@@ -6,19 +6,24 @@
  */
 package org.openwms.domain.common.system.usermanagement;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.persistence.Column;
+import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+
+import org.hibernate.validator.Email;
 
 /**
  * All minor details of an <code>User</code>.
  * 
  * @author <a href="heiko.scherrer@gmx.de">Heiko Scherrer</a>
  * @version $Revision$
- * TODO: + List<Email> instead of a single property.
- *
+ * 
  */
 @Entity
 @Table(name = "USER_DETAILS")
@@ -29,7 +34,7 @@ public class UserDetails {
 	 * Mapping to the <code>User</code> entity.
 	 */
 	@OneToOne
-	@JoinColumn(name = "user_USERNAME", referencedColumnName = "USERNAME")
+	@JoinColumn(name = "USER_USERNAME", referencedColumnName = "USERNAME")
 	private IUser user;
 
 	/**
@@ -48,7 +53,8 @@ public class UserDetails {
 	 * Email address assigned to the <code>User</code> entity.
 	 */
 	@Column(name = "EMAIL")
-	private String email;
+	@Embedded
+	private List<Email> emails;
 
 	/**
 	 * Phone number assigned to the <code>User</code> entity.
@@ -74,6 +80,7 @@ public class UserDetails {
 	@Column(name = "DEPARTMENT")
 	private String department;
 
+	/* ----------------------------- methods ------------------- */
 	public UserDetails() {
 		super();
 	}
@@ -118,12 +125,22 @@ public class UserDetails {
 		this.office = office;
 	}
 
-	public String getEmail() {
-		return this.email;
+	public List<Email> getEmails() {
+		if (emails == null) {
+			emails = new ArrayList<Email>();
+		}
+		return emails;
 	}
 
-	public void setEmail(String email) {
-		this.email = email;
+	public void addEmail(Email email) {
+		if (emails == null) {
+			emails = new ArrayList<Email>();
+		}
+		emails.add(email);
+	}
+
+	public void setEmails(List<Email> emails) {
+		this.emails = emails;
 	}
 
 	public String getSkypeName() {

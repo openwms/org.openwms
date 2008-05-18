@@ -13,10 +13,12 @@ import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.persistence.Version;
 
 /**
  * Entity to persist preferences. A <code>Preference</code> could be an user-,
@@ -26,12 +28,12 @@ import javax.persistence.Table;
  * @version $Revision$
  */
 /*
- * TODO: + Assing key, value as complementary key instead of using ID
- * + Replace BigDecimal with float
+ * TODO: + Assing key, value as complementary key instead of using ID + Replace
+ * BigDecimal with float
  */
 @Entity
-@Table(name = "preference")
-public class Preference implements Serializable {
+@Table(name = "PREFERENCE")
+public class Preference implements Serializable, IPreference {
 
 	private static final long serialVersionUID = 1L;
 
@@ -39,6 +41,7 @@ public class Preference implements Serializable {
 	 * Unique identifier of the <code>Preference</code>.
 	 */
 	@Id
+	@GeneratedValue
 	@Column(name = "ID")
 	private long id;
 
@@ -89,11 +92,18 @@ public class Preference implements Serializable {
 	private int maximum;
 
 	/**
+	 * Version field
+	 */
+	@Version
+	private long version;
+
+	/**
 	 * A list of <code>Role</code>s assigned to the <code>Preference</code>.
 	 */
 	@ManyToMany(mappedBy = "preferences")
 	private List<Role> roles = new ArrayList<Role>();
 
+	/* ----------------------------- methods ------------------- */
 	public Preference() {
 		super();
 	}
@@ -176,5 +186,14 @@ public class Preference implements Serializable {
 
 	public void setRoles(List<Role> roles) {
 		this.roles = roles;
+	}
+
+	/**
+	 * JPA optimistic locking: Returns version field.
+	 * 
+	 * @return
+	 */
+	public long getVersion() {
+		return version;
 	}
 }

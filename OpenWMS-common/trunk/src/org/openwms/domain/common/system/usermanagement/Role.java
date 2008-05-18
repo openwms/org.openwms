@@ -17,17 +17,21 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
+import javax.persistence.Version;
+
 /**
- * The <code>Role</code> entity is grouping multiple <code>User</code>s concerning
- * security aspects. Security access policies were assigned to <code>Role</code>s
- * instead to <code>User</code>s
+ * The <code>Role</code> entity is grouping multiple <code>User</code>s
+ * concerning security aspects.
+ * <p>
+ * Security access policies were assigned to <code>Role</code>s instead to
+ * <code>User</code>s
  * 
  * @author <a href="heiko.scherrer@gmx.de">Heiko Scherrer</a>
  * @version $Revision$
  */
 @Entity
 @Table(name = "ROLE")
-public class Role implements Serializable {
+public class Role implements Serializable, IRole {
 
 	private static final long serialVersionUID = 1L;
 
@@ -46,7 +50,14 @@ public class Role implements Serializable {
 	private String description;
 
 	/**
-	 * All <code>User</code>s linked to this <code>Role</code>
+	 * Version field
+	 */
+	@Version
+	private long version;
+
+	/* ------------------- collection mapping ------------------- */
+	/**
+	 * All <code>User</code>s belonging to this <code>Role</code>
 	 */
 	@ManyToMany
 	@JoinTable(name = "ROLE_USER", joinColumns = @JoinColumn(name = "ROLE_ID"), inverseJoinColumns = @JoinColumn(name = "USER_ID"))
@@ -59,39 +70,81 @@ public class Role implements Serializable {
 	@JoinTable(name = "ROLE_PREFERENCE", joinColumns = @JoinColumn(name = "ROLE_ID"), inverseJoinColumns = @JoinColumn(name = "PREFERENCE_ID"))
 	private Set<Preference> preferences = new HashSet<Preference>();
 
-	public Role() {
+	/* ----------------------------- methods ------------------- */
+	public Role(String id) {
 		super();
+		this.id = id;
 	}
 
+	/**
+	 * Return the Id.
+	 * 
+	 * @return
+	 */
 	public String getId() {
 		return this.id;
 	}
 
-	public void setId(String id) {
-		this.id = id;
-	}
-
+	/**
+	 * Return the description.
+	 * 
+	 * @return
+	 */
 	public String getDescription() {
 		return this.description;
 	}
 
+	/**
+	 * Set the description for this <code>Role</code>.
+	 * 
+	 * @param description
+	 */
 	public void setDescription(String description) {
 		this.description = description;
 	}
 
+	/**
+	 * Get all <code>User</code>s belonging to this <code>Role</code>.
+	 * 
+	 * @return
+	 */
 	public Set<User> getUsers() {
 		return users;
 	}
 
+	/**
+	 * Set all <code>User</code>s belonging to this <code>Role</code>.
+	 * 
+	 * @param users
+	 */
 	public void setUsers(Set<User> users) {
 		this.users = users;
 	}
 
+	/**
+	 * Get all <code>Preference</code>s of this <code>Role</code>.
+	 * 
+	 * @return
+	 */
 	public Set<Preference> getPreferences() {
 		return preferences;
 	}
 
+	/**
+	 * Set all <code>Preference</code>s belonging to this <code>Role</code>.
+	 * 
+	 * @param preferences
+	 */
 	public void setPreferences(Set<Preference> preferences) {
 		this.preferences = preferences;
+	}
+
+	/**
+	 * JPA optimistic locking: Returns version field.
+	 * 
+	 * @return
+	 */
+	public long getVersion() {
+		return this.version;
 	}
 }
