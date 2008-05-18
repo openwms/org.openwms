@@ -29,6 +29,7 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "USER")
 public class User implements Serializable, IUser {
+	
 	private static final long serialVersionUID = 1L;
 
 	/**
@@ -81,11 +82,12 @@ public class User implements Serializable, IUser {
 	@Column(name = "FULLNAME")
 	private String fullname;
 
+	/* ------------------- collection mapping ------------------- */
 	/**
 	 * More detail information about the <code>User</code>.
 	 */
 	@OneToOne()
-	@JoinColumn(name = "userDetails_USERNAME", referencedColumnName = "USERNAME")
+	@JoinColumn(name = "USERDETAILS_USERNAME", referencedColumnName = "USERNAME")
 	private UserDetails userDetails;
 
 	/**
@@ -100,6 +102,7 @@ public class User implements Serializable, IUser {
 	@OneToMany(mappedBy = "user")
 	private List<UserPassword> passwords;
 
+	/* ----------------------------- methods ------------------- */
 	public User() {
 		super();
 	}
