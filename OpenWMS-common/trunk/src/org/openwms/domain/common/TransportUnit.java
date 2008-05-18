@@ -39,7 +39,7 @@ import org.openwms.domain.common.system.usermanagement.IUser;
  */
 @Entity
 @Table(name = "TRANSPORT_UNIT", uniqueConstraints = @UniqueConstraint(columnNames = ("UNIT_ID")))
-public class TransportUnit implements Serializable {
+public class TransportUnit implements Serializable, ITransportUnit {
 
 	private static final long serialVersionUID = 1L;
 
@@ -126,7 +126,7 @@ public class TransportUnit implements Serializable {
 	 * Owning <code>TransportUnit</code>.
 	 */
 	@ManyToOne
-	private TransportUnit parent;
+	private ITransportUnit parent;
 
 	/**
 	 * The <code>User</code> who did the last inventory action on this
@@ -154,49 +154,37 @@ public class TransportUnit implements Serializable {
 		this.creationDate = new Date();
 	}
 
-	/**
-	 * Get the actualLocation.
-	 * 
-	 * @return the actualLocation.
+	/* (non-Javadoc)
+	 * @see org.openwms.domain.common.ITransportUnit#getActualLocation()
 	 */
 	public ILocation getActualLocation() {
 		return actualLocation;
 	}
 
-	/**
-	 * Set the actualLocation.
-	 * 
-	 * @param actualLocation
-	 *            The actualLocation to set.
+	/* (non-Javadoc)
+	 * @see org.openwms.domain.common.ITransportUnit#setActualLocation(org.openwms.domain.common.ILocation)
 	 */
 	public void setActualLocation(ILocation actualLocation) {
 		this.actualLocation = actualLocation;
 		this.actualLocationDate = new Date();
 	}
 
-	/**
-	 * Get the targetLocation.
-	 * 
-	 * @return the targetLocation.
+	/* (non-Javadoc)
+	 * @see org.openwms.domain.common.ITransportUnit#getTargetLocation()
 	 */
 	public ILocation getTargetLocation() {
 		return targetLocation;
 	}
 
-	/**
-	 * Set the targetLocation.
-	 * 
-	 * @param targetLocation
-	 *            The targetLocation to set.
+	/* (non-Javadoc)
+	 * @see org.openwms.domain.common.ITransportUnit#setTargetLocation(org.openwms.domain.common.ILocation)
 	 */
 	public void setTargetLocation(ILocation targetLocation) {
 		this.targetLocation = targetLocation;
 	}
 
-	/**
-	 * Get the id.
-	 * 
-	 * @return the id.
+	/* (non-Javadoc)
+	 * @see org.openwms.domain.common.ITransportUnit#getId()
 	 */
 	public long getId() {
 		return id;
@@ -367,20 +355,15 @@ public class TransportUnit implements Serializable {
 		this.transportUnitType = transportUnitType;
 	}
 
-	/**
-	 * Get the unitId of this <code>TransportUnit</code>.
-	 * 
-	 * @return the unitId.
+	/* (non-Javadoc)
+	 * @see org.openwms.domain.common.ITransportUnit#getUnitId()
 	 */
 	public String getUnitId() {
 		return unitId;
 	}
 
-	/**
-	 * Set the unitId of this <code>TransportUnit</code>.
-	 * 
-	 * @param unitId
-	 *            The unitId to set.
+	/* (non-Javadoc)
+	 * @see org.openwms.domain.common.ITransportUnit#setUnitId(java.lang.String)
 	 */
 	public void setUnitId(String unitId) {
 		this.unitId = unitId;
@@ -391,7 +374,7 @@ public class TransportUnit implements Serializable {
 	 * 
 	 * @return the parent.
 	 */
-	public TransportUnit getParent() {
+	public ITransportUnit getParent() {
 		return parent;
 	}
 
@@ -401,7 +384,7 @@ public class TransportUnit implements Serializable {
 	 * @param parent
 	 *            The parent to set.
 	 */
-	public void setParent(TransportUnit parent) {
+	public void setParent(ITransportUnit parent) {
 		this.parent = parent;
 	}
 
