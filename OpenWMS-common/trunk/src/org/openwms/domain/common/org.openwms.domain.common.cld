@@ -7,8 +7,8 @@
       <name>org.openwms.domain.common.ILocationType</name>
       <stereoType></stereoType>
       <constraint>
-        <x>920</x>
-        <y>1110</y>
+        <x>389</x>
+        <y>2330</y>
         <width>-1</width>
         <height>-1</height>
       </constraint>
@@ -23,8 +23,8 @@
             <stereoType></stereoType>
             <isAbstract>false</isAbstract>
             <constraint>
-              <x>240</x>
-              <y>580</y>
+              <x>890</x>
+              <y>1830</y>
               <width>-1</width>
               <height>-1</height>
             </constraint>
@@ -35,8 +35,8 @@
                   <name>org.openwms.domain.common.ILocation</name>
                   <stereoType></stereoType>
                   <constraint>
-                    <x>270</x>
-                    <y>44</y>
+                    <x>1327</x>
+                    <y>1280</y>
                     <width>-1</width>
                     <height>-1</height>
                   </constraint>
@@ -51,8 +51,8 @@
                         <stereoType></stereoType>
                         <isAbstract>false</isAbstract>
                         <constraint>
-                          <x>1970</x>
-                          <y>730</y>
+                          <x>1667</x>
+                          <y>1620</y>
                           <width>-1</width>
                           <height>-1</height>
                         </constraint>
@@ -104,8 +104,8 @@
                               <name>org.openwms.domain.common.ITransportUnitType</name>
                               <stereoType></stereoType>
                               <constraint>
-                                <x>2620</x>
-                                <y>200</y>
+                                <x>2097</x>
+                                <y>1070</y>
                                 <width>-1</width>
                                 <height>-1</height>
                               </constraint>
@@ -120,8 +120,8 @@
                                     <stereoType></stereoType>
                                     <isAbstract>false</isAbstract>
                                     <constraint>
-                                      <x>1880</x>
-                                      <y>171</y>
+                                      <x>2597</x>
+                                      <y>1010</y>
                                       <width>-1</width>
                                       <height>-1</height>
                                     </constraint>
@@ -304,8 +304,8 @@
                                     <stereoType></stereoType>
                                     <isAbstract>false</isAbstract>
                                     <constraint>
-                                      <x>2530</x>
-                                      <y>520</y>
+                                      <x>2377</x>
+                                      <y>1620</y>
                                       <width>-1</width>
                                       <height>-1</height>
                                     </constraint>
@@ -2800,8 +2800,8 @@
                   <stereoType></stereoType>
                   <isAbstract>false</isAbstract>
                   <constraint>
-                    <x>810</x>
-                    <y>30</y>
+                    <x>1656</x>
+                    <y>2610</y>
                     <width>-1</width>
                     <height>-1</height>
                   </constraint>
@@ -3177,8 +3177,8 @@
                   <name>org.openwms.domain.common.ILocationGroup</name>
                   <stereoType></stereoType>
                   <constraint>
-                    <x>1460</x>
-                    <y>50</y>
+                    <x>937</x>
+                    <y>1380</y>
                     <width>-1</width>
                     <height>-1</height>
                   </constraint>
@@ -3193,8 +3193,8 @@
                         <stereoType></stereoType>
                         <isAbstract>false</isAbstract>
                         <constraint>
-                          <x>1450</x>
-                          <y>434</y>
+                          <x>917</x>
+                          <y>100</y>
                           <width>-1</width>
                           <height>-1</height>
                         </constraint>
@@ -5591,8 +5591,8 @@
             <stereoType></stereoType>
             <isAbstract>false</isAbstract>
             <constraint>
-              <x>838</x>
-              <y>840</y>
+              <x>307</x>
+              <y>2060</y>
               <width>-1</width>
               <height>-1</height>
             </constraint>
@@ -5766,8 +5766,8 @@
             <stereoType></stereoType>
             <isAbstract>false</isAbstract>
             <constraint>
-              <x>924</x>
-              <y>1370</y>
+              <x>393</x>
+              <y>2590</y>
               <width>-1</width>
               <height>-1</height>
             </constraint>

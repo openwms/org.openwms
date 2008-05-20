@@ -8,7 +8,9 @@ package org.openwms.domain.common;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.EmbeddedId;
@@ -192,7 +194,7 @@ public class Location implements Serializable, ILocation {
 	 */
 	@OneToMany
 	@JoinColumn(name = "FK_LOCATION")
-	private IMessage message;
+	private List<IMessage> messages;
 
 	/* ----------------------------- methods ------------------- */
 	public Location(LocationPK id) {
@@ -252,12 +254,19 @@ public class Location implements Serializable, ILocation {
 		this.countingActive = countingActive;
 	}
 
-	public IMessage getMessage() {
-		return this.message;
+	public List<IMessage> getMessages() {
+		return this.messages;
 	}
 
-	public void setMessage(IMessage message) {
-		this.message = message;
+	public void setMessages(List<IMessage> messages) {
+		this.messages = messages;
+	}
+
+	public void addMessage(IMessage message) {
+		if (this.messages == null) {
+			this.messages = new ArrayList<IMessage>();
+		}
+		messages.add(message);
 	}
 
 	public boolean isOutgoingActive() {

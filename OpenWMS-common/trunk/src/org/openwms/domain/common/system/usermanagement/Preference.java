@@ -50,6 +50,7 @@ public class Preference implements Serializable, IPreference {
 	 * UserPreference.
 	 */
 	@ManyToOne
+	@Column(name = "USER")
 	private IUser user;
 
 	@Column(name = "KEY")

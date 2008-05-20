@@ -114,14 +114,14 @@ public class LocationGroup implements Serializable, ILocationGroup {
 	/**
 	 * Parent <code>LocationGroup</code>.
 	 */
-	@ManyToOne
+	@Column(name = "PARENT")
 	private ILocationGroup parent;
 
 	/**
 	 * Child <code>LocationGroup</code>s.
 	 */
 	@OneToMany(mappedBy = "parent")
-	private Set<LocationGroup> locationGroups;
+	private Set<ILocationGroup> locationGroups;
 
 	/**
 	 * Child <code>Location</code>s.
@@ -237,7 +237,7 @@ public class LocationGroup implements Serializable, ILocationGroup {
 	 * 
 	 * @return client LocationGroups.
 	 */
-	public Set<LocationGroup> getLocationGroups() {
+	public Set<ILocationGroup> getLocationGroups() {
 		return this.locationGroups;
 	}
 
@@ -246,7 +246,7 @@ public class LocationGroup implements Serializable, ILocationGroup {
 	 * 
 	 * @param locationGroups
 	 */
-	public void setLocationGroups(Set<LocationGroup> locationGroups) {
+	public void setLocationGroups(Set<ILocationGroup> locationGroups) {
 		this.locationGroups = locationGroups;
 	}
 
