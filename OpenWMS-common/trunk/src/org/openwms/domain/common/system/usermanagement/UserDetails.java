@@ -10,11 +10,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.Column;
+import javax.persistence.Embeddable;
 import javax.persistence.Embedded;
-import javax.persistence.Entity;
-import javax.persistence.JoinColumn;
-import javax.persistence.OneToOne;
-import javax.persistence.Table;
 
 import org.hibernate.validator.Email;
 
@@ -25,17 +22,9 @@ import org.hibernate.validator.Email;
  * @version $Revision$
  * 
  */
-@Entity
-@Table(name = "USER_DETAILS")
+@Embeddable
 public class UserDetails {
 	private static final long serialVersionUID = 1L;
-
-	/**
-	 * Mapping to the <code>User</code> entity.
-	 */
-	@OneToOne
-	@JoinColumn(name = "USER_USERNAME", referencedColumnName = "USERNAME")
-	private IUser user;
 
 	/**
 	 * Description assigned to the <code>User</code> entity.
@@ -83,14 +72,6 @@ public class UserDetails {
 	/* ----------------------------- methods ------------------- */
 	public UserDetails() {
 		super();
-	}
-
-	public IUser getUser() {
-		return this.user;
-	}
-
-	public void setUser(IUser user) {
-		this.user = user;
 	}
 
 	public String getPhoneNo() {

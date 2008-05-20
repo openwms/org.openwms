@@ -12,12 +12,11 @@ import java.util.Date;
 import java.util.List;
 
 import javax.persistence.Column;
+import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 /**
@@ -29,7 +28,7 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "USER")
 public class User implements Serializable, IUser {
-	
+
 	private static final long serialVersionUID = 1L;
 
 	/**
@@ -86,8 +85,7 @@ public class User implements Serializable, IUser {
 	/**
 	 * More detail information about the <code>User</code>.
 	 */
-	@OneToOne()
-	@JoinColumn(name = "USERDETAILS_USERNAME", referencedColumnName = "USERNAME")
+	@Embedded
 	private UserDetails userDetails;
 
 	/**

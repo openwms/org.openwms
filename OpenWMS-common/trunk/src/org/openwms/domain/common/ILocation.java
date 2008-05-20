@@ -8,6 +8,7 @@ package org.openwms.domain.common;
 
 import java.math.BigDecimal;
 import java.util.Date;
+import java.util.List;
 
 import org.openwms.domain.common.system.IMessage;
 
@@ -29,7 +30,7 @@ public interface ILocation {
 
 	public abstract long getVersion();
 
-	public abstract IMessage getMessage();
+	public abstract List<IMessage> getMessages();
 
 	public abstract boolean isOutgoingActive();
 
