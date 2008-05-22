@@ -13,6 +13,7 @@ import java.util.Date;
 import java.util.List;
 
 import javax.persistence.Column;
+import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -46,7 +47,7 @@ public class Location implements Serializable, ILocation {
 	@GeneratedValue
 	private long id;
 
-	@Column(name = "LOCATION_ID", unique = true)
+	@Embedded
 	private LocationPK locationId;
 
 	/**
@@ -198,8 +199,7 @@ public class Location implements Serializable, ILocation {
 	/**
 	 * Stores a <code>Message</code> for this <code>Location</code>.
 	 */
-	@OneToMany
-	@JoinColumn(name = "FK_LOCATION")
+	@OneToMany(mappedBy = "id")
 	private List<Message> messages;
 
 	/* ----------------------------- methods ------------------- */

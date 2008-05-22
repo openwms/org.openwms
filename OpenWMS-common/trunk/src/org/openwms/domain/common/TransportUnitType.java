@@ -11,7 +11,6 @@ import java.math.BigDecimal;
 import java.util.Set;
 
 import javax.persistence.Column;
-import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
@@ -107,14 +106,14 @@ public class TransportUnitType implements Serializable, ITransportUnitType {
 	 * Describes which other <code>TransportUnitType</code>s and how many of
 	 * that type may be stacked on this <code>TransportUnitType</code>.
 	 */
-	@Embedded
+	@OneToMany(mappedBy = "transportUnitType")
 	private Set<TypeStackingRule> typeStackingRules;
 
 	/**
 	 * A Set of <code>TypePlacingRule</code>s to describe all possible
 	 * <code>LocationType</code>s for this <code>TransportUnitType</code>.
 	 */
-	@Embedded
+	@OneToMany(mappedBy = "transportUnitType")
 	private Set<TypePlacingRule> typePlacingRules;
 
 	/* ----------------------------- methods ------------------- */
