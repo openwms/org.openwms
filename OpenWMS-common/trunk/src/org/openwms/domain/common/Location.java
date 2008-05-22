@@ -13,15 +13,16 @@ import java.util.Date;
 import java.util.List;
 
 import javax.persistence.Column;
-import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Version;
 
-import org.openwms.domain.common.system.IMessage;
+import org.openwms.domain.common.system.Message;
 
 /**
  * This class is used to specify a location. A location could be a storage
@@ -40,8 +41,13 @@ public class Location implements Serializable, ILocation {
 
 	private static final long serialVersionUID = 1L;
 
-	@EmbeddedId
-	private LocationPK id;
+	@Id
+	@Column(name = "ID")
+	@GeneratedValue
+	private long id;
+
+	@Column(name = "LOCATION_ID", unique = true)
+	private LocationPK locationId;
 
 	/**
 	 * Describes the <code>Location</code>.
@@ -179,31 +185,35 @@ public class Location implements Serializable, ILocation {
 	 */
 	@ManyToOne
 	@JoinColumn(name = "LOCATION_TYPE")
-	private ILocationType locationType;
+	private LocationType locationType;
 
 	/**
 	 * The <code>LocationGroup</code> to which this <code>Location</code>
 	 * belongs.
 	 */
 	@ManyToOne
-	@JoinColumn(name = "ID")
-	private ILocationGroup locationGroup;
+	@JoinColumn(name = "LOCATION_GROUP_ID")
+	private LocationGroup locationGroup;
 
 	/**
 	 * Stores a <code>Message</code> for this <code>Location</code>.
 	 */
 	@OneToMany
 	@JoinColumn(name = "FK_LOCATION")
-	private List<IMessage> messages;
+	private List<Message> messages;
 
 	/* ----------------------------- methods ------------------- */
-	public Location(LocationPK id) {
+	public Location(LocationPK locationId) {
 		super();
-		this.id = id;
+		this.locationId = locationId;
 	}
 
-	public LocationPK getId() {
+	public long getId() {
 		return this.id;
+	}
+
+	public LocationPK getLocationId() {
+		return this.locationId;
 	}
 
 	public String getDescription() {
@@ -254,17 +264,17 @@ public class Location implements Serializable, ILocation {
 		this.countingActive = countingActive;
 	}
 
-	public List<IMessage> getMessages() {
+	public List<Message> getMessages() {
 		return this.messages;
 	}
 
-	public void setMessages(List<IMessage> messages) {
+	public void setMessages(List<Message> messages) {
 		this.messages = messages;
 	}
 
-	public void addMessage(IMessage message) {
+	public void addMessage(Message message) {
 		if (this.messages == null) {
-			this.messages = new ArrayList<IMessage>();
+			this.messages = new ArrayList<Message>();
 		}
 		messages.add(message);
 	}
@@ -341,19 +351,19 @@ public class Location implements Serializable, ILocation {
 		this.incomingActive = incomingActive;
 	}
 
-	public ILocationType getLocationType() {
+	public LocationType getLocationType() {
 		return this.locationType;
 	}
 
-	public void setLocationType(ILocationType locationType) {
+	public void setLocationType(LocationType locationType) {
 		this.locationType = locationType;
 	}
 
-	public ILocationGroup getLocationGroup() {
+	public LocationGroup getLocationGroup() {
 		return this.locationGroup;
 	}
 
-	public void setLocationGroup(ILocationGroup locationGroup) {
+	public void setLocationGroup(LocationGroup locationGroup) {
 		this.locationGroup = locationGroup;
 	}
 

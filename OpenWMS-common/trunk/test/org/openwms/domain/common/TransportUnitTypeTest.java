@@ -13,7 +13,10 @@ import java.sql.DriverManager;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
+import javax.persistence.EntityTransaction;
 import javax.persistence.Persistence;
+
+import junit.framework.Assert;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -86,9 +89,23 @@ public class TransportUnitTypeTest {
 	 */
 	@Test
 	public final void testTransportUnitType() {
+		EntityTransaction entityTransaction =  em.getTransaction();
 		TransportUnitType transportUnitType = new TransportUnitType("TEST_TYPE");
+
+		entityTransaction.begin();
 		em.persist(transportUnitType);
-		fail("Not yet implemented"); // TODO
+		entityTransaction.commit();
+
+		TransportUnitType tt = em.find(TransportUnitType.class, "TEST_TYPE");
+		Assert.assertNotNull("TransportUnitType should be SAVED before", tt);
+
+		entityTransaction.begin();
+		em.remove(tt);
+		entityTransaction.commit();
+
+		tt = em.find(TransportUnitType.class, "TEST_TYPE");
+		Assert.assertNull("TransportUnitType should be REMOVED before", tt);
+		
 	}
 
 	/**
