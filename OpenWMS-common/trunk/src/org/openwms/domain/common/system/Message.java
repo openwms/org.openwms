@@ -30,6 +30,7 @@ public class Message implements IMessage {
 	 * Primary key.
 	 */
 	@Id
+	@Column(name = "ID")
 	@GeneratedValue
 	private long id;
 

@@ -15,7 +15,13 @@ package org.openwms.domain.common;
 import java.io.Serializable;
 
 import javax.persistence.Column;
-import javax.persistence.Embeddable;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
+import javax.persistence.UniqueConstraint;
 
 /**
  * 
@@ -26,9 +32,26 @@ import javax.persistence.Embeddable;
  * @author <a href="heiko.scherrer@gmx.de">Heiko Scherrer</a>
  * @version $Revision$
  */
-@Embeddable
+@Entity
+@Table(name = "TYPE_STACKING_RULE", uniqueConstraints = @UniqueConstraint(columnNames = { "TRANSPORT_UNIT_TYPE",
+		"NO_TRANSPORT_UNITS", "ALLOWED_TRANSPORT_UNIT_TYPE" }))
 public class TypeStackingRule implements Serializable {
 	private static final long serialVersionUID = 1L;
+
+	/**
+	 * Primary key.
+	 */
+	@Id
+	@Column(name = "ID")
+	@GeneratedValue
+	private long id;
+
+	/**
+	 * Parent <code>TransportUnitType</code>.
+	 */
+	@ManyToOne
+	@JoinColumn(name = "TRANSPORT_UNIT_TYPE")
+	private TransportUnitType transportUnitType;
 
 	/**
 	 * Number of <code>TransportUnitType</code>s that may be placed on the
@@ -41,13 +64,31 @@ public class TypeStackingRule implements Serializable {
 	 * The allowed <code>TransportUnitType</code> that may be placed on the
 	 * owning <code>TransportUnitType</code>.
 	 */
-	@Column(name = "ALLOWED_TYPE", nullable = false)
-	private ITransportUnitType allowedTransportUnitType;
+	@Column(name = "ALLOWED_TRANSPORT_UNIT_TYPE", nullable = false)
+	private TransportUnitType allowedTransportUnitType;
 
 	/* ----------------------------- methods ------------------- */
-	public TypeStackingRule(short noTransportUnits, ITransportUnitType allowedTransportUnitType) {
+	public TypeStackingRule(short noTransportUnits, TransportUnitType allowedTransportUnitType) {
 		this.noTransportUnits = noTransportUnits;
 		this.allowedTransportUnitType = allowedTransportUnitType;
+	}
+
+	/**
+	 * Get the Primary Key.
+	 * 
+	 * @return the id.
+	 */
+	public long getId() {
+		return id;
+	}
+
+	/**
+	 * Get the transportUnitType.
+	 * 
+	 * @return the transportUnitType.
+	 */
+	public TransportUnitType getTransportUnitType() {
+		return transportUnitType;
 	}
 
 	/**
@@ -66,7 +107,7 @@ public class TypeStackingRule implements Serializable {
 	 * 
 	 * @return
 	 */
-	public ITransportUnitType getAllowedTransportUnitType() {
+	public TransportUnitType getAllowedTransportUnitType() {
 		return this.allowedTransportUnitType;
 	}
 }

@@ -33,9 +33,15 @@ public class User implements Serializable, IUser {
 	private static final long serialVersionUID = 1L;
 
 	/**
-	 * Unique identifier of the <code>User</code>.
+	 * Primary key.
 	 */
 	@Id
+	@Column(name = "ID")
+	private long id;
+
+	/**
+	 * Unique identifier of the <code>User</code>.
+	 */
 	@Column(name = "USERNAME")
 	private String username;
 
@@ -110,6 +116,15 @@ public class User implements Serializable, IUser {
 	/* ----------------------------- methods ------------------- */
 	public User() {
 		super();
+	}
+	
+	/**
+	 * Get the id.
+	 * 
+	 * @return the id.
+	 */
+	public long getId() {
+		return id;
 	}
 
 	public String getUsername() {

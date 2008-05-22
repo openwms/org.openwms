@@ -6,6 +6,7 @@
  */
 package org.openwms.domain.common.system.usermanagement;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -23,7 +24,7 @@ import org.hibernate.validator.Email;
  * 
  */
 @Embeddable
-public class UserDetails {
+public class UserDetails implements Serializable{
 	private static final long serialVersionUID = 1L;
 
 	/**

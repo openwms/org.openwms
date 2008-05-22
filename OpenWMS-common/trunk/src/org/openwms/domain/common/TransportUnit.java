@@ -11,11 +11,13 @@ import java.math.BigDecimal;
 import java.util.Collection;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -26,7 +28,6 @@ import javax.persistence.Version;
 
 import org.openwms.domain.common.system.UnitError;
 import org.openwms.domain.common.system.usermanagement.User;
-import javax.persistence.JoinColumns;
 
 /**
  * 
@@ -49,6 +50,7 @@ public class TransportUnit implements Serializable {
 	 */
 	@Id
 	@Column(name = "ID")
+	@GeneratedValue
 	private long id;
 
 	/**
@@ -105,7 +107,7 @@ public class TransportUnit implements Serializable {
 	 * The actual Location of the TransportUnit.
 	 */
 	@ManyToOne
-	@JoinColumn(name = "ID", insertable = false, updatable = false)
+	@JoinColumn(name = "ACTUAL_LOCATION", insertable = false, updatable = false)
 	private Location actualLocation;
 
 	/**
@@ -113,20 +115,21 @@ public class TransportUnit implements Serializable {
 	 * This property should be set when starting a new TransportOrder.
 	 */
 	@ManyToOne
-	@JoinColumn(name = "ID", insertable = false, updatable = false)
+	@JoinColumn(name = "TARGET_LOCATION", insertable = false, updatable = false)
 	private Location targetLocation;
 
 	/**
 	 * The <code>TransportUnitType</code> of this <code>TransportUnit</code>.
 	 */
 	@ManyToOne
-	@JoinColumn(name = "TYPE")
+	@JoinColumn(name = "TRANSPORT_UNIT_TYPE")
 	private TransportUnitType transportUnitType;
 
 	/**
 	 * Owning <code>TransportUnit</code>.
 	 */
 	@ManyToOne
+	@JoinColumn(name = "PARENT_TRANSPORT_UNIT", nullable = false)
 	private TransportUnit parent;
 
 	/**
@@ -141,7 +144,7 @@ public class TransportUnit implements Serializable {
 	 * Child <code>TransportUnit</code>s.
 	 */
 	@OneToMany(mappedBy = "parent")
-	private Set<TransportUnit> transportUnits;
+	private Set<TransportUnit> transportUnits = new HashSet<TransportUnit>();
 
 	/**
 	 * A set of occurred errors on this <code>TransportUnit</code>.

@@ -9,7 +9,13 @@ package org.openwms.domain.common;
 import java.io.Serializable;
 
 import javax.persistence.Column;
-import javax.persistence.Embeddable;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
+import javax.persistence.UniqueConstraint;
 
 /**
  * A TypePlacingRule.
@@ -21,9 +27,23 @@ import javax.persistence.Embeddable;
  * @author <a href="heiko.scherrer@gmx.de">Heiko Scherrer</a>
  * @version $Revision$
  */
-@Embeddable
+@Entity
+@Table(name = "TYPE_PLACING_RULE", uniqueConstraints = @UniqueConstraint(columnNames = { "TRANSPORT_UNIT_TYPE",
+		"PRIVILEGE_LEVEL", "ALLOWED_LOCATION_TYPE" }))
 public class TypePlacingRule implements Serializable {
 	private static final long serialVersionUID = 1L;
+
+	@Id
+	@Column(name = "ID")
+	@GeneratedValue
+	private long id;
+
+	/**
+	 * Parent <code>TransportUnitType</code>.
+	 */
+	@ManyToOne
+	@JoinColumn(name = "TRANSPORT_UNIT_TYPE")
+	private TransportUnitType transportUnitType;
 
 	/**
 	 * The privilegeLevel defines a priority to describe which
@@ -46,13 +66,36 @@ public class TypePlacingRule implements Serializable {
 	 * <code>TransportUnitType</code> may be placed.
 	 */
 	@Column(name = "ALLOWED_LOCATION_TYPE", nullable = false)
-	private ILocationType allowedLocationType;
+	private LocationType allowedLocationType;
 
 	/* ----------------------------- methods ------------------- */
-	public TypePlacingRule(short privilegeLevel, ILocationType allowedLocationType) {
+	public TypePlacingRule(short privilegeLevel, LocationType allowedLocationType) {
 		super();
 		this.privilegeLevel = privilegeLevel;
 		this.allowedLocationType = allowedLocationType;
+	}
+
+	public TypePlacingRule(LocationType allowedLocationType) {
+		super();
+		this.allowedLocationType = allowedLocationType;
+	}
+
+	/**
+	 * Get the id.
+	 * 
+	 * @return the id.
+	 */
+	public long getId() {
+		return id;
+	}
+
+	/**
+	 * Get the transportUnitType.
+	 * 
+	 * @return the transportUnitType.
+	 */
+	public TransportUnitType getTransportUnitType() {
+		return transportUnitType;
 	}
 
 	/**
@@ -69,7 +112,7 @@ public class TypePlacingRule implements Serializable {
 	 * 
 	 * @return the allowedLocationType.
 	 */
-	public ILocationType getAllowedLocationType() {
+	public LocationType getAllowedLocationType() {
 		return allowedLocationType;
 	}
 }
