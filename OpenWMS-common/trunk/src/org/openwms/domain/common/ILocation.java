@@ -10,11 +10,11 @@ import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
 
-import org.openwms.domain.common.system.IMessage;
+import org.openwms.domain.common.system.Message;
 
 public interface ILocation {
 
-	public abstract LocationPK getId();
+	public abstract LocationPK getLocationId();
 
 	public abstract String getDescription();
 
@@ -30,7 +30,7 @@ public interface ILocation {
 
 	public abstract long getVersion();
 
-	public abstract List<IMessage> getMessages();
+	public abstract List<Message> getMessages();
 
 	public abstract boolean isOutgoingActive();
 
@@ -50,8 +50,8 @@ public interface ILocation {
 
 	public abstract boolean isIncomingActive();
 
-	public abstract ILocationType getLocationType();
+	public abstract LocationType getLocationType();
 
-	public abstract ILocationGroup getLocationGroup();
+	public abstract LocationGroup getLocationGroup();
 
 }

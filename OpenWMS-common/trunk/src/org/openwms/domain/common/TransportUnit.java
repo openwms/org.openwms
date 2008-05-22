@@ -24,8 +24,9 @@ import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 import javax.persistence.Version;
 
-import org.openwms.domain.common.system.IUnitError;
-import org.openwms.domain.common.system.usermanagement.IUser;
+import org.openwms.domain.common.system.UnitError;
+import org.openwms.domain.common.system.usermanagement.User;
+import javax.persistence.JoinColumns;
 
 /**
  * 
@@ -39,7 +40,7 @@ import org.openwms.domain.common.system.usermanagement.IUser;
  */
 @Entity
 @Table(name = "TRANSPORT_UNIT", uniqueConstraints = @UniqueConstraint(columnNames = ("UNIT_ID")))
-public class TransportUnit implements Serializable, ITransportUnit {
+public class TransportUnit implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
@@ -104,29 +105,29 @@ public class TransportUnit implements Serializable, ITransportUnit {
 	 * The actual Location of the TransportUnit.
 	 */
 	@ManyToOne
-	@JoinColumn(name = "ID")
-	private ILocation actualLocation;
+	@JoinColumn(name = "ID", insertable = false, updatable = false)
+	private Location actualLocation;
 
 	/**
 	 * The target Location of the TransportUnit.<br>
 	 * This property should be set when starting a new TransportOrder.
 	 */
 	@ManyToOne
-	@JoinColumn(name = "ID")
-	private ILocation targetLocation;
+	@JoinColumn(name = "ID", insertable = false, updatable = false)
+	private Location targetLocation;
 
 	/**
 	 * The <code>TransportUnitType</code> of this <code>TransportUnit</code>.
 	 */
 	@ManyToOne
 	@JoinColumn(name = "TYPE")
-	private ITransportUnitType transportUnitType;
+	private TransportUnitType transportUnitType;
 
 	/**
 	 * Owning <code>TransportUnit</code>.
 	 */
 	@ManyToOne
-	private ITransportUnit parent;
+	private TransportUnit parent;
 
 	/**
 	 * The <code>User</code> who did the last inventory action on this
@@ -134,7 +135,7 @@ public class TransportUnit implements Serializable, ITransportUnit {
 	 */
 	@ManyToOne
 	@JoinColumn(name = "USERNAME")
-	private IUser inventoryUser;
+	private User inventoryUser;
 
 	/**
 	 * Child <code>TransportUnit</code>s.
@@ -146,7 +147,7 @@ public class TransportUnit implements Serializable, ITransportUnit {
 	 * A set of occurred errors on this <code>TransportUnit</code>.
 	 */
 	@OneToMany(mappedBy = "id")
-	private Map<Date, IUnitError> errors;
+	private Map<Date, UnitError> errors;
 
 	/* ----------------------------- methods ------------------- */
 	public TransportUnit() {
@@ -154,36 +155,46 @@ public class TransportUnit implements Serializable, ITransportUnit {
 		this.creationDate = new Date();
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see org.openwms.domain.common.ITransportUnit#getActualLocation()
 	 */
-	public ILocation getActualLocation() {
+	public Location getActualLocation() {
 		return actualLocation;
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see org.openwms.domain.common.ITransportUnit#setActualLocation(org.openwms.domain.common.ILocation)
 	 */
-	public void setActualLocation(ILocation actualLocation) {
+	public void setActualLocation(Location actualLocation) {
 		this.actualLocation = actualLocation;
 		this.actualLocationDate = new Date();
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see org.openwms.domain.common.ITransportUnit#getTargetLocation()
 	 */
-	public ILocation getTargetLocation() {
+	public Location getTargetLocation() {
 		return targetLocation;
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see org.openwms.domain.common.ITransportUnit#setTargetLocation(org.openwms.domain.common.ILocation)
 	 */
-	public void setTargetLocation(ILocation targetLocation) {
+	public void setTargetLocation(Location targetLocation) {
 		this.targetLocation = targetLocation;
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see org.openwms.domain.common.ITransportUnit#getId()
 	 */
 	public long getId() {
@@ -214,7 +225,7 @@ public class TransportUnit implements Serializable, ITransportUnit {
 	 * 
 	 * @return
 	 */
-	public IUser getInventoryUser() {
+	public User getInventoryUser() {
 		return this.inventoryUser;
 	}
 
@@ -224,7 +235,7 @@ public class TransportUnit implements Serializable, ITransportUnit {
 	 * 
 	 * @param inventoryUser
 	 */
-	public void setInventoryUser(IUser inventoryUser) {
+	public void setInventoryUser(User inventoryUser) {
 		this.inventoryUser = inventoryUser;
 	}
 
@@ -298,9 +309,9 @@ public class TransportUnit implements Serializable, ITransportUnit {
 	 * 
 	 * @return
 	 */
-	public Collection<IUnitError> getErrors() {
+	public Collection<UnitError> getErrors() {
 		if (errors == null) {
-			errors = new HashMap<Date, IUnitError>();
+			errors = new HashMap<Date, UnitError>();
 		}
 		return this.errors.values();
 	}
@@ -310,9 +321,9 @@ public class TransportUnit implements Serializable, ITransportUnit {
 	 * 
 	 * @param error
 	 */
-	public void addError(IUnitError error) {
+	public void addError(UnitError error) {
 		if (errors == null) {
-			errors = new HashMap<Date, IUnitError>();
+			errors = new HashMap<Date, UnitError>();
 		}
 		this.errors.put(new Date(), error);
 	}
@@ -341,7 +352,7 @@ public class TransportUnit implements Serializable, ITransportUnit {
 	 * 
 	 * @return
 	 */
-	public ITransportUnitType getTransportUnitType() {
+	public TransportUnitType getTransportUnitType() {
 		return this.transportUnitType;
 	}
 
@@ -351,18 +362,22 @@ public class TransportUnit implements Serializable, ITransportUnit {
 	 * 
 	 * @param transportUnitType
 	 */
-	public void setTransportUnitType(ITransportUnitType transportUnitType) {
+	public void setTransportUnitType(TransportUnitType transportUnitType) {
 		this.transportUnitType = transportUnitType;
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see org.openwms.domain.common.ITransportUnit#getUnitId()
 	 */
 	public String getUnitId() {
 		return unitId;
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see org.openwms.domain.common.ITransportUnit#setUnitId(java.lang.String)
 	 */
 	public void setUnitId(String unitId) {
@@ -374,7 +389,7 @@ public class TransportUnit implements Serializable, ITransportUnit {
 	 * 
 	 * @return the parent.
 	 */
-	public ITransportUnit getParent() {
+	public TransportUnit getParent() {
 		return parent;
 	}
 
@@ -384,7 +399,7 @@ public class TransportUnit implements Serializable, ITransportUnit {
 	 * @param parent
 	 *            The parent to set.
 	 */
-	public void setParent(ITransportUnit parent) {
+	public void setParent(TransportUnit parent) {
 		this.parent = parent;
 	}
 

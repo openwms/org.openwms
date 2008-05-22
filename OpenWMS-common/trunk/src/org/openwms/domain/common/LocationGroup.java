@@ -22,7 +22,6 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
@@ -38,7 +37,7 @@ public class LocationGroup implements Serializable, ILocationGroup {
 	 * Primary Key.
 	 */
 	@Id
-	@Column(name = "ID")
+	@Column(name = "LOCATION_GROUP_ID")
 	@GeneratedValue
 	private long id;
 
@@ -115,13 +114,13 @@ public class LocationGroup implements Serializable, ILocationGroup {
 	 * Parent <code>LocationGroup</code>.
 	 */
 	@Column(name = "PARENT")
-	private ILocationGroup parent;
+	private LocationGroup parent;
 
 	/**
 	 * Child <code>LocationGroup</code>s.
 	 */
 	@OneToMany(mappedBy = "parent")
-	private Set<ILocationGroup> locationGroups;
+	private Set<LocationGroup> locationGroups;
 
 	/**
 	 * Child <code>Location</code>s.
@@ -219,7 +218,7 @@ public class LocationGroup implements Serializable, ILocationGroup {
 	 * 
 	 * @return parent LocationGroup.
 	 */
-	public ILocationGroup getParent() {
+	public LocationGroup getParent() {
 		return this.parent;
 	}
 
@@ -228,7 +227,7 @@ public class LocationGroup implements Serializable, ILocationGroup {
 	 * 
 	 * @param parent
 	 */
-	public void setParent(ILocationGroup parent) {
+	public void setParent(LocationGroup parent) {
 		this.parent = parent;
 	}
 
@@ -237,7 +236,7 @@ public class LocationGroup implements Serializable, ILocationGroup {
 	 * 
 	 * @return client LocationGroups.
 	 */
-	public Set<ILocationGroup> getLocationGroups() {
+	public Set<LocationGroup> getLocationGroups() {
 		return this.locationGroups;
 	}
 
@@ -246,7 +245,7 @@ public class LocationGroup implements Serializable, ILocationGroup {
 	 * 
 	 * @param locationGroups
 	 */
-	public void setLocationGroups(Set<ILocationGroup> locationGroups) {
+	public void setLocationGroups(Set<LocationGroup> locationGroups) {
 		this.locationGroups = locationGroups;
 	}
 

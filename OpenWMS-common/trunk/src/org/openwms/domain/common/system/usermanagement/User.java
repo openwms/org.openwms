@@ -10,6 +10,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Embedded;
@@ -89,16 +90,22 @@ public class User implements Serializable, IUser {
 	private UserDetails userDetails;
 
 	/**
-	 * List of all granted <code>Role</code>s to this <code>User</code>
+	 * List of all granted <code>Role</code>s to this <code>User</code>.
 	 */
 	@ManyToMany(mappedBy = "users")
 	private List<Role> roles = new ArrayList<Role>();
 
 	/**
-	 * Password history of this <code>User</code>
+	 * Password history of this <code>User</code>.
 	 */
 	@OneToMany(mappedBy = "user")
 	private List<UserPassword> passwords;
+
+	/**
+	 * All <code>Preference</code>s of this <code>User</code>.
+	 */
+	@OneToMany(mappedBy = "user")
+	private Set<Preference> preferences;
 
 	/* ----------------------------- methods ------------------- */
 	public User() {
@@ -184,6 +191,11 @@ public class User implements Serializable, IUser {
 		return this.passwords;
 	}
 
+	/**
+	 * Set a list of <code>UserPassword</code>s to this <code>User</code>.
+	 * 
+	 * @param passwords
+	 */
 	public void setPasswords(List<UserPassword> passwords) {
 		this.passwords = passwords;
 	}
@@ -201,5 +213,45 @@ public class User implements Serializable, IUser {
 	 */
 	public void setUserDetails(UserDetails userDetails) {
 		this.userDetails = userDetails;
+	}
+
+	/**
+	 * Is this <code>User</code> an user authenticated through an external
+	 * system?
+	 * 
+	 * @return - extern.
+	 */
+	public boolean isExtern() {
+		return extern;
+	}
+
+	/**
+	 * Set this <code>User</code> as user authenticated through an external
+	 * system.
+	 * 
+	 * @param extern -
+	 *            extern to set.
+	 */
+	public void setExtern(boolean extern) {
+		this.extern = extern;
+	}
+
+	/**
+	 * Get all <code>Preference</code>s of this <code>User</code>.
+	 * 
+	 * @return the preferences.
+	 */
+	public Set<Preference> getPreferences() {
+		return preferences;
+	}
+
+	/**
+	 * Set all <code>Preference</code>s of this <code>User</code>.
+	 * 
+	 * @param preferences -
+	 *            The preferences to set.
+	 */
+	public void setPreferences(Set<Preference> preferences) {
+		this.preferences = preferences;
 	}
 }

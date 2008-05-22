@@ -101,7 +101,7 @@ public class TransportUnitType implements Serializable, ITransportUnitType {
 	 * All <code>TransportUnit</code>s belonging to this type.
 	 */
 	@OneToMany(mappedBy = "transportUnitType")
-	private Set<ITransportUnit> transportUnits;
+	private Set<TransportUnit> transportUnits;
 
 	/**
 	 * Describes which other <code>TransportUnitType</code>s and how many of
@@ -264,7 +264,7 @@ public class TransportUnitType implements Serializable, ITransportUnitType {
 	 * 
 	 * @return
 	 */
-	public Set<ITransportUnit> getTransportUnits() {
+	public Set<TransportUnit> getTransportUnits() {
 		return this.transportUnits;
 	}
 
@@ -273,7 +273,7 @@ public class TransportUnitType implements Serializable, ITransportUnitType {
 	 * 
 	 * @param transportUnits
 	 */
-	public void setTransportUnits(Set<ITransportUnit> transportUnits) {
+	public void setTransportUnits(Set<TransportUnit> transportUnits) {
 		this.transportUnits = transportUnits;
 	}
 

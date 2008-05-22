@@ -45,7 +45,7 @@ public class UserPassword implements Serializable {
 	 * User assigned to this password.
 	 */
 	@ManyToOne
-	private IUser user;
+	private User user;
 
 	/**
 	 * Password.
