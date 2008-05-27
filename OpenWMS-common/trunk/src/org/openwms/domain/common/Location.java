@@ -37,7 +37,7 @@ import org.openwms.domain.common.system.Message;
  * @version $Revision$
  */
 @Entity
-@Table(name = "location")
+@Table(name = "LOCATION")
 public class Location implements Serializable, ILocation {
 
 	private static final long serialVersionUID = 1L;

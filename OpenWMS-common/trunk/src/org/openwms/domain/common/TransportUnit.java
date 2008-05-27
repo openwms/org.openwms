@@ -8,13 +8,15 @@ package org.openwms.domain.common;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
-import java.util.HashSet;
+import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -22,6 +24,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.OrderBy;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 import javax.persistence.Version;
@@ -107,7 +110,7 @@ public class TransportUnit implements Serializable {
 	 * The actual Location of the TransportUnit.
 	 */
 	@ManyToOne
-	@JoinColumn(name = "ACTUAL_LOCATION", insertable = false, updatable = false)
+	@JoinColumn(name = "ACTUAL_LOCATION", nullable = false)
 	private Location actualLocation;
 
 	/**
@@ -115,21 +118,21 @@ public class TransportUnit implements Serializable {
 	 * This property should be set when starting a new TransportOrder.
 	 */
 	@ManyToOne
-	@JoinColumn(name = "TARGET_LOCATION", insertable = false, updatable = false)
+	@JoinColumn(name = "TARGET_LOCATION", nullable = false)
 	private Location targetLocation;
 
 	/**
 	 * The <code>TransportUnitType</code> of this <code>TransportUnit</code>.
 	 */
 	@ManyToOne
-	@JoinColumn(name = "TRANSPORT_UNIT_TYPE")
+	@JoinColumn(name = "TRANSPORT_UNIT_TYPE", nullable = false)
 	private TransportUnitType transportUnitType;
 
 	/**
 	 * Owning <code>TransportUnit</code>.
 	 */
 	@ManyToOne
-	@JoinColumn(name = "PARENT_TRANSPORT_UNIT", nullable = false)
+	@JoinColumn(name = "PARENT")
 	private TransportUnit parent;
 
 	/**
@@ -143,8 +146,9 @@ public class TransportUnit implements Serializable {
 	/**
 	 * Child <code>TransportUnit</code>s.
 	 */
-	@OneToMany(mappedBy = "parent")
-	private Set<TransportUnit> transportUnits = new HashSet<TransportUnit>();
+	@OneToMany(mappedBy = "parent", cascade = { CascadeType.MERGE, CascadeType.PERSIST })
+	@OrderBy("unitId DESC")
+	private List<TransportUnit> children = new ArrayList<TransportUnit>();
 
 	/**
 	 * A set of occurred errors on this <code>TransportUnit</code>.
@@ -153,7 +157,10 @@ public class TransportUnit implements Serializable {
 	private Map<Date, UnitError> errors;
 
 	/* ----------------------------- methods ------------------- */
-	public TransportUnit() {
+	/**
+	 * Create a new <code>TransportUnit</code> with a unique unitId.
+	 */
+	public TransportUnit(String unitId) {
 		super();
 		this.creationDate = new Date();
 	}
@@ -183,7 +190,7 @@ public class TransportUnit implements Serializable {
 	 * @see org.openwms.domain.common.ITransportUnit#getTargetLocation()
 	 */
 	public Location getTargetLocation() {
-		return targetLocation;
+		return this.targetLocation;
 	}
 
 	/*
@@ -247,7 +254,7 @@ public class TransportUnit implements Serializable {
 	 * <code>TransportUnit</code>.
 	 */
 	public int getNoTransportUnits() {
-		return this.transportUnits.size();
+		return this.children.size();
 	}
 
 	/**
@@ -411,18 +418,62 @@ public class TransportUnit implements Serializable {
 	 * 
 	 * @return the transportUnits.
 	 */
-	public Set<TransportUnit> getTransportUnits() {
-		return transportUnits;
+	public List<TransportUnit> getChildren() {
+		return Collections.unmodifiableList(children);
 	}
 
 	/**
-	 * Set the transportUnits.
+	 * Add to children.
 	 * 
-	 * @param transportUnits
-	 *            The transportUnits to set.
+	 * @param transportUnit
 	 */
-	public void setTransportUnits(Set<TransportUnit> transportUnits) {
-		this.transportUnits = transportUnits;
+	public void addChild(TransportUnit transportUnit) {
+		if (transportUnit == null) {
+			throw new IllegalArgumentException("child transportUnit is null!");
+		}
+
+		if (transportUnit.getParent() != null) {
+			if (transportUnit.getParent().equals(this)) {
+				// if this instance is already the parent, we can just return
+				return;
+			} else {
+				// disconnect post from it's current relationship
+				transportUnit.getParent().children.remove(this);
+			}
+		}
+
+		// make this instance the new parent
+		transportUnit.setParent(this);
+		children.add(transportUnit);
+	}
+
+	/**
+	 * Remove from children.
+	 * 
+	 * @param transportUnit
+	 */
+	public void removeChild(TransportUnit transportUnit) {
+		if (transportUnit == null) {
+			throw new IllegalArgumentException("child transportUnit is null!");
+		}
+
+		// make sure we are the parent before we break the relationship
+		if (transportUnit.parent != null && transportUnit.getParent().equals(this)) {
+			transportUnit.setParent(null);
+			children.remove(transportUnit);
+		} else {
+			throw new IllegalArgumentException("child transportUnit not associated with this instance");
+		}
+	}
+
+	
+	/**
+	 * Set the actualLocationDate.
+	 * 
+	 * @param actualLocationDate The actualLocationDate to set.
+	 */
+	public void setActualLocationDate(Date actualLocationDate) {
+		this.actualLocationDate = actualLocationDate;
 	}
 
 	/**
