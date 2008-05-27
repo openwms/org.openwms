@@ -15,7 +15,7 @@ public interface ITransportUnit {
 	 * @param actualLocation
 	 *            The actualLocation to set.
 	 */
-	public abstract void setActualLocation(ILocation actualLocation);
+	public abstract void setActualLocation(Location actualLocation);
 
 	/**
 	 * Get the targetLocation.
@@ -30,7 +30,7 @@ public interface ITransportUnit {
 	 * @param targetLocation
 	 *            The targetLocation to set.
 	 */
-	public abstract void setTargetLocation(ILocation targetLocation);
+	public abstract void setTargetLocation(Location targetLocation);
 
 	/**
 	 * Get the id.

@@ -6,22 +6,10 @@
  */
 package org.openwms.domain.common;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-
-import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityTransaction;
-import javax.persistence.Persistence;
 import javax.persistence.PersistenceException;
 
-import junit.framework.TestCase;
-
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 import org.hibernate.NonUniqueObjectException;
-import org.junit.After;
-import org.junit.Before;
 import org.junit.Test;
 
 /**
@@ -30,58 +18,7 @@ import org.junit.Test;
  * @author <a href="heiko.scherrer@gmx.de">Heiko Scherrer</a>
  * @version $Revision$
  */
-public class TransportUnitTypeTest extends TestCase {
-
-	private static final Log LOG = LogFactory.getLog(TransportUnitTypeTest.class);
-	private EntityManagerFactory emf;
-	private EntityManager em;
-	private Connection connection;
-
-	/**
-	 * FIXME Comment this
-	 * 
-	 * @throws java.lang.Exception
-	 */
-	@Before
-	public void setUp() throws Exception {
-		try {
-			LOG.info("Starting in-memory HSQL database for unit tests");
-			Class.forName("org.hsqldb.jdbcDriver");
-			connection = DriverManager.getConnection("jdbc:hsqldb:mem:openwms", "sa", "");
-		} catch (Exception ex) {
-			ex.printStackTrace();
-			fail("Exception during HSQL database startup.");
-		}
-		try {
-			LOG.info("Building JPA EntityManager for unit tests");
-			emf = Persistence.createEntityManagerFactory("OpenWMS-test-durable");
-			em = emf.createEntityManager();
-		} catch (Exception ex) {
-			ex.printStackTrace();
-			fail("Exception during JPA EntityManager instanciation.");
-		}
-	}
-
-	/**
-	 * FIXME Comment this
-	 * 
-	 * @throws java.lang.Exception
-	 */
-	@After
-	public void tearDown() throws Exception {
-		LOG.info("Shuting down Hibernate JPA layer.");
-		if (em != null) {
-			em.close();
-		}
-		if (emf != null) {
-			emf.close();
-		}
-		LOG.info("Stopping in-memory HSQL database.");
-		try {
-			connection.createStatement().execute("SHUTDOWN");
-		} catch (Exception ex) {
-		}
-	}
+public class TransportUnitTypeTest extends AbstractPDOTestCase {
 
 	/**
 	 * Test method for
@@ -101,10 +38,10 @@ public class TransportUnitTypeTest extends TestCase {
 			em.persist(transportUnitType2);
 			fail("Expecting exception when persisting existing entity with same identifier!");
 		} catch (PersistenceException pe) {
-			if (!(pe.getCause() instanceof NonUniqueObjectException)){
+			if (!(pe.getCause() instanceof NonUniqueObjectException)) {
 				fail("Unallowed exception when persisting existing entity with same identifier!");
 			}
-		} 		
+		}
 		entityTransaction.rollback();
 
 		TransportUnitType tt = em.find(TransportUnitType.class, "JU_TEST");
@@ -116,33 +53,6 @@ public class TransportUnitTypeTest extends TestCase {
 
 		tt = em.find(TransportUnitType.class, "JU_TEST");
 		assertNull("TransportUnitType should be REMOVED before", tt);
-	}
-
-	/**
-	 * Test method for
-	 * {@link org.openwms.domain.common.TransportUnitType#setTypePlacingRules(java.util.Set)}.
-	 */
-	@Test
-	public final void testSetTypePlacingRules() {
-		
-	}
-
-	/**
-	 * Test method for
-	 * {@link org.openwms.domain.common.TransportUnitType#getTypeStackingRules()}.
-	 */
-	@Test
-	public final void testGetTypeStackingRules() {
-		fail("Not yet implemented"); // TODO
-	}
-
-	/**
-	 * Test method for
-	 * {@link org.openwms.domain.common.TransportUnitType#setTypeStackingRules(java.util.Set)}.
-	 */
-	@Test
-	public final void testSetTypeStackingRules() {
-		fail("Not yet implemented"); // TODO
 	}
 
 }
