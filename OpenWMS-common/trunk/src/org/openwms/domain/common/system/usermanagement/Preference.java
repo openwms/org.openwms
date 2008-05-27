@@ -51,7 +51,7 @@ public class Preference implements Serializable, IPreference {
 	 * UserPreference.
 	 */
 	@ManyToOne
-	@JoinColumn(name = "USER")
+	@JoinColumn(name = "USER_ID")
 	private User user;
 
 	@Column(name = "KEY")

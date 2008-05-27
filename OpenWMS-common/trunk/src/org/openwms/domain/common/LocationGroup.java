@@ -114,7 +114,7 @@ public class LocationGroup implements Serializable, ILocationGroup {
 	 * Parent <code>LocationGroup</code>.
 	 */
 	@Column(name = "PARENT")
-	private LocationGroup parent;
+	private long parent;
 
 	/**
 	 * Child <code>LocationGroup</code>s.
@@ -218,7 +218,7 @@ public class LocationGroup implements Serializable, ILocationGroup {
 	 * 
 	 * @return parent LocationGroup.
 	 */
-	public LocationGroup getParent() {
+	public long getParent() {
 		return this.parent;
 	}
 
@@ -227,7 +227,7 @@ public class LocationGroup implements Serializable, ILocationGroup {
 	 * 
 	 * @param parent
 	 */
-	public void setParent(LocationGroup parent) {
+	public void setParent(long parent) {
 		this.parent = parent;
 	}
 
