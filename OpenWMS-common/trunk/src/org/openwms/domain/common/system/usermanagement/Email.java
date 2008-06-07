@@ -8,7 +8,10 @@ package org.openwms.domain.common.system.usermanagement;
 
 import java.io.Serializable;
 
-import javax.persistence.Embeddable;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.Version;
 
 /**
  * 
@@ -17,24 +20,45 @@ import javax.persistence.Embeddable;
  * @author <a href="heiko.scherrer@gmx.de">Heiko Scherrer</a>
  * @version $Revision$
  */
-@Embeddable
+@Entity
 public class Email implements Serializable {
 	private static final long serialVersionUID = 1L;
 
+	/**
+	 * Primary Key.
+	 */
+	@Id
+	@GeneratedValue
+	private long id;
 	/**
 	 * Email Address.
 	 */
 	@org.hibernate.validator.Email
 	private String emailAddress;
-	
+
 	/**
 	 * Fullname belonging to this <code>Email</code>.
 	 */
 	private String fullName;
 
+	/**
+	 * Hibernate Version field.
+	 */
+	@Version
+	private long version;
+
 	/* ----------------------------- methods ------------------- */
 	public Email(String emailAddress) {
 		this.emailAddress = emailAddress;
+	}
+
+	/**
+	 * Get the Primary Key.
+	 * 
+	 * @return
+	 */
+	public long getId() {
+		return id;
 	}
 
 	/**
@@ -49,7 +73,8 @@ public class Email implements Serializable {
 	/**
 	 * Set the emailAddress.
 	 * 
-	 * @param emailAddress The emailAddress to set.
+	 * @param emailAddress
+	 *            The emailAddress to set.
 	 */
 	public void setEmailAddress(String emailAddress) {
 		this.emailAddress = emailAddress;
@@ -67,11 +92,19 @@ public class Email implements Serializable {
 	/**
 	 * Set the fullName.
 	 * 
-	 * @param fullName The fullName to set.
+	 * @param fullName
+	 *            The fullName to set.
 	 */
 	public void setFullName(String fullName) {
 		this.fullName = fullName;
 	}
-	
-	
+
+	/**
+	 * Returns Hibernate version field.
+	 * 
+	 * @return
+	 */
+	public long getVersion() {
+		return version;
+	}
 }

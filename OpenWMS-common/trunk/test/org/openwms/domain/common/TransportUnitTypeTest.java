@@ -18,11 +18,10 @@ import org.junit.Test;
  * @author <a href="heiko.scherrer@gmx.de">Heiko Scherrer</a>
  * @version $Revision$
  */
-public class TransportUnitTypeTest extends AbstractPDOTestCase {
+public final class TransportUnitTypeTest extends AbstractPDOTestCase {
 
 	/**
-	 * Test method for
-	 * {@link org.openwms.domain.common.TransportUnitType#TransportUnitType(java.lang.String)}.
+	 * Test unique constraint on type.
 	 */
 	@Test
 	public final void testTransportUnitType() {
@@ -53,6 +52,34 @@ public class TransportUnitTypeTest extends AbstractPDOTestCase {
 
 		tt = em.find(TransportUnitType.class, "JU_TEST");
 		assertNull("TransportUnitType should be REMOVED before", tt);
+	}
+	
+	@Test
+	public final void testCascadingTypePlacingRule() {
+		EntityTransaction entityTransaction = em.getTransaction();
+		TransportUnitType transportUnitType = new TransportUnitType("JU_TEST");
+		LocationType locationType = new LocationType("JU_LOC_TYPE");
+		TypePlacingRule typePlacingRule = new TypePlacingRule(1, locationType);
+		
+		transportUnitType.addTypePlacingRule(typePlacingRule);
+
+		entityTransaction.begin();
+		em.persist(locationType);
+		entityTransaction.commit();
+		entityTransaction.begin();
+		em.persist(transportUnitType);	
+		entityTransaction.commit();
+
+		TypePlacingRule tpr = em.find(TypePlacingRule.class, new Long(1));
+		assertNotNull("TypePlacingRule should be cascaded SAVED before", tpr);
+
+		entityTransaction.begin();
+		em.remove(transportUnitType);
+		entityTransaction.commit();
+
+		transportUnitType = em.find(TransportUnitType.class, "JU_TEST");
+		assertNull("TransportUnitType should be REMOVED before", transportUnitType);
+		
 	}
 
 }

@@ -12,9 +12,8 @@ import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
-import javax.persistence.Embedded;
+import javax.persistence.OneToMany;
 
-import org.hibernate.validator.Email;
 
 /**
  * All minor details of an <code>User</code>.
@@ -24,7 +23,7 @@ import org.hibernate.validator.Email;
  * 
  */
 @Embeddable
-public class UserDetails implements Serializable{
+public class UserDetails implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	/**
@@ -42,9 +41,8 @@ public class UserDetails implements Serializable{
 	/**
 	 * Email address assigned to the <code>User</code> entity.
 	 */
-	@Column(name = "EMAIL")
-	@Embedded
-	private List<Email> emails;
+	@OneToMany(mappedBy = "id")
+	private List<Email> emails = new ArrayList<Email>();
 
 	/**
 	 * Phone number assigned to the <code>User</code> entity.

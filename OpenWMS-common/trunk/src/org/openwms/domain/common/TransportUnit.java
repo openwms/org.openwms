@@ -140,7 +140,7 @@ public class TransportUnit implements Serializable {
 	 * <code>TransportUnit</code>.
 	 */
 	@ManyToOne
-	@JoinColumn(name = "USERNAME")
+	@JoinColumn(name = "INVENTORY_USER")
 	private User inventoryUser;
 
 	/**
@@ -157,6 +157,12 @@ public class TransportUnit implements Serializable {
 	private Map<Date, UnitError> errors;
 
 	/* ----------------------------- methods ------------------- */
+	/**
+	 * Accessed by persistence provider.
+	 */
+	@SuppressWarnings("unused")
+	private TransportUnit(){}
+	
 	/**
 	 * Create a new <code>TransportUnit</code> with a unique unitId.
 	 */

@@ -8,8 +8,10 @@ package org.openwms.domain.common;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.util.HashSet;
 import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -100,23 +102,26 @@ public class TransportUnitType implements Serializable, ITransportUnitType {
 	 * All <code>TransportUnit</code>s belonging to this type.
 	 */
 	@OneToMany(mappedBy = "transportUnitType")
-	private Set<TransportUnit> transportUnits;
+	private Set<TransportUnit> transportUnits = new HashSet<TransportUnit>();
 
 	/**
 	 * Describes which other <code>TransportUnitType</code>s and how many of
 	 * that type may be stacked on this <code>TransportUnitType</code>.
 	 */
-	@OneToMany(mappedBy = "transportUnitType")
-	private Set<TypeStackingRule> typeStackingRules;
+	@OneToMany(mappedBy = "transportUnitType", cascade = { CascadeType.PERSIST, CascadeType.MERGE})
+	private Set<TypeStackingRule> typeStackingRules = new HashSet<TypeStackingRule>();
 
 	/**
 	 * A Set of <code>TypePlacingRule</code>s to describe all possible
 	 * <code>LocationType</code>s for this <code>TransportUnitType</code>.
 	 */
-	@OneToMany(mappedBy = "transportUnitType")
-	private Set<TypePlacingRule> typePlacingRules;
+	@OneToMany(mappedBy = "transportUnitType", cascade = { CascadeType.PERSIST, CascadeType.MERGE})
+	private Set<TypePlacingRule> typePlacingRules = new HashSet<TypePlacingRule>();
 
 	/* ----------------------------- methods ------------------- */
+	/**
+	 * Accessed by persistence provider.
+	 */
 	@SuppressWarnings("unused")
 	private TransportUnitType() {
 		super();
@@ -274,6 +279,13 @@ public class TransportUnitType implements Serializable, ITransportUnitType {
 	 */
 	public void setTransportUnits(Set<TransportUnit> transportUnits) {
 		this.transportUnits = transportUnits;
+	}
+	
+	public void addTypePlacingRule(TypePlacingRule typePlacingRule){
+		if (typePlacingRule == null) {
+			return;
+		}
+		this.typePlacingRules.add(typePlacingRule);
 	}
 
 	/**

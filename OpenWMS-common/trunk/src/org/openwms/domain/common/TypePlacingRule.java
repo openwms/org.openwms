@@ -59,7 +59,7 @@ public class TypePlacingRule implements Serializable {
 	 * <code>LocationType</code> the privilegeLevel must be set to -1.
 	 */
 	@Column(name = "PRIVILEGE_LEVEL", nullable = false)
-	private short privilegeLevel = 0;
+	private int privilegeLevel = 0;
 
 	/**
 	 * The allowed <code>LocationType</code> on which the owning
@@ -69,7 +69,7 @@ public class TypePlacingRule implements Serializable {
 	private LocationType allowedLocationType;
 
 	/* ----------------------------- methods ------------------- */
-	public TypePlacingRule(short privilegeLevel, LocationType allowedLocationType) {
+	public TypePlacingRule(int privilegeLevel, LocationType allowedLocationType) {
 		super();
 		this.privilegeLevel = privilegeLevel;
 		this.allowedLocationType = allowedLocationType;
@@ -103,7 +103,7 @@ public class TypePlacingRule implements Serializable {
 	 * 
 	 * @return the privilegeLevel.
 	 */
-	public short getPrivilegeLevel() {
+	public int getPrivilegeLevel() {
 		return privilegeLevel;
 	}
 
