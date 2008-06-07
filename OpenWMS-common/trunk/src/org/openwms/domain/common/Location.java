@@ -203,6 +203,12 @@ public class Location implements Serializable, ILocation {
 	private List<Message> messages;
 
 	/* ----------------------------- methods ------------------- */
+	/**
+	 * Accessed by persistence provider.
+	 */
+	@SuppressWarnings("unused")
+	private Location(){}
+	
 	public Location(LocationPK locationId) {
 		super();
 		this.locationId = locationId;
