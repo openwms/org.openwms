@@ -36,8 +36,6 @@
 	<classpathentry kind="lib" path="lib/log4j-1.2.11.jar"/>
 	<classpathentry kind="lib" path="lib/lucene-analyzers-2.1.0.jar"/>
 	<classpathentry kind="lib" path="lib/lucene-core-2.1.0.jar"/>
-	<classpathentry kind="lib" path="lib/mysql-connector-java-5.0.6-bin.jar"/>
-	<classpathentry kind="lib" path="lib/oracle_jdbc.jar"/>
 	<classpathentry kind="lib" path="lib/junit-4.4.jar"/>
 	<classpathentry kind="output" path="build/classes"/>
 </classpath>
