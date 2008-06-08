@@ -16,8 +16,7 @@ import javax.persistence.Table;
 
 /**
  * 
- * A Message.
- * Predefined messages.
+ * A Message. Predefined messages.
  * 
  * @author <a href="heiko.scherrer@gmx.de">Heiko Scherrer</a>
  * @version $Revision$
@@ -33,6 +32,12 @@ public class Message implements IMessage {
 	@Column(name = "ID")
 	@GeneratedValue
 	private long id;
+
+	/**
+	 * Parent <code>Location</code>.
+	 */
+	@Column(name = "LOCATION_ID")
+	private long locationId;
 
 	/**
 	 * Message number.
@@ -53,13 +58,19 @@ public class Message implements IMessage {
 	private Date created;
 
 	/**
+	 * Accessed by persistence provider.
+	 */
+	@SuppressWarnings("unused")
+	private Message() {
+	}
+
+	/**
 	 * Create a new Message.
 	 * 
 	 * @param messageNo
 	 * @param messageText
 	 */
 	public Message(int messageNo, String messageText) {
-		super();
 		this.messageNo = messageNo;
 		this.messageText = messageText;
 		this.created = new Date();

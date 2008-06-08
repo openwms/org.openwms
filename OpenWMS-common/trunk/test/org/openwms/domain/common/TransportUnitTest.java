@@ -167,7 +167,7 @@ public class TransportUnitTest extends AbstractPDOTestCase {
 	}
 
 	@Test
-	public void testTUwithErrors(){
+	public void testTUwithErrors() {
 		TransportUnit transportUnit = new TransportUnit("TEST_TU");
 		TransportUnitType transportUnitType = new TransportUnitType("KNOWN_TUT");
 		LocationPK unknownLocationPk = new LocationPK("KNOWN", "KNOWN", "KNOWN", "KNOWN", "KNOWN");
@@ -181,7 +181,7 @@ public class TransportUnitTest extends AbstractPDOTestCase {
 		transportUnit.setTransportUnitType(transportUnitType);
 		transportUnit.setActualLocation(location);
 		transportUnit.setTargetLocation(location);
-		
+
 		UnitError error = new UnitError();
 		try {
 			entityTransaction.begin();
@@ -189,6 +189,6 @@ public class TransportUnitTest extends AbstractPDOTestCase {
 			entityTransaction.commit();
 		} catch (Exception pe) {
 			fail("Persist with well known Location and TransportUnitType fails.");
-		}		
+		}
 	}
 }

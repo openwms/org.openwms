@@ -123,17 +123,14 @@ public class TransportUnitType implements Serializable, ITransportUnitType {
 	 * Accessed by persistence provider.
 	 */
 	@SuppressWarnings("unused")
-	private TransportUnitType() {
-		super();
-	}
+	private TransportUnitType() { }
 
 	/**
-	 * Create a new TransportUnitType.
+	 * Create a new <code>TransportUnitType</code>.
 	 * 
 	 * @param type
 	 */
 	public TransportUnitType(String type) {
-		super();
 		this.type = type;
 	}
 

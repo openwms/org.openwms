@@ -15,8 +15,8 @@ import junit.framework.TestCase;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.junit.After;
-import org.junit.Before;
+import org.junit.AfterClass;
+import org.junit.BeforeClass;
 
 /**
  * A AbstractPDOTestCase.
@@ -37,7 +37,7 @@ public abstract class AbstractPDOTestCase extends TestCase {
 	 * 
 	 * @throws java.lang.Exception
 	 */
-	@Before
+	@BeforeClass
 	public void setUp() {
 		try {
 			if (!running) {
@@ -64,7 +64,7 @@ public abstract class AbstractPDOTestCase extends TestCase {
 	 * 
 	 * @throws java.lang.Exception
 	 */
-	@After
+	@AfterClass
 	public void tearDown() {
 		LOG.info("Shuting down Hibernate JPA layer.");
 		if (em != null) {

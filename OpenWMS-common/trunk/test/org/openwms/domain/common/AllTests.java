@@ -21,6 +21,7 @@ public class AllTests {
 		// $JUnit-BEGIN$
 		suite.addTestSuite(TransportUnitTypeTest.class);
 		suite.addTestSuite(TransportUnitTest.class);
+		suite.addTestSuite(LocationTest.class);
 
 		// $JUnit-END$
 		TestHelper.stopDb();

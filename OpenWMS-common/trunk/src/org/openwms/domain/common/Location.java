@@ -8,19 +8,21 @@ package org.openwms.domain.common;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
-import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.UniqueConstraint;
 import javax.persistence.Version;
 
 import org.openwms.domain.common.system.Message;
@@ -37,16 +39,21 @@ import org.openwms.domain.common.system.Message;
  * @version $Revision$
  */
 @Entity
-@Table(name = "LOCATION")
+@Table(name = "LOCATION", uniqueConstraints = @UniqueConstraint(columnNames = { "AREA", "AISLE", "X", "Y", "Z" }))
 public class Location implements Serializable, ILocation {
 
 	private static final long serialVersionUID = 1L;
 
+	/**
+	 * Primary key.
+	 */
 	@Id
 	@Column(name = "ID")
-	@GeneratedValue
 	private long id;
 
+	/**
+	 * Unique key.
+	 */
 	@Embedded
 	private LocationPK locationId;
 
@@ -199,18 +206,24 @@ public class Location implements Serializable, ILocation {
 	/**
 	 * Stores a <code>Message</code> for this <code>Location</code>.
 	 */
-	@OneToMany(mappedBy = "id")
-	private List<Message> messages;
+	@OneToMany(mappedBy = "locationId", cascade = { CascadeType.ALL })
+	private Set<Message> messages = new HashSet<Message>();
 
 	/* ----------------------------- methods ------------------- */
 	/**
 	 * Accessed by persistence provider.
 	 */
 	@SuppressWarnings("unused")
-	private Location(){}
-	
+	private Location() {
+	}
+
+	/**
+	 * 
+	 * Create a new <code>Location</code>.
+	 * 
+	 * @param locationId
+	 */
 	public Location(LocationPK locationId) {
-		super();
 		this.locationId = locationId;
 	}
 
@@ -270,19 +283,22 @@ public class Location implements Serializable, ILocation {
 		this.countingActive = countingActive;
 	}
 
-	public List<Message> getMessages() {
-		return this.messages;
+	public Set<Message> getMessages() {
+		return Collections.unmodifiableSet(messages);
 	}
 
-	public void setMessages(List<Message> messages) {
-		this.messages = messages;
-	}
-
-	public void addMessage(Message message) {
-		if (this.messages == null) {
-			this.messages = new ArrayList<Message>();
+	public boolean removeMessage(Message message) {
+		if (message == null) {
+			throw new IllegalArgumentException("Message may not be null!");
 		}
-		messages.add(message);
+		return this.messages.remove(message);
+	}
+
+	public boolean addMessage(Message message) {
+		if (message == null) {
+			throw new IllegalArgumentException("Message may not be null!");
+		}
+		return this.messages.add(message);
 	}
 
 	public boolean isOutgoingActive() {

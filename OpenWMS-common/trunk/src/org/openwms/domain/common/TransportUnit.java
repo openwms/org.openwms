@@ -8,13 +8,13 @@ package org.openwms.domain.common;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
-import java.util.List;
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -43,7 +43,7 @@ import org.openwms.domain.common.system.usermanagement.User;
  * @version $Revision$
  */
 @Entity
-@Table(name = "TRANSPORT_UNIT", uniqueConstraints = @UniqueConstraint(columnNames = ("UNIT_ID")))
+@Table(name = "TRANSPORT_UNIT", uniqueConstraints = @UniqueConstraint(columnNames = { "UNIT_ID" }))
 public class TransportUnit implements Serializable {
 
 	private static final long serialVersionUID = 1L;
@@ -148,26 +148,26 @@ public class TransportUnit implements Serializable {
 	 */
 	@OneToMany(mappedBy = "parent", cascade = { CascadeType.MERGE, CascadeType.PERSIST })
 	@OrderBy("unitId DESC")
-	private List<TransportUnit> children = new ArrayList<TransportUnit>();
+	private Set<TransportUnit> children = new HashSet<TransportUnit>();
 
 	/**
 	 * A set of occurred errors on this <code>TransportUnit</code>.
 	 */
 	@OneToMany(mappedBy = "id")
-	private Map<Date, UnitError> errors;
+	private Map<Date, UnitError> errors = new HashMap<Date, UnitError>();
 
 	/* ----------------------------- methods ------------------- */
 	/**
 	 * Accessed by persistence provider.
 	 */
 	@SuppressWarnings("unused")
-	private TransportUnit(){}
-	
+	private TransportUnit() {
+	}
+
 	/**
 	 * Create a new <code>TransportUnit</code> with a unique unitId.
 	 */
 	public TransportUnit(String unitId) {
-		super();
 		this.creationDate = new Date();
 	}
 
@@ -424,8 +424,8 @@ public class TransportUnit implements Serializable {
 	 * 
 	 * @return the transportUnits.
 	 */
-	public List<TransportUnit> getChildren() {
-		return Collections.unmodifiableList(children);
+	public Set<TransportUnit> getChildren() {
+		return Collections.unmodifiableSet(children);
 	}
 
 	/**
@@ -435,7 +435,7 @@ public class TransportUnit implements Serializable {
 	 */
 	public void addChild(TransportUnit transportUnit) {
 		if (transportUnit == null) {
-			throw new IllegalArgumentException("child transportUnit is null!");
+			throw new IllegalArgumentException("Child transportUnit is null!");
 		}
 
 		if (transportUnit.getParent() != null) {
@@ -460,7 +460,7 @@ public class TransportUnit implements Serializable {
 	 */
 	public void removeChild(TransportUnit transportUnit) {
 		if (transportUnit == null) {
-			throw new IllegalArgumentException("child transportUnit is null!");
+			throw new IllegalArgumentException("Child transportUnit is null!");
 		}
 
 		// make sure we are the parent before we break the relationship
@@ -468,15 +468,15 @@ public class TransportUnit implements Serializable {
 			transportUnit.setParent(null);
 			children.remove(transportUnit);
 		} else {
-			throw new IllegalArgumentException("child transportUnit not associated with this instance");
+			throw new IllegalArgumentException("Child transportUnit not associated with this instance");
 		}
 	}
 
-	
 	/**
 	 * Set the actualLocationDate.
 	 * 
-	 * @param actualLocationDate The actualLocationDate to set.
+	 * @param actualLocationDate
+	 *            The actualLocationDate to set.
 	 */
 	public void setActualLocationDate(Date actualLocationDate) {
 		this.actualLocationDate = actualLocationDate;

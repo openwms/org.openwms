@@ -15,6 +15,7 @@ package org.openwms.domain.common;
  * @version $Revision$
  */
 import java.io.Serializable;
+import java.util.Collections;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
@@ -274,7 +275,7 @@ public class LocationGroup implements Serializable, ILocationGroup {
 	 * @return child LocationGroups.
 	 */
 	public Set<LocationGroup> getLocationGroups() {
-		return this.locationGroups;
+		return Collections.unmodifiableSet(locationGroups);
 	}
 
 	/**
@@ -296,7 +297,7 @@ public class LocationGroup implements Serializable, ILocationGroup {
 	 */
 	public boolean removeLocationGroup(LocationGroup locationGroup) {
 		if (locationGroup == null) {
-			return false;
+			throw new IllegalArgumentException("Child locationGroup is null!");
 		}
 		return this.locationGroups.remove(locationGroup);
 	}
@@ -307,16 +308,31 @@ public class LocationGroup implements Serializable, ILocationGroup {
 	 * @return all Locations.
 	 */
 	public Set<Location> getLocations() {
-		return this.locations;
+		return Collections.unmodifiableSet(locations);
 	}
 
 	/**
-	 * Set all locations.
+	 * Add a <code>Location</code> as child.
 	 * 
-	 * @param locations
+	 * @param location
 	 */
-	public void setLocations(Set<Location> locations) {
-		this.locations = locations;
+	public boolean addLocation(Location location) {
+		if (location == null) {
+			return false;
+		}
+		return locations.add(location);
+	}
+
+	/**
+	 * Remove a <code>Location</code> from children.
+	 * 
+	 * @param location
+	 */
+	public boolean removeLocation(Location location) {
+		if (location == null) {
+			throw new IllegalArgumentException("Child location is null!");
+		}
+		return locations.remove(location);
 	}
 
 	/**

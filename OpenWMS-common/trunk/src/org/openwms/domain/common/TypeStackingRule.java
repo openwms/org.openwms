@@ -33,8 +33,7 @@ import javax.persistence.UniqueConstraint;
  * @version $Revision$
  */
 @Entity
-@Table(name = "TYPE_STACKING_RULE", uniqueConstraints = @UniqueConstraint(columnNames = { "TRANSPORT_UNIT_TYPE",
-		"NO_TRANSPORT_UNITS", "ALLOWED_TRANSPORT_UNIT_TYPE" }))
+@Table(name = "TYPE_STACKING_RULE", uniqueConstraints = @UniqueConstraint(columnNames = { "TRANSPORT_UNIT_TYPE", "NO_TRANSPORT_UNITS", "ALLOWED_TRANSPORT_UNIT_TYPE" }))
 public class TypeStackingRule implements Serializable {
 	private static final long serialVersionUID = 1L;
 
@@ -68,6 +67,14 @@ public class TypeStackingRule implements Serializable {
 	private TransportUnitType allowedTransportUnitType;
 
 	/* ----------------------------- methods ------------------- */
+	/**
+	 * Create a new <code>TypeStackingRule</code>. Define how many
+	 * <code>TransportUnit</code>s of the allowedTransportUnitType may
+	 * stacked on this <code>TransportUnitType</code>.
+	 * 
+	 * @param noTransportUnits
+	 * @param allowedTransportUnitType
+	 */
 	public TypeStackingRule(short noTransportUnits, TransportUnitType allowedTransportUnitType) {
 		this.noTransportUnits = noTransportUnits;
 		this.allowedTransportUnitType = allowedTransportUnitType;
