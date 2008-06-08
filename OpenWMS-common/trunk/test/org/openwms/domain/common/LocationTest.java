@@ -82,17 +82,18 @@ public class LocationTest extends AbstractPDOTestCase {
 		em.merge(location2);
 		entityTransaction.commit();
 
-		Query query = em.createQuery("select count(m) from Message m where m.locationId = :locationId");
-		query.setParameter("locationId", id);
-		Long cnt = (Long) query.getSingleResult();
-		assertEquals("Expected 2 persisted Messages", 2, cnt.intValue());
+		location2 = em.find(Location.class, id);
+		
+		assertEquals("Expected 2 persisted Messages", 2, location2.getMessages().size());
 
 		entityTransaction.begin();
 		em.remove(location2);
 		entityTransaction.commit();
+		
+		Query query = em.createQuery("select count(m) from Message m");
+		Long cnt = (Long) query.getSingleResult();
 		cnt = (Long) query.getSingleResult();
 		assertEquals("Expected 0 persisted Messages", 0, cnt.intValue());
-		
 		
 		LOG.debug("Test closed.");
 
