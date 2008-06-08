@@ -78,6 +78,5 @@ public class RoleTest extends AbstractPDOTestCase {
 		query.setParameter("username", "KNOWN_USER");
 		cnt = (Long) query.getSingleResult();
 		assertEquals("User may not be removed", 1, cnt.intValue());
-
 	}
 }
