@@ -9,12 +9,15 @@ package org.openwms.domain.common.system.usermanagement;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
@@ -37,12 +40,13 @@ public class User implements Serializable, IUser {
 	 */
 	@Id
 	@Column(name = "ID")
+	@GeneratedValue
 	private long id;
 
 	/**
 	 * Unique identifier of the <code>User</code>.
 	 */
-	@Column(name = "USERNAME")
+	@Column(name = "USERNAME", unique = true)
 	private String username;
 
 	/**
@@ -110,14 +114,21 @@ public class User implements Serializable, IUser {
 	/**
 	 * All <code>Preference</code>s of this <code>User</code>.
 	 */
-	@OneToMany(mappedBy = "user")
-	private Set<Preference> preferences;
+	@OneToMany(cascade = CascadeType.ALL)
+	private Set<Preference> preferences = new HashSet<Preference>();
 
 	/* ----------------------------- methods ------------------- */
-	public User() {
-		super();
+	/**
+	 * Accessed by persistence provider.
+	 */
+	@SuppressWarnings("unused")
+	private User() {
 	}
-	
+
+	public User(String username) {
+		this.username = username;
+	}
+
 	/**
 	 * Get the id.
 	 * 

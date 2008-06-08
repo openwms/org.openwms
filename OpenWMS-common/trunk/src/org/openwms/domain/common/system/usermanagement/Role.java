@@ -7,11 +7,14 @@
 package org.openwms.domain.common.system.usermanagement;
 
 import java.io.Serializable;
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
@@ -41,7 +44,14 @@ public class Role implements Serializable, IRole {
 	 */
 	@Id
 	@Column(name = "ID")
-	private String id;
+	@GeneratedValue
+	private long id;
+
+	/**
+	 * Name of the <code>Role</code>.
+	 */
+	@Column(name = "ROLENAME", unique = true)
+	private String rolename;
 
 	/**
 	 * <code>Role</code> description
@@ -59,21 +69,44 @@ public class Role implements Serializable, IRole {
 	/**
 	 * All <code>User</code>s belonging to this <code>Role</code>
 	 */
-	@ManyToMany
+	@ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
 	@JoinTable(name = "ROLE_USER", joinColumns = @JoinColumn(name = "ROLE_ID"), inverseJoinColumns = @JoinColumn(name = "USER_ID"))
 	private Set<User> users = new HashSet<User>();
 
 	/**
 	 * All <code>Preference</code>s linked to this <code>Role</code>
 	 */
-	@ManyToMany
+	@ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
 	@JoinTable(name = "ROLE_PREFERENCE", joinColumns = @JoinColumn(name = "ROLE_ID"), inverseJoinColumns = @JoinColumn(name = "PREFERENCE_ID"))
 	private Set<Preference> preferences = new HashSet<Preference>();
 
 	/* ----------------------------- methods ------------------- */
-	public Role(String id) {
-		super();
-		this.id = id;
+	/**
+	 * Accessed by persistence provider.
+	 */
+	@SuppressWarnings("unused")
+	private Role(){}
+	
+	/**
+	 * 
+	 * Create a new Role.
+	 * 
+	 * @param rolename
+	 */
+	public Role(String rolename) {
+		this.rolename = rolename;
+	}
+
+	/**
+	 * 
+	 * Create a new Role.
+	 * 
+	 * @param rolename
+	 * @param description
+	 */
+	public Role(String rolename, String description) {
+		this.rolename = rolename;
+		this.description = description;
 	}
 
 	/**
@@ -81,8 +114,17 @@ public class Role implements Serializable, IRole {
 	 * 
 	 * @return
 	 */
-	public String getId() {
+	public long getId() {
 		return this.id;
+	}
+
+	/**
+	 * Get the rolename.
+	 * 
+	 * @return the rolename.
+	 */
+	public String getRolename() {
+		return rolename;
 	}
 
 	/**
@@ -91,7 +133,7 @@ public class Role implements Serializable, IRole {
 	 * @return
 	 */
 	public String getDescription() {
-		return this.description;
+		return description;
 	}
 
 	/**
@@ -109,7 +151,14 @@ public class Role implements Serializable, IRole {
 	 * @return
 	 */
 	public Set<User> getUsers() {
-		return users;
+		return Collections.unmodifiableSet(users);
+	}
+	
+	public boolean addUser(User user){
+		if (user == null) {
+			throw new IllegalArgumentException("User cannot be null.");
+		}
+		return this.users.add(user);
 	}
 
 	/**
@@ -118,6 +167,9 @@ public class Role implements Serializable, IRole {
 	 * @param users
 	 */
 	public void setUsers(Set<User> users) {
+		if (users == null) {
+			throw new IllegalArgumentException("Users cannot be null.");
+		}
 		this.users = users;
 	}
 
@@ -145,6 +197,6 @@ public class Role implements Serializable, IRole {
 	 * @return
 	 */
 	public long getVersion() {
-		return this.version;
+		return version;
 	}
 }
