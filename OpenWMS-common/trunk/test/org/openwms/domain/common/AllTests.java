@@ -6,10 +6,11 @@
  */
 package org.openwms.domain.common;
 
-import org.apache.log4j.xml.DOMConfigurator;
-
 import junit.framework.Test;
 import junit.framework.TestSuite;
+
+import org.apache.log4j.xml.DOMConfigurator;
+import org.openwms.domain.common.system.usermanagement.RoleTest;
 
 public class AllTests {
 
@@ -22,6 +23,7 @@ public class AllTests {
 		suite.addTestSuite(TransportUnitTypeTest.class);
 		suite.addTestSuite(TransportUnitTest.class);
 		suite.addTestSuite(LocationTest.class);
+		suite.addTestSuite(RoleTest.class);
 
 		// $JUnit-END$
 		TestHelper.stopDb();
