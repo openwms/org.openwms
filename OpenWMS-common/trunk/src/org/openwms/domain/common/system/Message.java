@@ -34,12 +34,6 @@ public class Message implements IMessage {
 	private long id;
 
 	/**
-	 * Parent <code>Location</code>.
-	 */
-	@Column(name = "LOCATION_ID")
-	private long locationId;
-
-	/**
 	 * Message number.
 	 */
 	@Column(name = "MESSAGE_NO")

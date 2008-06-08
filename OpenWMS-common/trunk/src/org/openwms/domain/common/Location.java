@@ -206,7 +206,7 @@ public class Location implements Serializable, ILocation {
 	/**
 	 * Stores a <code>Message</code> for this <code>Location</code>.
 	 */
-	@OneToMany(mappedBy = "locationId", cascade = { CascadeType.ALL })
+	@OneToMany(cascade = { CascadeType.ALL })
 	private Set<Message> messages = new HashSet<Message>();
 
 	/* ----------------------------- methods ------------------- */

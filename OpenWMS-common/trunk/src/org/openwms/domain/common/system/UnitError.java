@@ -8,6 +8,7 @@ package org.openwms.domain.common.system;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
@@ -29,6 +30,7 @@ public class UnitError implements IUnitError {
 	 */
 	@Id
 	@Column(name = "ID")
+	@GeneratedValue
 	private long id;
 
 	/**

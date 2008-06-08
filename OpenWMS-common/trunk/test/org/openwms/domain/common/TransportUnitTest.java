@@ -8,6 +8,7 @@ package org.openwms.domain.common;
 
 import javax.persistence.EntityTransaction;
 import javax.persistence.PersistenceException;
+import javax.persistence.Query;
 
 import org.junit.Test;
 import org.openwms.domain.common.system.UnitError;
@@ -182,7 +183,13 @@ public class TransportUnitTest extends AbstractPDOTestCase {
 		transportUnit.setActualLocation(location);
 		transportUnit.setTargetLocation(location);
 
-		UnitError error = new UnitError();
+		transportUnit.addError(new UnitError());
+		try {
+			Thread.sleep(100);
+		} catch (InterruptedException e) {
+			LOG.error("Error", e);
+		}
+		transportUnit.addError(new UnitError());
 		try {
 			entityTransaction.begin();
 			em.persist(transportUnit);
@@ -190,5 +197,16 @@ public class TransportUnitTest extends AbstractPDOTestCase {
 		} catch (Exception pe) {
 			fail("Persist with well known Location and TransportUnitType fails.");
 		}
+		Query query = em.createQuery("select count(ue) from UnitError ue");
+		Long cnt = (Long) query.getSingleResult();
+		assertEquals("Expected 2 persisted UnitErrors", 2, cnt.intValue());
+
+		entityTransaction.begin();
+		em.remove(transportUnit);
+		entityTransaction.commit();
+
+		cnt = (Long) query.getSingleResult();
+		assertEquals("Expected 0 persisted UnitErrors", 0, cnt.intValue());
+
 	}
 }

@@ -8,7 +8,6 @@ package org.openwms.domain.common;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
@@ -153,7 +152,7 @@ public class TransportUnit implements Serializable {
 	/**
 	 * A set of occurred errors on this <code>TransportUnit</code>.
 	 */
-	@OneToMany(mappedBy = "id")
+	@OneToMany(cascade = CascadeType.ALL)
 	private Map<Date, UnitError> errors = new HashMap<Date, UnitError>();
 
 	/* ----------------------------- methods ------------------- */
@@ -325,11 +324,8 @@ public class TransportUnit implements Serializable {
 	 * 
 	 * @return
 	 */
-	public Collection<UnitError> getErrors() {
-		if (errors == null) {
-			errors = new HashMap<Date, UnitError>();
-		}
-		return this.errors.values();
+	public Map<Date, UnitError> getErrors() {
+		return Collections.unmodifiableMap(errors);
 	}
 
 	/**
@@ -337,11 +333,11 @@ public class TransportUnit implements Serializable {
 	 * 
 	 * @param error
 	 */
-	public void addError(UnitError error) {
-		if (errors == null) {
-			errors = new HashMap<Date, UnitError>();
+	public UnitError addError(UnitError error) {
+		if (error == null) {
+			throw new IllegalArgumentException("Error may not be null!");
 		}
-		this.errors.put(new Date(), error);
+		return errors.put(new Date(), error);
 	}
 
 	/**
