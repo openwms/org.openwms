@@ -39,8 +39,7 @@ public class Role implements Serializable, IRole {
 	private static final long serialVersionUID = 1L;
 
 	/**
-	 * Unique <code>Role</code> identifier, e.g. name of the <code>Role</code>
-	 * Recommended prefix id 'ROLE_'
+	 * Primary key.
 	 */
 	@Id
 	@Column(name = "ID")
@@ -48,7 +47,8 @@ public class Role implements Serializable, IRole {
 	private long id;
 
 	/**
-	 * Name of the <code>Role</code>.
+	 * Name of the <code>Role</code>, e.g. name of the <code>Role</code>
+	 * Recommended prefix id 'ROLE_'
 	 */
 	@Column(name = "ROLENAME", unique = true)
 	private String rolename;
