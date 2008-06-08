@@ -8,6 +8,7 @@ package org.openwms.domain.common;
 
 import java.io.Serializable;
 
+import javax.persistence.Column;
 import javax.persistence.Embeddable;
 
 /**
@@ -21,19 +22,24 @@ public class LocationPK implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
+	@Column(name = "AREA")
 	private String area;
 
+	@Column(name = "AISLE")
 	private String aisle;
 
+	@Column(name = "X")
 	private String x;
 
+	@Column(name = "Y")
 	private String y;
 
+	@Column(name = "Z")
 	private String z;
 
 	/* ----------------------------- methods ------------------- */
-	public LocationPK() {
-		super();
+	@SuppressWarnings("unused")
+	private LocationPK() {
 	}
 
 	/**
@@ -46,7 +52,6 @@ public class LocationPK implements Serializable {
 	 * @param z
 	 */
 	public LocationPK(String area, String aisle, String x, String y, String z) {
-		super();
 		this.area = area;
 		this.aisle = aisle;
 		this.x = x;
@@ -115,6 +120,11 @@ public class LocationPK implements Serializable {
 	@Override
 	public int hashCode() {
 		return this.y.hashCode() ^ this.x.hashCode() ^ this.area.hashCode() ^ this.z.hashCode() ^ this.aisle.hashCode();
+	}
+	
+	@Override
+	public String toString() {
+		return this.area+this.aisle+this.x+this.y+this.z;
 	}
 
 }
