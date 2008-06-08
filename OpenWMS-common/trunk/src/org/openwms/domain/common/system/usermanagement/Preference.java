@@ -8,16 +8,15 @@ package org.openwms.domain.common.system.usermanagement;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
-import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Version;
 
@@ -42,17 +41,9 @@ public class Preference implements Serializable, IPreference {
 	 * Unique identifier of the <code>Preference</code>.
 	 */
 	@Id
-	@GeneratedValue
 	@Column(name = "ID")
+	@GeneratedValue
 	private long id;
-
-	/**
-	 * When the user is set, the <code>Preference</code> is specified as a
-	 * UserPreference.
-	 */
-	@ManyToOne
-	@JoinColumn(name = "USER_ID")
-	private User user;
 
 	@Column(name = "KEY")
 	private String key;
@@ -103,11 +94,10 @@ public class Preference implements Serializable, IPreference {
 	 * A list of <code>Role</code>s assigned to the <code>Preference</code>.
 	 */
 	@ManyToMany(mappedBy = "preferences")
-	private List<Role> roles = new ArrayList<Role>();
+	private Set<Role> roles = new HashSet<Role>();
 
 	/* ----------------------------- methods ------------------- */
 	public Preference() {
-		super();
 	}
 
 	public long getId() {
@@ -142,14 +132,6 @@ public class Preference implements Serializable, IPreference {
 		this.value = key;
 	}
 
-	public User getUser() {
-		return this.user;
-	}
-
-	public void setUser(User user) {
-		this.user = user;
-	}
-
 	public BigDecimal getFloatValue() {
 		return this.floatValue;
 	}
@@ -182,11 +164,25 @@ public class Preference implements Serializable, IPreference {
 		this.maximum = maximum;
 	}
 
-	public List<Role> getRoles() {
-		return this.roles;
+	public Set<Role> getRoles() {
+		return Collections.unmodifiableSet(roles);
 	}
 
-	public void setRoles(List<Role> roles) {
+	public boolean addRole(Role role) {
+		if (role == null) {
+			throw new IllegalArgumentException("Role may not be null!");
+		}
+		return roles.add(role);
+	}
+
+	public boolean removeRole(Role role) {
+		if (role == null) {
+			throw new IllegalArgumentException("Role may not be null!");
+		}
+		return roles.remove(role);
+	}
+
+	public void setRoles(Set<Role> roles) {
 		this.roles = roles;
 	}
 
