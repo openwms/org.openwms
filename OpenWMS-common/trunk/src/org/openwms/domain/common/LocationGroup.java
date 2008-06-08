@@ -16,6 +16,7 @@ package org.openwms.domain.common;
  */
 import java.io.Serializable;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.Set;
 
 import javax.persistence.Column;
@@ -24,11 +25,10 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import javax.persistence.UniqueConstraint;
 import javax.persistence.Version;
 
 @Entity
-@Table(name = "LOCATION_GROUP", uniqueConstraints = @UniqueConstraint(columnNames = ("GROUP_ID")))
+@Table(name = "LOCATION_GROUP")
 public class LocationGroup implements Serializable, ILocationGroup {
 
 	private static final long serialVersionUID = 1L;
@@ -89,7 +89,7 @@ public class LocationGroup implements Serializable, ILocationGroup {
 	 * Maximum fill level for this <code>LocationGroup</code>.
 	 */
 	@Column(name = "MAX_FILL_LEVEL")
-	private int maxFillLevel;
+	private float maxFillLevel;
 
 	/**
 	 * Last update timestamp.
@@ -120,17 +120,19 @@ public class LocationGroup implements Serializable, ILocationGroup {
 	 * Child <code>LocationGroup</code>s.
 	 */
 	@OneToMany(mappedBy = "parent")
-	private Set<LocationGroup> locationGroups;
+	private Set<LocationGroup> locationGroups = new HashSet<LocationGroup>();
 
 	/**
 	 * Child <code>Location</code>s.
 	 */
 	@OneToMany(mappedBy = "locationGroup")
-	private Set<Location> locations;
+	private Set<Location> locations = new HashSet<Location>();
 
 	/* ----------------------------- methods ------------------- */
+	/**
+	 * Create a new <code>LocationGroup</code> with unique groupId as name.
+	 */
 	public LocationGroup(String groupId) {
-		super();
 		this.groupId = groupId;
 	}
 
@@ -147,52 +149,87 @@ public class LocationGroup implements Serializable, ILocationGroup {
 		return groupId;
 	}
 
+	/**
+	 * Returns the sum of sub <code>Location</code>s having no
+	 * <code>TransportUnit</code>s.
+	 * 
+	 * @return
+	 */
 	public int getNoFreeLocations() {
 		return this.noFreeLocations;
 	}
 
-	public void setNoFreeLocations(int noFreeLocations) {
-		this.noFreeLocations = noFreeLocations;
-	}
-
+	/**
+	 * Returns the inbound status of this <code>Location</code>.
+	 * 
+	 * @return
+	 */
 	public short getGroupStateIn() {
 		return this.groupStateIn;
 	}
 
-	public void setGroupStateIn(short groupStateIn) {
-		this.groupStateIn = groupStateIn;
-	}
-
+	/**
+	 * Returns the number of all sub <code>Location</code>s.
+	 * 
+	 * @return
+	 */
 	public int getNoLocations() {
 		return this.noLocations;
 	}
 
-	public void setNoLocations(int noLocations) {
-		this.noLocations = noLocations;
-	}
-
-	public int getMaxFillLevel() {
+	/**
+	 * Returns the maximum fill level of this <code>LocationGroup</code>.<br>
+	 * The maximum fill level defines how many <code>Location</code>s of this
+	 * <code>LocationGroup</code> can be occupied with
+	 * <code>TransportUnit</code>s.
+	 * <p>
+	 * The maximum fill level must be value between 0 and 1 and reflects a
+	 * percentage value.
+	 * 
+	 * @return maxFillLevel.
+	 */
+	public float getMaxFillLevel() {
 		return this.maxFillLevel;
 	}
 
-	public void setMaxFillLevel(int maxFillLevel) {
+	/**
+	 * Set the maximum fill level for this <code>LocationGroup</code>.
+	 * <p>
+	 * Pass a value between 0 and 1.<br>
+	 * For example maxFillLevel = 0.85 means 85% of all sub
+	 * <code>Location</code>s can be occupied.
+	 * 
+	 * @param maxFillLevel
+	 */
+	public void setMaxFillLevel(float maxFillLevel) {
 		this.maxFillLevel = maxFillLevel;
 	}
 
+	/**
+	 * Returns the type of this <code>LocationGroup</code>.
+	 * 
+	 * @return
+	 */
 	public String getGroupType() {
 		return this.groupType;
 	}
 
+	/**
+	 * Set the type of this <code>LocationGroup</code>.
+	 * 
+	 * @param groupType
+	 */
 	public void setGroupType(String groupType) {
 		this.groupType = groupType;
 	}
 
+	/**
+	 * Returns the last modification date of this <code>LocationGroup</code>.
+	 * 
+	 * @return lastUpdated.
+	 */
 	public Date getLastUpdated() {
 		return this.lastUpdated;
-	}
-
-	public void setLastUpdated(Date lastUpdated) {
-		this.lastUpdated = lastUpdated;
 	}
 
 	/**
@@ -232,21 +269,36 @@ public class LocationGroup implements Serializable, ILocationGroup {
 	}
 
 	/**
-	 * Get all client LocationGroups.
+	 * Get all child LocationGroups.
 	 * 
-	 * @return client LocationGroups.
+	 * @return child LocationGroups.
 	 */
 	public Set<LocationGroup> getLocationGroups() {
 		return this.locationGroups;
 	}
 
 	/**
-	 * Set all child LocationGroups.
+	 * Add a <code>LocationGroup</code> as child.
 	 * 
 	 * @param locationGroups
 	 */
-	public void setLocationGroups(Set<LocationGroup> locationGroups) {
-		this.locationGroups = locationGroups;
+	public boolean addLocationGroup(LocationGroup locationGroup) {
+		if (locationGroup == null) {
+			return false;
+		}
+		return this.locationGroups.add(locationGroup);
+	}
+
+	/**
+	 * Remove a <code>LocationGroup</code> as child.
+	 * 
+	 * @param locationGroups
+	 */
+	public boolean removeLocationGroup(LocationGroup locationGroup) {
+		if (locationGroup == null) {
+			return false;
+		}
+		return this.locationGroups.remove(locationGroup);
 	}
 
 	/**
@@ -268,22 +320,12 @@ public class LocationGroup implements Serializable, ILocationGroup {
 	}
 
 	/**
-	 * Get the groupStateOut.
+	 * Get the outbound status of this <code>LocationGroup</code>.
 	 * 
 	 * @return the groupStateOut.
 	 */
 	public short getGroupStateOut() {
 		return groupStateOut;
-	}
-
-	/**
-	 * Set the groupStateOut.
-	 * 
-	 * @param groupStateOut
-	 *            The groupStateOut to set.
-	 */
-	public void setGroupStateOut(short groupStateOut) {
-		this.groupStateOut = groupStateOut;
 	}
 
 	/**
