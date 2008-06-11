@@ -28,7 +28,7 @@ public final class TestHelper {
 	private static final Log LOG = LogFactory.getLog(TestHelper.class);
 	private static Connection connection;
 	private static boolean dbStarted = false;
-	private static String persistenceUnit = "OpenWMS-test";
+	private static String persistenceUnit = "OpenWMS-test-durable";
 	private static EntityManagerFactory emf;
 
 	private TestHelper() {

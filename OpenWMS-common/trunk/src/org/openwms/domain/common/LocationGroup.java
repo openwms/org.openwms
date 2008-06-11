@@ -61,6 +61,18 @@ public class LocationGroup implements Serializable, ILocationGroup {
 	private String groupType;
 
 	/**
+	 * Is this <code>LocationGroup</code> be integrated in the calculation of
+	 * <code>TransportUnit</code>s.
+	 * <p>
+	 * true : Location is been included in calculation of
+	 * <code>TransportUnit</code>s.<br>
+	 * false: Location is not been included in calculation of
+	 * <code>TransportUnit</code>s.
+	 */
+	@Column(name = "LOCATION_GROUP_COUNTING_ACTIVE")
+	private boolean locationGroupCountingActive = true;
+
+	/**
 	 * Number of <code>Location</code>s belonging to this
 	 * <code>LocationGroup</code>.
 	 */
@@ -158,6 +170,14 @@ public class LocationGroup implements Serializable, ILocationGroup {
 	 */
 	public int getNoFreeLocations() {
 		return this.noFreeLocations;
+	}
+	
+	public void increaseNoFreeLocations(){
+		this.noFreeLocations++;
+	}
+	
+	public void decreaseNoFreeLocations(){
+		this.noFreeLocations--;
 	}
 
 	/**
@@ -361,6 +381,26 @@ public class LocationGroup implements Serializable, ILocationGroup {
 	 */
 	public void setSystemCode(String systemCode) {
 		this.systemCode = systemCode;
+	}
+
+	
+	
+	/**
+	 * Get the locationGroupCountingActive.
+	 * 
+	 * @return the locationGroupCountingActive.
+	 */
+	public boolean isLocationGroupCountingActive() {
+		return locationGroupCountingActive;
+	}
+
+	/**
+	 * Set the locationGroupCountingActive.
+	 * 
+	 * @param locationGroupCountingActive The locationGroupCountingActive to set.
+	 */
+	public void setLocationGroupCountingActive(boolean locationGroupCountingActive) {
+		this.locationGroupCountingActive = locationGroupCountingActive;
 	}
 
 	/**
