@@ -17,6 +17,7 @@ import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -49,6 +50,7 @@ public class Location implements Serializable, ILocation {
 	 */
 	@Id
 	@Column(name = "ID")
+	@GeneratedValue
 	private long id;
 
 	/**
@@ -255,8 +257,17 @@ public class Location implements Serializable, ILocation {
 		return this.noIncomingTransportUnits;
 	}
 
+	// TODO: needed?
 	public void setNoIncomingTransportUnits(short noIncomingTransportUnits) {
 		this.noIncomingTransportUnits = noIncomingTransportUnits;
+	}
+
+	public void increaseIncomingTransportUnits() {
+		this.noIncomingTransportUnits++;
+	}
+
+	public void decreaseIncomingTransportUnits() {
+		this.noIncomingTransportUnits--;
 	}
 
 	public Date getLastAccess() {
@@ -337,8 +348,23 @@ public class Location implements Serializable, ILocation {
 		return this.noTransportUnits;
 	}
 
+	// TODO: needed?
 	public void setNoTransportUnits(short noTransportUnits) {
 		this.noTransportUnits = noTransportUnits;
+	}
+
+	public void increaseNoTransportUnits() {
+		this.noTransportUnits++;
+		if (this.isLocationGroupCountingActive()){
+			this.locationGroup.increaseNoFreeLocations();
+		}
+	}
+
+	public void decreaseNoTransportUnits() {
+		this.noTransportUnits--;
+		if (isLocationGroupCountingActive()){
+			this.locationGroup.decreaseNoFreeLocations();
+		}
 	}
 
 	public short getPlcState() {
@@ -387,6 +413,7 @@ public class Location implements Serializable, ILocation {
 
 	public void setLocationGroup(LocationGroup locationGroup) {
 		this.locationGroup = locationGroup;
+		this.setLocationGroupCountingActive(this.locationGroup.isLocationGroupCountingActive());
 	}
 
 	/**

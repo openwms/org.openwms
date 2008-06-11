@@ -117,7 +117,7 @@ public class TransportUnit implements Serializable {
 	 * This property should be set when starting a new TransportOrder.
 	 */
 	@ManyToOne
-	@JoinColumn(name = "TARGET_LOCATION", nullable = false)
+	@JoinColumn(name = "TARGET_LOCATION")
 	private Location targetLocation;
 
 	/**
@@ -168,8 +168,9 @@ public class TransportUnit implements Serializable {
 	 */
 	public TransportUnit(String unitId) {
 		this.creationDate = new Date();
+		this.unitId = unitId;
 	}
-
+	
 	/*
 	 * (non-Javadoc)
 	 * 
@@ -185,7 +186,11 @@ public class TransportUnit implements Serializable {
 	 * @see org.openwms.domain.common.ITransportUnit#setActualLocation(org.openwms.domain.common.ILocation)
 	 */
 	public void setActualLocation(Location actualLocation) {
+		if (this.actualLocation != null){
+			this.actualLocation.decreaseNoTransportUnits();
+		}
 		this.actualLocation = actualLocation;
+		this.actualLocation.increaseNoTransportUnits();
 		this.actualLocationDate = new Date();
 	}
 
@@ -204,7 +209,11 @@ public class TransportUnit implements Serializable {
 	 * @see org.openwms.domain.common.ITransportUnit#setTargetLocation(org.openwms.domain.common.ILocation)
 	 */
 	public void setTargetLocation(Location targetLocation) {
+		if (this.targetLocation != null) {
+			this.targetLocation.decreaseIncomingTransportUnits();
+		}
 		this.targetLocation = targetLocation;
+		this.targetLocation.increaseIncomingTransportUnits();
 	}
 
 	/*

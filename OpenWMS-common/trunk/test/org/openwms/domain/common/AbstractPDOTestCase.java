@@ -53,11 +53,8 @@ public abstract class AbstractPDOTestCase extends TestCase {
 			ex.printStackTrace();
 			fail("Exception during JPA EntityManager instanciation.");
 		}
-		setup();
 	}
 
-	protected void setup() {
-	}
 
 	/**
 	 * Do after test run.

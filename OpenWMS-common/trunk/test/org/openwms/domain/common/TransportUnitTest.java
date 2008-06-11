@@ -68,7 +68,6 @@ public class TransportUnitTest extends AbstractPDOTestCase {
 		em.persist(transportUnitType);
 		entityTransaction.commit();
 		transportUnit.setTransportUnitType(transportUnitType);
-		transportUnit.setTargetLocation(actualLocation);
 		transportUnit.setActualLocation(actualLocation);
 		try {
 			entityTransaction.begin();
@@ -100,42 +99,19 @@ public class TransportUnitTest extends AbstractPDOTestCase {
 		em.persist(location);
 		entityTransaction.commit();
 		transportUnit.setTransportUnitType(transportUnitType);
+
 		transportUnit.setActualLocation(location);
 		try {
 			entityTransaction.begin();
-			em.persist(transportUnit);
+			em.merge(transportUnit);
 			entityTransaction.commit();
-			fail("Persist with unknown targetLocation not allowed");
+			LOG.debug("Also without targetLocation must be okay");
+			//fail("Persist with unknown targetLocation not allowed");
 		} catch (PersistenceException pe) {
 			// okay
 			entityTransaction.rollback();
 			LOG.debug("OK:Execption while persisting TransportUnit with unknown targetLocation");
 		}
-
-		transportUnit.setActualLocation(null);
-		transportUnit.setTargetLocation(location);
-		try {
-			entityTransaction.begin();
-			em.merge(transportUnit);
-			entityTransaction.commit();
-			fail("Persist with unknown actualLocation not allowed");
-		} catch (PersistenceException pe) {
-			// okay
-			entityTransaction.rollback();
-			LOG.debug("OK:Execption while persisting TransportUnit with unknown actualLocation");
-		}
-
-		entityTransaction = em.getTransaction();
-		transportUnit.setActualLocation(location);
-		try {
-			entityTransaction.begin();
-			em.merge(transportUnit);
-			entityTransaction.commit();
-			LOG.debug("OK:Execption while persisting TransportUnit with known Locations");
-		} catch (PersistenceException pe) {
-			fail("Persist with unknown actualLocation not allowed");
-		}
-
 	}
 
 	/**
@@ -207,6 +183,5 @@ public class TransportUnitTest extends AbstractPDOTestCase {
 
 		cnt = (Long) query.getSingleResult();
 		assertEquals("Expected 0 persisted UnitErrors", 0, cnt.intValue());
-
 	}
 }
