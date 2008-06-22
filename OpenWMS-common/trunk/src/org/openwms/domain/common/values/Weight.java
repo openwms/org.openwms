@@ -8,21 +8,26 @@ package org.openwms.domain.common.values;
 
 import java.math.BigDecimal;
 
-public class Weight {
+/**
+ * 
+ * A Weight.
+ * <p>
+ * Describes a weight in real world, always including a unit and a value.
+ * 
+ * @author <a href="heiko.scherrer@gmx.de">Heiko Scherrer</a>
+ * @version $Revision$
+ */
+public class Weight implements Comparable<Weight>, Unit<WeightUnit> {
 
-	public enum WEIGHT_UNIT {
-		T, KG, G, MG
-	}
-
-	private WEIGHT_UNIT unit;
+	private WeightUnit unit;
 	private BigDecimal value;
-	
+
 	/* ----------------------------- methods ------------------- */
 	/**
 	 * Accessed by persistence provider.
 	 */
 	@SuppressWarnings("unused")
-	private Weight(){
+	private Weight() {
 	}
 
 	/**
@@ -32,26 +37,18 @@ public class Weight {
 	 * @param value
 	 * @param unit
 	 */
-	public Weight(BigDecimal value, WEIGHT_UNIT unit){
+	public Weight(BigDecimal value, WeightUnit unit) {
 		this.value = value;
 		this.unit = unit;
 	}
+
 	/**
 	 * Get the unit.
 	 * 
 	 * @return the unit.
 	 */
-	public WEIGHT_UNIT getUnit() {
+	public WeightUnit getUnit() {
 		return unit;
-	}
-
-	/**
-	 * Set the unit.
-	 * 
-	 * @param unit The unit to set.
-	 */
-	public void setUnit(WEIGHT_UNIT unit) {
-		this.unit = unit;
 	}
 
 	/**
@@ -63,15 +60,22 @@ public class Weight {
 		return value;
 	}
 
-	/**
-	 * Set the value.
-	 * 
-	 * @param value The value to set.
-	 */
-	public void setValue(BigDecimal value) {
-		this.value = value;
+	public void convertTo(WeightUnit unit) {
+		value = value.scaleByPowerOfTen((this.getUnit().ordinal() - unit.ordinal()) * 3);
+		this.unit = unit;
 	}
-	
-	
+
+	/**
+	 * Compares o.Value with this.value.
+	 */
+	public int compareTo(Weight o) {
+		if (o.unit.ordinal() > this.getUnit().ordinal()) {
+			return 1;
+		} else if (o.unit.ordinal() < this.getUnit().ordinal()) {
+			return -1;
+		} else {
+			return o.getValue().compareTo(this.getValue());
+		}
+	}
 
 }
