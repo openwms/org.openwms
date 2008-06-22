@@ -30,6 +30,7 @@ import javax.persistence.Version;
 
 import org.openwms.domain.common.system.UnitError;
 import org.openwms.domain.common.system.usermanagement.User;
+import org.openwms.domain.common.values.Barcode;
 
 /**
  * 
@@ -42,10 +43,14 @@ import org.openwms.domain.common.system.usermanagement.User;
  * @version $Revision$
  */
 @Entity
-@Table(name = "TRANSPORT_UNIT", uniqueConstraints = @UniqueConstraint(columnNames = { "UNIT_ID" }))
+@Table(name = "TRANSPORT_UNIT", uniqueConstraints = @UniqueConstraint(columnNames = { "BARCODE" }))
 public class TransportUnit implements Serializable {
 
 	private static final long serialVersionUID = 1L;
+
+	public enum TU_STATE {
+		AVAILABLE, OK, NOT_OK
+	}
 
 	/**
 	 * Primary key.
@@ -58,8 +63,8 @@ public class TransportUnit implements Serializable {
 	/**
 	 * Natural key.
 	 */
-	@Column(name = "UNIT_ID", unique = true)
-	private String unitId;
+	@Column(name = "BARCODE", unique = true)
+	private Barcode barcode;
 
 	/**
 	 * Indicates whether the <code>TransportUnit</code> is empty or not.
@@ -96,7 +101,7 @@ public class TransportUnit implements Serializable {
 	 * State of this <code>TransportUnit</code>.
 	 */
 	@Column(name = "STATE")
-	private short state;
+	private TU_STATE state;
 
 	/**
 	 * Version field
@@ -146,7 +151,7 @@ public class TransportUnit implements Serializable {
 	 * Child <code>TransportUnit</code>s.
 	 */
 	@OneToMany(mappedBy = "parent", cascade = { CascadeType.MERGE, CascadeType.PERSIST })
-	@OrderBy("unitId DESC")
+	@OrderBy("id DESC")
 	private Set<TransportUnit> children = new HashSet<TransportUnit>();
 
 	/**
@@ -168,25 +173,23 @@ public class TransportUnit implements Serializable {
 	 */
 	public TransportUnit(String unitId) {
 		this.creationDate = new Date();
-		this.unitId = unitId;
+		this.barcode = new Barcode(unitId);
 	}
 	
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see org.openwms.domain.common.ITransportUnit#getActualLocation()
+	/**
+	 * Create a new <code>TransportUnit</code> with a unique barcode.
 	 */
+	public TransportUnit(Barcode barcode) {
+		this.creationDate = new Date();
+		this.barcode = barcode;
+	}	
+
 	public Location getActualLocation() {
 		return actualLocation;
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see org.openwms.domain.common.ITransportUnit#setActualLocation(org.openwms.domain.common.ILocation)
-	 */
 	public void setActualLocation(Location actualLocation) {
-		if (this.actualLocation != null){
+		if (this.actualLocation != null) {
 			this.actualLocation.decreaseNoTransportUnits();
 		}
 		this.actualLocation = actualLocation;
@@ -194,20 +197,10 @@ public class TransportUnit implements Serializable {
 		this.actualLocationDate = new Date();
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see org.openwms.domain.common.ITransportUnit#getTargetLocation()
-	 */
 	public Location getTargetLocation() {
 		return this.targetLocation;
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see org.openwms.domain.common.ITransportUnit#setTargetLocation(org.openwms.domain.common.ILocation)
-	 */
 	public void setTargetLocation(Location targetLocation) {
 		if (this.targetLocation != null) {
 			this.targetLocation.decreaseIncomingTransportUnits();
@@ -216,11 +209,6 @@ public class TransportUnit implements Serializable {
 		this.targetLocation.increaseIncomingTransportUnits();
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see org.openwms.domain.common.ITransportUnit#getId()
-	 */
 	public long getId() {
 		return id;
 	}
@@ -354,7 +342,7 @@ public class TransportUnit implements Serializable {
 	 * 
 	 * @return
 	 */
-	public short getState() {
+	public TU_STATE getState() {
 		return this.state;
 	}
 
@@ -363,7 +351,7 @@ public class TransportUnit implements Serializable {
 	 * 
 	 * @param state
 	 */
-	public void setState(short state) {
+	public void setState(TU_STATE state) {
 		this.state = state;
 	}
 
@@ -387,22 +375,22 @@ public class TransportUnit implements Serializable {
 		this.transportUnitType = transportUnitType;
 	}
 
-	/*
-	 * (non-Javadoc)
+	/**
+	 * Return the <tt>Barcode</tt> of the <tt>TransportUnit</tt>.
 	 * 
-	 * @see org.openwms.domain.common.ITransportUnit#getUnitId()
+	 * @return - Barcode
 	 */
-	public String getUnitId() {
-		return unitId;
+	public Barcode getBarcode() {
+		return barcode;
 	}
 
-	/*
-	 * (non-Javadoc)
+	/**
+	 * Set the <tt>Barcode</tt> of the <tt>TransportUnit</tt>.
 	 * 
-	 * @see org.openwms.domain.common.ITransportUnit#setUnitId(java.lang.String)
+	 * @param barcode
 	 */
-	public void setUnitId(String unitId) {
-		this.unitId = unitId;
+	public void setBarcode(Barcode barcode) {
+		this.barcode = barcode;
 	}
 
 	/**

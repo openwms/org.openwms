@@ -37,5 +37,6 @@
 	<classpathentry kind="lib" path="lib/lucene-analyzers-2.1.0.jar"/>
 	<classpathentry kind="lib" path="lib/lucene-core-2.1.0.jar"/>
 	<classpathentry kind="lib" path="lib/junit-4.4.jar"/>
+	<classpathentry kind="lib" path="lib/commons-lang-2.4.jar"/>
 	<classpathentry kind="output" path="build/classes"/>
 </classpath>
