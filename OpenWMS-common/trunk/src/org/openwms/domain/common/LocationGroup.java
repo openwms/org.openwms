@@ -20,6 +20,7 @@ import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -127,12 +128,12 @@ public class LocationGroup implements Serializable, ILocationGroup {
 	 * Parent <code>LocationGroup</code>.
 	 */
 	@Column(name = "PARENT")
-	private long parent;
+	private LocationGroup parent;
 
 	/**
 	 * Child <code>LocationGroup</code>s.
 	 */
-	@OneToMany(mappedBy = "parent")
+	@OneToMany(mappedBy = "parent", cascade={CascadeType.MERGE, CascadeType.PERSIST})
 	private Set<LocationGroup> locationGroups = new HashSet<LocationGroup>();
 
 	/**
@@ -145,6 +146,13 @@ public class LocationGroup implements Serializable, ILocationGroup {
 	/**
 	 * Create a new <code>LocationGroup</code> with unique groupId as name.
 	 */
+	/**
+	 * Accessed by persistence provider.
+	 */
+	@SuppressWarnings("unused")
+	private LocationGroup() {
+	}
+
 	public LocationGroup(String groupId) {
 		this.groupId = groupId;
 	}
@@ -172,10 +180,18 @@ public class LocationGroup implements Serializable, ILocationGroup {
 		return this.noFreeLocations;
 	}
 	
+	/**
+	 * Increase the number of <tt>Location</tt>s about one.
+	 *
+	 */
 	public void increaseNoFreeLocations(){
 		this.noFreeLocations++;
 	}
 	
+	/**
+	 * Decrease the number of <tt>Location</tt>s about one.
+	 *
+	 */
 	public void decreaseNoFreeLocations(){
 		this.noFreeLocations--;
 	}
@@ -276,7 +292,7 @@ public class LocationGroup implements Serializable, ILocationGroup {
 	 * 
 	 * @return parent LocationGroup.
 	 */
-	public long getParent() {
+	public LocationGroup getParent() {
 		return this.parent;
 	}
 
@@ -285,7 +301,7 @@ public class LocationGroup implements Serializable, ILocationGroup {
 	 * 
 	 * @param parent
 	 */
-	public void setParent(long parent) {
+	public void setParent(LocationGroup parent) {
 		this.parent = parent;
 	}
 
@@ -307,6 +323,7 @@ public class LocationGroup implements Serializable, ILocationGroup {
 		if (locationGroup == null) {
 			return false;
 		}
+		locationGroup.setParent(this);
 		return this.locationGroups.add(locationGroup);
 	}
 
@@ -340,6 +357,7 @@ public class LocationGroup implements Serializable, ILocationGroup {
 		if (location == null) {
 			return false;
 		}
+		location.setLocationGroup(this);
 		return locations.add(location);
 	}
 
@@ -352,6 +370,7 @@ public class LocationGroup implements Serializable, ILocationGroup {
 		if (location == null) {
 			throw new IllegalArgumentException("Child location is null!");
 		}
+		location.setLocationGroup(null);
 		return locations.remove(location);
 	}
 

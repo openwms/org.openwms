@@ -202,7 +202,7 @@ public class Location implements Serializable, ILocation {
 	 * belongs.
 	 */
 	@ManyToOne
-	@JoinColumn(name = "LOCATION_GROUP_ID")
+	@JoinColumn(name = "LOCATION_GROUP_ID", nullable = true)
 	private LocationGroup locationGroup;
 
 	/**
@@ -355,14 +355,14 @@ public class Location implements Serializable, ILocation {
 
 	public void increaseNoTransportUnits() {
 		this.noTransportUnits++;
-		if (this.isLocationGroupCountingActive()){
+		if (this.isLocationGroupCountingActive()) {
 			this.locationGroup.increaseNoFreeLocations();
 		}
 	}
 
 	public void decreaseNoTransportUnits() {
 		this.noTransportUnits--;
-		if (isLocationGroupCountingActive()){
+		if (isLocationGroupCountingActive()) {
 			this.locationGroup.decreaseNoFreeLocations();
 		}
 	}
@@ -412,8 +412,10 @@ public class Location implements Serializable, ILocation {
 	}
 
 	public void setLocationGroup(LocationGroup locationGroup) {
+		if (locationGroup != null) {
+			this.setLocationGroupCountingActive(locationGroup.isLocationGroupCountingActive());
+		}
 		this.locationGroup = locationGroup;
-		this.setLocationGroupCountingActive(this.locationGroup.isLocationGroupCountingActive());
 	}
 
 	/**
