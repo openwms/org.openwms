@@ -15,12 +15,16 @@ import org.junit.Test;
 import org.openwms.domain.common.AbstractPDOTestCase;
 
 public class RoleTest extends AbstractPDOTestCase {
+	
+	private static final String TEST_ROLE = "ROLE_TEST";
+	private static final String KNOWN_USER = "KNOWN_USER";
+	private static final String UNKNOWN_USER = "UNKNOWN_USER";
 
 	@Test
 	public void testRoleConstraint() {
 		EntityTransaction entityTransaction = em.getTransaction();
-		Role role = new Role("ROLE_TEST");
-		Role role2 = new Role("ROLE_TEST");
+		Role role = new Role(TEST_ROLE);
+		Role role2 = new Role(TEST_ROLE);
 
 		try {
 			entityTransaction.begin();
@@ -40,9 +44,9 @@ public class RoleTest extends AbstractPDOTestCase {
 	@Test
 	public void testRoleLifecycle() {
 		EntityTransaction entityTransaction = em.getTransaction();
-		Role role = new Role("ROLE_TEST");
-		User unknownUser = new User("UNKNOWN_USER");
-		User knownUser = new User("KNOWN_USER");
+		Role role = new Role(TEST_ROLE);
+		User unknownUser = new User(UNKNOWN_USER);
+		User knownUser = new User(KNOWN_USER);
 
 		entityTransaction.begin();
 		em.persist(knownUser);
@@ -56,12 +60,12 @@ public class RoleTest extends AbstractPDOTestCase {
 		entityTransaction.commit();
 
 		Query query = em.createQuery("select count(u) from User u where u.username = :username");
-		query.setParameter("username", "UNKNOWN_USER");
+		query.setParameter("username", unknownUser.getUsername());
 		Long cnt = (Long) query.getSingleResult();
 		assertEquals("User must be persisted with Role", 1, cnt.intValue());
 
 		query = em.createQuery("select r from Role r where r.rolename = :rolename");
-		query.setParameter("rolename", "ROLE_TEST");
+		query.setParameter("rolename", role.getRolename());
 		role = (Role)query.getSingleResult();
 		assertNotSame("Role must be persisted", 0, role.getId());
 
@@ -70,12 +74,12 @@ public class RoleTest extends AbstractPDOTestCase {
 		entityTransaction.commit();
 
 		query = em.createQuery("select count(r) from Role r where r.rolename = :rolename");
-		query.setParameter("rolename", "ROLE_TEST");
+		query.setParameter("rolename", role.getRolename());
 		cnt = (Long) query.getSingleResult();
 		assertEquals("Role must be removed", 0, cnt.intValue());
 
 		query = em.createQuery("select count(u) from User u where u.username = :username");
-		query.setParameter("username", "KNOWN_USER");
+		query.setParameter("username", knownUser.getUsername());
 		cnt = (Long) query.getSingleResult();
 		assertEquals("User may not be removed", 1, cnt.intValue());
 	}
