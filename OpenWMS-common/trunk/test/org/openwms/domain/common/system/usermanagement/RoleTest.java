@@ -12,7 +12,7 @@ import javax.persistence.Query;
 
 import org.hibernate.exception.ConstraintViolationException;
 import org.junit.Test;
-import org.openwms.domain.common.AbstractPDOTestCase;
+import org.openwms.domain.common.helper.AbstractPDOTestCase;
 
 public class RoleTest extends AbstractPDOTestCase {
 	

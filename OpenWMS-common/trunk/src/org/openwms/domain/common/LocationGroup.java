@@ -25,6 +25,8 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Version;
@@ -127,13 +129,14 @@ public class LocationGroup implements Serializable, ILocationGroup {
 	/**
 	 * Parent <code>LocationGroup</code>.
 	 */
-	@Column(name = "PARENT")
+	@ManyToOne
+	@JoinColumn(name = "PARENT")
 	private LocationGroup parent;
 
 	/**
 	 * Child <code>LocationGroup</code>s.
 	 */
-	@OneToMany(mappedBy = "parent", cascade={CascadeType.MERGE, CascadeType.PERSIST})
+	@OneToMany(mappedBy = "parent", cascade = { CascadeType.MERGE, CascadeType.PERSIST })
 	private Set<LocationGroup> locationGroups = new HashSet<LocationGroup>();
 
 	/**
@@ -179,20 +182,20 @@ public class LocationGroup implements Serializable, ILocationGroup {
 	public int getNoFreeLocations() {
 		return this.noFreeLocations;
 	}
-	
+
 	/**
 	 * Increase the number of <tt>Location</tt>s about one.
-	 *
+	 * 
 	 */
-	public void increaseNoFreeLocations(){
+	public void increaseNoFreeLocations() {
 		this.noFreeLocations++;
 	}
-	
+
 	/**
 	 * Decrease the number of <tt>Location</tt>s about one.
-	 *
+	 * 
 	 */
-	public void decreaseNoFreeLocations(){
+	public void decreaseNoFreeLocations() {
 		this.noFreeLocations--;
 	}
 
@@ -402,8 +405,6 @@ public class LocationGroup implements Serializable, ILocationGroup {
 		this.systemCode = systemCode;
 	}
 
-	
-	
 	/**
 	 * Get the locationGroupCountingActive.
 	 * 
@@ -416,7 +417,8 @@ public class LocationGroup implements Serializable, ILocationGroup {
 	/**
 	 * Set the locationGroupCountingActive.
 	 * 
-	 * @param locationGroupCountingActive The locationGroupCountingActive to set.
+	 * @param locationGroupCountingActive
+	 *            The locationGroupCountingActive to set.
 	 */
 	public void setLocationGroupCountingActive(boolean locationGroupCountingActive) {
 		this.locationGroupCountingActive = locationGroupCountingActive;

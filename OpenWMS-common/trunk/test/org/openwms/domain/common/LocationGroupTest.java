@@ -12,6 +12,7 @@ import javax.persistence.EntityTransaction;
 import javax.persistence.Query;
 
 import org.junit.Test;
+import org.openwms.domain.common.helper.AbstractPDOTestCase;
 
 /**
  * A LocationGroupTest.
@@ -68,8 +69,10 @@ public class LocationGroupTest extends AbstractPDOTestCase {
 				locationGroup2));
 
 		Set<LocationGroup> clients = parent.getLocationGroups();
+		LocationGroup test = null;
 		for (LocationGroup client : clients) {
-			assertEquals("The parent of child must match", locationGroup1, client.getParent());
+			test = client.getParent();
+			assertEquals("The parent of child must match", locationGroup1, test);
 		}
 	}
 

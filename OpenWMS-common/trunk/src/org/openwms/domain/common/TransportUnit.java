@@ -111,15 +111,15 @@ public class TransportUnit implements Serializable {
 
 	/* ------------------- collection mapping ------------------- */
 	/**
-	 * The actual Location of the TransportUnit.
+	 * The actual <tt>Location</tt> of the <tt>TransportUnit</tt>.
 	 */
 	@ManyToOne
 	@JoinColumn(name = "ACTUAL_LOCATION", nullable = false)
 	private Location actualLocation;
 
 	/**
-	 * The target Location of the TransportUnit.<br>
-	 * This property should be set when starting a new TransportOrder.
+	 * The target <tt>Location</tt> of the <tt>TransportUnit</tt>.<br>
+	 * This property will be set when a <tt>TransportOrder</tt> is started.
 	 */
 	@ManyToOne
 	@JoinColumn(name = "TARGET_LOCATION")
@@ -175,19 +175,31 @@ public class TransportUnit implements Serializable {
 		this.creationDate = new Date();
 		this.barcode = new Barcode(unitId);
 	}
-	
+
 	/**
 	 * Create a new <code>TransportUnit</code> with a unique barcode.
 	 */
 	public TransportUnit(Barcode barcode) {
 		this.creationDate = new Date();
 		this.barcode = barcode;
-	}	
+	}
 
+	/**
+	 * Get the actual <tt>Location</tt> of this <tt>TransportUnit</tt>.
+	 * 
+	 * @return
+	 */
 	public Location getActualLocation() {
 		return actualLocation;
 	}
 
+	/**
+	 * Set the actual <tt>Location</tt> of this <tt>TransportUnit</tt> and
+	 * correct the <tt>TransportUnit</tt> counters on the old and the new
+	 * <tt>Location</tt>.
+	 * 
+	 * @param actualLocation
+	 */
 	public void setActualLocation(Location actualLocation) {
 		if (this.actualLocation != null) {
 			this.actualLocation.decreaseNoTransportUnits();
@@ -197,10 +209,23 @@ public class TransportUnit implements Serializable {
 		this.actualLocationDate = new Date();
 	}
 
+	/**
+	 * Get the target <tt>Location</tt> of this <tt>TransportUnit</tt>.
+	 * This property is only set when a started <tt>TransportOrder</tt>
+	 * exists.
+	 * 
+	 * @return Location.
+	 */
 	public Location getTargetLocation() {
 		return this.targetLocation;
 	}
 
+	/**
+	 * Set the target <tt>Location</tt> of this <tt>TransportUnit</tt>.
+	 * Shall only be set when a started <tt>TransportOder</tt> exist.
+	 * 
+	 * @param targetLocation
+	 */
 	public void setTargetLocation(Location targetLocation) {
 		if (this.targetLocation != null) {
 			this.targetLocation.decreaseIncomingTransportUnits();
@@ -209,6 +234,11 @@ public class TransportUnit implements Serializable {
 		this.targetLocation.increaseIncomingTransportUnits();
 	}
 
+	/**
+	 * Return the Primary Key.
+	 * 
+	 * @return id.
+	 */
 	public long getId() {
 		return id;
 	}
@@ -433,7 +463,7 @@ public class TransportUnit implements Serializable {
 
 		if (transportUnit.getParent() != null) {
 			if (transportUnit.getParent().equals(this)) {
-				// if this instance is already the parent, we can just return
+				// if this instance is already the parent, we just return
 				return;
 			} else {
 				// disconnect post from it's current relationship

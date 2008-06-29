@@ -11,6 +11,7 @@ import javax.persistence.PersistenceException;
 import javax.persistence.Query;
 
 import org.junit.Test;
+import org.openwms.domain.common.helper.AbstractPDOTestCase;
 import org.openwms.domain.common.system.Message;
 
 /**

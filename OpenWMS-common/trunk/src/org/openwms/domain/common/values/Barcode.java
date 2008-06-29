@@ -6,22 +6,26 @@
  */
 package org.openwms.domain.common.values;
 
+import java.io.Serializable;
+
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
 
 import org.apache.commons.lang.StringUtils;
 
 @Embeddable
-public class Barcode {
+public class Barcode implements Serializable{
 
 	public static enum BARCODE_ALIGN {
 		LEFT, RIGHT
 	}
+	
+	private static final long serialVersionUID = 1L;
 
 	private static boolean padded = false;
 	private static char padder;
 	private static int length;
-	private static BARCODE_ALIGN alignment = BARCODE_ALIGN.LEFT;
+	private static BARCODE_ALIGN alignment = BARCODE_ALIGN.RIGHT;
 
 	@Column(name = "BARCODE")
 	private String id;
@@ -38,7 +42,7 @@ public class Barcode {
 		assert (id != null);
 		this.id = id;
 		if (isPadded()) {
-			this.id = (alignment == BARCODE_ALIGN.LEFT) ? StringUtils.leftPad(id, length, padder) : StringUtils
+			this.id = (alignment == BARCODE_ALIGN.RIGHT) ? StringUtils.leftPad(id, length, padder) : StringUtils
 					.rightPad(id, length, padder);
 		}
 	}
