@@ -4,7 +4,7 @@
  * Distributable under LGPL license.
  * See terms of license at gnu.org.
  */
-package org.openwms.domain.common;
+package org.openwms.domain.common.helper;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -74,9 +74,7 @@ public final class TestHelper {
 	}
 
 	public static EntityManagerFactory createEntityManagerFactory(String pUnit) {
-		//if (emf == null) {
-			emf = Persistence.createEntityManagerFactory(pUnit);
-		//}
+		emf = Persistence.createEntityManagerFactory(pUnit);
 		return emf;
 	}
 

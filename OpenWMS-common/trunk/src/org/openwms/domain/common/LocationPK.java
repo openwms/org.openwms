@@ -121,10 +121,10 @@ public class LocationPK implements Serializable {
 	public int hashCode() {
 		return this.y.hashCode() ^ this.x.hashCode() ^ this.area.hashCode() ^ this.z.hashCode() ^ this.aisle.hashCode();
 	}
-	
+
 	@Override
 	public String toString() {
-		return this.area+this.aisle+this.x+this.y+this.z;
+		return this.area + this.aisle + this.x + this.y + this.z;
 	}
 
 }

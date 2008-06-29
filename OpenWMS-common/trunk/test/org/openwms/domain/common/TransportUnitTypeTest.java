@@ -11,6 +11,7 @@ import javax.persistence.PersistenceException;
 
 import org.hibernate.NonUniqueObjectException;
 import org.junit.Test;
+import org.openwms.domain.common.helper.AbstractPDOTestCase;
 
 /**
  * A TransportUnitTypeTest.

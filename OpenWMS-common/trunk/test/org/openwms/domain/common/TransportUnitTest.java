@@ -11,7 +11,10 @@ import javax.persistence.PersistenceException;
 import javax.persistence.Query;
 
 import org.junit.Test;
+import org.openwms.domain.common.helper.AbstractPDOTestCase;
 import org.openwms.domain.common.system.UnitError;
+import org.openwms.domain.common.values.Barcode;
+import org.openwms.domain.common.values.Barcode.BARCODE_ALIGN;
 
 public class TransportUnitTest extends AbstractPDOTestCase {
 
@@ -145,6 +148,10 @@ public class TransportUnitTest extends AbstractPDOTestCase {
 
 	@Test
 	public void testTUwithErrors() {
+		Barcode.setPadder('0');
+		Barcode.setLength(20);
+		Barcode.setAlignment(BARCODE_ALIGN.RIGHT);
+		Barcode.setPadded(true);
 		TransportUnit transportUnit = new TransportUnit("TEST_TU");
 		TransportUnitType transportUnitType = new TransportUnitType("KNOWN_TUT");
 		LocationPK unknownLocationPk = new LocationPK("KNOWN", "KNOWN", "KNOWN", "KNOWN", "KNOWN");

@@ -9,6 +9,7 @@ package org.openwms.domain.common;
 import javax.persistence.EntityTransaction;
 
 import org.junit.Test;
+import org.openwms.domain.common.helper.AbstractPDOTestCase;
 
 public class LocationSystemTest extends AbstractPDOTestCase{
 	
@@ -16,6 +17,7 @@ public class LocationSystemTest extends AbstractPDOTestCase{
 	private static final String KNOWN = "KNOWN";
 	private static final String VIRTUAL = "VIRTUAL";
 
+	//TODO: Finish
 	@Test
 	public void testCascadingOnLocationGroup(){
 		EntityTransaction entityTransaction = em.getTransaction();
@@ -28,6 +30,7 @@ public class LocationSystemTest extends AbstractPDOTestCase{
 		entityTransaction.begin();
 		em.persist(actualLocation);
 		em.persist(virtualLocation);
+		em.persist(locationGroup);
 		entityTransaction.commit();
 		
 		

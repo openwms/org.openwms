@@ -9,6 +9,7 @@ package org.openwms.domain.common;
 import javax.persistence.EntityTransaction;
 
 import org.junit.Test;
+import org.openwms.domain.common.helper.AbstractPDOTestCase;
 
 public class TransportUnitSystemTest extends AbstractPDOTestCase {
 
