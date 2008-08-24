@@ -3,5 +3,6 @@
 <wb-module deploy-name="OpenWMS-common">
 <wb-resource deploy-path="/" source-path="/src"/>
 <wb-resource deploy-path="/" source-path="/test"/>
+<wb-resource deploy-path="/" source-path="/spring"/>
 </wb-module>
 </project-modules>
