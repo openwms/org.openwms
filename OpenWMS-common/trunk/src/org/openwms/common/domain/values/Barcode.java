@@ -38,6 +38,12 @@ public class Barcode implements Serializable{
 	private Barcode() {
 	}
 
+	/**
+	 * 
+	 * Create a new Barcode with an Id.
+	 * 
+	 * @param id
+	 */
 	public Barcode(String id) {
 		assert (id != null);
 		this.id = id;
