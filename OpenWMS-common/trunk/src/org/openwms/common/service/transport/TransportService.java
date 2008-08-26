@@ -6,15 +6,15 @@
  */
 package org.openwms.common.service.transport;
 
-import java.io.Serializable;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.openwms.common.dao.IEntityDao;
+import org.openwms.common.dao.IGenericDAO;
 import org.openwms.common.domain.LocationPK;
 import org.openwms.common.domain.TransportUnit;
 import org.openwms.common.domain.values.Barcode;
+import org.openwms.common.exception.service.ServiceException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -27,17 +27,28 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 public class TransportService {
 
-    private IEntityDao<Serializable> entityDao;
+    private IGenericDAO<TransportUnit, Barcode> entityDao;
 
-    public TransportService(IEntityDao<Serializable> entityDao) {
+    public TransportService(IGenericDAO<TransportUnit, Barcode> entityDao) {
 	this.entityDao = entityDao;
     }
 
+    /**
+     * Moves a <tt>TransportUnit</tt> identified by its <tt>Barcode</tt> to the given actual <tt>Location</tt>
+     * identified by the <tt>LocationPK</tt>.
+     * 
+     * @param barcode
+     * @param locationPk
+     */
     @Transactional
     public void moveTransportUnit(Barcode barcode, LocationPK locationPk) {
 	Map<String, String> params = new HashMap<String, String>();
 	params.put("id", barcode.getId());
-	List<Serializable> transportUnits = entityDao.find("findTUByBarcodeString", params);
+	List<TransportUnit> transportUnits = entityDao.findByQuery("findTUByBarcodeString", params);
+	// FIXME: Provide a findUniqueResult method in DAO to prevent result checks in service method
+	if (transportUnits.size() != 1) {
+	    throw new ServiceException("Excepted a unique query result while searching a TransportUnit by Barcode");
+	}
 
     }
 
