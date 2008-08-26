@@ -1,0 +1,21 @@
+/*
+ * OpenWMS, the open Warehouse Management System
+ * 
+ * Distributable under LGPL license.
+ * See terms of license at gnu.org.
+ */
+package org.openwms.common.dao;
+
+import org.openwms.common.domain.TransportUnit;
+import org.openwms.common.domain.values.Barcode;
+
+/**
+ * A ITransportUnitDAO.
+ * 
+ * @author <a href="heiko.scherrer@gmx.de">Heiko Scherrer</a>
+ * @version $Revision: 314 $
+ */
+public interface ITransportUnitDAO extends IGenericDAO<TransportUnit, Barcode> {
+
+    //TODO: Pull up all non-CRUD operations
+}
