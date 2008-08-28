@@ -13,6 +13,12 @@
 		<property name="entityManagerFactory" ref="entityManagerFactoryBean" />
 	</bean>
 
+	<bean class="org.springframework.dao.annotation.PersistenceExceptionTranslationPostProcessor" />
+
+	<bean class="org.springframework.orm.jpa.support.PersistenceAnnotationBeanPostProcessor" />
+
+
+
 	<tx:annotation-driven />
-	<context:annotation-config/>
+	<context:annotation-config />
 </beans>
