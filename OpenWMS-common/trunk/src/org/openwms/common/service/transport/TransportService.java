@@ -55,6 +55,9 @@ public class TransportService implements ITransportService {
 	TransportUnit transportUnit = null;
 	try {
 	    Location actualLocation = locationDao.findByUniqueId(actualLocationPk);
+	    if (actualLocation == null) {
+		throw new ServiceException("Location with id [" + actualLocation + "] not found");
+	    }
 	    transportUnit = transportUnitDao.findByUniqueId(barcode);
 	    if (transportUnit == null) {
 		throw new ServiceException("TransportUnit with id [" + barcode + "] not found");

@@ -26,6 +26,6 @@ public class TransportServiceTest extends AbstractSpringContextTests {
 
     public void testCreateTransportUnit() {
 	ITransportService service = (ITransportService) getApplicationContext().getBean("transportService");
-	service.createTransportUnit(new Barcode("4711"), new TransportUnitType("TestType"),new LocationPK("AREA", "AISLE", "X", "Y", "Z"));
+	service.moveTransportUnit(new Barcode("4711"), new LocationPK("AREA", "AISLE", "X", "Y", "Z"));
     }
 }
