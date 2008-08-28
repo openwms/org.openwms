@@ -18,10 +18,8 @@ import java.util.Map;
  */
 public interface IGenericDAO<T, ID extends Serializable> {
 
-    final String NQ_FIND_ALL = "findAll";
-
     /**
-     * Find and return the entity identified by <tt>id</tt>.
+     * Find and return the entity identified by the technical <tt>id</tt>.
      * 
      * @param id
      * @return
@@ -44,6 +42,14 @@ public interface IGenericDAO<T, ID extends Serializable> {
      */
     List<T> findByQuery(String queryName, Map<String, ?> params);
 
+    /**
+     * Find and return the entity identified by the natural unique id.
+     * 
+     * @param id
+     * @return
+     */
+    T findByUniqueId(Object id);
+    
     /**
      * Saves a persistent entity and returns it.
      * 

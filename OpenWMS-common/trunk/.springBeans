@@ -8,9 +8,9 @@
 	<enableImports><![CDATA[true]]></enableImports>
 	<configs>
 		<config>spring/org/openwms/common/bootstrap-cfg.xml</config>
-		<config>test/org/openwms/common/dao/UserDao-test-cfg.xml</config>
 		<config>test/org/openwms/common/Test-Infrastructure-test-cfg.xml</config>
 		<config>test/org/openwms/common/service/transport/TransportService-test-cfg.xml</config>
+		<config>test/org/openwms/common/dao/Dao-test-cfg.xml</config>
 	</configs>
 	<configSets>
 		<configSet>
@@ -18,9 +18,9 @@
 			<allowBeanDefinitionOverriding>true</allowBeanDefinitionOverriding>
 			<incomplete>true</incomplete>
 			<configs>
-				<config>test/org/openwms/common/dao/UserDao-test-cfg.xml</config>
 				<config>test/org/openwms/common/service/transport/TransportService-test-cfg.xml</config>
 				<config>test/org/openwms/common/Test-Infrastructure-test-cfg.xml</config>
+				<config>test/org/openwms/common/dao/Dao-test-cfg.xml</config>
 			</configs>
 		</configSet>
 	</configSets>

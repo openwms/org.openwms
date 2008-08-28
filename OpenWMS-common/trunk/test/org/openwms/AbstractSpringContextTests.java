@@ -17,7 +17,7 @@ import org.springframework.test.AbstractDependencyInjectionSpringContextTests;
 public class AbstractSpringContextTests extends
 		AbstractDependencyInjectionSpringContextTests {
 
-	private String commonTestPackage = "classpath:org/openwms/common/*-test-cfg.xml";
+	private String commonTestPackage = "classpath:org/openwms/common/**/*-test-cfg.xml";
 
 	protected String[] getConfigLocations() {
 		String[] loc= new String[] {

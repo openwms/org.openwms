@@ -8,7 +8,8 @@
 		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-2.5.xsd">
 
 	<bean class="org.openwms.common.service.transport.TransportService" id="transportService">
-		<constructor-arg ref="entityDao"/>
+		<constructor-arg ref="transportUnitDao"/>
+		<constructor-arg ref="locationDao"/>
 	</bean>
 
 </beans>
