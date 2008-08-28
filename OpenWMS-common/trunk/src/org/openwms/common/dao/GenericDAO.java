@@ -11,6 +11,7 @@ import java.lang.reflect.ParameterizedType;
 import java.util.List;
 import java.util.Map;
 
+import org.springframework.dao.IncorrectResultSizeDataAccessException;
 import org.springframework.orm.jpa.support.JpaDaoSupport;
 import org.springframework.stereotype.Repository;
 
@@ -56,12 +57,21 @@ public abstract class GenericDAO<T, ID extends Serializable> extends JpaDaoSuppo
 
     @SuppressWarnings("unchecked")
     public List<T> findAll() {
-	return getJpaTemplate().findByNamedQuery(IGenericDAO.NQ_FIND_ALL);
+	return getJpaTemplate().findByNamedQuery(getFindAllQuery());
     }
 
     @SuppressWarnings("unchecked")
     public List<T> findByQuery(String queryName, Map<String, ?> params) {
 	return getJpaTemplate().findByNamedQueryAndNamedParams(queryName, params);
+    }
+
+    @SuppressWarnings("unchecked")
+    public T findByUniqueId(Object id) {
+	List<T> result = getJpaTemplate().findByNamedQuery(getFindAllUniqueQuery(), id);
+	if (result.size() > 1) {
+	    throw new IncorrectResultSizeDataAccessException("Unexpected size of result list", 1, result.size());
+	}
+	return result == null || result.size() == 0 ? null : result.get(0);
     }
 
     public T save(T entity) {
@@ -75,5 +85,7 @@ public abstract class GenericDAO<T, ID extends Serializable> extends JpaDaoSuppo
     public void persist(T entity) {
 	getJpaTemplate().persist(entity);
     }
-
+    
+    abstract String getFindAllQuery();
+    abstract String getFindAllUniqueQuery();
 }

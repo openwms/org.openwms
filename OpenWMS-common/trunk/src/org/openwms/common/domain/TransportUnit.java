@@ -47,8 +47,8 @@ import org.openwms.common.domain.values.Barcode;
 @Entity
 @Table(name = "TRANSPORT_UNIT", uniqueConstraints = @UniqueConstraint(columnNames = { "BARCODE" }))
 @NamedQueries( { 
-    @NamedQuery(name = "findAll", query = "SELECT tu FROM TransportUnit tu"),
-    @NamedQuery(name = "findTUByBarcodeString", query = "SELECT tu FROM TransportUnit tu WHERE tu.barcode.id = ?1") })
+    @NamedQuery(name = "findTransportUnitAll", query = "SELECT tu FROM TransportUnit tu"),
+    @NamedQuery(name = "findTransportUnitUnique", query = "SELECT tu FROM TransportUnit tu WHERE tu.barcode = ?1") })
 public class TransportUnit implements Serializable {
 
     private static final long serialVersionUID = 1L;

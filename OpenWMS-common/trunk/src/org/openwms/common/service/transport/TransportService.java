@@ -6,15 +6,16 @@
  */
 package org.openwms.common.service.transport;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.openwms.common.dao.IGenericDAO;
+import org.openwms.common.domain.Location;
 import org.openwms.common.domain.LocationPK;
 import org.openwms.common.domain.TransportUnit;
+import org.openwms.common.domain.TransportUnitType;
 import org.openwms.common.domain.values.Barcode;
 import org.openwms.common.exception.service.ServiceException;
+import org.openwms.common.service.ITransportService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -25,12 +26,21 @@ import org.springframework.transaction.annotation.Transactional;
  * @version $Revision: 314 $
  */
 @Service
-public class TransportService {
+public class TransportService implements ITransportService {
 
-    private IGenericDAO<TransportUnit, Barcode> entityDao;
+    protected Log LOG = LogFactory.getLog(this.getClass());
+    private IGenericDAO<TransportUnit, Barcode> transportUnitDao;
+    private IGenericDAO<Location, LocationPK> locationDao;
 
-    public TransportService(IGenericDAO<TransportUnit, Barcode> entityDao) {
-	this.entityDao = entityDao;
+    public TransportService(IGenericDAO<TransportUnit, Barcode> entityDao, IGenericDAO<Location, LocationPK> locationDao) {
+	this.transportUnitDao = entityDao;
+	this.locationDao = locationDao;
+    }
+
+    public TransportUnit createTransportUnit(Barcode barcode, TransportUnitType transportUnitType,
+	    LocationPK actualLocationPk) {
+	// FIXME: implement
+	return null;
     }
 
     /**
@@ -41,15 +51,21 @@ public class TransportService {
      * @param locationPk
      */
     @Transactional
-    public void moveTransportUnit(Barcode barcode, LocationPK locationPk) {
-	Map<String, String> params = new HashMap<String, String>();
-	params.put("id", barcode.getId());
-	List<TransportUnit> transportUnits = entityDao.findByQuery("findTUByBarcodeString", params);
-	// FIXME: Provide a findUniqueResult method in DAO to prevent result checks in service method
-	if (transportUnits.size() != 1) {
-	    throw new ServiceException("Excepted a unique query result while searching a TransportUnit by Barcode");
+    public void moveTransportUnit(Barcode barcode, LocationPK actualLocationPk) throws ServiceException {
+	TransportUnit transportUnit = null;
+	try {
+	    Location actualLocation = locationDao.findByUniqueId(actualLocationPk);
+	    transportUnit = transportUnitDao.findByUniqueId(barcode);
+	    if (transportUnit == null) {
+		throw new ServiceException("TransportUnit with id [" + barcode + "] not found");
+	    }
+	    transportUnit.setActualLocation(actualLocation);
+	    transportUnitDao.persist(transportUnit);
 	}
-
+	catch (RuntimeException e) {
+	    // FIXME
+	    e.printStackTrace();
+	}
     }
 
 }

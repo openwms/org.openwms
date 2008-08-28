@@ -17,5 +17,15 @@ import org.openwms.common.domain.values.Barcode;
  */
 public class TransportUnitDAO extends GenericDAO<TransportUnit, Barcode> implements ITransportUnitDAO {
 
+    @Override
+    String getFindAllQuery() {
+        return ITransportUnitDAO.NQ_FIND_ALL;
+    }
+    
+    @Override
+    String getFindAllUniqueQuery() {
+        return ITransportUnitDAO.NQ_FIND_BY_UNIQUE_QUERY;
+    }
+    
     // TODO: Provide other TransportUnit based non-CRUD operations here!
 }

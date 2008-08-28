@@ -21,6 +21,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
@@ -39,6 +41,9 @@ import org.openwms.common.domain.system.Message;
  */
 @Entity
 @Table(name = "LOCATION", uniqueConstraints = @UniqueConstraint(columnNames = { "AREA", "AISLE", "X", "Y", "Z" }))
+@NamedQueries( { 
+    @NamedQuery(name = "findLocationAll", query = "SELECT l FROM Location l"),
+    @NamedQuery(name = "findLocationUnique", query = "SELECT l FROM Location l WHERE l.locationId = ?1") })
 public class Location implements Serializable, ILocation {
 
     private static final long serialVersionUID = 1L;

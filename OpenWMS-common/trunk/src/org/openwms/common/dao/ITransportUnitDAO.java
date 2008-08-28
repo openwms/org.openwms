@@ -17,5 +17,8 @@ import org.openwms.common.domain.values.Barcode;
  */
 public interface ITransportUnitDAO extends IGenericDAO<TransportUnit, Barcode> {
 
+    public final String NQ_FIND_ALL = "findTransportUnitAll";
+    public final String NQ_FIND_BY_UNIQUE_QUERY = "findTransportUnitUnique";
+
     //TODO: Pull up all non-CRUD operations
 }
