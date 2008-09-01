@@ -8,7 +8,7 @@ package org.openwms.common.dao;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.openwms.AbstractSpringContextTests;
+import org.openwms.AbstractJpaSpringContextTests;
 
 /**
  * A UserDaoTest.
@@ -16,7 +16,7 @@ import org.openwms.AbstractSpringContextTests;
  * @author <a href="heiko.scherrer@gmx.de">Heiko Scherrer</a>
  * @version $Revision: 314 $
  */
-public class UserDaoTest extends AbstractSpringContextTests {
+public class UserDaoTest extends AbstractJpaSpringContextTests {
 
 	protected static final Log LOG = LogFactory.getLog(UserDaoTest.class);
 
