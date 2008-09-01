@@ -6,16 +6,16 @@
  */
 package org.openwms;
 
-import org.springframework.test.AbstractDependencyInjectionSpringContextTests;
+import org.springframework.test.jpa.AbstractJpaTests;
 
 /**
- * A AbstractSpringContextTests.
+ * A AbstractJpaSpringContextTests.
  * 
  * @author <a href="heiko.scherrer@gmx.de">Heiko Scherrer</a>
  * @version $Revision: 314 $
  */
-public class AbstractSpringContextTests extends
-		AbstractDependencyInjectionSpringContextTests {
+public class AbstractJpaSpringContextTests extends
+		AbstractJpaTests {
 
 	private String commonTestPackage = "classpath:org/openwms/common/**/*-test-cfg.xml";
 
@@ -26,5 +26,9 @@ public class AbstractSpringContextTests extends
 								'/') + "/**/*-test-cfg.xml", commonTestPackage };
 		return loc;
 	}
+	
+	
+	
+	
 
 }

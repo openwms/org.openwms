@@ -13,6 +13,17 @@
 		<property name="entityManagerFactory" ref="entityManagerFactoryBean" />
 	</bean>
 
+	<bean class="org.springframework.jdbc.datasource.DriverManagerDataSource" id="dataSource">
+		<property name="driverClassName" value="org.postgresql.Drive" />
+		<property name="url" value="jdbc:postgresql:OPENWMSDB" />
+		<property name="username" value="postgres" />
+		<property name="password" value="postgres" />
+	</bean>
+
+	<bean class="org.dbunit.database.DatabaseDataSourceConnection" id="databaseConnection">
+		<constructor-arg ref="dataSource" />
+	</bean>
+
 	<bean class="org.springframework.dao.annotation.PersistenceExceptionTranslationPostProcessor" />
 
 	<bean class="org.springframework.orm.jpa.support.PersistenceAnnotationBeanPostProcessor" />
