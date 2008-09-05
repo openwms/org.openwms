@@ -14,10 +14,10 @@
 	</bean>
 
 	<bean class="org.springframework.jdbc.datasource.DriverManagerDataSource" id="dataSource">
-		<property name="driverClassName" value="org.postgresql.Drive" />
+		<property name="driverClassName" value="org.postgresql.Driver" />
 		<property name="url" value="jdbc:postgresql:OPENWMSDB" />
-		<property name="username" value="postgres" />
-		<property name="password" value="postgres" />
+		<property name="username" value="OPENWMS" />
+		<property name="password" value="OPENWMS" />
 	</bean>
 
 	<bean class="org.dbunit.database.DatabaseDataSourceConnection" id="databaseConnection">

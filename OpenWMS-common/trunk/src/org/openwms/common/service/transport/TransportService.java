@@ -29,6 +29,7 @@ import org.springframework.transaction.annotation.Transactional;
 public class TransportService implements ITransportService {
 
     protected Log LOG = LogFactory.getLog(this.getClass());
+    // FIXME: Eliminate different dao injections, use only one generic dao!
     private IGenericDAO<TransportUnit, Barcode> transportUnitDao;
     private IGenericDAO<Location, LocationPK> locationDao;
 
@@ -56,18 +57,19 @@ public class TransportService implements ITransportService {
 	try {
 	    Location actualLocation = locationDao.findByUniqueId(actualLocationPk);
 	    if (actualLocation == null) {
-		throw new ServiceException("Location with id [" + actualLocation + "] not found");
+		throw new ServiceException("Location with id " + actualLocationPk + " not found");
 	    }
 	    transportUnit = transportUnitDao.findByUniqueId(barcode);
 	    if (transportUnit == null) {
-		throw new ServiceException("TransportUnit with id [" + barcode + "] not found");
+		throw new ServiceException("TransportUnit with id " + barcode + " not found");
 	    }
 	    transportUnit.setActualLocation(actualLocation);
-	    transportUnitDao.persist(transportUnit);
+	    // FIXME: Persisting not working in test case, yet
+	    transportUnitDao.save(transportUnit);
 	}
-	catch (RuntimeException e) {
-	    // FIXME
-	    e.printStackTrace();
+	catch (RuntimeException e) { // FIXME
+	    throw new ServiceException("Cannot move TransportUnit with barcode " + barcode + " to location "
+		    + actualLocationPk, e);
 	}
     }
 

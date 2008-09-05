@@ -18,9 +18,9 @@ import org.openwms.common.domain.system.usermanagement.User;
 
 public class RoleTest extends AbstractPDOTestCase {
 	
-	private final String TEST_ROLE = "ROLE_TEST";
-	private final String KNOWN_USER = "KNOWN_USER";
-	private final String UNKNOWN_USER = "UNKNOWN_USER";
+	private static final String TEST_ROLE = "ROLE_TEST";
+	private static final String KNOWN_USER = "KNOWN_USER";
+	private static final String UNKNOWN_USER = "UNKNOWN_USER";
 
 	@Test
 	public void testRoleConstraint() {

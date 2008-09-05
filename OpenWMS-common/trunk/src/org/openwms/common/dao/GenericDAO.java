@@ -67,11 +67,12 @@ public abstract class GenericDAO<T, ID extends Serializable> extends JpaDaoSuppo
 
     @SuppressWarnings("unchecked")
     public T findByUniqueId(Object id) {
+	//TODO:Don't check null, yet
 	List<T> result = getJpaTemplate().findByNamedQuery(getFindAllUniqueQuery(), id);
 	if (result.size() > 1) {
 	    throw new IncorrectResultSizeDataAccessException("Unexpected size of result list", 1, result.size());
 	}
-	return result == null || result.size() == 0 ? null : result.get(0);
+	return result.size() == 0 ? null : result.get(0);
     }
 
     public T save(T entity) {
