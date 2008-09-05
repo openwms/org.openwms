@@ -151,7 +151,7 @@ public class Location implements Serializable, ILocation {
      * true : <code>Location</code> is enabled for outgoing transports<br>
      * false: <code>Location</code> is locked, <code>TransportUnit</code>s can't leave from here.
      */
-    @Column(name = "OUTGOING_STATE")
+    @Column(name = "OUTGOING_ACTIVE")
     private boolean outgoingActive;
 
     /**

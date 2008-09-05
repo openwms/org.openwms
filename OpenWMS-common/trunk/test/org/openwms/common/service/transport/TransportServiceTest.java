@@ -6,12 +6,6 @@
  */
 package org.openwms.common.service.transport;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
-import org.dbunit.database.IDatabaseConnection;
-import org.dbunit.dataset.IDataSet;
-import org.dbunit.dataset.xml.FlatXmlDataSet;
-import org.dbunit.operation.DatabaseOperation;
 import org.junit.Test;
 import org.openwms.AbstractJpaSpringContextTests;
 import org.openwms.common.domain.LocationPK;
@@ -26,33 +20,22 @@ import org.openwms.common.service.ITransportService;
  */
 public class TransportServiceTest extends AbstractJpaSpringContextTests {
 
-    protected static final Log LOG = LogFactory.getLog(TransportServiceTest.class);
-    private IDatabaseConnection connection;
-    private static ITransportService service;
+    private ITransportService transportService = null;
+    private String testDataFile = "load-TransportUnits.sql";
 
-    public TransportServiceTest() {
+    // Spring IoC
+    public void setTransportService(ITransportService transportService) {
+	this.transportService = transportService;
+    }
 
-	IDatabaseConnection s = (IDatabaseConnection) getApplicationContext().getBean("databaseConnection");
-	
-	IDataSet dataSet = new FlatXmlDataSet(
-		    this.getClass().getResource(
-		    "/junitbook/database/data.xml"));
-
-	try
-	{
-	    DatabaseOperation.CLEAN_INSERT.execute(connection,
-	        dataSet);
-	}
-	finally
-	{
-	    connection.close();
-	}
-
-	service = (ITransportService) getApplicationContext().getBean("transportService");
+    @Override
+    protected String getTestDataFile() {
+	return this.testDataFile;
     }
 
     @Test
     public void testCreateTransportUnit() {
-	service.moveTransportUnit(new Barcode("4711"), new LocationPK("AREA", "AISLE", "X", "Y", "Z"));
+	transportService.moveTransportUnit(new Barcode("4711"), new LocationPK("AREA", "AISLE", "X", "Y", "Z"));
     }
+
 }
