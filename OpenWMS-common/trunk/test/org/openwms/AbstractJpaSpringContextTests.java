@@ -6,7 +6,6 @@
  */
 package org.openwms;
 
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.sql.Connection;
 
@@ -30,7 +29,11 @@ import org.springframework.test.jpa.AbstractJpaTests;
 public abstract class AbstractJpaSpringContextTests extends AbstractJpaTests {
 
     private String commonTestPackage = "classpath:org/openwms/common/**/*-test-cfg.xml";
-    //private static String TEST_DATA_FILE = "load-testData.sql";
+    private Resource fileResource = null;
+    private DataSource dataSource = null;
+    private Connection connection = null;
+
+    // private static String TEST_DATA_FILE = "load-testData.sql";
 
     protected String[] getConfigLocations() {
 	String[] loc = new String[] {
@@ -41,49 +44,40 @@ public abstract class AbstractJpaSpringContextTests extends AbstractJpaTests {
 
     @Override
     protected void onSetUpInTransaction() throws Exception {
-	logger.info("*** Inserting test data ***");
-	// Use spring to get the datasource
-	DataSource ds = this.jdbcTemplate.getDataSource();
-	Connection conn = ds.getConnection();
-	try {
-	    IDatabaseConnection connection = new DatabaseConnection(conn);
-	    connection.getConfig().setFeature(DatabaseConfig.FEATURE_QUALIFIED_TABLE_NAMES, true);
-	    DatabaseOperation.INSERT.execute(connection, new FlatXmlDataSet(getTestDataFileAsResource().getFile()));
-	}
-	finally {
-	    DataSourceUtils.releaseConnection(conn, ds);
-	    logger.info("*** Finished inserting test data ***");
-	}
+	dataSource = this.jdbcTemplate.getDataSource();
+	fileResource = getTestDataFileAsResource();
+	fileResource = (fileResource == null) ? null : populateTestData(fileResource, DatabaseOperation.INSERT);
 	super.onSetUpInTransaction();
     }
 
     @Override
     protected void onTearDown() throws Exception {
-	// Commit or rollback the transaction
 	endTransaction();
+	fileResource = (fileResource == null) ? null : populateTestData(fileResource, DatabaseOperation.DELETE);
+    }
 
-	// Delete the data
-	DataSource ds = this.jdbcTemplate.getDataSource();
-	Connection conn = ds.getConnection();
+    private Resource populateTestData(Resource fileResource, DatabaseOperation dbOp) throws Exception {
+	connection = dataSource.getConnection();
 	try {
-	    IDatabaseConnection connection = new DatabaseConnection(conn);
-	    connection.getConfig().setFeature(DatabaseConfig.FEATURE_QUALIFIED_TABLE_NAMES, true);
-	    DatabaseOperation.DELETE.execute(connection, new FlatXmlDataSet(new FileInputStream(
-		    getTestDataFileAsResource().getFile())));
+	    IDatabaseConnection dbUnitConnection = new DatabaseConnection(connection);
+	    dbUnitConnection.getConfig().setFeature(DatabaseConfig.FEATURE_QUALIFIED_TABLE_NAMES, true);
+	    dbOp.execute(dbUnitConnection, new FlatXmlDataSet(fileResource.getFile()));
 	}
 	finally {
-	    DataSourceUtils.releaseConnection(conn, ds);
-	    logger.info("*** Finished removing test data ***");
+	    DataSourceUtils.releaseConnection(connection, dataSource);
+	    logger.info("*** Finished inserting/deleting test data ***");
 	}
+	return fileResource;
     }
 
     protected String getTestDataFile() {
-	return ""; // FIXME:Dont return null;
+	return "";
     }
 
     protected Resource getTestDataFileAsResource() throws IOException {
-	//FIXME: Name path in ant style! MUST
-	return getApplicationContext().getResource("classpath:org/openwms/" + getTestDataFile());
+	// FIXME: Name path in ant style! MUST
+	Resource fileResource = getApplicationContext().getResource("classpath:org/openwms/" + getTestDataFile());
+	return fileResource.exists() ? fileResource : null;
     }
 
 }
