@@ -29,6 +29,7 @@ import org.springframework.test.jpa.AbstractJpaTests;
 public abstract class AbstractJpaSpringContextTests extends AbstractJpaTests {
 
     private String commonTestPackage = "classpath:org/openwms/common/**/*-test-cfg.xml";
+    private static final String DEFAULT_FILE = "";
     private Resource fileResource = null;
     private DataSource dataSource = null;
     private Connection connection = null;
@@ -40,6 +41,11 @@ public abstract class AbstractJpaSpringContextTests extends AbstractJpaTests {
 		"classpath:" + this.getClass().getPackage().getName().replace('.', '/') + "/**/*-test-cfg.xml",
 		commonTestPackage };
 	return loc;
+    }
+
+    @Override
+    protected boolean shouldUseShadowLoader() {
+	return false;
     }
 
     @Override
@@ -70,14 +76,26 @@ public abstract class AbstractJpaSpringContextTests extends AbstractJpaTests {
 	return fileResource;
     }
 
+    /**
+     * Override this method to load test data with dbUnit.
+     * 
+     * @return
+     */
     protected String getTestDataFile() {
-	return "";
+	return DEFAULT_FILE;
     }
 
+    /**
+     * Calls {@link getTestDataFile} and tries to resolve the resource name within the package where the test class
+     * exists.
+     * 
+     * @return
+     * @throws IOException
+     */
     protected Resource getTestDataFileAsResource() throws IOException {
-	// FIXME: Name path in ant style! MUST
-	Resource fileResource = getApplicationContext().getResource("classpath:org/openwms/" + getTestDataFile());
-	return fileResource.exists() ? fileResource : null;
+	Resource fileResource = getApplicationContext().getResource(
+		"classpath:" + this.getClass().getPackage().getName().replace('.', '/') + "/" + getTestDataFile());
+	return fileResource.exists() && getTestDataFile() != DEFAULT_FILE ? fileResource : null;
     }
 
 }

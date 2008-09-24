@@ -6,7 +6,7 @@
 		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-2.5.xsd">
 
 	<bean class="org.springframework.orm.jpa.LocalEntityManagerFactoryBean" id="entityManagerFactoryBean">
-		<property name="persistenceUnitName" value="OpenWMS-test-durable" />
+		<property name="persistenceUnitName" value="OpenWMS-test" />
 	</bean>
 
 	<bean class="org.springframework.orm.jpa.JpaTransactionManager" id="transactionManager">
@@ -25,10 +25,7 @@
 	</bean>
 
 	<bean class="org.springframework.dao.annotation.PersistenceExceptionTranslationPostProcessor" />
-
 	<bean class="org.springframework.orm.jpa.support.PersistenceAnnotationBeanPostProcessor" />
-
-
 
 	<tx:annotation-driven />
 	<context:annotation-config />

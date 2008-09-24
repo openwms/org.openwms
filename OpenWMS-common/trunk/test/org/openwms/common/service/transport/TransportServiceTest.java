@@ -9,6 +9,7 @@ package org.openwms.common.service.transport;
 import org.junit.Test;
 import org.openwms.AbstractJpaSpringContextTests;
 import org.openwms.common.domain.LocationPK;
+import org.openwms.common.domain.TransportUnitType;
 import org.openwms.common.domain.values.Barcode;
 import org.openwms.common.service.ITransportService;
 
@@ -35,7 +36,11 @@ public class TransportServiceTest extends AbstractJpaSpringContextTests {
 
     @Test
     public void testCreateTransportUnit() {
-	//FIXME: transportService.moveTransportUnit(new Barcode("4711"), new LocationPK("AREA", "AISLE", "X", "Y", "Z"));
+	//FIXME: complete!
+	transportService.createTransportUnit(new Barcode("4711"), new TransportUnitType("TestType"), new LocationPK(
+		"AREA", "AISLE", "X", "Y", "Z"));
+	// FIXME: transportService.moveTransportUnit(new Barcode("4711"), new LocationPK("AREA", "AISLE", "X", "Y",
+	// "Z"));
     }
 
 }
