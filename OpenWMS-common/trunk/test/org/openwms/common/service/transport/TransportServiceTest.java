@@ -19,7 +19,7 @@ import org.openwms.common.service.ITransportService;
  * @author <a href="heiko.scherrer@gmx.de">Heiko Scherrer</a>
  * @version $Revision: 314 $
  */
-public class TransportServiceTest extends AbstractJpaSpringContextTests {
+public final class TransportServiceTest extends AbstractJpaSpringContextTests {
 
     private ITransportService transportService = null;
     private String testDataFile = "load-TransportUnits.sql";

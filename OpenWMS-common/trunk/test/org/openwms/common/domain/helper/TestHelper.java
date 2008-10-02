@@ -9,7 +9,6 @@ package org.openwms.common.domain.helper;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
-import java.sql.Statement;
 
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
@@ -27,69 +26,111 @@ import org.apache.log4j.xml.DOMConfigurator;
 public final class TestHelper {
 
     public static final String PERSISTENCE_UNIT_DURABLE = "OpenWMS-test-durable";
-    private static final Log LOG = LogFactory.getLog(TestHelper.class);
-    private static Connection connection;
-    private static boolean dbStarted = false;
     private static String persistenceUnit = "OpenWMS-test";
-    private static EntityManagerFactory emf;
+    private Log logger = LogFactory.getLog(TestHelper.class);
+    private static TestHelper helper;
+    private Connection connection;
+    private boolean dbStarted = false;
 
     private TestHelper() {};
 
-    public static void initializeTestCase() {
+    /**
+     * Get Singleton instance.
+     * 
+     * @return
+     */
+    public synchronized static TestHelper getInstance() {
+	return helper == null ? new TestHelper() : helper;
+    }
+
+    /**
+     * Care about log4j settings.
+     *
+     */
+    public void initializeTestCase() {
 	DOMConfigurator.configure("src/META-INF/log4j.xml");
     }
 
-    public static void startDb() {
+    /**
+     * Start the in-memory HSQL database.
+     * 
+     */
+    public void startDb() {
+	if (dbStarted) {
+	    return;
+	}
+	logger.info("Starting in-memory HSQL database for unit tests");
 	try {
-	    LOG.info("Starting in-memory HSQL database for unit tests");
 	    Class.forName("org.hsqldb.jdbcDriver");
 	    connection = DriverManager.getConnection("jdbc:hsqldb:mem:openwms", "sa", "");
 	    dbStarted = true;
 	}
 	catch (Exception ex) {
-	    ex.printStackTrace();
 	    throw new RuntimeException("Exception during HSQL database startup.");
 	}
     }
 
-    public static void stopDb() {
-	LOG.info("Stopping in-memory HSQL database.");
-	Statement stmnt = null;
+    /**
+     * Stop the in-memory HSQL database.
+     * 
+     */
+    public void stopDb() {
+	if (!dbStarted) {
+	    return;
+	}
+	logger.info("Stopping in-memory HSQL database.");
 	try {
-	    stmnt = connection.createStatement();
-	    stmnt.execute("SHUTDOWN");
-	    dbStarted = false;
+	    connection.createStatement().execute("SHUTDOWN");
 	}
 	catch (Exception ex) {
-	    ex.printStackTrace();
 	    throw new RuntimeException("Exception during HSQL database shutdown.");
 	}
 	finally {
 	    try {
-		stmnt.close();
 		connection.close();
 	    }
 	    catch (SQLException e) {
-		LOG.error("Error closing connection", e);
+		logger.error("Error closing connection", e);
 	    }
+	    dbStarted = false;
 	}
     }
 
-    public static boolean isDbStarted() {
+    /**
+     * Is the HSQL database started ?
+     * 
+     * @return
+     */
+    public boolean isDbStarted() {
 	return dbStarted;
     }
 
-    public static String getPersistenceUnit() {
+    /**
+     * Return the name of the PersistenceUnit to use for tests.
+     * 
+     * @return
+     */
+    public String getPersistenceUnit() {
 	return persistenceUnit;
     }
 
-    public static boolean isPersistenceUnitDurable() {
+    /**
+     * Check whether the used PersistenceUnit is durable.
+     * 
+     * @return
+     */
+    public boolean isPersistenceUnitDurable() {
 	return (PERSISTENCE_UNIT_DURABLE.equals(getPersistenceUnit()));
     }
 
-    public static EntityManagerFactory createEntityManagerFactory(String pUnit) {
-	emf = Persistence.createEntityManagerFactory(pUnit);
-	return emf;
+    /**
+     * Create a EntityManagerFactory.
+     * 
+     * @param pUnit
+     * @return
+     */
+    public EntityManagerFactory createEntityManagerFactory(String pUnit) {
+	return Persistence.createEntityManagerFactory(pUnit);
     }
 
 }

@@ -15,6 +15,13 @@ import org.apache.commons.logging.LogFactory;
 import org.openwms.common.domain.Location;
 import org.openwms.common.domain.LocationPK;
 
+/**
+ * 
+ * A LocationHelper.
+ * 
+ * @author <a href="heiko.scherrer@gmx.de">Heiko Scherrer</a>
+ * @version $Revision$
+ */
 public class LocationHelper {
 
 	private EntityManager em;

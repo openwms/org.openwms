@@ -32,7 +32,6 @@ public abstract class AbstractJpaSpringContextTests extends AbstractJpaTests {
     private static final String DEFAULT_FILE = "";
     private Resource fileResource = null;
     private DataSource dataSource = null;
-    private Connection connection = null;
 
     // private static String TEST_DATA_FILE = "load-testData.sql";
 
@@ -63,7 +62,7 @@ public abstract class AbstractJpaSpringContextTests extends AbstractJpaTests {
     }
 
     private Resource populateTestData(Resource fileResource, DatabaseOperation dbOp) throws Exception {
-	connection = dataSource.getConnection();
+	Connection connection = dataSource.getConnection();
 	try {
 	    IDatabaseConnection dbUnitConnection = new DatabaseConnection(connection);
 	    dbUnitConnection.getConfig().setFeature(DatabaseConfig.FEATURE_QUALIFIED_TABLE_NAMES, true);
