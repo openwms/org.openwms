@@ -6,14 +6,15 @@
  */
 package org.openwms.common.domain;
 
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.fail;
+
 import javax.persistence.EntityTransaction;
 import javax.persistence.PersistenceException;
 
 import org.hibernate.NonUniqueObjectException;
 import org.junit.Test;
-import org.openwms.common.domain.LocationType;
-import org.openwms.common.domain.TransportUnitType;
-import org.openwms.common.domain.TypePlacingRule;
 import org.openwms.common.domain.helper.AbstractPDOTestCase;
 
 /**
@@ -24,66 +25,67 @@ import org.openwms.common.domain.helper.AbstractPDOTestCase;
  */
 public final class TransportUnitTypeTest extends AbstractPDOTestCase {
 
-	/**
-	 * Test unique constraint on type.
-	 */
-	@Test
-	public final void testTransportUnitType() {
-		EntityTransaction entityTransaction = em.getTransaction();
-		TransportUnitType transportUnitType = new TransportUnitType("JU_TEST");
-		TransportUnitType transportUnitType2 = new TransportUnitType("JU_TEST");
+    /**
+     * Test unique constraint on type.
+     */
+    @Test
+    public final void testTransportUnitType() {
+	EntityTransaction entityTransaction = em.getTransaction();
+	TransportUnitType transportUnitType = new TransportUnitType("JU_TEST");
+	TransportUnitType transportUnitType2 = new TransportUnitType("JU_TEST");
 
-		entityTransaction.begin();
-		em.persist(transportUnitType);
-		entityTransaction.commit();
-		entityTransaction.begin();
-		try {
-			em.persist(transportUnitType2);
-			fail("Expecting exception when persisting existing entity with same identifier!");
-		} catch (PersistenceException pe) {
-			if (!(pe.getCause() instanceof NonUniqueObjectException)) {
-				fail("Unallowed exception when persisting existing entity with same identifier!");
-			}
-		}
-		entityTransaction.rollback();
-
-		TransportUnitType tt = em.find(TransportUnitType.class, "JU_TEST");
-		assertNotNull("TransportUnitType should be SAVED before", tt);
-
-		entityTransaction.begin();
-		em.remove(tt);
-		entityTransaction.commit();
-
-		tt = em.find(TransportUnitType.class, "JU_TEST");
-		assertNull("TransportUnitType should be REMOVED before", tt);
+	entityTransaction.begin();
+	em.persist(transportUnitType);
+	entityTransaction.commit();
+	entityTransaction.begin();
+	try {
+	    em.persist(transportUnitType2);
+	    fail("Expecting exception when persisting existing entity with same identifier!");
 	}
-	
-	@Test
-	public final void testCascadingTypePlacingRule() {
-		EntityTransaction entityTransaction = em.getTransaction();
-		TransportUnitType transportUnitType = new TransportUnitType("JU_TEST");
-		LocationType locationType = new LocationType("JU_LOC_TYPE");
-		TypePlacingRule typePlacingRule = new TypePlacingRule(1, locationType);
-		
-		transportUnitType.addTypePlacingRule(typePlacingRule);
-
-		entityTransaction.begin();
-		em.persist(locationType);
-		entityTransaction.commit();
-		entityTransaction.begin();
-		em.persist(transportUnitType);	
-		entityTransaction.commit();
-
-		TypePlacingRule tpr = em.find(TypePlacingRule.class, Long.valueOf(1));
-		assertNotNull("TypePlacingRule should be cascaded SAVED before", tpr);
-
-		entityTransaction.begin();
-		em.remove(transportUnitType);
-		entityTransaction.commit();
-
-		transportUnitType = em.find(TransportUnitType.class, "JU_TEST");
-		assertNull("TransportUnitType should be REMOVED before", transportUnitType);
-		
+	catch (PersistenceException pe) {
+	    if (!(pe.getCause() instanceof NonUniqueObjectException)) {
+		fail("Unallowed exception when persisting existing entity with same identifier!");
+	    }
 	}
+	entityTransaction.rollback();
+
+	TransportUnitType tt = em.find(TransportUnitType.class, "JU_TEST");
+	assertNotNull("TransportUnitType should be SAVED before", tt);
+
+	entityTransaction.begin();
+	em.remove(tt);
+	entityTransaction.commit();
+
+	tt = em.find(TransportUnitType.class, "JU_TEST");
+	assertNull("TransportUnitType should be REMOVED before", tt);
+    }
+
+    @Test
+    public final void testCascadingTypePlacingRule() {
+	EntityTransaction entityTransaction = em.getTransaction();
+	TransportUnitType transportUnitType = new TransportUnitType("JU_TEST");
+	LocationType locationType = new LocationType("JU_LOC_TYPE");
+	TypePlacingRule typePlacingRule = new TypePlacingRule(1, locationType);
+
+	transportUnitType.addTypePlacingRule(typePlacingRule);
+
+	entityTransaction.begin();
+	em.persist(locationType);
+	entityTransaction.commit();
+	entityTransaction.begin();
+	em.persist(transportUnitType);
+	entityTransaction.commit();
+
+	TypePlacingRule tpr = em.find(TypePlacingRule.class, Long.valueOf(1));
+	assertNotNull("TypePlacingRule should be cascaded SAVED before", tpr);
+
+	entityTransaction.begin();
+	em.remove(transportUnitType);
+	entityTransaction.commit();
+
+	transportUnitType = em.find(TransportUnitType.class, "JU_TEST");
+	assertNull("TransportUnitType should be REMOVED before", transportUnitType);
+
+    }
 
 }

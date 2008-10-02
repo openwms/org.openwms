@@ -16,7 +16,7 @@ import org.openwms.AbstractJpaSpringContextTests;
  * @author <a href="heiko.scherrer@gmx.de">Heiko Scherrer</a>
  * @version $Revision: 314 $
  */
-public class UserDaoTest extends AbstractJpaSpringContextTests {
+public final class UserDaoTest extends AbstractJpaSpringContextTests {
 
 	protected static final Log LOG = LogFactory.getLog(UserDaoTest.class);
 
@@ -35,7 +35,7 @@ public class UserDaoTest extends AbstractJpaSpringContextTests {
 		// routines
 		// assertNotNull("testUser must not be null", testUser);
 
-//		LOG.debug("Test GenericDAO passed");
+//		logger.debug("Test GenericDAO passed");
 	}
 
 }

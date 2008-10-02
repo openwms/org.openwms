@@ -6,15 +6,15 @@
  */
 package org.openwms.common.domain.helper;
 
-import java.sql.Connection;
+import static org.junit.Assert.fail;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
-
-import junit.framework.TestCase;
+import javax.persistence.EntityTransaction;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
 
@@ -24,51 +24,55 @@ import org.junit.BeforeClass;
  * @author <a href="heiko.scherrer@gmx.de">Heiko Scherrer</a>
  * @version $Revision$
  */
-public abstract class AbstractPDOTestCase extends TestCase {
+public abstract class AbstractPDOTestCase {
 
-	protected Log LOG = LogFactory.getLog(this.getClass());
-	protected EntityManagerFactory emf;
-	protected EntityManager em;
-	protected Connection connection;
-	protected boolean running = false;
+    protected final Log logger = LogFactory.getLog(this.getClass());
+    protected static EntityManagerFactory emf;
+    protected static EntityManager em;
+    protected static boolean running = false;
 
-	/**
-	 * Do before test run.
-	 * 
-	 * @throws java.lang.Exception
-	 */
-	@BeforeClass
-	public void setUp() {
-		try {
-			if (!running) {
-				TestHelper.initializeTestCase();
-			}
-			if (!TestHelper.isPersistenceUnitDurable() && !TestHelper.isDbStarted()) {
-				TestHelper.startDb();
-			}
-			LOG.info("Building JPA EntityManager for unit tests");
-			emf = TestHelper.createEntityManagerFactory(TestHelper.getPersistenceUnit());
-			em = emf.createEntityManager();
-		} catch (Exception ex) {
-			ex.printStackTrace();
-			fail("Exception during JPA EntityManager instanciation.");
-		}
+    /**
+     * Do before test run.
+     * 
+     */
+    @BeforeClass
+    public static void setUpBeforeClass() {
+	try {
+	    if (!running) {
+		TestHelper.getInstance().initializeTestCase();
+		running = true;
+	    }
+	    if (!TestHelper.getInstance().isDbStarted() && !TestHelper.getInstance().isPersistenceUnitDurable()) {
+		TestHelper.getInstance().startDb();
+	    }
+	    emf = TestHelper.getInstance().createEntityManagerFactory(TestHelper.getInstance().getPersistenceUnit());
+	    em = emf.createEntityManager();
 	}
-
-
-	/**
-	 * Do after test run.
-	 * 
-	 * @throws java.lang.Exception
-	 */
-	@AfterClass
-	public void tearDown() {
-		LOG.info("Shuting down Hibernate JPA layer.");
-		if (em != null) {
-			em.close();
-		}
-		if (emf != null) {
-			emf.close();
-		}
+	catch (Exception ex) {
+	    fail("Exception during JPA EntityManager instanciation.");
 	}
+    }
+
+    /**
+     * Do after test run.
+     * 
+     * @throws java.lang.Exception
+     */
+    @AfterClass
+    public static void tearDownAfterClass() {
+	if (em != null) {
+	    em.close();
+	}
+	if (emf != null) {
+	    emf.close();
+	}
+    }
+
+    @After
+    public void tearDown() {
+	EntityTransaction entityTransaction = em.getTransaction();
+	if (entityTransaction.isActive()) {
+	    entityTransaction.rollback();
+	}
+    }
 }

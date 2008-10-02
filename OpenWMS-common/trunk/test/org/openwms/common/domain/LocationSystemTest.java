@@ -14,7 +14,14 @@ import org.openwms.common.domain.LocationGroup;
 import org.openwms.common.domain.LocationPK;
 import org.openwms.common.domain.helper.AbstractPDOTestCase;
 
-public class LocationSystemTest extends AbstractPDOTestCase{
+/**
+ * 
+ * A LocationSystemTest.
+ * 
+ * @author <a href="heiko.scherrer@gmx.de">Heiko Scherrer</a>
+ * @version $Revision$
+ */
+public final class LocationSystemTest extends AbstractPDOTestCase{
 	
 	private static final String TEST_LOCATION_GROUP = "TEST_LG";
 	private static final String KNOWN = "KNOWN";
