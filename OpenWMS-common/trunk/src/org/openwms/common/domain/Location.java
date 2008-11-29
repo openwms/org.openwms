@@ -29,6 +29,7 @@ import javax.persistence.UniqueConstraint;
 import javax.persistence.Version;
 
 import org.openwms.common.domain.system.Message;
+import org.springframework.core.style.ToStringCreator;
 
 /**
  * This class is used to specify a location. A location could be a storage location in stock as well as a location on
@@ -41,9 +42,8 @@ import org.openwms.common.domain.system.Message;
  */
 @Entity
 @Table(name = "LOCATION", uniqueConstraints = @UniqueConstraint(columnNames = { "AREA", "AISLE", "X", "Y", "Z" }))
-@NamedQueries( { 
-    @NamedQuery(name = "findLocationAll", query = "SELECT l FROM Location l"),
-    @NamedQuery(name = "findLocationUnique", query = "SELECT l FROM Location l WHERE l.locationId = ?1") })
+@NamedQueries( { @NamedQuery(name = "findLocationAll", query = "SELECT l FROM Location l"),
+	@NamedQuery(name = "findLocationUnique", query = "SELECT l FROM Location l WHERE l.locationId = ?1") })
 public class Location implements Serializable, ILocation {
 
     private static final long serialVersionUID = 1L;
@@ -54,7 +54,7 @@ public class Location implements Serializable, ILocation {
     @Id
     @Column(name = "ID")
     @GeneratedValue
-    private long id;
+    private Long id;
 
     /**
      * Unique key.
@@ -217,8 +217,12 @@ public class Location implements Serializable, ILocation {
 	this.locationId = locationId;
     }
 
-    public long getId() {
+    public Long getId() {
 	return this.id;
+    }
+
+    public boolean isNew() {
+	return (this.id == null);
     }
 
     public LocationPK getLocationId() {
@@ -414,4 +418,16 @@ public class Location implements Serializable, ILocation {
     public long getVersion() {
 	return this.version;
     }
+
+    @Override
+    public String toString() {
+	return new ToStringCreator(this)
+
+	.append("id", this.getId())
+
+	.append("locationId", this.getLocationId())
+
+	.toString();
+    }
+
 }
