@@ -18,6 +18,7 @@ import org.dbunit.dataset.xml.FlatXmlDataSet;
 import org.dbunit.operation.DatabaseOperation;
 import org.springframework.core.io.Resource;
 import org.springframework.jdbc.datasource.DataSourceUtils;
+import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.jpa.AbstractJpaTests;
 
 /**
@@ -26,6 +27,7 @@ import org.springframework.test.jpa.AbstractJpaTests;
  * @author <a href="heiko.scherrer@gmx.de">Heiko Scherrer</a>
  * @version $Revision: 314 $
  */
+@ContextConfiguration
 public abstract class AbstractJpaSpringContextTests extends AbstractJpaTests {
 
     private String commonTestPackage = "classpath:org/openwms/common/**/*-test-cfg.xml";
