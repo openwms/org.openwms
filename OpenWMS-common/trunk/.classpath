@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
-	<classpathentry kind="src" path="src"/>
+	<classpathentry excluding="META-INF/|META-INF/" kind="src" path="src"/>
 	<classpathentry kind="src" path="test"/>
 	<classpathentry kind="src" path="spring"/>
+	<classpathentry kind="src" path="src/META-INF"/>
 	<classpathentry kind="lib" path="lib/postgresql-8.2-504.jdbc3.jar"/>
 	<classpathentry kind="lib" path="lib/easymock.jar"/>
 	<classpathentry kind="lib" path="lib/easymockclassextension.jar"/>
@@ -59,6 +60,8 @@
 	<classpathentry kind="lib" path="lib/dbunit-2.2.jar"/>
 	<classpathentry kind="lib" path="lib/hsqldb.jar" sourcepath="/OpenWMS-Libraries/sources/hsqldb_1_8_0_10.zip"/>
 	<classpathentry kind="lib" path="lib/common-annotations-1.0.jar"/>
+	<classpathentry kind="lib" path="lib/aspectjrt.jar"/>
+	<classpathentry kind="lib" path="lib/aspectjweaver.jar"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry kind="lib" path="lib/spring-test-2.5.4.jar" sourcepath="/OpenWMS-Libraries/sources/spring-test-sources.jar">
 		<attributes>
