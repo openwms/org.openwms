@@ -7,8 +7,5 @@
 		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-2.5.xsd
 		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-2.5.xsd">
 
-	<bean class="org.openwms.common.service.transport.TransportServiceImpl" id="transportService">
-	</bean>
-	
-	
+
 </beans>

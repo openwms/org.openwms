@@ -18,7 +18,6 @@ import org.dbunit.dataset.xml.FlatXmlDataSet;
 import org.dbunit.operation.DatabaseOperation;
 import org.springframework.core.io.Resource;
 import org.springframework.jdbc.datasource.DataSourceUtils;
-import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.jpa.AbstractJpaTests;
 
 /**
@@ -27,26 +26,23 @@ import org.springframework.test.jpa.AbstractJpaTests;
  * @author <a href="heiko.scherrer@gmx.de">Heiko Scherrer</a>
  * @version $Revision: 314 $
  */
-@ContextConfiguration
 public abstract class AbstractJpaSpringContextTests extends AbstractJpaTests {
 
-    private String commonTestPackage = "classpath:org/openwms/common/**/*-test-cfg.xml";
     private static final String DEFAULT_FILE = "";
     private Resource fileResource = null;
     private DataSource dataSource = null;
 
-    // private static String TEST_DATA_FILE = "load-testData.sql";
-
-    protected String[] getConfigLocations() {
-	String[] loc = new String[] {
-		"classpath:" + this.getClass().getPackage().getName().replace('.', '/') + "/**/*-test-cfg.xml",
-		commonTestPackage };
-	return loc;
-    }
-
     @Override
     protected boolean shouldUseShadowLoader() {
 	return false;
+    }
+
+    @Override
+    protected String[] getConfigLocations() {
+	return new String[] {
+		"classpath:**/*Test-Infrastructure-context.xml",
+		"classpath:" + this.getClass().getPackage().getName().replace('.', '/') + "/"
+			+ this.getClass().getSimpleName() + "-context.xml" };
     }
 
     @Override
