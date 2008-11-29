@@ -23,7 +23,7 @@ import org.springframework.test.context.ContextConfiguration;
 @ContextConfiguration
 public final class TransportServiceTest extends AbstractJpaSpringContextTests {
 
-    private TransportService transportService = null;
+    private TransportService transportService;
     private String testDataFile = "load-TransportUnits.sql";
 
     // Spring IoC
@@ -33,6 +33,8 @@ public final class TransportServiceTest extends AbstractJpaSpringContextTests {
 
     @Override
     protected String getTestDataFile() {
+	// return null;
+	// To load testdata return the filename of the DBUnit file
 	return this.testDataFile;
     }
 

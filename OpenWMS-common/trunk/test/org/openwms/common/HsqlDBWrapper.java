@@ -15,7 +15,6 @@ import javax.annotation.PreDestroy;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.openwms.common.domain.helper.TestHelper;
 import org.springframework.beans.factory.annotation.Required;
 
 /**
@@ -27,7 +26,7 @@ import org.springframework.beans.factory.annotation.Required;
 public class HsqlDBWrapper {
 
     public static final String PERSISTENCE_UNIT_DURABLE = "OpenWMS-test-durable";
-    private Log logger = LogFactory.getLog(TestHelper.class);
+    private Log logger = LogFactory.getLog(HsqlDBWrapper.class);
     private Connection connection;
     private boolean dbStarted = false;
 
