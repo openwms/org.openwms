@@ -8,7 +8,7 @@ package org.openwms.common.service.transport;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.openwms.common.dao.IGenericDAO;
+import org.openwms.common.dao.GenericDAO;
 import org.openwms.common.domain.Location;
 import org.openwms.common.domain.LocationPK;
 import org.openwms.common.domain.TransportUnit;
@@ -30,18 +30,27 @@ public class TransportServiceImpl implements TransportService {
 
     protected Log LOG = LogFactory.getLog(this.getClass());
     // FIXME: Eliminate different dao injections, use only one generic dao!
-    private IGenericDAO<TransportUnit, Barcode> transportUnitDao;
-    private IGenericDAO<Location, LocationPK> locationDao;
+    private GenericDAO<TransportUnit, Barcode> transportUnitDao;
+    private GenericDAO<Location, LocationPK> locationDao;
 
-    public TransportServiceImpl(IGenericDAO<TransportUnit, Barcode> entityDao, IGenericDAO<Location, LocationPK> locationDao) {
-	this.transportUnitDao = entityDao;
-	this.locationDao = locationDao;
-    }
+    // public TransportServiceImpl(GenericDAO<TransportUnit, Barcode> entityDao,
+    // GenericDAO<Location, LocationPK> locationDao) {
+    // this.transportUnitDao = entityDao;
+    // this.locationDao = locationDao;
+    // }
 
     public TransportUnit createTransportUnit(Barcode barcode, TransportUnitType transportUnitType,
 	    LocationPK actualLocationPk) {
 	// FIXME: implement
 	return null;
+    }
+
+    public void setLocationDao(GenericDAO<Location, LocationPK> locationDao) {
+	this.locationDao = locationDao;
+    }
+
+    public void setTransportUnitDao(GenericDAO<TransportUnit, Barcode> transportUnitDao) {
+	this.transportUnitDao = transportUnitDao;
     }
 
     /**
