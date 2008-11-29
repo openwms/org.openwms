@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beansProjectDescription>
 	<version>1</version>
-	<pluginVersion><![CDATA[2.0.6.v200806241357]]></pluginVersion>
+	<pluginVersion><![CDATA[2.2.0.v200809261800]]></pluginVersion>
 	<configSuffixes>
 		<configSuffix><![CDATA[xml]]></configSuffix>
 	</configSuffixes>
@@ -9,7 +9,6 @@
 	<configs>
 		<config>spring/org/openwms/common/bootstrap-cfg.xml</config>
 		<config>test/org/openwms/common/Test-Infrastructure-test-cfg.xml</config>
-		<config>test/org/openwms/common/service/transport/TransportService-test-cfg.xml</config>
 		<config>test/org/openwms/common/dao/Dao-test-cfg.xml</config>
 	</configs>
 	<configSets>
@@ -18,7 +17,6 @@
 			<allowBeanDefinitionOverriding>true</allowBeanDefinitionOverriding>
 			<incomplete>true</incomplete>
 			<configs>
-				<config>test/org/openwms/common/service/transport/TransportService-test-cfg.xml</config>
 				<config>test/org/openwms/common/Test-Infrastructure-test-cfg.xml</config>
 				<config>test/org/openwms/common/dao/Dao-test-cfg.xml</config>
 			</configs>

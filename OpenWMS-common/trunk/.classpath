@@ -3,7 +3,6 @@
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="src" path="test"/>
 	<classpathentry kind="src" path="spring"/>
-	<classpathentry kind="lib" path="lib/hsqldb.jar"/>
 	<classpathentry kind="lib" path="lib/postgresql-8.2-504.jdbc3.jar"/>
 	<classpathentry kind="lib" path="lib/easymock.jar"/>
 	<classpathentry kind="lib" path="lib/easymockclassextension.jar"/>
@@ -48,7 +47,6 @@
 	<classpathentry kind="lib" path="lib/hibernate-search.jar"/>
 	<classpathentry kind="lib" path="lib/hibernate-tools.jar"/>
 	<classpathentry kind="lib" path="lib/hibernate-validator.jar"/>
-	<classpathentry kind="lib" path="lib/hsqldb-1.8.0.7.jar"/>
 	<classpathentry kind="lib" path="lib/javassist.jar"/>
 	<classpathentry kind="lib" path="lib/jboss-archive-browsing.jar"/>
 	<classpathentry kind="lib" path="lib/jta.jar"/>
@@ -59,6 +57,8 @@
 	<classpathentry kind="lib" path="lib/junit-4.4.jar"/>
 	<classpathentry kind="lib" path="lib/commons-lang-2.4.jar"/>
 	<classpathentry kind="lib" path="lib/dbunit-2.2.jar"/>
+	<classpathentry kind="lib" path="lib/hsqldb.jar" sourcepath="/OpenWMS-Libraries/sources/hsqldb_1_8_0_10.zip"/>
+	<classpathentry kind="lib" path="lib/common-annotations-1.0.jar"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry kind="lib" path="lib/spring-test-2.5.4.jar" sourcepath="/OpenWMS-Libraries/sources/spring-test-sources.jar">
 		<attributes>
