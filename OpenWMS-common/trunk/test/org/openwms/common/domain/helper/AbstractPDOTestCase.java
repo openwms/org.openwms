@@ -39,7 +39,6 @@ public abstract class AbstractPDOTestCase {
     public static void setUpBeforeClass() {
 	try {
 	    if (!running) {
-		TestHelper.getInstance().initializeTestCase();
 		running = true;
 	    }
 	    if (!TestHelper.getInstance().isDbStarted() && !TestHelper.getInstance().isPersistenceUnitDurable()) {

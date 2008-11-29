@@ -15,7 +15,6 @@ import javax.persistence.Persistence;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.apache.log4j.xml.DOMConfigurator;
 
 /**
  * A TestHelper.
@@ -26,7 +25,7 @@ import org.apache.log4j.xml.DOMConfigurator;
 public final class TestHelper {
 
     public static final String PERSISTENCE_UNIT_DURABLE = "OpenWMS-test-durable";
-    private static String persistenceUnit = "OpenWMS-test";
+    private static String persistenceUnit = "OpenWMS-test-durable";
     private Log logger = LogFactory.getLog(TestHelper.class);
     private static TestHelper helper;
     private Connection connection;
@@ -41,14 +40,6 @@ public final class TestHelper {
      */
     public synchronized static TestHelper getInstance() {
 	return helper == null ? new TestHelper() : helper;
-    }
-
-    /**
-     * Care about log4j settings.
-     *
-     */
-    public void initializeTestCase() {
-	DOMConfigurator.configure("src/META-INF/log4j.xml");
     }
 
     /**
