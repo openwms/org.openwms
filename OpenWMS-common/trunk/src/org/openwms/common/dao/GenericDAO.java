@@ -7,86 +7,68 @@
 package org.openwms.common.dao;
 
 import java.io.Serializable;
-import java.lang.reflect.ParameterizedType;
 import java.util.List;
 import java.util.Map;
 
-import org.springframework.dao.IncorrectResultSizeDataAccessException;
-import org.springframework.orm.jpa.support.JpaDaoSupport;
-import org.springframework.stereotype.Repository;
-
 /**
- * A GenericDAO.
- * <p>
- * Use this DAO implementation to execute CRUD operations with JAVA Persistence API. Furthermore extend this class to be
- * explicitly independent from OR mapping frameworks.
- * <p>
- * The <tt>GenericDAO</tt> extends Springs JpaDaoSupport, to have a benefit from Springs exception translation and
- * transaction management.<br>
- * The stereotype annotation <code>atRepository</code> expressed the belongs as data access class. <br>
- * Spring introduced the <tt>PersistenceExceptionTranslationPostProcessor</tt> to automatically to enable data access
- * exception translation for any object carrying the <tt>atRepository</tt> annotation
+ * A IGenericDAO.
  * 
  * @author <a href="heiko.scherrer@gmx.de">Heiko Scherrer</a>
  * @version $Revision: 314 $
  */
-@Repository
-public abstract class GenericDAO<T, ID extends Serializable> extends JpaDaoSupport implements IGenericDAO<T, ID> {
-
-    private Class<T> persistentClass;
-
-    @SuppressWarnings("unchecked")
-    public GenericDAO() {
-	this.persistentClass = (Class<T>) ((ParameterizedType) getClass().getGenericSuperclass())
-		.getActualTypeArguments()[0];
-    }
+public interface GenericDAO<T extends Serializable, ID extends Serializable> {
 
     /**
-     * Get the persistent entity class.<br>
-     * Resolved with Java Reflection to find the class of the <tt>T</tt> generic argument.
+     * Find and return the entity identified by the technical <tt>id</tt>.
+     * 
+     * @param id
+     * @return
+     */
+    T findById(ID id);
+
+    /**
+     * Find all entities and return them as a <tt>List</tt>.
      * 
      * @return
      */
-    public Class<T> getPersistentClass() {
-	return persistentClass;
-    }
+    List<T> findAll();
 
-    public T findById(ID id) {
-	return getJpaTemplate().find(getPersistentClass(), id);
-    }
+    /**
+     * Find all entities by passing the name of the JPA NamedQuery and the parameter map.
+     * 
+     * @param queryName
+     * @param params
+     * @return
+     */
+    List<T> findByQuery(String queryName, Map<String, ?> params);
 
-    @SuppressWarnings("unchecked")
-    public List<T> findAll() {
-	return getJpaTemplate().findByNamedQuery(getFindAllQuery());
-    }
+    /**
+     * Find and return the entity identified by the natural unique id.
+     * 
+     * @param id
+     * @return
+     */
+    T findByUniqueId(Object id);
 
-    @SuppressWarnings("unchecked")
-    public List<T> findByQuery(String queryName, Map<String, ?> params) {
-	return getJpaTemplate().findByNamedQueryAndNamedParams(queryName, params);
-    }
+    /**
+     * Merges a detached entity. Return the entity as persisted.
+     * 
+     * @param entity
+     * @return
+     */
+    T save(T entity);
 
-    @SuppressWarnings("unchecked")
-    public T findByUniqueId(Object id) {
-	//TODO:Don't check null, yet
-	List<T> result = getJpaTemplate().findByNamedQuery(getFindAllUniqueQuery(), id);
-	if (result.size() > 1) {
-	    throw new IncorrectResultSizeDataAccessException("Unexpected size of result list", 1, result.size());
-	}
-	return result.size() == 0 ? null : result.get(0);
-    }
+    /**
+     * Removes a persistent entity.
+     * 
+     * @param entity
+     */
+    void remove(T entity);
 
-    public T save(T entity) {
-	return getJpaTemplate().merge(entity);
-    }
-
-    public void remove(T entity) {
-	getJpaTemplate().remove(entity);
-    }
-
-    public void persist(T entity) {
-	getJpaTemplate().persist(entity);
-    }
-    
-    abstract String getFindAllQuery();
-    abstract String getFindAllUniqueQuery();
+    /**
+     * Persist a new transient entity.
+     * 
+     * @param entity
+     */
+    void persist(T entity);
 }

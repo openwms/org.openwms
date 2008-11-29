@@ -10,20 +10,15 @@ import org.openwms.common.domain.Location;
 import org.openwms.common.domain.LocationPK;
 
 /**
- * A LocationDAO.
+ * A ILocationDAO.
  * 
  * @author <a href="heiko.scherrer@gmx.de">Heiko Scherrer</a>
  * @version $Revision: 314 $
  */
-public class LocationDAO extends GenericDAO<Location, LocationPK> implements ILocationDAO {
+public interface LocationDAO extends GenericDAO<Location, LocationPK> {
 
-    @Override
-    String getFindAllQuery() {
-        return ILocationDAO.NQ_FIND_ALL;
-    }
-    
-    @Override
-    String getFindAllUniqueQuery() {
-        return ILocationDAO.NQ_FIND_BY_UNIQUE_QUERY;
-    }
+    public final String NQ_FIND_ALL = "findLocationAll";
+    public final String NQ_FIND_BY_UNIQUE_QUERY = "findLocationUnique";
+
+    // TODO: Pull up all non-CRUD operations
 }

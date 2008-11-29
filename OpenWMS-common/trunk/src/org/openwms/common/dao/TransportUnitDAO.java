@@ -10,22 +10,15 @@ import org.openwms.common.domain.TransportUnit;
 import org.openwms.common.domain.values.Barcode;
 
 /**
- * A TransportUnitDAO.
+ * A ITransportUnitDAO.
  * 
  * @author <a href="heiko.scherrer@gmx.de">Heiko Scherrer</a>
  * @version $Revision: 314 $
  */
-public class TransportUnitDAO extends GenericDAO<TransportUnit, Barcode> implements ITransportUnitDAO {
+public interface TransportUnitDAO extends GenericDAO<TransportUnit, Barcode> {
 
-    @Override
-    String getFindAllQuery() {
-        return ITransportUnitDAO.NQ_FIND_ALL;
-    }
-    
-    @Override
-    String getFindAllUniqueQuery() {
-        return ITransportUnitDAO.NQ_FIND_BY_UNIQUE_QUERY;
-    }
-    
-    // TODO: Provide other TransportUnit based non-CRUD operations here!
+    public final String NQ_FIND_ALL = "findTransportUnitAll";
+    public final String NQ_FIND_BY_UNIQUE_QUERY = "findTransportUnitUnique";
+
+    //TODO: Pull up all non-CRUD operations
 }
