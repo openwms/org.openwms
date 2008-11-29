@@ -32,9 +32,9 @@
 		<provider>org.hibernate.ejb.HibernatePersistence</provider>
 		<properties>
 			<property name="hibernate.connection.driver_class" value="org.postgresql.Driver" />
-			<property name="hibernate.connection.password" value="OPENWMS" />
 			<property name="hibernate.connection.url" value="jdbc:postgresql:OPENWMSDB" />
 			<property name="hibernate.connection.username" value="OPENWMS" />
+			<property name="hibernate.connection.password" value="OPENWMS" />
 			<property name="hibernate.default_schema" value="OPENWMS" />
 			<property name="hibernate.dialect" value="org.hibernate.dialect.PostgreSQLDialect" />
 			<property name="hibernate.archive.autodetection" value="class" />
