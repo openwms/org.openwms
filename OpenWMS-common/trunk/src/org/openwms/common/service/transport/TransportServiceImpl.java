@@ -15,7 +15,7 @@ import org.openwms.common.domain.TransportUnit;
 import org.openwms.common.domain.TransportUnitType;
 import org.openwms.common.domain.values.Barcode;
 import org.openwms.common.exception.service.ServiceException;
-import org.openwms.common.service.ITransportService;
+import org.openwms.common.service.TransportService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -26,14 +26,14 @@ import org.springframework.transaction.annotation.Transactional;
  * @version $Revision: 314 $
  */
 @Service
-public class TransportService implements ITransportService {
+public class TransportServiceImpl implements TransportService {
 
     protected Log LOG = LogFactory.getLog(this.getClass());
     // FIXME: Eliminate different dao injections, use only one generic dao!
     private IGenericDAO<TransportUnit, Barcode> transportUnitDao;
     private IGenericDAO<Location, LocationPK> locationDao;
 
-    public TransportService(IGenericDAO<TransportUnit, Barcode> entityDao, IGenericDAO<Location, LocationPK> locationDao) {
+    public TransportServiceImpl(IGenericDAO<TransportUnit, Barcode> entityDao, IGenericDAO<Location, LocationPK> locationDao) {
 	this.transportUnitDao = entityDao;
 	this.locationDao = locationDao;
     }
