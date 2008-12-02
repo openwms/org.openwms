@@ -11,6 +11,7 @@ import java.io.Serializable;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import javax.persistence.Version;
 
 /**
@@ -22,89 +23,90 @@ import javax.persistence.Version;
  */
 @Entity
 public class Email implements Serializable {
-	private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
-	/**
-	 * Primary Key.
-	 */
-	@Id
-	@GeneratedValue
-	private long id;
-	/**
-	 * Email Address.
-	 */
-	@org.hibernate.validator.Email
-	private String emailAddress;
+    /**
+     * Primary Key.
+     */
+    @Id
+    @GeneratedValue
+    @ManyToOne
+    private long id;
+    /**
+     * Email Address.
+     */
+    @org.hibernate.validator.Email
+    private String emailAddress;
 
-	/**
-	 * Fullname belonging to this <code>Email</code>.
-	 */
-	private String fullName;
+    /**
+     * Fullname belonging to this <code>Email</code>.
+     */
+    private String fullName;
 
-	/**
-	 * Hibernate Version field.
-	 */
-	@Version
-	private long version;
+    /**
+     * Hibernate Version field.
+     */
+    @Version
+    private long version;
 
-	/* ----------------------------- methods ------------------- */
-	public Email(String emailAddress) {
-		this.emailAddress = emailAddress;
-	}
+    /* ----------------------------- methods ------------------- */
+    public Email(String emailAddress) {
+	this.emailAddress = emailAddress;
+    }
 
-	/**
-	 * Get the Primary Key.
-	 * 
-	 * @return
-	 */
-	public long getId() {
-		return id;
-	}
+    /**
+     * Get the Primary Key.
+     * 
+     * @return
+     */
+    public long getId() {
+	return id;
+    }
 
-	/**
-	 * Get the emailAddress.
-	 * 
-	 * @return the emailAddress.
-	 */
-	public String getEmailAddress() {
-		return emailAddress;
-	}
+    /**
+     * Get the emailAddress.
+     * 
+     * @return the emailAddress.
+     */
+    public String getEmailAddress() {
+	return emailAddress;
+    }
 
-	/**
-	 * Set the emailAddress.
-	 * 
-	 * @param emailAddress
-	 *            The emailAddress to set.
-	 */
-	public void setEmailAddress(String emailAddress) {
-		this.emailAddress = emailAddress;
-	}
+    /**
+     * Set the emailAddress.
+     * 
+     * @param emailAddress
+     *                The emailAddress to set.
+     */
+    public void setEmailAddress(String emailAddress) {
+	this.emailAddress = emailAddress;
+    }
 
-	/**
-	 * Get the fullName.
-	 * 
-	 * @return the fullName.
-	 */
-	public String getFullName() {
-		return fullName;
-	}
+    /**
+     * Get the fullName.
+     * 
+     * @return the fullName.
+     */
+    public String getFullName() {
+	return fullName;
+    }
 
-	/**
-	 * Set the fullName.
-	 * 
-	 * @param fullName
-	 *            The fullName to set.
-	 */
-	public void setFullName(String fullName) {
-		this.fullName = fullName;
-	}
+    /**
+     * Set the fullName.
+     * 
+     * @param fullName
+     *                The fullName to set.
+     */
+    public void setFullName(String fullName) {
+	this.fullName = fullName;
+    }
 
-	/**
-	 * Returns Hibernate version field.
-	 * 
-	 * @return
-	 */
-	public long getVersion() {
-		return version;
-	}
+    /**
+     * Returns Hibernate version field.
+     * 
+     * @return
+     */
+    public long getVersion() {
+	return version;
+    }
 }
