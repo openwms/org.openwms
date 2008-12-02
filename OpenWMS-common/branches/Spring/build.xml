@@ -1,0 +1,90 @@
+<?xml version = "1.0" encoding="ISO-8859-1" ?>
+<!-- 
+ * OpenWMS, the open Warehouse Management System
+ * 
+ * Distributable under LGPL license.
+ * See terms of license at gnu.org.
+-->
+<project name = "OpenWMS-common" default = "Main-Build" basedir=".">
+	<property file="build-dist.properties"/>
+	
+	<path id="class.path">
+	    <fileset dir="${lib.dir}">
+	         <include name="*.jar"/>
+	    </fileset>
+	</path>
+
+	<target name = "Main-Build" depends="initialize, compile, junit, jar">
+		<echo message = "Build main target..." />
+	</target>
+	
+	<target name = "initialize">
+		<tstamp>
+			<format property="TODAY" pattern="d-MM-yy"/>
+	    </tstamp>
+		<echo message = "************************************************" />
+		<echo message = "Remove and create directories..." />
+		<echo message = "************************************************" />
+		<mkdir dir="${dist.dir}" /> 
+		<mkdir dir="${src.build.dir}" />
+		<mkdir dir="${testsrc.build.dir}" />
+	</target>
+
+	<target name = "compile">
+		<echo message = "************************************************" />
+		<echo message = "Compile sources in ${src.dir} and ${testsrc.dir}..." />
+		<echo message = "************************************************" />
+		<javac destdir="${src.build.dir}" classpathref="class.path" debug="on" deprecation="on" optimize="off">
+			<src path="${src.dir}" />
+		</javac>
+		<javac destdir="${testsrc.build.dir}" debug="on" deprecation="on" optimize="off">
+			<src path="${testsrc.dir}" />
+			<classpath>
+			    <fileset dir="${lib.dir}">
+			         <include name="*.jar"/>
+			    </fileset>
+				<fileset dir="${src.build.dir}">
+				    <include name="**/*.class"/>					
+				</fileset>	
+			</classpath>
+		</javac>
+	</target>
+
+	<target name = "junit">
+		<echo message = "************************************************" />
+		<echo message = "Running unit tests..." />
+		<echo message = "************************************************" />
+		<junit printsummary="on" fork="true" failureproperty="failed" dir="." maxmemory="512m" >
+			<sysproperty key="exec.longrunning.tests" value="true"/>
+			
+			<formatter type="xml"/>
+
+			<classpath>
+				<path refid="class.path"/>
+			</classpath>
+
+			<batchtest fork="yes" todir="${log.dir}">
+			  <fileset dir="${testsrc.build.dir}">
+			    <include name="**/*Test.class"/>
+				<include name="**/*TestCase.class"/>
+			  </fileset>
+			</batchtest>
+		</junit>
+		<fail if ="failed" message="One or more unit test have failed!"/>
+	</target>
+
+		
+	<target name = "jar">
+		<echo message = "************************************************" />
+		<echo message = "Create jar file ${dist.dir}/${war.file}..." />
+		<echo message = "************************************************" />
+		<jar destfile="${dist.dir}/${war.file}" >
+			<fileset dir="${src.build.dir}" />
+			<manifest>
+				<attribute name="Built-By" value="${user.name}"/>
+				<attribute name="Main-Class" value=""/>
+				<attribute name="Class-Path" value="."/>
+			</manifest>			
+		</jar>
+	</target>
+</project>
