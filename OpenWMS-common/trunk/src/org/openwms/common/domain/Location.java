@@ -29,7 +29,6 @@ import javax.persistence.UniqueConstraint;
 import javax.persistence.Version;
 
 import org.openwms.common.domain.system.Message;
-import org.springframework.core.style.ToStringCreator;
 
 /**
  * This class is used to specify a location. A location could be a storage location in stock as well as a location on
@@ -418,16 +417,4 @@ public class Location implements Serializable, ILocation {
     public long getVersion() {
 	return this.version;
     }
-
-    @Override
-    public String toString() {
-	return new ToStringCreator(this)
-
-	.append("id", this.getId())
-
-	.append("locationId", this.getLocationId())
-
-	.toString();
-    }
-
 }
