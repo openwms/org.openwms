@@ -7,12 +7,6 @@
 	</configSuffixes>
 	<enableImports><![CDATA[true]]></enableImports>
 	<configs>
-		<config>spring/org/openwms/common/bootstrap-cfg.xml</config>
-		<config>test/org/openwms/common/service/transport/TransportServiceTest-context.xml</config>
-		<config>test/org/openwms/Test-Infrastructure-context.xml</config>
-		<config>test/org/openwms/common/dao/GenericJpaDAOTest-context.xml</config>
-		<config>test/org/openwms/common/dao/LocationDAOTest-context.xml</config>
-		<config>test/org/openwms/common/dao/UserDaoTest-context.xml</config>
 	</configs>
 	<configSets>
 		<configSet>

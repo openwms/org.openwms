@@ -2,7 +2,6 @@
 <classpath>
 	<classpathentry excluding="META-INF/|META-INF/" kind="src" path="src"/>
 	<classpathentry kind="src" path="test"/>
-	<classpathentry kind="src" path="spring"/>
 	<classpathentry kind="lib" path="lib/postgresql-8.2-504.jdbc3.jar"/>
 	<classpathentry kind="lib" path="lib/easymock.jar"/>
 	<classpathentry kind="lib" path="lib/easymockclassextension.jar"/>
@@ -62,11 +61,5 @@
 	<classpathentry kind="lib" path="lib/aspectjrt.jar"/>
 	<classpathentry kind="lib" path="lib/aspectjweaver.jar"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
-	<classpathentry kind="lib" path="lib/spring-test-2.5.4.jar" sourcepath="/OpenWMS-Libraries/sources/spring-test-sources.jar">
-		<attributes>
-			<attribute name="org.eclipse.jst.component.dependency" value="../"/>
-		</attributes>
-	</classpathentry>
-	<classpathentry kind="lib" path="lib/spring-2.5.4.jar" sourcepath="/OpenWMS-Libraries/sources/spring-framework-2.5.4.zip"/>
 	<classpathentry kind="output" path="build/classes"/>
 </classpath>
