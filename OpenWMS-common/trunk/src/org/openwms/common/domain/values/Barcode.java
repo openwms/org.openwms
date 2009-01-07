@@ -52,7 +52,7 @@ public class Barcode implements Serializable {
     private static int length;
 
     /**
-     * The alignment of the <tt>Barcode</tt> can be set to <tt>LEFT</tt> or <tt>RIGHT</tt>.
+     * The alignment of the <tt>Barcode</tt> can be set to {@link BARCODE_ALIGN}.
      */
     private static BARCODE_ALIGN alignment = BARCODE_ALIGN.RIGHT;
 
@@ -73,7 +73,9 @@ public class Barcode implements Serializable {
      * @param id
      */
     public Barcode(String id) {
-	assert (id != null);
+	if (id == null) {
+	    throw new IllegalArgumentException("Cannot create a barcode without id");
+	}
 	this.id = id;
 	if (isPadded()) {
 	    this.id = (alignment == BARCODE_ALIGN.RIGHT) ? StringUtils.leftPad(id, length, padder) : StringUtils
@@ -86,14 +88,15 @@ public class Barcode implements Serializable {
      * 
      * @return the alignment.
      */
-    public BARCODE_ALIGN getAlignment() {
+    public static BARCODE_ALIGN getAlignment() {
 	return alignment;
     }
 
     /**
      * Set the alignment.
      * 
-     * @param a - The alignment to set.
+     * @param a -
+     *                The alignment to set.
      */
     public static void setAlignment(BARCODE_ALIGN a) {
 	alignment = a;
@@ -104,14 +107,15 @@ public class Barcode implements Serializable {
      * 
      * @return the padded.
      */
-    public boolean isPadded() {
+    public static boolean isPadded() {
 	return padded;
     }
 
     /**
      * Set the padded.
      * 
-     * @param p - The padded to set.
+     * @param p -
+     *                The padded to set.
      */
     public static void setPadded(boolean p) {
 	padded = p;
@@ -122,14 +126,15 @@ public class Barcode implements Serializable {
      * 
      * @return the padder.
      */
-    public char getPadder() {
+    public static char getPadder() {
 	return padder;
     }
 
     /**
      * Set the padder.
      * 
-     * @param p - The padder to set.
+     * @param p -
+     *                The padder to set.
      */
     public static void setPadder(char p) {
 	padder = p;
@@ -150,14 +155,15 @@ public class Barcode implements Serializable {
      * 
      * @return the length.
      */
-    public int getLength() {
+    public static int getLength() {
 	return length;
     }
 
     /**
      * Set the length.
      * 
-     * @param l - The length to set.
+     * @param l -
+     *                The length to set.
      */
     public static void setLength(int l) {
 	length = l;

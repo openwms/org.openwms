@@ -33,9 +33,13 @@ import javax.persistence.Version;
 
 @Entity
 @Table(name = "LOCATION_GROUP")
-public class LocationGroup implements Serializable, ILocationGroup {
+public class LocationGroup implements Serializable {
 
     private static final long serialVersionUID = 1L;
+
+    public static enum STATE {
+	AVAILABLE, NOT_AVAILABLE
+    };
 
     /**
      * Primary Key.
@@ -43,7 +47,7 @@ public class LocationGroup implements Serializable, ILocationGroup {
     @Id
     @Column(name = "LOCATION_GROUP_ID")
     @GeneratedValue
-    private long id;
+    private Long id;
 
     /**
      * Unique identifier of a <code>LocationGroup</code>.
@@ -70,7 +74,7 @@ public class LocationGroup implements Serializable, ILocationGroup {
      * false: Location is not been included in calculation of <code>TransportUnit</code>s.
      */
     @Column(name = "LOCATION_GROUP_COUNTING_ACTIVE")
-    private boolean locationGroupCountingActive = true;
+    private Boolean locationGroupCountingActive = Boolean.TRUE;
 
     /**
      * Number of <code>Location</code>s belonging to this <code>LocationGroup</code>.
@@ -88,13 +92,13 @@ public class LocationGroup implements Serializable, ILocationGroup {
      * Inbound status of this <code>LocationGroup</code>.
      */
     @Column(name = "GROUP_STATE_IN")
-    private short groupStateIn = 0;
+    private STATE groupStateIn = STATE.AVAILABLE;
 
     /**
      * Outbound status of this <code>LocationGroup</code>.
      */
     @Column(name = "GROUP_STATE_OUT")
-    private short groupStateOut;
+    private STATE groupStateOut = STATE.AVAILABLE;
 
     /**
      * Maximum fill level for this <code>LocationGroup</code>.
@@ -142,20 +146,24 @@ public class LocationGroup implements Serializable, ILocationGroup {
 
     /* ----------------------------- methods ------------------- */
     /**
-     * Create a new <code>LocationGroup</code> with unique groupId as name.
-     */
-    /**
      * Accessed by persistence provider.
      */
     @SuppressWarnings("unused")
     private LocationGroup() {}
 
+    /**
+     * Create a new <code>LocationGroup</code> with unique groupId as name.
+     */
     public LocationGroup(String groupId) {
 	this.groupId = groupId;
     }
 
-    public long getId() {
+    public Long getId() {
 	return this.id;
+    }
+
+    public boolean isNew() {
+	return (this.id == null);
     }
 
     /**
@@ -193,12 +201,21 @@ public class LocationGroup implements Serializable, ILocationGroup {
     }
 
     /**
-     * Returns the inbound status of this <code>Location</code>.
+     * Returns the inbound state of this <code>LocationGroup</code>.
      * 
      * @return
      */
-    public short getGroupStateIn() {
+    public STATE getGroupStateIn() {
 	return this.groupStateIn;
+    }
+
+    /**
+     * Get the outbound state of this <code>LocationGroup</code>.
+     * 
+     * @return the groupStateOut.
+     */
+    public STATE getGroupStateOut() {
+	return groupStateOut;
     }
 
     /**
@@ -365,15 +382,6 @@ public class LocationGroup implements Serializable, ILocationGroup {
 	}
 	location.setLocationGroup(null);
 	return locations.remove(location);
-    }
-
-    /**
-     * Get the outbound status of this <code>LocationGroup</code>.
-     * 
-     * @return the groupStateOut.
-     */
-    public short getGroupStateOut() {
-	return groupStateOut;
     }
 
     /**

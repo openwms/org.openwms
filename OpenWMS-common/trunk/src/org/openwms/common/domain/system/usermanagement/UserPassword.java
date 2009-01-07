@@ -18,12 +18,10 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 /**
- * Password history. All passwords used by the <code>User</code>. When the
- * <code>User</code> changes her password, the current password is moving to
- * the beginning of the password history list.
+ * Password history. All passwords used by the <code>User</code>. When the <code>User</code> changes her password,
+ * the current password is moving to the beginning of the password history list.
  * 
- * TODO: + Maybe possible to implement as an ring list with a given number of
- * entries.
+ * TODO: + Maybe possible to implement as an ring list with a given number of entries.
  * 
  * @author <a href="heiko.scherrer@gmx.de">Heiko Scherrer</a>
  * @version $Revision$
@@ -31,41 +29,44 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "USER_PASSWORD")
 public class UserPassword implements Serializable {
-	private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
-	/**
-	 * Internal identifier.
-	 */
-	@Id
-	@Column(name = "ID")
-	@GeneratedValue(strategy = AUTO)
-	private long id;
+    /**
+     * Internal identifier.
+     */
+    @Id
+    @Column(name = "ID")
+    @GeneratedValue(strategy = AUTO)
+    private Long id;
 
-	/**
-	 * User assigned to this password.
-	 */
-	@ManyToOne
-	private User user;
+    /**
+     * User assigned to this password.
+     */
+    @ManyToOne
+    private User user;
 
-	/**
-	 * Password.
-	 */
-	@Column(name = "PASSWORD")
-	private String password;
+    /**
+     * Password.
+     */
+    @Column(name = "PASSWORD")
+    private String password;
 
-	public long getId() {
-		return this.id;
-	}
+    /* ----------------------------- methods ------------------- */
+    public UserPassword() {}
 
-	public void setId(long id) {
-		this.id = id;
-	}
+    public Long getId() {
+	return this.id;
+    }
 
-	public IUser getUser() {
-		return this.user;
-	}
+    public void setId(Long id) {
+	this.id = id;
+    }
 
-	public String getPassword() {
-		return this.password;
-	}
+    public User getUser() {
+	return this.user;
+    }
+
+    public String getPassword() {
+	return this.password;
+    }
 }

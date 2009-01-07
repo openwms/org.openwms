@@ -6,6 +6,7 @@
  */
 package org.openwms.common.domain.system;
 
+import java.io.Serializable;
 import java.util.Date;
 
 import javax.persistence.Column;
@@ -23,106 +24,100 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name = "MESSAGE")
-public class Message implements IMessage {
+public class Message implements Serializable {
 
-	/**
-	 * Primary key.
-	 */
-	@Id
-	@Column(name = "ID")
-	@GeneratedValue
-	private long id;
+    private static final long serialVersionUID = 1L;
 
-	/**
-	 * Message number.
-	 */
-	@Column(name = "MESSAGE_NO")
-	private int messageNo;
+    /**
+     * Primary key.
+     */
+    @Id
+    @Column(name = "ID")
+    @GeneratedValue
+    private Long id;
 
-	/**
-	 * Message description text.
-	 */
-	@Column(name = "MESSAGE_TEXT")
-	private String messageText;
+    /**
+     * Message number.
+     */
+    @Column(name = "MESSAGE_NO")
+    private int messageNo;
 
-	/**
-	 * Timestamp when the <code>Message</code> was created.
-	 */
-	@Column(name = "CREATED")
-	private Date created;
+    /**
+     * Message description text.
+     */
+    @Column(name = "MESSAGE_TEXT")
+    private String messageText;
 
-	/**
-	 * Accessed by persistence provider.
-	 */
-	@SuppressWarnings("unused")
-	private Message() {
-	}
+    /**
+     * Timestamp when the <code>Message</code> was created.
+     */
+    @Column(name = "CREATED")
+    private Date created;
 
-	/**
-	 * Create a new Message.
-	 * 
-	 * @param messageNo
-	 * @param messageText
-	 */
-	public Message(int messageNo, String messageText) {
-		this.messageNo = messageNo;
-		this.messageText = messageText;
-		this.created = new Date();
-	}
+    /* ----------------------------- methods ------------------- */
+    /**
+     * Accessed by persistence provider.
+     */
+    @SuppressWarnings("unused")
+    private Message() {}
 
-	/**
-	 * Get the id.
-	 * 
-	 * @return the id.
-	 */
-	public long getId() {
-		return id;
-	}
+    /**
+     * Create a new Message.
+     * 
+     * @param messageNo
+     * @param messageText
+     */
+    public Message(int messageNo, String messageText) {
+	this.messageNo = messageNo;
+	this.messageText = messageText;
+	this.created = new Date();
+    }
 
-	/**
-	 * Get the messageNo.
-	 * 
-	 * @return the messageNo.
-	 */
-	public int getMessageNo() {
-		return messageNo;
-	}
+    /**
+     * {@inheritDoc}
+     */
+    public Long getId() {
+	return id;
+    }
 
-	/**
-	 * Set the messageNo.
-	 * 
-	 * @param messageNo
-	 *            The messageNo to set.
-	 */
-	public void setMessageNo(int messageNo) {
-		this.messageNo = messageNo;
-	}
+    /**
+     * {@inheritDoc}
+     */
+    public int getMessageNo() {
+	return messageNo;
+    }
 
-	/**
-	 * Get the messageText.
-	 * 
-	 * @return the messageText.
-	 */
-	public String getMessageText() {
-		return messageText;
-	}
+    /**
+     * Set the messageNo.
+     * 
+     * @param messageNo
+     *                The messageNo to set.
+     */
+    public void setMessageNo(int messageNo) {
+	this.messageNo = messageNo;
+    }
 
-	/**
-	 * Set the messageText.
-	 * 
-	 * @param messageText
-	 *            The messageText to set.
-	 */
-	public void setMessageText(String messageText) {
-		this.messageText = messageText;
-	}
+    /**
+     * {@inheritDoc}
+     */
+    public String getMessageText() {
+	return messageText;
+    }
 
-	/**
-	 * Get the created.
-	 * 
-	 * @return the created.
-	 */
-	public Date getCreated() {
-		return created;
-	}
+    /**
+     * Set the messageText.
+     * 
+     * @param messageText
+     *                The messageText to set.
+     */
+    public void setMessageText(String messageText) {
+	this.messageText = messageText;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public Date getCreated() {
+	return created;
+    }
 }
