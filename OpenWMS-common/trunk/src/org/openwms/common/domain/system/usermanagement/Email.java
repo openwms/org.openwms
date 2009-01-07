@@ -31,7 +31,7 @@ public class Email implements Serializable {
     @Id
     @GeneratedValue
     @ManyToOne
-    private long id;
+    private Long id;
     /**
      * Email Address.
      */
@@ -50,6 +50,12 @@ public class Email implements Serializable {
     private long version;
 
     /* ----------------------------- methods ------------------- */
+    /**
+     * Accessed by persistence provider.
+     */
+    @SuppressWarnings("unused")
+    private Email() {}
+
     public Email(String emailAddress) {
 	this.emailAddress = emailAddress;
     }
@@ -59,7 +65,7 @@ public class Email implements Serializable {
      * 
      * @return
      */
-    public long getId() {
+    public Long getId() {
 	return id;
     }
 

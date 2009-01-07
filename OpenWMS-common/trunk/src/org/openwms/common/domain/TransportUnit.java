@@ -46,14 +46,13 @@ import org.openwms.common.domain.values.Barcode;
  */
 @Entity
 @Table(name = "TRANSPORT_UNIT", uniqueConstraints = @UniqueConstraint(columnNames = { "BARCODE" }))
-@NamedQueries( { 
-    @NamedQuery(name = "findTransportUnitAll", query = "SELECT tu FROM TransportUnit tu"),
-    @NamedQuery(name = "findTransportUnitUnique", query = "SELECT tu FROM TransportUnit tu WHERE tu.barcode = ?1") })
+@NamedQueries( { @NamedQuery(name = "findAll", query = "SELECT tu FROM TransportUnit tu"),
+	@NamedQuery(name = "findUnique", query = "SELECT tu FROM TransportUnit tu WHERE tu.barcode = ?1") })
 public class TransportUnit implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    public enum TU_STATE {
+    public static enum TU_STATE {
 	AVAILABLE, OK, NOT_OK
     }
 
@@ -63,7 +62,7 @@ public class TransportUnit implements Serializable {
     @Id
     @Column(name = "ID")
     @GeneratedValue
-    private long id;
+    private Long id;
 
     /**
      * Natural key.
@@ -75,7 +74,7 @@ public class TransportUnit implements Serializable {
      * Indicates whether the <code>TransportUnit</code> is empty or not.
      */
     @Column(name = "EMPTY")
-    private boolean empty;
+    private Boolean empty;
 
     /**
      * Timestamp when the <code>TransportUnit</code> has been created.
@@ -187,6 +186,19 @@ public class TransportUnit implements Serializable {
     }
 
     /**
+     * Return the Primary Key.
+     * 
+     * @return id.
+     */
+    public Long getId() {
+	return id;
+    }
+
+    public boolean isNew() {
+	return (this.id == null);
+    }
+
+    /**
      * Get the actual <tt>Location</tt> of this <tt>TransportUnit</tt>.
      * 
      * @return
@@ -196,17 +208,12 @@ public class TransportUnit implements Serializable {
     }
 
     /**
-     * Set the actual <tt>Location</tt> of this <tt>TransportUnit</tt> and correct the <tt>TransportUnit</tt>
-     * counters on the old and the new <tt>Location</tt>.
+     * Set the actual <tt>Location</tt> of this <tt>TransportUnit</tt>.
      * 
      * @param actualLocation
      */
     public void setActualLocation(Location actualLocation) {
-	if (this.actualLocation != null) {
-	    this.actualLocation.decreaseNoTransportUnits();
-	}
 	this.actualLocation = actualLocation;
-	this.actualLocation.increaseNoTransportUnits();
 	this.actualLocationDate = new Date();
     }
 
@@ -227,20 +234,7 @@ public class TransportUnit implements Serializable {
      * @param targetLocation
      */
     public void setTargetLocation(Location targetLocation) {
-	if (this.targetLocation != null) {
-	    this.targetLocation.decreaseIncomingTransportUnits();
-	}
 	this.targetLocation = targetLocation;
-	this.targetLocation.increaseIncomingTransportUnits();
-    }
-
-    /**
-     * Return the Primary Key.
-     * 
-     * @return id.
-     */
-    public long getId() {
-	return id;
     }
 
     /**
@@ -248,7 +242,7 @@ public class TransportUnit implements Serializable {
      * 
      * @return<br> - true if empty <br> - false if not empty.
      */
-    public boolean isEmpty() {
+    public Boolean isEmpty() {
 	return this.empty;
     }
 
@@ -257,7 +251,7 @@ public class TransportUnit implements Serializable {
      * 
      * @param empty
      */
-    public void setEmpty(boolean empty) {
+    public void setEmpty(Boolean empty) {
 	this.empty = empty;
     }
 

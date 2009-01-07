@@ -26,95 +26,92 @@ import javax.persistence.UniqueConstraint;
 /**
  * 
  * A TypeStackingRule.<br>
- * Defines what <code>TransportUnitType</code> may be placed on the owning
- * <code>TransportUnitType</code>.
+ * Defines what <code>TransportUnitType</code> may be placed on the owning <code>TransportUnitType</code>.
  * 
  * @author <a href="heiko.scherrer@gmx.de">Heiko Scherrer</a>
  * @version $Revision$
  */
 @Entity
-@Table(name = "TYPE_STACKING_RULE", uniqueConstraints = @UniqueConstraint(columnNames = { "TRANSPORT_UNIT_TYPE", "NO_TRANSPORT_UNITS", "ALLOWED_TRANSPORT_UNIT_TYPE" }))
+@Table(name = "TYPE_STACKING_RULE", uniqueConstraints = @UniqueConstraint(columnNames = { "TRANSPORT_UNIT_TYPE",
+	"NO_TRANSPORT_UNITS", "ALLOWED_TRANSPORT_UNIT_TYPE" }))
 public class TypeStackingRule implements Serializable {
-	private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
-	/**
-	 * Primary key.
-	 */
-	@Id
-	@Column(name = "ID")
-	@GeneratedValue
-	private long id;
+    /**
+     * Primary key.
+     */
+    @Id
+    @Column(name = "ID")
+    @GeneratedValue
+    private Long id;
 
-	/**
-	 * Parent <code>TransportUnitType</code>.
-	 */
-	@ManyToOne
-	@JoinColumn(name = "TRANSPORT_UNIT_TYPE")
-	private TransportUnitType transportUnitType;
+    /**
+     * Parent <code>TransportUnitType</code>.
+     */
+    @ManyToOne
+    @JoinColumn(name = "TRANSPORT_UNIT_TYPE")
+    private TransportUnitType transportUnitType;
 
-	/**
-	 * Number of <code>TransportUnitType</code>s that may be placed on the
-	 * owning <code>TransportUnitType</code>.
-	 */
-	@Column(name = "NO_TRANSPORT_UNITS", nullable = false)
-	private short noTransportUnits;
+    /**
+     * Number of <code>TransportUnitType</code>s that may be placed on the owning <code>TransportUnitType</code>.
+     */
+    @Column(name = "NO_TRANSPORT_UNITS", nullable = false)
+    private short noTransportUnits;
 
-	/**
-	 * The allowed <code>TransportUnitType</code> that may be placed on the
-	 * owning <code>TransportUnitType</code>.
-	 */
-	@Column(name = "ALLOWED_TRANSPORT_UNIT_TYPE", nullable = false)
-	private TransportUnitType allowedTransportUnitType;
+    /**
+     * The allowed <code>TransportUnitType</code> that may be placed on the owning <code>TransportUnitType</code>.
+     */
+    @Column(name = "ALLOWED_TRANSPORT_UNIT_TYPE", nullable = false)
+    private TransportUnitType allowedTransportUnitType;
 
-	/* ----------------------------- methods ------------------- */
-	/**
-	 * Create a new <code>TypeStackingRule</code>. Define how many
-	 * <code>TransportUnit</code>s of the allowedTransportUnitType may
-	 * stacked on this <code>TransportUnitType</code>.
-	 * 
-	 * @param noTransportUnits
-	 * @param allowedTransportUnitType
-	 */
-	public TypeStackingRule(short noTransportUnits, TransportUnitType allowedTransportUnitType) {
-		this.noTransportUnits = noTransportUnits;
-		this.allowedTransportUnitType = allowedTransportUnitType;
-	}
+    /* ----------------------------- methods ------------------- */
+    /**
+     * Create a new <code>TypeStackingRule</code>. Define how many <code>TransportUnit</code>s of the
+     * allowedTransportUnitType may stacked on this <code>TransportUnitType</code>.
+     * 
+     * @param noTransportUnits
+     * @param allowedTransportUnitType
+     */
+    public TypeStackingRule(short noTransportUnits, TransportUnitType allowedTransportUnitType) {
+	this.noTransportUnits = noTransportUnits;
+	this.allowedTransportUnitType = allowedTransportUnitType;
+    }
 
-	/**
-	 * Get the Primary Key.
-	 * 
-	 * @return the id.
-	 */
-	public long getId() {
-		return id;
-	}
+    /**
+     * Get the Primary Key.
+     * 
+     * @return the id.
+     */
+    public Long getId() {
+	return id;
+    }
 
-	/**
-	 * Get the transportUnitType.
-	 * 
-	 * @return the transportUnitType.
-	 */
-	public TransportUnitType getTransportUnitType() {
-		return transportUnitType;
-	}
+    /**
+     * Get the transportUnitType.
+     * 
+     * @return the transportUnitType.
+     */
+    public TransportUnitType getTransportUnitType() {
+	return transportUnitType;
+    }
 
-	/**
-	 * Returns the number of <code>TransportUnitType</code>s that may be
-	 * placed on the owning <code>TransportUnitType</code>.
-	 * 
-	 * @return
-	 */
-	public short getNoTransportUnits() {
-		return this.noTransportUnits;
-	}
+    /**
+     * Returns the number of <code>TransportUnitType</code>s that may be placed on the owning
+     * <code>TransportUnitType</code>.
+     * 
+     * @return
+     */
+    public short getNoTransportUnits() {
+	return this.noTransportUnits;
+    }
 
-	/**
-	 * Returns the allowed <code>TransportUnitType</code> that may be placed
-	 * on the owning <code>TransportUnitType</code>.
-	 * 
-	 * @return
-	 */
-	public TransportUnitType getAllowedTransportUnitType() {
-		return this.allowedTransportUnitType;
-	}
+    /**
+     * Returns the allowed <code>TransportUnitType</code> that may be placed on the owning
+     * <code>TransportUnitType</code>.
+     * 
+     * @return
+     */
+    public TransportUnitType getAllowedTransportUnitType() {
+	return this.allowedTransportUnitType;
+    }
 }

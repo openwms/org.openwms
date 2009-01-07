@@ -43,7 +43,7 @@ import org.openwms.common.domain.system.Message;
 @Table(name = "LOCATION", uniqueConstraints = @UniqueConstraint(columnNames = { "AREA", "AISLE", "X", "Y", "Z" }))
 @NamedQueries( { @NamedQuery(name = "findLocationAll", query = "SELECT l FROM Location l"),
 	@NamedQuery(name = "findLocationUnique", query = "SELECT l FROM Location l WHERE l.locationId = ?1") })
-public class Location implements Serializable, ILocation {
+public class Location implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
@@ -68,36 +68,10 @@ public class Location implements Serializable, ILocation {
     private String description;
 
     /**
-     * Number of <code>TransportUnit</code>s actually placed on this <code>Location</code>.
-     */
-    @Column(name = "NO_TRANSPORT_UNITS")
-    private short noTransportUnits;
-
-    /**
      * Number of <code>TransportUnit</code>s maximum placed on this <code>Location</code>.
      */
     @Column(name = "NO_MAX_TRANSPORT_UNITS")
     private short noMaxTransportUnits;
-
-    /**
-     * Number of empty <code>TransportUnit</code>s placed on this <code>Location</code>.
-     */
-    @Column(name = "NO_EMPTY_TRANSPORT_UNITS")
-    private short noEmptyTransportUnits;
-
-    /**
-     * Number of <code>TransportUnit</code>s placed on this <code>Location</code> having a target
-     * <code>Location</code> other then this.
-     */
-    @Column(name = "NO_LEAVE_TRANSPORT_UNITS")
-    private short noLeaveTransportUnits;
-
-    /**
-     * Number of <code>TransportUnit</code>s not placed on this <code>Location</code> but having as target this
-     * <code>Location</code>.
-     */
-    @Column(name = "NO_INCOMING_TRANSPORT_UNITS")
-    private short noIncomingTransportUnits;
 
     /**
      * Maximum of weight for this <code>Location</code>.
@@ -117,7 +91,7 @@ public class Location implements Serializable, ILocation {
      * Flag to indicate whether <code>TransportUnit</code>s should be counted on this <code>Location</code>.
      */
     @Column(name = "COUNTING_ACTIVE")
-    private boolean countingActive;
+    private Boolean countingActive;
 
     /**
      * Reserved for stock check procedure and for inventory control.
@@ -133,7 +107,7 @@ public class Location implements Serializable, ILocation {
      * false: Location is not been included in calculation of <code>TransportUnit</code>s.
      */
     @Column(name = "LOCATION_GROUP_COUNTING_ACTIVE")
-    private boolean locationGroupCountingActive;
+    private Boolean locationGroupCountingActive;
 
     /**
      * Signals the state of incoming for this <code>Location</code>.
@@ -142,7 +116,7 @@ public class Location implements Serializable, ILocation {
      * false: <code>Location</code> is locked, and cannot gather <code>TransportUnit</code>s.
      */
     @Column(name = "INCOMING_ACTIVE")
-    private boolean incomingActive;
+    private Boolean incomingActive;
 
     /**
      * Signals the state of outgoing of this <code>Location</code>.
@@ -151,7 +125,7 @@ public class Location implements Serializable, ILocation {
      * false: <code>Location</code> is locked, <code>TransportUnit</code>s can't leave from here.
      */
     @Column(name = "OUTGOING_ACTIVE")
-    private boolean outgoingActive;
+    private Boolean outgoingActive;
 
     /**
      * The PLC could change the state of an <code>Location</code>. This property stores the last state, received from
@@ -170,7 +144,7 @@ public class Location implements Serializable, ILocation {
      * false: This <code>Location</code> will not been considered.
      */
     @Column(name = "CONSIDERED_IN_ALLOCATION")
-    private boolean consideredInAllocation;
+    private Boolean consideredInAllocation;
 
     /**
      * Version field
@@ -236,31 +210,6 @@ public class Location implements Serializable, ILocation {
 	this.description = description;
     }
 
-    public short getNoLeaveTransportUnits() {
-	return this.noLeaveTransportUnits;
-    }
-
-    public void setNoLeaveTransportUnits(short noLeaveTransportUnits) {
-	this.noLeaveTransportUnits = noLeaveTransportUnits;
-    }
-
-    public short getNoIncomingTransportUnits() {
-	return this.noIncomingTransportUnits;
-    }
-
-    // TODO: needed?
-    public void setNoIncomingTransportUnits(short noIncomingTransportUnits) {
-	this.noIncomingTransportUnits = noIncomingTransportUnits;
-    }
-
-    public void increaseIncomingTransportUnits() {
-	this.noIncomingTransportUnits++;
-    }
-
-    public void decreaseIncomingTransportUnits() {
-	this.noIncomingTransportUnits--;
-    }
-
     public Date getLastAccess() {
 	return this.lastAccess;
     }
@@ -269,19 +218,19 @@ public class Location implements Serializable, ILocation {
 	this.lastAccess = lastAccess;
     }
 
-    public boolean isConsideredInAllocation() {
+    public Boolean getConsideredInAllocation() {
 	return this.consideredInAllocation;
     }
 
-    public void setConsideredInAllocation(boolean consideredInAllocation) {
+    public void setConsideredInAllocation(Boolean consideredInAllocation) {
 	this.consideredInAllocation = consideredInAllocation;
     }
 
-    public boolean isCountingActive() {
+    public Boolean getCountingActive() {
 	return this.countingActive;
     }
 
-    public void setCountingActive(boolean countingActive) {
+    public void setCountingActive(Boolean countingActive) {
 	this.countingActive = countingActive;
     }
 
@@ -303,11 +252,11 @@ public class Location implements Serializable, ILocation {
 	return this.messages.add(message);
     }
 
-    public boolean isOutgoingActive() {
+    public Boolean getOutgoingActive() {
 	return this.outgoingActive;
     }
 
-    public void setOutgoingActive(boolean outgoingActive) {
+    public void setOutgoingActive(Boolean outgoingActive) {
 	this.outgoingActive = outgoingActive;
     }
 
@@ -327,37 +276,6 @@ public class Location implements Serializable, ILocation {
 	this.noMaxTransportUnits = noMaxTransportUnits;
     }
 
-    public short getNoEmptyTransportUnits() {
-	return this.noEmptyTransportUnits;
-    }
-
-    public void setNoEmptyTransportUnits(short noEmptyTransportUnits) {
-	this.noEmptyTransportUnits = noEmptyTransportUnits;
-    }
-
-    public short getNoTransportUnits() {
-	return this.noTransportUnits;
-    }
-
-    // TODO: needed?
-    public void setNoTransportUnits(short noTransportUnits) {
-	this.noTransportUnits = noTransportUnits;
-    }
-
-    public void increaseNoTransportUnits() {
-	this.noTransportUnits++;
-	if (this.isLocationGroupCountingActive()) {
-	    this.locationGroup.increaseNoFreeLocations();
-	}
-    }
-
-    public void decreaseNoTransportUnits() {
-	this.noTransportUnits--;
-	if (isLocationGroupCountingActive()) {
-	    this.locationGroup.decreaseNoFreeLocations();
-	}
-    }
-
     public short getPlcState() {
 	return this.plcState;
     }
@@ -374,19 +292,19 @@ public class Location implements Serializable, ILocation {
 	this.checkState = checkState;
     }
 
-    public boolean isLocationGroupCountingActive() {
+    public Boolean getLocationGroupCountingActive() {
 	return this.locationGroupCountingActive;
     }
 
-    public void setLocationGroupCountingActive(boolean locationGroupCountingActive) {
+    public void setLocationGroupCountingActive(Boolean locationGroupCountingActive) {
 	this.locationGroupCountingActive = locationGroupCountingActive;
     }
 
-    public boolean isIncomingActive() {
+    public Boolean getIncomingActive() {
 	return this.incomingActive;
     }
 
-    public void setIncomingActive(boolean incomingActive) {
+    public void setIncomingActive(Boolean incomingActive) {
 	this.incomingActive = incomingActive;
     }
 
