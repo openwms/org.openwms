@@ -24,7 +24,7 @@
 	<!-- Entity Manager -->
 	<bean id="entityManagerFactory" class="org.springframework.orm.jpa.LocalEntityManagerFactoryBean"
 		depends-on="hsqlDbServer">
-		<property name="persistenceUnitName" value="OpenWMS-test" />
+		<property name="persistenceUnitName" value="${jdbc.persistenceUnit}" />
 	</bean>
 
 	<!-- Transaction Manager -->
