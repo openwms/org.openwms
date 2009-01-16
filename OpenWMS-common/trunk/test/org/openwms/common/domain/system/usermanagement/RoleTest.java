@@ -46,7 +46,7 @@ public final class RoleTest extends AbstractPDOTestCase {
 	}
 	catch (PersistenceException pe) {
 	    if (pe.getCause() instanceof ConstraintViolationException) {
-		logger.debug("OK:Tested unique constraint on rolename.");
+		LOG.debug("OK:Tested unique constraint on rolename.");
 	    } else {
 		fail("Unknown PersistenceException");
 	    }

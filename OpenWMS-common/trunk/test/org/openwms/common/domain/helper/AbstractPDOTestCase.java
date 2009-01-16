@@ -16,6 +16,7 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.junit.After;
 import org.junit.AfterClass;
+import org.junit.Before;
 import org.junit.BeforeClass;
 
 /**
@@ -26,7 +27,7 @@ import org.junit.BeforeClass;
  */
 public abstract class AbstractPDOTestCase {
 
-    protected final Log logger = LogFactory.getLog(this.getClass());
+    protected final Log LOG = LogFactory.getLog(this.getClass());
     protected static EntityManagerFactory emf;
     protected static EntityManager em;
     protected static boolean running = false;
@@ -45,7 +46,7 @@ public abstract class AbstractPDOTestCase {
 		TestHelper.getInstance().startDb();
 	    }
 	    emf = TestHelper.getInstance().createEntityManagerFactory(TestHelper.getInstance().getPersistenceUnit());
-	    em = emf.createEntityManager();
+	    // em = emf.createEntityManager();
 	}
 	catch (Exception ex) {
 	    fail("Exception during JPA EntityManager instanciation.");
@@ -71,7 +72,19 @@ public abstract class AbstractPDOTestCase {
     public void tearDown() {
 	EntityTransaction entityTransaction = em.getTransaction();
 	if (entityTransaction.isActive()) {
+	    LOG.debug("Rollback transaction");
 	    entityTransaction.rollback();
+	}
+	LOG.debug("Destroying EntityManager");
+	em.close();
+	em = null;
+    }
+
+    @Before
+    public void setUp() {
+	if (em == null) {
+	    LOG.debug("Getting EntityManager");
+	    em = emf.createEntityManager();
 	}
     }
 }
