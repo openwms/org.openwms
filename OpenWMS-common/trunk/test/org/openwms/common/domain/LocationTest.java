@@ -8,8 +8,6 @@ package org.openwms.common.domain;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.fail;
 
 import javax.persistence.EntityTransaction;
 import javax.persistence.PersistenceException;
@@ -34,38 +32,7 @@ public final class LocationTest extends AbstractPDOTestCase {
      */
     @Test
     public final void testLocationLifecycle() {
-	LocationPK pk = new LocationPK("UNKNOWN", "UNKNOWN", "UNKNOWN", "UNKNOWN", "UNKNOWN");
-	Location location = new Location(pk);
-	EntityTransaction entityTransaction = em.getTransaction();
-	try {
-	    entityTransaction.begin();
-	    em.persist(location);
-	    entityTransaction.commit();
-	}
-	catch (Exception pe) {
-	    fail("Persist of an Location fails");
-	}
-
-	Location location2 = new Location(pk);
-	try {
-	    entityTransaction.begin();
-	    em.persist(location2);
-	    entityTransaction.commit();
-	    fail("Persist of an Location fails");
-	}
-	catch (Exception pe) {
-	    entityTransaction.rollback();
-	}
-
-	Location location3 = em.find(Location.class, location.getId());
-	assertNotNull("Cannot read location after persisting", location3);
-
-	entityTransaction.begin();
-	em.remove(location3);
-	entityTransaction.commit();
-
-	Location location4 = em.find(Location.class, location.getId());
-	assertNull("Location should be REMOVED before", location4);
+    // tested in LocationDAOTest
     }
 
     /**

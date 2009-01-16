@@ -44,7 +44,7 @@ public final class TransportUnitTest extends AbstractPDOTestCase {
 	}
 	catch (PersistenceException pe) {
 	    // okay
-	    logger.debug("OK:Execption while persisting TransportUnit without TransportUnitType.");
+	    LOG.debug("OK:Execption while persisting TransportUnit without TransportUnitType.");
 	    entityTransaction.rollback();
 	}
     }
@@ -67,7 +67,7 @@ public final class TransportUnitTest extends AbstractPDOTestCase {
 	}
 	catch (PersistenceException pe) {
 	    // okay
-	    logger.debug("OK:Exception while persisting TransportUnit with unknown TransportUnitType.");
+	    LOG.debug("OK:Exception while persisting TransportUnit with unknown TransportUnitType.");
 	    entityTransaction.rollback();
 	}
     }
@@ -97,7 +97,7 @@ public final class TransportUnitTest extends AbstractPDOTestCase {
 	}
 	catch (Exception pe) {
 	    // okay
-	    logger.debug("OK:Execption while persisting TransportUnit with unknown actualLocation and targetLocation.");
+	    LOG.debug("OK:Execption while persisting TransportUnit with unknown actualLocation and targetLocation.");
 	    entityTransaction.rollback();
 	}
     }
@@ -125,10 +125,10 @@ public final class TransportUnitTest extends AbstractPDOTestCase {
 	    entityTransaction.begin();
 	    em.merge(transportUnit);
 	    entityTransaction.commit();
-	    logger.debug("Also without targetLocation must be okay.");
+	    LOG.debug("Also without targetLocation must be okay.");
 	}
 	catch (PersistenceException pe) {
-	    logger
+	    LOG
 		    .debug("NOT OK:Execption while persisting TransportUnit with known actualLocation and transportUnitType!");
 	    entityTransaction.rollback();
 	    fail("Persisting transportUnit with known actualLocation and transportUnitType not committed!");
@@ -164,7 +164,7 @@ public final class TransportUnitTest extends AbstractPDOTestCase {
 	    Thread.sleep(100);
 	}
 	catch (InterruptedException e) {
-	    logger.error("Error", e);
+	    LOG.error("Error", e);
 	}
 	transportUnit.addError(new UnitError());
 	try {
@@ -217,7 +217,7 @@ public final class TransportUnitTest extends AbstractPDOTestCase {
 	}
 	catch (Exception pe) {
 	    // okay
-	    logger.debug("OK:Execption while persisting TransportUnit with unknown targetLocation.");
+	    LOG.debug("OK:Execption while persisting TransportUnit with unknown targetLocation.");
 	}
     }
 

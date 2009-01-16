@@ -41,7 +41,7 @@ public final class TransportOrderTest extends AbstractPDOTestCase {
 	    fail("TransportOrder must not be switched in next mode without transportUnit");
 	}
 	catch (TransportManagementException tme) {
-	    logger.debug("OK:Exception while switching to next state without transportUnit");
+	    LOG.debug("OK:Exception while switching to next state without transportUnit");
 	}
 
 	assertEquals("TransportOrder must remain in state CREATED:", TRANSPORT_ORDER_STATE.CREATED, transportOrder
@@ -53,14 +53,14 @@ public final class TransportOrderTest extends AbstractPDOTestCase {
 	    fail("TransportOrder must not be switched in next mode without setting a target");
 	}
 	catch (TransportManagementException tme) {
-	    logger.debug("OK:Exception while switching to next state without target");
+	    LOG.debug("OK:Exception while switching to next state without target");
 	}
 
 	Location targetLocation = new Location(new LocationPK("KNOWN", "KNOWN", "KNOWN", "KNOWN", "KNOWN"));
 	transportOrder.setTargetLocation(targetLocation);
 	try {
 	    transportOrder.setState(TRANSPORT_ORDER_STATE.INITIALIZED);
-	    logger.debug("transportUnit set and target set");
+	    LOG.debug("transportUnit set and target set");
 	}
 	catch (TransportManagementException tme) {
 	    fail("TransportOrder could be switched in next mode");
@@ -73,7 +73,7 @@ public final class TransportOrderTest extends AbstractPDOTestCase {
 	transportOrder2.setTargetLocationGroup(targetLocationGroup);
 	try {
 	    transportOrder.setState(TRANSPORT_ORDER_STATE.INITIALIZED);
-	    logger.debug("transportUnit set and targetLocationGroup set");
+	    LOG.debug("transportUnit set and targetLocationGroup set");
 	}
 	catch (TransportManagementException tme) {
 	    fail("TransportOrder could be switched in next mode");
