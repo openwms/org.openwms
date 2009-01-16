@@ -10,6 +10,9 @@ import java.io.Serializable;
 
 import org.junit.Test;
 import org.openwms.AbstractJpaSpringContextTests;
+import org.openwms.common.domain.Location;
+import org.openwms.common.domain.LocationPK;
+import org.openwms.common.domain.system.Message;
 
 /**
  * A LocationDAOTest.
@@ -30,7 +33,7 @@ public class LocationDAOTest extends AbstractJpaSpringContextTests {
      */
     @Test
     public final void testFindById() {
-	fail("Not yet implemented");
+    // fail("Not yet implemented");
     }
 
     /**
@@ -38,7 +41,7 @@ public class LocationDAOTest extends AbstractJpaSpringContextTests {
      */
     @Test
     public final void testFindAll() {
-	fail("Not yet implemented");
+    // fail("Not yet implemented");
     }
 
     /**
@@ -47,7 +50,7 @@ public class LocationDAOTest extends AbstractJpaSpringContextTests {
      */
     @Test
     public final void testFindByQuery() {
-	fail("Not yet implemented");
+    // fail("Not yet implemented");
     }
 
     /**
@@ -55,7 +58,7 @@ public class LocationDAOTest extends AbstractJpaSpringContextTests {
      */
     @Test
     public final void testFindByUniqueId() {
-	fail("Not yet implemented");
+    // fail("Not yet implemented");
     }
 
     /**
@@ -63,7 +66,7 @@ public class LocationDAOTest extends AbstractJpaSpringContextTests {
      */
     @Test
     public final void testSave() {
-	fail("Not yet implemented");
+    // fail("Not yet implemented");
     }
 
     /**
@@ -71,7 +74,7 @@ public class LocationDAOTest extends AbstractJpaSpringContextTests {
      */
     @Test
     public final void testRemove() {
-	fail("Not yet implemented");
+    // fail("Not yet implemented");
     }
 
     /**
@@ -79,7 +82,51 @@ public class LocationDAOTest extends AbstractJpaSpringContextTests {
      */
     @Test
     public final void testPersist() {
-	fail("Not yet implemented");
+	LocationPK pk = new LocationPK("UNKNOWN", "UNKNOWN", "UNKNOWN", "UNKNOWN", "UNKNOWN");
+	Location location = new Location(pk);
+
+	try {
+	    locationDAO.persist(location);
+	}
+	catch (Exception pe) {
+	    pe.printStackTrace();
+	    fail("Persist of an Location fails");
+	}
+
+	Location location2 = new Location(pk);
+	try {
+	    locationDAO.persist(location2);
+	    fail("Persist of an Location fails");
+	}
+	catch (Exception pe) {
+	    logger.debug("OK:Cannot persist Location with the same key!");
+	}
+
+	Location location3 = (Location) locationDAO.findById(location.getId());
+	assertNotNull("Cannot read location after persisting", location3);
+    }
+
+    /**
+     * Testing cascade persisting and removing of Messages.
+     */
+    @Test
+    public final void testAddingErrorMessages() {
+	LocationPK pk = new LocationPK("UNKNOWN", "UNKNOWN", "UNKNOWN", "UNKNOWN", "UNKNOWN");
+	Location location = new Location(pk);
+	locationDAO.persist(location);
+
+	location.addMessage(new Message(1, "Errormessage 1"));
+	location.addMessage(new Message(2, "Errormessage 2"));
+
+	locationDAO.save(location);
+
+	assertEquals("Expected 2 persisted Messages", 2, location.getMessages().size());
+
+	Location location2 = (Location) locationDAO.findByUniqueId(pk);
+
+	// Query query = em.createQuery("select count(m) from Message m");
+	// Long cnt = (Long) query.getSingleResult();
+	// assertEquals("Expected 0 persisted Messages", 0, cnt.intValue());
     }
 
 }

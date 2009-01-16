@@ -3,6 +3,7 @@
 	<name>OpenWMS-common-Spring</name>
 	<comment></comment>
 	<projects>
+		<project>OpenWMS-common</project>
 	</projects>
 	<buildSpec>
 		<buildCommand>
