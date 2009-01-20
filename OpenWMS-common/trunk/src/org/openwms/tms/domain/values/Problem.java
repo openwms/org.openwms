@@ -21,79 +21,79 @@ import javax.persistence.Embeddable;
 @Embeddable
 public class Problem implements Serializable {
 
-	private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
-	@Column(name = "OCCURED")
-	private Date occured;
+    @Column(name = "OCCURED")
+    private Date occured;
 
-	@Column(name = "MESSAGE_NO")
-	private int messageNo;
+    @Column(name = "MESSAGE_NO")
+    private int messageNo;
 
-	@Column(name = "MESSAGE")
-	private String message;
+    @Column(name = "MESSAGE")
+    private String message;
 
-	/* ----------------------------- methods ------------------- */
-	/**
-	 * Creates a new Problem.
-	 */
-	public Problem() {
-		this.occured = new Date();
-	}
+    /* ----------------------------- methods ------------------- */
+    /**
+     * Creates a new Problem.
+     */
+    public Problem() {
+	this.occured = new Date();
+    }
 
-	/**
-	 * Get the occured.
-	 * 
-	 * @return the occured.
-	 */
-	public Date getOccured() {
-		return occured;
-	}
+    /**
+     * Get the occured.
+     * 
+     * @return the occured.
+     */
+    public Date getOccured() {
+	return occured;
+    }
 
-	/**
-	 * Set the occured.
-	 * 
-	 * @param occured
-	 *            The occured to set.
-	 */
-	public void setOccured(Date occured) {
-		this.occured = occured;
-	}
+    /**
+     * Set the occured.
+     * 
+     * @param occured
+     *            The occured to set.
+     */
+    public void setOccured(Date occured) {
+	this.occured = occured;
+    }
 
-	/**
-	 * Get the messageNo.
-	 * 
-	 * @return the messageNo.
-	 */
-	public int getMessageNo() {
-		return messageNo;
-	}
+    /**
+     * Get the messageNo.
+     * 
+     * @return the messageNo.
+     */
+    public int getMessageNo() {
+	return messageNo;
+    }
 
-	/**
-	 * Set the messageNo.
-	 * 
-	 * @param messageNo
-	 *            The messageNo to set.
-	 */
-	public void setMessageNo(int messageNo) {
-		this.messageNo = messageNo;
-	}
+    /**
+     * Set the messageNo.
+     * 
+     * @param messageNo
+     *            The messageNo to set.
+     */
+    public void setMessageNo(int messageNo) {
+	this.messageNo = messageNo;
+    }
 
-	/**
-	 * Get the message.
-	 * 
-	 * @return the message.
-	 */
-	public String getMessage() {
-		return message;
-	}
+    /**
+     * Get the message.
+     * 
+     * @return the message.
+     */
+    public String getMessage() {
+	return message;
+    }
 
-	/**
-	 * Set the message.
-	 * 
-	 * @param message
-	 *            The message to set.
-	 */
-	public void setMessage(String message) {
-		this.message = message;
-	}
+    /**
+     * Set the message.
+     * 
+     * @param message
+     *            The message to set.
+     */
+    public void setMessage(String message) {
+	this.message = message;
+    }
 }

@@ -194,6 +194,11 @@ public class TransportUnit implements Serializable {
 	return id;
     }
 
+    /**
+     * Check whether the instance is transient.
+     * 
+     * @return
+     */
     public boolean isNew() {
 	return (this.id == null);
     }
@@ -240,7 +245,8 @@ public class TransportUnit implements Serializable {
     /**
      * Indicates whether the <code>TransportUnit</code> is empty or not.
      * 
-     * @return<br> - true if empty <br> - false if not empty.
+     * @return<br> - true if empty <br>
+     *             - false if not empty.
      */
     public Boolean isEmpty() {
 	return this.empty;
@@ -422,7 +428,7 @@ public class TransportUnit implements Serializable {
      * Set the parent.
      * 
      * @param parent
-     *                The parent to set.
+     *            The parent to set.
      */
     public void setParent(TransportUnit parent) {
 	this.parent = parent;
@@ -485,7 +491,7 @@ public class TransportUnit implements Serializable {
      * Set the actualLocationDate.
      * 
      * @param actualLocationDate
-     *                The actualLocationDate to set.
+     *            The actualLocationDate to set.
      */
     public void setActualLocationDate(Date actualLocationDate) {
 	this.actualLocationDate = actualLocationDate;
