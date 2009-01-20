@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xmlns:p="http://www.springframework.org/schema/p" xmlns:context="http://www.springframework.org/schema/context"
-	xmlns:tx="http://www.springframework.org/schema/tx" xmlns:aop="http://www.springframework.org/schema/aop"
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:context="http://www.springframework.org/schema/context" xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:aop="http://www.springframework.org/schema/aop"
 	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
 		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-2.5.xsd
 		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-2.5.xsd
@@ -13,16 +14,19 @@
 	<aop:aspectj-autoproxy />
 
 	<!-- HSQL Database Server -->
-	<bean id="hsqlDbServer" class="org.openwms.common.HsqlDBWrapper" p:url="${jdbc.url}" p:username="${jdbc.username}"
-		p:password="${jdbc.password}" />
+	<bean id="hsqlDbServer" class="org.openwms.common.HsqlDBWrapper"
+		p:url="${jdbc.url}" p:username="${jdbc.username}" p:password="${jdbc.password}" />
 
 	<!-- Datasource -->
-	<bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource"
-		p:driverClassName="${jdbc.driverClassName}" p:url="${jdbc.url}" p:username="${jdbc.username}"
-		p:password="${jdbc.password}" depends-on="hsqlDbServer" />
+	<bean id="dataSource"
+		class="org.springframework.jdbc.datasource.DriverManagerDataSource"
+		p:driverClassName="${jdbc.driverClassName}" p:url="${jdbc.url}"
+		p:username="${jdbc.username}" p:password="${jdbc.password}"
+		depends-on="hsqlDbServer" />
 
 	<!-- Entity Manager -->
-	<bean id="entityManagerFactory" class="org.springframework.orm.jpa.LocalEntityManagerFactoryBean"
+	<bean id="entityManagerFactory"
+		class="org.springframework.orm.jpa.LocalEntityManagerFactoryBean"
 		depends-on="hsqlDbServer">
 		<property name="persistenceUnitName" value="${jdbc.persistenceUnit}" />
 	</bean>
@@ -35,8 +39,10 @@
 		<constructor-arg ref="dataSource" />
 	</bean>
 
-	<bean class="org.springframework.dao.annotation.PersistenceExceptionTranslationPostProcessor" />
-	<bean class="org.springframework.orm.jpa.support.PersistenceAnnotationBeanPostProcessor" />
+	<bean
+		class="org.springframework.dao.annotation.PersistenceExceptionTranslationPostProcessor" />
+	<bean
+		class="org.springframework.orm.jpa.support.PersistenceAnnotationBeanPostProcessor" />
 
 
 </beans>
