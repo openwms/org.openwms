@@ -41,8 +41,8 @@ import org.openwms.common.domain.system.Message;
  */
 @Entity
 @Table(name = "LOCATION", uniqueConstraints = @UniqueConstraint(columnNames = { "AREA", "AISLE", "X", "Y", "Z" }))
-@NamedQueries( { @NamedQuery(name = "findLocationAll", query = "SELECT l FROM Location l"),
-	@NamedQuery(name = "findLocationUnique", query = "SELECT l FROM Location l WHERE l.locationId = ?1") })
+@NamedQueries( { @NamedQuery(name = "Location.findAll", query = "select l from Location l"),
+	@NamedQuery(name = "Location.findByLocationPK", query = "select l from Location l where l.locationId = ?1") })
 public class Location implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -81,8 +81,8 @@ public class Location implements Serializable {
 
     /**
      * Timestamp of last change of the <code>TransportUnit</code>. When a <code>TransportUnit</code> is entering or
-     * leaving this place, the timestamp will be updated. This is necessary to locate old <code>TransportUnit</code>s
-     * in the stock as well as for inventory calculation.
+     * leaving this place, the timestamp will be updated. This is necessary to locate old <code>TransportUnit</code>s in
+     * the stock as well as for inventory calculation.
      */
     @Column(name = "LAST_ACCESS")
     private Date lastAccess;
@@ -100,8 +100,8 @@ public class Location implements Serializable {
     private String checkState;
 
     /**
-     * Shall this <code>Location</code> be integrated in the calculation of <code>TransportUnit</code>s on the
-     * parent <code>LocationGroup</code>.
+     * Shall this <code>Location</code> be integrated in the calculation of <code>TransportUnit</code>s on the parent
+     * <code>LocationGroup</code>.
      * <p>
      * true : Location is been included in calculation of <code>TransportUnit</code>s.<br>
      * false: Location is not been included in calculation of <code>TransportUnit</code>s.

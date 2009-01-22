@@ -25,31 +25,31 @@ public class LocationPK implements Serializable {
     /**
      * Expresses an area.
      */
-    @Column(name = "AREA")
+    @Column(name = "AREA", nullable = false)
     private String area;
 
     /**
      * Expresses an aisle.
      */
-    @Column(name = "AISLE")
+    @Column(name = "AISLE", nullable = false)
     private String aisle;
 
     /**
      * Expresses an dimension x.
      */
-    @Column(name = "X")
+    @Column(name = "X", nullable = false)
     private String x;
 
     /**
      * Expresses an dimension y.
      */
-    @Column(name = "Y")
+    @Column(name = "Y", nullable = false)
     private String y;
 
     /**
      * Expresses an dimension z.
      */
-    @Column(name = "Z")
+    @Column(name = "Z", nullable = false)
     private String z;
 
     /* ----------------------------- methods ------------------- */
