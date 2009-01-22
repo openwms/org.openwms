@@ -6,7 +6,7 @@
  */
 package org.openwms.common.dao;
 
-import java.io.Serializable;
+import javax.management.Query;
 
 import org.junit.Test;
 import org.openwms.AbstractJpaSpringContextTests;
@@ -22,9 +22,9 @@ import org.openwms.common.domain.system.Message;
  */
 public class LocationDAOTest extends AbstractJpaSpringContextTests {
 
-    private GenericDAO<Serializable, Serializable> locationDAO;
+    private GenericDAO<Location, Long> locationDAO;
 
-    public void setLocationDAO(GenericDAO<Serializable, Serializable> locationDAO) {
+    public void setLocationDAO(GenericDAO<Location, Long> locationDAO) {
 	this.locationDAO = locationDAO;
     }
 
@@ -121,12 +121,11 @@ public class LocationDAOTest extends AbstractJpaSpringContextTests {
 	locationDAO.save(location);
 
 	assertEquals("Expected 2 persisted Messages", 2, location.getMessages().size());
-
 	Location location2 = (Location) locationDAO.findByUniqueId(pk);
-
-	// Query query = em.createQuery("select count(m) from Message m");
-	// Long cnt = (Long) query.getSingleResult();
-	// assertEquals("Expected 0 persisted Messages", 0, cnt.intValue());
+System.out.println("Hallo");
+//	 Query query = em.createQuery("select count(m) from Message m");
+//	 Long cnt = (Long) query.getSingleResult();
+//	 assertEquals("Expected 0 persisted Messages", 0, cnt.intValue());
     }
 
 }

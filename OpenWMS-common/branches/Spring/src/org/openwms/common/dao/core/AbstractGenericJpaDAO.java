@@ -74,9 +74,9 @@ public abstract class AbstractGenericJpaDAO<T extends Serializable, ID extends S
 
     @Transactional(readOnly = true)
     @SuppressWarnings("unchecked")
-    public T findByUniqueId(Object id) {
+    public T findByUniqueId(Serializable id) {
 	// TODO:Don't check null, yet
-	List<T> result = getJpaTemplate().findByNamedQuery(getFindAllUniqueQuery(), id);
+	List<T> result = getJpaTemplate().findByNamedQuery(getFindByUniqueIdQuery(), id);
 	if (result.size() > 1) {
 	    throw new IncorrectResultSizeDataAccessException("Unexpected size of result list", 1, result.size());
 	}
@@ -97,5 +97,5 @@ public abstract class AbstractGenericJpaDAO<T extends Serializable, ID extends S
 
     abstract String getFindAllQuery();
 
-    abstract String getFindAllUniqueQuery();
+    abstract String getFindByUniqueIdQuery();
 }

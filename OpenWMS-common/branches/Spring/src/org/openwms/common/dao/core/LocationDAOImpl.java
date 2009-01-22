@@ -24,7 +24,7 @@ public class LocationDAOImpl extends AbstractGenericJpaDAO<Location, LocationPK>
     }
 
     @Override
-    String getFindAllUniqueQuery() {
+    String getFindByUniqueIdQuery() {
 	return LocationDAO.NQ_FIND_BY_UNIQUE_QUERY;
     }
 }

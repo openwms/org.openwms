@@ -26,7 +26,7 @@ public class GenericJpaDAOImpl<T extends Serializable, ID extends Serializable> 
     }
 
     @Override
-    String getFindAllUniqueQuery() {
+    String getFindByUniqueIdQuery() {
 	// FIXME getFindAllUniqueQuery
 	return " ";
     }

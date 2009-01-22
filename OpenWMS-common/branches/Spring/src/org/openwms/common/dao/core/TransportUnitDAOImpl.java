@@ -24,7 +24,7 @@ public class TransportUnitDAOImpl extends AbstractGenericJpaDAO<TransportUnit, B
     }
 
     @Override
-    String getFindAllUniqueQuery() {
+    String getFindByUniqueIdQuery() {
 	return TransportUnitDAO.NQ_FIND_BY_UNIQUE_QUERY;
     }
 

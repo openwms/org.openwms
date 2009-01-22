@@ -48,7 +48,7 @@ public interface GenericDAO<T extends Serializable, ID extends Serializable> {
      * @param id
      * @return
      */
-    T findByUniqueId(Object id);
+    T findByUniqueId(Serializable id);
 
     /**
      * Merges a detached entity. Return the entity as persisted.

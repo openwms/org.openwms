@@ -35,7 +35,7 @@ public final class TransportServiceTest extends AbstractJpaSpringContextTests {
     protected String getTestDataFile() {
 	// return null;
 	// To load testdata return the filename of the DBUnit file
-	return this.testDataFile;
+	return null;//this.testDataFile;
     }
 
     @Test
