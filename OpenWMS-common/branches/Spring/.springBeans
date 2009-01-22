@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beansProjectDescription>
 	<version>1</version>
-	<pluginVersion><![CDATA[2.2.0.v200809261800]]></pluginVersion>
+	<pluginVersion><![CDATA[2.2.1.v200811281800]]></pluginVersion>
 	<configSuffixes>
 		<configSuffix><![CDATA[xml]]></configSuffix>
 	</configSuffixes>
@@ -20,6 +20,12 @@
 			<allowBeanDefinitionOverriding>true</allowBeanDefinitionOverriding>
 			<incomplete>true</incomplete>
 			<configs>
+				<config>spring/org/openwms/common/bootstrap-cfg.xml</config>
+				<config>test/org/openwms/common/dao/GenericJpaDAOTest-context.xml</config>
+				<config>test/org/openwms/common/dao/LocationDAOTest-context.xml</config>
+				<config>test/org/openwms/common/dao/UserDaoTest-context.xml</config>
+				<config>test/org/openwms/common/service/transport/TransportServiceTest-context.xml</config>
+				<config>test/org/openwms/Test-Infrastructure-context.xml</config>
 			</configs>
 		</configSet>
 	</configSets>
