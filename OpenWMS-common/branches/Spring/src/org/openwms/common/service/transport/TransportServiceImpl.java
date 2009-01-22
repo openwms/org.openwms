@@ -16,6 +16,7 @@ import org.openwms.common.domain.TransportUnitType;
 import org.openwms.common.domain.values.Barcode;
 import org.openwms.common.exception.service.ServiceException;
 import org.openwms.common.service.TransportService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -29,20 +30,19 @@ import org.springframework.transaction.annotation.Transactional;
 public class TransportServiceImpl implements TransportService {
 
     protected Log LOG = LogFactory.getLog(this.getClass());
-    // FIXME: Eliminate different dao injections, use only one generic dao!
     private GenericDAO<TransportUnit, Barcode> transportUnitDao;
     private GenericDAO<Location, LocationPK> locationDao;
 
-    // public TransportServiceImpl(GenericDAO<TransportUnit, Barcode> entityDao,
-    // GenericDAO<Location, LocationPK> locationDao) {
-    // this.transportUnitDao = entityDao;
-    // this.locationDao = locationDao;
-    // }
-
     public TransportUnit createTransportUnit(Barcode barcode, TransportUnitType transportUnitType,
 	    LocationPK actualLocationPk) {
-	// FIXME: implement
-	return null;
+	TransportUnit transportUnit = transportUnitDao.findByUniqueId(barcode);
+	if (transportUnit != null) {
+	    throw new ServiceException("TransportUnit with id " + barcode + " still exists");
+	}
+	transportUnit = new TransportUnit(barcode);
+	transportUnit.setTransportUnitType(transportUnitType);
+	transportUnit.setActualLocation(locationDao.findById(actualLocationPk));
+	return transportUnit;
     }
 
     public void setLocationDao(GenericDAO<Location, LocationPK> locationDao) {
@@ -81,5 +81,4 @@ public class TransportServiceImpl implements TransportService {
 		    + actualLocationPk, e);
 	}
     }
-
 }

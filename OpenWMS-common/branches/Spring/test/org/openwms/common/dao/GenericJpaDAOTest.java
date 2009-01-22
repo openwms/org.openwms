@@ -6,6 +6,8 @@
  */
 package org.openwms.common.dao;
 
+import java.util.List;
+
 import org.junit.Test;
 import org.openwms.AbstractJpaSpringContextTests;
 import org.openwms.common.domain.Location;
@@ -30,7 +32,7 @@ public class GenericJpaDAOTest extends AbstractJpaSpringContextTests {
      */
     @Test
     public final void testFindAll() {
-    // TODO
+	List<Location> l = locationDao.findAll();
     }
 
     /**
@@ -39,7 +41,8 @@ public class GenericJpaDAOTest extends AbstractJpaSpringContextTests {
      */
     @Test
     public final void testFindByQuery() {
-    // TODO
+	Location l = locationDao.findById(new Long(1));
+	System.out.println("Hallo");
     }
 
     /**
