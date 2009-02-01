@@ -7,12 +7,9 @@
 package org.openwms.common.domain.system.usermanagement;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
-import javax.persistence.OneToMany;
 
 /**
  * All minor details of an <code>User</code>.
@@ -40,8 +37,8 @@ public class UserDetails implements Serializable {
     /**
      * Email address assigned to the <code>User</code> entity.
      */
-    @OneToMany(mappedBy = "id")
-    private List<Email> emails = new ArrayList<Email>();
+    @Column(name = "EMAIL")
+    private Email email;
 
     /**
      * Phone number assigned to the <code>User</code> entity.
@@ -102,22 +99,12 @@ public class UserDetails implements Serializable {
 	this.office = office;
     }
 
-    public List<Email> getEmails() {
-	if (emails == null) {
-	    emails = new ArrayList<Email>();
-	}
-	return emails;
+    public Email getEmails() {
+	return email;
     }
 
-    public void addEmail(Email email) {
-	if (emails == null) {
-	    emails = new ArrayList<Email>();
-	}
-	emails.add(email);
-    }
-
-    public void setEmails(List<Email> emails) {
-	this.emails = emails;
+    public void setEmail(Email email) {
+	this.email = email;
     }
 
     public String getSkypeName() {

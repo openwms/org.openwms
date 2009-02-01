@@ -49,7 +49,7 @@ public abstract class AbstractPDOTestCase {
 	    // em = emf.createEntityManager();
 	}
 	catch (Exception ex) {
-	    fail("Exception during JPA EntityManager instanciation.");
+	    fail("Exception during JPA EntityManager instanciation: " + ex.getMessage());
 	}
     }
 
