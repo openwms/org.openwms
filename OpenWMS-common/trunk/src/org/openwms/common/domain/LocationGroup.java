@@ -27,12 +27,16 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Version;
 
 @Entity
 @Table(name = "LOCATION_GROUP")
+@NamedQueries( { @NamedQuery(name = "LocationGroup.findAll", query = "select lg from LocationGroup lg"),
+	@NamedQuery(name = "LocationGroup.findByName", query = "select lg from LocationGroup lg where lg.name = ?1") })
 public class LocationGroup implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -45,15 +49,15 @@ public class LocationGroup implements Serializable {
      * Primary Key.
      */
     @Id
-    @Column(name = "LOCATION_GROUP_ID")
+    @Column(name = "ID")
     @GeneratedValue
     private Long id;
 
     /**
      * Unique identifier of a <code>LocationGroup</code>.
      */
-    @Column(name = "GROUP_ID", unique = true)
-    private String groupId;
+    @Column(name = "NAME", unique = true)
+    private String name;
 
     /**
      * Description for this <code>LocationGroup</code>.
@@ -86,6 +90,7 @@ public class LocationGroup implements Serializable {
      * Number of free <code>Location</code>s belonging to this <code>LocationGroup</code>.
      */
     @Column(name = "NO_FREE_LOCATIONS")
+    @Deprecated
     private int noFreeLocations;
 
     /**
@@ -135,7 +140,7 @@ public class LocationGroup implements Serializable {
     /**
      * Child <code>LocationGroup</code>s.
      */
-    @OneToMany(mappedBy = "parent", cascade = { CascadeType.MERGE, CascadeType.PERSIST })
+    @OneToMany(mappedBy = "parent", cascade = { CascadeType.ALL })
     private Set<LocationGroup> locationGroups = new HashSet<LocationGroup>();
 
     /**
@@ -152,27 +157,32 @@ public class LocationGroup implements Serializable {
     private LocationGroup() {}
 
     /**
-     * Create a new <code>LocationGroup</code> with unique groupId as name.
+     * Create a new <code>LocationGroup</code> with an unique name.
      */
-    public LocationGroup(String groupId) {
-	this.groupId = groupId;
+    public LocationGroup(String name) {
+	this.name = name;
     }
 
     public Long getId() {
 	return this.id;
     }
 
+    /**
+     * Returns true if this is a transient object.
+     * 
+     * @return
+     */
     public boolean isNew() {
-	return (this.id == null);
+	return this.id == null;
     }
 
     /**
-     * Get the groupId.
+     * Get the name of this <code>LocationGroup</code>.
      * 
-     * @return the groupId.
+     * @return the name.
      */
-    public String getGroupId() {
-	return groupId;
+    public String getName() {
+	return name;
     }
 
     /**
@@ -180,6 +190,7 @@ public class LocationGroup implements Serializable {
      * 
      * @return
      */
+    @Deprecated
     public int getNoFreeLocations() {
 	return this.noFreeLocations;
     }
@@ -188,6 +199,7 @@ public class LocationGroup implements Serializable {
      * Increase the number of <tt>Location</tt>s about one.
      * 
      */
+    @Deprecated
     public void increaseNoFreeLocations() {
 	this.noFreeLocations++;
     }
@@ -196,6 +208,7 @@ public class LocationGroup implements Serializable {
      * Decrease the number of <tt>Location</tt>s about one.
      * 
      */
+    @Deprecated
     public void decreaseNoFreeLocations() {
 	this.noFreeLocations--;
     }
@@ -209,6 +222,16 @@ public class LocationGroup implements Serializable {
 	return this.groupStateIn;
     }
 
+    public void setGroupStateIn(STATE groupStateIn) {
+	if (this.groupStateIn == groupStateIn) {
+	    return;
+	}
+	this.groupStateIn = groupStateIn;
+	for (LocationGroup child : getLocationGroups()) {
+	    child.setGroupStateIn(groupStateIn);
+	}
+    }
+
     /**
      * Get the outbound state of this <code>LocationGroup</code>.
      * 
@@ -216,6 +239,16 @@ public class LocationGroup implements Serializable {
      */
     public STATE getGroupStateOut() {
 	return groupStateOut;
+    }
+
+    public void setGroupStateOut(STATE groupStateOut) {
+	if (this.groupStateOut == groupStateOut) {
+	    return;
+	}
+	this.groupStateOut = groupStateOut;
+	for (LocationGroup child : getLocationGroups()) {
+	    child.setGroupStateOut(groupStateOut);
+	}
     }
 
     /**
@@ -229,8 +262,8 @@ public class LocationGroup implements Serializable {
 
     /**
      * Returns the maximum fill level of this <code>LocationGroup</code>.<br>
-     * The maximum fill level defines how many <code>Location</code>s of this <code>LocationGroup</code> can be
-     * occupied with <code>TransportUnit</code>s.
+     * The maximum fill level defines how many <code>Location</code>s of this <code>LocationGroup</code> can be occupied
+     * with <code>TransportUnit</code>s.
      * <p>
      * The maximum fill level must be value between 0 and 1 and reflects a percentage value.
      * 
@@ -320,8 +353,8 @@ public class LocationGroup implements Serializable {
      * 
      * @return child LocationGroups.
      */
-    public Set<LocationGroup> getLocationGroups() {
-	return Collections.unmodifiableSet(locationGroups);
+    private Set<LocationGroup> getLocationGroups() {
+	return locationGroups;
     }
 
     /**
@@ -331,10 +364,13 @@ public class LocationGroup implements Serializable {
      */
     public boolean addLocationGroup(LocationGroup locationGroup) {
 	if (locationGroup == null) {
-	    return false;
+	    throw new IllegalArgumentException("LocationGroup to add is null");
+	}
+	if (locationGroup.getParent() != null) {
+	    locationGroup.getParent().removeLocationGroup(locationGroup);
 	}
 	locationGroup.setParent(this);
-	return this.locationGroups.add(locationGroup);
+	return locationGroups.add(locationGroup);
     }
 
     /**
@@ -344,9 +380,10 @@ public class LocationGroup implements Serializable {
      */
     public boolean removeLocationGroup(LocationGroup locationGroup) {
 	if (locationGroup == null) {
-	    throw new IllegalArgumentException("Child locationGroup is null!");
+	    throw new IllegalArgumentException("LocationGroup to remove is null!");
 	}
-	return this.locationGroups.remove(locationGroup);
+	locationGroup.setParent(null);
+	return locationGroups.remove(locationGroup);
     }
 
     /**
@@ -364,8 +401,12 @@ public class LocationGroup implements Serializable {
      * @param location
      */
     public boolean addLocation(Location location) {
+
 	if (location == null) {
-	    return false;
+	    throw new IllegalArgumentException("Location to add is null");
+	}
+	if (location.getLocationGroup() != null) {
+	    location.getLocationGroup().removeLocation(location);
 	}
 	location.setLocationGroup(this);
 	return locations.add(location);
@@ -397,7 +438,7 @@ public class LocationGroup implements Serializable {
      * Set the systemCode.
      * 
      * @param systemCode
-     *                The systemCode to set.
+     *            The systemCode to set.
      */
     public void setSystemCode(String systemCode) {
 	this.systemCode = systemCode;
@@ -416,7 +457,7 @@ public class LocationGroup implements Serializable {
      * Set the locationGroupCountingActive.
      * 
      * @param locationGroupCountingActive
-     *                The locationGroupCountingActive to set.
+     *            The locationGroupCountingActive to set.
      */
     public void setLocationGroupCountingActive(boolean locationGroupCountingActive) {
 	this.locationGroupCountingActive = locationGroupCountingActive;

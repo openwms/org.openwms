@@ -164,7 +164,7 @@ public class Location implements Serializable {
      * The <code>LocationGroup</code> to which this <code>Location</code> belongs.
      */
     @ManyToOne
-    @JoinColumn(name = "LOCATION_GROUP_ID", nullable = true)
+    @JoinColumn(name = "LOC_GROUP_ID", nullable = true)
     private LocationGroup locationGroup;
 
     /**
@@ -194,8 +194,13 @@ public class Location implements Serializable {
 	return this.id;
     }
 
+    /**
+     * Returns true if this is a transient object.
+     * 
+     * @return
+     */
     public boolean isNew() {
-	return (this.id == null);
+	return this.id == null;
     }
 
     public LocationPK getLocationId() {
