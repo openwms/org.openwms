@@ -33,6 +33,7 @@ public class HsqlDBWrapper {
     private String url;
     private String username;
     private String password;
+    private String persistenceUnit;
 
     @Required
     public void setUrl(String url) {
@@ -48,6 +49,10 @@ public class HsqlDBWrapper {
     public void setPassword(String password) {
 	this.password = password;
     }
+    
+    public void setPersistenceUnit(String persistenceUnit) {
+	this.persistenceUnit = persistenceUnit;
+    }
 
     /**
      * Start the in-memory HSQL database.
@@ -55,7 +60,7 @@ public class HsqlDBWrapper {
      */
     @PostConstruct
     public void startDb() {
-	if (dbStarted) {
+	if (dbStarted || persistenceUnit.endsWith("durable")) {
 	    return;
 	}
 	logger.info("Starting in-memory HSQL database for unit tests");
@@ -75,7 +80,7 @@ public class HsqlDBWrapper {
      */
     @PreDestroy
     public void stopDb() {
-	if (!dbStarted) {
+	if (!dbStarted || persistenceUnit.endsWith("durable")) {
 	    return;
 	}
 	logger.info("Stopping in-memory HSQL database.");

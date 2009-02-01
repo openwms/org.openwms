@@ -8,7 +8,6 @@ package org.openwms.common.dao.core;
 
 import org.openwms.common.dao.LocationDAO;
 import org.openwms.common.domain.Location;
-import org.openwms.common.domain.LocationPK;
 
 /**
  * A LocationDAO.
@@ -16,7 +15,7 @@ import org.openwms.common.domain.LocationPK;
  * @author <a href="heiko.scherrer@gmx.de">Heiko Scherrer</a>
  * @version $Revision: 314 $
  */
-public class LocationDAOImpl extends AbstractGenericJpaDAO<Location, LocationPK> implements LocationDAO {
+public class LocationDAOImpl extends AbstractGenericJpaDAO<Location, Long> implements LocationDAO {
 
     @Override
     String getFindAllQuery() {

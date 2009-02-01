@@ -8,13 +8,14 @@
 		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-2.5.xsd
 		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-2.5.xsd">
 
-	<bean class="org.openwms.common.dao.core.LocationDAOImpl" id="locationDao"
-		p:entityManagerFactory-ref="entityManagerFactory" />
+	<bean id="genericDao" abstract="true">
+		<property name="entityManagerFactory" ref="entityManagerFactory" />
+	</bean>
 
-	<bean class="org.openwms.common.dao.core.TransportUnitDAOImpl" id="transportUnitDao"
-		p:entityManagerFactory-ref="entityManagerFactory" />
+	<bean class="org.openwms.common.dao.core.LocationGroupDaoImpl"
+		parent="genericDao" id="locationGroupDaoImpl" />
 
-	<bean class="org.openwms.common.service.transport.TransportServiceImpl"
-		id="transportService" p:locationDao-ref="locationDao"
-		p:transportUnitDao-ref="transportUnitDao" />
+	<bean class="org.openwms.common.dao.core.LocationDAOImpl"
+		parent="genericDao" id="locationDaoImpl" />
+
 </beans>

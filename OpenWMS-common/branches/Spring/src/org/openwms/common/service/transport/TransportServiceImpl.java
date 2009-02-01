@@ -29,8 +29,8 @@ import org.springframework.transaction.annotation.Transactional;
 public class TransportServiceImpl implements TransportService {
 
     protected Log LOG = LogFactory.getLog(this.getClass());
-    private GenericDAO<TransportUnit, Barcode> transportUnitDao;
-    private GenericDAO<Location, LocationPK> locationDao;
+    private GenericDAO<TransportUnit, Long> transportUnitDao;
+    private GenericDAO<Location, Long> locationDao;
 
     public TransportUnit createTransportUnit(Barcode barcode, TransportUnitType transportUnitType,
 	    LocationPK actualLocationPk) {
@@ -40,15 +40,16 @@ public class TransportServiceImpl implements TransportService {
 	}
 	transportUnit = new TransportUnit(barcode);
 	transportUnit.setTransportUnitType(transportUnitType);
-	transportUnit.setActualLocation(locationDao.findById(actualLocationPk));
+	transportUnit.setActualLocation(locationDao.findByUniqueId(actualLocationPk));
+	transportUnitDao.persist(transportUnit);
 	return transportUnit;
     }
 
-    public void setLocationDao(GenericDAO<Location, LocationPK> locationDao) {
+    public void setLocationDao(GenericDAO<Location, Long> locationDao) {
 	this.locationDao = locationDao;
     }
 
-    public void setTransportUnitDao(GenericDAO<TransportUnit, Barcode> transportUnitDao) {
+    public void setTransportUnitDao(GenericDAO<TransportUnit, Long> transportUnitDao) {
 	this.transportUnitDao = transportUnitDao;
     }
 
