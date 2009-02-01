@@ -6,8 +6,6 @@
  */
 package org.openwms.common.dao;
 
-import javax.management.Query;
-
 import org.junit.Test;
 import org.openwms.AbstractJpaSpringContextTests;
 import org.openwms.common.domain.Location;
@@ -96,6 +94,7 @@ public class LocationDAOTest extends AbstractJpaSpringContextTests {
 	Location location2 = new Location(pk);
 	try {
 	    locationDAO.persist(location2);
+	    sharedEntityManager.flush();
 	    fail("Persist of an Location fails");
 	}
 	catch (Exception pe) {

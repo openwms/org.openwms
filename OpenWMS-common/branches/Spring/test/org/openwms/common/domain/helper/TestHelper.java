@@ -25,7 +25,7 @@ import org.apache.commons.logging.LogFactory;
 public final class TestHelper {
 
     public static final String PERSISTENCE_UNIT_DURABLE = "OpenWMS-test-durable";
-    private static String persistenceUnit = "OpenWMS-test";
+    private static String persistenceUnit = "OpenWMS-test-durable";
     private Log logger = LogFactory.getLog(TestHelper.class);
     private static TestHelper helper;
     private Connection connection;

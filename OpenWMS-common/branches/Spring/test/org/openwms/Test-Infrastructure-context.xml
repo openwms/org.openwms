@@ -9,13 +9,14 @@
 		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-2.5.xsd">
 
 	<context:property-placeholder location="classpath:jdbc.properties" />
-	<tx:annotation-driven />
+	<tx:annotation-driven transaction-manager="transactionManager" />
 	<context:annotation-config />
 	<aop:aspectj-autoproxy />
 
 	<!-- HSQL Database Server -->
 	<bean id="hsqlDbServer" class="org.openwms.common.HsqlDBWrapper"
-		p:url="${jdbc.url}" p:username="${jdbc.username}" p:password="${jdbc.password}" />
+		p:url="${jdbc.url}" p:username="${jdbc.username}" p:password="${jdbc.password}"
+		p:persistenceUnit="${jdbc.persistenceUnit}" />
 
 	<!-- Datasource -->
 	<bean id="dataSource"

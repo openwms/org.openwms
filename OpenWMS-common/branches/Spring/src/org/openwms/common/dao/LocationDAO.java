@@ -7,7 +7,6 @@
 package org.openwms.common.dao;
 
 import org.openwms.common.domain.Location;
-import org.openwms.common.domain.LocationPK;
 
 /**
  * A ILocationDAO.
@@ -15,7 +14,7 @@ import org.openwms.common.domain.LocationPK;
  * @author <a href="heiko.scherrer@gmx.de">Heiko Scherrer</a>
  * @version $Revision: 314 $
  */
-public interface LocationDAO extends GenericDAO<Location, LocationPK> {
+public interface LocationDAO extends GenericDAO<Location, Long> {
 
     public final String NQ_FIND_ALL = "Location.findAll";
     public final String NQ_FIND_BY_UNIQUE_QUERY = "Location.findByLocationPK";

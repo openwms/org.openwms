@@ -8,7 +8,6 @@ package org.openwms.common.dao.core;
 
 import org.openwms.common.dao.TransportUnitDAO;
 import org.openwms.common.domain.TransportUnit;
-import org.openwms.common.domain.values.Barcode;
 
 /**
  * A TransportUnitDAO.
@@ -16,7 +15,7 @@ import org.openwms.common.domain.values.Barcode;
  * @author <a href="heiko.scherrer@gmx.de">Heiko Scherrer</a>
  * @version $Revision: 314 $
  */
-public class TransportUnitDAOImpl extends AbstractGenericJpaDAO<TransportUnit, Barcode> implements TransportUnitDAO {
+public class TransportUnitDAOImpl extends AbstractGenericJpaDAO<TransportUnit, Long> implements TransportUnitDAO {
 
     @Override
     String getFindAllQuery() {
