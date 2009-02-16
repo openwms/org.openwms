@@ -6,27 +6,26 @@
  */
 package org.openwms.common.dao.core;
 
-import java.io.Serializable;
-
-import org.openwms.common.dao.GenericDAO;
+import org.openwms.common.dao.TransportUnitTypeDao;
+import org.openwms.common.domain.TransportUnitType;
 
 /**
- * A GenericJpaDAOImpl.
+ * A TransportUnitTypeDaoImpl.
  * 
  * @author <a href="heiko.scherrer@gmx.de">Heiko Scherrer</a>
  * @version $Revision: 314 $
  */
-public class GenericJpaDAOImpl<T extends Serializable, ID extends Serializable> extends AbstractGenericJpaDAO<T, ID>
-	implements GenericDAO<T, ID> {
+public class TransportUnitTypeDaoImpl extends AbstractGenericJpaDAO<TransportUnitType, String> implements
+	TransportUnitTypeDao {
 
     @Override
     String getFindAllQuery() {
-	return getPersistentClass().getSimpleName().concat(FIND_ALL);
+	return TransportUnitTypeDao.NQ_FIND_ALL;
     }
 
     @Override
     String getFindByUniqueIdQuery() {
-	return getPersistentClass().getSimpleName().concat(FIND_BY_ID);
+	return TransportUnitTypeDao.NQ_FIND_BY_NAME;
     }
 
 }

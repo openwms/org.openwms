@@ -3,7 +3,7 @@
 	<version>1</version>
 	<pluginVersion><![CDATA[2.2.1.v200811281800]]></pluginVersion>
 	<configSuffixes>
-		<configSuffix><![CDATA[xml]]></configSuffix>
+		<configSuffix><![CDATA[-cfg.xml]]></configSuffix>
 	</configSuffixes>
 	<enableImports><![CDATA[true]]></enableImports>
 	<configs>
@@ -13,6 +13,8 @@
 		<config>test/org/openwms/common/dao/GenericJpaDAOTest-context.xml</config>
 		<config>test/org/openwms/common/dao/LocationDAOTest-context.xml</config>
 		<config>test/org/openwms/common/dao/UserDaoTest-context.xml</config>
+		<config>spring/org/openwms/common/dao/daos-cfg.xml</config>
+		<config>spring/org/openwms/common/service/services-cfg.xml</config>
 	</configs>
 	<configSets>
 		<configSet>

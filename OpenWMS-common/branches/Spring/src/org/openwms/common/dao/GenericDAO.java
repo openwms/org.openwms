@@ -18,6 +18,9 @@ import java.util.Map;
  */
 public interface GenericDAO<T extends Serializable, ID extends Serializable> {
 
+    public final static String FIND_ALL = ".findAll";
+    public final static String FIND_BY_ID = ".findById";
+    
     /**
      * Find and return the entity identified by the technical <tt>id</tt>.
      * 
@@ -71,4 +74,6 @@ public interface GenericDAO<T extends Serializable, ID extends Serializable> {
      * @param entity
      */
     void persist(T entity);
+
+    void setPersistentClass(Class<T> persistentClass);
 }

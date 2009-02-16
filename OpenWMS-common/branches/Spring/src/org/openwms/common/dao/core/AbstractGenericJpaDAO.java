@@ -37,12 +37,14 @@ import org.springframework.transaction.annotation.Transactional;
 public abstract class AbstractGenericJpaDAO<T extends Serializable, ID extends Serializable> extends JpaDaoSupport
 	implements GenericDAO<T, ID> {
 
-    private Class<T> persistentClass;
+    public Class<T> persistentClass;
 
     @SuppressWarnings("unchecked")
     public AbstractGenericJpaDAO() {
-	this.persistentClass = (Class<T>) ((ParameterizedType) getClass().getGenericSuperclass())
-		.getActualTypeArguments()[0];
+	if (getClass().getGenericSuperclass() != null) {
+	    this.persistentClass = (Class<T>) ((ParameterizedType) getClass().getGenericSuperclass())
+		    .getActualTypeArguments()[0];
+	}
     }
 
     /**
@@ -55,6 +57,10 @@ public abstract class AbstractGenericJpaDAO<T extends Serializable, ID extends S
 	return persistentClass;
     }
 
+    public void setPersistentClass(Class<T> persistentClass) {
+	this.persistentClass = persistentClass;
+    }
+    
     @Transactional(readOnly = true)
     public T findById(ID id) {
 	return getJpaTemplate().find(getPersistentClass(), id);
@@ -83,14 +89,17 @@ public abstract class AbstractGenericJpaDAO<T extends Serializable, ID extends S
 	return result.size() == 0 ? null : result.get(0);
     }
 
+    @Transactional
     public T save(T entity) {
 	return getJpaTemplate().merge(entity);
     }
 
+    @Transactional
     public void remove(T entity) {
 	getJpaTemplate().remove(entity);
     }
 
+    @Transactional
     public void persist(T entity) {
 	getJpaTemplate().persist(entity);
     }
