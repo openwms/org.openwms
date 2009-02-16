@@ -14,6 +14,9 @@
 	<bean class="org.openwms.common.dao.core.TransportUnitDAOImpl" id="transportUnitDao"
 		p:entityManagerFactory-ref="entityManagerFactory" />
 
+	<bean class="org.openwms.common.dao.core.TransportUnitTypeDaoImpl" id="transportUnitTypeDao"
+		p:entityManagerFactory-ref="entityManagerFactory" />
+
 	<bean class="org.openwms.common.service.transport.TransportServiceImpl"
 		id="transportService" p:locationDao-ref="locationDao"
 		p:transportUnitDao-ref="transportUnitDao" />

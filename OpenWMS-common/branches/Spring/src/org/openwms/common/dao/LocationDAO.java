@@ -6,7 +6,7 @@
  */
 package org.openwms.common.dao;
 
-import org.openwms.common.domain.Location;
+import org.openwms.common.domain.Location;;
 
 /**
  * A ILocationDAO.

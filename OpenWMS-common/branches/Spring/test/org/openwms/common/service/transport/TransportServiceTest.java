@@ -11,9 +11,12 @@ import org.openwms.AbstractJpaSpringContextTests;
 import org.openwms.common.dao.GenericDAO;
 import org.openwms.common.domain.Location;
 import org.openwms.common.domain.LocationPK;
+import org.openwms.common.domain.TransportUnit;
 import org.openwms.common.domain.TransportUnitType;
 import org.openwms.common.domain.values.Barcode;
 import org.openwms.common.service.TransportService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.test.context.ContextConfiguration;
 
 /**
@@ -25,36 +28,42 @@ import org.springframework.test.context.ContextConfiguration;
 @ContextConfiguration
 public final class TransportServiceTest extends AbstractJpaSpringContextTests {
 
-    private TransportService transportService;
-    private GenericDAO<Location, Long> locationDao;
+    @Autowired
+    protected TransportService transportService;
+    @Qualifier("locationDao")
+    @Autowired
+    protected GenericDAO<Location, Long> locationDao;
+    @Qualifier("transportUnitTypeDao")
+    @Autowired
+    protected GenericDAO<TransportUnitType, String> transportUnitTypeDao;
+    @Qualifier("transportUnitDao")
+    @Autowired
+    protected GenericDAO<TransportUnit, Long> transportUnitDao;
     private String testDataFile = "load-TransportUnits.sql";
+    LocationPK locationPk;
+    LocationPK targetLocation;
+    TransportUnitType transportUnitType = new TransportUnitType("TestType");
 
-    // Spring IoC
-    public void setTransportService(TransportService transportService) {
-	this.transportService = transportService;
-    }
-
-    public void setLocationDao(GenericDAO<Location, Long> locationDao) {
-	this.locationDao = locationDao;
+    @Override
+    protected void onSetUpInTransaction() throws Exception {
+	super.onSetUpInTransaction();
+	locationPk = new LocationPK("AREA", "AISLE", "X", "Y", "Z");
+	targetLocation = new LocationPK("TARGET", "TARGET", "TARGET", "TARGET", "TARGET");
+	locationDao.persist(new Location(locationPk));
+	locationDao.persist(new Location(targetLocation));
+	transportUnitTypeDao.persist(transportUnitType);
     }
 
     @Override
     protected String getTestDataFile() {
-	// return null;
-	// To load testdata return the filename of the DBUnit file
-	return null;// this.testDataFile;
+	return null;
     }
 
     @Test
     public void testCreateTransportUnit() {
-	// FIXME: complete!
-	LocationPK locationPk = new LocationPK("AREA", "AISLE", "X", "Y", "Z");
-	//Location actualLocation = new Location(locationPk);
-	//locationDao.persist(actualLocation);
-
-	transportService.createTransportUnit(new Barcode("4711"), new TransportUnitType("TestType"), locationPk);
-	// FIXME: transportService.moveTransportUnit(new Barcode("4711"), new LocationPK("AREA", "AISLE", "X", "Y",
-	// "Z"));
+	TransportUnit transportUnit = transportService.createTransportUnit(new Barcode("4711"), transportUnitType,
+		locationPk);
+	transportService.moveTransportUnit(transportUnit.getBarcode(), new LocationPK("TARGET1", "TARGET", "TARGET",
+		"TARGET", "TARGET"));
     }
-
 }

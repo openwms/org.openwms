@@ -35,12 +35,16 @@ public class TransportServiceImpl implements TransportService {
     public TransportUnit createTransportUnit(Barcode barcode, TransportUnitType transportUnitType,
 	    LocationPK actualLocationPk) {
 	TransportUnit transportUnit = transportUnitDao.findByUniqueId(barcode);
+	Location location = locationDao.findByUniqueId(actualLocationPk);
 	if (transportUnit != null) {
 	    throw new ServiceException("TransportUnit with id " + barcode + " still exists");
 	}
+	if (location == null) {
+	    throw new ServiceException("Location " + actualLocationPk + " doesn't exists");
+	}
 	transportUnit = new TransportUnit(barcode);
 	transportUnit.setTransportUnitType(transportUnitType);
-	transportUnit.setActualLocation(locationDao.findByUniqueId(actualLocationPk));
+	transportUnit.setActualLocation(location);
 	transportUnitDao.persist(transportUnit);
 	return transportUnit;
     }
@@ -61,24 +65,22 @@ public class TransportServiceImpl implements TransportService {
      * @param locationPk
      */
     @Transactional
-    public void moveTransportUnit(Barcode barcode, LocationPK actualLocationPk) throws ServiceException {
-	TransportUnit transportUnit = null;
-	try {
-	    Location actualLocation = locationDao.findByUniqueId(actualLocationPk);
-	    if (actualLocation == null) {
-		throw new ServiceException("Location with id " + actualLocationPk + " not found");
-	    }
-	    transportUnit = transportUnitDao.findByUniqueId(barcode);
-	    if (transportUnit == null) {
-		throw new ServiceException("TransportUnit with id " + barcode + " not found");
-	    }
-	    transportUnit.setActualLocation(actualLocation);
-	    // FIXME: Persisting not working in test case, yet
-	    transportUnitDao.save(transportUnit);
+    public void moveTransportUnit(Barcode barcode, LocationPK newLocationPk) throws ServiceException {
+	TransportUnit transportUnit = transportUnitDao.findByUniqueId(barcode);
+	if (transportUnit == null) {
+	    throw new ServiceException("TransportUnit with id " + barcode + " not found");
 	}
-	catch (RuntimeException e) { // FIXME
-	    throw new ServiceException("Cannot move TransportUnit with barcode " + barcode + " to location "
-		    + actualLocationPk, e);
-	}
+	Location actualLocation = locationDao.findByUniqueId(newLocationPk);
+	// if (actualLocation == null) {
+	// throw new ServiceException("Location with id " + newLocationPk + " not found");
+	// }
+	transportUnit.setActualLocation(actualLocation);
+	// try {
+	transportUnitDao.save(transportUnit);
+	// }
+	// catch (RuntimeException e) {
+	// throw new ServiceException("Cannot move TransportUnit with barcode " + barcode + " to location "
+	// + newLocationPk, e);
+	// }
     }
 }

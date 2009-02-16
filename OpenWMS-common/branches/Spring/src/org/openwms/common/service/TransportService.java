@@ -13,6 +13,7 @@ import org.openwms.common.domain.values.Barcode;
 import org.openwms.common.exception.service.ServiceException;
 import org.springframework.transaction.annotation.Transactional;
 
+
 public interface TransportService {
 
     /**

@@ -48,14 +48,15 @@ public abstract class AbstractJpaSpringContextTests extends AbstractJpaTests {
     @Override
     protected void onSetUpInTransaction() throws Exception {
 	dataSource = this.jdbcTemplate.getDataSource();
-	fileResource = getTestDataFileAsResource();
-	fileResource = (fileResource == null) ? null : populateTestData(fileResource, DatabaseOperation.INSERT);
+	fileResource = ((fileResource = getTestDataFileAsResource()) == null) ? null : populateTestData(fileResource, DatabaseOperation.INSERT);
 	super.onSetUpInTransaction();
     }
-
+    
     @Override
     protected void onTearDown() throws Exception {
-	endTransaction();
+	sharedEntityManager.flush();
+	super.onTearDown();
+	//endTransaction();
 	fileResource = (fileResource == null) ? null : populateTestData(fileResource, DatabaseOperation.DELETE);
     }
 
