@@ -3,6 +3,11 @@
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="src" path="test"/>
 	<classpathentry kind="src" path="spring"/>
+	<classpathentry exported="true" kind="lib" path="lib/OpenWMS-DB.jar">
+		<attributes>
+			<attribute name="org.eclipse.jst.component.dependency" value="../"/>
+		</attributes>
+	</classpathentry>
 	<classpathentry kind="lib" path="lib/postgresql-8.2-504.jdbc3.jar">
 		<attributes>
 			<attribute name="org.eclipse.jst.component.dependency" value="../"/>
@@ -139,11 +144,6 @@
 		</attributes>
 	</classpathentry>
 	<classpathentry kind="lib" path="lib/jtidy-r8-20060801.jar">
-		<attributes>
-			<attribute name="org.eclipse.jst.component.dependency" value="../"/>
-		</attributes>
-	</classpathentry>
-	<classpathentry kind="lib" path="lib/log4j-1.2.11.jar">
 		<attributes>
 			<attribute name="org.eclipse.jst.component.dependency" value="../"/>
 		</attributes>

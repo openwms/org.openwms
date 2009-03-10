@@ -15,8 +15,10 @@ import java.util.List;
  * @author <a href="heiko.scherrer@gmx.de">Heiko Scherrer</a>
  * @version $Revision: 314 $
  */
-public interface EntityService<T extends Serializable, ID extends Serializable> {
+public interface EntityService<T extends Serializable> {
     
     List<T> findAll(Class<T> clazz);
+    
+    T save(Class<T> clazz, T entity);
 
 }

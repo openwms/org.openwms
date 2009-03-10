@@ -21,17 +21,24 @@ import org.springframework.transaction.annotation.Transactional;
  * @version $Revision: 314 $
  */
 @Transactional
-public class EntityServiceImpl<T extends Serializable, ID extends Serializable> implements EntityService<T,ID> {
+public class EntityServiceImpl<T extends Serializable, ID extends Serializable> implements EntityService<T>{
 
-    private GenericDAO<T, ID> dao;
+	private GenericDAO<T, ID> dao;
 
-    @Required
-    public void setDao(GenericDAO<T, ID> dao) {
-	this.dao = dao;
-    }
-    
-    public List<T> findAll(Class<T> clazz) {
-	dao.setPersistentClass(clazz);
-	return dao.findAll();
-    }
+	@Required
+	public void setDao(GenericDAO<T, ID> dao) {
+		this.dao = dao;
+	}
+
+	public List<T> findAll(Class<T> clazz) {
+		dao.setPersistentClass(clazz);
+		return dao.findAll();
+	}
+	
+	public T save(Class<T> clazz, T entity) {
+		dao.setPersistentClass(clazz);
+		return dao.save(entity);
+	}
+	
+	
 }
