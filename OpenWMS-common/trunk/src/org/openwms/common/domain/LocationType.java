@@ -27,164 +27,170 @@ import javax.persistence.Version;
 @Table(name = "LOCATION_TYPE")
 public class LocationType implements Serializable {
 
-    private static final long serialVersionUID = 1L;
-    public static final String DEF_TYPE_DESCRIPTION = "--";
+	private static final long serialVersionUID = 1L;
+	public static final String DEF_TYPE_DESCRIPTION = "--";
 
+	/**
+	 * Type of this <code>LocationType</code>.
+	 */
+	@Id
+	@Column(name = "TYPE")
+	private String type;
+
+	/**
+	 * Description of this <code>LocationType</code>.
+	 */
+	@Column(name = "DESCRIPTION")
+	private String description = DEF_TYPE_DESCRIPTION;
+
+	/**
+	 * Length of this <code>LocationType</code>.
+	 */
+	@Column(name = "LENGTH")
+	private int length = 0;
+
+	/**
+	 * Width of this <code>LocationType</code>.
+	 */
+	@Column(name = "WIDTH")
+	private int width = 0;
+
+	/**
+	 * Height of this <code>LocationType</code>.
+	 */
+	@Column(name = "HEIGHT")
+	private int height = 0;
+
+	/**
+	 * Version field
+	 */
+	@Version
+	private long version;
+
+	/* ------------------- collection mapping ------------------- */
+	/**
+	 * All <code>Location</code>s belonging to this type.
+	 */
+	@OneToMany(mappedBy = "locationType")
+	private Set<Location> locations;
+
+	/* ----------------------------- methods ------------------- */
     /**
-     * Type of this <code>LocationType</code>.
+     * Accessed by persistence provider.
      */
-    @Id
-    @Column(name = "TYPE")
-    private String type;
+    @SuppressWarnings("unused")
+    private LocationType() {}
 
-    /**
-     * Description of this <code>LocationType</code>.
-     */
-    @Column(name = "DESCRIPTION")
-    private String description = DEF_TYPE_DESCRIPTION;
+	public LocationType(String type) {
+		super();
+		this.type = type;
+	}
 
-    /**
-     * Length of this <code>LocationType</code>.
-     */
-    @Column(name = "LENGTH")
-    private int length;
+	/**
+	 * Get the unique identifier of this <code>LocationType</code>.
+	 * 
+	 * @return - type
+	 */
+	public String getType() {
+		return this.type;
+	}
 
-    /**
-     * Width of this <code>LocationType</code>.
-     */
-    @Column(name = "WIDTH")
-    private int width;
+	/**
+	 * Get the length of this <code>LocationType</code>.
+	 * 
+	 * @return - length
+	 */
+	public int getLength() {
+		return this.length;
+	}
 
-    /**
-     * Height of this <code>LocationType</code>.
-     */
-    @Column(name = "HEIGHT")
-    private int height;
+	/**
+	 * Set the length of this <code>LocationType</code>.
+	 * 
+	 * @param length
+	 */
+	public void setLength(int length) {
+		this.length = length;
+	}
 
-    /**
-     * Version field
-     */
-    @Version
-    private long version;
+	/**
+	 * Get the width of this <code>LocationType</code>.
+	 * 
+	 * @return - width
+	 */
+	public int getWidth() {
+		return this.width;
+	}
 
-    /* ------------------- collection mapping ------------------- */
-    /**
-     * All <code>Location</code>s belonging to this type.
-     */
-    @OneToMany(mappedBy = "locationType")
-    private Set<Location> locations;
+	/**
+	 * Set the width of this <code>LocationType</code>.
+	 * 
+	 * @param width
+	 */
+	public void setWidth(int width) {
+		this.width = width;
+	}
 
-    /* ----------------------------- methods ------------------- */
-    public LocationType(String type) {
-	super();
-	this.type = type;
-    }
+	/**
+	 * Get the description of this <code>LocationType</code>.
+	 * 
+	 * @return - description
+	 */
+	public String getDescription() {
+		return this.description;
+	}
 
-    /**
-     * Get the unique identifier of this <code>LocationType</code>.
-     * 
-     * @return - type
-     */
-    public String getType() {
-	return this.type;
-    }
+	/**
+	 * Set the description of this <code>LocationType</code>.
+	 * 
+	 * @param description
+	 */
+	public void setDescription(String description) {
+		this.description = description;
+	}
 
-    /**
-     * Get the length of this <code>LocationType</code>.
-     * 
-     * @return - length
-     */
-    public int getLength() {
-	return this.length;
-    }
+	/**
+	 * Get the height of this <code>LocationType</code>.
+	 * 
+	 * @return - height
+	 */
+	public int getHeight() {
+		return this.height;
+	}
 
-    /**
-     * Set the length of this <code>LocationType</code>.
-     * 
-     * @param length
-     */
-    public void setLength(int length) {
-	this.length = length;
-    }
+	/**
+	 * Set the height of this <code>LocationType</code>.
+	 * 
+	 * @param height
+	 */
+	public void setHeight(int height) {
+		this.height = height;
+	}
 
-    /**
-     * Get the width of this <code>LocationType</code>.
-     * 
-     * @return - width
-     */
-    public int getWidth() {
-	return this.width;
-    }
+	/**
+	 * Get all <code>Location</code>s belonging to this <code>LocationType</code>.
+	 * 
+	 * @return - All <code>Location</code>s belonging to this <code>LocationType</code>
+	 */
+	public Set<Location> getLocations() {
+		return this.locations;
+	}
 
-    /**
-     * Set the width of this <code>LocationType</code>.
-     * 
-     * @param width
-     */
-    public void setWidth(int width) {
-	this.width = width;
-    }
+	/**
+	 * Set a <code>Set</code> of <code>Location</code>s belonging to this <code>LocationType</code>.
+	 * 
+	 * @param locations
+	 */
+	public void setLocations(Set<Location> locations) {
+		this.locations = locations;
+	}
 
-    /**
-     * Get the description of this <code>LocationType</code>.
-     * 
-     * @return - description
-     */
-    public String getDescription() {
-	return this.description;
-    }
-
-    /**
-     * Set the description of this <code>LocationType</code>.
-     * 
-     * @param description
-     */
-    public void setDescription(String description) {
-	this.description = description;
-    }
-
-    /**
-     * Get the height of this <code>LocationType</code>.
-     * 
-     * @return - height
-     */
-    public int getHeight() {
-	return this.height;
-    }
-
-    /**
-     * Set the height of this <code>LocationType</code>.
-     * 
-     * @param height
-     */
-    public void setHeight(int height) {
-	this.height = height;
-    }
-
-    /**
-     * Get all <code>Location</code>s belonging to this <code>LocationType</code>.
-     * 
-     * @return - All <code>Location</code>s belonging to this <code>LocationType</code>
-     */
-    public Set<Location> getLocations() {
-	return this.locations;
-    }
-
-    /**
-     * Set a <code>Set</code> of <code>Location</code>s belonging to this <code>LocationType</code>.
-     * 
-     * @param locations
-     */
-    public void setLocations(Set<Location> locations) {
-	this.locations = locations;
-    }
-
-    /**
-     * JPA optimistic locking: Returns version field.
-     * 
-     * @return
-     */
-    public long getVersion() {
-	return this.version;
-    }
+	/**
+	 * JPA optimistic locking: Returns version field.
+	 * 
+	 * @return
+	 */
+	public long getVersion() {
+		return this.version;
+	}
 }
