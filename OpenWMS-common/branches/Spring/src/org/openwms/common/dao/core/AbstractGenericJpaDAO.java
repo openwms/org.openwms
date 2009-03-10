@@ -35,76 +35,81 @@ import org.springframework.transaction.annotation.Transactional;
 @Repository
 @Transactional
 public abstract class AbstractGenericJpaDAO<T extends Serializable, ID extends Serializable> extends JpaDaoSupport
-	implements GenericDAO<T, ID> {
+		implements GenericDAO<T, ID> {
 
-    public Class<T> persistentClass;
+	public Class<T> persistentClass;
 
-    @SuppressWarnings("unchecked")
-    public AbstractGenericJpaDAO() {
-	if (getClass().getGenericSuperclass() != null) {
-	    this.persistentClass = (Class<T>) ((ParameterizedType) getClass().getGenericSuperclass())
-		    .getActualTypeArguments()[0];
+	@SuppressWarnings("unchecked")
+	public AbstractGenericJpaDAO() {
+		if (getClass().getGenericSuperclass() != null) {
+			// this.persistentClass = (Class<T>) ((ParameterizedType) getClass().getGenericSuperclass())
+			// .getActualTypeArguments()[0];
+		}
 	}
-    }
 
-    /**
-     * Get the persistent entity class.<br>
-     * Resolved with Java Reflection to find the class of type <tt>T</tt>.
-     * 
-     * @return
-     */
-    public Class<T> getPersistentClass() {
-	return persistentClass;
-    }
-
-    public void setPersistentClass(Class<T> persistentClass) {
-	this.persistentClass = persistentClass;
-    }
-    
-    @Transactional(readOnly = true)
-    public T findById(ID id) {
-	return getJpaTemplate().find(getPersistentClass(), id);
-    }
-
-    @Transactional(readOnly = true)
-    @SuppressWarnings("unchecked")
-    public List<T> findAll() {
-	return getJpaTemplate().findByNamedQuery(getFindAllQuery());
-    }
-
-    @Transactional(readOnly = true)
-    @SuppressWarnings("unchecked")
-    public List<T> findByQuery(String queryName, Map<String, ?> params) {
-	return getJpaTemplate().findByNamedQueryAndNamedParams(queryName, params);
-    }
-
-    @Transactional(readOnly = true)
-    @SuppressWarnings("unchecked")
-    public T findByUniqueId(Serializable id) {
-	// TODO:Don't check null, yet
-	List<T> result = getJpaTemplate().findByNamedQuery(getFindByUniqueIdQuery(), id);
-	if (result.size() > 1) {
-	    throw new IncorrectResultSizeDataAccessException("Unexpected size of result list", 1, result.size());
+	/**
+	 * Get the persistent entity class.<br>
+	 * Resolved with Java Reflection to find the class of type <tt>T</tt>.
+	 * 
+	 * @return
+	 */
+	public Class<T> getPersistentClass() {
+		return persistentClass;
 	}
-	return result.size() == 0 ? null : result.get(0);
-    }
 
-    @Transactional
-    public T save(T entity) {
-	return getJpaTemplate().merge(entity);
-    }
+	public void setPersistentClass(Class<T> persistentClass) {
+		this.persistentClass = persistentClass;
+	}
 
-    @Transactional
-    public void remove(T entity) {
-	getJpaTemplate().remove(entity);
-    }
+	@Transactional(readOnly = true)
+	public T findById(ID id) {
+		return getJpaTemplate().find(getPersistentClass(), id);
+	}
 
-    @Transactional
-    public void persist(T entity) {
-	getJpaTemplate().persist(entity);
-    }
+	@Transactional(readOnly = true)
+	@SuppressWarnings("unchecked")
+	public List<T> findAll() {
+		return getJpaTemplate().findByNamedQuery(getFindAllQuery());
+	}
 
-    abstract String getFindAllQuery();
+	@Transactional(readOnly = true)
+	@SuppressWarnings("unchecked")
+	public List<T> findByQuery(String queryName, Map<String, ?> params) {
+		return getJpaTemplate().findByNamedQueryAndNamedParams(queryName, params);
+	}
 
-    abstract String getFindByUniqueIdQuery();
+	@Transactional(readOnly = true)
+	@SuppressWarnings("unchecked")
+	public T findByUniqueId(Serializable id) {
+		// TODO:Don't check null, yet
+		List<T> result = getJpaTemplate().findByNamedQuery(getFindByUniqueIdQuery(), id);
+		if (result.size() > 1) {
+			throw new IncorrectResultSizeDataAccessException("Unexpected size of result list", 1, result.size());
+		}
+		return result.size() == 0 ? null : result.get(0);
+	}
+
+	@Transactional
+	public T save(T entity) {
+		beforeUpdate(entity);
+		getJpaTemplate().refresh(entity);
+		return getJpaTemplate().merge(entity);
+	}
+
+	@Transactional
+	public void remove(T entity) {
+		getJpaTemplate().remove(entity);
+	}
+
+	@Transactional
+	public void persist(T entity) {
+		beforeUpdate(entity);
+		getJpaTemplate().persist(entity);
+	}
+
+	abstract String getFindAllQuery();
+
+	abstract String getFindByUniqueIdQuery();
+	
+	protected void beforeUpdate(T entity) {};
 }

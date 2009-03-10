@@ -14,7 +14,7 @@ import org.openwms.common.domain.LocationGroup;
  * @author <a href="heiko.scherrer@gmx.de">Heiko Scherrer</a>
  * @version $Revision: 314 $
  */
-public interface LocationGroupDao extends GenericDAO<LocationGroup, Long> {
+public interface LocationGroupDao<T extends LocationGroup, ID extends Long> extends GenericDAO<T, ID> {
 
     public final String NQ_FIND_ALL = "LocationGroup.findAll";
     public final String NQ_FIND_BY_NAME = "LocationGroup.findByName";
