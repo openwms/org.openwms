@@ -29,7 +29,7 @@ public class GenericJpaDAOTest extends AbstractJpaSpringContextTests {
 	}
 
 	/**
-	 * Test method for {@link org.openwms.common.dao.core.AbstractGenericJpaDAO#findAll()}.
+	 * Test method for {@link org.openwms.common.dao.core.AbstractGenericJpaDao#findAll()}.
 	 */
 	@Test
 	public final void testFindAll() {
@@ -43,7 +43,7 @@ public class GenericJpaDAOTest extends AbstractJpaSpringContextTests {
 
 	/**
 	 * Test method for
-	 * {@link org.openwms.common.dao.core.AbstractGenericJpaDAO#findByQuery(java.lang.String, java.util.Map)}.
+	 * {@link org.openwms.common.dao.core.AbstractGenericJpaDao#findByQuery(java.lang.String, java.util.Map)}.
 	 */
 	@Test
 	public final void testFindByQuery() {
@@ -56,7 +56,7 @@ public class GenericJpaDAOTest extends AbstractJpaSpringContextTests {
 	}
 
 	/**
-	 * Test method for {@link org.openwms.common.dao.core.AbstractGenericJpaDAO#findByUniqueId(java.lang.Object)}.
+	 * Test method for {@link org.openwms.common.dao.core.AbstractGenericJpaDao#findByUniqueId(java.lang.Object)}.
 	 */
 	@Test
 	public final void testFindByUniqueId() {
@@ -69,7 +69,7 @@ public class GenericJpaDAOTest extends AbstractJpaSpringContextTests {
 	}
 
 	/**
-	 * Test method for {@link org.openwms.common.dao.core.AbstractGenericJpaDAO#save(java.io.Serializable)}.
+	 * Test method for {@link org.openwms.common.dao.core.AbstractGenericJpaDao#save(java.io.Serializable)}.
 	 */
 	@Test
 	public final void testSave() {
@@ -82,7 +82,7 @@ public class GenericJpaDAOTest extends AbstractJpaSpringContextTests {
 	}
 
 	/**
-	 * Test method for {@link org.openwms.common.dao.core.AbstractGenericJpaDAO#persist(java.io.Serializable)}.
+	 * Test method for {@link org.openwms.common.dao.core.AbstractGenericJpaDao#persist(java.io.Serializable)}.
 	 */
 	@Test
 	public final void testPersistAndRemove() {
@@ -98,7 +98,7 @@ public class GenericJpaDAOTest extends AbstractJpaSpringContextTests {
 	}
 
 	/**
-	 * Test method for {@link org.openwms.common.dao.core.AbstractGenericJpaDAO#persist(java.lang.Object)}.
+	 * Test method for {@link org.openwms.common.dao.core.AbstractGenericJpaDao#persist(java.lang.Object)}.
 	 */
 	@Test
 	public final void testPersist() {

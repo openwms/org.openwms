@@ -16,10 +16,10 @@
 		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-2.5.xsd
 		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-2.5.xsd">
 
-	<bean class="org.openwms.common.dao.core.LocationDAOImpl" id="locationDao"
+	<bean class="org.openwms.common.dao.core.LocationDaoImpl" id="locationDao"
 		p:entityManagerFactory-ref="entityManagerFactory" />
 
-	<bean class="org.openwms.common.dao.core.TransportUnitDAOImpl" id="transportUnitDao"
+	<bean class="org.openwms.common.dao.core.TransportUnitDaoImpl" id="transportUnitDao"
 		p:entityManagerFactory-ref="entityManagerFactory" />
 
 	<bean class="org.openwms.common.dao.core.TransportUnitTypeDaoImpl" id="transportUnitTypeDao"
