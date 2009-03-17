@@ -10,22 +10,24 @@ import java.util.Date;
 
 import org.openwms.common.dao.LocationGroupDao;
 import org.openwms.common.domain.LocationGroup;
+import org.springframework.stereotype.Repository;
 
-public class LocationGroupDaoImpl<T extends LocationGroup, ID extends Long> extends AbstractGenericJpaDAO<T, ID> implements LocationGroupDao<T,ID> {
+@Repository
+public class LocationGroupDaoImpl extends AbstractGenericJpaDAO<LocationGroup, Long> implements LocationGroupDao {
 
-    @Override
-    String getFindAllQuery() {
-	return LocationGroupDao.NQ_FIND_ALL;
-    }
+	@Override
+	String getFindAllQuery() {
+		return LocationGroupDao.NQ_FIND_ALL;
+	}
 
-    @Override
-    String getFindByUniqueIdQuery() {
-	return LocationGroupDao.NQ_FIND_BY_NAME;
-    }
-    
-    @Override
-    protected void beforeUpdate(T entity) {
-    	entity.setLastUpdated(new Date());
-    }
+	@Override
+	String getFindByUniqueIdQuery() {
+		return LocationGroupDao.NQ_FIND_BY_NAME;
+	}
+
+	@Override
+	protected void beforeUpdate(LocationGroup entity) {
+		entity.setLastUpdated(new Date());
+	}
 
 }

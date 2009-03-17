@@ -39,11 +39,10 @@ public abstract class AbstractGenericJpaDAO<T extends Serializable, ID extends S
 
 	public Class<T> persistentClass;
 
-	@SuppressWarnings("unchecked")
 	public AbstractGenericJpaDAO() {
 		if (getClass().getGenericSuperclass() != null) {
-			// this.persistentClass = (Class<T>) ((ParameterizedType) getClass().getGenericSuperclass())
-			// .getActualTypeArguments()[0];
+			 this.persistentClass = (Class<T>) ((ParameterizedType) getClass().getGenericSuperclass())
+					.getActualTypeArguments()[0];
 		}
 	}
 
@@ -92,7 +91,7 @@ public abstract class AbstractGenericJpaDAO<T extends Serializable, ID extends S
 	@Transactional
 	public T save(T entity) {
 		beforeUpdate(entity);
-		getJpaTemplate().refresh(entity);
+		//getJpaTemplate().refresh(entity);
 		return getJpaTemplate().merge(entity);
 	}
 
