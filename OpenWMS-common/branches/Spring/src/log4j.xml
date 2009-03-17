@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE log4j:configuration SYSTEM "log4j.dtd">
 <!--
 /*
  * OpenWMS, the Open Warehouse Management System
@@ -8,7 +7,7 @@
  * See terms of license at gnu.org.
  */
 -->
-
+<!DOCTYPE log4j:configuration SYSTEM "log4j.dtd">
 <!-- ===================================================================== -->
 <!--                                                                       -->
 <!--  Log4j Configuration                                                  -->
