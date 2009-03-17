@@ -8,7 +8,7 @@ package org.openwms.common.service.impl;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.openwms.common.dao.GenericDAO;
+import org.openwms.common.dao.GenericDao;
 import org.openwms.common.domain.Location;
 import org.openwms.common.domain.LocationPK;
 import org.openwms.common.domain.TransportUnit;
@@ -29,8 +29,8 @@ import org.springframework.transaction.annotation.Transactional;
 public class TransportServiceImpl implements TransportService {
 
 	protected Log LOG = LogFactory.getLog(this.getClass());
-	private GenericDAO<TransportUnit, Long> transportUnitDao;
-	private GenericDAO<Location, Long> locationDao;
+	private GenericDao<TransportUnit, Long> transportUnitDao;
+	private GenericDao<Location, Long> locationDao;
 
 	public TransportUnit createTransportUnit(Barcode barcode, TransportUnitType transportUnitType,
 			LocationPK actualLocationPk) {
@@ -49,11 +49,11 @@ public class TransportServiceImpl implements TransportService {
 		return transportUnit;
 	}
 
-	public void setLocationDao(GenericDAO<Location, Long> locationDao) {
+	public void setLocationDao(GenericDao<Location, Long> locationDao) {
 		this.locationDao = locationDao;
 	}
 
-	public void setTransportUnitDao(GenericDAO<TransportUnit, Long> transportUnitDao) {
+	public void setTransportUnitDao(GenericDao<TransportUnit, Long> transportUnitDao) {
 		this.transportUnitDao = transportUnitDao;
 	}
 

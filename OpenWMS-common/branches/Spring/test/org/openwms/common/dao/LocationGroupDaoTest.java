@@ -24,11 +24,11 @@ public class LocationGroupDaoTest extends AbstractJpaSpringContextTests {
 
 	@Autowired
 	@Qualifier("locationGroupDaoImpl")
-	protected GenericDAO<LocationGroup, Long> dao;
+	protected GenericDao<LocationGroup, Long> dao;
 
 	@Autowired
 	@Qualifier("locationDaoImpl")
-	protected GenericDAO<Location, Long> locationDao;
+	protected GenericDao<Location, Long> locationDao;
 
 	public LocationGroupDaoTest() {
 		setPopulateProtectedVariables(true);

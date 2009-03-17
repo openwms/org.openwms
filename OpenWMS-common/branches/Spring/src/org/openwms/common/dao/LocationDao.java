@@ -6,17 +6,17 @@
  */
 package org.openwms.common.dao;
 
-import org.openwms.common.domain.TransportUnit;
+import org.openwms.common.domain.Location;
 
 /**
- * A TransportUnitDAO.
+ * A LocationDao.
  * 
  * @author <a href="heiko.scherrer@gmx.de">Heiko Scherrer</a>
  * @version $Revision: 314 $
  */
-public interface TransportUnitDAO extends GenericDAO<TransportUnit, Long> {
+public interface LocationDao extends GenericDao<Location, Long> {
 
-	public final String NQ_FIND_ALL = "TransportUnit.findAll";
-	public final String NQ_FIND_BY_UNIQUE_QUERY = "TransportUnit.findByBarcode";
+	public final String NQ_FIND_ALL = "Location.findAll";
+	public final String NQ_FIND_BY_UNIQUE_QUERY = "Location.findByLocationPK";
 
 }

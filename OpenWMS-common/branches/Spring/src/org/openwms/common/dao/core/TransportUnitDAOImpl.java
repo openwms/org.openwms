@@ -6,7 +6,7 @@
  */
 package org.openwms.common.dao.core;
 
-import org.openwms.common.dao.TransportUnitDAO;
+import org.openwms.common.dao.TransportUnitDao;
 import org.openwms.common.domain.TransportUnit;
 
 /**
@@ -15,16 +15,16 @@ import org.openwms.common.domain.TransportUnit;
  * @author <a href="heiko.scherrer@gmx.de">Heiko Scherrer</a>
  * @version $Revision: 314 $
  */
-public class TransportUnitDAOImpl extends AbstractGenericJpaDAO<TransportUnit, Long> implements TransportUnitDAO {
+public class TransportUnitDAOImpl extends AbstractGenericJpaDAO<TransportUnit, Long> implements TransportUnitDao {
 
     @Override
     String getFindAllQuery() {
-	return TransportUnitDAO.NQ_FIND_ALL;
+	return TransportUnitDao.NQ_FIND_ALL;
     }
 
     @Override
     String getFindByUniqueIdQuery() {
-	return TransportUnitDAO.NQ_FIND_BY_UNIQUE_QUERY;
+	return TransportUnitDao.NQ_FIND_BY_UNIQUE_QUERY;
     }
 
     // TODO: Provide other TransportUnit based non-CRUD operations here!

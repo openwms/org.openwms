@@ -8,7 +8,7 @@ package org.openwms.common.dao.core;
 
 import java.io.Serializable;
 
-import org.openwms.common.dao.GenericDAO;
+import org.openwms.common.dao.GenericDao;
 
 /**
  * A GenericJpaDAOImpl.
@@ -17,7 +17,7 @@ import org.openwms.common.dao.GenericDAO;
  * @version $Revision: 314 $
  */
 public class GenericJpaDAOImpl<T extends Serializable, ID extends Serializable> extends AbstractGenericJpaDAO<T, ID>
-	implements GenericDAO<T, ID> {
+	implements GenericDao<T, ID> {
 
     @Override
     String getFindAllQuery() {

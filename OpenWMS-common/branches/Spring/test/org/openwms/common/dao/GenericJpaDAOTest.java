@@ -22,9 +22,9 @@ import org.openwms.common.domain.system.Message;
  */
 public class GenericJpaDAOTest extends AbstractJpaSpringContextTests {
 
-	private GenericDAO<Location, Long> locationDao;
+	private GenericDao<Location, Long> locationDao;
 
-	public void setLocationDao(GenericDAO<Location, Long> locationDao) {
+	public void setLocationDao(GenericDao<Location, Long> locationDao) {
 		this.locationDao = locationDao;
 	}
 

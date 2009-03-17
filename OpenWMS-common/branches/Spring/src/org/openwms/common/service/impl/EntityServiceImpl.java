@@ -9,7 +9,7 @@ package org.openwms.common.service.impl;
 import java.io.Serializable;
 import java.util.List;
 
-import org.openwms.common.dao.GenericDAO;
+import org.openwms.common.dao.GenericDao;
 import org.openwms.common.service.EntityService;
 import org.springframework.beans.factory.annotation.Required;
 import org.springframework.transaction.annotation.Transactional;
@@ -23,10 +23,10 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional
 public class EntityServiceImpl<T extends Serializable, ID extends Serializable> implements EntityService<T>{
 
-	private GenericDAO<T, ID> dao;
+	private GenericDao<T, ID> dao;
 
 	@Required
-	public void setDao(GenericDAO<T, ID> dao) {
+	public void setDao(GenericDao<T, ID> dao) {
 		this.dao = dao;
 	}
 

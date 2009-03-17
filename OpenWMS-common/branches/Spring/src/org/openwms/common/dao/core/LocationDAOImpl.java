@@ -6,7 +6,7 @@
  */
 package org.openwms.common.dao.core;
 
-import org.openwms.common.dao.LocationDAO;
+import org.openwms.common.dao.LocationDao;
 import org.openwms.common.domain.Location;
 
 /**
@@ -15,15 +15,15 @@ import org.openwms.common.domain.Location;
  * @author <a href="heiko.scherrer@gmx.de">Heiko Scherrer</a>
  * @version $Revision: 314 $
  */
-public class LocationDAOImpl extends AbstractGenericJpaDAO<Location, Long> implements LocationDAO {
+public class LocationDAOImpl extends AbstractGenericJpaDAO<Location, Long> implements LocationDao {
 
     @Override
     String getFindAllQuery() {
-	return LocationDAO.NQ_FIND_ALL;
+	return LocationDao.NQ_FIND_ALL;
     }
 
     @Override
     String getFindByUniqueIdQuery() {
-	return LocationDAO.NQ_FIND_BY_UNIQUE_QUERY;
+	return LocationDao.NQ_FIND_BY_UNIQUE_QUERY;
     }
 }

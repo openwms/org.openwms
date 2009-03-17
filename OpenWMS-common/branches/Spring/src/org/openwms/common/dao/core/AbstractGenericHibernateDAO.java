@@ -10,7 +10,7 @@ import java.io.Serializable;
 import java.util.List;
 
 import org.hibernate.criterion.Criterion;
-import org.openwms.common.dao.GenericHibernateDAO;
+import org.openwms.common.dao.GenericHibernateDao;
 
 /**
  * A GenericHibernateDAO.
@@ -21,7 +21,7 @@ import org.openwms.common.dao.GenericHibernateDAO;
  * @version $Revision: 314 $
  */
 public abstract class AbstractGenericHibernateDAO<T extends Serializable, ID extends Serializable> extends
-	AbstractGenericJpaDAO<T, ID> implements GenericHibernateDAO<T> {
+	AbstractGenericJpaDAO<T, ID> implements GenericHibernateDao<T> {
 
     /**
      * Find and return a List of entities queried with Hibernates QueryByExample.
