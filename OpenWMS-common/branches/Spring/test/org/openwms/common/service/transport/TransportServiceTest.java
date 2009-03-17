@@ -8,7 +8,7 @@ package org.openwms.common.service.transport;
 
 import org.junit.Test;
 import org.openwms.AbstractJpaSpringContextTests;
-import org.openwms.common.dao.GenericDAO;
+import org.openwms.common.dao.GenericDao;
 import org.openwms.common.domain.Location;
 import org.openwms.common.domain.LocationPK;
 import org.openwms.common.domain.TransportUnit;
@@ -32,13 +32,13 @@ public final class TransportServiceTest extends AbstractJpaSpringContextTests {
     protected TransportService transportService;
     @Qualifier("locationDao")
     @Autowired
-    protected GenericDAO<Location, Long> locationDao;
+    protected GenericDao<Location, Long> locationDao;
     @Qualifier("transportUnitTypeDao")
     @Autowired
-    protected GenericDAO<TransportUnitType, String> transportUnitTypeDao;
+    protected GenericDao<TransportUnitType, String> transportUnitTypeDao;
     @Qualifier("transportUnitDao")
     @Autowired
-    protected GenericDAO<TransportUnit, Long> transportUnitDao;
+    protected GenericDao<TransportUnit, Long> transportUnitDao;
     private String testDataFile = "load-TransportUnits.sql";
     LocationPK locationPk;
     LocationPK targetLocation;

@@ -11,7 +11,7 @@ import java.lang.reflect.ParameterizedType;
 import java.util.List;
 import java.util.Map;
 
-import org.openwms.common.dao.GenericDAO;
+import org.openwms.common.dao.GenericDao;
 import org.springframework.dao.IncorrectResultSizeDataAccessException;
 import org.springframework.orm.jpa.support.JpaDaoSupport;
 import org.springframework.stereotype.Repository;
@@ -35,7 +35,7 @@ import org.springframework.transaction.annotation.Transactional;
 @Repository
 @Transactional
 public abstract class AbstractGenericJpaDAO<T extends Serializable, ID extends Serializable> extends JpaDaoSupport
-		implements GenericDAO<T, ID> {
+		implements GenericDao<T, ID> {
 
 	public Class<T> persistentClass;
 
