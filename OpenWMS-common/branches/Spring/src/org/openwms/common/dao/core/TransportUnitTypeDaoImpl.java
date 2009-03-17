@@ -16,16 +16,16 @@ import org.openwms.common.domain.TransportUnitType;
  * @version $Revision: 314 $
  */
 public class TransportUnitTypeDaoImpl extends AbstractGenericJpaDao<TransportUnitType, String> implements
-	TransportUnitTypeDao {
+		TransportUnitTypeDao {
 
-    @Override
-    String getFindAllQuery() {
-	return TransportUnitTypeDao.NQ_FIND_ALL;
-    }
+	@Override
+	String getFindAllQuery() {
+		return TransportUnitTypeDao.NQ_FIND_ALL;
+	}
 
-    @Override
-    String getFindByUniqueIdQuery() {
-	return TransportUnitTypeDao.NQ_FIND_BY_NAME;
-    }
+	@Override
+	String getFindByUniqueIdQuery() {
+		return TransportUnitTypeDao.NQ_FIND_BY_NAME;
+	}
 
 }
