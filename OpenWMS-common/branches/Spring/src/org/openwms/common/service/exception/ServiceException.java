@@ -4,7 +4,7 @@
  * Distributable under LGPL license.
  * See terms of license at gnu.org.
  */
-package org.openwms.common.exception.service;
+package org.openwms.common.service.exception;
 
 /**
  * A ServiceException.

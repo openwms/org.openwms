@@ -14,8 +14,8 @@ import org.openwms.common.domain.LocationPK;
 import org.openwms.common.domain.TransportUnit;
 import org.openwms.common.domain.TransportUnitType;
 import org.openwms.common.domain.values.Barcode;
-import org.openwms.common.exception.service.ServiceException;
 import org.openwms.common.service.TransportService;
+import org.openwms.common.service.exception.ServiceException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
