@@ -22,60 +22,59 @@ import org.springframework.beans.factory.annotation.Qualifier;
  */
 public class LocationGroupDaoTest extends AbstractJpaSpringContextTests {
 
-    @Autowired
-    @Qualifier("locationGroupDaoImpl")
-    protected GenericDAO<LocationGroup, Long> dao;
-    
-    @Autowired
-    @Qualifier("locationDaoImpl")
-    protected GenericDAO<Location,Long> locationDao;
+	@Autowired
+	@Qualifier("locationGroupDaoImpl")
+	protected GenericDAO<LocationGroup, Long> dao;
 
-    public LocationGroupDaoTest() {
-	setPopulateProtectedVariables(true);
-    }
-    
-    @Test
-    public final void testLocationGroupConstraint() {
-	LocationGroup locationGroup = new LocationGroup("FIRST_LG");
-	LocationGroup locationGroup2 = new LocationGroup("FIRST_LG");
-	dao.persist(locationGroup);
-	sharedEntityManager.flush();
-	try {
-	    dao.persist(locationGroup2);
-	    sharedEntityManager.flush();
-	}
-	catch (Exception e) {
-	    logger.debug("OK:Duplicate name of locGroup must be prevented by unique constraint.");
+	@Autowired
+	@Qualifier("locationDaoImpl")
+	protected GenericDAO<Location, Long> locationDao;
+
+	public LocationGroupDaoTest() {
+		setPopulateProtectedVariables(true);
 	}
 
-	System.out.println("stop");
-    }
+	@Test
+	public final void testLocationGroupConstraint() {
+		LocationGroup locationGroup = new LocationGroup("FIRST_LG");
+		LocationGroup locationGroup2 = new LocationGroup("FIRST_LG");
+		dao.persist(locationGroup);
+		sharedEntityManager.flush();
+		try {
+			dao.persist(locationGroup2);
+			sharedEntityManager.flush();
+		}
+		catch (Exception e) {
+			logger.debug("OK:Duplicate name of locGroup must be prevented by unique constraint.");
+		}
 
-    @Test
-    public final void testLocationGroupInheritance() {
-	LocationGroup locationGroup1 = new LocationGroup("TEST_GROUP_1");
-	LocationGroup locationGroup2 = new LocationGroup("TEST_GROUP_2");
+		System.out.println("stop");
+	}
 
-	dao.persist(locationGroup1);
+	@Test
+	public final void testLocationGroupInheritance() {
+		LocationGroup locationGroup1 = new LocationGroup("TEST_GROUP_1");
+		LocationGroup locationGroup2 = new LocationGroup("TEST_GROUP_2");
 
-	locationGroup1.addLocationGroup(locationGroup2);
-	sharedEntityManager.flush();
+		dao.persist(locationGroup1);
 
-	locationGroup1 = dao.save(locationGroup1);
+		locationGroup1.addLocationGroup(locationGroup2);
+		sharedEntityManager.flush();
 
-	// Save the second one (merge) to retrieve the PK
-	locationGroup2 = dao.save(locationGroup2);
+		locationGroup1 = dao.save(locationGroup1);
 
-	assertTrue(locationGroup2.getParent() == locationGroup1);
+		// Save the second one (merge) to retrieve the PK
+		locationGroup2 = dao.save(locationGroup2);
 
-	// Second locGroup must also be persisted.
-	assertFalse(locationGroup2.isNew());
+		assertTrue(locationGroup2.getParent() == locationGroup1);
 
-	locationGroup1.setGroupStateIn(STATE.NOT_AVAILABLE);
+		// Second locGroup must also be persisted.
+		assertFalse(locationGroup2.isNew());
 
-	assertTrue(locationGroup2.getGroupStateIn() == STATE.NOT_AVAILABLE);
+		locationGroup1.setGroupStateIn(STATE.NOT_AVAILABLE);
 
-	System.out.println("stop");
-    }
+		assertTrue(locationGroup2.getGroupStateIn() == STATE.NOT_AVAILABLE);
+
+	}
 
 }
