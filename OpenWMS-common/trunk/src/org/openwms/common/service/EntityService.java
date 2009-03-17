@@ -20,5 +20,14 @@ public interface EntityService<T extends Serializable> {
     List<T> findAll(Class<T> clazz);
     
     T save(Class<T> clazz, T entity);
+    
+
+    /**
+	 * Removes a persistent entity.
+     * 
+     * @param clazz
+     * @param entity
+     */
+	void remove(Class<T> clazz, T entity);
 
 }
