@@ -19,5 +19,5 @@
 		<property name="entityManagerFactory" ref="entityManagerFactory" />
 	</bean>
 
-	<bean id="dao" class="org.openwms.common.dao.core.GenericJpaDAOImpl" parent="parent"/>
+	<bean id="dao" class="org.openwms.common.dao.core.GenericJpaDaoImpl" parent="parent"/>
 </beans>

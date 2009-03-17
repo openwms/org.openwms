@@ -10,10 +10,14 @@ import java.util.Date;
 
 import org.openwms.common.dao.LocationGroupDao;
 import org.openwms.common.domain.LocationGroup;
-import org.springframework.stereotype.Repository;
 
-@Repository
-public class LocationGroupDaoImpl extends AbstractGenericJpaDAO<LocationGroup, Long> implements LocationGroupDao {
+/**
+ * A LocationGroupDaoImpl.
+ * 
+ * @author <a href="heiko.scherrer@gmx.de">Heiko Scherrer</a>
+ * @version $Revision: 314 $
+ */
+public class LocationGroupDaoImpl extends AbstractGenericJpaDao<LocationGroup, Long> implements LocationGroupDao {
 
 	@Override
 	String getFindAllQuery() {

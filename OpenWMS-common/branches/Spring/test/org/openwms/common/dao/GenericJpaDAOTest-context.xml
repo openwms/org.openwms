@@ -16,7 +16,7 @@
 		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-2.5.xsd">
 
 
-	<bean id="locationDao" class="org.openwms.common.dao.core.LocationDAOImpl">
+	<bean id="locationDao" class="org.openwms.common.dao.core.LocationDaoImpl">
 		<property name="entityManagerFactory" ref="entityManagerFactory"/>
 	</bean>
 

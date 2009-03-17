@@ -15,7 +15,7 @@ import org.openwms.common.domain.TransportUnitType;
  * @author <a href="heiko.scherrer@gmx.de">Heiko Scherrer</a>
  * @version $Revision: 314 $
  */
-public class TransportUnitTypeDaoImpl extends AbstractGenericJpaDAO<TransportUnitType, String> implements
+public class TransportUnitTypeDaoImpl extends AbstractGenericJpaDao<TransportUnitType, String> implements
 	TransportUnitTypeDao {
 
     @Override

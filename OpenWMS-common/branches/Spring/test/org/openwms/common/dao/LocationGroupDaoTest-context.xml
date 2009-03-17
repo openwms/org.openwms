@@ -23,7 +23,7 @@
 	<bean class="org.openwms.common.dao.core.LocationGroupDaoImpl"
 		parent="genericDao" id="locationGroupDaoImpl" />
 
-	<bean class="org.openwms.common.dao.core.LocationDAOImpl"
+	<bean class="org.openwms.common.dao.core.LocationDaoImpl"
 		parent="genericDao" id="locationDaoImpl" />
 
 </beans>

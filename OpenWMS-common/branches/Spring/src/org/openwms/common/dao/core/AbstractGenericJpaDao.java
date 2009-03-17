@@ -18,7 +18,7 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 /**
- * A GenericJpaDAOImpl.
+ * A AbstractGenericJpaDao.
  * <p>
  * Subclass this DAO implementation to call CRUD operations with JAVA Persistence API. Furthermore extend this class to
  * be explicitly independent from OR mapping frameworks.
@@ -34,14 +34,15 @@ import org.springframework.transaction.annotation.Transactional;
  */
 @Repository
 @Transactional
-public abstract class AbstractGenericJpaDAO<T extends Serializable, ID extends Serializable> extends JpaDaoSupport
+public abstract class AbstractGenericJpaDao<T extends Serializable, ID extends Serializable> extends JpaDaoSupport
 		implements GenericDao<T, ID> {
 
 	public Class<T> persistentClass;
 
-	public AbstractGenericJpaDAO() {
+	@SuppressWarnings("unchecked")
+	public AbstractGenericJpaDao() {
 		if (getClass().getGenericSuperclass() != null) {
-			 this.persistentClass = (Class<T>) ((ParameterizedType) getClass().getGenericSuperclass())
+			this.persistentClass = (Class<T>) ((ParameterizedType) getClass().getGenericSuperclass())
 					.getActualTypeArguments()[0];
 		}
 	}
@@ -91,7 +92,6 @@ public abstract class AbstractGenericJpaDAO<T extends Serializable, ID extends S
 	@Transactional
 	public T save(T entity) {
 		beforeUpdate(entity);
-		//getJpaTemplate().refresh(entity);
 		return getJpaTemplate().merge(entity);
 	}
 
@@ -106,9 +106,11 @@ public abstract class AbstractGenericJpaDAO<T extends Serializable, ID extends S
 		getJpaTemplate().persist(entity);
 	}
 
+	@Transactional(readOnly = true)
 	abstract String getFindAllQuery();
 
+	@Transactional(readOnly = true)
 	abstract String getFindByUniqueIdQuery();
-	
+
 	protected void beforeUpdate(T entity) {};
 }
