@@ -19,34 +19,34 @@ import org.openwms.common.domain.values.Barcode.BARCODE_ALIGN;
  */
 public class BarcodeTest {
 
-    /**
-     * Test basic behaviour of the Barcode class.
-     * 
-     */
-    @Test
-    public final void testBarcode() {
-	Barcode bc = new Barcode("TEST");
-	System.out.println("Test Barcode:" + bc);
+	/**
+	 * Test basic behaviour of the Barcode class.
+	 * 
+	 */
+	@Test
+	public final void testBarcode() {
+		Barcode bc = new Barcode("TEST");
+		System.out.println("Test Barcode:" + bc);
 
-	Barcode.setLength(20);
-	Barcode.setPadder('0');
+		Barcode.setLength(20);
+		Barcode.setPadder('0');
 
-	Barcode bc3 = new Barcode("RIGHT");
-	System.out.println("Test left-padded, right-aligned:[" + bc3 + "]");
-	assertTrue("Barcode length must be expanded to 20 characters.", (20 == Barcode.getLength()));
-	assertTrue("Barcode must start with 0", bc3.toString().startsWith("0"));
+		Barcode bc3 = new Barcode("RIGHT");
+		System.out.println("Test left-padded, right-aligned:[" + bc3 + "]");
+		assertTrue("Barcode length must be expanded to 20 characters.", (20 == Barcode.getLength()));
+		assertTrue("Barcode must start with 0", bc3.toString().startsWith("0"));
 
-	Barcode.setAlignment(BARCODE_ALIGN.LEFT);
-	Barcode bc2 = new Barcode("LEFT");
-	System.out.println("Test right-padded, left-aligned:[" + bc2 + "]");
-	assertTrue("Barcode must end with 0", bc2.toString().endsWith("0"));
-	assertTrue("Barcode must start with LEFT", bc2.toString().startsWith("LEFT"));
+		Barcode.setAlignment(BARCODE_ALIGN.LEFT);
+		Barcode bc2 = new Barcode("LEFT");
+		System.out.println("Test right-padded, left-aligned:[" + bc2 + "]");
+		assertTrue("Barcode must end with 0", bc2.toString().endsWith("0"));
+		assertTrue("Barcode must start with LEFT", bc2.toString().startsWith("LEFT"));
 
-	Barcode.setLength(2);
-	Barcode bc4 = new Barcode("A123456789");
-	System.out.println("Test not-padded:[" + bc4 + "]");
-	assertTrue("Barcode must end with 9", bc4.toString().endsWith("9"));
-	assertTrue("Barcode must start with A", bc4.toString().startsWith("A"));
-    }
+		Barcode.setLength(2);
+		Barcode bc4 = new Barcode("A123456789");
+		System.out.println("Test not-padded:[" + bc4 + "]");
+		assertTrue("Barcode must end with 9", bc4.toString().endsWith("9"));
+		assertTrue("Barcode must start with A", bc4.toString().startsWith("A"));
+	}
 
 }

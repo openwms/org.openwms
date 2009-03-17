@@ -97,7 +97,7 @@ public class Location implements Serializable {
 	 * Reserved for stock check procedure and for inventory control.
 	 */
 	@Column(name = "CHECK_STATE")
-	private String checkState;
+	private String checkState = "--";
 
 	/**
 	 * Shall this <code>Location</code> be integrated in the calculation of <code>TransportUnit</code>s on the parent

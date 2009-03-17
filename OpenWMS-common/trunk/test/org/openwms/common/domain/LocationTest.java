@@ -25,61 +25,60 @@ import org.openwms.common.domain.system.Message;
  */
 public final class LocationTest extends AbstractPDOTestCase {
 
-    /**
-     * <li> Checks primary key constraint.
-     * <li> Checks inserting and removing a Location.
-     * 
-     */
-    @Test
-    public final void testLocationLifecycle() {
-    // tested in LocationDAOTest
-    }
-
-    /**
-     * <li>Testing cascade persisting and removing of Messages.
-     * 
-     */
-    @Test
-    public final void testAddingErrors() {
-	EntityTransaction entityTransaction = em.getTransaction();
-	Location location = createLocation("UNKNOWN", "UNKNOWN", "UNKNOWN", "UNKNOWN", "UNKNOWN");
-	assertNotNull("Cannot persist location", location);
-
-	Long id = location.getId();
-	Location location2 = em.find(Location.class, id);
-	assertNotNull("Location must be persisted before", location2);
-	location2.addMessage(new Message(1, "Errormessage 1"));
-	location2.addMessage(new Message(2, "Errormessage 2"));
-	entityTransaction.begin();
-	location2 = em.merge(location2);
-	entityTransaction.commit();
-
-	Location location3 = em.find(Location.class, id);
-
-	assertEquals("Expected 2 persisted Messages", 2, location3.getMessages().size());
-
-	entityTransaction.begin();
-	em.remove(location3);
-	entityTransaction.commit();
-
-	Query query = em.createQuery("select count(m) from Message m");
-	Long cnt = (Long) query.getSingleResult();
-	assertEquals("Expected 0 persisted Messages", 0, cnt.intValue());
-    }
-
-    private Location createLocation(String area, String aisle, String x, String y, String z) {
-	LocationPK pk = new LocationPK(area, aisle, x, y, z);
-	Location location = new Location(pk);
-	EntityTransaction entityTransaction = em.getTransaction();
-	try {
-	    entityTransaction.begin();
-	    em.persist(location);
-	    entityTransaction.commit();
+	/**
+	 * <li>Checks primary key constraint. <li>Checks inserting and removing a Location.
+	 * 
+	 */
+	@Test
+	public final void testLocationLifecycle() {
+	// tested in LocationDAOTest
 	}
-	catch (PersistenceException pe) {
-	    entityTransaction.rollback();
-	    throw pe;
+
+	/**
+	 * <li>Testing cascade persisting and removing of Messages.
+	 * 
+	 */
+	@Test
+	public final void testAddingErrors() {
+		EntityTransaction entityTransaction = em.getTransaction();
+		Location location = createLocation("UNKNOWN", "UNKNOWN", "UNKNOWN", "UNKNOWN", "UNKNOWN");
+		assertNotNull("Cannot persist location", location);
+
+		Long id = location.getId();
+		Location location2 = em.find(Location.class, id);
+		assertNotNull("Location must be persisted before", location2);
+		location2.addMessage(new Message(1, "Errormessage 1"));
+		location2.addMessage(new Message(2, "Errormessage 2"));
+		entityTransaction.begin();
+		location2 = em.merge(location2);
+		entityTransaction.commit();
+
+		Location location3 = em.find(Location.class, id);
+
+		assertEquals("Expected 2 persisted Messages", 2, location3.getMessages().size());
+
+		entityTransaction.begin();
+		em.remove(location3);
+		entityTransaction.commit();
+
+		Query query = em.createQuery("select count(m) from Message m");
+		Long cnt = (Long) query.getSingleResult();
+		assertEquals("Expected 0 persisted Messages", 0, cnt.intValue());
 	}
-	return location;
-    }
+
+	private Location createLocation(String area, String aisle, String x, String y, String z) {
+		LocationPK pk = new LocationPK(area, aisle, x, y, z);
+		Location location = new Location(pk);
+		EntityTransaction entityTransaction = em.getTransaction();
+		try {
+			entityTransaction.begin();
+			em.persist(location);
+			entityTransaction.commit();
+		}
+		catch (PersistenceException pe) {
+			entityTransaction.rollback();
+			throw pe;
+		}
+		return location;
+	}
 }
