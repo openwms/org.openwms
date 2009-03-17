@@ -27,11 +27,11 @@ public class LocationHelper {
 	private EntityManager em;
 	protected Log LOG = LogFactory.getLog(this.getClass());
 
-	public LocationHelper(EntityManager em){
+	public LocationHelper(EntityManager em) {
 		this.em = em;
 	}
-	
-	public Location createLocation(String area, String aisle, String x, String y, String z){
+
+	public Location createLocation(String area, String aisle, String x, String y, String z) {
 		LocationPK locationPk = new LocationPK(area, aisle, x, y, z);
 		Location location = new Location(locationPk);
 		EntityTransaction entityTransaction = em.getTransaction();
@@ -39,7 +39,8 @@ public class LocationHelper {
 			entityTransaction.begin();
 			em.persist(location);
 			entityTransaction.commit();
-		} catch (PersistenceException pe) {
+		}
+		catch (PersistenceException pe) {
 			LOG.debug("OK:Execption while persisting TransportUnit without TransportUnitType");
 		}
 		return location;
