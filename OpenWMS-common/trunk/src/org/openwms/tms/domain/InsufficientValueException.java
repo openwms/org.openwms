@@ -12,7 +12,7 @@ package org.openwms.tms.domain;
  * @author <a href="heiko.scherrer@gmx.de">Heiko Scherrer</a>
  * @version $Revision$
  */
-public class InsufficientValueException extends TransportManagementException {
+public class InsufficientValueException extends RuntimeException {
 
 	private static final long serialVersionUID = 1L;
 	
