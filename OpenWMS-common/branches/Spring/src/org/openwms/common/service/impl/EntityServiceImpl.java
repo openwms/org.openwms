@@ -42,7 +42,7 @@ public class EntityServiceImpl<T extends Serializable, ID extends Serializable> 
 	
 	public void remove(Class<T> clazz, T entity) {
 		dao.setPersistentClass(clazz);
-		dao.save(entity);
+		//dao.save(entity);
 		dao.remove(entity);
 	}
 	
