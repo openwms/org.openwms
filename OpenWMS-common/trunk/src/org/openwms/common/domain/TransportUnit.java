@@ -54,7 +54,7 @@ public class TransportUnit implements Serializable {
     private static final long serialVersionUID = 1L;
 
     public static enum TU_STATE {
-	AVAILABLE, OK, NOT_OK
+    	AVAILABLE, OK, NOT_OK
     }
 
     /**

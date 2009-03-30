@@ -28,7 +28,7 @@ public class Barcode implements Serializable {
      * be used when padding is active.
      */
     public static enum BARCODE_ALIGN {
-	LEFT, RIGHT
+    	LEFT, RIGHT
     }
 
     private static final long serialVersionUID = 1L;

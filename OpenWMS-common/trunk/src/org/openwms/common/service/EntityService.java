@@ -9,6 +9,8 @@ package org.openwms.common.service;
 import java.io.Serializable;
 import java.util.List;
 
+import org.openwms.common.domain.Location;
+
 /**
  * A EntityService.
  * 
@@ -21,7 +23,12 @@ public interface EntityService<T extends Serializable> {
     
     T save(Class<T> clazz, T entity);
     
-
+    public String findAll2();//Remove
+    
+    public List<T> findAll();//Remove
+    
+    public List<String> findPojos();//Remove
+    
     /**
 	 * Removes a persistent entity.
      * 
