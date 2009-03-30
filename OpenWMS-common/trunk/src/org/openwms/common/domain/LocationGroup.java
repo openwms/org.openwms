@@ -42,7 +42,7 @@ public class LocationGroup implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	public static enum STATE {
-		AVAILABLE, NOT_AVAILABLE
+		AVAILABLE,NOT_AVAILABLE;
 	};
 
 	/**
@@ -188,13 +188,12 @@ public class LocationGroup implements Serializable {
 	}
 
 	public void setGroupStateIn(STATE groupStateIn) {
-		if (this.groupStateIn == groupStateIn) {
-			return;
-		}
+		/*
+		 * Due to lazy initialization, perform this action within a service method if (this.groupStateIn ==
+		 * groupStateIn) { return; } this.groupStateIn = groupStateIn; for (LocationGroup child : getLocationGroups()) {
+		 * child.setGroupStateIn(groupStateIn); }
+		 */
 		this.groupStateIn = groupStateIn;
-		for (LocationGroup child : getLocationGroups()) {
-			child.setGroupStateIn(groupStateIn);
-		}
 	}
 
 	/**
@@ -207,13 +206,12 @@ public class LocationGroup implements Serializable {
 	}
 
 	public void setGroupStateOut(STATE groupStateOut) {
-		if (this.groupStateOut == groupStateOut) {
-			return;
-		}
+		/*
+		 * Due to lazy initialization, perform this action within a service method if (this.groupStateOut ==
+		 * groupStateOut) { return; } this.groupStateOut = groupStateOut; for (LocationGroup child :
+		 * getLocationGroups()) { child.setGroupStateOut(groupStateOut); }
+		 */
 		this.groupStateOut = groupStateOut;
-		for (LocationGroup child : getLocationGroups()) {
-			child.setGroupStateOut(groupStateOut);
-		}
 	}
 
 	/**
@@ -224,7 +222,7 @@ public class LocationGroup implements Serializable {
 	public int getNoLocations() {
 		return this.noLocations;
 	}
-	
+
 	/**
 	 * Returns the maximum fill level of this <code>LocationGroup</code>.<br>
 	 * The maximum fill level defines how many <code>Location</code>s of this <code>LocationGroup</code> can be occupied
@@ -276,7 +274,7 @@ public class LocationGroup implements Serializable {
 	public Date getLastUpdated() {
 		return this.lastUpdated;
 	}
-	
+
 	/**
 	 * Set the date of the last modification of this <code>LocationGroup</code>.
 	 * 
@@ -327,7 +325,7 @@ public class LocationGroup implements Serializable {
 	 * 
 	 * @return child LocationGroups.
 	 */
-	private Set<LocationGroup> getLocationGroups() {
+	public Set<LocationGroup> getLocationGroups() {
 		return locationGroups;
 	}
 
@@ -450,4 +448,5 @@ public class LocationGroup implements Serializable {
 	public String toString() {
 		return getName();
 	}
+
 }
