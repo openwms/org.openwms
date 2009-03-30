@@ -20,4 +20,8 @@
 	</bean>
 
 	<bean id="dao" class="org.openwms.common.dao.core.GenericJpaDaoImpl" parent="parent"/>
+	
+	<bean id="locationDao" class="org.openwms.common.dao.core.LocationDaoImpl" parent="parent"/>
+
+	<bean id="locationGroupDao" class="org.openwms.common.dao.core.LocationGroupDaoImpl" parent="parent"/>
 </beans>

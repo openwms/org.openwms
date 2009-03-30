@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<graniteProperties version="1.0">
+  <gas3 uid="uid" as3TypeFactory="org.granite.generator.as3.DefaultAs3TypeFactory" debugEnabled="false">
+    <source path="src" output="as3"/>
+    <project path="OpenWMS-common"/>
+    <template kind="BEAN" uris="class:org/granite/generator/template/bean.gsp;class:org/granite/generator/template/beanBase.gsp"/>
+    <template kind="INTERFACE" uris="class:org/granite/generator/template/interface.gsp;class:org/granite/generator/template/interfaceBase.gsp"/>
+    <template kind="ENTITY" uris="class:org/granite/generator/template/entity.gsp;class:org/granite/generator/template/entityBase.gsp"/>
+    <template kind="ENUM" uris="class:org/granite/generator/template/enum.gsp"/>
+    <transformer type="org.granite.generator.as3.JavaAs3GroovyTransformer"/>
+  </gas3>
+</graniteProperties>

@@ -4,7 +4,7 @@
  * Distributable under LGPL license.
  * See terms of license at gnu.org.
  */
-package org.openwms.common.service.impl;
+package org.openwms.common.service;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -28,7 +28,7 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 public class TransportServiceImpl implements TransportService {
 
-	protected Log LOG = LogFactory.getLog(this.getClass());
+	protected Log logger = LogFactory.getLog(this.getClass());
 	private GenericDao<TransportUnit, Long> transportUnitDao;
 	private GenericDao<Location, Long> locationDao;
 

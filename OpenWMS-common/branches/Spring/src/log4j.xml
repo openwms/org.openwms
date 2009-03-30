@@ -31,6 +31,15 @@
 	<category name="org.openwms">
 		<priority value="DEBUG" />
 	</category>
+	
+	<category name="org.granite.messaging">
+		<priority value="ERROR" />
+	</category>
+
+	<category name="org.springframework.orm.jpa.support">
+		<priority value="DEBUG" />
+	</category>
+	
 
 	<!-- Limit the org.apache category to INFO as its DEBUG is verbose -->
 

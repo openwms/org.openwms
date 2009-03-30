@@ -15,8 +15,12 @@
 		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-2.5.xsd
 		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-2.5.xsd">
 
-	<bean id="entityService" class="org.openwms.common.service.impl.EntityServiceImpl">
+	<bean id="entityService" class="org.openwms.common.service.EntityServiceImpl">
 		<property name="dao" ref="dao" />
+	</bean>
+	
+	<bean id="locationGroupService" class="org.openwms.common.service.LocationGroupServiceImpl" parent="entityService">
+		<property name="dao" ref="locationGroupDao" />
 	</bean>
 
 </beans>
