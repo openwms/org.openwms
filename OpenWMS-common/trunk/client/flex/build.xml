@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+/*
+ * OpenWMS, the Open Warehouse Management System
+ * 
+ * Distributable under LGPL license.
+ * See terms of license at gnu.org.
+ */
+-->
+<project name="graniteds" default="build.swc">
+
+    <!--
+     ! EDIT THE 'env.properties' FILE TO REFLECT YOUR ENVIRONMENT.
+     !-->
+    <property file="env.properties" />
+    <property file="project.properties" />
+    <xmlproperty prefix="eclipse" file=".project" />
+
+    <condition property="windows">
+        <equals arg1="${file.separator}" arg2="\" />
+    </condition>
+
+    <condition property="eclipse">
+        <contains string="${java.class.path}" substring="org.eclipse.swt" />
+    </condition>
+
+    <echo message="===============================================================================" />
+    <echo message="  Building GraniteDS" />
+    <echo message="  " />
+    <echo message="  $FLEX_HOME = ${FLEX_HOME}" />
+    <echo message="  $FLEX_TASKS_JAR = ${FLEX_TASKS_JAR}" />
+    <echo message="  " />
+    <echo message="===============================================================================" />
+
+    <!--
+     ! Flex 2 SDK tasks (mxmlc, compc, html-wrapper).
+     !-->
+    <taskdef resource="flexTasks.tasks" classpath="${FLEX_TASKS_JAR}" />
+
+
+    <!--
+      ! Build AS3 libraries (only if outdated).
+      !-->
+    <target name="build.swc">
+        <mkdir dir="build" />
+        <mkdir dir="build/META-INF" />
+
+        <!-- Create Swcs Manifest -->
+        <tstamp>
+            <format property="TODAY" pattern="yyyy-MM-dd HH:mm:ss 'GMT'Z" />
+        </tstamp>
+        <manifest file="build/META-INF/MANIFEST.MF">
+            <section name="granite/swc">
+                <attribute name="Implementation-Vendor" value="Granite Data Services" />
+                <attribute name="Implementation-Version" value="${GDS_VERSION} (${TODAY})" />
+            </section>
+        </manifest>
+
+        <!-- Build Swcs and add Manifest -->
+        <compc output="build/domainObjects.swc" use-network="false" warn-missing-namespace-decl="false">
+            <source-path path-element="as3" />
+            <include-sources dir="as3" includes="**/*.as" />
+            <compiler.external-library-path dir="${FLEX_HOME}/frameworks/libs" append="true">
+                <include name="framework.swc" />
+            </compiler.external-library-path>
+            <compiler.include-libraries dir="lib" append="true">
+				<include name="granite.swc" />
+				<include name="granite-essentials.swc" />
+            </compiler.include-libraries>
+        </compc>
+        <zip basedir="build" update="true" keepcompression="true" destfile="build/domainObjects.swc" includes="META-INF/MANIFEST.MF" />
+
+
+    </target>
+</project>
