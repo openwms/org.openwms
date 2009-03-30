@@ -1,0 +1,8 @@
+Manifest-Version: 1.0
+Ant-Version: Apache Ant 1.7.0
+Created-By: 11.0-b15 (Sun Microsystems Inc.)
+
+Name: granite/swc
+Implementation-Vendor: Granite Data Services
+Implementation-Version: ${GDS_VERSION} (2009-03-20 14:16:09 GMT+0100)
+
