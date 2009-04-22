@@ -6,7 +6,7 @@
  * See terms of license at gnu.org.
 -->
 <project name = "OpenWMS-common" default = "Main-Build" basedir=".">
-	<property file="build-dist.properties"/>
+	<property file="build.properties"/>
 	
 	<path id="class.path">
 	    <fileset dir="${lib.dir}">
