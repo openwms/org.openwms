@@ -236,7 +236,7 @@
         <echo message="Building..." />
         <echo message="************************************************" />
     </target>
-    <target name="nightly" depends="clean, initialize, deps, compile, compile-flex, junit, compile-tests, coverage-report, jar">
+    <target name="nightly" depends="clean, initialize, deps, compile, junit, compile-tests, coverage-report, jar">
         <echo message="************************************************" />
         <echo message="Building nightly build" />
         <echo message="************************************************" />
