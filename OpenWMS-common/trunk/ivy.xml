@@ -21,6 +21,11 @@
 		<dependency org="commons-logging" name="commons-logging" rev="1.1.1" conf="build->*" />
 		<!-- Used for JUnit tests -->
 		<dependency org="junit" name="junit" rev="4.4" conf="test->*" />
+		<!-- Cobertura -->
+		<dependency org="cobertura" name="cobertura" rev="1.8" conf="test->*" />
+		<dependency org="asm" name="asm" rev="2.2.1" conf="test->*" />
+		<dependency org="oro" name="oro" rev="2.0.8" conf="test->*" />
+
 		<dependency org="hsqldb" name="hsqldb" rev="1.8.0.7" conf="test->*" />
 		<dependency org="org.hibernate" name="hibernate" rev="3.2.6.ga" conf="test->*" />
   	</dependencies>

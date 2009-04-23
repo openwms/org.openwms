@@ -16,7 +16,6 @@
 				<ivy pattern="${basedir}/deps/[organisation]/[module]/ivys/ivy-[revision].xml" />
 				<artifact pattern="${basedir}/deps/[organisation]/[module]/[type]s/[artifact]-[revision].[ext]" />
 			</filesystem>
-			<ibiblio />
 			<url name="default-repo" m2compatible="true">
 				<artifact pattern="http://repo1.maven.org/maven2/[organisation]/[module]/[revision]/[artifact]-[revision].[ext]" />
 			</url>

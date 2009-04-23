@@ -35,7 +35,7 @@ public class Email implements Serializable {
     /**
      * Email Address.
      */
-    @org.hibernate.validator.Email
+    //@org.hibernate.validator.Email
     private String emailAddress;
 
     /**

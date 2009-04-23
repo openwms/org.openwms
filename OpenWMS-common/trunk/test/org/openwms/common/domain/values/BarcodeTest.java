@@ -25,6 +25,12 @@ public class BarcodeTest {
 	 */
 	@Test
 	public final void testBarcode() {
+		try {
+			new Barcode(null);
+		} catch (Exception e) {
+			System.out.println("OK:Barcode cannot instanciated with NULL");
+		}
+		
 		Barcode bc = new Barcode("TEST");
 		System.out.println("Test Barcode:" + bc);
 
