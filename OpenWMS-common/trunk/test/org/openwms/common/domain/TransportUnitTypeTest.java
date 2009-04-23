@@ -13,7 +13,6 @@ import static org.junit.Assert.fail;
 import javax.persistence.EntityTransaction;
 import javax.persistence.PersistenceException;
 
-import org.hibernate.NonUniqueObjectException;
 import org.junit.Test;
 import org.openwms.common.domain.helper.AbstractPDOTestCase;
 
@@ -43,9 +42,6 @@ public final class TransportUnitTypeTest extends AbstractPDOTestCase {
 			fail("Expecting exception when persisting existing entity with same identifier!");
 		}
 		catch (PersistenceException pe) {
-			if (!(pe.getCause() instanceof NonUniqueObjectException)) {
-				fail("Unallowed exception when persisting existing entity with same identifier!");
-			}
 		}
 		entityTransaction.rollback();
 

@@ -14,7 +14,6 @@ import javax.persistence.EntityTransaction;
 import javax.persistence.PersistenceException;
 import javax.persistence.Query;
 
-import org.hibernate.exception.ConstraintViolationException;
 import org.junit.Test;
 import org.openwms.common.domain.helper.AbstractPDOTestCase;
 
@@ -45,11 +44,7 @@ public final class RoleTest extends AbstractPDOTestCase {
 			fail("No unique constraint on rolename");
 		}
 		catch (PersistenceException pe) {
-			if (pe.getCause() instanceof ConstraintViolationException) {
-				LOG.debug("OK:Tested unique constraint on rolename.");
-			} else {
-				fail("Unknown PersistenceException");
-			}
+			LOG.debug("OK:Tested unique constraint on rolename.");
 		}
 	}
 
