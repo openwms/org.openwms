@@ -92,7 +92,7 @@
             </section>
         </manifest>
 		<!-- Build Swcs and add Manifest -->
-		<compc output="${flex.build.dir}/domainObjects.swc" use-network="false" warn-missing-namespace-decl="false">
+		<compc output="${flex.build.dir}/domainObjects.swc" use-network="false" warn-missing-namespace-decl="false" failonerror="no" logerror="yes" fork="yes">
 			<source-path path-element="${flex.src.dir}" />
 			<include-sources dir="${flex.src.dir}" includes="**/*.as" />
 			<compiler.external-library-path dir="${env.FLEX_HOME}/frameworks/libs" append="true">
@@ -205,12 +205,11 @@
 
     <target name="jar">
         <echo message="************************************************" />
-        <echo message="Create jar file ${dist.dir}/${war.file}..." />
+        <echo message="Create jar file ${dist.dir}/${jar.file}..." />
         <echo message="************************************************" />
-        <jar destfile="${dist.dir}/${war.file}">
-            <fileset dir="${src.build.dir}" />
+        <jar destfile="${dist.dir}/${jar.file}">
+            <fileset dir="${build.main.dir}" />
             <manifest>
-                <attribute name="Built-By" value="${user.name}" />
                 <attribute name="Main-Class" value="" />
                 <attribute name="Class-Path" value="." />
             </manifest>
