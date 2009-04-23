@@ -20,18 +20,12 @@
             <include name="*.jar" />
         </fileset>
     </path>
-	<path id="cobertura.classpath">
-		<fileset dir="${deps.test.dir}">
-			<include name="**/*.jar" />
-        </fileset>
-	</path>
 	<path id="flex.classpath">
 		<fileset dir="${lib.dir}">
 			<include name="**/*.jar" />
         </fileset>
 	</path>
 	
-    <taskdef classpathref="cobertura.classpath" resource="tasks.properties"/>
     <taskdef classpath="${FLEX_TASKS_JAR}" resource="flexTasks.tasks" />
     
     <target name="deps">
@@ -42,6 +36,8 @@
 			<fileset dir="${lib.dir}/ivy" includes="**/*.jar" />
 		</path>
         <taskdef resource="org/apache/ivy/ant/antlib.xml" uri="antlib:org.apache.ivy.ant" classpathref="ivy.path" />
+        <ivy:configure file="${ivy.settings.file}" />
+        <ivy:resolve file="${ivy.dep.file}" conf="build, test" />
         <ivy:retrieve pattern="${deps.dir}/[conf]/[artifact]-[revision].[ext]"/>
     </target>
 
@@ -148,7 +144,15 @@
         <fail if="failed" message="One or more unit test have failed!" />
     </target>
     
-	<target name="instrument" depends="compile, compile-tests">
+	<path id="cobertura.classpath">
+		<fileset dir="${deps.test.dir}">
+			<include name="**/*.jar" />
+        </fileset>
+	</path>
+    
+    <taskdef classpathref="cobertura.classpath" resource="tasks.properties"/>
+
+    <target name="instrument" depends="compile, compile-tests">
 		<cobertura-instrument todir="${cobertura.instrumented.dir}">
 			<fileset dir="${build.main.dir}">
 				<include name="**/*.class"/>
