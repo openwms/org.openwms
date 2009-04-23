@@ -7,29 +7,13 @@
 
 package org.openwms.common.domain {
 
-    import flash.events.EventDispatcher;
     import flash.utils.IDataInput;
     import flash.utils.IDataOutput;
     import flash.utils.IExternalizable;
-    import flash.utils.getQualifiedClassName;
     import mx.collections.ListCollectionView;
-    import mx.core.IUID;
-    import mx.utils.UIDUtil;
-    import org.granite.collections.IPersistentCollection;
-    import org.granite.meta;
-    import org.granite.tide.IEntity;
-    import org.granite.tide.IEntityManager;
-    import org.granite.tide.IPropertyHolder;
 
-    use namespace meta;
-
-    [Managed]
-    public class LocationBase implements IExternalizable, IUID {
-
-        protected var _em:IEntityManager = null;
-
-        private var __initialized:Boolean = true;
-        private var __detachedState:String = null;
+    [Bindable]
+    public class LocationBase implements IExternalizable {
 
         private var _checkState:String;
         private var _consideredInAllocation:Boolean;
@@ -48,25 +32,6 @@ package org.openwms.common.domain {
         private var _outgoingActive:Boolean;
         private var _plcState:int;
         private var _version:Number;
-
-        meta function isInitialized(name:String = null):Boolean {
-            if (!name)
-                return __initialized;
-
-            var property:* = this[name];
-            return (
-                (!(property is Location) || (property as Location).meta::isInitialized()) &&
-                (!(property is IPersistentCollection) || (property as IPersistentCollection).isInitialized())
-            );
-        }
-
-        [Transient]
-        public function meta_getEntityManager():IEntityManager {
-            return _em;
-        }
-        public function meta_setEntityManager(em:IEntityManager):void {
-            _em = em;
-        }
 
         public function set checkState(value:String):void {
             _checkState = value;
@@ -171,101 +136,48 @@ package org.openwms.common.domain {
             return _plcState;
         }
 
-        [Version]
         public function get version():Number {
             return _version;
         }
 
-        public function set uid(value:String):void {
-            // noop...
-        }
-        public function get uid():String {
-        	if (isNaN(_id))
-        		return UIDUtil.createUID();
-        	return getQualifiedClassName(this) + "#[" + String(_id) + "]";
-        	
-        }
-
-        public function meta_merge(em:IEntityManager, obj:*):void {
-            var src:LocationBase = LocationBase(obj);
-            __initialized = src.__initialized;
-            __detachedState = src.__detachedState;
-            if (meta::isInitialized()) {
-               em.meta_mergeExternal(src._checkState, _checkState, null, this, 'checkState', function setter(o:*):void{_checkState = o as String});
-               em.meta_mergeExternal(src._consideredInAllocation, _consideredInAllocation, null, this, 'consideredInAllocation', function setter(o:*):void{_consideredInAllocation = o as Boolean});
-               em.meta_mergeExternal(src._countingActive, _countingActive, null, this, 'countingActive', function setter(o:*):void{_countingActive = o as Boolean});
-               em.meta_mergeExternal(src._description, _description, null, this, 'description', function setter(o:*):void{_description = o as String});
-               em.meta_mergeExternal(src._id, _id, null, this, 'id', function setter(o:*):void{_id = o as Number});
-               em.meta_mergeExternal(src._incomingActive, _incomingActive, null, this, 'incomingActive', function setter(o:*):void{_incomingActive = o as Boolean});
-               em.meta_mergeExternal(src._lastAccess, _lastAccess, null, this, 'lastAccess', function setter(o:*):void{_lastAccess = o as Date});
-               em.meta_mergeExternal(src._locationGroup, _locationGroup, null, this, 'locationGroup', function setter(o:*):void{_locationGroup = o as LocationGroup});
-               em.meta_mergeExternal(src._locationGroupCountingActive, _locationGroupCountingActive, null, this, 'locationGroupCountingActive', function setter(o:*):void{_locationGroupCountingActive = o as Boolean});
-               em.meta_mergeExternal(src._locationId, _locationId, null, this, 'locationId', function setter(o:*):void{_locationId = o as LocationPK});
-               em.meta_mergeExternal(src._locationType, _locationType, null, this, 'locationType', function setter(o:*):void{_locationType = o as LocationType});
-               em.meta_mergeExternal(src._maximumWeight, _maximumWeight, null, this, 'maximumWeight', function setter(o:*):void{_maximumWeight = o as Number});
-               em.meta_mergeExternal(src._messages, _messages, null, this, 'messages', function setter(o:*):void{_messages = o as ListCollectionView});
-               em.meta_mergeExternal(src._noMaxTransportUnits, _noMaxTransportUnits, null, this, 'noMaxTransportUnits', function setter(o:*):void{_noMaxTransportUnits = o as int});
-               em.meta_mergeExternal(src._outgoingActive, _outgoingActive, null, this, 'outgoingActive', function setter(o:*):void{_outgoingActive = o as Boolean});
-               em.meta_mergeExternal(src._plcState, _plcState, null, this, 'plcState', function setter(o:*):void{_plcState = o as int});
-               em.meta_mergeExternal(src._version, _version, null, this, 'version', function setter(o:*):void{_version = o as Number});
-            }
-            else {
-               em.meta_mergeExternal(src._id, _id, null, this, 'id', function setter(o:*):void{_id = o as Number});
-            }
-        }
-
         public function readExternal(input:IDataInput):void {
-            __initialized = input.readObject() as Boolean;
-            __detachedState = input.readObject() as String;
-            if (meta::isInitialized()) {
-                _checkState = input.readObject() as String;
-                _consideredInAllocation = input.readObject() as Boolean;
-                _countingActive = input.readObject() as Boolean;
-                _description = input.readObject() as String;
-                _id = function(o:*):Number { return (o is Number ? o as Number : Number.NaN) } (input.readObject());
-                _incomingActive = input.readObject() as Boolean;
-                _lastAccess = input.readObject() as Date;
-                _locationGroup = input.readObject() as LocationGroup;
-                _locationGroupCountingActive = input.readObject() as Boolean;
-                _locationId = input.readObject() as LocationPK;
-                _locationType = input.readObject() as LocationType;
-                _maximumWeight = function(o:*):Number { return (o is Number ? o as Number : Number.NaN) } (input.readObject());
-                _messages = input.readObject() as ListCollectionView;
-                _noMaxTransportUnits = input.readObject() as int;
-                _outgoingActive = input.readObject() as Boolean;
-                _plcState = input.readObject() as int;
-                _version = function(o:*):Number { return (o is Number ? o as Number : Number.NaN) } (input.readObject());
-            }
-            else {
-                _id = function(o:*):Number { return (o is Number ? o as Number : Number.NaN) } (input.readObject());
-            }
+            _checkState = input.readObject() as String;
+            _consideredInAllocation = input.readObject() as Boolean;
+            _countingActive = input.readObject() as Boolean;
+            _description = input.readObject() as String;
+            _id = function(o:*):Number { return (o is Number ? o as Number : Number.NaN) } (input.readObject());
+            _incomingActive = input.readObject() as Boolean;
+            _lastAccess = input.readObject() as Date;
+            _locationGroup = input.readObject() as LocationGroup;
+            _locationGroupCountingActive = input.readObject() as Boolean;
+            _locationId = input.readObject() as LocationPK;
+            _locationType = input.readObject() as LocationType;
+            _maximumWeight = function(o:*):Number { return (o is Number ? o as Number : Number.NaN) } (input.readObject());
+            _messages = input.readObject() as ListCollectionView;
+            _noMaxTransportUnits = input.readObject() as int;
+            _outgoingActive = input.readObject() as Boolean;
+            _plcState = input.readObject() as int;
+            _version = function(o:*):Number { return (o is Number ? o as Number : Number.NaN) } (input.readObject());
         }
 
         public function writeExternal(output:IDataOutput):void {
-            output.writeObject(__initialized);
-            output.writeObject(__detachedState);
-            if (meta::isInitialized()) {
-                output.writeObject((_checkState is IPropertyHolder) ? IPropertyHolder(_checkState).object : _checkState);
-                output.writeObject((_consideredInAllocation is IPropertyHolder) ? IPropertyHolder(_consideredInAllocation).object : _consideredInAllocation);
-                output.writeObject((_countingActive is IPropertyHolder) ? IPropertyHolder(_countingActive).object : _countingActive);
-                output.writeObject((_description is IPropertyHolder) ? IPropertyHolder(_description).object : _description);
-                output.writeObject((_id is IPropertyHolder) ? IPropertyHolder(_id).object : _id);
-                output.writeObject((_incomingActive is IPropertyHolder) ? IPropertyHolder(_incomingActive).object : _incomingActive);
-                output.writeObject((_lastAccess is IPropertyHolder) ? IPropertyHolder(_lastAccess).object : _lastAccess);
-                output.writeObject((_locationGroup is IPropertyHolder) ? IPropertyHolder(_locationGroup).object : _locationGroup);
-                output.writeObject((_locationGroupCountingActive is IPropertyHolder) ? IPropertyHolder(_locationGroupCountingActive).object : _locationGroupCountingActive);
-                output.writeObject((_locationId is IPropertyHolder) ? IPropertyHolder(_locationId).object : _locationId);
-                output.writeObject((_locationType is IPropertyHolder) ? IPropertyHolder(_locationType).object : _locationType);
-                output.writeObject((_maximumWeight is IPropertyHolder) ? IPropertyHolder(_maximumWeight).object : _maximumWeight);
-                output.writeObject((_messages is IPropertyHolder) ? IPropertyHolder(_messages).object : _messages);
-                output.writeObject((_noMaxTransportUnits is IPropertyHolder) ? IPropertyHolder(_noMaxTransportUnits).object : _noMaxTransportUnits);
-                output.writeObject((_outgoingActive is IPropertyHolder) ? IPropertyHolder(_outgoingActive).object : _outgoingActive);
-                output.writeObject((_plcState is IPropertyHolder) ? IPropertyHolder(_plcState).object : _plcState);
-                output.writeObject((_version is IPropertyHolder) ? IPropertyHolder(_version).object : _version);
-            }
-            else {
-                output.writeObject(_id);
-            }
+            output.writeObject(_checkState);
+            output.writeObject(_consideredInAllocation);
+            output.writeObject(_countingActive);
+            output.writeObject(_description);
+            output.writeObject(_id);
+            output.writeObject(_incomingActive);
+            output.writeObject(_lastAccess);
+            output.writeObject(_locationGroup);
+            output.writeObject(_locationGroupCountingActive);
+            output.writeObject(_locationId);
+            output.writeObject(_locationType);
+            output.writeObject(_maximumWeight);
+            output.writeObject(_messages);
+            output.writeObject(_noMaxTransportUnits);
+            output.writeObject(_outgoingActive);
+            output.writeObject(_plcState);
+            output.writeObject(_version);
         }
     }
 }
