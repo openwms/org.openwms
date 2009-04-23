@@ -3,5 +3,11 @@
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="src" path="test"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="lib" path="deps/build/commons-lang-2.4.jar"/>
+	<classpathentry kind="lib" path="deps/build/commons-logging-1.1.1.jar"/>
+	<classpathentry kind="lib" path="deps/build/persistence-api-1.0.jar"/>
+	<classpathentry kind="lib" path="deps/test/hibernate-3.2.6.ga.jar"/>
+	<classpathentry kind="lib" path="deps/test/hsqldb-1.8.0.7.jar"/>
+	<classpathentry kind="lib" path="deps/test/junit-4.4.jar"/>
 	<classpathentry kind="output" path="build/classes"/>
 </classpath>
