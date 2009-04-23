@@ -24,6 +24,7 @@
 		<!-- Cobertura -->
 		<dependency org="cobertura" name="cobertura" rev="1.8" conf="test->*" />
 		<dependency org="asm" name="asm" rev="2.2.1" conf="test->*" />
+		<dependency org="log4j" name="log4j" rev="1.2.9" conf="test->*" />
 		<dependency org="oro" name="oro" rev="2.0.8" conf="test->*" />
 
 		<dependency org="hsqldb" name="hsqldb" rev="1.8.0.7" conf="test->*" />
