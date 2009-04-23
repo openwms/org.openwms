@@ -41,6 +41,23 @@
         <ivy:retrieve pattern="${deps.dir}/[conf]/[artifact]-[revision].[ext]"/>
     </target>
 
+    <target name="deps-clean">
+        <echo message="************************************************" />
+        <echo message="Clear dependencies..." />
+        <echo message="************************************************" />
+        <delete>
+            <fileset dir="${deps.test.dir}">
+                <include name="**/*" />
+            </fileset>
+        </delete>
+        <delete>
+            <fileset dir="${deps.build.dir}">
+                <include name="**/*" />
+            </fileset>
+        </delete>
+        <antcall target="deps" />
+    </target>
+
     <target name="initialize">
         <echo message="************************************************" />
         <echo message="Remove and create directories..." />
