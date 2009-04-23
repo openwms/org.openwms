@@ -16,7 +16,7 @@
 		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-2.5.xsd">
 
 	<bean id="entityService" class="org.openwms.common.service.EntityServiceImpl">
-		<property name="dao" ref="dao" />
+		<property name="dao" ref="locationDao" />
 	</bean>
 	
 	<bean id="locationGroupService" class="org.openwms.common.service.LocationGroupServiceImpl" parent="entityService">
