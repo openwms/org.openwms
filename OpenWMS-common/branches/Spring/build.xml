@@ -11,7 +11,7 @@
     </tstamp>
 
     <property environment="env" />
-    <property file="build-dist.properties" />
+    <property file="build.properties" />
     <path id="class.path">
         <fileset dir="${openwms_common.dist.dir}">
             <include name="*.jar" />
