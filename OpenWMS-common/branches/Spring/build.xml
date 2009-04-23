@@ -5,86 +5,211 @@
  * Distributable under LGPL license.
  * See terms of license at gnu.org.
 -->
-<project name = "OpenWMS-common" default = "Main-Build" basedir=".">
-	<property file="build-dist.properties"/>
-	
-	<path id="class.path">
-	    <fileset dir="${lib.dir}">
-	         <include name="*.jar"/>
-	    </fileset>
+<project xmlns:ivy="antlib:org.apache.ivy.ant" name="OpenWMS-common-Spring" default="nightly" basedir=".">
+    <tstamp>
+        <format property="TODAY" pattern="yyyy-MM-dd HH:mm:ss 'GMT'Z" />
+    </tstamp>
+
+    <property environment="env" />
+    <property file="build-dist.properties" />
+    <path id="class.path">
+        <fileset dir="${openwms_common.dist.dir}">
+            <include name="*.jar" />
+        </fileset>
+        <fileset dir="${deps.dir}/build">
+            <include name="*.jar" />
+        </fileset>
+        <fileset dir="${deps.dir}/test">
+            <include name="*.jar" />
+        </fileset>
+    </path>
+
+    <target name="deps">
+        <echo message="************************************************" />
+        <echo message="Resolve dependencies..." />
+        <echo message="************************************************" />
+        <path id="ivy.path">
+			<fileset dir="${lib.dir}/ivy" includes="**/*.jar" />
+		</path>
+        <taskdef resource="org/apache/ivy/ant/antlib.xml" uri="antlib:org.apache.ivy.ant" classpathref="ivy.path" />
+        <ivy:configure file="${ivy.settings.file}" />
+        <ivy:resolve file="${ivy.dep.file}" conf="build, test" />
+        <ivy:retrieve pattern="${deps.dir}/[conf]/[artifact]-[revision].[ext]"/>
+    </target>
+
+    <target name="deps-clean">
+        <echo message="************************************************" />
+        <echo message="Clear dependencies..." />
+        <echo message="************************************************" />
+        <delete>
+            <fileset dir="${deps.test.dir}">
+                <include name="**/*" />
+            </fileset>
+        </delete>
+        <delete>
+            <fileset dir="${deps.build.dir}">
+                <include name="**/*" />
+            </fileset>
+        </delete>
+        <antcall target="deps" />
+    </target>
+
+    <target name="initialize">
+        <echo message="************************************************" />
+        <echo message="Remove and create directories..." />
+        <echo message="************************************************" />
+        <mkdir dir="${dist.dir}" />
+        <mkdir dir="${junit.reports.dir}"/>
+        <mkdir dir="${build.main.dir}" />
+        <mkdir dir="${build.main.dir}/META-INF" />
+        <mkdir dir="${build.test.dir}" />
+        <mkdir dir="${build.test.dir}/META-INF" />
+    </target>
+
+    <target name="compile" depends="initialize">
+        <echo message="************************************************" />
+        <echo message="Compile sources in ${src.dir}..." />
+        <echo message="************************************************" />
+        <javac destdir="${build.main.dir}" classpathref="class.path" debug="on" deprecation="on">
+            <src path="${src.dir}" />
+        </javac>
+        <copy tofile="${build.main.dir}/META-INF/persistence.xml" file="${src.meta-inf.dir}/persistence.xml"/>
+        <copy tofile="${build.main.dir}/log4j.xml" file="${src.dir}/log4j.xml"/>
+    </target>
+
+
+    <target name="compile-tests" depends="compile">
+        <echo message="************************************************" />
+        <echo message="Compile sources in ${testsrc.dir}..." />
+        <echo message="************************************************" />
+        <javac destdir="${build.test.dir}" debug="on" deprecation="on" >
+            <src path="${testsrc.dir}" />
+            <classpath>
+                <pathelement location="${build.main.dir}"/>
+                <path refid="class.path" />
+                <fileset dir="${deps.dir}/build">
+                    <include name="*.jar" />
+                </fileset>
+                <fileset dir="${deps.dir}/test">
+                    <include name="*.jar" />
+                </fileset>
+            </classpath>
+        </javac>
+        <copy tofile="${build.test.dir}/log4j.xml" file="${testsrc.dir}/log4j.xml"/>
+    </target>
+
+    <!-- ********************************* TESTS & REPORTS ********************************* -->
+	<target name="junit" depends="compile">
+        <echo message="************************************************" />
+        <echo message="Running unit tests..." />
+        <echo message="************************************************" />
+        <junit printsummary="on" fork="true" failureproperty="failed" dir="." maxmemory="512m">
+            <sysproperty key="exec.longrunning.tests" value="true" />
+
+            <formatter type="xml" />
+
+            <classpath>
+                <path refid="class.path" />
+                <pathelement location="${build.main.dir}"/>
+                <pathelement location="${build.test.dir}"/>
+            </classpath>
+
+            <batchtest fork="yes" todir="${java.io.tmpdir}">
+                <fileset dir="${build.test.dir}">
+                    <include name="**/*Test.class" />
+                </fileset>
+            </batchtest>
+        </junit>
+	    <mkdir dir="${junit.reports.html.dir}"/>
+	    <mkdir dir="${junit.reports.xml.dir}"/>
+	    <junitreport todir="${junit.reports.xml.dir}">
+			<fileset dir="${java.io.tmpdir}">
+				<include name="TEST-*.xml"/>
+			</fileset>
+			<report format="frames" todir="${junit.reports.html.dir}"/>
+	    </junitreport>
+        <fail if="failed" message="One or more unit test have failed!" />
+    </target>
+    
+	<path id="cobertura.classpath">
+		<fileset dir="${deps.test.dir}">
+			<include name="**/*.jar" />
+        </fileset>
 	</path>
+    
+    <taskdef classpathref="cobertura.classpath" resource="tasks.properties"/>
 
-	<target name = "Main-Build" depends="initialize, compile, junit, jar">
-		<echo message = "Build main target..." />
+    <target name="instrument" depends="compile, compile-tests">
+		<cobertura-instrument todir="${cobertura.instrumented.dir}">
+			<fileset dir="${build.main.dir}">
+				<include name="**/*.class"/>
+			</fileset>
+		</cobertura-instrument>
 	</target>
-	
-	<target name = "initialize">
-		<tstamp>
-			<format property="TODAY" pattern="d-MM-yy"/>
-	    </tstamp>
-		<echo message = "************************************************" />
-		<echo message = "Remove and create directories..." />
-		<echo message = "************************************************" />
-		<mkdir dir="${dist.dir}" /> 
-		<mkdir dir="${src.build.dir}" />
-		<mkdir dir="${testsrc.build.dir}" />
-	</target>
+    
+	<target name="cover-test" depends="instrument">
+		<junit dir="." failureproperty="test.failure" printsummary="yes" fork="true" haltonerror="false">
+            <sysproperty key="exec.longrunning.tests" value="true" />
 
-	<target name = "compile">
-		<echo message = "************************************************" />
-		<echo message = "Compile sources in ${src.dir} and ${testsrc.dir}..." />
-		<echo message = "************************************************" />
-		<javac destdir="${src.build.dir}" classpathref="class.path" debug="on" deprecation="on" optimize="off">
-			<src path="${src.dir}" />
-		</javac>
-		<javac destdir="${testsrc.build.dir}" debug="on" deprecation="on" optimize="off">
-			<src path="${testsrc.dir}" />
-			<classpath>
-			    <fileset dir="${lib.dir}">
-			         <include name="*.jar"/>
-			    </fileset>
-				<fileset dir="${src.build.dir}">
-				    <include name="**/*.class"/>					
-				</fileset>	
-			</classpath>
-		</javac>
-	</target>
+            <classpath>
+                <path location="${cobertura.instrumented.dir}" />
+                <path refid="class.path" />
+                <path refid="cobertura.classpath"/>
+            </classpath>
 
-	<target name = "junit">
-		<echo message = "************************************************" />
-		<echo message = "Running unit tests..." />
-		<echo message = "************************************************" />
-		<junit printsummary="on" fork="true" failureproperty="failed" dir="." maxmemory="512m" >
-			<sysproperty key="exec.longrunning.tests" value="true"/>
-			
-			<formatter type="xml"/>
-
-			<classpath>
-				<path refid="class.path"/>
-			</classpath>
-
-			<batchtest fork="yes" todir="${log.dir}">
-			  <fileset dir="${testsrc.build.dir}">
-			    <include name="**/*Test.class"/>
-				<include name="**/*TestCase.class"/>
-			  </fileset>
-			</batchtest>
+		    <batchtest fork="yes" todir="${java.io.tmpdir}">
+                <fileset dir="${build.test.dir}">
+                    <include name="**/*Test.class" />
+                </fileset>
+            </batchtest>
 		</junit>
-		<fail if ="failed" message="One or more unit test have failed!"/>
+	</target>
+      
+	<!-- run this target to generate the coverage reports -->
+	<target name="coverage-report" depends="cover-test">
+        <delete dir="${cobertura.reports.coveragereport.dir}" failonerror="no"/>
+        <mkdir dir="${cobertura.reports.coveragereport.dir}"/>
+		<cobertura-report srcdir="${src.dir}" destdir="${cobertura.reports.coveragereport.dir}"/>
+        <delete dir="${cobertura.instrumented.dir}" failonerror="no"/>
 	</target>
 
-		
-	<target name = "jar">
-		<echo message = "************************************************" />
-		<echo message = "Create jar file ${dist.dir}/${war.file}..." />
-		<echo message = "************************************************" />
-		<jar destfile="${dist.dir}/${war.file}" >
-			<fileset dir="${src.build.dir}" />
-			<manifest>
-				<attribute name="Built-By" value="${user.name}"/>
-				<attribute name="Main-Class" value=""/>
-				<attribute name="Class-Path" value="."/>
-			</manifest>			
-		</jar>
-	</target>
+    <target name="jar">
+        <echo message="************************************************" />
+        <echo message="Create jar file ${dist.dir}/${jar.file}..." />
+        <echo message="************************************************" />
+        <jar destfile="${dist.dir}/${jar.file}">
+            <fileset dir="${build.main.dir}" />
+            <manifest>
+                <attribute name="Main-Class" value="" />
+                <attribute name="Class-Path" value="." />
+            </manifest>
+        </jar>
+    </target>
+
+    <target name="clean">
+        <echo message="************************************************" />
+        <echo message="Clean" />
+        <echo message="************************************************" />
+        <delete dir="${cobertura.reports.coveragereport.dir}" failonerror="no"/>
+        <delete dir="${build.main.dir}" />
+        <delete dir="${build.test.dir}" />
+        <delete dir="${cobertura.instrumented.dir}" failonerror="no" />
+        <delete dir="${junit.reports.dir}" failonerror="no"/>
+        <delete>
+            <fileset dir="${dist.dir}">
+                <include name="**/*" />
+            </fileset>
+        </delete>
+    </target>
+
+    <target name="build" depends="clean, initialize, compile, jar">
+        <echo message="************************************************" />
+        <echo message="Building..." />
+        <echo message="************************************************" />
+    </target>
+    <target name="nightly" depends="clean, initialize, deps, compile, junit, compile-tests, coverage-report, jar">
+        <echo message="************************************************" />
+        <echo message="Building nightly build" />
+        <echo message="************************************************" />
+    </target>
 </project>
