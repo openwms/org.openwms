@@ -6,8 +6,12 @@
  * See terms of license at gnu.org.
 -->
 <project xmlns:ivy="antlib:org.apache.ivy.ant" name="OpenWMS-common" default="nightly" basedir=".">
-    <property file="build.properties" />
+    <tstamp>
+        <format property="TODAY" pattern="yyyy-MM-dd HH:mm:ss 'GMT'Z" />
+    </tstamp>
 
+    <property environment="env" />
+    <property file="build.properties" />
     <path id="class.path">
         <fileset dir="${deps.dir}/build">
             <include name="*.jar" />
@@ -21,9 +25,14 @@
 			<include name="**/*.jar" />
         </fileset>
 	</path>
+	<path id="flex.classpath">
+		<fileset dir="${lib.dir}">
+			<include name="**/*.jar" />
+        </fileset>
+	</path>
 	
     <taskdef classpathref="cobertura.classpath" resource="tasks.properties"/>
-      
+    <taskdef classpath="${FLEX_TASKS_JAR}" resource="flexTasks.tasks" />
     
     <target name="deps">
         <echo message="************************************************" />
@@ -37,9 +46,6 @@
     </target>
 
     <target name="initialize">
-        <tstamp>
-            <format property="TODAY" pattern="d-MM-yy" />
-        </tstamp>
         <echo message="************************************************" />
         <echo message="Remove and create directories..." />
         <echo message="************************************************" />
@@ -62,6 +68,31 @@
         <copy tofile="${build.main.dir}/META-INF/MANIFEST.MF" file="${src.meta-inf.dir}/MANIFEST.MF"/>
         <copy tofile="${build.main.dir}/log4j.xml" file="${src.dir}/log4j.xml"/>
     </target>
+
+    <target name="flex">
+        <mkdir dir="${flex.build.dir}/META-INF" />
+
+        <manifest file="${flex.build.dir}/META-INF/MANIFEST.MF">
+            <section name="granite/swc">
+                <attribute name="Implementation-Vendor" value="Granite Data Services" />
+                <attribute name="Compilation-Date" value="${TODAY}" />
+            </section>
+        </manifest>
+		<!-- Build Swcs and add Manifest -->
+		<compc output="${flex.build.dir}/domainObjects.swc" use-network="false" warn-missing-namespace-decl="false">
+			<source-path path-element="${flex.src.dir}" />
+			<include-sources dir="${flex.src.dir}" includes="**/*.as" />
+			<compiler.external-library-path dir="${env.FLEX_HOME}/frameworks/libs" append="true">
+				<include name="framework.swc" />
+			</compiler.external-library-path>
+			<compiler.include-libraries dir="${lib.dir}/granite" append="true">
+				<include name="granite.swc" />
+				<include name="granite-essentials.swc" />
+			</compiler.include-libraries>
+		</compc>
+		<zip basedir="${flex.build.dir}" update="true" keepcompression="true" destfile="${dist.dir}/domainObjects.swc" includes="META-INF/MANIFEST.MF" />
+        <delete dir="${flex.build.dir}" failonerror="no" />
+	</target>
 
     <target name="compile-tests" depends="compile">
         <echo message="************************************************" />
