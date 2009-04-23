@@ -82,7 +82,7 @@
         <copy tofile="${build.main.dir}/log4j.xml" file="${src.dir}/log4j.xml"/>
     </target>
 
-    <target name="flex">
+    <target name="compile-flex">
         <mkdir dir="${flex.build.dir}/META-INF" />
 
         <manifest file="${flex.build.dir}/META-INF/MANIFEST.MF">
@@ -233,7 +233,7 @@
         <echo message="Building..." />
         <echo message="************************************************" />
     </target>
-    <target name="nightly" depends="clean, initialize, deps, junit, compile-tests, coverage-report, jar">
+    <target name="nightly" depends="clean, initialize, deps, compile, compile-flex, junit, compile-tests, coverage-report, jar">
         <echo message="************************************************" />
         <echo message="Building nightly build" />
         <echo message="************************************************" />
