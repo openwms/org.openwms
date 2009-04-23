@@ -2,10 +2,10 @@
 <graniteProperties version="1.0">
   <gas3 uid="uid" as3TypeFactory="org.granite.generator.as3.DefaultAs3TypeFactory" debugEnabled="false">
     <source path="src" includes="" excludes="" output="client/flex/as3;"/>
-    <template kind="ENUM" uris="class:org/granite/generator/template/enum.gsp"/>
     <template kind="INTERFACE" uris="class:org/granite/generator/template/interface.gsp;class:org/granite/generator/template/interfaceBase.gsp"/>
-    <template kind="ENTITY" uris="class:org/granite/generator/template/entity.gsp;class:org/granite/generator/template/tideEntityBase.gsp"/>
     <template kind="BEAN" uris="class:org/granite/generator/template/bean.gsp;class:org/granite/generator/template/beanBase.gsp"/>
+    <template kind="ENUM" uris="class:org/granite/generator/template/enum.gsp"/>
+    <template kind="ENTITY" uris="class:org/granite/generator/template/entity.gsp;class:org/granite/generator/template/tideEntityBase.gsp"/>
     <transformer type="org.granite.generator.as3.JavaAs3GroovyTransformer"/>
   </gas3>
 </graniteProperties>
