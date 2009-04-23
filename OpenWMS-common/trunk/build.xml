@@ -226,6 +226,11 @@
         <delete dir="${build.test.dir}" />
         <delete dir="${cobertura.instrumented.dir}" failonerror="no" />
         <delete dir="${junit.reports.dir}" failonerror="no"/>
+        <delete>
+            <fileset dir="${dist.dir}">
+                <include name="**/*" />
+            </fileset>
+        </delete>
     </target>
 
     <target name="build" depends="clean, initialize, compile, jar">
