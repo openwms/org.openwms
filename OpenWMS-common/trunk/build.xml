@@ -5,86 +5,106 @@
  * Distributable under LGPL license.
  * See terms of license at gnu.org.
 -->
-<project name = "OpenWMS-common" default = "Main-Build" basedir=".">
-	<property file="build.properties"/>
-	
-	<path id="class.path">
-	    <fileset dir="${lib.dir}">
-	         <include name="*.jar"/>
-	    </fileset>
-	</path>
+<project xmlns:ivy="antlib:org.apache.ivy.ant" name="OpenWMS-common" default="Main-Build" basedir=".">
+    <property file="build.properties" />
 
-	<target name = "Main-Build" depends="initialize, compile, junit, jar">
-		<echo message = "Build main target..." />
-	</target>
-	
-	<target name = "initialize">
-		<tstamp>
-			<format property="TODAY" pattern="d-MM-yy"/>
-	    </tstamp>
-		<echo message = "************************************************" />
-		<echo message = "Remove and create directories..." />
-		<echo message = "************************************************" />
-		<mkdir dir="${dist.dir}" /> 
-		<mkdir dir="${src.build.dir}" />
-		<mkdir dir="${testsrc.build.dir}" />
-	</target>
+    <path id="class.path">
+        <fileset dir="${deps.dir}/build">
+            <include name="*.jar" />
+        </fileset>
+        <fileset dir="${deps.dir}/test">
+            <include name="*.jar" />
+        </fileset>
+        <fileset dir="${lib.dir}">
+            <include name="*.jar" />
+        </fileset>
+        <fileset dir="${lib.dir}/ivy">
+            <include name="*.jar" />
+        </fileset>
+    </path>
+    
+    <path id="compile.test">
+        <fileset dir="${deps.dir}/build">
+            <include name="*.jar" />
+        </fileset>
+        <fileset dir="${deps.dir}/test">
+            <include name="*.jar" />
+        </fileset>
+    </path>
 
-	<target name = "compile">
-		<echo message = "************************************************" />
-		<echo message = "Compile sources in ${src.dir} and ${testsrc.dir}..." />
-		<echo message = "************************************************" />
-		<javac destdir="${src.build.dir}" classpathref="class.path" debug="on" deprecation="on" optimize="off">
-			<src path="${src.dir}" />
-		</javac>
-		<javac destdir="${testsrc.build.dir}" debug="on" deprecation="on" optimize="off">
-			<src path="${testsrc.dir}" />
-			<classpath>
-			    <fileset dir="${lib.dir}">
-			         <include name="*.jar"/>
-			    </fileset>
-				<fileset dir="${src.build.dir}">
-				    <include name="**/*.class"/>					
-				</fileset>	
-			</classpath>
-		</javac>
-	</target>
+    
+    <target name="deps">
+        <echo message="************************************************" />
+        <echo message="Resolve dependencies..." />
+        <echo message="************************************************" />
+        <taskdef resource="org/apache/ivy/ant/antlib.xml" uri="antlib:org.apache.ivy.ant" classpathref="class.path" />
+        <ivy:retrieve pattern="${deps.dir}/[conf]/[artifact]-[revision].[ext]"/>
+    </target>
 
-	<target name = "junit">
-		<echo message = "************************************************" />
-		<echo message = "Running unit tests..." />
-		<echo message = "************************************************" />
-		<junit printsummary="on" fork="true" failureproperty="failed" dir="." maxmemory="512m" >
-			<sysproperty key="exec.longrunning.tests" value="true"/>
-			
-			<formatter type="xml"/>
+    <target name="initialize" depends="deps">
+        <tstamp>
+            <format property="TODAY" pattern="d-MM-yy" />
+        </tstamp>
+        <echo message="************************************************" />
+        <echo message="Remove and create directories..." />
+        <echo message="************************************************" />
+        <mkdir dir="${dist.dir}" />
+        <mkdir dir="${src.build.dir}" />
+        <mkdir dir="${testsrc.build.dir}" />
+    </target>
 
-			<classpath>
-				<path refid="class.path"/>
-			</classpath>
+    <target name="compile">
+        <echo message="************************************************" />
+        <echo message="Compile sources in ${src.dir} and ${testsrc.dir}..." />
+        <echo message="************************************************" />
+        <javac destdir="${src.build.dir}" classpathref="class.path" debug="on" deprecation="on" optimize="off">
+            <src path="${src.dir}" />
+        </javac>
+        <javac srcdir="${src.dir};${testsrc.dir}" destdir="${testsrc.build.dir}" classpathref="compile.test" debug="on" deprecation="on" optimize="off">
+        </javac>
+    </target>
 
-			<batchtest fork="yes" todir="${log.dir}">
-			  <fileset dir="${testsrc.build.dir}">
-			    <include name="**/*Test.class"/>
-				<include name="**/*TestCase.class"/>
-			  </fileset>
-			</batchtest>
-		</junit>
-		<fail if ="failed" message="One or more unit test have failed!"/>
-	</target>
+    <target name="junit">
+        <echo message="************************************************" />
+        <echo message="Running unit tests..." />
+        <echo message="************************************************" />
+        <junit printsummary="on" fork="true" failureproperty="failed" dir="." maxmemory="512m">
+            <sysproperty key="exec.longrunning.tests" value="true" />
 
-		
-	<target name = "jar">
-		<echo message = "************************************************" />
-		<echo message = "Create jar file ${dist.dir}/${war.file}..." />
-		<echo message = "************************************************" />
-		<jar destfile="${dist.dir}/${war.file}" >
-			<fileset dir="${src.build.dir}" />
-			<manifest>
-				<attribute name="Built-By" value="${user.name}"/>
-				<attribute name="Main-Class" value=""/>
-				<attribute name="Class-Path" value="."/>
-			</manifest>			
-		</jar>
-	</target>
+            <formatter type="xml" />
+
+            <classpath>
+                <path refid="class.path" />
+            </classpath>
+
+            <batchtest fork="yes" todir="${log.dir}">
+                <fileset dir="${testsrc.build.dir}">
+                    <include name="**/*Test.class" />
+                    <include name="**/*TestCase.class" />
+                </fileset>
+            </batchtest>
+        </junit>
+        <fail if="failed" message="One or more unit test have failed!" />
+    </target>
+
+
+    <target name="jar">
+        <echo message="************************************************" />
+        <echo message="Create jar file ${dist.dir}/${war.file}..." />
+        <echo message="************************************************" />
+        <jar destfile="${dist.dir}/${war.file}">
+            <fileset dir="${src.build.dir}" />
+            <manifest>
+                <attribute name="Built-By" value="${user.name}" />
+                <attribute name="Main-Class" value="" />
+                <attribute name="Class-Path" value="." />
+            </manifest>
+        </jar>
+    </target>
+
+    <target name="Main-Build" depends="initialize, compile, junit, jar">
+        <echo message="************************************************" />
+        <echo message="Building Main Target" />
+        <echo message="************************************************" />
+    </target>
 </project>
