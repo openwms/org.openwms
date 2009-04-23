@@ -78,7 +78,6 @@
             <src path="${src.dir}" />
         </javac>
         <copy tofile="${build.main.dir}/META-INF/persistence.xml" file="${src.meta-inf.dir}/persistence.xml"/>
-        <copy tofile="${build.main.dir}/META-INF/MANIFEST.MF" file="${src.meta-inf.dir}/MANIFEST.MF"/>
         <copy tofile="${build.main.dir}/log4j.xml" file="${src.dir}/log4j.xml"/>
     </target>
 
