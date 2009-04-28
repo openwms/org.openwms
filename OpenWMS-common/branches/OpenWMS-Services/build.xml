@@ -1,0 +1,130 @@
+<?xml version = "1.0" encoding="ISO-8859-1" ?>
+<!-- 
+ * OpenWMS, the open Warehouse Management System
+ * 
+ * Distributable under LGPL license.
+ * See terms of license at gnu.org.
+-->
+<project xmlns:ivy="antlib:org.apache.ivy.ant" name="OpenWMS-Services" default="nightly" basedir=".">
+    <tstamp>
+        <format property="TODAY" pattern="yyyy-MM-dd HH:mm:ss 'GMT'Z" />
+    </tstamp>
+
+    <property environment="env" />
+    <property file="build.properties" />
+
+	<property name="bundle.version" value="1.0"/>
+	<property name="bundle.symbolicName" value="org.openwms.common.ServiceAPI"/>
+	<property name="bundle.name" value="OpenWMS Common Service API"/>
+	<property name="bundle.vendor" value="openwms.org"/>
+	<property name="bundle.manifestVersion" value="2"/>
+
+    <path id="class.path">
+        <fileset dir="${openwms_common.dist.dir}">
+            <include name="*.jar" />
+        </fileset>
+        <fileset dir="${deps.dir}/build">
+            <include name="*.jar" />
+        </fileset>
+    </path>
+
+    <target name="deps">
+        <echo message="************************************************" />
+        <echo message="Resolve dependencies..." />
+        <echo message="************************************************" />
+        <path id="ivy.path">
+			<fileset dir="${lib.dir}/ivy" includes="**/*.jar" />
+		</path>
+        <taskdef resource="org/apache/ivy/ant/antlib.xml" uri="antlib:org.apache.ivy.ant" classpathref="ivy.path" />
+        <ivy:configure file="${ivy.settings.file}" />
+        <ivy:resolve file="${ivy.dep.file}" conf="build, test" />
+        <ivy:retrieve pattern="${deps.dir}/[conf]/[artifact]-[revision].[ext]"/>
+    </target>
+
+    <target name="deps-clean">
+        <echo message="************************************************" />
+        <echo message="Clear dependencies..." />
+        <echo message="************************************************" />
+        <delete>
+            <fileset dir="${deps.test.dir}">
+                <include name="**/*" />
+            </fileset>
+        </delete>
+        <delete>
+            <fileset dir="${deps.build.dir}">
+                <include name="**/*" />
+            </fileset>
+        </delete>
+        <antcall target="deps" />
+    </target>
+
+    <target name="initialize">
+        <echo message="************************************************" />
+        <echo message="Remove and create directories..." />
+        <echo message="************************************************" />
+        <mkdir dir="${dist.dir}" />
+        <mkdir dir="${build.main.dir}" />
+    </target>
+
+    <target name="compile" depends="initialize">
+        <echo message="************************************************" />
+        <echo message="Compile sources in ${src.dir}..." />
+        <echo message="************************************************" />
+        <javac destdir="${build.main.dir}" classpathref="class.path" debug="on" deprecation="on">
+            <src path="${src.dir}" />
+        </javac>
+    </target>
+
+	<target name="jar">
+        <echo message="************************************************" />
+        <echo message="Create jar file ${dist.dir}/${jar.file}..." />
+        <echo message="************************************************" />
+        <jar destfile="${dist.dir}/${jar.file}">
+            <fileset dir="${build.main.dir}" />
+            <manifest>
+                <attribute name="Main-Class" value="" />
+                <attribute name="Class-Path" value="." />
+            </manifest>
+        </jar>
+    </target>
+
+    <target name="jar-osgi">
+        <echo message="************************************************" />
+        <echo message="Create OSGi compliant jar file ${dist.dir}/${osgi-jar.file}..." />
+        <echo message="************************************************" />
+        <jar destfile="${dist.dir}/${osgi-jar.file}">
+            <fileset dir="${build.main.dir}" />
+            <manifest>
+				<attribute name="Bundle-Version" value="${bundle.version}" />
+				<attribute name="Bundle-SymbolicName" value="${bundle.symbolicName}" />
+				<attribute name="Bundle-Name" value="${bundle.name}" />
+				<attribute name="Bundle-Vendor" value="${bundle.vendor}" />
+				<attribute name="Export-Package"  value="${osgi.export-package}" />
+				<attribute name="Bundle-ManifestVersion" value="${bundle.manifestVersion}" />
+            </manifest>
+        </jar>
+    </target>
+
+    <target name="clean">
+        <echo message="************************************************" />
+        <echo message="Clean" />
+        <echo message="************************************************" />
+        <delete dir="${build.main.dir}" />
+    </target>
+
+    <target name="build" depends="clean, initialize, compile, jar">
+        <echo message="************************************************" />
+        <echo message="Building..." />
+        <echo message="************************************************" />
+    </target>
+    <target name="build-osgi" depends="clean, initialize, compile, jar-osgi">
+        <echo message="************************************************" />
+        <echo message="Building OSGi bundle..." />
+        <echo message="************************************************" />
+    </target>
+    <target name="nightly" depends="clean, initialize, compile, jar">
+        <echo message="************************************************" />
+        <echo message="Building nightly build" />
+        <echo message="************************************************" />
+    </target>
+</project>

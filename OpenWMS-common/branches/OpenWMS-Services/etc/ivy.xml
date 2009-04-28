@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+/*
+ * OpenWMS, the Open Warehouse Management System
+ * 
+ * Distributable under LGPL license.
+ * See terms of license at gnu.org.
+ */
+-->
+<ivy-module version="2.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://ant.apache.org/ivy/schemas/ivy.xsd">
+	<info organisation="openwms.org" module="OpenWMS-Services"/>
+	
+	<configurations>
+		<conf name="build" />
+		<conf name="test" />
+	</configurations>
+	
+	<dependencies>
+		<dependency org="javax.persistence" name="persistence-api" rev="1.0" conf="build->*" />
+		<dependency org="commons-lang" name="commons-lang" rev="2.4" conf="build->*" />
+		<dependency org="commons-logging" name="commons-logging" rev="1.1.1" conf="build->*" />
+  	</dependencies>
+</ivy-module>
