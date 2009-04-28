@@ -188,12 +188,15 @@
 		<fileset dir="${deps.test.dir}">
 			<include name="**/*.jar" />
         </fileset>
+		<fileset dir="${deps.build.dir}">
+			<include name="**/*.jar" />
+        </fileset>
 	</path>
     
     <taskdef classpathref="cobertura.classpath" resource="tasks.properties"/>
 
     <target name="instrument" depends="compile-tests">
-		<cobertura-instrument todir="${cobertura.instrumented.dir}">
+		<cobertura-instrument todir="${cobertura.instrumented.dir}" datafile="${cobertura.ser.file}">
 			<fileset dir="${build.main.dir}">
 				<include name="**/*.class"/>
 			</fileset>
@@ -208,11 +211,10 @@
 		    <formatter type="xml" />
 
 			<classpath>
-                <path location="${cobertura.instrumented.dir}" />
-                <pathelement path="${build.test.dir}"/>
-                <pathelement path="${build.main.dir}"/>
+                <pathelement path="${cobertura.instrumented.dir}" />
                 <path refid="cobertura.classpath"/>
-                <path refid="class.path" />
+                <pathelement path="${build.main.dir}"/>
+                <pathelement path="${build.test.dir}"/>
             </classpath>
 
 		    <batchtest fork="yes" todir="${java.io.tmpdir}">
@@ -234,14 +236,16 @@
 				<include name="TEST-*.xml"/>
 			</fileset>
         </delete>
+        <fail if="test.failure" message="One or more unit test have failed!" />
 	</target>
       
 	<!-- run this target to generate the coverage reports -->
 	<target name="coverage-report" depends="cover-test">
         <delete dir="${cobertura.reports.coveragereport.dir}" failonerror="no"/>
         <mkdir dir="${cobertura.reports.coveragereport.dir}"/>
-		<cobertura-report srcdir="${src.dir}" destdir="${cobertura.reports.coveragereport.dir}"/>
+		<cobertura-report srcdir="${src.dir}" destdir="${cobertura.reports.coveragereport.dir}" datafile="${cobertura.ser.file}"/>
         <delete dir="${cobertura.instrumented.dir}" failonerror="no"/>
+	    <delete file="${cobertura.ser.file}" />
 	</target>
 
     <target name="jar">
