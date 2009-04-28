@@ -27,7 +27,18 @@
 		<dependency org="oro" name="oro" rev="2.0.8" conf="test->*" />
 
 		<dependency org="org.hsqldb" name="com.springsource.org.hsqldb" rev="1.8.0.9" conf="test->*" />
-		<dependency org="org.hibernate" name="hibernate" rev="3.2.6.ga" conf="test->*" />
+		<!-- Hibernate -->
+		<dependency org="org.hibernate" name="hibernate-annotations" rev="3.4.0.GA" conf="build->*" />
+		<dependency org="org.hibernate" name="hibernate-commons-annotations" rev="3.3.0.ga" conf="build->*" />
+		<dependency org="org.hibernate" name="hibernate-entitymanager" rev="3.4.0.GA" conf="build->*" />
+		<dependency org="org.hibernate" name="hibernate-core" rev="3.3.1.GA" conf="build->*" />
+		<dependency org="dom4j" name="dom4j" rev="1.6.1" conf="build->*" />
+		<dependency org="org.slf4j" name="slf4j-api" rev="1.5.6" conf="build->*" />
+		<dependency org="org.slf4j" name="slf4j-simple" rev="1.5.6" conf="build->*" />
+		<dependency org="javassist" name="javassist" rev="3.6.0.GA" conf="build->*" />
+		<dependency org="commons-collections" name="commons-collections" rev="3.2.1" conf="build->*" />
+		<dependency org="antlr" name="antlr" rev="2.7.7" conf="build->*" />
+		<dependency org="javax.transaction" name="jta" rev="1.1" conf="build->*" />
 
 		<!-- Spring -->
 		<dependency org="org.springframework" name="org.springframework.core" rev="2.5.6.A" conf="build->*" />

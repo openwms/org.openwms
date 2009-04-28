@@ -16,11 +16,11 @@
 				<ivy pattern="${basedir}/deps/[organisation]/[module]/ivys/ivy-[revision].xml" />
 				<artifact pattern="${basedir}/deps/[organisation]/[module]/[type]s/[artifact]-[revision].[ext]" />
 			</filesystem>
-			<url name="com.springsource.repository.bundles.release" m2compatible="true">
+			<url name="com.springsource.repository.bundles.release">
 				<ivy pattern="http://repository.springsource.com/ivy/bundles/release/[organisation]/[module]/[revision]/[artifact]-[revision].[ext]" />
 				<artifact pattern="http://repository.springsource.com/ivy/bundles/release/[organisation]/[module]/[revision]/[artifact]-[revision].[ext]" />
 			</url>
-			<url name="com.springsource.repository.bundles.external" m2compatible="true">
+			<url name="com.springsource.repository.bundles.external">
 				<ivy pattern="http://repository.springsource.com/ivy/bundles/external/[organisation]/[module]/[revision]/[artifact]-[revision].[ext]" />
 				<artifact pattern="http://repository.springsource.com/ivy/bundles/external/[organisation]/[module]/[revision]/[artifact]-[revision].[ext]" />
 			</url>
