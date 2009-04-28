@@ -299,7 +299,7 @@
         <echo message="Building..." />
         <echo message="************************************************" />
     </target>
-    <target name="nightly" depends="clean, initialize, deps, compile, coverage-report, jar">
+    <target name="nightly" depends="clean, initialize, deps, compile, coverage-report, jar, jar-osgi">
         <echo message="************************************************" />
         <echo message="Building nightly build" />
         <echo message="************************************************" />
