@@ -33,7 +33,16 @@
             <include name="*.jar" />
         </fileset>
     </path>
-    
+
+    <path id="project.deps.path">
+        <fileset dir="${openwms_common.dist.dir}">
+            <include name="**/*.jar" />
+        </fileset>
+        <fileset dir="${openwms_services.dist.dir}">
+            <include name="**/*.jar" />
+        </fileset>
+    </path>
+
 	<!-- All non java files in the src directory -->
 	<patternset id="all.nonjava.files">
 		<include name="**/*.txt"/>
@@ -167,7 +176,7 @@
     <taskdef classpathref="cobertura.classpath" resource="tasks.properties"/>
 
     <target name="instrument" depends="compile, compile-tests">
-		<cobertura-instrument todir="${cobertura.instrumented.dir}">
+		<cobertura-instrument todir="${cobertura.instrumented.dir}" datafile="${cobertura.ser.file}">
 			<fileset dir="${build.main.dir}">
 				<include name="**/*.class"/>
 			</fileset>
@@ -182,11 +191,11 @@
 		    <formatter type="xml" />
 
             <classpath>
-                <path location="${cobertura.instrumented.dir}" />
                 <pathelement path="${build.test.dir}"/>
+                <pathelement path="${cobertura.instrumented.dir}" />
                 <pathelement path="${build.main.dir}"/>
                 <path refid="cobertura.classpath"/>
-                <path refid="class.path" />
+                <path refid="project.deps.path" />
             </classpath>
 
 		    <batchtest fork="yes" todir="${java.io.tmpdir}">
@@ -203,14 +212,21 @@
 			</fileset>
 			<report format="frames" todir="${junit.reports.html.dir}"/>
 	    </junitreport>
+        <delete>
+			<fileset dir="${java.io.tmpdir}">
+				<include name="TEST-*.xml"/>
+			</fileset>
+        </delete>
+        <fail if="test.failure" message="One or more unit test have failed!" />
  	</target>
       
 	<!-- run this target to generate the coverage reports -->
 	<target name="coverage-report" depends="cover-test">
         <delete dir="${cobertura.reports.coveragereport.dir}" failonerror="no"/>
         <mkdir dir="${cobertura.reports.coveragereport.dir}"/>
-		<cobertura-report srcdir="${src.dir}" destdir="${cobertura.reports.coveragereport.dir}"/>
+		<cobertura-report srcdir="${src.dir}" destdir="${cobertura.reports.coveragereport.dir}" datafile="${cobertura.ser.file}"/>
         <delete dir="${cobertura.instrumented.dir}" failonerror="no"/>
+	    <delete file="${cobertura.ser.file}" />
  	</target>
 
     <target name="jar">
