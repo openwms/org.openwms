@@ -13,12 +13,6 @@
     <property environment="env" />
     <property file="build.properties" />
     
-	<property name="bundle.version" value="1.0"/>
-	<property name="bundle.symbolicName" value="org.openwms.common"/>
-	<property name="bundle.name" value="OpenWMS Common Domain Model"/>
-	<property name="bundle.vendor" value="openwms.org"/>
-	<property name="bundle.manifestVersion" value="2"/>
-    
     <path id="class.path">
         <fileset dir="${deps.dir}/build">
             <include name="*.jar" />
@@ -265,16 +259,8 @@
         <echo message="************************************************" />
         <echo message="Create OSGi compliant jar file ${dist.dir}/${osgi-jar.file}..." />
         <echo message="************************************************" />
-        <jar destfile="${dist.dir}/${osgi-jar.file}">
+        <jar destfile="${dist.dir}/${osgi-jar.file}" manifest="${src.meta-inf.dir}/MANIFEST.MF">
             <fileset dir="${build.main.dir}" />
-            <manifest>
-				<attribute name="Bundle-Version" value="${bundle.version}" />
-				<attribute name="Bundle-SymbolicName" value="${bundle.symbolicName}" />
-				<attribute name="Bundle-Name" value="${bundle.name}" />
-				<attribute name="Bundle-Vendor" value="${bundle.vendor}" />
-				<attribute name="Export-Package"  value="${osgi.export-package}" />
-				<attribute name="Bundle-ManifestVersion" value="${bundle.manifestVersion}" />
-            </manifest>
         </jar>
     </target>
 

@@ -1,0 +1,6 @@
+Bundle-Version: 1.0
+Bundle-SymbolicName: org.openwms.common.domain
+Bundle-Name: OpenWMS Common Domain Model
+Bundle-Vendor: openwms.org
+Export-Package: org.openwms;version="1.0.0"
+Bundle-ManifestVersion: 2
