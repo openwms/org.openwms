@@ -12,9 +12,19 @@
 
     <property environment="env" />
     <property file="build.properties" />
+
+    <property name="bundle.version" value="1.0"/>
+	<property name="bundle.symbolicName" value="org.openwms.common.ServiceImpl"/>
+	<property name="bundle.name" value="OpenWMS Common Spring Service Implementation"/>
+	<property name="bundle.vendor" value="openwms.org"/>
+	<property name="bundle.manifestVersion" value="2"/>
+
     <path id="class.path">
         <fileset dir="${openwms_common.dist.dir}">
-            <include name="*.jar" />
+            <include name="**/*.jar" />
+        </fileset>
+        <fileset dir="${openwms_services.dist.dir}">
+            <include name="**/*.jar" />
         </fileset>
         <fileset dir="${deps.dir}/build">
             <include name="*.jar" />
@@ -23,6 +33,16 @@
             <include name="*.jar" />
         </fileset>
     </path>
+    
+	<!-- All non java files in the src directory -->
+	<patternset id="all.nonjava.files">
+		<include name="**/*.txt"/>
+		<include name="**/*.xml"/>
+		<include name="**/*.properties"/>
+	</patternset>
+
+	<!-- Filters -->
+	<filter token="version" value="${project.version}"/>
 
     <target name="deps">
         <echo message="************************************************" />
@@ -83,7 +103,6 @@
         <echo message="Compile sources in ${testsrc.dir}..." />
         <echo message="************************************************" />
         <javac destdir="${build.test.dir}" debug="on" deprecation="on" >
-            <src path="${testsrc.dir}" />
             <classpath>
                 <pathelement location="${build.main.dir}"/>
                 <path refid="class.path" />
@@ -94,8 +113,13 @@
                     <include name="*.jar" />
                 </fileset>
             </classpath>
+            <src path="${testsrc.dir}" />
         </javac>
-        <copy tofile="${build.test.dir}/log4j.xml" file="${testsrc.dir}/log4j.xml"/>
+		<copy todir="${build.test.dir}">
+			<fileset dir="${testsrc.dir}">
+				<patternset refid="all.nonjava.files"/>
+			</fileset>
+		</copy>
     </target>
 
     <!-- ********************************* TESTS & REPORTS ********************************* -->
@@ -135,6 +159,9 @@
 		<fileset dir="${deps.test.dir}">
 			<include name="**/*.jar" />
         </fileset>
+		<fileset dir="${deps.build.dir}">
+			<include name="**/*.jar" />
+        </fileset>
 	</path>
     
     <taskdef classpathref="cobertura.classpath" resource="tasks.properties"/>
@@ -148,13 +175,18 @@
 	</target>
     
 	<target name="cover-test" depends="instrument">
-		<junit dir="." failureproperty="test.failure" printsummary="yes" fork="true" haltonerror="false">
+		<junit dir="." failureproperty="test.failure" printsummary="yes" fork="true" haltonerror="false" maxmemory="512m">
             <sysproperty key="exec.longrunning.tests" value="true" />
+		    <sysproperty key="net.sourceforge.cobertura.datafile" file="${cobertura.ser.file}" />
+
+		    <formatter type="xml" />
 
             <classpath>
                 <path location="${cobertura.instrumented.dir}" />
-                <path refid="class.path" />
+                <pathelement path="${build.test.dir}"/>
+                <pathelement path="${build.main.dir}"/>
                 <path refid="cobertura.classpath"/>
+                <path refid="class.path" />
             </classpath>
 
 		    <batchtest fork="yes" todir="${java.io.tmpdir}">
@@ -163,7 +195,15 @@
                 </fileset>
             </batchtest>
 		</junit>
-	</target>
+	    <mkdir dir="${junit.reports.html.dir}"/>
+	    <mkdir dir="${junit.reports.xml.dir}"/>
+	    <junitreport todir="${junit.reports.xml.dir}">
+			<fileset dir="${java.io.tmpdir}">
+				<include name="TEST-*.xml"/>
+			</fileset>
+			<report format="frames" todir="${junit.reports.html.dir}"/>
+	    </junitreport>
+ 	</target>
       
 	<!-- run this target to generate the coverage reports -->
 	<target name="coverage-report" depends="cover-test">
@@ -171,7 +211,7 @@
         <mkdir dir="${cobertura.reports.coveragereport.dir}"/>
 		<cobertura-report srcdir="${src.dir}" destdir="${cobertura.reports.coveragereport.dir}"/>
         <delete dir="${cobertura.instrumented.dir}" failonerror="no"/>
-	</target>
+ 	</target>
 
     <target name="jar">
         <echo message="************************************************" />
@@ -186,6 +226,23 @@
         </jar>
     </target>
 
+    <target name="jar-osgi">
+        <echo message="************************************************" />
+        <echo message="Create OSGi compliant jar file ${dist.dir}/${osgi-jar.file}..." />
+        <echo message="************************************************" />
+        <jar destfile="${dist.dir}/${osgi-jar.file}">
+            <fileset dir="${build.main.dir}" />
+            <manifest>
+				<attribute name="Bundle-Version" value="${bundle.version}" />
+				<attribute name="Bundle-SymbolicName" value="${bundle.symbolicName}" />
+				<attribute name="Bundle-Name" value="${bundle.name}" />
+				<attribute name="Bundle-Vendor" value="${bundle.vendor}" />
+				<attribute name="Export-Package"  value="${osgi.export-package}" />
+				<attribute name="Bundle-ManifestVersion" value="${bundle.manifestVersion}" />
+            </manifest>
+        </jar>
+    </target>
+
     <target name="clean">
         <echo message="************************************************" />
         <echo message="Clean" />
@@ -195,11 +252,6 @@
         <delete dir="${build.test.dir}" />
         <delete dir="${cobertura.instrumented.dir}" failonerror="no" />
         <delete dir="${junit.reports.dir}" failonerror="no"/>
-        <delete>
-            <fileset dir="${dist.dir}">
-                <include name="**/*" />
-            </fileset>
-        </delete>
     </target>
 
     <target name="build" depends="clean, initialize, compile, jar">
@@ -207,7 +259,12 @@
         <echo message="Building..." />
         <echo message="************************************************" />
     </target>
-    <target name="nightly" depends="clean, initialize, deps, compile, junit, compile-tests, coverage-report, jar">
+    <target name="build-osgi" depends="clean, initialize, compile, jar-osgi">
+        <echo message="************************************************" />
+        <echo message="Building OSGi bundle..." />
+        <echo message="************************************************" />
+    </target>
+    <target name="nightly" depends="clean, initialize, deps, compile, compile-tests, coverage-report, jar">
         <echo message="************************************************" />
         <echo message="Building nightly build" />
         <echo message="************************************************" />

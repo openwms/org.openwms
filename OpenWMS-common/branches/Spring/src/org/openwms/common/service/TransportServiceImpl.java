@@ -16,6 +16,7 @@ import org.openwms.common.domain.TransportUnitType;
 import org.openwms.common.domain.values.Barcode;
 import org.openwms.common.service.TransportService;
 import org.openwms.common.service.exception.ServiceException;
+import org.springframework.beans.factory.annotation.Required;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -32,6 +33,20 @@ public class TransportServiceImpl implements TransportService {
 	private GenericDao<TransportUnit, Long> transportUnitDao;
 	private GenericDao<Location, Long> locationDao;
 
+	@Required
+	public void setLocationDao(GenericDao<Location, Long> locationDao) {
+		this.locationDao = locationDao;
+	}
+
+	@Required
+	public void setTransportUnitDao(GenericDao<TransportUnit, Long> transportUnitDao) {
+		this.transportUnitDao = transportUnitDao;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Transactional
 	public TransportUnit createTransportUnit(Barcode barcode, TransportUnitType transportUnitType,
 			LocationPK actualLocationPk) {
 		TransportUnit transportUnit = transportUnitDao.findByUniqueId(barcode);
@@ -49,20 +64,8 @@ public class TransportServiceImpl implements TransportService {
 		return transportUnit;
 	}
 
-	public void setLocationDao(GenericDao<Location, Long> locationDao) {
-		this.locationDao = locationDao;
-	}
-
-	public void setTransportUnitDao(GenericDao<TransportUnit, Long> transportUnitDao) {
-		this.transportUnitDao = transportUnitDao;
-	}
-
 	/**
-	 * Moves a <tt>TransportUnit</tt> identified by its <tt>Barcode</tt> to the given actual <tt>Location</tt>
-	 * identified by the <tt>LocationPK</tt>.
-	 * 
-	 * @param barcode
-	 * @param locationPk
+	 * {@inheritDoc}
 	 */
 	@Transactional
 	public void moveTransportUnit(Barcode barcode, LocationPK newLocationPk) throws ServiceException {

@@ -31,8 +31,8 @@
 	<category name="org.openwms">
 		<priority value="DEBUG" />
 	</category>
-	<category name="org.hibernate">
-		<priority value="ERROR" />
+	<category name="org.hibernate.pretty">
+		<priority value="DEBUG" />
 	</category>
 
 	<!-- Limit the org.apache category to INFO as its DEBUG is verbose -->

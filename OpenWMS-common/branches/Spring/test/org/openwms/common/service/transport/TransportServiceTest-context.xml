@@ -8,24 +8,22 @@
  */
 -->
 <beans xmlns="http://www.springframework.org/schema/beans"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:p="http://www.springframework.org/schema/p"
-	xmlns:context="http://www.springframework.org/schema/context" xmlns:tx="http://www.springframework.org/schema/tx"
-	xmlns:aop="http://www.springframework.org/schema/aop"
-	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
-		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-2.5.xsd
-		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-2.5.xsd
-		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-2.5.xsd">
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd">
 
-	<bean class="org.openwms.common.dao.core.LocationDaoImpl" id="locationDao"
-		p:entityManagerFactory-ref="entityManagerFactory" />
+	<bean id="locationDao" class="org.openwms.common.dao.core.LocationDaoImpl">
+		<property name="entityManagerFactory" ref="entityManagerFactory"/>
+	</bean>
 
-	<bean class="org.openwms.common.dao.core.TransportUnitDaoImpl" id="transportUnitDao"
-		p:entityManagerFactory-ref="entityManagerFactory" />
+	<bean id="transportUnitDao" class="org.openwms.common.dao.core.TransportUnitDaoImpl">
+		<property name="entityManagerFactory" ref="entityManagerFactory"/>
+	</bean>
 
-	<bean class="org.openwms.common.dao.core.TransportUnitTypeDaoImpl" id="transportUnitTypeDao"
-		p:entityManagerFactory-ref="entityManagerFactory" />
+	<bean id="transportUnitTypeDao" class="org.openwms.common.dao.core.TransportUnitTypeDaoImpl" >
+		<property name="entityManagerFactory" ref="entityManagerFactory"/>
+	</bean>
 
-	<bean class="org.openwms.common.service.TransportServiceImpl"
-		id="transportService" p:locationDao-ref="locationDao"
-		p:transportUnitDao-ref="transportUnitDao" />
+	<bean id="transportService" class="org.openwms.common.service.TransportServiceImpl">
+		<property name="transportUnitDao" ref="transportUnitDao"/>
+		<property name="locationDao" ref="locationDao"/>
+	</bean>
 </beans>

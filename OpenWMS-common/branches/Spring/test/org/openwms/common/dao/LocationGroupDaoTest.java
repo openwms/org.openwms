@@ -8,11 +8,8 @@ package org.openwms.common.dao;
 
 import org.junit.Test;
 import org.openwms.AbstractJpaSpringContextTests;
-import org.openwms.common.domain.Location;
 import org.openwms.common.domain.LocationGroup;
-import org.openwms.common.domain.LocationGroup.STATE;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 
 /**
  * A LocationGroupDaoTest.
@@ -23,19 +20,10 @@ import org.springframework.beans.factory.annotation.Qualifier;
 public class LocationGroupDaoTest extends AbstractJpaSpringContextTests {
 
 	@Autowired
-	@Qualifier("locationGroupDaoImpl")
-	protected GenericDao<LocationGroup, Long> dao;
-
-	@Autowired
-	@Qualifier("locationDaoImpl")
-	protected GenericDao<Location, Long> locationDao;
-
-	public LocationGroupDaoTest() {
-		setPopulateProtectedVariables(true);
-	}
+	protected LocationGroupDao dao;
 
 	@Test
-	public final void testLocationGroupConstraint() {
+	public final void testDuplicateLocationGroups() {
 		LocationGroup locationGroup = new LocationGroup("FIRST_LG");
 		LocationGroup locationGroup2 = new LocationGroup("FIRST_LG");
 		dao.persist(locationGroup);
@@ -43,38 +31,56 @@ public class LocationGroupDaoTest extends AbstractJpaSpringContextTests {
 		try {
 			dao.persist(locationGroup2);
 			sharedEntityManager.flush();
+			fail("Persisting two LocationGroups with same id must be permitted");
 		}
 		catch (Exception e) {
-			logger.debug("OK:Duplicate name of locGroup must be prevented by unique constraint.");
+			logger.debug("OK:Duplicate id for LocationGroup must be prevented by unique constraint.");
 		}
-
-		System.out.println("stop");
 	}
 
 	@Test
-	public final void testLocationGroupInheritance() {
-		LocationGroup locationGroup1 = new LocationGroup("TEST_GROUP_1");
-		LocationGroup locationGroup2 = new LocationGroup("TEST_GROUP_2");
+	public final void testAddLocationGroup() {
+		LocationGroup parent = new LocationGroup("TEST_GROUP_1");
+		LocationGroup child = new LocationGroup("TEST_GROUP_2");
+		dao.persist(parent);
 
-		dao.persist(locationGroup1);
-
-		locationGroup1.addLocationGroup(locationGroup2);
+		try {
+			parent.addLocationGroup(null);
+			fail("Not allowed to add null as LocationGroup on parent");
+		}
+		catch (IllegalArgumentException iae) {
+			logger.debug("OK: Exception when trying to add null as parent LocationGroup");
+		}
+		int noChildren = parent.getLocationGroups().size();
+		parent.addLocationGroup(child);
 		sharedEntityManager.flush();
+		parent = dao.save(parent);
+		assertTrue("The number of child LocationGroups must be increased by one", noChildren + 1 == parent
+				.getLocationGroups().size());
+		assertTrue("Parent LocationGroup is not the right one", child.getParent() == parent);
+		assertFalse("Child LocationGroup must also be persisted", child.isNew());
+	}
 
-		locationGroup1 = dao.save(locationGroup1);
-
-		// Save the second one (merge) to retrieve the PK
-		locationGroup2 = dao.save(locationGroup2);
-
-		assertTrue(locationGroup2.getParent() == locationGroup1);
-
-		// Second locGroup must also be persisted.
-		assertFalse(locationGroup2.isNew());
-
-		locationGroup1.setGroupStateIn(STATE.NOT_AVAILABLE);
-
-		assertTrue(locationGroup2.getGroupStateIn() == STATE.NOT_AVAILABLE);
-
+	@Test
+	public final void testRemoveLocationGroups() {
+		LocationGroup parent = new LocationGroup("TEST_GROUP_1");
+		LocationGroup child = new LocationGroup("TEST_GROUP_2");
+		parent.addLocationGroup(child);
+		dao.persist(parent);
+		sharedEntityManager.flush();
+		try {
+			parent.removeLocationGroup(null);
+			fail("Not allowed to remove null as LocationGroup on parent");
+		}
+		catch (IllegalArgumentException iae) {
+			logger.debug("OK: Exception when trying to remove null as parent LocationGroup");
+		}
+		int noChildren = parent.getLocationGroups().size();
+		assertEquals("The parent must be set on the child", child.getParent(), parent);
+		parent.removeLocationGroup(child);
+		assertNull("The parent has to be removed as LocationGroup from the child", child.getParent());
+		assertTrue("The number of child LocationGroups must be decreased by one", noChildren - 1 == parent
+				.getLocationGroups().size());;
 	}
 
 }

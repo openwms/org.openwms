@@ -15,6 +15,7 @@ import org.openwms.common.domain.TransportUnit;
 import org.openwms.common.domain.TransportUnitType;
 import org.openwms.common.domain.values.Barcode;
 import org.openwms.common.service.TransportService;
+import org.openwms.common.service.exception.ServiceException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.test.context.ContextConfiguration;
@@ -28,42 +29,103 @@ import org.springframework.test.context.ContextConfiguration;
 @ContextConfiguration
 public final class TransportServiceTest extends AbstractJpaSpringContextTests {
 
-    @Autowired
-    protected TransportService transportService;
-    @Qualifier("locationDao")
-    @Autowired
-    protected GenericDao<Location, Long> locationDao;
-    @Qualifier("transportUnitTypeDao")
-    @Autowired
-    protected GenericDao<TransportUnitType, String> transportUnitTypeDao;
-    @Qualifier("transportUnitDao")
-    @Autowired
-    protected GenericDao<TransportUnit, Long> transportUnitDao;
-    private String testDataFile = "load-TransportUnits.sql";
-    LocationPK locationPk;
-    LocationPK targetLocation;
-    TransportUnitType transportUnitType = new TransportUnitType("TestType");
+	@Autowired
+	protected TransportService transportService;
 
-    @Override
-    protected void onSetUpInTransaction() throws Exception {
-	super.onSetUpInTransaction();
-	locationPk = new LocationPK("AREA", "AISLE", "X", "Y", "Z");
-	targetLocation = new LocationPK("TARGET", "TARGET", "TARGET", "TARGET", "TARGET");
-	locationDao.persist(new Location(locationPk));
-	locationDao.persist(new Location(targetLocation));
-	transportUnitTypeDao.persist(transportUnitType);
-    }
+	@Qualifier("locationDao")
+	@Autowired
+	protected GenericDao<Location, Long> locationDao;
 
-    @Override
-    protected String getTestDataFile() {
-	return null;
-    }
+	@Qualifier("transportUnitTypeDao")
+	@Autowired
+	protected GenericDao<TransportUnitType, String> transportUnitTypeDao;
 
-    @Test
-    public void testCreateTransportUnit() {
-	TransportUnit transportUnit = transportService.createTransportUnit(new Barcode("4711"), transportUnitType,
-		locationPk);
-	transportService.moveTransportUnit(transportUnit.getBarcode(), new LocationPK("TARGET1", "TARGET", "TARGET",
-		"TARGET", "TARGET"));
-    }
+	@Qualifier("transportUnitDao")
+	@Autowired
+	protected GenericDao<TransportUnit, Long> transportUnitDao;
+
+	private String testDataFile = "load-TransportUnits.sql";
+	LocationPK locationPk = new LocationPK("AREA", "AISLE", "X", "Y", "Z");
+	LocationPK targetLocation = new LocationPK("TARGET", "TARGET", "TARGET", "TARGET", "TARGET");
+	TransportUnitType transportUnitType = new TransportUnitType("TestType");
+
+	public TransportServiceTest() {
+		super();
+		// setPopulateProtectedVariables(true);
+	}
+
+	@Override
+	protected void onSetUpInTransaction() throws Exception {
+		super.onSetUpInTransaction();
+		Location actualLocation = new Location(locationPk);
+		locationDao.persist(actualLocation);
+		actualLocation = locationDao.save(actualLocation);
+		locationDao.persist(new Location(targetLocation));
+		transportUnitTypeDao.persist(transportUnitType);
+		TransportUnit transportUnit = new TransportUnit("KNOWN");
+		transportUnit.setTransportUnitType(transportUnitType);
+		transportUnit.setActualLocation(actualLocation);
+		transportUnitDao.persist(transportUnit);
+	}
+
+	@Override
+	protected String getTestDataFile() {
+		return null;
+	}
+
+	@Test
+	public final void testCreateExistingTransportUnit() {
+		try {
+			transportService.createTransportUnit(new Barcode("KNOWN"), transportUnitType, locationPk);
+			fail("Must throw a ServiceException while trying to create an already known TransportUnit");
+		}
+		catch (ServiceException se) {
+			logger.debug("OK:ServiceException expected while trying to create an already known TransportUnit");
+			se.printStackTrace();
+		}
+	}
+
+	@Test
+	public final void testCreateTransportUnitOnUnknownLocation() {
+
+		try {
+			transportService.createTransportUnit(new Barcode("4711"), transportUnitType, new LocationPK("UNKNOWN",
+					"UNKNOWN", "UNKNOWN", "UNKNOWN", "UNKNOWN"));
+			fail("Must throw a ServiceException while trying to create a TransportUnit with an unknown actual Location");
+		}
+		catch (ServiceException se) {
+			logger.debug("OK:ServiceException expected while trying to create a TransportUnit with an unknown actual Location");
+			se.printStackTrace();
+		}
+	}
+	
+	@Test
+	public final void testCreateTransportUnit() {
+		TransportUnit transportUnit = transportService.createTransportUnit(new Barcode("4711"), transportUnitType,
+				locationPk);
+		assertNotNull("TransportService must create a new TransportUnit", transportUnit);
+	}
+
+
+	@Test
+	public final void testMoveUnknownTransportUnit() {
+		try {
+			transportService.moveTransportUnit(new Barcode("TEST"), targetLocation);
+			fail("Must throw a ServiceException while trying to create a TransportUnit with unknown Barcode");
+		}
+		catch (ServiceException se) {
+			logger.debug("OK:ServiceException expected while trying to create a TransportUnit with unknown Barcode");
+			se.printStackTrace();
+		}
+	}
+
+	@Test
+	public final void testMoveTransportUnit() {
+		TransportUnit transportUnit = transportService.createTransportUnit(new Barcode("4711"), transportUnitType,
+				locationPk);
+		assertNotNull("TransportService must create a new TransportUnit", transportUnit);
+		assertEquals("The actual Location of the TransportUnit must be preset", locationPk, transportUnit.getActualLocation().getLocationId());
+		transportService.moveTransportUnit(transportUnit.getBarcode(), targetLocation);
+		assertEquals("The actual Location of the TransportUnit must be changed", targetLocation, transportUnit.getActualLocation().getLocationId());
+	}
 }

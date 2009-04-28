@@ -16,25 +16,22 @@
 	</configurations>
 	
 	<dependencies>
-		<dependency org="javax.persistence" name="persistence-api" rev="1.0" conf="build->*" />
 		<dependency org="javax.annotation" name="jsr250-api" rev="1.0" conf="build->*" />
 
 		<dependency org="commons-lang" name="commons-lang" rev="2.4" conf="build->*" />
-		<dependency org="commons-logging" name="commons-logging" rev="1.1.1" conf="build->*" />
 		<!-- Used for JUnit tests -->
-		<dependency org="junit" name="junit" rev="4.4" conf="test->*" />
 		<dependency org="org.dbunit" name="dbunit" rev="2.2" conf="test->*" />
 		<!-- Cobertura -->
 		<dependency org="cobertura" name="cobertura" rev="1.8" conf="test->*" />
 		<dependency org="asm" name="asm" rev="2.2.1" conf="test->*" />
-		<dependency org="log4j" name="log4j" rev="1.2.9" conf="test->*" />
 		<dependency org="oro" name="oro" rev="2.0.8" conf="test->*" />
 
-		<dependency org="hsqldb" name="hsqldb" rev="1.8.0.7" conf="test->*" />
+		<dependency org="org.hsqldb" name="com.springsource.org.hsqldb" rev="1.8.0.9" conf="test->*" />
 		<dependency org="org.hibernate" name="hibernate" rev="3.2.6.ga" conf="test->*" />
 
 		<!-- Spring -->
-		<dependency org="org.springframework" name="spring" rev="2.5.6" conf="build->*" />
-		<dependency org="org.springframework" name="spring-test" rev="2.5.6" conf="build->*" />
+		<dependency org="org.springframework" name="org.springframework.core" rev="2.5.6.A" conf="build->*" />
+		<dependency org="org.springframework" name="org.springframework.test" rev="2.5.6.A" conf="test->*" />
+		<dependency org="org.easymock" name="com.springsource.org.easymock.classextension" rev="2.3.0" conf="test->*" />
   	</dependencies>
 </ivy-module>
