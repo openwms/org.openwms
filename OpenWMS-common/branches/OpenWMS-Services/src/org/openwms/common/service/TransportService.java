@@ -20,22 +20,22 @@ import org.openwms.common.service.exception.ServiceException;
  */
 public interface TransportService {
 
-    /**
-     * Create a new <tt>TransportUnit</tt> with the type <tt>TransportUnitType</tt> on an initial <tt>Location</tt>.
-     * 
-     * @param barcode
-     * @param actualLocation
-     * @return
-     */
-    TransportUnit createTransportUnit(Barcode barcode, TransportUnitType transportUnitType, LocationPK actualLocation);
+	/**
+	 * Create a new <tt>TransportUnit</tt> with the type <tt>TransportUnitType</tt> on an initial <tt>Location</tt>.
+	 * 
+	 * @param barcode
+	 * @param actualLocation
+	 * @return
+	 */
+	TransportUnit createTransportUnit(Barcode barcode, TransportUnitType transportUnitType, LocationPK actualLocation);
 
-    /**
-     * Moves a <tt>TransportUnit</tt> identified by its <tt>Barcode</tt> to the given actual <tt>Location</tt>
-     * identified by the <tt>LocationPK</tt>.
-     * 
-     * @param barcode
-     * @param locationPk
-     */
-    void moveTransportUnit(Barcode barcode, LocationPK locationPk) throws ServiceException;
+	/**
+	 * Moves a <tt>TransportUnit</tt> identified by its <tt>Barcode</tt> to the given actual <tt>Location</tt>
+	 * identified by the <tt>LocationPK</tt>.
+	 * 
+	 * @param barcode
+	 * @param locationPk
+	 */
+	void moveTransportUnit(Barcode barcode, LocationPK locationPk) throws ServiceException;
 
 }

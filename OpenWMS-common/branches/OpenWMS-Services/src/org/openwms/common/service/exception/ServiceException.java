@@ -15,38 +15,38 @@ package org.openwms.common.service.exception;
 @SuppressWarnings("serial")
 public class ServiceException extends RuntimeException {
 
-    /**
-     * Create a new ServiceException.
-     * 
-     */
-    public ServiceException() {}
+	/**
+	 * Create a new ServiceException.
+	 * 
+	 */
+	public ServiceException() {}
 
-    /**
-     * Create a new ServiceException.
-     * 
-     * @param arg0
-     */
-    public ServiceException(String arg0) {
-	super(arg0);
-    }
+	/**
+	 * Create a new ServiceException.
+	 * 
+	 * @param arg0
+	 */
+	public ServiceException(String arg0) {
+		super(arg0);
+	}
 
-    /**
-     * Create a new ServiceException.
-     * 
-     * @param arg0
-     */
-    public ServiceException(Throwable arg0) {
-	super(arg0);
-    }
+	/**
+	 * Create a new ServiceException.
+	 * 
+	 * @param arg0
+	 */
+	public ServiceException(Throwable arg0) {
+		super(arg0);
+	}
 
-    /**
-     * Create a new ServiceException.
-     * 
-     * @param arg0
-     * @param arg1
-     */
-    public ServiceException(String arg0, Throwable arg1) {
-	super(arg0, arg1);
-    }
+	/**
+	 * Create a new ServiceException.
+	 * 
+	 * @param arg0
+	 * @param arg1
+	 */
+	public ServiceException(String arg0, Throwable arg1) {
+		super(arg0, arg1);
+	}
 
 }
