@@ -42,8 +42,8 @@ public abstract class AbstractGenericJpaDao<T extends Serializable, ID extends S
 	@SuppressWarnings("unchecked")
 	public AbstractGenericJpaDao() {
 		if (getClass().getGenericSuperclass() != null) {
-//			this.persistentClass = (Class<T>) ((ParameterizedType) getClass().getGenericSuperclass())
-//					.getActualTypeArguments()[0];
+			this.persistentClass = (Class<T>) ((ParameterizedType) getClass().getGenericSuperclass())
+					.getActualTypeArguments()[0];
 		}
 	}
 

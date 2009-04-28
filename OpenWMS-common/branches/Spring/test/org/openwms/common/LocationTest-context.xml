@@ -14,4 +14,8 @@
 		<property name="entityManagerFactory" ref="entityManagerFactory" />
 	</bean>
 
+	<bean id="locationDao" class="org.openwms.common.dao.core.LocationDaoImpl">
+		<property name="entityManagerFactory" ref="entityManagerFactory" />
+	</bean>
+
 </beans>
