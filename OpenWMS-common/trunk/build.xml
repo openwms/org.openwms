@@ -12,6 +12,13 @@
 
     <property environment="env" />
     <property file="build.properties" />
+    
+	<property name="bundle.version" value="1.0"/>
+	<property name="bundle.symbolicName" value="org.openwms.common"/>
+	<property name="bundle.name" value="OpenWMS Common Domain Model"/>
+	<property name="bundle.vendor" value="openwms.org"/>
+	<property name="bundle.manifestVersion" value="2"/>
+    
     <path id="class.path">
         <fileset dir="${deps.dir}/build">
             <include name="*.jar" />
@@ -25,7 +32,14 @@
 			<include name="**/*.jar" />
         </fileset>
 	</path>
-	
+
+	<!-- All non java files in the src directory -->
+	<patternset id="all.nonjava.files">
+		<include name="**/*.txt"/>
+		<include name="**/*.xml"/>
+		<include name="**/*.properties"/>
+	</patternset>
+
     <taskdef classpath="${FLEX_TASKS_JAR}" resource="flexTasks.tasks" />
     
     <target name="deps">
@@ -74,11 +88,14 @@
         <echo message="************************************************" />
         <echo message="Compile sources in ${src.dir}..." />
         <echo message="************************************************" />
-        <javac destdir="${build.main.dir}" classpathref="class.path" debug="on" deprecation="on">
+        <javac destdir="${build.main.dir}" classpathref="class.path" debug="on" deprecation="on" optimize="off" target="1.5">
             <src path="${src.dir}" />
         </javac>
-        <copy tofile="${build.main.dir}/META-INF/persistence.xml" file="${src.meta-inf.dir}/persistence.xml"/>
-        <copy tofile="${build.main.dir}/log4j.xml" file="${src.dir}/log4j.xml"/>
+		<copy todir="${build.main.dir}">
+			<fileset dir="${src.dir}">
+				<patternset refid="all.nonjava.files"/>
+			</fileset>
+		</copy>
     </target>
 
     <target name="compile-flex">
@@ -110,7 +127,7 @@
         <echo message="************************************************" />
         <echo message="Compile sources in ${testsrc.dir}..." />
         <echo message="************************************************" />
-        <javac destdir="${build.test.dir}" debug="on" deprecation="on" >
+        <javac destdir="${build.test.dir}" debug="on" deprecation="on">
             <src path="${testsrc.dir}" />
             <classpath>
                 <pathelement location="${build.main.dir}"/>
@@ -122,16 +139,23 @@
                 </fileset>
             </classpath>
         </javac>
-        <copy tofile="${build.test.dir}/META-INF/persistence.xml" file="${testsrc.dir}/META-INF/persistence.xml"/>
-        <copy tofile="${build.test.dir}/META-INF/MANIFEST.MF" file="${testsrc.dir}/META-INF/MANIFEST.MF"/>
-        <copy tofile="${build.test.dir}/log4j.xml" file="${testsrc.dir}/log4j.xml"/>
+		<copy todir="${build.test.dir}">
+			<fileset dir="${testsrc.dir}">
+				<patternset refid="all.nonjava.files"/>
+			</fileset>
+		</copy>
     </target>
 
     <!-- ********************************* TESTS & REPORTS ********************************* -->
-	<target name="junit" depends="compile">
+	<target name="junit" depends="compile, compile-tests">
         <echo message="************************************************" />
         <echo message="Running unit tests..." />
         <echo message="************************************************" />
+		<delete>
+			<fileset dir="${java.io.tmpdir}">
+				<include name="TEST-*.xml"/>
+			</fileset>
+		</delete>
         <junit printsummary="on" fork="true" failureproperty="failed" dir="." maxmemory="512m">
             <sysproperty key="exec.longrunning.tests" value="true" />
 
@@ -139,8 +163,8 @@
 
             <classpath>
                 <path refid="class.path" />
-                <pathelement location="${build.main.dir}"/>
                 <pathelement location="${build.test.dir}"/>
+                <pathelement location="${build.main.dir}"/>
             </classpath>
 
             <batchtest fork="yes" todir="${java.io.tmpdir}">
@@ -157,7 +181,7 @@
 			</fileset>
 			<report format="frames" todir="${junit.reports.html.dir}"/>
 	    </junitreport>
-        <fail if="failed" message="One or more unit test have failed!" />
+         <fail if="failed" message="One or more unit test have failed!" />
     </target>
     
 	<path id="cobertura.classpath">
@@ -168,7 +192,7 @@
     
     <taskdef classpathref="cobertura.classpath" resource="tasks.properties"/>
 
-    <target name="instrument" depends="compile, compile-tests">
+    <target name="instrument" depends="compile-tests">
 		<cobertura-instrument todir="${cobertura.instrumented.dir}">
 			<fileset dir="${build.main.dir}">
 				<include name="**/*.class"/>
@@ -177,13 +201,18 @@
 	</target>
     
 	<target name="cover-test" depends="instrument">
-		<junit dir="." failureproperty="test.failure" printsummary="yes" fork="true" haltonerror="false">
+		<junit dir="." failureproperty="test.failure" printsummary="yes" fork="true" haltonerror="false" maxmemory="512m">
             <sysproperty key="exec.longrunning.tests" value="true" />
+		    <sysproperty key="net.sourceforge.cobertura.datafile" file="${cobertura.ser.file}" />
 
-            <classpath>
+		    <formatter type="xml" />
+
+			<classpath>
                 <path location="${cobertura.instrumented.dir}" />
-                <path refid="class.path" />
+                <pathelement path="${build.test.dir}"/>
+                <pathelement path="${build.main.dir}"/>
                 <path refid="cobertura.classpath"/>
+                <path refid="class.path" />
             </classpath>
 
 		    <batchtest fork="yes" todir="${java.io.tmpdir}">
@@ -192,6 +221,19 @@
                 </fileset>
             </batchtest>
 		</junit>
+	    <mkdir dir="${junit.reports.html.dir}"/>
+	    <mkdir dir="${junit.reports.xml.dir}"/>
+	    <junitreport todir="${junit.reports.xml.dir}">
+			<fileset dir="${java.io.tmpdir}">
+				<include name="TEST-*.xml"/>
+			</fileset>
+			<report format="frames" todir="${junit.reports.html.dir}"/>
+	    </junitreport>
+        <delete>
+			<fileset dir="${java.io.tmpdir}">
+				<include name="TEST-*.xml"/>
+			</fileset>
+        </delete>
 	</target>
       
 	<!-- run this target to generate the coverage reports -->
@@ -215,6 +257,23 @@
         </jar>
     </target>
 
+    <target name="jar-osgi">
+        <echo message="************************************************" />
+        <echo message="Create OSGi compliant jar file ${dist.dir}/${osgi-jar.file}..." />
+        <echo message="************************************************" />
+        <jar destfile="${dist.dir}/${osgi-jar.file}">
+            <fileset dir="${build.main.dir}" />
+            <manifest>
+				<attribute name="Bundle-Version" value="${bundle.version}" />
+				<attribute name="Bundle-SymbolicName" value="${bundle.symbolicName}" />
+				<attribute name="Bundle-Name" value="${bundle.name}" />
+				<attribute name="Bundle-Vendor" value="${bundle.vendor}" />
+				<attribute name="Export-Package"  value="${osgi.export-package}" />
+				<attribute name="Bundle-ManifestVersion" value="${bundle.manifestVersion}" />
+            </manifest>
+        </jar>
+    </target>
+
     <target name="clean">
         <echo message="************************************************" />
         <echo message="Clean" />
@@ -231,12 +290,12 @@
         </delete>
     </target>
 
-    <target name="build" depends="clean, initialize, compile, jar">
+    <target name="build" depends="clean, initialize, compile, jar, jar-osgi">
         <echo message="************************************************" />
         <echo message="Building..." />
         <echo message="************************************************" />
     </target>
-    <target name="nightly" depends="clean, initialize, deps, compile, junit, compile-tests, coverage-report, jar">
+    <target name="nightly" depends="clean, initialize, deps, compile, coverage-report, jar">
         <echo message="************************************************" />
         <echo message="Building nightly build" />
         <echo message="************************************************" />

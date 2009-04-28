@@ -26,8 +26,19 @@
 		<dependency org="asm" name="asm" rev="2.2.1" conf="test->*" />
 		<dependency org="log4j" name="log4j" rev="1.2.9" conf="test->*" />
 		<dependency org="oro" name="oro" rev="2.0.8" conf="test->*" />
-
+		<!-- Hibernate -->
 		<dependency org="hsqldb" name="hsqldb" rev="1.8.0.7" conf="test->*" />
 		<dependency org="org.hibernate" name="hibernate" rev="3.2.6.ga" conf="test->*" />
+		<dependency org="org.hibernate" name="hibernate-tools" rev="3.2.0.ga" conf="test->*" />
+		<dependency org="org.hibernate" name="hibernate-validator" rev="3.0.0.ga" conf="test->*" />
+		<dependency org="org.hibernate" name="hibernate-annotations" rev="3.3.0.ga" conf="test->*" />
+		<dependency org="org.hibernate" name="hibernate-commons-annotations" rev="3.3.0.ga" conf="test->*" />
+		<dependency org="org.hibernate" name="hibernate-entitymanager" rev="3.3.2.GA" conf="test->*" />
+		<dependency org="javax.transaction" name="jta" rev="1.1" conf="test->*" />
+		<dependency org="antlr" name="antlr" rev="2.7.7" conf="test->*" />
+		<dependency org="jboss" name="jboss-common-core" rev="2.2.0.GA" conf="test->*" />
+		<dependency org="javassist" name="javassist" rev="3.6.0.GA" conf="test->*" />
+		<dependency org="cglib" name="cglib" rev="2.1_3" conf="test->*" />
+		<dependency org="dom4j" name="dom4j" rev="1.6.1" conf="test->*" />
   	</dependencies>
 </ivy-module>
