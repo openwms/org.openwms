@@ -188,11 +188,6 @@ public class LocationGroup implements Serializable {
 	}
 
 	public void setGroupStateIn(STATE groupStateIn) {
-		/*
-		 * Due to lazy initialization, perform this action within a service method if (this.groupStateIn ==
-		 * groupStateIn) { return; } this.groupStateIn = groupStateIn; for (LocationGroup child : getLocationGroups()) {
-		 * child.setGroupStateIn(groupStateIn); }
-		 */
 		this.groupStateIn = groupStateIn;
 	}
 
@@ -206,11 +201,6 @@ public class LocationGroup implements Serializable {
 	}
 
 	public void setGroupStateOut(STATE groupStateOut) {
-		/*
-		 * Due to lazy initialization, perform this action within a service method if (this.groupStateOut ==
-		 * groupStateOut) { return; } this.groupStateOut = groupStateOut; for (LocationGroup child :
-		 * getLocationGroups()) { child.setGroupStateOut(groupStateOut); }
-		 */
 		this.groupStateOut = groupStateOut;
 	}
 
