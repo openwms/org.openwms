@@ -27,6 +27,7 @@
 		<dependency org="oro" name="oro" rev="2.0.8" conf="test->*" />
 
 		<dependency org="org.hsqldb" name="com.springsource.org.hsqldb" rev="1.8.0.9" conf="test->*" />
+		<dependency org="org.postgresql" name="com.springsource.org.postgresql.jdbc3" rev="8.3.603" conf="build->*" />
 		<!-- Hibernate -->
 		<dependency org="org.hibernate" name="hibernate-annotations" rev="3.4.0.GA" conf="build->*" />
 		<dependency org="org.hibernate" name="hibernate-commons-annotations" rev="3.3.0.ga" conf="build->*" />
