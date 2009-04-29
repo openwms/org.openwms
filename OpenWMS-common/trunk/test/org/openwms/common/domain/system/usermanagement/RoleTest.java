@@ -47,7 +47,39 @@ public final class RoleTest extends AbstractPDOTestCase {
 			LOG.debug("OK:Tested unique constraint on rolename.");
 		}
 	}
+	
+	@Test
+	public final void testRoleInstanciation() {
+		Role role = new Role("Rolename","Description");
+		assertEquals("Rolename doesnt match", "Rolename", role.getRolename());
+		assertEquals("Description doesnt match", "Description", role.getDescription());
+	}
 
+	@Test
+	public final void testAddingUserToRole() {
+		Role role = new Role("Rolename");
+		try {
+			role.addUser(null);
+			fail("Not allowed to call addUser() with null");
+		}
+		catch (Exception e) {
+			LOG.debug("OK:Adding null user not allowed");
+		}
+	}
+
+	@Test
+	public final void testAddingUsersToRole() {
+		Role role = new Role("Rolename");
+		try {
+			role.setUsers(null);
+			fail("Not allowed to call setUsers() with null");
+		}
+		catch (Exception e) {
+			LOG.debug("OK:Setting null to Set of users not allowed");
+		}
+	}
+
+	
 	@Test
 	public final void testRoleLifecycle() {
 		EntityTransaction entityTransaction = em.getTransaction();
