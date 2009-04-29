@@ -113,20 +113,69 @@
 			<attribute name="org.eclipse.jst.component.dependency" value="../"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="lib" path="deps/build/antlr-2.7.7.jar"/>
-	<classpathentry kind="lib" path="deps/build/commons-collections-3.2.1.jar"/>
-	<classpathentry kind="lib" path="deps/build/dom4j-1.6.1.jar"/>
-	<classpathentry kind="lib" path="deps/build/hibernate-annotations-3.4.0.GA.jar"/>
-	<classpathentry kind="lib" path="deps/build/hibernate-commons-annotations-3.3.0.ga.jar"/>
-	<classpathentry kind="lib" path="deps/build/hibernate-core-3.3.1.GA.jar"/>
-	<classpathentry kind="lib" path="deps/build/hibernate-entitymanager-3.4.0.GA.jar"/>
-	<classpathentry kind="lib" path="deps/build/javassist-3.6.0.GA.jar"/>
-	<classpathentry kind="lib" path="deps/build/jta-1.1.jar"/>
-	<classpathentry kind="lib" path="deps/build/slf4j-api-1.5.6.jar"/>
-	<classpathentry kind="lib" path="deps/build/slf4j-simple-1.5.6.jar"/>
-	<classpathentry kind="lib" path="deps/test/dbunit-2.2.jar"/>
+	<classpathentry exported="true" kind="lib" path="deps/build/antlr-2.7.7.jar">
+		<attributes>
+			<attribute name="org.eclipse.jst.component.dependency" value="../"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry exported="true" kind="lib" path="deps/build/commons-collections-3.2.1.jar">
+		<attributes>
+			<attribute name="org.eclipse.jst.component.dependency" value="../"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry exported="true" kind="lib" path="deps/build/dom4j-1.6.1.jar">
+		<attributes>
+			<attribute name="org.eclipse.jst.component.dependency" value="../"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry exported="true" kind="lib" path="deps/build/hibernate-annotations-3.4.0.GA.jar">
+		<attributes>
+			<attribute name="org.eclipse.jst.component.dependency" value="../"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry exported="true" kind="lib" path="deps/build/hibernate-commons-annotations-3.3.0.ga.jar">
+		<attributes>
+			<attribute name="org.eclipse.jst.component.dependency" value="../"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry exported="true" kind="lib" path="deps/build/hibernate-core-3.3.1.GA.jar">
+		<attributes>
+			<attribute name="org.eclipse.jst.component.dependency" value="../"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry exported="true" kind="lib" path="deps/build/hibernate-entitymanager-3.4.0.GA.jar">
+		<attributes>
+			<attribute name="org.eclipse.jst.component.dependency" value="../"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry exported="true" kind="lib" path="deps/build/javassist-3.6.0.GA.jar">
+		<attributes>
+			<attribute name="org.eclipse.jst.component.dependency" value="../"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry exported="true" kind="lib" path="deps/build/jta-1.1.jar">
+		<attributes>
+			<attribute name="org.eclipse.jst.component.dependency" value="../"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry exported="true" kind="lib" path="deps/build/slf4j-api-1.5.6.jar">
+		<attributes>
+			<attribute name="org.eclipse.jst.component.dependency" value="../"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry exported="true" kind="lib" path="deps/build/slf4j-simple-1.5.6.jar">
+		<attributes>
+			<attribute name="org.eclipse.jst.component.dependency" value="../"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry exported="true" kind="lib" path="deps/test/dbunit-2.2.jar">
+		<attributes>
+			<attribute name="org.eclipse.jst.component.dependency" value="../"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry exported="true" kind="lib" path="deps/build/com.springsource.org.postgresql.jdbc3-8.3.603.jar"/>
 	<classpathentry combineaccessrules="false" exported="true" kind="src" path="/OpenWMS-common"/>
-	<classpathentry combineaccessrules="false" kind="src" path="/OpenWMS-Services"/>
+	<classpathentry combineaccessrules="false" exported="true" kind="src" path="/OpenWMS-Services"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/java-6-sun-1.6.0.10"/>
 	<classpathentry kind="output" path="build/classes"/>
 </classpath>
