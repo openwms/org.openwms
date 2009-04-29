@@ -37,7 +37,7 @@
 	</category>
 
 	<category name="org.springframework.orm.jpa.support">
-		<priority value="DEBUG" />
+		<priority value="ERROR" />
 	</category>
 	
 

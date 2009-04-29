@@ -32,7 +32,7 @@ public class LocationGroupServiceImpl extends EntityServiceImpl<LocationGroup, L
 				&& locationGroup.getGroupStateIn() == STATE.AVAILABLE) {
 			throw new ServiceException("Not allowed to change GroupStateIn, parent locationGroup is not available");
 		}
-		
+
 		// Attach
 		locationGroup = dao.save(locationGroup);
 		Set<LocationGroup> childs = locationGroup.getLocationGroups();
