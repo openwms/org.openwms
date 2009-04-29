@@ -8,6 +8,7 @@
  */
 -->
 <!DOCTYPE log4j:configuration SYSTEM "log4j.dtd">
+
 <!-- ===================================================================== -->
 <!--                                                                       -->
 <!--  Log4j Configuration                                                  -->
@@ -32,7 +33,7 @@
 		<priority value="DEBUG" />
 	</category>
 	<category name="org.hibernate.pretty">
-		<priority value="DEBUG" />
+		<priority value="ERROR" />
 	</category>
 
 	<!-- Limit the org.apache category to INFO as its DEBUG is verbose -->
