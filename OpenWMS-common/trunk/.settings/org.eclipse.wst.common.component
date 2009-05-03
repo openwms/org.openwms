@@ -4,6 +4,6 @@
 <wb-resource deploy-path="/" source-path="/src"/>
 <wb-resource deploy-path="/" source-path="/test"/>
 <wb-resource deploy-path="/" source-path="/src/META-INF"/>
-        <wb-resource deploy-path="/" source-path="/client/flex"/>
+        <wb-resource deploy-path="/" source-path="/client/flex/as3"/>
 </wb-module>
 </project-modules>
