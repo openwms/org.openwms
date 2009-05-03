@@ -2,6 +2,7 @@
 <classpath>
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="src" path="test"/>
+	<classpathentry kind="src" path="client/flex/as3"/>
 	<classpathentry kind="lib" path="deps/build/commons-lang-2.4.jar"/>
 	<classpathentry kind="lib" path="deps/build/commons-logging-1.1.1.jar"/>
 	<classpathentry kind="lib" path="deps/build/persistence-api-1.0.jar"/>
