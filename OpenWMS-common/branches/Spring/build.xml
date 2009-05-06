@@ -5,7 +5,7 @@
  * Distributable under LGPL license.
  * See terms of license at gnu.org.
 -->
-<project xmlns:ivy="antlib:org.apache.ivy.ant" name="OpenWMS-common-Spring" default="nightly" basedir=".">
+<project xmlns:ivy="antlib:org.apache.ivy.ant" name="OpenWMS-common-Spring" default="all" basedir=".">
     <tstamp>
         <format property="TODAY" pattern="yyyy-MM-dd HH:mm:ss 'GMT'Z" />
     </tstamp>
@@ -47,6 +47,7 @@
 	<patternset id="all.nonjava.files">
 		<include name="**/*.txt"/>
 		<include name="**/*.xml"/>
+		<include name="**/*.dtd"/>
 		<include name="**/*.properties"/>
 	</patternset>
 
@@ -102,8 +103,12 @@
         <javac destdir="${build.main.dir}" classpathref="class.path" debug="on" deprecation="on">
             <src path="${src.dir}" />
         </javac>
+        <copy todir="${build.main.dir}">
+            <fileset dir="${src.dir}">
+                <patternset refid="all.nonjava.files" />
+            </fileset>
+        </copy>
         <copy tofile="${build.main.dir}/META-INF/persistence.xml" file="${src.meta-inf.dir}/persistence.xml"/>
-        <copy tofile="${build.main.dir}/log4j.xml" file="${src.dir}/log4j.xml"/>
     </target>
 
 
@@ -284,5 +289,38 @@
         <echo message="************************************************" />
         <echo message="Building nightly build" />
         <echo message="************************************************" />
+    </target>
+
+    <target name="check-env" >
+        <property name="common_var" value="$${env.OPENWMS_COMMON}" />
+        <property name="servicesapi_var" value="$${env.OPENWMS_SERVICESAPI}" />
+        <condition property="home-set">
+	    <and>
+		<not>
+			<equals arg1="${servicesapi_var}" arg2="${env.OPENWMS_SERVICESAPI}"/>
+		</not>
+		<not>
+			<equals arg1="${common_var}" arg2="${env.OPENWMS_COMMON}"/>
+		</not>
+	    </and>
+        </condition>
+    </target>
+
+    <target name="usage" depends="check-env" unless="home-set">
+        <echo message="*************************************************************************************" />
+        <echo message="Environment variable OPENWMS_COMMON must point to the main OpenWMS-commons checkout" />
+	<echo message="directory." />
+        <echo message="Environment variable OPENWMS_SERVICESAPI must point to the main OpenWMS-Services" />
+	<echo message="checkout directory." />
+        <echo message="" />
+        <echo message="( try: export OPENWMS_COMMON=../../ )" />
+        <echo message="( try: export OPENWMS_SERVICESAPI=../../ )" />
+        <echo message="*************************************************************************************" />
+        <fail/>
+    </target>
+    
+    <target name="all">
+        <antcall target="usage" />
+        <antcall target="nightly" />
     </target>
 </project>

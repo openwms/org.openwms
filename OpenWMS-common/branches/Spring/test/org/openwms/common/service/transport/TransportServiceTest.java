@@ -44,7 +44,7 @@ public final class TransportServiceTest extends AbstractJpaSpringContextTests {
 	@Autowired
 	protected GenericDao<TransportUnit, Long> transportUnitDao;
 
-	private String testDataFile = "load-TransportUnits.sql";
+	//private String testDataFile = "load-TransportUnits.sql";
 	LocationPK locationPk = new LocationPK("AREA", "AISLE", "X", "Y", "Z");
 	LocationPK targetLocation = new LocationPK("TARGET", "TARGET", "TARGET", "TARGET", "TARGET");
 	TransportUnitType transportUnitType = new TransportUnitType("TestType");

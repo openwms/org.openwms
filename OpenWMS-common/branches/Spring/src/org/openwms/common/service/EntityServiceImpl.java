@@ -7,7 +7,6 @@
 package org.openwms.common.service;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
@@ -15,7 +14,6 @@ import javax.annotation.PostConstruct;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.openwms.common.dao.GenericDao;
-import org.openwms.common.service.EntityService;
 import org.springframework.beans.factory.annotation.Required;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -43,19 +41,6 @@ public class EntityServiceImpl<T extends Serializable, ID extends Serializable> 
 
 	public List<T> findAll() {
 		return dao.findAll();
-	}
-
-	public List<String> findPojos() {
-		List<String> l = new ArrayList<String>();
-		l.add("Hallo 1");
-		l.add("Hallo 2");
-		l.add("Hallo 3");
-		l.add("Hallo 4");
-		return l;
-	}
-
-	public String findAll2() {
-		return "return String";
 	}
 
 	public List<T> findAll(Class<T> clazz) {
