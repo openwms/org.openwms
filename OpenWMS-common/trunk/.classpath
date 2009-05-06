@@ -19,6 +19,6 @@
 	<classpathentry kind="lib" path="deps/build/commons-collections-3.2.1.jar"/>
 	<classpathentry kind="lib" path="deps/test/antlr-2.7.7.jar"/>
 	<classpathentry kind="lib" path="deps/test/jta-1.1.jar"/>
-	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/java-6-sun-1.6.0.10"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry kind="output" path="build/classes"/>
 </classpath>

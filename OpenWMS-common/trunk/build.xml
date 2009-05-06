@@ -31,6 +31,7 @@
     <patternset id="all.nonjava.files">
         <include name="**/*.txt" />
         <include name="**/*.xml" />
+		<include name="**/*.dtd"/>
         <include name="**/*.properties" />
     </patternset>
 
