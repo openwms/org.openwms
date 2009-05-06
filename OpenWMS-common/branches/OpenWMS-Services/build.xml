@@ -5,7 +5,7 @@
  * Distributable under LGPL license.
  * See terms of license at gnu.org.
 -->
-<project xmlns:ivy="antlib:org.apache.ivy.ant" name="OpenWMS-Services" default="nightly" basedir=".">
+<project xmlns:ivy="antlib:org.apache.ivy.ant" name="OpenWMS-Services" default="all" basedir=".">
     <tstamp>
         <format property="TODAY" pattern="yyyy-MM-dd HH:mm:ss 'GMT'Z" />
     </tstamp>
@@ -102,7 +102,7 @@
         <echo message="************************************************" />
         <echo message="Building commons project" />
         <echo message="************************************************" />
-        <ant antfile="${openwms_common.dir}/build.xml" inheritall="false" target="nightly"/>
+        <ant antfile="${openwms_common.dir}/build.xml" inheritall="false" target="all"/>
     </target>
     <target name="build" depends="clean, deps, initialize, compile, jar">
         <echo message="************************************************" />
@@ -140,7 +140,8 @@
     </target>
 
     <target name="all">
-        <antcall target="usage, nightly" />
+        <antcall target="usage" />
+        <antcall target="nightly" />
     </target>
     
 </project>
