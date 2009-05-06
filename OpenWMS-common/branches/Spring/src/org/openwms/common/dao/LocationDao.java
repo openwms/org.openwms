@@ -6,6 +6,8 @@
  */
 package org.openwms.common.dao;
 
+import java.util.List;
+
 import org.openwms.common.domain.Location;
 
 /**
@@ -17,6 +19,9 @@ import org.openwms.common.domain.Location;
 public interface LocationDao extends GenericDao<Location, Long> {
 
 	public final String NQ_FIND_ALL = "Location.findAll";
+	public final String NQ_FIND_ALL_EAGER = "Location.findAllEager";
 	public final String NQ_FIND_BY_UNIQUE_QUERY = "Location.findByLocationPK";
+
+	List<Location> getAllLocations();
 
 }

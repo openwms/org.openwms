@@ -6,12 +6,15 @@
  */
 package org.openwms.common.service;
 
+import java.util.List;
 import java.util.Set;
+import java.util.TreeMap;
 
 import org.openwms.common.domain.LocationGroup;
 import org.openwms.common.domain.LocationGroup.STATE;
-import org.openwms.common.service.LocationGroupService;
 import org.openwms.common.service.exception.ServiceException;
+import org.openwms.common.util.TreeNode;
+import org.openwms.common.util.TreeNodeImpl;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -46,4 +49,47 @@ public class LocationGroupServiceImpl extends EntityServiceImpl<LocationGroup, L
 	public LocationGroup save(LocationGroup locationGroup) {
 		return dao.save(locationGroup);
 	}
+
+	public TreeNode<LocationGroup> getLocationGroupsAsTree() {
+		TreeNode<LocationGroup> tree = createTree(new TreeNodeImpl<LocationGroup>(), getLocationGroupsAsList());
+		return tree;
+	}
+
+	public List<LocationGroup> getLocationGroupsAsList() {
+		List<LocationGroup> locationGroups = dao.findAll();
+		return locationGroups;
+	}
+
+	private TreeNode<LocationGroup> createTree(TreeNode<LocationGroup> root, List<LocationGroup> locationGroups) {
+		for (LocationGroup l : locationGroups) {
+			searchForNode(l, root);
+		}
+		return root;
+	}
+
+	private TreeNode<LocationGroup> searchForNode(LocationGroup lg, TreeNode<LocationGroup> root) {
+		TreeNode<LocationGroup> node;
+		if (lg.getParent() == null) {
+			node = root.getChild(lg);
+			if (node == null) {
+				TreeNode<LocationGroup> n1 = new TreeNodeImpl<LocationGroup>();
+				n1.setData(lg);
+				n1.setParent(root);
+				root.addChild(n1.getData(), n1);
+				return n1;
+			}
+			return node;
+		} else {
+			node = searchForNode(lg.getParent(), root);
+			TreeNode<LocationGroup> child = node.getChild(lg);
+			if (child == null) {
+				child = new TreeNodeImpl<LocationGroup>();
+				child.setData(lg);
+				child.setParent(node);
+				node.addChild(lg, child);
+			}
+			return child;
+		}
+	}
+
 }

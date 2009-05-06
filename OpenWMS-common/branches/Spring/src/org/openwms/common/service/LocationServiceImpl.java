@@ -6,6 +6,9 @@
  */
 package org.openwms.common.service;
 
+import java.util.List;
+
+import org.openwms.common.dao.LocationDao;
 import org.openwms.common.domain.Location;
 
 /**
@@ -15,5 +18,9 @@ import org.openwms.common.domain.Location;
  * @version $Revision: 314 $
  */
 public class LocationServiceImpl extends EntityServiceImpl<Location, Long> implements LocationService<Location> {
+	public LocationServiceImpl() {}
 
+	public List<Location> getAllLocations() {
+		return ((LocationDao) dao).getAllLocations();
+	}
 }
