@@ -38,7 +38,7 @@ public abstract class AbstractGenericDao<T extends Serializable, ID extends Seri
 	@PersistenceContext(unitName = "OpenWMS-test-durable")
 	protected EntityManager em;
 
-	@SuppressWarnings("unchecked")
+	//@SuppressWarnings("unchecked")
 	public AbstractGenericDao() {
 		if (getClass().getGenericSuperclass() != null) {
 //			this.persistentClass = (Class<T>) ((ParameterizedType) getClass().getGenericSuperclass())
@@ -69,7 +69,6 @@ public abstract class AbstractGenericDao<T extends Serializable, ID extends Seri
 		return em.createQuery(getFindAllQuery()).getResultList();
 	}
 
-	@SuppressWarnings("unchecked")
 	public List<T> findByQuery(String queryName, Map<String, ?> params) {
 		return null;
 		//TODO
