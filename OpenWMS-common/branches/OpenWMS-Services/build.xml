@@ -69,7 +69,7 @@
         </javac>
     </target>
 
-	<target name="jar">
+    <target name="jar">
         <echo message="************************************************" />
         <echo message="Create jar file ${dist.dir}/${jar.file}..." />
         <echo message="************************************************" />
@@ -98,7 +98,13 @@
         <delete dir="${build.main.dir}" />
     </target>
 
-    <target name="build" depends="clean, initialize, compile, jar">
+    <target name="build-commons">
+        <echo message="************************************************" />
+        <echo message="Building commons project" />
+        <echo message="************************************************" />
+        <ant antfile="${openwms_common.dir}/build.xml" inheritall="false" target="nightly"/>
+    </target>
+    <target name="build" depends="clean, deps, initialize, compile, jar">
         <echo message="************************************************" />
         <echo message="Building..." />
         <echo message="************************************************" />
@@ -108,9 +114,33 @@
         <echo message="Building OSGi bundle..." />
         <echo message="************************************************" />
     </target>
-    <target name="nightly" depends="build, build-osgi">
+    
+    <target name="check">
+        <property name="home_var" value="$${env.OPENWMS_COMMON}"></property>
+        <condition property="home-set">
+            <not>
+		<equals arg1="${home_var}" arg2="${env.OPENWMS_COMMON}"/>
+	    </not>
+        </condition>
+    </target>
+
+    <target name="usage" depends="check" unless="home-set">
+        <echo message="*************************************************************************************" />
+        <echo message="Environment variable OPENWMS_COMMON must point to the main OpenWMS checkout directory" />
+        <echo message="" />
+        <echo message="( try: export OPENWMS_COMMON=../../ )" />
+        <echo message="*************************************************************************************" />
+        <fail/>
+    </target>
+    
+    <target name="nightly" depends="build-commons, build, build-osgi">
         <echo message="************************************************" />
         <echo message="Building nightly build" />
         <echo message="************************************************" />
     </target>
+
+    <target name="all">
+        <antcall target="usage, nightly" />
+    </target>
+    
 </project>

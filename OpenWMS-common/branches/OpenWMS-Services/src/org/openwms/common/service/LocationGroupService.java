@@ -7,6 +7,10 @@
 package org.openwms.common.service;
 
 import java.io.Serializable;
+import java.util.List;
+
+import org.openwms.common.domain.LocationGroup;
+import org.openwms.common.util.TreeNode;
 
 /**
  * A LocationGroupService.
@@ -17,5 +21,9 @@ import java.io.Serializable;
 public interface LocationGroupService<T extends Serializable> extends EntityService<T> {
 
 	void changeGroupState(T locationGroup);
+
+	TreeNode<LocationGroup> getLocationGroupsAsTree();
+
+	List<LocationGroup> getLocationGroupsAsList();
 
 }

@@ -21,11 +21,7 @@ public interface EntityService<T extends Serializable> {
 
 	T save(Class<T> clazz, T entity);
 
-	public String findAll2();// Remove
-
 	public List<T> findAll();// Remove
-
-	public List<String> findPojos();// Remove
 
 	/**
 	 * Removes a persistent entity.
