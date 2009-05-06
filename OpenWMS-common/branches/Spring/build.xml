@@ -309,9 +309,9 @@
     <target name="usage" depends="check-env" unless="home-set">
         <echo message="*************************************************************************************" />
         <echo message="Environment variable OPENWMS_COMMON must point to the main OpenWMS-commons checkout" />
-	<echo message="directory." />
+		<echo message="directory." />
         <echo message="Environment variable OPENWMS_SERVICESAPI must point to the main OpenWMS-Services" />
-	<echo message="checkout directory." />
+		<echo message="checkout directory." />
         <echo message="" />
         <echo message="( try: export OPENWMS_COMMON=../../ )" />
         <echo message="( try: export OPENWMS_SERVICESAPI=../../ )" />
@@ -319,8 +319,10 @@
         <fail/>
     </target>
     
-    <target name="all">
+    <target name="all" depends="usage">
         <antcall target="usage" />
+        <ant antfile="${env.OPENWMS_COMMON}/build.xml" inheritall="false" target="all"/>
+        <ant antfile="${env.OPENWMS_SERVICESAPI}/build.xml" inheritall="false" target="all"/>
         <antcall target="nightly" />
     </target>
 </project>
