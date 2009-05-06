@@ -5,7 +5,7 @@
  * Distributable under LGPL license.
  * See terms of license at gnu.org.
 -->
-<project xmlns:ivy="antlib:org.apache.ivy.ant" name="OpenWMS-common" default="nightly" basedir=".">
+<project xmlns:ivy="antlib:org.apache.ivy.ant" name="OpenWMS-common" default="all" basedir=".">
     <tstamp>
         <format property="TODAY" pattern="yyyy-MM-dd HH:mm:ss 'GMT'Z" />
     </tstamp>
@@ -286,7 +286,7 @@
         <echo message="Building..." />
         <echo message="************************************************" />
     </target>
-    <target name="nightly" depends="clean, initialize, deps, compile, coverage-report, jar, jar-osgi">
+    <target name="all" depends="clean, initialize, deps, compile, coverage-report, jar, jar-osgi">
         <echo message="************************************************" />
         <echo message="Building nightly build" />
         <echo message="************************************************" />
