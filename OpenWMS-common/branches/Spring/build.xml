@@ -180,7 +180,7 @@
     
     <taskdef classpathref="cobertura.classpath" resource="tasks.properties"/>
 
-    <target name="instrument" depends="compile, compile-tests">
+    <target name="instrument" depends="compile-tests">
 		<cobertura-instrument todir="${cobertura.instrumented.dir}" datafile="${cobertura.ser.file}">
 			<fileset dir="${build.main.dir}">
 				<include name="**/*.class"/>
