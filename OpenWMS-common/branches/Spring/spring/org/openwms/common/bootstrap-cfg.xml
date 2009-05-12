@@ -33,4 +33,8 @@
 	<bean class="org.springframework.dao.annotation.PersistenceExceptionTranslationPostProcessor" />
 	<bean class="org.springframework.orm.jpa.support.PersistenceAnnotationBeanPostProcessor" />
 
+	<bean id="oemiv"
+		class="org.springframework.orm.jpa.support.OpenEntityManagerInViewInterceptor"
+		autowire="byName">
+	</bean>
 </beans>

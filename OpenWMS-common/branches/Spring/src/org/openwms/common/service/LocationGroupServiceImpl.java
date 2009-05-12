@@ -8,7 +8,6 @@ package org.openwms.common.service;
 
 import java.util.List;
 import java.util.Set;
-import java.util.TreeMap;
 
 import org.openwms.common.domain.LocationGroup;
 import org.openwms.common.domain.LocationGroup.STATE;
