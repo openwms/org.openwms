@@ -92,6 +92,18 @@
             </fileset>
         </copy>
     </target>
+	
+	<taskdef name="gas3" classname="org.granite.generator.ant.AntJavaAs3Task"/>
+	<target name="generate.as3">
+	    <gas3 outputdir="client/flex/as3" >
+	        <classpath>
+	        	<pathelement location="${build.main.dir}" />
+	        </classpath>
+	        <fileset dir="${build.main.dir}">
+	            <include name="org/openwms/common/domain/**/*.class"/>
+	        </fileset>
+	    </gas3>
+	</target>
 
     <target name="compile-flex">
         <mkdir dir="${flex.build.dir}/META-INF" />
@@ -281,12 +293,12 @@
         </delete>
     </target>
 
-    <target name="build" depends="clean, initialize, compile, jar, jar-osgi">
+    <target name="build" depends="clean, initialize, compile, jar, jar-osgi, compile-flex">
         <echo message="************************************************" />
         <echo message="Building..." />
         <echo message="************************************************" />
     </target>
-    <target name="all" depends="clean, initialize, deps, compile, coverage-report, jar, jar-osgi">
+    <target name="all" depends="clean, initialize, deps, compile, coverage-report, compile-flex, jar, jar-osgi">
         <echo message="************************************************" />
         <echo message="Building nightly build" />
         <echo message="************************************************" />

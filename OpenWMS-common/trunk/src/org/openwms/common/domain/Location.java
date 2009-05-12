@@ -36,14 +36,15 @@ import org.openwms.common.domain.system.Message;
  * 
  * <code>Location</code>s could be grouped together to a <code>LocationGroup</code>.
  * 
- * @author <a href="heiko.scherrer@gmx.de">Heiko Scherrer</a>
+ * @author <a href="mailto:openwms@googlemail.com">Heiko Scherrer</a>
  * @version $Revision$
  */
 @Entity
 @Table(name = "LOCATION", uniqueConstraints = @UniqueConstraint(columnNames = { "AREA", "AISLE", "X", "Y", "Z" }))
-@NamedQueries( { @NamedQuery(name = "Location.findAll", query = "select l from Location l"),
+@NamedQueries( {
+		@NamedQuery(name = "Location.findAll", query = "select l from Location l"),
 		@NamedQuery(name = "Location.findByLocationPK", query = "select l from Location l where l.locationId = ?1"),
-		@NamedQuery(name = "Location.findAllEager", query = "select l from Location l, Message m") })
+		@NamedQuery(name = "Location.findAllEager", query = "select l from Location l left join fetch l.messages left join fetch l.locationType") })
 public class Location implements Serializable {
 
 	private static final long serialVersionUID = 1L;
