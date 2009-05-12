@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+/*
+ * OpenWMS, the Open Warehouse Management System
+ * 
+ * Distributable under LGPL license.
+ * See terms of license at gnu.org.
+ */
+-->
+<ivy-module version="2.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://ant.apache.org/ivy/schemas/ivy.xsd">
+	<info organisation="openwms.org" module="OpenWMS-Flex-Integration"/>
+	
+	<configurations>
+		<conf name="build" />
+		<conf name="test" />
+	</configurations>
+	
+	<dependencies>
+		<dependency org="javax.annotation" name="jsr250-api" rev="1.0" conf="build->*" />
+
+		<dependency org="commons-lang" name="commons-lang" rev="2.4" conf="build->*" />
+		<!-- Used for JUnit tests -->
+		<dependency org="org.dbunit" name="dbunit" rev="2.2" conf="test->*" />
+		<!-- Cobertura -->
+		<dependency org="cobertura" name="cobertura" rev="1.8" conf="test->*" />
+		<dependency org="asm" name="asm" rev="2.2.1" conf="test->*" />
+		<dependency org="oro" name="oro" rev="2.0.8" conf="test->*" />
+
+		<dependency org="org.hsqldb" name="com.springsource.org.hsqldb" rev="1.8.0.9" conf="test->*" />
+		<dependency org="org.postgresql" name="com.springsource.org.postgresql.jdbc3" rev="8.3.603" conf="build->*" />
+
+		<!-- Spring 
+		<dependency org="org.springframework" name="org.springframework.core" rev="2.5.6.A" conf="build->*" />
+		<dependency org="org.springframework" name="org.springframework.beans" rev="2.5.6.A" conf="build->*" />
+		<dependency org="org.springframework" name="org.springframework.context" rev="2.5.6.A" conf="build->*" />
+		<dependency org="org.springframework" name="org.springframework.context.support" rev="2.5.6.A" conf="build->*" />
+		<dependency org="org.springframework" name="org.springframework.transaction" rev="2.5.6.A" conf="build->*" />
+		<dependency org="org.springframework" name="org.springframework.web" rev="2.5.6.A" conf="build->*" />
+		<dependency org="org.springframework" name="org.springframework.web.servlet" rev="2.5.6.A" conf="build->*" />
+		<dependency org="com.adobe.flex" name="com.springsource.flex.messaging.common" rev="3.2.0.3978" conf="build->*"/>
+		<dependency org="com.adobe.flex" name="com.springsource.flex.messaging" rev="3.2.0.3978" conf="build->*"/>
+-->
+		<!-- Spring Security -->
+		<dependency org="org.springframework.security" name="org.springframework.security" rev="2.0.4.A" conf="build->*" />
+	</dependencies>
+</ivy-module>
