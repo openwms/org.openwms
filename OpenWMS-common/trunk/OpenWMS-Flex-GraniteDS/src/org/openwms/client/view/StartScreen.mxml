@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Canvas xmlns:mx="http://www.adobe.com/2006/mxml" width="1280" height="800">
+	<mx:Script>
+		<![CDATA[
+			import org.openwms.client.event.SwitchScreenEvent;
+		]]>
+	</mx:Script>
+
+		<mx:VBox height="800" width="1280" verticalGap="0" backgroundColor="#C2DAEF">
+		<mx:HBox width="100%" height="100" verticalAlign="middle" backgroundColor="0x9fc3db" id="hbox1" horizontalGap="8">
+			<mx:Image source="assets/images/openwms_header_logo6.png"/>
+		</mx:HBox>
+		<mx:Canvas width="100%" height="30" backgroundColor="#FFFFFF" backgroundAlpha="0.5" >
+			<mx:MenuBar x="5" y="5" width="1270" height="20" labelField="@label">
+			<mx:XMLList>
+            <menuitem label="Administration">
+                <menuitem label="SubMenuItem A-1" enabled="false"/>
+                <menuitem label="SubMenuItem A-2"/>
+            </menuitem>
+            <menuitem label="Stock Configuration"/>
+            <menuitem label="Monitoring"/>
+            <menuitem label="Management">
+                <menuitem label="Users + Roles" type="radio" groupName="one" click="new SwitchScreenEvent(SwitchScreenEvent.SHOW_LOCATION_VIEW).dispatch()"/>
+                <menuitem label="Security" 
+                    type="radio" groupName="one"
+                    selected="true"/>
+                <menuitem label="SubMenuItem D-3" 
+                    type="radio" groupName="one"/>
+            </menuitem>
+        </mx:XMLList>
+			</mx:MenuBar>
+		</mx:Canvas>
+		<mx:Button label="Show Locations" click="new SwitchScreenEvent(SwitchScreenEvent.SHOW_LOCATION_VIEW).dispatch()"/>
+		<mx:Button label="Show Location Groups" click="new SwitchScreenEvent(SwitchScreenEvent.SHOW_LOCATIONGROUP_VIEW).dispatch()"/>
+	</mx:VBox>
+
+</mx:Canvas>

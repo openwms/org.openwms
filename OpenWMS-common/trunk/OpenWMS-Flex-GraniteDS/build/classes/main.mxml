@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Application xmlns:mx="http://www.adobe.com/2006/mxml"
+	xmlns:business="org.openwms.client.business.*"
+	xmlns:control="org.openwms.client.control.*"
+	xmlns:view="org.openwms.client.view.*" 
+	layout="absolute" backgroundGradientAlphas="[1.0, 1.0]" backgroundGradientColors="[#FFFFFF, #FFFFFF]" width="1280" height="800">
+	
+	<!-- Styles -->
+	<mx:Style source="assets/css/main.css" />
+
+	<!-- Scripts -->
+	<mx:Script>
+		<![CDATA[
+			import mx.controls.Alert;
+			import org.openwms.client.model.ModelLocator;
+			[Bindable]
+			private var modelLocator:ModelLocator = ModelLocator.getInstance();
+
+			public function loadAllLocations():void {
+				trace("Function called");
+				//locationService.findAll();
+
+			}
+		]]>
+	</mx:Script>
+
+	<!-- Services -->
+	<business:Services />
+	
+	<control:MainController />
+	
+	<mx:ViewStack id="myViewStack" selectedIndex="{modelLocator.mainViewStackIndex}">
+		<view:StartScreen />
+		<view:LocationView />
+		<view:LocationGroupView />
+	</mx:ViewStack>
+
+	
+</mx:Application>

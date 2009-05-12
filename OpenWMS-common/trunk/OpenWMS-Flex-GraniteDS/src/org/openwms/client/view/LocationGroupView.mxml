@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Canvas xmlns:mx="http://www.adobe.com/2006/mxml" xmlns:business="org.openwms.client.business.*" width="1280" height="670" backgroundColor="#C2DAEF">
+	<!-- Scripts -->
+	<mx:Script>
+		<![CDATA[
+			import org.openwms.client.model.ModelLocator;
+			[Bindable]
+			private var modelLocator:ModelLocator = ModelLocator.getInstance();
+
+		]]>
+	</mx:Script>
+
+	<mx:Tree x="10" y="10" height="650" width="236"></mx:Tree>
+	<mx:Panel width="250" height="250" layout="absolute" x="762" y="10" title="Fill Level">
+		<mx:PieChart x="0" y="0" id="piechart1" width="230" height="210">
+			<mx:series>
+				<mx:PieSeries displayName="Series 1" field=""/>
+			</mx:series>
+		</mx:PieChart>
+		<mx:Legend dataProvider="{piechart1}" width="230" height="30" y="180"/>
+	</mx:Panel>
+	<mx:Panel width="250" height="250" layout="absolute" x="1020" y="10" title="No of Transports">
+		<mx:ColumnChart x="0" y="0" id="columnchart1" height="210" width="230">
+			<mx:series>
+				<mx:ColumnSeries displayName="Series 1" yField=""/>
+			</mx:series>
+		</mx:ColumnChart>
+	</mx:Panel>
+	<mx:Panel x="254" y="10" width="500" height="214" layout="absolute" title="Details">
+		<mx:CheckBox x="10" y="96" label="Group State In allowed"/>
+		<mx:CheckBox x="10" y="126" label="Group State Out allowed"/>
+		<mx:Canvas x="10" y="10" width="460" height="35" borderStyle="solid" alpha="0.5" backgroundColor="#C2DAEF">
+			<mx:Label x="5" y="5" text="Location Group :{modelLocator.allLocationGroups.getItemAt(0,0).name}" fontSize="16" textDecoration="normal"/>
+		</mx:Canvas>
+		<mx:Button y="156" label="vv" width="100%" cornerRadius="2" height="18"/>
+		<mx:Canvas x="10" y="53" width="460" height="18" backgroundColor="#C2DAEF" backgroundAlpha="0.5">
+			<mx:Label x="0" y="0" text="Parent Location Group :"/>
+		</mx:Canvas>
+		<mx:HSlider x="250" y="126"/>
+		<mx:Label x="250" y="98" text="Maximum Fill Level"/>
+	</mx:Panel>
+	<mx:HBox width="500" height="30" backgroundColor="#FFFFFF" backgroundAlpha="0.5"  x="254" y="232" verticalAlign="middle">
+		<mx:Button x="5" y="5" label="Refresh"/>
+		<mx:Button x="84" y="5" label="Show Locations"/>
+		<mx:Button x="205" y="5" label="Show Transports"/>
+	</mx:HBox>
+	<mx:Canvas x="254" y="268" width="1016" height="392">
+		<mx:DataGrid id="dgBrands" width="100%" height="100%">
+			<mx:columns>
+				<mx:DataGridColumn dataField="locationId.area" editable="false" width="50">
+					<mx:headerRenderer>
+						<mx:Component>
+							<mx:Label text="Area" styleName="headerArea" />
+						</mx:Component>
+					</mx:headerRenderer>
+				</mx:DataGridColumn>
+				<mx:DataGridColumn headerText="Aisle" dataField="locationId.aisle" editable="false" width="50" />
+				<mx:DataGridColumn headerText="X" dataField="locationId.x" editable="false" width="50" />
+				<mx:DataGridColumn headerText="Y" dataField="locationId.y" editable="false" width="50" />
+				<mx:DataGridColumn headerText="Z" dataField="locationId.z" editable="false" width="50" />
+				<mx:DataGridColumn headerText="Location Group" dataField="locationGroup.name" editable="false" />
+				<mx:DataGridColumn headerText="Description" dataField="description" editable="true" />
+				<mx:DataGridColumn headerText="Counting Active" dataField="countingActive" editable="true">
+					<mx:itemRenderer>
+						<mx:Component>
+							<mx:CheckBox />
+						</mx:Component>
+					</mx:itemRenderer>
+				</mx:DataGridColumn>
+				<mx:DataGridColumn headerText="Incoming Active" dataField="incomingActive" editable="true" />
+				<mx:DataGridColumn headerText="Outgoing Active" dataField="outgoingActive" editable="true" />
+				<mx:DataGridColumn headerText="Last Access" dataField="lastAccess" editable="false" />
+			</mx:columns>
+		</mx:DataGrid>
+	</mx:Canvas>
+
+</mx:Canvas>

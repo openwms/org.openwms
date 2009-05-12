@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+/*
+ * OpenWMS, the Open Warehouse Management System
+ * 
+ * Distributable under LGPL license.
+ * See terms of license at gnu.org.
+ */
+-->
+<beans xmlns="http://www.springframework.org/schema/beans"
+	   xmlns:flex="http://www.springframework.org/schema/flex"
+	   xmlns:security="http://www.springframework.org/schema/security"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="
+		http://www.springframework.org/schema/beans
+		http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
+		http://www.springframework.org/schema/flex 
+		http://www.springframework.org/schema/flex/spring-flex-1.0.xsd
+		http://www.springframework.org/schema/security
+		http://www.springframework.org/schema/security/spring-security-2.0.4.xsd">
+
+<!-- Maps request paths at /* to the BlazeDS MessageBroker 
+<bean class="org.springframework.web.servlet.handler.SimpleUrlHandlerMapping">
+    <property name="mappings">
+        <value>
+            /*=messageBrokerFactoryBean
+        </value>
+    </property>
+    <property name="interceptors">
+	         <list>
+        	      <ref bean="oemiv"/>
+	         </list>
+	</property>
+</bean>
+-->
+
+<!-- Dispatches requests mapped to a MessageBroker 
+<bean class="org.springframework.flex.messaging.servlet.MessageBrokerHandlerAdapter"/>
+-->    
+
+<!-- Bootstraps and exposes the BlazeDS MessageBroker 
+<bean id="messageBrokerFactoryBean" class="org.springframework.flex.messaging.MessageBrokerFactoryBean" />
+-->
+
+
+</beans>
