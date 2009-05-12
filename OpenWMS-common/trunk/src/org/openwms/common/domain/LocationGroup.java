@@ -42,7 +42,7 @@ public class LocationGroup implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	public static enum STATE {
-		AVAILABLE,NOT_AVAILABLE;
+		AVAILABLE, NOT_AVAILABLE;
 	};
 
 	/**
@@ -179,6 +179,16 @@ public class LocationGroup implements Serializable {
 	}
 
 	/**
+	 * Set the name.
+	 * 
+	 * @param name
+	 *            The name to set.
+	 */
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	/**
 	 * Returns the inbound state of this <code>LocationGroup</code>.
 	 * 
 	 * @return
@@ -215,8 +225,8 @@ public class LocationGroup implements Serializable {
 
 	/**
 	 * Returns the maximum fill level of this <code>LocationGroup</code>.<br>
-	 * The maximum fill level defines how many <code>Location</code>s of this <code>LocationGroup</code> can be occupied
-	 * with <code>TransportUnit</code>s.
+	 * The maximum fill level defines how many <code>Location</code>s of this <code>LocationGroup</code> can be
+	 * occupied with <code>TransportUnit</code>s.
 	 * <p>
 	 * The maximum fill level must be value between 0 and 1 and reflects a percentage value.
 	 * 
