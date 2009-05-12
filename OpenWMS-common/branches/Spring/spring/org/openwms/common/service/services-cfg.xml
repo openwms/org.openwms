@@ -23,7 +23,7 @@
 		<property name="dao" ref="locationDao" />
 	</bean>
 	
-	<bean id="locationGroupService" class="org.openwms.common.service.LocationGroupServiceImpl" parent="entityService">
+	<bean id="locationGroupService" class="org.openwms.common.service.LocationGroupServiceImpl">
 		<property name="dao" ref="locationGroupDao" />
 	</bean>
 
