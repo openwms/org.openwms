@@ -14,8 +14,8 @@
         destination="locationGroupService"
         showBusyCursor="true"/>
 -->
-<mx:RemoteObject id="locationService" endpoint="http://127.0.0.1:8380/OpenWMS/graniteamf/amf" destination="locationService" />
-<mx:RemoteObject id="locationGroupService" endpoint="http://127.0.0.1:8380/OpenWMS/graniteamf/amf" destination="locationGroupService" />
+<mx:RemoteObject id="locationService" endpoint="/OpenWMS/graniteamf/amf" destination="locationService" />
+<mx:RemoteObject id="locationGroupService" endpoint="/OpenWMS/graniteamf/amf" destination="locationGroupService" />
 <!--
 	<mx:HTTPService id="LocationGroupService" showBusyCursor="true" url="http://localhost:8380/OpenWMS/messagebroker/amf" />
 -->

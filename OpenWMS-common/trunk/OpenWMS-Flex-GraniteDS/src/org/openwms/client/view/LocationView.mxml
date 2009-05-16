@@ -93,9 +93,9 @@
 					</mx:PieChart>
 				</mx:Panel>
 				<mx:Canvas x="10" y="268" width="1260" height="392">
-				<mx:DataGrid id="locationsList" sortableColumns="true" width="100%" height="340" y="52" dataProvider="{modelLocator.allLocations}" itemClick="onRowClick(event)">
+				<mx:DataGrid id="locationsList" allowMultipleSelection="true" sortableColumns="true" width="100%" height="340" y="52" dataProvider="{modelLocator.allLocations}" itemClick="onRowClick(event)">
 					<mx:columns>
-						<mx:DataGridColumn dataField="area" labelFunction="locationIdField" editable="false" width="50">
+						<mx:DataGridColumn dataField="Area" labelFunction="locationIdField" editable="false" width="50">
 							<mx:headerRenderer>
 								<mx:Component>
 									<mx:Label text="Area" styleName="headerArea" />
