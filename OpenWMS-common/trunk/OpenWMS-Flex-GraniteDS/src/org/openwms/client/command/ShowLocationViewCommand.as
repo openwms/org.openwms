@@ -24,6 +24,7 @@ package org.openwms.client.command
 
 		public function execute(event:CairngormEvent):void
 		{
+			trace("Show LocationView");
 			var delegate:LocationDelegate = new LocationDelegate(this)
 			delegate.getLocations();
 			modelLocator.mainViewStackIndex = ModelLocator.MAIN_VIEW_STACK_LOCATION_VIEW;

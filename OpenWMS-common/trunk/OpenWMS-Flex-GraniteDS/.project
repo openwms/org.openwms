@@ -55,11 +55,4 @@
 		<nature>com.adobe.flexbuilder.project.actionscriptnature</nature>
 		<nature>org.granite.builder.granitenature</nature>
 	</natures>
-	<linkedResources>
-		<link>
-			<name>[source path] as3</name>
-			<type>2</type>
-			<location>/media/WORKSPACE/workspace/OpenWMS2005/OpenWMS-common/trunk/client/flex/as3</location>
-		</link>
-	</linkedResources>
 </projectDescription>

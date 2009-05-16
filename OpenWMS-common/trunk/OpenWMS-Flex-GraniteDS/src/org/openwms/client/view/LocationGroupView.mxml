@@ -4,13 +4,20 @@
 	<mx:Script>
 		<![CDATA[
 			import org.openwms.client.model.ModelLocator;
+			import org.openwms.client.model.TreeNode;
 			[Bindable]
 			private var modelLocator:ModelLocator = ModelLocator.getInstance();
+
+			private function locationGroupLabel(item:Object, dg:DataGridColumn):String
+			{
+				return item.data['id'];
+			}
 
 		]]>
 	</mx:Script>
 
-	<mx:Tree x="10" y="10" height="650" width="236"></mx:Tree>
+	<mx:Tree x="10" y="10" height="650" width="236" dataProvider="{modelLocator.locationGroupTree}" labelFunction="locationGroupLabel">
+	</mx:Tree>
 	<mx:Panel width="250" height="250" layout="absolute" x="762" y="10" title="Fill Level">
 		<mx:PieChart x="0" y="0" id="piechart1" width="230" height="210">
 			<mx:series>

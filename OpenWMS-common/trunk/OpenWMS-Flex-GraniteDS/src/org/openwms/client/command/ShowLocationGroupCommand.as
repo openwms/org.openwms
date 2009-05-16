@@ -10,6 +10,7 @@ package org.openwms.client.command
 	
 	import org.openwms.client.business.LocationGroupDelegate;
 	import org.openwms.client.model.ModelLocator;
+	import org.openwms.client.model.TreeNode;
 	import org.openwms.common.domain.LocationGroup;
 
 	public class ShowLocationGroupCommand implements ICommand, IResponder
@@ -32,6 +33,11 @@ package org.openwms.client.command
 		public function result(event:Object):void {
 			var rawResult:ArrayCollection = (event as ResultEvent).result as ArrayCollection;
 			modelLocator.allLocationGroups = (event as ResultEvent).result as ArrayCollection;
+			// Setup tree if not set before
+			if ( null == modelLocator.locationGroupTree ) {
+				modelLocator.locationGroupTree = new TreeNode();
+				modelLocator.locationGroupTree.build(modelLocator.allLocationGroups);
+			}
 			Alert.show("Name"+(modelLocator.allLocationGroups.getItemAt(10) as LocationGroup).description);
 		}
 		
