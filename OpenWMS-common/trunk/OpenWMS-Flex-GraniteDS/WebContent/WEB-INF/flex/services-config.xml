@@ -4,7 +4,7 @@
 
     <services>
         <service
-            id="granite-service"
+            id="granite-service" 
             class="flex.messaging.services.RemotingService"
             messageTypes="flex.messaging.messages.RemotingMessage">
             <destination id="locationService">
