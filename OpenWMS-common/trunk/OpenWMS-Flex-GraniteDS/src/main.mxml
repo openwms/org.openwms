@@ -43,7 +43,7 @@
 			<mx:XMLList>
             <menuitem label="Administration">
                 <menuitem label="SubMenuItem A-1" enabled="false"/>
-                <menuitem label="SubMenuItem A-2"/>
+                <menuitem label="SubMenuItem A-2" enabled="false"/>
             </menuitem>
             <menuitem label="Stock Configuration">
                 <menuitem label="Locations" action="{SwitchScreenEvent.SHOW_LOCATION_VIEW}" />
@@ -51,12 +51,12 @@
             </menuitem>
             <menuitem label="Monitoring"/>
             <menuitem label="Management">
-                <menuitem label="Users + Roles"/>
+                <menuitem label="Users + Roles" enabled="false"/>
                 <menuitem label="Security" 
                     type="radio" groupName="one"
-                    selected="true"/>
+                    selected="true" enabled="false"/>
                 <menuitem label="SubMenuItem D-3" 
-                    type="radio" groupName="one"/>
+                    type="radio" groupName="one" enabled="false"/>
             </menuitem>
         	</mx:XMLList>
 		</mx:MenuBar>

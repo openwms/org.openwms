@@ -16,6 +16,7 @@ package org.openwms.client.control
       this.addCommand( SwitchScreenEvent.SHOW_LOCATION_VIEW, ShowLocationViewCommand);
       this.addCommand( SwitchScreenEvent.SHOW_LOCATIONGROUP_VIEW, ShowLocationGroupCommand );
       this.addCommand( LoadLocationGroupsEvent.LOAD_ALL_LOCATION_GROUPS, LoadLocationGroupsCommand );
+      this.addCommand( LocationEvent.LOAD_ALL_LOCATIONS, LoadLocationsCommand );
     }
   }
 } 
