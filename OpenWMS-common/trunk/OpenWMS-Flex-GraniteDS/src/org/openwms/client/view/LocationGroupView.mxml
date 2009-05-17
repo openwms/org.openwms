@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<mx:Canvas xmlns:mx="http://www.adobe.com/2006/mxml" xmlns:business="org.openwms.client.business.*" xmlns:o="org.openwms.client.components.*" width="1280" height="670" backgroundColor="#C2DAEF">
+<mx:Canvas xmlns:mx="http://www.adobe.com/2006/mxml" xmlns:business="org.openwms.client.business.*" xmlns:o="org.openwms.client.components.*" width="1280" height="670" backgroundColor="#C2DAEF" creationComplete="init()">
 	<!-- Scripts -->
 	<mx:Script>
 		<![CDATA[
 			import org.openwms.client.model.*;
 			import org.openwms.common.domain.LocationGroup;
+			import org.openwms.client.event.LocationEvent;
 			import mx.collections.ArrayCollection;
 			import mx.events.*; 
 			[Bindable]
@@ -15,6 +16,10 @@
 			private var selectedParent:String;
 			[Bindable]
         	private var selectedLocations:ArrayCollection = new ArrayCollection(); 
+
+			private function init():void {
+				new LocationEvent(LocationEvent.LOAD_ALL_LOCATIONS).dispatch()
+			}
 			
 			private function locationGroupLabel(item:Object):String
 			{

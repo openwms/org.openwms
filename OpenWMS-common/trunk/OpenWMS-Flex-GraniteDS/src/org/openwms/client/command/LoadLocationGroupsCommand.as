@@ -34,7 +34,6 @@ package org.openwms.client.command
 		{
 			var rawResult:ArrayCollection = (data as ResultEvent).result as ArrayCollection;
 			modelLocator.allLocationGroups = (data as ResultEvent).result as ArrayCollection;
-			//Alert.show("Name"+(modelLocator.allLocationGroups.getItemAt(10) as LocationGroup).description);
 		}
 		
 		public function fault(info:Object):void
