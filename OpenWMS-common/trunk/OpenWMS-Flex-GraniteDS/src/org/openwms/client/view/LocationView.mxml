@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<mx:Canvas xmlns:mx="http://www.adobe.com/2006/mxml" width="1280" height="670" backgroundColor="#C2DAEF" creationComplete="init()">
+<mx:Canvas xmlns:mx="http://www.adobe.com/2006/mxml" xmlns:o="org.openwms.client.components.*" width="1280" height="670" backgroundColor="#C2DAEF" creationComplete="init()">
 				<mx:Script>
 					<![CDATA[
 						import mx.controls.dataGridClasses.DataGridColumn;
@@ -26,7 +26,9 @@
 						private function onRowClick( event:ListEvent ):void {
 							var selected:Location = (event.currentTarget.selectedItem) as Location;
 							selectedRow = (event.currentTarget.selectedItem) as Location;
-							locationGroupCB.selectedIndex = listLocationGroups.getItemIndex(selectedRow.locationGroup.name);
+							if (selectedRow.locationGroup != null) {
+								locationGroupCB.selectedIndex = listLocationGroups.getItemIndex(selectedRow.locationGroup.name);
+							}
 						}
 						
 						private function getListAsComboBoxList( list:ArrayCollection ):ArrayCollection {
@@ -42,15 +44,18 @@
 						
 						private function locationIdField(item:Object, dg:DataGridColumn):String
 						{
-      						return item.locationId[dg.dataField];
+							return item.locationId[dg.dataField];
 						}
 						private function locationGroupField(item:Object, dg:DataGridColumn):String
 						{
-      						return item.locationGroup[dg.dataField];
+							if(item.locationGroup != null) {
+								return item.locationGroup[dg.dataField];
+							}
+      						return "NULL";
 						}
 					]]>
 				</mx:Script>
-				<mx:Panel x="12" y="10" width="744" height="250" layout="absolute" title="Location Details" id="locationDetailsPnl">
+				<o:SuperPanel x="12" y="10" width="744" height="250" layout="absolute" title="Location Details" id="locationDetailsPnl" showControls="true" enableResize="true">
 					<mx:Label text="Description:"  y="48" x="10"/>
 					<mx:Label x="10" y="12" text="Location:" />
 					<mx:Text x="139" y="12" text="{selectedRow.locationId.area}/{selectedRow.locationId.aisle}/{selectedRow.locationId.x}/{selectedRow.locationId.y}/{selectedRow.locationId.z}" width="241"/>
@@ -74,28 +79,28 @@
 					<mx:Text x="263" y="182" text="{selectedRow.checkState}"/>
 					<mx:Text x="373" y="182" text="{selectedRow.plcState}"/>
 					<mx:Text x="531" y="93" text="{selectedRow.locationType.description}" width="183"/>
-				</mx:Panel>
-				<mx:Panel width="250" height="250" layout="absolute" x="1020" y="10" title="No of Transports">
-					<mx:ColumnChart x="0" y="0" id="columnchart1" height="210" width="230" dataProvider="{selectedRow.noMaxTransportUnits}">
+				</o:SuperPanel>
+				<o:SuperPanel width="250" height="250" layout="absolute" x="1020" y="10" title="No of Transports" showControls="true" enableResize="true">
+					<mx:ColumnChart x="0" y="0" id="columnchart1" horizontalAxisRatio=".33" verticalAxisRatio=".99" height="100%" width="100%" dataProvider="{selectedRow.noMaxTransportUnits}">
 						<mx:series>
-							<mx:ColumnSeries displayName="Series 1"  yField="Profit" xField="In"/>
+							<mx:ColumnSeries displayName="Series 1"/>
 						</mx:series>
 						<mx:horizontalAxis>
-							<mx:CategoryAxis dataProvider="{selectedRow.noMaxTransportUnits}" categoryField="Number"/>
+							<mx:CategoryAxis dataProvider="{selectedRow.noMaxTransportUnits}"  categoryField="Number"/>
 						</mx:horizontalAxis>
 					</mx:ColumnChart>
-				</mx:Panel>
-				<mx:Panel width="250" height="250" layout="absolute" x="762" y="10" title="Fill Level">
-					<mx:PieChart x="0" y="0" id="piechart1" width="230" height="210">
+				</o:SuperPanel>
+				<o:SuperPanel width="250" height="250" layout="absolute" x="762" y="10" title="Fill Level" showControls="true" enableResize="true">
+					<mx:PieChart x="0" y="0" id="piechart1" width="210" height="200">
 						<mx:series>
 							<mx:PieSeries displayName="Series 1" field=""/>
 						</mx:series>
 					</mx:PieChart>
-				</mx:Panel>
+				</o:SuperPanel>
 				<mx:Canvas x="10" y="268" width="1260" height="392">
 				<mx:DataGrid id="locationsList" allowMultipleSelection="true" sortableColumns="true" width="100%" height="340" y="52" dataProvider="{modelLocator.allLocations}" itemClick="onRowClick(event)">
 					<mx:columns>
-						<mx:DataGridColumn dataField="Area" labelFunction="locationIdField" editable="false" width="50">
+						<mx:DataGridColumn dataField="area" labelFunction="locationIdField" editable="false" width="50">
 							<mx:headerRenderer>
 								<mx:Component>
 									<mx:Label text="Area" styleName="headerArea" />
