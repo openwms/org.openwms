@@ -38,7 +38,6 @@ package org.openwms.client.command
 				modelLocator.locationGroupTree = new TreeNode();
 				modelLocator.locationGroupTree.build(modelLocator.allLocationGroups);
 			}
-			Alert.show("Name"+(modelLocator.allLocationGroups.getItemAt(10) as LocationGroup).description);
 		}
 		
 		public function fault(event:Object):void {

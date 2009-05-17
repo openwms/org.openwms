@@ -8,7 +8,7 @@ package org.openwms.client.model
 	public class TreeNode
 	{
 		private var _parent:TreeNode;
-		private var _child:Dictionary = new Dictionary();
+		private var _child:ArrayCollection;
 		private var _data:Object;
 		private var _list:ArrayCollection;
 
@@ -30,55 +30,98 @@ package org.openwms.client.model
 		public function setParent(node:TreeNode):void {
 			_parent = node;
 		}
+		private function getParent():TreeNode {
+			return _parent;
+		}
 		
 		public function getChild(key:Object):TreeNode {
-			Alert.show("Try to find child with key:"+key);
-			Alert.show("Details of arr:"+_child);
-			return _child[key];
+			if(_child==null) {
+				return null;
+			}
+			for (var i:uint=0;i<_child.length;i++) {
+				if (_child[i].getData().id == key){
+					return _child[i];
+				}
+			}
+			return null;
+		}
+		private function addChild(node:TreeNode):void {
+			if (_child==null) {
+				_child = new ArrayCollection();
+			}
+			_child.addItem(node);
+		}
+				
+		public function get children():ArrayCollection {
+			return _child;
 		}
 		
 		
 		private function createTree(root:TreeNode):TreeNode {
+			var r:TreeNode;
 			for (var i:uint=0;i < _list.length; i++) {
-				searchForNode(_list[i], root);
+				r = searchForNode(_list[i], root);
 			}
+			trace("----Start tracing tree----");
+			traceTree(root,0);
 			return root;
 		}
 
 		private function searchForNode(lg:LocationGroup, root:TreeNode):TreeNode {
-			Alert.show("Node details :"+lg.name+", Parent:"+lg.parent);
-			trace("okay");
+			trace("Node details :"+lg.name+", Parent:"+lg.parent," Root:"+root.getData());
 			var node:TreeNode;
 			if (lg.parent == null) {
-				Alert.show("I understand, parent is null");
+				trace("--Parent == null");
 				node = root.getChild(lg.id);
-				Alert.show("Okay, parent found, node = "+node);
 				if (node == null) {
-					Alert.show("Add this as root node");
+					trace("--Parent has no child set");
 					var n1:TreeNode = new TreeNode();
 					n1.setData(lg);
 					n1.setParent(root);
-					root.addChild(n1.getData().id, n1);
-					Alert.show("Return new node n1:"+n1);
+					root.addChild(n1);
+					trace("--n1 looks like:["+n1.getParent()+"], ["+n1.getData()+"]");
+					trace("--Adding n1 as child of root:");
 					return n1;
+				} else {
+					trace("--Child of it:"+node.getData());
 				}
 				return node;
 			} else {
+				trace("Parent is not null, Parent ="+lg.parent.name);
 				node = searchForNode(lg.parent, root);
+				trace("After coming back from search for "+lg.parent);
 				var child:TreeNode = node.getChild(lg.id);
 				if (child == null) {
 					child = new TreeNode();
 					child.setData(lg);
 					child.setParent(node);
-					node.addChild(lg.id, child);
+					node.addChild(child);
+					trace("Added lg as child of node");
 				}
 				return child;
 			}
 		}
 
-		private function addChild(key:Object, node:TreeNode):void {
-			_child[key] = node;
-		} 
+		private function traceTree(tree:TreeNode, level:uint):void {
+			//trace("start trace");
+			if (tree != null) {
+				var _level:uint=level+1;
+				var l:String="";
+				for(var i:uint=0;i<_level;i++) {
+					l=l+"-";
+				}
+				if (tree.getData() != null) {
+					trace(l+""+tree.getData().name);
+				}
+				var f:ArrayCollection=tree.children;
+				if (f != null) {
+					//trace(l+"Tracing Children:"+f.length);
+					for (var x:uint;x<f.length;x++) {
+						traceTree(f[x],_level);
+					}
+				}
+			}
+		}
 		
 
 	}
