@@ -113,7 +113,7 @@
 		<mx:Button x="205" y="5" label="Show Transports"/>
 	</mx:HBox>
 	<mx:Canvas x="254" y="268" width="1016" height="392">
-		<mx:DataGrid id="dgBrands" width="100%" height="100%" dataProvider="{selectedLocations}">
+		<mx:DataGrid id="locationsList" allowMultipleSelection="true" sortableColumns="true" width="100%" height="100%" dataProvider="{selectedLocations}">
 					<mx:columns>
 						<mx:DataGridColumn dataField="area" labelFunction="locationIdField" editable="false" width="50">
 							<mx:headerRenderer>
