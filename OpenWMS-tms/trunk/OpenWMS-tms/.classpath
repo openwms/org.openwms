@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
-	<classpathentry combineaccessrules="false" exported="true" kind="src" path="/OpenWMS-common"/>
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="src" path="test"/>
+	<classpathentry combineaccessrules="false" exported="true" kind="src" path="/OpenWMS-common"/>
 	<classpathentry exported="true" kind="lib" path="deps/build/commons-lang-2.4.jar"/>
 	<classpathentry exported="true" kind="lib" path="deps/build/commons-logging-1.1.1.jar"/>
 	<classpathentry exported="true" kind="lib" path="deps/build/persistence-api-1.0.jar"/>
