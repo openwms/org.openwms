@@ -100,7 +100,7 @@
 	
 	<target name="generate.as3">
 		<taskdef name="gas3" classname="org.granite.generator.ant.AntJavaAs3Task" classpathref="gas.class.path"/>
-	    <gas3 outputdir="client/flex/as3" >
+	    <gas3 outputdir="${flex.src.dir}" >
 	        <classpath>
 	        	<pathelement location="${build.main.dir}" />
 	        </classpath>
