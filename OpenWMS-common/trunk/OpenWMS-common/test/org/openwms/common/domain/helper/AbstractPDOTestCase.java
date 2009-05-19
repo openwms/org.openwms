@@ -55,7 +55,6 @@ public abstract class AbstractPDOTestCase {
 	/**
 	 * Do after test run.
 	 * 
-	 * @throws java.lang.Exception
 	 */
 	@AfterClass
 	public static void tearDownAfterClass() {
