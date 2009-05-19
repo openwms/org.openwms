@@ -12,6 +12,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.Table;
 import javax.persistence.Version;
 
 /**
@@ -22,6 +23,7 @@ import javax.persistence.Version;
  * @version $Revision$
  */
 @Entity
+@Table(name = "EMAIL")
 public class Email implements Serializable {
     private static final long serialVersionUID = 1L;
 

@@ -27,8 +27,7 @@ import javax.persistence.UniqueConstraint;
  * @version $Revision$
  */
 @Entity
-@Table(name = "TYPE_PLACING_RULE", uniqueConstraints = @UniqueConstraint(columnNames = { "TRANSPORT_UNIT_TYPE",
-	"PRIVILEGE_LEVEL", "ALLOWED_LOCATION_TYPE" }))
+@Table(name = "TYPE_PLACING_RULE", uniqueConstraints = @UniqueConstraint(columnNames = { "TRANSPORT_UNIT_TYPE", "PRIVILEGE_LEVEL", "ALLOWED_LOCATION_TYPE" }))
 public class TypePlacingRule implements Serializable {
     private static final long serialVersionUID = 1L;
 
@@ -68,7 +67,13 @@ public class TypePlacingRule implements Serializable {
     private LocationType allowedLocationType;
 
     /* ----------------------------- methods ------------------- */
-    /**
+	/**
+	 * Create a new <code>TypePlacingRule</code>.
+	 */
+    @SuppressWarnings("unused")
+	private TypePlacingRule() {}
+
+	/**
      * Create new <code>TypePlacingRule</code> with privilegeLevel and allowedLocationType.
      * 
      * @param privilegeLevel
