@@ -6,16 +6,20 @@
  */
 package org.openwms.common.service;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.openwms.common.dao.GenericDao;
 import org.openwms.common.domain.Location;
+import org.openwms.common.domain.LocationGroup;
 import org.openwms.common.domain.LocationPK;
 import org.openwms.common.domain.TransportUnit;
 import org.openwms.common.domain.TransportUnitType;
 import org.openwms.common.domain.values.Barcode;
-import org.openwms.common.service.TransportService;
 import org.openwms.common.service.exception.ServiceException;
+import org.openwms.tms.domain.order.TransportOrder;
 import org.springframework.beans.factory.annotation.Required;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -32,6 +36,7 @@ public class TransportServiceImpl implements TransportService {
 	protected Log logger = LogFactory.getLog(this.getClass());
 	private GenericDao<TransportUnit, Long> transportUnitDao;
 	private GenericDao<Location, Long> locationDao;
+	private GenericDao<TransportOrder, Long> transportOrderDao;
 
 	@Required
 	public void setLocationDao(GenericDao<Location, Long> locationDao) {
@@ -41,6 +46,18 @@ public class TransportServiceImpl implements TransportService {
 	@Required
 	public void setTransportUnitDao(GenericDao<TransportUnit, Long> transportUnitDao) {
 		this.transportUnitDao = transportUnitDao;
+	}
+
+	@Required
+	public void setTransportOrderDao(GenericDao<TransportOrder, Long> transportOrderDao) {
+		this.transportOrderDao = transportOrderDao;
+	}
+
+	public int getNumberTransportsToLocGroup(LocationGroup locationGroup) {
+		Map<String, LocationGroup> map = new HashMap<String, LocationGroup>();
+		map.put("locationGroup", locationGroup);
+		int i = transportOrderDao.findByQuery("select count(*) from TransportOrder where targetLocationGroup = :locationGroup", map).size();
+		return 0;
 	}
 
 	/**
