@@ -2,22 +2,87 @@
 <classpath>
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="src" path="test"/>
-	<classpathentry exported="true" kind="lib" path="deps/build/commons-lang-2.4.jar"/>
-	<classpathentry exported="true" kind="lib" path="deps/build/commons-logging-1.1.1.jar"/>
-	<classpathentry exported="true" kind="lib" path="deps/build/persistence-api-1.0.jar"/>
-	<classpathentry exported="true" kind="lib" path="deps/test/hsqldb-1.8.0.7.jar"/>
-	<classpathentry exported="true" kind="lib" path="deps/test/junit-4.4.jar"/>
-	<classpathentry exported="true" kind="lib" path="deps/test/hibernate-core-3.3.1.GA.jar"/>
-	<classpathentry exported="true" kind="lib" path="deps/test/hibernate-entitymanager-3.4.0.GA.jar"/>
-	<classpathentry exported="true" kind="lib" path="deps/test/dom4j-1.6.1.jar"/>
-	<classpathentry exported="true" kind="lib" path="deps/test/hibernate-annotations-3.4.0.GA.jar"/>
-	<classpathentry exported="true" kind="lib" path="deps/test/hibernate-commons-annotations-3.3.0.ga.jar"/>
-	<classpathentry exported="true" kind="lib" path="deps/test/slf4j-api-1.5.6.jar"/>
-	<classpathentry exported="true" kind="lib" path="deps/test/javassist-3.6.0.GA.jar"/>
-	<classpathentry exported="true" kind="lib" path="deps/test/slf4j-simple-1.5.6.jar"/>
-	<classpathentry exported="true" kind="lib" path="deps/build/commons-collections-3.2.1.jar"/>
-	<classpathentry exported="true" kind="lib" path="deps/test/antlr-2.7.7.jar"/>
-	<classpathentry exported="true" kind="lib" path="deps/test/jta-1.1.jar"/>
+	<classpathentry exported="true" kind="lib" path="deps/build/commons-lang-2.4.jar">
+		<attributes>
+			<attribute name="org.eclipse.jst.component.dependency" value="../"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry exported="true" kind="lib" path="deps/build/commons-logging-1.1.1.jar">
+		<attributes>
+			<attribute name="org.eclipse.jst.component.dependency" value="../"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry exported="true" kind="lib" path="deps/build/persistence-api-1.0.jar">
+		<attributes>
+			<attribute name="org.eclipse.jst.component.dependency" value="../"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry exported="true" kind="lib" path="deps/test/hsqldb-1.8.0.7.jar">
+		<attributes>
+			<attribute name="org.eclipse.jst.component.dependency" value="../"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry exported="true" kind="lib" path="deps/test/junit-4.4.jar">
+		<attributes>
+			<attribute name="org.eclipse.jst.component.dependency" value="../"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry exported="true" kind="lib" path="deps/test/hibernate-core-3.3.1.GA.jar">
+		<attributes>
+			<attribute name="org.eclipse.jst.component.dependency" value="../"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry exported="true" kind="lib" path="deps/test/hibernate-entitymanager-3.4.0.GA.jar">
+		<attributes>
+			<attribute name="org.eclipse.jst.component.dependency" value="../"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry exported="true" kind="lib" path="deps/test/dom4j-1.6.1.jar">
+		<attributes>
+			<attribute name="org.eclipse.jst.component.dependency" value="../"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry exported="true" kind="lib" path="deps/test/hibernate-annotations-3.4.0.GA.jar">
+		<attributes>
+			<attribute name="org.eclipse.jst.component.dependency" value="../"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry exported="true" kind="lib" path="deps/test/hibernate-commons-annotations-3.3.0.ga.jar">
+		<attributes>
+			<attribute name="org.eclipse.jst.component.dependency" value="../"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry exported="true" kind="lib" path="deps/test/slf4j-api-1.5.6.jar">
+		<attributes>
+			<attribute name="org.eclipse.jst.component.dependency" value="../"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry exported="true" kind="lib" path="deps/test/javassist-3.6.0.GA.jar">
+		<attributes>
+			<attribute name="org.eclipse.jst.component.dependency" value="../"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry exported="true" kind="lib" path="deps/test/slf4j-simple-1.5.6.jar">
+		<attributes>
+			<attribute name="org.eclipse.jst.component.dependency" value="../"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry exported="true" kind="lib" path="deps/build/commons-collections-3.2.1.jar">
+		<attributes>
+			<attribute name="org.eclipse.jst.component.dependency" value="../"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry exported="true" kind="lib" path="deps/test/antlr-2.7.7.jar">
+		<attributes>
+			<attribute name="org.eclipse.jst.component.dependency" value="../"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry exported="true" kind="lib" path="deps/test/jta-1.1.jar">
+		<attributes>
+			<attribute name="org.eclipse.jst.component.dependency" value="../"/>
+		</attributes>
+	</classpathentry>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="con" path="com.springsource.server.ide.jdt.core.MANIFEST_CLASSPATH_CONTAINER"/>
 	<classpathentry kind="output" path="build/classes"/>
 </classpath>
