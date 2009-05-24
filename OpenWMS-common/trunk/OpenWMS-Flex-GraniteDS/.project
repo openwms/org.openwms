@@ -6,6 +6,7 @@
 		<project>OpenWMS-Services</project>
 		<project>OpenWMS-common-Spring</project>
 		<project>OpenWMS-common</project>
+		<project>OpenWMS-tms</project>
 	</projects>
 	<buildSpec>
 		<buildCommand>

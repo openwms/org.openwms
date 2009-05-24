@@ -13,6 +13,9 @@
         <dependent-module archiveName="OpenWMS-common.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/OpenWMS-common/OpenWMS-common">
             <dependency-type>uses</dependency-type>
         </dependent-module>
+        <dependent-module archiveName="OpenWMS-tms.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/OpenWMS-tms/OpenWMS-tms">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
         <property name="java-output-path"/>
         <property name="context-root" value="OpenWMS"/>
     </wb-module>
