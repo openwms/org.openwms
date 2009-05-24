@@ -8,9 +8,7 @@
 </libraryPath>
 <sourceAttachmentPath/>
 </compiler>
-<applications>
-<application path="main.mxml"/>
-</applications>
+<applications/>
 <modules/>
 <buildCSSFiles/>
 </actionScriptProperties>
