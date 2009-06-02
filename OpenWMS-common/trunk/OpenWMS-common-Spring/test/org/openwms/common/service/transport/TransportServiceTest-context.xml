@@ -22,7 +22,12 @@
 		<property name="entityManagerFactory" ref="entityManagerFactory"/>
 	</bean>
 
+	<bean id="transportOrderDao" class="org.openwms.common.dao.core.TransportOrderDaoImpl" >
+		<property name="entityManagerFactory" ref="entityManagerFactory"/>
+	</bean>
+
 	<bean id="transportService" class="org.openwms.common.service.TransportServiceImpl">
+		<property name="transportOrderDao" ref="transportOrderDao"/>
 		<property name="transportUnitDao" ref="transportUnitDao"/>
 		<property name="locationDao" ref="locationDao"/>
 	</bean>

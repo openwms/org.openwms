@@ -12,6 +12,7 @@ import java.util.Map;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.openwms.common.dao.GenericDao;
+import org.openwms.common.dao.TransportOrderDao;
 import org.openwms.common.domain.Location;
 import org.openwms.common.domain.LocationGroup;
 import org.openwms.common.domain.LocationPK;
@@ -36,7 +37,7 @@ public class TransportServiceImpl implements TransportService {
 	protected Log logger = LogFactory.getLog(this.getClass());
 	private GenericDao<TransportUnit, Long> transportUnitDao;
 	private GenericDao<Location, Long> locationDao;
-	private GenericDao<TransportOrder, Long> transportOrderDao;
+	private TransportOrderDao transportOrderDao;
 
 	@Required
 	public void setLocationDao(GenericDao<Location, Long> locationDao) {
@@ -49,15 +50,15 @@ public class TransportServiceImpl implements TransportService {
 	}
 
 	@Required
-	public void setTransportOrderDao(GenericDao<TransportOrder, Long> transportOrderDao) {
+	public void setTransportOrderDao(TransportOrderDao transportOrderDao) {
 		this.transportOrderDao = transportOrderDao;
 	}
 
 	public int getNumberTransportsToLocGroup(LocationGroup locationGroup) {
 		Map<String, LocationGroup> map = new HashMap<String, LocationGroup>();
 		map.put("locationGroup", locationGroup);
-		int i = transportOrderDao.findByQuery("select count(*) from TransportOrder where targetLocationGroup = :locationGroup", map).size();
-		return 0;
+		return transportOrderDao.findByQuery(
+				"select count(*) from TransportOrder where targetLocationGroup = :locationGroup", map).size();
 	}
 
 	/**
@@ -102,5 +103,9 @@ public class TransportServiceImpl implements TransportService {
 		// throw new ServiceException("Cannot move TransportUnit with barcode " + barcode + " to location "
 		// + newLocationPk, e);
 		// }
+	}
+	
+	public int getTransportsToLocationGroup(LocationGroup locationGroup) {
+		return transportOrderDao.getNumberOfTransportOrders(locationGroup);
 	}
 }

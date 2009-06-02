@@ -6,8 +6,7 @@
  */
 package org.openwms.common.dao;
 
-import java.io.Serializable;
-
+import org.openwms.common.domain.LocationGroup;
 import org.openwms.tms.domain.order.TransportOrder;
 
 /**
@@ -21,6 +20,6 @@ public interface TransportOrderDao extends GenericDao<TransportOrder, Long> {
 	public final String NQ_FIND_ALL = "TransportOrder.findAll";
 	public final String NQ_FIND_BY_ID = "TransportUnitType.findById";
 	
-	public int getNumberOfTransportOrders(String sqlString, Class<Serializable> resultClass);
+	public int getNumberOfTransportOrders(LocationGroup locationGroup);
 
 }
