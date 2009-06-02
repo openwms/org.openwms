@@ -67,18 +67,43 @@
             <src path="${src.dir}" />
         </javac>
     </target>
+	
+	<target name="copy-libs">
+        <delete>
+            <fileset dir="WebContent/WEB-INF/lib">
+                <include name="**/*" />
+            </fileset>
+        </delete>
+		<copy file="${openwms_common.jar}" todir="WebContent/WEB-INF/lib" />
+		<copy file="${openwms_tms.jar}" todir="WebContent/WEB-INF/lib" />
+		<copy file="${openwms_services.jar}" todir="WebContent/WEB-INF/lib" />
+		<copy file="${openwms_service-impl.jar}" todir="WebContent/WEB-INF/lib" />
+		<copy todir="WebContent/WEB-INF/lib">
+			<fileset dir="${deps.build.dir}" id="id">
+    			<exclude name="*javax.servlet*"/>
+    			<exclude name="*-sources-*"/>
+    			<exclude name="license-*.txt"/>
+			</fileset>
+			<fileset dir="${lib.dir}">
+				<include name="granite-spring.jar"/>
+				<include name="granite-hibernate.jar"/>
+				<include name="granite.jar"/>
+			</fileset>
+		</copy>
+		
+	</target>
 
-	<target name="jar">
+	<target name="war" depends="copy-libs">
         <echo message="************************************************" />
-        <echo message="Create jar file ${dist.dir}/${jar.file}..." />
+        <echo message="Create war file ${dist.dir}/${war.file}..." />
         <echo message="************************************************" />
-        <jar destfile="${dist.dir}/${jar.file}">
-            <fileset dir="${build.main.dir}" />
+        <war destfile="${dist.dir}/${war.file}" webxml="WebContent/WEB-INF/web.xml">
+            <fileset dir="WebContent" />
             <manifest>
                 <attribute name="Main-Class" value="" />
                 <attribute name="Class-Path" value="." />
             </manifest>
-        </jar>
+        </war>
     </target>
 
     <target name="jar-osgi">
@@ -97,7 +122,7 @@
         <delete dir="${build.main.dir}" />
     </target>
 
-    <target name="build" depends="clean, initialize, compile, jar">
+    <target name="build" depends="clean, initialize, compile, war">
         <echo message="************************************************" />
         <echo message="Building..." />
         <echo message="************************************************" />
