@@ -20,6 +20,9 @@
 	<property name="bundle.manifestVersion" value="2"/>
 
     <path id="class.path">
+        <fileset dir="${openwms_tms.dist.dir}">
+            <include name="**/*.jar" />
+        </fileset>
         <fileset dir="${openwms_common.dist.dir}">
             <include name="**/*.jar" />
         </fileset>
@@ -35,6 +38,9 @@
     </path>
 
     <path id="project.deps.path">
+        <fileset dir="${openwms_tms.dist.dir}">
+            <include name="**/*.jar" />
+        </fileset>
         <fileset dir="${openwms_common.dist.dir}">
             <include name="**/*.jar" />
         </fileset>
