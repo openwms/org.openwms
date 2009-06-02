@@ -6,6 +6,7 @@
  */
 package org.openwms.common.service;
 
+import org.openwms.common.domain.LocationGroup;
 import org.openwms.common.domain.LocationPK;
 import org.openwms.common.domain.TransportUnit;
 import org.openwms.common.domain.TransportUnitType;
@@ -37,5 +38,7 @@ public interface TransportService {
 	 * @param locationPk
 	 */
 	void moveTransportUnit(Barcode barcode, LocationPK locationPk) throws ServiceException;
+	
+	int getTransportsToLocationGroup(LocationGroup locationGroup);
 
 }
