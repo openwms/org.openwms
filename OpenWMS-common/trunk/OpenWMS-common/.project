@@ -25,11 +25,6 @@
 			<arguments>
 			</arguments>
 		</buildCommand>
-		<buildCommand>
-			<name>org.granite.builder.granitebuilder</name>
-			<arguments>
-			</arguments>
-		</buildCommand>
 	</buildSpec>
 	<natures>
 		<nature>org.springframework.ide.eclipse.core.springnature</nature>
@@ -37,6 +32,5 @@
 		<nature>org.eclipse.jdt.core.javanature</nature>
 		<nature>org.eclipse.wst.common.modulecore.ModuleCoreNature</nature>
 		<nature>org.eclipse.jem.workbench.JavaEMFNature</nature>
-		<nature>org.granite.builder.granitenature</nature>
 	</natures>
 </projectDescription>
