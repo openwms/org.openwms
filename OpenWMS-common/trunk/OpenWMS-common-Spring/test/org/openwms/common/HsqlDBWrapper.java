@@ -75,7 +75,7 @@ public class HsqlDBWrapper {
 			dbStarted = true;
 		}
 		catch (Exception ex) {
-			throw new RuntimeException("Exception during HSQL database startup.\n"+ex.getStackTrace());
+			throw new RuntimeException("Exception during HSQL database startup",ex);
 		}
 	}
 
