@@ -1,0 +1,50 @@
+Button {
+   highlightAlphas: 1, 0.33;
+   fillAlphas: 1, 0.16, 0.18, 1;
+   fillColors: #5f89b9, #697182, #ffffff, #eeeeee;
+}
+Panel {
+	headerHeight: 26;
+	roundedBottomCorners: true;
+	borderThicknessTop: 0;
+	borderThicknessBottom: 3;
+	borderThicknessLeft: 3;
+	borderThicknessRight: 3;
+	borderAlpha: 1.0;
+	titleStyleName: "mypanelTitle";
+}
+.mypanelTitle {
+	fontFamily: Arial;
+	fontSize: 10;
+	fontWeight: bold;
+}
+.closeBtn {
+	upSkin:        Embed('/assets/images/closeButton.png');
+	overSkin:      Embed('/assets/images/closeButton.png');
+	downSkin:      Embed('/assets/images/closeButton.png');
+	disabledSkin:  Embed('/assets/images/closeButton.png');
+}
+.increaseBtn {
+	upSkin:        Embed('/assets/images/increaseButton.png');
+	overSkin:      Embed('/assets/images/increaseButton.png');
+	downSkin:      Embed('/assets/images/increaseButton.png');
+	disabledSkin:  Embed('/assets/images/increaseButton.png');
+}
+.decreaseBtn {
+	upSkin:        Embed('/assets/images/decreaseButton.png');
+	overSkin:      Embed('/assets/images/decreaseButton.png');
+	downSkin:      Embed('/assets/images/decreaseButton.png');
+	disabledSkin:  Embed('/assets/images/decreaseButton.png');
+}
+.minimizeBtn {
+	upSkin:        Embed('/assets/images/decreaseButton.png');
+	overSkin:      Embed('/assets/images/decreaseButton.png');
+	downSkin:      Embed('/assets/images/decreaseButton.png');
+	disabledSkin:  Embed('/assets/images/decreaseButton.png');
+}
+.resizeHndlr {
+	upSkin:        Embed('/assets/images/resizeHandler.png');
+	overSkin:      Embed('/assets/images/resizeHandler.png');
+	downSkin:      Embed('/assets/images/resizeHandler.png');
+	disabledSkin:  Embed('/assets/images/resizeHandler.png');
+}
