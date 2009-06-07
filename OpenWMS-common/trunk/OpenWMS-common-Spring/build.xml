@@ -21,7 +21,7 @@
 
     <path id="class.path">
         <fileset dir="${openwms_tms.dist.dir}">
-            <include name="**/*.jar" />
+            <include name="**/OpenWMS-tms.jar" />
         </fileset>
         <fileset dir="${openwms_common.dist.dir}">
             <include name="**/*.jar" />
