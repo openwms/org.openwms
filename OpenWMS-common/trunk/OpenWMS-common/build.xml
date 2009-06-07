@@ -30,6 +30,12 @@
         <fileset dir="${lib.dir}/granite">
             <include name="**/*.jar" />
         </fileset>
+        <fileset dir="${deps.dir}/build">
+            <include name="**/*.jar" />
+        </fileset>
+        <fileset dir="${deps.dir}/test">
+            <include name="*.jar" />
+        </fileset>
     </path>
 
     <!-- All non java files in the src directory -->
