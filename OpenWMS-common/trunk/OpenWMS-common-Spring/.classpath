@@ -48,7 +48,11 @@
 			<attribute name="org.eclipse.jst.component.dependency" value="../"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="lib" path="deps/test/com.springsource.org.hsqldb-1.8.0.9.jar" sourcepath="deps/test/com.springsource.org.hsqldb-sources-1.8.0.9.jar"/>
+	<classpathentry exported="true" kind="lib" path="deps/test/com.springsource.org.hsqldb-1.8.0.9.jar" sourcepath="deps/test/com.springsource.org.hsqldb-sources-1.8.0.9.jar">
+		<attributes>
+			<attribute name="org.eclipse.jst.component.dependency" value="../"/>
+		</attributes>
+	</classpathentry>
 	<classpathentry exported="true" kind="lib" path="deps/test/com.springsource.net.sf.cglib-2.1.3.jar" sourcepath="deps/test/com.springsource.net.sf.cglib-sources-2.1.3.jar">
 		<attributes>
 			<attribute name="org.eclipse.jst.component.dependency" value="../"/>
