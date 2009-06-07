@@ -92,7 +92,7 @@
             <src path="${src.dir}" />
         </javac>
         <copy todir="${build.main.dir}">
-            <fileset dir="${src.dir}">
+            <fileset dir="${res.dir}">
                 <patternset refid="all.nonjava.files" />
             </fileset>
         </copy>
@@ -151,7 +151,7 @@
             </classpath>
         </javac>
         <copy todir="${build.test.dir}">
-            <fileset dir="${testsrc.dir}">
+            <fileset dir="${testres.dir}">
                 <patternset refid="all.nonjava.files" />
             </fileset>
         </copy>
@@ -276,7 +276,7 @@
         <echo message="************************************************" />
         <echo message="Create OSGi compliant jar file ${dist.dir}/${osgi-jar.file}..." />
         <echo message="************************************************" />
-        <jar destfile="${dist.dir}/${osgi-jar.file}" manifest="${src.meta-inf.dir}/MANIFEST.MF">
+        <jar destfile="${dist.dir}/${osgi-jar.file}" manifest="${res.dir}/META-INF/MANIFEST.MF">
             <fileset dir="${build.main.dir}" />
         </jar>
     </target>
