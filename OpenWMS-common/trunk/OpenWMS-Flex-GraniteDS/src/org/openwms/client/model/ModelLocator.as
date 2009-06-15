@@ -1,31 +1,42 @@
+/*
+ * OpenWMS, the Open Warehouse Management System
+ * 
+ * Distributable under LGPL license.
+ * See terms of license at gnu.org.
+ */
 package org.openwms.client.model {
-  import com.adobe.cairngorm.model.IModelLocator;
-  
-  import mx.collections.ArrayCollection;
-  [Bindable]
-  public class ModelLocator implements IModelLocator {
+	import com.adobe.cairngorm.model.IModelLocator;
+	import mx.collections.ArrayCollection;
 
-    private static var instance:ModelLocator;
+	/**
+	 * A ModelLocator.
+	 * 
+	 * @author <a href="mailto:openwms@googlemail.com">Heiko Scherrer</a>
+	 * @version $Revision: 235 $
+	 */
+	[Bindable]
+	public class ModelLocator implements IModelLocator {
 
-    public function ModelLocator(enforcer:SingletonEnforcer) {
-    }
+		public static const MAIN_VIEW_STACK_START_SCREEN:uint = 0;
+		public static const MAIN_VIEW_STACK_LOCATION_VIEW:uint = 1;
+		public static const MAIN_VIEW_STACK_LOCATIONGROUP_VIEW:uint = 2;
 
-    public static function getInstance():ModelLocator {
-      if ( instance == null ) {
-        instance = new ModelLocator( new SingletonEnforcer );
-      }
-      return instance;
-    }
+		public var mainViewStackIndex:uint = MAIN_VIEW_STACK_START_SCREEN;
+		public var allLocationGroups:ArrayCollection = new ArrayCollection();
+		public var allLocations:ArrayCollection = new ArrayCollection();
+		public var locationGroupTree:TreeNode;
 
-    public static const MAIN_VIEW_STACK_START_SCREEN:uint = 0;
-    public static const MAIN_VIEW_STACK_LOCATION_VIEW:uint = 1;
-    public static const MAIN_VIEW_STACK_LOCATIONGROUP_VIEW:uint = 2;
+		private static var instance:ModelLocator;
 
-    public var mainViewStackIndex:uint = MAIN_VIEW_STACK_START_SCREEN;
-    public var allLocationGroups:ArrayCollection = new ArrayCollection();
-    public var allLocations:ArrayCollection = new ArrayCollection();
-    public var locationGroupTree:TreeNode;
-  }
+		public function ModelLocator(enforcer:SingletonEnforcer) {}
+
+		public static function getInstance():ModelLocator {
+			if ( instance == null ) {
+				instance = new ModelLocator( new SingletonEnforcer );
+			}
+			return instance;
+		}
+	}
 }
 
 class SingletonEnforcer {}    

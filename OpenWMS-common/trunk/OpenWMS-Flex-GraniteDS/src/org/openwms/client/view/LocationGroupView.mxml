@@ -1,4 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!--
+/*
+ * OpenWMS, the Open Warehouse Management System
+ * 
+ * Distributable under LGPL license.
+ * See terms of license at gnu.org.
+ */
+-->
 <mx:Canvas xmlns:mx="http://www.adobe.com/2006/mxml" xmlns:business="org.openwms.client.business.*" xmlns:o="org.openwms.client.components.*" width="1280" height="670" backgroundColor="#C2DAEF" creationComplete="init()">
 	<!-- Scripts -->
 	<mx:Script>

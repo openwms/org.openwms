@@ -1,3 +1,9 @@
+/*
+ * OpenWMS, the Open Warehouse Management System
+ * 
+ * Distributable under LGPL license.
+ * See terms of license at gnu.org.
+ */
 package org.openwms.client.command
 {
 	import com.adobe.cairngorm.commands.ICommand;
@@ -13,6 +19,12 @@ package org.openwms.client.command
 	import org.openwms.client.model.TreeNode;
 	import org.openwms.common.domain.LocationGroup;
 
+	/**
+	 * A ShowLocationGroupCommand.
+	 * 
+	 * @author <a href="mailto:openwms@googlemail.com">Heiko Scherrer</a>
+	 * @version $Revision: 235 $
+	 */
 	public class ShowLocationGroupCommand implements ICommand, IResponder
 	{
 		[Bindable]

@@ -1,3 +1,9 @@
+/*
+ * OpenWMS, the Open Warehouse Management System
+ * 
+ * Distributable under LGPL license.
+ * See terms of license at gnu.org.
+ */
 package org.openwms.client.model
 {
 	import mx.collections.ArrayCollection;
@@ -8,6 +14,12 @@ package org.openwms.client.model
 	import mx.events.CollectionEventKind;
 	import mx.controls.treeClasses.*;
 
+	/**
+	 * A TreeDataDescriptor.
+	 * 
+	 * @author <a href="mailto:openwms@googlemail.com">Heiko Scherrer</a>
+	 * @version $Revision: 235 $
+	 */
 	public class TreeDataDescriptor implements mx.controls.treeClasses.ITreeDataDescriptor
 	{
 		public function TreeDataDescriptor()
