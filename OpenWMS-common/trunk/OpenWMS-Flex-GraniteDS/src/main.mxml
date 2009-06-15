@@ -1,4 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!--
+/*
+ * OpenWMS, the Open Warehouse Management System
+ * 
+ * Distributable under LGPL license.
+ * See terms of license at gnu.org.
+ */
+-->
 <mx:Application xmlns:mx="http://www.adobe.com/2006/mxml"
 	xmlns:business="org.openwms.client.business.*"
 	xmlns:control="org.openwms.client.control.*"
@@ -41,22 +49,29 @@
 		<mx:Canvas width="100%" height="30" backgroundColor="#FFFFFF" backgroundAlpha="0.5" >
 		<mx:MenuBar x="5" y="5" width="1270" height="20" labelField="@label" itemClick="onMenuChange(event)">
 			<mx:XMLList>
+            <menuitem label="OpenWMS">
+                <menuitem label="Connect ..." enabled="false"/>
+                <menuitem label="Logout" enabled="false"/>
+            </menuitem>
             <menuitem label="Administration">
-                <menuitem label="SubMenuItem A-1" enabled="false"/>
-                <menuitem label="SubMenuItem A-2" enabled="false"/>
+                <menuitem label="Users" enabled="false"/>
+                <menuitem label="Roles" enabled="false"/>
+                <menuitem label="Security" enabled="false"/>
+            </menuitem>
+            <menuitem label="Transport Management">
+                <menuitem label="Transport Units" enabled="false"/>
+                <menuitem label="Transport Orders" enabled="false"/>
+            </menuitem>
+            <menuitem label="Warehouse">
+                <menuitem label="Ordering" enabled="false"/>
+                <menuitem label="Receiving" enabled="false"/>
             </menuitem>
             <menuitem label="Stock Configuration">
                 <menuitem label="Locations" action="{SwitchScreenEvent.SHOW_LOCATION_VIEW}" />
                 <menuitem label="Location Groups" action="{SwitchScreenEvent.SHOW_LOCATIONGROUP_VIEW}"/>
             </menuitem>
-            <menuitem label="Monitoring"/>
-            <menuitem label="Management">
-                <menuitem label="Users + Roles" enabled="false"/>
-                <menuitem label="Security" 
-                    type="radio" groupName="one"
-                    selected="true" enabled="false"/>
-                <menuitem label="SubMenuItem D-3" 
-                    type="radio" groupName="one" enabled="false"/>
+            <menuitem label="Monitoring">
+                <menuitem label="Reports" action="{SwitchScreenEvent.SHOW_LOCATION_VIEW}" />
             </menuitem>
         	</mx:XMLList>
 		</mx:MenuBar>

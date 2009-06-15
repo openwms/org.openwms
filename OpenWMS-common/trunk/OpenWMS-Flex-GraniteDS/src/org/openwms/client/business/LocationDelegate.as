@@ -1,3 +1,9 @@
+/*
+ * OpenWMS, the Open Warehouse Management System
+ * 
+ * Distributable under LGPL license.
+ * See terms of license at gnu.org.
+ */
 package org.openwms.client.business
 {
 	import com.adobe.cairngorm.business.ServiceLocator;
@@ -5,6 +11,12 @@ package org.openwms.client.business
 	import mx.rpc.AsyncToken;
 	import mx.rpc.IResponder;
 	
+	/**
+	 * A LocationDelegate.
+	 * 
+	 * @author <a href="mailto:openwms@googlemail.com">Heiko Scherrer</a>
+	 * @version $Revision: 235 $
+	 */
 	public class LocationDelegate
 	{
 			private var responder:IResponder;

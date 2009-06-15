@@ -1,3 +1,9 @@
+/*
+ * OpenWMS, the Open Warehouse Management System
+ * 
+ * Distributable under LGPL license.
+ * See terms of license at gnu.org.
+ */
 package org.openwms.client.command
 {
 	import com.adobe.cairngorm.control.CairngormEvent;
@@ -9,6 +15,12 @@ package org.openwms.client.command
 	import mx.controls.Alert;
 	import mx.rpc.events.ResultEvent;
 
+	/**
+	 * A LoadLocationsCommand.
+	 * 
+	 * @author <a href="mailto:openwms@googlemail.com">Heiko Scherrer</a>
+	 * @version $Revision: 235 $
+	 */
 	public class LoadLocationsCommand implements IResponder, ICommand
 	{
 		[Bindable]
