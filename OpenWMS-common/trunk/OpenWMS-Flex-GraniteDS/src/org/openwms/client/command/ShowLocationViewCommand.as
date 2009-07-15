@@ -24,18 +24,16 @@ package org.openwms.client.command
 	 * @author <a href="mailto:openwms@googlemail.com">Heiko Scherrer</a>
 	 * @version $Revision: 235 $
 	 */
-	public class ShowLocationViewCommand implements ICommand, IResponder
-	{
+	public class ShowLocationViewCommand implements ICommand, IResponder {
 		[Bindable]
 		private var modelLocator:ModelLocator = ModelLocator.getInstance();
 
-		public function ShowLocationViewCommand()
-		{
+		public function ShowLocationViewCommand() {
 			super();
 		}
 
-		public function execute(event:CairngormEvent):void
-		{
+		public function execute(event:CairngormEvent):void {
+			trace("Executing command to show the LocationView");
 			var delegate:LocationDelegate = new LocationDelegate(this)
 			delegate.getLocations();
 			modelLocator.mainViewStackIndex = ModelLocator.MAIN_VIEW_STACK_LOCATION_VIEW;

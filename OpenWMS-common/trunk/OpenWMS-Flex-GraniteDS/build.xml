@@ -59,13 +59,30 @@
         <mkdir dir="${build.main.dir}" />
     </target>
 
-    <target name="compile" depends="initialize">
+    <target name="compile" depends="initialize, deps">
         <echo message="************************************************" />
         <echo message="Compile sources in ${src.dir}..." />
         <echo message="************************************************" />
         <javac destdir="${build.main.dir}" classpathref="class.path" debug="on" deprecation="on">
             <src path="${src.dir}" />
         </javac>
+    </target>
+	
+    <!-- Declare Flex Ant tasks (such as mxmlc used below) -->
+    <taskdef resource="flexTasks.tasks" classpath="${FLEX_HOME}/ant/lib/flexTasks.jar" />
+
+    <!-- Compile MXML source code to SWF -->
+    <target name="mxmlc">
+        <mxmlc
+            file="src/main.mxml"
+            output="WebContent/main.swf"
+            services="WebContent/WEB-INF/flex/services-config.xml"
+            context-root="OpenWMS">
+            <source-path path-element="src"/>
+            <compiler.include-libraries dir="lib" append="true">
+                <include name="*.swc" />
+            </compiler.include-libraries>
+        </mxmlc>
     </target>
 	
 	<target name="copy-libs">
@@ -80,9 +97,28 @@
 		<copy file="${openwms_service-impl.jar}" todir="WebContent/WEB-INF/lib" />
 		<copy todir="WebContent/WEB-INF/lib">
 			<fileset dir="${deps.build.dir}" id="id">
-    			<exclude name="*javax.servlet*"/>
-    			<exclude name="*-sources-*"/>
-    			<exclude name="license-*.txt"/>
+    			<exclude name="*-sources*.jar"/>
+            	<include name="com.springsource.org.postgresql.jdbc3*.jar"/>
+			</fileset>
+			<fileset dir="${deps.test.dir}" id="id">
+    			<exclude name="*-sources*.jar"/>
+    			<include name="org.springframework.web*.jar"/>
+    			<include name="org.springframework.beans*.jar"/>
+    			<include name="org.springframework.instrument.classloading*.jar"/>
+    			<include name="org.springframework.jdbc*.jar"/>
+    			<include name="org.springframework.context*.jar"/>
+        		<include name="org.springframework.transaction*.jar"/>
+        		<include name="org.springframework.orm*.jar"/>
+            	<include name="org.springframework.aop*.jar"/>
+            	<include name="org.springframework.core*.jar"/>
+            	<include name="com.springsource.org.aspectj.runtime*.jar"/>
+            	<include name="com.springsource.net.sf.cglib*.jar"/>
+            	<include name="com.springsource.javax.persistence*.jar"/>
+                <include name="com.springsource.org.apache.log4j*.jar"/>
+            	<include name="com.springsource.org.hsqldb*.jar"/>
+            	<include name="com.springsource.org.apache.commons.collections*.jar"/>
+    			<include name="com.springsource.org.apache.commons.logging*.jar"/>
+            	<include name="com.springsource.org.aopalliance*.jar"/>
 			</fileset>
 			<fileset dir="${lib.dir}">
 				<include name="granite-spring.jar"/>

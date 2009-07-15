@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+/*
+ * OpenWMS, the Open Warehouse Management System
+ * 
+ * Distributable under LGPL license.
+ * See terms of license at gnu.org.
+ */
+-->
+<mx:Canvas xmlns:mx="http://www.adobe.com/2006/mxml" 
+	height="100%"
+	xmlns:Renderers="org.openwms.client.view.renderers.*"
+	creationComplete="initComp()" styleName="frameContainerSkin">
+	
+	<mx:Script>
+		<![CDATA[
+			import org.openwms.client.event.UserEvent;
+			import org.openwms.client.model.ModelLocator;
+		
+			[Bindable] 
+			private var modelLocator:ModelLocator = ModelLocator.getInstance();
+			private var lastSelectedListObject:Object=null;
+			
+			private function initComp():void {
+				this.addEventListener(UserEvent.USER_ADDED, userAdded);
+				new UserEvent(UserEvent.LOAD_ALL_USERS).dispatch();
+			}
+			
+			private function userAdded():void {
+				trace("New user was added");
+			}
+			
+			private function onUserSelectionChanged(event:Event):void {
+				event.currentTarget.style = "selectedUserListItem";
+				if (lastSelectedListObject != null && lastSelectedListObject != event.currentTarget) {
+					lastSelectedListObject.style = "userListItem";
+				}
+				lastSelectedListObject = event.currentTarget;
+			}
+		]]>
+	</mx:Script>
+	
+	<mx:VBox width="278" height="100%"
+		paddingBottom="5" paddingLeft="5" paddingRight="5" paddingTop="5">  
+		<mx:Repeater id="rp" dataProvider="{modelLocator.allUsers}">
+			<Renderers:UserListRenderer userData="{rp.currentItem}" userSelectionChanged="onUserSelectionChanged(event)" />		
+		</mx:Repeater>
+	</mx:VBox>
+</mx:Canvas>

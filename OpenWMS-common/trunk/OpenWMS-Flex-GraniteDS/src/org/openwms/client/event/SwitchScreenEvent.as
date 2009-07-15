@@ -18,7 +18,8 @@ package org.openwms.client.event
 	{
 		public static const SHOW_STARTSCREEN:String = "ShowStartscreen";
 		public static const SHOW_LOCATION_VIEW:String = "ShowLocationView";
-		public static const SHOW_LOCATIONGROUP_VIEW:String ="ShowLocationGroupView";
+		public static const SHOW_LOCATIONGROUP_VIEW:String = "ShowLocationGroupView";
+		public static const SHOW_USER_MGMT_VIEW:String = "ShowUserManagementView";
 		public function SwitchScreenEvent(type:String, bubbles:Boolean=false, cancelable:Boolean=false)
 		{
 			super(type, bubbles, cancelable);

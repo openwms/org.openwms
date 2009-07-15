@@ -1,30 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
-	<classpathentry combineaccessrules="false" exported="true" kind="src" path="/OpenWMS-common"/>
-	<classpathentry combineaccessrules="false" exported="true" kind="src" path="/OpenWMS-tms"/>
-	<classpathentry combineaccessrules="false" exported="true" kind="src" path="/OpenWMS-Services"/>
-	<classpathentry combineaccessrules="false" exported="true" kind="src" path="/OpenWMS-common-Spring"/>
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="src" path="spring"/>
-	<classpathentry exported="true" kind="con" path="org.eclipse.jst.j2ee.internal.web.container"/>
-	<classpathentry exported="true" kind="con" path="org.eclipse.jst.j2ee.internal.module.container"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/OpenWMS-common"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/OpenWMS-common-Spring"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/OpenWMS-Services"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/OpenWMS-tms"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
-	<classpathentry kind="lib" path="deps/build/org.springframework.web-2.5.5.A.jar">
-		<attributes>
-			<attribute name="org.eclipse.jst.component.dependency" value="/WEB-INF/lib"/>
-		</attributes>
-	</classpathentry>
-	<classpathentry kind="lib" path="lib/granite-spring.jar">
-		<attributes>
-			<attribute name="org.eclipse.jst.component.dependency" value="/WEB-INF/lib"/>
-		</attributes>
-	</classpathentry>
-	<classpathentry kind="lib" path="lib/granite.jar">
-		<attributes>
-			<attribute name="org.eclipse.jst.component.dependency" value="/WEB-INF/lib"/>
-		</attributes>
-	</classpathentry>
-	<classpathentry kind="lib" path="lib/granite-hibernate.jar">
+	<classpathentry kind="con" path="org.eclipse.jst.j2ee.internal.web.container"/>
+	<classpathentry kind="lib" path="deps/test/com.springsource.javax.servlet-2.4.0.jar"/>
+	<classpathentry kind="lib" path="lib/multipartrequest.jar" sourcepath="/home/d7scheh/Desktop/MultipartRequest-1.30rc1/src">
 		<attributes>
 			<attribute name="org.eclipse.jst.component.dependency" value="/WEB-INF/lib"/>
 		</attributes>

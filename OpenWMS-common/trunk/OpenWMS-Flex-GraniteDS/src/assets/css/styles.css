@@ -1,7 +1,31 @@
+/*
+ * OpenWMS, the Open Warehouse Management System
+ * 
+ * Distributable under LGPL license.
+ * See terms of license at gnu.org.
+ *
+ * Main colors:
+ * blue		: 2e7bb1
+ * yellow	: e1e76b 
+ *
+ */
 Button {
    highlightAlphas: 1, 0.33;
    fillAlphas: 1, 0.16, 0.18, 1;
    fillColors: #5f89b9, #697182, #ffffff, #eeeeee;
+	skin: Embed("/assets/images/cleanskin/button_skin.png",
+			scaleGridLeft="7",
+			scaleGridRight="21",
+			scaleGridTop="7",
+			scaleGridBottom="19");
+	over-skin: Embed("/assets/images/cleanskin/button_over_skin.png",
+			scaleGridLeft="7",
+			scaleGridRight="21",
+			scaleGridTop="7",
+			scaleGridBottom="19");
+	open-duration: 0;
+	close-duration: 0;
+	corner-radius: 2;
 }
 Panel {
 	headerHeight: 26;

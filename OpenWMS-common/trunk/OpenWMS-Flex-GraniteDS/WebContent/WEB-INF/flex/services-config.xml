@@ -25,6 +25,15 @@
                     <source>locationGroupService</source>
                 </properties>
             </destination>
+            <destination id="userService">
+                <channels>
+                    <channel ref="my-graniteamf"/>
+                </channels>
+                <properties>
+                    <factory>springFactory</factory>
+                    <source>userService</source>
+                </properties>
+            </destination>
         </service>
     </services>
     

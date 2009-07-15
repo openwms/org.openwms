@@ -28,7 +28,7 @@
 						private var listLocationGroups:ArrayCollection = new ArrayCollection();
 						
 						private function init():void {
-							new LoadLocationGroupsEvent(LoadLocationGroupsEvent.LOAD_ALL_LOCATION_GROUPS).dispatch()
+							new LoadLocationGroupsEvent(LoadLocationGroupsEvent.LOAD_ALL_LOCATION_GROUPS).dispatch();
 						}
 						
 						private function onRowClick( event:ListEvent ):void {
