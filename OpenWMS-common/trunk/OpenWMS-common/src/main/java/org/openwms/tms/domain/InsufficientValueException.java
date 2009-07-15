@@ -7,9 +7,10 @@
 package org.openwms.tms.domain;
 
 /**
+ * 
  * A InsufficientValueException.
  * 
- * @author <a href="heiko.scherrer@gmx.de">Heiko Scherrer</a>
+ * @author <a href="mailto:openwms@googlemail.com">Heiko Scherrer</a>
  * @version $Revision$
  */
 public class InsufficientValueException extends RuntimeException {

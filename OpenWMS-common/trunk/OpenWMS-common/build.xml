@@ -117,16 +117,8 @@
 	</target>
 
     <target name="compile-flex">
-        <mkdir dir="${flex.build.dir}/META-INF" />
-
-        <manifest file="${flex.build.dir}/META-INF/MANIFEST.MF">
-            <section name="granite/swc">
-                <attribute name="Implementation-Vendor" value="Granite Data Services" />
-                <attribute name="Compilation-Date" value="${TODAY}" />
-            </section>
-        </manifest>
         <!-- Build Swcs and add Manifest -->
-        <compc output="${flex.build.dir}/OpenWMS-common.swc" use-network="false" warn-missing-namespace-decl="false" failonerror="no" logerror="yes" fork="yes">
+        <compc output="${flex.build.dir}/OpenWMS-domain.swc" use-network="false" warn-missing-namespace-decl="false" failonerror="no" logerror="yes" fork="yes">
             <source-path path-element="${flex.src.dir}" />
             <include-sources dir="${flex.src.dir}" includes="**/*.as" />
             <compiler.external-library-path dir="${env.FLEX_HOME}/frameworks/libs" append="true">
@@ -137,7 +129,6 @@
                 <include name="granite-essentials.swc" />
             </compiler.include-libraries>
         </compc>
-        <zip basedir="${flex.build.dir}" update="true" keepcompression="true" destfile="${dist.dir}/OpenWMS-common.swc" includes="**/*" />
     </target>
 
     <target name="compile-tests" depends="compile">

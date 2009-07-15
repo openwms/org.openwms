@@ -23,7 +23,7 @@ import org.openwms.common.domain.values.Barcode.BARCODE_ALIGN;
  * 
  * A TransportUnitTest.
  * 
- * @author <a href="heiko.scherrer@gmx.de">Heiko Scherrer</a>
+ * @author <a href="mailto:openwms@googlemail.com">Heiko Scherrer</a>
  * @version $Revision$
  */
 public final class TransportUnitTest extends AbstractPDOTestCase {

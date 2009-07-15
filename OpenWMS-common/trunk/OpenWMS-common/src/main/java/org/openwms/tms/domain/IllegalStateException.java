@@ -7,9 +7,10 @@
 package org.openwms.tms.domain;
 
 /**
+ * 
  * A IllegalStateException.
  * 
- * @author <a href="heiko.scherrer@gmx.de">Heiko Scherrer</a>
+ * @author <a href="mailto:openwms@googlemail.com">Heiko Scherrer</a>
  * @version $Revision$
  */
 public class IllegalStateException extends RuntimeException {

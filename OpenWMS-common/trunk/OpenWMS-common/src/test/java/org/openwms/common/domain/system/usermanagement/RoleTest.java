@@ -21,7 +21,7 @@ import org.openwms.common.domain.helper.AbstractPDOTestCase;
  * 
  * A RoleTest.
  * 
- * @author <a href="heiko.scherrer@gmx.de">Heiko Scherrer</a>
+ * @author <a href="mailto:openwms@googlemail.com">Heiko Scherrer</a>
  * @version $Revision$
  */
 public final class RoleTest extends AbstractPDOTestCase {

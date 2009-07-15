@@ -11,10 +11,11 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 /**
+ * 
  * A TreeNodeImpl.
  * 
- * @author <a href="heiko.scherrer@gmx.de">Heiko Scherrer</a>
- * @version $Revision: 314 $
+ * @author <a href="mailto:openwms@googlemail.com">Heiko Scherrer</a>
+ * @version $Revision: 877 $
  */
 public class TreeNodeImpl<T> implements TreeNode<T> {
 	private static final long serialVersionUID = -5498990493803705085L;

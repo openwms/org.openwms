@@ -3,6 +3,7 @@
 	<classpathentry kind="src" path="src/test/java"/>
 	<classpathentry kind="src" path="src/main/resources"/>
 	<classpathentry kind="src" path="src/main/java"/>
+	<classpathentry kind="src" path="src/test/resources"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry kind="con" path="com.springsource.server.ide.jdt.core.MANIFEST_CLASSPATH_CONTAINER"/>
 	<classpathentry kind="lib" path="deps/build/commons-collections-3.2.1.jar"/>
