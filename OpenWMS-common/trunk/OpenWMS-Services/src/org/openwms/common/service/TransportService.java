@@ -14,10 +14,11 @@ import org.openwms.common.domain.values.Barcode;
 import org.openwms.common.service.exception.ServiceException;
 
 /**
+ * 
  * A TransportService.
  * 
- * @author <a href="heiko.scherrer@gmx.de">Heiko Scherrer</a>
- * @version $Revision: 314 $
+ * @author <a href="mailto:openwms@googlemail.com">Heiko Scherrer</a>
+ * @version $Revision: 877 $
  */
 public interface TransportService {
 
