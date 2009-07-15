@@ -1,0 +1,4 @@
+#Sun Jun 28 17:57:17 CEST 2009
+eclipse.preferences.version=1
+flexCompiles=\tmxmlc\tsrc/main.mxml -compiler.as3\=true -target-player\=10.0.0 -include-libraries\=./lib -services\=WebContent/WEB-INF/flex/services-config.xml -context-root\=OpenWMS -source-path\=./src -locale\=en_US -output ./WebContent/main.swf\t2\ttrue\t\n
+flexLibraries=lib/Cairngorm.swc\tlib/granite-essentials.swc\tlib/granite.swc\tlib/OpenWMS-domain.swc

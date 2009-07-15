@@ -35,12 +35,15 @@
 		<dependency org="org.springframework" name="org.springframework.context" rev="2.5.6.A" conf="build->*" />
 		<dependency org="org.springframework" name="org.springframework.context.support" rev="2.5.6.A" conf="build->*" />
 		<dependency org="org.springframework" name="org.springframework.transaction" rev="2.5.6.A" conf="build->*" />
-		<dependency org="org.springframework" name="org.springframework.web" rev="2.5.6.A" conf="build->*" />
 		<dependency org="org.springframework" name="org.springframework.web.servlet" rev="2.5.6.A" conf="build->*" />
 		<dependency org="com.adobe.flex" name="com.springsource.flex.messaging.common" rev="3.2.0.3978" conf="build->*"/>
 		<dependency org="com.adobe.flex" name="com.springsource.flex.messaging" rev="3.2.0.3978" conf="build->*"/>
 -->
-		<!-- Spring Security -->
+		<dependency org="org.springframework" name="org.springframework.web" rev="2.5.6.A" conf="build->*" />
+		<dependency org="org.springframework" name="org.springframework.core" rev="2.5.6.A" conf="build->*" />
+		<dependency org="org.springframework" name="org.springframework.test" rev="2.5.6.A" conf="test->*" />
+		<!-- Spring Security
 		<dependency org="org.springframework.security" name="org.springframework.security" rev="2.0.4.A" conf="build->*" />
+		 -->
 	</dependencies>
 </ivy-module>

@@ -1,0 +1,261 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Canvas xmlns:mx="http://www.adobe.com/2006/mxml"
+	xmlns="*"
+	width="0" height="0"
+	verticalScrollPolicy="off"
+	horizontalScrollPolicy="off"
+	creationComplete="initComp();"
+	xmlns:common="com.af.common.*">
+	
+	<mx:Script>
+	<![CDATA[
+		import org.openwms.client.model.ModelLocator;
+		//import com.af.clientmanager.model.vo.MediaVO;
+	    import mx.controls.Alert;
+	    import mx.effects.Blur;
+		import mx.effects.easing.Circular;
+		import mx.effects.easing.Elastic;
+		import mx.effects.Fade;
+		import mx.events.EffectEvent;
+		import mx.effects.easing.Bounce;
+		import mx.effects.easing.Quintic;
+		import mx.effects.Move;
+		import mx.effects.Parallel;
+		import mx.effects.Resize;
+		import mx.utils.ObjectUtil;
+		import flash.events.*;
+	    import flash.net.FileReference;
+	    import flash.net.URLRequest;
+	    import mx.messaging.events.MessageEvent;
+	    import mx.rpc.events.*;
+	    import mx.managers.PopUpManager;
+	    import com.adobe.cairngorm.business.ServiceLocator;
+		
+		[Bindable]
+	    public var modelLocator:ModelLocator = ModelLocator.getInstance();
+	    [Bindable]
+		public var iconClass:Class; 
+		
+	    [Bindable] public var parentObjectId: Number;
+		[Bindable] public var parentLoreCategory: String;
+		[Bindable] public var parentLoreAuthor: String;
+		[Bindable] public var parentObject: Object;
+		
+		//private var _fileAttachment:MediaVO;
+		private var tmpFileName: String;
+	    private var fileRef:FileReference;
+	
+        private function initComp():void {            
+            fileRef = new FileReference();
+            fileRef.addEventListener(Event.CANCEL, traceEvent);
+            fileRef.addEventListener(Event.COMPLETE, completeEvent);
+            fileRef.addEventListener(Event.SELECT, selectEvent);
+            fileRef.addEventListener(IOErrorEvent.IO_ERROR, traceEvent);
+            fileRef.addEventListener(Event.OPEN, traceEvent);
+            fileRef.addEventListener(ProgressEvent.PROGRESS, progressEvent);
+            fileRef.addEventListener(SecurityErrorEvent.SECURITY_ERROR, traceEvent);
+            
+            //_fileAttachment = new MediaVO();
+            
+            this.width = 0; 
+			this.height = 0; 
+	
+			var parellel:Parallel = new Parallel(); 
+			parellel.target = this; 
+			
+			var resize:Resize = new Resize();
+			resize.target = this;
+			resize.widthTo = 496; 
+			resize.heightTo = 437;
+					
+			var move:Move = new Move(); 
+			move.xFrom = this.stage.width/2; 
+			move.yFrom = this.stage.height/2; 
+			move.xTo = this.stage.width/2 - 496/2; 
+			move.yTo = this.stage.height/2 - 437/2; 
+			
+			var fade:Fade = new Fade(); 
+			fade.alphaFrom = 0; 
+			fade.alphaTo = 1; 
+			
+			var blur:Blur = new Blur(); 
+			blur.blurXFrom = 30; 
+			blur.blurYFrom = 30; 
+			blur.blurXTo = 0; 
+			blur.blurYTo = 0;
+			
+			parellel.addChild(resize); 
+			parellel.addChild(move); 
+			parellel.addChild(fade); 
+			parellel.addChild(blur); 
+			
+			resize.easingFunction = mx.effects.easing.Circular.easeInOut; 
+			move.easingFunction = mx.effects.easing.Circular.easeInOut; 
+			fade.easingFunction = mx.effects.easing.Circular.easeInOut; 
+			
+			parellel.duration = 1200; 
+			parellel.play(); 
+			parellel.addEventListener(EffectEvent.EFFECT_END, effectEndHandler); 
+			
+			container.visible = false; 
+			
+		//	iconImage.source = iconClass; 
+		
+			this.addEventListener(KeyboardEvent.KEY_DOWN, keyboardEventHandler);
+        }
+		public function effectEndHandler(event:EffectEvent):void
+		{
+			container.visible = true; 
+		}
+		private function keyboardEventHandler(event:KeyboardEvent):void
+		{
+			if(event.keyCode == 13)
+			{
+			//	YesClickHandler(new MouseEvent(MouseEvent.CLICK)); 
+			}
+		}
+		private function closeDialog():void
+		{
+			var parellel:Parallel = new Parallel(); 
+			parellel.target = this; 
+			
+			var fade:Fade = new Fade(); 
+			fade.alphaFrom = 1; 
+			fade.alphaTo = 0; 
+
+			parellel.addChild(fade); 
+
+			fade.easingFunction = mx.effects.easing.Circular.easeInOut; 
+			
+			parellel.duration = 400; 
+			parellel.play(); 
+			parellel.addEventListener(EffectEvent.EFFECT_END, closeDialogFinal); 
+			
+		}
+		private function closeDialogFinal(event:EffectEvent):void
+		{
+			PopUpManager.removePopUp(this);
+		}
+		private function traceEvent(event:Event):void {
+			var tmp:String = "================================\n";
+			ta.text += tmp + event.type + " event:" + mx.utils.ObjectUtil.toString(event) + "\n" ;
+			ta.verticalScrollPosition += 20;
+		}
+		
+		private function ioErrorEvent(event:IOErrorEvent):void{
+			Alert.show("IOError:" + event.text);
+			traceEvent(event);
+		}
+		
+		private function selectEvent(event:Event):void{
+			btn_upload.enabled = true;
+			trace("SelectEvent thrown");
+			filename.text = fileRef.name;
+			progressBar.setProgress(0, 100);
+			progressBar.label = "Loading 0%";			
+		}
+	
+		private function progressEvent(event:ProgressEvent):void {
+			progressBar.setProgress(event.bytesLoaded, event.bytesTotal);
+			traceEvent(event);
+		}
+	
+		private function completeEvent(event:Event):void {
+			progressBar.label = "Complete.";
+			filename.text += " uploaded";
+			traceEvent(event);
+			btn_upload.enabled = false;
+			btn_cancel.enabled = false;
+		
+			tmpFileName = fileRef.name;
+			//modelLocator.image = fileRef.data;
+			//Call Add Attachment DB method
+			addFileAttachment();
+			//new UserEvent(UserEvent.SAVE_USER).dispatch(); 
+		}
+		
+		private function uploadFile(endpoint:String):void 
+		{
+
+			var request:URLRequest = new URLRequest(modelLocator.UPLOAD_URL);
+			var params:URLVariables = new URLVariables();
+			request.contentType = "multipart/form-data";
+		
+   	 		params.directoryName = modelLocator.DIRECTORY_NAME;
+   	 		params.selectedUser = modelLocator.selectedUser.username;
+    		request.data = params;
+    		fileRef.upload(request);
+   
+			progressBar.label = "Uploading...";		
+			btn_cancel.enabled = true;
+		}
+		
+		private function addFileAttachment():void
+		{
+			var index:Number;
+			var extension:String;
+	
+			//_fileAttachment.assocobjectID = parentObjectId;
+			
+			//var insertLoreAttachmentEvent:InsertLoreAttachmentEvent = new InsertLoreAttachmentEvent(_fileAttachment);
+	        //insertLoreAttachmentEvent.dispatch();         
+        }	
+	]]>
+	</mx:Script>
+	
+	<mx:VBox width="496" height="437" 
+		verticalScrollPolicy="off" horizontalScrollPolicy="off"
+		styleName="panelSkin">
+		<mx:VBox width="100%" height="100%" id="container"
+			verticalScrollPolicy="off" horizontalScrollPolicy="off"
+			paddingLeft="10" paddingRight="10" paddingBottom="10" paddingTop="5"
+			verticalGap="0">
+			<mx:Spacer height="10" />
+			<mx:HBox width="100%" 
+				verticalScrollPolicy="off"
+				horizontalScrollPolicy="off">
+				<mx:Image id="iconImage" source="{iconClass}"/>
+				<mx:Text text="MEDIA UPLOAD" styleName="lblDialogFont"
+					width="90%" fontWeight="bold" fontSize="14" />
+                <mx:Spacer width="100%"/>
+				<mx:Image toolTip="Close Dialog" 
+						source="@Embed('/assets/images/closeButton.png')" 
+						click="closeDialog()"
+						mouseChildren="false" useHandCursor="true" buttonMode="true"/>
+			</mx:HBox>
+		<mx:Form>		
+			<mx:FormItem label="Upload URL:">
+				<mx:TextInput id="uploadURL" width="100%" color="#2c2c2c" 
+					text="{'/upload'}"
+					enabled="true"  />
+			</mx:FormItem>
+
+			<mx:FormItem label="Selected File:">
+			    <mx:Label id="filename"/>
+			</mx:FormItem>
+			
+			<mx:FormItem label="Upload By:">
+				<mx:TextInput id="ti_author" color="#2c2c2c"/>
+			</mx:FormItem>
+
+			<mx:FormItem direction="horizontal" width="100%">
+				<mx:Button width="80" label="Browse" click="fileRef.browse()" />
+				<mx:Button width="80" label="Upload" id="btn_upload" enabled="false" click="uploadFile(uploadURL.text)" />
+				<mx:Button width="80" label="Cancel" id="btn_cancel" enabled="false" click="fileRef.cancel()" />
+			</mx:FormItem>
+			
+			<mx:HRule width="100%" tabEnabled="false"/>
+			
+			<mx:FormItem label="Progress:">
+				<mx:ProgressBar id="progressBar" mode="manual" />
+			</mx:FormItem>
+			
+			<mx:FormItem label="Events:">
+				<mx:TextArea id="ta" width="350" height="200" color="#2c2c2c"/>
+			</mx:FormItem>
+			
+		</mx:Form>
+		
+	</mx:VBox>		
+	</mx:VBox>
+</mx:Canvas>

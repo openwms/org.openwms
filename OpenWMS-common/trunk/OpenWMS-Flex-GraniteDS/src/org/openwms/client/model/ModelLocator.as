@@ -6,7 +6,10 @@
  */
 package org.openwms.client.model {
 	import com.adobe.cairngorm.model.IModelLocator;
+	
 	import mx.collections.ArrayCollection;
+	
+	import org.openwms.common.domain.system.usermanagement.User;
 
 	/**
 	 * A ModelLocator.
@@ -20,11 +23,18 @@ package org.openwms.client.model {
 		public static const MAIN_VIEW_STACK_START_SCREEN:uint = 0;
 		public static const MAIN_VIEW_STACK_LOCATION_VIEW:uint = 1;
 		public static const MAIN_VIEW_STACK_LOCATIONGROUP_VIEW:uint = 2;
-
+		public static const MAIN_VIEW_STACK_USER_MGMT_VIEW:uint = 3;
 		public var mainViewStackIndex:uint = MAIN_VIEW_STACK_START_SCREEN;
+		
+		public const UPLOAD_URL:String = "/OpenWMS/upload";
+		public const DIRECTORY_NAME:String = "data";
+		
 		public var allLocationGroups:ArrayCollection = new ArrayCollection();
 		public var allLocations:ArrayCollection = new ArrayCollection();
+		public var allUsers:ArrayCollection = new ArrayCollection();
+		public var selectedUser:User = null;
 		public var locationGroupTree:TreeNode;
+		public var image:Object;
 
 		private static var instance:ModelLocator;
 

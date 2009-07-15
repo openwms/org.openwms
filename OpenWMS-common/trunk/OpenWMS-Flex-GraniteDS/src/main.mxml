@@ -32,6 +32,7 @@
 			}
 			
 			private function onMenuChange(event:MenuEvent):void {
+				trace("Switching to view:"+event.item.@action);
 				new SwitchScreenEvent(event.item.@action).dispatch();
 			}
 		]]>
@@ -54,9 +55,9 @@
                 <menuitem label="Logout" enabled="false"/>
             </menuitem>
             <menuitem label="Administration">
-                <menuitem label="Users" enabled="false"/>
-                <menuitem label="Roles" enabled="false"/>
-                <menuitem label="Security" enabled="false"/>
+                <menuitem label="Users" action="{SwitchScreenEvent.SHOW_LOCATION_VIEW}" />
+                <menuitem label="Roles" action="{SwitchScreenEvent.SHOW_LOCATION_VIEW}" />
+                <menuitem label="Security" action="{SwitchScreenEvent.SHOW_LOCATION_VIEW}" />
             </menuitem>
             <menuitem label="Transport Management">
                 <menuitem label="Transport Units" enabled="false"/>
@@ -68,10 +69,11 @@
             </menuitem>
             <menuitem label="Stock Configuration">
                 <menuitem label="Locations" action="{SwitchScreenEvent.SHOW_LOCATION_VIEW}" />
+                <menuitem label="Users" action="{SwitchScreenEvent.SHOW_USER_MGMT_VIEW}" />
                 <menuitem label="Location Groups" action="{SwitchScreenEvent.SHOW_LOCATIONGROUP_VIEW}"/>
             </menuitem>
             <menuitem label="Monitoring">
-                <menuitem label="Reports" action="{SwitchScreenEvent.SHOW_LOCATION_VIEW}" />
+                <menuitem label="Reports" enabled="false" />
             </menuitem>
         	</mx:XMLList>
 		</mx:MenuBar>
@@ -80,6 +82,7 @@
 			<view:StartScreen />
 			<view:LocationView />
 			<view:LocationGroupView />
+			<view:UserManagementView />
 		</mx:ViewStack>
 	</mx:VBox>
 

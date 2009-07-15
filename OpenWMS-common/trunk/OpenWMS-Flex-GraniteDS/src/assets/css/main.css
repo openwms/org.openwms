@@ -15,7 +15,7 @@ Application {
 	paddingTop: 5px;
 	paddingBottom: 5px;
 	horizontalAlign: "left";
-	backgroundGradientColors:#2E7BB1,#FFFFFF;
+	backgroundGradientColors: #2E7BB1, #FFFFFF;
 	backgroundColor: #FFFFFF;
 	font-family: "Verdana";
 }
@@ -23,4 +23,62 @@ Application {
 .headerArea {
 	width: 200px;
 	textAlign: "center";
+}
+
+.userNameListFont {
+	font-size: 10pt;
+	font-weight: bold;
+	horizontalAlign: "left";
+}
+
+.userFullnameListFont {
+	font-size: 8pt;
+	horizontalAlign: "left";
+}
+
+.userListItem {
+	border-style: solid;
+	border-shickness: 2;
+	border-color: #f9f9f9;
+	fill-colors: #419af2, #0865c4;
+	fill-alphas: 1, 1;
+	drop-shadow-enabled: true;
+	topCornerRadius: 0;
+	bottomCornerRadius: 0;
+	corner-radius: 0;
+	header-height: 0;
+}
+
+.selectedUserListItem {
+	border-style: solid;
+	border-shickness: 2;
+	border-color: #f9f9f9;
+	fill-colors: #f1f07c, #f1f07c;
+	fill-alphas: 1, 1;
+	drop-shadow-enabled: true;
+	topCornerRadius: 0;
+	bottomCornerRadius: 0;
+	corner-radius: 0;
+	header-height: 0;
+	backgroundColor: #f1f07c;
+}
+
+.userListContainer {
+	paddingLeft: 0px;
+	paddingRight: 0px;
+	paddingTop: 0px;
+	paddingBottom: 0px;
+	horizontalAlign: "left";
+}
+
+.frameContainerSkin {
+	background-image: Embed("/assets/images/frame_container_skin_blue.png", scaleGridLeft =
+		"10", scaleGridRight = "430", scaleGridTop = "60", scaleGridBottom =
+		"64");
+	background-size: "100%";
+}
+
+.panelSkin {
+	border-skin: Embed("/assets/images/cleanskin/panel_skin.png", scaleGridLeft = "10",
+		scaleGridRight = "274", scaleGridTop = "40", scaleGridBottom = "101");
 }
