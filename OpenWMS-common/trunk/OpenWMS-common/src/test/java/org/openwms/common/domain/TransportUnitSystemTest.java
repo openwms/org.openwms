@@ -13,7 +13,7 @@ import org.openwms.common.domain.helper.AbstractPDOTestCase;
  * 
  * A TransportUnitSystemTest.
  * 
- * @author <a href="heiko.scherrer@gmx.de">Heiko Scherrer</a>
+ * @author <a href="mailto:openwms@googlemail.com">Heiko Scherrer</a>
  * @version $Revision$
  */
 public final class TransportUnitSystemTest extends AbstractPDOTestCase {

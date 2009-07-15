@@ -8,8 +8,13 @@ package org.openwms.common.domain.system.usermanagement;
 
 import java.io.Serializable;
 
+import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
+import javax.persistence.Lob;
 
 /**
  * All minor details of an <code>User</code>.
@@ -20,106 +25,127 @@ import javax.persistence.Embeddable;
  */
 @Embeddable
 public class UserDetails implements Serializable {
-    private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 1L;
 
-    /**
-     * Description assigned to the <code>User</code> entity.
-     */
-    @Column(name = "DESCRIPTION")
-    private String description;
+	public static enum SEX {
+		MAN, WOMAN
+	}
 
-    /**
-     * Comment assigned to the <code>User</code> entity.
-     */
-    @Column(name = "COMMENT")
-    private String comment;
+	/**
+	 * Description assigned to the <code>User</code> entity.
+	 */
+	@Column(name = "DESCRIPTION")
+	private String description;
 
-    /**
-     * Email address assigned to the <code>User</code> entity.
-     */
-    @Column(name = "EMAIL")
-    private Email email;
+	/**
+	 * Comment assigned to the <code>User</code> entity.
+	 */
+	@Column(name = "COMMENT")
+	private String comment;
 
-    /**
-     * Phone number assigned to the <code>User</code> entity.
-     */
-    @Column(name = "PHONE_NO")
-    private String phoneNo;
+	/**
+	 * Phone number assigned to the <code>User</code> entity.
+	 */
+	@Column(name = "PHONE_NO")
+	private String phoneNo;
 
-    /**
-     * Skype account name assigned to the <code>User</code> entity.
-     */
-    @Column(name = "SKYPE_NAME")
-    private String skypeName;
+	/**
+	 * Skype account name assigned to the <code>User</code> entity.
+	 */
+	@Column(name = "SKYPE_NAME")
+	private String skypeName;
 
-    /**
-     * Office description assigned to the <code>User</code> entity.
-     */
-    @Column(name = "OFFICE")
-    private String office;
+	/**
+	 * Office description assigned to the <code>User</code> entity.
+	 */
+	@Column(name = "OFFICE")
+	private String office;
 
-    /**
-     * Department description assigned to the <code>User</code> entity.
-     */
-    @Column(name = "DEPARTMENT")
-    private String department;
+	/**
+	 * Department description assigned to the <code>User</code> entity.
+	 */
+	@Column(name = "DEPARTMENT")
+	private String department;
 
-    /* ----------------------------- methods ------------------- */
-    public UserDetails() {}
+	/**
+	 * Image of the user.
+	 */
+	@Lob
+	@Basic(fetch = FetchType.LAZY)
+	@Column(name = "IMAGE")
+	private byte[] image;
 
-    public String getPhoneNo() {
-	return this.phoneNo;
-    }
+	/**
+	 * Sex of the user.
+	 */
+	@Enumerated(EnumType.STRING)
+	@Column(name = "SEX")
+	private SEX sex;
 
-    public void setPhone(String phoneNo) {
-	this.phoneNo = phoneNo;
-    }
+	/* ----------------------------- methods ------------------- */
+	public UserDetails() {}
 
-    public String getDescription() {
-	return this.description;
-    }
+	public String getPhoneNo() {
+		return this.phoneNo;
+	}
 
-    public void setDescription(String description) {
-	this.description = description;
-    }
+	public void setPhoneNo(String phoneNo) {
+		this.phoneNo = phoneNo;
+	}
 
-    public String getUserComment() {
-	return this.comment;
-    }
+	public String getDescription() {
+		return this.description;
+	}
 
-    public void setUserComment(String userComment) {
-	this.comment = userComment;
-    }
+	public void setDescription(String description) {
+		this.description = description;
+	}
 
-    public String getOffice() {
-	return this.office;
-    }
+	public String getComment() {
+		return this.comment;
+	}
 
-    public void setOffice(String office) {
-	this.office = office;
-    }
+	public void setComment(String comment) {
+		this.comment = comment;
+	}
 
-    public Email getEmails() {
-	return email;
-    }
+	public String getOffice() {
+		return this.office;
+	}
 
-    public void setEmail(Email email) {
-	this.email = email;
-    }
+	public void setOffice(String office) {
+		this.office = office;
+	}
 
-    public String getSkypeName() {
-	return this.skypeName;
-    }
+	public String getSkypeName() {
+		return this.skypeName;
+	}
 
-    public void setSkypeName(String skypeName) {
-	this.skypeName = skypeName;
-    }
+	public void setSkypeName(String skypeName) {
+		this.skypeName = skypeName;
+	}
 
-    public String getDepartment() {
-	return this.department;
-    }
+	public String getDepartment() {
+		return this.department;
+	}
 
-    public void setDepartment(String department) {
-	this.department = department;
-    }
+	public void setDepartment(String department) {
+		this.department = department;
+	}
+
+	public byte[] getImage() {
+		return this.image;
+	}
+
+	public void setImage(byte[] image) {
+		this.image = image;
+	}
+
+	public SEX getSex() {
+		return sex;
+	}
+
+	public void setSex(SEX sex) {
+		this.sex = sex;
+	}
 }

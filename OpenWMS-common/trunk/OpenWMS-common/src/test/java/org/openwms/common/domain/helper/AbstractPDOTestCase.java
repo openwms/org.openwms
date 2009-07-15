@@ -20,9 +20,10 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 
 /**
+ * 
  * A AbstractPDOTestCase.
  * 
- * @author <a href="heiko.scherrer@gmx.de">Heiko Scherrer</a>
+ * @author <a href="mailto:openwms@googlemail.com">Heiko Scherrer</a>
  * @version $Revision$
  */
 public abstract class AbstractPDOTestCase {

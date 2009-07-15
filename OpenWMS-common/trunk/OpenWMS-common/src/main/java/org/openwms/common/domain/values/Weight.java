@@ -14,7 +14,7 @@ import java.math.BigDecimal;
  * <p>
  * Describes a weight in real world, always including a unit and a value.
  * 
- * @author <a href="heiko.scherrer@gmx.de">Heiko Scherrer</a>
+ * @author <a href="openwms@googlemail.com">Heiko Scherrer</a>
  * @version $Revision$
  */
 public class Weight implements Comparable<Weight>, Unit<WeightUnit> {

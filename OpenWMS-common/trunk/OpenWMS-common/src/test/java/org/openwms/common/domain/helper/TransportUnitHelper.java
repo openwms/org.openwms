@@ -18,7 +18,7 @@ import org.openwms.common.domain.TransportUnitType;
  * 
  * A TransportUnitHelper.
  * 
- * @author <a href="heiko.scherrer@gmx.de">Heiko Scherrer</a>
+ * @author <a href="mailto:openwms@googlemail.com">Heiko Scherrer</a>
  * @version $Revision$
  */
 public class TransportUnitHelper {

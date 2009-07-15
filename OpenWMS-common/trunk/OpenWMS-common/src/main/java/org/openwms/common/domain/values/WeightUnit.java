@@ -12,7 +12,7 @@ package org.openwms.common.domain.values;
  * <p>
  * In SI format.
  * 
- * @author <a href="heiko.scherrer@gmx.de">Heiko Scherrer</a>
+ * @author <a href="openwms@googlemail.com">Heiko Scherrer</a>
  * @version $Revision$
  */
 public enum WeightUnit {

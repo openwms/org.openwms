@@ -17,7 +17,7 @@ import org.apache.commons.lang.StringUtils;
  * 
  * A Barcode.
  * 
- * @author <a href="heiko.scherrer@gmx.de">Heiko Scherrer</a>
+ * @author <a href="openwms@googlemail.com">Heiko Scherrer</a>
  * @version $Revision$
  */
 @Embeddable

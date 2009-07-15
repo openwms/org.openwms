@@ -8,6 +8,7 @@ package org.openwms.common.domain.system.usermanagement;
 
 import java.io.Serializable;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -25,96 +26,123 @@ import javax.persistence.Version;
 @Entity
 @Table(name = "EMAIL")
 public class Email implements Serializable {
-    private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 1L;
 
-    /**
-     * Primary Key.
-     */
-    @Id
-    @GeneratedValue
-    @ManyToOne
-    private Long id;
-    /**
-     * Email Address.
-     */
-    //@org.hibernate.validator.Email
-    private String emailAddress;
+	/**
+	 * Primary Key.
+	 */
+	@Id
+	@GeneratedValue
+	@ManyToOne
+	private Long id;
 
-    /**
-     * Fullname belonging to this <code>Email</code>.
-     */
-    private String fullName;
+	/**
+	 * Unique identifier of the <code>User</code>.
+	 */
+	@Column(name = "USERNAME", nullable = false)
+	private String username;
 
-    /**
-     * Hibernate Version field.
-     */
-    @Version
-    private long version;
+	/**
+	 * Email Address.
+	 */
+	@Column(name = "ADDRESS", nullable = false)
+	private String emailAddress;
 
-    /* ----------------------------- methods ------------------- */
-    /**
-     * Accessed by persistence provider.
-     */
-    @SuppressWarnings("unused")
-    private Email() {}
+	/**
+	 * Fullname belonging to this <code>Email</code>.
+	 */
+	private String fullName;
 
-    public Email(String emailAddress) {
-	this.emailAddress = emailAddress;
-    }
+	/**
+	 * Hibernate Version field.
+	 */
+	@Version
+	private long version;
 
-    /**
-     * Get the Primary Key.
-     * 
-     * @return
-     */
-    public Long getId() {
-	return id;
-    }
+	/* ----------------------------- methods ------------------- */
+	/**
+	 * Accessed by persistence provider.
+	 */
+	@SuppressWarnings("unused")
+	private Email() {}
 
-    /**
-     * Get the emailAddress.
-     * 
-     * @return the emailAddress.
-     */
-    public String getEmailAddress() {
-	return emailAddress;
-    }
+	public Email(String username, String emailAddress) {
+		assert username != null && !username.equals("");
+		assert emailAddress != null && !emailAddress.equals("");
+		this.username = username;
+		this.emailAddress = emailAddress;
+	}
 
-    /**
-     * Set the emailAddress.
-     * 
-     * @param emailAddress
-     *                The emailAddress to set.
-     */
-    public void setEmailAddress(String emailAddress) {
-	this.emailAddress = emailAddress;
-    }
+	/**
+	 * Get the Primary Key.
+	 * 
+	 * @return
+	 */
+	public Long getId() {
+		return id;
+	}
 
-    /**
-     * Get the fullName.
-     * 
-     * @return the fullName.
-     */
-    public String getFullName() {
-	return fullName;
-    }
+	/**
+	 * Returns true if this is a transient object.
+	 * 
+	 * @return
+	 */
+	public boolean isNew() {
+		return this.id == null;
+	}
 
-    /**
-     * Set the fullName.
-     * 
-     * @param fullName
-     *                The fullName to set.
-     */
-    public void setFullName(String fullName) {
-	this.fullName = fullName;
-    }
+	public String getUsername() {
+		return this.username;
+	}
 
-    /**
-     * Returns Hibernate version field.
-     * 
-     * @return
-     */
-    public long getVersion() {
-	return version;
-    }
+	public void setUsername(String username) {
+		this.username = username;
+	}
+
+	/**
+	 * Get the emailAddress.
+	 * 
+	 * @return the emailAddress.
+	 */
+	public String getEmailAddress() {
+		return emailAddress;
+	}
+
+	/**
+	 * Set the emailAddress.
+	 * 
+	 * @param emailAddress
+	 *            The emailAddress to set.
+	 */
+	public void setEmailAddress(String emailAddress) {
+		this.emailAddress = emailAddress;
+	}
+
+	/**
+	 * Get the fullName.
+	 * 
+	 * @return the fullName.
+	 */
+	public String getFullName() {
+		return fullName;
+	}
+
+	/**
+	 * Set the fullName.
+	 * 
+	 * @param fullName
+	 *            The fullName to set.
+	 */
+	public void setFullName(String fullName) {
+		this.fullName = fullName;
+	}
+
+	/**
+	 * Returns Hibernate version field.
+	 * 
+	 * @return
+	 */
+	public long getVersion() {
+		return version;
+	}
 }

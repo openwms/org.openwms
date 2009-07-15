@@ -13,9 +13,10 @@ import java.math.BigDecimal;
 import org.junit.Test;
 
 /**
+ * 
  * A WeightTest.
  * 
- * @author <a href="heiko.scherrer@gmx.de">Heiko Scherrer</a>
+ * @author <a href="mailto:openwms@googlemail.com">Heiko Scherrer</a>
  * @version $Revision$
  */
 public class WeightTest {

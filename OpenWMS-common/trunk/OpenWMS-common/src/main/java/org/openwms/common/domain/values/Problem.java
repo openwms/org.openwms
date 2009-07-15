@@ -15,7 +15,7 @@ import javax.persistence.Embeddable;
 /**
  * A Problem.
  * 
- * @author <a href="heiko.scherrer@gmx.de">Heiko Scherrer</a>
+ * @author <a href="openwms@googlemail.com">Heiko Scherrer</a>
  * @version $Revision$
  */
 @Embeddable
