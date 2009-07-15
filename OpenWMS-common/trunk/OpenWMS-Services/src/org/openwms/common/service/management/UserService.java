@@ -21,10 +21,30 @@ public interface UserService<T extends Serializable> extends EntityService<T> {
 
 	boolean uploadImageFile(String username, byte[] image);
 
+	/**
+	 * 
+	 * Return an transient user entity class, serving as a template
+	 * 
+	 * @param username
+	 * @return
+	 */
 	T getTemplate(String username);
 
+	/**
+	 * 
+	 * Save the given user entity class in the database, persist the user when it is transient.
+	 * 
+	 * @param user
+	 * @return
+	 */
 	T save(T user);
 
+	/**
+	 * 
+	 * Delete the user entity class from the database.
+	 * 
+	 * @param user
+	 */
 	void remove(T user);
 
 }
