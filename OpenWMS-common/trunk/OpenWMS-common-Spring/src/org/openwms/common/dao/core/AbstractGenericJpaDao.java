@@ -29,7 +29,7 @@ import org.springframework.transaction.annotation.Transactional;
  * Spring introduced the <tt>PersistenceExceptionTranslationPostProcessor</tt> automatically to enable data access
  * exception translation for any object carrying the <tt>atRepository</tt> annotation
  * 
- * @author <a href="heiko.scherrer@gmx.de">Heiko Scherrer</a>
+ * @author <a href="mailto:openwms@googlemail.com">Heiko Scherrer</a>
  * @version $Revision: 314 $
  */
 @Repository
@@ -61,24 +61,20 @@ public abstract class AbstractGenericJpaDao<T extends Serializable, ID extends S
 		this.persistentClass = persistentClass;
 	}
 
-	@Transactional(readOnly = true)
 	public T findById(ID id) {
 		return getJpaTemplate().find(getPersistentClass(), id);
 	}
 
-	@Transactional(readOnly = true)
 	@SuppressWarnings("unchecked")
 	public List<T> findAll() {
 		return getJpaTemplate().findByNamedQuery(getFindAllQuery());
 	}
 
-	@Transactional(readOnly = true)
 	@SuppressWarnings("unchecked")
 	public List<T> findByQuery(String queryName, Map<String, ?> params) {
 		return getJpaTemplate().findByNamedQueryAndNamedParams(queryName, params);
 	}
 
-	@Transactional(readOnly = true)
 	@SuppressWarnings("unchecked")
 	public T findByUniqueId(Serializable id) {
 		// TODO:Don't check null, yet
@@ -89,28 +85,23 @@ public abstract class AbstractGenericJpaDao<T extends Serializable, ID extends S
 		return result.size() == 0 ? null : result.get(0);
 	}
 
-	@Transactional
 	public T save(T entity) {
 		beforeUpdate(entity);
 		return getJpaTemplate().merge(entity);
 	}
 
-	@Transactional
 	public void remove(T entity) {
 		getJpaTemplate().remove(entity);
 	}
 
-	@Transactional
 	public void persist(T entity) {
 		beforeUpdate(entity);
 		getJpaTemplate().persist(entity);
 	}
 
-	@Transactional(readOnly = true)
-	abstract String getFindAllQuery();
+	protected abstract String getFindAllQuery();
 
-	@Transactional(readOnly = true)
-	abstract String getFindByUniqueIdQuery();
+	protected abstract String getFindByUniqueIdQuery();
 
 	protected void beforeUpdate(T entity) {};
 }

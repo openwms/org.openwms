@@ -20,7 +20,7 @@ import org.springframework.transaction.annotation.Transactional;
 /**
  * A EntityServiceImpl.
  * 
- * @author <a href="heiko.scherrer@gmx.de">Heiko Scherrer</a>
+ * @author <a href="mailto:openwms@googlemail.com">Heiko Scherrer</a>
  * @version $Revision: 314 $
  */
 @Transactional
@@ -57,6 +57,11 @@ public class EntityServiceImpl<T extends Serializable, ID extends Serializable> 
 		dao.setPersistentClass(clazz);
 		// dao.save(entity);
 		dao.remove(entity);
+	}
+	
+	public void addEntity(T newEntity) {
+		// FIXME: All entities shall extend a superclass Entity with isNew() method, to check this here
+		dao.persist(newEntity);
 	}
 
 }

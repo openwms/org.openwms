@@ -12,19 +12,19 @@ import org.openwms.common.domain.TransportUnitType;
 /**
  * A TransportUnitTypeDaoImpl.
  * 
- * @author <a href="heiko.scherrer@gmx.de">Heiko Scherrer</a>
+ * @author <a href="mailto:openwms@googlemail.com">Heiko Scherrer</a>
  * @version $Revision: 314 $
  */
 public class TransportUnitTypeDaoImpl extends AbstractGenericJpaDao<TransportUnitType, String> implements
 		TransportUnitTypeDao {
 
 	@Override
-	String getFindAllQuery() {
+	protected String getFindAllQuery() {
 		return TransportUnitTypeDao.NQ_FIND_ALL;
 	}
 
 	@Override
-	String getFindByUniqueIdQuery() {
+	protected String getFindByUniqueIdQuery() {
 		return TransportUnitTypeDao.NQ_FIND_BY_NAME;
 	}
 

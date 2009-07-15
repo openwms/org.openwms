@@ -7,7 +7,6 @@
 package org.openwms.common.dao;
 
 import java.io.IOException;
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -19,10 +18,11 @@ import org.springframework.orm.jpa.persistenceunit.PersistenceUnitPostProcessor;
 import org.springframework.util.ResourceUtils;
 
 /**
+ * 
  * A CustomPersistenceUnitPostProcessor.
  * 
- * @author <a href="heiko.scherrer@gmx.de">Heiko Scherrer</a>
- * @version $Revision: 314 $
+ * @author <a href="mailto:openwms@googlemail.com">Heiko Scherrer</a>
+ * @version $Revision: 877 $
  */
 public class CustomPersistenceUnitPostProcessor implements PersistenceUnitPostProcessor {
 
@@ -41,7 +41,7 @@ public class CustomPersistenceUnitPostProcessor implements PersistenceUnitPostPr
 	private void resolveJarFiles() {
 		try {
 			for (int i = 0; i < persistenceJarFiles.length; i++) {
-				System.out.println("--"+ResourceUtils.getURL(persistenceJarFiles[i]));
+				System.out.println("--" + ResourceUtils.getURL(persistenceJarFiles[i]));
 				Resource[] resources = this.resourcePatternResolver.getResources(persistenceJarFiles[i]);
 				for (Resource resource : resources) {
 					jarFiles.add(resource);

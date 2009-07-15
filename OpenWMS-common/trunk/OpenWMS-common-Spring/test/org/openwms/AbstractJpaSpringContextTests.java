@@ -23,7 +23,7 @@ import org.springframework.test.jpa.AbstractJpaTests;
 /**
  * A AbstractJpaSpringContextTests.
  * 
- * @author <a href="heiko.scherrer@gmx.de">Heiko Scherrer</a>
+ * @author <a href="mailto:openwms@googlemail.com">Heiko Scherrer</a>
  * @version $Revision: 314 $
  */
 public abstract class AbstractJpaSpringContextTests extends AbstractJpaTests {

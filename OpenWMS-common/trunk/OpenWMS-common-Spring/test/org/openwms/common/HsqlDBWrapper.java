@@ -20,7 +20,7 @@ import org.springframework.beans.factory.annotation.Required;
 /**
  * A HsqlDBWrapper.
  * 
- * @author <a href="heiko.scherrer@gmx.de">Heiko Scherrer</a>
+ * @author <a href="mailto:openwms@googlemail.com">Heiko Scherrer</a>
  * @version $Revision: 314 $
  */
 public class HsqlDBWrapper {
@@ -33,7 +33,6 @@ public class HsqlDBWrapper {
 	private String url;
 	private String username;
 	private String password;
-	private String persistenceUnit;
 	private boolean inMemoryDB = false;
 
 	@Required

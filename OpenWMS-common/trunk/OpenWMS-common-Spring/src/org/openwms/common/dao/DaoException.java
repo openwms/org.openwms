@@ -9,8 +9,8 @@ package org.openwms.common.dao;
 /**
  * A DaoException.
  * 
- * @author <a href="heiko.scherrer@gmx.de">Heiko Scherrer</a>
- * @version $Revision: 314 $
+ * @author <a href="mailto:openwms@googlemail.com">Heiko Scherrer</a>
+ * @version $Revision: 877 $
  */
 public class DaoException extends RuntimeException {
 

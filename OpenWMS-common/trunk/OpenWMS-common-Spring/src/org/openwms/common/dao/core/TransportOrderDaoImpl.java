@@ -17,18 +17,18 @@ import org.springframework.orm.jpa.JpaCallback;
 /**
  * A TransportOrderDaoImpl.
  * 
- * @author <a href="heiko.scherrer@gmx.de">Heiko Scherrer</a>
+ * @author <a href="mailto:openwms@googlemail.com">Heiko Scherrer</a>
  * @version $Revision: 314 $
  */
 public class TransportOrderDaoImpl extends AbstractGenericJpaDao<TransportOrder, Long> implements TransportOrderDao {
 
 	@Override
-	String getFindAllQuery() {
+	protected String getFindAllQuery() {
 		return TransportOrderDao.FIND_ALL;
 	}
 
 	@Override
-	String getFindByUniqueIdQuery() {
+	protected String getFindByUniqueIdQuery() {
 		return TransportOrderDao.FIND_BY_ID;
 	}
 

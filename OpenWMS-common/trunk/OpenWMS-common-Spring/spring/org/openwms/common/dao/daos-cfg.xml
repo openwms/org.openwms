@@ -17,4 +17,8 @@
 	<bean id="locationGroupDao" class="org.openwms.common.dao.core.LocationGroupDaoImpl">
 		<property name="entityManagerFactory" ref="entityManagerFactory" />
 	</bean>
+
+	<bean id="userDao" class="org.openwms.common.dao.management.UserDaoImpl">
+		<property name="entityManagerFactory" ref="entityManagerFactory" />
+	</bean>
 </beans>

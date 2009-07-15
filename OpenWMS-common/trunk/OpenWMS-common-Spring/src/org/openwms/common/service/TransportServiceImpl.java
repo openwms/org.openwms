@@ -20,7 +20,6 @@ import org.openwms.common.domain.TransportUnit;
 import org.openwms.common.domain.TransportUnitType;
 import org.openwms.common.domain.values.Barcode;
 import org.openwms.common.service.exception.ServiceException;
-import org.openwms.tms.domain.order.TransportOrder;
 import org.springframework.beans.factory.annotation.Required;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -28,7 +27,7 @@ import org.springframework.transaction.annotation.Transactional;
 /**
  * A TransportService.
  * 
- * @author <a href="heiko.scherrer@gmx.de">Heiko Scherrer</a>
+ * @author <a href="mailto:openwms@googlemail.com">Heiko Scherrer</a>
  * @version $Revision: 314 $
  */
 @Service
@@ -104,7 +103,7 @@ public class TransportServiceImpl implements TransportService {
 		// + newLocationPk, e);
 		// }
 	}
-	
+
 	public int getTransportsToLocationGroup(LocationGroup locationGroup) {
 		return transportOrderDao.getNumberOfTransportOrders(locationGroup);
 	}

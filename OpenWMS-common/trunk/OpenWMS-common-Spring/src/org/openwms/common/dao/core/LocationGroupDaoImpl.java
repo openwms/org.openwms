@@ -14,18 +14,18 @@ import org.openwms.common.domain.LocationGroup;
 /**
  * A LocationGroupDaoImpl.
  * 
- * @author <a href="heiko.scherrer@gmx.de">Heiko Scherrer</a>
+ * @author <a href="mailto:openwms@googlemail.com">Heiko Scherrer</a>
  * @version $Revision: 314 $
  */
 public class LocationGroupDaoImpl extends AbstractGenericJpaDao<LocationGroup, Long> implements LocationGroupDao {
 
 	@Override
-	String getFindAllQuery() {
+	protected String getFindAllQuery() {
 		return LocationGroupDao.NQ_FIND_ALL;
 	}
 
 	@Override
-	String getFindByUniqueIdQuery() {
+	protected String getFindByUniqueIdQuery() {
 		return LocationGroupDao.NQ_FIND_BY_NAME;
 	}
 
