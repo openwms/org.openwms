@@ -10,11 +10,14 @@ import java.io.Serializable;
 import java.util.List;
 import java.util.Map;
 
+import org.springframework.transaction.annotation.Transactional;
+
 /**
+ * 
  * A GenericDao.
  * 
- * @author <a href="heiko.scherrer@gmx.de">Heiko Scherrer</a>
- * @version $Revision: 314 $
+ * @author <a href="mailto:openwms@googlemail.com">Heiko Scherrer</a>
+ * @version $Revision: 877 $
  */
 public interface GenericDao<T extends Serializable, ID extends Serializable> {
 
@@ -27,6 +30,7 @@ public interface GenericDao<T extends Serializable, ID extends Serializable> {
 	 * @param id
 	 * @return
 	 */
+	@Transactional(readOnly = true)
 	T findById(ID id);
 
 	/**
@@ -34,6 +38,7 @@ public interface GenericDao<T extends Serializable, ID extends Serializable> {
 	 * 
 	 * @return
 	 */
+	@Transactional(readOnly = true)
 	List<T> findAll();
 
 	/**
@@ -43,6 +48,7 @@ public interface GenericDao<T extends Serializable, ID extends Serializable> {
 	 * @param params
 	 * @return
 	 */
+	@Transactional(readOnly = true)
 	List<T> findByQuery(String queryName, Map<String, ?> params);
 
 	/**
@@ -51,6 +57,7 @@ public interface GenericDao<T extends Serializable, ID extends Serializable> {
 	 * @param id
 	 * @return
 	 */
+	@Transactional(readOnly = true)
 	T findByUniqueId(Serializable id);
 
 	/**
@@ -59,6 +66,7 @@ public interface GenericDao<T extends Serializable, ID extends Serializable> {
 	 * @param entity
 	 * @return
 	 */
+	@Transactional
 	T save(T entity);
 
 	/**
@@ -66,6 +74,7 @@ public interface GenericDao<T extends Serializable, ID extends Serializable> {
 	 * 
 	 * @param entity
 	 */
+	@Transactional
 	void remove(T entity);
 
 	/**
@@ -73,6 +82,7 @@ public interface GenericDao<T extends Serializable, ID extends Serializable> {
 	 * 
 	 * @param entity
 	 */
+	@Transactional
 	void persist(T entity);
 
 	void setPersistentClass(Class<T> persistentClass);

@@ -18,7 +18,7 @@ import org.openwms.common.dao.GenericHibernateDao;
  * <p>
  * Subclass this DAO implementation to get extended comfort by Hibernates advanced query features.
  * 
- * @author <a href="heiko.scherrer@gmx.de">Heiko Scherrer</a>
+ * @author <a href="mailto:openwms@googlemail.com">Heiko Scherrer</a>
  * @version $Revision: 314 $
  */
 public abstract class AbstractGenericHibernateDao<T extends Serializable, ID extends Serializable> extends

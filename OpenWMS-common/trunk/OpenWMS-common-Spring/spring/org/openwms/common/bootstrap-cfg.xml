@@ -13,21 +13,25 @@
 		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-2.5.xsd">
 
 	<context:property-placeholder location="classpath:jdbc.properties" />
-	<tx:annotation-driven transaction-manager="transactionManager" />
+	<context:component-scan base-package="org.openwms.common.domain" />
 	<context:annotation-config />
-	<aop:aspectj-autoproxy />
+	
+	<tx:annotation-driven />
 
 	<!-- Entity Manager -->
 	<bean id="entityManagerFactory"
 		class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
 		<property name="persistenceUnitName" value="${jdbc.persistenceUnit}" />
 	</bean>
-	
-	<bean id="cpu" class="org.openwms.common.dao.CustomPersistenceUnitPostProcessor">
+
+	<bean id="cpu"
+		class="org.openwms.common.dao.CustomPersistenceUnitPostProcessor">
 		<property name="persistenceJarFiles">
 			<list>
-				<value>classpath:/**/*OpenWMS-tms.jar</value>
-				<value>classpath:/**/*OpenWMS-commons.jar</value>
+				<value>classpath:/**/*OpenWMS-tms.jar
+				</value>
+				<value>classpath:/**/*OpenWMS-commons.jar
+				</value>
 			</list>
 		</property>
 	</bean>
@@ -37,10 +41,12 @@
 		<property name="entityManagerFactory" ref="entityManagerFactory" />
 	</bean>
 
+	<!-- Used for the exception translation -->
 	<bean
 		class="org.springframework.dao.annotation.PersistenceExceptionTranslationPostProcessor" />
+	<!-- Used for the transaction annotation post processing -->
 	<bean
-		class="org.springframework.orm.jpa.support.PersistenceAnnotationBeanPostProcessor" />
+		class="org.springframework.orm.jpa.support.PersistenceAnnotationBeanPostProcessor" /> 
 
 	<bean id="oemiv"
 		class="org.springframework.orm.jpa.support.OpenEntityManagerInViewInterceptor"

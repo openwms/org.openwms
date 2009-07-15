@@ -13,19 +13,19 @@ import org.openwms.common.dao.GenericDao;
 /**
  * A GenericJpaDaoImpl.
  * 
- * @author <a href="heiko.scherrer@gmx.de">Heiko Scherrer</a>
+ * @author <a href="mailto:openwms@googlemail.com">Heiko Scherrer</a>
  * @version $Revision: 314 $
  */
 public class GenericJpaDaoImpl<T extends Serializable, ID extends Serializable> extends AbstractGenericJpaDao<T, ID>
 		implements GenericDao<T, ID> {
 
 	@Override
-	String getFindAllQuery() {
+	protected String getFindAllQuery() {
 		return getPersistentClass().getSimpleName().concat(FIND_ALL);
 	}
 
 	@Override
-	String getFindByUniqueIdQuery() {
+	protected String getFindByUniqueIdQuery() {
 		return getPersistentClass().getSimpleName().concat(FIND_BY_ID);
 	}
 

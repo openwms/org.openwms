@@ -9,7 +9,7 @@ package org.openwms.common.service.exception;
 /**
  * A ServiceException.
  * 
- * @author <a href="heiko.scherrer@gmx.de">Heiko Scherrer</a>
+ * @author <a href="mailto:openwms@googlemail.com">Heiko Scherrer</a>
  * @version $Revision: 314 $
  */
 @SuppressWarnings("serial")

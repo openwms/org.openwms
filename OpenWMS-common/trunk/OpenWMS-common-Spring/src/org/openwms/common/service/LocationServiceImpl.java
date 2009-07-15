@@ -14,7 +14,7 @@ import org.openwms.common.domain.Location;
 /**
  * A LocationServiceImpl.
  * 
- * @author <a href="heiko.scherrer@gmx.de">Heiko Scherrer</a>
+ * @author <a href="mailto:openwms@googlemail.com">Heiko Scherrer</a>
  * @version $Revision: 314 $
  */
 public class LocationServiceImpl extends EntityServiceImpl<Location, Long> implements LocationService<Location> {

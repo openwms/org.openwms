@@ -14,10 +14,11 @@ import org.springframework.orm.jpa.persistenceunit.DefaultPersistenceUnitManager
 import org.springframework.orm.jpa.persistenceunit.MutablePersistenceUnitInfo;
 
 /**
+ * 
  * A CustomPersistenceUnitManager.
  * 
- * @author <a href="heiko.scherrer@gmx.de">Heiko Scherrer</a>
- * @version $Revision: 314 $
+ * @author <a href="mailto:openwms@googlemail.com">Heiko Scherrer</a>
+ * @version $Revision: 877 $
  */
 public class CustomPersistenceUnitManager extends DefaultPersistenceUnitManager {
 	List<URL> url = new ArrayList<URL>();

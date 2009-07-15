@@ -27,6 +27,10 @@
 		<property name="dao" ref="locationGroupDao" />
 	</bean>
 
+	<bean id="userService" class="org.openwms.common.service.management.UserServiceImpl">
+		<property name="dao" ref="userDao" />
+	</bean>
+
 </beans>
 
 
