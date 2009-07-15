@@ -10,17 +10,36 @@ import java.io.Serializable;
 import java.util.List;
 
 /**
+ * 
  * A EntityService.
  * 
- * @author <a href="heiko.scherrer@gmx.de">Heiko Scherrer</a>
- * @version $Revision: 314 $
+ * @author <a href="mailto:openwms@googlemail.com">Heiko Scherrer</a>
+ * @version $Revision: 877 $
  */
 public interface EntityService<T extends Serializable> {
 
+	/**
+	 * Find all entities of type clazz.
+	 * 
+	 * @param clazz
+	 * @return
+	 */
 	List<T> findAll(Class<T> clazz);
 
+	/**
+	 * Update an entity of type <T>
+	 * 
+	 * @param clazz
+	 * @param entity
+	 * @return
+	 */
 	T save(Class<T> clazz, T entity);
 
+	/**
+	 * Find all entities of type <T>.
+	 * 
+	 * @return
+	 */
 	public List<T> findAll();// Remove
 
 	/**
@@ -31,4 +50,10 @@ public interface EntityService<T extends Serializable> {
 	 */
 	void remove(Class<T> clazz, T entity);
 
+	/**
+	 * Add a new entity to the persistent storage.
+	 * 
+	 * @param newEntity
+	 */
+	void addEntity(T newEntity);
 }

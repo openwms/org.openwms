@@ -13,10 +13,11 @@ import org.openwms.common.domain.LocationGroup;
 import org.openwms.common.util.TreeNode;
 
 /**
+ * 
  * A LocationGroupService.
  * 
- * @author <a href="heiko.scherrer@gmx.de">Heiko Scherrer</a>
- * @version $Revision: 314 $
+ * @author <a href="mailto:openwms@googlemail.com">Heiko Scherrer</a>
+ * @version $Revision: 877 $
  */
 public interface LocationGroupService<T extends Serializable> extends EntityService<T> {
 
