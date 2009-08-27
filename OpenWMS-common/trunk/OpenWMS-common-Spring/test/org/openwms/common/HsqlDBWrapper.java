@@ -29,7 +29,7 @@ public class HsqlDBWrapper {
 	private Log logger = LogFactory.getLog(HsqlDBWrapper.class);
 	private Connection connection;
 	private boolean dbStarted = false;
-
+	private String persistenceUnit;
 	private String url;
 	private String username;
 	private String password;
