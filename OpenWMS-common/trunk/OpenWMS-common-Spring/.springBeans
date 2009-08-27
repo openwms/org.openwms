@@ -1,14 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beansProjectDescription>
 	<version>1</version>
-	<pluginVersion><![CDATA[2.2.3.RELEASE]]></pluginVersion>
+	<pluginVersion><![CDATA[2.2.4.RELEASE]]></pluginVersion>
 	<configSuffixes>
 		<configSuffix><![CDATA[xml]]></configSuffix>
 		<configSuffix><![CDATA[-cfg.xml]]></configSuffix>
 	</configSuffixes>
 	<enableImports><![CDATA[true]]></enableImports>
 	<configs>
-		<config>spring/org/openwms/common/bootstrap-cfg.xml</config>
 		<config>test/org/openwms/common/service/transport/TransportServiceTest-context.xml</config>
 		<config>test/org/openwms/Test-Infrastructure-context.xml</config>
 		<config>spring/org/openwms/common/dao/daos-cfg.xml</config>
@@ -20,7 +19,6 @@
 			<allowBeanDefinitionOverriding>true</allowBeanDefinitionOverriding>
 			<incomplete>false</incomplete>
 			<configs>
-				<config>spring/org/openwms/common/bootstrap-cfg.xml</config>
 				<config>spring/org/openwms/common/dao/daos-cfg.xml</config>
 				<config>spring/org/openwms/common/service/services-cfg.xml</config>
 			</configs>
