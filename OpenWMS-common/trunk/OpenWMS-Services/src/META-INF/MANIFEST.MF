@@ -1,7 +1,0 @@
-Bundle-Version: 1.0
-Bundle-SymbolicName: org.openwms.common.service.api
-Bundle-Name: OpenWMS Common Service API
-Bundle-Vendor: openwms.org
-Export-Package: org.openwms.common.service;version="1.0.0"
-Import-Package: org.openwms;version="1.0.0"
-Bundle-ManifestVersion: 2
