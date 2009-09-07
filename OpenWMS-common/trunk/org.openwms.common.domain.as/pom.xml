@@ -1,9 +1,12 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     <modelVersion>4.0.0</modelVersion>
-    <groupId>org.openwms</groupId>
-    <artifactId>common-domain-swc</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
+    <parent>
+        <groupId>org.openwms</groupId>
+        <artifactId>OpenWMS</artifactId>
+        <version>0.0.1-SNAPSHOT</version>
+    </parent>
+    <artifactId>org.openwms.common.domain.as</artifactId>
     <packaging>swc</packaging>
     <name>Common Domain ActionScript Classes</name>
     <description>Generated ActionScript class files</description>
@@ -141,7 +144,7 @@
     <dependencies>
         <dependency>
             <groupId>org.openwms</groupId>
-            <artifactId>OpenWMS-common</artifactId>
+            <artifactId>org.openwms.common.domain</artifactId>
             <version>${project.version}</version>
             <scope>provided</scope>
         </dependency>
