@@ -6,7 +6,7 @@
         <artifactId>OpenWMS</artifactId>
         <version>0.0.1-SNAPSHOT</version>
     </parent>
-    <artifactId>common-domain</artifactId>
+    <artifactId>org.openwms.common.domain</artifactId>
     <packaging>jar</packaging>
     <name>Common Domain classes</name>
     <properties>
