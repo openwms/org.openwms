@@ -1,9 +1,12 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     <modelVersion>4.0.0</modelVersion>
-    <groupId>org.openwms</groupId>
-    <artifactId>tms-domain</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
+    <parent>
+        <groupId>org.openwms</groupId>
+        <artifactId>OpenWMS</artifactId>
+        <version>0.0.1-SNAPSHOT</version>
+    </parent>
+    <artifactId>org.openwms.tms.domain</artifactId>
     <packaging>jar</packaging>
     <name>TMS Domain classes</name>
     <properties>
@@ -104,12 +107,12 @@
         </dependency>
         <dependency>
             <groupId>${project.groupId}</groupId>
-            <artifactId>common-domain</artifactId>
+            <artifactId>org.openwms.common.domain</artifactId>
             <version>${project.version}</version>
         </dependency>
         <dependency>
             <groupId>${project.groupId}</groupId>
-            <artifactId>common-test-fw</artifactId>
+            <artifactId>org.openwms.common.framework.test</artifactId>
             <version>${project.version}</version>
             <scope>provided</scope>
         </dependency>
