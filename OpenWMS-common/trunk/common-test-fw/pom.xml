@@ -2,13 +2,10 @@
     xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <groupId>org.openwms</groupId>
-    <artifactId>tms-domain</artifactId>
+    <artifactId>common-test-fw</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <packaging>jar</packaging>
-    <name>TMS Domain classes</name>
-    <properties>
-        <property.org.graniteds.version>1.2.0_SP1</property.org.graniteds.version>
-    </properties>
+    <name>Common Test Framework</name>
     <build>
         <plugins>
             <plugin>
@@ -22,26 +19,7 @@
 
         </plugins>
     </build>
-
-    <distributionManagement>
-        <repository>
-            <id>Rudi-Releases</id>
-            <name>Internal Releases</name>
-            <url>http://rudi:8081/nexus/content/repositories/releases</url>
-        </repository>
-        <snapshotRepository>
-            <id>Rudi-Snapshots</id>
-            <name>Internal Snapshots</name>
-            <url>http://rudi:8081/nexus/content/repositories/snapshots</url>
-        </snapshotRepository>
-    </distributionManagement>
-
     <dependencies>
-        <dependency>
-            <groupId>org.apache.commons</groupId>
-            <artifactId>com.springsource.org.apache.commons.lang</artifactId>
-            <version>2.4.0</version>
-        </dependency>
         <dependency>
             <groupId>org.apache.log4j</groupId>
             <artifactId>com.springsource.org.apache.log4j</artifactId>
@@ -52,8 +30,6 @@
             <artifactId>com.springsource.org.apache.commons.logging</artifactId>
             <version>1.1.1</version>
         </dependency>
-
-        <!-- Hibernate -->
         <dependency>
             <groupId>javax.persistence</groupId>
             <artifactId>persistence-api</artifactId>
@@ -100,17 +76,6 @@
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
             <version>4.5</version>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>${project.groupId}</groupId>
-            <artifactId>common-domain</artifactId>
-            <version>${project.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>${project.groupId}</groupId>
-            <artifactId>common-test-fw</artifactId>
-            <version>${project.version}</version>
             <scope>provided</scope>
         </dependency>
     </dependencies>
