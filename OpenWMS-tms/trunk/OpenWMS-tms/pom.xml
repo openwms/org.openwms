@@ -2,7 +2,7 @@
     xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <groupId>org.openwms</groupId>
-    <artifactId>OpenWMS-tms</artifactId>
+    <artifactId>tms-domain</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <packaging>jar</packaging>
     <name>TMS Domain classes</name>
@@ -101,6 +101,11 @@
             <artifactId>junit</artifactId>
             <version>4.5</version>
             <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>common-domain</artifactId>
+            <version>${project.version}</version>
         </dependency>
     </dependencies>
 </project>
