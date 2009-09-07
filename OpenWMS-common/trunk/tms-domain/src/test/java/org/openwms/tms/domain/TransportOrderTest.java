@@ -17,7 +17,7 @@ import org.openwms.common.domain.LocationGroup;
 import org.openwms.common.domain.LocationPK;
 import org.openwms.common.domain.TransportUnit;
 import org.openwms.common.domain.TransportUnitType;
-import org.openwms.common.domain.helper.AbstractPDOTestCase;
+import org.openwms.common.test.AbstractPDOTestCase;
 import org.openwms.tms.domain.order.TransportOrder;
 import org.openwms.tms.domain.order.TransportOrder.TRANSPORT_ORDER_STATE;
 
