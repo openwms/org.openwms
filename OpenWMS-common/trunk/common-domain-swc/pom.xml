@@ -5,7 +5,7 @@
     <artifactId>common-domain-swc</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <packaging>swc</packaging>
-    <name>Common Domain ActionScript DTO</name>
+    <name>Common Domain ActionScript Classes</name>
     <description>Generated ActionScript class files</description>
     <properties>
         <property.org.graniteds-core.version>1.2.0_SP1</property.org.graniteds-core.version>
