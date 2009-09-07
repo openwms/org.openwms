@@ -1,0 +1,167 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <groupId>org.openwms</groupId>
+    <artifactId>common-domain-swc</artifactId>
+    <version>0.0.1-SNAPSHOT</version>
+    <packaging>swc</packaging>
+    <name>Common Domain ActionScript DTO</name>
+    <description>Generated ActionScript class files</description>
+    <properties>
+        <property.org.graniteds-core.version>1.2.0_SP1</property.org.graniteds-core.version>
+        <property.org.graniteds.version>2.0.0.GA</property.org.graniteds.version>
+    </properties>
+    <build>
+        <finalName>${project.artifactId}-${project.version}</finalName>
+        <sourceDirectory>${project.basedir}/src/main/flex</sourceDirectory>
+        <pluginManagement>
+            <plugins>
+                <plugin>
+                    <groupId>org.sonatype.flexmojos</groupId>
+                    <artifactId>flexmojos-maven-plugin</artifactId>
+                    <version>3.3.0</version>
+                </plugin>
+            </plugins>
+        </pluginManagement>
+        <plugins>
+            <plugin>
+                <groupId>org.sonatype.flexmojos</groupId>
+                <artifactId>flexmojos-maven-plugin</artifactId>
+                <version>3.3.0</version>
+                <extensions>true</extensions>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>generate</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <configuration>
+                    <resourceBundlePath>${project.basedir}/src/main/resources</resourceBundlePath>
+                    <generatorToUse>graniteds2</generatorToUse>
+                    <outputDirectory>${project.basedir}/src/main/flex</outputDirectory>
+                    <outputEnumToBaseOutputDirectory>true</outputEnumToBaseOutputDirectory>
+                    <beanTemplate>
+                        <template>${project.basedir}/etc/${property.org.graniteds.version}/beanBase.gsp</template>
+                        <template>${project.basedir}/etc/${property.org.graniteds.version}/bean.gsp</template>
+                    </beanTemplate>
+                    <entityTemplate>
+                        <template>${project.basedir}/etc/${property.org.graniteds.version}/entityBase.gsp</template>
+                        <template>${project.basedir}/etc/${property.org.graniteds.version}/entity.gsp</template>
+                    </entityTemplate>
+                    <enumTemplate>
+                        <template>${project.basedir}/etc/${property.org.graniteds.version}/enum.gsp</template>
+                    </enumTemplate>
+                    <interfaceTemplate>
+                        <template>${project.basedir}/etc/${property.org.graniteds.version}/interfaceBase.gsp</template>
+                        <template>${project.basedir}/etc/${property.org.graniteds.version}/interface.gsp</template>
+                    </interfaceTemplate>
+                    <includeJavaClasses>
+                        <class>org.openwms.common.domain.*</class>
+                    </includeJavaClasses>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+
+    <reporting>
+        <plugins>
+            <plugin>
+                <!-- We want to have everything compiled for Java 6 -->
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <configuration>
+                    <source>1.6</source>
+                    <target>1.6</target>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.sonatype.flexmojos</groupId>
+                <artifactId>flexmojos-maven-plugin</artifactId>
+                <version>3.3.0</version>
+                <reportSets>
+                    <reportSet>
+                        <id>flex-reports</id>
+                        <reports>
+                            <report>asdoc-report</report>
+                        </reports>
+                        <configuration>
+                            <windowTitle>My TEST API Doc</windowTitle>
+                            <footer>Copyright 2009 Sonatype</footer>
+                        </configuration>
+                    </reportSet>
+                </reportSets>
+            </plugin>
+
+        </plugins>
+    </reporting>
+
+    <repositories>
+        <repository>
+            <id>flex-mojos-repository</id>
+            <url>http://svn.sonatype.org/flexmojos/repository/</url>
+            <releases>
+                <enabled>true</enabled>
+            </releases>
+            <snapshots>
+                <enabled>false</enabled>
+            </snapshots>
+        </repository>
+        <repository>
+            <id>restforflex</id>
+            <url>http://restforflex.googlecode.com/svn/repo</url>
+        </repository>
+    </repositories>
+    <pluginRepositories>
+        <pluginRepository>
+            <id>flex-mojos-repository</id>
+            <url>http://svn.sonatype.org/flexmojos/repository/</url>
+            <releases>
+                <enabled>true</enabled>
+            </releases>
+            <snapshots>
+                <enabled>false</enabled>
+            </snapshots>
+        </pluginRepository>
+    </pluginRepositories>
+
+    <distributionManagement>
+        <repository>
+            <id>Rudi-Releases</id>
+            <name>Internal Releases</name>
+            <url>http://rudi:8081/nexus/content/repositories/releases</url>
+        </repository>
+        <snapshotRepository>
+            <id>Rudi-Snapshots</id>
+            <name>Internal Snapshots</name>
+            <url>http://rudi:8081/nexus/content/repositories/snapshots</url>
+        </snapshotRepository>
+    </distributionManagement>
+
+    <dependencies>
+        <dependency>
+            <groupId>org.openwms</groupId>
+            <artifactId>OpenWMS-common</artifactId>
+            <version>${project.version}</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.adobe.flex.framework</groupId>
+            <artifactId>flex-framework</artifactId>
+            <version>3.2.0.3958</version>
+            <type>pom</type>
+        </dependency>
+        <dependency>
+            <groupId>org.graniteds</groupId>
+            <artifactId>granite-core-swc</artifactId>
+            <version>${property.org.graniteds-core.version}</version>
+            <type>swc</type>
+        </dependency>
+        <dependency>
+            <groupId>org.graniteds</groupId>
+            <artifactId>granite-essentials-swc</artifactId>
+            <version>${property.org.graniteds.version}</version>
+            <type>swc</type>
+        </dependency>
+    </dependencies>
+</project>
