@@ -1,8 +1,12 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     <modelVersion>4.0.0</modelVersion>
-    <groupId>org.openwms</groupId>
-    <artifactId>common-services-impl</artifactId>
+    <parent>
+        <groupId>org.openwms</groupId>
+        <artifactId>OpenWMS</artifactId>
+        <version>0.0.1-SNAPSHOT</version>
+    </parent>
+    <artifactId>org.openwms.common.service.spring</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <packaging>jar</packaging>
     <name>Common Service Spring Implementation</name>
@@ -22,12 +26,12 @@
     <dependencies>
         <dependency>
             <groupId>${project.groupId}</groupId>
-            <artifactId>common-domain</artifactId>
+            <artifactId>org.openwms.common.domain</artifactId>
             <version>${project.version}</version>
         </dependency>
         <dependency>
             <groupId>${project.groupId}</groupId>
-            <artifactId>tms-domain</artifactId>
+            <artifactId>org.openwms.tms.domain</artifactId>
             <version>${project.version}</version>
         </dependency>
         <dependency>
