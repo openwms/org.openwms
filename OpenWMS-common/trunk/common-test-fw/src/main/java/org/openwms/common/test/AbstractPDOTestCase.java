@@ -4,7 +4,7 @@
  * Distributable under LGPL license.
  * See terms of license at gnu.org.
  */
-package org.openwms.common.domain.helper;
+package org.openwms.common.test;
 
 import static org.junit.Assert.fail;
 
