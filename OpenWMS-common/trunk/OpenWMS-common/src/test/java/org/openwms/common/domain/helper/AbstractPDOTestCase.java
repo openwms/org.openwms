@@ -43,10 +43,10 @@ public abstract class AbstractPDOTestCase {
 			if (!running) {
 				running = true;
 			}
-			if (!TestHelper.getInstance().isDbStarted() && !TestHelper.getInstance().isPersistenceUnitDurable()) {
-				TestHelper.getInstance().startDb();
+			if (!Helper.getInstance().isDbStarted() && !Helper.getInstance().isPersistenceUnitDurable()) {
+				Helper.getInstance().startDb();
 			}
-			emf = TestHelper.getInstance().createEntityManagerFactory(TestHelper.getInstance().getPersistenceUnit());
+			emf = Helper.getInstance().createEntityManagerFactory(Helper.getInstance().getPersistenceUnit());
 		}
 		catch (Exception ex) {
 			fail("Exception during JPA EntityManager instanciation: " + ex.getMessage());
@@ -84,6 +84,12 @@ public abstract class AbstractPDOTestCase {
 		if (em == null) {
 			LOG.debug("Getting EntityManager");
 			em = emf.createEntityManager();
+			if (em==null) {
+				LOG.debug("Creation of EntityManager failed");
+				throw new RuntimeException("TEST manage is null");
+			} else {
+				LOG.debug("Creation of EntityManager passed");
+			}
 		}
 	}
 }

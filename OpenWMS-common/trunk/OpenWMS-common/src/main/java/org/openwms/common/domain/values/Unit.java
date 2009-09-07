@@ -15,6 +15,6 @@ package org.openwms.common.domain.values;
  */
 public interface Unit<T> {
 
-	public abstract void convertTo(T unit);
+	void convertTo(T unit);
 
 }

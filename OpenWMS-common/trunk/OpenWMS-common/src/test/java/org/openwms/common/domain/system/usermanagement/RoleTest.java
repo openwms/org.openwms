@@ -82,6 +82,10 @@ public final class RoleTest extends AbstractPDOTestCase {
 	
 	@Test
 	public final void testRoleLifecycle() {
+		if (em == null) {
+			LOG.debug("NOK:EntityManager is null");
+			fail("Not allowed to call setUsers() with null");
+		}
 		EntityTransaction entityTransaction = em.getTransaction();
 		Role role = new Role(TEST_ROLE);
 		User unknownUser = new User(UNKNOWN_USER);

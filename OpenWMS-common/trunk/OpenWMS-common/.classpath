@@ -1,26 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
-	<classpathentry kind="src" path="src/test/java"/>
-	<classpathentry kind="src" path="src/main/resources"/>
-	<classpathentry kind="src" path="src/main/java"/>
-	<classpathentry kind="src" path="src/test/resources"/>
-	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="src" output="target/classes" path="src/main/java"/>
+	<classpathentry excluding="**" kind="src" output="target/classes" path="src/main/resources"/>
+	<classpathentry kind="src" output="target/test-classes" path="src/test/java"/>
+	<classpathentry excluding="**" kind="src" output="target/test-classes" path="src/test/resources"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.6"/>
 	<classpathentry kind="con" path="com.springsource.server.ide.jdt.core.MANIFEST_CLASSPATH_CONTAINER"/>
-	<classpathentry kind="lib" path="deps/build/commons-collections-3.2.1.jar"/>
-	<classpathentry kind="lib" path="deps/build/commons-lang-2.4.jar"/>
-	<classpathentry kind="lib" path="deps/build/commons-logging-1.1.1.jar"/>
-	<classpathentry kind="lib" path="deps/build/persistence-api-1.0.jar"/>
-	<classpathentry kind="lib" path="deps/test/antlr-2.7.7.jar"/>
-	<classpathentry kind="lib" path="deps/test/dom4j-1.6.1.jar"/>
-	<classpathentry kind="lib" path="deps/test/hibernate-annotations-3.4.0.GA.jar"/>
-	<classpathentry kind="lib" path="deps/test/hibernate-commons-annotations-3.3.0.ga.jar"/>
-	<classpathentry kind="lib" path="deps/test/hibernate-core-3.3.1.GA.jar"/>
-	<classpathentry kind="lib" path="deps/test/hibernate-entitymanager-3.4.0.GA.jar"/>
-	<classpathentry kind="lib" path="deps/test/hsqldb-1.8.0.7.jar"/>
-	<classpathentry kind="lib" path="deps/test/javassist-3.6.0.GA.jar"/>
-	<classpathentry kind="lib" path="deps/test/jta-1.1.jar"/>
-	<classpathentry kind="lib" path="deps/test/junit-4.4.jar"/>
-	<classpathentry kind="lib" path="deps/test/slf4j-api-1.5.6.jar"/>
-	<classpathentry kind="lib" path="deps/test/slf4j-simple-1.5.6.jar"/>
-	<classpathentry kind="output" path="build/classes"/>
+	<classpathentry kind="con" path="org.maven.ide.eclipse.MAVEN2_CLASSPATH_CONTAINER"/>
+	<classpathentry kind="output" path="target/classes"/>
 </classpath>
