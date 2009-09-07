@@ -23,24 +23,24 @@ import org.apache.commons.logging.LogFactory;
  * @author <a href="mailto:openwms@googlemail.com">Heiko Scherrer</a>
  * @version $Revision$
  */
-public final class TestHelper {
+public final class Helper {
 
 	public static final String PERSISTENCE_UNIT_DURABLE = "OpenWMS-test-durable";
 	private static String persistenceUnit = "OpenWMS-test";
-	private Log logger = LogFactory.getLog(TestHelper.class);
-	private static TestHelper helper;
+	private Log logger = LogFactory.getLog(Helper.class);
+	private static Helper helper;
 	private Connection connection;
 	private boolean dbStarted = false;
 
-	private TestHelper() {};
+	private Helper() {};
 
 	/**
 	 * Get Singleton instance.
 	 * 
 	 * @return
 	 */
-	public synchronized static TestHelper getInstance() {
-		return helper == null ? new TestHelper() : helper;
+	public synchronized static Helper getInstance() {
+		return helper == null ? new Helper() : helper;
 	}
 
 	/**
