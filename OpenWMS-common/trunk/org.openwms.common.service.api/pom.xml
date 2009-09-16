@@ -7,31 +7,19 @@
         <version>0.0.1-SNAPSHOT</version>
     </parent>
     <artifactId>org.openwms.common.service.api</artifactId>
-    <packaging>jar</packaging>
-    <name>Common Service API</name>
-    <build>
-        <plugins>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-compiler-plugin</artifactId>
-                <configuration>
-                    <source>1.6</source>
-                    <target>1.6</target>
-                </configuration>
-            </plugin>
-
-        </plugins>
-    </build>
+    <name>+ Common Service API</name>
     <dependencies>
+        <dependency>
+            <groupId>javax.persistence</groupId>
+            <artifactId>persistence-api</artifactId>
+        </dependency>
         <dependency>
             <groupId>${project.groupId}</groupId>
             <artifactId>org.openwms.common.domain</artifactId>
-            <version>${project.version}</version>
         </dependency>
         <dependency>
             <groupId>${project.groupId}</groupId>
             <artifactId>org.openwms.tms.domain</artifactId>
-            <version>${project.version}</version>
         </dependency>
     </dependencies>
 </project>
