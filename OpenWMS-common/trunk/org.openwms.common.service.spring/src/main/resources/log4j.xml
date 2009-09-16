@@ -41,6 +41,9 @@
 		<priority value="ERROR" />
 	</category>
 	
+    <category name="org.hibernate">
+        <priority value="WARN" />
+    </category>
 
 	<!-- Limit the org.apache category to INFO as its DEBUG is verbose -->
 

@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+    <!--
+        /* * OpenWMS, the Open Warehouse Management System * * Distributable under LGPL license. * See terms of license
+        at gnu.org. */
+    -->
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:context="http://www.springframework.org/schema/context" xmlns:tx="http://www.springframework.org/schema/tx"
+    xmlns:aop="http://www.springframework.org/schema/aop"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-2.5.xsd http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-2.5.xsd http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-2.5.xsd">
+
+    <context:property-placeholder location="classpath:jdbc.test.properties" />
+    <tx:annotation-driven transaction-manager="transactionManager" />
+    <context:annotation-config />
+    <aop:aspectj-autoproxy />
+
+    <!-- HSQL Database Server -->
+    <bean id="hsqlDbServer" class="org.openwms.common.HsqlDBWrapper">
+        <property name="url" value="${jdbc.test.url}" />
+        <property name="username" value="${jdbc.test.username}" />
+        <property name="password" value="${jdbc.test.password}" />
+        <property name="persistenceUnit" value="${jdbc.test.persistenceUnit}" />
+    </bean>
+
+    <!-- Datasource -->
+    <bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource" depends-on="hsqlDbServer">
+        <property name="url" value="${jdbc.test.url}" />
+        <property name="username" value="${jdbc.test.username}" />
+        <property name="password" value="${jdbc.test.password}" />
+        <property name="driverClassName" value="${jdbc.test.driverClassName}" />
+    </bean>
+
+    <!-- Entity Manager -->
+    <bean id="entityManagerFactory" class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
+        <property name="persistenceUnitName" value="${jdbc.test.persistenceUnit}" />
+        <property name="persistenceUnitManager" ref="pum"/>
+    </bean>
+
+    <bean id="pum" class="org.springframework.orm.jpa.persistenceunit.DefaultPersistenceUnitManager">
+        <property name="persistenceXmlLocations">
+            <list>
+                <value>classpath:/org/openwms/**/persistence.xml</value>
+                <value>classpath*:META-INF/persistence.xml</value>
+            </list>
+        </property>
+    </bean>
+
+    <!-- Transaction Manager -->
+    <bean id="transactionManager" class="org.springframework.orm.jpa.JpaTransactionManager">
+        <property name="entityManagerFactory" ref="entityManagerFactory" />
+    </bean>
+
+    <bean class="org.springframework.dao.annotation.PersistenceExceptionTranslationPostProcessor" />
+    <bean class="org.springframework.orm.jpa.support.PersistenceAnnotationBeanPostProcessor" />
+
+</beans>
