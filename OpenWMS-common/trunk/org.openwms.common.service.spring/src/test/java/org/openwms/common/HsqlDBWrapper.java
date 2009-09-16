@@ -29,7 +29,6 @@ public class HsqlDBWrapper {
 	private Log logger = LogFactory.getLog(HsqlDBWrapper.class);
 	private Connection connection;
 	private boolean dbStarted = false;
-	private String persistenceUnit;
 	private String url;
 	private String username;
 	private String password;
@@ -50,10 +49,6 @@ public class HsqlDBWrapper {
 		this.password = password;
 	}
 
-	public void setPersistenceUnit(String persistenceUnit) {
-		this.persistenceUnit = persistenceUnit;
-	}
-	
 	public void setInMemoryDB(boolean inMemoryDB) {
 		this.inMemoryDB = inMemoryDB;
 	}

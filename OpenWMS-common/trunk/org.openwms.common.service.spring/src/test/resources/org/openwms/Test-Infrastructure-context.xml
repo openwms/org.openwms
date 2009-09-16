@@ -18,7 +18,6 @@
         <property name="url" value="${jdbc.test.url}" />
         <property name="username" value="${jdbc.test.username}" />
         <property name="password" value="${jdbc.test.password}" />
-        <property name="persistenceUnit" value="${jdbc.test.persistenceUnit}" />
     </bean>
 
     <!-- Datasource -->
