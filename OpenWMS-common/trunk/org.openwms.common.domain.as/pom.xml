@@ -8,7 +8,7 @@
     </parent>
     <artifactId>org.openwms.common.domain.as</artifactId>
     <packaging>swc</packaging>
-    <name>Common Domain ActionScript Classes</name>
+    <name>+ Common Domain ActionScript Classes</name>
     <description>Generated ActionScript class files</description>
     <properties>
         <property.org.graniteds-core.version>1.2.0_SP1</property.org.graniteds-core.version>
@@ -17,15 +17,6 @@
     <build>
         <finalName>${project.artifactId}-${project.version}</finalName>
         <sourceDirectory>${project.basedir}/src/main/flex</sourceDirectory>
-        <pluginManagement>
-            <plugins>
-                <plugin>
-                    <groupId>org.sonatype.flexmojos</groupId>
-                    <artifactId>flexmojos-maven-plugin</artifactId>
-                    <version>3.3.0</version>
-                </plugin>
-            </plugins>
-        </pluginManagement>
         <plugins>
             <plugin>
                 <groupId>org.sonatype.flexmojos</groupId>
@@ -128,22 +119,9 @@
         </pluginRepository>
     </pluginRepositories>
 
-    <distributionManagement>
-        <repository>
-            <id>Rudi-Releases</id>
-            <name>Internal Releases</name>
-            <url>http://rudi:8081/nexus/content/repositories/releases</url>
-        </repository>
-        <snapshotRepository>
-            <id>Rudi-Snapshots</id>
-            <name>Internal Snapshots</name>
-            <url>http://rudi:8081/nexus/content/repositories/snapshots</url>
-        </snapshotRepository>
-    </distributionManagement>
-
     <dependencies>
         <dependency>
-            <groupId>org.openwms</groupId>
+            <groupId>${project.groupId}</groupId>
             <artifactId>org.openwms.common.domain</artifactId>
             <version>${project.version}</version>
             <scope>provided</scope>
