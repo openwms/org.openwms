@@ -68,11 +68,6 @@ public final class TransportServiceTest extends AbstractJpaSpringContextTests {
 		transportUnitDao.persist(transportUnit);
 	}
 
-	@Override
-	protected String getTestDataFile() {
-		return null;
-	}
-
 	@Test
 	public final void testCreateExistingTransportUnit() {
 		try {
