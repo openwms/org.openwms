@@ -80,6 +80,7 @@ public final class TransportOrderTest extends AbstractPDOTestCase {
 		}
 
 		// Try to persist
+		/*
 		TransportUnitType transportUnitType = new TransportUnitType("TEST_TYPE");
 		transportUnit.setTransportUnitType(transportUnitType);
 		transportUnit.setActualLocation(targetLocation);
@@ -91,6 +92,7 @@ public final class TransportOrderTest extends AbstractPDOTestCase {
 		em.persist(targetLocationGroup);
 		em.persist(transportOrder2);
 		entityTransaction.commit();
+		*/
 	}
 
 }
