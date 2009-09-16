@@ -14,7 +14,7 @@ import javax.persistence.EntityTransaction;
 import javax.persistence.PersistenceException;
 
 import org.junit.Test;
-import org.openwms.common.domain.helper.AbstractPDOTestCase;
+import org.openwms.common.test.AbstractPDOTestCase;
 
 /**
  * 

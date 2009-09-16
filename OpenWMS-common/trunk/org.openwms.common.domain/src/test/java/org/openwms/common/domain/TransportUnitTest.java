@@ -14,10 +14,10 @@ import javax.persistence.PersistenceException;
 import javax.persistence.Query;
 
 import org.junit.Test;
-import org.openwms.common.domain.helper.AbstractPDOTestCase;
 import org.openwms.common.domain.system.UnitError;
 import org.openwms.common.domain.values.Barcode;
 import org.openwms.common.domain.values.Barcode.BARCODE_ALIGN;
+import org.openwms.common.test.AbstractPDOTestCase;
 
 /**
  * 
