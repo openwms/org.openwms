@@ -1,1 +1,6 @@
 Manifest-Version: 1.0
+Bundle-SymbolicName: org.openwms.common.domain
+Bundle-Version: 0.0.1.SNAPSHOT
+Bundle-Name: org.openwms.common.domain
+Bundle-Vendor: openwms.org
+Import-Package: javax.persistence;version="[1.0.0,1.0.0]"
