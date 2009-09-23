@@ -24,6 +24,7 @@ import org.springframework.util.ResourceUtils;
  * @author <a href="mailto:openwms@googlemail.com">Heiko Scherrer</a>
  * @version $Revision: 877 $
  */
+@Deprecated
 public class CustomPersistenceUnitPostProcessor implements PersistenceUnitPostProcessor {
 
 	/**
