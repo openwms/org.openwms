@@ -20,6 +20,7 @@ import org.springframework.orm.jpa.persistenceunit.MutablePersistenceUnitInfo;
  * @author <a href="mailto:openwms@googlemail.com">Heiko Scherrer</a>
  * @version $Revision: 877 $
  */
+@Deprecated
 public class CustomPersistenceUnitManager extends DefaultPersistenceUnitManager {
 	List<URL> url = new ArrayList<URL>();
 

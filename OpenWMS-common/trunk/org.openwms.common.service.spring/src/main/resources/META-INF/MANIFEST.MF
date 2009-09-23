@@ -1,2 +1,6 @@
 Manifest-Version: 1.0
+Bundle-SymbolicName: org.openwms.common.service.spring
+Bundle-Version: 0.0.1.SNAPSHOT
+Bundle-Name: org.openwms.common.service.spring
+Bundle-Vendor: openwms.org
 
