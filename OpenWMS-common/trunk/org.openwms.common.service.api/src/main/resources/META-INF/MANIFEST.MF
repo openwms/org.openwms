@@ -1,0 +1,10 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: org.openwms.common.service.api
+Bundle-SymbolicName: org.openwms.common.service.api
+Bundle-Version: 0.0.1.SNAPSHOT
+Export-Package: org.openwms.common.service,
+ org.openwms.common.service.exception,
+ org.openwms.common.service.management
+Bundle-Vendor: openwms.org
+Import-Package: javax.persistence;version="[1.0.0,1.0.0]"
