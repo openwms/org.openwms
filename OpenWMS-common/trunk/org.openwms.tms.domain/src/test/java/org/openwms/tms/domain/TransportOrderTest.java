@@ -6,18 +6,13 @@
  */
 package org.openwms.tms.domain;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.fail;
-
-import javax.persistence.EntityTransaction;
-
 import org.junit.Test;
 import org.openwms.common.domain.Location;
 import org.openwms.common.domain.LocationGroup;
 import org.openwms.common.domain.LocationPK;
 import org.openwms.common.domain.TransportUnit;
 import org.openwms.common.domain.TransportUnitType;
-import org.openwms.common.test.AbstractPDOTestCase;
+import org.openwms.common.test.AbstractJpaSpringContextTests;
 import org.openwms.tms.domain.order.TransportOrder;
 import org.openwms.tms.domain.order.TransportOrder.TRANSPORT_ORDER_STATE;
 
@@ -27,11 +22,12 @@ import org.openwms.tms.domain.order.TransportOrder.TRANSPORT_ORDER_STATE;
  * @author <a href="heiko.scherrer@gmx.de">Heiko Scherrer</a>
  * @version $Revision: 120 $
  */
-public final class TransportOrderTest extends AbstractPDOTestCase {
+public final class TransportOrderTest extends AbstractJpaSpringContextTests {
 
 	/**
 	 * Test method for
-	 * {@link org.openwms.tms.domain.order.TransportOrder#setState(org.openwms.tms.domain.order.TransportOrder.TRANSPORT_ORDER_STATE)} .
+	 * {@link org.openwms.tms.domain.order.TransportOrder#setState(org.openwms.tms.domain.order.TransportOrder.TRANSPORT_ORDER_STATE)}
+	 * .
 	 */
 	@Test
 	public final void testSetState() {
@@ -41,7 +37,7 @@ public final class TransportOrderTest extends AbstractPDOTestCase {
 			fail("Exception expected while switching to next state without transportUnit");
 		}
 		catch (InsufficientValueException tme) {
-			LOG.debug("OK:Exception while switching to next state without transportUnit");
+			logger.debug("OK:Exception while switching to next state without transportUnit");
 		}
 
 		assertEquals("TransportOrder must remain in state CREATED:", TRANSPORT_ORDER_STATE.CREATED, transportOrder
@@ -53,14 +49,14 @@ public final class TransportOrderTest extends AbstractPDOTestCase {
 			fail("TransportOrder must not be switched in next mode without setting a target");
 		}
 		catch (InsufficientValueException tme) {
-			LOG.debug("OK:Exception while switching to next state without target");
+			logger.debug("OK:Exception while switching to next state without target");
 		}
 
 		Location targetLocation = new Location(new LocationPK("KNOWN", "KNOWN", "KNOWN", "KNOWN", "KNOWN"));
 		transportOrder.setTargetLocation(targetLocation);
 		try {
 			transportOrder.setState(TRANSPORT_ORDER_STATE.INITIALIZED);
-			LOG.debug("transportUnit set and target set");
+			logger.debug("transportUnit set and target set");
 		}
 		catch (Exception tme) {
 			fail("TransportOrder could be switched in next mode");
@@ -73,26 +69,22 @@ public final class TransportOrderTest extends AbstractPDOTestCase {
 		transportOrder2.setTargetLocationGroup(targetLocationGroup);
 		try {
 			transportOrder.setState(TRANSPORT_ORDER_STATE.INITIALIZED);
-			LOG.debug("transportUnit set and targetLocationGroup set");
+			logger.debug("transportUnit set and targetLocationGroup set");
 		}
 		catch (Exception tme) {
 			fail("TransportOrder could be switched in next mode");
 		}
 
 		// Try to persist
-		/*
 		TransportUnitType transportUnitType = new TransportUnitType("TEST_TYPE");
 		transportUnit.setTransportUnitType(transportUnitType);
 		transportUnit.setActualLocation(targetLocation);
-		EntityTransaction entityTransaction = em.getTransaction();
-		entityTransaction.begin();
-		em.persist(targetLocation);
-		em.persist(transportUnitType);
-		em.persist(transportUnit);
-		em.persist(targetLocationGroup);
-		em.persist(transportOrder2);
-		entityTransaction.commit();
-		*/
+
+		sharedEntityManager.persist(targetLocation);
+		sharedEntityManager.persist(transportUnitType);
+		sharedEntityManager.persist(transportUnit);
+		sharedEntityManager.persist(targetLocationGroup);
+		sharedEntityManager.persist(transportOrder2);
 	}
 
 }
