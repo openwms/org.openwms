@@ -43,6 +43,5 @@ public class WeightTest {
 		Weight w4 = new Weight(new BigDecimal("0.000002"), WeightUnit.T);
 		w3.convertTo(WeightUnit.T);
 		assertEquals("2G are the same as 0.000002T", 0, w3.compareTo(w4));
-
 	}
 }

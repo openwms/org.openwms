@@ -6,7 +6,7 @@
  */
 package org.openwms.common.domain.values;
 
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 
 import org.junit.Test;
 import org.openwms.common.domain.values.Barcode.BARCODE_ALIGN;
@@ -21,17 +21,20 @@ import org.openwms.common.domain.values.Barcode.BARCODE_ALIGN;
 public class BarcodeTest {
 
 	/**
+	 * Test Barcode instantiation with null
+	 */
+	@Test(expected = IllegalArgumentException.class)
+	public final void testBarcodeWithNull() throws IllegalArgumentException {
+			new Barcode(null);
+			fail("OK:Barcode cannot instanciated with NULL");
+	}
+
+	/**
 	 * Test basic behaviour of the Barcode class.
 	 * 
 	 */
 	@Test
 	public final void testBarcode() {
-		try {
-			new Barcode(null);
-		} catch (Exception e) {
-			System.out.println("OK:Barcode cannot instanciated with NULL");
-		}
-		
 		Barcode bc = new Barcode("TEST");
 		System.out.println("Test Barcode:" + bc);
 
@@ -55,5 +58,4 @@ public class BarcodeTest {
 		assertTrue("Barcode must end with 9", bc4.toString().endsWith("9"));
 		assertTrue("Barcode must start with A", bc4.toString().startsWith("A"));
 	}
-
 }

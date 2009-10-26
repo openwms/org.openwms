@@ -1,6 +1,19 @@
 Manifest-Version: 1.0
-Bundle-SymbolicName: org.openwms.common.domain
-Bundle-Version: 0.0.1.SNAPSHOT
-Bundle-Name: org.openwms.common.domain
+Export-Package: org.openwms.common.domain;version="0.0.1.SNAPSHOT";use
+ s:="javax.persistence,org.openwms.common.domain.system,org.openwms.co
+ mmon.domain.system.usermanagement,org.openwms.common.domain.values",o
+ rg.openwms.common.domain.system;version="0.0.1.SNAPSHOT";uses:="javax
+ .persistence",org.openwms.common.domain.system.usermanagement;version
+ ="0.0.1.SNAPSHOT";uses:="javax.persistence",org.openwms.common.domain
+ .values;version="0.0.1.SNAPSHOT";uses:="javax.persistence,org.junit",
+ org.openwms.common.util;version="0.0.1.SNAPSHOT",org.openwms.tms.doma
+ in;version="0.0.1.SNAPSHOT"
 Bundle-Vendor: openwms.org
-Import-Package: javax.persistence;version="[1.0.0,1.0.0]"
+Bundle-Version: 0.0.1.SNAPSHOT
+Tool: Bundlor 1.0.0.M6
+Bundle-Name: org.openwms.common.domain
+Bundle-ManifestVersion: 2
+Bundle-SymbolicName: org.openwms.common.domain
+Import-Package: javax.persistence;version="[1.0.0, 1.0.0]",org.apache.
+ commons.lang;version="[2.4.0, 2.4.0]"
+
