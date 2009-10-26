@@ -10,10 +10,12 @@ import javax.persistence.PersistenceException;
 import javax.persistence.Query;
 
 import org.junit.Test;
+import org.junit.runner.RunWith;
 import org.openwms.common.domain.system.UnitError;
 import org.openwms.common.domain.values.Barcode;
 import org.openwms.common.domain.values.Barcode.BARCODE_ALIGN;
 import org.openwms.common.test.AbstractJpaSpringContextTests;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 /**
  * 
@@ -22,6 +24,7 @@ import org.openwms.common.test.AbstractJpaSpringContextTests;
  * @author <a href="mailto:openwms@googlemail.com">Heiko Scherrer</a>
  * @version $Revision$
  */
+@RunWith(SpringJUnit4ClassRunner.class)
 public final class TransportUnitTest extends AbstractJpaSpringContextTests {
 
 	/**
