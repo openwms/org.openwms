@@ -1,0 +1,9 @@
+Manifest-Version: 1.0
+Bundle-Version: 0.0.1.SNAPSHOT
+Bundle-Name: org.openwms.common.infrastructure.postgres
+Bundle-ManifestVersion: 2
+Bundle-SymbolicName: org.openwms.common.infrastructure.postgres
+Import-Bundle: com.springsource.org.apache.commons.dbcp;version="[1.2.2.osgi,1.2.2.osgi]",
+ com.springsource.org.postgresql.jdbc4;version="[8.3.604,8.3.604]"
+Import-Package: javax.sql
+ 
