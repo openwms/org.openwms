@@ -11,7 +11,7 @@ import javax.persistence.Query;
 
 import org.junit.Test;
 import org.openwms.common.test.AbstractJpaSpringContextTests;
-import org.springframework.stereotype.Component;
+import org.springframework.test.context.ContextConfiguration;
 
 /**
  * 
@@ -20,7 +20,7 @@ import org.springframework.stereotype.Component;
  * @author <a href="mailto:openwms@googlemail.com">Heiko Scherrer</a>
  * @version $Revision$
  */
-@Component
+@ContextConfiguration
 public final class RoleTest extends AbstractJpaSpringContextTests {
 
 	private static final String TEST_ROLE = "ROLE_TEST";

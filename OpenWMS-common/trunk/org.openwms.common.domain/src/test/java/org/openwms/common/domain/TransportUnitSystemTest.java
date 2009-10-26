@@ -16,6 +16,7 @@ import org.openwms.common.test.AbstractJpaSpringContextTests;
  * @author <a href="mailto:openwms@googlemail.com">Heiko Scherrer</a>
  * @version $Revision$
  */
+@ContextConfiguration({})
 public final class TransportUnitSystemTest extends AbstractJpaSpringContextTests {
 
 	/**
