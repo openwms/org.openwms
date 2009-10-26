@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     <modelVersion>4.0.0</modelVersion>
@@ -7,16 +8,22 @@
         <version>0.0.1-SNAPSHOT</version>
     </parent>
     <artifactId>org.openwms.common.domain</artifactId>
-    <name>+ Common Domain classes</name>
+    <name>${project.artifactId}</name>
     <build>
         <plugins>
             <plugin>
-                <artifactId>maven-assembly-plugin</artifactId>
-                <configuration>
-                    <descriptorRefs>
-                        <descriptorRef>jar-with-dependencies</descriptorRef>
-                    </descriptorRefs>
-                </configuration>
+                <groupId>com.springsource.bundlor</groupId>
+                <artifactId>com.springsource.bundlor.maven</artifactId>
+                <version>1.0.0.M2</version>
+                <executions>
+                    <execution>
+                        <id>bundlor</id>
+                        <goals>
+                            <goal>transform</goal>
+                        </goals>
+                        <phase>package</phase>
+                    </execution>
+                </executions>
             </plugin>
         </plugins>
     </build>
@@ -24,13 +31,12 @@
         <!-- Runtime dependencies -->
         <dependency>
             <groupId>javax.persistence</groupId>
-            <artifactId>persistence-api</artifactId>
+            <artifactId>com.springsource.javax.persistence</artifactId>
         </dependency>
         <dependency>
             <groupId>org.apache.commons</groupId>
             <artifactId>com.springsource.org.apache.commons.lang</artifactId>
         </dependency>
-
         <!-- Test dependencies -->
         <dependency>
             <groupId>${project.groupId}</groupId>
@@ -38,27 +44,6 @@
             <version>${project.version}</version>
             <type>test-jar</type>
             <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.slf4j</groupId>
-            <artifactId>slf4j-simple</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.hibernate</groupId>
-            <artifactId>hibernate</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.hibernate</groupId>
-            <artifactId>hibernate-entitymanager</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.aspectj</groupId>
-            <artifactId>com.springsource.org.aspectj.weaver</artifactId>
-            <version>1.6.5.RELEASE</version>
-        </dependency>
-        <dependency>
-            <groupId>hsqldb</groupId>
-            <artifactId>hsqldb</artifactId>
         </dependency>
     </dependencies>
 </project>
