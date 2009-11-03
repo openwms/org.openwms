@@ -13,7 +13,7 @@ import javax.annotation.PostConstruct;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.openwms.common.dao.GenericDao;
+import org.openwms.common.integration.GenericDao;
 import org.springframework.beans.factory.annotation.Required;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -58,7 +58,7 @@ public class EntityServiceImpl<T extends Serializable, ID extends Serializable> 
 		// dao.save(entity);
 		dao.remove(entity);
 	}
-	
+
 	public void addEntity(T newEntity) {
 		// FIXME: All entities shall extend a superclass Entity with isNew() method, to check this here
 		dao.persist(newEntity);

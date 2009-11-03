@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+/*
+ * OpenWMS, the Open Warehouse Management System
+ * 
+ * Distributable under LGPL license.
+ * See terms of license at gnu.org.
+ */
+-->
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/osgi http://www.springframework.org/schema/osgi/spring-osgi.xsd"
+	xmlns:osgi="http://www.springframework.org/schema/osgi">
+
+    <osgi:reference id="transactionManager" interface="org.springframework.transaction.PlatformTransactionManager"/>
+
+	<osgi:reference id="userDao" interface="org.openwms.common.integration.system.usermanagement.UserDao"/>
+    <osgi:reference id="locationDao" interface="org.openwms.common.integration.LocationDao"/>
+    <osgi:reference id="locationGroupDao" interface="org.openwms.common.integration.LocationGroupDao"/>
+	
+	<osgi:service ref="entityService" interface="org.openwms.common.service.EntityService"/>
+    <osgi:service ref="locationGroupService" interface="org.openwms.common.service.LocationGroupService"/>
+    <osgi:service ref="locationService" interface="org.openwms.common.service.LocationService"/>
+
+</beans>

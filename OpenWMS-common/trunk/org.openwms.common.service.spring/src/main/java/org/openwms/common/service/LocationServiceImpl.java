@@ -8,8 +8,8 @@ package org.openwms.common.service;
 
 import java.util.List;
 
-import org.openwms.common.dao.LocationDao;
 import org.openwms.common.domain.Location;
+import org.openwms.common.integration.LocationDao;
 
 /**
  * A LocationServiceImpl.
