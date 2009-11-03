@@ -8,8 +8,7 @@ Tool: Bundlor 1.0.0.M6
 Bundle-Name: org.openwms.tms.domain
 Bundle-ManifestVersion: 2
 Bundle-SymbolicName: org.openwms.tms.domain
-Import-Package: 
- javax.persistence;version="[1.0.0, 1.0.0]",
- org.openwms.common.domain;version="[0.0.1.SNAPSHOT, 0.0.1.SNAPSHOT]",
- org.openwms.common.domain.values;version="[0.0.1.SNAPSHOT, 0.0.1.SNAPSHOT]",
- org.openwms.tms.domain;version="[0.0.1.SNAPSHOT, 0.0.1.SNAPSHOT]"
+Import-Package: javax.persistence;version="[1.0.0, 1.0.0]",org.openwms
+ .common.domain;version="[0.0.1.SNAPSHOT, 0.0.1.SNAPSHOT]",org.openwms
+ .common.domain.values;version="[0.0.1.SNAPSHOT, 0.0.1.SNAPSHOT]"
+

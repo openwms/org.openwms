@@ -32,7 +32,7 @@ import org.openwms.tms.domain.InsufficientValueException;
  * <tt>TransportOrder</tt> can only be processed in a specific state (STARTED).
  * 
  * @author <a href="heiko.scherrer@gmx.de">Heiko Scherrer</a>
- * @version $Revision: 40 $
+ * @version $Revision$
  */
 @Entity
 @Table(name = "TRANSPORT_ORDER")
