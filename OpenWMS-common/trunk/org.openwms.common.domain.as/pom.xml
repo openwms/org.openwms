@@ -21,6 +21,7 @@
     <properties>
         <property.org.graniteds-core.version>1.2.0_SP1</property.org.graniteds-core.version>
         <property.org.graniteds.version>2.0.0.GA</property.org.graniteds.version>
+        <flex.version>3.2.0.3958</flex.version>
     </properties>
     <build>
         <finalName>${project.artifactId}-${project.version}</finalName>
@@ -88,8 +89,8 @@
                             <report>asdoc-report</report>
                         </reports>
                         <configuration>
-                            <windowTitle>My TEST API Doc</windowTitle>
-                            <footer>Copyright 2009 Sonatype</footer>
+                            <windowTitle>AsDoc</windowTitle>
+                            <footer>openwms.org</footer>
                         </configuration>
                     </reportSet>
                 </reportSets>
@@ -137,7 +138,7 @@
         <dependency>
             <groupId>com.adobe.flex.framework</groupId>
             <artifactId>flex-framework</artifactId>
-            <version>3.2.0.3958</version>
+            <version>${flex.version}</version>
             <type>pom</type>
         </dependency>
         <dependency>
