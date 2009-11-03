@@ -4,12 +4,13 @@
  * Distributable under LGPL license.
  * See terms of license at gnu.org.
  */
-package org.openwms.common.service;
+package org.openwms.common.service.spring;
 
 import java.util.List;
 
 import org.openwms.common.domain.Location;
 import org.openwms.common.integration.LocationDao;
+import org.openwms.common.service.LocationService;
 
 /**
  * A LocationServiceImpl.

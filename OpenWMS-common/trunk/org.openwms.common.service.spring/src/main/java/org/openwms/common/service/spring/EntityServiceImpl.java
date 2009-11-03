@@ -4,7 +4,7 @@
  * Distributable under LGPL license.
  * See terms of license at gnu.org.
  */
-package org.openwms.common.service;
+package org.openwms.common.service.spring;
 
 import java.io.Serializable;
 import java.util.List;
@@ -14,6 +14,7 @@ import javax.annotation.PostConstruct;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.openwms.common.integration.GenericDao;
+import org.openwms.common.service.EntityService;
 import org.springframework.beans.factory.annotation.Required;
 import org.springframework.transaction.annotation.Transactional;
 

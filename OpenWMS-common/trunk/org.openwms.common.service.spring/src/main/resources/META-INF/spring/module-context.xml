@@ -18,19 +18,19 @@
     <context:annotation-config />
     <tx:annotation-driven mode="aspectj" />
 
-    <bean id="entityService" class="org.openwms.common.service.EntityServiceImpl">
+    <bean id="entityService" class="org.openwms.common.service.spring.EntityServiceImpl">
         <property name="dao" ref="locationDao" />
     </bean>
 
-    <bean id="locationService" class="org.openwms.common.service.LocationServiceImpl">
+    <bean id="locationService" class="org.openwms.common.service.spring.LocationServiceImpl">
         <property name="dao" ref="locationDao" />
     </bean>
     
-    <bean id="locationGroupService" class="org.openwms.common.service.LocationGroupServiceImpl">
+    <bean id="locationGroupService" class="org.openwms.common.service.spring.LocationGroupServiceImpl">
         <property name="dao" ref="locationGroupDao" />
     </bean>
 
-    <bean id="userService" class="org.openwms.common.service.management.UserServiceImpl">
+    <bean id="userService" class="org.openwms.common.service.spring.management.UserServiceImpl">
         <property name="dao" ref="userDao" />
     </bean>
 </beans>

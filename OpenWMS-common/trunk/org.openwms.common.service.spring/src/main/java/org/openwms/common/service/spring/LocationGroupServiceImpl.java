@@ -4,14 +4,15 @@
  * Distributable under LGPL license.
  * See terms of license at gnu.org.
  */
-package org.openwms.common.service;
+package org.openwms.common.service.spring;
 
 import java.util.List;
 import java.util.Set;
 
 import org.openwms.common.domain.LocationGroup;
 import org.openwms.common.domain.LocationGroup.STATE;
-import org.openwms.common.service.exception.ServiceException;
+import org.openwms.common.service.LocationGroupService;
+import org.openwms.common.service.spring.exception.ServiceException;
 import org.openwms.common.util.TreeNode;
 import org.openwms.common.util.TreeNodeImpl;
 import org.springframework.stereotype.Service;
