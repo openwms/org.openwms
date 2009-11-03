@@ -1,6 +1,6 @@
 Manifest-Version: 1.0
-Export-Package: org.openwms.web.flex.servlet;version="2.0";uses:="java
- x.servlet,javax.servlet.http"
+Export-Package: src.main.java.org.openwms.web.flex.servlet;version="2.
+ 0";uses:="javax.servlet.http"
 Implementation-Title: org.openwms.client.flex.wrapper
 Implementation-Version: 0.0.1.SNAPSHOT
 Tool: Bundlor 1.0.0.M6
@@ -15,9 +15,9 @@ Bundle-Version: 2.0
 Bundle-ManifestVersion: 2
 Bundle-SymbolicName: org.openwms.client.flex.wrapper
 Import-Package: com.springsource.server.web.dm;version="[2.0.0, 3.0.0)
- ",freemarker.cache;version="[2.3.15,2.3.15]",javax.servlet,javax.serv
- let.http,javax.servlet.jsp.jstl.core;version="[1.1.2,1.2.0)",org.open
- wms.web.servlet;version="[0.0.1.SNAPSHOT,)",org.springframework.web.c
- ontext;version="[3.0, 3.1)",org.springframework.web.context.request;v
- ersion="[3.0, 3.1)"
+ ",freemarker.cache;version="[2.3.15,2.3.15]",javax.servlet.http,javax
+ .servlet.jsp.jstl.core;version="[1.1.2,1.2.0)",org.openwms.web.servle
+ t;version="[0.0.1.SNAPSHOT,)",org.springframework.web.context;version
+ ="[3.0, 3.1)",org.springframework.web.context.request;version="[3.0, 
+ 3.1)"
 
