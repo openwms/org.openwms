@@ -1,0 +1,15 @@
+Manifest-Version: 1.0
+Export-Package: org.openwms.common.integration;version="0.0.1.SNAPSHOT
+ ";uses:="org.openwms.common.domain",org.openwms.common.integration.ex
+ ception;version="0.0.1.SNAPSHOT",org.openwms.common.integration.syste
+ m.usermanagement;version="0.0.1.SNAPSHOT";uses:="org.openwms.common.i
+ ntegration"
+Bundle-Vendor: openwms.org
+Bundle-Version: 0.0.1.SNAPSHOT
+Tool: Bundlor 1.0.0.M6
+Bundle-Name: org.openwms.common.integration
+Bundle-ManifestVersion: 2
+Bundle-SymbolicName: org.openwms.common.integration
+Import-Package: org.openwms.common.domain;version="[0.0.1.SNAPSHOT, 0.
+ 0.1.SNAPSHOT)"
+
