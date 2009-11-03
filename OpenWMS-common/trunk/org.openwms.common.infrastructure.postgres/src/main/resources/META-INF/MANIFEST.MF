@@ -1,8 +1,10 @@
 Manifest-Version: 1.0
+Bundle-Vendor: openwms.org
 Bundle-Version: 0.0.1.SNAPSHOT
 Tool: Bundlor 1.0.0.M6
 Bundle-Name: org.openwms.common.infrastructure.postgres
 Bundle-ManifestVersion: 2
-Import-Package: javax.sql,org.apache.commons.dbcp
+Import-Package: javax.sql;version="0",org.apache.commons.dbcp;version=
+ "[1.2.2.osgi, 1.2.2.osgi]"
 Bundle-SymbolicName: org.openwms.common.infrastructure.postgres
 
