@@ -1,0 +1,12 @@
+Manifest-Version: 1.0
+Bundle-Vendor: openwms.org
+Bundle-Classpath: .
+Bundle-Version: 0.0.1.SNAPSHOT
+Bundle-Name: org.openwms.tms.domain
+Bundle-ManifestVersion: 2
+Bundle-SymbolicName: org.openwms.tms.domain
+Excluded-Imports: 
+ org.openwms.common.framework.test.*,
+ org.openwms.common.test.*
+ org.springframework.test.*,
+ org.junit.*,
