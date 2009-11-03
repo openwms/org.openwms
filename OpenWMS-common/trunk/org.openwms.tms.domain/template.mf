@@ -1,12 +1,16 @@
 Manifest-Version: 1.0
 Bundle-Vendor: openwms.org
-Bundle-Classpath: .
 Bundle-Version: 0.0.1.SNAPSHOT
 Bundle-Name: org.openwms.tms.domain
 Bundle-ManifestVersion: 2
 Bundle-SymbolicName: org.openwms.tms.domain
+Import-Template: 
+ javax.persistence;version="[1.0.0, 1.0.0]",
+ org.openwms.common.domain.*;version="[0.0.1.SNAPSHOT, 0.0.1.SNAPSHOT]",
+ org.apache.commons.lang;version="[2.4.0, 2.4.0]",
+ org.apache.commons.logging;version="[1.1.1, 1.1.1]"
 Excluded-Imports: 
  org.openwms.common.framework.test.*,
- org.openwms.common.test.*
- org.springframework.test.*,
- org.junit.*,
+ org.openwms.tms.domain.*,
+ org.openwms.common.test.*,
+ org.junit.*
