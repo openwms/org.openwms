@@ -11,4 +11,4 @@ Import-Template:
 Excluded-Imports: 
  org.openwms.common.framework.test.*,
  org.openwms.common.test.*,
- org.junit
+ org.junit.*
