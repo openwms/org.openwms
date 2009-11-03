@@ -1,0 +1,26 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: OpenWMS
+Bundle-SymbolicName: org.openwms.client.flex.wrapper
+Bundle-Vendor: openwms.org
+Bundle-Version: 2.0
+Web-ContextPath: openwms
+Import-Template: 
+ org.springframework.*;version="[3.0, 3.1)",
+ org.openwms.*;version="[0.0.1.SNAPSHOT,)"
+Import-Package: 
+ javax.servlet.jsp.jstl.core;version="[1.1.2,1.2.0)",
+ com.springsource.server.web.dm;version="[2.0.0, 3.0.0)",
+ org.springframework.web.context;version="[3.0, 3.1)",
+ freemarker.cache;version="[2.3.15,2.3.15]"
+Import-Bundle: 
+ com.springsource.org.apache.taglibs.standard;version="[1.1.2,1.3)"
+Import-Library: 
+ org.springframework.spring;version="[3.0, 3.1)"
+Excluded-Exports: 
+ org.openwms.common.framework.test.*,
+ org.openwms.common.test.*,
+ org.junit.*
+Excluded-Imports: 
+ org.springframework.test.*,
+ org.junit.*
