@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>org.openwms</groupId>
+        <artifactId>OpenWMS</artifactId>
+        <version>0.0.1-SNAPSHOT</version>
+    </parent>
+    <artifactId>org.openwms.client.flex.app</artifactId>
+    <packaging>swf</packaging>
+    <name>${project.artifactId}</name>
+    <properties>
+        <granite.version>2.0.0.GA</granite.version>
+        <template.version>2.0.0</template.version>
+        <flex.version>3.4.0.9271</flex.version>
+    </properties>
+    <build>
+        <finalName>${project.artifactId}-${project.version}</finalName>
+        <sourceDirectory>src/main/flex</sourceDirectory>
+        <testSourceDirectory>src/test/flex</testSourceDirectory>
+        <plugins>
+            <plugin>
+                <groupId>org.sonatype.flexmojos</groupId>
+                <artifactId>flexmojos-maven-plugin</artifactId>
+                <version>3.3.0</version>
+                <extensions>true</extensions>
+                <configuration>
+                    <incremental>true</incremental>
+                    <configurationReport>false</configurationReport>
+                    <sourcePaths>
+                        <path>${basedir}/src/main/resources</path>
+                        <path>${basedir}/src/main/flex</path>
+                    </sourcePaths>
+                    <services>${basedir}/src/main/resources/flex/services-config.xml</services>
+                    <contextRoot>openwms</contextRoot>
+                    <sourceFile>org/openwms/web/flex/client/view/StartScreen.mxml</sourceFile>
+                    <warnings>
+                        <arrayTostringChanges>true</arrayTostringChanges>
+                        <duplicateArgumentNames>false</duplicateArgumentNames>
+                    </warnings>
+                    <allowSourcePathOverlap>true</allowSourcePathOverlap>
+                    <output>${project.build.directory}/${project.artifactId}.swf</output>
+                </configuration>
+                <dependencies>
+                    <dependency>
+                        <groupId>com.adobe.flex</groupId>
+                        <artifactId>compiler</artifactId>
+                        <version>${flex.version}</version>
+                        <type>pom</type>
+                    </dependency>
+                </dependencies>
+            </plugin>
+        </plugins>
+    </build>
+
+
+
+    <dependencies>
+        <dependency>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>org.openwms.common.domain.as</artifactId>
+            <version>${project.version}</version>
+            <type>swc</type>
+        </dependency>
+        <dependency>
+            <groupId>com.adobe.flex.framework</groupId>
+            <artifactId>flex-framework</artifactId>
+            <version>${flex.version}</version>
+            <type>pom</type>
+        </dependency>
+        <dependency>
+            <groupId>com.adobe.flex.framework</groupId>
+            <artifactId>cairngorm-framework</artifactId>
+            <version>2.2.1</version>
+            <type>swc</type>
+        </dependency>
+        <dependency>
+            <groupId>org.graniteds</groupId>
+            <artifactId>granite-core-swc</artifactId>
+            <version>1.2.0_SP1</version>
+            <type>swc</type>
+        </dependency>
+        <dependency>
+            <groupId>org.graniteds</groupId>
+            <artifactId>granite-essentials-swc</artifactId>
+            <version>2.0.0.GA</version>
+            <type>swc</type>
+        </dependency>    
+        
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>org.springframework.spring-library</artifactId>
+			<type>libd</type>
+		</dependency>
+    </dependencies>
+</project>

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<business:ServiceLocator xmlns:mx="http://www.adobe.com/2006/mxml" xmlns:business="com.adobe.cairngorm.business.*" xmlns:granite="org.granite.rpc.remoting.mxml.*">
+<!-- When using BlazeDS with SBI instead of GraniteDS than uncomment the RemoteObjects 
+	<mx:RemoteObject id="locationService" endpoint="http://127.0.0.1:8380/OpenWMS/messagebroker/amf" destination="locationServiceProxy" showBusyCursor="true"/>
+	<mx:RemoteObject id="locationGroupService" endpoint="http://127.0.0.1:8380/OpenWMS/messagebroker/amf" destination="locationGroupServiceProxy" showBusyCursor="true"/>
+
+	<granite:SecureRemoteObject
+        id="locationService"
+        destination="locationService"
+        showBusyCursor="true"/>
+
+	<granite:SecureRemoteObject
+        id="locationGroupService"
+        destination="locationGroupService"
+        showBusyCursor="true"/>
+-->
+<mx:RemoteObject id="locationService" destination="locationService" />
+<mx:RemoteObject id="locationGroupService" destination="locationGroupService" />
+<mx:RemoteObject id="userService" destination="userService" />
+
+</business:ServiceLocator>
