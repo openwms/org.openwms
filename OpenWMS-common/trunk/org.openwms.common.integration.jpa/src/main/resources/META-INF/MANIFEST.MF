@@ -1,26 +1,29 @@
 Manifest-Version: 1.0
 Export-Package: org.openwms.common.integration.jpa;version="0.0.1.SNAP
- SHOT";uses:="org.openwms.common.domain,org.springframework.orm.jpa.pe
- rsistenceunit,org.springframework.orm.jpa.support,org.springframework
- .stereotype,org.springframework.transaction.annotation"
+ SHOT";uses:="javax.persistence,org.openwms.common.domain,org.openwms.
+ common.integration,org.openwms.common.integration.system.usermanageme
+ nt,org.springframework.orm.jpa,org.springframework.orm.jpa.persistenc
+ eunit,org.springframework.orm.jpa.support,org.springframework.stereot
+ ype,org.springframework.transaction.annotation"
 Bundle-Vendor: openwms.org
 Bundle-Version: 0.0.1.SNAPSHOT
 Tool: Bundlor 1.0.0.M6
 Bundle-Name: org.openwms.common.integration.jpa
 Bundle-ManifestVersion: 2
 Bundle-SymbolicName: org.openwms.common.integration.jpa
-Import-Package: javax.sql;version="0",org.openwms.common.domain;versio
- n="[0.0.1.SNAPSHOT, 0.0.1.SNAPSHOT)",org.openwms.common.integration;v
- ersion="[0.0.1.SNAPSHOT, 0.0.1.SNAPSHOT)",org.openwms.common.integrat
- ion.system.usermanagement;version="[0.0.1.SNAPSHOT, 0.0.1.SNAPSHOT)",
- org.springframework.core.io;version="[3.0.0, 3.1.0)",org.springframew
- ork.core.io.support;version="[3.0.0, 3.1.0)",org.springframework.dao.
- annotation;version="[3.0.0, 3.1.0)",org.springframework.orm.jpa;versi
- on="[3.0.0, 3.1.0)",org.springframework.orm.jpa.persistenceunit;versi
- on="[3.0.0, 3.1.0)",org.springframework.orm.jpa.support;version="[3.0
- .0, 3.1.0)",org.springframework.orm.jpa.vendor;version="[3.0.0, 3.1.0
- )",org.springframework.stereotype;version="[3.0.0, 3.1.0)",org.spring
- framework.transaction;version="[3.0.0, 3.1.0)",org.springframework.tr
- ansaction.annotation;version="[3.0.0, 3.1.0)",org.springframework.uti
- l;version="[3.0.0, 3.1.0)"
+Import-Package: javax.persistence;version="[1.0.0, 1.0.0]",javax.sql;v
+ ersion="0",org.openwms.common.domain;version="[0.0.1.SNAPSHOT, 0.0.1.
+ SNAPSHOT)",org.openwms.common.integration;version="[0.0.1.SNAPSHOT, 0
+ .0.1.SNAPSHOT)",org.openwms.common.integration.system.usermanagement;
+ version="[0.0.1.SNAPSHOT, 0.0.1.SNAPSHOT)",org.springframework.core.i
+ o;version="[3.0.0, 3.1.0)",org.springframework.core.io.support;versio
+ n="[3.0.0, 3.1.0)",org.springframework.dao;version="[3.0.0, 3.1.0)",o
+ rg.springframework.dao.annotation;version="[3.0.0, 3.1.0)",org.spring
+ framework.orm.jpa;version="[3.0.0, 3.1.0)",org.springframework.orm.jp
+ a.persistenceunit;version="[3.0.0, 3.1.0)",org.springframework.orm.jp
+ a.support;version="[3.0.0, 3.1.0)",org.springframework.orm.jpa.vendor
+ ;version="[3.0.0, 3.1.0)",org.springframework.stereotype;version="[3.
+ 0.0, 3.1.0)",org.springframework.transaction;version="[3.0.0, 3.1.0)"
+ ,org.springframework.transaction.annotation;version="[3.0.0, 3.1.0)",
+ org.springframework.util;version="[3.0.0, 3.1.0)"
 
