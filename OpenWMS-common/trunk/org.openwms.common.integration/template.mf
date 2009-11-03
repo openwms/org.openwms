@@ -1,0 +1,17 @@
+Manifest-Version: 1.0
+Bundle-Vendor: openwms.org
+Bundle-Version: 0.0.1.SNAPSHOT
+Bundle-Name: org.openwms.common.integration
+Bundle-ManifestVersion: 2
+Bundle-SymbolicName: org.openwms.common.integration
+Import-Template: 
+ org.springframework.*;version="[3.0.0, 3.1.0)",
+ org.openwms.common.domain.*;version="[0.0.1.SNAPSHOT, 0.0.1.SNAPSHOT)",
+ javax.persistence;version="[1.0.0, 1.0.0]",
+ com.springsource.org.eclipse.persistence;version="(1.0.0,1.0.0)",
+ org.apache.commons.lang;version="[2.4.0, 2.4.0]",
+ org.apache.commons.logging;version="[1.1.1, 1.1.1]"
+Excluded-Imports: 
+ org.openwms.common.framework.test.*,
+ org.openwms.common.test.*,
+ org.junit.*
