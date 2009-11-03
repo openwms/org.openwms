@@ -1,3 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+/*
+ * OpenWMS, the Open Warehouse Management System
+ * 
+ * Distributable under LGPL license.
+ * See terms of license at gnu.org.
+ */
+-->
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     <modelVersion>4.0.0</modelVersion>
@@ -8,8 +17,7 @@
     </parent>
     <artifactId>org.openwms.common.domain.as</artifactId>
     <packaging>swc</packaging>
-    <name>+ Common Domain ActionScript Classes</name>
-    <description>Generated ActionScript class files</description>
+    <name>${project.artifactId}</name>
     <properties>
         <property.org.graniteds-core.version>1.2.0_SP1</property.org.graniteds-core.version>
         <property.org.graniteds.version>2.0.0.GA</property.org.graniteds.version>
