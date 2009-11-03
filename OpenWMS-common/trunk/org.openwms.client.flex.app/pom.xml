@@ -13,7 +13,7 @@
     <properties>
         <granite.version>2.0.0.GA</granite.version>
         <template.version>2.0.0</template.version>
-        <flex.version>3.4.0.9271</flex.version>
+        <flex.version>3.2.0.3958</flex.version>
     </properties>
     <build>
         <finalName>${project.artifactId}-${project.version}</finalName>
