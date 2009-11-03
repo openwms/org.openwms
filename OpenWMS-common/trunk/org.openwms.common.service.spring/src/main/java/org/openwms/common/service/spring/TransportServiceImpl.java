@@ -4,7 +4,7 @@
  * Distributable under LGPL license.
  * See terms of license at gnu.org.
  */
-package org.openwms.common.service;
+package org.openwms.common.service.spring;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -19,7 +19,8 @@ import org.openwms.common.domain.TransportUnitType;
 import org.openwms.common.domain.values.Barcode;
 import org.openwms.common.integration.GenericDao;
 import org.openwms.common.integration.TransportOrderDao;
-import org.openwms.common.service.exception.ServiceException;
+import org.openwms.common.service.TransportService;
+import org.openwms.common.service.spring.exception.ServiceException;
 import org.springframework.beans.factory.annotation.Required;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

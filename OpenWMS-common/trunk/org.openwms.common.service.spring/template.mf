@@ -14,10 +14,12 @@ Import-Template:
  org.openwms.common.service.*;version="[0.0.1.SNAPSHOT,0.0.1.SNAPSHOT]",
  org.openwms.common.domain.*;version="[0.0.1.SNAPSHOT,0.0.1.SNAPSHOT]",
  org.openwms.tms.domain.*;version="[0.0.1.SNAPSHOT,0.0.1.SNAPSHOT]",
- org.openwms.common.util;version="[0.0.1.SNAPSHOT,0.0.1.SNAPSHOT]"
+ org.openwms.common.util.*;version="[0.0.1.SNAPSHOT,0.0.1.SNAPSHOT]"
 Excluded-Imports: 
  org.openwms.common.framework.test.*,
  org.openwms.common.test.*,
+ org.openwms.common.domain.*,
  org.springframework.test.*,
  org.junit.*,
  org.hibernate.*
+ 

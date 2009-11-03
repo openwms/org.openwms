@@ -4,11 +4,12 @@
  * Distributable under LGPL license.
  * See terms of license at gnu.org.
  */
-package org.openwms.common.service.management;
+package org.openwms.common.service.spring.management;
 
 import org.openwms.common.domain.system.usermanagement.User;
 import org.openwms.common.domain.system.usermanagement.UserDetails;
-import org.openwms.common.service.EntityServiceImpl;
+import org.openwms.common.service.management.UserService;
+import org.openwms.common.service.spring.EntityServiceImpl;
 
 /**
  * A UserServiceImpl.
