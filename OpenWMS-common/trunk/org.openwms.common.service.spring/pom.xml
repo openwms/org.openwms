@@ -20,7 +20,7 @@
     <name>${project.artifactId}</name>
     <build>
         <plugins>
-            <plugin>
+<!--            <plugin>
                 <groupId>com.springsource.bundlor</groupId>
                 <artifactId>com.springsource.bundlor.maven</artifactId>
                 <version>1.0.0.M6</version>
@@ -34,6 +34,7 @@
                     </execution>
                 </executions>
             </plugin>
+-->
         </plugins>
     </build>
     <dependencies>

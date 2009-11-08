@@ -1,22 +1,6 @@
 Manifest-Version: 1.0
-Export-Package: org.openwms;version="0.0.1.SNAPSHOT";uses:="org.spring
- framework.test.jpa",org.openwms.common;version="0.0.1.SNAPSHOT",org.o
- penwms.common.dao;version="0.0.1.SNAPSHOT",org.openwms.common.dao.cor
- e;version="0.0.1.SNAPSHOT",org.openwms.common.domain;version="0.0.1.S
- NAPSHOT",org.openwms.common.domain.helper;version="0.0.1.SNAPSHOT";us
- es:="javax.persistence,org.openwms.common.domain",org.openwms.common.
- domain.system.usermanagement;version="0.0.1.SNAPSHOT",org.openwms.com
- mon.service.spring;version="0.0.1.SNAPSHOT";uses:="javax.annotation,o
- rg.openwms.common.domain,org.openwms.common.domain.values,org.openwms
- .common.integration,org.openwms.common.service,org.openwms.common.ser
- vice.spring.exception,org.openwms.common.util,org.springframework.bea
- ns.factory.annotation,org.springframework.stereotype,org.springframew
- ork.transaction.annotation",org.openwms.common.service.spring.excepti
- on;version="0.0.1.SNAPSHOT",org.openwms.common.service.spring.managem
- ent;version="0.0.1.SNAPSHOT";uses:="org.openwms.common.domain.system.
- usermanagement,org.openwms.common.service.management,org.openwms.comm
- on.service.spring",org.openwms.common.service.transport;version="0.0.
- 1.SNAPSHOT",org.openwms.tms.domain;version="0.0.1.SNAPSHOT"
+Export-Package: org.openwms.common.service.spring;version="0.0.1.SNAPS
+ HOT"
 Bundle-Vendor: openwms.org
 Bundle-Version: 0.0.1.SNAPSHOT
 Tool: Bundlor 1.0.0.M6
@@ -25,14 +9,19 @@ Bundle-ManifestVersion: 2
 Bundle-SymbolicName: org.openwms.common.service.spring
 Import-Package: javax.annotation;version="0",javax.persistence;version
  ="[1.0.0, 1.0.0]",org.apache.commons.logging;version="[1.1.1, 1.1.1]"
- ,org.openwms.common.integration;version="[0.0.1.SNAPSHOT,0.0.1.SNAPSH
- OT]",org.openwms.common.integration.system.usermanagement;version="[0
- .0.1.SNAPSHOT,0.0.1.SNAPSHOT]",org.openwms.common.service;version="[0
- .0.1.SNAPSHOT,0.0.1.SNAPSHOT]",org.openwms.common.service.management;
- version="[0.0.1.SNAPSHOT,0.0.1.SNAPSHOT]",org.openwms.common.util;ver
- sion="[0.0.1.SNAPSHOT,0.0.1.SNAPSHOT]",org.springframework.beans.fact
- ory.annotation;version="[3.0.0, 3.1.0)",org.springframework.stereotyp
- e;version="[3.0.0, 3.1.0)",org.springframework.transaction;version="[
- 3.0.0, 3.1.0)",org.springframework.transaction.annotation;version="[3
- .0.0, 3.1.0)"
+ ,org.openwms.common.domain;version="[0.0.1.SNAPSHOT,0.0.1.SNAPSHOT]",
+ org.openwms.common.domain.system.usermanagement;version="[0.0.1.SNAPS
+ HOT,0.0.1.SNAPSHOT]",org.openwms.common.domain.values;version="[0.0.1
+ .SNAPSHOT,0.0.1.SNAPSHOT]",org.openwms.common.integration;version="[0
+ .0.1.SNAPSHOT,0.0.1.SNAPSHOT]",org.openwms.common.integration.system.
+ usermanagement;version="[0.0.1.SNAPSHOT,0.0.1.SNAPSHOT]",org.openwms.
+ common.service;version="[0.0.1.SNAPSHOT,0.0.1.SNAPSHOT]",org.openwms.
+ common.service.management;version="[0.0.1.SNAPSHOT,0.0.1.SNAPSHOT]",o
+ rg.openwms.common.util;version="[0.0.1.SNAPSHOT,0.0.1.SNAPSHOT]",org.
+ springframework.beans.factory.annotation;version="[3.0.0, 3.1.0)",org
+ .springframework.context.weaving;version="[3.0, 3.1)",org.springframe
+ work.stereotype;version="[3.0.0, 3.1.0)",org.springframework.transact
+ ion;version="[3.0.0, 3.1.0)",org.springframework.transaction.annotati
+ on;version="[3.0.0, 3.1.0)",org.springframework.transaction.aspectj;v
+ ersion="[3.0, 3.1)"
 
