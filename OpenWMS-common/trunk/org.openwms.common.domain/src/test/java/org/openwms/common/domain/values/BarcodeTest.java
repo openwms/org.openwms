@@ -12,7 +12,6 @@ import org.junit.Test;
 import org.openwms.common.domain.values.Barcode.BARCODE_ALIGN;
 
 /**
- * 
  * A BarcodeTest.
  * 
  * @author <a href="mailto:openwms@googlemail.com">Heiko Scherrer</a>

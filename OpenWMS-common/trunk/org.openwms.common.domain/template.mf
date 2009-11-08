@@ -12,3 +12,7 @@ Excluded-Imports:
  org.openwms.common.framework.test.*,
  org.openwms.common.test.*,
  org.junit.*
+Export-Package:  
+ org.openwms.common.domain.system.usermanagement;version="0.0.1.SNAPSHOT"
+Excluded-Exports: 
+ org.openwms.tms.domain

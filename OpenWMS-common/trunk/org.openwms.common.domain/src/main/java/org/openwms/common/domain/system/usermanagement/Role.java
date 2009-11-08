@@ -27,7 +27,7 @@ import javax.persistence.Version;
  * <p>
  * Security access policies were assigned to <code>Role</code>s instead to <code>User</code>s
  * 
- * @author <a href="heiko.scherrer@gmx.de">Heiko Scherrer</a>
+ * @author <a href="mailto:openwms@googlemail.com">Heiko Scherrer</a>
  * @version $Revision$
  */
 @Entity

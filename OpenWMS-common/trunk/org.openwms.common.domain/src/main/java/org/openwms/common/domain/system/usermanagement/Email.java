@@ -17,10 +17,9 @@ import javax.persistence.Table;
 import javax.persistence.Version;
 
 /**
- * 
  * An Email.
  * 
- * @author <a href="heiko.scherrer@gmx.de">Heiko Scherrer</a>
+ * @author <a href="mailto:openwms@googlemail.com">Heiko Scherrer</a>
  * @version $Revision$
  */
 @Entity

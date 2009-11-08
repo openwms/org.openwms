@@ -14,10 +14,9 @@ import javax.persistence.Embeddable;
 import org.apache.commons.lang.StringUtils;
 
 /**
- * 
  * A Barcode.
  * 
- * @author <a href="openwms@googlemail.com">Heiko Scherrer</a>
+ * @author <a href="mailto:openwms@googlemail.com">Heiko Scherrer</a>
  * @version $Revision$
  */
 @Embeddable

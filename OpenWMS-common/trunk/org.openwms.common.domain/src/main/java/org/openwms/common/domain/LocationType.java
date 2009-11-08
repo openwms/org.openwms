@@ -20,7 +20,7 @@ import javax.persistence.Version;
  * Type of <code>Location</code>.<br>
  * Used to describe <code>Location</code>s with same characteristics.
  * 
- * @author <a href="heiko.scherrer@gmx.de">Heiko Scherrer</a>
+ * @author <a href="mailto:openwms@googlemail.com">Heiko Scherrer</a>
  * @version $Revision$
  */
 @Entity

@@ -7,7 +7,6 @@
 package org.openwms.common.domain.values;
 
 /**
- * 
  * A Unit.
  * 
  * @author <a href="mailto:openwms@googlemail.com">Heiko Scherrer</a>

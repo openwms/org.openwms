@@ -11,7 +11,6 @@ import java.util.Iterator;
 import java.util.Map;
 
 /**
- * 
  * A TreeNode.
  * 
  * @author <a href="mailto:openwms@googlemail.com">Heiko Scherrer</a>

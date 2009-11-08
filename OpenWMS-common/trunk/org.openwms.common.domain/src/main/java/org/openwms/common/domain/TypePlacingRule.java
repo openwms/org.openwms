@@ -23,7 +23,7 @@ import javax.persistence.UniqueConstraint;
  * Describes which <code>TransportUnitType</code> may be placed on which <code>LocationType</code>.<br>
  * A privilegeLevel can be set to order all allowed <code>LocationType</code>s.
  * 
- * @author <a href="heiko.scherrer@gmx.de">Heiko Scherrer</a>
+ * @author <a href="mailto:openwms@googlemail.com">Heiko Scherrer</a>
  * @version $Revision$
  */
 @Entity

@@ -18,7 +18,7 @@ import javax.persistence.Table;
  * A UnitError. Describes errors occuring on <code>TransportUnit</code>s as well as <code>LoadUnit</code>s and
  * others.
  * 
- * @author <a href="heiko.scherrer@gmx.de">Heiko Scherrer</a>
+ * @author <a href="mailto:openwms@googlemail.com">Heiko Scherrer</a>
  * @version $Revision$
  */
 @Entity
