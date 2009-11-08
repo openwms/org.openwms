@@ -13,7 +13,6 @@ import java.math.BigDecimal;
 import org.junit.Test;
 
 /**
- * 
  * A WeightTest.
  * 
  * @author <a href="mailto:openwms@googlemail.com">Heiko Scherrer</a>

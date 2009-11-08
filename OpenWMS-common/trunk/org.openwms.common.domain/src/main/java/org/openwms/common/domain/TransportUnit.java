@@ -35,13 +35,12 @@ import org.openwms.common.domain.system.usermanagement.User;
 import org.openwms.common.domain.values.Barcode;
 
 /**
- * 
  * A TransportUnit.
  * <p>
  * Used as a container to transport items and <code>LoadUnit</code>s.<br>
  * It can be moved between <code>Location</code>s.
  * 
- * @author <a href="heiko.scherrer@gmx.de">Heiko Scherrer</a>
+ * @author <a href="mailto:openwms@googlemail.com">Heiko Scherrer</a>
  * @version $Revision$
  */
 @Entity

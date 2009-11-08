@@ -7,12 +7,11 @@
 package org.openwms.common.domain.values;
 
 /**
- * 
  * A WeightUnit.
  * <p>
  * In SI format.
  * 
- * @author <a href="openwms@googlemail.com">Heiko Scherrer</a>
+ * @author <a href="mailto:openwms@googlemail.com">Heiko Scherrer</a>
  * @version $Revision$
  */
 public enum WeightUnit {

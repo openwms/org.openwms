@@ -11,7 +11,6 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 /**
- * 
  * A TreeNodeImpl.
  * 
  * @author <a href="mailto:openwms@googlemail.com">Heiko Scherrer</a>

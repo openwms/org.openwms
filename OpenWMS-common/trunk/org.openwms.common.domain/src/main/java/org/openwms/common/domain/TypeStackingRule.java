@@ -24,11 +24,10 @@ import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 
 /**
- * 
  * A TypeStackingRule.<br>
  * Defines what <code>TransportUnitType</code> may be placed on the owning <code>TransportUnitType</code>.
  * 
- * @author <a href="heiko.scherrer@gmx.de">Heiko Scherrer</a>
+ * @author <a href="mailto:openwms@googlemail.com">Heiko Scherrer</a>
  * @version $Revision$
  */
 @Entity

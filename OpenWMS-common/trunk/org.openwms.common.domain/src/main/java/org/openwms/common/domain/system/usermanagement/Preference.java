@@ -23,7 +23,7 @@ import javax.persistence.Version;
 /**
  * Entity to persist preferences. A <code>Preference</code> could be an user-, role- or system preference.
  * 
- * @author <a href="heiko.scherrer@gmx.de">Heiko Scherrer</a>
+ * @author <a href="mailto:openwms@googlemail.com">Heiko Scherrer</a>
  * @version $Revision$
  */
 /*

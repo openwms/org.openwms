@@ -19,7 +19,7 @@ import javax.persistence.Lob;
 /**
  * All minor details of an <code>User</code>.
  * 
- * @author <a href="heiko.scherrer@gmx.de">Heiko Scherrer</a>
+ * @author <a href="mailto:openwms@googlemail.com">Heiko Scherrer</a>
  * @version $Revision$
  * 
  */

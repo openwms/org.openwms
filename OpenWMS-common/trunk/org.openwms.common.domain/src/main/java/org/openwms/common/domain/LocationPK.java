@@ -14,7 +14,7 @@ import javax.persistence.Embeddable;
 /**
  * This value type is the primary key of the <code>Location</code> entity.
  * 
- * @author <a href="heiko.scherrer@gmx.de">Heiko Scherrer</a>
+ * @author <a href="mailto:openwms@googlemail.com">Heiko Scherrer</a>
  * @version $Revision$
  */
 @Embeddable

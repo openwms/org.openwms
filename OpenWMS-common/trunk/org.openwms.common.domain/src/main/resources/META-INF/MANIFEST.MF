@@ -4,10 +4,9 @@ Export-Package: org.openwms.common.domain;version="0.0.1.SNAPSHOT";use
  mmon.domain.system.usermanagement,org.openwms.common.domain.values",o
  rg.openwms.common.domain.system;version="0.0.1.SNAPSHOT";uses:="javax
  .persistence",org.openwms.common.domain.system.usermanagement;version
- ="0.0.1.SNAPSHOT";uses:="javax.persistence",org.openwms.common.domain
- .values;version="0.0.1.SNAPSHOT";uses:="javax.persistence,org.junit",
- org.openwms.common.util;version="0.0.1.SNAPSHOT",org.openwms.tms.doma
- in;version="0.0.1.SNAPSHOT"
+ ="0.0.1.SNAPSHOT",org.openwms.common.domain.values;version="0.0.1.SNA
+ PSHOT";uses:="javax.persistence,org.junit",org.openwms.common.util;ve
+ rsion="0.0.1.SNAPSHOT"
 Bundle-Vendor: openwms.org
 Bundle-Version: 0.0.1.SNAPSHOT
 Tool: Bundlor 1.0.0.M6

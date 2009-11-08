@@ -20,11 +20,10 @@ import javax.persistence.Table;
 import javax.persistence.Version;
 
 /**
- * 
  * A TransportUnitType. Describes typical static attributes of a <code>TransportUnit</code> such as length, height,
  * aso. So it is possible to group different <code>TransportUnit</code>s.
  * 
- * @author <a href="heiko.scherrer@gmx.de">Heiko Scherrer</a>
+ * @author <a href="mailto:openwms@googlemail.com">Heiko Scherrer</a>
  * @version $Revision$
  */
 @Entity

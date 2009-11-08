@@ -7,7 +7,6 @@
 package org.openwms.tms.domain;
 
 /**
- * 
  * A InsufficientValueException.
  * 
  * @author <a href="mailto:openwms@googlemail.com">Heiko Scherrer</a>

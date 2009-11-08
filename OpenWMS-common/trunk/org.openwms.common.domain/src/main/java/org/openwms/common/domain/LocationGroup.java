@@ -11,7 +11,7 @@ package org.openwms.common.domain;
  * <p>
  * Used to group <code>Location</code>s with same characteristics.
  * 
- * @author <a href="heiko.scherrer@gmx.de">Heiko Scherrer</a>
+ * @author <a href="mailto:openwms@googlemail.com">Heiko Scherrer</a>
  * @version $Revision$
  */
 import java.io.Serializable;

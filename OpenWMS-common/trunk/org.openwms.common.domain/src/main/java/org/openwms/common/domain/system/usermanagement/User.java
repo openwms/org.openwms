@@ -28,7 +28,7 @@ import javax.persistence.Table;
 /**
  * Entity <code>User</code> describes basic functionality of an user.
  * 
- * @author <a href="heiko.scherrer@gmx.de">Heiko Scherrer</a>
+ * @author <a href="mailto:openwms@googlemail.com">Heiko Scherrer</a>
  * @version $Revision$
  */
 @Entity
