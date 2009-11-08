@@ -2,9 +2,13 @@ Manifest-Version: 1.0
 Export-Package: org.openwms.common.integration.jpa;version="0.0.1.SNAP
  SHOT";uses:="javax.persistence,org.openwms.common.domain,org.openwms.
  common.integration,org.openwms.common.integration.system.usermanageme
- nt,org.springframework.orm.jpa,org.springframework.orm.jpa.persistenc
- eunit,org.springframework.orm.jpa.support,org.springframework.stereot
- ype,org.springframework.transaction.annotation"
+ nt,org.springframework.beans,org.springframework.context,org.springfr
+ amework.orm.jpa,org.springframework.orm.jpa.persistenceunit,org.sprin
+ gframework.orm.jpa.support,org.springframework.stereotype,org.springf
+ ramework.transaction.annotation"
+Import-Bundle: com.springsource.org.eclipse.persistence;version="[1.0.
+ 0,1.0.0]";import-scope:="application",com.springsource.org.eclipse.pe
+ rsistence.jpa;version="[1.0.0, 1.0.0]"
 Bundle-Vendor: openwms.org
 Bundle-Version: 0.0.1.SNAPSHOT
 Tool: Bundlor 1.0.0.M6
@@ -13,17 +17,24 @@ Bundle-ManifestVersion: 2
 Bundle-SymbolicName: org.openwms.common.integration.jpa
 Import-Package: javax.persistence;version="[1.0.0, 1.0.0]",javax.sql;v
  ersion="0",org.openwms.common.domain;version="[0.0.1.SNAPSHOT, 0.0.1.
- SNAPSHOT)",org.openwms.common.integration;version="[0.0.1.SNAPSHOT, 0
- .0.1.SNAPSHOT)",org.openwms.common.integration.system.usermanagement;
- version="[0.0.1.SNAPSHOT, 0.0.1.SNAPSHOT)",org.springframework.core.i
- o;version="[3.0.0, 3.1.0)",org.springframework.core.io.support;versio
- n="[3.0.0, 3.1.0)",org.springframework.dao;version="[3.0.0, 3.1.0)",o
- rg.springframework.dao.annotation;version="[3.0.0, 3.1.0)",org.spring
- framework.orm.jpa;version="[3.0.0, 3.1.0)",org.springframework.orm.jp
- a.persistenceunit;version="[3.0.0, 3.1.0)",org.springframework.orm.jp
- a.support;version="[3.0.0, 3.1.0)",org.springframework.orm.jpa.vendor
- ;version="[3.0.0, 3.1.0)",org.springframework.stereotype;version="[3.
- 0.0, 3.1.0)",org.springframework.transaction;version="[3.0.0, 3.1.0)"
- ,org.springframework.transaction.annotation;version="[3.0.0, 3.1.0)",
- org.springframework.util;version="[3.0.0, 3.1.0)"
+ SNAPSHOT]",org.openwms.common.domain.system.usermanagement;version="[
+ 0.0.1.SNAPSHOT, 0.0.1.SNAPSHOT]",org.openwms.common.integration;versi
+ on="[0.0.1.SNAPSHOT, 0.0.1.SNAPSHOT]",org.openwms.common.integration.
+ system.usermanagement;version="[0.0.1.SNAPSHOT, 0.0.1.SNAPSHOT]",org.
+ openwms.tms.domain.order;version="[0.0.1.SNAPSHOT, 0.0.1.SNAPSHOT]",o
+ rg.springframework.beans;version="[3.0.0, 3.1.0)",org.springframework
+ .context;version="[3.0.0, 3.1.0)",org.springframework.context.weaving
+ ;version="[3.0, 3.1)",org.springframework.core.io;version="[3.0.0, 3.
+ 1.0)",org.springframework.core.io.support;version="[3.0.0, 3.1.0)",or
+ g.springframework.dao;version="[3.0.0, 3.1.0)",org.springframework.da
+ o.annotation;version="[3.0.0, 3.1.0)",org.springframework.dao.support
+ ;version="[3.0, 3.1)",org.springframework.orm.jpa;version="[3.0.0, 3.
+ 1.0)",org.springframework.orm.jpa.persistenceunit;version="[3.0.0, 3.
+ 1.0)",org.springframework.orm.jpa.support;version="[3.0.0, 3.1.0)",or
+ g.springframework.orm.jpa.vendor;version="[3.0.0, 3.1.0)",org.springf
+ ramework.stereotype;version="[3.0.0, 3.1.0)",org.springframework.tran
+ saction;version="[3.0.0, 3.1.0)",org.springframework.transaction.anno
+ tation;version="[3.0.0, 3.1.0)",org.springframework.transaction.aspec
+ tj;version="[3.0, 3.1)",org.springframework.util;version="[3.0.0, 3.1
+ .0)"
 

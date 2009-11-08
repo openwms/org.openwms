@@ -54,4 +54,27 @@
 
     <bean id="oemiv" class="org.springframework.orm.jpa.support.OpenEntityManagerInViewInterceptor" autowire="byName">
     </bean>
+    
+    <bean id="locationDao" class="org.openwms.common.integration.jpa.LocationDaoImpl">
+        <property name="entityManagerFactory" ref="entityManagerFactory" />
+    </bean>
+
+    <bean id="locationGroupDao" class="org.openwms.common.integration.jpa.LocationGroupDaoImpl">
+        <property name="entityManagerFactory" ref="entityManagerFactory" />
+    </bean>
+
+
+    <bean id="transportUnitDao" class="org.openwms.common.integration.jpa.TransportUnitDaoImpl">
+        <property name="entityManagerFactory" ref="entityManagerFactory" />
+    </bean>
+
+    <bean id="transportUnitTypeDao" class="org.openwms.common.integration.jpa.TransportUnitTypeDaoImpl" depends-on="starter">
+        <property name="entityManagerFactory" ref="entityManagerFactory" />
+    </bean>
+
+    <bean id="starter" class="org.openwms.common.integration.jpa.Starter"></bean>
+
+    <bean id="userDao" class="org.openwms.common.integration.jpa.UserDaoImpl">
+        <property name="entityManagerFactory" ref="entityManagerFactory" />
+    </bean>
 </beans>

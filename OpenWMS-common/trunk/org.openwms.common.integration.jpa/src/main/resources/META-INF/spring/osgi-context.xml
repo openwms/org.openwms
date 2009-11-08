@@ -19,9 +19,8 @@
 
 	<osgi:service ref="locationDao" interface="org.openwms.common.integration.LocationDao"/>
     <osgi:service ref="locationGroupDao" interface="org.openwms.common.integration.LocationGroupDao"/>
-    <osgi:service ref="transportOrderDao" interface="org.openwms.common.integration.TransportOrderDao"/>
     <osgi:service ref="transportUnitDao" interface="org.openwms.common.integration.TransportUnitDao"/>
-    <osgi:service ref="transportUnitTyppeDao" interface="org.openwms.common.integration.TransportUnitTypeDao"/>
+    <osgi:service ref="transportUnitTypeDao" interface="org.openwms.common.integration.TransportUnitTypeDao"/>
     <osgi:service ref="userDao" interface="org.openwms.common.integration.system.usermanagement.UserDao"/>
 
 
