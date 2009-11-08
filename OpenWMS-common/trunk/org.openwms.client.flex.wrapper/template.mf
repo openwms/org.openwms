@@ -3,24 +3,29 @@ Bundle-ManifestVersion: 2
 Bundle-Name: OpenWMS
 Bundle-SymbolicName: org.openwms.client.flex.wrapper
 Bundle-Vendor: openwms.org
-Bundle-Version: 2.0
+Bundle-Version: 0.0.1.SNAPSHOT
 Web-ContextPath: openwms
 Import-Template: 
- org.springframework.*;version="[3.0, 3.1)",
- org.openwms.*;version="[0.0.1.SNAPSHOT,)"
+ org.springframework.*;version="[3.0.0,)",
+ org.openwms.common.service.api.*;version="[0.0.1.SNAPSHOT,)"
 Import-Package: 
  javax.servlet.jsp.jstl.core;version="[1.1.2,1.2.0)",
  com.springsource.server.web.dm;version="[2.0.0, 3.0.0)",
- org.springframework.web.context;version="[3.0, 3.1)",
- freemarker.cache;version="[2.3.15,2.3.15]"
+ org.springframework.web.context;version="[3.0.0,3.0.0]",
+ freemarker.cache;version="[2.3.15,2.3.15]",
+ javax.servlet.http;version="[2.5, 3.0)",org.springfram
+ ework.beans.factory.xml;version="[3.0,3.1)",org.springframework.web.s
+ ervlet;version="[3.0,3.1)",org.springframework.web.servlet.handler;ve
+ rsion="[3.0,3.1)",org.springframework.web.servlet.mvc;version="[3.0,3
+ .1)",org.springframework.web.servlet.view;version="[3.0,3.1)"
 Import-Bundle: 
  com.springsource.org.apache.taglibs.standard;version="[1.1.2,1.3)"
 Import-Library: 
  org.springframework.spring;version="[3.0, 3.1)"
 Excluded-Exports: 
  org.openwms.common.framework.test.*,
- org.openwms.common.test.*,
- org.junit.*
+ org.openwms.common.test.*
 Excluded-Imports: 
  org.springframework.test.*,
+ org.openwms.web.servlet.*,
  org.junit.*
