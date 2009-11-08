@@ -9,7 +9,7 @@ package org.openwms.tms.exception;
 /**
  * A TransportManagementException.
  * 
- * @author <a href="heiko.scherrer@gmx.de">Heiko Scherrer</a>
+ * @author <a href="mailto:openwms@googlemail.com">Heiko Scherrer</a>
  * @version $Revision$
  */
 public class TransportManagementException extends RuntimeException {
