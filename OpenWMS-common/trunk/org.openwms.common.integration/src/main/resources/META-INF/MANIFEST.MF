@@ -11,5 +11,8 @@ Bundle-Name: org.openwms.common.integration
 Bundle-ManifestVersion: 2
 Bundle-SymbolicName: org.openwms.common.integration
 Import-Package: org.openwms.common.domain;version="[0.0.1.SNAPSHOT, 0.
- 0.1.SNAPSHOT)"
+ 0.1.SNAPSHOT]",org.openwms.common.domain.system;version="[0.0.1.SNAPS
+ HOT, 0.0.1.SNAPSHOT]",org.openwms.common.domain.system.usermanagement
+ ;version="[0.0.1.SNAPSHOT, 0.0.1.SNAPSHOT]"
+Bundle-Symbolic: Name: org.openwms.common.integration
 
