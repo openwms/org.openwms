@@ -25,13 +25,12 @@ import org.openwms.common.domain.values.Problem;
 import org.openwms.tms.domain.InsufficientValueException;
 
 /**
- * 
  * A TransportOrder.
  * <p>
  * Is used to move <tt>TransportUnit</tt>s from an actual <tt>Location</tt> to a target <tt>Location</tt>. A
  * <tt>TransportOrder</tt> can only be processed in a specific state (STARTED).
  * 
- * @author <a href="heiko.scherrer@gmx.de">Heiko Scherrer</a>
+ * @author <a href="mailto:openwms@googlemail.com">Heiko Scherrer</a>
  * @version $Revision$
  */
 @Entity
