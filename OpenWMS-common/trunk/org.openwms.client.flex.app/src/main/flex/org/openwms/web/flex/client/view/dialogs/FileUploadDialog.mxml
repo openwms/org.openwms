@@ -9,7 +9,7 @@
 	
 	<mx:Script>
 	<![CDATA[
-		import org.openwms.client.model.ModelLocator;
+		import org.openwms.web.flex.client.model.ModelLocator;
 		//import com.af.clientmanager.model.vo.MediaVO;
 	    import mx.controls.Alert;
 	    import mx.effects.Blur;

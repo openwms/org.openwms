@@ -13,12 +13,12 @@
   backgroundAlpha="0.5">
 
   <mx:Metadata>
-    [Event(name="login", type="org.openwms.client.event.SecurityEvent")]
+    [Event(name="login", type="org.openwms.web.flex.client.event.SecurityEvent")]
   </mx:Metadata>
 
   <mx:Script>
     <![CDATA[
-      import org.openwms.client.event.SecurityEvent;
+      import org.openwms.web.flex.client.event.SecurityEvent;
       
       private function onClick( event:MouseEvent ):void {
         var SecurityEvent = new SecurityEvent("login");

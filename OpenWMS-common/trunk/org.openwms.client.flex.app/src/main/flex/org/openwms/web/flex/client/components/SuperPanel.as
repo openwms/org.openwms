@@ -1,4 +1,4 @@
-package org.openwms.client.components
+package org.openwms.web.flex.client.components
 {
 
     import mx.containers.Panel;

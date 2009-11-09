@@ -9,13 +9,13 @@
 -->
 <mx:Canvas xmlns:mx="http://www.adobe.com/2006/mxml" 
 	height="100%"
-	xmlns:Renderers="org.openwms.client.view.renderers.*"
+	xmlns:Renderers="org.openwms.web.flex.client.view.renderers.*"
 	creationComplete="initComp()" styleName="frameContainerSkin">
 	
 	<mx:Script>
 		<![CDATA[
-			import org.openwms.client.event.UserEvent;
-			import org.openwms.client.model.ModelLocator;
+			import org.openwms.web.flex.client.event.UserEvent;
+			import org.openwms.web.flex.client.model.ModelLocator;
 		
 			[Bindable] 
 			private var modelLocator:ModelLocator = ModelLocator.getInstance();

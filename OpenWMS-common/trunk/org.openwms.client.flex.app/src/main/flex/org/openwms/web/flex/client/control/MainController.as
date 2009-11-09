@@ -4,12 +4,12 @@
  * Distributable under LGPL license.
  * See terms of license at gnu.org.
  */
-package org.openwms.client.control
+package org.openwms.web.flex.client.control
 {
 	import com.adobe.cairngorm.control.FrontController;
 	
-	import org.openwms.client.command.*;
-	import org.openwms.client.event.*;
+	import org.openwms.web.flex.client.command.*;
+	import org.openwms.web.flex.client.event.*;
 
 	/**
 	 * A MainController.

@@ -18,7 +18,7 @@
     	import org.openwms.common.domain.system.usermanagement.User;
     	import org.openwms.common.domain.system.usermanagement.UserDetails;
     	import org.openwms.common.domain.system.usermanagement.UserDetails$SEX;
-    	import org.openwms.client.helper.UserHelper;
+    	import org.openwms.web.flex.client.helper.UserHelper;
     	import mx.effects.Fade;
     	import mx.effects.Blur;
     	import mx.effects.Parallel;
@@ -29,7 +29,7 @@
     	import mx.core.BitmapAsset;
     	import mx.core.DragSource;
     	import mx.controls.Alert;
-		import org.openwms.client.model.ModelLocator;
+		import org.openwms.web.flex.client.model.ModelLocator;
 
 		[Bindable]
 		[Embed(source="/assets/images/userDefaultUniSex.jpg")]

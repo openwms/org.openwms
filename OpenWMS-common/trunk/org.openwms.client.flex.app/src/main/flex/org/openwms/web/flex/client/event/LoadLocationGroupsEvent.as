@@ -4,7 +4,7 @@
  * Distributable under LGPL license.
  * See terms of license at gnu.org.
  */
-package org.openwms.client.event
+package org.openwms.web.flex.client.event
 {
 	import com.adobe.cairngorm.control.CairngormEvent;
 	

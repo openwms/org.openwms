@@ -12,15 +12,15 @@
 		<![CDATA[
 			import mx.validators.RegExpValidationResult;
 			import mx.controls.Alert;
-			import org.openwms.client.model.ModelLocator;
-			import org.openwms.client.view.dialogs.FileUploadDialog;
+			import org.openwms.web.flex.client.model.ModelLocator;
+			import org.openwms.web.flex.client.view.dialogs.FileUploadDialog;
 			import mx.managers.PopUpManager;
 			import mx.events.ValidationResultEvent;
 			import flash.utils.ByteArray;
 			import org.openwms.common.domain.system.usermanagement.User;
 			import org.openwms.common.domain.system.usermanagement.UserDetails$SEX;
-			import org.openwms.client.helper.UserHelper;
-			import org.openwms.client.event.UserEvent;
+			import org.openwms.web.flex.client.helper.UserHelper;
+			import org.openwms.web.flex.client.event.UserEvent;
 			import mx.core.BitmapAsset;
 
 			[Bindable]
