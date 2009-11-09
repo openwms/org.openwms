@@ -4,7 +4,7 @@
  * Distributable under LGPL license.
  * See terms of license at gnu.org.
  */
-package org.openwms.client.business
+package org.openwms.web.flex.client.business
 {
 	import com.adobe.cairngorm.business.ServiceLocator;
 	

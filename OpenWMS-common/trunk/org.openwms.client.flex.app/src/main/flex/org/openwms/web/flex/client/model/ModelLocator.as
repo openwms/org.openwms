@@ -4,7 +4,7 @@
  * Distributable under LGPL license.
  * See terms of license at gnu.org.
  */
-package org.openwms.client.model {
+package org.openwms.web.flex.client.model {
 	import com.adobe.cairngorm.model.IModelLocator;
 	
 	import mx.collections.ArrayCollection;

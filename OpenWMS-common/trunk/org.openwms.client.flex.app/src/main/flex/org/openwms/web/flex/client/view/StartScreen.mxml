@@ -7,11 +7,86 @@
  * See terms of license at gnu.org.
  */
 -->
-<mx:Canvas xmlns:mx="http://www.adobe.com/2006/mxml">
+<mx:Application xmlns:mx="http://www.adobe.com/2006/mxml"
+	xmlns:business="org.openwms.web.flex.client.business.*"
+	xmlns:control="org.openwms.web.flex.client.control.*"
+	xmlns:view="org.openwms.web.flex.client.view.*" 
+	layout="absolute" backgroundGradientAlphas="[1.0, 1.0]" backgroundGradientColors="[#FFFFFF, #FFFFFF]" creationComplete="init()">
+	
+	<!-- Styles -->
+	<mx:Style source="assets/css/main.css" />
+	<mx:Style source="assets/css/styles.css"/>
+
+	<!-- Scripts -->
 	<mx:Script>
 		<![CDATA[
+			import mx.controls.Alert;
+			import org.openwms.web.flex.client.model.ModelLocator;
+			import org.openwms.web.flex.client.event.SwitchScreenEvent;
+			import mx.events.MenuEvent;
+			[Bindable]
+			private var modelLocator:ModelLocator = ModelLocator.getInstance();
+
+			public function init():void {
+				
+			}
+			
+			private function onMenuChange(event:MenuEvent):void {
+				trace("Switching to view:"+event.item.@action);
+				new SwitchScreenEvent(event.item.@action).dispatch();
+			}
 		]]>
 	</mx:Script>
 
+	<!-- Services -->
+	<business:Services />
+	
+	<control:MainController />
+	
+	<mx:VBox height="800" width="1280" verticalGap="0" backgroundColor="#C2DAEF">
+		<mx:HBox width="100%" height="100" verticalAlign="middle" backgroundColor="0x9fc3db" id="hbox1" horizontalGap="8">
+			<mx:Image source="assets/images/openwms_header_logo6.png"/>
+		</mx:HBox>
+		<mx:Canvas width="100%" height="30" backgroundColor="#FFFFFF" backgroundAlpha="0.5" >
+		<mx:MenuBar x="5" y="5" width="1270" height="20" labelField="@label" itemClick="onMenuChange(event)">
+			<mx:XMLList>
+            <menuitem label="OpenWMS">
+                <menuitem label="Connect ..." enabled="false"/>
+                <menuitem label="Logout" enabled="false"/>
+            </menuitem>
+            <menuitem label="Administration">
+                <menuitem label="Users" action="{SwitchScreenEvent.SHOW_LOCATION_VIEW}" />
+                <menuitem label="Roles" action="{SwitchScreenEvent.SHOW_LOCATION_VIEW}" />
+                <menuitem label="Security" action="{SwitchScreenEvent.SHOW_LOCATION_VIEW}" />
+            </menuitem>
+            <menuitem label="Transport Management">
+                <menuitem label="Transport Units" enabled="false"/>
+                <menuitem label="Transport Orders" enabled="false"/>
+            </menuitem>
+            <menuitem label="Warehouse">
+                <menuitem label="Ordering" enabled="false"/>
+                <menuitem label="Receiving" enabled="false"/>
+            </menuitem>
+            <menuitem label="Stock Configuration">
+                <menuitem label="Locations" action="{SwitchScreenEvent.SHOW_LOCATION_VIEW}" />
+                <menuitem label="Users" action="{SwitchScreenEvent.SHOW_USER_MGMT_VIEW}" />
+                <menuitem label="Location Groups" action="{SwitchScreenEvent.SHOW_LOCATIONGROUP_VIEW}"/>
+            </menuitem>
+            <menuitem label="Monitoring">
+                <menuitem label="Reports" enabled="false" />
+            </menuitem>
+        	</mx:XMLList>
+		</mx:MenuBar>
+		</mx:Canvas>
+		<mx:ViewStack id="myViewStack" selectedIndex="{modelLocator.mainViewStackIndex}">
+			<view:LocationView />
+			<view:LocationGroupView />
+			<view:UserManagementView />
+            <view:UserManagementView />
+		</mx:ViewStack>
+	</mx:VBox>
 
-</mx:Canvas>
+
+
+	
+</mx:Application>

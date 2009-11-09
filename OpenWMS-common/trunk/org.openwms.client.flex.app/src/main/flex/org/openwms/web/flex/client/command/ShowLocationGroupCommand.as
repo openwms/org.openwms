@@ -4,7 +4,7 @@
  * Distributable under LGPL license.
  * See terms of license at gnu.org.
  */
-package org.openwms.client.command
+package org.openwms.web.flex.client.command
 {
 	import com.adobe.cairngorm.commands.ICommand;
 	import com.adobe.cairngorm.control.CairngormEvent;
@@ -14,9 +14,9 @@ package org.openwms.client.command
 	import mx.rpc.IResponder;
 	import mx.rpc.events.ResultEvent;
 	
-	import org.openwms.client.business.LocationGroupDelegate;
-	import org.openwms.client.model.ModelLocator;
-	import org.openwms.client.model.TreeNode;
+	import org.openwms.web.flex.client.business.LocationGroupDelegate;
+	import org.openwms.web.flex.client.model.ModelLocator;
+	import org.openwms.web.flex.client.model.TreeNode;
 	import org.openwms.common.domain.LocationGroup;
 
 	/**

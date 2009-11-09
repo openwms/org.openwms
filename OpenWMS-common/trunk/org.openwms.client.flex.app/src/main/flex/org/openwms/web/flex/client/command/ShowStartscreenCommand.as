@@ -4,11 +4,11 @@
  * Distributable under LGPL license.
  * See terms of license at gnu.org.
  */
-package org.openwms.client.command
+package org.openwms.web.flex.client.command
 {
 	import com.adobe.cairngorm.commands.ICommand;
 	import com.adobe.cairngorm.control.CairngormEvent;
-	import org.openwms.client.model.ModelLocator;
+	import org.openwms.web.flex.client.model.ModelLocator;
 
 	/**
 	 * A ShowStartscreenCommand.

@@ -4,7 +4,7 @@
  * Distributable under LGPL license.
  * See terms of license at gnu.org.
  */
-package org.openwms.client.helper {
+package org.openwms.web.flex.client.helper {
 
 	import org.openwms.common.domain.system.usermanagement.User;
 	import org.openwms.common.domain.system.usermanagement.UserDetails$SEX;

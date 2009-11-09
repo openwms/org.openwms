@@ -4,7 +4,7 @@
  * Distributable under LGPL license.
  * See terms of license at gnu.org.
  */
-package org.openwms.client.event.SecurityEvent
+package org.openwms.web.flex.client.event.SecurityEvent
 {
 	import flash.events.Event;
 
