@@ -33,7 +33,7 @@
                         <path>${basedir}/src/main/flex</path>
                     </sourcePaths>
                     <services>${basedir}/src/main/resources/flex/services-config.xml</services>
-                    <contextRoot>org.openwms.client.flex.wrapper</contextRoot>
+                    <contextRoot>openwms</contextRoot>
                     <sourceFile>org/openwms/web/flex/client/view/StartScreen.mxml</sourceFile>
                     <warnings>
                         <arrayTostringChanges>true</arrayTostringChanges>
