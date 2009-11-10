@@ -1,35 +1,20 @@
 Manifest-Version: 1.0
 Export-Package: org.openwms.web.flex.servlet;version="0.0.1.SNAPSHOT";
  uses:="javax.servlet,javax.servlet.http"
-Implementation-Title: org.openwms.client.flex.wrapper
-Implementation-Version: 0.0.1.SNAPSHOT
-Tool: Bundlor 1.0.0.M6
-Import-Library: org.springframework.spring;version="[3.0, 3.1)"
-Bundle-Name: OpenWMS
-Web-ContextPath: openwms
-Require-Bundle: org.springframework.bundle.spring.aop;version="[3.0, 3
- .1)",org.springframework.bundle.spring.beans;version="[3.0, 3.1)",org
- .springframework.bundle.spring.context;version="[3.0, 3.1)",org.sprin
- gframework.bundle.spring.context.support;version="[3.0, 3.1)",org.spr
- ingframework.bundle.spring.core;version="[3.0, 3.1)",org.springframew
- ork.bundle.spring.web;version="[3.0, 3.1)",org.springframework.bundle
- .spring.webmvc;version="[3.0, 3.1)"
 Import-Bundle: com.springsource.org.apache.taglibs.standard;version="[
  1.1.2,1.3)"
 Bundle-Vendor: openwms.org
-Module-Type: Web
 Bundle-Version: 0.0.1.SNAPSHOT
+Tool: Bundlor 1.0.0.M6
+Bundle-Name: OpenWMS
+Import-Library: org.springframework.spring;version="[3.0, 3.1)"
 Bundle-ManifestVersion: 2
 Bundle-SymbolicName: org.openwms.client.flex.wrapper
+Web-ContextPath: openwms
 Import-Package: com.springsource.server.web.dm;version="[2.0.0, 3.0.0)
  ",javax.servlet,javax.servlet.http;version="[2.5, 3.0)",javax.servlet
- .jsp.jstl.core;version="[1.1.2,1.2.0)",org.granite.config,org.granite
- .messaging.webapp,org.springframework.beans.factory.xml;version="[3.0
- ,3.1)",org.springframework.context.support;version="[3.0, 3.1)",org.s
- pringframework.web.context;version="[3.0, 3.1)",org.springframework.w
- eb.context.request;version="[3.0, 3.1)",org.springframework.web.servl
- et;version="[3.0,3.1)",org.springframework.web.servlet.handler;versio
- n="[3.0,3.1)",org.springframework.web.servlet.mvc;version="[3.0,3.1)"
- ,org.springframework.web.servlet.mvc.support;version="[3.0,3.1)",org.
- springframework.web.servlet.view;version="[3.0,3.1)"
+ .jsp.jstl.core;version="[1.1.2,1.2.0)",org.eclipse.persistence.indire
+ ction;version="[1.0.0,1.0.1)",org.openwms.common.service;version="[0.
+ 0.1.SNAPSHOT,1.0.0]",org.springframework.web.context;version="[3.0, 3
+ .1)",org.springframework.web.context.request;version="[3.0, 3.1)"
 
