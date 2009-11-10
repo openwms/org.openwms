@@ -8,6 +8,11 @@
         <param-name>contextClass</param-name>
         <param-value>com.springsource.server.web.dm.ServerOsgiBundleXmlWebApplicationContext</param-value>
     </context-param>
+
+    <context-param>
+        <param-name>contextConfigLocation</param-name>
+        <param-value>/WEB-INF/spring/*-context.xml</param-value>
+    </context-param>
     <!--
         Use this with Blaze DS SBI <listener> <listener-class>flex.messaging.HttpFlexSession</listener-class>
         </listener> <servlet> <servlet-name>DispatcherServlet</servlet-name>
@@ -24,13 +29,13 @@
         <listener-class>org.granite.config.GraniteConfigListener</listener-class>
     </listener>
     <!--
+    -->
     <listener>
         <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
     </listener>
     <listener>
         <listener-class>org.springframework.web.context.request.RequestContextListener</listener-class>
     </listener>
-    -->
     <!--
         <filter> <filter-name>jpaFilter</filter-name>
         <filter-class>org.springframework.orm.jpa.support.OpenEntityManagerInViewFilter</filter-class> </filter>

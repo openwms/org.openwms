@@ -18,6 +18,18 @@
         <sourceDirectory>src/main</sourceDirectory>
         <finalName>${project.artifactId}</finalName>
         <plugins>
+          <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-war-plugin</artifactId>
+                <configuration>
+                    <finalName>${project.artifactId}</finalName>
+                    <archive>
+                        <manifestFile>
+                            src/main/webapp/META-INF/MANIFEST.MF
+                        </manifestFile>
+                    </archive>
+                </configuration>
+            </plugin>
            <plugin>
                 <groupId>org.sonatype.flexmojos</groupId>
                 <artifactId>flexmojos-maven-plugin</artifactId>
@@ -126,6 +138,10 @@
             <groupId>org.graniteds</groupId>
             <artifactId>granite-hibernate</artifactId>
             <version>${granite.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.eclipse.persistence</groupId>
+            <artifactId>com.springsource.org.eclipse.persistence</artifactId>
         </dependency>
     </dependencies>
 </project>
