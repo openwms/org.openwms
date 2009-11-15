@@ -16,7 +16,26 @@
         <version>0.0.1-SNAPSHOT</version>
     </parent>
     <artifactId>org.openwms.common.infrastructure.postgres</artifactId>
+    <packaging>jar</packaging>
     <name>${project.artifactId}</name>
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>com.springsource.bundlor</groupId>
+                <artifactId>com.springsource.bundlor.maven</artifactId>
+                <version>1.0.0.M6</version>
+                <executions>
+                    <execution>
+                        <id>bundlor</id>
+                        <goals>
+                            <goal>transform</goal>
+                        </goals>
+                        <phase>package</phase>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
     <dependencies>
         <!-- Runtime dependencies -->
         <dependency>
