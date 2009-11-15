@@ -7,6 +7,8 @@ Export-Package: org.openwms.common.domain;version="0.0.1.SNAPSHOT";use
  ="0.0.1.SNAPSHOT",org.openwms.common.domain.values;version="0.0.1.SNA
  PSHOT";uses:="javax.persistence,org.junit",org.openwms.common.util;ve
  rsion="0.0.1.SNAPSHOT"
+Import-Bundle: com.springsource.org.eclipse.persistence;version="1.0.0
+ ",com.springsource.javax.persistence;version="[1.0.0,1.0.0]"
 Bundle-Vendor: openwms.org
 Bundle-Version: 0.0.1.SNAPSHOT
 Tool: Bundlor 1.0.0.M6
