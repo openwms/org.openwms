@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+/*
+ * OpenWMS, the Open Warehouse Management System
+ * 
+ * Distributable under LGPL license.
+ * See terms of license at gnu.org.
+ */
+-->
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/osgi http://www.springframework.org/schema/osgi/spring-osgi.xsd"
+	xmlns:osgi="http://www.springframework.org/schema/osgi">
+
+    <!-- imports -->
+    <osgi:reference id="dataSource" interface="javax.sql.DataSource" />
+
+    <!-- exports -->
+    <osgi:service ref="jpaVendorAdapter" interface="org.springframework.orm.jpa.JpaVendorAdapter" />
+    <osgi:service ref="transactionManager" interface="org.springframework.transaction.PlatformTransactionManager" />
+    <osgi:service ref="entityManagerFactory" interface="javax.persistence.EntityManagerFactory" />
+
+</beans>
