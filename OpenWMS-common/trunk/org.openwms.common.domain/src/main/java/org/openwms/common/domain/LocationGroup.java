@@ -31,6 +31,8 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import javax.persistence.Version;
 
 @Entity
@@ -107,6 +109,7 @@ public class LocationGroup implements Serializable {
 	/**
 	 * Last update timestamp.
 	 */
+	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "LAST_UPDATED")
 	private Date lastUpdated;
 

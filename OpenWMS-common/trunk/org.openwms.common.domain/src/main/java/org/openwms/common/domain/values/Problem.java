@@ -11,6 +11,8 @@ import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 /**
  * A Problem.
@@ -23,6 +25,7 @@ public class Problem implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
+	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "OCCURED")
 	private Date occured;
 

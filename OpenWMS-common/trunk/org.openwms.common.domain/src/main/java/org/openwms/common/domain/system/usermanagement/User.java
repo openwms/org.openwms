@@ -24,6 +24,8 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 /**
  * Entity <code>User</code> describes basic functionality of an user.
@@ -64,6 +66,7 @@ public class User implements Serializable {
 	/**
 	 * Date of last password change.
 	 */
+	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "LAST_PASSWORD_CHANGE")
 	private Date lastPasswordChange;
 
@@ -88,6 +91,7 @@ public class User implements Serializable {
 	/**
 	 * Date when the <code>User</code> expires. After expiration, no system access is possible.
 	 */
+	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "EXPIRATION_DATE")
 	private Date expirationDate;
 

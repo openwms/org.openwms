@@ -27,6 +27,8 @@ import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.OrderBy;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import javax.persistence.UniqueConstraint;
 import javax.persistence.Version;
 
@@ -79,18 +81,21 @@ public class TransportUnit implements Serializable {
 	/**
 	 * Timestamp when the <code>TransportUnit</code> has been created.
 	 */
+	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "CREATION_DATE")
 	private Date creationDate;
 
 	/**
 	 * Timestamp when this <code>TransportUnit</code> moved to the actualLocation.
 	 */
+	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "ACTUAL_LOCATION_DATE")
 	private Date actualLocationDate;
 
 	/**
 	 * Timestamp of last inventory.
 	 */
+	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "INVENTORY_DATE")
 	private Date inventoryDate;
 

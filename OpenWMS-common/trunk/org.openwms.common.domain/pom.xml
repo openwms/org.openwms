@@ -18,7 +18,6 @@
     <artifactId>org.openwms.common.domain</artifactId>
     <packaging>jar</packaging>
     <name>${project.artifactId}</name>
-<!-- 
     <build>
         <plugins>
             <plugin>
@@ -37,7 +36,6 @@
             </plugin>
         </plugins>
     </build>
- -->
     <dependencies>
         <!-- Runtime dependencies -->
         <dependency>
