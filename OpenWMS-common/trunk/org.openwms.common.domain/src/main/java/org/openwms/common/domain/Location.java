@@ -25,6 +25,8 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import javax.persistence.UniqueConstraint;
 import javax.persistence.Version;
 
@@ -86,6 +88,7 @@ public class Location implements Serializable {
 	 * leaving this place, the timestamp will be updated. This is necessary to locate old <code>TransportUnit</code>s
 	 * in the stock as well as for inventory calculation.
 	 */
+	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "LAST_ACCESS")
 	private Date lastAccess;
 

@@ -14,6 +14,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 /**
  * A Message. Predefined messages.
@@ -50,6 +52,7 @@ public class Message implements Serializable {
     /**
      * Timestamp when the <code>Message</code> was created.
      */
+	@Temporal(TemporalType.TIMESTAMP)
     @Column(name = "CREATED")
     private Date created;
 

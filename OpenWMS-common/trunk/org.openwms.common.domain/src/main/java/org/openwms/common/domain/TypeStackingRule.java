@@ -60,7 +60,7 @@ public class TypeStackingRule implements Serializable {
 	/**
 	 * The allowed <code>TransportUnitType</code> that may be placed on the owning <code>TransportUnitType</code>.
 	 */
-	@Column(name = "ALLOWED_TRANSPORT_UNIT_TYPE", nullable = false)
+	@JoinColumn(name = "ALLOWED_TRANSPORT_UNIT_TYPE", nullable = false)
 	private TransportUnitType allowedTransportUnitType;
 
 	/* ----------------------------- methods ------------------- */

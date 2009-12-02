@@ -63,7 +63,7 @@ public class TypePlacingRule implements Serializable {
     /**
      * The allowed <code>LocationType</code> on which the owning <code>TransportUnitType</code> may be placed.
      */
-    @Column(name = "ALLOWED_LOCATION_TYPE", nullable = false)
+    @JoinColumn(name = "ALLOWED_LOCATION_TYPE", nullable = false)
     private LocationType allowedLocationType;
 
     /* ----------------------------- methods ------------------- */
