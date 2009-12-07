@@ -13,5 +13,6 @@ Bundle-ManifestVersion: 2
 Bundle-SymbolicName: org.openwms.tms.domain
 Import-Package: javax.persistence;version="[1.0.0, 1.0.0]",org.openwms
  .common.domain;version="[0.0.1.SNAPSHOT, 0.0.1.SNAPSHOT]",org.openwms
- .common.domain.values;version="[0.0.1.SNAPSHOT, 0.0.1.SNAPSHOT]"
+ .common.domain.values;version="[0.0.1.SNAPSHOT, 0.0.1.SNAPSHOT]",org.
+ openwms.common.exception
 

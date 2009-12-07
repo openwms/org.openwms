@@ -24,7 +24,7 @@ import org.openwms.common.domain.Location;
 import org.openwms.common.domain.LocationGroup;
 import org.openwms.common.domain.TransportUnit;
 import org.openwms.common.domain.values.Problem;
-import org.openwms.tms.domain.InsufficientValueException;
+import org.openwms.common.exception.InsufficientValueException;
 
 /**
  * A TransportOrder.
