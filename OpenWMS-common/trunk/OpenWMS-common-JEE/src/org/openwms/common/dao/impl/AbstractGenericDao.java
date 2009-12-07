@@ -28,7 +28,7 @@ import org.openwms.common.dao.GenericDao;
  * Spring introduced the <tt>PersistenceExceptionTranslationPostProcessor</tt> automatically to enable data access
  * exception translation for any object carrying the <tt>atRepository</tt> annotation
  * 
- * @author <a href="heiko.scherrer@gmx.de">Heiko Scherrer</a>
+ * @author <a href="mailto:openwms@googlemail.com">Heiko Scherrer</a>
  * @version $Revision: 314 $
  */
 public abstract class AbstractGenericDao<T extends Serializable, ID extends Serializable> implements GenericDao<T, ID> {

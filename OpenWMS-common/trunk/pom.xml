@@ -1,3 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+    <!--
+        /* * OpenWMS, the Open Warehouse Management System * * Distributable under LGPL license. * See terms of license
+        at gnu.org. */
+    -->
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     <modelVersion>4.0.0</modelVersion>
@@ -7,16 +12,25 @@
     <packaging>pom</packaging>
     <name>OpenWMS</name>
     <modules>
+        <module>org.openwms.common.framework.test</module>
+        <module>org.openwms.common.infrastructure.postgres</module>
         <module>org.openwms.common.domain</module>
         <module>org.openwms.common.domain.as</module>
-        <module>org.openwms.common.framework.test</module>
+        <module>org.openwms.common.integration</module>
+        <module>org.openwms.common.integration.eclipselink</module>
+        <module>org.openwms.common.integration.jpa</module>
         <module>org.openwms.common.service.api</module>
         <module>org.openwms.common.service.spring</module>
         <module>org.openwms.tms.domain</module>
+        <module>org.openwms.client.flex.app</module>
+        <module>org.openwms.zz.client.flex.wrapper</module>
+        <module>org.openwms.app</module>
     </modules>
     <properties>
         <spring.version>2.5.6</spring.version>
         <hibernate.version>3.2.6.GA</hibernate.version>
+        <maven.test.failure.ignore>true</maven.test.failure.ignore>
+        <granite.version>2.0.0.GA</granite.version>
     </properties>
     <build>
         <pluginManagement>
@@ -37,6 +51,48 @@
             </plugins>
         </pluginManagement>
         <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-jar-plugin</artifactId>
+                <configuration>
+                    <finalName>${project.artifactId}</finalName>
+                    <archive>
+                        <manifestFile>
+                            src/main/resources/META-INF/MANIFEST.MF
+						</manifestFile>
+                    </archive>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <configuration>
+                    <skipTests>true</skipTests>
+                    <includes>
+                        <include>**/*Test.java</include>
+                        <include>**/*Tests.java</include>
+                    </includes>
+                    <excludes>
+                        <exclude>**/Abstract*.java</exclude>
+                    </excludes>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <configuration>
+                    <source>1.6</source>
+                    <target>1.6</target>
+                </configuration>
+            </plugin>
+            <plugin>
+                <artifactId>maven-assembly-plugin</artifactId>
+                <configuration>
+                    <descriptorRefs>
+                        <descriptorRef>jar-with-dependencies</descriptorRef>
+                    </descriptorRefs>
+                </configuration>
+            </plugin>
         </plugins>
     </build>
     <reporting>
@@ -64,124 +120,270 @@
             <url>http://rudi:8081/nexus/content/repositories/snapshots</url>
         </snapshotRepository>
     </distributionManagement>
-    <profiles>
-        <profile>
-            <id>test</id>
-            <activation>
-                <activeByDefault>true</activeByDefault>
-            </activation>
-            <dependencyManagement>
-                <dependencies>
-                    <dependency>
-                        <groupId>${project.groupId}</groupId>
-                        <artifactId>org.openwms.common.framework.test</artifactId>
-                        <version>${project.version}</version>
-                        <type>test-jar</type>
-                        <scope>test</scope>
-                    </dependency>
-                    <dependency>
-                        <groupId>${project.groupId}</groupId>
-                        <artifactId>org.openwms.common.domain</artifactId>
-                        <version>${project.version}</version>
-                    </dependency>
-                    <dependency>
-                        <groupId>${project.groupId}</groupId>
-                        <artifactId>org.openwms.tms.domain</artifactId>
-                        <version>${project.version}</version>
-                    </dependency>
-                    <dependency>
-                        <groupId>javax.persistence</groupId>
-                        <artifactId>persistence-api</artifactId>
-                        <version>1.0</version>
-                        <scope>provided</scope>
-                    </dependency>
-                    <dependency>
-                        <groupId>org.springframework</groupId>
-                        <artifactId>org.springframework.orm</artifactId>
-                        <version>${spring.version}</version>
-                        <scope>test</scope>
-                    </dependency>
-                    <dependency>
-                        <groupId>org.springframework</groupId>
-                        <artifactId>spring</artifactId>
-                        <version>${spring.version}</version>
-                        <type>jar</type>
-                        <scope>test</scope>
-                    </dependency>
-                    <dependency>
-                        <groupId>org.springframework</groupId>
-                        <artifactId>spring-test</artifactId>
-                        <version>${spring.version}</version>
-                        <type>jar</type>
-                        <scope>test</scope>
-                    </dependency>
-                    <dependency>
-                        <groupId>org.apache.commons</groupId>
-                        <artifactId>com.springsource.org.apache.commons.lang</artifactId>
-                        <version>2.4.0</version>
-                    </dependency>
-                    <dependency>
-                        <groupId>org.apache.log4j</groupId>
-                        <artifactId>com.springsource.org.apache.log4j</artifactId>
-                        <version>1.2.15</version>
-                    </dependency>
-                    <dependency>
-                        <groupId>org.apache.commons</groupId>
-                        <artifactId>com.springsource.org.apache.commons.logging</artifactId>
-                        <version>1.1.1</version>
-                    </dependency>
-                    <dependency>
-                        <groupId>commons-collections</groupId>
-                        <artifactId>commons-collections</artifactId>
-                        <version>3.2</version>
-                    </dependency>
-                    <dependency>
-                        <groupId>org.hibernate</groupId>
-                        <artifactId>hibernate</artifactId>
-                        <version>${hibernate.version}</version>
-                        <exclusions>
-                            <exclusion>
-                                <groupId>javax.transaction</groupId>
-                                <artifactId>jta</artifactId>
-                            </exclusion>
-                        </exclusions>
-                        <scope>test</scope>
-                    </dependency>
-                    <dependency>
-                        <groupId>org.hibernate</groupId>
-                        <artifactId>hibernate-entitymanager</artifactId>
-                        <version>3.4.0.GA</version>
-                        <scope>test</scope>
-                    </dependency>
-                    <dependency>
-                        <groupId>org.slf4j</groupId>
-                        <artifactId>slf4j-simple</artifactId>
-                        <version>1.4.2</version>
-                        <scope>test</scope>
-                    </dependency>
-                    <dependency>
-                        <groupId>hsqldb</groupId>
-                        <artifactId>hsqldb</artifactId>
-                        <version>1.8.0.7</version>
-                        <scope>test</scope>
-                    </dependency>
-                    <dependency>
-                        <groupId>org.junit</groupId>
-                        <artifactId>com.springsource.org.junit</artifactId>
-                        <version>4.7.0</version>
-                        <scope>test</scope>
-                    </dependency>
-                </dependencies>
-            </dependencyManagement>
-            <dependencies>
-                <dependency>
-                    <groupId>org.junit</groupId>
-                    <artifactId>com.springsource.org.junit</artifactId>
-                    <version>4.7.0</version>
-                    <scope>test</scope>
-                </dependency>
-            </dependencies>
-        </profile>
-    </profiles>
+
+    <pluginRepositories>
+        <pluginRepository>
+            <id>com.springsource.repository.bundles.release</id>
+            <name>SpringSource Enterprise Bundle Repository - Releases</name>
+            <url>http://repository.springsource.com/maven/bundles/release</url>
+        </pluginRepository>
+        <pluginRepository>
+            <id>com.springsource.repository.bundles.milestone</id>
+            <name>SpringSource Enterprise Bundle Repository - Milestone</name>
+            <url>http://repository.springsource.com/maven/bundles/milestone</url>
+        </pluginRepository>
+    </pluginRepositories>
+
+
+    <repositories>
+        <repository>
+            <id>com.springsource.repository.bundles.snapshot</id>
+            <name>SpringSource Enterprise Bundle Repository - SpringSource Bundle Snapshot</name>
+            <url>http://repository.springsource.com/maven/bundles/snapshot</url>
+        </repository>
+        <repository>
+            <id>com.springsource.repository.bundles.release</id>
+            <name>SpringSource Enterprise Bundle Repository - SpringSource Bundle Releases</name>
+            <url>http://repository.springsource.com/maven/bundles/release</url>
+        </repository>
+        <repository>
+            <id>com.springsource.repository.bundle.external</id>
+            <name>SpringSource Enterprise Bundle Repository - External Bundle Releases</name>
+            <url>http://repository.springsource.com/maven/bundles/external</url>
+        </repository>
+        <repository>
+            <id>com.springsource.repository.bundle.milestone</id>
+            <name>SpringSource Enterprise Bundle Repository - SpringSource Bundle Milestones</name>
+            <url>http://repository.springsource.com/maven/bundles/milestone</url>
+        </repository>
+
+        <repository>
+            <id>com.springsource.repository.libraries.release</id>
+            <name>SpringSource Enterprise Bundle Repository - SpringSource Library Releases</name>
+            <url>http://repository.springsource.com/maven/libraries/release</url>
+        </repository>
+        <repository>
+            <id>com.springsource.repository.libraries.external</id>
+            <name>SpringSource Enterprise Bundle Repository - External Library Releases</name>
+            <url>http://repository.springsource.com/maven/libraries/external</url>
+        </repository>
+        <repository>
+            <id>com.springsource.repository.libraries.milestone</id>
+            <name>SpringSource Enterprise Bundle Repository - Milestone Library Releases</name>
+            <url>http://repository.springsource.com/maven/libraries/milestone</url>
+        </repository>
+        <repository>
+            <id>com.springsource.repository.libraries.snapshot</id>
+            <name>SpringSource Enterprise Bundle Repository - Snapshot Library Releases</name>
+            <url>http://repository.springsource.com/maven/libraries/snapshot</url>
+        </repository>
+    </repositories>
+
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>org.springframework</groupId>
+                <artifactId>org.springframework.spring-library</artifactId>
+                <type>libd</type>
+                <version>3.0.0.M3</version>
+                <scope>provided</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.commons</groupId>
+                <artifactId>com.springsource.org.apache.commons.dbcp</artifactId>
+                <version>1.2.2.osgi</version>
+                <scope>compile</scope>
+            </dependency>
+            <dependency>
+                <groupId>javax.persistence</groupId>
+                <artifactId>com.springsource.javax.persistence</artifactId>
+                <version>1.0.0</version>
+                <scope>compile</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.eclipse.persistence</groupId>
+                <artifactId>com.springsource.org.eclipse.persistence</artifactId>
+                <version>1.0.0</version>
+                <scope>compile</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.eclipse.persistence</groupId>
+                <artifactId>com.springsource.org.eclipse.persistence.jpa</artifactId>
+                <version>1.0.0</version>
+                <scope>compile</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.aspectj</groupId>
+                <artifactId>org.aspectj-library</artifactId>
+                <type>libd</type>
+                <version>1.6.2.RELEASE</version>
+                <scope>provided</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.freemarker</groupId>
+                <artifactId>com.springsource.freemarker</artifactId>
+                <version>2.3.15</version>
+                <scope>compile</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework</groupId>
+                <artifactId>org.springframework.test</artifactId>
+                <version>3.0.0.M3</version>
+                <scope>test</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework</groupId>
+                <artifactId>org.springframework.context</artifactId>
+                <version>3.0.0.M3</version>
+                <scope>provided</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework</groupId>
+                <artifactId>org.springframework.instrument</artifactId>
+                <version>3.0.0.M3</version>
+                <scope>test</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework</groupId>
+                <artifactId>org.springframework.aspects</artifactId>
+                <version>3.0.0.M3</version>
+                <scope>test</scope>
+            </dependency>
+            <dependency>
+                <groupId>javax.servlet</groupId>
+                <artifactId>com.springsource.javax.servlet</artifactId>
+                <version>2.5.0</version>
+                <scope>provided</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.slf4j</groupId>
+                <artifactId>com.springsource.slf4j.api</artifactId>
+                <version>1.5.6</version>
+            </dependency>
+
+
+
+            <dependency>
+                <groupId>${project.groupId}</groupId>
+                <artifactId>org.openwms.common.infrastructure.postgres</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>${project.groupId}</groupId>
+                <artifactId>org.openwms.common.integration</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>${project.groupId}</groupId>
+                <artifactId>org.openwms.common.integration.jpa</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>${project.groupId}</groupId>
+                <artifactId>org.openwms.common.service.api</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>${project.groupId}</groupId>
+                <artifactId>org.openwms.common.service.spring</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>${project.groupId}</groupId>
+                <artifactId>org.openwms.common.framework.test</artifactId>
+                <version>${project.version}</version>
+                <type>test-jar</type>
+                <scope>test</scope>
+            </dependency>
+            <dependency>
+                <groupId>${project.groupId}</groupId>
+                <artifactId>org.openwms.common.domain</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>${project.groupId}</groupId>
+                <artifactId>org.openwms.tms.domain</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework</groupId>
+                <artifactId>spring</artifactId>
+                <version>${spring.version}</version>
+                <type>jar</type>
+                <scope>test</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework</groupId>
+                <artifactId>spring-test</artifactId>
+                <version>${spring.version}</version>
+                <type>jar</type>
+                <scope>test</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.commons</groupId>
+                <artifactId>com.springsource.org.apache.commons.lang</artifactId>
+                <version>2.4.0</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.log4j</groupId>
+                <artifactId>com.springsource.org.apache.log4j</artifactId>
+                <version>1.2.15</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.commons</groupId>
+                <artifactId>com.springsource.org.apache.commons.logging</artifactId>
+                <version>1.1.1</version>
+            </dependency>
+            <dependency>
+                <groupId>commons-collections</groupId>
+                <artifactId>commons-collections</artifactId>
+                <version>3.2</version>
+            </dependency>
+            <dependency>
+                <groupId>org.hibernate</groupId>
+                <artifactId>hibernate</artifactId>
+                <version>${hibernate.version}</version>
+                <exclusions>
+                    <exclusion>
+                        <groupId>javax.transaction</groupId>
+                        <artifactId>jta</artifactId>
+                    </exclusion>
+                </exclusions>
+                <scope>test</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.hibernate</groupId>
+                <artifactId>hibernate-entitymanager</artifactId>
+                <version>3.4.0.GA</version>
+                <scope>test</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.slf4j</groupId>
+                <artifactId>slf4j-simple</artifactId>
+                <version>1.4.2</version>
+                <scope>test</scope>
+            </dependency>
+            <dependency>
+                <groupId>hsqldb</groupId>
+                <artifactId>hsqldb</artifactId>
+                <version>1.8.0.7</version>
+                <scope>test</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.junit</groupId>
+                <artifactId>com.springsource.org.junit</artifactId>
+                <version>4.7.0</version>
+                <scope>test</scope>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+    <dependencies>
+        <dependency>
+            <groupId>org.junit</groupId>
+            <artifactId>com.springsource.org.junit</artifactId>
+            <version>4.7.0</version>
+            <scope>test</scope>
+        </dependency>
+    </dependencies>
 
 </project>
