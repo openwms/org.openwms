@@ -1,20 +1,29 @@
 Manifest-Version: 1.0
-Export-Package: org.openwms.web.flex.servlet;version="0.0.1.SNAPSHOT";
- uses:="javax.servlet,javax.servlet.http"
-Import-Bundle: com.springsource.org.apache.taglibs.standard;version="[
- 1.1.2,1.3)"
+Import-Bundle: org.springframework.web.servlet;version="[3.0.0.CI-395,
+ 3.1)",com.springsource.org.apache.taglibs.standard;version="[1.1.2,1.
+ 3)",org.openwms.common.service.api;version="[0.0.1.SNAPSHOT,1.0)",org
+ .openwms.common.domain;version="[0.0.1.SNAPSHOT,1.0)",com.springsourc
+ e.org.postgresql.jdbc4;version="8.3.604"
 Bundle-Vendor: openwms.org
+Bundle-ClassPath: .,WEB-INF/lib/granite-core-2.0.0.GA.jar,WEB-INF/lib/
+ granite-eclipselink-2.0.0.GA.jar,WEB-INF/lib/granite-hibernate-2.0.0.
+ GA.jar,WEB-INF/lib/granite-spring-2.0.0.GA.jar,WEB-INF/lib/granite-to
+ plink-2.0.0.GA.jar
 Bundle-Version: 0.0.1.SNAPSHOT
 Tool: Bundlor 1.0.0.M6
-Bundle-Name: OpenWMS
+Bundle-Name: org.openwms.zz.client.flex.wrapper
 Import-Library: org.springframework.spring;version="[3.0, 3.1)"
 Bundle-ManifestVersion: 2
-Bundle-SymbolicName: org.openwms.client.flex.wrapper
+Bundle-SymbolicName: org.openwms.zz.client.flex.wrapper
 Web-ContextPath: openwms
 Import-Package: com.springsource.server.web.dm;version="[2.0.0, 3.0.0)
- ",javax.servlet,javax.servlet.http;version="[2.5, 3.0)",javax.servlet
- .jsp.jstl.core;version="[1.1.2,1.2.0)",org.eclipse.persistence.indire
- ction;version="[1.0.0,1.0.1)",org.openwms.common.service;version="[0.
- 0.1.SNAPSHOT,1.0.0]",org.springframework.web.context;version="[3.0, 3
- .1)",org.springframework.web.context.request;version="[3.0, 3.1)"
+ ",javax.management,javax.naming,javax.persistence,javax.servlet;versi
+ on="[2.4.0,2.5.0]",javax.servlet.http;version="[2.4.0,2.5.0]",javax.s
+ ervlet.jsp.jstl.core;version="[1.1.2,1.2.0)",javax.servlet.resources;
+ version="[2.4.0,2.5.0]",javax.transaction,javax.xml.namespace,javax.x
+ ml.parsers,javax.xml.transform,javax.xml.transform.dom,javax.xml.tran
+ sform.stream,javax.xml.xpath,org.springframework.web.context;version=
+ "[3.0, 3.1)",org.springframework.web.context.request;version="[3.0, 3
+ .1)",org.w3c.dom,org.w3c.dom.traversal,org.xml.sax,org.xml.sax.ext,or
+ g.xml.sax.helpers
 

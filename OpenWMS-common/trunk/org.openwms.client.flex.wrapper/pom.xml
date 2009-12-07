@@ -1,4 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<!--
+/*
+ * OpenWMS, the Open Warehouse Management System
+ * 
+ * Distributable under LGPL license.
+ * See terms of license at gnu.org.
+ */
+-->
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     <modelVersion>4.0.0</modelVersion>
@@ -7,18 +15,17 @@
         <artifactId>OpenWMS</artifactId>
         <version>0.0.1-SNAPSHOT</version>
     </parent>
-    <artifactId>org.openwms.client.flex.wrapper</artifactId>
+    <artifactId>org.openwms.zz.client.flex.wrapper</artifactId>
     <packaging>war</packaging>
     <name>${project.artifactId}</name>
     <properties>
-        <granite.version>2.0.0.GA</granite.version>
         <packed.app>${project.groupId}.client.flex.app-${project.version}</packed.app>
     </properties>
     <build>
         <sourceDirectory>src/main</sourceDirectory>
         <finalName>${project.artifactId}</finalName>
         <plugins>
-          <plugin>
+            <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-war-plugin</artifactId>
                 <configuration>
@@ -30,7 +37,7 @@
                     </archive>
                 </configuration>
             </plugin>
-           <plugin>
+            <plugin>
                 <groupId>org.sonatype.flexmojos</groupId>
                 <artifactId>flexmojos-maven-plugin</artifactId>
                 <version>3.2.0</version>
@@ -103,17 +110,17 @@
             <artifactId>com.springsource.freemarker</artifactId>
             <scope>compile</scope>
         </dependency>
-		<dependency>
-			<groupId>org.springframework</groupId>
-			<artifactId>org.springframework.spring-library</artifactId>
-			<type>libd</type>
-			<scope>provided</scope>
-		</dependency>
-		<dependency>
-			<groupId>javax.servlet</groupId>
-			<artifactId>com.springsource.javax.servlet</artifactId>
-			<scope>provided</scope>
-		</dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>org.springframework.spring-library</artifactId>
+            <type>libd</type>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>javax.servlet</groupId>
+            <artifactId>com.springsource.javax.servlet</artifactId>
+            <scope>provided</scope>
+        </dependency>
         <dependency>
             <groupId>org.graniteds</groupId>
             <artifactId>granite-core</artifactId>
@@ -142,6 +149,12 @@
         <dependency>
             <groupId>org.eclipse.persistence</groupId>
             <artifactId>com.springsource.org.eclipse.persistence</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.xmlcommons</groupId>
+            <artifactId>com.springsource.org.apache.xmlcommons</artifactId>
+            <version>1.3.3</version>
+            <scope>provided</scope>
         </dependency>
     </dependencies>
 </project>
