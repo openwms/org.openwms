@@ -5,8 +5,9 @@ Export-Package: org.openwms.common.domain;version="0.0.1.SNAPSHOT";use
  rg.openwms.common.domain.system;version="0.0.1.SNAPSHOT";uses:="javax
  .persistence",org.openwms.common.domain.system.usermanagement;version
  ="0.0.1.SNAPSHOT",org.openwms.common.domain.values;version="0.0.1.SNA
- PSHOT";uses:="javax.persistence,org.junit",org.openwms.common.util;ve
- rsion="0.0.1.SNAPSHOT"
+ PSHOT";uses:="javax.persistence,org.junit",org.openwms.common.excepti
+ on;version="0.0.1.SNAPSHOT",org.openwms.common.util;version="0.0.1.SN
+ APSHOT"
 Import-Bundle: com.springsource.javax.persistence;version="[1.0.0,1.0.
  0]"
 Bundle-Vendor: openwms.org

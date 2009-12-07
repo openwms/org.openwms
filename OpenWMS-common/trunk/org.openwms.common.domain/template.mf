@@ -18,5 +18,3 @@ Excluded-Imports:
  org.junit.*
 Export-Package: 
  org.openwms.common.domain.system.usermanagement;version="0.0.1.SNAPSHOT"
-Excluded-Exports: 
- org.openwms.tms.domain
