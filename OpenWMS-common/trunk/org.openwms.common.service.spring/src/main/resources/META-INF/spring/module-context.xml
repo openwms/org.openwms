@@ -33,4 +33,10 @@
     <bean id="userService" class="org.openwms.common.service.spring.management.UserServiceImpl">
         <property name="dao" ref="userDao" />
     </bean>
+    
+    <bean id="transportService" class="org.openwms.common.service.spring.TransportServiceImpl">
+        <property name="transportUnitDao" ref="transportUnitDao" />
+        <property name="locationDao" ref="locationDao" />
+        <property name="transportOrderDao" ref="transportOrderDao" />
+    </bean>
 </beans>

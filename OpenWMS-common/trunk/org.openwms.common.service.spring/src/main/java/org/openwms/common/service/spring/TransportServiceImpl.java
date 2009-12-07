@@ -9,8 +9,7 @@ package org.openwms.common.service.spring;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.apache.log4j.Logger;
 import org.openwms.common.domain.Location;
 import org.openwms.common.domain.LocationGroup;
 import org.openwms.common.domain.LocationPK;
@@ -34,7 +33,7 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 public class TransportServiceImpl implements TransportService {
 
-	protected Log logger = LogFactory.getLog(this.getClass());
+	protected Logger logger = Logger.getLogger(this.getClass());
 	private GenericDao<TransportUnit, Long> transportUnitDao;
 	private GenericDao<Location, Long> locationDao;
 	private TransportOrderDao transportOrderDao;
@@ -54,16 +53,10 @@ public class TransportServiceImpl implements TransportService {
 		this.transportOrderDao = transportOrderDao;
 	}
 
-	public int getNumberTransportsToLocGroup(LocationGroup locationGroup) {
-		Map<String, LocationGroup> map = new HashMap<String, LocationGroup>();
-		map.put("locationGroup", locationGroup);
-		return transportOrderDao.findByQuery(
-				"select count(*) from TransportOrder where targetLocationGroup = :locationGroup", map).size();
-	}
-
 	/**
 	 * {@inheritDoc}
 	 */
+	@Override
 	@Transactional
 	public TransportUnit createTransportUnit(Barcode barcode, TransportUnitType transportUnitType,
 			LocationPK actualLocationPk) {
@@ -85,6 +78,7 @@ public class TransportServiceImpl implements TransportService {
 	/**
 	 * {@inheritDoc}
 	 */
+	@Override
 	@Transactional
 	public void moveTransportUnit(Barcode barcode, LocationPK newLocationPk) throws ServiceException {
 		TransportUnit transportUnit = transportUnitDao.findByUniqueId(barcode);
@@ -105,6 +99,10 @@ public class TransportServiceImpl implements TransportService {
 		// }
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
 	public int getTransportsToLocationGroup(LocationGroup locationGroup) {
 		return transportOrderDao.getNumberOfTransportOrders(locationGroup);
 	}

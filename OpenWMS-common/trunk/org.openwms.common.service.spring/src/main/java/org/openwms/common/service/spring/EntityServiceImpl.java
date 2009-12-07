@@ -11,8 +11,7 @@ import java.util.List;
 
 import javax.annotation.PostConstruct;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.apache.log4j.Logger;
 import org.openwms.common.integration.GenericDao;
 import org.openwms.common.service.EntityService;
 import org.springframework.beans.factory.annotation.Required;
@@ -28,7 +27,7 @@ import org.springframework.transaction.annotation.Transactional;
 public class EntityServiceImpl<T extends Serializable, ID extends Serializable> implements EntityService<T> {
 
 	protected GenericDao<T, ID> dao;
-	protected Log logger = LogFactory.getLog(this.getClass());
+	protected Logger logger = Logger.getLogger(this.getClass());
 
 	@PostConstruct
 	public void init() {

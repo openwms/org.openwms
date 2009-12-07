@@ -8,20 +8,19 @@ Bundle-Name: org.openwms.common.service.spring
 Bundle-ManifestVersion: 2
 Bundle-SymbolicName: org.openwms.common.service.spring
 Import-Package: javax.annotation;version="0",javax.persistence;version
- ="[1.0.0, 1.0.0]",org.apache.commons.logging;version="[1.1.1, 1.1.1]"
- ,org.openwms.common.domain;version="[0.0.1.SNAPSHOT,0.0.1.SNAPSHOT]",
- org.openwms.common.domain.system.usermanagement;version="[0.0.1.SNAPS
- HOT,0.0.1.SNAPSHOT]",org.openwms.common.domain.values;version="[0.0.1
- .SNAPSHOT,0.0.1.SNAPSHOT]",org.openwms.common.integration;version="[0
- .0.1.SNAPSHOT,0.0.1.SNAPSHOT]",org.openwms.common.integration.system.
- usermanagement;version="[0.0.1.SNAPSHOT,0.0.1.SNAPSHOT]",org.openwms.
- common.service;version="[0.0.1.SNAPSHOT,0.0.1.SNAPSHOT]",org.openwms.
- common.service.management;version="[0.0.1.SNAPSHOT,0.0.1.SNAPSHOT]",o
- rg.openwms.common.util;version="[0.0.1.SNAPSHOT,0.0.1.SNAPSHOT]",org.
- springframework.beans.factory.annotation;version="[3.0.0, 3.1.0)",org
- .springframework.context.weaving;version="[3.0, 3.1)",org.springframe
- work.stereotype;version="[3.0.0, 3.1.0)",org.springframework.transact
- ion;version="[3.0.0, 3.1.0)",org.springframework.transaction.annotati
- on;version="[3.0.0, 3.1.0)",org.springframework.transaction.aspectj;v
- ersion="[3.0, 3.1)"
+ ="[1.0.0, 1.0.0]",org.apache.log4j,org.openwms.common.domain;version=
+ "[0.0.1.SNAPSHOT,0.0.1.SNAPSHOT]",org.openwms.common.domain.system.us
+ ermanagement;version="[0.0.1.SNAPSHOT,0.0.1.SNAPSHOT]",org.openwms.co
+ mmon.domain.values;version="[0.0.1.SNAPSHOT,0.0.1.SNAPSHOT]",org.open
+ wms.common.integration;version="[0.0.1.SNAPSHOT,0.0.1.SNAPSHOT]",org.
+ openwms.common.integration.system.usermanagement;version="[0.0.1.SNAP
+ SHOT,0.0.1.SNAPSHOT]",org.openwms.common.service;version="[0.0.1.SNAP
+ SHOT,0.0.1.SNAPSHOT]",org.openwms.common.service.management;version="
+ [0.0.1.SNAPSHOT,0.0.1.SNAPSHOT]",org.openwms.common.util;version="[0.
+ 0.1.SNAPSHOT,0.0.1.SNAPSHOT]",org.springframework.beans.factory.annot
+ ation;version="[3.0.0, 3.1.0)",org.springframework.context.weaving;ve
+ rsion="[3.0, 3.1)",org.springframework.stereotype;version="[3.0.0, 3.
+ 1.0)",org.springframework.transaction;version="[3.0.0, 3.1.0)",org.sp
+ ringframework.transaction.annotation;version="[3.0.0, 3.1.0)",org.spr
+ ingframework.transaction.aspectj;version="[3.0, 3.1)"
 
