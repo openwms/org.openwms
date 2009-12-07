@@ -34,7 +34,7 @@ import javax.persistence.TemporalType;
  * @version $Revision$
  */
 @Entity
-@Table(name = "USER")
+@Table(name = "T_USER")
 @NamedQueries( { 
 	@NamedQuery(name = "User.findAll", query = "SELECT u FROM User u"),
 	@NamedQuery(name = "User.findAllOrdered", query = "SELECT u FROM User u ORDER BY u.username"),
