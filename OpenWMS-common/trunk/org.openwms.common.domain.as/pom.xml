@@ -21,6 +21,7 @@
     <properties>
         <property.org.graniteds-core.version>1.2.0_SP1</property.org.graniteds-core.version>
         <property.org.graniteds.version>2.0.0.GA</property.org.graniteds.version>
+        <property.org.graniteds.version2>1.2.0</property.org.graniteds.version2>
         <flex.version>3.2.0.3958</flex.version>
     </properties>
     <build>
@@ -30,7 +31,7 @@
             <plugin>
                 <groupId>org.sonatype.flexmojos</groupId>
                 <artifactId>flexmojos-maven-plugin</artifactId>
-                <version>3.3.0</version>
+                <version>3.4.0</version>
                 <extensions>true</extensions>
                 <executions>
                     <execution>
@@ -39,25 +40,45 @@
                         </goals>
                     </execution>
                 </executions>
+                <dependencies>
+                    <dependency>
+                        <groupId>com.adobe.flex</groupId>
+                        <artifactId>compiler</artifactId>
+                        <version>${flex.version}</version>
+                        <type>pom</type>
+                    </dependency>
+                    <dependency>
+                        <groupId>org.graniteds</groupId>
+                        <artifactId>granite-essentials-swc</artifactId>
+                        <version>${property.org.graniteds.version}</version>
+                        <type>swc</type>
+                    </dependency>
+                    <dependency>
+                        <groupId>org.graniteds</groupId>
+                        <artifactId>granite-swc</artifactId>
+                        <version>${property.org.graniteds.version}</version>
+                        <type>swc</type>
+                    </dependency>
+                </dependencies>
                 <configuration>
                     <resourceBundlePath>${project.basedir}/src/main/resources</resourceBundlePath>
                     <generatorToUse>graniteds2</generatorToUse>
                     <outputDirectory>${project.basedir}/src/main/flex</outputDirectory>
                     <outputEnumToBaseOutputDirectory>true</outputEnumToBaseOutputDirectory>
                     <beanTemplate>
-                        <template>${project.basedir}/etc/${property.org.graniteds.version}/beanBase.gsp</template>
-                        <template>${project.basedir}/etc/${property.org.graniteds.version}/bean.gsp</template>
+                        <template>${project.basedir}/etc/${property.org.graniteds.version2}/beanBase.gsp</template>
+                        <template>${project.basedir}/etc/${property.org.graniteds.version2}/bean.gsp</template>
                     </beanTemplate>
                     <entityTemplate>
-                        <template>${project.basedir}/etc/${property.org.graniteds.version}/entityBase.gsp</template>
-                        <template>${project.basedir}/etc/${property.org.graniteds.version}/entity.gsp</template>
+                        <template>${project.basedir}/etc/${property.org.graniteds.version2}/entityBase.gsp</template>
+                        <template>${project.basedir}/etc/${property.org.graniteds.version2}/entity.gsp</template>
                     </entityTemplate>
                     <enumTemplate>
-                        <template>${project.basedir}/etc/${property.org.graniteds.version}/enum.gsp</template>
+                        <template>${project.basedir}/etc/${property.org.graniteds.version2}/enum.gsp</template>
                     </enumTemplate>
                     <interfaceTemplate>
-                        <template>${project.basedir}/etc/${property.org.graniteds.version}/interfaceBase.gsp</template>
-                        <template>${project.basedir}/etc/${property.org.graniteds.version}/interface.gsp</template>
+                        <template>${project.basedir}/etc/${property.org.graniteds.version2}/interfaceBase.gsp</template>
+                        <template>${project.basedir}/etc/${property.org.graniteds.version2}/interface.gsp</template>
                     </interfaceTemplate>
                     <includeJavaClasses>
                         <class>org.openwms.common.domain.*</class>
@@ -152,6 +173,19 @@
             <artifactId>granite-essentials-swc</artifactId>
             <version>${property.org.graniteds.version}</version>
             <type>swc</type>
+            <scope>internal</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.graniteds</groupId>
+            <artifactId>granite-swc</artifactId>
+            <version>${property.org.graniteds.version}</version>
+            <type>swc</type>
+            <scope>internal</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.graniteds</groupId>
+            <artifactId>granite-generator</artifactId>
+            <version>2.0.0.GA</version>
         </dependency>
     </dependencies>
 </project>
