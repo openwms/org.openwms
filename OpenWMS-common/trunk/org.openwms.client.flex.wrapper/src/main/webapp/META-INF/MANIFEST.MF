@@ -22,8 +22,8 @@ Import-Package: com.springsource.server.web.dm;version="[2.0.0, 3.0.0)
  ervlet.jsp.jstl.core;version="[1.1.2,1.2.0)",javax.servlet.resources;
  version="[2.4.0,2.5.0]",javax.transaction,javax.xml.namespace,javax.x
  ml.parsers,javax.xml.transform,javax.xml.transform.dom,javax.xml.tran
- sform.stream,javax.xml.xpath,org.springframework.web.context;version=
- "[3.0, 3.1)",org.springframework.web.context.request;version="[3.0, 3
- .1)",org.w3c.dom,org.w3c.dom.traversal,org.xml.sax,org.xml.sax.ext,or
- g.xml.sax.helpers
+ sform.stream,javax.xml.xpath,org.openwms.web.flex.servlet,org.springf
+ ramework.web.context;version="[3.0, 3.1)",org.springframework.web.con
+ text.request;version="[3.0, 3.1)",org.w3c.dom,org.w3c.dom.traversal,o
+ rg.xml.sax,org.xml.sax.ext,org.xml.sax.helpers
 
