@@ -20,7 +20,7 @@
     <name>${project.artifactId}</name>
     <build>
         <plugins>
-<!--            <plugin>
+            <plugin>
                 <groupId>com.springsource.bundlor</groupId>
                 <artifactId>com.springsource.bundlor.maven</artifactId>
                 <version>1.0.0.M6</version>
@@ -34,7 +34,6 @@
                     </execution>
                 </executions>
             </plugin>
--->
         </plugins>
     </build>
     <dependencies>
@@ -64,8 +63,9 @@
             <version>${project.version}</version>
         </dependency>
         <dependency>
-            <groupId>org.apache.commons</groupId>
-            <artifactId>com.springsource.org.apache.commons.logging</artifactId>
+            <groupId>org.apache.log4j</groupId>
+            <artifactId>com.springsource.org.apache.log4j</artifactId>
+            <version>1.2.15</version>
         </dependency>
         <dependency>
             <groupId>javax.persistence</groupId>

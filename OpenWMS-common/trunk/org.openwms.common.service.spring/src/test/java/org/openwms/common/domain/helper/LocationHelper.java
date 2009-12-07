@@ -10,8 +10,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
 import javax.persistence.PersistenceException;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.apache.log4j.Logger;
 import org.openwms.common.domain.Location;
 import org.openwms.common.domain.LocationPK;
 
@@ -25,7 +24,7 @@ import org.openwms.common.domain.LocationPK;
 public class LocationHelper {
 
 	private EntityManager em;
-	protected Log LOG = LogFactory.getLog(this.getClass());
+	private Logger logger = Logger.getLogger(this.getClass());
 
 	public LocationHelper(EntityManager em) {
 		this.em = em;
@@ -41,7 +40,7 @@ public class LocationHelper {
 			entityTransaction.commit();
 		}
 		catch (PersistenceException pe) {
-			LOG.debug("OK:Execption while persisting TransportUnit without TransportUnitType");
+			logger.debug("OK:Execption while persisting TransportUnit without TransportUnitType");
 		}
 		return location;
 	}
