@@ -20,6 +20,11 @@ import org.openwms.common.domain.Location;
  */
 public interface LocationService<T extends Serializable> extends EntityService<T> {
 
+	/**
+	 * Return a List of all Locations not sorted and not filtered,
+	 * 
+	 * @return
+	 */
 	List<Location> getAllLocations();
 
 }
