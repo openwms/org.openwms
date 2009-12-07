@@ -32,6 +32,7 @@ package org.openwms.web.flex.client.control
 			this.addCommand( SwitchScreenEvent.SHOW_LOCATION_VIEW, ShowLocationViewCommand );
 			this.addCommand( SwitchScreenEvent.SHOW_LOCATIONGROUP_VIEW, ShowLocationGroupCommand );
 			this.addCommand( SwitchScreenEvent.SHOW_USER_MGMT_VIEW, ShowUserManagementViewCommand );
+			this.addCommand( SwitchScreenEvent.SHOW_TRANSPORTUNIT_VIEW, ShowTransportUnitCommand );
 			this.addCommand( LoadLocationGroupsEvent.LOAD_ALL_LOCATION_GROUPS, LoadLocationGroupsCommand );
 			this.addCommand( LocationEvent.LOAD_ALL_LOCATIONS, LoadLocationsCommand );
 		}

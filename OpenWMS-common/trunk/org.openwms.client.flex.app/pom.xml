@@ -1,4 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<!--
+/*
+ * OpenWMS, the Open Warehouse Management System
+ * 
+ * Distributable under LGPL license.
+ * See terms of license at gnu.org.
+ */
+-->
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     <modelVersion>4.0.0</modelVersion>
@@ -11,7 +19,6 @@
     <packaging>swf</packaging>
     <name>${project.artifactId}</name>
     <properties>
-        <granite.version>2.0.0.GA</granite.version>
         <template.version>2.0.0</template.version>
         <flex.version>3.2.0.3958</flex.version>
     </properties>
@@ -23,9 +30,10 @@
             <plugin>
                 <groupId>org.sonatype.flexmojos</groupId>
                 <artifactId>flexmojos-maven-plugin</artifactId>
-                <version>3.3.0</version>
+                <version>3.4.0</version>
                 <extensions>true</extensions>
                 <configuration>
+                    <generatorToUse>graniteds2</generatorToUse>
                     <incremental>true</incremental>
                     <configurationReport>false</configurationReport>
                     <sourcePaths>
@@ -49,13 +57,24 @@
                         <version>${flex.version}</version>
                         <type>pom</type>
                     </dependency>
+                    <dependency>
+                        <groupId>org.graniteds</groupId>
+                        <artifactId>granite-essentials-swc</artifactId>
+                        <version>${granite.version}</version>
+                        <type>swc</type>
+                        <scope>internal</scope>
+                    </dependency>
+                    <dependency>
+                        <groupId>org.graniteds</groupId>
+                        <artifactId>granite-swc</artifactId>
+                        <version>${granite.version}</version>
+                        <type>swc</type>
+                        <scope>internal</scope>
+                    </dependency>
                 </dependencies>
             </plugin>
         </plugins>
     </build>
-
-
-
     <dependencies>
         <dependency>
             <groupId>${project.groupId}</groupId>
@@ -84,14 +103,28 @@
         <dependency>
             <groupId>org.graniteds</groupId>
             <artifactId>granite-essentials-swc</artifactId>
-            <version>2.0.0.GA</version>
+            <version>${granite.version}</version>
             <type>swc</type>
-        </dependency>    
-        
-		<dependency>
-			<groupId>org.springframework</groupId>
-			<artifactId>org.springframework.spring-library</artifactId>
-			<type>libd</type>
-		</dependency>
+            <scope>internal</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.graniteds</groupId>
+            <artifactId>granite-swc</artifactId>
+            <version>${granite.version}</version>
+            <type>swc</type>
+            <scope>internal</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>org.springframework.spring-library</artifactId>
+            <type>libd</type>
+        </dependency>
+        <dependency>
+            <groupId>com.asunit</groupId>
+            <artifactId>asunit</artifactId>
+            <version>20071011</version>
+            <type>swc</type>
+            <scope>test</scope>
+        </dependency>
     </dependencies>
 </project>
