@@ -1,7 +1,6 @@
 Manifest-Version: 1.0
 Import-Bundle: com.springsource.org.eclipse.persistence;version="1.0.0
- ";import-scope:="application",com.springsource.javax.persistence;vers
- ion="[1.0.0,1.0.0]"
+ ";import-scope:="application"
 Bundle-Vendor: openwms.org
 Bundle-Version: 0.0.1.SNAPSHOT
 Tool: Bundlor 1.0.0.M6
@@ -9,11 +8,7 @@ Bundle-Name: org.openwms.common.integration.eclipselink
 Import-Library: org.springframework.spring;version="[3.0,3.1)"
 Bundle-ManifestVersion: 2
 Bundle-SymbolicName: org.openwms.common.integration.eclipselink
-Import-Package: javax.persistence;version="[1.0.0, 1.0.0]",javax.sql,o
- rg.aspectj.asm;version="0.0.0",org.aspectj.lang;version="0.0.0",org.s
- pringframework.context.weaving;version="[3.0, 3.1)",org.springframewo
- rk.dao.annotation,org.springframework.orm.jpa,org.springframework.orm
- .jpa.support,org.springframework.orm.jpa.vendor,org.springframework.t
- ransaction,org.springframework.transaction.aspectj;version="[3.0, 3.1
- )"
+Import-Package: org.aspectj.asm;version="0.0.0",org.aspectj.lang;versi
+ on="0.0.0",org.springframework.orm.jpa,org.springframework.orm.jpa.ve
+ ndor
 
