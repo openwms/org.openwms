@@ -16,6 +16,8 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import javax.persistence.Version;
 
 import org.openwms.common.domain.Location;
@@ -61,6 +63,7 @@ public class TransportOrder implements Serializable {
 	/**
 	 * Date when the <tt>TransportOrder</tt> was last updated.
 	 */
+	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "DATE_UPDATED")
 	private Date dateUpdated;
 
@@ -75,6 +78,7 @@ public class TransportOrder implements Serializable {
 	/**
 	 * Timestamp when the <tt>TransportOrder</tt> was started.
 	 */
+	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "START_DATE")
 	private Date startDate;
 
@@ -87,12 +91,14 @@ public class TransportOrder implements Serializable {
 	/**
 	 * Timestamp when the <tt>TransportOrder</tt> was created.
 	 */
+	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "CREATION_DATE")
 	private Date creationDate;
 
 	/**
 	 * Timestamp when the <tt>TransportOrder</tt> ended.
 	 */
+	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "END_DATE")
 	private Date endDate;
 
