@@ -28,7 +28,7 @@ package org.openwms.web.flex.client.command
 
 		public function execute(event:CairngormEvent):void
 		{
-			modelLocator.mainViewStackIndex = ModelLocator.MAIN_VIEW_STACK_START_SCREEN;
+			modelLocator.mainViewStackIndex = ModelLocator.MAIN_VIEW_STACK_LOCATION_VIEW;
 		}
 		
 	}

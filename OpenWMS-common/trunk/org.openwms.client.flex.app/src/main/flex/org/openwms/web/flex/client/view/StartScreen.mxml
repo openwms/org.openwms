@@ -60,10 +60,10 @@
                 <menuitem label="Security" action="{SwitchScreenEvent.SHOW_LOCATION_VIEW}" />
             </menuitem>
             <menuitem label="Transport Management">
-                <menuitem label="Transport Units" enabled="false"/>
                 <menuitem label="Transport Orders" enabled="false"/>
             </menuitem>
             <menuitem label="Warehouse">
+                <menuitem label="Transport Units" action="{SwitchScreenEvent.SHOW_TRANSPORTUNIT_VIEW}" />
                 <menuitem label="Ordering" enabled="false"/>
                 <menuitem label="Receiving" enabled="false"/>
             </menuitem>
@@ -82,7 +82,7 @@
 			<view:LocationView />
 			<view:LocationGroupView />
 			<view:UserManagementView />
-            <view:UserManagementView />
+            <view:TransportUnitView />
 		</mx:ViewStack>
 	</mx:VBox>
 

@@ -20,6 +20,7 @@ package org.openwms.web.flex.client.event
 		public static const SHOW_LOCATION_VIEW:String = "ShowLocationView";
 		public static const SHOW_LOCATIONGROUP_VIEW:String = "ShowLocationGroupView";
 		public static const SHOW_USER_MGMT_VIEW:String = "ShowUserManagementView";
+		public static const SHOW_TRANSPORTUNIT_VIEW:String = "ShowTransportUnitView";
 		public function SwitchScreenEvent(type:String, bubbles:Boolean=false, cancelable:Boolean=false)
 		{
 			super(type, bubbles, cancelable);

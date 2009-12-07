@@ -17,5 +17,6 @@
 <mx:RemoteObject id="locationService" destination="locationService" />
 <mx:RemoteObject id="locationGroupService" destination="locationGroupService" />
 <mx:RemoteObject id="userService" destination="userService" />
+<mx:RemoteObject id="transportService" destination="transportService" />
 
 </business:ServiceLocator>
