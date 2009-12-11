@@ -31,7 +31,7 @@
             <plugin>
                 <groupId>org.sonatype.flexmojos</groupId>
                 <artifactId>flexmojos-maven-plugin</artifactId>
-                <version>3.4.0</version>
+                <version>3.3.0</version>
                 <extensions>true</extensions>
                 <executions>
                     <execution>
@@ -122,29 +122,25 @@
 
     <repositories>
         <repository>
-            <id>flex-mojos-repository</id>
-            <url>http://svn.sonatype.org/flexmojos/repository/</url>
+            <id>sonatype-public</id>
+            <url>http://repository.sonatype.org/content/groups/public</url>
             <releases>
                 <enabled>true</enabled>
             </releases>
             <snapshots>
-                <enabled>false</enabled>
+                <enabled>true</enabled>
             </snapshots>
-        </repository>
-        <repository>
-            <id>restforflex</id>
-            <url>http://restforflex.googlecode.com/svn/repo</url>
-        </repository>
+	</repository>
     </repositories>
     <pluginRepositories>
         <pluginRepository>
-            <id>flex-mojos-repository</id>
-            <url>http://svn.sonatype.org/flexmojos/repository/</url>
+            <id>sonatype-public</id>
+            <url>http://repository.sonatype.org/content/groups/public</url>
             <releases>
                 <enabled>true</enabled>
             </releases>
             <snapshots>
-                <enabled>false</enabled>
+                <enabled>true</enabled>
             </snapshots>
         </pluginRepository>
     </pluginRepositories>
