@@ -344,24 +344,6 @@
                 <version>3.2</version>
             </dependency>
             <dependency>
-                <groupId>org.hibernate</groupId>
-                <artifactId>hibernate</artifactId>
-                <version>${hibernate.version}</version>
-                <exclusions>
-                    <exclusion>
-                        <groupId>javax.transaction</groupId>
-                        <artifactId>jta</artifactId>
-                    </exclusion>
-                </exclusions>
-                <scope>test</scope>
-            </dependency>
-            <dependency>
-                <groupId>org.hibernate</groupId>
-                <artifactId>hibernate-entitymanager</artifactId>
-                <version>3.4.0.GA</version>
-                <scope>test</scope>
-            </dependency>
-            <dependency>
                 <groupId>org.slf4j</groupId>
                 <artifactId>slf4j-simple</artifactId>
                 <version>1.4.2</version>

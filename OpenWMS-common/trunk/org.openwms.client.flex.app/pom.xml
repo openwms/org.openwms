@@ -30,7 +30,7 @@
             <plugin>
                 <groupId>org.sonatype.flexmojos</groupId>
                 <artifactId>flexmojos-maven-plugin</artifactId>
-                <version>3.4.0</version>
+                <version>3.3.0</version>
                 <extensions>true</extensions>
                 <configuration>
                     <generatorToUse>graniteds2</generatorToUse>
