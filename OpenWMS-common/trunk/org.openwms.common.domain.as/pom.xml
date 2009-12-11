@@ -131,6 +131,16 @@
                 <enabled>true</enabled>
             </snapshots>
 	</repository>
+        <repository>
+            <id>granite-repo</id>
+            <url>http://download.java.net/maven/2/</url>
+            <releases>
+                <enabled>true</enabled>
+            </releases>
+            <snapshots>
+                <enabled>true</enabled>
+            </snapshots>
+	</repository>
     </repositories>
     <pluginRepositories>
         <pluginRepository>

@@ -75,6 +75,52 @@
             </plugin>
         </plugins>
     </build>
+
+    <repositories>
+        <repository>
+            <id>sonatype-public</id>
+            <url>http://repository.sonatype.org/content/groups/public</url>
+            <releases>
+                <enabled>true</enabled>
+            </releases>
+            <snapshots>
+                <enabled>true</enabled>
+            </snapshots>
+	</repository>
+        <repository>
+            <id>granite-repo</id>
+            <url>http://download.java.net/maven/2/</url>
+            <releases>
+                <enabled>true</enabled>
+            </releases>
+            <snapshots>
+                <enabled>true</enabled>
+            </snapshots>
+	</repository>
+        <repository>
+            <id>cairngorm-repo</id>
+            <url>http://maven.ow2.org/maven2/</url>
+            <releases>
+                <enabled>true</enabled>
+            </releases>
+            <snapshots>
+                <enabled>true</enabled>
+            </snapshots>
+	</repository>
+    </repositories>
+    <pluginRepositories>
+        <pluginRepository>
+            <id>sonatype-public</id>
+            <url>http://repository.sonatype.org/content/groups/public</url>
+            <releases>
+                <enabled>true</enabled>
+            </releases>
+            <snapshots>
+                <enabled>true</enabled>
+            </snapshots>
+        </pluginRepository>
+    </pluginRepositories>
+
     <dependencies>
         <dependency>
             <groupId>${project.groupId}</groupId>
@@ -89,11 +135,19 @@
             <type>pom</type>
         </dependency>
         <dependency>
+            <groupId>com.adobe.cairngorm</groupId>
+            <artifactId>cairngorm-bin</artifactId>
+            <version>2.2.1</version>
+            <type>swc</type>
+        </dependency>
+<!--
+        <dependency>
             <groupId>com.adobe.flex.framework</groupId>
             <artifactId>cairngorm-framework</artifactId>
             <version>2.2.1</version>
             <type>swc</type>
         </dependency>
+-->
         <dependency>
             <groupId>org.graniteds</groupId>
             <artifactId>granite-core-swc</artifactId>
