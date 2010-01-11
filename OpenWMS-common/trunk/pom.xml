@@ -36,6 +36,54 @@
         <maven.test.failure.ignore>true</maven.test.failure.ignore>
         <granite.version>2.0.0.GA</granite.version>
     </properties>
+    <developers>
+    	<developer>
+    		<id>scherrer</id>
+    		<name>Heiko Scherrer</name>
+    		<email>openwms@googlemail.com</email>
+    		<url>https://sourceforge.net/users/scherrer</url>
+    		<organization>openwms.org</organization>
+    		<organizationUrl>http://www.openwms.org</organizationUrl>
+    		<timezone>+1</timezone>
+    		<roles>
+    			<role>project founder</role>
+    			<role>developer</role>
+    			<role>deployer</role>
+    		</roles>
+    	</developer>
+    	<developer>
+    		<id>flauer99</id>
+    		<name>Frank Lauer</name>
+    		<email>flauer99@users.sourceforge.net</email>
+    		<url>https://sourceforge.net/users/flauer99</url>
+    		<organization>Aberle GmbH</organization>
+    		<organizationUrl>http://www.a-s.de</organizationUrl>
+    		<timezone>+1</timezone>
+    		<roles>
+    			<role>developer</role>
+    		</roles>
+    	</developer>
+    	<developer>
+    		<id>smudo99</id>
+    		<name>Michael Schmut</name>
+    		<email>smudo99@users.sourceforge.net</email>
+    		<url>https://sourceforge.net/users/smudo99</url>
+    		<timezone>+1</timezone>
+    		<roles>
+    			<role>developer</role>
+    		</roles>
+    	</developer>
+    </developers>
+    <scm>
+    	<connection>scm:https://openwms2005.svn.sourceforge.net/svnroot/openwms2005/OpenWMS-common/trunk</connection>
+    	<developerConnection>scm:https://openwms2005.svn.sourceforge.net/svnroot/openwms2005/OpenWMS-common/trunk</developerConnection>
+    	<tag>HEAD</tag>
+    	<url>scm:https://openwms2005.svn.sourceforge.net/svnroot/openwms2005/OpenWMS-common/trunk</url>
+    </scm>
+    <organization>
+    	<name>openwms.org</name>
+    	<url>http://www.openwms.org</url>
+    </organization>
     <build>
         <pluginManagement>
             <plugins>
