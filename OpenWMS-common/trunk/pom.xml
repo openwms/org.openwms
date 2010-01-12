@@ -11,7 +11,7 @@
     xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <groupId>org.openwms</groupId>
-    <artifactId>OpenWMS</artifactId>
+    <artifactId>org.openwms</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <packaging>pom</packaging>
     <name>OpenWMS</name>
@@ -189,7 +189,6 @@
     </properties>
 
     <modules>
-        <module>org.openwms.common.framework.test</module>
         <module>org.openwms.common.infrastructure.postgres</module>
         <module>org.openwms.common.domain</module>
         <module>org.openwms.common.domain.as</module>
