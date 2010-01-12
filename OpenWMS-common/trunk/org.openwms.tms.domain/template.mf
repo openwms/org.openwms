@@ -10,11 +10,10 @@ Import-Bundle:
  com.springsource.javax.persistence;version="[1.0.0,1.0.0]"
 Import-Template: 
  javax.persistence;version="[1.0.0, 1.0.0]",
- org.openwms.common.domain.*;version="[0.0.1.SNAPSHOT, 0.0.1.SNAPSHOT]",
  org.apache.commons.lang;version="[2.4.0, 2.4.0]",
- org.apache.commons.logging;version="[1.1.1, 1.1.1]"
+ org.apache.commons.logging;version="[1.1.1, 1.1.1]",
+ org.openwms.common.domain.*;version="[0.0.1.SNAPSHOT, 0.0.1.SNAPSHOT]"
 Excluded-Imports: 
  org.openwms.common.framework.test.*,
- org.openwms.tms.domain.*,
  org.openwms.common.test.*,
  org.junit.*
