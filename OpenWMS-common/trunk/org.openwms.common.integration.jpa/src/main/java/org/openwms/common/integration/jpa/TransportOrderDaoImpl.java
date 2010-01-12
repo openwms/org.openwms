@@ -6,6 +6,7 @@
  */
 package org.openwms.common.integration.jpa;
 
+import javax.annotation.PostConstruct;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceException;
 
@@ -21,6 +22,11 @@ import org.springframework.orm.jpa.JpaCallback;
  * @version $Revision: 314 $
  */
 public class TransportOrderDaoImpl extends AbstractGenericJpaDao<TransportOrder, Long> implements TransportOrderDao {
+
+	@PostConstruct
+	public void init() {
+		logger.debug("TransportOrderDao bean initialized");
+	}
 
 	@Override
 	protected String getFindAllQuery() {

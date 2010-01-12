@@ -8,6 +8,8 @@ package org.openwms.common.integration.jpa;
 
 import java.util.List;
 
+import javax.annotation.PostConstruct;
+
 import org.openwms.common.domain.system.usermanagement.User;
 import org.openwms.common.integration.system.usermanagement.UserDao;
 import org.springframework.stereotype.Repository;
@@ -20,6 +22,11 @@ import org.springframework.stereotype.Repository;
  */
 @Repository
 public class UserDaoImpl extends AbstractGenericJpaDao<User, Long> implements UserDao {
+
+	@PostConstruct
+	public void init() {
+		logger.debug("UserDao bean initialized");
+	}
 
 	/**
 	 * {@inheritDoc}

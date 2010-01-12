@@ -6,6 +6,8 @@
  */
 package org.openwms.common.integration.jpa;
 
+import javax.annotation.PostConstruct;
+
 import org.openwms.common.domain.TransportUnit;
 import org.openwms.common.integration.TransportUnitDao;
 
@@ -16,6 +18,11 @@ import org.openwms.common.integration.TransportUnitDao;
  * @version $Revision: 314 $
  */
 public class TransportUnitDaoImpl extends AbstractGenericJpaDao<TransportUnit, Long> implements TransportUnitDao {
+
+	@PostConstruct
+	public void init() {
+		logger.debug("TransportUnitDao bean initialized");
+	}
 
 	@Override
 	protected String getFindAllQuery() {
