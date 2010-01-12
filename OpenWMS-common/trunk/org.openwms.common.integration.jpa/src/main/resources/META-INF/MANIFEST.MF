@@ -1,11 +1,11 @@
 Manifest-Version: 1.0
 Export-Package: org.openwms.common.integration.jpa;version="0.0.1.SNAP
- SHOT";uses:="javax.persistence,org.openwms.common.domain,org.openwms.
- common.integration,org.openwms.common.integration.system.usermanageme
- nt,org.springframework.beans,org.springframework.context,org.springfr
- amework.orm.jpa,org.springframework.orm.jpa.persistenceunit,org.sprin
- gframework.orm.jpa.support,org.springframework.stereotype,org.springf
- ramework.transaction.annotation"
+ SHOT";uses:="javax.annotation,javax.persistence,org.openwms.common.do
+ main,org.openwms.common.integration,org.openwms.common.integration.sy
+ stem.usermanagement,org.springframework.beans,org.springframework.con
+ text,org.springframework.orm.jpa,org.springframework.orm.jpa.persiste
+ nceunit,org.springframework.orm.jpa.support,org.springframework.stere
+ otype,org.springframework.transaction.annotation"
 Import-Bundle: com.springsource.javax.persistence;version="[1.0.0,1.0.
  0]",com.springsource.org.eclipse.persistence.jpa;version="[1.0.0,1.0.
  0]"
@@ -16,8 +16,9 @@ Bundle-Name: org.openwms.common.integration.jpa
 Import-Library: org.springframework.spring;version="[3.0,3.1)"
 Bundle-ManifestVersion: 2
 Bundle-SymbolicName: org.openwms.common.integration.jpa
-Import-Package: javax.persistence;version="[1.0.0, 1.0.0]",javax.sql;v
- ersion="0",org.aspectj.asm;version="0.0.0",org.aspectj.lang;version="
+Import-Package: javax.annotation,javax.persistence;version="[1.0.0, 1.
+ 0.0]",javax.sql;version="0",org.apache.commons.logging;version="[1.1.
+ 1, 1.1.1]",org.aspectj.asm;version="0.0.0",org.aspectj.lang;version="
  0.0.0",org.aspectj.runtime;version="0.0.0",org.aspectj.runtime.reflec
  t;version="0.0.0",org.openwms.common.domain;version="[0.0.1.SNAPSHOT,
   0.0.1.SNAPSHOT]",org.openwms.common.domain.system;version="[0.0.1.SN

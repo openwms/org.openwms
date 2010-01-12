@@ -8,6 +8,8 @@ package org.openwms.common.integration.jpa;
 
 import java.util.Date;
 
+import javax.annotation.PostConstruct;
+
 import org.openwms.common.domain.LocationGroup;
 import org.openwms.common.integration.LocationGroupDao;
 
@@ -18,6 +20,11 @@ import org.openwms.common.integration.LocationGroupDao;
  * @version $Revision: 314 $
  */
 public class LocationGroupDaoImpl extends AbstractGenericJpaDao<LocationGroup, Long> implements LocationGroupDao {
+
+	@PostConstruct
+	public void init() {
+		logger.debug("LocationGroupDao bean initialized");
+	}
 
 	@Override
 	protected String getFindAllQuery() {

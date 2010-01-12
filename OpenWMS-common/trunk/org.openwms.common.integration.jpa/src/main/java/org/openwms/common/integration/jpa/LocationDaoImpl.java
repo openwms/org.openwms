@@ -8,6 +8,8 @@ package org.openwms.common.integration.jpa;
 
 import java.util.List;
 
+import javax.annotation.PostConstruct;
+
 import org.openwms.common.domain.Location;
 import org.openwms.common.integration.LocationDao;
 import org.springframework.transaction.annotation.Transactional;
@@ -19,6 +21,11 @@ import org.springframework.transaction.annotation.Transactional;
  * @version $Revision: 314 $
  */
 public class LocationDaoImpl extends AbstractGenericJpaDao<Location, Long> implements LocationDao {
+
+	@PostConstruct
+	public void init() {
+		logger.debug("LocationDao bean initialized");
+	}
 
 	@Override
 	protected String getFindAllQuery() {
@@ -33,9 +40,13 @@ public class LocationDaoImpl extends AbstractGenericJpaDao<Location, Long> imple
 	@Transactional(readOnly = true)
 	@SuppressWarnings("unchecked")
 	public List<Location> getAllLocations() {
+		logger.debug("getAllLocations in Dao called");
 		List<Location> list = getJpaTemplate().findByNamedQuery(LocationDao.NQ_FIND_ALL_EAGER);
 		for (Location location : list) {
 			location.getLocationType();
+		}
+		for (Location location : list) {
+			logger.debug(location.getDescription());
 		}
 		return list;
 	}

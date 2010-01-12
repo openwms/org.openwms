@@ -11,6 +11,7 @@ import java.lang.reflect.ParameterizedType;
 import java.util.List;
 import java.util.Map;
 
+import org.openwms.common.domain.Location;
 import org.openwms.common.integration.GenericDao;
 import org.springframework.dao.IncorrectResultSizeDataAccessException;
 import org.springframework.orm.jpa.support.JpaDaoSupport;
@@ -63,24 +64,35 @@ public abstract class AbstractGenericJpaDao<T extends Serializable, ID extends S
 
 	@Transactional(readOnly = true)
 	public T findById(ID id) {
+		logger.debug("AGJpaDAO: findById(id) called");
 		return getJpaTemplate().find(getPersistentClass(), id);
 	}
 
 	@Transactional(readOnly = true)
 	@SuppressWarnings("unchecked")
 	public List<T> findAll() {
-		return getJpaTemplate().findByNamedQuery(getFindAllQuery());
+		logger.debug("AGJpaDAO: findAll() called");
+		logger.debug("AGJpaDAO: findAllQuery: "+getFindAllQuery());
+		List list = getJpaTemplate().findByNamedQuery(getFindAllQuery());
+		for (Object object : list) {
+			if (object instanceof Location) {
+				logger.debug(((Location)object).getDescription());
+			}
+		}
+		return list; 
 	}
 
 	@Transactional(readOnly = true)
 	@SuppressWarnings("unchecked")
 	public List<T> findByQuery(String queryName, Map<String, ?> params) {
+		logger.debug("AGJpaDAO: findByQuery(queryName, params) called");
 		return getJpaTemplate().findByNamedQueryAndNamedParams(queryName, params);
 	}
 
 	@Transactional(readOnly = true)
 	@SuppressWarnings("unchecked")
 	public T findByUniqueId(Serializable id) {
+		logger.debug("AGJpaDAO: findByUniqueId(id) called");
 		// TODO:Don't check null, yet
 		List<T> result = getJpaTemplate().findByNamedQuery(getFindByUniqueIdQuery(), id);
 		if (result.size() > 1) {
@@ -91,17 +103,20 @@ public abstract class AbstractGenericJpaDao<T extends Serializable, ID extends S
 
 	@Transactional
 	public T save(T entity) {
+		logger.debug("AGJpaDAO: save(entity) called");
 		beforeUpdate(entity);
 		return getJpaTemplate().merge(entity);
 	}
 
 	@Transactional
 	public void remove(T entity) {
+		logger.debug("AGJpaDAO: remove(entity) called");
 		getJpaTemplate().remove(entity);
 	}
 
 	@Transactional
 	public void persist(T entity) {
+		logger.debug("AGJpaDAO: persist(entity) called");
 		beforeUpdate(entity);
 		getJpaTemplate().persist(entity);
 	}
