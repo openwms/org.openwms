@@ -29,6 +29,19 @@
         <sourceDirectory>${project.basedir}/src/main/flex</sourceDirectory>
         <plugins>
             <plugin>
+                <artifactId>maven-clean-plugin</artifactId>
+                <configuration>
+                    <filesets>
+                        <fileset>
+                            <directory>src/main/flex/org</directory>
+                            <includes>
+                                <include>**</include>
+                            </includes>
+                        </fileset>
+                    </filesets>
+                </configuration>
+            </plugin>
+            <plugin>
                 <groupId>org.sonatype.flexmojos</groupId>
                 <artifactId>flexmojos-maven-plugin</artifactId>
                 <version>3.3.0</version>
@@ -66,19 +79,19 @@
                     <outputDirectory>${project.basedir}/src/main/flex</outputDirectory>
                     <outputEnumToBaseOutputDirectory>true</outputEnumToBaseOutputDirectory>
                     <beanTemplate>
-                        <template>${project.basedir}/etc/${property.org.graniteds.version2}/beanBase.gsp</template>
-                        <template>${project.basedir}/etc/${property.org.graniteds.version2}/bean.gsp</template>
+                        <template>${project.basedir}/etc/${property.org.graniteds.version}/beanBase.gsp</template>
+                        <template>${project.basedir}/etc/${property.org.graniteds.version}/bean.gsp</template>
                     </beanTemplate>
                     <entityTemplate>
-                        <template>${project.basedir}/etc/${property.org.graniteds.version2}/entityBase.gsp</template>
-                        <template>${project.basedir}/etc/${property.org.graniteds.version2}/entity.gsp</template>
+                        <template>${project.basedir}/etc/${property.org.graniteds.version}/entityBase.gsp</template>
+                        <template>${project.basedir}/etc/${property.org.graniteds.version}/entity.gsp</template>
                     </entityTemplate>
                     <enumTemplate>
-                        <template>${project.basedir}/etc/${property.org.graniteds.version2}/enum.gsp</template>
+                        <template>${project.basedir}/etc/${property.org.graniteds.version}/enum.gsp</template>
                     </enumTemplate>
                     <interfaceTemplate>
-                        <template>${project.basedir}/etc/${property.org.graniteds.version2}/interfaceBase.gsp</template>
-                        <template>${project.basedir}/etc/${property.org.graniteds.version2}/interface.gsp</template>
+                        <template>${project.basedir}/etc/${property.org.graniteds.version}/interfaceBase.gsp</template>
+                        <template>${project.basedir}/etc/${property.org.graniteds.version}/interface.gsp</template>
                     </interfaceTemplate>
                     <includeJavaClasses>
                         <class>org.openwms.common.domain.*</class>
@@ -99,6 +112,7 @@
                     <target>1.6</target>
                 </configuration>
             </plugin>
+            <!--  -->
             <plugin>
                 <groupId>org.sonatype.flexmojos</groupId>
                 <artifactId>flexmojos-maven-plugin</artifactId>
@@ -112,6 +126,10 @@
                         <configuration>
                             <windowTitle>AsDoc</windowTitle>
                             <footer>openwms.org</footer>
+                            <sourcePaths>
+                                <sourcePath>${project.basedir}/src/main/flex/</sourcePath>
+                                <sourcePath>${project.build.directory}/generated-sources/flexmojos/</sourcePath>
+                            </sourcePaths>
                         </configuration>
                     </reportSet>
                 </reportSets>
@@ -130,7 +148,7 @@
             <snapshots>
                 <enabled>true</enabled>
             </snapshots>
-	</repository>
+        </repository>
         <repository>
             <id>granite-repo</id>
             <url>http://download.java.net/maven/2/</url>
@@ -140,7 +158,7 @@
             <snapshots>
                 <enabled>true</enabled>
             </snapshots>
-	</repository>
+        </repository>
     </repositories>
     <pluginRepositories>
         <pluginRepository>
