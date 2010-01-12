@@ -39,21 +39,27 @@ public class EntityServiceImpl<T extends Serializable, ID extends Serializable> 
 		this.dao = dao;
 	}
 
+	@Transactional(readOnly = true)
 	public List<T> findAll() {
+		logger.debug("findAll called");
 		return dao.findAll();
 	}
 
+	@Transactional(readOnly = true)
 	public List<T> findAll(Class<T> clazz) {
+		logger.debug("findAll(clazz) called");
 		dao.setPersistentClass(clazz);
 		return dao.findAll();
 	}
 
 	public T save(Class<T> clazz, T entity) {
+		logger.debug("save called");
 		dao.setPersistentClass(clazz);
 		return dao.save(entity);
 	}
 
 	public void remove(Class<T> clazz, T entity) {
+		logger.debug("remove called");
 		dao.setPersistentClass(clazz);
 		// dao.save(entity);
 		dao.remove(entity);
@@ -63,5 +69,4 @@ public class EntityServiceImpl<T extends Serializable, ID extends Serializable> 
 		// FIXME: All entities shall extend a superclass Entity with isNew() method, to check this here
 		dao.persist(newEntity);
 	}
-
 }
