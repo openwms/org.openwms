@@ -1,0 +1,142 @@
+[INFO] Scanning for projects...
+[INFO] ------------------------------------------------------------------------
+[INFO] Building org.openwms.client.flex.app
+[INFO]    task-segment: [clean, site]
+[INFO] ------------------------------------------------------------------------
+[INFO] [clean:clean {execution: default-clean}]
+[INFO] Deleting directory /projects/OpenWMS2005/OpenWMS-common/trunk/org.openwms.client.flex.app/target
+[INFO] Setting property: classpath.resource.loader.class => 'org.codehaus.plexus.velocity.ContextClassLoaderResourceLoader'.
+[INFO] Setting property: velocimacro.messages.on => 'false'.
+[INFO] Setting property: resource.loader => 'classpath'.
+[INFO] Setting property: resource.manager.logwhenfound => 'false'.
+[INFO] ************************************************************** 
+[INFO] Starting Jakarta Velocity v1.4
+[INFO] RuntimeInstance initializing.
+[INFO] Default Properties File: org/apache/velocity/runtime/defaults/velocity.properties
+[INFO] Default ResourceManager initializing. (class org.apache.velocity.runtime.resource.ResourceManagerImpl)
+[INFO] Resource Loader Instantiated: org.codehaus.plexus.velocity.ContextClassLoaderResourceLoader
+[INFO] ClasspathResourceLoader : initialization starting.
+[INFO] ClasspathResourceLoader : initialization complete.
+[INFO] ResourceCache : initialized. (class org.apache.velocity.runtime.resource.ResourceCacheImpl)
+[INFO] Default ResourceManager initialization complete.
+[INFO] Loaded System Directive: org.apache.velocity.runtime.directive.Literal
+[INFO] Loaded System Directive: org.apache.velocity.runtime.directive.Macro
+[INFO] Loaded System Directive: org.apache.velocity.runtime.directive.Parse
+[INFO] Loaded System Directive: org.apache.velocity.runtime.directive.Include
+[INFO] Loaded System Directive: org.apache.velocity.runtime.directive.Foreach
+[INFO] Created: 1 parsers.
+[INFO] Velocimacro : initialization starting.
+[INFO] Velocimacro : adding VMs from VM library template : VM_global_library.vm
+[ERROR] ResourceManager : unable to find resource 'VM_global_library.vm' in any resource loader.
+[INFO] Velocimacro : error using  VM library template VM_global_library.vm : org.apache.velocity.exception.ResourceNotFoundException: Unable to find resource 'VM_global_library.vm'
+[INFO] Velocimacro :  VM library template macro registration complete.
+[INFO] Velocimacro : allowInline = true : VMs can be defined inline in templates
+[INFO] Velocimacro : allowInlineToOverride = false : VMs defined inline may NOT replace previous VM definitions
+[INFO] Velocimacro : allowInlineLocal = false : VMs defined inline will be  global in scope if allowed.
+[INFO] Velocimacro : initialization complete.
+[INFO] Velocity successfully started.
+[INFO] Preparing surefire-report:report
+[INFO] [resources:resources {execution: default-resources}]
+[WARNING] Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+[INFO] Copying 28 resources
+[INFO] snapshot org.openwms:org.openwms.common.domain.as:0.0.1-SNAPSHOT: checking for updates from sonatype-public
+[INFO] snapshot org.openwms:org.openwms.common.domain.as:0.0.1-SNAPSHOT: checking for updates from granite-repo
+[INFO] snapshot org.openwms:org.openwms.common.domain.as:0.0.1-SNAPSHOT: checking for updates from cairngorm-repo
+[INFO] [flexmojos:compile-swf {execution: default-compile-swf}]
+[INFO] Flexmojos 3.3.0 - Apache License (NO WARRANTY) - See COPYRIGHT file
+[WARNING] Unable to find license.jar on classpath. Check wiki for instructions about how to add it:
+   https://docs.sonatype.org/display/FLEXMOJOS/FAQ#FAQ-1.3
+[INFO] Flex compiler configurations:
+-compiler.accessible=false 
+-compiler.actionscript-file-encoding UTF-8 
+-compiler.allow-source-path-overlap=true 
+-compiler.as3=true 
+-compiler.context-root openwms 
+-compiler.debug=false 
+-compiler.es=false 
+-compiler.external-library-path /projects/OpenWMS2005/OpenWMS-common/trunk/org.openwms.client.flex.app/target/classes/libraries/playerglobal.swc 
+-compiler.fonts.local-fonts-snapshot /projects/OpenWMS2005/OpenWMS-common/trunk/org.openwms.client.flex.app/target/classes/fonts.ser 
+-compiler.fonts.managers flash.fonts.JREFontManager flash.fonts.AFEFontManager flash.fonts.BatikFontManager 
+-compiler.headless-server=false 
+-compiler.include-libraries /home/heiko/.m2/repository/org/graniteds/granite-essentials-swc/2.0.0.GA/granite-essentials-swc-2.0.0.GA.swc /home/heiko/.m2/repository/org/graniteds/granite-swc/2.0.0.GA/granite-swc-2.0.0.GA.swc 
+-compiler.keep-all-type-selectors=false 
+-compiler.keep-generated-actionscript=false 
+-compiler.library-path /home/heiko/.m2/repository/org/openwms/org.openwms.common.domain.as/0.0.1-SNAPSHOT/org.openwms.common.domain.as-0.0.1-SNAPSHOT.swc /home/heiko/.m2/repository/com/adobe/flex/framework/flex/3.2.0.3958/flex-3.2.0.3958.swc /home/heiko/.m2/repository/com/adobe/flex/framework/framework/3.2.0.3958/framework-3.2.0.3958.swc /home/heiko/.m2/repository/com/adobe/flex/framework/rpc/3.2.0.3958/rpc-3.2.0.3958.swc /home/heiko/.m2/repository/com/adobe/flex/framework/utilities/3.2.0.3958/utilities-3.2.0.3958.swc /home/heiko/.m2/repository/org/graniteds/granite-core-swc/1.2.0_SP1/granite-core-swc-1.2.0_SP1.swc /home/heiko/.m2/repository/com/adobe/cairngorm/cairngorm-bin/2.2.1/cairngorm-bin-2.2.1.swc /home/heiko/.m2/repository/com/adobe/flex/framework/framework/3.2.0.3958/framework-3.2.0.3958-en_US.rb.swc /home/heiko/.m2/repository/com/adobe/flex/framework/rpc/3.2.0.3958/rpc-3.2.0.3958-en_US.rb.swc 
+-compiler.locale en_US 
+-compiler.namespaces.namespace http://www.adobe.com/2006/mxml /projects/OpenWMS2005/OpenWMS-common/trunk/org.openwms.client.flex.app/target/classes/config-3.2.0.3958/mxml-manifest.xml 
+-compiler.optimize=true 
+-compiler.services /projects/OpenWMS2005/OpenWMS-common/trunk/org.openwms.client.flex.app/src/main/resources/flex/services-config.xml 
+-compiler.source-path /projects/OpenWMS2005/OpenWMS-common/trunk/org.openwms.client.flex.app/src/main/resources /projects/OpenWMS2005/OpenWMS-common/trunk/org.openwms.client.flex.app/src/main/flex 
+-compiler.strict=true 
+-compiler.use-resource-bundle-metadata=true 
+-compiler.verbose-stacktraces=false 
+-compiler.warn-array-tostring-changes=true 
+-compiler.warn-duplicate-argument-names=false 
+-default-background-color 8821927 
+-default-frame-rate 24 
+-default-script-limits 1000 60 
+-default-size 500 375 
+-licenses.license flexbuilder3 137741287012368381165862 
+-licenses.license flexbuilder3.displayed10DaysLeftMessage true 
+-licenses.license flexbuilder3.displayedFirstLaunchMessage true 
+-metadata.creator Heiko Scherrer 
+-metadata.date Tue Jan 12 00:16:38 CET 2010 
+-target-player 9.0.0 
+-use-network=true 
+-verify-digests=true -static-link-runtime-shared-libraries=false -load-config= 
+[INFO] [resources:testResources {execution: default-testResources}]
+[WARNING] Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+[INFO] Copying 0 resource
+[INFO] [flexmojos:test-compile {execution: default-test-compile}]
+[INFO] flexmojos 3.3.0 - GNU GPL License (NO WARRANTY) - See COPYRIGHT file
+[WARNING] Unable to find license.jar on classpath. Check wiki for instructions about how to add it:
+   https://docs.sonatype.org/display/FLEXMOJOS/FAQ#FAQ-1.3
+[INFO] [flexmojos:test-run {execution: default-test-run}]
+[INFO] flexmojos 3.3.0 - GNU GPL License (NO WARRANTY) - See COPYRIGHT file
+[INFO] ------------------------------------------------------------------------
+[INFO] Tests run: 0, Failures: 0, Errors: 0, Time Elapsed: 0 sec
+[INFO] Preparing surefire-report:report-only
+[INFO] No goals needed for project - skipping
+[INFO] [site:site {execution: default-site}]
+[WARNING] No URL defined for the project - decoration links will not be resolved
+[INFO] Skipped "Maven Surefire Report" report, file "surefire-report.html" already exists for the English version.
+[INFO] Generating "Project Team" report.
+[INFO] Generating "Issue Tracking" report.
+[INFO] Generating "Maven Surefire Report" report.
+[WARNING] Unable to locate Test Source XRef to link to - DISABLED
+[INFO] Generating "Dependency Management" report.
+[INFO] Generating "Dependencies" report.
+[WARNING] The repository url 'http://repository.springsource.com/maven/bundles/milestone' is invalid - Repository 'com.springsource.repository.bundle.milestone' will be blacklisted.
+[WARNING] The repository url 'http://repository.springsource.com/maven/libraries/snapshot' is invalid - Repository 'com.springsource.repository.libraries.snapshot' will be blacklisted.
+[WARNING] The repository url 'http://repository.springsource.com/maven/bundles/release' is invalid - Repository 'com.springsource.repository.bundles.release' will be blacklisted.
+[WARNING] The repository url 'http://repository.springsource.com/maven/libraries/release' is invalid - Repository 'com.springsource.repository.libraries.release' will be blacklisted.
+[WARNING] The repository url 'http://repository.springsource.com/maven/bundles/snapshot' is invalid - Repository 'com.springsource.repository.bundles.snapshot' will be blacklisted.
+[WARNING] The repository url 'http://repository.springsource.com/maven/libraries/milestone' is invalid - Repository 'com.springsource.repository.libraries.milestone' will be blacklisted.
+[WARNING] The repository url 'http://repository.springsource.com/maven/libraries/external' is invalid - Repository 'com.springsource.repository.libraries.external' will be blacklisted.
+[WARNING] The repository url 'http://repository.springsource.com/maven/bundles/external' is invalid - Repository 'com.springsource.repository.bundle.external' will be blacklisted.
+[INFO] Generating "Continuous Integration" report.
+[INFO] Generating "Project Plugins" report.
+[INFO] Generating "Plugin Management" report.
+[INFO] Generating "Mailing Lists" report.
+[INFO] Generating "Source Repository" report.
+[INFO] Generating "Project Summary" report.
+[INFO] Generating "About" report.
+[INFO] Generating "Project License" report.
+[INFO] Generating "ASDocs" report.
+[INFO] flexmojos 3.3.0 - GNU GPL License (NO WARRANTY) - See COPYRIGHT file
+[WARNING] Nothing expecified to include.  Assuming source paths.
+[INFO] [-compiler.namespaces.namespace, http://www.adobe.com/2006/mxml, /projects/OpenWMS2005/OpenWMS-common/trunk/org.openwms.client.flex.app/target/classes/config-3.2.0.3958/mxml-manifest.xml, -doc-sources=/projects/OpenWMS2005/OpenWMS-common/trunk/org.openwms.client.flex.app/src/main/flex,/projects/OpenWMS2005/OpenWMS-common/trunk/org.openwms.client.flex.app/src/main/resources,/projects/OpenWMS2005/OpenWMS-common/trunk/org.openwms.client.flex.app/src/main/resources, -source-path=/projects/OpenWMS2005/OpenWMS-common/trunk/org.openwms.client.flex.app/src/main/flex,/projects/OpenWMS2005/OpenWMS-common/trunk/org.openwms.client.flex.app/src/main/resources,/projects/OpenWMS2005/OpenWMS-common/trunk/org.openwms.client.flex.app/src/main/resources, -library-path=/home/heiko/.m2/repository/org/openwms/org.openwms.common.domain.as/0.0.1-SNAPSHOT/org.openwms.common.domain.as-0.0.1-SNAPSHOT.swc,/home/heiko/.m2/repository/com/adobe/flex/framework/flex/3.2.0.3958/flex-3.2.0.3958.swc,/home/heiko/.m2/repository/com/adobe/flex/framework/framework/3.2.0.3958/framework-3.2.0.3958.swc,/home/heiko/.m2/repository/com/adobe/flex/framework/rpc/3.2.0.3958/rpc-3.2.0.3958.swc,/home/heiko/.m2/repository/com/adobe/flex/framework/utilities/3.2.0.3958/utilities-3.2.0.3958.swc,/home/heiko/.m2/repository/com/adobe/flex/framework/playerglobal/3.2.0.3958/playerglobal-3.2.0.3958-9.swc,/home/heiko/.m2/repository/org/graniteds/granite-core-swc/1.2.0_SP1/granite-core-swc-1.2.0_SP1.swc,/home/heiko/.m2/repository/org/graniteds/granite-essentials-swc/2.0.0.GA/granite-essentials-swc-2.0.0.GA.swc,/home/heiko/.m2/repository/org/graniteds/granite-swc/2.0.0.GA/granite-swc-2.0.0.GA.swc,/home/heiko/.m2/repository/com/adobe/cairngorm/cairngorm-bin/2.2.1/cairngorm-bin-2.2.1.swc,/home/heiko/.m2/repository/com/asunit/asunit/20071011/asunit-20071011.swc, -footer, openwms.org, -templates-path=/projects/OpenWMS2005/OpenWMS-common/trunk/org.openwms.client.flex.app/target/templates, -window-title=AsDoc, -main-title=API Documentation, -left-frameset-width=210, -exclude-dependencies=false, -compiler.fonts.local-fonts-snapshot=/projects/OpenWMS2005/OpenWMS-common/trunk/org.openwms.client.flex.app/target/fonts.ser, -load-config=, -output=/projects/OpenWMS2005/OpenWMS-common/trunk/org.openwms.client.flex.app/target/site/asdoc]
+[INFO] ------------------------------------------------------------------------
+[ERROR] BUILD ERROR
+[INFO] ------------------------------------------------------------------------
+[INFO] Error during page generation
+
+Embedded error: Error rendering Maven report: Unable to generate report
+Error compiling!
+[INFO] ------------------------------------------------------------------------
+[INFO] For more information, run Maven with the -e switch
+[INFO] ------------------------------------------------------------------------
+[INFO] Total time: 3 minutes 1 second
+[INFO] Finished at: Tue Jan 12 00:19:16 CET 2010
+[INFO] Final Memory: 53M/268M
+[INFO] ------------------------------------------------------------------------

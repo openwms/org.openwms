@@ -40,11 +40,13 @@ package org.openwms.web.flex.client.command
 		}
 		
 		public function result(event:Object):void {
+			trace("Receiving result in ShowLocationViewCommand");
 			var rawResult:ArrayCollection = (event as ResultEvent).result as ArrayCollection;
 			modelLocator.allLocations = (event as ResultEvent).result as ArrayCollection;
 		}
 		
 		public function fault(event:Object):void {
+			trace("ERROR result in ShowLocationViewCommand");
 			Alert.show("Fault in ["+this+"] Errormessage : "+event);
 		}
 	
