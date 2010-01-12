@@ -43,12 +43,12 @@
 	
 	<control:MainController />
 	
-	<mx:VBox height="800" width="1280" verticalGap="0" backgroundColor="#C2DAEF">
-		<mx:HBox width="100%" height="100" verticalAlign="middle" backgroundColor="0x9fc3db" id="hbox1" horizontalGap="8">
-			<mx:Image source="assets/images/openwms_header_logo6.png"/>
+	<mx:VBox height="100%" width="100%" verticalGap="0" backgroundColor="#C2DAEF">
+		<mx:HBox width="100%" height="30" verticalAlign="middle" backgroundColor="0x9fc3db" id="hbox1" horizontalGap="8">
+			<mx:Image source="assets/images/openwms_header.png"/>
 		</mx:HBox>
 		<mx:Canvas width="100%" height="30" backgroundColor="#FFFFFF" backgroundAlpha="0.5" >
-		<mx:MenuBar x="5" y="5" width="1270" height="20" labelField="@label" itemClick="onMenuChange(event)">
+		<mx:MenuBar x="5" y="5" width="100%" height="20" labelField="@label" itemClick="onMenuChange(event)">
 			<mx:XMLList>
             <menuitem label="OpenWMS">
                 <menuitem label="Connect ..." enabled="false"/>
@@ -79,6 +79,7 @@
 		</mx:MenuBar>
 		</mx:Canvas>
 		<mx:ViewStack id="myViewStack" selectedIndex="{modelLocator.mainViewStackIndex}">
+		    <view:EmptyScreenView />
 			<view:LocationView />
 			<view:LocationGroupView />
 			<view:UserManagementView />

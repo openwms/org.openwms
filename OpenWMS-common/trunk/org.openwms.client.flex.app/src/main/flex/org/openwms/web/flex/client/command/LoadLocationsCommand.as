@@ -33,12 +33,14 @@ package org.openwms.web.flex.client.command
 
 		public function result(data:Object):void
 		{
+			trace("Receiving result in LoadLocationsCommand");
 			var rawResult:ArrayCollection = (data as ResultEvent).result as ArrayCollection;
 			modelLocator.allLocations = (data as ResultEvent).result as ArrayCollection;
 		}
 		
 		public function fault(info:Object):void
 		{
+			trace("ERROR result in LoadLocationsCommand");
 			Alert.show("Fault in ["+this+"] Errormessage : "+info);
 		}
 		
