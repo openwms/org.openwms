@@ -30,6 +30,7 @@ public class LocationGroupServiceImpl extends EntityServiceImpl<LocationGroup, L
 		LocationGroupService<LocationGroup> {
 
 	public void changeGroupState(LocationGroup locationGroup) throws ServiceException {
+		logger.debug("change group state called");
 		if (null != locationGroup && locationGroup.getParent() != null
 				&& locationGroup.getParent().getGroupStateIn() == STATE.NOT_AVAILABLE
 				&& locationGroup.getGroupStateIn() == STATE.AVAILABLE) {
@@ -47,15 +48,18 @@ public class LocationGroupServiceImpl extends EntityServiceImpl<LocationGroup, L
 	}
 
 	public LocationGroup save(LocationGroup locationGroup) {
+		logger.debug("save LG called");
 		return dao.save(locationGroup);
 	}
 
 	public TreeNode<LocationGroup> getLocationGroupsAsTree() {
+		logger.debug("getLocationGroupsAsTree called");
 		TreeNode<LocationGroup> tree = createTree(new TreeNodeImpl<LocationGroup>(), getLocationGroupsAsList());
 		return tree;
 	}
 
 	public List<LocationGroup> getLocationGroupsAsList() {
+		logger.debug("getLocationGroupsAsList called");
 		List<LocationGroup> locationGroups = dao.findAll();
 		return locationGroups;
 	}
