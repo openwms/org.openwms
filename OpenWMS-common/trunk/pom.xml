@@ -19,6 +19,11 @@
     <url>http://www.openwms.org</url>
     <inceptionYear>2005</inceptionYear>
 
+	<issueManagement>
+		<system>sourceforge</system>
+		<url>http://sourceforge.net/tracker/?group_id=150387</url>
+	</issueManagement>
+
     <licenses>
         <license>
             <name>GNU LESSER GENERAL PUBLIC LICENSE</name>
@@ -29,15 +34,15 @@
     </licenses>
 
     <scm>
-        <connection>scm:https://openwms2005.svn.sourceforge.net/svnroot/openwms2005/OpenWMS-common/trunk</connection>
-        <developerConnection>scm:https://openwms2005.svn.sourceforge.net/svnroot/openwms2005/OpenWMS-common/trunk</developerConnection>
+        <connection>scm:svn:http://openwms2005.svn.sourceforge.net/svnroot/openwms2005/OpenWMS-common/trunk</connection>
+        <developerConnection>scm:svn:https://openwms2005.svn.sourceforge.net/svnroot/openwms2005/OpenWMS-common/trunk</developerConnection>
         <tag>HEAD</tag>
-        <url>scm:https://openwms2005.svn.sourceforge.net/svnroot/openwms2005/OpenWMS-common/trunk</url>
+        <url>http://openwms2005.svn.sourceforge.net/viewvc/openwms2005/OpenWMS-common/trunk/</url>
     </scm>
 
     <organization>
-        <name>openwms.org</name>
-        <url>http://www.openwms.org</url>
+		<name>SourceForge</name>
+		<url>http://sourceforge.net</url>
     </organization>
 
     <developers>
@@ -78,6 +83,35 @@
             </roles>
         </developer>
     </developers>
+
+	<mailingLists>
+		<mailingList>
+			<name>OpenWMS Public Mailing list</name>
+			<subscribe>
+				http://lists.sourceforge.net/lists/listinfo/openwms2005-public
+			</subscribe>
+			<unsubscribe>
+				http://lists.sourceforge.net/lists/listinfo/openwms2005-public
+			</unsubscribe>
+			<archive>
+				http://sourceforge.net/mailarchive/forum.php?forum_name=openwms2005-public
+			</archive>
+			<post>openwms2005-public@lists.sourceforge.net</post>
+		</mailingList>
+		<mailingList>
+			<name>OpenWMS Development Mailing list</name>
+			<subscribe>
+				http://lists.sourceforge.net/lists/listinfo/openwms2005-development
+			</subscribe>
+			<unsubscribe>
+				http://lists.sourceforge.net/lists/listinfo/openwms2005-development
+			</unsubscribe>
+			<archive>
+				http://sourceforge.net/mailarchive/forum.php?forum_name=openwms2005-development
+			</archive>
+			<post>openwms2005-development@lists.sourceforge.net</post>
+		</mailingList>
+	</mailingLists>
 
     <ciManagement>
         <system>Hudson</system>
@@ -178,6 +212,7 @@
     </profiles>
 
     <properties>
+		<moduleDir>.</moduleDir>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.jdkVersion>1.6</project.jdkVersion>
         <spring.version>2.5.6</spring.version>
@@ -189,8 +224,9 @@
     </properties>
 
     <modules>
-        <module>org.openwms.common.infrastructure.postgres</module>
         <module>org.openwms.common.domain</module>
+<!-- 
+        <module>org.openwms.common.infrastructure.postgres</module>
         <module>org.openwms.common.domain.as</module>
         <module>org.openwms.common.integration</module>
         <module>org.openwms.common.integration.eclipselink</module>
@@ -201,6 +237,7 @@
         <module>org.openwms.client.flex.app</module>
         <module>org.openwms.client.flex.wrapper</module>
         <module>org.openwms.app</module>
+ -->
     </modules>
 
     <build>
@@ -244,7 +281,7 @@
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-plugin</artifactId>
                 <configuration>
-                    <skipTests>true</skipTests>
+                    <skipTests>false</skipTests>
                     <includes>
                         <include>**/*Test.java</include>
                         <include>**/*Tests.java</include>
@@ -335,6 +372,11 @@
             </plugin>
 
             <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-changelog-plugin</artifactId>
+            </plugin>
+
+            <plugin>
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>taglist-maven-plugin</artifactId>
                 <configuration>
@@ -366,7 +408,8 @@
                 <configuration>
                     <xrefLocation>${project.reporting.outputDirectory}/../xref</xrefLocation>
                     <enableRulesSummary>false</enableRulesSummary>
-                    <configLocation>./checkstyle.xml</configLocation>
+                    <configLocation>${basedir}/${moduleDir}/src/checkstyle/checkstyle.xml</configLocation>
+                    <headerLocation>${basedir}/${moduleDir}/src/checkstyle/checkstyle-license.txt</headerLocation>
                 </configuration>
             </plugin>
 
