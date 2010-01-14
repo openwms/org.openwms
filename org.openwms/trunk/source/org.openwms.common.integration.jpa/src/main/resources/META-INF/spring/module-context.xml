@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+/*
+ * OpenWMS, the Open Warehouse Management System
+ * 
+ * Distributable under LGPL license.
+ * See terms of license at gnu.org.
+ */
+-->
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:context="http://www.springframework.org/schema/context" xmlns:tx="http://www.springframework.org/schema/tx"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
+		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-2.5.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-2.5.xsd">
+
+    <context:annotation-config />
+    <context:property-placeholder location="classpath:jdbc.properties" />
+    <context:component-scan base-package="org.openwms.common.domain" />
+    <context:load-time-weaver aspectj-weaving="on"/>
+    
+    <tx:annotation-driven mode="aspectj" />
+    
+    <!-- Entity Manager -->
+    <bean id="entityManagerFactory" class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
+        <property name="persistenceUnitName" value="${jdbc.persistenceUnit}" />
+        <property name="dataSource" ref="dataSource" />
+        <property name="jpaVendorAdapter" ref="jpaVendorAdapter" />
+    </bean>
+
+
+<!-- 
+    <bean id="cpu" class="org.openwms.common.integration.jpa.CustomPersistenceUnitPostProcessor">
+        <property name="persistenceJarFiles">
+            <list>
+                <value>classpath:/**/*OpenWMS-tms.jar
+                </value>
+                <value>classpath:/**/*OpenWMS-commons.jar
+                </value>
+            </list>
+        </property>
+    </bean>
+ -->
+    <!-- Transaction Manager -->
+    <bean id="transactionManager" class="org.springframework.orm.jpa.JpaTransactionManager">
+        <property name="entityManagerFactory" ref="entityManagerFactory" />
+    </bean>
+
+    <!-- Used for the exception translation -->
+    <bean class="org.springframework.dao.annotation.PersistenceExceptionTranslationPostProcessor" />
+
+    <bean id="oemiv" class="org.springframework.orm.jpa.support.OpenEntityManagerInViewInterceptor" autowire="byName">
+    </bean>
+    
+    
+    <bean id="locationDao" class="org.openwms.common.integration.jpa.LocationDaoImpl">
+        <property name="entityManagerFactory" ref="entityManagerFactory" />
+    </bean>
+
+    <bean id="locationGroupDao" class="org.openwms.common.integration.jpa.LocationGroupDaoImpl">
+        <property name="entityManagerFactory" ref="entityManagerFactory" />
+    </bean>
+
+    <bean id="transportUnitDao" class="org.openwms.common.integration.jpa.TransportUnitDaoImpl">
+        <property name="entityManagerFactory" ref="entityManagerFactory" />
+    </bean>
+
+    <bean id="transportUnitTypeDao" class="org.openwms.common.integration.jpa.TransportUnitTypeDaoImpl" depends-on="starter">
+        <property name="entityManagerFactory" ref="entityManagerFactory" />
+    </bean>
+    
+    <bean id="transportOrderDao" class="org.openwms.common.integration.jpa.TransportOrderDaoImpl">
+        <property name="entityManagerFactory" ref="entityManagerFactory" />
+    </bean>
+
+    <bean id="starter" class="org.openwms.common.integration.jpa.Starter"></bean>
+
+    <bean id="userDao" class="org.openwms.common.integration.jpa.UserDaoImpl">
+        <property name="entityManagerFactory" ref="entityManagerFactory" />
+    </bean>
+</beans>

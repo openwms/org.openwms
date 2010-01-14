@@ -1,0 +1,40 @@
+Manifest-Version: 1.0
+Export-Package: org.openwms.common.integration.jpa;version="0.0.1.SNAP
+ SHOT";uses:="javax.annotation,javax.persistence,org.openwms.common.do
+ main,org.openwms.common.integration,org.openwms.common.integration.sy
+ stem.usermanagement,org.springframework.beans,org.springframework.con
+ text,org.springframework.orm.jpa,org.springframework.orm.jpa.persiste
+ nceunit,org.springframework.orm.jpa.support,org.springframework.stere
+ otype,org.springframework.transaction.annotation"
+Import-Bundle: com.springsource.javax.persistence;version="[1.0.0,1.0.
+ 0]",com.springsource.org.eclipse.persistence.jpa;version="[1.0.0,1.0.
+ 0]"
+Bundle-Vendor: openwms.org
+Bundle-Version: 0.0.1.SNAPSHOT
+Tool: Bundlor 1.0.0.M6
+Bundle-Name: org.openwms.common.integration.jpa
+Import-Library: org.springframework.spring;version="[3.0,3.1)"
+Bundle-ManifestVersion: 2
+Bundle-SymbolicName: org.openwms.common.integration.jpa
+Import-Package: javax.annotation,javax.persistence;version="[1.0.0, 1.
+ 0.0]",javax.sql;version="0",org.apache.commons.logging;version="[1.1.
+ 1, 1.1.1]",org.aspectj.asm;version="0.0.0",org.aspectj.lang;version="
+ 0.0.0",org.aspectj.runtime;version="0.0.0",org.aspectj.runtime.reflec
+ t;version="0.0.0",org.openwms.common.domain;version="[0.0.1.SNAPSHOT,
+  0.0.1.SNAPSHOT]",org.openwms.common.domain.system;version="[0.0.1.SN
+ APSHOT, 0.0.1.SNAPSHOT]",org.openwms.common.domain.system.usermanagem
+ ent;version="[0.0.1.SNAPSHOT, 0.0.1.SNAPSHOT]",org.openwms.common.dom
+ ain.values;version="[0.0.1.SNAPSHOT, 0.0.1.SNAPSHOT]",org.openwms.com
+ mon.integration;version="[0.0.1.SNAPSHOT, 0.0.1.SNAPSHOT]",org.openwm
+ s.common.integration.system.usermanagement;version="[0.0.1.SNAPSHOT, 
+ 0.0.1.SNAPSHOT]",org.openwms.tms.domain.order;version="[0.0.1.SNAPSHO
+ T, 0.0.1.SNAPSHOT]",org.springframework.beans,org.springframework.con
+ text,org.springframework.context.weaving;version="[3.0, 3.1)",org.spr
+ ingframework.core.io,org.springframework.core.io.support,org.springfr
+ amework.dao,org.springframework.dao.annotation,org.springframework.da
+ o.support;version="[3.0, 3.1)",org.springframework.orm.jpa,org.spring
+ framework.orm.jpa.persistenceunit,org.springframework.orm.jpa.support
+ ,org.springframework.stereotype,org.springframework.transaction,org.s
+ pringframework.transaction.annotation,org.springframework.transaction
+ .aspectj;version="[3.0, 3.1)",org.springframework.util
+

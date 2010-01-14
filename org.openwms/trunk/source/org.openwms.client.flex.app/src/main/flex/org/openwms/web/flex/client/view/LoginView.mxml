@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+/*
+ * OpenWMS, the Open Warehouse Management System
+ * 
+ * Distributable under LGPL license.
+ * See terms of license at gnu.org.
+ */
+-->
+<mx:Canvas xmlns:mx="http://www.adobe.com/2006/mxml" 
+  width="300" height="200"
+  backgroundColor="#FFFFFF"
+  backgroundAlpha="0.5">
+
+  <mx:Metadata>
+    [Event(name="login", type="org.openwms.web.flex.client.event.SecurityEvent")]
+  </mx:Metadata>
+
+  <mx:Script>
+    <![CDATA[
+      import org.openwms.web.flex.client.event.SecurityEvent;
+      
+      private function onClick( event:MouseEvent ):void {
+        var SecurityEvent = new SecurityEvent("login");
+        e.user = myUser.text;
+        e.pass = myPass.text;
+        dispatchEvent( e );
+      }
+    ]]>
+  </mx:Script>
+
+  <mx:Form width="100%" height="100%">
+    <mx:FormHeading label="LOGIN" />
+    <mx:FormItem label="User">
+      <mx:TextInput id="myUser" />
+    </mx:FormItem>
+    <mx:FormItem label="Password">
+      <mx:TextInput id="myPass" displayAsPassword="true"/>
+    </mx:FormItem>
+    <mx:FormItem>
+      <mx:Button label="Login" click="onClick(event)" />
+    </mx:FormItem>
+  </mx:Form>
+
+</mx:Canvas>     
