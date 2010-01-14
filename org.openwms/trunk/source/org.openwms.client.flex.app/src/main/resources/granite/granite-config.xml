@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+/*
+ * OpenWMS, the Open Warehouse Management System
+ * 
+ * Distributable under LGPL license.
+ * See terms of license at gnu.org.
+ */
+-->
+<!DOCTYPE granite-config PUBLIC "-//Granite Data Services//DTD granite-config internal//EN"
+    "http://www.graniteds.org/public/dtd/2.0.0/granite-config.dtd">
+    
+<granite-config>
+<!--  -->
+    <class-getter type="org.granite.eclipselink.EclipseLinkClassGetter"/>
+
+    <externalizers>
+        <externalizer type="org.granite.eclipselink.EclipseLinkExternalizer">
+            <include annotated-with="javax.persistence.Entity"/>
+            <include annotated-with="javax.persistence.MappedSuperclass"/>
+            <include annotated-with="javax.persistence.Embeddable"/>
+        </externalizer>
+    </externalizers>
+<!-- 
+	<security type="org.granite.messaging.service.security.SpringSecurityService"/>
+ -->
+</granite-config>
+

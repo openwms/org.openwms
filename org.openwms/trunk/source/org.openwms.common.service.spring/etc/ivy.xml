@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+/*
+ * OpenWMS, the Open Warehouse Management System
+ * 
+ * Distributable under LGPL license.
+ * See terms of license at gnu.org.
+ */
+-->
+<ivy-module version="2.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://ant.apache.org/ivy/schemas/ivy.xsd">
+	<info organisation="openwms.org" module="OpenWMS-common-Spring"/>
+	
+	<configurations>
+		<conf name="build" />
+		<conf name="test" />
+	</configurations>
+	
+	<dependencies>
+		<dependency org="javax.annotation" name="jsr250-api" rev="1.0" conf="build->*" />
+		<dependency org="commons-lang" name="commons-lang" rev="2.4" conf="build->*" />
+		<!-- Java5 compatibility -->
+		<dependency org="javax.annotation" name="com.springsource.javax.annotation" rev="1.0.0" conf="build->*"/>
+
+		<!-- Used for JUnit tests -->
+		<dependency org="org.dbunit" name="dbunit" rev="2.2" conf="test->*" />
+		<!-- Cobertura -->
+		<dependency org="cobertura" name="cobertura" rev="1.8" conf="test->*" />
+		<dependency org="asm" name="asm" rev="2.2.1" conf="test->*" />
+		<dependency org="oro" name="oro" rev="2.0.8" conf="test->*" />
+
+		<dependency org="org.hsqldb" name="com.springsource.org.hsqldb" rev="1.8.0.9" conf="test->*" />
+		<dependency org="org.postgresql" name="com.springsource.org.postgresql.jdbc3" rev="8.3.603" conf="build->*" />
+		<!-- Hibernate -->
+		<dependency org="org.hibernate" name="hibernate-annotations" rev="3.4.0.GA" conf="build->*" />
+		<dependency org="org.hibernate" name="hibernate-commons-annotations" rev="3.3.0.ga" conf="build->*" />
+		<dependency org="org.hibernate" name="hibernate-entitymanager" rev="3.4.0.GA" conf="build->*" />
+		<dependency org="org.hibernate" name="hibernate-core" rev="3.3.1.GA" conf="build->*" />
+		<dependency org="dom4j" name="dom4j" rev="1.6.1" conf="build->*" />
+		<dependency org="org.slf4j" name="slf4j-api" rev="1.5.6" conf="build->*" />
+		<dependency org="org.slf4j" name="slf4j-simple" rev="1.5.6" conf="build->*" />
+		<dependency org="javassist" name="javassist" rev="3.6.0.GA" conf="build->*" />
+		<dependency org="commons-collections" name="commons-collections" rev="3.2.1" conf="build->*" />
+		<dependency org="antlr" name="antlr" rev="2.7.7" conf="build->*" />
+		<dependency org="javax.transaction" name="jta" rev="1.1" conf="build->*" />
+
+		<!-- Spring -->
+		<dependency org="org.springframework" name="org.springframework.core" rev="2.5.6.A" conf="build->*" />
+		<dependency org="org.springframework" name="org.springframework.test" rev="2.5.6.A" conf="test->*" />
+		<dependency org="org.easymock" name="com.springsource.org.easymock.classextension" rev="2.3.0" conf="test->*" />
+  	</dependencies>
+</ivy-module>

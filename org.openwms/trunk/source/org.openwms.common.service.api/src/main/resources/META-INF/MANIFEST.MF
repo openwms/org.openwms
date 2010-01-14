@@ -1,0 +1,20 @@
+Manifest-Version: 1.0
+Export-Package: org.openwms.common.service;version="0.0.1.SNAPSHOT";us
+ es:="org.openwms.common.domain,org.openwms.common.domain.values,org.o
+ penwms.common.service.exception,org.openwms.common.util",org.openwms.
+ common.service.exception;version="0.0.1.SNAPSHOT",org.openwms.common.
+ service.management;version="0.0.1.SNAPSHOT";uses:="org.openwms.common
+ .service"
+Bundle-Vendor: openwms.org
+Implementation-Title: org.openwms.common.service.api
+Implementation-Version: 0.0.1.SNAPSHOT
+Bundle-Version: 0.0.1.SNAPSHOT
+Tool: Bundlor 1.0.0.M6
+Bundle-Name: org.openwms.common.service.api
+Bundle-ManifestVersion: 2
+Bundle-SymbolicName: org.openwms.common.service.api
+Import-Package: org.openwms.common.domain;version="[0.0.1.SNAPSHOT,0.0
+ .1.SNAPSHOT]",org.openwms.common.domain.values;version="[0.0.1.SNAPSH
+ OT,0.0.1.SNAPSHOT]",org.openwms.common.util;version="[0.0.1.SNAPSHOT,
+ 0.0.1.SNAPSHOT]"
+
