@@ -70,8 +70,8 @@
             <artifactId>hsqldb</artifactId>
         </dependency>
         <dependency>
-            <groupId>org.junit</groupId>
-            <artifactId>com.springsource.org.junit</artifactId>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
             <scope>compile</scope>
         </dependency>
         <dependency>

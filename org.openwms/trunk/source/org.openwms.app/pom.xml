@@ -18,6 +18,9 @@
     <artifactId>org.openwms.app</artifactId>
     <packaging>par</packaging>
     <name>${project.artifactId}</name>
+    <properties>
+        <moduleDir>..</moduleDir>
+    </properties>
     <dependencies>
         <dependency>
             <groupId>${project.groupId}</groupId>

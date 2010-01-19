@@ -19,6 +19,7 @@
     <packaging>war</packaging>
     <name>${project.artifactId}</name>
     <properties>
+        <moduleDir>..</moduleDir>
         <packed.app>${project.groupId}.client.flex.app-${project.version}</packed.app>
     </properties>
     <build>
