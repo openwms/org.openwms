@@ -1,18 +1,28 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
-  <modelVersion>4.0.0</modelVersion>
-  <groupId>org.openwms</groupId>
-  <artifactId>site</artifactId>
-  <packaging>jar</packaging>
-  <version>1.0-SNAPSHOT</version>
-  <name>site</name>
-  <url>http://maven.apache.org</url>
-  <dependencies>
-    <dependency>
-      <groupId>junit</groupId>
-      <artifactId>junit</artifactId>
-      <version>3.8.1</version>
-      <scope>test</scope>
-    </dependency>
-  </dependencies>
+    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <groupId>org.openwms</groupId>
+    <artifactId>site</artifactId>
+    <version>0.0.1-SNAPSHOT</version>
+    <packaging>pom</packaging>
+    <url>http://www.openwms.org</url>
+    <distributionManagement>
+        <site>
+            <id>${distribution.serverId}</id>
+            <name>OpenWMS User Documentation</name>
+            <url>scp://${distribution.serverUrl.rootPath}</url>
+        </site>
+    </distributionManagement>
+    <pluginRepositories>
+        <pluginRepository>
+            <id>org.openwms.release</id>
+            <url>http://openwms2005.sourceforge.net/repo/releases</url>
+        </pluginRepository>
+    </pluginRepositories>
+    <repositories>
+        <repository>
+            <id>org.openwms.release</id>
+            <url>http://openwms2005.sourceforge.net/repo/releases</url>
+        </repository>
+    </repositories>
 </project>
