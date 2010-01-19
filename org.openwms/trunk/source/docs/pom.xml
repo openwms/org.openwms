@@ -1,23 +1,31 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd" xmlns="http://maven.apache.org/POM/4.0.0"
-    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
-  <modelVersion>4.0.0</modelVersion>
-  <parent>
-    <artifactId>org.openwms</artifactId>
-    <groupId>org.openwms</groupId>
-    <version>0.0.1-SNAPSHOT</version>
-  </parent>
-  <groupId>org.openwms</groupId>
-  <artifactId>docs</artifactId>
-  <version>1.0-SNAPSHOT</version>
-  <name>docs</name>
-  <url>http://maven.apache.org</url>
-  <dependencies>
-    <dependency>
-      <groupId>junit</groupId>
-      <artifactId>junit</artifactId>
-      <version>3.8.1</version>
-      <scope>test</scope>
-    </dependency>
-  </dependencies>
+<!--
+/*
+ * OpenWMS, the Open Warehouse Management System
+ * 
+ * Distributable under LGPL license.
+ * See terms of license at gnu.org.
+ */
+-->
+<project xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd"
+    xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <artifactId>org.openwms</artifactId>
+        <groupId>org.openwms</groupId>
+        <version>0.0.1-SNAPSHOT</version>
+    </parent>
+    <artifactId>docs</artifactId>
+    <packaging>pom</packaging>
+    <properties>
+        <moduleDir>..</moduleDir>
+    </properties>
+
+    <distributionManagement>
+        <site>
+            <id>${distribution.serverId}</id>
+            <name>OpenWMS User Documentation</name>
+            <url>scp://${distribution.serverUrl.docsPath}</url>
+        </site>
+    </distributionManagement>
 </project>
