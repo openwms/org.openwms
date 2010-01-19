@@ -16,6 +16,7 @@
         <version>0.0.1-SNAPSHOT</version>
     </parent>
     <artifactId>docs</artifactId>
+    <name>${project.artifactId}</name>
     <packaging>pom</packaging>
     <properties>
         <moduleDir>..</moduleDir>
