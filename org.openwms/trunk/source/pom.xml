@@ -1,12 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!--
-/*
- * OpenWMS, the Open Warehouse Management System
- * 
- * Distributable under LGPL license.
- * See terms of license at gnu.org.
- */
---><project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+    <!--
+        /* * OpenWMS, the Open Warehouse Management System * * Distributable under LGPL license. * See terms of license
+        at gnu.org. */
+    -->
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <groupId>org.openwms</groupId>
     <artifactId>org.openwms</artifactId>
@@ -17,10 +15,10 @@
     <url>http://www.openwms.org</url>
     <inceptionYear>2005</inceptionYear>
 
-	<issueManagement>
-		<system>sourceforge</system>
-		<url>http://sourceforge.net/tracker/?group_id=150387</url>
-	</issueManagement>
+    <issueManagement>
+        <system>sourceforge</system>
+        <url>http://sourceforge.net/tracker/?group_id=150387</url>
+    </issueManagement>
 
     <licenses>
         <license>
@@ -31,16 +29,24 @@
         </license>
     </licenses>
 
+    <distributionManagement>
+        <site>
+            <id>${distribution.serverId}</id>
+            <name>OpenWMS WebSite</name>
+            <url>scp://${distribution.serverUrl.sourcePath}</url>
+        </site>
+    </distributionManagement>
+
     <scm>
-        <connection>scm:svn:http://openwms2005.svn.sourceforge.net/svnroot/openwms2005/OpenWMS-common/trunk</connection>
-        <developerConnection>scm:svn:https://openwms2005.svn.sourceforge.net/svnroot/openwms2005/OpenWMS-common/trunk</developerConnection>
+        <connection>scm:svn:http://openwms2005.svn.sourceforge.net/svnroot/openwms2005/org.openwms/trunk/source</connection>
+        <developerConnection>scm:svn:https://openwms2005.svn.sourceforge.net/svnroot/openwms2005/org.openwms/trunk/source</developerConnection>
         <tag>HEAD</tag>
-        <url>http://openwms2005.svn.sourceforge.net/viewvc/openwms2005/OpenWMS-common/trunk/</url>
+        <url>http://openwms2005.svn.sourceforge.net/viewvc/openwms2005/org.openwms/trunk/source</url>
     </scm>
 
     <organization>
-		<name>SourceForge</name>
-		<url>http://sourceforge.net</url>
+        <name>SourceForge</name>
+        <url>http://sourceforge.net</url>
     </organization>
 
     <developers>
@@ -82,34 +88,34 @@
         </developer>
     </developers>
 
-	<mailingLists>
-		<mailingList>
-			<name>OpenWMS Public Mailing list</name>
-			<subscribe>
+    <mailingLists>
+        <mailingList>
+            <name>OpenWMS Public Mailing list</name>
+            <subscribe>
 				http://lists.sourceforge.net/lists/listinfo/openwms2005-public
 			</subscribe>
-			<unsubscribe>
+            <unsubscribe>
 				http://lists.sourceforge.net/lists/listinfo/openwms2005-public
 			</unsubscribe>
-			<archive>
+            <archive>
 				http://sourceforge.net/mailarchive/forum.php?forum_name=openwms2005-public
 			</archive>
-			<post>openwms2005-public@lists.sourceforge.net</post>
-		</mailingList>
-		<mailingList>
-			<name>OpenWMS Development Mailing list</name>
-			<subscribe>
+            <post>openwms2005-public@lists.sourceforge.net</post>
+        </mailingList>
+        <mailingList>
+            <name>OpenWMS Development Mailing list</name>
+            <subscribe>
 				http://lists.sourceforge.net/lists/listinfo/openwms2005-development
 			</subscribe>
-			<unsubscribe>
+            <unsubscribe>
 				http://lists.sourceforge.net/lists/listinfo/openwms2005-development
 			</unsubscribe>
-			<archive>
+            <archive>
 				http://sourceforge.net/mailarchive/forum.php?forum_name=openwms2005-development
 			</archive>
-			<post>openwms2005-development@lists.sourceforge.net</post>
-		</mailingList>
-	</mailingLists>
+            <post>openwms2005-development@lists.sourceforge.net</post>
+        </mailingList>
+    </mailingLists>
 
     <ciManagement>
         <system>Hudson</system>
@@ -210,7 +216,7 @@
     </profiles>
 
     <properties>
-		<moduleDir>.</moduleDir>
+        <moduleDir>.</moduleDir>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.jdkVersion>1.6</project.jdkVersion>
         <spring.version>2.5.6</spring.version>
@@ -223,21 +229,15 @@
 
     <modules>
         <module>org.openwms.common.domain</module>
-<!-- 
-        <module>org.openwms.common.infrastructure.postgres</module>
-        <module>org.openwms.common.domain.as</module>
-        <module>org.openwms.common.integration</module>
-        <module>org.openwms.common.integration.eclipselink</module>
-        <module>org.openwms.common.integration.jpa</module>
-        <module>org.openwms.common.service.api</module>
-        <module>org.openwms.common.service.spring</module>
-        <module>org.openwms.tms.domain</module>
-        <module>org.openwms.client.flex.app</module>
-        <module>org.openwms.client.flex.wrapper</module>
-        <module>org.openwms.app</module>
- -->
-    <module>docs</module>
-  </modules>
+        
+            <module>org.openwms.common.infrastructure.postgres</module> <module>org.openwms.common.domain.as</module>
+            <module>org.openwms.common.integration</module> <module>org.openwms.common.integration.eclipselink</module>
+            <module>org.openwms.common.integration.jpa</module> <module>org.openwms.common.service.api</module>
+            <module>org.openwms.common.service.spring</module> <module>org.openwms.tms.domain</module>
+            <module>org.openwms.client.flex.app</module> <module>org.openwms.client.flex.wrapper</module>
+            <module>org.openwms.app</module>
+                <module>docs</module>
+    </modules>
 
     <build>
 
@@ -342,6 +342,22 @@
                     </descriptorRefs>
                 </configuration>
             </plugin>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-install-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>install</goal>
+                        </goals>
+                        <configuration>
+                            <createChecksum>true</createChecksum>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+
         </plugins>
     </build>
 
@@ -364,17 +380,16 @@
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-jxr-plugin</artifactId>
                 <configuration>
-                    <linkJavadoc>true</linkJavadoc>
-                    <aggregate>true</aggregate>
-                    <javadocDir>${project.name}/apidocs</javadocDir>
+                    <!--
+                        <linkJavadoc>true</linkJavadoc> <aggregate>true</aggregate>
+                        <javadocDir>${project.name}/apidocs</javadocDir>
+                    -->
                 </configuration>
             </plugin>
-
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-changelog-plugin</artifactId>
-            </plugin>
-
+            <!--
+                <plugin> <groupId>org.apache.maven.plugins</groupId> <artifactId>maven-changelog-plugin</artifactId>
+                </plugin>
+            -->
             <plugin>
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>taglist-maven-plugin</artifactId>
@@ -656,13 +671,18 @@
                 <version>4.7.0</version>
                 <scope>test</scope>
             </dependency>
+            <dependency>
+                <groupId>junit</groupId>
+                <artifactId>junit</artifactId>
+                <version>4.7</version>
+            </dependency>
         </dependencies>
     </dependencyManagement>
     <dependencies>
         <dependency>
-            <groupId>org.junit</groupId>
-            <artifactId>com.springsource.org.junit</artifactId>
-            <version>4.7.0</version>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>4.7</version>
             <scope>test</scope>
         </dependency>
     </dependencies>

@@ -19,6 +19,7 @@
     <packaging>swf</packaging>
     <name>${project.artifactId}</name>
     <properties>
+        <moduleDir>..</moduleDir>
         <template.version>2.0.0</template.version>
         <flex.version>3.2.0.3958</flex.version>
     </properties>

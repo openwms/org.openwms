@@ -18,6 +18,9 @@
     <artifactId>org.openwms.common.service.api</artifactId>
     <packaging>jar</packaging>
     <name>${project.artifactId}</name>
+    <properties>
+        <moduleDir>..</moduleDir>
+    </properties>
     <build>
         <plugins>
             <plugin>
