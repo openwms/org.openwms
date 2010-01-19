@@ -1,8 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
-    <!--
-        /* * OpenWMS, the Open Warehouse Management System * * Distributable under LGPL license. * See terms of license
-        at gnu.org. */
-    -->
+<!--
+/*
+ * OpenWMS, the Open Warehouse Management System
+ * 
+ * Distributable under LGPL license.
+ * See terms of license at gnu.org.
+ */
+-->
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     <modelVersion>4.0.0</modelVersion>
@@ -190,7 +194,6 @@
                     <name>SpringSource Enterprise Bundle Repository - SpringSource Bundle Milestones</name>
                     <url>http://repository.springsource.com/maven/bundles/milestone</url>
                 </repository>
-
                 <repository>
                     <id>com.springsource.repository.libraries.release</id>
                     <name>SpringSource Enterprise Bundle Repository - SpringSource Library Releases</name>
@@ -229,14 +232,17 @@
 
     <modules>
         <module>org.openwms.common.domain</module>
-        
-            <module>org.openwms.common.infrastructure.postgres</module> <module>org.openwms.common.domain.as</module>
-            <module>org.openwms.common.integration</module> <module>org.openwms.common.integration.eclipselink</module>
-            <module>org.openwms.common.integration.jpa</module> <module>org.openwms.common.service.api</module>
-            <module>org.openwms.common.service.spring</module> <module>org.openwms.tms.domain</module>
-            <module>org.openwms.client.flex.app</module> <module>org.openwms.client.flex.wrapper</module>
-            <module>org.openwms.app</module>
-                <module>docs</module>
+        <module>org.openwms.common.infrastructure.postgres</module>
+        <module>org.openwms.common.domain.as</module>
+        <module>org.openwms.common.integration</module>
+        <module>org.openwms.common.integration.eclipselink</module>
+        <module>org.openwms.common.integration.jpa</module>
+        <module>org.openwms.common.service.api</module>
+        <module>org.openwms.common.service.spring</module>
+        <module>org.openwms.tms.domain</module>
+        <module>org.openwms.client.flex.app</module>
+        <module>org.openwms.client.flex.wrapper</module>
+        <module>org.openwms.app</module>
     </modules>
 
     <build>
@@ -678,6 +684,7 @@
             </dependency>
         </dependencies>
     </dependencyManagement>
+
     <dependencies>
         <dependency>
             <groupId>junit</groupId>
