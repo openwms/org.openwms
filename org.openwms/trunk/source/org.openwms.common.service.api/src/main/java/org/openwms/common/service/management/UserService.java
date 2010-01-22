@@ -11,7 +11,6 @@ import java.io.Serializable;
 import org.openwms.common.service.EntityService;
 
 /**
- * 
  * A UserService.
  * 
  * @author <a href="mailto:openwms@googlemail.com">Heiko Scherrer</a>
@@ -19,32 +18,44 @@ import org.openwms.common.service.EntityService;
  */
 public interface UserService<T extends Serializable> extends EntityService<T> {
 
-	boolean uploadImageFile(String username, byte[] image);
+    /**
+     * Call this method to store an image of an user.
+     * 
+     * @param username
+     *            - Username of the User
+     * @param image
+     *            - Image as byte[]
+     * @return - true, if operation successful - false, if not successful
+     */
+    boolean uploadImageFile(String username, byte[] image);
 
-	/**
-	 * 
-	 * Return an transient user entity class, serving as a template
-	 * 
-	 * @param username
-	 * @return
-	 */
-	T getTemplate(String username);
+    /**
+     * 
+     * Return an transient User entity class, serving as a template
+     * 
+     * @param username
+     *            - Username of the User
+     * @return - An empty template object of an User entity
+     */
+    T getTemplate(String username);
 
-	/**
-	 * 
-	 * Save the given user entity class in the database, persist the user when it is transient.
-	 * 
-	 * @param user
-	 * @return
-	 */
-	T save(T user);
+    /**
+     * 
+     * Save the given User entity class or persist it when it is transient.
+     * 
+     * @param user
+     *            - User entity instance
+     * @return - Saved User entity instance
+     */
+    T save(T user);
 
-	/**
-	 * 
-	 * Delete the user entity class from the database.
-	 * 
-	 * @param user
-	 */
-	void remove(T user);
+    /**
+     * 
+     * Remove the User entity from the persistence.
+     * 
+     * @param user
+     *            - User entity instance
+     */
+    void remove(T user);
 
 }

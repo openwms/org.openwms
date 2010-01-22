@@ -7,8 +7,11 @@
 package org.openwms.common.service.exception;
 
 /**
- * 
  * A ServiceException.
+ * <p>
+ * Is used as an application exception thrown by the service layer. This type of
+ * exception is NOT used as an system exception.
+ * </p>
  * 
  * @author <a href="mailto:openwms@googlemail.com">Heiko Scherrer</a>
  * @version $Revision: 877 $
@@ -16,38 +19,42 @@ package org.openwms.common.service.exception;
 @SuppressWarnings("serial")
 public class ServiceException extends RuntimeException {
 
-	/**
-	 * Create a new ServiceException.
-	 * 
-	 */
-	public ServiceException() {}
+    /**
+     * Create a new ServiceException.
+     * 
+     */
+    public ServiceException() {}
 
-	/**
-	 * Create a new ServiceException.
-	 * 
-	 * @param arg0
-	 */
-	public ServiceException(String arg0) {
-		super(arg0);
-	}
+    /**
+     * Create a new ServiceException.
+     * 
+     * @param arg0
+     *            - Message text
+     */
+    public ServiceException(String arg0) {
+        super(arg0);
+    }
 
-	/**
-	 * Create a new ServiceException.
-	 * 
-	 * @param arg0
-	 */
-	public ServiceException(Throwable arg0) {
-		super(arg0);
-	}
+    /**
+     * Create a new ServiceException.
+     * 
+     * @param arg0
+     *            - Cause exception
+     */
+    public ServiceException(Throwable arg0) {
+        super(arg0);
+    }
 
-	/**
-	 * Create a new ServiceException.
-	 * 
-	 * @param arg0
-	 * @param arg1
-	 */
-	public ServiceException(String arg0, Throwable arg1) {
-		super(arg0, arg1);
-	}
+    /**
+     * Create a new ServiceException.
+     * 
+     * @param arg0
+     *            - Message text
+     * @param arg1
+     *            - Cause exception
+     */
+    public ServiceException(String arg0, Throwable arg1) {
+        super(arg0, arg1);
+    }
 
 }

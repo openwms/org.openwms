@@ -12,6 +12,7 @@ package org.openwms.common.service.spring.exception;
  * @author <a href="mailto:openwms@googlemail.com">Heiko Scherrer</a>
  * @version $Revision: 314 $
  */
+// FIXME [scherrer] : Remove this class from here
 @SuppressWarnings("serial")
 public class ServiceException extends RuntimeException {
 
@@ -27,7 +28,7 @@ public class ServiceException extends RuntimeException {
      * @param arg0
      */
     public ServiceException(String arg0) {
-	super(arg0);
+        super(arg0);
     }
 
     /**
@@ -36,7 +37,7 @@ public class ServiceException extends RuntimeException {
      * @param arg0
      */
     public ServiceException(Throwable arg0) {
-	super(arg0);
+        super(arg0);
     }
 
     /**
@@ -46,7 +47,7 @@ public class ServiceException extends RuntimeException {
      * @param arg1
      */
     public ServiceException(String arg0, Throwable arg1) {
-	super(arg0, arg1);
+        super(arg0, arg1);
     }
 
 }

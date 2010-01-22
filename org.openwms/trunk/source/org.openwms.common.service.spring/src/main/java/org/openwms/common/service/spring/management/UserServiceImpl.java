@@ -8,6 +8,7 @@ package org.openwms.common.service.spring.management;
 
 import org.openwms.common.domain.system.usermanagement.User;
 import org.openwms.common.domain.system.usermanagement.UserDetails;
+import org.openwms.common.service.exception.ServiceException;
 import org.openwms.common.service.management.UserService;
 import org.openwms.common.service.spring.EntityServiceImpl;
 
@@ -19,54 +20,61 @@ import org.openwms.common.service.spring.EntityServiceImpl;
  */
 public class UserServiceImpl extends EntityServiceImpl<User, Long> implements UserService<User> {
 
-	public boolean uploadImageFile(String username, byte[] image) {
-		try {
-			User user = (User) dao.findByUniqueId(username);
-			System.out.println("ok");
-			if (user != null) {
-				if (user.getUserDetails() == null) {
-					user.setUserDetails(new UserDetails());
-				}
-				user.getUserDetails().setImage(image);
-				dao.save(user);
-			}
-		}
-		catch (Exception e) {
-			// FIXME
-			System.out.println("failure");
-			e.printStackTrace();
-		}
+    /**
+     * {@inheritDoc}
+     */
+    // FIXME [scherrer] : Remove return value, when no user found exception is
+    // thrown.
+    @Override
+    public boolean uploadImageFile(String username, byte[] image) {
+        User user = dao.findByUniqueId(username);
+        if (user.getUserDetails() == null) {
+            user.setUserDetails(new UserDetails());
+        }
+        user.getUserDetails().setImage(image);
+        dao.save(user);
+        return true;
+    }
 
-		return false;
-	}
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public User save(User entity) {
+        if (null == entity) {
+            logger.warn("Calling save with null as argument");
+            throw new ServiceException("The instance of the User to be removed is NULL");
+        }
+        if (entity.isNew()) {
+            addEntity(entity);
+        }
+        return save(User.class, entity);
+    }
 
-	public User save(User entity) {
-		if (null == entity) {
-			logger.warn("Calling save with null as argument");
-			return null;
-		}
-		if (entity.isNew()) {
-			super.addEntity(entity);
-			return super.save(User.class, entity);
-		} else {
-			return super.save(User.class, entity);
-		}
-	}
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void remove(User user) {
+        if (null == user) {
+            logger.warn("Calling remove with null as argument");
+            throw new ServiceException("The instance of the User to be remove is NULL");
+        }
+        if (user.isNew()) {
+            logger.warn("The User instance that shall be removed is not persist yet, no need to remove");
+        } else {
+            user = save(User.class, user);
+            remove(User.class, user);
+        }
+    }
 
-	public void remove(User user) {
-		if (null == user) {
-			logger.warn("Calling remove with null as argument");
-			return;
-		}
-		if (!user.isNew()) {
-			user = super.save(User.class, user);
-			super.remove(User.class, user);
-		}
-	}
-
-	public User getTemplate(String username) {
-		logger.debug("Retrieve a User template object for username:" + username);
-		return new User(username);
-	}
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public User getTemplate(String username) {
+        logger.debug("Retrieve a User template instance for username:" + username);
+        return new User(username);
+    }
 
 }
