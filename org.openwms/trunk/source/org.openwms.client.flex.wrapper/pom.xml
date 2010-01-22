@@ -28,7 +28,7 @@
         <url>https://openwms2005.svn.sourceforge.net/svnroot/openwms2005/org.openwms/trunk/source/org.openwms.client.flex.wrapper</url>
     </scm>
     <build>
-        <sourceDirectory>src/main</sourceDirectory>
+        <sourceDirectory>src/main/java</sourceDirectory>
         <finalName>${project.artifactId}</finalName>
         <plugins>
             <plugin>
