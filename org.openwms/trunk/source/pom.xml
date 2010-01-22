@@ -236,13 +236,13 @@
     <properties>
         <moduleDir>.</moduleDir>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <project.jdkVersion>1.6</project.jdkVersion>
+        <jdkVersion>1.6</jdkVersion>
         <spring.version>2.5.6</spring.version>
         <hibernate.version>3.2.6.GA</hibernate.version>
         <maven.test.failure.ignore>true</maven.test.failure.ignore>
         <granite.version>2.0.0.GA</granite.version>
-        <maven.compile.targetLevel>${project.jdkVersion}</maven.compile.targetLevel>
-        <maven.compile.sourceLevel>${project.jdkVersion}</maven.compile.sourceLevel>
+        <maven.compile.targetLevel>${jdkVersion}</maven.compile.targetLevel>
+        <maven.compile.sourceLevel>${jdkVersion}</maven.compile.sourceLevel>
     </properties>
 
     <modules>
@@ -316,10 +316,10 @@
                     <skipTests>false</skipTests>
                     <includes>
                         <include>**/*Test.java</include>
-                        <include>**/*Tests.java</include>
                     </includes>
                     <excludes>
                         <exclude>**/Abstract*.java</exclude>
+                        <exclude>**/*Tests.java</exclude>
                     </excludes>
                 </configuration>
             </plugin>

@@ -17,7 +17,6 @@ import org.openwms.common.domain.TransportUnit;
 import org.openwms.common.domain.TransportUnitType;
 import org.openwms.common.domain.values.Barcode;
 import org.openwms.common.integration.GenericDao;
-import org.openwms.common.integration.TransportOrderDao;
 import org.openwms.common.service.TransportService;
 import org.openwms.common.service.spring.exception.ServiceException;
 import org.springframework.beans.factory.annotation.Required;
@@ -36,7 +35,6 @@ public class TransportServiceImpl implements TransportService {
 	protected Logger logger = Logger.getLogger(this.getClass());
 	private GenericDao<TransportUnit, Long> transportUnitDao;
 	private GenericDao<Location, Long> locationDao;
-	private TransportOrderDao transportOrderDao;
 
 	@Required
 	public void setLocationDao(GenericDao<Location, Long> locationDao) {
@@ -46,11 +44,6 @@ public class TransportServiceImpl implements TransportService {
 	@Required
 	public void setTransportUnitDao(GenericDao<TransportUnit, Long> transportUnitDao) {
 		this.transportUnitDao = transportUnitDao;
-	}
-
-	@Required
-	public void setTransportOrderDao(TransportOrderDao transportOrderDao) {
-		this.transportOrderDao = transportOrderDao;
 	}
 
 	/**
@@ -104,6 +97,6 @@ public class TransportServiceImpl implements TransportService {
 	 */
 	@Override
 	public int getTransportsToLocationGroup(LocationGroup locationGroup) {
-		return transportOrderDao.getNumberOfTransportOrders(locationGroup);
+		return 0;
 	}
 }
