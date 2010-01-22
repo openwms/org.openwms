@@ -1,12 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!--
-/*
- * OpenWMS, the Open Warehouse Management System
- * 
- * Distributable under LGPL license.
- * See terms of license at gnu.org.
- */
--->
+    <!--
+        /* * OpenWMS, the Open Warehouse Management System * * Distributable under LGPL license. * See terms of license
+        at gnu.org. */
+    -->
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     <modelVersion>4.0.0</modelVersion>
@@ -37,30 +33,27 @@
         <site>
             <id>${distribution.serverId}</id>
             <name>OpenWMS WebSite</name>
-            <url>scp://${distribution.serverUrl.sourcePath}</url>
+            <url>${distribution.serverProtocol}${distribution.serverUrl.sourcePath}</url>
         </site>
     </distributionManagement>
 
     <scm>
         <connection>scm:svn:http://openwms2005.svn.sourceforge.net/svnroot/openwms2005/org.openwms/trunk/source</connection>
         <developerConnection>scm:svn:https://openwms2005.svn.sourceforge.net/svnroot/openwms2005/org.openwms/trunk/source</developerConnection>
-        <tag>HEAD</tag>
         <url>http://openwms2005.svn.sourceforge.net/viewvc/openwms2005/org.openwms/trunk/source</url>
     </scm>
 
     <organization>
-        <name>SourceForge</name>
-        <url>http://sourceforge.net</url>
+        <name>openwms.org</name>
+        <url>openwms.org</url>
     </organization>
 
     <developers>
         <developer>
             <id>scherrer</id>
             <name>Heiko Scherrer</name>
-            <email>openwms@googlemail.com</email>
+            <email>scherrer@users.sourceforge.net</email>
             <url>https://sourceforge.net/users/scherrer</url>
-            <organization>openwms.org</organization>
-            <organizationUrl>http://www.openwms.org</organizationUrl>
             <timezone>+1</timezone>
             <roles>
                 <role>project founder</role>
@@ -175,6 +168,28 @@
             </pluginRepositories>
             <repositories>
                 <repository>
+                    <id>org.openwms.releases</id>
+                    <name>OpenWMS Sourceforge Maven Repository Releases</name>
+                    <url>http://openwms2005.sourceforge.net/repo/releases</url>
+                    <releases>
+                        <enabled>true</enabled>
+                    </releases>
+                    <snapshots>
+                        <enabled>false</enabled>
+                    </snapshots>
+                </repository>
+                <repository>
+                    <id>org.openwms.snapshot</id>
+                    <name>OpenWMS Sourceforge Maven Repository Snapshots</name>
+                    <url>http://openwms2005.sourceforge.net/repo/snapshots</url>
+                    <releases>
+                        <enabled>false</enabled>
+                    </releases>
+                    <snapshots>
+                        <enabled>true</enabled>
+                    </snapshots>
+                </repository>
+                <repository>
                     <id>com.springsource.repository.bundles.snapshot</id>
                     <name>SpringSource Enterprise Bundle Repository - SpringSource Bundle Snapshot</name>
                     <url>http://repository.springsource.com/maven/bundles/snapshot</url>
@@ -271,6 +286,18 @@
 
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-source-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>jar</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-jar-plugin</artifactId>
                 <configuration>
                     <finalName>${project.artifactId}</finalName>
@@ -363,11 +390,12 @@
                     </execution>
                 </executions>
             </plugin>
-
         </plugins>
+
     </build>
 
     <reporting>
+
         <plugins>
             <plugin>
                 <artifactId>maven-javadoc-plugin</artifactId>
@@ -386,16 +414,18 @@
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-jxr-plugin</artifactId>
                 <configuration>
-                    <!--
-                        <linkJavadoc>true</linkJavadoc> <aggregate>true</aggregate>
-                        <javadocDir>${project.name}/apidocs</javadocDir>
-                    -->
+                    <aggregate>true</aggregate>
+                    <linkJavadoc>true</linkJavadoc>
+                    <aggregate>true</aggregate>
+                    <javadocDir>${project.name}/apidocs</javadocDir>
                 </configuration>
             </plugin>
-            <!--
-                <plugin> <groupId>org.apache.maven.plugins</groupId> <artifactId>maven-changelog-plugin</artifactId>
-                </plugin>
-            -->
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-changelog-plugin</artifactId>
+            </plugin>
+
             <plugin>
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>taglist-maven-plugin</artifactId>
@@ -405,15 +435,28 @@
                     <tagListOptions>
                         <tagClasses>
                             <tagClass>
-                                <displayName>My Todos</displayName>
+                                <displayName>Important Tags</displayName>
+                                <tags>
+                                    <tag>
+                                        <matchString>FIXME</matchString>
+                                        <matchType>ignoreCase</matchType>
+                                    </tag>
+                                </tags>
+                            </tagClass>
+                            <tagClass>
+                                <displayName>Just things to do</displayName>
                                 <tags>
                                     <tag>
                                         <matchString>todo</matchString>
                                         <matchType>ignoreCase</matchType>
                                     </tag>
                                     <tag>
-                                        <matchString>FIXME</matchString>
-                                        <matchType>exact</matchType>
+                                        <matchString>@todo</matchString>
+                                        <matchType>ignoreCase</matchType>
+                                    </tag>
+                                    <tag>
+                                        <matchString>XXX</matchString>
+                                        <matchType>ignoreCase</matchType>
                                     </tag>
                                 </tags>
                             </tagClass>
@@ -486,6 +529,31 @@
                     <srcHtml>xref/</srcHtml>
                     <srcHtmlType>JXR</srcHtmlType>
                 </configuration>
+            </plugin>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-project-info-reports-plugin</artifactId>
+                <version>2.1</version>
+                <reportSets>
+                    <reportSet>
+                        <inherited>true</inherited>
+                        <reports>
+                            <report>scm</report>
+                            <report>plugin-management</report>
+                            <report>plugins</report>
+                            <report>summary</report>
+                        </reports>
+                    </reportSet>
+                    <reportSet>
+                        <inherited>true</inherited>
+                        <reports>
+                            <report>dependencies</report>
+                            <report>dependency-convergence</report>
+                            <report>dependency-management</report>
+                        </reports>
+                    </reportSet>
+                </reportSets>
             </plugin>
 
             <plugin>
@@ -623,6 +691,11 @@
             <dependency>
                 <groupId>${project.groupId}</groupId>
                 <artifactId>org.openwms.tms.domain</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>${project.groupId}</groupId>
+                <artifactId>org.openwms.tms.integration</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <dependency>
