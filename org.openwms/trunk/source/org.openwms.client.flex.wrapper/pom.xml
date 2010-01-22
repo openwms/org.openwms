@@ -15,7 +15,7 @@
         <artifactId>org.openwms</artifactId>
         <version>0.0.1-SNAPSHOT</version>
     </parent>
-    <artifactId>org.openwms.zz.client.flex.wrapper</artifactId>
+    <artifactId>org.openwms.client.flex.wrapper</artifactId>
     <packaging>war</packaging>
     <name>${project.artifactId}</name>
     <properties>

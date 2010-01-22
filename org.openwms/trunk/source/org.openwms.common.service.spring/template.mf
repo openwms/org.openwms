@@ -13,7 +13,6 @@ Import-Template:
  org.openwms.common.integration.*;version="[0.0.1.SNAPSHOT,0.0.1.SNAPSHOT]",
  org.openwms.common.service.*;version="[0.0.1.SNAPSHOT,0.0.1.SNAPSHOT]",
  org.openwms.common.domain.*;version="[0.0.1.SNAPSHOT,0.0.1.SNAPSHOT]",
- org.openwms.tms.domain.*;version="[0.0.1.SNAPSHOT,0.0.1.SNAPSHOT]",
  org.openwms.common.util.*;version="[0.0.1.SNAPSHOT,0.0.1.SNAPSHOT]"
 Import-Package: 
  org.springframework.context.weaving;version="[3.0, 3.1)",

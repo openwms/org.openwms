@@ -27,7 +27,8 @@ Import-Package: javax.annotation,javax.persistence;version="[1.0.0, 1.
  ain.values;version="[0.0.1.SNAPSHOT, 0.0.1.SNAPSHOT]",org.openwms.com
  mon.integration;version="[0.0.1.SNAPSHOT, 0.0.1.SNAPSHOT]",org.openwm
  s.common.integration.system.usermanagement;version="[0.0.1.SNAPSHOT, 
- 0.0.1.SNAPSHOT]",org.springframework.beans,org.springframework.con
+ 0.0.1.SNAPSHOT]",org.openwms.tms.domain.order;version="[0.0.1.SNAPSHO
+ T, 0.0.1.SNAPSHOT]",org.springframework.beans,org.springframework.con
  text,org.springframework.context.weaving;version="[3.0, 3.1)",org.spr
  ingframework.core.io,org.springframework.core.io.support,org.springfr
  amework.dao,org.springframework.dao.annotation,org.springframework.da

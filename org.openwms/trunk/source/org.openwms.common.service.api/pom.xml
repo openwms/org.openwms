@@ -52,9 +52,5 @@
             <groupId>${project.groupId}</groupId>
             <artifactId>org.openwms.common.domain</artifactId>
         </dependency>
-        <dependency>
-            <groupId>${project.groupId}</groupId>
-            <artifactId>org.openwms.tms.domain</artifactId>
-        </dependency>
     </dependencies>
 </project>

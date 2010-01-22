@@ -29,11 +29,6 @@
         </dependency>
         <dependency>
             <groupId>${project.groupId}</groupId>
-            <artifactId>org.openwms.tms.domain</artifactId>
-            <version>${project.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>${project.groupId}</groupId>
             <artifactId>org.openwms.common.integration</artifactId>
             <version>${project.version}</version>
         </dependency>
@@ -59,7 +54,7 @@
         </dependency>
         <dependency>
             <groupId>${project.groupId}</groupId>
-            <artifactId>org.openwms.zz.client.flex.wrapper</artifactId>
+            <artifactId>org.openwms.client.flex.wrapper</artifactId>
             <version>${project.version}</version>
             <type>war</type>
         </dependency>

@@ -97,6 +97,10 @@
                     <includeJavaClasses>
                         <class>org.openwms.common.domain.*</class>
                     </includeJavaClasses>
+                            <sourcePaths>
+                                <sourcePath>${project.basedir}/src/main/flex/</sourcePath>
+                                <sourcePath>${project.build.directory}/generated-sources/flexmojos/</sourcePath>
+                            </sourcePaths>
                 </configuration>
             </plugin>
         </plugins>

@@ -14,7 +14,6 @@
 
     <osgi:reference id="locationGroupService" interface="org.openwms.common.service.LocationGroupService"/>
     <osgi:reference id="locationService" interface="org.openwms.common.service.LocationService"/>
-    <osgi:reference id="transportService" interface="org.openwms.common.service.TransportService"/>
     <osgi:reference id="userService" interface="org.openwms.common.service.management.UserService"/>
 
 </beans>

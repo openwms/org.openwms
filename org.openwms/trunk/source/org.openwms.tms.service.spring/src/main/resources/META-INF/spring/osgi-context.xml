@@ -18,12 +18,14 @@
     <osgi:reference id="locationDao" interface="org.openwms.common.integration.LocationDao"/>
     <osgi:reference id="locationGroupDao" interface="org.openwms.common.integration.LocationGroupDao"/>
     <osgi:reference id="transportUnitDao" interface="org.openwms.common.integration.TransportUnitDao"/>
+    <osgi:reference id="transportOrderDao" interface="org.openwms.common.integration.TransportOrderDao"/>
     <osgi:reference id="userDao" interface="org.openwms.common.integration.system.usermanagement.UserDao"/>
 	
     <!-- exports -->
 	<osgi:service ref="entityService" interface="org.openwms.common.service.EntityService"/>
     <osgi:service ref="locationGroupService" interface="org.openwms.common.service.LocationGroupService"/>
     <osgi:service ref="locationService" interface="org.openwms.common.service.LocationService"/>
+    <osgi:service ref="transportService" interface="org.openwms.common.service.TransportService"/>
     <osgi:service ref="userService" interface="org.openwms.common.service.management.UserService"/>
 
 </beans>

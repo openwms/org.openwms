@@ -68,6 +68,10 @@
         <property name="entityManagerFactory" ref="entityManagerFactory" />
     </bean>
     
+    <bean id="transportOrderDao" class="org.openwms.common.integration.jpa.TransportOrderDaoImpl">
+        <property name="entityManagerFactory" ref="entityManagerFactory" />
+    </bean>
+
     <bean id="starter" class="org.openwms.common.integration.jpa.Starter"></bean>
 
     <bean id="userDao" class="org.openwms.common.integration.jpa.UserDaoImpl">
