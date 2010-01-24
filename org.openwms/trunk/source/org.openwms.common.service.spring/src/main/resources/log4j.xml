@@ -8,15 +8,7 @@
  */
 -->
 <!DOCTYPE log4j:configuration SYSTEM "log4j.dtd">
-
-<!-- ===================================================================== -->
-<!--                                                                       -->
-<!--  Log4j Configuration                                                  -->
-<!--                                                                       -->
-<!-- ===================================================================== -->
-
 <!-- $Id: log4j.xml 24 2008-06-07 22:53:07Z scherrer $ -->
-
 <log4j:configuration xmlns:log4j="http://jakarta.apache.org/log4j/" debug="false">
 
 	<appender name="STDOUT" class="org.apache.log4j.ConsoleAppender">
@@ -26,27 +18,10 @@
 		</layout>
 	</appender>
 
-	<!-- ================ -->
-	<!-- Limit categories -->
-	<!-- ================ -->
 	<category name="org.openwms">
 		<priority value="DEBUG" />
 	</category>
 	
-	<category name="org.granite.messaging">
-		<priority value="ERROR" />
-	</category>
-
-	<category name="org.springframework.orm.jpa.support">
-		<priority value="ERROR" />
-	</category>
-	
-    <category name="org.hibernate">
-        <priority value="WARN" />
-    </category>
-
-	<!-- Limit the org.apache category to INFO as its DEBUG is verbose -->
-
 	<root>
 		<priority value="ERROR" />
 		<appender-ref ref="STDOUT" />
