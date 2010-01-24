@@ -23,36 +23,36 @@ import org.springframework.stereotype.Repository;
 @Repository
 public class UserDaoImpl extends AbstractGenericJpaDao<User, Long> implements UserDao {
 
-	@PostConstruct
-	public void init() {
-		logger.debug("UserDao bean initialized");
-	}
+    @PostConstruct
+    public void init() {
+        logger.debug("UserDao bean initialized");
+    }
 
-	/**
-	 * {@inheritDoc}
-	 * 
-	 */
-	@Override
-	protected String getFindAllQuery() {
-		return UserDao.NQ_FIND_ALL;
-	}
+    /**
+     * {@inheritDoc}
+     * 
+     */
+    @Override
+    protected String getFindAllQuery() {
+        return UserDao.NQ_FIND_ALL;
+    }
 
-	/**
-	 * {@inheritDoc}
-	 * 
-	 */
-	@Override
-	protected String getFindByUniqueIdQuery() {
-		return UserDao.NQ_FIND_BY_USERNAME;
-	}
+    /**
+     * {@inheritDoc}
+     * 
+     */
+    @Override
+    protected String getFindByUniqueIdQuery() {
+        return UserDao.NQ_FIND_BY_USERNAME;
+    }
 
-	/**
-	 * {@inheritDoc}
-	 * 
-	 */
-	@Override
-	@SuppressWarnings("unchecked")
-	public List<User> findAll() {
-		return getJpaTemplate().findByNamedQuery(UserDao.NQ_FIND_ALL_ORDERED);
-	}
+    /**
+     * {@inheritDoc}
+     * 
+     */
+    @Override
+    @SuppressWarnings("unchecked")
+    public List<User> findAll() {
+        return getJpaTemplate().findByNamedQuery(UserDao.NQ_FIND_ALL_ORDERED);
+    }
 }
