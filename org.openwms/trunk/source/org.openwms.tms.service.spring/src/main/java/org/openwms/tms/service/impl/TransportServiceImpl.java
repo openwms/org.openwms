@@ -4,7 +4,7 @@
  * Distributable under LGPL license.
  * See terms of license at gnu.org.
  */
-package org.openwms.tms.service;
+package org.openwms.tms.service.impl;
 
 import org.apache.log4j.Logger;
 import org.openwms.common.domain.Location;
