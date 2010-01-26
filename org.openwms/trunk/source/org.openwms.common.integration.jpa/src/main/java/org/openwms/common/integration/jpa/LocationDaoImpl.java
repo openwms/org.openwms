@@ -8,8 +8,6 @@ package org.openwms.common.integration.jpa;
 
 import java.util.List;
 
-import javax.annotation.PostConstruct;
-
 import org.openwms.common.domain.Location;
 import org.openwms.common.integration.LocationDao;
 import org.springframework.transaction.annotation.Transactional;
@@ -22,33 +20,28 @@ import org.springframework.transaction.annotation.Transactional;
  */
 public class LocationDaoImpl extends AbstractGenericJpaDao<Location, Long> implements LocationDao {
 
-	@PostConstruct
-	public void init() {
-		logger.debug("LocationDao bean initialized");
-	}
+    @Override
+    protected String getFindAllQuery() {
+        return Location.NQ_FIND_ALL;
+    }
 
-	@Override
-	protected String getFindAllQuery() {
-		return LocationDao.NQ_FIND_ALL;
-	}
+    @Override
+    protected String getFindByUniqueIdQuery() {
+        return Location.NQ_FIND_BY_UNIQUE_QUERY;
+    }
 
-	@Override
-	protected String getFindByUniqueIdQuery() {
-		return LocationDao.NQ_FIND_BY_UNIQUE_QUERY;
-	}
-
-	@Transactional(readOnly = true)
-	@SuppressWarnings("unchecked")
-	public List<Location> getAllLocations() {
-		logger.debug("getAllLocations in Dao called");
-		List<Location> list = getJpaTemplate().findByNamedQuery(LocationDao.NQ_FIND_ALL_EAGER);
-		for (Location location : list) {
-			location.getLocationType();
-		}
-		for (Location location : list) {
-			logger.debug(location.getDescription());
-		}
-		return list;
-	}
+    @Transactional(readOnly = true)
+    @SuppressWarnings("unchecked")
+    public List<Location> getAllLocations() {
+        logger.debug("getAllLocations in Dao called");
+        List<Location> list = getEm().createNamedQuery(Location.NQ_FIND_ALL_EAGER).getResultList();
+        for (Location location : list) {
+            location.getLocationType();
+        }
+        for (Location location : list) {
+            logger.debug(location.getDescription());
+        }
+        return list;
+    }
 
 }

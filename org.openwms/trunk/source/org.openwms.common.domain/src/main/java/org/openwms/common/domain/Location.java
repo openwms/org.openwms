@@ -33,10 +33,12 @@ import javax.persistence.Version;
 import org.openwms.common.domain.system.Message;
 
 /**
- * This class is used to specify a location. A location could be a storage location in stock as well as a location on
- * the conveyor. Also virtual and error locations should be described by an <code>Location</code> entity.
+ * This class is used to specify a location. A location could be a storage
+ * location in stock as well as a location on the conveyor. Also virtual and
+ * error locations should be described by an <code>Location</code> entity.
  * 
- * <code>Location</code>s could be grouped together to a <code>LocationGroup</code>.
+ * <code>Location</code>s could be grouped together to a
+ * <code>LocationGroup</code>.
  * 
  * @author <a href="mailto:openwms@googlemail.com">Heiko Scherrer</a>
  * @version $Revision$
@@ -44,305 +46,320 @@ import org.openwms.common.domain.system.Message;
 @Entity
 @Table(name = "LOCATION", uniqueConstraints = @UniqueConstraint(columnNames = { "AREA", "AISLE", "X", "Y", "Z" }))
 @NamedQueries( {
-		@NamedQuery(name = "Location.findAll", query = "select l from Location l"),
-		@NamedQuery(name = "Location.findByLocationPK", query = "select l from Location l where l.locationId = ?1"),
-		@NamedQuery(name = "Location.findAllEager", query = "select l from Location l left join fetch l.messages left join fetch l.locationType") })
+        @NamedQuery(name = Location.NQ_FIND_ALL, query = "select l from Location l"),
+        @NamedQuery(name = Location.NQ_FIND_BY_UNIQUE_QUERY, query = "select l from Location l where l.locationId = ?1"),
+        @NamedQuery(name = Location.NQ_FIND_ALL_EAGER, query = "select l from Location l left join fetch l.messages left join fetch l.locationType") })
 public class Location implements Serializable {
 
-	private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
-	/**
-	 * Primary key.
-	 */
-	@Id
-	@Column(name = "ID")
-	@GeneratedValue
-	private Long id;
+    public static final String NQ_FIND_ALL = "Location.findAll";
+    public static final String NQ_FIND_ALL_EAGER = "Location.findAllEager";
+    public static final String NQ_FIND_BY_UNIQUE_QUERY = "Location.findByLocationPK";
 
-	/**
-	 * Unique key.
-	 */
-	@Embedded
-	private LocationPK locationId;
+    /**
+     * Primary key.
+     */
+    @Id
+    @Column(name = "ID")
+    @GeneratedValue
+    private Long id;
 
-	/**
-	 * Describes the <code>Location</code>.
-	 */
-	@Column(name = "DESCRIPTION")
-	private String description;
+    /**
+     * Unique key.
+     */
+    @Embedded
+    private LocationPK locationId;
 
-	/**
-	 * Number of <code>TransportUnit</code>s maximum placed on this <code>Location</code>.
-	 */
-	@Column(name = "NO_MAX_TRANSPORT_UNITS")
-	private short noMaxTransportUnits = 1;
+    /**
+     * Describes the <code>Location</code>.
+     */
+    @Column(name = "DESCRIPTION")
+    private String description;
 
-	/**
-	 * Maximum of weight for this <code>Location</code>.
-	 */
-	@Column(name = "MAXIMUM_WEIGHT")
-	private BigDecimal maximumWeight;
+    /**
+     * Number of <code>TransportUnit</code>s maximum placed on this
+     * <code>Location</code>.
+     */
+    @Column(name = "NO_MAX_TRANSPORT_UNITS")
+    private short noMaxTransportUnits = 1;
 
-	/**
-	 * Timestamp of last change of the <code>TransportUnit</code>. When a <code>TransportUnit</code> is entering or
-	 * leaving this place, the timestamp will be updated. This is necessary to locate old <code>TransportUnit</code>s
-	 * in the stock as well as for inventory calculation.
-	 */
-	@Temporal(TemporalType.TIMESTAMP)
-	@Column(name = "LAST_ACCESS")
-	private Date lastAccess;
+    /**
+     * Maximum of weight for this <code>Location</code>.
+     */
+    @Column(name = "MAXIMUM_WEIGHT")
+    private BigDecimal maximumWeight;
 
-	/**
-	 * Flag to indicate whether <code>TransportUnit</code>s should be counted on this <code>Location</code>.
-	 */
-	@Column(name = "COUNTING_ACTIVE")
-	private Boolean countingActive;
+    /**
+     * Timestamp of last change of the <code>TransportUnit</code>. When a
+     * <code>TransportUnit</code> is entering or leaving this place, the
+     * timestamp will be updated. This is necessary to locate old
+     * <code>TransportUnit</code>s in the stock as well as for inventory
+     * calculation.
+     */
+    @Temporal(TemporalType.TIMESTAMP)
+    @Column(name = "LAST_ACCESS")
+    private Date lastAccess;
 
-	/**
-	 * Reserved for stock check procedure and for inventory control.
-	 */
-	@Column(name = "CHECK_STATE")
-	private String checkState = "--";
+    /**
+     * Flag to indicate whether <code>TransportUnit</code>s should be counted on
+     * this <code>Location</code>.
+     */
+    @Column(name = "COUNTING_ACTIVE")
+    private Boolean countingActive;
 
-	/**
-	 * Shall this <code>Location</code> be integrated in the calculation of <code>TransportUnit</code>s on the
-	 * parent <code>LocationGroup</code>.
-	 * <p>
-	 * true : Location is been included in calculation of <code>TransportUnit</code>s.<br>
-	 * false: Location is not been included in calculation of <code>TransportUnit</code>s.
-	 */
-	@Column(name = "LOCATION_GROUP_COUNTING_ACTIVE")
-	private Boolean locationGroupCountingActive;
+    /**
+     * Reserved for stock check procedure and for inventory control.
+     */
+    @Column(name = "CHECK_STATE")
+    private String checkState = "--";
 
-	/**
-	 * Signals the state of incoming for this <code>Location</code>.
-	 * <p>
-	 * true : <code>Location</code> is available to gather <code>TransportUnit</code>s.<br>
-	 * false: <code>Location</code> is locked, and cannot gather <code>TransportUnit</code>s.
-	 */
-	@Column(name = "INCOMING_ACTIVE")
-	private Boolean incomingActive;
+    /**
+     * Shall this <code>Location</code> be integrated in the calculation of
+     * <code>TransportUnit</code>s on the parent <code>LocationGroup</code>.
+     * <p>
+     * true : Location is been included in calculation of
+     * <code>TransportUnit</code>s.<br>
+     * false: Location is not been included in calculation of
+     * <code>TransportUnit</code>s.
+     */
+    @Column(name = "LOCATION_GROUP_COUNTING_ACTIVE")
+    private Boolean locationGroupCountingActive;
 
-	/**
-	 * Signals the state of outgoing of this <code>Location</code>.
-	 * <p>
-	 * true : <code>Location</code> is enabled for outgoing transports<br>
-	 * false: <code>Location</code> is locked, <code>TransportUnit</code>s can't leave from here.
-	 */
-	@Column(name = "OUTGOING_ACTIVE")
-	private Boolean outgoingActive;
+    /**
+     * Signals the state of incoming for this <code>Location</code>.
+     * <p>
+     * true : <code>Location</code> is available to gather
+     * <code>TransportUnit</code>s.<br>
+     * false: <code>Location</code> is locked, and cannot gather
+     * <code>TransportUnit</code>s.
+     */
+    @Column(name = "INCOMING_ACTIVE")
+    private Boolean incomingActive;
 
-	/**
-	 * The PLC could change the state of an <code>Location</code>. This property stores the last state, received from
-	 * the PLC.
-	 * <p>
-	 * -1: Not defined.<br>
-	 * 0 : No plc error state, everything okay.
-	 */
-	@Column(name = "PLC_STATE")
-	private short plcState = 0;
+    /**
+     * Signals the state of outgoing of this <code>Location</code>.
+     * <p>
+     * true : <code>Location</code> is enabled for outgoing transports<br>
+     * false: <code>Location</code> is locked, <code>TransportUnit</code>s can't
+     * leave from here.
+     */
+    @Column(name = "OUTGOING_ACTIVE")
+    private Boolean outgoingActive;
 
-	/**
-	 * State to lock the <code>Location</code>.
-	 * <p>
-	 * true : This <code>Location</code> will been considered in storage calculation with by an allocator.<br>
-	 * false: This <code>Location</code> will not been considered.
-	 */
-	@Column(name = "CONSIDERED_IN_ALLOCATION")
-	private Boolean consideredInAllocation;
+    /**
+     * The PLC could change the state of an <code>Location</code>. This property
+     * stores the last state, received from the PLC.
+     * <p>
+     * -1: Not defined.<br>
+     * 0 : No plc error state, everything okay.
+     */
+    @Column(name = "PLC_STATE")
+    private short plcState = 0;
 
-	/**
-	 * Version field
-	 */
-	@Version
-	private long version;
+    /**
+     * State to lock the <code>Location</code>.
+     * <p>
+     * true : This <code>Location</code> will been considered in storage
+     * calculation with by an allocator.<br>
+     * false: This <code>Location</code> will not been considered.
+     */
+    @Column(name = "CONSIDERED_IN_ALLOCATION")
+    private Boolean consideredInAllocation;
 
-	/* ------------------- collection mapping ------------------- */
-	/**
-	 * The <code>LocationType</code> of this <code>Location</code>.
-	 */
-	@ManyToOne
-	@JoinColumn(name = "LOCATION_TYPE")
-	private LocationType locationType;
+    /**
+     * Version field
+     */
+    @Version
+    private long version;
 
-	/**
-	 * The <code>LocationGroup</code> to which this <code>Location</code> belongs.
-	 */
-	@ManyToOne
-	@JoinColumn(name = "LOCATION_GROUP", nullable = true)
-	private LocationGroup locationGroup;
+    /* ------------------- collection mapping ------------------- */
+    /**
+     * The <code>LocationType</code> of this <code>Location</code>.
+     */
+    @ManyToOne
+    @JoinColumn(name = "LOCATION_TYPE")
+    private LocationType locationType;
 
-	/**
-	 * Stores a <code>Message</code> for this <code>Location</code>.
-	 */
-	@OneToMany(cascade = { CascadeType.ALL })
-	private Set<Message> messages = new HashSet<Message>();
+    /**
+     * The <code>LocationGroup</code> to which this <code>Location</code>
+     * belongs.
+     */
+    @ManyToOne
+    @JoinColumn(name = "LOCATION_GROUP", nullable = true)
+    private LocationGroup locationGroup;
 
-	/* ----------------------------- methods ------------------- */
-	/**
-	 * Accessed by persistence provider.
-	 */
-	@SuppressWarnings("unused")
-	private Location() {}
+    /**
+     * Stores a <code>Message</code> for this <code>Location</code>.
+     */
+    @OneToMany(cascade = { CascadeType.ALL })
+    private Set<Message> messages = new HashSet<Message>();
 
-	/**
-	 * 
-	 * Create a new <code>Location</code>.
-	 * 
-	 * @param locationId
-	 */
-	public Location(LocationPK locationId) {
-		this.locationId = locationId;
-	}
+    /* ----------------------------- methods ------------------- */
+    /**
+     * Accessed by persistence provider.
+     */
+    @SuppressWarnings("unused")
+    private Location() {}
 
-	public Long getId() {
-		return this.id;
-	}
+    /**
+     * 
+     * Create a new <code>Location</code>.
+     * 
+     * @param locationId
+     */
+    public Location(LocationPK locationId) {
+        this.locationId = locationId;
+    }
 
-	/**
-	 * Returns true if this is a transient object.
-	 * 
-	 * @return
-	 */
-	public boolean isNew() {
-		return this.id == null;
-	}
+    public Long getId() {
+        return this.id;
+    }
 
-	public LocationPK getLocationId() {
-		return this.locationId;
-	}
+    /**
+     * Returns true if this is a transient object.
+     * 
+     * @return
+     */
+    public boolean isNew() {
+        return this.id == null;
+    }
 
-	public String getDescription() {
-		return this.description;
-	}
+    public LocationPK getLocationId() {
+        return this.locationId;
+    }
 
-	public void setDescription(String description) {
-		this.description = description;
-	}
+    public String getDescription() {
+        return this.description;
+    }
 
-	public Date getLastAccess() {
-		return this.lastAccess;
-	}
+    public void setDescription(String description) {
+        this.description = description;
+    }
 
-	public void setLastAccess(Date lastAccess) {
-		this.lastAccess = lastAccess;
-	}
+    public Date getLastAccess() {
+        return this.lastAccess;
+    }
 
-	public Boolean getConsideredInAllocation() {
-		return this.consideredInAllocation;
-	}
+    public void setLastAccess(Date lastAccess) {
+        this.lastAccess = lastAccess;
+    }
 
-	public void setConsideredInAllocation(Boolean consideredInAllocation) {
-		this.consideredInAllocation = consideredInAllocation;
-	}
+    public Boolean getConsideredInAllocation() {
+        return this.consideredInAllocation;
+    }
 
-	public Boolean getCountingActive() {
-		return this.countingActive;
-	}
+    public void setConsideredInAllocation(Boolean consideredInAllocation) {
+        this.consideredInAllocation = consideredInAllocation;
+    }
 
-	public void setCountingActive(Boolean countingActive) {
-		this.countingActive = countingActive;
-	}
+    public Boolean getCountingActive() {
+        return this.countingActive;
+    }
 
-	public Set<Message> getMessages() {
-		return Collections.unmodifiableSet(messages);
-	}
+    public void setCountingActive(Boolean countingActive) {
+        this.countingActive = countingActive;
+    }
 
-	public boolean removeMessage(Message message) {
-		if (message == null) {
-			throw new IllegalArgumentException("Message may not be null!");
-		}
-		return this.messages.remove(message);
-	}
+    public Set<Message> getMessages() {
+        return Collections.unmodifiableSet(messages);
+    }
 
-	public boolean addMessage(Message message) {
-		if (message == null) {
-			throw new IllegalArgumentException("Message may not be null!");
-		}
-		return this.messages.add(message);
-	}
+    public boolean removeMessage(Message message) {
+        if (message == null) {
+            throw new IllegalArgumentException("Message may not be null!");
+        }
+        return this.messages.remove(message);
+    }
 
-	public Boolean getOutgoingActive() {
-		return this.outgoingActive;
-	}
+    public boolean addMessage(Message message) {
+        if (message == null) {
+            throw new IllegalArgumentException("Message may not be null!");
+        }
+        return this.messages.add(message);
+    }
 
-	public void setOutgoingActive(Boolean outgoingActive) {
-		this.outgoingActive = outgoingActive;
-	}
+    public Boolean getOutgoingActive() {
+        return this.outgoingActive;
+    }
 
-	public BigDecimal getMaximumWeight() {
-		return this.maximumWeight;
-	}
+    public void setOutgoingActive(Boolean outgoingActive) {
+        this.outgoingActive = outgoingActive;
+    }
 
-	public void setMaximumWeight(BigDecimal maximumWeight) {
-		this.maximumWeight = maximumWeight;
-	}
+    public BigDecimal getMaximumWeight() {
+        return this.maximumWeight;
+    }
 
-	public short getNoMaxTransportUnits() {
-		return this.noMaxTransportUnits;
-	}
+    public void setMaximumWeight(BigDecimal maximumWeight) {
+        this.maximumWeight = maximumWeight;
+    }
 
-	public void setNoMaxTransportUnits(short noMaxTransportUnits) {
-		this.noMaxTransportUnits = noMaxTransportUnits;
-	}
+    public short getNoMaxTransportUnits() {
+        return this.noMaxTransportUnits;
+    }
 
-	public short getPlcState() {
-		return this.plcState;
-	}
+    public void setNoMaxTransportUnits(short noMaxTransportUnits) {
+        this.noMaxTransportUnits = noMaxTransportUnits;
+    }
 
-	public void setPlcState(short plcState) {
-		this.plcState = plcState;
-	}
+    public short getPlcState() {
+        return this.plcState;
+    }
 
-	public String getCheckState() {
-		return this.checkState;
-	}
+    public void setPlcState(short plcState) {
+        this.plcState = plcState;
+    }
 
-	public void setCheckState(String checkState) {
-		this.checkState = checkState;
-	}
+    public String getCheckState() {
+        return this.checkState;
+    }
 
-	public Boolean getLocationGroupCountingActive() {
-		return this.locationGroupCountingActive;
-	}
+    public void setCheckState(String checkState) {
+        this.checkState = checkState;
+    }
 
-	public void setLocationGroupCountingActive(Boolean locationGroupCountingActive) {
-		this.locationGroupCountingActive = locationGroupCountingActive;
-	}
+    public Boolean getLocationGroupCountingActive() {
+        return this.locationGroupCountingActive;
+    }
 
-	public Boolean getIncomingActive() {
-		return this.incomingActive;
-	}
+    public void setLocationGroupCountingActive(Boolean locationGroupCountingActive) {
+        this.locationGroupCountingActive = locationGroupCountingActive;
+    }
 
-	public void setIncomingActive(Boolean incomingActive) {
-		this.incomingActive = incomingActive;
-	}
+    public Boolean getIncomingActive() {
+        return this.incomingActive;
+    }
 
-	public LocationType getLocationType() {
-		return this.locationType;
-	}
+    public void setIncomingActive(Boolean incomingActive) {
+        this.incomingActive = incomingActive;
+    }
 
-	public void setLocationType(LocationType locationType) {
-		this.locationType = locationType;
-	}
+    public LocationType getLocationType() {
+        return this.locationType;
+    }
 
-	public LocationGroup getLocationGroup() {
-		return this.locationGroup;
-	}
+    public void setLocationType(LocationType locationType) {
+        this.locationType = locationType;
+    }
 
-	public void setLocationGroup(LocationGroup locationGroup) {
-		if (locationGroup != null) {
-			this.setLocationGroupCountingActive(locationGroup.isLocationGroupCountingActive());
-		}
-		this.locationGroup = locationGroup;
-	}
+    public LocationGroup getLocationGroup() {
+        return this.locationGroup;
+    }
 
-	/**
-	 * JPA optimistic locking: Returns version field.
-	 * 
-	 * @return
-	 */
-	public long getVersion() {
-		return this.version;
-	}
+    public void setLocationGroup(LocationGroup locationGroup) {
+        if (locationGroup != null) {
+            this.setLocationGroupCountingActive(locationGroup.isLocationGroupCountingActive());
+        }
+        this.locationGroup = locationGroup;
+    }
+
+    /**
+     * JPA optimistic locking: Returns version field.
+     * 
+     * @return
+     */
+    public long getVersion() {
+        return this.version;
+    }
 }

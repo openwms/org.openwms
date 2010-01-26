@@ -21,16 +21,18 @@ import javax.persistence.Table;
 import javax.persistence.Version;
 
 /**
- * Entity to persist preferences. A <code>Preference</code> could be an user-, role- or system preference.
+ * Entity to persist preferences. A <code>Preference</code> could be an user-,
+ * role- or system preference.
  * 
  * @author <a href="mailto:openwms@googlemail.com">Heiko Scherrer</a>
  * @version $Revision$
  */
 /*
- * TODO: + Assing key, value as complementary key instead of using ID + Replace BigDecimal with float
+ * TODO: + Assing key, value as complementary key instead of using ID + Replace
+ * BigDecimal with float
  */
 @Entity
-@Table(name = "PREFERENCE")
+@Table(name = "T_PREFERENCE")
 public class Preference implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -98,85 +100,85 @@ public class Preference implements Serializable {
     public Preference() {}
 
     public Long getId() {
-	return this.id;
+        return this.id;
     }
 
     public String getType() {
-	return this.type;
+        return this.type;
     }
 
     public void setType(String type) {
-	this.type = type;
+        this.type = type;
     }
 
     public String getValue() {
-	return this.value;
+        return this.value;
     }
 
     public void setValue(String value) {
-	this.value = value;
+        this.value = value;
     }
 
     public String getKey() {
-	return this.key;
+        return this.key;
     }
 
     public void setKey(String key) {
-	this.value = key;
+        this.value = key;
     }
 
     public BigDecimal getFloatValue() {
-	return this.floatValue;
+        return this.floatValue;
     }
 
     public void setFloatValue(BigDecimal floatValue) {
-	this.floatValue = floatValue;
+        this.floatValue = floatValue;
     }
 
     public String getDescription() {
-	return this.description;
+        return this.description;
     }
 
     public void setDescription(String description) {
-	this.description = description;
+        this.description = description;
     }
 
     public int getMinimum() {
-	return this.minimum;
+        return this.minimum;
     }
 
     public void setMinimum(int minimum) {
-	this.minimum = minimum;
+        this.minimum = minimum;
     }
 
     public int getMaximum() {
-	return this.maximum;
+        return this.maximum;
     }
 
     public void setMaximum(int maximum) {
-	this.maximum = maximum;
+        this.maximum = maximum;
     }
 
     public Set<Role> getRoles() {
-	return Collections.unmodifiableSet(roles);
+        return Collections.unmodifiableSet(roles);
     }
 
     public boolean addRole(Role role) {
-	if (role == null) {
-	    throw new IllegalArgumentException("Role may not be null!");
-	}
-	return roles.add(role);
+        if (role == null) {
+            throw new IllegalArgumentException("Role may not be null!");
+        }
+        return roles.add(role);
     }
 
     public boolean removeRole(Role role) {
-	if (role == null) {
-	    throw new IllegalArgumentException("Role may not be null!");
-	}
-	return roles.remove(role);
+        if (role == null) {
+            throw new IllegalArgumentException("Role may not be null!");
+        }
+        return roles.remove(role);
     }
 
     public void setRoles(Set<Role> roles) {
-	this.roles = roles;
+        this.roles = roles;
     }
 
     /**
@@ -185,6 +187,6 @@ public class Preference implements Serializable {
      * @return
      */
     public long getVersion() {
-	return version;
+        return version;
     }
 }

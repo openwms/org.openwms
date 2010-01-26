@@ -6,14 +6,16 @@
  */
 package org.openwms.common.test;
 
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.junit.runner.RunWith;
 import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.TestExecutionListeners;
-import org.springframework.test.context.junit4.AbstractTransactionalJUnit4SpringContextTests;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-import org.springframework.test.context.support.DependencyInjectionTestExecutionListener;
+import org.springframework.test.context.transaction.TransactionConfiguration;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  * A AbstractJpaSpringContextTests.
@@ -22,10 +24,14 @@ import org.springframework.test.context.support.DependencyInjectionTestExecution
  * @version $Revision: 314 $
  */
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(locations = { "classpath*:/**/Test-Infrastructure-context.xml" })
-@TestExecutionListeners(value = DependencyInjectionTestExecutionListener.class)
-public abstract class AbstractJpaSpringContextTests extends AbstractTransactionalJUnit4SpringContextTests {
-	
-	protected final static Log log = LogFactory.getLog(AbstractJpaSpringContextTests.class); 
+@ContextConfiguration("classpath*:*/**/Test-Infrastructure-context.xml")
+@TransactionConfiguration
+@Transactional
+public abstract class AbstractJpaSpringContextTests {
+
+    protected final static Log logger = LogFactory.getLog(AbstractJpaSpringContextTests.class);
+
+    @PersistenceContext
+    protected EntityManager entityManager;
 
 }
