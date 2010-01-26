@@ -46,6 +46,11 @@
             <type>libd</type>
         </dependency>
         <dependency>
+            <groupId>javax.transaction</groupId>
+            <artifactId>com.springsource.javax.transaction</artifactId>
+            <version>1.1.0</version>
+        </dependency>
+        <dependency>
             <groupId>javax.persistence</groupId>
             <artifactId>com.springsource.javax.persistence</artifactId>
         </dependency>
@@ -86,6 +91,11 @@
         <dependency>
             <groupId>${project.groupId}</groupId>
             <artifactId>org.openwms.common.domain</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>org.openwms.common.framework.test</artifactId>
+            <type>test-jar</type>
         </dependency>
     </dependencies>
 </project>

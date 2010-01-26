@@ -11,7 +11,6 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * 
  * A GenericDao.
  * 
  * @author <a href="mailto:openwms@googlemail.com">Heiko Scherrer</a>
@@ -19,62 +18,72 @@ import java.util.Map;
  */
 public interface GenericDao<T extends Serializable, ID extends Serializable> {
 
-	public final static String FIND_ALL = ".findAll";
-	public final static String FIND_BY_ID = ".findById";
+    public final static String FIND_ALL = ".findAll";
+    public final static String FIND_BY_ID = ".findById";
 
-	/**
-	 * Find and return the entity identified by the technical <tt>id</tt>.
-	 * 
-	 * @param id
-	 * @return
-	 */
-	T findById(ID id);
+    /**
+     * Find and return the entity identified by the technical <tt>id</tt>.
+     * 
+     * @param id
+     * @return
+     */
+    T findById(ID id);
 
-	/**
-	 * Find all entities and return them as a <tt>List</tt>.
-	 * 
-	 * @return
-	 */
-	List<T> findAll();
+    /**
+     * Find all entities and return them as a <tt>List</tt>.
+     * 
+     * @return
+     */
+    List<T> findAll();
 
-	/**
-	 * Find all entities by passing the name of the JPA NamedQuery and the parameter map.
-	 * 
-	 * @param queryName
-	 * @param params
-	 * @return
-	 */
-	List<T> findByQuery(String queryName, Map<String, ?> params);
+    /**
+     * Find all entities by passing the name of the JPA NamedQuery and the
+     * parameter map.
+     * 
+     * @param queryName
+     * @param params
+     * @return
+     */
+    List<T> findByQuery(String queryName, Map<String, ?> params);
 
-	/**
-	 * Find and return the entity identified by the natural unique id.
-	 * 
-	 * @param id
-	 * @return
-	 */
-	T findByUniqueId(Serializable id);
+    /**
+     * Find and return the entity identified by the natural unique id.
+     * 
+     * @param id
+     * @return
+     */
+    T findByUniqueId(Serializable id);
 
-	/**
-	 * Merges a detached entity. Return the entity as persisted.
-	 * 
-	 * @param entity
-	 * @return
-	 */
-	T save(T entity);
+    /**
+     * Merges a detached entity. Return the entity as persisted.
+     * 
+     * @param entity
+     *            - Entity instance to synchronize with te persistence layer.
+     * @return - The synchronized Entity instance.
+     */
+    T save(T entity);
 
-	/**
-	 * Removes a persistent entity.
-	 * 
-	 * @param entity
-	 */
-	void remove(T entity);
+    /**
+     * Removes a persistent entity.
+     * 
+     * @param entity
+     *            - Entity instance to remove
+     */
+    void remove(T entity);
 
-	/**
-	 * Persist a new transient entity.
-	 * 
-	 * @param entity
-	 */
-	void persist(T entity);
+    /**
+     * Persist a new transient entity.
+     * 
+     * @param entity
+     *            - Entity instance to persist.
+     */
+    void persist(T entity);
 
-	void setPersistentClass(Class<T> persistentClass);
+    /**
+     * Set the type of Entity to deal with
+     * 
+     * @param persistentClass
+     *            - Class type of Entity class
+     */
+    void setPersistentClass(Class<T> persistentClass);
 }

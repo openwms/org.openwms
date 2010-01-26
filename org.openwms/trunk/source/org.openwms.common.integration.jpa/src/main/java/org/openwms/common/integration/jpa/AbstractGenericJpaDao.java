@@ -11,6 +11,8 @@ import java.lang.reflect.ParameterizedType;
 import java.util.List;
 import java.util.Map;
 
+import javax.persistence.EntityManager;
+
 import org.openwms.common.domain.Location;
 import org.openwms.common.integration.GenericDao;
 import org.openwms.common.integration.exception.TooManyEntitiesFoundException;
@@ -67,15 +69,12 @@ public abstract class AbstractGenericJpaDao<T extends Serializable, ID extends S
 
     @Transactional(readOnly = true)
     public T findById(ID id) {
-        logger.debug("AGJpaDAO: findById(id) called");
         return getJpaTemplate().find(getPersistentClass(), id);
     }
 
     @Transactional(readOnly = true)
     @SuppressWarnings("unchecked")
     public List<T> findAll() {
-        logger.debug("AGJpaDAO: findAll() called");
-        logger.debug("AGJpaDAO: findAllQuery: " + getFindAllQuery());
         List list = getJpaTemplate().findByNamedQuery(getFindAllQuery());
         for (Object object : list) {
             if (object instanceof Location) {
@@ -88,7 +87,6 @@ public abstract class AbstractGenericJpaDao<T extends Serializable, ID extends S
     @Transactional(readOnly = true)
     @SuppressWarnings("unchecked")
     public List<T> findByQuery(String queryName, Map<String, ?> params) {
-        logger.debug("AGJpaDAO: findByQuery(queryName, params) called");
         return getJpaTemplate().findByNamedQueryAndNamedParams(queryName, params);
     }
 
@@ -104,20 +102,17 @@ public abstract class AbstractGenericJpaDao<T extends Serializable, ID extends S
 
     @Transactional
     public T save(T entity) {
-        logger.debug("AGJpaDAO: save(entity) called");
         beforeUpdate(entity);
         return getJpaTemplate().merge(entity);
     }
 
     @Transactional
     public void remove(T entity) {
-        logger.debug("AGJpaDAO: remove(entity) called");
         getJpaTemplate().remove(entity);
     }
 
     @Transactional
     public void persist(T entity) {
-        logger.debug("AGJpaDAO: persist(entity) called");
         beforeUpdate(entity);
         getJpaTemplate().persist(entity);
     }
@@ -127,4 +122,8 @@ public abstract class AbstractGenericJpaDao<T extends Serializable, ID extends S
     protected abstract String getFindByUniqueIdQuery();
 
     protected void beforeUpdate(T entity) {};
+
+    protected final EntityManager getEm() {
+        return getJpaTemplate().getEntityManager();
+    }
 }
