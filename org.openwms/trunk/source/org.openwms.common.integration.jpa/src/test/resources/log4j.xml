@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+/*
+ * OpenWMS, the Open Warehouse Management System
+ * 
+ * Distributable under LGPL license.
+ * See terms of license at gnu.org.
+ */
+-->
+<!DOCTYPE log4j:configuration SYSTEM "log4j.dtd">
+<log4j:configuration xmlns:log4j="http://jakarta.apache.org/log4j/" debug="false">
+
+	<appender name="STDOUT" class="org.apache.log4j.ConsoleAppender">
+		<param name="Target" value="System.out" />
+		<layout class="org.apache.log4j.PatternLayout">
+			<param name="ConversionPattern" value="%d %-5p [%c] - %m%n" />
+		</layout>
+	</appender>
+
+	<category name="org.openwms">
+		<priority value="DEBUG" />
+	</category>
+
+    <category name="org.hibernate">
+        <priority value="WARN" />
+    </category>
+
+	<root>
+		<priority value="ERROR" />
+		<appender-ref ref="STDOUT" />
+	</root>
+
+</log4j:configuration>
