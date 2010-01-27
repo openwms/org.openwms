@@ -1,8 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
-    <!--
-        /* * OpenWMS, the Open Warehouse Management System * * Distributable under LGPL license. * See terms of license
-        at gnu.org. */
-    -->
+<!--
+/*
+ * OpenWMS, the Open Warehouse Management System
+ * 
+ * Distributable under LGPL license.
+ * See terms of license at gnu.org.
+ */
+-->
 <beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xmlns:context="http://www.springframework.org/schema/context" xmlns:tx="http://www.springframework.org/schema/tx"
     xmlns:aop="http://www.springframework.org/schema/aop"
@@ -13,15 +17,8 @@
     <context:annotation-config />
     <aop:aspectj-autoproxy />
 
-    <!-- HSQL Database Server -->
-    <bean id="hsqlDbServer" class="org.openwms.common.test.HsqlDBWrapper">
-        <property name="url" value="${jdbc.test.url}" />
-        <property name="username" value="${jdbc.test.username}" />
-        <property name="password" value="${jdbc.test.password}" />
-    </bean>
-
     <!-- Datasource -->
-    <bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource" depends-on="hsqlDbServer">
+    <bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
         <property name="driverClassName" value="${jdbc.test.driverClassName}" />
         <property name="url" value="${jdbc.test.url}" />
         <property name="username" value="${jdbc.test.username}" />
@@ -41,6 +38,7 @@
         </property>
     </bean>
 
+    <!-- Transaction Manager -->
     <bean id="transactionManager" class="org.springframework.orm.jpa.JpaTransactionManager">
         <property name="entityManagerFactory" ref="entityManagerFactory" />
         <property name="dataSource" ref="dataSource" />
