@@ -109,5 +109,4 @@ public class LocationDaoTest extends AbstractJpaSpringContextTests {
         Long cnt = (Long) query.getSingleResult();
         assertEquals("Expected 2 persisted Messages in MESSAGE table", 2, cnt.intValue());
     }
-
 }
