@@ -29,9 +29,14 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional
 public abstract class AbstractJpaSpringContextTests {
 
+    /**
+     * Logger instance can be used by subclasses.
+     */
     protected final static Log logger = LogFactory.getLog(AbstractJpaSpringContextTests.class);
 
+    /**
+     * EntityManager instance to be accessed by subclasses.
+     */
     @PersistenceContext
     protected EntityManager entityManager;
-
 }
