@@ -1,0 +1,18 @@
+Manifest-Version: 1.0
+Bundle-Vendor: openwms.org
+Bundle-Version: 0.0.1.SNAPSHOT
+Bundle-Name: org.openwms.common.infrastructure.hsql
+Bundle-ManifestVersion: 2
+Bundle-SymbolicName: org.openwms.common.infrastructure.hsql
+Import-Library: 
+ org.springframework.spring;version="[3.0,3.1)"
+Import-Template: 
+ javax.sql;version="0"
+Import-Bundle: 
+ com.springsource.org.apache.commons.dbcp;version="1.2.2.osgi",
+ com.springsource.org.hsqldb;version="[1.8.0.9,1.8.0.9]"
+Excluded-Imports: 
+ org.apache.commons.dbcp,
+ org.openwms.common.framework.test.*,
+ org.openwms.common.test.*,
+ org.junit.*

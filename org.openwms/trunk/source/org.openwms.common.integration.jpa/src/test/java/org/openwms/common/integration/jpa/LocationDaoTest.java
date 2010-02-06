@@ -25,7 +25,6 @@ import org.openwms.common.integration.LocationDao;
 import org.openwms.common.test.AbstractJpaSpringContextTests;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
-import org.springframework.transaction.annotation.Transactional;
 
 /**
  * A LocationDaoTest.
@@ -33,12 +32,11 @@ import org.springframework.transaction.annotation.Transactional;
  * @author <a href="mailto:openwms@googlemail.com">Heiko Scherrer</a>
  * @version $Revision: $
  */
-@Transactional
-@ContextConfiguration
+@ContextConfiguration("classpath:META-INF/spring/LocationDaoTest-context.xml")
 public class LocationDaoTest extends AbstractJpaSpringContextTests {
 
-    @Autowired
-    private LocationDao locationDao;
+    @Autowired(required = true)
+    protected LocationDao locationDao;
     private List<Location> locations;
 
     @Before

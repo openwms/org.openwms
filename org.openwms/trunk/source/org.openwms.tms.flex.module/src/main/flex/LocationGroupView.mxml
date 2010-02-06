@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+/*
+ * OpenWMS, the Open Warehouse Management System
+ * 
+ * Distributable under LGPL license.
+ * See terms of license at gnu.org.
+ */
+-->
+<mx:Canvas xmlns:mx="http://www.adobe.com/2006/mxml" xmlns:business="org.openwms.web.flex.client.business.*" xmlns:o="org.openwms.web.flex.client.components.*" width="1280" height="670" backgroundColor="#C2DAEF" creationComplete="init()">
+    <!-- Scripts -->
+    <mx:Script>
+        <![CDATA[
+            import org.openwms.web.flex.client.model.*;
+			import org.openwms.common.domain.LocationGroup;
+			import org.openwms.web.flex.client.event.LocationEvent;
+			import mx.collections.ArrayCollection;
+			import mx.events.*; 
+			[Bindable]
+			private var modelLocator:ModelLocator = ModelLocator.getInstance();
+			[Bindable]
+			private var selectedLocationGroup:LocationGroup;
+			[Bindable]
+			private var selectedParent:String;
+			[Bindable]
+        	private var selectedLocations:ArrayCollection = new ArrayCollection(); 
+
+			private function init():void {
+				new LocationEvent(LocationEvent.LOAD_ALL_LOCATIONS).dispatch()
+			}
+			
+			private function locationGroupLabel(item:Object):String {
+				if (item != null) {
+					if (item.getData() != null) {
+						return item.getData()['name'];
+					} else {
+						return "";
+					}
+				} else {
+					return "";
+				}
+			}
+			
+	        public function onTreeClick(event:Event):void {
+    	        selectedLocationGroup = (event.target.selectedItem.getData()) as LocationGroup;
+    	        selectedParent=findLocationGroup();
+    	        showLocations();
+        	}
+        	
+        	private function showLocations():void {
+        		var locations:ArrayCollection = modelLocator.allLocations;
+        		selectedLocations.removeAll();
+        			trace("GoingMoving");
+        		for (var i:uint=0;i<locations.length;i++) {
+        			if (locations[i].locationGroup == null) {
+        				continue;
+        			}
+        			trace("Moving"+locations[i].locationGroup.id);
+        			if (locations[i].locationGroup.id == selectedLocationGroup.id) {
+        				selectedLocations.addItem(locations[i]);
+        			}
+        		}
+        	}
+        	
+        	private function findLocationGroup():String {
+        		if (selectedLocationGroup.parent != null) {
+        			return selectedLocationGroup.parent.name;
+        		} else {
+	        		return "NULL";
+	        	}
+			}
+
+            private function locationIdField(item:Object, dg:DataGridColumn):String {
+                return item.locationId[dg.dataField];
+            }
+            
+            private function locationGroupField(item:Object, dg:DataGridColumn):String {
+                if(item.locationGroup != null) {
+                    return item.locationGroup[dg.dataField];
+                }
+                return "NULL";
+            }
+        ]]>
+    </mx:Script>
+
+    <mx:Tree id="myTree" x="10" y="10" showRoot="false" height="650" width="236" dataProvider="{modelLocator.locationGroupTree}" dataDescriptor="{new TreeDataDescriptor()}" labelFunction="locationGroupLabel" change="onTreeClick(event)"></mx:Tree>
+	<mx:Panel width="250" height="250" layout="absolute" x="762" y="10" title="Fill Level">
+<!-- 
+		<mx:PieChart x="0" y="0" id="piechart1" width="100%" height="100%">
+			<mx:series>
+				<mx:PieSeries displayName="Series 1" />
+			</mx:series>
+		</mx:PieChart>
+		<mx:Legend dataProvider="{piechart1}" width="230" height="30" y="180"/>
+ -->
+ 	</mx:Panel>
+	<mx:Panel width="250" height="250" layout="absolute" x="1020" y="10" title="No of Transports">
+<!-- 
+		<mx:ColumnChart x="0" y="0" id="columnchart1" height="100%" width="100%">
+			<mx:series>
+				<mx:ColumnSeries displayName="Series 1" yField=""/>
+			</mx:series>
+		</mx:ColumnChart>
+ -->
+ 	</mx:Panel>
+	<mx:Panel x="254" y="10" width="500" height="214" layout="absolute" title="Details">
+		<mx:CheckBox x="10" y="96" label="Group State In allowed"/>
+		<mx:CheckBox x="10" y="126" label="Group State Out allowed"/>
+		<mx:Canvas x="10" y="10" width="460" height="35" borderStyle="solid" alpha="0.5" backgroundColor="#C2DAEF">
+			<mx:Label x="5" y="5" text="Location Group : {selectedLocationGroup.name}" fontSize="16" textDecoration="normal"/>
+		</mx:Canvas>
+		<mx:Canvas x="10" y="53" width="460" height="18" backgroundColor="#C2DAEF" backgroundAlpha="0.5">
+			<mx:Label x="0" y="0" text="Parent Location Group : {selectedParent}"/>
+		</mx:Canvas>
+		<mx:HSlider x="250" y="126" value="{selectedLocationGroup.maxFillLevel}"/>
+		<mx:Label x="250" y="98" text="Maximum Fill Level"/>
+	</mx:Panel>
+	<mx:HBox width="500" height="30" backgroundColor="#FFFFFF" backgroundAlpha="0.5"  x="254" y="232" verticalAlign="middle">
+		<mx:Button x="5" y="5" label="Refresh"/>
+		<mx:Button x="84" y="5" label="Show Locations"/>
+		<mx:Button x="205" y="5" label="Show Transports"/>
+	</mx:HBox>
+	<mx:Canvas x="254" y="268" width="1016" height="392">
+		<mx:DataGrid id="locationsList" allowMultipleSelection="true" sortableColumns="true" width="100%" height="100%" dataProvider="{selectedLocations}">
+            <mx:columns>
+                <mx:DataGridColumn dataField="area" labelFunction="locationIdField" editable="false" width="50">
+                    <mx:headerRenderer>
+                        <mx:Component>
+                            <mx:Label text="Area" styleName="headerArea" />
+                        </mx:Component>
+                    </mx:headerRenderer>
+                </mx:DataGridColumn>
+                <mx:DataGridColumn headerText="Aisle" dataField="aisle" labelFunction="locationIdField" editable="false" width="50" />
+                <mx:DataGridColumn headerText="X" dataField="x" labelFunction="locationIdField" editable="false" width="50" />
+                <mx:DataGridColumn headerText="Y" dataField="y" labelFunction="locationIdField" editable="false" width="50" />
+                <mx:DataGridColumn headerText="Z" dataField="z" labelFunction="locationIdField" editable="false" width="50" />
+                <mx:DataGridColumn headerText="Location Group" dataField="name" labelFunction="locationGroupField" editable="false" />
+                <mx:DataGridColumn headerText="Description" dataField="description" editable="true" />
+                <mx:DataGridColumn headerText="Counting Active" dataField="countingActive" editable="true">
+                    <mx:itemRenderer>
+                        <mx:Component>
+                            <mx:CheckBox />
+                        </mx:Component>
+                    </mx:itemRenderer>
+                </mx:DataGridColumn>
+                <mx:DataGridColumn headerText="Incoming Active" dataField="incomingActive" editable="true">
+                    <mx:itemRenderer>
+                        <mx:Component>
+                            <mx:CheckBox />
+                        </mx:Component>
+                    </mx:itemRenderer>
+                </mx:DataGridColumn>
+                <mx:DataGridColumn headerText="Outgoing Active" dataField="outgoingActive" editable="true">
+                    <mx:itemRenderer>
+                        <mx:Component>
+                            <mx:CheckBox />
+                        </mx:Component>
+                    </mx:itemRenderer>
+                </mx:DataGridColumn>
+                <mx:DataGridColumn headerText="Last Access" dataField="lastAccess" editable="false" />
+            </mx:columns>
+        </mx:DataGrid>
+	</mx:Canvas>
+</mx:Canvas>

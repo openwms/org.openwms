@@ -45,7 +45,7 @@ public class Preference implements Serializable {
     @GeneratedValue
     private Long id;
 
-    @Column(name = "KEY")
+    @Column(name = "C_KEY")
     private String key;
 
     /**

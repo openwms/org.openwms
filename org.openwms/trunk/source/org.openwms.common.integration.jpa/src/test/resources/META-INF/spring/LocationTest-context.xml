@@ -10,8 +10,8 @@
 <beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">
 
-    <bean id="locationDao" class="org.openwms.common.integration.jpa.LocationDaoImpl">
-        <property name="entityManagerFactory" ref="entityManagerFactory" />
-    </bean>
+    <bean id="locationDao" class="org.openwms.common.integration.jpa.LocationDaoImpl" />
+
+    <bean id="locationGroupDao" class="org.openwms.common.integration.jpa.LocationGroupDaoImpl" />
 
 </beans>

@@ -31,6 +31,6 @@
         <class>org.openwms.common.domain.values.Unit</class>
         <class>org.openwms.common.domain.values.Weight</class>
         <class>org.openwms.common.domain.values.WeightUnit</class>
-        <exclude-unlisted-classes>true</exclude-unlisted-classes>
+        <exclude-unlisted-classes>false</exclude-unlisted-classes>
     </persistence-unit>
 </persistence>

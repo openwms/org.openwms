@@ -28,14 +28,11 @@
             <plugin>
                 <groupId>com.springsource.bundlor</groupId>
                 <artifactId>com.springsource.bundlor.maven</artifactId>
-                <version>1.0.0.M6</version>
                 <executions>
                     <execution>
-                        <id>bundlor</id>
                         <goals>
-                            <goal>transform</goal>
+                            <goal>bundlor</goal>
                         </goals>
-                        <phase>package</phase>
                     </execution>
                 </executions>
             </plugin>
@@ -43,7 +40,6 @@
     </build>
 
     <dependencies>
-        <!-- Runtime dependencies -->
         <dependency>
             <groupId>javax.persistence</groupId>
             <artifactId>com.springsource.javax.persistence</artifactId>

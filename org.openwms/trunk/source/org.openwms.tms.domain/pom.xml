@@ -26,7 +26,6 @@
             <plugin>
                 <groupId>com.springsource.bundlor</groupId>
                 <artifactId>com.springsource.bundlor.maven</artifactId>
-                <version>1.0.0.M6</version>
                 <executions>
                     <execution>
                         <id>bundlor</id>

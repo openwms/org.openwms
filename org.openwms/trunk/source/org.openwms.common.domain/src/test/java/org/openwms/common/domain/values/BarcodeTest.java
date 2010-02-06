@@ -11,6 +11,8 @@ import static org.junit.Assert.fail;
 
 import org.junit.Test;
 import org.openwms.common.domain.values.Barcode.BARCODE_ALIGN;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * A BarcodeTest.
@@ -21,12 +23,22 @@ import org.openwms.common.domain.values.Barcode.BARCODE_ALIGN;
 public class BarcodeTest {
 
     /**
+     * Logger instance can be used by subclasses.
+     */
+    protected Logger logger = LoggerFactory.getLogger(this.getClass());
+
+    /**
      * Test Barcode instantiation with null
      */
-    @Test(expected = IllegalArgumentException.class)
+    @Test
     public void testBarcodeWithNull() {
-        new Barcode(null);
-        fail("OK:Barcode cannot instanciated with NULL");
+        try {
+            new Barcode(null);
+            fail("NOK:Barcode cannot instanciated with NULL");
+        }
+        catch (IllegalArgumentException iae) {
+            logger.debug("OK:Not allowed to initiante a Barcode with null");
+        }
     }
 
     /**

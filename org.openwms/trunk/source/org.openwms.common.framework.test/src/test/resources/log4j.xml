@@ -18,7 +18,7 @@
 	</appender>
 
 	<category name="org.openwms">
-		<priority value="DEBUG" />
+		<priority value="WARN" />
 	</category>
 
     <category name="org.hibernate">
@@ -26,7 +26,7 @@
     </category>
 
 	<root>
-		<priority value="WARN" />
+		<priority value="ERROR" />
 		<appender-ref ref="STDOUT" />
 	</root>
 

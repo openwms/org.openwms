@@ -12,10 +12,16 @@ import java.util.List;
 import java.util.Map;
 
 import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
 
 import org.openwms.common.domain.Location;
 import org.openwms.common.integration.GenericDao;
 import org.openwms.common.integration.exception.TooManyEntitiesFoundException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.beans.factory.annotation.Required;
 import org.springframework.orm.jpa.support.JpaDaoSupport;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
@@ -43,7 +49,18 @@ import org.springframework.transaction.annotation.Transactional;
 public abstract class AbstractGenericJpaDao<T extends Serializable, ID extends Serializable> extends JpaDaoSupport
         implements GenericDao<T, ID> {
 
+    /**
+     * Logger instance can be used by subclasses.
+     */
+    protected Logger logger = LoggerFactory.getLogger(this.getClass());
+
     public Class<T> persistentClass;
+
+    @Autowired
+    @Required
+    public void setJpaEntityManagerFactory(@Qualifier("entityManagerFactory") EntityManagerFactory entityManagerFactory) {
+        super.setEntityManagerFactory(entityManagerFactory);
+    }
 
     @SuppressWarnings("unchecked")
     public AbstractGenericJpaDao() {

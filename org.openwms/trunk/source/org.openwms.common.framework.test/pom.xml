@@ -1,8 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
-    <!--
-        /* * OpenWMS, the Open Warehouse Management System * * Distributable under LGPL license. * See terms of license
-        at gnu.org. */
-    -->
+<!--
+/*
+ * OpenWMS, the Open Warehouse Management System
+ * 
+ * Distributable under LGPL license.
+ * See terms of license at gnu.org.
+ */
+-->
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     <modelVersion>4.0.0</modelVersion>
@@ -32,12 +36,10 @@
     </build>
     <dependencies>
         <dependency>
-            <groupId>org.apache.log4j</groupId>
-            <artifactId>com.springsource.org.apache.log4j</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.apache.commons</groupId>
-            <artifactId>com.springsource.org.apache.commons.logging</artifactId>
+            <groupId>org.springframework</groupId>
+            <artifactId>org.springframework.spring-library</artifactId>
+            <type>libd</type>
+            <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>javax.persistence</groupId>
@@ -45,12 +47,8 @@
         </dependency>
         <dependency>
             <groupId>org.springframework</groupId>
-            <artifactId>org.springframework.spring-library</artifactId>
-            <type>libd</type>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework</groupId>
             <artifactId>org.springframework.instrument</artifactId>
+            <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>org.springframework</groupId>
@@ -58,24 +56,14 @@
             <scope>provided</scope>
         </dependency>
         <dependency>
-            <groupId>org.slf4j</groupId>
-            <artifactId>slf4j-simple</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>hsqldb</groupId>
-            <artifactId>hsqldb</artifactId>
-            <scope>compile</scope>
+            <groupId>org.hsqldb</groupId>
+            <artifactId>com.springsource.org.hsqldb</artifactId>
+            <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>org.springframework.test</artifactId>
-            <scope>compile</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.hibernate</groupId>
-            <artifactId>org.hibernate.ejb-library</artifactId>
-            <type>libd</type>
-            <version>3.3.2.GA</version>
+            <scope>provided</scope>
         </dependency>
     </dependencies>
 </project>

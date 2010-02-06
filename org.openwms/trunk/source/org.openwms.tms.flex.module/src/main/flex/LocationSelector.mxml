@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:HBox xmlns:mx="http://www.adobe.com/2006/mxml">
+	<mx:TextInput id="areaId" />
+	<mx:TextInput id="aisleId" />
+	<mx:TextInput id="xId" />
+	<mx:TextInput id="yId" />
+	<mx:TextInput id="zId" />	
+</mx:HBox>
