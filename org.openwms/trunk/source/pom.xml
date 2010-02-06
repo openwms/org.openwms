@@ -38,8 +38,10 @@
     </distributionManagement>
 
     <scm>
-        <connection>scm:svn:http://openwms2005.svn.sourceforge.net/svnroot/openwms2005/org.openwms/trunk/source</connection>
-        <developerConnection>scm:svn:https://openwms2005.svn.sourceforge.net/svnroot/openwms2005/org.openwms/trunk/source</developerConnection>
+        <connection>scm:svn:http://openwms2005.svn.sourceforge.net/svnroot/openwms2005/org.openwms/trunk/source
+        </connection>
+        <developerConnection>scm:svn:https://openwms2005.svn.sourceforge.net/svnroot/openwms2005/org.openwms/trunk/source
+        </developerConnection>
         <url>http://openwms2005.svn.sourceforge.net/viewvc/openwms2005/org.openwms/trunk/source</url>
     </scm>
 
@@ -89,26 +91,26 @@
         <mailingList>
             <name>OpenWMS Public Mailing list</name>
             <subscribe>
-				http://lists.sourceforge.net/lists/listinfo/openwms2005-public
+                http://lists.sourceforge.net/lists/listinfo/openwms2005-public
 			</subscribe>
             <unsubscribe>
-				http://lists.sourceforge.net/lists/listinfo/openwms2005-public
+                http://lists.sourceforge.net/lists/listinfo/openwms2005-public
 			</unsubscribe>
             <archive>
-				http://sourceforge.net/mailarchive/forum.php?forum_name=openwms2005-public
+                http://sourceforge.net/mailarchive/forum.php?forum_name=openwms2005-public
 			</archive>
             <post>openwms2005-public@lists.sourceforge.net</post>
         </mailingList>
         <mailingList>
             <name>OpenWMS Development Mailing list</name>
             <subscribe>
-				http://lists.sourceforge.net/lists/listinfo/openwms2005-development
+                http://lists.sourceforge.net/lists/listinfo/openwms2005-development
 			</subscribe>
             <unsubscribe>
-				http://lists.sourceforge.net/lists/listinfo/openwms2005-development
+                http://lists.sourceforge.net/lists/listinfo/openwms2005-development
 			</unsubscribe>
             <archive>
-				http://sourceforge.net/mailarchive/forum.php?forum_name=openwms2005-development
+                http://sourceforge.net/mailarchive/forum.php?forum_name=openwms2005-development
 			</archive>
             <post>openwms2005-development@lists.sourceforge.net</post>
         </mailingList>
@@ -167,6 +169,12 @@
                 </pluginRepository>
             </pluginRepositories>
             <repositories>
+                <repository>
+                    <id>Version99</id>
+                    <name>Version 99 Does Not Exist Maven repository</name>
+                    <layout>default</layout>
+                    <url>http://no-commons-logging.zapto.org/mvn2</url>
+                </repository>
                 <repository>
                     <id>org.openwms.releases</id>
                     <name>OpenWMS Sourceforge Maven Repository Releases</name>
@@ -247,6 +255,7 @@
 
     <modules>
         <module>org.openwms.common.domain</module>
+        <module>org.openwms.common.infrastructure.hsql</module>
         <module>org.openwms.common.infrastructure.postgres</module>
         <module>org.openwms.common.domain.as</module>
         <module>org.openwms.common.framework.test</module>
@@ -255,7 +264,6 @@
         <module>org.openwms.common.integration.jpa</module>
         <module>org.openwms.common.service.api</module>
         <module>org.openwms.common.service.spring</module>
-        <module>org.openwms.tms.domain</module>
         <module>org.openwms.client.flex.app</module>
         <module>org.openwms.client.flex.wrapper</module>
         <module>org.openwms.app</module>
@@ -265,11 +273,13 @@
 
         <pluginManagement>
             <plugins>
+
                 <plugin>
                     <groupId>org.sonatype.flexmojos</groupId>
                     <artifactId>flexmojos-maven-plugin</artifactId>
                     <version>3.3.0</version>
                 </plugin>
+
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-compiler-plugin</artifactId>
@@ -280,6 +290,21 @@
                         <target>${maven.compile.targetLevel}</target>
                     </configuration>
                 </plugin>
+
+                <plugin>
+                    <groupId>com.springsource.bundlor</groupId>
+                    <artifactId>com.springsource.bundlor.maven</artifactId>
+                    <version>1.0.0.RELEASE</version>
+                    <executions>
+                        <execution>
+                            <id>bundlor</id>
+                            <goals>
+                                <goal>bundlor</goal>
+                            </goals>
+                        </execution>
+                    </executions>
+                </plugin>
+
             </plugins>
         </pluginManagement>
 
@@ -313,14 +338,20 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-plugin</artifactId>
+                <version>2.5</version>
                 <configuration>
+                    <testFailureIgnore>false</testFailureIgnore>
+                    <useSystemClassLoader>true</useSystemClassLoader>
                     <skipTests>false</skipTests>
+                    <systemPropertyVariables>
+                        <log4j.configuration>log4j.xml</log4j.configuration>
+                    </systemPropertyVariables>
+                    <forkMode>once</forkMode>
                     <includes>
                         <include>**/*Test.java</include>
                     </includes>
                     <excludes>
                         <exclude>**/Abstract*.java</exclude>
-                        <exclude>**/*Tests.java</exclude>
                     </excludes>
                 </configuration>
             </plugin>
@@ -335,39 +366,17 @@
                     <target>${maven.compile.targetLevel}</target>
                 </configuration>
             </plugin>
+            <!--
 
-            <plugin>
-                <groupId>org.codehaus.mojo</groupId>
-                <artifactId>cobertura-maven-plugin</artifactId>
-                <configuration>
-
-                    <check>
-                        <branchRate>70</branchRate>
-                        <lineRate>75</lineRate>
-                        <haltOnFailure>false</haltOnFailure>
-                        <totalBranchRate>75</totalBranchRate>
-                        <totalLineRate>80</totalLineRate>
-                        <packageLineRate>80</packageLineRate>
-                        <packageBranchRate>65</packageBranchRate>
-                        <regexes>
-                            <regex>
-                                <pattern>org.openwms.*</pattern>
-                                <branchRate>50</branchRate>
-                                <lineRate>50</lineRate>
-                            </regex>
-                        </regexes>
-                    </check>
-                </configuration>
-                <executions>
-                    <execution>
-                        <goals>
-                            <goal>clean</goal>
-                            <goal>check</goal>
-                        </goals>
-                    </execution>
-                </executions>
-            </plugin>
-
+                <plugin> <groupId>org.codehaus.mojo</groupId> <artifactId>cobertura-maven-plugin</artifactId>
+                <configuration> <check> <branchRate>70</branchRate> <lineRate>75</lineRate>
+                <haltOnFailure>false</haltOnFailure> <totalBranchRate>75</totalBranchRate>
+                <totalLineRate>80</totalLineRate> <packageLineRate>80</packageLineRate>
+                <packageBranchRate>65</packageBranchRate> <regexes> <regex> <pattern>org.openwms.*</pattern>
+                <branchRate>50</branchRate> <lineRate>50</lineRate> </regex> </regexes> </check> </configuration>
+                <executions> <execution> <goals> <goal>clean</goal> <goal>check</goal> </goals> </execution>
+                </executions> </plugin>
+            -->
             <plugin>
                 <artifactId>maven-assembly-plugin</artifactId>
                 <configuration>
@@ -587,6 +596,11 @@
                 <scope>compile</scope>
             </dependency>
             <dependency>
+                <groupId>javax.transaction</groupId>
+                <artifactId>com.springsource.javax.transaction</artifactId>
+                <version>1.1.0</version>
+            </dependency>
+            <dependency>
                 <groupId>org.eclipse.persistence</groupId>
                 <artifactId>com.springsource.org.eclipse.persistence</artifactId>
                 <version>1.0.0</version>
@@ -597,6 +611,13 @@
                 <artifactId>com.springsource.org.eclipse.persistence.jpa</artifactId>
                 <version>1.0.0</version>
                 <scope>compile</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.hibernate</groupId>
+                <artifactId>org.hibernate.ejb-library</artifactId>
+                <version>3.3.2.GA</version>
+                <type>libd</type>
+                <scope>test</scope>
             </dependency>
             <dependency>
                 <groupId>org.aspectj</groupId>
@@ -641,15 +662,51 @@
                 <version>2.5.0</version>
                 <scope>provided</scope>
             </dependency>
+            <!-- SLF4J API -->
             <dependency>
                 <groupId>org.slf4j</groupId>
                 <artifactId>com.springsource.slf4j.api</artifactId>
-                <version>1.5.6</version>
+                <version>1.5.10</version>
+            </dependency>
+            <!-- SLF4J Binding to log4j -->
+            <dependency>
+                <groupId>org.slf4j</groupId>
+                <artifactId>com.springsource.slf4j.log4j</artifactId>
+                <version>1.5.10</version>
+            </dependency>
+            <!-- Bridge from JCL to SLF4J -->
+            <dependency>
+                <groupId>org.slf4j</groupId>
+                <artifactId>com.springsource.slf4j.org.apache.commons.logging</artifactId>
+                <version>1.5.10</version>
+            </dependency>
+            <!-- Bridge from java.util.Logging to SLF4J -->
+            <dependency>
+                <groupId>org.slf4j</groupId>
+                <artifactId>com.springsource.slf4j.bridge</artifactId>
+                <version>1.5.10</version>
+            </dependency>
+            <!-- Bridge from log4j to SLF4J -->
+            <dependency>
+                <groupId>org.slf4j</groupId>
+                <artifactId>com.springsource.slf4j.org.apache.log4j</artifactId>
+                <version>1.5.10</version>
+            </dependency>
+            <!-- Log4j Logging API -->
+            <dependency>
+                <groupId>org.apache.log4j</groupId>
+                <artifactId>com.springsource.org.apache.log4j</artifactId>
+                <version>1.2.15</version>
             </dependency>
 
             <dependency>
                 <groupId>${project.groupId}</groupId>
                 <artifactId>org.openwms.common.infrastructure.postgres</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>${project.groupId}</groupId>
+                <artifactId>org.openwms.common.infrastructure.hsql</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <dependency>
@@ -695,50 +752,24 @@
                 <version>${project.version}</version>
             </dependency>
             <dependency>
-                <groupId>org.springframework</groupId>
-                <artifactId>spring</artifactId>
-                <version>${spring.version}</version>
-                <type>jar</type>
-                <scope>test</scope>
-            </dependency>
-            <dependency>
-                <groupId>org.springframework</groupId>
-                <artifactId>spring-test</artifactId>
-                <version>${spring.version}</version>
-                <type>jar</type>
-                <scope>test</scope>
-            </dependency>
-            <dependency>
                 <groupId>org.apache.commons</groupId>
                 <artifactId>com.springsource.org.apache.commons.lang</artifactId>
                 <version>2.4.0</version>
             </dependency>
-            <dependency>
-                <groupId>org.apache.log4j</groupId>
-                <artifactId>com.springsource.org.apache.log4j</artifactId>
-                <version>1.2.15</version>
-            </dependency>
+            <!--
+                <dependency> <groupId>org.apache.commons</groupId>
+                <artifactId>com.springsource.org.apache.commons.logging</artifactId> <version>1.1.1</version>
+                </dependency>
+            -->
             <dependency>
                 <groupId>org.apache.commons</groupId>
-                <artifactId>com.springsource.org.apache.commons.logging</artifactId>
-                <version>1.1.1</version>
+                <artifactId>com.springsource.org.apache.commons.collections</artifactId>
+                <version>3.2.1</version>
             </dependency>
             <dependency>
-                <groupId>commons-collections</groupId>
-                <artifactId>commons-collections</artifactId>
-                <version>3.2</version>
-            </dependency>
-            <dependency>
-                <groupId>org.slf4j</groupId>
-                <artifactId>slf4j-simple</artifactId>
-                <version>1.4.2</version>
-                <scope>test</scope>
-            </dependency>
-            <dependency>
-                <groupId>hsqldb</groupId>
-                <artifactId>hsqldb</artifactId>
-                <version>1.8.0.7</version>
-                <scope>test</scope>
+                <groupId>org.hsqldb</groupId>
+                <artifactId>com.springsource.org.hsqldb</artifactId>
+                <version>1.8.0.9</version>
             </dependency>
             <dependency>
                 <groupId>org.junit</groupId>
@@ -746,21 +777,47 @@
                 <version>4.7.0</version>
                 <scope>test</scope>
             </dependency>
-            <dependency>
-                <groupId>junit</groupId>
-                <artifactId>junit</artifactId>
-                <version>4.7</version>
-            </dependency>
         </dependencies>
     </dependencyManagement>
 
     <dependencies>
         <dependency>
-            <groupId>junit</groupId>
-            <artifactId>junit</artifactId>
-            <version>4.7</version>
+            <groupId>org.junit</groupId>
+            <artifactId>com.springsource.org.junit</artifactId>
             <scope>test</scope>
         </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>org.springframework.test</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>com.springsource.slf4j.api</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>com.springsource.slf4j.log4j</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>com.springsource.slf4j.org.apache.commons.logging</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.log4j</groupId>
+            <artifactId>com.springsource.org.apache.log4j</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.aspectj</groupId>
+            <artifactId>org.aspectj-library</artifactId>
+            <type>libd</type>
+            <scope>provided</scope>
+        </dependency>
+
+        <!--
+            <dependency> <groupId>commons-logging</groupId> <artifactId>commons-logging</artifactId>
+            <version>99.0-does-not-exist</version> </dependency>
+        -->
     </dependencies>
 
 </project>

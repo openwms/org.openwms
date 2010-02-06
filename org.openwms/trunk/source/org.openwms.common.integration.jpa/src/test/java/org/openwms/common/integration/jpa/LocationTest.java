@@ -22,7 +22,6 @@ import org.openwms.common.test.AbstractJpaSpringContextTests;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.transaction.BeforeTransaction;
-import org.springframework.transaction.annotation.Transactional;
 
 /**
  * A LocationTest.
@@ -31,13 +30,12 @@ import org.springframework.transaction.annotation.Transactional;
  * @version $Revision: $
  * 
  */
-@Transactional
-@ContextConfiguration
+@ContextConfiguration("classpath:META-INF/spring/LocationTest-context.xml")
 public class LocationTest extends AbstractJpaSpringContextTests {
 
-    @Autowired
+    @Autowired(required = true)
     protected LocationDao locationDao;
-    @Autowired
+    @Autowired(required = true)
     protected LocationGroupDao locationGroupDao;
 
     LocationGroup locationGroup = new LocationGroup("TEST_LOCATION_GROUP1");

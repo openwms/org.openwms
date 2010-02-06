@@ -14,7 +14,7 @@
 	layout="absolute" backgroundGradientAlphas="[1.0, 1.0]" backgroundGradientColors="[#FFFFFF, #FFFFFF]" creationComplete="init()">
 	
 	<!-- Styles -->
-	<mx:Style source="assets/css/main.css" />
+	<mx:Style source="/assets/css/main.css" />
 	<mx:Style source="assets/css/styles.css"/>
 
 	<!-- Scripts -->
@@ -44,11 +44,11 @@
 	<control:MainController />
 	
 	<mx:VBox height="100%" width="100%" verticalGap="0" backgroundColor="#C2DAEF">
-		<mx:HBox width="100%" height="30" verticalAlign="middle" backgroundColor="0x9fc3db" id="hbox1" horizontalGap="8">
-			<mx:Image source="assets/images/openwms_header.png"/>
-		</mx:HBox>
-		<mx:Canvas width="100%" height="30" backgroundColor="#FFFFFF" backgroundAlpha="0.5" >
-		<mx:MenuBar x="5" y="5" width="100%" height="20" labelField="@label" itemClick="onMenuChange(event)">
+		<mx:Canvas width="100%" height="30" backgroundColor="0x9fc3db" id="hbox1" backgroundImage="@Embed(source='banner.jpg')">
+			<mx:Image source="openwms_header.png" />
+		</mx:Canvas>
+		<mx:Canvas width="100%" height="30" backgroundImage="@Embed(source='breadcrumbs.jpg')">
+		<mx:MenuBar x="5" y="5" width="100%" height="20" labelField="@label" itemClick="onMenuChange(event)" backgroundAlpha=".5" backgroundColor="#FB0505" borderColor="#FB0505" color="#FB0505" fillAlphas="0.5" fillColors="#FB0505">
 			<mx:XMLList>
             <menuitem label="OpenWMS">
                 <menuitem label="Connect ..." enabled="false"/>

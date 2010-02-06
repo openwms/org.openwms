@@ -13,9 +13,9 @@
     xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-2.5.xsd http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-2.5.xsd http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-2.5.xsd">
 
     <context:property-placeholder location="classpath:jdbc.test.properties" />
-    <tx:annotation-driven />
     <context:annotation-config />
     <aop:aspectj-autoproxy />
+    <tx:annotation-driven />
 
     <!-- Datasource -->
     <bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
@@ -32,7 +32,7 @@
         <property name="jpaVendorAdapter">
             <bean class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter">
                 <property name="databasePlatform" value="${jdbc.test.dialect}" />
-                <property name="showSql" value="true" />
+                <property name="showSql" value="false" />
                 <property name="generateDdl" value="true" />
             </bean>
         </property>

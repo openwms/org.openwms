@@ -24,21 +24,28 @@
     <build>
         <plugins>
             <plugin>
-                <groupId>com.springsource.bundlor</groupId>
-                <artifactId>com.springsource.bundlor.maven</artifactId>
-                <version>1.0.0.M6</version>
-                <executions>
-                    <execution>
-                        <id>bundlor</id>
-                        <goals>
-                            <goal>transform</goal>
-                        </goals>
-                        <phase>package</phase>
-                    </execution>
-                </executions>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <configuration>
+                    <useSystemClassLoader>true</useSystemClassLoader>
+                    <skipTests>false</skipTests>
+                    <systemPropertyVariables>
+                        <log4j.configuration>log4j.xml</log4j.configuration>
+                    </systemPropertyVariables>
+                    <trimStackTrace>false</trimStackTrace>
+                    <forkMode>once</forkMode>
+                    <junitArtifactName>org.junit:com.springsource.org.junit</junitArtifactName>
+                    <includes>
+                        <include>**/*Test.java</include>
+                    </includes>
+                    <excludes>
+                        <exclude>**/Abstract*.java</exclude>
+                    </excludes>
+                </configuration>
             </plugin>
         </plugins>
     </build>
+    
     <dependencies>
         <dependency>
             <groupId>org.springframework</groupId>
@@ -48,19 +55,10 @@
         <dependency>
             <groupId>javax.transaction</groupId>
             <artifactId>com.springsource.javax.transaction</artifactId>
-            <version>1.1.0</version>
         </dependency>
         <dependency>
             <groupId>javax.persistence</groupId>
             <artifactId>com.springsource.javax.persistence</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.eclipse.persistence</groupId>
-            <artifactId>com.springsource.org.eclipse.persistence</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.eclipse.persistence</groupId>
-            <artifactId>com.springsource.org.eclipse.persistence.jpa</artifactId>
         </dependency>
         <dependency>
             <groupId>org.springframework</groupId>
@@ -72,17 +70,27 @@
             <scope>provided</scope>
         </dependency>
         <dependency>
-            <groupId>org.apache.commons</groupId>
-            <artifactId>com.springsource.org.apache.commons.logging</artifactId>
+            <groupId>org.springframework</groupId>
+            <artifactId>org.springframework.test</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.hibernate</groupId>
+            <artifactId>org.hibernate.ejb-library</artifactId>
+            <type>libd</type>
+            <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>org.aspectj</groupId>
             <artifactId>org.aspectj-library</artifactId>
             <type>libd</type>
         </dependency>
+
+        <!-- Framework dependencies -->
         <dependency>
             <groupId>${project.groupId}</groupId>
-            <artifactId>org.openwms.common.infrastructure.postgres</artifactId>
+            <artifactId>org.openwms.common.infrastructure.hsql</artifactId>
+            <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>${project.groupId}</groupId>
@@ -96,6 +104,7 @@
             <groupId>${project.groupId}</groupId>
             <artifactId>org.openwms.common.framework.test</artifactId>
             <type>test-jar</type>
+            <scope>test</scope>
         </dependency>
     </dependencies>
 </project>

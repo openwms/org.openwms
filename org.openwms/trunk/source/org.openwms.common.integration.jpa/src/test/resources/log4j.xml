@@ -18,10 +18,14 @@
 	</appender>
 
 	<category name="org.openwms">
-		<priority value="DEBUG" />
+		<priority value="WARN" />
 	</category>
 
     <category name="org.hibernate">
+        <priority value="WARN" />
+    </category>
+
+    <category name="org.springframework">
         <priority value="WARN" />
     </category>
 
