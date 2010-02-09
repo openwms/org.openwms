@@ -28,7 +28,6 @@
                 <artifactId>com.springsource.bundlor.maven</artifactId>
                 <executions>
                     <execution>
-                        <id>bundlor</id>
                         <goals>
                             <goal>bundlor</goal>
                         </goals>
@@ -41,10 +40,6 @@
         <dependency>
             <groupId>javax.persistence</groupId>
             <artifactId>com.springsource.javax.persistence</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.eclipse.persistence</groupId>
-            <artifactId>com.springsource.org.eclipse.persistence</artifactId>
         </dependency>
         <dependency>
             <groupId>${project.groupId}</groupId>
