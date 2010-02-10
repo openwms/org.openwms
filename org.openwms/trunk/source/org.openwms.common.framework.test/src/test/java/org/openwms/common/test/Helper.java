@@ -1,8 +1,22 @@
 /*
- * OpenWMS, the open Warehouse Management System
- * 
- * Distributable under LGPL license.
- * See terms of license at gnu.org.
+ * openwms.org, the Open Warehouse Management System.
+ *
+ * This file is part of openwms.org.
+ *
+ * openwms.org is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as 
+ * published by the Free Software Foundation, either version 3 of the
+ * License, or (at your option) any later version.
+ *
+ * openwms.org is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with this software. If not, write to the Free
+ * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
+ * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
 package org.openwms.common.test;
 
@@ -17,14 +31,22 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * 
  * A TestHelper.
+ * <p>
+ * A helper class responsible for starting an embedded database. Implemented as
+ * Singleton [Gof] pattern.
+ * </p>
  * 
  * @author <a href="mailto:openwms@googlemail.com">Heiko Scherrer</a>
  * @version $Revision: 353 $
+ * @since 0.1
  */
+@Deprecated
 public final class Helper {
 
+    /**
+     * Name of the PersistenceUnit used for the unit tests.
+     */
     public static final String PERSISTENCE_UNIT_DURABLE = "OpenWMS-test-durable";
     private static String persistenceUnit = "OpenWMS-test";
     private Logger logger = LoggerFactory.getLogger(this.getClass());
@@ -37,7 +59,7 @@ public final class Helper {
     /**
      * Get Singleton instance.
      * 
-     * @return
+     * @return - The Singleton instance
      */
     public synchronized static Helper getInstance() {
         return helper == null ? new Helper() : helper;
@@ -45,7 +67,6 @@ public final class Helper {
 
     /**
      * Start the in-memory HSQL database.
-     * 
      */
     public void startDb() {
         if (dbStarted) {
@@ -64,7 +85,6 @@ public final class Helper {
 
     /**
      * Stop the in-memory HSQL database.
-     * 
      */
     public void stopDb() {
         if (!dbStarted) {
@@ -91,7 +111,8 @@ public final class Helper {
     /**
      * Is the HSQL database started ?
      * 
-     * @return
+     * @return - true: If the database is started<br>
+     *         - false: If the database is stopped
      */
     public boolean isDbStarted() {
         return dbStarted;
@@ -100,7 +121,7 @@ public final class Helper {
     /**
      * Return the name of the PersistenceUnit to use for tests.
      * 
-     * @return
+     * @return - The name of the PersistenceUnit
      */
     public String getPersistenceUnit() {
         return persistenceUnit;
@@ -109,7 +130,8 @@ public final class Helper {
     /**
      * Check whether the used PersistenceUnit is durable.
      * 
-     * @return
+     * @return - true: if a database installation is used<br>
+     *         - false: if an embedded database engine is used
      */
     public boolean isPersistenceUnitDurable() {
         return (PERSISTENCE_UNIT_DURABLE.equals(getPersistenceUnit()));
@@ -119,7 +141,8 @@ public final class Helper {
      * Create a EntityManagerFactory.
      * 
      * @param pUnit
-     * @return
+     *            - Name of the PersistenceUnit
+     * @return - EntityManagerFactory instance
      */
     public EntityManagerFactory createEntityManagerFactory(String pUnit) {
         return Persistence.createEntityManagerFactory(pUnit);
