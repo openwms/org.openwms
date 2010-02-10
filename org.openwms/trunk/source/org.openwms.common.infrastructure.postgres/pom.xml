@@ -42,7 +42,6 @@
                 <artifactId>com.springsource.bundlor.maven</artifactId>
                 <executions>
                     <execution>
-                        <id>bundlor</id>
                         <goals>
                             <goal>bundlor</goal>
                         </goals>
