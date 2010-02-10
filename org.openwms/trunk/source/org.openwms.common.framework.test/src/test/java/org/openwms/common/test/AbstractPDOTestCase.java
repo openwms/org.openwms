@@ -1,8 +1,22 @@
 /*
- * OpenWMS, the open Warehouse Management System
- * 
- * Distributable under LGPL license.
- * See terms of license at gnu.org.
+ * openwms.org, the Open Warehouse Management System.
+ *
+ * This file is part of openwms.org.
+ *
+ * openwms.org is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as 
+ * published by the Free Software Foundation, either version 3 of the
+ * License, or (at your option) any later version.
+ *
+ * openwms.org is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with this software. If not, write to the Free
+ * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
+ * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
 package org.openwms.common.test;
 
@@ -21,21 +35,41 @@ import org.slf4j.LoggerFactory;
 
 /**
  * 
- * A AbstractPDOTestCase.
+ * An AbstractPDOTestCase.
+ * <p>
+ * Used to create an EntityManager instance and care about transactional
+ * behavior.
+ * </p>
  * 
  * @author <a href="mailto:openwms@googlemail.com">Heiko Scherrer</a>
+ * @since 0.1
  * @version $Revision: 353 $
  */
+@Deprecated
 public abstract class AbstractPDOTestCase {
 
+    /**
+     * Logger instance can be used by subclasses.
+     */
     protected Logger logger = LoggerFactory.getLogger(this.getClass());
+
+    /**
+     * Shared EntityManagerFactory instance
+     */
     protected static EntityManagerFactory emf;
+
+    /**
+     * Shared EntityManager instance
+     */
     protected static EntityManager em;
+
+    /**
+     * Indicates whether the embedded database is running or not.
+     */
     protected static boolean running = false;
 
     /**
      * Do before test run.
-     * 
      */
     @BeforeClass
     public static void setUpBeforeClass() {
@@ -55,7 +89,6 @@ public abstract class AbstractPDOTestCase {
 
     /**
      * Do after test run.
-     * 
      */
     @AfterClass
     public static void tearDownAfterClass() {
@@ -67,6 +100,9 @@ public abstract class AbstractPDOTestCase {
         }
     }
 
+    /**
+     * Do after each test method
+     */
     @After
     public void tearDown() {
         EntityTransaction entityTransaction = em.getTransaction();
@@ -79,10 +115,12 @@ public abstract class AbstractPDOTestCase {
         em = null;
     }
 
+    /**
+     * Do before each test method
+     */
     @Before
     public void setUp() {
         if (em == null) {
-            logger.debug("Getting EntityManager");
             em = emf.createEntityManager();
             if (em == null) {
                 logger.debug("Creation of EntityManager failed");
