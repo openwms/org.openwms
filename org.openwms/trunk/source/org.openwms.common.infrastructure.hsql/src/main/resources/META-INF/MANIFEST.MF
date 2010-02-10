@@ -1,12 +1,12 @@
 Manifest-Version: 1.0
 Import-Bundle: com.springsource.org.apache.commons.dbcp;version="1.2.2
- .osgi",com.springsource.org.hsqldb;version="[1.8.0.9,1.8.0.9]"
+ .osgi",com.springsource.org.hsqldb;version="1.8.0.9"
 Bundle-Vendor: openwms.org
 Bundle-Version: 0.0.1.SNAPSHOT
-Tool: Bundlor 1.0.0.BUILD-20091207202403
+Tool: Bundlor 1.0.0.M6
 Bundle-Name: org.openwms.common.infrastructure.hsql
-Import-Library: org.springframework.spring;version="[3.0,3.1)"
+Import-Library: org.springframework.spring;version="[3.0, 3.1)"
 Bundle-ManifestVersion: 2
 Bundle-SymbolicName: org.openwms.common.infrastructure.hsql
-Import-Package: javax.sql;version="0"
+Import-Package: javax.sql;version="0",org.apache.commons.dbcp
 
