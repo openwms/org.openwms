@@ -24,34 +24,36 @@
     <build>
         <plugins>
             <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-surefire-plugin</artifactId>
-                <configuration>
-                    <useSystemClassLoader>true</useSystemClassLoader>
-                    <skipTests>false</skipTests>
-                    <systemPropertyVariables>
-                        <log4j.configuration>log4j.xml</log4j.configuration>
-                    </systemPropertyVariables>
-                    <trimStackTrace>false</trimStackTrace>
-                    <forkMode>once</forkMode>
-                    <junitArtifactName>org.junit:com.springsource.org.junit</junitArtifactName>
-                    <includes>
-                        <include>**/*Test.java</include>
-                    </includes>
-                    <excludes>
-                        <exclude>**/Abstract*.java</exclude>
-                    </excludes>
-                </configuration>
+                <groupId>com.springsource.bundlor</groupId>
+                <artifactId>com.springsource.bundlor.maven</artifactId>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>bundlor</goal>
+                        </goals>
+                    </execution>
+                </executions>
             </plugin>
         </plugins>
     </build>
-    
     <dependencies>
+        <!-- Spring Framework -->
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>org.springframework.spring-library</artifactId>
             <type>libd</type>
         </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>org.springframework.instrument</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>org.springframework.test</artifactId>
+            <scope>test</scope>
+        </dependency>
+
+        <!-- JEE API -->
         <dependency>
             <groupId>javax.transaction</groupId>
             <artifactId>com.springsource.javax.transaction</artifactId>
@@ -60,33 +62,31 @@
             <groupId>javax.persistence</groupId>
             <artifactId>com.springsource.javax.persistence</artifactId>
         </dependency>
+
+        <!-- Test database driver -->
         <dependency>
-            <groupId>org.springframework</groupId>
-            <artifactId>org.springframework.instrument</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework</groupId>
-            <artifactId>org.springframework.aspects</artifactId>
-            <scope>provided</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework</groupId>
-            <artifactId>org.springframework.test</artifactId>
+            <groupId>org.hsqldb</groupId>
+            <artifactId>com.springsource.org.hsqldb</artifactId>
             <scope>test</scope>
         </dependency>
+        
+        <!-- JPA Provider -->
         <dependency>
             <groupId>org.hibernate</groupId>
             <artifactId>org.hibernate.ejb-library</artifactId>
             <type>libd</type>
             <scope>test</scope>
         </dependency>
+
+        <!-- Weaver -->
         <dependency>
             <groupId>org.aspectj</groupId>
             <artifactId>org.aspectj-library</artifactId>
             <type>libd</type>
+            <scope>test</scope>
         </dependency>
 
-        <!-- Framework dependencies -->
+        <!-- Project dependencies -->
         <dependency>
             <groupId>${project.groupId}</groupId>
             <artifactId>org.openwms.common.infrastructure.hsql</artifactId>

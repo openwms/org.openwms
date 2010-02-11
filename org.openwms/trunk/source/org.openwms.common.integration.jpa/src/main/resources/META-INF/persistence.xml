@@ -31,7 +31,8 @@
         <class>org.openwms.common.domain.values.Unit</class>
         <class>org.openwms.common.domain.values.Weight</class>
         <class>org.openwms.common.domain.values.WeightUnit</class>
-        <exclude-unlisted-classes>false</exclude-unlisted-classes>
+        <class>org.openwms.tms.domain.order.TransportOrder</class>
+        <exclude-unlisted-classes />
         <properties>
             <property name="eclipselink.ddl-generation" value="create-tables"/>
         </properties>
