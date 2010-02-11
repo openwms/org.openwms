@@ -1,8 +1,22 @@
 /*
- * OpenWMS, the open Warehouse Management System
- * 
- * Distributable under LGPL license.
- * See terms of license at gnu.org.
+ * openwms.org, the Open Warehouse Management System.
+ *
+ * This file is part of openwms.org.
+ *
+ * openwms.org is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as 
+ * published by the Free Software Foundation, either version 3 of the
+ * License, or (at your option) any later version.
+ *
+ * openwms.org is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with this software. If not, write to the Free
+ * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
+ * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
 package org.openwms.common.service.exception;
 
@@ -10,11 +24,13 @@ package org.openwms.common.service.exception;
  * A ServiceException.
  * <p>
  * Is used as an application exception thrown by the service layer. This type of
- * exception is NOT used as an system exception.
+ * exception is <strong>NOT</strong> used as an system exception. Furthermore it
+ * shall indicate occurring exceptions in the service layer.
  * </p>
  * 
  * @author <a href="mailto:openwms@googlemail.com">Heiko Scherrer</a>
  * @version $Revision: 877 $
+ * @since 0.1
  */
 @SuppressWarnings("serial")
 public class ServiceException extends RuntimeException {
@@ -26,35 +42,36 @@ public class ServiceException extends RuntimeException {
     public ServiceException() {}
 
     /**
-     * Create a new ServiceException.
+     * Create a new ServiceException with a message text.
      * 
-     * @param arg0
-     *            - Message text
+     * @param message
+     *            - Message text as String
      */
-    public ServiceException(String arg0) {
-        super(arg0);
+    public ServiceException(String message) {
+        super(message);
     }
 
     /**
-     * Create a new ServiceException.
+     * Create a new ServiceException with a cause exception.
      * 
-     * @param arg0
-     *            - Cause exception
+     * @param cause
+     *            - The cause exception
      */
-    public ServiceException(Throwable arg0) {
-        super(arg0);
+    public ServiceException(Throwable cause) {
+        super(cause);
     }
 
     /**
-     * Create a new ServiceException.
+     * Create a new ServiceException with a message text and the cause
+     * exception.
      * 
-     * @param arg0
-     *            - Message text
-     * @param arg1
-     *            - Cause exception
+     * @param message
+     *            - Message text as String
+     * @param cause
+     *            - The cause exception
      */
-    public ServiceException(String arg0, Throwable arg1) {
-        super(arg0, arg1);
+    public ServiceException(String message, Throwable cause) {
+        super(message, cause);
     }
 
 }
