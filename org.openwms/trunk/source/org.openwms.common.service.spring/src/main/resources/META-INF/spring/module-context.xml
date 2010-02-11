@@ -16,7 +16,7 @@
 			http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-2.5.xsd">
 
     <context:annotation-config />
-    <tx:annotation-driven mode="aspectj" />
+    <tx:annotation-driven />
 
     <bean id="entityService" class="org.openwms.common.service.spring.EntityServiceImpl">
         <property name="dao" ref="locationDao" />

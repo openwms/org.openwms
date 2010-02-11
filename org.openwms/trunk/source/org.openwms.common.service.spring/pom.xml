@@ -28,7 +28,6 @@
                 <artifactId>com.springsource.bundlor.maven</artifactId>
                 <executions>
                     <execution>
-                        <id>bundlor</id>
                         <goals>
                             <goal>bundlor</goal>
                         </goals>
@@ -44,6 +43,10 @@
             <type>libd</type>
         </dependency>
         <dependency>
+            <groupId>javax.persistence</groupId>
+            <artifactId>com.springsource.javax.persistence</artifactId>
+        </dependency>
+        <dependency>
             <groupId>${project.groupId}</groupId>
             <artifactId>org.openwms.common.service.api</artifactId>
             <version>${project.version}</version>
@@ -57,15 +60,6 @@
             <groupId>${project.groupId}</groupId>
             <artifactId>org.openwms.common.domain</artifactId>
             <version>${project.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.apache.log4j</groupId>
-            <artifactId>com.springsource.org.apache.log4j</artifactId>
-            <version>1.2.15</version>
-        </dependency>
-        <dependency>
-            <groupId>javax.persistence</groupId>
-            <artifactId>com.springsource.javax.persistence</artifactId>
         </dependency>
         <!-- Test dependencies -->
         <dependency>
