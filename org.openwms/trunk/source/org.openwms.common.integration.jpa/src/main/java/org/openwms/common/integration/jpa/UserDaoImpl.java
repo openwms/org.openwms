@@ -53,6 +53,6 @@ public class UserDaoImpl extends AbstractGenericJpaDao<User, Long> implements Us
     @Override
     @SuppressWarnings("unchecked")
     public List<User> findAll() {
-        return getEm().createNamedQuery(UserDao.NQ_FIND_ALL_ORDERED).getResultList();
+        return getJpaTemplate().findByNamedQuery(UserDao.NQ_FIND_ALL_ORDERED);
     }
 }

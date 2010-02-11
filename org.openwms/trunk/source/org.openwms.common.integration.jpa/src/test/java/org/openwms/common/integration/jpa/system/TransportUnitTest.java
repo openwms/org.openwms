@@ -181,7 +181,7 @@ public class TransportUnitTest extends AbstractJpaSpringContextTests {
         transportUnit.setTargetLocation(targetLocation);
         try {
             entityManager.persist(transportUnit);
-            // FIXME fail("Persisting with unknown targetLocation must fail!");
+            // FIXME [scherrer] : fail("Persisting with unknown targetLocation must fail!");
         }
         catch (Exception pe) {
             // okay

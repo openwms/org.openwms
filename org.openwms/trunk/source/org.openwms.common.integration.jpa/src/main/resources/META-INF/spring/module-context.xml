@@ -16,9 +16,13 @@
     <context:annotation-config />
     <context:property-placeholder location="classpath:jdbc.properties" />
     <context:component-scan base-package="org.openwms.common.domain" />
+
+<!-- Hibernate does not require a LTW
     <context:load-time-weaver aspectj-weaving="on"/>
-    
-    <tx:annotation-driven mode="aspectj" />
+-->    
+
+<!-- See ch. 10.2 -->
+    <tx:annotation-driven />
     
     <!-- Entity Manager -->
     <bean id="entityManagerFactory" class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
@@ -64,12 +68,10 @@
         <property name="entityManagerFactory" ref="entityManagerFactory" />
     </bean>
 
-    <bean id="transportUnitTypeDao" class="org.openwms.common.integration.jpa.TransportUnitTypeDaoImpl" depends-on="starter">
+    <bean id="transportUnitTypeDao" class="org.openwms.common.integration.jpa.TransportUnitTypeDaoImpl">
         <property name="entityManagerFactory" ref="entityManagerFactory" />
     </bean>
     
-    <bean id="starter" class="org.openwms.common.integration.jpa.Starter"></bean>
-
     <bean id="userDao" class="org.openwms.common.integration.jpa.UserDaoImpl">
         <property name="entityManagerFactory" ref="entityManagerFactory" />
     </bean>

@@ -13,37 +13,31 @@ Export-Package: org.openwms.common.integration.jpa;version="0.0.1.SNAP
  mmon.integration.jpa.system.usermanagement;version="0.0.1.SNAPSHOT";u
  ses:="org.junit,org.openwms.common.test,org.springframework.transacti
  on.annotation"
-Import-Bundle: com.springsource.javax.persistence;version="[1.0.0,1.0.
- 0]",com.springsource.org.eclipse.persistence.jpa;version="[1.0.0,1.0.
- 0]"
+Import-Bundle: com.springsource.javax.persistence;version="1.0.0",org.
+ openwms.common.domain;version="0.0.1.SNAPSHOT",org.openwms.tms.domain
+ ;version="0.0.1.SNAPSHOT",org.openwms.common.integration;version="0.0
+ .1.SNAPSHOT",com.springsource.org.hibernate;version="3.2.6.ga"
+Require-Bundle: com.springsource.org.hibernate,com.springsource.javass
+ ist
 Bundle-Vendor: openwms.org
 Bundle-Version: 0.0.1.SNAPSHOT
-Tool: Bundlor 1.0.0.BUILD-20091207202403
+Tool: Bundlor 1.0.0.M6
 Bundle-Name: org.openwms.common.integration.jpa
-Import-Library: org.springframework.spring;version="[3.0,3.1)"
+Import-Library: org.springframework.spring;version="[3.0, 3.1)"
 Bundle-ManifestVersion: 2
 Bundle-SymbolicName: org.openwms.common.integration.jpa
-Import-Package: javax.annotation,javax.persistence;version="[1.0.0, 1.
- 0.0]",javax.sql;version="0",junit.framework,org.apache.log4j,org.aspe
- ctj.asm;version="0.0.0",org.aspectj.lang;version="0.0.0",org.aspectj.
- runtime;version="0.0.0",org.aspectj.runtime.reflect;version="0.0.0",o
- rg.openwms.common.domain;version="[0.0.1.SNAPSHOT, 0.0.1.SNAPSHOT]",o
- rg.openwms.common.domain.system;version="[0.0.1.SNAPSHOT, 0.0.1.SNAPS
- HOT]",org.openwms.common.domain.system.usermanagement;version="[0.0.1
- .SNAPSHOT, 0.0.1.SNAPSHOT]",org.openwms.common.domain.values;version=
- "[0.0.1.SNAPSHOT, 0.0.1.SNAPSHOT]",org.openwms.common.integration;ver
- sion="[0.0.1.SNAPSHOT, 0.0.1.SNAPSHOT]",org.openwms.common.integratio
- n.exception;version="[0.0.1.SNAPSHOT, 0.0.1.SNAPSHOT]",org.openwms.co
- mmon.integration.system.usermanagement;version="[0.0.1.SNAPSHOT, 0.0.
- 1.SNAPSHOT]",org.slf4j,org.springframework.beans,org.springframework.
- beans.factory.annotation,org.springframework.context,org.springframew
- ork.context.weaving;version="[3.0, 3.1)",org.springframework.core.io,
- org.springframework.core.io.support,org.springframework.dao.annotatio
- n,org.springframework.dao.support;version="[3.0, 3.1)",org.springfram
- ework.orm.jpa,org.springframework.orm.jpa.persistenceunit,org.springf
- ramework.orm.jpa.support,org.springframework.stereotype,org.springfra
- mework.test.context,org.springframework.test.context.transaction,org.
- springframework.transaction,org.springframework.transaction.annotatio
- n,org.springframework.transaction.aspectj;version="[3.0, 3.1)",org.sp
- ringframework.util
+Import-Package: javax.annotation,javax.persistence,javax.sql;version="
+ 0",junit.framework,org.hibernate.proxy;version="0.0.0",org.openwms.co
+ mmon.domain,org.openwms.common.domain.system,org.openwms.common.domai
+ n.system.usermanagement,org.openwms.common.domain.values,org.openwms.
+ common.integration,org.openwms.common.integration.exception,org.openw
+ ms.common.integration.system.usermanagement,org.openwms.tms.domain.or
+ der,org.slf4j,org.springframework.beans,org.springframework.beans.fac
+ tory.annotation,org.springframework.context,org.springframework.core.
+ io,org.springframework.core.io.support,org.springframework.dao.annota
+ tion,org.springframework.orm.jpa,org.springframework.orm.jpa.persiste
+ nceunit,org.springframework.orm.jpa.support,org.springframework.stere
+ otype,org.springframework.test.context,org.springframework.test.conte
+ xt.transaction,org.springframework.transaction,org.springframework.tr
+ ansaction.annotation,org.springframework.util
 
