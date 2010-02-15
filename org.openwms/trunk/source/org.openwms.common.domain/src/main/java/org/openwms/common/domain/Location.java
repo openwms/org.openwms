@@ -1,8 +1,22 @@
 /*
- * OpenWMS, the Open Warehouse Management System
- * 
- * Distributable under LGPL license.
- * See terms of license at gnu.org.
+ * openwms.org, the Open Warehouse Management System.
+ *
+ * This file is part of openwms.org.
+ *
+ * openwms.org is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as 
+ * published by the Free Software Foundation, either version 3 of the
+ * License, or (at your option) any later version.
+ *
+ * openwms.org is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with this software. If not, write to the Free
+ * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
+ * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
 package org.openwms.common.domain;
 
@@ -33,15 +47,19 @@ import javax.persistence.Version;
 import org.openwms.common.domain.system.Message;
 
 /**
- * This class is used to specify a location. A location could be a storage
- * location in stock as well as a location on the conveyor. Also virtual and
- * error locations should be described by an <code>Location</code> entity.
+ * A Location.
+ * <p>
+ * Could be a storage location in the stock as well as a location on a conveyer.
+ * Also virtual and error locations can be described with an {@link Location}
+ * Entity.
+ * </p>
  * 
- * <code>Location</code>s could be grouped together to a
- * <code>LocationGroup</code>.
+ * {@link Location}s could be grouped together to a {@link LocationGroup}s.
  * 
  * @author <a href="mailto:openwms@googlemail.com">Heiko Scherrer</a>
  * @version $Revision$
+ * @since 0.1
+ * @see {@link org.openwms.common.domain.LocationGroup}
  */
 @Entity
 @Table(name = "LOCATION", uniqueConstraints = @UniqueConstraint(columnNames = { "AREA", "AISLE", "X", "Y", "Z" }))
@@ -53,8 +71,18 @@ public class Location implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
+    /**
+     * Query to find all {@link Location}s.
+     */
     public static final String NQ_FIND_ALL = "Location.findAll";
+    /**
+     * Query to find all {@link Location}s and all {@link Message}s, eager
+     * loaded.
+     */
     public static final String NQ_FIND_ALL_EAGER = "Location.findAllEager";
+    /**
+     * Query to find <strong>one</strong> {@link Location} by the natural key.
+     */
     public static final String NQ_FIND_BY_UNIQUE_QUERY = "Location.findByLocationPK";
 
     /**
@@ -66,131 +94,138 @@ public class Location implements Serializable {
     private Long id;
 
     /**
-     * Unique key.
+     * Unique natural key.
      */
     @Embedded
     private LocationPK locationId;
 
     /**
-     * Describes the <code>Location</code>.
+     * Describes the {@link Location}.
      */
     @Column(name = "DESCRIPTION")
     private String description;
 
     /**
-     * Number of <code>TransportUnit</code>s maximum placed on this
-     * <code>Location</code>.
+     * Maximum number of {@link org.openwms.common.domain.TransportUnit}s placed
+     * on this {@link Location}.
      */
     @Column(name = "NO_MAX_TRANSPORT_UNITS")
     private short noMaxTransportUnits = 1;
 
     /**
-     * Maximum of weight for this <code>Location</code>.
+     * Maximum allowed weight for this {@link Location}.
      */
     @Column(name = "MAXIMUM_WEIGHT")
     private BigDecimal maximumWeight;
 
     /**
-     * Timestamp of last change of the <code>TransportUnit</code>. When a
-     * <code>TransportUnit</code> is entering or leaving this place, the
-     * timestamp will be updated. This is necessary to locate old
-     * <code>TransportUnit</code>s in the stock as well as for inventory
-     * calculation.
+     * Timestamp of last change. When a
+     * {@link org.openwms.common.domain.TransportUnit} is moving on or from this
+     * place, the timestamp will be updated. This is necessary to find old
+     * {@link org.openwms.common.domain.TransportUnit}s in the stock as well as
+     * for inventory calculation.
      */
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "LAST_ACCESS")
     private Date lastAccess;
 
     /**
-     * Flag to indicate whether <code>TransportUnit</code>s should be counted on
-     * this <code>Location</code>.
+     * Flag to indicate whether {@link org.openwms.common.domain.TransportUnit}s
+     * should be counted on this {@link Location} or not.
      */
     @Column(name = "COUNTING_ACTIVE")
     private Boolean countingActive;
 
     /**
-     * Reserved for stock check procedure and for inventory control.
+     * Reserved for stock check procedure and for inventory calculation.
      */
     @Column(name = "CHECK_STATE")
     private String checkState = "--";
 
     /**
-     * Shall this <code>Location</code> be integrated in the calculation of
-     * <code>TransportUnit</code>s on the parent <code>LocationGroup</code>.
+     * Shall this {@link Location} be integrated in the calculation of
+     * {@link org.openwms.common.domain.TransportUnit}s on the parent
+     * {@link org.openwms.common.domain.LocationGroup}.
      * <p>
      * true : Location is been included in calculation of
-     * <code>TransportUnit</code>s.<br>
+     * {@link org.openwms.common.domain.TransportUnit}s.<br>
      * false: Location is not been included in calculation of
-     * <code>TransportUnit</code>s.
+     * {@link org.openwms.common.domain.TransportUnit}s.
+     * </p>
      */
     @Column(name = "LOCATION_GROUP_COUNTING_ACTIVE")
     private Boolean locationGroupCountingActive;
 
     /**
-     * Signals the state of incoming for this <code>Location</code>.
+     * Signals the incoming state of this <code>Location</code>.
      * <p>
-     * true : <code>Location</code> is available to gather
-     * <code>TransportUnit</code>s.<br>
-     * false: <code>Location</code> is locked, and cannot gather
-     * <code>TransportUnit</code>s.
+     * true : {@link Location} is available to gather
+     * {@link org.openwms.common.domain.TransportUnit}s.<br>
+     * false: {@link Location} is locked, and cannot gather
+     * {@link org.openwms.common.domain.TransportUnit}s.
+     * </p>
      */
     @Column(name = "INCOMING_ACTIVE")
     private Boolean incomingActive;
 
     /**
-     * Signals the state of outgoing of this <code>Location</code>.
+     * Signals the outgoing state this {@link Location}.
      * <p>
-     * true : <code>Location</code> is enabled for outgoing transports<br>
-     * false: <code>Location</code> is locked, <code>TransportUnit</code>s can't
-     * leave from here.
+     * true : {@link Location} is enabled for outgoing <code>Transport</code>s<br>
+     * false: {@link Location} is locked,
+     * {@link org.openwms.common.domain.TransportUnit}s can't move from this
+     * place.
+     * </p>
      */
     @Column(name = "OUTGOING_ACTIVE")
     private Boolean outgoingActive;
 
     /**
-     * The PLC could change the state of an <code>Location</code>. This property
+     * The PLC is able to change the state of an {@link Location}. This property
      * stores the last state, received from the PLC.
      * <p>
      * -1: Not defined.<br>
-     * 0 : No plc error state, everything okay.
+     * 0 : No PLC error state, everything okay.
+     * </p>
      */
     @Column(name = "PLC_STATE")
     private short plcState = 0;
 
     /**
-     * State to lock the <code>Location</code>.
+     * State to exclude the {@link Location} from allocation.
      * <p>
-     * true : This <code>Location</code> will been considered in storage
-     * calculation with by an allocator.<br>
-     * false: This <code>Location</code> will not been considered.
+     * true : This {@link Location} will been considered in storage calculation
+     * by an allocator.<br>
+     * false: This {@link Location} will not been considered in allocation
+     * process.
+     * </p>
      */
     @Column(name = "CONSIDERED_IN_ALLOCATION")
     private Boolean consideredInAllocation;
 
     /**
-     * Version field
+     * Version field.
      */
     @Version
     private long version;
 
     /* ------------------- collection mapping ------------------- */
     /**
-     * The <code>LocationType</code> of this <code>Location</code>.
+     * The {@link LocationType} of this {@link Location}.
      */
     @ManyToOne
     @JoinColumn(name = "LOCATION_TYPE")
     private LocationType locationType;
 
     /**
-     * The <code>LocationGroup</code> to which this <code>Location</code>
-     * belongs.
+     * The {@link LocationGroup} the {@link Location} belongs to.
      */
     @ManyToOne
     @JoinColumn(name = "LOCATION_GROUP", nullable = true)
     private LocationGroup locationGroup;
 
     /**
-     * Stores a <code>Message</code> for this <code>Location</code>.
+     * Stores a {@link Message}s for this {@link Location}.
      */
     @OneToMany(cascade = { CascadeType.ALL })
     private Set<Message> messages = new HashSet<Message>();
@@ -203,23 +238,29 @@ public class Location implements Serializable {
     private Location() {}
 
     /**
-     * 
-     * Create a new <code>Location</code>.
+     * Create a new {@link Location}.
      * 
      * @param locationId
+     *            - The unique natural key of the {@link Location}
      */
     public Location(LocationPK locationId) {
         this.locationId = locationId;
     }
 
+    /**
+     * Return the technical key.
+     * 
+     * @return - Technical, unique key
+     */
     public Long getId() {
         return this.id;
     }
 
     /**
-     * Returns true if this is a transient object.
+     * Checks if the instance is transient.
      * 
-     * @return
+     * @return - true: Entity is not present on the persistent storage.<br>
+     *         - false : Entity already exists on the persistence storage
      */
     public boolean isNew() {
         return this.id == null;
@@ -355,11 +396,21 @@ public class Location implements Serializable {
     }
 
     /**
-     * JPA optimistic locking: Returns version field.
+     * JPA optimistic locking.
      * 
-     * @return
+     * @return - Version field
      */
     public long getVersion() {
         return this.version;
+    }
+
+    /**
+     * Return the {@link LocationPK} as String.
+     * 
+     * @see java.lang.Object#toString()
+     */
+    @Override
+    public String toString() {
+        return this.locationId.toString();
     }
 }

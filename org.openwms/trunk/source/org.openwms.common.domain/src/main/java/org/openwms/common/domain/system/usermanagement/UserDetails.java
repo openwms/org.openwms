@@ -1,8 +1,22 @@
 /*
- * OpenWMS, the open Warehouse Management System
- * 
- * Distributable under LGPL license.
- * See terms of license at gnu.org.
+ * openwms.org, the Open Warehouse Management System.
+ *
+ * This file is part of openwms.org.
+ *
+ * openwms.org is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as 
+ * published by the Free Software Foundation, either version 3 of the
+ * License, or (at your option) any later version.
+ *
+ * openwms.org is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with this software. If not, write to the Free
+ * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
+ * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
 package org.openwms.common.domain.system.usermanagement;
 
@@ -17,135 +31,146 @@ import javax.persistence.FetchType;
 import javax.persistence.Lob;
 
 /**
- * All minor details of an <code>User</code>.
+ * Detail information about an {@link User}.
  * 
  * @author <a href="mailto:openwms@googlemail.com">Heiko Scherrer</a>
  * @version $Revision$
- * 
+ * @since 0.1
  */
 @Embeddable
 public class UserDetails implements Serializable {
-	private static final long serialVersionUID = 1L;
 
-	public static enum SEX {
-		MAN, WOMAN
-	}
+    private static final long serialVersionUID = 1L;
 
-	/**
-	 * Description assigned to the <code>User</code> entity.
-	 */
-	@Column(name = "DESCRIPTION")
-	private String description;
+    /**
+     * A SEX.
+     * <p>
+     * {@link User}s sex.
+     * </p>
+     * 
+     * @author <a href="mailto:openwms@googlemail.com">Heiko Scherrer</a>
+     * @version $Revision$
+     * @since 0.1
+     */
+    public static enum SEX {
+        MAN, FEMALE
+    }
 
-	/**
-	 * Comment assigned to the <code>User</code> entity.
-	 */
-	@Column(name = "COMMENT")
-	private String comment;
+    /**
+     * Description assigned to the {@link User} entity.
+     */
+    @Column(name = "DESCRIPTION")
+    private String description;
 
-	/**
-	 * Phone number assigned to the <code>User</code> entity.
-	 */
-	@Column(name = "PHONE_NO")
-	private String phoneNo;
+    /**
+     * Comment assigned to the {@link User} entity.
+     */
+    @Column(name = "COMMENT")
+    private String comment;
 
-	/**
-	 * Skype account name assigned to the <code>User</code> entity.
-	 */
-	@Column(name = "SKYPE_NAME")
-	private String skypeName;
+    /**
+     * Phone number assigned to the {@link User} entity.
+     */
+    @Column(name = "PHONE_NO")
+    private String phoneNo;
 
-	/**
-	 * Office description assigned to the <code>User</code> entity.
-	 */
-	@Column(name = "OFFICE")
-	private String office;
+    /**
+     * Skype account name assigned to the {@link User} entity.
+     */
+    @Column(name = "SKYPE_NAME")
+    private String skypeName;
 
-	/**
-	 * Department description assigned to the <code>User</code> entity.
-	 */
-	@Column(name = "DEPARTMENT")
-	private String department;
+    /**
+     * Office description assigned to the {@link User} entity.
+     */
+    @Column(name = "OFFICE")
+    private String office;
 
-	/**
-	 * Image of the user.
-	 */
-	@Lob
-	@Basic(fetch = FetchType.LAZY)
-	@Column(name = "IMAGE")
-	private byte[] image;
+    /**
+     * Department description assigned to the {@link User} entity.
+     */
+    @Column(name = "DEPARTMENT")
+    private String department;
 
-	/**
-	 * Sex of the user.
-	 */
-	@Enumerated(EnumType.STRING)
-	@Column(name = "SEX")
-	private SEX sex;
+    /**
+     * Image of the user.
+     */
+    @Lob
+    @Basic(fetch = FetchType.LAZY)
+    @Column(name = "IMAGE")
+    private byte[] image;
 
-	/* ----------------------------- methods ------------------- */
-	public UserDetails() {}
+    /**
+     * Sex of the user.
+     */
+    @Enumerated(EnumType.STRING)
+    @Column(name = "SEX")
+    private SEX sex;
 
-	public String getPhoneNo() {
-		return this.phoneNo;
-	}
+    /* ----------------------------- methods ------------------- */
+    public UserDetails() {}
 
-	public void setPhoneNo(String phoneNo) {
-		this.phoneNo = phoneNo;
-	}
+    public String getPhoneNo() {
+        return this.phoneNo;
+    }
 
-	public String getDescription() {
-		return this.description;
-	}
+    public void setPhoneNo(String phoneNo) {
+        this.phoneNo = phoneNo;
+    }
 
-	public void setDescription(String description) {
-		this.description = description;
-	}
+    public String getDescription() {
+        return this.description;
+    }
 
-	public String getComment() {
-		return this.comment;
-	}
+    public void setDescription(String description) {
+        this.description = description;
+    }
 
-	public void setComment(String comment) {
-		this.comment = comment;
-	}
+    public String getComment() {
+        return this.comment;
+    }
 
-	public String getOffice() {
-		return this.office;
-	}
+    public void setComment(String comment) {
+        this.comment = comment;
+    }
 
-	public void setOffice(String office) {
-		this.office = office;
-	}
+    public String getOffice() {
+        return this.office;
+    }
 
-	public String getSkypeName() {
-		return this.skypeName;
-	}
+    public void setOffice(String office) {
+        this.office = office;
+    }
 
-	public void setSkypeName(String skypeName) {
-		this.skypeName = skypeName;
-	}
+    public String getSkypeName() {
+        return this.skypeName;
+    }
 
-	public String getDepartment() {
-		return this.department;
-	}
+    public void setSkypeName(String skypeName) {
+        this.skypeName = skypeName;
+    }
 
-	public void setDepartment(String department) {
-		this.department = department;
-	}
+    public String getDepartment() {
+        return this.department;
+    }
 
-	public byte[] getImage() {
-		return this.image;
-	}
+    public void setDepartment(String department) {
+        this.department = department;
+    }
 
-	public void setImage(byte[] image) {
-		this.image = image;
-	}
+    public byte[] getImage() {
+        return this.image;
+    }
 
-	public SEX getSex() {
-		return sex;
-	}
+    public void setImage(byte[] image) {
+        this.image = image;
+    }
 
-	public void setSex(SEX sex) {
-		this.sex = sex;
-	}
+    public SEX getSex() {
+        return sex;
+    }
+
+    public void setSex(SEX sex) {
+        this.sex = sex;
+    }
 }

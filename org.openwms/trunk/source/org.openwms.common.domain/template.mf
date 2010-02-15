@@ -13,4 +13,7 @@ Excluded-Imports:
  org.junit.*
 Excluded-Exports: 
  org.junit.*
+Require-Bundle: 
+ com.springsource.org.hibernate,
+ com.springsource.javassist
  

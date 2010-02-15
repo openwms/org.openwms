@@ -1,8 +1,22 @@
 /*
- * OpenWMS, the Open Warehouse Management System
- * 
- * Distributable under LGPL license.
- * See terms of license at gnu.org.
+ * openwms.org, the Open Warehouse Management System.
+ *
+ * This file is part of openwms.org.
+ *
+ * openwms.org is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as 
+ * published by the Free Software Foundation, either version 3 of the
+ * License, or (at your option) any later version.
+ *
+ * openwms.org is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with this software. If not, write to the Free
+ * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
+ * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
 package org.openwms.common.domain.system.usermanagement;
 
@@ -21,127 +35,163 @@ import javax.persistence.Version;
  * 
  * @author <a href="mailto:openwms@googlemail.com">Heiko Scherrer</a>
  * @version $Revision$
+ * @since 0.1
+ * @see User
  */
+// TODO [scherrer] : Add unique constraint to username+emailAddess
 @Entity
 @Table(name = "EMAIL")
 public class Email implements Serializable {
-	private static final long serialVersionUID = 1L;
 
-	/**
-	 * Primary Key.
-	 */
-	@Id
-	@GeneratedValue
-	@ManyToOne
-	private Long id;
+    private static final long serialVersionUID = 1L;
 
-	/**
-	 * Unique identifier of the <code>User</code>.
-	 */
-	@Column(name = "USERNAME", nullable = false)
-	private String username;
+    /**
+     * Unique technical key
+     */
+    @Id
+    @GeneratedValue
+    @ManyToOne
+    private Long id;
 
-	/**
-	 * Email Address.
-	 */
-	@Column(name = "ADDRESS", nullable = false)
-	private String emailAddress;
+    /**
+     * Unique identifier of the {@link Email}.
+     */
+    @Column(name = "USERNAME", nullable = false)
+    private String username;
 
-	/**
-	 * Fullname belonging to this <code>Email</code>.
-	 */
-	private String fullName;
+    /**
+     * Email address of the
+     * {@link org.openwms.common.domain.system.usermanagement.User}.
+     */
+    @Column(name = "ADDRESS", nullable = false)
+    private String emailAddress;
 
-	/**
-	 * Hibernate Version field.
-	 */
-	@Version
-	private long version;
+    /**
+     * Full name belonging to this
+     * {@link org.openwms.common.domain.system.usermanagement.User}.
+     */
+    private String fullName;
 
-	/* ----------------------------- methods ------------------- */
-	/**
-	 * Accessed by persistence provider.
-	 */
-	@SuppressWarnings("unused")
-	private Email() {}
+    /**
+     * Version field.
+     */
+    @Version
+    private long version;
 
-	public Email(String username, String emailAddress) {
-		assert username != null && !username.equals("");
-		assert emailAddress != null && !emailAddress.equals("");
-		this.username = username;
-		this.emailAddress = emailAddress;
-	}
+    /* ----------------------------- methods ------------------- */
+    /**
+     * Accessed by persistence provider.
+     */
+    @SuppressWarnings("unused")
+    private Email() {}
 
-	/**
-	 * Get the Primary Key.
-	 * 
-	 * @return
-	 */
-	public Long getId() {
-		return id;
-	}
+    /**
+     * Create a new Email for the
+     * {@link org.openwms.common.domain.system.usermanagement.User} with this
+     * <code>username</code> and this <code>emailAddress</code>.
+     * 
+     * @param username
+     * @param emailAddress
+     */
+    public Email(String username, String emailAddress) {
+        assert username != null && !username.equals("");
+        assert emailAddress != null && !emailAddress.equals("");
+        this.username = username;
+        this.emailAddress = emailAddress;
+    }
 
-	/**
-	 * Returns true if this is a transient object.
-	 * 
-	 * @return
-	 */
-	public boolean isNew() {
-		return this.id == null;
-	}
+    /**
+     * Get the Primary Key.
+     * 
+     * @return
+     */
+    public Long getId() {
+        return id;
+    }
 
-	public String getUsername() {
-		return this.username;
-	}
+    /**
+     * Checks if the instance is transient.
+     * 
+     * @return - true: Entity is not present on the persistent storage.<br>
+     *         - false : Entity already exists on the persistence storage
+     */
+    public boolean isNew() {
+        return this.id == null;
+    }
 
-	public void setUsername(String username) {
-		this.username = username;
-	}
+    /**
+     * Return the name of the user that belongs to this email.
+     * 
+     * @return - Username as String
+     */
+    public String getUsername() {
+        return this.username;
+    }
 
-	/**
-	 * Get the emailAddress.
-	 * 
-	 * @return the emailAddress.
-	 */
-	public String getEmailAddress() {
-		return emailAddress;
-	}
+    /**
+     * Set the name of the user that belongs to this email.
+     * 
+     * @param username
+     *            - Name of the user.
+     */
+    public void setUsername(String username) {
+        this.username = username;
+    }
 
-	/**
-	 * Set the emailAddress.
-	 * 
-	 * @param emailAddress
-	 *            The emailAddress to set.
-	 */
-	public void setEmailAddress(String emailAddress) {
-		this.emailAddress = emailAddress;
-	}
+    /**
+     * Get the emailAddress.
+     * 
+     * @return the emailAddress.
+     */
+    public String getEmailAddress() {
+        return emailAddress;
+    }
 
-	/**
-	 * Get the fullName.
-	 * 
-	 * @return the fullName.
-	 */
-	public String getFullName() {
-		return fullName;
-	}
+    /**
+     * Set the emailAddress.
+     * 
+     * @param emailAddress
+     *            The emailAddress to set.
+     */
+    public void setEmailAddress(String emailAddress) {
+        this.emailAddress = emailAddress;
+    }
 
-	/**
-	 * Set the fullName.
-	 * 
-	 * @param fullName
-	 *            The fullName to set.
-	 */
-	public void setFullName(String fullName) {
-		this.fullName = fullName;
-	}
+    /**
+     * Get the fullName.
+     * 
+     * @return the fullName.
+     */
+    public String getFullName() {
+        return fullName;
+    }
 
-	/**
-	 * Returns Hibernate version field.
-	 * 
-	 * @return
-	 */
-	public long getVersion() {
-		return version;
-	}
+    /**
+     * Set the fullName.
+     * 
+     * @param fullName
+     *            The fullName to set.
+     */
+    public void setFullName(String fullName) {
+        this.fullName = fullName;
+    }
+
+    /**
+     * JPA optimistic locking.
+     * 
+     * @return - Version field
+     */
+    public long getVersion() {
+        return version;
+    }
+
+    /**
+     * Return the emailAddress
+     * 
+     * @see java.lang.Object#toString()
+     */
+    @Override
+    public String toString() {
+        return emailAddress;
+    }
 }

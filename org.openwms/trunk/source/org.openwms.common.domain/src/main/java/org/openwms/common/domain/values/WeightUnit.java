@@ -1,8 +1,22 @@
 /*
- * OpenWMS, the open Warehouse Management System
- * 
- * Distributable under LGPL license.
- * See terms of license at gnu.org.
+ * openwms.org, the Open Warehouse Management System.
+ *
+ * This file is part of openwms.org.
+ *
+ * openwms.org is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as 
+ * published by the Free Software Foundation, either version 3 of the
+ * License, or (at your option) any later version.
+ *
+ * openwms.org is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with this software. If not, write to the Free
+ * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
+ * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
 package org.openwms.common.domain.values;
 
@@ -10,20 +24,32 @@ package org.openwms.common.domain.values;
  * A WeightUnit.
  * <p>
  * In SI format.
+ * </p>
  * 
  * @author <a href="mailto:openwms@googlemail.com">Heiko Scherrer</a>
  * @version $Revision$
+ * @since 0.1
  */
 public enum WeightUnit {
-	MG(1000000000), G(1000000), KG(1000), T(1);
+    MG(1000000000), G(1000000), KG(1000), T(1);
 
-	private Long baseUnit;
+    private Long baseUnit;
 
-	WeightUnit(long baseUnit) {
-		this.baseUnit = baseUnit;
-	}
+    /**
+     * Create a new WeightUnit.
+     * 
+     * @param baseUnit
+     */
+    WeightUnit(long baseUnit) {
+        this.baseUnit = baseUnit;
+    }
 
-	public long getBaseUnit() {
-		return this.baseUnit;
-	}
+    /**
+     * Return the base unit.
+     * 
+     * @return
+     */
+    public long getBaseUnit() {
+        return this.baseUnit;
+    }
 }

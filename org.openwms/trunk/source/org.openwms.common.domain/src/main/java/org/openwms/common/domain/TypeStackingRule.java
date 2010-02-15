@@ -1,14 +1,22 @@
 /*
- * OpenWMS, the Open Warehouse Management System
- * 
- * Distributable under LGPL license.
- * See terms of license at gnu.org.
- */
-/*
- * OpenWMS, the Open Warehouse Management System
- * 
- * Distributable under LGPL license.
- * See terms of license at gnu.org.
+ * openwms.org, the Open Warehouse Management System.
+ *
+ * This file is part of openwms.org.
+ *
+ * openwms.org is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as 
+ * published by the Free Software Foundation, either version 3 of the
+ * License, or (at your option) any later version.
+ *
+ * openwms.org is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with this software. If not, write to the Free
+ * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
+ * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
 package org.openwms.common.domain;
 
@@ -24,21 +32,26 @@ import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 
 /**
- * A TypeStackingRule.<br>
- * Defines what <code>TransportUnitType</code> may be placed on the owning
- * <code>TransportUnitType</code>.
+ * A TypeStackingRule.
+ * <p>
+ * Defines which {@link TransportUnitType} may be placed on the which other
+ * {@link TransportUnitType}.
+ * </p>
  * 
  * @author <a href="mailto:openwms@googlemail.com">Heiko Scherrer</a>
  * @version $Revision$
+ * @since 0.1
+ * @see TransportUnitType
  */
 @Entity
 @Table(name = "TYPE_STACKING_RULE", uniqueConstraints = @UniqueConstraint(columnNames = { "TRANSPORT_UNIT_TYPE",
         "NO_TRANSPORT_UNITS", "ALLOWED_TRANSPORT_UNIT_TYPE" }))
 public class TypeStackingRule implements Serializable {
+
     private static final long serialVersionUID = 1L;
 
     /**
-     * Primary key.
+     * Unique technical key.
      */
     @Id
     @Column(name = "ID")
@@ -46,22 +59,22 @@ public class TypeStackingRule implements Serializable {
     private Long id;
 
     /**
-     * Parent <code>TransportUnitType</code>.
+     * Parent {@link TransportUnitType}.
      */
     @ManyToOne
     @JoinColumn(name = "TRANSPORT_UNIT_TYPE")
     private TransportUnitType transportUnitType;
 
     /**
-     * Number of <code>TransportUnitType</code>s that may be placed on the
-     * owning <code>TransportUnitType</code>.
+     * Number of {@link TransportUnitType}s that may be placed on the owning
+     * {@link TransportUnitType}.
      */
     @Column(name = "NO_TRANSPORT_UNITS", nullable = false)
     private short noTransportUnits;
 
     /**
-     * The allowed <code>TransportUnitType</code> that may be placed on the
-     * owning <code>TransportUnitType</code>.
+     * The allowed {@link TransportUnitType} that may be placed on the owning
+     * {@link TransportUnitType}.
      */
     @ManyToOne
     @JoinColumn(name = "ALLOWED_TRANSPORT_UNIT_TYPE", nullable = false)
@@ -69,15 +82,15 @@ public class TypeStackingRule implements Serializable {
 
     /* ----------------------------- methods ------------------- */
     /**
-     * Create a new <code>TypeStackingRule</code>.
+     * Create a new {@link TypeStackingRule}.
      */
     @SuppressWarnings("unused")
     private TypeStackingRule() {}
 
     /**
-     * Create a new <code>TypeStackingRule</code>. Define how many
-     * <code>TransportUnit</code>s of the allowedTransportUnitType may stacked
-     * on this <code>TransportUnitType</code>.
+     * Create a new {@link TypeStackingRule}. Define how many
+     * {@link org.openwms.common.domain.TransportUnit}s of the
+     * allowedTransportUnitType may stacked on this {@link TransportUnitType}.
      * 
      * @param noTransportUnits
      * @param allowedTransportUnitType
@@ -88,7 +101,7 @@ public class TypeStackingRule implements Serializable {
     }
 
     /**
-     * Get the Primary Key.
+     * Return the unique technical key.
      * 
      * @return the id.
      */
@@ -106,8 +119,8 @@ public class TypeStackingRule implements Serializable {
     }
 
     /**
-     * Returns the number of <code>TransportUnitType</code>s that may be placed
-     * on the owning <code>TransportUnitType</code>.
+     * Returns the number of {@link TransportUnitType}s that may be placed on
+     * the owning {@link TransportUnitType}.
      * 
      * @return
      */
@@ -116,8 +129,8 @@ public class TypeStackingRule implements Serializable {
     }
 
     /**
-     * Returns the allowed <code>TransportUnitType</code> that may be placed on
-     * the owning <code>TransportUnitType</code>.
+     * Returns the allowed {@link TransportUnitType} that may be placed on the
+     * owning {@link TransportUnitType}.
      * 
      * @return
      */

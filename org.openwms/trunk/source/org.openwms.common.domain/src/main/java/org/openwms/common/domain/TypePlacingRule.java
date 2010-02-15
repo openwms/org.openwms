@@ -1,8 +1,22 @@
 /*
- * OpenWMS, the Open Warehouse Management System
- * 
- * Distributable under LGPL license.
- * See terms of license at gnu.org.
+ * openwms.org, the Open Warehouse Management System.
+ *
+ * This file is part of openwms.org.
+ *
+ * openwms.org is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as 
+ * published by the Free Software Foundation, either version 3 of the
+ * License, or (at your option) any later version.
+ *
+ * openwms.org is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with this software. If not, write to the Free
+ * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
+ * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
 package org.openwms.common.domain;
 
@@ -20,21 +34,25 @@ import javax.persistence.UniqueConstraint;
 /**
  * A TypePlacingRule.
  * <p>
- * Describes which <code>TransportUnitType</code> may be placed on which
- * <code>LocationType</code>.<br>
- * A privilegeLevel can be set to order all allowed <code>LocationType</code>s.
+ * Describes which {@link TransportUnitType} may be placed on which
+ * {@link LocationType}. A privilegeLevel can be set to order all allowed
+ * {@link LocationType}s.
+ * </p>
  * 
  * @author <a href="mailto:openwms@googlemail.com">Heiko Scherrer</a>
  * @version $Revision$
+ * @since 0.1
+ * @see TransportUnitType
  */
 @Entity
 @Table(name = "TYPE_PLACING_RULE", uniqueConstraints = @UniqueConstraint(columnNames = { "TRANSPORT_UNIT_TYPE",
         "PRIVILEGE_LEVEL", "ALLOWED_LOCATION_TYPE" }))
 public class TypePlacingRule implements Serializable {
+
     private static final long serialVersionUID = 1L;
 
     /**
-     * Primary key.
+     * Unique technical key.
      */
     @Id
     @Column(name = "ID")
@@ -42,7 +60,7 @@ public class TypePlacingRule implements Serializable {
     private Long id;
 
     /**
-     * Parent <code>TransportUnitType</code>.
+     * Parent {@link TransportUnitType}.
      */
     @ManyToOne
     @JoinColumn(name = "TRANSPORT_UNIT_TYPE")
@@ -50,23 +68,24 @@ public class TypePlacingRule implements Serializable {
 
     /**
      * The privilegeLevel defines a priority to describe which
-     * <code>TransportUnitType</code> shall be placed on which
-     * <code>LocationType</code>.<br>
+     * {@link TransportUnitType} shall be placed on which {@link LocationType}.
      * <p>
      * A value of 0 is the lowest priority. Increasing the privilegeLevel
-     * implies a higher priority, that means the <code>TransportUnitType</code>
-     * shall be placed to the <code>LocationType</code> with the highest
-     * privilegeLevel.
+     * implies a higher priority, that means the {@link TransportUnitType} shall
+     * be placed to the {@link LocationType} with the highest privilegeLevel.
+     * </p>
      * <p>
-     * To forbid a <code>TransportUnitType</code> on a <code>LocationType</code>
-     * the privilegeLevel must be set to -1.
+     * To forbid a {@link TransportUnitType} on a {@link LocationType} the
+     * privilegeLevel must be set to -1.
+     * </p>
+     * <i>Note: Default value is 0</i>
      */
     @Column(name = "PRIVILEGE_LEVEL", nullable = false)
     private int privilegeLevel = 0;
 
     /**
-     * The allowed <code>LocationType</code> on which the owning
-     * <code>TransportUnitType</code> may be placed.
+     * The allowed {@link LocationType} on which the owning
+     * {@link TransportUnitType} may be placed.
      */
     @ManyToOne
     @JoinColumn(name = "ALLOWED_LOCATION_TYPE", nullable = false)
@@ -74,13 +93,13 @@ public class TypePlacingRule implements Serializable {
 
     /* ----------------------------- methods ------------------- */
     /**
-     * Create a new <code>TypePlacingRule</code>.
+     * Create a new {@link TypePlacingRule}.
      */
     @SuppressWarnings("unused")
     private TypePlacingRule() {}
 
     /**
-     * Create new <code>TypePlacingRule</code> with privilegeLevel and
+     * Create new {@link TypePlacingRule} with privilegeLevel and
      * allowedLocationType.
      * 
      * @param privilegeLevel
@@ -93,7 +112,7 @@ public class TypePlacingRule implements Serializable {
 
     /**
      * 
-     * Create new <code>TypePlacingRule</code> with allowedLocationType.
+     * Create new {@link TypePlacingRule} with allowedLocationType.
      * 
      * @param allowedLocationType
      */
@@ -102,7 +121,7 @@ public class TypePlacingRule implements Serializable {
     }
 
     /**
-     * Get the id.
+     * Return the unique technical key.
      * 
      * @return the id.
      */
