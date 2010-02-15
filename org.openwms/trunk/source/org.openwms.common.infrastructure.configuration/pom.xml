@@ -53,6 +53,7 @@
                             <version>${project.version}</version>
                             <packaging>properties</packaging>
                             <file>src/org.openwms.infrastructure.configuration.properties</file>
+                            <createChecksum>true</createChecksum>
                         </configuration>
                     </execution>
                 </executions>
