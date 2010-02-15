@@ -1,8 +1,22 @@
 /*
- * OpenWMS, the Open Warehouse Management System
- * 
- * Distributable under LGPL license.
- * See terms of license at gnu.org.
+ * openwms.org, the Open Warehouse Management System.
+ *
+ * This file is part of openwms.org.
+ *
+ * openwms.org is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as 
+ * published by the Free Software Foundation, either version 3 of the
+ * License, or (at your option) any later version.
+ *
+ * openwms.org is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with this software. If not, write to the Free
+ * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
+ * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
 package org.openwms.common.domain;
 
@@ -12,10 +26,13 @@ import javax.persistence.Column;
 import javax.persistence.Embeddable;
 
 /**
- * This value type is the primary key of the <code>Location</code> entity.
+ * This value type is used as unique natural key of the
+ * {@link org.openwms.common.domain.Location} Entity.
  * 
  * @author <a href="mailto:openwms@googlemail.com">Heiko Scherrer</a>
  * @version $Revision$
+ * @since 0.1
+ * @see {@link org.openwms.common.domain.Location}
  */
 @Embeddable
 public class LocationPK implements Serializable {
@@ -66,11 +83,11 @@ public class LocationPK implements Serializable {
      * @param z
      */
     public LocationPK(String area, String aisle, String x, String y, String z) {
-	this.area = area;
-	this.aisle = aisle;
-	this.x = x;
-	this.y = y;
-	this.z = z;
+        this.area = area;
+        this.aisle = aisle;
+        this.x = x;
+        this.y = y;
+        this.z = z;
     }
 
     /**
@@ -79,7 +96,7 @@ public class LocationPK implements Serializable {
      * @return - area
      */
     public String getArea() {
-	return this.area;
+        return this.area;
     }
 
     /**
@@ -88,7 +105,7 @@ public class LocationPK implements Serializable {
      * @return - aisle
      */
     public String getAisle() {
-	return this.aisle;
+        return this.aisle;
     }
 
     /**
@@ -97,7 +114,7 @@ public class LocationPK implements Serializable {
      * @return - x
      */
     public String getX() {
-	return this.x;
+        return this.x;
     }
 
     /**
@@ -106,7 +123,7 @@ public class LocationPK implements Serializable {
      * @return - y
      */
     public String getY() {
-	return this.y;
+        return this.y;
     }
 
     /**
@@ -115,30 +132,35 @@ public class LocationPK implements Serializable {
      * @return - z
      */
     public String getZ() {
-	return this.z;
+        return this.z;
     }
 
     @Override
     public boolean equals(Object o) {
-	if (o == this) {
-	    return true;
-	}
-	if (!(o instanceof LocationPK)) {
-	    return false;
-	}
-	LocationPK other = (LocationPK) o;
-	return this.y.equals(other.y) && this.x.equals(other.x) && this.area.equals(other.area)
-		&& this.z.equals(other.z) && this.aisle.equals(other.aisle);
+        if (o == this) {
+            return true;
+        }
+        if (!(o instanceof LocationPK)) {
+            return false;
+        }
+        LocationPK other = (LocationPK) o;
+        return this.y.equals(other.y) && this.x.equals(other.x) && this.area.equals(other.area)
+                && this.z.equals(other.z) && this.aisle.equals(other.aisle);
     }
 
     @Override
     public int hashCode() {
-	return this.y.hashCode() ^ this.x.hashCode() ^ this.area.hashCode() ^ this.z.hashCode() ^ this.aisle.hashCode();
+        return this.y.hashCode() ^ this.x.hashCode() ^ this.area.hashCode() ^ this.z.hashCode() ^ this.aisle.hashCode();
     }
 
+    /**
+     * Return a String like {AREA/AISLE/X/Y/Z}
+     * 
+     * @see java.lang.Object#toString()
+     */
     @Override
     public String toString() {
-	return "{" + this.area + "/" + this.aisle + "/" + this.x + "/" + this.y + "/" + this.z + "}";
+        return "{" + this.area + "/" + this.aisle + "/" + this.x + "/" + this.y + "/" + this.z + "}";
     }
 
 }

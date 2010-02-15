@@ -1,8 +1,22 @@
 /*
- * OpenWMS, the Open Warehouse Management System
- * 
- * Distributable under LGPL license.
- * See terms of license at gnu.org.
+ * openwms.org, the Open Warehouse Management System.
+ *
+ * This file is part of openwms.org.
+ *
+ * openwms.org is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as 
+ * published by the Free Software Foundation, either version 3 of the
+ * License, or (at your option) any later version.
+ *
+ * openwms.org is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with this software. If not, write to the Free
+ * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
+ * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
 package org.openwms.common.domain;
 
@@ -20,71 +34,81 @@ import javax.persistence.Table;
 import javax.persistence.Version;
 
 /**
- * A TransportUnitType. Describes typical static attributes of a <code>TransportUnit</code> such as length, height,
- * aso. So it is possible to group different <code>TransportUnit</code>s.
+ * A TransportUnitType.
+ * <p>
+ * Holds typical static attributes of a {@link TransportUnit} such as length,
+ * height, aso. So it is possible to group different {@link TransportUnit}s.
+ * </p>
  * 
  * @author <a href="mailto:openwms@googlemail.com">Heiko Scherrer</a>
  * @version $Revision$
+ * @since 0.1
+ * @see TransportUnit
  */
 @Entity
 @Table(name = "TRANSPORT_UNIT_TYPE")
 public class TransportUnitType implements Serializable {
 
     private static final long serialVersionUID = 1L;
+
+    /**
+     * Default description of the {@link TransportUnitType}.
+     */
     public static final String DEF_TYPE_DESCRIPTION = "--";
 
     /**
-     * Unique type identification of a <code>TransportUnit</code>.
+     * Unique natural key. Also used as primary key.
      */
     @Id
     @Column(name = "TYPE")
     private String type;
 
     /**
-     * Description of this Type.
+     * Description of this type.
      */
     @Column(name = "DESCRIPTION")
     private String description = DEF_TYPE_DESCRIPTION;
 
     /**
-     * Length of the <code>TransportUnit</code>.
+     * Length of the {@link TransportUnit}.
      */
     @Column(name = "LENGTH")
     private int length;
 
     /**
-     * Width of the <code>TransportUnit</code>.
+     * Width of the {@link TransportUnit}.
      */
     @Column(name = "WIDTH")
     private int width;
 
     /**
-     * Height of the <code>TransportUnit</code>.
+     * Height of the {@link TransportUnit}.
      */
     @Column(name = "HEIGHT")
     private int height;
 
     /**
-     * Tare weight of the <code>TransportUnit</code>.
+     * Tare weight of the {@link TransportUnit}.
      */
     @Column(name = "WEIGHT_TARE")
     private BigDecimal weightTare;
 
     /**
-     * Maximum weight of this <code>TransportUnit</code>.
+     * Maximum weight of this {@link TransportUnit}.
      */
     @Column(name = "WEIGHT_MAX")
     private BigDecimal weightMax;
 
     /**
-     * Effective payload of the <code>TransportUnit</code>.
+     * Effective payload of the {@link TransportUnit}.
      */
     @Column(name = "PAYLOAD")
     private BigDecimal payload;
 
     /**
-     * Characteristic used to show specific compatibility attributes like: 'isn't compatible with...' or 'is compatible
-     * with ...' or 'type owns the type ...'
+     * Characteristic used to show specific compatibility attributes like:
+     * 'isn't compatible with...' or 'is compatible with ...' or 'type owns the
+     * type ...'
      */
     @Column(name = "COMPATIBILITY")
     private String compatibility;
@@ -97,21 +121,21 @@ public class TransportUnitType implements Serializable {
 
     /* ------------------- collection mapping ------------------- */
     /**
-     * All <code>TransportUnit</code>s belonging to this type.
+     * A collection of all {@link TransportUnit}s belonging to this type.
      */
     @OneToMany(mappedBy = "transportUnitType")
     private Set<TransportUnit> transportUnits = new HashSet<TransportUnit>();
 
     /**
-     * Describes which other <code>TransportUnitType</code>s and how many of that type may be stacked on this
-     * <code>TransportUnitType</code>.
+     * Describes which other {@link TransportUnitType}s and how many of that
+     * type may be stacked on this {@link TransportUnitType}.
      */
     @OneToMany(mappedBy = "transportUnitType", cascade = { CascadeType.PERSIST, CascadeType.MERGE })
     private Set<TypeStackingRule> typeStackingRules = new HashSet<TypeStackingRule>();
 
     /**
-     * A Set of <code>TypePlacingRule</code>s to describe all possible <code>LocationType</code>s for this
-     * <code>TransportUnitType</code>.
+     * A Set of {@link TypePlacingRule}s to describe all possible
+     * {@link LocationType}s for this {@link TransportUnitType}.
      */
     @OneToMany(mappedBy = "transportUnitType", cascade = { CascadeType.PERSIST, CascadeType.MERGE })
     private Set<TypePlacingRule> typePlacingRules = new HashSet<TypePlacingRule>();
@@ -124,203 +148,206 @@ public class TransportUnitType implements Serializable {
     private TransportUnitType() {}
 
     /**
-     * Create a new <code>TransportUnitType</code>.
+     * Create a new {@link TransportUnitType}.
      * 
      * @param type
+     *            - Unique name
      */
     public TransportUnitType(String type) {
-	this.type = type;
+        this.type = type;
     }
 
     /**
-     * Returns the type of the <code>TransportUnit</code>.
+     * Returns the type of the {@link TransportUnit}.
      * 
      * @return
      */
     public String getType() {
-	return this.type;
+        return this.type;
     }
 
     /**
-     * Set the type of the <code>TransportUnit</code>.
+     * Set the type of the {@link TransportUnit}.
      * 
      * @param type
      */
     public void setType(String type) {
-	this.type = type;
+        this.type = type;
     }
 
     /**
-     * Returns the width of the <code>TransportUnit</code>.
+     * Returns the width of the {@link TransportUnit}.
      * 
      * @return
      */
     public int getWidth() {
-	return this.width;
+        return this.width;
     }
 
     /**
-     * Set the width of the <code>TransportUnit</code>.
+     * Set the width of the {@link TransportUnit}.
      * 
      * @param width
      */
     public void setWidth(int width) {
-	this.width = width;
+        this.width = width;
     }
 
     /**
-     * Returns the description of the <code>TransportUnit</code>.
+     * Returns the description of the {@link TransportUnit}.
      * 
      * @return
      */
     public String getDescription() {
-	return this.description;
+        return this.description;
     }
 
     /**
-     * Set the description for the <code>TransportUnit</code>.
+     * Set the description for the {@link TransportUnit}.
      * 
      * @param description
      */
     public void setDescription(String description) {
-	this.description = description;
+        this.description = description;
     }
 
     /**
-     * Returns the height of this <code>TransportUnit</code>.
+     * Returns the height of this {@link TransportUnit}.
      * 
      * @return
      */
     public int getHeight() {
-	return this.height;
+        return this.height;
     }
 
     /**
-     * Set the height of this <code>TransportUnit</code>.
+     * Set the height of this {@link TransportUnit}.
      * 
      * @param height
      */
     public void setHeight(int height) {
-	this.height = height;
+        this.height = height;
     }
 
     /**
-     * Returns the payload of the <code>TransportUnit</code>.
+     * Returns the payload of the {@link TransportUnit}.
      * 
      * @return
      */
     public BigDecimal getPayload() {
-	return this.payload;
+        return this.payload;
     }
 
     /**
-     * Set the payload of the <code>TransportUnit</code>.
+     * Set the payload of the {@link TransportUnit}.
      * 
      * @param payload
      */
     public void setPayload(BigDecimal payload) {
-	this.payload = payload;
+        this.payload = payload;
     }
 
     /**
-     * Get the compatibility of the <code>TransportUnit</code>.
+     * Get the compatibility of the {@link TransportUnit}.
      * 
      * @return
      */
     public String getCompatibility() {
-	return this.compatibility;
+        return this.compatibility;
     }
 
     /**
-     * Set the compatibility of the <code>TransportUnit</code>.
+     * Set the compatibility of the {@link TransportUnit}.
      * 
      * @param compatibility
      */
     public void setCompatibility(String compatibility) {
-	this.compatibility = compatibility;
+        this.compatibility = compatibility;
     }
 
     /**
-     * Get the length of the <code>TransportUnit</code>.
+     * Get the length of the {@link TransportUnit}.
      * 
      * @return
      */
     public int getLength() {
-	return this.length;
+        return this.length;
     }
 
     /**
-     * Set the length of the <code>TransportUnit</code>.
+     * Set the length of the {@link TransportUnit}.
      * 
      * @param length
      */
     public void setLength(int length) {
-	this.length = length;
+        this.length = length;
     }
 
     /**
-     * Returns a Set of <code>TransportUnit</code>s belonging to this type.
+     * Returns a Set of all {@link TransportUnit}s belonging to this type.
      * 
      * @return
      */
     public Set<TransportUnit> getTransportUnits() {
-	return this.transportUnits;
+        return this.transportUnits;
     }
 
     /**
-     * Assign a Set of <code>TransportUnit</code>s to this type.
+     * Assign a Set of {@link TransportUnit}s to this type.
      * 
      * @param transportUnits
      */
     public void setTransportUnits(Set<TransportUnit> transportUnits) {
-	this.transportUnits = transportUnits;
+        this.transportUnits = transportUnits;
     }
 
     public void addTypePlacingRule(TypePlacingRule typePlacingRule) {
-	if (typePlacingRule == null) {
-	    return;
-	}
-	this.typePlacingRules.add(typePlacingRule);
+        if (typePlacingRule == null) {
+            return;
+        }
+        this.typePlacingRules.add(typePlacingRule);
     }
 
     /**
-     * Returns all <code>TypePlacingRule</code>s belonging to this <code>TransportUnitType</code>.
+     * Returns all {@link TypePlacingRule}s belonging to this
+     * {@link TransportUnitType}.
      * 
      * @return
      */
     public Set<TypePlacingRule> getTypePlacingRules() {
-	return this.typePlacingRules;
+        return this.typePlacingRules;
     }
 
     /**
-     * Set all <code>TypePlacingRule</code>s belonging to this <code>TransportUnitType</code>.
+     * Set all {@link TypePlacingRule}s belonging to this
+     * {@link TransportUnitType}.
      * 
      * @param typePlacingRules
      */
     public void setTypePlacingRules(Set<TypePlacingRule> typePlacingRules) {
-	this.typePlacingRules = typePlacingRules;
+        this.typePlacingRules = typePlacingRules;
     }
 
     /**
-     * Returns a Set of all <code>TypeStackingRule</code>s.<br>
-     * A <code>TypeStackingRule</code> describes which <code>TransportUnitType</code> could be placed on this
-     * <code>TransportUnitType</code>.
+     * Returns a Set of all {@link TypeStackingRule}s.<br>
+     * A {@link TypeStackingRule} describes which {@link TransportUnitType}
+     * could be placed on this {@link TransportUnitType}.
      * 
      * @return
      */
     public Set<TypeStackingRule> getTypeStackingRules() {
-	return this.typeStackingRules;
+        return this.typeStackingRules;
     }
 
     /**
-     * Sets a Set of all <code>TypeStackingRule</code>s.<br>
-     * A <code>TypeStackingRule</code> describes which <code>TransportUnitType</code> could be placed on this
-     * <code>TransportUnitType</code>.
+     * Sets a Set of all {@link TypeStackingRule}s.<br>
+     * A {@link TypeStackingRule} describes which {@link TransportUnitType}
+     * could be placed on this {@link TransportUnitType}.
      * 
      * @param typeStackingRules
      */
     public void setTypeStackingRules(Set<TypeStackingRule> typeStackingRules) {
-	this.typeStackingRules = typeStackingRules;
+        this.typeStackingRules = typeStackingRules;
     }
 
     /**
@@ -329,17 +356,17 @@ public class TransportUnitType implements Serializable {
      * @return the weightTare.
      */
     public BigDecimal getWeightTare() {
-	return weightTare;
+        return weightTare;
     }
 
     /**
      * Set the weightTare.
      * 
      * @param weightTare
-     *                The weightTare to set.
+     *            The weightTare to set.
      */
     public void setWeightTare(BigDecimal weightTare) {
-	this.weightTare = weightTare;
+        this.weightTare = weightTare;
     }
 
     /**
@@ -348,25 +375,35 @@ public class TransportUnitType implements Serializable {
      * @return the weightMax.
      */
     public BigDecimal getWeightMax() {
-	return weightMax;
+        return weightMax;
     }
 
     /**
      * Set the weightMax.
      * 
      * @param weightMax
-     *                The weightMax to set.
+     *            The weightMax to set.
      */
     public void setWeightMax(BigDecimal weightMax) {
-	this.weightMax = weightMax;
+        this.weightMax = weightMax;
     }
 
     /**
-     * JPA optimistic locking: Returns version field.
+     * JPA optimistic locking.
      * 
-     * @return
+     * @return - Version field.
      */
     public long getVersion() {
-	return this.version;
+        return this.version;
+    }
+
+    /**
+     * Returns the type.
+     * 
+     * @see java.lang.Object#toString()
+     */
+    @Override
+    public String toString() {
+        return this.type;
     }
 }

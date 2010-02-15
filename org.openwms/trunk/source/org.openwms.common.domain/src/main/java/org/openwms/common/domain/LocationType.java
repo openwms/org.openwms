@@ -1,8 +1,22 @@
 /*
- * OpenWMS, the Open Warehouse Management System
- * 
- * Distributable under LGPL license.
- * See terms of license at gnu.org.
+ * openwms.org, the Open Warehouse Management System.
+ *
+ * This file is part of openwms.org.
+ *
+ * openwms.org is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as 
+ * published by the Free Software Foundation, either version 3 of the
+ * License, or (at your option) any later version.
+ *
+ * openwms.org is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with this software. If not, write to the Free
+ * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
+ * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
 package org.openwms.common.domain;
 
@@ -17,180 +31,208 @@ import javax.persistence.Table;
 import javax.persistence.Version;
 
 /**
- * Type of <code>Location</code>.<br>
- * Used to describe <code>Location</code>s with same characteristics.
+ * A LocationType.
+ * <p>
+ * Type of a {@link org.openwms.common.domain.Location}.<br>
+ * Used to describe {@link org.openwms.common.domain.Location}s that have same
+ * characteristics.
+ * </p>
  * 
  * @author <a href="mailto:openwms@googlemail.com">Heiko Scherrer</a>
  * @version $Revision$
+ * @since 0.1
+ * @see {@link org.openwms.common.domain.Location}
  */
 @Entity
 @Table(name = "LOCATION_TYPE")
 public class LocationType implements Serializable {
 
-	private static final long serialVersionUID = 1L;
-	public static final String DEF_TYPE_DESCRIPTION = "--";
+    private static final long serialVersionUID = 1L;
 
-	/**
-	 * Type of this <code>LocationType</code>.
-	 */
-	@Id
-	@Column(name = "TYPE")
-	private String type;
+    /**
+     * Default value of the description.
+     */
+    public static final String DEF_TYPE_DESCRIPTION = "--";
 
-	/**
-	 * Description of this <code>LocationType</code>.
-	 */
-	@Column(name = "DESCRIPTION")
-	private String description = DEF_TYPE_DESCRIPTION;
+    /**
+     * Type of this {@link LocationType}
+     */
+    @Id
+    @Column(name = "TYPE")
+    private String type;
 
-	/**
-	 * Length of this <code>LocationType</code>.
-	 */
-	@Column(name = "LENGTH")
-	private int length = 0;
+    /**
+     * Description of this {@link LocationType}
+     */
+    @Column(name = "DESCRIPTION")
+    private String description = DEF_TYPE_DESCRIPTION;
 
-	/**
-	 * Width of this <code>LocationType</code>.
-	 */
-	@Column(name = "WIDTH")
-	private int width = 0;
+    /**
+     * Length of this {@link LocationType}
+     */
+    @Column(name = "LENGTH")
+    private int length = 0;
 
-	/**
-	 * Height of this <code>LocationType</code>.
-	 */
-	@Column(name = "HEIGHT")
-	private int height = 0;
+    /**
+     * Width of this {@link LocationType}
+     */
+    @Column(name = "WIDTH")
+    private int width = 0;
 
-	/**
-	 * Version field
-	 */
-	@Version
-	private long version;
+    /**
+     * Height of this {@link LocationType}
+     */
+    @Column(name = "HEIGHT")
+    private int height = 0;
 
-	/* ------------------- collection mapping ------------------- */
-	/**
-	 * All <code>Location</code>s belonging to this type.
-	 */
-	@OneToMany(mappedBy = "locationType")
-	private Set<Location> locations;
+    /**
+     * Version field.
+     */
+    @Version
+    private long version;
 
-	/* ----------------------------- methods ------------------- */
+    /* ------------------- collection mapping ------------------- */
+    /**
+     * All {@link LocationType}s belonging to this type.
+     */
+    @OneToMany(mappedBy = "locationType")
+    private Set<Location> locations;
+
+    /* ----------------------------- methods ------------------- */
     /**
      * Accessed by persistence provider.
      */
     @SuppressWarnings("unused")
     private LocationType() {}
 
-	public LocationType(String type) {
-		super();
-		this.type = type;
-	}
+    /**
+     * Create a new {@link LocationType} with a unique natural key.
+     * 
+     * @param type
+     *            - Unique type
+     */
+    public LocationType(String type) {
+        super();
+        this.type = type;
+    }
 
-	/**
-	 * Get the unique identifier of this <code>LocationType</code>.
-	 * 
-	 * @return - type
-	 */
-	public String getType() {
-		return this.type;
-	}
+    /**
+     * Get the unique identifier of this {@link LocationType}
+     * 
+     * @return - type
+     */
+    public String getType() {
+        return this.type;
+    }
 
-	/**
-	 * Get the length of this <code>LocationType</code>.
-	 * 
-	 * @return - length
-	 */
-	public int getLength() {
-		return this.length;
-	}
+    /**
+     * Get the length of this {@link LocationType}
+     * 
+     * @return - length
+     */
+    public int getLength() {
+        return this.length;
+    }
 
-	/**
-	 * Set the length of this <code>LocationType</code>.
-	 * 
-	 * @param length
-	 */
-	public void setLength(int length) {
-		this.length = length;
-	}
+    /**
+     * Set the length of this {@link LocationType}
+     * 
+     * @param length
+     */
+    public void setLength(int length) {
+        this.length = length;
+    }
 
-	/**
-	 * Get the width of this <code>LocationType</code>.
-	 * 
-	 * @return - width
-	 */
-	public int getWidth() {
-		return this.width;
-	}
+    /**
+     * Get the width of this {@link LocationType}
+     * 
+     * @return - width
+     */
+    public int getWidth() {
+        return this.width;
+    }
 
-	/**
-	 * Set the width of this <code>LocationType</code>.
-	 * 
-	 * @param width
-	 */
-	public void setWidth(int width) {
-		this.width = width;
-	}
+    /**
+     * Set the width of this {@link LocationType}
+     * 
+     * @param width
+     */
+    public void setWidth(int width) {
+        this.width = width;
+    }
 
-	/**
-	 * Get the description of this <code>LocationType</code>.
-	 * 
-	 * @return - description
-	 */
-	public String getDescription() {
-		return this.description;
-	}
+    /**
+     * Get the description of this {@link LocationType}
+     * 
+     * @return - description
+     */
+    public String getDescription() {
+        return this.description;
+    }
 
-	/**
-	 * Set the description of this <code>LocationType</code>.
-	 * 
-	 * @param description
-	 */
-	public void setDescription(String description) {
-		this.description = description;
-	}
+    /**
+     * Set the description of this {@link LocationType}
+     * 
+     * @param description
+     */
+    public void setDescription(String description) {
+        this.description = description;
+    }
 
-	/**
-	 * Get the height of this <code>LocationType</code>.
-	 * 
-	 * @return - height
-	 */
-	public int getHeight() {
-		return this.height;
-	}
+    /**
+     * Get the height of this {@link LocationType}
+     * 
+     * @return - height
+     */
+    public int getHeight() {
+        return this.height;
+    }
 
-	/**
-	 * Set the height of this <code>LocationType</code>.
-	 * 
-	 * @param height
-	 */
-	public void setHeight(int height) {
-		this.height = height;
-	}
+    /**
+     * Set the height of this {@link LocationType}
+     * 
+     * @param height
+     */
+    public void setHeight(int height) {
+        this.height = height;
+    }
 
-	/**
-	 * Get all <code>Location</code>s belonging to this <code>LocationType</code>.
-	 * 
-	 * @return - All <code>Location</code>s belonging to this <code>LocationType</code>
-	 */
-	public Set<Location> getLocations() {
-		return this.locations;
-	}
+    /**
+     * Get all {@link LocationType}s belonging to this {@link LocationType}
+     * 
+     * @return - All {@link LocationType}s belonging to this
+     *         {@link LocationType}
+     */
+    public Set<Location> getLocations() {
+        return this.locations;
+    }
 
-	/**
-	 * Set a <code>Set</code> of <code>Location</code>s belonging to this <code>LocationType</code>.
-	 * 
-	 * @param locations
-	 */
-	public void setLocations(Set<Location> locations) {
-		this.locations = locations;
-	}
+    /**
+     * Set a {@java.util.Set} of {@link LocationType}s belonging
+     * to this {@link LocationType}
+     * 
+     * @param locations
+     */
+    public void setLocations(Set<Location> locations) {
+        this.locations = locations;
+    }
 
-	/**
-	 * JPA optimistic locking: Returns version field.
-	 * 
-	 * @return
-	 */
-	public long getVersion() {
-		return this.version;
-	}
+    /**
+     * JPA optimistic locking.
+     * 
+     * @return - Version field
+     */
+    public long getVersion() {
+        return this.version;
+    }
+
+    /**
+     * Return the type as String.
+     * 
+     * @see java.lang.Object#toString()
+     */
+    @Override
+    public String toString() {
+        return getType();
+    }
 }
