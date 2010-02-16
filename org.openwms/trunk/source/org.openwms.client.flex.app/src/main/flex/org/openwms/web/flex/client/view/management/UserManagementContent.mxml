@@ -67,7 +67,7 @@
 					if (UserHelper.haveDetails(user)) {
 						if (user.userDetails.sex == UserDetails$SEX.MAN) {
 							asset=new manImage() as BitmapAsset;
-						} else if (user.userDetails.sex == UserDetails$SEX.WOMAN) {
+						} else if (user.userDetails.sex == UserDetails$SEX.FEMALE) {
 							asset=new womanImage() as BitmapAsset;
 						} else {
 							asset=new uniSexImage() as BitmapAsset;
@@ -157,7 +157,7 @@
 						<mx:Tile width="250">
 							<mx:RadioButtonGroup id="sexRb" selectedValue="{modelLocator.selectedUser.userDetails.sex}"/>
 							<mx:RadioButton value="{UserDetails$SEX.MAN}" label="Male" group="{sexRb}"/>
-							<mx:RadioButton value="{UserDetails$SEX.WOMAN}" label="Female" group="{sexRb}"/>
+							<mx:RadioButton value="{UserDetails$SEX.FEMALE}" label="Female" group="{sexRb}"/>
 						</mx:Tile>
 					</mx:FormItem>
 

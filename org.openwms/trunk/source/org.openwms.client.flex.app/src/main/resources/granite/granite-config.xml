@@ -11,18 +11,20 @@
     "http://www.graniteds.org/public/dtd/2.0.0/granite-config.dtd">
     
 <granite-config>
-<!--  -->
+<!--  
     <class-getter type="org.granite.eclipselink.EclipseLinkClassGetter"/>
+-->
+    <class-getter type="org.granite.hibernate.HibernateClassGetter"/>
 
     <externalizers>
-        <externalizer type="org.granite.eclipselink.EclipseLinkExternalizer">
+        <externalizer type="org.granite.hibernate.HibernateExternalizer">
             <include annotated-with="javax.persistence.Entity"/>
             <include annotated-with="javax.persistence.MappedSuperclass"/>
             <include annotated-with="javax.persistence.Embeddable"/>
         </externalizer>
     </externalizers>
 <!-- 
-	<security type="org.granite.messaging.service.security.SpringSecurityService"/>
+    <security type="org.granite.messaging.service.security.SpringSecurityService"/>
  -->
 </granite-config>
 
