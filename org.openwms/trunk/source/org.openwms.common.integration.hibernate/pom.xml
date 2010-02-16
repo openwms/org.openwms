@@ -34,8 +34,15 @@
     <name>${project.artifactId}</name>
     <properties>
         <moduleDir>..</moduleDir>
+        <openwms.configuration.version>0.0.1-SNAPSHOT</openwms.configuration.version>
     </properties>
     <build>
+        <resources>
+          <resource>
+            <directory>src/main/resources</directory>
+            <filtering>true</filtering>
+          </resource>
+        </resources>
         <plugins>
             <plugin>
                 <groupId>com.springsource.bundlor</groupId>
@@ -103,6 +110,13 @@
             <groupId>${project.groupId}</groupId>
             <artifactId>org.openwms.common.domain</artifactId>
             <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>org.openwms.common.infrastructure.configuration</artifactId>
+            <version>${openwms.configuration.version}</version>
+            <type>properties</type>
+            <scope>runtime</scope>
         </dependency>
     </dependencies>
 </project>
