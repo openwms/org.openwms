@@ -1,8 +1,26 @@
 <?xml version="1.0" encoding="UTF-8"?>
-    <!--
-        /* * OpenWMS, the Open Warehouse Management System * * Distributable under LGPL license. * See terms of license
-        at gnu.org. */
-    -->
+<!--
+/*
+ * openwms.org, the Open Warehouse Management System.
+ *
+ * This file is part of openwms.org.
+ *
+ * openwms.org is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as 
+ * published by the Free Software Foundation, either version 3 of the
+ * License, or (at your option) any later version.
+ *
+ * openwms.org is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with this software. If not, write to the Free
+ * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
+ * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
+ */  
+-->
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     <modelVersion>4.0.0</modelVersion>
@@ -30,10 +48,20 @@
     </licenses>
 
     <distributionManagement>
+        <repository>
+            <id>${distribution.repo.serverId}</id>
+            <name>OpenWMS Release Repository</name>
+            <url>${distribution.repo.serverProtocol}//${distribution.repo.serverUrl.rootPath}</url>
+        </repository>
+        <snapshotRepository>
+            <id>${distribution.repo.serverId}</id>
+            <name>OpenWMS Snapshot Repository</name>
+            <url>${distribution.repo.serverProtocol}//${distribution.repo.snapshot.serverUrl.rootPath}</url>
+        </snapshotRepository>
         <site>
             <id>${distribution.serverId}</id>
             <name>OpenWMS WebSite</name>
-            <url>${distribution.serverProtocol}${distribution.serverUrl.sourcePath}</url>
+            <url>${distribution.serverProtocol}://${distribution.serverUrl.sourcePath}</url>
         </site>
     </distributionManagement>
 
@@ -58,7 +86,7 @@
             <url>https://sourceforge.net/users/scherrer</url>
             <timezone>+1</timezone>
             <roles>
-                <role>project founder</role>
+                <role>project owner</role>
                 <role>developer</role>
                 <role>deployer</role>
             </roles>
@@ -124,120 +152,59 @@
     <profiles>
         <profile>
             <id>private-repo</id>
-            <distributionManagement>
-                <repository>
-                    <id>Rudi-Releases</id>
-                    <name>Internal Releases</name>
-                    <url>http://rudi.worker:8081/nexus/content/repositories/releases</url>
-                </repository>
-                <snapshotRepository>
-                    <id>Rudi-Snapshots</id>
-                    <name>Internal Snapshots</name>
-                    <url>http://rudi.worker:8081/nexus/content/repositories/snapshots</url>
-                </snapshotRepository>
-            </distributionManagement>
-            <pluginRepositories>
-                <pluginRepository>
-                    <id>com.springsource.repository.bundles.release</id>
-                    <name>Internal Plugin Repository</name>
-                    <url>rudi.worker:8081/nexus/content/repositories/plugins</url>
-                </pluginRepository>
-            </pluginRepositories>
-            <repositories>
-                <repository>
-                    <id>com.springsource.repository.bundles.snapshot</id>
-                    <name>Internal Repository</name>
-                    <url>http://rudi.worker:8081/nexus/content/repositories/all</url>
-                </repository>
-            </repositories>
+            <properties>
+                <!-- Web Site deployment -->
+                <distribution.serverId>router</distribution.serverId>
+                <distribution.serverProtocol>file:/</distribution.serverProtocol>
+                <distribution.serverUrl.rootPath>var/www/openwms</distribution.serverUrl.rootPath>
+                <distribution.serverUrl.sourcePath>${distribution.serverUrl.rootPath}/reference/${project.version}</distribution.serverUrl.sourcePath>
+                <distribution.serverUrl.docsPath>${distribution.serverUrl.rootPath}/docs</distribution.serverUrl.docsPath>
+                <!-- Maven Repo Artifact deployment -->
+                <distribution.repo.serverId>nexus</distribution.repo.serverId>
+                <distribution.repo.serverProtocol>http:</distribution.repo.serverProtocol>
+                <distribution.repo.serverUrl.rootPath>rudi:8081/nexus/content/repositories/releases</distribution.repo.serverUrl.rootPath>
+                <distribution.repo.snapshot.serverUrl.rootPath>rudi:8081/nexus/content/repositories/snapshots</distribution.repo.snapshot.serverUrl.rootPath>
+            </properties>
+        </profile>
+        <profile>
+            <id>all</id>
+            <modules>
+                <module>org.openwms.common.domain</module>
+                <module>org.openwms.common.infrastructure.configuration</module>
+                <module>org.openwms.common.infrastructure.hsql</module>
+                <module>org.openwms.common.infrastructure.postgres</module>
+                <module>org.openwms.common.domain.as</module>
+                <module>org.openwms.common.framework.test</module>
+                <module>org.openwms.common.integration</module>
+                <module>org.openwms.common.integration.eclipselink</module>
+                <module>org.openwms.common.integration.hibernate</module>
+                <module>org.openwms.common.integration.jpa</module>
+                <module>org.openwms.common.service.api</module>
+                <module>org.openwms.common.service.spring</module>
+                <module>org.openwms.client.flex.app</module>
+                <module>org.openwms.client.flex.wrapper</module>
+                <module>org.openwms.tms.domain</module>
+                <module>org.openwms.app.plan</module>
+            </modules>
         </profile>
         <profile>
             <id>public-repo</id>
             <activation>
                 <activeByDefault>true</activeByDefault>
             </activation>
-            <pluginRepositories>
-                <pluginRepository>
-                    <id>com.springsource.repository.bundles.release</id>
-                    <name>SpringSource Enterprise Bundle Repository - Releases</name>
-                    <url>http://repository.springsource.com/maven/bundles/release</url>
-                </pluginRepository>
-                <pluginRepository>
-                    <id>com.springsource.repository.bundles.milestone</id>
-                    <name>SpringSource Enterprise Bundle Repository - Milestone</name>
-                    <url>http://repository.springsource.com/maven/bundles/milestone</url>
-                </pluginRepository>
-            </pluginRepositories>
-            <repositories>
-                <repository>
-                    <id>Version99</id>
-                    <name>Version 99 Does Not Exist Maven repository</name>
-                    <layout>default</layout>
-                    <url>http://no-commons-logging.zapto.org/mvn2</url>
-                </repository>
-                <repository>
-                    <id>org.openwms.releases</id>
-                    <name>OpenWMS Sourceforge Maven Repository Releases</name>
-                    <url>http://openwms2005.sourceforge.net/repo/releases</url>
-                    <releases>
-                        <enabled>true</enabled>
-                    </releases>
-                    <snapshots>
-                        <enabled>false</enabled>
-                    </snapshots>
-                </repository>
-                <repository>
-                    <id>org.openwms.snapshot</id>
-                    <name>OpenWMS Sourceforge Maven Repository Snapshots</name>
-                    <url>http://openwms2005.sourceforge.net/repo/snapshots</url>
-                    <releases>
-                        <enabled>false</enabled>
-                    </releases>
-                    <snapshots>
-                        <enabled>true</enabled>
-                    </snapshots>
-                </repository>
-                <repository>
-                    <id>com.springsource.repository.bundles.snapshot</id>
-                    <name>SpringSource Enterprise Bundle Repository - SpringSource Bundle Snapshot</name>
-                    <url>http://repository.springsource.com/maven/bundles/snapshot</url>
-                </repository>
-                <repository>
-                    <id>com.springsource.repository.bundles.release</id>
-                    <name>SpringSource Enterprise Bundle Repository - SpringSource Bundle Releases</name>
-                    <url>http://repository.springsource.com/maven/bundles/release</url>
-                </repository>
-                <repository>
-                    <id>com.springsource.repository.bundle.external</id>
-                    <name>SpringSource Enterprise Bundle Repository - External Bundle Releases</name>
-                    <url>http://repository.springsource.com/maven/bundles/external</url>
-                </repository>
-                <repository>
-                    <id>com.springsource.repository.bundle.milestone</id>
-                    <name>SpringSource Enterprise Bundle Repository - SpringSource Bundle Milestones</name>
-                    <url>http://repository.springsource.com/maven/bundles/milestone</url>
-                </repository>
-                <repository>
-                    <id>com.springsource.repository.libraries.release</id>
-                    <name>SpringSource Enterprise Bundle Repository - SpringSource Library Releases</name>
-                    <url>http://repository.springsource.com/maven/libraries/release</url>
-                </repository>
-                <repository>
-                    <id>com.springsource.repository.libraries.external</id>
-                    <name>SpringSource Enterprise Bundle Repository - External Library Releases</name>
-                    <url>http://repository.springsource.com/maven/libraries/external</url>
-                </repository>
-                <repository>
-                    <id>com.springsource.repository.libraries.milestone</id>
-                    <name>SpringSource Enterprise Bundle Repository - Milestone Library Releases</name>
-                    <url>http://repository.springsource.com/maven/libraries/milestone</url>
-                </repository>
-                <repository>
-                    <id>com.springsource.repository.libraries.snapshot</id>
-                    <name>SpringSource Enterprise Bundle Repository - Snapshot Library Releases</name>
-                    <url>http://repository.springsource.com/maven/libraries/snapshot</url>
-                </repository>
-            </repositories>
+            <properties>
+                <!-- Web Site deployment -->
+                <distribution.serverId>repo.sourceforge.net</distribution.serverId>
+                <distribution.serverProtocol>scp://</distribution.serverProtocol>
+                <distribution.serverUrl.rootPath>shell.sourceforge.net/home/groups/o/op/openwms2005/htdocs/openwms</distribution.serverUrl.rootPath>
+                <distribution.serverUrl.sourcePath>${distribution.serverUrl.rootPath}/reference/${project.version}</distribution.serverUrl.sourcePath>
+                <distribution.serverUrl.docsPath>${distribution.serverUrl.rootPath}/docs</distribution.serverUrl.docsPath>
+                <!-- Maven Repo Artifact deployment -->
+                <distribution.repo.serverId>repo.sourceforge.net</distribution.repo.serverId>
+                <distribution.repo.serverProtocol>scp:</distribution.repo.serverProtocol>
+                <distribution.repo.serverUrl.rootPath>shell.sourceforge.net/home/groups/o/op/openwms2005/htdocs/repo/releases</distribution.repo.serverUrl.rootPath>
+                <distribution.repo.snapshot.serverUrl.rootPath>shell.sourceforge.net/home/groups/o/op/openwms2005/htdocs/repo/snapshots</distribution.repo.snapshot.serverUrl.rootPath>
+            </properties>
         </profile>
     </profiles>
 
@@ -247,42 +214,114 @@
         <jdkVersion>1.6</jdkVersion>
         <spring.version>3.0.0.RELEASE</spring.version>
         <hibernate.version>3.2.6.GA</hibernate.version>
-        <maven.test.failure.ignore>true</maven.test.failure.ignore>
         <granite.version>2.0.0.GA</granite.version>
         <maven.compile.targetLevel>${jdkVersion}</maven.compile.targetLevel>
         <maven.compile.sourceLevel>${jdkVersion}</maven.compile.sourceLevel>
     </properties>
 
-    <modules>
-        <module>org.openwms.common.domain</module>
-        <module>org.openwms.common.infrastructure.hsql</module>
-        <module>org.openwms.common.infrastructure.postgres</module>
-        <module>org.openwms.common.domain.as</module>
-        <module>org.openwms.common.framework.test</module>
-        <module>org.openwms.common.integration</module>
-        <module>org.openwms.common.integration.eclipselink</module>
-        <module>org.openwms.common.integration.jpa</module>
-        <module>org.openwms.common.service.api</module>
-        <module>org.openwms.common.service.spring</module>
-        <module>org.openwms.client.flex.app</module>
-        <module>org.openwms.client.flex.wrapper</module>
-        <module>org.openwms.app</module>
-    </modules>
+    <pluginRepositories>
+        <pluginRepository>
+            <id>com.springsource.repository.bundles.release</id>
+            <name>SpringSource Enterprise Bundle Repository - Releases</name>
+            <url>http://repository.springsource.com/maven/bundles/release</url>
+        </pluginRepository>
+        <pluginRepository>
+            <id>com.springsource.repository.bundles.milestone</id>
+            <name>SpringSource Enterprise Bundle Repository - Milestone</name>
+            <url>http://repository.springsource.com/maven/bundles/milestone</url>
+        </pluginRepository>
+    </pluginRepositories>
+    <repositories>
+        <repository>
+            <id>org.openwms.releases</id>
+            <name>OpenWMS Sourceforge Maven Repository Releases</name>
+            <url>http://openwms2005.sourceforge.net/repo/releases</url>
+            <releases>
+                <enabled>true</enabled>
+            </releases>
+            <snapshots>
+                <enabled>false</enabled>
+            </snapshots>
+        </repository>
+        <repository>
+            <id>org.openwms.snapshot</id>
+            <name>OpenWMS Sourceforge Maven Repository Snapshots</name>
+            <url>http://openwms2005.sourceforge.net/repo/snapshots</url>
+            <releases>
+                <enabled>false</enabled>
+            </releases>
+            <snapshots>
+                <enabled>true</enabled>
+            </snapshots>
+        </repository>
+        <repository>
+            <id>com.springsource.repository.bundles.snapshot</id>
+            <name>SpringSource Enterprise Bundle Repository - SpringSource Bundle Snapshot</name>
+            <url>http://repository.springsource.com/maven/bundles/snapshot</url>
+        </repository>
+        <repository>
+            <id>com.springsource.repository.bundles.release</id>
+            <name>SpringSource Enterprise Bundle Repository - SpringSource Bundle Releases</name>
+            <url>http://repository.springsource.com/maven/bundles/release</url>
+        </repository>
+        <repository>
+            <id>com.springsource.repository.bundle.external</id>
+            <name>SpringSource Enterprise Bundle Repository - External Bundle Releases</name>
+            <url>http://repository.springsource.com/maven/bundles/external</url>
+        </repository>
+        <repository>
+            <id>com.springsource.repository.bundle.milestone</id>
+            <name>SpringSource Enterprise Bundle Repository - SpringSource Bundle Milestones</name>
+            <url>http://repository.springsource.com/maven/bundles/milestone</url>
+        </repository>
+        <repository>
+            <id>com.springsource.repository.libraries.release</id>
+            <name>SpringSource Enterprise Bundle Repository - SpringSource Library Releases</name>
+            <url>http://repository.springsource.com/maven/libraries/release</url>
+        </repository>
+        <repository>
+            <id>com.springsource.repository.libraries.external</id>
+            <name>SpringSource Enterprise Bundle Repository - External Library Releases</name>
+            <url>http://repository.springsource.com/maven/libraries/external</url>
+        </repository>
+        <repository>
+            <id>com.springsource.repository.libraries.milestone</id>
+            <name>SpringSource Enterprise Bundle Repository - Milestone Library Releases</name>
+            <url>http://repository.springsource.com/maven/libraries/milestone</url>
+        </repository>
+        <repository>
+            <id>com.springsource.repository.libraries.snapshot</id>
+            <name>SpringSource Enterprise Bundle Repository - Snapshot Library Releases</name>
+            <url>http://repository.springsource.com/maven/libraries/snapshot</url>
+        </repository>
+    </repositories>
 
     <build>
-
         <pluginManagement>
             <plugins>
 
                 <plugin>
-                    <groupId>org.sonatype.flexmojos</groupId>
-                    <artifactId>flexmojos-maven-plugin</artifactId>
-                    <version>3.3.0</version>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-source-plugin</artifactId>
+                    <version>2.1.1</version>
+                </plugin>
+
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-jar-plugin</artifactId>
+                    <version>2.3</version>
+                </plugin>
+
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-surefire-plugin</artifactId>
+                    <version>2.5</version>
                 </plugin>
 
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-compiler-plugin</artifactId>
+                    <version>2.1</version>
                     <configuration>
                         <debug>false</debug>
                         <optimize>true</optimize>
@@ -292,12 +331,32 @@
                 </plugin>
 
                 <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-assembly-plugin</artifactId>
+                    <version>2.2-beta-5</version>
+                </plugin>
+
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-install-plugin</artifactId>
+                    <version>2.3</version>
+                </plugin>
+
+                <plugin>
+                    <groupId>org.sonatype.flexmojos</groupId>
+                    <artifactId>flexmojos-maven-plugin</artifactId>
+                    <version>3.3.0</version>
+                </plugin>
+
+                <plugin>
                     <groupId>com.springsource.bundlor</groupId>
                     <artifactId>com.springsource.bundlor.maven</artifactId>
                     <version>1.0.0.RELEASE</version>
+                    <configuration>
+                        <inputPath>target/classes</inputPath>
+                    </configuration>
                     <executions>
                         <execution>
-                            <id>bundlor</id>
                             <goals>
                                 <goal>bundlor</goal>
                             </goals>
@@ -305,13 +364,23 @@
                     </executions>
                 </plugin>
 
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-par-plugin</artifactId>
+                    <version>1.0.0.RELEASE</version>
+                </plugin>
+
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-dependency-plugin</artifactId>
+                    <version>2.1</version>
+                </plugin>
             </plugins>
         </pluginManagement>
 
         <plugins>
 
             <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-source-plugin</artifactId>
                 <executions>
                     <execution>
@@ -323,29 +392,25 @@
             </plugin>
 
             <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-jar-plugin</artifactId>
                 <configuration>
                     <finalName>${project.artifactId}</finalName>
                     <archive>
-                        <manifestFile>
-                            src/main/resources/META-INF/MANIFEST.MF
-						</manifestFile>
+                        <manifestFile>target/classes/META-INF/MANIFEST.MF</manifestFile>
                     </archive>
                 </configuration>
             </plugin>
 
             <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-plugin</artifactId>
-                <version>2.5</version>
                 <configuration>
-                    <testFailureIgnore>false</testFailureIgnore>
                     <useSystemClassLoader>true</useSystemClassLoader>
                     <skipTests>false</skipTests>
+                    <trimStackTrace>false</trimStackTrace>
                     <systemPropertyVariables>
                         <log4j.configuration>log4j.xml</log4j.configuration>
                     </systemPropertyVariables>
+                    <junitArtifactName>org.junit:com.springsource.org.junit</junitArtifactName>
                     <forkMode>once</forkMode>
                     <includes>
                         <include>**/*Test.java</include>
@@ -357,7 +422,6 @@
             </plugin>
 
             <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
                 <configuration>
                     <debug>false</debug>
@@ -387,7 +451,6 @@
             </plugin>
 
             <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-install-plugin</artifactId>
                 <executions>
                     <execution>
@@ -405,9 +468,10 @@
     </build>
 
     <reporting>
-
+    
         <plugins>
             <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-javadoc-plugin</artifactId>
                 <version>2.6.1</version>
                 <configuration>
@@ -423,6 +487,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-jxr-plugin</artifactId>
+                <version>2.1</version>
                 <configuration>
                     <aggregate>true</aggregate>
                     <linkJavadoc>true</linkJavadoc>
@@ -434,11 +499,13 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-changelog-plugin</artifactId>
+                <version>2.1</version>
             </plugin>
 
             <plugin>
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>taglist-maven-plugin</artifactId>
+                <version>2.4</version>
                 <configuration>
                     <aggregate>true</aggregate>
                     <encoding>${project.build.sourceEncoding}</encoding>
@@ -478,6 +545,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-checkstyle-plugin</artifactId>
+                <version>2.5</version>
                 <configuration>
                     <xrefLocation>${project.reporting.outputDirectory}/../xref</xrefLocation>
                     <enableRulesSummary>false</enableRulesSummary>
@@ -489,6 +557,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-pmd-plugin</artifactId>
+                <version>2.4</version>
                 <configuration>
                     <targetJdk>${maven.compile.targetLevel}</targetJdk>
                     <format>xml</format>
@@ -501,7 +570,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-report-plugin</artifactId>
-                <version>2.4.3</version>
+                <version>2.5</version>
                 <configuration>
                     <aggregate>true</aggregate>
                     <xrefLocation>${project.reporting.outputDirectory}/../xref-test</xrefLocation>
@@ -512,11 +581,13 @@
             <plugin>
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>jdepend-maven-plugin</artifactId>
+                <version>2.0-beta-2</version>
             </plugin>
 
             <plugin>
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>cobertura-maven-plugin</artifactId>
+                <version>2.3</version>
                 <configuration>
                     <formats>
                         <format>html</format>
@@ -528,7 +599,7 @@
             <plugin>
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>findbugs-maven-plugin</artifactId>
-                <version>2.0.1</version>
+                <version>2.3.1</version>
                 <configuration>
                     <xrefLocation>${project.reporting.outputDirectory}/../xref</xrefLocation>
                     <effort>Max</effort>
@@ -544,7 +615,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-project-info-reports-plugin</artifactId>
-                <version>2.1</version>
+                <version>2.1.2</version>
                 <reportSets>
                     <reportSet>
                         <inherited>true</inherited>
@@ -569,6 +640,7 @@
             <plugin>
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>dashboard-maven-plugin</artifactId>
+                <version>1.0.0-beta-1</version>
             </plugin>
 
         </plugins>
@@ -576,19 +648,46 @@
 
     <dependencyManagement>
         <dependencies>
+            <!-- Spring Framework -->
             <dependency>
                 <groupId>org.springframework</groupId>
                 <artifactId>org.springframework.spring-library</artifactId>
                 <type>libd</type>
-                <version>3.0.0.RELEASE</version>
+                <version>${spring.version}</version>
                 <scope>provided</scope>
             </dependency>
             <dependency>
-                <groupId>org.apache.commons</groupId>
-                <artifactId>com.springsource.org.apache.commons.dbcp</artifactId>
-                <version>1.2.2.osgi</version>
-                <scope>compile</scope>
+                <groupId>org.springframework.osgi</groupId>
+                <artifactId>spring-osgi-core</artifactId>
+                <version>1.2.1</version>
+                <scope>provided</scope>
             </dependency>
+            <dependency>
+                <groupId>org.springframework</groupId>
+                <artifactId>org.springframework.test</artifactId>
+                <version>${spring.version}</version>
+                <scope>test</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework</groupId>
+                <artifactId>org.springframework.context</artifactId>
+                <version>${spring.version}</version>
+                <scope>provided</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework</groupId>
+                <artifactId>org.springframework.instrument</artifactId>
+                <version>${spring.version}</version>
+                <scope>test</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework</groupId>
+                <artifactId>org.springframework.aspects</artifactId>
+                <version>${spring.version}</version>
+                <scope>test</scope>
+            </dependency>
+
+            <!-- JEE API -->
             <dependency>
                 <groupId>javax.persistence</groupId>
                 <artifactId>com.springsource.javax.persistence</artifactId>
@@ -601,31 +700,66 @@
                 <version>1.1.0</version>
             </dependency>
             <dependency>
-                <groupId>org.eclipse.persistence</groupId>
-                <artifactId>com.springsource.org.eclipse.persistence</artifactId>
-                <version>1.0.0</version>
+                <groupId>javax.servlet</groupId>
+                <artifactId>com.springsource.javax.servlet</artifactId>
+                <version>2.5.0</version>
+                <scope>provided</scope>
+            </dependency>
+
+            <!-- Apache libraries -->
+            <dependency>
+                <groupId>org.apache.commons</groupId>
+                <artifactId>com.springsource.org.apache.commons.lang</artifactId>
+                <version>2.4.0</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.commons</groupId>
+                <artifactId>com.springsource.org.apache.commons.dbcp</artifactId>
+                <version>1.2.2.osgi</version>
                 <scope>compile</scope>
             </dependency>
             <dependency>
+                <groupId>org.apache.commons</groupId>
+                <artifactId>com.springsource.org.apache.commons.collections</artifactId>
+                <version>3.2.1</version>
+            </dependency>
+
+            <!-- Database libraries -->
+            <dependency>
+                <groupId>org.hsqldb</groupId>
+                <artifactId>com.springsource.org.hsqldb</artifactId>
+                <version>1.8.0.9</version>
+            </dependency>
+            <dependency>
+                <groupId>org.postgresql</groupId>
+                <artifactId>com.springsource.org.postgresql.jdbc4</artifactId>
+                <version>8.3.604</version>
+            </dependency>
+
+            <!-- JPA Provider Libraries -->
+            <dependency>
                 <groupId>org.eclipse.persistence</groupId>
-                <artifactId>com.springsource.org.eclipse.persistence.jpa</artifactId>
+                <artifactId>org.eclipse.persistence-library</artifactId>
+                <type>libd</type>
                 <version>1.0.0</version>
-                <scope>compile</scope>
             </dependency>
             <dependency>
                 <groupId>org.hibernate</groupId>
                 <artifactId>org.hibernate.ejb-library</artifactId>
-                <version>3.3.2.GA</version>
+                <version>3.4.0.GA</version>
                 <type>libd</type>
-                <scope>test</scope>
             </dependency>
+
+            <!-- Weaver, used only for EclipseLink provider -->
             <dependency>
                 <groupId>org.aspectj</groupId>
                 <artifactId>org.aspectj-library</artifactId>
                 <type>libd</type>
-                <version>1.6.2.RELEASE</version>
+                <version>1.6.5.RELEASE</version>
                 <scope>provided</scope>
             </dependency>
+
+            <!-- Others -->
             <dependency>
                 <groupId>org.freemarker</groupId>
                 <artifactId>com.springsource.freemarker</artifactId>
@@ -633,35 +767,12 @@
                 <scope>compile</scope>
             </dependency>
             <dependency>
-                <groupId>org.springframework</groupId>
-                <artifactId>org.springframework.test</artifactId>
-                <version>3.0.0.RELEASE</version>
+                <groupId>org.junit</groupId>
+                <artifactId>com.springsource.org.junit</artifactId>
+                <version>4.7.0</version>
                 <scope>test</scope>
             </dependency>
-            <dependency>
-                <groupId>org.springframework</groupId>
-                <artifactId>org.springframework.context</artifactId>
-                <version>3.0.0.RELEASE</version>
-                <scope>provided</scope>
-            </dependency>
-            <dependency>
-                <groupId>org.springframework</groupId>
-                <artifactId>org.springframework.instrument</artifactId>
-                <version>3.0.0.RELEASE</version>
-                <scope>test</scope>
-            </dependency>
-            <dependency>
-                <groupId>org.springframework</groupId>
-                <artifactId>org.springframework.aspects</artifactId>
-                <version>3.0.0.RELEASE</version>
-                <scope>test</scope>
-            </dependency>
-            <dependency>
-                <groupId>javax.servlet</groupId>
-                <artifactId>com.springsource.javax.servlet</artifactId>
-                <version>2.5.0</version>
-                <scope>provided</scope>
-            </dependency>
+
             <!-- SLF4J API -->
             <dependency>
                 <groupId>org.slf4j</groupId>
@@ -699,6 +810,17 @@
                 <version>1.2.15</version>
             </dependency>
 
+            <!-- Project dependencies -->
+            <dependency>
+                <groupId>${project.groupId}</groupId>
+                <artifactId>org.openwms.common.domain</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>${project.groupId}</groupId>
+                <artifactId>org.openwms.common.infrastructure.configuration</artifactId>
+                <version>${project.version}</version>
+            </dependency>
             <dependency>
                 <groupId>${project.groupId}</groupId>
                 <artifactId>org.openwms.common.infrastructure.postgres</artifactId>
@@ -738,11 +860,6 @@
             </dependency>
             <dependency>
                 <groupId>${project.groupId}</groupId>
-                <artifactId>org.openwms.common.domain</artifactId>
-                <version>${project.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>${project.groupId}</groupId>
                 <artifactId>org.openwms.tms.domain</artifactId>
                 <version>${project.version}</version>
             </dependency>
@@ -750,32 +867,6 @@
                 <groupId>${project.groupId}</groupId>
                 <artifactId>org.openwms.tms.integration</artifactId>
                 <version>${project.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.apache.commons</groupId>
-                <artifactId>com.springsource.org.apache.commons.lang</artifactId>
-                <version>2.4.0</version>
-            </dependency>
-            <!--
-                <dependency> <groupId>org.apache.commons</groupId>
-                <artifactId>com.springsource.org.apache.commons.logging</artifactId> <version>1.1.1</version>
-                </dependency>
-            -->
-            <dependency>
-                <groupId>org.apache.commons</groupId>
-                <artifactId>com.springsource.org.apache.commons.collections</artifactId>
-                <version>3.2.1</version>
-            </dependency>
-            <dependency>
-                <groupId>org.hsqldb</groupId>
-                <artifactId>com.springsource.org.hsqldb</artifactId>
-                <version>1.8.0.9</version>
-            </dependency>
-            <dependency>
-                <groupId>org.junit</groupId>
-                <artifactId>com.springsource.org.junit</artifactId>
-                <version>4.7.0</version>
-                <scope>test</scope>
             </dependency>
         </dependencies>
     </dependencyManagement>
@@ -794,30 +885,23 @@
         <dependency>
             <groupId>org.slf4j</groupId>
             <artifactId>com.springsource.slf4j.api</artifactId>
+            <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>org.slf4j</groupId>
             <artifactId>com.springsource.slf4j.log4j</artifactId>
+            <scope>runtime</scope>
         </dependency>
         <dependency>
             <groupId>org.slf4j</groupId>
             <artifactId>com.springsource.slf4j.org.apache.commons.logging</artifactId>
+            <scope>runtime</scope>
         </dependency>
         <dependency>
             <groupId>org.apache.log4j</groupId>
             <artifactId>com.springsource.org.apache.log4j</artifactId>
+            <scope>runtime</scope>
         </dependency>
-        <dependency>
-            <groupId>org.aspectj</groupId>
-            <artifactId>org.aspectj-library</artifactId>
-            <type>libd</type>
-            <scope>provided</scope>
-        </dependency>
-
-        <!--
-            <dependency> <groupId>commons-logging</groupId> <artifactId>commons-logging</artifactId>
-            <version>99.0-does-not-exist</version> </dependency>
-        -->
     </dependencies>
 
 </project>
