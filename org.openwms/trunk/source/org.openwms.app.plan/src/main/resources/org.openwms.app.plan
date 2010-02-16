@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+/*
+ * openwms.org, the Open Warehouse Management System.
+ *
+ * This file is part of openwms.org.
+ *
+ * openwms.org is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as 
+ * published by the Free Software Foundation, either version 3 of the
+ * License, or (at your option) any later version.
+ *
+ * openwms.org is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with this software. If not, write to the Free
+ * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
+ * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
+ */  
+-->
+<plan name="org.openwms.app.plan" version="2.0.0" scoped="false" atomic="true"
+        xmlns="http://www.springsource.org/schema/dm-server/plan"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.springsource.org/schema/dm-server/plan 
+                            http://www.springsource.org/schema/dm-server/plan/springsource-dm-server-plan.xsd">
+
+    <artifact type="configuration" name="org.openwms.common.infrastructure.configuration-${openwms.configuration.version}" version="0"/>
+	<artifact type="bundle" name="org.openwms.common.infrastructure.postgres" version="[0.0.1.SNAPSHOT,1.0)"/>
+	<artifact type="bundle" name="org.openwms.common.domain" version="[0.0.1.SNAPSHOT,1.0)"/>
+	<artifact type="bundle" name="org.openwms.tms.domain" version="[0.0.1.SNAPSHOT,1.0)"/>
+	<artifact type="bundle" name="org.openwms.common.integration.hibernate" version="[0.0.1.SNAPSHOT,1.0)"/>
+	<artifact type="bundle" name="org.openwms.common.integration" version="[0.0.1.SNAPSHOT,1.0)"/>
+	<artifact type="bundle" name="org.openwms.common.integration.jpa" version="[0.0.1.SNAPSHOT,1.0)"/>
+	<artifact type="bundle" name="org.openwms.common.service.api" version="[0.0.1.SNAPSHOT,1.0)"/>
+	<artifact type="bundle" name="org.openwms.common.service.spring" version="[0.0.1.SNAPSHOT,1.0)"/>
+	<artifact type="bundle" name="org.openwms.zz.client.flex.wrapper" version="[0.0.1.SNAPSHOT,1.0)"/>
+</plan>
