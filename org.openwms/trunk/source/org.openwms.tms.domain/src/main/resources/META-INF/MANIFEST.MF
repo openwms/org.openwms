@@ -11,12 +11,12 @@ Require-Bundle: com.springsource.org.hibernate,com.springsource.javass
  ist
 Bundle-Vendor: openwms.org
 Bundle-Version: 0.0.1.SNAPSHOT
-Tool: Bundlor 1.0.0.M6
+Tool: Bundlor 1.0.0.BUILD-20091207202403
 Bundle-Name: org.openwms.tms.domain
 Bundle-ManifestVersion: 2
 Bundle-SymbolicName: org.openwms.tms.domain
-Import-Package: javax.persistence,org.openwms.common.domain,org.openwm
- s.common.domain.system,org.openwms.common.domain.system.usermanagemen
- t,org.openwms.common.domain.values,org.openwms.common.exception,org.s
- lf4j
+Import-Package: javax.persistence,org.apache.log4j,org.openwms.common.
+ domain,org.openwms.common.domain.system,org.openwms.common.domain.sys
+ tem.usermanagement,org.openwms.common.domain.values,org.openwms.commo
+ n.exception,org.slf4j
 

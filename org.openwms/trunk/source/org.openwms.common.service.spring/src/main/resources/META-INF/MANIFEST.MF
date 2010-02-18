@@ -17,18 +17,19 @@ Import-Bundle: com.springsource.javax.persistence;version="1.0.0",com.
  NAPSHOT"
 Bundle-Vendor: openwms.org
 Bundle-Version: 0.0.1.SNAPSHOT
-Tool: Bundlor 1.0.0.M6
+Tool: Bundlor 1.0.0.BUILD-20091207202403
 Bundle-Name: org.openwms.common.service.spring
 Import-Library: org.springframework.spring;version="[3.0, 3.1)"
 Bundle-ManifestVersion: 2
 Bundle-SymbolicName: org.openwms.common.service.spring
-Import-Package: org.openwms.common.domain,org.openwms.common.domain.sy
- stem.usermanagement,org.openwms.common.integration,org.openwms.common
- .integration.system.usermanagement,org.openwms.common.service,org.ope
- nwms.common.service.exception,org.openwms.common.service.management,o
- rg.openwms.common.util,org.slf4j,org.springframework.beans.factory.an
- notation,org.springframework.context.weaving;version="[3.0, 3.1)",org
- .springframework.stereotype,org.springframework.transaction,org.sprin
- gframework.transaction.annotation,org.springframework.transaction.asp
- ectj;version="[3.0, 3.1)"
+Import-Package: org.apache.log4j,org.openwms.common.dao.core,org.openw
+ ms.common.domain,org.openwms.common.domain.system.usermanagement,org.
+ openwms.common.integration,org.openwms.common.integration.system.user
+ management,org.openwms.common.service,org.openwms.common.service.exce
+ ption,org.openwms.common.service.management,org.openwms.common.util,o
+ rg.slf4j,org.springframework.beans.factory.annotation,org.springframe
+ work.context.weaving;version="[3.0, 3.1)",org.springframework.stereot
+ ype,org.springframework.transaction,org.springframework.transaction.a
+ nnotation,org.springframework.transaction.aspectj;version="[3.0, 3.1)
+ "
 
