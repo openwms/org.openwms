@@ -22,6 +22,7 @@ package org.openwms.common.integration.jpa;
 
 import org.openwms.common.domain.TransportUnit;
 import org.openwms.common.integration.TransportUnitDao;
+import org.springframework.stereotype.Repository;
 
 /**
  * A TransportUnitDaoImpl.
@@ -31,6 +32,7 @@ import org.openwms.common.integration.TransportUnitDao;
  * @since 0.1
  * @see {@link org.openwms.common.integration.jpa.AbstractGenericJpaDao}
  */
+@Repository
 public class TransportUnitDaoImpl extends AbstractGenericJpaDao<TransportUnit, Long> implements TransportUnitDao {
 
     /**

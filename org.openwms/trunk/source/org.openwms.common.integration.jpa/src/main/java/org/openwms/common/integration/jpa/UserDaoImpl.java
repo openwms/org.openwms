@@ -24,6 +24,7 @@ import java.util.List;
 
 import org.openwms.common.domain.system.usermanagement.User;
 import org.openwms.common.integration.system.usermanagement.UserDao;
+import org.springframework.stereotype.Repository;
 
 /**
  * An UserDaoImpl.
@@ -33,6 +34,7 @@ import org.openwms.common.integration.system.usermanagement.UserDao;
  * @since 0.1
  * @see {@link org.openwms.common.integration.jpa.AbstractGenericJpaDao}
  */
+@Repository
 public class UserDaoImpl extends AbstractGenericJpaDao<User, Long> implements UserDao {
 
     /**
