@@ -25,6 +25,7 @@ import java.util.List;
 import org.openwms.common.domain.Location;
 import org.openwms.common.integration.LocationDao;
 import org.openwms.common.service.LocationService;
+import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 /**
@@ -34,6 +35,7 @@ import org.springframework.transaction.annotation.Transactional;
  * @version $Revision: 314 $
  * @since 0.1
  */
+@Service
 @Transactional
 public class LocationServiceImpl extends EntityServiceImpl<Location, Long> implements LocationService<Location> {
     public LocationServiceImpl() {}

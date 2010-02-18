@@ -7,7 +7,9 @@ Export-Package: org.openwms.common.service.spring;version="0.0.1.SNAPS
  tation",org.openwms.common.service.spring.exception;version="0.0.1.SN
  APSHOT",org.openwms.common.service.spring.management;version="0.0.1.S
  NAPSHOT";uses:="org.openwms.common.domain.system.usermanagement,org.o
- penwms.common.service.management,org.openwms.common.service.spring"
+ penwms.common.service.management,org.openwms.common.service.spring,or
+ g.springframework.stereotype,org.springframework.transaction.annotati
+ on"
 Import-Bundle: com.springsource.javax.persistence;version="1.0.0",com.
  springsource.org.apache.commons.lang;version="2.4.0",org.openwms.comm
  on.domain;version="0.0.1.SNAPSHOT",org.openwms.common.integration;ver

@@ -25,6 +25,8 @@ import org.openwms.common.domain.system.usermanagement.UserDetails;
 import org.openwms.common.service.exception.ServiceException;
 import org.openwms.common.service.management.UserService;
 import org.openwms.common.service.spring.EntityServiceImpl;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  * A UserServiceImpl.
@@ -33,6 +35,8 @@ import org.openwms.common.service.spring.EntityServiceImpl;
  * @version $Revision: 314 $
  * @since 0.1
  */
+@Service
+@Transactional
 public class UserServiceImpl extends EntityServiceImpl<User, Long> implements UserService<User> {
 
     /**
@@ -87,6 +91,7 @@ public class UserServiceImpl extends EntityServiceImpl<User, Long> implements Us
      * {@inheritDoc}
      */
     @Override
+    @Transactional(readOnly = true)
     public User getTemplate(String username) {
         logger.debug("Retrieve a User template instance for username:" + username);
         return new User(username);
