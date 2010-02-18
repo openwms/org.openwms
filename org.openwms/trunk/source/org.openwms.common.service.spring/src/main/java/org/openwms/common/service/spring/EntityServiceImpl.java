@@ -28,6 +28,7 @@ import org.openwms.common.service.EntityService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Required;
+import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 /**
@@ -37,6 +38,7 @@ import org.springframework.transaction.annotation.Transactional;
  * @version $Revision: 314 $
  * @since 0.1
  */
+@Service
 @Transactional
 public class EntityServiceImpl<T extends Serializable, ID extends Serializable> implements EntityService<T> {
 

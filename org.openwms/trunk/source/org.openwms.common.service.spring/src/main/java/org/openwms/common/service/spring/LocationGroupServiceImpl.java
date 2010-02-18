@@ -39,8 +39,8 @@ import org.springframework.transaction.annotation.Transactional;
  * @version $Revision: 314 $
  * @since 0.1
  */
-@Transactional
 @Service
+@Transactional
 public class LocationGroupServiceImpl extends EntityServiceImpl<LocationGroup, Long> implements
         LocationGroupService<LocationGroup> {
 
