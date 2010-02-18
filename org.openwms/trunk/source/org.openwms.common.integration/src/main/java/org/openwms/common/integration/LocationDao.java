@@ -34,15 +34,15 @@ import org.openwms.common.domain.Location;
  * @author <a href="mailto:openwms@googlemail.com">Heiko Scherrer</a>
  * @version $Revision: 877 $
  * @since 0.1
- * @see {@link GenericDao}
- * @see {@link Location}
+ * @see {@link org.openwms.common.integration.GenericDao}
+ * @see {@link org.openwms.common.domain.Location}
  */
 public interface LocationDao extends GenericDao<Location, Long> {
 
     /**
      * Retrieve all {@link Location}s in natural order.
      * 
-     * @return - A List of all {@link Location}s
+     * @return A List of all {@link Location}s
      */
     List<Location> getAllLocations();
 }

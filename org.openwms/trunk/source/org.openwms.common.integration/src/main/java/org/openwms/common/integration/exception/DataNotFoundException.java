@@ -25,13 +25,14 @@ import java.io.Serializable;
 /**
  * A DataNotFoundException.
  * <p>
- * This type of {@link DataException} signals that expected data was not found
- * in the persistence integration layer.
+ * This type of {@link DataException} signals that the expected data was not
+ * found in the persistence layer.
  * </p>
  * 
  * @author <a href="mailto:openwms@googlemail.com">Heiko Scherrer</a>
  * @version $Revision: $
  * @since 0.1
+ * @see {@link rg.openwms.common.integration.exception.DataException}
  */
 public class DataNotFoundException extends DataException {
 

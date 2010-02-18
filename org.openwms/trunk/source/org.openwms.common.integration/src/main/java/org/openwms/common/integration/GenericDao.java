@@ -28,8 +28,8 @@ import java.util.Map;
  * A GenericDao.
  * <p>
  * This interface provides basic functionality to create/read/update and remove
- * Entity classes. These can be POJOs without any dependencies. Merely the
- * implementation of this interface knows about how the Entity is been
+ * Entity classes. Entities can be POJOs without any ORM dependencies. Merely
+ * the implementation of this interface knows about the way the Entity is been
  * persisted.
  * </p>
  * 
@@ -40,40 +40,40 @@ import java.util.Map;
 public interface GenericDao<T extends Serializable, ID extends Serializable> {
 
     /**
-     * Suffix for the FIND_ALL named query
+     * Suffix for the FIND_ALL named query.
      */
-    public final static String FIND_ALL = ".findAll";
+    final static String FIND_ALL = ".findAll";
 
     /**
-     * Suffix for the FIND_BY_ID named query
+     * Suffix for the FIND_BY_ID named query.
      */
-    public final static String FIND_BY_ID = ".findById";
+    final static String FIND_BY_ID = ".findById";
 
     /**
-     * Find and return the Entity identified by the technical <tt>id</tt>.
+     * Find and return the Entity identified by the technical key.
      * 
      * @param id
-     *            - Unique technical key to find the Entity
-     * @return - Entity class identified by id
+     *            Unique technical key to find the Entity
+     * @return Entity class identified by id
      */
     T findById(ID id);
 
     /**
      * Find all entities and return them in a {@link java.util.List}.
      * 
-     * @return - List of all Entity classes
+     * @return List of all Entity classes
      */
     List<T> findAll();
 
     /**
-     * Find all Entities with an NamedQuery. Pass in the name of the JPA
-     * NamedQuery and a parameter map.
+     * Use a named query to find all Entities. Pass in the name of the JPA
+     * <code>NamedQuery</code> and a parameter map.
      * 
      * @param queryName
-     *            - Defined name of the NamedQuery.
+     *            Defined name of the NamedQuery.
      * @param params
-     *            - Map of parameters to pass to the query
-     * @return - List of found Entity classes
+     *            Map of parameters to pass to the query
+     * @return List of found Entity classes
      */
     List<T> findByQuery(String queryName, Map<String, ?> params);
 
@@ -81,18 +81,17 @@ public interface GenericDao<T extends Serializable, ID extends Serializable> {
      * Find and return the Entity identified by the natural unique id.
      * 
      * @param id
-     *            - Natural key to find the Entity (also known as business key)
-     * @return - The found Entity
+     *            Natural key to find the Entity (also known as business key)
+     * @return The found Entity
      */
     T findByUniqueId(Serializable id);
 
     /**
-     * Updates an Entity with the persistence layer and return the synchronized.
+     * Synchronize an Entity with the persistence layer and return it.
      * 
      * @param entity
-     *            - Entity instance to be synchronized with the persistence
-     *            layer
-     * @return - The synchronized Entity instance. If JPA as implementation is
+     *            Entity instance to be synchronized with the persistence layer
+     * @return The synchronized Entity instance. If JPA as implementation is
      *         used, the returned instance is in managed state.
      */
     T save(T entity);
@@ -101,7 +100,7 @@ public interface GenericDao<T extends Serializable, ID extends Serializable> {
      * Removes an already persistent Entity.
      * 
      * @param entity
-     *            - Entity instance to be removed
+     *            Entity instance to be removed
      */
     void remove(T entity);
 
@@ -109,15 +108,15 @@ public interface GenericDao<T extends Serializable, ID extends Serializable> {
      * Persist a transient entity.
      * 
      * @param entity
-     *            - Entity instance to be persisted
+     *            Entity instance to be persisted
      */
     void persist(T entity);
 
     /**
-     * Set the type of Entity to deal with
+     * Set the type of Entity to deal with.
      * 
      * @param persistentClass
-     *            - Class type of the Entity instance
+     *            Class type of the Entity instance
      */
     void setPersistentClass(Class<T> persistentClass);
 }
