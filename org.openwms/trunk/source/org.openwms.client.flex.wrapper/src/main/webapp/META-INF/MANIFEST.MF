@@ -11,7 +11,7 @@ Bundle-ClassPath: .,WEB-INF/lib/granite-core-2.0.0.GA.jar,WEB-INF/lib/
  GA.jar,WEB-INF/lib/granite-spring-2.0.0.GA.jar,WEB-INF/lib/granite-to
  plink-2.0.0.GA.jar
 Bundle-Version: 0.0.1.SNAPSHOT
-Tool: Bundlor 1.0.0.M6
+Tool: Bundlor 1.0.0.BUILD-20091207202403
 Bundle-Name: org.openwms.zz.client.flex.wrapper
 Import-Library: org.springframework.spring;version="[3.0, 3.1)"
 Bundle-ManifestVersion: 2
@@ -23,8 +23,9 @@ Import-Package: com.springsource.server.web.dm;version="[2.0.0, 3.0.0)
  ervlet.jsp.jstl.core;version="[1.1.2,1.2.0)",javax.servlet.resources;
  version="[2.4.0,2.5.0]",javax.transaction,javax.xml.namespace,javax.x
  ml.parsers,javax.xml.transform,javax.xml.transform.dom,javax.xml.tran
- sform.stream,javax.xml.xpath,org.springframework.web.context;version=
- "[3.0, 3.1)",org.springframework.web.context.request;version="[3.0, 3
- .1)",org.w3c.dom,org.w3c.dom.traversal,org.xml.sax,org.xml.sax.ext,or
- g.xml.sax.helpers
+ sform.stream,javax.xml.xpath,org.openwms.common.service,org.openwms.c
+ ommon.service.management,org.springframework.web.context;version="[3.
+ 0, 3.1)",org.springframework.web.context.request;version="[3.0, 3.1)"
+ ,org.w3c.dom,org.w3c.dom.traversal,org.xml.sax,org.xml.sax.ext,org.xm
+ l.sax.helpers
 
