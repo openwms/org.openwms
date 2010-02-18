@@ -6,8 +6,6 @@ Export-Package: org.openwms.common.service;version="0.0.1.SNAPSHOT";us
  PSHOT";uses:="org.openwms.common.service"
 Import-Bundle: org.openwms.common.domain;version="0.0.1.SNAPSHOT"
 Bundle-Vendor: openwms.org
-Implementation-Title: org.openwms.common.service.api
-Implementation-Version: 0.0.1.SNAPSHOT
 Bundle-Version: 0.0.1.SNAPSHOT
 Tool: Bundlor 1.0.0.BUILD-20091207202403
 Bundle-Name: org.openwms.common.service.api
