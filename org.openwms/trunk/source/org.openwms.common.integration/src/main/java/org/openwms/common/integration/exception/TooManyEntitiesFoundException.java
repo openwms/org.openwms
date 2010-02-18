@@ -25,13 +25,14 @@ import java.io.Serializable;
 /**
  * A TooManyEntriesFoundException.
  * <p>
- * This exception is thrown if the caller expects a return of <b>one</b> Entity
- * instance but the persistence layer found more Entity instances.
+ * This exception is thrown if a return value of <b>one</b> Entity instance was
+ * expected but the persistence layer found more Entities.
  * </p>
  * 
  * @author <a href="mailto:openwms@googlemail.com">Heiko Scherrer</a>
  * @version $Revision: $
  * @since 0.1
+ * @see {@link rg.openwms.common.integration.exception.DataException}
  */
 public class TooManyEntitiesFoundException extends DataException {
 

@@ -32,20 +32,21 @@ import org.openwms.common.domain.LocationGroup;
  * @author <a href="mailto:openwms@googlemail.com">Heiko Scherrer</a>
  * @version $Revision: 877 $
  * @since 0.1
- * @see {@link GenericDao}
- * @see {@link LocationGroup}
+ * @see {@link org.openwms.common.integration.GenericDao}
+ * @see {@link org.openwms.common.domain.LocationGroup}
  */
 public interface LocationGroupDao extends GenericDao<LocationGroup, Long> {
 
     /**
-     * Name of the NamedQuery to find all {@link LocationGroup} Entities
+     * Name of the <code>NamedQuery</code> to find all {@link LocationGroup}
+     * Entities.
      */
-    public final String NQ_FIND_ALL = "LocationGroup.findAll";
+    final String NQ_FIND_ALL = "LocationGroup.findAll";
 
     /**
-     * Name of the NamedQuery to find a {@link LocationGroup} by
-     * {@link LocationGroup#getName()}
+     * Name of the <code>NamedQuery</code> to find a {@link LocationGroup} by
+     * {@link LocationGroup#getName()}.
      */
-    public final String NQ_FIND_BY_NAME = "LocationGroup.findByName";
+    final String NQ_FIND_BY_NAME = "LocationGroup.findByName";
 
 }

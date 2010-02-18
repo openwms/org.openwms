@@ -37,7 +37,6 @@ public class DataException extends RuntimeException {
 
     /**
      * Create a new DataException.
-     * 
      */
     public DataException() {
         super();
