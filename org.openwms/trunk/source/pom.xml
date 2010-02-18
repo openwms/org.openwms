@@ -188,6 +188,12 @@
             </modules>
         </profile>
         <profile>
+            <id>a</id>
+            <modules>
+                <module>org.openwms.common.domain</module>
+            </modules>
+        </profile>
+        <profile>
             <id>public-repo</id>
             <activation>
                 <activeByDefault>true</activeByDefault>
@@ -255,11 +261,6 @@
             </snapshots>
         </repository>
         <repository>
-            <id>com.springsource.repository.bundles.snapshot</id>
-            <name>SpringSource Enterprise Bundle Repository - SpringSource Bundle Snapshot</name>
-            <url>http://repository.springsource.com/maven/bundles/snapshot</url>
-        </repository>
-        <repository>
             <id>com.springsource.repository.bundles.release</id>
             <name>SpringSource Enterprise Bundle Repository - SpringSource Bundle Releases</name>
             <url>http://repository.springsource.com/maven/bundles/release</url>
@@ -273,6 +274,11 @@
             <id>com.springsource.repository.bundle.milestone</id>
             <name>SpringSource Enterprise Bundle Repository - SpringSource Bundle Milestones</name>
             <url>http://repository.springsource.com/maven/bundles/milestone</url>
+        </repository>
+        <repository>
+            <id>com.springsource.repository.bundles.snapshot</id>
+            <name>SpringSource Enterprise Bundle Repository - SpringSource Bundle Snapshot</name>
+            <url>http://repository.springsource.com/maven/bundles/snapshot</url>
         </repository>
         <repository>
             <id>com.springsource.repository.libraries.release</id>
@@ -353,7 +359,7 @@
                     <artifactId>com.springsource.bundlor.maven</artifactId>
                     <version>1.0.0.RELEASE</version>
                     <configuration>
-                        <inputPath>target/classes</inputPath>
+                        <inputPath>${basedir}/target/classes</inputPath>
                     </configuration>
                     <executions>
                         <execution>
@@ -549,8 +555,8 @@
                 <configuration>
                     <xrefLocation>${project.reporting.outputDirectory}/../xref</xrefLocation>
                     <enableRulesSummary>false</enableRulesSummary>
-                    <configLocation>${basedir}/${moduleDir}/src/checkstyle/checkstyle.xml</configLocation>
-                    <headerLocation>${basedir}/${moduleDir}/src/checkstyle/checkstyle-license.txt</headerLocation>
+                    <configLocation>http://openwms2005.sourceforge.net/openwms/rules/checkstyle/checkstyle.xml</configLocation>
+                    <headerLocation>http://openwms2005.sourceforge.net/openwms/rules/checkstyle/checkstyle-license.txt</headerLocation>
                 </configuration>
             </plugin>
 
