@@ -17,11 +17,14 @@ Import-Template:
 Excluded-Imports: 
  org.openwms.common.framework.test.*,
  org.openwms.common.test.*,
+ org.springframework.test.*,
  org.junit.*,
+ junit.framework.*,
  org.hibernate.*
 Excluded-Exports: 
  org.openwms.common.framework.test.*,
  org.openwms.common.test.*,
+ org.springframework.test.*,
  org.junit.*,
  org.hibernate.*
 Require-Bundle: 

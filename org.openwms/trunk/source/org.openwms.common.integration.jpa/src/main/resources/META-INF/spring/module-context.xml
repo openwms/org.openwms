@@ -59,23 +59,13 @@
 
     <bean id="oemiv" class="org.springframework.orm.jpa.support.OpenEntityManagerInViewInterceptor" autowire="byName" />
 
-    <bean id="locationDao" class="org.openwms.common.integration.jpa.LocationDaoImpl">
-        <property name="entityManagerFactory" ref="entityManagerFactory" />
-    </bean>
+    <bean id="locationDao" class="org.openwms.common.integration.jpa.LocationDaoImpl"/>
 
-    <bean id="locationGroupDao" class="org.openwms.common.integration.jpa.LocationGroupDaoImpl">
-        <property name="entityManagerFactory" ref="entityManagerFactory" />
-    </bean>
+    <bean id="locationGroupDao" class="org.openwms.common.integration.jpa.LocationGroupDaoImpl"/>
 
-    <bean id="transportUnitDao" class="org.openwms.common.integration.jpa.TransportUnitDaoImpl">
-        <property name="entityManagerFactory" ref="entityManagerFactory" />
-    </bean>
+    <bean id="transportUnitDao" class="org.openwms.common.integration.jpa.TransportUnitDaoImpl"/>
 
-    <bean id="transportUnitTypeDao" class="org.openwms.common.integration.jpa.TransportUnitTypeDaoImpl">
-        <property name="entityManagerFactory" ref="entityManagerFactory" />
-    </bean>
+    <bean id="transportUnitTypeDao" class="org.openwms.common.integration.jpa.TransportUnitTypeDaoImpl"/>
 
-    <bean id="userDao" class="org.openwms.common.integration.jpa.UserDaoImpl">
-        <property name="entityManagerFactory" ref="entityManagerFactory" />
-    </bean>
+    <bean id="userDao" class="org.openwms.common.integration.jpa.UserDaoImpl"/>
 </beans>
