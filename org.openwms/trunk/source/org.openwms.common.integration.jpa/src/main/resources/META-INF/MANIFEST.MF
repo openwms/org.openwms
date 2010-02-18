@@ -1,8 +1,17 @@
 Manifest-Version: 1.0
 Export-Package: org.openwms.common.integration.jpa;version="0.0.1.SNAP
- SHOT",org.openwms.common.integration.jpa.system;version="0.0.1.SNAPSH
- OT",org.openwms.common.integration.jpa.system.usermanagement;version=
- "0.0.1.SNAPSHOT"
+ SHOT";uses:="javax.persistence,org.junit,org.openwms.common.domain,or
+ g.openwms.common.integration,org.openwms.common.integration.system.us
+ ermanagement,org.openwms.common.test,org.springframework.beans.factor
+ y.annotation,org.springframework.orm.jpa.persistenceunit,org.springfr
+ amework.orm.jpa.support,org.springframework.stereotype,org.springfram
+ ework.test.context,org.springframework.test.context.transaction,org.s
+ pringframework.transaction.annotation",org.openwms.common.integration
+ .jpa.system;version="0.0.1.SNAPSHOT";uses:="org.junit,org.openwms.com
+ mon.test,org.springframework.transaction.annotation",org.openwms.comm
+ on.integration.jpa.system.usermanagement;version="0.0.1.SNAPSHOT";use
+ s:="org.junit,org.openwms.common.test,org.springframework.transaction
+ .annotation"
 Import-Bundle: com.springsource.javax.persistence;version="1.0.0",org.
  openwms.common.domain;version="0.0.1.SNAPSHOT",org.openwms.tms.domain
  ;version="0.0.1.SNAPSHOT",org.openwms.common.integration;version="0.0
@@ -19,8 +28,12 @@ Bundle-SymbolicName: org.openwms.common.integration.jpa
 Import-Package: javax.persistence,javax.sql;version="0",org.apache.log
  4j,org.openwms.common.domain,org.openwms.common.domain.system,org.ope
  nwms.common.domain.system.usermanagement,org.openwms.common.domain.va
- lues,org.openwms.common.integration,org.openwms.common.integration.sy
- stem.usermanagement,org.openwms.tms.domain.order,org.springframework.
- dao.annotation,org.springframework.orm.jpa,org.springframework.orm.jp
- a.support,org.springframework.transaction
+ lues,org.openwms.common.integration,org.openwms.common.integration.ex
+ ception,org.openwms.common.integration.system.usermanagement,org.open
+ wms.tms.domain.order,org.slf4j,org.springframework.beans.factory.anno
+ tation,org.springframework.core.io,org.springframework.core.io.suppor
+ t,org.springframework.dao.annotation,org.springframework.orm.jpa,org.
+ springframework.orm.jpa.persistenceunit,org.springframework.orm.jpa.s
+ upport,org.springframework.stereotype,org.springframework.transaction
+ ,org.springframework.transaction.annotation,org.springframework.util
 
