@@ -57,6 +57,42 @@
             <artifactId>com.springsource.javax.persistence</artifactId>
         </dependency>
 
+        <!-- Test database driver -->
+        <dependency>
+            <groupId>org.hsqldb</groupId>
+            <artifactId>com.springsource.org.hsqldb</artifactId>
+            <scope>test</scope>
+        </dependency>
+        
+        <!-- JPA Provider -->
+        <dependency>
+            <groupId>org.hibernate</groupId>
+            <artifactId>org.hibernate.ejb-library</artifactId>
+            <type>libd</type>
+            <scope>test</scope>
+        </dependency>
+
+        <!-- Weaver -->
+        <dependency>
+            <groupId>org.aspectj</groupId>
+            <artifactId>org.aspectj-library</artifactId>
+            <type>libd</type>
+            <scope>test</scope>
+        </dependency>
+
+        <!-- Test dependencies -->
+        <dependency>
+            <groupId>javax.transaction</groupId>
+            <artifactId>com.springsource.javax.transaction</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>org.springframework.spring-library</artifactId>
+            <type>libd</type>
+            <scope>test</scope>
+        </dependency>
+
         <!-- Project dependencies -->
         <dependency>
             <groupId>${project.groupId}</groupId>
