@@ -24,6 +24,7 @@ import java.util.List;
 
 import org.openwms.common.domain.Location;
 import org.openwms.common.integration.LocationDao;
+import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 /**
@@ -34,6 +35,7 @@ import org.springframework.transaction.annotation.Transactional;
  * @since 0.1
  * @see {@link org.openwms.common.integration.jpa.AbstractGenericJpaDao}
  */
+@Repository
 public class LocationDaoImpl extends AbstractGenericJpaDao<Location, Long> implements LocationDao {
 
     /**

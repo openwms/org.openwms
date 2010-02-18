@@ -24,6 +24,7 @@ import java.util.Date;
 
 import org.openwms.common.domain.LocationGroup;
 import org.openwms.common.integration.LocationGroupDao;
+import org.springframework.stereotype.Repository;
 
 /**
  * A LocationGroupDaoImpl.
@@ -33,6 +34,7 @@ import org.openwms.common.integration.LocationGroupDao;
  * @since 0.1
  * @see {@link org.openwms.common.integration.jpa.AbstractGenericJpaDao}
  */
+@Repository
 public class LocationGroupDaoImpl extends AbstractGenericJpaDao<LocationGroup, Long> implements LocationGroupDao {
 
     /**
