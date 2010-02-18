@@ -1,8 +1,22 @@
 /*
- * OpenWMS, the open Warehouse Management System
- * 
- * Distributable under LGPL license.
- * See terms of license at gnu.org.
+ * openwms.org, the Open Warehouse Management System.
+ *
+ * This file is part of openwms.org.
+ *
+ * openwms.org is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as 
+ * published by the Free Software Foundation, either version 3 of the
+ * License, or (at your option) any later version.
+ *
+ * openwms.org is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with this software. If not, write to the Free
+ * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
+ * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
 package org.openwms.common.integration.jpa;
 
@@ -27,22 +41,27 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 /**
- * A AbstractGenericJpaDao.
+ * An AbstractGenericJpaDao.
  * <p>
- * Subclass this DAO implementation to call CRUD operations with JAVA
- * Persistence API. Furthermore extend this class to be explicitly independent
- * from OR mapping frameworks.
+ * Extend this DAO implementation to inherit simple JPA CRUD operations.
+ * </p>
  * <p>
- * The <tt>GenericDAO</tt> extends Springs JpaDaoSupport, to have a benefit from
- * Springs exception translation and transaction management.<br>
- * The stereotype annotation <code>atRepository</code> expresses the belongs as
- * data access class. <br>
- * Spring introduced the <tt>PersistenceExceptionTranslationPostProcessor</tt>
- * automatically to enable data access exception translation for any object
- * carrying the <tt>atRepository</tt> annotation
+ * This {@link GenericDao} implementation extends Springs {@link JpaDaoSupport},
+ * to have a benefit from Springs exception translation and transaction
+ * management.<br>
+ * The stereotype annotation {@link Repository} marks this class as DAO in the
+ * architecture and enables exception translation and component scanning.<br>
+ * </p>
+ * <p>
+ * Furthermore an {@link AbstractGenericJpaDao} has transactional behavior
+ * expressed with Springs {@link Transactional} annotation.
+ * </p>
  * 
  * @author <a href="mailto:openwms@googlemail.com">Heiko Scherrer</a>
  * @version $Revision: 314 $
+ * @since 0.1
+ * @see {@link org.springframework.stereotype.Repository}
+ * @see {@link org.springframework.transaction.annotation.Transactional}
  */
 @Repository
 @Transactional
@@ -54,14 +73,23 @@ public abstract class AbstractGenericJpaDao<T extends Serializable, ID extends S
      */
     protected Logger logger = LoggerFactory.getLogger(this.getClass());
 
-    public Class<T> persistentClass;
+    private Class<T> persistentClass;
 
+    /**
+     * Used to inject an {@link EntityManagerFactory} automatically.
+     * 
+     * @param entityManagerFactory
+     *            The {@link EntityManagerFactory}
+     */
     @Autowired
     @Required
     public void setJpaEntityManagerFactory(@Qualifier("entityManagerFactory") EntityManagerFactory entityManagerFactory) {
         super.setEntityManagerFactory(entityManagerFactory);
     }
 
+    /**
+     * Create a new AbstractGenericJpaDao.
+     */
     @SuppressWarnings("unchecked")
     public AbstractGenericJpaDao() {
         if (getClass().getGenericSuperclass() != null) {
@@ -71,24 +99,36 @@ public abstract class AbstractGenericJpaDao<T extends Serializable, ID extends S
     }
 
     /**
-     * Get the persistent entity class.<br>
-     * Resolved with Java Reflection to find the class of type <tt>T</tt>.
+     * Returns the entity class to deals with.<br>
+     * The Java Reflection API is used to find the type.
      * 
-     * @return
+     * @return Entity class type.
      */
     public Class<T> getPersistentClass() {
         return persistentClass;
     }
 
+    /**
+     * {@inheritDoc}
+     */
+    @Override
     public void setPersistentClass(Class<T> persistentClass) {
         this.persistentClass = persistentClass;
     }
 
+    /**
+     * {@inheritDoc}
+     */
+    @Override
     @Transactional(readOnly = true)
     public T findById(ID id) {
         return getJpaTemplate().find(getPersistentClass(), id);
     }
 
+    /**
+     * {@inheritDoc}
+     */
+    @Override
     @Transactional(readOnly = true)
     @SuppressWarnings("unchecked")
     public List<T> findAll() {
@@ -101,12 +141,20 @@ public abstract class AbstractGenericJpaDao<T extends Serializable, ID extends S
         return list;
     }
 
+    /**
+     * {@inheritDoc}
+     */
+    @Override
     @Transactional(readOnly = true)
     @SuppressWarnings("unchecked")
     public List<T> findByQuery(String queryName, Map<String, ?> params) {
         return getJpaTemplate().findByNamedQueryAndNamedParams(queryName, params);
     }
 
+    /**
+     * {@inheritDoc}
+     */
+    @Override
     @Transactional(readOnly = true)
     @SuppressWarnings("unchecked")
     public T findByUniqueId(Serializable id) {
@@ -117,29 +165,66 @@ public abstract class AbstractGenericJpaDao<T extends Serializable, ID extends S
         return result.size() == 0 ? null : result.get(0);
     }
 
+    /**
+     * {@inheritDoc}
+     */
+    @Override
     @Transactional
     public T save(T entity) {
         beforeUpdate(entity);
         return getJpaTemplate().merge(entity);
     }
 
+    /**
+     * {@inheritDoc}
+     */
+    @Override
     @Transactional
     public void remove(T entity) {
         getJpaTemplate().remove(entity);
     }
 
+    /**
+     * {@inheritDoc}
+     */
+    @Override
     @Transactional
     public void persist(T entity) {
         beforeUpdate(entity);
         getJpaTemplate().persist(entity);
     }
 
+    /**
+     * Returns the name of the <code>NamedQuery</code> to find all Entity
+     * classes.
+     * 
+     * @return Name of the query
+     */
     protected abstract String getFindAllQuery();
 
+    /**
+     * Returns the name of the <code>NamedQuery</code> to find an Entity by the
+     * business key.
+     * 
+     * @return Name of the query
+     */
     protected abstract String getFindByUniqueIdQuery();
 
+    /**
+     * This method is considered as a hook to do something before an update is
+     * performed.
+     * 
+     * @param entity
+     *            The Entity that is updated
+     */
     protected void beforeUpdate(T entity) {};
 
+    /**
+     * Subclasses can call this method to retrieve an shared
+     * {@link EntityManager} instance.
+     * 
+     * @return The {@link EntityManager}
+     */
     protected final EntityManager getEm() {
         return getJpaTemplate().getEntityManager();
     }
