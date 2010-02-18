@@ -89,7 +89,7 @@
 		/**
 		 * This method stores the selected user in the ModelSelector as selectedUser.
 		 * It also sends an Event to change settings in the main content panel
-		 * When the User has no UserDetails, a new set is instanciated.
+		 * When the User has no UserDetails, a new set is instantiated.
 		 *
 		 */
 		public function setSelectedItem():void {
