@@ -20,10 +20,7 @@
  */
 package org.openwms.common.service;
 
-import java.io.Serializable;
-
 import org.openwms.common.domain.Location;
-import org.openwms.common.domain.LocationGroup;
 import org.openwms.common.domain.LocationPK;
 import org.openwms.common.domain.TransportUnit;
 import org.openwms.common.domain.TransportUnitType;
@@ -41,7 +38,7 @@ import org.openwms.common.domain.values.Barcode;
  * @since 0.1
  * @see EntityService
  */
-public interface TransportService<T extends Serializable> extends EntityService<T> {
+public interface TransportService extends EntityService<TransportUnit> {
 
     /**
      * Create a new {@link TransportUnit} with the type
@@ -69,18 +66,5 @@ public interface TransportService<T extends Serializable> extends EntityService<
      *            - Unique identifier of the target <tt>Location</tt>
      */
     void moveTransportUnit(Barcode barcode, LocationPK targetLocationPK);
-
-    /**
-     * Returns the actual number of active transports that have the
-     * <tt>locationGroup</tt> as target {@link LocationGroup}.
-     * 
-     * @param locationGroup
-     *            - {@link LocationGroup} to count all active transports for
-     * @return - Number of all active transports that are on the way to this
-     *         {@link LocationGroup}
-     */
-    // TODO [scherrer] : move this method into the tms bundle, cause it cares
-    // about Transports
-    int getTransportsToLocationGroup(LocationGroup locationGroup);
 
 }
