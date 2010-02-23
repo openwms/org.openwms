@@ -36,7 +36,7 @@ import org.openwms.common.service.EntityService;
  * @since 0.1
  * @see EntityService
  */
-public interface TransportService extends EntityService<TransportUnit> {
+public interface TransportOrderService extends EntityService<TransportUnit> {
 
     /**
      * Returns the actual number of active transports that have the
