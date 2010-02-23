@@ -40,31 +40,31 @@ public class LocationPK implements Serializable {
     private static final long serialVersionUID = 1L;
 
     /**
-     * Expresses an area.
+     * Expresses the area where the <code>Location</code> belongs to.
      */
     @Column(name = "AREA", nullable = false)
     private String area;
 
     /**
-     * Expresses an aisle.
+     * Expresses the aisle where the <code>Location</code> belongs to.
      */
     @Column(name = "AISLE", nullable = false)
     private String aisle;
 
     /**
-     * Expresses an dimension x.
+     * Expresses the dimension x where this <code>Location</code> belongs to.
      */
     @Column(name = "X", nullable = false)
     private String x;
 
     /**
-     * Expresses an dimension y.
+     * Expresses the dimension y where this <code>Location</code> belongs to.
      */
     @Column(name = "Y", nullable = false)
     private String y;
 
     /**
-     * Expresses an dimension z.
+     * Expresses the dimension z where this <code>Location</code> belongs to.
      */
     @Column(name = "Z", nullable = false)
     private String z;
@@ -77,10 +77,15 @@ public class LocationPK implements Serializable {
      * Create a new LocationPK.
      * 
      * @param area
+     *            Area where this <code>Location</code> belongs to
      * @param aisle
+     *            Aisle where this <code>Location</code> belongs to
      * @param x
+     *            Dimension x where this <code>Location</code> belongs to
      * @param y
+     *            Dimension y where this <code>Location</code> belongs to
      * @param z
+     *            Dimension z where this <code>Location</code> belongs to
      */
     public LocationPK(String area, String aisle, String x, String y, String z) {
         this.area = area;
@@ -154,9 +159,10 @@ public class LocationPK implements Serializable {
     }
 
     /**
-     * Return a String like {AREA/AISLE/X/Y/Z}
+     * Return a String like {AREA/AISLE/X/Y/Z}.
      * 
      * @see java.lang.Object#toString()
+     * @return as String
      */
     @Override
     public String toString() {

@@ -32,7 +32,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 /**
- * Password history.
+ * A Password.
  * <p>
  * All passwords used by the {@link User}. When the {@link User} changes her
  * password, the current password moves to the beginning of the password history
@@ -71,20 +71,47 @@ public class UserPassword implements Serializable {
     private String password;
 
     /* ----------------------------- methods ------------------- */
-    public UserPassword() {}
+    /**
+     * Create a new <code>UserPassword</code>.
+     * 
+     * @param user
+     *            The {@link User} to assign
+     * @param password
+     *            The password as String to assign
+     */
+    public UserPassword(User user, String password) {
+        this.user = user;
+        this.password = password;
+    }
 
+    /**
+     * Constructor only for the persistence provider.
+     */
+    protected UserPassword() {}
+
+    /**
+     * Return the unique technical key.
+     * 
+     * @return The unique technical key
+     */
     public Long getId() {
         return this.id;
     }
 
-    public void setId(Long id) {
-        this.id = id;
-    }
-
+    /**
+     * Get the {@link User} of this password.
+     * 
+     * @return The {@link User} of this password
+     */
     public User getUser() {
         return this.user;
     }
 
+    /**
+     * Return the stored password.
+     * 
+     * @return The stored password
+     */
     public String getPassword() {
         return this.password;
     }

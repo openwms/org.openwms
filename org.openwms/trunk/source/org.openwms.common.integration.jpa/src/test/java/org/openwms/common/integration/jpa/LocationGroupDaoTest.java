@@ -56,8 +56,7 @@ public class LocationGroupDaoTest extends AbstractJpaSpringContextTests {
             dao.persist(locationGroup2);
             entityManager.flush();
             fail("Persisting two LocationGroups with same id must be permitted");
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             logger.debug("OK:Duplicate id for LocationGroup must be prevented by unique constraint.");
         }
     }
@@ -71,8 +70,7 @@ public class LocationGroupDaoTest extends AbstractJpaSpringContextTests {
         try {
             parent.addLocationGroup(null);
             fail("Not allowed to add null as LocationGroup on parent");
-        }
-        catch (IllegalArgumentException iae) {
+        } catch (IllegalArgumentException iae) {
             logger.debug("OK: Exception when trying to add null as parent LocationGroup");
         }
         int noChildren = parent.getLocationGroups().size();
@@ -95,8 +93,7 @@ public class LocationGroupDaoTest extends AbstractJpaSpringContextTests {
         try {
             parent.removeLocationGroup(null);
             fail("Not allowed to remove null as LocationGroup on parent");
-        }
-        catch (IllegalArgumentException iae) {
+        } catch (IllegalArgumentException iae) {
             logger.debug("OK: Exception when trying to remove null as parent LocationGroup");
         }
         int noChildren = parent.getLocationGroups().size();

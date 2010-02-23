@@ -36,7 +36,7 @@
     </category>
 
     <category name="org.hibernate">
-        <priority value="WARN" />
+        <priority value="INFO" />
     </category>
 
     <root>

@@ -43,20 +43,18 @@ public interface UserService<T extends Serializable> extends EntityService<T> {
      * Call this method to store an image of an {@link User}.
      * 
      * @param username
-     *            - Username of the User
+     *            Username of the User
      * @param image
-     *            - Image as byte[]
-     * @return - true, if operation successful<br>
-     *         - false, if not
+     *            Image as byte[]
      */
-    boolean uploadImageFile(String username, byte[] image);
+    void uploadImageFile(String username, byte[] image);
 
     /**
      * Return an transient {@link User} Entity class, serving as a template.
      * 
      * @param username
-     *            - Username of the {@link User}
-     * @return - An empty template {@link User} instance
+     *            Username of the {@link User}
+     * @return An empty template {@link User} instance
      */
     T getTemplate(String username);
 
@@ -64,8 +62,8 @@ public interface UserService<T extends Serializable> extends EntityService<T> {
      * Save the given {@link User} Entity or persist it when it is transient.
      * 
      * @param user
-     *            - {@link User} Entity to persist
-     * @return - Saved {@link User} Entity instance
+     *            {@link User} Entity to persist
+     * @return Saved {@link User} Entity instance
      */
     T save(T user);
 
@@ -73,7 +71,7 @@ public interface UserService<T extends Serializable> extends EntityService<T> {
      * Remove {@link User} Entity from the persistence storage.
      * 
      * @param user
-     *            - {@link User} Entity to be removed
+     *            {@link User} Entity to be removed
      */
     void remove(T user);
 

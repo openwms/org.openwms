@@ -68,8 +68,7 @@ public class LocationTest extends AbstractJpaSpringContextTests {
         try {
             locationGroup.addLocation(null);
             fail("Not allowed to add null as location to a group");
-        }
-        catch (IllegalArgumentException iae) {
+        } catch (IllegalArgumentException iae) {
             logger.debug("OK: Exception when trying to add null");
         }
 

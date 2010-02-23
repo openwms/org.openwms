@@ -82,7 +82,18 @@ public class TransportUnit implements Serializable {
      * @see TransportUnit
      */
     public static enum TU_STATE {
-        AVAILABLE, OK, NOT_OK
+        /**
+         * The <code>TransportUnit</code> is available.
+         */
+        AVAILABLE,
+        /**
+         * The <code>TransportUnit</code> is okay.
+         */
+        OK,
+        /**
+         * The <code>TransportUnit</code> is not okay.
+         */
+        NOT_OK
     }
 
     /**
@@ -140,7 +151,7 @@ public class TransportUnit implements Serializable {
     private TU_STATE state;
 
     /**
-     * Version field
+     * Version field.
      */
     @Version
     private long version;
@@ -206,6 +217,9 @@ public class TransportUnit implements Serializable {
     /**
      * Create a new {@link TransportUnit} with a unique unitId. The unitId is
      * used to create a {@link Barcode}.
+     * 
+     * @param unitId
+     *            The unique identifier of the {@link TransportUnit} as String
      */
     public TransportUnit(String unitId) {
         this.creationDate = new Date();
@@ -214,6 +228,10 @@ public class TransportUnit implements Serializable {
 
     /**
      * Create a new {@link TransportUnit} with a unique {@link Barcode}.
+     * 
+     * @param barcode
+     *            The unique identifier of this {@link TransportUnit} as
+     *            {@link Barcode}
      */
     public TransportUnit(Barcode barcode) {
         this.creationDate = new Date();
@@ -240,9 +258,10 @@ public class TransportUnit implements Serializable {
     }
 
     /**
-     * Get the actual <tt>Location</tt> of this {@link TransportUnit}.
+     * Get the actual {@link Location} of this {@link TransportUnit}.
      * 
-     * @return
+     * @return The {@link Location} where this {@link TransportUnit} is
+     *         currently placed on
      */
     public Location getActualLocation() {
         return actualLocation;
@@ -252,6 +271,8 @@ public class TransportUnit implements Serializable {
      * Set the actual {@link Location} of this {@link TransportUnit}.
      * 
      * @param actualLocation
+     *            The {@link Location} where this {@link TransportUnit} shall be
+     *            moved to
      */
     public void setActualLocation(Location actualLocation) {
         this.actualLocation = actualLocation;
@@ -273,6 +294,8 @@ public class TransportUnit implements Serializable {
      * be set when a started <tt>TransportOder</tt> exist.
      * 
      * @param targetLocation
+     *            The target {@link Location} where this {@link TransportUnit}
+     *            shall be transported to
      */
     public void setTargetLocation(Location targetLocation) {
         this.targetLocation = targetLocation;
@@ -281,8 +304,7 @@ public class TransportUnit implements Serializable {
     /**
      * Indicates whether the {@link TransportUnit} is empty or not.
      * 
-     * @return<br> - true if empty <br>
-     *             - false if not empty.
+     * @return true if empty, otherwise false
      */
     public Boolean isEmpty() {
         return this.empty;
@@ -292,6 +314,7 @@ public class TransportUnit implements Serializable {
      * Sets this {@link TransportUnit} to be empty.
      * 
      * @param empty
+     *            true to mark the {@link TransportUnit} as empty
      */
     public void setEmpty(Boolean empty) {
         this.empty = empty;
@@ -301,7 +324,7 @@ public class TransportUnit implements Serializable {
      * Returns the <code>User</code> who did the last inventory action on this
      * {@link TransportUnit}.
      * 
-     * @return
+     * @return The user who did the last inventory check
      */
     public User getInventoryUser() {
         return this.inventoryUser;
@@ -312,6 +335,7 @@ public class TransportUnit implements Serializable {
      * {@link TransportUnit}.
      * 
      * @param inventoryUser
+     *            The {@link User} who did the last inventory check
      */
     public void setInventoryUser(User inventoryUser) {
         this.inventoryUser = inventoryUser;
@@ -319,35 +343,38 @@ public class TransportUnit implements Serializable {
 
     /**
      * Number of {@link TransportUnit}s belonging to this {@link TransportUnit}.
+     * 
+     * @return The number of all {@link TransportUnit}s belonging to this one
      */
     public int getNoTransportUnits() {
         return this.children.size();
     }
 
     /**
-     * Returns the date when the {@link TransportUnit} was been created.
+     * Returns the date when the {@link TransportUnit} was created.
      * 
-     * @return
+     * @return The date when this {@link TransportUnit} was created
      */
     public Date getCreationDate() {
         return this.creationDate;
     }
 
     /**
-     * Returns the timestamp when this {@link TransportUnit} moved to the
+     * Returns the date when this {@link TransportUnit} moved to the
      * actualLocation.
      * 
-     * @return
+     * @return The timestamp when this {@link TransportUnit} moved the last time
      */
     public Date getActualLocationDate() {
         return this.actualLocationDate;
     }
 
     /**
-     * Returns the timestamp of the last inventory action of this
+     * Returns the timestamp of the last inventory check of this
      * {@link TransportUnit}.
      * 
-     * @return
+     * @return The timestamp of the last inventory check of this
+     *         {@link TransportUnit}.
      */
     public Date getInventoryDate() {
         return this.inventoryDate;
@@ -358,24 +385,26 @@ public class TransportUnit implements Serializable {
      * {@link TransportUnit}.
      * 
      * @param inventoryDate
+     *            The timestamp of the last inventory check
      */
     public void setInventoryDate(Date inventoryDate) {
         this.inventoryDate = inventoryDate;
     }
 
     /**
-     * Returns the actual weight of this {@link TransportUnit}.
+     * Returns the current weight of this {@link TransportUnit}.
      * 
-     * @return
+     * @return The current weight of this {@link TransportUnit}
      */
     public BigDecimal getWeight() {
         return this.weight;
     }
 
     /**
-     * Sets the actual weight of this {@link TransportUnit}.
+     * Sets the current weight of this {@link TransportUnit}.
      * 
      * @param weight
+     *            The current weight of this {@link TransportUnit}
      */
     public void setWeight(BigDecimal weight) {
         this.weight = weight;
@@ -384,7 +413,8 @@ public class TransportUnit implements Serializable {
     /**
      * Get all errors that occurred on this {@link TransportUnit}.
      * 
-     * @return
+     * @return A Map of all occurred {@link UnitError}s on this
+     *         {@link TransportUnit}
      */
     public Map<Date, UnitError> getErrors() {
         return Collections.unmodifiableMap(errors);
@@ -394,6 +424,9 @@ public class TransportUnit implements Serializable {
      * Add an error for this {@link TransportUnit}.
      * 
      * @param error
+     *            An {@link UnitError} to add
+     * @return The key, or null in case the {@link UnitError} wasn't put into
+     *         the Map
      */
     public UnitError addError(UnitError error) {
         if (error == null) {
@@ -405,7 +438,7 @@ public class TransportUnit implements Serializable {
     /**
      * Get the state of this {@link TransportUnit}.
      * 
-     * @return
+     * @return The current state of this {@link TransportUnit}
      */
     public TU_STATE getState() {
         return this.state;
@@ -415,24 +448,27 @@ public class TransportUnit implements Serializable {
      * Set the state of this {@link TransportUnit}.
      * 
      * @param state
+     *            The state to set on this {@link TransportUnit}
      */
     public void setState(TU_STATE state) {
         this.state = state;
     }
 
     /**
-     * Get the {@link TransportUnitType} of this {@link TransportUnit} .
+     * Get the {@link TransportUnitType} of this {@link TransportUnit}.
      * 
-     * @return
+     * @return The {@link TransportUnitType} this {@link TransportUnit} belongs
+     *         to
      */
     public TransportUnitType getTransportUnitType() {
         return this.transportUnitType;
     }
 
     /**
-     * Set the {@link TransportUnitType} of this {@link TransportUnit} .
+     * Set the {@link TransportUnitType} of this {@link TransportUnit}.
      * 
      * @param transportUnitType
+     *            The type to which this {@link TransportUnit} belongs to
      */
     public void setTransportUnitType(TransportUnitType transportUnitType) {
         this.transportUnitType = transportUnitType;
@@ -451,6 +487,7 @@ public class TransportUnit implements Serializable {
      * Set the {@link Barcode} of the {@link TransportUnit}.
      * 
      * @param barcode
+     *            The {@link Barcode} to set for this {@link TransportUnit}
      */
     public void setBarcode(Barcode barcode) {
         this.barcode = barcode;
@@ -488,6 +525,7 @@ public class TransportUnit implements Serializable {
      * Add a {@link TransportUnit} to children.
      * 
      * @param transportUnit
+     *            The {@link TransportUnit} to add to the list of children
      */
     public void addChild(TransportUnit transportUnit) {
         if (transportUnit == null) {
@@ -513,6 +551,8 @@ public class TransportUnit implements Serializable {
      * Remove a {@link TransportUnit} from the collection of children.
      * 
      * @param transportUnit
+     *            The {@link TransportUnit} to be removed from the list of
+     *            children
      */
     public void removeChild(TransportUnit transportUnit) {
         if (transportUnit == null) {
@@ -551,6 +591,7 @@ public class TransportUnit implements Serializable {
      * Return the {@link Barcode} as String.
      * 
      * @see java.lang.Object#toString()
+     * @return as String
      */
     @Override
     public String toString() {

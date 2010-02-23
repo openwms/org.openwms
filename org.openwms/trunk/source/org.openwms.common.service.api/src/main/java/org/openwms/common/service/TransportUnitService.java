@@ -20,7 +20,6 @@
  */
 package org.openwms.common.service;
 
-import org.openwms.common.domain.Location;
 import org.openwms.common.domain.LocationPK;
 import org.openwms.common.domain.TransportUnit;
 import org.openwms.common.domain.TransportUnitType;
@@ -36,34 +35,34 @@ import org.openwms.common.domain.values.Barcode;
  * @author <a href="mailto:openwms@googlemail.com">Heiko Scherrer</a>
  * @version $Revision: 877 $
  * @since 0.1
- * @see EntityService
+ * @see org.openwms.common.service.EntityService
  */
 public interface TransportUnitService extends EntityService<TransportUnit> {
 
     /**
      * Create a new {@link TransportUnit} with the type
-     * {@link TransportUnitType} placed on an initial <tt>Location</tt>. The new
-     * {@link TransportUnit} has the given {@link Barcode} as identifier.
+     * {@link TransportUnitType} placed on an initial <code>Location</code>. The
+     * new {@link TransportUnit} has the given {@link Barcode} as identifier.
      * 
      * @param barcode
-     *            - {@link Barcode} of the new {@link TransportUnit}
+     *            {@link Barcode} of the new {@link TransportUnit}
      * @param transportUnitType
-     *            - The type of the new {@link TransportUnit}
+     *            The type of the new {@link TransportUnit}
      * @param actualLocation
-     *            - The {@link Location} where the {@link TransportUnit} is
+     *            The <code>Location</code> where the {@link TransportUnit} is
      *            placed on
-     * @return - The updated {@link TransportUnit} instance
+     * @return The updated {@link TransportUnit} instance
      */
     TransportUnit createTransportUnit(Barcode barcode, TransportUnitType transportUnitType, LocationPK actualLocation);
 
     /**
      * Move a {@link TransportUnit} identified by its {@link Barcode} to the
-     * given target <tt>Location</tt> identified by the {@link LocationPK}.
+     * given target <code>Location</code> identified by the {@link LocationPK}.
      * 
      * @param barcode
-     *            - {@link Barcode} of the {@link TransportUnit} to move
+     *            {@link Barcode} of the {@link TransportUnit} to move
      * @param targetLocationPK
-     *            - Unique identifier of the target <tt>Location</tt>
+     *            Unique identifier of the target <code>Location</code>
      */
     void moveTransportUnit(Barcode barcode, LocationPK targetLocationPK);
 

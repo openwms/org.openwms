@@ -1,12 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
-<mx:Canvas xmlns:mx="http://www.adobe.com/2006/mxml"
-	xmlns="*"
-	width="0" height="0"
-	verticalScrollPolicy="off"
-	horizontalScrollPolicy="off"
-	creationComplete="initComp();"
-	xmlns:common="com.af.common.*">
-	
+<!--
+/*
+ * openwms.org, the Open Warehouse Management System.
+ *
+ * This file is part of openwms.org.
+ *
+ * openwms.org is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as 
+ * published by the Free Software Foundation, either version 3 of the
+ * License, or (at your option) any later version.
+ *
+ * openwms.org is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with this software. If not, write to the Free
+ * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
+ * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
+ */
+-->
+<mx:Canvas xmlns:mx="http://www.adobe.com/2006/mxml" xmlns="*" width="0" height="0" verticalScrollPolicy="off"
+	horizontalScrollPolicy="off" creationComplete="initComp();" xmlns:common="com.af.common.*">
+
 	<mx:Script>
 	<![CDATA[
 		import org.openwms.web.flex.client.model.ModelLocator;
@@ -202,60 +219,49 @@
         }	
 	]]>
 	</mx:Script>
-	
-	<mx:VBox width="496" height="437" 
-		verticalScrollPolicy="off" horizontalScrollPolicy="off"
-		styleName="panelSkin">
-		<mx:VBox width="100%" height="100%" id="container"
-			verticalScrollPolicy="off" horizontalScrollPolicy="off"
-			paddingLeft="10" paddingRight="10" paddingBottom="10" paddingTop="5"
-			verticalGap="0">
+
+	<mx:VBox width="496" height="437" verticalScrollPolicy="off" horizontalScrollPolicy="off" styleName="panelSkin">
+		<mx:VBox width="100%" height="100%" id="container" verticalScrollPolicy="off" horizontalScrollPolicy="off"
+			paddingLeft="10" paddingRight="10" paddingBottom="10" paddingTop="5" verticalGap="0">
 			<mx:Spacer height="10" />
-			<mx:HBox width="100%" 
-				verticalScrollPolicy="off"
-				horizontalScrollPolicy="off">
-				<mx:Image id="iconImage" source="{iconClass}"/>
-				<mx:Text text="MEDIA UPLOAD" styleName="lblDialogFont"
-					width="90%" fontWeight="bold" fontSize="14" />
-                <mx:Spacer width="100%"/>
-				<mx:Image toolTip="Close Dialog" 
-						source="@Embed('/assets/images/closeButton.png')" 
-						click="closeDialog()"
-						mouseChildren="false" useHandCursor="true" buttonMode="true"/>
+			<mx:HBox width="100%" verticalScrollPolicy="off" horizontalScrollPolicy="off">
+				<mx:Image id="iconImage" source="{iconClass}" />
+				<mx:Text text="MEDIA UPLOAD" styleName="lblDialogFont" width="90%" fontWeight="bold" fontSize="14" />
+				<mx:Spacer width="100%" />
+				<mx:Image toolTip="Close Dialog" source="@Embed('/assets/images/closeButton.png')" click="closeDialog()"
+					mouseChildren="false" useHandCursor="true" buttonMode="true" />
 			</mx:HBox>
-		<mx:Form>		
-			<mx:FormItem label="Upload URL:">
-				<mx:TextInput id="uploadURL" width="100%" color="#2c2c2c" 
-					text="{'/upload'}"
-					enabled="true"  />
-			</mx:FormItem>
+			<mx:Form>
+				<mx:FormItem label="Upload URL:">
+					<mx:TextInput id="uploadURL" width="100%" color="#2c2c2c" text="{'/upload'}" enabled="true" />
+				</mx:FormItem>
 
-			<mx:FormItem label="Selected File:">
-			    <mx:Label id="filename"/>
-			</mx:FormItem>
-			
-			<mx:FormItem label="Upload By:">
-				<mx:TextInput id="ti_author" color="#2c2c2c"/>
-			</mx:FormItem>
+				<mx:FormItem label="Selected File:">
+					<mx:Label id="filename" />
+				</mx:FormItem>
 
-			<mx:FormItem direction="horizontal" width="100%">
-				<mx:Button width="80" label="Browse" click="fileRef.browse()" />
-				<mx:Button width="80" label="Upload" id="btn_upload" enabled="false" click="uploadFile(uploadURL.text)" />
-				<mx:Button width="80" label="Cancel" id="btn_cancel" enabled="false" click="fileRef.cancel()" />
-			</mx:FormItem>
-			
-			<mx:HRule width="100%" tabEnabled="false"/>
-			
-			<mx:FormItem label="Progress:">
-				<mx:ProgressBar id="progressBar" mode="manual" />
-			</mx:FormItem>
-			
-			<mx:FormItem label="Events:">
-				<mx:TextArea id="ta" width="350" height="200" color="#2c2c2c"/>
-			</mx:FormItem>
-			
-		</mx:Form>
-		
-	</mx:VBox>		
+				<mx:FormItem label="Upload By:">
+					<mx:TextInput id="ti_author" color="#2c2c2c" />
+				</mx:FormItem>
+
+				<mx:FormItem direction="horizontal" width="100%">
+					<mx:Button width="80" label="Browse" click="fileRef.browse()" />
+					<mx:Button width="80" label="Upload" id="btn_upload" enabled="false" click="uploadFile(uploadURL.text)" />
+					<mx:Button width="80" label="Cancel" id="btn_cancel" enabled="false" click="fileRef.cancel()" />
+				</mx:FormItem>
+
+				<mx:HRule width="100%" tabEnabled="false" />
+
+				<mx:FormItem label="Progress:">
+					<mx:ProgressBar id="progressBar" mode="manual" />
+				</mx:FormItem>
+
+				<mx:FormItem label="Events:">
+					<mx:TextArea id="ta" width="350" height="200" color="#2c2c2c" />
+				</mx:FormItem>
+
+			</mx:Form>
+
+		</mx:VBox>
 	</mx:VBox>
 </mx:Canvas>

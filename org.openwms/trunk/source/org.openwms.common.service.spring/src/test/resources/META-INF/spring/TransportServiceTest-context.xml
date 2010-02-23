@@ -1,3 +1,5 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
 /*
  * openwms.org, the Open Warehouse Management System.
  *
@@ -17,35 +19,21 @@
  * License along with this software. If not, write to the Free
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
- */
-package org.openwms.common.service.spring;
+ */  
+-->
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">
 
-import java.util.List;
+    <bean id="locationDao" class="org.openwms.common.integration.jpa.LocationDaoImpl" />
 
-import org.openwms.common.domain.Location;
-import org.openwms.common.integration.LocationDao;
-import org.openwms.common.service.LocationService;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
+    <bean id="transportUnitTypeDao" class="org.openwms.common.integration.jpa.TransportUnitTypeDaoImpl" />
 
-/**
- * A LocationServiceImpl.
- * 
- * @author <a href="mailto:openwms@googlemail.com">Heiko Scherrer</a>
- * @version $Revision: 314 $
- * @since 0.1
- */
-@Service
-@Transactional
-public class LocationServiceImpl extends EntityServiceImpl<Location, Long> implements LocationService<Location> {
+    <bean id="transportUnitDao" class="org.openwms.common.integration.jpa.TransportUnitDaoImpl" />
 
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    @Transactional(readOnly = true)
-    public List<Location> getAllLocations() {
-        logger.debug("GetAllLocations on service called");
-        return ((LocationDao) dao).getAllLocations();
-    }
-}
+
+    <bean id="transportUnitService" class="org.openwms.common.service.spring.TransportUnitServiceImpl">
+        <property name="dao" ref="transportUnitDao" />
+    </bean>
+
+</beans>

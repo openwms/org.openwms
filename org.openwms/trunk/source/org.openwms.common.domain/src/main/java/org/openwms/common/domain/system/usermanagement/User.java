@@ -42,7 +42,7 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
 /**
- * An {@link User} represents an user of the system.
+ * An <code>User</code> represents an user of the system.
  * 
  * @author <a href="mailto:openwms@googlemail.com">Heiko Scherrer</a>
  * @version $Revision$
@@ -66,14 +66,14 @@ public class User implements Serializable {
     private Long id;
 
     /**
-     * Unique identifier of the {@link User}.
+     * Unique identifier of this <code>User</code>.
      */
     @Column(name = "USERNAME", unique = true, nullable = false)
     private String username;
 
     /**
-     * <code>true</code> if the {@link User} is authenticated by an external
-     * system.
+     * <code>true</code> if the <code>User</code> is authenticated by an
+     * external system.
      */
     @Column(name = "EXTERN")
     private Boolean extern;
@@ -86,58 +86,59 @@ public class User implements Serializable {
     private Date lastPasswordChange;
 
     /**
-     * <code>true</code> if this {@link User} is locked and cannot login.
+     * <code>true</code> if this <code>User</code> is locked and has no
+     * permission to login.
      */
     @Column(name = "LOCKED")
     private Boolean locked;
 
     /**
-     * Current password of the {@link User}.
+     * Current password of the <code>User</code>.
      */
     @Column(name = "PASSWORD")
     private String password;
 
     /**
-     * <code>true</code> if this {@link User} is enabled.
+     * <code>true</code> if this <code>User</code> is enabled.
      */
     @Column(name = "ENABLED")
     private Boolean enabled;
 
     /**
-     * Date when the account expires. After expiration, no system access is
-     * possible.
+     * Date when the account expires. After expiration, the <code>User</code>
+     * cannot login anymore.
      */
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "EXPIRATION_DATE")
     private Date expirationDate;
 
     /**
-     * {@link User}s fullname. Doesn't have to be unique.
+     * <code>User</code>s fullname. Doesn't have to be unique.
      */
     @Column(name = "FULLNAME")
     private String fullname;
 
     /* ------------------- collection mapping ------------------- */
     /**
-     * More detail information about the {@link User}.
+     * More detail information about the <code>User</code>.
      */
     @Embedded
     private UserDetails userDetails = new UserDetails();
 
     /**
-     * List of all granted {@link Role}s to this {@link User}.
+     * List of all granted {@link Role}s to this <code>User</code>.
      */
     @ManyToMany(mappedBy = "users")
     private List<Role> roles = new ArrayList<Role>();
 
     /**
-     * Password history of this {@link User}.
+     * Password history of this <code>User</code>.
      */
     @OneToMany(mappedBy = "user")
     private List<UserPassword> passwords = new ArrayList<UserPassword>();
 
     /**
-     * All {@link Preference}s of this {@link User}.
+     * All {@link Preference}s of this <code>User</code>.
      */
     @OneToMany(cascade = CascadeType.ALL)
     private Set<Preference> preferences = new HashSet<Preference>();
@@ -149,6 +150,12 @@ public class User implements Serializable {
     @SuppressWarnings("unused")
     private User() {}
 
+    /**
+     * Create a new User with an username.
+     * 
+     * @param username
+     *            The unique name of the user
+     */
     public User(String username) {
         this.username = username;
     }
@@ -156,7 +163,7 @@ public class User implements Serializable {
     /**
      * Return the technical key.
      * 
-     * @return the id.
+     * @return The unique technical key
      */
     public Long getId() {
         return id;
@@ -165,8 +172,8 @@ public class User implements Serializable {
     /**
      * Checks if the instance is transient.
      * 
-     * @return - true: Entity is not present on the persistent storage.<br>
-     *         - false : Entity already exists on the persistence storage
+     * @return true if the entity is not present on the persistent storage,
+     *         otherwise false.
      */
     public boolean isNew() {
         return this.id == null;
@@ -245,16 +252,20 @@ public class User implements Serializable {
     }
 
     /**
-     * @return a {@link java.util.List} of the last passwords.
+     * Returns a List of the last used passwords.
+     * 
+     * @return A List of the last used passwords.
      */
     public List<UserPassword> getPasswords() {
         return this.passwords;
     }
 
     /**
-     * Set a list of {@link UserPassword}s to this {@link User}.
+     * Set a List of {@link UserPassword}s to this <code>User</code>. Already
+     * existing {@link UserPassword}s are removed.
      * 
      * @param passwords
+     *            A List of {@link UserPassword}s
      */
     public void setPasswords(List<UserPassword> passwords) {
         this.passwords = passwords;
@@ -276,38 +287,42 @@ public class User implements Serializable {
     }
 
     /**
-     * Is this {@link User} an user authenticated through an external system?
+     * Is this <code>User</code> an user authenticated through an external
+     * system?
      * 
-     * @return - extern.
+     * @return true if this <code>User</code> was authenticated by an external
+     *         system, otherwise false.
      */
     public Boolean getExtern() {
         return extern;
     }
 
     /**
-     * Set this {@link User} as user authenticated through an external system.
+     * Set this <code>User</code> as authenticated through an external system.
      * 
      * @param extern
-     *            - extern to set.
+     *            true if this <code>User</code> was authenticated by an
+     *            external system, otherwise false.
      */
     public void setExtern(Boolean extern) {
         this.extern = extern;
     }
 
     /**
-     * Get all {@link Preference}s of this {@link User}.
+     * Get all {@link Preference}s of this <code>User</code>.
      * 
-     * @return the preferences.
+     * @return A Set of all {@link Preference}s
      */
     public Set<Preference> getPreferences() {
         return preferences;
     }
 
     /**
-     * Set all {@link Preference}s of this {@link User}.
+     * Set all {@link Preference}s of this <code>User</code>. Already existing
+     * {@link Preference}s are removed.
      * 
      * @param preferences
-     *            - The preferences to set.
+     *            A Set of {@link Preference}s to set
      */
     public void setPreferences(Set<Preference> preferences) {
         this.preferences = preferences;

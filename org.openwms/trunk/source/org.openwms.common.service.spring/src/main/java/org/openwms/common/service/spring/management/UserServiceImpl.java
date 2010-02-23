@@ -29,7 +29,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 /**
- * A UserServiceImpl.
+ * An UserServiceImpl.
  * 
  * @author <a href="mailto:openwms@googlemail.com">Heiko Scherrer</a>
  * @version $Revision: 314 $
@@ -42,17 +42,14 @@ public class UserServiceImpl extends EntityServiceImpl<User, Long> implements Us
     /**
      * {@inheritDoc}
      */
-    // FIXME [scherrer] : Remove return value, when no user found exception is
-    // thrown.
     @Override
-    public boolean uploadImageFile(String username, byte[] image) {
+    public void uploadImageFile(String username, byte[] image) {
         User user = dao.findByUniqueId(username);
         if (user.getUserDetails() == null) {
             user.setUserDetails(new UserDetails());
         }
         user.getUserDetails().setImage(image);
         dao.save(user);
-        return true;
     }
 
     /**

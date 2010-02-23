@@ -55,7 +55,7 @@ public class LocationDaoTest extends AbstractJpaSpringContextTests {
     private List<Location> locations;
 
     @Before
-    public void beforeTransaction() {
+    public void inTransaction() {
         locationDao.persist(new Location(new LocationPK("area", "aisle", "x", "y", "z")));
     }
 

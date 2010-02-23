@@ -55,32 +55,32 @@ public class LocationType implements Serializable {
     public static final String DEF_TYPE_DESCRIPTION = "--";
 
     /**
-     * Type of this {@link LocationType}
+     * Type of this {@link LocationType}.
      */
     @Id
     @Column(name = "TYPE")
     private String type;
 
     /**
-     * Description of this {@link LocationType}
+     * Description of this {@link LocationType}.
      */
     @Column(name = "DESCRIPTION")
     private String description = DEF_TYPE_DESCRIPTION;
 
     /**
-     * Length of this {@link LocationType}
+     * Length of this {@link LocationType}.
      */
     @Column(name = "LENGTH")
     private int length = 0;
 
     /**
-     * Width of this {@link LocationType}
+     * Width of this {@link LocationType}.
      */
     @Column(name = "WIDTH")
     private int width = 0;
 
     /**
-     * Height of this {@link LocationType}
+     * Height of this {@link LocationType}.
      */
     @Column(name = "HEIGHT")
     private int height = 0;
@@ -117,7 +117,7 @@ public class LocationType implements Serializable {
     }
 
     /**
-     * Get the unique identifier of this {@link LocationType}
+     * Get the unique identifier of this {@link LocationType}.
      * 
      * @return - type
      */
@@ -126,7 +126,7 @@ public class LocationType implements Serializable {
     }
 
     /**
-     * Get the length of this {@link LocationType}
+     * Get the length of this {@link LocationType}.
      * 
      * @return - length
      */
@@ -135,16 +135,17 @@ public class LocationType implements Serializable {
     }
 
     /**
-     * Set the length of this {@link LocationType}
+     * Set the length of this {@link LocationType}.
      * 
      * @param length
+     *            The length of this type
      */
     public void setLength(int length) {
         this.length = length;
     }
 
     /**
-     * Get the width of this {@link LocationType}
+     * Get the width of this {@link LocationType}.
      * 
      * @return - width
      */
@@ -153,16 +154,17 @@ public class LocationType implements Serializable {
     }
 
     /**
-     * Set the width of this {@link LocationType}
+     * Set the width of this {@link LocationType}.
      * 
      * @param width
+     *            The width of this type
      */
     public void setWidth(int width) {
         this.width = width;
     }
 
     /**
-     * Get the description of this {@link LocationType}
+     * Get the description of this {@link LocationType}.
      * 
      * @return - description
      */
@@ -171,16 +173,17 @@ public class LocationType implements Serializable {
     }
 
     /**
-     * Set the description of this {@link LocationType}
+     * Set the description of this {@link LocationType}.
      * 
      * @param description
+     *            The description text of this type
      */
     public void setDescription(String description) {
         this.description = description;
     }
 
     /**
-     * Get the height of this {@link LocationType}
+     * Get the height of this {@link LocationType}.
      * 
      * @return - height
      */
@@ -189,16 +192,17 @@ public class LocationType implements Serializable {
     }
 
     /**
-     * Set the height of this {@link LocationType}
+     * Set the height of this {@link LocationType}.
      * 
      * @param height
+     *            The height of this type
      */
     public void setHeight(int height) {
         this.height = height;
     }
 
     /**
-     * Get all {@link LocationType}s belonging to this {@link LocationType}
+     * Get all {@link LocationType}s belonging to this {@link LocationType}.
      * 
      * @return - All {@link LocationType}s belonging to this
      *         {@link LocationType}
@@ -209,9 +213,10 @@ public class LocationType implements Serializable {
 
     /**
      * Set a {@java.util.Set} of {@link LocationType}s belonging
-     * to this {@link LocationType}
+     * to this {@link LocationType}.
      * 
      * @param locations
+     *            a collection of {@link Location} to assign to this type
      */
     public void setLocations(Set<Location> locations) {
         this.locations = locations;
@@ -230,6 +235,7 @@ public class LocationType implements Serializable {
      * Return the type as String.
      * 
      * @see java.lang.Object#toString()
+     * @return as String
      */
     @Override
     public String toString() {

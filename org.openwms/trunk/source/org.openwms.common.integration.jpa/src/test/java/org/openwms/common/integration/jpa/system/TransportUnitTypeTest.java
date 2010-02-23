@@ -55,8 +55,7 @@ public class TransportUnitTypeTest extends AbstractJpaSpringContextTests {
         try {
             entityManager.persist(transportUnitType2);
             fail("Expecting exception when persisting existing entity with same identifier!");
-        }
-        catch (PersistenceException pe) {}
+        } catch (PersistenceException pe) {}
 
         TransportUnitType tt = entityManager.find(TransportUnitType.class, "JU_TEST");
         assertNotNull("TransportUnitType should be SAVED before", tt);

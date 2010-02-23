@@ -106,7 +106,8 @@ public class TransportUnitType implements Serializable {
     private BigDecimal payload;
 
     /**
-     * Characteristic used to show specific compatibility attributes like:
+     * Characteristic used to show specific compatibility attributes like.<br>
+     * Example:<br>
      * 'isn't compatible with...' or 'is compatible with ...' or 'type owns the
      * type ...'
      */
@@ -114,7 +115,7 @@ public class TransportUnitType implements Serializable {
     private String compatibility;
 
     /**
-     * Version field
+     * Version field.
      */
     @Version
     private long version;
@@ -401,6 +402,7 @@ public class TransportUnitType implements Serializable {
      * Returns the type.
      * 
      * @see java.lang.Object#toString()
+     * @return as String
      */
     @Override
     public String toString() {

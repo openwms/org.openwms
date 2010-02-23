@@ -1,14 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
 /*
- * OpenWMS, the Open Warehouse Management System
- * 
- * Distributable under LGPL license.
- * See terms of license at gnu.org.
+ * openwms.org, the Open Warehouse Management System.
+ *
+ * This file is part of openwms.org.
+ *
+ * openwms.org is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as 
+ * published by the Free Software Foundation, either version 3 of the
+ * License, or (at your option) any later version.
+ *
+ * openwms.org is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with this software. If not, write to the Free
+ * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
+ * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
 -->
-<mx:Canvas xmlns:mx="http://www.adobe.com/2006/mxml"
-	showEffect="Fade" width="100%" height="40" creationComplete="init()">
+<mx:Canvas xmlns:mx="http://www.adobe.com/2006/mxml" showEffect="Fade" width="100%" height="40"
+	creationComplete="init()">
 
 	<mx:Script>
 	<![CDATA[
@@ -49,7 +63,6 @@
 
 		/**
 		 * Initializing the component. Filling all fields with user data.
-		 *
 		 */
         private function init():void {
     	    userFullname.text = userData.fullname;
@@ -60,7 +73,6 @@
         
 		/**
 		 * Setting the small user preview image depending on the user's sex.
-		 *
 		 */ 
 		private function setUserImage():void {
 			var asset:BitmapAsset;
@@ -69,8 +81,8 @@
 					img.data = userData.userDetails.image;
 					return;
 				}
-				if (userData.userDetails.sex == UserDetails$SEX.MAN) {
-					trace("User has details, setting MAN");
+				if (userData.userDetails.sex == UserDetails$SEX.MALE) {
+					trace("User has details, setting MALE");
 				 	asset = new manImage() as BitmapAsset;
 				} else if (userData.userDetails.sex == UserDetails$SEX.FEMALE) {
 					trace("User has details, setting FEMALE");
@@ -90,7 +102,6 @@
 		 * This method stores the selected user in the ModelSelector as selectedUser.
 		 * It also sends an Event to change settings in the main content panel
 		 * When the User has no UserDetails, a new set is instantiated.
-		 *
 		 */
 		public function setSelectedItem():void {
 			modelLocator.selectedUser = User(this.userData); 
@@ -99,7 +110,6 @@
 		
 		/**
 		 * Move this item from the left side into the surrounding container.
-		 *
 		 */
         public function MoveItem():void {
 			var parallel:Parallel = new Parallel(); 
@@ -123,18 +133,15 @@
 		}
     ]]>
 	</mx:Script>
-	
+
 	<mx:Metadata>
 		[Event(name="userSelectionChanged", type="flash.events.Event")]
 	</mx:Metadata>
 
-	<mx:HBox id="userListItem" width="100%" height="40"
-		useHandCursor="true" mouseChildren="false" buttonMode="true"
-		horizontalScrollPolicy="off" verticalScrollPolicy="off" click="setSelectedItem()"
-		styleName="{style}" horizontalGap="8">
+	<mx:HBox id="userListItem" width="100%" height="40" useHandCursor="true" mouseChildren="false" buttonMode="true"
+		horizontalScrollPolicy="off" verticalScrollPolicy="off" click="setSelectedItem()" styleName="{style}" horizontalGap="8">
 		<mx:Image id="img" height="40" width="40" />
-		<mx:VBox width="100%" verticalGap="0" horizontalScrollPolicy="off"
-			verticalScrollPolicy="off" styleName="userListContainer">
+		<mx:VBox width="100%" verticalGap="0" horizontalScrollPolicy="off" verticalScrollPolicy="off" styleName="userListContainer">
 			<mx:Label id="userName" styleName="userNameListFont" />
 			<mx:Label id="userFullname" styleName="userFullnameListFont" />
 		</mx:VBox>

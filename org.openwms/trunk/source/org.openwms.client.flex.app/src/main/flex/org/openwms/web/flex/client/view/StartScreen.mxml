@@ -1,21 +1,33 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
 /*
- * OpenWMS, the Open Warehouse Management System
- * 
- * Distributable under LGPL license.
- * See terms of license at gnu.org.
+ * openwms.org, the Open Warehouse Management System.
+ *
+ * This file is part of openwms.org.
+ *
+ * openwms.org is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as 
+ * published by the Free Software Foundation, either version 3 of the
+ * License, or (at your option) any later version.
+ *
+ * openwms.org is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with this software. If not, write to the Free
+ * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
+ * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
 -->
-<mx:Application xmlns:mx="http://www.adobe.com/2006/mxml"
-	xmlns:business="org.openwms.web.flex.client.business.*"
-	xmlns:control="org.openwms.web.flex.client.control.*"
-	xmlns:view="org.openwms.web.flex.client.view.*" 
-	layout="absolute" backgroundGradientAlphas="[1.0, 1.0]" backgroundGradientColors="[#FFFFFF, #FFFFFF]" creationComplete="init()">
-	
+<mx:Application xmlns:mx="http://www.adobe.com/2006/mxml" xmlns:business="org.openwms.web.flex.client.business.*"
+	xmlns:control="org.openwms.web.flex.client.control.*" xmlns:view="org.openwms.web.flex.client.view.*" layout="absolute"
+	backgroundGradientAlphas="[1.0, 1.0]" backgroundGradientColors="[#FFFFFF, #FFFFFF]" creationComplete="init()">
+
 	<!-- Styles -->
 	<mx:Style source="/assets/css/main.css" />
-	<mx:Style source="assets/css/styles.css"/>
+	<mx:Style source="assets/css/styles.css" />
 
 	<!-- Scripts -->
 	<mx:Script>
@@ -40,54 +52,55 @@
 
 	<!-- Services -->
 	<business:Services />
-	
+
 	<control:MainController />
-	
+
 	<mx:VBox height="100%" width="100%" verticalGap="0" backgroundColor="#C2DAEF">
 		<mx:Canvas width="100%" height="30" backgroundColor="0x9fc3db" id="hbox1" backgroundImage="@Embed(source='banner.jpg')">
 			<mx:Image source="openwms_header.png" />
 		</mx:Canvas>
 		<mx:Canvas width="100%" height="30" backgroundImage="@Embed(source='breadcrumbs.jpg')">
-		<mx:MenuBar x="5" y="5" width="100%" height="20" labelField="@label" itemClick="onMenuChange(event)" backgroundAlpha=".5" backgroundColor="#FB0505" borderColor="#FB0505" color="#FB0505" fillAlphas="0.5" fillColors="#FB0505">
-			<mx:XMLList>
-            <menuitem label="OpenWMS">
-                <menuitem label="Connect ..." enabled="false"/>
-                <menuitem label="Logout" enabled="false"/>
-            </menuitem>
-            <menuitem label="Administration">
-                <menuitem label="Users" action="{SwitchScreenEvent.SHOW_LOCATION_VIEW}" />
-                <menuitem label="Roles" action="{SwitchScreenEvent.SHOW_LOCATION_VIEW}" />
-                <menuitem label="Security" action="{SwitchScreenEvent.SHOW_LOCATION_VIEW}" />
-            </menuitem>
-            <menuitem label="Transport Management">
-                <menuitem label="Transport Orders" enabled="false"/>
-            </menuitem>
-            <menuitem label="Warehouse">
-                <menuitem label="Transport Units" action="{SwitchScreenEvent.SHOW_TRANSPORTUNIT_VIEW}" />
-                <menuitem label="Ordering" enabled="false"/>
-                <menuitem label="Receiving" enabled="false"/>
-            </menuitem>
-            <menuitem label="Stock Configuration">
-                <menuitem label="Locations" action="{SwitchScreenEvent.SHOW_LOCATION_VIEW}" />
-                <menuitem label="Users" action="{SwitchScreenEvent.SHOW_USER_MGMT_VIEW}" />
-                <menuitem label="Location Groups" action="{SwitchScreenEvent.SHOW_LOCATIONGROUP_VIEW}"/>
-            </menuitem>
-            <menuitem label="Monitoring">
-                <menuitem label="Reports" enabled="false" />
-            </menuitem>
-        	</mx:XMLList>
-		</mx:MenuBar>
+			<mx:MenuBar x="5" y="5" width="100%" height="20" labelField="@label" itemClick="onMenuChange(event)"
+				backgroundAlpha=".5" backgroundColor="#FB0505" borderColor="#FB0505" color="#FB0505" fillAlphas="0.5" fillColors="#FB0505">
+				<mx:XMLList>
+					<menuitem label="OpenWMS">
+						<menuitem label="Connect ..." enabled="false" />
+						<menuitem label="Logout" enabled="false" />
+					</menuitem>
+					<menuitem label="Administration">
+						<menuitem label="Users" action="{SwitchScreenEvent.SHOW_LOCATION_VIEW}" />
+						<menuitem label="Roles" action="{SwitchScreenEvent.SHOW_LOCATION_VIEW}" />
+						<menuitem label="Security" action="{SwitchScreenEvent.SHOW_LOCATION_VIEW}" />
+					</menuitem>
+					<menuitem label="Transport Management">
+						<menuitem label="Transport Orders" enabled="false" />
+					</menuitem>
+					<menuitem label="Warehouse">
+						<menuitem label="Transport Units" action="{SwitchScreenEvent.SHOW_TRANSPORTUNIT_VIEW}" />
+						<menuitem label="Ordering" enabled="false" />
+						<menuitem label="Receiving" enabled="false" />
+					</menuitem>
+					<menuitem label="Stock Configuration">
+						<menuitem label="Locations" action="{SwitchScreenEvent.SHOW_LOCATION_VIEW}" />
+						<menuitem label="Users" action="{SwitchScreenEvent.SHOW_USER_MGMT_VIEW}" />
+						<menuitem label="Location Groups" action="{SwitchScreenEvent.SHOW_LOCATIONGROUP_VIEW}" />
+					</menuitem>
+					<menuitem label="Monitoring">
+						<menuitem label="Reports" enabled="false" />
+					</menuitem>
+				</mx:XMLList>
+			</mx:MenuBar>
 		</mx:Canvas>
 		<mx:ViewStack id="myViewStack" selectedIndex="{modelLocator.mainViewStackIndex}">
-		    <view:EmptyScreenView />
+			<view:EmptyScreenView />
 			<view:LocationView />
 			<view:LocationGroupView />
 			<view:UserManagementView />
-            <view:TransportUnitView />
+			<view:TransportUnitView />
 		</mx:ViewStack>
 	</mx:VBox>
 
 
 
-	
+
 </mx:Application>

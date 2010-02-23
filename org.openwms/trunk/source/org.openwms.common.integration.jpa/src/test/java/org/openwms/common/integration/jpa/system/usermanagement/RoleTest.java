@@ -56,8 +56,7 @@ public class RoleTest extends AbstractJpaSpringContextTests {
             entityManager.persist(role);
             entityManager.persist(role2);
             fail("No unique constraint on rolename");
-        }
-        catch (PersistenceException pe) {
+        } catch (PersistenceException pe) {
             logger.debug("OK:Tested unique constraint on rolename.");
         }
     }
@@ -75,8 +74,7 @@ public class RoleTest extends AbstractJpaSpringContextTests {
         try {
             role.addUser(null);
             fail("Not allowed to call addUser() with null");
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             logger.debug("OK:Adding null user not allowed");
         }
     }
@@ -87,8 +85,7 @@ public class RoleTest extends AbstractJpaSpringContextTests {
         try {
             role.setUsers(null);
             fail("Not allowed to call setUsers() with null");
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             logger.debug("OK:Setting null to Set of users not allowed");
         }
     }

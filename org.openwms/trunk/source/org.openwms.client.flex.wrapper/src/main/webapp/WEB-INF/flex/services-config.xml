@@ -40,7 +40,7 @@
                 </channels>
                 <properties>
                     <factory>springFactory</factory>
-                    <source>userService</source>
+                    <source>transportUnitService</source>
                 </properties>
             </destination>
         </service>
