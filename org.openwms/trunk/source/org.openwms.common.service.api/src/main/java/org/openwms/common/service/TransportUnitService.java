@@ -38,7 +38,7 @@ import org.openwms.common.domain.values.Barcode;
  * @since 0.1
  * @see EntityService
  */
-public interface TransportService extends EntityService<TransportUnit> {
+public interface TransportUnitService extends EntityService<TransportUnit> {
 
     /**
      * Create a new {@link TransportUnit} with the type
