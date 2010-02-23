@@ -30,7 +30,7 @@ import org.openwms.common.util.TreeNode;
  * A LocationGroupService.
  * <p>
  * Extends the {@link EntityService} interface about some useful methods
- * regarding the general handling with {@link LocationGroup}s.
+ * regarding the general handling with <code>LocationGroup</code>s.
  * </p>
  * 
  * @author <a href="mailto:openwms@googlemail.com">Heiko Scherrer</a>
@@ -41,30 +41,40 @@ import org.openwms.common.util.TreeNode;
 public interface LocationGroupService<T extends Serializable> extends EntityService<T> {
 
     /**
-     * Changes the GroupStates of a {@link LocationGroup}.<br>
+     * Changes the GroupStates of a <code>LocationGroup</code>.<br>
      * Both, the GroupStateIn and the GroupStateOut of all child
-     * {@link LocationGroup}s are changed according to the parent
+     * <code>LocationGroup</code>s are changed according to the parent
      * <tt>locationGroup</tt>. This call is executed recursively to <i>all</i>
-     * child {@link LocationGroup}s of the <tt>locationGroup</tt> Entity.
+     * child <code>LocationGroup</code>s of the <tt>locationGroup</tt> Entity.
      * 
      * @param locationGroup
-     *            - The {@link LocationGroup} to change
+     *            The <code>LocationGroup</code> to change
      */
     void changeGroupState(T locationGroup);
 
     /**
-     * Returns a hierarchical Tree of all {@link LocationGroup}s. Used by the
-     * user interface to show all {@link LocationGroup}s in a tree form.
+     * Returns a hierarchical Tree of all <code>LocationGroup</code>s. Used by
+     * the user interface to show all <code>LocationGroup</code>s in a tree
+     * form.
      * 
-     * @return - All {@link LocationGroup}s as hierarchical tree
+     * @return All <code>LocationGroup</code>s as hierarchical tree
      */
     TreeNode<LocationGroup> getLocationGroupsAsTree();
 
     /**
-     * Returns a {@link java.util.List} of all {@link LocationGroup}s.
+     * Returns a List of all <code>LocationGroup</code>s.
      * 
-     * @return - All {@link LocationGroup}s as a list
+     * @return All <code>LocationGroup</code>s as a list
      */
     List<LocationGroup> getLocationGroupsAsList();
 
+    /**
+     * Save an already persisted <code>LocationGroup</code> and return the saved
+     * instance.
+     * 
+     * @param locationGroup
+     *            The <code>LocationGroup</code> to save
+     * @return The saved <code>LocationGroup</code>
+     */
+    LocationGroup save(LocationGroup locationGroup);
 }

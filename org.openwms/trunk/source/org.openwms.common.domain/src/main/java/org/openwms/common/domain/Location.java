@@ -306,6 +306,14 @@ public class Location implements Serializable {
         return Collections.unmodifiableSet(messages);
     }
 
+    /**
+     * Remove one {@link Message} from this {@link Location}.
+     * 
+     * @param message
+     *            The {@link Message} to be removed
+     * @return true if the {@link Message} was found and removed, otherwise
+     *         false
+     */
     public boolean removeMessage(Message message) {
         if (message == null) {
             throw new IllegalArgumentException("Message may not be null!");
@@ -313,6 +321,14 @@ public class Location implements Serializable {
         return this.messages.remove(message);
     }
 
+    /**
+     * Add a new {@link Message} to this {@link Location}.
+     * 
+     * @param message
+     *            The {@link Message} to be added
+     * @return true if the {@link Message} was new in the collection of
+     *         messages, otherwise false
+     */
     public boolean addMessage(Message message) {
         if (message == null) {
             throw new IllegalArgumentException("Message may not be null!");
@@ -388,6 +404,12 @@ public class Location implements Serializable {
         return this.locationGroup;
     }
 
+    /**
+     * Add this {@link Location} to the <code>locationGroup</code>.
+     * 
+     * @param locationGroup
+     *            The {@link LocationGroup} to be assigned
+     */
     public void setLocationGroup(LocationGroup locationGroup) {
         if (locationGroup != null) {
             this.setLocationGroupCountingActive(locationGroup.isLocationGroupCountingActive());
@@ -408,6 +430,7 @@ public class Location implements Serializable {
      * Return the {@link LocationPK} as String.
      * 
      * @see java.lang.Object#toString()
+     * @return the String
      */
     @Override
     public String toString() {

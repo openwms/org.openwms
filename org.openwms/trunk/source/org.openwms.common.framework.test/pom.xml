@@ -81,7 +81,6 @@
             <groupId>org.hsqldb</groupId>
             <artifactId>com.springsource.org.hsqldb</artifactId>
             <scope>test</scope>
-            <optional>true</optional>
         </dependency>
     </dependencies>
 </project>

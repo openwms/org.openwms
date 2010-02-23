@@ -28,6 +28,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.persistence.UniqueConstraint;
 import javax.persistence.Version;
 
 /**
@@ -36,17 +37,16 @@ import javax.persistence.Version;
  * @author <a href="mailto:openwms@googlemail.com">Heiko Scherrer</a>
  * @version $Revision$
  * @since 0.1
- * @see User
+ * @see org.openwms.common.domain.system.usermanagement.User
  */
-// TODO [scherrer] : Add unique constraint to username+emailAddess
 @Entity
-@Table(name = "EMAIL")
+@Table(name = "EMAIL", uniqueConstraints = @UniqueConstraint(columnNames = { "USERNAME", "ADDRESS" }))
 public class Email implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
     /**
-     * Unique technical key
+     * Unique technical key.
      */
     @Id
     @GeneratedValue
@@ -87,11 +87,13 @@ public class Email implements Serializable {
 
     /**
      * Create a new Email for the
-     * {@link org.openwms.common.domain.system.usermanagement.User} with this
-     * <code>username</code> and this <code>emailAddress</code>.
+     * {@link org.openwms.common.domain.system.usermanagement.User} with his
+     * <code>username</code> and <code>emailAddress</code>.
      * 
      * @param username
+     *            The name of the User
      * @param emailAddress
+     *            The email address of the User
      */
     public Email(String username, String emailAddress) {
         assert username != null && !username.equals("");
@@ -103,7 +105,7 @@ public class Email implements Serializable {
     /**
      * Get the Primary Key.
      * 
-     * @return
+     * @return The unique technical key
      */
     public Long getId() {
         return id;
@@ -186,9 +188,10 @@ public class Email implements Serializable {
     }
 
     /**
-     * Return the emailAddress
+     * Return the emailAddress.
      * 
      * @see java.lang.Object#toString()
+     * @return As String
      */
     @Override
     public String toString() {

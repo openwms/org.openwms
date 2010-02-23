@@ -43,15 +43,14 @@ public class BarcodeTest {
     protected Logger logger = LoggerFactory.getLogger(this.getClass());
 
     /**
-     * Test Barcode instantiation with null
+     * Test Barcode instantiation with null.
      */
     @Test
     public void testBarcodeWithNull() {
         try {
             new Barcode(null);
             fail("NOK:Barcode cannot instanciated with NULL");
-        }
-        catch (IllegalArgumentException iae) {
+        } catch (IllegalArgumentException iae) {
             logger.debug("OK:Not allowed to initiante a Barcode with null");
         }
     }

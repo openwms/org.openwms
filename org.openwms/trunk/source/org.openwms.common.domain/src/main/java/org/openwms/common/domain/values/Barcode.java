@@ -42,7 +42,7 @@ public class Barcode implements Serializable {
     /**
      * A BARCODE_ALIGN.
      * <p>
-     * The {@link BARCODE_ALIGN} defines whether the {@link Barcode} is applied
+     * The {@link BARCODE_ALIGN} defines whether the Barcode is applied
      * <code>LEFT</code> or <code>RIGHT</code>. Only be used when padding is
      * activated.
      * </p>
@@ -52,7 +52,14 @@ public class Barcode implements Serializable {
      * @since 0.1
      */
     public static enum BARCODE_ALIGN {
-        LEFT, RIGHT
+        /**
+         * Barcode is left aligned.
+         */
+        LEFT,
+        /**
+         * Barcode is right aligned.
+         */
+        RIGHT
     }
 
     /**
@@ -62,9 +69,9 @@ public class Barcode implements Serializable {
 
     /**
      * Defines a character used for padding.<br>
-     * If the actually length of the {@link Barcode} is less than the maximum
-     * defined <code>length</code> the rest will be filled with
-     * <code>padder</code> characters.
+     * If the actually length of the Barcode is less than the maximum defined
+     * <code>length</code> the rest will be filled with <code>padder</code>
+     * characters.
      */
     private static char padder;
 
@@ -74,13 +81,13 @@ public class Barcode implements Serializable {
     private static int length;
 
     /**
-     * The alignment of the {@link Barcode}. Could be set to
-     * {@link BARCODE_ALIGN}.
+     * The alignment of the Barcode. Could be set to {@link BARCODE_ALIGN}.
+     * Default is {@link BARCODE_ALIGN#RIGHT}.
      */
     private static BARCODE_ALIGN alignment = BARCODE_ALIGN.RIGHT;
 
     /**
-     * "Identifier" of the {@link Barcode}.
+     * "Identifier" of the Barcode.
      * <p>
      * <i>Note:</i>It is not guaranteed that this field must be unique.
      * </p>
@@ -103,7 +110,7 @@ public class Barcode implements Serializable {
      * </p>
      * 
      * @param value
-     *            - Value of the {@link Barcode} as String.
+     *            Value of the Barcode as String
      */
     public Barcode(String value) {
         if (value == null) {
@@ -120,7 +127,7 @@ public class Barcode implements Serializable {
     /**
      * Get the alignment.
      * 
-     * @return the alignment.
+     * @return the alignment
      */
     public static BARCODE_ALIGN getAlignment() {
         return alignment;
@@ -129,17 +136,17 @@ public class Barcode implements Serializable {
     /**
      * Set the alignment.
      * 
-     * @param a
-     *            - The alignment to set.
+     * @param align
+     *            The alignment to set
      */
-    public static void setAlignment(BARCODE_ALIGN a) {
-        alignment = a;
+    public static void setAlignment(BARCODE_ALIGN align) {
+        alignment = align;
     }
 
     /**
      * Get the padded.
      * 
-     * @return the padded.
+     * @return the padded
      */
     public static boolean isPadded() {
         return padded;
@@ -149,7 +156,7 @@ public class Barcode implements Serializable {
      * Set the padded.
      * 
      * @param p
-     *            - The padded to set.
+     *            The padded to set
      */
     public static void setPadded(boolean p) {
         padded = p;
@@ -158,7 +165,7 @@ public class Barcode implements Serializable {
     /**
      * Get the padder.
      * 
-     * @return the padder.
+     * @return the padder
      */
     public static char getPadder() {
         return padder;
@@ -168,7 +175,7 @@ public class Barcode implements Serializable {
      * Set the padder.
      * 
      * @param p
-     *            - The padder to set.
+     *            The padder to set
      */
     public static void setPadder(char p) {
         padder = p;
@@ -176,9 +183,9 @@ public class Barcode implements Serializable {
     }
 
     /**
-     * Get the {@link Barcode} value.
+     * Get the Barcode value.
      * 
-     * @return - The value of the {@link Barcode}..
+     * @return The value of the Barcode
      */
     public String getValue() {
         return value;
@@ -187,7 +194,7 @@ public class Barcode implements Serializable {
     /**
      * Get the length.
      * 
-     * @return the length.
+     * @return the length
      */
     public static int getLength() {
         return length;
@@ -197,16 +204,17 @@ public class Barcode implements Serializable {
      * Set the length.
      * 
      * @param l
-     *            - The length to set.
+     *            The length to set
      */
     public static void setLength(int l) {
         length = l;
     }
 
     /**
-     * Return the value of the {@link Barcode} as String.
+     * Return the value of the Barcode as String.
      * 
      * @see java.lang.Object#toString()
+     * @return As String
      */
     @Override
     public String toString() {

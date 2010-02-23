@@ -32,7 +32,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 /**
- * A EntityServiceImpl.
+ * An EntityServiceImpl.
  * 
  * @author <a href="mailto:openwms@googlemail.com">Heiko Scherrer</a>
  * @version $Revision: 314 $
@@ -53,9 +53,11 @@ public class EntityServiceImpl<T extends Serializable, ID extends Serializable> 
     protected Logger logger = LoggerFactory.getLogger(this.getClass());
 
     /**
-     * FIXME [scherrer] Comment this
+     * The Repository implementation to work with. This must be set manually
+     * because it is generic.
      * 
      * @param dao
+     *            The Repository to set
      */
     @Required
     public void setDao(GenericDao<T, ID> dao) {
@@ -109,7 +111,7 @@ public class EntityServiceImpl<T extends Serializable, ID extends Serializable> 
      */
     @Override
     public void addEntity(T newEntity) {
-        // FIXME [scherrer]: All entities shall extend a superclass Entity with
+        // FIXME [scherrer] : All entities shall extend a superclass Entity with
         // isNew()
         // method, to check this here
         dao.persist(newEntity);

@@ -18,34 +18,7 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
-package org.openwms.common.service.spring;
-
-import java.util.List;
-
-import org.openwms.common.domain.Location;
-import org.openwms.common.integration.LocationDao;
-import org.openwms.common.service.LocationService;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-
 /**
- * A LocationServiceImpl.
- * 
- * @author <a href="mailto:openwms@googlemail.com">Heiko Scherrer</a>
- * @version $Revision: 314 $
- * @since 0.1
+ * This package contains essential base classes belonging to user and role management.
  */
-@Service
-@Transactional
-public class LocationServiceImpl extends EntityServiceImpl<Location, Long> implements LocationService<Location> {
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    @Transactional(readOnly = true)
-    public List<Location> getAllLocations() {
-        logger.debug("GetAllLocations on service called");
-        return ((LocationDao) dao).getAllLocations();
-    }
-}
+package org.openwms.common.domain.system.usermanagement;

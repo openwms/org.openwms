@@ -66,7 +66,8 @@
         </dependency>
         <dependency>
             <groupId>org.springframework.osgi</groupId>
-            <artifactId>spring-osgi-core</artifactId>
+            <artifactId>org.springframework.osgi-library</artifactId>
+            <type>libd</type>
             <scope>provided</scope>
         </dependency>
         <dependency>
@@ -81,12 +82,12 @@
 
         <!-- JEE API -->
         <dependency>
-            <groupId>javax.transaction</groupId>
-            <artifactId>com.springsource.javax.transaction</artifactId>
-        </dependency>
-        <dependency>
             <groupId>javax.persistence</groupId>
             <artifactId>com.springsource.javax.persistence</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>javax.transaction</groupId>
+            <artifactId>com.springsource.javax.transaction</artifactId>
         </dependency>
 
         <!-- Test database driver -->

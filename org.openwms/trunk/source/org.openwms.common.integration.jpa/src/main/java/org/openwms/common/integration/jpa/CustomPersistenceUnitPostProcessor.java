@@ -49,9 +49,9 @@ public class CustomPersistenceUnitPostProcessor implements PersistenceUnitPostPr
     /**
      * Default location of the persistence jar file: "classpath*:OpenWMS*".
      */
-    public final static String DEFAULT_PERSISTENCE_JAR_FILES = "classpath*:OpenWMS*";
+    public static final String DEFAULT_PERSISTENCE_JAR_FILES = "classpath*:OpenWMS*";
 
-    /** Location of persistence jar file(s) */
+    // Location of persistence jar file(s)
     private String[] persistenceJarFiles = new String[] { DEFAULT_PERSISTENCE_JAR_FILES };
     private ResourcePatternResolver resourcePatternResolver = new PathMatchingResourcePatternResolver();
     private List<Resource> jarFiles = new ArrayList<Resource>();
@@ -65,8 +65,7 @@ public class CustomPersistenceUnitPostProcessor implements PersistenceUnitPostPr
                     jarFiles.add(resource);
                 }
             }
-        }
-        catch (IOException ex) {
+        } catch (IOException ex) {
             throw new IllegalArgumentException("Cannot load persistence jar file from ", ex);
         }
     }
@@ -79,7 +78,7 @@ public class CustomPersistenceUnitPostProcessor implements PersistenceUnitPostPr
      * Default is "classpath*:META-INF/persistence.xml".
      * </p>
      * 
-     * @param persistenceXmlLocations
+     * @param persistenceJarFiles
      *            An array of Spring resources identifying the location of the
      *            <code>persistence.xml</code> files to read
      */
@@ -101,8 +100,7 @@ public class CustomPersistenceUnitPostProcessor implements PersistenceUnitPostPr
             for (Resource resource : jarFiles) {
                 pui.addJarFileUrl(resource.getURL());
             }
-        }
-        catch (IOException e) {
+        } catch (IOException e) {
             throw new IllegalArgumentException("Cannot parse persistence unit from " + pui.getPersistenceUnitName(), e);
         }
     }

@@ -1,22 +1,34 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
 /*
- * OpenWMS, the Open Warehouse Management System
- * 
- * Distributable under LGPL license.
- * See terms of license at gnu.org.
+ * openwms.org, the Open Warehouse Management System.
+ *
+ * This file is part of openwms.org.
+ *
+ * openwms.org is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as 
+ * published by the Free Software Foundation, either version 3 of the
+ * License, or (at your option) any later version.
+ *
+ * openwms.org is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with this software. If not, write to the Free
+ * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
+ * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
 -->
-<mx:Canvas xmlns:mx="http://www.adobe.com/2006/mxml" 
-  width="300" height="200"
-  backgroundColor="#FFFFFF"
-  backgroundAlpha="0.5">
+<mx:Canvas xmlns:mx="http://www.adobe.com/2006/mxml" width="300" height="200" backgroundColor="#FFFFFF"
+	backgroundAlpha="0.5">
 
-  <mx:Metadata>
-    [Event(name="login", type="org.openwms.web.flex.client.event.SecurityEvent")]
+	<mx:Metadata>
+		[Event(name="login", type="org.openwms.web.flex.client.event.SecurityEvent")]
   </mx:Metadata>
 
-  <mx:Script>
+	<mx:Script>
     <![CDATA[
       import org.openwms.web.flex.client.event.SecurityEvent;
       
@@ -27,19 +39,19 @@
         dispatchEvent( e );
       }
     ]]>
-  </mx:Script>
+	</mx:Script>
 
-  <mx:Form width="100%" height="100%">
-    <mx:FormHeading label="LOGIN" />
-    <mx:FormItem label="User">
-      <mx:TextInput id="myUser" />
-    </mx:FormItem>
-    <mx:FormItem label="Password">
-      <mx:TextInput id="myPass" displayAsPassword="true"/>
-    </mx:FormItem>
-    <mx:FormItem>
-      <mx:Button label="Login" click="onClick(event)" />
-    </mx:FormItem>
-  </mx:Form>
+	<mx:Form width="100%" height="100%">
+		<mx:FormHeading label="LOGIN" />
+		<mx:FormItem label="User">
+			<mx:TextInput id="myUser" />
+		</mx:FormItem>
+		<mx:FormItem label="Password">
+			<mx:TextInput id="myPass" displayAsPassword="true" />
+		</mx:FormItem>
+		<mx:FormItem>
+			<mx:Button label="Login" click="onClick(event)" />
+		</mx:FormItem>
+	</mx:Form>
 
 </mx:Canvas>     

@@ -37,11 +37,9 @@ import javax.persistence.Table;
 import javax.persistence.Version;
 
 /**
- * A {@link Role} is grouping multiple {@link User}s concerning security
- * aspects.
+ * A Role is grouping multiple {@link User}s concerning security aspects.
  * <p>
- * Security access policies were assigned to {@link Role}s instead of
- * {@link User}s.
+ * Security access policies are assigned to Roles instead of {@link User}s.
  * </p>
  * 
  * @author <a href="mailto:openwms@googlemail.com">Heiko Scherrer</a>
@@ -63,13 +61,13 @@ public class Role implements Serializable {
     private Long id;
 
     /**
-     * Name of the {@link Role}. Recommended prefix id 'ROLE_'
+     * Name of the Role. Recommended prefix id 'ROLE_'.
      */
     @Column(name = "ROLENAME", unique = true)
     private String rolename;
 
     /**
-     * {@link Role} description
+     * Role description.
      */
     @Column(name = "DESCRIPTION")
     private String description;
@@ -82,14 +80,14 @@ public class Role implements Serializable {
 
     /* ------------------- collection mapping ------------------- */
     /**
-     * All {@link User}s belonging to this {@link Role}.
+     * All {@link User}s belonging to this Role.
      */
     @ManyToMany(cascade = { CascadeType.PERSIST, CascadeType.MERGE })
     @JoinTable(name = "ROLE_USER", joinColumns = @JoinColumn(name = "ROLE_ID"), inverseJoinColumns = @JoinColumn(name = "USER_ID"))
     private Set<User> users = new HashSet<User>();
 
     /**
-     * All {@link Preference}s linked to this {@link Role}.
+     * All {@link Preference}s linked to this Role.
      */
     @ManyToMany(cascade = { CascadeType.PERSIST, CascadeType.MERGE })
     @JoinTable(name = "ROLE_PREFERENCE", joinColumns = @JoinColumn(name = "ROLE_ID"), inverseJoinColumns = @JoinColumn(name = "PREFERENCE_ID"))
@@ -106,6 +104,7 @@ public class Role implements Serializable {
      * Create a new Role with a name.
      * 
      * @param rolename
+     *            The name of the Role
      */
     public Role(String rolename) {
         this.rolename = rolename;
@@ -115,7 +114,9 @@ public class Role implements Serializable {
      * Create a new Role with name and description.
      * 
      * @param rolename
+     *            The name of the Role
      * @param description
+     *            The description text of the Role
      */
     public Role(String rolename, String description) {
         this.rolename = rolename;
@@ -125,7 +126,7 @@ public class Role implements Serializable {
     /**
      * Return the technical key.
      * 
-     * @return
+     * @return The unique technical key
      */
     public Long getId() {
         return this.id;
@@ -134,7 +135,7 @@ public class Role implements Serializable {
     /**
      * Get the rolename.
      * 
-     * @return the rolename.
+     * @return The name of the Role
      */
     public String getRolename() {
         return rolename;
@@ -143,35 +144,38 @@ public class Role implements Serializable {
     /**
      * Return the description.
      * 
-     * @return
+     * @return The description of the Role as text
      */
     public String getDescription() {
         return description;
     }
 
     /**
-     * Set the description for this {@link Role}.
+     * Set the description for this Role.
      * 
      * @param description
+     *            The description of the Role as text
      */
     public void setDescription(String description) {
         this.description = description;
     }
 
     /**
-     * Get all {@link User}s belonging to this {@link Role}.
+     * Get all {@link User}s belonging to this Role.
      * 
-     * @return
+     * @return A Set of all {@link User}s belonging to this Role
      */
     public Set<User> getUsers() {
         return Collections.unmodifiableSet(users);
     }
 
     /**
-     * Add a existing {@link User} to this {@link Role}.
+     * Add a existing {@link User} to this Role.
      * 
      * @param user
-     * @return
+     *            The {@link User} to add to this Role
+     * @return true if the {@link User} was new in the collection of
+     *         {@link User}s, otherwise false
      */
     public boolean addUser(User user) {
         if (user == null) {
@@ -181,9 +185,11 @@ public class Role implements Serializable {
     }
 
     /**
-     * Set all {@link User}s belonging to this {@link Role}.
+     * Set all {@link User}s belonging to this Role. Already existing
+     * {@link User}s will be removed.
      * 
      * @param users
+     *            A Set of {@link User}s to assign to this Role
      */
     public void setUsers(Set<User> users) {
         if (users == null) {
@@ -193,18 +199,20 @@ public class Role implements Serializable {
     }
 
     /**
-     * Get all {@link Preference}s of this {@link Role}.
+     * Get all {@link Preference}s of this Role.
      * 
-     * @return
+     * @return A Set of all {@link Preference}s of this Role
      */
     public Set<Preference> getPreferences() {
         return preferences;
     }
 
     /**
-     * Set all {@link Preference}s belonging to this {@link Role}.
+     * Set all {@link Preference}s belonging to this Role. Already existing
+     * {@link Preference}s will be removed.
      * 
      * @param preferences
+     *            A Set of {@link Preference}s to assign to this Role.
      */
     public void setPreferences(Set<Preference> preferences) {
         this.preferences = preferences;
@@ -213,7 +221,7 @@ public class Role implements Serializable {
     /**
      * JPA optimistic locking.
      * 
-     * @return - Version field.
+     * @return Version field
      */
     public long getVersion() {
         return version;

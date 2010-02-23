@@ -157,7 +157,7 @@
                 <distribution.serverId>router</distribution.serverId>
                 <distribution.serverProtocol>file:/</distribution.serverProtocol>
                 <distribution.serverUrl.rootPath>var/www/openwms</distribution.serverUrl.rootPath>
-                <distribution.serverUrl.sourcePath>${distribution.serverUrl.rootPath}/reference/${project.version}</distribution.serverUrl.sourcePath>
+                <distribution.serverUrl.sourcePath>${distribution.serverUrl.rootPath}/development/reference/${project.version}</distribution.serverUrl.sourcePath>
                 <distribution.serverUrl.docsPath>${distribution.serverUrl.rootPath}/docs</distribution.serverUrl.docsPath>
                 <!-- Maven Repo Artifact deployment -->
                 <distribution.repo.serverId>nexus</distribution.repo.serverId>
@@ -203,7 +203,7 @@
                 <distribution.serverId>repo.sourceforge.net</distribution.serverId>
                 <distribution.serverProtocol>scp://</distribution.serverProtocol>
                 <distribution.serverUrl.rootPath>shell.sourceforge.net/home/groups/o/op/openwms2005/htdocs/openwms</distribution.serverUrl.rootPath>
-                <distribution.serverUrl.sourcePath>${distribution.serverUrl.rootPath}/reference/${project.version}</distribution.serverUrl.sourcePath>
+                <distribution.serverUrl.sourcePath>${distribution.serverUrl.rootPath}/development/reference/${project.version}</distribution.serverUrl.sourcePath>
                 <distribution.serverUrl.docsPath>${distribution.serverUrl.rootPath}/docs</distribution.serverUrl.docsPath>
                 <!-- Maven Repo Artifact deployment -->
                 <distribution.repo.serverId>repo.sourceforge.net</distribution.repo.serverId>
@@ -675,6 +675,12 @@
                 <scope>provided</scope>
             </dependency>
             <dependency>
+                <groupId>org.springframework.osgi</groupId>
+                <artifactId>org.springframework.osgi-library</artifactId>
+                <type>libd</type>
+                <version>1.1.2.B</version>
+            </dependency>
+            <dependency>
                 <groupId>org.springframework</groupId>
                 <artifactId>org.springframework.test</artifactId>
                 <version>${spring.version}</version>
@@ -878,6 +884,21 @@
             <dependency>
                 <groupId>${project.groupId}</groupId>
                 <artifactId>org.openwms.tms.integration</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>${project.groupId}</groupId>
+                <artifactId>org.openwms.tms.integration.jpa</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>${project.groupId}</groupId>
+                <artifactId>org.openwms.tms.service.api</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>${project.groupId}</groupId>
+                <artifactId>org.openwms.tms.service.spring</artifactId>
                 <version>${project.version}</version>
             </dependency>
         </dependencies>

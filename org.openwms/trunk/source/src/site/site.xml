@@ -39,11 +39,11 @@
             <item name="User Documentation" href="/docs/" />
         </menu>
 
-        <menu name="Project" ref="reports" />
+        <menu name="Project" ref="reports" inherit="top" />
         
         <menu name="Modules" ref="modules" />
         
-        <menu ref="parentProject" inherit="top"/>
+        <menu name="Home" ref="parentProject" inherit="top"/>
 
     </body>
 </project>

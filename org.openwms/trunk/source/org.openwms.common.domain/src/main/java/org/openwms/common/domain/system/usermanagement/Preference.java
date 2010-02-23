@@ -21,13 +21,13 @@
 package org.openwms.common.domain.system.usermanagement;
 
 import java.io.Serializable;
-import java.math.BigDecimal;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.persistence.UniqueConstraint;
 import javax.persistence.Version;
 
 /**
@@ -40,10 +40,8 @@ import javax.persistence.Version;
  * @version $Revision$
  * @since 0.1
  */
-// TODO [scherrer] : + Assign key, value as complementary key instead of using
-// ID + Replace BigDecimal with float
 @Entity
-@Table(name = "T_PREFERENCE")
+@Table(name = "T_PREFERENCE", uniqueConstraints = @UniqueConstraint(columnNames = { "C_KEY", "VALUE" }))
 public class Preference implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -78,7 +76,7 @@ public class Preference implements Serializable {
      * A float representation of the value.
      */
     @Column(name = "FLOAT_VALUE")
-    private BigDecimal floatValue;
+    private Float floatValue;
 
     /**
      * Description text of the {@link Preference}.
@@ -99,62 +97,106 @@ public class Preference implements Serializable {
     private int maximum;
 
     /**
-     * Version field
+     * Version field.
      */
     @Version
     private long version;
 
     /* ----------------------------- methods ------------------- */
     /**
-     * Create a {@link Preference}
+     * Create a {@link Preference}.
      */
     public Preference() {}
 
     /**
      * Return the unique technical key.
      * 
-     * @return
+     * @return The unique technical key
      */
     public Long getId() {
         return this.id;
     }
 
+    /**
+     * Return the type of the {@link Preference}.
+     * 
+     * @return The type as String
+     */
     public String getType() {
         return this.type;
     }
 
+    /**
+     * Set the type of the {@link Preference}.
+     * 
+     * @param type
+     *            The type to set as String
+     */
     public void setType(String type) {
         this.type = type;
     }
 
+    /**
+     * Return the value of the {@link Preference}.
+     * 
+     * @return The value of the {@link Preference}
+     */
     public String getValue() {
         return this.value;
     }
 
+    /**
+     * Set the value of the {@link Preference}.
+     * 
+     * @param value
+     *            The value to set
+     */
     public void setValue(String value) {
         this.value = value;
     }
 
+    /**
+     * Get the key of the {@link Preference}.
+     * 
+     * @return The key of the {@link Preference}
+     */
     public String getKey() {
         return this.key;
     }
 
+    /**
+     * Set the key of this {@link Preference}.
+     * 
+     * @param key
+     *            The key to set
+     */
     public void setKey(String key) {
         this.value = key;
     }
 
-    public BigDecimal getFloatValue() {
+    /**
+     * Get the <code>floatValue</code> of the {@link Preference}.
+     * 
+     * @return The <code>floatValue</code> of the {@link Preference}
+     */
+    public Float getFloatValue() {
         return this.floatValue;
     }
 
-    public void setFloatValue(BigDecimal floatValue) {
+    /**
+     * Set the <code>floatValue</code> of the {@link Preference}.
+     * 
+     * @param floatValue
+     *            The <code>floatValue</code> to set
+     */
+    public void setFloatValue(Float floatValue) {
         this.floatValue = floatValue;
     }
 
     /**
      * Return the description of this {@link Preference}.
      * 
-     * @return
+     * @return The description as String
      */
     public String getDescription() {
         return this.description;
@@ -164,6 +206,7 @@ public class Preference implements Serializable {
      * Set a description for this {@link Preference}.
      * 
      * @param description
+     *            The description to set
      */
     public void setDescription(String description) {
         this.description = description;
@@ -172,7 +215,7 @@ public class Preference implements Serializable {
     /**
      * Return the possible minimum value of this {@link Preference}.
      * 
-     * @return
+     * @return The possible minimum value
      */
     public int getMinimum() {
         return this.minimum;
@@ -182,6 +225,7 @@ public class Preference implements Serializable {
      * Set a possible minimum value for this {@link Preference}.
      * 
      * @param minimum
+     *            The possible minimum value to set
      */
     public void setMinimum(int minimum) {
         this.minimum = minimum;
@@ -190,7 +234,7 @@ public class Preference implements Serializable {
     /**
      * Return the possible maximum value of this {@link Preference}.
      * 
-     * @return
+     * @return The possible maximum value
      */
     public int getMaximum() {
         return this.maximum;
@@ -200,6 +244,7 @@ public class Preference implements Serializable {
      * Set a possible maximum integer value for this {@link Preference}.
      * 
      * @param maximum
+     *            The possible maximum value to set
      */
     public void setMaximum(int maximum) {
         this.maximum = maximum;
@@ -208,7 +253,7 @@ public class Preference implements Serializable {
     /**
      * JPA optimistic locking.
      * 
-     * @return - Version field
+     * @return Version field
      */
     public long getVersion() {
         return version;
@@ -218,6 +263,7 @@ public class Preference implements Serializable {
      * Return the key concatenated with value.
      * 
      * @see java.lang.Object#toString()
+     * @return As String
      */
     @Override
     public String toString() {

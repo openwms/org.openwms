@@ -34,4 +34,7 @@
         <property name="dao" ref="userDao" />
     </bean>
     
+    <bean id="transportUnitService" class="org.openwms.common.service.spring.TransportUnitServiceImpl">
+        <property name="dao" ref="transportUnitDao" />
+    </bean>
 </beans>

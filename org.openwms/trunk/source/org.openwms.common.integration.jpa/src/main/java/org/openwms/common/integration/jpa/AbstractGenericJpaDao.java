@@ -215,7 +215,7 @@ public abstract class AbstractGenericJpaDao<T extends Serializable, ID extends S
      * @param entity
      *            The Entity that is updated
      */
-    protected void beforeUpdate(T entity) {};
+    protected void beforeUpdate(T entity) {}
 
     /**
      * Subclasses can call this method to retrieve an shared

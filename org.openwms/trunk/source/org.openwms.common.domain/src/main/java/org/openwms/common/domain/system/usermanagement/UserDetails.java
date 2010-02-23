@@ -43,7 +43,7 @@ public class UserDetails implements Serializable {
     private static final long serialVersionUID = 1L;
 
     /**
-     * A SEX.
+     * A Sex.
      * <p>
      * {@link User}s sex.
      * </p>
@@ -53,41 +53,48 @@ public class UserDetails implements Serializable {
      * @since 0.1
      */
     public static enum SEX {
-        MAN, FEMALE
+        /**
+         * Male sex.
+         */
+        MALE,
+        /**
+         * Female sex.
+         */
+        FEMALE
     }
 
     /**
-     * Description assigned to the {@link User} entity.
+     * Description text of the {@link User}.
      */
     @Column(name = "DESCRIPTION")
     private String description;
 
     /**
-     * Comment assigned to the {@link User} entity.
+     * Comment text of the {@link User}.
      */
     @Column(name = "COMMENT")
     private String comment;
 
     /**
-     * Phone number assigned to the {@link User} entity.
+     * Phone number assigned to the {@link User}.
      */
     @Column(name = "PHONE_NO")
     private String phoneNo;
 
     /**
-     * Skype account name assigned to the {@link User} entity.
+     * Skype account name assigned to the {@link User}.
      */
     @Column(name = "SKYPE_NAME")
     private String skypeName;
 
     /**
-     * Office description assigned to the {@link User} entity.
+     * Office description assigned to the {@link User}.
      */
     @Column(name = "OFFICE")
     private String office;
 
     /**
-     * Department description assigned to the {@link User} entity.
+     * Department description assigned to the {@link User}.
      */
     @Column(name = "DEPARTMENT")
     private String department;
@@ -108,6 +115,9 @@ public class UserDetails implements Serializable {
     private SEX sex;
 
     /* ----------------------------- methods ------------------- */
+    /**
+     * Create a new <code>UserDetails</code> instance.
+     */
     public UserDetails() {}
 
     public String getPhoneNo() {

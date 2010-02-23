@@ -26,7 +26,7 @@ import java.util.Set;
 import org.openwms.common.domain.LocationGroup;
 import org.openwms.common.domain.LocationGroup.STATE;
 import org.openwms.common.service.LocationGroupService;
-import org.openwms.common.service.spring.exception.ServiceException;
+import org.openwms.common.service.exception.ServiceException;
 import org.openwms.common.util.TreeNode;
 import org.openwms.common.util.TreeNodeImpl;
 import org.springframework.stereotype.Service;
@@ -67,19 +67,18 @@ public class LocationGroupServiceImpl extends EntityServiceImpl<LocationGroup, L
     }
 
     /**
-     * FIXME [scherrer] Comment this
-     * 
-     * @param locationGroup
-     * @return
+     * {@inheritDoc}
      */
+    @Override
     public LocationGroup save(LocationGroup locationGroup) {
-        logger.debug("save LG called");
+        logger.debug("Save LocationGroup on service called");
         return dao.save(locationGroup);
     }
 
     /**
      * {@inheritDoc}
      */
+    @Transactional(readOnly = true)
     @Override
     public TreeNode<LocationGroup> getLocationGroupsAsTree() {
         logger.debug("getLocationGroupsAsTree called");
@@ -90,6 +89,7 @@ public class LocationGroupServiceImpl extends EntityServiceImpl<LocationGroup, L
     /**
      * {@inheritDoc}
      */
+    @Transactional(readOnly = true)
     @Override
     public List<LocationGroup> getLocationGroupsAsList() {
         logger.debug("getLocationGroupsAsList called");

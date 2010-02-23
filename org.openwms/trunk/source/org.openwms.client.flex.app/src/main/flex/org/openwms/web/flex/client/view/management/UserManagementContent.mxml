@@ -1,13 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
 /*
- * OpenWMS, the Open Warehouse Management System
- * 
- * Distributable under LGPL license.
- * See terms of license at gnu.org.
+ * openwms.org, the Open Warehouse Management System.
+ *
+ * This file is part of openwms.org.
+ *
+ * openwms.org is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as 
+ * published by the Free Software Foundation, either version 3 of the
+ * License, or (at your option) any later version.
+ *
+ * openwms.org is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with this software. If not, write to the Free
+ * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
+ * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
 -->
-<mx:VBox xmlns:mx="http://www.adobe.com/2006/mxml" width="100%" height="100%" styleName="frameContainerSkin" paddingBottom="5" paddingLeft="5" paddingRight="5" paddingTop="5" creationComplete="init()">
+<mx:VBox xmlns:mx="http://www.adobe.com/2006/mxml" width="100%" height="100%" styleName="frameContainerSkin"
+	paddingBottom="5" paddingLeft="5" paddingRight="5" paddingTop="5" creationComplete="init()">
 	<mx:Script>
 		<![CDATA[
 			import mx.validators.RegExpValidationResult;
@@ -65,7 +80,7 @@
 				if (modelLocator.selectedUser != null) {
 					var user:User=modelLocator.selectedUser;
 					if (UserHelper.haveDetails(user)) {
-						if (user.userDetails.sex == UserDetails$SEX.MAN) {
+						if (user.userDetails.sex == UserDetails$SEX.MALE) {
 							asset=new manImage() as BitmapAsset;
 						} else if (user.userDetails.sex == UserDetails$SEX.FEMALE) {
 							asset=new womanImage() as BitmapAsset;
@@ -91,108 +106,114 @@
 		]]>
 	</mx:Script>
 
-	<mx:RegExpValidator source="{usernameTi}" property="text" flags="gmi" valid="fireSaveUserEvent()" expression="_*" noMatchError="Username not allowed!" trigger="{saveUserBtn}"
-						triggerEvent="click"/>
+	<mx:RegExpValidator source="{usernameTi}" property="text" flags="gmi" valid="fireSaveUserEvent()"
+		expression="_*" noMatchError="Username not allowed!" trigger="{saveUserBtn}" triggerEvent="click" />
 
 
-	<mx:Binding source="usernameTi.text" destination="modelLocator.selectedUser.username"/>
-	<mx:Binding source="fullnameTi.text" destination="modelLocator.selectedUser.fullname"/>
-	<mx:Binding source="descriptionTi.text" destination="modelLocator.selectedUser.userDetails.description"/>
-	<mx:Binding source="phoneNoTi.text" destination="modelLocator.selectedUser.userDetails.phoneNo"/>
-	<!--  	<mx:Binding source="emailTi.text" destination="modelLocator.selectedUser.userDetails.email.getItemAt(0).emailAddress"/>-->
-	<mx:Binding source="skypeNameTi.text" destination="modelLocator.selectedUser.userDetails.skypeName"/>
-	<mx:Binding source="departmentTi.text" destination="modelLocator.selectedUser.userDetails.department"/>
-	<mx:Binding source="officeTi.text" destination="modelLocator.selectedUser.userDetails.office"/>
-	<mx:Binding source="sexRb.selection.value as UserDetails$SEX" destination="modelLocator.selectedUser.userDetails.sex"/>
+	<mx:Binding source="usernameTi.text" destination="modelLocator.selectedUser.username" />
+	<mx:Binding source="fullnameTi.text" destination="modelLocator.selectedUser.fullname" />
+	<mx:Binding source="descriptionTi.text" destination="modelLocator.selectedUser.userDetails.description" />
+	<mx:Binding source="phoneNoTi.text" destination="modelLocator.selectedUser.userDetails.phoneNo" />
+	<!--
+		<mx:Binding source="emailTi.text"
+		destination="modelLocator.selectedUser.userDetails.email.getItemAt(0).emailAddress"/>
+	-->
+	<mx:Binding source="skypeNameTi.text" destination="modelLocator.selectedUser.userDetails.skypeName" />
+	<mx:Binding source="departmentTi.text" destination="modelLocator.selectedUser.userDetails.department" />
+	<mx:Binding source="officeTi.text" destination="modelLocator.selectedUser.userDetails.office" />
+	<mx:Binding source="sexRb.selection.value as UserDetails$SEX" destination="modelLocator.selectedUser.userDetails.sex" />
 
 	<mx:HBox width="100%">
-		<mx:Label text="User Settings" fontSize="14" fontWeight="bold"/>
-		<mx:Button id="addUserBtn" label="Add User" click="fireAddUserEvent()"/>
+		<mx:Label text="User Settings" fontSize="14" fontWeight="bold" />
+		<mx:Button id="addUserBtn" label="Add User" click="fireAddUserEvent()" />
 		<mx:Button id="saveUserBtn" label="Save User" />
-		<mx:Button id="deleteUserBtn" label="Delete User" click="fireDeleteUserEvent()"/>
+		<mx:Button id="deleteUserBtn" label="Delete User" click="fireDeleteUserEvent()" />
 	</mx:HBox>
 	<mx:HBox width="100%" height="100%">
 		<mx:VBox label="General Information" height="100%">
-			<mx:Image id="userImg" source="{modelLocator.selectedUser.userDetails.image}" width="100" height="150" click="showFileUploadDialog()"/>
-			<mx:Button label="Change Picture" click="showFileUploadDialog()"/>
+			<mx:Image id="userImg" source="{modelLocator.selectedUser.userDetails.image}" width="100" height="150"
+				click="showFileUploadDialog()" />
+			<mx:Button label="Change Picture" click="showFileUploadDialog()" />
 		</mx:VBox>
 		<mx:TabNavigator height="100%" width="100%">
 			<mx:VBox label="General Information" width="100%" height="100%">
 				<mx:Form width="100%">
 
 					<mx:FormItem label="Username" required="true">
-						<mx:TextInput id="usernameTi" text="{modelLocator.selectedUser.username}" editable="false" click="setEditable(event)" width="250"/>
+						<mx:TextInput id="usernameTi" text="{modelLocator.selectedUser.username}" editable="false"
+							click="setEditable(event)" width="250" />
 					</mx:FormItem>
 
 					<mx:FormItem label="Fullname" required="false">
-						<mx:TextInput id="fullnameTi" text="{modelLocator.selectedUser.fullname}" width="250"/>
+						<mx:TextInput id="fullnameTi" text="{modelLocator.selectedUser.fullname}" width="250" />
 					</mx:FormItem>
 
 					<mx:FormItem label="Description" required="false">
-						<mx:TextArea id="descriptionTi" text="{modelLocator.selectedUser.userDetails.description}" width="250"/>
+						<mx:TextArea id="descriptionTi" text="{modelLocator.selectedUser.userDetails.description}" width="250" />
 					</mx:FormItem>
 
 					<mx:FormItem label="Phone" required="false">
-						<mx:TextInput id="phoneNoTi" text="{modelLocator.selectedUser.userDetails.phoneNo}" width="250"/>
+						<mx:TextInput id="phoneNoTi" text="{modelLocator.selectedUser.userDetails.phoneNo}" width="250" />
 					</mx:FormItem>
 					<!--
-						 <mx:FormItem label="Email" required="false">
-						 <mx:TextInput id="emailTi"
-						 text="{modelLocator.selectedUser.userDetails.email.getItemAt(0).emailAddress}" width="250" />
-						 </mx:FormItem>
+						<mx:FormItem label="Email" required="false"> <mx:TextInput id="emailTi"
+						text="{modelLocator.selectedUser.userDetails.email.getItemAt(0).emailAddress}" width="250" /> </mx:FormItem>
 					-->
 					<mx:FormItem label="Skype" required="false">
-						<mx:TextInput id="skypeNameTi" text="{modelLocator.selectedUser.userDetails.skypeName}" width="250"/>
+						<mx:TextInput id="skypeNameTi" text="{modelLocator.selectedUser.userDetails.skypeName}" width="250" />
 					</mx:FormItem>
 
 					<mx:FormItem label="Department" required="false">
-						<mx:TextInput id="departmentTi" text="{modelLocator.selectedUser.userDetails.department}" width="250"/>
+						<mx:TextInput id="departmentTi" text="{modelLocator.selectedUser.userDetails.department}" width="250" />
 					</mx:FormItem>
 
 					<mx:FormItem label="Office" required="false">
-						<mx:TextInput id="officeTi" text="{modelLocator.selectedUser.userDetails.office}" width="250"/>
+						<mx:TextInput id="officeTi" text="{modelLocator.selectedUser.userDetails.office}" width="250" />
 					</mx:FormItem>
 
 					<mx:FormItem label="Sex">
 						<mx:Tile width="250">
-							<mx:RadioButtonGroup id="sexRb" selectedValue="{modelLocator.selectedUser.userDetails.sex}"/>
-							<mx:RadioButton value="{UserDetails$SEX.MAN}" label="Male" group="{sexRb}"/>
-							<mx:RadioButton value="{UserDetails$SEX.FEMALE}" label="Female" group="{sexRb}"/>
+							<mx:RadioButtonGroup id="sexRb" selectedValue="{modelLocator.selectedUser.userDetails.sex}" />
+							<mx:RadioButton value="{UserDetails$SEX.MALE}" label="Male" group="{sexRb}" />
+							<mx:RadioButton value="{UserDetails$SEX.FEMALE}" label="Female" group="{sexRb}" />
 						</mx:Tile>
 					</mx:FormItem>
 
 					<mx:FormItem label="Comment" required="false">
-						<mx:TextArea id="tiComment" text="{modelLocator.selectedUser.userDetails.comment}" width="250"/>
+						<mx:TextArea id="tiComment" text="{modelLocator.selectedUser.userDetails.comment}" width="250" />
 					</mx:FormItem>
 				</mx:Form>
 			</mx:VBox>
 
-			<mx:VBox label="Manage Groups" width="100%" height="100%" paddingBottom="5" paddingLeft="5" paddingRight="5" paddingTop="5">
+			<mx:VBox label="Manage Groups" width="100%" height="100%" paddingBottom="5" paddingLeft="5" paddingRight="5"
+				paddingTop="5">
 				<mx:DataGrid width="600" height="100%">
 					<mx:columns>
-						<mx:DataGridColumn headerText="Column 1" dataField="col1"/>
-						<mx:DataGridColumn headerText="Column 2" dataField="col2"/>
-						<mx:DataGridColumn headerText="Column 3" dataField="col3"/>
+						<mx:DataGridColumn headerText="Column 1" dataField="col1" />
+						<mx:DataGridColumn headerText="Column 2" dataField="col2" />
+						<mx:DataGridColumn headerText="Column 3" dataField="col3" />
 					</mx:columns>
 				</mx:DataGrid>
 			</mx:VBox>
 
-			<mx:VBox label="Security Settings" width="100%" height="100%" paddingBottom="5" paddingLeft="5" paddingRight="5" paddingTop="5">
+			<mx:VBox label="Security Settings" width="100%" height="100%" paddingBottom="5" paddingLeft="5" paddingRight="5"
+				paddingTop="5">
 				<mx:DataGrid width="600" height="100%">
 					<mx:columns>
-						<mx:DataGridColumn headerText="Column 1" dataField="col1"/>
-						<mx:DataGridColumn headerText="Column 2" dataField="col2"/>
-						<mx:DataGridColumn headerText="Column 3" dataField="col3"/>
+						<mx:DataGridColumn headerText="Column 1" dataField="col1" />
+						<mx:DataGridColumn headerText="Column 2" dataField="col2" />
+						<mx:DataGridColumn headerText="Column 3" dataField="col3" />
 					</mx:columns>
 				</mx:DataGrid>
 			</mx:VBox>
 
-			<mx:VBox label="Preferences" width="100%" height="100%" paddingBottom="5" paddingLeft="5" paddingRight="5" paddingTop="5">
+			<mx:VBox label="Preferences" width="100%" height="100%" paddingBottom="5" paddingLeft="5" paddingRight="5"
+				paddingTop="5">
 				<mx:DataGrid width="600" height="100%">
 					<mx:columns>
-						<mx:DataGridColumn headerText="Column 1" dataField="col1"/>
-						<mx:DataGridColumn headerText="Column 2" dataField="col2"/>
-						<mx:DataGridColumn headerText="Column 3" dataField="col3"/>
+						<mx:DataGridColumn headerText="Column 1" dataField="col1" />
+						<mx:DataGridColumn headerText="Column 2" dataField="col2" />
+						<mx:DataGridColumn headerText="Column 3" dataField="col3" />
 					</mx:columns>
 				</mx:DataGrid>
 			</mx:VBox>
