@@ -56,12 +56,12 @@
 	<control:MainController />
 
 	<mx:VBox height="100%" width="100%" verticalGap="0" backgroundColor="#C2DAEF">
-		<mx:Canvas width="100%" height="30" backgroundColor="0x9fc3db" id="hbox1" backgroundImage="@Embed(source='banner.jpg')">
-			<mx:Image source="openwms_header.png" />
+		<mx:Canvas width="100%" height="66" backgroundColor="0x9fc3db" id="hbox1" backgroundImage="@Embed(source='banner.jpg')">
+			<mx:Image source="@Embed('/assets/images/openwms_header.png')" />
 		</mx:Canvas>
-		<mx:Canvas width="100%" height="30" backgroundImage="@Embed(source='breadcrumbs.jpg')">
-			<mx:MenuBar x="5" y="5" width="100%" height="20" labelField="@label" itemClick="onMenuChange(event)"
-				backgroundAlpha=".5" backgroundColor="#FB0505" borderColor="#FB0505" color="#FB0505" fillAlphas="0.5" fillColors="#FB0505">
+		<mx:Canvas width="100%" height="25" backgroundImage="@Embed(source='breadcrumbs.jpg')" backgroundSize="100%">
+			<mx:MenuBar x="5" y="5" width="100%" height="25" labelField="@label" itemClick="onMenuChange(event)"
+				backgroundAlpha=".5" backgroundColor="#FB0505" color="#FB0505" fillAlphas="0.5" fillColors="#FB0505">
 				<mx:XMLList>
 					<menuitem label="OpenWMS">
 						<menuitem label="Connect ..." enabled="false" />
@@ -76,12 +76,12 @@
 						<menuitem label="Transport Orders" enabled="false" />
 					</menuitem>
 					<menuitem label="Warehouse">
-						<menuitem label="Transport Units" action="{SwitchScreenEvent.SHOW_TRANSPORTUNIT_VIEW}" />
 						<menuitem label="Ordering" enabled="false" />
 						<menuitem label="Receiving" enabled="false" />
 					</menuitem>
 					<menuitem label="Stock Configuration">
-						<menuitem label="Locations" action="{SwitchScreenEvent.SHOW_LOCATION_VIEW}" />
+						<menuitem label="Transport Units" action="{SwitchScreenEvent.SHOW_TRANSPORTUNIT_VIEW}" />
+                        <menuitem label="Locations" action="{SwitchScreenEvent.SHOW_LOCATION_VIEW}" />
 						<menuitem label="Users" action="{SwitchScreenEvent.SHOW_USER_MGMT_VIEW}" />
 						<menuitem label="Location Groups" action="{SwitchScreenEvent.SHOW_LOCATIONGROUP_VIEW}" />
 					</menuitem>

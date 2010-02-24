@@ -106,9 +106,10 @@
 		]]>
 	</mx:Script>
 
+<!-- 
 	<mx:RegExpValidator source="{usernameTi}" property="text" flags="gmi" valid="fireSaveUserEvent()"
 		expression="_*" noMatchError="Username not allowed!" trigger="{saveUserBtn}" triggerEvent="click" />
-
+ -->
 
 	<mx:Binding source="usernameTi.text" destination="modelLocator.selectedUser.username" />
 	<mx:Binding source="fullnameTi.text" destination="modelLocator.selectedUser.fullname" />
@@ -126,7 +127,7 @@
 	<mx:HBox width="100%">
 		<mx:Label text="User Settings" fontSize="14" fontWeight="bold" />
 		<mx:Button id="addUserBtn" label="Add User" click="fireAddUserEvent()" />
-		<mx:Button id="saveUserBtn" label="Save User" />
+		<mx:Button id="saveUserBtn" label="Save User" click="fireSaveUserEvent()" />
 		<mx:Button id="deleteUserBtn" label="Delete User" click="fireDeleteUserEvent()" />
 	</mx:HBox>
 	<mx:HBox width="100%" height="100%">

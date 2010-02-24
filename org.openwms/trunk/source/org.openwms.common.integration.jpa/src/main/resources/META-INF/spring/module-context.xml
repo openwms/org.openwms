@@ -47,6 +47,7 @@
         <property name="persistenceUnitName" value="${jdbc.persistenceUnit}" />
         <property name="dataSource" ref="dataSource" />
         <property name="jpaVendorAdapter" ref="jpaVendorAdapter" />
+        <property name="jpaProperties" value="${jdbc.properties}" />
     </bean>
 
     <!-- Transaction Manager -->
