@@ -42,11 +42,12 @@ package org.openwms.web.flex.client.model
         public static const MAIN_VIEW_STACK_TRANSPORTUNIT_VIEW:uint = 4;
         public var mainViewStackIndex:uint = MAIN_VIEW_STACK_EMPTY_SCREEN_VIEW;
 
-        public const UPLOAD_URL:String = "/OpenWMS/upload";
+        public const UPLOAD_URL:String = "/openwms/upload";
         public const DIRECTORY_NAME:String = "data";
 
         public var allLocationGroups:ArrayCollection = new ArrayCollection();
         public var allLocations:ArrayCollection = new ArrayCollection();
+        public var allTransportUnits:ArrayCollection = new ArrayCollection();
         public var allUsers:ArrayCollection = new ArrayCollection();
         public var selectedUser:User = null;
         public var locationGroupTree:TreeNode;

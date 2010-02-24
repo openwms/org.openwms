@@ -34,7 +34,7 @@
                     <source>userService</source>
                 </properties>
             </destination>
-            <destination id="transportService">
+            <destination id="transportUnitService">
                 <channels>
                     <channel ref="my-graniteamf"/>
                 </channels>

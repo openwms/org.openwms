@@ -40,12 +40,12 @@ package org.openwms.web.flex.client.business
         public function TransportUnitDelegate(responder:IResponder):void
         {
             this.responder = responder;
-            this.service = ServiceLocator.getInstance().getRemoteObject("transportService");
+            this.service = ServiceLocator.getInstance().getRemoteObject("transportUnitService");
         }
 
         public function getTransportUnits():void
         {
-            var call:AsyncToken = service.getLocationGroupsAsList();
+            var call:AsyncToken = service.getAllTransportUnits();
             call.addResponder(responder);
         }
 

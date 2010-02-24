@@ -20,6 +20,8 @@
  */
 package org.openwms.common.service;
 
+import java.util.List;
+
 import org.openwms.common.domain.LocationPK;
 import org.openwms.common.domain.TransportUnit;
 import org.openwms.common.domain.TransportUnitType;
@@ -65,5 +67,12 @@ public interface TransportUnitService extends EntityService<TransportUnit> {
      *            Unique identifier of the target <code>Location</code>
      */
     void moveTransportUnit(Barcode barcode, LocationPK targetLocationPK);
+
+    /**
+     * Returns an unsorted List of all {@link TransportUnit}s.
+     * 
+     * @return A List of all {@link TransportUnit}s
+     */
+    List<TransportUnit> getAllTransportUnits();
 
 }

@@ -124,6 +124,11 @@
 	</pluginRepositories>
 
 	<dependencies>
+        <dependency>
+            <groupId>opensymphony</groupId>
+            <artifactId>pell-multipart</artifactId>
+            <version>2.1.5</version>
+        </dependency>
 		<dependency>
 			<groupId>${project.groupId}</groupId>
 			<artifactId>org.openwms.client.flex.app</artifactId>

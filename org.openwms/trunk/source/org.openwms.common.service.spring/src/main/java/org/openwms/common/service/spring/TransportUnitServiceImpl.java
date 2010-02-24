@@ -20,6 +20,8 @@
  */
 package org.openwms.common.service.spring;
 
+import java.util.List;
+
 import org.openwms.common.domain.Location;
 import org.openwms.common.domain.LocationPK;
 import org.openwms.common.domain.TransportUnit;
@@ -67,6 +69,16 @@ public class TransportUnitServiceImpl extends EntityServiceImpl<TransportUnit, L
         transportUnit.setActualLocation(location);
         dao.persist(transportUnit);
         return transportUnit;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    @Transactional(readOnly = true)
+    public List<TransportUnit> getAllTransportUnits() {
+        logger.debug("GetAllTransportUnits on service called");
+        return dao.findAll();
     }
 
     /**
