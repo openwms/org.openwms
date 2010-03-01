@@ -39,19 +39,35 @@ public class TreeNodeImpl<T> implements TreeNode<T> {
 
     private Map<Object, TreeNode<T>> childrenMap = new LinkedHashMap<Object, TreeNode<T>>();
 
+    /**
+     * {@inheritDoc}
+     */
+    @Override
     public T getData() {
         return data;
     }
 
+    /**
+     * {@inheritDoc}
+     */
+    @Override
     public TreeNode<T> getChild(Object identifier) {
         return (TreeNode<T>) childrenMap.get(identifier);
     }
 
+    /**
+     * {@inheritDoc}
+     */
+    @Override
     public void addChild(Object identifier, TreeNode<T> child) {
         child.setParent(this);
         childrenMap.put(identifier, child);
     }
 
+    /**
+     * {@inheritDoc}
+     */
+    @Override
     public void removeChild(Object identifier) {
         TreeNode<T> treeNode = childrenMap.remove(identifier);
         if (treeNode != null) {
@@ -59,24 +75,43 @@ public class TreeNodeImpl<T> implements TreeNode<T> {
         }
     }
 
+    /**
+     * {@inheritDoc}
+     */
+    @Override
     public void setData(T data) {
         this.data = data;
     }
 
+    /**
+     * {@inheritDoc}
+     */
+    @Override
     public TreeNode<T> getParent() {
         return parent;
     }
 
+    /**
+     * {@inheritDoc}
+     */
+    @Override
     public void setParent(TreeNode<T> parent) {
         this.parent = parent;
     }
 
+    /**
+     * {@inheritDoc}
+     */
+    @Override
     public Iterator<Map.Entry<Object, TreeNode<T>>> getChildren() {
         return childrenMap.entrySet().iterator();
     }
 
+    /**
+     * {@inheritDoc}
+     */
+    @Override
     public boolean isLeaf() {
         return childrenMap.isEmpty();
     }
-
 }

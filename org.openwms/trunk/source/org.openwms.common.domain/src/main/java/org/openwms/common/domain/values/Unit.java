@@ -33,7 +33,7 @@ public interface Unit<T> {
      * Convert this unit into <tt>unit</tt>.
      * 
      * @param unit
-     *            - The unit to converto to
+     *            The unit to convert to
      */
     void convertTo(T unit);
 

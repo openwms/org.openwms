@@ -36,6 +36,9 @@ import org.junit.Test;
  */
 public class WeightTest {
 
+    /**
+     * Test creation of a Weight.
+     */
     @Test
     public final void testWeight() {
         Weight w1 = new Weight(new BigDecimal(1), WeightUnit.KG);
@@ -44,6 +47,9 @@ public class WeightTest {
         w1.compareTo(w2);
     }
 
+    /**
+     * Test creation of a Weight and comparison.
+     */
     @Test
     public final void testWeightComparison() {
         Weight w1 = new Weight(new BigDecimal(1), WeightUnit.G);
