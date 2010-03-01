@@ -212,8 +212,9 @@ public class LocationType implements Serializable {
     }
 
     /**
-     * Set a {@java.util.Set} of {@link LocationType}s belonging
-     * to this {@link LocationType}.
+     * Set a {@java.util.Set} of {@link Location}s belonging to
+     * this {@link LocationType}. Already existing {@link Location}s will be
+     * removed.
      * 
      * @param locations
      *            a collection of {@link Location} to assign to this type

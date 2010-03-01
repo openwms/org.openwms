@@ -16,7 +16,7 @@
  * A ${type_name}.
  * 
  * @author &lt;a href="mailto:openwms@googlemail.com"&gt;Heiko Scherrer&lt;/a&gt;
- * @version $$Revision: 877 $$
+ * @version $$Revision$$
  */</template><template autoinsert="true" context="fieldcomment_context" deleted="false" description="Comment for fields" enabled="true" id="org.eclipse.jdt.ui.text.codetemplates.fieldcomment" name="fieldcomment">/** The ${field} */</template><template autoinsert="false" context="methodcomment_context" deleted="false" description="Comment for non-overriding methods" enabled="true" id="org.eclipse.jdt.ui.text.codetemplates.methodcomment" name="methodcomment">/**
  * FIXME Comment this
  * 
