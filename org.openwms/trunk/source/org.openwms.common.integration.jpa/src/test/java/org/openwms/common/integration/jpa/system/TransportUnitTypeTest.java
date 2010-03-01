@@ -37,7 +37,7 @@ import org.springframework.transaction.annotation.Transactional;
  * A TransportUnitTypeTest.
  * 
  * @author <a href="mailto:openwms@googlemail.com">Heiko Scherrer</a>
- * @version $Revision: 447 $
+ * @version $Revision$
  * @since 0.1
  */
 @Transactional

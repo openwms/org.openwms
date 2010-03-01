@@ -37,7 +37,7 @@ import org.springframework.test.context.ContextConfiguration;
  * A LocationGroupDaoTest.
  * 
  * @author <a href="mailto:openwms@googlemail.com">Heiko Scherrer</a>
- * @version $Revision: $
+ * @version $Revision$
  * @since 0.1
  */
 @ContextConfiguration("classpath:META-INF/spring/LocationTest-context.xml")
