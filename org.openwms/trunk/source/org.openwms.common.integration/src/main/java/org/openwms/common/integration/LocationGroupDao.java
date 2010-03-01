@@ -30,7 +30,7 @@ import org.openwms.common.domain.LocationGroup;
  * </p>
  * 
  * @author <a href="mailto:openwms@googlemail.com">Heiko Scherrer</a>
- * @version $Revision: 877 $
+ * @version $Revision$
  * @since 0.1
  * @see {@link org.openwms.common.integration.GenericDao}
  * @see {@link org.openwms.common.domain.LocationGroup}

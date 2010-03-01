@@ -34,7 +34,7 @@ import java.util.Map;
  * </p>
  * 
  * @author <a href="mailto:openwms@googlemail.com">Heiko Scherrer</a>
- * @version $Revision: 877 $
+ * @version $Revision$
  * @since 0.1
  */
 public interface GenericDao<T extends Serializable, ID extends Serializable> {

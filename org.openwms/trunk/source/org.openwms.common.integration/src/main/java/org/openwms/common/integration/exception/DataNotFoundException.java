@@ -30,7 +30,7 @@ import java.io.Serializable;
  * </p>
  * 
  * @author <a href="mailto:openwms@googlemail.com">Heiko Scherrer</a>
- * @version $Revision: $
+ * @version $Revision$
  * @since 0.1
  * @see {@link rg.openwms.common.integration.exception.DataException}
  */
