@@ -31,7 +31,7 @@ import org.springframework.transaction.annotation.Transactional;
  * A LocationDaoImpl.
  * 
  * @author <a href="mailto:openwms@googlemail.com">Heiko Scherrer</a>
- * @version $Revision: 314 $
+ * @version $Revision$
  * @since 0.1
  * @see {@link org.openwms.common.integration.jpa.AbstractGenericJpaDao}
  */

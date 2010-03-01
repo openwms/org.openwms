@@ -44,7 +44,7 @@ import org.springframework.test.context.ContextConfiguration;
  * A LocationDaoTest.
  * 
  * @author <a href="mailto:openwms@googlemail.com">Heiko Scherrer</a>
- * @version $Revision: $
+ * @version $Revision$
  * @since 0.1
  */
 @ContextConfiguration("classpath:META-INF/spring/LocationDaoTest-context.xml")

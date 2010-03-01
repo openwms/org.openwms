@@ -34,7 +34,7 @@ import org.springframework.orm.jpa.persistenceunit.MutablePersistenceUnitInfo;
  * </p>
  * 
  * @author <a href="mailto:openwms@googlemail.com">Heiko Scherrer</a>
- * @version $Revision: 877 $
+ * @version $Revision$
  * @since 0.1
  * @deprecated as an OSGi environment is used since 0.1
  */

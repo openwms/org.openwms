@@ -57,7 +57,7 @@ import org.springframework.transaction.annotation.Transactional;
  * </p>
  * 
  * @author <a href="mailto:openwms@googlemail.com">Heiko Scherrer</a>
- * @version $Revision: 314 $
+ * @version $Revision$
  * @since 0.1
  * @see {@link org.springframework.stereotype.Repository}
  * @see {@link org.springframework.transaction.annotation.Transactional}
