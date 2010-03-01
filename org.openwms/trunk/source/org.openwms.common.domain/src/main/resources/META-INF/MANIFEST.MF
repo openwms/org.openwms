@@ -1,25 +1,23 @@
 Manifest-Version: 1.0
-Archiver-Version: Plexus Archiver
-Created-By: Apache Maven
-Built-By: heiko
-Build-Jdk: 1.6.0_16
 Export-Package: org.openwms.common.domain;version="0.0.1.SNAPSHOT";use
  s:="javax.persistence,org.openwms.common.domain.system,org.openwms.co
  mmon.domain.system.usermanagement,org.openwms.common.domain.values",o
  rg.openwms.common.domain.system;version="0.0.1.SNAPSHOT";uses:="javax
  .persistence",org.openwms.common.domain.system.usermanagement;version
  ="0.0.1.SNAPSHOT";uses:="javax.persistence",org.openwms.common.domain
- .values;version="0.0.1.SNAPSHOT";uses:="javax.persistence",org.openwm
- s.common.exception;version="0.0.1.SNAPSHOT",org.openwms.common.util;v
- ersion="0.0.1.SNAPSHOT"
+ .values;version="0.0.1.SNAPSHOT";uses:="javax.persistence,org.junit",
+ org.openwms.common.exception;version="0.0.1.SNAPSHOT",org.openwms.com
+ mon.util;version="0.0.1.SNAPSHOT"
 Import-Bundle: com.springsource.javax.persistence;version="1.0.0",com.
  springsource.org.apache.commons.lang;version="2.4.0"
+Require-Bundle: com.springsource.org.hibernate,com.springsource.javass
+ ist
 Bundle-Vendor: openwms.org
 Bundle-Version: 0.0.1.SNAPSHOT
-Tool: Bundlor 1.0.0.RELEASE
+Tool: Bundlor 1.0.0.BUILD-20091207202403
 Bundle-Name: org.openwms.common.domain
 Bundle-ManifestVersion: 2
 Bundle-SymbolicName: org.openwms.common.domain
 Import-Package: javax.persistence,org.apache.commons.lang,org.apache.l
- og4j
+ og4j,org.slf4j
 
