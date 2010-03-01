@@ -34,27 +34,26 @@ import java.util.Map;
 public interface TreeNode<T> extends Serializable {
 
     /**
-     * getter for node attached data
+     * Getter for node attached data.
      * 
-     * @return node attached data
+     * @return Node attached data
      */
-    public T getData();
+    T getData();
 
     /**
-     * setter for node attached data
+     * Setter for node attached data.
      * 
      * @param data
-     *            data to set as attached node data
+     *            Data to set as attached node data
      */
-    public void setData(T data);
+    void setData(T data);
 
     /**
-     * Returns whether this node is leaf
+     * Returns whether this node is leaf.
      * 
-     * @return <code>true</code> if this node is leaf else returns
-     *         <code>false</code>
+     * @return true if this node is leaf, otherwise false
      */
-    public boolean isLeaf();
+    boolean isLeaf();
 
     /**
      * Getter for children entries. Each children entry contains identifier
@@ -78,20 +77,20 @@ public interface TreeNode<T> extends Serializable {
      *         {@link TreeNode} as values and their identifiers as keys.
      * 
      */
-    public Iterator<Map.Entry<Object, TreeNode<T>>> getChildren();
+    Iterator<Map.Entry<Object, TreeNode<T>>> getChildren();
 
     /**
-     * find child by id Please see {@link #getChildren()} for more information
+     * Find child by id Please see {@link #getChildren()} for more information
      * about identifier constraints.
      * 
      * @param id
      *            identifier of the child to find
      * @return designated {@link TreeNode} instance or <code>null</code>
      */
-    public TreeNode<T> getChild(Object id);
+    TreeNode<T> getChild(Object id);
 
     /**
-     * adds child to children collection
+     * Adds child to children collection.
      * 
      * @param identifier
      *            child identifier. Please see {@link #getChildren()} for more
@@ -99,7 +98,7 @@ public interface TreeNode<T> extends Serializable {
      * @param child
      *            child
      */
-    public void addChild(Object identifier, TreeNode<T> child);
+    void addChild(Object identifier, TreeNode<T> child);
 
     /**
      * Please see {@link #getChildren()} for more information about identifier
@@ -108,21 +107,21 @@ public interface TreeNode<T> extends Serializable {
      * @param id
      *            id of the child to remove
      */
-    public void removeChild(Object id);
+    void removeChild(Object id);
 
     /**
-     * getter for parent {@link TreeNode}
+     * Getter for parent {@link TreeNode}.
      * 
      * @return parent {@link TreeNode} instance or <code>null</code> if this
      *         node is root
      */
-    public TreeNode<T> getParent();
+    TreeNode<T> getParent();
 
     /**
-     * setter for parent {@link TreeNode}
+     * Setter for parent {@link TreeNode}.
      * 
      * @param parent
      *            {@link TreeNode} to set as parent
      */
-    public void setParent(TreeNode<T> parent);
+    void setParent(TreeNode<T> parent);
 }

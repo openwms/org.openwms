@@ -33,14 +33,14 @@ public class InsufficientValueException extends RuntimeException {
 
     /**
      * Create a new InsufficientValueException.
-     * 
      */
-    public InsufficientValueException() {}
+    public InsufficientValueException() { }
 
     /**
      * Create a new InsufficientValueException.
      * 
      * @param message
+     *            The message text
      */
     public InsufficientValueException(String message) {
         super(message);
@@ -50,6 +50,7 @@ public class InsufficientValueException extends RuntimeException {
      * Create a new InsufficientValueException.
      * 
      * @param cause
+     *            The root cause of the exception
      */
     public InsufficientValueException(Throwable cause) {
         super(cause);
@@ -59,7 +60,9 @@ public class InsufficientValueException extends RuntimeException {
      * Create a new InsufficientValueException.
      * 
      * @param message
+     *            The message text
      * @param cause
+     *            The root cause of the exception
      */
     public InsufficientValueException(String message, Throwable cause) {
         super(message, cause);

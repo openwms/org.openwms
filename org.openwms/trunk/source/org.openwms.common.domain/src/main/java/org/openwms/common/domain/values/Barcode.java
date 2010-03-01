@@ -100,7 +100,7 @@ public class Barcode implements Serializable {
      * Accessed by persistence provider.
      */
     @SuppressWarnings("unused")
-    private Barcode() {}
+    private Barcode() { }
 
     /**
      * Create a new Barcode with a String.

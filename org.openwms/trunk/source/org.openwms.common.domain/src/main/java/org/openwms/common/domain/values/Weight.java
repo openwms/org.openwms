@@ -42,14 +42,15 @@ public class Weight implements Comparable<Weight>, Unit<WeightUnit> {
      * Accessed by persistence provider.
      */
     @SuppressWarnings("unused")
-    private Weight() {}
+    private Weight() { }
 
     /**
-     * 
      * Create a new Weight.
      * 
      * @param value
+     *            The value of the weight
      * @param unit
+     *            The unit of measure
      */
     public Weight(BigDecimal value, WeightUnit unit) {
         this.value = value;
@@ -77,14 +78,16 @@ public class Weight implements Comparable<Weight>, Unit<WeightUnit> {
     /**
      * {@inheritDoc}
      */
+    @Override
     public void convertTo(WeightUnit unit) {
         value = value.scaleByPowerOfTen((this.getUnit().ordinal() - unit.ordinal()) * 3);
         this.unit = unit;
     }
 
     /**
-     * Compares o.Value with this.value.
+     * {@inheritDoc}
      */
+    @Override
     public int compareTo(Weight o) {
         if (o.getUnit().ordinal() > this.getUnit().ordinal()) {
             return 1;

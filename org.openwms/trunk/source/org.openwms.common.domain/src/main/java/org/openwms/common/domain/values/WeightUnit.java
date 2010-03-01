@@ -31,7 +31,23 @@ package org.openwms.common.domain.values;
  * @since 0.1
  */
 public enum WeightUnit {
-    MG(1000000000), G(1000000), KG(1000), T(1);
+
+    /**
+     * Milligram.
+     */
+    MG(1000000000),
+    /**
+     * Gram.
+     */
+    G(1000000),
+    /**
+     * Kilogram.
+     */
+    KG(1000),
+    /**
+     * Tons.
+     */
+    T(1);
 
     private Long baseUnit;
 
@@ -39,6 +55,7 @@ public enum WeightUnit {
      * Create a new WeightUnit.
      * 
      * @param baseUnit
+     *            The base unit of the weight
      */
     WeightUnit(long baseUnit) {
         this.baseUnit = baseUnit;
@@ -47,7 +64,7 @@ public enum WeightUnit {
     /**
      * Return the base unit.
      * 
-     * @return
+     * @return The base unit of the weight
      */
     public long getBaseUnit() {
         return this.baseUnit;
