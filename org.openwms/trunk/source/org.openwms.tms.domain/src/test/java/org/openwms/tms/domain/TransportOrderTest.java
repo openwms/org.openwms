@@ -1,8 +1,22 @@
 /*
- * OpenWMS, the open Warehouse Management System
- * 
- * Distributable under LGPL license.
- * See terms of license at gnu.org.
+ * openwms.org, the Open Warehouse Management System.
+ *
+ * This file is part of openwms.org.
+ *
+ * openwms.org is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as 
+ * published by the Free Software Foundation, either version 3 of the
+ * License, or (at your option) any later version.
+ *
+ * openwms.org is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with this software. If not, write to the Free
+ * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
+ * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
 package org.openwms.tms.domain;
 
@@ -24,7 +38,8 @@ import org.openwms.tms.domain.order.TransportOrder.TRANSPORT_ORDER_STATE;
  * A TransportOrderTest.
  * 
  * @author <a href="heiko.scherrer@gmx.de">Heiko Scherrer</a>
- * @version $Revision: 120 $
+ * @version $Revision$
+ * @since 0.1
  */
 public class TransportOrderTest extends AbstractJpaSpringContextTests {
 
@@ -39,8 +54,7 @@ public class TransportOrderTest extends AbstractJpaSpringContextTests {
         try {
             transportOrder.setState(TRANSPORT_ORDER_STATE.INITIALIZED);
             fail("Exception expected while switching to next state without transportUnit");
-        }
-        catch (InsufficientValueException tme) {
+        } catch (InsufficientValueException tme) {
             logger.debug("OK:Exception while switching to next state without transportUnit");
         }
 
@@ -51,8 +65,7 @@ public class TransportOrderTest extends AbstractJpaSpringContextTests {
         try {
             transportOrder.setState(TRANSPORT_ORDER_STATE.INITIALIZED);
             fail("TransportOrder must not be switched in next mode without setting a target");
-        }
-        catch (InsufficientValueException tme) {
+        } catch (InsufficientValueException tme) {
             logger.debug("OK:Exception while switching to next state without target");
         }
 
@@ -61,8 +74,7 @@ public class TransportOrderTest extends AbstractJpaSpringContextTests {
         try {
             transportOrder.setState(TRANSPORT_ORDER_STATE.INITIALIZED);
             logger.debug("transportUnit set and target set");
-        }
-        catch (Exception tme) {
+        } catch (Exception tme) {
             fail("TransportOrder could be switched in next mode");
 
         }
@@ -74,8 +86,7 @@ public class TransportOrderTest extends AbstractJpaSpringContextTests {
         try {
             transportOrder.setState(TRANSPORT_ORDER_STATE.INITIALIZED);
             logger.debug("transportUnit set and targetLocationGroup set");
-        }
-        catch (Exception tme) {
+        } catch (Exception tme) {
             fail("TransportOrder could be switched in next mode");
         }
 
