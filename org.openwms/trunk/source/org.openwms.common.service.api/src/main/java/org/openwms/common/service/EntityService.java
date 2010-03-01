@@ -37,7 +37,7 @@ import java.util.List;
  * </p>
  * 
  * @author <a href="mailto:openwms@googlemail.com">Heiko Scherrer</a>
- * @version $Revision: 877 $
+ * @version $Revision$
  * @since 0.1
  */
 public interface EntityService<T extends Serializable> {
