@@ -50,7 +50,7 @@ import javax.persistence.TemporalType;
  */
 @Entity
 @Table(name = "T_USER")
-@NamedQueries( { @NamedQuery(name = "User.findAll", query = "SELECT u FROM User u"),
+@NamedQueries({ @NamedQuery(name = "User.findAll", query = "SELECT u FROM User u"),
         @NamedQuery(name = "User.findAllOrdered", query = "SELECT u FROM User u ORDER BY u.username"),
         @NamedQuery(name = "User.findByUsername", query = "SELECT u FROM User u WHERE u.username = ?1") })
 public class User implements Serializable {
@@ -148,7 +148,7 @@ public class User implements Serializable {
      * Accessed by persistence provider.
      */
     @SuppressWarnings("unused")
-    private User() {}
+    private User() { }
 
     /**
      * Create a new User with an username.

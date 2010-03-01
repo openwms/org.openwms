@@ -103,7 +103,7 @@ public class LocationType implements Serializable {
      * Accessed by persistence provider.
      */
     @SuppressWarnings("unused")
-    private LocationType() {}
+    private LocationType() { }
 
     /**
      * Create a new {@link LocationType} with a unique natural key.

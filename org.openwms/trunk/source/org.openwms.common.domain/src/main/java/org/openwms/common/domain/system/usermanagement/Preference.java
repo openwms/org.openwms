@@ -106,7 +106,7 @@ public class Preference implements Serializable {
     /**
      * Create a {@link Preference}.
      */
-    public Preference() {}
+    public Preference() { }
 
     /**
      * Return the unique technical key.

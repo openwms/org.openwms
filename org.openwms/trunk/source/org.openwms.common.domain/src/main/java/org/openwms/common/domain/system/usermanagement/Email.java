@@ -83,7 +83,7 @@ public class Email implements Serializable {
      * Accessed by persistence provider.
      */
     @SuppressWarnings("unused")
-    private Email() {}
+    private Email() { }
 
     /**
      * Create a new Email for the

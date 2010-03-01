@@ -98,7 +98,7 @@ public class Role implements Serializable {
      * Accessed by persistence provider.
      */
     @SuppressWarnings("unused")
-    private Role() {}
+    private Role() { }
 
     /**
      * Create a new Role with a name.

@@ -96,14 +96,16 @@ public class TypePlacingRule implements Serializable {
      * Create a new {@link TypePlacingRule}.
      */
     @SuppressWarnings("unused")
-    private TypePlacingRule() {}
+    private TypePlacingRule() { }
 
     /**
      * Create new {@link TypePlacingRule} with privilegeLevel and
      * allowedLocationType.
      * 
      * @param privilegeLevel
+     *            The privilege level
      * @param allowedLocationType
+     *            The allowed LocationType
      */
     public TypePlacingRule(int privilegeLevel, LocationType allowedLocationType) {
         this.privilegeLevel = privilegeLevel;
@@ -111,10 +113,10 @@ public class TypePlacingRule implements Serializable {
     }
 
     /**
-     * 
      * Create new {@link TypePlacingRule} with allowedLocationType.
      * 
      * @param allowedLocationType
+     *            The allowed LocationType
      */
     public TypePlacingRule(LocationType allowedLocationType) {
         this.allowedLocationType = allowedLocationType;

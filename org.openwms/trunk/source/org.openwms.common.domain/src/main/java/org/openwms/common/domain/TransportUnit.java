@@ -63,7 +63,7 @@ import org.openwms.common.domain.values.Barcode;
  */
 @Entity
 @Table(name = "TRANSPORT_UNIT", uniqueConstraints = @UniqueConstraint(columnNames = { "BARCODE" }))
-@NamedQueries( {
+@NamedQueries({
         @NamedQuery(name = "TransportUnit.findAll", query = "select tu from TransportUnit tu"),
         @NamedQuery(name = "TransportUnit.findByBarcode", query = "select tu from TransportUnit tu where tu.barcode = ?1") })
 public class TransportUnit implements Serializable {
@@ -212,7 +212,7 @@ public class TransportUnit implements Serializable {
      * Accessed by persistence provider.
      */
     @SuppressWarnings("unused")
-    private TransportUnit() {}
+    private TransportUnit() { }
 
     /**
      * Create a new {@link TransportUnit} with a unique unitId. The unitId is

@@ -85,7 +85,7 @@ public class TypeStackingRule implements Serializable {
      * Create a new {@link TypeStackingRule}.
      */
     @SuppressWarnings("unused")
-    private TypeStackingRule() {}
+    private TypeStackingRule() { }
 
     /**
      * Create a new {@link TypeStackingRule}. Define how many
@@ -93,7 +93,9 @@ public class TypeStackingRule implements Serializable {
      * allowedTransportUnitType may stacked on this {@link TransportUnitType}.
      * 
      * @param noTransportUnits
+     *            The number of allowed TransportUnits
      * @param allowedTransportUnitType
+     *            The allowed TransportUnitType
      */
     public TypeStackingRule(short noTransportUnits, TransportUnitType allowedTransportUnitType) {
         this.noTransportUnits = noTransportUnits;
@@ -122,7 +124,7 @@ public class TypeStackingRule implements Serializable {
      * Returns the number of {@link TransportUnitType}s that may be placed on
      * the owning {@link TransportUnitType}.
      * 
-     * @return
+     * @return The number of TransportUnits allowed
      */
     public short getNoTransportUnits() {
         return this.noTransportUnits;
@@ -132,7 +134,7 @@ public class TypeStackingRule implements Serializable {
      * Returns the allowed {@link TransportUnitType} that may be placed on the
      * owning {@link TransportUnitType}.
      * 
-     * @return
+     * @return The allowed TransportUnitType
      */
     public TransportUnitType getAllowedTransportUnitType() {
         return this.allowedTransportUnitType;

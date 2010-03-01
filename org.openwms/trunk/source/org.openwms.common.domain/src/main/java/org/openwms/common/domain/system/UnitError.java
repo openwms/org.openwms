@@ -69,13 +69,13 @@ public class UnitError implements Serializable {
     /**
      * Create a new UnitError.
      */
-    public UnitError() {}
+    public UnitError() { }
 
     /**
-     * 
      * Create a new UnitError with an error number.
      * 
      * @param errorNo
+     *            The error number
      */
     public UnitError(String errorNo) {
         this.errorNo = errorNo;
@@ -84,7 +84,7 @@ public class UnitError implements Serializable {
     /**
      * Return the unique technical key.
      * 
-     * @return
+     * @return The unique technical key
      */
     public Long getId() {
         return id;
@@ -93,7 +93,7 @@ public class UnitError implements Serializable {
     /**
      * Return the error number.
      * 
-     * @return
+     * @return The error number
      */
     public String getErrorNo() {
         return errorNo;
@@ -112,7 +112,7 @@ public class UnitError implements Serializable {
     /**
      * Return the error text.
      * 
-     * @return
+     * @return The error text
      */
     public String getErrorText() {
         return errorText;

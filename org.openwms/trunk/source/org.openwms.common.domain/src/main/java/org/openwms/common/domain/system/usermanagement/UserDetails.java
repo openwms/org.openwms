@@ -118,7 +118,7 @@ public class UserDetails implements Serializable {
     /**
      * Create a new <code>UserDetails</code> instance.
      */
-    public UserDetails() {}
+    public UserDetails() { }
 
     public String getPhoneNo() {
         return this.phoneNo;
