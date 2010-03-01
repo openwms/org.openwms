@@ -41,7 +41,7 @@ import org.springframework.orm.jpa.persistenceunit.MutablePersistenceUnitInfo;
  * @since 0.1
  * @see {@link org.springframework.orm.jpa.persistenceunit.PersistenceUnitManager}
  * @see {@link org.springframework.orm.jpa.persistenceunit.DefaultPersistenceUnitManager}
- * @version $Revision: 877 $
+ * @version $Revision$
  */
 public class CustomPersistenceUnitManager extends DefaultPersistenceUnitManager {
     List<URL> url = new ArrayList<URL>();

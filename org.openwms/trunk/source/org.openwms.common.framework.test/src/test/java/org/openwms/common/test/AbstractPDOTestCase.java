@@ -43,7 +43,7 @@ import org.slf4j.LoggerFactory;
  * 
  * @author <a href="mailto:openwms@googlemail.com">Heiko Scherrer</a>
  * @since 0.1
- * @version $Revision: 353 $
+ * @version $Revision$
  */
 @Deprecated
 public abstract class AbstractPDOTestCase {

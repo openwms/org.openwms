@@ -42,7 +42,7 @@ import org.springframework.transaction.annotation.Transactional;
  * @since 0.1
  * @see {@link org.springframework.test.context.junit4.SpringJUnit4ClassRunner}
  * @see {@link org.springframework.test.context.transaction.TransactionConfiguration}
- * @version $Revision: 314 $
+ * @version $Revision$
  */
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration("classpath*:/META-INF/spring/Test-Infrastructure-context.xml")
