@@ -87,7 +87,7 @@ public class UserPassword implements Serializable {
     /**
      * Constructor only for the persistence provider.
      */
-    protected UserPassword() {}
+    protected UserPassword() { }
 
     /**
      * Return the unique technical key.

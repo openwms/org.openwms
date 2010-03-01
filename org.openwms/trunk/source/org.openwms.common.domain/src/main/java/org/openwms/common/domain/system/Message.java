@@ -48,7 +48,7 @@ public class Message implements Serializable {
     private static final long serialVersionUID = 1L;
 
     /**
-     * Unique technical key,
+     * Unique technical key.
      */
     @Id
     @Column(name = "ID")
@@ -79,13 +79,15 @@ public class Message implements Serializable {
      * Accessed by persistence provider.
      */
     @SuppressWarnings("unused")
-    private Message() {}
+    private Message() { }
 
     /**
      * Create a new Message with message number and message text.
      * 
      * @param messageNo
+     *            The message number
      * @param messageText
+     *            The message text
      */
     public Message(int messageNo, String messageText) {
         this.messageNo = messageNo;
@@ -96,7 +98,7 @@ public class Message implements Serializable {
     /**
      * Return unique technical key.
      * 
-     * @return
+     * @return The unique technical key
      */
     public Long getId() {
         return id;
@@ -105,7 +107,7 @@ public class Message implements Serializable {
     /**
      * Return the message number.
      * 
-     * @return
+     * @return The message number
      */
     public int getMessageNo() {
         return messageNo;
@@ -124,7 +126,7 @@ public class Message implements Serializable {
     /**
      * Return the message text.
      * 
-     * @return
+     * @return The message text
      */
     public String getMessageText() {
         return messageText;
@@ -143,7 +145,7 @@ public class Message implements Serializable {
     /**
      * Return the date when this {@link Message} was created.
      * 
-     * @return
+     * @return The date of creation
      */
     public Date getCreated() {
         return created;

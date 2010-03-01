@@ -54,7 +54,7 @@ import javax.persistence.Version;
  */
 @Entity
 @Table(name = "LOCATION_GROUP")
-@NamedQueries( { @NamedQuery(name = "LocationGroup.findAll", query = "select lg from LocationGroup lg"),
+@NamedQueries({ @NamedQuery(name = "LocationGroup.findAll", query = "select lg from LocationGroup lg"),
         @NamedQuery(name = "LocationGroup.findByName", query = "select lg from LocationGroup lg where lg.name = ?1") })
 public class LocationGroup implements Serializable {
 
@@ -189,7 +189,7 @@ public class LocationGroup implements Serializable {
      * Accessed by persistence provider.
      */
     @SuppressWarnings("unused")
-    private LocationGroup() {}
+    private LocationGroup() { }
 
     /**
      * Create a new LocationGroup with an unique name.
