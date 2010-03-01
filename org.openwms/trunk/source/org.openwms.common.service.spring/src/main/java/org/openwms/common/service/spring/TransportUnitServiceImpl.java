@@ -39,7 +39,7 @@ import org.springframework.transaction.annotation.Transactional;
  * A TransportUnitServiceImpl.
  * 
  * @author <a href="mailto:openwms@googlemail.com">Heiko Scherrer</a>
- * @version $Revision: $
+ * @version $Revision$
  * 
  */
 @Service
