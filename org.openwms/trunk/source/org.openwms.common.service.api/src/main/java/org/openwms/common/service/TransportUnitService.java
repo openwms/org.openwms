@@ -35,7 +35,7 @@ import org.openwms.common.domain.values.Barcode;
  * </p>
  * 
  * @author <a href="mailto:openwms@googlemail.com">Heiko Scherrer</a>
- * @version $Revision: 877 $
+ * @version $Revision$
  * @since 0.1
  * @see org.openwms.common.service.EntityService
  */

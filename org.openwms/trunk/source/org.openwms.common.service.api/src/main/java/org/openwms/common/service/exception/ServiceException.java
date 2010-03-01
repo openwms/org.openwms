@@ -29,7 +29,7 @@ package org.openwms.common.service.exception;
  * </p>
  * 
  * @author <a href="mailto:openwms@googlemail.com">Heiko Scherrer</a>
- * @version $Revision: 877 $
+ * @version $Revision$
  * @since 0.1
  */
 @SuppressWarnings("serial")
