@@ -32,7 +32,7 @@ import org.springframework.transaction.annotation.Transactional;
  * An UserServiceImpl.
  * 
  * @author <a href="mailto:openwms@googlemail.com">Heiko Scherrer</a>
- * @version $Revision: 314 $
+ * @version $Revision$
  * @since 0.1
  */
 @Service
