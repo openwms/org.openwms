@@ -38,7 +38,7 @@ import org.slf4j.LoggerFactory;
  * </p>
  * 
  * @author <a href="mailto:openwms@googlemail.com">Heiko Scherrer</a>
- * @version $Revision: 353 $
+ * @version $Revision$
  * @since 0.1
  */
 @Deprecated
