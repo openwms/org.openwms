@@ -28,7 +28,7 @@ package org.openwms.common.integration.exception;
  * </p>
  * 
  * @author <a href="mailto:openwms@googlemail.com">Heiko Scherrer</a>
- * @version $Revision: 877 $
+ * @version $Revision$
  * @since 0.1
  */
 public class DataException extends RuntimeException {

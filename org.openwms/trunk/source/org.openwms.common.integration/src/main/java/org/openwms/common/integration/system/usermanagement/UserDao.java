@@ -31,7 +31,7 @@ import org.openwms.common.integration.GenericDao;
  * </p>
  * 
  * @author <a href="mailto:openwms@googlemail.com">Heiko Scherrer</a>
- * @version $Revision: 314 $
+ * @version $Revision$
  * @since 0.1
  * @see {@link org.openwms.common.integration.GenericDao}
  * @see {@link org.openwms.common.domain.system.usermanagement.User}
