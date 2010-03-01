@@ -43,7 +43,7 @@ import javax.persistence.Version;
  * @author <a href="mailto:openwms@googlemail.com">Heiko Scherrer</a>
  * @version $Revision$
  * @since 0.1
- * @see TransportUnit
+ * @see org.openwms.common.domain.TransportUnit
  */
 @Entity
 @Table(name = "TRANSPORT_UNIT_TYPE")
@@ -146,13 +146,13 @@ public class TransportUnitType implements Serializable {
      * Accessed by persistence provider.
      */
     @SuppressWarnings("unused")
-    private TransportUnitType() {}
+    private TransportUnitType() { }
 
     /**
      * Create a new {@link TransportUnitType}.
      * 
      * @param type
-     *            - Unique name
+     *            Unique name
      */
     public TransportUnitType(String type) {
         this.type = type;
@@ -161,7 +161,7 @@ public class TransportUnitType implements Serializable {
     /**
      * Returns the type of the {@link TransportUnit}.
      * 
-     * @return
+     * @return The type
      */
     public String getType() {
         return this.type;
@@ -171,6 +171,7 @@ public class TransportUnitType implements Serializable {
      * Set the type of the {@link TransportUnit}.
      * 
      * @param type
+     *            The type to set
      */
     public void setType(String type) {
         this.type = type;
@@ -179,7 +180,7 @@ public class TransportUnitType implements Serializable {
     /**
      * Returns the width of the {@link TransportUnit}.
      * 
-     * @return
+     * @return The width
      */
     public int getWidth() {
         return this.width;
@@ -189,6 +190,7 @@ public class TransportUnitType implements Serializable {
      * Set the width of the {@link TransportUnit}.
      * 
      * @param width
+     *            The width to set
      */
     public void setWidth(int width) {
         this.width = width;
@@ -197,7 +199,7 @@ public class TransportUnitType implements Serializable {
     /**
      * Returns the description of the {@link TransportUnit}.
      * 
-     * @return
+     * @return The description text
      */
     public String getDescription() {
         return this.description;
@@ -207,6 +209,7 @@ public class TransportUnitType implements Serializable {
      * Set the description for the {@link TransportUnit}.
      * 
      * @param description
+     *            The description to set
      */
     public void setDescription(String description) {
         this.description = description;
@@ -215,7 +218,7 @@ public class TransportUnitType implements Serializable {
     /**
      * Returns the height of this {@link TransportUnit}.
      * 
-     * @return
+     * @return The height
      */
     public int getHeight() {
         return this.height;
@@ -225,6 +228,7 @@ public class TransportUnitType implements Serializable {
      * Set the height of this {@link TransportUnit}.
      * 
      * @param height
+     *            The height to set
      */
     public void setHeight(int height) {
         this.height = height;
@@ -233,7 +237,7 @@ public class TransportUnitType implements Serializable {
     /**
      * Returns the payload of the {@link TransportUnit}.
      * 
-     * @return
+     * @return The payload
      */
     public BigDecimal getPayload() {
         return this.payload;
@@ -243,6 +247,7 @@ public class TransportUnitType implements Serializable {
      * Set the payload of the {@link TransportUnit}.
      * 
      * @param payload
+     *            The payload to set
      */
     public void setPayload(BigDecimal payload) {
         this.payload = payload;
@@ -251,7 +256,7 @@ public class TransportUnitType implements Serializable {
     /**
      * Get the compatibility of the {@link TransportUnit}.
      * 
-     * @return
+     * @return The compatibility
      */
     public String getCompatibility() {
         return this.compatibility;
@@ -261,6 +266,7 @@ public class TransportUnitType implements Serializable {
      * Set the compatibility of the {@link TransportUnit}.
      * 
      * @param compatibility
+     *            The compatibility to set
      */
     public void setCompatibility(String compatibility) {
         this.compatibility = compatibility;
@@ -269,7 +275,7 @@ public class TransportUnitType implements Serializable {
     /**
      * Get the length of the {@link TransportUnit}.
      * 
-     * @return
+     * @return The length
      */
     public int getLength() {
         return this.length;
@@ -279,6 +285,7 @@ public class TransportUnitType implements Serializable {
      * Set the length of the {@link TransportUnit}.
      * 
      * @param length
+     *            The length to set
      */
     public void setLength(int length) {
         this.length = length;
@@ -287,21 +294,31 @@ public class TransportUnitType implements Serializable {
     /**
      * Returns a Set of all {@link TransportUnit}s belonging to this type.
      * 
-     * @return
+     * @return A Set of all {@link TransportUnit}s belonging to this type
      */
     public Set<TransportUnit> getTransportUnits() {
         return this.transportUnits;
     }
 
     /**
-     * Assign a Set of {@link TransportUnit}s to this type.
+     * Assign a Set of {@link TransportUnit}s to this type. Already existing
+     * {@link TransportUnit}s will be removed.
      * 
      * @param transportUnits
+     *            a Set of {@link TransportUnit}s of this type.
      */
     public void setTransportUnits(Set<TransportUnit> transportUnits) {
         this.transportUnits = transportUnits;
     }
 
+    /**
+     * Add a rule to this {@link TransportUnitType}. A {@link TypePlacingRule}
+     * determines what {@link TransportUnitType}s can be placed on which
+     * locations.
+     * 
+     * @param typePlacingRule
+     *            The rule to set
+     */
     public void addTypePlacingRule(TypePlacingRule typePlacingRule) {
         if (typePlacingRule == null) {
             return;
@@ -313,39 +330,43 @@ public class TransportUnitType implements Serializable {
      * Returns all {@link TypePlacingRule}s belonging to this
      * {@link TransportUnitType}.
      * 
-     * @return
+     * @return A Set of all placing rules
      */
     public Set<TypePlacingRule> getTypePlacingRules() {
         return this.typePlacingRules;
     }
 
     /**
-     * Set all {@link TypePlacingRule}s belonging to this
-     * {@link TransportUnitType}.
+     * Assign a Set of all {@link TypePlacingRule}s belonging to this
+     * {@link TransportUnitType}. Already existing {@link TypePlacingRule}s will
+     * be removed.
      * 
      * @param typePlacingRules
+     *            The rules to set
      */
     public void setTypePlacingRules(Set<TypePlacingRule> typePlacingRules) {
         this.typePlacingRules = typePlacingRules;
     }
 
     /**
-     * Returns a Set of all {@link TypeStackingRule}s.<br>
-     * A {@link TypeStackingRule} describes which {@link TransportUnitType}
-     * could be placed on this {@link TransportUnitType}.
+     * Returns a Set of all {@link TypeStackingRule}s. A
+     * {@link TypeStackingRule} determines which {@link TransportUnitType}s can
+     * be placed on this {@link TransportUnitType}.
      * 
-     * @return
+     * @return A set of all stacking rules
      */
     public Set<TypeStackingRule> getTypeStackingRules() {
         return this.typeStackingRules;
     }
 
     /**
-     * Sets a Set of all {@link TypeStackingRule}s.<br>
-     * A {@link TypeStackingRule} describes which {@link TransportUnitType}
-     * could be placed on this {@link TransportUnitType}.
+     * Assign a Set of all {@link TypeStackingRule}s. A {@link TypeStackingRule}
+     * determines which {@link TransportUnitType}s can be placed on this
+     * {@link TransportUnitType}. Already existing {@link TypeStackingRule}s
+     * will be removed.
      * 
      * @param typeStackingRules
+     *            The rules to set
      */
     public void setTypeStackingRules(Set<TypeStackingRule> typeStackingRules) {
         this.typeStackingRules = typeStackingRules;

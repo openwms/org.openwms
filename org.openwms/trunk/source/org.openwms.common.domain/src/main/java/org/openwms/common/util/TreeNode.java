@@ -28,7 +28,7 @@ import java.util.Map;
  * A TreeNode.
  * 
  * @author <a href="mailto:openwms@googlemail.com">Heiko Scherrer</a>
- * @version $Revision: 877 $
+ * @version $Revision$
  * @since 0.1
  */
 public interface TreeNode<T> extends Serializable {

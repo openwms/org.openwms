@@ -28,7 +28,7 @@ import java.util.Map;
  * A TreeNodeImpl.
  * 
  * @author <a href="mailto:openwms@googlemail.com">Heiko Scherrer</a>
- * @version $Revision: 877 $
+ * @version $Revision$
  * @since 0.1
  */
 public class TreeNodeImpl<T> implements TreeNode<T> {
