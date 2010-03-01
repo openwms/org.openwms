@@ -132,6 +132,18 @@
         </plugins>
     </build>
     <dependencies>
+        <!-- Spring Framework -->
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>org.springframework.spring-library</artifactId>
+            <type>libd</type>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.security</groupId>
+            <artifactId>org.springframework.security.core</artifactId>
+        </dependency>
+    
         <!-- Project Core dependencies -->
         <dependency>
             <groupId>${project.groupId}</groupId>
