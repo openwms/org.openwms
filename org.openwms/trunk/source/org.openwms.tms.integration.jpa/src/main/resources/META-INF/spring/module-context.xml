@@ -22,23 +22,32 @@
  */  
 -->
 <beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xmlns:context="http://www.springframework.org/schema/context" xmlns:tx="http://www.springframework.org/schema/tx"
-	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
-		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-3.0.xsd
-		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.0.xsd">
+    xmlns:context="http://www.springframework.org/schema/context" xmlns:tx="http://www.springframework.org/schema/tx"
+    xmlns:osgix="http://www.springframework.org/schema/osgi-compendium"
+    xsi:schemaLocation="http://www.springframework.org/schema/osgi http://www.springframework.org/schema/osgi/spring-osgi-1.2.xsd
+        http://www.springframework.org/schema/osgi-compendium http://www.springframework.org/schema/osgi-compendium/spring-osgi-compendium-1.2.xsd
+        http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+        http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-3.0.xsd
+        http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.0.xsd">
 
-	<context:annotation-config />
-	<context:property-placeholder location="classpath:jdbc.properties" />
-	<context:component-scan base-package="org.openwms.common.domain" />
-	<context:load-time-weaver aspectj-weaving="on" />
+    <osgix:cm-properties id="global.properties" persistent-id="org.openwms.common.infrastructure.configuration-${openwms.configuration.version}" />
+    <context:property-placeholder properties-ref="global.properties" />
 
-	<tx:annotation-driven mode="aspectj" />
+    <context:annotation-config />
+    <context:component-scan base-package="org.openwms.tms.integration.jpa" />
+
+    <!-- Hibernate does not require a LTW
+    <context:load-time-weaver aspectj-weaving="on"/>-->
+
+    <!-- See ch. 10.2 -->
+    <tx:annotation-driven />
 
 	<!-- Entity Manager -->
 	<bean id="entityManagerFactory" class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
 		<property name="persistenceUnitName" value="${jdbc.persistenceUnit}" />
 		<property name="dataSource" ref="dataSource" />
 		<property name="jpaVendorAdapter" ref="jpaVendorAdapter" />
+        <property name="jpaProperties" value="${jdbc.properties}" />
 	</bean>
 
 <!-- 
@@ -62,33 +71,18 @@
 	<!-- Used for the exception translation -->
 	<bean class="org.springframework.dao.annotation.PersistenceExceptionTranslationPostProcessor" />
 
-	<bean id="oemiv" class="org.springframework.orm.jpa.support.OpenEntityManagerInViewInterceptor" autowire="byName">
-	</bean>
+	<bean id="oemiv" class="org.springframework.orm.jpa.support.OpenEntityManagerInViewInterceptor" autowire="byName" />
 
+	<bean id="locationDao" class="org.openwms.common.integration.jpa.LocationDaoImpl" />
 
-	<bean id="locationDao" class="org.openwms.common.integration.jpa.LocationDaoImpl">
-		<property name="entityManagerFactory" ref="entityManagerFactory" />
-	</bean>
+	<bean id="locationGroupDao" class="org.openwms.common.integration.jpa.LocationGroupDaoImpl" />
 
-	<bean id="locationGroupDao" class="org.openwms.common.integration.jpa.LocationGroupDaoImpl">
-		<property name="entityManagerFactory" ref="entityManagerFactory" />
-	</bean>
+	<bean id="transportUnitDao" class="org.openwms.common.integration.jpa.TransportUnitDaoImpl" />
 
-	<bean id="transportUnitDao" class="org.openwms.common.integration.jpa.TransportUnitDaoImpl">
-		<property name="entityManagerFactory" ref="entityManagerFactory" />
-	</bean>
+	<bean id="transportUnitTypeDao" class="org.openwms.common.integration.jpa.TransportUnitTypeDaoImpl" />
 
-	<bean id="transportUnitTypeDao" class="org.openwms.common.integration.jpa.TransportUnitTypeDaoImpl" depends-on="starter">
-		<property name="entityManagerFactory" ref="entityManagerFactory" />
-	</bean>
+	<bean id="transportOrderDao" class="org.openwms.tms.integration.jpa.TransportOrderDaoImpl" />
 
-	<bean id="transportOrderDao" class="org.openwms.common.integration.jpa.TransportOrderDaoImpl">
-		<property name="entityManagerFactory" ref="entityManagerFactory" />
-	</bean>
-
-	<bean id="starter" class="org.openwms.common.integration.jpa.Starter"></bean>
-
-	<bean id="userDao" class="org.openwms.common.integration.jpa.UserDaoImpl">
-		<property name="entityManagerFactory" ref="entityManagerFactory" />
-	</bean>
+	<bean id="userDao" class="org.openwms.common.integration.jpa.UserDaoImpl" />
+	
 </beans>
