@@ -50,7 +50,7 @@ import javax.persistence.Version;
  * @author <a href="mailto:openwms@googlemail.com">Heiko Scherrer</a>
  * @version $Revision$
  * @since 0.1
- * @see {@link org.openwms.common.domain.Location}
+ * @see org.openwms.common.domain.Location
  */
 @Entity
 @Table(name = "LOCATION_GROUP")

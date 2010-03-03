@@ -59,11 +59,11 @@ import org.openwms.common.domain.system.Message;
  * @author <a href="mailto:openwms@googlemail.com">Heiko Scherrer</a>
  * @version $Revision$
  * @since 0.1
- * @see {@link org.openwms.common.domain.LocationGroup}
+ * @see org.openwms.common.domain.LocationGroup
  */
 @Entity
 @Table(name = "LOCATION", uniqueConstraints = @UniqueConstraint(columnNames = { "AREA", "AISLE", "X", "Y", "Z" }))
-@NamedQueries({
+@NamedQueries( {
         @NamedQuery(name = Location.NQ_FIND_ALL, query = "select l from Location l"),
         @NamedQuery(name = Location.NQ_FIND_BY_UNIQUE_QUERY, query = "select l from Location l where l.locationId = ?1"),
         @NamedQuery(name = Location.NQ_FIND_ALL_EAGER, query = "select l from Location l left join fetch l.messages left join fetch l.locationType") })
@@ -235,7 +235,7 @@ public class Location implements Serializable {
      * Accessed by persistence provider.
      */
     @SuppressWarnings("unused")
-    private Location() { }
+    private Location() {}
 
     /**
      * Create a new {@link Location}.
