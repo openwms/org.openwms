@@ -1,0 +1,171 @@
+/*
+ * openwms.org, the Open Warehouse Management System.
+ *
+ * This file is part of openwms.org.
+ *
+ * openwms.org is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as 
+ * published by the Free Software Foundation, either version 3 of the
+ * License, or (at your option) any later version.
+ *
+ * openwms.org is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with this software. If not, write to the Free
+ * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
+ * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
+ */
+
+/* Javadoc style sheet */
+
+/* Define colors, fonts and other style attributes here to override the defaults  */
+
+/* Page background color */
+body
+{
+ font: 12px Tahoma, Helvetica, sans-serif;
+ line-height: 1.3em;
+ background-color: #FFFFFF;
+ color: #333;
+}
+
+font
+{
+ font-family:inherit !important;
+ font-size:inherit !important;
+ font-size-adjust:inherit !important;
+ font-style:inherit !important;
+ font-variant:inherit !important;
+ font-weight:inherit !important;
+ line-height:inherit !important;
+}
+
+a:link, a:visited
+{
+ color: #47a;
+ text-decoration:none; 
+}
+
+a:active, a:hover, #leftcol a:active, #leftcol a:hover
+{
+ color: red !important;
+ text-decoration: underline;
+}
+
+a:link.selfref, a:visited.selfref {
+ color: #555 !important;
+ }
+
+.a td {
+ background: #ddd;
+ color: #000;
+ }
+
+/* Table colors */
+table
+{
+ border:none;
+}
+
+td
+{
+ border: none;
+ border-bottom: 1px dotted #B0CAEF;
+}
+
+th
+{
+ border: none;
+}
+
+
+.TableHeadingColor th
+{ 
+ background: #FFFFFF;
+ background-image: url(../breadcrumbs.jpg);
+ background-repeat: repeat-x;
+ font-size:14px;
+ height:32px;
+ color:#ffff1b
+} /* Dark blue */
+.TableSubHeadingColor 
+{ 
+ background: #f7ffee;
+ color:#fff
+} /* Dark grey */
+
+.TableRowColor {
+ border-bottom: none;
+ color: #666;
+ font-weight: normal;
+ background: #efefef
+} /* White */
+
+tr.TableRowColor:hover
+{
+ background:#fbfaa8;
+}
+
+/* Font used in left-hand frame lists */
+.FrameTitleFont
+{
+ font-size: medium;
+ font-family: normal;
+ color:#000000
+}
+
+.FrameHeadingFont
+{ font-size: medium;
+font-family: normal;
+color:#000000
+}
+
+.FrameItemFont
+{ font-size: medium;
+font-family: normal;
+color:#000000
+}
+
+/* Example of smaller, sans-serif font in frames */
+/* .FrameItemFont  { font-size: 10pt; font-family: Helvetica, Arial, sans-serif } */
+
+/* Navigation bar fonts and colors */
+.NavBarCell1
+{ 
+ background-color:#C6D9F9;
+}/* Light mauve */
+
+.NavBarCell1Rev
+{
+background-color:#888;
+}/* Dark Blue */
+
+.NavBarFont1
+{
+ color:#666666;
+ text-decoration:underline;
+}
+
+.NavBarFont1.a
+{
+ background: #ddd;
+ color: #000;
+}
+
+.NavBarFont1Rev
+{
+color:#FEB;
+}
+
+.NavBarCell2
+{
+background-color:#FFFFFF;
+}
+
+.NavBarCell3
+{
+background-color:#FFFFFF;
+}
