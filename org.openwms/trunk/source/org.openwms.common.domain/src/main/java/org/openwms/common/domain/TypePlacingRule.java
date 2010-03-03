@@ -42,7 +42,7 @@ import javax.persistence.UniqueConstraint;
  * @author <a href="mailto:openwms@googlemail.com">Heiko Scherrer</a>
  * @version $Revision$
  * @since 0.1
- * @see TransportUnitType
+ * @see org.openwms.common.domain.TransportUnitType
  */
 @Entity
 @Table(name = "TYPE_PLACING_RULE", uniqueConstraints = @UniqueConstraint(columnNames = { "TRANSPORT_UNIT_TYPE",
@@ -96,7 +96,7 @@ public class TypePlacingRule implements Serializable {
      * Create a new {@link TypePlacingRule}.
      */
     @SuppressWarnings("unused")
-    private TypePlacingRule() { }
+    private TypePlacingRule() {}
 
     /**
      * Create new {@link TypePlacingRule} with privilegeLevel and

@@ -32,7 +32,7 @@ import javax.persistence.Embeddable;
  * @author <a href="mailto:openwms@googlemail.com">Heiko Scherrer</a>
  * @version $Revision$
  * @since 0.1
- * @see {@link org.openwms.common.domain.Location}
+ * @see org.openwms.common.domain.Location
  */
 @Embeddable
 public class LocationPK implements Serializable {
@@ -98,7 +98,7 @@ public class LocationPK implements Serializable {
     /**
      * Get the area region.
      * 
-     * @return - area
+     * @return The area
      */
     public String getArea() {
         return this.area;
@@ -107,7 +107,7 @@ public class LocationPK implements Serializable {
     /**
      * Get the aisle region.
      * 
-     * @return - aisle
+     * @return The aisle
      */
     public String getAisle() {
         return this.aisle;
@@ -116,7 +116,7 @@ public class LocationPK implements Serializable {
     /**
      * Get the x dimension.
      * 
-     * @return - x
+     * @return The x dimension
      */
     public String getX() {
         return this.x;
@@ -125,7 +125,7 @@ public class LocationPK implements Serializable {
     /**
      * Get the y dimension.
      * 
-     * @return - y
+     * @return The y dimension
      */
     public String getY() {
         return this.y;
@@ -134,7 +134,7 @@ public class LocationPK implements Serializable {
     /**
      * Get the z dimension.
      * 
-     * @return - z
+     * @return The z dimension
      */
     public String getZ() {
         return this.z;

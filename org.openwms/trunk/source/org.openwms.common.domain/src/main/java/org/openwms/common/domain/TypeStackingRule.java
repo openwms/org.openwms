@@ -41,7 +41,7 @@ import javax.persistence.UniqueConstraint;
  * @author <a href="mailto:openwms@googlemail.com">Heiko Scherrer</a>
  * @version $Revision$
  * @since 0.1
- * @see TransportUnitType
+ * @see org.openwms.common.domain.TransportUnitType
  */
 @Entity
 @Table(name = "TYPE_STACKING_RULE", uniqueConstraints = @UniqueConstraint(columnNames = { "TRANSPORT_UNIT_TYPE",
@@ -85,7 +85,7 @@ public class TypeStackingRule implements Serializable {
      * Create a new {@link TypeStackingRule}.
      */
     @SuppressWarnings("unused")
-    private TypeStackingRule() { }
+    private TypeStackingRule() {}
 
     /**
      * Create a new {@link TypeStackingRule}. Define how many

@@ -41,7 +41,7 @@ import javax.persistence.Version;
  * @author <a href="mailto:openwms@googlemail.com">Heiko Scherrer</a>
  * @version $Revision$
  * @since 0.1
- * @see {@link org.openwms.common.domain.Location}
+ * @see org.openwms.common.domain.Location
  */
 @Entity
 @Table(name = "LOCATION_TYPE")
@@ -103,7 +103,7 @@ public class LocationType implements Serializable {
      * Accessed by persistence provider.
      */
     @SuppressWarnings("unused")
-    private LocationType() { }
+    private LocationType() {}
 
     /**
      * Create a new {@link LocationType} with a unique natural key.
