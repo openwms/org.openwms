@@ -32,7 +32,7 @@ import java.io.Serializable;
  * @author <a href="mailto:openwms@googlemail.com">Heiko Scherrer</a>
  * @version $Revision$
  * @since 0.1
- * @see {@link rg.openwms.common.integration.exception.DataException}
+ * @see org.openwms.common.integration.exception.DataException
  */
 public class DataNotFoundException extends DataException {
 
