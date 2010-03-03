@@ -32,8 +32,8 @@ import org.openwms.common.domain.TransportUnit;
  * @author <a href="mailto:openwms@googlemail.com">Heiko Scherrer</a>
  * @version $Revision$
  * @since 0.1
- * @see {@link org.openwms.common.integration}
- * @see {@link org.openwms.common.domain.TransportUnit}
+ * @see org.openwms.common.integration
+ * @see org.openwms.common.domain.TransportUnit
  */
 public interface TransportUnitDao extends GenericDao<TransportUnit, Long> {
 

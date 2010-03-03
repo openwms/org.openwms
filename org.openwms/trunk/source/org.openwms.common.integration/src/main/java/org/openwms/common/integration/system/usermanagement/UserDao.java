@@ -33,8 +33,8 @@ import org.openwms.common.integration.GenericDao;
  * @author <a href="mailto:openwms@googlemail.com">Heiko Scherrer</a>
  * @version $Revision$
  * @since 0.1
- * @see {@link org.openwms.common.integration.GenericDao}
- * @see {@link org.openwms.common.domain.system.usermanagement.User}
+ * @see org.openwms.common.integration.GenericDao
+ * @see org.openwms.common.domain.system.usermanagement.User
  */
 public interface UserDao extends GenericDao<User, Long> {
 
