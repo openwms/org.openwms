@@ -188,10 +188,29 @@
             </modules>
         </profile>
         <profile>
-            <id>a</id>
+            <id>domain</id>
             <modules>
                 <module>org.openwms.common.domain</module>
             </modules>
+        </profile>
+        <profile>
+            <id>release</id>
+            <build>
+    	        <plugins>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-javadoc-plugin</artifactId>
+                        <executions>
+                            <execution>
+                                <id>attach-javadocs</id>
+                                <goals>
+                                    <goal>jar</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                    </plugin>
+	            </plugins>
+            </build>
         </profile>
         <profile>
             <id>public-repo</id>
@@ -220,7 +239,7 @@
         <jdkVersion>1.6</jdkVersion>
         <spring.version>3.0.0.RELEASE</spring.version>
         <hibernate.version>3.2.6.GA</hibernate.version>
-        <granite.version>2.0.0.GA</granite.version>
+        <granite.version>2.1.0.GA</granite.version>
         <maven.compile.targetLevel>${jdkVersion}</maven.compile.targetLevel>
         <maven.compile.sourceLevel>${jdkVersion}</maven.compile.sourceLevel>
     </properties>
@@ -486,14 +505,25 @@
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-javadoc-plugin</artifactId>
                 <version>2.6.1</version>
-                <configuration>
-                    <linksource>true</linksource>
-                    <links>
-                        <link>http://java.sun.com/j2se/${project.jdkVersion}.0/docs/api/</link>
-                    </links>
-                    <aggregate>true</aggregate>
-                    <excludePackageNames>java.org.openwms.web.flex.servlet</excludePackageNames>
-                </configuration>
+                <reportSets>
+                    <reportSet>
+                        <reports>
+                            <report>aggregate</report>
+                        </reports>
+                        <configuration>
+                            <linksource>true</linksource>
+                            <links>
+                                <link>http://java.sun.com/j2se/${jdkVersion}.0/docs/api/</link>
+                            </links>
+                            <detectLinks/>
+                            <overview>${basedir}/overview.html</overview>
+                            <source>${project.build.sourceCompilerLevel}</source>
+                            <verbose>true</verbose>
+                            <stylesheetfile>src/site/css/openwms-jdoc.css</stylesheetfile>
+                            <excludePackageNames>org.openwms.web.flex.servlet</excludePackageNames>
+                        </configuration>
+                    </reportSet>
+                </reportSets>
             </plugin>
 
             <plugin>
@@ -557,7 +587,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-checkstyle-plugin</artifactId>
-                <version>2.5</version>
+                <version>2.4</version>
                 <configuration>
                     <xrefLocation>${project.reporting.outputDirectory}/../xref</xrefLocation>
                     <enableRulesSummary>false</enableRulesSummary>
@@ -679,6 +709,11 @@
                 <artifactId>org.springframework.osgi-library</artifactId>
                 <type>libd</type>
                 <version>1.1.2.B</version>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework.security</groupId>
+                <artifactId>org.springframework.security.core</artifactId>
+                <version>${spring.version}</version>
             </dependency>
             <dependency>
                 <groupId>org.springframework</groupId>
@@ -923,17 +958,17 @@
         <dependency>
             <groupId>org.slf4j</groupId>
             <artifactId>com.springsource.slf4j.log4j</artifactId>
-            <scope>runtime</scope>
+            <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>org.slf4j</groupId>
             <artifactId>com.springsource.slf4j.org.apache.commons.logging</artifactId>
-            <scope>runtime</scope>
+            <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>org.apache.log4j</groupId>
             <artifactId>com.springsource.org.apache.log4j</artifactId>
-            <scope>runtime</scope>
+            <scope>provided</scope>
         </dependency>
     </dependencies>
 
