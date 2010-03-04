@@ -1,19 +1,33 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
 /*
- * OpenWMS, the Open Warehouse Management System
- * 
- * Distributable under LGPL license.
- * See terms of license at gnu.org.
- */
+ * openwms.org, the Open Warehouse Management System.
+ *
+ * This file is part of openwms.org.
+ *
+ * openwms.org is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as 
+ * published by the Free Software Foundation, either version 3 of the
+ * License, or (at your option) any later version.
+ *
+ * openwms.org is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with this software. If not, write to the Free
+ * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
+ * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
+ */  
 -->
 <project xmlns="http://maven.apache.org/DECORATION/1.0.0"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:schemaLocation="http://maven.apache.org/DECORATION/1.0.0 http://maven.apache.org/xsd/decoration-1.0.0.xsd">
     
     <poweredBy>
-        <logo name="OSGi" href="http://www.osgi.org" img="images/osgi.jpg"/>
-        <logo name="Spring" href="http://www.springframework.org" img="images/spring.png"/>
+        <logo name="OSGi" href="http://www.osgi.org" img="http://openwms2005.sourceforge.net/openwms/images/osgi.jpg"/>
+        <logo name="Spring" href="http://www.springframework.org" img="http://openwms2005.sourceforge.net/openwms/images/spring.png"/>
     </poweredBy>
     
     <skin>
@@ -31,8 +45,8 @@
             <item name="Maven 2" href="http://maven.apache.org/" />
         </links>
 
-        <menu name="OpenWMS" inherit="top">
-            <item name="Home" href="../../index.html" />
+        <menu name="OpenWMS" inherit="top" ref="parent">
+            <!--<item name="Home" href="../../index.html" />-->
         </menu>
 
         <menu name="User" inherit="top">

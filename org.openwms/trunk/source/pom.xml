@@ -151,7 +151,7 @@
 
     <profiles>
         <profile>
-            <id>private-repo</id>
+            <id>private</id>
             <properties>
                 <!-- Web Site deployment -->
                 <distribution.serverId>router</distribution.serverId>
@@ -190,7 +190,7 @@
         <profile>
             <id>domain</id>
             <modules>
-                <module>org.openwms.common.domain</module>
+                <module>org.openwms.common.integration</module>
             </modules>
         </profile>
         <profile>
@@ -213,14 +213,14 @@
             </build>
         </profile>
         <profile>
-            <id>public-repo</id>
+            <id>public</id>
             <activation>
                 <activeByDefault>true</activeByDefault>
             </activation>
             <properties>
                 <!-- Web Site deployment -->
                 <distribution.serverId>repo.sourceforge.net</distribution.serverId>
-                <distribution.serverProtocol>scp://</distribution.serverProtocol>
+                <distribution.serverProtocol>scp</distribution.serverProtocol>
                 <distribution.serverUrl.rootPath>shell.sourceforge.net/home/groups/o/op/openwms2005/htdocs/openwms</distribution.serverUrl.rootPath>
                 <distribution.serverUrl.sourcePath>${distribution.serverUrl.rootPath}/development/reference/${project.version}</distribution.serverUrl.sourcePath>
                 <distribution.serverUrl.docsPath>${distribution.serverUrl.rootPath}/docs</distribution.serverUrl.docsPath>
@@ -535,6 +535,8 @@
                     <linkJavadoc>true</linkJavadoc>
                     <aggregate>true</aggregate>
                     <javadocDir>${project.name}/apidocs</javadocDir>
+                    <stylesheet>${basedir}/src/site/css/openwms-jdoc.css</stylesheet>
+                    <windowTitle>OpenWMS Sources</windowTitle>
                 </configuration>
             </plugin>
 
@@ -645,7 +647,7 @@
                 <configuration>
                     <xrefLocation>${project.reporting.outputDirectory}/../xref</xrefLocation>
                     <effort>Max</effort>
-                    <threshold>Low</threshold>
+                    <threshold>High</threshold>
                     <failOnError>false</failOnError>
                     <findbugsXmlOutput>true</findbugsXmlOutput>
                     <findbugsXmlOutputDirectory>target/site</findbugsXmlOutputDirectory>
@@ -662,18 +664,24 @@
                     <reportSet>
                         <inherited>true</inherited>
                         <reports>
+                            <report>index</report>
                             <report>scm</report>
                             <report>plugin-management</report>
                             <report>plugins</report>
                             <report>summary</report>
-                        </reports>
-                    </reportSet>
-                    <reportSet>
-                        <inherited>true</inherited>
-                        <reports>
                             <report>dependencies</report>
                             <report>dependency-convergence</report>
                             <report>dependency-management</report>
+                        </reports>
+                    </reportSet>
+                    <reportSet>
+                        <inherited>false</inherited>
+                        <reports>
+                            <report>project-team</report>
+                            <report>issue-tracking</report>
+                            <report>license</report>
+                            <report>mailing-list</report>
+                            <report>cim</report>
                         </reports>
                     </reportSet>
                 </reportSets>

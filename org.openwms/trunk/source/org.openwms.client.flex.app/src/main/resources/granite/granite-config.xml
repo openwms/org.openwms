@@ -37,8 +37,8 @@
             <include annotated-with="javax.persistence.Embeddable"/>
         </externalizer>
     </externalizers>
-<!-- 
+    
     <security type="org.granite.messaging.service.security.SpringSecurityService"/>
- -->
+    
 </granite-config>
 

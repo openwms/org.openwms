@@ -34,7 +34,7 @@ package org.openwms.web.flex.client.command
      * A AddUserCommand.
      *
      * @author <a href="mailto:openwms@googlemail.com">Heiko Scherrer</a>
-     * @version $Revision: 235 $
+     * @version $Revision$
      */
     public class AddUserCommand implements ICommand, IResponder
     {

@@ -79,7 +79,7 @@
                         </goals>
                         <configuration>
                             <outputDirectory>${project.build.directory}/usr</outputDirectory>
-                            <overWriteIfNewer>true</overWriteIfNewer>
+                            <overWriteIfNewer>true</overWriteIfNewer><includeGroupIds></includeGroupIds>
                             <excludeGroupIds>javax.transaction,javax.persistence,org.junit,org.slf4j,org.springframework,com.springsource.dmserver,org.apache.log4j</excludeGroupIds>
                         </configuration>
                     </execution>
@@ -141,7 +141,25 @@
         </dependency>
         <dependency>
             <groupId>org.springframework.security</groupId>
+            <artifactId>org.springframework.security.web</artifactId>
+            <version>${spring.version}</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.security</groupId>
             <artifactId>org.springframework.security.core</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.security</groupId>
+            <artifactId>org.springframework.security.taglibs</artifactId>
+            <version>3.0.0.RELEASE</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.security</groupId>
+            <artifactId>org.springframework.security.config</artifactId>
+            <version>3.0.0.RELEASE</version>
+            <scope>provided</scope>
         </dependency>
     
         <!-- Project Core dependencies -->

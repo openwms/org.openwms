@@ -20,7 +20,6 @@
  */
 package org.openwms.common.service;
 
-import java.io.Serializable;
 import java.util.List;
 
 import org.openwms.common.domain.Location;
@@ -37,13 +36,13 @@ import org.openwms.common.domain.Location;
  * @since 0.1
  * @see EntityService
  */
-public interface LocationService<T extends Serializable> extends EntityService<T> {
+public interface LocationService extends EntityService<Location> {
 
     /**
      * Return a {@link java.util.List} of all {@link Location}s not sorted and
      * not filtered.
      * 
-     * @return - All {@link Location}s as a list
+     * @return All {@link Location}s as a list
      */
     List<Location> getAllLocations();
 

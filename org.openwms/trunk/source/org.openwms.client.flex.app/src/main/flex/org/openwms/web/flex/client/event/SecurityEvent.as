@@ -26,7 +26,7 @@ package org.openwms.web.flex.client.event.SecurityEvent
      * A SecurityEvent.
      *
      * @author <a href="mailto:openwms@googlemail.com">Heiko Scherrer</a>
-     * @version $Revision: 235 $
+     * @version $Revision$
      */
     public class SecurityEvent extends Event
     {
