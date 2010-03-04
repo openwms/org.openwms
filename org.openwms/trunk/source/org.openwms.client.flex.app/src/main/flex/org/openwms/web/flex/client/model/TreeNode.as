@@ -29,7 +29,7 @@ package org.openwms.web.flex.client.model
      * A TreeNode.
      *
      * @author <a href="mailto:openwms@googlemail.com">Heiko Scherrer</a>
-     * @version $Revision: 235 $
+     * @version $Revision$
      */
     public class TreeNode
     {

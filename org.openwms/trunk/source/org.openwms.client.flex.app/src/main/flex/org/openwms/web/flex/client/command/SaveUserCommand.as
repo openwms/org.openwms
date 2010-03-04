@@ -36,7 +36,7 @@ package org.openwms.web.flex.client.command
      * A SaveUserCommand.
      *
      * @author <a href="mailto:openwms@googlemail.com">Heiko Scherrer</a>
-     * @version $Revision: 235 $
+     * @version $Revision$
      */
     public class SaveUserCommand implements ICommand, IResponder
     {

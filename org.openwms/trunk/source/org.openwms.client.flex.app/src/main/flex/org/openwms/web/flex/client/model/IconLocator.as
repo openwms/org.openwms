@@ -27,7 +27,7 @@ package org.openwms.web.flex.client.model
      * An IconLocator.
      *
      * @author <a href="mailto:openwms@googlemail.com">Heiko Scherrer</a>
-     * @version $Revision: 235 $
+     * @version $Revision$
      */
     [Bindable]
     public class IconLocator implements IModelLocator

@@ -20,8 +20,6 @@
  */
 package org.openwms.common.service.management;
 
-import java.io.Serializable;
-
 import org.openwms.common.domain.system.usermanagement.User;
 import org.openwms.common.service.EntityService;
 
@@ -32,12 +30,14 @@ import org.openwms.common.service.EntityService;
  * regarding the general handling with {@link User}s.
  * </p>
  * 
+ * @param <T>
+ *            A type of User
  * @author <a href="mailto:openwms@googlemail.com">Heiko Scherrer</a>
  * @version $Revision$
  * @since 0.1
  * @see EntityService
  */
-public interface UserService<T extends Serializable> extends EntityService<T> {
+public interface UserService<T extends User> extends EntityService<T> {
 
     /**
      * Call this method to store an image of an {@link User}.

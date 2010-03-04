@@ -36,6 +36,7 @@ import java.util.List;
  * Facade and access multiple data providers as well other services.
  * </p>
  * 
+ * @param <T>
  * @author <a href="mailto:openwms@googlemail.com">Heiko Scherrer</a>
  * @version $Revision$
  * @since 0.1
@@ -45,47 +46,52 @@ public interface EntityService<T extends Serializable> {
     /**
      * Find all Entity classes of type clazz.
      * 
+     * @param <T>
      * @param clazz
-     *            - Class of the Entity to find
-     * @return - A {@link java.util.List} of all found Entities
+     *            Class of the Entity to find
+     * @return A {@link java.util.List} of all found Entities
      */
     List<T> findAll(Class<T> clazz);
 
     /**
      * Save an Entity of type T.
      * 
+     * @param <T>
      * @param clazz
-     *            - Class of the Entity to be saved
+     *            Class of the Entity to be saved
      * @param entity
-     *            - Entity instance to be saved
-     * @return - The saved Entity instance
+     *            Entity instance to be saved
+     * @return The saved Entity instance
      */
     T save(Class<T> clazz, T entity);
 
     /**
      * Find all Entities of type T.
      * 
-     * @return
+     * @param <T>
+     * @return A {@link java.util.List} of all found Entities
      */
     // TODO [scherrer] : To be removed
     @Deprecated
-    public List<T> findAll();
+    List<T> findAll();
 
     /**
      * Removes a persistent Entity.
      * 
+     * @param <T>
      * @param clazz
-     *            - Class of the Entity to be removed
+     *            Class of the Entity to be removed
      * @param entity
-     *            - Entity instance to be removed
+     *            Entity instance to be removed
      */
     void remove(Class<T> clazz, T entity);
 
     /**
      * Add a new entity to the persistent storage.
      * 
+     * @param <T>
      * @param newEntity
-     *            - Transient Entity instance to persist
+     *            Transient Entity instance to persist
      */
     void addEntity(T newEntity);
 }

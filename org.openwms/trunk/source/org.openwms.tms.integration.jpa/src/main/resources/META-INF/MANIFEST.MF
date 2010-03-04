@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Export-Package: org.openwms.tms.integration.jpa;version="0.0.1.SNAPSHO
  T";uses:="javax.annotation,javax.persistence,org.openwms.common.domai
  n,org.openwms.common.integration.jpa,org.openwms.tms.integration,org.
- springframework.orm.jpa",spring;version="0.0.1.SNAPSHOT"
+ springframework.orm.jpa"
 Import-Bundle: com.springsource.javax.persistence;version="[1.0.0,1.0.
  0]",com.springsource.org.eclipse.persistence.jpa;version="[1.0.0,1.0.
  0]"
@@ -14,14 +14,18 @@ Import-Library: org.springframework.spring;version="[3.0,3.1)"
 Bundle-ManifestVersion: 2
 Bundle-SymbolicName: org.openwms.common.integration.jpa
 Import-Package: javax.annotation,javax.persistence;version="[1.0.0, 1.
- 0.0]",org.aspectj.asm;version="0.0.0",org.aspectj.lang;version="0.0.0
- ",org.aspectj.runtime;version="0.0.0",org.aspectj.runtime.reflect;ver
- sion="0.0.0",org.openwms.common.domain;version="[0.0.1.SNAPSHOT, 0.0.
- 1.SNAPSHOT]",org.openwms.common.integration.jpa;version="[0.0.1.SNAPS
- HOT, 0.0.1.SNAPSHOT]",org.openwms.tms.domain.order;version="[0.0.1.SN
- APSHOT, 0.0.1.SNAPSHOT]",org.openwms.tms.integration,org.slf4j,org.sp
- ringframework.context.weaving;version="[3.0, 3.1)",org.springframewor
- k.dao.annotation,org.springframework.dao.support;version="[3.0, 3.1)"
- ,org.springframework.orm.jpa,org.springframework.orm.jpa.support,org.
- springframework.transaction.aspectj;version="[3.0, 3.1)"
+ 0.0]",javax.sql;version="0",org.aspectj.asm;version="0.0.0",org.aspec
+ tj.lang;version="0.0.0",org.aspectj.runtime;version="0.0.0",org.aspec
+ tj.runtime.reflect;version="0.0.0",org.openwms.common.domain;version=
+ "[0.0.1.SNAPSHOT, 0.0.1.SNAPSHOT]",org.openwms.common.integration;ver
+ sion="[0.0.1.SNAPSHOT, 0.0.1.SNAPSHOT]",org.openwms.common.integratio
+ n.jpa;version="[0.0.1.SNAPSHOT, 0.0.1.SNAPSHOT]",org.openwms.common.i
+ ntegration.system.usermanagement;version="[0.0.1.SNAPSHOT, 0.0.1.SNAP
+ SHOT]",org.openwms.tms.domain.order;version="[0.0.1.SNAPSHOT, 0.0.1.S
+ NAPSHOT]",org.openwms.tms.integration,org.slf4j,org.springframework.c
+ ontext.weaving;version="[3.0, 3.1)",org.springframework.dao.annotatio
+ n,org.springframework.dao.support;version="[3.0, 3.1)",org.springfram
+ ework.orm.jpa,org.springframework.orm.jpa.support,org.springframework
+ .transaction,org.springframework.transaction.aspectj;version="[3.0, 3
+ .1)"
 

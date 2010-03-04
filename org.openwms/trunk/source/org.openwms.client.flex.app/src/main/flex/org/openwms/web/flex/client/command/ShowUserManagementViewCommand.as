@@ -35,7 +35,7 @@ package org.openwms.web.flex.client.command
      * A ShowUserManagementViewCommand.
      *
      * @author <a href="mailto:openwms@googlemail.com">Heiko Scherrer</a>
-     * @version $Revision: 235 $
+     * @version $Revision$
      */
     public class ShowUserManagementViewCommand implements ICommand, IResponder
     {

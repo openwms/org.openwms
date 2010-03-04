@@ -29,7 +29,7 @@ package org.openwms.web.flex.client.business
      * A LocationDelegate.
      *
      * @author <a href="mailto:openwms@googlemail.com">Heiko Scherrer</a>
-     * @version $Revision: 235 $
+     * @version $Revision$
      */
     public class LocationDelegate
     {

@@ -28,7 +28,7 @@ package org.openwms.web.flex.client.helper
      * An UserHelper.
      *
      * @author <a href="mailto:openwms@googlemail.com">Heiko Scherrer</a>
-     * @version $Revision: 235 $
+     * @version $Revision$
      */
     public final class UserHelper
     {

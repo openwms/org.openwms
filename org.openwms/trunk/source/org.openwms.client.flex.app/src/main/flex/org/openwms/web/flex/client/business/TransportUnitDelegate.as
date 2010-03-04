@@ -30,7 +30,7 @@ package org.openwms.web.flex.client.business
      * A TransportUnitDelegate.
      *
      * @author <a href="mailto:openwms@googlemail.com">Heiko Scherrer</a>
-     * @version $Revision: 235 $
+     * @version $Revision$
      */
     public class TransportUnitDelegate
     {

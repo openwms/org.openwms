@@ -26,7 +26,7 @@ package org.openwms.web.flex.client.event
      * A LocationEvent.
      *
      * @author <a href="mailto:openwms@googlemail.com">Heiko Scherrer</a>
-     * @version $Revision: 235 $
+     * @version $Revision$
      */
     public class LocationEvent extends CairngormEvent
     {

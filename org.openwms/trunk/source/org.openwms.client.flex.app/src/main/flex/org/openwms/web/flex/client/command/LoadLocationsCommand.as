@@ -33,7 +33,7 @@ package org.openwms.web.flex.client.command
      * A LoadLocationsCommand.
      *
      * @author <a href="mailto:openwms@googlemail.com">Heiko Scherrer</a>
-     * @version $Revision: 235 $
+     * @version $Revision$
      */
     public class LoadLocationsCommand implements IResponder, ICommand
     {
