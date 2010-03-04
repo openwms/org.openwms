@@ -31,7 +31,7 @@ import javax.persistence.Table;
 import javax.persistence.Version;
 
 /**
- * A LocationType.
+ * A LocationType. Defines a type for {@link Location}s.
  * <p>
  * Type of a {@link org.openwms.common.domain.Location}.<br>
  * Used to describe {@link org.openwms.common.domain.Location}s that have same
@@ -50,7 +50,8 @@ public class LocationType implements Serializable {
     private static final long serialVersionUID = 1L;
 
     /**
-     * Default value of the description.
+     * Default value of the description, by default
+     * {@value #DEF_TYPE_DESCRIPTION}.
      */
     public static final String DEF_TYPE_DESCRIPTION = "--";
 
@@ -119,7 +120,7 @@ public class LocationType implements Serializable {
     /**
      * Get the unique identifier of this {@link LocationType}.
      * 
-     * @return - type
+     * @return type
      */
     public String getType() {
         return this.type;
@@ -128,7 +129,7 @@ public class LocationType implements Serializable {
     /**
      * Get the length of this {@link LocationType}.
      * 
-     * @return - length
+     * @return length
      */
     public int getLength() {
         return this.length;
@@ -138,7 +139,7 @@ public class LocationType implements Serializable {
      * Set the length of this {@link LocationType}.
      * 
      * @param length
-     *            The length of this type
+     *            - The length of this type
      */
     public void setLength(int length) {
         this.length = length;
@@ -147,7 +148,7 @@ public class LocationType implements Serializable {
     /**
      * Get the width of this {@link LocationType}.
      * 
-     * @return - width
+     * @return width
      */
     public int getWidth() {
         return this.width;
@@ -157,7 +158,7 @@ public class LocationType implements Serializable {
      * Set the width of this {@link LocationType}.
      * 
      * @param width
-     *            The width of this type
+     *            - The width of this type
      */
     public void setWidth(int width) {
         this.width = width;
@@ -166,7 +167,7 @@ public class LocationType implements Serializable {
     /**
      * Get the description of this {@link LocationType}.
      * 
-     * @return - description
+     * @return description
      */
     public String getDescription() {
         return this.description;
@@ -176,7 +177,7 @@ public class LocationType implements Serializable {
      * Set the description of this {@link LocationType}.
      * 
      * @param description
-     *            The description text of this type
+     *            - The description text of this type
      */
     public void setDescription(String description) {
         this.description = description;
@@ -185,7 +186,7 @@ public class LocationType implements Serializable {
     /**
      * Get the height of this {@link LocationType}.
      * 
-     * @return - height
+     * @return height
      */
     public int getHeight() {
         return this.height;
@@ -195,7 +196,7 @@ public class LocationType implements Serializable {
      * Set the height of this {@link LocationType}.
      * 
      * @param height
-     *            The height of this type
+     *            - The height of this type
      */
     public void setHeight(int height) {
         this.height = height;
@@ -204,8 +205,7 @@ public class LocationType implements Serializable {
     /**
      * Get all {@link LocationType}s belonging to this {@link LocationType}.
      * 
-     * @return - All {@link LocationType}s belonging to this
-     *         {@link LocationType}
+     * @return All {@link LocationType}s belonging to this {@link LocationType}
      */
     public Set<Location> getLocations() {
         return this.locations;
@@ -217,7 +217,7 @@ public class LocationType implements Serializable {
      * removed.
      * 
      * @param locations
-     *            a collection of {@link Location} to assign to this type
+     *            - A collection of {@link Location} to assign to this type
      */
     public void setLocations(Set<Location> locations) {
         this.locations = locations;
@@ -226,7 +226,7 @@ public class LocationType implements Serializable {
     /**
      * JPA optimistic locking.
      * 
-     * @return - Version field
+     * @return The version field
      */
     public long getVersion() {
         return this.version;
