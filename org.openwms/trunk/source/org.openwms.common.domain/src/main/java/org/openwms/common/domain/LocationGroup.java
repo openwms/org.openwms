@@ -42,7 +42,7 @@ import javax.persistence.TemporalType;
 import javax.persistence.Version;
 
 /**
- * A LocationGroup.
+ * A LocationGroup. Used to logical group {@link Location}s together.
  * <p>
  * Used to group {@link Location}s with same characteristics.
  * </p>
@@ -54,7 +54,7 @@ import javax.persistence.Version;
  */
 @Entity
 @Table(name = "LOCATION_GROUP")
-@NamedQueries({ @NamedQuery(name = "LocationGroup.findAll", query = "select lg from LocationGroup lg"),
+@NamedQueries( { @NamedQuery(name = "LocationGroup.findAll", query = "select lg from LocationGroup lg"),
         @NamedQuery(name = "LocationGroup.findByName", query = "select lg from LocationGroup lg where lg.name = ?1") })
 public class LocationGroup implements Serializable {
 
@@ -69,7 +69,7 @@ public class LocationGroup implements Serializable {
      * @author <a href="mailto:openwms@googlemail.com">Heiko Scherrer</a>
      * @version $Revision$
      * @since 0.1
-     * @see {@link org.openwms.common.domain.LocationGroup}
+     * @see LocationGroup
      */
     public static enum STATE {
         /**
@@ -83,7 +83,7 @@ public class LocationGroup implements Serializable {
     };
 
     /**
-     * Primary Key.
+     * Unique technical key.
      */
     @Id
     @Column(name = "ID")
@@ -189,13 +189,13 @@ public class LocationGroup implements Serializable {
      * Accessed by persistence provider.
      */
     @SuppressWarnings("unused")
-    private LocationGroup() { }
+    private LocationGroup() {}
 
     /**
      * Create a new LocationGroup with an unique name.
      * 
      * @param name
-     *            The name of the LocationGroup
+     *            - The name of the LocationGroup
      */
     public LocationGroup(String name) {
         this.name = name;
@@ -233,7 +233,7 @@ public class LocationGroup implements Serializable {
      * Set the name.
      * 
      * @param name
-     *            The name to set.
+     *            - The name to set.
      */
     public void setName(String name) {
         this.name = name;
@@ -252,7 +252,7 @@ public class LocationGroup implements Serializable {
      * Change the infeed state of this LocationGroup.
      * 
      * @param groupStateIn
-     *            The state to set
+     *            - The state to set
      */
     public void setGroupStateIn(STATE groupStateIn) {
         this.groupStateIn = groupStateIn;
@@ -271,7 +271,7 @@ public class LocationGroup implements Serializable {
      * Set the outfeed state of this LocationGroup.
      * 
      * @param groupStateOut
-     *            The state to set
+     *            - The state to set
      */
     public void setGroupStateOut(STATE groupStateOut) {
         this.groupStateOut = groupStateOut;
@@ -311,7 +311,7 @@ public class LocationGroup implements Serializable {
      * </p>
      * 
      * @param maxFillLevel
-     *            The maximum fill level
+     *            - The maximum fill level
      */
     public void setMaxFillLevel(float maxFillLevel) {
         this.maxFillLevel = maxFillLevel;
@@ -330,7 +330,7 @@ public class LocationGroup implements Serializable {
      * Set the type of this LocationGroup.
      * 
      * @param groupType
-     *            The type where this LocationGroup belongs to
+     *            - The type where this LocationGroup belongs to
      */
     public void setGroupType(String groupType) {
         this.groupType = groupType;
@@ -349,7 +349,7 @@ public class LocationGroup implements Serializable {
      * Set the date of last modification for this LocationGroup.
      * 
      * @param lastUpdated
-     *            The date to set
+     *            - The date to set
      */
     public void setLastUpdated(Date lastUpdated) {
         this.lastUpdated = lastUpdated;
@@ -368,7 +368,7 @@ public class LocationGroup implements Serializable {
      * Set the description text.
      * 
      * @param description
-     *            The String to set as description text
+     *            - The String to set as description text
      */
     public void setDescription(String description) {
         this.description = description;
@@ -387,7 +387,7 @@ public class LocationGroup implements Serializable {
      * Set parent LocationGroup.
      * 
      * @param parent
-     *            The LocationGroup to set as parent
+     *            - The LocationGroup to set as parent
      */
     public void setParent(LocationGroup parent) {
         this.parent = parent;
@@ -406,7 +406,7 @@ public class LocationGroup implements Serializable {
      * Add a LocationGroup as child.
      * 
      * @param locationGroup
-     *            The LocationGroup to add as child
+     *            - The LocationGroup to add as child
      * @return true if the LocationGroup was new in the collection of
      *         LocationGroups, otherwise false
      */
@@ -425,7 +425,7 @@ public class LocationGroup implements Serializable {
      * Remove a LocationGroup as child.
      * 
      * @param locationGroup
-     *            The LocationGroup to remove from the list of children
+     *            - The LocationGroup to remove from the list of children
      * @return true if the LocationGroup was found and removed, otherwise false
      */
     public boolean removeLocationGroup(LocationGroup locationGroup) {
@@ -453,7 +453,7 @@ public class LocationGroup implements Serializable {
      * Add a {@link Location} as child.
      * 
      * @param location
-     *            The {@link Location} to add as child
+     *            - The {@link Location} to add as child
      * @return true if the {@link Location} was new in the collection of
      *         {@link Message}s, otherwise false
      */
@@ -473,7 +473,7 @@ public class LocationGroup implements Serializable {
      * Remove a {@link Location} from children.
      * 
      * @param location
-     *            The {@link Location} to be removed from the list of children
+     *            - The {@link Location} to be removed from the list of children
      * @return true if the {@link Location} was found and removed, otherwise
      *         false
      */
@@ -498,7 +498,7 @@ public class LocationGroup implements Serializable {
      * Set the systemCode.
      * 
      * @param systemCode
-     *            The systemCode to set
+     *            - The systemCode to set
      */
     public void setSystemCode(String systemCode) {
         this.systemCode = systemCode;
@@ -517,7 +517,7 @@ public class LocationGroup implements Serializable {
      * Set the locationGroupCountingActive.
      * 
      * @param locationGroupCountingActive
-     *            The locationGroupCountingActive to set
+     *            - The locationGroupCountingActive to set
      */
     public void setLocationGroupCountingActive(boolean locationGroupCountingActive) {
         this.locationGroupCountingActive = locationGroupCountingActive;
