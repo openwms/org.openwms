@@ -25,18 +25,21 @@ import java.util.List;
 import org.openwms.common.domain.Location;
 
 /**
- * A LocationService.
+ * A LocationService - Extends the {@link EntityService} interface about some
+ * useful methods regarding the general handling with {@link Location}s.
  * <p>
- * Extends the {@link EntityService} interface about some useful methods
- * regarding the general handling with {@link Location}s.
+ * This interface is declared generic typed that implementation classes can use
+ * any extension of {@link Location}s.
  * </p>
  * 
+ * @param <T>
+ *            Any kind of {@link Location}
  * @author <a href="mailto:openwms@googlemail.com">Heiko Scherrer</a>
  * @version $Revision$
  * @since 0.1
- * @see EntityService
+ * @see org.openwms.common.service.EntityService
  */
-public interface LocationService extends EntityService<Location> {
+public interface LocationService<T extends Location> extends EntityService<Location> {
 
     /**
      * Return a {@link java.util.List} of all {@link Location}s not sorted and
@@ -44,6 +47,6 @@ public interface LocationService extends EntityService<Location> {
      * 
      * @return All {@link Location}s as a list
      */
-    List<Location> getAllLocations();
+    List<T> getAllLocations();
 
 }

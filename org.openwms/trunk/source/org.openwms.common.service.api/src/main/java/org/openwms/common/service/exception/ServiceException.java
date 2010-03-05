@@ -37,7 +37,6 @@ public class ServiceException extends RuntimeException {
 
     /**
      * Create a new ServiceException.
-     * 
      */
     public ServiceException() {}
 
@@ -45,7 +44,7 @@ public class ServiceException extends RuntimeException {
      * Create a new ServiceException with a message text.
      * 
      * @param message
-     *            - Message text as String
+     *            Message text as String
      */
     public ServiceException(String message) {
         super(message);
@@ -55,7 +54,7 @@ public class ServiceException extends RuntimeException {
      * Create a new ServiceException with a cause exception.
      * 
      * @param cause
-     *            - The cause exception
+     *            The cause exception
      */
     public ServiceException(Throwable cause) {
         super(cause);
@@ -66,9 +65,9 @@ public class ServiceException extends RuntimeException {
      * exception.
      * 
      * @param message
-     *            - Message text as String
+     *            Message text as String
      * @param cause
-     *            - The cause exception
+     *            The cause exception
      */
     public ServiceException(String message, Throwable cause) {
         super(message, cause);
