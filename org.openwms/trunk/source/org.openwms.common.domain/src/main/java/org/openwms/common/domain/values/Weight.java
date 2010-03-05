@@ -42,15 +42,15 @@ public class Weight implements Comparable<Weight>, Unit<WeightUnit> {
      * Accessed by persistence provider.
      */
     @SuppressWarnings("unused")
-    private Weight() { }
+    private Weight() {}
 
     /**
      * Create a new Weight.
      * 
      * @param value
-     *            The value of the weight
+     *            - The value of the weight
      * @param unit
-     *            The unit of measure
+     *            - The unit of measure
      */
     public Weight(BigDecimal value, WeightUnit unit) {
         this.value = value;
@@ -60,7 +60,7 @@ public class Weight implements Comparable<Weight>, Unit<WeightUnit> {
     /**
      * Get the unit.
      * 
-     * @return the unit.
+     * @return The unit.
      */
     public WeightUnit getUnit() {
         return unit;
@@ -69,7 +69,7 @@ public class Weight implements Comparable<Weight>, Unit<WeightUnit> {
     /**
      * Get the value.
      * 
-     * @return the value.
+     * @return The value.
      */
     public BigDecimal getValue() {
         return value;

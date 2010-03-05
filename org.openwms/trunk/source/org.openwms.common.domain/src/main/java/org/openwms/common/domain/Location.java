@@ -428,7 +428,7 @@ public class Location implements Serializable {
      * Return the {@link LocationPK} as String.
      * 
      * @see java.lang.Object#toString()
-     * @return the String
+     * @return String
      */
     @Override
     public String toString() {

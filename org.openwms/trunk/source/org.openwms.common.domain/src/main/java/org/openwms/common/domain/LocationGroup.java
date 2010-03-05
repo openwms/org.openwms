@@ -507,7 +507,7 @@ public class LocationGroup implements Serializable {
     /**
      * Get the locationGroupCountingActive.
      * 
-     * @return The locationGroupCountingActive
+     * long * @return The locationGroupCountingActive
      */
     public boolean isLocationGroupCountingActive() {
         return locationGroupCountingActive;
@@ -526,7 +526,7 @@ public class LocationGroup implements Serializable {
     /**
      * JPA optimistic locking.
      * 
-     * @return Version field
+     * @return The version field
      */
     public long getVersion() {
         return this.version;
@@ -536,7 +536,7 @@ public class LocationGroup implements Serializable {
      * Return the name of the LocationGroup as String.
      * 
      * @see java.lang.Object#toString()
-     * @return The String
+     * @return String
      */
     @Override
     public String toString() {

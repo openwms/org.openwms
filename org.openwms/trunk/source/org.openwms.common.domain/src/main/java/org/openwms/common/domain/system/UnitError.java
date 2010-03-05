@@ -69,13 +69,13 @@ public class UnitError implements Serializable {
     /**
      * Create a new UnitError.
      */
-    public UnitError() { }
+    public UnitError() {}
 
     /**
      * Create a new UnitError with an error number.
      * 
      * @param errorNo
-     *            The error number
+     *            - The error number
      */
     public UnitError(String errorNo) {
         this.errorNo = errorNo;
@@ -103,7 +103,7 @@ public class UnitError implements Serializable {
      * Set the error number.
      * 
      * @param errorNo
-     *            The errorNo to set.
+     *            - The errorNo to set.
      */
     public void setErrorNo(String errorNo) {
         this.errorNo = errorNo;
@@ -122,7 +122,7 @@ public class UnitError implements Serializable {
      * Set the error text.
      * 
      * @param errorText
-     *            The errorText to set.
+     *            - The errorText to set.
      */
     public void setErrorText(String errorText) {
         this.errorText = errorText;

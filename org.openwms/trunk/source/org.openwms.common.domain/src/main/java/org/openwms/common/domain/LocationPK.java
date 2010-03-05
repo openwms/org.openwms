@@ -26,7 +26,7 @@ import javax.persistence.Column;
 import javax.persistence.Embeddable;
 
 /**
- * This value type is used as unique natural key of the
+ * A LocationPK. This value type is used as unique natural key of the
  * {@link org.openwms.common.domain.Location} Entity.
  * 
  * @author <a href="mailto:openwms@googlemail.com">Heiko Scherrer</a>
@@ -71,21 +71,21 @@ public class LocationPK implements Serializable {
 
     /* ----------------------------- methods ------------------- */
     @SuppressWarnings("unused")
-    private LocationPK() { }
+    private LocationPK() {}
 
     /**
      * Create a new LocationPK.
      * 
      * @param area
-     *            Area where this <code>Location</code> belongs to
+     *            - Area where this <code>Location</code> belongs to
      * @param aisle
-     *            Aisle where this <code>Location</code> belongs to
+     *            - Aisle where this <code>Location</code> belongs to
      * @param x
-     *            Dimension x where this <code>Location</code> belongs to
+     *            - Dimension x where this <code>Location</code> belongs to
      * @param y
-     *            Dimension y where this <code>Location</code> belongs to
+     *            - Dimension y where this <code>Location</code> belongs to
      * @param z
-     *            Dimension z where this <code>Location</code> belongs to
+     *            - Dimension z where this <code>Location</code> belongs to
      */
     public LocationPK(String area, String aisle, String x, String y, String z) {
         this.area = area;
@@ -140,6 +140,11 @@ public class LocationPK implements Serializable {
         return this.z;
     }
 
+    /**
+     * {@inheritDoc}
+     * 
+     * @see java.lang.Object#hashCode()
+     */
     @Override
     public boolean equals(Object o) {
         if (o == this) {
@@ -153,6 +158,11 @@ public class LocationPK implements Serializable {
                 && this.z.equals(other.z) && this.aisle.equals(other.aisle);
     }
 
+    /**
+     * {@inheritDoc}
+     * 
+     * @see java.lang.Object#hashCode()
+     */
     @Override
     public int hashCode() {
         return this.y.hashCode() ^ this.x.hashCode() ^ this.area.hashCode() ^ this.z.hashCode() ^ this.aisle.hashCode();
@@ -162,7 +172,7 @@ public class LocationPK implements Serializable {
      * Return a String like {AREA/AISLE/X/Y/Z}.
      * 
      * @see java.lang.Object#toString()
-     * @return as String
+     * @return String
      */
     @Override
     public String toString() {

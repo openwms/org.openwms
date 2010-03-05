@@ -27,6 +27,7 @@ package org.openwms.common.exception;
  * @version $Revision$
  * @since 0.1
  */
+@Deprecated
 public class IllegalStateException extends RuntimeException {
 
     private static final long serialVersionUID = 1L;
@@ -34,13 +35,13 @@ public class IllegalStateException extends RuntimeException {
     /**
      * Create a new IllegalStateException.
      */
-    public IllegalStateException() { }
+    public IllegalStateException() {}
 
     /**
      * Create a new IllegalStateException.
      * 
      * @param message
-     *            The message text
+     *            - The message text
      */
     public IllegalStateException(String message) {
         super(message);
@@ -50,7 +51,7 @@ public class IllegalStateException extends RuntimeException {
      * Create a new IllegalStateException.
      * 
      * @param cause
-     *            The root cause of the exception
+     *            - The root cause of the exception
      */
     public IllegalStateException(Throwable cause) {
         super(cause);
@@ -60,9 +61,9 @@ public class IllegalStateException extends RuntimeException {
      * Create a new IllegalStateException.
      * 
      * @param message
-     *            The message text
+     *            - The message text
      * @param cause
-     *            The root cause of the exception
+     *            - The root cause of the exception
      */
     public IllegalStateException(String message, Throwable cause) {
         super(message, cause);
