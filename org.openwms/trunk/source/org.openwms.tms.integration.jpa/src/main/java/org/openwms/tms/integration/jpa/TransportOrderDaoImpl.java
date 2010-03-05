@@ -20,7 +20,6 @@
  */
 package org.openwms.tms.integration.jpa;
 
-import javax.annotation.PostConstruct;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceException;
 
@@ -29,6 +28,7 @@ import org.openwms.common.integration.jpa.AbstractGenericJpaDao;
 import org.openwms.tms.domain.order.TransportOrder;
 import org.openwms.tms.integration.TransportOrderDao;
 import org.springframework.orm.jpa.JpaCallback;
+import org.springframework.stereotype.Repository;
 
 /**
  * A TransportOrderDaoImpl.
@@ -36,24 +36,36 @@ import org.springframework.orm.jpa.JpaCallback;
  * @author <a href="mailto:openwms@googlemail.com">Heiko Scherrer</a>
  * @version $Revision$
  * @since 0.1
+ * @see org.openwms.common.integration.jpa.AbstractGenericJpaDao
+ * @see org.openwms.tms.integration.TransportOrderDao
  */
+@Repository
 public class TransportOrderDaoImpl extends AbstractGenericJpaDao<TransportOrder, Long> implements TransportOrderDao {
 
-    @PostConstruct
-    public void init() {
-        logger.debug("TransportOrderDao bean initialized");
-    }
-
+    /**
+     * @return Name of the query
+     * @see org.openwms.common.integration.jpa.AbstractGenericJpaDao#getFindAllQuery()
+     */
     @Override
     protected String getFindAllQuery() {
         return TransportOrderDao.FIND_ALL;
     }
 
+    /**
+     * @return Name of the query
+     * @see org.openwms.common.integration.jpa.AbstractGenericJpaDao#getFindByUniqueIdQuery()
+     */
     @Override
     protected String getFindByUniqueIdQuery() {
         return TransportOrderDao.FIND_BY_ID;
     }
 
+    /**
+     * {@inheritDoc}
+     * 
+     * @see org.openwms.tms.integration.TransportOrderDao#getNumberOfTransportOrders(org.openwms.common.domain.LocationGroup)
+     */
+    @SuppressWarnings("unchecked")
     public int getNumberOfTransportOrders(final LocationGroup locationGroup) {
         return (Integer) getJpaTemplate().execute(new JpaCallback() {
             public Object doInJpa(EntityManager em) throws PersistenceException {
