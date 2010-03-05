@@ -91,9 +91,9 @@ public class Email implements Serializable {
      * <code>username</code> and <code>emailAddress</code>.
      * 
      * @param username
-     *            - The name of the User
+     *            The name of the User
      * @param emailAddress
-     *            - The email address of the User
+     *            The email address of the User
      */
     public Email(String username, String emailAddress) {
         assert username != null && !username.equals("");
@@ -134,7 +134,7 @@ public class Email implements Serializable {
      * Set the name of the user that belongs to this email.
      * 
      * @param username
-     *            - Name of the user.
+     *            Name of the user.
      */
     public void setUsername(String username) {
         this.username = username;
@@ -153,7 +153,7 @@ public class Email implements Serializable {
      * Set the emailAddress.
      * 
      * @param emailAddress
-     *            - The emailAddress to set.
+     *            The emailAddress to set.
      */
     public void setEmailAddress(String emailAddress) {
         this.emailAddress = emailAddress;
@@ -172,7 +172,7 @@ public class Email implements Serializable {
      * Set the fullName.
      * 
      * @param fullName
-     *            - The fullName to set.
+     *            The fullName to set.
      */
     public void setFullName(String fullName) {
         this.fullName = fullName;

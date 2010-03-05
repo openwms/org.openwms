@@ -34,7 +34,7 @@ import javax.persistence.Table;
 import javax.persistence.Version;
 
 /**
- * A TransportUnitType. Defines a type for {@link TransportUnit}s
+ * A TransportUnitType - Defines a type for {@link TransportUnit}s
  * <p>
  * Holds typical static attributes of a {@link TransportUnit} such as length,
  * height, aso. So it is possible to group different {@link TransportUnit}s.
@@ -153,7 +153,7 @@ public class TransportUnitType implements Serializable {
      * Create a new {@link TransportUnitType}.
      * 
      * @param type
-     *            - Unique name
+     *            Unique name
      */
     public TransportUnitType(String type) {
         this.type = type;
@@ -172,7 +172,7 @@ public class TransportUnitType implements Serializable {
      * Set the type of the {@link TransportUnit}.
      * 
      * @param type
-     *            - The type to set
+     *            The type to set
      */
     public void setType(String type) {
         this.type = type;
@@ -191,7 +191,7 @@ public class TransportUnitType implements Serializable {
      * Set the width of the {@link TransportUnit}.
      * 
      * @param width
-     *            - The width to set
+     *            The width to set
      */
     public void setWidth(int width) {
         this.width = width;
@@ -210,7 +210,7 @@ public class TransportUnitType implements Serializable {
      * Set the description for the {@link TransportUnit}.
      * 
      * @param description
-     *            - The description to set
+     *            The description to set
      */
     public void setDescription(String description) {
         this.description = description;
@@ -229,7 +229,7 @@ public class TransportUnitType implements Serializable {
      * Set the height of this {@link TransportUnit}.
      * 
      * @param height
-     *            - The height to set
+     *            The height to set
      */
     public void setHeight(int height) {
         this.height = height;
@@ -248,7 +248,7 @@ public class TransportUnitType implements Serializable {
      * Set the payload of the {@link TransportUnit}.
      * 
      * @param payload
-     *            - The payload to set
+     *            The payload to set
      */
     public void setPayload(BigDecimal payload) {
         this.payload = payload;
@@ -267,7 +267,7 @@ public class TransportUnitType implements Serializable {
      * Set the compatibility of the {@link TransportUnit}.
      * 
      * @param compatibility
-     *            - The compatibility to set
+     *            The compatibility to set
      */
     public void setCompatibility(String compatibility) {
         this.compatibility = compatibility;
@@ -286,7 +286,7 @@ public class TransportUnitType implements Serializable {
      * Set the length of the {@link TransportUnit}.
      * 
      * @param length
-     *            - The length to set
+     *            The length to set
      */
     public void setLength(int length) {
         this.length = length;
@@ -306,7 +306,7 @@ public class TransportUnitType implements Serializable {
      * {@link TransportUnit}s will be removed.
      * 
      * @param transportUnits
-     *            - a Set of {@link TransportUnit}s of this type.
+     *            A Set of {@link TransportUnit}s of this type.
      */
     public void setTransportUnits(Set<TransportUnit> transportUnits) {
         this.transportUnits = transportUnits;
@@ -318,7 +318,7 @@ public class TransportUnitType implements Serializable {
      * locations.
      * 
      * @param typePlacingRule
-     *            - The rule to set
+     *            The rule to set
      */
     public void addTypePlacingRule(TypePlacingRule typePlacingRule) {
         if (typePlacingRule == null) {
@@ -343,7 +343,7 @@ public class TransportUnitType implements Serializable {
      * be removed.
      * 
      * @param typePlacingRules
-     *            - The rules to set
+     *            The rules to set
      */
     public void setTypePlacingRules(Set<TypePlacingRule> typePlacingRules) {
         this.typePlacingRules = typePlacingRules;
@@ -367,7 +367,7 @@ public class TransportUnitType implements Serializable {
      * will be removed.
      * 
      * @param typeStackingRules
-     *            - The rules to set
+     *            The rules to set
      */
     public void setTypeStackingRules(Set<TypeStackingRule> typeStackingRules) {
         this.typeStackingRules = typeStackingRules;
@@ -386,7 +386,7 @@ public class TransportUnitType implements Serializable {
      * Set the weightTare.
      * 
      * @param weightTare
-     *            - The weightTare to set.
+     *            The weightTare to set.
      */
     public void setWeightTare(BigDecimal weightTare) {
         this.weightTare = weightTare;
@@ -405,7 +405,7 @@ public class TransportUnitType implements Serializable {
      * Set the weightMax.
      * 
      * @param weightMax
-     *            - The weightMax to set.
+     *            The weightMax to set.
      */
     public void setWeightMax(BigDecimal weightMax) {
         this.weightMax = weightMax;

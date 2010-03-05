@@ -51,7 +51,7 @@ import org.openwms.common.domain.system.usermanagement.User;
 import org.openwms.common.domain.values.Barcode;
 
 /**
- * A TransportUnit. Something like a box, toad, bin or palette that has to be
+ * A TransportUnit - Something like a box, toad, bin or palette that has to be
  * moved.
  * <p>
  * Used as a container to transport items and <code>LoadUnit</code>s. It can be
@@ -220,7 +220,7 @@ public class TransportUnit implements Serializable {
      * used to create a {@link Barcode}.
      * 
      * @param unitId
-     *            - The unique identifier of the {@link TransportUnit} as String
+     *            The unique identifier of the {@link TransportUnit} as String
      */
     public TransportUnit(String unitId) {
         this.creationDate = new Date();
@@ -231,7 +231,7 @@ public class TransportUnit implements Serializable {
      * Create a new {@link TransportUnit} with a unique {@link Barcode}.
      * 
      * @param barcode
-     *            - The unique identifier of this {@link TransportUnit} is the
+     *            The unique identifier of this {@link TransportUnit} is the
      *            {@link Barcode}
      */
     public TransportUnit(Barcode barcode) {
@@ -272,8 +272,8 @@ public class TransportUnit implements Serializable {
      * Set this {@link TransportUnit} to the actual {@link Location}.
      * 
      * @param actualLocation
-     *            - The {@link Location} where this {@link TransportUnit} shall
-     *            be moved to
+     *            The {@link Location} where this {@link TransportUnit} shall be
+     *            moved to
      */
     public void setActualLocation(Location actualLocation) {
         this.actualLocation = actualLocation;
@@ -296,7 +296,7 @@ public class TransportUnit implements Serializable {
      * be set when an active <tt>TransportOder</tt> exist.
      * 
      * @param targetLocation
-     *            - The target {@link Location} where this {@link TransportUnit}
+     *            The target {@link Location} where this {@link TransportUnit}
      *            shall be transported to
      */
     public void setTargetLocation(Location targetLocation) {
@@ -316,7 +316,7 @@ public class TransportUnit implements Serializable {
      * Sets this {@link TransportUnit} to be empty.
      * 
      * @param empty
-     *            - true to mark the {@link TransportUnit} as empty
+     *            true to mark the {@link TransportUnit} as empty
      */
     public void setEmpty(Boolean empty) {
         this.empty = empty;
@@ -337,7 +337,7 @@ public class TransportUnit implements Serializable {
      * {@link TransportUnit}.
      * 
      * @param inventoryUser
-     *            - The {@link User} who did the last inventory check
+     *            The {@link User} who did the last inventory check
      */
     public void setInventoryUser(User inventoryUser) {
         this.inventoryUser = inventoryUser;
@@ -387,7 +387,7 @@ public class TransportUnit implements Serializable {
      * {@link TransportUnit}.
      * 
      * @param inventoryDate
-     *            - The timestamp of the last inventory check
+     *            The timestamp of the last inventory check
      */
     public void setInventoryDate(Date inventoryDate) {
         this.inventoryDate = inventoryDate;
@@ -406,7 +406,7 @@ public class TransportUnit implements Serializable {
      * Sets the current weight of this {@link TransportUnit}.
      * 
      * @param weight
-     *            - The current weight of this {@link TransportUnit}
+     *            The current weight of this {@link TransportUnit}
      */
     public void setWeight(BigDecimal weight) {
         this.weight = weight;
@@ -426,7 +426,7 @@ public class TransportUnit implements Serializable {
      * Add an error for this {@link TransportUnit}.
      * 
      * @param error
-     *            - An {@link UnitError} to add
+     *            An {@link UnitError} to add
      * @return The key, or null in case the {@link UnitError} wasn't put into
      *         the Map
      */
@@ -470,7 +470,7 @@ public class TransportUnit implements Serializable {
      * Set the {@link TransportUnitType} of this {@link TransportUnit}.
      * 
      * @param transportUnitType
-     *            - The type to which this {@link TransportUnit} belongs to
+     *            The type to which this {@link TransportUnit} belongs to
      */
     public void setTransportUnitType(TransportUnitType transportUnitType) {
         this.transportUnitType = transportUnitType;
@@ -489,7 +489,7 @@ public class TransportUnit implements Serializable {
      * Set the {@link Barcode} of the {@link TransportUnit}.
      * 
      * @param barcode
-     *            - The {@link Barcode} to set for this {@link TransportUnit}
+     *            The {@link Barcode} to set for this {@link TransportUnit}
      */
     public void setBarcode(Barcode barcode) {
         this.barcode = barcode;
@@ -508,7 +508,7 @@ public class TransportUnit implements Serializable {
      * Set the parent.
      * 
      * @param parent
-     *            - The parent to set.
+     *            The parent to set.
      */
     public void setParent(TransportUnit parent) {
         this.parent = parent;
@@ -527,7 +527,7 @@ public class TransportUnit implements Serializable {
      * Add a {@link TransportUnit} to children.
      * 
      * @param transportUnit
-     *            - The {@link TransportUnit} to add to the list of children
+     *            The {@link TransportUnit} to add to the list of children
      */
     public void addChild(TransportUnit transportUnit) {
         if (transportUnit == null) {
@@ -553,7 +553,7 @@ public class TransportUnit implements Serializable {
      * Remove a {@link TransportUnit} from the collection of children.
      * 
      * @param transportUnit
-     *            - The {@link TransportUnit} to be removed from the list of
+     *            The {@link TransportUnit} to be removed from the list of
      *            children
      */
     public void removeChild(TransportUnit transportUnit) {
@@ -574,7 +574,7 @@ public class TransportUnit implements Serializable {
      * Set the actualLocationDate.
      * 
      * @param actualLocationDate
-     *            - The actualLocationDate to set.
+     *            The actualLocationDate to set.
      */
     public void setActualLocationDate(Date actualLocationDate) {
         this.actualLocationDate = actualLocationDate;

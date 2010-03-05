@@ -31,7 +31,7 @@ import javax.persistence.Table;
 import javax.persistence.Version;
 
 /**
- * A LocationType. Defines a type for {@link Location}s.
+ * A LocationType - Defines a type for {@link Location}s.
  * <p>
  * Type of a {@link org.openwms.common.domain.Location}.<br>
  * Used to describe {@link org.openwms.common.domain.Location}s that have same
@@ -110,7 +110,7 @@ public class LocationType implements Serializable {
      * Create a new {@link LocationType} with a unique natural key.
      * 
      * @param type
-     *            - Unique type
+     *            Unique type
      */
     public LocationType(String type) {
         super();
@@ -139,7 +139,7 @@ public class LocationType implements Serializable {
      * Set the length of this {@link LocationType}.
      * 
      * @param length
-     *            - The length of this type
+     *            The length of this type
      */
     public void setLength(int length) {
         this.length = length;
@@ -158,7 +158,7 @@ public class LocationType implements Serializable {
      * Set the width of this {@link LocationType}.
      * 
      * @param width
-     *            - The width of this type
+     *            The width of this type
      */
     public void setWidth(int width) {
         this.width = width;
@@ -177,7 +177,7 @@ public class LocationType implements Serializable {
      * Set the description of this {@link LocationType}.
      * 
      * @param description
-     *            - The description text of this type
+     *            The description text of this type
      */
     public void setDescription(String description) {
         this.description = description;
@@ -196,7 +196,7 @@ public class LocationType implements Serializable {
      * Set the height of this {@link LocationType}.
      * 
      * @param height
-     *            - The height of this type
+     *            The height of this type
      */
     public void setHeight(int height) {
         this.height = height;
@@ -217,7 +217,7 @@ public class LocationType implements Serializable {
      * removed.
      * 
      * @param locations
-     *            - A collection of {@link Location} to assign to this type
+     *            A collection of {@link Location} to assign to this type
      */
     public void setLocations(Set<Location> locations) {
         this.locations = locations;

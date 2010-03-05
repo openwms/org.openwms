@@ -110,7 +110,7 @@ public class Barcode implements Serializable {
      * </p>
      * 
      * @param value
-     *            - Value of the Barcode as String
+     *            The value of the Barcode as String
      */
     public Barcode(String value) {
         if (value == null) {
@@ -137,7 +137,7 @@ public class Barcode implements Serializable {
      * Set the alignment.
      * 
      * @param align
-     *            - The alignment to set
+     *            The alignment to set
      */
     public static void setAlignment(BARCODE_ALIGN align) {
         alignment = align;
@@ -156,7 +156,7 @@ public class Barcode implements Serializable {
      * Set the padded.
      * 
      * @param p
-     *            - Set true if Barcode should be padded, otherwise set false.
+     *            Set true if Barcode should be padded, otherwise set false.
      */
     public static void setPadded(boolean p) {
         padded = p;
@@ -175,7 +175,7 @@ public class Barcode implements Serializable {
      * Set the padder.
      * 
      * @param p
-     *            - The padder character to use
+     *            The padder character to use
      */
     public static void setPadder(char p) {
         padder = p;
@@ -204,7 +204,7 @@ public class Barcode implements Serializable {
      * Set the length.
      * 
      * @param l
-     *            - The length to set
+     *            The length to set
      */
     public static void setLength(int l) {
         length = l;

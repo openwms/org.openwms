@@ -32,7 +32,7 @@ import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 
 /**
- * A TypePlacingRule. Which {@link TransportUnitType}s on what
+ * A TypePlacingRule - Which {@link TransportUnitType}s on what
  * {@link LocationType}s.
  * <p>
  * Describes which {@link TransportUnitType} may be placed on which
@@ -104,9 +104,9 @@ public class TypePlacingRule implements Serializable {
      * allowedLocationType.
      * 
      * @param privilegeLevel
-     *            - The privilege level
+     *            The privilege level
      * @param allowedLocationType
-     *            - The allowed LocationType
+     *            The allowed LocationType
      */
     public TypePlacingRule(int privilegeLevel, LocationType allowedLocationType) {
         this.privilegeLevel = privilegeLevel;
@@ -117,7 +117,7 @@ public class TypePlacingRule implements Serializable {
      * Create new {@link TypePlacingRule} with allowedLocationType.
      * 
      * @param allowedLocationType
-     *            - The allowed LocationType
+     *            The allowed LocationType
      */
     public TypePlacingRule(LocationType allowedLocationType) {
         this.allowedLocationType = allowedLocationType;
