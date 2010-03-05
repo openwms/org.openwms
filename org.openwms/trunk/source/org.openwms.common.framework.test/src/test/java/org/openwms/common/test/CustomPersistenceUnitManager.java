@@ -21,7 +21,6 @@
 package org.openwms.common.test;
 
 import java.net.URL;
-import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.orm.jpa.persistenceunit.DefaultPersistenceUnitManager;
@@ -33,19 +32,23 @@ import org.springframework.orm.jpa.persistenceunit.MutablePersistenceUnitInfo;
  * This customized
  * {@link org.springframework.orm.jpa.persistenceunit.PersistenceUnitManager}
  * extends Spring's default implementation to scan Entity classes in multiple
- * jar files. This class is useful when the application is <b>not</b> an OSGi
- * application.
+ * jar files. This class is only needed when the application is <b>not</b> an
+ * OSGi application.
  * </p>
  * 
  * @author <a href="mailto:openwms@googlemail.com">Heiko Scherrer</a>
  * @since 0.1
- * @see {@link org.springframework.orm.jpa.persistenceunit.PersistenceUnitManager}
- * @see {@link org.springframework.orm.jpa.persistenceunit.DefaultPersistenceUnitManager}
+ * @see org.springframework.orm.jpa.persistenceunit.PersistenceUnitManager
+ * @see org.springframework.orm.jpa.persistenceunit.DefaultPersistenceUnitManager
  * @version $Revision$
  */
 public class CustomPersistenceUnitManager extends DefaultPersistenceUnitManager {
-    List<URL> url = new ArrayList<URL>();
 
+    /**
+     * {@inheritDoc}
+     * 
+     * @see org.springframework.orm.jpa.persistenceunit.DefaultPersistenceUnitManager#postProcessPersistenceUnitInfo(org.springframework.orm.jpa.persistenceunit.MutablePersistenceUnitInfo)
+     */
     @Override
     protected void postProcessPersistenceUnitInfo(MutablePersistenceUnitInfo pui) {
         super.postProcessPersistenceUnitInfo(pui);

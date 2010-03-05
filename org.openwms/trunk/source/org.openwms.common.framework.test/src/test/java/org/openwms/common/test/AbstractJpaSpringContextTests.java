@@ -21,6 +21,7 @@
 package org.openwms.common.test;
 
 import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
 import javax.persistence.PersistenceContext;
 
 import org.junit.runner.RunWith;
@@ -32,16 +33,17 @@ import org.springframework.test.context.transaction.TransactionConfiguration;
 import org.springframework.transaction.annotation.Transactional;
 
 /**
- * An AbstractJpaSpringContextTests.
+ * An AbstractJpaSpringContextTests. Transactional superclass for JUnit tests.
  * <p>
  * An abstract superclass suitable for unit tests that run with Spring's
- * {@link SpringJUnit4ClassRunner}. This class is transaction aware.
+ * {@link SpringJUnit4ClassRunner}. A datasource instance and an
+ * {@link EntityManagerFactory} is initialized within the ApplicationContext.
  * </p>
  * 
  * @author <a href="mailto:openwms@googlemail.com">Heiko Scherrer</a>
  * @since 0.1
- * @see {@link org.springframework.test.context.junit4.SpringJUnit4ClassRunner}
- * @see {@link org.springframework.test.context.transaction.TransactionConfiguration}
+ * @see org.springframework.test.context.junit4.SpringJUnit4ClassRunner
+ * @see org.springframework.test.context.transaction.TransactionConfiguration
  * @version $Revision$
  */
 @RunWith(SpringJUnit4ClassRunner.class)
