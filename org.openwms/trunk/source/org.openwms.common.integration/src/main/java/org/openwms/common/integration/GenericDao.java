@@ -25,7 +25,7 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * A GenericDao.
+ * A GenericDao - Generic interface declaration for simple CRUD operations.
  * <p>
  * This interface provides basic functionality to create/read/update and remove
  * Entity classes. Entities can be POJOs without any ORM dependencies. Merely
@@ -33,6 +33,10 @@ import java.util.Map;
  * persisted.
  * </p>
  * 
+ * @param <T>
+ *            Any serializable type, mostly an Entity class type
+ * @param <ID>
+ *            The type of the Entity class' unique id
  * @author <a href="mailto:openwms@googlemail.com">Heiko Scherrer</a>
  * @version $Revision$
  * @since 0.1
