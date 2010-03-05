@@ -34,6 +34,10 @@ import org.springframework.transaction.annotation.Transactional;
 /**
  * An EntityServiceImpl.
  * 
+ * @param <T>
+ *            Any serializable type, mostly an Entity class type
+ * @param <ID>
+ *            The type of the Entity class' unique id
  * @author <a href="mailto:openwms@googlemail.com">Heiko Scherrer</a>
  * @version $Revision$
  * @since 0.1
