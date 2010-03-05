@@ -42,12 +42,12 @@ public interface LocationGroupDao extends GenericDao<LocationGroup, Long> {
      * Name of the <code>NamedQuery</code> to find all {@link LocationGroup}
      * Entities.
      */
-    final String NQ_FIND_ALL = "LocationGroup.findAll";
+    String NQ_FIND_ALL = "LocationGroup.findAll";
 
     /**
      * Name of the <code>NamedQuery</code> to find a {@link LocationGroup} by
      * {@link LocationGroup#getName()}.
      */
-    final String NQ_FIND_BY_NAME = "LocationGroup.findByName";
+    String NQ_FIND_BY_NAME = "LocationGroup.findByName";
 
 }

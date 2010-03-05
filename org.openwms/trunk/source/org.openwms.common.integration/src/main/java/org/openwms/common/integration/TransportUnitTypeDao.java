@@ -42,11 +42,11 @@ public interface TransportUnitTypeDao extends GenericDao<TransportUnitType, Stri
      * Name of the <code>NamedQuery</code> to find all {@link TransportUnitType}
      * Entities.
      */
-    final String NQ_FIND_ALL = "TransportUnitType.findAll";
+    String NQ_FIND_ALL = "TransportUnitType.findAll";
 
     /**
      * Name of the <code>NamedQuery</code> to find a {@link TransportUnitType}
      * by {@link TransportUnitType#getName()}.
      */
-    final String NQ_FIND_BY_NAME = "TransportUnitType.findByName";
+    String NQ_FIND_BY_NAME = "TransportUnitType.findByName";
 }

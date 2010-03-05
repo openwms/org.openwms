@@ -42,12 +42,12 @@ public interface TransportUnitDao extends GenericDao<TransportUnit, Long> {
      * Name of the <code>NamedQuery</code> to find all {@link TransportUnit}
      * Entities.
      */
-    final String NQ_FIND_ALL = "TransportUnit.findAll";
+    String NQ_FIND_ALL = "TransportUnit.findAll";
 
     /**
      * Name of the <code>NamedQuery</code> to find a {@link TransportUnit} by
      * the natural key.
      */
-    final String NQ_FIND_BY_UNIQUE_QUERY = "TransportUnit.findByBarcode";
+    String NQ_FIND_BY_UNIQUE_QUERY = "TransportUnit.findByBarcode";
 
 }

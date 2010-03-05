@@ -42,18 +42,18 @@ public interface UserDao extends GenericDao<User, Long> {
     /**
      * Name of the <code>NamedQuery</code> to find all {@link User} Entities.
      */
-    final String NQ_FIND_ALL = "User.findAll";
+    String NQ_FIND_ALL = "User.findAll";
 
     /**
      * Name of the <code>NamedQuery</code> to find {@link User} Entity classes
      * in a defined order.
      */
-    final String NQ_FIND_ALL_ORDERED = "User.findAllOrdered";
+    String NQ_FIND_ALL_ORDERED = "User.findAllOrdered";
 
     /**
      * Name of the <code>NamedQuery</code> to find a {@link User} by his
      * {@link User#getUsername()}.
      */
-    final String NQ_FIND_BY_USERNAME = "User.findByUsername";
+    String NQ_FIND_BY_USERNAME = "User.findByUsername";
 
 }
