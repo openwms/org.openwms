@@ -21,30 +21,33 @@
 package org.openwms.tms.service;
 
 import org.openwms.common.domain.LocationGroup;
-import org.openwms.common.domain.TransportUnit;
 import org.openwms.common.service.EntityService;
+import org.openwms.tms.domain.order.TransportOrder;
 
 /**
- * A TransportService.
+ * A TransportService - Extends the {@link EntityService} interface about some
+ * useful methods regarding the general handling with {@link TransportOrder}s.
  * <p>
  * Extends the {@link EntityService} interface about some useful methods
- * regarding the general handling with {@link TransportUnit}s.
+ * regarding the general handling with {@link TransportOrder}s.
  * </p>
  * 
+ * @param <T>
+ *            Any kind of {@link TransportOrder}
  * @author <a href="mailto:openwms@googlemail.com">Heiko Scherrer</a>
  * @version $Revision$
  * @since 0.1
  * @see org.openwms.common.service.EntityService
  */
-public interface TransportOrderService extends EntityService<TransportUnit> {
+public interface TransportOrderService<T extends TransportOrder> extends EntityService<T> {
 
     /**
      * Returns the actual number of active transports that have the
      * <tt>locationGroup</tt> as target {@link LocationGroup}.
      * 
      * @param locationGroup
-     *            - {@link LocationGroup} to count all active transports for
-     * @return - Number of all active transports that are on the way to this
+     *            {@link LocationGroup} to count all active transports for
+     * @return Number of all active transports that are on the way to this
      *         {@link LocationGroup}
      */
     int getTransportsToLocationGroup(LocationGroup locationGroup);
