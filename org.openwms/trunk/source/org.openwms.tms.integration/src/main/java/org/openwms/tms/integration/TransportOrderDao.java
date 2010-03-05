@@ -25,17 +25,37 @@ import org.openwms.common.integration.GenericDao;
 import org.openwms.tms.domain.order.TransportOrder;
 
 /**
- * A TransportOrderDao.
+ * A TransportOrderDao - Adds specific functionality concerning
+ * {@link TransportOrder} Entity classes.
  * 
  * @author <a href="mailto:openwms@googlemail.com">Heiko Scherrer</a>
  * @version $Revision$
  * @since 0.1
+ * @see org.openwms.common.integration.GenericDao
+ * @see org.openwms.tms.domain.order.TransportOrder
  */
 public interface TransportOrderDao extends GenericDao<TransportOrder, Long> {
 
-    public final String NQ_FIND_ALL = "TransportOrder.findAll";
-    public final String NQ_FIND_BY_ID = "TransportUnitType.findById";
+    /**
+     * Name of the <code>NamedQuery</code> to find all {@link TransportOrder}
+     * Entities.
+     */
+    String NQ_FIND_ALL = "TransportOrder.findAll";
 
-    public int getNumberOfTransportOrders(LocationGroup locationGroup);
+    /**
+     * Name of the <code>NamedQuery</code> to find a {@link TransportOrder} by
+     * the unique technical key.
+     */
+    String NQ_FIND_BY_ID = "TransportOrder.findById";
+
+    /**
+     * Get all active {@link TransportOrder}s that have the target destination
+     * to this locationGroup.
+     * 
+     * @param locationGroup
+     *            The group to search for
+     * @return The number of all active {@link TransportOrder}s
+     */
+    int getNumberOfTransportOrders(LocationGroup locationGroup);
 
 }
