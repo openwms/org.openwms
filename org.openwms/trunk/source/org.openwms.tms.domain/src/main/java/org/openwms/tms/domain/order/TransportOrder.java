@@ -51,8 +51,8 @@ import org.openwms.common.exception.InsufficientValueException;
  * @author <a href="mailto:openwms@googlemail.com">Heiko Scherrer</a>
  * @version $Revision$
  * @since 0.1
- * @see {@link org.openwms.common.domain.TransportUnit}
- * @see {@link org.openwms.common.domain.Location}
+ * @see org.openwms.common.domain.TransportUnit
+ * @see org.openwms.common.domain.Location
  */
 @Entity
 @Table(name = "TRANSPORT_ORDER")
@@ -61,15 +61,12 @@ public class TransportOrder implements Serializable {
     private static final long serialVersionUID = 1L;
 
     /**
-     * A TRANSPORT_ORDER_STATE.
-     * <p>
-     * Each {@link TransportOrder} can be in one of these states.
-     * </p>
+     * A TRANSPORT_ORDER_STATE - Each {@link TransportOrder} can be in one of
+     * these states.
      * 
      * @author <a href="mailto:openwms@googlemail.com">Heiko Scherrer</a>
      * @version $Revision$
      * @since 0.1
-     * @see {@link org.openwms.tms.domain.order.TransportOrder}
      */
     public enum TRANSPORT_ORDER_STATE {
         CREATED, INITIALIZED, STARTED, INTERRUPTED, ONFAILURE, FINISHED
@@ -179,9 +176,9 @@ public class TransportOrder implements Serializable {
     }
 
     /**
-     * Returns the technical key.
+     * Returns the unique technical key.
      * 
-     * @return id.
+     * @return The unique technical key
      */
     public Long getId() {
         return this.id;
@@ -190,8 +187,8 @@ public class TransportOrder implements Serializable {
     /**
      * Checks if the instance is transient.
      * 
-     * @return - true: Entity is not present on the persistent storage.<br>
-     *         - false : Entity already exists on the persistence storage
+     * @return true: Entity is not present on the persistent storage.<br>
+     *         false : Entity already exists on the persistence storage
      */
     public boolean isNew() {
         return (this.id == null);
@@ -200,7 +197,7 @@ public class TransportOrder implements Serializable {
     /**
      * Get the priority level of this {@link TransportOrder}.
      * 
-     * @return priority.
+     * @return The priority
      */
     public short getPriority() {
         return this.priority;
@@ -211,6 +208,7 @@ public class TransportOrder implements Serializable {
      * value the lower the priority.
      * 
      * @param priority
+     *            The priority to set
      */
     public void setPriority(short priority) {
         this.priority = priority;
@@ -219,7 +217,7 @@ public class TransportOrder implements Serializable {
     /**
      * Returns the date when the {@link TransportOrder} was started.
      * 
-     * @return startDate
+     * @return The date when started
      */
     public Date getStartDate() {
         return this.startDate;
@@ -229,6 +227,7 @@ public class TransportOrder implements Serializable {
      * Set the date when the {@link TransportOrder} was started.
      * 
      * @param startDate
+     *            The date when started
      */
     private void setStartDate(Date startDate) {
         this.startDate = startDate;
@@ -237,7 +236,7 @@ public class TransportOrder implements Serializable {
     /**
      * Get the {@link TransportUnit} moved by this {@link TransportOrder}.
      * 
-     * @return transportUnit.
+     * @return The transportUnit to be moved
      */
     public TransportUnit getTransportUnit() {
         return this.transportUnit;
@@ -247,6 +246,7 @@ public class TransportOrder implements Serializable {
      * Set a {@link TransportUnit} to be moved by this {@link TransportOrder}.
      * 
      * @param transportUnit
+     *            The transportUnit to be moved
      */
     public void setTransportUnit(TransportUnit transportUnit) {
         this.transportUnit = transportUnit;
@@ -255,7 +255,7 @@ public class TransportOrder implements Serializable {
     /**
      * Returns the date when this {@link TransportOrder} was created.
      * 
-     * @return
+     * @return The date when created
      */
     public Date getCreationDate() {
         return this.creationDate;
@@ -264,7 +264,7 @@ public class TransportOrder implements Serializable {
     /**
      * Returns the state of this {@link TransportOrder}.
      * 
-     * @return
+     * @return The state of the order
      */
     public TRANSPORT_ORDER_STATE getState() {
         return this.state;
@@ -297,6 +297,7 @@ public class TransportOrder implements Serializable {
      * Set the state of this {@link TransportOrder}.
      * 
      * @param newState
+     *            The new state to set
      */
     public void setState(TRANSPORT_ORDER_STATE newState) {
         validateStateChange(newState);
@@ -309,7 +310,7 @@ public class TransportOrder implements Serializable {
     /**
      * Get the target {@link Location} of this {@link TransportOrder}.
      * 
-     * @return targetLocation
+     * @return The targetLocation, if any
      */
     public Location getTargetLocation() {
         return this.targetLocation;
@@ -319,6 +320,7 @@ public class TransportOrder implements Serializable {
      * Set the target {@link Location} of this {@link TransportOrder}.
      * 
      * @param targetLocation
+     *            The location to move on
      */
     public void setTargetLocation(Location targetLocation) {
         this.targetLocation = targetLocation;
@@ -327,7 +329,7 @@ public class TransportOrder implements Serializable {
     /**
      * Get the date when the {@link TransportOrder} was changed last time.
      * 
-     * @return the dateUpdated.
+     * @return The date of last update
      */
     public Date getDateUpdated() {
         return dateUpdated;
@@ -336,7 +338,7 @@ public class TransportOrder implements Serializable {
     /**
      * Get the targetLocationGroup.
      * 
-     * @return the targetLocationGroup.
+     * @return The targetLocationGroup, if any
      */
     public LocationGroup getTargetLocationGroup() {
         return targetLocationGroup;
@@ -355,7 +357,7 @@ public class TransportOrder implements Serializable {
     /**
      * Get the last {@link Problem}.
      * 
-     * @return the problem.
+     * @return The last problem.
      */
     public Problem getProblem() {
         return problem;
@@ -374,7 +376,7 @@ public class TransportOrder implements Serializable {
     /**
      * Get the endDate.
      * 
-     * @return the endDate.
+     * @return The date the order ended
      */
     public Date getEndDate() {
         return endDate;
@@ -383,7 +385,7 @@ public class TransportOrder implements Serializable {
     /**
      * Get the sourceLocation.
      * 
-     * @return the sourceLocation.
+     * @return The sourceLocation
      */
     public Location getSourceLocation() {
         return sourceLocation;
@@ -393,7 +395,7 @@ public class TransportOrder implements Serializable {
      * Set the sourceLocation.
      * 
      * @param sourceLocation
-     *            The sourceLocation to set.
+     *            The sourceLocation to set
      */
     public void setSourceLocation(Location sourceLocation) {
         this.sourceLocation = sourceLocation;
@@ -402,7 +404,7 @@ public class TransportOrder implements Serializable {
     /**
      * JPA optimistic locking.
      * 
-     * @return - Version field
+     * @return The version field
      */
     public long getVersion() {
         return this.version;
