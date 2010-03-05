@@ -40,6 +40,7 @@ public class TransportManagementException extends RuntimeException {
      * Create a new TransportManagementException.
      * 
      * @param message
+     *            The message String
      */
     public TransportManagementException(String message) {
         super(message);
@@ -49,6 +50,7 @@ public class TransportManagementException extends RuntimeException {
      * Create a new TransportManagementException.
      * 
      * @param cause
+     *            The root cause
      */
     public TransportManagementException(Throwable cause) {
         super(cause);
@@ -58,7 +60,9 @@ public class TransportManagementException extends RuntimeException {
      * Create a new TransportManagementException.
      * 
      * @param message
+     *            The message String
      * @param cause
+     *            The root cause
      */
     public TransportManagementException(String message, Throwable cause) {
         super(message, cause);
