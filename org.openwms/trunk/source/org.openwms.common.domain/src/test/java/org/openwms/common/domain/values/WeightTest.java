@@ -32,7 +32,7 @@ import org.junit.Test;
  * @author <a href="mailto:openwms@googlemail.com">Heiko Scherrer</a>
  * @version $Revision$
  * @since 0.1
- * @see Weight
+ * @see org.openwms.common.domain.values.Weight
  */
 public class WeightTest {
 

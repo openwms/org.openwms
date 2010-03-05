@@ -75,9 +75,9 @@ public class UserPassword implements Serializable {
      * Create a new <code>UserPassword</code>.
      * 
      * @param user
-     *            The {@link User} to assign
+     *            - The {@link User} to assign
      * @param password
-     *            The password as String to assign
+     *            - The password as String to assign
      */
     public UserPassword(User user, String password) {
         this.user = user;
@@ -87,7 +87,7 @@ public class UserPassword implements Serializable {
     /**
      * Constructor only for the persistence provider.
      */
-    protected UserPassword() { }
+    protected UserPassword() {}
 
     /**
      * Return the unique technical key.

@@ -50,7 +50,7 @@ import javax.persistence.TemporalType;
  */
 @Entity
 @Table(name = "T_USER")
-@NamedQueries({ @NamedQuery(name = "User.findAll", query = "SELECT u FROM User u"),
+@NamedQueries( { @NamedQuery(name = "User.findAll", query = "SELECT u FROM User u"),
         @NamedQuery(name = "User.findAllOrdered", query = "SELECT u FROM User u ORDER BY u.username"),
         @NamedQuery(name = "User.findByUsername", query = "SELECT u FROM User u WHERE u.username = ?1") })
 public class User implements Serializable {
@@ -148,13 +148,13 @@ public class User implements Serializable {
      * Accessed by persistence provider.
      */
     @SuppressWarnings("unused")
-    private User() { }
+    private User() {}
 
     /**
      * Create a new User with an username.
      * 
      * @param username
-     *            The unique name of the user
+     *            - The unique name of the user
      */
     public User(String username) {
         this.username = username;
@@ -265,14 +265,14 @@ public class User implements Serializable {
      * existing {@link UserPassword}s are removed.
      * 
      * @param passwords
-     *            A List of {@link UserPassword}s
+     *            - A List of {@link UserPassword}s
      */
     public void setPasswords(List<UserPassword> passwords) {
         this.passwords = passwords;
     }
 
     /**
-     * @return the userDetails
+     * @return The userDetails
      */
     public UserDetails getUserDetails() {
         return userDetails;
@@ -280,7 +280,7 @@ public class User implements Serializable {
 
     /**
      * @param userDetails
-     *            the userDetails to set
+     *            - The userDetails to set
      */
     public void setUserDetails(UserDetails userDetails) {
         this.userDetails = userDetails;
@@ -301,7 +301,7 @@ public class User implements Serializable {
      * Set this <code>User</code> as authenticated through an external system.
      * 
      * @param extern
-     *            true if this <code>User</code> was authenticated by an
+     *            - true if this <code>User</code> was authenticated by an
      *            external system, otherwise false.
      */
     public void setExtern(Boolean extern) {

@@ -83,7 +83,7 @@ public class Email implements Serializable {
      * Accessed by persistence provider.
      */
     @SuppressWarnings("unused")
-    private Email() { }
+    private Email() {}
 
     /**
      * Create a new Email for the
@@ -91,9 +91,9 @@ public class Email implements Serializable {
      * <code>username</code> and <code>emailAddress</code>.
      * 
      * @param username
-     *            The name of the User
+     *            - The name of the User
      * @param emailAddress
-     *            The email address of the User
+     *            - The email address of the User
      */
     public Email(String username, String emailAddress) {
         assert username != null && !username.equals("");
@@ -114,8 +114,8 @@ public class Email implements Serializable {
     /**
      * Checks if the instance is transient.
      * 
-     * @return - true: Entity is not present on the persistent storage.<br>
-     *         - false : Entity already exists on the persistence storage
+     * @return true: Entity is not present on the persistent storage.<br>
+     *         false : Entity already exists on the persistence storage
      */
     public boolean isNew() {
         return this.id == null;
@@ -124,7 +124,7 @@ public class Email implements Serializable {
     /**
      * Return the name of the user that belongs to this email.
      * 
-     * @return - Username as String
+     * @return The username as String
      */
     public String getUsername() {
         return this.username;
@@ -143,7 +143,7 @@ public class Email implements Serializable {
     /**
      * Get the emailAddress.
      * 
-     * @return the emailAddress.
+     * @return The emailAddress.
      */
     public String getEmailAddress() {
         return emailAddress;
@@ -153,7 +153,7 @@ public class Email implements Serializable {
      * Set the emailAddress.
      * 
      * @param emailAddress
-     *            The emailAddress to set.
+     *            - The emailAddress to set.
      */
     public void setEmailAddress(String emailAddress) {
         this.emailAddress = emailAddress;
@@ -162,7 +162,7 @@ public class Email implements Serializable {
     /**
      * Get the fullName.
      * 
-     * @return the fullName.
+     * @return The fullName.
      */
     public String getFullName() {
         return fullName;
@@ -172,7 +172,7 @@ public class Email implements Serializable {
      * Set the fullName.
      * 
      * @param fullName
-     *            The fullName to set.
+     *            - The fullName to set.
      */
     public void setFullName(String fullName) {
         this.fullName = fullName;
@@ -181,7 +181,7 @@ public class Email implements Serializable {
     /**
      * JPA optimistic locking.
      * 
-     * @return - Version field
+     * @return The version field
      */
     public long getVersion() {
         return version;

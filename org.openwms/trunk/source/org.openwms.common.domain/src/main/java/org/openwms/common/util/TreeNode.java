@@ -27,6 +27,8 @@ import java.util.Map;
 /**
  * A TreeNode.
  * 
+ * @param <T>
+ *            - The type of the node.
  * @author <a href="mailto:openwms@googlemail.com">Heiko Scherrer</a>
  * @version $Revision$
  * @since 0.1
@@ -36,7 +38,7 @@ public interface TreeNode<T> extends Serializable {
     /**
      * Getter for node attached data.
      * 
-     * @return Node attached data
+     * @return The attached Node data
      */
     T getData();
 
@@ -44,7 +46,7 @@ public interface TreeNode<T> extends Serializable {
      * Setter for node attached data.
      * 
      * @param data
-     *            Data to set as attached node data
+     *            - Data to set as attached node data
      */
     void setData(T data);
 
@@ -84,7 +86,7 @@ public interface TreeNode<T> extends Serializable {
      * about identifier constraints.
      * 
      * @param id
-     *            identifier of the child to find
+     *            - The identifier of the child to find
      * @return designated {@link TreeNode} instance or <code>null</code>
      */
     TreeNode<T> getChild(Object id);
@@ -93,10 +95,10 @@ public interface TreeNode<T> extends Serializable {
      * Adds child to children collection.
      * 
      * @param identifier
-     *            child identifier. Please see {@link #getChildren()} for more
+     *            - child identifier. Please see {@link #getChildren()} for more
      *            information about identifier constraints.
      * @param child
-     *            child
+     *            - The child
      */
     void addChild(Object identifier, TreeNode<T> child);
 
@@ -105,7 +107,7 @@ public interface TreeNode<T> extends Serializable {
      * constraints. removes child from children collection by child id
      * 
      * @param id
-     *            id of the child to remove
+     *            - The id of the child to remove
      */
     void removeChild(Object id);
 
@@ -121,7 +123,7 @@ public interface TreeNode<T> extends Serializable {
      * Setter for parent {@link TreeNode}.
      * 
      * @param parent
-     *            {@link TreeNode} to set as parent
+     *            - {@link TreeNode} to set as parent
      */
     void setParent(TreeNode<T> parent);
 }

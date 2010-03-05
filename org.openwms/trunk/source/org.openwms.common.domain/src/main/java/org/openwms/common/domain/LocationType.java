@@ -236,7 +236,7 @@ public class LocationType implements Serializable {
      * Return the type as String.
      * 
      * @see java.lang.Object#toString()
-     * @return as String
+     * @return String
      */
     @Override
     public String toString() {

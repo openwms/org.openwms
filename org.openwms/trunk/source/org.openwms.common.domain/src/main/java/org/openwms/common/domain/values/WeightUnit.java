@@ -55,7 +55,7 @@ public enum WeightUnit {
      * Create a new WeightUnit.
      * 
      * @param baseUnit
-     *            The base unit of the weight
+     *            - The base unit of the weight
      */
     WeightUnit(long baseUnit) {
         this.baseUnit = baseUnit;

@@ -23,6 +23,8 @@ package org.openwms.common.domain.values;
 /**
  * A Unit.
  * 
+ * @param <T>
+ *            - Type of Unit
  * @author <a href="mailto:openwms@googlemail.com">Heiko Scherrer</a>
  * @version $Revision$
  * @since 0.1
@@ -33,7 +35,7 @@ public interface Unit<T> {
      * Convert this unit into <tt>unit</tt>.
      * 
      * @param unit
-     *            The unit to convert to
+     *            - The unit to convert to
      */
     void convertTo(T unit);
 

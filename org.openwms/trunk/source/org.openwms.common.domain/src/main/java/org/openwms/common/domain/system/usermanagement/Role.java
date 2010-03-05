@@ -98,13 +98,13 @@ public class Role implements Serializable {
      * Accessed by persistence provider.
      */
     @SuppressWarnings("unused")
-    private Role() { }
+    private Role() {}
 
     /**
      * Create a new Role with a name.
      * 
      * @param rolename
-     *            The name of the Role
+     *            - The name of the Role
      */
     public Role(String rolename) {
         this.rolename = rolename;
@@ -114,9 +114,9 @@ public class Role implements Serializable {
      * Create a new Role with name and description.
      * 
      * @param rolename
-     *            The name of the Role
+     *            - The name of the Role
      * @param description
-     *            The description text of the Role
+     *            - The description text of the Role
      */
     public Role(String rolename, String description) {
         this.rolename = rolename;
@@ -154,7 +154,7 @@ public class Role implements Serializable {
      * Set the description for this Role.
      * 
      * @param description
-     *            The description of the Role as text
+     *            - The description of the Role as text
      */
     public void setDescription(String description) {
         this.description = description;
@@ -173,7 +173,7 @@ public class Role implements Serializable {
      * Add a existing {@link User} to this Role.
      * 
      * @param user
-     *            The {@link User} to add to this Role
+     *            - The {@link User} to add to this Role
      * @return true if the {@link User} was new in the collection of
      *         {@link User}s, otherwise false
      */
@@ -189,7 +189,7 @@ public class Role implements Serializable {
      * {@link User}s will be removed.
      * 
      * @param users
-     *            A Set of {@link User}s to assign to this Role
+     *            - A Set of {@link User}s to assign to this Role
      */
     public void setUsers(Set<User> users) {
         if (users == null) {
@@ -212,7 +212,7 @@ public class Role implements Serializable {
      * {@link Preference}s will be removed.
      * 
      * @param preferences
-     *            A Set of {@link Preference}s to assign to this Role.
+     *            - A Set of {@link Preference}s to assign to this Role.
      */
     public void setPreferences(Set<Preference> preferences) {
         this.preferences = preferences;
@@ -221,7 +221,7 @@ public class Role implements Serializable {
     /**
      * JPA optimistic locking.
      * 
-     * @return Version field
+     * @return The version field
      */
     public long getVersion() {
         return version;
