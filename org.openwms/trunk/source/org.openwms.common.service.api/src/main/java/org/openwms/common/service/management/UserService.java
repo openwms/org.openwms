@@ -24,18 +24,15 @@ import org.openwms.common.domain.system.usermanagement.User;
 import org.openwms.common.service.EntityService;
 
 /**
- * An UserService.
- * <p>
- * Extends the {@link EntityService} interface about some useful methods
- * regarding the general handling with {@link User}s.
- * </p>
+ * An UserService - Extends the {@link EntityService} interface about some
+ * useful methods regarding the general handling with {@link User}s.
  * 
  * @param <T>
  *            A type of User
  * @author <a href="mailto:openwms@googlemail.com">Heiko Scherrer</a>
  * @version $Revision$
  * @since 0.1
- * @see EntityService
+ * @see org.openwms.common.service.EntityService
  */
 public interface UserService<T extends User> extends EntityService<T> {
 

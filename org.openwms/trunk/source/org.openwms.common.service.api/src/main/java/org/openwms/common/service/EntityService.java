@@ -24,11 +24,8 @@ import java.io.Serializable;
 import java.util.List;
 
 /**
- * An EntityService.
- * <p>
- * Generic interface definition of a service to perform simple
- * create/read/update and remove functionality.
- * </p>
+ * An EntityService - Generic interface definition of a service to perform
+ * simple create/read/update and remove functionality.
  * <p>
  * Basically the service is responsible to access the persistence integration
  * layer. Even though the service cares about the transaction boundary and
@@ -37,6 +34,7 @@ import java.util.List;
  * </p>
  * 
  * @param <T>
+ *            Any serializable type, mostly an Entity class type
  * @author <a href="mailto:openwms@googlemail.com">Heiko Scherrer</a>
  * @version $Revision$
  * @since 0.1
@@ -47,6 +45,7 @@ public interface EntityService<T extends Serializable> {
      * Find all Entity classes of type clazz.
      * 
      * @param <T>
+     *            Any serializable type, mostly an Entity class type
      * @param clazz
      *            Class of the Entity to find
      * @return A {@link java.util.List} of all found Entities
@@ -57,6 +56,7 @@ public interface EntityService<T extends Serializable> {
      * Save an Entity of type T.
      * 
      * @param <T>
+     *            Any serializable type, mostly an Entity class type
      * @param clazz
      *            Class of the Entity to be saved
      * @param entity
@@ -69,6 +69,7 @@ public interface EntityService<T extends Serializable> {
      * Find all Entities of type T.
      * 
      * @param <T>
+     *            Any serializable type, mostly an Entity class type
      * @return A {@link java.util.List} of all found Entities
      */
     // TODO [scherrer] : To be removed
@@ -79,6 +80,7 @@ public interface EntityService<T extends Serializable> {
      * Removes a persistent Entity.
      * 
      * @param <T>
+     *            Any serializable type, mostly an Entity class type
      * @param clazz
      *            Class of the Entity to be removed
      * @param entity
@@ -90,6 +92,7 @@ public interface EntityService<T extends Serializable> {
      * Add a new entity to the persistent storage.
      * 
      * @param <T>
+     *            Any serializable type, mostly an Entity class type
      * @param newEntity
      *            Transient Entity instance to persist
      */

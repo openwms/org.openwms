@@ -26,54 +26,58 @@ import org.openwms.common.domain.LocationGroup;
 import org.openwms.common.util.TreeNode;
 
 /**
- * A LocationGroupService.
+ * A LocationGroupService - Extends the {@link EntityService} interface about
+ * some useful methods regarding the general handling with {@link LocationGroup}
+ * s.
  * <p>
- * Extends the {@link EntityService} interface about some useful methods
- * regarding the general handling with <code>LocationGroup</code>s.
+ * This interface is declared generic typed that implementation classes can use
+ * any extension of {@link LocationGroup}s.
  * </p>
  * 
+ * @param <T>
+ *            Any kind of {@link LocationGroup}
  * @author <a href="mailto:openwms@googlemail.com">Heiko Scherrer</a>
  * @version $Revision$
  * @since 0.1
- * @see EntityService
+ * @see org.openwms.common.service.EntityService
  */
-public interface LocationGroupService extends EntityService<LocationGroup> {
+public interface LocationGroupService<T extends LocationGroup> extends EntityService<T> {
 
     /**
-     * Changes the GroupStates of a <code>LocationGroup</code>.<br>
+     * Changes the GroupStates of a {@link LocationGroup}.<br>
      * Both, the GroupStateIn and the GroupStateOut of all child
-     * <code>LocationGroup</code>s are changed according to the parent
-     * <tt>locationGroup</tt>. This call is executed recursively to <i>all</i>
-     * child <code>LocationGroup</code>s of the <tt>locationGroup</tt> Entity.
+     * {@link LocationGroup}s are changed according to the parent
+     * <tt>locationGroup</tt>. This call is executed recursively to
+     * <strong>all</strong> child {@link LocationGroup}s of the
+     * <tt>locationGroup</tt> Entity.
      * 
-     * @param locationGroup
-     *            The <code>LocationGroup</code> to change
+     * @param T
+     *            The {@link LocationGroup} to change
      */
-    void changeGroupState(LocationGroup locationGroup);
+    void changeGroupState(T locationGroup);
 
     /**
-     * Returns a hierarchical Tree of all <code>LocationGroup</code>s. Used by
-     * the user interface to show all <code>LocationGroup</code>s in a tree
-     * form.
+     * Returns a hierarchical Tree of all {@link LocationGroup}s. Used by the
+     * user interface to show all {@link LocationGroup}s in a tree form.
      * 
-     * @return All <code>LocationGroup</code>s as hierarchical tree
+     * @return All {@link LocationGroup}s as hierarchical tree
      */
-    TreeNode<LocationGroup> getLocationGroupsAsTree();
+    TreeNode<T> getLocationGroupsAsTree();
 
     /**
-     * Returns a List of all <code>LocationGroup</code>s.
+     * Returns a List of all {@link LocationGroup}s.
      * 
-     * @return All <code>LocationGroup</code>s as a list
+     * @return All {@link LocationGroup}s as a list
      */
-    List<LocationGroup> getLocationGroupsAsList();
+    List<T> getLocationGroupsAsList();
 
     /**
-     * Save an already persisted <code>LocationGroup</code> and return the saved
+     * Save an already persisted {@link LocationGroup} and return the saved
      * instance.
      * 
-     * @param locationGroup
-     *            The <code>LocationGroup</code> to save
-     * @return The saved <code>LocationGroup</code>
+     * @param T
+     *            The {@link LocationGroup} to save
+     * @return The saved {@link LocationGroup}
      */
-    LocationGroup save(LocationGroup locationGroup);
+    T save(T locationGroup);
 }

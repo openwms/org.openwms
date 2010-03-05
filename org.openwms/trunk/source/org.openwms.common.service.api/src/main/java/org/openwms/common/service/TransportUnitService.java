@@ -28,18 +28,17 @@ import org.openwms.common.domain.TransportUnitType;
 import org.openwms.common.domain.values.Barcode;
 
 /**
- * A TransportService.
- * <p>
- * Extends the {@link EntityService} interface about some useful methods
- * regarding the general handling with {@link TransportUnit}s.
- * </p>
+ * A TransportService - Extends the {@link EntityService} interface about some
+ * useful methods regarding the general handling with {@link TransportUnit}s.
  * 
+ * @param <T>
+ *            Any kind of {@link TransportUnit}
  * @author <a href="mailto:openwms@googlemail.com">Heiko Scherrer</a>
  * @version $Revision$
  * @since 0.1
  * @see org.openwms.common.service.EntityService
  */
-public interface TransportUnitService extends EntityService<TransportUnit> {
+public interface TransportUnitService<T extends TransportUnit> extends EntityService<TransportUnit> {
 
     /**
      * Create a new {@link TransportUnit} with the type
@@ -53,9 +52,9 @@ public interface TransportUnitService extends EntityService<TransportUnit> {
      * @param actualLocation
      *            The <code>Location</code> where the {@link TransportUnit} is
      *            placed on
-     * @return The updated {@link TransportUnit} instance
+     * @return The created {@link TransportUnit} instance
      */
-    TransportUnit createTransportUnit(Barcode barcode, TransportUnitType transportUnitType, LocationPK actualLocation);
+    T createTransportUnit(Barcode barcode, TransportUnitType transportUnitType, LocationPK actualLocation);
 
     /**
      * Move a {@link TransportUnit} identified by its {@link Barcode} to the
@@ -73,6 +72,6 @@ public interface TransportUnitService extends EntityService<TransportUnit> {
      * 
      * @return A List of all {@link TransportUnit}s
      */
-    List<TransportUnit> getAllTransportUnits();
+    List<T> getAllTransportUnits();
 
 }
