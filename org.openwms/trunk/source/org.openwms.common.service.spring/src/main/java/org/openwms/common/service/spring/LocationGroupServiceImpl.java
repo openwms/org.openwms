@@ -38,6 +38,7 @@ import org.springframework.transaction.annotation.Transactional;
  * @author <a href="mailto:openwms@googlemail.com">Heiko Scherrer</a>
  * @version $Revision$
  * @since 0.1
+ * @see org.openwms.common.service.spring.EntityServiceImpl
  */
 @Service
 @Transactional
