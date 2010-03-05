@@ -24,7 +24,8 @@ import org.openwms.common.domain.system.usermanagement.User;
 import org.openwms.common.integration.GenericDao;
 
 /**
- * An UserDao.
+ * An UserDao - Adds specific functionality concerning {@link User} Entity
+ * classes.
  * <p>
  * Adds additional behavior to the {@link GenericDao} to operate on {@link User}
  * Entity classes.

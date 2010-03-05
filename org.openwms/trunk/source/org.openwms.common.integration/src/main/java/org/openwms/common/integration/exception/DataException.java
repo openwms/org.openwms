@@ -21,7 +21,7 @@
 package org.openwms.common.integration.exception;
 
 /**
- * A DataException.
+ * A DataException - General type of DAO exception.
  * <p>
  * Superclass of exceptions thrown in the persistence integration layer
  * regarding data access errors.
@@ -46,7 +46,7 @@ public class DataException extends RuntimeException {
      * Create a new DataException with a message text.
      * 
      * @param message
-     *            - Message text as String
+     *            Message text as String
      */
     public DataException(String message) {
         super(message);
@@ -56,7 +56,7 @@ public class DataException extends RuntimeException {
      * Create a new DataException with the cause exception.
      * 
      * @param cause
-     *            - The cause exception
+     *            The cause exception
      */
     public DataException(Throwable cause) {
         super(cause);
@@ -66,9 +66,9 @@ public class DataException extends RuntimeException {
      * Create a new DataException with a message text and the cause exception.
      * 
      * @param message
-     *            - Message text as String
+     *            Message text as String
      * @param cause
-     *            - The cause exception
+     *            The cause exception
      */
     public DataException(String message, Throwable cause) {
         super(message, cause);

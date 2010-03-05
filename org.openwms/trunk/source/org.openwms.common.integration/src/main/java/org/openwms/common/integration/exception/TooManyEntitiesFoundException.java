@@ -23,7 +23,8 @@ package org.openwms.common.integration.exception;
 import java.io.Serializable;
 
 /**
- * A TooManyEntriesFoundException.
+ * A TooManyEntriesFoundException - When a single result was expected but more
+ * than one found.
  * <p>
  * This exception is thrown if a return value of <b>one</b> Entity instance was
  * expected but the persistence layer found more Entities.
@@ -42,7 +43,7 @@ public class TooManyEntitiesFoundException extends DataException {
      * Create a new TooManyEntriesFoundException with a message text.
      * 
      * @param message
-     *            - Message test as String
+     *            Message test as String
      */
     public TooManyEntitiesFoundException(String message) {
         super(message);
@@ -53,9 +54,9 @@ public class TooManyEntitiesFoundException extends DataException {
      * cause exception.
      * 
      * @param message
-     *            - Message text as String
+     *            Message text as String
      * @param cause
-     *            - The cause exception
+     *            The cause exception
      */
     public TooManyEntitiesFoundException(String message, Throwable cause) {
         super(message, cause);
@@ -66,7 +67,7 @@ public class TooManyEntitiesFoundException extends DataException {
      * Entity.
      * 
      * @param id
-     *            - Id of the expected Entity
+     *            Id of the expected Entity
      */
     public TooManyEntitiesFoundException(Serializable id) {
         super("Persistence layer returned more than expected entities for id: " + id);

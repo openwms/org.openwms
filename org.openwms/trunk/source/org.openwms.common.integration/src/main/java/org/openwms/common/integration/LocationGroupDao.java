@@ -23,7 +23,8 @@ package org.openwms.common.integration;
 import org.openwms.common.domain.LocationGroup;
 
 /**
- * A LocationGroupDao.
+ * A LocationGroupDao - Adds specific functionality concerning
+ * {@link LocationGroup} Entity classes.
  * <p>
  * Adds additional behavior to the {@link GenericDao} to operate on
  * {@link LocationGroup} Entity classes.
