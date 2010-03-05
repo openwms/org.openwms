@@ -25,13 +25,17 @@ import java.io.Serializable;
 import org.openwms.common.integration.GenericDao;
 
 /**
- * A GenericJpaDaoImpl.
+ * A GenericJpaDaoImpl - Adds generic finder methods to query Entity classes.
  * 
+ * @param <T>
+ *            Any serializable type, mostly an Entity class type.
+ * @param <I>
+ *            The type of the Entity class' unique id
  * @author <a href="mailto:openwms@googlemail.com">Heiko Scherrer</a>
  * @version $Revision$
  * @since 0.1
- * @see {@link org.openwms.common.integration.GenericDao}
- * @see {@link org.openwms.common.integration.jpa.AbstractGenericJpaDao}
+ * @see org.openwms.common.integration.jpa.AbstractGenericJpaDao
+ * @see org.openwms.common.integration.GenericDao
  */
 public class GenericJpaDaoImpl<T extends Serializable, ID extends Serializable> extends AbstractGenericJpaDao<T, ID>
         implements GenericDao<T, ID> {

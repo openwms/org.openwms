@@ -40,10 +40,8 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 /**
- * An AbstractGenericJpaDao.
- * <p>
- * Extend this DAO implementation to inherit simple JPA CRUD operations.
- * </p>
+ * An AbstractGenericJpaDao - Extend this DAO implementation to inherit simple
+ * JPA CRUD operations.
  * <p>
  * This {@link GenericDao} implementation extends Springs {@link JpaDaoSupport},
  * to have a benefit from Springs exception translation and transaction
@@ -56,11 +54,15 @@ import org.springframework.transaction.annotation.Transactional;
  * expressed with Springs {@link Transactional} annotation.
  * </p>
  * 
+ * @param <T>
+ *            Any serializable type, mostly an Entity class type.
+ * @param <ID>
+ *            The type of the Entity class' unique id
  * @author <a href="mailto:openwms@googlemail.com">Heiko Scherrer</a>
  * @version $Revision$
  * @since 0.1
- * @see {@link org.springframework.stereotype.Repository}
- * @see {@link org.springframework.transaction.annotation.Transactional}
+ * @see org.springframework.stereotype.Repository
+ * @see org.springframework.transaction.annotation.Transactional
  */
 @Repository
 @Transactional

@@ -44,8 +44,11 @@ import org.springframework.test.context.ContextConfiguration;
 public class LocationGroupDaoTest extends AbstractJpaSpringContextTests {
 
     @Autowired(required = true)
-    protected LocationGroupDao dao;
+    private LocationGroupDao dao;
 
+    /**
+     * Try to persist two locationGroups with the same business key.
+     */
     @Test
     public final void testDuplicateLocationGroups() {
         LocationGroup locationGroup = new LocationGroup("FIRST_LG");
@@ -61,6 +64,9 @@ public class LocationGroupDaoTest extends AbstractJpaSpringContextTests {
         }
     }
 
+    /**
+     * Check locationGroup relationships between parent and childs.
+     */
     @Test
     public final void testAddLocationGroup() {
         LocationGroup parent = new LocationGroup("TEST_GROUP_1");
@@ -83,6 +89,9 @@ public class LocationGroupDaoTest extends AbstractJpaSpringContextTests {
         assertFalse("Child LocationGroup must also be persisted", child.isNew());
     }
 
+    /**
+     * Test the removal of a locationGroup.
+     */
     @Test
     public final void testRemoveLocationGroups() {
         LocationGroup parent = new LocationGroup("TEST_GROUP_1");

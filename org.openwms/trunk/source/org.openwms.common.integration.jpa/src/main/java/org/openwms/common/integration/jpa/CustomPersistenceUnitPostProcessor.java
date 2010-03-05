@@ -39,7 +39,7 @@ import org.springframework.util.ResourceUtils;
  * 
  * @author <a href="mailto:openwms@googlemail.com">Heiko Scherrer</a>
  * @version $Revision$
- * @see {@link org.springframework.orm.jpa.persistenceunit.PersistenceUnitPostProcessor}
+ * @see org.springframework.orm.jpa.persistenceunit.PersistenceUnitPostProcessor
  * @since 0.1
  * @deprecated as an OSGi environment is used since 0.1
  */
