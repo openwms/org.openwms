@@ -20,15 +20,14 @@
  */
 package org.openwms.tms.service.impl;
 
-import org.openwms.common.domain.Location;
 import org.openwms.common.domain.LocationGroup;
-import org.openwms.common.domain.TransportUnit;
-import org.openwms.common.integration.GenericDao;
 import org.openwms.common.service.spring.EntityServiceImpl;
+import org.openwms.tms.domain.order.TransportOrder;
 import org.openwms.tms.integration.TransportOrderDao;
 import org.openwms.tms.service.TransportOrderService;
 import org.springframework.beans.factory.annotation.Required;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  * A TransportService.
@@ -36,24 +35,24 @@ import org.springframework.stereotype.Service;
  * @author <a href="mailto:openwms@googlemail.com">Heiko Scherrer</a>
  * @version $Revision$
  * @since 0.1
+ * @see org.openwms.common.service.spring.EntityServiceImpl
+ * @see org.openwms.tms.service.TransportOrderService
  */
+// FIXME [scherrer] Remove the dependency to an own dao, use generic dao
+// instead.
 @Service
-public class TransportServiceImpl extends EntityServiceImpl<TransportUnit, Long> implements TransportOrderService {
+@Transactional
+public class TransportServiceImpl extends EntityServiceImpl<TransportOrder, Long> implements
+        TransportOrderService<TransportOrder> {
 
-    private GenericDao<TransportUnit, Long> transportUnitDao;
-    private GenericDao<Location, Long> locationDao;
     private TransportOrderDao transportOrderDao;
 
-    @Required
-    public void setLocationDao(GenericDao<Location, Long> locationDao) {
-        this.locationDao = locationDao;
-    }
-
-    @Required
-    public void setTransportUnitDao(GenericDao<TransportUnit, Long> transportUnitDao) {
-        this.transportUnitDao = transportUnitDao;
-    }
-
+    /**
+     * Use an specific DAO for the actions provided by this service.
+     * 
+     * @param transportOrderDao
+     *            An instance of {@link TransportOrderDao}
+     */
     @Required
     public void setTransportOrderDao(TransportOrderDao transportOrderDao) {
         this.transportOrderDao = transportOrderDao;
