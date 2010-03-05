@@ -23,10 +23,8 @@ package org.openwms.common.domain.values;
 import java.math.BigDecimal;
 
 /**
- * A Weight.
- * <p>
- * Describes a weight in real world, always including a unit and a value.
- * </p>
+ * A Weight - Describes a weight in real world, always including a unit and a
+ * value.
  * 
  * @author <a href="mailto:openwms@googlemail.com">Heiko Scherrer</a>
  * @version $Revision$
@@ -48,9 +46,9 @@ public class Weight implements Comparable<Weight>, Unit<WeightUnit> {
      * Create a new Weight.
      * 
      * @param value
-     *            - The value of the weight
+     *            The value of the weight
      * @param unit
-     *            - The unit of measure
+     *            The unit of measure
      */
     public Weight(BigDecimal value, WeightUnit unit) {
         this.value = value;

@@ -80,7 +80,7 @@ public class Problem implements Serializable {
      * Set the Date when occurred.
      * 
      * @param occurred
-     *            - The Date to set.
+     *            The Date to set.
      */
     public void setOccurred(Date occurred) {
         this.occurred = occurred;
@@ -99,7 +99,7 @@ public class Problem implements Serializable {
      * Set the messageNo.
      * 
      * @param messageNo
-     *            - The messageNo to set.
+     *            The messageNo to set.
      */
     public void setMessageNo(int messageNo) {
         this.messageNo = messageNo;
@@ -118,7 +118,7 @@ public class Problem implements Serializable {
      * Set the message.
      * 
      * @param message
-     *            - The message to set.
+     *            The message to set.
      */
     public void setMessage(String message) {
         this.message = message;

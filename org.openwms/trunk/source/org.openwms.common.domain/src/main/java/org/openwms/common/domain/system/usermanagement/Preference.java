@@ -31,10 +31,7 @@ import javax.persistence.UniqueConstraint;
 import javax.persistence.Version;
 
 /**
- * A Preference.
- * <p>
- * Could be an user-, role- or system preference.
- * </p>
+ * A Preference - Could be an user-, role- or system preference.
  * 
  * @author <a href="mailto:openwms@googlemail.com">Heiko Scherrer</a>
  * @version $Revision$
@@ -130,7 +127,7 @@ public class Preference implements Serializable {
      * Set the type of the {@link Preference}.
      * 
      * @param type
-     *            - The type to set as String
+     *            The type to set as String
      */
     public void setType(String type) {
         this.type = type;
@@ -149,7 +146,7 @@ public class Preference implements Serializable {
      * Set the value of the {@link Preference}.
      * 
      * @param value
-     *            - The value to set
+     *            The value to set
      */
     public void setValue(String value) {
         this.value = value;
@@ -168,7 +165,7 @@ public class Preference implements Serializable {
      * Set the key of this {@link Preference}.
      * 
      * @param key
-     *            - The key to set
+     *            The key to set
      */
     public void setKey(String key) {
         this.value = key;
@@ -187,7 +184,7 @@ public class Preference implements Serializable {
      * Set the <code>floatValue</code> of the {@link Preference}.
      * 
      * @param floatValue
-     *            - The <code>floatValue</code> to set
+     *            The <code>floatValue</code> to set
      */
     public void setFloatValue(Float floatValue) {
         this.floatValue = floatValue;
@@ -206,7 +203,7 @@ public class Preference implements Serializable {
      * Set a description for this {@link Preference}.
      * 
      * @param description
-     *            - The description to set
+     *            The description to set
      */
     public void setDescription(String description) {
         this.description = description;
@@ -225,7 +222,7 @@ public class Preference implements Serializable {
      * Set a possible minimum value for this {@link Preference}.
      * 
      * @param minimum
-     *            - The possible minimum value to set
+     *            The possible minimum value to set
      */
     public void setMinimum(int minimum) {
         this.minimum = minimum;
@@ -244,7 +241,7 @@ public class Preference implements Serializable {
      * Set a possible maximum integer value for this {@link Preference}.
      * 
      * @param maximum
-     *            - The possible maximum value to set
+     *            The possible maximum value to set
      */
     public void setMaximum(int maximum) {
         this.maximum = maximum;

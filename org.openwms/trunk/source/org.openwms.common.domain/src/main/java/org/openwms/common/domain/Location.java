@@ -47,7 +47,7 @@ import javax.persistence.Version;
 import org.openwms.common.domain.system.Message;
 
 /**
- * A Location. Any kind of place within a warehouse.
+ * A Location - Any kind of place within a warehouse.
  * <p>
  * Could be a storage location in the stock as well as a location on a conveyer.
  * Also virtual and error locations can be described with an {@link Location}
@@ -239,7 +239,7 @@ public class Location implements Serializable {
      * Create a new {@link Location} with the business key.
      * 
      * @param locationId
-     *            - The unique natural key of the {@link Location}
+     *            The unique natural key of the {@link Location}
      */
     public Location(LocationPK locationId) {
         this.locationId = locationId;
@@ -308,7 +308,7 @@ public class Location implements Serializable {
      * Remove one {@link Message} from this {@link Location}.
      * 
      * @param message
-     *            - The {@link Message} to be removed
+     *            The {@link Message} to be removed
      * @return true if the {@link Message} was found and removed, otherwise
      *         false
      */
@@ -323,7 +323,7 @@ public class Location implements Serializable {
      * Add a new {@link Message} to this {@link Location}.
      * 
      * @param message
-     *            - The {@link Message} to be added
+     *            The {@link Message} to be added
      * @return true if the {@link Message} was new in the collection of
      *         messages, otherwise false
      */
@@ -406,7 +406,7 @@ public class Location implements Serializable {
      * Add this {@link Location} to the <code>locationGroup</code>.
      * 
      * @param locationGroup
-     *            - The {@link LocationGroup} to be assigned
+     *            The {@link LocationGroup} to be assigned
      */
     public void setLocationGroup(LocationGroup locationGroup) {
         if (locationGroup != null) {

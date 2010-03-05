@@ -26,7 +26,7 @@ import javax.persistence.Column;
 import javax.persistence.Embeddable;
 
 /**
- * A LocationPK. This value type is used as unique natural key of the
+ * A LocationPK - This value type is used as unique natural key of the
  * {@link org.openwms.common.domain.Location} Entity.
  * 
  * @author <a href="mailto:openwms@googlemail.com">Heiko Scherrer</a>
@@ -77,15 +77,15 @@ public class LocationPK implements Serializable {
      * Create a new LocationPK.
      * 
      * @param area
-     *            - Area where this <code>Location</code> belongs to
+     *            Area where this <code>Location</code> belongs to
      * @param aisle
-     *            - Aisle where this <code>Location</code> belongs to
+     *            Aisle where this <code>Location</code> belongs to
      * @param x
-     *            - Dimension x where this <code>Location</code> belongs to
+     *            Dimension x where this <code>Location</code> belongs to
      * @param y
-     *            - Dimension y where this <code>Location</code> belongs to
+     *            Dimension y where this <code>Location</code> belongs to
      * @param z
-     *            - Dimension z where this <code>Location</code> belongs to
+     *            Dimension z where this <code>Location</code> belongs to
      */
     public LocationPK(String area, String aisle, String x, String y, String z) {
         this.area = area;

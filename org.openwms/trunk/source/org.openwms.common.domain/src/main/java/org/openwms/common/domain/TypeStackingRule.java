@@ -32,7 +32,7 @@ import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 
 /**
- * A TypeStackingRule. Which {@link TransportUnitType}s on others.
+ * A TypeStackingRule - Which {@link TransportUnitType}s on others.
  * <p>
  * Defines which {@link TransportUnitType} may be placed on the which other
  * {@link TransportUnitType}.
@@ -93,9 +93,9 @@ public class TypeStackingRule implements Serializable {
      * allowedTransportUnitType may stacked on this {@link TransportUnitType}.
      * 
      * @param noTransportUnits
-     *            - The number of allowed TransportUnits
+     *            The number of allowed TransportUnits
      * @param allowedTransportUnitType
-     *            - The allowed TransportUnitType
+     *            The allowed TransportUnitType
      */
     public TypeStackingRule(short noTransportUnits, TransportUnitType allowedTransportUnitType) {
         this.noTransportUnits = noTransportUnits;

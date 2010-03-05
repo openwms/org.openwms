@@ -28,7 +28,7 @@ import java.util.Map;
  * A TreeNodeImpl.
  * 
  * @param <T>
- *            - The type of the node.
+ *            The type of the node.
  * @author <a href="mailto:openwms@googlemail.com">Heiko Scherrer</a>
  * @version $Revision$
  * @since 0.1

@@ -32,10 +32,7 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
 /**
- * A Message.
- * <p>
- * Predefined message.
- * </p>
+ * A Message - Predefined message.
  * 
  * @author <a href="mailto:openwms@googlemail.com">Heiko Scherrer</a>
  * @version $Revision$
@@ -85,9 +82,9 @@ public class Message implements Serializable {
      * Create a new Message with message number and message text.
      * 
      * @param messageNo
-     *            - The message number
+     *            The message number
      * @param messageText
-     *            - The message text
+     *            The message text
      */
     public Message(int messageNo, String messageText) {
         this.messageNo = messageNo;
@@ -117,7 +114,7 @@ public class Message implements Serializable {
      * Set the message number.
      * 
      * @param messageNo
-     *            - The messageNo to set.
+     *            The messageNo to set.
      */
     public void setMessageNo(int messageNo) {
         this.messageNo = messageNo;
@@ -136,7 +133,7 @@ public class Message implements Serializable {
      * Set the message text.
      * 
      * @param messageText
-     *            - The messageText to set.
+     *            The messageText to set.
      */
     public void setMessageText(String messageText) {
         this.messageText = messageText;

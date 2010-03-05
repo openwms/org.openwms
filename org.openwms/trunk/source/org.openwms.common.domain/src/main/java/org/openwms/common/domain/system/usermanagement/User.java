@@ -42,7 +42,7 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
 /**
- * An <code>User</code> represents an user of the system.
+ * An <code>User</code> represents the user of the system.
  * 
  * @author <a href="mailto:openwms@googlemail.com">Heiko Scherrer</a>
  * @version $Revision$
@@ -154,7 +154,7 @@ public class User implements Serializable {
      * Create a new User with an username.
      * 
      * @param username
-     *            - The unique name of the user
+     *            The unique name of the user
      */
     public User(String username) {
         this.username = username;
@@ -265,7 +265,7 @@ public class User implements Serializable {
      * existing {@link UserPassword}s are removed.
      * 
      * @param passwords
-     *            - A List of {@link UserPassword}s
+     *            A List of {@link UserPassword}s
      */
     public void setPasswords(List<UserPassword> passwords) {
         this.passwords = passwords;
@@ -280,7 +280,7 @@ public class User implements Serializable {
 
     /**
      * @param userDetails
-     *            - The userDetails to set
+     *            The userDetails to set
      */
     public void setUserDetails(UserDetails userDetails) {
         this.userDetails = userDetails;
@@ -301,7 +301,7 @@ public class User implements Serializable {
      * Set this <code>User</code> as authenticated through an external system.
      * 
      * @param extern
-     *            - true if this <code>User</code> was authenticated by an
+     *            true if this <code>User</code> was authenticated by an
      *            external system, otherwise false.
      */
     public void setExtern(Boolean extern) {
