@@ -51,20 +51,30 @@ import org.springframework.test.context.ContextConfiguration;
 public class LocationDaoTest extends AbstractJpaSpringContextTests {
 
     @Autowired(required = true)
-    protected LocationDao locationDao;
+    private LocationDao locationDao;
     private List<Location> locations;
 
+    /**
+     * Persist a location for each test execution.
+     */
     @Before
-    public void inTransaction() {
+    public void onSetUpInTransaction() {
         locationDao.persist(new Location(new LocationPK("area", "aisle", "x", "y", "z")));
+        // TODO [scherrer] Do we need to flush and clear after persist?
     }
 
+    /**
+     * Try to find the persisted location using the findAll query.
+     */
     @Test
     public final void testFindAll() {
         assertNotNull("Cannot query a list of all Locations", locationDao.findAll());
         logger.debug("OK:All Location found by query");
     }
 
+    /**
+     * Try to find the persisted location using the findById query.
+     */
     @Test
     public final void testFindById() {
         locations = locationDao.findAll();
@@ -72,6 +82,10 @@ public class LocationDaoTest extends AbstractJpaSpringContextTests {
         logger.debug("OK:Location found by id query");
     }
 
+    /**
+     * Try to find the persisted location using the findByUniqeId query, that
+     * means fetching by the business key.
+     */
     @Test
     public final void testFindByUniqueId() {
         Location known = locationDao.findByUniqueId(new LocationPK("area", "aisle", "x", "y", "z"));
@@ -83,6 +97,9 @@ public class LocationDaoTest extends AbstractJpaSpringContextTests {
         logger.debug("OK:Unknown Location not found by unique id query");
     }
 
+    /**
+     * Test {@link Location#isNew()} and try to persist.
+     */
     @Test
     public final void testPersist() {
         Location l = new Location(new LocationPK("NEW", "NEW", "NEW", "NEW", "NEW"));
@@ -93,6 +110,9 @@ public class LocationDaoTest extends AbstractJpaSpringContextTests {
         assertFalse("isNew should return false for a persistend entity", l.isNew());
     }
 
+    /**
+     * Try to persist and remove.
+     */
     @Test
     public final void testPersistAndRemove() {
         Location l = new Location(new LocationPK("NEW", "NEW", "NEW", "NEW", "NEW"));
@@ -106,6 +126,9 @@ public class LocationDaoTest extends AbstractJpaSpringContextTests {
         assertNull("PK should be NULL", l2);
     }
 
+    /**
+     * Test adding messages to the location. Test cascading persistence.
+     */
     @Test
     public final void testAddingErrorMessages() {
         LocationPK pk = new LocationPK("UNKNOWN", "UNKNOWN", "UNKNOWN", "UNKNOWN", "UNKNOWN");
