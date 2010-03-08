@@ -24,20 +24,21 @@
 <mx:Canvas xmlns:mx="http://www.adobe.com/2006/mxml" width="300" height="200" backgroundColor="#FFFFFF"
 	backgroundAlpha="0.5">
 
-	<mx:Metadata>
-		[Event(name="login", type="org.openwms.web.flex.client.event.SecurityEvent")]
-  </mx:Metadata>
+    <mx:Metadata>
+        [Event(name="login", type="org.openwms.web.flex.client.event.SecurityEvent")]
+    </mx:Metadata>
 
 	<mx:Script>
     <![CDATA[
-      import org.openwms.web.flex.client.event.SecurityEvent;
-      
-      private function onClick( event:MouseEvent ):void {
-        var SecurityEvent = new SecurityEvent("login");
-        e.user = myUser.text;
-        e.pass = myPass.text;
-        dispatchEvent( e );
-      }
+        import org.openwms.web.flex.client.event.SecurityEvent
+        
+        [Bindable]
+        public var loginMessageText:String = "";
+        [Bindable]
+        public var authenticated:Boolean = false;
+        [Bindable]
+        public var onLogin:Function = null;
+        
     ]]>
 	</mx:Script>
 
@@ -47,10 +48,11 @@
 			<mx:TextInput id="myUser" />
 		</mx:FormItem>
 		<mx:FormItem label="Password">
-			<mx:TextInput id="myPass" displayAsPassword="true" />
+			<mx:TextInput id="myPass" displayAsPassword="true" enter="onLogin(myUser.text, myPass.text)"/>
 		</mx:FormItem>
+		<mx:Text text="{loginMessageText}"/>
 		<mx:FormItem>
-			<mx:Button label="Login" click="onClick(event)" />
+			<mx:Button label="Login" click="onLogin(myUser.text, myPass.text)" />
 		</mx:FormItem>
 	</mx:Form>
 
