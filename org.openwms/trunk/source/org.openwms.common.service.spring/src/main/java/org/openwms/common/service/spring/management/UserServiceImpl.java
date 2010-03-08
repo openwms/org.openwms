@@ -95,4 +95,23 @@ public class UserServiceImpl extends EntityServiceImpl<User, Long> implements Us
         return new User(username);
     }
 
+    /**
+     * @see org.openwms.common.service.management.UserService#setCredentials(java.lang.String,
+     *      java.lang.String)
+     */
+    @Override
+    public void setCredentials(String username, String password) {
+        System.out.println(username + password);
+
+    }
+
+    /**
+     * @see org.openwms.common.service.management.UserService#login()
+     */
+    @Override
+    public void login() {
+        System.out.println("Login");
+
+    }
+
 }
