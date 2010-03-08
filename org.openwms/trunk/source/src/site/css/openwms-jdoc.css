@@ -17,211 +17,193 @@
  * License along with this software. If not, write to the Free
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
- */
-
-/* Javadoc style sheet */
-
-/* Define colors, fonts and other style attributes here to override the defaults  */
-
-/* Page background color */
-body
-{
- font: 12px Tahoma, Helvetica, sans-serif;
- line-height: 1.3em;
- background-color: #FFFFFF;
- color: #333;
+ */ 
+body {
+	font: 12px Tahoma, Helvetica, sans-serif;
+	line-height: 1.3em;
+	background-color: #FFFFFF;
+	color: #333;
 }
 
-font
-{
- font-family:inherit !important;
- font-size:inherit !important;
- font-size-adjust:inherit !important;
- font-style:inherit !important;
- font-variant:inherit !important;
- font-weight:inherit !important;
- line-height:inherit !important;
+font {
+	font-family: inherit !important;
+	font-size: inherit !important;
+	font-size-adjust: inherit !important;
+	font-style: inherit !important;
+	font-variant: inherit !important;
+	font-weight: inherit !important;
+	line-height: inherit !important;
 }
 
-a:link, a:visited
-{
- color: #47a;
- text-decoration:none; 
+a:link,a:visited {
+	color: #47a;
+	text-decoration: none;
 }
 
-a:active, a:hover, #leftcol a:active, #leftcol a:hover
-{
- color: red !important;
- text-decoration: underline;
+a:active,a:hover,#leftcol a:active,#leftcol a:hover {
+	color: red !important;
+	text-decoration: underline;
 }
 
-a:link.selfref, a:visited.selfref {
- color: #555 !important;
- }
+a:link.selfref,a:visited.selfref {
+	color: #555 !important;
+}
 
 .a td {
- background: #ddd;
- color: #000;
- }
+	background: #ddd;
+	color: #000;
+}
 
 /* Table colors */
-table, table.summary
-{
- border:none;
+table,table.summary {
+	border: none;
 }
 
-td, table.summary td
-{
- border: none;
- border-bottom: 1px dotted #B0CAEF;
+td,table.summary td {
+	border: none;
+	border-bottom: 1px dotted #B0CAEF;
 }
 
-th, table.summary th
-{
- border: none;
+th,table.summary th {
+	border: none;
 }
 
-
-.TableHeadingColor th, table.summary th
-{ 
- background: #FFFFFF;
- background-image: url(../breadcrumbs.jpg);
- background-repeat: repeat-x;
- font-size:14px;
- height:32px;
- color:#ffff1b
-} /* Dark blue */
-.TableSubHeadingColor 
-{ 
- background: #f7ffee;
- color:#fff
-} /* Dark grey */
-
+.TableHeadingColor th,table.summary th {
+	background: #FFFFFF;
+	background-image: url(../breadcrumbs.jpg);
+	background-repeat: repeat-x;
+	font-size: 14px;
+	height: 32px;
+	color: #ffff1b
+}  /* Dark blue */
+.TableSubHeadingColor {
+	background: #f7ffee;
+	color: #fff
+}  /* Dark grey */
 .TableRowColor {
- border-bottom: none;
- color: #666;
- font-weight: normal;
- background: #efefef
-} /* White */
-
-tr.TableRowColor:hover
-{
- background:#fbfaa8;
+	border-bottom: none;
+	color: #666;
+	font-weight: normal;
+	background: #efefef
+}  /* White */
+tr.TableRowColor:hover {
+	background: #fbfaa8;
 }
 
 /* Font used in left-hand frame lists */
-.FrameTitleFont
-{
- font-size: medium;
- font-family: normal;
- color:#000000
+.FrameTitleFont {
+	font-size: medium;
+	font-family: normal;
+	color: #000000
 }
 
-.FrameHeadingFont
-{ font-size: medium;
-font-family: normal;
-color:#000000
+.FrameHeadingFont {
+	font-size: medium;
+	font-family: normal;
+	color: #000000
 }
 
-.FrameItemFont
-{ font-size: medium;
-font-family: normal;
-color:#000000
+.FrameItemFont {
+	font-size: medium;
+	font-family: normal;
+	color: #000000
 }
 
 /* Example of smaller, sans-serif font in frames */
-/* .FrameItemFont  { font-size: 10pt; font-family: Helvetica, Arial, sans-serif } */
-
-/* Navigation bar fonts and colors */
-.NavBarCell1
-{ 
- background-color:#C6D9F9;
-}/* Light mauve */
-
-.NavBarCell1Rev
-{
-background-color:#888;
-}/* Dark Blue */
-
-.NavBarFont1
-{
- color:#666666;
- text-decoration:underline;
+	/* .FrameItemFont  { font-size: 10pt; font-family: Helvetica, Arial, sans-serif } */
+	/* Navigation bar fonts and colors */
+.NavBarCell1 {
+	background-color: #C6D9F9;
+}  /* Light mauve */
+.NavBarCell1Rev {
+	background-color: #888;
+}  /* Dark Blue */
+.NavBarFont1 {
+	color: #666666;
+	text-decoration: underline;
 }
 
-.NavBarFont1.a
-{
- background: #ddd;
- color: #000;
+.NavBarFont1.a {
+	background: #ddd;
+	color: #000;
 }
 
-.NavBarFont1Rev
-{
-color:#FEB;
+.NavBarFont1Rev {
+	color: #FEB;
 }
 
-.NavBarCell2
-{
-background-color:#FFFFFF;
+.NavBarCell2 {
+	background-color: #FFFFFF;
 }
 
-.NavBarCell3
-{
-background-color:#FFFFFF;
+.NavBarCell3 {
+	background-color: #FFFFFF;
 }
 
 /* JXR */
-ul, li	{
- list-style-type:none ;
- margin:0;
- padding:0;
- border: none;
- border-bottom: 1px dotted #B0CAEF;
+ul,li {
+	list-style-type: none;
+	margin: 0;
+	padding: 0;
+	border: none;
+	border-bottom: 1px dotted #B0CAEF;
 }
 
 div.overview {
- background-color: #c6d9f9;
- padding: 4px 4px 4px 0;
- border: none;
- border-bottom: 1px dotted #B0CAEF;
+	background-color: #c6d9f9;
+	padding: 4px 4px 4px 0;
+	border: none;
+	border-bottom: 1px dotted #B0CAEF;
 }
-div.overview li, div.framenoframe li {
+
+div.overview li,div.framenoframe li {
 	display: inline;
 }
+
 div.framenoframe {
 	text-align: center;
 	font-size: x-small;
 }
+
 div.framenoframe li {
 	margin: 0 3px 0 3px;
 }
+
 div.overview li {
-	margin:3px 3px 0 3px;
+	margin: 3px 3px 0 3px;
 	padding: 4px;
 }
+
 li.selected {
-	background-color:#888;
+	background-color: #888;
 	color: #fff;
 	font-weight: bold;
+}
+
+table.summary {
+	width: 100%;
 }
 
 em {
 	color: #3F5FBF;
 }
+
 em.comment {
 	color: #3F5FBF;
 }
+
 .string {
 	color: #009;
 }
+
 div#footer {
-	text-align:center;
+	text-align: center;
 }
+
 #overview {
-	padding:2px;
+	padding: 2px;
 }
-            
-            
+
 hr {
 	height: 1px;
 	color: #000;
