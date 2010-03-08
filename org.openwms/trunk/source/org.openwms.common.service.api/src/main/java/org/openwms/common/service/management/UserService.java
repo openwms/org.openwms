@@ -72,4 +72,8 @@ public interface UserService<T extends User> extends EntityService<T> {
      */
     void remove(T user);
 
+    void setCredentials(String username, String password);
+
+    void login();
+
 }
