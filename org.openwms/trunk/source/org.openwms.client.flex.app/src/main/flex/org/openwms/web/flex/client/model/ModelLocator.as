@@ -35,12 +35,12 @@ package org.openwms.web.flex.client.model
     public class ModelLocator implements IModelLocator
     {
 
-        public static const MAIN_VIEW_STACK_EMPTY_SCREEN_VIEW:uint = 0;
+        public static const MAIN_VIEW_STACK_LOGIN_VIEW:uint = 0;
         public static const MAIN_VIEW_STACK_LOCATION_VIEW:uint = 1;
         public static const MAIN_VIEW_STACK_LOCATIONGROUP_VIEW:uint = 2;
         public static const MAIN_VIEW_STACK_USER_MGMT_VIEW:uint = 3;
         public static const MAIN_VIEW_STACK_TRANSPORTUNIT_VIEW:uint = 4;
-        public var mainViewStackIndex:uint = MAIN_VIEW_STACK_EMPTY_SCREEN_VIEW;
+        public var mainViewStackIndex:uint = MAIN_VIEW_STACK_LOCATION_VIEW;
 
         public const UPLOAD_URL:String = "/openwms/upload";
         public const DIRECTORY_NAME:String = "data";

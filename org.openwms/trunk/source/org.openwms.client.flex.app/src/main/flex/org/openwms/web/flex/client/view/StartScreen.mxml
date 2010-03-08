@@ -27,26 +27,111 @@
 
 	<!-- Styles -->
 	<mx:Style source="/assets/css/main.css" />
-	<mx:Style source="assets/css/styles.css" />
+	<mx:Style source="/assets/css/styles.css" />
 
 	<!-- Scripts -->
 	<mx:Script>
 		<![CDATA[
+			import mx.collections.ArrayCollection;
+			import org.openwms.web.flex.client.components.IApplicationModule;
+			import mx.events.ModuleEvent;
+			import mx.modules.IModuleInfo;
+			import mx.modules.ModuleManager;
 			import mx.controls.Alert;
 			import org.openwms.web.flex.client.model.ModelLocator;
 			import org.openwms.web.flex.client.event.SwitchScreenEvent;
 			import mx.events.MenuEvent;
+            import org.granite.rpc.remoting.mxml.SecureRemoteObject;
+            import org.granite.events.SecurityEvent;
+            
 			[Bindable]
 			private var modelLocator:ModelLocator = ModelLocator.getInstance();
+			[Bindable]
+            private var srv:SecureRemoteObject = null;
+            
+            private var mInfo-common:IModuleInfo;
+            private var mInfo-tms:IModuleInfo;
+            private var mInfo-wms:IModuleInfo;
+            private var mInfo-app:IModuleInfo;
 
 			public function init():void {
-				
+                srv = new SecureRemoteObject("userService");
+                srv.login();
+                /*
+                srv.source = "personService";
+                srv.channelSet = new ChannelSet();
+                srv.channelSet.addChannel(new AMFChannel("graniteamf", "http://{server.name}:{server.port}/graniteds-spring/graniteamf/amf"));
+                srv.showBusyCursor = true;
+                var operation:Operation = new Operation();
+                operation.name = "findAllPersons";
+                operation.addEventListener(ResultEvent.RESULT, onFindAllPersonsResult);
+                srv.operations = {findAllPersons: operation};
+                srv.addEventListener(FaultEvent.FAULT, onRemoteFault);
+                srv.addEventListener(SecurityEvent.ALL, onSecurityEvent);
+                srv.findAllPersons();
+                */
 			}
 			
+            public function onSecurityEvent(event:SecurityEvent):void {
+                trace("onSecurityEvent: " + event);
+                switch (event.type) {
+                case SecurityEvent.INVALID_CREDENTIALS:
+                    loginView.loginMessageText = "Invalid username or password";
+                    loginView.authenticated = false;
+                    break;
+                case SecurityEvent.NOT_LOGGED_IN:
+                    srv.logout();
+                    loginView.loginMessageText = "";
+                    loginView.authenticated = false;
+                    break;
+                case SecurityEvent.SESSION_EXPIRED:
+                    srv.logout();
+                    loginView.loginMessageText = "Session expired";
+                    loginView.authenticated = false;
+                    break;
+                case SecurityEvent.ACCESS_DENIED:
+                    Alert.show("You don't have required rights to execute this action");
+                    break;
+                }
+            }
+
 			private function onMenuChange(event:MenuEvent):void {
 				trace("Switching to view:"+event.item.@action);
 				new SwitchScreenEvent(event.item.@action).dispatch();
 			}
+			
+            public function login(username:String, password:String):void {
+                srv.setCredentials(username, password);
+                srv.login();
+            }
+
+            public function logout():void {
+                srv.logout();
+                loginView.authenticated = false;
+                loginView.loginMessageText = "";
+            }
+            
+            private function detectModules():void {
+            	mInfo-app = ModuleManager.getModule('openwms-app.swf');
+            	mInfo-app.addEventListener(ModuleEvent.READY, moduleLoaded);
+            	mInfo-common = ModuleManager.getModule('openwms-common.swf');
+                mInfo-common.addEventListener(ModuleEvent.READY, moduleLoaded);
+            	mInfo-tms = ModuleManager.getModule('openwms-tms.swf');
+                mInfo-tms.addEventListener(ModuleEvent.READY, moduleLoaded);
+            	mInfo-wms = ModuleManager.getModule('openwms-wms.swf');
+                mInfo-wms.addEventListener(ModuleEvent.READY, moduleLoaded);
+            }
+            
+            private function moduleLoaded(e:ModuleEvent):void {
+            	trace("Loaded Module:"+e.module.url);
+            }
+            
+            private function populateMenuBar(tempMenu:ArrayCollection, module:IApplicationModule):void {
+            	
+                
+            }
+
+
 		]]>
 	</mx:Script>
 
@@ -56,12 +141,11 @@
 	<control:MainController />
 
 	<mx:VBox height="100%" width="100%" verticalGap="0" backgroundColor="#C2DAEF">
-		<mx:Canvas width="100%" height="66" backgroundColor="0x9fc3db" id="hbox1" backgroundImage="@Embed(source='banner.jpg')">
+		<mx:Canvas width="100%" height="66" backgroundImage="@Embed(source='openwms_banner.jpg')" backgroundSize="100%">
 			<mx:Image source="@Embed('/assets/images/openwms_header.png')" />
 		</mx:Canvas>
 		<mx:Canvas width="100%" height="25" backgroundImage="@Embed(source='breadcrumbs.jpg')" backgroundSize="100%">
-			<mx:MenuBar x="5" y="5" width="100%" height="25" labelField="@label" itemClick="onMenuChange(event)"
-				backgroundAlpha=".5" backgroundColor="#FB0505" color="#FB0505" fillAlphas="0.5" fillColors="#FB0505">
+			<mx:MenuBar id="mainMenuBar" labelField="@label" itemClick="onMenuChange(event)" color="#FFFF1B" fontWeight="bold" fontSize="12" alpha="0.0">
 				<mx:XMLList>
 					<menuitem label="OpenWMS">
 						<menuitem label="Connect ..." enabled="false" />
@@ -91,16 +175,15 @@
 				</mx:XMLList>
 			</mx:MenuBar>
 		</mx:Canvas>
-		<mx:ViewStack id="myViewStack" selectedIndex="{modelLocator.mainViewStackIndex}">
-			<view:EmptyScreenView />
+		<mx:HBox width="100%" height="100%" horizontalAlign="center" verticalAlign="middle">
+		<mx:ViewStack id="myViewStack" selectedIndex="{loginView.authenticated ? modelLocator.mainViewStackIndex : 0}">
+            <view:LoginView id="loginView" onLogin="login" cornerRadius="20" borderStyle="solid" alpha="1.0" borderThickness="3"/>
 			<view:LocationView />
 			<view:LocationGroupView />
 			<view:UserManagementView />
 			<view:TransportUnitView />
 		</mx:ViewStack>
+        </mx:HBox>
 	</mx:VBox>
-
-
-
 
 </mx:Application>
