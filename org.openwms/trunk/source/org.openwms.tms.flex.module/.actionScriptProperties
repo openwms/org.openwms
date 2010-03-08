@@ -1,18 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<actionScriptProperties mainApplicationPath="main.mxml" version="3">
-<compiler additionalCompilerArguments="-locale en_US" copyDependentFiles="true" enableModuleDebug="true" generateAccessible="false" htmlExpressInstall="true" htmlGenerate="true" htmlHistoryManagement="true" htmlPlayerVersion="9.0.28" htmlPlayerVersionCheck="true" outputFolderPath="target/classes" sourceFolderPath="src/main/flex" strict="true" useApolloConfig="false" verifyDigests="true" warn="true">
-<compilerSourcePath/>
+<actionScriptProperties mainApplicationPath="org.openwms.tms.flex.module.as" version="3">
+<compiler additionalCompilerArguments="" copyDependentFiles="true" enableModuleDebug="true" generateAccessible="false" htmlExpressInstall="true" htmlGenerate="true" htmlHistoryManagement="true" htmlPlayerVersion="9.0.28" htmlPlayerVersionCheck="true" outputFolderPath="bin" sourceFolderPath="src/main/flex" strict="true" useApolloConfig="false" verifyDigests="true" warn="true">
+<compilerSourcePath>
+<compilerSourcePathEntry kind="1" linkType="1" path="C:/projects/OpenWMS/openwms2005/org.openwms/trunk/source/org.openwms.client.flex.app/src/main/flex"/>
+</compilerSourcePath>
 <libraryPath defaultLinkType="1">
 <libraryPathEntry kind="4" path=""/>
-<libraryPathEntry kind="1" linkType="1" path="libs"/>
 </libraryPath>
 <sourceAttachmentPath/>
 </compiler>
 <applications>
-<application path="main.mxml"/>
+<application path="org.openwms.tms.flex.module.as"/>
 </applications>
-<modules>
-<module destPath="MenuBar.swf" optimize="false" sourcePath="src/main/flex/MenuBar.mxml"/>
-</modules>
+<modules/>
 <buildCSSFiles/>
 </actionScriptProperties>
