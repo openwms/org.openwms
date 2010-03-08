@@ -49,10 +49,10 @@
 			[Bindable]
             private var srv:SecureRemoteObject = null;
             
-            private var mInfo-common:IModuleInfo;
-            private var mInfo-tms:IModuleInfo;
-            private var mInfo-wms:IModuleInfo;
-            private var mInfo-app:IModuleInfo;
+            private var mInfo_common:IModuleInfo;
+            private var mInfo_tms:IModuleInfo;
+            private var mInfo_wms:IModuleInfo;
+            private var mInfo_app:IModuleInfo;
 
 			public function init():void {
                 srv = new SecureRemoteObject("userService");
@@ -112,14 +112,14 @@
             }
             
             private function detectModules():void {
-            	mInfo-app = ModuleManager.getModule('openwms-app.swf');
-            	mInfo-app.addEventListener(ModuleEvent.READY, moduleLoaded);
-            	mInfo-common = ModuleManager.getModule('openwms-common.swf');
-                mInfo-common.addEventListener(ModuleEvent.READY, moduleLoaded);
-            	mInfo-tms = ModuleManager.getModule('openwms-tms.swf');
-                mInfo-tms.addEventListener(ModuleEvent.READY, moduleLoaded);
-            	mInfo-wms = ModuleManager.getModule('openwms-wms.swf');
-                mInfo-wms.addEventListener(ModuleEvent.READY, moduleLoaded);
+            	mInfo_app = ModuleManager.getModule('openwms_app.swf');
+            	mInfo_app.addEventListener(ModuleEvent.READY, moduleLoaded);
+            	mInfo_common = ModuleManager.getModule('openwms_common.swf');
+                mInfo_common.addEventListener(ModuleEvent.READY, moduleLoaded);
+            	mInfo_tms = ModuleManager.getModule('openwms_tms.swf');
+                mInfo_tms.addEventListener(ModuleEvent.READY, moduleLoaded);
+            	mInfo_wms = ModuleManager.getModule('openwms_wms.swf');
+                mInfo_wms.addEventListener(ModuleEvent.READY, moduleLoaded);
             }
             
             private function moduleLoaded(e:ModuleEvent):void {
