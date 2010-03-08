@@ -45,7 +45,7 @@
     <!-- Entity Manager -->
     <bean id="entityManagerFactory" class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
         <property name="persistenceUnitName" value="${jdbc.persistenceUnit}" />
-        <property name="dataSource" ref="dataSource" />
+        <property name="dataSource" ref="wmsDataSource" />
         <property name="jpaVendorAdapter" ref="jpaVendorAdapter" />
         <property name="jpaProperties" value="${jdbc.properties}" />
     </bean>
