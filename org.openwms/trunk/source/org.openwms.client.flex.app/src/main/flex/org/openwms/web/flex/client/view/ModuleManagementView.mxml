@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<mx:VBox xmlns:mx="http://www.adobe.com/2006/mxml" width="100%" height="100%">
+<mx:Canvas xmlns:mx="http://www.adobe.com/2006/mxml" width="1062" height="100%" verticalGap="6" backgroundAlpha="0.0">
 
     <mx:Script>
         <![CDATA[
@@ -8,43 +8,40 @@
             private var moduleLocator:ModuleLocator = ModuleLocator.getInstance();
         ]]>
     </mx:Script>
-
-
-
-	<mx:HBox width="100%">
-		<mx:Button label="Add"/>
-		<mx:Button label="Delete"/>
-	</mx:HBox>
-	<mx:HBox width="100%">
-		<mx:DataGrid width="300" dataProvider="{ModuleLocator.getRegisteredModules()}">
+		<mx:Panel height="250" backgroundColor="#EAFF00" backgroundAlpha="0.5" width="800" layout="absolute" x="10" y="10" title="Modules">
+			<mx:DataGrid width="300" dataProvider="{ModuleLocator.getRegisteredModules()}" x="10" y="10" height="201">
+				<mx:columns>
+					<mx:DataGridColumn headerText="Column 1" dataField="col1"/>
+					<mx:DataGridColumn headerText="Column 2" dataField="col2"/>
+					<mx:DataGridColumn headerText="Column 3" dataField="col3"/>
+				</mx:columns>
+			</mx:DataGrid>
+			<mx:Canvas height="201" x="318" y="10" width="466">
+				<mx:Label x="10" y="10" text="Modulename"/>
+				<mx:Label x="10" y="40" text="URI"/>
+				<mx:Label x="10" y="70" text="Description"/>
+				<mx:TextInput x="95" y="8" width="301"/>
+				<mx:TextInput x="95" y="38" width="301"/>
+				<mx:TextInput x="95" y="68" width="301"/>
+				<mx:Button label="Add" x="10" y="179"/>
+				<mx:Button label="Save" x="67" y="179"/>
+				<mx:Button label="Delete" x="129" y="179"/>
+			</mx:Canvas>
+		</mx:Panel>
+	<mx:Panel width="800" backgroundColor="#EAFF00" backgroundAlpha="0.5" y="268" layout="absolute" x="10" height="250" title="Views and Menu Items">
+		<mx:DataGrid x="10" y="10" height="201">
 			<mx:columns>
 				<mx:DataGridColumn headerText="Column 1" dataField="col1"/>
 				<mx:DataGridColumn headerText="Column 2" dataField="col2"/>
 				<mx:DataGridColumn headerText="Column 3" dataField="col3"/>
 			</mx:columns>
 		</mx:DataGrid>
-		<mx:DataGrid width="300">
+		<mx:DataGrid x="320" y="10" height="201">
 			<mx:columns>
 				<mx:DataGridColumn headerText="Column 1" dataField="col1"/>
 				<mx:DataGridColumn headerText="Column 2" dataField="col2"/>
 				<mx:DataGridColumn headerText="Column 3" dataField="col3"/>
 			</mx:columns>
 		</mx:DataGrid>
-	</mx:HBox>
-	<mx:HBox width="100%">
-		<mx:DataGrid>
-			<mx:columns>
-				<mx:DataGridColumn headerText="Column 1" dataField="col1"/>
-				<mx:DataGridColumn headerText="Column 2" dataField="col2"/>
-				<mx:DataGridColumn headerText="Column 3" dataField="col3"/>
-			</mx:columns>
-		</mx:DataGrid>
-		<mx:DataGrid>
-			<mx:columns>
-				<mx:DataGridColumn headerText="Column 1" dataField="col1"/>
-				<mx:DataGridColumn headerText="Column 2" dataField="col2"/>
-				<mx:DataGridColumn headerText="Column 3" dataField="col3"/>
-			</mx:columns>
-		</mx:DataGrid>
-	</mx:HBox>
-</mx:VBox>
+	</mx:Panel>
+</mx:Canvas>
