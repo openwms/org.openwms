@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:VBox xmlns:mx="http://www.adobe.com/2006/mxml" width="100%" height="100%">
+	<mx:HBox width="100%">
+		<mx:Button label="Add"/>
+		<mx:Button label="Delete"/>
+	</mx:HBox>
+	<mx:HBox width="100%">
+		<mx:DataGrid width="300">
+			<mx:columns>
+				<mx:DataGridColumn headerText="Column 1" dataField="col1"/>
+				<mx:DataGridColumn headerText="Column 2" dataField="col2"/>
+				<mx:DataGridColumn headerText="Column 3" dataField="col3"/>
+			</mx:columns>
+		</mx:DataGrid>
+		<mx:DataGrid width="300">
+			<mx:columns>
+				<mx:DataGridColumn headerText="Column 1" dataField="col1"/>
+				<mx:DataGridColumn headerText="Column 2" dataField="col2"/>
+				<mx:DataGridColumn headerText="Column 3" dataField="col3"/>
+			</mx:columns>
+		</mx:DataGrid>
+	</mx:HBox>
+	<mx:HBox width="100%">
+		<mx:DataGrid>
+			<mx:columns>
+				<mx:DataGridColumn headerText="Column 1" dataField="col1"/>
+				<mx:DataGridColumn headerText="Column 2" dataField="col2"/>
+				<mx:DataGridColumn headerText="Column 3" dataField="col3"/>
+			</mx:columns>
+		</mx:DataGrid>
+		<mx:DataGrid>
+			<mx:columns>
+				<mx:DataGridColumn headerText="Column 1" dataField="col1"/>
+				<mx:DataGridColumn headerText="Column 2" dataField="col2"/>
+				<mx:DataGridColumn headerText="Column 3" dataField="col3"/>
+			</mx:columns>
+		</mx:DataGrid>
+	</mx:HBox>
+</mx:VBox>
