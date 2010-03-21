@@ -65,7 +65,7 @@ public class UserServiceImpl extends EntityServiceImpl<User, Long> implements Us
         if (entity.isNew()) {
             addEntity(entity);
         }
-        return save(User.class, entity);
+        return super.save(entity);
     }
 
     /**
@@ -80,8 +80,8 @@ public class UserServiceImpl extends EntityServiceImpl<User, Long> implements Us
         if (user.isNew()) {
             logger.warn("The User instance that shall be removed is not persist yet, no need to remove");
         } else {
-            user = save(User.class, user);
-            remove(User.class, user);
+            user = super.save(user);
+            super.remove(user);
         }
     }
 

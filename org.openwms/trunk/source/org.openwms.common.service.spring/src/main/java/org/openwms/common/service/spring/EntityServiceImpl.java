@@ -21,6 +21,7 @@
 package org.openwms.common.service.spring;
 
 import java.io.Serializable;
+import java.lang.reflect.ParameterizedType;
 import java.util.List;
 
 import org.openwms.common.integration.GenericDao;
@@ -51,6 +52,8 @@ public class EntityServiceImpl<T extends Serializable, ID extends Serializable> 
      */
     protected GenericDao<T, ID> dao;
 
+    private Class<T> persistentClass;
+
     /**
      * Logger instance can be used by subclasses.
      */
@@ -66,6 +69,16 @@ public class EntityServiceImpl<T extends Serializable, ID extends Serializable> 
     @Required
     public void setDao(GenericDao<T, ID> dao) {
         this.dao = dao;
+    }
+
+    @SuppressWarnings("unchecked")
+    private void resolveTypeClass() {
+        if (persistentClass == null) {
+            if (getClass().getGenericSuperclass() != null) {
+                this.persistentClass = (Class<T>) ((ParameterizedType) getClass().getGenericSuperclass())
+                        .getActualTypeArguments()[0];
+            }
+        }
     }
 
     /**
@@ -85,6 +98,7 @@ public class EntityServiceImpl<T extends Serializable, ID extends Serializable> 
     @Transactional(readOnly = true)
     public List<T> findAll(Class<T> clazz) {
         logger.debug("findAll(clazz) called");
+        resolveTypeClass();
         dao.setPersistentClass(clazz);
         return dao.findAll();
     }
@@ -93,9 +107,10 @@ public class EntityServiceImpl<T extends Serializable, ID extends Serializable> 
      * {@inheritDoc}
      */
     @Override
-    public T save(Class<T> clazz, T entity) {
+    public T save(T entity) {
         logger.debug("save called");
-        dao.setPersistentClass(clazz);
+        resolveTypeClass();
+        dao.setPersistentClass(persistentClass);
         return dao.save(entity);
     }
 
@@ -103,10 +118,11 @@ public class EntityServiceImpl<T extends Serializable, ID extends Serializable> 
      * {@inheritDoc}
      */
     @Override
-    public void remove(Class<T> clazz, T entity) {
-        logger.debug("remove called");
-        dao.setPersistentClass(clazz);
-        // dao.save(entity);
+    public void remove(T entity) {
+        logger.debug("Remove entity");
+        resolveTypeClass();
+        dao.setPersistentClass(persistentClass);
+        entity = dao.save(entity);
         dao.remove(entity);
     }
 
