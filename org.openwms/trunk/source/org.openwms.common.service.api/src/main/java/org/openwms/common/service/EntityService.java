@@ -50,6 +50,8 @@ public interface EntityService<T extends Serializable> {
      *            Class of the Entity to find
      * @return A {@link java.util.List} of all found Entities
      */
+    // TODO [scherrer] : To be removed
+    @Deprecated
     List<T> findAll(Class<T> clazz);
 
     /**
@@ -57,13 +59,11 @@ public interface EntityService<T extends Serializable> {
      * 
      * @param <T>
      *            Any serializable type, mostly an Entity class type
-     * @param clazz
-     *            Class of the Entity to be saved
      * @param entity
      *            Entity instance to be saved
      * @return The saved Entity instance
      */
-    T save(Class<T> clazz, T entity);
+    T save(T entity);
 
     /**
      * Find all Entities of type T.
@@ -72,8 +72,6 @@ public interface EntityService<T extends Serializable> {
      *            Any serializable type, mostly an Entity class type
      * @return A {@link java.util.List} of all found Entities
      */
-    // TODO [scherrer] : To be removed
-    @Deprecated
     List<T> findAll();
 
     /**
@@ -81,12 +79,10 @@ public interface EntityService<T extends Serializable> {
      * 
      * @param <T>
      *            Any serializable type, mostly an Entity class type
-     * @param clazz
-     *            Class of the Entity to be removed
      * @param entity
      *            Entity instance to be removed
      */
-    void remove(Class<T> clazz, T entity);
+    void remove(T entity);
 
     /**
      * Add a new entity to the persistent storage.
