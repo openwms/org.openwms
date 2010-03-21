@@ -25,7 +25,7 @@ import org.openwms.common.service.spring.EntityServiceImpl;
 import org.openwms.tms.domain.order.TransportOrder;
 import org.openwms.tms.integration.TransportOrderDao;
 import org.openwms.tms.service.TransportOrderService;
-import org.springframework.beans.factory.annotation.Required;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -38,25 +38,13 @@ import org.springframework.transaction.annotation.Transactional;
  * @see org.openwms.common.service.spring.EntityServiceImpl
  * @see org.openwms.tms.service.TransportOrderService
  */
-// FIXME [scherrer] Remove the dependency to an own dao, use generic dao
-// instead.
 @Service
 @Transactional
 public class TransportServiceImpl extends EntityServiceImpl<TransportOrder, Long> implements
         TransportOrderService<TransportOrder> {
 
+    @Autowired
     private TransportOrderDao transportOrderDao;
-
-    /**
-     * Use an specific DAO for the actions provided by this service.
-     * 
-     * @param transportOrderDao
-     *            An instance of {@link TransportOrderDao}
-     */
-    @Required
-    public void setTransportOrderDao(TransportOrderDao transportOrderDao) {
-        this.transportOrderDao = transportOrderDao;
-    }
 
     /**
      * {@inheritDoc}
