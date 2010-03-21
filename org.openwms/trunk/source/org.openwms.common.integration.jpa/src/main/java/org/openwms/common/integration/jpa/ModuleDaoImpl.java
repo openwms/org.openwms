@@ -20,48 +20,32 @@
  */
 package org.openwms.common.integration.jpa;
 
-import java.io.Serializable;
-
-import org.openwms.common.integration.GenericDao;
+import org.openwms.common.domain.Module;
+import org.openwms.common.integration.ModuleDao;
 
 /**
- * A GenericJpaDaoImpl - Adds generic finder methods to query Entity classes.
+ * A ModuleDao.
  * 
- * @param <T>
- *            Any serializable type, mostly an Entity class type.
- * @param <ID>
- *            The type of the Entity class' unique id
  * @author <a href="mailto:openwms@googlemail.com">Heiko Scherrer</a>
- * @version $Revision$
- * @since 0.1
- * @see org.openwms.common.integration.jpa.AbstractGenericJpaDao
- * @see org.openwms.common.integration.GenericDao
+ * @version $Revision: $
+ * 
  */
-public class GenericJpaDaoImpl<T extends Serializable, ID extends Serializable> extends AbstractGenericJpaDao<T, ID>
-        implements GenericDao<T, ID> {
+public class ModuleDaoImpl extends AbstractGenericJpaDao<Module, Long> implements ModuleDao {
 
     /**
-     * Concatenates the simple class name of the persistent class with the
-     * default prefix {@link org.openwms.common.integration.FIND_ALL}.
-     * 
-     * @return Name of the query
      * @see org.openwms.common.integration.jpa.AbstractGenericJpaDao#getFindAllQuery()
      */
     @Override
     protected String getFindAllQuery() {
-        return getPersistentClass().getSimpleName().concat(FIND_ALL);
+        return Module.NQ_FIND_ALL;
     }
 
     /**
-     * Concatenates the simple class name of the persistent class with the
-     * default prefix {@link org.openwms.common.integration.FIND_BY_ID}.
-     * 
-     * @return Name of the query
      * @see org.openwms.common.integration.jpa.AbstractGenericJpaDao#getFindByUniqueIdQuery()
      */
     @Override
     protected String getFindByUniqueIdQuery() {
-        return getPersistentClass().getSimpleName().concat(FIND_BY_ID);
+        return Module.NQ_FIND_BY_UNIQUE_QUERY;
     }
 
 }

@@ -69,4 +69,6 @@
     <bean id="transportUnitTypeDao" class="org.openwms.common.integration.jpa.TransportUnitTypeDaoImpl"/>
 
     <bean id="userDao" class="org.openwms.common.integration.jpa.UserDaoImpl"/>
+    
+    <bean id="moduleDao" class="org.openwms.common.integration.jpa.ModuleDaoImpl" />
 </beans>
