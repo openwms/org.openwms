@@ -123,4 +123,5 @@ public interface GenericDao<T extends Serializable, ID extends Serializable> {
      *            Class type of the Entity instance
      */
     void setPersistentClass(Class<T> persistentClass);
+
 }
