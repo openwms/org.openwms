@@ -91,7 +91,7 @@ public abstract class AbstractGenericJpaDao<T extends Serializable, ID extends S
      * Create a new AbstractGenericJpaDao.
      */
     @SuppressWarnings("unchecked")
-    public AbstractGenericJpaDao() {
+    protected AbstractGenericJpaDao() {
         if (getClass().getGenericSuperclass() != null) {
             this.persistentClass = (Class<T>) ((ParameterizedType) getClass().getGenericSuperclass())
                     .getActualTypeArguments()[0];
