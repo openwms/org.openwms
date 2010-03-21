@@ -21,28 +21,32 @@
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */  
 -->
-<beans:beans xmlns="http://www.springframework.org/schema/security" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+<beans:beans
+    xmlns="http://www.springframework.org/schema/security"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xmlns:beans="http://www.springframework.org/schema/beans"
-	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
-		http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security-3.0.xsd">
+	xmlns:graniteds="http://www.graniteds.org/config"
+	xsi:schemaLocation="
+	    http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+		http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security-3.0.xsd 
+		http://www.graniteds.org/config http://www.graniteds.org/public/dtd/2.1.0/granite-config-2.1.xsd">
 
 	<http>
-		<anonymous />
-		<form-login />
-		<http-basic />
-		<logout />
-		<remember-me />
+	    <form-login />
+        <http-basic />
+        <logout />
+        <remember-me />
 	</http>
 
-	<authentication-manager>
+    <authentication-manager alias="myAuthenticationManager">
 		<authentication-provider>
 			<user-service>
 				<user name="admin" password="admin" authorities="ROLE_USER,ROLE_ADMIN" />
 				<user name="user" password="user" authorities="ROLE_USER" />
 			</user-service>
 		</authentication-provider>
-	</authentication-manager>
-
-	<global-method-security secured-annotations="enabled" jsr250-annotations="enabled" />
-
+    </authentication-manager>
+<!--
+    <graniteds:security-service authentication-manager="myAuthenticationManager"/>
+-->
 </beans:beans>
