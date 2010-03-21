@@ -35,8 +35,6 @@
 	<properties>
 		<moduleDir>..</moduleDir>
 		<property.org.graniteds-core.version>1.2.0_SP1</property.org.graniteds-core.version>
-		<property.org.graniteds.version>2.0.0.GA</property.org.graniteds.version>
-		<property.org.graniteds.version2>1.2.0</property.org.graniteds.version2>
 		<flex.version>3.2.0.3958</flex.version>
 	</properties>
 	<build>
@@ -78,13 +76,13 @@
 					<dependency>
 						<groupId>org.graniteds</groupId>
 						<artifactId>granite-essentials-swc</artifactId>
-						<version>${property.org.graniteds.version}</version>
+						<version>${granite.version}</version>
 						<type>swc</type>
 					</dependency>
 					<dependency>
 						<groupId>org.graniteds</groupId>
 						<artifactId>granite-swc</artifactId>
-						<version>${property.org.graniteds.version}</version>
+						<version>${granite.version}</version>
 						<type>swc</type>
 					</dependency>
 				</dependencies>
@@ -94,19 +92,19 @@
 					<outputDirectory>${project.basedir}/src/main/flex</outputDirectory>
 					<outputEnumToBaseOutputDirectory>true</outputEnumToBaseOutputDirectory>
 					<beanTemplate>
-						<template>${project.basedir}/etc/${property.org.graniteds.version}/beanBase.gsp</template>
-						<template>${project.basedir}/etc/${property.org.graniteds.version}/bean.gsp</template>
+						<template>${project.basedir}/etc/2.0.0.GA/beanBase.gsp</template>
+						<template>${project.basedir}/etc/2.0.0.GA/bean.gsp</template>
 					</beanTemplate>
 					<entityTemplate>
-						<template>${project.basedir}/etc/${property.org.graniteds.version}/entityBase.gsp</template>
-						<template>${project.basedir}/etc/${property.org.graniteds.version}/entity.gsp</template>
+						<template>${project.basedir}/etc/2.0.0.GA/entityBase.gsp</template>
+						<template>${project.basedir}/etc/2.0.0.GA/entity.gsp</template>
 					</entityTemplate>
 					<enumTemplate>
-						<template>${project.basedir}/etc/${property.org.graniteds.version}/enum.gsp</template>
+						<template>${project.basedir}/etc/2.0.0.GA/enum.gsp</template>
 					</enumTemplate>
 					<interfaceTemplate>
-						<template>${project.basedir}/etc/${property.org.graniteds.version}/interfaceBase.gsp</template>
-						<template>${project.basedir}/etc/${property.org.graniteds.version}/interface.gsp</template>
+						<template>${project.basedir}/etc/2.0.0.GA/interfaceBase.gsp</template>
+						<template>${project.basedir}/etc/2.0.0.GA/interface.gsp</template>
 					</interfaceTemplate>
 					<includeJavaClasses>
 						<class>org.openwms.common.domain.*</class>
@@ -135,7 +133,7 @@
 			<plugin>
 				<groupId>org.sonatype.flexmojos</groupId>
 				<artifactId>flexmojos-maven-plugin</artifactId>
-				<version>3.3.0</version>
+				<version>3.5.0</version>
 				<reportSets>
 					<reportSet>
 						<id>flex-reports</id>
@@ -159,8 +157,8 @@
 
 	<repositories>
 		<repository>
-			<id>sonatype-public</id>
-			<url>http://repository.sonatype.org/content/groups/public</url>
+			<id>granite-repo</id>
+			<url>http://download.java.net/maven/2/</url>
 			<releases>
 				<enabled>true</enabled>
 			</releases>
@@ -169,8 +167,8 @@
 			</snapshots>
 		</repository>
 		<repository>
-			<id>granite-repo</id>
-			<url>http://download.java.net/maven/2/</url>
+			<id>sonatype-public</id>
+			<url>http://repository.sonatype.org/content/groups/public</url>
 			<releases>
 				<enabled>true</enabled>
 			</releases>
@@ -207,28 +205,17 @@
 		</dependency>
 		<dependency>
 			<groupId>org.graniteds</groupId>
-			<artifactId>granite-core-swc</artifactId>
-			<version>${property.org.graniteds-core.version}</version>
-			<type>swc</type>
-		</dependency>
-		<dependency>
-			<groupId>org.graniteds</groupId>
 			<artifactId>granite-essentials-swc</artifactId>
-			<version>${property.org.graniteds.version}</version>
+			<version>${granite.version}</version>
 			<type>swc</type>
 			<scope>internal</scope>
 		</dependency>
 		<dependency>
 			<groupId>org.graniteds</groupId>
 			<artifactId>granite-swc</artifactId>
-			<version>${property.org.graniteds.version}</version>
+			<version>${granite.version}</version>
 			<type>swc</type>
 			<scope>internal</scope>
-		</dependency>
-		<dependency>
-			<groupId>org.graniteds</groupId>
-			<artifactId>granite-generator</artifactId>
-			<version>2.0.0.GA</version>
 		</dependency>
 	</dependencies>
 </project>
