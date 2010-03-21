@@ -140,6 +140,12 @@
 			<version>${project.version}</version>
 			<type>swc</type>
 		</dependency>
+        <dependency>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>org.openwms.client.flex.lib</artifactId>
+            <version>${project.version}</version>
+            <type>swc</type>
+        </dependency>
 		<dependency>
 			<groupId>com.adobe.flex.framework</groupId>
 			<artifactId>flex-framework</artifactId>
@@ -152,13 +158,6 @@
 			<version>2.2.1</version>
 			<type>swc</type>
 		</dependency>
-        <dependency>
-            <groupId>${project.groupId}</groupId>
-            <artifactId>org.openwms.client.flex.lib</artifactId>
-            <version>${project.version}</version>
-            <type>swc</type>
-        </dependency>
-
 		<dependency>
 			<groupId>org.graniteds</groupId>
 			<artifactId>granite-core-swc</artifactId>

@@ -22,7 +22,7 @@
  */
 -->
 <mx:Module xmlns:mx="http://www.adobe.com/2006/mxml" layout="absolute" width="400" height="300"
-    creationComplete="initApp()" xmlns:view="org.openwms.web.flex.client.common.view.*" implements="org.openwms.web.flex.client.lib.api.IApplicationModule">
+    creationComplete="initApp()" xmlns:view="org.openwms.web.flex.client.common.view.*" implements="org.openwms.web.flex.client.IApplicationModule">
 
     <mx:Script>
         <![CDATA[
@@ -67,7 +67,7 @@
          */
         public function getModuleName():String
         {
-            return "TMS";
+            return "COMMON";
         }
 
         /**
