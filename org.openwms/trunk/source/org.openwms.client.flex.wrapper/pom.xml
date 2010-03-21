@@ -34,7 +34,7 @@
 	<name>${project.artifactId}</name>
 	<properties>
 		<moduleDir>..</moduleDir>
-		<packed.app>${project.groupId}.client.flex.app-${project.version}</packed.app>
+		<packed.app>${project.groupId}.client.flex.app</packed.app>
 	</properties>
 	<scm>
 		<connection>scm:svn:https://openwms2005.svn.sourceforge.net/svnroot/openwms2005/org.openwms/trunk/source/org.openwms.client.flex.wrapper</connection>
@@ -67,6 +67,7 @@
 					<archive>
 						<manifestFile>src/main/webapp/META-INF/MANIFEST.MF</manifestFile>
 					</archive>
+					<outputFileNameMapping>@{artifactId}@.@{extension}@</outputFileNameMapping>
 				</configuration>
 			</plugin>
 			<plugin>
@@ -95,6 +96,7 @@
 						<String>**/*.jsp</String>
 						<String>WEB-INF/**/*</String>
 					</templateInclusions>
+                    <stripVersion>true</stripVersion>
 				</configuration>
 			</plugin>
 		</plugins>
@@ -147,18 +149,19 @@
 		<dependency>
 			<groupId>org.springframework.security</groupId>
 			<artifactId>org.springframework.security.core</artifactId>
+			<version>3.0.0.RELEASE</version>
 			<scope>provided</scope>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework.security</groupId>
 			<artifactId>org.springframework.security.web</artifactId>
-			<version>${spring.version}</version>
+			<version>3.0.0.RELEASE</version>
 			<scope>provided</scope>
 		</dependency>
         <dependency>
             <groupId>org.springframework.security</groupId>
             <artifactId>org.springframework.security.config</artifactId>
-            <version>${spring.version}</version>
+            <version>3.0.0.RELEASE</version>
             <scope>provided</scope>
         </dependency>
 
@@ -170,10 +173,12 @@
 			<type>swf</type>
 			<scope>provided</scope>
 		</dependency>
-		<!--
-			<dependency> <groupId>${project.groupId}</groupId> <artifactId>org.openwms.common.domain.as</artifactId>
-			<version>${project.version}</version> <type>swc</type> </dependency>
-		-->
+		<dependency>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>org.openwms.tms.flex.module</artifactId>
+			<version>${project.version}</version>
+			<type>swf</type>
+        </dependency>
 		<dependency>
 			<groupId>${project.groupId}</groupId>
 			<artifactId>org.openwms.common.framework.test</artifactId>
