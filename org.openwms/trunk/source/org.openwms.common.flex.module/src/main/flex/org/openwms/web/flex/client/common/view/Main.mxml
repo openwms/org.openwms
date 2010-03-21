@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+/*
+ * openwms.org, the Open Warehouse Management System.
+ *
+ * This file is part of openwms.org.
+ *
+ * openwms.org is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as 
+ * published by the Free Software Foundation, either version 3 of the
+ * License, or (at your option) any later version.
+ *
+ * openwms.org is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with this software. If not, write to the Free
+ * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
+ * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
+ */
+-->
+<mx:Module xmlns:mx="http://www.adobe.com/2006/mxml" layout="absolute" width="400" height="300"
+    creationComplete="initApp()" xmlns:view="org.openwms.web.flex.client.common.view.*" implements="org.openwms.web.flex.client.lib.api.IApplicationModule">
+
+    <mx:Script>
+        <![CDATA[
+        import mx.collections.ArrayCollection;
+        import mx.collections.XMLListCollection;
+
+        [Bindable]
+        public var menuCollection:ArrayCollection;
+
+        private var menuList:XMLList =
+                <>
+                    <menuitem label="Transport Management">
+                        <menuitem label="Transport Orders" enabled="false" />
+                    </menuitem>
+                </>;
+
+        private function initApp():void
+        {
+            trace("setting mc");
+            //menuCollection = new XMLListCollection(menuList);
+        }
+        
+        /**
+         * This method returns a list of menu items which shall be expaned to the main
+         * application menu bar.
+         */
+        public function getMainMenuItems():ArrayCollection
+        {
+            if (menuCollection == null) { 
+                trace("MC is null");
+                //menuCollection = new XMLListCollection(tmsMenuBar.dataProvider as XMLList);
+            }
+            if (menuList == null) { trace("ML is null"); }
+            var tmp:Array = new Array();
+            tmp.push({label:"TransportOrders"});
+            menuCollection = new ArrayCollection(tmp);
+            return menuCollection;//new ArrayCollection(menuCollection.toArray());
+        }
+
+        /**
+         * This method returns the name of the module as unique String identifier.
+         */
+        public function getModuleName():String
+        {
+            return "TMS";
+        }
+
+        /**
+         * This method returns a list of items which shall be expaned to the context popup
+         * menu. The list contains objects with key,value pairs. The key is the name of the
+         * gui component where the popup shall appear, the value is the list of popup items.
+         */
+        public function getPopupItems():ArrayCollection
+        {
+            return new ArrayCollection();
+        }
+
+        ]]>
+    </mx:Script>
+
+    <mx:VBox height="100%" width="100%" verticalGap="0" backgroundColor="#C2DAEF">
+        <mx:Canvas width="100%" height="66" backgroundImage="@Embed(source='openwms_banner.jpg')" backgroundSize="100%">
+            <mx:Image source="@Embed('/assets/images/openwms_header.png')" />
+        </mx:Canvas>
+        <mx:Canvas width="100%" height="25" backgroundImage="@Embed(source='breadcrumbs.jpg')" backgroundSize="100%">
+            <mx:MenuBar id="commonMenuBar" labelField="@label">
+                <mx:XMLList>
+                    <menuitem label="Administration">
+                        <menuitem label="Users" action="{SwitchScreenEvent.SHOW_USER_MGMT_VIEW}" />
+                        <menuitem label="Roles" action="{SwitchScreenEvent.SHOW_USER_MGMT_VIEW}" />
+                        <menuitem label="Security" action="{SwitchScreenEvent.SHOW_USER_MGMT_VIEW}" />
+                    </menuitem>
+                    <menuitem label="Stock Configuration">
+                        <menuitem label="Transport Units" action="{SwitchScreenEvent.SHOW_TRANSPORTUNIT_VIEW}" />
+                        <menuitem label="Locations" action="{SwitchScreenEvent.SHOW_LOCATION_VIEW}" />
+                        <menuitem label="Users" action="{SwitchScreenEvent.SHOW_USER_MGMT_VIEW}" />
+                        <menuitem label="Location Groups" action="{SwitchScreenEvent.SHOW_LOCATIONGROUP_VIEW}" />
+                    </menuitem>
+                </mx:XMLList>
+            </mx:MenuBar>
+        </mx:Canvas>
+        <mx:HBox width="100%" height="100%" horizontalAlign="center" verticalAlign="middle">
+        <mx:ViewStack id="commonViewStack" selectedIndex="{loginView.authenticated ? modelLocator.mainViewStackIndex : modelLocator.mainViewStackIndex}">
+            <view:LoginView id="loginView" onLogin="login" cornerRadius="20" borderStyle="solid" alpha="1.0" borderThickness="3"/>
+            <view:EmptyScreenView />
+            <view:ModuleManagementView />
+            <view:LocationView />
+            <view:LocationGroupView />
+            <view:UserManagementView />
+            <view:TransportUnitView />
+        </mx:ViewStack>
+        </mx:HBox>
+    </mx:VBox>
+
+
+</mx:Module>
