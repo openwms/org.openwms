@@ -45,13 +45,39 @@ package org.openwms.web.flex.client.control
             this.addCommand(UserEvent.ADD_USER, AddUserCommand);
             this.addCommand(UserEvent.SAVE_USER, SaveUserCommand);
             this.addCommand(UserEvent.DELETE_USER, DeleteUserCommand);
+
             this.addCommand(SwitchScreenEvent.SHOW_STARTSCREEN, ShowStartscreenCommand);
+            this.addCommand(SwitchScreenEvent.SHOW_MODULE_MGMT_VIEW, ShowModuleManagementViewCommand);
             this.addCommand(SwitchScreenEvent.SHOW_LOCATION_VIEW, ShowLocationViewCommand);
             this.addCommand(SwitchScreenEvent.SHOW_LOCATIONGROUP_VIEW, ShowLocationGroupCommand);
             this.addCommand(SwitchScreenEvent.SHOW_USER_MGMT_VIEW, ShowUserManagementViewCommand);
             this.addCommand(SwitchScreenEvent.SHOW_TRANSPORTUNIT_VIEW, ShowTransportUnitCommand);
+
             this.addCommand(LoadLocationGroupsEvent.LOAD_ALL_LOCATION_GROUPS, LoadLocationGroupsCommand);
             this.addCommand(LocationEvent.LOAD_ALL_LOCATIONS, LoadLocationsCommand);
+
+            this.addCommand(ApplicationEvent.LOAD_ALL_MODULES, LoadModulesCommand);
+            this.addCommand(ApplicationEvent.SAVE_MODULE, SaveModuleCommand);
+            this.addCommand(ApplicationEvent.DELETE_MODULE, DeleteModuleCommand);
+        }
+
+        /**
+         * Register a new command as handler for incoming events. If the event occurrs,
+         * the command is executed.
+         */
+        public function registerHander(event:String, command:Class):void
+        {
+            this.addCommand(event, command);
+        }
+
+        /**
+         * Unregister a command. This is useful when an application module is unloaded. In
+         * that case, all commands belonging to that module and that are registered previously
+         * must be unregistered again.
+         */
+        public function unregisterHandler(event:String):void
+        {
+            this.removeCommand(event)
         }
     }
 }
