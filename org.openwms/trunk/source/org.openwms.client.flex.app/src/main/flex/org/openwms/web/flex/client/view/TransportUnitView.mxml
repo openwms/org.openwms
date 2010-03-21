@@ -21,7 +21,7 @@
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
 -->
-<mx:Canvas xmlns:mx="http://www.adobe.com/2006/mxml" width="928" height="612" initialize="onStartup()">
+<mx:Canvas xmlns:mx="http://www.adobe.com/2006/mxml" width="100%" height="100%" initialize="onStartup()">
 
 	<mx:Script>
     	<![CDATA[
@@ -50,7 +50,12 @@
 		</mx:HBox>
 		<mx:DataGrid width="100%" height="100%" dataProvider="{modelLocator.allTransportUnits}">
 			<mx:columns>
-				<mx:DataGridColumn headerText="Barcode" dataField="barcode" />
+				<mx:DataGridColumn headerText="Barcode" dataField="barcode.value" />
+				<mx:DataGridColumn headerText="Actual Location" dataField="actualLocation" />
+                <mx:DataGridColumn headerText="Created on" dataField="creationDate" />
+                <mx:DataGridColumn headerText="Last Inventory" dataField="inventoryDate" />
+                <mx:DataGridColumn headerText="Inventory User" dataField="inventoryUser.username" />
+                <mx:DataGridColumn headerText="Placed on" dataField="parent.barcode.value" />
 			</mx:columns>
 		</mx:DataGrid>
 	</mx:VBox>

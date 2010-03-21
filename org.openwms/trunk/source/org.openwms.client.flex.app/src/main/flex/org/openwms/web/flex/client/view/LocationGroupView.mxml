@@ -22,7 +22,7 @@
  */
 -->
 <mx:Canvas xmlns:mx="http://www.adobe.com/2006/mxml" xmlns:business="org.openwms.web.flex.client.business.*"
-	xmlns:o="org.openwms.web.flex.client.components.*" width="1280" height="670" backgroundColor="#C2DAEF"
+	xmlns:o="org.openwms.web.flex.client.components.*" width="100%" height="100%" backgroundColor="#C2DAEF"
 	creationComplete="init()">
 	<!-- Scripts -->
 	<mx:Script>

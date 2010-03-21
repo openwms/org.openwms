@@ -20,27 +20,43 @@
  */
 package org.openwms.web.flex.client.event
 {
-    import com.adobe.cairngorm.control.CairngormEvent;
+
+    import flash.events.Event;
+    import flash.events.EventDispatcher;
 
     /**
-     * A SwitchScreenEvent.
+     * An EventBroker.
      *
      * @author <a href="mailto:openwms@googlemail.com">Heiko Scherrer</a>
-     * @version $Revision$
+     * @version $Revision: 235 $
+     * @since 0.1
      */
-    public class SwitchScreenEvent extends CairngormEvent
+    [Bindable]
+    public class EventBroker extends EventDispatcher
     {
-        public static const SHOW_STARTSCREEN:String = "ShowStartscreen";
-        public static const SHOW_MODULE_MGMT_VIEW:String = "ShowModuleManagementView";
-        public static const SHOW_LOCATION_VIEW:String = "ShowLocationView";
-        public static const SHOW_LOCATIONGROUP_VIEW:String = "ShowLocationGroupView";
-        public static const SHOW_USER_MGMT_VIEW:String = "ShowUserManagementView";
-        public static const SHOW_TRANSPORTUNIT_VIEW:String = "ShowTransportUnitView";
+        private static var instance:EventBroker;
 
-        public function SwitchScreenEvent(type:String, bubbles:Boolean = false, cancelable:Boolean = false)
+        public function EventBroker(enforcer:SingletonEnforcer)
         {
-            super(type, bubbles, cancelable);
+        }
+
+        public static function getInstance():EventBroker
+        {
+            if (instance == null)
+            {
+                instance = new EventBroker(new SingletonEnforcer);
+            }
+            return instance;
+        }
+
+        public function dispatchEvt(e:Event):void
+        {
+            dispatchEvent(e);
         }
 
     }
+}
+
+class SingletonEnforcer
+{
 }

@@ -34,7 +34,6 @@
 	<name>${project.artifactId}</name>
 	<properties>
 		<moduleDir>..</moduleDir>
-		<template.version>2.0.0</template.version>
 		<flex.version>3.2.0.3958</flex.version>
 	</properties>
 	<build>
@@ -84,6 +83,12 @@
 						<version>${granite.version}</version>
 						<type>swc</type>
 					</dependency>
+                    <dependency>
+                        <groupId>${project.groupId}</groupId>
+                        <artifactId>org.openwms.client.flex.lib</artifactId>
+                        <version>${project.version}</version>
+                        <type>swc</type>
+                    </dependency>
 				</dependencies>
 			</plugin>
 		</plugins>
@@ -91,8 +96,8 @@
 
 	<repositories>
 		<repository>
-			<id>sonatype-public</id>
-			<url>http://repository.sonatype.org/content/groups/public</url>
+			<id>granite-repo</id>
+			<url>http://download.java.net/maven/2/</url>
 			<releases>
 				<enabled>true</enabled>
 			</releases>
@@ -101,8 +106,8 @@
 			</snapshots>
 		</repository>
 		<repository>
-			<id>granite-repo</id>
-			<url>http://download.java.net/maven/2/</url>
+			<id>sonatype-public</id>
+			<url>http://repository.sonatype.org/content/groups/public</url>
 			<releases>
 				<enabled>true</enabled>
 			</releases>
@@ -141,6 +146,12 @@
 			<version>${project.version}</version>
 			<type>swc</type>
 		</dependency>
+        <dependency>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>org.openwms.client.flex.lib</artifactId>
+            <version>${project.version}</version>
+            <type>swc</type>
+        </dependency>
 		<dependency>
 			<groupId>com.adobe.flex.framework</groupId>
 			<artifactId>flex-framework</artifactId>
@@ -154,11 +165,6 @@
 			<type>swc</type>
 		</dependency>
 
-		<!--
-			<dependency> <groupId>com.adobe.flex.framework</groupId>
-			<artifactId>cairngorm-framework</artifactId> <version>2.2.1</version>
-			<type>swc</type> </dependency>
-		-->
 		<dependency>
 			<groupId>org.graniteds</groupId>
 			<artifactId>granite-core-swc</artifactId>

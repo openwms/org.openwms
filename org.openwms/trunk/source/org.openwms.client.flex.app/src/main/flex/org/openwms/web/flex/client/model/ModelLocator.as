@@ -36,11 +36,13 @@ package org.openwms.web.flex.client.model
     {
 
         public static const MAIN_VIEW_STACK_LOGIN_VIEW:uint = 0;
-        public static const MAIN_VIEW_STACK_LOCATION_VIEW:uint = 1;
-        public static const MAIN_VIEW_STACK_LOCATIONGROUP_VIEW:uint = 2;
-        public static const MAIN_VIEW_STACK_USER_MGMT_VIEW:uint = 3;
-        public static const MAIN_VIEW_STACK_TRANSPORTUNIT_VIEW:uint = 4;
-        public var mainViewStackIndex:uint = MAIN_VIEW_STACK_LOCATION_VIEW;
+        public static const MAIN_VIEW_STACK_EMPTY_VIEW:uint = 1;
+        public static const MAIN_VIEW_STACK_MODULE_MGMT_VIEW:uint = 2;
+        public static const MAIN_VIEW_STACK_LOCATION_VIEW:uint = 3;
+        public static const MAIN_VIEW_STACK_LOCATIONGROUP_VIEW:uint = 4;
+        public static const MAIN_VIEW_STACK_USER_MGMT_VIEW:uint = 5;
+        public static const MAIN_VIEW_STACK_TRANSPORTUNIT_VIEW:uint = 6;
+        public var mainViewStackIndex:uint = MAIN_VIEW_STACK_EMPTY_VIEW;
 
         public const UPLOAD_URL:String = "/openwms/upload";
         public const DIRECTORY_NAME:String = "data";
@@ -48,17 +50,26 @@ package org.openwms.web.flex.client.model
         public var allLocationGroups:ArrayCollection = new ArrayCollection();
         public var allLocations:ArrayCollection = new ArrayCollection();
         public var allTransportUnits:ArrayCollection = new ArrayCollection();
+        public var allModules:ArrayCollection = new ArrayCollection();
         public var allUsers:ArrayCollection = new ArrayCollection();
         public var selectedUser:User = null;
         public var locationGroupTree:TreeNode;
         public var image:Object;
+        private var views:Array = new Array();
 
         private static var instance:ModelLocator;
 
+        /**
+         * Used to construct the Singleton instance.
+         */
         public function ModelLocator(enforcer:SingletonEnforcer)
         {
         }
 
+        /**
+         * Return the instance of ModelLocator which is implemented
+         * as Singleton.
+         */
         public static function getInstance():ModelLocator
         {
             if (instance == null)
@@ -66,6 +77,29 @@ package org.openwms.web.flex.client.model
                 instance = new ModelLocator(new SingletonEnforcer);
             }
             return instance;
+        }
+
+        /**
+         * Access the views array and add the viewObject to the defined
+         * position. The postion is mandatory for the viewStack.
+         */
+        public static function addView(pos:int, view:Object):void
+        {
+
+        }
+
+        /**
+         * Search the viewObject from the array of views and remove it.
+         */
+        public static function removeView(view:Object):void
+        {
+        }
+
+        /**
+         * Shift the view to a new position.
+         **/
+        public static function moveView(destPos:int, view:Object):void
+        {
         }
     }
 }

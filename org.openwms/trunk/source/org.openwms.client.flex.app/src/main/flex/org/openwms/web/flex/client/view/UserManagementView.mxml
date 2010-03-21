@@ -23,7 +23,7 @@
 -->
 <mx:HBox xmlns:mx="http://www.adobe.com/2006/mxml" xmlns:view="org.openwms.web.flex.client.view.*"
 	xmlns:management="org.openwms.web.flex.client.view.management.*" xmlns:renderer="org.openwms.web.flex.client.view.renderers.*"
-	width="1280" height="670">
+	width="100%" height="100%">
 	<management:UserList />
 	<management:UserManagementContent />
 </mx:HBox>

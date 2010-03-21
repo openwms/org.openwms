@@ -1,31 +1,193 @@
 <?xml version="1.0" encoding="utf-8"?>
-<mx:Canvas xmlns:mx="http://www.adobe.com/2006/mxml" width="1062" height="100%" verticalGap="6" backgroundAlpha="0.0">
+<!--
+/*
+ * openwms.org, the Open Warehouse Management System.
+ *
+ * This file is part of openwms.org.
+ *
+ * openwms.org is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as 
+ * published by the Free Software Foundation, either version 3 of the
+ * License, or (at your option) any later version.
+ *
+ * openwms.org is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with this software. If not, write to the Free
+ * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
+ * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
+ */
+-->
+<mx:Canvas xmlns:mx="http://www.adobe.com/2006/mxml" width="100%" height="100%" backgroundAlpha="0.0" creationComplete="init()">
 
     <mx:Script>
         <![CDATA[
+            
+            import mx.collections.ArrayCollection;
+            import mx.binding.utils.BindingUtils;
             import org.openwms.web.flex.client.service.ModuleLocator;
+            import org.openwms.common.domain.Module;
+            import org.openwms.web.flex.client.event.ApplicationEvent;
+            import org.openwms.web.flex.client.model.ModelLocator;
+            import mx.events.ListEvent;
+            import mx.events.DragEvent;
+
+            [Bindable]
+            private var modelLocator:ModelLocator = ModelLocator.getInstance();            
             [Bindable]
             private var moduleLocator:ModuleLocator = ModuleLocator.getInstance();
+        
+            private function init():void {
+                this.addEventListener(ApplicationEvent.MODULE_CONFIG_CHANGED, moduleConfigChanged);
+                newBtn.enabled = true;
+                saveBtn.enabled = false;
+                deleteBtn.enabled = false;
+                enableTextFields(false);
+                traceOut();
+                //new ApplicationEvent(ApplicationEvent.LOAD_ALL_MODULES).dispatch();
+            }
+            
+            private function moduleConfigChanged():void {
+                trace("Module configuration has changed");
+                newBtn.enabled = true;
+                saveBtn.enabled = false;
+                deleteBtn.enabled = false;
+                enableTextFields(false);
+            }
+            
+            private function newModule():void {
+                var module:Module = new Module();
+                moduleLocator.selectedModule = module;
+                saveBtn.enabled = true;
+                deleteBtn.enabled = true;
+                newBtn.enabled = false;
+                enableTextFields(true);
+                moduleNameTxt.setFocus();
+            }
+
+            private function saveModule():void {
+                deleteBtn.enabled = false;
+                saveBtn.enabled = false;
+                trace("Module:"+moduleLocator.selectedModule.moduleName);
+                var e:ApplicationEvent = new ApplicationEvent(ApplicationEvent.SAVE_MODULE);
+                e.data = moduleLocator.selectedModule;
+                e.dispatch();
+                moduleConfigChanged();
+                newBtn.setFocus();
+            }
+            
+            private function deleteModule():void {
+                if (moduleLocator.selectedModule != null) {
+                    trace("Delete Module:"+moduleLocator.selectedModule.moduleName);
+                    if (!isNaN(moduleLocator.selectedModule.id)) {
+                        // Persisted instance
+                        trace("Delete a persistend instance");
+                        var e:ApplicationEvent = new ApplicationEvent(ApplicationEvent.DELETE_MODULE);
+                        e.data = moduleLocator.selectedModule;
+                        e.dispatch();
+                    }
+                    moduleLocator.selectedModule = null;
+                    enableTextFields(false);
+                    saveBtn.enabled = false;
+                    deleteBtn.enabled = false;
+                    newBtn.enabled = true;
+                    modulesGrid.setFocus();
+                }
+            }
+            
+            private function loadModule():void {
+            trace("m:"+moduleLocator.selectedModule.moduleName);
+                if (moduleLocator.selectedModule != null) {
+                    if (moduleLocator.selectedModule.loaded) {
+                        moduleLocator.unloadModule(moduleLocator.selectedModule);
+                    } else {
+                        moduleLocator.loadModule(moduleLocator.selectedModule);
+                    }
+                }
+            }
+
+            private function enableTextFields(enable:Boolean):void {
+                moduleNameTxt.enabled = enable;
+                urlTxt.enabled = enable;
+                descriptionTxt.enabled = enable;
+            }
+            
+            private function onChange():void {
+                saveBtn.enabled = true;
+            }
+
+            private function onRowClick( event:ListEvent ):void {
+                moduleLocator.selectedModule = (event.currentTarget.selectedItem) as Module;
+                enableTextFields(true);
+                deleteBtn.enabled = true;
+            }
+            
+            private function onDragComplete(event:DragEvent):void {
+                var e:ApplicationEvent = new ApplicationEvent(ApplicationEvent.SAVE_MODULE);
+                var value:Object = event.dragSource.dataForFormat('items');
+                
+                trace(value);
+                var index:int = modulesGrid.calculateDropIndex(event);
+                trace("Index:"+index);
+                if (value != null) {
+                    moduleLocator.selectedModule = getModule(value as Module);
+                    moduleLocator.selectedModule.startupOrder = index;
+                    e.data = moduleLocator.selectedModule;
+                    e.dispatch();
+                }
+                traceOut();
+            }
+            
+            private function traceOut():void {
+                var i:int = 0;
+                for each (var module:Module in moduleLocator.allModules)
+                {
+                    trace("Module ["+i+"]:"+module.moduleName);
+                    i++;
+                }
+            }
+
+            private function getModule(module:Module):Module {
+                for each (var m:Module in moduleLocator.allModules)
+                {
+                    if (m.moduleName == module.moduleName) {
+                        return m;
+                    }
+                }
+                return module;
+            }
+
         ]]>
     </mx:Script>
+
+    <mx:Binding source="moduleNameTxt.text" destination="moduleLocator.selectedModule.moduleName" />
+    <mx:Binding source="urlTxt.text" destination="moduleLocator.selectedModule.url" />
+    <mx:Binding source="descriptionTxt.text" destination="moduleLocator.selectedModule.description" />
+
+    <mx:StringValidator minLength="1" tooShortError="Modulename is required" source="{moduleNameTxt}" required="true" property="text"/>
+    <mx:StringValidator minLength="1" tooShortError="URL is required" source="{urlTxt}" required="true" property="text"/>
+
 		<mx:Panel height="250" backgroundColor="#EAFF00" backgroundAlpha="0.5" width="800" layout="absolute" x="10" y="10" title="Modules">
-			<mx:DataGrid width="300" dataProvider="{ModuleLocator.getRegisteredModules()}" x="10" y="10" height="201">
-				<mx:columns>
-					<mx:DataGridColumn headerText="Column 1" dataField="col1"/>
-					<mx:DataGridColumn headerText="Column 2" dataField="col2"/>
-					<mx:DataGridColumn headerText="Column 3" dataField="col3"/>
-				</mx:columns>
-			</mx:DataGrid>
+			<mx:List id="modulesGrid" dataProvider="{moduleLocator.allModules}" labelField="moduleName" dragEnabled="true" dropEnabled="true" dragMoveEnabled="true" dragDrop="onDragComplete(event);" width="300" x="10" y="10" height="201" itemClick="onRowClick(event)" />
 			<mx:Canvas height="201" x="318" y="10" width="466">
-				<mx:Label x="10" y="10" text="Modulename"/>
-				<mx:Label x="10" y="40" text="URI"/>
-				<mx:Label x="10" y="70" text="Description"/>
-				<mx:TextInput x="95" y="8" width="301"/>
-				<mx:TextInput x="95" y="38" width="301"/>
-				<mx:TextInput x="95" y="68" width="301"/>
-				<mx:Button label="Add" x="10" y="179"/>
-				<mx:Button label="Save" x="67" y="179"/>
-				<mx:Button label="Delete" x="129" y="179"/>
+			<mx:Form width="100%">
+				<mx:FormItem label="Modulename" required="true" x="10" y="10" >
+				    <mx:TextInput id="moduleNameTxt" x="95" y="8" width="301" change="onChange()" text="{moduleLocator.selectedModule.moduleName}" />
+				</mx:FormItem>
+				<mx:FormItem label="URL" required="true" x="10" y="40" >
+    				<mx:TextInput id="urlTxt" x="95" y="38" width="301" change="onChange()" text="{moduleLocator.selectedModule.url}" />
+                </mx:FormItem>
+                <mx:FormItem label="Description" x="10" y="70" >
+    				<mx:TextInput id="descriptionTxt" x="95" y="68" width="301" change="onChange()" text="{moduleLocator.selectedModule.description}" />
+                </mx:FormItem>
+			</mx:Form>
+            <mx:Button id="newBtn" label="New" x="10" y="110" click="newModule()" />
+            <mx:Button id="saveBtn" label="Save" x="67" y="110" click="saveModule()"/>
+            <mx:Button id="deleteBtn" label="Delete" x="129" y="110" click="deleteModule()"/>
+            <mx:Button id="loadBtn" label="{(moduleLocator.selectedModule == null || moduleLocator.selectedModule.loaded) ? 'Unload' : 'Load'}" x="200" y="110" click="loadModule()" enabled="{(moduleLocator.selectedModule == null || moduleLocator.selectedModule.moduleName == '') ? false : true}"/>
 			</mx:Canvas>
 		</mx:Panel>
 	<mx:Panel width="800" backgroundColor="#EAFF00" backgroundAlpha="0.5" y="268" layout="absolute" x="10" height="250" title="Views and Menu Items">

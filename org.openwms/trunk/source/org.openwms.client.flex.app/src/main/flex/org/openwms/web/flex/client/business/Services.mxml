@@ -36,8 +36,9 @@
         destination="locationGroupService"
         showBusyCursor="true"/>
 -->
-<mx:RemoteObject id="locationService" destination="locationService" />
-<mx:RemoteObject id="locationGroupService" destination="locationGroupService" />
-<mx:RemoteObject id="userService" destination="userService" />
-<mx:RemoteObject id="transportUnitService" destination="transportUnitService" />
+<mx:RemoteObject id="locationService" destination="locationService" showBusyCursor="true" />
+<mx:RemoteObject id="locationGroupService" destination="locationGroupService" showBusyCursor="true" />
+<mx:RemoteObject id="userService" destination="userService" showBusyCursor="true" />
+<mx:RemoteObject id="transportUnitService" destination="transportUnitService" showBusyCursor="true" />
+<mx:RemoteObject id="moduleManagementService" destination="moduleManagementService" showBusyCursor="true" />
 </business:ServiceLocator>

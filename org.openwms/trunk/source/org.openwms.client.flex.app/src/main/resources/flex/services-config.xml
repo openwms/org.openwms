@@ -61,6 +61,15 @@
 					<source>transportUnitService</source>
 				</properties>
 			</destination>
+            <destination id="moduleManagementService">
+                <channels>
+                    <channel ref="my-graniteamf" />
+                </channels>
+                <properties>
+                    <factory>springFactory</factory>
+                    <source>moduleManagementService</source>
+                </properties>
+            </destination>
 		</service>
 	</services>
 
