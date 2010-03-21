@@ -58,6 +58,12 @@
 			import org.openwms.common.domain.MenuItem;
             import org.granite.rpc.remoting.mxml.SecureRemoteObject;
             import org.granite.events.SecurityEvent;
+            import org.openwms.web.flex.client.command.*;
+            import org.openwms.web.flex.client.event.UserEvent;
+            import org.openwms.web.flex.client.event.SwitchScreenEvent;
+            import org.openwms.web.flex.client.event.LoadLocationGroupsEvent;
+            import org.openwms.web.flex.client.event.LocationEvent;
+            import org.openwms.web.flex.client.event.ApplicationEvent;
 
 			[Bindable]
 			private var modelLocator:ModelLocator = ModelLocator.getInstance();
@@ -68,11 +74,11 @@
 			[Bindable]
             private var srv:SecureRemoteObject = null;
             [Bindable]
-            protected var mainController = new MainController(); 
+            protected var mainController:MainController = new MainController(); 
             [Bindable]
             public var menuBarCollection:XMLListCollection;
             [Bindable]
-            var menuItems:ArrayCollection;
+            protected var menuItems:ArrayCollection;
             
             // Manager classes are loaded to the application domain
             private var moduleManager:ModuleManager; 
@@ -84,8 +90,31 @@
                 srv = new SecureRemoteObject("userService");
                 //srv.login();
                 registerEventListeners();
+                bindCommands();
                 detectModules();
                 //configService.send();
+			}
+			
+			private function bindCommands():void
+			{
+                mainController.addCommand(UserEvent.LOAD_ALL_USERS, LoadUsersCommand);
+                mainController.addCommand(UserEvent.ADD_USER, AddUserCommand);
+                mainController.addCommand(UserEvent.SAVE_USER, SaveUserCommand);
+                mainController.addCommand(UserEvent.DELETE_USER, DeleteUserCommand);
+
+                mainController.addCommand(SwitchScreenEvent.SHOW_STARTSCREEN, ShowStartscreenCommand);
+                mainController.addCommand(SwitchScreenEvent.SHOW_MODULE_MGMT_VIEW, ShowModuleManagementViewCommand);
+                mainController.addCommand(SwitchScreenEvent.SHOW_LOCATION_VIEW, ShowLocationViewCommand);
+                mainController.addCommand(SwitchScreenEvent.SHOW_LOCATIONGROUP_VIEW, ShowLocationGroupCommand);
+                mainController.addCommand(SwitchScreenEvent.SHOW_USER_MGMT_VIEW, ShowUserManagementViewCommand);
+                mainController.addCommand(SwitchScreenEvent.SHOW_TRANSPORTUNIT_VIEW, ShowTransportUnitCommand);
+
+                mainController.addCommand(LoadLocationGroupsEvent.LOAD_ALL_LOCATION_GROUPS, LoadLocationGroupsCommand);
+                mainController.addCommand(LocationEvent.LOAD_ALL_LOCATIONS, LoadLocationsCommand);
+
+                mainController.addCommand(ApplicationEvent.LOAD_ALL_MODULES, LoadModulesCommand);
+                mainController.addCommand(ApplicationEvent.SAVE_MODULE, SaveModuleCommand);
+                mainController.addCommand(ApplicationEvent.DELETE_MODULE, DeleteModuleCommand);
 			}
 			
             public function onSecurityEvent(event:SecurityEvent):void {
@@ -158,7 +187,7 @@
              * This method rebuilds the viewStack of the application, and should be called,
              * in case application modules are loaded or unloaded.
              */
-            private function refreshViewStack()
+            private function refreshViewStack():void
             {
                 
             }
@@ -168,7 +197,7 @@
              * in case an application module is loaded or unloaded.
              * The main menu, could be an MenuBar or any other kind of menu.
              */
-            private function refreshMainMenu()
+            private function refreshMainMenu():void
             {
                 
             }
