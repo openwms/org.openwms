@@ -51,4 +51,8 @@
 	<bean id="transportUnitService" class="org.openwms.common.service.spring.TransportUnitServiceImpl">
 		<property name="dao" ref="transportUnitDao" />
 	</bean>
+
+    <bean id="moduleManagementService" class="org.openwms.common.service.spring.ModuleManagementImpl">
+        <property name="dao" ref="moduleDao" />
+    </bean>
 </beans>
