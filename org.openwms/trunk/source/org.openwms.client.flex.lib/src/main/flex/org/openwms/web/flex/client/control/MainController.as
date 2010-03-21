@@ -22,9 +22,6 @@ package org.openwms.web.flex.client.control
 {
     import com.adobe.cairngorm.control.FrontController;
 
-    import org.openwms.web.flex.client.command.*;
-    import org.openwms.web.flex.client.event.*;
-
     /**
      * A MainController.
      *
@@ -41,24 +38,6 @@ package org.openwms.web.flex.client.control
 
         private function setupEventHandler():void
         {
-            this.addCommand(UserEvent.LOAD_ALL_USERS, LoadUsersCommand);
-            this.addCommand(UserEvent.ADD_USER, AddUserCommand);
-            this.addCommand(UserEvent.SAVE_USER, SaveUserCommand);
-            this.addCommand(UserEvent.DELETE_USER, DeleteUserCommand);
-
-            this.addCommand(SwitchScreenEvent.SHOW_STARTSCREEN, ShowStartscreenCommand);
-            this.addCommand(SwitchScreenEvent.SHOW_MODULE_MGMT_VIEW, ShowModuleManagementViewCommand);
-            this.addCommand(SwitchScreenEvent.SHOW_LOCATION_VIEW, ShowLocationViewCommand);
-            this.addCommand(SwitchScreenEvent.SHOW_LOCATIONGROUP_VIEW, ShowLocationGroupCommand);
-            this.addCommand(SwitchScreenEvent.SHOW_USER_MGMT_VIEW, ShowUserManagementViewCommand);
-            this.addCommand(SwitchScreenEvent.SHOW_TRANSPORTUNIT_VIEW, ShowTransportUnitCommand);
-
-            this.addCommand(LoadLocationGroupsEvent.LOAD_ALL_LOCATION_GROUPS, LoadLocationGroupsCommand);
-            this.addCommand(LocationEvent.LOAD_ALL_LOCATIONS, LoadLocationsCommand);
-
-            this.addCommand(ApplicationEvent.LOAD_ALL_MODULES, LoadModulesCommand);
-            this.addCommand(ApplicationEvent.SAVE_MODULE, SaveModuleCommand);
-            this.addCommand(ApplicationEvent.DELETE_MODULE, DeleteModuleCommand);
         }
 
         /**
