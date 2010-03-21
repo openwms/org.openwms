@@ -55,9 +55,8 @@
 						<path>${basedir}/src/main/resources</path>
 						<path>${basedir}/src/main/flex</path>
 					</sourcePaths>
-					<services>${basedir}/src/main/resources/flex/services-config.xml</services>
 					<contextRoot>openwms</contextRoot>
-					<sourceFile>org/openwms/web/flex/client/view/StartScreen.mxml</sourceFile>
+					<sourceFile>org/openwms/web/flex/client/tms/view/MenuBar.mxml</sourceFile>
 					<warnings>
 						<arrayTostringChanges>true</arrayTostringChanges>
 						<duplicateArgumentNames>false</duplicateArgumentNames>
@@ -153,12 +152,13 @@
 			<version>2.2.1</version>
 			<type>swc</type>
 		</dependency>
+        <dependency>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>org.openwms.client.flex.lib</artifactId>
+            <version>${project.version}</version>
+            <type>swc</type>
+        </dependency>
 
-		<!--
-			<dependency> <groupId>com.adobe.flex.framework</groupId>
-			<artifactId>cairngorm-framework</artifactId> <version>2.2.1</version>
-			<type>swc</type> </dependency>
-		-->
 		<dependency>
 			<groupId>org.graniteds</groupId>
 			<artifactId>granite-core-swc</artifactId>
