@@ -28,7 +28,6 @@
 
     <!-- imports -->
     <osgi:reference id="transactionManager" interface="org.springframework.transaction.PlatformTransactionManager"/>
-    <osgi:reference id="locationDao" interface="org.openwms.common.integration.LocationDao"/>
     <osgi:reference id="transportUnitDao" interface="org.openwms.common.integration.TransportUnitDao"/>
     <osgi:reference id="transportOrderDao" interface="org.openwms.tms.integration.TransportOrderDao"/>
 	
