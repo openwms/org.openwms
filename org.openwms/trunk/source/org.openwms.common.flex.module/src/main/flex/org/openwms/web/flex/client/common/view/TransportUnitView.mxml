@@ -25,7 +25,7 @@
 
 	<mx:Script>
     	<![CDATA[
-    		import org.openwms.web.flex.client.model.IconLocator;
+    		import org.openwms.web.flex.client.common.model.IconLocator;
     		import org.openwms.common.domain.TransportUnit;
     		import org.openwms.web.flex.client.model.ModelLocator;
     		[Bindable]

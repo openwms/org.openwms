@@ -21,7 +21,7 @@
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
 -->
-<mx:Canvas xmlns:mx="http://www.adobe.com/2006/mxml" xmlns:o="org.openwms.web.flex.client.components.*" width="100%"
+<mx:Canvas xmlns:mx="http://www.adobe.com/2006/mxml" xmlns:o="org.openwms.web.flex.client.component.*" width="100%"
 	height="100%" backgroundColor="#C2DAEF" creationComplete="init()">
 	<mx:Script>
 					<![CDATA[
@@ -30,8 +30,8 @@
 						import mx.utils.ArrayUtil;
 						import org.openwms.common.domain.*;
 						import mx.collections.ArrayCollection;
-						import org.openwms.web.flex.client.event.LoadLocationGroupsEvent;
-						import org.openwms.web.flex.client.business.LocationGroupDelegate;
+						import org.openwms.web.flex.client.common.event.LoadLocationGroupsEvent;
+						import org.openwms.web.flex.client.common.business.LocationGroupDelegate;
 						import mx.controls.List;
 						import mx.events.ListEvent;
 						import org.openwms.web.flex.client.model.ModelLocator;

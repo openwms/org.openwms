@@ -228,7 +228,7 @@
 				<mx:Image id="iconImage" source="{iconClass}" />
 				<mx:Text text="MEDIA UPLOAD" styleName="lblDialogFont" width="90%" fontWeight="bold" fontSize="14" />
 				<mx:Spacer width="100%" />
-				<mx:Image toolTip="Close Dialog" source="@Embed('/assets/images/closeButton.png')" click="closeDialog()"
+				<mx:Image toolTip="Close Dialog" source="@Embed('assets/images/superPanel/closeButton.png')" click="closeDialog()"
 					mouseChildren="false" useHandCursor="true" buttonMode="true" />
 			</mx:HBox>
 			<mx:Form>

@@ -27,12 +27,12 @@ Button {
    highlightAlphas: 1, 0.33;
    fillAlphas: 1, 0.16, 0.18, 1;
    fillColors: #5f89b9, #697182, #ffffff, #eeeeee;
-	skin: Embed("/assets/images/cleanskin/button_skin.png",
+	skin: Embed("assets/images/clearskin/button_skin.png",
 			scaleGridLeft="7",
 			scaleGridRight="21",
 			scaleGridTop="7",
 			scaleGridBottom="19");
-	over-skin: Embed("/assets/images/cleanskin/button_over_skin.png",
+	over-skin: Embed("assets/images/clearskin/button_over_skin.png",
 			scaleGridLeft="7",
 			scaleGridRight="21",
 			scaleGridTop="7",
@@ -57,32 +57,32 @@ Panel {
 	fontWeight: bold;
 }
 .closeBtn {
-	upSkin:        Embed('/assets/images/closeButton.png');
-	overSkin:      Embed('/assets/images/closeButton.png');
-	downSkin:      Embed('/assets/images/closeButton.png');
-	disabledSkin:  Embed('/assets/images/closeButton.png');
+	upSkin:        Embed('assets/images/superPanel/closeButton.png');
+	overSkin:      Embed('assets/images/superPanel/closeButton.png');
+	downSkin:      Embed('assets/images/superPanel/closeButton.png');
+	disabledSkin:  Embed('assets/images/superPanel/closeButton.png');
 }
 .increaseBtn {
-	upSkin:        Embed('/assets/images/increaseButton.png');
-	overSkin:      Embed('/assets/images/increaseButton.png');
-	downSkin:      Embed('/assets/images/increaseButton.png');
-	disabledSkin:  Embed('/assets/images/increaseButton.png');
+	upSkin:        Embed('assets/images/superPanel/increaseButton.png');
+	overSkin:      Embed('assets/images/superPanel/increaseButton.png');
+	downSkin:      Embed('assets/images/superPanel/increaseButton.png');
+	disabledSkin:  Embed('assets/images/superPanel/increaseButton.png');
 }
 .decreaseBtn {
-	upSkin:        Embed('/assets/images/decreaseButton.png');
-	overSkin:      Embed('/assets/images/decreaseButton.png');
-	downSkin:      Embed('/assets/images/decreaseButton.png');
-	disabledSkin:  Embed('/assets/images/decreaseButton.png');
+	upSkin:        Embed('assets/images/superPanel/decreaseButton.png');
+	overSkin:      Embed('assets/images/superPanel/decreaseButton.png');
+	downSkin:      Embed('assets/images/superPanel/decreaseButton.png');
+	disabledSkin:  Embed('assets/images/superPanel/decreaseButton.png');
 }
 .minimizeBtn {
-	upSkin:        Embed('/assets/images/decreaseButton.png');
-	overSkin:      Embed('/assets/images/decreaseButton.png');
-	downSkin:      Embed('/assets/images/decreaseButton.png');
-	disabledSkin:  Embed('/assets/images/decreaseButton.png');
+	upSkin:        Embed('assets/images/superPanel/decreaseButton.png');
+	overSkin:      Embed('assets/images/superPanel/decreaseButton.png');
+	downSkin:      Embed('assets/images/superPanel/decreaseButton.png');
+	disabledSkin:  Embed('assets/images/superPanel/decreaseButton.png');
 }
 .resizeHndlr {
-	upSkin:        Embed('/assets/images/resizeHandler.png');
-	overSkin:      Embed('/assets/images/resizeHandler.png');
-	downSkin:      Embed('/assets/images/resizeHandler.png');
-	disabledSkin:  Embed('/assets/images/resizeHandler.png');
+	upSkin:        Embed('assets/images/superPanel/resizeHandler.png');
+	overSkin:      Embed('assets/images/superPanel/resizeHandler.png');
+	downSkin:      Embed('assets/images/superPanel/resizeHandler.png');
+	disabledSkin:  Embed('assets/images/superPanel/resizeHandler.png');
 }

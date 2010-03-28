@@ -22,6 +22,7 @@ package org.openwms.web.flex.client.module
 {
     import mx.collections.ArrayCollection;
     import flash.events.Event;
+    import mx.events.FlexEvent;
     import org.openwms.web.flex.client.IApplicationModule;
     import mx.modules.ModuleBase;
 
@@ -32,18 +33,21 @@ package org.openwms.web.flex.client.module
          */
         public function CommonModule()
         {
-            //TODO: implement function
             super();
+            this.addEventListener(FlexEvent.CREATION_COMPLETE, onCreationComplete);
         }
 
         /**
          * This method returns a list of menu items which shall be expaned to the main
          * application menu bar.
          */
-        public function getMainMenuItems():ArrayCollection
+        private function onCreationComplete(e:Event):void
         {
-            //TODO: implement function
-            return null;
+            initApp();
+        }
+
+        protected function initApp():void
+        {
         }
 
     }

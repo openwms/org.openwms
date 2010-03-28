@@ -56,7 +56,7 @@
 						<path>${basedir}/src/main/flex</path>
 					</sourcePaths>
 					<contextRoot>openwms</contextRoot>
-					<sourceFile>org/openwms/web/flex/client/tms/view/MenuBar.mxml</sourceFile>
+					<sourceFile>org/openwms/web/flex/client/tms/view/Main.mxml</sourceFile>
 					<warnings>
 						<arrayTostringChanges>true</arrayTostringChanges>
 						<duplicateArgumentNames>false</duplicateArgumentNames>
@@ -155,6 +155,12 @@
         <dependency>
             <groupId>${project.groupId}</groupId>
             <artifactId>org.openwms.client.flex.lib</artifactId>
+            <version>${project.version}</version>
+            <type>swc</type>
+        </dependency>
+        <dependency>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>org.openwms.common.flex.module</artifactId>
             <version>${project.version}</version>
             <type>swc</type>
         </dependency>

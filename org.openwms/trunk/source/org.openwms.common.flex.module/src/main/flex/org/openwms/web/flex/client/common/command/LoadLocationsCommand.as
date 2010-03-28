@@ -18,13 +18,13 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
-package org.openwms.web.flex.client.command
+package org.openwms.web.flex.client.common.command
 {
     import com.adobe.cairngorm.control.CairngormEvent;
     import com.adobe.cairngorm.commands.ICommand;
     import mx.collections.ArrayCollection;
     import org.openwms.web.flex.client.model.ModelLocator;
-    import org.openwms.web.flex.client.business.LocationDelegate;
+    import org.openwms.web.flex.client.common.business.LocationDelegate;
     import mx.rpc.IResponder;
     import mx.controls.Alert;
     import mx.rpc.events.ResultEvent;

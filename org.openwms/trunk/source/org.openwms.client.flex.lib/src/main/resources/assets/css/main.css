@@ -86,13 +86,13 @@ Application {
 }
 
 .frameContainerSkin {
-	background-image: Embed("/assets/images/frame_container_skin_blue.png", scaleGridLeft =
+	background-image: Embed("assets/images/frame_container_skin_blue.png", scaleGridLeft =
 		"10", scaleGridRight = "430", scaleGridTop = "60", scaleGridBottom =
 		"64");
 	background-size: "100%";
 }
 
 .panelSkin {
-	border-skin: Embed("/assets/images/cleanskin/panel_skin.png", scaleGridLeft = "10",
+	border-skin: Embed("assets/images/clearskin/panel_skin.png", scaleGridLeft = "10",
 		scaleGridRight = "274", scaleGridTop = "40", scaleGridBottom = "101");
 }

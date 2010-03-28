@@ -166,6 +166,7 @@
     <mx:Binding source="moduleNameTxt.text" destination="moduleLocator.selectedModule.moduleName" />
     <mx:Binding source="urlTxt.text" destination="moduleLocator.selectedModule.url" />
     <mx:Binding source="descriptionTxt.text" destination="moduleLocator.selectedModule.description" />
+    <mx:Binding source="loadOnStartupChk" destination="moduleLocator.selectedModule.loadOnStartup" />
 
     <mx:StringValidator minLength="1" tooShortError="Modulename is required" source="{moduleNameTxt}" required="true" property="text"/>
     <mx:StringValidator minLength="1" tooShortError="URL is required" source="{urlTxt}" required="true" property="text"/>
@@ -183,11 +184,14 @@
                 <mx:FormItem label="Description" x="10" y="70" >
     				<mx:TextInput id="descriptionTxt" x="95" y="68" width="301" change="onChange()" text="{moduleLocator.selectedModule.description}" />
                 </mx:FormItem>
+                <mx:FormItem label="Load on Startup" x="10" y="100" >
+                    <mx:CheckBox id="loadOnStartupChk" change="onChange()" x="95" y="98" selected="{moduleLocator.selectedModule.loadOnStartup}"/>
+                </mx:FormItem>
 			</mx:Form>
-            <mx:Button id="newBtn" label="New" x="10" y="110" click="newModule()" />
-            <mx:Button id="saveBtn" label="Save" x="67" y="110" click="saveModule()"/>
-            <mx:Button id="deleteBtn" label="Delete" x="129" y="110" click="deleteModule()"/>
-            <mx:Button id="loadBtn" label="{(moduleLocator.selectedModule == null || moduleLocator.selectedModule.loaded) ? 'Unload' : 'Load'}" x="200" y="110" click="loadModule()" enabled="{(moduleLocator.selectedModule == null || moduleLocator.selectedModule.moduleName == '') ? false : true}"/>
+            <mx:Button id="newBtn" label="New" x="10" y="140" click="newModule()" />
+            <mx:Button id="saveBtn" label="Save" x="67" y="140" click="saveModule()"/>
+            <mx:Button id="deleteBtn" label="Delete" x="129" y="140" click="deleteModule()"/>
+            <mx:Button id="loadBtn" label="{(moduleLocator.selectedModule == null || moduleLocator.selectedModule.loaded) ? 'Unload' : 'Load'}" x="200" y="140" click="loadModule()" enabled="{(moduleLocator.selectedModule == null || moduleLocator.selectedModule.moduleName == '') ? false : true}"/>
 			</mx:Canvas>
 		</mx:Panel>
 	<mx:Panel width="800" backgroundColor="#EAFF00" backgroundAlpha="0.5" y="268" layout="absolute" x="10" height="250" title="Views and Menu Items">

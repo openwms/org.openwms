@@ -29,7 +29,7 @@
         <![CDATA[
             import org.openwms.web.flex.client.model.*;
 			import org.openwms.common.domain.LocationGroup;
-			import org.openwms.web.flex.client.event.LocationEvent;
+			import org.openwms.web.flex.client.common.event.LocationEvent;
 			import mx.collections.ArrayCollection;
 			import mx.events.*; 
 			[Bindable]
