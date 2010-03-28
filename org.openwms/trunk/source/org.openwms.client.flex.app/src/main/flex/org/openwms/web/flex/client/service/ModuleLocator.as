@@ -23,6 +23,7 @@ package org.openwms.web.flex.client.service
 
     import com.adobe.cairngorm.model.IModelLocator;
     import mx.events.ModuleEvent;
+    import mx.events.FlexEvent;
     import mx.modules.IModuleInfo;
     import mx.modules.ModuleManager;
     import mx.collections.ArrayCollection;

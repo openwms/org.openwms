@@ -22,6 +22,7 @@ package org.openwms.web.flex.client
 {
     import flash.events.IEventDispatcher;
     import mx.collections.ArrayCollection;
+    import mx.collections.XMLListCollection;
 
     /**
      * An IApplicationModule.
@@ -35,7 +36,7 @@ package org.openwms.web.flex.client
          * This method returns a list of menu items which shall be expaned to the main
          * application menu bar.
          */
-        function getMainMenuItems():ArrayCollection;
+        function getMainMenuItems():HashMap;
 
         /**
          * This method returns a list of views which shall be populated to the parent

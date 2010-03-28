@@ -21,27 +21,34 @@
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
 -->
-<mx:Module xmlns:mx="http://www.adobe.com/2006/mxml" layout="absolute" width="400" height="300"
-	creationComplete="initApp()" xmlns:view="org.openwms.web.flex.client.tms.view.*" implements="org.openwms.web.flex.client.lib.api.IApplicationModule">
+<module:CommonModule xmlns:mx="http://www.adobe.com/2006/mxml" xmlns:module="org.openwms.web.flex.client.module.*"
+	 xmlns:view="org.openwms.web.flex.client.tms.view.*" implements="org.openwms.web.flex.client.IApplicationModule">
 
 	<mx:Script>
         <![CDATA[
         import mx.collections.ArrayCollection;
         import mx.collections.XMLListCollection;
+        import org.openwms.web.flex.client.event.SwitchScreenEvent;
+        import org.openwms.web.flex.client.model.ModelLocator;
+        import org.openwms.web.flex.client.HashMap;
 
         [Bindable]
         public var menuCollection:ArrayCollection;
+        [Bindable]
+        public var menuBarItemsCollection:XMLListCollection;
+        [Bindable]
+        private var modelLocator:ModelLocator = ModelLocator.getInstance();
 
         private var menuList:XMLList =
                 <>
                     <menuitem label="Transport Management">
-                        <menuitem label="Transport Orders" enabled="false" />
+                        <menuitem label="Transport Orders" enabled="true" />
                     </menuitem>
                 </>;
 
-        private function initApp():void
+        protected override function initApp():void
         {
-            trace("setting mc");
+            trace("InitApp called");
             //menuCollection = new XMLListCollection(menuList);
         }
         
@@ -49,17 +56,32 @@
          * This method returns a list of menu items which shall be expaned to the main
          * application menu bar.
          */
-        public function getMainMenuItems():ArrayCollection
+        public function getMainMenuItems():HashMap
         {
+        
+            var map:HashMap = new HashMap();
+            map.put(0,new XMLListCollection(menuList));
+            return map;
+            
+            
+            if (menuBarItemsCollection == null)
+            {
+                trace("drinnen");
+                menuBarItemsCollection = new XMLListCollection(menuList);
+                trace("bar:"+tmsMenuBar);
+                if (tmsMenuBar == null) 
+                {
+                return new ArrayCollection();
+                }
+                trace("DP:"+tmsMenuBar.dataProvider);
+                trace("DP2:"+menuBarItemsCollection);
+                tmsMenuBar.dataProvider = menuBarItemsCollection;
+            }
             if (menuCollection == null) { 
                 trace("MC is null");
-                //menuCollection = new XMLListCollection(tmsMenuBar.dataProvider as XMLList);
+                menuCollection = new ArrayCollection(menuBarItemsCollection.toArray());
             }
-            if (menuList == null) { trace("ML is null"); }
-            var tmp:Array = new Array();
-            tmp.push({label:"TransportOrders"});
-            menuCollection = new ArrayCollection(tmp);
-            return menuCollection;//new ArrayCollection(menuCollection.toArray());
+            return menuCollection;
         }
 
         /**
@@ -79,29 +101,26 @@
         {
             return new ArrayCollection();
         }
+        public function getViews():ArrayCollection
+        {
+            return new ArrayCollection();
+        }
 
         ]]>
 	</mx:Script>
 
     <mx:VBox height="100%" width="100%" verticalGap="0" backgroundColor="#C2DAEF">
-        <mx:Canvas width="100%" height="66" backgroundImage="@Embed(source='openwms_banner.jpg')" backgroundSize="100%">
-            <mx:Image source="@Embed('/assets/images/openwms_header.png')" />
+        <mx:Canvas width="100%" height="66" backgroundSize="100%">
         </mx:Canvas>
-        <mx:Canvas width="100%" height="25" backgroundImage="@Embed(source='breadcrumbs.jpg')" backgroundSize="100%">
-            <mx:MenuBar id="tmsMenuBar" labelField="@label">
-                <mx:XMLList>
-                    <menuitem label="Transport Management">
-                        <menuitem label="Transport Orders" enabled="false" />
-                    </menuitem>
-                </mx:XMLList>
-            </mx:MenuBar>
+        <mx:Canvas width="100%" height="25" backgroundSize="100%">
+        <mx:MenuBar id="tmsMenuBar" labelField="@label" dataProvider="{menuBarItemsCollection}"/>
         </mx:Canvas>
         <mx:HBox width="100%" height="100%" horizontalAlign="center" verticalAlign="middle">
-        <mx:ViewStack id="myViewStack" selectedIndex="{loginView.authenticated ? modelLocator.mainViewStackIndex : modelLocator.mainViewStackIndex}">
+        <mx:ViewStack id="myViewStack" selectedIndex="{modelLocator.mainViewStackIndex}">
             <view:TransportOrderView />
         </mx:ViewStack>
         </mx:HBox>
     </mx:VBox>
 
 
-</mx:Module>
+</module:CommonModule>

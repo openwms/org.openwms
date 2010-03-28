@@ -26,8 +26,8 @@
 	backgroundGradientAlphas="[1.0, 1.0]" backgroundGradientColors="[#FFFFFF, #FFFFFF]" creationComplete="init()">
 
 	<!-- Styles -->
-	<mx:Style source="/assets/css/main.css" />
-	<mx:Style source="/assets/css/styles.css" />
+	<mx:Style source="assets/css/main.css" />
+	<mx:Style source="assets/css/styles.css" />
 	
 	<!-- Scripts -->
 	<mx:Script>
@@ -45,25 +45,25 @@
             import mx.collections.XMLListCollection;
 			import mx.controls.Alert;
             import flash.events.Event;
+
             import org.openwms.web.flex.client.IApplicationModule;
 			import org.openwms.web.flex.client.model.ModelLocator;
             import org.openwms.web.flex.client.control.MainController;
             import org.openwms.web.flex.client.service.ModuleLocator;
 			import org.openwms.web.flex.client.event.SwitchScreenEvent;
 			import org.openwms.web.flex.client.event.ApplicationEvent;
+           // import org.openwms.web.flex.client.event.LocationEvent;
+            //import org.openwms.web.flex.client.event.LoadLocationGroupsEvent;
             import org.openwms.web.flex.client.event.ModulesEvent;
+            import org.openwms.web.flex.client.event.UserEvent;
             import org.openwms.web.flex.client.event.EventBroker;
-            import org.openwms.web.flex.client.command.LoadModulesCommand;
+            import org.openwms.web.flex.client.command.*;
 			import org.openwms.common.domain.Module;
 			import org.openwms.common.domain.MenuItem;
+			import org.openwms.web.flex.client.HashMap;
+
             import org.granite.rpc.remoting.mxml.SecureRemoteObject;
             import org.granite.events.SecurityEvent;
-            import org.openwms.web.flex.client.command.*;
-            import org.openwms.web.flex.client.event.UserEvent;
-            import org.openwms.web.flex.client.event.SwitchScreenEvent;
-            import org.openwms.web.flex.client.event.LoadLocationGroupsEvent;
-            import org.openwms.web.flex.client.event.LocationEvent;
-            import org.openwms.web.flex.client.event.ApplicationEvent;
 
 			[Bindable]
 			private var modelLocator:ModelLocator = ModelLocator.getInstance();
@@ -79,6 +79,23 @@
             public var menuBarCollection:XMLListCollection;
             [Bindable]
             protected var menuItems:ArrayCollection;
+
+            private var menubarXML:XMLList =
+                <>
+                    <menuitem label="Application">
+                        <menuitem label="Connect ..." enabled="false" />
+                        <menuitem label="Logout" enabled="false" />
+                    </menuitem>
+                    <menuitem label="Administration">
+                        <menuitem label="Users" action="{SwitchScreenEvent.SHOW_USER_MGMT_VIEW}" />
+                        <menuitem label="Roles" action="{SwitchScreenEvent.SHOW_USER_MGMT_VIEW}" />
+                        <menuitem label="Security" action="{SwitchScreenEvent.SHOW_USER_MGMT_VIEW}" />
+                    </menuitem>
+                    <menuitem label="Application Configuration">
+                        <menuitem label="Module Management" action="{SwitchScreenEvent.SHOW_MODULE_MGMT_VIEW}" />
+                        <menuitem label="Users" action="{SwitchScreenEvent.SHOW_USER_MGMT_VIEW}" />
+                    </menuitem>
+            </>;
             
             // Manager classes are loaded to the application domain
             private var moduleManager:ModuleManager; 
@@ -89,6 +106,7 @@
 			public function init():void {
                 srv = new SecureRemoteObject("userService");
                 //srv.login();
+                menuBarCollection = new XMLListCollection(menubarXML);
                 registerEventListeners();
                 bindCommands();
                 detectModules();
@@ -104,13 +122,15 @@
 
                 mainController.addCommand(SwitchScreenEvent.SHOW_STARTSCREEN, ShowStartscreenCommand);
                 mainController.addCommand(SwitchScreenEvent.SHOW_MODULE_MGMT_VIEW, ShowModuleManagementViewCommand);
+/*
                 mainController.addCommand(SwitchScreenEvent.SHOW_LOCATION_VIEW, ShowLocationViewCommand);
                 mainController.addCommand(SwitchScreenEvent.SHOW_LOCATIONGROUP_VIEW, ShowLocationGroupCommand);
-                mainController.addCommand(SwitchScreenEvent.SHOW_USER_MGMT_VIEW, ShowUserManagementViewCommand);
                 mainController.addCommand(SwitchScreenEvent.SHOW_TRANSPORTUNIT_VIEW, ShowTransportUnitCommand);
-
                 mainController.addCommand(LoadLocationGroupsEvent.LOAD_ALL_LOCATION_GROUPS, LoadLocationGroupsCommand);
                 mainController.addCommand(LocationEvent.LOAD_ALL_LOCATIONS, LoadLocationsCommand);
+*/
+
+                mainController.addCommand(SwitchScreenEvent.SHOW_USER_MGMT_VIEW, ShowUserManagementViewCommand);
 
                 mainController.addCommand(ApplicationEvent.LOAD_ALL_MODULES, LoadModulesCommand);
                 mainController.addCommand(ApplicationEvent.SAVE_MODULE, SaveModuleCommand);
@@ -173,13 +193,8 @@
                 {
                     var appModule:IApplicationModule = (event.data as IApplicationModule);
                     trace("Configuration changed for Module:"+appModule.getModuleName());
-                    // Resolve MenuItems to populate application menu...
-                    menuItems = appModule.getMainMenuItems();
-                    //mainMenuBar.dataProvider.removeAll();
-                    for each (var m:Object in menuItems) {
-                        trace("m:"+m);
-                    }
-                    mainMenuBar.dataProvider = menuItems ;
+                    refreshMainMenu(appModule);
+                    refreshViewStack(appModule);
                 }
             }
             
@@ -187,7 +202,7 @@
              * This method rebuilds the viewStack of the application, and should be called,
              * in case application modules are loaded or unloaded.
              */
-            private function refreshViewStack():void
+            private function refreshViewStack(module:IApplicationModule):void
             {
                 
             }
@@ -197,9 +212,16 @@
              * in case an application module is loaded or unloaded.
              * The main menu, could be an MenuBar or any other kind of menu.
              */
-            private function refreshMainMenu():void
+            private function refreshMainMenu(module:IApplicationModule):void
             {
-                
+                trace("Resolve MenuItems to populate application menu...");
+                //menuItems = module.getMainMenuItems();
+                var map:HashMap = module.getMainMenuItems();
+                //for each (var m:Object in map) {
+                //    trace("m:"+m);
+                //}
+                trace("Map entry:"+map.get(0));
+                menubarXML.addAll(map.get(0));
             }
             
             /**
@@ -244,47 +266,23 @@
 	<control:MainController />
  -->
 	<mx:VBox height="100%" width="100%" verticalGap="0" backgroundColor="#C2DAEF">
-		<mx:Canvas width="100%" height="66" backgroundImage="@Embed(source='openwms_banner.jpg')" backgroundSize="100%">
-			<mx:Image source="@Embed('/assets/images/openwms_header.png')" />
+		<mx:Canvas width="100%" height="66" backgroundImage="@Embed(source='assets/images/openwms_banner.jpg')" backgroundSize="100%">
+			<mx:Image source="@Embed('assets/images/openwms_header.png')" />
 		</mx:Canvas>
-		<mx:Canvas width="100%" height="25" backgroundImage="@Embed(source='breadcrumbs.jpg')" backgroundSize="100%">
-			<mx:MenuBar id="mainMenuBar" labelField="@label" itemClick="onMenuChange(event)" color="#00286e" fontWeight="bold" fontSize="12" alpha="0.0">
-				<mx:XMLList>
-					<menuitem label="Application">
-                        <menuitem label="Connect ..." enabled="false" />
-                        <menuitem label="Logout" enabled="false" />
-					</menuitem>
-					<menuitem label="Administration">
-						<menuitem label="Users" action="{SwitchScreenEvent.SHOW_USER_MGMT_VIEW}" />
-						<menuitem label="Roles" action="{SwitchScreenEvent.SHOW_USER_MGMT_VIEW}" />
-						<menuitem label="Security" action="{SwitchScreenEvent.SHOW_USER_MGMT_VIEW}" />
-					</menuitem>
-					<menuitem label="Warehouse">
-						<menuitem label="Ordering" enabled="false" />
-						<menuitem label="Receiving" enabled="false" />
-					</menuitem>
-					<menuitem label="Stock Configuration">
-                        <menuitem label="Module Management" action="{SwitchScreenEvent.SHOW_MODULE_MGMT_VIEW}" />
-						<menuitem label="Transport Units" action="{SwitchScreenEvent.SHOW_TRANSPORTUNIT_VIEW}" />
-                        <menuitem label="Locations" action="{SwitchScreenEvent.SHOW_LOCATION_VIEW}" />
-						<menuitem label="Users" action="{SwitchScreenEvent.SHOW_USER_MGMT_VIEW}" />
-						<menuitem label="Location Groups" action="{SwitchScreenEvent.SHOW_LOCATIONGROUP_VIEW}" />
-					</menuitem>
-					<menuitem label="Monitoring">
-						<menuitem label="Reports" enabled="false" />
-					</menuitem> 
-				</mx:XMLList>
-			</mx:MenuBar>
+		<mx:Canvas width="100%" height="25" backgroundImage="@Embed(source='assets/images/breadcrumbs.jpg')" backgroundSize="100%">
+			<mx:MenuBar id="mainMenuBar" dataProvider="{menuBarCollection}" labelField="@label" itemClick="onMenuChange(event)" color="#00286e" fontWeight="bold" fontSize="12" alpha="0.0">			</mx:MenuBar>
 		</mx:Canvas>
 		<mx:HBox width="100%" height="100%" horizontalAlign="center" verticalAlign="middle">
 		<mx:ViewStack id="myViewStack" selectedIndex="{loginView.authenticated ? modelLocator.mainViewStackIndex : modelLocator.mainViewStackIndex}">
             <view:LoginView id="loginView" onLogin="login" cornerRadius="20" borderStyle="solid" alpha="1.0" borderThickness="3"/>
             <view:EmptyScreenView />
             <view:ModuleManagementView />
+<!-- 
 			<view:LocationView />
 			<view:LocationGroupView />
-			<view:UserManagementView />
-			<view:TransportUnitView />
+            <view:TransportUnitView />
+ -->
+ 			<view:UserManagementView />
 		</mx:ViewStack>
         </mx:HBox>
 	</mx:VBox>

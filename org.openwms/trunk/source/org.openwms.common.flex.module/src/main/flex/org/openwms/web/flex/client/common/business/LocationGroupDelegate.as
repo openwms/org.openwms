@@ -18,41 +18,36 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
-package org.openwms.web.flex.client.model
+package org.openwms.web.flex.client.common.business
 {
+    import com.adobe.cairngorm.business.ServiceLocator;
 
-    import com.adobe.cairngorm.model.IModelLocator;
+    import mx.controls.Alert;
+    import mx.rpc.AsyncToken;
+    import mx.rpc.IResponder;
 
     /**
-     * An IconLocator.
+     * A LocationGroupDelegate.
      *
      * @author <a href="mailto:openwms@googlemail.com">Heiko Scherrer</a>
      * @version $Revision$
      */
-    [Bindable]
-    public class IconLocator implements IModelLocator
+    public class LocationGroupDelegate
     {
+        private var responder:IResponder;
+        private var service:Object;
 
-        [Embed(source="/assets/icons/fuegue/user--plus.png")]
-        public static var iconUserAdd:Class
-
-        private static var instance:IconLocator;
-
-        public function IconLocator(enforcer:SingletonEnforcer)
+        public function LocationGroupDelegate(responder:IResponder):void
         {
+            this.responder = responder;
+            this.service = ServiceLocator.getInstance().getRemoteObject("locationGroupService");
         }
 
-        public static function getInstance():IconLocator
+        public function getLocationGroups():void
         {
-            if (instance == null)
-            {
-                instance = new IconLocator(new SingletonEnforcer);
-            }
-            return instance;
+            var call:AsyncToken = service.getLocationGroupsAsList();
+            call.addResponder(responder);
         }
+
     }
-}
-
-class SingletonEnforcer
-{
 }

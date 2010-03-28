@@ -18,7 +18,7 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
-package org.openwms.web.flex.client.command
+package org.openwms.web.flex.client.common.command
 {
     import com.adobe.cairngorm.commands.ICommand;
     import com.adobe.cairngorm.control.CairngormEvent;
@@ -28,45 +28,37 @@ package org.openwms.web.flex.client.command
     import mx.rpc.IResponder;
     import mx.rpc.events.ResultEvent;
 
-    import org.openwms.web.flex.client.business.LocationGroupDelegate;
+    import org.openwms.web.flex.client.common.business.TransportUnitDelegate;
     import org.openwms.web.flex.client.model.ModelLocator;
-    import org.openwms.web.flex.client.model.TreeNode;
-    import org.openwms.common.domain.LocationGroup;
 
     /**
-     * A ShowLocationGroupCommand.
+     * A ShowTransportUnitCommand.
      *
      * @author <a href="mailto:openwms@googlemail.com">Heiko Scherrer</a>
      * @version $Revision$
      */
-    public class ShowLocationGroupCommand implements ICommand, IResponder
+    public class ShowTransportUnitCommand implements ICommand, IResponder
     {
         [Bindable]
         private var modelLocator:ModelLocator = ModelLocator.getInstance();
 
-        public function ShowLocationGroupCommand()
+        public function ShowTransportUnitCommand()
         {
             super();
         }
 
         public function execute(event:CairngormEvent):void
         {
-            trace("Executing command to show the LocationGroupView");
-            var delegate:LocationGroupDelegate = new LocationGroupDelegate(this)
-            delegate.getLocationGroups();
-            modelLocator.mainViewStackIndex = ModelLocator.MAIN_VIEW_STACK_LOCATIONGROUP_VIEW;
+            trace("Executing command to show the TransportUnitView");
+            var delegate:TransportUnitDelegate = new TransportUnitDelegate(this)
+            delegate.getTransportUnits();
+            modelLocator.mainViewStackIndex = ModelLocator.MAIN_VIEW_STACK_TRANSPORTUNIT_VIEW;
         }
 
         public function result(event:Object):void
         {
             var rawResult:ArrayCollection = (event as ResultEvent).result as ArrayCollection;
-            modelLocator.allLocationGroups = (event as ResultEvent).result as ArrayCollection;
-            // Setup tree if not set before
-            if (null == modelLocator.locationGroupTree)
-            {
-                modelLocator.locationGroupTree = new TreeNode();
-                modelLocator.locationGroupTree.build(modelLocator.allLocationGroups);
-            }
+            modelLocator.allTransportUnits = (event as ResultEvent).result as ArrayCollection;
         }
 
         public function fault(event:Object):void

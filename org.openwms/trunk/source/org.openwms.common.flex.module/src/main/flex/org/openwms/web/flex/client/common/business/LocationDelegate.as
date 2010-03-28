@@ -18,23 +18,34 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
-package org.openwms.web.flex.client.event
+package org.openwms.web.flex.client.common.business
 {
-    import com.adobe.cairngorm.control.CairngormEvent;
+    import com.adobe.cairngorm.business.ServiceLocator;
+
+    import mx.rpc.AsyncToken;
+    import mx.rpc.IResponder;
 
     /**
-     * A LoadLocationGroupEvent.
+     * A LocationDelegate.
      *
      * @author <a href="mailto:openwms@googlemail.com">Heiko Scherrer</a>
      * @version $Revision$
      */
-    public class LoadLocationGroupsEvent extends CairngormEvent
+    public class LocationDelegate
     {
-        public static const LOAD_ALL_LOCATION_GROUPS:String = "LoadAllLocationGroups";
+        private var responder:IResponder;
+        private var service:Object;
 
-        public function LoadLocationGroupsEvent(type:String, bubbles:Boolean = false, cancelable:Boolean = false)
+        public function LocationDelegate(responder:IResponder):void
         {
-            super(type, bubbles, cancelable);
+            this.responder = responder;
+            this.service = ServiceLocator.getInstance().getRemoteObject("locationService");
+        }
+
+        public function getLocations():void
+        {
+            var call:AsyncToken = service.findAll();
+            call.addResponder(responder);
         }
 
     }
