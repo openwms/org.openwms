@@ -26,7 +26,7 @@
 	backgroundGradientAlphas="[1.0, 1.0]" backgroundGradientColors="[#FFFFFF, #FFFFFF]" creationComplete="init()">
 
 	<!-- Styles -->
-	<mx:Style source="assets/css/main.css" />
+	<mx:Style source="/css/main.css" />
 	<mx:Style source="assets/css/styles.css" />
 	
 	<!-- Scripts -->
@@ -273,7 +273,7 @@
 			<mx:MenuBar id="mainMenuBar" dataProvider="{menuBarCollection}" labelField="@label" itemClick="onMenuChange(event)" color="#00286e" fontWeight="bold" fontSize="12" alpha="0.0">			</mx:MenuBar>
 		</mx:Canvas>
 		<mx:HBox width="100%" height="100%" horizontalAlign="center" verticalAlign="middle">
-		<mx:ViewStack id="myViewStack" selectedIndex="{loginView.authenticated ? modelLocator.mainViewStackIndex : modelLocator.mainViewStackIndex}">
+		<mx:ViewStack id="myViewStack" selectedIndex="{loginView.authenticated ? modelLocator.mainViewStackIndex : modelLocator.mainViewStackIndex}" width="100%" height="100%">
             <view:LoginView id="loginView" onLogin="login" cornerRadius="20" borderStyle="solid" alpha="1.0" borderThickness="3"/>
             <view:EmptyScreenView />
             <view:ModuleManagementView />

@@ -171,9 +171,9 @@
     <mx:StringValidator minLength="1" tooShortError="Modulename is required" source="{moduleNameTxt}" required="true" property="text"/>
     <mx:StringValidator minLength="1" tooShortError="URL is required" source="{urlTxt}" required="true" property="text"/>
 
-		<mx:Panel height="250" backgroundColor="#EAFF00" backgroundAlpha="0.5" width="800" layout="absolute" x="10" y="10" title="Modules">
-			<mx:List id="modulesGrid" dataProvider="{moduleLocator.allModules}" labelField="moduleName" dragEnabled="true" dropEnabled="true" dragMoveEnabled="true" dragDrop="onDragComplete(event);" width="300" x="10" y="10" height="201" itemClick="onRowClick(event)" />
-			<mx:Canvas height="201" x="318" y="10" width="466">
+		<mx:Panel height="255" backgroundColor="#EAFF00" backgroundAlpha="0.5" width="100%" layout="absolute" x="10" y="10" title="Modules">
+			<mx:List id="modulesGrid" dataProvider="{moduleLocator.allModules}" labelField="moduleName" dragEnabled="true" dropEnabled="true" dragMoveEnabled="true" dragDrop="onDragComplete(event);" width="300" x="10" y="10" height="195" itemClick="onRowClick(event)" />
+			<mx:Canvas height="195" x="318" y="10" width="466">
 			<mx:Form width="100%">
 				<mx:FormItem label="Modulename" required="true" x="10" y="10" >
 				    <mx:TextInput id="moduleNameTxt" x="95" y="8" width="301" change="onChange()" text="{moduleLocator.selectedModule.moduleName}" />
@@ -187,6 +187,9 @@
                 <mx:FormItem label="Load on Startup" x="10" y="100" >
                     <mx:CheckBox id="loadOnStartupChk" change="onChange()" x="95" y="98" selected="{moduleLocator.selectedModule.loadOnStartup}"/>
                 </mx:FormItem>
+                <mx:FormItem label="Load on Startup" x="10" y="100" >
+                    <mx:CheckBox id="loadOnStartupChk" change="onChange()" x="95" y="98" selected="{moduleLocator.selectedModule.loadOnStartup}"/>
+                </mx:FormItem>
 			</mx:Form>
             <mx:Button id="newBtn" label="New" x="10" y="140" click="newModule()" />
             <mx:Button id="saveBtn" label="Save" x="67" y="140" click="saveModule()"/>
@@ -194,7 +197,7 @@
             <mx:Button id="loadBtn" label="{(moduleLocator.selectedModule == null || moduleLocator.selectedModule.loaded) ? 'Unload' : 'Load'}" x="200" y="140" click="loadModule()" enabled="{(moduleLocator.selectedModule == null || moduleLocator.selectedModule.moduleName == '') ? false : true}"/>
 			</mx:Canvas>
 		</mx:Panel>
-	<mx:Panel width="800" backgroundColor="#EAFF00" backgroundAlpha="0.5" y="268" layout="absolute" x="10" height="250" title="Views and Menu Items">
+	<mx:Panel width="100%" backgroundColor="#EAFF00" backgroundAlpha="0.5" y="310" layout="absolute" x="10" height="255" title="Views and Menu Items">
 		<mx:DataGrid x="10" y="10" height="201">
 			<mx:columns>
 				<mx:DataGridColumn headerText="Column 1" dataField="col1"/>
@@ -202,7 +205,7 @@
 				<mx:DataGridColumn headerText="Column 3" dataField="col3"/>
 			</mx:columns>
 		</mx:DataGrid>
-		<mx:DataGrid x="320" y="10" height="201">
+		<mx:DataGrid x="320" y="10" height="195">
 			<mx:columns>
 				<mx:DataGridColumn headerText="Column 1" dataField="col1"/>
 				<mx:DataGridColumn headerText="Column 2" dataField="col2"/>
