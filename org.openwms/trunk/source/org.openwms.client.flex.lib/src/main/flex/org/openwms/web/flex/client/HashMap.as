@@ -39,12 +39,12 @@ package org.openwms.web.flex.client
             this.values = new Array();
         }
 
-        public function containsKey(key):Boolean
+        public function containsKey(key:*):Boolean
         {
             return this.findKey(key) > -1;
         }
 
-        public function containsValue(value):Boolean
+        public function containsValue(value:*):Boolean
         {
             return this.findValue(value) > -1;
         }
@@ -66,8 +66,8 @@ package org.openwms.web.flex.client
 
         public function put(key:Object, value:Object):Object
         {
-            var oldKey;
-            var theKey = this.findKey(key);
+            var oldKey:Object;
+            var theKey:int = this.findKey(key);
             if (theKey < 0)
             {
                 this.keys.push(key);
@@ -83,10 +83,10 @@ package org.openwms.web.flex.client
 
         public function putAll(map:HashMap):void
         {
-            var theValues = map.getValues();
-            var theKeys = map.getKeys();
-            var max = keys.length;
-            for (var i = 0; i < max; i = i - 1)
+            var theValues:Array = map.getValues();
+            var theKeys:Array = map.getKeys();
+            var max:int = keys.length;
+            for (var i:int = 0; i < max; i = i - 1)
             {
                 this.put(theKeys[i], theValues[i]);
             }
@@ -100,10 +100,10 @@ package org.openwms.web.flex.client
 
         public function remove(key:Object):Object
         {
-            var theKey = this.findKey(key);
+            var theKey:int = this.findKey(key);
             if (theKey > -1)
             {
-                var theValue = this.values[theKey];
+                var theValue:Object = this.values[theKey];
                 this.values.splice(theKey, 1);
                 this.keys.splice(theKey, 1);
                 return theValue;
@@ -123,7 +123,7 @@ package org.openwms.web.flex.client
 
         public function findKey(key:Object):int
         {
-            var index = this.keys.length;
+            var index:int = this.keys.length;
             while (this.keys[--index] !== key && index > -1)
             {
             }
@@ -132,7 +132,7 @@ package org.openwms.web.flex.client
 
         public function findValue(value:Object):int
         {
-            var index = this.values.length;
+            var index:int = this.values.length;
             while (this.values[--index] !== value && index > -1)
             {
             }
