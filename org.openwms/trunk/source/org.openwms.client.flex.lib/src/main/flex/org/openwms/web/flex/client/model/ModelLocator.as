@@ -38,9 +38,9 @@ package org.openwms.web.flex.client.model
         public static const MAIN_VIEW_STACK_LOGIN_VIEW:uint = 0;
         public static const MAIN_VIEW_STACK_EMPTY_VIEW:uint = 1;
         public static const MAIN_VIEW_STACK_MODULE_MGMT_VIEW:uint = 2;
-        public static const MAIN_VIEW_STACK_LOCATION_VIEW:uint = 3;
-        public static const MAIN_VIEW_STACK_LOCATIONGROUP_VIEW:uint = 4;
-        public static const MAIN_VIEW_STACK_USER_MGMT_VIEW:uint = 5;
+        public static const MAIN_VIEW_STACK_USER_MGMT_VIEW:uint = 3;
+        public static const MAIN_VIEW_STACK_LOCATION_VIEW:uint = 4;
+        public static const MAIN_VIEW_STACK_LOCATIONGROUP_VIEW:uint = 5;
         public static const MAIN_VIEW_STACK_TRANSPORTUNIT_VIEW:uint = 6;
         public var mainViewStackIndex:uint = MAIN_VIEW_STACK_EMPTY_VIEW;
 

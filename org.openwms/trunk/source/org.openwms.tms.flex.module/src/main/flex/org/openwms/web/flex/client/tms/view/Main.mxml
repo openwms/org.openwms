@@ -22,105 +22,31 @@
  */
 -->
 <module:CommonModule xmlns:mx="http://www.adobe.com/2006/mxml" xmlns:module="org.openwms.web.flex.client.module.*"
-	 xmlns:view="org.openwms.web.flex.client.tms.view.*" implements="org.openwms.web.flex.client.IApplicationModule">
+	xmlns:view="org.openwms.web.flex.client.tms.view.*" implements="org.openwms.web.flex.client.IApplicationModule">
 
-	<mx:Script>
-        <![CDATA[
-        import mx.collections.ArrayCollection;
-        import mx.collections.XMLListCollection;
-        import org.openwms.web.flex.client.event.SwitchScreenEvent;
-        import org.openwms.web.flex.client.model.ModelLocator;
-        import org.openwms.web.flex.client.HashMap;
+	<mx:Script source="Runner.as" />
 
-        [Bindable]
-        public var menuCollection:ArrayCollection;
-        [Bindable]
-        public var menuBarItemsCollection:XMLListCollection;
-        [Bindable]
-        private var modelLocator:ModelLocator = ModelLocator.getInstance();
-
-        private var menuList:XMLList =
-                <>
-                    <menuitem label="Transport Management">
-                        <menuitem label="Transport Orders" enabled="true" />
-                    </menuitem>
-                </>;
-
-        protected override function initApp():void
-        {
-            trace("InitApp called");
-            //menuCollection = new XMLListCollection(menuList);
-        }
-        
-        /**
-         * This method returns a list of menu items which shall be expaned to the main
-         * application menu bar.
-         */
-        public function getMainMenuItems():HashMap
-        {
-        
-            var map:HashMap = new HashMap();
-            map.put(0,new XMLListCollection(menuList));
-            return map;
-            
-            
-            if (menuBarItemsCollection == null)
-            {
-                trace("drinnen");
-                menuBarItemsCollection = new XMLListCollection(menuList);
-                trace("bar:"+tmsMenuBar);
-                if (tmsMenuBar == null) 
-                {
-                return new ArrayCollection();
-                }
-                trace("DP:"+tmsMenuBar.dataProvider);
-                trace("DP2:"+menuBarItemsCollection);
-                tmsMenuBar.dataProvider = menuBarItemsCollection;
-            }
-            if (menuCollection == null) { 
-                trace("MC is null");
-                menuCollection = new ArrayCollection(menuBarItemsCollection.toArray());
-            }
-            return menuCollection;
-        }
-
-        /**
-         * This method returns the name of the module as unique String identifier.
-         */
-        public function getModuleName():String
-        {
-            return "TMS";
-        }
-
-        /**
-         * This method returns a list of items which shall be expaned to the context popup
-         * menu. The list contains objects with key,value pairs. The key is the name of the
-         * gui component where the popup shall appear, the value is the list of popup items.
-         */
-        public function getPopupItems():ArrayCollection
-        {
-            return new ArrayCollection();
-        }
-        public function getViews():ArrayCollection
-        {
-            return new ArrayCollection();
-        }
-
-        ]]>
-	</mx:Script>
-
-    <mx:VBox height="100%" width="100%" verticalGap="0" backgroundColor="#C2DAEF">
-        <mx:Canvas width="100%" height="66" backgroundSize="100%">
-        </mx:Canvas>
-        <mx:Canvas width="100%" height="25" backgroundSize="100%">
-        <mx:MenuBar id="tmsMenuBar" labelField="@label" dataProvider="{menuBarItemsCollection}"/>
-        </mx:Canvas>
-        <mx:HBox width="100%" height="100%" horizontalAlign="center" verticalAlign="middle">
-        <mx:ViewStack id="myViewStack" selectedIndex="{modelLocator.mainViewStackIndex}">
-            <view:TransportOrderView />
-        </mx:ViewStack>
-        </mx:HBox>
-    </mx:VBox>
+	<mx:VBox height="100%" width="100%" verticalGap="0" backgroundColor="#C2DAEF">
+		<mx:Canvas width="100%" height="66" backgroundSize="100%">
+		</mx:Canvas>
+		<mx:Canvas width="100%" height="25" backgroundSize="100%">
+			<mx:MenuBar id="tmsMenuBar" labelField="@label">
+				<mx:XMLList>
+					<menuitem label="Transport Management">
+						<menuitem label="Transport Orders" enabled="true" />
+					</menuitem>
+					<menuitem label="Transport Order Management" targetPos="7">
+						<menuitem label="Transport Orders" enabled="true" />
+					</menuitem>
+				</mx:XMLList>
+			</mx:MenuBar>
+		</mx:Canvas>
+		<mx:HBox width="100%" height="100%" horizontalAlign="center" verticalAlign="middle">
+			<mx:ViewStack id="myViewStack" selectedIndex="{modelLocator.mainViewStackIndex}">
+				<view:TransportOrderView />
+			</mx:ViewStack>
+		</mx:HBox>
+	</mx:VBox>
 
 
 </module:CommonModule>
