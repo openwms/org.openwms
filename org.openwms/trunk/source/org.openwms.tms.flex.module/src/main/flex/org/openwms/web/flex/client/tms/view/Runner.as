@@ -44,38 +44,10 @@ protected override function initApp():void
  */
 public function getMainMenuItems():HashMap
 {
-
-
-    var map:MenuItemMap = new MenuItemMap(tmsMenuBar.dataProvider as XMLListCollection);
-
-    /*
-       for each (var item:XML in menu)
-       {
-       if (item.@targetPos != "")
-       {
-       trace("Put " + item.@label + " to target position " + item.@targetPos);
-       map.put(item.@targetPos, new XMLListCollection(XMLList(item)));
-       }
-       else
-       {
-       appendOthers = true;
-       }
-       }
-       if (appendOthers)
-       {
-       for each (item in menu)
-       {
-       if (item.@targetPos == "")
-       {
-       trace("Put " + item.@label + " to position " + map.size());
-       map.put(map.size(), new XMLListCollection(XMLList(item)));
-       }
-       }
-       }
-     */
-
-    //map.put(1, new XMLListCollection(menuList));
-    //map.put(3, new XMLListCollection(menuList2));
+    trace("tmsMenuBar:" + this);
+    trace("tmsMenuBar:" + this.parentDocument);
+    trace("tmsMenuBar:" + this.parent);
+    var map:MenuItemMap = new MenuItemMap(this.parentDocument.tmsMenuBar.dataProvider as XMLListCollection);
     return map;
 }
 
