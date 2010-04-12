@@ -126,15 +126,22 @@
 
 	<mx:HBox width="100%">
 		<mx:Label text="User Settings" fontSize="14" fontWeight="bold" />
-		<mx:Button id="addUserBtn" label="Add User" click="fireAddUserEvent()" />
-		<mx:Button id="saveUserBtn" label="Save User" click="fireSaveUserEvent()" />
-		<mx:Button id="deleteUserBtn" label="Delete User" click="fireDeleteUserEvent()" />
+		<mx:Button id="addUserBtn" label="New User" click="fireAddUserEvent()" >
+			<mx:icon>@Embed(source='../../../../../../../../../../src/main/resources/assets/icons/fuegue/user--plus.png')</mx:icon>
+		</mx:Button>
+		<mx:Button id="saveUserBtn" label="Save User" click="fireSaveUserEvent()" >
+			<mx:icon>@Embed(source='../../../../../../../../../../src/main/resources/assets/icons/fuegue/user--pencil.png')</mx:icon>
+		</mx:Button>
+		<mx:Button id="deleteUserBtn" label="Delete User" click="fireDeleteUserEvent()" >
+			<mx:icon>@Embed(source='../../../../../../../../../../src/main/resources/assets/icons/fuegue/user--minus.png')</mx:icon>
+		</mx:Button>
 	</mx:HBox>
 	<mx:HBox width="100%" height="100%">
 		<mx:VBox label="General Information" height="100%">
 			<mx:Image id="userImg" source="{modelLocator.selectedUser.userDetails.image}" width="100" height="150"
 				click="showFileUploadDialog()" />
 			<mx:Button label="Change Picture" click="showFileUploadDialog()" />
+			<mx:Button label="Change Password" click="showFileUploadDialog()" />
 		</mx:VBox>
 		<mx:TabNavigator height="100%" width="100%">
 			<mx:VBox label="General Information" width="100%" height="100%">
@@ -186,31 +193,23 @@
 				</mx:Form>
 			</mx:VBox>
 
-			<mx:VBox label="Manage Groups" width="100%" height="100%" paddingBottom="5" paddingLeft="5" paddingRight="5"
+			<mx:HBox label="Manage Groups" width="100%" height="100%" paddingBottom="5" paddingLeft="5" paddingRight="5"
 				paddingTop="5">
-				<mx:DataGrid width="600" height="100%">
-					<mx:columns>
-						<mx:DataGridColumn headerText="Column 1" dataField="col1" />
-						<mx:DataGridColumn headerText="Column 2" dataField="col2" />
-						<mx:DataGridColumn headerText="Column 3" dataField="col3" />
-					</mx:columns>
-				</mx:DataGrid>
-			</mx:VBox>
-
-			<mx:VBox label="Security Settings" width="100%" height="100%" paddingBottom="5" paddingLeft="5" paddingRight="5"
-				paddingTop="5">
-				<mx:DataGrid width="600" height="100%">
-					<mx:columns>
-						<mx:DataGridColumn headerText="Column 1" dataField="col1" />
-						<mx:DataGridColumn headerText="Column 2" dataField="col2" />
-						<mx:DataGridColumn headerText="Column 3" dataField="col3" />
-					</mx:columns>
-				</mx:DataGrid>
-			</mx:VBox>
+				<mx:VBox height="100%">
+					<mx:Label text="Available Groups"/>
+					<mx:List height="100%" width="200"></mx:List>
+				</mx:VBox>
+				<mx:VBox height="100%">
+				</mx:VBox>
+				<mx:VBox height="100%">
+					<mx:Label text="Assigned Groups"/>
+					<mx:List height="100%" width="200"></mx:List>
+				</mx:VBox>
+			</mx:HBox>
 
 			<mx:VBox label="Preferences" width="100%" height="100%" paddingBottom="5" paddingLeft="5" paddingRight="5"
 				paddingTop="5">
-				<mx:DataGrid width="600" height="100%">
+				<mx:DataGrid width="100%" height="100%">
 					<mx:columns>
 						<mx:DataGridColumn headerText="Column 1" dataField="col1" />
 						<mx:DataGridColumn headerText="Column 2" dataField="col2" />

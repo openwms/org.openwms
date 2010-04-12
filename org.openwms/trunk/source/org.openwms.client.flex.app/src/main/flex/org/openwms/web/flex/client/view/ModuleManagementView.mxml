@@ -195,19 +195,11 @@
 			</mx:Canvas>
 		</mx:Panel>
 	<mx:Panel width="100%" backgroundColor="#EAFF00" backgroundAlpha="0.5" y="310" layout="absolute" x="10" height="255" title="Views and Menu Items">
-		<mx:DataGrid x="10" y="10" height="201">
-			<mx:columns>
-				<mx:DataGridColumn headerText="Column 1" dataField="col1"/>
-				<mx:DataGridColumn headerText="Column 2" dataField="col2"/>
-				<mx:DataGridColumn headerText="Column 3" dataField="col3"/>
-			</mx:columns>
-		</mx:DataGrid>
-		<mx:DataGrid x="320" y="10" height="195">
-			<mx:columns>
-				<mx:DataGridColumn headerText="Column 1" dataField="col1"/>
-				<mx:DataGridColumn headerText="Column 2" dataField="col2"/>
-				<mx:DataGridColumn headerText="Column 3" dataField="col3"/>
-			</mx:columns>
-		</mx:DataGrid>
+		<mx:Label x="10" y="13" text="MenuItems provided by this Module"/>
+		<mx:Tree x="10" y="39" height="166" width="205"></mx:Tree>
+		<mx:List x="223" y="39" height="166" width="160"></mx:List>
+		<mx:List x="391" y="39" height="166" width="260"></mx:List>
+		<mx:Label x="223" y="13" text="Views included in Module"/>
+		<mx:Label x="391" y="13" text="Context Menus provided by Module"/>
 	</mx:Panel>
 </mx:Canvas>

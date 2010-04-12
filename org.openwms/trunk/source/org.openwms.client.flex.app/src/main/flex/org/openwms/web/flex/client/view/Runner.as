@@ -37,7 +37,6 @@ import org.openwms.web.flex.client.model.ModelLocator;
 import org.openwms.web.flex.client.control.MainController;
 import org.openwms.web.flex.client.service.ModuleLocator;
 import org.openwms.web.flex.client.event.SwitchScreenEvent;
-import org.openwms.web.flex.client.event.ApplicationEvent;
 // import org.openwms.web.flex.client.event.LocationEvent;
 //import org.openwms.web.flex.client.event.LoadLocationGroupsEvent;
 import org.openwms.web.flex.client.event.ModulesEvent;
@@ -47,6 +46,7 @@ import org.openwms.web.flex.client.command.*;
 import org.openwms.common.domain.Module;
 import org.openwms.common.domain.MenuItem;
 import org.openwms.web.flex.client.HashMap;
+import org.openwms.web.flex.client.event.ApplicationEvent;
 
 import org.granite.rpc.remoting.mxml.SecureRemoteObject;
 import org.granite.events.SecurityEvent;

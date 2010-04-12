@@ -21,80 +21,12 @@
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
 -->
-<mx:Module xmlns:mx="http://www.adobe.com/2006/mxml" layout="absolute" width="400" height="300"
-    creationComplete="initApp()" xmlns:view="org.openwms.web.flex.client.common.view.*" implements="org.openwms.web.flex.client.IApplicationModule">
+<module:CommonModule xmlns:mx="http://www.adobe.com/2006/mxml" xmlns:module="org.openwms.web.flex.client.module.*"
+    xmlns:view="org.openwms.web.flex.client.tms.view.*" layout="absolute" width="400" height="300" implements="org.openwms.web.flex.client.IApplicationModule">
 
-    <mx:Script>
-        <![CDATA[
-        import mx.collections.ArrayCollection;
-        import mx.collections.XMLListCollection;
-        import org.openwms.web.flex.client.event.SwitchScreenEvent;
-        import org.openwms.web.flex.client.model.ModelLocator;
-
-        [Bindable]
-        public var menuCollection:ArrayCollection;
-        [Bindable]
-        private var modelLocator:ModelLocator = ModelLocator.getInstance();
-            
-        private var menuList:XMLList =
-                <>
-                    <menuitem label="Transport Management">
-                        <menuitem label="Transport Orders" enabled="false" />
-                    </menuitem>
-                </>;
-
-        private function initApp():void
-        {
-            trace("setting mc");
-            //menuCollection = new XMLListCollection(menuList);
-        }
-        
-        /**
-         * This method returns a list of menu items which shall be expaned to the main
-         * application menu bar.
-         */
-        public function getMainMenuItems():ArrayCollection
-        {
-            if (menuCollection == null) { 
-                trace("MC is null");
-                //menuCollection = new XMLListCollection(tmsMenuBar.dataProvider as XMLList);
-            }
-            if (menuList == null) { trace("ML is null"); }
-            var tmp:Array = new Array();
-            tmp.push({label:"TransportOrders"});
-            menuCollection = new ArrayCollection(tmp);
-            return menuCollection;//new ArrayCollection(menuCollection.toArray());
-        }
-
-        /**
-         * This method returns the name of the module as unique String identifier.
-         */
-        public function getModuleName():String
-        {
-            return "COMMON";
-        }
-
-        /**
-         * This method returns a list of items which shall be expaned to the context popup
-         * menu. The list contains objects with key,value pairs. The key is the name of the
-         * gui component where the popup shall appear, the value is the list of popup items.
-         */
-        public function getPopupItems():ArrayCollection
-        {
-            return new ArrayCollection();
-        }
-        
-        public function getViews():ArrayCollection
-        {
-            return new ArrayCollection();
-        }
-
-        ]]>
-    </mx:Script>
+    <mx:Script source="Runner.as" />
 
     <mx:VBox height="100%" width="100%" verticalGap="0" backgroundColor="#C2DAEF">
-        <mx:Canvas width="100%" height="66"  backgroundSize="100%">
-        </mx:Canvas>
         <mx:Canvas width="100%" height="25"  backgroundSize="100%">
             <mx:MenuBar id="commonMenuBar" labelField="@label">
                 <mx:XMLList>
@@ -113,15 +45,12 @@
             </mx:MenuBar>
         </mx:Canvas>
         <mx:HBox width="100%" height="100%" horizontalAlign="center" verticalAlign="middle">
-        <mx:ViewStack id="commonViewStack" selectedIndex="{modelLocator.mainViewStackIndex}">
-<!-- 
-            <view:LocationView />
-            <view:LocationGroupView />
-            <view:TransportUnitView />
-         -->
-        </mx:ViewStack>
+            <mx:ViewStack id="commonViewStack" selectedIndex="{modelLocator.mainViewStackIndex}">
+                <view:LocationView />
+                <view:LocationGroupView />
+                <view:TransportUnitView />
+            </mx:ViewStack>
         </mx:HBox>
     </mx:VBox>
 
-
-</mx:Module>
+</module:CommonModule>

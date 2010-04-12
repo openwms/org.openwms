@@ -82,7 +82,7 @@
 					return;
 				}
 				if (userData.userDetails.sex == UserDetails$SEX.MALE) {
-					trace("User has details, setting MALE");
+					trace("User has details, setting MAN");
 				 	asset = new manImage() as BitmapAsset;
 				} else if (userData.userDetails.sex == UserDetails$SEX.FEMALE) {
 					trace("User has details, setting FEMALE");
