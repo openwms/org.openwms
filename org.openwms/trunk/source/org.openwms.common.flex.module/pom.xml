@@ -30,7 +30,7 @@
 		<version>0.0.1-SNAPSHOT</version>
 	</parent>
 	<artifactId>org.openwms.common.flex.module</artifactId>
-	<packaging>swc</packaging>
+	<packaging>swf</packaging>
 	<name>${project.artifactId}</name>
 	<properties>
 		<moduleDir>..</moduleDir>
@@ -56,13 +56,13 @@
 						<path>${basedir}/src/main/flex</path>
 					</sourcePaths>
 					<contextRoot>openwms</contextRoot>
-					<sourceFile>org/openwms/web/flex/client/common/module/CommonModule.as</sourceFile>
+					<sourceFile>org/openwms/web/flex/client/common/view/Main.mxml</sourceFile>
 					<warnings>
 						<arrayTostringChanges>true</arrayTostringChanges>
 						<duplicateArgumentNames>false</duplicateArgumentNames>
 					</warnings>
 					<allowSourcePathOverlap>true</allowSourcePathOverlap>
-					<output>${project.build.directory}/${project.artifactId}.swc</output>
+					<output>${project.build.directory}/${project.artifactId}.swf</output>
 				</configuration>
 				<dependencies>
 					<dependency>
@@ -84,6 +84,25 @@
 						<type>swc</type>
 					</dependency>
 				</dependencies>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-dependency-plugin</artifactId>
+				<executions>
+					<execution>
+						<id>copy-dependencies</id>
+						<phase>process-resources</phase>
+						<goals>
+							<goal>copy-dependencies</goal>
+						</goals>
+						<configuration>
+							<outputDirectory>libs</outputDirectory>
+							<overWriteIfNewer>true</overWriteIfNewer>
+							<includeGroupIds></includeGroupIds>
+							<excludeGroupIds>com.adobe.flex.framework</excludeGroupIds>
+						</configuration>
+					</execution>
+				</executions>
 			</plugin>
 		</plugins>
 	</build>

@@ -22,7 +22,6 @@ package org.openwms.web.flex.client
 {
     import flash.events.IEventDispatcher;
     import mx.collections.ArrayCollection;
-    import mx.collections.XMLListCollection;
 
     /**
      * An IApplicationModule.

@@ -24,9 +24,9 @@ package org.openwms.web.flex.client.module
     import flash.events.Event;
     import mx.events.FlexEvent;
     import org.openwms.web.flex.client.IApplicationModule;
-    import mx.modules.ModuleBase;
+    import mx.modules.Module;
 
-    public class CommonModule extends ModuleBase
+    public class CommonModule extends Module
     {
         /**
          * CommonModule.
