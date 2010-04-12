@@ -44,7 +44,7 @@ protected override function initApp():void
  */
 public function getMainMenuItems():HashMap
 {
-    var map:MenuItemMap = new MenuItemMap(commonMenuBar.dataProvider as XMLListCollection);
+    var map:MenuItemMap = new MenuItemMap(this.parentDocument.commonMenuBar.dataProvider as XMLListCollection);
     return map;
 }
 
