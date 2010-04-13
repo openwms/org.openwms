@@ -52,6 +52,7 @@ package org.openwms.web.flex.client.business
 
         public function saveModule(module:Module):void
         {
+        	trace("Saving module with data:"+module);
             var call:AsyncToken = service.save(module);
             call.addResponder(responder);
         }

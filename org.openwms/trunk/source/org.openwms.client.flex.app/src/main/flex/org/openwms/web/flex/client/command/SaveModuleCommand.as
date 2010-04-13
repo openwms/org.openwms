@@ -64,7 +64,6 @@ package org.openwms.web.flex.client.command
         public function execute(event:CairngormEvent):void
         {
             var delegate:ModulesDelegate = new ModulesDelegate(this)
-            trace("Module:" + event.data.moduleName);
             delegate.saveModule(event.data as Module);
         }
 
