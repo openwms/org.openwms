@@ -41,6 +41,7 @@
 		<finalName>${project.artifactId}-${project.version}</finalName>
 		<sourceDirectory>${project.basedir}/src/main/flex</sourceDirectory>
 		<plugins>
+        <!-- 
 			<plugin>
 				<artifactId>maven-clean-plugin</artifactId>
 				<configuration>
@@ -54,6 +55,7 @@
 					</filesets>
 				</configuration>
 			</plugin>
+             -->
 			<plugin>
 				<groupId>org.sonatype.flexmojos</groupId>
 				<artifactId>flexmojos-maven-plugin</artifactId>

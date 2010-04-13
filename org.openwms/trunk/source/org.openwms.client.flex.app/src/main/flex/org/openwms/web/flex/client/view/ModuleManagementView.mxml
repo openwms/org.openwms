@@ -166,7 +166,7 @@
     <mx:Binding source="moduleNameTxt.text" destination="moduleLocator.selectedModule.moduleName" />
     <mx:Binding source="urlTxt.text" destination="moduleLocator.selectedModule.url" />
     <mx:Binding source="descriptionTxt.text" destination="moduleLocator.selectedModule.description" />
-    <mx:Binding source="loadOnStartupChk" destination="moduleLocator.selectedModule.loadOnStartup" />
+    <mx:Binding source="loadOnStartupChk.selected" destination="moduleLocator.selectedModule.loadOnStartup" />
 
     <mx:StringValidator minLength="1" tooShortError="Modulename is required" source="{moduleNameTxt}" required="true" property="text"/>
     <mx:StringValidator minLength="1" tooShortError="URL is required" source="{urlTxt}" required="true" property="text"/>
