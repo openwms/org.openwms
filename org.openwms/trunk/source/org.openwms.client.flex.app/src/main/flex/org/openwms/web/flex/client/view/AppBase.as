@@ -105,11 +105,7 @@ package org.openwms.web.flex.client.view
 		    mainController.addCommand(SwitchScreenEvent.SHOW_STARTSCREEN, ShowStartscreenCommand);
 		    mainController.addCommand(SwitchScreenEvent.SHOW_MODULE_MGMT_VIEW, ShowModuleManagementViewCommand);
 		    /*
-		       mainController.addCommand(SwitchScreenEvent.SHOW_LOCATION_VIEW, ShowLocationViewCommand);
-		       mainController.addCommand(SwitchScreenEvent.SHOW_LOCATIONGROUP_VIEW, ShowLocationGroupCommand);
 		       mainController.addCommand(SwitchScreenEvent.SHOW_TRANSPORTUNIT_VIEW, ShowTransportUnitCommand);
-		       mainController.addCommand(LoadLocationGroupsEvent.LOAD_ALL_LOCATION_GROUPS, LoadLocationGroupsCommand);
-		       mainController.addCommand(LocationEvent.LOAD_ALL_LOCATIONS, LoadLocationsCommand);
 		     */
 		
 		    mainController.addCommand(SwitchScreenEvent.SHOW_USER_MGMT_VIEW, ShowUserManagementViewCommand);
@@ -218,8 +214,6 @@ package org.openwms.web.flex.client.view
 		        item = XML(map.get(itemPos));
 		        mainMenuBar.dataProvider.addItemAt(item, itemPos);
 		    }
-		    trace("Map entry:" + map.get(0));
-		
 		}
 		
 		/**
@@ -228,6 +222,8 @@ package org.openwms.web.flex.client.view
 		 */
 		public function loadAllModules(event:Event):void
 		{
+			moduleLocator.loadAllModules();
+			return;
 		    for each (var module:Module in moduleLocator.allModules)
 		    {
 		        if (module.loadOnStartup)

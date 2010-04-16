@@ -22,16 +22,17 @@ package org.openwms.web.flex.client.module
 {
 
     import com.adobe.cairngorm.model.IModelLocator;
-    import mx.events.ModuleEvent;
-    import mx.events.FlexEvent;
-    import mx.modules.IModuleInfo;
-    import mx.modules.ModuleManager;
+    
     import mx.collections.ArrayCollection;
     import mx.controls.Alert;
+    import mx.events.ModuleEvent;
+    import mx.modules.IModuleInfo;
+    import mx.modules.ModuleManager;
+    
     import org.openwms.common.domain.Module;
+    import org.openwms.web.flex.client.IApplicationModule;
     import org.openwms.web.flex.client.event.ApplicationEvent;
     import org.openwms.web.flex.client.event.EventBroker;
-    import org.openwms.web.flex.client.IApplicationModule;
 
     /**
      * A ModuleLocator.
@@ -72,10 +73,9 @@ package org.openwms.web.flex.client.module
         {
             var modules:Array = allModules.toArray();
             var e:ApplicationEvent;
-            var mInfo:IModuleInfo;
             for each (var module:Module in allModules)
             {
-                if (module.loadOnStartup)
+                if (module.loadOnStartup && !module.loaded)
                 {
                     trace("Trying to load module:" + module.url);
                     mInfo = ModuleManager.getModule(module.url);
@@ -87,6 +87,7 @@ package org.openwms.web.flex.client.module
                         {
                             mInfo.data = module;
                             mInfo.load();
+                            break;
                         }
                         else
                         {
@@ -96,6 +97,7 @@ package org.openwms.web.flex.client.module
                     else
                     {
                         trace("Module was not found on server:" + module.moduleName);
+                        break;
                     }
                 }
                 else
@@ -117,7 +119,7 @@ package org.openwms.web.flex.client.module
             trace("Successfully loaded module: " + e.module.url);
             var module:Module = (e.module.data as Module);
             // Dont set this flag because we can have many clients
-            //module.loaded = true;
+            module.loaded = true;
             //fireSaveEvent(module);
             var appModule:Object = e.module.factory.create();
             if (appModule is IApplicationModule)
@@ -125,6 +127,7 @@ package org.openwms.web.flex.client.module
                 fireChangedEvent(appModule as IApplicationModule);
             }
             mInfo.removeEventListener(ModuleEvent.READY, moduleLoaded);
+            loadAllModules();
         }
 
         /**
@@ -137,7 +140,7 @@ package org.openwms.web.flex.client.module
             trace("Successfully unloaded a Module:" + e.module.url);
             var module:Module = (e.module.data as Module);
             // Dont set this flag because we can have many clients
-            //module.loaded = false;
+            module.loaded = false;
             //fireSaveEvent(module);
             var appModule:Object = e.module.factory.create();
             if (appModule is IApplicationModule)
@@ -156,6 +159,12 @@ package org.openwms.web.flex.client.module
             {
                 trace("Loading/Unloading a Module [" + e.module.url + "] failed with error:" + e.errorText);
                 Alert.show("Loading/Unloading a Module [" + e.module.url + "] failed with error:" + e.errorText);
+            	if (e.module.data != null)
+            	{
+                    var module:Module = (e.module.data as Module);
+            	    module.loaded = true;
+                    loadAllModules();
+            	}
             }
             else
             {
@@ -173,6 +182,7 @@ package org.openwms.web.flex.client.module
         {
             if (module == null)
             {
+            	trace("Module instance is NULL, skip loading");
                 return false;
             }
             if (!isRegistered(module))
@@ -180,24 +190,23 @@ package org.openwms.web.flex.client.module
                 trace("Module was not found in list of all modules");
                 return false;
             }
-
+            trace("Load:"+module.moduleName);
             mInfo = ModuleManager.getModule(module.url);
+            trace("MInfo:"+mInfo);
             mInfo.addEventListener(ModuleEvent.READY, moduleLoaded);
             mInfo.addEventListener(ModuleEvent.ERROR, moduleLoaderError);
             if (mInfo != null)
             {
+            	trace("1:"+module.moduleName);
                 if (!mInfo.loaded)
                 {
                     mInfo.data = module;
                     mInfo.load();
+                    trace("Module forced to load:"+module.moduleName);
                 }
                 return true;
             }
-            if (module.loaded)
-            {
-                module.loaded = false;
-                fireSaveEvent(module);
-            }
+            trace("No module to load with url:"+module.url);
             return false;
         }
 
@@ -208,6 +217,7 @@ package org.openwms.web.flex.client.module
         {
             if (module == null)
             {
+            	trace("Module instance is NULL, skip unloading");
                 return;
             }
             if (!isRegistered(module))
@@ -224,16 +234,14 @@ package org.openwms.web.flex.client.module
                 {
                     mInfo.data = module;
                     mInfo.unload();
+                    trace("Module forced to unload:"+module.moduleName);
                 }
                 else
                 {
                     trace("Module was not loaded before, nothing to unload");
                 }
             }
-            else
-            {
-                trace("Module was not found on server:" + module.moduleName);
-            }
+            trace("No module to unload with url:" + module.url);
             return;
         }
 

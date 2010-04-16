@@ -56,7 +56,7 @@
 						<path>${basedir}/src/main/flex</path>
 					</sourcePaths>
 					<contextRoot>openwms</contextRoot>
-					<sourceFile>org/openwms/web/flex/client/common/view/Main.mxml</sourceFile>
+					<sourceFile>org/openwms/web/flex/client/common/view/CommonApp.mxml</sourceFile>
 					<warnings>
 						<arrayTostringChanges>true</arrayTostringChanges>
 						<duplicateArgumentNames>false</duplicateArgumentNames>
