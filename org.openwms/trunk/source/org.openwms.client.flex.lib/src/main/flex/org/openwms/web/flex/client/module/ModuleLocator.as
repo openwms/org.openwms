@@ -18,7 +18,7 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
-package org.openwms.web.flex.client.service
+package org.openwms.web.flex.client.module
 {
 
     import com.adobe.cairngorm.model.IModelLocator;

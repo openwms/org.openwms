@@ -24,7 +24,7 @@ package org.openwms.web.flex.client.command
     import com.adobe.cairngorm.commands.ICommand;
     import mx.collections.ArrayCollection;
     import mx.rpc.events.FaultEvent;
-    import org.openwms.web.flex.client.service.ModuleLocator;
+    import org.openwms.web.flex.client.module.ModuleLocator;
     import org.openwms.web.flex.client.business.ModulesDelegate;
     import org.openwms.web.flex.client.event.ApplicationEvent;
     import org.openwms.common.domain.Module;

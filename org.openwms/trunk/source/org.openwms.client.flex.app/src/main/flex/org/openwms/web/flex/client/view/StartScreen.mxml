@@ -30,7 +30,7 @@
     		import org.openwms.web.flex.client.event.SwitchScreenEvent;
 import org.openwms.web.flex.client.event.UserEvent;
 import org.openwms.web.flex.client.model.ModelLocator;
-import org.openwms.web.flex.client.service.ModuleLocator;
+import org.openwms.web.flex.client.module.ModuleLocator;
 
     	]]>
     </mx:Script>
