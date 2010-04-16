@@ -18,20 +18,48 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
+package org.openwms.web.flex.client.tms.view
+{
+
 import mx.collections.ArrayCollection;
 import mx.collections.XMLListCollection;
-import org.openwms.web.flex.client.event.SwitchScreenEvent;
-import org.openwms.web.flex.client.model.ModelLocator;
-import org.openwms.web.flex.client.MenuItemMap;
+import mx.controls.MenuBar;
+import mx.events.FlexEvent;
+
 import org.openwms.web.flex.client.HashMap;
 import org.openwms.web.flex.client.IApplicationModule;
+import org.openwms.web.flex.client.MenuItemMap;
+import org.openwms.web.flex.client.model.ModelLocator;
+import org.openwms.web.flex.client.module.CommonModule;
 
-[Bindable]
-public var menuCollection:ArrayCollection;
-[Bindable]
-public var menuBarItemsCollection:XMLListCollection;
-[Bindable]
-private var modelLocator:ModelLocator = ModelLocator.getInstance();
+    public class Runner extends CommonModule implements IApplicationModule
+    {
+
+    [Bindable]
+    public var menuCollection:ArrayCollection;
+    [Bindable]
+    public var menuBarItemsCollection:XMLListCollection;
+    [Bindable]
+    protected var modelLocator:ModelLocator = ModelLocator.getInstance();
+    [Bindable]
+    public var tmsMenuBar:MenuBar;
+
+    /**
+     * A backing class for modules coded in XML.
+     */
+    public function Runner()
+    {
+        super();
+        trace("Contructor");
+        addEventListener(FlexEvent.APPLICATION_COMPLETE, creationCompleteHandler);
+        addEventListener(FlexEvent.CREATION_COMPLETE, creationCompleteHandler);
+    }
+    
+    public function creationCompleteHandler(event:FlexEvent):void
+    {
+        trace("TTT:");
+    }
+ 
 
 protected override function initApp():void
 {
@@ -44,10 +72,8 @@ protected override function initApp():void
  */
 public function getMainMenuItems():HashMap
 {
-    trace("tmsMenuBar:" + this);
-    trace("tmsMenuBar:" + this.parentDocument);
-    trace("tmsMenuBar:" + this.parent);
-    var map:MenuItemMap = new MenuItemMap(this.parentDocument.tmsMenuBar.dataProvider as XMLListCollection);
+    trace("tmsMenuBar2:" + tmsMenuBar);
+    var map:MenuItemMap = new MenuItemMap(tmsMenuBar.dataProvider as XMLListCollection);
     return map;
 }
 
@@ -73,4 +99,5 @@ public function getViews():ArrayCollection
 {
     return new ArrayCollection();
 }
-
+    }
+}

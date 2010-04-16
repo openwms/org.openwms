@@ -25,12 +25,12 @@
 
 	<mx:Script>
     	<![CDATA[
+    		import org.openwms.tms.domain.order.TransportOrder;
     		import org.openwms.web.flex.client.common.model.IconLocator;
-    		import org.openwms.common.domain.TransportUnit;
     		import org.openwms.web.flex.client.model.ModelLocator;
     		[Bindable]
             private var modelLocator:ModelLocator = ModelLocator.getInstance();
-            private static var tu:TransportUnit = new TransportUnit();
+            private static var tu:TransportOrder = new TransportOrder();
             
     		public function onStartup():void {
     			//userAddBtn.addChild(IconLocator.iconUserAdd);
@@ -41,21 +41,26 @@
 
 	<mx:VBox x="10" y="10" width="908" height="592">
 		<mx:HBox width="908">
-			<mx:Button id="userAddBtn" label="Add" />
-			<mx:Button id="userSaveBtn" label="Save" />
-			<mx:Button id="userDeleteBtn" label="Delete" />
-			<mx:Button id="createTransportBtn" label="Create Transport" />
-			<mx:Button id="transportsBtn" label="Transports" />
-			<mx:Button id="historyBtn" label="History" />
+			<mx:Button id="createTransportOrderBtn" label="Create" />
+			<mx:Button id="cancelTransportOrderBtn" label="Cancel" />
+			<mx:Button id="transportOrderHistoryBtn" label="History" />
+            <mx:Button id="redirectTransportOrderBtn" label="Redirect" />
+            <mx:Button id="priorizeTransportOrderBtn" label="Priority" />
+            <mx:Button id="stateTransportOrderBtn" label="State" />
 		</mx:HBox>
 		<mx:DataGrid width="100%" height="100%" dataProvider="{modelLocator.allTransportUnits}">
 			<mx:columns>
-				<mx:DataGridColumn headerText="Barcode" dataField="barcode.value" />
-				<mx:DataGridColumn headerText="Actual Location" dataField="actualLocation" />
-                <mx:DataGridColumn headerText="Created on" dataField="creationDate" />
-                <mx:DataGridColumn headerText="Last Inventory" dataField="inventoryDate" />
-                <mx:DataGridColumn headerText="Inventory User" dataField="inventoryUser.username" />
-                <mx:DataGridColumn headerText="Placed on" dataField="parent.barcode.value" />
+				<mx:DataGridColumn headerText="ID" dataField="id" />
+                <mx:DataGridColumn headerText="State" dataField="state" />
+                <mx:DataGridColumn headerText="Priority" dataField="priority" />
+				<mx:DataGridColumn headerText="Transport Unit" dataField="transportUnit.barcode" />
+                <mx:DataGridColumn headerText="Source Location" dataField="sourceLocation" />
+                <mx:DataGridColumn headerText="Target Location" dataField="targetLocation" />
+                <mx:DataGridColumn headerText="Target Location Group" dataField="targetLocationGroup" />
+                <mx:DataGridColumn headerText="Actual Location" dataField="actualLocation" />
+                <mx:DataGridColumn headerText="Created" dataField="creationDate" />
+                <mx:DataGridColumn headerText="Started" dataField="startDate" />
+                <mx:DataGridColumn headerText="Ended" dataField="endDate" />
 			</mx:columns>
 		</mx:DataGrid>
 	</mx:VBox>

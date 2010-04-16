@@ -18,41 +18,42 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
-import mx.events.ModuleEvent;
-import mx.events.MenuEvent;
-import mx.modules.IModuleInfo;
-import mx.modules.ModuleManager;
-import mx.managers.PopUpManager;
-import mx.managers.DragManager;
-import mx.messaging.channels.AMFChannel;
-import mx.messaging.ChannelSet;
-import mx.rpc.events.ResultEvent;
+package org.openwms.web.flex.client.view
+{
+import flash.events.Event;
+
 import mx.collections.ArrayCollection;
 import mx.collections.XMLListCollection;
 import mx.controls.Alert;
-import flash.events.Event;
+import mx.controls.MenuBar;
+import mx.core.Application;
+import mx.events.MenuEvent;
+import mx.managers.DragManager;
+import mx.managers.PopUpManager;
+import mx.modules.IModuleInfo;
+import mx.modules.ModuleManager;
 
-import org.openwms.web.flex.client.IApplicationModule;
-import org.openwms.web.flex.client.model.ModelLocator;
-import org.openwms.web.flex.client.control.MainController;
-import org.openwms.web.flex.client.service.ModuleLocator;
-import org.openwms.web.flex.client.event.SwitchScreenEvent;
-// import org.openwms.web.flex.client.event.LocationEvent;
-//import org.openwms.web.flex.client.event.LoadLocationGroupsEvent;
-import org.openwms.web.flex.client.event.ModulesEvent;
-import org.openwms.web.flex.client.event.UserEvent;
-import org.openwms.web.flex.client.event.EventBroker;
-import org.openwms.web.flex.client.command.*;
-import org.openwms.common.domain.Module;
-import org.openwms.common.domain.MenuItem;
-import org.openwms.web.flex.client.HashMap;
-import org.openwms.web.flex.client.event.ApplicationEvent;
-
-import org.granite.rpc.remoting.mxml.SecureRemoteObject;
 import org.granite.events.SecurityEvent;
+import org.granite.rpc.remoting.mxml.SecureRemoteObject;
+import org.openwms.common.domain.MenuItem;
+import org.openwms.common.domain.Module;
+import org.openwms.web.flex.client.HashMap;
+import org.openwms.web.flex.client.IApplicationModule;
+import org.openwms.web.flex.client.command.*;
+import org.openwms.web.flex.client.control.MainController;
+import org.openwms.web.flex.client.event.ApplicationEvent;
+import org.openwms.web.flex.client.event.EventBroker;
+import org.openwms.web.flex.client.event.ModulesEvent;
+import org.openwms.web.flex.client.event.SwitchScreenEvent;
+import org.openwms.web.flex.client.event.UserEvent;
+import org.openwms.web.flex.client.model.ModelLocator;
+import org.openwms.web.flex.client.service.ModuleLocator;
+
+    public class Runner extends Application
+    {
 
 [Bindable]
-private var modelLocator:ModelLocator = ModelLocator.getInstance();
+protected var modelLocator:ModelLocator = ModelLocator.getInstance();
 [Bindable]
 private var moduleLocator:ModuleLocator = ModuleLocator.getInstance();
 [Bindable]
@@ -65,6 +66,10 @@ protected var mainController:MainController = new MainController();
 public var menuBarCollection:XMLListCollection;
 [Bindable]
 protected var menuItems:ArrayCollection;
+[Bindable]
+public var loginView:LoginView;
+[Bindable]
+public var mainMenuBar:MenuBar;
 
 private var menubarXML:XMLList =
     <>
@@ -93,7 +98,6 @@ public function init():void
 {
     srv = new SecureRemoteObject("userService");
     //srv.login();
-    menuBarCollection = new XMLListCollection(menubarXML);
     registerEventListeners();
     bindCommands();
     detectModules();
@@ -149,7 +153,7 @@ public function onSecurityEvent(event:SecurityEvent):void
     }
 }
 
-private function onMenuChange(event:MenuEvent):void
+public function onMenuChange(event:MenuEvent):void
 {
     trace("Switching to view:" + event.item.@action);
     new SwitchScreenEvent(event.item.@action).dispatch();
@@ -186,7 +190,7 @@ private function moduleConfigChanged(event:ApplicationEvent):void
     if (event.data != null && event.data is IApplicationModule)
     {
         var appModule:IApplicationModule = (event.data as IApplicationModule);
-        trace("Configuration changed for Module:" + appModule.getModuleName());
+        trace("Configuration changed for Module: " + appModule.getModuleName());
         refreshMainMenu(appModule);
         refreshViewStack(appModule);
     }
@@ -208,12 +212,12 @@ private function refreshViewStack(module:IApplicationModule):void
  */
 private function refreshMainMenu(module:IApplicationModule):void
 {
-    trace("Resolve MenuItems to populate application menu...");
-    //menuItems = module.getMainMenuItems();
+    trace("Resolve MenuItems to populate application menu");
     var map:HashMap = module.getMainMenuItems();
-    //for each (var m:Object in map) {
-    //    trace("m:"+m);
-    //}
+    if (map == null)
+    {
+    	return;
+    }
     var keys:Array = map.getKeys();
     var itemPos:int = 0;
     var item:XML;
@@ -237,6 +241,7 @@ public function loadAllModules(event:Event):void
     {
         if (module.loadOnStartup)
         {
+        	trace("Loading module... "+module.moduleName); 
             moduleLocator.loadModule(module);
         }
         else
@@ -258,4 +263,6 @@ private function updateViewStack(module:Module):void
 private function detectModules():void
 {
     new ApplicationEvent(ApplicationEvent.LOAD_ALL_MODULES).dispatch();
+}
+    }
 }

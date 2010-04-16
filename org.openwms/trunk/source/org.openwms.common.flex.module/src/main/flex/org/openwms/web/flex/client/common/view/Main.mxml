@@ -21,7 +21,7 @@
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
 -->
-<module:CommonModule xmlns:mx="http://www.adobe.com/2006/mxml" xmlns:module="org.openwms.web.flex.client.module.*"
+<view:CommonModule xmlns:mx="http://www.adobe.com/2006/mxml" xmlns:module="org.openwms.web.flex.client.module.*"
     xmlns:view="org.openwms.web.flex.client.common.view.*" layout="absolute" width="400" height="300" implements="org.openwms.web.flex.client.IApplicationModule">
 
     <mx:Script source="Runner.as" />

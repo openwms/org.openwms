@@ -21,17 +21,24 @@
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
 -->
-<mx:Application xmlns:mx="http://www.adobe.com/2006/mxml" xmlns:business="org.openwms.web.flex.client.business.*"
+<view:Runner xmlns:mx="http://www.adobe.com/2006/mxml" xmlns:business="org.openwms.web.flex.client.business.*"
 	xmlns:control="org.openwms.web.flex.client.control.*" xmlns:event="org.openwms.web.flex.client.event.*" xmlns:view="org.openwms.web.flex.client.view.*" layout="absolute"
 	backgroundGradientAlphas="[1.0, 1.0]" backgroundGradientColors="[#FFFFFF, #FFFFFF]" creationComplete="init()">
+
+    <mx:Script>
+    	<![CDATA[
+    		import org.openwms.web.flex.client.event.SwitchScreenEvent;
+import org.openwms.web.flex.client.event.UserEvent;
+import org.openwms.web.flex.client.model.ModelLocator;
+import org.openwms.web.flex.client.service.ModuleLocator;
+
+    	]]>
+    </mx:Script>
 
 	<!-- Styles -->
 	<mx:Style source="assets/css/main.css" />
 	<mx:Style source="assets/css/styles.css" />
 	
-	<!-- Scripts -->
-	<mx:Script source="Runner.as" />
-
 	<!-- Services -->
 	<business:Services />
 
@@ -76,4 +83,4 @@
         </mx:HBox>
 	</mx:VBox>
 
-</mx:Application>
+</view:Runner>

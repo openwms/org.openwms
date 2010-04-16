@@ -122,6 +122,7 @@
 	<mx:Binding source="skypeNameTi.text" destination="modelLocator.selectedUser.userDetails.skypeName" />
 	<mx:Binding source="departmentTi.text" destination="modelLocator.selectedUser.userDetails.department" />
 	<mx:Binding source="officeTi.text" destination="modelLocator.selectedUser.userDetails.office" />
+    <mx:Binding source="tiComment.text" destination="modelLocator.selectedUser.userDetails.comment" />
 	<mx:Binding source="sexRb.selection.value as UserDetails$SEX" destination="modelLocator.selectedUser.userDetails.sex" />
 
 	<mx:HBox width="100%">

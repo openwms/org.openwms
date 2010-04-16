@@ -22,12 +22,11 @@
  */
 -->
 <mx:Canvas xmlns:mx="http://www.adobe.com/2006/mxml" xmlns="*" width="0" height="0" verticalScrollPolicy="off"
-	horizontalScrollPolicy="off" creationComplete="initComp();" xmlns:common="com.af.common.*">
+	horizontalScrollPolicy="off" creationComplete="initComp();">
 
 	<mx:Script>
 	<![CDATA[
 		import org.openwms.web.flex.client.model.ModelLocator;
-		//import com.af.clientmanager.model.vo.MediaVO;
 	    import mx.controls.Alert;
 	    import mx.effects.Blur;
 		import mx.effects.easing.Circular;
@@ -64,15 +63,9 @@
 	
         private function initComp():void {            
             fileRef = new FileReference();
-            fileRef.addEventListener(Event.CANCEL, traceEvent);
             fileRef.addEventListener(Event.COMPLETE, completeEvent);
             fileRef.addEventListener(Event.SELECT, selectEvent);
-            fileRef.addEventListener(IOErrorEvent.IO_ERROR, traceEvent);
-            fileRef.addEventListener(Event.OPEN, traceEvent);
             fileRef.addEventListener(ProgressEvent.PROGRESS, progressEvent);
-            fileRef.addEventListener(SecurityErrorEvent.SECURITY_ERROR, traceEvent);
-            
-            //_fileAttachment = new MediaVO();
             
             this.width = 0; 
 			this.height = 0; 
@@ -116,8 +109,6 @@
 			
 			container.visible = false; 
 			
-		//	iconImage.source = iconClass; 
-		
 			this.addEventListener(KeyboardEvent.KEY_DOWN, keyboardEventHandler);
         }
 		public function effectEndHandler(event:EffectEvent):void
@@ -153,15 +144,9 @@
 		{
 			PopUpManager.removePopUp(this);
 		}
-		private function traceEvent(event:Event):void {
-			var tmp:String = "================================\n";
-			ta.text += tmp + event.type + " event:" + mx.utils.ObjectUtil.toString(event) + "\n" ;
-			ta.verticalScrollPosition += 20;
-		}
 		
 		private function ioErrorEvent(event:IOErrorEvent):void{
 			Alert.show("IOError:" + event.text);
-			traceEvent(event);
 		}
 		
 		private function selectEvent(event:Event):void{
@@ -174,19 +159,16 @@
 	
 		private function progressEvent(event:ProgressEvent):void {
 			progressBar.setProgress(event.bytesLoaded, event.bytesTotal);
-			traceEvent(event);
 		}
 	
 		private function completeEvent(event:Event):void {
 			progressBar.label = "Complete.";
 			filename.text += " uploaded";
-			traceEvent(event);
 			btn_upload.enabled = false;
 			btn_cancel.enabled = false;
 		
 			tmpFileName = fileRef.name;
 			//modelLocator.image = fileRef.data;
-			//Call Add Attachment DB method
 			addFileAttachment();
 			//new UserEvent(UserEvent.SAVE_USER).dispatch(); 
 		}
@@ -211,11 +193,6 @@
 		{
 			var index:Number;
 			var extension:String;
-	
-			//_fileAttachment.assocobjectID = parentObjectId;
-			
-			//var insertLoreAttachmentEvent:InsertLoreAttachmentEvent = new InsertLoreAttachmentEvent(_fileAttachment);
-	        //insertLoreAttachmentEvent.dispatch();         
         }	
 	]]>
 	</mx:Script>

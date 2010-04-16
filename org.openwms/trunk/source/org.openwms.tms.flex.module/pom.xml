@@ -98,7 +98,6 @@
                         <configuration>
                             <outputDirectory>libs</outputDirectory>
                             <overWriteIfNewer>true</overWriteIfNewer>
-                            <includeGroupIds></includeGroupIds>
                             <excludeGroupIds>com.adobe.flex.framework</excludeGroupIds>
                         </configuration>
                     </execution>
@@ -159,6 +158,12 @@
 			<version>${project.version}</version>
 			<type>swc</type>
 		</dependency>
+        <dependency>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>org.openwms.tms.domain.as</artifactId>
+            <version>${project.version}</version>
+            <type>swc</type>
+        </dependency>
 		<dependency>
 			<groupId>com.adobe.flex.framework</groupId>
 			<artifactId>flex-framework</artifactId>
