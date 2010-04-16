@@ -49,7 +49,7 @@ import org.openwms.web.flex.client.event.UserEvent;
 import org.openwms.web.flex.client.model.ModelLocator;
 import org.openwms.web.flex.client.module.ModuleLocator;
 
-    public class Runner extends Application
+    public class AppBase extends Application
     {
 
 [Bindable]
