@@ -18,13 +18,11 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
-package org.openwms.web.flex.client.tms.view
+package org.openwms.web.flex.client.common.view
 {
-
 	import mx.collections.ArrayCollection;
 	import mx.collections.XMLListCollection;
 	import mx.controls.MenuBar;
-	import mx.events.FlexEvent;
 	
 	import org.openwms.web.flex.client.HashMap;
 	import org.openwms.web.flex.client.IApplicationModule;
@@ -32,55 +30,48 @@ package org.openwms.web.flex.client.tms.view
 	import org.openwms.web.flex.client.model.ModelLocator;
 	import org.openwms.web.flex.client.module.CommonModule;
 
-    public class TMSAppBase extends CommonModule implements IApplicationModule
-	    {
-	
-	    [Bindable]
-	    public var menuCollection:ArrayCollection;
-	    [Bindable]
-	    public var menuBarItemsCollection:XMLListCollection;
-	    [Bindable]
-	    protected var modelLocator:ModelLocator = ModelLocator.getInstance();
-	    [Bindable]
-	    public var tmsMenuBar:MenuBar;
-	
-	    /**
-	     * A backing class for modules coded in XML.
-	     */
-	    public function TMSAppBase()
-	    {
-	        super();
-	        addEventListener(FlexEvent.APPLICATION_COMPLETE, creationCompleteHandler);
-	        addEventListener(FlexEvent.CREATION_COMPLETE, creationCompleteHandler);
-	    }
-	    
-	    public function creationCompleteHandler(event:FlexEvent):void
-	    {
-	        trace("TTT:");
-	    }
- 
-
+    public class CommonAppBase extends CommonModule implements IApplicationModule
+    {
+        
+        [Bindable]
+		public var menuCollection:ArrayCollection;
+		[Bindable]
+		public var menuBarItemsCollection:XMLListCollection;
+		[Bindable]
+		private var modelLocator:ModelLocator = ModelLocator.getInstance();
+        [Bindable]
+        public var commonMenuBar:MenuBar;
+        private var mainController:MainController = new MainController();
+        
+        /**
+         * Constructor.
+         */ 
+        public function CommonAppBase()
+        {
+        	super();
+        }		
+        
 		protected override function initApp():void
 		{
-		    trace("InitApp called");
+		    trace("InitApp in common module called");
 		}
-		
+
 		/**
 		 * This method returns a list of menu items which shall be expaned to the main
 		 * application menu bar.
 		 */
 		public function getMainMenuItems():HashMap
 		{
-		    var map:MenuItemMap = new MenuItemMap(tmsMenuBar.dataProvider as XMLListCollection);
+		    var map:MenuItemMap = new MenuItemMap(commonMenuBar.dataProvider as XMLListCollection);
 		    return map;
 		}
-		
+
 		/**
 		 * This method returns the name of the module as unique String identifier.
 		 */
 		public function getModuleName():String
 		{
-		    return "TMS";
+		    return "COMMON";
 		}
 		
 		/**
@@ -97,5 +88,14 @@ package org.openwms.web.flex.client.tms.view
 		{
 		    return new ArrayCollection();
 		}
+		
+        private function bindCommands():void
+        {
+            mainController.addCommand(SwitchScreenEvent.SHOW_LOCATION_VIEW, ShowLocationViewCommand);
+            mainController.addCommand(SwitchScreenEvent.SHOW_LOCATIONGROUP_VIEW, ShowLocationGroupCommand);
+            //mainController.addCommand(SwitchScreenEvent.SHOW_TRANSPORTUNIT_VIEW, ShowTransportUnitCommand);
+            mainController.addCommand(LoadLocationGroupsEvent.LOAD_ALL_LOCATION_GROUPS, LoadLocationGroupsCommand);
+            mainController.addCommand(LocationEvent.LOAD_ALL_LOCATIONS, LoadLocationsCommand);
+        }
     }
 }

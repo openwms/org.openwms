@@ -34,21 +34,24 @@ package org.openwms.web.flex.client.module
         {
             super();
             this.addEventListener(FlexEvent.CREATION_COMPLETE, onCreationComplete);
-            this.addEventListener(FlexEvent.APPLICATION_COMPLETE, onCreationComplete);
-            this.addEventListener(Event.ACTIVATE, onCreationComplete);
+            this.addEventListener(Event.ACTIVATE, gotFocus);
         }
 
         /**
          * This method returns a list of menu items which shall be expaned to the main
          * application menu bar.
          */
-        private function onCreationComplete(e:Event):void
+        public function onCreationComplete(e:Event):void
         {
         	trace("Creation of Module completed");
             initApp();
         }
 
         protected function initApp():void
+        {
+        }
+        
+        protected function gotFocus():void
         {
         }
 
