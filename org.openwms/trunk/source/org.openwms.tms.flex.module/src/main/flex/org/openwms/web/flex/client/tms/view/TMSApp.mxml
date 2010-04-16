@@ -21,7 +21,7 @@
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
 -->
-<view:Runner xmlns:mx="http://www.adobe.com/2006/mxml" xmlns:module="org.openwms.web.flex.client.module.*"
+<view:TMSAppBase xmlns:mx="http://www.adobe.com/2006/mxml" xmlns:module="org.openwms.web.flex.client.module.*"
 	xmlns:view="org.openwms.web.flex.client.tms.view.*">
 
 	<mx:VBox height="100%" width="100%" verticalGap="0" backgroundColor="#C2DAEF">
@@ -44,4 +44,4 @@
 		</mx:HBox>
 	</mx:VBox>
 
-</view:Runner>
+</view:TMSAppBase>
