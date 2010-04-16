@@ -56,7 +56,7 @@
 					</sourcePaths>
 					<services>${basedir}/src/main/resources/flex/services-config.xml</services>
 					<contextRoot>openwms</contextRoot>
-					<sourceFile>org/openwms/web/flex/client/view/StartScreen.mxml</sourceFile>
+					<sourceFile>org/openwms/web/flex/client/view/App.mxml</sourceFile>
 					<warnings>
 						<arrayTostringChanges>true</arrayTostringChanges>
 						<duplicateArgumentNames>false</duplicateArgumentNames>
