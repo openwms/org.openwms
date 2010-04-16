@@ -20,34 +20,8 @@
  */
 package org.openwms.web.flex.client.view
 {
-	import flash.events.Event;
-	
-	import mx.collections.ArrayCollection;
-	import mx.collections.XMLListCollection;
-	import mx.controls.Alert;
-	import mx.controls.MenuBar;
-	import mx.core.Application;
-	import mx.events.MenuEvent;
-	import mx.managers.DragManager;
-	import mx.managers.PopUpManager;
-	import mx.modules.IModuleInfo;
-	import mx.modules.ModuleManager;
-	
-	import org.granite.events.SecurityEvent;
-	import org.granite.rpc.remoting.mxml.SecureRemoteObject;
-	import org.openwms.common.domain.MenuItem;
-	import org.openwms.common.domain.Module;
-	import org.openwms.web.flex.client.HashMap;
-	import org.openwms.web.flex.client.IApplicationModule;
 	import org.openwms.web.flex.client.command.*;
 	import org.openwms.web.flex.client.control.MainController;
-	import org.openwms.web.flex.client.event.ApplicationEvent;
-	import org.openwms.web.flex.client.event.EventBroker;
-	import org.openwms.web.flex.client.event.ModulesEvent;
-	import org.openwms.web.flex.client.event.SwitchScreenEvent;
-	import org.openwms.web.flex.client.event.UserEvent;
-	import org.openwms.web.flex.client.model.ModelLocator;
-	import org.openwms.web.flex.client.module.ModuleLocator;
 
     public class AppBase extends Application
     {
@@ -60,8 +34,6 @@ package org.openwms.web.flex.client.view
 		private var broker:EventBroker = EventBroker.getInstance();
 		[Bindable]
 		private var srv:SecureRemoteObject = null;
-		[Bindable]
-		protected var mainController:MainController = new MainController();
 		[Bindable]
 		public var menuBarCollection:XMLListCollection;
 		[Bindable]
@@ -76,6 +48,8 @@ package org.openwms.web.flex.client.view
 		private var popUpManager:PopUpManager;
 		private var dragManager:DragManager;
 		private var mInfo:IModuleInfo
+        [Bindable]
+		private var mainController:MainController = MainController.getInstance();
 	    
 	    /**
 	     * Constructor.
@@ -104,10 +78,6 @@ package org.openwms.web.flex.client.view
 		
 		    mainController.addCommand(SwitchScreenEvent.SHOW_STARTSCREEN, ShowStartscreenCommand);
 		    mainController.addCommand(SwitchScreenEvent.SHOW_MODULE_MGMT_VIEW, ShowModuleManagementViewCommand);
-		    /*
-		       mainController.addCommand(SwitchScreenEvent.SHOW_TRANSPORTUNIT_VIEW, ShowTransportUnitCommand);
-		     */
-		
 		    mainController.addCommand(SwitchScreenEvent.SHOW_USER_MGMT_VIEW, ShowUserManagementViewCommand);
 		
 		    mainController.addCommand(ApplicationEvent.LOAD_ALL_MODULES, LoadModulesCommand);

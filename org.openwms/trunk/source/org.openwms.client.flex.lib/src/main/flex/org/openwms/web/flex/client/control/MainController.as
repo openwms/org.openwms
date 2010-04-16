@@ -30,10 +30,21 @@ package org.openwms.web.flex.client.control
      */
     public class MainController extends FrontController
     {
-        public function MainController():void
+    	private static var instance:MainController;
+    	
+        public function MainController(enforcer:SingletonEnforcer):void
         {
             super();
             setupEventHandler();
+        }
+
+        public static function getInstance():MainController
+        {
+            if (instance == null)
+            {
+                instance = new MainController(new SingletonEnforcer);
+            }
+            return instance;
         }
 
         private function setupEventHandler():void
@@ -59,4 +70,7 @@ package org.openwms.web.flex.client.control
             this.removeCommand(event)
         }
     }
+}
+class SingletonEnforcer
+{
 }

@@ -27,6 +27,15 @@ package org.openwms.web.flex.client.common.view
 	import org.openwms.web.flex.client.HashMap;
 	import org.openwms.web.flex.client.IApplicationModule;
 	import org.openwms.web.flex.client.MenuItemMap;
+	import org.openwms.web.flex.client.common.command.LoadLocationGroupsCommand;
+	import org.openwms.web.flex.client.common.command.LoadLocationsCommand;
+	import org.openwms.web.flex.client.common.command.ShowLocationGroupCommand;
+	import org.openwms.web.flex.client.common.command.ShowLocationViewCommand;
+	import org.openwms.web.flex.client.common.command.ShowTransportUnitCommand;
+	import org.openwms.web.flex.client.common.event.LoadLocationGroupsEvent;
+	import org.openwms.web.flex.client.common.event.LocationEvent;
+	import org.openwms.web.flex.client.control.MainController;
+	import org.openwms.web.flex.client.event.SwitchScreenEvent;
 	import org.openwms.web.flex.client.model.ModelLocator;
 	import org.openwms.web.flex.client.module.CommonModule;
 
@@ -41,7 +50,8 @@ package org.openwms.web.flex.client.common.view
 		private var modelLocator:ModelLocator = ModelLocator.getInstance();
         [Bindable]
         public var commonMenuBar:MenuBar;
-        private var mainController:MainController = new MainController();
+        [Bindable]
+        private var mainController:MainController = MainController.getInstance();
         
         /**
          * Constructor.
@@ -62,6 +72,7 @@ package org.openwms.web.flex.client.common.view
 		 */
 		public function getMainMenuItems():HashMap
 		{
+			bindCommands();
 		    var map:MenuItemMap = new MenuItemMap(commonMenuBar.dataProvider as XMLListCollection);
 		    return map;
 		}
@@ -89,13 +100,27 @@ package org.openwms.web.flex.client.common.view
 		    return new ArrayCollection();
 		}
 		
+        public function initializeModule():void
+        {
+        	
+        }
+
+        public function destroyModule():void
+        {
+        	mainController.unregisterHandler(SwitchScreenEvent.SHOW_LOCATION_VIEW);
+            mainController.unregisterHandler(SwitchScreenEvent.SHOW_LOCATIONGROUP_VIEW);
+            mainController.unregisterHandler(SwitchScreenEvent.SHOW_TRANSPORTUNIT_VIEW);
+            mainController.unregisterHandler(LoadLocationGroupsEvent.LOAD_ALL_LOCATION_GROUPS);
+            mainController.unregisterHandler(LocationEvent.LOAD_ALL_LOCATIONS);
+        }
+
         private function bindCommands():void
         {
-            mainController.addCommand(SwitchScreenEvent.SHOW_LOCATION_VIEW, ShowLocationViewCommand);
-            mainController.addCommand(SwitchScreenEvent.SHOW_LOCATIONGROUP_VIEW, ShowLocationGroupCommand);
-            //mainController.addCommand(SwitchScreenEvent.SHOW_TRANSPORTUNIT_VIEW, ShowTransportUnitCommand);
-            mainController.addCommand(LoadLocationGroupsEvent.LOAD_ALL_LOCATION_GROUPS, LoadLocationGroupsCommand);
-            mainController.addCommand(LocationEvent.LOAD_ALL_LOCATIONS, LoadLocationsCommand);
+            mainController.registerHander(SwitchScreenEvent.SHOW_LOCATION_VIEW, ShowLocationViewCommand);
+            mainController.registerHander(SwitchScreenEvent.SHOW_LOCATIONGROUP_VIEW, ShowLocationGroupCommand);
+            mainController.registerHander(SwitchScreenEvent.SHOW_TRANSPORTUNIT_VIEW, ShowTransportUnitCommand);
+            mainController.registerHander(LoadLocationGroupsEvent.LOAD_ALL_LOCATION_GROUPS, LoadLocationGroupsCommand);
+            mainController.registerHander(LocationEvent.LOAD_ALL_LOCATIONS, LoadLocationsCommand);
         }
     }
 }

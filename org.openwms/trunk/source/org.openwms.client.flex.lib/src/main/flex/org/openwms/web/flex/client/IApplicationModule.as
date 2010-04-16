@@ -54,6 +54,15 @@ package org.openwms.web.flex.client
          * gui component where the popup shall appear, the value is the list of popup items.
          */
         function getPopupItems():ArrayCollection;
+        
+        /**
+         * Do additional initial work when the module is loaded.
+         */
+        function initializeModule():void;
 
+        /**
+         * Do addtional cleanup work before the module is unloaded.
+         */
+        function destroyModule():void;
     }
 }

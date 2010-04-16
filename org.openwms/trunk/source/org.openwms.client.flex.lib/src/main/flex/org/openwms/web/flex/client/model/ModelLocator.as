@@ -56,6 +56,8 @@ package org.openwms.web.flex.client.model
         public var locationGroupTree:TreeNode;
         public var image:Object;
         private var views:Array = new Array();
+        // Used to control the main viewStack
+        public var actualView:Class;
 
         private static var instance:ModelLocator;
 
