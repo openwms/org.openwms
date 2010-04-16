@@ -21,7 +21,7 @@
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
 -->
-<view:Runner xmlns:mx="http://www.adobe.com/2006/mxml" xmlns:business="org.openwms.web.flex.client.business.*"
+<view:AppBase xmlns:mx="http://www.adobe.com/2006/mxml" xmlns:business="org.openwms.web.flex.client.business.*"
 	xmlns:control="org.openwms.web.flex.client.control.*" xmlns:event="org.openwms.web.flex.client.event.*" xmlns:view="org.openwms.web.flex.client.view.*" layout="absolute"
 	backgroundGradientAlphas="[1.0, 1.0]" backgroundGradientColors="[#FFFFFF, #FFFFFF]" creationComplete="init()">
 
@@ -83,4 +83,4 @@ import org.openwms.web.flex.client.module.ModuleLocator;
         </mx:HBox>
 	</mx:VBox>
 
-</view:Runner>
+</view:AppBase>
