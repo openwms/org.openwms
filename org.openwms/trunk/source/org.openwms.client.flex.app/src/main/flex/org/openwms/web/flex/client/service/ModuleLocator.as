@@ -114,10 +114,11 @@ package org.openwms.web.flex.client.service
          */
         public function moduleLoaded(e:ModuleEvent):void
         {
-            trace("Successfully loaded a Module:" + e.module.url);
+            trace("Successfully loaded module: " + e.module.url);
             var module:Module = (e.module.data as Module);
-            module.loaded = true;
-            fireSaveEvent(module);
+            // Dont set this flag because we can have many clients
+            //module.loaded = true;
+            //fireSaveEvent(module);
             var appModule:Object = e.module.factory.create();
             if (appModule is IApplicationModule)
             {
@@ -135,8 +136,9 @@ package org.openwms.web.flex.client.service
         {
             trace("Successfully unloaded a Module:" + e.module.url);
             var module:Module = (e.module.data as Module);
-            module.loaded = false;
-            fireSaveEvent(module);
+            // Dont set this flag because we can have many clients
+            //module.loaded = false;
+            //fireSaveEvent(module);
             var appModule:Object = e.module.factory.create();
             if (appModule is IApplicationModule)
             {

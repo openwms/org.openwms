@@ -20,13 +20,12 @@
  */
 package org.openwms.web.flex.client.module
 {
-    import mx.collections.ArrayCollection;
     import flash.events.Event;
+    
     import mx.events.FlexEvent;
-    import org.openwms.web.flex.client.IApplicationModule;
-    import mx.modules.Module;
+    import mx.modules.ModuleBase;
 
-    public class CommonModule extends Module
+    public class CommonModule extends ModuleBase
     {
         /**
          * CommonModule.
@@ -35,6 +34,8 @@ package org.openwms.web.flex.client.module
         {
             super();
             this.addEventListener(FlexEvent.CREATION_COMPLETE, onCreationComplete);
+            this.addEventListener(FlexEvent.APPLICATION_COMPLETE, onCreationComplete);
+            this.addEventListener(Event.ACTIVATE, onCreationComplete);
         }
 
         /**
@@ -43,6 +44,7 @@ package org.openwms.web.flex.client.module
          */
         private function onCreationComplete(e:Event):void
         {
+        	trace("Creation of Module completed");
             initApp();
         }
 
