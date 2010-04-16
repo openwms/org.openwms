@@ -28,7 +28,7 @@ package org.openwms.web.flex.client.command
     import mx.collections.ArrayCollection;
     import mx.controls.Alert;
     import flash.events.EventDispatcher;
-    import org.openwms.web.flex.client.service.ModuleLocator;
+    import org.openwms.web.flex.client.module.ModuleLocator;
     import org.openwms.web.flex.client.business.ModulesDelegate;
     import org.openwms.web.flex.client.event.ModulesEvent;
     import org.openwms.web.flex.client.event.EventBroker;

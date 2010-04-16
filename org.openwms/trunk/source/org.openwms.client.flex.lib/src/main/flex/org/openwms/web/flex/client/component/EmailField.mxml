@@ -21,9 +21,16 @@
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */  
 -->
-<mx:HBox xmlns:mx="http://www.adobe.com/2006/mxml" showEffect="Fade" width="100%" height="40" creationComplete="init()">
-
-	<mx:TextInput id="emailTi" text="{modelLocator.selectedUser.userDetails.email.getItemAt(0).emailAddress}"
+<mx:HBox xmlns:mx="http://www.adobe.com/2006/mxml" showEffect="Fade" width="100%" height="40">
+    
+    <mx:Script>
+    	<![CDATA[
+    		import org.openwms.web.flex.client.model.ModelLocator;
+    	]]>
+    </mx:Script>
+<!--
+	<mx:TextInput id="emailTi" text="{ModelLocator.getInstance().selectedUser.userDetails.email.getItemAt(0).emailAddress}"
 		width="250" />
+-->
 	<mx:Button id="Add" label="Add..." />
 </mx:HBox>

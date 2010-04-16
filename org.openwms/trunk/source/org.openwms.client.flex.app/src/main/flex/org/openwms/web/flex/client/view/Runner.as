@@ -47,7 +47,7 @@ import org.openwms.web.flex.client.event.ModulesEvent;
 import org.openwms.web.flex.client.event.SwitchScreenEvent;
 import org.openwms.web.flex.client.event.UserEvent;
 import org.openwms.web.flex.client.model.ModelLocator;
-import org.openwms.web.flex.client.service.ModuleLocator;
+import org.openwms.web.flex.client.module.ModuleLocator;
 
     public class Runner extends Application
     {
@@ -70,23 +70,6 @@ protected var menuItems:ArrayCollection;
 public var loginView:LoginView;
 [Bindable]
 public var mainMenuBar:MenuBar;
-
-private var menubarXML:XMLList =
-    <>
-        <menuitem label="Application">
-            <menuitem label="Connect ..." enabled="false" />
-            <menuitem label="Logout" enabled="false" />
-        </menuitem>
-        <menuitem label="Administration">
-            <menuitem label="Users" action="{SwitchScreenEvent.SHOW_USER_MGMT_VIEW}" />
-            <menuitem label="Roles" action="{SwitchScreenEvent.SHOW_USER_MGMT_VIEW}" />
-            <menuitem label="Security" action="{SwitchScreenEvent.SHOW_USER_MGMT_VIEW}" />
-        </menuitem>
-        <menuitem label="Application Configuration">
-            <menuitem label="Module Management" action="{SwitchScreenEvent.SHOW_MODULE_MGMT_VIEW}" />
-            <menuitem label="Users" action="{SwitchScreenEvent.SHOW_USER_MGMT_VIEW}" />
-        </menuitem>
-    </>;
 
 // Manager classes are loaded to the application domain
 private var moduleManager:ModuleManager;
