@@ -57,7 +57,7 @@ package org.openwms.web.flex.client.model
         public var image:Object;
         private var views:Array = new Array();
         // Used to control the main viewStack
-        public var actualView:Class;
+        public var actualView:String;
 
         private static var instance:ModelLocator;
 

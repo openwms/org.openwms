@@ -20,8 +20,35 @@
  */
 package org.openwms.web.flex.client.view
 {
+	import flash.display.DisplayObject;
+	
+	import mx.collections.ArrayCollection;
+	import mx.collections.XMLListCollection;
+	import mx.containers.ViewStack;
+	import mx.controls.Alert;
+	import mx.controls.MenuBar;
+	import mx.core.Application;
+	import mx.events.MenuEvent;
+	import mx.managers.DragManager;
+	import mx.managers.PopUpManager;
+	import mx.modules.IModuleInfo;
+	import mx.modules.ModuleManager;
+	
+	import org.granite.events.SecurityEvent;
+	import org.granite.rpc.remoting.mxml.SecureRemoteObject;
+	import org.openwms.common.domain.MenuItem;
+	import org.openwms.common.domain.Module;
+	import org.openwms.web.flex.client.HashMap;
+	import org.openwms.web.flex.client.IApplicationModule;
 	import org.openwms.web.flex.client.command.*;
 	import org.openwms.web.flex.client.control.MainController;
+	import org.openwms.web.flex.client.event.ApplicationEvent;
+	import org.openwms.web.flex.client.event.EventBroker;
+	import org.openwms.web.flex.client.event.ModulesEvent;
+	import org.openwms.web.flex.client.event.SwitchScreenEvent;
+	import org.openwms.web.flex.client.event.UserEvent;
+	import org.openwms.web.flex.client.model.ModelLocator;
+	import org.openwms.web.flex.client.module.ModuleLocator;
 
     public class AppBase extends Application
     {
@@ -42,12 +69,14 @@ package org.openwms.web.flex.client.view
 		public var loginView:LoginView;
 		[Bindable]
 		public var mainMenuBar:MenuBar;
+        [Bindable]
+        public var appViewStack:ViewStack;
 		
 		// Manager classes are loaded to the application domain
 		private var moduleManager:ModuleManager;
 		private var popUpManager:PopUpManager;
 		private var dragManager:DragManager;
-		private var mInfo:IModuleInfo
+		private var mInfo:IModuleInfo;
         [Bindable]
 		private var mainController:MainController = MainController.getInstance();
 	    
@@ -64,6 +93,7 @@ package org.openwms.web.flex.client.view
 	        srv = new SecureRemoteObject("userService");
 	        //srv.login();
 	        registerEventListeners();
+	        modelLocator.actualView = "emptyScreenView";
 	        bindCommands();
 	        detectModules();
 	        //configService.send();
@@ -114,6 +144,9 @@ package org.openwms.web.flex.client.view
 		{
 		    trace("Switching to view:" + event.item.@action);
 		    new SwitchScreenEvent(event.item.@action).dispatch();
+		    modelLocator.actualView = event.item.@action;
+		    trace("zzz"+appViewStack.getChildByName(event.item.@action));
+		    appViewStack.selectedIndex = appViewStack.getChildIndex(appViewStack.getChildByName(event.item.@action));
 		}
 		
 		public function login(username:String, password:String):void
@@ -159,7 +192,13 @@ package org.openwms.web.flex.client.view
 		 */
 		private function refreshViewStack(module:IApplicationModule):void
 		{
-		
+			trace("Resolve ViewStack items from module:" + module.getModuleName());
+			var views:ArrayCollection = module.getViews();
+			trace("Number:"+views.length);
+			for each (var view:DisplayObject in views)
+			{
+                appViewStack.addChild(view);
+			}
 		}
 		
 		/**
