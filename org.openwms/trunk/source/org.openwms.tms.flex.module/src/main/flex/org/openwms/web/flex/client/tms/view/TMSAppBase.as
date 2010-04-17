@@ -97,5 +97,13 @@ package org.openwms.web.flex.client.tms.view
 		{
 		    return new ArrayCollection();
 		}
+
+        public function initializeModule():void
+        {
+        }
+
+        public function destroyModule():void
+        {
+        }
     }
 }

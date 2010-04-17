@@ -40,6 +40,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.persistence.Version;
 
 /**
  * An <code>User</code> represents the user of the system.
@@ -118,6 +119,13 @@ public class User implements Serializable {
     @Column(name = "FULLNAME")
     private String fullname;
 
+
+    /**
+     * Version field.
+     */
+    @Version
+    private long version;
+    
     /* ------------------- collection mapping ------------------- */
     /**
      * More detail information about the <code>User</code>.
@@ -326,5 +334,14 @@ public class User implements Serializable {
      */
     public void setPreferences(Set<Preference> preferences) {
         this.preferences = preferences;
+    }
+
+    /**
+     * JPA optimistic locking.
+     * 
+     * @return The version field
+     */
+    public long getVersion() {
+        return this.version;
     }
 }

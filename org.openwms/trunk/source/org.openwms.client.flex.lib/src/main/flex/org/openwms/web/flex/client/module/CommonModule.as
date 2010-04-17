@@ -34,7 +34,7 @@ package org.openwms.web.flex.client.module
         {
             super();
             this.addEventListener(FlexEvent.CREATION_COMPLETE, onCreationComplete);
-            this.addEventListener(Event.ACTIVATE, gotFocus);
+            //this.addEventListener(Event.ACTIVATE, gotFocus);
         }
 
         /**
@@ -50,10 +50,5 @@ package org.openwms.web.flex.client.module
         protected function initApp():void
         {
         }
-        
-        protected function gotFocus():void
-        {
-        }
-
     }
 }

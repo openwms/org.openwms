@@ -30,12 +30,12 @@ package org.openwms.web.flex.client.event
      */
     public class SwitchScreenEvent extends CairngormEvent
     {
-        public static const SHOW_STARTSCREEN:String = "ShowStartscreen";
-        public static const SHOW_MODULE_MGMT_VIEW:String = "ShowModuleManagementView";
-        public static const SHOW_LOCATION_VIEW:String = "ShowLocationView";
-        public static const SHOW_LOCATIONGROUP_VIEW:String = "ShowLocationGroupView";
-        public static const SHOW_USER_MGMT_VIEW:String = "ShowUserManagementView";
-        public static const SHOW_TRANSPORTUNIT_VIEW:String = "ShowTransportUnitView";
+        public static const SHOW_STARTSCREEN:String = "emptyScreenView";
+        public static const SHOW_MODULE_MGMT_VIEW:String = "moduleManagementView";
+        public static const SHOW_LOCATION_VIEW:String = "locationView";
+        public static const SHOW_LOCATIONGROUP_VIEW:String = "locationGroupView";
+        public static const SHOW_USER_MGMT_VIEW:String = "userManagementView";
+        public static const SHOW_TRANSPORTUNIT_VIEW:String = "transportUnitView";
 
         public function SwitchScreenEvent(type:String, bubbles:Boolean = false, cancelable:Boolean = false)
         {

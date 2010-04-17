@@ -31,6 +31,7 @@
             import org.openwms.web.flex.client.event.UserEvent;
             import org.openwms.web.flex.client.model.ModelLocator;
             import org.openwms.web.flex.client.module.ModuleLocator;
+            import org.openwms.web.flex.client.util.DisplayUtility;
     	]]>
     </mx:Script>
 
@@ -65,11 +66,11 @@
 			</mx:MenuBar>
 		</mx:Canvas>
 		<mx:HBox width="100%" height="100%" horizontalAlign="center" verticalAlign="middle">
-		<mx:ViewStack id="myViewStack" selectedIndex="{loginView.authenticated ? modelLocator.mainViewStackIndex : modelLocator.mainViewStackIndex}" width="100%" height="100%">
-            <view:LoginView id="loginView" onLogin="login" cornerRadius="20" borderStyle="solid" alpha="1.0" borderThickness="3"/>
-            <view:EmptyScreenView id="emptyScreenView" />
-            <view:ModuleManagementView id="moduleManagementView" />
- 			<view:UserManagementView id="userManagementView" />
+		<mx:ViewStack id="appViewStack" selectedIndex="{loginView.authenticated ? DisplayUtility.getView(modelLocator.actualView,appViewStack) : DisplayUtility.getView(modelLocator.actualView/*LoginView*/,appViewStack)}" width="100%" height="100%">
+            <view:LoginView name="loginView" onLogin="login" cornerRadius="20" borderStyle="solid" alpha="1.0" borderThickness="3"/>
+            <view:EmptyScreenView name="emptyScreenView" />
+            <view:ModuleManagementView name="moduleManagementView" />
+ 			<view:UserManagementView name="userManagementView" />
 		</mx:ViewStack>
         </mx:HBox>
 	</mx:VBox>

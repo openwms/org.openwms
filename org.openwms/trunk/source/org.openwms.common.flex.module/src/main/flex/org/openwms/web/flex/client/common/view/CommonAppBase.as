@@ -22,6 +22,7 @@ package org.openwms.web.flex.client.common.view
 {
 	import mx.collections.ArrayCollection;
 	import mx.collections.XMLListCollection;
+	import mx.containers.ViewStack;
 	import mx.controls.MenuBar;
 	
 	import org.openwms.web.flex.client.HashMap;
@@ -50,6 +51,8 @@ package org.openwms.web.flex.client.common.view
 		private var modelLocator:ModelLocator = ModelLocator.getInstance();
         [Bindable]
         public var commonMenuBar:MenuBar;
+        [Bindable]
+        public var commonViewStack:ViewStack;
         [Bindable]
         private var mainController:MainController = MainController.getInstance();
         
@@ -97,7 +100,7 @@ package org.openwms.web.flex.client.common.view
 		
 		public function getViews():ArrayCollection
 		{
-		    return new ArrayCollection();
+		    return new ArrayCollection(commonViewStack.getChildren());
 		}
 		
         public function initializeModule():void
