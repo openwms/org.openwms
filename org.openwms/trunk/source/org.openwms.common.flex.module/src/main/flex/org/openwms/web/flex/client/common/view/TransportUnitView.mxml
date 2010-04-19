@@ -28,6 +28,9 @@
     		import org.openwms.web.flex.client.common.model.IconLocator;
     		import org.openwms.common.domain.TransportUnit;
     		import org.openwms.web.flex.client.model.ModelLocator;
+    		import org.openwms.web.flex.client.common.view.dialogs.CreateTransportUnitDialog;
+    		import mx.managers.PopUpManager;
+    		
     		[Bindable]
             private var modelLocator:ModelLocator = ModelLocator.getInstance();
             private static var tu:TransportUnit = new TransportUnit();
@@ -36,12 +39,19 @@
     			//userAddBtn.addChild(IconLocator.iconUserAdd);
     		}
     		
+            private function showCreateTransportUnitDialog():void
+            {
+                var pop1:CreateTransportUnitDialog=CreateTransportUnitDialog(PopUpManager.createPopUp(this, CreateTransportUnitDialog, true));
+                PopUpManager.centerPopUp(pop1);
+            }
+
+
     	]]>
 	</mx:Script>
 
 	<mx:VBox x="10" y="10" width="908" height="592">
 		<mx:HBox width="908">
-			<mx:Button id="userAddBtn" label="Add" />
+			<mx:Button id="userAddBtn" label="Add" click="showCreateTransportUnitDialog()"/>
 			<mx:Button id="userSaveBtn" label="Save" />
 			<mx:Button id="userDeleteBtn" label="Delete" />
 			<mx:Button id="createTransportBtn" label="Create Transport" />
