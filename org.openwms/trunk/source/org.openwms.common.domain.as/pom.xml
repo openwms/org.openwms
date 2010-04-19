@@ -29,7 +29,7 @@
 		<artifactId>org.openwms</artifactId>
 		<version>0.0.1-SNAPSHOT</version>
 	</parent>
-	<artifactId>org.openwms.common.domain.as</artifactId>
+	<artifactId>org.openwms.tms.domain.as</artifactId>
 	<packaging>swc</packaging>
 	<name>${project.artifactId}</name>
 	<properties>
@@ -109,7 +109,7 @@
 						<template>${project.basedir}/etc/2.0.0.GA/interface.gsp</template>
 					</interfaceTemplate>
 					<includeJavaClasses>
-						<class>org.openwms.common.domain.*</class>
+						<class>org.openwms.tms.domain.*</class>
 					</includeJavaClasses>
 					<sourcePaths>
 						<sourcePath>${project.basedir}/src/main/flex/</sourcePath>
@@ -197,12 +197,18 @@
 			<groupId>${project.groupId}</groupId>
 			<artifactId>org.openwms.common.domain</artifactId>
 			<version>${project.version}</version>
-            <type>jar</type>
             <scope>provided</scope>
 		</dependency>
         <dependency>
             <groupId>${project.groupId}</groupId>
             <artifactId>org.openwms.common.domain</artifactId>
+            <version>${project.version}</version>
+            <scope>provided</scope>
+            <type>swc</type>
+        </dependency>
+        <dependency>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>org.openwms.tms.domain</artifactId>
             <version>${project.version}</version>
             <scope>provided</scope>
         </dependency>
