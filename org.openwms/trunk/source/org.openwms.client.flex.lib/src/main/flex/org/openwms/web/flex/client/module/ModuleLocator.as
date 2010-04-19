@@ -118,9 +118,7 @@ package org.openwms.web.flex.client.module
         {
             trace("Successfully loaded module: " + e.module.url);
             var module:Module = (e.module.data as Module);
-            // Dont set this flag because we can have many clients
             module.loaded = true;
-            //fireSaveEvent(module);
             var appModule:Object = e.module.factory.create();
             if (appModule is IApplicationModule)
             {
@@ -137,15 +135,13 @@ package org.openwms.web.flex.client.module
          */
         public function moduleUnloaded(e:ModuleEvent):void
         {
-            trace("Successfully unloaded a Module:" + e.module.url);
+            trace("Successfully unloaded Module:" + e.module.url);
             var module:Module = (e.module.data as Module);
-            // Dont set this flag because we can have many clients
             module.loaded = false;
-            //fireSaveEvent(module);
             var appModule:Object = e.module.factory.create();
             if (appModule is IApplicationModule)
             {
-                fireChangedEvent(appModule as IApplicationModule);
+                fireUnloadedEvent(appModule as IApplicationModule);
             }
             mInfo.removeEventListener(ModuleEvent.UNLOAD, moduleUnloaded);
         }
@@ -202,11 +198,11 @@ package org.openwms.web.flex.client.module
                 {
                     mInfo.data = module;
                     mInfo.load();
-                    trace("Module forced to load:"+module.moduleName);
+                    trace("Module forced to load: "+module.moduleName);
                 }
                 return true;
             }
-            trace("No module to load with url:"+module.url);
+            trace("No module to load with url: "+module.url);
             return false;
         }
 
@@ -222,7 +218,7 @@ package org.openwms.web.flex.client.module
             }
             if (!isRegistered(module))
             {
-                trace("Module was not found in list of all modules");
+                trace("Module was not found in list of registered modules");
                 return;
             }
             mInfo = ModuleManager.getModule(module.url);
@@ -233,15 +229,16 @@ package org.openwms.web.flex.client.module
                 if (mInfo.loaded)
                 {
                     mInfo.data = module;
+                    trace("Module forced to unload: "+module.moduleName);
                     mInfo.unload();
-                    trace("Module forced to unload:"+module.moduleName);
+                    return;
                 }
                 else
                 {
                     trace("Module was not loaded before, nothing to unload");
                 }
             }
-            trace("No module to unload with url:" + module.url);
+            trace("No module to unload with url: " + module.url);
             return;
         }
 
@@ -263,6 +260,17 @@ package org.openwms.web.flex.client.module
         private function fireChangedEvent(module:IApplicationModule):void
         {
             var e:ApplicationEvent = new ApplicationEvent(ApplicationEvent.MODULE_CONFIG_CHANGED);
+            e.data = module;
+            broker.dispatchEvt(e);
+        }
+
+        /**
+         * Fire an event to notify others that a module was successfully unloaded.
+         * The event data (e.data) contains the changed module.
+         */
+        private function fireUnloadedEvent(module:IApplicationModule):void
+        {
+            var e:ApplicationEvent = new ApplicationEvent(ApplicationEvent.MODULE_UNLOADED);
             e.data = module;
             broker.dispatchEvt(e);
         }

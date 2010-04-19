@@ -23,15 +23,19 @@ package org.openwms.web.flex.client.tms.view
 
 	import mx.collections.ArrayCollection;
 	import mx.collections.XMLListCollection;
+	import mx.containers.ViewStack;
 	import mx.controls.MenuBar;
 	import mx.events.FlexEvent;
 	
 	import org.openwms.web.flex.client.HashMap;
 	import org.openwms.web.flex.client.IApplicationModule;
 	import org.openwms.web.flex.client.MenuItemMap;
+	import org.openwms.web.flex.client.control.MainController;
 	import org.openwms.web.flex.client.model.ModelLocator;
 	import org.openwms.web.flex.client.module.CommonModule;
-
+	import org.openwms.web.flex.client.tms.command.LoadTransportOrdersCommand;
+	import org.openwms.web.flex.client.tms.event.TMSSwitchScreenEvent;
+    
     public class TMSAppBase extends CommonModule implements IApplicationModule
 	    {
 	
@@ -43,6 +47,10 @@ package org.openwms.web.flex.client.tms.view
 	    protected var modelLocator:ModelLocator = ModelLocator.getInstance();
 	    [Bindable]
 	    public var tmsMenuBar:MenuBar;
+        [Bindable]
+        public var tmsViewStack:ViewStack;
+        [Bindable]
+        private var mainController:MainController = MainController.getInstance();
 	
 	    /**
 	     * A backing class for modules coded in XML.
@@ -52,6 +60,12 @@ package org.openwms.web.flex.client.tms.view
 	        super();
 	        addEventListener(FlexEvent.APPLICATION_COMPLETE, creationCompleteHandler);
 	        addEventListener(FlexEvent.CREATION_COMPLETE, creationCompleteHandler);
+	        bindCommands();
+	    }
+	    
+	    private function bindCommands():void
+	    {
+            mainController.registerHandler(TMSSwitchScreenEvent.SHOW_TRANSPORT_ORDERS_VIEW, LoadTransportOrdersCommand);
 	    }
 	    
 	    public function creationCompleteHandler(event:FlexEvent):void
@@ -95,7 +109,7 @@ package org.openwms.web.flex.client.tms.view
 		
 		public function getViews():ArrayCollection
 		{
-		    return new ArrayCollection();
+		    return new ArrayCollection(tmsViewStack.getChildren());
 		}
 
         public function initializeModule():void
@@ -104,6 +118,7 @@ package org.openwms.web.flex.client.tms.view
 
         public function destroyModule():void
         {
+        	mainController.unregisterHandler(TMSSwitchScreenEvent.SHOW_TRANSPORT_ORDERS_VIEW);
         }
     }
 }

@@ -75,7 +75,7 @@ package org.openwms.web.flex.client.common.view
 		 */
 		public function getMainMenuItems():HashMap
 		{
-			bindCommands();
+			//bindCommands();
 		    var map:MenuItemMap = new MenuItemMap(commonMenuBar.dataProvider as XMLListCollection);
 		    return map;
 		}
@@ -105,7 +105,7 @@ package org.openwms.web.flex.client.common.view
 		
         public function initializeModule():void
         {
-        	
+        	bindCommands();
         }
 
         public function destroyModule():void
@@ -119,11 +119,11 @@ package org.openwms.web.flex.client.common.view
 
         private function bindCommands():void
         {
-            mainController.registerHander(SwitchScreenEvent.SHOW_LOCATION_VIEW, ShowLocationViewCommand);
-            mainController.registerHander(SwitchScreenEvent.SHOW_LOCATIONGROUP_VIEW, ShowLocationGroupCommand);
-            mainController.registerHander(SwitchScreenEvent.SHOW_TRANSPORTUNIT_VIEW, ShowTransportUnitCommand);
-            mainController.registerHander(LoadLocationGroupsEvent.LOAD_ALL_LOCATION_GROUPS, LoadLocationGroupsCommand);
-            mainController.registerHander(LocationEvent.LOAD_ALL_LOCATIONS, LoadLocationsCommand);
+            mainController.registerHandler(SwitchScreenEvent.SHOW_LOCATION_VIEW, ShowLocationViewCommand);
+            mainController.registerHandler(SwitchScreenEvent.SHOW_LOCATIONGROUP_VIEW, ShowLocationGroupCommand);
+            mainController.registerHandler(SwitchScreenEvent.SHOW_TRANSPORTUNIT_VIEW, ShowTransportUnitCommand);
+            mainController.registerHandler(LoadLocationGroupsEvent.LOAD_ALL_LOCATION_GROUPS, LoadLocationGroupsCommand);
+            mainController.registerHandler(LocationEvent.LOAD_ALL_LOCATIONS, LoadLocationsCommand);
         }
     }
 }

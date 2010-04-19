@@ -20,35 +20,35 @@
  */
 package org.openwms.web.flex.client.view
 {
-	import flash.display.DisplayObject;
-	
-	import mx.collections.ArrayCollection;
-	import mx.collections.XMLListCollection;
-	import mx.containers.ViewStack;
-	import mx.controls.Alert;
-	import mx.controls.MenuBar;
-	import mx.core.Application;
-	import mx.events.MenuEvent;
-	import mx.managers.DragManager;
-	import mx.managers.PopUpManager;
-	import mx.modules.IModuleInfo;
-	import mx.modules.ModuleManager;
-	
-	import org.granite.events.SecurityEvent;
-	import org.granite.rpc.remoting.mxml.SecureRemoteObject;
-	import org.openwms.common.domain.MenuItem;
-	import org.openwms.common.domain.Module;
-	import org.openwms.web.flex.client.HashMap;
-	import org.openwms.web.flex.client.IApplicationModule;
-	import org.openwms.web.flex.client.command.*;
-	import org.openwms.web.flex.client.control.MainController;
-	import org.openwms.web.flex.client.event.ApplicationEvent;
-	import org.openwms.web.flex.client.event.EventBroker;
-	import org.openwms.web.flex.client.event.ModulesEvent;
-	import org.openwms.web.flex.client.event.SwitchScreenEvent;
-	import org.openwms.web.flex.client.event.UserEvent;
-	import org.openwms.web.flex.client.model.ModelLocator;
-	import org.openwms.web.flex.client.module.ModuleLocator;
+    import flash.display.DisplayObject;
+    
+    import mx.collections.ArrayCollection;
+    import mx.collections.XMLListCollection;
+    import mx.containers.ViewStack;
+    import mx.controls.Alert;
+    import mx.controls.MenuBar;
+    import mx.core.Application;
+    import mx.events.MenuEvent;
+    import mx.managers.DragManager;
+    import mx.managers.PopUpManager;
+    import mx.modules.IModuleInfo;
+    import mx.modules.ModuleManager;
+    
+    import org.granite.events.SecurityEvent;
+    import org.granite.rpc.remoting.mxml.SecureRemoteObject;
+    import org.openwms.common.domain.MenuItem;
+    import org.openwms.common.domain.Module;
+    import org.openwms.web.flex.client.HashMap;
+    import org.openwms.web.flex.client.IApplicationModule;
+    import org.openwms.web.flex.client.command.*;
+    import org.openwms.web.flex.client.control.MainController;
+    import org.openwms.web.flex.client.event.ApplicationEvent;
+    import org.openwms.web.flex.client.event.EventBroker;
+    import org.openwms.web.flex.client.event.ModulesEvent;
+    import org.openwms.web.flex.client.event.SwitchScreenEvent;
+    import org.openwms.web.flex.client.event.UserEvent;
+    import org.openwms.web.flex.client.model.ModelLocator;
+    import org.openwms.web.flex.client.module.ModuleLocator;
 
     public class AppBase extends Application
     {
@@ -143,9 +143,13 @@ package org.openwms.web.flex.client.view
 		public function onMenuChange(event:MenuEvent):void
 		{
 		    trace("Switching to view:" + event.item.@action);
+		    if (appViewStack.getChildByName(event.item.@action) == null)
+		    {
+		    	Alert.show("Screen with name "+event.item.@action+" not found!");
+		    	return;
+		    }
 		    new SwitchScreenEvent(event.item.@action).dispatch();
 		    modelLocator.actualView = event.item.@action;
-		    trace("zzz"+appViewStack.getChildByName(event.item.@action));
 		    appViewStack.selectedIndex = appViewStack.getChildIndex(appViewStack.getChildByName(event.item.@action));
 		}
 		
@@ -166,12 +170,30 @@ package org.openwms.web.flex.client.view
 		{
 		    var broker:EventBroker = EventBroker.getInstance();
 		    broker.addEventListener(ApplicationEvent.MODULE_CONFIG_CHANGED, moduleConfigChanged);
+		    broker.addEventListener(ApplicationEvent.MODULE_UNLOADED, moduleUnloaded);
 		    // When all modules are loaded from DB then notify application to start modules automatically ...
 		    broker.addEventListener(ModulesEvent.MODULES_LOADED, loadAllModules);
 		}
+
+        /**
+         * In the case a Module was unloaded, a re-organize of menus and
+         * views becomes necessary.
+         */
+        private function moduleUnloaded(event:ApplicationEvent):void
+        {
+            // Modules were unloaded, hence update viewStack, menuBar and popUps...
+            if (event.data != null && event.data is IApplicationModule)
+            {
+                var appModule:IApplicationModule = (event.data as IApplicationModule);
+                trace("Module was unloaded: " + appModule.getModuleName());
+                removeFromMainMenu(appModule);
+                //refreshViewStack(appModule);
+                appModule.destroyModule();
+            }
+        }
 	
 		/**
-		 * In the case the Module confifuration has changed, a re-organize of menus and
+		 * In the case the Module configuration has changed, a re-organize of menus and
 		 * views becomes necessary.
 		 */
 		private function moduleConfigChanged(event:ApplicationEvent):void
@@ -183,6 +205,7 @@ package org.openwms.web.flex.client.view
 		        trace("Configuration changed for Module: " + appModule.getModuleName());
 		        refreshMainMenu(appModule);
 		        refreshViewStack(appModule);
+		        appModule.initializeModule();
 		    }
 		}
 		
@@ -194,16 +217,45 @@ package org.openwms.web.flex.client.view
 		{
 			trace("Resolve ViewStack items from module:" + module.getModuleName());
 			var views:ArrayCollection = module.getViews();
-			trace("Number:"+views.length);
 			for each (var view:DisplayObject in views)
 			{
                 appViewStack.addChild(view);
 			}
 		}
-		
+	
+	    /**
+         * This method rebuilds the main application menu and should be called
+         * in case an application module is unloaded.
+         * The main menu, could be an MenuBar or any other kind of menu.
+         */
+        private function removeFromMainMenu(module:IApplicationModule):void
+        {
+            var map:HashMap = module.getMainMenuItems();
+            if (map == null)
+            {
+                return;
+            }
+            var keys:Array = map.getKeys();
+            var itemPos:int = 0;
+            var itemModule:XML;
+            for (var i:int = 0; i < keys.length; i++)
+            {
+                itemPos = keys[i];
+                itemModule = XML(map.get(itemPos));
+                for (var j:int = 0; j < mainMenuBar.dataProvider.length; j++)
+                {
+                	// TODO: Right now remove it when you find it
+                    if (mainMenuBar.dataProvider[j].label == itemModule.label)
+                    {
+                    	mainMenuBar.dataProvider.removeItemAt(j);
+                    }
+                }
+            }
+        }
+	
 		/**
 		 * This method rebuilds the main application menu and should be called
-		 * in case an application module is loaded or unloaded.
+		 * in case an application module is loaded.
 		 * The main menu, could be an MenuBar or any other kind of menu.
 		 */
 		private function refreshMainMenu(module:IApplicationModule):void
