@@ -21,6 +21,8 @@
 package org.openwms.web.flex.client.event
 {
     import com.adobe.cairngorm.control.CairngormEvent;
+    
+    import mx.collections.ArrayCollection;
 
     /**
      * A SwitchScreenEvent.
@@ -36,10 +38,25 @@ package org.openwms.web.flex.client.event
         public static const SHOW_LOCATIONGROUP_VIEW:String = "locationGroupView";
         public static const SHOW_USER_MGMT_VIEW:String = "userManagementView";
         public static const SHOW_TRANSPORTUNIT_VIEW:String = "transportUnitView";
+        
+        public static var eventTypes:Array;
 
         public function SwitchScreenEvent(type:String, bubbles:Boolean = false, cancelable:Boolean = false)
         {
+        	eventTypes = new Array();
             super(type, bubbles, cancelable);
+        }
+        
+        public static function addType(type:String):void
+        {
+        	eventTypes.push(type);
+        }
+        
+        public static function removeType(type:String):void
+        {
+        	var col:ArrayCollection = new ArrayCollection(eventTypes);
+        	col.removeItemAt(eventTypes.indexOf(type));
+        	eventTypes = col.toArray();
         }
 
     }

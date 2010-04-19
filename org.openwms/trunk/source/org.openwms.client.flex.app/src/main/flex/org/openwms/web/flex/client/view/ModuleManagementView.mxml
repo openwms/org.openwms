@@ -99,7 +99,6 @@
             }
             
             private function loadModule():void {
-            trace("m:"+moduleLocator.selectedModule.moduleName);
                 if (moduleLocator.selectedModule != null) {
                     if (moduleLocator.selectedModule.loaded) {
                         moduleLocator.unloadModule(moduleLocator.selectedModule);

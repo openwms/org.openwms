@@ -34,6 +34,7 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 /**
  * A Module.
@@ -48,8 +49,10 @@ import javax.persistence.Table;
         @NamedQuery(name = Module.NQ_FIND_ALL, query = "select m from Module m order by m.startupOrder, m.id"),
         @NamedQuery(name = Module.NQ_FIND_BY_UNIQUE_QUERY, query = "select m from Module m where m.moduleName = ?1") })
 public class Module implements Serializable {
+	
+	private static final long serialVersionUID = 1L;
 
-    /**
+	/**
      * Query to find all {@link Module}s.
      */
     public static final String NQ_FIND_ALL = "Module.findAll";
@@ -73,6 +76,7 @@ public class Module implements Serializable {
     @Column(unique = true, nullable = false)
     private String url;
 
+    @Transient
     private boolean loaded = false;
 
     private boolean loadOnStartup = true;

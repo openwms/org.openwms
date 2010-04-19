@@ -32,12 +32,17 @@ package org.openwms.web.flex.client.control
     {
     	private static var instance:MainController;
     	
+    	/**
+    	 * Constructor as Singleton Enforcer.
+    	 */
         public function MainController(enforcer:SingletonEnforcer):void
         {
             super();
-            setupEventHandler();
         }
 
+        /**
+         * Call to get the Singleton instance.
+         */
         public static function getInstance():MainController
         {
             if (instance == null)
@@ -47,27 +52,37 @@ package org.openwms.web.flex.client.control
             return instance;
         }
 
-        private function setupEventHandler():void
-        {
-        }
-
         /**
          * Register a new command as handler for incoming events. If the event occurrs,
          * the command is executed.
          */
-        public function registerHander(event:String, command:Class):void
+        public function registerHandler(event:String, command:Class):void
         {
-            this.addCommand(event, command);
+        	try {
+                this.getCommand(event);
+                trace("Command "+event+" is already registered, please unregister first!");
+        	}
+        	catch (error:Error) {
+                this.addCommand(event, command);
+                trace("Successfully registered command: "+event);
+        	}
         }
 
         /**
          * Unregister a command. This is useful when an application module is unloaded. In
-         * that case, all commands belonging to that module and that are registered previously
+         * that case, all commands belonging to that module are registered previously
          * must be unregistered again.
          */
         public function unregisterHandler(event:String):void
         {
-            this.removeCommand(event)
+            try {
+                this.getCommand(event);
+                this.removeCommand(event);
+                trace("Successfully unregistered command: "+event);
+            }
+            catch (error:Error) {
+                trace("Command "+event+" is NOT registered, please register first!");
+            }
         }
     }
 }

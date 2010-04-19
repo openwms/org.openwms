@@ -18,26 +18,23 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
-package org.openwms.web.flex.client.event
+package org.openwms.web.flex.client.tms.event
 {
     import com.adobe.cairngorm.control.CairngormEvent;
+    import org.openwms.web.flex.client.event.SwitchScreenEvent;    
+    import mx.collections.ArrayCollection;
 
     /**
-     * An ApplicationEvent.
+     * A TMSSwitchScreenEvent.
      *
      * @author <a href="mailto:openwms@googlemail.com">Heiko Scherrer</a>
-     * @version $Revision: 700 $
+     * @version $Revision: 796 $
      */
-    public class ApplicationEvent extends CairngormEvent
+    public class TMSSwitchScreenEvent extends SwitchScreenEvent
     {
-        public static const LOAD_ALL_MODULES:String = "Load_All_Modules";
-        public static const MODULES_LOADED:String = "Modules_Loaded";
-        public static const MODULE_CONFIG_CHANGED:String = "Module_Config_Changed";
-        public static const MODULE_UNLOADED:String = "Module_Unloaded";
-        public static const SAVE_MODULE:String = "Save_Module";
-        public static const DELETE_MODULE:String = "Delete_Module";
-
-        public function ApplicationEvent(type:String, bubbles:Boolean = true, cancelable:Boolean = false)
+        public static const SHOW_TRANSPORT_ORDERS_VIEW:String = "tmsTransportOrdersView";
+        
+        public function TMSSwitchScreenEvent(type:String, bubbles:Boolean = false, cancelable:Boolean = false)
         {
             super(type, bubbles, cancelable);
         }
