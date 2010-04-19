@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Panel xmlns:mx="http://www.adobe.com/2006/mxml" width="442" height="346" title="Create Transport Units" fontSize="12" creationComplete="init();">
+
+    <mx:Script>
+    	<![CDATA[
+    	
+            import mx.containers.HBox;
+            import mx.controls.Image;
+            import mx.managers.PopUpManager;
+
+            [Embed ("closeButton.png")]
+            private var closeImg:Class;
+    	
+            private function init():void
+            {
+            	barcodeTxt.setFocus();
+                var image:Image = new Image();
+                image.source = closeImg;
+                image.width=16;
+                image.height=16;
+                image.addEventListener(MouseEvent.CLICK, closeDialog);
+                var titleHbox:HBox = new HBox();
+                titleHbox.width=this.titleBar.width;
+                titleHbox.height=this.titleBar.height;
+                titleHbox.addChild(image);
+                this.titleBar.addChild(titleHbox);
+                PopUpManager.centerPopUp(this);
+            }
+            
+            private function closeDialog(event:Event):void
+            {
+                PopUpManager.removePopUp(this);
+            }
+
+    	]]>
+    </mx:Script>
+
+	<mx:Canvas width="422" height="100%">
+		<mx:Label x="9" y="10" text="Barcode" fontSize="24"/>
+		<mx:Label x="9" y="80" text="Type" fontSize="24"/>
+		<mx:TextInput id="barcodeTxt" x="138" y="10" width="273" fontSize="24"/>
+		<mx:TextInput id="tuTypeTxt" x="138" y="80" width="273" fontSize="24"/>
+		<mx:Canvas x="9" y="151" width="402" height="99" backgroundColor="#F1F07C">
+			<mx:Label x="108" y="10" text="Actual Location" fontSize="24"/>
+			<mx:TextInput width="70" fontSize="24" x="10" y="53" text="FFFF"/>
+			<mx:TextInput width="70" fontSize="24" x="88" y="53" text="FFFF"/>
+			<mx:TextInput width="70" fontSize="24" x="166" y="53" text="FFFF"/>
+			<mx:TextInput width="70" fontSize="24" x="244" y="53" text="FFFF"/>
+			<mx:TextInput width="70" fontSize="24" text="FFFF" x="322" y="53"/>
+		</mx:Canvas>
+		<mx:Button id="createBtn" x="10" y="268" label="Create" fontSize="12"/>
+		<mx:Button id="cancelBtn" x="342" y="268" label="Cancel" fontSize="12" click="closeDialog(event)"/>
+	</mx:Canvas>
+</mx:Panel>
