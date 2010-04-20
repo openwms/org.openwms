@@ -45,7 +45,6 @@
                 PopUpManager.centerPopUp(pop1);
             }
 
-
     	]]>
 	</mx:Script>
 

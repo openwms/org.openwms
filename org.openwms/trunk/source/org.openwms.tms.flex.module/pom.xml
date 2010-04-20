@@ -174,7 +174,7 @@
             <groupId>${project.groupId}</groupId>
             <artifactId>org.openwms.common.flex.module</artifactId>
             <version>${project.version}</version>
-            <type>swc</type>
+            <type>swf</type>
         </dependency>
 
 		<dependency>
