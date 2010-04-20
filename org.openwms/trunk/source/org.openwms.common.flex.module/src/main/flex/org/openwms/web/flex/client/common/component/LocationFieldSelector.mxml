@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:VBox xmlns:mx="http://www.adobe.com/2006/mxml" xmlns:comp="org.openwms.web.flex.client.common.component.*">
+
+    <mx:Script>
+        <![CDATA[
+            [Bindable]    
+            public var label2:String;
+        ]]>
+    </mx:Script>
+
+
+
+	<mx:Label text="{label2}" width="70" textAlign="center"/>
+	<comp:CoordinateField />
+	
+</mx:VBox>

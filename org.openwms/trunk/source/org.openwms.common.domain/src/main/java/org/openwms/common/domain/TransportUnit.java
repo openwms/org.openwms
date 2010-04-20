@@ -29,9 +29,11 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
+import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
@@ -108,6 +110,7 @@ public class TransportUnit implements Serializable {
     /**
      * Unique natural key.
      */
+    @Basic(fetch = FetchType.EAGER)
     @Column(name = "BARCODE", unique = true)
     private Barcode barcode;
 

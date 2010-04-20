@@ -87,6 +87,12 @@
 						<version>${granite.version}</version>
 						<type>swc</type>
 					</dependency>
+                    <dependency>
+                        <groupId>${project.groupId}</groupId>
+                        <artifactId>org.openwms.common.domain.as</artifactId>
+                        <version>${project.version}</version>
+                        <type>swc</type>
+                    </dependency>
 				</dependencies>
 				<configuration>
 					<resourceBundlePath>${project.basedir}/src/main/resources</resourceBundlePath>
@@ -201,9 +207,9 @@
 		</dependency>
         <dependency>
             <groupId>${project.groupId}</groupId>
-            <artifactId>org.openwms.common.domain</artifactId>
+            <artifactId>org.openwms.common.domain.as</artifactId>
             <version>${project.version}</version>
-            <scope>provided</scope>
+            <scope>internal</scope>
             <type>swc</type>
         </dependency>
         <dependency>
