@@ -26,8 +26,9 @@
 	<mx:Script>
     	<![CDATA[
     		import org.openwms.tms.domain.order.TransportOrder;
-    		import org.openwms.web.flex.client.common.model.IconLocator;
     		import org.openwms.web.flex.client.tms.model.TMSModelLocator;
+    		import org.openwms.web.flex.client.tms.view.dialogs.CreateTransportOrderDialog;
+            import mx.managers.PopUpManager;
     		[Bindable]
             private var modelLocator:TMSModelLocator = TMSModelLocator.getInstance();
             
@@ -35,16 +36,20 @@
     			//userAddBtn.addChild(IconLocator.iconUserAdd);
     		}
     		
+            private function showCreateTransportOrderDialog():void
+            {
+                var pop1:CreateTransportOrderDialog=CreateTransportOrderDialog(PopUpManager.createPopUp(this, CreateTransportOrderDialog, true));
+                PopUpManager.centerPopUp(pop1);
+            }
     	]]>
 	</mx:Script>
 
 	<mx:VBox x="10" y="10" width="908" height="592">
 		<mx:HBox width="908">
-			<mx:Button id="createTransportOrderBtn" label="Create" />
+			<mx:Button id="createTransportOrderBtn" label="Create" click="showCreateTransportOrderDialog()" />
 			<mx:Button id="cancelTransportOrderBtn" label="Cancel" />
 			<mx:Button id="transportOrderHistoryBtn" label="History" />
             <mx:Button id="redirectTransportOrderBtn" label="Redirect" />
-            <mx:Button id="priorizeTransportOrderBtn" label="Priority" />
             <mx:Button id="stateTransportOrderBtn" label="State" />
 		</mx:HBox>
 		<mx:DataGrid width="100%" height="100%" dataProvider="{modelLocator.allTransportOrders}">

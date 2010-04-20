@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<mx:VBox xmlns:mx="http://www.adobe.com/2006/mxml" xmlns:comp="org.openwms.web.flex.client.common.component.*">
+<mx:VBox xmlns:mx="http://www.adobe.com/2006/mxml" xmlns:comp="org.openwms.web.flex.client.component.*">
 
     <mx:Script>
         <![CDATA[

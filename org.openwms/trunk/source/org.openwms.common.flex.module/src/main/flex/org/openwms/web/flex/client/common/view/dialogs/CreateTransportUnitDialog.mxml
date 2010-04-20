@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<mx:Panel xmlns:mx="http://www.adobe.com/2006/mxml" width="442" height="368" title="Create Transport Units" fontSize="12" creationComplete="init();" xmlns:comp="org.openwms.web.flex.client.common.component.*">
+<mx:Panel xmlns:mx="http://www.adobe.com/2006/mxml" width="442" height="368" title="Create Transport Units" fontSize="12" creationComplete="init();" xmlns:comp="org.openwms.web.flex.client.component.*">
 
     <mx:Script>
     	<![CDATA[
