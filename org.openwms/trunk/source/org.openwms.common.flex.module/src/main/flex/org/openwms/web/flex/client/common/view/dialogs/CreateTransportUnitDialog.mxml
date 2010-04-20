@@ -1,12 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
-<mx:Panel xmlns:mx="http://www.adobe.com/2006/mxml" width="442" height="346" title="Create Transport Units" fontSize="12" creationComplete="init();">
+<mx:Panel xmlns:mx="http://www.adobe.com/2006/mxml" width="442" height="368" title="Create Transport Units" fontSize="12" creationComplete="init();" xmlns:comp="org.openwms.web.flex.client.common.component.*">
 
     <mx:Script>
     	<![CDATA[
+    		import org.openwms.common.domain.values.Barcode;
+    		import org.openwms.common.domain.TransportUnitType;
+    		import org.openwms.common.domain.LocationPK;
+    		import org.openwms.common.domain.Location;
+    		import org.openwms.common.domain.TransportUnit;
     	
             import mx.containers.HBox;
             import mx.controls.Image;
             import mx.managers.PopUpManager;
+            import flash.events.KeyboardEvent;
 
             [Embed ("closeButton.png")]
             private var closeImg:Class;
@@ -24,14 +30,44 @@
                 titleHbox.height=this.titleBar.height;
                 titleHbox.addChild(image);
                 this.titleBar.addChild(titleHbox);
+                this.addEventListener(KeyboardEvent.KEY_DOWN, keyEventHandler);
                 PopUpManager.centerPopUp(this);
             }
             
             private function closeDialog(event:Event):void
             {
+            	this.removeEventListener(KeyboardEvent.KEY_DOWN, keyEventHandler);
                 PopUpManager.removePopUp(this);
             }
+            
+            private function createTransportUnit():void
+            {
+            	var loc:LocationPK = new LocationPK();
+            	loc.area = "AREA";
+            	loc.aisle = "AISLE";
+            	loc.x = "X";
+            	loc.y = "Y";
+            	loc.z = "Z";
+                var actualLocation:Location = new Location();
+                actualLocation.locationId = loc;
+                
+                var tuType:TransportUnitType = new TransportUnitType();
+                tuType.type = tuTypeTxt.text;
+                
+                var barcode:Barcode = new Barcode();
+                barcode.value = barcodeTxt.text;
+            	
+            }
 
+	        private function keyEventHandler(event:KeyboardEvent):void
+	        {
+	        	// ESC
+	            if(event.keyCode == 27)
+	            {
+	               closeDialog(event);
+	               return;
+	            }
+	        }
     	]]>
     </mx:Script>
 
@@ -40,15 +76,11 @@
 		<mx:Label x="9" y="80" text="Type" fontSize="24"/>
 		<mx:TextInput id="barcodeTxt" x="138" y="10" width="273" fontSize="24"/>
 		<mx:TextInput id="tuTypeTxt" x="138" y="80" width="273" fontSize="24"/>
-		<mx:Canvas x="9" y="151" width="402" height="99" backgroundColor="#F1F07C">
+		<mx:Canvas x="9" y="151" width="402" height="132" backgroundColor="#F1F07C">
 			<mx:Label x="108" y="10" text="Actual Location" fontSize="24"/>
-			<mx:TextInput width="70" fontSize="24" x="10" y="53" text="FFFF"/>
-			<mx:TextInput width="70" fontSize="24" x="88" y="53" text="FFFF"/>
-			<mx:TextInput width="70" fontSize="24" x="166" y="53" text="FFFF"/>
-			<mx:TextInput width="70" fontSize="24" x="244" y="53" text="FFFF"/>
-			<mx:TextInput width="70" fontSize="24" text="FFFF" x="322" y="53"/>
+			<comp:LocationSelector x="10" y="53" />
 		</mx:Canvas>
-		<mx:Button id="createBtn" x="10" y="268" label="Create" fontSize="12"/>
-		<mx:Button id="cancelBtn" x="342" y="268" label="Cancel" fontSize="12" click="closeDialog(event)"/>
+		<mx:Button id="createBtn" x="10" y="291" label="Create" fontSize="12" click="createTransportUnit()"/>
+		<mx:Button id="cancelBtn" x="342" y="291" label="Cancel" fontSize="12" click="closeDialog(event)"/>
 	</mx:Canvas>
 </mx:Panel>

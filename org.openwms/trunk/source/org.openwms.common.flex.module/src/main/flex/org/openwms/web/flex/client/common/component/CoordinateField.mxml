@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Canvas xmlns:mx="http://www.adobe.com/2006/mxml">
+	
+	<mx:Script>
+		<![CDATA[
+            
+            import org.openwms.web.flex.client.model.ModelLocator;
+            
+            [Bindable]
+            private var modelLocator:ModelLocator = ModelLocator.getInstance();
+            private var all:Array = modelLocator.allLocations.toArray();
+            private var regEx:RegExp;
+		
+			private function check():void
+			{
+				var i:int =0;
+				var temp:Array = all.filter(filter);
+				inputTxt.text = temp[0];
+			}
+			
+			private function filter(element:*, index:int, arr:Array):Boolean
+			{
+				regEx = new RegExp(inputTxt.text);
+				return (regEx.test(element as String));
+			}
+		]]>
+	</mx:Script>
+	
+	<mx:TextInput id="inputTxt" change="check()" width="70" fontSize="24"/>
+</mx:Canvas>

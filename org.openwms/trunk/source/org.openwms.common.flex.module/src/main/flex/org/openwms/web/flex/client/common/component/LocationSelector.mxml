@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:VBox xmlns:mx="http://www.adobe.com/2006/mxml" xmlns:component="org.openwms.web.flex.client.common.component.*">
+
+    <mx:HBox>
+        <component:LocationFieldSelector label2="AREA" />
+        <component:LocationFieldSelector label2="AISLE"/>
+        <component:LocationFieldSelector label2="X"/>
+        <component:LocationFieldSelector label2="Y"/>
+        <component:LocationFieldSelector label2="Z"/>
+    </mx:HBox>  
+</mx:VBox>
