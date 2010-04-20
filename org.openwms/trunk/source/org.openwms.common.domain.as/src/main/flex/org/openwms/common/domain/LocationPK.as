@@ -23,5 +23,18 @@ package org.openwms.common.domain {
     [Bindable]
     [RemoteClass(alias="org.openwms.common.domain.LocationPK")]
     public class LocationPK extends LocationPKBase {
+    	
+        public function LocationPK(area:String = null, aisle:String = null, x:String = null, y:String = null, z:String = null)
+        {
+            super();
+            if (area != null && aisle != null && x != null && y != null && z != null)
+            {
+	            _area = area;
+	            _aisle = aisle;
+	            _x = x;
+	            _y = y;
+	            _z = z;
+            }
+        }
     }
 }

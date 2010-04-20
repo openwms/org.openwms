@@ -24,6 +24,15 @@ package org.openwms.common.domain.values {
     [RemoteClass(alias="org.openwms.common.domain.values.Barcode")]
     public class Barcode extends BarcodeBase {
     	
+    	public function Barcode(value:String = null):void
+    	{
+    		super();
+            if (value != null)
+            {
+                _value = value;
+            }
+    	}
+    	
         public function toString():String
         {
             return this.value;

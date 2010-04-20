@@ -41,4 +41,7 @@
 <mx:RemoteObject id="userService" destination="userService" showBusyCursor="true" />
 <mx:RemoteObject id="transportUnitService" destination="transportUnitService" showBusyCursor="true" />
 <mx:RemoteObject id="moduleManagementService" destination="moduleManagementService" showBusyCursor="true" />
+
+
+<mx:RemoteObject id="transportService" destination="transportService" showBusyCursor="true" />
 </business:ServiceLocator>

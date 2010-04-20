@@ -24,9 +24,18 @@ package org.openwms.common.domain {
     [RemoteClass(alias="org.openwms.common.domain.Location")]
     public class Location extends LocationBase {
     	
+        public function Location(pk:LocationPK = null)
+        {
+            super();
+            if (pk != null)
+            {
+                _locationId = pk;
+            }
+        }
+
     	public function toString():String
     	{
-    		return this.locationId.area+"/"+this.locationId.aisle+"/"+this.locationId.x+"/"+this.locationId.y+"/"+this.locationId.z;
+    		return _locationId.area+"/"+_locationId.aisle+"/"+_locationId.x+"/"+_locationId.y+"/"+_locationId.z;
     	}
     }
 }

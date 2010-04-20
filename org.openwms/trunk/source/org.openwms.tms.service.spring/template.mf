@@ -1,0 +1,36 @@
+Manifest-Version: 1.0
+Bundle-Vendor: openwms.org
+Bundle-Version: 0.0.1.SNAPSHOT
+Bundle-Name: org.openwms.tms.service.spring
+Bundle-ManifestVersion: 2
+Bundle-SymbolicName: org.openwms.tms.service.spring
+Import-Library: 
+ org.springframework.spring;version="[3.0, 3.1)"
+Import-Bundle: 
+ com.springsource.javax.persistence;version="1.0.0",
+ com.springsource.org.apache.commons.lang;version="2.4.0",
+ org.openwms.common.domain;version="0.0.1.SNAPSHOT",
+ org.openwms.common.integration;version="0.0.1.SNAPSHOT",
+ org.openwms.common.service.api;version="0.0.1.SNAPSHOT",
+ org.openwms.tms.domain;version="0.0.1.SNAPSHOT",
+ org.openwms.tms.integration;version="0.0.1.SNAPSHOT",
+ org.openwms.tms.service.api;version="0.0.1.SNAPSHOT"
+Import-Template: 
+ javax.annotation;version="0"
+Import-Package: 
+ org.springframework.context.weaving;version="[3.0, 3.1)",
+ org.springframework.transaction.aspectj;version="[3.0, 3.1)"
+Excluded-Exports: 
+ org.openwms.common,
+ org.openwms.common.domain.*,
+ org.openwms.common.service.transport*,
+ org.openwms.tms.*,
+ org.openwms.common.service.management.*,
+ org.openwms.common.dao.*
+Excluded-Imports: 
+ org.openwms.common.framework.test.*,
+ org.openwms.common.test.*,
+ org.springframework.test.*,
+ org.junit.*,
+ org.hibernate.*
+ 

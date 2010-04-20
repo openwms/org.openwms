@@ -37,18 +37,6 @@ import org.openwms.tms.domain.order.TransportOrder;
 public interface TransportOrderDao extends GenericDao<TransportOrder, Long> {
 
     /**
-     * Name of the <code>NamedQuery</code> to find all {@link TransportOrder}
-     * Entities.
-     */
-    String NQ_FIND_ALL = "TransportOrder.findAll";
-
-    /**
-     * Name of the <code>NamedQuery</code> to find a {@link TransportOrder} by
-     * the unique technical key.
-     */
-    String NQ_FIND_BY_ID = "TransportOrder.findById";
-
-    /**
      * Get all active {@link TransportOrder}s that have the target destination
      * to this locationGroup.
      * 

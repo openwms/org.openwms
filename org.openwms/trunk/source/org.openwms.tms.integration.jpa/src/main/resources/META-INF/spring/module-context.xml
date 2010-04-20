@@ -42,47 +42,11 @@
     <!-- See ch. 10.2 -->
     <tx:annotation-driven />
 
-	<!-- Entity Manager -->
-	<bean id="entityManagerFactory" class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
-		<property name="persistenceUnitName" value="${jdbc.persistenceUnit}" />
-		<property name="dataSource" ref="dataSource" />
-		<property name="jpaVendorAdapter" ref="jpaVendorAdapter" />
-        <property name="jpaProperties" value="${jdbc.properties}" />
-	</bean>
-
-<!-- 
-    <bean id="cpu" class="org.openwms.common.integration.jpa.CustomPersistenceUnitPostProcessor">
-        <property name="persistenceJarFiles">
-            <list>
-                <value>classpath:/**/*OpenWMS-tms.jar
-                </value>
-                <value>classpath:/**/*OpenWMS-commons.jar
-                </value>
-            </list>
-        </property>
-    </bean>
- -->
-
-	<!-- Transaction Manager -->
-	<bean id="transactionManager" class="org.springframework.orm.jpa.JpaTransactionManager">
-		<property name="entityManagerFactory" ref="entityManagerFactory" />
-	</bean>
-
-	<!-- Used for the exception translation -->
+	<!-- Used for the exception translation 
 	<bean class="org.springframework.dao.annotation.PersistenceExceptionTranslationPostProcessor" />
-
+-->
 	<bean id="oemiv" class="org.springframework.orm.jpa.support.OpenEntityManagerInViewInterceptor" autowire="byName" />
-
-	<bean id="locationDao" class="org.openwms.common.integration.jpa.LocationDaoImpl" />
-
-	<bean id="locationGroupDao" class="org.openwms.common.integration.jpa.LocationGroupDaoImpl" />
-
-	<bean id="transportUnitDao" class="org.openwms.common.integration.jpa.TransportUnitDaoImpl" />
-
-	<bean id="transportUnitTypeDao" class="org.openwms.common.integration.jpa.TransportUnitTypeDaoImpl" />
 
 	<bean id="transportOrderDao" class="org.openwms.tms.integration.jpa.TransportOrderDaoImpl" />
 
-	<bean id="userDao" class="org.openwms.common.integration.jpa.UserDaoImpl" />
-	
 </beans>

@@ -34,8 +34,15 @@
 	<name>${project.artifactId}</name>
 	<properties>
 		<moduleDir>..</moduleDir>
+        <openwms.configuration.version>0.0.1-SNAPSHOT</openwms.configuration.version>
 	</properties>
 	<build>
+        <resources>
+          <resource>
+            <directory>src/main/resources</directory>
+            <filtering>true</filtering>
+          </resource>
+        </resources>
 		<plugins>
 			<plugin>
 				<groupId>com.springsource.bundlor</groupId>

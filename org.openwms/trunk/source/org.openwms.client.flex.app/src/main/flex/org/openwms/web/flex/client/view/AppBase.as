@@ -38,6 +38,7 @@ package org.openwms.web.flex.client.view
     import org.granite.rpc.remoting.mxml.SecureRemoteObject;
     import org.openwms.common.domain.MenuItem;
     import org.openwms.common.domain.Module;
+    import org.openwms.tms.domain.order.TransportOrder;
     import org.openwms.web.flex.client.HashMap;
     import org.openwms.web.flex.client.IApplicationModule;
     import org.openwms.web.flex.client.command.*;
@@ -77,6 +78,7 @@ package org.openwms.web.flex.client.view
 		private var popUpManager:PopUpManager;
 		private var dragManager:DragManager;
 		private var mInfo:IModuleInfo;
+		private static var _link:Array = [org.openwms.tms.domain.order.TransportOrder];
         [Bindable]
 		private var mainController:MainController = MainController.getInstance();
 	    

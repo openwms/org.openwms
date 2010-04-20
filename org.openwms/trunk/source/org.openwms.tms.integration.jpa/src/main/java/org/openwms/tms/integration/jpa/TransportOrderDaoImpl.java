@@ -48,7 +48,7 @@ public class TransportOrderDaoImpl extends AbstractGenericJpaDao<TransportOrder,
      */
     @Override
     protected String getFindAllQuery() {
-        return TransportOrderDao.FIND_ALL;
+        return TransportOrder.NQ_FIND_ALL;
     }
 
     /**
@@ -57,7 +57,7 @@ public class TransportOrderDaoImpl extends AbstractGenericJpaDao<TransportOrder,
      */
     @Override
     protected String getFindByUniqueIdQuery() {
-        return TransportOrderDao.FIND_BY_ID;
+        throw new UnsupportedOperationException("Not allowed to query for TransportOrders by an unique business key!");
     }
 
     /**

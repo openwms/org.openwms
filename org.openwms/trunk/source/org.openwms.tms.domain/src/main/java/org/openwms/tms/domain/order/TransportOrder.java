@@ -29,6 +29,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -37,6 +39,7 @@ import javax.persistence.Version;
 import org.openwms.common.domain.Location;
 import org.openwms.common.domain.LocationGroup;
 import org.openwms.common.domain.TransportUnit;
+import org.openwms.common.domain.system.Message;
 import org.openwms.common.domain.values.Problem;
 import org.openwms.common.exception.InsufficientValueException;
 
@@ -56,9 +59,16 @@ import org.openwms.common.exception.InsufficientValueException;
  */
 @Entity
 @Table(name = "TRANSPORT_ORDER")
+@NamedQueries( {
+        @NamedQuery(name = TransportOrder.NQ_FIND_ALL, query = "select to from TransportOrder to")})
 public class TransportOrder implements Serializable {
 
     private static final long serialVersionUID = 1L;
+
+    /**
+     * Query to find all {@link TransportOrder}s.
+     */
+    public static final String NQ_FIND_ALL = "TransportOrder.findAll";
 
     /**
      * A TRANSPORT_ORDER_STATE - Each {@link TransportOrder} can be in one of

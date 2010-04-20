@@ -36,5 +36,8 @@
 	<artifact type="bundle" name="org.openwms.common.integration.jpa" version="[0.0.1.SNAPSHOT,1.0)"/>
 	<artifact type="bundle" name="org.openwms.common.service.api" version="[0.0.1.SNAPSHOT,1.0)"/>
 	<artifact type="bundle" name="org.openwms.common.service.spring" version="[0.0.1.SNAPSHOT,1.0)"/>
-	<artifact type="bundle" name="org.openwms.zz.client.flex.wrapper" version="[0.0.1.SNAPSHOT,1.0)"/>
+    <artifact type="bundle" name="org.openwms.tms.integration" version="[0.0.1.SNAPSHOT,1.0)"/>
+    <artifact type="bundle" name="org.openwms.tms.integration.jpa" version="[0.0.1.SNAPSHOT,1.0)"/>
+    <artifact type="bundle" name="org.openwms.tms.service.api" version="[0.0.1.SNAPSHOT,1.0)"/>
+    <artifact type="bundle" name="org.openwms.tms.service.spring" version="[0.0.1.SNAPSHOT,1.0)"/>
 </plan>

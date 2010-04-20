@@ -42,21 +42,13 @@
             
             private function createTransportUnit():void
             {
-            	var loc:LocationPK = new LocationPK();
-            	loc.area = "AREA";
-            	loc.aisle = "AISLE";
-            	loc.x = "X";
-            	loc.y = "Y";
-            	loc.z = "Z";
-                var actualLocation:Location = new Location();
-                actualLocation.locationId = loc;
+            	var loc:LocationPK = new LocationPK("AREA","AISLE","X","Y","Z");
+                var actualLocation:Location = new Location(loc);
                 
                 var tuType:TransportUnitType = new TransportUnitType();
                 tuType.type = tuTypeTxt.text;
                 
-                var barcode:Barcode = new Barcode();
-                barcode.value = barcodeTxt.text;
-            	
+                var barcode:Barcode = new Barcode(barcodeTxt.text);
             }
 
 	        private function keyEventHandler(event:KeyboardEvent):void

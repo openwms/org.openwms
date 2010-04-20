@@ -91,6 +91,12 @@
                     </dependency>
                     <dependency>
                         <groupId>${project.groupId}</groupId>
+                        <artifactId>org.openwms.tms.domain.as</artifactId>
+                        <version>${project.version}</version>
+                        <type>swc</type>
+                    </dependency>
+                    <dependency>
+                        <groupId>${project.groupId}</groupId>
                         <artifactId>org.openwms.client.flex.lib</artifactId>
                         <version>${project.version}</version>
                         <type>swc</type>
@@ -171,6 +177,12 @@
 			<version>${project.version}</version>
 			<type>swc</type>
 		</dependency>
+        <dependency>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>org.openwms.tms.domain.as</artifactId>
+            <version>${project.version}</version>
+            <type>swc</type>
+        </dependency>
         <dependency>
             <groupId>${project.groupId}</groupId>
             <artifactId>org.openwms.client.flex.lib</artifactId>
