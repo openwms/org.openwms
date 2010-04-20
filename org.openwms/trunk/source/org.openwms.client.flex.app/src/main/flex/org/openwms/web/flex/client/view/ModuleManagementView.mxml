@@ -47,11 +47,9 @@
                 deleteBtn.enabled = false;
                 enableTextFields(false);
                 traceOut();
-                //new ApplicationEvent(ApplicationEvent.LOAD_ALL_MODULES).dispatch();
             }
             
             private function moduleConfigChanged():void {
-                trace("Module configuration has changed");
                 newBtn.enabled = true;
                 saveBtn.enabled = false;
                 deleteBtn.enabled = false;
@@ -71,7 +69,6 @@
             private function saveModule():void {
                 deleteBtn.enabled = false;
                 saveBtn.enabled = false;
-                trace("Module:"+moduleLocator.selectedModule.moduleName);
                 var e:ApplicationEvent = new ApplicationEvent(ApplicationEvent.SAVE_MODULE);
                 e.data = moduleLocator.selectedModule;
                 e.dispatch();
@@ -81,10 +78,9 @@
             
             private function deleteModule():void {
                 if (moduleLocator.selectedModule != null) {
-                    trace("Delete Module:"+moduleLocator.selectedModule.moduleName);
+                    trace("Delete Module: "+moduleLocator.selectedModule.moduleName);
                     if (!isNaN(moduleLocator.selectedModule.id)) {
                         // Persisted instance
-                        trace("Delete a persistend instance");
                         var e:ApplicationEvent = new ApplicationEvent(ApplicationEvent.DELETE_MODULE);
                         e.data = moduleLocator.selectedModule;
                         e.dispatch();
@@ -127,10 +123,7 @@
             private function onDragComplete(event:DragEvent):void {
                 var e:ApplicationEvent = new ApplicationEvent(ApplicationEvent.SAVE_MODULE);
                 var value:Object = event.dragSource.dataForFormat('items');
-                
-                trace(value);
                 var index:int = modulesGrid.calculateDropIndex(event);
-                trace("Index:"+index);
                 if (value != null) {
                     moduleLocator.selectedModule = getModule(value as Module);
                     moduleLocator.selectedModule.startupOrder = index;

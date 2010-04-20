@@ -28,7 +28,8 @@ package org.openwms.web.flex.client.tms.command
     import mx.rpc.IResponder;
     import mx.rpc.events.ResultEvent;
 
-    import org.openwms.web.flex.client.model.ModelLocator;
+    import org.openwms.web.flex.client.tms.model.TMSModelLocator;
+    import org.openwms.web.flex.client.tms.business.TransportsDelegate;
 
     /**
      * A LoadUsersCommand.
@@ -39,7 +40,7 @@ package org.openwms.web.flex.client.tms.command
     public class LoadTransportOrdersCommand implements ICommand, IResponder
     {
         [Bindable]
-        private var modelLocator:ModelLocator = ModelLocator.getInstance();
+        private var modelLocator:TMSModelLocator = TMSModelLocator.getInstance();
 
         public function LoadTransportOrdersCommand()
         {
@@ -48,24 +49,13 @@ package org.openwms.web.flex.client.tms.command
 
         public function execute(event:CairngormEvent):void
         {
-/*
-            if (modelLocator.allUsers.length == 0)
-            {
-                var delegate:UserDelegate = new UserDelegate(this)
-                delegate.getUsers();
-            }
-            */
+            var delegate:TransportsDelegate = new TransportsDelegate(this)
+            delegate.getAllTransports();
         }
 
         public function result(data:Object):void
         {
-        	/*
-            modelLocator.allUsers = ArrayCollection(data.result);
-            if (modelLocator.allUsers.length > 0)
-            {
-                modelLocator.selectedUser = modelLocator.allUsers.getItemAt(0) as User;
-            }
-            */
+            modelLocator.allTransportOrders = ArrayCollection(data.result);
         }
 
         public function fault(info:Object):void

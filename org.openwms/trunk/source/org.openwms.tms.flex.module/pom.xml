@@ -164,18 +164,6 @@
             <version>${project.version}</version>
             <type>swc</type>
         </dependency>
-		<dependency>
-			<groupId>com.adobe.flex.framework</groupId>
-			<artifactId>flex-framework</artifactId>
-			<version>${flex.version}</version>
-			<type>pom</type>
-		</dependency>
-		<dependency>
-			<groupId>com.adobe.cairngorm</groupId>
-			<artifactId>cairngorm-bin</artifactId>
-			<version>2.2.1</version>
-			<type>swc</type>
-		</dependency>
         <dependency>
             <groupId>${project.groupId}</groupId>
             <artifactId>org.openwms.client.flex.lib</artifactId>
@@ -188,6 +176,19 @@
             <version>${project.version}</version>
             <type>swc</type>
         </dependency>
+
+		<dependency>
+			<groupId>com.adobe.flex.framework</groupId>
+			<artifactId>flex-framework</artifactId>
+			<version>${flex.version}</version>
+			<type>pom</type>
+		</dependency>
+		<dependency>
+			<groupId>com.adobe.cairngorm</groupId>
+			<artifactId>cairngorm-bin</artifactId>
+			<version>2.2.1</version>
+			<type>swc</type>
+		</dependency>
 
 		<dependency>
 			<groupId>org.graniteds</groupId>

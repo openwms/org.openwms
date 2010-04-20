@@ -98,7 +98,6 @@
 						<configuration>
 							<outputDirectory>libs</outputDirectory>
 							<overWriteIfNewer>true</overWriteIfNewer>
-							<includeGroupIds></includeGroupIds>
 							<excludeGroupIds>com.adobe.flex.framework</excludeGroupIds>
 						</configuration>
 					</execution>
@@ -165,6 +164,7 @@
             <version>${project.version}</version>
             <type>swc</type>
         </dependency>
+        
 		<dependency>
 			<groupId>com.adobe.flex.framework</groupId>
 			<artifactId>flex-framework</artifactId>
@@ -177,6 +177,7 @@
 			<version>2.2.1</version>
 			<type>swc</type>
 		</dependency>
+        
 		<dependency>
 			<groupId>org.graniteds</groupId>
 			<artifactId>granite-core-swc</artifactId>

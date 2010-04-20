@@ -27,10 +27,9 @@
     	<![CDATA[
     		import org.openwms.tms.domain.order.TransportOrder;
     		import org.openwms.web.flex.client.common.model.IconLocator;
-    		import org.openwms.web.flex.client.model.ModelLocator;
+    		import org.openwms.web.flex.client.tms.model.TMSModelLocator;
     		[Bindable]
-            private var modelLocator:ModelLocator = ModelLocator.getInstance();
-            private static var tu:TransportOrder = new TransportOrder();
+            private var modelLocator:TMSModelLocator = TMSModelLocator.getInstance();
             
     		public function onStartup():void {
     			//userAddBtn.addChild(IconLocator.iconUserAdd);
@@ -48,7 +47,7 @@
             <mx:Button id="priorizeTransportOrderBtn" label="Priority" />
             <mx:Button id="stateTransportOrderBtn" label="State" />
 		</mx:HBox>
-		<mx:DataGrid width="100%" height="100%" dataProvider="{modelLocator.allTransportUnits}">
+		<mx:DataGrid width="100%" height="100%" dataProvider="{modelLocator.allTransportOrders}">
 			<mx:columns>
 				<mx:DataGridColumn headerText="ID" dataField="id" />
                 <mx:DataGridColumn headerText="State" dataField="state" />

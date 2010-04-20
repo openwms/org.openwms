@@ -31,5 +31,6 @@
 	<osgi:reference id="userService" interface="org.openwms.common.service.management.UserService" />
 	<osgi:reference id="transportUnitService" interface="org.openwms.common.service.TransportUnitService" />
     <osgi:reference id="moduleManagementService" interface="org.openwms.common.service.ModuleManagementService" />
+    <osgi:reference id="transportService" interface="org.openwms.tms.service.TransportOrderService" />
     
 </beans>

@@ -96,7 +96,7 @@ package ${jClass.as3Type.packageName} {
     // Write Private Fields.
 
     for (jProperty in jClass.properties) {%>
-        private var _${jProperty.name}:${jProperty.as3Type.name};<%
+        protected var _${jProperty.name}:${jProperty.as3Type.name};<%
     }
 
     ///////////////////////////////////////////////////////////////////////////

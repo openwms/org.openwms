@@ -33,6 +33,6 @@
     <tx:annotation-driven />
 
     <bean id="transportService" class="org.openwms.tms.service.impl.TransportServiceImpl">
-        <property name="transportUnitDao" ref="transportUnitDao" />
+        <property name="dao" ref="transportOrderDao" />
     </bean>
 </beans>

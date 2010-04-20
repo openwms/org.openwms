@@ -1,38 +1,35 @@
 Manifest-Version: 1.0
 Bundle-Vendor: openwms.org
 Bundle-Version: 0.0.1.SNAPSHOT
-Bundle-Name: org.openwms.common.integration.jpa
+Bundle-Name: org.openwms.tms.integration.jpa
 Bundle-ManifestVersion: 2
-Bundle-SymbolicName: org.openwms.common.integration.jpa
+Bundle-SymbolicName: org.openwms.tms.integration.jpa
 Import-Library: 
- org.springframework.spring;version="[3.0,3.1)"
+ org.springframework.spring;version="[3.0, 3.1)"
 Import-Bundle: 
- com.springsource.javax.persistence;version="[1.0.0,1.0.0]",
- com.springsource.org.eclipse.persistence.jpa;version="[1.0.0,1.0.0]"
+ com.springsource.javax.persistence;version="1.0.0",
+ org.openwms.common.domain;version="0.0.1.SNAPSHOT",
+ org.openwms.common.integration;version="0.0.1.SNAPSHOT",
+ org.openwms.tms.domain;version="0.0.1.SNAPSHOT",
+ org.openwms.tms.integration;version="0.0.1.SNAPSHOT",
+ com.springsource.org.hibernate;version="3.2.6.ga"
 Import-Template: 
- org.openwms.common.domain.*;version="[0.0.1.SNAPSHOT, 0.0.1.SNAPSHOT]",
- org.openwms.common.domain.system.*;version="[0.0.1.SNAPSHOT, 0.0.1.SNAPSHOT]",
- org.openwms.common.domain.values.*;version="[0.0.1.SNAPSHOT, 0.0.1.SNAPSHOT]",
- org.openwms.common.domain.system.usermanagement.*;version="[0.0.1.SNAPSHOT, 0.0.1.SNAPSHOT]",
- org.openwms.tms.domain.*;version="[0.0.1.SNAPSHOT, 0.0.1.SNAPSHOT]",
- org.openwms.common.integration.*;version="[0.0.1.SNAPSHOT, 0.0.1.SNAPSHOT]",
- javax.persistence;version="[1.0.0, 1.0.0]",
- org.apache.commons.lang;version="[2.4.0, 2.4.0]",
- org.apache.commons.logging;version="[1.1.1, 1.1.1]",
- org.apache.commons.dbcp.*;version="[1.2.2.osgi, 1.2.2.osgi]",
- javax.sql;version="0",
- org.aspectj.*; version="0.0.0"
-Import-Package: 
- org.openwms.tms.domain.order;version="[0.0.1.SNAPSHOT, 0.0.1.SNAPSHOT]",
- org.springframework.dao.support;version="[3.0, 3.1)",
- org.springframework.context.weaving;version="[3.0, 3.1)",
- org.springframework.transaction.aspectj;version="[3.0, 3.1)",
- org.aspectj.asm; version="0.0.0",
- org.aspectj.lang; version="0.0.0",
- org.aspectj.runtime; version="0.0.0",
- org.aspectj.runtime.reflect; version="0.0.0"
+ javax.sql;version="0"
 Excluded-Imports: 
  org.openwms.common.framework.test.*,
  org.openwms.common.test.*,
+ org.openwms.tms.test.*,
+ org.springframework.test.*,
+ org.junit.*,
+ junit.framework.*,
+ org.hibernate.*
+Excluded-Exports: 
+ org.openwms.tms.test.*,
+ org.springframework.test.*,
  org.junit.*,
  org.hibernate.*
+Require-Bundle: 
+ com.springsource.org.hibernate,
+ com.springsource.javassist
+Import-Package: 
+ org.hibernate.proxy; version="0.0.0"

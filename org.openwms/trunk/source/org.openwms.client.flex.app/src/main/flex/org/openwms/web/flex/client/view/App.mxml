@@ -68,9 +68,9 @@
 		<mx:HBox width="100%" height="100%" horizontalAlign="center" verticalAlign="middle">
 		<mx:ViewStack id="appViewStack" selectedIndex="{loginView.authenticated ? DisplayUtility.getView(modelLocator.actualView,appViewStack) : DisplayUtility.getView(modelLocator.actualView/*LoginView*/,appViewStack)}" width="100%" height="100%">
             <view:LoginView name="loginView" onLogin="login" cornerRadius="20" borderStyle="solid" alpha="1.0" borderThickness="3"/>
-            <view:EmptyScreenView name="emptyScreenView" />
-            <view:ModuleManagementView name="moduleManagementView" />
- 			<view:UserManagementView name="userManagementView" />
+            <view:EmptyScreenView name="{SwitchScreenEvent.SHOW_STARTSCREEN}" />
+            <view:ModuleManagementView name="{SwitchScreenEvent.SHOW_MODULE_MGMT_VIEW}" />
+ 			<view:UserManagementView name="{SwitchScreenEvent.SHOW_USER_MGMT_VIEW}" />
 		</mx:ViewStack>
         </mx:HBox>
 	</mx:VBox>

@@ -230,6 +230,26 @@
 			<artifactId>org.openwms.tms.domain</artifactId>
 			<version>${project.version}</version>
 		</dependency>
+        <dependency>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>org.openwms.tms.integration</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>org.openwms.tms.integration.jpa</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>org.openwms.tms.service.api</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>org.openwms.tms.service.spring</artifactId>
+            <version>${project.version}</version>
+        </dependency>
 		<!-- Project client dependencies -->
 		<dependency>
 			<groupId>${project.groupId}</groupId>

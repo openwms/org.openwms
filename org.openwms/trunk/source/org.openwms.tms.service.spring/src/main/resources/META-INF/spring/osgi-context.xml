@@ -32,6 +32,6 @@
     <osgi:reference id="transportOrderDao" interface="org.openwms.tms.integration.TransportOrderDao"/>
 	
     <!-- exports -->
-    <osgi:service ref="transportService" interface="org.openwms.tms.service.TransportService"/>
+    <osgi:service ref="transportService" interface="org.openwms.tms.service.TransportOrderService"/>
 
 </beans>
