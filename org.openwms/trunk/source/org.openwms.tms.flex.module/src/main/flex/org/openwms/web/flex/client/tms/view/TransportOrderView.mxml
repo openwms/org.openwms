@@ -21,7 +21,7 @@
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
 -->
-<mx:Canvas xmlns:mx="http://www.adobe.com/2006/mxml" width="100%" height="100%" initialize="onStartup()">
+<mx:Canvas xmlns:mx="http://www.adobe.com/2006/mxml" width="100%" height="100%" initialize="onStartup()" backgroundColor="#C2DAEF">
 
 	<mx:Script>
     	<![CDATA[
@@ -44,28 +44,26 @@
     	]]>
 	</mx:Script>
 
-	<mx:VBox x="10" y="10" width="908" height="592">
-		<mx:HBox width="908">
-			<mx:Button id="createTransportOrderBtn" label="Create" click="showCreateTransportOrderDialog()" />
-			<mx:Button id="cancelTransportOrderBtn" label="Cancel" />
-			<mx:Button id="transportOrderHistoryBtn" label="History" />
-            <mx:Button id="redirectTransportOrderBtn" label="Redirect" />
-            <mx:Button id="stateTransportOrderBtn" label="State" />
-		</mx:HBox>
-		<mx:DataGrid width="100%" height="100%" dataProvider="{modelLocator.allTransportOrders}">
-			<mx:columns>
-				<mx:DataGridColumn headerText="ID" dataField="id" />
-                <mx:DataGridColumn headerText="State" dataField="state" />
-                <mx:DataGridColumn headerText="Priority" dataField="priority" />
-				<mx:DataGridColumn headerText="Transport Unit" dataField="transportUnit.barcode" />
-                <mx:DataGridColumn headerText="Source Location" dataField="sourceLocation" />
-                <mx:DataGridColumn headerText="Target Location" dataField="targetLocation" />
-                <mx:DataGridColumn headerText="Target Location Group" dataField="targetLocationGroup" />
-                <mx:DataGridColumn headerText="Actual Location" dataField="actualLocation" />
-                <mx:DataGridColumn headerText="Created" dataField="creationDate" />
-                <mx:DataGridColumn headerText="Started" dataField="startDate" />
-                <mx:DataGridColumn headerText="Ended" dataField="endDate" />
-			</mx:columns>
-		</mx:DataGrid>
-	</mx:VBox>
+	<mx:HBox width="100%" backgroundAlpha="0.5" backgroundColor="#FFFFFF" x="10" y="10">
+		<mx:Button id="createTransportOrderBtn" label="Create" click="showCreateTransportOrderDialog()" />
+		<mx:Button id="cancelTransportOrderBtn" label="Cancel" />
+		<mx:Button id="transportOrderHistoryBtn" label="History" />
+        <mx:Button id="redirectTransportOrderBtn" label="Redirect" />
+        <mx:Button id="stateTransportOrderBtn" label="State" />
+	</mx:HBox>
+	<mx:DataGrid width="100%" height="100%" dataProvider="{modelLocator.allTransportOrders}" y="40" x="10">
+		<mx:columns>
+			<mx:DataGridColumn headerText="ID" dataField="id" />
+		          <mx:DataGridColumn headerText="State" dataField="state" />
+		          <mx:DataGridColumn headerText="Priority" dataField="priority" />
+			<mx:DataGridColumn headerText="Transport Unit" dataField="transportUnit.barcode" />
+		          <mx:DataGridColumn headerText="Source Location" dataField="sourceLocation" />
+		          <mx:DataGridColumn headerText="Target Location" dataField="targetLocation" />
+		          <mx:DataGridColumn headerText="Target Location Group" dataField="targetLocationGroup" />
+		          <mx:DataGridColumn headerText="Actual Location" dataField="actualLocation" />
+		          <mx:DataGridColumn headerText="Created" dataField="creationDate" />
+		          <mx:DataGridColumn headerText="Started" dataField="startDate" />
+		          <mx:DataGridColumn headerText="Ended" dataField="endDate" />
+		</mx:columns>
+	</mx:DataGrid>
 </mx:Canvas>
