@@ -21,7 +21,7 @@
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
 -->
-<mx:Canvas xmlns:mx="http://www.adobe.com/2006/mxml" width="100%" height="100%" initialize="onStartup()">
+<mx:Canvas xmlns:mx="http://www.adobe.com/2006/mxml" width="100%" height="100%" initialize="onStartup()" backgroundColor="#C2DAEF">
 
 	<mx:Script>
     	<![CDATA[
@@ -48,8 +48,8 @@
     	]]>
 	</mx:Script>
 
-	<mx:VBox x="10" y="10" width="100%" height="592">
-		<mx:HBox width="908">
+	<mx:VBox x="10" y="10" width="100%" height="100%">
+		<mx:HBox backgroundAlpha="0.5" width="100%" backgroundColor="#FFFFFF" horizontalGap="8">
 			<mx:Button id="userAddBtn" label="Add" click="showCreateTransportUnitDialog()"/>
 			<mx:Button id="userSaveBtn" label="Save" />
 			<mx:Button id="userDeleteBtn" label="Delete" />

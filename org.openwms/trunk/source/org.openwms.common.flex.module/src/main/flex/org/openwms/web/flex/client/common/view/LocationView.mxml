@@ -122,9 +122,9 @@
 			field=""/> </mx:series> </mx:PieChart>
 		-->
 	</o:SuperPanel>
-	<mx:Canvas x="10" y="268" width="1260" height="392">
-		<mx:DataGrid id="locationsList" allowMultipleSelection="true" sortableColumns="true" width="100%" height="340"
-			y="52" dataProvider="{modelLocator.allLocations}" itemClick="onRowClick(event)">
+	<mx:Canvas x="10" y="268" width="100%" height="100%">
+		<mx:DataGrid id="locationsList" allowMultipleSelection="true" sortableColumns="true" width="100%"
+			dataProvider="{modelLocator.allLocations}" itemClick="onRowClick(event)" height="100%">
 			<mx:columns>
 				<mx:DataGridColumn dataField="area" labelFunction="locationIdField" editable="false" width="50">
 					<mx:headerRenderer>

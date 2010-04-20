@@ -99,7 +99,7 @@
         ]]>
 	</mx:Script>
 
-	<mx:Tree id="myTree" x="10" y="10" showRoot="false" height="650" width="236" dataProvider="{modelLocator.locationGroupTree}"
+	<mx:Tree id="myTree" x="10" y="10" showRoot="false" height="100%" width="236" dataProvider="{modelLocator.locationGroupTree}"
 		dataDescriptor="{new TreeDataDescriptor()}" labelFunction="locationGroupLabel" change="onTreeClick(event)"></mx:Tree>
 	<mx:Panel width="250" height="250" layout="absolute" x="762" y="10" title="Fill Level">
 		<!--
@@ -130,7 +130,7 @@
 		<mx:Button x="84" y="5" label="Show Locations" />
 		<mx:Button x="205" y="5" label="Show Transports" />
 	</mx:HBox>
-	<mx:Canvas x="254" y="268" width="1016" height="392">
+	<mx:Canvas x="254" y="268" width="100%" height="100%">
 		<mx:DataGrid id="locationsList" allowMultipleSelection="true" sortableColumns="true" width="100%" height="100%"
 			dataProvider="{selectedLocations}">
 			<mx:columns>
