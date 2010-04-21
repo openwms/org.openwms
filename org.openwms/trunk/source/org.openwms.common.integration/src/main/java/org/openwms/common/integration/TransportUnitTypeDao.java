@@ -38,15 +38,4 @@ import org.openwms.common.domain.TransportUnitType;
  */
 public interface TransportUnitTypeDao extends GenericDao<TransportUnitType, String> {
 
-    /**
-     * Name of the <code>NamedQuery</code> to find all {@link TransportUnitType}
-     * Entities.
-     */
-    String NQ_FIND_ALL = "TransportUnitType.findAll";
-
-    /**
-     * Name of the <code>NamedQuery</code> to find a {@link TransportUnitType}
-     * by {@link TransportUnitType#getName()}.
-     */
-    String NQ_FIND_BY_NAME = "TransportUnitType.findByName";
 }

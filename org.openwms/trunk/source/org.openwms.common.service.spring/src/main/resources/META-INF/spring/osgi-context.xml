@@ -31,6 +31,7 @@
 	<osgi:reference id="locationDao" interface="org.openwms.common.integration.LocationDao" />
 	<osgi:reference id="locationGroupDao" interface="org.openwms.common.integration.LocationGroupDao" />
 	<osgi:reference id="transportUnitDao" interface="org.openwms.common.integration.TransportUnitDao" />
+    <osgi:reference id="transportUnitTypeDao" interface="org.openwms.common.integration.TransportUnitTypeDao" />
 	<osgi:reference id="userDao" interface="org.openwms.common.integration.system.usermanagement.UserDao" />
 	<osgi:reference id="moduleDao" interface="org.openwms.common.integration.ModuleDao" />
 

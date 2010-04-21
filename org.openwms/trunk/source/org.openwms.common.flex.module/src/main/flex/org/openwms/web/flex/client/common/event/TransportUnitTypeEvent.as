@@ -4,7 +4,7 @@
  * This file is part of openwms.org.
  *
  * openwms.org is free software: you can redistribute it and/or modify
- * it under the terms of the GNU Lesser General Public License as 
+ * it under the terms of the GNU Lesser General Public License as
  * published by the Free Software Foundation, either version 3 of the
  * License, or (at your option) any later version.
  *
@@ -18,15 +18,24 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
-package org.openwms.common.domain {
+package org.openwms.web.flex.client.common.event
+{
+    import com.adobe.cairngorm.control.CairngormEvent;
 
-    [Bindable]
-    [RemoteClass(alias="org.openwms.common.domain.TransportUnitType")]
-    public class TransportUnitType extends TransportUnitTypeBase {
+    /**
+     * A TransportUnitTypeEvent.
+     *
+     * @author <a href="mailto:openwms@googlemail.com">Heiko Scherrer</a>
+     * @version $Revision: 771 $
+     */
+    public class TransportUnitTypeEvent extends CairngormEvent
+    {
+        public static const LOAD_ALL_TRANSPORT_UNIT_TYPES:String = "LoadAllTransportUnitTypes";
 
-        public function toString()
+        public function TransportUnitTypeEvent(type:String, bubbles:Boolean = false, cancelable:Boolean = false)
         {
-            return this._type;
+            super(type, bubbles, cancelable);
         }
+
     }
 }

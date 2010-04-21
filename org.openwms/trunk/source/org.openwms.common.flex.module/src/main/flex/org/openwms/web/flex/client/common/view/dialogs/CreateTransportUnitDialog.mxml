@@ -3,11 +3,13 @@
 
     <mx:Script>
     	<![CDATA[
+    		import org.openwms.web.flex.client.common.model.CommonModelLocator;
     		import org.openwms.common.domain.values.Barcode;
     		import org.openwms.common.domain.TransportUnitType;
     		import org.openwms.common.domain.LocationPK;
     		import org.openwms.common.domain.Location;
     		import org.openwms.common.domain.TransportUnit;
+            import org.openwms.web.flex.client.common.model.CommonModelLocator;
     	
             import mx.containers.HBox;
             import mx.controls.Image;
@@ -16,6 +18,8 @@
 
             [Embed ("closeButton.png")]
             private var closeImg:Class;
+            [Bindable]
+            private var commonModelLocator:CommonModelLocator = CommonModelLocator.getInstance();
     	
             private function init():void
             {
@@ -67,7 +71,7 @@
 		<mx:Label x="9" y="10" text="Barcode" fontSize="24"/>
 		<mx:Label x="9" y="80" text="Type" fontSize="24"/>
 		<mx:TextInput id="barcodeTxt" x="138" y="10" width="273" fontSize="24"/>
-		<mx:TextInput id="tuTypeTxt" x="138" y="80" width="273" fontSize="24"/>
+		<mx:ComboBox id="tuTypeTxt" x="138" y="80" width="273" fontSize="24" labelField="type" dataProvider="{commonModelLocator.allTransportUnitTypes}"/>
 		<mx:Canvas x="9" y="151" width="402" height="132" backgroundColor="#F1F07C">
 			<mx:Label x="108" y="10" text="Actual Location" fontSize="24"/>
 			<comp:LocationSelector x="10" y="53" />

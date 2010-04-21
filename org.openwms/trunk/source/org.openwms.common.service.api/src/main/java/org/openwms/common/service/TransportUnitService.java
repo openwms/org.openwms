@@ -74,4 +74,10 @@ public interface TransportUnitService<T extends TransportUnit> extends EntitySer
      */
     List<T> getAllTransportUnits();
 
+    /**
+     * Returns an unsorted List of all {@link TransportUnitType}s.
+     * 
+     * @return A list of all {@link TransportUnitType}s
+     */
+    List<TransportUnitType> getAllTransportUnitTypes();
 }

@@ -22,7 +22,6 @@ package org.openwms.web.flex.client.common.business
 {
     import com.adobe.cairngorm.business.ServiceLocator;
 
-    import mx.controls.Alert;
     import mx.rpc.AsyncToken;
     import mx.rpc.IResponder;
 

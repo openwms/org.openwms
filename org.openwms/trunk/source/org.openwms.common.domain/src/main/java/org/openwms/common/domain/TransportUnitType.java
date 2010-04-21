@@ -29,9 +29,13 @@ import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Version;
+
+import org.openwms.common.domain.system.Message;
 
 /**
  * A TransportUnitType - Defines a type for {@link TransportUnit}s
@@ -47,9 +51,21 @@ import javax.persistence.Version;
  */
 @Entity
 @Table(name = "TRANSPORT_UNIT_TYPE")
+@NamedQueries( {
+        @NamedQuery(name = TransportUnitType.NQ_FIND_ALL, query = "select tut from TransportUnitType tut"),
+        @NamedQuery(name = TransportUnitType.NQ_FIND_BY_NAME, query = "select tut from TransportUnitType tut where tut.type = ?1") })
 public class TransportUnitType implements Serializable {
 
     private static final long serialVersionUID = 1L;
+    
+    /**
+     * Query to find all {@link Location}s.
+     */
+    public static final String NQ_FIND_ALL = "TransportUnitType.findAll";
+    /**
+     * Query to find <strong>one</strong> {@link TransportUnitType} by its natural key.
+     */
+    public static final String NQ_FIND_BY_NAME = "TransportUnitType.findByID";
 
     /**
      * Default description of the {@link TransportUnitType}, by default
