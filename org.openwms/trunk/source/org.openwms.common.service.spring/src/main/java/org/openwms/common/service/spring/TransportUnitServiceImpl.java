@@ -52,6 +52,10 @@ public class TransportUnitServiceImpl extends EntityServiceImpl<TransportUnit, L
     @Qualifier("locationDao")
     private GenericDao<Location, Long> locationDao;
 
+    @Autowired
+    @Qualifier("transportUnitTypeDao")
+    private GenericDao<TransportUnitType, Long> transportUnitTypeDao;
+
     /**
      * {@inheritDoc}
      */
@@ -81,6 +85,15 @@ public class TransportUnitServiceImpl extends EntityServiceImpl<TransportUnit, L
     public List<TransportUnit> getAllTransportUnits() {
         logger.debug("GetAllTransportUnits on service called");
         return dao.findAll();
+    }
+    
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    @Transactional(readOnly = true)
+    public List<TransportUnitType> getAllTransportUnitTypes() {
+    	return transportUnitTypeDao.findAll();
     }
 
     /**

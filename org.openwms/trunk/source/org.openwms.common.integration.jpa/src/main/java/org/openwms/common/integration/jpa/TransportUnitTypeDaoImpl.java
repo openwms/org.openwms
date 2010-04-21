@@ -43,7 +43,7 @@ public class TransportUnitTypeDaoImpl extends AbstractGenericJpaDao<TransportUni
      */
     @Override
     protected String getFindAllQuery() {
-        return TransportUnitTypeDao.NQ_FIND_ALL;
+        return TransportUnitType.NQ_FIND_ALL;
     }
 
     /**
@@ -52,7 +52,7 @@ public class TransportUnitTypeDaoImpl extends AbstractGenericJpaDao<TransportUni
      */
     @Override
     protected String getFindByUniqueIdQuery() {
-        return TransportUnitTypeDao.NQ_FIND_BY_NAME;
+        return TransportUnitType.NQ_FIND_BY_NAME;
     }
 
 }

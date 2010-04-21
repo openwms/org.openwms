@@ -29,12 +29,15 @@ package org.openwms.web.flex.client.common.view
 	import org.openwms.web.flex.client.IApplicationModule;
 	import org.openwms.web.flex.client.MenuItemMap;
 	import org.openwms.web.flex.client.common.command.LoadLocationGroupsCommand;
+    import org.openwms.web.flex.client.common.command.LoadTransportUnitTypesCommand;
 	import org.openwms.web.flex.client.common.command.LoadLocationsCommand;
 	import org.openwms.web.flex.client.common.command.ShowLocationGroupCommand;
 	import org.openwms.web.flex.client.common.command.ShowLocationViewCommand;
 	import org.openwms.web.flex.client.common.command.ShowTransportUnitCommand;
 	import org.openwms.web.flex.client.common.event.LoadLocationGroupsEvent;
 	import org.openwms.web.flex.client.common.event.LocationEvent;
+	import org.openwms.web.flex.client.common.event.TransportUnitTypeEvent;
+    import org.openwms.web.flex.client.common.model.CommonModelLocator;
 	import org.openwms.web.flex.client.control.MainController;
 	import org.openwms.web.flex.client.event.SwitchScreenEvent;
 	import org.openwms.web.flex.client.model.ModelLocator;
@@ -50,6 +53,8 @@ package org.openwms.web.flex.client.common.view
 		[Bindable]
 		private var modelLocator:ModelLocator = ModelLocator.getInstance();
         [Bindable]
+        private var commonModelLocator:CommonModelLocator = CommonModelLocator.getInstance();
+        [Bindable]
         public var commonMenuBar:MenuBar;
         [Bindable]
         public var commonViewStack:ViewStack;
@@ -63,6 +68,11 @@ package org.openwms.web.flex.client.common.view
         {
         	super();
         }		
+
+        private function loadAllStaticEntities():void
+        {
+        	new TransportUnitTypeEvent(TransportUnitTypeEvent.LOAD_ALL_TRANSPORT_UNIT_TYPES).dispatch();
+        }
         
 		protected override function initApp():void
 		{
@@ -106,6 +116,7 @@ package org.openwms.web.flex.client.common.view
         public function initializeModule():void
         {
         	bindCommands();
+            loadAllStaticEntities();
         }
 
         public function destroyModule():void
@@ -115,6 +126,7 @@ package org.openwms.web.flex.client.common.view
             mainController.unregisterHandler(SwitchScreenEvent.SHOW_TRANSPORTUNIT_VIEW);
             mainController.unregisterHandler(LoadLocationGroupsEvent.LOAD_ALL_LOCATION_GROUPS);
             mainController.unregisterHandler(LocationEvent.LOAD_ALL_LOCATIONS);
+            mainController.unregisterHandler(TransportUnitTypeEvent.LOAD_ALL_TRANSPORT_UNIT_TYPES);
         }
 
         private function bindCommands():void
@@ -124,6 +136,7 @@ package org.openwms.web.flex.client.common.view
             mainController.registerHandler(SwitchScreenEvent.SHOW_TRANSPORTUNIT_VIEW, ShowTransportUnitCommand);
             mainController.registerHandler(LoadLocationGroupsEvent.LOAD_ALL_LOCATION_GROUPS, LoadLocationGroupsCommand);
             mainController.registerHandler(LocationEvent.LOAD_ALL_LOCATIONS, LoadLocationsCommand);
+            mainController.registerHandler(TransportUnitTypeEvent.LOAD_ALL_TRANSPORT_UNIT_TYPES, LoadTransportUnitTypesCommand);
         }
     }
 }
