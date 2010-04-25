@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Panel xmlns:mx="http://www.adobe.com/2006/mxml" width="600" height="512" title="TransportUnit Details" creationComplete="init()">
+
+    <mx:Script>
+    	<![CDATA[
+    		import mx.managers.PopUpManager;
+    		import org.openwms.web.flex.client.common.model.CommonModelLocator;
+            import org.openwms.web.flex.client.model.ModelLocator;
+    		import mx.collections.ArrayCollection;
+    		import org.openwms.common.domain.TransportUnit;
+    		[Bindable]
+    		private var transportUnit:TransportUnit;
+    		[Bindable]
+    		public var transportUnits:ArrayCollection;
+    		[Bindable]
+    		private var modelLocator:CommonModelLocator = CommonModelLocator.getInstance();
+            [Bindable]
+            private var modelLocator2:ModelLocator = ModelLocator.getInstance();
+    		
+    		private function init():void
+    		{
+                this.addEventListener(KeyboardEvent.KEY_DOWN, keyEventHandler);
+                PopUpManager.centerPopUp(this);
+                if (transportUnits != null && transportUnits.length == 1)
+                {
+                    // Single marked
+                    transportUnit = transportUnits.getItemAt(0) as TransportUnit;
+                }
+                if (transportUnits != null && transportUnits.length > 1)
+                {
+                    // Multiple marked
+                }
+    		}
+    		
+            private function closeDialog(event:Event):void
+            {
+                this.removeEventListener(KeyboardEvent.KEY_DOWN, keyEventHandler);
+                PopUpManager.removePopUp(this);
+            }
+
+    		private function getParent():String
+    		{
+    			if(transportUnit.parent != null)
+    			{
+                    return transportUnit.parent.barcode.toString();
+    			}
+    			return null;
+    		}
+
+            private function keyEventHandler(event:KeyboardEvent):void
+            {
+                // ESC
+                if(event.keyCode == 27)
+                {
+                   closeDialog(event);
+                   return;
+                }
+            }
+    	]]>
+    </mx:Script>
+	<mx:Canvas height="100%" width="100%">
+		<mx:Label x="367" y="10" text="(ID)" id="idLbl"/>
+		<mx:Label x="10" y="10" text="Barcode"/>
+		<mx:Label x="382" y="64" text="by"/>
+		<mx:Label x="10" y="38" text="Actual Location"/>
+		<mx:Label x="367" y="38" text="since"/>
+		<mx:Label x="10" y="64" text="Last inventory check on"/>
+		<mx:Label x="10" y="90" text="Created on"/>
+		<mx:Label x="10" y="116" text="Weight"/>
+		<mx:Label x="10" y="142" text="Stands On (Parent)"/>
+		<mx:Label x="10" y="168" text="State"/>
+		<mx:Label x="10" y="194" text="Target Location"/>
+		<mx:Canvas x="10" y="220" width="560" height="213" backgroundColor="#E1D0D0">
+			<mx:Label x="10" y="10" text="TransportUnit Type" fontWeight="bold"/>
+			<mx:Label x="10" y="90" text="Description"/>
+			<mx:Label x="10" y="36" text="Height"/>
+			<mx:Label x="157" y="36" text="Length"/>
+			<mx:Label x="285" y="36" text="Width" height="19"/>
+			<mx:Label x="10" y="64" text="Weight Tare"/>
+			<mx:Label x="285" y="64" text="Weight max"/>
+			<mx:Label x="285" y="90" text="Compatibility"/>
+			<mx:ComboBox x="159" y="8" id="transportUnitTypeCmb" dataProvider="{modelLocator.allTransportUnitTypes}" />
+			<mx:TextInput x="85" y="34" width="64" id="transportUnitTypeHeightTxt"/>
+			<mx:TextInput x="85" y="62" width="64" id="transportUnitTypeWeightTareTxt"/>
+			<mx:TextInput x="377" y="62" width="64" id="transportUnitTypeWeightMaxTxt"/>
+			<mx:TextInput x="377" y="34" width="64" id="transportUnitTypeWidthTxt"/>
+			<mx:TextInput x="208" y="34" width="64" id="transportUnitTypeLengthTxt"/>
+			<mx:TextArea x="10" y="116" height="85" width="262" id="transportUnitTypeDescriptionTxt"/>
+			<mx:TextArea x="285" y="116" height="85" width="262" id="transportUnitTypeCompatibilityTxt"/>
+		</mx:Canvas>
+		<mx:TextInput x="170" y="8" id="barcodeTxt" text="{transportUnit.barcode}"/>
+		<mx:TextInput x="170" y="140" id="parentTxt" text="{getParent()}"/>
+		<mx:ComboBox x="170" y="36" id="actualLocationCmb" dataProvider="{modelLocator2.allLocations}"/>
+		<mx:ComboBox x="170" y="166" id="stateCmb" />
+		<mx:ComboBox x="170" y="192" id="targetLocationCmb" dataProvider="{modelLocator2.allLocations}"/>
+		<mx:DateField x="420" y="36" id="sinceDt" text="{transportUnit.actualLocationDate}" width="150"/>
+		<mx:DateField x="170" y="62" id="invDt" text="{transportUnit.inventoryDate}" width="100"/>
+		<mx:DateField x="170" y="88" id="createdDt" text="{transportUnit.creationDate}" width="100"/>
+		<mx:Label x="420" y="64" id="invLbl" text="{transportUnit.inventoryUser}"/>
+		<mx:Label x="170" y="116" id="weightLbl" width="100"/>
+		<mx:CheckBox x="289" y="114" label="is empty" id="emptyChk"/>
+		<mx:HBox x="10" y="441" width="100%" verticalAlign="middle" horizontalAlign="center">
+			<mx:Button label="Save" id="saveBtn"/>
+			<mx:Button label="Cancel" id="cancelBtn"/>
+		</mx:HBox>
+	</mx:Canvas>
+</mx:Panel>

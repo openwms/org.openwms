@@ -25,14 +25,23 @@
 
 	<mx:Script>
     	<![CDATA[
+    		import flash.events.MouseEvent;
+    		import mx.collections.ArrayCollection;
+    		import org.openwms.web.flex.client.common.event.TransportUnitEvent;
+    		import mx.controls.Alert;
     		import org.openwms.web.flex.client.common.model.IconLocator;
     		import org.openwms.common.domain.TransportUnit;
     		import org.openwms.web.flex.client.model.ModelLocator;
+            import org.openwms.web.flex.client.common.model.CommonModelLocator;
     		import org.openwms.web.flex.client.common.view.dialogs.CreateTransportUnitDialog;
+    		import org.openwms.web.flex.client.common.view.dialogs.ConfirmDeletionDialog;
+            import org.openwms.web.flex.client.common.view.dialogs.TransportUnitDetailsDialog;
     		import mx.managers.PopUpManager;
     		
     		[Bindable]
             private var modelLocator:ModelLocator = ModelLocator.getInstance();
+            [Bindable]
+            private var modelLocator2:CommonModelLocator = CommonModelLocator.getInstance();
             private static var tu:TransportUnit = new TransportUnit();
             
     		public function onStartup():void {
@@ -41,26 +50,62 @@
     		
             private function showCreateTransportUnitDialog():void
             {
-                var pop1:CreateTransportUnitDialog=CreateTransportUnitDialog(PopUpManager.createPopUp(this, CreateTransportUnitDialog, true));
-                PopUpManager.centerPopUp(pop1);
+                var pop:CreateTransportUnitDialog = CreateTransportUnitDialog(PopUpManager.createPopUp(this, CreateTransportUnitDialog, true));
+                PopUpManager.centerPopUp(pop);
+            }
+            
+            private function deleteTransportUnitDialog():void
+            {
+                if (transportUnitsGrid.selectedIndices.length == 0)
+                {
+                    Alert.show("Please select at least one TransportUnit to delete");
+                    return;                	
+                }
+                var pop:ConfirmDeletionDialog = ConfirmDeletionDialog(PopUpManager.createPopUp(this, ConfirmDeletionDialog, true));
+                pop.items = new ArrayCollection(transportUnitsGrid.selectedItems);
+                PopUpManager.centerPopUp(pop);
+            }
+            
+            private function deleteTransportUnit(event:Event):void
+            {
+            	var e:TransportUnitEvent = new TransportUnitEvent(TransportUnitEvent.DELETE_TRANSPORT_UNIT);
+            	e.data = transportUnitsGrid.selectedItems;
+            	e.dispatch();
+            }
+            
+            private function showDetails():void
+            {
+                var pop:TransportUnitDetailsDialog = TransportUnitDetailsDialog(PopUpManager.createPopUp(this, TransportUnitDetailsDialog, false));
+                pop.transportUnits = new ArrayCollection(transportUnitsGrid.selectedItems);
+                PopUpManager.centerPopUp(pop);            	
             }
 
     	]]>
 	</mx:Script>
 
 	<mx:VBox x="10" y="10" width="100%" height="100%">
-		<mx:HBox backgroundAlpha="0.5" width="100%" backgroundColor="#FFFFFF" horizontalGap="8">
-			<mx:Button id="userAddBtn" label="Add" click="showCreateTransportUnitDialog()"/>
-			<mx:Button id="userSaveBtn" label="Save" />
-			<mx:Button id="userDeleteBtn" label="Delete" />
-			<mx:Button id="createTransportBtn" label="Create Transport" />
-			<mx:Button id="transportsBtn" label="Transports" />
-			<mx:Button id="historyBtn" label="History" />
+        <mx:Grid>
+            <mx:GridRow height="100%">
+                <mx:GridItem horizontalAlign="left" verticalAlign="middle">
+                    <mx:Label text="Transport Units" fontWeight="bold" fontStyle="normal" fontSize="14" color="#207C2F"/>
+                </mx:GridItem>
+                <mx:GridItem horizontalAlign="right" verticalAlign="middle">
+                    <mx:Label id="messageLbl"  color="#FB3232" fontSize="12" text="TransportUnits deleted" fontStyle="italic"/>
+                </mx:GridItem>
+            </mx:GridRow>
+        </mx:Grid>
+		<mx:HBox backgroundAlpha="0.5" backgroundColor="#FFFFFF" horizontalGap="8" width="100%">
+			<mx:Button id="transportUnitCreateBtn" label="Create" click="showCreateTransportUnitDialog()"/>
+			<mx:Button id="transportUnitDeleteBtn" label="Delete" click="deleteTransportUnitDialog()"/>
+			<mx:Button id="transportUnitDetailsBtn" label="Details" click="showDetails()"/>
+			<mx:Button id="transportUnitHistoryBtn0" label="History" />
 		</mx:HBox>
-		<mx:DataGrid width="100%" height="100%" dataProvider="{modelLocator.allTransportUnits}">
+		<mx:DataGrid id="transportUnitsGrid" width="100%" height="607" doubleClickEnabled="true" doubleClick="showDetails()" allowMultipleSelection="true" dataProvider="{modelLocator.allTransportUnits}">
 			<mx:columns>
-				<mx:DataGridColumn headerText="Barcode" dataField="barcode.value" />
-				<mx:DataGridColumn headerText="Actual Location" dataField="actualLocation" />
+				<mx:DataGridColumn headerText="Barcode" dataField="barcode" />
+                <mx:DataGridColumn headerText="Type" dataField="transportUnitType" />
+                <mx:DataGridColumn headerText="State" dataField="state" />
+				<mx:DataGridColumn headerText="Current Location" dataField="actualLocation" />
                 <mx:DataGridColumn headerText="Created on" dataField="creationDate" />
                 <mx:DataGridColumn headerText="Last Inventory" dataField="inventoryDate" />
                 <mx:DataGridColumn headerText="Inventory User" dataField="inventoryUser.username" />

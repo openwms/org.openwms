@@ -18,35 +18,26 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
-package org.openwms.web.flex.client.util
+package org.openwms.web.flex.client.common.event
 {
-	import mx.containers.ViewStack;
-	import mx.core.ComponentDescriptor;
-	import mx.collections.ArrayCollection;
-	
+    import com.adobe.cairngorm.control.CairngormEvent;
 
     /**
-     * A DisplayUtility.
+     * A TransportUnitEvent.
      *
      * @author <a href="mailto:openwms@googlemail.com">Heiko Scherrer</a>
      * @version $Revision: 700 $
      */
-	public final class DisplayUtility
-	{
-		public function DisplayUtility()
-		{
-		}
-        
-        public static function getView(viewId:String, viewStack:ViewStack):int
+    public class TransportUnitEvent extends CairngormEvent
+    {
+        public static const LOAD_TRANSPORT_UNITS:String = "Load_TransportUnits";
+        public static const CREATE_TRANSPORT_UNIT:String = "Create_TransportUnit";
+        public static const DELETE_TRANSPORT_UNIT:String = "Delete_TransportUnit";
+
+        public function TransportUnitEvent(type:String, bubbles:Boolean = true, cancelable:Boolean = false)
         {
-        	trace("tt:"+viewStack.getChildByName(viewId));
-        	trace("tt:"+viewStack.getChildIndex(viewStack.getChildByName(viewId)));
-            return viewStack.getChildIndex(viewStack.getChildByName(viewId));
+            super(type, bubbles, cancelable);
         }
-        
-        public static function getListOfValues(list:ArrayCollection, name:String):ArrayCollection
-        {
-            return null;	
-        }
-	}
+
+    }
 }

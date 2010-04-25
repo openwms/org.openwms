@@ -18,35 +18,25 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
-package org.openwms.web.flex.client.util
+package org.openwms.web.flex.client.factory
 {
-	import mx.containers.ViewStack;
-	import mx.core.ComponentDescriptor;
-	import mx.collections.ArrayCollection;
+	import org.openwms.common.domain.Location;
+	import org.openwms.common.domain.LocationPK;
+	import org.openwms.web.flex.client.component.LocationSelector;
 	
-
     /**
-     * A DisplayUtility.
+     * A DOFactory.
      *
      * @author <a href="mailto:openwms@googlemail.com">Heiko Scherrer</a>
      * @version $Revision: 700 $
      */
-	public final class DisplayUtility
-	{
-		public function DisplayUtility()
-		{
-		}
-        
-        public static function getView(viewId:String, viewStack:ViewStack):int
+    public class DOFactory
+    {
+
+        public static function newLocation(s:String):Location
         {
-        	trace("tt:"+viewStack.getChildByName(viewId));
-        	trace("tt:"+viewStack.getChildIndex(viewStack.getChildByName(viewId)));
-            return viewStack.getChildIndex(viewStack.getChildByName(viewId));
+            return new Location(new LocationPK(s, s, s, s, s));
         }
-        
-        public static function getListOfValues(list:ArrayCollection, name:String):ArrayCollection
-        {
-            return null;	
-        }
-	}
+
+    }
 }

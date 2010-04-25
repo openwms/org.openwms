@@ -11,6 +11,5 @@
 
 
 	<mx:Label text="{label2}" width="70" textAlign="center"/>
-	<comp:CoordinateField />
 	
 </mx:VBox>

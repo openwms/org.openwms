@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Panel xmlns:mx="http://www.adobe.com/2006/mxml" width="594" height="358" creationComplete="init();" title="Delete TransportUnits">
+
+    <mx:Script>
+    	<![CDATA[
+    		import org.openwms.common.domain.TransportUnit;
+    		import mx.controls.listClasses.ListData;
+            import mx.collections.ArrayCollection;
+            import mx.managers.PopUpManager;
+            import flash.events.KeyboardEvent;
+            [Bindable]
+            public var items:ArrayCollection;
+
+            private function init():void
+            {
+                deleteBtn.setFocus();
+                this.addEventListener(KeyboardEvent.KEY_DOWN, keyEventHandler);
+                PopUpManager.centerPopUp(this);
+            }
+
+            private function closeDialog(event:Event):void
+            {
+                this.removeEventListener(KeyboardEvent.KEY_DOWN, keyEventHandler);
+                PopUpManager.removePopUp(this);
+            }
+
+            private function keyEventHandler(event:KeyboardEvent):void
+            {
+                // ESC
+                if(event.keyCode == 27)
+                {
+                   closeDialog(event);
+                   return;
+                }
+            }
+            
+            private function formatFunction(item:TransportUnit):String
+            {
+                return item.transportUnitType+" with Barcode "+item.barcode+" on Location "+item.actualLocation;
+            }
+    	]]>
+    </mx:Script>
+	<mx:Canvas width="100%" height="100%">
+		<mx:Label text="Do you want to delete the selected Transport Units?" fontSize="24" textAlign="center" width="554" x="10" y="10"/>
+		<mx:List  width="554" height="225" labelFunction="formatFunction" dataProvider="{items}" enabled="false" alternatingItemColors="[#F1F07C, #FFFE9D]" y="53" x="10"/>
+		<mx:HBox width="554" horizontalAlign="center" x="10" y="286">
+			<mx:Button id="deleteBtn" label="Delete" fontSize="12"/>
+			<mx:Button id="cancelBtn" label="Cancel" click="closeDialog(event)" fontSize="12"/>
+		</mx:HBox>
+	</mx:Canvas>
+</mx:Panel>

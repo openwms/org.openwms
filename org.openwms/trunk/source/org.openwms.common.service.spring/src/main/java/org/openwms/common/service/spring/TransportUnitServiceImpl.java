@@ -32,6 +32,7 @@ import org.openwms.common.service.TransportUnitService;
 import org.openwms.common.service.exception.ServiceException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -63,10 +64,10 @@ public class TransportUnitServiceImpl extends EntityServiceImpl<TransportUnit, L
     public TransportUnit createTransportUnit(Barcode barcode, TransportUnitType transportUnitType,
             LocationPK actualLocation) {
         TransportUnit transportUnit = dao.findByUniqueId(barcode);
-        Location location = locationDao.findByUniqueId(actualLocation);
         if (transportUnit != null) {
-            throw new ServiceException("TransportUnit with id " + barcode + " still exists");
+            throw new ServiceException("TransportUnit with id " + barcode + " already exists");
         }
+        Location location = locationDao.findByUniqueId(actualLocation);
         if (location == null) {
             throw new ServiceException("Location " + actualLocation + " doesn't exists");
         }
@@ -120,5 +121,29 @@ public class TransportUnitServiceImpl extends EntityServiceImpl<TransportUnit, L
         // + barcode + " to location "
         // + newLocationPk, e);
         // }
+    }
+    
+    @Override
+    public void deleteTransportUnits(List<TransportUnit> transportUnits) {
+    	if (transportUnits != null && transportUnits.size() > 0) {
+        	Exception failure = null;
+    		for (TransportUnit tu : transportUnits) {
+				failure = delete(tu);
+			}
+    		if (null != failure) {
+    			throw new ServiceException("Could not delete at least one TransportUnit", failure);
+    		}
+    	} else {
+    		logger.warn("No selected TransportUnits to delete");
+    	}
+    }
+    
+    private Exception delete(TransportUnit tu) {
+    	try {
+			remove(tu);
+			return null;
+		} catch (DataAccessException dae) {
+			return dae;
+		}
     }
 }

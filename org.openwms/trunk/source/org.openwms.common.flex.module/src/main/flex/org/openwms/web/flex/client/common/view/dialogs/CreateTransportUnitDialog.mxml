@@ -1,11 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
-<mx:Panel xmlns:mx="http://www.adobe.com/2006/mxml" width="442" height="368" title="Create Transport Units" fontSize="12" creationComplete="init();" xmlns:comp="org.openwms.web.flex.client.component.*">
+<mx:Panel xmlns:mx="http://www.adobe.com/2006/mxml" width="442" height="358" title="Create Transport Units" fontSize="12" creationComplete="init();" xmlns:comp="org.openwms.web.flex.client.component.*">
 
     <mx:Script>
     	<![CDATA[
+    		import org.openwms.web.flex.client.model.ModelLocator;
+    		import org.openwms.web.flex.client.component.LocationSelector;
+    		import org.openwms.web.flex.client.factory.DOFactory;
+    		import org.openwms.web.flex.client.common.command.CreateTransportUnitCommand;
     		import org.openwms.web.flex.client.common.model.CommonModelLocator;
+            import org.openwms.web.flex.client.common.event.TransportUnitEvent;
     		import org.openwms.common.domain.values.Barcode;
     		import org.openwms.common.domain.TransportUnitType;
+            import org.openwms.common.domain.TransportUnit;
     		import org.openwms.common.domain.LocationPK;
     		import org.openwms.common.domain.Location;
     		import org.openwms.common.domain.TransportUnit;
@@ -20,6 +26,8 @@
             private var closeImg:Class;
             [Bindable]
             private var commonModelLocator:CommonModelLocator = CommonModelLocator.getInstance();
+            [Bindable]
+            public var modelLocator:ModelLocator = ModelLocator.getInstance();
     	
             private function init():void
             {
@@ -46,13 +54,18 @@
             
             private function createTransportUnit():void
             {
-            	var loc:LocationPK = new LocationPK("AREA","AISLE","X","Y","Z");
-                var actualLocation:Location = new Location(loc);
-                
+                var actualLocation:Location = locationCmb.selectedItem as Location;
                 var tuType:TransportUnitType = new TransportUnitType();
                 tuType.type = tuTypeTxt.text;
                 
                 var barcode:Barcode = new Barcode(barcodeTxt.text);
+                var transportUnit:TransportUnit = new TransportUnit();
+                transportUnit.actualLocation = actualLocation;
+                transportUnit.barcode = barcode;
+                transportUnit.transportUnitType = tuType;
+                var event:TransportUnitEvent = new TransportUnitEvent(TransportUnitEvent.CREATE_TRANSPORT_UNIT);
+                event.data = transportUnit;
+                event.dispatch();
             }
 
 	        private function keyEventHandler(event:KeyboardEvent):void
@@ -72,11 +85,11 @@
 		<mx:Label x="9" y="80" text="Type" fontSize="24"/>
 		<mx:TextInput id="barcodeTxt" x="138" y="10" width="273" fontSize="24"/>
 		<mx:ComboBox id="tuTypeTxt" x="138" y="80" width="273" fontSize="24" labelField="type" dataProvider="{commonModelLocator.allTransportUnitTypes}"/>
-		<mx:Canvas x="9" y="151" width="402" height="132" backgroundColor="#F1F07C">
+		<mx:Canvas x="9" y="151" width="402" height="109" backgroundColor="#F1F07C">
 			<mx:Label x="108" y="10" text="Actual Location" fontSize="24"/>
-			<comp:LocationSelector x="10" y="53" />
+			<comp:SuggestComboBox id="locationCmb" width="382" fontSize="24" dataProvider="{modelLocator.allLocations}" x="10" y="60"/>
 		</mx:Canvas>
-		<mx:Button id="createBtn" x="10" y="291" label="Create" fontSize="12" click="createTransportUnit()"/>
-		<mx:Button id="cancelBtn" x="342" y="291" label="Cancel" fontSize="12" click="closeDialog(event)"/>
+		<mx:Button id="createBtn" x="10" y="280" label="Create" fontSize="12" click="createTransportUnit()"/>
+		<mx:Button id="cancelBtn" x="342" y="280" label="Cancel" fontSize="12" click="closeDialog(event)"/>
 	</mx:Canvas>
 </mx:Panel>

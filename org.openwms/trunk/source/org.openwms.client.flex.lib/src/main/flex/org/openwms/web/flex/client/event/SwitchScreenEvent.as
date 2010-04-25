@@ -37,7 +37,6 @@ package org.openwms.web.flex.client.event
         public static const SHOW_LOCATION_VIEW:String = "locationView";
         public static const SHOW_LOCATIONGROUP_VIEW:String = "locationGroupView";
         public static const SHOW_USER_MGMT_VIEW:String = "userManagementView";
-        public static const SHOW_TRANSPORTUNIT_VIEW:String = "transportUnitView";
         
         public static var eventTypes:Array;
 

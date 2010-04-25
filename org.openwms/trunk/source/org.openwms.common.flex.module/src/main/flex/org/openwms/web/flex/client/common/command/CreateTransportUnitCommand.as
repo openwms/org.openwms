@@ -18,7 +18,7 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
-package org.openwms.web.flex.client.command
+package org.openwms.web.flex.client.common.command
 {
     import com.adobe.cairngorm.commands.ICommand;
     import com.adobe.cairngorm.control.CairngormEvent;
@@ -26,44 +26,40 @@ package org.openwms.web.flex.client.command
     import mx.controls.Alert;
     import mx.rpc.IResponder;
     import mx.rpc.events.FaultEvent;
-    import mx.rpc.events.ResultEvent;
     
-    import org.openwms.common.domain.Module;
-    import org.openwms.web.flex.client.business.ModulesDelegate;
-    import org.openwms.web.flex.client.module.ModuleLocator;
+    import org.openwms.common.domain.TransportUnit;
+    import org.openwms.web.flex.client.common.business.TransportUnitDelegate;
+    import org.openwms.web.flex.client.common.event.CommonSwitchScreenEvent;
 
     /**
-     * A SaveModuleCommand.
+     * A CreateTransportUnitCommand.
      *
      * @author <a href="mailto:openwms@googlemail.com">Heiko Scherrer</a>
      * @version $Revision: 700 $
      */
-    public class SaveModuleCommand implements IResponder, ICommand
+    public class CreateTransportUnitCommand implements IResponder, ICommand
     {
 
-        public function SaveModuleCommand()
+        public function CreateTransportUnitCommand()
         {
             super();
         }
 
         public function result(data:Object):void
         {
-            var module:Module = (data as ResultEvent).result as Module;
-            var moduleLocator:ModuleLocator = ModuleLocator.getInstance();
-            moduleLocator.addModule(module);
-            moduleLocator.selectedModule = module;
+        	new CommonSwitchScreenEvent(CommonSwitchScreenEvent.SHOW_TRANSPORTUNIT_VIEW).dispatch();
         }
 
         public function fault(info:Object):void
         {
             var fault:FaultEvent = info as FaultEvent;
-            Alert.show("Could not save the module");
+            Alert.show("Could not create TransportUnit");
         }
 
         public function execute(event:CairngormEvent):void
         {
-            var delegate:ModulesDelegate = new ModulesDelegate(this)
-            delegate.saveModule(event.data as Module);
+            var delegate:TransportUnitDelegate = new TransportUnitDelegate(this)
+            delegate.createTransportUnit(event.data as TransportUnit);
         }
 
     }
