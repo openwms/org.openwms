@@ -65,7 +65,7 @@ public class Barcode implements Serializable {
     /**
      * Define whether to use character padding or not.
      */
-    private static boolean padded = false;
+    private static boolean padded = true;
 
     /**
      * Defines a character used for padding.<br>
@@ -73,12 +73,12 @@ public class Barcode implements Serializable {
      * <code>length</code> the rest will be filled with <code>padder</code>
      * characters.
      */
-    private static char padder;
+    private static char padder = '0';
 
     /**
      * Defines the maximum length of characters.
      */
-    private static int length;
+    private static int length = 16;
 
     /**
      * The alignment of the Barcode. Could be set to {@link BARCODE_ALIGN}.
@@ -113,6 +113,10 @@ public class Barcode implements Serializable {
      *            The value of the Barcode as String
      */
     public Barcode(String value) {
+    	adjustBarcode(value);
+    }
+    
+    private void adjustBarcode(String value) {
         if (value == null) {
             throw new IllegalArgumentException("Cannot create a barcode without value");
         }
@@ -122,6 +126,7 @@ public class Barcode implements Serializable {
         } else {
             this.value = value;
         }
+    	
     }
 
     /**
@@ -191,6 +196,14 @@ public class Barcode implements Serializable {
         return value;
     }
 
+    /**
+     * Set the Barcode value.
+     * 
+     * @param value The value to set
+     */
+    public void setValue(String value) {
+    	adjustBarcode(value);
+	}
     /**
      * Get the length.
      * 

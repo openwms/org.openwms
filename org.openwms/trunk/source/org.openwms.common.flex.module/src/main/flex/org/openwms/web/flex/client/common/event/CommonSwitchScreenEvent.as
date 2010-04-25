@@ -18,35 +18,26 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
-package org.openwms.web.flex.client.util
+package org.openwms.web.flex.client.common.event
 {
-	import mx.containers.ViewStack;
-	import mx.core.ComponentDescriptor;
-	import mx.collections.ArrayCollection;
-	
+    import com.adobe.cairngorm.control.CairngormEvent;
+    import org.openwms.web.flex.client.event.SwitchScreenEvent;    
+    import mx.collections.ArrayCollection;
 
     /**
-     * A DisplayUtility.
+     * A CommonSwitchScreenEvent.
      *
      * @author <a href="mailto:openwms@googlemail.com">Heiko Scherrer</a>
-     * @version $Revision: 700 $
+     * @version $Revision: 796 $
      */
-	public final class DisplayUtility
-	{
-		public function DisplayUtility()
-		{
-		}
+    public class CommonSwitchScreenEvent extends SwitchScreenEvent
+    {
+        public static const SHOW_TRANSPORTUNIT_VIEW:String = "transportUnitView";
         
-        public static function getView(viewId:String, viewStack:ViewStack):int
+        public function CommonSwitchScreenEvent(type:String, bubbles:Boolean = false, cancelable:Boolean = false)
         {
-        	trace("tt:"+viewStack.getChildByName(viewId));
-        	trace("tt:"+viewStack.getChildIndex(viewStack.getChildByName(viewId)));
-            return viewStack.getChildIndex(viewStack.getChildByName(viewId));
+            super(type, bubbles, cancelable);
         }
-        
-        public static function getListOfValues(list:ArrayCollection, name:String):ArrayCollection
-        {
-            return null;	
-        }
-	}
+
+    }
 }

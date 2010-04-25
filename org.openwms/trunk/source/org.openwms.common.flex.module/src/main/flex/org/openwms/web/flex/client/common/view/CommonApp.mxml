@@ -27,6 +27,7 @@
     <mx:Script>
     	<![CDATA[
     		import org.openwms.web.flex.client.event.SwitchScreenEvent;
+    		import org.openwms.web.flex.client.common.event.CommonSwitchScreenEvent;
     		import org.openwms.web.flex.client.model.ModelLocator;
     	]]>
     </mx:Script>
@@ -36,7 +37,7 @@
             <mx:MenuBar id="commonMenuBar" labelField="@label">
                 <mx:XMLList>
                     <menuitem label="Stock Configuration" targetPos="2">
-                        <menuitem label="Transport Units" action="{SwitchScreenEvent.SHOW_TRANSPORTUNIT_VIEW}" />
+                        <menuitem label="Transport Units" action="{CommonSwitchScreenEvent.SHOW_TRANSPORTUNIT_VIEW}" />
                         <menuitem label="Locations" action="{SwitchScreenEvent.SHOW_LOCATION_VIEW}" />
                         <menuitem label="Users" action="{SwitchScreenEvent.SHOW_USER_MGMT_VIEW}" />
                         <menuitem label="Location Groups" action="{SwitchScreenEvent.SHOW_LOCATIONGROUP_VIEW}" />

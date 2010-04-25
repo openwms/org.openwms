@@ -42,6 +42,7 @@ import org.openwms.common.domain.TransportUnit;
 import org.openwms.common.domain.system.Message;
 import org.openwms.common.domain.values.Problem;
 import org.openwms.common.exception.InsufficientValueException;
+import org.openwms.tms.domain.values.PriorityLevel;
 
 /**
  * A TransportOrder.
@@ -111,7 +112,7 @@ public class TransportOrder implements Serializable {
      * An order with high priority will be processed faster than lower ones.
      */
     @Column(name = "PRIORITY")
-    private short priority = 0;
+    private String priority = PriorityLevel.medium;
 
     /**
      * Timestamp when the {@link TransportOrder} was started.
@@ -209,18 +210,17 @@ public class TransportOrder implements Serializable {
      * 
      * @return The priority
      */
-    public short getPriority() {
+    public String getPriority() {
         return this.priority;
     }
 
     /**
-     * Set the priority level of this {@link TransportOrder}. The lower the
-     * value the lower the priority.
+     * Set the priority level of this {@link TransportOrder}.
      * 
      * @param priority
      *            The priority to set
      */
-    public void setPriority(short priority) {
+    public void setPriority(String priority) {
         this.priority = priority;
     }
 

@@ -28,17 +28,22 @@ package org.openwms.web.flex.client.common.view
 	import org.openwms.web.flex.client.HashMap;
 	import org.openwms.web.flex.client.IApplicationModule;
 	import org.openwms.web.flex.client.MenuItemMap;
+	import org.openwms.web.flex.client.common.command.CreateTransportUnitCommand;
+	import org.openwms.web.flex.client.common.command.DeleteTransportUnitCommand;
 	import org.openwms.web.flex.client.common.command.LoadLocationGroupsCommand;
-    import org.openwms.web.flex.client.common.command.LoadTransportUnitTypesCommand;
 	import org.openwms.web.flex.client.common.command.LoadLocationsCommand;
+	import org.openwms.web.flex.client.common.command.LoadTransportUnitTypesCommand;
 	import org.openwms.web.flex.client.common.command.ShowLocationGroupCommand;
 	import org.openwms.web.flex.client.common.command.ShowLocationViewCommand;
 	import org.openwms.web.flex.client.common.command.ShowTransportUnitCommand;
+	import org.openwms.web.flex.client.common.event.CommonSwitchScreenEvent;
 	import org.openwms.web.flex.client.common.event.LoadLocationGroupsEvent;
 	import org.openwms.web.flex.client.common.event.LocationEvent;
+	import org.openwms.web.flex.client.common.event.TransportUnitEvent;
 	import org.openwms.web.flex.client.common.event.TransportUnitTypeEvent;
-    import org.openwms.web.flex.client.common.model.CommonModelLocator;
+	import org.openwms.web.flex.client.common.model.CommonModelLocator;
 	import org.openwms.web.flex.client.control.MainController;
+	import org.openwms.web.flex.client.event.EventBroker;
 	import org.openwms.web.flex.client.event.SwitchScreenEvent;
 	import org.openwms.web.flex.client.model.ModelLocator;
 	import org.openwms.web.flex.client.module.CommonModule;
@@ -117,26 +122,36 @@ package org.openwms.web.flex.client.common.view
         {
         	bindCommands();
             loadAllStaticEntities();
+            registerEventListeners();
         }
 
+        private function registerEventListeners():void
+        {
+            var broker:EventBroker = EventBroker.getInstance();
+        }
+        
         public function destroyModule():void
         {
         	mainController.unregisterHandler(SwitchScreenEvent.SHOW_LOCATION_VIEW);
             mainController.unregisterHandler(SwitchScreenEvent.SHOW_LOCATIONGROUP_VIEW);
-            mainController.unregisterHandler(SwitchScreenEvent.SHOW_TRANSPORTUNIT_VIEW);
+            mainController.unregisterHandler(CommonSwitchScreenEvent.SHOW_TRANSPORTUNIT_VIEW);
             mainController.unregisterHandler(LoadLocationGroupsEvent.LOAD_ALL_LOCATION_GROUPS);
             mainController.unregisterHandler(LocationEvent.LOAD_ALL_LOCATIONS);
             mainController.unregisterHandler(TransportUnitTypeEvent.LOAD_ALL_TRANSPORT_UNIT_TYPES);
+            mainController.unregisterHandler(TransportUnitEvent.CREATE_TRANSPORT_UNIT);
+            mainController.unregisterHandler(TransportUnitEvent.DELETE_TRANSPORT_UNIT);
         }
 
         private function bindCommands():void
         {
             mainController.registerHandler(SwitchScreenEvent.SHOW_LOCATION_VIEW, ShowLocationViewCommand);
             mainController.registerHandler(SwitchScreenEvent.SHOW_LOCATIONGROUP_VIEW, ShowLocationGroupCommand);
-            mainController.registerHandler(SwitchScreenEvent.SHOW_TRANSPORTUNIT_VIEW, ShowTransportUnitCommand);
+            mainController.registerHandler(CommonSwitchScreenEvent.SHOW_TRANSPORTUNIT_VIEW, ShowTransportUnitCommand);
             mainController.registerHandler(LoadLocationGroupsEvent.LOAD_ALL_LOCATION_GROUPS, LoadLocationGroupsCommand);
             mainController.registerHandler(LocationEvent.LOAD_ALL_LOCATIONS, LoadLocationsCommand);
             mainController.registerHandler(TransportUnitTypeEvent.LOAD_ALL_TRANSPORT_UNIT_TYPES, LoadTransportUnitTypesCommand);
+            mainController.registerHandler(TransportUnitEvent.CREATE_TRANSPORT_UNIT, CreateTransportUnitCommand);
+            mainController.registerHandler(TransportUnitEvent.DELETE_TRANSPORT_UNIT, DeleteTransportUnitCommand);
         }
     }
 }

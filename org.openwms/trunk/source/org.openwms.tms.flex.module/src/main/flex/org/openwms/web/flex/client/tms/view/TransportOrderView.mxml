@@ -56,7 +56,7 @@
 			<mx:DataGridColumn headerText="ID" dataField="id" />
 		          <mx:DataGridColumn headerText="State" dataField="state" />
 		          <mx:DataGridColumn headerText="Priority" dataField="priority" />
-			<mx:DataGridColumn headerText="Transport Unit" dataField="transportUnit.barcode" />
+			      <mx:DataGridColumn headerText="Transport Unit" dataField="transportUnit.barcode" />
 		          <mx:DataGridColumn headerText="Source Location" dataField="sourceLocation" />
 		          <mx:DataGridColumn headerText="Target Location" dataField="targetLocation" />
 		          <mx:DataGridColumn headerText="Target Location Group" dataField="targetLocationGroup" />

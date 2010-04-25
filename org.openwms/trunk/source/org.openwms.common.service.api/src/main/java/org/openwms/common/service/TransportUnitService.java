@@ -38,46 +38,60 @@ import org.openwms.common.domain.values.Barcode;
  * @since 0.1
  * @see org.openwms.common.service.EntityService
  */
-public interface TransportUnitService<T extends TransportUnit> extends EntityService<TransportUnit> {
+public interface TransportUnitService<T extends TransportUnit> extends
+		EntityService<TransportUnit> {
 
-    /**
-     * Create a new {@link TransportUnit} with the type
-     * {@link TransportUnitType} placed on an initial <code>Location</code>. The
-     * new {@link TransportUnit} has the given {@link Barcode} as identifier.
-     * 
-     * @param barcode
-     *            {@link Barcode} of the new {@link TransportUnit}
-     * @param transportUnitType
-     *            The type of the new {@link TransportUnit}
-     * @param actualLocation
-     *            The <code>Location</code> where the {@link TransportUnit} is
-     *            placed on
-     * @return The created {@link TransportUnit} instance
-     */
-    T createTransportUnit(Barcode barcode, TransportUnitType transportUnitType, LocationPK actualLocation);
+	/**
+	 * Create a new {@link TransportUnit} with the type
+	 * {@link TransportUnitType} placed on an initial <code>Location</code>.
+	 * The new {@link TransportUnit} has the given {@link Barcode} as
+	 * identifier.
+	 * 
+	 * @param barcode
+	 *            {@link Barcode} of the new {@link TransportUnit}
+	 * @param transportUnitType
+	 *            The type of the new {@link TransportUnit}
+	 * @param actualLocation
+	 *            The <code>Location</code> where the {@link TransportUnit} is
+	 *            placed on
+	 * @return The created {@link TransportUnit} instance
+	 */
+	T createTransportUnit(Barcode barcode, TransportUnitType transportUnitType,
+			LocationPK actualLocation);
 
-    /**
-     * Move a {@link TransportUnit} identified by its {@link Barcode} to the
-     * given target <code>Location</code> identified by the {@link LocationPK}.
-     * 
-     * @param barcode
-     *            {@link Barcode} of the {@link TransportUnit} to move
-     * @param targetLocationPK
-     *            Unique identifier of the target <code>Location</code>
-     */
-    void moveTransportUnit(Barcode barcode, LocationPK targetLocationPK);
+	/**
+	 * Move a {@link TransportUnit} identified by its {@link Barcode} to the
+	 * given target <code>Location</code> identified by the {@link LocationPK}.
+	 * 
+	 * @param barcode
+	 *            {@link Barcode} of the {@link TransportUnit} to move
+	 * @param targetLocationPK
+	 *            Unique identifier of the target <code>Location</code>
+	 */
+	void moveTransportUnit(Barcode barcode, LocationPK targetLocationPK);
 
-    /**
-     * Returns an unsorted List of all {@link TransportUnit}s.
-     * 
-     * @return A List of all {@link TransportUnit}s
-     */
-    List<T> getAllTransportUnits();
+	/**
+	 * Delete already persisted {@link TransportUnit}s from the persistence
+	 * storage. It is not allowed in all cases to delete a {@link TransportUnit},
+	 * potentially an active TransportOrder exists or Inventory is still linked
+	 * with the <tt>transportUnit</tt>.
+	 * 
+	 * @param transportUnits
+	 *            The collection of {@link TransportUnit}s to delete
+	 */
+	void deleteTransportUnits(List<T> transportUnits);
 
-    /**
-     * Returns an unsorted List of all {@link TransportUnitType}s.
-     * 
-     * @return A list of all {@link TransportUnitType}s
-     */
-    List<TransportUnitType> getAllTransportUnitTypes();
+	/**
+	 * Returns an unsorted List of all {@link TransportUnit}s.
+	 * 
+	 * @return A List of all {@link TransportUnit}s
+	 */
+	List<T> getAllTransportUnits();
+
+	/**
+	 * Returns an unsorted List of all {@link TransportUnitType}s.
+	 * 
+	 * @return A list of all {@link TransportUnitType}s
+	 */
+	List<TransportUnitType> getAllTransportUnitTypes();
 }
