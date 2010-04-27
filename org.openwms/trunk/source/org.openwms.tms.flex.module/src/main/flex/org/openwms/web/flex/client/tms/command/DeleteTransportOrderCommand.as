@@ -18,48 +18,50 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
-package org.openwms.web.flex.client.tms.business
+package org.openwms.web.flex.client.tms.command
 {
-    import com.adobe.cairngorm.business.ServiceLocator;
+    import com.adobe.cairngorm.commands.ICommand;
+    import com.adobe.cairngorm.control.CairngormEvent;
     
-    import mx.rpc.AsyncToken;
+    import mx.collections.ArrayCollection;
+    import mx.controls.Alert;
     import mx.rpc.IResponder;
     
     import org.openwms.tms.domain.order.TransportOrder;
+    import org.openwms.web.flex.client.tms.business.TransportsDelegate;
+    import org.openwms.web.flex.client.tms.model.TMSModelLocator;
 
     /**
-     * A TransportsDelegate.
+     * A DeleteTransportOrderCommand.
      *
      * @author <a href="mailto:openwms@googlemail.com">Heiko Scherrer</a>
      * @version $Revision: 700 $
      */
-    public class TransportsDelegate
+    public class DeleteTransportOrderCommand implements ICommand, IResponder
     {
-        private var responder:IResponder;
-        private var service:Object;
+        [Bindable]
+        private var modelLocator:TMSModelLocator = TMSModelLocator.getInstance();
 
-        public function TransportsDelegate(responder:IResponder):void
+        public function DeleteTransportOrderCommand()
         {
-            this.responder = responder;
-            this.service = ServiceLocator.getInstance().getRemoteObject("transportService");
-        }
-
-        public function getAllTransports():void
-        {
-            var call:AsyncToken = service.findAll();
-            call.addResponder(responder);
-        }
-        
-        public function createTransportOrder(transportOrder:TransportOrder):void
-        {
-            var call:AsyncToken = service.createTransportOrder(transportOrder.transportUnit.barcode, transportOrder.targetLocationGroup, transportOrder.targetLocation, "HIGH");
-            call.addResponder(responder);
+            super();
         }
 
-        public function deleteTransportOrder(transportOrder:TransportOrder):void
+        public function execute(event:CairngormEvent):void
         {
-            var call:AsyncToken = service.remove(transportOrder);
-            call.addResponder(responder);
+            var delegate:TransportsDelegate = new TransportsDelegate(this)
+            delegate.deleteTransportOrder(event.data as TransportOrder);
         }
+
+        public function result(data:Object):void
+        {
+            trace("TransportOrder deleted");
+        }
+
+        public function fault(info:Object):void
+        {
+            Alert.show("Fault in [" + this + "] Errormessage : " + info);
+        }
+
     }
 }

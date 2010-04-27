@@ -22,7 +22,9 @@ package org.openwms.web.flex.client.model
 {
 
     import com.adobe.cairngorm.model.IModelLocator;
+    
     import mx.collections.ArrayCollection;
+    
     import org.openwms.common.domain.system.usermanagement.User;
 
     /**
@@ -46,6 +48,7 @@ package org.openwms.web.flex.client.model
 
         public const UPLOAD_URL:String = "/openwms/upload";
         public const DIRECTORY_NAME:String = "data";
+        public const DT_FORMAT:String = "DD.MM.YYYY";
 
         public var allLocationGroups:ArrayCollection = new ArrayCollection();
         public var allLocations:ArrayCollection = new ArrayCollection();

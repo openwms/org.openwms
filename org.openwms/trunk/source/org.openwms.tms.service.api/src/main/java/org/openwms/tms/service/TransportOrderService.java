@@ -20,7 +20,10 @@
  */
 package org.openwms.tms.service;
 
+import org.openwms.common.domain.Location;
 import org.openwms.common.domain.LocationGroup;
+import org.openwms.common.domain.LocationPK;
+import org.openwms.common.domain.values.Barcode;
 import org.openwms.common.service.EntityService;
 import org.openwms.tms.domain.order.TransportOrder;
 
@@ -51,5 +54,7 @@ public interface TransportOrderService<T extends TransportOrder> extends EntityS
      *         {@link LocationGroup}
      */
     int getTransportsToLocationGroup(LocationGroup locationGroup);
+    
+    T createTransportOrder(Barcode barcode, LocationGroup targetLocationGroup, Location targetLocation, String priority);
 
 }
