@@ -30,6 +30,8 @@
     <osgi:reference id="transactionManager" interface="org.springframework.transaction.PlatformTransactionManager"/>
     <osgi:reference id="transportUnitDao" interface="org.openwms.common.integration.TransportUnitDao"/>
     <osgi:reference id="transportOrderDao" interface="org.openwms.tms.integration.TransportOrderDao"/>
+    <osgi:reference id="locationDao" interface="org.openwms.common.integration.LocationDao"/>
+    <osgi:reference id="locationGroupDao" interface="org.openwms.common.integration.LocationGroupDao"/>
 	
     <!-- exports -->
     <osgi:service ref="transportService" interface="org.openwms.tms.service.TransportOrderService"/>

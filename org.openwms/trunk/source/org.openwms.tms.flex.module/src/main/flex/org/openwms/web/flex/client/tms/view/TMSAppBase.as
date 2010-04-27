@@ -33,8 +33,11 @@ package org.openwms.web.flex.client.tms.view
 	import org.openwms.web.flex.client.control.MainController;
 	import org.openwms.web.flex.client.model.ModelLocator;
 	import org.openwms.web.flex.client.module.CommonModule;
+	import org.openwms.web.flex.client.tms.command.CreateTransportOrderCommand;
+	import org.openwms.web.flex.client.tms.command.DeleteTransportOrderCommand;
 	import org.openwms.web.flex.client.tms.command.LoadTransportOrdersCommand;
 	import org.openwms.web.flex.client.tms.event.TMSSwitchScreenEvent;
+	import org.openwms.web.flex.client.tms.event.TransportOrderEvent;
     
     public class TMSAppBase extends CommonModule implements IApplicationModule
 	    {
@@ -61,11 +64,6 @@ package org.openwms.web.flex.client.tms.view
 	        addEventListener(FlexEvent.APPLICATION_COMPLETE, creationCompleteHandler);
 	        addEventListener(FlexEvent.CREATION_COMPLETE, creationCompleteHandler);
 	        bindCommands();
-	    }
-	    
-	    private function bindCommands():void
-	    {
-            mainController.registerHandler(TMSSwitchScreenEvent.SHOW_TRANSPORT_ORDERS_VIEW, LoadTransportOrdersCommand);
 	    }
 	    
 	    public function creationCompleteHandler(event:FlexEvent):void
@@ -119,6 +117,15 @@ package org.openwms.web.flex.client.tms.view
         public function destroyModule():void
         {
         	mainController.unregisterHandler(TMSSwitchScreenEvent.SHOW_TRANSPORT_ORDERS_VIEW);
+            mainController.unregisterHandler(TransportOrderEvent.CREATE_TRANSPORT_ORDER);
+            mainController.unregisterHandler(TransportOrderEvent.DELETE_TRANSPORT_ORDER);
+        }
+
+        private function bindCommands():void
+        {
+            mainController.registerHandler(TMSSwitchScreenEvent.SHOW_TRANSPORT_ORDERS_VIEW, LoadTransportOrdersCommand);
+            mainController.registerHandler(TransportOrderEvent.CREATE_TRANSPORT_ORDER, CreateTransportOrderCommand);
+            mainController.registerHandler(TransportOrderEvent.DELETE_TRANSPORT_ORDER, DeleteTransportOrderCommand);
         }
     }
 }

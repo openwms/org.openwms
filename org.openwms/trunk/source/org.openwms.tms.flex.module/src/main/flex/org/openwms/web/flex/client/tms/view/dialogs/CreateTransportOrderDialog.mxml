@@ -3,6 +3,12 @@
 
     <mx:Script>
     	<![CDATA[
+    		import org.openwms.tms.domain.order.TransportOrder$TRANSPORT_ORDER_STATE;
+    		import org.openwms.common.domain.values.Barcode;
+    		import org.openwms.common.domain.TransportUnit;
+    		import org.openwms.tms.domain.order.TransportOrder;
+    		import org.openwms.web.flex.client.tms.event.TransportOrderEvent;
+    		import org.openwms.common.domain.Location;
     		import org.openwms.common.domain.LocationGroup;
     		import mx.collections.ArrayCollection;
             import org.openwms.web.flex.client.model.ModelLocator;
@@ -15,8 +21,6 @@
             
             [Bindable]
             private var modelLocator:ModelLocator = ModelLocator.getInstance();
-            [Bindable]
-            private var priorityList:Array = new Array[0,1,2,3,4,5];            
             [Embed ("closeButton.png")]
             private var closeImg:Class;
     	
@@ -51,9 +55,27 @@
             		// Please provide at least one target
             		// Change state of component to show a div
             	}
+            	var event:TransportOrderEvent = new TransportOrderEvent(TransportOrderEvent.CREATE_TRANSPORT_ORDER);
+            	var transportOrder:TransportOrder = new TransportOrder();
+            	if (targetLocationGroupChk.selected)
+            	{
+            		transportOrder.targetLocationGroup = targetLocationGroupCmb.selectedItem as LocationGroup;
+            	}
+                if (targetLocationChk.selected)
+                {
+                    transportOrder.targetLocation = targetLocationCmb.selectedItem as Location;
+                }
+                var transportUnit:TransportUnit = new TransportUnit();
+                transportUnit.barcode = new Barcode(barcodeTxt.text);
+            	transportOrder.transportUnit =  transportUnit;
+            	transportOrder.priority = new String("HIGH");
+            	transportOrder.state = TransportOrder$TRANSPORT_ORDER_STATE.CREATED;
+            	trace("Creating TransportOrder :"+barcodeTxt.text+transportOrder.state+transportOrder.targetLocationGroup);
+            	event.data = transportOrder;
+            	event.dispatch();
             	closeDialog();
             }
-
+            
 	        private function keyEventHandler(event:KeyboardEvent):void
 	        {
 	        	// ESC
@@ -72,21 +94,26 @@
                 }
                 return result;
             }
+            
+            private function getLabel(item:Location):String
+            {
+            	return item.locationId.area+'/'+item.locationId.aisle+'/'+item.locationId.x+'/'+item.locationId.y+'/'+item.locationId.z;
+            }
     	]]>
     </mx:Script>
 
 	<mx:Canvas width="100%" height="100%">
 		<mx:Label x="10" y="10" text="Transport Unit" fontSize="24"/>
-		<mx:ComboBox id="barcodeTxt" x="195" y="10" width="259" fontSize="24" labelField="barcode" dataProvider="{modelLocator.allTransportUnits}"/>
+		<comp:SuggestComboBox id="barcodeTxt" x="195" y="10" selectedIndex="-1" width="259" fontSize="24" labelField="barcode" dataProvider="{modelLocator.allTransportUnits}"/>
         <mx:Label x="9" y="80" text="Priority" fontSize="24"/>
 		<mx:Canvas x="9" y="151" width="445" height="229" backgroundColor="#F1F07C">
 			<mx:CheckBox id="targetLocationGroupChk" x="10" y="10" label="Target Location Group" selected="true" fontSize="24" />
-			<mx:ComboBox id="targetLocationGroupCmb" x="53" y="57" fontSize="24" width="382" dataProvider="{getListAsComboBoxList(modelLocator.allLocationGroups)}" enabled="{targetLocationGroupChk.selected}" />
+			<comp:SuggestComboBox id="targetLocationGroupCmb" x="53" y="57" selectedIndex="-1" fontSize="24" width="382" labelField="name" dataProvider="{modelLocator.allLocationGroups}" enabled="{targetLocationGroupChk.selected}" />
 			<mx:CheckBox id="targetLocationChk" x="10" y="104" label="Target Location" selected="false" fontSize="24" />
-            <comp:LocationSelector id="targetLocationCmb" x="53" y="151" enabled="{targetLocationChk.selected}"/>
+            <comp:SuggestComboBox id="targetLocationCmb" x="53" y="151" selectedIndex="-1" enabled="{targetLocationChk.selected}" labelField="" width="382" dataProvider="{modelLocator.allLocations}"/>
 		</mx:Canvas>
 		<mx:Button id="createBtn" x="10" y="388" label="Create" fontSize="12" click="createTransportOrder()"/>
 		<mx:Button id="cancelBtn" x="384" y="388" label="Cancel" fontSize="12" click="closeDialog(event)"/>
-		<mx:ComboBox id="priorityCmb" x="195" y="77" fontSize="24" width="259" selectedIndex="2" dataProvider="{priorityList}"/>
+		<mx:ComboBox id="priorityCmb" x="195" y="77" fontSize="24" width="259" />
 	</mx:Canvas>
 </mx:Panel>
