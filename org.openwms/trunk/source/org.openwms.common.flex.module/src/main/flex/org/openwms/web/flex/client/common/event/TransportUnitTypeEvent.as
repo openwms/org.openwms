@@ -31,6 +31,8 @@ package org.openwms.web.flex.client.common.event
     public class TransportUnitTypeEvent extends CairngormEvent
     {
         public static const LOAD_ALL_TRANSPORT_UNIT_TYPES:String = "LoadAllTransportUnitTypes";
+        public static const CREATE_TRANSPORT_UNIT_TYPE:String = "Create_TransportUnitType";
+        public static const DELETE_TRANSPORT_UNIT_TYPE:String = "Delete_TransportUnitType";
 
         public function TransportUnitTypeEvent(type:String, bubbles:Boolean = false, cancelable:Boolean = false)
         {

@@ -138,6 +138,16 @@
 				<enabled>true</enabled>
 			</snapshots>
 		</repository>
+        <repository>
+            <id>as3commons</id>
+            <url>http://dev.yoolab.org/maven/content/repositories/snapshots</url>
+            <releases>
+                <enabled>true</enabled>
+            </releases>
+            <snapshots>
+                <enabled>true</enabled>
+            </snapshots>
+        </repository>
 	</repositories>
 	<pluginRepositories>
 		<pluginRepository>
@@ -171,7 +181,7 @@
 			<version>2.2.1</version>
 			<type>swc</type>
 		</dependency>
-
+        
 		<!--
 			<dependency> <groupId>com.adobe.flex.framework</groupId>
 			<artifactId>cairngorm-framework</artifactId> <version>2.2.1</version>

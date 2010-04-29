@@ -29,7 +29,9 @@ package org.openwms.web.flex.client.common.view
 	import org.openwms.web.flex.client.IApplicationModule;
 	import org.openwms.web.flex.client.MenuItemMap;
 	import org.openwms.web.flex.client.common.command.CreateTransportUnitCommand;
+	import org.openwms.web.flex.client.common.command.CreateTransportUnitTypeCommand;
 	import org.openwms.web.flex.client.common.command.DeleteTransportUnitCommand;
+	import org.openwms.web.flex.client.common.command.DeleteTransportUnitTypeCommand;
 	import org.openwms.web.flex.client.common.command.LoadLocationGroupsCommand;
 	import org.openwms.web.flex.client.common.command.LoadLocationsCommand;
 	import org.openwms.web.flex.client.common.command.LoadTransportUnitTypesCommand;
@@ -135,9 +137,12 @@ package org.openwms.web.flex.client.common.view
         	mainController.unregisterHandler(SwitchScreenEvent.SHOW_LOCATION_VIEW);
             mainController.unregisterHandler(SwitchScreenEvent.SHOW_LOCATIONGROUP_VIEW);
             mainController.unregisterHandler(CommonSwitchScreenEvent.SHOW_TRANSPORTUNIT_VIEW);
+            mainController.unregisterHandler(CommonSwitchScreenEvent.SHOW_TRANSPORTUNITTYPE_VIEW);
             mainController.unregisterHandler(LoadLocationGroupsEvent.LOAD_ALL_LOCATION_GROUPS);
             mainController.unregisterHandler(LocationEvent.LOAD_ALL_LOCATIONS);
             mainController.unregisterHandler(TransportUnitTypeEvent.LOAD_ALL_TRANSPORT_UNIT_TYPES);
+            mainController.unregisterHandler(TransportUnitTypeEvent.CREATE_TRANSPORT_UNIT_TYPE);
+            mainController.unregisterHandler(TransportUnitTypeEvent.DELETE_TRANSPORT_UNIT_TYPE);
             mainController.unregisterHandler(TransportUnitEvent.CREATE_TRANSPORT_UNIT);
             mainController.unregisterHandler(TransportUnitEvent.DELETE_TRANSPORT_UNIT);
         }
@@ -147,9 +152,12 @@ package org.openwms.web.flex.client.common.view
             mainController.registerHandler(SwitchScreenEvent.SHOW_LOCATION_VIEW, ShowLocationViewCommand);
             mainController.registerHandler(SwitchScreenEvent.SHOW_LOCATIONGROUP_VIEW, ShowLocationGroupCommand);
             mainController.registerHandler(CommonSwitchScreenEvent.SHOW_TRANSPORTUNIT_VIEW, ShowTransportUnitCommand);
+            mainController.registerHandler(CommonSwitchScreenEvent.SHOW_TRANSPORTUNITTYPE_VIEW, ShowTransportUnitCommand);
             mainController.registerHandler(LoadLocationGroupsEvent.LOAD_ALL_LOCATION_GROUPS, LoadLocationGroupsCommand);
             mainController.registerHandler(LocationEvent.LOAD_ALL_LOCATIONS, LoadLocationsCommand);
             mainController.registerHandler(TransportUnitTypeEvent.LOAD_ALL_TRANSPORT_UNIT_TYPES, LoadTransportUnitTypesCommand);
+            mainController.registerHandler(TransportUnitTypeEvent.CREATE_TRANSPORT_UNIT_TYPE, CreateTransportUnitTypeCommand);
+            mainController.registerHandler(TransportUnitTypeEvent.DELETE_TRANSPORT_UNIT_TYPE, DeleteTransportUnitTypeCommand);
             mainController.registerHandler(TransportUnitEvent.CREATE_TRANSPORT_UNIT, CreateTransportUnitCommand);
             mainController.registerHandler(TransportUnitEvent.DELETE_TRANSPORT_UNIT, DeleteTransportUnitCommand);
         }

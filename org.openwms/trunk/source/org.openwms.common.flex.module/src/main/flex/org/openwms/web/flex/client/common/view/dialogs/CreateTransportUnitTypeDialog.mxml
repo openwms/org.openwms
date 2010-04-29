@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Panel xmlns:mx="http://www.adobe.com/2006/mxml" width="540" height="452" title="Create Transport Unit Type" fontSize="12" creationComplete="init();">
+	
+	<mx:Script>
+		<![CDATA[
+			import org.openwms.web.flex.client.common.event.TransportUnitTypeEvent;
+			import org.openwms.common.domain.TransportUnitType;
+			import org.openwms.web.flex.client.common.event.TransportUnitEvent;
+			import mx.managers.PopUpManager;
+			import flash.events.KeyboardEvent;
+			
+			private function init():void
+			{
+				typeTxt.setFocus();
+                this.addEventListener(KeyboardEvent.KEY_DOWN, keyEventHandler);
+                PopUpManager.centerPopUp(this);
+			}
+
+
+            private function closeDialog(event:Event=null):void
+            {
+                this.removeEventListener(KeyboardEvent.KEY_DOWN, keyEventHandler);
+                PopUpManager.removePopUp(this);
+            }
+            
+            private function createTransportUnitType():void
+            {
+            	var event:TransportUnitTypeEvent = new TransportUnitTypeEvent(TransportUnitTypeEvent.CREATE_TRANSPORT_UNIT_TYPE);
+            	
+            	var transportUnitType:TransportUnitType = new TransportUnitType();
+            	transportUnitType.type = typeTxt.text;
+            	transportUnitType.length = int(lengthTxt.text);
+            	transportUnitType.width = int(widthTxt.text);
+            	transportUnitType.height = int(heightTxt.text);
+            	transportUnitType.weightTare = Number(weightTareTxt.text);
+            	transportUnitType.weightMax = Number(weightMaxTxt.text);
+            	transportUnitType.description = descriptionTxt.text;
+            	
+            	event.data = transportUnitType;
+            	event.dispatch();
+            	closeDialog();
+            }
+
+	        private function keyEventHandler(event:KeyboardEvent):void
+            {
+                if(event.keyCode == 27)
+                {
+                   closeDialog(event);
+                   return;
+                }
+            }
+            
+	]]>
+	</mx:Script>
+	<mx:Canvas width="100%" height="100%" backgroundColor="#F1F07C">
+		<mx:Label x="158" y="10" text="Type" fontSize="22" fontWeight="bold"/>
+		<mx:Label x="141" y="51" text="Length" fontSize="22"/>
+		<mx:Label x="152" y="92" text="Width" fontSize="22"/>
+		<mx:Label x="144" y="133" text="Height" fontSize="22"/>
+		<mx:Label x="82" y="174" text="Weight Tare" fontSize="22"/>
+		<mx:Label x="24" y="215" text="Maximum Weight" fontSize="22"/>
+		<mx:TextInput id="typeTxt" x="230" y="8" fontSize="22" width="280"/>
+		<mx:TextInput id="lengthTxt" x="230" y="49" fontSize="22" width="280"/>
+		<mx:TextInput id="widthTxt" x="230" y="90" fontSize="22" width="280"/>
+		<mx:TextInput id="heightTxt" x="230" y="131" fontSize="22" width="280"/>
+		<mx:TextInput id="weightTareTxt" x="230" y="172" fontSize="22" width="280"/>
+		<mx:TextInput id="weightMaxTxt" x="230" y="213" fontSize="22" width="280"/>
+		<mx:Label x="94" y="259" text="Description" fontSize="22"/>
+		<mx:TextArea id="descriptionTxt" x="230" y="258" width="280" height="73" fontSize="22"/>
+		<mx:HBox x="0" y="374" width="100%" horizontalAlign="center">
+			<mx:Button id="createBtn" label="Create" fontSize="12" click="createTransportUnitType()"/>
+			<mx:Button id="cancelBtn" label="Cancel" fontSize="12" click="closeDialog(event)"/>
+		</mx:HBox>
+	</mx:Canvas>
+</mx:Panel>

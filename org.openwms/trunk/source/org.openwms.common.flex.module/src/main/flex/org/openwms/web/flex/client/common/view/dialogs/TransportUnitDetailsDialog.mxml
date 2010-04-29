@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<mx:Panel xmlns:mx="http://www.adobe.com/2006/mxml" width="600" height="512" title="TransportUnit Details" creationComplete="init()">
+<mx:Panel xmlns:mx="http://www.adobe.com/2006/mxml" width="752" height="512" title="TransportUnit Details" creationComplete="init()" xmlns:comp="org.openwms.web.flex.client.component.*" xmlns:jwo="com.jwopitz.containers.*">
 
     <mx:Script>
     	<![CDATA[
+    		import org.openwms.common.domain.TransportUnit$TU_STATE;
+    		import org.openwms.common.domain.TransportUnitType;
     		import mx.managers.PopUpManager;
     		import org.openwms.web.flex.client.common.model.CommonModelLocator;
             import org.openwms.web.flex.client.model.ModelLocator;
@@ -16,19 +18,36 @@
     		private var modelLocator:ModelLocator = ModelLocator.getInstance();
             [Bindable]
             private var commonModelLocator:CommonModelLocator = CommonModelLocator.getInstance();
+            [Bindable]
+            private var markedMultiple:Boolean = false;
+            [Bindable]
+            private var tus:ArrayCollection = new ArrayCollection(modelLocator.allTransportUnits.toArray());
     		
     		private function init():void
     		{
                 this.addEventListener(KeyboardEvent.KEY_DOWN, keyEventHandler);
                 PopUpManager.centerPopUp(this);
+                
                 if (transportUnits != null && transportUnits.length == 1)
                 {
                     // Single marked
                     transportUnit = transportUnits.getItemAt(0) as TransportUnit;
+                    /*
+                    for (var i:int = 0; i < transportUnitTypeCmb.dataProvider.length; i++)
+                    {
+                    	var tuType:TransportUnitType = ArrayCollection(transportUnitTypeCmb.dataProvider).getItemAt(i) as TransportUnitType;
+                    	if ( tuType.type == transportUnit.transportUnitType.type)
+                    	{
+                    		transportUnitTypeCmb.selectedItem = tuType;
+                    		transportUnitTypeCmb.dropdown.dataProvider = transportUnitTypeCmb.dataProvider;
+                    		break;
+                    	}
+                    }*/
                 }
                 if (transportUnits != null && transportUnits.length > 1)
                 {
                     // Multiple marked
+                    markedMultiple = true;
                 }
     		}
     		
@@ -65,52 +84,57 @@
                    return;
                 }
             }
+            
+            private function transportUnitDataChanged(event:Event):void
+            {
+            	trace("Event fired:"+event.currentTarget.valueOf().valueOf());
+            	trace("Event fired:"+event.target.valueOf().valueOf());
+            }
+            
     	]]>
     </mx:Script>
+    
 	<mx:Canvas height="100%" width="100%">
-		<mx:Label x="367" y="10" text="{getID()}" id="idLbl"/>
+		<mx:Label x="67" y="10" text="{getID()}" id="idLbl"/>
 		<mx:Label x="10" y="10" text="Barcode"/>
-		<mx:Label x="382" y="64" text="by"/>
+		<mx:Label x="10" y="133" text="by"/>
 		<mx:Label x="10" y="38" text="Actual Location"/>
-		<mx:Label x="367" y="38" text="since"/>
-		<mx:Label x="10" y="64" text="Last inventory check on"/>
-		<mx:Label x="10" y="90" text="Created on"/>
-		<mx:Label x="10" y="116" text="Weight"/>
-		<mx:Label x="10" y="142" text="Placed On (Parent)"/>
-		<mx:Label x="10" y="168" text="State"/>
-		<mx:Label x="10" y="194" text="Target Location"/>
-		<mx:Canvas x="10" y="220" width="560" height="213" backgroundColor="#E1D0D0">
-			<mx:Label x="10" y="10" text="TransportUnit Type" fontWeight="bold"/>
-			<mx:Label x="10" y="90" text="Description"/>
-			<mx:Label x="10" y="36" text="Height"/>
-			<mx:Label x="157" y="36" text="Length"/>
-			<mx:Label x="285" y="36" text="Width" height="19"/>
-			<mx:Label x="10" y="64" text="Weight Tare"/>
-			<mx:Label x="285" y="64" text="Weight max"/>
-			<mx:Label x="285" y="90" text="Compatibility"/>
-			<mx:ComboBox x="159" y="8" id="transportUnitTypeCmb" dataProvider="{commonModelLocator.allTransportUnitTypes}" />
-			<mx:TextInput x="85" y="34" width="64" id="transportUnitTypeHeightTxt"/>
-			<mx:TextInput x="85" y="62" width="64" id="transportUnitTypeWeightTareTxt"/>
-			<mx:TextInput x="377" y="62" width="64" id="transportUnitTypeWeightMaxTxt"/>
-			<mx:TextInput x="377" y="34" width="64" id="transportUnitTypeWidthTxt"/>
-			<mx:TextInput x="208" y="34" width="64" id="transportUnitTypeLengthTxt"/>
-			<mx:TextArea x="10" y="116" height="85" width="262" id="transportUnitTypeDescriptionTxt"/>
-			<mx:TextArea x="285" y="116" height="85" width="262" id="transportUnitTypeCompatibilityTxt"/>
-		</mx:Canvas>
-		<mx:TextInput x="170" y="8" id="barcodeTxt" text="{transportUnit.barcode}"/>
-		<mx:TextInput x="170" y="140" id="parentTxt" text="{getParent()}"/>
-		<mx:ComboBox x="170" y="36" id="actualLocationCmb" dataProvider="{modelLocator.allLocations}" width="160"/>
-		<mx:ComboBox x="170" y="166" id="stateCmb" />
-		<mx:ComboBox x="170" y="192" id="targetLocationCmb" dataProvider="{modelLocator.allLocations}"/>
-		<mx:DateField x="420" y="36" id="sinceDt" formatString="DD.MM.YYYY" text="{transportUnit.actualLocationDate}" width="150"/>
-		<mx:DateField x="170" y="62" id="invDt" formatString="{modelLocator.DT_FORMAT}" text="{transportUnit.inventoryDate}" width="160"/>
-		<mx:DateField x="170" y="88" id="createdDt" formatString="{modelLocator.DT_FORMAT}" text="{transportUnit.creationDate}" width="160" enabled="false"/>
-		<mx:Label x="420" y="64" id="invLbl" text="{transportUnit.inventoryUser}"/>
-		<mx:Label x="170" y="116" id="weightLbl" width="160" text="{transportUnit.weight}"/>
-		<mx:CheckBox x="367" y="114" label="is empty" id="emptyChk"/>
+		<mx:Label x="10" y="64" text="since"/>
+		<mx:Label x="10" y="107" text="Last inventory check on"/>
+		<mx:Label x="10" y="173" text="Created on"/>
+		<mx:Label x="10" y="199" text="Weight"/>
+		<mx:Label x="10" y="257" text="Placed On (Parent)"/>
+		<mx:Label x="10" y="283" text="State"/>
+		<mx:Label x="10" y="309" text="Target Location"/>
+        <mx:Canvas x="439" y="10" width="282" height="423" backgroundColor="#D8D8D8">
+			<mx:Label x="10" y="10" text="TransportUnit Type" fontWeight="bold" />
+            <comp:SuggestComboBox x="10" y="36" id="transportUnitTypeCmb" labelField="type" selectedIndex="{commonModelLocator.allTransportUnitTypes.getItemIndex(transportUnit.transportUnitType)}" dataProvider="{commonModelLocator.allTransportUnitTypes}" />
+			<mx:Label x="10" y="68" text="Height : {(transportUnitTypeCmb.selectedItem as TransportUnitType).height}" />
+			<mx:Label x="10" y="96" text="Length : {(transportUnitTypeCmb.selectedItem as TransportUnitType).length}" />
+			<mx:Label x="10" y="122" text="Width : {(transportUnitTypeCmb.selectedItem as TransportUnitType).width}" />
+			<mx:Label x="10" y="149" text="Weight Tare : {(transportUnitTypeCmb.selectedItem as TransportUnitType).weightTare}" />
+			<mx:Label x="10" y="178" text="Weight max : {(transportUnitTypeCmb.selectedItem as TransportUnitType).weightMax}" />
+            <mx:Label x="10" y="204" text="Description :" />
+            <mx:Text x="10" y="230" height="64" width="262" id="transportUnitTypeDescriptionTxt" text="{(transportUnitTypeCmb.selectedItem as TransportUnitType).description}" keyUp="transportUnitDataChanged(event)"/>
+            <mx:Label x="10" y="302" text="Compatibility :" />
+			<mx:Text x="10" y="328" height="85" width="262" id="transportUnitTypeCompatibilityTxt" text="{(transportUnitTypeCmb.selectedItem as TransportUnitType).compatibility}"/>
+        </mx:Canvas>
+		<mx:TextInput x="170" y="8" id="barcodeTxt" text="{transportUnit.barcode}" width="261"/>
+		<comp:SuggestComboBox x="170" y="255" id="parentTxt" labelField="barcode" dataProvider="{tus}" width="261"/>
+		<comp:SuggestComboBox x="170" y="36" id="actualLocationCmb" dataProvider="{modelLocator.allLocations}" width="261"/>
+		<mx:ComboBox x="170" y="281" id="stateCmb" width="261" dataProvider="{TransportUnit$TU_STATE.constants}"/>
+		<comp:SuggestComboBox x="170" y="307" id="targetLocationCmb" dataProvider="{modelLocator.allLocations}" width="261"/>
+		<mx:Label x="170" y="62" id="sinceDt" text="{transportUnit.actualLocationDate}" width="261" />
+		<mx:Label x="170" y="105" id="invDt" text="{transportUnit.inventoryDate}" width="261" />
+		<mx:Label x="170" y="171" id="createdDt" text="{transportUnit.creationDate}" width="261" />
+		<mx:Label x="170" y="133" id="invLbl" text="{transportUnit.inventoryUser}" width="261"/>
+		<mx:Label x="170" y="199" id="weightLbl" width="261" text="{transportUnit.weight}"/>
+		<mx:CheckBox x="170" y="225" label="is empty" id="emptyChk" />
 		<mx:HBox x="10" y="441" width="100%" verticalAlign="middle" horizontalAlign="center">
 			<mx:Button label="Save" id="saveBtn"/>
-			<mx:Button label="Cancel" id="cancelBtn"/>
+			<mx:Button label="Cancel" id="cancelBtn" click="closeDialog(event)"/>
 		</mx:HBox>
+		<mx:HRule x="41" y="90" width="318" height="4"/>
+		<mx:HRule x="41" y="159" width="318" height="4"/>
 	</mx:Canvas>
 </mx:Panel>

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<mx:Panel xmlns:mx="http://www.adobe.com/2006/mxml" width="442" height="358" title="Create Transport Units" fontSize="12" creationComplete="init();" xmlns:comp="org.openwms.web.flex.client.component.*">
+<mx:Panel xmlns:mx="http://www.adobe.com/2006/mxml" width="506" height="358" title="Create Transport Units" fontSize="12" creationComplete="init();" xmlns:comp="org.openwms.web.flex.client.component.*">
 
     <mx:Script>
     	<![CDATA[
@@ -80,16 +80,18 @@
     	]]>
     </mx:Script>
 
-	<mx:Canvas width="422" height="100%">
+	<mx:Canvas width="100%" height="100%">
 		<mx:Label x="9" y="10" text="Barcode" fontSize="24"/>
 		<mx:Label x="9" y="80" text="Type" fontSize="24"/>
-		<mx:TextInput id="barcodeTxt" x="138" y="10" width="273" fontSize="24"/>
-		<mx:ComboBox id="tuTypeTxt" x="138" y="80" width="273" fontSize="24" labelField="type" dataProvider="{commonModelLocator.allTransportUnitTypes}"/>
-		<mx:Canvas x="9" y="151" width="402" height="109" backgroundColor="#F1F07C">
-			<mx:Label x="108" y="10" text="Actual Location" fontSize="24"/>
-			<comp:SuggestComboBox id="locationCmb" width="382" fontSize="24" dataProvider="{modelLocator.allLocations}" x="10" y="60"/>
+		<mx:TextInput id="barcodeTxt" x="155" y="8" width="321" fontSize="24"/>
+		<mx:ComboBox id="tuTypeTxt" x="155" y="77" width="321" fontSize="24" labelField="type" dataProvider="{commonModelLocator.allTransportUnitTypes}"/>
+		<mx:Canvas x="9" y="151" width="467" height="109" backgroundColor="#F1F07C">
+			<mx:Label x="140.5" y="10" text="Actual Location" fontSize="24"/>
+			<comp:SuggestComboBox id="locationCmb" width="447" fontSize="24" prompt="Select one..." dataProvider="{modelLocator.allLocations}" x="10" y="60"/>
 		</mx:Canvas>
-		<mx:Button id="createBtn" x="10" y="280" label="Create" fontSize="12" click="createTransportUnit()"/>
-		<mx:Button id="cancelBtn" x="342" y="280" label="Cancel" fontSize="12" click="closeDialog(event)"/>
+		<mx:HBox x="0" y="268" width="100%" horizontalAlign="center">
+			<mx:Button id="createBtn" label="Create" fontSize="12" click="createTransportUnit()"/>
+			<mx:Button id="cancelBtn" label="Cancel" fontSize="12" click="closeDialog(event)"/>
+		</mx:HBox>
 	</mx:Canvas>
 </mx:Panel>

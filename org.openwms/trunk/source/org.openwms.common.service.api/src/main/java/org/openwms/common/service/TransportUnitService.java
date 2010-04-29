@@ -54,7 +54,7 @@ public interface TransportUnitService<T extends TransportUnit> extends
 	 * @param actualLocation
 	 *            The <code>Location</code> where the {@link TransportUnit} is
 	 *            placed on
-	 * @return The created {@link TransportUnit} instance
+	 * @return The new created {@link TransportUnit} instance
 	 */
 	T createTransportUnit(Barcode barcode, TransportUnitType transportUnitType,
 			LocationPK actualLocation);
@@ -94,4 +94,19 @@ public interface TransportUnitService<T extends TransportUnit> extends
 	 * @return A list of all {@link TransportUnitType}s
 	 */
 	List<TransportUnitType> getAllTransportUnitTypes();
+	
+	/**
+	 * Create a new {@link TransportUnitType}.
+	 * 
+	 * @param transportUnitType The type to be created
+	 * @return The new created {@link TransportUnitType} instance.
+	 */
+	TransportUnitType createTransportUnitType(TransportUnitType transportUnitType);
+
+	/**
+	 * Delete already persisted {@link TransportUnitType} instances.
+	 * 
+	 * @param transportUnitType A list of all instances to be deleted.
+	 */
+	void deleteTransportUnitTypes(List<TransportUnitType> transportUnitType);
 }

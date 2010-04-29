@@ -107,13 +107,13 @@ public class TransportUnitType implements Serializable {
     /**
      * Tare weight of the {@link TransportUnit}.
      */
-    @Column(name = "WEIGHT_TARE")
+    @Column(name = "WEIGHT_TARE", precision = 5)
     private BigDecimal weightTare;
 
     /**
      * Maximum weight of this {@link TransportUnit}.
      */
-    @Column(name = "WEIGHT_MAX")
+    @Column(name = "WEIGHT_MAX", precision = 5)
     private BigDecimal weightMax;
 
     /**

@@ -96,6 +96,28 @@ public class TransportUnitServiceImpl extends EntityServiceImpl<TransportUnit, L
     public List<TransportUnitType> getAllTransportUnitTypes() {
     	return transportUnitTypeDao.findAll();
     }
+    
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public TransportUnitType createTransportUnitType(
+    		TransportUnitType transportUnitType) {
+    	try {
+			transportUnitTypeDao.persist(transportUnitType);
+		} catch (RuntimeException e) {
+			e.printStackTrace();
+		}
+    	return transportUnitTypeDao.save(transportUnitType);
+    }
+    
+    @Override
+    public void deleteTransportUnitTypes(List<TransportUnitType> transportUnitTypes) {
+    	for (TransportUnitType transportUnitType : transportUnitTypes) {
+        	transportUnitType = transportUnitTypeDao.save(transportUnitType);
+        	transportUnitTypeDao.remove(transportUnitType);			
+		}
+    }
 
     /**
      * @see org.openwms.common.service.TransportUnitService#moveTransportUnit(org.openwms.common.domain.values.Barcode,

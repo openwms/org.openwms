@@ -64,15 +64,7 @@ public class LocationDaoImpl extends AbstractGenericJpaDao<Location, Long> imple
     @Transactional(readOnly = true)
     @SuppressWarnings("unchecked")
     public List<Location> getAllLocations() {
-        // TODO [scherrer] : Remove this method, was only used for eager loading
-        List<Location> list = getEm().createNamedQuery(Location.NQ_FIND_ALL_EAGER).getResultList();
-        for (Location location : list) {
-            location.getLocationType();
-        }
-        for (Location location : list) {
-            logger.debug(location.getDescription());
-        }
-        return list;
+        return getJpaTemplate().findByNamedQuery(Location.NQ_FIND_ALL_EAGER);
     }
 
 }

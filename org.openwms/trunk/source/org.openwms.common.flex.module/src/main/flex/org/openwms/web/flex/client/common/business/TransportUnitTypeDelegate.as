@@ -21,9 +21,12 @@
 package org.openwms.web.flex.client.common.business
 {
     import com.adobe.cairngorm.business.ServiceLocator;
-
+    
+    import mx.collections.ArrayCollection;
     import mx.rpc.AsyncToken;
     import mx.rpc.IResponder;
+    
+    import org.openwms.common.domain.TransportUnitType;
 
     /**
      * A TransportUnitTypeDelegate.
@@ -47,6 +50,17 @@ package org.openwms.web.flex.client.common.business
             var call:AsyncToken = service.getAllTransportUnitTypes();
             call.addResponder(responder);
         }
+        
+        public function createTransportUnitType(transportUnitType:TransportUnitType):void
+        {
+            var call:AsyncToken = service.createTransportUnitType(transportUnitType);
+            call.addResponder(responder);
+        }
 
+        public function deleteTransportUnitTypes(transportUnitTypes:ArrayCollection):void
+        {
+            var call:AsyncToken = service.deleteTransportUnitTypes(transportUnitTypes);
+            call.addResponder(responder);
+        }
     }
 }

@@ -146,13 +146,13 @@ public class TransportUnit implements Serializable {
      * Weight of this {@link TransportUnit}.
      */
     @Column(name = "WEIGHT")
-    private BigDecimal weight;
+    private BigDecimal weight = new BigDecimal(0);
 
     /**
      * State of this {@link TransportUnit}.
      */
     @Column(name = "STATE")
-    private TU_STATE state;
+    private TU_STATE state = TU_STATE.AVAILABLE;
 
     /**
      * Version field.

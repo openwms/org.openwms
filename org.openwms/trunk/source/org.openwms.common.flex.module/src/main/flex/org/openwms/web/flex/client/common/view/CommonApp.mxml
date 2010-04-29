@@ -38,6 +38,7 @@
                 <mx:XMLList>
                     <menuitem label="Stock Configuration" targetPos="2">
                         <menuitem label="Transport Units" action="{CommonSwitchScreenEvent.SHOW_TRANSPORTUNIT_VIEW}" />
+                        <menuitem label="Transport Unit Types" action="{CommonSwitchScreenEvent.SHOW_TRANSPORTUNITTYPE_VIEW}" />
                         <menuitem label="Locations" action="{SwitchScreenEvent.SHOW_LOCATION_VIEW}" />
                         <menuitem label="Users" action="{SwitchScreenEvent.SHOW_USER_MGMT_VIEW}" />
                         <menuitem label="Location Groups" action="{SwitchScreenEvent.SHOW_LOCATIONGROUP_VIEW}" />
@@ -50,6 +51,7 @@
                 <view:LocationView name="locationView" />
                 <view:LocationGroupView name="locationGroupView" />
                 <view:TransportUnitView name="transportUnitView" />
+                <view:TransportUnitTypeView name="transportUnitTypeView" />
             </mx:ViewStack>
         </mx:HBox>
     </mx:VBox>
