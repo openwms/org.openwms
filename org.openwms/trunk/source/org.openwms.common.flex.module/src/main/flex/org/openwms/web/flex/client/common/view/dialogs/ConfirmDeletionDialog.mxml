@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<mx:Panel xmlns:mx="http://www.adobe.com/2006/mxml" width="594" height="358" creationComplete="init();" title="Delete TransportUnits">
+<mx:Panel xmlns:mx="http://www.adobe.com/2006/mxml" width="594" height="248" creationComplete="init();" title="Delete Transport Units">
 
     <mx:Script>
     	<![CDATA[
+    		import org.openwms.web.flex.client.common.event.TransportUnitEvent;
     		import org.openwms.common.domain.TransportUnit;
     		import mx.controls.listClasses.ListData;
             import mx.collections.ArrayCollection;
@@ -10,23 +11,32 @@
             import flash.events.KeyboardEvent;
             [Bindable]
             public var items:ArrayCollection;
+            [Bindable]
+            public var messageText:String = new String("Do you really want to delete?");
 
-            private function init():void
+            protected function init():void
             {
                 deleteBtn.setFocus();
                 this.addEventListener(KeyboardEvent.KEY_DOWN, keyEventHandler);
                 PopUpManager.centerPopUp(this);
             }
 
-            private function closeDialog(event:Event):void
+            protected function closeDialog(event:Event=null):void
             {
                 this.removeEventListener(KeyboardEvent.KEY_DOWN, keyEventHandler);
                 PopUpManager.removePopUp(this);
             }
 
-            private function keyEventHandler(event:KeyboardEvent):void
+            protected function accept(e:Event):void
             {
-                // ESC
+            	var event:TransportUnitEvent = new TransportUnitEvent(TransportUnitEvent.DELETE_TRANSPORT_UNIT);
+            	event.data = deleteLst.dataProvider as ArrayCollection;
+            	event.dispatch();
+            	closeDialog();
+            }
+
+            protected function keyEventHandler(event:KeyboardEvent):void
+            {
                 if(event.keyCode == 27)
                 {
                    closeDialog(event);
@@ -34,17 +44,18 @@
                 }
             }
             
-            private function formatFunction(item:TransportUnit):String
+            protected function formatFunction(item:*):String
             {
-                return item.transportUnitType+" with Barcode "+item.barcode+" on Location "+item.actualLocation;
+                return item.transportUnitType+"\twith Barcode\t"+item.barcode+"\ton Location\t"+item.actualLocation;
             }
+                        
     	]]>
     </mx:Script>
-	<mx:Canvas width="100%" height="100%">
-		<mx:Label text="Do you want to delete the selected Transport Units?" fontSize="24" textAlign="center" width="554" x="10" y="10"/>
-		<mx:List  width="554" height="225" labelFunction="formatFunction" dataProvider="{items}" enabled="false" alternatingItemColors="[#F1F07C, #FFFE9D]" y="53" x="10"/>
-		<mx:HBox width="554" horizontalAlign="center" x="10" y="286">
-			<mx:Button id="deleteBtn" label="Delete" fontSize="12"/>
+	<mx:Canvas width="100%">
+		<mx:Label text="{messageText}" fontSize="20" textAlign="center" width="554" x="10" y="10" />
+		<mx:List id="deleteLst" width="514" height="112" labelFunction="formatFunction" dataProvider="{items}" enabled="true" alternatingItemColors="[#B7BABC, #FFFFFF]" y="53" x="30"/>
+		<mx:HBox width="554" horizontalAlign="center" x="10" y="173">
+			<mx:Button id="deleteBtn" label="Delete" click="accept(event)" fontSize="12"/>
 			<mx:Button id="cancelBtn" label="Cancel" click="closeDialog(event)" fontSize="12"/>
 		</mx:HBox>
 	</mx:Canvas>

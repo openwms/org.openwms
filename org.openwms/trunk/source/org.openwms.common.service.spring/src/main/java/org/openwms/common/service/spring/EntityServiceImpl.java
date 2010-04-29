@@ -87,7 +87,6 @@ public class EntityServiceImpl<T extends Serializable, ID extends Serializable> 
     @Override
     @Transactional(readOnly = true)
     public List<T> findAll() {
-        logger.debug("findAll called");
         return dao.findAll();
     }
 
@@ -97,7 +96,6 @@ public class EntityServiceImpl<T extends Serializable, ID extends Serializable> 
     @Override
     @Transactional(readOnly = true)
     public List<T> findAll(Class<T> clazz) {
-        logger.debug("findAll(clazz) called");
         resolveTypeClass();
         dao.setPersistentClass(clazz);
         return dao.findAll();
@@ -108,7 +106,6 @@ public class EntityServiceImpl<T extends Serializable, ID extends Serializable> 
      */
     @Override
     public T save(T entity) {
-        logger.debug("save called");
         resolveTypeClass();
         dao.setPersistentClass(persistentClass);
         return dao.save(entity);
@@ -119,7 +116,6 @@ public class EntityServiceImpl<T extends Serializable, ID extends Serializable> 
      */
     @Override
     public void remove(T entity) {
-        logger.debug("Remove entity");
         resolveTypeClass();
         dao.setPersistentClass(persistentClass);
         entity = dao.save(entity);

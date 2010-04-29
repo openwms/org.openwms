@@ -62,6 +62,7 @@
                     return;                	
                 }
                 var pop:ConfirmDeletionDialog = ConfirmDeletionDialog(PopUpManager.createPopUp(this, ConfirmDeletionDialog, true));
+                pop.messageText = "Delete selected Transport Units";
                 pop.items = new ArrayCollection(transportUnitsGrid.selectedItems);
                 PopUpManager.centerPopUp(pop);
             }
@@ -75,7 +76,7 @@
             
             private function showDetails():void
             {
-                var pop:TransportUnitDetailsDialog = TransportUnitDetailsDialog(PopUpManager.createPopUp(this, TransportUnitDetailsDialog, false));
+                var pop:TransportUnitDetailsDialog = TransportUnitDetailsDialog(PopUpManager.createPopUp(this, TransportUnitDetailsDialog, true));
                 pop.transportUnits = new ArrayCollection(transportUnitsGrid.selectedItems);
                 PopUpManager.centerPopUp(pop);            	
             }

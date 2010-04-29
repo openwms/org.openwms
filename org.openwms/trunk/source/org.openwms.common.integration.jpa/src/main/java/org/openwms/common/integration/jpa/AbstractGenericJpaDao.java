@@ -132,13 +132,7 @@ public abstract class AbstractGenericJpaDao<T extends Serializable, ID extends S
     @Transactional(readOnly = true)
     @SuppressWarnings("unchecked")
     public List<T> findAll() {
-        List list = getJpaTemplate().findByNamedQuery(getFindAllQuery());
-        for (Object object : list) {
-            if (object instanceof Location) {
-                logger.debug(((Location) object).getDescription());
-            }
-        }
-        return list;
+        return getJpaTemplate().findByNamedQuery(getFindAllQuery());
     }
 
     /**

@@ -67,6 +67,7 @@ package org.openwms.web.flex.client.command
                     {
                         found = true;
                         modelLocator.allUsers[i] = user;
+                        modelLocator.allUsers.refresh();
                         trace("User found and replaced in List");
                         break;
                     }

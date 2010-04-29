@@ -33,6 +33,7 @@ package org.openwms.web.flex.client.common.event
     public class CommonSwitchScreenEvent extends SwitchScreenEvent
     {
         public static const SHOW_TRANSPORTUNIT_VIEW:String = "transportUnitView";
+        public static const SHOW_TRANSPORTUNITTYPE_VIEW:String = "transportUnitTypeView";
         
         public function CommonSwitchScreenEvent(type:String, bubbles:Boolean = false, cancelable:Boolean = false)
         {
