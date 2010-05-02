@@ -62,6 +62,8 @@
 
     <bean id="locationDao" class="org.openwms.common.integration.jpa.LocationDaoImpl"/>
 
+    <bean id="locationTypeDao" class="org.openwms.common.integration.jpa.LocationTypeDaoImpl"/>
+
     <bean id="locationGroupDao" class="org.openwms.common.integration.jpa.LocationGroupDaoImpl"/>
 
     <bean id="transportUnitDao" class="org.openwms.common.integration.jpa.TransportUnitDaoImpl"/>

@@ -36,6 +36,7 @@ package org.openwms.web.flex.client.common.model
 
         public var allTransportUnitTypes:ArrayCollection = new ArrayCollection();
         public var allLocations:ArrayCollection = new ArrayCollection();
+        public var allLocationTypes:ArrayCollection = new ArrayCollection();
         private static var instance:CommonModelLocator;
 
         /**

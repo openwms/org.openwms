@@ -21,9 +21,12 @@
 package org.openwms.web.flex.client.common.business
 {
     import com.adobe.cairngorm.business.ServiceLocator;
-
+    
+    import mx.collections.ArrayCollection;
     import mx.rpc.AsyncToken;
     import mx.rpc.IResponder;
+    
+    import org.openwms.common.domain.LocationType;
 
     /**
      * A LocationDelegate.
@@ -47,6 +50,23 @@ package org.openwms.web.flex.client.common.business
             var call:AsyncToken = service.findAll();
             call.addResponder(responder);
         }
+        
+        public function getLocationTypes():void
+        {
+            var call:AsyncToken = service.getAllLocationTypes();
+            call.addResponder(responder);
+        }
+        
+        public function createLocationType(locationType:LocationType):void
+        {
+            var call:AsyncToken = service.createLocationType(locationType);
+            call.addResponder(responder);        	
+        }
 
+        public function deleteLocationType(locationTypes:ArrayCollection):void
+        {
+            var call:AsyncToken = service.deleteLocationTypes(locationTypes);
+            call.addResponder(responder);            
+        }
     }
 }

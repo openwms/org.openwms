@@ -24,9 +24,5 @@ package org.openwms.common.domain {
     [RemoteClass(alias="org.openwms.common.domain.TransportUnit")]
     public class TransportUnit extends TransportUnitBase {
     	
-        public function get empty():Boolean {
-            return _empty;
-        }
-
     }
 }

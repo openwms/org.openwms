@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<mx:Panel xmlns:mx="http://www.adobe.com/2006/mxml" width="594" height="248" creationComplete="init();" title="Delete Transport Units">
+<mx:Panel xmlns:mx="http://www.adobe.com/2006/mxml" height="248" creationComplete="init();" title="Delete Transport Units" width="398">
 
     <mx:Script>
     	<![CDATA[
@@ -52,9 +52,9 @@
     	]]>
     </mx:Script>
 	<mx:Canvas width="100%">
-		<mx:Label text="{messageText}" fontSize="20" textAlign="center" width="554" x="10" y="10" />
-		<mx:List id="deleteLst" width="514" height="112" labelFunction="formatFunction" dataProvider="{items}" enabled="true" alternatingItemColors="[#B7BABC, #FFFFFF]" y="53" x="30"/>
-		<mx:HBox width="554" horizontalAlign="center" x="10" y="173">
+		<mx:Label id="messageTxt" text="{messageText}" fontSize="20" textAlign="center" y="10"  width="100%"/>
+		<mx:List id="deleteLst" height="112" labelFunction="formatFunction" dataProvider="{items}" enabled="true" alternatingItemColors="[#B7BABC, #FFFFFF]" y="53" x="10"  width="358"/>
+		<mx:HBox horizontalAlign="center" x="0" y="173" width="100%">
 			<mx:Button id="deleteBtn" label="Delete" click="accept(event)" fontSize="12"/>
 			<mx:Button id="cancelBtn" label="Cancel" click="closeDialog(event)" fontSize="12"/>
 		</mx:HBox>

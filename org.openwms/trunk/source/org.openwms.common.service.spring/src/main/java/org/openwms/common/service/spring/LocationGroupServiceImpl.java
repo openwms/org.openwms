@@ -82,7 +82,6 @@ public class LocationGroupServiceImpl extends EntityServiceImpl<LocationGroup, L
     @Transactional(readOnly = true)
     @Override
     public TreeNode<LocationGroup> getLocationGroupsAsTree() {
-        logger.debug("getLocationGroupsAsTree called");
         TreeNode<LocationGroup> tree = createTree(new TreeNodeImpl<LocationGroup>(), getLocationGroupsAsList());
         return tree;
     }
@@ -93,7 +92,6 @@ public class LocationGroupServiceImpl extends EntityServiceImpl<LocationGroup, L
     @Transactional(readOnly = true)
     @Override
     public List<LocationGroup> getLocationGroupsAsList() {
-        logger.debug("getLocationGroupsAsList called");
         List<LocationGroup> locationGroups = dao.findAll();
         return locationGroups;
     }

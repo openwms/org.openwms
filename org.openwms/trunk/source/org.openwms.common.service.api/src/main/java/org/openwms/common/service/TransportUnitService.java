@@ -109,4 +109,12 @@ public interface TransportUnitService<T extends TransportUnit> extends
 	 * @param transportUnitType A list of all instances to be deleted.
 	 */
 	void deleteTransportUnitTypes(List<TransportUnitType> transportUnitType);
+	
+	/**
+	 * Save an already persisted instance of {@link TransportUnitType}.
+	 * 
+	 * @param transportUnitType The instance to be updated
+	 * @return The updated instance
+	 */
+	TransportUnitType saveTransportUnitType(TransportUnitType transportUnitType);
 }

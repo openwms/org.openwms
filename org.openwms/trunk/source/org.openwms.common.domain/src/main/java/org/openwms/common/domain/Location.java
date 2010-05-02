@@ -113,7 +113,7 @@ public class Location implements Serializable {
     /**
      * Maximum allowed weight for this {@link Location}.
      */
-    @Column(name = "MAXIMUM_WEIGHT")
+    @Column(name = "MAXIMUM_WEIGHT", scale = 3)
     private BigDecimal maximumWeight;
 
     /**

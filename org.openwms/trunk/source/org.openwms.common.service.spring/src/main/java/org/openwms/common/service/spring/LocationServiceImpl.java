@@ -23,8 +23,12 @@ package org.openwms.common.service.spring;
 import java.util.List;
 
 import org.openwms.common.domain.Location;
+import org.openwms.common.domain.LocationType;
+import org.openwms.common.integration.GenericDao;
 import org.openwms.common.integration.LocationDao;
 import org.openwms.common.service.LocationService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -40,13 +44,41 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional
 public class LocationServiceImpl extends EntityServiceImpl<Location, Long> implements LocationService<Location> {
 
+    @Autowired
+    @Qualifier("locationTypeDao")
+    private GenericDao<LocationType, Long> locationTypeDao;
+
     /**
      * {@inheritDoc}
      */
     @Override
     @Transactional(readOnly = true)
     public List<Location> getAllLocations() {
-        logger.debug("GetAllLocations on service called");
         return ((LocationDao) dao).getAllLocations();
+    }
+    
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    @Transactional(readOnly = true)
+    public List<LocationType> getAllLocationTypes() {
+    	logger.debug("Get all location types");
+    	List<LocationType> list = locationTypeDao.findAll();
+    	logger.debug("List:"+list.size());
+    	return list;
+    }
+    
+    @Override
+    public void createLocationType(LocationType locationType) {
+    	locationTypeDao.persist(locationType);
+    }
+    
+    @Override
+    public void deleteLocationTypes(List<LocationType> locationTypes) {
+    	for (LocationType locationType : locationTypes) {
+    		locationType = locationTypeDao.save(locationType);
+    		locationTypeDao.remove(locationType);			
+		}
     }
 }

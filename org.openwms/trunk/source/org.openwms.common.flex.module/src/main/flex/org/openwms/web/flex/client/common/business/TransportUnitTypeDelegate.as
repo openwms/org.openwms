@@ -62,5 +62,11 @@ package org.openwms.web.flex.client.common.business
             var call:AsyncToken = service.deleteTransportUnitTypes(transportUnitTypes);
             call.addResponder(responder);
         }
+
+        public function saveTransportUnitType(transportUnitType:TransportUnitType):void
+        {
+            var call:AsyncToken = service.saveTransportUnitType(transportUnitType);
+            call.addResponder(responder);
+        }
     }
 }

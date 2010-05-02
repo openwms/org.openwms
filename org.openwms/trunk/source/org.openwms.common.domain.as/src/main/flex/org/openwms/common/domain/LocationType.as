@@ -23,5 +23,10 @@ package org.openwms.common.domain {
     [Bindable]
     [RemoteClass(alias="org.openwms.common.domain.LocationType")]
     public class LocationType extends LocationTypeBase {
+    	
+    	public function withType(type:String):void
+    	{
+    		this._type = type;
+    	}
     }
 }
