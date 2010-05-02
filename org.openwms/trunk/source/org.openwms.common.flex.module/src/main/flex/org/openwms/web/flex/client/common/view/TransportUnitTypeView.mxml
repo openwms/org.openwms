@@ -36,7 +36,6 @@
     <mx:Script>
     	<![CDATA[
     		import mx.events.ListEvent;
-    		import org.openwms.web.flex.client.common.view.dialogs.ConfirmDeletionTransportUnitTypesDialog;
     		import org.openwms.web.flex.client.common.event.TransportUnitTypeEvent;
     		import mx.collections.ArrayCollection;
     		import org.openwms.web.flex.client.common.view.dialogs.ConfirmDeletionDialog;
@@ -45,6 +44,9 @@
     		import org.openwms.common.domain.TransportUnitType;
     		import org.openwms.web.flex.client.common.model.CommonModelLocator;
     		import org.openwms.web.flex.client.common.view.dialogs.CreateTransportUnitTypeDialog;
+            import org.openwms.web.flex.client.common.view.dialogs.AssignmentLocationTypeDialog;
+            import org.openwms.web.flex.client.common.view.dialogs.ConfirmDeletionTransportUnitTypesDialog;
+
             [Bindable]
             private var commonModelLocator:CommonModelLocator = CommonModelLocator.getInstance();
             [Bindable]
@@ -79,18 +81,43 @@
             	selected = event.currentTarget.selectedItem as TransportUnitType;
             }
             
+            private function showAssignmentLocationTypeDialog():void
+            {
+                var pop:AssignmentLocationTypeDialog = AssignmentLocationTypeDialog(PopUpManager.createPopUp(this, AssignmentLocationTypeDialog, true));
+                pop.transportUnitType = selected;
+                PopUpManager.centerPopUp(pop);            	
+            }
+            
+            private function saveTransportUnit():void
+            {
+                var event:TransportUnitTypeEvent = new TransportUnitTypeEvent(TransportUnitTypeEvent.SAVE_TRANSPORT_UNIT_TYPE);
+                event.data = selected;
+                event.dispatch();
+            }
     	]]>
     </mx:Script>
-    <mx:HBox x="10" y="10" verticalAlign="middle">
+
+    <mx:Binding source="Number(heightTxt.text)" destination="selected.height" />
+    <mx:Binding source="Number(lengthTxt.text)" destination="selected.length" />
+    <mx:Binding source="Number(widthTxt.text)" destination="selected.width" />
+    <mx:Binding source="Number(weightTareTxt.text)" destination="selected.weightTare" />
+    <mx:Binding source="Number(weightMaxTxt.text)" destination="selected.weightMax" />
+    <mx:Binding source="descriptionTxt.text" destination="selected.description" />
+    <mx:Binding source="compatibilityTxt.text" destination="selected.compatibility" />
+    <mx:Binding source="(allowedLocationTypeLst.dataProvider as ArrayCollection)" destination="selected.typePlacingRules" />
+
+    <mx:HBox x="10" y="10" verticalAlign="middle" backgroundColor="#FFDE97" width="95%">
         <mx:Label x="10" y="10" text="Transport Unit Types" fontSize="24"/>
         <mx:VRule height="10"/>
-        <mx:Button id="addTUTBtn" buttonMode="true" mouseChildren="false" toolTip="Create a new Transport Unit Type" icon="@Embed(source='/assets/images/TransportUnit--Add.png')" click="showCreateTransportUnitTypeDialog()"/>
+        <mx:Button id="addTUTBtn" buttonMode="true" mouseChildren="false" toolTip="Create a new Transport Unit Type" icon="@Embed(source='/assets/images/TransportUnitType--Add.png')" click="showCreateTransportUnitTypeDialog()"/>
         <mx:VRule height="10"/>
-        <mx:Button id="removeTUTBtn" buttonMode="true" mouseChildren="false" toolTip="Delete an existing Transport Unit Type" icon="@Embed(source='/assets/images/TransportUnit--Delete.png')" click="showDeleteTransportUnitTypeDialog()" />
+        <mx:Button id="removeTUTBtn" buttonMode="true" mouseChildren="false" toolTip="Delete an existing Transport Unit Type" icon="@Embed(source='/assets/images/TransportUnitType--Delete.png')" click="showDeleteTransportUnitTypeDialog()" />
+        <mx:VRule height="10"/>
+        <mx:Button id="saveTUTBtn" buttonMode="true" mouseChildren="false" toolTip="Save an existing Transport Unit Type" icon="@Embed(source='/assets/images/TransportUnitType--Save.png')" click="saveTransportUnit()"  x="390" y="13"/>
     </mx:HBox>
     <mx:HRule x="10" y="43" width="95%"/>
-    <mx:HBox x="10" y="53" width="100%">
-        <mx:DataGrid id="transportUnitTypeGrd" dataProvider="{commonModelLocator.allTransportUnitTypes}" itemClick="changeSelection(event)" allowMultipleSelection="true" width="95%">
+    <mx:HBox x="10" y="53" width="95%">
+        <mx:DataGrid id="transportUnitTypeGrd" dataProvider="{commonModelLocator.allTransportUnitTypes}" itemClick="changeSelection(event)" allowMultipleSelection="true" width="100%">
             <mx:columns>
                 <mx:DataGridColumn headerText="Type" dataField="type"/>
                 <mx:DataGridColumn headerText="Length" dataField="length"/>
@@ -108,7 +135,7 @@
         <mx:Label x="351" y="40" text="Allowed on these Location Types :" fontWeight="bold" />
         <mx:Label x="351" y="188" text="Allowed on other Transport Unit Types :" fontWeight="bold" />
         <mx:Label x="46" y="40" text="Type :" />
-        <comp:SuggestComboBox x="173" y="38" id="transportUnitTypeCmb" labelField="type" dataProvider="{commonModelLocator.allTransportUnitTypes}"  width="160"/>
+        <mx:Text x="173" y="38" id="transportUnitTypeTxt" text="{selected.type}" width="160" fontWeight="bold"/>
         <mx:Label x="46" y="66" text="Height :" />
         <mx:Label x="46" y="92" text="Length :" />
         <mx:Label x="46" y="118" text="Width :" />
@@ -116,18 +143,18 @@
         <mx:Label x="46" y="170" text="Weight max :" />
         <mx:Label x="46" y="196" text="Description :" />
         <mx:Label x="46" y="268" text="Compatibility :" />
-        <mx:TextInput x="173" y="64" text="{selected.height}"/>
-        <mx:TextInput x="173" y="90" text="{selected.length}"/>
-        <mx:TextInput x="173" y="116" text="{selected.width}"/>
-        <mx:TextInput x="173" y="142" text="{selected.weightTare}"/>
-        <mx:TextInput x="173" y="168" text="{selected.weightMax}"/>
-        <mx:TextArea x="173" y="195" text="{selected.description}" height="64"/>
-        <mx:TextArea x="173" y="267" text="{selected.compatibility}" height="64"/>
+        <mx:TextInput id="heightTxt" x="173" y="64" text="{selected.height}"/>
+        <mx:TextInput id="lengthTxt" x="173" y="90" text="{selected.length}"/>
+        <mx:TextInput id="widthTxt" x="173" y="116" text="{selected.width}"/>
+        <mx:TextInput id="weightTareTxt" x="173" y="142" text="{selected.weightTare}"/>
+        <mx:TextInput id="weightMaxTxt" x="173" y="168" text="{selected.weightMax}"/>
+        <mx:TextArea id="descriptionTxt" x="173" y="195" text="{selected.description}" height="64"/>
+        <mx:TextArea id="compatibilityTxt" x="173" y="267" text="{selected.compatibility}" height="64"/>
         <mx:VRule x="341" y="38" height="344"/>
         <mx:VRule x="635" y="40" height="344"/>
-        <mx:List x="351" y="63" width="228" height="117" labelField="allowedLocationType" dataProvider="{selected.typePlacingRules}" />
-        <mx:List x="351" y="214" width="228" height="117" labelField="allowedTransportUnitType" dataProvider="{selected.typeStackingRules}" />
-        <mx:Button id="editAllowedTransportUnitTypesBtn" buttonMode="true" mouseChildren="false" toolTip="Modify the allowed Transport Unit Types that can be placed on this Transport Unit Type" icon="@Embed(source='/assets/images/TransportUnit--Edit.png')" click="showCreateTransportUnitTypeDialog()" x="587" y="215"/>
-        <mx:Button id="editAllowedLocationTypesBtn" buttonMode="true" mouseChildren="false" toolTip="Modify the allowed Location Types where this Transport Unit Type can be placed on" icon="@Embed(source='/assets/images/TransportUnit--Edit.png')" click="showCreateTransportUnitTypeDialog()" x="587" y="64"/>
+        <mx:List id="allowedLocationTypeLst" x="351" y="63" width="276" height="117" labelField="allowedLocationType" dataProvider="{selected.typePlacingRules}" />
+        <mx:List id="allowedTransportUnitTypeLst" x="351" y="214" width="276" height="117" labelField="allowedTransportUnitType" dataProvider="{selected.typeStackingRules}" />
+        <mx:Image id="editAllowedLocationTypesBtn" buttonMode="true" mouseChildren="false" toolTip="Modify the allowed Location Types where this Transport Unit Type can be placed on" source="@Embed(source='/assets/images/TransportUnitType--Edit.png')" click="showAssignmentLocationTypeDialog()" x="555" y="36"/>
+        <mx:Image id="editAllowedTransportUnitTypesBtn" buttonMode="true" mouseChildren="false" toolTip="Modify the allowed Transport Unit Types that can be placed on this Transport Unit Type" source="@Embed(source='/assets/images/TransportUnitType--Edit.png')" click="showCreateTransportUnitTypeDialog()" x="587" y="186"/>
     </mx:Canvas>
 </mx:Canvas>

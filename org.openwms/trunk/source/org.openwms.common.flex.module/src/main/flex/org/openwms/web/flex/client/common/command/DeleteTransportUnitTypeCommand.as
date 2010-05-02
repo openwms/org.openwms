@@ -26,7 +26,6 @@ package org.openwms.web.flex.client.common.command
     import mx.collections.ArrayCollection;
     import mx.controls.Alert;
     import mx.rpc.IResponder;
-    import mx.rpc.events.FaultEvent;
     
     import org.openwms.web.flex.client.common.business.TransportUnitTypeDelegate;
     import org.openwms.web.flex.client.common.event.TransportUnitTypeEvent;
@@ -52,7 +51,6 @@ package org.openwms.web.flex.client.common.command
 
         public function fault(info:Object):void
         {
-            var fault:FaultEvent = info as FaultEvent;
             Alert.show("Could not delete Transport Unit Type");
         }
 

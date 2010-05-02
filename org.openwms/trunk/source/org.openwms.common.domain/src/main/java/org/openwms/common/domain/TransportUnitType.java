@@ -35,8 +35,6 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Version;
 
-import org.openwms.common.domain.system.Message;
-
 /**
  * A TransportUnitType - Defines a type for {@link TransportUnit}s
  * <p>
@@ -107,13 +105,13 @@ public class TransportUnitType implements Serializable {
     /**
      * Tare weight of the {@link TransportUnit}.
      */
-    @Column(name = "WEIGHT_TARE", precision = 5)
+    @Column(name = "WEIGHT_TARE", scale = 3)
     private BigDecimal weightTare;
 
     /**
      * Maximum weight of this {@link TransportUnit}.
      */
-    @Column(name = "WEIGHT_MAX", precision = 5)
+    @Column(name = "WEIGHT_MAX", scale = 3)
     private BigDecimal weightMax;
 
     /**

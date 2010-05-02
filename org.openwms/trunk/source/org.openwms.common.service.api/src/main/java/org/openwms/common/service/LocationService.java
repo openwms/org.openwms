@@ -23,6 +23,7 @@ package org.openwms.common.service;
 import java.util.List;
 
 import org.openwms.common.domain.Location;
+import org.openwms.common.domain.LocationType;
 
 /**
  * A LocationService - Extends the {@link EntityService} interface about some
@@ -42,11 +43,33 @@ import org.openwms.common.domain.Location;
 public interface LocationService<T extends Location> extends EntityService<Location> {
 
     /**
-     * Return a {@link java.util.List} of all {@link Location}s not sorted and
-     * not filtered.
+     * Return a list of all {@link Location}s not sorted and
+     * not filtered in natural order.
      * 
      * @return All {@link Location}s as a list
      */
     List<T> getAllLocations();
+    
+    /**
+     * Return a list of all {@link LocationType}s not sorted and
+     * not filtered in natural order.
+     * 
+     * @return All {@link LocationType}s as a list
+     */
+    List<LocationType> getAllLocationTypes();
+    
+    /**
+     * Create a new {@link LocationType}.
+     * 
+     * @param locationType The type to be created
+     */
+    void createLocationType(LocationType locationType);
+    
+    /**
+     * Delete already persisted {@link LocationType} instances.
+     * 
+     * @param locationTypes A list of all instances to be deleted.
+     */
+    void deleteLocationTypes(List<LocationType> locationTypes);
 
 }

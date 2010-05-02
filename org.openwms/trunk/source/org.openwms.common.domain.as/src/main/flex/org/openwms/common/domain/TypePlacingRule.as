@@ -23,5 +23,15 @@ package org.openwms.common.domain {
     [Bindable]
     [RemoteClass(alias="org.openwms.common.domain.TypePlacingRule")]
     public class TypePlacingRule extends TypePlacingRuleBase {
+    	
+    	public function withTransportUnitType(transportUnitType:TransportUnitType)
+    	{
+    		this._transportUnitType = transportUnitType;
+    	}
+    	
+    	public function withLocationType(locationType:LocationType)
+    	{
+    		this._allowedLocationType = locationType;
+    	}
     }
 }

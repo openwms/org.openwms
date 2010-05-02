@@ -61,6 +61,7 @@ public class LocationDaoImpl extends AbstractGenericJpaDao<Location, Long> imple
      * @return A List of all {@link Location}s
      * @see org.openwms.common.integration.LocationDao#getAllLocations()
      */
+    @Override
     @Transactional(readOnly = true)
     @SuppressWarnings("unchecked")
     public List<Location> getAllLocations() {

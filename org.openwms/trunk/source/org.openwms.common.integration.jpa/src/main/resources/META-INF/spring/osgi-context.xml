@@ -34,6 +34,7 @@
     <osgi:service ref="transactionManager" interface="org.springframework.transaction.PlatformTransactionManager" />
     <osgi:service ref="entityManagerFactory" interface="javax.persistence.EntityManagerFactory" />
 	<osgi:service ref="locationDao" interface="org.openwms.common.integration.LocationDao"/>
+    <osgi:service ref="locationTypeDao" interface="org.openwms.common.integration.LocationTypeDao"/>
     <osgi:service ref="locationGroupDao" interface="org.openwms.common.integration.LocationGroupDao"/>
     <osgi:service ref="transportUnitDao" interface="org.openwms.common.integration.TransportUnitDao"/>
     <osgi:service ref="transportUnitTypeDao" interface="org.openwms.common.integration.TransportUnitTypeDao"/>

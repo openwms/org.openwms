@@ -21,12 +21,13 @@
 package org.openwms.common.domain;
 
 import java.io.Serializable;
-import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.persistence.Version;
 
@@ -45,9 +46,22 @@ import javax.persistence.Version;
  */
 @Entity
 @Table(name = "LOCATION_TYPE")
+@NamedQueries( {
+        @NamedQuery(name = LocationType.NQ_FIND_ALL, query = "select l from LocationType l"),
+        @NamedQuery(name = LocationType.NQ_FIND_BY_UNIQUE_QUERY, query = "select l from LocationType l where l.type = ?1")})
 public class LocationType implements Serializable {
 
     private static final long serialVersionUID = 1L;
+
+    /**
+     * Query to find all {@link LocationType}s.
+     */
+    public static final String NQ_FIND_ALL = "LocationType.findAll";
+    /**
+     * Query to find <strong>one</strong> {@link LocationType} by its natural key.
+     */
+    public static final String NQ_FIND_BY_UNIQUE_QUERY = "LocationType.findByUniqueId";
+
 
     /**
      * Default value of the description, by default
@@ -56,10 +70,17 @@ public class LocationType implements Serializable {
     public static final String DEF_TYPE_DESCRIPTION = "--";
 
     /**
-     * Type of this {@link LocationType}.
+     * Unique technical key.
      */
     @Id
-    @Column(name = "TYPE")
+    @Column(name = "ID")
+    @GeneratedValue
+    private Long id;
+
+    /**
+     * Type of this {@link LocationType}.
+     */
+    @Column(name = "TYPE", unique = true)
     private String type;
 
     /**
@@ -92,13 +113,6 @@ public class LocationType implements Serializable {
     @Version
     private long version;
 
-    /* ------------------- collection mapping ------------------- */
-    /**
-     * All {@link LocationType}s belonging to this type.
-     */
-    @OneToMany(mappedBy = "locationType")
-    private Set<Location> locations;
-
     /* ----------------------------- methods ------------------- */
     /**
      * Accessed by persistence provider.
@@ -115,6 +129,25 @@ public class LocationType implements Serializable {
     public LocationType(String type) {
         super();
         this.type = type;
+    }
+
+    /**
+     * Return the technical key.
+     * 
+     * @return The technical, unique key
+     */
+    public Long getId() {
+        return this.id;
+    }
+
+    /**
+     * Checks if the instance is transient.
+     * 
+     * @return true: Entity is not present on the persistent storage.<br>
+     *         false : Entity already exists on the persistence storage
+     */
+    public boolean isNew() {
+        return this.id == null;
     }
 
     /**
@@ -200,27 +233,6 @@ public class LocationType implements Serializable {
      */
     public void setHeight(int height) {
         this.height = height;
-    }
-
-    /**
-     * Get all {@link LocationType}s belonging to this {@link LocationType}.
-     * 
-     * @return All {@link LocationType}s belonging to this {@link LocationType}
-     */
-    public Set<Location> getLocations() {
-        return this.locations;
-    }
-
-    /**
-     * Set a {@java.util.Set} of {@link Location}s belonging to
-     * this {@link LocationType}. Already existing {@link Location}s will be
-     * removed.
-     * 
-     * @param locations
-     *            A collection of {@link Location} to assign to this type
-     */
-    public void setLocations(Set<Location> locations) {
-        this.locations = locations;
     }
 
     /**

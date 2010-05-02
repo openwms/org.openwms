@@ -34,6 +34,7 @@ package org.openwms.web.flex.client.common.event
     {
         public static const SHOW_TRANSPORTUNIT_VIEW:String = "transportUnitView";
         public static const SHOW_TRANSPORTUNITTYPE_VIEW:String = "transportUnitTypeView";
+        public static const SHOW_LOCATIONTYPE_VIEW:String = "locationTypeView";
         
         public function CommonSwitchScreenEvent(type:String, bubbles:Boolean = false, cancelable:Boolean = false)
         {

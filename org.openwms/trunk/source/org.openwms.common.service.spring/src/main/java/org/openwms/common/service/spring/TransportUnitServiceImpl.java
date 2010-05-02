@@ -118,6 +118,14 @@ public class TransportUnitServiceImpl extends EntityServiceImpl<TransportUnit, L
         	transportUnitTypeDao.remove(transportUnitType);			
 		}
     }
+    
+    @Override
+    public TransportUnitType saveTransportUnitType(
+    		TransportUnitType transportUnitType) {
+    	TransportUnitType tut = transportUnitTypeDao.save(transportUnitType);
+    	logger.debug("Save a TransportUnitType, list of typePlacingRules:"+tut.getTypePlacingRules().size());
+    	return tut;
+    }
 
     /**
      * @see org.openwms.common.service.TransportUnitService#moveTransportUnit(org.openwms.common.domain.values.Barcode,

@@ -27,7 +27,6 @@ package org.openwms.web.flex.client.common.view.dialogs
     
     import org.openwms.common.domain.TransportUnitType;
     import org.openwms.web.flex.client.common.event.TransportUnitTypeEvent;
-    import org.openwms.web.flex.client.component.SuperPanel;
     
     /**
      * A ConfirmDeletionTransportUnitTypesDialog.

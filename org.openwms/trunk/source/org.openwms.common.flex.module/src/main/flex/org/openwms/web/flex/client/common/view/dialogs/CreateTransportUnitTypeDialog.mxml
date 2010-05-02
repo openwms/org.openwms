@@ -16,7 +16,6 @@
                 PopUpManager.centerPopUp(this);
 			}
 
-
             private function closeDialog(event:Event=null):void
             {
                 this.removeEventListener(KeyboardEvent.KEY_DOWN, keyEventHandler);

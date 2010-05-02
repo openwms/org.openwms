@@ -127,22 +127,16 @@
 
 	<mx:HBox width="100%">
 		<mx:Label text="User Settings" fontSize="14" fontWeight="bold" />
-		<mx:Button id="addUserBtn" label="New User" click="fireAddUserEvent()" >
-			<mx:icon>@Embed(source='../../../../../../../../../../src/main/resources/assets/icons/fuegue/user--plus.png')</mx:icon>
-		</mx:Button>
-		<mx:Button id="saveUserBtn" label="Save User" click="fireSaveUserEvent()" >
-			<mx:icon>@Embed(source='../../../../../../../../../../src/main/resources/assets/icons/fuegue/user--pencil.png')</mx:icon>
-		</mx:Button>
-		<mx:Button id="deleteUserBtn" label="Delete User" click="fireDeleteUserEvent()" >
-			<mx:icon>@Embed(source='../../../../../../../../../../src/main/resources/assets/icons/fuegue/user--minus.png')</mx:icon>
-		</mx:Button>
+		<mx:Button id="addUserBtn" label="New" buttonMode="true" mouseChildren="false" toolTip="Create a new User" icon="@Embed(source='/assets/icons/fuegue/user--plus.png')" click="fireAddUserEvent()" />
+        <mx:Button id="deleteUserBtn" label="Delete" buttonMode="true" mouseChildren="false" toolTip="Delete an User" icon="@Embed(source='/assets/icons/fuegue/user--minus.png')" click="fireDeleteUserEvent()" />
+		<mx:Button id="saveUserBtn" label="Save" buttonMode="true" mouseChildren="false" toolTip="Save an already existing User" icon="@Embed(source='/assets/icons/fuegue/user--pencil.png')" click="fireSaveUserEvent()" />
 	</mx:HBox>
 	<mx:HBox width="100%" height="100%">
 		<mx:VBox label="General Information" height="100%">
 			<mx:Image id="userImg" source="{modelLocator.selectedUser.userDetails.image}" width="100" height="150"
 				click="showFileUploadDialog()" />
-			<mx:Button label="Change Picture" click="showFileUploadDialog()" />
-			<mx:Button label="Change Password" click="showFileUploadDialog()" />
+			<mx:Button id="changePictureBtn" label="Picture" buttonMode="true" mouseChildren="false" toolTip="Change the picture of an User" icon="@Embed(source='assets/images/icons/picture--edit.png')" click="showFileUploadDialog()" />
+			<mx:Button id="changePasswordBtn" label="Password" buttonMode="true" mouseChildren="false" toolTip="Change the password of an User" icon="@Embed(source='assets/images/icons/key--edit.png')" click="showFileUploadDialog()" />
 		</mx:VBox>
 		<mx:TabNavigator height="100%" width="100%">
 			<mx:VBox label="General Information" width="100%" height="100%">
