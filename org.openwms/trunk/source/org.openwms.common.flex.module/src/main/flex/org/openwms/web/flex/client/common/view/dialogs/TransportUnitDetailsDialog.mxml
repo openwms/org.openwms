@@ -129,7 +129,7 @@
 		<mx:Label x="170" y="171" id="createdDt" text="{transportUnit.creationDate}" width="261" />
 		<mx:Label x="170" y="133" id="invLbl" text="{transportUnit.inventoryUser}" width="261"/>
 		<mx:Label x="170" y="199" id="weightLbl" width="261" text="{transportUnit.weight}"/>
-		<mx:CheckBox x="170" y="225" label="is empty" id="emptyChk" />
+		<mx:CheckBox x="170" y="225" label="is empty" id="emptyChk" selected="{transportUnit.isEmpty()}" />
 		<mx:HBox x="10" y="441" width="100%" verticalAlign="middle" horizontalAlign="center">
 			<mx:Button label="Save" id="saveBtn"/>
 			<mx:Button label="Cancel" id="cancelBtn" click="closeDialog(event)"/>

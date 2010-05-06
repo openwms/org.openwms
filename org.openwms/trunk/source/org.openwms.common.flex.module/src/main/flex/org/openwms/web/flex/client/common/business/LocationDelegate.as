@@ -26,6 +26,7 @@ package org.openwms.web.flex.client.common.business
     import mx.rpc.AsyncToken;
     import mx.rpc.IResponder;
     
+    import org.openwms.common.domain.Location;
     import org.openwms.common.domain.LocationType;
 
     /**
@@ -51,6 +52,24 @@ package org.openwms.web.flex.client.common.business
             call.addResponder(responder);
         }
         
+        public function createLocation(location:Location):void
+        {
+            var call:AsyncToken = service.addEntity(location);
+            call.addResponder(responder);           
+        }
+
+        public function deleteLocation(location:Location):void
+        {
+            var call:AsyncToken = service.remove(location);
+            call.addResponder(responder);            
+        }
+
+        public function saveLocation(location:Location):void
+        {
+            var call:AsyncToken = service.save(location);
+            call.addResponder(responder);            
+        }
+
         public function getLocationTypes():void
         {
             var call:AsyncToken = service.getAllLocationTypes();

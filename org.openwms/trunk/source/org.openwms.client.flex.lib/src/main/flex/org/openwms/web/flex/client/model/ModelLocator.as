@@ -48,7 +48,7 @@ package org.openwms.web.flex.client.model
 
         public const UPLOAD_URL:String = "/openwms/upload";
         public const DIRECTORY_NAME:String = "data";
-        public const DT_FORMAT:String = "DD.MM.YYYY";
+        public static const DT_FORMAT_STRING:String = "DD.MM.YYYY HH:NN:SS";
 
         public var allLocationGroups:ArrayCollection = new ArrayCollection();
         public var allLocations:ArrayCollection = new ArrayCollection();

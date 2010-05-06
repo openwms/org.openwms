@@ -36,5 +36,10 @@ package org.openwms.common.domain {
 	            _z = z;
             }
         }
+        
+        public function toString():String
+        {
+        	return _area+"/"+_aisle+"/"+_x+"/"+_y+"/"+_z;
+        }
     }
 }

@@ -47,7 +47,6 @@ package org.openwms.web.flex.client.common.command
 
         public function result(data:Object):void
         {
-            trace("Receiving result in LoadLocationsCommand");
             var rawResult:ArrayCollection = (data as ResultEvent).result as ArrayCollection;
             modelLocator.allLocations = (data as ResultEvent).result as ArrayCollection;
         }
@@ -60,11 +59,8 @@ package org.openwms.web.flex.client.common.command
 
         public function execute(event:CairngormEvent):void
         {
-            if (modelLocator.allLocations.length == 0)
-            {
-                var delegate:LocationDelegate = new LocationDelegate(this)
-                delegate.getLocations();
-            }
+            var delegate:LocationDelegate = new LocationDelegate(this)
+            delegate.getLocations();
         }
 
     }

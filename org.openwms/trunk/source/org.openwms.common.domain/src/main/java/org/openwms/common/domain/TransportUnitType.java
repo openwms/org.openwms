@@ -50,7 +50,7 @@ import javax.persistence.Version;
 @Entity
 @Table(name = "TRANSPORT_UNIT_TYPE")
 @NamedQueries( {
-        @NamedQuery(name = TransportUnitType.NQ_FIND_ALL, query = "select tut from TransportUnitType tut"),
+        @NamedQuery(name = TransportUnitType.NQ_FIND_ALL, query = "select tut from TransportUnitType tut order by tut.type"),
         @NamedQuery(name = TransportUnitType.NQ_FIND_BY_NAME, query = "select tut from TransportUnitType tut where tut.type = ?1") })
 public class TransportUnitType implements Serializable {
 
