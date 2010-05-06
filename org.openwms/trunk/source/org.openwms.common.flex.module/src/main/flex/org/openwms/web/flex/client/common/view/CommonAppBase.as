@@ -41,6 +41,7 @@ package org.openwms.web.flex.client.common.view
 	import org.openwms.web.flex.client.common.command.LoadLocationsCommand;
 	import org.openwms.web.flex.client.common.command.LoadTransportUnitTypesCommand;
 	import org.openwms.web.flex.client.common.command.SaveLocationCommand;
+	import org.openwms.web.flex.client.common.command.SaveLocationTypeCommand;
 	import org.openwms.web.flex.client.common.command.SaveTransportUnitTypeCommand;
 	import org.openwms.web.flex.client.common.command.ShowLocationGroupCommand;
 	import org.openwms.web.flex.client.common.command.ShowLocationViewCommand;
@@ -159,6 +160,7 @@ package org.openwms.web.flex.client.common.view
             mainController.unregisterHandler(LocationTypeEvent.LOAD_ALL_LOCATION_TYPES);
             mainController.unregisterHandler(LocationTypeEvent.CREATE_LOCATION_TYPE);
             mainController.unregisterHandler(LocationTypeEvent.DELETE_LOCATION_TYPE);
+            mainController.unregisterHandler(LocationTypeEvent.SAVE_LOCATION_TYPE);
 
             mainController.unregisterHandler(TransportUnitTypeEvent.LOAD_ALL_TRANSPORT_UNIT_TYPES);
             mainController.unregisterHandler(TransportUnitTypeEvent.CREATE_TRANSPORT_UNIT_TYPE);
@@ -188,6 +190,7 @@ package org.openwms.web.flex.client.common.view
             mainController.registerHandler(LocationTypeEvent.LOAD_ALL_LOCATION_TYPES, LoadLocationTypeCommand);
             mainController.registerHandler(LocationTypeEvent.CREATE_LOCATION_TYPE, CreateLocationTypeCommand);
             mainController.registerHandler(LocationTypeEvent.DELETE_LOCATION_TYPE, DeleteLocationTypeCommand);
+            mainController.registerHandler(LocationTypeEvent.SAVE_LOCATION_TYPE, SaveLocationTypeCommand);
 
             mainController.registerHandler(TransportUnitTypeEvent.LOAD_ALL_TRANSPORT_UNIT_TYPES, LoadTransportUnitTypesCommand);
             mainController.registerHandler(TransportUnitTypeEvent.CREATE_TRANSPORT_UNIT_TYPE, CreateTransportUnitTypeCommand);

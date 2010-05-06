@@ -71,5 +71,14 @@ public interface LocationService<T extends Location> extends EntityService<Locat
      * @param locationTypes A list of all instances to be deleted.
      */
     void deleteLocationTypes(List<LocationType> locationTypes);
+    
+    /**
+     * Saves a {@link LocationType}.
+     * 
+     * @param locationType The type to save
+     * @return The saved type
+     */
+    LocationType saveLocationType(LocationType locationType);
+    
 
 }
