@@ -22,7 +22,7 @@
  */
 -->
 <mx:VBox xmlns:mx="http://www.adobe.com/2006/mxml" width="100%" height="100%" styleName="frameContainerSkin"
-	paddingBottom="5" paddingLeft="5" paddingRight="5" paddingTop="5" creationComplete="init()">
+	paddingBottom="5" paddingLeft="5" paddingRight="5" paddingTop="5" creationComplete="init()" verticalGap="10">
 	<mx:Script>
 		<![CDATA[
 			import mx.validators.RegExpValidationResult;
@@ -125,20 +125,24 @@
     <mx:Binding source="tiComment.text" destination="modelLocator.selectedUser.userDetails.comment" />
 	<mx:Binding source="sexRb.selection.value as UserDetails$SEX" destination="modelLocator.selectedUser.userDetails.sex" />
 
-	<mx:HBox width="100%">
+	<mx:HBox width="95%" horizontalGap="8" verticalAlign="middle">
 		<mx:Label text="User Settings" fontSize="14" fontWeight="bold" />
-		<mx:Button id="addUserBtn" label="New" buttonMode="true" mouseChildren="false" toolTip="Create a new User" icon="@Embed(source='/assets/icons/fuegue/user--plus.png')" click="fireAddUserEvent()" />
-        <mx:Button id="deleteUserBtn" label="Delete" buttonMode="true" mouseChildren="false" toolTip="Delete an User" icon="@Embed(source='/assets/icons/fuegue/user--minus.png')" click="fireDeleteUserEvent()" />
-		<mx:Button id="saveUserBtn" label="Save" buttonMode="true" mouseChildren="false" toolTip="Save an already existing User" icon="@Embed(source='/assets/icons/fuegue/user--pencil.png')" click="fireSaveUserEvent()" />
+        <mx:VRule height="10"/>
+		<mx:Button id="addUserBtn" buttonMode="true" mouseChildren="false" toolTip="Create a new User" icon="@Embed(source='/assets/icons/fuegue/user--plus.png')" click="fireAddUserEvent()" />
+        <mx:VRule height="10"/>
+        <mx:Button id="deleteUserBtn" buttonMode="true" mouseChildren="false" toolTip="Delete an User" icon="@Embed(source='/assets/icons/fuegue/user--minus.png')" click="fireDeleteUserEvent()" />
+        <mx:VRule height="10"/>
+		<mx:Button id="saveUserBtn" buttonMode="true" mouseChildren="false" toolTip="Save an already existing User" icon="@Embed(source='/assets/icons/fuegue/user--pencil.png')" click="fireSaveUserEvent()" />
 	</mx:HBox>
-	<mx:HBox width="100%" height="100%">
-		<mx:VBox label="General Information" height="100%">
+	<mx:HRule width="95%"/>
+	<mx:HBox width="95%" height="100%" horizontalGap="10">
+		<mx:VBox label="General Information" verticalGap="8">
 			<mx:Image id="userImg" source="{modelLocator.selectedUser.userDetails.image}" width="100" height="150"
 				click="showFileUploadDialog()" />
 			<mx:Button id="changePictureBtn" label="Picture" buttonMode="true" mouseChildren="false" toolTip="Change the picture of an User" icon="@Embed(source='assets/images/icons/picture--edit.png')" click="showFileUploadDialog()" />
 			<mx:Button id="changePasswordBtn" label="Password" buttonMode="true" mouseChildren="false" toolTip="Change the password of an User" icon="@Embed(source='assets/images/icons/key--edit.png')" click="showFileUploadDialog()" />
 		</mx:VBox>
-		<mx:TabNavigator height="100%" width="100%">
+		<mx:TabNavigator>
 			<mx:VBox label="General Information" width="100%" height="100%">
 				<mx:Form width="100%">
 

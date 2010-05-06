@@ -21,10 +21,11 @@
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
 -->
-<mx:Canvas xmlns:mx="http://www.adobe.com/2006/mxml" width="100%" height="100%" backgroundColor="#C2DAEF" >
+<mx:Canvas xmlns:mx="http://www.adobe.com/2006/mxml" width="100%" height="100%" backgroundColor="#C2DAEF" show="onShow()">
 
     <mx:Script>
     	<![CDATA[
+    		import org.openwms.web.flex.client.common.event.LocationTypeEvent;
     		import mx.collections.ArrayCollection;
     		import mx.controls.Alert;
             import org.openwms.web.flex.client.common.view.dialogs.ConfirmDeletionLocationTypeDialog;
@@ -35,6 +36,14 @@
             [Bindable]
             private var commonModelLocator:CommonModelLocator = CommonModelLocator.getInstance();
 
+            private function onShow():void
+            {
+            	if (commonModelLocator.allLocationTypes.length == 0)
+            	{
+            	   new LocationTypeEvent(LocationTypeEvent.LOAD_ALL_LOCATION_TYPES).dispatch();
+            	}
+            }
+            
             private function showCreateLocationTypeDialog():void
             {
                 var pop:CreateLocationTypeDialog = CreateLocationTypeDialog(PopUpManager.createPopUp(this, CreateLocationTypeDialog, true));
@@ -57,14 +66,14 @@
     	]]>
     </mx:Script>
 
-	<mx:HBox x="10" y="10" verticalAlign="middle">
+	<mx:HBox x="10" y="10" verticalAlign="middle" width="95%" backgroundColor="#92FC95">
 	    <mx:Label x="10" y="10" text="Location Types" fontSize="24"/>
 	    <mx:VRule height="10"/>
 	    <mx:Button id="addLocationTypeBtn" buttonMode="true" mouseChildren="false" toolTip="Create a new Location Type" icon="@Embed(source='/assets/images/LocationType--Add.png')" click="showCreateLocationTypeDialog()" />
 	    <mx:VRule height="10"/>
 	    <mx:Button id="removeLocationTypeBtn" buttonMode="true" mouseChildren="false" toolTip="Delete an existing Location Type" icon="@Embed(source='/assets/images/LocationType--Delete.png')" click="showDeleteLocationTypeDialog()" />
 	</mx:HBox>
-	<mx:HBox x="10" y="53" width="100%">
+	<mx:HBox x="10" y="63" width="95%" height="100%">
 	    <mx:DataGrid id="locationTypeGrd" dataProvider="{commonModelLocator.allLocationTypes}" allowMultipleSelection="true" width="638">
 	        <mx:columns>
 	            <mx:DataGridColumn headerText="Type" dataField="type"/>
@@ -76,6 +85,6 @@
 	        </mx:columns>
 	    </mx:DataGrid>
 	</mx:HBox>
-	<mx:HRule x="10" y="43" width="95%"/>
+	<mx:HRule x="10" y="53" width="95%"/>
 	
 </mx:Canvas>

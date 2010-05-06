@@ -31,6 +31,9 @@ package org.openwms.web.flex.client.common.event
     public class LocationEvent extends CairngormEvent
     {
         public static const LOAD_ALL_LOCATIONS:String = "LoadAllLocations";
+        public static const CREATE_LOCATION:String = "Create_Location";
+        public static const DELETE_LOCATION:String = "Delete_Location";
+        public static const SAVE_LOCATION:String = "Save_Location";
 
         public function LocationEvent(type:String, bubbles:Boolean = false, cancelable:Boolean = false)
         {

@@ -25,6 +25,7 @@
 
 	<mx:Script>
     	<![CDATA[
+    		import mx.events.ListEvent;
     		import flash.events.MouseEvent;
     		import mx.collections.ArrayCollection;
     		import org.openwms.web.flex.client.common.event.TransportUnitEvent;
@@ -42,6 +43,8 @@
             private var modelLocator:ModelLocator = ModelLocator.getInstance();
             [Bindable]
             private var modelLocator2:CommonModelLocator = CommonModelLocator.getInstance();
+            [Bindable]
+            private var selected:TransportUnit;
             private static var tu:TransportUnit = new TransportUnit();
             
     		public function onStartup():void {
@@ -81,23 +84,27 @@
                 PopUpManager.centerPopUp(pop);            	
             }
 
+            private function onRowClick(event:ListEvent):void {
+                selected = (event.currentTarget.selectedItem) as TransportUnit;
+            }
+
     	]]>
 	</mx:Script>
-	<mx:HBox x="10" y="10" verticalAlign="middle" width="95%">
+	<mx:HBox x="10" y="10" verticalAlign="middle" width="95%" backgroundColor="#F9FBB7">
 	    <mx:Label x="10" y="10" text="Transport Units" fontSize="24"/>
 	    <mx:VRule height="10"/>
-	    <mx:Button id="transportUnitCreateBtn" label="New" buttonMode="true" mouseChildren="false" toolTip="Create a new Transport Unit" icon="@Embed(source='/assets/images/TransportUnit--Add.png')" click="showCreateTransportUnitDialog()"/>
+	    <mx:Button id="transportUnitCreateBtn" buttonMode="true" mouseChildren="false" toolTip="Create a new Transport Unit" icon="@Embed(source='/assets/images/TransportUnit--Add.png')" click="showCreateTransportUnitDialog()"/>
 	    <mx:VRule height="10"/>
-	    <mx:Button id="transportUnitDeleteBtn" label="Delete" buttonMode="true" mouseChildren="false" toolTip="Delete an existing Transport Unit" icon="@Embed(source='/assets/images/TransportUnit--Delete.png')" click="deleteTransportUnitDialog()" />
+	    <mx:Button id="transportUnitDeleteBtn" buttonMode="true" mouseChildren="false" toolTip="Delete an existing Transport Unit" icon="@Embed(source='/assets/images/TransportUnit--Delete.png')" click="deleteTransportUnitDialog()" />
         <mx:VRule height="10"/>
-	    <mx:Button id="transportUnitDetailsBtn" label="Details" buttonMode="true" mouseChildren="false" toolTip="Show details of an existing Transport Unit" icon="@Embed(source='/assets/images/TransportUnit--Edit.png')" click="showDetails()" />
+	    <mx:Button id="transportUnitDetailsBtn" buttonMode="true" mouseChildren="false" toolTip="Show details of an existing Transport Unit" icon="@Embed(source='/assets/images/TransportUnit--Edit.png')" click="showDetails()" />
         <mx:VRule height="10"/>
-	    <mx:Button id="transportUnitHistoryBtn" label="History" buttonMode="true" mouseChildren="false" toolTip="Show history information about an Transport Unit" icon="@Embed(source='/assets/images/TransportUnit--History.png')" click="deleteTransportUnitDialog()" />
+	    <mx:Button id="transportUnitHistoryBtn" buttonMode="true" mouseChildren="false" toolTip="Show history information about an Transport Unit" icon="@Embed(source='/assets/images/TransportUnit--History.png')" click="deleteTransportUnitDialog()" />
 	</mx:HBox>
-    <mx:HRule x="10" y="43" width="95%"/>
+    <mx:HRule x="10" y="53" width="95%"/>
 
-	<mx:Canvas x="10" y="53" width="100%" height="100%">
-		<mx:DataGrid id="transportUnitsGrid" width="95%" height="95%" doubleClickEnabled="true" doubleClick="showDetails()" allowMultipleSelection="true" dataProvider="{modelLocator.allTransportUnits}" x="0" y="0">
+	<mx:HBox x="10" y="63" width="95%" height="100%">
+		<mx:DataGrid id="transportUnitsGrid" width="100%" height="95%" doubleClickEnabled="true" doubleClick="showDetails()" itemClick="onRowClick(event)" allowMultipleSelection="true" dataProvider="{modelLocator.allTransportUnits}" x="0" y="10">
 			<mx:columns>
 				<mx:DataGridColumn headerText="Barcode" dataField="barcode" />
                 <mx:DataGridColumn headerText="Type" dataField="transportUnitType" />
@@ -109,5 +116,38 @@
                 <mx:DataGridColumn headerText="Placed on" dataField="parent.barcode.value" />
 			</mx:columns>
 		</mx:DataGrid>
-	</mx:Canvas>
+		<mx:Canvas width="329" height="95%" backgroundColor="#F9FBB7" backgroundAlpha="1.0">
+
+			<mx:Label text="Transport Unit" fontWeight="bold" width="130" textAlign="right" x="10" y="10"/>
+            <mx:Text text="{selected.barcode}" width="100%" fontWeight="bold"  x="148" y="10"/>
+
+			<mx:Label text="State" fontWeight="normal" width="130" textAlign="right" x="10" y="36"/>
+            <mx:ComboBox x="148" y="34"/>
+
+			<mx:Label text="Actual Location" fontWeight="normal" width="130" textAlign="right" x="10" y="62"/>
+            <mx:ComboBox x="148" y="60" />
+
+			<mx:Label text="Last Move" fontWeight="normal" width="130" textAlign="right" x="10" y="110"/>
+			<mx:Label text="Created on" fontWeight="normal" width="130" textAlign="right" x="10" y="214"/>
+			<mx:Label text="Errors" fontWeight="normal" width="130" textAlign="right" x="10" y="321"/>
+            <mx:Text text="{selected.actualLocationDate}" width="100%" fontWeight="normal"  x="148" y="110"/>
+            <mx:Text text="{selected.creationDate}" width="100%" fontWeight="normal"  x="148" y="214"/>
+
+			<mx:Label text="Last Inventory" fontWeight="normal" width="130" textAlign="right" x="10" y="136"/>
+            <mx:Text text="{selected.inventoryDate}" width="100%" fontWeight="normal"  x="148" y="136"/>
+
+			<mx:Label text="Inventory User" fontWeight="normal" width="130" textAlign="right" x="10" y="162"/>
+            <mx:Text text="{selected.inventoryUser}" width="100%" fontWeight="normal"  x="148" y="162"/>
+
+			<mx:Label text="Placed On" fontWeight="normal" width="130" textAlign="right" x="10" y="188"/>
+			<mx:Text text="{selected.parent.barcode}" width="100%" fontWeight="normal"  x="148" y="188"/>
+			<mx:HRule x="10" y="100" width="309"/>
+			<mx:HRule x="10" y="311" width="309"/>
+			<mx:CheckBox x="148" y="255" label="is empty" id="emptyChk" selected="{selected.isEmpty()}"/>
+			<mx:TextArea x="148" y="320" width="140" height="64"/>
+			<mx:Label x="10" y="285" text="Weight" width="130" textAlign="right"/>
+			<mx:Label x="148" y="285" id="weightLbl" width="100%" text="{selected.weight}"/>
+			<mx:Image x="292" y="320" height="16" width="16" mouseChildren="false" source="@Embed(source='assets/images/icons/minus.png')"/>
+		</mx:Canvas>
+	</mx:HBox>
 </mx:Canvas>

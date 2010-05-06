@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<mx:Panel xmlns:mx="http://www.adobe.com/2006/mxml" height="248" creationComplete="init();" title="Delete Transport Units" width="398">
+<mx:Panel xmlns:mx="http://www.adobe.com/2006/mxml" height="248" creationComplete="init();" show="deleteBtn.setFocus();" title="Delete Transport Units" width="398">
 
     <mx:Script>
     	<![CDATA[

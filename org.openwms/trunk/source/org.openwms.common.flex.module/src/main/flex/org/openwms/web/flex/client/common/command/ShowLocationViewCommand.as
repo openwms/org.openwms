@@ -50,17 +50,17 @@ package org.openwms.web.flex.client.common.command
 
         public function execute(event:CairngormEvent):void
         {
-            trace("Executing command to show the LocationView");
-            var delegate:LocationDelegate = new LocationDelegate(this)
-            delegate.getLocations();
+            //trace("Executing command to show the LocationView");
+            //var delegate:LocationDelegate = new LocationDelegate(this)
+            //delegate.getLocations();
             modelLocator.mainViewStackIndex = ModelLocator.MAIN_VIEW_STACK_LOCATION_VIEW;
         }
 
         public function result(event:Object):void
         {
-            trace("Receiving result in ShowLocationViewCommand");
-            var rawResult:ArrayCollection = (event as ResultEvent).result as ArrayCollection;
-            modelLocator.allLocations = (event as ResultEvent).result as ArrayCollection;
+            //trace("Receiving result in ShowLocationViewCommand");
+            //var rawResult:ArrayCollection = (event as ResultEvent).result as ArrayCollection;
+            //modelLocator.allLocations = (event as ResultEvent).result as ArrayCollection;
         }
 
         public function fault(event:Object):void

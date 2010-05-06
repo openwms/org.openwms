@@ -38,6 +38,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
+import javax.persistence.PrePersist;
+import javax.persistence.PreUpdate;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -263,7 +265,13 @@ public class Location implements Serializable {
     public boolean isNew() {
         return this.id == null;
     }
-
+    
+    @PrePersist
+    @PreUpdate
+    protected void preUpdate() {
+    	lastAccess = new Date();
+    }
+    
     public LocationPK getLocationId() {
         return this.locationId;
     }
