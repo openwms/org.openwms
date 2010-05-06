@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Panel xmlns:mx="http://www.adobe.com/2006/mxml" layout="absolute" width="522" height="398" title="Create Location" fontSize="12" creationComplete="init();" xmlns:comp="org.openwms.web.flex.client.component.*">
+
+    <mx:Script>
+        <![CDATA[
+        	import org.openwms.web.flex.client.common.event.LocationEvent;
+        	import org.openwms.common.domain.LocationType;
+        	import org.openwms.common.domain.LocationGroup;
+        	import org.openwms.web.flex.client.common.event.LocationTypeEvent;
+        	import org.openwms.common.domain.LocationPK;
+        	import org.openwms.common.domain.Location;
+        	import org.openwms.web.flex.client.common.model.CommonModelLocator;
+        	import org.openwms.web.flex.client.model.ModelLocator;
+
+            import mx.managers.PopUpManager;
+            import flash.events.KeyboardEvent;
+            [Bindable]
+            private var modelLocator:ModelLocator = ModelLocator.getInstance();
+            [Bindable]
+            private var commonModelLocator:CommonModelLocator = CommonModelLocator.getInstance();
+            
+            private function init():void
+            {
+                areaTxt.setFocus();
+                this.addEventListener(KeyboardEvent.KEY_DOWN, keyEventHandler);
+                PopUpManager.centerPopUp(this);
+            }
+
+            private function createLocation():void
+            {
+                var event:LocationEvent = new LocationEvent(LocationEvent.CREATE_LOCATION);
+                var locationId:LocationPK = new LocationPK(areaTxt.text, aisleTxt.text, xTxt.text, yTxt.text, zTxt.text);
+                var location:Location = new Location(locationId);
+                location.description = descriptionTxt.text;
+                location.locationGroup = locationGroupCmb.selectedItem as LocationGroup;
+                location.locationType = locationTypeCmb.selectedItem as LocationType;
+                event.data = location;
+                event.dispatch();
+            }
+
+            private function closeDialog(event:Event=null):void
+            {
+                this.removeEventListener(KeyboardEvent.KEY_DOWN, keyEventHandler);
+                PopUpManager.removePopUp(this);
+            }
+
+            private function keyEventHandler(event:KeyboardEvent):void
+            {
+                if(event.keyCode == 27)
+                {
+                   closeDialog(event);
+                   return;
+                }
+            }
+        ]]>
+    </mx:Script>    
+
+
+	<mx:Canvas width="100%" height="100%" backgroundColor="#F1F07C">
+
+		<mx:Label x="94.5" y="10" text="AREA / AISLE / X / Y / Z" fontSize="22" fontWeight="bold"/>
+        <mx:TextInput id="areaTxt" x="35" y="51" fontSize="22" width="80"/>
+        <mx:TextInput id="aisleTxt" x="123" y="51" fontSize="22" width="80"/>
+        <mx:TextInput id="xTxt" x="211" y="51" fontSize="22" width="80"/>
+        <mx:TextInput id="yTxt" x="299" y="51" fontSize="22" width="80"/>
+        <mx:TextInput id="zTxt" x="387" y="51" fontSize="22" width="80"/>
+
+		<mx:Label x="10" y="113" text="Location Group" fontSize="22" width="180" textAlign="right"/>
+        <comp:SuggestComboBox id="locationGroupCmb" width="280" fontSize="22" prompt="Select one..." labelField="name" dataProvider="{modelLocator.allLocationGroups}" x="198" y="111"/>
+
+		<mx:Label x="10" y="173" text="Location Type" fontSize="22" width="180" textAlign="right"/>
+        <comp:SuggestComboBox id="locationTypeCmb" width="280" fontSize="22" prompt="Select one..." labelField="type" dataProvider="{commonModelLocator.allLocationTypes}" x="198" y="171"/>
+
+		<mx:Label x="10" y="232" text="Description" fontSize="22" width="180" textAlign="right"/>
+		<mx:TextArea id="descriptionTxt" x="198" y="231" width="280" height="73" fontSize="22"/>
+
+		<mx:HBox x="0" y="320" width="100%" horizontalAlign="center">
+			<mx:Button id="createBtn" label="Create" fontSize="12" click="createLocation()"/>
+			<mx:Button id="cancelBtn" label="Cancel" fontSize="12" click="closeDialog(event)"/>
+		</mx:HBox>
+	</mx:Canvas>
+	
+</mx:Panel>
