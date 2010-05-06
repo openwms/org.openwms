@@ -18,27 +18,38 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
-package org.openwms.web.flex.client.common.event
+package org.openwms.web.flex.client.util
 {
-    import com.adobe.cairngorm.control.CairngormEvent;
+    import mx.events.ValidationResultEvent;
+    import mx.formatters.Formatter;
+    import mx.validators.Validator;
 
     /**
-     * A LocationTypeEvent.
+     * A ValidationUtil.
      *
      * @author <a href="mailto:openwms@googlemail.com">Heiko Scherrer</a>
-     * @version $Revision: 771 $
+     * @version $Revision: 700 $
      */
-    public class LocationTypeEvent extends CairngormEvent
+    public final class ValidationUtil
     {
-        public static const LOAD_ALL_LOCATION_TYPES:String = "LoadAllLocationTypes";
-        public static const CREATE_LOCATION_TYPE:String = "Create_LocationType";
-        public static const DELETE_LOCATION_TYPE:String = "Delete_LocationType";
-        public static const SAVE_LOCATION_TYPE:String = "Save_LocationType";
-
-        public function LocationTypeEvent(type:String, bubbles:Boolean = false, cancelable:Boolean = false)
+        public function ValidationUtil()
         {
-            super(type, bubbles, cancelable);
         }
-
+        
+        public static function validateAndFormat(id:Object, val:Validator, fmt:Formatter):Boolean
+        {
+            val.source = id;
+            var res:ValidationResultEvent = val.validate();
+            if (res.type == ValidationResultEvent.VALID)
+            {
+                id.text= fmt.format(id.text);
+                return true;
+            }
+            else
+            {
+                id.text= "";
+                return false;
+            }
+        }
     }
 }

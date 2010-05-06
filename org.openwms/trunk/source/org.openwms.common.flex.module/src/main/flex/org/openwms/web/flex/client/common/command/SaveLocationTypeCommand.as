@@ -23,47 +23,55 @@ package org.openwms.web.flex.client.common.command
     import com.adobe.cairngorm.commands.ICommand;
     import com.adobe.cairngorm.control.CairngormEvent;
     
-    import mx.collections.ArrayCollection;
     import mx.controls.Alert;
     import mx.rpc.IResponder;
-    import mx.rpc.events.ResultEvent;
     
+    import org.openwms.common.domain.LocationType;
     import org.openwms.web.flex.client.common.business.LocationDelegate;
-    import org.openwms.web.flex.client.common.model.CommonModelLocator;
-    import mx.rpc.events.FaultEvent;
+    import org.openwms.web.flex.client.common.event.LocationTypeEvent;
 
     /**
-     * A LoadLocationTypeCommand.
+     * A SaveLocationTypeCommand.
      *
      * @author <a href="mailto:openwms@googlemail.com">Heiko Scherrer</a>
-     * @version $Revision: 771 $
+     * @version $Revision: 700 $
      */
-    public class LoadLocationTypeCommand implements ICommand, IResponder
+    public class SaveLocationTypeCommand implements IResponder, ICommand
     {
-        [Bindable]
-        private var commonModelLocator:CommonModelLocator = CommonModelLocator.getInstance();
 
-        public function LoadLocationTypeCommand()
+        public function SaveLocationTypeCommand()
         {
             super();
         }
 
+        public function result(data:Object):void
+        {
+            new LocationTypeEvent(LocationTypeEvent.LOAD_ALL_LOCATION_TYPES).dispatch();
+            /*var types:ArrayCollection = CommonModelLocator.getInstance().allLocationTypes;
+            for each (var type:LocationType in types)
+            {
+            	if (type.type == (data as LocationType).type)
+            	{
+            		type = (data as LocationType);
+            	}
+            }
+            */
+        }
+
+        public function fault(info:Object):void
+        {
+            Alert.show("Could not save Location Type");
+        }
+
         public function execute(event:CairngormEvent):void
         {
+            if (event.data == null)
+            {
+                Alert.show("Please select a Location Type first");
+                return;
+            }
             var delegate:LocationDelegate = new LocationDelegate(this)
-            delegate.getLocationTypes();
-        }
-
-        public function result(event:Object):void
-        {
-            commonModelLocator.allLocationTypes = (event as ResultEvent).result as ArrayCollection;
-        }
-
-        public function fault(event:Object):void
-        {
-        	var fault:FaultEvent = event as FaultEvent;
-        	trace("Error:"+fault.message);
-            Alert.show("Fault in [" + this + "] Errormessage : " + event);
+            delegate.saveLocationType(event.data as LocationType);
         }
 
     }

@@ -87,5 +87,11 @@ package org.openwms.web.flex.client.common.business
             var call:AsyncToken = service.deleteLocationTypes(locationTypes);
             call.addResponder(responder);            
         }
+
+        public function saveLocationType(locationType:LocationType):void
+        {
+            var call:AsyncToken = service.saveLocationType(locationType);
+            call.addResponder(responder);            
+        }
     }
 }

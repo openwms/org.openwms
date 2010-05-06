@@ -81,4 +81,9 @@ public class LocationServiceImpl extends EntityServiceImpl<Location, Long> imple
     		locationTypeDao.remove(locationType);			
 		}
     }
+    
+    @Override
+    public LocationType saveLocationType(LocationType locationType) {
+    	return locationTypeDao.save(locationType);
+    }
 }

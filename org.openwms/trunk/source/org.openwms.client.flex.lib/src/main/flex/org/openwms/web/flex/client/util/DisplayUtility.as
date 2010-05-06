@@ -20,10 +20,8 @@
  */
 package org.openwms.web.flex.client.util
 {
-	import mx.containers.ViewStack;
-	import mx.core.ComponentDescriptor;
 	import mx.collections.ArrayCollection;
-	
+	import mx.containers.ViewStack;
 
     /**
      * A DisplayUtility.
@@ -39,8 +37,6 @@ package org.openwms.web.flex.client.util
         
         public static function getView(viewId:String, viewStack:ViewStack):int
         {
-        	trace("tt:"+viewStack.getChildByName(viewId));
-        	trace("tt:"+viewStack.getChildIndex(viewStack.getChildByName(viewId)));
             return viewStack.getChildIndex(viewStack.getChildByName(viewId));
         }
         
@@ -48,5 +44,6 @@ package org.openwms.web.flex.client.util
         {
             return null;	
         }
+
 	}
 }

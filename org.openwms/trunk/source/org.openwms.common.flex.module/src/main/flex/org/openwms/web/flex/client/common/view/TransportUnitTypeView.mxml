@@ -35,6 +35,7 @@
     
     <mx:Script>
     	<![CDATA[
+    		import org.openwms.web.flex.client.util.ValidationUtil;
     		import mx.events.ListEvent;
     		import org.openwms.web.flex.client.common.event.TransportUnitTypeEvent;
     		import mx.collections.ArrayCollection;
@@ -97,9 +98,16 @@
             
             private function saveTransportUnit():void
             {
-                var event:TransportUnitTypeEvent = new TransportUnitTypeEvent(TransportUnitTypeEvent.SAVE_TRANSPORT_UNIT_TYPE);
-                event.data = selected;
-                event.dispatch();
+            	if (ValidationUtil.validateAndFormat(heightTxt, numberVal, numberFmt) &&
+            	   ValidationUtil.validateAndFormat(lengthTxt, numberVal, numberFmt) &&
+            	   ValidationUtil.validateAndFormat(widthTxt, numberVal, numberFmt) &&
+            	   ValidationUtil.validateAndFormat(weightTareTxt, numberVal, numberFmt) &&
+            	   ValidationUtil.validateAndFormat(weightMaxTxt, numberVal, numberFmt))
+            	{
+                    var event:TransportUnitTypeEvent = new TransportUnitTypeEvent(TransportUnitTypeEvent.SAVE_TRANSPORT_UNIT_TYPE);
+                    event.data = selected;
+                    event.dispatch();
+                }
             }
     	]]>
     </mx:Script>
@@ -113,6 +121,9 @@
     <mx:Binding source="compatibilityTxt.text" destination="selected.compatibility" />
     <mx:Binding source="(allowedLocationTypeLst.dataProvider as ArrayCollection)" destination="selected.typePlacingRules" />
 
+    <mx:NumberFormatter id="numberFmt" />
+    <mx:NumberValidator id="numberVal" property="text" />
+
     <mx:HBox x="10" y="10" verticalAlign="middle" backgroundColor="#E8FB91" width="95%">
         <mx:Label x="10" y="10" text="Transport Unit Types" fontSize="24"/>
         <mx:VRule height="10"/>
@@ -124,7 +135,7 @@
     </mx:HBox>
     <mx:HRule x="10" y="53" width="95%"/>
     <mx:HBox x="10" y="63" width="95%">
-        <mx:DataGrid id="transportUnitTypeGrd" dataProvider="{commonModelLocator.allTransportUnitTypes}" itemClick="changeSelection(event)" allowMultipleSelection="true" width="100%" height="165">
+        <mx:DataGrid id="transportUnitTypeGrd" dataProvider="{commonModelLocator.allTransportUnitTypes}" change="changeSelection(event)" allowMultipleSelection="true" width="100%" height="165">
             <mx:columns>
                 <mx:DataGridColumn headerText="Type" dataField="type"/>
                 <mx:DataGridColumn headerText="Length" dataField="length"/>

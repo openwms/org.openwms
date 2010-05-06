@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<mx:Panel xmlns:mx="http://www.adobe.com/2006/mxml" width="460" height="334" title="Create Transport Unit Type" fontSize="12" creationComplete="init();">
+<mx:Panel xmlns:mx="http://www.adobe.com/2006/mxml" width="460" height="334" title="Create Location Type" fontSize="12" creationComplete="init();">
 
     <mx:Script>
     	<![CDATA[
+    		import mx.events.ValidationResultEvent;
+    		import org.openwms.web.flex.client.util.ValidationUtil;
     		import org.openwms.web.flex.client.common.event.LocationTypeEvent;
     		import org.openwms.web.flex.client.common.event.LocationEvent;
     		import org.openwms.common.domain.LocationType;
@@ -16,20 +18,26 @@
                 this.addEventListener(KeyboardEvent.KEY_DOWN, keyEventHandler);
                 PopUpManager.centerPopUp(this);
     		}
+    		
 
             private function createLocationType():void
             {
-                var event:LocationTypeEvent = new LocationTypeEvent(LocationTypeEvent.CREATE_LOCATION_TYPE);
+            	if (stringVal.validate(typeTxt).type == ValidationResultEvent.VALID &&
+            	    ValidationUtil.validateAndFormat(lengthTxt,numberVal,numberFmt) &&
+            	    ValidationUtil.validateAndFormat(widthTxt,numberVal,numberFmt) &&
+            	    ValidationUtil.validateAndFormat(heightTxt,numberVal,numberFmt))
+            	{
+	                var event:LocationTypeEvent = new LocationTypeEvent(LocationTypeEvent.CREATE_LOCATION_TYPE);
+	                var locationType:LocationType = new LocationType();
+	                locationType.withType(typeTxt.text);
+	                locationType.length = int(lengthTxt.text);
+	                locationType.width = int(widthTxt.text);
+	                locationType.height = int(heightTxt.text);
+	                locationType.description = descriptionTxt.text;
                 
-                var locationType:LocationType = new LocationType();
-                locationType.withType(typeTxt.text);
-                locationType.length = int(lengthTxt.text);
-                locationType.width = int(widthTxt.text);
-                locationType.height = int(heightTxt.text);
-                locationType.description = descriptionTxt.text;
-                
-                event.data = locationType;
-                event.dispatch();
+	                event.data = locationType;
+	                event.dispatch();
+                }
             }
 
             private function closeDialog(event:Event=null):void
@@ -47,7 +55,12 @@
                 }
             }
     	]]>
-    </mx:Script>	
+    </mx:Script>
+    
+   	<mx:NumberFormatter id="numberFmt" precision="2" />
+    <mx:NumberValidator id="numberVal" property="text" />
+    <mx:StringValidator id="stringVal" minLength="1" />
+
     <mx:Canvas width="100%" height="100%" backgroundColor="#F1F07C">
     	<mx:Label x="77" y="12" text="Type" fontSize="22" fontWeight="bold"/>
     	<mx:Label x="60" y="53" text="Length" fontSize="22"/>
