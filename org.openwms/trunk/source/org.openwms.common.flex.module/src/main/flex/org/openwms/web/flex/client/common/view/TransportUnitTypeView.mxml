@@ -35,6 +35,7 @@
     
     <mx:Script>
     	<![CDATA[
+    		import org.openwms.web.flex.client.common.event.LocationTypeEvent;
     		import org.openwms.web.flex.client.util.ValidationUtil;
     		import mx.events.ListEvent;
     		import org.openwms.web.flex.client.common.event.TransportUnitTypeEvent;
@@ -55,6 +56,10 @@
             
             private function onShow():void
             {
+                if (commonModelLocator.allLocationTypes.length == 0)
+                {
+                    new LocationTypeEvent(LocationTypeEvent.LOAD_ALL_LOCATION_TYPES).dispatch();
+                }
             	if (commonModelLocator.allTransportUnitTypes.length == 0)
             	{
             		new TransportUnitTypeEvent(TransportUnitTypeEvent.LOAD_ALL_TRANSPORT_UNIT_TYPES).dispatch();
@@ -87,6 +92,8 @@
             private function changeSelection(event:ListEvent):void
             {
             	selected = event.currentTarget.selectedItem as TransportUnitType;
+                weightTareTxt.text = numberFmt.format(weightTareTxt.text);
+                weightMaxTxt.text = numberFmt.format(weightMaxTxt.text);
             }
             
             private function showAssignmentLocationTypeDialog():void
@@ -98,9 +105,9 @@
             
             private function saveTransportUnit():void
             {
-            	if (ValidationUtil.validateAndFormat(heightTxt, numberVal, numberFmt) &&
-            	   ValidationUtil.validateAndFormat(lengthTxt, numberVal, numberFmt) &&
-            	   ValidationUtil.validateAndFormat(widthTxt, numberVal, numberFmt) &&
+            	if (ValidationUtil.validateAndFormat(heightTxt, numberVal) &&
+            	   ValidationUtil.validateAndFormat(lengthTxt, numberVal) &&
+            	   ValidationUtil.validateAndFormat(widthTxt, numberVal) &&
             	   ValidationUtil.validateAndFormat(weightTareTxt, numberVal, numberFmt) &&
             	   ValidationUtil.validateAndFormat(weightMaxTxt, numberVal, numberFmt))
             	{
@@ -108,6 +115,12 @@
                     event.data = selected;
                     event.dispatch();
                 }
+            }
+
+            private function refresh():void
+            {
+                var event:TransportUnitTypeEvent = new TransportUnitTypeEvent(TransportUnitTypeEvent.LOAD_ALL_TRANSPORT_UNIT_TYPES);
+                event.dispatch();
             }
     	]]>
     </mx:Script>
@@ -121,7 +134,7 @@
     <mx:Binding source="compatibilityTxt.text" destination="selected.compatibility" />
     <mx:Binding source="(allowedLocationTypeLst.dataProvider as ArrayCollection)" destination="selected.typePlacingRules" />
 
-    <mx:NumberFormatter id="numberFmt" />
+    <mx:NumberFormatter id="numberFmt" precision="2" />
     <mx:NumberValidator id="numberVal" property="text" />
 
     <mx:HBox x="10" y="10" verticalAlign="middle" backgroundColor="#E8FB91" width="95%">
@@ -132,6 +145,8 @@
         <mx:Button id="removeTUTBtn" buttonMode="true" mouseChildren="false" toolTip="Delete an existing Transport Unit Type" icon="@Embed(source='/assets/images/TransportUnitType--Delete.png')" click="showDeleteTransportUnitTypeDialog()" />
         <mx:VRule height="10"/>
         <mx:Button id="saveTUTBtn" buttonMode="true" mouseChildren="false" toolTip="Save an existing Transport Unit Type" icon="@Embed(source='/assets/images/TransportUnitType--Save.png')" click="saveTransportUnit()"  x="390" y="13"/>
+        <mx:VRule height="10"/>
+        <mx:Button id="refreshBtn" buttonMode="true" mouseChildren="false" toolTip="Refresh the list of Transport Unit Types" icon="@Embed(source='assets/images/icons/refresh.png')" click="refresh()"/>
     </mx:HBox>
     <mx:HRule x="10" y="53" width="95%"/>
     <mx:HBox x="10" y="63" width="95%">
@@ -180,8 +195,8 @@
         <mx:List id="allowedLocationTypeLst" x="326" y="61" width="276" height="103" labelField="allowedLocationType" dataProvider="{selected.typePlacingRules}" />
         <mx:List id="allowedTransportUnitTypeLst" x="326" y="194" width="276" height="103" labelField="allowedTransportUnitType" dataProvider="{selected.typeStackingRules}" />
         <mx:HRule x="326" y="305" width="286" strokeWidth="0"/>
-        <mx:Image x="292" y="269" height="16" width="16" mouseChildren="false" source="@Embed(source='assets/images/icons/plus.png')"/>
-        <mx:Image x="292" y="293" height="16" width="16" mouseChildren="false" source="@Embed(source='assets/images/icons/minus.png')"/>
+        <mx:Image x="292" y="269" height="16" width="16" buttonMode="true" mouseChildren="false" source="@Embed(source='assets/images/icons/plus.png')"/>
+        <mx:Image x="292" y="293" height="16" width="16" buttonMode="true" mouseChildren="false" source="@Embed(source='assets/images/icons/minus.png')"/>
     </mx:Canvas>
     <mx:Canvas backgroundColor="#E8FB91" width="100%" height="100%" backgroundAlpha="0.5">
     	<mx:Label x="10" y="10" text="Image" fontWeight="bold" />

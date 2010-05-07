@@ -117,7 +117,7 @@ public class TransportUnitType implements Serializable {
     /**
      * Effective payload of the {@link TransportUnit}.
      */
-    @Column(name = "PAYLOAD")
+    @Column(name = "PAYLOAD", scale = 3)
     private BigDecimal payload;
 
     /**

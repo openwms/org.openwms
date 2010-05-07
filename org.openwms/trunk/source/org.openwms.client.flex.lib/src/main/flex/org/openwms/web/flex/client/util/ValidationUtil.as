@@ -18,8 +18,8 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
-package org.openwms.web.flex.client.util
-{
+package org.openwms.web.flex.client.util {
+    import mx.controls.TextInput;
     import mx.events.ValidationResultEvent;
     import mx.formatters.Formatter;
     import mx.validators.Validator;
@@ -30,24 +30,26 @@ package org.openwms.web.flex.client.util
      * @author <a href="mailto:openwms@googlemail.com">Heiko Scherrer</a>
      * @version $Revision: 700 $
      */
-    public final class ValidationUtil
-    {
-        public function ValidationUtil()
-        {
+    public final class ValidationUtil {
+        public function ValidationUtil() {
         }
-        
-        public static function validateAndFormat(id:Object, val:Validator, fmt:Formatter):Boolean
-        {
-            val.source = id;
-            var res:ValidationResultEvent = val.validate();
-            if (res.type == ValidationResultEvent.VALID)
-            {
-                id.text= fmt.format(id.text);
+
+        public static function validateField(t:TextInput, val:Validator):Boolean {
+            val.source=t
+            return val.validate().type == ValidationResultEvent.VALID;
+        }
+
+
+        public static function validateAndFormat(id:Object, val:Validator, fmt:Formatter=null):Boolean {
+            val.source=id;
+            var res:ValidationResultEvent=val.validate();
+            if (res.type == ValidationResultEvent.VALID) {
+                if (fmt != null) {
+                    id.text=fmt.format(id.text);
+                }
                 return true;
-            }
-            else
-            {
-                id.text= "";
+            } else {
+                id.text="";
                 return false;
             }
         }

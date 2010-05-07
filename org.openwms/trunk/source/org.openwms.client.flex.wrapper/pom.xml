@@ -87,7 +87,7 @@
                     <templateOutputDirectory>${project.build.directory}/templates</templateOutputDirectory>
                     <parameters>
                         <swf>${packed.app}</swf>
-                        <title>OpenWMS</title>
+                        <title>openwms.org</title>
                         <width>100%</width>
                         <height>100%</height>
                     </parameters>
