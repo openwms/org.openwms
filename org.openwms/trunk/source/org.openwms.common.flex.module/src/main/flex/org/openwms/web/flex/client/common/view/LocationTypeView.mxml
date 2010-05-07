@@ -1,152 +1,153 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
-/*
- * openwms.org, the Open Warehouse Management System.
- *
- * This file is part of openwms.org.
- *
- * openwms.org is free software: you can redistribute it and/or modify
- * it under the terms of the GNU Lesser General Public License as 
- * published by the Free Software Foundation, either version 3 of the
- * License, or (at your option) any later version.
- *
- * openwms.org is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU Lesser General Public License for more details.
- *
- * You should have received a copy of the GNU Lesser General Public
- * License along with this software. If not, write to the Free
- * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
- * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
- */
+     /*
+     * openwms.org, the Open Warehouse Management System.
+     *
+     * This file is part of openwms.org.
+     *
+     * openwms.org is free software: you can redistribute it and/or modify
+     * it under the terms of the GNU Lesser General Public License as
+     * published by the Free Software Foundation, either version 3 of the
+     * License, or (at your option) any later version.
+     *
+     * openwms.org is distributed in the hope that it will be useful,
+     * but WITHOUT ANY WARRANTY; without even the implied warranty of
+     * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+     * GNU Lesser General Public License for more details.
+     *
+     * You should have received a copy of the GNU Lesser General Public
+     * License along with this software. If not, write to the Free
+     * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
+     * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
+     */
 -->
 <mx:Canvas xmlns:mx="http://www.adobe.com/2006/mxml" width="100%" height="100%" backgroundColor="#C2DAEF" show="onShow()">
 
     <mx:Script>
-    	<![CDATA[
-    		import org.openwms.web.flex.client.util.ValidationUtil;
-    		import mx.events.ListEvent;
-    		import org.openwms.common.domain.LocationType;
-    		import org.openwms.web.flex.client.common.event.LocationTypeEvent;
-    		import mx.collections.ArrayCollection;
-    		import mx.controls.Alert;
+        <![CDATA[
+            import mx.binding.utils.BindingUtils;
+            import mx.events.ListEvent;
+            import mx.collections.ArrayCollection;
+            import mx.controls.Alert;
+            import mx.managers.PopUpManager;
+            import org.openwms.common.domain.LocationType;
+            import org.openwms.web.flex.client.util.ValidationUtil;
+            import org.openwms.web.flex.client.common.event.LocationTypeEvent;
+            import org.openwms.web.flex.client.common.model.CommonModelLocator;
             import org.openwms.web.flex.client.common.view.dialogs.ConfirmDeletionLocationTypeDialog;
-    		import mx.managers.PopUpManager;
-    		import org.openwms.web.flex.client.common.model.CommonModelLocator;
-    		import org.openwms.web.flex.client.common.view.dialogs.CreateLocationTypeDialog;
-    		
+            import org.openwms.web.flex.client.common.view.dialogs.CreateLocationTypeDialog;
+
             [Bindable]
-            private var commonModelLocator:CommonModelLocator = CommonModelLocator.getInstance();
+            private var commonModelLocator:CommonModelLocator=CommonModelLocator.getInstance();
             [Bindable]
             private var selected:LocationType;
+            // Can be checked outside to recognize unsubmitted changes
+            [Bindable]
+            public var changed:Boolean=false;
 
-            private function onShow():void
-            {
-            	if (commonModelLocator.allLocationTypes.length == 0)
-            	{
-            	   new LocationTypeEvent(LocationTypeEvent.LOAD_ALL_LOCATION_TYPES).dispatch();
-            	}
+            private function onShow():void {
+                if (commonModelLocator.allLocationTypes.length == 0) {
+                    new LocationTypeEvent(LocationTypeEvent.LOAD_ALL_LOCATION_TYPES).dispatch();
+                }
             }
-            
-            private function showCreateLocationTypeDialog():void
-            {
-                var pop:CreateLocationTypeDialog = CreateLocationTypeDialog(PopUpManager.createPopUp(this, CreateLocationTypeDialog, true));
+
+            private function showCreateLocationTypeDialog():void {
+                var pop:CreateLocationTypeDialog=CreateLocationTypeDialog(PopUpManager.createPopUp(this, CreateLocationTypeDialog, true));
                 PopUpManager.centerPopUp(pop);
             }
 
-            private function showDeleteLocationTypeDialog():void
-            {
-                if (locationTypeGrd.selectedIndices.length == 0)
-                {
+            private function showDeleteLocationTypeDialog():void {
+                if (locationTypeGrd.selectedIndices.length == 0) {
                     Alert.show("Please select at least one Location Type to delete");
-                    return;                 
+                    return;
                 }
-                var pop:ConfirmDeletionLocationTypeDialog = ConfirmDeletionLocationTypeDialog(PopUpManager.createPopUp(this, ConfirmDeletionLocationTypeDialog, true));
-                pop.messageText = "Delete selected Location Types";
-                pop.items = new ArrayCollection(locationTypeGrd.selectedItems);
+                selected=null;
+                var pop:ConfirmDeletionLocationTypeDialog=ConfirmDeletionLocationTypeDialog(PopUpManager.createPopUp(this, ConfirmDeletionLocationTypeDialog, true));
+                pop.messageText="Delete selected Location Types";
+                pop.items=new ArrayCollection(locationTypeGrd.selectedItems);
                 PopUpManager.centerPopUp(pop);
             }
 
-            private function onChange(event:ListEvent):void
-            {
-                selected = (event.currentTarget.selectedItem) as LocationType;
-                lengthTxt.text = numberFmt.format(lengthTxt.text);
-                widthTxt.text = numberFmt.format(widthTxt.text);
-                heightTxt.text = numberFmt.format(heightTxt.text);
+            private function onChange(event:ListEvent):void {
+                selected=(event.currentTarget.selectedItem) as LocationType;
             }
 
-            private function save():void
-            {
-                if (ValidationUtil.validateAndFormat(lengthTxt,numberVal,numberFmt) &&
-                    ValidationUtil.validateAndFormat(widthTxt,numberVal,numberFmt) &&
-                    ValidationUtil.validateAndFormat(heightTxt,numberVal,numberFmt))
-                {
-                    var event:LocationTypeEvent = new LocationTypeEvent(LocationTypeEvent.SAVE_LOCATION_TYPE);
-                    event.data = selected;
+            private function save():void {
+                if (changed && 
+                    ValidationUtil.validateField(lengthTxt,numberVal) &&
+                    ValidationUtil.validateField(widthTxt,numberVal) &&
+                    ValidationUtil.validateField(heightTxt,numberVal)) {
+                    BindingUtils.bindProperty(selected, "length", lengthTxt, "text");
+                    BindingUtils.bindProperty(selected, "width", widthTxt, "text");
+                    BindingUtils.bindProperty(selected, "height", heightTxt, "text");
+                    BindingUtils.bindProperty(selected, "description", descriptionTxt, "text");
+
+                    var event:LocationTypeEvent=new LocationTypeEvent(LocationTypeEvent.SAVE_LOCATION_TYPE);
+                    event.data=selected;
                     event.dispatch();
+                    selected = null;
+                    changed = false;
                 }
             }
-    		
-            private function refresh():void
-            {
-                var event:LocationTypeEvent = new LocationTypeEvent(LocationTypeEvent.LOAD_ALL_LOCATION_TYPES   );
+
+            private function refresh():void {
+                var event:LocationTypeEvent=new LocationTypeEvent(LocationTypeEvent.LOAD_ALL_LOCATION_TYPES);
                 event.dispatch();
+                selected=null;
+                changed = false;
             }
-    	]]>
+
+            private function validate(event:Event):void {
+            	changed = changed || ValidationUtil.validateField(event.currentTarget as TextInput,numberVal);
+            }
+        ]]>
     </mx:Script>
 
-    <mx:Binding source="descriptionTxt.text" destination="selected.description" />
-    <mx:Binding source="Number(lengthTxt.text)" destination="selected.length" />
-    <mx:Binding source="Number(widthTxt.text)" destination="selected.width" />
-    <mx:Binding source="Number(heightTxt.text)" destination="selected.height" />
+    <mx:NumberValidator id="numberVal" property="text"/>
 
-    <mx:NumberFormatter id="numberFmt" />
-    <mx:NumberValidator id="numberVal" property="text" />
-
-	<mx:HBox x="10" y="10" verticalAlign="middle" width="95%" backgroundColor="#92FC95">
-	    <mx:Label x="10" y="10" text="Location Types" fontSize="24"/>
-	    <mx:VRule height="10"/>
-	    <mx:Button id="addBtn" buttonMode="true" mouseChildren="false" toolTip="Create a new Location Type" icon="@Embed(source='/assets/images/LocationType--Add.png')" click="showCreateLocationTypeDialog()" />
-	    <mx:VRule height="10"/>
-	    <mx:Button id="removeBtn" buttonMode="true" mouseChildren="false" toolTip="Delete an existing Location Type" icon="@Embed(source='/assets/images/LocationType--Delete.png')" click="showDeleteLocationTypeDialog()" />
+    <mx:HBox x="10" y="10" verticalAlign="middle" width="95%" backgroundColor="#92FC95">
+        <mx:Label x="10" y="10" text="Location Types" fontSize="24"/>
         <mx:VRule height="10"/>
-        <mx:Button id="saveBtn" buttonMode="true" mouseChildren="false" toolTip="Save an existing Location Type" icon="@Embed(source='/assets/images/LocationType--Save.png')" click="save()" />
+        <mx:Button id="addBtn" buttonMode="true" mouseChildren="false" toolTip="Create a new Location Type" icon="@Embed(source='/assets/images/LocationType--Add.png')" click="showCreateLocationTypeDialog()"/>
+        <mx:VRule height="10"/>
+        <mx:Button id="removeBtn" buttonMode="true" mouseChildren="false" toolTip="Delete an existing Location Type" icon="@Embed(source='/assets/images/LocationType--Delete.png')" click="showDeleteLocationTypeDialog()"/>
+        <mx:VRule height="10"/>
+        <mx:Button id="saveBtn" buttonMode="true" mouseChildren="false" toolTip="Save an existing Location Type" icon="@Embed(source='/assets/images/LocationType--Save.png')" click="save()"/>
         <mx:VRule height="10"/>
         <mx:Button id="refreshBtn" buttonMode="true" mouseChildren="false" toolTip="Refresh the list of Location Types" icon="@Embed(source='assets/images/icons/refresh.png')" click="refresh()"/>
-	</mx:HBox>
+    </mx:HBox>
     <mx:HRule x="10" y="53" width="95%"/>
-	<mx:HBox x="10" y="63" width="95%" height="100%">
-	    <mx:DataGrid id="locationTypeGrd" dataProvider="{commonModelLocator.allLocationTypes}" height="200" allowMultipleSelection="true" width="100%" change="onChange(event)">
-	        <mx:columns>
-	            <mx:DataGridColumn headerText="Type" dataField="type"/>
-	            <mx:DataGridColumn headerText="Length" dataField="length" width="50" />
-	            <mx:DataGridColumn headerText="Width" dataField="width" width="50" />
-	            <mx:DataGridColumn headerText="Height" dataField="height" width="50" />
-	            <mx:DataGridColumn headerText="Description" dataField="description"/>
-	        </mx:columns>
-	    </mx:DataGrid>
-	    <mx:Canvas id="locationTypeDetailsPnl" backgroundColor="#C6FFC7" backgroundAlpha="0.5" height="200">
-	        
-	        <mx:Image x="10" y="10" mouseChildren="false" source="@Embed(source='/assets/images/LocationType.png')"/>
-	        <mx:Label text="Location Type" fontWeight="bold" width="130" textAlign="right" x="10" y="12"/>
-	        <mx:Text text="{selected.type}" width="100%" fontWeight="bold" x="148" y="12"/>
-	        
-	        <mx:Label text="Description" width="130" textAlign="right" x="10" y="38"/>
-	        <mx:TextArea id="descriptionTxt" text="{selected.description}" width="200" height="64" x="148" y="37"/>
-	        <mx:HRule x="10" y="109" width="330"/>
-	        <mx:HRule x="10" y="197" width="350" strokeWidth="0"/>
-	        
-	        <mx:Label text="Length" width="130" textAlign="right" x="10" y="119"/>
-            <mx:TextInput id="lengthTxt" text="{selected.length}" width="60" x="148" y="117" textAlign="right"/>
-	        
-	        <mx:Label text="Width" width="130" textAlign="right" x="10" y="145"/>
-            <mx:TextInput id="widthTxt" text="{selected.width}" width="60" x="148" y="143" textAlign="right"/>
-	        
-	        <mx:Label text="Height" width="130" textAlign="right" x="10" y="171"/>
-	        <mx:TextInput id="heightTxt" text="{selected.height}" width="60" x="148" y="169" textAlign="right"/>
-	        
-	    </mx:Canvas>
-	</mx:HBox>
-	
+    <mx:HBox x="10" y="63" width="95%" height="100%">
+        <mx:DataGrid id="locationTypeGrd" dataProvider="{commonModelLocator.allLocationTypes}" height="200" allowMultipleSelection="true" width="100%" change="onChange(event)">
+            <mx:columns>
+                <mx:DataGridColumn headerText="Type" dataField="type" width="50"/>
+                <mx:DataGridColumn headerText="Length" dataField="length" width="50"/>
+                <mx:DataGridColumn headerText="Width" dataField="width" width="50"/>
+                <mx:DataGridColumn headerText="Height" dataField="height" width="50"/>
+                <mx:DataGridColumn headerText="Description" dataField="description"/>
+            </mx:columns>
+        </mx:DataGrid>
+        <mx:Canvas id="locationTypeDetailsPnl" backgroundColor="#C6FFC7" backgroundAlpha="0.5" height="200">
+
+            <mx:Image x="10" y="10" mouseChildren="false" source="@Embed(source='/assets/images/LocationType.png')"/>
+            <mx:Label text="Location Type" fontWeight="bold" width="130" textAlign="right" x="10" y="12"/>
+            <mx:Text text="{selected.type}" width="100%" fontWeight="bold" x="148" y="12"/>
+
+            <mx:Label text="Description" width="130" textAlign="right" x="10" y="38"/>
+            <mx:TextArea id="descriptionTxt" keyUp="{changed = true;}" text="{selected.description}" width="200" height="64" x="148" y="37"/>
+            <mx:HRule x="10" y="109" width="330"/>
+            <mx:HRule x="10" y="197" width="350" strokeWidth="0"/>
+
+            <mx:Label text="Length" width="130" textAlign="right" x="10" y="119"/>
+            <mx:TextInput id="lengthTxt" keyUp="validate(event)" text="{selected.length}" width="60" x="148" y="117" textAlign="right"/>
+
+            <mx:Label text="Width" width="130" textAlign="right" x="10" y="145"/>
+            <mx:TextInput id="widthTxt" keyUp="validate(event)" text="{selected.width}" width="60" x="148" y="143" textAlign="right"/>
+
+            <mx:Label text="Height" width="130" textAlign="right" x="10" y="171"/>
+            <mx:TextInput id="heightTxt" keyUp="validate(event)" text="{selected.height}" width="60" x="148" y="169" textAlign="right"/>
+
+        </mx:Canvas>
+    </mx:HBox>
+
 </mx:Canvas>
