@@ -49,7 +49,6 @@ package org.openwms.web.flex.client.util {
                 }
                 return true;
             } else {
-                id.text="";
                 return false;
             }
         }
