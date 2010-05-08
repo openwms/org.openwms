@@ -1,25 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
-/*
- * openwms.org, the Open Warehouse Management System.
- *
- * This file is part of openwms.org.
- *
- * openwms.org is free software: you can redistribute it and/or modify
- * it under the terms of the GNU Lesser General Public License as 
- * published by the Free Software Foundation, either version 3 of the
- * License, or (at your option) any later version.
- *
- * openwms.org is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU Lesser General Public License for more details.
- *
- * You should have received a copy of the GNU Lesser General Public
- * License along with this software. If not, write to the Free
- * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
- * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
- */
+     /*
+     * openwms.org, the Open Warehouse Management System.
+     *
+     * This file is part of openwms.org.
+     *
+     * openwms.org is free software: you can redistribute it and/or modify
+     * it under the terms of the GNU Lesser General Public License as
+     * published by the Free Software Foundation, either version 3 of the
+     * License, or (at your option) any later version.
+     *
+     * openwms.org is distributed in the hope that it will be useful,
+     * but WITHOUT ANY WARRANTY; without even the implied warranty of
+     * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+     * GNU Lesser General Public License for more details.
+     *
+     * You should have received a copy of the GNU Lesser General Public
+     * License along with this software. If not, write to the Free
+     * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
+     * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
+     */
 -->
 <mx:Canvas xmlns:mx="http://www.adobe.com/2006/mxml" width="100%" height="100%" show="onShow()" backgroundColor="#C2DAEF" xmlns:comp="org.openwms.web.flex.client.component.*">
 
@@ -32,119 +32,108 @@
             disabled-skin: Embed("/assets/images/TransportUnit.png");
         } 
     </mx:Style>
-    
+
     <mx:Script>
-    	<![CDATA[
-    		import org.openwms.web.flex.client.common.event.LocationTypeEvent;
-    		import org.openwms.web.flex.client.util.ValidationUtil;
-    		import mx.events.ListEvent;
-    		import org.openwms.web.flex.client.common.event.TransportUnitTypeEvent;
-    		import mx.collections.ArrayCollection;
-    		import org.openwms.web.flex.client.common.view.dialogs.ConfirmDeletionDialog;
-    		import mx.controls.Alert;
-    		import mx.managers.PopUpManager;
-    		import org.openwms.common.domain.TransportUnitType;
-    		import org.openwms.web.flex.client.common.model.CommonModelLocator;
-    		import org.openwms.web.flex.client.common.view.dialogs.CreateTransportUnitTypeDialog;
+        <![CDATA[
+        	import mx.binding.utils.BindingUtils;
+            import org.openwms.web.flex.client.common.event.LocationTypeEvent;
+            import org.openwms.web.flex.client.util.ValidationUtil;
+            import mx.events.ListEvent;
+            import org.openwms.web.flex.client.common.event.TransportUnitTypeEvent;
+            import mx.collections.ArrayCollection;
+            import org.openwms.web.flex.client.common.view.dialogs.ConfirmDeletionDialog;
+            import mx.controls.Alert;
+            import mx.managers.PopUpManager;
+            import org.openwms.common.domain.TransportUnitType;
+            import org.openwms.web.flex.client.common.model.CommonModelLocator;
+            import org.openwms.web.flex.client.common.view.dialogs.CreateTransportUnitTypeDialog;
             import org.openwms.web.flex.client.common.view.dialogs.AssignmentLocationTypeDialog;
             import org.openwms.web.flex.client.common.view.dialogs.ConfirmDeletionTransportUnitTypesDialog;
 
             [Bindable]
-            private var commonModelLocator:CommonModelLocator = CommonModelLocator.getInstance();
+            private var commonModelLocator:CommonModelLocator=CommonModelLocator.getInstance();
             [Bindable]
             private var selected:TransportUnitType;
-            
-            private function onShow():void
-            {
-                if (commonModelLocator.allLocationTypes.length == 0)
-                {
+
+            private function onShow():void {
+                if (commonModelLocator.allLocationTypes.length == 0) {
                     new LocationTypeEvent(LocationTypeEvent.LOAD_ALL_LOCATION_TYPES).dispatch();
                 }
-            	if (commonModelLocator.allTransportUnitTypes.length == 0)
-            	{
-            		new TransportUnitTypeEvent(TransportUnitTypeEvent.LOAD_ALL_TRANSPORT_UNIT_TYPES).dispatch();
-            	}
-            	else
-            	{
-            	   selected = commonModelLocator.allTransportUnitTypes.getItemAt(0) as TransportUnitType;
-            	}
-            }
-
-            private function showCreateTransportUnitTypeDialog():void
-            {
-                var pop:CreateTransportUnitTypeDialog = CreateTransportUnitTypeDialog(PopUpManager.createPopUp(this, CreateTransportUnitTypeDialog, true));
-                PopUpManager.centerPopUp(pop);
-            }
-
-            private function showDeleteTransportUnitTypeDialog():void
-            {
-                if (transportUnitTypeGrd.selectedIndices.length == 0)
-                {
-                    Alert.show("Please select at least one Transport Unit Type to delete");
-                    return;                 
+                if (commonModelLocator.allTransportUnitTypes.length == 0) {
+                    new TransportUnitTypeEvent(TransportUnitTypeEvent.LOAD_ALL_TRANSPORT_UNIT_TYPES).dispatch();
+                } else {
+                    selected=commonModelLocator.allTransportUnitTypes.getItemAt(0) as TransportUnitType;
                 }
-                var pop:ConfirmDeletionTransportUnitTypesDialog = ConfirmDeletionTransportUnitTypesDialog(PopUpManager.createPopUp(this, ConfirmDeletionTransportUnitTypesDialog, true));
-                pop.messageText = "Delete selected Transport Unit Types";
-                pop.items = new ArrayCollection(transportUnitTypeGrd.selectedItems);
+            }
+
+            private function showCreateTransportUnitTypeDialog():void {
+                var pop:CreateTransportUnitTypeDialog=CreateTransportUnitTypeDialog(PopUpManager.createPopUp(this, CreateTransportUnitTypeDialog, true));
                 PopUpManager.centerPopUp(pop);
             }
-            
-            private function changeSelection(event:ListEvent):void
-            {
-            	selected = event.currentTarget.selectedItem as TransportUnitType;
-                weightTareTxt.text = numberFmt.format(weightTareTxt.text);
-                weightMaxTxt.text = numberFmt.format(weightMaxTxt.text);
+
+            private function showDeleteTransportUnitTypeDialog():void {
+                if (transportUnitTypeGrd.selectedIndices.length == 0) {
+                    Alert.show("Please select at least one Transport Unit Type to delete");
+                    return;
+                }
+                var pop:ConfirmDeletionTransportUnitTypesDialog=ConfirmDeletionTransportUnitTypesDialog(PopUpManager.createPopUp(this, ConfirmDeletionTransportUnitTypesDialog, true));
+                pop.messageText="Delete selected Transport Unit Types";
+                pop.items=new ArrayCollection(transportUnitTypeGrd.selectedItems);
+                PopUpManager.centerPopUp(pop);
             }
-            
-            private function showAssignmentLocationTypeDialog():void
-            {
-                var pop:AssignmentLocationTypeDialog = AssignmentLocationTypeDialog(PopUpManager.createPopUp(this, AssignmentLocationTypeDialog, true));
-                pop.transportUnitType = selected;
-                PopUpManager.centerPopUp(pop);            	
+
+            private function changeSelection(event:ListEvent):void {
+                selected=event.currentTarget.selectedItem as TransportUnitType;
+                weightTareTxt.text=numberFmt.format(weightTareTxt.text);
+                weightMaxTxt.text=numberFmt.format(weightMaxTxt.text);
             }
-            
-            private function saveTransportUnit():void
-            {
-            	if (ValidationUtil.validateAndFormat(heightTxt, numberVal) &&
-            	   ValidationUtil.validateAndFormat(lengthTxt, numberVal) &&
-            	   ValidationUtil.validateAndFormat(widthTxt, numberVal) &&
-            	   ValidationUtil.validateAndFormat(weightTareTxt, numberVal, numberFmt) &&
-            	   ValidationUtil.validateAndFormat(weightMaxTxt, numberVal, numberFmt))
-            	{
-                    var event:TransportUnitTypeEvent = new TransportUnitTypeEvent(TransportUnitTypeEvent.SAVE_TRANSPORT_UNIT_TYPE);
-                    event.data = selected;
+
+            private function showAssignmentLocationTypeDialog():void {
+                var pop:AssignmentLocationTypeDialog=AssignmentLocationTypeDialog(PopUpManager.createPopUp(this, AssignmentLocationTypeDialog, true));
+                pop.transportUnitType=selected;
+                PopUpManager.centerPopUp(pop);
+            }
+
+            private function saveTransportUnit():void {
+                if (ValidationUtil.validateAndFormat(heightTxt, numberVal) &&
+                    ValidationUtil.validateAndFormat(lengthTxt, numberVal) &&
+                    ValidationUtil.validateAndFormat(widthTxt, numberVal) &&
+                    ValidationUtil.validateAndFormat(weightTareTxt, numberVal, numberFmt) &&
+                    ValidationUtil.validateAndFormat(weightMaxTxt, numberVal, numberFmt)) {
+
+                    BindingUtils.bindProperty(selected, "length", lengthTxt, "text");
+                    BindingUtils.bindProperty(selected, "width", widthTxt, "text");
+                    BindingUtils.bindProperty(selected, "height", heightTxt, "text");
+                    BindingUtils.bindProperty(selected, "weightTare", weightTareTxt, "text");
+                    BindingUtils.bindProperty(selected, "weightMax", weightMaxTxt, "text");
+                    BindingUtils.bindProperty(selected, "description", descriptionTxt, "text");
+                    BindingUtils.bindProperty(selected, "compatibility", compatibilityTxt, "text");
+                    BindingUtils.bindProperty(selected, "typePlacingRules", allowedLocationTypeLst, "dataProvider");
+
+                    var event:TransportUnitTypeEvent=new TransportUnitTypeEvent(TransportUnitTypeEvent.SAVE_TRANSPORT_UNIT_TYPE);
+                    event.data=selected;
                     event.dispatch();
                 }
             }
 
-            private function refresh():void
-            {
-                var event:TransportUnitTypeEvent = new TransportUnitTypeEvent(TransportUnitTypeEvent.LOAD_ALL_TRANSPORT_UNIT_TYPES);
+            private function refresh():void {
+                var event:TransportUnitTypeEvent=new TransportUnitTypeEvent(TransportUnitTypeEvent.LOAD_ALL_TRANSPORT_UNIT_TYPES);
                 event.dispatch();
             }
-    	]]>
+        ]]>
     </mx:Script>
 
-    <mx:Binding source="Number(heightTxt.text)" destination="selected.height" />
-    <mx:Binding source="Number(lengthTxt.text)" destination="selected.length" />
-    <mx:Binding source="Number(widthTxt.text)" destination="selected.width" />
-    <mx:Binding source="Number(weightTareTxt.text)" destination="selected.weightTare" />
-    <mx:Binding source="Number(weightMaxTxt.text)" destination="selected.weightMax" />
-    <mx:Binding source="descriptionTxt.text" destination="selected.description" />
-    <mx:Binding source="compatibilityTxt.text" destination="selected.compatibility" />
-    <mx:Binding source="(allowedLocationTypeLst.dataProvider as ArrayCollection)" destination="selected.typePlacingRules" />
-
-    <mx:NumberFormatter id="numberFmt" precision="2" />
-    <mx:NumberValidator id="numberVal" property="text" />
+    <mx:NumberFormatter id="numberFmt" precision="2"/>
+    <mx:NumberValidator id="numberVal" property="text"/>
 
     <mx:HBox x="10" y="10" verticalAlign="middle" backgroundColor="#E8FB91" width="95%">
         <mx:Label x="10" y="10" text="Transport Unit Types" fontSize="24"/>
         <mx:VRule height="10"/>
         <mx:Button id="addTUTBtn" buttonMode="true" mouseChildren="false" toolTip="Create a new Transport Unit Type" icon="@Embed(source='/assets/images/TransportUnitType--Add.png')" click="showCreateTransportUnitTypeDialog()"/>
         <mx:VRule height="10"/>
-        <mx:Button id="removeTUTBtn" buttonMode="true" mouseChildren="false" toolTip="Delete an existing Transport Unit Type" icon="@Embed(source='/assets/images/TransportUnitType--Delete.png')" click="showDeleteTransportUnitTypeDialog()" />
+        <mx:Button id="removeTUTBtn" buttonMode="true" mouseChildren="false" toolTip="Delete an existing Transport Unit Type" icon="@Embed(source='/assets/images/TransportUnitType--Delete.png')" click="showDeleteTransportUnitTypeDialog()"/>
         <mx:VRule height="10"/>
-        <mx:Button id="saveTUTBtn" buttonMode="true" mouseChildren="false" toolTip="Save an existing Transport Unit Type" icon="@Embed(source='/assets/images/TransportUnitType--Save.png')" click="saveTransportUnit()"  x="390" y="13"/>
+        <mx:Button id="saveTUTBtn" buttonMode="true" mouseChildren="false" toolTip="Save an existing Transport Unit Type" icon="@Embed(source='/assets/images/TransportUnitType--Save.png')" click="saveTransportUnit()" x="390" y="13"/>
         <mx:VRule height="10"/>
         <mx:Button id="refreshBtn" buttonMode="true" mouseChildren="false" toolTip="Refresh the list of Transport Unit Types" icon="@Embed(source='assets/images/icons/refresh.png')" click="refresh()"/>
     </mx:HBox>
@@ -164,43 +153,55 @@
         </mx:DataGrid>
     </mx:HBox>
     <mx:HBox y="236" x="9" width="95%">
-    <mx:Canvas backgroundColor="#E8FB91" backgroundAlpha="0.5">
-        <mx:Label x="10" y="10" text="Transport Unit Type Details" fontWeight="bold" />
-        <mx:HBox x="326" y="38" >
-            <mx:Label text="Allowed on these Location Types :" fontWeight="bold" />
-            <mx:Image id="editAllowedLocationTypesBtn" buttonMode="true" mouseChildren="false" toolTip="Modify the allowed Location Types where this Transport Unit Type can be placed on" source="@Embed(source='/assets/images/TransportUnitType--Edit.png')" click="showAssignmentLocationTypeDialog()"/>
-        </mx:HBox>
-        <mx:HBox x="326" y="170" >
-            <mx:Label text="Allowed on other Transport Unit Types :" fontWeight="bold" />
-            <mx:Image id="editAllowedTransportUnitTypesBtn" buttonMode="true" mouseChildren="false" toolTip="Modify the allowed Transport Unit Types that can be placed on this Transport Unit Type" source="@Embed(source='/assets/images/TransportUnitType--Edit.png')" click="showCreateTransportUnitTypeDialog()"/>
-        </mx:HBox>
-        <mx:Label x="10" y="38" text="Type"  width="130" textAlign="right"/>
-        <mx:Text x="148" y="38" id="transportUnitTypeTxt" text="{selected.type}" width="160" fontWeight="bold"/>
-        <mx:Label x="10" y="64" text="Height"  textAlign="right" width="130"/>
-        <mx:Label x="10" y="92" text="Length"  width="130" textAlign="right"/>
-        <mx:Label x="10" y="118" text="Width"  width="130" textAlign="right"/>
-        <mx:Label x="10" y="144" text="Weight Tare"  textAlign="right" width="130"/>
-        <mx:Label x="10" y="170" text="Weight max"  textAlign="right" width="130"/>
-        <mx:Label x="10" y="197" text="Description"  textAlign="right" width="130"/>
-        <mx:Label x="10" y="267" text="Compatibility"  textAlign="right" width="130"/>
-        <mx:TextInput id="heightTxt" x="148" y="62" text="{selected.height}"/>
-        <mx:TextInput id="lengthTxt" x="148" y="90" text="{selected.length}"/>
-        <mx:TextInput id="widthTxt" x="148" y="116" text="{selected.width}"/>
-        <mx:TextInput id="weightTareTxt" x="148" y="142" text="{selected.weightTare}"/>
-        <mx:TextInput id="weightMaxTxt" x="148" y="168" text="{selected.weightMax}"/>
-        <mx:TextArea id="descriptionTxt" x="148" y="196" text="{selected.description}" height="64"/>
-        <mx:TextArea id="compatibilityTxt" x="148" y="266" text="{selected.compatibility}" height="64" width="140"/>
-        <mx:VRule x="316" y="38" height="300"/>
-        <mx:VRule x="34" y="36" height="310" strokeWidth="0"/>
-        <mx:List id="allowedLocationTypeLst" x="326" y="61" width="276" height="103" labelField="allowedLocationType" dataProvider="{selected.typePlacingRules}" />
-        <mx:List id="allowedTransportUnitTypeLst" x="326" y="194" width="276" height="103" labelField="allowedTransportUnitType" dataProvider="{selected.typeStackingRules}" />
-        <mx:HRule x="326" y="305" width="286" strokeWidth="0"/>
-        <mx:Image x="292" y="269" height="16" width="16" buttonMode="true" mouseChildren="false" source="@Embed(source='assets/images/icons/plus.png')"/>
-        <mx:Image x="292" y="293" height="16" width="16" buttonMode="true" mouseChildren="false" source="@Embed(source='assets/images/icons/minus.png')"/>
-    </mx:Canvas>
-    <mx:Canvas backgroundColor="#E8FB91" width="100%" height="100%" backgroundAlpha="0.5">
-    	<mx:Label x="10" y="10" text="Image" fontWeight="bold" />
-    	<mx:Image x="10" y="36"/>
-    </mx:Canvas>
+        <mx:Canvas backgroundColor="#E8FB91" backgroundAlpha="0.5">
+            <mx:Label x="10" y="10" text="Transport Unit Type Details" fontWeight="bold"/>
+
+            <mx:Label x="10" y="38" text="Type" width="130" textAlign="right"/>
+            <mx:Text x="148" y="38" id="transportUnitTypeTxt" text="{selected.type}" width="160" fontWeight="bold"/>
+
+            <mx:Label x="10" y="64" text="Height" textAlign="right" width="130"/>
+            <mx:TextInput id="heightTxt" x="148" y="62" text="{selected.height}"/>
+
+            <mx:Label x="10" y="92" text="Length" width="130" textAlign="right"/>
+            <mx:TextInput id="lengthTxt" x="148" y="90" text="{selected.length}"/>
+
+            <mx:Label x="10" y="118" text="Width" width="130" textAlign="right"/>
+            <mx:TextInput id="widthTxt" x="148" y="116" text="{selected.width}"/>
+
+            <mx:Label x="10" y="144" text="Weight Tare" textAlign="right" width="130"/>
+            <mx:TextInput id="weightTareTxt" x="148" y="142" text="{selected.weightTare}"/>
+
+            <mx:Label x="10" y="170" text="Weight max" textAlign="right" width="130"/>
+            <mx:TextInput id="weightMaxTxt" x="148" y="168" text="{selected.weightMax}"/>
+
+            <mx:Label x="10" y="197" text="Description" textAlign="right" width="130"/>
+            <mx:TextArea id="descriptionTxt" x="148" y="196" text="{selected.description}" height="64"/>
+
+            <mx:Label x="10" y="267" text="Compatibility" textAlign="right" width="130"/>
+            <mx:TextArea id="compatibilityTxt" x="148" y="266" text="{selected.compatibility}" height="64" width="140"/>
+
+            <mx:VRule x="316" y="38" height="300"/>
+            <mx:VRule x="34" y="36" height="310" strokeWidth="0"/>
+
+            <mx:HBox x="326" y="38">
+                <mx:Label text="Allowed on these Location Types :" fontWeight="bold"/>
+                <mx:Image id="editAllowedLocationTypesBtn" buttonMode="true" mouseChildren="false" toolTip="Modify the allowed Location Types where this Transport Unit Type can be placed on" source="@Embed(source='/assets/images/TransportUnitType--Edit.png')" click="showAssignmentLocationTypeDialog()"/>
+            </mx:HBox>
+            <mx:List id="allowedLocationTypeLst" x="326" y="61" width="276" height="103" labelField="allowedLocationType" dataProvider="{selected.typePlacingRules}"/>
+
+            <mx:HBox x="326" y="170">
+                <mx:Label text="Allowed on other Transport Unit Types :" fontWeight="bold"/>
+                <mx:Image id="editAllowedTransportUnitTypesBtn" buttonMode="true" mouseChildren="false" toolTip="Modify the allowed Transport Unit Types that can be placed on this Transport Unit Type" source="@Embed(source='/assets/images/TransportUnitType--Edit.png')" click="showCreateTransportUnitTypeDialog()"/>
+            </mx:HBox>
+            <mx:List id="allowedTransportUnitTypeLst" x="326" y="194" width="276" height="103" labelField="allowedTransportUnitType" dataProvider="{selected.typeStackingRules}"/>
+
+            <mx:HRule x="326" y="305" width="286" strokeWidth="0"/>
+            <mx:Image x="292" y="269" height="16" width="16" buttonMode="true" mouseChildren="false" source="@Embed(source='assets/images/icons/plus.png')"/>
+            <mx:Image x="292" y="293" height="16" width="16" buttonMode="true" mouseChildren="false" source="@Embed(source='assets/images/icons/minus.png')"/>
+        </mx:Canvas>
+        <mx:Canvas backgroundColor="#E8FB91" width="100%" height="100%" backgroundAlpha="0.5">
+            <mx:Label x="10" y="10" text="Image" fontWeight="bold"/>
+            <mx:Image x="10" y="36"/>
+        </mx:Canvas>
     </mx:HBox>
 </mx:Canvas>
