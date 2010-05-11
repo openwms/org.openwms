@@ -21,11 +21,13 @@
 package org.openwms.web.flex.client.business
 {
     import com.adobe.cairngorm.business.ServiceLocator;
-
+    
     import mx.rpc.AsyncToken;
     import mx.rpc.IResponder;
+    import mx.rpc.remoting.RemoteObject;
+    
+    import org.granite.events.SecurityEvent;
     import org.openwms.common.domain.Module;
-    import mx.collections.ArrayCollection;
 
     /**
      * A ModulesDelegate.
@@ -36,7 +38,7 @@ package org.openwms.web.flex.client.business
     public class ModulesDelegate
     {
         private var responder:IResponder;
-        private var service:Object;
+        private var service:RemoteObject;
 
         public function ModulesDelegate(responder:IResponder):void
         {

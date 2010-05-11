@@ -25,6 +25,7 @@
 <!-- When using BlazeDS with SBI instead of GraniteDS than uncomment the RemoteObjects 
 	<mx:RemoteObject id="locationService" endpoint="http://127.0.0.1:8380/OpenWMS/messagebroker/amf" destination="locationServiceProxy" showBusyCursor="true"/>
 	<mx:RemoteObject id="locationGroupService" endpoint="http://127.0.0.1:8380/OpenWMS/messagebroker/amf" destination="locationGroupServiceProxy" showBusyCursor="true"/>
+-->
 
 	<granite:SecureRemoteObject
         id="locationService"
@@ -35,10 +36,16 @@
         id="locationGroupService"
         destination="locationGroupService"
         showBusyCursor="true"/>
--->
+
+    <granite:SecureRemoteObject
+        id="userService"
+        destination="userService"
+        showBusyCursor="true"/>
+<!--
 <mx:RemoteObject id="locationService" destination="locationService" showBusyCursor="true" />
 <mx:RemoteObject id="locationGroupService" destination="locationGroupService" showBusyCursor="true" />
 <mx:RemoteObject id="userService" destination="userService" showBusyCursor="true" />
+-->
 <mx:RemoteObject id="transportUnitService" destination="transportUnitService" showBusyCursor="true" />
 <mx:RemoteObject id="moduleManagementService" destination="moduleManagementService" showBusyCursor="true" />
 

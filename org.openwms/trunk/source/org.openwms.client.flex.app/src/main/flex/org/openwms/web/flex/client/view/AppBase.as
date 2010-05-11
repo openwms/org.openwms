@@ -20,6 +20,8 @@
  */
 package org.openwms.web.flex.client.view
 {
+    import com.adobe.cairngorm.business.ServiceLocator;
+    
     import flash.display.DisplayObject;
     
     import mx.collections.ArrayCollection;
@@ -33,6 +35,7 @@ package org.openwms.web.flex.client.view
     import mx.managers.PopUpManager;
     import mx.modules.IModuleInfo;
     import mx.modules.ModuleManager;
+    import mx.rpc.remoting.RemoteObject;
     
     import org.granite.events.SecurityEvent;
     import org.granite.rpc.remoting.mxml.SecureRemoteObject;
@@ -50,6 +53,7 @@ package org.openwms.web.flex.client.view
     import org.openwms.web.flex.client.event.UserEvent;
     import org.openwms.web.flex.client.model.ModelLocator;
     import org.openwms.web.flex.client.module.ModuleLocator;
+    import org.openwms.web.flex.client.view.dialogs.LoginView;
 
     public class AppBase extends Application
     {
@@ -67,7 +71,7 @@ package org.openwms.web.flex.client.view
 		[Bindable]
 		protected var menuItems:ArrayCollection;
 		[Bindable]
-		public var loginView:LoginView;
+		public var loginView:LoginView = LoginView(PopUpManager.createPopUp(this, LoginView, true));
 		[Bindable]
 		public var mainMenuBar:MenuBar;
         [Bindable]
@@ -81,6 +85,7 @@ package org.openwms.web.flex.client.view
 		private static var _link:Array = [org.openwms.tms.domain.order.TransportOrder];
         [Bindable]
 		private var mainController:MainController = MainController.getInstance();
+		private var service:RemoteObject;
 	    
 	    /**
 	     * Constructor.
@@ -92,8 +97,32 @@ package org.openwms.web.flex.client.view
 	
 	    public function init():void
 	    {
+	    	loginView.onLogin = login;
+	    	this.addEventListener(SecurityEvent.ALL,onSecurityEvent);
+	    	this.service = ServiceLocator.getInstance().getRemoteObject("userService");
+            this.service.addEventListener(SecurityEvent.ALL, onSecurityEvent);
+            this.service.login();
+	    	/*
 	        srv = new SecureRemoteObject("userService");
-	        //srv.login();
+	        srv.source = "userService";
+	        srv.login();
+
+                srv = new SecureRemoteObject("personService");
+                srv.source = "personService";
+                srv.channelSet = new ChannelSet();
+                srv.channelSet.addChannel(new AMFChannel("graniteamf", "http://{server.name}:{server.port}/graniteds-spring/graniteamf/amf"));
+                srv.showBusyCursor = true;
+                var operation:Operation = new Operation();
+                operation.name = "findAllPersons";
+                operation.addEventListener(ResultEvent.RESULT, onFindAllPersonsResult);
+                srv.operations = {findAllPersons: operation};
+                srv.addEventListener(FaultEvent.FAULT, onRemoteFault);
+                srv.addEventListener(SecurityEvent.ALL, onSecurityEvent);
+                srv.findAllPersons();
+*/
+
+
+
 	        registerEventListeners();
 	        modelLocator.actualView = "emptyScreenView";
 	        bindCommands();
@@ -125,16 +154,19 @@ package org.openwms.web.flex.client.view
 		        case SecurityEvent.INVALID_CREDENTIALS:
 		            loginView.loginMessageText = "Invalid username or password";
 		            loginView.authenticated = false;
+                    PopUpManager.centerPopUp(loginView);
 		            break;
 		        case SecurityEvent.NOT_LOGGED_IN:
-		            srv.logout();
+		            service.logout();
 		            loginView.loginMessageText = "";
 		            loginView.authenticated = false;
+	                PopUpManager.centerPopUp(loginView);
 		            break;
 		        case SecurityEvent.SESSION_EXPIRED:
-		            srv.logout();
+		            service.logout();
 		            loginView.loginMessageText = "Session expired";
 		            loginView.authenticated = false;
+	                PopUpManager.centerPopUp(loginView);
 		            break;
 		        case SecurityEvent.ACCESS_DENIED:
 		            Alert.show("You don't have required rights to execute this action");
