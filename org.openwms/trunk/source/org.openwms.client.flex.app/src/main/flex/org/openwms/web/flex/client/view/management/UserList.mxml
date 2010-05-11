@@ -52,7 +52,7 @@
 		]]>
 	</mx:Script>
 
-	<mx:VBox width="278" height="100%" paddingBottom="5" paddingLeft="5" paddingRight="5" paddingTop="5">
+	<mx:VBox width="290" height="100%" paddingBottom="5" paddingLeft="5" paddingRight="5" paddingTop="5">
 		<mx:Repeater id="rp" dataProvider="{modelLocator.allUsers}">
 			<Renderers:UserListRenderer userData="{rp.currentItem}" userSelectionChanged="onUserSelectionChanged(event)" />
 		</mx:Repeater>

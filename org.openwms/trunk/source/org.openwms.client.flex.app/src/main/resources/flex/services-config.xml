@@ -51,6 +51,15 @@
 					<factory>springFactory</factory>
 					<source>userService</source>
 				</properties>
+                <security>
+                    <security-constraint>
+                        <auth-method>Custom</auth-method>
+                        <roles>
+                            <role>ROLE_ADMIN</role>
+                            <role>ROLE_USER</role>
+                        </roles>
+                    </security-constraint>
+                </security>            
 			</destination>
 			<destination id="transportUnitService">
 				<channels>
