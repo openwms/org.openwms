@@ -71,7 +71,7 @@ package org.openwms.web.flex.client.view
 		[Bindable]
 		protected var menuItems:ArrayCollection;
 		[Bindable]
-		public var loginView:LoginView = LoginView(PopUpManager.createPopUp(this, LoginView, true));
+		public var loginView:LoginView = LoginView(PopUpManager.createPopUp(this as DisplayObject, LoginView, true));
 		[Bindable]
 		public var mainMenuBar:MenuBar;
         [Bindable]
