@@ -34,6 +34,7 @@ package org.openwms.web.flex.client.common.event
         public static const CREATE_TRANSPORT_UNIT_TYPE:String = "Create_TransportUnitType";
         public static const DELETE_TRANSPORT_UNIT_TYPE:String = "Delete_TransportUnitType";
         public static const SAVE_TRANSPORT_UNIT_TYPE:String = "Save_TransportUnitType";
+        public static const LOAD_TUT_RULES:String = "Load_RulesForTUT";
 
         public function TransportUnitTypeEvent(type:String, bubbles:Boolean = false, cancelable:Boolean = false)
         {

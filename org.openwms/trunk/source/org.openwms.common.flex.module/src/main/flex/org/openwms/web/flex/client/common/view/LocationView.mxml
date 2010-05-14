@@ -138,6 +138,7 @@
 
             private function refresh():void
             {
+            	selected = null;
                 var event:LocationEvent = new LocationEvent(LocationEvent.LOAD_ALL_LOCATIONS);
                 event.dispatch();
             }

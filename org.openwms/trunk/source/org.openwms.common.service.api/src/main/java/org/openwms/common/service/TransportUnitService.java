@@ -23,6 +23,8 @@ package org.openwms.common.service;
 import java.util.List;
 
 import org.openwms.common.domain.LocationPK;
+import org.openwms.common.domain.LocationType;
+import org.openwms.common.domain.Rule;
 import org.openwms.common.domain.TransportUnit;
 import org.openwms.common.domain.TransportUnitType;
 import org.openwms.common.domain.values.Barcode;
@@ -117,4 +119,8 @@ public interface TransportUnitService<T extends TransportUnit> extends
 	 * @return The updated instance
 	 */
 	TransportUnitType saveTransportUnitType(TransportUnitType transportUnitType);
+	
+	TransportUnitType updateRules(String type, List<LocationType> newAssigned, List<LocationType> newNotAssigned);
+	
+	List<Rule> loadRules(String transportUnitType);
 }

@@ -23,6 +23,7 @@
             private var rules:ListCollectionView;
             [Bindable]
             public var transportUnitType:TransportUnitType;
+            private var changed:Boolean = false;
 
             private function init():void
             {
@@ -36,6 +37,8 @@
                         assigned.addItem(rule.allowedLocationType);
                     }
                 }
+                this.addEventListener(KeyboardEvent.KEY_DOWN, keyEventHandler);
+                PopUpManager.centerPopUp(this);
             }
 
             private function closeDialog(event:Event=null):void
@@ -55,7 +58,7 @@
 
             private function accept(e:Event):void
             {
-            	var changed:Boolean = false;
+            	/*
             	for each (var rule:TypePlacingRule in rules)
             	{
             		if (!assigned.contains(rule.allowedLocationType))
@@ -77,10 +80,11 @@
                         changed = true;
             		}
             	}
+            	*/
             	if (changed)
             	{
-                    var event:TransportUnitTypeEvent = new TransportUnitTypeEvent(TransportUnitTypeEvent.SAVE_TRANSPORT_UNIT_TYPE);
-                    event.data = transportUnitType;
+                    var event:TransportUnitTypeEvent = new TransportUnitTypeEvent(TransportUnitTypeEvent.SAVE_ALLOWED_LOCATION_TYPES);
+                    event.data = {tuType:transportUnitType.type, newAssigned:assigned, newNotAssigned:notAssigned};
                     event.dispatch();
                 }
                 closeDialog();
@@ -97,6 +101,7 @@
             	{
             		notAssigned.removeItemAt(notAssigned.getItemIndex(locationType));
             		assigned.addItem(locationType);
+            		changed = true;
             	}
             }
             		
@@ -106,6 +111,7 @@
                 {
                     assigned.removeItemAt(assigned.getItemIndex(locationType));
                     notAssigned.addItem(locationType);
+                    changed = true;
                 }
             }
     	]]>

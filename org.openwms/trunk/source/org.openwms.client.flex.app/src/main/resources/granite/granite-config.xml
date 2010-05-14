@@ -40,7 +40,7 @@
     </externalizers>
     
     <security type="org.granite.spring.security.SpringSecurity3Service">
-        <param name='authentication-manager-bean-name' value='myAuthenticationManager'/>
+        <param name="authentication-manager-bean-name" value="authenticationManager"/>
     </security>
     
 </granite-config>

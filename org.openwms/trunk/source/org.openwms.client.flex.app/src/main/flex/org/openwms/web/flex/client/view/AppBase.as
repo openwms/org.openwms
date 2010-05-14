@@ -71,7 +71,7 @@ package org.openwms.web.flex.client.view
 		[Bindable]
 		protected var menuItems:ArrayCollection;
 		[Bindable]
-		public var loginView:LoginView = LoginView(PopUpManager.createPopUp(this as DisplayObject, LoginView, true));
+		public var loginView:LoginView;
 		[Bindable]
 		public var mainMenuBar:MenuBar;
         [Bindable]
@@ -97,37 +97,14 @@ package org.openwms.web.flex.client.view
 	
 	    public function init():void
 	    {
-	    	loginView.onLogin = login;
 	    	this.addEventListener(SecurityEvent.ALL,onSecurityEvent);
 	    	this.service = ServiceLocator.getInstance().getRemoteObject("userService");
             this.service.addEventListener(SecurityEvent.ALL, onSecurityEvent);
             this.service.login();
-	    	/*
-	        srv = new SecureRemoteObject("userService");
-	        srv.source = "userService";
-	        srv.login();
-
-                srv = new SecureRemoteObject("personService");
-                srv.source = "personService";
-                srv.channelSet = new ChannelSet();
-                srv.channelSet.addChannel(new AMFChannel("graniteamf", "http://{server.name}:{server.port}/graniteds-spring/graniteamf/amf"));
-                srv.showBusyCursor = true;
-                var operation:Operation = new Operation();
-                operation.name = "findAllPersons";
-                operation.addEventListener(ResultEvent.RESULT, onFindAllPersonsResult);
-                srv.operations = {findAllPersons: operation};
-                srv.addEventListener(FaultEvent.FAULT, onRemoteFault);
-                srv.addEventListener(SecurityEvent.ALL, onSecurityEvent);
-                srv.findAllPersons();
-*/
-
-
-
 	        registerEventListeners();
 	        modelLocator.actualView = "emptyScreenView";
 	        bindCommands();
 	        detectModules();
-	        //configService.send();
 	    }
 	
 	    private function bindCommands():void
@@ -152,21 +129,27 @@ package org.openwms.web.flex.client.view
 		    switch (event.type)
 		    {
 		        case SecurityEvent.INVALID_CREDENTIALS:
-		            loginView.loginMessageText = "Invalid username or password";
-		            loginView.authenticated = false;
+                    loginView = LoginView(PopUpManager.createPopUp(this as DisplayObject, LoginView, true));
+                    loginView.loginMessageText = "Invalid username or password";
+                    loginView.authenticated = false;
+                    loginView.onLogin = login;
                     PopUpManager.centerPopUp(loginView);
 		            break;
 		        case SecurityEvent.NOT_LOGGED_IN:
-		            service.logout();
-		            loginView.loginMessageText = "";
-		            loginView.authenticated = false;
-	                PopUpManager.centerPopUp(loginView);
+		            //service.logout();
+                    loginView = LoginView(PopUpManager.createPopUp(this as DisplayObject, LoginView, true));
+                    loginView.loginMessageText = "";
+                    loginView.authenticated = false;
+	                loginView.onLogin = login;
+                    PopUpManager.centerPopUp(loginView);
 		            break;
 		        case SecurityEvent.SESSION_EXPIRED:
 		            service.logout();
-		            loginView.loginMessageText = "Session expired";
-		            loginView.authenticated = false;
-	                PopUpManager.centerPopUp(loginView);
+                    loginView = LoginView(PopUpManager.createPopUp(this as DisplayObject, LoginView, true));
+                    loginView.loginMessageText = "Session expired";
+                    loginView.authenticated = false;
+	                loginView.onLogin = login;
+                    PopUpManager.centerPopUp(loginView);
 		            break;
 		        case SecurityEvent.ACCESS_DENIED:
 		            Alert.show("You don't have required rights to execute this action");
@@ -187,15 +170,18 @@ package org.openwms.web.flex.client.view
 		    appViewStack.selectedIndex = appViewStack.getChildIndex(appViewStack.getChildByName(event.item.@action));
 		}
 		
-		public function login(username:String, password:String):void
+		public function login(username:String = null, password:String = null):void
 		{
-		    srv.setCredentials(username, password);
-		    srv.login();
+			PopUpManager.removePopUp(loginView);
+			trace("Call service to set credentials");
+		    service.setCredentials(username, password);
+		    trace("Call service again");
+		    service.login();
 		}
 		
 		public function logout():void
 		{
-		    srv.logout();
+		    service.logout();
 		    loginView.authenticated = false;
 		    loginView.loginMessageText = "";
 		}

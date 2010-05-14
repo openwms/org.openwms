@@ -46,7 +46,7 @@ import javax.persistence.UniqueConstraint;
 @Entity
 @Table(name = "TYPE_STACKING_RULE", uniqueConstraints = @UniqueConstraint(columnNames = { "TRANSPORT_UNIT_TYPE",
         "NO_TRANSPORT_UNITS", "ALLOWED_TRANSPORT_UNIT_TYPE" }))
-public class TypeStackingRule implements Serializable {
+public class TypeStackingRule implements Serializable, Rule {
 
     private static final long serialVersionUID = 1L;
 

@@ -80,6 +80,15 @@ public interface GenericDao<T extends Serializable, ID extends Serializable> {
      * @return List of found Entity classes
      */
     List<T> findByQuery(String queryName, Map<String, ?> params);
+    
+    /**
+     * Use an own JPA query to fetch Entities.
+     * 
+     * @param query The JPA query to execute
+     * @param values A list of values to use as parameters
+     * @return A list of all Entities
+     */
+    List<T> findByOwnQuery(String query, Object...values);
 
     /**
      * Find and return the Entity identified by the natural unique id.

@@ -50,5 +50,9 @@
         <class>org.openwms.common.domain.values.WeightUnit</class>
         <class>org.openwms.tms.domain.order.TransportOrder</class>
         <exclude-unlisted-classes />
+        <properties>
+            <property name="hibernate.show_sql" value="true"/>
+            <property name="hibernate.format_sql" value="true"/>
+        </properties>
     </persistence-unit>
 </persistence>

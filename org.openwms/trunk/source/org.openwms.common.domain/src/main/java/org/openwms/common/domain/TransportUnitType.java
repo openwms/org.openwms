@@ -22,7 +22,9 @@ package org.openwms.common.domain;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
@@ -146,7 +148,7 @@ public class TransportUnitType implements Serializable {
      * Describes which other {@link TransportUnitType}s and how many of that
      * type may be stacked on this {@link TransportUnitType}.
      */
-    @OneToMany(mappedBy = "transportUnitType", cascade = { CascadeType.PERSIST, CascadeType.MERGE })
+    @OneToMany(mappedBy = "transportUnitType", cascade = { CascadeType.ALL })
     private Set<TypeStackingRule> typeStackingRules = new HashSet<TypeStackingRule>();
 
     /**
@@ -334,11 +336,18 @@ public class TransportUnitType implements Serializable {
      * @param typePlacingRule
      *            The rule to set
      */
-    public void addTypePlacingRule(TypePlacingRule typePlacingRule) {
+    public boolean addTypePlacingRule(TypePlacingRule typePlacingRule) {
         if (typePlacingRule == null) {
-            return;
+            return false;
         }
-        this.typePlacingRules.add(typePlacingRule);
+        return this.typePlacingRules.add(typePlacingRule);
+    }
+    
+    public boolean removeTypePlacingRule(TypePlacingRule typePlacingRule) {
+        if (typePlacingRule == null) {
+            return false;
+        }
+        return this.typePlacingRules.remove(typePlacingRule);
     }
 
     /**
@@ -368,7 +377,7 @@ public class TransportUnitType implements Serializable {
      * {@link TypeStackingRule} determines which {@link TransportUnitType}s can
      * be placed on this {@link TransportUnitType}.
      * 
-     * @return A set of all stacking rules
+     * @return A Set of all stacking rules
      */
     public Set<TypeStackingRule> getTypeStackingRules() {
         return this.typeStackingRules;

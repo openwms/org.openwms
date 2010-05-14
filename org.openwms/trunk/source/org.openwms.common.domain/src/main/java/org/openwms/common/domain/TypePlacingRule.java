@@ -48,7 +48,7 @@ import javax.persistence.UniqueConstraint;
 @Entity
 @Table(name = "TYPE_PLACING_RULE", uniqueConstraints = @UniqueConstraint(columnNames = { "TRANSPORT_UNIT_TYPE",
         "PRIVILEGE_LEVEL", "ALLOWED_LOCATION_TYPE" }))
-public class TypePlacingRule implements Serializable {
+public class TypePlacingRule implements Serializable, Rule {
 
     private static final long serialVersionUID = 1L;
 
@@ -64,7 +64,7 @@ public class TypePlacingRule implements Serializable {
      * Parent {@link TransportUnitType}.
      */
     @ManyToOne
-    @JoinColumn(name = "TRANSPORT_UNIT_TYPE")
+    @JoinColumn(name = "TRANSPORT_UNIT_TYPE", nullable = false)
     private TransportUnitType transportUnitType;
 
     /**
@@ -103,14 +103,17 @@ public class TypePlacingRule implements Serializable {
      * Create new {@link TypePlacingRule} with privilegeLevel and
      * allowedLocationType.
      * 
-     * @param privilegeLevel
-     *            The privilege level
+     * @param transportUnitType
+     *            The TransportUnitType for this rule
      * @param allowedLocationType
      *            The allowed LocationType
+     * @param privilegeLevel
+     *            The privilege level
      */
-    public TypePlacingRule(int privilegeLevel, LocationType allowedLocationType) {
-        this.privilegeLevel = privilegeLevel;
+    public TypePlacingRule(TransportUnitType transportUnitType, LocationType allowedLocationType, int privilegeLevel) {
+    	this.transportUnitType = transportUnitType;
         this.allowedLocationType = allowedLocationType;
+        this.privilegeLevel = privilegeLevel;
     }
 
     /**
@@ -119,7 +122,8 @@ public class TypePlacingRule implements Serializable {
      * @param allowedLocationType
      *            The allowed LocationType
      */
-    public TypePlacingRule(LocationType allowedLocationType) {
+    public TypePlacingRule(TransportUnitType transportUnitType, LocationType allowedLocationType) {
+    	this.transportUnitType = transportUnitType;
         this.allowedLocationType = allowedLocationType;
     }
 
@@ -149,6 +153,15 @@ public class TypePlacingRule implements Serializable {
     public int getPrivilegeLevel() {
         return privilegeLevel;
     }
+    
+    /**
+     * Set the privilegeLevel.
+     * 
+     * @param privilegeLevel The level to set
+     */
+    public void setPrivilegeLevel(int privilegeLevel) {
+		this.privilegeLevel = privilegeLevel;
+	}
 
     /**
      * Get the allowedLocationType.
