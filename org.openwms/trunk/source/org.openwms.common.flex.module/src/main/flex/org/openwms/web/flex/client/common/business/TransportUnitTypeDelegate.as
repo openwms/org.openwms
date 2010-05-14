@@ -68,5 +68,16 @@ package org.openwms.web.flex.client.common.business
             var call:AsyncToken = service.saveTransportUnitType(transportUnitType);
             call.addResponder(responder);
         }
+
+        public function updateAllowedLocationTypes(data:*):void
+        {
+            var call:AsyncToken = service.updateRules(data.tuType, data.newAssigned, data.newNotAssigned);
+            call.addResponder(responder);
+        }
+        
+        public function loadRules(type:String):void {
+            var call:AsyncToken = service.loadRules(type);
+            call.addResponder(responder);        	
+        }
     }
 }

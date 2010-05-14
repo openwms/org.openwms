@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:TitleWindow xmlns:mx="http://www.adobe.com/2006/mxml" layout="absolute" creationComplete="init()" dropShadowEnabled="true" showCloseButton="true" close="onCancel(event)" width="342" height="261">
+
+    <mx:Script>
+    	<![CDATA[
+    		import mx.collections.ArrayCollection;
+    		import flash.events.Event;
+            import mx.managers.PopUpManager;
+            import flash.events.KeyboardEvent;
+    		
+    		[Bindable]
+    		public var listToDisplay:ArrayCollection;
+            [Bindable]
+            public var selectedItems:ArrayCollection;
+            [Bindable]
+            public var panelHeaderText:String = "NO TITLE SET";
+            [Bindable]
+            public var labelText:String = "NO LABEL SET";
+            [Bindable]
+            public var formatFunction:Function;
+            [Bindable]
+            public var submitBtnText:String = "Submit";
+            [Bindable]
+            public var cancelBtnText:String = "Cancel";
+            [Bindable]
+            public var closeDialogOnSubmit:Boolean = true;
+            
+            protected function init():void {
+            	this.title = panelHeaderText;
+                this.addEventListener(KeyboardEvent.KEY_DOWN, keyEventHandler);
+                PopUpManager.centerPopUp(this);
+                submitBtn.setFocus();
+            }
+            
+            public function onSubmit(event:MouseEvent):void {
+            	selectedItems = new ArrayCollection(list.selectedItems);
+            	if (closeDialogOnSubmit) {
+            		onCancel();
+            	}
+            }
+            
+            protected function onCancel(event:Event = null):void {
+                this.removeEventListener(KeyboardEvent.KEY_DOWN, keyEventHandler);
+                PopUpManager.removePopUp(this);
+            } 
+            
+            protected function keyEventHandler(event:KeyboardEvent):void {
+                if(event.keyCode == 27) {
+                   onCancel();
+                }
+            }
+
+    	]]>
+    </mx:Script>
+
+    <mx:VBox horizontalAlign="center" verticalAlign="middle" width="100%" height="100%" verticalGap="15">
+	    <mx:Label x="56" y="10" text="{labelText}" width="100%" textAlign="center"/>
+	    <mx:List id="list" width="95%" height="138" labelFunction="{formatFunction}" allowMultipleSelection="true" dataProvider="{listToDisplay}" alternatingItemColors="[#B7BABC, #FFFFFF]" y="39" x="10"/>
+	    <mx:HBox width="100%" horizontalAlign="center">
+	        <mx:Button id="submitBtn" label="{submitBtnText}" click="onSubmit(event)" fontSize="12"/>
+	        <mx:Button id="cancelBtn" label="{cancelBtnText}" click="onCancel(event)" fontSize="12"/>
+	    </mx:HBox>
+    </mx:VBox>
+</mx:TitleWindow>

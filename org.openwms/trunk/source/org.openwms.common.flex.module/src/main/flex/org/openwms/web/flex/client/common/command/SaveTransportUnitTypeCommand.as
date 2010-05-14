@@ -63,9 +63,8 @@ package org.openwms.web.flex.client.common.command
                 Alert.show("Please select a Transport Unit Type first");
                 return;
             }
-            trace("TUT to Save:"+(event.data as TransportUnitType).typePlacingRules.length);
             var delegate:TransportUnitTypeDelegate = new TransportUnitTypeDelegate(this)
-            delegate.saveTransportUnitType(event.data as TransportUnitType);
+            delegate.saveTransportUnitType(event.data);
         }
 
     }

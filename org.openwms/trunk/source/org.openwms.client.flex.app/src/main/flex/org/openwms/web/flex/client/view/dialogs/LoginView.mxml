@@ -21,8 +21,8 @@
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
 -->
-<mx:TitleWindow xmlns:mx="http://www.adobe.com/2006/mxml" width="300" height="200" backgroundColor="#FFFFFF"
-	backgroundAlpha="0.5" borderStyle="solid" alpha="1" borderThickness="3">
+<mx:TitleWindow xmlns:mx="http://www.adobe.com/2006/mxml" width="300" height="220" backgroundColor="#FFFFFF"
+	backgroundAlpha="0.5" borderStyle="solid" alpha="1" borderThickness="3" title="Application Login">
 
     <mx:Metadata>
         [Event(name="login", type="org.openwms.web.flex.client.event.SecurityEvent")]

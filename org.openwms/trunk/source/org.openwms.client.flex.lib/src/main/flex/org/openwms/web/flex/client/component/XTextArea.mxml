@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:HBox xmlns:mx="http://www.adobe.com/2006/mxml" horizontalGap="0" creationComplete="init();">
+
+    <mx:Script>
+        <![CDATA[
+        	import mx.events.DragEvent;
+            import mx.collections.ArrayCollection;
+            import flash.events.Event;
+            // List props            
+            [Bindable]
+            public var listToDisplay:Object;
+            [Bindable]
+            public var formatFunction:Function;
+            [Bindable]
+            public var onDragComplete:Function;
+            [Bindable]
+            public var dragAllowed:Boolean = true;
+            
+            // Button props
+            [Bindable]
+            public var plusToolTip:String = "Add";
+            [Bindable]
+            public var plusClick:Function;
+            [Bindable]
+            public var minusToolTip:String = "Remove";
+            [Bindable]
+            public var minusClick:Function;
+
+            [Bindable]
+            public var selectedItems:ArrayCollection = new ArrayCollection(lst.selectedItems);
+            
+            private function init():void {
+            	if (onDragComplete != null) {
+            		lst.addEventListener(DragEvent.DRAG_DROP, onDragComplete);
+            	}
+                if (plusClick != null) {
+                    addBtn.addEventListener(MouseEvent.CLICK, plusClick);
+                }
+                if (minusClick != null) {
+                    removeBtn.addEventListener(MouseEvent.CLICK, minusClick);
+                }
+                if (formatFunction != null) {
+                    lst.labelFunction = formatFunction;
+                }
+            }
+                        
+        ]]>
+    </mx:Script>
+
+    <mx:List id="lst" width="100%" height="100%" dataProvider="{listToDisplay}" dragEnabled="{dragAllowed}" dropEnabled="{dragAllowed}" dragMoveEnabled="{dragAllowed}" />
+    <mx:VBox height="100%" width="16" verticalAlign="middle">
+        <mx:Image id="addBtn" height="16" width="16" buttonMode="true" mouseChildren="false" toolTip="{plusToolTip}" source="@Embed(source='/assets/images/icons/plus.png')" />
+        <mx:Image id="removeBtn" height="16" width="16" buttonMode="true" mouseChildren="false" toolTip="{minusToolTip}" source="@Embed(source='/assets/images/icons/minus.png')" />
+    </mx:VBox>
+</mx:HBox>

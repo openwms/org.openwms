@@ -46,6 +46,7 @@ package org.openwms.web.flex.client.common.view
 	import org.openwms.web.flex.client.common.command.ShowLocationGroupCommand;
 	import org.openwms.web.flex.client.common.command.ShowLocationViewCommand;
 	import org.openwms.web.flex.client.common.command.ShowTransportUnitCommand;
+	import org.openwms.web.flex.client.common.command.LoadRulesForTransportUnitTypeCommand;
 	import org.openwms.web.flex.client.common.event.CommonSwitchScreenEvent;
 	import org.openwms.web.flex.client.common.event.LoadLocationGroupsEvent;
 	import org.openwms.web.flex.client.common.event.LocationEvent;
@@ -166,6 +167,7 @@ package org.openwms.web.flex.client.common.view
             mainController.unregisterHandler(TransportUnitTypeEvent.CREATE_TRANSPORT_UNIT_TYPE);
             mainController.unregisterHandler(TransportUnitTypeEvent.DELETE_TRANSPORT_UNIT_TYPE);
             mainController.unregisterHandler(TransportUnitTypeEvent.SAVE_TRANSPORT_UNIT_TYPE);
+            mainController.unregisterHandler(TransportUnitTypeEvent.LOAD_TUT_RULES);
 
             mainController.unregisterHandler(TransportUnitEvent.CREATE_TRANSPORT_UNIT);
             mainController.unregisterHandler(TransportUnitEvent.DELETE_TRANSPORT_UNIT);
@@ -196,6 +198,7 @@ package org.openwms.web.flex.client.common.view
             mainController.registerHandler(TransportUnitTypeEvent.CREATE_TRANSPORT_UNIT_TYPE, CreateTransportUnitTypeCommand);
             mainController.registerHandler(TransportUnitTypeEvent.DELETE_TRANSPORT_UNIT_TYPE, DeleteTransportUnitTypeCommand);
             mainController.registerHandler(TransportUnitTypeEvent.SAVE_TRANSPORT_UNIT_TYPE, SaveTransportUnitTypeCommand);
+            mainController.registerHandler(TransportUnitTypeEvent.LOAD_TUT_RULES, LoadRulesForTransportUnitTypeCommand);
 
             mainController.registerHandler(TransportUnitEvent.CREATE_TRANSPORT_UNIT, CreateTransportUnitCommand);
             mainController.registerHandler(TransportUnitEvent.DELETE_TRANSPORT_UNIT, DeleteTransportUnitCommand);

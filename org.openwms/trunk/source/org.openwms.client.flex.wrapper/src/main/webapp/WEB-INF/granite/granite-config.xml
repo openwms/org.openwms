@@ -21,7 +21,8 @@
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */  
 -->
-<!DOCTYPE granite-config PUBLIC "-//Granite Data Services//DTD granite-config internal//EN"
+<!DOCTYPE granite-config PUBLIC
+    "-//Granite Data Services//DTD granite-config internal//EN"
     "http://www.graniteds.org/public/dtd/2.1.0/granite-config.dtd">
 
 <granite-config>
@@ -37,10 +38,10 @@
 			<include annotated-with="javax.persistence.Embeddable" />
 		</externalizer>
 	</externalizers>
-<!--
+    
     <security type="org.granite.spring.security.SpringSecurity3Service">
-       <param name='authentication-manager-bean-name' value='myAuthenticationManager'/>
+        <param name="authentication-manager-bean-name" value="authenticationManager"/>
     </security>
--->
+    
 </granite-config>
 

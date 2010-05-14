@@ -144,6 +144,16 @@ public abstract class AbstractGenericJpaDao<T extends Serializable, ID extends S
     public List<T> findByQuery(String queryName, Map<String, ?> params) {
         return getJpaTemplate().findByNamedQueryAndNamedParams(queryName, params);
     }
+    
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    @Transactional(readOnly = true)
+    @SuppressWarnings("unchecked")
+    public List<T> findByOwnQuery(String query, Object... values) {
+    	return getJpaTemplate().find(query, values);
+    }
 
     /**
      * {@inheritDoc}

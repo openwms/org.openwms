@@ -70,7 +70,7 @@ public class TransportUnitTypeTest extends AbstractJpaSpringContextTests {
     public final void testCascadingTypePlacingRule() {
         TransportUnitType transportUnitType = new TransportUnitType("JU_TEST");
         LocationType locationType = new LocationType("JU_LOC_TYPE");
-        TypePlacingRule typePlacingRule = new TypePlacingRule(1, locationType);
+        TypePlacingRule typePlacingRule = new TypePlacingRule(transportUnitType, locationType, 1);
 
         transportUnitType.addTypePlacingRule(typePlacingRule);
 
