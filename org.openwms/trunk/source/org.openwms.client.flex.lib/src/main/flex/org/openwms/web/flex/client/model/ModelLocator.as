@@ -44,7 +44,7 @@ package org.openwms.web.flex.client.model
         public static const MAIN_VIEW_STACK_LOCATION_VIEW:uint = 4;
         public static const MAIN_VIEW_STACK_LOCATIONGROUP_VIEW:uint = 5;
         public static const MAIN_VIEW_STACK_TRANSPORTUNIT_VIEW:uint = 6;
-        public var mainViewStackIndex:uint = MAIN_VIEW_STACK_EMPTY_VIEW;
+        //public var mainViewStackIndex:uint = MAIN_VIEW_STACK_EMPTY_VIEW;
 
         public const UPLOAD_URL:String = "/openwms/upload";
         public const DIRECTORY_NAME:String = "data";
@@ -55,13 +55,17 @@ package org.openwms.web.flex.client.model
         public var allTransportUnits:ArrayCollection = new ArrayCollection();
         public var allModules:ArrayCollection = new ArrayCollection();
         public var allUsers:ArrayCollection = new ArrayCollection();
+        public var allRoles:ArrayCollection = new ArrayCollection();
         public var selectedUser:User = null;
         public var locationGroupTree:TreeNode;
         public var image:Object;
         private var views:Array = new Array();
         // Used to control the main viewStack
         public var actualView:String;
-
+        // Credentials, set by the login screen
+        public static var isInitialized:Boolean = false;
+        public static var authenticated:Boolean = false;
+        
         private static var instance:ModelLocator;
 
         /**

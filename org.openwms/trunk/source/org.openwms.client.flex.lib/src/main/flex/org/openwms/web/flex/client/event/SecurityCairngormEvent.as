@@ -18,29 +18,34 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
-package org.openwms.web.flex.client.util {
-    import mx.collections.ArrayCollection;
-    import mx.containers.ViewStack;
+package org.openwms.web.flex.client.event
+{
+    import com.adobe.cairngorm.control.CairngormEvent;
+    
+    import org.granite.events.SecurityEvent;
 
     /**
-     * A DisplayUtility.
+     * A SecurityCairngormEvent.
      *
      * @author <a href="mailto:openwms@googlemail.com">Heiko Scherrer</a>
-     * @version $Revision: 700 $
+     * @version $Revision$
      */
-    public final class DisplayUtility {
-        public function DisplayUtility() {
+    public class SecurityCairngormEvent extends SecurityEvent
+    {
+    	
+    	private var _rootEvent:CairngormEvent;
+
+        public function set rootEvent(rootEvent:CairngormEvent):void {
+            _rootEvent = rootEvent;
+        }
+        public function get rootEvent():CairngormEvent {
+            return _rootEvent;
         }
 
-        public static function getView(viewId : String, viewStack : ViewStack) : int {
-            if (viewStack.getChildByName(viewId) == null) {
-                return -1;
-            }
-            return viewStack.getChildIndex(viewStack.getChildByName(viewId));
-        }
-
-        public static function getListOfValues(list : ArrayCollection, name : String) : ArrayCollection {
-            return null;
+        public function SecurityCairngormEvent(event_type:String, rootEvent:CairngormEvent = null, message:String = null, bubbles:Boolean = true, cancelable:Boolean = false):void
+        {
+            super(event_type, message, bubbles, cancelable);
+            _rootEvent = rootEvent;
         }
 
     }
