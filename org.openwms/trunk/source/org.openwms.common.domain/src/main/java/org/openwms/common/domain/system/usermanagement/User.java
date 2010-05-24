@@ -77,7 +77,7 @@ public class User implements Serializable {
      * external system.
      */
     @Column(name = "EXTERN")
-    private Boolean extern;
+    private boolean extern = false;
 
     /**
      * Date of last password change.
@@ -91,7 +91,7 @@ public class User implements Serializable {
      * permission to login.
      */
     @Column(name = "LOCKED")
-    private Boolean locked;
+    private boolean locked = false;
 
     /**
      * Current password of the <code>User</code>.
@@ -103,7 +103,7 @@ public class User implements Serializable {
      * <code>true</code> if this <code>User</code> is enabled.
      */
     @Column(name = "ENABLED")
-    private Boolean enabled;
+    private boolean enabled = true;
 
     /**
      * Date when the account expires. After expiration, the <code>User</code>
@@ -119,13 +119,12 @@ public class User implements Serializable {
     @Column(name = "FULLNAME")
     private String fullname;
 
-
     /**
      * Version field.
      */
     @Version
     private long version;
-    
+
     /* ------------------- collection mapping ------------------- */
     /**
      * More detail information about the <code>User</code>.
@@ -195,11 +194,11 @@ public class User implements Serializable {
         this.username = username;
     }
 
-    public Boolean getExternalUser() {
+    public boolean isExternalUser() {
         return this.extern;
     }
 
-    public void setExternalUser(Boolean externalUser) {
+    public void setExternalUser(boolean externalUser) {
         this.extern = externalUser;
     }
 
@@ -211,11 +210,11 @@ public class User implements Serializable {
         this.lastPasswordChange = lastPasswordChange;
     }
 
-    public Boolean getLocked() {
+    public boolean isLocked() {
         return this.locked;
     }
 
-    public void setLocked(Boolean locked) {
+    public void setLocked(boolean locked) {
         this.locked = locked;
     }
 
@@ -227,11 +226,11 @@ public class User implements Serializable {
         this.password = password;
     }
 
-    public Boolean getEnabled() {
+    public boolean isEnabled() {
         return this.enabled;
     }
 
-    public void setEnabled(Boolean enabled) {
+    public void setEnabled(boolean enabled) {
         this.enabled = enabled;
     }
 
@@ -298,10 +297,10 @@ public class User implements Serializable {
      * Is this <code>User</code> an user authenticated through an external
      * system?
      * 
-     * @return true if this <code>User</code> was authenticated by an external
-     *         system, otherwise false.
+     * @return <code>true</code> if this <code>User</code> was authenticated by
+     *         an external system, otherwise <code>false</code>.
      */
-    public Boolean getExtern() {
+    public boolean isExtern() {
         return extern;
     }
 
@@ -309,10 +308,10 @@ public class User implements Serializable {
      * Set this <code>User</code> as authenticated through an external system.
      * 
      * @param extern
-     *            true if this <code>User</code> was authenticated by an
-     *            external system, otherwise false.
+     *            <code>true</code> if this <code>User</code> was authenticated
+     *            by an external system, otherwise <code>false</code>.
      */
-    public void setExtern(Boolean extern) {
+    public void setExtern(boolean extern) {
         this.extern = extern;
     }
 
