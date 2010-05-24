@@ -33,6 +33,8 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.persistence.Version;
 
@@ -47,37 +49,21 @@ import javax.persistence.Version;
  * @since 0.1
  */
 @Entity
-@Table(name = "ROLE")
-public class Role implements Serializable {
+@NamedQueries( { @NamedQuery(name = Role.NQ_FIND_ALL, query = "select distinct(r) from Role r left join fetch r.users left join fetch r.grants"),
+        @NamedQuery(name = Role.NQ_FIND_BY_UNIQUE_QUERY, query = "select r from Role r where r.name = ?1") })
+public class Role extends SecurityObject implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
     /**
-     * Unique technical key.
+     * Query to find all {@link Role}s.
      */
-    @Id
-    @Column(name = "ID")
-    @GeneratedValue
-    private Long id;
-
+    public static final String NQ_FIND_ALL = "Role.findAll";
     /**
-     * Name of the Role. Recommended prefix id 'ROLE_'.
+     * Query to find <strong>one</strong> {@link Role} by its natural key.
      */
-    @Column(name = "ROLENAME", unique = true)
-    private String rolename;
-
-    /**
-     * Role description.
-     */
-    @Column(name = "DESCRIPTION")
-    private String description;
-
-    /**
-     * Version field.
-     */
-    @Version
-    private long version;
-
+    public static final String NQ_FIND_BY_UNIQUE_QUERY = "Role.findByRolename";
+    
     /* ------------------- collection mapping ------------------- */
     /**
      * All {@link User}s belonging to this Role.
@@ -93,72 +79,18 @@ public class Role implements Serializable {
     @JoinTable(name = "ROLE_PREFERENCE", joinColumns = @JoinColumn(name = "ROLE_ID"), inverseJoinColumns = @JoinColumn(name = "PREFERENCE_ID"))
     private Set<Preference> preferences = new HashSet<Preference>();
 
+    /**
+     * All {@link SecurityObject}s belonging to this Role.
+     */
+    @ManyToMany(cascade = { CascadeType.PERSIST, CascadeType.MERGE })
+    @JoinTable(name = "ROLE_ROLE", joinColumns = @JoinColumn(name = "ROLE_ID"), inverseJoinColumns = @JoinColumn(name = "GRANT_ID"))
+    private Set<SecurityObject> grants = new HashSet<SecurityObject>();
     /* ----------------------------- methods ------------------- */
     /**
      * Accessed by persistence provider.
      */
     @SuppressWarnings("unused")
     private Role() {}
-
-    /**
-     * Create a new Role with a name.
-     * 
-     * @param rolename
-     *            The name of the Role
-     */
-    public Role(String rolename) {
-        this.rolename = rolename;
-    }
-
-    /**
-     * Create a new Role with name and description.
-     * 
-     * @param rolename
-     *            The name of the Role
-     * @param description
-     *            The description text of the Role
-     */
-    public Role(String rolename, String description) {
-        this.rolename = rolename;
-        this.description = description;
-    }
-
-    /**
-     * Return the technical key.
-     * 
-     * @return The unique technical key
-     */
-    public Long getId() {
-        return this.id;
-    }
-
-    /**
-     * Get the rolename.
-     * 
-     * @return The name of the Role
-     */
-    public String getRolename() {
-        return rolename;
-    }
-
-    /**
-     * Return the description.
-     * 
-     * @return The description of the Role as text
-     */
-    public String getDescription() {
-        return description;
-    }
-
-    /**
-     * Set the description for this Role.
-     * 
-     * @param description
-     *            The description of the Role as text
-     */
-    public void setDescription(String description) {
-        this.description = description;
-    }
 
     /**
      * Get all {@link User}s belonging to this Role.
@@ -219,11 +151,55 @@ public class Role implements Serializable {
     }
 
     /**
-     * JPA optimistic locking.
+     * Get all {@link SecurityObject}s belonging to this Role.
      * 
-     * @return The version field
+     * @return A Set of all {@link SecurityObject}s belonging to this Role
      */
-    public long getVersion() {
-        return version;
+    public Set<SecurityObject> getGrants() {
+        return Collections.unmodifiableSet(grants);
+    }
+
+    /**
+     * Add a existing {@link SecurityObject} to this Role.
+     * 
+     * @param grant
+     *            The {@link SecurityObject} to add to this Role
+     * @return <code>true</code> if the {@link SecurityObject} was new in the Set of
+     *         {@link SecurityObject}s, otherwise <code>false</code>
+     */
+    public boolean addGrant(SecurityObject grant) {
+        if (grant == null) {
+            throw new IllegalArgumentException("Grant to add cannot be null.");
+        }
+        return this.grants.add(grant);
+    }
+
+    /**
+     * Add a existing {@link SecurityObject} to this Role.
+     * 
+     * @param grant
+     *            The {@link SecurityObject} to add to this Role
+     * @return <code>true</code> if the {@link SecurityObject} was successfully removed from the Set of
+     *         {@link SecurityObject}s, otherwise <code>false</code>
+     */
+    public boolean removeGrant(SecurityObject grant) {
+        if (grant == null) {
+            throw new IllegalArgumentException("Grant to remove cannot be null.");
+        }
+        return this.grants.remove(grant);
+    }
+
+    /**
+     * Set all {@link SecurityObject}s belonging to this Role. Already existing
+     * {@link SecurityObject}s will be removed.
+     * 
+     * @param grants
+     *            A Set of {@link SecurityObject}s to assign to this Role
+     */
+    public void setGrants(Set<SecurityObject> grants) {
+        if (grants == null) {
+            throw new IllegalArgumentException("Set of SecurityObjects cannot be null.");
+        }
+        this.grants = grants;
     }
 }
