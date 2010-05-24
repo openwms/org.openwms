@@ -62,6 +62,9 @@
 						<duplicateArgumentNames>false</duplicateArgumentNames>
 					</warnings>
 					<allowSourcePathOverlap>true</allowSourcePathOverlap>
+                    <keepAs3Metadatas>
+                        <param>Protected</param>
+                    </keepAs3Metadatas>
 					<output>${project.build.directory}/${project.artifactId}.swf</output>
 				</configuration>
 				<dependencies>
@@ -201,6 +204,13 @@
 			<version>2.2.1</version>
 			<type>swc</type>
 		</dependency>
+        <!-- Flex Security -->
+        <dependency>
+            <groupId>com.gorillalogic</groupId>
+            <artifactId>chimp</artifactId>
+            <version>0.2</version>
+            <type>swc</type>
+        </dependency>
 
 		<dependency>
 			<groupId>org.graniteds</groupId>

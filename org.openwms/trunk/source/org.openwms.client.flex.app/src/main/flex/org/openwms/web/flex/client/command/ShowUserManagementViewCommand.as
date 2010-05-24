@@ -18,8 +18,7 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
-package org.openwms.web.flex.client.command
-{
+package org.openwms.web.flex.client.command {
     import com.adobe.cairngorm.commands.ICommand;
     import com.adobe.cairngorm.control.CairngormEvent;
 
@@ -37,32 +36,29 @@ package org.openwms.web.flex.client.command
      * @author <a href="mailto:openwms@googlemail.com">Heiko Scherrer</a>
      * @version $Revision$
      */
-    public class ShowUserManagementViewCommand implements ICommand, IResponder
-    {
-        [Bindable]
-        private var modelLocator:ModelLocator = ModelLocator.getInstance();
+    public class ShowUserManagementViewCommand extends AbstractCommand implements ICommand, IResponder {
 
-        public function ShowUserManagementViewCommand()
-        {
+        [Bindable]
+        private var modelLocator : ModelLocator = ModelLocator.getInstance();
+
+        public function ShowUserManagementViewCommand() {
             super();
         }
 
-        public function execute(event:CairngormEvent):void
-        {
-            var delegate:UserDelegate = new UserDelegate(this)
-            delegate.getUsers();
-            modelLocator.mainViewStackIndex = ModelLocator.MAIN_VIEW_STACK_USER_MGMT_VIEW;
+        public function execute(event : CairngormEvent) : void {
+            new UserDelegate(this).getUsers();
         }
 
-        public function result(event:Object):void
-        {
-            var rawResult:ArrayCollection = (event as ResultEvent).result as ArrayCollection;
-            modelLocator.allUsers = (event as ResultEvent).result as ArrayCollection;
+        public function result(data : Object) : void {
+            modelLocator.allUsers = (data as ResultEvent).result as ArrayCollection;
         }
 
-        public function fault(event:Object):void
-        {
-            Alert.show("Fault in [" + this + "] Errormessage : " + event);
+        public function fault(event : Object) : void {
+            if (onFault(event)) {
+                return;
+            }
+            trace("Fault loading the User Management view:" + event);
+            Alert.show("Fault loading the User Management view");
         }
 
     }

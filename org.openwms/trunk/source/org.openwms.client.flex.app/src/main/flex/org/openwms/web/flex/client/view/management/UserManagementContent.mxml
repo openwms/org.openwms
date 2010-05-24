@@ -138,7 +138,8 @@
 	<mx:HBox width="95%" height="100%" horizontalGap="10">
 		<mx:VBox label="General Information" verticalGap="8">
 			<mx:Image id="userImg" source="{modelLocator.selectedUser.userDetails.image}" width="100" height="150"
-				click="showFileUploadDialog()" />
+				click="showFileUploadDialog()">
+			</mx:Image>
 			<mx:Button id="changePictureBtn" label="Picture" buttonMode="true" mouseChildren="false" toolTip="Change the picture of an User" icon="@Embed(source='assets/images/icons/picture--edit.png')" click="showFileUploadDialog()" />
 			<mx:Button id="changePasswordBtn" label="Password" buttonMode="true" mouseChildren="false" toolTip="Change the password of an User" icon="@Embed(source='assets/images/icons/key--edit.png')" click="showFileUploadDialog()" />
 		</mx:VBox>

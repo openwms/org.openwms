@@ -18,8 +18,7 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
-package org.openwms.web.flex.client.command
-{
+package org.openwms.web.flex.client.command {
     import com.adobe.cairngorm.commands.ICommand;
     import com.adobe.cairngorm.control.CairngormEvent;
 
@@ -37,37 +36,29 @@ package org.openwms.web.flex.client.command
      * @author <a href="mailto:openwms@googlemail.com">Heiko Scherrer</a>
      * @version $Revision$
      */
-    public class DeleteUserCommand implements ICommand, IResponder
-    {
+    public class DeleteUserCommand extends AbstractCommand implements ICommand, IResponder {
         [Bindable]
-        private var modelLocator:ModelLocator = ModelLocator.getInstance();
+        private var modelLocator : ModelLocator = ModelLocator.getInstance();
 
-        public function DeleteUserCommand()
-        {
+        public function DeleteUserCommand() {
             super();
         }
 
-        public function execute(event:CairngormEvent):void
-        {
-            if (isNaN(modelLocator.selectedUser.id))
-            {
+        public function execute(event : CairngormEvent) : void {
+            if (isNaN(modelLocator.selectedUser.id)) {
                 modelLocator.selectedUser = modelLocator.allUsers.getItemAt(0) as User;
                 return;
             }
-            var delegate:UserDelegate = new UserDelegate(this);
+            var delegate : UserDelegate = new UserDelegate(this);
             delegate.deleteUser(modelLocator.selectedUser);
         }
 
-        private function removeUserFromList(user:User):void
-        {
-            var len:int = modelLocator.allUsers.length;
-            for (var i:int = 0; i < len; i++)
-            {
-                if (user.id == modelLocator.allUsers[i].id)
-                {
+        private function removeUserFromList(user : User) : void {
+            var len : int = modelLocator.allUsers.length;
+            for (var i : int = 0; i < len; i++) {
+                if (user.id == modelLocator.allUsers[i].id) {
                     modelLocator.allUsers.removeItemAt(i);
-                    if (modelLocator.allUsers.length > 0)
-                    {
+                    if (modelLocator.allUsers.length > 0) {
                         modelLocator.selectedUser = modelLocator.allUsers[0];
                     }
                     break;
@@ -75,16 +66,16 @@ package org.openwms.web.flex.client.command
             }
         }
 
-        public function result(data:Object):void
-        {
-            var event:ResultEvent = data as ResultEvent;
+        public function result(data : Object) : void {
+            var event : ResultEvent = data as ResultEvent;
             removeUserFromList(modelLocator.selectedUser);
         }
 
-        public function fault(info:Object):void
-        {
-            Alert.show("Fault in [" + this + "] Errormessage : " + info);
+        public function fault(event : Object) : void {
+            if (onFault(event)) {
+                return;
+            }
+            Alert.show("Coulde not delete User");
         }
-
     }
 }

@@ -3,8 +3,17 @@
 
     <mx:Script>
     	<![CDATA[
+    		import org.openwms.web.flex.client.event.EventBroker;
+    		import org.openwms.web.flex.client.event.ApplicationEvent;
     		[Bindable]
     		private var currentUser:String = "Anonymous";
+    		private var broker:EventBroker = EventBroker.getInstance();
+    		
+    		private function logout(event:MouseEvent = null):void {
+    			var e:ApplicationEvent = new ApplicationEvent(ApplicationEvent.LOGOUT);
+    			//broker.dispatchEvt(e);
+    			e.dispatch();
+    		}
     	]]>
     </mx:Script>
     <mx:HBox width="100%" height="66" horizontalAlign="left">
@@ -15,7 +24,7 @@
                 <mx:Image width="16" source="@Embed('assets/images/icons/user--anonymous.png')"/>
             </mx:HBox>
             <mx:HBox width="100%" horizontalAlign="right">
-                <mx:LinkButton label="logout" color="#E9EBEB"/>
+                <mx:LinkButton label="logout" color="#E9EBEB" click="logout()"/>
                 <mx:Image width="16" source="@Embed('assets/images/icons/logout.png')"/>
             </mx:HBox>
         </mx:VBox>

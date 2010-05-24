@@ -18,42 +18,37 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
-package org.openwms.web.flex.client.command {
-    import com.adobe.cairngorm.commands.ICommand;
-    import com.adobe.cairngorm.control.CairngormEvent;
-
-    import mx.controls.Alert;
-    import mx.rpc.IResponder;
-    import mx.rpc.events.ResultEvent;
-
-    import org.openwms.web.flex.client.model.ModelLocator;
+package org.openwms.web.flex.client.helper {
 
     /**
-     * A ShowModuleManagementViewCommand.
+     * A ServiceHolder.
      *
      * @author <a href="mailto:openwms@googlemail.com">Heiko Scherrer</a>
      * @version $Revision: 700 $
      */
-    public class ShowModuleManagementViewCommand extends AbstractCommand implements ICommand, IResponder {
+    public class ServiceHolder {
 
-        [Bindable]
-        private var modelLocator : ModelLocator = ModelLocator.getInstance();
+        private static var instance:ServiceHolder;
 
-        public function ShowModuleManagementViewCommand() {
-            super();
+        /**
+         * Used to construct the Singleton instance.
+         */
+        public function ServiceHolder(enforcer:SingletonEnforcer) {
         }
 
-        public function execute(event : CairngormEvent) : void {
-        	// Just do nothing, view is already switched
-        }
-
-        public function result(data : Object) : void {
-            // Just do nothing, view is already switched
-        }
-
-        public function fault(event : Object) : void {
-            // Just do nothing, view is already switched
+        /**
+         * Return the instance of ModelLocator which is implemented
+         * as Singleton.
+         */
+        public static function getInstance():ServiceHolder {
+            if (instance == null) {
+                instance=new ServiceHolder(new SingletonEnforcer);
+            }
+            return instance;
         }
 
     }
+}
+
+class SingletonEnforcer {
 }

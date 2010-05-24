@@ -18,8 +18,7 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
-package org.openwms.web.flex.client.command
-{
+package org.openwms.web.flex.client.command {
     import com.adobe.cairngorm.control.CairngormEvent;
     import com.adobe.cairngorm.commands.ICommand;
     import mx.collections.ArrayCollection;
@@ -37,34 +36,27 @@ package org.openwms.web.flex.client.command
      * @author <a href="mailto:openwms@googlemail.com">Heiko Scherrer</a>
      * @version $Revision: 700 $
      */
-    public class DeleteModuleCommand implements IResponder, ICommand
-    {
-        private var toRemove:Module;
+    public class DeleteModuleCommand extends AbstractCommand implements IResponder, ICommand {
+        private var toRemove : Module;
 
-        public function DeleteModuleCommand()
-        {
+        public function DeleteModuleCommand() {
             super();
         }
 
-        public function result(data:Object):void
-        {
-            trace("Receiving result in DeleteModuleCommand");
-            var moduleLocator:ModuleLocator = ModuleLocator.getInstance();
-            moduleLocator.removeFromModules(toRemove, true);
+        public function result(data : Object) : void {
+            ModuleLocator.getInstance().removeFromModules(toRemove, true);
         }
 
-        public function fault(info:Object):void
-        {
-            trace("ERROR result in DeleteModuleCommand");
-            Alert.show("Fault in [" + this + "] Errormessage : " + info);
+        public function fault(event : Object) : void {
+            if (onFault(event)) {
+                return;
+            }
+            Alert.show("Could not delete Module");
         }
 
-        public function execute(event:CairngormEvent):void
-        {
-            var delegate:ModulesDelegate = new ModulesDelegate(this)
-            trace("Module:" + event.data.moduleName);
+        public function execute(event : CairngormEvent) : void {
             toRemove = event.data as Module;
-            delegate.deleteModule(event.data as Module);
+            new ModulesDelegate(this).deleteModule(event.data as Module);
         }
 
     }
