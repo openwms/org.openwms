@@ -18,8 +18,7 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
-package org.openwms.web.flex.client.command
-{
+package org.openwms.web.flex.client.command {
     import com.adobe.cairngorm.commands.ICommand;
     import com.adobe.cairngorm.control.CairngormEvent;
 
@@ -38,33 +37,25 @@ package org.openwms.web.flex.client.command
      * @author <a href="mailto:openwms@googlemail.com">Heiko Scherrer</a>
      * @version $Revision$
      */
-    public class SaveUserCommand implements ICommand, IResponder
-    {
-        [Bindable]
-        private var modelLocator:ModelLocator = ModelLocator.getInstance();
+    public class SaveUserCommand extends AbstractCommand implements ICommand, IResponder {
+        private var modelLocator : ModelLocator = ModelLocator.getInstance();
 
-        public function SaveUserCommand()
-        {
+        public function SaveUserCommand() {
             super();
         }
 
-        public function execute(event:CairngormEvent):void
-        {
-            var delegate:UserDelegate = new UserDelegate(this);
+        public function execute(event : CairngormEvent) : void {
+            var delegate : UserDelegate = new UserDelegate(this);
             delegate.saveUser(modelLocator.selectedUser);
         }
 
-        public function result(data:Object):void
-        {
-            var user:User = User(data.result);
-            if (user != null)
-            {
-                var len:int = modelLocator.allUsers.length;
-                var found:Boolean = false;
-                for (var i:int = 0; i < len; i++)
-                {
-                    if (user.id == modelLocator.allUsers[i].id)
-                    {
+        public function result(data : Object) : void {
+            if (data != null && data.result is User) {
+                var user : User = User(data.result);
+                var len : int = modelLocator.allUsers.length;
+                var found : Boolean = false;
+                for (var i : int = 0; i < len; i++) {
+                    if (user.id == modelLocator.allUsers[i].id) {
                         found = true;
                         modelLocator.allUsers[i] = user;
                         modelLocator.allUsers.refresh();
@@ -72,21 +63,20 @@ package org.openwms.web.flex.client.command
                         break;
                     }
                 }
-                if (!found)
-                {
+                if (!found) {
                     Alert.show("New user saved");
                     modelLocator.allUsers.addItemAt(user, modelLocator.allUsers.length);
-                }
-                else
-                {
+                } else {
                     Alert.show("User data saved");
                 }
             }
             UserHelper.traceUser(user);
         }
 
-        public function fault(info:Object):void
-        {
+        public function fault(event : Object) : void {
+            if (onFault(event)) {
+                return;
+            }
             Alert.show("Error while saving userdata");
         }
 

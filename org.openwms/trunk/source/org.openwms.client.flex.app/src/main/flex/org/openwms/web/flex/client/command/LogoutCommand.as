@@ -21,45 +21,38 @@
 package org.openwms.web.flex.client.command {
     import com.adobe.cairngorm.commands.ICommand;
     import com.adobe.cairngorm.control.CairngormEvent;
-
+    
     import mx.controls.Alert;
     import mx.rpc.IResponder;
-    import mx.rpc.events.FaultEvent;
-    import mx.rpc.events.ResultEvent;
-
-    import org.openwms.common.domain.Module;
+    
     import org.openwms.web.flex.client.business.ModulesDelegate;
-    import org.openwms.web.flex.client.module.ModuleLocator;
+    import org.openwms.web.flex.client.event.ApplicationEvent;
+    import org.openwms.web.flex.client.model.ModelLocator;
 
     /**
-     * A SaveModuleCommand.
+     * A LogoutCommand.
      *
      * @author <a href="mailto:openwms@googlemail.com">Heiko Scherrer</a>
      * @version $Revision: 700 $
      */
-    public class SaveModuleCommand extends AbstractCommand implements IResponder, ICommand {
+    public class LogoutCommand extends AbstractCommand implements IResponder, ICommand {
 
-        public function SaveModuleCommand() {
+        public function LogoutCommand() {
             super();
         }
 
         public function result(data : Object) : void {
-            var module : Module = (data as ResultEvent).result as Module;
-            var moduleLocator : ModuleLocator = ModuleLocator.getInstance();
-            moduleLocator.addModule(module);
-            moduleLocator.selectedModule = module;
         }
 
         public function fault(event : Object) : void {
             if (onFault(event)) {
                 return;
             }
-            Alert.show("Could not save the Module");
+            Alert.show("Fault while trying to logout");
         }
 
         public function execute(event : CairngormEvent) : void {
-            var delegate : ModulesDelegate = new ModulesDelegate(this)
-            delegate.saveModule(event.data as Module);
+            new ModulesDelegate(this).logout();
         }
 
     }

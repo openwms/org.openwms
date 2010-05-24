@@ -18,8 +18,7 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
-package org.openwms.web.flex.client.command
-{
+package org.openwms.web.flex.client.command {
     import com.adobe.cairngorm.commands.ICommand;
     import com.adobe.cairngorm.control.CairngormEvent;
 
@@ -38,37 +37,33 @@ package org.openwms.web.flex.client.command
      * @author <a href="mailto:openwms@googlemail.com">Heiko Scherrer</a>
      * @version $Revision$
      */
-    public class LoadUsersCommand implements ICommand, IResponder
-    {
+    public class LoadUsersCommand extends AbstractCommand implements ICommand, IResponder {
         [Bindable]
-        private var modelLocator:ModelLocator = ModelLocator.getInstance();
+        private var modelLocator : ModelLocator = ModelLocator.getInstance();
 
-        public function LoadUsersCommand()
-        {
+        public function LoadUsersCommand() {
             super();
         }
 
-        public function execute(event:CairngormEvent):void
-        {
-            if (modelLocator.allUsers.length == 0)
-            {
-                var delegate:UserDelegate = new UserDelegate(this)
+        public function execute(event : CairngormEvent) : void {
+            if (modelLocator.allUsers.length == 0) {
+                var delegate : UserDelegate = new UserDelegate(this)
                 delegate.getUsers();
             }
         }
 
-        public function result(data:Object):void
-        {
+        public function result(data : Object) : void {
             modelLocator.allUsers = ArrayCollection(data.result);
-            if (modelLocator.allUsers.length > 0)
-            {
+            if (modelLocator.allUsers.length > 0) {
                 modelLocator.selectedUser = modelLocator.allUsers.getItemAt(0) as User;
             }
         }
 
-        public function fault(info:Object):void
-        {
-            Alert.show("Fault in [" + this + "] Errormessage : " + info);
+        public function fault(event : Object) : void {
+            if (onFault(event)) {
+                return;
+            }
+            Alert.show("Fault in [" + this + "] Errormessage : " + event);
         }
 
     }

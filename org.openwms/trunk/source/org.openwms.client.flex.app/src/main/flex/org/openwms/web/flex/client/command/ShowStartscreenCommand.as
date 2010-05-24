@@ -18,8 +18,7 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
-package org.openwms.web.flex.client.command
-{
+package org.openwms.web.flex.client.command {
     import com.adobe.cairngorm.commands.ICommand;
     import com.adobe.cairngorm.control.CairngormEvent;
     import org.openwms.web.flex.client.model.ModelLocator;
@@ -30,19 +29,17 @@ package org.openwms.web.flex.client.command
      * @author <a href="mailto:openwms@googlemail.com">Heiko Scherrer</a>
      * @version $Revision$
      */
-    public class ShowStartscreenCommand implements ICommand
-    {
-        [Bindable]
-        private var modelLocator:ModelLocator = ModelLocator.getInstance();
+    public class ShowStartscreenCommand extends AbstractCommand implements ICommand {
 
-        public function ShowStartscreenCommand()
-        {
+        [Bindable]
+        private var modelLocator : ModelLocator = ModelLocator.getInstance();
+
+        public function ShowStartscreenCommand() {
             super();
         }
 
-        public function execute(event:CairngormEvent):void
-        {
-            modelLocator.mainViewStackIndex = ModelLocator.MAIN_VIEW_STACK_LOCATION_VIEW;
+        public function execute(event : CairngormEvent) : void {
+            // Just do nothing, view is already switched
         }
 
     }

@@ -18,13 +18,16 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
-package org.openwms.web.flex.client.business
-{
+package org.openwms.web.flex.client.business {
     import com.adobe.cairngorm.business.ServiceLocator;
-
-    import org.openwms.common.domain.system.usermanagement.User;
+    
+    import flash.events.EventDispatcher;
+    
     import mx.rpc.AsyncToken;
     import mx.rpc.IResponder;
+    
+    import org.openwms.common.domain.system.usermanagement.User;
+    import org.openwms.web.flex.client.model.Constants;
 
     /**
      * A UserDelegate.
@@ -32,38 +35,32 @@ package org.openwms.web.flex.client.business
      * @author <a href="mailto:openwms@googlemail.com">Heiko Scherrer</a>
      * @version $Revision$
      */
-    public class UserDelegate
-    {
-        private var responder:IResponder;
-        private var service:Object;
+    public class UserDelegate extends EventDispatcher {
+        private var responder : IResponder;
+        private var service : Object;
 
-        public function UserDelegate(responder:IResponder):void
-        {
+        public function UserDelegate(responder : IResponder) : void {
             this.responder = responder;
-            this.service = ServiceLocator.getInstance().getRemoteObject("userService");
+            this.service = ServiceLocator.getInstance().getRemoteObject(Constants.USERMGMT_SERVICE);
         }
 
-        public function getUsers():void
-        {
-            var call:AsyncToken = service.findAll();
+        public function getUsers() : void {
+            var call : AsyncToken = service.findAll();
             call.addResponder(responder);
         }
 
-        public function addUser():void
-        {
-            var call:AsyncToken = service.getTemplate("PSEUDO");
+        public function addUser() : void {
+            var call : AsyncToken = service.getTemplate("PSEUDO");
             call.addResponder(responder);
         }
 
-        public function saveUser(user:User):void
-        {
-            var call:AsyncToken = service.save(user);
+        public function saveUser(user : User) : void {
+            var call : AsyncToken = service.save(user);
             call.addResponder(responder);
         }
 
-        public function deleteUser(user:User):void
-        {
-            var call:AsyncToken = service.remove(user);
+        public function deleteUser(user : User) : void {
+            var call : AsyncToken = service.remove(user);
             call.addResponder(responder);
         }
 

@@ -23,7 +23,7 @@
 -->
 <view:AppBase xmlns:mx="http://www.adobe.com/2006/mxml" xmlns:business="org.openwms.web.flex.client.business.*"
 	xmlns:control="org.openwms.web.flex.client.control.*" xmlns:event="org.openwms.web.flex.client.event.*" xmlns:view="org.openwms.web.flex.client.view.*" layout="absolute"
-	backgroundGradientAlphas="[1.0, 1.0]" backgroundGradientColors="[#FFFFFF, #FFFFFF]" creationComplete="init()">
+	backgroundGradientAlphas="[1.0, 1.0]" backgroundGradientColors="[#FFFFFF, #FFFFFF]" creationComplete="init()" preinitialize="preInit(event)">
 
     <mx:Script>
     	<![CDATA[
@@ -44,26 +44,23 @@
 
 	<mx:VBox height="100%" width="100%" verticalGap="0" backgroundColor="#C2DAEF">
         <view:HeaderComponent />
-		<mx:Canvas width="100%" height="25" backgroundImage="@Embed(source='assets/images/breadcrumbs.jpg')" backgroundSize="100%">
-			<mx:MenuBar id="mainMenuBar"  labelField="@label" itemClick="onMenuChange(event)" color="#00286e" fontWeight="bold" fontSize="12" alpha="0.0">
-            <mx:XMLList>
-                    <menuitem label="Administration">
-                        <menuitem label="Users" action="{SwitchScreenEvent.SHOW_USER_MGMT_VIEW}" />
-                        <menuitem label="Roles" action="{SwitchScreenEvent.SHOW_USER_MGMT_VIEW}" />
-                        <menuitem label="Security" action="{SwitchScreenEvent.SHOW_USER_MGMT_VIEW}" />
-                    </menuitem>
-                    <menuitem label="Application Configuration">
-                        <menuitem label="Module Management" action="{SwitchScreenEvent.SHOW_MODULE_MGMT_VIEW}" />
-                        <menuitem label="Users" action="{SwitchScreenEvent.SHOW_USER_MGMT_VIEW}" />
-                    </menuitem>
+   		<mx:Canvas width="100%" height="25" backgroundImage="@Embed(source='assets/images/breadcrumbs.jpg')" backgroundSize="100%">
+			<mx:MenuBar id="mainMenuBar" labelField="@label" itemClick="onMenuChange(event);" color="#00286e" fontWeight="bold" fontSize="12" alpha="0.0">
+            <mx:XMLList xmlns="">
+                <menuitem label="Application">
+                    <menuitem label="Users" action="{SwitchScreenEvent.SHOW_USER_MGMT_VIEW}" />
+                    <menuitem label="Roles" action="{SwitchScreenEvent.SHOW_ROLE_MGMT_VIEW}" />
+                    <menuitem label="Modules" action="{SwitchScreenEvent.SHOW_MODULE_MGMT_VIEW}" />
+                </menuitem>
             </mx:XMLList>
 			</mx:MenuBar>
 		</mx:Canvas>
 		<mx:HBox width="100%" height="100%" horizontalAlign="center" verticalAlign="middle">
-		<mx:ViewStack id="appViewStack" selectedIndex="{loginView.authenticated ? DisplayUtility.getView(modelLocator.actualView,appViewStack) : DisplayUtility.getView('loginView',appViewStack)}" width="100%" height="100%">
+		<mx:ViewStack id="appViewStack" selectedIndex="{ModelLocator.authenticated ? DisplayUtility.getView(modelLocator.actualView,appViewStack) : DisplayUtility.getView(SwitchScreenEvent.SHOW_STARTSCREEN,appViewStack)}" width="100%" height="100%">
             <view:EmptyScreenView name="{SwitchScreenEvent.SHOW_STARTSCREEN}" />
             <view:ModuleManagementView name="{SwitchScreenEvent.SHOW_MODULE_MGMT_VIEW}" />
  			<view:UserManagementView name="{SwitchScreenEvent.SHOW_USER_MGMT_VIEW}" />
+            <view:RoleManagementView name="{SwitchScreenEvent.SHOW_ROLE_MGMT_VIEW}" />
 		</mx:ViewStack>
         </mx:HBox>
 	</mx:VBox>

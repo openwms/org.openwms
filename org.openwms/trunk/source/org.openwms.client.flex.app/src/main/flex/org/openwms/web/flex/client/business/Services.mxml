@@ -30,7 +30,7 @@
 	<granite:SecureRemoteObject
         id="locationService"
         destination="locationService"
-        showBusyCursor="true"/>
+        showBusyCursor="true" />
 
 	<granite:SecureRemoteObject
         id="locationGroupService"
@@ -38,17 +38,34 @@
         showBusyCursor="true"/>
 
     <granite:SecureRemoteObject
+        id="transportUnitService"
+        destination="transportUnitService"
+        showBusyCursor="true"/>
+
+    <granite:SecureRemoteObject
+        id="transportService"
+        destination="transportService"
+        showBusyCursor="true"/>
+
+    <granite:SecureRemoteObject
+        id="moduleManagementService"
+        destination="moduleManagementService"
+        showBusyCursor="true"/>
+
+    <granite:SecureRemoteObject
         id="userService"
         destination="userService"
         showBusyCursor="true"/>
+
+<!--
+-->
 <!--
 <mx:RemoteObject id="locationService" destination="locationService" showBusyCursor="true" />
 <mx:RemoteObject id="locationGroupService" destination="locationGroupService" showBusyCursor="true" />
 <mx:RemoteObject id="userService" destination="userService" showBusyCursor="true" />
--->
 <mx:RemoteObject id="transportUnitService" destination="transportUnitService" showBusyCursor="true" />
 <mx:RemoteObject id="moduleManagementService" destination="moduleManagementService" showBusyCursor="true" />
 
-
 <mx:RemoteObject id="transportService" destination="transportService" showBusyCursor="true" />
+-->
 </business:ServiceLocator>

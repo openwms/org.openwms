@@ -18,8 +18,7 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
-package org.openwms.web.flex.client.command
-{
+package org.openwms.web.flex.client.command {
     import com.adobe.cairngorm.commands.ICommand;
     import com.adobe.cairngorm.control.CairngormEvent;
 
@@ -31,47 +30,40 @@ package org.openwms.web.flex.client.command
     import org.openwms.common.domain.system.usermanagement.User;
 
     /**
-     * A AddUserCommand.
+     * An AddUserCommand.
      *
      * @author <a href="mailto:openwms@googlemail.com">Heiko Scherrer</a>
      * @version $Revision$
      */
-    public class AddUserCommand implements ICommand, IResponder
-    {
+    public class AddUserCommand extends AbstractCommand implements ICommand, IResponder {
         [Bindable]
         [Embed(source="/assets/images/userDefaultUniSex.jpg")]
-        private var uniSexImage:Class;
-        [Bindable]
-        private var modelLocator:ModelLocator = ModelLocator.getInstance();
+        private var uniSexImage : Class;
 
-        public function AddUserCommand()
-        {
+        public function AddUserCommand() {
             super();
         }
 
-        public function execute(event:CairngormEvent):void
-        {
-            var delegate:UserDelegate = new UserDelegate(this);
-            delegate.addUser();
+        public function execute(event : CairngormEvent) : void {
+            new UserDelegate(this).addUser();
         }
 
-        public function result(data:Object):void
-        {
-            var user:User = User(data.result);
+        public function result(data : Object) : void {
+            var user : User = User(data.result);
             user.username = "";
-            if (user.userDetails.image == null)
-            {
+            if (user.userDetails.image == null) {
             }
             //user.userDetails.image = uniSexImageBytes; 
             //modelLocator.allUsers.addItem(user);
-            modelLocator.selectedUser = user;
-            trace("Dispatching event");
+            ModelLocator.getInstance().selectedUser = user;
             //new UserEvent(UserEvent.USER_ADDED).dispatch();
         }
 
-        public function fault(info:Object):void
-        {
-            Alert.show("Fault in [" + this + "] Errormessage : " + info);
+        public function fault(event : Object) : void {
+            if (onFault(event)) {
+                return;
+            }
+            Alert.show("Could not create User");
         }
 
     }
