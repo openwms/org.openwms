@@ -18,30 +18,17 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
-package org.openwms.web.flex.client.util {
-    import mx.collections.ArrayCollection;
-    import mx.containers.ViewStack;
+package org.openwms.web.flex.client.model {
 
     /**
-     * A DisplayUtility.
+     * A Constants class.
      *
      * @author <a href="mailto:openwms@googlemail.com">Heiko Scherrer</a>
      * @version $Revision: 700 $
      */
-    public final class DisplayUtility {
-        public function DisplayUtility() {
-        }
-
-        public static function getView(viewId : String, viewStack : ViewStack) : int {
-            if (viewStack.getChildByName(viewId) == null) {
-                return -1;
-            }
-            return viewStack.getChildIndex(viewStack.getChildByName(viewId));
-        }
-
-        public static function getListOfValues(list : ArrayCollection, name : String) : ArrayCollection {
-            return null;
-        }
+    public class Constants {
+        public static const MODULEMGMT_SERVICE : String = "moduleManagementService";
+        public static const USERMGMT_SERVICE : String = "userService";
 
     }
 }

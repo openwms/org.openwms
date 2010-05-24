@@ -20,50 +20,26 @@
  */
 package org.openwms.web.flex.client.event
 {
-    import flash.events.Event;
+    import com.adobe.cairngorm.control.CairngormEvent;
 
     /**
-     * A SecurityEvent.
+     * An RoleEvent.
      *
      * @author <a href="mailto:openwms@googlemail.com">Heiko Scherrer</a>
-     * @version $Revision$
+     * @version $Revision: 788 $
      */
-    public class SecurityEvent extends Event
+    public class RoleEvent extends CairngormEvent
     {
-        private var _user:String;
-        private var _pass:String;
+        public static const LOAD_ALL_ROLES:String = "LoadAllRoles";
+        public static const ADD_ROLE:String = "AddRole";
+        public static const ROLE_ADDED:String = "RoleAdded";
+        public static const SAVE_ROLE:String = "SaveRole";
+        public static const DELETE_ROLE:String = "DeleteRole";
 
-        public function SecurityEvent(event_type:String, bubbles:Boolean = true, cancelable:Boolean = false):void
+        public function RoleEvent(type:String, bubbles:Boolean = false, cancelable:Boolean = false)
         {
-            super(event_type, bubbles, cancelable);
+            super(type, bubbles, cancelable);
         }
 
-        public function set user(pValue:String):void
-        {
-            _user = pValue;
-        }
-
-        public function get user():String
-        {
-            return _user;
-        }
-
-        public function set pass(pValue:String):void
-        {
-            _pass = pValue;
-        }
-
-        public function get pass():String
-        {
-            return _pass;
-        }
-
-        public function get loginStatus():Boolean
-        {
-            if ((_user == "openwms") && (_pass == "openwms"))
-                return true;
-            else
-                return false;
-        }
     }
 }

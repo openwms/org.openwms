@@ -18,9 +18,10 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
-package org.openwms.web.flex.client.event
-{
+package org.openwms.web.flex.client.event {
     import com.adobe.cairngorm.control.CairngormEvent;
+
+    import flash.events.Event;
 
     /**
      * An ApplicationEvent.
@@ -28,17 +29,18 @@ package org.openwms.web.flex.client.event
      * @author <a href="mailto:openwms@googlemail.com">Heiko Scherrer</a>
      * @version $Revision: 700 $
      */
-    public class ApplicationEvent extends CairngormEvent
-    {
-        public static const LOAD_ALL_MODULES:String = "Load_All_Modules";
-        public static const MODULES_LOADED:String = "Modules_Loaded";
-        public static const MODULE_CONFIG_CHANGED:String = "Module_Config_Changed";
-        public static const MODULE_UNLOADED:String = "Module_Unloaded";
-        public static const SAVE_MODULE:String = "Save_Module";
-        public static const DELETE_MODULE:String = "Delete_Module";
+    public class ApplicationEvent extends CairngormEvent {
+        public static const LOAD_ALL_MODULES:String="Load_All_Modules";
+        public static const MODULES_LOADED:String="Modules_Loaded";
+        public static const MODULE_CONFIG_CHANGED:String="Module_Config_Changed";
+        public static const MODULE_UNLOADED:String="Module_Unloaded";
+        public static const SAVE_MODULE:String="Save_Module";
+        public static const DELETE_MODULE:String="Delete_Module";
 
-        public function ApplicationEvent(type:String, bubbles:Boolean = true, cancelable:Boolean = false)
-        {
+        public static const LOGIN:String="APP_LOGIN";
+        public static const LOGOUT:String="APP_LOGOUT";
+
+        public function ApplicationEvent(type:String, bubbles:Boolean=true, cancelable:Boolean=false) {
             super(type, bubbles, cancelable);
         }
 
