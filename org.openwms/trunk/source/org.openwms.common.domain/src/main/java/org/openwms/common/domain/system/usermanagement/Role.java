@@ -26,17 +26,12 @@ import java.util.HashSet;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
-import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
-import javax.persistence.Table;
-import javax.persistence.Version;
 
 /**
  * A Role is grouping multiple {@link User}s concerning security aspects.
@@ -49,7 +44,8 @@ import javax.persistence.Version;
  * @since 0.1
  */
 @Entity
-@NamedQueries( { @NamedQuery(name = Role.NQ_FIND_ALL, query = "select distinct(r) from Role r left join fetch r.users left join fetch r.grants"),
+@NamedQueries( {
+        @NamedQuery(name = Role.NQ_FIND_ALL, query = "select distinct(r) from Role r left join fetch r.users left join fetch r.grants"),
         @NamedQuery(name = Role.NQ_FIND_BY_UNIQUE_QUERY, query = "select r from Role r where r.name = ?1") })
 public class Role extends SecurityObject implements Serializable {
 
@@ -63,7 +59,7 @@ public class Role extends SecurityObject implements Serializable {
      * Query to find <strong>one</strong> {@link Role} by its natural key.
      */
     public static final String NQ_FIND_BY_UNIQUE_QUERY = "Role.findByRolename";
-    
+
     /* ------------------- collection mapping ------------------- */
     /**
      * All {@link User}s belonging to this Role.
@@ -85,11 +81,11 @@ public class Role extends SecurityObject implements Serializable {
     @ManyToMany(cascade = { CascadeType.PERSIST, CascadeType.MERGE })
     @JoinTable(name = "ROLE_ROLE", joinColumns = @JoinColumn(name = "ROLE_ID"), inverseJoinColumns = @JoinColumn(name = "GRANT_ID"))
     private Set<SecurityObject> grants = new HashSet<SecurityObject>();
+
     /* ----------------------------- methods ------------------- */
     /**
      * Accessed by persistence provider.
      */
-    @SuppressWarnings("unused")
     private Role() {}
 
     /**
@@ -164,8 +160,8 @@ public class Role extends SecurityObject implements Serializable {
      * 
      * @param grant
      *            The {@link SecurityObject} to add to this Role
-     * @return <code>true</code> if the {@link SecurityObject} was new in the Set of
-     *         {@link SecurityObject}s, otherwise <code>false</code>
+     * @return <code>true</code> if the {@link SecurityObject} was new in the
+     *         Set of {@link SecurityObject}s, otherwise <code>false</code>
      */
     public boolean addGrant(SecurityObject grant) {
         if (grant == null) {
@@ -179,8 +175,9 @@ public class Role extends SecurityObject implements Serializable {
      * 
      * @param grant
      *            The {@link SecurityObject} to add to this Role
-     * @return <code>true</code> if the {@link SecurityObject} was successfully removed from the Set of
-     *         {@link SecurityObject}s, otherwise <code>false</code>
+     * @return <code>true</code> if the {@link SecurityObject} was successfully
+     *         removed from the Set of {@link SecurityObject}s, otherwise
+     *         <code>false</code>
      */
     public boolean removeGrant(SecurityObject grant) {
         if (grant == null) {
