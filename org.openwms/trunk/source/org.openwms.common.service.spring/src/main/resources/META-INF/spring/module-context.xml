@@ -55,4 +55,19 @@
     <bean id="moduleManagementService" class="org.openwms.common.service.spring.ModuleManagementImpl">
         <property name="dao" ref="moduleDao" />
     </bean>
+    
+    <bean id="userDetailsService" class="org.openwms.common.service.spring.security.SecurityContextUserServiceImpl" />
+    
+    <bean id="userCache" class="org.springframework.security.core.userdetails.cache.EhCacheBasedUserCache">
+        <property name="cache" ref="ehCache" />
+    </bean>
+    
+    <bean id="ehCache" class="org.springframework.cache.ehcache.EhCacheFactoryBean">
+        <property name="cacheManager" ref="cacheManager" />
+    </bean>
+    
+    <bean id="cacheManager" class="org.springframework.cache.ehcache.EhCacheManagerFactoryBean">
+        <property name="configLocation" value="classpath:/ehcache.xml" />
+    </bean>
+    
 </beans>

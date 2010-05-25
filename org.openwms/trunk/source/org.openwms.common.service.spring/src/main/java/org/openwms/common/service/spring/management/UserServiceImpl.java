@@ -4,7 +4,7 @@
  * This file is part of openwms.org.
  *
  * openwms.org is free software: you can redistribute it and/or modify
- * it under the terms of the GNU Lesser General Public License as 
+ * it under the terms of the GNU Lesser General Public License as
  * published by the Free Software Foundation, either version 3 of the
  * License, or (at your option) any later version.
  *
@@ -20,11 +20,16 @@
  */
 package org.openwms.common.service.spring.management;
 
+import java.util.List;
+
+import org.openwms.common.domain.system.usermanagement.Role;
 import org.openwms.common.domain.system.usermanagement.User;
 import org.openwms.common.domain.system.usermanagement.UserDetails;
+import org.openwms.common.integration.GenericDao;
 import org.openwms.common.service.exception.ServiceException;
 import org.openwms.common.service.management.UserService;
 import org.openwms.common.service.spring.EntityServiceImpl;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -39,6 +44,9 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 @Transactional
 public class UserServiceImpl extends EntityServiceImpl<User, Long> implements UserService<User> {
+
+    @Autowired
+    private GenericDao<Role, Long> roleDao;
 
     /**
      * {@inheritDoc}
@@ -91,27 +99,26 @@ public class UserServiceImpl extends EntityServiceImpl<User, Long> implements Us
     @Override
     @Transactional(readOnly = true)
     public User getTemplate(String username) {
-        logger.debug("Retrieve a User template instance for username:" + username);
         return new User(username);
     }
-
-    /**
-     * @see org.openwms.common.service.management.UserService#setCredentials(java.lang.String,
-     *      java.lang.String)
-     */
+    
     @Override
-    public void setCredentials(String username, String password) {
-        System.out.println(username + password);
-
+    public void removeRoles(List<Role> roles) {
+        for (Role role : roles) {
+            role = roleDao.save(role);
+            roleDao.remove(role);
+        }
     }
-
-    /**
-     * @see org.openwms.common.service.management.UserService#login()
-     */
+    
     @Override
-    public void login() {
-        System.out.println("Login");
-
+    public Role saveRole(Role role) {
+        return roleDao.save(role);
     }
-
+    
+    @Override
+    @Transactional(readOnly = true)
+    public List<Role> findAllRoles() {
+        return roleDao.findAll();
+    }
+    
 }

@@ -64,6 +64,25 @@
             <type>libd</type>
             <scope>provided</scope>
         </dependency>
+        <!-- Spring Security -->
+        <dependency>
+            <groupId>org.springframework.security</groupId>
+            <artifactId>org.springframework.security.core</artifactId>
+            <version>3.0.0.RELEASE</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.security</groupId>
+            <artifactId>org.springframework.security.web</artifactId>
+            <version>3.0.0.RELEASE</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.security</groupId>
+            <artifactId>org.springframework.security.config</artifactId>
+            <version>3.0.0.RELEASE</version>
+            <scope>provided</scope>
+        </dependency>
 
         <!-- JEE API -->
         <dependency>
@@ -92,6 +111,12 @@
             <artifactId>org.aspectj-library</artifactId>
             <type>libd</type>
             <scope>test</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>net.sourceforge.ehcache</groupId>
+            <artifactId>com.springsource.net.sf.ehcache</artifactId>
+            <version>1.6.2</version>
         </dependency>
 
         <!-- Project dependencies -->

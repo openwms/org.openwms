@@ -36,7 +36,7 @@ import org.springframework.transaction.annotation.Transactional;
  * 
  * @author <a href="mailto:openwms@googlemail.com">Heiko Scherrer</a>
  * @version $Revision: $
- * 
+ * @since 0.1
  */
 @Service
 @Transactional
@@ -70,6 +70,15 @@ public class ModuleManagementImpl extends EntityServiceImpl<Module, Long> implem
         dao.findByQuery("jjj", params);
         // TODO [scherrer] Auto-generated method stub
         return null;
+    }
+
+    /**
+     * @see org.openwms.common.service.ModuleManagementService#login()
+     */
+    @Override
+    @Transactional(readOnly = true)
+    public void login() {
+        logger.debug("Login successful!");
     }
 
 }
