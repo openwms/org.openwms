@@ -4,7 +4,7 @@
  * This file is part of openwms.org.
  *
  * openwms.org is free software: you can redistribute it and/or modify
- * it under the terms of the GNU Lesser General Public License as 
+ * it under the terms of the GNU Lesser General Public License as
  * published by the Free Software Foundation, either version 3 of the
  * License, or (at your option) any later version.
  *
@@ -20,6 +20,9 @@
  */
 package org.openwms.common.service.management;
 
+import java.util.List;
+
+import org.openwms.common.domain.system.usermanagement.Role;
 import org.openwms.common.domain.system.usermanagement.User;
 import org.openwms.common.service.EntityService;
 
@@ -72,8 +75,27 @@ public interface UserService<T extends User> extends EntityService<T> {
      */
     void remove(T user);
 
-    void setCredentials(String username, String password);
+    /**
+     * Return a List of all persisted Roles.
+     * 
+     * @return The List of Roles or <code>null</code> when no Roles exist.
+     */
+    List<Role> findAllRoles();
 
-    void login();
+    /**
+     * Save an already existed Role object and return the saved instance.
+     * 
+     * @param role
+     *            The Role to save.
+     * @return The saved Role.
+     */
+    Role saveRole(Role role);
 
+    /**
+     * Remove a List of Roles from the persistence layer.
+     * 
+     * @param roles
+     *            The List of Roles to remove.
+     */
+    void removeRoles(List<Role> roles);
 }
