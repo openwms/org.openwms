@@ -72,5 +72,7 @@
 
     <bean id="userDao" class="org.openwms.common.integration.jpa.UserDaoImpl"/>
     
+    <bean id="roleDao" class="org.openwms.common.integration.jpa.RoleDaoImpl"/>
+
     <bean id="moduleDao" class="org.openwms.common.integration.jpa.ModuleDaoImpl" />
 </beans>
