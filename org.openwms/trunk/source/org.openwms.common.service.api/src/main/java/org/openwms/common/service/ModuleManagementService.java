@@ -35,10 +35,38 @@ import org.openwms.common.domain.PopupItem;
  */
 public interface ModuleManagementService<T extends Module> extends EntityService<Module> {
 
+    /**
+     * Return a List of all MenuItems. MenuItems are used to populate the main
+     * menu bar in the application. They can be persisted or loaded from the swf
+     * files directly.
+     * 
+     * @param module
+     *            The module to search for.
+     * @return A List of all MenuItems belonging to the module.
+     */
     List<MenuItem> getMenuItems(Module module);
 
+    /**
+     * Return a List of PopupItems. PopupItems are used to populate the context
+     * menu.
+     * 
+     * @param module
+     *            The module to search for.
+     * @return A List of all PopupItems belonging to the module.
+     */
     List<PopupItem> getPopupItems(Module module);
 
+    /**
+     * Return a List of all persisted modules.
+     * 
+     * @return A List of modules.
+     */
     List<Module> getModules();
+
+    /**
+     * Force a login. Call this method and try to access the security filter
+     * chain. The implementation does not need to execute any logic.
+     */
+    void login();
 
 }
