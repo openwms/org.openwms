@@ -35,7 +35,7 @@ import javax.persistence.Version;
 
 /**
  * A SecurityObject.
- *
+ * 
  * @author <a href="mailto:scherrer@users.sourceforge.net">Heiko Scherrer</a>
  * @version $Revision: $
  * @since 0.1
@@ -43,7 +43,8 @@ import javax.persistence.Version;
 @Entity
 @Table(name = "ROLE")
 @Inheritance
-@NamedQueries( { @NamedQuery(name = SecurityObject.NQ_FIND_ALL, query = "select g from SecurityObject g"),
+@NamedQueries( {
+        @NamedQuery(name = SecurityObject.NQ_FIND_ALL, query = "select g from SecurityObject g"),
         @NamedQuery(name = SecurityObject.NQ_FIND_BY_UNIQUE_QUERY, query = "select g from SecurityObject g where g.name = ?1") })
 public class SecurityObject implements Serializable {
 
@@ -54,10 +55,11 @@ public class SecurityObject implements Serializable {
      */
     public static final String NQ_FIND_ALL = "SecurityObject.findAll";
     /**
-     * Query to find <strong>one</strong> {@link SecurityObject} by its natural key.
+     * Query to find <strong>one</strong> {@link SecurityObject} by its natural
+     * key.
      */
     public static final String NQ_FIND_BY_UNIQUE_QUERY = "SecurityObject.findByRolename";
-    
+
     /**
      * Unique technical key.
      */
@@ -88,7 +90,6 @@ public class SecurityObject implements Serializable {
     /**
      * Accessed by persistence provider.
      */
-    @SuppressWarnings("unused")
     protected SecurityObject() {}
 
     /**

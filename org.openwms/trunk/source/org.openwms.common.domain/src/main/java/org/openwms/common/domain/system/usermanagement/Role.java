@@ -86,7 +86,30 @@ public class Role extends SecurityObject implements Serializable {
     /**
      * Accessed by persistence provider.
      */
+    @SuppressWarnings("unused")
     private Role() {}
+
+    /**
+     * Create a new Role with a name.
+     * 
+     * @param name
+     *            The name of the Role
+     */
+    public Role(String name) {
+        super(name);
+    }
+
+    /**
+     * Create a new Role with name and description.
+     * 
+     * @param name
+     *            The name of the Role
+     * @param description
+     *            The description text of the Role
+     */
+    public Role(String name, String description) {
+        super(name, description);
+    }
 
     /**
      * Get all {@link User}s belonging to this Role.
