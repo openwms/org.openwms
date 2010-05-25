@@ -23,5 +23,10 @@ package org.openwms.common.domain.system.usermanagement {
     [Bindable]
     [RemoteClass(alias="org.openwms.common.domain.system.usermanagement.Role")]
     public class Role extends RoleBase {
+    	
+    	public function Role(name:String = null, description:String = null) {
+    		this._name = name;
+    		this._description = description;
+    	}
     }
 }
