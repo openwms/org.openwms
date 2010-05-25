@@ -56,7 +56,8 @@ public class RoleTest extends AbstractJpaSpringContextTests {
             entityManager.persist(role);
             entityManager.persist(role2);
             fail("No unique constraint on rolename");
-        } catch (PersistenceException pe) {
+        }
+        catch (PersistenceException pe) {
             logger.debug("OK:Tested unique constraint on rolename.");
         }
     }
@@ -64,7 +65,7 @@ public class RoleTest extends AbstractJpaSpringContextTests {
     @Test
     public final void testRoleInstanciation() {
         Role role = new Role("Rolename", "Description");
-        assertEquals("Rolename doesnt match", "Rolename", role.getRolename());
+        assertEquals("Rolename doesnt match", "Rolename", role.getName());
         assertEquals("Description doesnt match", "Description", role.getDescription());
     }
 
@@ -74,7 +75,8 @@ public class RoleTest extends AbstractJpaSpringContextTests {
         try {
             role.addUser(null);
             fail("Not allowed to call addUser() with null");
-        } catch (Exception e) {
+        }
+        catch (Exception e) {
             logger.debug("OK:Adding null user not allowed");
         }
     }
@@ -85,7 +87,8 @@ public class RoleTest extends AbstractJpaSpringContextTests {
         try {
             role.setUsers(null);
             fail("Not allowed to call setUsers() with null");
-        } catch (Exception e) {
+        }
+        catch (Exception e) {
             logger.debug("OK:Setting null to Set of users not allowed");
         }
     }
@@ -109,14 +112,14 @@ public class RoleTest extends AbstractJpaSpringContextTests {
         assertEquals("User must be persisted with Role", 1, cnt.intValue());
 
         query = entityManager.createQuery("select r from Role r where r.rolename = :rolename");
-        query.setParameter("rolename", role.getRolename());
+        query.setParameter("rolename", role.getName());
         role = (Role) query.getSingleResult();
         assertNotSame("Role must be persisted", 0, role.getId());
 
         entityManager.remove(role);
 
         query = entityManager.createQuery("select count(r) from Role r where r.rolename = :rolename");
-        query.setParameter("rolename", role.getRolename());
+        query.setParameter("rolename", role.getName());
         cnt = (Long) query.getSingleResult();
         assertEquals("Role must be removed", 0, cnt.intValue());
 
