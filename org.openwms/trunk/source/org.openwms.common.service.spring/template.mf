@@ -9,6 +9,7 @@ Import-Library:
 Import-Bundle: 
  com.springsource.javax.persistence;version="1.0.0",
  com.springsource.org.apache.commons.lang;version="2.4.0",
+ com.springsource.net.sf.ehcache;version="[1.6.2,1.6.2]",
  org.openwms.common.domain;version="0.0.1.SNAPSHOT",
  org.openwms.common.integration;version="0.0.1.SNAPSHOT",
  org.openwms.common.service.api;version="0.0.1.SNAPSHOT"

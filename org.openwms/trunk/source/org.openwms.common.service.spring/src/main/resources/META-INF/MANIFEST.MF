@@ -1,22 +1,28 @@
 Manifest-Version: 1.0
 Export-Package: org.openwms.common.service.spring;version="0.0.1.SNAPS
- HOT";uses:="org.openwms.common.domain,org.openwms.common.domain.value
- s,org.openwms.common.integration,org.openwms.common.service,org.openw
- ms.common.service.exception,org.openwms.common.util,org.springframewo
- rk.beans.factory.annotation,org.springframework.stereotype,org.spring
- framework.transaction.annotation",org.openwms.common.service.spring.m
- anagement;version="0.0.1.SNAPSHOT";uses:="org.openwms.common.domain.s
- ystem.usermanagement,org.openwms.common.service.management,org.openwm
- s.common.service.spring,org.springframework.stereotype,org.springfram
+ HOT";uses:="org.openwms.common.domain,org.openwms.common.domain.syste
+ m.usermanagement,org.openwms.common.domain.values,org.openwms.common.
+ integration,org.openwms.common.service,org.openwms.common.service.exc
+ eption,org.openwms.common.util,org.springframework.beans.factory.anno
+ tation,org.springframework.security.core,org.springframework.security
+ .core.userdetails,org.springframework.stereotype,org.springframework.
+ transaction.annotation",org.openwms.common.service.spring.management;
+ version="0.0.1.SNAPSHOT";uses:="org.openwms.common.domain.system.user
+ management,org.openwms.common.service.management,org.openwms.common.s
+ ervice.spring,org.springframework.beans.factory.annotation,org.spring
+ framework.stereotype,org.springframework.transaction.annotation",org.
+ openwms.common.service.spring.security;version="0.0.1.SNAPSHOT";uses:
+ ="org.springframework.beans.factory.annotation,org.springframework.se
+ curity.core.userdetails,org.springframework.stereotype,org.springfram
  ework.transaction.annotation"
 Import-Bundle: com.springsource.javax.persistence;version="1.0.0",com.
- springsource.org.apache.commons.lang;version="2.4.0",org.openwms.comm
- on.domain;version="0.0.1.SNAPSHOT",org.openwms.common.integration;ver
- sion="0.0.1.SNAPSHOT",org.openwms.common.service.api;version="0.0.1.S
- NAPSHOT"
+ springsource.org.apache.commons.lang;version="2.4.0",com.springsource
+ .net.sf.ehcache;version="[1.6.2,1.6.2]",org.openwms.common.domain;ver
+ sion="0.0.1.SNAPSHOT",org.openwms.common.integration;version="0.0.1.S
+ NAPSHOT",org.openwms.common.service.api;version="0.0.1.SNAPSHOT"
 Bundle-Vendor: openwms.org
 Bundle-Version: 0.0.1.SNAPSHOT
-Tool: Bundlor 1.0.0.BUILD-20091207202403
+Tool: Bundlor 1.0.0.RELEASE
 Bundle-Name: org.openwms.common.service.spring
 Import-Library: org.springframework.spring;version="[3.0, 3.1)"
 Bundle-ManifestVersion: 2
@@ -28,8 +34,11 @@ Import-Package: org.apache.log4j,org.openwms.common.dao.core,org.openw
  s.common.integration.system.usermanagement,org.openwms.common.service
  ,org.openwms.common.service.exception,org.openwms.common.service.mana
  gement,org.openwms.common.util,org.slf4j,org.springframework.beans.fa
- ctory.annotation,org.springframework.context.weaving;version="[3.0, 3
- .1)",org.springframework.stereotype,org.springframework.transaction,o
- rg.springframework.transaction.annotation,org.springframework.transac
- tion.aspectj;version="[3.0, 3.1)"
+ ctory.annotation,org.springframework.cache.ehcache,org.springframewor
+ k.context.weaving;version="[3.0, 3.1)",org.springframework.dao,org.sp
+ ringframework.security.core,org.springframework.security.core.userdet
+ ails,org.springframework.security.core.userdetails.cache,org.springfr
+ amework.stereotype,org.springframework.transaction,org.springframewor
+ k.transaction.annotation,org.springframework.transaction.aspectj;vers
+ ion="[3.0, 3.1)"
 

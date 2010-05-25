@@ -34,6 +34,7 @@
 	<osgi:reference id="transportUnitDao" interface="org.openwms.common.integration.TransportUnitDao" />
     <osgi:reference id="transportUnitTypeDao" interface="org.openwms.common.integration.TransportUnitTypeDao" />
 	<osgi:reference id="userDao" interface="org.openwms.common.integration.system.usermanagement.UserDao" />
+    <osgi:reference id="roleDao" interface="org.openwms.common.integration.system.usermanagement.RoleDao" />
 	<osgi:reference id="moduleDao" interface="org.openwms.common.integration.ModuleDao" />
 
 	<!-- exports -->
@@ -43,5 +44,6 @@
 	<osgi:service ref="userService" interface="org.openwms.common.service.management.UserService" />
     <osgi:service ref="transportUnitService" interface="org.openwms.common.service.TransportUnitService" />
     <osgi:service ref="moduleManagementService" interface="org.openwms.common.service.ModuleManagementService" />
+    <osgi:service ref="userDetailsService" interface="org.springframework.security.core.userdetails.UserDetailsService" />
 
 </beans>
