@@ -194,10 +194,24 @@ public class User implements Serializable {
         this.username = username;
     }
 
+    /**
+     * Is this <code>User</code> an user authenticated through an external
+     * system?
+     * 
+     * @return <code>true</code> if this <code>User</code> was authenticated by
+     *         an external system, otherwise <code>false</code>.
+     */
     public boolean isExternalUser() {
         return this.extern;
     }
 
+    /**
+     * Set this <code>User</code> as authenticated through an external system.
+     * 
+     * @param extern
+     *            <code>true</code> if this <code>User</code> was authenticated
+     *            by an external system, otherwise <code>false</code>.
+     */
     public void setExternalUser(boolean externalUser) {
         this.extern = externalUser;
     }
@@ -291,28 +305,6 @@ public class User implements Serializable {
      */
     public void setUserDetails(UserDetails userDetails) {
         this.userDetails = userDetails;
-    }
-
-    /**
-     * Is this <code>User</code> an user authenticated through an external
-     * system?
-     * 
-     * @return <code>true</code> if this <code>User</code> was authenticated by
-     *         an external system, otherwise <code>false</code>.
-     */
-    public boolean isExtern() {
-        return extern;
-    }
-
-    /**
-     * Set this <code>User</code> as authenticated through an external system.
-     * 
-     * @param extern
-     *            <code>true</code> if this <code>User</code> was authenticated
-     *            by an external system, otherwise <code>false</code>.
-     */
-    public void setExtern(boolean extern) {
-        this.extern = extern;
     }
 
     /**
