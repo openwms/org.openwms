@@ -25,7 +25,7 @@
     "-//Granite Data Services//DTD granite-config internal//EN"
     "http://www.graniteds.org/public/dtd/2.1.0/granite-config.dtd">
 
-<granite-config>
+<granite-config scan="true">
 <!--  
     <class-getter type="org.granite.eclipselink.EclipseLinkClassGetter"/>
 -->
@@ -39,7 +39,7 @@
 		</externalizer>
 	</externalizers>
     
-    <security type="org.granite.spring.security.SpringSecurity3Service">
+    <security type="org.openwms.web.flex.security.CustomSecurityService">
         <param name="authentication-manager-bean-name" value="authenticationManager"/>
     </security>
     

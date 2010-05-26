@@ -25,25 +25,18 @@
     xmlns="http://www.springframework.org/schema/security"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xmlns:beans="http://www.springframework.org/schema/beans"
-	xmlns:graniteds="http://www.graniteds.org/config"
 	xsi:schemaLocation="
 	    http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
-		http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security-3.0.xsd 
-		http://www.graniteds.org/config http://www.graniteds.org/public/dtd/2.1.0/granite-config-2.1.xsd">
+		http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security-3.0.xsd">
 
     <http entry-point-ref="entryPoint">
-        <anonymous enabled="false"/>
+        <anonymous enabled="true"/>
     </http>
     
     <beans:bean id="entryPoint" class="org.springframework.security.web.authentication.Http403ForbiddenEntryPoint"/>
     
     <authentication-manager alias="authenticationManager">
-		<authentication-provider>
-			<user-service>
-				<user name="admin" password="admin" authorities="ROLE_USER,ROLE_ADMIN" />
-				<user name="user" password="user" authorities="ROLE_USER" />
-			</user-service>
-		</authentication-provider>
+		<authentication-provider user-service-ref="userDetailsService" />
     </authentication-manager>
 
     <global-method-security secured-annotations="enabled" jsr250-annotations="enabled"/>
