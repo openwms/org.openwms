@@ -21,56 +21,50 @@
 package org.openwms.web.flex.client.business {
     import com.adobe.cairngorm.business.ServiceLocator;
 
+    import flash.events.EventDispatcher;
+
+    import mx.collections.ArrayCollection;
     import mx.rpc.AsyncToken;
     import mx.rpc.IResponder;
-    import mx.rpc.remoting.RemoteObject;
 
-    import org.openwms.common.domain.Module;
-    import org.openwms.web.flex.client.event.ApplicationEvent;
+    import org.openwms.common.domain.system.usermanagement.Role;
     import org.openwms.web.flex.client.model.Constants;
-    import org.openwms.web.flex.client.model.ModelLocator;
 
     /**
-     * A ModulesDelegate.
+     * A RoleDelegate.
      *
-     * @author <a href="mailto:openwms@googlemail.com">Heiko Scherrer</a>
+     * @author <a href="mailto:russelltina@users.sourceforge.net">Tina Russell</a>
      * @version $Revision: 700 $
      */
-    public class ModulesDelegate {
+    public class RoleDelegate extends EventDispatcher {
         private var responder : IResponder;
 
-        private var service : RemoteObject;
+        private var service : Object;
 
-        public function ModulesDelegate(responder : IResponder) : void {
+        public function RoleDelegate(responder : IResponder) : void {
             this.responder = responder;
-            this.service = ServiceLocator.getInstance().getRemoteObject(Constants.MODULEMGMT_SERVICE);
+            this.service = ServiceLocator.getInstance().getRemoteObject(Constants.USERMGMT_SERVICE);
         }
 
-        public function getModules() : void {
-            var call : AsyncToken = service.getModules();
+        public function getRoles() : void {
+            var call : AsyncToken = service.findAllRoles();
             call.addResponder(responder);
         }
 
-        public function saveModule(module : Module) : void {
-            var call : AsyncToken = service.save(module);
+        public function addRole(role : Role) : void {
+            var call : AsyncToken = service.addEntity(role);
             call.addResponder(responder);
         }
 
-        public function deleteModule(module : Module) : void {
-            var call : AsyncToken = service.remove(module);
+        public function saveRole(role : Role) : void {
+            var call : AsyncToken = service.saveRole(role);
             call.addResponder(responder);
         }
 
-        public function login() : void {
-            var call : AsyncToken = service.channelSet.login();
+        public function deleteRoles(roles : ArrayCollection) : void {
+            var call : AsyncToken = service.removeRoles(roles);
             call.addResponder(responder);
         }
 
-        public function logout() : void {
-            service.logout();
-            trace("Logged out gracefully");
-            ModelLocator.authenticated = false;
-            new ApplicationEvent(ApplicationEvent.LOGIN).dispatch();
-        }
     }
 }
