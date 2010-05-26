@@ -21,113 +21,96 @@
      * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
      */
 -->
-<mx:Canvas xmlns:mx="http://www.adobe.com/2006/mxml" xmlns:business="org.openwms.web.flex.client.business.*" xmlns:o="org.openwms.web.flex.client.components.*" width="100%" height="100%" backgroundColor="#C2DAEF" show="onShow()">
+<mx:Canvas xmlns:mx="http://www.adobe.com/2006/mxml" xmlns:x="org.openwms.web.flex.client.component.*" width="100%" height="100%" backgroundColor="#C2DAEF" show="onShow()">
+
     <!-- Scripts -->
     <mx:Script>
         <![CDATA[
-        	import org.openwms.web.flex.client.event.SwitchScreenEvent;
-        	import org.openwms.web.flex.client.common.model.CommonModelLocator;
+            import org.openwms.web.flex.client.event.SwitchScreenEvent;
+            import org.openwms.web.flex.client.common.model.CommonModelLocator;
             import org.openwms.web.flex.client.model.*;
             import org.openwms.common.domain.LocationGroup;
             import org.openwms.web.flex.client.common.event.LocationEvent;
             import mx.collections.ArrayCollection;
             import mx.events.*;
-            [Bindable]
-            private var modelLocator:ModelLocator=ModelLocator.getInstance();
-            [Bindable]
-            private var commonModelLocator:CommonModelLocator = CommonModelLocator.getInstance();
-            [Bindable]
-            private var selectedLocationGroup:LocationGroup;
-            [Bindable]
-            private var selectedParent:String;
-            [Bindable]
-            private var selectedLocations:ArrayCollection=new ArrayCollection();
 
-            private function onShow():void
-            {
-            	if (commonModelLocator.allLocations.length == 0)
-            	{
+            [Bindable]
+            private var modelLocator : ModelLocator = ModelLocator.getInstance();
+
+            [Bindable]
+            private var commonModelLocator : CommonModelLocator = CommonModelLocator.getInstance();
+
+            [Bindable]
+            private var selectedLocationGroup : LocationGroup;
+
+            [Bindable]
+            private var selectedParent : String;
+
+            [Bindable]
+            private var selectedLocations : ArrayCollection = new ArrayCollection();
+
+            private function onShow() : void {
+                if (commonModelLocator.allLocations.length == 0) {
                     new LocationEvent(LocationEvent.LOAD_ALL_LOCATIONS).dispatch();
-                }    
+                }
             }
 
-            private function locationGroupLabel(item:Object):String
-            {
-                if (item != null)
-                {
-                    if (item.getData() != null)
-                    {
+            private function locationGroupLabel(item : Object) : String {
+                if (item != null) {
+                    if (item.getData() != null) {
                         return item.getData()['name'];
-                    }
-                    else
-                    {
+                    } else {
                         return "";
                     }
-                }
-                else
-                {
+                } else {
                     return "";
                 }
             }
 
-            public function onTreeClick(event:Event):void
-            {
-                selectedLocationGroup=(event.target.selectedItem.getData()) as LocationGroup;
-                selectedParent=findLocationGroup();
+            public function onTreeClick(event : Event) : void {
+                selectedLocationGroup = (event.target.selectedItem.getData()) as LocationGroup;
+                selectedParent = findLocationGroup();
                 showLocations();
             }
 
-            private function showLocations():void
-            {
-                var locations:ArrayCollection=modelLocator.allLocations;
+            private function showLocations() : void {
+                var locations : ArrayCollection = modelLocator.allLocations;
                 selectedLocations.removeAll();
                 trace("GoingMoving");
-                for (var i:uint=0; i < locations.length; i++)
-                {
-                    if (locations[i].locationGroup == null)
-                    {
+                for (var i : uint = 0; i < locations.length; i++) {
+                    if (locations[i].locationGroup == null) {
                         continue;
                     }
                     trace("Moving" + locations[i].locationGroup.id);
-                    if (locations[i].locationGroup.id == selectedLocationGroup.id)
-                    {
+                    if (locations[i].locationGroup.id == selectedLocationGroup.id) {
                         selectedLocations.addItem(locations[i]);
                     }
                 }
             }
 
-            private function findLocationGroup():String
-            {
-                if (selectedLocationGroup.parent != null)
-                {
+            private function findLocationGroup() : String {
+                if (selectedLocationGroup.parent != null) {
                     return selectedLocationGroup.parent.name;
-                }
-                else
-                {
+                } else {
                     return "NULL";
                 }
             }
 
-            private function locationIdField(item:Object, dg:DataGridColumn):String
-            {
+            private function locationIdField(item : Object, dg : DataGridColumn) : String {
                 return item.locationId[dg.dataField];
             }
 
-            private function locationGroupField(item:Object, dg:DataGridColumn):String
-            {
-                if (item.locationGroup != null)
-                {
+            private function locationGroupField(item : Object, dg : DataGridColumn) : String {
+                if (item.locationGroup != null) {
                     return item.locationGroup[dg.dataField];
                 }
                 return "NULL";
             }
 
-            private function refresh():void
-            {
-                var event:SwitchScreenEvent = new SwitchScreenEvent(SwitchScreenEvent.SHOW_LOCATIONGROUP_VIEW);
+            private function refresh() : void {
+                var event : SwitchScreenEvent = new SwitchScreenEvent(SwitchScreenEvent.SHOW_LOCATIONGROUP_VIEW);
                 event.dispatch();
             }
-
         ]]>
     </mx:Script>
 
@@ -142,28 +125,37 @@
         <mx:Tree id="myTree" showRoot="false" width="236" dataProvider="{modelLocator.locationGroupTree}" dataDescriptor="{new TreeDataDescriptor()}" labelFunction="locationGroupLabel" change="onTreeClick(event)" height="95%">
         </mx:Tree>
         <mx:Canvas width="100%" height="95%">
-            <mx:Panel x="0" y="0" width="500" height="250" layout="absolute" title="Details" borderColor="#C6FFC7">
-                <mx:CheckBox x="10" y="96" label="Group State In allowed"/>
-                <mx:CheckBox x="10" y="126" label="Group State Out allowed"/>
-                <mx:Canvas x="10" y="10" width="460" height="35" borderStyle="solid" alpha="0.5" backgroundColor="#C2DAEF">
-                    <mx:Label x="5" y="5" text="Location Group : {selectedLocationGroup.name}" fontSize="16" textDecoration="normal"/>
-                </mx:Canvas>
-                <mx:Canvas x="10" y="53" width="460" height="18" backgroundColor="#C2DAEF" backgroundAlpha="0.5">
-                    <mx:Label x="0" y="0" text="Parent Location Group : {selectedParent}"/>
-                </mx:Canvas>
-                <mx:HSlider x="250" y="126" value="{selectedLocationGroup.maxFillLevel}"/>
-                <mx:Label x="250" y="98" text="Maximum Fill Level"/>
+            <x:XPanel x="0" y="0" width="500" height="327" layout="absolute" title="Details" titleIcon="@Embed(source='/assets/images/LocationGroup.png')" toolTipBtn1="Refresh" onClickBtn1="refresh" iconBtn1="@Embed(source='assets/images/icons/refresh.png')">
+                <mx:CheckBox x="190" y="146" label="Infeed allowed"/>
+                <mx:CheckBox x="190" y="176" label="Outfeed allowed"/>
+                <mx:CheckBox x="190" y="205" label="Counting active"/>
+                <mx:HBox x="10" y="10" width="460" height="25" borderStyle="solid" alpha="0.5" backgroundColor="#C2DAEF">
+                    <mx:Label text="Location Group" fontSize="16" textDecoration="normal" width="170" textAlign="right" fontWeight="bold"/>
+                    <mx:Label text="{selectedLocationGroup.name}" fontSize="16" textDecoration="normal" width="100%"/>
+                </mx:HBox>
+                <mx:HBox x="10" y="43" width="460" height="18">
+                    <mx:Label text="Parent Location Group" width="170" textAlign="right"/>
+                    <mx:Label text="{selectedParent}" width="100%"/>
+                </mx:HBox>
+                <mx:HSlider x="190" y="235" value="{selectedLocationGroup.maxFillLevel}" width="280" minimum="0" maximum="100" snapInterval="5"/>
+                <mx:Label x="10" y="69" text="Description" textAlign="right" width="170"/>
+                <mx:Label x="10" y="120" text="Group Type" textAlign="right" width="170"/>
+                <mx:Label x="10" y="261" text="System Code" textAlign="right" width="170"/>
+                <mx:Label x="10" y="235" text="Maximum Fill Level" textAlign="right" width="170"/>
+                <mx:TextArea x="190" y="68" width="280"/>
+                <mx:Label text="{selectedLocationGroup.groupType}" width="100%" x="190" y="120"/>
+                <mx:Label text="{selectedLocationGroup.systemCode}" width="100%" x="188" y="261"/>
+            </x:XPanel>
+            <mx:Panel width="250" height="250" layout="absolute" x="508" y="0" title="Fill Level">
+                <!--
+                     <mx:PieChart x="0" y="0" id="piechart1" width="100%" height="100%">
+                     <mx:series>
+                     <mx:PieSeries displayName="Series 1"/>
+                     </mx:series>
+                     </mx:PieChart>
+                -->
             </mx:Panel>
-            <mx:Panel width="250" height="250" layout="absolute" x="508" y="0" title="Fill Level" borderColor="#C6FFC7">
-            <!--
-                <mx:PieChart x="0" y="0" id="piechart1" width="100%" height="100%">
-                    <mx:series>
-                        <mx:PieSeries displayName="Series 1"/>
-                    </mx:series>
-                </mx:PieChart>
-            -->
-            </mx:Panel>
-            <mx:DataGrid id="locationsList" allowMultipleSelection="true" sortableColumns="true" x="0" y="301" width="100%" dataProvider="{selectedLocations}" height="100%">
+            <mx:DataGrid id="locationsList" allowMultipleSelection="true" sortableColumns="true" x="0" y="512" width="100%" dataProvider="{selectedLocations}" height="367">
                 <mx:columns>
                     <mx:DataGridColumn dataField="area" labelFunction="locationIdField" editable="false" width="50">
                         <mx:headerRenderer>
@@ -202,7 +194,7 @@
                     <mx:DataGridColumn headerText="Last Access" dataField="lastAccess" editable="false"/>
                 </mx:columns>
             </mx:DataGrid>
-            <mx:HBox verticalAlign="middle" backgroundColor="#C6FFC7" width="100%" x="0" y="258" backgroundAlpha="0.5">
+            <mx:HBox verticalAlign="middle" backgroundColor="#C6FFC7" width="100%" x="0" y="469" backgroundAlpha="1.0">
                 <mx:Label text="Locations" fontSize="24"/>
                 <mx:VRule height="10"/>
             </mx:HBox>

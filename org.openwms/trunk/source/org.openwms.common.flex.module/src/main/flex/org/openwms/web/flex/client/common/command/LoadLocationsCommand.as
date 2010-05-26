@@ -18,13 +18,13 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
-package org.openwms.web.flex.client.common.command
-{
+package org.openwms.web.flex.client.common.command {
     import com.adobe.cairngorm.control.CairngormEvent;
     import com.adobe.cairngorm.commands.ICommand;
     import mx.collections.ArrayCollection;
     import org.openwms.web.flex.client.model.ModelLocator;
     import org.openwms.web.flex.client.common.business.LocationDelegate;
+    import org.openwms.web.flex.client.command.AbstractCommand;
     import mx.rpc.IResponder;
     import mx.controls.Alert;
     import mx.rpc.events.ResultEvent;
@@ -35,32 +35,27 @@ package org.openwms.web.flex.client.common.command
      * @author <a href="mailto:openwms@googlemail.com">Heiko Scherrer</a>
      * @version $Revision$
      */
-    public class LoadLocationsCommand implements IResponder, ICommand
-    {
+    public class LoadLocationsCommand extends AbstractCommand implements IResponder, ICommand {
         [Bindable]
-        private var modelLocator:ModelLocator = ModelLocator.getInstance();
+        private var modelLocator : ModelLocator = ModelLocator.getInstance();
 
-        public function LoadLocationsCommand()
-        {
+        public function LoadLocationsCommand() {
             super();
         }
 
-        public function result(data:Object):void
-        {
-            var rawResult:ArrayCollection = (data as ResultEvent).result as ArrayCollection;
+        public function result(data : Object) : void {
             modelLocator.allLocations = (data as ResultEvent).result as ArrayCollection;
         }
 
-        public function fault(info:Object):void
-        {
-            trace("ERROR result in LoadLocationsCommand");
-            Alert.show("Fault in [" + this + "] Errormessage : " + info);
+        public function fault(event : Object) : void {
+            if (onFault(event)) {
+                return;
+            }
+            Alert.show("Cannot load Locations");
         }
 
-        public function execute(event:CairngormEvent):void
-        {
-            var delegate:LocationDelegate = new LocationDelegate(this)
-            delegate.getLocations();
+        public function execute(event : CairngormEvent) : void {
+            new LocationDelegate(this).getLocations();
         }
 
     }

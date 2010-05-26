@@ -52,7 +52,7 @@ package org.openwms.web.flex.client.common.command
             trace("Executing command to show the TransportUnitView");
             var delegate:TransportUnitDelegate = new TransportUnitDelegate(this)
             delegate.getTransportUnits();
-            modelLocator.mainViewStackIndex = ModelLocator.MAIN_VIEW_STACK_TRANSPORTUNIT_VIEW;
+            //modelLocator.mainViewStackIndex = ModelLocator.MAIN_VIEW_STACK_TRANSPORTUNIT_VIEW;
         }
 
         public function result(event:Object):void

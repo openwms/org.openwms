@@ -18,19 +18,18 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
-package org.openwms.web.flex.client.common.command
-{
+package org.openwms.web.flex.client.common.command {
     import com.adobe.cairngorm.commands.ICommand;
     import com.adobe.cairngorm.control.CairngormEvent;
-
+    
     import mx.collections.ArrayCollection;
     import mx.controls.Alert;
     import mx.rpc.IResponder;
     import mx.rpc.events.ResultEvent;
-
+    
+    import org.openwms.web.flex.client.command.AbstractCommand;
     import org.openwms.web.flex.client.common.business.LocationGroupDelegate;
     import org.openwms.web.flex.client.model.ModelLocator;
-    import org.openwms.common.domain.LocationGroup;
 
     /**
      * A LoadLocationGroupCommand.
@@ -38,34 +37,29 @@ package org.openwms.web.flex.client.common.command
      * @author <a href="mailto:openwms@googlemail.com">Heiko Scherrer</a>
      * @version $Revision$
      */
-    public class LoadLocationGroupsCommand implements ICommand, IResponder
-    {
+    public class LoadLocationGroupsCommand extends AbstractCommand implements ICommand, IResponder {
         [Bindable]
-        private var modelLocator:ModelLocator = ModelLocator.getInstance();
+        private var modelLocator : ModelLocator = ModelLocator.getInstance();
 
-        public function LoadLocationGroupsCommand()
-        {
+        public function LoadLocationGroupsCommand() {
             super();
         }
 
-        public function execute(event:CairngormEvent):void
-        {
-            if (modelLocator.allLocationGroups.length == 0)
-            {
-                var delegate:LocationGroupDelegate = new LocationGroupDelegate(this)
-                delegate.getLocationGroups();
+        public function execute(event : CairngormEvent) : void {
+            if (modelLocator.allLocationGroups.length == 0) {
+                new LocationGroupDelegate(this).getLocationGroups();
             }
         }
 
-        public function result(data:Object):void
-        {
-            var rawResult:ArrayCollection = (data as ResultEvent).result as ArrayCollection;
+        public function result(data : Object) : void {
             modelLocator.allLocationGroups = (data as ResultEvent).result as ArrayCollection;
         }
 
-        public function fault(info:Object):void
-        {
-            Alert.show("Fault in [" + this + "] Errormessage : " + info);
+        public function fault(event : Object) : void {
+            if (onFault(event)) {
+                return;
+            }
+            Alert.show("Cannot load Location Groups");
         }
 
     }

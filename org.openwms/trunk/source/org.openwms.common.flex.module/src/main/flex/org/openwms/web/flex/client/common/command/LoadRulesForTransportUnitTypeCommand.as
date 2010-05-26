@@ -33,14 +33,15 @@ package org.openwms.web.flex.client.common.command {
     import org.openwms.common.domain.TypePlacingRule;
     import org.openwms.common.domain.TypeStackingRule;
     import org.openwms.web.flex.client.common.business.TransportUnitTypeDelegate;
-
+    import org.openwms.web.flex.client.command.AbstractCommand;
+    
     /**
      * A LoadRulesForTransportUnitTypeCommand.
      *
      * @author <a href="mailto:openwms@googlemail.com">Heiko Scherrer</a>
      * @version $Revision: 700 $
      */
-    public class LoadRulesForTransportUnitTypeCommand implements IResponder, ICommand {
+    public class LoadRulesForTransportUnitTypeCommand extends AbstractCommand implements IResponder, ICommand {
 
         private var transportUnitType:TransportUnitType;
 
@@ -62,9 +63,11 @@ package org.openwms.web.flex.client.common.command {
             }
         }
 
-        public function fault(info:Object):void {
-            trace("Error:" + (info as FaultEvent).message);
-            Alert.show("Could not update Transport Unit Type");
+        public function fault(event:Object):void {
+            if (onFault(event)) {
+                return;
+            }
+            Alert.show("Could not load Rules for Transport Unit Type");
         }
 
         public function execute(event:CairngormEvent):void {
@@ -74,7 +77,6 @@ package org.openwms.web.flex.client.common.command {
             }
             transportUnitType=event.data as TransportUnitType;
             var delegate:TransportUnitTypeDelegate=new TransportUnitTypeDelegate(this);
-            trace("Calling delegate "+transportUnitType.type);
             delegate.loadRules(transportUnitType.type);
         }
 

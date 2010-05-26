@@ -54,7 +54,7 @@ package org.openwms.web.flex.client.common.command
             trace("Executing command to show the LocationGroupView");
             var delegate:LocationGroupDelegate = new LocationGroupDelegate(this)
             delegate.getLocationGroups();
-            modelLocator.mainViewStackIndex = ModelLocator.MAIN_VIEW_STACK_LOCATIONGROUP_VIEW;
+            //modelLocator.mainViewStackIndex = ModelLocator.MAIN_VIEW_STACK_LOCATIONGROUP_VIEW;
         }
 
         public function result(event:Object):void
