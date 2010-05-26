@@ -43,12 +43,10 @@ package org.openwms.web.flex.client.command {
         protected function onFault(e : Object) : Boolean {
             if (e is FaultEvent) {
                 var event : FaultEvent = e as FaultEvent;
-                // Examine of there is a security problem
                 if (event.fault.faultCode == "Server.Security.NotLoggedIn") {
                     broker.dispatchEvent(new SecurityEvent(SecurityEvent.NOT_LOGGED_IN, SecurityEvent.NOT_LOGGED_IN));
                     return true;
-                } else if (event.fault.faultCode == "Server.Security.InvalidCredentials" ||
-                           event.fault.faultCode == "Channel.Authentication.Error") {
+                } else if (event.fault.faultCode == "Server.Security.InvalidCredentials" || event.fault.faultCode == "Channel.Authentication.Error") {
                     broker.dispatchEvent(new SecurityEvent(SecurityEvent.INVALID_CREDENTIALS, SecurityEvent.INVALID_CREDENTIALS));
                     return true;
                 } else if (event.fault.faultCode == "Server.Security.SessionExpired") {
