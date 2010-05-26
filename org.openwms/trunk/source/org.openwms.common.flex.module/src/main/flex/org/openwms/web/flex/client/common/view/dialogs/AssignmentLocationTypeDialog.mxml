@@ -1,5 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
-<mx:Panel xmlns:mx="http://www.adobe.com/2006/mxml" layout="absolute" width="528" height="350" title="Assign Location Types to Transport Unit Type" fontSize="12" creationComplete="init();">
+<!--
+/*
+ * openwms.org, the Open Warehouse Management System.
+ *
+ * This file is part of openwms.org.
+ *
+ * openwms.org is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as 
+ * published by the Free Software Foundation, either version 3 of the
+ * License, or (at your option) any later version.
+ *
+ * openwms.org is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with this software. If not, write to the Free
+ * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
+ * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
+ */
+-->
+<mx:TitleWindow xmlns:mx="http://www.adobe.com/2006/mxml" layout="absolute" width="528" height="350" title="Assign Location Types to Transport Unit Type" fontSize="12" creationComplete="init();">
 
     <mx:Script>
     	<![CDATA[
@@ -58,29 +80,6 @@
 
             private function accept(e:Event):void
             {
-            	/*
-            	for each (var rule:TypePlacingRule in rules)
-            	{
-            		if (!assigned.contains(rule.allowedLocationType))
-            		{
-                        trace("Removed a rule");
-            			rules.removeItemAt(rules.getItemIndex(rule));
-            			changed = true;
-            		}
-            	}
-            	for each (var locationType:LocationType in assigned)
-            	{
-            		if (!rules.contains(locationType))
-            		{
-            			trace("Added a rule");
-            			var newRule:TypePlacingRule = new TypePlacingRule();
-            			newRule.withTransportUnitType(transportUnitType);
-            			newRule.withLocationType(locationType);
-            			transportUnitType.typePlacingRules.addItem(newRule);
-                        changed = true;
-            		}
-            	}
-            	*/
             	if (changed)
             	{
                     var event:TransportUnitTypeEvent = new TransportUnitTypeEvent(TransportUnitTypeEvent.SAVE_ALLOWED_LOCATION_TYPES);
@@ -128,4 +127,4 @@
     <mx:Button x="234" y="117" buttonMode="true" mouseChildren="false" toolTip="Move Right" icon="@Embed(source='assets/images/icons/arrow_right.png')" click="moveRight()"/>
 	<mx:Button x="234" y="147" buttonMode="true" mouseChildren="false" toolTip="Move Left" icon="@Embed(source='assets/images/icons/arrow_left.png')" click="moveLeft()"/>
 	
-</mx:Panel>
+</mx:TitleWindow>

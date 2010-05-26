@@ -105,7 +105,7 @@
 
     <mx:NumberValidator id="numberVal" property="text"/>
 
-    <mx:HBox x="10" y="10" verticalAlign="middle" width="95%" backgroundColor="#92FC95">
+    <mx:HBox x="10" y="10" verticalAlign="middle" width="95%" backgroundColor="#C6FFC7">
         <mx:Label x="10" y="10" text="Location Types" fontSize="24"/>
         <mx:VRule height="10"/>
         <mx:Button id="addBtn" buttonMode="true" mouseChildren="false" toolTip="Create a new Location Type" icon="@Embed(source='/assets/images/LocationType--Add.png')" click="showCreateLocationTypeDialog()"/>

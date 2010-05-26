@@ -53,7 +53,7 @@ package org.openwms.web.flex.client.common.command
             //trace("Executing command to show the LocationView");
             //var delegate:LocationDelegate = new LocationDelegate(this)
             //delegate.getLocations();
-            modelLocator.mainViewStackIndex = ModelLocator.MAIN_VIEW_STACK_LOCATION_VIEW;
+            //modelLocator.mainViewStackIndex = ModelLocator.MAIN_VIEW_STACK_LOCATION_VIEW;
         }
 
         public function result(event:Object):void
