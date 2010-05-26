@@ -22,6 +22,7 @@ package org.openwms.common.integration.jpa;
 
 import java.util.List;
 
+import org.openwms.common.domain.system.usermanagement.SystemUser;
 import org.openwms.common.domain.system.usermanagement.User;
 import org.openwms.common.integration.system.usermanagement.UserDao;
 import org.springframework.stereotype.Repository;
@@ -64,5 +65,51 @@ public class UserDaoImpl extends AbstractGenericJpaDao<User, Long> implements Us
     @SuppressWarnings("unchecked")
     public List<User> findAll() {
         return getJpaTemplate().findByNamedQuery(UserDao.NQ_FIND_ALL_ORDERED);
+    }
+
+    /**
+     * {@inheritDoc}
+     * 
+     * Is the passed in User object is the SuperUser or <code>null</code> no
+     * action is performed.
+     */
+    @Override
+    public void persist(User user) {
+        if (isSuperUser(user)) {
+            return;
+        }
+        super.persist(user);
+    }
+
+    /**
+     * {@inheritDoc}
+     * 
+     * Is the passed in User object is the SuperUser or <code>null</code> no
+     * action is performed.
+     */
+    @Override
+    public User save(User user) {
+        if (isSuperUser(user)) {
+            return user;
+        }
+        return super.save(user);
+    }
+
+    /**
+     * {@inheritDoc}
+     * 
+     * Is the passed in User object is the SuperUser or <code>null</code> no
+     * action is performed.
+     */
+    @Override
+    public void remove(User user) {
+        if (isSuperUser(user)) {
+            return;
+        }
+        super.remove(user);
+    }
+
+    private boolean isSuperUser(User user) {
+        return (user == null || user instanceof SystemUser || SystemUser.SYSTEM_USERNAME.equals(user.getFullname()));
     }
 }
