@@ -20,6 +20,7 @@
  */
 package org.openwms.common.service.spring.security;
 
+import org.openwms.common.domain.system.usermanagement.SystemUser;
 import org.openwms.common.domain.system.usermanagement.User;
 import org.openwms.common.integration.GenericDao;
 import org.openwms.common.service.exception.ServiceException;
@@ -29,6 +30,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.beans.factory.annotation.Required;
 import org.springframework.security.core.userdetails.UserCache;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -64,6 +66,31 @@ public class SecurityContextUserServiceImpl implements UserDetailsService {
     @Autowired
     protected UserCache userCache;
 
+    private String systemUser;
+    private String systemPassword;
+
+    /**
+     * Set the systemUser.
+     * 
+     * @param systemUser
+     *            The systemUser to set.
+     */
+    @Required
+    public void setSystemUser(String systemUser) {
+        this.systemUser = systemUser;
+    }
+
+    /**
+     * Set the systemPassword.
+     * 
+     * @param systemPassword
+     *            The systemPassword to set.
+     */
+    @Required
+    public void setSystemPassword(String systemPassword) {
+        this.systemPassword = systemPassword;
+    }
+
     /**
      * @see org.springframework.security.core.userdetails.UserDetailsService#loadUserByUsername(java.lang.String)
      */
@@ -79,12 +106,16 @@ public class SecurityContextUserServiceImpl implements UserDetailsService {
         }
         User user = null;
 
-        try {
-            user = loadUser(username);
-        }
-        catch (ServiceException se) {
-            logger.debug("User does not exist in database");
-            throw new UsernameNotFoundException("User with username not found:" + username, se);
+        if (systemUser.equals(username)) {
+            user = new SystemUser(systemUser, systemPassword);
+        } else {
+            try {
+                user = loadUser(username);
+            }
+            catch (ServiceException se) {
+                logger.debug("User does not exist in database");
+                throw new UsernameNotFoundException("User with username not found:" + username, se);
+            }
         }
         ud = new UserWrapper(user);
         userCache.putUserInCache(ud);

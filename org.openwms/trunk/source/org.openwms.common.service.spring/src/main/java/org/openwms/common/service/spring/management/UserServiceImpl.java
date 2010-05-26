@@ -101,7 +101,10 @@ public class UserServiceImpl extends EntityServiceImpl<User, Long> implements Us
     public User getTemplate(String username) {
         return new User(username);
     }
-    
+
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void removeRoles(List<Role> roles) {
         for (Role role : roles) {
@@ -109,16 +112,22 @@ public class UserServiceImpl extends EntityServiceImpl<User, Long> implements Us
             roleDao.remove(role);
         }
     }
-    
+
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public Role saveRole(Role role) {
         return roleDao.save(role);
     }
-    
+
+    /**
+     * {@inheritDoc}
+     */
     @Override
     @Transactional(readOnly = true)
     public List<Role> findAllRoles() {
         return roleDao.findAll();
     }
-    
+
 }
