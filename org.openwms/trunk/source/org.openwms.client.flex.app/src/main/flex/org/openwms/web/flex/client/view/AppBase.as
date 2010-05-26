@@ -21,10 +21,10 @@
 package org.openwms.web.flex.client.view {
     import com.adobe.cairngorm.business.ServiceLocator;
     import com.gorillalogic.security.Chimp;
-    
+
     import flash.display.DisplayObject;
     import flash.events.Event;
-    
+
     import mx.collections.ArrayCollection;
     import mx.collections.XMLListCollection;
     import mx.containers.ViewStack;
@@ -36,7 +36,7 @@ package org.openwms.web.flex.client.view {
     import mx.managers.PopUpManager;
     import mx.modules.IModuleInfo;
     import mx.modules.ModuleManager;
-    
+
     import org.granite.events.SecurityEvent;
     import org.granite.rpc.remoting.mxml.SecureRemoteObject;
     import org.openwms.common.domain.MenuItem;
@@ -61,33 +61,50 @@ package org.openwms.web.flex.client.view {
 
         [Bindable]
         protected var modelLocator : ModelLocator = ModelLocator.getInstance();
+
         [Bindable]
         private var moduleLocator : ModuleLocator = ModuleLocator.getInstance();
+
         [Bindable]
         private var mainController : MainController = MainController.getInstance();
+
         [Bindable]
         private var srv : SecureRemoteObject = null;
+
         [Bindable]
         public var menuBarCollection : XMLListCollection;
+
         [Bindable]
         protected var menuItems : ArrayCollection;
+
         [Bindable]
         public var loginView : LoginView;
+
         [Bindable]
         public var mainMenuBar : MenuBar;
+
         [Bindable]
         public var appViewStack : ViewStack;
+
         [Bindable]
         public var moduleManagementService : SecureRemoteObject = null;
+
         [Bindable]
         public var userService : SecureRemoteObject = null;
+
         // Manager classes are loaded to the application domain
         private var moduleManager : ModuleManager;
+
         private var popUpManager : PopUpManager;
+
         private var dragManager : DragManager;
+
         private var mInfo : IModuleInfo;
+
         private static var _link : Array = [org.openwms.tms.domain.order.TransportOrder];
+
         private var service : SecureRemoteObject;
+
         private var broker : EventBroker = EventBroker.getInstance();
 
         /**
@@ -140,6 +157,8 @@ package org.openwms.web.flex.client.view {
             mainController.addCommand(UserEvent.DELETE_USER, DeleteUserCommand);
 
             mainController.addCommand(RoleEvent.LOAD_ALL_ROLES, LoadRolesCommand);
+            mainController.addCommand(RoleEvent.ADD_ROLE, AddRoleCommand);
+            mainController.addCommand(RoleEvent.DELETE_ROLE, DeleteRoleCommand);
 
             mainController.addCommand(SwitchScreenEvent.SHOW_STARTSCREEN, ShowStartscreenCommand);
             mainController.addCommand(SwitchScreenEvent.SHOW_MODULE_MGMT_VIEW, ShowModuleManagementViewCommand);
@@ -159,14 +178,16 @@ package org.openwms.web.flex.client.view {
                     showLoginDialog("Invalid username or password");
                     break;
                 case SecurityEvent.NOT_LOGGED_IN:
+                    ModelLocator.authenticated = false;
                     showLoginDialog("Not logged in");
                     break;
                 case SecurityEvent.SESSION_EXPIRED:
-                    service.logout();
                     ModelLocator.authenticated = false;
+                    service.logout();
                     showLoginDialog("Session expired");
                     break;
                 case SecurityEvent.ACCESS_DENIED:
+                    ModelLocator.authenticated = false;
                     Alert.show("You don't have required rights to execute this action");
                     break;
             }

@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+/*
+ * openwms.org, the Open Warehouse Management System.
+ *
+ * This file is part of openwms.org.
+ *
+ * openwms.org is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as 
+ * published by the Free Software Foundation, either version 3 of the
+ * License, or (at your option) any later version.
+ *
+ * openwms.org is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with this software. If not, write to the Free
+ * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
+ * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
+ */
+-->
+<mx:TitleWindow xmlns:mx="http://www.adobe.com/2006/mxml" layout="absolute" width="528" height="350" title="Assign Users to Roles" fontSize="12" creationComplete="init();">
+
+    <mx:Script>
+        <![CDATA[
+        	import mx.utils.ObjectUtil;
+        	import org.openwms.common.domain.system.usermanagement.User;
+        	import org.openwms.web.flex.client.event.RoleEvent;
+        	import org.openwms.common.domain.system.usermanagement.Role;
+        	import org.openwms.web.flex.client.model.ModelLocator;
+            import mx.collections.ListCollectionView;
+            import mx.managers.PopUpManager;
+            import mx.collections.ArrayCollection;
+
+            [Bindable]
+            private var modelLocator:ModelLocator = ModelLocator.getInstance();
+            [Bindable]
+            private var notAssigned:ArrayCollection = new ArrayCollection();
+            [Bindable]
+            private var toAssign:ArrayCollection;
+            [Bindable]
+            public var assigned:ArrayCollection;
+            [Bindable]
+            public var role:Role;
+            private var changed:Boolean = false;
+
+            private function init():void
+            {
+                notAssigned = new ArrayCollection(modelLocator.allUsers.toArray());
+                toAssign = assigned;
+                for each (var user:User in notAssigned)
+                {
+                	if (toAssign.contains(user))
+                	{
+                		notAssigned.removeItemAt(notAssigned.getItemIndex(user));
+                	}
+                }
+                this.addEventListener(KeyboardEvent.KEY_DOWN, keyEventHandler);
+                PopUpManager.centerPopUp(this);
+            }
+
+            private function closeDialog(event:Event=null):void
+            {
+                this.removeEventListener(KeyboardEvent.KEY_DOWN, keyEventHandler);
+                PopUpManager.removePopUp(this);
+            }
+
+            private function keyEventHandler(event:KeyboardEvent):void
+            {
+                if(event.keyCode == 27)
+                {
+                   closeDialog(event);
+                }
+            }
+
+            private function accept(e:Event):void
+            {
+            	toAssign.refresh();
+            	assigned = toAssign;
+                closeDialog();
+            }
+
+            private function formatFunction(item:*):String
+            {
+                return (item as User).username+" - "+(item as User).fullname;
+            }
+            
+            private function moveRight():void
+            {
+                for each (var item:* in allLst.selectedItems)
+                {
+                    toAssign.addItem(notAssigned.removeItemAt(notAssigned.getItemIndex(item)));
+                    toAssign.itemUpdated(item);
+                    changed = true;
+                }
+            }
+                    
+            private function moveLeft():void
+            {
+                for each (var item:* in assLst.selectedItems)
+                {
+                    notAssigned.addItem(toAssign.removeItemAt(toAssign.getItemIndex(item)));
+                    notAssigned.itemUpdated(item);
+                    changed = true;
+                }
+            }
+        ]]>
+    </mx:Script>
+    
+    <mx:Label x="83" y="10" text="All Users"/>
+    <mx:List id="allLst" y="39" x="10" width="202" height="225" doubleClickEnabled="true" doubleClick="moveRight();" labelFunction="formatFunction" allowMultipleSelection="true" dataProvider="{notAssigned}" enabled="true" alternatingItemColors="[#B7BABC, #FFFFFF]"/>
+
+    <mx:Button x="234" y="117" buttonMode="true" mouseChildren="false" toolTip="Move Right" icon="@Embed(source='assets/images/icons/arrow_right.png')" click="moveRight()"/>
+    <mx:Button x="234" y="147" buttonMode="true" mouseChildren="false" toolTip="Move Left" icon="@Embed(source='assets/images/icons/arrow_left.png')" click="moveLeft()"/>
+
+    <mx:Label x="348" y="10" text="Assigned Users"/>
+    <mx:List id="assLst" y="39" x="296" width="202" height="225" doubleClickEnabled="true" doubleClick="moveLeft();" labelFunction="formatFunction" allowMultipleSelection="true" dataProvider="{toAssign}" enabled="true" alternatingItemColors="[#B7BABC, #FFFFFF]"/>
+
+    <mx:HBox width="100%" horizontalAlign="center" x="0" y="272">
+        <mx:Button id="saveBtn" label="Save" click="accept(event)" fontSize="12"/>
+        <mx:Button id="cancelBtn" label="Cancel" click="closeDialog(event)" fontSize="12"/>
+    </mx:HBox>
+    
+</mx:TitleWindow>

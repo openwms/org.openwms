@@ -24,6 +24,12 @@
 <mx:Canvas xmlns:mx="http://www.adobe.com/2006/mxml" width="100%" height="100%" backgroundColor="#C2DAEF" show="init()">
     <mx:Script>
         <![CDATA[
+        	import org.openwms.web.flex.client.event.UserEvent;
+        	import org.openwms.common.domain.system.usermanagement.SecurityObject;
+        	import org.openwms.web.flex.client.view.dialogs.AssignUsersDialog;
+        	import org.openwms.web.flex.client.view.dialogs.ConfirmDeleteRoleDialog;
+        	import mx.managers.PopUpManager;
+        	import org.openwms.web.flex.client.view.dialogs.CreateRoleDialog;
         	import org.openwms.common.domain.system.usermanagement.User;
         	import org.openwms.common.domain.system.usermanagement.Role;
             import mx.controls.Alert;
@@ -45,37 +51,24 @@
             private function onRowClick(event:ListEvent):void
             {
                 selected = event.currentTarget.selectedItem as Role;
-                if (selected.users.length == 0) {
-                	trace("The users is null");
-                } 
-                /*
-                lastAccessTxt.text=dateFormatter.format(selected.lastAccess);
-                setLocationGroup();
-                setLocationType();
-                */
             }
 
-            private function showCreateLocationDialog():void
+            private function add():void
             {
-            	/*
-                var pop:CreateLocationDialog = CreateLocationDialog(PopUpManager.createPopUp(this, CreateLocationDialog, true));
+                var pop:CreateRoleDialog = CreateRoleDialog(PopUpManager.createPopUp(this, CreateRoleDialog, true));
                 PopUpManager.centerPopUp(pop);
-                */
             }
 
-            private function showDeleteLocationDialog():void
+            private function remove():void
             {
-            	/*
-                if (locationsList.selectedIndices.length == 0)
+                if (lst.selectedIndices.length == 0)
                 {
-                    Alert.show("Please select a Location to delete");
+                    Alert.show("Please select at least one Role to delete");
                     return;                 
                 }
-                var pop:ConfirmDeletionLocationDialog = ConfirmDeletionLocationDialog(PopUpManager.createPopUp(this, ConfirmDeletionLocationDialog, true));
-                pop.messageText = "Delete selected Locations";
-                pop.items = new ArrayCollection(locationsList.selectedItems);
+                var pop:ConfirmDeleteRoleDialog = ConfirmDeleteRoleDialog(PopUpManager.createPopUp(this, ConfirmDeleteRoleDialog, true));
+                pop.items = new ArrayCollection(lst.selectedItems);
                 PopUpManager.centerPopUp(pop);
-                */
             }
 
             private function save():void
@@ -89,6 +82,31 @@
                 event.data = selected;
                 event.dispatch();
             }
+            
+            private function addUsers():void
+            {
+            	if (modelLocator.allUsers.length == 0) {
+            		new UserEvent(UserEvent.LOAD_ALL_USERS).dispatch();
+            	}
+                var pop:AssignUsersDialog = AssignUsersDialog(PopUpManager.createPopUp(this, AssignUsersDialog, true));
+                pop.assigned = new ArrayCollection(selected.users.toArray());
+                pop.role = selected;
+                PopUpManager.centerPopUp(pop);            	
+            }
+            
+            private function removeUsers():void
+            {
+            	for each (var user:User in selected.users)
+            	{
+            		for each (var selectedUser:User in usersLst.selectedItems)
+            		{
+                        if (user.username == selectedUser.username)
+                        {
+                        	selected.users.removeItemAt(selected.users.getItemIndex(user));
+                        }
+                    } 
+                }
+            }
 
             private function refresh():void
             {
@@ -98,6 +116,9 @@
             private function formatUser(item:*):String {
             	return (item as User).username + " - " + (item as User).fullname;
             }
+            private function formatGrant(item:*):String {
+                return (item as SecurityObject).name + " - " + (item as SecurityObject).description;
+            }
         ]]>
     </mx:Script>
 
@@ -105,11 +126,11 @@
 	    <mx:HBox verticalAlign="middle" backgroundColor="#FFA6A6" width="100%">
 	        <mx:Label x="10" y="10" text="Roles" fontSize="24"/>
 	        <mx:VRule height="10"/>
-	        <mx:Button id="addRoleBtn" buttonMode="true" mouseChildren="false" toolTip="Create a new Role" click="showCreateLocationDialog()"/>
+	        <mx:Button id="addRoleBtn" buttonMode="true" mouseChildren="false" toolTip="Create a new Role" icon="@Embed(source='/assets/images/icons/users--plus.png')" click="add()"/>
 	        <mx:VRule height="10"/>
-	        <mx:Button id="removeRoleBtn" buttonMode="true" mouseChildren="false" toolTip="Delete an existing Role" click="showDeleteLocationDialog()"/>
+	        <mx:Button id="removeRoleBtn" buttonMode="true" mouseChildren="false" toolTip="Delete an existing Role" icon="@Embed(source='/assets/images/icons/users--minus.png')" click="remove()"/>
 	        <mx:VRule height="10"/>
-	        <mx:Button id="saveRoleBtn" buttonMode="true" mouseChildren="false" toolTip="Save an existing Role" click="save()"/>
+	        <mx:Button id="saveRoleBtn" buttonMode="true" mouseChildren="false" toolTip="Save a modified Role" icon="@Embed(source='/assets/images/icons/users--save.png')" click="save()"/>
 	        <mx:VRule height="10"/>
 	        <mx:Button id="refreshRoleBtn" buttonMode="true" mouseChildren="false" toolTip="Refresh the list of Roles" icon="@Embed(source='assets/images/icons/refresh.png')" click="refresh()"/>
 	    </mx:HBox>
@@ -117,7 +138,7 @@
     <mx:HRule x="9" y="53" width="95%"/>
     <mx:VBox height="100%" width="95%" x="10" y="63">
         <mx:VBox width="100%">
-            <mx:DataGrid id="lst" height="200" width="100%" dataProvider="{modelLocator.allRoles}" change="onRowClick(event)">
+            <mx:DataGrid id="lst" height="200" width="100%" allowMultipleSelection="true" dataProvider="{modelLocator.allRoles}" change="onRowClick(event)">
                 <mx:columns>
                     <mx:DataGridColumn headerText="Name" dataField="name" editable="false" width="100"/>
                     <mx:DataGridColumn headerText="Description" dataField="description" editable="false"/>
@@ -128,21 +149,21 @@
 	                <mx:HBox verticalAlign="middle" backgroundColor="#FFA6A6" width="100%" backgroundAlpha="0.5" horizontalGap="8" height="25">
 	                    <mx:Label x="10" y="10" text="Assigned Grants" fontSize="10"/>
 	                    <mx:VRule height="10"/>
-	                    <mx:Button id="assignedGrantsBtn" width="18" height="18" buttonMode="true" mouseChildren="false" toolTip="Assign Grants to the selected Role" click="showCreateLocationDialog()" icon="@Embed(source='assets/images/icons/grant--add.png')"/>
+	                    <mx:Button id="assignedGrantsBtn" width="22" height="22" buttonMode="true" mouseChildren="false" toolTip="Assign Grants to the selected Role" click="add()" icon="@Embed(source='assets/images/icons/grant--add.png')"/>
 	                    <mx:VRule height="10"/>
-	                    <mx:Button id="removeGrantsBtn" width="18" height="18" buttonMode="true" mouseChildren="false" toolTip="Remove Grants from the selected Role" click="showDeleteLocationDialog()" icon="@Embed(source='assets/images/icons/grant--delete.png')"/>
+	                    <mx:Button id="removeGrantsBtn" width="22" height="22" buttonMode="true" mouseChildren="false" enabled="{grantsLst.selectedItems.length > 0}" toolTip="Remove Grants from the selected Role" click="add()" icon="@Embed(source='assets/images/icons/grant--delete.png')"/>
 	                </mx:HBox>
-	                <mx:List id="grantsLst" height="200" width="100%" />
+	                <mx:List id="grantsLst" height="200" width="100%" allowMultipleSelection="true" labelFunction="formatGrant" dataProvider="{selected.grants}"/>
 	            </mx:VBox>
 	            <mx:VBox width="50%">
 			        <mx:HBox verticalAlign="middle" backgroundColor="#FFA6A6" width="100%" height="25" backgroundAlpha="0.5">
 			            <mx:Label x="10" y="10" text="Assigned Users" fontSize="10"/>
 			            <mx:VRule height="10"/>
-			            <mx:Button id="assignedUsersBtn" width="18" height="18" buttonMode="true" mouseChildren="false" toolTip="Assign Users to the selected Role" click="showCreateLocationDialog()" icon="@Embed(source='/assets/icons/fuegue/user--plus.png')"/>
+			            <mx:Button id="assignedUsersBtn" width="22" height="22" buttonMode="true" mouseChildren="false" toolTip="Assign Users to the selected Role" click="addUsers()" icon="@Embed(source='/assets/icons/fuegue/user--plus.png')"/>
 			            <mx:VRule height="10"/>
-			            <mx:Button id="removeUsersBtn" width="18" height="18" buttonMode="true" mouseChildren="false" toolTip="Remove Users from the selected Role" click="showDeleteLocationDialog()" icon="@Embed(source='/assets/icons/fuegue/user--minus.png')"/>
+			            <mx:Button id="removeUsersBtn" width="22" height="22" buttonMode="true" mouseChildren="false" enabled="{usersLst.selectedItems.length > 0}" toolTip="Remove Users from the selected Role" click="removeUsers()" icon="@Embed(source='/assets/icons/fuegue/user--minus.png')"/>
 			        </mx:HBox>
-	                <mx:List id="usersLst" height="200" width="100%" labelFunction="formatUser" dataProvider="{selected.users}" />
+	                <mx:List id="usersLst" height="200" width="100%" allowMultipleSelection="true" labelFunction="formatUser" dataProvider="{selected.users}" />
 	            </mx:VBox>
             </mx:HBox>
         </mx:VBox>

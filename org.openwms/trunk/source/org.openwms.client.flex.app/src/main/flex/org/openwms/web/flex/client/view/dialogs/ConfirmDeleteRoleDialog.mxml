@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+/*
+ * openwms.org, the Open Warehouse Management System.
+ *
+ * This file is part of openwms.org.
+ *
+ * openwms.org is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as 
+ * published by the Free Software Foundation, either version 3 of the
+ * License, or (at your option) any later version.
+ *
+ * openwms.org is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with this software. If not, write to the Free
+ * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
+ * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
+ */
+-->
+<mx:Panel xmlns:mx="http://www.adobe.com/2006/mxml" height="248" creationComplete="init();" show="deleteBtn.setFocus();" title="Delete Roles" width="398">
+
+    <mx:Script>
+        <![CDATA[
+        	import org.openwms.web.flex.client.event.RoleEvent;
+            import mx.controls.listClasses.ListData;
+            import mx.collections.ArrayCollection;
+            import mx.managers.PopUpManager;
+            import flash.events.KeyboardEvent;
+            [Bindable]
+            public var items:ArrayCollection;
+            [Bindable]
+            public var messageText:String = new String("Do you really want to delete?");
+
+            protected function init():void
+            {
+                deleteBtn.setFocus();
+                this.addEventListener(KeyboardEvent.KEY_DOWN, keyEventHandler);
+                PopUpManager.centerPopUp(this);
+            }
+
+            protected function closeDialog(event:Event=null):void
+            {
+                this.removeEventListener(KeyboardEvent.KEY_DOWN, keyEventHandler);
+                PopUpManager.removePopUp(this);
+            }
+
+            protected function accept(e:Event):void
+            {
+                var event:RoleEvent = new RoleEvent(RoleEvent.DELETE_ROLE);
+                event.data = deleteLst.dataProvider as ArrayCollection;
+                event.dispatch();
+                closeDialog();
+            }
+
+            protected function keyEventHandler(event:KeyboardEvent):void
+            {
+                if(event.keyCode == 27)
+                {
+                   closeDialog(event);
+                   return;
+                }
+            }
+            
+            protected function formatFunction(item:*):String
+            {
+                return "Role "+item.name+"\t - "+item.description;
+            }
+                        
+        ]]>
+    </mx:Script>
+    <mx:Canvas width="100%">
+        <mx:Label id="messageTxt" text="{messageText}" fontSize="20" textAlign="center" y="10"  width="100%"/>
+        <mx:List id="deleteLst" height="112" labelFunction="formatFunction" dataProvider="{items}" enabled="true" alternatingItemColors="[#B7BABC, #FFFFFF]" y="53" x="10"  width="358"/>
+        <mx:HBox horizontalAlign="center" x="0" y="173" width="100%">
+            <mx:Button id="deleteBtn" label="Delete" click="accept(event)" fontSize="12"/>
+            <mx:Button id="cancelBtn" label="Cancel" click="closeDialog(event)" fontSize="12"/>
+        </mx:HBox>
+    </mx:Canvas>
+</mx:Panel>
