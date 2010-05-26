@@ -111,14 +111,14 @@ public class RoleTest extends AbstractJpaSpringContextTests {
         Long cnt = (Long) query.getSingleResult();
         assertEquals("User must be persisted with Role", 1, cnt.intValue());
 
-        query = entityManager.createQuery("select r from Role r where r.rolename = :rolename");
+        query = entityManager.createQuery("select r from Role r where r.name = :rolename");
         query.setParameter("rolename", role.getName());
         role = (Role) query.getSingleResult();
         assertNotSame("Role must be persisted", 0, role.getId());
 
         entityManager.remove(role);
 
-        query = entityManager.createQuery("select count(r) from Role r where r.rolename = :rolename");
+        query = entityManager.createQuery("select count(r) from Role r where r.name = :rolename");
         query.setParameter("rolename", role.getName());
         cnt = (Long) query.getSingleResult();
         assertEquals("Role must be removed", 0, cnt.intValue());
