@@ -20,7 +20,7 @@
  */
 package org.openwms.web.flex.client.event
 {
-    import com.adobe.cairngorm.control.CairngormEvent;
+    import flash.events.Event;
 
     /**
      * An UserEvent.
@@ -28,15 +28,16 @@ package org.openwms.web.flex.client.event
      * @author <a href="mailto:openwms@googlemail.com">Heiko Scherrer</a>
      * @version $Revision$
      */
-    public class UserEvent extends CairngormEvent
+    public class UserEvent extends Event
     {
-        public static const LOAD_ALL_USERS:String = "LoadAllUsers";
-        public static const ADD_USER:String = "AddUser";
-        public static const USER_ADDED:String = "UserAdded";
-        public static const SAVE_USER:String = "SaveUser";
-        public static const DELETE_USER:String = "DeleteUser";
+        public static const LOAD_ALL_USERS:String = "LOAD_ALL_USERS";
+        public static const ADD_USER:String = "ADD_USER";
+        public static const SAVE_USER:String = "SAVE_USER";
+        public static const DELETE_USER:String = "DELETE_USER";
 
-        public function UserEvent(type:String, bubbles:Boolean = false, cancelable:Boolean = false)
+        public static const USER_ADDED:String = "USER_ADDED";
+
+        public function UserEvent(type:String, bubbles:Boolean = true, cancelable:Boolean = false)
         {
             super(type, bubbles, cancelable);
         }

@@ -54,7 +54,7 @@
 
     <granite:SecureRemoteObject
         id="userService"
-        destination="userService"
+        destination="userService2"
         showBusyCursor="true"/>
 
 <!--

@@ -46,6 +46,7 @@
     <tide-components>
         <!-- List of component matchers, see 'Enabling components' section -->
         <tide-component type="org\.openwms\.common\.service\..*"/>
+        <tide-component type="org\.openwms\.common\.service\.management\..*"/>
         <!-- tide-component type="org\.openwms\.common\.service\.spring\..*"/-->
     </tide-components>
     

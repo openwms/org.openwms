@@ -23,6 +23,11 @@
 -->
 <mx:Panel xmlns:mx="http://www.adobe.com/2006/mxml" height="248" creationComplete="init();" show="deleteBtn.setFocus();" title="Delete Roles" width="398">
 
+    <mx:Metadata>
+        [Name("confirmDeleteRoleDialog")]
+        [ManagedEvent(name="DELETE_ROLE")]
+    </mx:Metadata>
+
     <mx:Script>
         <![CDATA[
         	import org.openwms.web.flex.client.event.RoleEvent;
@@ -52,7 +57,7 @@
             {
                 var event:RoleEvent = new RoleEvent(RoleEvent.DELETE_ROLE);
                 event.data = deleteLst.dataProvider as ArrayCollection;
-                event.dispatch();
+                dispatchEvent(event);
                 closeDialog();
             }
 

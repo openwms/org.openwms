@@ -23,6 +23,11 @@
 -->
 <mx:TitleWindow xmlns:mx="http://www.adobe.com/2006/mxml" layout="absolute" width="400" height="250" title="Create Role" backgroundColor="#F1F07C" creationComplete="init();">
 
+    <mx:Metadata>
+        [Name("createRoleDialog")]
+        [ManagedEvent(name="ADD_ROLE")]
+    </mx:Metadata>
+
     <mx:Script>
     	<![CDATA[
     		import mx.events.ValidationResultEvent;
@@ -32,8 +37,9 @@
 
             import mx.managers.PopUpManager;
             import flash.events.KeyboardEvent;
+            [In]
             [Bindable]
-            private var modelLocator:ModelLocator = ModelLocator.getInstance();
+            public var modelLocator:ModelLocator;            
             
             private function init():void
             {
@@ -48,7 +54,7 @@
                     var event:RoleEvent = new RoleEvent(RoleEvent.ADD_ROLE);
                     var role:Role = new Role(roleTxt.text, descriptionTxt.text);
                     event.data = role;
-                    event.dispatch();
+                    dispatchEvent(event);
                 }
             }
 

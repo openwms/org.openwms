@@ -23,7 +23,35 @@
 -->
 <mx:HBox xmlns:mx="http://www.adobe.com/2006/mxml" xmlns:view="org.openwms.web.flex.client.view.*"
 	xmlns:management="org.openwms.web.flex.client.view.management.*" xmlns:renderer="org.openwms.web.flex.client.view.renderers.*"
-	width="100%" height="100%">
+	width="100%" height="100%" creationComplete="init()">
+
+    <mx:Metadata>
+        [Name("userManagementView")]
+        [ManagedEvent(name="SAVE_MODULE")]
+        [ManagedEvent(name="DELETE_MODULE")]
+        [ManagedEvent(name="LOAD_MODULE")]
+        [ManagedEvent(name="UNLOAD_MODULE")]
+    </mx:Metadata>
+
+    <mx:Script>
+        <![CDATA[
+            import org.granite.tide.spring.Context;
+            import org.openwms.web.flex.client.event.UserEvent;
+
+            [In]
+            public var tideContext:Context;
+        
+            /**
+             * Load all users when the view is loaded.
+             */
+            private function init():void {
+                trace("Trigger to load all users");
+                dispatchEvent(new UserEvent(UserEvent.LOAD_ALL_USERS));
+                tideContext.raiseEvent(UserEvent.LOAD_ALL_USERS);
+            }
+        ]]>
+    </mx:Script>
+    
 	<management:UserList />
 	<management:UserManagementContent />
 </mx:HBox>

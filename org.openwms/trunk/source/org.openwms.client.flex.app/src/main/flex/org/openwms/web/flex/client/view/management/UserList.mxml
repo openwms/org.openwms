@@ -24,21 +24,27 @@
 <mx:Canvas xmlns:mx="http://www.adobe.com/2006/mxml" height="100%" xmlns:Renderers="org.openwms.web.flex.client.view.renderers.*"
 	creationComplete="initComp()" styleName="frameContainerSkin">
 
+    <mx:Metadata>
+        [Name("userList")]
+        [ManagedEvent(name="LOAD_ALL_USERS")]
+    </mx:Metadata>
+
 	<mx:Script>
 		<![CDATA[
 			import org.openwms.web.flex.client.event.UserEvent;
 			import org.openwms.web.flex.client.model.ModelLocator;
 		
-			[Bindable] 
-			private var modelLocator:ModelLocator = ModelLocator.getInstance();
+            [In]
+            [Bindable]
+            public var modelLocator:ModelLocator;            
 			private var lastSelectedListObject:Object=null;
 			
 			private function initComp():void {
-				this.addEventListener(UserEvent.USER_ADDED, userAdded);
-				new UserEvent(UserEvent.LOAD_ALL_USERS).dispatch();
+				dispatchEvent(new UserEvent(UserEvent.LOAD_ALL_USERS));
 			}
 			
-			private function userAdded():void {
+            [Observer("USER_ADDED")]
+			public function userAdded():void {
 				trace("New user was added");
 			}
 			

@@ -30,13 +30,14 @@ package org.openwms.web.flex.client.event
      */
     public class RoleEvent extends CairngormEvent
     {
-        public static const LOAD_ALL_ROLES:String = "LoadAllRoles";
-        public static const ADD_ROLE:String = "AddRole";
-        public static const ROLE_ADDED:String = "RoleAdded";
-        public static const SAVE_ROLE:String = "SaveRole";
-        public static const DELETE_ROLE:String = "DeleteRole";
+        public static const LOAD_ALL_ROLES:String = "LOAD_ALL_ROLES";
+        public static const ADD_ROLE:String = "ADD_ROLE";
+        public static const SAVE_ROLE:String = "SAVE_ROLE";
+        public static const DELETE_ROLE:String = "DELETE_ROLE";
 
-        public function RoleEvent(type:String, bubbles:Boolean = false, cancelable:Boolean = false)
+        public static const ROLE_ADDED:String = "ROLE_ADDED";
+
+        public function RoleEvent(type:String, bubbles:Boolean = true, cancelable:Boolean = false)
         {
             super(type, bubbles, cancelable);
         }

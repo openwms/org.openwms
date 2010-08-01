@@ -42,8 +42,8 @@
             import mx.events.ListEvent;
             import mx.events.DragEvent;
 
-            import org.granite.tide.spring.Context;
-            import org.granite.tide.events.TideResultEvent;
+//            import org.granite.tide.spring.Context;
+//            import org.granite.tide.events.TideResultEvent;
 
             [In]
             [Bindable]
@@ -51,8 +51,8 @@
             [In]
             [Bindable]
             public var moduleLocator:ModuleLocator;
-            [In]
-            public var tideContext:Context;
+//            [In]
+//            public var tideContext:Context;
         
             private function init():void {
                 newBtn.enabled = true;
