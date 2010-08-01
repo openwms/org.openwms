@@ -23,6 +23,14 @@
 -->
 <mx:Canvas xmlns:mx="http://www.adobe.com/2006/mxml" width="100%" height="100%" backgroundAlpha="0.0" creationComplete="init()">
 
+    <mx:Metadata>
+        [Name("moduleManagementView")]
+        [ManagedEvent(name="SAVE_MODULE")]
+        [ManagedEvent(name="DELETE_MODULE")]
+        [ManagedEvent(name="LOAD_MODULE")]
+        [ManagedEvent(name="UNLOAD_MODULE")]
+    </mx:Metadata>
+
     <mx:Script>
         <![CDATA[
             
@@ -34,13 +42,19 @@
             import mx.events.ListEvent;
             import mx.events.DragEvent;
 
+            import org.granite.tide.spring.Context;
+            import org.granite.tide.events.TideResultEvent;
+
+            [In]
             [Bindable]
-            private var modelLocator:ModelLocator = ModelLocator.getInstance();            
+            public var modelLocator:ModelLocator;            
+            [In]
             [Bindable]
-            private var moduleLocator:ModuleLocator = ModuleLocator.getInstance();
+            public var moduleLocator:ModuleLocator;
+            [In]
+            public var tideContext:Context;
         
             private function init():void {
-                this.addEventListener(ApplicationEvent.MODULE_CONFIG_CHANGED, moduleConfigChanged);
                 newBtn.enabled = true;
                 saveBtn.enabled = false;
                 deleteBtn.enabled = false;
@@ -48,7 +62,8 @@
                 traceOut();
             }
             
-            private function moduleConfigChanged():void {
+            //[Observer("MODULE_CONFIG_CHANGED")]
+            public function moduleConfigChanged():void {
                 newBtn.enabled = true;
                 saveBtn.enabled = false;
                 deleteBtn.enabled = false;
@@ -57,7 +72,7 @@
             
             private function newModule():void {
                 var module:Module = new Module();
-                moduleLocator.selectedModule = module;
+                modelLocator.selectedModule = module;
                 saveBtn.enabled = true;
                 deleteBtn.enabled = true;
                 newBtn.enabled = false;
@@ -69,22 +84,22 @@
                 deleteBtn.enabled = false;
                 saveBtn.enabled = false;
                 var e:ApplicationEvent = new ApplicationEvent(ApplicationEvent.SAVE_MODULE);
-                e.data = moduleLocator.selectedModule;
-                e.dispatch();
-                moduleConfigChanged();
+                e.data = modelLocator.selectedModule;
+                dispatchEvent(e);
+                //moduleConfigChanged();
                 newBtn.setFocus();
             }
             
             private function deleteModule():void {
-                if (moduleLocator.selectedModule != null) {
-                    trace("Delete Module: "+moduleLocator.selectedModule.moduleName);
-                    if (!isNaN(moduleLocator.selectedModule.id)) {
+                if (modelLocator.selectedModule != null) {
+                    trace("Delete Module: "+modelLocator.selectedModule.moduleName);
+                    if (!isNaN(modelLocator.selectedModule.id)) {
                         // Persisted instance
                         var e:ApplicationEvent = new ApplicationEvent(ApplicationEvent.DELETE_MODULE);
-                        e.data = moduleLocator.selectedModule;
-                        e.dispatch();
+                        e.data = modelLocator.selectedModule;
+                        dispatchEvent(e);
                     }
-                    moduleLocator.selectedModule = null;
+                    modelLocator.selectedModule = null;
                     enableTextFields(false);
                     saveBtn.enabled = false;
                     deleteBtn.enabled = false;
@@ -94,11 +109,18 @@
             }
             
             private function loadModule():void {
-                if (moduleLocator.selectedModule != null) {
-                    if (moduleLocator.selectedModule.loaded) {
-                        moduleLocator.unloadModule(moduleLocator.selectedModule);
+                if (modelLocator.selectedModule != null) {
+                    var e:ApplicationEvent;
+                    if (modelLocator.selectedModule.loaded) {
+                        trace("Unloading Module:"+modelLocator.selectedModule);
+                        e = new ApplicationEvent(ApplicationEvent.UNLOAD_MODULE);
+                        e.data = modelLocator.selectedModule;
+                        dispatchEvent(e);
                     } else {
-                        moduleLocator.loadModule(moduleLocator.selectedModule);
+                        trace("Loading Module:"+modelLocator.selectedModule);
+                        e = new ApplicationEvent(ApplicationEvent.LOAD_MODULE);
+                        e.data = modelLocator.selectedModule;
+                        dispatchEvent(e);
                     }
                 }
             }
@@ -114,27 +136,27 @@
             }
 
             private function onRowClick( event:ListEvent ):void {
-                moduleLocator.selectedModule = (event.currentTarget.selectedItem) as Module;
+                modelLocator.selectedModule = (event.currentTarget.selectedItem) as Module;
                 enableTextFields(true);
                 deleteBtn.enabled = true;
             }
             
             private function onDragComplete(event:DragEvent):void {
-                var e:ApplicationEvent = new ApplicationEvent(ApplicationEvent.SAVE_MODULE);
                 var value:Object = event.dragSource.dataForFormat('items');
                 var index:int = modulesGrid.calculateDropIndex(event);
                 if (value != null) {
-                    moduleLocator.selectedModule = getModule(value as Module);
-                    moduleLocator.selectedModule.startupOrder = index;
-                    e.data = moduleLocator.selectedModule;
-                    e.dispatch();
+                    modelLocator.selectedModule = getModule(value as Module);
+                    modelLocator.selectedModule.startupOrder = index;
+                    var e:ApplicationEvent = new ApplicationEvent(ApplicationEvent.SAVE_MODULE);
+                    e.data = modelLocator.selectedModule;
+                    dispatchEvent(e);
                 }
                 traceOut();
             }
             
             private function traceOut():void {
                 var i:int = 0;
-                for each (var module:Module in moduleLocator.allModules)
+                for each (var module:Module in modelLocator.allModules)
                 {
                     trace("Module ["+i+"]:"+module.moduleName);
                     i++;
@@ -142,7 +164,7 @@
             }
 
             private function getModule(module:Module):Module {
-                for each (var m:Module in moduleLocator.allModules)
+                for each (var m:Module in modelLocator.allModules)
                 {
                     if (m.moduleName == module.moduleName) {
                         return m;
@@ -154,35 +176,35 @@
         ]]>
     </mx:Script>
 
-    <mx:Binding source="moduleNameTxt.text" destination="moduleLocator.selectedModule.moduleName" />
-    <mx:Binding source="urlTxt.text" destination="moduleLocator.selectedModule.url" />
-    <mx:Binding source="descriptionTxt.text" destination="moduleLocator.selectedModule.description" />
-    <mx:Binding source="loadOnStartupChk.selected" destination="moduleLocator.selectedModule.loadOnStartup" />
+    <mx:Binding source="moduleNameTxt.text" destination="modelLocator.selectedModule.moduleName" />
+    <mx:Binding source="urlTxt.text" destination="modelLocator.selectedModule.url" />
+    <mx:Binding source="descriptionTxt.text" destination="modelLocator.selectedModule.description" />
+    <mx:Binding source="loadOnStartupChk.selected" destination="modelLocator.selectedModule.loadOnStartup" />
 
     <mx:StringValidator minLength="1" tooShortError="Modulename is required" source="{moduleNameTxt}" required="true" property="text"/>
     <mx:StringValidator minLength="1" tooShortError="URL is required" source="{urlTxt}" required="true" property="text"/>
 
 		<mx:Panel height="255" backgroundColor="#EAFF00" backgroundAlpha="0.5" width="100%" layout="absolute" x="10" y="10" title="Modules">
-			<mx:List id="modulesGrid" dataProvider="{moduleLocator.allModules}" labelField="moduleName" dragEnabled="true" dropEnabled="true" dragMoveEnabled="true" dragDrop="onDragComplete(event);" width="300" x="10" y="10" height="195" itemClick="onRowClick(event)" />
+			<mx:List id="modulesGrid" dataProvider="{modelLocator.allModules}" labelField="moduleName" dragEnabled="true" dropEnabled="true" dragMoveEnabled="true" dragDrop="onDragComplete(event);" width="300" x="10" y="10" height="195" itemClick="onRowClick(event)" />
 			<mx:Canvas height="195" x="318" y="10" width="466">
 			<mx:Form width="100%">
 				<mx:FormItem label="Modulename" required="true" x="10" y="10" >
-				    <mx:TextInput id="moduleNameTxt" x="95" y="8" width="301" change="onChange()" text="{moduleLocator.selectedModule.moduleName}" />
+				    <mx:TextInput id="moduleNameTxt" x="95" y="8" width="301" change="onChange()" text="{modelLocator.selectedModule.moduleName}" />
 				</mx:FormItem>
 				<mx:FormItem label="URL" required="true" x="10" y="40" >
-    				<mx:TextInput id="urlTxt" x="95" y="38" width="301" change="onChange()" text="{moduleLocator.selectedModule.url}" />
+    				<mx:TextInput id="urlTxt" x="95" y="38" width="301" change="onChange()" text="{modelLocator.selectedModule.url}" />
                 </mx:FormItem>
                 <mx:FormItem label="Description" x="10" y="70" >
-    				<mx:TextInput id="descriptionTxt" x="95" y="68" width="301" change="onChange()" text="{moduleLocator.selectedModule.description}" />
+    				<mx:TextInput id="descriptionTxt" x="95" y="68" width="301" change="onChange()" text="{modelLocator.selectedModule.description}" />
                 </mx:FormItem>
                 <mx:FormItem label="Load on Startup" x="10" y="100" >
-                    <mx:CheckBox id="loadOnStartupChk" change="onChange()" x="95" y="98" selected="{moduleLocator.selectedModule.loadOnStartup}"/>
+                    <mx:CheckBox id="loadOnStartupChk" change="onChange()" x="95" y="98" selected="{modelLocator.selectedModule.loadOnStartup}"/>
                 </mx:FormItem>
 			</mx:Form>
             <mx:Button id="newBtn" label="New" x="10" y="140" click="newModule()" />
             <mx:Button id="saveBtn" label="Save" x="67" y="140" click="saveModule()"/>
             <mx:Button id="deleteBtn" label="Delete" x="129" y="140" click="deleteModule()"/>
-            <mx:Button id="loadBtn" label="{(moduleLocator.selectedModule == null || moduleLocator.selectedModule.loaded) ? 'Unload' : 'Load'}" x="200" y="140" click="loadModule()" enabled="{(moduleLocator.selectedModule == null || moduleLocator.selectedModule.moduleName == '') ? false : true}"/>
+            <mx:Button id="loadBtn" label="{(modelLocator.selectedModule == null || modelLocator.selectedModule.loaded) ? 'Unload' : 'Load'}" x="200" y="140" click="loadModule()" enabled="{(modelLocator.selectedModule == null || modelLocator.selectedModule.moduleName == '') ? false : true}"/>
 			</mx:Canvas>
 		</mx:Panel>
 	<mx:Panel width="100%" backgroundColor="#EAFF00" backgroundAlpha="0.5" y="310" layout="absolute" x="10" height="255" title="Views and Menu Items">

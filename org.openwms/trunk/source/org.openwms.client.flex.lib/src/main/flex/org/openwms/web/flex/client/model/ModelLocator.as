@@ -22,10 +22,13 @@ package org.openwms.web.flex.client.model
 {
 
     import com.adobe.cairngorm.model.IModelLocator;
-    
+
     import mx.collections.ArrayCollection;
-    
+
+    import org.openwms.common.domain.Module;
     import org.openwms.common.domain.system.usermanagement.User;
+    import org.openwms.web.flex.client.HashMap;
+    import org.openwms.web.flex.client.event.SwitchScreenEvent;
 
     /**
      * A ModelLocator.
@@ -33,6 +36,7 @@ package org.openwms.web.flex.client.model
      * @author <a href="mailto:openwms@googlemail.com">Heiko Scherrer</a>
      * @version $Revision$
      */
+    [Name("modelLocator")]
     [Bindable]
     public class ModelLocator implements IModelLocator
     {
@@ -53,7 +57,6 @@ package org.openwms.web.flex.client.model
         public var allLocationGroups:ArrayCollection = new ArrayCollection();
         public var allLocations:ArrayCollection = new ArrayCollection();
         public var allTransportUnits:ArrayCollection = new ArrayCollection();
-        public var allModules:ArrayCollection = new ArrayCollection();
         public var allUsers:ArrayCollection = new ArrayCollection();
         public var allRoles:ArrayCollection = new ArrayCollection();
         public var selectedUser:User = null;
@@ -61,17 +64,26 @@ package org.openwms.web.flex.client.model
         public var image:Object;
         private var views:Array = new Array();
         // Used to control the main viewStack
-        public var actualView:String;
-        // Credentials, set by the login screen
-        public static var isInitialized:Boolean = false;
+        public var actualView:String = SwitchScreenEvent.SHOW_STARTSCREEN;
         public static var authenticated:Boolean = false;
-        
+
+        // --------------------------------------------------------------------
+        // ModuleManagement
+        // --------------------------------------------------------------------
+        public var allModules:ArrayCollection = new ArrayCollection();
+        public var loadedModules:HashMap = new HashMap();
+        public var unloadedModules:HashMap = new HashMap();
+        public var selectedModule:Module = null;
+        // Credentials, set by the login screen
+        public var isInitialized:Boolean = false;
+
+
         private static var instance:ModelLocator;
 
         /**
          * Used to construct the Singleton instance.
          */
-        public function ModelLocator(enforcer:SingletonEnforcer)
+        public function ModelLocator()
         {
         }
 
@@ -83,7 +95,7 @@ package org.openwms.web.flex.client.model
         {
             if (instance == null)
             {
-                instance = new ModelLocator(new SingletonEnforcer);
+                instance = new ModelLocator();
             }
             return instance;
         }

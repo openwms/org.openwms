@@ -22,7 +22,7 @@ Import-Bundle: com.springsource.javax.persistence;version="1.0.0",com.
  NAPSHOT",org.openwms.common.service.api;version="0.0.1.SNAPSHOT"
 Bundle-Vendor: openwms.org
 Bundle-Version: 0.0.1.SNAPSHOT
-Tool: Bundlor 1.0.0.RELEASE
+Tool: Bundlor 1.0.0.BUILD-20091207202403
 Bundle-Name: org.openwms.common.service.spring
 Import-Library: org.springframework.spring;version="[3.0, 3.1)"
 Bundle-ManifestVersion: 2

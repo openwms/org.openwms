@@ -2,8 +2,9 @@ Manifest-Version: 1.0
 Export-Package: org.openwms.tms.domain;version="0.0.1.SNAPSHOT";uses:=
  "org.junit,org.openwms.common.test",org.openwms.tms.domain.order;vers
  ion="0.0.1.SNAPSHOT";uses:="javax.persistence,org.openwms.common.doma
- in,org.openwms.common.domain.values",org.openwms.tms.exception;versio
- n="0.0.1.SNAPSHOT"
+ in,org.openwms.common.domain.values",org.openwms.tms.domain.values;ve
+ rsion="0.0.1.SNAPSHOT";uses:="javax.persistence",org.openwms.tms.exce
+ ption;version="0.0.1.SNAPSHOT"
 Import-Bundle: com.springsource.javax.persistence;version="1.0.0",com.
  springsource.org.apache.commons.lang;version="2.4.0",org.openwms.comm
  on.domain;version="[0.0.1.SNAPSHOT, 0.0.1.SNAPSHOT]"

@@ -63,7 +63,21 @@
 					</warnings>
 					<allowSourcePathOverlap>true</allowSourcePathOverlap>
                     <keepAs3Metadatas>
-                        <param>Protected</param>
+                        <keepAs3Metadata>Protected</keepAs3Metadata>
+                        <keepAs3Metadata>Bindable</keepAs3Metadata>
+                        <keepAs3Metadata>Managed</keepAs3Metadata>
+                        <keepAs3Metadata>ChangeEvent</keepAs3Metadata>
+                        <keepAs3Metadata>NonCommittingChangeEvent</keepAs3Metadata>
+                        <keepAs3Metadata>Transient</keepAs3Metadata>
+                        <keepAs3Metadata>Id</keepAs3Metadata>
+                        <keepAs3Metadata>Version</keepAs3Metadata>
+                        <keepAs3Metadata>Name</keepAs3Metadata>
+                        <keepAs3Metadata>In</keepAs3Metadata>
+                        <keepAs3Metadata>Inject</keepAs3Metadata>
+                        <keepAs3Metadata>Out</keepAs3Metadata>
+                        <keepAs3Metadata>Observer</keepAs3Metadata>
+                        <keepAs3Metadata>ManagedEvent</keepAs3Metadata>
+                        <keepAs3Metadata>Destroy</keepAs3Metadata>
                     </keepAs3Metadatas>
 					<output>${project.build.directory}/${project.artifactId}.swf</output>
 				</configuration>
@@ -141,7 +155,7 @@
 		</repository>
 		<repository>
 			<id>sonatype-public</id>
-			<url>http://repository.sonatype.org/content/groups/public</url>
+			<url>http://repository.sonatype.org/content/groups/forge</url>
 			<releases>
 				<enabled>true</enabled>
 			</releases>
@@ -163,7 +177,7 @@
 	<pluginRepositories>
 		<pluginRepository>
 			<id>sonatype-public</id>
-			<url>http://repository.sonatype.org/content/groups/public</url>
+			<url>http://repository.sonatype.org/content/groups/forge</url>
 			<releases>
 				<enabled>true</enabled>
 			</releases>
@@ -174,6 +188,7 @@
 	</pluginRepositories>
 
 	<dependencies>
+	   <!-- Project dependencies -->
 		<dependency>
 			<groupId>${project.groupId}</groupId>
 			<artifactId>org.openwms.common.domain.as</artifactId>
@@ -192,6 +207,7 @@
             <version>${project.version}</version>
             <type>swc</type>
         </dependency>
+		
 		<dependency>
 			<groupId>com.adobe.flex.framework</groupId>
 			<artifactId>flex-framework</artifactId>
@@ -204,14 +220,14 @@
 			<version>2.2.1</version>
 			<type>swc</type>
 		</dependency>
-        <!-- Flex Security -->
+        <!-- Flex Security 
         <dependency>
             <groupId>com.gorillalogic</groupId>
             <artifactId>chimp</artifactId>
             <version>0.2</version>
             <type>swc</type>
         </dependency>
-
+-->
 		<dependency>
 			<groupId>org.graniteds</groupId>
 			<artifactId>granite-core-swc</artifactId>

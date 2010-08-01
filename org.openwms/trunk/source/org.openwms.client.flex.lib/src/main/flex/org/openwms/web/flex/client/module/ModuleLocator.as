@@ -18,20 +18,31 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
-package org.openwms.web.flex.client.module {
+package org.openwms.web.flex.client.module
+{
 
     import com.adobe.cairngorm.model.IModelLocator;
 
+    import flash.events.EventDispatcher;
+
     import mx.collections.ArrayCollection;
+    import mx.collections.XMLListCollection;
+    import mx.collections.IList;
+    import mx.collections.Sort;
+    import mx.collections.SortField;
     import mx.controls.Alert;
     import mx.events.ModuleEvent;
     import mx.modules.IModuleInfo;
     import mx.modules.ModuleManager;
 
     import org.openwms.common.domain.Module;
+    import org.openwms.web.flex.client.HashMap;
+    import org.openwms.web.flex.client.model.ModelLocator;
     import org.openwms.web.flex.client.IApplicationModule;
     import org.openwms.web.flex.client.event.ApplicationEvent;
-    import org.openwms.web.flex.client.event.EventBroker;
+
+    import org.granite.tide.spring.Context;
+    import org.granite.tide.events.TideResultEvent;
 
     /**
      * A ModuleLocator.
@@ -40,108 +51,59 @@ package org.openwms.web.flex.client.module {
      * @version $Revision: 235 $
      * @since 0.1
      */
+    [Name("moduleLocator")]
+    [ManagedEvent(name="MODULE_CONFIG_CHANGED")]
+    [ManagedEvent(name="MODULES_CONFIGURED")]
+    [ManagedEvent(name="MODULE_UNLOADED")]
     [Bindable]
-    public class ModuleLocator implements IModelLocator {
+    public class ModuleLocator extends EventDispatcher implements IModelLocator
+    {
         private static var instance:ModuleLocator;
 
+        [In]
+        public var modelLocator:ModelLocator;
+        [In]
+        public var tideContext:Context;
 
-        public var allModules:ArrayCollection=new ArrayCollection();
-        public var selectedModule:Module=null;
         private var mInfo:IModuleInfo;
-        private var broker:EventBroker=EventBroker.getInstance();
+        private var toRemove:Module;
 
-        public function ModuleLocator(enforcer:SingletonEnforcer) {
-        }
-
-        public static function getInstance():ModuleLocator {
-            if (instance == null) {
-                instance=new ModuleLocator(new SingletonEnforcer);
-            }
-            return instance;
+        public function ModuleLocator()
+        {
         }
 
         /**
-         * This method checks all known modules if they shall be loaded and tries to load
-         * them if they aren't loaded so far.
+         * Usually this method is called when the application is initialized,
+         * to load all modules and module configuration from the service.
+         * After this startup configuration is read, the application can really
+         * LOAD the swf modules into it.
          */
-        public function loadAllModules():void {
-            var modules:Array=allModules.toArray();
-            var e:ApplicationEvent;
-            for each (var module:Module in allModules) {
-                if (module.loadOnStartup && !module.loaded) {
-                    trace("Trying to load module:" + module.url);
-                    mInfo=ModuleManager.getModule(module.url);
-                    mInfo.addEventListener(ModuleEvent.READY, moduleLoaded);
-                    mInfo.addEventListener(ModuleEvent.ERROR, moduleLoaderError);
-                    if (mInfo != null) {
-                        if (!mInfo.loaded) {
-                            mInfo.data=module;
-                            mInfo.load();
-                            break;
-                        } else {
-                            trace("Module was already loaded:" + module.moduleName);
-                        }
-                    } else {
-                        trace("Module was not found on server:" + module.moduleName);
-                        break;
-                    }
-                } else {
-                    trace("Module not set to be loaded on startup:" + module.moduleName);
-                }
-
-            }
-            return;
+        [Observer("LOAD_ALL_MODULES")]
+        public function loadModulesFromService():void
+        {
+            trace("Load all modules from service");
+            tideContext.moduleManagementService.getModules(onModulesLoad);
         }
 
         /**
-         * This method is called when an application module was successfully loaded. Loading
-         * a module can be triggered by the Module Management screen or at application startup
-         * if the module is configured to behave so.
+         * Tries to save the module data via the service.
          */
-        public function moduleLoaded(e:ModuleEvent):void {
-            trace("Successfully loaded module: " + e.module.url);
-            var module:Module=(e.module.data as Module);
-            module.loaded=true;
-            var appModule:Object=e.module.factory.create();
-            if (appModule is IApplicationModule) {
-                fireChangedEvent(appModule as IApplicationModule);
-            }
-            mInfo.removeEventListener(ModuleEvent.READY, moduleLoaded);
-            loadAllModules();
+        [Observer("SAVE_MODULE")]
+        public function saveModule(event:ApplicationEvent):void
+        {
+            trace("Saving module data...");
+            tideContext.moduleManagementService.save(event.data as Module, onModuleSaved);
         }
 
         /**
-         * This method is called when an application module was successfully loaded. Loading
-         * a module can be triggered by the Module Management screen or at application startup
-         * if the module is configured to behave so.
+         * Tries to remove the module data via the service.
          */
-        public function moduleUnloaded(e:ModuleEvent):void {
-            trace("Successfully unloaded Module:" + e.module.url);
-            var module:Module=(e.module.data as Module);
-            module.loaded=false;
-            var appModule:Object=e.module.factory.create();
-            if (appModule is IApplicationModule) {
-                fireUnloadedEvent(appModule as IApplicationModule);
-            }
-            mInfo.removeEventListener(ModuleEvent.UNLOAD, moduleUnloaded);
-        }
-
-        /**
-         * This method is called when some error occurred loading or unloading a module.
-         */
-        public function moduleLoaderError(e:ModuleEvent):void {
-            if (e.module != null) {
-                trace("Loading/Unloading a Module [" + e.module.url + "] failed with error:" + e.errorText);
-                Alert.show("Loading/Unloading a Module [" + e.module.url + "] failed with error:" + e.errorText);
-                if (e.module.data != null) {
-                    var module:Module=(e.module.data as Module);
-                    module.loaded=true;
-                    loadAllModules();
-                }
-            } else {
-                trace("Loading/Unloading a Module failed, no further module data available here");
-            }
-            mInfo.removeEventListener(ModuleEvent.ERROR, moduleLoaderError);
+        [Observer("DELETE_MODULE")]
+        public function deleteModule(event:ApplicationEvent):void
+        {
+            trace("Delete module data...");
+            toRemove = event.data as Module;
+            tideContext.moduleManagementService.remove(event.data as Module, onModuleRemoved);
         }
 
         /**
@@ -149,55 +111,74 @@ package org.openwms.web.flex.client.module {
          * Then we try to load the module and set the loaded flag to true. If something goes
          * wrong we set loaded to false.
          */
-        public function loadModule(module:Module):Boolean {
-            if (module == null) {
+        [Observer("LOAD_MODULE")]
+        public function loadModule(event:ApplicationEvent):void
+        {
+            var module:Module = event.data as Module;
+            if (module == null)
+            {
                 trace("Module instance is NULL, skip loading");
-                return false;
+                return;
             }
-            if (!isRegistered(module)) {
+            if (!isRegistered(module))
+            {
                 trace("Module was not found in list of all modules");
-                return false;
+                return;
             }
             trace("Load:" + module.moduleName);
-            mInfo=ModuleManager.getModule(module.url);
-            trace("MInfo:" + mInfo);
-            mInfo.addEventListener(ModuleEvent.READY, moduleLoaded);
-            mInfo.addEventListener(ModuleEvent.ERROR, moduleLoaderError);
-            if (mInfo != null) {
-                trace("1:" + module.moduleName);
-                if (!mInfo.loaded) {
-                    mInfo.data=module;
-                    mInfo.load();
-                    trace("Module forced to load: " + module.moduleName);
+            var mInf:IModuleInfo = ModuleManager.getModule(module.url);
+            if (mInf != null)
+            {
+                if (mInf.loaded)
+                {
+                    trace("Module was already loaded:" + module.moduleName);
+                    return;
                 }
-                return true;
+                else
+                {
+                    mInf.addEventListener(ModuleEvent.READY, moduleLoaded);
+                    mInf.addEventListener(ModuleEvent.ERROR, moduleLoaderError);
+                    mInf.data = module;
+                    modelLocator.loadedModules.put(module.url, mInf);
+                    mInf.load();
+                    return;
+                }
             }
             trace("No module to load with url: " + module.url);
-            return false;
+            return;
         }
 
         /**
          * This method tries to unload a module. The module must be known.
          */
-        public function unloadModule(module:Module):void {
-            if (module == null) {
+        [Observer("UNLOAD_MODULE")]
+        public function unloadModule(event:ApplicationEvent):void
+        {
+            var module:Module = event.data as Module;
+            if (module == null)
+            {
                 trace("Module instance is NULL, skip unloading");
                 return;
             }
-            if (!isRegistered(module)) {
+            if (!isRegistered(module))
+            {
                 trace("Module was not found in list of registered modules");
                 return;
             }
-            mInfo=ModuleManager.getModule(module.url);
-            mInfo.addEventListener(ModuleEvent.UNLOAD, moduleUnloaded);
-            mInfo.addEventListener(ModuleEvent.ERROR, moduleLoaderError);
-            if (mInfo != null) {
-                if (mInfo.loaded) {
-                    mInfo.data=module;
-                    trace("Module forced to unload: " + module.moduleName);
-                    mInfo.unload();
+            var mInf:IModuleInfo = ModuleManager.getModule(module.url);
+            if (mInf != null)
+            {
+                if (mInf.loaded)
+                {
+                    mInf.addEventListener(ModuleEvent.UNLOAD, moduleUnloaded);
+                    mInf.addEventListener(ModuleEvent.ERROR, moduleLoaderError);
+                    mInf.data = module;
+                    modelLocator.unloadedModules.put(module.url, mInf);
+                    mInf.unload();
                     return;
-                } else {
+                }
+                else
+                {
                     trace("Module was not loaded before, nothing to unload");
                 }
             }
@@ -206,33 +187,43 @@ package org.openwms.web.flex.client.module {
         }
 
         /**
-         * Fire an event to notify others that configuration data of a module has changed.
-         * The event data (e.data) contains the changed module.
+         * Returns an ArrayCollection of MenuItems of all loaded modules.
          */
-        private function fireSaveEvent(module:Module):void {
-            var e:ApplicationEvent=new ApplicationEvent(ApplicationEvent.SAVE_MODULE);
-            e.data=module;
-            e.dispatch();
-        }
+        public function getActiveMenuItems(stdItems:XMLListCollection = null):XMLListCollection
+        {
+            var all:XMLListCollection = new XMLListCollection();
 
-        /**
-         * Fire an event to notify others that configuration data of a module has changed.
-         * The event data (e.data) contains the changed module.
-         */
-        private function fireChangedEvent(module:IApplicationModule):void {
-            var e:ApplicationEvent=new ApplicationEvent(ApplicationEvent.MODULE_CONFIG_CHANGED);
-            e.data=module;
-            broker.dispatchEvt(e);
-        }
+            if (stdItems != null)
+            {
+                for each (var stdNode:XML in stdItems)
+                {
+                    all.addItem(stdNode);
+                }
+            }
 
-        /**
-         * Fire an event to notify others that a module was successfully unloaded.
-         * The event data (e.data) contains the changed module.
-         */
-        private function fireUnloadedEvent(module:IApplicationModule):void {
-            var e:ApplicationEvent=new ApplicationEvent(ApplicationEvent.MODULE_UNLOADED);
-            e.data=module;
-            broker.dispatchEvt(e);
+            for each (var module:Module in modelLocator.allModules)
+            {
+                if (modelLocator.loadedModules.containsKey(module.url))
+                {
+                    trace("Module is in the list of loaded modules");
+
+                    // Get an handle to IApplicationModule here to retrieve the list of items
+                    // not like it is here to get the info from the db
+                    var mInf:IModuleInfo = modelLocator.loadedModules.get(module.url) as IModuleInfo;
+                    var appModule:Object = mInf.factory.create();
+                    if (appModule is IApplicationModule)
+                    {
+                        var tree:XMLListCollection = appModule.getMainMenuItems();
+                        // TODO: In Flex 3.5 replace with addAll()
+                        for each (var node:XML in tree)
+                        {
+                            all.addItem(node);
+                        }
+                        trace("Add menu items of module:" + appModule);
+                    }
+                }
+            }
+            return all;
         }
 
         /**
@@ -240,29 +231,38 @@ package org.openwms.web.flex.client.module {
          * Returns true only if the module is loaded, returns false if it is unknown
          * or it was not loaded.
          */
-        public function isRegistered(module:Module):Boolean {
-            if (module == null) {
+        public function isRegistered(module:Module):Boolean
+        {
+            if (module == null)
+            {
                 return false;
             }
-            for each (var m:Module in allModules) {
-                if (m.moduleName == module.moduleName) {
+            for each (var m:Module in modelLocator.allModules)
+            {
+                if (m.moduleName == module.moduleName)
+                {
                     return true;
                 }
             }
             return false;
         }
 
-        public function refreshModule(module:Module, select:Boolean):Boolean {
-            if (module == null) {
+        public function refreshModule(module:Module, select:Boolean):Boolean
+        {
+            if (module == null)
+            {
                 return false;
             }
-            var found:Boolean=false;
-            var modules:Array=allModules.toArray();
-            for (var i:int=0; i < modules.length; i++) {
-                if (modules[i].moduleName == module.moduleName) {
-                    modules[i]=module;
-                    if (select) {
-                        this.selectedModule=module;
+            var found:Boolean = false;
+            var modules:Array = modelLocator.allModules.toArray();
+            for (var i:int = 0; i < modules.length; i++)
+            {
+                if (modules[i].moduleName == module.moduleName)
+                {
+                    modules[i] = module;
+                    if (select)
+                    {
+                        modelLocator.selectedModule = module;
                     }
                     trace("Module refreshed:" + module.moduleName);
                     dispatchEvent(new ApplicationEvent(ApplicationEvent.MODULE_CONFIG_CHANGED));
@@ -272,42 +272,275 @@ package org.openwms.web.flex.client.module {
             return false;
         }
 
+        // +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+        //
+        // privates
+        //
+        // +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
         /**
-         * Adds a module to the list of all modules.
+         * Callback function when module configuration is retrieved from the service.
+         * The configuration is stored in allModules and the model is set to initialized.
          */
-        public function addModule(module:Module):void {
-            if (module == null) {
-                return;
-            }
-            var found:Boolean=false;
-            for each (var m:Module in allModules) {
-                if (m.moduleName == module.moduleName) {
-                    found=true;
-                    m=module;
+        private function onModulesLoad(event:TideResultEvent):void
+        {
+            modelLocator.allModules = event.result as ArrayCollection;
+            modelLocator.isInitialized = true;
+            startAllModules();
+        }
+
+        /**
+         * This function checks all known modules if they are configured to be loaded
+         * on startup and tries to start each Module if it hasn't been loaded so far.
+         */
+        private function startAllModules():void
+        {
+            for each (var module:Module in modelLocator.allModules)
+            {
+                if (module.loadOnStartup)
+                {
+                    if (modelLocator.loadedModules.containsKey(module.url))
+                    {
+                        module.loaded = true;
+                        continue;
+                    }
+                    trace("Trying to start module:" + module.url);
+                    var mInf:IModuleInfo = ModuleManager.getModule(module.url);
+                    if (mInf != null)
+                    {
+                        if (mInf.loaded)
+                        {
+                            module.loaded = true;
+                            trace("Module was already started:" + module.moduleName);
+                        }
+                        else
+                        {
+                            mInf.addEventListener(ModuleEvent.READY, moduleLoaded);
+                            mInf.addEventListener(ModuleEvent.ERROR, moduleLoaderError);
+                            mInf.data = module;
+                            modelLocator.loadedModules.put(module.url, mInf);
+                            mInf.load();
+                        }
+                    }
+                    else
+                    {
+                        trace("Module was not found on server:" + module.moduleName);
+                    }
+                }
+                else
+                {
+                    trace("Module not set to be started on startup:" + module.moduleName);
                 }
             }
-            if (!found) {
-                allModules.addItem(module);
+            dispatchEvent(new ApplicationEvent(ApplicationEvent.MODULES_CONFIGURED));
+        }
+
+        /**
+         * When module data was saved successfully it is updated in the list of modules
+         * and set as actual selected module.
+         */
+        private function onModuleSaved(event:TideResultEvent):void
+        {
+            addModule(event.result as Module);
+            modelLocator.selectedModule = event.result as Module;
+            trace("Module data saved.");
+        }
+
+        /**
+         * When module data was removed successfully it is updated in the list of modules
+         * and unset as selected module.
+         */
+        private function onModuleRemoved(event:TideResultEvent):void
+        {
+            removeFromModules(toRemove);
+            toRemove = null;
+            trace("Module data removed.");
+        }
+
+        /**
+         * Fire an event to notify others that configuration data of a module has changed.
+         * The event data (e.data) contains the changed module.
+         */
+        private function fireChangedEvent(module:IApplicationModule):void
+        {
+            var e:ApplicationEvent = new ApplicationEvent(ApplicationEvent.MODULE_CONFIG_CHANGED);
+            e.data = module;
+            dispatchEvent(e);
+        }
+
+        /**
+         * This method is called when an application module was successfully loaded.
+         * Loading a module can be triggered by the Module Management screen or at application
+         * startup if the module is configured to behave so.
+         */
+        private function moduleLoaded(e:ModuleEvent):void
+        {
+            trace("Successfully loaded module: " + e.module.url);
+            var module:Module = (e.module.data as Module);
+            module.loaded = true;
+            if (!modelLocator.loadedModules.containsKey(module.url))
+            {
+                modelLocator.loadedModules.put(module.url, ModuleManager.getModule(module.url));
             }
+            modelLocator.unloadedModules.remove(module.url);
+            var appModule:Object = e.module.factory.create();
+            if (appModule is IApplicationModule)
+            {
+                fireChangedEvent(appModule as IApplicationModule);
+            }
+            var mInf:IModuleInfo = (modelLocator.loadedModules.get(module.url) as IModuleInfo);
+            mInf.removeEventListener(ModuleEvent.READY, moduleLoaded);
+            mInf.removeEventListener(ModuleEvent.ERROR, moduleLoaderError);
+        }
+
+        /**
+         * This method is called when an application module was successfully unloaded. Unloading
+         * a module is usually triggered by the Module Management screen. As a result an event is
+         * fired to inform the main application about the unload. For instance the main application
+         * could rebuild the menu bar.
+         */
+        private function moduleUnloaded(e:ModuleEvent):void
+        {
+            trace("Successfully unloaded Module: " + e.module.url);
+            var module:Module = (e.module.data as Module);
+            module.loaded = false;
+            if (!modelLocator.unloadedModules.containsKey(module.url))
+            {
+                modelLocator.unloadedModules.put(module.url, ModuleManager.getModule(module.url));
+            }
+            modelLocator.loadedModules.remove(module.url);
+            var appModule:Object = e.module.factory.create();
+            if (appModule is IApplicationModule)
+            {
+                fireUnloadedEvent(appModule as IApplicationModule);
+            }
+            var mInf:IModuleInfo = (modelLocator.unloadedModules.get(module.url) as IModuleInfo);
+            mInf.removeEventListener(ModuleEvent.UNLOAD, moduleUnloaded);
+            mInf.removeEventListener(ModuleEvent.ERROR, moduleLoaderError);
+        }
+
+        /**
+         * Fire an event to notify others that a module was successfully unloaded.
+         * The event data (e.data) contains the changed module.
+         */
+        private function fireUnloadedEvent(module:IApplicationModule):void
+        {
+            var e:ApplicationEvent = new ApplicationEvent(ApplicationEvent.MODULE_UNLOADED);
+            e.data = module;
+            dispatchEvent(e);
+        }
+
+        /**
+         * This method is called when an error occurred while loading or unloading a module.
+         */
+        private function moduleLoaderError(e:ModuleEvent):void
+        {
+            if (e.module != null)
+            {
+                trace("Loading/Unloading a module [" + e.module.url + "] failed with error:" + e.errorText);
+                if (e.module.data != null)
+                {
+                    var module:Module = (e.module.data as Module);
+                    module.loaded = false;
+                    var mInf:IModuleInfo = (modelLocator.loadedModules.get(module.url) as IModuleInfo);
+                    if (mInf != null)
+                    {
+                        // TODO: Also remove other listeners here
+                        mInf.removeEventListener(ModuleEvent.ERROR, moduleLoaderError);
+                        modelLocator.unloadedModules.put(module.url, mInf);
+                    }
+                    modelLocator.loadedModules.remove(module.url);
+                }
+                Alert.show("Loading/Unloading a module [" + e.module.url + "] failed with error:" + e.errorText);
+            }
+            else
+            {
+                trace("Loading/Unloading a module failed, no further module data available here");
+                Alert.show("Loading/Unloading a module failed, no further module data available here");
+            }
+        }
+
+
+
+
+
+
+        /**
+         * Fire an event to notify others that configuration data of a module has changed.
+         * The event data (e.data) contains the changed module.
+           private function fireSaveEvent(module:Module):void
+           {
+           var e:ApplicationEvent = new ApplicationEvent(ApplicationEvent.SAVE_MODULE);
+           e.data = module;
+           dispatchEvent(e);
+           }
+         */
+
+        /**
+         * Add a module to the list of all modules.
+         */
+        private function addModule(module:Module):void
+        {
+            if (module == null)
+            {
+                return;
+            }
+            var found:Boolean = false;
+            for each (var m:Module in modelLocator.allModules)
+            {
+                if (m.moduleName == module.moduleName)
+                {
+                    found = true;
+                    m = module;
+                }
+            }
+            if (!found)
+            {
+                modelLocator.allModules.addItem(module);
+            }
+            if (modelLocator.loadedModules.containsKey(module.url))
+            {
+                modelLocator.loadedModules.put(module.url, ModuleManager.getModule(module.url));
+            }
+            if (modelLocator.unloadedModules.containsKey(module.url))
+            {
+                modelLocator.unloadedModules.put(module.url, ModuleManager.getModule(module.url));
+            }
+        }
+
+// REMOVE
+        public static function getInstance():ModuleLocator
+        {
+            if (instance == null)
+            {
+                instance = new ModuleLocator();
+            }
+            return instance;
         }
 
         /**
          * Removes a module from the list of all modules and unloads it in the case it was loaded before.
          */
-        public function removeFromModules(module:Module, unload:Boolean=false):Boolean {
-            if (module == null) {
+        private function removeFromModules(module:Module, unload:Boolean = false):Boolean
+        {
+            if (module == null)
+            {
                 return false;
             }
-            var modules:Array=allModules.toArray();
-            for (var i:int=0; i < modules.length; i++) {
-                if (modules[i].moduleName == module.moduleName) {
-                    allModules.removeItemAt(i);
-                    if (unload) {
-                        var mInfo:IModuleInfo=ModuleManager.getModule(module.url);
+            var modules:Array = modelLocator.allModules.toArray();
+            for (var i:int = 0; i < modules.length; i++)
+            {
+                if (modules[i].moduleName == module.moduleName)
+                {
+                    modelLocator.allModules.removeItemAt(i);
+                    if (unload)
+                    {
+                        var mInfo:IModuleInfo = ModuleManager.getModule(module.url);
                         mInfo.addEventListener(ModuleEvent.READY, moduleLoaded);
                         mInfo.addEventListener(ModuleEvent.ERROR, moduleLoaderError);
-                        if (mInfo != null && mInfo.loaded) {
-                            mInfo.data=module;
+                        if (mInfo != null && mInfo.loaded)
+                        {
+                            mInfo.data = module;
                             mInfo.unload();
                         }
                     }
@@ -320,5 +553,6 @@ package org.openwms.web.flex.client.module {
     }
 }
 
-class SingletonEnforcer {
+class SingletonEnforcer
+{
 }

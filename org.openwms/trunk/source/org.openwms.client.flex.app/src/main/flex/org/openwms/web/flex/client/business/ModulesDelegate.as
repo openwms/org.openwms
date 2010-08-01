@@ -18,7 +18,8 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
-package org.openwms.web.flex.client.business {
+package org.openwms.web.flex.client.business
+{
     import com.adobe.cairngorm.business.ServiceLocator;
 
     import mx.rpc.AsyncToken;
@@ -36,37 +37,47 @@ package org.openwms.web.flex.client.business {
      * @author <a href="mailto:openwms@googlemail.com">Heiko Scherrer</a>
      * @version $Revision: 700 $
      */
-    public class ModulesDelegate {
-        private var responder : IResponder;
+    public class ModulesDelegate
+    {
+        private var responder:IResponder;
 
-        private var service : RemoteObject;
+        private var service:RemoteObject;
 
-        public function ModulesDelegate(responder : IResponder) : void {
+        public function ModulesDelegate(responder:IResponder):void
+        {
             this.responder = responder;
             this.service = ServiceLocator.getInstance().getRemoteObject(Constants.MODULEMGMT_SERVICE);
         }
 
-        public function getModules() : void {
-            var call : AsyncToken = service.getModules();
+// REMOVE
+        public function getModules():void
+        {
+            var call:AsyncToken = service.getModules();
             call.addResponder(responder);
         }
 
-        public function saveModule(module : Module) : void {
-            var call : AsyncToken = service.save(module);
+// REMOVE
+        public function saveModule(module:Module):void
+        {
+            var call:AsyncToken = service.save(module);
             call.addResponder(responder);
         }
 
-        public function deleteModule(module : Module) : void {
-            var call : AsyncToken = service.remove(module);
+// REMOVE
+        public function deleteModule(module:Module):void
+        {
+            var call:AsyncToken = service.remove(module);
             call.addResponder(responder);
         }
 
-        public function login() : void {
-            var call : AsyncToken = service.channelSet.login();
+        public function login():void
+        {
+            var call:AsyncToken = service.channelSet.login("jghjh", "jhh");
             call.addResponder(responder);
         }
 
-        public function logout() : void {
+        public function logout():void
+        {
             service.logout();
             trace("Logged out gracefully");
             ModelLocator.authenticated = false;
