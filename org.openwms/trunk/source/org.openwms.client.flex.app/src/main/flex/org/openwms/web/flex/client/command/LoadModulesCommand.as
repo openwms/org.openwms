@@ -18,20 +18,30 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
-package org.openwms.web.flex.client.command {
+package org.openwms.web.flex.client.command
+{
     import com.adobe.cairngorm.commands.ICommand;
     import com.adobe.cairngorm.control.CairngormEvent;
-    
+
     import mx.collections.ArrayCollection;
     import mx.controls.Alert;
     import mx.rpc.IResponder;
     import mx.rpc.events.ResultEvent;
-    
+
     import org.openwms.web.flex.client.business.ModulesDelegate;
     import org.openwms.web.flex.client.event.EventBroker;
     import org.openwms.web.flex.client.event.ModulesEvent;
     import org.openwms.web.flex.client.model.ModelLocator;
     import org.openwms.web.flex.client.module.ModuleLocator;
+
+
+/////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////
+//   TO BE REMOVED  
+/////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////
 
     /**
      * A LoadModulesCommand.
@@ -40,31 +50,37 @@ package org.openwms.web.flex.client.command {
      * @version $Revision: 700 $
      */
     [Event(name="modulesLoaded", type="org.openwms.web.flex.client.event.ModulesEvent")]
-    public class LoadModulesCommand extends AbstractCommand implements IResponder, ICommand {
+    public class LoadModulesCommand extends AbstractCommand implements IResponder, ICommand
+    {
 
-        public function LoadModulesCommand() {
+        public function LoadModulesCommand()
+        {
             super();
         }
 
-        public function result(data : Object) : void {
-            var rawResult : ArrayCollection = (data as ResultEvent).result as ArrayCollection;
-            var moduleLocator : ModuleLocator = ModuleLocator.getInstance();
-            var broker : EventBroker = EventBroker.getInstance();
+        public function result(data:Object):void
+        {
+            var rawResult:ArrayCollection = (data as ResultEvent).result as ArrayCollection;
+            var moduleLocator:ModuleLocator = ModuleLocator.getInstance();
+            var broker:EventBroker = EventBroker.getInstance();
             moduleLocator.allModules = rawResult;
-            var event : ModulesEvent = new ModulesEvent(ModulesEvent.MODULES_LOADED);
+            var event:ModulesEvent = new ModulesEvent(ModulesEvent.MODULES_LOADED);
             ModelLocator.isInitialized = true;
             broker.dispatchEvt(event);
         }
 
-        public function fault(event : Object) : void {
-            if (onFault(event)) {
+        public function fault(event:Object):void
+        {
+            if (onFault(event))
+            {
                 return;
             }
             Alert.show("Fault while loading all Application Modules from the server");
         }
 
-        public function execute(event : CairngormEvent) : void {
-            var delegate : ModulesDelegate = new ModulesDelegate(this)
+        public function execute(event:CairngormEvent):void
+        {
+            var delegate:ModulesDelegate = new ModulesDelegate(this)
             delegate.getModules();
         }
 

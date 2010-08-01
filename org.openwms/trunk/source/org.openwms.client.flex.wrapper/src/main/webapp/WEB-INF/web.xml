@@ -33,15 +33,23 @@
 		<param-name>contextConfigLocation</param-name>
 		<param-value>/WEB-INF/spring/*-context.xml</param-value>
 	</context-param>
+    
+    <!-- Granite config context listener -->
 	<listener>
 		<listener-class>org.granite.config.GraniteConfigListener</listener-class>
 	</listener>
+
+    <!-- Spring Initializer -->
 	<listener>
 		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
 	</listener>
+    
+    <!-- Spring listener to support different scopes -->
 	<listener>
 		<listener-class>org.springframework.web.context.request.RequestContextListener</listener-class>
 	</listener>
+    
+    <!-- GraniteDS AMF message filter -->
 	<filter>
 		<filter-name>AMFMessageFilter</filter-name>
 		<filter-class>org.granite.messaging.webapp.AMFMessageFilter</filter-class>
@@ -50,6 +58,8 @@
 		<filter-name>AMFMessageFilter</filter-name>
 		<url-pattern>/graniteamf/*</url-pattern>
 	</filter-mapping>
+
+    <!-- Spring Security integration -->
     <filter>
         <filter-name>springSecurityFilterChain</filter-name>
         <filter-class>org.springframework.web.filter.DelegatingFilterProxy</filter-class>
@@ -62,6 +72,8 @@
         <filter-name>springSecurityFilterChain</filter-name>
         <url-pattern>/*</url-pattern>
     </filter-mapping>
+
+    <!-- GraniteDS Servlet -->    
 	<servlet>
 		<servlet-name>AMFMessageServlet</servlet-name>
 		<servlet-class>org.granite.messaging.webapp.AMFMessageServlet</servlet-class>
@@ -71,6 +83,18 @@
 		<servlet-name>AMFMessageServlet</servlet-name>
 		<url-pattern>/graniteamf/*</url-pattern>
 	</servlet-mapping>
+    <!-- 
+    <servlet>
+        <servlet-name>GravityServlet</servlet-name>
+        <servlet-class>org.granite.gravity.servlet3.GravityAsyncServlet</servlet-class>
+        <load-on-startup>1</load-on-startup>
+        <async-supported>true</async-supported>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>GravityServlet</servlet-name>
+        <url-pattern>/gravityamf/*</url-pattern>
+    </servlet-mapping>
+     -->
 	<servlet>
 		<servlet-name>UploadServlet</servlet-name>
 		<servlet-class>org.openwms.web.flex.servlet.UploadServlet</servlet-class>
@@ -80,7 +104,8 @@
 		<servlet-name>UploadServlet</servlet-name>
 		<url-pattern>/upload/*</url-pattern>
 	</servlet-mapping>
-	<welcome-file-list>
+	
+    <welcome-file-list>
 		<welcome-file>index.html</welcome-file>
 		<welcome-file>index.htm</welcome-file>
 		<welcome-file>index.jsp</welcome-file>

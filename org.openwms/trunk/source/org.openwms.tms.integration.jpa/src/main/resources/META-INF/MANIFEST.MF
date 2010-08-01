@@ -3,29 +3,22 @@ Export-Package: org.openwms.tms.integration.jpa;version="0.0.1.SNAPSHO
  T";uses:="javax.persistence,org.openwms.common.domain,org.openwms.com
  mon.integration.jpa,org.openwms.tms.integration,org.springframework.o
  rm.jpa,org.springframework.stereotype"
-Import-Bundle: com.springsource.javax.persistence;version="[1.0.0,1.0.
- 0]",com.springsource.org.eclipse.persistence.jpa;version="[1.0.0,1.0.
- 0]"
+Import-Bundle: com.springsource.javax.persistence;version="1.0.0",org.
+ openwms.common.domain;version="0.0.1.SNAPSHOT",org.openwms.common.int
+ egration;version="0.0.1.SNAPSHOT",org.openwms.tms.domain;version="0.0
+ .1.SNAPSHOT",org.openwms.tms.integration;version="0.0.1.SNAPSHOT",com
+ .springsource.org.hibernate;version="3.2.6.ga"
+Require-Bundle: com.springsource.org.hibernate,com.springsource.javass
+ ist
 Bundle-Vendor: openwms.org
 Bundle-Version: 0.0.1.SNAPSHOT
 Tool: Bundlor 1.0.0.BUILD-20091207202403
-Bundle-Name: org.openwms.common.integration.jpa
-Import-Library: org.springframework.spring;version="[3.0,3.1)"
+Bundle-Name: org.openwms.tms.integration.jpa
+Import-Library: org.springframework.spring;version="[3.0, 3.1)"
 Bundle-ManifestVersion: 2
-Bundle-SymbolicName: org.openwms.common.integration.jpa
-Import-Package: javax.persistence;version="[1.0.0, 1.0.0]",javax.sql;v
- ersion="0",org.aspectj.asm;version="0.0.0",org.aspectj.lang;version="
- 0.0.0",org.aspectj.runtime;version="0.0.0",org.aspectj.runtime.reflec
- t;version="0.0.0",org.openwms.common.domain;version="[0.0.1.SNAPSHOT,
-  0.0.1.SNAPSHOT]",org.openwms.common.integration;version="[0.0.1.SNAP
- SHOT, 0.0.1.SNAPSHOT]",org.openwms.common.integration.jpa;version="[0
- .0.1.SNAPSHOT, 0.0.1.SNAPSHOT]",org.openwms.common.integration.system
- .usermanagement;version="[0.0.1.SNAPSHOT, 0.0.1.SNAPSHOT]",org.openwm
- s.tms.domain.order;version="[0.0.1.SNAPSHOT, 0.0.1.SNAPSHOT]",org.ope
- nwms.tms.integration,org.springframework.context.weaving;version="[3.
- 0, 3.1)",org.springframework.dao.annotation,org.springframework.dao.s
- upport;version="[3.0, 3.1)",org.springframework.orm.jpa,org.springfra
- mework.orm.jpa.support,org.springframework.stereotype,org.springframe
- work.transaction,org.springframework.transaction.aspectj;version="[3.
- 0, 3.1)"
+Bundle-SymbolicName: org.openwms.tms.integration.jpa
+Import-Package: javax.persistence,org.openwms.common.domain,org.openwm
+ s.common.integration.jpa,org.openwms.tms.integration,org.springframew
+ ork.orm.jpa,org.springframework.orm.jpa.support,org.springframework.s
+ tereotype,org.springframework.transaction
 

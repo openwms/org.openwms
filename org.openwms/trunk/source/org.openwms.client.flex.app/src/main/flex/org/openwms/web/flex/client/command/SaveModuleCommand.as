@@ -18,7 +18,8 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
-package org.openwms.web.flex.client.command {
+package org.openwms.web.flex.client.command
+{
     import com.adobe.cairngorm.commands.ICommand;
     import com.adobe.cairngorm.control.CairngormEvent;
 
@@ -31,35 +32,53 @@ package org.openwms.web.flex.client.command {
     import org.openwms.web.flex.client.business.ModulesDelegate;
     import org.openwms.web.flex.client.module.ModuleLocator;
 
+/////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////
+//   TO BE REMOVED  
+/////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////
+
     /**
      * A SaveModuleCommand.
      *
      * @author <a href="mailto:openwms@googlemail.com">Heiko Scherrer</a>
      * @version $Revision: 700 $
      */
-    public class SaveModuleCommand extends AbstractCommand implements IResponder, ICommand {
+    public class SaveModuleCommand extends AbstractCommand implements IResponder, ICommand
+    {
 
-        public function SaveModuleCommand() {
+        public function SaveModuleCommand()
+        {
             super();
         }
 
-        public function result(data : Object) : void {
-            var module : Module = (data as ResultEvent).result as Module;
-            var moduleLocator : ModuleLocator = ModuleLocator.getInstance();
-            moduleLocator.addModule(module);
-            moduleLocator.selectedModule = module;
+        public function result(data:Object):void
+        {
+        /*
+           var module : Module = (data as ResultEvent).result as Module;
+           var moduleLocator : ModuleLocator = ModuleLocator.getInstance();
+           moduleLocator.addModule(module);
+           moduleLocator.selectedModule = module;
+         */
         }
 
-        public function fault(event : Object) : void {
-            if (onFault(event)) {
+        public function fault(event:Object):void
+        {
+            if (onFault(event))
+            {
                 return;
             }
             Alert.show("Could not save the Module");
         }
 
-        public function execute(event : CairngormEvent) : void {
-            var delegate : ModulesDelegate = new ModulesDelegate(this)
-            delegate.saveModule(event.data as Module);
+        public function execute(event:CairngormEvent):void
+        {
+        /*
+           var delegate : ModulesDelegate = new ModulesDelegate(this)
+           delegate.saveModule(event.data as Module);
+         */
         }
 
     }

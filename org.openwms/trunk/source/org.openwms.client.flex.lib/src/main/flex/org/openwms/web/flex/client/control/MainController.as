@@ -21,6 +21,10 @@
 package org.openwms.web.flex.client.control
 {
     import com.adobe.cairngorm.control.FrontController;
+    import mx.collections.ArrayCollection;
+    import org.openwms.web.flex.client.model.ModelLocator;
+    import org.openwms.web.flex.client.event.ApplicationEvent;
+    import org.openwms.web.flex.client.module.ModuleLocator;
 
     /**
      * A MainController.
@@ -28,17 +32,32 @@ package org.openwms.web.flex.client.control
      * @author <a href="mailto:openwms@googlemail.com">Heiko Scherrer</a>
      * @version $Revision$
      */
+    [Name("mainController")]
+    [Bindable]
     public class MainController extends FrontController
     {
-    	private static var instance:MainController;
-    	
-    	/**
-    	 * Constructor as Singleton Enforcer.
-    	 */
-        public function MainController(enforcer:SingletonEnforcer):void
+        private static var instance:MainController;
+
+
+        [In]
+        public var modelLocator:ModelLocator;
+
+        [In]
+        public var moduleLocator:ModuleLocator;
+
+        public function MainController():void
         {
             super();
         }
+
+        /**
+         * Constructor as Singleton Enforcer.
+           public function MainController(enforcer:SingletonEnforcer):void
+           {
+           super();
+           }
+         */
+
 
         /**
          * Call to get the Singleton instance.
@@ -47,7 +66,7 @@ package org.openwms.web.flex.client.control
         {
             if (instance == null)
             {
-                instance = new MainController(new SingletonEnforcer);
+                instance = new MainController();
             }
             return instance;
         }
@@ -58,14 +77,16 @@ package org.openwms.web.flex.client.control
          */
         public function registerHandler(event:String, command:Class):void
         {
-        	try {
+            try
+            {
                 this.getCommand(event);
-                trace("Command "+event+" is already registered, please unregister first!");
-        	}
-        	catch (error:Error) {
+                trace("Command " + event + " is already registered, please unregister first!");
+            }
+            catch (error:Error)
+            {
                 this.addCommand(event, command);
-                trace("Successfully registered command: "+event);
-        	}
+                trace("Successfully registered command: " + event);
+            }
         }
 
         /**
@@ -75,17 +96,20 @@ package org.openwms.web.flex.client.control
          */
         public function unregisterHandler(event:String):void
         {
-            try {
+            try
+            {
                 this.getCommand(event);
                 this.removeCommand(event);
-                trace("Successfully unregistered command: "+event);
+                trace("Successfully unregistered command: " + event);
             }
-            catch (error:Error) {
-                trace("Command "+event+" is NOT registered, please register first!");
+            catch (error:Error)
+            {
+                trace("Command " + event + " is NOT registered, please register first!");
             }
         }
     }
 }
+
 class SingletonEnforcer
 {
 }

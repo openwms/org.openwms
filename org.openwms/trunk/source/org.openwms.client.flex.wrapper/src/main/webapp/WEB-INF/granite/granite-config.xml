@@ -25,7 +25,7 @@
     "-//Granite Data Services//DTD granite-config internal//EN"
     "http://www.graniteds.org/public/dtd/2.1.0/granite-config.dtd">
 
-<granite-config scan="true">
+<granite-config>
 <!--  
     <class-getter type="org.granite.eclipselink.EclipseLinkClassGetter"/>
 -->
@@ -42,6 +42,12 @@
     <security type="org.openwms.web.flex.security.CustomSecurityService">
         <param name="authentication-manager-bean-name" value="authenticationManager"/>
     </security>
+    
+    <tide-components>
+        <!-- List of component matchers, see 'Enabling components' section -->
+        <tide-component type="org\.openwms\.common\.service\..*"/>
+        <!-- tide-component type="org\.openwms\.common\.service\.spring\..*"/-->
+    </tide-components>
     
 </granite-config>
 

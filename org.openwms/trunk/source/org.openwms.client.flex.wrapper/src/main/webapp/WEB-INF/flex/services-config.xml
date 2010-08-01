@@ -28,6 +28,17 @@
             id="granite-service" 
             class="flex.messaging.services.RemotingService"
             messageTypes="flex.messaging.messages.RemotingMessage">
+            <destination id="spring">
+                <channels>
+                    <channel ref="my-graniteamf"/>
+                </channels>
+                <properties>
+                    <factory>tideSpringFactory</factory>
+                    <entityManagerFactoryBeanName>
+                        entityManagerFactory
+                    </entityManagerFactoryBeanName>
+                </properties>
+            </destination>
             <destination id="locationService">
                 <channels>
                     <channel ref="my-graniteamf"/>
@@ -64,7 +75,7 @@
                     <source>transportUnitService</source>
                 </properties>
             </destination>
-            <destination id="moduleManagementService">
+            <destination id="moduleManagementService2">
                 <channels>
                     <channel ref="my-graniteamf" />
                 </channels>
@@ -93,8 +104,10 @@
             </destination>
         </service>
     </services>
-    
+
     <factories>
+        <factory id="tideSpringFactory"
+            class="org.granite.tide.spring.SpringServiceFactory" />
         <factory id="springFactory"
             class="org.granite.spring.SpringServiceFactory" />
     </factories>

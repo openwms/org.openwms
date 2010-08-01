@@ -49,7 +49,7 @@
 
     <granite:SecureRemoteObject
         id="moduleManagementService"
-        destination="moduleManagementService"
+        destination="moduleManagementService2"
         showBusyCursor="true"/>
 
     <granite:SecureRemoteObject

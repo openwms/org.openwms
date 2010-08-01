@@ -109,7 +109,7 @@
 	<repositories>
 		<repository>
 			<id>sonatype-public</id>
-			<url>http://repository.sonatype.org/content/groups/public</url>
+			<url>http://repository.sonatype.org/content/groups/forge</url>
 			<releases>
 				<enabled>true</enabled>
 			</releases>
@@ -141,7 +141,7 @@
 	<pluginRepositories>
 		<pluginRepository>
 			<id>sonatype-public</id>
-			<url>http://repository.sonatype.org/content/groups/public</url>
+			<url>http://repository.sonatype.org/content/groups/forge</url>
 			<releases>
 				<enabled>true</enabled>
 			</releases>

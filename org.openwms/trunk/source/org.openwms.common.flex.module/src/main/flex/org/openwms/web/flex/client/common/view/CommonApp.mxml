@@ -40,7 +40,7 @@
         <mx:Canvas width="100%" height="25"  backgroundSize="100%">
             <mx:MenuBar id="commonMenuBar" labelField="@label">
                 <mx:XMLList>
-                    <menuitem label="Configuration" targetPos="1">
+                    <menuitem label="Configuration">
                         <menuitem label="Transport Unit Types" action="{CommonSwitchScreenEvent.SHOW_TRANSPORTUNITTYPE_VIEW}" />
                         <menuitem label="Transport Units" action="{CommonSwitchScreenEvent.SHOW_TRANSPORTUNIT_VIEW}" />
                         <menuitem label="Location Types" action="{CommonSwitchScreenEvent.SHOW_LOCATIONTYPE_VIEW}" />
