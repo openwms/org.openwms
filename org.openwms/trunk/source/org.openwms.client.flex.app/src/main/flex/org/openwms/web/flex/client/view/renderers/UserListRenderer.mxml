@@ -24,6 +24,11 @@
 <mx:Canvas xmlns:mx="http://www.adobe.com/2006/mxml" showEffect="Fade" width="100%" height="40"
 	creationComplete="init()">
 
+    <mx:Metadata>
+        [Name("userListRenderer")]
+        [ManagedEvent(name="LOAD_ALL_USERS")]
+    </mx:Metadata>
+
 	<mx:Script>
 	<![CDATA[
     	//import com.af.clientmanager.control.commands.events.clientEvents.GetClientLinksEvent;
@@ -54,8 +59,9 @@
 		[Bindable]
 		[Embed(source="/assets/images/userDefaultWoman.jpg")]
        	private var womanImage:Class;
-	  	[Bindable]
-	   	public var modelLocator : ModelLocator = ModelLocator.getInstance();
+            [In]
+            [Bindable]
+            public var modelLocator:ModelLocator;            
         [Bindable]
         public var userData:User;
         [Bindable]

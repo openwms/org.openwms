@@ -63,6 +63,8 @@ package org.openwms.web.flex.client.view
     import org.openwms.web.flex.client.model.ModelLocator;
     import org.openwms.web.flex.client.module.ModuleLocator;
     import org.openwms.web.flex.client.view.dialogs.LoginView;
+    import org.openwms.web.flex.client.business.UserDelegate;
+    import org.openwms.web.flex.client.business.RoleDelegate;
 
     public class AppBase extends Application
     {
@@ -111,7 +113,7 @@ package org.openwms.web.flex.client.view
 
         [Bindable]
         public var tideContext:Context = Spring.getInstance().getSpringContext();
-        Spring.getInstance().addComponents([ModelLocator, ModuleLocator, MainController]);
+        Spring.getInstance().addComponents([ModelLocator, ModuleLocator, MainController, UserDelegate, RoleDelegate]);
 
         private static var log:ILogger = Log.getLogger("org.openwms.web.flex.client.view.App");
 
@@ -230,6 +232,9 @@ package org.openwms.web.flex.client.view
             PopUpManager.centerPopUp(loginView);
         }
 
+        /**
+         * Called when a menu item of the main menu bar is clicked.
+         */
         public function onMenuChange(event:MenuEvent):void
         {
             if (appViewStack.getChildByName(event.item.@action) == null)

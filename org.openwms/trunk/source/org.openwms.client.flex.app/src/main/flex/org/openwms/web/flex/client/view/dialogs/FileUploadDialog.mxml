@@ -24,6 +24,11 @@
 <mx:Canvas xmlns:mx="http://www.adobe.com/2006/mxml" xmlns="*" width="0" height="0" verticalScrollPolicy="off"
 	horizontalScrollPolicy="off" creationComplete="initComp();">
 
+    <mx:Metadata>
+        [Name("fileUploadDialog")]
+        [ManagedEvent(name="LOAD_ALL_USERS")]
+    </mx:Metadata>
+
 	<mx:Script>
 	<![CDATA[
 		import org.openwms.web.flex.client.model.ModelLocator;
@@ -47,8 +52,9 @@
 	    import mx.managers.PopUpManager;
 	    import com.adobe.cairngorm.business.ServiceLocator;
 		
-		[Bindable]
-	    public var modelLocator:ModelLocator = ModelLocator.getInstance();
+            [In]
+            [Bindable]
+            public var modelLocator:ModelLocator;            
 	    [Bindable]
 		public var iconClass:Class; 
 		

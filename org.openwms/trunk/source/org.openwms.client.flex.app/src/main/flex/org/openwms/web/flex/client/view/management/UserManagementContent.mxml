@@ -23,6 +23,14 @@
 -->
 <mx:VBox xmlns:mx="http://www.adobe.com/2006/mxml" width="100%" height="100%" styleName="frameContainerSkin"
 	paddingBottom="5" paddingLeft="5" paddingRight="5" paddingTop="5" creationComplete="init()" verticalGap="10">
+
+    <mx:Metadata>
+        [Name("userManagementContent")]
+        [ManagedEvent(name="ADD_USER")]
+        [ManagedEvent(name="SAVE_USER")]
+        [ManagedEvent(name="DELETE_USER")]
+    </mx:Metadata>
+
 	<mx:Script>
 		<![CDATA[
 			import mx.validators.RegExpValidationResult;
@@ -47,8 +55,9 @@
 			[Bindable]
 			[Embed(source="/assets/images/userDefaultWoman.jpg")]
 			private var womanImage:Class;
-			[Bindable]
-			private var modelLocator:ModelLocator=ModelLocator.getInstance();
+            [In]
+            [Bindable]
+            public var modelLocator:ModelLocator;            
 
 			private function init():void {
 				userImg.source=getUserImage();
@@ -60,15 +69,15 @@
 			}
 
 			private function fireAddUserEvent():void {
-				new UserEvent(UserEvent.ADD_USER).dispatch();
+				dispatchEvent(new UserEvent(UserEvent.ADD_USER));
 			}
 
 			private function fireSaveUserEvent():void {
-				new UserEvent(UserEvent.SAVE_USER).dispatch();
+				dispatchEvent(new UserEvent(UserEvent.SAVE_USER));
 			}
 
 			private function fireDeleteUserEvent():void {
-				new UserEvent(UserEvent.DELETE_USER).dispatch();
+				dispatchEvent(new UserEvent(UserEvent.DELETE_USER));
 			}
 
 			private function setEditable(event:Event):void {

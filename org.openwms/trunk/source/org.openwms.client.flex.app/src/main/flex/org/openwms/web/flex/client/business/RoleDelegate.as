@@ -18,17 +18,16 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
-package org.openwms.web.flex.client.business {
-    import com.adobe.cairngorm.business.ServiceLocator;
-
-    import flash.events.EventDispatcher;
+package org.openwms.web.flex.client.business
+{
 
     import mx.collections.ArrayCollection;
-    import mx.rpc.AsyncToken;
-    import mx.rpc.IResponder;
 
+    import org.granite.tide.spring.Context;
+    import org.granite.tide.events.TideResultEvent;
     import org.openwms.common.domain.system.usermanagement.Role;
-    import org.openwms.web.flex.client.model.Constants;
+    import org.openwms.web.flex.client.event.RoleEvent;
+    import org.openwms.web.flex.client.model.ModelLocator;
 
     /**
      * A RoleDelegate.
@@ -36,35 +35,71 @@ package org.openwms.web.flex.client.business {
      * @author <a href="mailto:russelltina@users.sourceforge.net">Tina Russell</a>
      * @version $Revision: 700 $
      */
-    public class RoleDelegate extends EventDispatcher {
-        private var responder : IResponder;
+    [Name("roleController")]
+    [Bindable]
+    public class RoleDelegate
+    {
+        [In]
+        public var tideContext:Context;
+        [In]
+        public var modelLocator:ModelLocator;
 
-        private var service : Object;
-
-        public function RoleDelegate(responder : IResponder) : void {
-            this.responder = responder;
-            this.service = ServiceLocator.getInstance().getRemoteObject(Constants.USERMGMT_SERVICE);
+        public function RoleDelegate():void
+        {
         }
 
-        public function getRoles() : void {
-            var call : AsyncToken = service.findAllRoles();
-            call.addResponder(responder);
+        [Observer("LOAD_ALL_ROLES")]
+        public function getRoles():void
+        {
+            tideContext.userService.findAllRoles(onRolesLoaded);
         }
 
-        public function addRole(role : Role) : void {
-            var call : AsyncToken = service.addEntity(role);
-            call.addResponder(responder);
+        [Observer("ADD_ROLE")]
+        public function addRole(event:RoleEvent):void
+        {
+            if (event.data is Role)
+            {
+                tideContext.userService.addEntity(event.data as Role, onRoleAdded);
+            }
         }
 
-        public function saveRole(role : Role) : void {
-            var call : AsyncToken = service.saveRole(role);
-            call.addResponder(responder);
+        [Observer("SAVE_ROLE")]
+        public function saveRole(event:RoleEvent):void
+        {
+            if (event.data is Role)
+            {
+                tideContext.userService.saveRole(event.data as Role, onRoleSaved);
+            }
         }
 
-        public function deleteRoles(roles : ArrayCollection) : void {
-            var call : AsyncToken = service.removeRoles(roles);
-            call.addResponder(responder);
+        [Observer("DELETE_ROLE")]
+        public function deleteRoles(event:RoleEvent):void
+        {
+            if (event.data != null)
+            {
+                tideContext.userService.removeRoles(event.data as ArrayCollection, onRoleDeleted);
+            }
         }
 
+        private function onRolesLoaded(event:TideResultEvent):void
+        {
+            modelLocator.allRoles = event.result as ArrayCollection;
+        }
+
+        private function onRoleAdded(event:TideResultEvent):void
+        {
+            dispatchEvent(new RoleEvent(RoleEvent.LOAD_ALL_ROLES));
+        }
+
+        private function onRoleSaved(event:TideResultEvent):void
+        {
+            dispatchEvent(new RoleEvent(RoleEvent.LOAD_ALL_ROLES));
+        }
+
+        private function onRoleDeleted(event:TideResultEvent):void
+        {
+            trace("Role deleted");
+            dispatchEvent(new RoleEvent(RoleEvent.LOAD_ALL_ROLES));
+        }
     }
 }

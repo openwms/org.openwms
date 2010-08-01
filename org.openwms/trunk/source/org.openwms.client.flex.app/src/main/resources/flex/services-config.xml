@@ -57,7 +57,7 @@
                     <source>locationGroupService</source>
                 </properties>
             </destination>
-            <destination id="userService">
+            <destination id="userService2">
                 <channels>
                     <channel ref="my-graniteamf"/>
                 </channels>

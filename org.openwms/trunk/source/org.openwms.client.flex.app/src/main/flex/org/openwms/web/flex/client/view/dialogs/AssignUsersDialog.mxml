@@ -23,6 +23,10 @@
 -->
 <mx:TitleWindow xmlns:mx="http://www.adobe.com/2006/mxml" layout="absolute" width="528" height="350" title="Assign Users to Roles" fontSize="12" creationComplete="init();">
 
+    <mx:Metadata>
+        [Name("assignUsersDialog")]
+    </mx:Metadata>
+
     <mx:Script>
         <![CDATA[
         	import mx.utils.ObjectUtil;
@@ -34,8 +38,9 @@
             import mx.managers.PopUpManager;
             import mx.collections.ArrayCollection;
 
+            [In]
             [Bindable]
-            private var modelLocator:ModelLocator = ModelLocator.getInstance();
+            public var modelLocator:ModelLocator;            
             [Bindable]
             private var notAssigned:ArrayCollection = new ArrayCollection();
             [Bindable]
