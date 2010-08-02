@@ -36,6 +36,7 @@ package org.openwms.web.flex.client.business
      * @version $Revision: 700 $
      */
     [Name("roleController")]
+    [ManagedEvent(name="LOAD_ALL_ROLES")]
     [Bindable]
     public class RoleDelegate
     {
@@ -59,7 +60,7 @@ package org.openwms.web.flex.client.business
         {
             if (event.data is Role)
             {
-                tideContext.userService.addEntity(event.data as Role, onRoleAdded);
+                tideContext.userService.saveRole(event.data as Role, onRoleAdded);
             }
         }
 
@@ -98,7 +99,6 @@ package org.openwms.web.flex.client.business
 
         private function onRoleDeleted(event:TideResultEvent):void
         {
-            trace("Role deleted");
             dispatchEvent(new RoleEvent(RoleEvent.LOAD_ALL_ROLES));
         }
     }
