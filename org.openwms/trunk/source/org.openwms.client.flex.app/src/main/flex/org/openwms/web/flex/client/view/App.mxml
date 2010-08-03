@@ -33,9 +33,6 @@
     <mx:Script>
     	<![CDATA[
     		import org.openwms.web.flex.client.event.SwitchScreenEvent;
-            import org.openwms.web.flex.client.event.UserEvent;
-            import org.openwms.web.flex.client.model.ModelLocator;
-            import org.openwms.web.flex.client.module.ModuleLocator;
             import org.openwms.web.flex.client.util.DisplayUtility;
     	]]>
     </mx:Script>
@@ -47,13 +44,13 @@
 	<!-- Services -->
 	<business:Services />
 
-                <mx:XMLList id="stdMenu">
-                    <menuitem label="Application">
-                        <menuitem label="Users" action="{SwitchScreenEvent.SHOW_USER_MGMT_VIEW}" />
-                        <menuitem label="Roles" action="{SwitchScreenEvent.SHOW_ROLE_MGMT_VIEW}" />
-                        <menuitem label="Modules" action="{SwitchScreenEvent.SHOW_MODULE_MGMT_VIEW}" />
-                    </menuitem>
-                </mx:XMLList>
+    <mx:XMLList id="stdMenu">
+        <menuitem label="Application">
+            <menuitem label="Users" action="{SwitchScreenEvent.SHOW_USER_MGMT_VIEW}" />
+            <menuitem label="Roles" action="{SwitchScreenEvent.SHOW_ROLE_MGMT_VIEW}" />
+            <menuitem label="Modules" action="{SwitchScreenEvent.SHOW_MODULE_MGMT_VIEW}" />
+        </menuitem>
+    </mx:XMLList>
 
 	<mx:VBox height="100%" width="100%" verticalGap="0" backgroundColor="#C2DAEF">
         <view:HeaderComponent />
@@ -62,7 +59,7 @@
 			</mx:MenuBar>
 		</mx:Canvas>
 		<mx:HBox width="100%" height="100%" horizontalAlign="center" verticalAlign="middle">
-		<mx:ViewStack id="appViewStack" selectedIndex="{ModelLocator.authenticated ? DisplayUtility.getView(modelLocator.actualView,appViewStack) : DisplayUtility.getView(SwitchScreenEvent.SHOW_STARTSCREEN,appViewStack)}" width="100%" height="100%">
+		<mx:ViewStack id="appViewStack" selectedIndex="{identity.loggedIn ? DisplayUtility.getView(modelLocator.actualView,appViewStack) : DisplayUtility.getView(SwitchScreenEvent.SHOW_STARTSCREEN,appViewStack)}" width="100%" height="100%">
             <view:EmptyScreenView name="{SwitchScreenEvent.SHOW_STARTSCREEN}" />
             <view:ModuleManagementView name="{SwitchScreenEvent.SHOW_MODULE_MGMT_VIEW}" />
  			<view:UserManagementView name="{SwitchScreenEvent.SHOW_USER_MGMT_VIEW}" />

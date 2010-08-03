@@ -65,7 +65,7 @@ package org.openwms.web.flex.client.model
         private var views:Array = new Array();
         // Used to control the main viewStack
         public var actualView:String = SwitchScreenEvent.SHOW_STARTSCREEN;
-        public static var authenticated:Boolean = false;
+        public var authenticated:Boolean = false;
 
         // --------------------------------------------------------------------
         // ModuleManagement

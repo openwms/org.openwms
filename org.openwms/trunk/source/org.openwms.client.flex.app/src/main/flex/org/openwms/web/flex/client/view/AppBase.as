@@ -45,6 +45,7 @@ package org.openwms.web.flex.client.view
 
     import org.granite.tide.spring.Spring;
     import org.granite.tide.spring.Context;
+    import org.granite.tide.spring.Identity;
 
     import org.openwms.common.domain.MenuItem;
     import org.openwms.common.domain.Module;
@@ -54,14 +55,13 @@ package org.openwms.web.flex.client.view
     import org.openwms.web.flex.client.command.*;
     import org.openwms.web.flex.client.control.MainController;
     import org.openwms.web.flex.client.event.ApplicationEvent;
-    import org.openwms.web.flex.client.event.EventBroker;
-    import org.openwms.web.flex.client.event.ModulesEvent;
     import org.openwms.web.flex.client.event.RoleEvent;
     import org.openwms.web.flex.client.event.SwitchScreenEvent;
     import org.openwms.web.flex.client.event.UserEvent;
     import org.openwms.web.flex.client.model.Constants;
     import org.openwms.web.flex.client.model.ModelLocator;
     import org.openwms.web.flex.client.module.ModuleLocator;
+    import org.openwms.web.flex.client.util.DisplayUtility;
     import org.openwms.web.flex.client.view.dialogs.LoginView;
     import org.openwms.web.flex.client.business.UserDelegate;
     import org.openwms.web.flex.client.business.RoleDelegate;
@@ -77,11 +77,9 @@ package org.openwms.web.flex.client.view
         [Bindable]
         public var moduleLocator:ModuleLocator;
 
+        [In]
         [Bindable]
-        private var mainController:MainController = MainController.getInstance();
-
-        [Bindable]
-        private var srv:SecureRemoteObject = null;
+        public var identity:Identity;
 
         [Bindable]
         public var loginView:LoginView;
@@ -152,86 +150,6 @@ package org.openwms.web.flex.client.view
             tideContext.raiseEvent(ApplicationEvent.LOAD_ALL_MODULES);
         }
 
-        /*
-           private function initModules(username:String = null, password:String = null):void
-           {
-           login(username, password);
-           detectModules();
-           }
-         */ /*
-           private function registerEventListeners():void
-           {
-           broker.addEventListener(ApplicationEvent.MODULE_CONFIG_CHANGED, moduleConfigChanged);
-           broker.addEventListener(ApplicationEvent.MODULE_UNLOADED, moduleUnloaded);
-           broker.addEventListener(SecurityEvent.NOT_LOGGED_IN, onSecurityEvent);
-           broker.addEventListener(SecurityEvent.INVALID_CREDENTIALS, onSecurityEvent);
-           broker.addEventListener(SecurityEvent.ACCESS_DENIED, onSecurityEvent);
-           broker.addEventListener(SecurityEvent.SESSION_EXPIRED, onSecurityEvent);
-           broker.addEventListener(ModulesEvent.MODULES_LOADED, loadAllModules);
-           }
-         */ /*
-           private function bindCommands():void
-           {
-           mainController.addCommand(UserEvent.LOAD_ALL_USERS, LoadUsersCommand);
-           mainController.addCommand(UserEvent.ADD_USER, AddUserCommand);
-           mainController.addCommand(UserEvent.SAVE_USER, SaveUserCommand);
-           mainController.addCommand(UserEvent.DELETE_USER, DeleteUserCommand);
-
-           mainController.addCommand(RoleEvent.LOAD_ALL_ROLES, LoadRolesCommand);
-           mainController.addCommand(RoleEvent.ADD_ROLE, AddRoleCommand);
-           mainController.addCommand(RoleEvent.DELETE_ROLE, DeleteRoleCommand);
-
-           mainController.addCommand(SwitchScreenEvent.SHOW_STARTSCREEN, ShowStartscreenCommand);
-           mainController.addCommand(SwitchScreenEvent.SHOW_MODULE_MGMT_VIEW, ShowModuleManagementViewCommand);
-           mainController.addCommand(SwitchScreenEvent.SHOW_USER_MGMT_VIEW, ShowUserManagementViewCommand);
-
-           mainController.addCommand(ApplicationEvent.LOAD_ALL_MODULES, LoadModulesCommand);
-           mainController.addCommand(ApplicationEvent.SAVE_MODULE, SaveModuleCommand);
-           mainController.addCommand(ApplicationEvent.DELETE_MODULE, DeleteModuleCommand);
-           mainController.addCommand(ApplicationEvent.LOGIN, LoginCommand);
-           mainController.addCommand(ApplicationEvent.LOGOUT, LogoutCommand);
-           }
-         */
-        public function onSecurityEvent(event:SecurityEvent):void
-        {
-            switch (event.type)
-            {
-                case SecurityEvent.INVALID_CREDENTIALS:
-                    ModelLocator.authenticated = false;
-                    showLoginDialog("Invalid username or password");
-                    break;
-                case SecurityEvent.NOT_LOGGED_IN:
-                    ModelLocator.authenticated = false;
-                    showLoginDialog("Not logged in");
-                    break;
-                case SecurityEvent.SESSION_EXPIRED:
-                    ModelLocator.authenticated = false;
-                    service.logout();
-                    showLoginDialog("Session expired");
-                    break;
-                case SecurityEvent.ACCESS_DENIED:
-                    ModelLocator.authenticated = false;
-                    Alert.show("You don't have required rights to execute this action");
-                    break;
-            }
-        }
-
-        private function showLoginDialog(text:String, onLogin:Function = null):void
-        {
-            loginView = LoginView(PopUpManager.createPopUp(this as DisplayObject, LoginView, true));
-            loginView.loginMessageText = text;
-            ModelLocator.authenticated = false;
-            if (modelLocator.isInitialized)
-            {
-                loginView.onLogin = login;
-            }
-            else
-            {
-                loginView.onLogin = login; //initModules;
-            }
-            PopUpManager.centerPopUp(loginView);
-        }
-
         /**
          * Called when a menu item of the main menu bar is clicked.
          */
@@ -247,18 +165,14 @@ package org.openwms.web.flex.client.view
             appViewStack.selectedIndex = appViewStack.getChildIndex(appViewStack.getChildByName(event.item.@action));
         }
 
-        public function login(username:String = null, password:String = null):void
-        {
-            PopUpManager.removePopUp(loginView);
-            service.setCredentials(username, password);
-        }
-
+        /**
+         * Called when logout is proceeded and the application should switch to the initial screen (with login dialog).
+         */
+        [Observer("APP_LOGOUT")]
         public function logout(event:ApplicationEvent):void
         {
-            trace("Logout");
-            service.logout();
-            ModelLocator.authenticated = false;
-            showLoginDialog("Not logged in");
+            modelLocator.actualView = SwitchScreenEvent.SHOW_STARTSCREEN;
+            appViewStack.selectedIndex = DisplayUtility.getView(SwitchScreenEvent.SHOW_STARTSCREEN, appViewStack);
         }
 
         /**
@@ -299,6 +213,10 @@ package org.openwms.web.flex.client.view
             }
         }
 
+        /**
+         * When all modules are loaded and started properly an MODULES_CONFIGURED event is fired,
+         * the standard menu is loaded then by default.
+         */
         [Observer("MODULES_CONFIGURED")]
         public function modulesConfigured(event:ApplicationEvent):void
         {
@@ -319,83 +237,6 @@ package org.openwms.web.flex.client.view
             }
         }
 
-        /**
-         * This method rebuilds the main application menu and should be called
-         * in case an application module is unloaded.
-         * The main menu, could be an MenuBar or any other kind of menu.
-
-           private function removeFromMainMenu(module:IApplicationModule):void
-           {
-           var map:HashMap = module.getMainMenuItems();
-           if (map == null)
-           {
-           return;
-           }
-           var keys:Array = map.getKeys();
-           var itemPos:int = 0;
-           var itemModule:XML;
-           for (var i:int = 0; i < keys.length; i++)
-           {
-           itemPos = keys[i];
-           itemModule = XML(map.get(itemPos));
-           trace("Check to remove:" + itemModule.label);
-           for (var j:int = 0; j < mainMenuBar.dataProvider.length; j++)
-           {
-           // TODO: Right now remove it when you find it
-           if (mainMenuBar.dataProvider[j].label == itemModule.label)
-           {
-           trace("Remove now:" + itemModule.label);
-           mainMenuBar.dataProvider.removeItemAt(j);
-           }
-           }
-           }
-           }
-         */ /**
-         * This method rebuilds the main application menu and should be called
-         * in case an application module is loaded.
-         * The main menu, could be an MenuBar or any other kind of menu.
-
-           private function refreshMainMenu(module:IApplicationModule):void
-           {
-           trace("Resolve MenuItems to populate application menu");
-           var map:HashMap = module.getMainMenuItems();
-           if (map == null)
-           {
-           return;
-           }
-           var keys:Array = map.getKeys();
-           var itemPos:int = 0;
-           var item:XML;
-           for (var i:int = 0; i < keys.length; i++)
-           {
-           itemPos = keys[i];
-           item = XML(map.get(itemPos));
-           mainMenuBar.dataProvider.addItemAt(item, itemPos);
-           }
-           }
-         */ /**
-         * Load all modules that are configured to start automatically. This method is event triggered
-         * and called when the module configuration is loaded from the service layer.
-           public function loadAllModules(event:Event):void
-           {
-           moduleLocator.loadAllModules();
-           return;
-           for each (var module:Module in moduleLocator.allModules)
-           {
-           if (module.loadOnStartup)
-           {
-           trace("Loading module... " + module.moduleName);
-           moduleLocator.loadModule(module);
-           }
-           else
-           {
-           trace("Module not configured to load on startup:" + module.moduleName);
-           }
-           }
-           return;
-           }
-         */
-
         private function updateViewStack(module:Module):void
         {
             for each (var menuItem:MenuItem in module.menuItems)
@@ -404,9 +245,5 @@ package org.openwms.web.flex.client.view
             }
         }
 
-        private function detectModules():void
-        {
-            new ApplicationEvent(ApplicationEvent.LOAD_ALL_MODULES).dispatch();
-        }
     }
 }

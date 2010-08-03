@@ -4,7 +4,7 @@
  * This file is part of openwms.org.
  *
  * openwms.org is free software: you can redistribute it and/or modify
- * it under the terms of the GNU Lesser General Public License as
+ * it under the terms of the GNU Lesser General Public License as 
  * published by the Free Software Foundation, either version 3 of the
  * License, or (at your option) any later version.
  *
@@ -18,24 +18,10 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
-package org.openwms.web.flex.client.event
-{
-    import flash.events.Event;
+package org.openwms.common.domain.system.usermanagement {
 
-    /**
-     * A ModulesEvent.
-     *
-     * @author <a href="mailto:openwms@googlemail.com">Heiko Scherrer</a>
-     * @version $Revision: 700 $
-     */
-    public class ModulesEvent extends Event
-    {
-        public static const MODULES_LOADED:String = "Modules_Loaded";
-
-        public function ModulesEvent(type:String, bubbles:Boolean = true, cancelable:Boolean = false)
-        {
-            super(type, bubbles, cancelable);
-        }
-
+    [Bindable]
+    [RemoteClass(alias="org.openwms.common.domain.system.usermanagement.SystemUser")]
+    public class SystemUser extends SystemUserBase {
     }
 }

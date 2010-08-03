@@ -21,22 +21,14 @@
 package org.openwms.web.flex.client.module
 {
 
-    import com.adobe.cairngorm.model.IModelLocator;
-
-    import flash.events.EventDispatcher;
-
     import mx.collections.ArrayCollection;
     import mx.collections.XMLListCollection;
-    import mx.collections.IList;
-    import mx.collections.Sort;
-    import mx.collections.SortField;
     import mx.controls.Alert;
     import mx.events.ModuleEvent;
     import mx.modules.IModuleInfo;
     import mx.modules.ModuleManager;
 
     import org.openwms.common.domain.Module;
-    import org.openwms.web.flex.client.HashMap;
     import org.openwms.web.flex.client.model.ModelLocator;
     import org.openwms.web.flex.client.IApplicationModule;
     import org.openwms.web.flex.client.event.ApplicationEvent;
@@ -56,7 +48,7 @@ package org.openwms.web.flex.client.module
     [ManagedEvent(name="MODULES_CONFIGURED")]
     [ManagedEvent(name="MODULE_UNLOADED")]
     [Bindable]
-    public class ModuleLocator extends EventDispatcher implements IModelLocator
+    public class ModuleLocator
     {
         private static var instance:ModuleLocator;
 
@@ -65,7 +57,6 @@ package org.openwms.web.flex.client.module
         [In]
         public var tideContext:Context;
 
-        private var mInfo:IModuleInfo;
         private var toRemove:Module;
 
         public function ModuleLocator()
@@ -81,7 +72,6 @@ package org.openwms.web.flex.client.module
         [Observer("LOAD_ALL_MODULES")]
         public function loadModulesFromService():void
         {
-            trace("Load all modules from service");
             tideContext.moduleManagementService.getModules(onModulesLoad);
         }
 
@@ -91,7 +81,6 @@ package org.openwms.web.flex.client.module
         [Observer("SAVE_MODULE")]
         public function saveModule(event:ApplicationEvent):void
         {
-            trace("Saving module data...");
             tideContext.moduleManagementService.save(event.data as Module, onModuleSaved);
         }
 
@@ -101,7 +90,6 @@ package org.openwms.web.flex.client.module
         [Observer("DELETE_MODULE")]
         public function deleteModule(event:ApplicationEvent):void
         {
-            trace("Delete module data...");
             toRemove = event.data as Module;
             tideContext.moduleManagementService.remove(event.data as Module, onModuleRemoved);
         }
@@ -247,7 +235,8 @@ package org.openwms.web.flex.client.module
             return false;
         }
 
-        public function refreshModule(module:Module, select:Boolean):Boolean
+//remove
+        private function refreshModule(module:Module, select:Boolean):Boolean
         {
             if (module == null)
             {
@@ -343,7 +332,6 @@ package org.openwms.web.flex.client.module
         {
             addModule(event.result as Module);
             modelLocator.selectedModule = event.result as Module;
-            trace("Module data saved.");
         }
 
         /**
@@ -354,7 +342,6 @@ package org.openwms.web.flex.client.module
         {
             removeFromModules(toRemove);
             toRemove = null;
-            trace("Module data removed.");
         }
 
         /**
@@ -460,22 +447,6 @@ package org.openwms.web.flex.client.module
             }
         }
 
-
-
-
-
-
-        /**
-         * Fire an event to notify others that configuration data of a module has changed.
-         * The event data (e.data) contains the changed module.
-           private function fireSaveEvent(module:Module):void
-           {
-           var e:ApplicationEvent = new ApplicationEvent(ApplicationEvent.SAVE_MODULE);
-           e.data = module;
-           dispatchEvent(e);
-           }
-         */
-
         /**
          * Add a module to the list of all modules.
          */
@@ -506,16 +477,6 @@ package org.openwms.web.flex.client.module
             {
                 modelLocator.unloadedModules.put(module.url, ModuleManager.getModule(module.url));
             }
-        }
-
-// REMOVE
-        public static function getInstance():ModuleLocator
-        {
-            if (instance == null)
-            {
-                instance = new ModuleLocator();
-            }
-            return instance;
         }
 
         /**
@@ -551,8 +512,4 @@ package org.openwms.web.flex.client.module
         }
 
     }
-}
-
-class SingletonEnforcer
-{
 }

@@ -22,21 +22,44 @@
  */
 -->
 <mx:TitleWindow xmlns:mx="http://www.adobe.com/2006/mxml" width="300" height="220" backgroundColor="#FFFFFF"
-	backgroundAlpha="0.5" borderStyle="solid" alpha="1" borderThickness="3" title="Application Login" show="onShow();">
+	backgroundAlpha="0.5" borderStyle="solid" alpha="1" borderThickness="3" title="Application Login" creationComplete="onShow();">
+
+    <mx:Metadata>
+        [Name]
+    </mx:Metadata>
 
 	<mx:Script>
-    <![CDATA[
+        <![CDATA[
+            
+            import mx.managers.PopUpManager;
+            import org.granite.tide.events.TideResultEvent;
+            import org.granite.tide.events.TideFaultEvent;
+            import org.granite.tide.spring.Identity;
+
+            [In]
+            [Bindable]
+            public var identity:Identity;
+            [Bindable]
+            public var loginMessageText:String = "";
+            
+            private function onShow():void {
+            	myUser.setFocus();
+            }
+            
+            private function onLogin(username:String, password:String):void {
+                identity.login(username, password, loginOk, loginError);        
+            }
+
+            private function loginOk(event:TideResultEvent):void {
+                loginMessageText = null;
+                PopUpManager.removePopUp(this);
+            }
         
-        [Bindable]
-        public var loginMessageText:String = "";
-        [Bindable]
-        public var onLogin:Function = null;
-        
-        private function onShow():void {
-        	myUser.setFocus();
-        }
-        
-    ]]>
+            private function loginError(event:TideFaultEvent):void {
+                loginMessageText = event.fault.faultString;
+            }
+
+        ]]>
 	</mx:Script>
 
 	<mx:Form width="100%" height="100%">

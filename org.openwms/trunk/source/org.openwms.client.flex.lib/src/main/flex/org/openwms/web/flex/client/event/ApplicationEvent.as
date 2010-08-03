@@ -20,8 +20,6 @@
  */
 package org.openwms.web.flex.client.event
 {
-    import com.adobe.cairngorm.control.CairngormEvent;
-
     import flash.events.Event;
 
     /**
@@ -30,7 +28,7 @@ package org.openwms.web.flex.client.event
      * @author <a href="mailto:openwms@googlemail.com">Heiko Scherrer</a>
      * @version $Revision: 700 $
      */
-    public class ApplicationEvent extends CairngormEvent
+    public class ApplicationEvent extends Event
     {
         public static const LOAD_ALL_MODULES:String = "LOAD_ALL_MODULES";
         public static const MODULE_CONFIG_CHANGED:String = "MODULE_CONFIG_CHANGED";
@@ -41,11 +39,8 @@ package org.openwms.web.flex.client.event
         public static const UNLOAD_MODULE:String = "UNLOAD_MODULE";
         public static const MODULE_UNLOADED:String = "MODULE_UNLOADED";
 
-
-        public static const MODULES_LOADED:String = "Modules_Loaded";
-
-        public static const LOGIN:String = "APP_LOGIN";
         public static const LOGOUT:String = "APP_LOGOUT";
+        public var data:*;
 
         public function ApplicationEvent(type:String, bubbles:Boolean = true, cancelable:Boolean = false)
         {

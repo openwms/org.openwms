@@ -25,7 +25,7 @@
 	creationComplete="init()">
 
     <mx:Metadata>
-        [Name("userListRenderer")]
+        [Name]
         [ManagedEvent(name="LOAD_ALL_USERS")]
     </mx:Metadata>
 
