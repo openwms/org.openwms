@@ -41,9 +41,11 @@
             import org.openwms.web.flex.client.model.ModelLocator;
             import mx.events.ListEvent;
             import mx.events.DragEvent;
+            import org.granite.tide.spring.Identity;
 
-//            import org.granite.tide.spring.Context;
-//            import org.granite.tide.events.TideResultEvent;
+            [In]
+            [Bindable]
+            public var identity:Identity;
 
             [In]
             [Bindable]
@@ -51,8 +53,6 @@
             [In]
             [Bindable]
             public var moduleLocator:ModuleLocator;
-//            [In]
-//            public var tideContext:Context;
         
             private function init():void {
                 newBtn.enabled = true;
@@ -201,7 +201,7 @@
                     <mx:CheckBox id="loadOnStartupChk" change="onChange()" x="95" y="98" selected="{modelLocator.selectedModule.loadOnStartup}"/>
                 </mx:FormItem>
 			</mx:Form>
-            <mx:Button id="newBtn" label="New" x="10" y="140" click="newModule()" />
+            <mx:Button id="newBtn" label="New" x="10" y="140" click="newModule()" visible="{identity.ifAnyGranted('ROLE_ADMIN')}"/>
             <mx:Button id="saveBtn" label="Save" x="67" y="140" click="saveModule()"/>
             <mx:Button id="deleteBtn" label="Delete" x="129" y="140" click="deleteModule()"/>
             <mx:Button id="loadBtn" label="{(modelLocator.selectedModule == null || modelLocator.selectedModule.loaded) ? 'Unload' : 'Load'}" x="200" y="140" click="loadModule()" enabled="{(modelLocator.selectedModule == null || modelLocator.selectedModule.moduleName == '') ? false : true}"/>

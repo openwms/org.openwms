@@ -20,7 +20,7 @@
  */
 package org.openwms.web.flex.client.event
 {
-    import com.adobe.cairngorm.control.CairngormEvent;
+    import flash.events.Event;
 
     /**
      * An RoleEvent.
@@ -28,7 +28,7 @@ package org.openwms.web.flex.client.event
      * @author <a href="mailto:openwms@googlemail.com">Heiko Scherrer</a>
      * @version $Revision: 788 $
      */
-    public class RoleEvent extends CairngormEvent
+    public class RoleEvent extends Event
     {
         public static const LOAD_ALL_ROLES:String = "LOAD_ALL_ROLES";
         public static const ADD_ROLE:String = "ADD_ROLE";
@@ -36,6 +36,8 @@ package org.openwms.web.flex.client.event
         public static const DELETE_ROLE:String = "DELETE_ROLE";
 
         public static const ROLE_ADDED:String = "ROLE_ADDED";
+
+        public var data:*;
 
         public function RoleEvent(type:String, bubbles:Boolean = true, cancelable:Boolean = false)
         {

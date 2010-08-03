@@ -37,6 +37,8 @@ package org.openwms.web.flex.client.event
 
         public static const USER_ADDED:String = "USER_ADDED";
 
+        public var data:*;
+
         public function UserEvent(type:String, bubbles:Boolean = true, cancelable:Boolean = false)
         {
             super(type, bubbles, cancelable);

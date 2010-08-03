@@ -21,6 +21,41 @@
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
 -->
-<mx:Canvas xmlns:mx="http://www.adobe.com/2006/mxml" width="100%" height="100%">
+<mx:Canvas xmlns:mx="http://www.adobe.com/2006/mxml" width="100%" height="100%" creationComplete="onShow()" show="onShow()">
 	
+    <mx:Metadata>
+        [Name]
+    </mx:Metadata>
+
+    <mx:Script>
+        <![CDATA[
+        
+            import mx.managers.PopUpManager;
+            import org.openwms.web.flex.client.view.dialogs.LoginView;
+            import org.granite.tide.spring.Identity;
+            
+            [In]
+            [Bindable]
+            public var identity:Identity;
+
+            [Bindable]
+            public var loginView:LoginView;
+        
+            private function onShow():void {
+                if (!identity.loggedIn)
+                {
+                    showLoginDialog("Not logged in");
+                }
+            }
+    
+            private function showLoginDialog(text:String):void
+            {
+                loginView = LoginView(PopUpManager.createPopUp(this, LoginView, true));
+                loginView.loginMessageText = text;
+                PopUpManager.centerPopUp(loginView);
+            }
+            
+        ]]>
+    </mx:Script>
+    
 </mx:Canvas>
