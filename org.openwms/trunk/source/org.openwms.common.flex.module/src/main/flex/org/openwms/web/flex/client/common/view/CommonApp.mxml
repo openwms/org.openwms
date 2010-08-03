@@ -51,7 +51,7 @@
             </mx:MenuBar>
         </mx:Canvas>
         <mx:HBox width="100%" height="100%" horizontalAlign="center" verticalAlign="middle">
-            <mx:ViewStack id="commonViewStack" selectedIndex="{ModelLocator.authenticated ? DisplayUtility.getView(modelLocator.actualView, commonViewStack) : DisplayUtility.getView(SwitchScreenEvent.SHOW_STARTSCREEN, commonViewStack)}">
+            <mx:ViewStack id="commonViewStack" selectedIndex="{DisplayUtility.getView(modelLocator.actualView, commonViewStack)}">
                 <view:LocationView name="locationView" />
                 <view:LocationTypeView name="locationTypeView" />
                 <view:LocationGroupView name="locationGroupView" />
