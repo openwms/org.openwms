@@ -45,7 +45,7 @@
 			</mx:MenuBar>
 		</mx:Canvas>
 		<mx:HBox width="100%" height="100%" horizontalAlign="center" verticalAlign="middle">
-			<mx:ViewStack id="tmsViewStack" selectedIndex="{ModelLocator.authenticated ? DisplayUtility.getView(modelLocator.actualView, tmsViewStack) : DisplayUtility.getView(SwitchScreenEvent.SHOW_STARTSCREEN, tmsViewStack)}">
+			<mx:ViewStack id="tmsViewStack" selectedIndex="{DisplayUtility.getView(modelLocator.actualView, tmsViewStack)}">
 				<view:TransportOrderView name="tmsTransportOrdersView" />
 			</mx:ViewStack>
 		</mx:HBox>
