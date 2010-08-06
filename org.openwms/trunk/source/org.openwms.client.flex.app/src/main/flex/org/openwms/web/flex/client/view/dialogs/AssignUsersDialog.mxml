@@ -21,7 +21,7 @@
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
 -->
-<mx:TitleWindow xmlns:mx="http://www.adobe.com/2006/mxml" layout="absolute" width="528" height="350" title="Assign Users to Roles" fontSize="12" creationComplete="init();">
+<mx:TitleWindow xmlns:mx="http://www.adobe.com/2006/mxml" layout="absolute" width="528" height="350" fontSize="12" creationComplete="init();">
 
     <mx:Metadata>
         [Name("assignUsersDialog")]
@@ -63,6 +63,7 @@
                 	}
                 }
                 this.addEventListener(KeyboardEvent.KEY_DOWN, keyEventHandler);
+                this.title = "Assign Users to Role"+role.name;
                 PopUpManager.centerPopUp(this);
             }
 

@@ -114,25 +114,25 @@ package org.openwms.web.flex.client.business
                 var user:User = User(event.result);
                 var len:int = modelLocator.allUsers.length;
                 var found:Boolean = false;
-                for (var i:int = 0; i < len; i++)
+                for each (var usr:User in modelLocator.allUsers)
                 {
-                    if (user.id == modelLocator.allUsers[i].id)
+                    if (user.id == usr.id)
                     {
                         found = true;
-                        modelLocator.allUsers[i] = user;
+                        usr = user;
                         modelLocator.allUsers.refresh();
-                        trace("User found and replaced in List");
                         break;
                     }
                 }
                 if (!found)
                 {
-                    Alert.show("New user saved");
+                    Alert.show("New User created");
                     modelLocator.allUsers.addItemAt(user, modelLocator.allUsers.length);
                 }
                 else
                 {
                     Alert.show("User data saved");
+                    modelLocator.selectedUser = user;
                 }
             }
             //UserHelper.traceUser(user);
