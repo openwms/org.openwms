@@ -58,6 +58,9 @@
             private function init():void
             {
                 dispatchEvent(new RoleEvent(RoleEvent.LOAD_ALL_ROLES));
+                if (modelLocator.allUsers.length == 0) {
+                    dispatchEvent(new UserEvent(UserEvent.LOAD_ALL_USERS));
+                }
                 tideContext.raiseEvent(RoleEvent.LOAD_ALL_ROLES);
             }
 
@@ -98,9 +101,11 @@
             
             private function addUsers():void
             {
-            	if (modelLocator.allUsers.length == 0) {
-            		dispatchEvent(new UserEvent(UserEvent.LOAD_ALL_USERS));
-            	}
+                if (selected == null)
+                {
+                    Alert.show("Please select a Role to add a User for");
+                    return;
+                }
                 var pop:AssignUsersDialog = AssignUsersDialog(PopUpManager.createPopUp(this, AssignUsersDialog, true));
                 pop.assigned = new ArrayCollection(selected.users.toArray());
                 pop.role = selected;
@@ -109,6 +114,16 @@
             
             private function removeUsers():void
             {
+                if (selected == null)
+                {
+                    Alert.show("Please select a Role to remove a User from");
+                    return;
+                }
+                if (usersLst.selectedItems.length == 0)
+                {
+                    Alert.show("Please select one or more Users to be removed from this Role");
+                    return;
+                }
             	for each (var user:User in selected.users)
             	{
             		for each (var selectedUser:User in usersLst.selectedItems)
@@ -174,7 +189,7 @@
 			            <mx:VRule height="10"/>
 			            <mx:Button id="assignedUsersBtn" width="22" height="22" buttonMode="true" mouseChildren="false" toolTip="Assign Users to the selected Role" click="addUsers()" icon="@Embed(source='/assets/icons/fuegue/user--plus.png')"/>
 			            <mx:VRule height="10"/>
-			            <mx:Button id="removeUsersBtn" width="22" height="22" buttonMode="true" mouseChildren="false" enabled="{usersLst.selectedItems.length > 0}" toolTip="Remove Users from the selected Role" click="removeUsers()" icon="@Embed(source='/assets/icons/fuegue/user--minus.png')"/>
+			            <mx:Button id="removeUsersBtn" width="22" height="22" buttonMode="true" mouseChildren="false" toolTip="Remove Users from the selected Role" click="removeUsers()" icon="@Embed(source='/assets/icons/fuegue/user--minus.png')"/>
 			        </mx:HBox>
 	                <mx:List id="usersLst" height="200" width="100%" allowMultipleSelection="true" labelFunction="formatUser" dataProvider="{selected.users}" />
 	            </mx:VBox>

@@ -31,6 +31,7 @@
         [ManagedEvent(name="DELETE_MODULE")]
         [ManagedEvent(name="LOAD_MODULE")]
         [ManagedEvent(name="UNLOAD_MODULE")]
+        [ManagedEvent(name="LOAD_ALL_USERS")]
     </mx:Metadata>
 
     <mx:Script>
@@ -45,9 +46,7 @@
              * Load all users when the view is loaded.
              */
             private function init():void {
-                trace("Trigger to load all users");
                 dispatchEvent(new UserEvent(UserEvent.LOAD_ALL_USERS));
-                tideContext.raiseEvent(UserEvent.LOAD_ALL_USERS);
             }
         ]]>
     </mx:Script>

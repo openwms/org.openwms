@@ -64,6 +64,14 @@
 			}
 
 			private function showFileUploadDialog():void {
+                if (modelLocator.selectedUser == null) {
+                    Alert.show("Select a User first");
+                    return;
+                }
+                if (isNaN(modelLocator.selectedUser.id)) {
+                    Alert.show("Please save the User first to add an Image");
+                    return;
+                }
 				var pop1:FileUploadDialog=FileUploadDialog(PopUpManager.createPopUp(this, FileUploadDialog, true));
 				PopUpManager.centerPopUp(pop1);
 			}
@@ -73,12 +81,19 @@
 			}
 
 			private function fireSaveUserEvent():void {
-				dispatchEvent(new UserEvent(UserEvent.SAVE_USER));
+                if (stringVal.validate().type == ValidationResultEvent.VALID) {
+    				dispatchEvent(new UserEvent(UserEvent.SAVE_USER));
+                }
 			}
 
 			private function fireDeleteUserEvent():void {
 				dispatchEvent(new UserEvent(UserEvent.DELETE_USER));
 			}
+
+            private function refresh():void
+            {
+                dispatchEvent(new UserEvent(UserEvent.LOAD_ALL_USERS));
+            }
 
 			private function setEditable(event:Event):void {
 				event.currentTarget.editable=true;
@@ -104,14 +119,6 @@
 				}
 				return asset;
 			}
-
-			private function handleValidation(event:ValidationResultEvent):void {
-				var oneResult:RegExpValidationResult;
-				for (var i:int=0; i < event.results.length; i++) {
-					oneResult=event.results[i];
-					Alert.show("Found a match at Index:" + oneResult.matchedIndex + "\nOn the characters of:" + oneResult.matchedString, "RegEx Results", Alert.NONMODAL);
-				}
-			}
 		]]>
 	</mx:Script>
 
@@ -134,6 +141,8 @@
     <mx:Binding source="tiComment.text" destination="modelLocator.selectedUser.userDetails.comment" />
 	<mx:Binding source="sexRb.selection.value as UserDetails$SEX" destination="modelLocator.selectedUser.userDetails.sex" />
 
+    <mx:StringValidator id="stringVal" minLength="1" source="{usernameTi}" property="text"/>
+
 	<mx:HBox width="95%" horizontalGap="8" verticalAlign="middle">
 		<mx:Label text="User Settings" fontSize="14" fontWeight="bold" />
         <mx:VRule height="10"/>
@@ -142,6 +151,8 @@
         <mx:Button id="deleteUserBtn" buttonMode="true" mouseChildren="false" toolTip="Delete an User" icon="@Embed(source='/assets/icons/fuegue/user--minus.png')" click="fireDeleteUserEvent()" />
         <mx:VRule height="10"/>
 		<mx:Button id="saveUserBtn" buttonMode="true" mouseChildren="false" toolTip="Save an already existing User" icon="@Embed(source='/assets/icons/fuegue/user--pencil.png')" click="fireSaveUserEvent()" />
+        <mx:VRule height="10"/>
+        <mx:Button id="refreshUserBtn" buttonMode="true" mouseChildren="false" toolTip="Refresh the list of Users" icon="@Embed(source='assets/images/icons/refresh.png')" click="refresh()"/>
 	</mx:HBox>
 	<mx:HRule width="95%"/>
 	<mx:HBox width="95%" height="100%" horizontalGap="10">
