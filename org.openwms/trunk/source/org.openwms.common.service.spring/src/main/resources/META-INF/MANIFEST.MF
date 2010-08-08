@@ -1,4 +1,9 @@
 Manifest-Version: 1.0
+Import-Bundle: com.springsource.javax.persistence;version="1.0.0",com.
+ springsource.org.apache.commons.lang;version="2.4.0",com.springsource
+ .net.sf.ehcache;version="[1.6.2,1.6.2]",org.openwms.common.domain;ver
+ sion="0.0.1.SNAPSHOT",org.openwms.common.integration;version="0.0.1.S
+ NAPSHOT",org.openwms.common.service.api;version="0.0.1.SNAPSHOT"
 Export-Package: org.openwms.common.service.spring;version="0.0.1.SNAPS
  HOT";uses:="org.openwms.common.domain,org.openwms.common.domain.syste
  m.usermanagement,org.openwms.common.domain.values,org.openwms.common.
@@ -15,30 +20,26 @@ Export-Package: org.openwms.common.service.spring;version="0.0.1.SNAPS
  ="org.springframework.beans.factory.annotation,org.springframework.se
  curity.core.userdetails,org.springframework.stereotype,org.springfram
  ework.transaction.annotation"
-Import-Bundle: com.springsource.javax.persistence;version="1.0.0",com.
- springsource.org.apache.commons.lang;version="2.4.0",com.springsource
- .net.sf.ehcache;version="[1.6.2,1.6.2]",org.openwms.common.domain;ver
- sion="0.0.1.SNAPSHOT",org.openwms.common.integration;version="0.0.1.S
- NAPSHOT",org.openwms.common.service.api;version="0.0.1.SNAPSHOT"
 Bundle-Vendor: openwms.org
+Bundle-Classpath: .
 Bundle-Version: 0.0.1.SNAPSHOT
 Tool: Bundlor 1.0.0.BUILD-20091207202403
-Bundle-Name: org.openwms.common.service.spring
 Import-Library: org.springframework.spring;version="[3.0, 3.1)"
+Bundle-Name: org.openwms.common.service.spring
 Bundle-ManifestVersion: 2
+Import-Package: org.openwms.common.domain,org.openwms.common.domain.Lo
+ cationGroup,org.openwms.common.domain.system,org.openwms.common.domai
+ n.system.usermanagement,org.openwms.common.domain.values,org.openwms.
+ common.integration,org.openwms.common.integration.jpa,org.openwms.com
+ mon.integration.system.usermanagement,org.openwms.common.service,org.
+ openwms.common.service.exception,org.openwms.common.service.managemen
+ t,org.openwms.common.util,org.slf4j,org.springframework.beans.factory
+ .annotation,org.springframework.cache.ehcache,org.springframework.con
+ text.weaving;version="[3.0, 3.1)",org.springframework.dao,org.springf
+ ramework.security.core,org.springframework.security.core.userdetails,
+ org.springframework.security.core.userdetails.cache,org.springframewo
+ rk.stereotype,org.springframework.transaction,org.springframework.tra
+ nsaction.annotation,org.springframework.transaction.aspectj;version="
+ [3.0, 3.1)"
 Bundle-SymbolicName: org.openwms.common.service.spring
-Import-Package: org.apache.log4j,org.openwms.common.dao.core,org.openw
- ms.common.domain,org.openwms.common.domain.system,org.openwms.common.
- domain.system.usermanagement,org.openwms.common.domain.values,org.ope
- nwms.common.integration,org.openwms.common.integration.jpa,org.openwm
- s.common.integration.system.usermanagement,org.openwms.common.service
- ,org.openwms.common.service.exception,org.openwms.common.service.mana
- gement,org.openwms.common.util,org.slf4j,org.springframework.beans.fa
- ctory.annotation,org.springframework.cache.ehcache,org.springframewor
- k.context.weaving;version="[3.0, 3.1)",org.springframework.dao,org.sp
- ringframework.security.core,org.springframework.security.core.userdet
- ails,org.springframework.security.core.userdetails.cache,org.springfr
- amework.stereotype,org.springframework.transaction,org.springframewor
- k.transaction.annotation,org.springframework.transaction.aspectj;vers
- ion="[3.0, 3.1)"
 

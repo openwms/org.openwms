@@ -25,6 +25,7 @@
 
     <mx:Metadata>
         [Name("assignUsersDialog")]
+        [ManagedEvent(name="USERS_ASSIGNED_TO_ROLE")]
     </mx:Metadata>
 
     <mx:Script>
@@ -44,9 +45,9 @@
             [Bindable]
             private var notAssigned:ArrayCollection = new ArrayCollection();
             [Bindable]
-            private var toAssign:ArrayCollection;
+            private var toAssign:ListCollectionView;
             [Bindable]
-            public var assigned:ArrayCollection;
+            public var assigned:ListCollectionView;
             [Bindable]
             public var role:Role;
             private var changed:Boolean = false;
@@ -63,7 +64,7 @@
                 	}
                 }
                 this.addEventListener(KeyboardEvent.KEY_DOWN, keyEventHandler);
-                this.title = "Assign Users to Role"+role.name;
+                this.title = "Assign Users to Role : "+role.name;
                 PopUpManager.centerPopUp(this);
             }
 

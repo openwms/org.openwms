@@ -34,8 +34,8 @@ package org.openwms.web.flex.client.event
         public static const ADD_ROLE:String = "ADD_ROLE";
         public static const SAVE_ROLE:String = "SAVE_ROLE";
         public static const DELETE_ROLE:String = "DELETE_ROLE";
-
         public static const ROLE_ADDED:String = "ROLE_ADDED";
+        public static const ROLE_SAVED:String = "ROLE_SAVED";
 
         public var data:*;
 

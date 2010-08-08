@@ -37,6 +37,8 @@ package org.openwms.web.flex.client.business
      */
     [Name("roleController")]
     [ManagedEvent(name="LOAD_ALL_ROLES")]
+    [ManagedEvent(name="ROLE_ADDED")]
+    [ManagedEvent(name="ROLE_SAVED")]
     [Bindable]
     public class RoleDelegate
     {
@@ -50,6 +52,8 @@ package org.openwms.web.flex.client.business
         }
 
         [Observer("LOAD_ALL_ROLES")]
+        [Observer("ROLE_ADDED")]
+        [Observer("ROLE_SAVED")]
         public function getRoles():void
         {
             tideContext.userService.findAllRoles(onRolesLoaded);
@@ -89,12 +93,12 @@ package org.openwms.web.flex.client.business
 
         private function onRoleAdded(event:TideResultEvent):void
         {
-            dispatchEvent(new RoleEvent(RoleEvent.LOAD_ALL_ROLES));
+            dispatchEvent(new RoleEvent(RoleEvent.ROLE_ADDED));
         }
 
         private function onRoleSaved(event:TideResultEvent):void
         {
-            dispatchEvent(new RoleEvent(RoleEvent.LOAD_ALL_ROLES));
+            dispatchEvent(new RoleEvent(RoleEvent.ROLE_SAVED));
         }
 
         private function onRoleDeleted(event:TideResultEvent):void

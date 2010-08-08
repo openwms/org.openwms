@@ -32,6 +32,7 @@
 
     <mx:Script>
         <![CDATA[
+        	import org.openwms.web.flex.client.event.ApplicationEvent;
         	import org.openwms.web.flex.client.event.UserEvent;
         	import org.openwms.common.domain.system.usermanagement.SecurityObject;
         	import org.openwms.web.flex.client.view.dialogs.AssignUsersDialog;
@@ -107,7 +108,7 @@
                     return;
                 }
                 var pop:AssignUsersDialog = AssignUsersDialog(PopUpManager.createPopUp(this, AssignUsersDialog, true));
-                pop.assigned = new ArrayCollection(selected.users.toArray());
+                pop.assigned = selected.users;
                 pop.role = selected;
                 PopUpManager.centerPopUp(pop);            	
             }
@@ -140,11 +141,14 @@
             {
                 dispatchEvent(new RoleEvent(RoleEvent.LOAD_ALL_ROLES));
             }
-            
-            private function formatUser(item:*):String {
+
+            private function formatUser(item:*):String
+            {
             	return (item as User).username + " - " + (item as User).fullname;
             }
-            private function formatGrant(item:*):String {
+
+            private function formatGrant(item:*):String
+            {
                 return (item as SecurityObject).name + " - " + (item as SecurityObject).description;
             }
         ]]>

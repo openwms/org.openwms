@@ -30,6 +30,7 @@
 
     <mx:Script>
     	<![CDATA[
+    		import mx.controls.Alert;
     		import mx.events.ValidationResultEvent;
     		import org.openwms.common.domain.system.usermanagement.Role;
     		import org.openwms.web.flex.client.event.RoleEvent;
@@ -52,10 +53,20 @@
             {
             	if (stringVal.validate().type == ValidationResultEvent.VALID) {
                     var event:RoleEvent = new RoleEvent(RoleEvent.ADD_ROLE);
-                    var role:Role = new Role(roleTxt.text, descriptionTxt.text);
+                    var role:Role = new Role(formatRoleName(roleTxt.text), descriptionTxt.text);
                     event.data = role;
                     dispatchEvent(event);
                 }
+            }
+            
+            private function formatRoleName(roleName:String):String
+            {
+            	var result:String = roleName.toUpperCase();
+            	if (result.substring(0,5) != "ROLE_")
+            	{
+            		result = "ROLE_"+result;
+            	}
+            	return result;
             }
 
             private function closeDialog(event:Event=null):void
@@ -70,6 +81,16 @@
                 {
                    closeDialog(event);
                 }
+            }
+            
+            /**
+             * When a Role was successfully added reset the form to add a new Role.
+             */
+            [Observer("ROLE_ADDED")]
+            public function onRoleAdded(event:RoleEvent):void
+            {
+            	roleTxt.text = "";
+            	descriptionTxt.text = "";
             }
     	]]>
     </mx:Script>
