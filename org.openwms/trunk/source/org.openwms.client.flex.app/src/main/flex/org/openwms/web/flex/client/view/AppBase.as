@@ -107,7 +107,7 @@ package org.openwms.web.flex.client.view
 
         private static var _link:Array = [org.openwms.tms.domain.order.TransportOrder];
 
-        private var service:SecureRemoteObject;
+//        private var service:SecureRemoteObject;
 
         [Bindable]
         public var tideContext:Context = Spring.getInstance().getSpringContext();
@@ -142,7 +142,7 @@ package org.openwms.web.flex.client.view
         {
             // register application itself
             tideContext.mainAppUI = this;
-            this.service = SecureRemoteObject(ServiceLocator.getInstance().getRemoteObject(Constants.MODULEMGMT_SERVICE));
+//            this.service = SecureRemoteObject(ServiceLocator.getInstance().getRemoteObject(Constants.MODULEMGMT_SERVICE));
 //            registerEventListeners();
 //            modelLocator.actualView = SwitchScreenEvent.SHOW_STARTSCREEN;
 //            bindCommands();
