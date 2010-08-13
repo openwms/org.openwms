@@ -68,7 +68,7 @@ package org.openwms.web.flex.client.common.view
         }
         
         public function init(tide:Tide):void {
-            tide.addComponents([CommonModelLocator, TransportUnitTypeView, TransportUnitTypeDelegate, LocationDelegate]);
+            tide.addComponents([CommonModelLocator, TransportUnitTypeDelegate, LocationDelegate]);
         }
 
         /**
