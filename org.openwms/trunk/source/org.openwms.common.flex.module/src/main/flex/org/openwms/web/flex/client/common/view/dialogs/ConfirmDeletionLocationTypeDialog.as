@@ -32,6 +32,8 @@ package org.openwms.web.flex.client.common.view.dialogs
      * @author <a href="mailto:openwms@googlemail.com">Heiko Scherrer</a>
      * @version $Revision: 796 $
      */
+    [Name]
+    [ManagedEvent(name="DELETE_LOCATION_TYPE")]
     [Bindable]
     public class ConfirmDeletionLocationTypeDialog extends ConfirmDeletionDialog
     {
@@ -50,7 +52,7 @@ package org.openwms.web.flex.client.common.view.dialogs
         {
             var event:LocationTypeEvent = new LocationTypeEvent(LocationTypeEvent.DELETE_LOCATION_TYPE);
             event.data = deleteLst.dataProvider as ArrayCollection;
-            event.dispatch();
+            dispatchEvent(event);
             closeDialog();
         }
         

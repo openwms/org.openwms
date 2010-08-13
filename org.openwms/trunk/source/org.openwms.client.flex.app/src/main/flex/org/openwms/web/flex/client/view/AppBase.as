@@ -20,12 +20,10 @@
  */
 package org.openwms.web.flex.client.view
 {
-    import com.adobe.cairngorm.business.ServiceLocator;
-    //import com.gorillalogic.security.Chimp;
-
     import flash.display.DisplayObject;
     import flash.events.Event;
-
+    import flash.system.ApplicationDomain;
+    
     import mx.collections.ArrayCollection;
     import mx.collections.XMLListCollection;
     import mx.containers.ViewStack;
@@ -37,34 +35,26 @@ package org.openwms.web.flex.client.view
     import mx.logging.Log;
     import mx.managers.DragManager;
     import mx.managers.PopUpManager;
-    import mx.modules.IModuleInfo;
     import mx.modules.ModuleManager;
-
-    import org.granite.events.SecurityEvent;
+    
     import org.granite.rpc.remoting.mxml.SecureRemoteObject;
-
-    import org.granite.tide.spring.Spring;
     import org.granite.tide.spring.Context;
     import org.granite.tide.spring.Identity;
-
+    import org.granite.tide.spring.Spring;
     import org.openwms.common.domain.MenuItem;
     import org.openwms.common.domain.Module;
     import org.openwms.tms.domain.order.TransportOrder;
-    import org.openwms.web.flex.client.HashMap;
     import org.openwms.web.flex.client.IApplicationModule;
+    import org.openwms.web.flex.client.business.RoleDelegate;
+    import org.openwms.web.flex.client.business.UserDelegate;
     import org.openwms.web.flex.client.command.*;
     import org.openwms.web.flex.client.control.MainController;
     import org.openwms.web.flex.client.event.ApplicationEvent;
-    import org.openwms.web.flex.client.event.RoleEvent;
     import org.openwms.web.flex.client.event.SwitchScreenEvent;
-    import org.openwms.web.flex.client.event.UserEvent;
-    import org.openwms.web.flex.client.model.Constants;
     import org.openwms.web.flex.client.model.ModelLocator;
     import org.openwms.web.flex.client.module.ModuleLocator;
     import org.openwms.web.flex.client.util.DisplayUtility;
     import org.openwms.web.flex.client.view.dialogs.LoginView;
-    import org.openwms.web.flex.client.business.UserDelegate;
-    import org.openwms.web.flex.client.business.RoleDelegate;
 
     public class AppBase extends Application
     {
@@ -97,6 +87,8 @@ package org.openwms.web.flex.client.view
 
         [Bindable]
         public var userService:SecureRemoteObject = null;
+        
+        private var applicationDomain:ApplicationDomain = new ApplicationDomain(ApplicationDomain.currentDomain);
 
         // Manager classes are loaded to the application domain
         private var moduleManager:ModuleManager;
@@ -209,7 +201,7 @@ package org.openwms.web.flex.client.view
                 //refreshMainMenu(appModule);
                 mainMenuBar.dataProvider = moduleLocator.getActiveMenuItems(new XMLListCollection(stdMenu));
                 refreshViewStack(appModule);
-                appModule.initializeModule();
+                appModule.initializeModule(applicationDomain);
             }
         }
 
@@ -221,6 +213,13 @@ package org.openwms.web.flex.client.view
         public function modulesConfigured(event:ApplicationEvent):void
         {
             mainMenuBar.dataProvider = new XMLListCollection(stdMenu);
+            modelLocator.securityObjectNames = getStdSecurityObjects();
+        }
+        
+        private function getStdSecurityObjects():ArrayCollection
+        {
+        	// Go through all components that implement ISecured and add them to the modelLocator.secured...
+        	return new ArrayCollection(new Array({}));
         }
 
         /**
@@ -229,11 +228,13 @@ package org.openwms.web.flex.client.view
          */
         private function refreshViewStack(module:IApplicationModule):void
         {
-            trace("Resolve ViewStack items from module:" + module.getModuleName());
+            trace("Resolve ViewStack items from module : " + module.getModuleName());
             var views:ArrayCollection = module.getViews();
+            trace("GET SUCCESSFUL");
             for each (var view:DisplayObject in views)
             {
-                appViewStack.addChild(view);
+            	trace("ADDING:"+view);
+                appViewStack.addChild(view as DisplayObject);
             }
         }
 

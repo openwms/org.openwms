@@ -22,6 +22,7 @@ package org.openwms.web.flex.client.common.model
 {
 
     import com.adobe.cairngorm.model.IModelLocator;
+    
     import mx.collections.ArrayCollection;
     
     /**
@@ -30,6 +31,7 @@ package org.openwms.web.flex.client.common.model
      * @author <a href="mailto:openwms@googlemail.com">Heiko Scherrer</a>
      * @version $Revision: 796 $
      */
+    [Name("commonModelLocator")]
     [Bindable]
     public class CommonModelLocator implements IModelLocator
     {
@@ -37,30 +39,13 @@ package org.openwms.web.flex.client.common.model
         public var allTransportUnitTypes:ArrayCollection = new ArrayCollection();
         public var allLocations:ArrayCollection = new ArrayCollection();
         public var allLocationTypes:ArrayCollection = new ArrayCollection();
-        private static var instance:CommonModelLocator;
+        public var securityObjects:ArrayCollection = new ArrayCollection();
 
         /**
-         * Used to construct the Singleton instance.
+         * Constructor.
          */
-        public function CommonModelLocator(enforcer:SingletonEnforcer)
+        public function CommonModelLocator()
         {
-        }
-        
-        /**
-         * Return the instance of CommonModelLocator which is implemented
-         * as Singleton.
-         */
-        public static function getInstance():CommonModelLocator
-        {
-            if (instance == null)
-            {
-                instance = new CommonModelLocator(new SingletonEnforcer);
-            }
-            return instance;
         }
     }
-}
-
-class SingletonEnforcer
-{
 }

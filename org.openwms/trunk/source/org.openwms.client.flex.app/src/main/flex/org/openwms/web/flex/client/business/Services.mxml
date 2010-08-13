@@ -29,32 +29,32 @@
 
 	<granite:SecureRemoteObject
         id="locationService"
-        destination="locationService"
+        destination="locationServiceRemote"
         showBusyCursor="true" />
 
 	<granite:SecureRemoteObject
         id="locationGroupService"
-        destination="locationGroupService"
+        destination="locationGroupServiceRemote"
         showBusyCursor="true"/>
 
     <granite:SecureRemoteObject
         id="transportUnitService"
-        destination="transportUnitService"
+        destination="transportUnitServiceRemote"
         showBusyCursor="true"/>
 
     <granite:SecureRemoteObject
         id="transportService"
-        destination="transportService"
+        destination="transportServiceRemote"
         showBusyCursor="true"/>
 
     <granite:SecureRemoteObject
         id="moduleManagementService"
-        destination="moduleManagementService2"
+        destination="moduleManagementServiceRemote"
         showBusyCursor="true"/>
 
     <granite:SecureRemoteObject
         id="userService"
-        destination="userService2"
+        destination="userServiceRemote"
         showBusyCursor="true"/>
 
 <!--

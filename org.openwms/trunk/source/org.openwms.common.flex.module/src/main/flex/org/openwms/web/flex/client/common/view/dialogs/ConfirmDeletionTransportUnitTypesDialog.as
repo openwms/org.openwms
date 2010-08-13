@@ -34,6 +34,8 @@ package org.openwms.web.flex.client.common.view.dialogs
      * @author <a href="mailto:openwms@googlemail.com">Heiko Scherrer</a>
      * @version $Revision: 796 $
      */
+    [Name]
+    [ManagedEvent(name="DELETE_TRANSPORT_UNIT_TYPE")]
     [Bindable]
     public class ConfirmDeletionTransportUnitTypesDialog extends ConfirmDeletionDialog
     {
@@ -52,7 +54,7 @@ package org.openwms.web.flex.client.common.view.dialogs
         {
             var event:TransportUnitTypeEvent = new TransportUnitTypeEvent(TransportUnitTypeEvent.DELETE_TRANSPORT_UNIT_TYPE);
             event.data = deleteLst.dataProvider as ArrayCollection;
-            event.dispatch();
+            dispatchEvent(event);
             closeDialog();
         }
         

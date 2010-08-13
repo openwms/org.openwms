@@ -25,7 +25,13 @@ package org.openwms.web.flex.client.module
     import mx.events.FlexEvent;
     import mx.modules.ModuleBase;
 
-    public class CommonModule extends ModuleBase
+    /**
+     * A CommonModule.
+     *
+     * @author <a href="mailto:openwms@googlemail.com">Heiko Scherrer</a>
+     * @version $Revision: 870 $
+     */
+     public class CommonModule extends ModuleBase
     {
         /**
          * CommonModule.
@@ -34,7 +40,6 @@ package org.openwms.web.flex.client.module
         {
             super();
             this.addEventListener(FlexEvent.CREATION_COMPLETE, onCreationComplete);
-            //this.addEventListener(Event.ACTIVATE, gotFocus);
         }
 
         /**
@@ -47,6 +52,9 @@ package org.openwms.web.flex.client.module
             initApp();
         }
 
+        /**
+         * Override to do initial work when FlexEvent.CREATION_COMPLETE is fired.
+         */
         protected function initApp():void
         {
         }

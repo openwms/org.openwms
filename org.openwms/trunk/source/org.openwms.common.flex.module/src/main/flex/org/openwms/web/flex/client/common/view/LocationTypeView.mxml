@@ -23,6 +23,12 @@
 -->
 <mx:Canvas xmlns:mx="http://www.adobe.com/2006/mxml" width="100%" height="100%" backgroundColor="#C2DAEF" show="onShow()">
 
+    <mx:Metadata>
+        [Name]
+        [ManagedEvent(name="SAVE_LOCATION_TYPE")]
+        [ManagedEvent(name="LOAD_ALL_LOCATION_TYPES")]
+    </mx:Metadata>
+
     <mx:Script>
         <![CDATA[
             import mx.binding.utils.BindingUtils;
@@ -37,17 +43,21 @@
             import org.openwms.web.flex.client.common.view.dialogs.ConfirmDeletionLocationTypeDialog;
             import org.openwms.web.flex.client.common.view.dialogs.CreateLocationTypeDialog;
 
+            [In]
             [Bindable]
-            private var commonModelLocator:CommonModelLocator=CommonModelLocator.getInstance();
+            public var commonModelLocator:CommonModelLocator;
             [Bindable]
             private var selected:LocationType;
             // Can be checked outside to recognize unsubmitted changes
             [Bindable]
             public var changed:Boolean=false;
 
+            /**
+             * OnShow load all LocationTypes if they weren't loaded before.
+             */
             private function onShow():void {
                 if (commonModelLocator.allLocationTypes.length == 0) {
-                    new LocationTypeEvent(LocationTypeEvent.LOAD_ALL_LOCATION_TYPES).dispatch();
+                    dispatchEvent(new LocationTypeEvent(LocationTypeEvent.LOAD_ALL_LOCATION_TYPES));
                 }
             }
 
@@ -84,7 +94,7 @@
 
                     var event:LocationTypeEvent=new LocationTypeEvent(LocationTypeEvent.SAVE_LOCATION_TYPE);
                     event.data=selected;
-                    event.dispatch();
+                    dispatchEvent(event);
                     selected = null;
                     changed = false;
                 }
@@ -92,7 +102,7 @@
 
             private function refresh():void {
                 var event:LocationTypeEvent=new LocationTypeEvent(LocationTypeEvent.LOAD_ALL_LOCATION_TYPES);
-                event.dispatch();
+                dispatchEvent(event);
                 selected=null;
                 changed = false;
             }

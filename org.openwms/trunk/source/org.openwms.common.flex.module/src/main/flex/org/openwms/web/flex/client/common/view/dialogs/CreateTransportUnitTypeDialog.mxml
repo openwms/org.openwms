@@ -1,6 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <mx:Panel xmlns:mx="http://www.adobe.com/2006/mxml" width="540" height="452" title="Create Transport Unit Type" fontSize="12" creationComplete="init();">
 	
+    <mx:Metadata>
+        [Name]
+        [ManagedEvent(name="CREATE_TRANSPORT_UNIT_TYPE")]
+    </mx:Metadata>
+
 	<mx:Script>
 		<![CDATA[
 			import mx.events.ValidationResultEvent;
@@ -44,7 +49,7 @@
 	            	transportUnitType.description = descriptionTxt.text;
 	            	
 	            	event.data = transportUnitType;
-	            	event.dispatch();
+	            	dispatchEvent(event);
 	            	closeDialog();
                     }
             }

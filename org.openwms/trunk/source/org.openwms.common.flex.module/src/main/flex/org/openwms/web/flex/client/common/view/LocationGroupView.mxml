@@ -23,6 +23,10 @@
 -->
 <mx:Canvas xmlns:mx="http://www.adobe.com/2006/mxml" xmlns:x="org.openwms.web.flex.client.component.*" width="100%" height="100%" backgroundColor="#C2DAEF" show="onShow()">
 
+    <mx:Metadata>
+        [Name]
+    </mx:Metadata>
+
     <!-- Scripts -->
     <mx:Script>
         <![CDATA[
@@ -34,11 +38,13 @@
             import mx.collections.ArrayCollection;
             import mx.events.*;
 
+            [In]
             [Bindable]
-            private var modelLocator : ModelLocator = ModelLocator.getInstance();
+            public var modelLocator:ModelLocator;
 
-            [Bindable]
-            private var commonModelLocator : CommonModelLocator = CommonModelLocator.getInstance();
+	        [In]
+	        [Bindable]
+	        public var commonModelLocator:CommonModelLocator;
 
             [Bindable]
             private var selectedLocationGroup : LocationGroup;

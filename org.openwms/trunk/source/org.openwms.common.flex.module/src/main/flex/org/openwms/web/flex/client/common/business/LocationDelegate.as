@@ -26,8 +26,11 @@ package org.openwms.web.flex.client.common.business
     import mx.rpc.AsyncToken;
     import mx.rpc.IResponder;
     
+    import org.granite.tide.spring.Context;
+    import org.granite.tide.events.TideResultEvent;
     import org.openwms.common.domain.Location;
     import org.openwms.common.domain.LocationType;
+    import org.openwms.web.flex.client.common.model.CommonModelLocator;
 
     /**
      * A LocationDelegate.
@@ -35,22 +38,34 @@ package org.openwms.web.flex.client.common.business
      * @author <a href="mailto:openwms@googlemail.com">Heiko Scherrer</a>
      * @version $Revision$
      */
+    [Name("locationDelegate")]
+    [ManagedEvent(name="LOAD_ALL_LOCATION_TYPES")]
     public class LocationDelegate
     {
+        [In]
+        [Bindable]
+        public var tideContext:Context;
+	    [In]
+	    [Bindable]
+	    public var commonModelLocator:CommonModelLocator;            
+
         private var responder:IResponder;
         private var service:Object;
 
-        public function LocationDelegate(responder:IResponder):void
+        public function LocationDelegate():void
         {
-            this.responder = responder;
-            this.service = ServiceLocator.getInstance().getRemoteObject("locationService");
         }
 
+        /**
+         * Call to load all LocationTypes from the service.
+         */
+        [Observer("LOAD_ALL_TRANSPORT_UNIT_TYPES")]
         public function getLocations():void
         {
-            var call:AsyncToken = service.findAll();
-            call.addResponder(responder);
+            tideContext.locationService.getLocationTypes(onLocationTypesLoaded);
         }
+
+        
         
         public function createLocation(location:Location):void
         {
@@ -70,10 +85,20 @@ package org.openwms.web.flex.client.common.business
             call.addResponder(responder);            
         }
 
+        /**
+         * Call to load all LocationTypes from the service.
+         */
+        [Observer("LOAD_ALL_LOCATION_TYPES")]
         public function getLocationTypes():void
         {
-            var call:AsyncToken = service.getAllLocationTypes();
-            call.addResponder(responder);
+        	trace("LOAD_ALL_LOCATION_TYPES delegate");
+            tideContext.locationService.getLocationTypes(onLocationTypesLoaded);
+        }
+
+        private function onLocationTypesLoaded(event:TideResultEvent):void
+        {
+        	trace("LOCATION TYPES LOADED");
+            commonModelLocator.allLocationTypes = event.result as ArrayCollection;
         }
         
         public function createLocationType(locationType:LocationType):void

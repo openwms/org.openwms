@@ -20,13 +20,16 @@
  */
 package org.openwms.web.flex.client.common.business
 {
-    import com.adobe.cairngorm.business.ServiceLocator;
-    
     import mx.collections.ArrayCollection;
-    import mx.rpc.AsyncToken;
-    import mx.rpc.IResponder;
     
+    import org.granite.tide.spring.Context;
+    import org.granite.tide.events.TideResultEvent;
+    import org.openwms.common.domain.Rule;
     import org.openwms.common.domain.TransportUnitType;
+    import org.openwms.common.domain.TypePlacingRule;
+    import org.openwms.common.domain.TypeStackingRule;
+    import org.openwms.web.flex.client.common.event.TransportUnitTypeEvent;
+    import org.openwms.web.flex.client.common.model.CommonModelLocator;
 
     /**
      * A TransportUnitTypeDelegate.
@@ -34,50 +37,113 @@ package org.openwms.web.flex.client.common.business
      * @author <a href="mailto:openwms@googlemail.com">Heiko Scherrer</a>
      * @version $Revision: 771 $
      */
+    [Name("transportUnitTypeDelegate")]
+    [ManagedEvent(name="LOAD_ALL_TRANSPORT_UNIT_TYPES")]
     public class TransportUnitTypeDelegate
     {
-        private var responder:IResponder;
-        private var service:Object;
+        [In]
+        [Bindable]
+        public var tideContext:Context;
 
-        public function TransportUnitTypeDelegate(responder:IResponder):void
+        [In]
+        [Bindable]
+    	public var commonModelLocator:CommonModelLocator;
+        private var transportUnitType:TransportUnitType;
+
+        public function TransportUnitTypeDelegate():void
         {
-            this.responder = responder;
-            this.service = ServiceLocator.getInstance().getRemoteObject("transportUnitService");
         }
 
+        /**
+         * Call to load all TransportUnitTypes from the service.
+         */
+        [Observer("LOAD_ALL_TRANSPORT_UNIT_TYPES")]
         public function getTransportUnitTypes():void
         {
-            var call:AsyncToken = service.getAllTransportUnitTypes();
-            call.addResponder(responder);
+        	tideContext.transportUnitService.getAllTransportUnitTypes(onTransportUnitTypesLoaded);
         }
         
-        public function createTransportUnitType(transportUnitType:TransportUnitType):void
+        private function onTransportUnitTypesLoaded(event:TideResultEvent):void
         {
-            var call:AsyncToken = service.createTransportUnitType(transportUnitType);
-            call.addResponder(responder);
-        }
-
-        public function deleteTransportUnitTypes(transportUnitTypes:ArrayCollection):void
-        {
-            var call:AsyncToken = service.deleteTransportUnitTypes(transportUnitTypes);
-            call.addResponder(responder);
-        }
-
-        public function saveTransportUnitType(transportUnitType:TransportUnitType):void
-        {
-            var call:AsyncToken = service.saveTransportUnitType(transportUnitType);
-            call.addResponder(responder);
-        }
-
-        public function updateAllowedLocationTypes(data:*):void
-        {
-            var call:AsyncToken = service.updateRules(data.tuType, data.newAssigned, data.newNotAssigned);
-            call.addResponder(responder);
+            commonModelLocator.allTransportUnitTypes = event.result as ArrayCollection;        	
         }
         
-        public function loadRules(type:String):void {
-            var call:AsyncToken = service.loadRules(type);
-            call.addResponder(responder);        	
+        /**
+         * Call to create a new TransportUnitType.
+         */
+        [Observer("CREATE_TRANSPORT_UNIT_TYPE")]
+        public function createTransportUnitType(event:TransportUnitTypeEvent):void
+        {
+            if (event.data != null)
+            {
+                tideContext.transportUnitService.createTransportUnitType(event.data as TransportUnitType, onTransportUnitTypeCreated);
+            }
+        }
+
+        private function onTransportUnitTypeCreated(event:TideResultEvent):void
+        {
+            dispatchEvent(new TransportUnitTypeEvent(TransportUnitTypeEvent.LOAD_ALL_TRANSPORT_UNIT_TYPES));
+        }
+
+        /**
+         * Call to delete a TransportUnitType.
+         */
+        [Observer("DELETE_TRANSPORT_UNIT_TYPE")]
+        public function deleteTransportUnitTypes(event:TransportUnitTypeEvent):void
+        {
+            if (event.data != null)
+            {
+                tideContext.transportUnitService.deleteTransportUnitTypes(event.data as ArrayCollection, onTransportUnitTypeDeleted);
+            }
+        }
+
+        private function onTransportUnitTypeDeleted(event:TideResultEvent):void
+        {
+            dispatchEvent(new TransportUnitTypeEvent(TransportUnitTypeEvent.LOAD_ALL_TRANSPORT_UNIT_TYPES));
+        }
+
+        /**
+         * Call to save an already existing TransportUnitType.
+         */
+        [Observer("SAVE_TRANSPORT_UNIT_TYPE")]
+        public function saveTransportUnitType(event:TransportUnitTypeEvent):void
+        {
+            if (event.data != null)
+            {
+                tideContext.transportUnitService.saveTransportUnitType(event.data as TransportUnitType, onTransportUnitTypeSaved);
+            }
+        }
+
+        private function onTransportUnitTypeSaved(event:TideResultEvent):void
+        {
+            dispatchEvent(new TransportUnitTypeEvent(TransportUnitTypeEvent.LOAD_ALL_TRANSPORT_UNIT_TYPES));
+        }
+
+        /**
+         * Lazy load all Rules belonging to a TransportUnitType.
+         */
+        [Observer("LOAD_TUT_RULES")]
+        public function loadRules(event:TransportUnitTypeEvent):void {
+            if (event.data != null)
+            {
+            	transportUnitType = event.data as TransportUnitType;
+                tideContext.transportUnitService.loadRules(transportUnitType.type, onRulesLoaded);
+            }
+        }
+
+        private function onRulesLoaded(event:TideResultEvent):void
+        {
+            var rules:ArrayCollection = event.result as ArrayCollection;
+            for each (var rule:Rule in rules) {
+                if (rule is TypePlacingRule) {
+                    trace("Rule added as Placing Rule");
+                    transportUnitType.typePlacingRules.addItem(rule);
+                }
+                if (rule is TypeStackingRule) {
+                    trace("Rule added as Stacking Rule");
+                    transportUnitType.typeStackingRules.addItem(rule);
+                }
+            }
         }
     }
 }

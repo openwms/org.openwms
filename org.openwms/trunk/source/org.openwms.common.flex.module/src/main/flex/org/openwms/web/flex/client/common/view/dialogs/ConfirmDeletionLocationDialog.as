@@ -35,6 +35,8 @@ package org.openwms.web.flex.client.common.view.dialogs
      * @author <a href="mailto:openwms@googlemail.com">Heiko Scherrer</a>
      * @version $Revision: 796 $
      */
+    [Name]
+    [ManagedEvent(name="DELETE_LOCATION")]
     [Bindable]
     public class ConfirmDeletionLocationDialog extends ConfirmDeletionDialog
     {

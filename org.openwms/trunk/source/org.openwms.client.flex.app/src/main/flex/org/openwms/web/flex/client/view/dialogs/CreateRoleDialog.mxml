@@ -57,6 +57,7 @@
                     event.data = role;
                     dispatchEvent(event);
                 }
+                roleTxt.setFocus();
             }
             
             private function formatRoleName(roleName:String):String
@@ -91,6 +92,7 @@
             {
             	roleTxt.text = "";
             	descriptionTxt.text = "";
+            	roleTxt.setFocus();
             }
     	]]>
     </mx:Script>
