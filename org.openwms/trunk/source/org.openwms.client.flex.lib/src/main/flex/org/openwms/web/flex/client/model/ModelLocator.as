@@ -22,9 +22,9 @@ package org.openwms.web.flex.client.model
 {
 
     import com.adobe.cairngorm.model.IModelLocator;
-
+    
     import mx.collections.ArrayCollection;
-
+    
     import org.openwms.common.domain.Module;
     import org.openwms.common.domain.system.usermanagement.User;
     import org.openwms.web.flex.client.HashMap;
@@ -74,30 +74,19 @@ package org.openwms.web.flex.client.model
         public var loadedModules:HashMap = new HashMap();
         public var unloadedModules:HashMap = new HashMap();
         public var selectedModule:Module = null;
+        
+        // --------------------------------------------------------------------
+        // Security
+        // --------------------------------------------------------------------
         // Credentials, set by the login screen
         public var isInitialized:Boolean = false;
-
-
-        private static var instance:ModelLocator;
+        public var securityObjectNames:ArrayCollection = new ArrayCollection();
 
         /**
-         * Used to construct the Singleton instance.
+         * Constructor.
          */
         public function ModelLocator()
         {
-        }
-
-        /**
-         * Return the instance of ModelLocator which is implemented
-         * as Singleton.
-         */
-        public static function getInstance():ModelLocator
-        {
-            if (instance == null)
-            {
-                instance = new ModelLocator();
-            }
-            return instance;
         }
 
         /**
@@ -123,8 +112,4 @@ package org.openwms.web.flex.client.model
         {
         }
     }
-}
-
-class SingletonEnforcer
-{
 }

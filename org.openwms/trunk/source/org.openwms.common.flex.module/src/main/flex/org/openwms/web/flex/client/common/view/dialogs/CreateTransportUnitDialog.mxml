@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <mx:Panel xmlns:mx="http://www.adobe.com/2006/mxml" width="506" height="358" title="Create Transport Units" fontSize="12" creationComplete="init();" xmlns:comp="org.openwms.web.flex.client.component.*">
 
+    <mx:Metadata>
+        [Name]
+    </mx:Metadata>
+
     <mx:Script>
     	<![CDATA[
     		import org.openwms.web.flex.client.model.ModelLocator;
@@ -24,10 +28,12 @@
 
             [Embed ("closeButton.png")]
             private var closeImg:Class;
+            [In]
             [Bindable]
-            private var commonModelLocator:CommonModelLocator = CommonModelLocator.getInstance();
+            public var commonModelLocator:CommonModelLocator;
+            [In]
             [Bindable]
-            public var modelLocator:ModelLocator = ModelLocator.getInstance();
+            public var modelLocator:ModelLocator;
     	
             private function init():void
             {

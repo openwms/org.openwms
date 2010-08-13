@@ -23,6 +23,14 @@
 -->
 <mx:Canvas xmlns:mx="http://www.adobe.com/2006/mxml" width="100%" height="100%" show="onShow()" backgroundColor="#C2DAEF" xmlns:comp="org.openwms.web.flex.client.component.*">
 
+    <mx:Metadata>
+        [Name]
+        [ManagedEvent(name="LOAD_ALL_TRANSPORT_UNIT_TYPES")]
+        [ManagedEvent(name="LOAD_ALL_LOCATION_TYPES")]
+        [ManagedEvent(name="LOAD_TUT_RULES")]
+        [ManagedEvent(name="SAVE_TRANSPORT_UNIT_TYPE")]
+    </mx:Metadata>
+
     <mx:Style>
         .multipleImageButtonStyle
         {
@@ -35,6 +43,7 @@
 
     <mx:Script>
         <![CDATA[
+        	import org.granite.tide.spring.Context;
         	import org.openwms.common.domain.LocationType;
         	import mx.events.DragEvent;
         	import org.openwms.common.domain.TypePlacingRule;
@@ -55,17 +64,25 @@
             import org.openwms.web.flex.client.component.ListDialog;
             import org.openwms.web.flex.client.common.view.dialogs.ConfirmDeletionTransportUnitTypesDialog;
 
+            [In]
             [Bindable]
-            private var commonModelLocator:CommonModelLocator=CommonModelLocator.getInstance();
+            public var commonModelLocator:CommonModelLocator;            
+            [In]
+            [Bindable]
+            public var tideContext:Context;
             [Bindable]
             private var selected:TransportUnitType;
 
+            /**
+             * Initialize data structures in model or fire events to do so.
+             */
             private function onShow():void {
                 if (commonModelLocator.allLocationTypes.length == 0) {
-                    new LocationTypeEvent(LocationTypeEvent.LOAD_ALL_LOCATION_TYPES).dispatch();
+                	trace("FIRE EVENT");
+                    dispatchEvent(new LocationTypeEvent(LocationTypeEvent.LOAD_ALL_LOCATION_TYPES));
                 }
                 if (commonModelLocator.allTransportUnitTypes.length == 0) {
-                    new TransportUnitTypeEvent(TransportUnitTypeEvent.LOAD_ALL_TRANSPORT_UNIT_TYPES).dispatch();
+                    dispatchEvent(new TransportUnitTypeEvent(TransportUnitTypeEvent.LOAD_ALL_TRANSPORT_UNIT_TYPES));
                 } else {
                     selected=commonModelLocator.allTransportUnitTypes.getItemAt(0) as TransportUnitType;
                 }
@@ -78,7 +95,7 @@
 
             private function showDeleteTransportUnitTypeDialog():void {
                 if (transportUnitTypeGrd.selectedIndices.length == 0) {
-                    Alert.show("Please select at least one Transport Unit Type to delete");
+                    Alert.show("Please select at least one TransportUnitType to delete");
                     return;
                 }
                 selected = null;
@@ -101,7 +118,7 @@
                     }
 	                var e:TransportUnitTypeEvent = new TransportUnitTypeEvent(TransportUnitTypeEvent.LOAD_TUT_RULES);
 	                e.data = selected;
-	                e.dispatch();
+	                dispatchEvent(e);
                 }
             }
 
@@ -124,13 +141,12 @@
 
                     var event:TransportUnitTypeEvent=new TransportUnitTypeEvent(TransportUnitTypeEvent.SAVE_TRANSPORT_UNIT_TYPE);
                     event.data=selected;
-                    event.dispatch();
+                    dispatchEvent(event);
                 }
             }
 
             private function refresh():void {
-                var event:TransportUnitTypeEvent=new TransportUnitTypeEvent(TransportUnitTypeEvent.LOAD_ALL_TRANSPORT_UNIT_TYPES);
-                event.dispatch();
+                dispatchEvent(new TransportUnitTypeEvent(TransportUnitTypeEvent.LOAD_ALL_TRANSPORT_UNIT_TYPES));
             }
             
             private function retAllowedLocationType(item:*):String {

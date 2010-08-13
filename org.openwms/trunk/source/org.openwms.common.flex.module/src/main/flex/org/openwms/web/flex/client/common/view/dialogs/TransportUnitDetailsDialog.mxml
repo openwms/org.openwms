@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <mx:Panel xmlns:mx="http://www.adobe.com/2006/mxml" width="752" height="512" title="TransportUnit Details" creationComplete="init()" xmlns:comp="org.openwms.web.flex.client.component.*" xmlns:jwo="com.jwopitz.containers.*">
 
+    <mx:Metadata>
+        [Name]
+    </mx:Metadata>
+
     <mx:Script>
     	<![CDATA[
     		import org.openwms.common.domain.TransportUnit$TU_STATE;
@@ -14,10 +18,12 @@
     		private var transportUnit:TransportUnit;
     		[Bindable]
     		public var transportUnits:ArrayCollection;
-    		[Bindable]
-    		private var modelLocator:ModelLocator = ModelLocator.getInstance();
+            [In]
             [Bindable]
-            private var commonModelLocator:CommonModelLocator = CommonModelLocator.getInstance();
+            public var modelLocator:ModelLocator;
+            [In]
+            [Bindable]
+            public var commonModelLocator:CommonModelLocator;
             [Bindable]
             private var markedMultiple:Boolean = false;
             [Bindable]

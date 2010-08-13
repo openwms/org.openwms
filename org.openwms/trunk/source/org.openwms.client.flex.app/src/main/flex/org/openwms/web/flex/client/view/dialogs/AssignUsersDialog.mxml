@@ -30,6 +30,8 @@
 
     <mx:Script>
         <![CDATA[
+        	import mx.collections.Sort;
+        	import mx.collections.SortField;
         	import mx.utils.ObjectUtil;
         	import org.openwms.common.domain.system.usermanagement.User;
         	import org.openwms.web.flex.client.event.RoleEvent;
@@ -102,6 +104,8 @@
                     toAssign.itemUpdated(item);
                     changed = true;
                 }
+                sortList(toAssign);
+                sortList(notAssigned);
             }
                     
             private function moveLeft():void
@@ -110,8 +114,23 @@
                 {
                     notAssigned.addItem(toAssign.removeItemAt(toAssign.getItemIndex(item)));
                     notAssigned.itemUpdated(item);
+                    notAssigned.sort
                     changed = true;
                 }
+                sortList(toAssign);
+                sortList(notAssigned);
+            }
+            
+            private function sortList(list:ListCollectionView):ListCollectionView
+            {
+            	var sortField:SortField = new SortField();
+                sortField.name = "username";
+                sortField.numeric = false;
+                var dataSort:Sort = new Sort();
+                dataSort.fields = [sortField];
+                list.sort = dataSort;
+                list.refresh();
+                return list;
             }
         ]]>
     </mx:Script>

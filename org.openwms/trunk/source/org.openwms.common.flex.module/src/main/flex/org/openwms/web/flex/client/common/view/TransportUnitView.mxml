@@ -23,6 +23,10 @@
 -->
 <mx:Canvas xmlns:mx="http://www.adobe.com/2006/mxml" width="100%" height="100%" initialize="onStartup()" backgroundColor="#C2DAEF">
 
+    <mx:Metadata>
+        [Name]
+    </mx:Metadata>
+
 	<mx:Script>
     	<![CDATA[
     		import mx.events.ListEvent;
@@ -39,10 +43,9 @@
             import org.openwms.web.flex.client.common.view.dialogs.TransportUnitDetailsDialog;
     		import mx.managers.PopUpManager;
     		
-    		[Bindable]
-            private var modelLocator:ModelLocator = ModelLocator.getInstance();
+            [In]
             [Bindable]
-            private var modelLocator2:CommonModelLocator = CommonModelLocator.getInstance();
+            public var modelLocator:ModelLocator;
             [Bindable]
             private var selected:TransportUnit;
             private static var tu:TransportUnit = new TransportUnit();

@@ -21,21 +21,19 @@
 package org.openwms.web.flex.client.tms.view
 {
 
+    import flash.system.ApplicationDomain;
+    
     import mx.collections.ArrayCollection;
     import mx.collections.XMLListCollection;
     import mx.containers.ViewStack;
     import mx.controls.MenuBar;
     import mx.events.FlexEvent;
-
-    import org.openwms.web.flex.client.HashMap;
+    
+    import org.granite.tide.spring.Spring;
     import org.openwms.web.flex.client.IApplicationModule;
-    import org.openwms.web.flex.client.MenuItemMap;
     import org.openwms.web.flex.client.control.MainController;
     import org.openwms.web.flex.client.model.ModelLocator;
     import org.openwms.web.flex.client.module.CommonModule;
-    import org.openwms.web.flex.client.tms.command.CreateTransportOrderCommand;
-    import org.openwms.web.flex.client.tms.command.DeleteTransportOrderCommand;
-    import org.openwms.web.flex.client.tms.command.LoadTransportOrdersCommand;
     import org.openwms.web.flex.client.tms.event.TMSSwitchScreenEvent;
     import org.openwms.web.flex.client.tms.event.TransportOrderEvent;
 
@@ -63,7 +61,6 @@ package org.openwms.web.flex.client.tms.view
             super();
             addEventListener(FlexEvent.APPLICATION_COMPLETE, creationCompleteHandler);
             addEventListener(FlexEvent.CREATION_COMPLETE, creationCompleteHandler);
-            //bindCommands();
         }
 
         public function creationCompleteHandler(event:FlexEvent):void
@@ -95,11 +92,11 @@ package org.openwms.web.flex.client.tms.view
         }
 
         /**
-         * This method returns a list of items which shall be expaned to the context popup
-         * menu. The list contains objects with key,value pairs. The key is the name of the
-         * gui component where the popup shall appear, the value is the list of popup items.
+         * This method returns a list of items which are handled as SecuityObjects.
+         * A SecurityObject can be assigned to a Role and is monitored by the SecurityHandler
+         * to allow or deny certain functionality within the user interface.
          */
-        public function getPopupItems():ArrayCollection
+        public function getSecurityObjects():ArrayCollection
         {
             return new ArrayCollection();
         }
@@ -109,23 +106,14 @@ package org.openwms.web.flex.client.tms.view
             return new ArrayCollection(tmsViewStack.getChildren());
         }
 
-        public function initializeModule():void
+        public function initializeModule(applicationDomain:ApplicationDomain = null):void
         {
+        	trace("Initialize module : "+getModuleName());
+        	Spring.getInstance().addModule(TMSAppBase, applicationDomain);
         }
 
         public function destroyModule():void
         {
-            mainController.unregisterHandler(TMSSwitchScreenEvent.SHOW_TRANSPORT_ORDERS_VIEW);
-            mainController.unregisterHandler(TransportOrderEvent.CREATE_TRANSPORT_ORDER);
-            mainController.unregisterHandler(TransportOrderEvent.DELETE_TRANSPORT_ORDER);
         }
-    /*
-       private function bindCommands():void
-       {
-       mainController.registerHandler(TMSSwitchScreenEvent.SHOW_TRANSPORT_ORDERS_VIEW, LoadTransportOrdersCommand);
-       mainController.registerHandler(TransportOrderEvent.CREATE_TRANSPORT_ORDER, CreateTransportOrderCommand);
-       mainController.registerHandler(TransportOrderEvent.DELETE_TRANSPORT_ORDER, DeleteTransportOrderCommand);
-       }
-     */
     }
 }

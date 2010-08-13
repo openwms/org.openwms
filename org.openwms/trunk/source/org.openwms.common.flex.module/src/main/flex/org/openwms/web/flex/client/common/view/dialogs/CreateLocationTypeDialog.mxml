@@ -23,6 +23,11 @@
 -->
 <mx:Panel xmlns:mx="http://www.adobe.com/2006/mxml" width="460" height="334" title="Create Location Type" fontSize="12" creationComplete="init();">
 
+    <mx:Metadata>
+        [Name]
+        [ManagedEvent(name="CREATE_LOCATION_TYPE")]
+    </mx:Metadata>
+
     <mx:Script>
         <![CDATA[
             import mx.events.ValidationResultEvent;
@@ -55,7 +60,7 @@
                     locationType.description=descriptionTxt.text;
 
                     event.data=locationType;
-                    event.dispatch();
+                    dispatchEvent(event);
                 }
             }
 

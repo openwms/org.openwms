@@ -29,11 +29,7 @@
     		import org.openwms.web.flex.client.util.DisplayUtility;
     		import org.openwms.web.flex.client.event.SwitchScreenEvent;
     		import org.openwms.web.flex.client.common.event.CommonSwitchScreenEvent;
-    		import org.openwms.web.flex.client.model.ModelLocator;
-    		
-            [Bindable]
-            protected var modelLocator : ModelLocator = ModelLocator.getInstance();
-    	]]>
+       	]]>
     </mx:Script>
 
     <mx:VBox height="100%" width="100%" verticalGap="0" backgroundColor="#C2DAEF">

@@ -20,7 +20,7 @@
  */
 package org.openwms.web.flex.client.common.event
 {
-    import com.adobe.cairngorm.control.CairngormEvent;
+    import flash.events.Event;
 
     /**
      * A TransportUnitTypeEvent.
@@ -28,15 +28,17 @@ package org.openwms.web.flex.client.common.event
      * @author <a href="mailto:openwms@googlemail.com">Heiko Scherrer</a>
      * @version $Revision: 771 $
      */
-    public class TransportUnitTypeEvent extends CairngormEvent
+    public class TransportUnitTypeEvent extends Event
     {
-        public static const LOAD_ALL_TRANSPORT_UNIT_TYPES:String = "LoadAllTransportUnitTypes";
-        public static const CREATE_TRANSPORT_UNIT_TYPE:String = "Create_TransportUnitType";
-        public static const DELETE_TRANSPORT_UNIT_TYPE:String = "Delete_TransportUnitType";
-        public static const SAVE_TRANSPORT_UNIT_TYPE:String = "Save_TransportUnitType";
-        public static const LOAD_TUT_RULES:String = "Load_RulesForTUT";
+        public static const LOAD_ALL_TRANSPORT_UNIT_TYPES:String = "LOAD_ALL_TRANSPORT_UNIT_TYPES";
+        public static const CREATE_TRANSPORT_UNIT_TYPE:String = "CREATE_TRANSPORT_UNIT_TYPE";
+        public static const DELETE_TRANSPORT_UNIT_TYPE:String = "DELETE_TRANSPORT_UNIT_TYPE";
+        public static const SAVE_TRANSPORT_UNIT_TYPE:String = "SAVE_TRANSPORT_UNIT_TYPE";
+        public static const LOAD_TUT_RULES:String = "LOAD_TUT_RULES";
 
-        public function TransportUnitTypeEvent(type:String, bubbles:Boolean = false, cancelable:Boolean = false)
+        public var data:*;
+
+        public function TransportUnitTypeEvent(type:String, bubbles:Boolean = true, cancelable:Boolean = false)
         {
             super(type, bubbles, cancelable);
         }

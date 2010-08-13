@@ -22,9 +22,11 @@ package org.openwms.web.flex.client.business
 {
 
     import mx.collections.ArrayCollection;
-
-    import org.granite.tide.spring.Context;
+    import mx.controls.Alert;
+    
+    import org.granite.tide.data.events.TideDataConflictsEvent;
     import org.granite.tide.events.TideResultEvent;
+    import org.granite.tide.spring.Context;
     import org.openwms.common.domain.system.usermanagement.Role;
     import org.openwms.web.flex.client.event.RoleEvent;
     import org.openwms.web.flex.client.model.ModelLocator;
@@ -73,7 +75,7 @@ package org.openwms.web.flex.client.business
         {
             if (event.data is Role)
             {
-                tideContext.userService.saveRole(event.data as Role, onRoleSaved);
+                tideContext.userService.saveRole(event.data as Role, onRoleSaved, onFault);
             }
         }
 
@@ -104,6 +106,11 @@ package org.openwms.web.flex.client.business
         private function onRoleDeleted(event:TideResultEvent):void
         {
             dispatchEvent(new RoleEvent(RoleEvent.LOAD_ALL_ROLES));
+        }
+
+        private function onFault(event:TideDataConflictsEvent):void
+        {
+            Alert.show("Error when saving the Role");
         }
     }
 }

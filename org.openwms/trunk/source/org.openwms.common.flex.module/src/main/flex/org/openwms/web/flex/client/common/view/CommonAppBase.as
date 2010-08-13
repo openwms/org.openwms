@@ -20,63 +20,39 @@
  */
 package org.openwms.web.flex.client.common.view
 {
+    import flash.system.ApplicationDomain;
+    
     import mx.collections.ArrayCollection;
     import mx.collections.XMLListCollection;
     import mx.containers.ViewStack;
     import mx.controls.MenuBar;
-
-    import org.openwms.web.flex.client.HashMap;
+    
+    import org.granite.tide.ITideModule;
+    import org.granite.tide.Tide;
+    import org.granite.tide.spring.Spring;
     import org.openwms.web.flex.client.IApplicationModule;
-    import org.openwms.web.flex.client.MenuItemMap;
-    import org.openwms.web.flex.client.common.command.CreateLocationCommand;
-    import org.openwms.web.flex.client.common.command.CreateLocationTypeCommand;
-    import org.openwms.web.flex.client.common.command.CreateTransportUnitCommand;
-    import org.openwms.web.flex.client.common.command.CreateTransportUnitTypeCommand;
-    import org.openwms.web.flex.client.common.command.DeleteLocationCommand;
-    import org.openwms.web.flex.client.common.command.DeleteLocationTypeCommand;
-    import org.openwms.web.flex.client.common.command.DeleteTransportUnitCommand;
-    import org.openwms.web.flex.client.common.command.DeleteTransportUnitTypeCommand;
-    import org.openwms.web.flex.client.common.command.LoadLocationGroupsCommand;
-    import org.openwms.web.flex.client.common.command.LoadLocationTypeCommand;
-    import org.openwms.web.flex.client.common.command.LoadLocationsCommand;
-    import org.openwms.web.flex.client.common.command.LoadTransportUnitTypesCommand;
-    import org.openwms.web.flex.client.common.command.SaveLocationCommand;
-    import org.openwms.web.flex.client.common.command.SaveLocationTypeCommand;
-    import org.openwms.web.flex.client.common.command.SaveTransportUnitTypeCommand;
-    import org.openwms.web.flex.client.common.command.ShowLocationGroupCommand;
-    import org.openwms.web.flex.client.common.command.ShowLocationViewCommand;
-    import org.openwms.web.flex.client.common.command.ShowTransportUnitCommand;
-    import org.openwms.web.flex.client.common.command.LoadRulesForTransportUnitTypeCommand;
-    import org.openwms.web.flex.client.common.event.CommonSwitchScreenEvent;
-    import org.openwms.web.flex.client.common.event.LoadLocationGroupsEvent;
-    import org.openwms.web.flex.client.common.event.LocationEvent;
-    import org.openwms.web.flex.client.common.event.LocationTypeEvent;
-    import org.openwms.web.flex.client.common.event.TransportUnitEvent;
+    import org.openwms.web.flex.client.common.business.LocationDelegate;
+    import org.openwms.web.flex.client.common.business.TransportUnitTypeDelegate;
     import org.openwms.web.flex.client.common.event.TransportUnitTypeEvent;
     import org.openwms.web.flex.client.common.model.CommonModelLocator;
-    import org.openwms.web.flex.client.control.MainController;
-    import org.openwms.web.flex.client.event.EventBroker;
-    import org.openwms.web.flex.client.event.SwitchScreenEvent;
     import org.openwms.web.flex.client.model.ModelLocator;
     import org.openwms.web.flex.client.module.CommonModule;
 
-    public class CommonAppBase extends CommonModule implements IApplicationModule
+    [Name]
+    [ManagedEvent(name="LOAD_ALL_TRANSPORT_UNIT_TYPES")]
+    public class CommonAppBase extends CommonModule implements IApplicationModule, ITideModule
     {
 
+        [In]
         [Bindable]
-        public var menuCollection:ArrayCollection;
+        public var modelLocator:ModelLocator;
+        [In]
         [Bindable]
-        public var menuBarItemsCollection:XMLListCollection;
-        [Bindable]
-        private var modelLocator:ModelLocator = ModelLocator.getInstance();
-        [Bindable]
-        private var commonModelLocator:CommonModelLocator = CommonModelLocator.getInstance();
+        public var commonModelLocator:CommonModelLocator;
         [Bindable]
         public var commonMenuBar:MenuBar;
         [Bindable]
         public var commonViewStack:ViewStack;
-        [Bindable]
-        private var mainController:MainController = MainController.getInstance();
 
         /**
          * Constructor.
@@ -85,15 +61,14 @@ package org.openwms.web.flex.client.common.view
         {
             super();
         }
-
-        private function loadAllStaticEntities():void
+        
+        public function start(applicationDomain:ApplicationDomain = null):void
         {
-            //new TransportUnitTypeEvent(TransportUnitTypeEvent.LOAD_ALL_TRANSPORT_UNIT_TYPES).dispatch();
+        	Spring.getInstance().addModule(CommonAppBase, applicationDomain);
         }
-
-        protected override function initApp():void
-        {
-            trace("InitApp in common module called");
+        
+        public function init(tide:Tide):void {
+            tide.addComponents([CommonModelLocator, TransportUnitTypeView, TransportUnitTypeDelegate, LocationDelegate]);
         }
 
         /**
@@ -102,7 +77,6 @@ package org.openwms.web.flex.client.common.view
          */
         public function getMainMenuItems():XMLListCollection
         {
-            //bindCommands();
             return commonMenuBar.dataProvider as XMLListCollection;
         }
 
@@ -111,98 +85,49 @@ package org.openwms.web.flex.client.common.view
          */
         public function getModuleName():String
         {
-            return "COMMON";
+            return "OPENWMS.ORG CORE MODULE";
         }
 
         /**
-         * This method returns a list of items which shall be expaned to the context popup
-         * menu. The list contains objects with key,value pairs. The key is the name of the
-         * gui component where the popup shall appear, the value is the list of popup items.
+         * This method returns a list of items which are handled as SecuityObjects.
+         * A SecurityObject can be assigned to a Role and is monitored by the SecurityHandler
+         * to allow or deny certain functionality within the user interface.
          */
-        public function getPopupItems():ArrayCollection
+        public function getSecurityObjects():ArrayCollection
         {
             return new ArrayCollection();
         }
 
+        /**
+         * This method returns a list of views which shall be populated to the parent
+         * application.
+         */
         public function getViews():ArrayCollection
         {
             return new ArrayCollection(commonViewStack.getChildren());
         }
 
-        public function initializeModule():void
+        /**
+         * Do additional initial work when the module is loaded.
+         */
+        public function initializeModule(applicationDomain:ApplicationDomain = null):void
         {
-//        	bindCommands();
+            trace("Initialize module : "+getModuleName());
             loadAllStaticEntities();
-            registerEventListeners();
         }
 
-        private function registerEventListeners():void
+        private function loadAllStaticEntities():void
         {
-            var broker:EventBroker = EventBroker.getInstance();
+            dispatchEvent(new TransportUnitTypeEvent(TransportUnitTypeEvent.LOAD_ALL_TRANSPORT_UNIT_TYPES));
         }
 
+        /**
+         * Do addtional cleanup work before the module is unloaded.
+         */
         public function destroyModule():void
         {
-            mainController.unregisterHandler(SwitchScreenEvent.SHOW_LOCATION_VIEW);
-            mainController.unregisterHandler(SwitchScreenEvent.SHOW_LOCATIONGROUP_VIEW);
-
-            mainController.unregisterHandler(CommonSwitchScreenEvent.SHOW_TRANSPORTUNIT_VIEW);
-            mainController.unregisterHandler(CommonSwitchScreenEvent.SHOW_TRANSPORTUNITTYPE_VIEW);
-            mainController.unregisterHandler(CommonSwitchScreenEvent.SHOW_LOCATIONTYPE_VIEW);
-
-            mainController.unregisterHandler(LoadLocationGroupsEvent.LOAD_ALL_LOCATION_GROUPS);
-
-            mainController.unregisterHandler(LocationEvent.LOAD_ALL_LOCATIONS);
-            mainController.unregisterHandler(LocationEvent.CREATE_LOCATION);
-            mainController.unregisterHandler(LocationEvent.DELETE_LOCATION);
-            mainController.unregisterHandler(LocationEvent.SAVE_LOCATION);
-
-            mainController.unregisterHandler(LocationTypeEvent.LOAD_ALL_LOCATION_TYPES);
-            mainController.unregisterHandler(LocationTypeEvent.CREATE_LOCATION_TYPE);
-            mainController.unregisterHandler(LocationTypeEvent.DELETE_LOCATION_TYPE);
-            mainController.unregisterHandler(LocationTypeEvent.SAVE_LOCATION_TYPE);
-
-            mainController.unregisterHandler(TransportUnitTypeEvent.LOAD_ALL_TRANSPORT_UNIT_TYPES);
-            mainController.unregisterHandler(TransportUnitTypeEvent.CREATE_TRANSPORT_UNIT_TYPE);
-            mainController.unregisterHandler(TransportUnitTypeEvent.DELETE_TRANSPORT_UNIT_TYPE);
-            mainController.unregisterHandler(TransportUnitTypeEvent.SAVE_TRANSPORT_UNIT_TYPE);
-            mainController.unregisterHandler(TransportUnitTypeEvent.LOAD_TUT_RULES);
-
-            mainController.unregisterHandler(TransportUnitEvent.CREATE_TRANSPORT_UNIT);
-            mainController.unregisterHandler(TransportUnitEvent.DELETE_TRANSPORT_UNIT);
+            trace("Destroying module : "+getModuleName());
+        	Spring.getInstance().removeModule(CommonAppBase);
         }
-
-    /*
-       private function bindCommands():void
-       {
-       mainController.registerHandler(SwitchScreenEvent.SHOW_LOCATION_VIEW, ShowLocationViewCommand);
-       mainController.registerHandler(SwitchScreenEvent.SHOW_LOCATIONGROUP_VIEW, ShowLocationGroupCommand);
-
-       mainController.registerHandler(CommonSwitchScreenEvent.SHOW_TRANSPORTUNIT_VIEW, ShowTransportUnitCommand);
-       mainController.registerHandler(CommonSwitchScreenEvent.SHOW_TRANSPORTUNITTYPE_VIEW, ShowTransportUnitCommand);
-       mainController.registerHandler(CommonSwitchScreenEvent.SHOW_LOCATIONTYPE_VIEW, LoadLocationTypeCommand);
-
-       mainController.registerHandler(LoadLocationGroupsEvent.LOAD_ALL_LOCATION_GROUPS, LoadLocationGroupsCommand);
-
-       mainController.registerHandler(LocationEvent.LOAD_ALL_LOCATIONS, LoadLocationsCommand);
-       mainController.registerHandler(LocationEvent.CREATE_LOCATION, CreateLocationCommand);
-       mainController.registerHandler(LocationEvent.DELETE_LOCATION, DeleteLocationCommand);
-       mainController.registerHandler(LocationEvent.SAVE_LOCATION, SaveLocationCommand);
-
-       mainController.registerHandler(LocationTypeEvent.LOAD_ALL_LOCATION_TYPES, LoadLocationTypeCommand);
-       mainController.registerHandler(LocationTypeEvent.CREATE_LOCATION_TYPE, CreateLocationTypeCommand);
-       mainController.registerHandler(LocationTypeEvent.DELETE_LOCATION_TYPE, DeleteLocationTypeCommand);
-       mainController.registerHandler(LocationTypeEvent.SAVE_LOCATION_TYPE, SaveLocationTypeCommand);
-
-       mainController.registerHandler(TransportUnitTypeEvent.LOAD_ALL_TRANSPORT_UNIT_TYPES, LoadTransportUnitTypesCommand);
-       mainController.registerHandler(TransportUnitTypeEvent.CREATE_TRANSPORT_UNIT_TYPE, CreateTransportUnitTypeCommand);
-       mainController.registerHandler(TransportUnitTypeEvent.DELETE_TRANSPORT_UNIT_TYPE, DeleteTransportUnitTypeCommand);
-       mainController.registerHandler(TransportUnitTypeEvent.SAVE_TRANSPORT_UNIT_TYPE, SaveTransportUnitTypeCommand);
-       mainController.registerHandler(TransportUnitTypeEvent.LOAD_TUT_RULES, LoadRulesForTransportUnitTypeCommand);
-
-       mainController.registerHandler(TransportUnitEvent.CREATE_TRANSPORT_UNIT, CreateTransportUnitCommand);
-       mainController.registerHandler(TransportUnitEvent.DELETE_TRANSPORT_UNIT, DeleteTransportUnitCommand);
-       }
-     */
-    }
+   }
 }

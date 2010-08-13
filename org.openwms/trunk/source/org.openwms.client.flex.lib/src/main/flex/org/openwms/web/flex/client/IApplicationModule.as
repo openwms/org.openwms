@@ -21,16 +21,18 @@
 package org.openwms.web.flex.client
 {
     import flash.events.IEventDispatcher;
+    import flash.system.ApplicationDomain;
+    
     import mx.collections.ArrayCollection;
     import mx.collections.XMLListCollection;
-
+    
     /**
      * An IApplicationModule.
      *
      * @author <a href="mailto:openwms@googlemail.com">Heiko Scherrer</a>
      * @version $Revision: 700 $
      */
-    public interface IApplicationModule extends IEventDispatcher
+    public interface IApplicationModule extends IEventDispatcher 
     {
         /**
          * This method returns a list of menu items which shall be expaned to the main
@@ -50,16 +52,16 @@ package org.openwms.web.flex.client
         function getModuleName():String;
 
         /**
-         * This method returns a list of items which shall be expaned to the context popup
-         * menu. The list contains objects with key,value pairs. The key is the name of the
-         * gui component where the popup shall appear, the value is the list of popup items.
+         * This method returns a list of items which are handled as SecuityObjects.
+         * A SecurityObject can be assigned to a Role and is monitored by the SecurityHandler
+         * to allow or deny certain functionality within the user interface.
          */
-        function getPopupItems():ArrayCollection;
+        function getSecurityObjects():ArrayCollection;
 
         /**
          * Do additional initial work when the module is loaded.
          */
-        function initializeModule():void;
+        function initializeModule(applicationDomain:ApplicationDomain = null):void;
 
         /**
          * Do addtional cleanup work before the module is unloaded.

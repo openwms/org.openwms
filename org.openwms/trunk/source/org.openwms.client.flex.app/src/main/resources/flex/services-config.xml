@@ -39,7 +39,7 @@
                     </entityManagerFactoryBeanName>
                 </properties>
             </destination>
-            <destination id="locationService">
+            <destination id="locationServiceRemote">
                 <channels>
                     <channel ref="my-graniteamf"/>
                 </channels>
@@ -48,7 +48,7 @@
                     <source>locationService</source>
                 </properties>
             </destination>
-            <destination id="locationGroupService">
+            <destination id="locationGroupServiceRemote">
                 <channels>
                     <channel ref="my-graniteamf"/>
                 </channels>
@@ -57,7 +57,7 @@
                     <source>locationGroupService</source>
                 </properties>
             </destination>
-            <destination id="userService2">
+            <destination id="userServiceRemote">
                 <channels>
                     <channel ref="my-graniteamf"/>
                 </channels>
@@ -66,7 +66,7 @@
                     <source>userService</source>
                 </properties>
             </destination>
-            <destination id="transportUnitService">
+            <destination id="transportUnitServiceRemote">
                 <channels>
                     <channel ref="my-graniteamf"/>
                 </channels>
@@ -75,7 +75,7 @@
                     <source>transportUnitService</source>
                 </properties>
             </destination>
-            <destination id="moduleManagementService2">
+            <destination id="moduleManagementServiceRemote">
                 <channels>
                     <channel ref="my-graniteamf" />
                 </channels>
@@ -84,7 +84,7 @@
                     <source>moduleManagementService</source>
                 </properties>
             </destination>
-            <destination id="transportService">
+            <destination id="transportServiceRemote">
                 <channels>
                     <channel ref="my-graniteamf" />
                 </channels>
@@ -92,37 +92,8 @@
                     <factory>springFactory</factory>
                     <source>transportService</source>
                 </properties>
-                <security>
-                    <security-constraint>
-                        <auth-method>Custom</auth-method>
-                        <roles>
-                            <role>ROLE_ADMIN</role>
-                            <role>ROLE_USER</role>
-                        </roles>
-                    </security-constraint>
-                </security>            
             </destination>
         </service>
-        
-        <service id="gravity-service"
-          class="flex.messaging.services.MessagingService"
-          messageTypes="flex.messaging.messages.AsyncMessage">
-          <adapters>
-            <adapter-definition id="simple" class="org.granite.gravity.adapters.SimpleServiceAdapter"/>
-          </adapters>
-        
-          <destination id="clientTopic">
-            <properties>
-              <no-local>false</no-local> 
-              <session-selector>true</session-selector>
-            </properties>
-            <channels>
-              <channel ref="gravityamf"/>
-            </channels>
-            <adapter ref="simple"/>
-          </destination>
-        </service>        
-        
     </services>
 
     <factories>
@@ -136,11 +107,6 @@
         <channel-definition id="my-graniteamf" class="mx.messaging.channels.AMFChannel">
             <endpoint
                 uri="http://{server.name}:{server.port}/{context.root}/graniteamf/amf"
-                class="flex.messaging.endpoints.AMFEndpoint"/>
-        </channel-definition>
-        <channel-definition id="gravityamf" class="org.granite.gravity.channels.GravityChannel">
-            <endpoint
-                uri="http://{server.name}:{server.port}/{context.root}/gravityamf/amf"
                 class="flex.messaging.endpoints.AMFEndpoint"/>
         </channel-definition>
     </channels>

@@ -21,20 +21,24 @@
 package org.openwms.web.flex.client.module
 {
 
+    import flash.system.ApplicationDomain;
+    import flash.utils.getQualifiedClassName;
+    
     import mx.collections.ArrayCollection;
     import mx.collections.XMLListCollection;
     import mx.controls.Alert;
     import mx.events.ModuleEvent;
     import mx.modules.IModuleInfo;
     import mx.modules.ModuleManager;
-
+    
+    import org.granite.tide.ITideModule;
+    import org.granite.tide.events.TideResultEvent;
+    import org.granite.tide.spring.Context;
+    import org.granite.tide.spring.Spring;
     import org.openwms.common.domain.Module;
-    import org.openwms.web.flex.client.model.ModelLocator;
     import org.openwms.web.flex.client.IApplicationModule;
     import org.openwms.web.flex.client.event.ApplicationEvent;
-
-    import org.granite.tide.spring.Context;
-    import org.granite.tide.events.TideResultEvent;
+    import org.openwms.web.flex.client.model.ModelLocator;
 
     /**
      * A ModuleLocator.
@@ -58,6 +62,7 @@ package org.openwms.web.flex.client.module
         public var tideContext:Context;
 
         private var toRemove:Module;
+        private var applicationDomain:ApplicationDomain = new ApplicationDomain(ApplicationDomain.currentDomain);
 
         public function ModuleLocator()
         {
@@ -124,11 +129,11 @@ package org.openwms.web.flex.client.module
                 }
                 else
                 {
-                    mInf.addEventListener(ModuleEvent.READY, moduleLoaded);
-                    mInf.addEventListener(ModuleEvent.ERROR, moduleLoaderError);
+                    mInf.addEventListener(ModuleEvent.READY, onModuleLoaded, false, 0, true);
+                    mInf.addEventListener(ModuleEvent.ERROR, onModuleLoaderError);
                     mInf.data = module;
                     modelLocator.loadedModules.put(module.url, mInf);
-                    mInf.load();
+                    mInf.load(applicationDomain);
                     return;
                 }
             }
@@ -158,8 +163,8 @@ package org.openwms.web.flex.client.module
             {
                 if (mInf.loaded)
                 {
-                    mInf.addEventListener(ModuleEvent.UNLOAD, moduleUnloaded);
-                    mInf.addEventListener(ModuleEvent.ERROR, moduleLoaderError);
+                    mInf.addEventListener(ModuleEvent.UNLOAD, onModuleUnloaded);
+                    mInf.addEventListener(ModuleEvent.ERROR, onModuleLoaderError);
                     mInf.data = module;
                     modelLocator.unloadedModules.put(module.url, mInf);
                     mInf.unload();
@@ -235,32 +240,6 @@ package org.openwms.web.flex.client.module
             return false;
         }
 
-//remove
-        private function refreshModule(module:Module, select:Boolean):Boolean
-        {
-            if (module == null)
-            {
-                return false;
-            }
-            var found:Boolean = false;
-            var modules:Array = modelLocator.allModules.toArray();
-            for (var i:int = 0; i < modules.length; i++)
-            {
-                if (modules[i].moduleName == module.moduleName)
-                {
-                    modules[i] = module;
-                    if (select)
-                    {
-                        modelLocator.selectedModule = module;
-                    }
-                    trace("Module refreshed:" + module.moduleName);
-                    dispatchEvent(new ApplicationEvent(ApplicationEvent.MODULE_CONFIG_CHANGED));
-                    return true;
-                }
-            }
-            return false;
-        }
-
         // +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
         //
         // privates
@@ -275,6 +254,7 @@ package org.openwms.web.flex.client.module
         {
             modelLocator.allModules = event.result as ArrayCollection;
             modelLocator.isInitialized = true;
+            dispatchEvent(new ApplicationEvent(ApplicationEvent.MODULES_CONFIGURED));
             startAllModules();
         }
 
@@ -304,11 +284,11 @@ package org.openwms.web.flex.client.module
                         }
                         else
                         {
-                            mInf.addEventListener(ModuleEvent.READY, moduleLoaded);
-                            mInf.addEventListener(ModuleEvent.ERROR, moduleLoaderError);
+                            mInf.addEventListener(ModuleEvent.READY, onModuleLoaded, false, 0, true);
+                            mInf.addEventListener(ModuleEvent.ERROR, onModuleLoaderError);
                             mInf.data = module;
                             modelLocator.loadedModules.put(module.url, mInf);
-                            mInf.load();
+                            mInf.load(applicationDomain);
                         }
                     }
                     else
@@ -321,7 +301,6 @@ package org.openwms.web.flex.client.module
                     trace("Module not set to be started on startup:" + module.moduleName);
                 }
             }
-            dispatchEvent(new ApplicationEvent(ApplicationEvent.MODULES_CONFIGURED));
         }
 
         /**
@@ -360,7 +339,7 @@ package org.openwms.web.flex.client.module
          * Loading a module can be triggered by the Module Management screen or at application
          * startup if the module is configured to behave so.
          */
-        private function moduleLoaded(e:ModuleEvent):void
+        private function onModuleLoaded(e:ModuleEvent):void
         {
             trace("Successfully loaded module: " + e.module.url);
             var module:Module = (e.module.data as Module);
@@ -373,11 +352,12 @@ package org.openwms.web.flex.client.module
             var appModule:Object = e.module.factory.create();
             if (appModule is IApplicationModule)
             {
+          		appModule.start(applicationDomain);
                 fireChangedEvent(appModule as IApplicationModule);
             }
             var mInf:IModuleInfo = (modelLocator.loadedModules.get(module.url) as IModuleInfo);
-            mInf.removeEventListener(ModuleEvent.READY, moduleLoaded);
-            mInf.removeEventListener(ModuleEvent.ERROR, moduleLoaderError);
+            mInf.removeEventListener(ModuleEvent.READY, onModuleLoaded);
+            mInf.removeEventListener(ModuleEvent.ERROR, onModuleLoaderError);
         }
 
         /**
@@ -386,7 +366,7 @@ package org.openwms.web.flex.client.module
          * fired to inform the main application about the unload. For instance the main application
          * could rebuild the menu bar.
          */
-        private function moduleUnloaded(e:ModuleEvent):void
+        private function onModuleUnloaded(e:ModuleEvent):void
         {
             trace("Successfully unloaded Module: " + e.module.url);
             var module:Module = (e.module.data as Module);
@@ -402,8 +382,8 @@ package org.openwms.web.flex.client.module
                 fireUnloadedEvent(appModule as IApplicationModule);
             }
             var mInf:IModuleInfo = (modelLocator.unloadedModules.get(module.url) as IModuleInfo);
-            mInf.removeEventListener(ModuleEvent.UNLOAD, moduleUnloaded);
-            mInf.removeEventListener(ModuleEvent.ERROR, moduleLoaderError);
+            mInf.removeEventListener(ModuleEvent.UNLOAD, onModuleUnloaded);
+            mInf.removeEventListener(ModuleEvent.ERROR, onModuleLoaderError);
         }
 
         /**
@@ -420,7 +400,7 @@ package org.openwms.web.flex.client.module
         /**
          * This method is called when an error occurred while loading or unloading a module.
          */
-        private function moduleLoaderError(e:ModuleEvent):void
+        private function onModuleLoaderError(e:ModuleEvent):void
         {
             if (e.module != null)
             {
@@ -433,7 +413,7 @@ package org.openwms.web.flex.client.module
                     if (mInf != null)
                     {
                         // TODO: Also remove other listeners here
-                        mInf.removeEventListener(ModuleEvent.ERROR, moduleLoaderError);
+                        mInf.removeEventListener(ModuleEvent.ERROR, onModuleLoaderError);
                         modelLocator.unloadedModules.put(module.url, mInf);
                     }
                     modelLocator.loadedModules.remove(module.url);
@@ -497,8 +477,8 @@ package org.openwms.web.flex.client.module
                     if (unload)
                     {
                         var mInfo:IModuleInfo = ModuleManager.getModule(module.url);
-                        mInfo.addEventListener(ModuleEvent.READY, moduleLoaded);
-                        mInfo.addEventListener(ModuleEvent.ERROR, moduleLoaderError);
+                        mInfo.addEventListener(ModuleEvent.READY, onModuleLoaded);
+                        mInfo.addEventListener(ModuleEvent.ERROR, onModuleLoaderError);
                         if (mInfo != null && mInfo.loaded)
                         {
                             mInfo.data = module;
