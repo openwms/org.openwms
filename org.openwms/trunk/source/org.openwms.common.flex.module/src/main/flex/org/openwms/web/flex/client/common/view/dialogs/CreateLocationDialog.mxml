@@ -25,6 +25,7 @@
 
     <mx:Metadata>
         [Name]
+        [ManagedEvent(name="CREATE_LOCATION")]
     </mx:Metadata>
 
     <mx:Script>
@@ -63,7 +64,7 @@
                 location.locationGroup = locationGroupCmb.selectedItem as LocationGroup;
                 location.locationType = locationTypeCmb.selectedItem as LocationType;
                 event.data = location;
-                event.dispatch();
+                dispatchEvent(event);
             }
 
             private function closeDialog(event:Event=null):void
@@ -94,7 +95,7 @@
         <mx:TextInput id="zTxt" x="387" y="51" fontSize="22" width="80"/>
 
 		<mx:Label x="10" y="113" text="Location Group" fontSize="22" width="180" textAlign="right"/>
-        <comp:SuggestComboBox id="locationGroupCmb" width="280" fontSize="22" prompt="Select one..." labelField="name" dataProvider="{modelLocator.allLocationGroups}" x="198" y="111"/>
+        <comp:SuggestComboBox id="locationGroupCmb" width="280" fontSize="22" prompt="Select one..." labelField="name" dataProvider="{commonModelLocator.allLocationGroups}" x="198" y="111"/>
 
 		<mx:Label x="10" y="173" text="Location Type" fontSize="22" width="180" textAlign="right"/>
         <comp:SuggestComboBox id="locationTypeCmb" width="280" fontSize="22" prompt="Select one..." labelField="type" dataProvider="{commonModelLocator.allLocationTypes}" x="198" y="171"/>

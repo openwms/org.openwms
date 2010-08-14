@@ -26,10 +26,12 @@
     <mx:Metadata>
         [Name("createRoleDialog")]
         [ManagedEvent(name="ADD_ROLE")]
+        [ManagedEvent(name="SAVE_ROLE")]
     </mx:Metadata>
 
     <mx:Script>
     	<![CDATA[
+    		import mx.binding.utils.BindingUtils;
     		import mx.controls.Alert;
     		import mx.events.ValidationResultEvent;
     		import org.openwms.common.domain.system.usermanagement.Role;
@@ -40,24 +42,47 @@
             import flash.events.KeyboardEvent;
             [In]
             [Bindable]
-            public var modelLocator:ModelLocator;            
+            public var modelLocator:ModelLocator;
+            [Bindable]
+            public var roleToChange:Role;
             
             private function init():void
             {
-                roleTxt.setFocus();
+            	if (roleToChange != null)
+            	{
+            		createBtn.label = "Save";
+            		nameTxt.text = roleToChange.name;
+            		descriptionTxt.text = roleToChange.description;
+            	}
+                nameTxt.setFocus();
                 this.addEventListener(KeyboardEvent.KEY_DOWN, keyEventHandler);
                 PopUpManager.centerPopUp(this);
             }
 
             private function submit():void
             {
-            	if (stringVal.validate().type == ValidationResultEvent.VALID) {
-                    var event:RoleEvent = new RoleEvent(RoleEvent.ADD_ROLE);
-                    var role:Role = new Role(formatRoleName(roleTxt.text), descriptionTxt.text);
-                    event.data = role;
-                    dispatchEvent(event);
+            	if (stringVal.validate().type == ValidationResultEvent.VALID)
+            	{
+            		var event:RoleEvent;
+            		if (roleToChange == null)
+            		{
+                        event = new RoleEvent(RoleEvent.ADD_ROLE);
+                        var role:Role = new Role(formatRoleName(nameTxt.text), descriptionTxt.text);
+                        event.data = role;
+                        dispatchEvent(event);
+                    }
+                    else
+                    {
+                        nameTxt.text = formatRoleName(nameTxt.text);
+                        BindingUtils.bindProperty(roleToChange, "name", nameTxt, "text");
+                        BindingUtils.bindProperty(roleToChange, "description", descriptionTxt, "text");
+                        event = new RoleEvent(RoleEvent.SAVE_ROLE);
+                        event.data = roleToChange;
+                        dispatchEvent(event);
+                        closeDialog();
+                    }
                 }
-                roleTxt.setFocus();
+                nameTxt.setFocus();
             }
             
             private function formatRoleName(roleName:String):String
@@ -90,20 +115,20 @@
             [Observer("ROLE_ADDED")]
             public function onRoleAdded(event:RoleEvent):void
             {
-            	roleTxt.text = "";
+            	nameTxt.text = "";
             	descriptionTxt.text = "";
-            	roleTxt.setFocus();
+            	nameTxt.setFocus();
             }
     	]]>
     </mx:Script>
     
-    <mx:StringValidator id="stringVal" minLength="1" source="{roleTxt}" property="text"/>
+    <mx:StringValidator id="stringVal" minLength="1" source="{nameTxt}" property="text"/>
     
 	<mx:Label x="10" y="10" text="Role" fontSize="22" width="140" textAlign="right"/>
-    <mx:TextInput id="roleTxt" width="200" fontSize="22" x="158" y="8"/>
+    <mx:TextInput id="nameTxt" width="200" fontSize="22" x="158" y="8" />
 
 	<mx:Label x="10" y="51" text="Description" fontSize="22" width="140" textAlign="right"/>
-    <mx:TextArea id="descriptionTxt" x="158" y="50" width="200" height="73" fontSize="22"/>
+    <mx:TextArea id="descriptionTxt" x="158" y="50" width="200" height="73" fontSize="22" />
 
 	<mx:HBox x="0" y="175" width="100%" horizontalAlign="center">
 		<mx:Button id="createBtn" label="Create" fontSize="12" click="submit()"/>

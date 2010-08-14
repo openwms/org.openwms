@@ -25,11 +25,14 @@
 
     <mx:Metadata>
         [Name]
+        [ManagedEvent(name="LOAD_ALL_LOCATIONS")]
+        [ManagedEvent(name="LOAD_ALL_LOCATION_GROUPS")]
     </mx:Metadata>
 
     <!-- Scripts -->
     <mx:Script>
         <![CDATA[
+        	import org.openwms.web.flex.client.common.event.LoadLocationGroupsEvent;
             import org.openwms.web.flex.client.event.SwitchScreenEvent;
             import org.openwms.web.flex.client.common.model.CommonModelLocator;
             import org.openwms.web.flex.client.model.*;
@@ -56,8 +59,11 @@
             private var selectedLocations : ArrayCollection = new ArrayCollection();
 
             private function onShow() : void {
+                if (commonModelLocator.allLocationGroups.length == 0) {
+                    dispatchEvent(new LoadLocationGroupsEvent(LoadLocationGroupsEvent.LOAD_ALL_LOCATION_GROUPS));
+                }
                 if (commonModelLocator.allLocations.length == 0) {
-                    new LocationEvent(LocationEvent.LOAD_ALL_LOCATIONS).dispatch();
+                    dispatchEvent(new LocationEvent(LocationEvent.LOAD_ALL_LOCATIONS));
                 }
             }
 
@@ -128,31 +134,31 @@
     <mx:HRule x="10" y="53" width="95%"/>
     <mx:HBox x="10" y="63" verticalAlign="top" height="100%" width="95%">
 
-        <mx:Tree id="myTree" showRoot="false" width="236" dataProvider="{modelLocator.locationGroupTree}" dataDescriptor="{new TreeDataDescriptor()}" labelFunction="locationGroupLabel" change="onTreeClick(event)" height="95%">
+        <mx:Tree id="myTree" showRoot="false" width="236" dataProvider="{commonModelLocator.locationGroupTree}" dataDescriptor="{new TreeDataDescriptor()}" labelFunction="locationGroupLabel" change="onTreeClick(event)" height="95%">
         </mx:Tree>
         <mx:Canvas width="100%" height="95%">
-            <x:XPanel x="0" y="0" width="500" height="327" layout="absolute" title="Details" titleIcon="@Embed(source='/assets/images/LocationGroup.png')" toolTipBtn1="Refresh" onClickBtn1="refresh" iconBtn1="@Embed(source='assets/images/icons/refresh.png')">
+            <x:XPanel x="258" y="0" width="100%" height="300" layout="absolute" title="Details" titleIcon="@Embed(source='/assets/images/LocationGroup.png')" toolTipBtn1="Refresh" onClickBtn1="refresh" iconBtn1="@Embed(source='assets/images/icons/refresh.png')">
                 <mx:CheckBox x="190" y="146" label="Infeed allowed"/>
-                <mx:CheckBox x="190" y="176" label="Outfeed allowed"/>
-                <mx:CheckBox x="190" y="205" label="Counting active"/>
-                <mx:HBox x="10" y="10" width="460" height="25" borderStyle="solid" alpha="0.5" backgroundColor="#C2DAEF">
+                <mx:CheckBox x="305" y="146" label="Outfeed allowed"/>
+                <mx:CheckBox x="190" y="176" label="Counting active"/>
+                <mx:HBox x="10" y="10" width="95%" height="25" borderStyle="solid" alpha="0.5" backgroundColor="#C2DAEF">
                     <mx:Label text="Location Group" fontSize="16" textDecoration="normal" width="170" textAlign="right" fontWeight="bold"/>
-                    <mx:Label text="{selectedLocationGroup.name}" fontSize="16" textDecoration="normal" width="100%"/>
+                    <mx:Label text="{selectedLocationGroup.name}" fontSize="16" textDecoration="normal" width="100%" toolTip="{selectedLocationGroup.name}"/>
                 </mx:HBox>
-                <mx:HBox x="10" y="43" width="460" height="18">
+                <mx:HBox x="10" y="43" width="95%" height="18">
                     <mx:Label text="Parent Location Group" width="170" textAlign="right"/>
                     <mx:Label text="{selectedParent}" width="100%"/>
                 </mx:HBox>
-                <mx:HSlider x="190" y="235" value="{selectedLocationGroup.maxFillLevel}" width="280" minimum="0" maximum="100" snapInterval="5"/>
+                <mx:NumericStepper x="190" y="206" value="{selectedLocationGroup.maxFillLevel}" minimum="0" maximum="100" />
                 <mx:Label x="10" y="69" text="Description" textAlign="right" width="170"/>
                 <mx:Label x="10" y="120" text="Group Type" textAlign="right" width="170"/>
-                <mx:Label x="10" y="261" text="System Code" textAlign="right" width="170"/>
-                <mx:Label x="10" y="235" text="Maximum Fill Level" textAlign="right" width="170"/>
-                <mx:TextArea x="190" y="68" width="280"/>
+                <mx:Label x="10" y="234" text="System Code" textAlign="right" width="170"/>
+                <mx:Label x="10" y="208" text="Maximum Fill Level" textAlign="right" width="170"/>
+                <mx:TextArea x="190" y="68" width="200"/>
                 <mx:Label text="{selectedLocationGroup.groupType}" width="100%" x="190" y="120"/>
-                <mx:Label text="{selectedLocationGroup.systemCode}" width="100%" x="188" y="261"/>
+                <mx:Label text="{selectedLocationGroup.systemCode}" width="100%" x="188" y="234"/>
             </x:XPanel>
-            <mx:Panel width="250" height="250" layout="absolute" x="508" y="0" title="Fill Level">
+            <mx:Panel width="250" height="250" layout="absolute" x="0" y="0" title="Fill Level">
                 <!--
                      <mx:PieChart x="0" y="0" id="piechart1" width="100%" height="100%">
                      <mx:series>
@@ -161,7 +167,7 @@
                      </mx:PieChart>
                 -->
             </mx:Panel>
-            <mx:DataGrid id="locationsList" allowMultipleSelection="true" sortableColumns="true" x="0" y="512" width="100%" dataProvider="{selectedLocations}" height="367">
+            <mx:DataGrid id="locationsList" allowMultipleSelection="true" sortableColumns="true" x="0" y="351" width="100%" dataProvider="{selectedLocations}" height="100%">
                 <mx:columns>
                     <mx:DataGridColumn dataField="area" labelFunction="locationIdField" editable="false" width="50">
                         <mx:headerRenderer>
@@ -200,8 +206,8 @@
                     <mx:DataGridColumn headerText="Last Access" dataField="lastAccess" editable="false"/>
                 </mx:columns>
             </mx:DataGrid>
-            <mx:HBox verticalAlign="middle" backgroundColor="#C6FFC7" width="100%" x="0" y="469" backgroundAlpha="1.0">
-                <mx:Label text="Locations" fontSize="24"/>
+            <mx:HBox verticalAlign="middle" backgroundColor="#C6FFC7" width="100%" x="0" y="318" backgroundAlpha="1.0">
+                <mx:Label text="Locations" fontSize="16"/>
                 <mx:VRule height="10"/>
             </mx:HBox>
         </mx:Canvas>

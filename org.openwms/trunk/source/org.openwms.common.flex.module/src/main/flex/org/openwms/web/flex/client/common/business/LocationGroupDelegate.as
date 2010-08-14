@@ -32,12 +32,20 @@ package org.openwms.web.flex.client.common.business
      * @author <a href="mailto:openwms@googlemail.com">Heiko Scherrer</a>
      * @version $Revision$
      */
+    [Name("locationGroupDelegate")]
     public class LocationGroupDelegate
     {
+        [In]
+        [Bindable]
+        public var tideContext:Context;
+        [In]
+        [Bindable]
+        public var commonModelLocator:CommonModelLocator;            
+
         private var responder:IResponder;
         private var service:Object;
 
-        public function LocationGroupDelegate(responder:IResponder):void
+        public function LocationGroupDelegate():void
         {
             this.responder = responder;
             this.service = ServiceLocator.getInstance().getRemoteObject("locationGroupService");

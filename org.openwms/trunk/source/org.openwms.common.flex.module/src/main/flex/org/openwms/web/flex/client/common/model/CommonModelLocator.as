@@ -25,6 +25,8 @@ package org.openwms.web.flex.client.common.model
     
     import mx.collections.ArrayCollection;
     
+    import org.openwms.web.flex.client.model.TreeNode;
+    
     /**
      * A CommonModelLocator.
      *
@@ -40,6 +42,8 @@ package org.openwms.web.flex.client.common.model
         public var allLocations:ArrayCollection = new ArrayCollection();
         public var allLocationTypes:ArrayCollection = new ArrayCollection();
         public var securityObjects:ArrayCollection = new ArrayCollection();
+        public var allLocationGroups:ArrayCollection = new ArrayCollection();
+        public var locationGroupTree:TreeNode;
 
         /**
          * Constructor.
