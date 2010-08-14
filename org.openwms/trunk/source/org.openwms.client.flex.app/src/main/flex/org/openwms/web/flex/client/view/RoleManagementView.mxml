@@ -70,6 +70,17 @@
                 selected = event.currentTarget.selectedItem as Role;
             }
 
+            /**
+             * Double clicking an entry opens the edit dialogue.
+             */ 
+            private function onDoubleClick(event:MouseEvent):void
+            {
+                var pop:CreateRoleDialog = CreateRoleDialog(PopUpManager.createPopUp(this, CreateRoleDialog, true));
+                pop.roleToChange = event.currentTarget.selectedItem as Role;
+                pop.title = "Change Role settings";
+                PopUpManager.centerPopUp(pop);
+            }
+
             private function add():void
             {
                 var pop:CreateRoleDialog = CreateRoleDialog(PopUpManager.createPopUp(this, CreateRoleDialog, true));
@@ -125,9 +136,9 @@
                     Alert.show("Please select one or more Users to be removed from this Role");
                     return;
                 }
-            	for each (var user:User in selected.users)
+            	for each (var selectedUser:User in usersLst.selectedItems)
             	{
-            		for each (var selectedUser:User in usersLst.selectedItems)
+            		for each (var user:User in selected.users)
             		{
                         if (user.username == selectedUser.username)
                         {
@@ -144,7 +155,7 @@
 
             private function formatUser(item:*):String
             {
-            	return (item as User).username + " - " + (item as User).fullname;
+            	return (item as User).fullname+" ("+(item as User).username+")";
             }
 
             private function formatGrant(item:*):String
@@ -170,7 +181,7 @@
     <mx:HRule x="9" y="53" width="95%"/>
     <mx:VBox height="100%" width="95%" x="10" y="63">
         <mx:VBox width="100%">
-            <mx:DataGrid id="lst" height="200" width="100%" allowMultipleSelection="true" dataProvider="{modelLocator.allRoles}" change="onRowClick(event)">
+            <mx:DataGrid id="lst" height="200" width="100%" allowMultipleSelection="true" dataProvider="{modelLocator.allRoles}" change="onRowClick(event);" doubleClickEnabled="true" doubleClick="onDoubleClick(event);">
                 <mx:columns>
                     <mx:DataGridColumn headerText="Name" dataField="name" editable="false" width="100"/>
                     <mx:DataGridColumn headerText="Description" dataField="description" editable="false"/>

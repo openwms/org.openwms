@@ -28,5 +28,8 @@ package org.openwms.common.domain.system.usermanagement {
             this._name = name;
             this._description = description;
         }
+        public function set name(value:String):void {
+            _name = value;
+        }
     }
 }

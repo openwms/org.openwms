@@ -55,7 +55,7 @@ package org.openwms.web.flex.client.common.view.dialogs
         {
             var event:LocationEvent = new LocationEvent(LocationEvent.DELETE_LOCATION);
             event.data = (deleteLst.dataProvider as ArrayCollection).getItemAt(0);
-            event.dispatch();
+            dispatchEvent(event);
             closeDialog();
         }
         

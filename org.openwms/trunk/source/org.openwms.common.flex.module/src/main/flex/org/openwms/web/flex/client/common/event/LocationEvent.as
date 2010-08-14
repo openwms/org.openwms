@@ -20,7 +20,7 @@
  */
 package org.openwms.web.flex.client.common.event
 {
-    import com.adobe.cairngorm.control.CairngormEvent;
+    import flash.events.Event;
 
     /**
      * A LocationEvent.
@@ -28,14 +28,16 @@ package org.openwms.web.flex.client.common.event
      * @author <a href="mailto:openwms@googlemail.com">Heiko Scherrer</a>
      * @version $Revision$
      */
-    public class LocationEvent extends CairngormEvent
+    public class LocationEvent extends Event
     {
-        public static const LOAD_ALL_LOCATIONS:String = "LoadAllLocations";
-        public static const CREATE_LOCATION:String = "Create_Location";
-        public static const DELETE_LOCATION:String = "Delete_Location";
-        public static const SAVE_LOCATION:String = "Save_Location";
+        public static const LOAD_ALL_LOCATIONS:String = "LOAD_ALL_LOCATIONS";
+        public static const CREATE_LOCATION:String = "CREATE_LOCATION";
+        public static const DELETE_LOCATION:String = "DELETE_LOCATION";
+        public static const SAVE_LOCATION:String = "SAVE_LOCATION";
+        
+        public var data:*;        
 
-        public function LocationEvent(type:String, bubbles:Boolean = false, cancelable:Boolean = false)
+        public function LocationEvent(type:String, bubbles:Boolean = true, cancelable:Boolean = false)
         {
             super(type, bubbles, cancelable);
         }

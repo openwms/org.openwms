@@ -58,11 +58,14 @@
             {
                 notAssigned = new ArrayCollection(modelLocator.allUsers.toArray());
                 toAssign = assigned;
-                for each (var user:User in notAssigned)
+                for each (var user:User in toAssign)
                 {
-                	if (toAssign.contains(user))
+                	for each (var u:User in notAssigned)
                 	{
-                		notAssigned.removeItemAt(notAssigned.getItemIndex(user));
+                		if (user.username == u.username)
+                		{
+                            notAssigned.removeItemAt(notAssigned.getItemIndex(u));
+                        }
                 	}
                 }
                 this.addEventListener(KeyboardEvent.KEY_DOWN, keyEventHandler);
@@ -114,7 +117,6 @@
                 {
                     notAssigned.addItem(toAssign.removeItemAt(toAssign.getItemIndex(item)));
                     notAssigned.itemUpdated(item);
-                    notAssigned.sort
                     changed = true;
                 }
                 sortList(toAssign);
@@ -124,7 +126,7 @@
             private function sortList(list:ListCollectionView):ListCollectionView
             {
             	var sortField:SortField = new SortField();
-                sortField.name = "username";
+                sortField.name = "fullname";
                 sortField.numeric = false;
                 var dataSort:Sort = new Sort();
                 dataSort.fields = [sortField];
@@ -145,7 +147,7 @@
     <mx:List id="assLst" y="39" x="296" width="202" height="225" doubleClickEnabled="true" doubleClick="moveLeft();" labelFunction="formatFunction" allowMultipleSelection="true" dataProvider="{toAssign}" enabled="true" alternatingItemColors="[#B7BABC, #FFFFFF]"/>
 
     <mx:HBox width="100%" horizontalAlign="center" x="0" y="272">
-        <mx:Button id="saveBtn" label="Save" click="accept(event)" fontSize="12"/>
+        <mx:Button id="setBtn" label="Set" click="accept(event)" fontSize="12"/>
         <mx:Button id="cancelBtn" label="Cancel" click="closeDialog(event)" fontSize="12"/>
     </mx:HBox>
     

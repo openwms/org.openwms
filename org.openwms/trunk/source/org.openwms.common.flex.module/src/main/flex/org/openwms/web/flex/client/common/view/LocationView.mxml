@@ -25,6 +25,10 @@
 
     <mx:Metadata>
         [Name]
+        [ManagedEvent(name="LOAD_ALL_LOCATIONS")]
+        [ManagedEvent(name="LOAD_ALL_LOCATION_TYPES")]
+        [ManagedEvent(name="LOAD_ALL_LOCATION_GROUPS")]
+        [ManagedEvent(name="SAVE_LOCATION")]
     </mx:Metadata>
 
     <mx:Script>
@@ -58,12 +62,12 @@
 
             private function init():void
             {
-                new LocationEvent(LocationEvent.LOAD_ALL_LOCATIONS).dispatch();
+                dispatchEvent(new LocationEvent(LocationEvent.LOAD_ALL_LOCATIONS));
                 if (commonModelLocator.allLocationTypes.length == 0)
                 {
                 	dispatchEvent(new LocationTypeEvent(LocationTypeEvent.LOAD_ALL_LOCATION_TYPES));
                 }
-                if (modelLocator.allLocationGroups.length == 0)
+                if (commonModelLocator.allLocationGroups.length == 0)
                 {
                 	dispatchEvent(new LoadLocationGroupsEvent(LoadLocationGroupsEvent.LOAD_ALL_LOCATION_GROUPS));
                 }
@@ -93,11 +97,11 @@
             private function setLocationGroup():void
             {
                 var locGroup:int=-1;
-                for each (var l:LocationGroup in modelLocator.allLocationGroups)
+                for each (var l:LocationGroup in commonModelLocator.allLocationGroups)
                 {
                     if (l.id == selected.locationGroup.id)
                     {
-                        locGroup=modelLocator.allLocationGroups.getItemIndex(l);
+                        locGroup=commonModelLocator.allLocationGroups.getItemIndex(l);
                     }
                 }
                 locationGroupCB.selectedIndex=locGroup;
@@ -140,14 +144,14 @@
             {
                 var event:LocationEvent = new LocationEvent(LocationEvent.SAVE_LOCATION);
                 event.data = selected;
-                event.dispatch();
+                dispatchEvent(event);
             }
 
             private function refresh():void
             {
             	selected = null;
                 var event:LocationEvent = new LocationEvent(LocationEvent.LOAD_ALL_LOCATIONS);
-                event.dispatch();
+                dispatchEvent(event);
             }
         ]]>
     </mx:Script>
@@ -230,7 +234,7 @@
 
             <mx:Image x="10" y="119" mouseChildren="false" source="@Embed(source='/assets/images/LocationGroup.png')"/>
             <mx:Label text="Location Group" width="130" textAlign="right" x="10" y="119"/>
-            <mx:ComboBox id="locationGroupCB" labelField="name" prompt="n/a" selectedIndex="-1" dataProvider="{modelLocator.allLocationGroups}" width="200" x="148" y="117"/>
+            <mx:ComboBox id="locationGroupCB" labelField="name" prompt="n/a" selectedIndex="-1" dataProvider="{commonModelLocator.allLocationGroups}" width="200" x="148" y="117"/>
             <mx:CheckBox id="locationGroupCountingActiveChk" x="148" y="147" label="Counting Active in Location Group" selected="{selected.locationGroupCountingActive}"/>
             <mx:HRule x="10" y="177" width="350"/>
 
@@ -238,30 +242,31 @@
             <mx:Label text="Location Type" width="130" textAlign="right" x="10" y="187"/>
             <mx:ComboBox id="locationTypeCB" labelField="type" prompt="n/a" selectedIndex="-1" dataProvider="{commonModelLocator.allLocationTypes}" width="200" x="148" y="185"/>
             <mx:Text x="148" y="217" text="{locationTypeCB.selectedItem.description}" width="200"/>
-            <mx:HRule x="10" y="253" width="350"/>
+            <mx:Text x="148" y="447" text="{selected.lastAccess}" width="200"/>
+            <mx:HRule x="10" y="243" width="350"/>
 
-            <mx:Label text="Max. Transport Units" width="130" textAlign="right" x="10" y="263"/>
-            <mx:NumericStepper id="noMaxTransportUnitsTxt" value="{selected.noMaxTransportUnits}" width="40" x="148" y="261"/>
+            <mx:Label text="Max. Transport Units" width="130" textAlign="right" x="10" y="253"/>
+            <mx:NumericStepper id="noMaxTransportUnitsTxt" value="{selected.noMaxTransportUnits}" width="40" x="148" y="251"/>
 
-            <mx:Label text="Check State" width="130" textAlign="right" x="10" y="289"/>
-            <mx:Text id="checkStateTxt" text="{selected.checkState}" width="200" x="148" y="289"/>
+            <mx:Label text="Check State" width="130" textAlign="right" x="10" y="279"/>
+            <mx:Text id="checkStateTxt" text="{selected.checkState}" width="200" x="148" y="279"/>
 
-            <mx:Label text="PLC State" width="130" textAlign="right" x="10" y="315"/>
-            <mx:TextInput id="plcStateTxt" text="{selected.plcState}" width="40" x="148" y="313"/>
+            <mx:Label text="PLC State" width="130" textAlign="right" x="10" y="305"/>
+            <mx:TextInput id="plcStateTxt" text="{selected.plcState}" width="40" x="148" y="303"/>
 
-            <mx:CheckBox id="countingActiveChk" x="148" y="343" label="Counting Active" selected="{selected.countingActive}"/>
-            <mx:CheckBox id="incomingActiveChk" x="148" y="373" label="Incoming Active" selected="{selected.incomingActive}"/>
-            <mx:CheckBox id="outgoingActiveChk" x="148" y="403" label="Outgoing Active" selected="{selected.outgoingActive}"/>
-            <mx:CheckBox id="consideredInAllocationChk" x="148" y="433" label="Considered in Allocation" selected="{selected.consideredInAllocation}"/>
+            <mx:CheckBox id="countingActiveChk" x="148" y="333" label="Counting Active" selected="{selected.countingActive}"/>
+            <mx:CheckBox id="incomingActiveChk" x="148" y="363" label="Incoming Active" selected="{selected.incomingActive}"/>
+            <mx:CheckBox id="outgoingActiveChk" x="148" y="393" label="Outgoing Active" selected="{selected.outgoingActive}"/>
+            <mx:CheckBox id="consideredInAllocationChk" x="148" y="423" label="Considered in Allocation" selected="{selected.consideredInAllocation}"/>
 
-            <mx:Label x="72" y="463" text="Last Access"/>
+            <mx:Label x="72" y="447" text="Last Access"/>
             <mx:Text id="lastAccessTxt" x="148" y="463" width="200"/>
 
-            <mx:Label x="80" y="489" text="Messages"/>
-            <mx:TextArea x="148" y="488" width="180" height="64"/>
+            <mx:Label x="80" y="473" text="Messages"/>
+            <mx:TextArea x="148" y="472" width="180" height="64"/>
             <mx:VRule x="10" y="253" width="1" height="309" strokeWidth="0"/>
-            <mx:Image x="332" y="488" height="16" width="16" mouseChildren="false" source="@Embed(source='assets/images/icons/plus.png')"/>
-            <mx:Image x="332" y="512" height="16" width="16" mouseChildren="false" source="@Embed(source='assets/images/icons/minus.png')"/>
+            <mx:Image x="332" y="473" height="16" width="16" mouseChildren="false" source="@Embed(source='assets/images/icons/plus.png')"/>
+            <mx:Image x="332" y="497" height="16" width="16" mouseChildren="false" source="@Embed(source='assets/images/icons/minus.png')"/>
 
         </mx:Canvas>
     </mx:HBox>

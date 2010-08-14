@@ -24,7 +24,7 @@ package org.openwms.web.flex.client.business
     import mx.collections.ArrayCollection;
     import mx.controls.Alert;
     
-    import org.granite.tide.data.events.TideDataConflictsEvent;
+    import org.granite.tide.events.TideFaultEvent;
     import org.granite.tide.events.TideResultEvent;
     import org.granite.tide.spring.Context;
     import org.openwms.common.domain.system.usermanagement.Role;
@@ -108,8 +108,9 @@ package org.openwms.web.flex.client.business
             dispatchEvent(new RoleEvent(RoleEvent.LOAD_ALL_ROLES));
         }
 
-        private function onFault(event:TideDataConflictsEvent):void
+        private function onFault(event:TideFaultEvent):void
         {
+            dispatchEvent(new RoleEvent(RoleEvent.ROLE_SAVED));
             Alert.show("Error when saving the Role");
         }
     }

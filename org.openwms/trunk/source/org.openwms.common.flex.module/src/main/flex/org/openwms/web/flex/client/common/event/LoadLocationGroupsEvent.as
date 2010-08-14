@@ -20,7 +20,7 @@
  */
 package org.openwms.web.flex.client.common.event
 {
-    import com.adobe.cairngorm.control.CairngormEvent;
+    import flash.events.Event;
 
     /**
      * A LoadLocationGroupEvent.
@@ -28,11 +28,11 @@ package org.openwms.web.flex.client.common.event
      * @author <a href="mailto:openwms@googlemail.com">Heiko Scherrer</a>
      * @version $Revision$
      */
-    public class LoadLocationGroupsEvent extends CairngormEvent
+    public class LoadLocationGroupsEvent extends Event
     {
-        public static const LOAD_ALL_LOCATION_GROUPS:String = "LoadAllLocationGroups";
+        public static const LOAD_ALL_LOCATION_GROUPS:String = "LOAD_ALL_LOCATION_GROUPS";
 
-        public function LoadLocationGroupsEvent(type:String, bubbles:Boolean = false, cancelable:Boolean = false)
+        public function LoadLocationGroupsEvent(type:String, bubbles:Boolean = true, cancelable:Boolean = false)
         {
             super(type, bubbles, cancelable);
         }
