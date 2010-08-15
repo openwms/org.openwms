@@ -51,9 +51,6 @@
             import org.openwms.web.flex.client.model.ModelLocator;
             [In]
             [Bindable]
-            public var modelLocator:ModelLocator;
-            [In]
-            [Bindable]
             public var commonModelLocator:CommonModelLocator;
             [Bindable]
             private var selected:Location;
@@ -62,7 +59,10 @@
 
             private function init():void
             {
-                dispatchEvent(new LocationEvent(LocationEvent.LOAD_ALL_LOCATIONS));
+                if (commonModelLocator.allLocations.length == 0)
+                {
+                    dispatchEvent(new LocationEvent(LocationEvent.LOAD_ALL_LOCATIONS));
+                }
                 if (commonModelLocator.allLocationTypes.length == 0)
                 {
                 	dispatchEvent(new LocationTypeEvent(LocationTypeEvent.LOAD_ALL_LOCATION_TYPES));
@@ -182,7 +182,7 @@
     </mx:HBox>
     <mx:HRule x="9" y="53" width="95%"/>
     <mx:HBox height="100%" width="95%" x="10" y="63">
-        <mx:DataGrid id="locationsList" allowMultipleSelection="true" sortableColumns="true" height="95%" width="100%" dataProvider="{modelLocator.allLocations}" change="onRowClick(event)">
+        <mx:DataGrid id="locationsList" allowMultipleSelection="true" sortableColumns="true" height="95%" width="100%" dataProvider="{commonModelLocator.allLocations}" change="onRowClick(event)">
             <mx:columns>
                 <mx:DataGridColumn dataField="area" labelFunction="locationIdField" editable="false" width="50">
                     <mx:headerRenderer>

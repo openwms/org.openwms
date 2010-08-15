@@ -20,7 +20,7 @@
  */
 package org.openwms.web.flex.client.common.event
 {
-    import com.adobe.cairngorm.control.CairngormEvent;
+    import flash.events.Event;
 
     /**
      * A TransportUnitEvent.
@@ -28,11 +28,13 @@ package org.openwms.web.flex.client.common.event
      * @author <a href="mailto:openwms@googlemail.com">Heiko Scherrer</a>
      * @version $Revision: 700 $
      */
-    public class TransportUnitEvent extends CairngormEvent
+    public class TransportUnitEvent extends Event
     {
-        public static const LOAD_TRANSPORT_UNITS:String = "Load_TransportUnits";
-        public static const CREATE_TRANSPORT_UNIT:String = "Create_TransportUnit";
-        public static const DELETE_TRANSPORT_UNIT:String = "Delete_TransportUnit";
+        public static const LOAD_TRANSPORT_UNITS:String = "LOAD_TRANSPORT_UNITS";
+        public static const CREATE_TRANSPORT_UNIT:String = "CREATE_TRANSPORT_UNIT";
+        public static const DELETE_TRANSPORT_UNIT:String = "DELETE_TRANSPORT_UNIT";
+        
+        public var data:*
 
         public function TransportUnitEvent(type:String, bubbles:Boolean = true, cancelable:Boolean = false)
         {

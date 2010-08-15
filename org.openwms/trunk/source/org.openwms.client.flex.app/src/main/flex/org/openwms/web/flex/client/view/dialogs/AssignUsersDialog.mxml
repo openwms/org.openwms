@@ -21,7 +21,7 @@
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
 -->
-<mx:TitleWindow xmlns:mx="http://www.adobe.com/2006/mxml" layout="absolute" width="528" height="350" fontSize="12" creationComplete="init();">
+<mx:TitleWindow xmlns:mx="http://www.adobe.com/2006/mxml" layout="absolute" width="528" height="350" fontSize="12" title="{getTitle()}" creationComplete="init();">
 
     <mx:Metadata>
         [Name("assignUsersDialog")]
@@ -45,16 +45,16 @@
             [Bindable]
             public var modelLocator:ModelLocator;            
             [Bindable]
-            private var notAssigned:ArrayCollection = new ArrayCollection();
+            protected var notAssigned:ArrayCollection = new ArrayCollection();
             [Bindable]
-            private var toAssign:ListCollectionView;
+            protected var toAssign:ListCollectionView;
             [Bindable]
             public var assigned:ListCollectionView;
             [Bindable]
             public var role:Role;
             private var changed:Boolean = false;
 
-            private function init():void
+            protected function init():void
             {
                 notAssigned = new ArrayCollection(modelLocator.allUsers.toArray());
                 toAssign = assigned;
@@ -69,17 +69,21 @@
                 	}
                 }
                 this.addEventListener(KeyboardEvent.KEY_DOWN, keyEventHandler);
-                this.title = "Assign Users to Role : "+role.name;
                 PopUpManager.centerPopUp(this);
             }
-
-            private function closeDialog(event:Event=null):void
+            
+            protected function getTitle():String
+            {
+            	return "Assign Users to Role : "+role.name;
+            }
+            
+            protected function closeDialog(event:Event=null):void
             {
                 this.removeEventListener(KeyboardEvent.KEY_DOWN, keyEventHandler);
                 PopUpManager.removePopUp(this);
             }
 
-            private function keyEventHandler(event:KeyboardEvent):void
+            protected function keyEventHandler(event:KeyboardEvent):void
             {
                 if(event.keyCode == 27)
                 {
@@ -87,14 +91,14 @@
                 }
             }
 
-            private function accept(e:Event):void
+            protected function accept(e:Event):void
             {
             	toAssign.refresh();
             	assigned = toAssign;
                 closeDialog();
             }
 
-            private function formatFunction(item:*):String
+            protected function formatFunction(item:*):String
             {
                 return (item as User).username+" - "+(item as User).fullname;
             }
@@ -126,7 +130,7 @@
             private function sortList(list:ListCollectionView):ListCollectionView
             {
             	var sortField:SortField = new SortField();
-                sortField.name = "fullname";
+                sortField.name = getSortField();
                 sortField.numeric = false;
                 var dataSort:Sort = new Sort();
                 dataSort.fields = [sortField];
@@ -134,16 +138,31 @@
                 list.refresh();
                 return list;
             }
+            
+            protected function getSortField():String
+            {
+            	return "fullname";
+            }
+            
+            protected function getAssignedLabel():String
+            {
+            	return "Assigned Users";
+            }
+
+            protected function getNotAssignedLabel():String
+            {
+                return "All Users";
+            }
         ]]>
     </mx:Script>
     
-    <mx:Label x="83" y="10" text="All Users"/>
+    <mx:Label id="notAssignedLbl" x="83" y="10" text="{getNotAssignedLabel()}"/>
     <mx:List id="allLst" y="39" x="10" width="202" height="225" doubleClickEnabled="true" doubleClick="moveRight();" labelFunction="formatFunction" allowMultipleSelection="true" dataProvider="{notAssigned}" enabled="true" alternatingItemColors="[#B7BABC, #FFFFFF]"/>
 
     <mx:Button x="234" y="117" buttonMode="true" mouseChildren="false" toolTip="Move Right" icon="@Embed(source='assets/images/icons/arrow_right.png')" click="moveRight()"/>
     <mx:Button x="234" y="147" buttonMode="true" mouseChildren="false" toolTip="Move Left" icon="@Embed(source='assets/images/icons/arrow_left.png')" click="moveLeft()"/>
 
-    <mx:Label x="348" y="10" text="Assigned Users"/>
+    <mx:Label id="assignedLbl" x="348" y="10" text="{getAssignedLabel()}"/>
     <mx:List id="assLst" y="39" x="296" width="202" height="225" doubleClickEnabled="true" doubleClick="moveLeft();" labelFunction="formatFunction" allowMultipleSelection="true" dataProvider="{toAssign}" enabled="true" alternatingItemColors="[#B7BABC, #FFFFFF]"/>
 
     <mx:HBox width="100%" horizontalAlign="center" x="0" y="272">

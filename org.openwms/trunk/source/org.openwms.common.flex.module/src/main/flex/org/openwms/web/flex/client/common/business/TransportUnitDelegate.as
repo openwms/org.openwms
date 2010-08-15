@@ -20,13 +20,15 @@
  */
 package org.openwms.web.flex.client.common.business
 {
-    import com.adobe.cairngorm.business.ServiceLocator;
     
     import mx.collections.ArrayCollection;
-    import mx.rpc.AsyncToken;
-    import mx.rpc.IResponder;
     
+    import org.granite.tide.events.TideFaultEvent;
+    import org.granite.tide.events.TideResultEvent;
+    import org.granite.tide.spring.Context;
     import org.openwms.common.domain.TransportUnit;
+    import org.openwms.web.flex.client.common.event.TransportUnitEvent;
+    import org.openwms.web.flex.client.common.model.CommonModelLocator;
 
     /**
      * A TransportUnitDelegate.
@@ -34,34 +36,57 @@ package org.openwms.web.flex.client.common.business
      * @author <a href="mailto:openwms@googlemail.com">Heiko Scherrer</a>
      * @version $Revision$
      */
+    [Name("transportUnitDelegate")]
+    [ManagedEvent(name="LOAD_ALL_LOCATION_TYPES")]
+    [ManagedEvent(name="LOAD_ALL_LOCATIONS")]
     public class TransportUnitDelegate
     {
-        private var responder:IResponder;
-        private var service:Object;
 
-        public function TransportUnitDelegate(responder:IResponder):void
+        [In]
+        [Bindable]
+        public var tideContext:Context;
+        [In]
+        [Bindable]
+        public var commonModelLocator:CommonModelLocator;            
+
+        public function TransportUnitDelegate():void
         {
-            this.responder = responder;
-            this.service = ServiceLocator.getInstance().getRemoteObject("transportUnitService");
         }
 
+        [Observer("LOAD_TRANSPORT_UNITS")]
         public function getTransportUnits():void
         {
-            var call:AsyncToken = service.getAllTransportUnits();
-            call.addResponder(responder);
+        	tideContext.transportUnitService.getAllTransportUnits(onTransportUnitsLoaded, onFault);
+        }
+        private function onTransportUnitsLoaded(event:TideResultEvent):void
+        {
+            commonModelLocator.allTransportUnits = event.result as ArrayCollection;
         }
         
-        public function createTransportUnit(transportUnit:TransportUnit):void
+        [Observer("CREATE_TRANSPORT_UNIT")]
+        public function createTransportUnit(event:TransportUnitEvent):void
         {
-            var call:AsyncToken = service.createTransportUnit(transportUnit.barcode, transportUnit.transportUnitType,transportUnit.actualLocation.locationId);
-            call.addResponder(responder);
+        	var transportUnit:TransportUnit = event.data as TransportUnit;
+        	tideContext.transportUnitService.createTransportUnit(transportUnit.barcode, transportUnit.transportUnitType, transportUnit.actualLocation.locationId, onTransportUnitCreated, onFault);
+        }
+        private function onTransportUnitCreated(event:TideResultEvent):void
+        {
+            dispatchEvent(new TransportUnitEvent(TransportUnitEvent.LOAD_TRANSPORT_UNITS));
         }
         
-        public function deleteTransportUnits(transportUnits:ArrayCollection):void
+        [Observer("DELETE_TRANSPORT_UNIT")]
+        public function deleteTransportUnits(event:TransportUnitEvent):void
         {
-            var call:AsyncToken = service.deleteTransportUnits(transportUnits);
-            call.addResponder(responder);
+        	tideContext.transportUnitService.deleteTransportUnits(event.data as ArrayCollection, onTransportUnitsLoaded, onFault);
+        }
+        private function onTransportUnitDeleted(event:TideResultEvent):void
+        {
+            dispatchEvent(new TransportUnitEvent(TransportUnitEvent.LOAD_TRANSPORT_UNITS));
         }
 
+        private function onFault(event:TideFaultEvent):void
+        {
+            Alert.show("Error executing operation on Location service");
+        }
     }
 }

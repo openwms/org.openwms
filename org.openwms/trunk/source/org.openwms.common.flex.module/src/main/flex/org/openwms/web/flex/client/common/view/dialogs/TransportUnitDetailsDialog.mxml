@@ -11,7 +11,6 @@
     		import org.openwms.common.domain.TransportUnitType;
     		import mx.managers.PopUpManager;
     		import org.openwms.web.flex.client.common.model.CommonModelLocator;
-            import org.openwms.web.flex.client.model.ModelLocator;
     		import mx.collections.ArrayCollection;
     		import org.openwms.common.domain.TransportUnit;
     		[Bindable]
@@ -20,14 +19,11 @@
     		public var transportUnits:ArrayCollection;
             [In]
             [Bindable]
-            public var modelLocator:ModelLocator;
-            [In]
-            [Bindable]
             public var commonModelLocator:CommonModelLocator;
             [Bindable]
             private var markedMultiple:Boolean = false;
             [Bindable]
-            private var tus:ArrayCollection = new ArrayCollection(modelLocator.allTransportUnits.toArray());
+            private var tus:ArrayCollection = new ArrayCollection(commonModelLocator.allTransportUnits.toArray());
     		
     		private function init():void
     		{
@@ -127,9 +123,9 @@
         </mx:Canvas>
 		<mx:TextInput x="170" y="8" id="barcodeTxt" text="{transportUnit.barcode}" width="261"/>
 		<comp:SuggestComboBox x="170" y="255" id="parentTxt" labelField="barcode" dataProvider="{tus}" width="261"/>
-		<comp:SuggestComboBox x="170" y="36" id="actualLocationCmb" dataProvider="{modelLocator.allLocations}" width="261"/>
+		<comp:SuggestComboBox x="170" y="36" id="actualLocationCmb" dataProvider="{commonModelLocator.allLocations}" width="261"/>
 		<mx:ComboBox x="170" y="281" id="stateCmb" width="261" dataProvider="{TransportUnit$TU_STATE.constants}"/>
-		<comp:SuggestComboBox x="170" y="307" id="targetLocationCmb" dataProvider="{modelLocator.allLocations}" width="261"/>
+		<comp:SuggestComboBox x="170" y="307" id="targetLocationCmb" dataProvider="{commonModelLocator.allLocations}" width="261"/>
 		<mx:Label x="170" y="62" id="sinceDt" text="{transportUnit.actualLocationDate}" width="261" />
 		<mx:Label x="170" y="105" id="invDt" text="{transportUnit.inventoryDate}" width="261" />
 		<mx:Label x="170" y="171" id="createdDt" text="{transportUnit.creationDate}" width="261" />

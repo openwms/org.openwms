@@ -21,10 +21,10 @@
      * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
      */
 -->
-<mx:Canvas xmlns:mx="http://www.adobe.com/2006/mxml" xmlns:x="org.openwms.web.flex.client.component.*" width="100%" height="100%" backgroundColor="#C2DAEF" show="onShow()">
+<mx:Canvas xmlns:mx="http://www.adobe.com/2006/mxml" xmlns:x="org.openwms.web.flex.client.component.*" width="100%" height="100%" backgroundColor="#C2DAEF" show="onShow();">
 
     <mx:Metadata>
-        [Name]
+        [Name("locationGroupView")]
         [ManagedEvent(name="LOAD_ALL_LOCATIONS")]
         [ManagedEvent(name="LOAD_ALL_LOCATION_GROUPS")]
     </mx:Metadata>
@@ -40,10 +40,6 @@
             import org.openwms.web.flex.client.common.event.LocationEvent;
             import mx.collections.ArrayCollection;
             import mx.events.*;
-
-            [In]
-            [Bindable]
-            public var modelLocator:ModelLocator;
 
 	        [In]
 	        [Bindable]
@@ -66,7 +62,7 @@
                     dispatchEvent(new LocationEvent(LocationEvent.LOAD_ALL_LOCATIONS));
                 }
             }
-
+            
             private function locationGroupLabel(item : Object) : String {
                 if (item != null) {
                     if (item.getData() != null) {
@@ -86,9 +82,8 @@
             }
 
             private function showLocations() : void {
-                var locations : ArrayCollection = modelLocator.allLocations;
+                var locations : ArrayCollection = commonModelLocator.allLocations;
                 selectedLocations.removeAll();
-                trace("GoingMoving");
                 for (var i : uint = 0; i < locations.length; i++) {
                     if (locations[i].locationGroup == null) {
                         continue;

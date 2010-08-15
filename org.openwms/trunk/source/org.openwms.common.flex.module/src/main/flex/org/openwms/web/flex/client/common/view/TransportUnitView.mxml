@@ -36,7 +36,6 @@
     		import mx.controls.Alert;
     		import org.openwms.web.flex.client.common.model.IconLocator;
     		import org.openwms.common.domain.TransportUnit;
-    		import org.openwms.web.flex.client.model.ModelLocator;
             import org.openwms.web.flex.client.common.model.CommonModelLocator;
     		import org.openwms.web.flex.client.common.view.dialogs.CreateTransportUnitDialog;
     		import org.openwms.web.flex.client.common.view.dialogs.ConfirmDeletionDialog;
@@ -45,10 +44,10 @@
     		
             [In]
             [Bindable]
-            public var modelLocator:ModelLocator;
+            public var commonModelLocator:CommonModelLocator;
             [Bindable]
             private var selected:TransportUnit;
-            private static var tu:TransportUnit = new TransportUnit();
+            private var tu:TransportUnit = new TransportUnit();
             
     		public function onStartup():void {
     			//userAddBtn.addChild(IconLocator.iconUserAdd);
@@ -77,7 +76,7 @@
             {
             	var e:TransportUnitEvent = new TransportUnitEvent(TransportUnitEvent.DELETE_TRANSPORT_UNIT);
             	e.data = transportUnitsGrid.selectedItems;
-            	e.dispatch();
+            	dispatchEvent(e);
             }
             
             private function showDetails():void
@@ -107,7 +106,7 @@
     <mx:HRule x="10" y="53" width="95%"/>
 
 	<mx:HBox x="10" y="63" width="95%" height="100%">
-		<mx:DataGrid id="transportUnitsGrid" width="100%" height="95%" doubleClickEnabled="true" doubleClick="showDetails()" change="onRowClick(event)" allowMultipleSelection="true" dataProvider="{modelLocator.allTransportUnits}" x="0" y="10">
+		<mx:DataGrid id="transportUnitsGrid" width="100%" height="95%" doubleClickEnabled="true" doubleClick="showDetails()" change="onRowClick(event)" allowMultipleSelection="true" dataProvider="{commonModelLocator.allTransportUnits}" x="0" y="10">
 			<mx:columns>
 				<mx:DataGridColumn headerText="Barcode" dataField="barcode" />
                 <mx:DataGridColumn headerText="Type" dataField="transportUnitType" />

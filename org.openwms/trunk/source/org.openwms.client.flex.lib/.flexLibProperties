@@ -9,11 +9,10 @@
     <classEntry path="org.openwms.web.flex.client.util.DisplayUtility"/>
     <classEntry path="org.openwms.web.flex.client.module.CommonModule"/>
     <classEntry path="org.openwms.web.flex.client.model.ModelLocator"/>
-    <classEntry path="org.openwms.web.flex.client.component.SimpleTransportUnitSelector"/>
     <classEntry path="org.openwms.web.flex.client.model.TreeNode"/>
-    <classEntry path="org.openwms.web.flex.client.model.TreeDataDescriptor"/>
-    <classEntry path="org.openwms.web.flex.client.component.SuperPanel"/>
     <classEntry path="org.openwms.web.flex.client.HashMap"/>
+    <classEntry path="org.openwms.web.flex.client.component.SuperPanel"/>
+    <classEntry path="org.openwms.web.flex.client.model.TreeDataDescriptor"/>
   </includeClasses>
   <includeResources/>
   <namespaceManifests/>

@@ -31,7 +31,7 @@
             {
             	var event:TransportUnitEvent = new TransportUnitEvent(TransportUnitEvent.DELETE_TRANSPORT_UNIT);
             	event.data = deleteLst.dataProvider as ArrayCollection;
-            	event.dispatch();
+            	dispatchEvent(event);
             	closeDialog();
             }
 
