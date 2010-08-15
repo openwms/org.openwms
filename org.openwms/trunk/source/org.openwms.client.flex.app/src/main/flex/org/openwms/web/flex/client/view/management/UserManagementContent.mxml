@@ -146,11 +146,11 @@
 	<mx:HBox width="95%" horizontalGap="8" verticalAlign="middle">
 		<mx:Label text="User Settings" fontSize="14" fontWeight="bold" />
         <mx:VRule height="10"/>
-		<mx:Button id="addUserBtn" buttonMode="true" mouseChildren="false" toolTip="Create a new User" icon="@Embed(source='/assets/icons/fuegue/user--plus.png')" click="fireAddUserEvent()" />
+		<mx:Button id="addUserBtn" buttonMode="true" mouseChildren="false" toolTip="Create a new User" icon="@Embed(source='/assets/images/User--plus.png')" click="fireAddUserEvent()" />
         <mx:VRule height="10"/>
-        <mx:Button id="deleteUserBtn" buttonMode="true" mouseChildren="false" toolTip="Delete an User" icon="@Embed(source='/assets/icons/fuegue/user--minus.png')" click="fireDeleteUserEvent()" />
+        <mx:Button id="deleteUserBtn" buttonMode="true" mouseChildren="false" toolTip="Delete an User" icon="@Embed(source='/assets/images/User--minus.png')" click="fireDeleteUserEvent()" />
         <mx:VRule height="10"/>
-		<mx:Button id="saveUserBtn" buttonMode="true" mouseChildren="false" toolTip="Save an already existing User" icon="@Embed(source='/assets/icons/fuegue/user--pencil.png')" click="fireSaveUserEvent()" />
+		<mx:Button id="saveUserBtn" buttonMode="true" mouseChildren="false" toolTip="Save an already existing User" icon="@Embed(source='/assets/images/User--save.png')" click="fireSaveUserEvent()" />
         <mx:VRule height="10"/>
         <mx:Button id="refreshUserBtn" buttonMode="true" mouseChildren="false" toolTip="Refresh the list of Users" icon="@Embed(source='assets/images/icons/refresh.png')" click="refresh()"/>
 	</mx:HBox>
