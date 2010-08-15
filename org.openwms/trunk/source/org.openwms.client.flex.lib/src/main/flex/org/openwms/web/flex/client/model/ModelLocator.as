@@ -54,8 +54,6 @@ package org.openwms.web.flex.client.model
         public const DIRECTORY_NAME:String = "data";
         public static const DT_FORMAT_STRING:String = "DD.MM.YYYY HH:NN:SS";
 
-        public var allLocations:ArrayCollection = new ArrayCollection();
-        public var allTransportUnits:ArrayCollection = new ArrayCollection();
         public var allUsers:ArrayCollection = new ArrayCollection();
         public var allRoles:ArrayCollection = new ArrayCollection();
         public var selectedUser:User = null;

@@ -21,13 +21,14 @@
 package org.openwms.web.flex.client.common.business
 {
     import mx.collections.ArrayCollection;
-    import mx.rpc.AsyncToken;
-    import mx.rpc.IResponder;
+    import mx.controls.Alert;
     
+    import org.granite.tide.events.TideFaultEvent;
     import org.granite.tide.events.TideResultEvent;
     import org.granite.tide.spring.Context;
     import org.openwms.common.domain.Location;
     import org.openwms.common.domain.LocationType;
+    import org.openwms.web.flex.client.common.event.LocationEvent;
     import org.openwms.web.flex.client.common.event.LocationTypeEvent;
     import org.openwms.web.flex.client.common.model.CommonModelLocator;
 
@@ -39,6 +40,7 @@ package org.openwms.web.flex.client.common.business
      */
     [Name("locationDelegate")]
     [ManagedEvent(name="LOAD_ALL_LOCATION_TYPES")]
+    [ManagedEvent(name="LOAD_ALL_LOCATIONS")]
     public class LocationDelegate
     {
         [In]
@@ -48,39 +50,56 @@ package org.openwms.web.flex.client.common.business
 	    [Bindable]
 	    public var commonModelLocator:CommonModelLocator;            
 
-        private var responder:IResponder;
-        private var service:Object;
-
         public function LocationDelegate():void
         {
         }
 
         /**
-         * Call to load all LocationTypes from the service.
+         * Call to load all Locations from the service.
          */
+        [Observer("LOAD_ALL_LOCATIONS")]
         public function getLocations():void
         {
-            tideContext.locationService.getLocationTypes(onLocationTypesLoaded);
+            tideContext.locationService.getAllLocations(onLocationsLoaded, onFault);
+        }
+        private function onLocationsLoaded(event:TideResultEvent):void
+        {
+            commonModelLocator.allLocations = event.result as ArrayCollection;
         }
 
-        
-        
-        public function createLocation(location:Location):void
+        [Observer("CREATE_LOCATION")]
+        public function createLocation(event:LocationEvent):void
         {
-            var call:AsyncToken = service.addEntity(location);
-            call.addResponder(responder);           
+            tideContext.locationService.addEntity(event.data as Location, onLocationCreated);
+        }
+        private function onLocationCreated(event:TideResultEvent):void
+        {
+            dispatchEvent(new LocationEvent(LocationEvent.LOAD_ALL_LOCATIONS));
         }
 
-        public function deleteLocation(location:Location):void
+        [Observer("DELETE_LOCATION")]
+        public function deleteLocation(event:LocationEvent):void
         {
-            var call:AsyncToken = service.remove(location);
-            call.addResponder(responder);            
+            tideContext.locationService.remove(event.data as Location, onLocationDeleted);
+        }
+        private function onLocationDeleted(event:TideResultEvent):void
+        {
+            dispatchEvent(new LocationEvent(LocationEvent.LOAD_ALL_LOCATIONS));
         }
 
-        public function saveLocation(location:Location):void
+        [Observer("SAVE_LOCATION")]
+        public function saveLocation(event:LocationEvent):void
         {
-            var call:AsyncToken = service.save(location);
-            call.addResponder(responder);            
+            tideContext.locationService.save(event.data as Location, onLocationSaved);
+        }
+        private function onLocationSaved(event:TideResultEvent):void
+        {
+            dispatchEvent(new LocationEvent(LocationEvent.LOAD_ALL_LOCATIONS));
+        }
+
+        private function onFault(event:TideFaultEvent):void
+        {
+            Alert.show("Error executing operation on Location service");
         }
 
         /**

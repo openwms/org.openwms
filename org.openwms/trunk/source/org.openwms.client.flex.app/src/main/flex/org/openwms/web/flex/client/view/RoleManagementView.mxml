@@ -32,6 +32,7 @@
 
     <mx:Script>
         <![CDATA[
+        	import org.openwms.web.flex.client.view.dialogs.AssignGrantsDialog;
         	import org.openwms.web.flex.client.event.ApplicationEvent;
         	import org.openwms.web.flex.client.event.UserEvent;
         	import org.openwms.common.domain.system.usermanagement.SecurityObject;
@@ -81,12 +82,18 @@
                 PopUpManager.centerPopUp(pop);
             }
 
+            /**
+             * Open dialogue to add a new Role.
+             */
             private function add():void
             {
                 var pop:CreateRoleDialog = CreateRoleDialog(PopUpManager.createPopUp(this, CreateRoleDialog, true));
                 PopUpManager.centerPopUp(pop);
             }
 
+            /**
+             * Open confirm dialogue to accept deletion of a Role.
+             */
             private function remove():void
             {
                 if (lst.selectedIndices.length == 0)
@@ -99,6 +106,9 @@
                 PopUpManager.centerPopUp(pop);
             }
 
+            /**
+             * Fire event to save the selected Role.
+             */
             private function save():void
             {
                 if (lst.selectedIndices.length == 0)
@@ -111,6 +121,9 @@
                 dispatchEvent(event);
             }
             
+            /**
+             * Add more Users to a Role.
+             */
             private function addUsers():void
             {
                 if (selected == null)
@@ -124,6 +137,25 @@
                 PopUpManager.centerPopUp(pop);            	
             }
             
+            /**
+             * Assign more Grants to a Role.
+             */
+            private function addGrants():void
+            {
+                if (selected == null)
+                {
+                    Alert.show("Please select a Role to assign Grants to it");
+                    return;
+                }
+                var pop:AssignGrantsDialog = AssignGrantsDialog(PopUpManager.createPopUp(this, AssignGrantsDialog, true));
+                pop.assigned = selected.grants;
+                pop.role = selected;
+                PopUpManager.centerPopUp(pop);              
+            }
+
+            /**
+             * Remove Users from an already existing Role.
+             */
             private function removeUsers():void
             {
                 if (selected == null)
@@ -148,16 +180,25 @@
                 }
             }
 
+            /**
+             * Reload the list of Roles.
+             */
             private function refresh():void
             {
                 dispatchEvent(new RoleEvent(RoleEvent.LOAD_ALL_ROLES));
             }
-
+            
+            /**
+             * Define how User information is displayed.
+             */
             private function formatUser(item:*):String
             {
             	return (item as User).fullname+" ("+(item as User).username+")";
             }
 
+            /**
+             * Define how Grant information is displayed.
+             */
             private function formatGrant(item:*):String
             {
                 return (item as SecurityObject).name + " - " + (item as SecurityObject).description;
@@ -192,7 +233,7 @@
 	                <mx:HBox verticalAlign="middle" backgroundColor="#FFA6A6" width="100%" backgroundAlpha="0.5" horizontalGap="8" height="25">
 	                    <mx:Label x="10" y="10" text="Assigned Grants" fontSize="10"/>
 	                    <mx:VRule height="10"/>
-	                    <mx:Button id="assignedGrantsBtn" width="22" height="22" buttonMode="true" mouseChildren="false" toolTip="Assign Grants to the selected Role" click="add()" icon="@Embed(source='assets/images/icons/grant--add.png')"/>
+	                    <mx:Button id="assignedGrantsBtn" width="22" height="22" buttonMode="true" mouseChildren="false" toolTip="Assign Grants to the selected Role" click="addGrants()" icon="@Embed(source='assets/images/icons/grant--add.png')"/>
 	                    <mx:VRule height="10"/>
 	                    <mx:Button id="removeGrantsBtn" width="22" height="22" buttonMode="true" mouseChildren="false" enabled="{grantsLst.selectedItems.length > 0}" toolTip="Remove Grants from the selected Role" click="add()" icon="@Embed(source='assets/images/icons/grant--delete.png')"/>
 	                </mx:HBox>

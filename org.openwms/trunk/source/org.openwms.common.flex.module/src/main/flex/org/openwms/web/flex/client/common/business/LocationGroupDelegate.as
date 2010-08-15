@@ -20,11 +20,15 @@
  */
 package org.openwms.web.flex.client.common.business
 {
-    import com.adobe.cairngorm.business.ServiceLocator;
-
+    import mx.collections.ArrayCollection;
     import mx.controls.Alert;
-    import mx.rpc.AsyncToken;
-    import mx.rpc.IResponder;
+    
+    import org.granite.tide.events.TideFaultEvent;
+    import org.granite.tide.events.TideResultEvent;
+    import org.granite.tide.spring.Context;
+    import org.openwms.web.flex.client.common.event.LoadLocationGroupsEvent;
+    import org.openwms.web.flex.client.common.model.CommonModelLocator;
+    import org.openwms.web.flex.client.model.TreeNode;
 
     /**
      * A LocationGroupDelegate.
@@ -42,20 +46,32 @@ package org.openwms.web.flex.client.common.business
         [Bindable]
         public var commonModelLocator:CommonModelLocator;            
 
-        private var responder:IResponder;
-        private var service:Object;
-
         public function LocationGroupDelegate():void
         {
-            this.responder = responder;
-            this.service = ServiceLocator.getInstance().getRemoteObject("locationGroupService");
         }
 
-        public function getLocationGroups():void
+        [Observer("LOAD_ALL_LOCATION_GROUPS")]
+        public function getLocationGroups(event:LoadLocationGroupsEvent):void
         {
-            var call:AsyncToken = service.getLocationGroupsAsList();
-            call.addResponder(responder);
+            tideContext.locationGroupService.getLocationGroupsAsList(onLocationGroupsLoaded, onFault);
         }
 
+        private function onLocationGroupsLoaded(event:TideResultEvent):void
+        {
+            trace("Load Location Groups");
+        	commonModelLocator.allLocationGroups = event.result as ArrayCollection;
+            // Setup tree if not set before
+            if (null == commonModelLocator.locationGroupTree)
+            {
+                commonModelLocator.locationGroupTree = new TreeNode();
+                commonModelLocator.locationGroupTree.build(commonModelLocator.allLocationGroups);
+            }
+        }
+
+        private function onFault(event:TideFaultEvent):void
+        {
+            Alert.show("Error when loading Location Groups");
+        }
     }
+            
 }

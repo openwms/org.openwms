@@ -7,10 +7,8 @@
 
     <mx:Script>
     	<![CDATA[
-    		import org.openwms.web.flex.client.model.ModelLocator;
-    		import org.openwms.web.flex.client.component.LocationSelector;
-    		import org.openwms.web.flex.client.factory.DOFactory;
-    		import org.openwms.web.flex.client.common.command.CreateTransportUnitCommand;
+    		import org.openwms.web.flex.client.common.factory.DOFactory;
+            import org.openwms.web.flex.client.common.component.LocationSelector;
     		import org.openwms.web.flex.client.common.model.CommonModelLocator;
             import org.openwms.web.flex.client.common.event.TransportUnitEvent;
     		import org.openwms.common.domain.values.Barcode;
@@ -19,7 +17,6 @@
     		import org.openwms.common.domain.LocationPK;
     		import org.openwms.common.domain.Location;
     		import org.openwms.common.domain.TransportUnit;
-            import org.openwms.web.flex.client.common.model.CommonModelLocator;
     	
             import mx.containers.HBox;
             import mx.controls.Image;
@@ -31,9 +28,6 @@
             [In]
             [Bindable]
             public var commonModelLocator:CommonModelLocator;
-            [In]
-            [Bindable]
-            public var modelLocator:ModelLocator;
     	
             private function init():void
             {
@@ -71,7 +65,7 @@
                 transportUnit.transportUnitType = tuType;
                 var event:TransportUnitEvent = new TransportUnitEvent(TransportUnitEvent.CREATE_TRANSPORT_UNIT);
                 event.data = transportUnit;
-                event.dispatch();
+                dispatchEvent(event);
             }
 
 	        private function keyEventHandler(event:KeyboardEvent):void
@@ -93,7 +87,7 @@
 		<mx:ComboBox id="tuTypeTxt" x="155" y="77" width="321" fontSize="24" labelField="type" dataProvider="{commonModelLocator.allTransportUnitTypes}"/>
 		<mx:Canvas x="9" y="151" width="467" height="109" backgroundColor="#F1F07C">
 			<mx:Label x="140.5" y="10" text="Actual Location" fontSize="24"/>
-			<comp:SuggestComboBox id="locationCmb" width="447" fontSize="24" prompt="Select one..." dataProvider="{modelLocator.allLocations}" x="10" y="60"/>
+			<comp:SuggestComboBox id="locationCmb" width="447" fontSize="24" prompt="Select one..." dataProvider="{commonModelLocator.allLocations}" x="10" y="60"/>
 		</mx:Canvas>
 		<mx:HBox x="0" y="268" width="100%" horizontalAlign="center">
 			<mx:Button id="createBtn" label="Create" fontSize="12" click="createTransportUnit()"/>

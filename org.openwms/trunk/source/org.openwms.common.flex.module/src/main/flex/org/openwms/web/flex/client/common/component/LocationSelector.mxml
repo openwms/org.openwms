@@ -21,7 +21,7 @@
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
 -->
-<mx:VBox xmlns:mx="http://www.adobe.com/2006/mxml" xmlns:comp="org.openwms.web.flex.client.component.*">
+<mx:VBox xmlns:mx="http://www.adobe.com/2006/mxml" xmlns:comp="org.openwms.web.flex.client.common.component.*">
 
     <mx:Metadata>
         [Name]

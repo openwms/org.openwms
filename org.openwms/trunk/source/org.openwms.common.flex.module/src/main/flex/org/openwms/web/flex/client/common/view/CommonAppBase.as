@@ -32,6 +32,7 @@ package org.openwms.web.flex.client.common.view
     import org.granite.tide.spring.Spring;
     import org.openwms.web.flex.client.IApplicationModule;
     import org.openwms.web.flex.client.common.business.LocationDelegate;
+    import org.openwms.web.flex.client.common.business.LocationGroupDelegate;
     import org.openwms.web.flex.client.common.business.TransportUnitTypeDelegate;
     import org.openwms.web.flex.client.common.event.TransportUnitTypeEvent;
     import org.openwms.web.flex.client.common.model.CommonModelLocator;
@@ -68,7 +69,7 @@ package org.openwms.web.flex.client.common.view
         }
         
         public function init(tide:Tide):void {
-            tide.addComponents([CommonModelLocator, TransportUnitTypeDelegate, LocationDelegate]);
+            tide.addComponents([CommonModelLocator, TransportUnitTypeDelegate, LocationDelegate, LocationGroupDelegate]);
         }
 
         /**
