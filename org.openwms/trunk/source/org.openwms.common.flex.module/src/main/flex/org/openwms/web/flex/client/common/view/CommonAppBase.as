@@ -35,22 +35,17 @@ package org.openwms.web.flex.client.common.view
     import org.openwms.web.flex.client.common.business.LocationGroupDelegate;
     import org.openwms.web.flex.client.common.business.TransportUnitDelegate;
     import org.openwms.web.flex.client.common.business.TransportUnitTypeDelegate;
-    import org.openwms.web.flex.client.common.event.TransportUnitTypeEvent;
     import org.openwms.web.flex.client.common.model.CommonModelLocator;
     import org.openwms.web.flex.client.model.ModelLocator;
     import org.openwms.web.flex.client.module.CommonModule;
 
     [Name]
-    [ManagedEvent(name="LOAD_ALL_TRANSPORT_UNIT_TYPES")]
     public class CommonAppBase extends CommonModule implements IApplicationModule, ITideModule
     {
 
         [In]
         [Bindable]
         public var modelLocator:ModelLocator;
-        [In]
-        [Bindable]
-        public var commonModelLocator:CommonModelLocator;
         [Bindable]
         public var commonMenuBar:MenuBar;
         [Bindable]
@@ -120,7 +115,6 @@ package org.openwms.web.flex.client.common.view
 
         private function loadAllStaticEntities():void
         {
-            dispatchEvent(new TransportUnitTypeEvent(TransportUnitTypeEvent.LOAD_ALL_TRANSPORT_UNIT_TYPES));
         }
 
         /**

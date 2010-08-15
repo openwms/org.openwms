@@ -20,7 +20,6 @@
  */
 package org.openwms.web.flex.client.common.event
 {
-    import com.adobe.cairngorm.control.CairngormEvent;
     import org.openwms.web.flex.client.event.SwitchScreenEvent;    
     import mx.collections.ArrayCollection;
 
@@ -36,7 +35,7 @@ package org.openwms.web.flex.client.common.event
         public static const SHOW_TRANSPORTUNITTYPE_VIEW:String = "transportUnitTypeView";
         public static const SHOW_LOCATIONTYPE_VIEW:String = "locationTypeView";
         
-        public function CommonSwitchScreenEvent(type:String, bubbles:Boolean = false, cancelable:Boolean = false)
+        public function CommonSwitchScreenEvent(type:String, bubbles:Boolean = true, cancelable:Boolean = false)
         {
             super(type, bubbles, cancelable);
         }

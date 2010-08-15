@@ -26,6 +26,8 @@
     <mx:Metadata>
         [Name]
         [ManagedEvent(name="LOAD_TRANSPORT_UNITS")]
+        [ManagedEvent(name="LOAD_ALL_LOCATIONS")]
+        [ManagedEvent(name="LOAD_ALL_TRANSPORT_UNIT_TYPES")]
         [ManagedEvent(name="DELETE_TRANSPORT_UNIT")]
     </mx:Metadata>
 
@@ -34,10 +36,12 @@
     		import mx.events.ListEvent;
     		import flash.events.MouseEvent;
     		import mx.collections.ArrayCollection;
-    		import org.openwms.web.flex.client.common.event.TransportUnitEvent;
     		import mx.controls.Alert;
+            import org.openwms.common.domain.TransportUnit;
+            import org.openwms.web.flex.client.common.event.TransportUnitEvent;
+            import org.openwms.web.flex.client.common.event.LocationEvent;
+            import org.openwms.web.flex.client.common.event.TransportUnitTypeEvent;
     		import org.openwms.web.flex.client.common.model.IconLocator;
-    		import org.openwms.common.domain.TransportUnit;
             import org.openwms.web.flex.client.common.model.CommonModelLocator;
     		import org.openwms.web.flex.client.common.view.dialogs.CreateTransportUnitDialog;
     		import org.openwms.web.flex.client.common.view.dialogs.ConfirmDeletionDialog;
@@ -55,6 +59,14 @@
     			if (commonModelLocator.allTransportUnits.length == 0)
                 {
                     dispatchEvent(new TransportUnitEvent(TransportUnitEvent.LOAD_TRANSPORT_UNITS));
+                }
+                if (commonModelLocator.allLocations.length == 0)
+                {
+                    dispatchEvent(new LocationEvent(LocationEvent.LOAD_ALL_LOCATIONS));
+                }
+                if (commonModelLocator.allTransportUnitTypes.length == 0)
+                {
+                    dispatchEvent(new TransportUnitTypeEvent(TransportUnitTypeEvent.LOAD_ALL_TRANSPORT_UNIT_TYPES));
                 }
     		}
     		
@@ -76,14 +88,7 @@
                 pop.items = new ArrayCollection(transportUnitsGrid.selectedItems);
                 PopUpManager.centerPopUp(pop);
             }
-            /*
-            private function deleteTransportUnit(event:Event):void
-            {
-            	var e:TransportUnitEvent = new TransportUnitEvent(TransportUnitEvent.DELETE_TRANSPORT_UNIT);
-            	e.data = transportUnitsGrid.selectedItems;
-            	dispatchEvent(e);
-            }
-            */
+
             private function showDetails():void
             {
                 var pop:TransportUnitDetailsDialog = TransportUnitDetailsDialog(PopUpManager.createPopUp(this, TransportUnitDetailsDialog, true));

@@ -44,25 +44,25 @@
     <mx:Script>
         <![CDATA[
         	import org.granite.tide.spring.Context;
-        	import org.openwms.common.domain.LocationType;
         	import mx.events.DragEvent;
-        	import org.openwms.common.domain.TypePlacingRule;
-        	import org.openwms.common.domain.TypeStackingRule;
-        	import mx.binding.utils.BindingUtils;
-            import org.openwms.web.flex.client.common.event.LocationTypeEvent;
-            import org.openwms.web.flex.client.util.ValidationUtil;
             import mx.events.ListEvent;
-            import org.openwms.web.flex.client.common.event.TransportUnitTypeEvent;
+        	import mx.binding.utils.BindingUtils;
             import mx.collections.ArrayCollection;
-            import org.openwms.web.flex.client.common.view.dialogs.ConfirmDeletionDialog;
             import mx.controls.Alert;
             import mx.managers.PopUpManager;
+            import org.openwms.common.domain.LocationType;
+            import org.openwms.common.domain.TypePlacingRule;
+            import org.openwms.common.domain.TypeStackingRule;
             import org.openwms.common.domain.TransportUnitType;
+            import org.openwms.web.flex.client.common.event.TransportUnitTypeEvent;
+            import org.openwms.web.flex.client.common.event.LocationTypeEvent;
             import org.openwms.web.flex.client.common.model.CommonModelLocator;
+            import org.openwms.web.flex.client.common.view.dialogs.ConfirmDeletionDialog;
             import org.openwms.web.flex.client.common.view.dialogs.CreateTransportUnitTypeDialog;
             import org.openwms.web.flex.client.common.view.dialogs.AssignmentLocationTypeDialog;
-            import org.openwms.web.flex.client.component.ListDialog;
             import org.openwms.web.flex.client.common.view.dialogs.ConfirmDeletionTransportUnitTypesDialog;
+            import org.openwms.web.flex.client.component.ListDialog;
+            import org.openwms.web.flex.client.util.ValidationUtil;
 
             [In]
             [Bindable]
