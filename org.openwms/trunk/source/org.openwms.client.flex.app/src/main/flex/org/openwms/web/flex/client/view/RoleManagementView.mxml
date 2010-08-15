@@ -210,11 +210,11 @@
 	    <mx:HBox verticalAlign="middle" backgroundColor="#FFA6A6" width="100%">
 	        <mx:Label x="10" y="10" text="Roles" fontSize="24"/>
 	        <mx:VRule height="10"/>
-	        <mx:Button id="addRoleBtn" buttonMode="true" mouseChildren="false" toolTip="Create a new Role" icon="@Embed(source='/assets/images/icons/users--plus.png')" click="add()"/>
+	        <mx:Button id="addRoleBtn" buttonMode="true" mouseChildren="false" toolTip="Create a new Role" icon="@Embed(source='/assets/images/Users--plus.png')" click="add()"/>
 	        <mx:VRule height="10"/>
-	        <mx:Button id="removeRoleBtn" buttonMode="true" mouseChildren="false" toolTip="Delete an existing Role" icon="@Embed(source='/assets/images/icons/users--minus.png')" click="remove()"/>
+	        <mx:Button id="removeRoleBtn" buttonMode="true" mouseChildren="false" toolTip="Delete an existing Role" icon="@Embed(source='/assets/images/Users--minus.png')" click="remove()"/>
 	        <mx:VRule height="10"/>
-	        <mx:Button id="saveRoleBtn" buttonMode="true" mouseChildren="false" toolTip="Save a modified Role" icon="@Embed(source='/assets/images/icons/users--save.png')" click="save()"/>
+	        <mx:Button id="saveRoleBtn" buttonMode="true" mouseChildren="false" toolTip="Save a modified Role" icon="@Embed(source='/assets/images/Users--save.png')" click="save()"/>
 	        <mx:VRule height="10"/>
 	        <mx:Button id="refreshRoleBtn" buttonMode="true" mouseChildren="false" toolTip="Refresh the list of Roles" icon="@Embed(source='assets/images/icons/refresh.png')" click="refresh()"/>
 	    </mx:HBox>
@@ -243,9 +243,9 @@
 			        <mx:HBox verticalAlign="middle" backgroundColor="#FFA6A6" width="100%" height="25" backgroundAlpha="0.5">
 			            <mx:Label x="10" y="10" text="Assigned Users" fontSize="10"/>
 			            <mx:VRule height="10"/>
-			            <mx:Button id="assignedUsersBtn" width="22" height="22" buttonMode="true" mouseChildren="false" toolTip="Assign Users to the selected Role" click="addUsers()" icon="@Embed(source='/assets/icons/fuegue/user--plus.png')"/>
+			            <mx:Button id="assignedUsersBtn" width="22" height="22" buttonMode="true" mouseChildren="false" toolTip="Assign Users to the selected Role" click="addUsers()" icon="@Embed(source='/assets/images/User--plus.png')"/>
 			            <mx:VRule height="10"/>
-			            <mx:Button id="removeUsersBtn" width="22" height="22" buttonMode="true" mouseChildren="false" toolTip="Remove Users from the selected Role" click="removeUsers()" icon="@Embed(source='/assets/icons/fuegue/user--minus.png')"/>
+			            <mx:Button id="removeUsersBtn" width="22" height="22" buttonMode="true" mouseChildren="false" toolTip="Remove Users from the selected Role" click="removeUsers()" icon="@Embed(source='/assets/images/User--minus.png')"/>
 			        </mx:HBox>
 	                <mx:List id="usersLst" height="200" width="100%" allowMultipleSelection="true" labelFunction="formatUser" dataProvider="{selected.users}" />
 	            </mx:VBox>

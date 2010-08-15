@@ -181,8 +181,7 @@ package org.openwms.web.flex.client.view
                 trace("Module was unloaded: " + appModule.getModuleName());
                 //removeFromMainMenu(appModule);
                 mainMenuBar.dataProvider = moduleLocator.getActiveMenuItems(new XMLListCollection(stdMenu));
-                refreshViewStack(appModule);
-                appModule.destroyModule();
+                removeViewsFromStack(appModule);
             }
         }
 
@@ -226,14 +225,26 @@ package org.openwms.web.flex.client.view
          * This method rebuilds the viewStack of the application, and should be called,
          * in case application modules are loaded or unloaded.
          */
+        private function removeViewsFromStack(module:IApplicationModule):void
+        {
+            trace("Remove views from applications ViewStack for module : " + module.getModuleName());
+            var views:ArrayCollection = module.getViews();
+            for each (var view:DisplayObject in views)
+            {
+                appViewStack.removeChild(view as DisplayObject);
+            }
+        }
+
+        /**
+         * This method rebuilds the viewStack of the application, and should be called,
+         * in case application modules are loaded or unloaded.
+         */
         private function refreshViewStack(module:IApplicationModule):void
         {
             trace("Resolve ViewStack items from module : " + module.getModuleName());
             var views:ArrayCollection = module.getViews();
-            trace("GET SUCCESSFUL");
             for each (var view:DisplayObject in views)
             {
-            	trace("ADDING:"+view);
                 appViewStack.addChild(view as DisplayObject);
             }
         }
