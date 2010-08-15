@@ -22,7 +22,6 @@ package org.openwms.web.flex.client.module
 {
 
     import flash.system.ApplicationDomain;
-    import flash.utils.getQualifiedClassName;
     
     import mx.collections.ArrayCollection;
     import mx.collections.XMLListCollection;
@@ -31,10 +30,8 @@ package org.openwms.web.flex.client.module
     import mx.modules.IModuleInfo;
     import mx.modules.ModuleManager;
     
-    import org.granite.tide.ITideModule;
     import org.granite.tide.events.TideResultEvent;
     import org.granite.tide.spring.Context;
-    import org.granite.tide.spring.Spring;
     import org.openwms.common.domain.Module;
     import org.openwms.web.flex.client.IApplicationModule;
     import org.openwms.web.flex.client.event.ApplicationEvent;
@@ -167,6 +164,11 @@ package org.openwms.web.flex.client.module
                     mInf.addEventListener(ModuleEvent.ERROR, onModuleLoaderError);
                     mInf.data = module;
                     modelLocator.unloadedModules.put(module.url, mInf);
+                    var appModule:Object = mInf.factory.create()
+                    if (appModule is IApplicationModule)
+                    {
+                    	(appModule as IApplicationModule).destroyModule();
+                    }
                     mInf.unload();
                     return;
                 }
