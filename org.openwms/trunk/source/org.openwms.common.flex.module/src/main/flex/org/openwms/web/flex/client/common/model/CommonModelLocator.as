@@ -36,6 +36,8 @@ package org.openwms.web.flex.client.common.model
     public class CommonModelLocator
     {
 
+        public static const DT_FORMAT_STRING:String = "DD.MM.YYYY HH:NN:SS";
+        
         public var allTransportUnitTypes:ArrayCollection = new ArrayCollection();
         public var allTransportUnits:ArrayCollection = new ArrayCollection();
         public var allLocations:ArrayCollection = new ArrayCollection();

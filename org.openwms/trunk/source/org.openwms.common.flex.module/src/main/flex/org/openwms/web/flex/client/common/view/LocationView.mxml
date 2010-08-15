@@ -47,7 +47,6 @@
             import mx.controls.dataGridClasses.DataGridColumn;
             import mx.collections.ArrayCollection;
             import mx.events.ListEvent;
-            import org.openwms.web.flex.client.model.ModelLocator;
             [In]
             [Bindable]
             public var commonModelLocator:CommonModelLocator;
@@ -74,8 +73,6 @@
 
             private function onRowClick(event:ListEvent):void
             {
-                selected = (event.currentTarget.selectedItem) as Location;
-                lastAccessTxt.text=dateFormatter.format(selected.lastAccess);
                 setLocationGroup();
                 setLocationType();
             }
@@ -152,6 +149,15 @@
                 var event:LocationEvent = new LocationEvent(LocationEvent.LOAD_ALL_LOCATIONS);
                 dispatchEvent(event);
             }
+
+            private function formatDateField(item:Object, dg:DataGridColumn):String
+            {
+                if (item.lastAccess != null)
+                {
+                    return dateFormatter.format(item.lastAccess);
+                }
+                return "n/a";
+            }
         ]]>
     </mx:Script>
 
@@ -166,7 +172,7 @@
     <mx:Binding source="outgoingActiveChk.selected" destination="selected.outgoingActive" />
     <mx:Binding source="consideredInAllocationChk.selected" destination="selected.consideredInAllocation" />
 
-    <mx:DateFormatter id="dateFormatter" formatString="{ModelLocator.DT_FORMAT_STRING}"/>
+    <mx:DateFormatter id="dateFormatter" formatString="{CommonModelLocator.DT_FORMAT_STRING}"/>
 
     <mx:HBox x="10" y="10" verticalAlign="middle" backgroundColor="#C6FFC7" width="95%">
         <mx:Label x="10" y="10" text="Locations" fontSize="24"/>
@@ -217,7 +223,7 @@
                         </mx:Component>
                     </mx:itemRenderer>
                 </mx:DataGridColumn>
-                <mx:DataGridColumn headerText="Last Access" dataField="lastAccess" editable="false"/>
+                <mx:DataGridColumn headerText="Last Access" dataField="lastAccess" labelFunction="formatDateField" editable="false" />
             </mx:columns>
         </mx:DataGrid>
         <mx:Canvas id="locationDetailsPnl" x="618" y="63" backgroundColor="#C6FFC7" backgroundAlpha="0.5">
@@ -259,7 +265,7 @@
             <mx:CheckBox id="consideredInAllocationChk" x="148" y="423" label="Considered in Allocation" selected="{selected.consideredInAllocation}"/>
 
             <mx:Label x="72" y="447" text="Last Access"/>
-            <mx:Text id="lastAccessTxt" x="148" y="463" width="200"/>
+            <mx:Text id="lastAccessTxt" x="148" y="463" width="200" text="{dateFormatter.format(selected.lastAccess)}"/>
 
             <mx:Label x="80" y="473" text="Messages"/>
             <mx:TextArea x="148" y="472" width="180" height="64"/>

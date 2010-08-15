@@ -21,7 +21,7 @@
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
 -->
-<mx:Panel xmlns:mx="http://www.adobe.com/2006/mxml" width="752" height="512" title="TransportUnit Details" creationComplete="init()" xmlns:comp="org.openwms.web.flex.client.component.*" xmlns:jwo="com.jwopitz.containers.*">
+<mx:Panel xmlns:mx="http://www.adobe.com/2006/mxml" width="752" height="512" title="Transport Unit Details" creationComplete="init()" xmlns:comp="org.openwms.web.flex.client.component.*" xmlns:jwo="com.jwopitz.containers.*">
 
     <mx:Metadata>
         [Name]
@@ -35,13 +35,13 @@
     		import org.openwms.web.flex.client.common.model.CommonModelLocator;
     		import mx.collections.ArrayCollection;
     		import org.openwms.common.domain.TransportUnit;
-    		[Bindable]
-    		private var transportUnit:TransportUnit;
-    		[Bindable]
-    		public var transportUnits:ArrayCollection;
             [In]
             [Bindable]
             public var commonModelLocator:CommonModelLocator;
+            [Bindable]
+            private var transportUnit:TransportUnit;
+            [Bindable]
+            public var transportUnits:ArrayCollection;
             [Bindable]
             private var markedMultiple:Boolean = false;
             [Bindable]
@@ -49,11 +49,13 @@
     		
     		private function init():void
     		{
+    			trace("init");
                 this.addEventListener(KeyboardEvent.KEY_DOWN, keyEventHandler);
                 PopUpManager.centerPopUp(this);
                 
                 if (transportUnits != null && transportUnits.length == 1)
                 {
+                trace("init");
                     // Single marked
                     transportUnit = transportUnits.getItemAt(0) as TransportUnit;
                     /*
@@ -70,6 +72,7 @@
                 }
                 if (transportUnits != null && transportUnits.length > 1)
                 {
+                trace("init");
                     // Multiple marked
                     markedMultiple = true;
                 }
