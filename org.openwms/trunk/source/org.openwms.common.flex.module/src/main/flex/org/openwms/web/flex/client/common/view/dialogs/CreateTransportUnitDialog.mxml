@@ -89,6 +89,17 @@
                 var event:TransportUnitEvent = new TransportUnitEvent(TransportUnitEvent.CREATE_TRANSPORT_UNIT);
                 event.data = transportUnit;
                 dispatchEvent(event);
+                barcodeTxt.setFocus();
+            }
+            
+            /**
+             * When a Role was successfully added reset the form to add a new Role.
+             */
+            [Observer("TRANSPORT_UNIT_CREATED")]
+            public function onTransportUnitCreated(event:TransportUnitEvent):void
+            {
+                barcodeTxt.text = "";
+                barcodeTxt.setFocus();
             }
 
 	        private function keyEventHandler(event:KeyboardEvent):void

@@ -22,6 +22,7 @@ package org.openwms.web.flex.client.common.business
 {
     
     import mx.collections.ArrayCollection;
+    import mx.controls.Alert;
     
     import org.granite.tide.events.TideFaultEvent;
     import org.granite.tide.events.TideResultEvent;
@@ -72,6 +73,7 @@ package org.openwms.web.flex.client.common.business
         private function onTransportUnitCreated(event:TideResultEvent):void
         {
             dispatchEvent(new TransportUnitEvent(TransportUnitEvent.LOAD_TRANSPORT_UNITS));
+            dispatchEvent(new TransportUnitEvent(TransportUnitEvent.TRANSPORT_UNIT_CREATED));
         }
         
         [Observer("DELETE_TRANSPORT_UNIT")]
