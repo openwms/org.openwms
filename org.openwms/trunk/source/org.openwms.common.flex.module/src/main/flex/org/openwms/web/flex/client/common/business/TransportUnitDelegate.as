@@ -79,7 +79,7 @@ package org.openwms.web.flex.client.common.business
         [Observer("DELETE_TRANSPORT_UNIT")]
         public function deleteTransportUnits(event:TransportUnitEvent):void
         {
-        	tideContext.transportUnitService.deleteTransportUnits(event.data as ArrayCollection, onTransportUnitsLoaded, onFault);
+        	tideContext.transportUnitService.deleteTransportUnits(event.data as ArrayCollection, onTransportUnitDeleted, onFault);
         }
         private function onTransportUnitDeleted(event:TideResultEvent):void
         {

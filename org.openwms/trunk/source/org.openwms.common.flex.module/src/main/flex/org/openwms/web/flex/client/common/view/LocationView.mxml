@@ -37,7 +37,7 @@
         	import mx.managers.PopUpManager;
             import org.openwms.web.flex.client.common.event.LocationEvent;
             import org.openwms.web.flex.client.common.event.LocationTypeEvent;
-            import org.openwms.web.flex.client.common.event.LoadLocationGroupsEvent;
+            import org.openwms.web.flex.client.common.event.LocationGroupEvent;
             import org.openwms.web.flex.client.common.view.dialogs.CreateLocationDialog;
         	import org.openwms.web.flex.client.common.view.dialogs.ConfirmDeletionLocationDialog;
         	import org.openwms.common.domain.LocationGroup;
@@ -68,7 +68,7 @@
                 }
                 if (commonModelLocator.allLocationGroups.length == 0)
                 {
-                	dispatchEvent(new LoadLocationGroupsEvent(LoadLocationGroupsEvent.LOAD_ALL_LOCATION_GROUPS));
+                	dispatchEvent(new LocationGroupEvent(LocationGroupEvent.LOAD_ALL_LOCATION_GROUPS));
                 }
             }
 

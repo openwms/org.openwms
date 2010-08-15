@@ -32,12 +32,12 @@
     <!-- Scripts -->
     <mx:Script>
         <![CDATA[
-        	import org.openwms.web.flex.client.model.TreeDataDescriptor;
-        	import org.openwms.web.flex.client.common.event.LoadLocationGroupsEvent;
-            import org.openwms.web.flex.client.event.SwitchScreenEvent;
-            import org.openwms.web.flex.client.common.model.CommonModelLocator;
             import org.openwms.common.domain.LocationGroup;
+            import org.openwms.web.flex.client.event.SwitchScreenEvent;
+        	import org.openwms.web.flex.client.model.TreeDataDescriptor;
+        	import org.openwms.web.flex.client.common.event.LocationGroupEvent;
             import org.openwms.web.flex.client.common.event.LocationEvent;
+            import org.openwms.web.flex.client.common.model.CommonModelLocator;
             import mx.collections.ArrayCollection;
 
 	        [In]
@@ -55,7 +55,7 @@
 
             private function onShow() : void {
                 if (commonModelLocator.allLocationGroups.length == 0) {
-                    dispatchEvent(new LoadLocationGroupsEvent(LoadLocationGroupsEvent.LOAD_ALL_LOCATION_GROUPS));
+                    dispatchEvent(new LocationGroupEvent(LocationGroupEvent.LOAD_ALL_LOCATION_GROUPS));
                 }
                 if (commonModelLocator.allLocations.length == 0) {
                     dispatchEvent(new LocationEvent(LocationEvent.LOAD_ALL_LOCATIONS));

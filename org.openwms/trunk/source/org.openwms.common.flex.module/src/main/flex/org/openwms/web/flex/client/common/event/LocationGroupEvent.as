@@ -23,16 +23,16 @@ package org.openwms.web.flex.client.common.event
     import flash.events.Event;
 
     /**
-     * A LoadLocationGroupEvent.
+     * A LocationGroupEvent.
      *
      * @author <a href="mailto:openwms@googlemail.com">Heiko Scherrer</a>
      * @version $Revision$
      */
-    public class LoadLocationGroupsEvent extends Event
+    public class LocationGroupEvent extends Event
     {
         public static const LOAD_ALL_LOCATION_GROUPS:String = "LOAD_ALL_LOCATION_GROUPS";
 
-        public function LoadLocationGroupsEvent(type:String, bubbles:Boolean = true, cancelable:Boolean = false)
+        public function LocationGroupEvent(type:String, bubbles:Boolean = true, cancelable:Boolean = false)
         {
             super(type, bubbles, cancelable);
         }

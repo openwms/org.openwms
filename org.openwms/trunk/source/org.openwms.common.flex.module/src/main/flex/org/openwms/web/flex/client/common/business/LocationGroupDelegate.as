@@ -26,7 +26,7 @@ package org.openwms.web.flex.client.common.business
     import org.granite.tide.events.TideFaultEvent;
     import org.granite.tide.events.TideResultEvent;
     import org.granite.tide.spring.Context;
-    import org.openwms.web.flex.client.common.event.LoadLocationGroupsEvent;
+    import org.openwms.web.flex.client.common.event.LocationGroupEvent;
     import org.openwms.web.flex.client.common.model.CommonModelLocator;
     import org.openwms.web.flex.client.model.TreeNode;
 
@@ -51,7 +51,7 @@ package org.openwms.web.flex.client.common.business
         }
 
         [Observer("LOAD_ALL_LOCATION_GROUPS")]
-        public function getLocationGroups(event:LoadLocationGroupsEvent):void
+        public function getLocationGroups(event:LocationGroupEvent):void
         {
             tideContext.locationGroupService.getLocationGroupsAsList(onLocationGroupsLoaded, onFault);
         }

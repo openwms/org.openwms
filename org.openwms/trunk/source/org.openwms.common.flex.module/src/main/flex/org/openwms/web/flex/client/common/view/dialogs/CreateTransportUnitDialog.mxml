@@ -88,6 +88,10 @@
 	               closeDialog(event);
 	               return;
 	            }
+	            if(event.keyCode == Keyboard.ENTER)
+                {
+                	createTransportUnit();
+                }
 	        }
     	]]>
     </mx:Script>
