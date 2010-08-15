@@ -33,6 +33,9 @@ package org.openwms.web.flex.client.common.factory
     public class DOFactory
     {
 
+        /**
+         * Returns a transient new Location instance.
+         */
         public static function newLocation(s:String):Location
         {
             return new Location(new LocationPK(s, s, s, s, s));
