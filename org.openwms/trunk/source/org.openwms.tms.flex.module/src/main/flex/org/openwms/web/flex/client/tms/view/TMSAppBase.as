@@ -27,31 +27,29 @@ package org.openwms.web.flex.client.tms.view
     import mx.collections.XMLListCollection;
     import mx.containers.ViewStack;
     import mx.controls.MenuBar;
-    import mx.events.FlexEvent;
     
+    import org.granite.tide.ITideModule;
+    import org.granite.tide.Tide;
     import org.granite.tide.spring.Spring;
     import org.openwms.web.flex.client.IApplicationModule;
-    import org.openwms.web.flex.client.control.MainController;
     import org.openwms.web.flex.client.model.ModelLocator;
     import org.openwms.web.flex.client.module.CommonModule;
-    import org.openwms.web.flex.client.tms.event.TMSSwitchScreenEvent;
-    import org.openwms.web.flex.client.tms.event.TransportOrderEvent;
 
-    public class TMSAppBase extends CommonModule implements IApplicationModule
+    [Name(tmsAppBase)]
+    public class TMSAppBase extends CommonModule implements IApplicationModule, ITideModule
     {
 
+        [In]
+        [Bindable]
+        public var modelLocator:ModelLocator;
         [Bindable]
         public var menuCollection:ArrayCollection;
         [Bindable]
         public var menuBarItemsCollection:XMLListCollection;
         [Bindable]
-        protected var modelLocator:ModelLocator = ModelLocator.getInstance();
-        [Bindable]
         public var tmsMenuBar:MenuBar;
         [Bindable]
         public var tmsViewStack:ViewStack;
-        [Bindable]
-        private var mainController:MainController = MainController.getInstance();
 
         /**
          * A backing class for modules coded in XML.
@@ -59,19 +57,18 @@ package org.openwms.web.flex.client.tms.view
         public function TMSAppBase()
         {
             super();
-            addEventListener(FlexEvent.APPLICATION_COMPLETE, creationCompleteHandler);
-            addEventListener(FlexEvent.CREATION_COMPLETE, creationCompleteHandler);
         }
 
-        public function creationCompleteHandler(event:FlexEvent):void
+        public function start(applicationDomain:ApplicationDomain = null):void
         {
-            trace("TTT:");
+            trace("Starting Tide context in applicationDomain : "+applicationDomain);
+            Spring.getInstance().addModule(TMSAppBase, applicationDomain);
         }
-
-
-        protected override function initApp():void
+        
+        public function init(tide:Tide):void
         {
-            trace("InitApp called");
+            trace("Add components to Tide context");
+            tide.addComponents([ModelLocator]);
         }
 
         /**
@@ -88,7 +85,7 @@ package org.openwms.web.flex.client.tms.view
          */
         public function getModuleName():String
         {
-            return "TMS";
+            return "OPENWMS.ORG TMS MODULE";
         }
 
         /**
@@ -101,7 +98,11 @@ package org.openwms.web.flex.client.tms.view
             return new ArrayCollection();
         }
 
-        public function getViews():ArrayCollection
+        /**
+         * This method returns a list of views which shall be populated to the parent
+         * application.
+         */
+       public function getViews():ArrayCollection
         {
             return new ArrayCollection(tmsViewStack.getChildren());
         }
@@ -109,11 +110,12 @@ package org.openwms.web.flex.client.tms.view
         public function initializeModule(applicationDomain:ApplicationDomain = null):void
         {
         	trace("Initialize module : "+getModuleName());
-        	Spring.getInstance().addModule(TMSAppBase, applicationDomain);
         }
 
         public function destroyModule():void
         {
+            trace("Destroying module : "+getModuleName());
+            Spring.getInstance().removeModule(TMSAppBase);
         }
     }
 }
