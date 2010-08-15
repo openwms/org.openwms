@@ -58,7 +58,6 @@ package org.openwms.web.flex.client.common.business
 
         private function onLocationGroupsLoaded(event:TideResultEvent):void
         {
-            trace("Load Location Groups");
         	commonModelLocator.allLocationGroups = event.result as ArrayCollection;
             // Setup tree if not set before
             if (null == commonModelLocator.locationGroupTree)

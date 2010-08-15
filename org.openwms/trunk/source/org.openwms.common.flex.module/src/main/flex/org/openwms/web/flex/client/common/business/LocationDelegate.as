@@ -97,11 +97,6 @@ package org.openwms.web.flex.client.common.business
             dispatchEvent(new LocationEvent(LocationEvent.LOAD_ALL_LOCATIONS));
         }
 
-        private function onFault(event:TideFaultEvent):void
-        {
-            Alert.show("Error executing operation on Location service");
-        }
-
         /**
          * Call to load all LocationTypes from the service.
          */
@@ -143,6 +138,11 @@ package org.openwms.web.flex.client.common.business
         private function onLocationTypesSaved(event:TideResultEvent):void
         {
             dispatchEvent(new LocationTypeEvent(LocationTypeEvent.LOAD_ALL_LOCATION_TYPES));
+        }
+
+        private function onFault(event:TideFaultEvent):void
+        {
+            Alert.show("Error executing operation on Location service");
         }
     }
 }
