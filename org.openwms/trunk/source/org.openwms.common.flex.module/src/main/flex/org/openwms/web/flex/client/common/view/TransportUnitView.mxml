@@ -25,6 +25,8 @@
 
     <mx:Metadata>
         [Name]
+        [ManagedEvent(name="LOAD_TRANSPORT_UNITS")]
+        [ManagedEvent(name="DELETE_TRANSPORT_UNIT")]
     </mx:Metadata>
 
 	<mx:Script>
@@ -50,7 +52,10 @@
             private var tu:TransportUnit = new TransportUnit();
             
     		public function onStartup():void {
-    			//userAddBtn.addChild(IconLocator.iconUserAdd);
+    			if (commonModelLocator.allTransportUnits.length == 0)
+                {
+                    dispatchEvent(new TransportUnitEvent(TransportUnitEvent.LOAD_TRANSPORT_UNITS));
+                }
     		}
     		
             private function showCreateTransportUnitDialog():void
@@ -71,14 +76,14 @@
                 pop.items = new ArrayCollection(transportUnitsGrid.selectedItems);
                 PopUpManager.centerPopUp(pop);
             }
-            
+            /*
             private function deleteTransportUnit(event:Event):void
             {
             	var e:TransportUnitEvent = new TransportUnitEvent(TransportUnitEvent.DELETE_TRANSPORT_UNIT);
             	e.data = transportUnitsGrid.selectedItems;
             	dispatchEvent(e);
             }
-            
+            */
             private function showDetails():void
             {
                 var pop:TransportUnitDetailsDialog = TransportUnitDetailsDialog(PopUpManager.createPopUp(this, TransportUnitDetailsDialog, true));
