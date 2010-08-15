@@ -21,7 +21,7 @@
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
 -->
-<mx:Canvas xmlns:mx="http://www.adobe.com/2006/mxml" width="100%" height="100%" initialize="onStartup()" backgroundColor="#C2DAEF">
+<mx:Canvas xmlns:mx="http://www.adobe.com/2006/mxml" width="100%" height="100%" show="onStartup()" backgroundColor="#C2DAEF">
 
     <mx:Metadata>
         [Name]
@@ -95,32 +95,39 @@
                 selected = (event.currentTarget.selectedItem) as TransportUnit;
             }
 
+            private function refresh():void
+            {
+                selected = null;
+                var event:TransportUnitEvent = new TransportUnitEvent(TransportUnitEvent.LOAD_TRANSPORT_UNITS);
+                dispatchEvent(event);
+            }
+
     	]]>
 	</mx:Script>
 	<mx:HBox x="10" y="10" verticalAlign="middle" width="95%" backgroundColor="#F9FBB7">
 	    <mx:Label x="10" y="10" text="Transport Units" fontSize="24"/>
 	    <mx:VRule height="10"/>
-	    <mx:Button id="transportUnitCreateBtn" buttonMode="true" mouseChildren="false" toolTip="Create a new Transport Unit" icon="@Embed(source='/assets/images/TransportUnit--Add.png')" click="showCreateTransportUnitDialog()"/>
+	    <mx:Button id="addTransportUnitBtn" buttonMode="true" mouseChildren="false" toolTip="Create a new Transport Unit" icon="@Embed(source='/assets/images/TransportUnit--Add.png')" click="showCreateTransportUnitDialog()"/>
 	    <mx:VRule height="10"/>
-	    <mx:Button id="transportUnitDeleteBtn" buttonMode="true" mouseChildren="false" toolTip="Delete an existing Transport Unit" icon="@Embed(source='/assets/images/TransportUnit--Delete.png')" click="deleteTransportUnitDialog()" />
+	    <mx:Button id="deleteTransportUnitBtn" buttonMode="true" mouseChildren="false" toolTip="Delete an existing Transport Unit" icon="@Embed(source='/assets/images/TransportUnit--Delete.png')" click="deleteTransportUnitDialog()" />
         <mx:VRule height="10"/>
-	    <mx:Button id="transportUnitDetailsBtn" buttonMode="true" mouseChildren="false" toolTip="Show details of an existing Transport Unit" icon="@Embed(source='/assets/images/TransportUnit--Edit.png')" click="showDetails()" />
+	    <mx:Button id="showTransportUnitDetailsBtn" buttonMode="true" mouseChildren="false" toolTip="Show details of an existing Transport Unit" icon="@Embed(source='/assets/images/TransportUnit--Edit.png')" click="showDetails()" />
         <mx:VRule height="10"/>
-	    <mx:Button id="transportUnitHistoryBtn" buttonMode="true" mouseChildren="false" toolTip="Show history information about an Transport Unit" icon="@Embed(source='/assets/images/TransportUnit--History.png')" click="deleteTransportUnitDialog()" />
+	    <mx:Button id="showTransportUnitHistoryBtn" buttonMode="true" mouseChildren="false" toolTip="Show history information about an Transport Unit" icon="@Embed(source='/assets/images/TransportUnit--History.png')" click="deleteTransportUnitDialog()" />
+        <mx:VRule height="10"/>
+        <mx:Button id="refreshTransportUnitsBtn" buttonMode="true" mouseChildren="false" toolTip="Refresh the list of TransportUnits" icon="@Embed(source='assets/images/icons/refresh.png')" click="refresh()"/>
 	</mx:HBox>
     <mx:HRule x="10" y="53" width="95%"/>
 
 	<mx:HBox x="10" y="63" width="95%" height="100%">
 		<mx:DataGrid id="transportUnitsGrid" width="100%" height="95%" doubleClickEnabled="true" doubleClick="showDetails()" change="onRowClick(event)" allowMultipleSelection="true" dataProvider="{commonModelLocator.allTransportUnits}" x="0" y="10">
 			<mx:columns>
-				<mx:DataGridColumn headerText="Barcode" dataField="barcode" />
-                <mx:DataGridColumn headerText="Type" dataField="transportUnitType" />
-                <mx:DataGridColumn headerText="State" dataField="state" />
-				<mx:DataGridColumn headerText="Current Location" dataField="actualLocation" />
-                <mx:DataGridColumn headerText="Created on" dataField="creationDate" />
-                <mx:DataGridColumn headerText="Last Inventory" dataField="inventoryDate" />
-                <mx:DataGridColumn headerText="Inventory User" dataField="inventoryUser.username" />
-                <mx:DataGridColumn headerText="Placed on" dataField="parent.barcode.value" />
+				<mx:DataGridColumn width="150" headerText="Barcode" dataField="barcode" />
+                <mx:DataGridColumn width="80" headerText="Type" dataField="transportUnitType" />
+                <mx:DataGridColumn width="100" headerText="State" dataField="state" />
+				<mx:DataGridColumn width="160" headerText="Actual Location" dataField="actualLocation" />
+                <mx:DataGridColumn width="130" headerText="Placed on" dataField="parent.barcode.value" />
+                <mx:DataGridColumn width="150" headerText="Created" dataField="creationDate" />
 			</mx:columns>
 		</mx:DataGrid>
 		<mx:Canvas width="329" height="95%" backgroundColor="#F9FBB7" backgroundAlpha="1.0">
@@ -151,7 +158,7 @@
 			<mx:HRule x="10" y="100" width="309"/>
 			<mx:HRule x="10" y="311" width="309"/>
 			<mx:CheckBox x="148" y="255" label="is empty" id="emptyChk" selected="{selected.isEmpty()}"/>
-			<mx:TextArea x="148" y="320" width="140" height="64"/>
+            <mx:List x="148" y="320" width="140" height="64" />
 			<mx:Label x="10" y="285" text="Weight" width="130" textAlign="right"/>
 			<mx:Label x="148" y="285" id="weightLbl" width="100%" text="{selected.weight}"/>
 			<mx:Image x="292" y="320" height="16" width="16" mouseChildren="false" source="@Embed(source='assets/images/icons/minus.png')"/>
