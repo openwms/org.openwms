@@ -20,7 +20,7 @@
  */
 package org.openwms.web.flex.client.tms.event
 {
-    import com.adobe.cairngorm.control.CairngormEvent;
+    import flash.events.Event;
 
     /**
      * A TransportOrderEvent.
@@ -28,10 +28,12 @@ package org.openwms.web.flex.client.tms.event
      * @author <a href="mailto:openwms@googlemail.com">Heiko Scherrer</a>
      * @version $Revision: 700 $
      */
-    public class TransportOrderEvent extends CairngormEvent
+    public class TransportOrderEvent extends Event
     {
-        public static const CREATE_TRANSPORT_ORDER:String = "Create_TransportOrder";
-        public static const DELETE_TRANSPORT_ORDER:String = "Delete_TransportOrder";
+        public static const CREATE_TRANSPORT_ORDER:String = "CREATE_TRANSPORT_ORDER";
+        public static const DELETE_TRANSPORT_ORDER:String = "DELETE_TRANSPORT_ORDER";
+        
+        public var data:*;
 
         public function TransportOrderEvent(type:String, bubbles:Boolean = true, cancelable:Boolean = false)
         {

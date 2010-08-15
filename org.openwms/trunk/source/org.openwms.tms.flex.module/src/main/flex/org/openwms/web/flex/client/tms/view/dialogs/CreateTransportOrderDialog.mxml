@@ -1,5 +1,32 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!--
+/*
+ * openwms.org, the Open Warehouse Management System.
+ *
+ * This file is part of openwms.org.
+ *
+ * openwms.org is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as 
+ * published by the Free Software Foundation, either version 3 of the
+ * License, or (at your option) any later version.
+ *
+ * openwms.org is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with this software. If not, write to the Free
+ * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
+ * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
+ */
+-->
 <mx:Panel xmlns:mx="http://www.adobe.com/2006/mxml" width="484" height="466" title="Create Transport Order" fontSize="12" creationComplete="init();" xmlns:comp="org.openwms.web.flex.client.component.*">
+
+    <mx:Metadata>
+        [Name]
+        [ManagedEvent(name="CREATE_TRANSPORT_ORDER")]
+    </mx:Metadata>
 
     <mx:Script>
     	<![CDATA[
@@ -19,25 +46,16 @@
             import flash.events.KeyboardEvent;
             import mx.controls.CheckBox;
             
+            [In]
+	        [Bindable]
+	        public var modelLocator:ModelLocator;
+            [In]
             [Bindable]
-            private var modelLocator:ModelLocator = ModelLocator.getInstance();
-            [Embed ("closeButton.png")]
-            private var closeImg:Class;
-    	
+            public var commonModelLocator:CommonModelLocator;
+
             private function init():void
             {
             	barcodeTxt.setFocus();
-                var image:Image = new Image();
-                image.source = closeImg;
-                image.width=16;
-                image.height=16;
-                image.addEventListener(MouseEvent.CLICK, closeDialog);
-                var titleHbox:HBox = new HBox();
-                titleHbox.width=this.titleBar.width;
-                titleHbox.height=this.titleBar.height;
-                titleHbox.addChild(image);
-                this.titleBar.addChild(titleHbox);
-                this.addEventListener(KeyboardEvent.KEY_DOWN, keyEventHandler);
                 PopUpManager.centerPopUp(this);
             }
             
@@ -72,7 +90,7 @@
             	transportOrder.state = TransportOrder$TRANSPORT_ORDER_STATE.CREATED;
             	trace("Creating TransportOrder :"+barcodeTxt.text+transportOrder.state+transportOrder.targetLocationGroup);
             	event.data = transportOrder;
-            	event.dispatch();
+            	dispatchEvent(event);
             	closeDialog();
             }
             
