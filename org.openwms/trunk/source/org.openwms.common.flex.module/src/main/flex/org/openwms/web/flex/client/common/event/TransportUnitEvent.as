@@ -33,6 +33,7 @@ package org.openwms.web.flex.client.common.event
         public static const LOAD_TRANSPORT_UNITS:String = "LOAD_TRANSPORT_UNITS";
         public static const CREATE_TRANSPORT_UNIT:String = "CREATE_TRANSPORT_UNIT";
         public static const DELETE_TRANSPORT_UNIT:String = "DELETE_TRANSPORT_UNIT";
+        public static const SAVE_TRANSPORT_UNIT:String = "SAVE_TRANSPORT_UNIT";
         public static const TRANSPORT_UNIT_CREATED:String = "TRANSPORT_UNIT_CREATED";
         
         public var data:*

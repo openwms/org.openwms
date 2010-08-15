@@ -33,6 +33,9 @@
 
 	<mx:Script>
     	<![CDATA[
+    		import mx.controls.dataGridClasses.DataGridColumn;
+    		import org.openwms.common.domain.TransportUnit$TU_STATE;
+    		import mx.messaging.channels.StreamingAMFChannel;
     		import mx.events.ListEvent;
     		import flash.events.MouseEvent;
     		import mx.collections.ArrayCollection;
@@ -106,9 +109,40 @@
                 var event:TransportUnitEvent = new TransportUnitEvent(TransportUnitEvent.LOAD_TRANSPORT_UNITS);
                 dispatchEvent(event);
             }
+            
+            private function save():void
+            {
+                if (selected == null)
+                {
+                	Alert.show("Select a TransportUnit first");
+                	return
+                }
+                var event:TransportUnitEvent = new TransportUnitEvent(TransportUnitEvent.SAVE_TRANSPORT_UNIT);
+                event.data = selected;
+                dispatchEvent(event);
+            }
 
+            private function resolveUser(transportUnit:TransportUnit):String
+            {
+            	if (transportUnit.inventoryUser == null) {
+            		return "--";
+            	}
+            	return transportUnit.inventoryUser.username;
+            }
+
+            private function formatDateField(item:Object, dg:DataGridColumn):String
+            {
+                if (item.creationDate != null)
+                {
+                    return dateFormatter.format(item.creationDate);
+                }
+                return "n/a";
+            }
     	]]>
 	</mx:Script>
+	
+    <mx:DateFormatter id="dateFormatter" formatString="{CommonModelLocator.DT_FORMAT_STRING}"/>
+
 	<mx:HBox x="10" y="10" verticalAlign="middle" width="95%" backgroundColor="#F9FBB7">
 	    <mx:Label x="10" y="10" text="Transport Units" fontSize="24"/>
 	    <mx:VRule height="10"/>
@@ -116,11 +150,13 @@
 	    <mx:VRule height="10"/>
 	    <mx:Button id="deleteTransportUnitBtn" buttonMode="true" mouseChildren="false" toolTip="Delete an existing Transport Unit" icon="@Embed(source='/assets/images/TransportUnit--Delete.png')" click="deleteTransportUnitDialog()" />
         <mx:VRule height="10"/>
-	    <mx:Button id="showTransportUnitDetailsBtn" buttonMode="true" mouseChildren="false" toolTip="Show details of an existing Transport Unit" icon="@Embed(source='/assets/images/TransportUnit--Edit.png')" click="showDetails()" />
-        <mx:VRule height="10"/>
-	    <mx:Button id="showTransportUnitHistoryBtn" buttonMode="true" mouseChildren="false" toolTip="Show history information about an Transport Unit" icon="@Embed(source='/assets/images/TransportUnit--History.png')" click="deleteTransportUnitDialog()" />
+        <mx:Button id="saveTransportUnitBtn" buttonMode="true" mouseChildren="false" toolTip="Save an existing Transport Unit" icon="@Embed(source='/assets/images/TransportUnit--Save.png')" click="save()" />
         <mx:VRule height="10"/>
         <mx:Button id="refreshTransportUnitsBtn" buttonMode="true" mouseChildren="false" toolTip="Refresh the list of TransportUnits" icon="@Embed(source='assets/images/icons/refresh.png')" click="refresh()"/>
+        <mx:VRule height="10"/>
+        <mx:Button id="showTransportUnitDetailsBtn" buttonMode="true" mouseChildren="false" toolTip="Show details of an existing Transport Unit" icon="@Embed(source='/assets/images/TransportUnit--Edit.png')" click="showDetails()" />
+        <mx:VRule height="10"/>
+	    <mx:Button id="showTransportUnitHistoryBtn" buttonMode="true" mouseChildren="false" toolTip="Show history information about an Transport Unit" icon="@Embed(source='/assets/images/TransportUnit--History.png')" click="deleteTransportUnitDialog()" />
 	</mx:HBox>
     <mx:HRule x="10" y="53" width="95%"/>
 
@@ -132,7 +168,7 @@
                 <mx:DataGridColumn width="100" headerText="State" dataField="state" />
 				<mx:DataGridColumn width="160" headerText="Actual Location" dataField="actualLocation" />
                 <mx:DataGridColumn width="130" headerText="Placed on" dataField="parent.barcode.value" />
-                <mx:DataGridColumn width="150" headerText="Created" dataField="creationDate" />
+                <mx:DataGridColumn width="150" headerText="Created" dataField="creationDate" labelFunction="formatDateField"/>
 			</mx:columns>
 		</mx:DataGrid>
 		<mx:Canvas width="329" height="95%" backgroundColor="#F9FBB7" backgroundAlpha="1.0">
@@ -141,31 +177,36 @@
             <mx:Text text="{selected.barcode}" width="100%" fontWeight="bold"  x="148" y="10"/>
 
 			<mx:Label text="State" fontWeight="normal" width="130" textAlign="right" x="10" y="36"/>
-            <mx:ComboBox x="148" y="34"/>
+            <mx:ComboBox x="148" y="34" dataProvider="{TransportUnit$TU_STATE.constants}" selectedIndex="{new ArrayCollection(TransportUnit$TU_STATE.constants).getItemIndex(selected.transportUnitType)}"/>
 
 			<mx:Label text="Actual Location" fontWeight="normal" width="130" textAlign="right" x="10" y="62"/>
             <mx:ComboBox x="148" y="60" />
 
-			<mx:Label text="Last Move" fontWeight="normal" width="130" textAlign="right" x="10" y="110"/>
-			<mx:Label text="Created on" fontWeight="normal" width="130" textAlign="right" x="10" y="214"/>
+			<mx:Label text="Last Moved" fontWeight="normal" width="130" textAlign="right" x="10" y="110"/>
+            <mx:Text text="{dateFormatter.format(selected.actualLocationDate)}" width="100%" fontWeight="normal"  x="148" y="110"/>
+
+            <mx:Label text="Last Inventory" fontWeight="normal" width="130" textAlign="right" x="10" y="136"/>
+            <mx:Text text="{dateFormatter.format(selected.inventoryDate)}" width="100%" fontWeight="normal"  x="148" y="136"/>
+
+            <mx:Label text="Inventory User" fontWeight="normal" width="130" textAlign="right" x="10" y="162"/>
+            <mx:Text text="{resolveUser(selected)}" width="100%" fontWeight="normal"  x="148" y="162"/>
+
+			<mx:Label text="Created at" fontWeight="normal" width="130" textAlign="right" x="10" y="214"/>
+            <mx:Text text="{dateFormatter.format(selected.creationDate)}" width="100%" fontWeight="normal"  x="148" y="214"/>
+
+            <mx:CheckBox id="emptyChk" x="148" y="255" label="Empty" selected="{selected.isEmpty()}"/>
+
+            <mx:Label x="10" y="285" text="Weight" width="130" textAlign="right"/>
+            <mx:Label id="weightLbl" x="148" y="285" width="100%" text="{selected.weight}"/>
+
 			<mx:Label text="Errors" fontWeight="normal" width="130" textAlign="right" x="10" y="321"/>
-            <mx:Text text="{selected.actualLocationDate}" width="100%" fontWeight="normal"  x="148" y="110"/>
-            <mx:Text text="{selected.creationDate}" width="100%" fontWeight="normal"  x="148" y="214"/>
-
-			<mx:Label text="Last Inventory" fontWeight="normal" width="130" textAlign="right" x="10" y="136"/>
-            <mx:Text text="{selected.inventoryDate}" width="100%" fontWeight="normal"  x="148" y="136"/>
-
-			<mx:Label text="Inventory User" fontWeight="normal" width="130" textAlign="right" x="10" y="162"/>
-            <mx:Text text="{selected.inventoryUser}" width="100%" fontWeight="normal"  x="148" y="162"/>
+            <mx:List x="148" y="320" width="140" height="64" />
 
 			<mx:Label text="Placed On" fontWeight="normal" width="130" textAlign="right" x="10" y="188"/>
 			<mx:Text text="{selected.parent.barcode}" width="100%" fontWeight="normal"  x="148" y="188"/>
+
 			<mx:HRule x="10" y="100" width="309"/>
 			<mx:HRule x="10" y="311" width="309"/>
-			<mx:CheckBox x="148" y="255" label="is empty" id="emptyChk" selected="{selected.isEmpty()}"/>
-            <mx:List x="148" y="320" width="140" height="64" />
-			<mx:Label x="10" y="285" text="Weight" width="130" textAlign="right"/>
-			<mx:Label x="148" y="285" id="weightLbl" width="100%" text="{selected.weight}"/>
 			<mx:Image x="292" y="320" height="16" width="16" mouseChildren="false" source="@Embed(source='assets/images/icons/minus.png')"/>
 		</mx:Canvas>
 	</mx:HBox>

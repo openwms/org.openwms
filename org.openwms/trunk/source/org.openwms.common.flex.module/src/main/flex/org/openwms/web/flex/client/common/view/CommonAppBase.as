@@ -39,7 +39,7 @@ package org.openwms.web.flex.client.common.view
     import org.openwms.web.flex.client.model.ModelLocator;
     import org.openwms.web.flex.client.module.CommonModule;
 
-    [Name]
+    [Name(commonAppBase)]
     public class CommonAppBase extends CommonModule implements IApplicationModule, ITideModule
     {
 
@@ -61,10 +61,13 @@ package org.openwms.web.flex.client.common.view
         
         public function start(applicationDomain:ApplicationDomain = null):void
         {
+        	trace("Starting Tide context in applicationDomain : "+applicationDomain);
         	Spring.getInstance().addModule(CommonAppBase, applicationDomain);
         }
         
-        public function init(tide:Tide):void {
+        public function init(tide:Tide):void
+        {
+        	trace("Add components to Tide context");
             tide.addComponents([CommonModelLocator, TransportUnitTypeDelegate, TransportUnitDelegate, LocationDelegate, LocationGroupDelegate]);
         }
 
@@ -110,11 +113,6 @@ package org.openwms.web.flex.client.common.view
         public function initializeModule(applicationDomain:ApplicationDomain = null):void
         {
             trace("Initialize module : "+getModuleName());
-            loadAllStaticEntities();
-        }
-
-        private function loadAllStaticEntities():void
-        {
         }
 
         /**

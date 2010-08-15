@@ -70,7 +70,7 @@ package org.openwms.web.flex.client.common.business
         [Observer("CREATE_LOCATION")]
         public function createLocation(event:LocationEvent):void
         {
-            tideContext.locationService.addEntity(event.data as Location, onLocationCreated);
+            tideContext.locationService.addEntity(event.data as Location, onLocationCreated, onFault);
         }
         private function onLocationCreated(event:TideResultEvent):void
         {
@@ -80,7 +80,7 @@ package org.openwms.web.flex.client.common.business
         [Observer("DELETE_LOCATION")]
         public function deleteLocation(event:LocationEvent):void
         {
-            tideContext.locationService.remove(event.data as Location, onLocationDeleted);
+            tideContext.locationService.remove(event.data as Location, onLocationDeleted, onFault);
         }
         private function onLocationDeleted(event:TideResultEvent):void
         {
@@ -90,7 +90,7 @@ package org.openwms.web.flex.client.common.business
         [Observer("SAVE_LOCATION")]
         public function saveLocation(event:LocationEvent):void
         {
-            tideContext.locationService.save(event.data as Location, onLocationSaved);
+            tideContext.locationService.save(event.data as Location, onLocationSaved, onFault);
         }
         private function onLocationSaved(event:TideResultEvent):void
         {
@@ -103,7 +103,7 @@ package org.openwms.web.flex.client.common.business
         [Observer("LOAD_ALL_LOCATION_TYPES")]
         public function getLocationTypes():void
         {
-            tideContext.locationService.getAllLocationTypes(onLocationTypesLoaded);
+            tideContext.locationService.getAllLocationTypes(onLocationTypesLoaded, onFault);
         }
         private function onLocationTypesLoaded(event:TideResultEvent):void
         {
@@ -113,7 +113,7 @@ package org.openwms.web.flex.client.common.business
         [Observer("CREATE_LOCATION_TYPE")]
         public function createLocationType(event:LocationTypeEvent):void
         {
-            tideContext.locationService.createLocationType(event.data as LocationType, onLocationTypeCreated);
+            tideContext.locationService.createLocationType(event.data as LocationType, onLocationTypeCreated, onFault);
         }
         private function onLocationTypeCreated(event:TideResultEvent):void
         {
@@ -123,7 +123,7 @@ package org.openwms.web.flex.client.common.business
         [Observer("DELETE_LOCATION_TYPE")]
         public function deleteLocationType(event:LocationTypeEvent):void
         {
-            tideContext.locationService.deleteLocationTypes(event.data as ArrayCollection, onLocationTypesDeleted);
+            tideContext.locationService.deleteLocationTypes(event.data as ArrayCollection, onLocationTypesDeleted, onFault);
         }
         private function onLocationTypesDeleted(event:TideResultEvent):void
         {
@@ -133,7 +133,7 @@ package org.openwms.web.flex.client.common.business
         [Observer("SAVE_LOCATION_TYPE")]
         public function saveLocationType(event:LocationTypeEvent):void
         {
-            tideContext.locationService.saveLocationType(event.data as LocationType, onLocationTypesSaved);
+            tideContext.locationService.saveLocationType(event.data as LocationType, onLocationTypesSaved, onFault);
         }
         private function onLocationTypesSaved(event:TideResultEvent):void
         {

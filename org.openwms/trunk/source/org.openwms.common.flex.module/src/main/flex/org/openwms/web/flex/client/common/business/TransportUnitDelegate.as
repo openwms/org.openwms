@@ -86,6 +86,16 @@ package org.openwms.web.flex.client.common.business
             dispatchEvent(new TransportUnitEvent(TransportUnitEvent.LOAD_TRANSPORT_UNITS));
         }
 
+        [Observer("SAVE_TRANSPORT_UNIT")]
+        public function saveTransportUnits(event:TransportUnitEvent):void
+        {
+            tideContext.transportUnitService.save(event.data as TransportUnit, onTransportUnitSaved, onFault);
+        }
+        private function onTransportUnitSaved(event:TideResultEvent):void
+        {
+            dispatchEvent(new TransportUnitEvent(TransportUnitEvent.LOAD_TRANSPORT_UNITS));
+        }
+
         private function onFault(event:TideFaultEvent):void
         {
             Alert.show("Error executing operation on Location service");
