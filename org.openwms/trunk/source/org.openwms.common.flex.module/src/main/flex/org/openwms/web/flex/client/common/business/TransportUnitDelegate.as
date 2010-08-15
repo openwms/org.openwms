@@ -38,8 +38,8 @@ package org.openwms.web.flex.client.common.business
      * @version $Revision$
      */
     [Name("transportUnitDelegate")]
-    [ManagedEvent(name="LOAD_ALL_LOCATION_TYPES")]
-    [ManagedEvent(name="LOAD_ALL_LOCATIONS")]
+    [ManagedEvent(name="LOAD_TRANSPORT_UNITS")]
+    [ManagedEvent(name="TRANSPORT_UNIT_CREATED")]
     public class TransportUnitDelegate
     {
 

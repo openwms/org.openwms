@@ -33,20 +33,19 @@
 
     <mx:Script>
         <![CDATA[
-        	import mx.events.ValidationResultEvent;
         	import mx.controls.Alert;
-        	import org.openwms.web.flex.client.common.event.LocationEvent;
         	import mx.managers.PopUpManager;
+            import org.openwms.web.flex.client.common.event.LocationEvent;
+            import org.openwms.web.flex.client.common.event.LocationTypeEvent;
+            import org.openwms.web.flex.client.common.event.LoadLocationGroupsEvent;
             import org.openwms.web.flex.client.common.view.dialogs.CreateLocationDialog;
         	import org.openwms.web.flex.client.common.view.dialogs.ConfirmDeletionLocationDialog;
-        	import org.openwms.web.flex.client.common.event.LocationTypeEvent;
         	import org.openwms.common.domain.LocationGroup;
         	import org.openwms.common.domain.LocationType;
         	import org.openwms.common.domain.Location;
             import org.openwms.web.flex.client.common.model.CommonModelLocator;
             import mx.controls.dataGridClasses.DataGridColumn;
             import mx.collections.ArrayCollection;
-            import org.openwms.web.flex.client.common.event.LoadLocationGroupsEvent;
             import mx.events.ListEvent;
             import org.openwms.web.flex.client.model.ModelLocator;
             [In]

@@ -48,7 +48,6 @@
             public var commonModelLocator:CommonModelLocator;
             [Bindable]
             private var selected:LocationType;
-            // Can be checked outside to recognize unsubmitted changes
             [Bindable]
             public var changed:Boolean=false;
 

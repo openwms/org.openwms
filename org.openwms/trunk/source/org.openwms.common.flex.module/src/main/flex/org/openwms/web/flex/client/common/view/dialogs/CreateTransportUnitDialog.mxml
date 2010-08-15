@@ -30,24 +30,14 @@
 
     <mx:Script>
     	<![CDATA[
-    		import org.openwms.web.flex.client.common.factory.DOFactory;
-            import org.openwms.web.flex.client.common.component.LocationSelector;
-    		import org.openwms.web.flex.client.common.model.CommonModelLocator;
-            import org.openwms.web.flex.client.common.event.TransportUnitEvent;
+    		import org.openwms.common.domain.TransportUnit;
     		import org.openwms.common.domain.values.Barcode;
     		import org.openwms.common.domain.TransportUnitType;
-            import org.openwms.common.domain.TransportUnit;
-    		import org.openwms.common.domain.LocationPK;
     		import org.openwms.common.domain.Location;
-    		import org.openwms.common.domain.TransportUnit;
-    	
-            import mx.containers.HBox;
-            import mx.controls.Image;
-            import mx.managers.PopUpManager;
-            import flash.events.KeyboardEvent;
+    		import mx.managers.PopUpManager;
+    		import org.openwms.web.flex.client.common.event.TransportUnitEvent;
+    		import org.openwms.web.flex.client.common.model.CommonModelLocator;
 
-            [Embed ("closeButton.png")]
-            private var closeImg:Class;
             [In]
             [Bindable]
             public var commonModelLocator:CommonModelLocator;
@@ -55,16 +45,6 @@
             private function init():void
             {
             	barcodeTxt.setFocus();
-                var image:Image = new Image();
-                image.source = closeImg;
-                image.width=16;
-                image.height=16;
-                image.addEventListener(MouseEvent.CLICK, closeDialog);
-                var titleHbox:HBox = new HBox();
-                titleHbox.width=this.titleBar.width;
-                titleHbox.height=this.titleBar.height;
-                titleHbox.addChild(image);
-                this.titleBar.addChild(titleHbox);
                 this.addEventListener(KeyboardEvent.KEY_DOWN, keyEventHandler);
                 PopUpManager.centerPopUp(this);
             }
@@ -89,7 +69,6 @@
                 var event:TransportUnitEvent = new TransportUnitEvent(TransportUnitEvent.CREATE_TRANSPORT_UNIT);
                 event.data = transportUnit;
                 dispatchEvent(event);
-                barcodeTxt.setFocus();
             }
             
             /**

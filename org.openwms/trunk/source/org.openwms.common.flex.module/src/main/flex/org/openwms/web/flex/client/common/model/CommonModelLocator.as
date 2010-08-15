@@ -21,8 +21,6 @@
 package org.openwms.web.flex.client.common.model
 {
 
-    import com.adobe.cairngorm.model.IModelLocator;
-    
     import mx.collections.ArrayCollection;
     
     import org.openwms.web.flex.client.model.TreeNode;
@@ -35,7 +33,7 @@ package org.openwms.web.flex.client.common.model
      */
     [Name("commonModelLocator")]
     [Bindable]
-    public class CommonModelLocator implements IModelLocator
+    public class CommonModelLocator
     {
 
         public var allTransportUnitTypes:ArrayCollection = new ArrayCollection();

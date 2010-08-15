@@ -21,7 +21,6 @@
 package org.openwms.web.flex.client.common.model
 {
 
-    import com.adobe.cairngorm.model.IModelLocator;
 
     /**
      * An IconLocator.
@@ -30,29 +29,16 @@ package org.openwms.web.flex.client.common.model
      * @version $Revision$
      */
     [Bindable]
-    public class IconLocator implements IModelLocator
+    public class IconLocator
     {
 
         //[Embed(source="/assets/icons/fuegue/user--plus.png")]
         public static var iconUserAdd:Class
 
-        private static var instance:IconLocator;
 
-        public function IconLocator(enforcer:SingletonEnforcer)
+        public function IconLocator()
         {
         }
 
-        public static function getInstance():IconLocator
-        {
-            if (instance == null)
-            {
-                instance = new IconLocator(new SingletonEnforcer);
-            }
-            return instance;
-        }
     }
-}
-
-class SingletonEnforcer
-{
 }
