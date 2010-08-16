@@ -163,16 +163,6 @@
 				<enabled>true</enabled>
 			</snapshots>
 		</repository>
-		<repository>
-			<id>cairngorm-repo</id>
-			<url>http://maven.ow2.org/maven2/</url>
-			<releases>
-				<enabled>true</enabled>
-			</releases>
-			<snapshots>
-				<enabled>true</enabled>
-			</snapshots>
-		</repository>
 	</repositories>
 	<pluginRepositories>
 		<pluginRepository>
@@ -214,20 +204,7 @@
 			<version>${flex.version}</version>
 			<type>pom</type>
 		</dependency>
-		<dependency>
-			<groupId>com.adobe.cairngorm</groupId>
-			<artifactId>cairngorm-bin</artifactId>
-			<version>2.2.1</version>
-			<type>swc</type>
-		</dependency>
-        <!-- Flex Security 
-        <dependency>
-            <groupId>com.gorillalogic</groupId>
-            <artifactId>chimp</artifactId>
-            <version>0.2</version>
-            <type>swc</type>
-        </dependency>
--->
+
 		<dependency>
 			<groupId>org.graniteds</groupId>
 			<artifactId>granite-core-swc</artifactId>

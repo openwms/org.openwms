@@ -50,11 +50,10 @@
 	    import mx.messaging.events.MessageEvent;
 	    import mx.rpc.events.*;
 	    import mx.managers.PopUpManager;
-	    import com.adobe.cairngorm.business.ServiceLocator;
 		
-            [In]
-            [Bindable]
-            public var modelLocator:ModelLocator;            
+        [In]
+        [Bindable]
+        public var modelLocator:ModelLocator;            
 	    [Bindable]
 		public var iconClass:Class; 
 		
@@ -157,7 +156,6 @@
 		
 		private function selectEvent(event:Event):void{
 			btn_upload.enabled = true;
-			trace("SelectEvent thrown");
 			filename.text = fileRef.name;
 			progressBar.setProgress(0, 100);
 			progressBar.label = "Loading 0%";			

@@ -21,11 +21,7 @@
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
 -->
-<business:ServiceLocator xmlns:mx="http://www.adobe.com/2006/mxml" xmlns:business="com.adobe.cairngorm.business.*" xmlns:granite="org.granite.rpc.remoting.mxml.*">
-<!-- When using BlazeDS with SBI instead of GraniteDS than uncomment the RemoteObjects 
-	<mx:RemoteObject id="locationService" endpoint="http://127.0.0.1:8380/OpenWMS/messagebroker/amf" destination="locationServiceProxy" showBusyCursor="true"/>
-	<mx:RemoteObject id="locationGroupService" endpoint="http://127.0.0.1:8380/OpenWMS/messagebroker/amf" destination="locationGroupServiceProxy" showBusyCursor="true"/>
--->
+<mx:Canvas xmlns:mx="http://www.adobe.com/2006/mxml" xmlns:granite="org.granite.rpc.remoting.mxml.*">
 
 	<granite:SecureRemoteObject
         id="locationService"
@@ -57,15 +53,4 @@
         destination="userServiceRemote"
         showBusyCursor="true"/>
 
-<!--
--->
-<!--
-<mx:RemoteObject id="locationService" destination="locationService" showBusyCursor="true" />
-<mx:RemoteObject id="locationGroupService" destination="locationGroupService" showBusyCursor="true" />
-<mx:RemoteObject id="userService" destination="userService" showBusyCursor="true" />
-<mx:RemoteObject id="transportUnitService" destination="transportUnitService" showBusyCursor="true" />
-<mx:RemoteObject id="moduleManagementService" destination="moduleManagementService" showBusyCursor="true" />
-
-<mx:RemoteObject id="transportService" destination="transportService" showBusyCursor="true" />
--->
-</business:ServiceLocator>
+</mx:Canvas>
