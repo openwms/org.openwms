@@ -28,7 +28,7 @@
     </mx:states>
 
     <mx:Metadata>
-        [Name]
+        [Name("transportUnitTypeView")]
         [ManagedEvent(name="LOAD_ALL_TRANSPORT_UNIT_TYPES")]
         [ManagedEvent(name="LOAD_ALL_LOCATION_TYPES")]
         [ManagedEvent(name="LOAD_TUT_RULES")]
