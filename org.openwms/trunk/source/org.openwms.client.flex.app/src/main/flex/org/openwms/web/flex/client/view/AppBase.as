@@ -48,7 +48,6 @@ package org.openwms.web.flex.client.view
     import org.openwms.web.flex.client.business.RoleDelegate;
     import org.openwms.web.flex.client.business.UserDelegate;
     import org.openwms.web.flex.client.command.*;
-    import org.openwms.web.flex.client.control.MainController;
     import org.openwms.web.flex.client.event.ApplicationEvent;
     import org.openwms.web.flex.client.event.SwitchScreenEvent;
     import org.openwms.web.flex.client.model.ModelLocator;
@@ -103,7 +102,7 @@ package org.openwms.web.flex.client.view
 
         [Bindable]
         public var tideContext:Context = Spring.getInstance().getSpringContext();
-        Spring.getInstance().addComponents([ModelLocator, ModuleLocator, MainController, UserDelegate, RoleDelegate]);
+        Spring.getInstance().addComponents([ModelLocator, ModuleLocator, UserDelegate, RoleDelegate]);
 
         private static var log:ILogger = Log.getLogger("org.openwms.web.flex.client.view.App");
 
@@ -152,7 +151,7 @@ package org.openwms.web.flex.client.view
                 Alert.show("Screen with name " + event.item.@action + " not found!");
                 return;
             }
-            new SwitchScreenEvent(event.item.@action).dispatch();
+            dispatchEvent(new SwitchScreenEvent(event.item.@action));
             modelLocator.actualView = event.item.@action;
             appViewStack.selectedIndex = appViewStack.getChildIndex(appViewStack.getChildByName(event.item.@action));
         }
