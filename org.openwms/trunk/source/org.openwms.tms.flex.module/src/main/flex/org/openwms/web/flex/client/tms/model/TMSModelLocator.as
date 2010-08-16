@@ -21,9 +21,7 @@
 package org.openwms.web.flex.client.tms.model
 {
 
-    import com.adobe.cairngorm.model.IModelLocator;
     import mx.collections.ArrayCollection;
-    import org.openwms.common.domain.system.usermanagement.User;
 
     /**
      * A TMSModelLocator.
@@ -31,36 +29,18 @@ package org.openwms.web.flex.client.tms.model
      * @author <a href="mailto:openwms@googlemail.com">Heiko Scherrer</a>
      * @version $Revision: 796 $
      */
+    [Name("tmsModelLocator")]
     [Bindable]
-    public class TMSModelLocator implements IModelLocator
+    public class TMSModelLocator
     {
 
         public var allTransportOrders:ArrayCollection = new ArrayCollection();
 
-        private static var instance:TMSModelLocator;
-
         /**
-         * Used to construct the Singleton instance.
+         * Constructor.
          */
-        public function TMSModelLocator(enforcer:SingletonEnforcer)
+        public function TMSModelLocator()
         {
-        }
-
-        /**
-         * Return the instance of TMSModelLocator which is implemented
-         * as Singleton.
-         */
-        public static function getInstance():TMSModelLocator
-        {
-            if (instance == null)
-            {
-                instance = new TMSModelLocator(new SingletonEnforcer);
-            }
-            return instance;
         }
     }
-}
-
-class SingletonEnforcer
-{
 }

@@ -32,14 +32,17 @@ package org.openwms.web.flex.client.tms.view
     import org.granite.tide.Tide;
     import org.granite.tide.spring.Spring;
     import org.openwms.web.flex.client.IApplicationModule;
+    import org.openwms.web.flex.client.common.model.CommonModelLocator;
     import org.openwms.web.flex.client.model.ModelLocator;
     import org.openwms.web.flex.client.module.CommonModule;
+    import org.openwms.web.flex.client.tms.business.TransportsDelegate;
+    import org.openwms.web.flex.client.tms.model.TMSModelLocator;
 
-    [Name(tmsAppBase)]
+    [Name("tmsAppBase")]
     public class TMSAppBase extends CommonModule implements IApplicationModule, ITideModule
     {
 
-        [In]
+        [Inject]
         [Bindable]
         public var modelLocator:ModelLocator;
         [Bindable]
@@ -68,7 +71,7 @@ package org.openwms.web.flex.client.tms.view
         public function init(tide:Tide):void
         {
             trace("Add components to Tide context");
-            tide.addComponents([ModelLocator]);
+            tide.addComponents([TMSModelLocator, TransportsDelegate]);
         }
 
         /**

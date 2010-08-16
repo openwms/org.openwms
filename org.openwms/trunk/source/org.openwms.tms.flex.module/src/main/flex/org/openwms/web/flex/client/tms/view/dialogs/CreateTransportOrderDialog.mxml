@@ -57,6 +57,7 @@
             private function init():void
             {
             	barcodeTxt.setFocus();
+            	this.addEventListener(KeyboardEvent.KEY_DOWN, keyEventHandler);
                 PopUpManager.centerPopUp(this);
             }
             
@@ -97,7 +98,6 @@
             
 	        private function keyEventHandler(event:KeyboardEvent):void
 	        {
-	        	// ESC
 	            if(event.keyCode == 27)
 	            {
 	               closeDialog(event);

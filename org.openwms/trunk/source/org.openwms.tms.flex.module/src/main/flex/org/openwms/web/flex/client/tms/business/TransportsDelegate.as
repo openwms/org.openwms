@@ -20,12 +20,16 @@
  */
 package org.openwms.web.flex.client.tms.business
 {
-    import com.adobe.cairngorm.business.ServiceLocator;
     
-    import mx.rpc.AsyncToken;
-    import mx.rpc.IResponder;
+    import mx.collections.ArrayCollection;
+    import mx.controls.Alert;
     
+    import org.granite.tide.events.TideFaultEvent;
+    import org.granite.tide.events.TideResultEvent;
+    import org.granite.tide.spring.Context;
     import org.openwms.tms.domain.order.TransportOrder;
+    import org.openwms.web.flex.client.tms.event.TransportOrderEvent;
+    import org.openwms.web.flex.client.tms.model.TMSModelLocator;
 
     /**
      * A TransportsDelegate.
@@ -33,33 +37,61 @@ package org.openwms.web.flex.client.tms.business
      * @author <a href="mailto:openwms@googlemail.com">Heiko Scherrer</a>
      * @version $Revision: 700 $
      */
+    [Name("transportsDelegate")]
+    [ManagedEvent(name="LOAD_ALL_LOCATION_TYPES")]
+    [ManagedEvent(name="LOAD_ALL_LOCATIONS")]
     public class TransportsDelegate
     {
-        private var responder:IResponder;
-        private var service:Object;
+        [In]
+        [Bindable]
+        public var tideContext:Context;
+        [In]
+        [Bindable]
+        public var tmsModelLocator:TMSModelLocator;            
 
-        public function TransportsDelegate(responder:IResponder):void
+        public function TransportsDelegate():void
         {
-            this.responder = responder;
-            this.service = ServiceLocator.getInstance().getRemoteObject("transportService");
         }
 
+        /**
+         * Call to load all Locations from the service.
+         */
+        [Observer("LOAD_TRANSPORT_ORDERS")]
         public function getAllTransports():void
         {
-            var call:AsyncToken = service.findAll();
-            call.addResponder(responder);
+        	tideContext.transportService.findAll(onTransportsLoaded, onFault);
+        }
+        private function onTransportsLoaded(event:TideResultEvent):void
+        {
+            tmsModelLocator.allTransportOrders = event.result as ArrayCollection;
         }
         
-        public function createTransportOrder(transportOrder:TransportOrder):void
+        [Observer("CREATE_TRANSPORT_ORDER")]
+        public function createTransportOrder(event:TransportOrderEvent):void
         {
-            var call:AsyncToken = service.createTransportOrder(transportOrder.transportUnit.barcode, transportOrder.targetLocationGroup, transportOrder.targetLocation, "HIGH");
-            call.addResponder(responder);
+        	var transportOrder:TransportOrder = event.data as TransportOrder; 
+            tideContext.transportService.createTransportOrder(transportOrder.transportUnit.barcode, transportOrder.targetLocationGroup, transportOrder.targetLocation, "HIGH", onTransportCreated, onFault);
+        }
+        private function onTransportCreated(event:TideResultEvent):void
+        {
+        	trace("TransportOrder successfully created");
+            dispatchEvent(new TransportOrderEvent(TransportOrderEvent.LOAD_TRANSPORT_ORDERS));
         }
 
-        public function deleteTransportOrder(transportOrder:TransportOrder):void
+        [Observer("DELETE_TRANSPORT_ORDER")]
+        public function deleteTransportOrder(event:TransportOrderEvent):void
         {
-            var call:AsyncToken = service.remove(transportOrder);
-            call.addResponder(responder);
+            var transportOrder:TransportOrder = event.data as TransportOrder; 
+            tideContext.transportService.remove(transportOrder, onTransportDeleted, onFault);
+        }
+        private function onTransportDeleted(event:TideResultEvent):void
+        {
+            dispatchEvent(new TransportOrderEvent(TransportOrderEvent.LOAD_TRANSPORT_ORDERS));
+        }
+
+        private function onFault(event:TideFaultEvent):void
+        {
+            Alert.show("Error executing operation on Transports service");
         }
     }
 }
