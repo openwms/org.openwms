@@ -48,6 +48,8 @@
         <tide-component type="org\.openwms\.common\.service\..*"/>
         <tide-component type="org\.openwms\.common\.service\.management\..*"/>
         <tide-component type="org\.openwms\.common\.service\.spring\..*"/>
+        <tide-component type="org\.openwms\.tms\.service\..*"/>
+        <tide-component type="org\.openwms\.tms\.service\.impl\..*"/>
     </tide-components>
     
 </granite-config>
