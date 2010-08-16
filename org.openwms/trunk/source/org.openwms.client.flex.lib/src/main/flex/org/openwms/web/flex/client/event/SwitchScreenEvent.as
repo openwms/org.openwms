@@ -20,7 +20,7 @@
  */
 package org.openwms.web.flex.client.event
 {
-    import com.adobe.cairngorm.control.CairngormEvent;
+    import flash.events.Event;
     
     import mx.collections.ArrayCollection;
 
@@ -30,18 +30,16 @@ package org.openwms.web.flex.client.event
      * @author <a href="mailto:openwms@googlemail.com">Heiko Scherrer</a>
      * @version $Revision$
      */
-    public class SwitchScreenEvent extends CairngormEvent
+    public class SwitchScreenEvent extends Event
     {
         public static const SHOW_STARTSCREEN:String = "emptyScreenView";
         public static const SHOW_MODULE_MGMT_VIEW:String = "moduleManagementView";
-        public static const SHOW_LOCATION_VIEW:String = "locationView";
-        public static const SHOW_LOCATIONGROUP_VIEW:String = "locationGroupView";
         public static const SHOW_USER_MGMT_VIEW:String = "userManagementView";
         public static const SHOW_ROLE_MGMT_VIEW:String = "roleManagementView";
         
         public static var eventTypes:Array;
 
-        public function SwitchScreenEvent(type:String, bubbles:Boolean = false, cancelable:Boolean = false)
+        public function SwitchScreenEvent(type:String, bubbles:Boolean = true, cancelable:Boolean = false)
         {
         	eventTypes = new Array();
             super(type, bubbles, cancelable);

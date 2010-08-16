@@ -145,16 +145,6 @@
 				<enabled>true</enabled>
 			</snapshots>
 		</repository>
-		<repository>
-			<id>cairngorm-repo</id>
-			<url>http://maven.ow2.org/maven2/</url>
-			<releases>
-				<enabled>true</enabled>
-			</releases>
-			<snapshots>
-				<enabled>true</enabled>
-			</snapshots>
-		</repository>
         <repository>
             <id>as3commons</id>
             <url>http://dev.yoolab.org/maven/content/repositories/snapshots</url>
@@ -192,18 +182,7 @@
 			<version>${flex.version}</version>
 			<type>pom</type>
 		</dependency>
-		<dependency>
-			<groupId>com.adobe.cairngorm</groupId>
-			<artifactId>cairngorm-bin</artifactId>
-			<version>2.2.1</version>
-			<type>swc</type>
-		</dependency>
-        
-		<!--
-			<dependency> <groupId>com.adobe.flex.framework</groupId>
-			<artifactId>cairngorm-framework</artifactId> <version>2.2.1</version>
-			<type>swc</type> </dependency>
-		-->
+
 		<dependency>
 			<groupId>org.graniteds</groupId>
 			<artifactId>granite-core-swc</artifactId>
