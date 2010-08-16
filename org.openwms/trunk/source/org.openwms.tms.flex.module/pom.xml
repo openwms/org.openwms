@@ -183,12 +183,6 @@
             <version>${project.version}</version>
             <type>swc</type>
         </dependency>
-        <dependency>
-            <groupId>${project.groupId}</groupId>
-            <artifactId>org.openwms.common.flex.module</artifactId>
-            <version>${project.version}</version>
-            <type>swf</type>
-        </dependency>
 
 		<dependency>
 			<groupId>com.adobe.flex.framework</groupId>
