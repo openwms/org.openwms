@@ -40,8 +40,8 @@
                         <menuitem label="Transport Unit Types" action="{CommonSwitchScreenEvent.SHOW_TRANSPORTUNITTYPE_VIEW}" />
                         <menuitem label="Transport Units" action="{CommonSwitchScreenEvent.SHOW_TRANSPORTUNIT_VIEW}" />
                         <menuitem label="Location Types" action="{CommonSwitchScreenEvent.SHOW_LOCATIONTYPE_VIEW}" />
-                        <menuitem label="Locations" action="{SwitchScreenEvent.SHOW_LOCATION_VIEW}" />
-                        <menuitem label="Location Groups" action="{SwitchScreenEvent.SHOW_LOCATIONGROUP_VIEW}" />
+                        <menuitem label="Locations" action="{CommonSwitchScreenEvent.SHOW_LOCATION_VIEW}" />
+                        <menuitem label="Location Groups" action="{CommonSwitchScreenEvent.SHOW_LOCATIONGROUP_VIEW}" />
                     </menuitem>
                 </mx:XMLList>
             </mx:MenuBar>

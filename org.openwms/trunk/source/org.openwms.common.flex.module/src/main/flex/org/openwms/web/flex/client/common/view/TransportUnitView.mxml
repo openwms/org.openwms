@@ -24,7 +24,7 @@
 <mx:Canvas xmlns:mx="http://www.adobe.com/2006/mxml" width="100%" height="100%" show="onStartup()" backgroundColor="#C2DAEF">
 
     <mx:Metadata>
-        [Name]
+        [Name("transportUnitView")]
         [ManagedEvent(name="LOAD_TRANSPORT_UNITS")]
         [ManagedEvent(name="LOAD_ALL_LOCATIONS")]
         [ManagedEvent(name="LOAD_ALL_TRANSPORT_UNIT_TYPES")]
@@ -152,7 +152,7 @@
         <mx:VRule height="10"/>
         <mx:Button id="saveTransportUnitBtn" buttonMode="true" mouseChildren="false" toolTip="Save an existing Transport Unit" icon="@Embed(source='/assets/images/TransportUnit--Save.png')" click="save()" />
         <mx:VRule height="10"/>
-        <mx:Button id="refreshTransportUnitsBtn" buttonMode="true" mouseChildren="false" toolTip="Refresh the list of TransportUnits" icon="@Embed(source='assets/images/icons/refresh.png')" click="refresh()"/>
+        <mx:Button id="refreshTransportUnitsBtn" buttonMode="true" mouseChildren="false" toolTip="Refresh the list of Transport Units" icon="@Embed(source='assets/images/icons/refresh.png')" click="refresh()"/>
         <mx:VRule height="10"/>
         <mx:Button id="showTransportUnitDetailsBtn" buttonMode="true" mouseChildren="false" toolTip="Show details of an existing Transport Unit" icon="@Embed(source='/assets/images/TransportUnit--Edit.png')" click="showDetails()" />
         <mx:VRule height="10"/>

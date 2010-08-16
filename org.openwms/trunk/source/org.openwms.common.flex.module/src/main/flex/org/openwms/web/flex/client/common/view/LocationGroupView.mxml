@@ -32,6 +32,7 @@
     <!-- Scripts -->
     <mx:Script>
         <![CDATA[
+        	import org.openwms.web.flex.client.common.event.CommonSwitchScreenEvent;
             import org.openwms.common.domain.LocationGroup;
             import org.openwms.web.flex.client.event.SwitchScreenEvent;
         	import org.openwms.web.flex.client.model.TreeDataDescriptor;
@@ -114,8 +115,8 @@
             }
 
             private function refresh() : void {
-                var event : SwitchScreenEvent = new SwitchScreenEvent(SwitchScreenEvent.SHOW_LOCATIONGROUP_VIEW);
-                event.dispatch();
+                var event : CommonSwitchScreenEvent = new CommonSwitchScreenEvent(CommonSwitchScreenEvent.SHOW_LOCATIONGROUP_VIEW);
+                dispatchEvent(event);
             }
         ]]>
     </mx:Script>

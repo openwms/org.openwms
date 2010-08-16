@@ -62,6 +62,23 @@
 						<duplicateArgumentNames>false</duplicateArgumentNames>
 					</warnings>
 					<allowSourcePathOverlap>true</allowSourcePathOverlap>
+                    <keepAs3Metadatas>
+                        <keepAs3Metadata>Protected</keepAs3Metadata>
+                        <keepAs3Metadata>Bindable</keepAs3Metadata>
+                        <keepAs3Metadata>Managed</keepAs3Metadata>
+                        <keepAs3Metadata>ChangeEvent</keepAs3Metadata>
+                        <keepAs3Metadata>NonCommittingChangeEvent</keepAs3Metadata>
+                        <keepAs3Metadata>Transient</keepAs3Metadata>
+                        <keepAs3Metadata>Id</keepAs3Metadata>
+                        <keepAs3Metadata>Version</keepAs3Metadata>
+                        <keepAs3Metadata>Name</keepAs3Metadata>
+                        <keepAs3Metadata>In</keepAs3Metadata>
+                        <keepAs3Metadata>Inject</keepAs3Metadata>
+                        <keepAs3Metadata>Out</keepAs3Metadata>
+                        <keepAs3Metadata>Observer</keepAs3Metadata>
+                        <keepAs3Metadata>ManagedEvent</keepAs3Metadata>
+                        <keepAs3Metadata>Destroy</keepAs3Metadata>
+                    </keepAs3Metadatas>
 					<output>${project.build.directory}/${project.artifactId}.swf</output>
 				</configuration>
 				<dependencies>
@@ -120,16 +137,6 @@
 		<repository>
 			<id>granite-repo</id>
 			<url>http://download.java.net/maven/2/</url>
-			<releases>
-				<enabled>true</enabled>
-			</releases>
-			<snapshots>
-				<enabled>true</enabled>
-			</snapshots>
-		</repository>
-		<repository>
-			<id>cairngorm-repo</id>
-			<url>http://maven.ow2.org/maven2/</url>
 			<releases>
 				<enabled>true</enabled>
 			</releases>

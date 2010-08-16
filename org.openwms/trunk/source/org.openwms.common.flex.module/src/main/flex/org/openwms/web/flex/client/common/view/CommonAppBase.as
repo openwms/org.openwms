@@ -39,7 +39,7 @@ package org.openwms.web.flex.client.common.view
     import org.openwms.web.flex.client.model.ModelLocator;
     import org.openwms.web.flex.client.module.CommonModule;
 
-    [Name(commonAppBase)]
+    [Name("commonAppBase")]
     public class CommonAppBase extends CommonModule implements IApplicationModule, ITideModule
     {
 
