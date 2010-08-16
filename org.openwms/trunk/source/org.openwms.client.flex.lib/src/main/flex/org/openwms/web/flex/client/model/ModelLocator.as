@@ -21,8 +21,6 @@
 package org.openwms.web.flex.client.model
 {
 
-    import com.adobe.cairngorm.model.IModelLocator;
-    
     import mx.collections.ArrayCollection;
     
     import org.openwms.common.domain.Module;
@@ -38,9 +36,12 @@ package org.openwms.web.flex.client.model
      */
     [Name("modelLocator")]
     [Bindable]
-    public class ModelLocator implements IModelLocator
+    public class ModelLocator
     {
 
+        // --------------------------------------------------------------------
+        // Default Views
+        // --------------------------------------------------------------------
         public static const MAIN_VIEW_STACK_LOGIN_VIEW:uint = 0;
         public static const MAIN_VIEW_STACK_EMPTY_VIEW:uint = 1;
         public static const MAIN_VIEW_STACK_MODULE_MGMT_VIEW:uint = 2;
@@ -48,23 +49,27 @@ package org.openwms.web.flex.client.model
         public static const MAIN_VIEW_STACK_LOCATION_VIEW:uint = 4;
         public static const MAIN_VIEW_STACK_LOCATIONGROUP_VIEW:uint = 5;
         public static const MAIN_VIEW_STACK_TRANSPORTUNIT_VIEW:uint = 6;
-        //public var mainViewStackIndex:uint = MAIN_VIEW_STACK_EMPTY_VIEW;
 
+        // --------------------------------------------------------------------
+        // Main Application Management
+        // --------------------------------------------------------------------
+        // Used to control the main viewStack
+        public var actualView:String = SwitchScreenEvent.SHOW_STARTSCREEN;
+        public var authenticated:Boolean = false;
         public const UPLOAD_URL:String = "/openwms/upload";
         public const DIRECTORY_NAME:String = "data";
         public static const DT_FORMAT_STRING:String = "DD.MM.YYYY HH:NN:SS";
 
+        // --------------------------------------------------------------------
+        // User and Role Management
+        // --------------------------------------------------------------------
         public var allUsers:ArrayCollection = new ArrayCollection();
         public var allRoles:ArrayCollection = new ArrayCollection();
         public var selectedUser:User = null;
         public var image:Object;
-        private var views:Array = new Array();
-        // Used to control the main viewStack
-        public var actualView:String = SwitchScreenEvent.SHOW_STARTSCREEN;
-        public var authenticated:Boolean = false;
 
         // --------------------------------------------------------------------
-        // ModuleManagement
+        // Module Management
         // --------------------------------------------------------------------
         public var allModules:ArrayCollection = new ArrayCollection();
         public var loadedModules:HashMap = new HashMap();
