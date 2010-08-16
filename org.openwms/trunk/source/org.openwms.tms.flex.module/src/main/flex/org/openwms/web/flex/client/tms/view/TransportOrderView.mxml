@@ -21,19 +21,53 @@
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
 -->
-<mx:Canvas xmlns:mx="http://www.adobe.com/2006/mxml" width="100%" height="100%" initialize="onStartup()" backgroundColor="#C2DAEF">
+<mx:Canvas xmlns:mx="http://www.adobe.com/2006/mxml" width="100%" height="100%" show="onShow();" backgroundColor="#C2DAEF">
+
+    <mx:Metadata>
+        [Name("transportOrderView")]
+        [ManagedEvent(name="LOAD_TRANSPORT_ORDERS")]
+        [ManagedEvent(name="LOAD_TRANSPORT_UNITS")]
+        [ManagedEvent(name="LOAD_ALL_LOCATIONS")]
+        [ManagedEvent(name="LOAD_ALL_LOCATION_GROUPS")]
+    </mx:Metadata>
 
 	<mx:Script>
     	<![CDATA[
+    		import mx.controls.dataGridClasses.DataGridColumn;
+    		import org.openwms.web.flex.client.common.event.LocationGroupEvent;
+    		import org.openwms.web.flex.client.common.event.LocationEvent;
+    		import org.openwms.web.flex.client.common.event.TransportUnitEvent;
+    		import org.openwms.web.flex.client.common.model.CommonModelLocator;
+    		import org.openwms.web.flex.client.tms.event.TransportOrderEvent;
     		import org.openwms.tms.domain.order.TransportOrder;
     		import org.openwms.web.flex.client.tms.model.TMSModelLocator;
     		import org.openwms.web.flex.client.tms.view.dialogs.CreateTransportOrderDialog;
             import mx.managers.PopUpManager;
+    		[Inject]
     		[Bindable]
-            private var modelLocator:TMSModelLocator = TMSModelLocator.getInstance();
+            public var tmsModelLocator:TMSModelLocator;
+	        [Inject]
+	        [Bindable]
+	        public var commonModelLocator:CommonModelLocator;            
             
-    		public function onStartup():void {
-    			//userAddBtn.addChild(IconLocator.iconUserAdd);
+    		private function onShow():void
+    		{
+                if (tmsModelLocator.allTransportOrders.length == 0)
+                {
+                    dispatchEvent(new TransportOrderEvent(TransportOrderEvent.LOAD_TRANSPORT_ORDERS));
+                }
+                if (commonModelLocator.allTransportUnits.length == 0)
+                {
+                    dispatchEvent(new TransportUnitEvent(TransportUnitEvent.LOAD_TRANSPORT_UNITS));
+                }
+                if (commonModelLocator.allLocations.length == 0)
+                {
+                    dispatchEvent(new LocationEvent(LocationEvent.LOAD_ALL_LOCATIONS));
+                }
+                if (commonModelLocator.allLocationGroups.length == 0)
+                {
+                    dispatchEvent(new LocationGroupEvent(LocationGroupEvent.LOAD_ALL_LOCATION_GROUPS));
+                }
     		}
     		
             private function showCreateTransportOrderDialog():void
@@ -41,29 +75,73 @@
                 var pop1:CreateTransportOrderDialog=CreateTransportOrderDialog(PopUpManager.createPopUp(this, CreateTransportOrderDialog, true));
                 PopUpManager.centerPopUp(pop1);
             }
+            
+            private function refresh():void
+            {
+                var event:TransportOrderEvent = new TransportOrderEvent(TransportOrderEvent.LOAD_TRANSPORT_ORDERS);
+                dispatchEvent(event);
+            }
+            
+            private function formatCreatedDateField(item:Object, dg:DataGridColumn):String
+            {
+                if (item.creationDate != null)
+                {
+                    return dateFormatter.format(item.creationDate);
+                }
+                return "n/a";
+            }
+
+            private function formatStartedDateField(item:Object, dg:DataGridColumn):String
+            {
+                if (item.startDate != null)
+                {
+                    return dateFormatter.format(item.startDate);
+                }
+                return "n/a";
+            }
+
+            private function formatEndDateField(item:Object, dg:DataGridColumn):String
+            {
+                if (item.endDate != null)
+                {
+                    return dateFormatter.format(item.endDate);
+                }
+                return "n/a";
+            }
     	]]>
 	</mx:Script>
-
-	<mx:HBox width="100%" backgroundAlpha="0.5" backgroundColor="#FFFFFF" x="10" y="10">
-		<mx:Button id="createTransportOrderBtn" label="Create" click="showCreateTransportOrderDialog()" />
-		<mx:Button id="cancelTransportOrderBtn" label="Cancel" />
-		<mx:Button id="transportOrderHistoryBtn" label="History" />
-        <mx:Button id="redirectTransportOrderBtn" label="Redirect" />
-        <mx:Button id="stateTransportOrderBtn" label="State" />
-	</mx:HBox>
-	<mx:DataGrid width="100%" height="100%" dataProvider="{modelLocator.allTransportOrders}" y="40" x="10">
+	
+	<mx:DateFormatter id="dateFormatter" formatString="{CommonModelLocator.DT_FORMAT_STRING}"/>
+	
+	<mx:DataGrid width="95%" height="650" dataProvider="{tmsModelLocator.allTransportOrders}" y="63" x="10">
 		<mx:columns>
 			<mx:DataGridColumn headerText="ID" dataField="id" />
-		          <mx:DataGridColumn headerText="State" dataField="state" />
-		          <mx:DataGridColumn headerText="Priority" dataField="priority" />
-			      <mx:DataGridColumn headerText="Transport Unit" dataField="transportUnit.barcode" />
-		          <mx:DataGridColumn headerText="Source Location" dataField="sourceLocation" />
-		          <mx:DataGridColumn headerText="Target Location" dataField="targetLocation" />
-		          <mx:DataGridColumn headerText="Target Location Group" dataField="targetLocationGroup" />
-		          <mx:DataGridColumn headerText="Actual Location" dataField="actualLocation" />
-		          <mx:DataGridColumn headerText="Created" dataField="creationDate" />
-		          <mx:DataGridColumn headerText="Started" dataField="startDate" />
-		          <mx:DataGridColumn headerText="Ended" dataField="endDate" />
+			<mx:DataGridColumn headerText="Current State" dataField="state" />
+			<mx:DataGridColumn headerText="Priority" dataField="priority" />
+			<mx:DataGridColumn headerText="Transport Unit" dataField="transportUnit.barcode.value" />
+			<mx:DataGridColumn headerText="Source Location" dataField="sourceLocation" />
+			<mx:DataGridColumn headerText="Target Location" dataField="targetLocation" />
+			<mx:DataGridColumn headerText="Target Location Group" dataField="targetLocationGroup.name" />
+			<mx:DataGridColumn headerText="Actual Location" dataField="actualLocation" />
+			<mx:DataGridColumn headerText="Created" dataField="creationDate" labelFunction="formatCreatedDateField"/>
+			<mx:DataGridColumn headerText="Started" dataField="startDate" labelFunction="formatStartedDateField"/>
+			<mx:DataGridColumn headerText="Finished" dataField="endDate" labelFunction="formatEndDateField"/>
 		</mx:columns>
 	</mx:DataGrid>
+	<mx:HBox x="10" y="10" verticalAlign="middle" width="95%" backgroundColor="#F9FBB7">
+	    <mx:Label x="10" y="10" text="Transport Orders" fontSize="24"/>
+	    <mx:VRule height="10"/>
+	    <mx:Button id="createTransportOrderBtn" buttonMode="true" mouseChildren="false" toolTip="Create a new Transport Order" icon="@Embed(source='/assets/images/TransportOrder--Add.png')" click="showCreateTransportOrderDialog()"/>
+	    <mx:VRule height="10"/>
+	    <mx:Button id="cancelTransportOrderBtn" buttonMode="true" mouseChildren="false" toolTip="Cancel an existing Transport Order" icon="@Embed(source='/assets/images/TransportOrder--Cancel.png')" click="showCreateTransportOrderDialog()" />
+        <mx:VRule height="10"/>
+        <mx:Button id="refreshTransportOrdersBtn" buttonMode="true" mouseChildren="false" toolTip="Refresh the list of Transport Orders" icon="@Embed(source='assets/images/icons/refresh.png')" click="refresh()" />
+	    <mx:VRule height="10"/>
+	    <mx:Button id="showTransportOrderHistoryBtn" buttonMode="true" mouseChildren="false" toolTip="Show history of a Transport Order" icon="@Embed(source='assets/images/icons/history.png')" click="showCreateTransportOrderDialog()" />
+	    <mx:VRule height="10"/>
+	    <mx:Button id="redirectTransportOrderBtn" buttonMode="true" mouseChildren="false" toolTip="Redirect a Transport Order" icon="@Embed(source='/assets/images/TransportOrder--Redirect.png')" click="showCreateTransportOrderDialog()"/>
+	    <mx:VRule height="10"/>
+	    <mx:Button id="stateTransportOrderBtn" buttonMode="true" mouseChildren="false" toolTip="Change state of a Transport Order" icon="@Embed(source='/assets/images/TransportOrder--State.png')" click="showCreateTransportOrderDialog()" />
+	</mx:HBox>
+	<mx:HRule x="10" y="53" width="95%"/>
 </mx:Canvas>

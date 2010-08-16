@@ -20,7 +20,6 @@
  */
 package org.openwms.web.flex.client.tms.event
 {
-    import com.adobe.cairngorm.control.CairngormEvent;
     import org.openwms.web.flex.client.event.SwitchScreenEvent;    
     import mx.collections.ArrayCollection;
 
@@ -34,7 +33,7 @@ package org.openwms.web.flex.client.tms.event
     {
         public static const SHOW_TRANSPORT_ORDERS_VIEW:String = "tmsTransportOrdersView";
         
-        public function TMSSwitchScreenEvent(type:String, bubbles:Boolean = false, cancelable:Boolean = false)
+        public function TMSSwitchScreenEvent(type:String, bubbles:Boolean = true, cancelable:Boolean = false)
         {
             super(type, bubbles, cancelable);
         }
