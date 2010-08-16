@@ -181,6 +181,7 @@
                 <module>org.openwms.common.integration.jpa</module>
                 <module>org.openwms.common.service.api</module>
                 <module>org.openwms.common.service.spring</module>
+                <module>org.openwms.common.flex.lib</module>
                 <module>org.openwms.common.flex.module</module>
 
                 <module>org.openwms.tms.domain</module>
@@ -934,9 +935,15 @@
             </dependency>
             <dependency>
                 <groupId>${project.groupId}</groupId>
-                <artifactId>org.openwms.common.flex.module</artifactId>
+                <artifactId>org.openwms.common.flex.lib</artifactId>
                 <version>${project.version}</version>
                 <type>swc</type>
+            </dependency>
+            <dependency>
+                <groupId>${project.groupId}</groupId>
+                <artifactId>org.openwms.common.flex.module</artifactId>
+                <version>${project.version}</version>
+                <type>swf</type>
             </dependency>
             <dependency>
                 <groupId>${project.groupId}</groupId>
