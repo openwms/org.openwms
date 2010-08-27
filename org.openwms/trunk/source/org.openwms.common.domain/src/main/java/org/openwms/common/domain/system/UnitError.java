@@ -43,7 +43,10 @@ import javax.persistence.Table;
 @Table(name = "UNIT_ERROR")
 public class UnitError implements Serializable {
 
-    private static final long serialVersionUID = 1L;
+    /**
+     * The serialVersionUID
+     */
+    private static final long serialVersionUID = -716902051194734598L;
 
     /**
      * Unique technical key.

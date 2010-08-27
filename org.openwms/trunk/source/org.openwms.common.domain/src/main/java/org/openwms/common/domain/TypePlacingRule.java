@@ -50,7 +50,10 @@ import javax.persistence.UniqueConstraint;
         "PRIVILEGE_LEVEL", "ALLOWED_LOCATION_TYPE" }))
 public class TypePlacingRule implements Serializable, Rule {
 
-    private static final long serialVersionUID = 1L;
+    /**
+     * The serialVersionUID
+     */
+    private static final long serialVersionUID = 9095722886493210159L;
 
     /**
      * Unique technical key.

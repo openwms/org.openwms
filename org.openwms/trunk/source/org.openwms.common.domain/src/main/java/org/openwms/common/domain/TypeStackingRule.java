@@ -48,7 +48,10 @@ import javax.persistence.UniqueConstraint;
         "NO_TRANSPORT_UNITS", "ALLOWED_TRANSPORT_UNIT_TYPE" }))
 public class TypeStackingRule implements Serializable, Rule {
 
-    private static final long serialVersionUID = 1L;
+    /**
+     * The serialVersionUID
+     */
+    private static final long serialVersionUID = 8695359002320051884L;
 
     /**
      * Unique technical key.

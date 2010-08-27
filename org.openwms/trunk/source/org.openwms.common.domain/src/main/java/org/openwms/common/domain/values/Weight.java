@@ -20,6 +20,7 @@
  */
 package org.openwms.common.domain.values;
 
+import java.io.Serializable;
 import java.math.BigDecimal;
 
 /**
@@ -30,8 +31,12 @@ import java.math.BigDecimal;
  * @version $Revision$
  * @since 0.1
  */
-public class Weight implements Comparable<Weight>, Unit<WeightUnit> {
+public class Weight implements Comparable<Weight>, Unit<WeightUnit>, Serializable {
 
+    /**
+     * The serialVersionUID
+     */
+    private static final long serialVersionUID = -8849107834046064278L;
     private WeightUnit unit;
     private BigDecimal value;
 

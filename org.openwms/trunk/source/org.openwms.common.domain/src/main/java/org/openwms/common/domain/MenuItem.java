@@ -20,6 +20,8 @@
  */
 package org.openwms.common.domain;
 
+import java.io.Serializable;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -35,7 +37,12 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name = "T_MENU_ITEM")
-public class MenuItem {
+public class MenuItem implements Serializable {
+
+    /**
+     * The serialVersionUID
+     */
+    private static final long serialVersionUID = 4903843725315147954L;
 
     /**
      * Unique technical key.

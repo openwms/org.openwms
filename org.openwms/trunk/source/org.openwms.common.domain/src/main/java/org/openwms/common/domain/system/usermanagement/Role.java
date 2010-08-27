@@ -49,8 +49,11 @@ import javax.persistence.NamedQuery;
         @NamedQuery(name = Role.NQ_FIND_BY_UNIQUE_QUERY, query = "select r from Role r where r.name = ?1") })
 public class Role extends SecurityObject implements Serializable {
 
-    private static final long serialVersionUID = 1L;
-
+    /**
+     * The serialVersionUID
+     */
+    private static final long serialVersionUID = -4133301834284932221L;
+    
     /**
      * Query to find all {@link Role}s.
      */

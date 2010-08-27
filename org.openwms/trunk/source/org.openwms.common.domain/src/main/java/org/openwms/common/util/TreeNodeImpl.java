@@ -20,6 +20,7 @@
  */
 package org.openwms.common.util;
 
+import java.io.Serializable;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -33,7 +34,7 @@ import java.util.Map;
  * @version $Revision$
  * @since 0.1
  */
-public class TreeNodeImpl<T> implements TreeNode<T> {
+public class TreeNodeImpl<T> implements TreeNode<T>, Serializable {
 
     private static final long serialVersionUID = -5498990493803705085L;
     private T data;

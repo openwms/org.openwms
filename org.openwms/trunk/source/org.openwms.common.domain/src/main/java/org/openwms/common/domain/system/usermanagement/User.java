@@ -56,7 +56,10 @@ import javax.persistence.Version;
         @NamedQuery(name = "User.findByUsername", query = "SELECT u FROM User u WHERE u.username = ?1") })
 public class User implements Serializable {
 
-    private static final long serialVersionUID = 1L;
+    /**
+     * The serialVersionUID
+     */
+    private static final long serialVersionUID = -1116645053773805413L;
 
     /**
      * Unique technical key.

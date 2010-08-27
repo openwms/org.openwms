@@ -43,7 +43,10 @@ import javax.persistence.Version;
 @Table(name = "EMAIL", uniqueConstraints = @UniqueConstraint(columnNames = { "USERNAME", "ADDRESS" }))
 public class Email implements Serializable {
 
-    private static final long serialVersionUID = 1L;
+    /**
+     * The serialVersionUID
+     */
+    private static final long serialVersionUID = 3182027866592095069L;
 
     /**
      * Unique technical key.

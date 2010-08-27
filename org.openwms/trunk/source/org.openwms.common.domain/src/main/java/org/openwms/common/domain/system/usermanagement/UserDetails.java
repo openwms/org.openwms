@@ -40,7 +40,10 @@ import javax.persistence.Lob;
 @Embeddable
 public class UserDetails implements Serializable {
 
-    private static final long serialVersionUID = 1L;
+    /**
+     * The serialVersionUID
+     */
+    private static final long serialVersionUID = 664778075559767489L;
 
     /**
      * A Sex.

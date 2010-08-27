@@ -41,7 +41,10 @@ import javax.persistence.Version;
 @Table(name = "T_PREFERENCE", uniqueConstraints = @UniqueConstraint(columnNames = { "C_KEY", "VALUE" }))
 public class Preference implements Serializable {
 
-    private static final long serialVersionUID = 1L;
+    /**
+     * The serialVersionUID
+     */
+    private static final long serialVersionUID = 4396571221433949201L;
 
     /**
      * Unique technical key.

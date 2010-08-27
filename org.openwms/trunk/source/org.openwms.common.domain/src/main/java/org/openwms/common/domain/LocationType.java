@@ -51,7 +51,10 @@ import javax.persistence.Version;
         @NamedQuery(name = LocationType.NQ_FIND_BY_UNIQUE_QUERY, query = "select l from LocationType l where l.type = ?1")})
 public class LocationType implements Serializable {
 
-    private static final long serialVersionUID = 1L;
+    /**
+     * The serialVersionUID
+     */
+    private static final long serialVersionUID = 7694581168374440182L;
 
     /**
      * Query to find all {@link LocationType}s.

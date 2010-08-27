@@ -58,7 +58,10 @@ import javax.persistence.Version;
         @NamedQuery(name = "LocationGroup.findByName", query = "select lg from LocationGroup lg where lg.name = ?1") })
 public class LocationGroup implements Serializable {
 
-    private static final long serialVersionUID = 1L;
+    /**
+     * The serialVersionUID
+     */
+    private static final long serialVersionUID = -885742169116552293L;
 
     /**
      * A STATE.
