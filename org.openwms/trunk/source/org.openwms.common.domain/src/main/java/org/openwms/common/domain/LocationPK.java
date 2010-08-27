@@ -37,7 +37,10 @@ import javax.persistence.Embeddable;
 @Embeddable
 public class LocationPK implements Serializable {
 
-    private static final long serialVersionUID = 1L;
+    /**
+     * The serialVersionUID
+     */
+    private static final long serialVersionUID = 7370071817754524569L;
 
     /**
      * Expresses the area where the <code>Location</code> belongs to.

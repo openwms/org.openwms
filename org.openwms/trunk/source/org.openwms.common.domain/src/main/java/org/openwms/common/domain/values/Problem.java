@@ -38,7 +38,10 @@ import javax.persistence.TemporalType;
 @Embeddable
 public class Problem implements Serializable {
 
-    private static final long serialVersionUID = 1L;
+    /**
+     * The serialVersionUID
+     */
+    private static final long serialVersionUID = 2923793250934936203L;
 
     /**
      * Timestamp when the {@link Problem} occurred.
@@ -65,6 +68,28 @@ public class Problem implements Serializable {
      */
     public Problem() {
         this.occurred = new Date();
+    }
+
+    /**
+     * Create a new {@link Problem} with a message text.
+     * 
+     * @param message text as String
+     */
+    public Problem(String message) {
+        super();
+        this.message = message;
+    }
+
+    /**
+     * Create a new {@link Problem} with a message text and a message number.
+     * 
+     * @param message text as String
+     * @param messageNo message number
+     */
+    public Problem(String message, int messageNo) {
+        super();
+        this.message = message;
+        this.messageNo = messageNo;
     }
 
     /**

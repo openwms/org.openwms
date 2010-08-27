@@ -20,7 +20,6 @@
  */
 package org.openwms.common.util;
 
-import java.io.Serializable;
 import java.util.Iterator;
 import java.util.Map;
 
@@ -33,7 +32,7 @@ import java.util.Map;
  * @version $Revision$
  * @since 0.1
  */
-public interface TreeNode<T> extends Serializable {
+public interface TreeNode<T> {
 
     /**
      * Getter for node attached data.

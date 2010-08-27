@@ -71,7 +71,10 @@ import org.openwms.common.domain.values.Barcode;
         @NamedQuery(name = "TransportUnit.findByBarcode", query = "select tu from TransportUnit tu where tu.barcode = ?1") })
 public class TransportUnit implements Serializable {
 
-    private static final long serialVersionUID = 1L;
+    /**
+     * The serialVersionUID
+     */
+    private static final long serialVersionUID = 4799247366681079321L;
 
     /**
      * A TU_STATE.

@@ -48,7 +48,10 @@ import javax.persistence.Table;
 @Table(name = "USER_PASSWORD")
 public class UserPassword implements Serializable {
 
-    private static final long serialVersionUID = 1L;
+    /**
+     * The serialVersionUID
+     */
+    private static final long serialVersionUID = 1678609250279381615L;
 
     /**
      * Unique technical key.

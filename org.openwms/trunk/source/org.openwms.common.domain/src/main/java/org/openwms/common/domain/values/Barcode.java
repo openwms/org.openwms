@@ -37,7 +37,10 @@ import org.apache.commons.lang.StringUtils;
 @Embeddable
 public class Barcode implements Serializable {
 
-    private static final long serialVersionUID = 1L;
+    /**
+     * The serialVersionUID
+     */
+    private static final long serialVersionUID = 7743388968799876214L;
 
     /**
      * A BARCODE_ALIGN.

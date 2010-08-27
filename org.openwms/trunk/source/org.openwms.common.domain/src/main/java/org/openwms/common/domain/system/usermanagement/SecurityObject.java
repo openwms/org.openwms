@@ -48,8 +48,10 @@ import javax.persistence.Version;
         @NamedQuery(name = SecurityObject.NQ_FIND_BY_UNIQUE_QUERY, query = "select g from SecurityObject g where g.name = ?1") })
 public class SecurityObject implements Serializable {
 
-    private static final long serialVersionUID = 1L;
-
+    /**
+     * The serialVersionUID
+     */
+    private static final long serialVersionUID = 7585736035228078754L;
     /**
      * Query to find all {@link SecurityObject}s.
      */

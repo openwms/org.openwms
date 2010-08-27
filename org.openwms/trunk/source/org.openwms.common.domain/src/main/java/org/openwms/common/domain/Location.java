@@ -69,7 +69,10 @@ import org.openwms.common.domain.system.Message;
         @NamedQuery(name = Location.NQ_FIND_ALL_EAGER, query = "select l from Location l left join fetch l.messages left join fetch l.locationType") })
 public class Location implements Serializable {
 
-    private static final long serialVersionUID = 1L;
+    /**
+     * The serialVersionUID
+     */
+    private static final long serialVersionUID = 6958794248591576907L;
 
     /**
      * Query to find all {@link Location}s.

@@ -42,7 +42,10 @@ import javax.persistence.TemporalType;
 @Table(name = "MESSAGE")
 public class Message implements Serializable {
 
-    private static final long serialVersionUID = 1L;
+    /**
+     * The serialVersionUID
+     */
+    private static final long serialVersionUID = 7836132529431969528L;
 
     /**
      * Unique technical key.
