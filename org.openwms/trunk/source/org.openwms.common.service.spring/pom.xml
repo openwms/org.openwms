@@ -96,6 +96,10 @@
             <groupId>javax.persistence</groupId>
             <artifactId>com.springsource.javax.persistence</artifactId>
         </dependency>
+        <dependency>
+            <groupId>javax.transaction</groupId>
+            <artifactId>com.springsource.javax.transaction</artifactId>
+        </dependency>
         
         <!-- Test database driver -->
         <dependency>

@@ -20,8 +20,6 @@
  */
 package org.openwms.tms.domain.values;
 
-import java.io.Serializable;
-
 import javax.persistence.Embeddable;
 
 import org.openwms.tms.domain.order.TransportOrder;
@@ -38,26 +36,16 @@ import org.openwms.tms.domain.order.TransportOrder;
  * @see org.openwms.tms.domain.order.TransportOrder
  */
 @Embeddable
-public class PriorityLevel implements Serializable {
-
-    private static final long serialVersionUID = 1L;
-
-    public static final String lowest = "lowest";
-
-    public static final String low = "low";
-
-    public static final String medium = "medium";
-
-    public static final String high = "high";
-
-    public static final String highest = "highest";
-
+public enum PriorityLevel {
     
-    /* ----------------------------- methods ------------------- */
-    /**
-     * Create a new {@link PriorityLevel}.
-     */
-    protected PriorityLevel() {
-    }
+    LOWEST,
+    
+    LOW,
+    
+    NORMAL,
+    
+    HIGH,
+    
+    HIGHEST
 
 }

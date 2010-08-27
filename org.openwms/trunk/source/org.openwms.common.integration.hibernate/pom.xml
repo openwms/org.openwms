@@ -70,6 +70,17 @@
             <artifactId>org.springframework.instrument</artifactId>
             <scope>provided</scope>
         </dependency>
+        <dependency>
+            <groupId>org.springframework.osgi</groupId>
+            <artifactId>org.springframework.osgi-library</artifactId>
+            <type>libd</type>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.osgi</groupId>
+            <artifactId>spring-osgi-core</artifactId>
+            <scope>provided</scope>
+        </dependency>
 
         <!-- JPA Provider -->
         <dependency>
@@ -84,6 +95,10 @@
             <groupId>javax.persistence</groupId>
             <artifactId>com.springsource.javax.persistence</artifactId>
             <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>javax.transaction</groupId>
+            <artifactId>com.springsource.javax.transaction</artifactId>
         </dependency>
 
         <!-- TODO [scherrer] : Is this needed here? Test without -->

@@ -33,6 +33,8 @@
 
 	<mx:Script>
     	<![CDATA[
+    		import mx.collections.ArrayCollection;
+    		import mx.controls.Alert;
     		import mx.controls.dataGridClasses.DataGridColumn;
     		import org.openwms.web.flex.client.common.event.LocationGroupEvent;
     		import org.openwms.web.flex.client.common.event.LocationEvent;
@@ -42,6 +44,7 @@
     		import org.openwms.tms.domain.order.TransportOrder;
     		import org.openwms.web.flex.client.tms.model.TMSModelLocator;
     		import org.openwms.web.flex.client.tms.view.dialogs.CreateTransportOrderDialog;
+            import org.openwms.web.flex.client.tms.view.dialogs.CancelTransportOrdersDialog;
             import mx.managers.PopUpManager;
     		[Inject]
     		[Bindable]
@@ -76,56 +79,86 @@
                 PopUpManager.centerPopUp(pop1);
             }
             
+            private function showCancelTransportOrdersDialog():void
+            {
+            	if (transportOrdersLst.selectedIndices.length == 0)
+            	{
+                    Alert.show("Please select at least one Transport Order to delete");
+                    return;             		
+            	}
+                var pop:CancelTransportOrdersDialog = CancelTransportOrdersDialog(PopUpManager.createPopUp(this, CancelTransportOrdersDialog, true));
+                pop.messageText = "Delete selected Transport Units";
+                pop.items = new ArrayCollection(transportOrdersLst.selectedItems);
+                PopUpManager.centerPopUp(pop);
+            }
+
             private function refresh():void
             {
                 var event:TransportOrderEvent = new TransportOrderEvent(TransportOrderEvent.LOAD_TRANSPORT_ORDERS);
                 dispatchEvent(event);
             }
             
-            private function formatCreatedDateField(item:Object, dg:DataGridColumn):String
+            private function formatAsDate(item:Object, dg:DataGridColumn):String
             {
-                if (item.creationDate != null)
+                if (item[dg.dataField] != null)
                 {
-                    return dateFormatter.format(item.creationDate);
+                    return dateFormatter.format(item[dg.dataField]);
                 }
-                return "n/a";
+                return "--";
             }
 
-            private function formatStartedDateField(item:Object, dg:DataGridColumn):String
+            private function formatAsString(item:Object, dg:DataGridColumn):String
             {
-                if (item.startDate != null)
+                if (item[dg.dataField] != null)
                 {
-                    return dateFormatter.format(item.startDate);
+                    return String(item[dg.dataField].toString());
                 }
-                return "n/a";
+                return "--";
             }
 
-            private function formatEndDateField(item:Object, dg:DataGridColumn):String
+            private function formatBarcode(item:Object, dg:DataGridColumn):String
             {
-                if (item.endDate != null)
+                if (item[dg.dataField] != null)
                 {
-                    return dateFormatter.format(item.endDate);
+                    return String(item[dg.dataField].barcode);
                 }
-                return "n/a";
+                return "--";
+            }
+
+            private function formatLocationGroup(item:Object, dg:DataGridColumn):String
+            {
+                if (item[dg.dataField] != null)
+                {
+                    return String(item[dg.dataField].name);
+                }
+                return "--";
+            }
+            private function formatAsActualLocation(item:Object, dg:DataGridColumn):String
+            {
+                if (item[dg.dataField] != null)
+                {
+                    return String(item[dg.dataField].actualLocation);
+                }
+                return "--";
             }
     	]]>
 	</mx:Script>
 	
 	<mx:DateFormatter id="dateFormatter" formatString="{CommonModelLocator.DT_FORMAT_STRING}"/>
 	
-	<mx:DataGrid width="95%" height="650" dataProvider="{tmsModelLocator.allTransportOrders}" y="63" x="10">
+	<mx:DataGrid id="transportOrdersLst" width="95%" height="650" allowMultipleSelection="true" dataProvider="{tmsModelLocator.allTransportOrders}" y="63" x="10">
 		<mx:columns>
 			<mx:DataGridColumn headerText="ID" dataField="id" />
 			<mx:DataGridColumn headerText="Current State" dataField="state" />
-			<mx:DataGridColumn headerText="Priority" dataField="priority" />
-			<mx:DataGridColumn headerText="Transport Unit" dataField="transportUnit.barcode.value" />
-			<mx:DataGridColumn headerText="Source Location" dataField="sourceLocation" />
-			<mx:DataGridColumn headerText="Target Location" dataField="targetLocation" />
-			<mx:DataGridColumn headerText="Target Location Group" dataField="targetLocationGroup.name" />
-			<mx:DataGridColumn headerText="Actual Location" dataField="actualLocation" />
-			<mx:DataGridColumn headerText="Created" dataField="creationDate" labelFunction="formatCreatedDateField"/>
-			<mx:DataGridColumn headerText="Started" dataField="startDate" labelFunction="formatStartedDateField"/>
-			<mx:DataGridColumn headerText="Finished" dataField="endDate" labelFunction="formatEndDateField"/>
+			<mx:DataGridColumn headerText="Priority" dataField="priority" labelFunction="formatAsString" />
+			<mx:DataGridColumn headerText="Transport Unit" dataField="transportUnit" labelFunction="formatBarcode" />
+			<mx:DataGridColumn headerText="Source Location" dataField="sourceLocation" labelFunction="formatAsString"/>
+			<mx:DataGridColumn headerText="Target Location" dataField="targetLocation" labelFunction="formatAsString" />
+			<mx:DataGridColumn headerText="Target Location Group" dataField="targetLocationGroup" labelFunction="formatLocationGroup" />
+			<mx:DataGridColumn headerText="Actual Location" dataField="transportUnit" labelFunction="formatAsActualLocation" />
+			<mx:DataGridColumn headerText="Created" dataField="creationDate" labelFunction="formatAsDate"/>
+			<mx:DataGridColumn headerText="Started" dataField="startDate" labelFunction="formatAsDate"/>
+			<mx:DataGridColumn headerText="Finished" dataField="endDate" labelFunction="formatAsDate"/>
 		</mx:columns>
 	</mx:DataGrid>
 	<mx:HBox x="10" y="10" verticalAlign="middle" width="95%" backgroundColor="#F9FBB7">
@@ -133,7 +166,7 @@
 	    <mx:VRule height="10"/>
 	    <mx:Button id="createTransportOrderBtn" buttonMode="true" mouseChildren="false" toolTip="Create a new Transport Order" icon="@Embed(source='/assets/images/TransportOrder--Add.png')" click="showCreateTransportOrderDialog()"/>
 	    <mx:VRule height="10"/>
-	    <mx:Button id="cancelTransportOrderBtn" buttonMode="true" mouseChildren="false" toolTip="Cancel an existing Transport Order" icon="@Embed(source='/assets/images/TransportOrder--Cancel.png')" click="showCreateTransportOrderDialog()" />
+	    <mx:Button id="cancelTransportOrderBtn" buttonMode="true" mouseChildren="false" toolTip="Cancel an existing Transport Order" icon="@Embed(source='/assets/images/TransportOrder--Cancel.png')" click="showCancelTransportOrdersDialog()" />
         <mx:VRule height="10"/>
         <mx:Button id="refreshTransportOrdersBtn" buttonMode="true" mouseChildren="false" toolTip="Refresh the list of Transport Orders" icon="@Embed(source='assets/images/icons/refresh.png')" click="refresh()" />
 	    <mx:VRule height="10"/>

@@ -25,6 +25,7 @@ import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
@@ -60,11 +61,13 @@ import org.openwms.tms.domain.values.PriorityLevel;
  */
 @Entity
 @Table(name = "TRANSPORT_ORDER")
-@NamedQueries( {
-        @NamedQuery(name = TransportOrder.NQ_FIND_ALL, query = "select to from TransportOrder to")})
+@NamedQueries( { @NamedQuery(name = TransportOrder.NQ_FIND_ALL, query = "select to from TransportOrder to") })
 public class TransportOrder implements Serializable {
 
-    private static final long serialVersionUID = 1L;
+    /**
+     * The serialVersionUID
+     */
+    private static final long serialVersionUID = 4586898047981474230L;
 
     /**
      * Query to find all {@link TransportOrder}s.
@@ -80,7 +83,44 @@ public class TransportOrder implements Serializable {
      * @since 0.1
      */
     public enum TRANSPORT_ORDER_STATE {
-        CREATED, INITIALIZED, STARTED, INTERRUPTED, ONFAILURE, FINISHED
+
+        /**
+         * Status of new created TransportOrders.
+         */
+        CREATED,
+
+        /**
+         * Status of a full initialized TransportOrder, ready to be started.
+         */
+        INITIALIZED,
+
+        /**
+         * A started TransportOrder, active to be executed. Only one per
+         * TransportUnit allowed.
+         */
+        STARTED,
+
+        /**
+         * Status to indicate that the TransportOrder is paused. Not active
+         * anymore.
+         */
+        INTERRUPTED,
+
+        /**
+         * Status to indicate a failure on the TransportOrder. Not active
+         * anymore.
+         */
+        ONFAILURE,
+
+        /**
+         * Status of a aborted TransportOrder. Not active anymore.
+         */
+        CANCELED,
+
+        /**
+         * Status to indicate that the TransportOrder completed successfull.
+         */
+        FINISHED
     }
 
     /**
@@ -95,7 +135,7 @@ public class TransportOrder implements Serializable {
      * The {@link TransportUnit} to be moved by this {@link TransportOrder}.
      */
     @ManyToOne
-    @JoinColumn(name = "TRANSPORT_UNIT")
+    @JoinColumn(name = "TRANSPORT_UNIT", nullable = false)
     private TransportUnit transportUnit;
 
     /**
@@ -103,7 +143,7 @@ public class TransportOrder implements Serializable {
      */
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "DATE_UPDATED")
-    private Date dateUpdated;
+    private Date dateUpdated = new Date();
 
     /**
      * A priority level of the {@link TransportOrder}. The lower the value the
@@ -112,7 +152,8 @@ public class TransportOrder implements Serializable {
      * An order with high priority will be processed faster than lower ones.
      */
     @Column(name = "PRIORITY")
-    private String priority = PriorityLevel.medium;
+    @Enumerated
+    private PriorityLevel priority = PriorityLevel.NORMAL;
 
     /**
      * Timestamp when the {@link TransportOrder} was started.
@@ -132,7 +173,7 @@ public class TransportOrder implements Serializable {
      */
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "CREATION_DATE")
-    private Date creationDate;
+    private Date creationDate = new Date();
 
     /**
      * Timestamp when the {@link TransportOrder} ended.
@@ -145,7 +186,7 @@ public class TransportOrder implements Serializable {
      * State of this {@link TransportOrder}.
      */
     @Column(name = "STATE")
-    private TRANSPORT_ORDER_STATE state;
+    private TRANSPORT_ORDER_STATE state = TRANSPORT_ORDER_STATE.CREATED;
 
     /**
      * The source {@link Location} of the {@link TransportOrder}.<br>
@@ -210,7 +251,7 @@ public class TransportOrder implements Serializable {
      * 
      * @return The priority
      */
-    public String getPriority() {
+    public PriorityLevel getPriority() {
         return this.priority;
     }
 
@@ -220,7 +261,7 @@ public class TransportOrder implements Serializable {
      * @param priority
      *            The priority to set
      */
-    public void setPriority(String priority) {
+    public void setPriority(PriorityLevel priority) {
         this.priority = priority;
     }
 
@@ -295,7 +336,7 @@ public class TransportOrder implements Serializable {
             throw new IllegalStateException("Turning back state of transportOrder not allowed");
         }
         if (getState() == TRANSPORT_ORDER_STATE.CREATED) {
-            if (newState != TRANSPORT_ORDER_STATE.INITIALIZED) {
+            if (newState != TRANSPORT_ORDER_STATE.INITIALIZED && newState != TRANSPORT_ORDER_STATE.CANCELED) {
                 // Don't allow to except the initialization
                 throw new IllegalStateException("TransportOrder must be initialized after creation");
             }
@@ -308,6 +349,15 @@ public class TransportOrder implements Serializable {
      * 
      * @param newState
      *            The new state to set
+     * @throws IllegalStateException
+     *             in case
+     *             <li>the newState is <code>null</code> or</li>
+     *             <li>the newState is less than the old state or</li>
+     *             <li>the TransportOrder is in state CREATED and shall be
+     *             manually turned into something else then INITIALIZED or CANCELED</li>
+     * @throws InsufficientValueException
+     *             in case the TransportOrder is CREATED and shall be turned
+     *             into INITIALIZED but is incomplete.
      */
     public void setState(TRANSPORT_ORDER_STATE newState) {
         validateStateChange(newState);

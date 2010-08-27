@@ -26,15 +26,14 @@ import java.util.List;
 import java.util.Map;
 
 import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
+import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 
-import org.openwms.common.domain.Location;
 import org.openwms.common.integration.GenericDao;
 import org.openwms.common.integration.exception.TooManyEntitiesFoundException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.orm.jpa.support.JpaDaoSupport;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
@@ -64,10 +63,14 @@ import org.springframework.transaction.annotation.Transactional;
  * @see org.springframework.stereotype.Repository
  * @see org.springframework.transaction.annotation.Transactional
  */
-@Repository
 @Transactional
-public abstract class AbstractGenericJpaDao<T extends Serializable, ID extends Serializable> extends JpaDaoSupport
+@Repository
+public abstract class AbstractGenericJpaDao<T extends Serializable, ID extends Serializable>
         implements GenericDao<T, ID> {
+    
+    @Autowired
+    @PersistenceContext
+    private EntityManager em;
 
     /**
      * Logger instance can be used by subclasses.
@@ -76,16 +79,6 @@ public abstract class AbstractGenericJpaDao<T extends Serializable, ID extends S
 
     private Class<T> persistentClass;
 
-    /**
-     * Used to inject an {@link EntityManagerFactory} automatically.
-     * 
-     * @param entityManagerFactory
-     *            The {@link EntityManagerFactory}
-     */
-    @Autowired
-    public void setJpaEntityManagerFactory(@Qualifier("entityManagerFactory") EntityManagerFactory entityManagerFactory) {
-        super.setEntityManagerFactory(entityManagerFactory);
-    }
 
     /**
      * Create a new AbstractGenericJpaDao.
@@ -122,7 +115,7 @@ public abstract class AbstractGenericJpaDao<T extends Serializable, ID extends S
     @Override
     @Transactional(readOnly = true)
     public T findById(ID id) {
-        return getJpaTemplate().find(getPersistentClass(), id);
+        return em.find(getPersistentClass(), id);
     }
 
     /**
@@ -132,7 +125,7 @@ public abstract class AbstractGenericJpaDao<T extends Serializable, ID extends S
     @Transactional(readOnly = true)
     @SuppressWarnings("unchecked")
     public List<T> findAll() {
-        return getJpaTemplate().findByNamedQuery(getFindAllQuery());
+        return em.createNamedQuery(getFindAllQuery()).getResultList();
     }
 
     /**
@@ -142,7 +135,13 @@ public abstract class AbstractGenericJpaDao<T extends Serializable, ID extends S
     @Transactional(readOnly = true)
     @SuppressWarnings("unchecked")
     public List<T> findByQuery(String queryName, Map<String, ?> params) {
-        return getJpaTemplate().findByNamedQueryAndNamedParams(queryName, params);
+        Query queryObject = em.createNamedQuery(queryName);
+        if (params != null) {
+            for (Map.Entry<String, ?> entry : params.entrySet()) {
+                queryObject.setParameter(entry.getKey(), entry.getValue());
+            }
+        }
+        return queryObject.getResultList();
     }
     
     /**
@@ -151,8 +150,14 @@ public abstract class AbstractGenericJpaDao<T extends Serializable, ID extends S
     @Override
     @Transactional(readOnly = true)
     @SuppressWarnings("unchecked")
-    public List<T> findByOwnQuery(String query, Object... values) {
-    	return getJpaTemplate().find(query, values);
+    public List<T> findByOwnQuery(String queryName, Object... values) {
+        Query queryObject = em.createNamedQuery(queryName);
+        if (values != null) {
+            for (int i = 0; i < values.length; i++) {
+                queryObject.setParameter(i + 1, values[i]);
+            }
+        }
+        return queryObject.getResultList();
     }
 
     /**
@@ -162,7 +167,7 @@ public abstract class AbstractGenericJpaDao<T extends Serializable, ID extends S
     @Transactional(readOnly = true)
     @SuppressWarnings("unchecked")
     public T findByUniqueId(Serializable id) {
-        List<T> result = getJpaTemplate().findByNamedQuery(getFindByUniqueIdQuery(), id);
+        List<T> result = em.createNamedQuery(getFindByUniqueIdQuery()).setParameter(1, id).getResultList();
         if (result.size() > 1) {
             throw new TooManyEntitiesFoundException(id);
         }
@@ -176,7 +181,7 @@ public abstract class AbstractGenericJpaDao<T extends Serializable, ID extends S
     @Transactional
     public T save(T entity) {
         beforeUpdate(entity);
-        return getJpaTemplate().merge(entity);
+        return em.merge(entity);
     }
 
     /**
@@ -185,7 +190,7 @@ public abstract class AbstractGenericJpaDao<T extends Serializable, ID extends S
     @Override
     @Transactional
     public void remove(T entity) {
-        getJpaTemplate().remove(entity);
+        em.remove(entity);
     }
 
     /**
@@ -195,7 +200,7 @@ public abstract class AbstractGenericJpaDao<T extends Serializable, ID extends S
     @Transactional
     public void persist(T entity) {
         beforeUpdate(entity);
-        getJpaTemplate().persist(entity);
+        em.persist(entity);
     }
 
     /**
@@ -230,6 +235,6 @@ public abstract class AbstractGenericJpaDao<T extends Serializable, ID extends S
      * @return The {@link EntityManager}
      */
     protected final EntityManager getEm() {
-        return getJpaTemplate().getEntityManager();
+        return em;
     }
 }

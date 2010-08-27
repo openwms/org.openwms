@@ -83,7 +83,7 @@
             {
                 if (transportUnitsGrid.selectedIndices.length == 0)
                 {
-                    Alert.show("Please select at least one TransportUnit to delete");
+                    Alert.show("Please select at least one Transport Unit to delete");
                     return;                	
                 }
                 var pop:ConfirmDeletionDialog = ConfirmDeletionDialog(PopUpManager.createPopUp(this, ConfirmDeletionDialog, true));

@@ -250,7 +250,7 @@
         <moduleDir>.</moduleDir>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <jdkVersion>1.6</jdkVersion>
-        <spring.version>3.0.0.RELEASE</spring.version>
+        <spring.version>3.0.3.RELEASE</spring.version>
         <hibernate.version>3.2.6.GA</hibernate.version>
         <granite.version>2.1.0.GA</granite.version>
         <maven.compile.targetLevel>${jdkVersion}</maven.compile.targetLevel>
@@ -727,15 +727,15 @@
             </dependency>
             <dependency>
                 <groupId>org.springframework.osgi</groupId>
-                <artifactId>spring-osgi-core</artifactId>
-                <version>1.2.1</version>
-                <scope>provided</scope>
-            </dependency>
-            <dependency>
-                <groupId>org.springframework.osgi</groupId>
                 <artifactId>org.springframework.osgi-library</artifactId>
                 <type>libd</type>
                 <version>1.1.2.B</version>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework.osgi</groupId>
+                <artifactId>spring-osgi-core</artifactId>
+                <version>1.2.1</version>
+                <scope>provided</scope>
             </dependency>
             <dependency>
                 <groupId>org.springframework</groupId>
@@ -760,6 +760,24 @@
                 <artifactId>org.springframework.aspects</artifactId>
                 <version>${spring.version}</version>
                 <scope>test</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework.security</groupId>
+                <artifactId>org.springframework.security.web</artifactId>
+                <version>${spring.version}</version>
+                <scope>provided</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework.security</groupId>
+                <artifactId>org.springframework.security.core</artifactId>
+                <version>${spring.version}</version>
+                <scope>provided</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework.security</groupId>
+                <artifactId>org.springframework.security.config</artifactId>
+                <version>${spring.version}</version>
+                <scope>provided</scope>
             </dependency>
 
             <!-- JEE API -->

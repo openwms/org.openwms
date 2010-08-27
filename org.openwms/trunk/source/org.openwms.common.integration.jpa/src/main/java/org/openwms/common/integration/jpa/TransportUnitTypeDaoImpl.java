@@ -23,6 +23,7 @@ package org.openwms.common.integration.jpa;
 import org.openwms.common.domain.TransportUnitType;
 import org.openwms.common.integration.TransportUnitTypeDao;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  * A TransportUnitTypeDaoImpl.
@@ -33,6 +34,7 @@ import org.springframework.stereotype.Repository;
  * @see org.openwms.common.integration.jpa.AbstractGenericJpaDao
  * @see org.openwms.common.integration.TransportUnitTypeDao
  */
+@Transactional
 @Repository
 public class TransportUnitTypeDaoImpl extends AbstractGenericJpaDao<TransportUnitType, String> implements
         TransportUnitTypeDao {

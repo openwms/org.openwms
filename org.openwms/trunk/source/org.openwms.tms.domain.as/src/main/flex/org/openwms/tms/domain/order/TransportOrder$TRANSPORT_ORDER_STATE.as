@@ -18,6 +18,7 @@ package org.openwms.tms.domain.order {
         public static const STARTED:TransportOrder$TRANSPORT_ORDER_STATE = new TransportOrder$TRANSPORT_ORDER_STATE("STARTED", _);
         public static const INTERRUPTED:TransportOrder$TRANSPORT_ORDER_STATE = new TransportOrder$TRANSPORT_ORDER_STATE("INTERRUPTED", _);
         public static const ONFAILURE:TransportOrder$TRANSPORT_ORDER_STATE = new TransportOrder$TRANSPORT_ORDER_STATE("ONFAILURE", _);
+        public static const CANCELED:TransportOrder$TRANSPORT_ORDER_STATE = new TransportOrder$TRANSPORT_ORDER_STATE("CANCELED", _);
         public static const FINISHED:TransportOrder$TRANSPORT_ORDER_STATE = new TransportOrder$TRANSPORT_ORDER_STATE("FINISHED", _);
 
         function TransportOrder$TRANSPORT_ORDER_STATE(value:String = null, restrictor:* = null) {
@@ -29,7 +30,7 @@ package org.openwms.tms.domain.order {
         }
 
         public static function get constants():Array {
-            return [CREATED, INITIALIZED, STARTED, INTERRUPTED, ONFAILURE, FINISHED];
+            return [CREATED, INITIALIZED, STARTED, INTERRUPTED, ONFAILURE, CANCELED, FINISHED];
         }
 
         public static function valueOf(name:String):TransportOrder$TRANSPORT_ORDER_STATE {
