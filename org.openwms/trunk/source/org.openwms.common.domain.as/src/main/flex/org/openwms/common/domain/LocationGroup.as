@@ -23,5 +23,9 @@ package org.openwms.common.domain {
     [Bindable]
     [RemoteClass(alias="org.openwms.common.domain.LocationGroup")]
     public class LocationGroup extends LocationGroupBase {
+        public function toString():String
+        {
+            return name;
+        }
     }
 }
