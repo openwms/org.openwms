@@ -1,25 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
-/*
- * openwms.org, the Open Warehouse Management System.
- *
- * This file is part of openwms.org.
- *
- * openwms.org is free software: you can redistribute it and/or modify
- * it under the terms of the GNU Lesser General Public License as 
- * published by the Free Software Foundation, either version 3 of the
- * License, or (at your option) any later version.
- *
- * openwms.org is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU Lesser General Public License for more details.
- *
- * You should have received a copy of the GNU Lesser General Public
- * License along with this software. If not, write to the Free
- * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
- * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
- */  
+    /*
+    * openwms.org, the Open Warehouse Management System.
+    *
+    * This file is part of openwms.org.
+    *
+    * openwms.org is free software: you can redistribute it and/or modify
+    * it under the terms of the GNU Lesser General Public License as 
+    * published by the Free Software Foundation, either version 3 of the
+    * License, or (at your option) any later version.
+    *
+    * openwms.org is distributed in the hope that it will be useful,
+    * but WITHOUT ANY WARRANTY; without even the implied warranty of
+    * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    * GNU Lesser General Public License for more details.
+    *
+    * You should have received a copy of the GNU Lesser General Public
+    * License along with this software. If not, write to the Free
+    * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
+    * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
+    */  
 -->
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
@@ -81,7 +81,9 @@
                             <outputDirectory>${project.build.directory}/usr</outputDirectory>
                             <overWriteIfNewer>true</overWriteIfNewer>
                             <includeGroupIds></includeGroupIds>
-                            <excludeGroupIds>javax.transaction,javax.persistence,org.junit,org.slf4j,org.springframework,com.springsource.dmserver,org.apache.log4j</excludeGroupIds>
+                            <excludeGroupIds>
+                                javax.transaction,javax.persistence,org.junit,org.slf4j,org.springframework,com.springsource.dmserver,org.apache.log4j
+                            </excludeGroupIds>
                         </configuration>
                     </execution>
                     <execution>
@@ -132,7 +134,9 @@
                         </goals>
                         <configuration>
                             <repositoryId>repo.sourceforge.net</repositoryId>
-                            <url>${distribution.repo.serverProtocol}//${distribution.repo.snapshot.serverUrl.rootPath}</url>
+                            <url>
+                                ${distribution.repo.serverProtocol}//${distribution.repo.snapshot.serverUrl.rootPath}
+                            </url>
                             <groupId>${project.groupId}</groupId>
                             <artifactId>${project.artifactId}</artifactId>
                             <version>${project.version}</version>
@@ -156,24 +160,16 @@
         <dependency>
             <groupId>org.springframework.security</groupId>
             <artifactId>org.springframework.security.web</artifactId>
-            <version>3.0.0.RELEASE</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>org.springframework.security</groupId>
             <artifactId>org.springframework.security.core</artifactId>
-            <version>3.0.0.RELEASE</version>
             <scope>provided</scope>
         </dependency>
-        <!--
-            <dependency> <groupId>org.springframework.security</groupId>
-            <artifactId>org.springframework.security.taglibs</artifactId> <version>3.0.2.RELEASE</version>
-            <scope>provided</scope> </dependency>
-        -->
         <dependency>
             <groupId>org.springframework.security</groupId>
             <artifactId>org.springframework.security.config</artifactId>
-            <version>3.0.0.RELEASE</version>
             <scope>provided</scope>
         </dependency>
 

@@ -5,12 +5,22 @@ Bundle-Name: org.openwms.common.integration.hibernate
 Bundle-ManifestVersion: 2
 Bundle-SymbolicName: org.openwms.common.integration.hibernate
 Import-Library: 
- org.springframework.spring;version="[3.0, 3.1)",
- org.hibernate.ejb;version="3.4.0.GA";import-scope:=application
+ org.springframework.spring;version="[3.0, 3.1)"
 Import-Bundle: 
- com.springsource.org.hibernate;version="3.2.6.ga"
+ com.springsource.javax.persistence;version="1.0.0",
+ com.springsource.org.hibernate;version="[3.3.2.GA,3.3.2.GA]";import-scope:=application,
+ com.springsource.org.hibernate.annotations;version="[3.4.0.GA, 3.4.0.GA]";import-scope:=application,
+ com.springsource.org.hibernate.annotations.common;version="[3.3.0.ga, 3.3.0.ga]";import-scope:=application,
+ com.springsource.org.hibernate.ejb;version="[3.4.0.GA, 3.4.0.GA]";import-scope:=application,
+ org.openwms.common.domain;version="0.0.1.SNAPSHOT",
+ org.openwms.tms.domain;version="0.0.1.SNAPSHOT"
 Import-Template: 
  javax.persistence;version="[1.0.0, 1.0.0]",
  javax.sql;version="0"
+Require-Bundle: 
+ com.springsource.org.hibernate,
+ com.springsource.javassist
 Import-Package: 
- org.hibernate.proxy; version="0.0.0"
+ org.hibernate.proxy; version="0.0.0",
+ org.springframework.context.weaving;version="[3.0, 3.1)",
+ org.springframework.transaction.aspectj;version="[3.0, 3.1)"

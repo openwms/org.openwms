@@ -33,6 +33,7 @@ package org.openwms.web.flex.client.tms.event
         public static const LOAD_TRANSPORT_ORDERS:String = "LOAD_TRANSPORT_ORDERS";
         public static const CREATE_TRANSPORT_ORDER:String = "CREATE_TRANSPORT_ORDER";
         public static const DELETE_TRANSPORT_ORDER:String = "DELETE_TRANSPORT_ORDER";
+        public static const CANCEL_TRANSPORT_ORDER:String = "CANCEL_TRANSPORT_ORDER";
         
         public var data:*;
 

@@ -30,6 +30,8 @@
 
     <mx:Script>
     	<![CDATA[
+    		import org.openwms.tms.domain.values.PriorityLevel;
+    		import mx.controls.Alert;
     		import org.openwms.web.flex.client.common.model.CommonModelLocator;
     		import org.openwms.tms.domain.order.TransportOrder$TRANSPORT_ORDER_STATE;
     		import org.openwms.common.domain.values.Barcode;
@@ -72,8 +74,8 @@
             	// First do some checks...
             	if (!targetLocationGroupChk.selected && !targetLocationChk.selected)
             	{
-            		// Please provide at least one target
-            		// Change state of component to show a div
+            		Alert.show("Please select at least one target for the Transport");
+            		return;
             	}
             	var event:TransportOrderEvent = new TransportOrderEvent(TransportOrderEvent.CREATE_TRANSPORT_ORDER);
             	var transportOrder:TransportOrder = new TransportOrder();
@@ -88,7 +90,7 @@
                 var transportUnit:TransportUnit = new TransportUnit();
                 transportUnit.barcode = new Barcode(barcodeTxt.text);
             	transportOrder.transportUnit =  transportUnit;
-            	transportOrder.priority = new String("HIGH");
+            	transportOrder.priority = priorityCmb.selectedItem as PriorityLevel;
             	transportOrder.state = TransportOrder$TRANSPORT_ORDER_STATE.CREATED;
             	trace("Creating TransportOrder :"+barcodeTxt.text+transportOrder.state+transportOrder.targetLocationGroup);
             	event.data = transportOrder;
@@ -133,6 +135,6 @@
 		</mx:Canvas>
 		<mx:Button id="createBtn" x="10" y="388" label="Create" fontSize="12" click="createTransportOrder()"/>
 		<mx:Button id="cancelBtn" x="384" y="388" label="Cancel" fontSize="12" click="closeDialog(event)"/>
-		<mx:ComboBox id="priorityCmb" x="195" y="77" fontSize="24" width="259" />
+		<mx:ComboBox id="priorityCmb" x="195" y="77" dataProvider="{PriorityLevel.constants}" fontSize="24" width="259" />
 	</mx:Canvas>
 </mx:Panel>

@@ -29,6 +29,7 @@ import org.openwms.tms.domain.order.TransportOrder;
 import org.openwms.tms.integration.TransportOrderDao;
 import org.springframework.orm.jpa.JpaCallback;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  * A TransportOrderDaoImpl.
@@ -39,6 +40,7 @@ import org.springframework.stereotype.Repository;
  * @see org.openwms.common.integration.jpa.AbstractGenericJpaDao
  * @see org.openwms.tms.integration.TransportOrderDao
  */
+@Transactional
 @Repository
 public class TransportOrderDaoImpl extends AbstractGenericJpaDao<TransportOrder, Long> implements TransportOrderDao {
 
@@ -67,13 +69,9 @@ public class TransportOrderDaoImpl extends AbstractGenericJpaDao<TransportOrder,
      */
     @SuppressWarnings("unchecked")
     public int getNumberOfTransportOrders(final LocationGroup locationGroup) {
-        return (Integer) getJpaTemplate().execute(new JpaCallback() {
-            public Object doInJpa(EntityManager em) throws PersistenceException {
-                return em.createNativeQuery(
-                        "select count(*) from TransportOrder to where to.targetLocationGroup = :locationGroup",
-                        Integer.class).setParameter("locationGroup", locationGroup).getSingleResult();
-            };
-        });
+        return (Integer) getEm().createNativeQuery(
+                "select count(*) from TransportOrder to where to.targetLocationGroup = :locationGroup",
+                Integer.class).setParameter("locationGroup", locationGroup).getSingleResult();
     }
 
 }

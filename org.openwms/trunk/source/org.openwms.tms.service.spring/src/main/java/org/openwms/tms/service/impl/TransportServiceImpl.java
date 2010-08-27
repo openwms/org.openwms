@@ -21,22 +21,27 @@
 package org.openwms.tms.service.impl;
 
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.apache.commons.lang.StringUtils;
 import org.openwms.common.domain.Location;
 import org.openwms.common.domain.LocationGroup;
-import org.openwms.common.domain.LocationPK;
 import org.openwms.common.domain.TransportUnit;
-import org.openwms.common.domain.TransportUnitType;
 import org.openwms.common.domain.values.Barcode;
+import org.openwms.common.domain.values.Problem;
 import org.openwms.common.integration.GenericDao;
 import org.openwms.common.service.exception.ServiceException;
 import org.openwms.common.service.spring.EntityServiceImpl;
 import org.openwms.tms.domain.order.TransportOrder;
+import org.openwms.tms.domain.order.TransportOrder.TRANSPORT_ORDER_STATE;
+import org.openwms.tms.domain.values.PriorityLevel;
 import org.openwms.tms.integration.TransportOrderDao;
 import org.openwms.tms.service.TransportOrderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 /**
@@ -79,9 +84,10 @@ public class TransportServiceImpl extends EntityServiceImpl<TransportOrder, Long
      * {@inheritDoc}
      */
     @Override
+    @Transactional(propagation = Propagation.REQUIRES_NEW)
     public TransportOrder createTransportOrder(Barcode barcode,
     		LocationGroup targetLocationGroup, Location targetLocation,
-    		String priority) {
+    		PriorityLevel priority) {
     	if (barcode == null) {
     		throw new ServiceException("Barcode cannot be null when creating a TransportOrder");
     	}
@@ -105,11 +111,31 @@ public class TransportServiceImpl extends EntityServiceImpl<TransportOrder, Long
     	if (tLocation == null && tLocationGroup == null) {
     		throw new ServiceException("Either a Location or a LocationGroup must be exist to create a TrasportOrder");
     	}
-    	if (StringUtils.isNotEmpty(priority)) {
+    	if (priority != null) {
     		transportOrder.setPriority(priority);
     	}
     	addEntity(transportOrder);
-    	transportOrder = save(transportOrder);
+    	dao.persist(transportOrder);
+    	//transportOrder = save(transportOrder);
+    	logger.error("ID of to:"+transportOrder.getId());
     	return transportOrder;
+    }
+    
+    @Override
+    public List<Long> cancelTransportOrders(List<TransportOrder> transportOrders) {
+        List<Long> canceled = new ArrayList<Long>(transportOrders.size());
+        for (TransportOrder transportOrder : transportOrders) {
+            try {
+                transportOrder = dao.save(transportOrder);
+                transportOrder.setState(TRANSPORT_ORDER_STATE.CANCELED);
+            }
+            catch (RuntimeException e) {
+                logger.error("Could not cancel TransportOrder with ID:"+transportOrder.getId());
+                Problem problem = new Problem(e.getMessage());
+                transportOrder.setProblem(problem);
+                canceled.add(transportOrder.getId());
+            }
+        }
+        return canceled;
     }
 }

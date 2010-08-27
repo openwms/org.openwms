@@ -38,8 +38,7 @@ package org.openwms.web.flex.client.tms.business
      * @version $Revision: 700 $
      */
     [Name("transportsDelegate")]
-    [ManagedEvent(name="LOAD_ALL_LOCATION_TYPES")]
-    [ManagedEvent(name="LOAD_ALL_LOCATIONS")]
+    [ManagedEvent(name="LOAD_TRANSPORT_ORDERS")]
     public class TransportsDelegate
     {
         [In]
@@ -54,7 +53,7 @@ package org.openwms.web.flex.client.tms.business
         }
 
         /**
-         * Call to load all Locations from the service.
+         * Call to load all TransportOrders from the service.
          */
         [Observer("LOAD_TRANSPORT_ORDERS")]
         public function getAllTransports():void
@@ -70,12 +69,29 @@ package org.openwms.web.flex.client.tms.business
         public function createTransportOrder(event:TransportOrderEvent):void
         {
         	var transportOrder:TransportOrder = event.data as TransportOrder; 
-            tideContext.transportService.createTransportOrder(transportOrder.transportUnit.barcode, transportOrder.targetLocationGroup, transportOrder.targetLocation, "HIGH", onTransportCreated, onFault);
+            tideContext.transportService.createTransportOrder(transportOrder.transportUnit.barcode, transportOrder.targetLocationGroup, transportOrder.targetLocation, transportOrder.priority, onTransportCreated, onFault);
         }
         private function onTransportCreated(event:TideResultEvent):void
         {
         	trace("TransportOrder successfully created");
             dispatchEvent(new TransportOrderEvent(TransportOrderEvent.LOAD_TRANSPORT_ORDERS));
+        }
+
+        /**
+         * Call to cancel one or more TransportOrder.
+         */
+        [Observer("CANCEL_TRANSPORT_ORDER")]
+        public function cancelTransportOrder(event:TransportOrderEvent):void
+        {
+            tideContext.transportService.cancelTransportOrders(event.data as ArrayCollection, onTransportsCanceled, onFault);
+        }
+        private function onTransportsCanceled(event:TideResultEvent):void
+        {
+            dispatchEvent(new TransportOrderEvent(TransportOrderEvent.LOAD_TRANSPORT_ORDERS));
+        	if ((event.result as ArrayCollection).length > 0)
+        	{
+        		Alert.show("Not all Transport Orders could be canceled!");
+        	}
         }
 
         [Observer("DELETE_TRANSPORT_ORDER")]

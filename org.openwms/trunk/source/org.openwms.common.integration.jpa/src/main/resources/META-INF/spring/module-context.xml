@@ -33,33 +33,16 @@
     <osgix:cm-properties id="global.properties" persistent-id="org.openwms.common.infrastructure.configuration-${openwms.configuration.version}" />
     <context:property-placeholder properties-ref="global.properties" />
 
+    <!-- Used for Springs annotation processing -->
     <context:annotation-config />
     <context:component-scan base-package="org.openwms.common.integration.jpa" />
 
-    <!-- Hibernate does not require a LTW
-    <context:load-time-weaver aspectj-weaving="on"/>-->
-
     <!-- See ch. 10.2 -->
-    <tx:annotation-driven />
+    <tx:annotation-driven transaction-manager="transactionManager" />
 
-    <!-- Entity Manager -->
-    <bean id="entityManagerFactory" class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
-        <property name="persistenceUnitName" value="${jdbc.persistenceUnit}" />
-        <property name="dataSource" ref="wmsDataSource" />
-        <property name="jpaVendorAdapter" ref="jpaVendorAdapter" />
-        <property name="jpaProperties" value="${jdbc.properties}" />
-    </bean>
-
-    <!-- Transaction Manager -->
-    <bean id="transactionManager" class="org.springframework.orm.jpa.JpaTransactionManager">
-        <property name="entityManagerFactory" ref="entityManagerFactory" />
-    </bean>
-
-    <!-- Used for the exception translation -->
-    <bean class="org.springframework.dao.annotation.PersistenceExceptionTranslationPostProcessor" />
-
-    <bean id="oemiv" class="org.springframework.orm.jpa.support.OpenEntityManagerInViewInterceptor" autowire="byName" />
-
+    <!-- Used for the exception translation 
+    <bean class="org.springframework.dao.annotation.PersistenceExceptionTranslationPostProcessor"/>
+    -->
     <bean id="locationDao" class="org.openwms.common.integration.jpa.LocationDaoImpl"/>
 
     <bean id="locationTypeDao" class="org.openwms.common.integration.jpa.LocationTypeDaoImpl"/>

@@ -20,12 +20,15 @@
  */
 package org.openwms.tms.service;
 
+import java.util.List;
+
 import org.openwms.common.domain.Location;
 import org.openwms.common.domain.LocationGroup;
 import org.openwms.common.domain.LocationPK;
 import org.openwms.common.domain.values.Barcode;
 import org.openwms.common.service.EntityService;
 import org.openwms.tms.domain.order.TransportOrder;
+import org.openwms.tms.domain.values.PriorityLevel;
 
 /**
  * A TransportService - Extends the {@link EntityService} interface about some
@@ -54,7 +57,31 @@ public interface TransportOrderService<T extends TransportOrder> extends EntityS
      *         {@link LocationGroup}
      */
     int getTransportsToLocationGroup(LocationGroup locationGroup);
-    
-    T createTransportOrder(Barcode barcode, LocationGroup targetLocationGroup, Location targetLocation, String priority);
+
+    /**
+     * Create a new {@link TransportOrder}.
+     * 
+     * @param barcode
+     *            The {@link Barcode} of the <tt>TransportUnit</tt>
+     * @param targetLocationGroup
+     *            The target {@link LocationGroup}
+     * @param targetLocation
+     *            The target {@link Location}
+     * @param priority
+     *            A {@link PriorityLevel} of the new {@link TransportOrder}
+     * @return The new created {@link TransportOrder}
+     */
+    T createTransportOrder(Barcode barcode, LocationGroup targetLocationGroup, Location targetLocation,
+            PriorityLevel priority);
+
+    /**
+     * Try to cancel a list of {@link TransportOrder}s.
+     * 
+     * @param transportOrders
+     *            The {@link TransportOrder}s to be canceled
+     * @return A list of {@link TransportOrder} IDs that have not been canceled
+     *         successfully
+     */
+    List<Long> cancelTransportOrders(List<T> transportOrders);
 
 }

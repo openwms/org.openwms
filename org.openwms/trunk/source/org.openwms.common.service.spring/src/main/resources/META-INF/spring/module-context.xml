@@ -34,7 +34,7 @@
     <context:property-placeholder properties-ref="global.properties" />
 
 	<context:annotation-config />
-	<tx:annotation-driven />
+    <tx:annotation-driven />
 
 	<bean id="entityService" class="org.openwms.common.service.spring.EntityServiceImpl">
 		<property name="dao" ref="locationDao" />

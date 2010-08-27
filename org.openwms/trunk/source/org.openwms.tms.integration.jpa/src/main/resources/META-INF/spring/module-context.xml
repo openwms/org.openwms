@@ -33,19 +33,13 @@
     <osgix:cm-properties id="global.properties" persistent-id="org.openwms.common.infrastructure.configuration-${openwms.configuration.version}" />
     <context:property-placeholder properties-ref="global.properties" />
 
+    <!-- Used for Springs annotation processing -->
     <context:annotation-config />
     <context:component-scan base-package="org.openwms.tms.integration.jpa" />
 
-    <!-- Hibernate does not require a LTW
-    <context:load-time-weaver aspectj-weaving="on"/>-->
-
     <!-- See ch. 10.2 -->
-    <tx:annotation-driven />
+    <tx:annotation-driven transaction-manager="transactionManager" />
 
-	<!-- Used for the exception translation 
-	<bean class="org.springframework.dao.annotation.PersistenceExceptionTranslationPostProcessor" />
--->
-	<bean id="oemiv" class="org.springframework.orm.jpa.support.OpenEntityManagerInViewInterceptor" autowire="byName" />
 
 	<bean id="transportOrderDao" class="org.openwms.tms.integration.jpa.TransportOrderDaoImpl" />
 

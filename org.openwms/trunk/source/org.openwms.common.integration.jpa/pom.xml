@@ -90,10 +90,12 @@
         <dependency>
             <groupId>javax.persistence</groupId>
             <artifactId>com.springsource.javax.persistence</artifactId>
+            <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>javax.transaction</groupId>
             <artifactId>com.springsource.javax.transaction</artifactId>
+            <scope>provided</scope>
         </dependency>
 
         <!-- Test database driver -->
@@ -116,7 +118,6 @@
             <groupId>org.aspectj</groupId>
             <artifactId>org.aspectj-library</artifactId>
             <type>libd</type>
-            <scope>test</scope>
         </dependency>
 
         <!-- Project dependencies -->

@@ -15,9 +15,9 @@ Web-ContextPath: openwms
 Import-Library: 
  org.springframework.spring;version="[3.0, 3.1)"
 Import-Bundle: 
- org.springframework.security.core;version="[3.0.0.RELEASE, 3.0.2.RELEASE]",
- org.springframework.security.web;version="[3.0.0.RELEASE, 3.0.2.RELEASE]",
- org.springframework.security.config;version="[3.0.0.RELEASE, 3.0.2.RELEASE]",
+ org.springframework.security.core;version="[3.0.0.RELEASE, 3.1)",
+ org.springframework.security.web;version="[3.0.0.RELEASE, 3.1)",
+ org.springframework.security.config;version="[3.0.0.RELEASE, 3.1)",
  com.springsource.org.hibernate;version="3.2.6.GA",
  org.springframework.web.servlet;version="[3.0.0.CI-395,3.1)",
  com.springsource.org.apache.taglibs.standard;version="[1.1.2,1.3)",
