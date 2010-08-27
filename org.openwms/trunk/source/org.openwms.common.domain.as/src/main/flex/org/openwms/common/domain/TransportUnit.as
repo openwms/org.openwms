@@ -19,6 +19,8 @@
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
 package org.openwms.common.domain {
+	
+	import mx.controls.dataGridClasses.DataGridColumn;
 
     [Bindable]
     [RemoteClass(alias="org.openwms.common.domain.TransportUnit")]
@@ -28,6 +30,24 @@ package org.openwms.common.domain {
     	{
     		return _empty;
     	}
+
+        public function formatBarcode(item:Object, dg:DataGridColumn):String
+        {
+            if (item[dg.dataField] != null)
+            {
+                return String(item[dg.dataField].barcode);
+            }
+            return "--";
+        }
+
+        public function formatLocation(item:Object, dg:DataGridColumn):String
+        {
+            if (item[dg.dataField] != null)
+            {
+                return String(item[dg.dataField].actualLocation);
+            }
+            return "--";
+        }
     	
     }
 }
