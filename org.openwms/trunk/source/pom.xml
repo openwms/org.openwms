@@ -169,6 +169,7 @@
         <profile>
             <id>all</id>
             <modules>
+                <module>org.openwms.common.util</module>
                 <module>org.openwms.common.domain</module>
                 <module>org.openwms.common.domain.as</module>
                 <module>org.openwms.common.infrastructure.configuration</module>
@@ -184,6 +185,7 @@
                 <module>org.openwms.common.flex.lib</module>
                 <module>org.openwms.common.flex.module</module>
 
+                <module>org.openwms.tms.util</module>
                 <module>org.openwms.tms.domain</module>
                 <module>org.openwms.tms.domain.as</module>
                 <module>org.openwms.tms.integration</module>
@@ -906,6 +908,11 @@
             <!-- Project dependencies -->
             <dependency>
                 <groupId>${project.groupId}</groupId>
+                <artifactId>org.openwms.common.util</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>${project.groupId}</groupId>
                 <artifactId>org.openwms.common.domain</artifactId>
                 <version>${project.version}</version>
             </dependency>
@@ -927,6 +934,11 @@
             <dependency>
                 <groupId>${project.groupId}</groupId>
                 <artifactId>org.openwms.common.integration</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>${project.groupId}</groupId>
+                <artifactId>org.openwms.common.integration.hibernate</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <dependency>
@@ -965,6 +977,11 @@
             </dependency>
             <dependency>
                 <groupId>${project.groupId}</groupId>
+                <artifactId>org.openwms.tms.util</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>${project.groupId}</groupId>
                 <artifactId>org.openwms.tms.domain</artifactId>
                 <version>${project.version}</version>
             </dependency>
@@ -993,6 +1010,12 @@
                 <artifactId>org.openwms.tms.flex.module</artifactId>
                 <version>${project.version}</version>
                 <type>swf</type>
+            </dependency>
+            <dependency>
+                <groupId>${project.groupId}</groupId>
+                <artifactId>org.openwms.client.flex.wrapper</artifactId>
+                <version>${project.version}</version>
+                <type>war</type>
             </dependency>
         </dependencies>
     </dependencyManagement>

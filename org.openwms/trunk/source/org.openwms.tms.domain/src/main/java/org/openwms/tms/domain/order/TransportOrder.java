@@ -32,6 +32,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.PreUpdate;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -40,7 +41,6 @@ import javax.persistence.Version;
 import org.openwms.common.domain.Location;
 import org.openwms.common.domain.LocationGroup;
 import org.openwms.common.domain.TransportUnit;
-import org.openwms.common.domain.system.Message;
 import org.openwms.common.domain.values.Problem;
 import org.openwms.common.exception.InsufficientValueException;
 import org.openwms.tms.domain.values.PriorityLevel;
@@ -61,7 +61,11 @@ import org.openwms.tms.domain.values.PriorityLevel;
  */
 @Entity
 @Table(name = "TRANSPORT_ORDER")
-@NamedQueries( { @NamedQuery(name = TransportOrder.NQ_FIND_ALL, query = "select to from TransportOrder to") })
+@NamedQueries( {
+        @NamedQuery(name = TransportOrder.NQ_FIND_ALL, query = "select to from TransportOrder to"),
+        @NamedQuery(name = TransportOrder.NQ_FIND_BY_TU, query = "select to from TransportOrder to where to.transportUnit = :transportUnit"),
+        @NamedQuery(name = TransportOrder.NQ_FIND_ACTIVE_FOR_TU, query = "select to from TransportOrder to where to.transportUnit = :transportUnit and to.state in (:state1, :state2)"),
+        @NamedQuery(name = TransportOrder.NQ_FIND_ORDERS_TO_START, query = "select to from TransportOrder to where to.transportUnit = :transportUnit and to.state in (INITIALIZED, INTERRUPTED) order by to.priority DESC, to.creationDate") })
 public class TransportOrder implements Serializable {
 
     /**
@@ -73,6 +77,41 @@ public class TransportOrder implements Serializable {
      * Query to find all {@link TransportOrder}s.
      */
     public static final String NQ_FIND_ALL = "TransportOrder.findAll";
+
+    /**
+     * Query to find all {@link TransportOrder}s for a given
+     * {@link TransportUnit}.
+     * <p>
+     * NG parameter name transportUnit : The {@link TransportUnit} to search
+     * for.
+     * </p>
+     */
+    public static final String NQ_FIND_BY_TU = "TransportOrder.findByTransportUnit";
+
+    /**
+     * Query to find all active {@link TransportOrder}s for a given
+     * {@link TransportUnit}. Active transports are in state
+     * {@link TRANSPORT_ORDER_STATE#STARTED} or
+     * {@link TRANSPORT_ORDER_STATE#INTERRUPTED}.
+     * <p>
+     * NG parameter name transportUnit : The {@link TransportUnit} to search
+     * for.
+     * </p>
+     */
+    public static final String NQ_FIND_ACTIVE_FOR_TU = "TransportOrder.findActiveToForTu";
+
+    /**
+     * Query to find all {@link TransportOrder}s for a given
+     * {@link TransportUnit} to start. Read transports are in state
+     * {@link TRANSPORT_ORDER_STATE#INITIALIZED} or
+     * {@link TRANSPORT_ORDER_STATE#INTERRUPTED}. The list of possible
+     * transports is sorted by priority and creationDate.
+     * <p>
+     * NG parameter name transportUnit : The {@link TransportUnit} to search
+     * for.
+     * </p>
+     */
+    public static final String NQ_FIND_ORDERS_TO_START = "TransportOrder.findOrdersToStartForTu";
 
     /**
      * A TRANSPORT_ORDER_STATE - Each {@link TransportOrder} can be in one of
@@ -118,7 +157,7 @@ public class TransportOrder implements Serializable {
         CANCELED,
 
         /**
-         * Status to indicate that the TransportOrder completed successfull.
+         * Status to indicate that the TransportOrder completed successfully.
          */
         FINISHED
     }
@@ -186,6 +225,7 @@ public class TransportOrder implements Serializable {
      * State of this {@link TransportOrder}.
      */
     @Column(name = "STATE")
+    @Enumerated
     private TRANSPORT_ORDER_STATE state = TRANSPORT_ORDER_STATE.CREATED;
 
     /**
@@ -217,6 +257,13 @@ public class TransportOrder implements Serializable {
      */
     @Version
     private long version;
+
+    /* ------------------- lifecycle callback methods ---------- */
+
+    @PreUpdate
+    protected void postUpdate() {
+        this.dateUpdated = new Date();
+    }
 
     /* ----------------------------- methods ------------------- */
     /**
@@ -272,16 +319,6 @@ public class TransportOrder implements Serializable {
      */
     public Date getStartDate() {
         return this.startDate;
-    }
-
-    /**
-     * Set the date when the {@link TransportOrder} was started.
-     * 
-     * @param startDate
-     *            The date when started
-     */
-    private void setStartDate(Date startDate) {
-        this.startDate = startDate;
     }
 
     /**
@@ -354,7 +391,8 @@ public class TransportOrder implements Serializable {
      *             <li>the newState is <code>null</code> or</li>
      *             <li>the newState is less than the old state or</li>
      *             <li>the TransportOrder is in state CREATED and shall be
-     *             manually turned into something else then INITIALIZED or CANCELED</li>
+     *             manually turned into something else then INITIALIZED or
+     *             CANCELED</li>
      * @throws InsufficientValueException
      *             in case the TransportOrder is CREATED and shall be turned
      *             into INITIALIZED but is incomplete.
@@ -362,7 +400,10 @@ public class TransportOrder implements Serializable {
     public void setState(TRANSPORT_ORDER_STATE newState) {
         validateStateChange(newState);
         if (newState == TRANSPORT_ORDER_STATE.STARTED) {
-            setStartDate(new Date());
+            startDate = new Date();
+        }
+        if (newState == TRANSPORT_ORDER_STATE.FINISHED) {
+            endDate = new Date();
         }
         state = newState;
     }

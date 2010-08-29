@@ -252,6 +252,24 @@ public class LocationGroup implements Serializable {
     }
 
     /**
+     * Check whether infeed for this LocationGroup is allowed.
+     * 
+     * @return <code>true</code> if so.
+     */
+    public boolean isInfeedAllowed() {
+        return (getGroupStateIn() == STATE.AVAILABLE);
+    }
+
+    /**
+     * Check whether infeed for this LocationGroup is blocked.
+     * 
+     * @return <code>true</code> if so.
+     */
+    public boolean isInfeedBlocked() {
+        return !isInfeedAllowed();
+    }
+
+    /**
      * Change the infeed state of this LocationGroup.
      * 
      * @param groupStateIn

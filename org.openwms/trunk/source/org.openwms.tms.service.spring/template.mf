@@ -13,6 +13,7 @@ Import-Bundle:
  org.openwms.common.integration;version="0.0.1.SNAPSHOT",
  org.openwms.common.service.api;version="0.0.1.SNAPSHOT",
  org.openwms.tms.domain;version="0.0.1.SNAPSHOT",
+ org.openwms.tms.util;version="0.0.1.SNAPSHOT",
  org.openwms.tms.integration;version="0.0.1.SNAPSHOT",
  org.openwms.tms.service.api;version="0.0.1.SNAPSHOT"
 Import-Template: 

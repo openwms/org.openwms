@@ -29,10 +29,12 @@
 			http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.0.xsd
 			http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-3.0.xsd">
 
+    <context:component-scan base-package="org.openwms.tms.service.impl" />
     <context:annotation-config />
     <tx:annotation-driven />
 
     <bean id="transportService" class="org.openwms.tms.service.impl.TransportServiceImpl">
         <property name="dao" ref="transportOrderDao" />
     </bean>
+    
 </beans>
