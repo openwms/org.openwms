@@ -71,6 +71,10 @@
         </dependency>
         <dependency>
             <groupId>${project.groupId}</groupId>
+            <artifactId>org.openwms.tms.util</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>${project.groupId}</groupId>
             <artifactId>org.openwms.tms.domain</artifactId>
         </dependency>
         <dependency>

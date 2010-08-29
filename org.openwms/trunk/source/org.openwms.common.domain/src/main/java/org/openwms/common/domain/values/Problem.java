@@ -76,7 +76,7 @@ public class Problem implements Serializable {
      * @param message text as String
      */
     public Problem(String message) {
-        super();
+        this();
         this.message = message;
     }
 
@@ -87,7 +87,7 @@ public class Problem implements Serializable {
      * @param messageNo message number
      */
     public Problem(String message, int messageNo) {
-        super();
+        this();
         this.message = message;
         this.messageNo = messageNo;
     }

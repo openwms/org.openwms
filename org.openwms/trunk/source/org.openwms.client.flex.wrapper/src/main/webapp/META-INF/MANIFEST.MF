@@ -3,10 +3,10 @@ Export-Package: org.openwms.web.flex.security;version="0.0.1.SNAPSHOT"
  ;uses:="org.granite.messaging.service.security,org.springframework.be
  ans.factory.annotation,org.springframework.context,org.springframewor
  k.security.authentication,org.springframework.security.core"
-Bundle-ClassPath: .,WEB-INF/lib/granite-core-2.1.0.GA.jar,WEB-INF/lib/
- granite-eclipselink-2.1.0.GA.jar,WEB-INF/lib/granite-hibernate-2.1.0.
- GA.jar,WEB-INF/lib/granite-spring-2.1.0.GA.jar,WEB-INF/lib/granite-to
- plink-2.1.0.GA.jar,WEB-INF/lib/pell-multipart-2.1.5.jar
+Bundle-ClassPath: .,WEB-INF/lib/granite-core.jar,WEB-INF/lib/granite-e
+ clipselink.jar,WEB-INF/lib/granite-hibernate.jar,WEB-INF/lib/granite-
+ spring.jar,WEB-INF/lib/granite-toplink.jar,WEB-INF/lib/pell-multipart
+ .jar
 Tool: Bundlor 1.0.0.RELEASE
 Import-Library: org.springframework.spring;version="[3.0, 3.1)"
 Bundle-Name: org.openwms.zz.client.flex.wrapper
@@ -14,13 +14,18 @@ Web-ContextPath: openwms
 Import-Bundle: org.springframework.security.core;version="[3.0.0.RELEA
  SE, 3.1)",org.springframework.security.web;version="[3.0.0.RELEASE, 3
  .1)",org.springframework.security.config;version="[3.0.0.RELEASE, 3.1
- )",com.springsource.org.hibernate;version="3.2.6.GA",org.springframew
- ork.web.servlet;version="[3.0.0.CI-395,3.1)",com.springsource.org.apa
- che.taglibs.standard;version="[1.1.2,1.3)",org.openwms.common.domain;
- version="[0.0.1.SNAPSHOT,1.0)",org.openwms.common.service.api;version
- ="[0.0.1.SNAPSHOT,1.0)",org.openwms.tms.domain;version="[0.0.1.SNAPSH
- OT,1.0)",org.openwms.tms.service.api;version="[0.0.1.SNAPSHOT,1.0)",c
- om.springsource.org.postgresql.jdbc4;version="8.3.604"
+ )",com.springsource.org.hibernate;version="[3.3.2.GA,3.3.2.GA]";impor
+ t-scope:="application",com.springsource.org.hibernate.annotations;ver
+ sion="[3.4.0.GA, 3.4.0.GA]";import-scope:="application",com.springsou
+ rce.org.hibernate.annotations.common;version="[3.3.0.ga, 3.3.0.ga]";i
+ mport-scope:="application",com.springsource.org.hibernate.ejb;version
+ ="[3.4.0.GA, 3.4.0.GA]";import-scope:="application",org.springframewo
+ rk.web.servlet;version="[3.0.0.CI-395, 3.1)",com.springsource.org.apa
+ che.taglibs.standard;version="[1.1.2, 1.3)",org.openwms.common.domain
+ ;version="[0.0.1.SNAPSHOT, 1.0)",org.openwms.common.service.api;versi
+ on="[0.0.1.SNAPSHOT, 1.0)",org.openwms.tms.domain;version="[0.0.1.SNA
+ PSHOT, 1.0)",org.openwms.tms.service.api;version="[0.0.1.SNAPSHOT, 1.
+ 0)",com.springsource.org.postgresql.jdbc4;version="8.3.604"
 Bundle-Vendor: openwms.org
 Bundle-Version: 0.0.1.SNAPSHOT
 Bundle-ManifestVersion: 2
@@ -30,17 +35,19 @@ Import-Package: com.springsource.server.web.dm;version="[2.0.0, 3.0.0)
  ervlet.jsp.jstl.core;version="[1.1.2,1.2.0)",javax.servlet.resources;
  version="[2.4.0,2.5.0]",javax.transaction,javax.xml.namespace,javax.x
  ml.parsers,javax.xml.transform,javax.xml.transform.dom,javax.xml.tran
- sform.stream,javax.xml.xpath,org.openwms.common.service.management,or
- g.slf4j;version="1.5.10",org.springframework.beans;version="[3.0, 3.1
- )",org.springframework.beans.factory;version="[3.0, 3.1)",org.springf
- ramework.beans.factory.annotation;version="[3.0, 3.1)",org.springfram
- ework.context;version="[3.0, 3.1)",org.springframework.security.acces
- s;version="[3.0, 3.1)",org.springframework.security.authentication;ve
- rsion="[3.0, 3.1)",org.springframework.security.core;version="[3.0, 3
- .1)",org.springframework.security.core.context;version="[3.0, 3.1)",o
- rg.springframework.web.context;version="[3.0, 3.1)",org.springframewo
- rk.web.context.request;version="[3.0, 3.1)",org.springframework.web.c
- ontext.support;version="[3.0, 3.1)",org.w3c.dom,org.w3c.dom.traversal
- ,org.xml.sax,org.xml.sax.ext,org.xml.sax.helpers
+ sform.stream,javax.xml.xpath,org.hibernate.proxy;version="0.0.0",org.
+ openwms.common.service.management,org.slf4j;version="1.5.10",org.spri
+ ngframework.beans;version="[3.0, 3.1)",org.springframework.beans.fact
+ ory;version="[3.0, 3.1)",org.springframework.beans.factory.annotation
+ ;version="[3.0, 3.1)",org.springframework.context;version="[3.0, 3.1)
+ ",org.springframework.context.weaving;version="[3.0, 3.1)",org.spring
+ framework.security.access;version="[3.0, 3.1)",org.springframework.se
+ curity.authentication;version="[3.0, 3.1)",org.springframework.securi
+ ty.core;version="[3.0, 3.1)",org.springframework.security.core.contex
+ t;version="[3.0, 3.1)",org.springframework.transaction.aspectj;versio
+ n="[3.0, 3.1)",org.springframework.web.context;version="[3.0, 3.1)",o
+ rg.springframework.web.context.request;version="[3.0, 3.1)",org.sprin
+ gframework.web.context.support;version="[3.0, 3.1)",org.w3c.dom,org.w
+ 3c.dom.traversal,org.xml.sax,org.xml.sax.ext,org.xml.sax.helpers
 Bundle-SymbolicName: org.openwms.zz.client.flex.wrapper
 

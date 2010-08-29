@@ -24,7 +24,6 @@ import java.util.List;
 
 import org.openwms.common.domain.Location;
 import org.openwms.common.domain.LocationGroup;
-import org.openwms.common.domain.LocationPK;
 import org.openwms.common.domain.values.Barcode;
 import org.openwms.common.service.EntityService;
 import org.openwms.tms.domain.order.TransportOrder;
@@ -73,6 +72,32 @@ public interface TransportOrderService<T extends TransportOrder> extends EntityS
      */
     T createTransportOrder(Barcode barcode, LocationGroup targetLocationGroup, Location targetLocation,
             PriorityLevel priority);
+
+    /**
+     * Create a new {@link TransportOrder}.
+     * 
+     * @param barcode
+     *            The {@link Barcode} of the <tt>TransportUnit</tt>
+     * @param targetLocationGroup
+     *            The target {@link LocationGroup}
+     * @param priority
+     *            A {@link PriorityLevel} of the new {@link TransportOrder}
+     * @return The new created {@link TransportOrder}
+     */
+    T createTransportOrder(Barcode barcode, LocationGroup targetLocationGroup, PriorityLevel priority);
+
+    /**
+     * Create a new {@link TransportOrder}.
+     * 
+     * @param barcode
+     *            The {@link Barcode} of the <tt>TransportUnit</tt>
+     * @param targetLocation
+     *            The target {@link Location}
+     * @param priority
+     *            A {@link PriorityLevel} of the new {@link TransportOrder}
+     * @return The new created {@link TransportOrder}
+     */
+    T createTransportOrder(Barcode barcode, Location targetLocation, PriorityLevel priority);
 
     /**
      * Try to cancel a list of {@link TransportOrder}s.

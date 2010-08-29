@@ -28,7 +28,10 @@ import org.openwms.common.integration.GenericDao;
 import org.openwms.common.service.EntityService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.annotation.Required;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.ApplicationContextAware;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -45,7 +48,7 @@ import org.springframework.transaction.annotation.Transactional;
  */
 @Service
 @Transactional
-public class EntityServiceImpl<T extends Serializable, ID extends Serializable> implements EntityService<T> {
+public class EntityServiceImpl<T extends Serializable, ID extends Serializable> implements EntityService<T>, ApplicationContextAware {
 
     /**
      * Generic Repository DAO.
@@ -53,11 +56,26 @@ public class EntityServiceImpl<T extends Serializable, ID extends Serializable> 
     protected GenericDao<T, ID> dao;
 
     private Class<T> persistentClass;
+    
+    /**
+     * Reference to the {@link ApplicationContext} instance.
+     */
+    protected ApplicationContext ctx;
 
     /**
      * Logger instance can be used by subclasses.
      */
     protected Logger logger = LoggerFactory.getLogger(this.getClass());
+    
+    /**
+     * {@inheritDoc}
+     * 
+     * @see org.springframework.context.ApplicationContextAware#setApplicationContext(org.springframework.context.ApplicationContext)
+     */
+    @Override
+    public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
+        this.ctx = applicationContext;
+    }
 
     /**
      * The Repository implementation to work with. This must be set manually
