@@ -1,0 +1,14 @@
+Manifest-Version: 1.0
+Export-Package: org.openwms;version="0.0.1.SNAPSHOT",org.openwms.commo
+ n;version="0.0.1.SNAPSHOT",org.openwms.common.util;version="0.0.1.SNA
+ PSHOT",org.openwms.common.util.event;version="0.0.1.SNAPSHOT";uses:="
+ org.springframework.context"
+Bundle-Vendor: openwms.org
+Bundle-Classpath: .
+Bundle-Version: 0.0.1.SNAPSHOT
+Import-Library: org.springframework.spring;version="[3.0, 3.1)"
+Bundle-Name: org.openwms.common.util
+Bundle-ManifestVersion: 2
+Import-Package: org.springframework.context
+Bundle-SymbolicName: org.openwms.common.util
+
