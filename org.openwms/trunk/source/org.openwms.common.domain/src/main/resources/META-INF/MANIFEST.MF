@@ -14,7 +14,7 @@ Require-Bundle: com.springsource.org.hibernate,com.springsource.javass
  ist
 Bundle-Vendor: openwms.org
 Bundle-Version: 0.0.1.SNAPSHOT
-Tool: Bundlor 1.0.0.BUILD-20091207202403
+Tool: Bundlor 1.0.0.RELEASE
 Bundle-Name: org.openwms.common.domain
 Bundle-ManifestVersion: 2
 Bundle-SymbolicName: org.openwms.common.domain
