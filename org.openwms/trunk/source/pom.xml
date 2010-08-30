@@ -169,37 +169,37 @@
         <profile>
             <id>all</id>
             <modules>
-                <module>org.openwms.common.util</module>
+                <module>org.openwms.app</module>
+                <module>org.openwms.app.plan</module>
+
+                <module>org.openwms.client.flex.app</module>
+                <module>org.openwms.client.flex.lib</module>
+                <module>org.openwms.client.flex.wrapper</module>
+
                 <module>org.openwms.common.domain</module>
                 <module>org.openwms.common.domain.as</module>
+                <module>org.openwms.common.flex.lib</module>
+                <module>org.openwms.common.flex.module</module>
+                <module>org.openwms.common.framework.test</module>
                 <module>org.openwms.common.infrastructure.configuration</module>
                 <module>org.openwms.common.infrastructure.hsql</module>
                 <module>org.openwms.common.infrastructure.postgres</module>
-                <module>org.openwms.common.framework.test</module>
                 <module>org.openwms.common.integration</module>
                 <module>org.openwms.common.integration.eclipselink</module>
                 <module>org.openwms.common.integration.hibernate</module>
                 <module>org.openwms.common.integration.jpa</module>
                 <module>org.openwms.common.service.api</module>
                 <module>org.openwms.common.service.spring</module>
-                <module>org.openwms.common.flex.lib</module>
-                <module>org.openwms.common.flex.module</module>
+                <module>org.openwms.common.util</module>
 
-                <module>org.openwms.tms.util</module>
                 <module>org.openwms.tms.domain</module>
                 <module>org.openwms.tms.domain.as</module>
+                <module>org.openwms.tms.flex.module</module>
                 <module>org.openwms.tms.integration</module>
                 <module>org.openwms.tms.integration.jpa</module>
                 <module>org.openwms.tms.service.api</module>
                 <module>org.openwms.tms.service.spring</module>
-                <module>org.openwms.tms.flex.module</module>
-
-                <module>org.openwms.client.flex.lib</module>
-                <module>org.openwms.client.flex.app</module>
-                <module>org.openwms.client.flex.wrapper</module>
-
-                <module>org.openwms.app</module>
-                <module>org.openwms.app.plan</module>
+                <module>org.openwms.tms.util</module>
             </modules>
         </profile>
         <profile>
@@ -252,7 +252,7 @@
         <moduleDir>.</moduleDir>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <jdkVersion>1.6</jdkVersion>
-        <spring.version>3.0.3.RELEASE</spring.version>
+        <spring.version>3.0.0.RELEASE</spring.version>
         <hibernate.version>3.2.6.GA</hibernate.version>
         <granite.version>2.1.0.GA</granite.version>
         <maven.compile.targetLevel>${jdkVersion}</maven.compile.targetLevel>
