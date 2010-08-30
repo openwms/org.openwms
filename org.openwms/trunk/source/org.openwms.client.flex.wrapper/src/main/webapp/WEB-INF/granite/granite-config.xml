@@ -25,11 +25,12 @@
     "-//Granite Data Services//DTD granite-config internal//EN"
     "http://www.graniteds.org/public/dtd/2.1.0/granite-config.dtd">
 
-<granite-config scan="true">
+<granite-config scan="false">
 <!--  
     <class-getter type="org.granite.eclipselink.EclipseLinkClassGetter"/>
 -->
 <!--  
+-->
 	<class-getter type="org.granite.hibernate.HibernateClassGetter" />
 
 	<externalizers>
@@ -43,7 +44,6 @@
             <include type="org.openwms.tms.domain.values.PriorityLevel"/>
         </externalizer>
    	</externalizers>
--->
     
     <security type="org.openwms.web.flex.security.CustomSecurityService">
         <param name="authentication-manager-bean-name" value="authenticationManager"/>
