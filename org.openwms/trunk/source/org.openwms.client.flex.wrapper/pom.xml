@@ -83,11 +83,6 @@
                                 <String>WEB-INF/**/*</String>
                             </templateInclusions>
                             <stripVersion>true</stripVersion>
-                            <wrapperArtifact>
-                                <groupId>org.openwms</groupId>
-                                <artifactId>org.openwms.client.flex.app</artifactId>
-                                <version>${project.version}</version>
-                            </wrapperArtifact>
                         </configuration>
                     </execution>
                 </executions>
