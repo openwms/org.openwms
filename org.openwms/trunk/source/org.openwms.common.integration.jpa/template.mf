@@ -5,7 +5,7 @@ Bundle-Name: org.openwms.common.integration.jpa
 Bundle-ManifestVersion: 2
 Bundle-SymbolicName: org.openwms.common.integration.jpa
 Import-Library: 
- org.springframework.spring;version="[3.0.3.RELEASE, 3.1)"
+ org.springframework.spring;version="[3.0, 3.1)"
 Import-Bundle: 
  com.springsource.javax.persistence;version="1.0.0",
  org.openwms.common.domain;version="0.0.1.SNAPSHOT",
