@@ -60,7 +60,7 @@ import org.openwms.tms.domain.values.PriorityLevel;
  * @see org.openwms.common.domain.Location
  */
 @Entity
-@Table(name = "TRANSPORT_ORDER")
+@Table(name = "TMS_TRANSPORT_ORDER")
 @NamedQueries( {
         @NamedQuery(name = TransportOrder.NQ_FIND_ALL, query = "select to from TransportOrder to"),
         @NamedQuery(name = TransportOrder.NQ_FIND_BY_TU, query = "select to from TransportOrder to where to.transportUnit = :transportUnit"),
@@ -256,6 +256,7 @@ public class TransportOrder implements Serializable {
      * Version field.
      */
     @Version
+    @Column(name = "C_VERSION")
     private long version;
 
     /* ------------------- lifecycle callback methods ---------- */
@@ -387,12 +388,10 @@ public class TransportOrder implements Serializable {
      * @param newState
      *            The new state to set
      * @throws IllegalStateException
-     *             in case
-     *             <li>the newState is <code>null</code> or</li>
-     *             <li>the newState is less than the old state or</li>
-     *             <li>the TransportOrder is in state CREATED and shall be
-     *             manually turned into something else then INITIALIZED or
-     *             CANCELED</li>
+     *             in case <li>the newState is <code>null</code> or</li> <li>the
+     *             newState is less than the old state or</li> <li>the
+     *             TransportOrder is in state CREATED and shall be manually
+     *             turned into something else then INITIALIZED or CANCELED</li>
      * @throws InsufficientValueException
      *             in case the TransportOrder is CREATED and shall be turned
      *             into INITIALIZED but is incomplete.

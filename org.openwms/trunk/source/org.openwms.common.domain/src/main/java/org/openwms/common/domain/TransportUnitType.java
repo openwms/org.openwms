@@ -29,6 +29,8 @@ import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
@@ -48,7 +50,7 @@ import javax.persistence.Version;
  * @see org.openwms.common.domain.TransportUnit
  */
 @Entity
-@Table(name = "TRANSPORT_UNIT_TYPE")
+@Table(name = "COR_TRANSPORT_UNIT_TYPE")
 @NamedQueries( {
         @NamedQuery(name = TransportUnitType.NQ_FIND_ALL, query = "select tut from TransportUnitType tut order by tut.type"),
         @NamedQuery(name = TransportUnitType.NQ_FIND_BY_NAME, query = "select tut from TransportUnitType tut where tut.type = ?1") })
@@ -58,13 +60,14 @@ public class TransportUnitType implements Serializable {
      * The serialVersionUID
      */
     private static final long serialVersionUID = -8223409025971215884L;
-    
+
     /**
      * Query to find all {@link Location}s.
      */
     public static final String NQ_FIND_ALL = "TransportUnitType.findAll";
     /**
-     * Query to find <strong>one</strong> {@link TransportUnitType} by its natural key.
+     * Query to find <strong>one</strong> {@link TransportUnitType} by its
+     * natural key.
      */
     public static final String NQ_FIND_BY_NAME = "TransportUnitType.findByID";
 
@@ -136,6 +139,7 @@ public class TransportUnitType implements Serializable {
      * Version field.
      */
     @Version
+    @Column(name = "C_VERSION")
     private long version;
 
     /* ------------------- collection mapping ------------------- */
@@ -143,6 +147,7 @@ public class TransportUnitType implements Serializable {
      * A collection of all {@link TransportUnit}s belonging to this type.
      */
     @OneToMany(mappedBy = "transportUnitType")
+    @JoinTable(name = "COR_TU_UNIT_TYPE", joinColumns = @JoinColumn(name = "TRANSPORT_UNIT_TYPE_ID"), inverseJoinColumns = @JoinColumn(name = "TRANSPORT_UNIT_ID"))
     private Set<TransportUnit> transportUnits = new HashSet<TransportUnit>();
 
     /**
@@ -343,7 +348,7 @@ public class TransportUnitType implements Serializable {
         }
         return this.typePlacingRules.add(typePlacingRule);
     }
-    
+
     public boolean removeTypePlacingRule(TypePlacingRule typePlacingRule) {
         if (typePlacingRule == null) {
             return false;

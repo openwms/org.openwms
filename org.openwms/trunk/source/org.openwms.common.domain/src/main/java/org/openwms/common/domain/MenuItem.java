@@ -27,6 +27,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.persistence.Version;
 
 /**
  * A MenuItem.
@@ -36,8 +37,8 @@ import javax.persistence.Table;
  * 
  */
 @Entity
-@Table(name = "T_MENU_ITEM")
-public class MenuItem implements Serializable {
+@Table(name = "APP_MENU_ITEM")
+public class MenuItem implements DomainObject, Serializable {
 
     /**
      * The serialVersionUID
@@ -52,15 +53,42 @@ public class MenuItem implements Serializable {
     @GeneratedValue
     private Long id;
 
+    /**
+     * The internal name of the menu item.
+     */
+    @Column(name = "C_NAME")
     private String name;
 
+    /**
+     * The label used within the gui.
+     */
+    @Column(name = "C_LABEL")
     private String label;
 
+    /**
+     * Name of link to an icon (if present).
+     */
+    @Column(name = "C_ICON_NAME")
     private String iconName;
 
+    /**
+     * An action that is triggered on an menu item.
+     */
+    @Column(name = "C_ACTION")
     private String action;
 
+    /**
+     * Version field.
+     */
+    @Column(name = "C_VERSION")
     private boolean enabled = true;
+
+    /**
+     * Version field.
+     */
+    @Version
+    @Column(name = "C_VERSION")
+    private long version;
 
     /**
      * Create a new MenuItem.
@@ -79,6 +107,28 @@ public class MenuItem implements Serializable {
         this.name = name;
         this.label = label;
         this.action = action;
+    }
+
+    /**
+     * Get the id.
+     * 
+     * @return the id.
+     */
+    public Long getId() {
+        return id;
+    }
+
+    /**
+     * Checks if the instance is transient.
+     * 
+     * @return <code>true</code> Entity is not present on the persistent
+     *         storage.<br>
+     *         <code>false</code> Entity already exists on the persistence
+     *         storage
+     */
+    @Override
+    public boolean isNew() {
+        return this.id == null;
     }
 
     /**
@@ -177,12 +227,24 @@ public class MenuItem implements Serializable {
     }
 
     /**
-     * Get the id.
+     * JPA optimistic locking.
      * 
-     * @return the id.
+     * @return The version field
      */
-    public Long getId() {
-        return id;
+    @Override
+    public long getVersion() {
+        return this.version;
+    }
+
+    /**
+     * Return the label as String.
+     * 
+     * @see java.lang.Object#toString()
+     * @return String
+     */
+    @Override
+    public String toString() {
+        return getLabel();
     }
 
 }

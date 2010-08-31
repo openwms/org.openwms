@@ -40,7 +40,7 @@ import javax.persistence.Version;
  * @see org.openwms.common.domain.system.usermanagement.User
  */
 @Entity
-@Table(name = "EMAIL", uniqueConstraints = @UniqueConstraint(columnNames = { "USERNAME", "ADDRESS" }))
+@Table(name = "APP_EMAIL", uniqueConstraints = @UniqueConstraint(columnNames = { "USERNAME", "ADDRESS" }))
 public class Email implements Serializable {
 
     /**
@@ -73,12 +73,14 @@ public class Email implements Serializable {
      * Full name belonging to this
      * {@link org.openwms.common.domain.system.usermanagement.User}.
      */
+    @Column(name = "FULL_NAME")
     private String fullName;
 
     /**
      * Version field.
      */
     @Version
+    @Column(name = "C_VERSION")
     private long version;
 
     /* ----------------------------- methods ------------------- */

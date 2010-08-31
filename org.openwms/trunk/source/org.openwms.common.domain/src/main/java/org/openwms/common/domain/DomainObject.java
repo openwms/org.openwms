@@ -20,51 +20,27 @@
  */
 package org.openwms.common.domain;
 
-import java.io.Serializable;
-
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.Table;
-
 /**
- * A PopupItem.
+ * A DomainObject.
  * 
  * @author <a href="mailto:openwms@googlemail.com">Heiko Scherrer</a>
  * @version $Revision: $
- * 
+ * @since 0.1
  */
-@Entity
-@Table(name = "APP_POPUP_ITEM")
-public class PopupItem implements Serializable {
+public interface DomainObject {
 
     /**
-     * The serialVersionUID
+     * Check whether the persistent domain class instance is transient or not.
+     * 
+     * @return <code>true</code> if transient (not persisted before)
      */
-    private static final long serialVersionUID = 5372719347934861369L;
+    boolean isNew();
 
     /**
-     * Unique technical key.
+     * Each persistent domain class must have an optimistic locking field.
+     * 
+     * @return the version number
      */
-    @Id
-    @Column(name = "ID")
-    @GeneratedValue
-    private Long id;
-
-    private String name;
-
-    private String label;
-
-    private String iconName;
-
-    private String action;
-
-    private boolean enabled = true;
-
-    /**
-     * Create a new PopupItem.
-     */
-    protected PopupItem() {}
+    long getVersion();
 
 }

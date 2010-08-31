@@ -33,6 +33,8 @@ import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
@@ -50,7 +52,7 @@ import javax.persistence.Version;
  * @since 0.1
  */
 @Entity
-@Table(name = "T_USER")
+@Table(name = "APP_USER")
 @NamedQueries( { @NamedQuery(name = "User.findAll", query = "SELECT u FROM User u"),
         @NamedQuery(name = "User.findAllOrdered", query = "SELECT u FROM User u ORDER BY u.username"),
         @NamedQuery(name = "User.findByUsername", query = "SELECT u FROM User u WHERE u.username = ?1") })
@@ -126,6 +128,7 @@ public class User implements Serializable {
      * Version field.
      */
     @Version
+    @Column(name = "C_VERSION")
     private long version;
 
     /* ------------------- collection mapping ------------------- */
@@ -145,12 +148,14 @@ public class User implements Serializable {
      * Password history of this <code>User</code>.
      */
     @OneToMany(mappedBy = "user")
+    @JoinTable(name = "T_USER_PASSWORD", joinColumns = @JoinColumn(name = "USER_ID"), inverseJoinColumns = @JoinColumn(name = "PASSWORD_ID"))
     private List<UserPassword> passwords = new ArrayList<UserPassword>();
 
     /**
      * All {@link Preference}s of this <code>User</code>.
      */
     @OneToMany(cascade = CascadeType.ALL)
+    @JoinTable(name = "T_ROLE_PREFERENCE", joinColumns = @JoinColumn(name = "ROLE_ID"), inverseJoinColumns = @JoinColumn(name = "PREF_ID"))
     private Set<Preference> preferences = new HashSet<Preference>();
 
     /* ----------------------------- methods ------------------- */

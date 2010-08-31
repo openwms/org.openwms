@@ -41,7 +41,7 @@ import javax.persistence.Version;
  * @since 0.1
  */
 @Entity
-@Table(name = "ROLE")
+@Table(name = "APP_ROLE")
 @Inheritance
 @NamedQueries( {
         @NamedQuery(name = SecurityObject.NQ_FIND_ALL, query = "select g from SecurityObject g"),
@@ -52,6 +52,7 @@ public class SecurityObject implements Serializable {
      * The serialVersionUID
      */
     private static final long serialVersionUID = 7585736035228078754L;
+
     /**
      * Query to find all {@link SecurityObject}s.
      */
@@ -73,7 +74,7 @@ public class SecurityObject implements Serializable {
     /**
      * Name of the SecurityObject.
      */
-    @Column(name = "NAME", unique = true)
+    @Column(name = "C_NAME", unique = true)
     private String name;
 
     /**
@@ -86,6 +87,7 @@ public class SecurityObject implements Serializable {
      * Version field.
      */
     @Version
+    @Column(name = "C_VERSION")
     private long version;
 
     /* ----------------------------- methods ------------------- */

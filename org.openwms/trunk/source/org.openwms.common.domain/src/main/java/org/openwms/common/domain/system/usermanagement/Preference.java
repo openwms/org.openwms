@@ -38,7 +38,7 @@ import javax.persistence.Version;
  * @since 0.1
  */
 @Entity
-@Table(name = "T_PREFERENCE", uniqueConstraints = @UniqueConstraint(columnNames = { "C_KEY", "VALUE" }))
+@Table(name = "APP_PREFERENCE", uniqueConstraints = @UniqueConstraint(columnNames = { "C_KEY", "VALUE" }))
 public class Preference implements Serializable {
 
     /**
@@ -63,43 +63,44 @@ public class Preference implements Serializable {
     /**
      * The type of the value.
      */
-    @Column(name = "TYPE")
+    @Column(name = "C_TYPE")
     private String type;
 
     /**
      * The value of the {@link Preference}.
      */
-    @Column(name = "VALUE")
+    @Column(name = "C_VALUE")
     private String value;
 
     /**
      * A float representation of the value.
      */
-    @Column(name = "FLOAT_VALUE")
+    @Column(name = "C_FLOAT_VALUE")
     private Float floatValue;
 
     /**
      * Description text of the {@link Preference}.
      */
-    @Column(name = "DESCRIPTION")
+    @Column(name = "C_DESCRIPTION")
     private String description;
 
     /**
      * A minimum for the value.
      */
-    @Column(name = "MINIMUM")
+    @Column(name = "C_MINIMUM")
     private int minimum;
 
     /**
      * A maximum for the value.
      */
-    @Column(name = "MAXIMUM")
+    @Column(name = "C_MAXIMUM")
     private int maximum;
 
     /**
      * Version field.
      */
     @Version
+    @Column(name = "C_VERSION")
     private long version;
 
     /* ----------------------------- methods ------------------- */
