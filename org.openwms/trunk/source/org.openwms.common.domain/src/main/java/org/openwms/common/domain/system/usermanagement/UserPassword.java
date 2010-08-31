@@ -45,7 +45,7 @@ import javax.persistence.Table;
  */
 // TODO [scherrer] : Implement as ring list
 @Entity
-@Table(name = "USER_PASSWORD")
+@Table(name = "APP_USER_PASSWORD")
 public class UserPassword implements Serializable {
 
     /**

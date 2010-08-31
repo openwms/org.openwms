@@ -27,6 +27,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.persistence.Version;
 
 /**
  * An UnitError.
@@ -40,7 +41,7 @@ import javax.persistence.Table;
  * @since 0.1
  */
 @Entity
-@Table(name = "UNIT_ERROR")
+@Table(name = "COR_UNIT_ERROR")
 public class UnitError implements Serializable {
 
     /**
@@ -67,6 +68,13 @@ public class UnitError implements Serializable {
      */
     @Column(name = "ERROR_TEXT")
     private String errorText;
+
+    /**
+     * Version field.
+     */
+    @Version
+    @Column(name = "C_VERSION")
+    private long version;
 
     /* ----------------------------- methods ------------------- */
     /**
@@ -129,6 +137,15 @@ public class UnitError implements Serializable {
      */
     public void setErrorText(String errorText) {
         this.errorText = errorText;
+    }
+
+    /**
+     * JPA optimistic locking.
+     * 
+     * @return The version field.
+     */
+    public long getVersion() {
+        return version;
     }
 
 }

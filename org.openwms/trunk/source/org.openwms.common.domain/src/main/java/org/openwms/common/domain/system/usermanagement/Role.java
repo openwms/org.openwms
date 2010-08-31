@@ -53,7 +53,7 @@ public class Role extends SecurityObject implements Serializable {
      * The serialVersionUID
      */
     private static final long serialVersionUID = -4133301834284932221L;
-    
+
     /**
      * Query to find all {@link Role}s.
      */
@@ -68,21 +68,21 @@ public class Role extends SecurityObject implements Serializable {
      * All {@link User}s belonging to this Role.
      */
     @ManyToMany(cascade = { CascadeType.PERSIST, CascadeType.MERGE })
-    @JoinTable(name = "ROLE_USER", joinColumns = @JoinColumn(name = "ROLE_ID"), inverseJoinColumns = @JoinColumn(name = "USER_ID"))
+    @JoinTable(name = "T_ROLE_USER", joinColumns = @JoinColumn(name = "ROLE_ID"), inverseJoinColumns = @JoinColumn(name = "USER_ID"))
     private Set<User> users = new HashSet<User>();
 
     /**
      * All {@link Preference}s linked to this Role.
      */
     @ManyToMany(cascade = { CascadeType.PERSIST, CascadeType.MERGE })
-    @JoinTable(name = "ROLE_PREFERENCE", joinColumns = @JoinColumn(name = "ROLE_ID"), inverseJoinColumns = @JoinColumn(name = "PREFERENCE_ID"))
+    @JoinTable(name = "T_ROLE_PREFERENCE", joinColumns = @JoinColumn(name = "ROLE_ID"), inverseJoinColumns = @JoinColumn(name = "PREFERENCE_ID"))
     private Set<Preference> preferences = new HashSet<Preference>();
 
     /**
      * All {@link SecurityObject}s belonging to this Role.
      */
     @ManyToMany(cascade = { CascadeType.PERSIST, CascadeType.MERGE })
-    @JoinTable(name = "ROLE_ROLE", joinColumns = @JoinColumn(name = "ROLE_ID"), inverseJoinColumns = @JoinColumn(name = "GRANT_ID"))
+    @JoinTable(name = "T_ROLE_ROLE", joinColumns = @JoinColumn(name = "ROLE_ID"), inverseJoinColumns = @JoinColumn(name = "GRANT_ID"))
     private Set<SecurityObject> grants = new HashSet<SecurityObject>();
 
     /* ----------------------------- methods ------------------- */

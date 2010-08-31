@@ -53,10 +53,10 @@ import javax.persistence.Version;
  * @see org.openwms.common.domain.Location
  */
 @Entity
-@Table(name = "LOCATION_GROUP")
+@Table(name = "COR_LOCATION_GROUP")
 @NamedQueries( { @NamedQuery(name = "LocationGroup.findAll", query = "select lg from LocationGroup lg"),
         @NamedQuery(name = "LocationGroup.findByName", query = "select lg from LocationGroup lg where lg.name = ?1") })
-public class LocationGroup implements Serializable {
+public class LocationGroup implements DomainObject, Serializable {
 
     /**
      * The serialVersionUID
@@ -165,6 +165,7 @@ public class LocationGroup implements Serializable {
      * Version field.
      */
     @Version
+    @Column(name = "C_VERSION")
     private long version;
 
     /* ------------------- collection mapping ------------------- */
@@ -219,6 +220,7 @@ public class LocationGroup implements Serializable {
      * @return true if this entity is not present on the persistent storage,
      *         otherwise false
      */
+    @Override
     public boolean isNew() {
         return this.id == null;
     }
@@ -549,6 +551,7 @@ public class LocationGroup implements Serializable {
      * 
      * @return long The version field
      */
+    @Override
     public long getVersion() {
         return this.version;
     }

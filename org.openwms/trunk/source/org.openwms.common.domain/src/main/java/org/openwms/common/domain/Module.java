@@ -44,13 +44,13 @@ import javax.persistence.Transient;
  * 
  */
 @Entity
-@Table(name = "T_MODULE")
+@Table(name = "APP_MODULE")
 @NamedQueries( {
         @NamedQuery(name = Module.NQ_FIND_ALL, query = "select m from Module m order by m.startupOrder, m.id"),
         @NamedQuery(name = Module.NQ_FIND_BY_UNIQUE_QUERY, query = "select m from Module m where m.moduleName = ?1") })
 public class Module implements Serializable {
 
-	/**
+    /**
      * The serialVersionUID
      */
     private static final long serialVersionUID = 7358306395032979355L;

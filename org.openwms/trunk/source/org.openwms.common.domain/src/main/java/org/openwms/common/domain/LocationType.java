@@ -45,11 +45,11 @@ import javax.persistence.Version;
  * @see org.openwms.common.domain.Location
  */
 @Entity
-@Table(name = "LOCATION_TYPE")
+@Table(name = "COR_LOCATION_TYPE")
 @NamedQueries( {
         @NamedQuery(name = LocationType.NQ_FIND_ALL, query = "select l from LocationType l"),
-        @NamedQuery(name = LocationType.NQ_FIND_BY_UNIQUE_QUERY, query = "select l from LocationType l where l.type = ?1")})
-public class LocationType implements Serializable {
+        @NamedQuery(name = LocationType.NQ_FIND_BY_UNIQUE_QUERY, query = "select l from LocationType l where l.type = ?1") })
+public class LocationType implements DomainObject, Serializable {
 
     /**
      * The serialVersionUID
@@ -61,10 +61,10 @@ public class LocationType implements Serializable {
      */
     public static final String NQ_FIND_ALL = "LocationType.findAll";
     /**
-     * Query to find <strong>one</strong> {@link LocationType} by its natural key.
+     * Query to find <strong>one</strong> {@link LocationType} by its natural
+     * key.
      */
     public static final String NQ_FIND_BY_UNIQUE_QUERY = "LocationType.findByUniqueId";
-
 
     /**
      * Default value of the description, by default
@@ -114,6 +114,7 @@ public class LocationType implements Serializable {
      * Version field.
      */
     @Version
+    @Column(name = "C_VERSION")
     private long version;
 
     /* ----------------------------- methods ------------------- */
@@ -149,6 +150,7 @@ public class LocationType implements Serializable {
      * @return true: Entity is not present on the persistent storage.<br>
      *         false : Entity already exists on the persistence storage
      */
+    @Override
     public boolean isNew() {
         return this.id == null;
     }
@@ -243,6 +245,7 @@ public class LocationType implements Serializable {
      * 
      * @return The version field
      */
+    @Override
     public long getVersion() {
         return this.version;
     }

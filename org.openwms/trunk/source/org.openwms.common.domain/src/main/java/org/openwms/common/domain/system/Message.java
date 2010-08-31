@@ -30,6 +30,7 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.persistence.Version;
 
 /**
  * A Message - Predefined message.
@@ -39,7 +40,7 @@ import javax.persistence.TemporalType;
  * @since 0.1
  */
 @Entity
-@Table(name = "MESSAGE")
+@Table(name = "APP_MESSAGE")
 public class Message implements Serializable {
 
     /**
@@ -73,6 +74,13 @@ public class Message implements Serializable {
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "CREATED")
     private Date created;
+
+    /**
+     * Version field.
+     */
+    @Version
+    @Column(name = "C_VERSION")
+    private long version;
 
     /* ----------------------------- methods ------------------- */
     /**
@@ -149,5 +157,14 @@ public class Message implements Serializable {
      */
     public Date getCreated() {
         return created;
+    }
+
+    /**
+     * JPA optimistic locking.
+     * 
+     * @return The version field
+     */
+    public long getVersion() {
+        return this.version;
     }
 }

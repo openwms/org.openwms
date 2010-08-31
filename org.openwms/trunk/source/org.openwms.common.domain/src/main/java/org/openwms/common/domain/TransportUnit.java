@@ -37,6 +37,7 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
@@ -65,7 +66,7 @@ import org.openwms.common.domain.values.Barcode;
  * @since 0.1
  */
 @Entity
-@Table(name = "TRANSPORT_UNIT", uniqueConstraints = @UniqueConstraint(columnNames = { "BARCODE" }))
+@Table(name = "COR_TRANSPORT_UNIT", uniqueConstraints = @UniqueConstraint(columnNames = { "BARCODE" }))
 @NamedQueries( {
         @NamedQuery(name = "TransportUnit.findAll", query = "select tu from TransportUnit tu"),
         @NamedQuery(name = "TransportUnit.findByBarcode", query = "select tu from TransportUnit tu where tu.barcode = ?1") })
@@ -161,6 +162,7 @@ public class TransportUnit implements Serializable {
      * Version field.
      */
     @Version
+    @Column(name = "C_VERSION")
     private long version;
 
     /* ------------------- collection mapping ------------------- */
@@ -212,6 +214,7 @@ public class TransportUnit implements Serializable {
      * A Map of errors occurred on this {@link TransportUnit}.
      */
     @OneToMany(cascade = CascadeType.ALL)
+    @JoinTable(name = "COR_TRANSPORT_UNIT_ERROR", joinColumns = @JoinColumn(name = "TRANSPORT_UNIT_ID"), inverseJoinColumns = @JoinColumn(name = "ERROR_ID"))
     private Map<Date, UnitError> errors = new HashMap<Date, UnitError>();
 
     /* ----------------------------- methods ------------------- */

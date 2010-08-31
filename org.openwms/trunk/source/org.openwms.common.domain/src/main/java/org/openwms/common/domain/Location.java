@@ -34,6 +34,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
@@ -62,12 +63,12 @@ import org.openwms.common.domain.system.Message;
  * @see org.openwms.common.domain.LocationGroup
  */
 @Entity
-@Table(name = "LOCATION", uniqueConstraints = @UniqueConstraint(columnNames = { "AREA", "AISLE", "X", "Y", "Z" }))
+@Table(name = "COR_LOCATION", uniqueConstraints = @UniqueConstraint(columnNames = { "AREA", "AISLE", "X", "Y", "Z" }))
 @NamedQueries( {
         @NamedQuery(name = Location.NQ_FIND_ALL, query = "select l from Location l"),
         @NamedQuery(name = Location.NQ_FIND_BY_UNIQUE_QUERY, query = "select l from Location l where l.locationId = ?1"),
         @NamedQuery(name = Location.NQ_FIND_ALL_EAGER, query = "select l from Location l left join fetch l.messages left join fetch l.locationType") })
-public class Location implements Serializable {
+public class Location implements DomainObject, Serializable {
 
     /**
      * The serialVersionUID
@@ -210,6 +211,7 @@ public class Location implements Serializable {
      * Version field.
      */
     @Version
+    @Column(name = "C_VERSION")
     private long version;
 
     /* ------------------- collection mapping ------------------- */
@@ -231,6 +233,7 @@ public class Location implements Serializable {
      * Stores a {@link Message}s for this {@link Location}.
      */
     @OneToMany(cascade = { CascadeType.ALL })
+    @JoinTable(name = "COR_LOCATION_MESSAGE", joinColumns = @JoinColumn(name = "LOCATION_ID"), inverseJoinColumns = @JoinColumn(name = "MESSAGE_ID"))
     private Set<Message> messages = new HashSet<Message>();
 
     /* ----------------------------- methods ------------------- */
@@ -265,16 +268,17 @@ public class Location implements Serializable {
      * @return true: Entity is not present on the persistent storage.<br>
      *         false : Entity already exists on the persistence storage
      */
+    @Override
     public boolean isNew() {
         return this.id == null;
     }
-    
+
     @PrePersist
     @PreUpdate
     protected void preUpdate() {
-    	lastAccess = new Date();
+        lastAccess = new Date();
     }
-    
+
     public LocationPK getLocationId() {
         return this.locationId;
     }
@@ -431,6 +435,7 @@ public class Location implements Serializable {
      * 
      * @return The version field
      */
+    @Override
     public long getVersion() {
         return this.version;
     }

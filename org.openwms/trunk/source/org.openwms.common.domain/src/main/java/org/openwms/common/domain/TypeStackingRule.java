@@ -30,6 +30,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
+import javax.persistence.Version;
 
 /**
  * A TypeStackingRule - Which {@link TransportUnitType}s on others.
@@ -44,7 +45,7 @@ import javax.persistence.UniqueConstraint;
  * @see org.openwms.common.domain.TransportUnitType
  */
 @Entity
-@Table(name = "TYPE_STACKING_RULE", uniqueConstraints = @UniqueConstraint(columnNames = { "TRANSPORT_UNIT_TYPE",
+@Table(name = "COR_TYPE_STACKING_RULE", uniqueConstraints = @UniqueConstraint(columnNames = { "TRANSPORT_UNIT_TYPE",
         "NO_TRANSPORT_UNITS", "ALLOWED_TRANSPORT_UNIT_TYPE" }))
 public class TypeStackingRule implements Serializable, Rule {
 
@@ -82,6 +83,13 @@ public class TypeStackingRule implements Serializable, Rule {
     @ManyToOne
     @JoinColumn(name = "ALLOWED_TRANSPORT_UNIT_TYPE", nullable = false)
     private TransportUnitType allowedTransportUnitType;
+
+    /**
+     * Version field.
+     */
+    @Version
+    @Column(name = "C_VERSION")
+    private long version;
 
     /* ----------------------------- methods ------------------- */
     /**
@@ -141,5 +149,14 @@ public class TypeStackingRule implements Serializable, Rule {
      */
     public TransportUnitType getAllowedTransportUnitType() {
         return this.allowedTransportUnitType;
+    }
+
+    /**
+     * JPA optimistic locking.
+     * 
+     * @return The version field
+     */
+    public long getVersion() {
+        return this.version;
     }
 }
