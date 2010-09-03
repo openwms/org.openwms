@@ -21,7 +21,7 @@
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
 -->
-<mx:Panel xmlns:mx="http://www.adobe.com/2006/mxml" height="248" creationComplete="init();" show="cancelOrdersBtn.setFocus();" title="Cancel Transport Orders" width="450">
+<mx:Panel xmlns:mx="http://www.adobe.com/2006/mxml" height="345" creationComplete="init();" show="cancelOrdersBtn.setFocus();" layout="absolute" title="Cancel Transport Orders" width="450">
 
     <mx:Metadata>
         [Name]
@@ -30,13 +30,21 @@
 
     <mx:Script>
         <![CDATA[
+        	import org.openwms.web.flex.client.tms.model.TMSModelLocator;
+        	import org.openwms.tms.domain.order.TransportOrder;
+        	import org.openwms.tms.domain.order.TransportOrder$TRANSPORT_ORDER_STATE;
         	import org.openwms.web.flex.client.tms.event.TransportOrderEvent;
             import mx.controls.listClasses.ListData;
             import mx.collections.ArrayCollection;
             import mx.managers.PopUpManager;
             import flash.events.KeyboardEvent;
+            [Inject]
+            [Bindable]
+            public var tmsModelLocator:TMSModelLocator;
             [Bindable]
             public var items:ArrayCollection;
+            [Bindable]
+            private var allStates:ArrayCollection;
             [Bindable]
             public var messageText:String = new String("Do you want to cancel selected Transport Orders ?");
 
@@ -56,7 +64,12 @@
             protected function accept(e:Event):void
             {
                 var event:TransportOrderEvent = new TransportOrderEvent(TransportOrderEvent.CANCEL_TRANSPORT_ORDER);
-                event.data = cancelLst.dataProvider as ArrayCollection;
+                var ids:ArrayCollection = new ArrayCollection();
+                for each (var order:TransportOrder in cancelLst.dataProvider)
+                {
+                    ids.addItem(order.id);
+                }
+                event.data = {ids:ids, state:actionStatesCmb.selectedItem};
                 dispatchEvent(event);
                 closeDialog();
             }
@@ -77,12 +90,10 @@
                         
         ]]>
     </mx:Script>
-    <mx:Canvas width="100%">
-        <mx:Label id="messageTxt" text="{messageText}" fontSize="20" textAlign="center" y="10"  width="100%"/>
-        <mx:List id="cancelLst" height="112" labelFunction="formatFunction" dataProvider="{items}" enabled="true" alternatingItemColors="[#B7BABC, #FFFFFF]" y="53" x="10"  width="410"/>
-        <mx:HBox horizontalAlign="center" x="0" y="173" width="100%">
-            <mx:Button id="cancelOrdersBtn" label="Cancel Orders" click="accept(event)" fontSize="12"/>
-            <mx:Button id="cancelBtn" label="Cancel" click="closeDialog(event)" fontSize="12"/>
-        </mx:HBox>
-    </mx:Canvas>
+    <mx:Label id="messageTxt" text="{messageText}" fontSize="20" textAlign="center" y="10"  width="100%"/>
+    <mx:Button id="cancelOrdersBtn" label="OK" click="accept(event)" fontSize="12" x="10" y="270"/>
+    <mx:Button id="cancelBtn" label="Cancel" click="closeDialog(event)" fontSize="12" x="350" y="270"/>
+    <mx:ComboBox x="160" y="214" fontSize="24" width="260" id="actionStatesCmb" dataProvider="{tmsModelLocator.allStates}" selectedIndex="{tmsModelLocator.allStates.getItemIndex(TransportOrder$TRANSPORT_ORDER_STATE.CANCELED)}"/>
+    <mx:Label x="10" y="217" text="Action" fontSize="24"/>
+    <mx:List id="cancelLst" height="152" labelFunction="formatFunction" dataProvider="{items}" enabled="true" alternatingItemColors="[#B7BABC, #FFFFFF]" y="54" x="10"  width="410"/>
 </mx:Panel>

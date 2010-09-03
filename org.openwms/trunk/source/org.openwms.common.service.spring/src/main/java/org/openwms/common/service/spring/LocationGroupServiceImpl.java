@@ -25,10 +25,13 @@ import java.util.Set;
 
 import org.openwms.common.domain.LocationGroup;
 import org.openwms.common.domain.LocationGroup.STATE;
+import org.openwms.common.integration.LocationGroupDao;
 import org.openwms.common.service.LocationGroupService;
 import org.openwms.common.service.exception.ServiceException;
 import org.openwms.common.util.TreeNode;
 import org.openwms.common.util.TreeNodeImpl;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -44,6 +47,13 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional
 public class LocationGroupServiceImpl extends EntityServiceImpl<LocationGroup, Long> implements
         LocationGroupService<LocationGroup> {
+
+    /**
+     * Generic Repository DAO.
+     */
+    @Autowired
+    @Qualifier("locationGroupDao")
+    protected LocationGroupDao dao;
 
     /**
      * {@inheritDoc}

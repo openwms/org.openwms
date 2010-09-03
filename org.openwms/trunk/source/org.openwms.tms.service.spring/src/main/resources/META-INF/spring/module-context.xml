@@ -35,5 +35,8 @@
     <bean id="transportService" class="org.openwms.tms.service.impl.TransportServiceImpl">
         <property name="dao" ref="transportOrderDao" />
     </bean>
-    
+
+    <bean id="transportTracker" class="org.openwms.tms.service.impl.TransportOrderStateTracker">
+        <property name="dao" ref="transportOrderDao" />
+    </bean>
 </beans>

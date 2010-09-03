@@ -27,7 +27,10 @@ import java.util.Map;
 import org.openwms.common.domain.MenuItem;
 import org.openwms.common.domain.Module;
 import org.openwms.common.domain.PopupItem;
+import org.openwms.common.integration.ModuleDao;
 import org.openwms.common.service.ModuleManagementService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -41,6 +44,10 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 @Transactional
 public class ModuleManagementImpl extends EntityServiceImpl<Module, Long> implements ModuleManagementService<Module> {
+
+    @Autowired
+    @Qualifier("moduleDao")
+    protected ModuleDao dao;
 
     /**
      * @see org.openwms.common.service.ModuleManagementService#getMenuItems()

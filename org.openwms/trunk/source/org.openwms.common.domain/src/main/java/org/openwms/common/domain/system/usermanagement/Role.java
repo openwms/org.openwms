@@ -68,21 +68,21 @@ public class Role extends SecurityObject implements Serializable {
      * All {@link User}s belonging to this Role.
      */
     @ManyToMany(cascade = { CascadeType.PERSIST, CascadeType.MERGE })
-    @JoinTable(name = "T_ROLE_USER", joinColumns = @JoinColumn(name = "ROLE_ID"), inverseJoinColumns = @JoinColumn(name = "USER_ID"))
+    @JoinTable(name = "APP_ROLE_USER", joinColumns = @JoinColumn(name = "ROLE_ID"), inverseJoinColumns = @JoinColumn(name = "USER_ID"))
     private Set<User> users = new HashSet<User>();
 
     /**
      * All {@link Preference}s linked to this Role.
      */
     @ManyToMany(cascade = { CascadeType.PERSIST, CascadeType.MERGE })
-    @JoinTable(name = "T_ROLE_PREFERENCE", joinColumns = @JoinColumn(name = "ROLE_ID"), inverseJoinColumns = @JoinColumn(name = "PREFERENCE_ID"))
+    @JoinTable(name = "APP_ROLE_PREFERENCE", joinColumns = @JoinColumn(name = "ROLE_ID"), inverseJoinColumns = @JoinColumn(name = "PREFERENCE_ID"))
     private Set<Preference> preferences = new HashSet<Preference>();
 
     /**
      * All {@link SecurityObject}s belonging to this Role.
      */
     @ManyToMany(cascade = { CascadeType.PERSIST, CascadeType.MERGE })
-    @JoinTable(name = "T_ROLE_ROLE", joinColumns = @JoinColumn(name = "ROLE_ID"), inverseJoinColumns = @JoinColumn(name = "GRANT_ID"))
+    @JoinTable(name = "APP_ROLE_ROLE", joinColumns = @JoinColumn(name = "ROLE_ID"), inverseJoinColumns = @JoinColumn(name = "GRANT_ID"))
     private Set<SecurityObject> grants = new HashSet<SecurityObject>();
 
     /* ----------------------------- methods ------------------- */
@@ -201,9 +201,9 @@ public class Role extends SecurityObject implements Serializable {
      * 
      * @param grant
      *            The {@link SecurityObject} to add to this Role
-     * @return <code>true</code> if the {@link SecurityObject} was successfully
-     *         removed from the Set of {@link SecurityObject}s, otherwise
-     *         <code>false</code>
+     * @return <code>true</code> if the {@link SecurityObject} was
+     *         successfully removed from the Set of {@link SecurityObject}s,
+     *         otherwise <code>false</code>
      */
     public boolean removeGrant(SecurityObject grant) {
         if (grant == null) {

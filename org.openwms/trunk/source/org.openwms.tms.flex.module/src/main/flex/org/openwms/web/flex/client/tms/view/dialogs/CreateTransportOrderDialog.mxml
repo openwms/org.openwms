@@ -131,7 +131,7 @@
 			<mx:CheckBox id="targetLocationGroupChk" x="10" y="10" label="Target Location Group" selected="true" fontSize="24" />
 			<comp:SuggestComboBox id="targetLocationGroupCmb" x="53" y="57" selectedIndex="-1" fontSize="24" width="382" labelField="name" dataProvider="{commonModelLocator.allLocationGroups}" enabled="{targetLocationGroupChk.selected}" />
 			<mx:CheckBox id="targetLocationChk" x="10" y="104" label="Target Location" selected="false" fontSize="24" />
-            <comp:SuggestComboBox id="targetLocationCmb" x="53" y="151" selectedIndex="-1" enabled="{targetLocationChk.selected}" labelField="" width="382" dataProvider="{commonModelLocator.allLocations}"/>
+            <comp:SuggestComboBox id="targetLocationCmb" x="53" y="151" selectedIndex="-1" enabled="{targetLocationChk.selected}" labelField="" width="382" dataProvider="{commonModelLocator.allLocations}" fontSize="24"/>
 		</mx:Canvas>
 		<mx:Button id="createBtn" x="10" y="388" label="Create" fontSize="12" click="createTransportOrder()"/>
 		<mx:Button id="cancelBtn" x="384" y="388" label="Cancel" fontSize="12" click="closeDialog(event)"/>

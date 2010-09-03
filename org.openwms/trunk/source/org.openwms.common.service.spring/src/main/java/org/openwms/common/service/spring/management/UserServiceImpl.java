@@ -25,11 +25,13 @@ import java.util.List;
 import org.openwms.common.domain.system.usermanagement.Role;
 import org.openwms.common.domain.system.usermanagement.User;
 import org.openwms.common.domain.system.usermanagement.UserDetails;
-import org.openwms.common.integration.GenericDao;
+import org.openwms.common.integration.system.usermanagement.RoleDao;
+import org.openwms.common.integration.system.usermanagement.UserDao;
 import org.openwms.common.service.exception.ServiceException;
 import org.openwms.common.service.management.UserService;
 import org.openwms.common.service.spring.EntityServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -46,7 +48,12 @@ import org.springframework.transaction.annotation.Transactional;
 public class UserServiceImpl extends EntityServiceImpl<User, Long> implements UserService<User> {
 
     @Autowired
-    private GenericDao<Role, Long> roleDao;
+    @Qualifier("userDao")
+    protected UserDao dao;
+
+    @Autowired
+    @Qualifier("roleDao")
+    private RoleDao roleDao;
 
     /**
      * {@inheritDoc}

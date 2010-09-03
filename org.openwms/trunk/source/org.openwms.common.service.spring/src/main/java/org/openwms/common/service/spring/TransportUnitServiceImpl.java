@@ -32,6 +32,7 @@ import org.openwms.common.domain.TransportUnitType;
 import org.openwms.common.domain.TypePlacingRule;
 import org.openwms.common.domain.values.Barcode;
 import org.openwms.common.integration.GenericDao;
+import org.openwms.common.integration.TransportUnitDao;
 import org.openwms.common.service.TransportUnitService;
 import org.openwms.common.service.exception.ServiceException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -52,6 +53,10 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional
 public class TransportUnitServiceImpl extends EntityServiceImpl<TransportUnit, Long> implements
         TransportUnitService<TransportUnit> {
+
+    @Autowired
+    @Qualifier("transportUnitDao")
+    protected TransportUnitDao dao;
 
     @Autowired
     @Qualifier("locationDao")

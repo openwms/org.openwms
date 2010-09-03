@@ -234,7 +234,7 @@
                 <mx:DataGridColumn headerText="Width" dataField="width" width="50"/>
                 <mx:DataGridColumn headerText="Height" dataField="height" width="50"/>
                 <mx:DataGridColumn headerText="Weight Tare" dataField="weightTare" width="50"/>
-                <mx:DataGridColumn headerText="Maxmial Weight" dataField="weightMax" width="50"/>
+                <mx:DataGridColumn headerText="Maximal Weight" dataField="weightMax" width="50"/>
                 <mx:DataGridColumn headerText="Description" dataField="description"/>
             </mx:columns>
         </mx:DataGrid>

@@ -29,7 +29,6 @@ import org.openwms.common.service.EntityService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeansException;
-import org.springframework.beans.factory.annotation.Required;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
 import org.springframework.stereotype.Service;
@@ -48,7 +47,8 @@ import org.springframework.transaction.annotation.Transactional;
  */
 @Service
 @Transactional
-public class EntityServiceImpl<T extends Serializable, ID extends Serializable> implements EntityService<T>, ApplicationContextAware {
+public abstract class EntityServiceImpl<T extends Serializable, ID extends Serializable> implements EntityService<T>,
+        ApplicationContextAware {
 
     /**
      * Generic Repository DAO.
@@ -56,7 +56,7 @@ public class EntityServiceImpl<T extends Serializable, ID extends Serializable> 
     protected GenericDao<T, ID> dao;
 
     private Class<T> persistentClass;
-    
+
     /**
      * Reference to the {@link ApplicationContext} instance.
      */
@@ -66,7 +66,7 @@ public class EntityServiceImpl<T extends Serializable, ID extends Serializable> 
      * Logger instance can be used by subclasses.
      */
     protected Logger logger = LoggerFactory.getLogger(this.getClass());
-    
+
     /**
      * {@inheritDoc}
      * 
@@ -84,7 +84,6 @@ public class EntityServiceImpl<T extends Serializable, ID extends Serializable> 
      * @param dao
      *            The Repository to set
      */
-    @Required
     public void setDao(GenericDao<T, ID> dao) {
         this.dao = dao;
     }
@@ -105,6 +104,7 @@ public class EntityServiceImpl<T extends Serializable, ID extends Serializable> 
     @Override
     @Transactional(readOnly = true)
     public List<T> findAll() {
+        resolveTypeClass();
         return dao.findAll();
     }
 
@@ -148,6 +148,7 @@ public class EntityServiceImpl<T extends Serializable, ID extends Serializable> 
         // FIXME [scherrer] : All entities shall extend a superclass Entity with
         // isNew()
         // method, to check this here
+        resolveTypeClass();
         dao.persist(newEntity);
     }
 }

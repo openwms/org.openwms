@@ -38,7 +38,7 @@ import javax.persistence.Version;
  * @since 0.1
  */
 @Entity
-@Table(name = "APP_PREFERENCE", uniqueConstraints = @UniqueConstraint(columnNames = { "C_KEY", "VALUE" }))
+@Table(name = "APP_PREFERENCE", uniqueConstraints = @UniqueConstraint(columnNames = { "C_KEY", "C_VALUE" }))
 public class Preference implements Serializable {
 
     /**

@@ -80,7 +80,7 @@ public class MenuItem implements DomainObject, Serializable {
     /**
      * Version field.
      */
-    @Column(name = "C_VERSION")
+    @Column(name = "C_ENABLED")
     private boolean enabled = true;
 
     /**

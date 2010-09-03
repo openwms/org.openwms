@@ -64,7 +64,7 @@ import org.openwms.tms.domain.values.PriorityLevel;
 @NamedQueries( {
         @NamedQuery(name = TransportOrder.NQ_FIND_ALL, query = "select to from TransportOrder to"),
         @NamedQuery(name = TransportOrder.NQ_FIND_BY_TU, query = "select to from TransportOrder to where to.transportUnit = :transportUnit"),
-        @NamedQuery(name = TransportOrder.NQ_FIND_ACTIVE_FOR_TU, query = "select to from TransportOrder to where to.transportUnit = :transportUnit and to.state in (:state1, :state2)"),
+        @NamedQuery(name = TransportOrder.NQ_FIND_FOR_TU_IN_STATE, query = "select to from TransportOrder to where to.transportUnit = :transportUnit and to.state in (:states)"),
         @NamedQuery(name = TransportOrder.NQ_FIND_ORDERS_TO_START, query = "select to from TransportOrder to where to.transportUnit = :transportUnit and to.state in (INITIALIZED, INTERRUPTED) order by to.priority DESC, to.creationDate") })
 public class TransportOrder implements Serializable {
 
@@ -90,15 +90,13 @@ public class TransportOrder implements Serializable {
 
     /**
      * Query to find all active {@link TransportOrder}s for a given
-     * {@link TransportUnit}. Active transports are in state
-     * {@link TRANSPORT_ORDER_STATE#STARTED} or
-     * {@link TRANSPORT_ORDER_STATE#INTERRUPTED}.
-     * <p>
-     * NG parameter name transportUnit : The {@link TransportUnit} to search
-     * for.
-     * </p>
+     * {@link TransportUnit} in a certain state.
+     * <li> NG parameter name <strong>transportUnit</strong> : The
+     * {@link TransportUnit} to search for.</li>
+     * <li>NG parameter name <strong>states</strong> : A list of
+     * {@link TRANSPORT_ORDER_STATE}s </li>
      */
-    public static final String NQ_FIND_ACTIVE_FOR_TU = "TransportOrder.findActiveToForTu";
+    public static final String NQ_FIND_FOR_TU_IN_STATE = "TransportOrder.findActiveToForTu";
 
     /**
      * Query to find all {@link TransportOrder}s for a given
@@ -388,10 +386,12 @@ public class TransportOrder implements Serializable {
      * @param newState
      *            The new state to set
      * @throws IllegalStateException
-     *             in case <li>the newState is <code>null</code> or</li> <li>the
-     *             newState is less than the old state or</li> <li>the
-     *             TransportOrder is in state CREATED and shall be manually
-     *             turned into something else then INITIALIZED or CANCELED</li>
+     *             in case
+     *             <li>the newState is <code>null</code> or</li>
+     *             <li>the newState is less than the old state or</li>
+     *             <li>the TransportOrder is in state CREATED and shall be
+     *             manually turned into something else then INITIALIZED or
+     *             CANCELED</li>
      * @throws InsufficientValueException
      *             in case the TransportOrder is CREATED and shall be turned
      *             into INITIALIZED but is incomplete.

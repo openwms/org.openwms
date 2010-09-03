@@ -103,10 +103,25 @@ public interface TransportOrderService<T extends TransportOrder> extends EntityS
      * Try to cancel a list of {@link TransportOrder}s.
      * 
      * @param transportOrders
-     *            The {@link TransportOrder}s to be canceled
+     *            The IDs of {@link TransportOrder}s to be canceled
+     * @param state
+     *            The state to change all orders to
      * @return A list of {@link TransportOrder} IDs that have not been canceled
      *         successfully
      */
-    List<Long> cancelTransportOrders(List<T> transportOrders);
+    List<Integer> cancelTransportOrders(List<Integer> transportOrders, TransportOrder.TRANSPORT_ORDER_STATE state);
+
+    /**
+     * Try to redirect a list of {@link TransportOrder}s to a new target
+     * {@link LocationGroup}.
+     * 
+     * @param transportOrders
+     *            The IDs of {@link TransportOrder}s to be canceled
+     * @param targetLocationGroup
+     *            The target {@link LocationGroup} for the orders
+     * @return A list of {@link TransportOrder} IDs that have not been
+     *         redirected successfully
+     */
+    List<Integer> redirectTransportOrders(List<Integer> transportOrders, LocationGroup targetLocationGroup);
 
 }

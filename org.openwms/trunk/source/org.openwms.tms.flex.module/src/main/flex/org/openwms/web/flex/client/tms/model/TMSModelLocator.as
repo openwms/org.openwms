@@ -22,6 +22,8 @@ package org.openwms.web.flex.client.tms.model
 {
 
     import mx.collections.ArrayCollection;
+    
+    import org.openwms.tms.domain.order.TransportOrder$TRANSPORT_ORDER_STATE;
 
     /**
      * A TMSModelLocator.
@@ -35,12 +37,16 @@ package org.openwms.web.flex.client.tms.model
     {
 
         public var allTransportOrders:ArrayCollection = new ArrayCollection();
+        public var allStates:ArrayCollection = new ArrayCollection(TransportOrder$TRANSPORT_ORDER_STATE.constants);
 
         /**
          * Constructor.
          */
         public function TMSModelLocator()
         {
+            allStates.removeItemAt(allStates.getItemIndex(TransportOrder$TRANSPORT_ORDER_STATE.CREATED));
+            allStates.removeItemAt(allStates.getItemIndex(TransportOrder$TRANSPORT_ORDER_STATE.INITIALIZED));
+            allStates.removeItemAt(allStates.getItemIndex(TransportOrder$TRANSPORT_ORDER_STATE.STARTED));
         }
     }
 }

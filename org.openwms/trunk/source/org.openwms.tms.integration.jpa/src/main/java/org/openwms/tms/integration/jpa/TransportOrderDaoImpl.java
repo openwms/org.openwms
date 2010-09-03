@@ -20,14 +20,12 @@
  */
 package org.openwms.tms.integration.jpa;
 
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceException;
+import java.util.List;
 
 import org.openwms.common.domain.LocationGroup;
 import org.openwms.common.integration.jpa.AbstractGenericJpaDao;
 import org.openwms.tms.domain.order.TransportOrder;
 import org.openwms.tms.integration.TransportOrderDao;
-import org.springframework.orm.jpa.JpaCallback;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -45,6 +43,8 @@ import org.springframework.transaction.annotation.Transactional;
 public class TransportOrderDaoImpl extends AbstractGenericJpaDao<TransportOrder, Long> implements TransportOrderDao {
 
     /**
+     * {@inheritDoc}
+     * 
      * @return Name of the query
      * @see org.openwms.common.integration.jpa.AbstractGenericJpaDao#getFindAllQuery()
      */
@@ -54,6 +54,8 @@ public class TransportOrderDaoImpl extends AbstractGenericJpaDao<TransportOrder,
     }
 
     /**
+     * {@inheritDoc}
+     * 
      * @return Name of the query
      * @see org.openwms.common.integration.jpa.AbstractGenericJpaDao#getFindByUniqueIdQuery()
      */
@@ -67,11 +69,22 @@ public class TransportOrderDaoImpl extends AbstractGenericJpaDao<TransportOrder,
      * 
      * @see org.openwms.tms.integration.TransportOrderDao#getNumberOfTransportOrders(org.openwms.common.domain.LocationGroup)
      */
-    @SuppressWarnings("unchecked")
+    @Override
     public int getNumberOfTransportOrders(final LocationGroup locationGroup) {
         return (Integer) getEm().createNativeQuery(
-                "select count(*) from TransportOrder to where to.targetLocationGroup = :locationGroup",
-                Integer.class).setParameter("locationGroup", locationGroup).getSingleResult();
+                "select count(*) from TransportOrder to where to.targetLocationGroup = :locationGroup", Integer.class)
+                .setParameter("locationGroup", locationGroup).getSingleResult();
     }
 
+    /**
+     * {@inheritDoc}
+     * 
+     * @see org.openwms.tms.integration.TransportOrderDao#findByIds(java.util.List)
+     */
+    @SuppressWarnings("unchecked")
+    @Override
+    public List<TransportOrder> findByIds(List<Long> ids) {
+        return getEm().createQuery("select to from TransportOrder to where to.id in (:ids)").setParameter("ids", ids)
+                .getResultList();
+    }
 }

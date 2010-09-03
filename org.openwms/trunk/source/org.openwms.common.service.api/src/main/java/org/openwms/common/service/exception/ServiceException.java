@@ -24,16 +24,20 @@ package org.openwms.common.service.exception;
  * A ServiceException.
  * <p>
  * Is used as an application exception thrown by the service layer. This type of
- * exception is <strong>NOT</strong> used as an system exception. Furthermore it
- * shall indicate occurring exceptions in the service layer.
+ * exception is <strong>NOT</strong> used as an system exception. Furthermore
+ * it shall indicate occurring exceptions in the service layer.
  * </p>
  * 
  * @author <a href="mailto:openwms@googlemail.com">Heiko Scherrer</a>
  * @version $Revision$
  * @since 0.1
  */
-@SuppressWarnings("serial")
 public class ServiceException extends RuntimeException {
+
+    /**
+     * The serialVersionUID
+     */
+    private static final long serialVersionUID = 3091182786979000919L;
 
     /**
      * Create a new ServiceException.

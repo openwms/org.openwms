@@ -20,6 +20,8 @@
  */
 package org.openwms.tms.integration;
 
+import java.util.List;
+
 import org.openwms.common.domain.LocationGroup;
 import org.openwms.common.integration.GenericDao;
 import org.openwms.tms.domain.order.TransportOrder;
@@ -45,5 +47,14 @@ public interface TransportOrderDao extends GenericDao<TransportOrder, Long> {
      * @return The number of all active {@link TransportOrder}s
      */
     int getNumberOfTransportOrders(LocationGroup locationGroup);
+
+    /**
+     * Find and retrieve a list of {@link TransportOrder}s.
+     * 
+     * @param ids
+     *            A list of technical keys of the orders to search for
+     * @return The list of {@link TransportOrder}s.
+     */
+    List<TransportOrder> findByIds(List<Long> ids);
 
 }
