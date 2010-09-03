@@ -28,6 +28,7 @@ package org.openwms.web.flex.client.tms.business
     import org.granite.tide.events.TideResultEvent;
     import org.granite.tide.spring.Context;
     import org.openwms.tms.domain.order.TransportOrder;
+    import org.openwms.tms.domain.order.TransportOrder$TRANSPORT_ORDER_STATE;
     import org.openwms.web.flex.client.tms.event.TransportOrderEvent;
     import org.openwms.web.flex.client.tms.model.TMSModelLocator;
 
@@ -78,12 +79,12 @@ package org.openwms.web.flex.client.tms.business
         }
 
         /**
-         * Call to cancel one or more TransportOrder.
+         * Call to cancel one or more TransportOrders.
          */
         [Observer("CANCEL_TRANSPORT_ORDER")]
         public function cancelTransportOrder(event:TransportOrderEvent):void
         {
-            tideContext.transportService.cancelTransportOrders(event.data as ArrayCollection, onTransportsCanceled, onFault);
+            tideContext.transportService.cancelTransportOrders(event.data.ids as ArrayCollection, event.data.state as TransportOrder$TRANSPORT_ORDER_STATE, onTransportsCanceled, onFault);
         }
         private function onTransportsCanceled(event:TideResultEvent):void
         {
@@ -94,6 +95,24 @@ package org.openwms.web.flex.client.tms.business
         	}
         }
 
+        /**
+         * Call to redirect one or more TransportOrders.
+         */
+        [Observer("REDIRECT_TRANSPORT_ORDER")]
+        public function redirectTransportOrders(event:TransportOrderEvent):void
+        {
+            tideContext.transportService.redirectTransportOrders(event.data as ArrayCollection, onTransportsRedirected, onFault);
+        }
+        private function onTransportsRedirected(event:TideResultEvent):void
+        {
+            dispatchEvent(new TransportOrderEvent(TransportOrderEvent.LOAD_TRANSPORT_ORDERS));
+            if ((event.result as ArrayCollection).length > 0)
+            {
+                Alert.show("Not all Transport Orders could be redirected!");
+            }
+        }
+
+          
         [Observer("DELETE_TRANSPORT_ORDER")]
         public function deleteTransportOrder(event:TransportOrderEvent):void
         {

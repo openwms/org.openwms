@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+/*
+ * openwms.org, the Open Warehouse Management System.
+ *
+ * This file is part of openwms.org.
+ *
+ * openwms.org is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as 
+ * published by the Free Software Foundation, either version 3 of the
+ * License, or (at your option) any later version.
+ *
+ * openwms.org is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with this software. If not, write to the Free
+ * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
+ * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
+ */
+-->
+<mx:Panel xmlns:mx="http://www.adobe.com/2006/mxml" layout="absolute" width="484" height="551" title="Redirect Transport Order" fontSize="12" creationComplete="init();" xmlns:comp="org.openwms.web.flex.client.component.*">
+
+    <mx:Metadata>
+        [Name]
+        [ManagedEvent(name="REDIRECT_TRANSPORT_ORDER")]
+    </mx:Metadata>
+
+    <mx:Script>
+    	<![CDATA[
+    		import org.openwms.tms.domain.order.TransportOrder;
+    		import org.openwms.web.flex.client.tms.event.TransportOrderEvent;
+    		import mx.collections.ArrayCollection;
+    		import mx.managers.PopUpManager;
+    		import org.openwms.web.flex.client.common.model.CommonModelLocator;
+            [In]
+            [Bindable]
+            public var commonModelLocator:CommonModelLocator;
+    		[Bindable]
+            public var items:ArrayCollection;
+
+            private function init():void 
+    	    {
+                this.addEventListener(KeyboardEvent.KEY_DOWN, keyEventHandler);
+                PopUpManager.centerPopUp(this);    		
+    	    }
+
+            private function closeDialog(event:Event=null):void
+            {
+                this.removeEventListener(KeyboardEvent.KEY_DOWN, keyEventHandler);
+                PopUpManager.removePopUp(this);
+            }
+
+            private function redirectTransportOrders():void
+            {
+                var event:TransportOrderEvent = new TransportOrderEvent(TransportOrderEvent.REDIRECT_TRANSPORT_ORDER);
+                var ids:ArrayCollection = new ArrayCollection();
+                for each (var order:TransportOrder in redirectLst.dataProvider)
+                {
+                	ids.addItem(order.id);
+                }
+                event.data = ids;
+                dispatchEvent(event);
+                closeDialog();
+            }
+
+            private function keyEventHandler(event:KeyboardEvent):void
+            {
+                if(event.keyCode == 27)
+                {
+                   closeDialog(event);
+                   return;
+                }
+            }
+    	    
+            private function formatFunction(item:*):String
+            {
+                return item.id+"\twith Barcode\t"+item.transportUnit.barcode+(item.targetLocation == null ? "":"\tto Location\t"+item.targetLocation)+(item.targetLocationGroup == null ? "":"\tto Location Group\t"+item.targetLocationGroup);
+            }
+
+    	]]>
+    </mx:Script>	
+    <mx:List id="redirectLst" x="10" y="53" width="444" labelFunction="formatFunction" dataProvider="{items}" alternatingItemColors="[#B7BABC, #FFFFFF]"  height="177"/>
+    <mx:Label x="10" y="10" text="Redirect" width="100%" textAlign="center" fontSize="24"/>
+    <mx:Canvas x="10" y="238" width="445" height="229" backgroundColor="#F1F07C">
+    	<mx:CheckBox id="targetLocationGroupChk" x="10" y="10" label="Target Location Group" selected="true" fontSize="24" />
+    	<comp:SuggestComboBox id="targetLocationGroupCmb" x="53" y="57" selectedIndex="-1" fontSize="24" width="382" labelField="name" dataProvider="{commonModelLocator.allLocationGroups}" enabled="{targetLocationGroupChk.selected}" />
+    	<mx:CheckBox id="targetLocationChk" x="10" y="104" label="Target Location" selected="false" fontSize="24" />
+           <comp:SuggestComboBox id="targetLocationCmb" x="53" y="151" selectedIndex="-1" enabled="{targetLocationChk.selected}" labelField="" width="382" dataProvider="{commonModelLocator.allLocations}" fontSize="24"/>
+    </mx:Canvas>
+    <mx:Button id="redirectBtn" x="10" y="475" label="Redirect" fontSize="12" click="redirectTransportOrders()"/>
+    <mx:Button id="cancelBtn" x="384" y="475" label="Cancel" fontSize="12" click="closeDialog(event)"/>
+</mx:Panel>

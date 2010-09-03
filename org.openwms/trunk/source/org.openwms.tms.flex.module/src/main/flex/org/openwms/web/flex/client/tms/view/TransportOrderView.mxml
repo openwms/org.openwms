@@ -45,6 +45,7 @@
     		import org.openwms.web.flex.client.tms.model.TMSModelLocator;
     		import org.openwms.web.flex.client.tms.view.dialogs.CreateTransportOrderDialog;
             import org.openwms.web.flex.client.tms.view.dialogs.CancelTransportOrdersDialog;
+            import org.openwms.web.flex.client.tms.view.dialogs.RedirectTransportOrderDialog;
             import mx.managers.PopUpManager;
     		[Inject]
     		[Bindable]
@@ -90,6 +91,13 @@
                 pop.messageText = "Delete selected Transport Units";
                 pop.items = new ArrayCollection(transportOrdersLst.selectedItems);
                 PopUpManager.centerPopUp(pop);
+            }
+
+            private function showRedirectTransportOrderDialog():void
+            {
+                var pop1:RedirectTransportOrderDialog = RedirectTransportOrderDialog(PopUpManager.createPopUp(this, RedirectTransportOrderDialog, true));
+                pop1.items = new ArrayCollection(transportOrdersLst.selectedItems);
+                PopUpManager.centerPopUp(pop1);
             }
 
             private function refresh():void
@@ -172,7 +180,7 @@
 	    <mx:VRule height="10"/>
 	    <mx:Button id="showTransportOrderHistoryBtn" buttonMode="true" mouseChildren="false" toolTip="Show history of a Transport Order" icon="@Embed(source='assets/images/icons/history.png')" click="showCreateTransportOrderDialog()" />
 	    <mx:VRule height="10"/>
-	    <mx:Button id="redirectTransportOrderBtn" buttonMode="true" mouseChildren="false" toolTip="Redirect a Transport Order" icon="@Embed(source='/assets/images/TransportOrder--Redirect.png')" click="showCreateTransportOrderDialog()"/>
+	    <mx:Button id="redirectTransportOrderBtn" buttonMode="true" mouseChildren="false" toolTip="Redirect one or more Transport Orders" icon="@Embed(source='/assets/images/TransportOrder--Redirect.png')" click="showRedirectTransportOrderDialog()"/>
 	    <mx:VRule height="10"/>
 	    <mx:Button id="stateTransportOrderBtn" buttonMode="true" mouseChildren="false" toolTip="Change state of a Transport Order" icon="@Embed(source='/assets/images/TransportOrder--State.png')" click="showCreateTransportOrderDialog()" />
 	</mx:HBox>

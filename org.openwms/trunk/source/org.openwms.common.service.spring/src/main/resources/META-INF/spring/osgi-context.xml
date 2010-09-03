@@ -38,7 +38,6 @@
 	<osgi:reference id="moduleDao" interface="org.openwms.common.integration.ModuleDao" />
 
 	<!-- exports -->
-	<osgi:service ref="entityService" interface="org.openwms.common.service.EntityService" />
 	<osgi:service ref="locationGroupService" interface="org.openwms.common.service.LocationGroupService" />
 	<osgi:service ref="locationService" interface="org.openwms.common.service.LocationService" />
 	<osgi:service ref="userService" interface="org.openwms.common.service.management.UserService" />

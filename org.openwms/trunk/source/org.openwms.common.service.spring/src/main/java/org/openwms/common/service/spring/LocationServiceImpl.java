@@ -45,6 +45,10 @@ import org.springframework.transaction.annotation.Transactional;
 public class LocationServiceImpl extends EntityServiceImpl<Location, Long> implements LocationService<Location> {
 
     @Autowired
+    @Qualifier("locationDao")
+    protected LocationDao dao;
+
+    @Autowired
     @Qualifier("locationTypeDao")
     private GenericDao<LocationType, Long> locationTypeDao;
 
@@ -56,34 +60,34 @@ public class LocationServiceImpl extends EntityServiceImpl<Location, Long> imple
     public List<Location> getAllLocations() {
         return ((LocationDao) dao).getAllLocations();
     }
-    
+
     /**
      * {@inheritDoc}
      */
     @Override
     @Transactional(readOnly = true)
     public List<LocationType> getAllLocationTypes() {
-    	logger.debug("Get all location types");
-    	List<LocationType> list = locationTypeDao.findAll();
-    	logger.debug("List:"+list.size());
-    	return list;
+        logger.debug("Get all location types");
+        List<LocationType> list = locationTypeDao.findAll();
+        logger.debug("List:" + list.size());
+        return list;
     }
-    
+
     @Override
     public void createLocationType(LocationType locationType) {
-    	locationTypeDao.persist(locationType);
+        locationTypeDao.persist(locationType);
     }
-    
+
     @Override
     public void deleteLocationTypes(List<LocationType> locationTypes) {
-    	for (LocationType locationType : locationTypes) {
-    		locationType = locationTypeDao.save(locationType);
-    		locationTypeDao.remove(locationType);			
-		}
+        for (LocationType locationType : locationTypes) {
+            locationType = locationTypeDao.save(locationType);
+            locationTypeDao.remove(locationType);
+        }
     }
-    
+
     @Override
     public LocationType saveLocationType(LocationType locationType) {
-    	return locationTypeDao.save(locationType);
+        return locationTypeDao.save(locationType);
     }
 }

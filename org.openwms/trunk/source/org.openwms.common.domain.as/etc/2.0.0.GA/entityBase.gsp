@@ -152,7 +152,11 @@ package ${jClass.as3Type.packageName} {
             _${jProperty.name} = value;
         }<%
                 }
-                if (jProperty.readable) {%>
+                if (jProperty.readable && jProperty.name == 'new') {%>
+        public function isNew():${jProperty.as3Type.name} {
+            return true;
+        }<%
+                } else if (jProperty.readable) {%>
         public function get ${jProperty.name}():${jProperty.as3Type.name} {
             return _${jProperty.name};
         }<%
@@ -181,7 +185,11 @@ package ${jClass.as3Type.packageName} {
         public function set ${jProperty.name}(value:${jProperty.as3Type.name}):void {
         }<%
                 }
-                if (jProperty.readable) {%>
+                if (jProperty.readable && jProperty.name == 'new') {%>
+        public function isNew():${jProperty.as3Type.name} {
+            return true;
+        }<%
+                } else if (jProperty.readable) {%>
         public function get ${jProperty.name}():${jProperty.as3Type.name} {
             return ${jProperty.as3Type.nullValue};
         }<%

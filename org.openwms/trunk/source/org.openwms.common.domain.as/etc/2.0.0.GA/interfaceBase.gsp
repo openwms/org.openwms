@@ -88,8 +88,11 @@ package ${jClass.as3Type.packageName} {<%
             if (jProperty.writable) {%>
         function set ${jProperty.name}(value:${jProperty.as3Type.name}):void;<%
             }
-            if (jProperty.readable) {%>
-        function get ${jProperty.name}():${jProperty.as3Type.name};<%
+            if (jProperty.readable && jProperty.name == 'new') {%>
+        function isNew():${jProperty.as3Type.name};<%
+            } else if (jProperty.readable)
+            {%>
+        function ${jProperty.name}():${jProperty.as3Type.name};<%
             }
         }
     }%>

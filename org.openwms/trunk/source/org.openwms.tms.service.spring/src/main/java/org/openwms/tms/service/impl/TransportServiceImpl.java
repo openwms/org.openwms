@@ -31,7 +31,6 @@ import org.openwms.common.domain.values.Problem;
 import org.openwms.common.integration.GenericDao;
 import org.openwms.common.service.spring.EntityServiceImpl;
 import org.openwms.tms.domain.order.TransportOrder;
-import org.openwms.tms.domain.order.TransportOrder.TRANSPORT_ORDER_STATE;
 import org.openwms.tms.domain.values.PriorityLevel;
 import org.openwms.tms.integration.TransportOrderDao;
 import org.openwms.tms.service.TransportOrderService;
@@ -51,13 +50,17 @@ import org.springframework.transaction.annotation.Transactional;
  * @see org.openwms.common.service.spring.EntityServiceImpl
  * @see org.openwms.tms.service.TransportOrderService
  */
-@Service
+@Service("transportService")
 @Transactional
 public class TransportServiceImpl extends EntityServiceImpl<TransportOrder, Long> implements
         TransportOrderService<TransportOrder> {
 
+    /**
+     * Generic Repository DAO.
+     */
     @Autowired
-    private TransportOrderDao transportOrderDao;
+    @Qualifier("transportOrderDao")
+    protected TransportOrderDao dao;
 
     @Autowired
     @Qualifier("transportUnitDao")
@@ -73,14 +76,20 @@ public class TransportServiceImpl extends EntityServiceImpl<TransportOrder, Long
 
     /**
      * {@inheritDoc}
+     * 
+     * @see org.openwms.tms.service.TransportOrderService#getTransportsToLocationGroup(org.openwms.common.domain.LocationGroup)
      */
     @Override
     public int getTransportsToLocationGroup(LocationGroup locationGroup) {
-        return transportOrderDao.getNumberOfTransportOrders(locationGroup);
+        return dao.getNumberOfTransportOrders(locationGroup);
     }
 
     /**
      * {@inheritDoc}
+     * 
+     * @see org.openwms.tms.service.TransportOrderService#createTransportOrder(org.openwms.common.domain.values.Barcode,
+     *      org.openwms.common.domain.LocationGroup,
+     *      org.openwms.tms.domain.values.PriorityLevel)
      */
     @Override
     public TransportOrder createTransportOrder(Barcode barcode, LocationGroup targetLocationGroup,
@@ -90,6 +99,10 @@ public class TransportServiceImpl extends EntityServiceImpl<TransportOrder, Long
 
     /**
      * {@inheritDoc}
+     * 
+     * @see org.openwms.tms.service.TransportOrderService#createTransportOrder(org.openwms.common.domain.values.Barcode,
+     *      org.openwms.common.domain.Location,
+     *      org.openwms.tms.domain.values.PriorityLevel)
      */
     @Override
     public TransportOrder createTransportOrder(Barcode barcode, Location targetLocation, PriorityLevel priority) {
@@ -98,6 +111,11 @@ public class TransportServiceImpl extends EntityServiceImpl<TransportOrder, Long
 
     /**
      * {@inheritDoc}
+     * 
+     * @see org.openwms.tms.service.TransportOrderService#createTransportOrder(org.openwms.common.domain.values.Barcode,
+     *      org.openwms.common.domain.LocationGroup,
+     *      org.openwms.common.domain.Location,
+     *      org.openwms.tms.domain.values.PriorityLevel)
      */
     @Override
     public TransportOrder createTransportOrder(Barcode barcode, LocationGroup targetLocationGroup,
@@ -131,34 +149,75 @@ public class TransportServiceImpl extends EntityServiceImpl<TransportOrder, Long
         }
         addEntity(transportOrder);
         dao.persist(transportOrder);
-        // transportOrder = save(transportOrder);
-        logger.error("ID of to:" + transportOrder.getId());
-        ctx
-                .publishEvent(new TransportServiceEvent(transportOrder.getId(),
-                        TransportServiceEvent.TYPE.TRANSPORT_CREATED));
+        if (logger.isDebugEnabled()) {
+            logger.debug("tetetetetet" + ctx);
+        }
+        ctx.publishEvent(new TransportServiceEvent(transportOrder.getTransportUnit(),
+                TransportServiceEvent.TYPE.TRANSPORT_CREATED));
         return transportOrder;
     }
 
+    /**
+     * {@inheritDoc}
+     * 
+     * @see org.openwms.tms.service.TransportOrderService#cancelTransportOrders(java.util.List)
+     */
     @Override
-    public List<Long> cancelTransportOrders(List<TransportOrder> transportOrders) {
-        List<Long> canceled = new ArrayList<Long>(transportOrders.size());
+    public List<Integer> cancelTransportOrders(List<Integer> ids, TransportOrder.TRANSPORT_ORDER_STATE state) {
+        List<Integer> failure = new ArrayList<Integer>(ids.size());
+        List<TransportOrder> transportOrders = dao.findByIds(getLongList(ids));
         for (TransportOrder transportOrder : transportOrders) {
             try {
-                transportOrder = dao.save(transportOrder);
-                transportOrder.setState(TRANSPORT_ORDER_STATE.CANCELED);
+                transportOrder.setState(state);
                 ctx.publishEvent(new TransportServiceEvent(transportOrder.getId(),
                         TransportServiceEvent.TYPE.TRANSPORT_CANCELED));
                 if (logger.isDebugEnabled()) {
-                    logger.debug("TransportOrder successfully set to be canceled:" + transportOrder.getId());
+                    logger.debug("TransportOrder " + transportOrder.getId() + " successfully set to:" + state);
                 }
             }
             catch (RuntimeException e) {
                 logger.error("Could not cancel TransportOrder with ID:" + transportOrder.getId());
                 Problem problem = new Problem(e.getMessage());
                 transportOrder.setProblem(problem);
-                canceled.add(transportOrder.getId());
+                failure.add(transportOrder.getId().intValue());
             }
         }
-        return canceled;
+        return failure;
+    }
+
+    /**
+     * {@inheritDoc}
+     * 
+     * @see org.openwms.tms.service.TransportOrderService#redirectTransportOrders(java.util.List,
+     *      org.openwms.common.domain.LocationGroup)
+     */
+    @Override
+    public List<Integer> redirectTransportOrders(List<Integer> ids, LocationGroup targetLocationGroup) {
+        List<Integer> failure = new ArrayList<Integer>(ids.size());
+        List<TransportOrder> transportOrders = dao.findByIds(getLongList(ids));
+        for (TransportOrder transportOrder : transportOrders) {
+            try {
+                transportOrder.setTargetLocationGroup(targetLocationGroup);
+                if (logger.isDebugEnabled()) {
+                    logger.debug("TransportOrder " + transportOrder.getId() + " successfully redirected to:"
+                            + targetLocationGroup.getName());
+                }
+            }
+            catch (RuntimeException e) {
+                logger.error("Could not redirect TransportOrder with ID:" + transportOrder.getId());
+                Problem problem = new Problem(e.getMessage());
+                transportOrder.setProblem(problem);
+                failure.add(transportOrder.getId().intValue());
+            }
+        }
+        return failure;
+    }
+
+    private List<Long> getLongList(List<Integer> values) {
+        List<Long> longList = new ArrayList<Long>(values.size());
+        for (Integer number : values) {
+            longList.add(number.longValue());
+        }
+        return longList;
     }
 }
