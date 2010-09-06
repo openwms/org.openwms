@@ -53,9 +53,11 @@ import org.openwms.common.domain.system.Message;
  * A Location - Any kind of place within a warehouse.
  * <p>
  * Could be a storage location in the stock as well as a location on a conveyer.
- * Also virtual and error locations can be described with an {@link Location}
+ * Also virtual and error locations can be described with a {@link Location}
  * Entity.
- * </p> {@link Location}s could be grouped together to a {@link LocationGroup}s.
+ * </p>
+ * Multiple {@link Location}s can be grouped together to a
+ * {@link LocationGroup}.
  * 
  * @author <a href="mailto:openwms@googlemail.com">Heiko Scherrer</a>
  * @version $Revision$
@@ -79,11 +81,13 @@ public class Location implements DomainObject, Serializable {
      * Query to find all {@link Location}s.
      */
     public static final String NQ_FIND_ALL = "Location.findAll";
+
     /**
      * Query to find all {@link Location}s and all {@link Message}s, eager
      * loaded.
      */
     public static final String NQ_FIND_ALL_EAGER = "Location.findAllEager";
+
     /**
      * Query to find <strong>one</strong> {@link Location} by its natural key.
      */
@@ -104,30 +108,30 @@ public class Location implements DomainObject, Serializable {
     private LocationPK locationId;
 
     /**
-     * Describes the {@link Location}.
+     * Description for the {@link Location}.
      */
     @Column(name = "DESCRIPTION")
     private String description;
 
     /**
-     * Maximum number of {@link org.openwms.common.domain.TransportUnit}s placed
-     * on this {@link Location}.
+     * Maximum number of {@link org.openwms.common.domain.TransportUnit}s
+     * placed on this {@link Location}.
      */
     @Column(name = "NO_MAX_TRANSPORT_UNITS")
     private short noMaxTransportUnits = 1;
 
     /**
-     * Maximum allowed weight for this {@link Location}.
+     * Maximum weight on this {@link Location}.
      */
     @Column(name = "MAXIMUM_WEIGHT", scale = 3)
     private BigDecimal maximumWeight;
 
     /**
-     * Timestamp of last change. When a
+     * Date of last change. When a
      * {@link org.openwms.common.domain.TransportUnit} is moving on or from this
-     * place, the timestamp will be updated. This is necessary to find old
-     * {@link org.openwms.common.domain.TransportUnit}s in the stock as well as
-     * for inventory calculation.
+     * location, lastAccess will be updated. This is necessary to find old
+     * {@link org.openwms.common.domain.TransportUnit}s and also for inventory
+     * calculation.
      */
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "LAST_ACCESS")
@@ -138,10 +142,10 @@ public class Location implements DomainObject, Serializable {
      * should be counted on this {@link Location} or not.
      */
     @Column(name = "COUNTING_ACTIVE")
-    private Boolean countingActive;
+    private boolean countingActive = false;
 
     /**
-     * Reserved for stock check procedure and for inventory calculation.
+     * Reserved for stock check procedure and inventory calculation.
      */
     @Column(name = "CHECK_STATE")
     private String checkState = "--";
@@ -151,61 +155,62 @@ public class Location implements DomainObject, Serializable {
      * {@link org.openwms.common.domain.TransportUnit}s on the parent
      * {@link org.openwms.common.domain.LocationGroup}.
      * <p>
-     * true : Location is been included in calculation of
+     * <code>true</code> : Location is included in calculation of
      * {@link org.openwms.common.domain.TransportUnit}s.<br>
-     * false: Location is not been included in calculation of
-     * {@link org.openwms.common.domain.TransportUnit}s.
+     * <code>false</code>: Location is not included in calculation of
+     * {@link org.openwms.common.domain.TransportUnit}s (Default).
      * </p>
      */
     @Column(name = "LOCATION_GROUP_COUNTING_ACTIVE")
-    private Boolean locationGroupCountingActive;
+    private boolean locationGroupCountingActive = false;
 
     /**
      * Signals the incoming state of this <code>Location</code>.
      * <p>
-     * true : {@link Location} is available to gather
-     * {@link org.openwms.common.domain.TransportUnit}s.<br>
-     * false: {@link Location} is locked, and cannot gather
+     * <code>true</code> : {@link Location} is available to carry
+     * {@link org.openwms.common.domain.TransportUnit}s. (Default)<br>
+     * <code>false</code>: {@link Location} is locked, and cannot carry
      * {@link org.openwms.common.domain.TransportUnit}s.
      * </p>
      */
     @Column(name = "INCOMING_ACTIVE")
-    private Boolean incomingActive;
+    private boolean incomingActive = true;
 
     /**
-     * Signals the outgoing state this {@link Location}.
+     * Signals the outgoing state of this {@link Location}.
      * <p>
-     * true : {@link Location} is enabled for outgoing <code>Transport</code>s<br>
-     * false: {@link Location} is locked,
-     * {@link org.openwms.common.domain.TransportUnit}s can't move from this
-     * place.
+     * <code>true</code> : {@link Location} is enabled for outgoing
+     * <code>Transport</code>s (Default)<br>
+     * <code>false</code>: {@link Location} is locked,
+     * {@link org.openwms.common.domain.TransportUnit}s can't leave from this
+     * location.
      * </p>
      */
     @Column(name = "OUTGOING_ACTIVE")
-    private Boolean outgoingActive;
+    private boolean outgoingActive = true;
 
     /**
-     * The PLC is able to change the state of an {@link Location}. This property
+     * The PLC is able to change the state of a {@link Location}. This property
      * stores the last state, received from the PLC.
      * <p>
      * -1: Not defined.<br>
-     * 0 : No PLC error state, everything okay.
+     * 0 : No PLC error, everything okay (Default).
      * </p>
      */
     @Column(name = "PLC_STATE")
     private short plcState = 0;
 
     /**
-     * State to exclude the {@link Location} from allocation.
+     * State to include the {@link Location} in allocation procedure.
      * <p>
-     * true : This {@link Location} will been considered in storage calculation
-     * by an allocator.<br>
-     * false: This {@link Location} will not been considered in allocation
-     * process.
+     * <code>true</code> : This {@link Location} will be considered in storage
+     * calculation by an allocation procedure. (Default)<br>
+     * <code>false</code> : This {@link Location} will not be considered in
+     * allocation process.
      * </p>
      */
     @Column(name = "CONSIDERED_IN_ALLOCATION")
-    private Boolean consideredInAllocation;
+    private boolean consideredInAllocation = true;
 
     /**
      * Version field.
@@ -216,7 +221,7 @@ public class Location implements DomainObject, Serializable {
 
     /* ------------------- collection mapping ------------------- */
     /**
-     * The {@link LocationType} of this {@link Location}.
+     * The {@link LocationType} the {@link Location} belongs to.
      */
     @ManyToOne
     @JoinColumn(name = "LOCATION_TYPE")
@@ -230,7 +235,7 @@ public class Location implements DomainObject, Serializable {
     private LocationGroup locationGroup;
 
     /**
-     * Stores a {@link Message}s for this {@link Location}.
+     * Stores {@link Message}s for this {@link Location}.
      */
     @OneToMany(cascade = { CascadeType.ALL })
     @JoinTable(name = "COR_LOCATION_MESSAGE", joinColumns = @JoinColumn(name = "LOCATION_ID"), inverseJoinColumns = @JoinColumn(name = "MESSAGE_ID"))
@@ -263,10 +268,7 @@ public class Location implements DomainObject, Serializable {
     }
 
     /**
-     * Checks if the instance is transient.
-     * 
-     * @return true: Entity is not present on the persistent storage.<br>
-     *         false : Entity already exists on the persistence storage
+     * {@inheritDoc}
      */
     @Override
     public boolean isNew() {
@@ -299,19 +301,19 @@ public class Location implements DomainObject, Serializable {
         this.lastAccess = lastAccess;
     }
 
-    public Boolean getConsideredInAllocation() {
+    public boolean getConsideredInAllocation() {
         return this.consideredInAllocation;
     }
 
-    public void setConsideredInAllocation(Boolean consideredInAllocation) {
+    public void setConsideredInAllocation(boolean consideredInAllocation) {
         this.consideredInAllocation = consideredInAllocation;
     }
 
-    public Boolean getCountingActive() {
+    public boolean getCountingActive() {
         return this.countingActive;
     }
 
-    public void setCountingActive(Boolean countingActive) {
+    public void setCountingActive(boolean countingActive) {
         this.countingActive = countingActive;
     }
 
@@ -389,19 +391,19 @@ public class Location implements DomainObject, Serializable {
         this.checkState = checkState;
     }
 
-    public Boolean getLocationGroupCountingActive() {
+    public boolean getLocationGroupCountingActive() {
         return this.locationGroupCountingActive;
     }
 
-    public void setLocationGroupCountingActive(Boolean locationGroupCountingActive) {
+    public void setLocationGroupCountingActive(boolean locationGroupCountingActive) {
         this.locationGroupCountingActive = locationGroupCountingActive;
     }
 
-    public Boolean getIncomingActive() {
+    public boolean getIncomingActive() {
         return this.incomingActive;
     }
 
-    public void setIncomingActive(Boolean incomingActive) {
+    public void setIncomingActive(boolean incomingActive) {
         this.incomingActive = incomingActive;
     }
 
@@ -431,9 +433,7 @@ public class Location implements DomainObject, Serializable {
     }
 
     /**
-     * JPA optimistic locking.
-     * 
-     * @return The version field
+     * {@inheritDoc}
      */
     @Override
     public long getVersion() {

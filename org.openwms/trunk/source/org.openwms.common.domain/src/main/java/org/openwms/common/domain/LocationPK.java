@@ -80,15 +80,15 @@ public class LocationPK implements Serializable {
      * Create a new LocationPK.
      * 
      * @param area
-     *            Area where this <code>Location</code> belongs to
+     *            Area where the <code>Location</code> belongs to
      * @param aisle
-     *            Aisle where this <code>Location</code> belongs to
+     *            Aisle where the <code>Location</code> belongs to
      * @param x
-     *            Dimension x where this <code>Location</code> belongs to
+     *            Dimension x where the <code>Location</code> belongs to
      * @param y
-     *            Dimension y where this <code>Location</code> belongs to
+     *            Dimension y where the <code>Location</code> belongs to
      * @param z
-     *            Dimension z where this <code>Location</code> belongs to
+     *            Dimension z where the <code>Location</code> belongs to
      */
     public LocationPK(String area, String aisle, String x, String y, String z) {
         this.area = area;
