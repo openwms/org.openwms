@@ -32,6 +32,7 @@ import org.openwms.common.integration.GenericDao;
 import org.openwms.common.service.spring.EntityServiceImpl;
 import org.openwms.tms.domain.order.TransportOrder;
 import org.openwms.tms.domain.values.PriorityLevel;
+import org.openwms.tms.domain.values.TransportOrderState;
 import org.openwms.tms.integration.TransportOrderDao;
 import org.openwms.tms.service.TransportOrderService;
 import org.openwms.tms.service.TransportOrderServiceException;
@@ -163,7 +164,7 @@ public class TransportServiceImpl extends EntityServiceImpl<TransportOrder, Long
      * @see org.openwms.tms.service.TransportOrderService#cancelTransportOrders(java.util.List)
      */
     @Override
-    public List<Integer> cancelTransportOrders(List<Integer> ids, TransportOrder.TRANSPORT_ORDER_STATE state) {
+    public List<Integer> cancelTransportOrders(List<Integer> ids, TransportOrderState state) {
         List<Integer> failure = new ArrayList<Integer>(ids.size());
         List<TransportOrder> transportOrders = dao.findByIds(getLongList(ids));
         for (TransportOrder transportOrder : transportOrders) {
