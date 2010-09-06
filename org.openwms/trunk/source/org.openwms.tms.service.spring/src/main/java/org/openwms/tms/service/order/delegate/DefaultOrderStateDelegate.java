@@ -24,7 +24,7 @@ import java.util.List;
 
 import org.openwms.common.domain.TransportUnit;
 import org.openwms.tms.domain.order.TransportOrder;
-import org.openwms.tms.domain.order.TransportOrder.TRANSPORT_ORDER_STATE;
+import org.openwms.tms.domain.values.TransportOrderState;
 import org.openwms.tms.integration.TransportOrderDao;
 import org.openwms.tms.service.impl.TransportOrderStateDelegate;
 import org.slf4j.Logger;
@@ -56,7 +56,7 @@ public class DefaultOrderStateDelegate implements TransportOrderStateDelegate {
     @Override
     public void afterCreation(TransportUnit transportUnit) {
         List<TransportOrder> transportOrders = dao.findByOwnQuery(TransportOrder.NQ_FIND_FOR_TU_IN_STATE,
-                transportUnit, TRANSPORT_ORDER_STATE.CREATED);
+                transportUnit, TransportOrderState.CREATED);
         if (logger.isDebugEnabled()) {
             logger.debug("List:" + transportOrders.size());
         }
@@ -130,7 +130,7 @@ public class DefaultOrderStateDelegate implements TransportOrderStateDelegate {
     }
 
     private boolean initialize(TransportOrder transportOrder) {
-        transportOrder.setState(TRANSPORT_ORDER_STATE.INITIALIZED);
+        transportOrder.setState(TransportOrderState.INITIALIZED);
         return true;
     }
 
@@ -145,7 +145,7 @@ public class DefaultOrderStateDelegate implements TransportOrderStateDelegate {
 
         // Check for other active transports
         List<TransportOrder> others = dao.findByOwnQuery(TransportOrder.NQ_FIND_FOR_TU_IN_STATE, transportOrder
-                .getTransportUnit(), new Object[] { TRANSPORT_ORDER_STATE.STARTED, TRANSPORT_ORDER_STATE.INTERRUPTED });
+                .getTransportUnit(), new Object[] { TransportOrderState.STARTED, TransportOrderState.INTERRUPTED });
         if (others == null) {
             if (logger.isDebugEnabled()) {
                 logger.debug("There is an already started one");
@@ -156,7 +156,7 @@ public class DefaultOrderStateDelegate implements TransportOrderStateDelegate {
             logger.debug("No active transportOrder found for transportUnit : " + transportOrder.getTransportUnit());
         }
 
-        transportOrder.setState(TRANSPORT_ORDER_STATE.STARTED);
+        transportOrder.setState(TransportOrderState.STARTED);
         return true;
     }
 }
