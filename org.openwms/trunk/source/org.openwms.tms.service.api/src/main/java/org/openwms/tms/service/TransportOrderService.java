@@ -28,6 +28,7 @@ import org.openwms.common.domain.values.Barcode;
 import org.openwms.common.service.EntityService;
 import org.openwms.tms.domain.order.TransportOrder;
 import org.openwms.tms.domain.values.PriorityLevel;
+import org.openwms.tms.domain.values.TransportOrderState;
 
 /**
  * A TransportService - Extends the {@link EntityService} interface about some
@@ -109,7 +110,7 @@ public interface TransportOrderService<T extends TransportOrder> extends EntityS
      * @return A list of {@link TransportOrder} IDs that have not been canceled
      *         successfully
      */
-    List<Integer> cancelTransportOrders(List<Integer> transportOrders, TransportOrder.TRANSPORT_ORDER_STATE state);
+    List<Integer> cancelTransportOrders(List<Integer> transportOrders, TransportOrderState state);
 
     /**
      * Try to redirect a list of {@link TransportOrder}s to a new target
