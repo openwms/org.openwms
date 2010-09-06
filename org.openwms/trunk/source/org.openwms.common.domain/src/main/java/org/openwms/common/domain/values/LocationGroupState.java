@@ -18,30 +18,29 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
-package org.openwms.common.domain;
+package org.openwms.common.domain.values;
 
 /**
- * A DomainObject.
+ * A LocationGroupState.
+ * <p>
+ * Possible states used for LocationGroups.
+ * </p>
  * 
- * @author <a href="mailto:openwms@googlemail.com">Heiko Scherrer</a>
+ * @author <a href="mailto:russelltina@users.sourceforge.net">Tina Russell</a>
  * @version $Revision: $
  * @since 0.1
+ * @see org.openwms.common.domain.LocationGroup
  */
-public interface DomainObject {
+public enum LocationGroupState {
 
     /**
-     * Check whether the persistent domain class instance is transient or not.
-     * 
-     * @return <code>true</code> if transient (not persisted before),
-     *         otherwise <code>false</code>.
+     * Available.
      */
-    boolean isNew();
+    AVAILABLE,
 
     /**
-     * Each persistent domain class must have an optimistic locking field.
-     * 
-     * @return the version number
+     * Not available.
      */
-    long getVersion();
+    NOT_AVAILABLE;
 
 }

@@ -65,6 +65,7 @@ public class TransportUnitType implements Serializable {
      * Query to find all {@link Location}s.
      */
     public static final String NQ_FIND_ALL = "TransportUnitType.findAll";
+
     /**
      * Query to find <strong>one</strong> {@link TransportUnitType} by its
      * natural key.
@@ -78,14 +79,14 @@ public class TransportUnitType implements Serializable {
     public static final String DEF_TYPE_DESCRIPTION = "--";
 
     /**
-     * Unique natural key. Also used as primary key.
+     * Unique natural key. Used as primary key.
      */
     @Id
     @Column(name = "TYPE")
     private String type;
 
     /**
-     * Description of this type.
+     * Description for this type.
      */
     @Column(name = "DESCRIPTION")
     private String description = DEF_TYPE_DESCRIPTION;
@@ -127,7 +128,7 @@ public class TransportUnitType implements Serializable {
     private BigDecimal payload;
 
     /**
-     * Characteristic used to show specific compatibility attributes like.<br>
+     * Characteristic used to show specific compatibility attributes.<br>
      * Example:<br>
      * 'isn't compatible with...' or 'is compatible with ...' or 'type owns the
      * type ...'
@@ -368,8 +369,8 @@ public class TransportUnitType implements Serializable {
 
     /**
      * Assign a Set of all {@link TypePlacingRule}s belonging to this
-     * {@link TransportUnitType}. Already existing {@link TypePlacingRule}s will
-     * be removed.
+     * {@link TransportUnitType}. Already existing {@link TypePlacingRule}s
+     * will be removed.
      * 
      * @param typePlacingRules
      *            The rules to set
@@ -390,10 +391,10 @@ public class TransportUnitType implements Serializable {
     }
 
     /**
-     * Assign a Set of all {@link TypeStackingRule}s. A {@link TypeStackingRule}
-     * determines which {@link TransportUnitType}s can be placed on this
-     * {@link TransportUnitType}. Already existing {@link TypeStackingRule}s
-     * will be removed.
+     * Assign a Set of all {@link TypeStackingRule}s. A
+     * {@link TypeStackingRule} determines which {@link TransportUnitType}s can
+     * be placed on this {@link TransportUnitType}. Already existing
+     * {@link TypeStackingRule}s will be removed.
      * 
      * @param typeStackingRules
      *            The rules to set
@@ -441,9 +442,7 @@ public class TransportUnitType implements Serializable {
     }
 
     /**
-     * JPA optimistic locking.
-     * 
-     * @return The version field.
+     * {@inheritDoc}
      */
     public long getVersion() {
         return this.version;

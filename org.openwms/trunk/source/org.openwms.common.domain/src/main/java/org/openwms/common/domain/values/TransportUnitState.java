@@ -18,30 +18,34 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
-package org.openwms.common.domain;
+package org.openwms.common.domain.values;
 
 /**
- * A DomainObject.
+ * A TransportUnitState.
+ * <p>
+ * All states belonging to a {@link org.openwms.common.domain.TransportUnit;}.
+ * </p>
  * 
- * @author <a href="mailto:openwms@googlemail.com">Heiko Scherrer</a>
- * @version $Revision: $
+ * @author <a href="mailto:russelltina@users.sourceforge.net">Tina Russell</a>
+ * @version $Revision: 930 $
  * @since 0.1
+ * @see org.openwms.common.domain.TransportUnit;
  */
-public interface DomainObject {
+public enum TransportUnitState {
 
     /**
-     * Check whether the persistent domain class instance is transient or not.
-     * 
-     * @return <code>true</code> if transient (not persisted before),
-     *         otherwise <code>false</code>.
+     * The <code>TransportUnit</code> is available.
      */
-    boolean isNew();
+    AVAILABLE,
 
     /**
-     * Each persistent domain class must have an optimistic locking field.
-     * 
-     * @return the version number
+     * The <code>TransportUnit</code> is okay.
      */
-    long getVersion();
+    OK,
+
+    /**
+     * The <code>TransportUnit</code> is not okay.
+     */
+    NOT_OK
 
 }

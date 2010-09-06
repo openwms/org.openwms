@@ -41,8 +41,10 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.persistence.Version;
 
+import org.openwms.common.domain.values.LocationGroupState;
+
 /**
- * A LocationGroup - Used to logical group {@link Location}s together.
+ * A LocationGroup - Used to group {@link Location}s logically together.
  * <p>
  * Used to group {@link Location}s with same characteristics.
  * </p>
@@ -64,28 +66,6 @@ public class LocationGroup implements DomainObject, Serializable {
     private static final long serialVersionUID = -885742169116552293L;
 
     /**
-     * A STATE.
-     * <p>
-     * Possible states used for LocationGroups.
-     * </p>
-     * 
-     * @author <a href="mailto:openwms@googlemail.com">Heiko Scherrer</a>
-     * @version $Revision$
-     * @since 0.1
-     * @see LocationGroup
-     */
-    public static enum STATE {
-        /**
-         * Available.
-         */
-        AVAILABLE,
-        /**
-         * Not available.
-         */
-        NOT_AVAILABLE;
-    };
-
-    /**
      * Unique technical key.
      */
     @Id
@@ -100,7 +80,7 @@ public class LocationGroup implements DomainObject, Serializable {
     private String name;
 
     /**
-     * Description of this LocationGroup.
+     * Description for this LocationGroup.
      */
     @Column(name = "DESCRIPTION")
     private String description;
@@ -115,9 +95,9 @@ public class LocationGroup implements DomainObject, Serializable {
      * Is this LocationGroup be included in the calculation of
      * {@link org.openwms.common.domain.TransportUnit}s?
      * <p>
-     * true : Location is been included in calculation of
-     * {@link org.openwms.common.domain.TransportUnit}s.<br>
-     * false: Location is not been included in calculation of
+     * <code>true</code> : Location is been included in calculation of
+     * {@link org.openwms.common.domain.TransportUnit}s (Default).<br>
+     * <code>false</code>: Location is not been included in calculation of
      * {@link org.openwms.common.domain.TransportUnit}s.
      * </p>
      */
@@ -131,16 +111,16 @@ public class LocationGroup implements DomainObject, Serializable {
     private int noLocations = 0;
 
     /**
-     * Infeed status of this LocationGroup.
+     * Infeed state of this LocationGroup.
      */
     @Column(name = "GROUP_STATE_IN")
-    private STATE groupStateIn = STATE.AVAILABLE;
+    private LocationGroupState groupStateIn = LocationGroupState.AVAILABLE;
 
     /**
-     * Outfeed status of this LocationGroup.
+     * Outfeed state of this LocationGroup.
      */
     @Column(name = "GROUP_STATE_OUT")
-    private STATE groupStateOut = STATE.AVAILABLE;
+    private LocationGroupState groupStateOut = LocationGroupState.AVAILABLE;
 
     /**
      * Maximum fill level of this LocationGroup.
@@ -149,14 +129,14 @@ public class LocationGroup implements DomainObject, Serializable {
     private float maxFillLevel = 0;
 
     /**
-     * Last update timestamp.
+     * Date last updated.
      */
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "LAST_UPDATED")
     private Date lastUpdated;
 
     /**
-     * Name of the PLC system, coupled with this LocationGroup.
+     * Name of the PLC system, coupled to this LocationGroup.
      */
     @Column(name = "SYSTEM_CODE")
     private String systemCode;
@@ -215,10 +195,7 @@ public class LocationGroup implements DomainObject, Serializable {
     }
 
     /**
-     * Checks whether the instance is transient.
-     * 
-     * @return true if this entity is not present on the persistent storage,
-     *         otherwise false
+     * {@inheritDoc}
      */
     @Override
     public boolean isNew() {
@@ -249,21 +226,21 @@ public class LocationGroup implements DomainObject, Serializable {
      * 
      * @return The state of infeed
      */
-    public STATE getGroupStateIn() {
+    public LocationGroupState getGroupStateIn() {
         return this.groupStateIn;
     }
 
     /**
-     * Check whether infeed for this LocationGroup is allowed.
+     * Check whether infeed is allowed for this LocationGroup.
      * 
      * @return <code>true</code> if so.
      */
     public boolean isInfeedAllowed() {
-        return (getGroupStateIn() == STATE.AVAILABLE);
+        return (getGroupStateIn() == LocationGroupState.AVAILABLE);
     }
 
     /**
-     * Check whether infeed for this LocationGroup is blocked.
+     * Check whether infeed is blocked for this LocationGroup.
      * 
      * @return <code>true</code> if so.
      */
@@ -277,7 +254,7 @@ public class LocationGroup implements DomainObject, Serializable {
      * @param groupStateIn
      *            The state to set
      */
-    public void setGroupStateIn(STATE groupStateIn) {
+    public void setGroupStateIn(LocationGroupState groupStateIn) {
         this.groupStateIn = groupStateIn;
     }
 
@@ -286,7 +263,7 @@ public class LocationGroup implements DomainObject, Serializable {
      * 
      * @return The state of outfeed
      */
-    public STATE getGroupStateOut() {
+    public LocationGroupState getGroupStateOut() {
         return groupStateOut;
     }
 
@@ -296,7 +273,7 @@ public class LocationGroup implements DomainObject, Serializable {
      * @param groupStateOut
      *            The state to set
      */
-    public void setGroupStateOut(STATE groupStateOut) {
+    public void setGroupStateOut(LocationGroupState groupStateOut) {
         this.groupStateOut = groupStateOut;
     }
 
@@ -315,7 +292,7 @@ public class LocationGroup implements DomainObject, Serializable {
      * LocationGroup can be occupied by
      * {@link org.openwms.common.domain.TransportUnit}s.
      * <p>
-     * The maximum fill level must be value between 0 and 1 and reflects a
+     * The maximum fill level is a value between 0 and 1 and reflects a
      * percentage value.
      * </p>
      * 
@@ -429,13 +406,13 @@ public class LocationGroup implements DomainObject, Serializable {
      * Add a LocationGroup as child.
      * 
      * @param locationGroup
-     *            The LocationGroup to add as child
-     * @return true if the LocationGroup was new in the collection of
-     *         LocationGroups, otherwise false
+     *            The LocationGroup to be added as a child
+     * @return <code>true</code> if the LocationGroup was new in the
+     *         collection of LocationGroups, otherwise <code>false</code>
      */
     public boolean addLocationGroup(LocationGroup locationGroup) {
         if (locationGroup == null) {
-            throw new IllegalArgumentException("LocationGroup to add is null");
+            throw new IllegalArgumentException("LocationGroup to be added is null");
         }
         if (locationGroup.getParent() != null) {
             locationGroup.getParent().removeLocationGroup(locationGroup);
@@ -445,11 +422,12 @@ public class LocationGroup implements DomainObject, Serializable {
     }
 
     /**
-     * Remove a LocationGroup as child.
+     * Remove a LocationGroup from the list of children.
      * 
      * @param locationGroup
-     *            The LocationGroup to remove from the list of children
-     * @return true if the LocationGroup was found and removed, otherwise false
+     *            The LocationGroup to be removed from the list of children
+     * @return <code>true</code> if the LocationGroup was found and removed,
+     *         otherwise <code>false</code>
      */
     public boolean removeLocationGroup(LocationGroup locationGroup) {
         if (locationGroup == null) {
@@ -476,14 +454,14 @@ public class LocationGroup implements DomainObject, Serializable {
      * Add a {@link Location} as child.
      * 
      * @param location
-     *            The {@link Location} to add as child
-     * @return true if the {@link Location} was new in the collection of
-     *         {@link Message}s, otherwise false
+     *            The {@link Location} to be added as child
+     * @return <code>true</code> if the {@link Location} was new in the
+     *         collection of {@link Location}s, otherwise <code>false</code>
      */
     public boolean addLocation(Location location) {
 
         if (location == null) {
-            throw new IllegalArgumentException("Location to add is null");
+            throw new IllegalArgumentException("Location to be added is null");
         }
         if (location.getLocationGroup() != null) {
             location.getLocationGroup().removeLocation(location);
@@ -493,12 +471,12 @@ public class LocationGroup implements DomainObject, Serializable {
     }
 
     /**
-     * Remove a {@link Location} from children.
+     * Remove a {@link Location} from the list of children.
      * 
      * @param location
      *            The {@link Location} to be removed from the list of children
-     * @return true if the {@link Location} was found and removed, otherwise
-     *         false
+     * @return <code>true</code> if the {@link Location} was found and
+     *         removed, otherwise <code>false</code>
      */
     public boolean removeLocation(Location location) {
         if (location == null) {
@@ -547,9 +525,7 @@ public class LocationGroup implements DomainObject, Serializable {
     }
 
     /**
-     * JPA optimistic locking.
-     * 
-     * @return long The version field
+     * {@inheritDoc}
      */
     @Override
     public long getVersion() {

@@ -52,13 +52,14 @@ import javax.persistence.Version;
 import org.openwms.common.domain.system.UnitError;
 import org.openwms.common.domain.system.usermanagement.User;
 import org.openwms.common.domain.values.Barcode;
+import org.openwms.common.domain.values.TransportUnitState;
 
 /**
  * A TransportUnit - Something like a box, toad, bin or palette that has to be
  * moved.
  * <p>
- * Used as a container to transport items and <code>LoadUnit</code>s. It can be
- * moved between {@link Location}s.
+ * Used as a container to transport items and <code>LoadUnit</code>s. It can
+ * be moved between {@link Location}s.
  * </p>
  * 
  * @author <a href="mailto:openwms@googlemail.com">Heiko Scherrer</a>
@@ -76,32 +77,6 @@ public class TransportUnit implements Serializable {
      * The serialVersionUID
      */
     private static final long serialVersionUID = 4799247366681079321L;
-
-    /**
-     * A TU_STATE.
-     * <p>
-     * All states belonging to a {@link TransportUnit}.
-     * </p>
-     * 
-     * @author <a href="mailto:openwms@googlemail.com">Heiko Scherrer</a>
-     * @version $Revision$
-     * @since 0.1
-     * @see TransportUnit
-     */
-    public static enum TU_STATE {
-        /**
-         * The <code>TransportUnit</code> is available.
-         */
-        AVAILABLE,
-        /**
-         * The <code>TransportUnit</code> is okay.
-         */
-        OK,
-        /**
-         * The <code>TransportUnit</code> is not okay.
-         */
-        NOT_OK
-    }
 
     /**
      * Unique technical key.
@@ -132,8 +107,7 @@ public class TransportUnit implements Serializable {
     private Date creationDate;
 
     /**
-     * Date when this {@link TransportUnit} moved to the actual {@link Location}
-     * .
+     * Date when this {@link TransportUnit} moved to the actual {@link Location} .
      */
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "ACTUAL_LOCATION_DATE")
@@ -156,7 +130,7 @@ public class TransportUnit implements Serializable {
      * State of this {@link TransportUnit}.
      */
     @Column(name = "STATE")
-    private TU_STATE state = TU_STATE.AVAILABLE;
+    private TransportUnitState state = TransportUnitState.AVAILABLE;
 
     /**
      * Version field.
@@ -175,7 +149,8 @@ public class TransportUnit implements Serializable {
 
     /**
      * The target {@link Location} of the {@link TransportUnit}.<br>
-     * This property will be set when a <code>TransportOrder</code> is started.
+     * This property will be set when a <code>TransportOrder</code> is
+     * started.
      */
     @ManyToOne
     @JoinColumn(name = "TARGET_LOCATION")
@@ -260,8 +235,8 @@ public class TransportUnit implements Serializable {
     /**
      * Checks if the instance is transient.
      * 
-     * @return - true: Entity is not present on the persistent storage.<br>
-     *         - false : Entity already exists on the persistence storage
+     * @return - true: Entity is not present on the persistent storage.<br> -
+     *         false : Entity already exists on the persistence storage
      */
     public boolean isNew() {
         return (this.id == null);
@@ -301,8 +276,8 @@ public class TransportUnit implements Serializable {
     }
 
     /**
-     * Set the target {@link Location} of this {@link TransportUnit}. Shall only
-     * be set when an active <tt>TransportOder</tt> exist.
+     * Set the target {@link Location} of this {@link TransportUnit}. Shall
+     * only be set when an active <tt>TransportOder</tt> exist.
      * 
      * @param targetLocation
      *            The target {@link Location} where this {@link TransportUnit}
@@ -451,7 +426,7 @@ public class TransportUnit implements Serializable {
      * 
      * @return The current state of this {@link TransportUnit}
      */
-    public TU_STATE getState() {
+    public TransportUnitState getState() {
         return this.state;
     }
 
@@ -461,7 +436,7 @@ public class TransportUnit implements Serializable {
      * @param state
      *            The state to set on this {@link TransportUnit}
      */
-    public void setState(TU_STATE state) {
+    public void setState(TransportUnitState state) {
         this.state = state;
     }
 

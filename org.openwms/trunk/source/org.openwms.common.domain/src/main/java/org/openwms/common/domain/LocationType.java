@@ -60,6 +60,7 @@ public class LocationType implements DomainObject, Serializable {
      * Query to find all {@link LocationType}s.
      */
     public static final String NQ_FIND_ALL = "LocationType.findAll";
+
     /**
      * Query to find <strong>one</strong> {@link LocationType} by its natural
      * key.
@@ -145,10 +146,7 @@ public class LocationType implements DomainObject, Serializable {
     }
 
     /**
-     * Checks if the instance is transient.
-     * 
-     * @return true: Entity is not present on the persistent storage.<br>
-     *         false : Entity already exists on the persistence storage
+     * {@inheritDoc}
      */
     @Override
     public boolean isNew() {
@@ -241,9 +239,7 @@ public class LocationType implements DomainObject, Serializable {
     }
 
     /**
-     * JPA optimistic locking.
-     * 
-     * @return The version field
+     * {@inheritDoc}
      */
     @Override
     public long getVersion() {
