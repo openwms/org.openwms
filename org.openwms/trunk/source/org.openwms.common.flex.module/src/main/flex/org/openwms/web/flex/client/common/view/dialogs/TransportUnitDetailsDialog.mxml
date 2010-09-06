@@ -29,7 +29,7 @@
 
     <mx:Script>
     	<![CDATA[
-    		import org.openwms.common.domain.TransportUnit$TU_STATE;
+    		import org.openwms.common.domain.values.TransportUnitState;
     		import org.openwms.common.domain.TransportUnitType;
     		import mx.managers.PopUpManager;
     		import org.openwms.web.flex.client.common.model.CommonModelLocator;
@@ -149,7 +149,7 @@
 		<mx:TextInput x="170" y="8" id="barcodeTxt" text="{transportUnit.barcode}" width="261"/>
 		<comp:SuggestComboBox x="170" y="255" id="parentTxt" labelField="barcode" dataProvider="{tus}" width="261"/>
 		<comp:SuggestComboBox x="170" y="36" id="actualLocationCmb" dataProvider="{commonModelLocator.allLocations}" width="261"/>
-		<mx:ComboBox x="170" y="281" id="stateCmb" width="261" dataProvider="{TransportUnit$TU_STATE.constants}"/>
+		<mx:ComboBox x="170" y="281" id="stateCmb" width="261" dataProvider="{TransportUnitState.constants}"/>
 		<comp:SuggestComboBox x="170" y="307" id="targetLocationCmb" dataProvider="{commonModelLocator.allLocations}" width="261"/>
 		<mx:Label x="170" y="62" id="sinceDt" text="{transportUnit.actualLocationDate}" width="261" />
 		<mx:Label x="170" y="105" id="invDt" text="{transportUnit.inventoryDate}" width="261" />
