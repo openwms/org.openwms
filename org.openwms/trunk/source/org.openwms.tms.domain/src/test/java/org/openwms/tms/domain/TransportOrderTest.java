@@ -32,7 +32,7 @@ import org.openwms.common.domain.TransportUnitType;
 import org.openwms.common.exception.InsufficientValueException;
 import org.openwms.common.test.AbstractJpaSpringContextTests;
 import org.openwms.tms.domain.order.TransportOrder;
-import org.openwms.tms.domain.order.TransportOrder.TRANSPORT_ORDER_STATE;
+import org.openwms.tms.domain.values.TransportOrderState;
 
 /**
  * A TransportOrderTest.
@@ -45,36 +45,38 @@ public class TransportOrderTest extends AbstractJpaSpringContextTests {
 
     /**
      * Test method for
-     * {@link org.openwms.tms.domain.order.TransportOrder#setState(org.openwms.tms.domain.order.TransportOrder.TRANSPORT_ORDER_STATE)}
-     * .
+     * {@link org.openwms.tms.domain.order.TransportOrder#setState(org.openwms.tms.domain.order.TransportOrder.TRANSPORT_ORDER_STATE)} .
      */
     @Test
     public final void testSetState() {
         TransportOrder transportOrder = new TransportOrder();
         try {
-            transportOrder.setState(TRANSPORT_ORDER_STATE.INITIALIZED);
+            transportOrder.setState(TransportOrderState.INITIALIZED);
             fail("Exception expected while switching to next state without transportUnit");
-        } catch (InsufficientValueException tme) {
+        }
+        catch (InsufficientValueException tme) {
             logger.debug("OK:Exception while switching to next state without transportUnit");
         }
 
-        assertEquals("TransportOrder must remain in state CREATED:", TRANSPORT_ORDER_STATE.CREATED, transportOrder
+        assertEquals("TransportOrder must remain in state CREATED:", TransportOrderState.CREATED, transportOrder
                 .getState());
         TransportUnit transportUnit = new TransportUnit("TEST_UNIT");
         transportOrder.setTransportUnit(transportUnit);
         try {
-            transportOrder.setState(TRANSPORT_ORDER_STATE.INITIALIZED);
+            transportOrder.setState(TransportOrderState.INITIALIZED);
             fail("TransportOrder must not be switched in next mode without setting a target");
-        } catch (InsufficientValueException tme) {
+        }
+        catch (InsufficientValueException tme) {
             logger.debug("OK:Exception while switching to next state without target");
         }
 
         Location targetLocation = new Location(new LocationPK("KNOWN", "KNOWN", "KNOWN", "KNOWN", "KNOWN"));
         transportOrder.setTargetLocation(targetLocation);
         try {
-            transportOrder.setState(TRANSPORT_ORDER_STATE.INITIALIZED);
+            transportOrder.setState(TransportOrderState.INITIALIZED);
             logger.debug("transportUnit set and target set");
-        } catch (Exception tme) {
+        }
+        catch (Exception tme) {
             fail("TransportOrder could be switched in next mode");
 
         }
@@ -84,9 +86,10 @@ public class TransportOrderTest extends AbstractJpaSpringContextTests {
         transportOrder2.setTransportUnit(transportUnit);
         transportOrder2.setTargetLocationGroup(targetLocationGroup);
         try {
-            transportOrder.setState(TRANSPORT_ORDER_STATE.INITIALIZED);
+            transportOrder.setState(TransportOrderState.INITIALIZED);
             logger.debug("transportUnit set and targetLocationGroup set");
-        } catch (Exception tme) {
+        }
+        catch (Exception tme) {
             fail("TransportOrder could be switched in next mode");
         }
 
