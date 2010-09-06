@@ -28,7 +28,7 @@ package org.openwms.web.flex.client.tms.business
     import org.granite.tide.events.TideResultEvent;
     import org.granite.tide.spring.Context;
     import org.openwms.tms.domain.order.TransportOrder;
-    import org.openwms.tms.domain.order.TransportOrder$TRANSPORT_ORDER_STATE;
+    import org.openwms.tms.domain.values.TransportOrderState;
     import org.openwms.web.flex.client.tms.event.TransportOrderEvent;
     import org.openwms.web.flex.client.tms.model.TMSModelLocator;
 
@@ -84,7 +84,7 @@ package org.openwms.web.flex.client.tms.business
         [Observer("CANCEL_TRANSPORT_ORDER")]
         public function cancelTransportOrder(event:TransportOrderEvent):void
         {
-            tideContext.transportService.cancelTransportOrders(event.data.ids as ArrayCollection, event.data.state as TransportOrder$TRANSPORT_ORDER_STATE, onTransportsCanceled, onFault);
+            tideContext.transportService.cancelTransportOrders(event.data.ids as ArrayCollection, event.data.state as TransportOrderState, onTransportsCanceled, onFault);
         }
         private function onTransportsCanceled(event:TideResultEvent):void
         {
