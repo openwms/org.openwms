@@ -24,9 +24,11 @@ package org.openwms.tms.domain.order {
     [RemoteClass(alias="org.openwms.tms.domain.order.TransportOrder")]
     public class TransportOrder extends TransportOrderBase {
     	
+    	import org.openwms.tms.domain.values.TransportOrderState;
+    	
     	public function TransportOrder()
     	{
-    		this.state = TransportOrder$TRANSPORT_ORDER_STATE.CREATED;
+    		this.state = TransportOrderState.CREATED;
     	}
     }
 }
