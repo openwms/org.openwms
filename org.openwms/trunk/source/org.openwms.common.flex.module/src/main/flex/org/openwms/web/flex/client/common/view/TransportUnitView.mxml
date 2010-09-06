@@ -34,7 +34,7 @@
 	<mx:Script>
     	<![CDATA[
     		import mx.controls.dataGridClasses.DataGridColumn;
-    		import org.openwms.common.domain.TransportUnit$TU_STATE;
+    		import org.openwms.common.domain.values.TransportUnitState;
     		import mx.messaging.channels.StreamingAMFChannel;
     		import mx.events.ListEvent;
     		import flash.events.MouseEvent;
@@ -177,7 +177,7 @@
             <mx:Text text="{selected.barcode}" width="100%" fontWeight="bold"  x="148" y="10"/>
 
 			<mx:Label text="State" fontWeight="normal" width="130" textAlign="right" x="10" y="36"/>
-            <mx:ComboBox x="148" y="34" dataProvider="{TransportUnit$TU_STATE.constants}" selectedIndex="{new ArrayCollection(TransportUnit$TU_STATE.constants).getItemIndex(selected.transportUnitType)}"/>
+            <mx:ComboBox x="148" y="34" dataProvider="{TransportUnitState.constants}" selectedIndex="{new ArrayCollection(TransportUnitState.constants).getItemIndex(selected.transportUnitType)}"/>
 
 			<mx:Label text="Actual Location" fontWeight="normal" width="130" textAlign="right" x="10" y="62"/>
             <mx:ComboBox x="148" y="60" />
