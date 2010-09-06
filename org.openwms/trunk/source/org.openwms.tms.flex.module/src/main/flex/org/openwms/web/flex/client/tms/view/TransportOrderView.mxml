@@ -154,7 +154,7 @@
 	
 	<mx:DateFormatter id="dateFormatter" formatString="{CommonModelLocator.DT_FORMAT_STRING}"/>
 	
-	<mx:DataGrid id="transportOrdersLst" width="95%" height="650" allowMultipleSelection="true" dataProvider="{tmsModelLocator.allTransportOrders}" y="63" x="10">
+	<mx:DataGrid id="transportOrdersLst" width="95%" height="400" allowMultipleSelection="true" dataProvider="{tmsModelLocator.allTransportOrders}" y="63" x="10">
 		<mx:columns>
 			<mx:DataGridColumn headerText="ID" dataField="id" />
 			<mx:DataGridColumn headerText="Current State" dataField="state" />

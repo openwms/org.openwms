@@ -33,7 +33,7 @@
     		import org.openwms.tms.domain.values.PriorityLevel;
     		import mx.controls.Alert;
     		import org.openwms.web.flex.client.common.model.CommonModelLocator;
-    		import org.openwms.tms.domain.order.TransportOrder$TRANSPORT_ORDER_STATE;
+    		import org.openwms.tms.domain.values.TransportOrderState;
     		import org.openwms.common.domain.values.Barcode;
     		import org.openwms.common.domain.TransportUnit;
     		import org.openwms.tms.domain.order.TransportOrder;
@@ -91,7 +91,7 @@
                 transportUnit.barcode = new Barcode(barcodeTxt.text);
             	transportOrder.transportUnit =  transportUnit;
             	transportOrder.priority = priorityCmb.selectedItem as PriorityLevel;
-            	transportOrder.state = TransportOrder$TRANSPORT_ORDER_STATE.CREATED;
+            	transportOrder.state = TransportOrderState.CREATED;
             	trace("Creating TransportOrder :"+barcodeTxt.text+transportOrder.state+transportOrder.targetLocationGroup);
             	event.data = transportOrder;
             	dispatchEvent(event);

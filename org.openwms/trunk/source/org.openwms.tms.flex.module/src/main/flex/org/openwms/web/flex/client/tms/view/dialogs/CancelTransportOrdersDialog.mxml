@@ -32,7 +32,7 @@
         <![CDATA[
         	import org.openwms.web.flex.client.tms.model.TMSModelLocator;
         	import org.openwms.tms.domain.order.TransportOrder;
-        	import org.openwms.tms.domain.order.TransportOrder$TRANSPORT_ORDER_STATE;
+        	import org.openwms.tms.domain.values.TransportOrderState;
         	import org.openwms.web.flex.client.tms.event.TransportOrderEvent;
             import mx.controls.listClasses.ListData;
             import mx.collections.ArrayCollection;
@@ -93,7 +93,7 @@
     <mx:Label id="messageTxt" text="{messageText}" fontSize="20" textAlign="center" y="10"  width="100%"/>
     <mx:Button id="cancelOrdersBtn" label="OK" click="accept(event)" fontSize="12" x="10" y="270"/>
     <mx:Button id="cancelBtn" label="Cancel" click="closeDialog(event)" fontSize="12" x="350" y="270"/>
-    <mx:ComboBox x="160" y="214" fontSize="24" width="260" id="actionStatesCmb" dataProvider="{tmsModelLocator.allStates}" selectedIndex="{tmsModelLocator.allStates.getItemIndex(TransportOrder$TRANSPORT_ORDER_STATE.CANCELED)}"/>
+    <mx:ComboBox x="160" y="214" fontSize="24" width="260" id="actionStatesCmb" dataProvider="{tmsModelLocator.allStates}" selectedIndex="{tmsModelLocator.allStates.getItemIndex(TransportOrderState.CANCELED)}"/>
     <mx:Label x="10" y="217" text="Action" fontSize="24"/>
     <mx:List id="cancelLst" height="152" labelFunction="formatFunction" dataProvider="{items}" enabled="true" alternatingItemColors="[#B7BABC, #FFFFFF]" y="54" x="10"  width="410"/>
 </mx:Panel>
