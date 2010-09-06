@@ -38,7 +38,7 @@ package org.openwms.common.domain {
             }
     	}
 
-        public function toString()
+        public function toString():String
         {
             return this._type;
         }
