@@ -25,6 +25,7 @@ import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -38,19 +39,20 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.persistence.Version;
 
+import org.openwms.common.domain.DomainObject;
 import org.openwms.common.domain.Location;
 import org.openwms.common.domain.LocationGroup;
 import org.openwms.common.domain.TransportUnit;
 import org.openwms.common.domain.values.Problem;
 import org.openwms.common.exception.InsufficientValueException;
 import org.openwms.tms.domain.values.PriorityLevel;
+import org.openwms.tms.domain.values.TransportOrderState;
 
 /**
  * A TransportOrder.
  * <p>
  * Is used to move {@link TransportUnit}s from an actual {@link Location} to a
- * target {@link Location}. A {@link TransportOrder} can only be processed in a
- * specific state (STARTED).
+ * target {@link Location}.
  * </p>
  * 
  * @author <a href="mailto:openwms@googlemail.com">Heiko Scherrer</a>
@@ -66,7 +68,7 @@ import org.openwms.tms.domain.values.PriorityLevel;
         @NamedQuery(name = TransportOrder.NQ_FIND_BY_TU, query = "select to from TransportOrder to where to.transportUnit = :transportUnit"),
         @NamedQuery(name = TransportOrder.NQ_FIND_FOR_TU_IN_STATE, query = "select to from TransportOrder to where to.transportUnit = :transportUnit and to.state in (:states)"),
         @NamedQuery(name = TransportOrder.NQ_FIND_ORDERS_TO_START, query = "select to from TransportOrder to where to.transportUnit = :transportUnit and to.state in (INITIALIZED, INTERRUPTED) order by to.priority DESC, to.creationDate") })
-public class TransportOrder implements Serializable {
+public class TransportOrder implements DomainObject, Serializable {
 
     /**
      * The serialVersionUID
@@ -81,84 +83,31 @@ public class TransportOrder implements Serializable {
     /**
      * Query to find all {@link TransportOrder}s for a given
      * {@link TransportUnit}.
-     * <p>
-     * NG parameter name transportUnit : The {@link TransportUnit} to search
-     * for.
-     * </p>
+     * <li> Query parameter name transportUnit : The {@link TransportUnit} to
+     * search for. </li>
      */
     public static final String NQ_FIND_BY_TU = "TransportOrder.findByTransportUnit";
 
     /**
-     * Query to find all active {@link TransportOrder}s for a given
-     * {@link TransportUnit} in a certain state.
-     * <li> NG parameter name <strong>transportUnit</strong> : The
+     * Query to find all {@link TransportOrder}s for a given
+     * {@link TransportUnit} in certain states.
+     * <li>Query parameter name <strong>transportUnit</strong> : The
      * {@link TransportUnit} to search for.</li>
-     * <li>NG parameter name <strong>states</strong> : A list of
-     * {@link TRANSPORT_ORDER_STATE}s </li>
+     * <li>Query parameter name <strong>states</strong> : A list of
+     * {@link TransportOrderState}s.</li>
      */
     public static final String NQ_FIND_FOR_TU_IN_STATE = "TransportOrder.findActiveToForTu";
 
     /**
      * Query to find all {@link TransportOrder}s for a given
-     * {@link TransportUnit} to start. Read transports are in state
-     * {@link TRANSPORT_ORDER_STATE#INITIALIZED} or
-     * {@link TRANSPORT_ORDER_STATE#INTERRUPTED}. The list of possible
-     * transports is sorted by priority and creationDate.
-     * <p>
-     * NG parameter name transportUnit : The {@link TransportUnit} to search
-     * for.
-     * </p>
+     * {@link TransportUnit} that can be started. Ready transports are in state
+     * {@link TransportOrderState#INITIALIZED} or
+     * {@link TransportOrderState#INTERRUPTED}. The list of possible transports
+     * is sorted by priority and creationDate.
+     * <li>Query parameter name transportUnit : The {@link TransportUnit} to
+     * search for.</li>
      */
     public static final String NQ_FIND_ORDERS_TO_START = "TransportOrder.findOrdersToStartForTu";
-
-    /**
-     * A TRANSPORT_ORDER_STATE - Each {@link TransportOrder} can be in one of
-     * these states.
-     * 
-     * @author <a href="mailto:openwms@googlemail.com">Heiko Scherrer</a>
-     * @version $Revision$
-     * @since 0.1
-     */
-    public enum TRANSPORT_ORDER_STATE {
-
-        /**
-         * Status of new created TransportOrders.
-         */
-        CREATED,
-
-        /**
-         * Status of a full initialized TransportOrder, ready to be started.
-         */
-        INITIALIZED,
-
-        /**
-         * A started TransportOrder, active to be executed. Only one per
-         * TransportUnit allowed.
-         */
-        STARTED,
-
-        /**
-         * Status to indicate that the TransportOrder is paused. Not active
-         * anymore.
-         */
-        INTERRUPTED,
-
-        /**
-         * Status to indicate a failure on the TransportOrder. Not active
-         * anymore.
-         */
-        ONFAILURE,
-
-        /**
-         * Status of a aborted TransportOrder. Not active anymore.
-         */
-        CANCELED,
-
-        /**
-         * Status to indicate that the TransportOrder completed successfully.
-         */
-        FINISHED
-    }
 
     /**
      * Unique technical key.
@@ -176,7 +125,7 @@ public class TransportOrder implements Serializable {
     private TransportUnit transportUnit;
 
     /**
-     * Last date when the {@link TransportOrder} was updated.
+     * Date when the {@link TransportOrder} was updated the last time.
      */
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "DATE_UPDATED")
@@ -186,14 +135,15 @@ public class TransportOrder implements Serializable {
      * A priority level of the {@link TransportOrder}. The lower the value the
      * lower the priority.<br>
      * The priority level affects the execution of the {@link TransportOrder}.
-     * An order with high priority will be processed faster than lower ones.
+     * An order with high priority will be processed faster than these with
+     * lower priority.
      */
     @Column(name = "PRIORITY")
     @Enumerated
     private PriorityLevel priority = PriorityLevel.NORMAL;
 
     /**
-     * Timestamp when the {@link TransportOrder} was started.
+     * Date when the {@link TransportOrder} was started.
      */
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "START_DATE")
@@ -206,14 +156,14 @@ public class TransportOrder implements Serializable {
     private Problem problem;
 
     /**
-     * Timestamp when the {@link TransportOrder} was created.
+     * Date when the {@link TransportOrder} was created.
      */
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "CREATION_DATE")
     private Date creationDate = new Date();
 
     /**
-     * Timestamp when the {@link TransportOrder} ended.
+     * Date when the {@link TransportOrder} ended.
      */
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "END_DATE")
@@ -223,12 +173,12 @@ public class TransportOrder implements Serializable {
      * State of this {@link TransportOrder}.
      */
     @Column(name = "STATE")
-    @Enumerated
-    private TRANSPORT_ORDER_STATE state = TRANSPORT_ORDER_STATE.CREATED;
+    @Enumerated(EnumType.STRING)
+    private TransportOrderState state = TransportOrderState.CREATED;
 
     /**
      * The source {@link Location} of the {@link TransportOrder}.<br>
-     * This property should be set before starting the {@link TransportOrder}.
+     * This property is set before the {@link TransportOrder} is started.
      */
     @ManyToOne
     @JoinColumn(name = "SOURCE_LOCATION")
@@ -236,15 +186,15 @@ public class TransportOrder implements Serializable {
 
     /**
      * The target {@link Location} of the {@link TransportOrder}.<br>
-     * This property should be set before starting the {@link TransportOrder}.
+     * This property is set before the {@link TransportOrder} is started.
      */
     @ManyToOne
     @JoinColumn(name = "TARGET_LOCATION")
     private Location targetLocation;
 
     /**
-     * A {@link LocationGroup} can also be set as target. When the
-     * {@link TransportOrder} will be started, at least one target must be set.
+     * A {@link LocationGroup} can also be set as target. At least one target
+     * must be set when the {@link TransportOrder} is being started.
      */
     @ManyToOne
     @JoinColumn(name = "TARGET_LOCATION_GROUP")
@@ -270,7 +220,7 @@ public class TransportOrder implements Serializable {
      */
     public TransportOrder() {
         this.creationDate = new Date();
-        this.state = TRANSPORT_ORDER_STATE.CREATED;
+        this.state = TransportOrderState.CREATED;
     }
 
     /**
@@ -285,8 +235,10 @@ public class TransportOrder implements Serializable {
     /**
      * Checks if the instance is transient.
      * 
-     * @return true: Entity is not present on the persistent storage.<br>
-     *         false : Entity already exists on the persistence storage
+     * @return <code>true</code>: Entity is not present on the persistent
+     *         storage.<br>
+     *         <code>false</code> : Entity already exists on the persistent
+     *         storage
      */
     public boolean isNew() {
         return (this.id == null);
@@ -321,19 +273,19 @@ public class TransportOrder implements Serializable {
     }
 
     /**
-     * Get the {@link TransportUnit} moved by this {@link TransportOrder}.
+     * Get the {@link TransportUnit} assigned to this {@link TransportOrder}.
      * 
-     * @return The transportUnit to be moved
+     * @return The assigned transportUnit
      */
     public TransportUnit getTransportUnit() {
         return this.transportUnit;
     }
 
     /**
-     * Set a {@link TransportUnit} to be moved by this {@link TransportOrder}.
+     * Assign a {@link TransportUnit} to this {@link TransportOrder}.
      * 
      * @param transportUnit
-     *            The transportUnit to be moved
+     *            The transportUnit to be assigned
      */
     public void setTransportUnit(TransportUnit transportUnit) {
         this.transportUnit = transportUnit;
@@ -342,7 +294,7 @@ public class TransportOrder implements Serializable {
     /**
      * Returns the date when this {@link TransportOrder} was created.
      * 
-     * @return The date when created
+     * @return The creation date
      */
     public Date getCreationDate() {
         return this.creationDate;
@@ -353,7 +305,7 @@ public class TransportOrder implements Serializable {
      * 
      * @return The state of the order
      */
-    public TRANSPORT_ORDER_STATE getState() {
+    public TransportOrderState getState() {
         return this.state;
     }
 
@@ -363,7 +315,7 @@ public class TransportOrder implements Serializable {
         }
     }
 
-    private void validateStateChange(TRANSPORT_ORDER_STATE newState) {
+    private void validateStateChange(TransportOrderState newState) {
         if (newState == null) {
             throw new IllegalStateException("transportState cannot be null");
         }
@@ -371,8 +323,8 @@ public class TransportOrder implements Serializable {
             // Don't allow to turn back the state!
             throw new IllegalStateException("Turning back state of transportOrder not allowed");
         }
-        if (getState() == TRANSPORT_ORDER_STATE.CREATED) {
-            if (newState != TRANSPORT_ORDER_STATE.INITIALIZED && newState != TRANSPORT_ORDER_STATE.CANCELED) {
+        if (getState() == TransportOrderState.CREATED) {
+            if (newState != TransportOrderState.INITIALIZED && newState != TransportOrderState.CANCELED) {
                 // Don't allow to except the initialization
                 throw new IllegalStateException("TransportOrder must be initialized after creation");
             }
@@ -396,12 +348,12 @@ public class TransportOrder implements Serializable {
      *             in case the TransportOrder is CREATED and shall be turned
      *             into INITIALIZED but is incomplete.
      */
-    public void setState(TRANSPORT_ORDER_STATE newState) {
+    public void setState(TransportOrderState newState) {
         validateStateChange(newState);
-        if (newState == TRANSPORT_ORDER_STATE.STARTED) {
+        if (newState == TransportOrderState.STARTED) {
             startDate = new Date();
         }
-        if (newState == TRANSPORT_ORDER_STATE.FINISHED) {
+        if (newState == TransportOrderState.FINISHED) {
             endDate = new Date();
         }
         state = newState;
@@ -410,7 +362,7 @@ public class TransportOrder implements Serializable {
     /**
      * Get the target {@link Location} of this {@link TransportOrder}.
      * 
-     * @return The targetLocation, if any
+     * @return The targetLocation if any, otherwise <code>null</code>
      */
     public Location getTargetLocation() {
         return this.targetLocation;
@@ -429,7 +381,7 @@ public class TransportOrder implements Serializable {
     /**
      * Get the date when the {@link TransportOrder} was changed last time.
      * 
-     * @return The date of last update
+     * @return The date of the last update
      */
     public Date getDateUpdated() {
         return dateUpdated;
@@ -438,7 +390,7 @@ public class TransportOrder implements Serializable {
     /**
      * Get the targetLocationGroup.
      * 
-     * @return The targetLocationGroup, if any
+     * @return The targetLocationGroup if any, otherwise <code>null</code>
      */
     public LocationGroup getTargetLocationGroup() {
         return targetLocationGroup;

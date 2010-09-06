@@ -20,47 +20,53 @@
  */
 package org.openwms.tms.domain.values;
 
-import javax.persistence.Embeddable;
-
 import org.openwms.tms.domain.order.TransportOrder;
 
 /**
- * A PriorityLevel.
- * <p>
- * Is used to prioritize {@link TransportOrder}s.
- * </p>
+ * A TransportOrderState - A {@link TransportOrder} must be in one of these
+ * states.
  * 
- * @author <a href="mailto:openwms@googlemail.com">Heiko Scherrer</a>
- * @version $Revision: 810 $
+ * @author <a href="mailto:russelltina@users.sourceforge.net">Tina Russell</a>
+ * @version $Revision: $
  * @since 0.1
  * @see org.openwms.tms.domain.order.TransportOrder
  */
-@Embeddable
-public enum PriorityLevel {
+public enum TransportOrderState {
 
     /**
-     * Lowest priority.
+     * Status of new created TransportOrders.
      */
-    LOWEST,
+    CREATED,
 
     /**
-     * Low priority.
+     * Status of a full initialized TransportOrder, ready to be started.
      */
-    LOW,
+    INITIALIZED,
 
     /**
-     * Standard priority.
+     * A started TransportOrder, active to be executed. Only one per
+     * TransportUnit allowed.
      */
-    NORMAL,
+    STARTED,
 
     /**
-     * High priority.
+     * Status to indicate that the TransportOrder is paused. Not active anymore.
      */
-    HIGH,
+    INTERRUPTED,
 
     /**
-     * Highest priority.
+     * Status to indicate a failure on the TransportOrder. Not active anymore.
      */
-    HIGHEST
+    ONFAILURE,
+
+    /**
+     * Status of a aborted TransportOrder. Not active anymore.
+     */
+    CANCELED,
+
+    /**
+     * Status to indicate that the TransportOrder completed successfully.
+     */
+    FINISHED
 
 }
