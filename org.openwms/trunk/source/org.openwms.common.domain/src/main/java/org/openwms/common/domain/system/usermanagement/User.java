@@ -148,14 +148,14 @@ public class User implements Serializable {
      * Password history of this <code>User</code>.
      */
     @OneToMany(mappedBy = "user")
-    @JoinTable(name = "T_USER_PASSWORD", joinColumns = @JoinColumn(name = "USER_ID"), inverseJoinColumns = @JoinColumn(name = "PASSWORD_ID"))
+    @JoinTable(name = "APP_USER_PASSWORD", joinColumns = @JoinColumn(name = "USER_ID"), inverseJoinColumns = @JoinColumn(name = "PASSWORD_ID"))
     private List<UserPassword> passwords = new ArrayList<UserPassword>();
 
     /**
      * All {@link Preference}s of this <code>User</code>.
      */
     @OneToMany(cascade = CascadeType.ALL)
-    @JoinTable(name = "T_ROLE_PREFERENCE", joinColumns = @JoinColumn(name = "ROLE_ID"), inverseJoinColumns = @JoinColumn(name = "PREF_ID"))
+    @JoinTable(name = "APP_USER_PREFERENCE", joinColumns = @JoinColumn(name = "ROLE_ID"), inverseJoinColumns = @JoinColumn(name = "PREF_ID"))
     private Set<Preference> preferences = new HashSet<Preference>();
 
     /* ----------------------------- methods ------------------- */
