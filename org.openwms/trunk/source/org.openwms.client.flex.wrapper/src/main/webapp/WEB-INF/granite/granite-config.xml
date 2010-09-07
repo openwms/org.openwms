@@ -42,6 +42,7 @@
         <externalizer type="org.granite.messaging.amf.io.util.externalizer.EnumExternalizer">
             <include instance-of="org.openwms.tms.domain.values.PriorityLevel" />
             <include type="org.openwms.tms.domain.values.PriorityLevel"/>
+            <include type="java.lang.Enum"/>
         </externalizer>
    	</externalizers>
     
