@@ -65,7 +65,7 @@ public class LocationDaoImpl extends AbstractGenericJpaDao<Location, Long> imple
     @Transactional(readOnly = true)
     @SuppressWarnings("unchecked")
     public List<Location> getAllLocations() {
-        return super.findByOwnQuery(Location.NQ_FIND_ALL_EAGER);
+        return super.findByPositionalParameters(Location.NQ_FIND_ALL_EAGER);
     }
 
 }

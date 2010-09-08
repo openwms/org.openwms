@@ -65,9 +65,9 @@ import org.springframework.transaction.annotation.Transactional;
  */
 @Transactional
 @Repository
-public abstract class AbstractGenericJpaDao<T extends Serializable, ID extends Serializable>
-        implements GenericDao<T, ID> {
-    
+public abstract class AbstractGenericJpaDao<T extends Serializable, ID extends Serializable> implements
+        GenericDao<T, ID> {
+
     @Autowired
     @PersistenceContext
     private EntityManager em;
@@ -78,7 +78,6 @@ public abstract class AbstractGenericJpaDao<T extends Serializable, ID extends S
     protected Logger logger = LoggerFactory.getLogger(this.getClass());
 
     private Class<T> persistentClass;
-
 
     /**
      * Create a new AbstractGenericJpaDao.
@@ -134,7 +133,7 @@ public abstract class AbstractGenericJpaDao<T extends Serializable, ID extends S
     @Override
     @Transactional(readOnly = true)
     @SuppressWarnings("unchecked")
-    public List<T> findByQuery(String queryName, Map<String, ?> params) {
+    public List<T> findByNamedParameters(String queryName, Map<String, ?> params) {
         Query queryObject = em.createNamedQuery(queryName);
         if (params != null) {
             for (Map.Entry<String, ?> entry : params.entrySet()) {
@@ -143,14 +142,14 @@ public abstract class AbstractGenericJpaDao<T extends Serializable, ID extends S
         }
         return queryObject.getResultList();
     }
-    
+
     /**
      * {@inheritDoc}
      */
     @Override
     @Transactional(readOnly = true)
     @SuppressWarnings("unchecked")
-    public List<T> findByOwnQuery(String queryName, Object... values) {
+    public List<T> findByPositionalParameters(String queryName, Object... values) {
         Query queryObject = em.createNamedQuery(queryName);
         if (values != null) {
             for (int i = 0; i < values.length; i++) {
@@ -212,8 +211,8 @@ public abstract class AbstractGenericJpaDao<T extends Serializable, ID extends S
     protected abstract String getFindAllQuery();
 
     /**
-     * Returns the name of the <code>NamedQuery</code> to find an Entity by the
-     * business key.
+     * Returns the name of the <code>NamedQuery</code> to find an Entity by
+     * the business key.
      * 
      * @return Name of the query
      */
