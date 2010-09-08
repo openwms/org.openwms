@@ -20,11 +20,9 @@
  */
 package org.openwms.tms.domain.values;
 
-import org.openwms.tms.domain.order.TransportOrder;
-
 /**
- * A TransportOrderState - A {@link TransportOrder} must be in one of these
- * states.
+ * A TransportOrderState - A {@link org.openwms.tms.domain.order.TransportOrder}
+ * must be in one of these states.
  * 
  * @author <a href="mailto:russelltina@users.sourceforge.net">Tina Russell</a>
  * @version $Revision: $
@@ -67,6 +65,6 @@ public enum TransportOrderState {
     /**
      * Status to indicate that the TransportOrder completed successfully.
      */
-    FINISHED
+    FINISHED;
 
 }

@@ -139,7 +139,7 @@ public class TransportOrder implements DomainObject, Serializable {
      * lower priority.
      */
     @Column(name = "PRIORITY")
-    @Enumerated
+    @Enumerated(EnumType.STRING)
     private PriorityLevel priority = PriorityLevel.NORMAL;
 
     /**
