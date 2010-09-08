@@ -157,13 +157,13 @@
 	<mx:DataGrid id="transportOrdersLst" width="95%" height="400" allowMultipleSelection="true" dataProvider="{tmsModelLocator.allTransportOrders}" y="63" x="10">
 		<mx:columns>
 			<mx:DataGridColumn headerText="ID" dataField="id" />
-			<mx:DataGridColumn headerText="Current State" dataField="state" />
+			<mx:DataGridColumn headerText="State" dataField="state" labelFunction="formatAsString" />
 			<mx:DataGridColumn headerText="Priority" dataField="priority" labelFunction="formatAsString" />
 			<mx:DataGridColumn headerText="Transport Unit" dataField="transportUnit" labelFunction="formatBarcode" />
 			<mx:DataGridColumn headerText="Source Location" dataField="sourceLocation" labelFunction="formatAsString"/>
+            <mx:DataGridColumn headerText="Current Location" dataField="transportUnit" labelFunction="formatAsActualLocation" />
 			<mx:DataGridColumn headerText="Target Location" dataField="targetLocation" labelFunction="formatAsString" />
 			<mx:DataGridColumn headerText="Target Location Group" dataField="targetLocationGroup" labelFunction="formatLocationGroup" />
-			<mx:DataGridColumn headerText="Actual Location" dataField="transportUnit" labelFunction="formatAsActualLocation" />
 			<mx:DataGridColumn headerText="Created" dataField="creationDate" labelFunction="formatAsDate"/>
 			<mx:DataGridColumn headerText="Started" dataField="startDate" labelFunction="formatAsDate"/>
 			<mx:DataGridColumn headerText="Finished" dataField="endDate" labelFunction="formatAsDate"/>
