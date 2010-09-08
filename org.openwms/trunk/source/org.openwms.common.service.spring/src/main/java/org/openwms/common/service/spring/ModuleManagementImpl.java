@@ -74,7 +74,7 @@ public class ModuleManagementImpl extends EntityServiceImpl<Module, Long> implem
     @Transactional(readOnly = true)
     public List<PopupItem> getPopupItems(Module module) {
         Map<String, String> params = new HashMap<String, String>();
-        dao.findByQuery("jjj", params);
+        dao.findByNamedParameters("jjj", params);
         // TODO [scherrer] Auto-generated method stub
         return null;
     }

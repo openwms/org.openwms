@@ -24,7 +24,7 @@ import java.util.List;
 import java.util.Set;
 
 import org.openwms.common.domain.LocationGroup;
-import org.openwms.common.domain.LocationGroup.STATE;
+import org.openwms.common.domain.values.LocationGroupState;
 import org.openwms.common.integration.LocationGroupDao;
 import org.openwms.common.service.LocationGroupService;
 import org.openwms.common.service.exception.ServiceException;
@@ -62,8 +62,8 @@ public class LocationGroupServiceImpl extends EntityServiceImpl<LocationGroup, L
     public void changeGroupState(LocationGroup locationGroup) throws ServiceException {
         logger.debug("change group state called");
         if (null != locationGroup && locationGroup.getParent() != null
-                && locationGroup.getParent().getGroupStateIn() == STATE.NOT_AVAILABLE
-                && locationGroup.getGroupStateIn() == STATE.AVAILABLE) {
+                && locationGroup.getParent().getGroupStateIn() == LocationGroupState.NOT_AVAILABLE
+                && locationGroup.getGroupStateIn() == LocationGroupState.AVAILABLE) {
             throw new ServiceException("Not allowed to change GroupStateIn, parent locationGroup is not available");
         }
 
