@@ -20,14 +20,10 @@
  */
 package org.openwms.tms.domain.values;
 
-import javax.persistence.Embeddable;
-
-import org.openwms.tms.domain.order.TransportOrder;
-
 /**
  * A PriorityLevel.
  * <p>
- * Is used to prioritize {@link TransportOrder}s.
+ * Is used to prioritize {@link org.openwms.tms.domain.order.TransportOrder}s.
  * </p>
  * 
  * @author <a href="mailto:openwms@googlemail.com">Heiko Scherrer</a>
@@ -35,7 +31,6 @@ import org.openwms.tms.domain.order.TransportOrder;
  * @since 0.1
  * @see org.openwms.tms.domain.order.TransportOrder
  */
-@Embeddable
 public enum PriorityLevel {
 
     /**
