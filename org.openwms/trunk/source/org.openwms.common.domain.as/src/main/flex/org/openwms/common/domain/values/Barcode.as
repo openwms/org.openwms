@@ -37,5 +37,10 @@ package org.openwms.common.domain.values {
         {
             return this.value;
         }
+        
+        public function isEmpty():Boolean
+        {
+        	return ((this.value == null||this.value.length == 0) ? true : false);
+        }
     }
 }
