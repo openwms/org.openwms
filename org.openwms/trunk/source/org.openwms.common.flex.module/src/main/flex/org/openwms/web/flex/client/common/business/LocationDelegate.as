@@ -142,6 +142,7 @@ package org.openwms.web.flex.client.common.business
 
         private function onFault(event:TideFaultEvent):void
         {
+        	trace("Error executing operation on Location service:"+event.fault);
             Alert.show("Error executing operation on Location service");
         }
     }

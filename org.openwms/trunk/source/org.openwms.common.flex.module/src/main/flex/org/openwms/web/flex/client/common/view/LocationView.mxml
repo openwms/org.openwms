@@ -21,7 +21,7 @@
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
 -->
-<mx:Canvas xmlns:mx="http://www.adobe.com/2006/mxml" width="100%" height="100%" backgroundColor="#C2DAEF" show="init()">
+<mx:Canvas xmlns:mx="http://www.adobe.com/2006/mxml" width="100%" height="100%" backgroundColor="#C2DAEF" show="onShow()">
 
     <mx:Metadata>
         [Name("locationView")]
@@ -55,7 +55,7 @@
             [Bindable]
             private var listLocationGroups:ArrayCollection=new ArrayCollection();
 
-            private function init():void
+            private function onShow():void
             {
                 if (commonModelLocator.allLocations.length == 0)
                 {
@@ -73,10 +73,10 @@
 
             private function onRowClick(event:ListEvent):void
             {
-                setLocationGroup();
-                setLocationType();
+            	selected = event.currentTarget.selectedItem as Location;
             }
 
+// Remove
             private function setLocationType():void
             {
                 var locGroup:int=-1;
@@ -89,7 +89,7 @@
                 }
                 locationTypeCB.selectedIndex=locGroup;
             }
-
+// Remove
             private function setLocationGroup():void
             {
                 var locGroup:int=-1;
@@ -114,7 +114,7 @@
                 {
                     return item.locationGroup[dg.dataField];
                 }
-                return "NULL";
+                return "n/a";
             }
 
             private function showCreateLocationDialog():void
@@ -161,16 +161,16 @@
         ]]>
     </mx:Script>
 
-    <mx:Binding source="descriptionTxt.text" destination="selected.description" />
-    <mx:Binding source="(locationGroupCB.selectedItem as LocationGroup)" destination="selected.locationGroup" />
-    <mx:Binding source="locationGroupCountingActiveChk.selected" destination="selected.locationGroupCountingActive" />
-    <mx:Binding source="(locationTypeCB.selectedItem as LocationType)" destination="selected.locationType" />
-    <mx:Binding source="noMaxTransportUnitsTxt.value" destination="selected.noMaxTransportUnits" />
-    <mx:Binding source="Number(plcStateTxt.text)" destination="selected.plcState" />
-    <mx:Binding source="countingActiveChk.selected" destination="selected.countingActive" />
-    <mx:Binding source="incomingActiveChk.selected" destination="selected.incomingActive" />
-    <mx:Binding source="outgoingActiveChk.selected" destination="selected.outgoingActive" />
-    <mx:Binding source="consideredInAllocationChk.selected" destination="selected.consideredInAllocation" />
+    <mx:Binding destination="descriptionTxt.text" source="selected.description" />
+    <mx:Binding destination="locationGroupCB.selectedItem" source="selected.locationGroup" />
+    <mx:Binding destination="locationGroupCountingActiveChk.selected" source="selected.locationGroupCountingActive" />
+    <mx:Binding destination="locationTypeCB.selectedItem" source="selected.locationType" />
+    <mx:Binding destination="noMaxTransportUnitsTxt.value" source="selected.noMaxTransportUnits" />
+    <mx:Binding destination="plcStateTxt.text" source="String(selected.plcState)" />
+    <mx:Binding destination="countingActiveChk.selected" source="selected.countingActive" />
+    <mx:Binding destination="incomingActiveChk.selected" source="selected.incomingActive" />
+    <mx:Binding destination="outgoingActiveChk.selected" source="selected.outgoingActive" />
+    <mx:Binding destination="consideredInAllocationChk.selected" source="selected.consideredInAllocation" />
 
     <mx:DateFormatter id="dateFormatter" formatString="{CommonModelLocator.DT_FORMAT_STRING}"/>
 
@@ -189,17 +189,17 @@
     <mx:HBox height="100%" width="95%" x="10" y="63">
         <mx:DataGrid id="locationsList" allowMultipleSelection="true" sortableColumns="true" height="95%" width="100%" dataProvider="{commonModelLocator.allLocations}" change="onRowClick(event)">
             <mx:columns>
-                <mx:DataGridColumn dataField="area" labelFunction="locationIdField" editable="false" width="50">
+                <mx:DataGridColumn dataField="area" labelFunction="locationIdField" editable="false" width="45">
                     <mx:headerRenderer>
                         <mx:Component>
                             <mx:Label text="Area" styleName="headerArea"/>
                         </mx:Component>
                     </mx:headerRenderer>
                 </mx:DataGridColumn>
-                <mx:DataGridColumn headerText="Aisle" dataField="aisle" labelFunction="locationIdField" editable="false" width="50"/>
-                <mx:DataGridColumn headerText="X" dataField="x" labelFunction="locationIdField" editable="false" width="50"/>
-                <mx:DataGridColumn headerText="Y" dataField="y" labelFunction="locationIdField" editable="false" width="50"/>
-                <mx:DataGridColumn headerText="Z" dataField="z" labelFunction="locationIdField" editable="false" width="50"/>
+                <mx:DataGridColumn headerText="Aisle" dataField="aisle" labelFunction="locationIdField" editable="false" width="45"/>
+                <mx:DataGridColumn headerText="X" dataField="x" labelFunction="locationIdField" editable="false" width="45"/>
+                <mx:DataGridColumn headerText="Y" dataField="y" labelFunction="locationIdField" editable="false" width="45"/>
+                <mx:DataGridColumn headerText="Z" dataField="z" labelFunction="locationIdField" editable="false" width="45"/>
                 <mx:DataGridColumn headerText="Location Group" dataField="name" labelFunction="locationGroupField" editable="false"/>
                 <mx:DataGridColumn headerText="Description" dataField="description" editable="true"/>
                 <mx:DataGridColumn headerText="Counting Active" dataField="countingActive" editable="true">
@@ -239,13 +239,13 @@
 
             <mx:Image x="10" y="119" mouseChildren="false" source="@Embed(source='/assets/images/LocationGroup.png')"/>
             <mx:Label text="Location Group" width="130" textAlign="right" x="10" y="119"/>
-            <mx:ComboBox id="locationGroupCB" labelField="name" prompt="n/a" selectedIndex="-1" dataProvider="{commonModelLocator.allLocationGroups}" width="200" x="148" y="117"/>
+            <mx:ComboBox id="locationGroupCB" labelField="name" prompt="n/a" selectedIndex="{commonModelLocator.allLocationGroups.getItemIndex(selected)}" dataProvider="{commonModelLocator.allLocationGroups}" width="200" x="148" y="117"/>
             <mx:CheckBox id="locationGroupCountingActiveChk" x="148" y="147" label="Counting Active in Location Group" selected="{selected.locationGroupCountingActive}"/>
             <mx:HRule x="10" y="177" width="350"/>
 
             <mx:Image x="10" y="187" mouseChildren="false" source="@Embed(source='/assets/images/LocationType.png')"/>
             <mx:Label text="Location Type" width="130" textAlign="right" x="10" y="187"/>
-            <mx:ComboBox id="locationTypeCB" labelField="type" prompt="n/a" selectedIndex="-1" dataProvider="{commonModelLocator.allLocationTypes}" width="200" x="148" y="185"/>
+            <mx:ComboBox id="locationTypeCB" labelField="type" prompt="n/a" selectedIndex="{commonModelLocator.allLocationTypes.getItemIndex(selected.locationType)}" dataProvider="{commonModelLocator.allLocationTypes}" width="200" x="148" y="185"/>
             <mx:Text x="148" y="217" text="{locationTypeCB.selectedItem.description}" width="200"/>
             <mx:Text x="148" y="447" text="{selected.lastAccess}" width="200"/>
             <mx:HRule x="10" y="243" width="350"/>
