@@ -79,7 +79,7 @@ public interface GenericDao<T extends Serializable, ID extends Serializable> {
      *            Map of parameters to pass to the query
      * @return List of found Entity classes
      */
-    List<T> findByQuery(String queryName, Map<String, ?> params);
+    List<T> findByNamedParameters(String queryName, Map<String, ?> params);
     
     /**
      * Use an own JPA query to fetch Entities.
@@ -88,7 +88,7 @@ public interface GenericDao<T extends Serializable, ID extends Serializable> {
      * @param values A list of values to use as parameters
      * @return A list of all Entities
      */
-    List<T> findByOwnQuery(String query, Object...values);
+    List<T> findByPositionalParameters(String query, Object...values);
 
     /**
      * Find and return the Entity identified by the natural unique id.
