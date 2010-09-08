@@ -21,7 +21,7 @@
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
 -->
-<mx:Canvas xmlns:mx="http://www.adobe.com/2006/mxml" width="100%" height="100%" show="onStartup()" backgroundColor="#C2DAEF">
+<mx:Canvas xmlns:mx="http://www.adobe.com/2006/mxml" xmlns:comp="org.openwms.web.flex.client.component.*" width="100%" height="100%" show="onStartup()" backgroundColor="#C2DAEF">
 
     <mx:Metadata>
         [Name("transportUnitView")]
@@ -100,7 +100,9 @@
             }
 
             private function onRowClick(event:ListEvent):void {
-                selected = (event.currentTarget.selectedItem) as TransportUnit;
+                selected = event.currentTarget.selectedItem as TransportUnit;
+                stateCmb.selectedItem = selected.state;
+                actualLocationCmb.selectedItem = selected.actualLocation;
             }
 
             private function refresh():void
@@ -122,13 +124,14 @@
                 dispatchEvent(event);
             }
 
-            private function resolveUser(transportUnit:TransportUnit):String
-            {
-            	if (transportUnit.inventoryUser == null) {
-            		return "--";
-            	}
-            	return transportUnit.inventoryUser.username;
-            }
+	        public static function formatBarcode(item:Object, dg:DataGridColumn):String
+	        {
+	            if (item[dg.dataField] != null)
+	            {
+	                return String(item[dg.dataField].barcode);
+	            }
+	            return "--";
+	        }
 
             private function formatDateField(item:Object, dg:DataGridColumn):String
             {
@@ -163,11 +166,11 @@
 	<mx:HBox x="10" y="63" width="95%" height="100%">
 		<mx:DataGrid id="transportUnitsGrid" width="100%" height="95%" doubleClickEnabled="true" doubleClick="showDetails()" change="onRowClick(event)" allowMultipleSelection="true" dataProvider="{commonModelLocator.allTransportUnits}" x="0" y="10">
 			<mx:columns>
-				<mx:DataGridColumn width="150" headerText="Barcode" dataField="barcode" />
+				<mx:DataGridColumn width="130" headerText="Barcode" dataField="barcode" />
                 <mx:DataGridColumn width="80" headerText="Type" dataField="transportUnitType" />
                 <mx:DataGridColumn width="100" headerText="State" dataField="state" />
-				<mx:DataGridColumn width="160" headerText="Actual Location" dataField="actualLocation" />
-                <mx:DataGridColumn width="130" headerText="Placed on" dataField="parent.barcode.value" />
+				<mx:DataGridColumn width="160" headerText="Current Location" dataField="actualLocation" />
+                <mx:DataGridColumn width="130" headerText="Placed on" dataField="parent" labelFunction="formatBarcode" />
                 <mx:DataGridColumn width="150" headerText="Created" dataField="creationDate" labelFunction="formatDateField"/>
 			</mx:columns>
 		</mx:DataGrid>
@@ -177,19 +180,19 @@
             <mx:Text text="{selected.barcode}" width="100%" fontWeight="bold"  x="148" y="10"/>
 
 			<mx:Label text="State" fontWeight="normal" width="130" textAlign="right" x="10" y="36"/>
-            <mx:ComboBox x="148" y="34" dataProvider="{TransportUnitState.constants}" selectedIndex="{new ArrayCollection(TransportUnitState.constants).getItemIndex(selected.transportUnitType)}"/>
+            <comp:SuggestComboBox id="stateCmb" x="148" y="34" dataProvider="{TransportUnitState.constants}" />
 
-			<mx:Label text="Actual Location" fontWeight="normal" width="130" textAlign="right" x="10" y="62"/>
-            <mx:ComboBox x="148" y="60" />
+			<mx:Label text="Current Location" fontWeight="normal" width="130" textAlign="right" x="10" y="62"/>
+			<comp:SuggestComboBox x="148" y="60" id="actualLocationCmb" dataProvider="{commonModelLocator.allLocations}"/>
 
-			<mx:Label text="Last Moved" fontWeight="normal" width="130" textAlign="right" x="10" y="110"/>
+			<mx:Label text="Moved" fontWeight="normal" width="130" textAlign="right" x="10" y="110"/>
             <mx:Text text="{dateFormatter.format(selected.actualLocationDate)}" width="100%" fontWeight="normal"  x="148" y="110"/>
 
-            <mx:Label text="Last Inventory" fontWeight="normal" width="130" textAlign="right" x="10" y="136"/>
-            <mx:Text text="{dateFormatter.format(selected.inventoryDate)}" width="100%" fontWeight="normal"  x="148" y="136"/>
+            <mx:Label text="Last Inventory at" fontWeight="normal" width="130" textAlign="right" x="10" y="136"/>
+            <mx:Text text="{(selected.inventoryDate == null) ? '--' : dateFormatter.format(selected.inventoryDate)}" width="100%" fontWeight="normal"  x="148" y="136"/>
 
-            <mx:Label text="Inventory User" fontWeight="normal" width="130" textAlign="right" x="10" y="162"/>
-            <mx:Text text="{resolveUser(selected)}" width="100%" fontWeight="normal"  x="148" y="162"/>
+            <mx:Label text="Last Inventory by" fontWeight="normal" width="130" textAlign="right" x="10" y="162"/>
+            <mx:Text text="{(selected.inventoryUser == null) ? '--' : selected.inventoryUser.username}" width="100%" fontWeight="normal"  x="148" y="162"/>
 
 			<mx:Label text="Created at" fontWeight="normal" width="130" textAlign="right" x="10" y="214"/>
             <mx:Text text="{dateFormatter.format(selected.creationDate)}" width="100%" fontWeight="normal"  x="148" y="214"/>
@@ -203,7 +206,7 @@
             <mx:List x="148" y="320" width="140" height="64" />
 
 			<mx:Label text="Placed On" fontWeight="normal" width="130" textAlign="right" x="10" y="188"/>
-			<mx:Text text="{selected.parent.barcode}" width="100%" fontWeight="normal"  x="148" y="188"/>
+			<mx:Text text="{(selected.parent == null) ? '--' : selected.parent.barcode}" width="100%" fontWeight="normal"  x="148" y="188"/>
 
 			<mx:HRule x="10" y="100" width="309"/>
 			<mx:HRule x="10" y="311" width="309"/>
