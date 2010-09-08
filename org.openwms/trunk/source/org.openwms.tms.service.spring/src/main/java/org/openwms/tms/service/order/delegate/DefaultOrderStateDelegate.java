@@ -20,7 +20,9 @@
  */
 package org.openwms.tms.service.order.delegate;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.openwms.common.domain.TransportUnit;
 import org.openwms.tms.domain.order.TransportOrder;
@@ -29,6 +31,7 @@ import org.openwms.tms.integration.TransportOrderDao;
 import org.openwms.tms.service.impl.TransportOrderStateDelegate;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Service;
 
 /**
  * A DefaultOrderStateDelegate.
@@ -37,6 +40,7 @@ import org.slf4j.LoggerFactory;
  * @version $Revision: $
  * @since 0.1
  */
+@Service
 public class DefaultOrderStateDelegate implements TransportOrderStateDelegate {
 
     protected TransportOrderDao dao;
@@ -55,14 +59,17 @@ public class DefaultOrderStateDelegate implements TransportOrderStateDelegate {
      */
     @Override
     public void afterCreation(TransportUnit transportUnit) {
-        List<TransportOrder> transportOrders = dao.findByOwnQuery(TransportOrder.NQ_FIND_FOR_TU_IN_STATE,
-                transportUnit, TransportOrderState.CREATED);
+        Map<String, Object> params = new HashMap<String, Object>();
+        params.put("transportUnit", transportUnit);
+        params.put("states", new Enum[] { TransportOrderState.CREATED });
+        List<TransportOrder> transportOrders = dao
+                .findByNamedParameters(TransportOrder.NQ_FIND_FOR_TU_IN_STATE, params);
         if (logger.isDebugEnabled()) {
             logger.debug("List:" + transportOrders.size());
         }
         for (TransportOrder transportOrder : transportOrders) {
             if (logger.isDebugEnabled()) {
-                logger.debug("Initialize TransportOrder" + transportOrder.getId());
+                logger.debug("Initialize TransportOrder :" + transportOrder.getId());
             }
             boolean go = initialize(transportOrder);
             if (go) go = start(transportOrder);
@@ -120,8 +127,10 @@ public class DefaultOrderStateDelegate implements TransportOrderStateDelegate {
             return null;
         }
         logger.debug("Serach an order to start");
-        List<TransportOrder> transportOrders = dao.findByOwnQuery(TransportOrder.NQ_FIND_ORDERS_TO_START,
-                transportOrder.getTransportUnit());
+        Map<String, Object> params = new HashMap<String, Object>();
+        params.put("transportUnit", transportOrder.getTransportUnit());
+        List<TransportOrder> transportOrders = dao
+                .findByNamedParameters(TransportOrder.NQ_FIND_ORDERS_TO_START, params);
         if (transportOrders != null) {
             return transportOrders.get(0);
         }
@@ -138,14 +147,16 @@ public class DefaultOrderStateDelegate implements TransportOrderStateDelegate {
         if (transportOrder.getTargetLocationGroup() != null
                 && transportOrder.getTargetLocationGroup().isInfeedBlocked()) {
             if (logger.isDebugEnabled()) {
-                logger.debug("TLG is blocked, do not start");
+                logger.debug("TargetLocationGroup is blocked, do not start");
             }
             return false;
         }
 
         // Check for other active transports
-        List<TransportOrder> others = dao.findByOwnQuery(TransportOrder.NQ_FIND_FOR_TU_IN_STATE, transportOrder
-                .getTransportUnit(), new Object[] { TransportOrderState.STARTED, TransportOrderState.INTERRUPTED });
+        Map<String, Object> params = new HashMap<String, Object>();
+        params.put("transportUnit", transportOrder.getTransportUnit());
+        params.put("states", new Object[] { TransportOrderState.STARTED, TransportOrderState.INTERRUPTED });
+        List<TransportOrder> others = dao.findByNamedParameters(TransportOrder.NQ_FIND_FOR_TU_IN_STATE, params);
         if (others == null) {
             if (logger.isDebugEnabled()) {
                 logger.debug("There is an already started one");
