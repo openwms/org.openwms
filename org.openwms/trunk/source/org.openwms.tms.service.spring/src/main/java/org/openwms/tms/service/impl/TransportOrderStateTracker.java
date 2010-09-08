@@ -69,6 +69,7 @@ public class TransportOrderStateTracker implements ApplicationListener<Transport
         this.dao = dao;
     }
 
+    @SuppressWarnings("unused")
     @PostConstruct
     private void initialize() {
         this.transportOrderStateDelegate = new DefaultOrderStateDelegate(this.dao);
@@ -80,7 +81,7 @@ public class TransportOrderStateTracker implements ApplicationListener<Transport
     @Override
     public void onApplicationEvent(TransportServiceEvent event) {
         if (logger.isDebugEnabled()) {
-            logger.debug("Got event" + event.getType());
+            logger.debug("Got event :" + event.getType());
         }
         switch (event.getType()) {
         case TRANSPORT_CREATED:

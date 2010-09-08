@@ -150,9 +150,6 @@ public class TransportServiceImpl extends EntityServiceImpl<TransportOrder, Long
         }
         addEntity(transportOrder);
         dao.persist(transportOrder);
-        if (logger.isDebugEnabled()) {
-            logger.debug("tetetetetet" + ctx);
-        }
         ctx.publishEvent(new TransportServiceEvent(transportOrder.getTransportUnit(),
                 TransportServiceEvent.TYPE.TRANSPORT_CREATED));
         return transportOrder;
