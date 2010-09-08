@@ -30,18 +30,18 @@
 
     <mx:Script>
     	<![CDATA[
-    		import org.openwms.tms.domain.values.PriorityLevel;
     		import mx.controls.Alert;
-    		import org.openwms.web.flex.client.common.model.CommonModelLocator;
+            import mx.collections.ArrayCollection;
+            import org.openwms.tms.domain.order.TransportOrder;
     		import org.openwms.tms.domain.values.TransportOrderState;
+            import org.openwms.tms.domain.values.PriorityLevel;
+            import org.openwms.common.domain.TransportUnit;
+            import org.openwms.common.domain.Location;
+            import org.openwms.common.domain.LocationGroup;
     		import org.openwms.common.domain.values.Barcode;
-    		import org.openwms.common.domain.TransportUnit;
-    		import org.openwms.tms.domain.order.TransportOrder;
-    		import org.openwms.web.flex.client.tms.event.TransportOrderEvent;
-    		import org.openwms.common.domain.Location;
-    		import org.openwms.common.domain.LocationGroup;
-    		import mx.collections.ArrayCollection;
+            import org.openwms.web.flex.client.common.model.CommonModelLocator;
             import org.openwms.web.flex.client.model.ModelLocator;
+            import org.openwms.web.flex.client.tms.event.TransportOrderEvent;
     	
             import mx.containers.HBox;
             import mx.controls.Image;
@@ -91,7 +91,6 @@
                 transportUnit.barcode = new Barcode(barcodeTxt.text);
             	transportOrder.transportUnit =  transportUnit;
             	transportOrder.priority = priorityCmb.selectedItem as PriorityLevel;
-            	transportOrder.state = TransportOrderState.CREATED;
             	trace("Creating TransportOrder :"+barcodeTxt.text+transportOrder.state+transportOrder.targetLocationGroup);
             	event.data = transportOrder;
             	dispatchEvent(event);
