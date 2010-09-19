@@ -35,7 +35,6 @@
 	<properties>
 		<moduleDir>..</moduleDir>
 		<template.version>2.0.0</template.version>
-		<flex.version>3.2.0.3958</flex.version>
 	</properties>
 	<build>
 		<finalName>${project.artifactId}-${project.version}</finalName>
@@ -45,7 +44,6 @@
 			<plugin>
 				<groupId>org.sonatype.flexmojos</groupId>
 				<artifactId>flexmojos-maven-plugin</artifactId>
-				<version>3.3.0</version>
 				<extensions>true</extensions>
 				<configuration>
 					<generatorToUse>graniteds2</generatorToUse>
@@ -85,19 +83,19 @@
 					<dependency>
 						<groupId>com.adobe.flex</groupId>
 						<artifactId>compiler</artifactId>
-						<version>${flex.version}</version>
+                        <version>${flex.version}</version>
 						<type>pom</type>
 					</dependency>
 					<dependency>
 						<groupId>org.graniteds</groupId>
 						<artifactId>granite-essentials-swc</artifactId>
-						<version>${granite.version}</version>
+                        <version>${granite.version}</version>
 						<type>swc</type>
 					</dependency>
 					<dependency>
 						<groupId>org.graniteds</groupId>
 						<artifactId>granite-swc</artifactId>
-						<version>${granite.version}</version>
+                        <version>${granite.version}</version>
 						<type>swc</type>
 					</dependency>
 				</dependencies>
@@ -159,61 +157,46 @@
 	</pluginRepositories>
 
 	<dependencies>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>org.springframework.spring-library</artifactId>
+            <type>libd</type>
+        </dependency>
 		<dependency>
 			<groupId>${project.groupId}</groupId>
 			<artifactId>org.openwms.common.domain.as</artifactId>
-			<version>${project.version}</version>
 			<type>swc</type>
 		</dependency>
         <dependency>
             <groupId>${project.groupId}</groupId>
             <artifactId>org.openwms.client.flex.lib</artifactId>
-            <version>${project.version}</version>
             <type>swc</type>
         </dependency>
         <dependency>
             <groupId>${project.groupId}</groupId>
             <artifactId>org.openwms.common.flex.lib</artifactId>
-            <version>${project.version}</version>
             <type>swc</type>
         </dependency>
-        
 		<dependency>
 			<groupId>com.adobe.flex.framework</groupId>
 			<artifactId>flex-framework</artifactId>
-			<version>${flex.version}</version>
 			<type>pom</type>
-		</dependency>
-        
-		<dependency>
-			<groupId>org.graniteds</groupId>
-			<artifactId>granite-core-swc</artifactId>
-			<version>1.2.0_SP1</version>
-			<type>swc</type>
 		</dependency>
 		<dependency>
 			<groupId>org.graniteds</groupId>
 			<artifactId>granite-essentials-swc</artifactId>
-			<version>${granite.version}</version>
 			<type>swc</type>
 			<scope>internal</scope>
 		</dependency>
 		<dependency>
 			<groupId>org.graniteds</groupId>
 			<artifactId>granite-swc</artifactId>
-			<version>${granite.version}</version>
 			<type>swc</type>
 			<scope>internal</scope>
 		</dependency>
 		<dependency>
-			<groupId>org.springframework</groupId>
-			<artifactId>org.springframework.spring-library</artifactId>
-			<type>libd</type>
-		</dependency>
-		<dependency>
 			<groupId>com.asunit</groupId>
 			<artifactId>asunit</artifactId>
-			<version>20071011</version>
 			<type>swc</type>
 			<scope>test</scope>
 		</dependency>

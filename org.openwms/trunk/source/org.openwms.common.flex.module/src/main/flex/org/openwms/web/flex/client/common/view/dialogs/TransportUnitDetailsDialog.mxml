@@ -132,7 +132,7 @@
 		<mx:Label x="10" y="10" text="Barcode"/>
         <mx:TextInput x="170" y="8" id="barcodeTxt" text="{transportUnit.barcode}" width="261"/>
 
-        <mx:Label x="10" y="38" text="Actual Location"/>
+        <mx:Label x="10" y="38" text="Current Location"/>
         <comp:SuggestComboBox id="actualLocationCmb" x="170" y="36" dataProvider="{commonModelLocator.allLocations}" width="261"/>
 
         <mx:Label x="10" y="64" text="Moved"/>
