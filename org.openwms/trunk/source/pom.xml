@@ -255,6 +255,7 @@
         <spring.version>3.0.0.RELEASE</spring.version>
         <hibernate.version>3.2.6.GA</hibernate.version>
         <granite.version>2.1.0.GA</granite.version>
+        <flex.version>3.2.0.3958</flex.version>
         <maven.compile.targetLevel>${jdkVersion}</maven.compile.targetLevel>
         <maven.compile.sourceLevel>${jdkVersion}</maven.compile.sourceLevel>
     </properties>
@@ -905,6 +906,68 @@
                 <version>1.2.15</version>
             </dependency>
 
+            <!-- Flex Framework and stuff -->
+            <dependency>
+                <groupId>com.adobe.flex.framework</groupId>
+                <artifactId>flex-framework</artifactId>
+                <version>${flex.version}</version>
+                <type>pom</type>
+            </dependency>
+            <dependency>
+                <groupId>com.adobe.flex</groupId>
+                <artifactId>compiler</artifactId>
+                <version>${flex.version}</version>
+                <type>pom</type>
+            </dependency>
+            <dependency>
+                <groupId>org.graniteds</groupId>
+                <artifactId>granite-swc</artifactId>
+                <version>${granite.version}</version>
+                <type>swc</type>
+                <scope>internal</scope>
+            </dependency>    
+            <dependency>
+                <groupId>org.graniteds</groupId>
+                <artifactId>granite-essentials-swc</artifactId>
+                <version>${granite.version}</version>
+                <type>swc</type>
+                <scope>internal</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.graniteds</groupId>
+                <artifactId>granite-core</artifactId>
+                <version>${granite.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.graniteds</groupId>
+                <artifactId>granite-spring</artifactId>
+                <version>${granite.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.graniteds</groupId>
+                <artifactId>granite-eclipselink</artifactId>
+                <version>${granite.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.graniteds</groupId>
+                <artifactId>granite-toplink</artifactId>
+                <version>${granite.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.graniteds</groupId>
+                <artifactId>granite-hibernate</artifactId>
+                <version>${granite.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.asunit</groupId>
+                <artifactId>asunit</artifactId>
+                <version>20071011</version>
+                <type>swc</type>
+                <scope>test</scope>
+            </dependency>
+        
+        
+        
             <!-- Project dependencies -->
             <dependency>
                 <groupId>${project.groupId}</groupId>
@@ -915,6 +978,12 @@
                 <groupId>${project.groupId}</groupId>
                 <artifactId>org.openwms.common.domain</artifactId>
                 <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>${project.groupId}</groupId>
+                <artifactId>org.openwms.common.domain.as</artifactId>
+                <version>${project.version}</version>
+                <type>swc</type>
             </dependency>
             <dependency>
                 <groupId>${project.groupId}</groupId>
@@ -987,6 +1056,12 @@
             </dependency>
             <dependency>
                 <groupId>${project.groupId}</groupId>
+                <artifactId>org.openwms.tms.domain.as</artifactId>
+                <version>${project.version}</version>
+                <type>swc</type>
+            </dependency>
+            <dependency>
+                <groupId>${project.groupId}</groupId>
                 <artifactId>org.openwms.tms.integration</artifactId>
                 <version>${project.version}</version>
             </dependency>
@@ -1008,6 +1083,18 @@
             <dependency>
                 <groupId>${project.groupId}</groupId>
                 <artifactId>org.openwms.tms.flex.module</artifactId>
+                <version>${project.version}</version>
+                <type>swf</type>
+            </dependency>
+            <dependency>
+                <groupId>${project.groupId}</groupId>
+                <artifactId>org.openwms.client.flex.lib</artifactId>
+                <version>${project.version}</version>
+                <type>swc</type>
+            </dependency>
+            <dependency>
+                <groupId>${project.groupId}</groupId>
+                <artifactId>org.openwms.client.flex.app</artifactId>
                 <version>${project.version}</version>
                 <type>swf</type>
             </dependency>
