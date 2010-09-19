@@ -53,6 +53,7 @@
         <properties>
             <property name="hibernate.show_sql" value="true"/>
             <property name="hibernate.format_sql" value="true"/>
+            <property name="hibernate.cache.use_query_cache" value="false"/>
         </properties>
     </persistence-unit>
 </persistence>
