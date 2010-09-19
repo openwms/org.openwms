@@ -68,7 +68,8 @@ package org.openwms.web.flex.client.view.dialogs
 		
         override protected function formatFunction(item:*):String
         {
-            return (item == null ? "" : (item as SecurityObject).name+" - "+(item as SecurityObject).description);
+        	trace("TTTT:"+item);
+            return (item == null ? " " : (item as SecurityObject).name+" - "+(item as SecurityObject).description);
         }
         
         override protected function getSortField():String

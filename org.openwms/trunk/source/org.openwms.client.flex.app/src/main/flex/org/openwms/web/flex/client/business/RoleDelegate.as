@@ -18,12 +18,13 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
-package org.openwms.web.flex.client.business
-{
+package org.openwms.web.flex.client.business {
 
     import mx.collections.ArrayCollection;
     import mx.controls.Alert;
-    
+    import mx.logging.ILogger;
+    import mx.logging.Log;
+
     import org.granite.tide.events.TideFaultEvent;
     import org.granite.tide.events.TideResultEvent;
     import org.granite.tide.spring.Context;
@@ -42,76 +43,68 @@ package org.openwms.web.flex.client.business
     [ManagedEvent(name="ROLE_ADDED")]
     [ManagedEvent(name="ROLE_SAVED")]
     [Bindable]
-    public class RoleDelegate
-    {
-        [In]
-        public var tideContext:Context;
-        [In]
-        public var modelLocator:ModelLocator;
+    public class RoleDelegate {
 
-        public function RoleDelegate():void
-        {
+        private static var logger : ILogger = Log.getLogger("org.openwms.web.flex.client.business.RoleDelegate");
+
+        [In]
+        public var tideContext : Context;
+        [In]
+        public var modelLocator : ModelLocator;
+
+        public function RoleDelegate() : void {
         }
 
         [Observer("LOAD_ALL_ROLES")]
         [Observer("ROLE_ADDED")]
         [Observer("ROLE_SAVED")]
-        public function getRoles():void
-        {
-            tideContext.userService.findAllRoles(onRolesLoaded);
+        public function getRoles() : void {
+            tideContext.userService.findAllRoles(onRolesLoaded, onFault);
+        }
+
+        private function onRolesLoaded(event : TideResultEvent) : void {
+            modelLocator.allRoles = event.result as ArrayCollection;
         }
 
         [Observer("ADD_ROLE")]
-        public function addRole(event:RoleEvent):void
-        {
-            if (event.data is Role)
-            {
-                tideContext.userService.saveRole(event.data as Role, onRoleAdded);
+        public function addRole(event : RoleEvent) : void {
+            if (event.data is Role) {
+                tideContext.userService.saveRole(event.data as Role, onRoleAdded, onFault);
             }
         }
 
+        private function onRoleAdded(event : TideResultEvent) : void {
+            dispatchEvent(new RoleEvent(RoleEvent.ROLE_ADDED));
+        }
+
         [Observer("SAVE_ROLE")]
-        public function saveRole(event:RoleEvent):void
-        {
-            if (event.data is Role)
-            {
+        public function saveRole(event : RoleEvent) : void {
+            if (event.data is Role) {
                 tideContext.userService.saveRole(event.data as Role, onRoleSaved, onFault);
             }
         }
 
+        private function onRoleSaved(event : TideResultEvent) : void {
+            dispatchEvent(new RoleEvent(RoleEvent.LOAD_ALL_ROLES));
+            dispatchEvent(new RoleEvent(RoleEvent.ROLE_SAVED));
+        }
+
         [Observer("DELETE_ROLE")]
-        public function deleteRoles(event:RoleEvent):void
-        {
-            if (event.data != null)
-            {
-                tideContext.userService.removeRoles(event.data as ArrayCollection, onRoleDeleted);
+        public function deleteRoles(event : RoleEvent) : void {
+            if (event.data != null) {
+                tideContext.userService.removeRoles(event.data as ArrayCollection, onRoleDeleted, onFault);
             }
         }
 
-        private function onRolesLoaded(event:TideResultEvent):void
-        {
-            modelLocator.allRoles = event.result as ArrayCollection;
-        }
-
-        private function onRoleAdded(event:TideResultEvent):void
-        {
-            dispatchEvent(new RoleEvent(RoleEvent.ROLE_ADDED));
-        }
-
-        private function onRoleSaved(event:TideResultEvent):void
-        {
-            dispatchEvent(new RoleEvent(RoleEvent.ROLE_SAVED));
-        }
-
-        private function onRoleDeleted(event:TideResultEvent):void
-        {
+        private function onRoleDeleted(event : TideResultEvent) : void {
             dispatchEvent(new RoleEvent(RoleEvent.LOAD_ALL_ROLES));
         }
 
-        private function onFault(event:TideFaultEvent):void
-        {
-            dispatchEvent(new RoleEvent(RoleEvent.ROLE_SAVED));
-            Alert.show("Error when saving the Role");
+        private function onFault(event : TideFaultEvent) : void {
+            trace("Error executing operation on Role service:" + event.fault);
+            logger.error("ERROR accessing UserService : " + event.fault);
+            Alert.show("Error executing operation on Role service");
+            dispatchEvent(new RoleEvent(RoleEvent.LOAD_ALL_ROLES));
         }
     }
 }

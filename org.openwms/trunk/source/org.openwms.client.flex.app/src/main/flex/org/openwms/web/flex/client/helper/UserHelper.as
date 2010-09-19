@@ -34,7 +34,6 @@ package org.openwms.web.flex.client.helper
     {
         public function UserHelper()
         {
-
         }
 
         public static function haveDetails(userData:User):Boolean
@@ -46,32 +45,14 @@ package org.openwms.web.flex.client.helper
             return false;
         }
 
-        public static function traceUser(user:User):void
-        {
-            if (user == null)
-            {
-                return;
-            }
-            trace("Username:" + user.username);
-            trace("Fullname:" + user.fullname);
-
-            if (haveDetails(user))
-            {
-                // trace also the details
-                //trace("Sex:"+user.userDetails.sex);
-            }
-        }
-
         public static function bindUserDetailsSEXtoRBG(sex:UserDetails$SEX):UserDetails$SEX
         {
             if (sex != null)
             {
-                trace("Sex is set");
                 return sex;
             }
             else
             {
-                trace("Sex is NOT set");
                 return null;
             }
         }

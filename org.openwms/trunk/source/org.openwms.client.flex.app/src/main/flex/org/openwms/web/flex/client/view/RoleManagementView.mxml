@@ -21,10 +21,10 @@
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
 -->
-<mx:Canvas xmlns:mx="http://www.adobe.com/2006/mxml" width="100%" height="100%" backgroundColor="#C2DAEF" show="init()">
+<mx:Canvas xmlns:mx="http://www.adobe.com/2006/mxml" width="100%" height="100%" backgroundColor="#C2DAEF" creationComplete="init()">
 
     <mx:Metadata>
-        [Name("roleManagementView")]
+        [Name]
         [ManagedEvent(name="LOAD_ALL_USERS")]
         [ManagedEvent(name="LOAD_ALL_ROLES")]
         [ManagedEvent(name="SAVE_ROLE")]
@@ -57,25 +57,22 @@
             [Bindable]
             private var selected:Role;
 
-            private function init():void
-            {
+            private function init():void {
                 dispatchEvent(new RoleEvent(RoleEvent.LOAD_ALL_ROLES));
                 if (modelLocator.allUsers.length == 0) {
                     dispatchEvent(new UserEvent(UserEvent.LOAD_ALL_USERS));
                 }
-                tideContext.raiseEvent(RoleEvent.LOAD_ALL_ROLES);
             }
 
-            private function onRowClick(event:ListEvent):void
-            {
+            private function onRowClick(event:ListEvent):void {
                 selected = event.currentTarget.selectedItem as Role;
             }
 
             /**
              * Double clicking an entry opens the edit dialogue.
              */ 
-            private function onDoubleClick(event:MouseEvent):void
-            {
+            private function onDoubleClick(event:MouseEvent):void {
+            	selected = event.currentTarget.selectedItem as Role;
                 var pop:CreateRoleDialog = CreateRoleDialog(PopUpManager.createPopUp(this, CreateRoleDialog, true));
                 pop.roleToChange = event.currentTarget.selectedItem as Role;
                 pop.title = "Change Role settings";
@@ -85,8 +82,7 @@
             /**
              * Open dialogue to add a new Role.
              */
-            private function add():void
-            {
+            private function add():void {
                 var pop:CreateRoleDialog = CreateRoleDialog(PopUpManager.createPopUp(this, CreateRoleDialog, true));
                 PopUpManager.centerPopUp(pop);
             }
@@ -94,10 +90,8 @@
             /**
              * Open confirm dialogue to accept deletion of a Role.
              */
-            private function remove():void
-            {
-                if (lst.selectedIndices.length == 0)
-                {
+            private function remove():void {
+                if (lst.selectedIndices.length == 0) {
                     Alert.show("Please select at least one Role to delete");
                     return;                 
                 }
@@ -109,10 +103,8 @@
             /**
              * Fire event to save the selected Role.
              */
-            private function save():void
-            {
-                if (lst.selectedIndices.length == 0)
-                {
+            private function save():void {
+                if (lst.selectedIndices.length == 0) {
                     Alert.show("Please select a Role to save");
                     return;                 
                 }
@@ -124,10 +116,8 @@
             /**
              * Add more Users to a Role.
              */
-            private function addUsers():void
-            {
-                if (selected == null)
-                {
+            private function addUsers():void {
+                if (selected == null) {
                     Alert.show("Please select a Role to add a User for");
                     return;
                 }
@@ -140,10 +130,8 @@
             /**
              * Assign more Grants to a Role.
              */
-            private function addGrants():void
-            {
-                if (selected == null)
-                {
+            private function addGrants():void {
+                if (selected == null) {
                     Alert.show("Please select a Role to assign Grants to it");
                     return;
                 }
@@ -156,24 +144,18 @@
             /**
              * Remove Users from an already existing Role.
              */
-            private function removeUsers():void
-            {
-                if (selected == null)
-                {
+            private function removeUsers():void {
+                if (selected == null) {
                     Alert.show("Please select a Role to remove a User from");
                     return;
                 }
-                if (usersLst.selectedItems.length == 0)
-                {
+                if (usersLst.selectedItems.length == 0) {
                     Alert.show("Please select one or more Users to be removed from this Role");
                     return;
                 }
-            	for each (var selectedUser:User in usersLst.selectedItems)
-            	{
-            		for each (var user:User in selected.users)
-            		{
-                        if (user.username == selectedUser.username)
-                        {
+            	for each (var selectedUser:User in usersLst.selectedItems) {
+            		for each (var user:User in selected.users) {
+                        if (user.username == selectedUser.username) {
                         	selected.users.removeItemAt(selected.users.getItemIndex(user));
                         }
                     } 
@@ -183,41 +165,36 @@
             /**
              * Reload the list of Roles.
              */
-            private function refresh():void
-            {
+            private function refresh():void {
                 dispatchEvent(new RoleEvent(RoleEvent.LOAD_ALL_ROLES));
             }
             
             /**
              * Define how User information is displayed.
              */
-            private function formatUser(item:*):String
-            {
+            private function formatUser(item:*):String {
             	return (item as User).fullname+" ("+(item as User).username+")";
             }
 
             /**
              * Define how Grant information is displayed.
              */
-            private function formatGrant(item:*):String
-            {
+            private function formatGrant(item:*):String {
                 return (item as SecurityObject).name + " - " + (item as SecurityObject).description;
             }
         ]]>
     </mx:Script>
 
-    <mx:HBox x="10" y="10" width="95%" verticalAlign="bottom">
-	    <mx:HBox verticalAlign="middle" backgroundColor="#FFA6A6" width="100%">
-	        <mx:Label x="10" y="10" text="Roles" fontSize="24"/>
-	        <mx:VRule height="10"/>
-	        <mx:Button id="addRoleBtn" buttonMode="true" mouseChildren="false" toolTip="Create a new Role" icon="@Embed(source='/assets/images/Users--plus.png')" click="add()"/>
-	        <mx:VRule height="10"/>
-	        <mx:Button id="removeRoleBtn" buttonMode="true" mouseChildren="false" toolTip="Delete an existing Role" icon="@Embed(source='/assets/images/Users--minus.png')" click="remove()"/>
-	        <mx:VRule height="10"/>
-	        <mx:Button id="saveRoleBtn" buttonMode="true" mouseChildren="false" toolTip="Save a modified Role" icon="@Embed(source='/assets/images/Users--save.png')" click="save()"/>
-	        <mx:VRule height="10"/>
-	        <mx:Button id="refreshRoleBtn" buttonMode="true" mouseChildren="false" toolTip="Refresh the list of Roles" icon="@Embed(source='assets/images/icons/refresh.png')" click="refresh()"/>
-	    </mx:HBox>
+    <mx:HBox x="10" y="10" width="95%" verticalAlign="middle" backgroundColor="#FFA6A6">
+        <mx:Label x="10" y="10" text="Roles" fontSize="24"/>
+        <mx:VRule height="10"/>
+        <mx:Button id="addRoleBtn" buttonMode="true" mouseChildren="false" toolTip="Create a new Role" icon="@Embed(source='/assets/images/Users--plus.png')" click="add()"/>
+        <mx:VRule height="10"/>
+        <mx:Button id="removeRoleBtn" buttonMode="true" mouseChildren="false" toolTip="Delete an existing Role" icon="@Embed(source='/assets/images/Users--minus.png')" click="remove()"/>
+        <mx:VRule height="10"/>
+        <mx:Button id="saveRoleBtn" buttonMode="true" mouseChildren="false" toolTip="Save a modified Role" icon="@Embed(source='/assets/images/Users--save.png')" click="save()"/>
+        <mx:VRule height="10"/>
+        <mx:Button id="refreshRoleBtn" buttonMode="true" mouseChildren="false" toolTip="Refresh the list of Roles" icon="@Embed(source='assets/images/icons/refresh.png')" click="refresh()"/>
     </mx:HBox>
     <mx:HRule x="9" y="53" width="95%"/>
     <mx:VBox height="100%" width="95%" x="10" y="63">
