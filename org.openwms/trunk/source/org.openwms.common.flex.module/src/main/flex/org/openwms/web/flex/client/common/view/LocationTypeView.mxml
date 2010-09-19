@@ -31,6 +31,7 @@
 
     <mx:Script>
         <![CDATA[
+        	import mx.binding.utils.ChangeWatcher;
             import mx.binding.utils.BindingUtils;
             import mx.events.ListEvent;
             import mx.collections.ArrayCollection;
@@ -78,7 +79,7 @@
             }
 
             private function onChange(event:ListEvent):void {
-                selected=(event.currentTarget.selectedItem) as LocationType;
+                selected = event.currentTarget.selectedItem as LocationType;
             }
 
             private function save():void {
@@ -86,15 +87,19 @@
                     ValidationUtil.validateField(lengthTxt,numberVal) &&
                     ValidationUtil.validateField(widthTxt,numberVal) &&
                     ValidationUtil.validateField(heightTxt,numberVal)) {
-                    BindingUtils.bindProperty(selected, "length", lengthTxt, "text");
-                    BindingUtils.bindProperty(selected, "width", widthTxt, "text");
-                    BindingUtils.bindProperty(selected, "height", heightTxt, "text");
-                    BindingUtils.bindProperty(selected, "description", descriptionTxt, "text");
-
+                    	
+	                var cw1:ChangeWatcher = BindingUtils.bindProperty(selected, "length", lengthTxt, "text");
+	                var cw2:ChangeWatcher = BindingUtils.bindProperty(selected, "width", widthTxt, "text");
+	                var cw3:ChangeWatcher = BindingUtils.bindProperty(selected, "height", heightTxt, "text");
+	                var cw4:ChangeWatcher = BindingUtils.bindProperty(selected, "description", descriptionTxt, "text");
                     var event:LocationTypeEvent=new LocationTypeEvent(LocationTypeEvent.SAVE_LOCATION_TYPE);
                     event.data=selected;
                     dispatchEvent(event);
                     selected = null;
+                    cw1.unwatch();
+                    cw2.unwatch();
+                    cw3.unwatch();
+                    cw4.unwatch();
                     changed = false;
                 }
             }

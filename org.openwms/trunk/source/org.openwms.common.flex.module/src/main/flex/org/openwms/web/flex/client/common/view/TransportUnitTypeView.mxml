@@ -129,7 +129,7 @@
                 }
             }
 
-            private function saveTransportUnit():void {
+            private function saveTransportUnitType():void {
                 if (ValidationUtil.validateAndFormat(heightTxt, numberVal) &&
                     ValidationUtil.validateAndFormat(lengthTxt, numberVal) &&
                     ValidationUtil.validateAndFormat(widthTxt, numberVal) &&
@@ -143,12 +143,14 @@
                     BindingUtils.bindProperty(selected, "weightMax", weightMaxTxt, "text");
                     BindingUtils.bindProperty(selected, "description", descriptionTxt, "text");
                     BindingUtils.bindProperty(selected, "compatibility", compatibilityTxt, "text");
-                    BindingUtils.bindProperty(selected, "typePlacingRules", allowedLocationTypeLst, "selectedItems");
+                    BindingUtils.bindProperty(selected, "typePlacingRules", allowedLocationTypeLst, "dataProvider");
                     BindingUtils.bindProperty(selected, "typeStackingRules", allowedTransportUnitTypeLst, "dataProvider");
 
                     var event:TransportUnitTypeEvent=new TransportUnitTypeEvent(TransportUnitTypeEvent.SAVE_TRANSPORT_UNIT_TYPE);
                     event.data=selected;
                     dispatchEvent(event);
+                } else {
+                	Alert.show("Data not valid");
                 }
             }
 
@@ -221,7 +223,7 @@
         <mx:VRule height="10"/>
         <mx:Button id="removeTUTBtn" buttonMode="true" mouseChildren="false" toolTip="Delete an existing Transport Unit Type" icon="@Embed(source='/assets/images/TransportUnitType--Delete.png')" click="showDeleteTransportUnitTypeDialog()"/>
         <mx:VRule height="10"/>
-        <mx:Button id="saveTUTBtn" buttonMode="true" mouseChildren="false" toolTip="Save an existing Transport Unit Type" icon="@Embed(source='/assets/images/TransportUnitType--Save.png')" click="saveTransportUnit()" x="390" y="13"/>
+        <mx:Button id="saveTUTBtn" buttonMode="true" mouseChildren="false" toolTip="Save an existing Transport Unit Type" icon="@Embed(source='/assets/images/TransportUnitType--Save.png')" click="saveTransportUnitType()" />
         <mx:VRule height="10"/>
         <mx:Button id="refreshBtn" buttonMode="true" mouseChildren="false" toolTip="Refresh the list of Transport Unit Types" icon="@Embed(source='assets/images/icons/refresh.png')" click="refresh()"/>
     </mx:HBox>
