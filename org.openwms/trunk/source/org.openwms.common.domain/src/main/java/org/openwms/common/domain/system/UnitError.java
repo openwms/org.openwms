@@ -29,6 +29,8 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.persistence.Version;
 
+import org.openwms.common.domain.AbstractEntity;
+
 /**
  * An UnitError.
  * <p>
@@ -42,7 +44,7 @@ import javax.persistence.Version;
  */
 @Entity
 @Table(name = "COR_UNIT_ERROR")
-public class UnitError implements Serializable {
+public class UnitError extends AbstractEntity implements Serializable {
 
     /**
      * The serialVersionUID

@@ -22,6 +22,8 @@ package org.openwms.common.domain.system.usermanagement;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
@@ -44,6 +46,11 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.persistence.Version;
 
+import org.openwms.common.domain.AbstractEntity;
+import org.openwms.common.exception.InvalidPasswordException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 /**
  * An <code>User</code> represents the user of the system.
  * 
@@ -53,15 +60,55 @@ import javax.persistence.Version;
  */
 @Entity
 @Table(name = "APP_USER")
-@NamedQueries( { @NamedQuery(name = "User.findAll", query = "SELECT u FROM User u"),
-        @NamedQuery(name = "User.findAllOrdered", query = "SELECT u FROM User u ORDER BY u.username"),
-        @NamedQuery(name = "User.findByUsername", query = "SELECT u FROM User u WHERE u.username = ?1") })
-public class User implements Serializable {
+@NamedQueries( {
+        @NamedQuery(name = User.NQ_FIND_ALL, query = "SELECT u FROM User u"),
+        @NamedQuery(name = User.NQ_FIND_ALL_ORDERED, query = "SELECT u FROM User u ORDER BY u.username"),
+        @NamedQuery(name = User.NQ_FIND_BY_USERNAME, query = "SELECT u FROM User u WHERE u.username = ?1"),
+        @NamedQuery(name = User.NQ_FIND_BY_USERNAME_PASSWORD, query = "SELECT u FROM User u WHERE u.username = :userName and u.password = :password") })
+public class User extends AbstractEntity implements Serializable {
 
     /**
-     * The serialVersionUID
+     * Logger instance can be used by subclasses.
+     */
+    private static final Logger logger = LoggerFactory.getLogger(User.class);
+
+    /**
+     * The serialVersionUID.
      */
     private static final long serialVersionUID = -1116645053773805413L;
+
+    /**
+     * Query to find all {@link User}s.
+     */
+    public static final String NQ_FIND_ALL = "User.findAll";
+
+    /**
+     * Query to find all {@link User}s sorted by userName.
+     */
+    public static final String NQ_FIND_ALL_ORDERED = "User.findAllOrdered";
+
+    /**
+     * Query to find <strong>one</strong> {@link User} by its userName.
+     * <li>Query parameter index <strong>1</strong> : The userName of the User
+     * to search for.</li>
+     */
+    public static final String NQ_FIND_BY_USERNAME = "User.findByUsername";
+
+    /**
+     * Query to find <strong>one</strong> {@link User} by its userName and
+     * password.
+     * <li>Query parameter name <strong>userName</strong> : The userName of
+     * the User to search for.</li>
+     * <li>Query parameter name <strong>password</strong> : The current
+     * password of the User to search for.</li>
+     */
+    public static final String NQ_FIND_BY_USERNAME_PASSWORD = "User.findByUsernameAndPassword";
+
+    /**
+     * The number passwords to be stored. When an User changes the password, the
+     * old password is stored. Currently set to {@link value}.
+     */
+    public static final short NUMBER_STORED_PASSWORDS = 3;
 
     /**
      * Unique technical key.
@@ -101,13 +148,13 @@ public class User implements Serializable {
     /**
      * Current password of the <code>User</code>.
      */
-    @Column(name = "PASSWORD")
-    private String password;
+    @Column(name = "C_PASSWORD")
+    protected String password;
 
     /**
      * <code>true</code> if this <code>User</code> is enabled.
      */
-    @Column(name = "ENABLED")
+    @Column(name = "C_ENABLED")
     private boolean enabled = true;
 
     /**
@@ -147,7 +194,7 @@ public class User implements Serializable {
     /**
      * Password history of this <code>User</code>.
      */
-    @OneToMany(mappedBy = "user")
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     @JoinTable(name = "APP_USER_PASSWORD", joinColumns = @JoinColumn(name = "USER_ID"), inverseJoinColumns = @JoinColumn(name = "PASSWORD_ID"))
     private List<UserPassword> passwords = new ArrayList<UserPassword>();
 
@@ -206,8 +253,8 @@ public class User implements Serializable {
      * Is this <code>User</code> an user authenticated through an external
      * system?
      * 
-     * @return <code>true</code> if this <code>User</code> was authenticated by
-     *         an external system, otherwise <code>false</code>.
+     * @return <code>true</code> if this <code>User</code> was authenticated
+     *         by an external system, otherwise <code>false</code>.
      */
     public boolean isExternalUser() {
         return this.extern;
@@ -217,35 +264,113 @@ public class User implements Serializable {
      * Set this <code>User</code> as authenticated through an external system.
      * 
      * @param extern
-     *            <code>true</code> if this <code>User</code> was authenticated
-     *            by an external system, otherwise <code>false</code>.
+     *            <code>true</code> if this <code>User</code> was
+     *            authenticated by an external system, otherwise
+     *            <code>false</code>.
      */
     public void setExternalUser(boolean externalUser) {
         this.extern = externalUser;
     }
 
+    /**
+     * Return the date when the password changed the last time.
+     * 
+     * @return The date when the password was changed .
+     */
     public Date getLastPasswordChange() {
         return this.lastPasswordChange;
     }
 
+    /**
+     * This method doesn't change the password. It only exists for JavaBeans
+     * compliance to support generation of ActionScript classes.
+     * 
+     * @param lastPasswordChange
+     *            Allowed to be null
+     */
     public void setLastPasswordChange(Date lastPasswordChange) {
-        this.lastPasswordChange = lastPasswordChange;
+    // do nothing, only used for JavaBeans compliance to support generation
+    // of AS classes.
     }
 
+    /**
+     * Check if this User is locked.
+     * 
+     * @return <code>true</code> when locked, otherwise <code>false</code>.
+     */
     public boolean isLocked() {
         return this.locked;
     }
 
+    /**
+     * Lock this User.
+     * 
+     * @param locked
+     *            <code>true</code> to lock this User, otherwise
+     *            <code>false</code>.
+     */
     public void setLocked(boolean locked) {
         this.locked = locked;
     }
 
+    /**
+     * Returns the current password of this User.
+     * 
+     * @return The current password as String.
+     */
     public String getPassword() {
         return this.password;
     }
 
-    public void setPassword(String password) {
-        this.password = password;
+    /**
+     * Checks if the new password is a valid password and set the password for
+     * this User.
+     * 
+     * @param password
+     *            The new password for this User.
+     * @throws InvalidPasswordException
+     *             in case a password change is not allowed.
+     */
+    public void setPassword(String password) throws InvalidPasswordException {
+        if (isPasswordValid(password)) {
+            storeOldPassword(this.password);
+            this.password = password;
+            this.lastPasswordChange = new Date();
+        } else {
+            throw new InvalidPasswordException();
+        }
+
+    }
+
+    private boolean isPasswordValid(String password) {
+        if (passwords.contains(new UserPassword(this, password))) {
+            return false;
+        }
+        return true;
+    }
+
+    private void storeOldPassword(String oldPassword) {
+        if (oldPassword == null || oldPassword.isEmpty()) {
+            if (logger.isDebugEnabled()) {
+                logger.debug("The first time the password can be null, dont store the null password");
+            }
+            return;
+        }
+        passwords.add(new UserPassword(this, oldPassword));
+        if (passwords.size() > NUMBER_STORED_PASSWORDS) {
+            Collections.sort(passwords, new Comparator<UserPassword>() {
+                @Override
+                public int compare(UserPassword o1, UserPassword o2) {
+                    return o2.getPasswordChanged().compareTo(o1.getPasswordChanged());
+                }
+            });
+            if (logger.isDebugEnabled()) {
+                logger.debug("Remove old password from list:" + passwords.get(passwords.size() - 1));
+            }
+            UserPassword pw = passwords.get(passwords.size() - 1);
+            pw.setUser(null);
+            passwords.remove(passwords.get(passwords.size() - 1));
+        }
     }
 
     public boolean isEnabled() {
@@ -290,8 +415,8 @@ public class User implements Serializable {
     }
 
     /**
-     * Set a List of {@link UserPassword}s to this <code>User</code>. Already
-     * existing {@link UserPassword}s are removed.
+     * Set a List of {@link UserPassword}s to this <code>User</code>.
+     * Already existing {@link UserPassword}s are removed.
      * 
      * @param passwords
      *            A List of {@link UserPassword}s
@@ -325,8 +450,8 @@ public class User implements Serializable {
     }
 
     /**
-     * Set all {@link Preference}s of this <code>User</code>. Already existing
-     * {@link Preference}s are removed.
+     * Set all {@link Preference}s of this <code>User</code>. Already
+     * existing {@link Preference}s are removed.
      * 
      * @param preferences
      *            A Set of {@link Preference}s to set

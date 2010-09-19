@@ -73,7 +73,7 @@ import org.openwms.common.domain.values.TransportUnitState;
 @NamedQueries( {
         @NamedQuery(name = "TransportUnit.findAll", query = "select tu from TransportUnit tu"),
         @NamedQuery(name = "TransportUnit.findByBarcode", query = "select tu from TransportUnit tu where tu.barcode = ?1") })
-public class TransportUnit implements Serializable {
+public class TransportUnit extends AbstractEntity implements Serializable {
 
     /**
      * The serialVersionUID

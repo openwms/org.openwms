@@ -23,6 +23,7 @@ package org.openwms.common.domain.system.usermanagement;
 import static javax.persistence.GenerationType.AUTO;
 
 import java.io.Serializable;
+import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -30,6 +31,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+
+import org.openwms.common.domain.AbstractEntity;
 
 /**
  * A Password.
@@ -43,10 +46,9 @@ import javax.persistence.Table;
  * @version $Revision$
  * @since 0.1
  */
-// TODO [scherrer] : Implement as ring list
 @Entity
 @Table(name = "APP_USER_PASSWORD")
-public class UserPassword implements Serializable {
+public class UserPassword extends AbstractEntity implements Serializable {
 
     /**
      * The serialVersionUID
@@ -70,8 +72,11 @@ public class UserPassword implements Serializable {
     /**
      * Password.
      */
-    @Column(name = "PASSWORD")
+    @Column(name = "C_PASSWORD")
     private String password;
+
+    @Column(name = "PASSWORD_CHANGED")
+    private Date passwordChanged = new Date();
 
     /* ----------------------------- methods ------------------- */
     /**
@@ -111,11 +116,70 @@ public class UserPassword implements Serializable {
     }
 
     /**
+     * Change the {@link User}.
+     * 
+     * @param user
+     *            The new {@link User}.
+     */
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+    /**
      * Return the stored password.
      * 
      * @return The stored password
      */
     public String getPassword() {
         return this.password;
+    }
+
+    /**
+     * When was the password changed.
+     * 
+     * @return The date when password changed
+     */
+    public Date getPasswordChanged() {
+        return passwordChanged;
+    }
+
+    /**
+     * @see java.lang.Object#hashCode()
+     */
+    @Override
+    public int hashCode() {
+        final int prime = 31;
+        int result = super.hashCode();
+        result = prime * result + ((password == null) ? 0 : password.hashCode());
+        result = prime * result + ((user == null) ? 0 : user.hashCode());
+        return result;
+    }
+
+    /**
+     * @see java.lang.Object#equals(java.lang.Object)
+     */
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) return true;
+        if (!super.equals(obj)) return false;
+        if (!(obj instanceof UserPassword)) return false;
+        final UserPassword other = (UserPassword) obj;
+        if (password == null) {
+            if (other.password != null) return false;
+        } else if (!password.equals(other.password)) return false;
+        if (user == null) {
+            if (other.user != null) return false;
+        } else if (!user.equals(other.user)) return false;
+        return true;
+    }
+
+    /**
+     * Return the persistent id as String.
+     * 
+     * @see java.lang.Object#toString()
+     */
+    @Override
+    public String toString() {
+        return id.toString();
     }
 }

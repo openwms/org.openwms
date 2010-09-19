@@ -47,7 +47,7 @@ import javax.persistence.Version;
 @Entity
 @Table(name = "COR_TYPE_STACKING_RULE", uniqueConstraints = @UniqueConstraint(columnNames = { "TRANSPORT_UNIT_TYPE",
         "NO_TRANSPORT_UNITS", "ALLOWED_TRANSPORT_UNIT_TYPE" }))
-public class TypeStackingRule implements Serializable, Rule {
+public class TypeStackingRule extends AbstractEntity implements Serializable, Rule {
 
     /**
      * The serialVersionUID

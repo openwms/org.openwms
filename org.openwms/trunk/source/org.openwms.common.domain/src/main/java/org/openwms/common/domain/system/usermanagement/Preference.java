@@ -30,6 +30,8 @@ import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 import javax.persistence.Version;
 
+import org.openwms.common.domain.AbstractEntity;
+
 /**
  * A Preference - Could be an user-, role- or system preference.
  * 
@@ -39,7 +41,7 @@ import javax.persistence.Version;
  */
 @Entity
 @Table(name = "APP_PREFERENCE", uniqueConstraints = @UniqueConstraint(columnNames = { "C_KEY", "C_VALUE" }))
-public class Preference implements Serializable {
+public class Preference extends AbstractEntity implements Serializable {
 
     /**
      * The serialVersionUID
