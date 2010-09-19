@@ -35,7 +35,6 @@
 	<properties>
 		<moduleDir>..</moduleDir>
 		<property.org.graniteds-core.version>1.2.0_SP1</property.org.graniteds-core.version>
-		<flex.version>3.2.0.3958</flex.version>
 	</properties>
 	<build>
 		<finalName>${project.artifactId}-${project.version}</finalName>
@@ -59,7 +58,6 @@
 			<plugin>
 				<groupId>org.sonatype.flexmojos</groupId>
 				<artifactId>flexmojos-maven-plugin</artifactId>
-				<version>3.3.0</version>
 				<extensions>true</extensions>
 				<executions>
 					<execution>
@@ -72,19 +70,19 @@
                     <dependency>
 						<groupId>com.adobe.flex</groupId>
 						<artifactId>compiler</artifactId>
-						<version>${flex.version}</version>
+                        <version>${flex.version}</version>
 						<type>pom</type>
 					</dependency>
 					<dependency>
 						<groupId>org.graniteds</groupId>
 						<artifactId>granite-essentials-swc</artifactId>
-						<version>${granite.version}</version>
+                        <version>${granite.version}</version>
 						<type>swc</type>
 					</dependency>
 					<dependency>
 						<groupId>org.graniteds</groupId>
 						<artifactId>granite-swc</artifactId>
-						<version>${granite.version}</version>
+                        <version>${granite.version}</version>
 						<type>swc</type>
 					</dependency>
 				</dependencies>
@@ -111,6 +109,9 @@
 					<includeJavaClasses>
 						<class>org.openwms.common.domain.*</class>
 					</includeJavaClasses>
+                    <excludeJavaClasses>
+                        <class>org.openwms.common.domain.system.usermanagement.package-info</class>
+                    </excludeJavaClasses>
 					<sourcePaths>
 						<sourcePath>${project.basedir}/src/main/flex/</sourcePath>
 						<sourcePath>${project.build.directory}/generated-sources/flexmojos/</sourcePath>
@@ -154,7 +155,6 @@
 			<plugin>
 				<groupId>org.sonatype.flexmojos</groupId>
 				<artifactId>flexmojos-maven-plugin</artifactId>
-				<version>3.5.0</version>
 				<reportSets>
 					<reportSet>
 						<id>flex-reports</id>
@@ -215,26 +215,22 @@
 		<dependency>
 			<groupId>${project.groupId}</groupId>
 			<artifactId>org.openwms.common.domain</artifactId>
-			<version>${project.version}</version>
             <scope>provided</scope>
 		</dependency>
 		<dependency>
 			<groupId>com.adobe.flex.framework</groupId>
 			<artifactId>flex-framework</artifactId>
-			<version>${flex.version}</version>
 			<type>pom</type>
 		</dependency>
 		<dependency>
 			<groupId>org.graniteds</groupId>
 			<artifactId>granite-essentials-swc</artifactId>
-			<version>${granite.version}</version>
 			<type>swc</type>
 			<scope>internal</scope>
 		</dependency>
 		<dependency>
 			<groupId>org.graniteds</groupId>
 			<artifactId>granite-swc</artifactId>
-			<version>${granite.version}</version>
 			<type>swc</type>
 			<scope>internal</scope>
 		</dependency>
