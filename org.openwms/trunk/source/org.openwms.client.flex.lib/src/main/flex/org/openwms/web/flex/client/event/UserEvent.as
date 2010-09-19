@@ -34,6 +34,8 @@ package org.openwms.web.flex.client.event
         public static const ADD_USER:String = "ADD_USER";
         public static const SAVE_USER:String = "SAVE_USER";
         public static const DELETE_USER:String = "DELETE_USER";
+        public static const CHANGE_USER_PASSWORD:String = "CHANGE_USER_PASSWORD";
+        public static const USER_SELECTION_CHANGED:String = "userSelectionChanged";
 
         public static const USER_ADDED:String = "USER_ADDED";
 

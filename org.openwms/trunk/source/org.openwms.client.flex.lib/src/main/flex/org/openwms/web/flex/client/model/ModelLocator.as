@@ -59,6 +59,7 @@ package org.openwms.web.flex.client.model
         public const UPLOAD_URL:String = "/openwms/upload";
         public const DIRECTORY_NAME:String = "data";
         public static const DT_FORMAT_STRING:String = "DD.MM.YYYY HH:NN:SS";
+        public static const SIMPLE_DT_FORMAT:String = "DD.MM.YYYY";
 
         // --------------------------------------------------------------------
         // User and Role Management
@@ -83,6 +84,12 @@ package org.openwms.web.flex.client.model
         public var isInitialized:Boolean = false;
         public var securityObjectNames:ArrayCollection = new ArrayCollection();
 
+        // WIDTH
+        public static const WIDTH_ID:Number = 70;
+        public static const WIDTH_DATE:Number = 40;
+        public static const WIDTH_TIME:Number = 40;
+        public static const WIDTH_DATETIME:Number = 60;
+        
         /**
          * Constructor.
          */
