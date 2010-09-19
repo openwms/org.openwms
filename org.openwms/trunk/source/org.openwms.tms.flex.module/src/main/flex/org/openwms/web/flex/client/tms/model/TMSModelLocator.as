@@ -39,6 +39,10 @@ package org.openwms.web.flex.client.tms.model
         public var allTransportOrders:ArrayCollection = new ArrayCollection();
         public var allStates:ArrayCollection = new ArrayCollection(TransportOrderState.constants);
 
+        // TransportOrderView
+        public static const WIDTH_STATE:Number = 70;
+        public static const WIDTH_PRIORITY:Number = 70;
+
         /**
          * Constructor.
          */
