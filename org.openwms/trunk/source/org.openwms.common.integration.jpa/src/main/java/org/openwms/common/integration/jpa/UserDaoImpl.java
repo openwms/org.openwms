@@ -20,10 +20,14 @@
  */
 package org.openwms.common.integration.jpa;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
+import org.openwms.common.domain.system.usermanagement.Role;
 import org.openwms.common.domain.system.usermanagement.SystemUser;
 import org.openwms.common.domain.system.usermanagement.User;
+import org.openwms.common.domain.system.usermanagement.UserPassword;
 import org.openwms.common.integration.system.usermanagement.UserDao;
 import org.springframework.stereotype.Repository;
 
@@ -45,7 +49,7 @@ public class UserDaoImpl extends AbstractGenericJpaDao<User, Long> implements Us
      */
     @Override
     protected String getFindAllQuery() {
-        return UserDao.NQ_FIND_ALL;
+        return User.NQ_FIND_ALL;
     }
 
     /**
@@ -54,7 +58,7 @@ public class UserDaoImpl extends AbstractGenericJpaDao<User, Long> implements Us
      */
     @Override
     protected String getFindByUniqueIdQuery() {
-        return UserDao.NQ_FIND_BY_USERNAME;
+        return User.NQ_FIND_BY_USERNAME;
     }
 
     /**
@@ -64,7 +68,7 @@ public class UserDaoImpl extends AbstractGenericJpaDao<User, Long> implements Us
     @Override
     @SuppressWarnings("unchecked")
     public List<User> findAll() {
-        return super.findByPositionalParameters(UserDao.NQ_FIND_ALL_ORDERED);
+        return super.findByPositionalParameters(User.NQ_FIND_ALL_ORDERED);
     }
 
     /**
@@ -106,7 +110,23 @@ public class UserDaoImpl extends AbstractGenericJpaDao<User, Long> implements Us
         if (isSuperUser(user)) {
             return;
         }
+        for (Role role : user.getRoles()) {
+            role.removeUser(user);
+        }
+        user.setRoles(null);
         super.remove(user);
+    }
+
+    @Override
+    public User findByNameAndPassword(UserPassword userPassword) {
+        Map<String, String> params = new HashMap<String, String>();
+        params.put("userName", userPassword.getUser().getUsername());
+        params.put("password", userPassword.getPassword());
+        List<User> users = super.findByNamedParameters(User.NQ_FIND_BY_USERNAME_PASSWORD, params);
+        if (users == null || users.isEmpty()) {
+            return null;
+        }
+        return users.get(0);
     }
 
     private boolean isSuperUser(User user) {

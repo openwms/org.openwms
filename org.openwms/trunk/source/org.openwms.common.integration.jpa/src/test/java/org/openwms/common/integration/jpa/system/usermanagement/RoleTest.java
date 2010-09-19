@@ -96,18 +96,16 @@ public class RoleTest extends AbstractJpaSpringContextTests {
     @Test
     public final void testRoleLifecycle() {
         Role role = new Role(TEST_ROLE);
-        User unknownUser = new User(UNKNOWN_USER);
         User knownUser = new User(KNOWN_USER);
 
         entityManager.persist(knownUser);
 
         role.addUser(knownUser);
-        role.addUser(unknownUser);
 
         entityManager.merge(role);
 
         Query query = entityManager.createQuery("select count(u) from User u where u.username = :username");
-        query.setParameter("username", unknownUser.getUsername());
+        query.setParameter("username", knownUser.getUsername());
         Long cnt = (Long) query.getSingleResult();
         assertEquals("User must be persisted with Role", 1, cnt.intValue());
 
