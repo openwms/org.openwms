@@ -24,6 +24,7 @@ import java.util.List;
 
 import org.openwms.common.domain.system.usermanagement.Role;
 import org.openwms.common.domain.system.usermanagement.User;
+import org.openwms.common.domain.system.usermanagement.UserPassword;
 import org.openwms.common.service.EntityService;
 
 /**
@@ -98,4 +99,14 @@ public interface UserService<T extends User> extends EntityService<T> {
      *            The List of Roles to remove.
      */
     void removeRoles(List<Role> roles);
+
+    /**
+     * Change the current password of the {@link User}.
+     * 
+     * @param userPassword
+     *            The new {@link UserPassword) to change
+     * @return <code>true</code> if the password could be changed
+     *         successfully, otherwise <code>false</code>.
+     */
+    boolean changeUserPassword(UserPassword userPassword);
 }
