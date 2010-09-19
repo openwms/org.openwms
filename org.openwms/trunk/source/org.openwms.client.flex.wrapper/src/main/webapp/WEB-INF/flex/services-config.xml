@@ -37,6 +37,7 @@
                     <entityManagerFactoryBeanName>
                         entityManagerFactory
                     </entityManagerFactoryBeanName>
+                    <scope>session</scope>
                 </properties>
             </destination>
             <destination id="locationServiceRemote">
