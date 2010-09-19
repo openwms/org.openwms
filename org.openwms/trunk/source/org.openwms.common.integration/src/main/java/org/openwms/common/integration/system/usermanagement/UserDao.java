@@ -21,6 +21,7 @@
 package org.openwms.common.integration.system.usermanagement;
 
 import org.openwms.common.domain.system.usermanagement.User;
+import org.openwms.common.domain.system.usermanagement.UserPassword;
 import org.openwms.common.integration.GenericDao;
 
 /**
@@ -40,20 +41,12 @@ import org.openwms.common.integration.GenericDao;
 public interface UserDao extends GenericDao<User, Long> {
 
     /**
-     * Name of the <code>NamedQuery</code> to find all {@link User} Entities.
+     * Search and return an {@link User} with its userName and password, stored
+     * in userPassword.
+     * 
+     * @param userPassword
+     *            Stores the userName and password.
+     * @return The User when found, otherwise <code>null</code>
      */
-    String NQ_FIND_ALL = "User.findAll";
-
-    /**
-     * Name of the <code>NamedQuery</code> to find {@link User} Entity classes
-     * in a defined order.
-     */
-    String NQ_FIND_ALL_ORDERED = "User.findAllOrdered";
-
-    /**
-     * Name of the <code>NamedQuery</code> to find a {@link User} by his
-     * {@link User#getUsername()}.
-     */
-    String NQ_FIND_BY_USERNAME = "User.findByUsername";
-
+    User findByNameAndPassword(UserPassword userPassword);
 }
