@@ -210,11 +210,11 @@ package org.openwms.web.flex.client.module
                     {
                         var tree:XMLListCollection = appModule.getMainMenuItems();
                         // TODO: In Flex 3.5 replace with addAll()
+                        //all.addAll(tree);
                         for each (var node:XML in tree)
                         {
                             all.addItem(node);
                         }
-                        trace("Add menu items of module:" + appModule);
                     }
                 }
             }
