@@ -58,7 +58,7 @@ import org.openwms.common.domain.values.LocationGroupState;
 @Table(name = "COR_LOCATION_GROUP")
 @NamedQueries( { @NamedQuery(name = "LocationGroup.findAll", query = "select lg from LocationGroup lg"),
         @NamedQuery(name = "LocationGroup.findByName", query = "select lg from LocationGroup lg where lg.name = ?1") })
-public class LocationGroup implements DomainObject, Serializable {
+public class LocationGroup extends AbstractEntity implements DomainObject, Serializable {
 
     /**
      * The serialVersionUID

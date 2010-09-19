@@ -70,7 +70,7 @@ import org.openwms.common.domain.system.Message;
         @NamedQuery(name = Location.NQ_FIND_ALL, query = "select l from Location l"),
         @NamedQuery(name = Location.NQ_FIND_BY_UNIQUE_QUERY, query = "select l from Location l where l.locationId = ?1"),
         @NamedQuery(name = Location.NQ_FIND_ALL_EAGER, query = "select l from Location l left join fetch l.messages left join fetch l.locationType") })
-public class Location implements DomainObject, Serializable {
+public class Location extends AbstractEntity implements DomainObject, Serializable {
 
     /**
      * The serialVersionUID

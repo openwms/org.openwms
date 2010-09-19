@@ -58,8 +58,11 @@ public class Role extends SecurityObject implements Serializable {
      * Query to find all {@link Role}s.
      */
     public static final String NQ_FIND_ALL = "Role.findAll";
+
     /**
      * Query to find <strong>one</strong> {@link Role} by its natural key.
+     * <li>Query parameter index <strong>1</strong> : The name of the Role to
+     * search for.</li>
      */
     public static final String NQ_FIND_BY_UNIQUE_QUERY = "Role.findByRolename";
 
@@ -67,7 +70,7 @@ public class Role extends SecurityObject implements Serializable {
     /**
      * All {@link User}s belonging to this Role.
      */
-    @ManyToMany(cascade = { CascadeType.PERSIST, CascadeType.MERGE })
+    @ManyToMany(cascade = { CascadeType.PERSIST })
     @JoinTable(name = "APP_ROLE_USER", joinColumns = @JoinColumn(name = "ROLE_ID"), inverseJoinColumns = @JoinColumn(name = "USER_ID"))
     private Set<User> users = new HashSet<User>();
 
@@ -130,6 +133,8 @@ public class Role extends SecurityObject implements Serializable {
      *            The {@link User} to add to this Role
      * @return true if the {@link User} was new in the collection of
      *         {@link User}s, otherwise false
+     * @throws IllegalArgumentException
+     *             if user is <code>null</code>
      */
     public boolean addUser(User user) {
         if (user == null) {
@@ -139,11 +144,28 @@ public class Role extends SecurityObject implements Serializable {
     }
 
     /**
+     * Remove a {@link User} from this role.
+     * 
+     * @param user
+     *            The {@link User} to be removed.
+     * @throws IllegalArgumentException
+     *             if user is <code>null</code>
+     */
+    public void removeUser(User user) {
+        if (user == null) {
+            throw new IllegalArgumentException("User cannot be null.");
+        }
+        this.users.remove(user);
+    }
+
+    /**
      * Set all {@link User}s belonging to this Role. Already existing
      * {@link User}s will be removed.
      * 
      * @param users
      *            A Set of {@link User}s to assign to this Role
+     * @throws IllegalArgumentException
+     *             if users is <code>null</code>
      */
     public void setUsers(Set<User> users) {
         if (users == null) {

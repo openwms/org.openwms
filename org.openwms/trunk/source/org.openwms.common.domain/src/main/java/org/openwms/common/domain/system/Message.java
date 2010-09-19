@@ -32,6 +32,8 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.persistence.Version;
 
+import org.openwms.common.domain.AbstractEntity;
+
 /**
  * A Message - Predefined message.
  * 
@@ -41,7 +43,7 @@ import javax.persistence.Version;
  */
 @Entity
 @Table(name = "APP_MESSAGE")
-public class Message implements Serializable {
+public class Message extends AbstractEntity implements Serializable {
 
     /**
      * The serialVersionUID

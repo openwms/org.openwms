@@ -75,7 +75,7 @@ public class UserDetails implements Serializable {
     /**
      * Comment text of the {@link User}.
      */
-    @Column(name = "COMMENT")
+    @Column(name = "C_COMMENT")
     private String comment;
 
     /**
@@ -121,7 +121,7 @@ public class UserDetails implements Serializable {
     /**
      * Create a new <code>UserDetails</code> instance.
      */
-    public UserDetails() { }
+    public UserDetails() {}
 
     public String getPhoneNo() {
         return this.phoneNo;

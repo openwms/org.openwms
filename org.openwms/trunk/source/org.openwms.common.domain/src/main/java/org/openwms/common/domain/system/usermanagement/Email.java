@@ -31,6 +31,8 @@ import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 import javax.persistence.Version;
 
+import org.openwms.common.domain.AbstractEntity;
+
 /**
  * An Email.
  * 
@@ -41,7 +43,7 @@ import javax.persistence.Version;
  */
 @Entity
 @Table(name = "APP_EMAIL", uniqueConstraints = @UniqueConstraint(columnNames = { "USERNAME", "ADDRESS" }))
-public class Email implements Serializable {
+public class Email extends AbstractEntity implements Serializable {
 
     /**
      * The serialVersionUID

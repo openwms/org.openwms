@@ -38,7 +38,7 @@ import javax.persistence.Version;
  */
 @Entity
 @Table(name = "APP_MENU_ITEM")
-public class MenuItem implements DomainObject, Serializable {
+public class MenuItem extends AbstractEntity implements DomainObject, Serializable {
 
     /**
      * The serialVersionUID

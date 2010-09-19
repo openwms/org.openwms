@@ -37,7 +37,7 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name = "APP_POPUP_ITEM")
-public class PopupItem implements Serializable {
+public class PopupItem extends AbstractEntity implements Serializable {
 
     /**
      * The serialVersionUID

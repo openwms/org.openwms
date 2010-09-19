@@ -46,7 +46,7 @@ public class SystemUser extends User implements Serializable {
      */
     public SystemUser(String username, String password) {
         super(username);
-        this.setPassword(password);
+        this.password = password;
         this.setFullname(SYSTEM_USERNAME);
     }
 

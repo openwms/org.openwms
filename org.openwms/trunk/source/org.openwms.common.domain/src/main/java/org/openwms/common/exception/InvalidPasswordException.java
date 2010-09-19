@@ -21,51 +21,53 @@
 package org.openwms.common.exception;
 
 /**
- * A IllegalStateException.
+ * An InvalidPasswordException.
  * 
- * @author <a href="mailto:openwms@googlemail.com">Heiko Scherrer</a>
+ * @author <a href="mailto:russelltina@users.sourceforge.net">Tina Russell</a>
  * @version $Revision$
  * @since 0.1
  */
-@Deprecated
-public class IllegalStateException extends RuntimeException {
+public class InvalidPasswordException extends Exception {
 
+    /**
+     * The serialVersionUID.
+     */
     private static final long serialVersionUID = 1L;
 
     /**
-     * Create a new IllegalStateException.
+     * Create a new InvalidPasswordException.
      */
-    public IllegalStateException() {}
+    public InvalidPasswordException() {}
 
     /**
-     * Create a new IllegalStateException.
+     * Create a new InvalidPasswordException.
      * 
      * @param message
      *            The message text
      */
-    public IllegalStateException(String message) {
+    public InvalidPasswordException(String message) {
         super(message);
     }
 
     /**
-     * Create a new IllegalStateException.
+     * Create a new InvalidPasswordException.
      * 
      * @param cause
      *            The root cause of the exception
      */
-    public IllegalStateException(Throwable cause) {
+    public InvalidPasswordException(Throwable cause) {
         super(cause);
     }
 
     /**
-     * Create a new IllegalStateException.
+     * Create a new InvalidPasswordException.
      * 
      * @param message
      *            The message text
      * @param cause
      *            The root cause of the exception
      */
-    public IllegalStateException(String message, Throwable cause) {
+    public InvalidPasswordException(String message, Throwable cause) {
         super(message, cause);
     }
 

@@ -49,7 +49,7 @@ import javax.persistence.Version;
 @Entity
 @Table(name = "COR_TYPE_PLACING_RULE", uniqueConstraints = @UniqueConstraint(columnNames = { "TRANSPORT_UNIT_TYPE",
         "PRIVILEGE_LEVEL", "ALLOWED_LOCATION_TYPE" }))
-public class TypePlacingRule implements Serializable, Rule {
+public class TypePlacingRule extends AbstractEntity implements Serializable, Rule {
 
     /**
      * The serialVersionUID

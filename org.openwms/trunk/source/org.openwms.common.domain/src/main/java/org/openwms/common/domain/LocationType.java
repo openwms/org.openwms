@@ -49,7 +49,7 @@ import javax.persistence.Version;
 @NamedQueries( {
         @NamedQuery(name = LocationType.NQ_FIND_ALL, query = "select l from LocationType l"),
         @NamedQuery(name = LocationType.NQ_FIND_BY_UNIQUE_QUERY, query = "select l from LocationType l where l.type = ?1") })
-public class LocationType implements DomainObject, Serializable {
+public class LocationType extends AbstractEntity implements DomainObject, Serializable {
 
     /**
      * The serialVersionUID

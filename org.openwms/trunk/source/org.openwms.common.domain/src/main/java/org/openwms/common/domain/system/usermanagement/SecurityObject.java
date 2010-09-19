@@ -33,6 +33,8 @@ import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.persistence.Version;
 
+import org.openwms.common.domain.AbstractEntity;
+
 /**
  * A SecurityObject.
  * 
@@ -46,7 +48,7 @@ import javax.persistence.Version;
 @NamedQueries( {
         @NamedQuery(name = SecurityObject.NQ_FIND_ALL, query = "select g from SecurityObject g"),
         @NamedQuery(name = SecurityObject.NQ_FIND_BY_UNIQUE_QUERY, query = "select g from SecurityObject g where g.name = ?1") })
-public class SecurityObject implements Serializable {
+public class SecurityObject extends AbstractEntity implements Serializable {
 
     /**
      * The serialVersionUID
