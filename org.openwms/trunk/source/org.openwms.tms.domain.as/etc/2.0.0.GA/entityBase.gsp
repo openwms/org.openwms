@@ -147,12 +147,16 @@ package ${jClass.as3Type.packageName} {
         if (jProperty != jClass.uid) {
             if (jProperty.readable || jProperty.writable) {%>
 <%
-                if (jProperty.writable) {%>
+                if (jProperty.writable || jProperty.name == 'version') {%>
         public function set ${jProperty.name}(value:${jProperty.as3Type.name}):void {
             _${jProperty.name} = value;
         }<%
                 }
-                if (jProperty.readable) {%>
+                if (jProperty.readable && jProperty.name == 'new') {%>
+        public function isNew():${jProperty.as3Type.name} {
+            return true;
+        }<%
+                } else if (jProperty.readable) {%>
         public function get ${jProperty.name}():${jProperty.as3Type.name} {
             return _${jProperty.name};
         }<%
