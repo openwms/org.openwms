@@ -98,8 +98,6 @@ package org.openwms.web.flex.client.view
 
         private static var _link:Array = [org.openwms.tms.domain.order.TransportOrder];
 
-//        private var service:SecureRemoteObject;
-
         [Bindable]
         public var tideContext:Context = Spring.getInstance().getSpringContext();
         Spring.getInstance().addComponents([ModelLocator, ModuleLocator, UserDelegate, RoleDelegate]);
@@ -131,13 +129,8 @@ package org.openwms.web.flex.client.view
          */
         public function init():void
         {
-            // register application itself
             tideContext.mainAppUI = this;
-//            this.service = SecureRemoteObject(ServiceLocator.getInstance().getRemoteObject(Constants.MODULEMGMT_SERVICE));
-//            registerEventListeners();
-//            modelLocator.actualView = SwitchScreenEvent.SHOW_STARTSCREEN;
-//            bindCommands();
-            tideContext.clientTopic.subscribe();
+            //tideContext.clientTopic.subscribe();
             tideContext.raiseEvent(ApplicationEvent.LOAD_ALL_MODULES);
         }
 
@@ -178,7 +171,6 @@ package org.openwms.web.flex.client.view
             {
                 var appModule:IApplicationModule = (event.data as IApplicationModule);
                 trace("Module was unloaded: " + appModule.getModuleName());
-                //removeFromMainMenu(appModule);
                 mainMenuBar.dataProvider = moduleLocator.getActiveMenuItems(new XMLListCollection(stdMenu));
                 removeViewsFromStack(appModule);
             }
@@ -196,7 +188,6 @@ package org.openwms.web.flex.client.view
             {
                 var appModule:IApplicationModule = (event.data as IApplicationModule);
                 trace("Configuration changed for Module: " + appModule.getModuleName());
-                //refreshMainMenu(appModule);
                 mainMenuBar.dataProvider = moduleLocator.getActiveMenuItems(new XMLListCollection(stdMenu));
                 refreshViewStack(appModule);
                 appModule.initializeModule(applicationDomain);

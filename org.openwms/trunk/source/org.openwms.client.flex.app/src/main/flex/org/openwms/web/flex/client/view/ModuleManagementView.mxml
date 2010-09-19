@@ -151,7 +151,6 @@
                     e.data = modelLocator.selectedModule;
                     dispatchEvent(e);
                 }
-                traceOut();
             }
             
             private function traceOut():void {

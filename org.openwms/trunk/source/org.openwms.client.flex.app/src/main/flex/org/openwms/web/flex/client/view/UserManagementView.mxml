@@ -32,21 +32,35 @@
         [ManagedEvent(name="LOAD_MODULE")]
         [ManagedEvent(name="UNLOAD_MODULE")]
         [ManagedEvent(name="LOAD_ALL_USERS")]
+        [ManagedEvent(name="LOAD_ALL_ROLES")]
     </mx:Metadata>
 
     <mx:Script>
         <![CDATA[
+        	import org.openwms.web.flex.client.event.RoleEvent;
+        	import org.openwms.web.flex.client.model.ModelLocator;
             import org.granite.tide.spring.Context;
             import org.openwms.web.flex.client.event.UserEvent;
 
             [In]
             public var tideContext:Context;
-        
+            [In]
+            [Bindable]
+            public var modelLocator : ModelLocator;
+            
             /**
              * Load all users when the view is loaded.
              */
-            private function init():void {
-                dispatchEvent(new UserEvent(UserEvent.LOAD_ALL_USERS));
+            private function init():void
+            {
+            	if (modelLocator.allRoles.length == 0)
+            	{
+                    dispatchEvent(new UserEvent(UserEvent.LOAD_ALL_USERS));
+                }
+                if (modelLocator.allRoles.length == 0)
+                {
+                	dispatchEvent(new UserEvent(RoleEvent.LOAD_ALL_ROLES));
+                }
             }
         ]]>
     </mx:Script>

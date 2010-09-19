@@ -31,9 +31,7 @@
 
 	<mx:Script>
 	<![CDATA[
-    	//import com.af.clientmanager.control.commands.events.clientEvents.GetClientLinksEvent;
-    	//import com.af.clientmanager.control.commands.events.clientEvents.GetClientContactsEvent;
-    	//import com.adobe.cairngorm.control.CairngormEventDispatcher;
+		import org.openwms.web.flex.client.event.UserEvent;
     	import org.openwms.common.domain.system.usermanagement.User;
     	import org.openwms.common.domain.system.usermanagement.UserDetails;
     	import org.openwms.common.domain.system.usermanagement.UserDetails$SEX;
@@ -59,9 +57,9 @@
 		[Bindable]
 		[Embed(source="/assets/images/userDefaultWoman.jpg")]
        	private var womanImage:Class;
-            [In]
-            [Bindable]
-            public var modelLocator:ModelLocator;            
+        [In]
+        [Bindable]
+        public var modelLocator:ModelLocator;            
         [Bindable]
         public var userData:User;
         [Bindable]
@@ -111,7 +109,7 @@
 		 */
 		public function setSelectedItem():void {
 			modelLocator.selectedUser = User(this.userData); 
-       		dispatchEvent(new Event("userSelectionChanged", true));
+       		dispatchEvent(new Event(UserEvent.USER_SELECTION_CHANGED, true));
 		}
 		
 		/**

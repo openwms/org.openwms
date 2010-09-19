@@ -18,136 +18,102 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
-package org.openwms.web.flex.client.business
-{
+package org.openwms.web.flex.client.business {
 
     import mx.collections.ArrayCollection;
     import mx.controls.Alert;
 
-    import org.granite.tide.spring.Context;
+    import org.granite.tide.events.TideFaultEvent;
     import org.granite.tide.events.TideResultEvent;
+    import org.granite.tide.spring.Context;
     import org.openwms.common.domain.system.usermanagement.User;
+    import org.openwms.common.domain.system.usermanagement.UserPassword;
+    import org.openwms.web.flex.client.event.UserEvent;
     import org.openwms.web.flex.client.model.ModelLocator;
 
     /**
-     * A UserDelegate.
+     * An UserDelegate. Handles all interaction with the server-side userService.
+     * Provides simple CRUD methods.
      *
      * @author <a href="mailto:openwms@googlemail.com">Heiko Scherrer</a>
      * @version $Revision$
      */
     [Name("userController")]
+    [ManagedEvent(name="LOAD_ALL_USERS")]
     [Bindable]
-    public class UserDelegate
-    {
+    public class UserDelegate {
         [In]
-        public var tideContext:Context;
+        public var tideContext : Context;
         [In]
-        public var modelLocator:ModelLocator;
+        public var modelLocator : ModelLocator;
 
-        public function UserDelegate():void
-        {
+        public function UserDelegate() : void {
         }
 
         /**
          * Fetch a list of all users from the service.
          */
         [Observer("LOAD_ALL_USERS")]
-        public function getUsers():void
-        {
-            trace("Load Users");
-            tideContext.userService.findAll(onUsersLoaded);
+        public function getUsers() : void {
+            tideContext.userService.findAll(onUsersLoaded, onFault);
+        }
+
+        private function onUsersLoaded(event : TideResultEvent) : void {
+            modelLocator.allUsers = event.result as ArrayCollection;
+            if (modelLocator.allUsers.length > 0) {
+                if (modelLocator.selectedUser == null) {
+                    modelLocator.selectedUser = modelLocator.allUsers[0];
+                } else {
+                    modelLocator.selectedUser = modelLocator.allUsers[(event.result as ArrayCollection).getItemIndex(modelLocator.selectedUser)];
+                }
+            }
         }
 
         /**
          * Call the service to create a new user.
          */
         [Observer("ADD_USER")]
-        public function addUser():void
-        {
-            tideContext.userService.getTemplate("PSEUDO", onUserAdded);
+        public function addUser() : void {
+            tideContext.userService.getTemplate("PSEUDO", onUserAdded, onFault);
         }
 
-        [Observer("SAVE_USER")]
-        public function saveUser():void
-        {
-            tideContext.userService.save(modelLocator.selectedUser, onUserSaved);
-        }
-
-        [Observer("DELETE_USER")]
-        public function deleteUser():void
-        {
-            if (isNaN(modelLocator.selectedUser.id))
-            {
-                modelLocator.selectedUser = modelLocator.allUsers.getItemAt(0) as User;
-                return;
-            }
-            tideContext.userService.remove(modelLocator.selectedUser, onUserDeleted);
-        }
-
-
-        private function onUsersLoaded(event:TideResultEvent):void
-        {
-            trace("Users were loaded");
-            modelLocator.allUsers = event.result as ArrayCollection;
-            if (modelLocator.allUsers.length > 0)
-            {
-                modelLocator.selectedUser = modelLocator.allUsers.getItemAt(0) as User;
-            }
-        }
-
-        private function onUserAdded(event:TideResultEvent):void
-        {
-            var user:User = User(event.result);
+        private function onUserAdded(event : TideResultEvent) : void {
+            var user : User = User(event.result);
             user.username = "";
-            if (user.userDetails.image == null)
-            {
-            }
-            //user.userDetails.image = uniSexImageBytes; 
-            //modelLocator.allUsers.addItem(user);
             modelLocator.selectedUser = user;
         }
 
-        private function onUserSaved(event:TideResultEvent):void
-        {
-            if (event != null && event.result is User)
-            {
-                var user:User = User(event.result);
-                var len:int = modelLocator.allUsers.length;
-                var found:Boolean = false;
-                for each (var usr:User in modelLocator.allUsers)
-                {
-                    if (user.id == usr.id)
-                    {
-                        found = true;
-                        usr = user;
-                        modelLocator.allUsers.refresh();
-                        break;
-                    }
-                }
-                if (!found)
-                {
-                    Alert.show("New User created");
-                    modelLocator.allUsers.addItemAt(user, modelLocator.allUsers.length);
-                }
-                else
-                {
-                    Alert.show("User data saved");
-                    modelLocator.selectedUser = user;
-                }
-            }
-            //UserHelper.traceUser(user);
+        /**
+         * Call to save User data of the current selected User.
+         */
+        [Observer("SAVE_USER")]
+        public function saveUser() : void {
+            tideContext.userService.save(modelLocator.selectedUser, onUserSaved, onFault);
         }
 
-        public function onUserDeleted(event:TideResultEvent):void
-        {
-            var len:int = modelLocator.allUsers.length;
-            for (var i:int = 0; i < len; i++)
-            {
-                if (modelLocator.selectedUser.id == modelLocator.allUsers[i].id)
-                {
+        private function onUserSaved(event : TideResultEvent) : void {
+            dispatchEvent(new UserEvent(UserEvent.LOAD_ALL_USERS));
+        }
+
+        /**
+         * Call to delete an existing User.
+         */
+        [Observer("DELETE_USER")]
+        public function deleteUser() : void {
+            if (isNaN(modelLocator.selectedUser.id)) {
+                modelLocator.selectedUser = modelLocator.allUsers.getItemAt(0) as User;
+                return;
+            }
+            tideContext.userService.remove(modelLocator.selectedUser, onUserDeleted, onFault);
+        }
+
+        [Deprecated]
+        public function onUserDeleted(event : TideResultEvent) : void {
+            var len : int = modelLocator.allUsers.length;
+            for (var i : int = 0; i < len; i++) {
+                if (modelLocator.selectedUser.id == modelLocator.allUsers[i].id) {
                     modelLocator.allUsers.removeItemAt(i);
-                    if (modelLocator.allUsers.length > 0)
-                    {
+                    if (modelLocator.allUsers.length > 0) {
                         modelLocator.selectedUser = modelLocator.allUsers[0];
                     }
                     break;
@@ -155,5 +121,26 @@ package org.openwms.web.flex.client.business
             }
         }
 
+        /**
+         * Call to change the current User's password.
+         */
+        [Observer("CHANGE_USER_PASSWORD")]
+        public function changeUserPassword(event : UserEvent) : void {
+            if (event.data != null) {
+                var uPassword : UserPassword = new UserPassword();
+                uPassword.password = event.data.password as String;
+                uPassword.user = event.data.user as User;
+                tideContext.userService.changeUserPassword(uPassword, onPasswordChanged, onFault);
+            }
+        }
+
+        private function onPasswordChanged(event : TideResultEvent) : void {
+            trace("Users has changed password");
+        }
+
+        private function onFault(event : TideFaultEvent) : void {
+            trace("Error executing operation on User service:" + event.fault);
+            Alert.show("Error executing operation on User service");
+        }
     }
 }
