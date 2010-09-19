@@ -47,6 +47,13 @@ package org.openwms.web.flex.client.common.model
         // LocationGroupView
         public var allLocationGroups:ArrayCollection = new ArrayCollection();
         public var locationGroupTree:TreeNode;
+        public static const WIDTH_LOCATION_GROUP_NAME:Number = 60;
+
+        // LocationView        
+        public static const WIDTH_LOCATION:Number = 80;
+
+        // TransportUnitView
+        public static const WIDTH_BARCODE:Number = 80;
 
         /**
          * Constructor.
