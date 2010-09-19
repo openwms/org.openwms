@@ -147,7 +147,7 @@ package ${jClass.as3Type.packageName} {
         if (jProperty != jClass.uid) {
             if (jProperty.readable || jProperty.writable) {%>
 <%
-                if (jProperty.writable) {%>
+                if (jProperty.writable || jProperty.name == 'version') {%>
         public function set ${jProperty.name}(value:${jProperty.as3Type.name}):void {
             _${jProperty.name} = value;
         }<%
