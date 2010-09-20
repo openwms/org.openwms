@@ -241,10 +241,20 @@ public class User extends AbstractEntity implements Serializable {
         return this.id == null;
     }
 
+    /**
+     * Return the username of this {@link User}. This property is unique.
+     * 
+     * @return The current username
+     */
     public String getUsername() {
         return this.username;
     }
 
+    /**
+     * Change the unique username of this {@link User} to <tt>username</tt>.
+     * 
+     * @param username The new username to set
+     */
     public void setUsername(String username) {
         this.username = username;
     }
@@ -397,10 +407,21 @@ public class User extends AbstractEntity implements Serializable {
         this.roles = roles;
     }
 
+    /**
+     * Returns the currently set full name of this {@link User}.
+     * 
+     * @return The current fullname
+     */
     public String getFullname() {
         return this.fullname;
     }
 
+    /**
+     * Change the full name of this {@link User}.
+     * 
+     * @param fullname
+     *            The new name to set
+     */
     public void setFullname(String fullname) {
         this.fullname = fullname;
     }
@@ -415,14 +436,16 @@ public class User extends AbstractEntity implements Serializable {
     }
 
     /**
-     * Set a List of {@link UserPassword}s to this <code>User</code>.
-     * Already existing {@link UserPassword}s are removed.
+     * The implementation does nothing. The method is defined to be compliant
+     * with JavaBeans and to generate appropriate ActionScript classes.
      * 
      * @param passwords
      *            A List of {@link UserPassword}s
      */
+    @Deprecated
     public void setPasswords(List<UserPassword> passwords) {
-        this.passwords = passwords;
+    // do nothing, only used for JavaBeans compliance to support generation
+    // of AS classes.
     }
 
     /**
