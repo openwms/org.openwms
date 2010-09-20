@@ -127,9 +127,7 @@ package org.openwms.web.flex.client.business {
         [Observer("CHANGE_USER_PASSWORD")]
         public function changeUserPassword(event : UserEvent) : void {
             if (event.data != null) {
-                var uPassword : UserPassword = new UserPassword();
-                uPassword.password = event.data.password as String;
-                uPassword.user = event.data.user as User;
+                var uPassword : UserPassword = new UserPassword(event.data.user as User, event.data.password as String);
                 tideContext.userService.changeUserPassword(uPassword, onPasswordChanged, onFault);
             }
         }

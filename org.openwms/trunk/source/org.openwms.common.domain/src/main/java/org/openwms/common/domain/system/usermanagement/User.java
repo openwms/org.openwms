@@ -64,7 +64,7 @@ import org.slf4j.LoggerFactory;
         @NamedQuery(name = User.NQ_FIND_ALL, query = "SELECT u FROM User u"),
         @NamedQuery(name = User.NQ_FIND_ALL_ORDERED, query = "SELECT u FROM User u ORDER BY u.username"),
         @NamedQuery(name = User.NQ_FIND_BY_USERNAME, query = "SELECT u FROM User u WHERE u.username = ?1"),
-        @NamedQuery(name = User.NQ_FIND_BY_USERNAME_PASSWORD, query = "SELECT u FROM User u WHERE u.username = :userName and u.password = :password") })
+        @NamedQuery(name = User.NQ_FIND_BY_USERNAME_PASSWORD, query = "SELECT u FROM User u WHERE u.username = :username and u.password = :password") })
 public class User extends AbstractEntity implements Serializable {
 
     /**
@@ -97,7 +97,7 @@ public class User extends AbstractEntity implements Serializable {
     /**
      * Query to find <strong>one</strong> {@link User} by its userName and
      * password.
-     * <li>Query parameter name <strong>userName</strong> : The userName of
+     * <li>Query parameter name <strong>username</strong> : The userName of
      * the User to search for.</li>
      * <li>Query parameter name <strong>password</strong> : The current
      * password of the User to search for.</li>
