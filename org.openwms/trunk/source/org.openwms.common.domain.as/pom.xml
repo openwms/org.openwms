@@ -110,7 +110,7 @@
 						<class>org.openwms.common.domain.*</class>
 					</includeJavaClasses>
                     <excludeJavaClasses>
-                        <class>org.openwms.common.domain.system.usermanagement.package-info</class>
+                        <class>org.openwms.common.domain.system.usermanagement.User$1</class>
                     </excludeJavaClasses>
 					<sourcePaths>
 						<sourcePath>${project.basedir}/src/main/flex/</sourcePath>

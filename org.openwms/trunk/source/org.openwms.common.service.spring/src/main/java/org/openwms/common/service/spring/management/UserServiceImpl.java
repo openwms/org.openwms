@@ -151,7 +151,7 @@ public class UserServiceImpl extends EntityServiceImpl<User, Long> implements Us
             logger.warn("Null or an empty String is not allowed for a new password");
             throw new ServiceException("Null or an empty String is not allowed for a new password");
         }
-        User entity = dao.findByNameAndPassword(userPassword);
+        User entity = dao.findByUniqueId(userPassword.getUser().getUsername());
         if (entity == null) {
             throw new UserNotFoundException("User not found, probably not persisted before");
         }
