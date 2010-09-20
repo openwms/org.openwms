@@ -30,6 +30,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.OrderBy;
 import javax.persistence.Table;
 
 import org.openwms.common.domain.AbstractEntity;
@@ -76,6 +77,7 @@ public class UserPassword extends AbstractEntity implements Serializable {
     private String password;
 
     @Column(name = "PASSWORD_CHANGED")
+    @OrderBy
     private Date passwordChanged = new Date();
 
     /* ----------------------------- methods ------------------- */
@@ -174,12 +176,12 @@ public class UserPassword extends AbstractEntity implements Serializable {
     }
 
     /**
-     * Return the persistent id as String.
+     * Return the persistent id as String or an empty String.
      * 
      * @see java.lang.Object#toString()
      */
     @Override
     public String toString() {
-        return id.toString();
+        return (id == null ? "" : id.toString());
     }
 }
