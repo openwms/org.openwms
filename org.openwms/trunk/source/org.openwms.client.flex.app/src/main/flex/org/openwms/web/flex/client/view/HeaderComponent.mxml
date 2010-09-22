@@ -42,8 +42,7 @@
     		
     		private function logout(event:MouseEvent = null):void {
                 identity.logout();
-    			var e:ApplicationEvent = new ApplicationEvent(ApplicationEvent.LOGOUT);
-    			dispatchEvent(e);
+    			dispatchEvent(new ApplicationEvent(ApplicationEvent.LOGOUT));
     		}
     		
     		public function getSecuredObjectNames():ArrayCollection
