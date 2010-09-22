@@ -24,6 +24,10 @@
 <view:CommonAppBase xmlns:mx="http://www.adobe.com/2006/mxml" xmlns:module="org.openwms.web.flex.client.module.*"
     xmlns:view="org.openwms.web.flex.client.common.view.*">
     
+    <mx:Metadata>
+        [Name("CommonApp")]
+    </mx:Metadata>
+    
     <mx:Script>
     	<![CDATA[
     		import org.openwms.web.flex.client.util.DisplayUtility;

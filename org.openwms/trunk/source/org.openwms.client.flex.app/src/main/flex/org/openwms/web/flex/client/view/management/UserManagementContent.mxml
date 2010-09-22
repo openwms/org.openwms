@@ -68,6 +68,9 @@
                 shadowImage();
             }
             
+            /**
+             * Callback method. To be called when a new user image was saved.
+             */ 
             public function notify():void
             {
             	refresh();

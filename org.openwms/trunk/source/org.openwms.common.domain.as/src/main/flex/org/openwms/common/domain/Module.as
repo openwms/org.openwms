@@ -26,7 +26,7 @@ package org.openwms.common.domain {
     	
     	public function toString():String
     	{
-    		return this.moduleName+this.description+this.loaded+this.loadOnStartup+this.startupOrder+this.url;
+    		return this.moduleName;
     	}
     }
 }

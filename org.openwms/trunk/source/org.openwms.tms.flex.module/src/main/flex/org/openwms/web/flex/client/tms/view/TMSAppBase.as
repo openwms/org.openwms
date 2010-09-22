@@ -32,7 +32,6 @@ package org.openwms.web.flex.client.tms.view
     import org.granite.tide.Tide;
     import org.granite.tide.spring.Spring;
     import org.openwms.web.flex.client.IApplicationModule;
-    import org.openwms.web.flex.client.common.model.CommonModelLocator;
     import org.openwms.web.flex.client.model.ModelLocator;
     import org.openwms.web.flex.client.module.CommonModule;
     import org.openwms.web.flex.client.tms.business.TransportsDelegate;
@@ -92,6 +91,13 @@ package org.openwms.web.flex.client.tms.view
         }
 
         /**
+         * This method returns the current version of the module as String.
+         */
+        public function getModuleVersion():String {
+            return "1.0.0";
+        }
+
+        /**
          * This method returns a list of items which are handled as SecuityObjects.
          * A SecurityObject can be assigned to a Role and is monitored by the SecurityHandler
          * to allow or deny certain functionality within the user interface.
@@ -120,5 +126,6 @@ package org.openwms.web.flex.client.tms.view
             trace("Destroying module : "+getModuleName());
             Spring.getInstance().removeModule(TMSAppBase);
         }
+
     }
 }
