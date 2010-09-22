@@ -18,8 +18,7 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
-package org.openwms.web.flex.client.view
-{
+package org.openwms.web.flex.client.view {
     import flash.display.DisplayObject;
     import flash.events.Event;
     import flash.system.ApplicationDomain;
@@ -37,7 +36,6 @@ package org.openwms.web.flex.client.view
     import mx.managers.PopUpManager;
     import mx.modules.ModuleManager;
     
-    import org.granite.rpc.remoting.mxml.SecureRemoteObject;
     import org.granite.tide.spring.Context;
     import org.granite.tide.spring.Identity;
     import org.granite.tide.spring.Spring;
@@ -47,7 +45,6 @@ package org.openwms.web.flex.client.view
     import org.openwms.web.flex.client.IApplicationModule;
     import org.openwms.web.flex.client.business.RoleDelegate;
     import org.openwms.web.flex.client.business.UserDelegate;
-    import org.openwms.web.flex.client.command.*;
     import org.openwms.web.flex.client.event.ApplicationEvent;
     import org.openwms.web.flex.client.event.SwitchScreenEvent;
     import org.openwms.web.flex.client.model.ModelLocator;
@@ -55,60 +52,48 @@ package org.openwms.web.flex.client.view
     import org.openwms.web.flex.client.util.DisplayUtility;
     import org.openwms.web.flex.client.view.dialogs.LoginView;
 
-    public class AppBase extends Application
-    {
+    public class AppBase extends Application {
 
         [In]
         [Bindable]
-        public var modelLocator:ModelLocator;
-
+        public var modelLocator : ModelLocator;
         [In]
         [Bindable]
-        public var moduleLocator:ModuleLocator;
-
+        public var moduleLocator : ModuleLocator;
         [In]
         [Bindable]
-        public var identity:Identity;
-
-        [Bindable]
-        public var loginView:LoginView;
-
-        [Bindable]
-        public var mainMenuBar:MenuBar;
-
-        [Bindable]
-        public var stdMenu:XMLList;
-        [Bindable]
-        public var appViewStack:ViewStack;
-
-        [Bindable]
-        public var moduleManagementService:SecureRemoteObject = null;
-
-        [Bindable]
-        public var userService:SecureRemoteObject = null;
+        public var identity : Identity;
         
-        private var applicationDomain:ApplicationDomain = new ApplicationDomain(ApplicationDomain.currentDomain);
+        [Bindable]
+        public var loginView : LoginView;
+        [Bindable]
+        public var mainMenuBar : MenuBar;
+        [Bindable]
+        public var stdMenu : XMLList;
+        [Bindable]
+        public var appViewStack : ViewStack;
+
+        private var applicationDomain : ApplicationDomain = new ApplicationDomain(ApplicationDomain.currentDomain);
 
         // Manager classes are loaded to the application domain
-        private var moduleManager:ModuleManager;
+        private var moduleManager : ModuleManager;
 
-        private var popUpManager:PopUpManager;
+        private var popUpManager : PopUpManager;
 
-        private var dragManager:DragManager;
+        private var dragManager : DragManager;
 
-        private static var _link:Array = [org.openwms.tms.domain.order.TransportOrder];
+        private static var _link : Array = [org.openwms.tms.domain.order.TransportOrder];
 
         [Bindable]
-        public var tideContext:Context = Spring.getInstance().getSpringContext();
+        public var tideContext : Context = Spring.getInstance().getSpringContext();
         Spring.getInstance().addComponents([ModelLocator, ModuleLocator, UserDelegate, RoleDelegate]);
 
-        private static var log:ILogger = Log.getLogger("org.openwms.web.flex.client.view.App");
+        private static var log : ILogger = Log.getLogger("org.openwms.web.flex.client.view.App");
 
         /**
          * Suppress warnings and add a constructor.
          */
-        public function AppBase()
-        {
+        public function AppBase() {
         }
 
         /**
@@ -116,8 +101,7 @@ package org.openwms.web.flex.client.view
          *
          * Put your code here, to initialize 3rd party frameworks.
          */
-        public function preInit(event:Event):void
-        {
+        public function preInit(event : Event) : void {
             Spring.getInstance().initApplication();
             //Chimp.load(null);
         }
@@ -127,20 +111,15 @@ package org.openwms.web.flex.client.view
          *
          * Put your code here, to initialize application specific structures.
          */
-        public function init():void
-        {
+        public function init() : void {
             tideContext.mainAppUI = this;
-            //tideContext.clientTopic.subscribe();
-            tideContext.raiseEvent(ApplicationEvent.LOAD_ALL_MODULES);
         }
 
         /**
          * Called when a menu item of the main menu bar is clicked.
          */
-        public function onMenuChange(event:MenuEvent):void
-        {
-            if (appViewStack.getChildByName(event.item.@action) == null)
-            {
+        public function onMenuChange(event : MenuEvent) : void {
+            if (appViewStack.getChildByName(event.item.@action) == null) {
                 Alert.show("Screen with name " + event.item.@action + " not found!");
                 return;
             }
@@ -153,24 +132,28 @@ package org.openwms.web.flex.client.view
          * Called when logout is proceeded and the application should switch to the initial screen (with login dialog).
          */
         [Observer("APP_LOGOUT")]
-        public function logout(event:ApplicationEvent):void
-        {
+        public function logout(event : ApplicationEvent) : void {
             modelLocator.actualView = SwitchScreenEvent.SHOW_STARTSCREEN;
             appViewStack.selectedIndex = DisplayUtility.getView(SwitchScreenEvent.SHOW_STARTSCREEN, appViewStack);
+            tideContext.raiseEvent(ApplicationEvent.UNLOAD_ALL_MODULES);
         }
 
+        /**
+         * Called when the user logged in successfully.
+         */
+        [Observer("APP_LOGIN_OK")]
+        public function loggedIn(event : ApplicationEvent) : void {
+            tideContext.raiseEvent(ApplicationEvent.LOAD_ALL_MODULES);
+        }
         /**
          * In the case a Module was unloaded, a re-organize of menus and
          * views becomes necessary.
          */
         [Observer("MODULE_UNLOADED")]
-        public function moduleUnloaded(event:ApplicationEvent):void
-        {
-            // Modules were unloaded, hence update viewStack, menuBar and context menu...
-            if (event.data != null && event.data is IApplicationModule)
-            {
-                var appModule:IApplicationModule = (event.data as IApplicationModule);
-                trace("Module was unloaded: " + appModule.getModuleName());
+        public function moduleUnloaded(event : ApplicationEvent) : void {
+            if (event.data != null && event.data is IApplicationModule) {
+                var appModule : IApplicationModule = (event.data as IApplicationModule);
+                trace("Module was unloaded : " + appModule.getModuleName());
                 mainMenuBar.dataProvider = moduleLocator.getActiveMenuItems(new XMLListCollection(stdMenu));
                 removeViewsFromStack(appModule);
             }
@@ -181,13 +164,10 @@ package org.openwms.web.flex.client.view
          * views becomes necessary.
          */
         [Observer("MODULE_CONFIG_CHANGED")]
-        public function moduleConfigChanged(event:ApplicationEvent):void
-        {
-            // Modules were loaded, hence update viewStack, menuBar and popUps...
-            if (event.data != null && event.data is IApplicationModule)
-            {
-                var appModule:IApplicationModule = (event.data as IApplicationModule);
-                trace("Configuration changed for Module: " + appModule.getModuleName());
+        public function moduleConfigChanged(event : ApplicationEvent) : void {
+            if (event.data != null && event.data is IApplicationModule) {
+                var appModule : IApplicationModule = (event.data as IApplicationModule);
+                trace("Configuration has changed for Module : " + appModule.getModuleName());
                 mainMenuBar.dataProvider = moduleLocator.getActiveMenuItems(new XMLListCollection(stdMenu));
                 refreshViewStack(appModule);
                 appModule.initializeModule(applicationDomain);
@@ -199,29 +179,27 @@ package org.openwms.web.flex.client.view
          * the standard menu is loaded then by default.
          */
         [Observer("MODULES_CONFIGURED")]
-        public function modulesConfigured(event:ApplicationEvent):void
-        {
+        public function modulesConfigured(event : ApplicationEvent) : void {
             mainMenuBar.dataProvider = new XMLListCollection(stdMenu);
             modelLocator.securityObjectNames = getStdSecurityObjects();
         }
-        
-        private function getStdSecurityObjects():ArrayCollection
-        {
-        	// Go through all components that implement ISecured and add them to the modelLocator.secured...
-        	return new ArrayCollection(new Array({}));
+
+        private function getStdSecurityObjects() : ArrayCollection {
+            // Go through all components that implement ISecured and add them to the modelLocator.secured...
+            return new ArrayCollection(new Array({}));
         }
 
         /**
          * This method rebuilds the viewStack of the application, and should be called,
          * in case application modules are loaded or unloaded.
          */
-        private function removeViewsFromStack(module:IApplicationModule):void
-        {
+        private function removeViewsFromStack(module : IApplicationModule) : void {
             trace("Remove views from applications ViewStack for module : " + module.getModuleName());
-            var views:ArrayCollection = module.getViews();
-            for each (var view:DisplayObject in views)
-            {
-                appViewStack.removeChild(view as DisplayObject);
+            var views : ArrayCollection = module.getViews();
+            for each (var view : DisplayObject in views) {
+                if (appViewStack.contains(view)) {
+                    appViewStack.removeChild(appViewStack.getChildByName(view.name));
+                }
             }
         }
 
@@ -229,20 +207,16 @@ package org.openwms.web.flex.client.view
          * This method rebuilds the viewStack of the application, and should be called,
          * in case application modules are loaded or unloaded.
          */
-        private function refreshViewStack(module:IApplicationModule):void
-        {
+        private function refreshViewStack(module : IApplicationModule) : void {
             trace("Resolve ViewStack items from module : " + module.getModuleName());
-            var views:ArrayCollection = module.getViews();
-            for each (var view:DisplayObject in views)
-            {
+            var views : ArrayCollection = module.getViews();
+            for each (var view : DisplayObject in views) {
                 appViewStack.addChild(view as DisplayObject);
             }
         }
 
-        private function updateViewStack(module:Module):void
-        {
-            for each (var menuItem:MenuItem in module.menuItems)
-            {
+        private function updateViewStack(module : Module) : void {
+            for each (var menuItem : MenuItem in module.menuItems) {
                 trace("MenuItem:" + menuItem.label);
             }
         }

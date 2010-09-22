@@ -26,10 +26,12 @@
 
     <mx:Metadata>
         [Name]
+        [ManagedEvent(name="APP_LOGIN_OK")]
     </mx:Metadata>
 
 	<mx:Script>
         <![CDATA[
+        	import org.openwms.web.flex.client.event.ApplicationEvent;
             
             import mx.managers.PopUpManager;
             import org.granite.tide.events.TideResultEvent;
@@ -52,6 +54,7 @@
 
             private function loginOk(event:TideResultEvent):void {
                 loginMessageText = null;
+                dispatchEvent(new ApplicationEvent(ApplicationEvent.APP_LOGIN_OK));
                 PopUpManager.removePopUp(this);
             }
         

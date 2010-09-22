@@ -50,7 +50,12 @@ package org.openwms.web.flex.client
          * This method returns the name of the module as unique String identifier.
          */
         function getModuleName():String;
-
+        
+        /**
+         * This method returns the current version of the module as String.
+         */
+        function getModuleVersion():String;
+        
         /**
          * This method returns a list of items which are handled as SecuityObjects.
          * A SecurityObject can be assigned to a Role and is monitored by the SecurityHandler

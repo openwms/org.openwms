@@ -59,7 +59,6 @@
                 saveBtn.enabled = false;
                 deleteBtn.enabled = false;
                 enableTextFields(false);
-                traceOut();
             }
             
             //[Observer("MODULE_CONFIG_CHANGED")]
@@ -81,12 +80,10 @@
             }
 
             private function saveModule():void {
-                deleteBtn.enabled = false;
                 saveBtn.enabled = false;
                 var e:ApplicationEvent = new ApplicationEvent(ApplicationEvent.SAVE_MODULE);
                 e.data = modelLocator.selectedModule;
                 dispatchEvent(e);
-                //moduleConfigChanged();
                 newBtn.setFocus();
             }
             
@@ -112,12 +109,12 @@
                 if (modelLocator.selectedModule != null) {
                     var e:ApplicationEvent;
                     if (modelLocator.selectedModule.loaded) {
-                        trace("Unloading Module:"+modelLocator.selectedModule);
+                        trace("Unloading Module : "+modelLocator.selectedModule);
                         e = new ApplicationEvent(ApplicationEvent.UNLOAD_MODULE);
                         e.data = modelLocator.selectedModule;
                         dispatchEvent(e);
                     } else {
-                        trace("Loading Module:"+modelLocator.selectedModule);
+                        trace("Loading Module : "+modelLocator.selectedModule);
                         e = new ApplicationEvent(ApplicationEvent.LOAD_MODULE);
                         e.data = modelLocator.selectedModule;
                         dispatchEvent(e);
@@ -153,15 +150,6 @@
                 }
             }
             
-            private function traceOut():void {
-                var i:int = 0;
-                for each (var module:Module in modelLocator.allModules)
-                {
-                    trace("Module ["+i+"]:"+module.moduleName);
-                    i++;
-                }
-            }
-
             private function getModule(module:Module):Module {
                 for each (var m:Module in modelLocator.allModules)
                 {
@@ -183,7 +171,7 @@
     <mx:StringValidator minLength="1" tooShortError="Modulename is required" source="{moduleNameTxt}" required="true" property="text"/>
     <mx:StringValidator minLength="1" tooShortError="URL is required" source="{urlTxt}" required="true" property="text"/>
 
-		<mx:Panel height="255" backgroundColor="#EAFF00" backgroundAlpha="0.5" width="100%" layout="absolute" x="10" y="10" title="Modules">
+		<mx:Panel height="255" backgroundColor="#EAFF00" backgroundAlpha="0.5" width="815" layout="absolute" x="10" y="10" title="Modules">
 			<mx:List id="modulesGrid" dataProvider="{modelLocator.allModules}" labelField="moduleName" dragEnabled="true" dropEnabled="true" dragMoveEnabled="true" dragDrop="onDragComplete(event);" width="300" x="10" y="10" height="195" itemClick="onRowClick(event)" />
 			<mx:Canvas height="195" x="318" y="10" width="466">
 			<mx:Form width="100%">

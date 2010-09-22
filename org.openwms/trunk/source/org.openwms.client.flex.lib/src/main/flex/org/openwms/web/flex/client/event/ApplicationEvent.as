@@ -31,6 +31,7 @@ package org.openwms.web.flex.client.event
     public class ApplicationEvent extends Event
     {
         public static const LOAD_ALL_MODULES:String = "LOAD_ALL_MODULES";
+        public static const UNLOAD_ALL_MODULES:String = "UNLOAD_ALL_MODULES";
         public static const MODULE_CONFIG_CHANGED:String = "MODULE_CONFIG_CHANGED";
         public static const MODULES_CONFIGURED:String = "MODULES_CONFIGURED";
         public static const SAVE_MODULE:String = "SAVE_MODULE";
@@ -39,6 +40,7 @@ package org.openwms.web.flex.client.event
         public static const UNLOAD_MODULE:String = "UNLOAD_MODULE";
         public static const MODULE_UNLOADED:String = "MODULE_UNLOADED";
 
+        public static const APP_LOGIN_OK:String = "APP_LOGIN_OK";
         public static const LOGOUT:String = "APP_LOGOUT";
         public var data:*;
 

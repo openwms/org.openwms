@@ -18,18 +18,18 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
-package org.openwms.web.flex.client.common.view
-{
+package org.openwms.web.flex.client.common.view {
     import flash.system.ApplicationDomain;
-    
+
     import mx.collections.ArrayCollection;
     import mx.collections.XMLListCollection;
     import mx.containers.ViewStack;
     import mx.controls.MenuBar;
-    
+
     import org.granite.tide.ITideModule;
     import org.granite.tide.Tide;
     import org.granite.tide.spring.Spring;
+    import org.granite.tide.spring.Context;
     import org.openwms.web.flex.client.IApplicationModule;
     import org.openwms.web.flex.client.common.business.LocationDelegate;
     import org.openwms.web.flex.client.common.business.LocationGroupDelegate;
@@ -39,35 +39,41 @@ package org.openwms.web.flex.client.common.view
     import org.openwms.web.flex.client.model.ModelLocator;
     import org.openwms.web.flex.client.module.CommonModule;
 
-    [Name("commonAppBase")]
-    public class CommonAppBase extends CommonModule implements IApplicationModule, ITideModule
-    {
+    [Name("CommonAppBase")]
+    public class CommonAppBase extends CommonModule implements IApplicationModule, ITideModule {
 
         [In]
         [Bindable]
-        public var modelLocator:ModelLocator;
+        public var modelLocator : ModelLocator;
         [Bindable]
-        public var commonMenuBar:MenuBar;
+        public var commonMenuBar : MenuBar;
         [Bindable]
-        public var commonViewStack:ViewStack;
+        public var commonViewStack : ViewStack;
+        [In]
+        public var tideContext : Context;
 
         /**
          * Constructor.
          */
-        public function CommonAppBase()
-        {
+        public function CommonAppBase() {
             super();
         }
-        
-        public function start(applicationDomain:ApplicationDomain = null):void
-        {
-        	trace("Starting Tide context in applicationDomain : "+applicationDomain);
-        	Spring.getInstance().addModule(CommonAppBase, applicationDomain);
+
+        /**
+         * This method is called first from the ModuleLocator to do the first initial work. The module registers itself on
+         * the main applicationDomain, that means the context of the main application is extended with the subcontext of
+         * this module.
+         */
+        public function start(applicationDomain : ApplicationDomain=null) : void {
+            trace("Add context to main context in applicationDomain : " + applicationDomain);
+            Spring.getInstance().addModule(CommonAppBase, applicationDomain);
         }
-        
-        public function init(tide:Tide):void
-        {
-        	trace("Add components to Tide context");
+
+        /**
+         * In a second step Tide tries to start the module calling this method. Here are all components added to the TideContext.
+         */
+        public function init(tide : Tide) : void {
+            trace("Add components to Tide context");
             tide.addComponents([CommonModelLocator, TransportUnitTypeDelegate, TransportUnitDelegate, LocationDelegate, LocationGroupDelegate]);
         }
 
@@ -75,17 +81,22 @@ package org.openwms.web.flex.client.common.view
          * This method returns a list of menu items which shall be expaned to the main
          * application menu bar.
          */
-        public function getMainMenuItems():XMLListCollection
-        {
+        public function getMainMenuItems() : XMLListCollection {
             return commonMenuBar.dataProvider as XMLListCollection;
         }
 
         /**
          * This method returns the name of the module as unique String identifier.
          */
-        public function getModuleName():String
-        {
+        public function getModuleName() : String {
             return "OPENWMS.ORG CORE MODULE";
+        }
+
+        /**
+         * This method returns the current version of the module as String.
+         */
+        public function getModuleVersion():String {
+        	return "1.0.0";
         }
 
         /**
@@ -93,8 +104,7 @@ package org.openwms.web.flex.client.common.view
          * A SecurityObject can be assigned to a Role and is monitored by the SecurityHandler
          * to allow or deny certain functionality within the user interface.
          */
-        public function getSecurityObjects():ArrayCollection
-        {
+        public function getSecurityObjects() : ArrayCollection {
             return new ArrayCollection();
         }
 
@@ -102,26 +112,23 @@ package org.openwms.web.flex.client.common.view
          * This method returns a list of views which shall be populated to the parent
          * application.
          */
-        public function getViews():ArrayCollection
-        {
+        public function getViews() : ArrayCollection {
             return new ArrayCollection(commonViewStack.getChildren());
         }
 
         /**
          * Do additional initial work when the module is loaded.
          */
-        public function initializeModule(applicationDomain:ApplicationDomain = null):void
-        {
-            trace("Initialize module : "+getModuleName());
+        public function initializeModule(applicationDomain : ApplicationDomain=null) : void {
+            trace("Initialize module : " + getModuleName());
         }
 
         /**
          * Do addtional cleanup work before the module is unloaded.
          */
-        public function destroyModule():void
-        {
-            trace("Destroying module : "+getModuleName());
-        	Spring.getInstance().removeModule(CommonAppBase);
+        public function destroyModule() : void {
+            trace("Destroying module : " + getModuleName());
+            Spring.getInstance().removeModule(CommonAppBase);
         }
-   }
+    }
 }

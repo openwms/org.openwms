@@ -102,7 +102,7 @@ package org.openwms.web.flex.client.business {
 
         private function onFault(event : TideFaultEvent) : void {
             trace("Error executing operation on Role service:" + event.fault);
-            logger.error("ERROR accessing UserService : " + event.fault);
+            logger.error("ERROR accessing Role : " + event.fault);
             Alert.show("Error executing operation on Role service");
             dispatchEvent(new RoleEvent(RoleEvent.LOAD_ALL_ROLES));
         }
