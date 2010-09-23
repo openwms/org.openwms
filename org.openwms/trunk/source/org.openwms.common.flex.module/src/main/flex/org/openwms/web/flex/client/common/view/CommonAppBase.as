@@ -20,16 +20,16 @@
  */
 package org.openwms.web.flex.client.common.view {
     import flash.system.ApplicationDomain;
-
+    
     import mx.collections.ArrayCollection;
     import mx.collections.XMLListCollection;
     import mx.containers.ViewStack;
     import mx.controls.MenuBar;
-
+    
     import org.granite.tide.ITideModule;
     import org.granite.tide.Tide;
-    import org.granite.tide.spring.Spring;
     import org.granite.tide.spring.Context;
+    import org.granite.tide.spring.Spring;
     import org.openwms.web.flex.client.IApplicationModule;
     import org.openwms.web.flex.client.common.business.LocationDelegate;
     import org.openwms.web.flex.client.common.business.LocationGroupDelegate;
