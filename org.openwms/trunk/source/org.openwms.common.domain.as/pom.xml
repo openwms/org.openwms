@@ -55,6 +55,19 @@
 				</configuration>
 			</plugin>
              -->
+            <plugin>
+                <artifactId>maven-clean-plugin</artifactId>
+                <configuration>
+                    <filesets>
+                        <fileset>
+                            <directory>${basedir}/libs</directory>
+                            <includes>
+                                <include>**</include>
+                            </includes>
+                        </fileset>
+                    </filesets>
+                </configuration>
+            </plugin>
 			<plugin>
 				<groupId>org.sonatype.flexmojos</groupId>
 				<artifactId>flexmojos-maven-plugin</artifactId>

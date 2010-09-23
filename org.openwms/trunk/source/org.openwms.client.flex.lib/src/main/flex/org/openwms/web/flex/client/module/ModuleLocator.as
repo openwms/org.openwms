@@ -150,8 +150,6 @@ package org.openwms.web.flex.client.module {
 
             for each (var module : Module in modelLocator.allModules) {
                 if (modelLocator.loadedModules.containsKey(module.url)) {
-                    trace("Module is in the list of loaded modules");
-
                     // Get an handle to IApplicationModule here to retrieve the list of items
                     // not like it is here to get the info from the db
                     var mInf : IModuleInfo = modelLocator.loadedModules.get(module.url) as IModuleInfo;
@@ -232,7 +230,7 @@ package org.openwms.web.flex.client.module {
                     trace("Trying to load module : " + module.url);
                     loadModule(module);
                 } else {
-                    trace("Module not set to be loaded on startup : " + module.moduleName);
+                    //trace("Module not set to be loaded on startup : " + module.moduleName);
                 }
             }
         }
@@ -267,6 +265,7 @@ package org.openwms.web.flex.client.module {
                     modelLocator.unloadedModules.put(module.url, mInf);
                     appModule.destroyModule();
                     mInf.unload();
+                    mInf.release();
                     return;
                 } else {
                     trace("Module was not loaded before, nothing to unload");
