@@ -149,7 +149,7 @@
             {
                 if (item[dg.dataField] != null)
                 {
-                    return String(item[dg.dataField]);
+                    return String(item[dg.dataField].actualLocation);
                 }
                 return "--";
             }
@@ -161,11 +161,11 @@
 	<mx:DataGrid id="transportOrdersLst" width="95%" height="400" allowMultipleSelection="true" dataProvider="{tmsModelLocator.allTransportOrders}" y="63" x="10">
 		<mx:columns>
 			<mx:DataGridColumn headerText="ID" dataField="id" width="{ModelLocator.WIDTH_ID}" />
+            <mx:DataGridColumn headerText="Transport Unit" dataField="transportUnit" width="{CommonModelLocator.WIDTH_BARCODE}" labelFunction="formatBarcode" />
 			<mx:DataGridColumn headerText="State" dataField="state" width="{TMSModelLocator.WIDTH_STATE}" labelFunction="formatAsString" />
 			<mx:DataGridColumn headerText="Priority" dataField="priority" width="{TMSModelLocator.WIDTH_PRIORITY}" labelFunction="formatAsString" />
-			<mx:DataGridColumn headerText="Transport Unit" dataField="transportUnit" width="{CommonModelLocator.WIDTH_BARCODE}" labelFunction="formatBarcode" />
 			<mx:DataGridColumn headerText="Source Location" dataField="sourceLocation" width="{CommonModelLocator.WIDTH_LOCATION}" labelFunction="formatAsString"/>
-            <mx:DataGridColumn headerText="Current Location" dataField="transportUnit.actualLocation" width="{CommonModelLocator.WIDTH_LOCATION}" labelFunction="formatAsActualLocation" />
+            <mx:DataGridColumn headerText="Current Location" dataField="transportUnit" width="{CommonModelLocator.WIDTH_LOCATION}" labelFunction="formatAsActualLocation" />
 			<mx:DataGridColumn headerText="Target Location" dataField="targetLocation" width="{CommonModelLocator.WIDTH_LOCATION}" labelFunction="formatAsString" />
 			<mx:DataGridColumn headerText="Target Location Group" dataField="targetLocationGroup" width="{CommonModelLocator.WIDTH_LOCATION_GROUP_NAME}" labelFunction="formatLocationGroup" />
 			<mx:DataGridColumn headerText="Created" dataField="creationDate" width="{ModelLocator.WIDTH_DATETIME}" labelFunction="formatAsDate"/>

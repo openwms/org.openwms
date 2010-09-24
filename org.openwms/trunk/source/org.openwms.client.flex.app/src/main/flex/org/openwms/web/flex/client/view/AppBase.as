@@ -39,7 +39,6 @@ package org.openwms.web.flex.client.view {
     import org.granite.tide.spring.Context;
     import org.granite.tide.spring.Identity;
     import org.granite.tide.spring.Spring;
-    import org.openwms.common.domain.MenuItem;
     import org.openwms.common.domain.Module;
     import org.openwms.tms.domain.order.TransportOrder;
     import org.openwms.web.flex.client.IApplicationModule;
@@ -212,12 +211,6 @@ package org.openwms.web.flex.client.view {
             var views : ArrayCollection = module.getViews();
             for each (var view : DisplayObject in views) {
                 appViewStack.addChild(view as DisplayObject);
-            }
-        }
-
-        private function updateViewStack(module : Module) : void {
-            for each (var menuItem : MenuItem in module.menuItems) {
-                trace("MenuItem:" + menuItem.label);
             }
         }
 

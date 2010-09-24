@@ -21,18 +21,14 @@
 package org.openwms.common.domain;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
 
-import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
-import javax.persistence.OneToMany;
+import javax.persistence.OrderBy;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
@@ -45,8 +41,7 @@ import javax.persistence.Transient;
  */
 @Entity
 @Table(name = "APP_MODULE")
-@NamedQueries( {
-        @NamedQuery(name = Module.NQ_FIND_ALL, query = "select m from Module m order by m.startupOrder, m.id"),
+@NamedQueries( { @NamedQuery(name = Module.NQ_FIND_ALL, query = "select m from Module m order by m.startupOrder"),
         @NamedQuery(name = Module.NQ_FIND_BY_UNIQUE_QUERY, query = "select m from Module m where m.moduleName = ?1") })
 public class Module extends AbstractEntity implements Serializable {
 
@@ -73,32 +68,48 @@ public class Module extends AbstractEntity implements Serializable {
     @GeneratedValue
     private Long id;
 
-    @Column(unique = true, nullable = false)
+    /**
+     * The unique name of the module (business key).
+     */
+    @Column(name = "MODULE_NAME", unique = true, nullable = false)
     private String moduleName;
 
-    @Column(unique = true, nullable = false)
+    /**
+     * The URL where to load this module (unique).
+     */
+    @Column(name = "URL", unique = true, nullable = false)
     private String url;
 
+    /**
+     * Property used on client side to store whether the module is loaded or
+     * not.
+     */
     @Transient
     private boolean loaded = false;
 
+    /**
+     * <code>true</code> when the module should be loaded on application
+     * startup.
+     */
+    @Column(name = "LOAD_ON_STARTUP")
     private boolean loadOnStartup = true;
 
+    /**
+     * Defines the startup order compared with other modules. Modules with lower
+     * startupOrders are loaded earlier.
+     */
+    @Column(name = "STARTUP_ORDER")
+    @OrderBy
     private int startupOrder;
 
+    /**
+     * A description field for this module.
+     */
+    @Column(name = "DESCRIPTION")
     private String description = "--";
-
-    @OneToMany
-    @Basic(fetch = FetchType.EAGER)
-    private List<MenuItem> menuItems = new ArrayList<MenuItem>();
-
-    @OneToMany
-    @Basic(fetch = FetchType.EAGER)
-    private List<PopupItem> popupItems = new ArrayList<PopupItem>();
 
     /**
      * Create a new Module.
-     * 
      */
     protected Module() {
         super();
@@ -163,44 +174,6 @@ public class Module extends AbstractEntity implements Serializable {
      */
     public void setUrl(String url) {
         this.url = url;
-    }
-
-    /**
-     * Get the menuItems.
-     * 
-     * @return the menuItems.
-     */
-    public List<MenuItem> getMenuItems() {
-        return menuItems;
-    }
-
-    /**
-     * Set the menuItems.
-     * 
-     * @param menuItems
-     *            The menuItems to set.
-     */
-    public void setMenuItems(List<MenuItem> menuItems) {
-        this.menuItems = menuItems;
-    }
-
-    /**
-     * Get the popupItems.
-     * 
-     * @return the popupItems.
-     */
-    public List<PopupItem> getPopupItems() {
-        return popupItems;
-    }
-
-    /**
-     * Set the popupItems.
-     * 
-     * @param popupItems
-     *            The popupItems to set.
-     */
-    public void setPopupItems(List<PopupItem> popupItems) {
-        this.popupItems = popupItems;
     }
 
     /**
@@ -286,6 +259,56 @@ public class Module extends AbstractEntity implements Serializable {
      */
     public void setStartupOrder(int startupOrder) {
         this.startupOrder = startupOrder;
+    }
+
+    /**
+     * Uses the moduleName for calculation, because this is unique and not null.
+     * 
+     * @see java.lang.Object#hashCode()
+     */
+    @Override
+    public int hashCode() {
+        final int prime = 31;
+        int result = super.hashCode();
+        result = prime * result + ((moduleName == null) ? 0 : moduleName.hashCode());
+        return result;
+    }
+
+    /**
+     * Uses the moduleName for comparison, because this is unique and not null.
+     * 
+     * @see java.lang.Object#equals(java.lang.Object)
+     */
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (!super.equals(obj)) {
+            return false;
+        }
+        if (!(obj instanceof Module)) {
+            return false;
+        }
+        final Module other = (Module) obj;
+        if (moduleName == null) {
+            if (other.moduleName != null) {
+                return false;
+            }
+        } else if (!moduleName.equals(other.moduleName)) {
+            return false;
+        }
+        return true;
+    }
+
+    /**
+     * Returns the moduleName.
+     * 
+     * @see java.lang.Object#toString()
+     */
+    @Override
+    public String toString() {
+        return this.moduleName;
     }
 
 }

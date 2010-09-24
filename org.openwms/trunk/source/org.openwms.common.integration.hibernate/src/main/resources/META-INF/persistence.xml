@@ -25,8 +25,6 @@
     xsi:schemaLocation="http://java.sun.com/xml/ns/persistence http://java.sun.com/xml/ns/persistence/persistence_1_0.xsd">
     <persistence-unit name="OpenWMS-test-durable" transaction-type="RESOURCE_LOCAL">
         <class>org.openwms.common.domain.Module</class>
-        <class>org.openwms.common.domain.MenuItem</class>
-        <class>org.openwms.common.domain.PopupItem</class>
         <class>org.openwms.common.domain.Location</class>
         <class>org.openwms.common.domain.LocationPK</class>
         <class>org.openwms.common.domain.LocationGroup</class>

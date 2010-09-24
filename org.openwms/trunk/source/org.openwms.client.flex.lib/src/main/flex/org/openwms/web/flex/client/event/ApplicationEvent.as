@@ -39,6 +39,7 @@ package org.openwms.web.flex.client.event
         public static const LOAD_MODULE:String = "LOAD_MODULE";
         public static const UNLOAD_MODULE:String = "UNLOAD_MODULE";
         public static const MODULE_UNLOADED:String = "MODULE_UNLOADED";
+        public static const SAVE_STARTUP_ORDERS:String = "SAVE_STARTUP_ORDERS";
 
         public static const APP_LOGIN_OK:String = "APP_LOGIN_OK";
         public static const LOGOUT:String = "APP_LOGOUT";
