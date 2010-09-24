@@ -48,25 +48,21 @@
             [Bindable]
             public var messageText:String = new String("Do you want to cancel selected Transport Orders ?");
 
-            protected function init():void
-            {
+            protected function init():void {
                 cancelOrdersBtn.setFocus();
                 this.addEventListener(KeyboardEvent.KEY_DOWN, keyEventHandler);
                 PopUpManager.centerPopUp(this);
             }
 
-            protected function closeDialog(event:Event=null):void
-            {
+            protected function closeDialog(event:Event=null):void {
                 this.removeEventListener(KeyboardEvent.KEY_DOWN, keyEventHandler);
                 PopUpManager.removePopUp(this);
             }
 
-            protected function accept(e:Event):void
-            {
+            protected function accept(e:Event):void {
                 var event:TransportOrderEvent = new TransportOrderEvent(TransportOrderEvent.CANCEL_TRANSPORT_ORDER);
                 var ids:ArrayCollection = new ArrayCollection();
-                for each (var order:TransportOrder in cancelLst.dataProvider)
-                {
+                for each (var order:TransportOrder in cancelLst.dataProvider) {
                     ids.addItem(order.id);
                 }
                 event.data = {ids:ids, state:actionStatesCmb.selectedItem};
@@ -74,17 +70,14 @@
                 closeDialog();
             }
 
-            protected function keyEventHandler(event:KeyboardEvent):void
-            {
-                if(event.keyCode == 27)
-                {
+            protected function keyEventHandler(event:KeyboardEvent):void {
+                if(event.keyCode == 27) {
                    closeDialog(event);
                    return;
                 }
             }
             
-            protected function formatFunction(item:*):String
-            {
+            protected function formatFunction(item:*):String {
                 return item.id+"\twith Barcode\t"+item.transportUnit.barcode+(item.targetLocation == null ? "":"\tto Location\t"+item.targetLocation)+(item.targetLocationGroup == null ? "":"\tto Location Group\t"+item.targetLocationGroup);
             }
                         
