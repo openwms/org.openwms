@@ -22,9 +22,7 @@ package org.openwms.common.service;
 
 import java.util.List;
 
-import org.openwms.common.domain.MenuItem;
 import org.openwms.common.domain.Module;
-import org.openwms.common.domain.PopupItem;
 
 /**
  * A ModuleManagementService.
@@ -34,27 +32,6 @@ import org.openwms.common.domain.PopupItem;
  * @see 0.1
  */
 public interface ModuleManagementService<T extends Module> extends EntityService<Module> {
-
-    /**
-     * Return a List of all MenuItems. MenuItems are used to populate the main
-     * menu bar in the application. They can be persisted or loaded from the swf
-     * files directly.
-     * 
-     * @param module
-     *            The module to search for.
-     * @return A List of all MenuItems belonging to the module.
-     */
-    List<MenuItem> getMenuItems(Module module);
-
-    /**
-     * Return a List of PopupItems. PopupItems are used to populate the context
-     * menu.
-     * 
-     * @param module
-     *            The module to search for.
-     * @return A List of all PopupItems belonging to the module.
-     */
-    List<PopupItem> getPopupItems(Module module);
 
     /**
      * Return a List of all persisted modules.
@@ -68,5 +45,15 @@ public interface ModuleManagementService<T extends Module> extends EntityService
      * chain. The implementation does not need to execute any logic.
      */
     void login();
+
+    /**
+     * For a list of modules the startupOrder is saved. The startupOrder
+     * property of all modules in the list must already be calculated and saved
+     * before.
+     * 
+     * @param modules
+     *            The list of modules to modify
+     */
+    void saveStartupOrder(List<Module> modules);
 
 }

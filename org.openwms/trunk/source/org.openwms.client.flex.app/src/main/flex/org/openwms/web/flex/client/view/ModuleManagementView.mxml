@@ -29,10 +29,13 @@
         [ManagedEvent(name="DELETE_MODULE")]
         [ManagedEvent(name="LOAD_MODULE")]
         [ManagedEvent(name="UNLOAD_MODULE")]
+        [ManagedEvent(name="SAVE_STARTUP_ORDERS")]
     </mx:Metadata>
 
     <mx:Script>
         <![CDATA[
+        	import mx.collections.SortField;
+        	import mx.collections.Sort;
             
             import mx.collections.ArrayCollection;
             import org.openwms.web.flex.client.module.ModuleLocator;
@@ -81,6 +84,7 @@
 
             private function saveModule():void {
                 saveBtn.enabled = false;
+                newBtn.enabled = true;
                 var e:ApplicationEvent = new ApplicationEvent(ApplicationEvent.SAVE_MODULE);
                 e.data = modelLocator.selectedModule;
                 dispatchEvent(e);
@@ -142,22 +146,39 @@
                 var value:Object = event.dragSource.dataForFormat('items');
                 var index:int = modulesGrid.calculateDropIndex(event);
                 if (value != null) {
-                    modelLocator.selectedModule = getModule(value as Module);
+                	trace("Setting startup order : "+index+" for module:"+value);
+                    modelLocator.selectedModule = getModule(value.toString());
                     modelLocator.selectedModule.startupOrder = index;
-                    var e:ApplicationEvent = new ApplicationEvent(ApplicationEvent.SAVE_MODULE);
-                    e.data = modelLocator.selectedModule;
-                    dispatchEvent(e);
+                    var sort:Sort = new Sort();
+                    sort.fields = [new SortField("startupOrder")];
+                    modelLocator.allModules.sort = sort;
+                    modelLocator.allModules.refresh();
+                    if (modelLocator.selectedModule != null) {
+                    	trace("Diff:"+Math.abs(index-modelLocator.selectedModule.startupOrder));
+	                    var e:ApplicationEvent = new ApplicationEvent(ApplicationEvent.SAVE_STARTUP_ORDERS);
+	                    e.data = recalculateOrder(modulesGrid.dataProvider as ArrayCollection);
+	                    dispatchEvent(e);
+                    }
                 }
             }
             
-            private function getModule(module:Module):Module {
-                for each (var m:Module in modelLocator.allModules)
-                {
-                    if (m.moduleName == module.moduleName) {
+            private function recalculateOrder(modules:ArrayCollection):ArrayCollection {
+            	for (var i:int = 0; i < modules.length; i++) {
+            		(modules[i] as Module).startupOrder = i;
+            	}
+            	return modules;
+            }
+            
+            private function getModule(module:String):Module {
+                for each (var m:Module in modelLocator.allModules) {
+                	trace("searching:"+m);
+                    if (m.moduleName == module) {
+                    	trace("found:"+m);
                         return m;
                     }
                 }
-                return module;
+                trace("Not found return : "+module);
+                return null;
             }
 
         ]]>

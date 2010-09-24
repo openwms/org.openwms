@@ -99,6 +99,15 @@ package org.openwms.web.flex.client.module {
             toRemove = event.data as Module;
             tideContext.moduleManagementService.remove(event.data as Module, onModuleRemoved, onFault);
         }
+        
+        /**
+         * A collection of modules is passed to the service to store the startupOrder properties.
+         * The startupOrders must be calculated before.
+         */
+        [Observer("SAVE_STARTUP_ORDERS")]
+        public function saveStartupOrders(event : ApplicationEvent) : void {
+            tideContext.moduleManagementService.saveStartupOrder(event.data as ArrayCollection, onStartupOrdersSaved, onFault);
+        }
 
         /**
          * This methods firts checks whether the module is known as module.
@@ -141,13 +150,11 @@ package org.openwms.web.flex.client.module {
          */
         public function getActiveMenuItems(stdItems : XMLListCollection=null) : XMLListCollection {
             var all : XMLListCollection = new XMLListCollection();
-
             if (stdItems != null) {
                 for each (var stdNode : XML in stdItems) {
                     all.addItem(stdNode);
                 }
             }
-
             for each (var module : Module in modelLocator.allModules) {
                 if (modelLocator.loadedModules.containsKey(module.url)) {
                     // Get an handle to IApplicationModule here to retrieve the list of items
@@ -212,8 +219,15 @@ package org.openwms.web.flex.client.module {
         private function onModulesLoad(event : TideResultEvent) : void {
             modelLocator.allModules = event.result as ArrayCollection;
             modelLocator.isInitialized = true;
-            dispatchEvent(new ApplicationEvent(ApplicationEvent.MODULES_CONFIGURED));
+            //dispatchEvent(new ApplicationEvent(ApplicationEvent.MODULES_CONFIGURED));
             startAllModules();
+        }
+
+        /**
+         * Callback when startupOrder was saved for a list of modules.
+         */
+        private function onStartupOrdersSaved(event : TideResultEvent) : void {
+        	// We do not need to update the list of modules here, keep quite
         }
 
         /**

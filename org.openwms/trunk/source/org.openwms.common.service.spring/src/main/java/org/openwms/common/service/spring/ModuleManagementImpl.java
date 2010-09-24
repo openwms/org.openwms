@@ -20,13 +20,9 @@
  */
 package org.openwms.common.service.spring;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
-import org.openwms.common.domain.MenuItem;
 import org.openwms.common.domain.Module;
-import org.openwms.common.domain.PopupItem;
 import org.openwms.common.integration.ModuleDao;
 import org.openwms.common.service.ModuleManagementService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -50,33 +46,12 @@ public class ModuleManagementImpl extends EntityServiceImpl<Module, Long> implem
     protected ModuleDao dao;
 
     /**
-     * @see org.openwms.common.service.ModuleManagementService#getMenuItems()
-     */
-    @Override
-    public List<MenuItem> getMenuItems(Module module) {
-        Module m = dao.save(module);
-        return m.getMenuItems();
-    }
-
-    /**
      * @see org.openwms.common.service.ModuleManagementService#getModules()
      */
     @Override
     @Transactional(readOnly = true)
     public List<Module> getModules() {
         return dao.findAll();
-    }
-
-    /**
-     * @see org.openwms.common.service.ModuleManagementService#getPopupItems()
-     */
-    @Override
-    @Transactional(readOnly = true)
-    public List<PopupItem> getPopupItems(Module module) {
-        Map<String, String> params = new HashMap<String, String>();
-        dao.findByNamedParameters("jjj", params);
-        // TODO [scherrer] Auto-generated method stub
-        return null;
     }
 
     /**
@@ -88,4 +63,14 @@ public class ModuleManagementImpl extends EntityServiceImpl<Module, Long> implem
         logger.debug("Login successful!");
     }
 
+    /**
+     * @see org.openwms.common.service.ModuleManagementService#saveStartupOrder(java.util.List)
+     */
+    @Override
+    public void saveStartupOrder(List<Module> modules) {
+        for (Module module : modules) {
+            Module toSave = dao.findById(module.getId());
+            toSave.setStartupOrder(module.getStartupOrder());
+        }
+    }
 }
