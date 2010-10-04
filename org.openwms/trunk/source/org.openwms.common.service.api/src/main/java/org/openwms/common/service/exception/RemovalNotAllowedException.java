@@ -4,7 +4,7 @@
  * This file is part of openwms.org.
  *
  * openwms.org is free software: you can redistribute it and/or modify
- * it under the terms of the GNU Lesser General Public License as
+ * it under the terms of the GNU Lesser General Public License as 
  * published by the Free Software Foundation, either version 3 of the
  * License, or (at your option) any later version.
  *
@@ -23,16 +23,13 @@ package org.openwms.common.service.exception;
 import java.io.Serializable;
 
 /**
- * An UserNotFoundException.
- * <p>
- * Thrown when the requested user was not found.
- * </p>
+ * A RemovalNotAllowedException.
  * 
  * @author <a href="mailto:russelltina@users.sourceforge.net">Tina Russell</a>
  * @version $Revision: $
- * @since 0.1
+ * 
  */
-public class UserNotFoundException extends ServiceException implements Serializable {
+public class RemovalNotAllowedException extends ServiceException implements Serializable {
 
     /**
      * The serialVersionUID
@@ -40,42 +37,42 @@ public class UserNotFoundException extends ServiceException implements Serializa
     private static final long serialVersionUID = -5592508830188199188L;
 
     /**
-     * Create a new UserNotFoundException.
+     * Create a new RemovalNotAllowedException.
      * 
      */
-    public UserNotFoundException() {
+    public RemovalNotAllowedException() {
         super();
     }
 
     /**
-     * Create a new UserNotFoundException.
+     * Create a new RemovalNotAllowedException.
      * 
      * @param message
      *            Message text as String
      */
-    public UserNotFoundException(String message) {
+    public RemovalNotAllowedException(String message) {
         super(message);
     }
 
     /**
-     * Create a new UserNotFoundException.
+     * Create a new RemovalNotAllowedException.
      * 
      * @param cause
      *            The cause exception
      */
-    public UserNotFoundException(Throwable cause) {
+    public RemovalNotAllowedException(Throwable cause) {
         super(cause);
     }
 
     /**
-     * Create a new UserNotFoundException.
+     * Create a new RemovalNotAllowedException.
      * 
      * @param message
      *            Message text as String
      * @param cause
      *            The cause exception
      */
-    public UserNotFoundException(String message, Throwable cause) {
+    public RemovalNotAllowedException(String message, Throwable cause) {
         super(message, cause);
     }
 
