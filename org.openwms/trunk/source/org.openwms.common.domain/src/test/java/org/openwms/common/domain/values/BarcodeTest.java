@@ -31,7 +31,7 @@ import org.slf4j.LoggerFactory;
 /**
  * A BarcodeTest.
  * 
- * @author <a href="mailto:openwms@googlemail.com">Heiko Scherrer</a>
+ * @author <a href="mailto:scherrer@users.sourceforge.net">Heiko Scherrer</a>
  * @version $Revision$
  * @since 0.1
  */
@@ -43,14 +43,15 @@ public class BarcodeTest {
     private static final Logger logger = LoggerFactory.getLogger(BarcodeTest.class);
 
     /**
-     * Test Barcode instantiation with null.
+     * Test Barcode instantiation with <code>null</code>.
      */
     @Test
     public final void testBarcodeWithNull() {
         try {
             new Barcode(null);
             fail("NOK:Barcode cannot instanciated with NULL");
-        } catch (IllegalArgumentException iae) {
+        }
+        catch (IllegalArgumentException iae) {
             logger.debug("OK:Not allowed to initiante a Barcode with null");
         }
     }

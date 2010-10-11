@@ -39,7 +39,7 @@ import javax.persistence.Version;
  * {@link TransportUnitType}.
  * </p>
  * 
- * @author <a href="mailto:openwms@googlemail.com">Heiko Scherrer</a>
+ * @author <a href="mailto:scherrer@users.sourceforge.net">Heiko Scherrer</a>
  * @version $Revision$
  * @since 0.1
  * @see org.openwms.common.domain.TransportUnitType
@@ -47,7 +47,7 @@ import javax.persistence.Version;
 @Entity
 @Table(name = "COR_TYPE_STACKING_RULE", uniqueConstraints = @UniqueConstraint(columnNames = { "TRANSPORT_UNIT_TYPE",
         "NO_TRANSPORT_UNITS", "ALLOWED_TRANSPORT_UNIT_TYPE" }))
-public class TypeStackingRule extends AbstractEntity implements Serializable, Rule {
+public class TypeStackingRule extends AbstractEntity implements DomainObject<Long>, Serializable, Rule {
 
     /**
      * The serialVersionUID
@@ -118,8 +118,17 @@ public class TypeStackingRule extends AbstractEntity implements Serializable, Ru
      * 
      * @return The id
      */
+    @Override
     public Long getId() {
         return id;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public boolean isNew() {
+        return this.id == null;
     }
 
     /**
@@ -156,6 +165,7 @@ public class TypeStackingRule extends AbstractEntity implements Serializable, Ru
      * 
      * @return The version field
      */
+    @Override
     public long getVersion() {
         return this.version;
     }

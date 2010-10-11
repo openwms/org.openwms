@@ -41,7 +41,7 @@ import javax.persistence.Version;
  * {@link LocationType}s.
  * </p>
  * 
- * @author <a href="mailto:openwms@googlemail.com">Heiko Scherrer</a>
+ * @author <a href="mailto:scherrer@users.sourceforge.net">Heiko Scherrer</a>
  * @version $Revision$
  * @since 0.1
  * @see org.openwms.common.domain.TransportUnitType
@@ -49,7 +49,7 @@ import javax.persistence.Version;
 @Entity
 @Table(name = "COR_TYPE_PLACING_RULE", uniqueConstraints = @UniqueConstraint(columnNames = { "TRANSPORT_UNIT_TYPE",
         "PRIVILEGE_LEVEL", "ALLOWED_LOCATION_TYPE" }))
-public class TypePlacingRule extends AbstractEntity implements Serializable, Rule {
+public class TypePlacingRule extends AbstractEntity implements DomainObject<Long>, Serializable, Rule {
 
     /**
      * The serialVersionUID
@@ -143,8 +143,17 @@ public class TypePlacingRule extends AbstractEntity implements Serializable, Rul
      * 
      * @return The id.
      */
+    @Override
     public Long getId() {
         return id;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public boolean isNew() {
+        return this.id == null;
     }
 
     /**
@@ -189,6 +198,7 @@ public class TypePlacingRule extends AbstractEntity implements Serializable, Rul
      * 
      * @return The version field
      */
+    @Override
     public long getVersion() {
         return this.version;
     }

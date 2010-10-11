@@ -28,12 +28,14 @@ import java.util.Set;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
+import javax.persistence.OrderBy;
 import javax.persistence.Table;
 import javax.persistence.Version;
 
@@ -44,7 +46,7 @@ import javax.persistence.Version;
  * height, aso. So it is possible to group different {@link TransportUnit}s.
  * </p>
  * 
- * @author <a href="mailto:openwms@googlemail.com">Heiko Scherrer</a>
+ * @author <a href="mailto:scherrer@users.sourceforge.net">Heiko Scherrer</a>
  * @version $Revision$
  * @since 0.1
  * @see org.openwms.common.domain.TransportUnit
@@ -54,7 +56,7 @@ import javax.persistence.Version;
 @NamedQueries( {
         @NamedQuery(name = TransportUnitType.NQ_FIND_ALL, query = "select tut from TransportUnitType tut order by tut.type"),
         @NamedQuery(name = TransportUnitType.NQ_FIND_BY_NAME, query = "select tut from TransportUnitType tut where tut.type = ?1") })
-public class TransportUnitType extends AbstractEntity implements Serializable {
+public class TransportUnitType extends AbstractEntity implements DomainObject<Long>, Serializable {
 
     /**
      * The serialVersionUID
@@ -69,6 +71,10 @@ public class TransportUnitType extends AbstractEntity implements Serializable {
     /**
      * Query to find <strong>one</strong> {@link TransportUnitType} by its
      * natural key.
+     * <ul>
+     * <li>Query parameter index <strong>1</strong> : The name of the
+     * TransportUnitType to search for.</li>
+     * </ul>
      */
     public static final String NQ_FIND_BY_NAME = "TransportUnitType.findByID";
 
@@ -79,10 +85,18 @@ public class TransportUnitType extends AbstractEntity implements Serializable {
     public static final String DEF_TYPE_DESCRIPTION = "--";
 
     /**
-     * Unique natural key. Used as primary key.
+     * Unique technical key.
      */
     @Id
-    @Column(name = "TYPE")
+    @Column(name = "ID")
+    @GeneratedValue
+    private Long id;
+
+    /**
+     * Unique natural key.
+     */
+    @Column(name = "TYPE", unique = true)
+    @OrderBy
     private String type;
 
     /**
@@ -189,6 +203,22 @@ public class TransportUnitType extends AbstractEntity implements Serializable {
      */
     public String getType() {
         return this.type;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public Long getId() {
+        return id;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public boolean isNew() {
+        return getType() == null || getType().isEmpty() ? true : false;
     }
 
     /**
@@ -444,6 +474,7 @@ public class TransportUnitType extends AbstractEntity implements Serializable {
     /**
      * {@inheritDoc}
      */
+    @Override
     public long getVersion() {
         return this.version;
     }

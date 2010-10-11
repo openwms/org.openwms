@@ -29,7 +29,7 @@ import javax.persistence.Embeddable;
  * A LocationPK - This value type is used as unique natural key of the
  * {@link org.openwms.common.domain.Location} Entity.
  * 
- * @author <a href="mailto:openwms@googlemail.com">Heiko Scherrer</a>
+ * @author <a href="mailto:scherrer@users.sourceforge.net">Heiko Scherrer</a>
  * @version $Revision$
  * @since 0.1
  * @see org.openwms.common.domain.Location

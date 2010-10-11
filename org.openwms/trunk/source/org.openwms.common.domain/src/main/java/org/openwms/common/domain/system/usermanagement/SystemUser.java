@@ -32,7 +32,7 @@ import java.io.Serializable;
 public class SystemUser extends User implements Serializable {
 
     /**
-     * The serialVersionUID
+     * The serialVersionUID.
      */
     private static final long serialVersionUID = -7575215406745881912L;
 

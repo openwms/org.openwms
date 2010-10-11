@@ -30,16 +30,19 @@ import java.util.Map;
  * 
  * @param <T>
  *            The type of the node.
- * @author <a href="mailto:openwms@googlemail.com">Heiko Scherrer</a>
+ * @author <a href="mailto:scherrer@users.sourceforge.net">Heiko Scherrer</a>
  * @version $Revision$
  * @since 0.1
  */
 public class TreeNodeImpl<T> implements TreeNode<T>, Serializable {
 
-    private static final long serialVersionUID = -5498990493803705085L;
+    /**
+     * The serialVersionUID
+     */
+    private static final long serialVersionUID = 5032295350189152303L;
+
     private T data;
     private TreeNode<T> parent;
-
     private Map<Object, TreeNode<T>> childrenMap = new LinkedHashMap<Object, TreeNode<T>>();
 
     /**

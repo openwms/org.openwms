@@ -29,13 +29,11 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
-import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
@@ -64,21 +62,37 @@ import org.openwms.common.domain.values.TransportUnitState;
  * be moved between {@link Location}s.
  * </p>
  * 
- * @author <a href="mailto:openwms@googlemail.com">Heiko Scherrer</a>
+ * @author <a href="mailto:scherrer@users.sourceforge.net">Heiko Scherrer</a>
  * @version $Revision$
  * @since 0.1
  */
 @Entity
 @Table(name = "COR_TRANSPORT_UNIT", uniqueConstraints = @UniqueConstraint(columnNames = { "BARCODE" }))
 @NamedQueries( {
-        @NamedQuery(name = "TransportUnit.findAll", query = "select tu from TransportUnit tu"),
-        @NamedQuery(name = "TransportUnit.findByBarcode", query = "select tu from TransportUnit tu where tu.barcode = ?1") })
-public class TransportUnit extends AbstractEntity implements Serializable {
+        @NamedQuery(name = TransportUnit.NQ_FIND_ALL, query = "select tu from TransportUnit tu"),
+        @NamedQuery(name = TransportUnit.NQ_FIND_BY_UNIQUE_QUERY, query = "select tu from TransportUnit tu where tu.barcode = ?1") })
+public class TransportUnit extends AbstractEntity implements DomainObject<Long>, Serializable {
 
     /**
      * The serialVersionUID
      */
     private static final long serialVersionUID = 4799247366681079321L;
+
+    /**
+     * Name of the <code>NamedQuery</code> to find all {@link TransportUnit}
+     * Entities.
+     */
+    public static final String NQ_FIND_ALL = "TransportUnit.findAll";
+
+    /**
+     * Query to find <strong>one</strong> {@link TransportUnit} by its natural
+     * key.
+     * <ul>
+     * <li>Query parameter index <strong>1</strong> : The name of the
+     * TransportUnit to search for.</li>
+     * </ul>
+     */
+    public static final String NQ_FIND_BY_UNIQUE_QUERY = "TransportUnit.findByBarcode";
 
     /**
      * Unique technical key.
@@ -91,8 +105,8 @@ public class TransportUnit extends AbstractEntity implements Serializable {
     /**
      * Unique natural key.
      */
-    @Basic(fetch = FetchType.EAGER)
-    @Column(name = "BARCODE", unique = true)
+    @Column(name = "BARCODE")
+    @OrderBy
     private Barcode barcode;
 
     /**
@@ -106,7 +120,7 @@ public class TransportUnit extends AbstractEntity implements Serializable {
      */
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "CREATION_DATE")
-    private Date creationDate;
+    private Date creationDate = new Date();
 
     /**
      * Date when this {@link TransportUnit} moved to the actual {@link Location} .
@@ -210,7 +224,6 @@ public class TransportUnit extends AbstractEntity implements Serializable {
      *            The unique identifier of the {@link TransportUnit} as String
      */
     public TransportUnit(String unitId) {
-        this.creationDate = new Date();
         this.barcode = new Barcode(unitId);
     }
 
@@ -222,7 +235,6 @@ public class TransportUnit extends AbstractEntity implements Serializable {
      *            {@link Barcode}
      */
     public TransportUnit(Barcode barcode) {
-        this.creationDate = new Date();
         this.barcode = barcode;
     }
 
@@ -231,6 +243,7 @@ public class TransportUnit extends AbstractEntity implements Serializable {
      * 
      * @return id.
      */
+    @Override
     public Long getId() {
         return id;
     }
@@ -241,6 +254,7 @@ public class TransportUnit extends AbstractEntity implements Serializable {
      * @return - true: Entity is not present on the persistent storage.<br> -
      *         false : Entity already exists on the persistence storage
      */
+    @Override
     public boolean isNew() {
         return (this.id == null);
     }
@@ -572,6 +586,7 @@ public class TransportUnit extends AbstractEntity implements Serializable {
      * 
      * @return The version field.
      */
+    @Override
     public long getVersion() {
         return this.version;
     }

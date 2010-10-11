@@ -31,19 +31,20 @@ import javax.persistence.NamedQuery;
 import javax.persistence.OrderBy;
 import javax.persistence.Table;
 import javax.persistence.Transient;
+import javax.persistence.Version;
 
 /**
  * A Module.
  * 
- * @author <a href="mailto:openwms@googlemail.com">Heiko Scherrer</a>
+ * @author <a href="mailto:scherrer@users.sourceforge.net">Heiko Scherrer</a>
  * @version $Revision: $
- * 
+ * @since 0.1
  */
 @Entity
 @Table(name = "APP_MODULE")
 @NamedQueries( { @NamedQuery(name = Module.NQ_FIND_ALL, query = "select m from Module m order by m.startupOrder"),
         @NamedQuery(name = Module.NQ_FIND_BY_UNIQUE_QUERY, query = "select m from Module m where m.moduleName = ?1") })
-public class Module extends AbstractEntity implements Serializable {
+public class Module extends AbstractEntity implements DomainObject<Long>, Serializable {
 
     /**
      * The serialVersionUID
@@ -109,6 +110,13 @@ public class Module extends AbstractEntity implements Serializable {
     private String description = "--";
 
     /**
+     * Version field.
+     */
+    @Version
+    @Column(name = "C_VERSION")
+    private long version;
+
+    /**
      * Create a new Module.
      */
     protected Module() {
@@ -136,6 +144,14 @@ public class Module extends AbstractEntity implements Serializable {
         super();
         this.moduleName = moduleName;
         this.url = url;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public boolean isNew() {
+        return this.id == null;
     }
 
     /**
@@ -181,6 +197,7 @@ public class Module extends AbstractEntity implements Serializable {
      * 
      * @return the id.
      */
+    @Override
     public Long getId() {
         return id;
     }
@@ -275,12 +292,21 @@ public class Module extends AbstractEntity implements Serializable {
     }
 
     /**
+     * {@inheritDoc}
+     */
+    @Override
+    public long getVersion() {
+        return this.version;
+    }
+
+    /**
      * Uses the moduleName for comparison, because this is unique and not null.
      * 
      * @see java.lang.Object#equals(java.lang.Object)
      */
     @Override
     public boolean equals(Object obj) {
+        // TODO [russelltina] : Use super+
         if (this == obj) {
             return true;
         }

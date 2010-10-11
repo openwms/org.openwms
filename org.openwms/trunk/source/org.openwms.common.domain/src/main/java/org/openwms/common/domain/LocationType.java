@@ -28,6 +28,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OrderBy;
 import javax.persistence.Table;
 import javax.persistence.Version;
 
@@ -39,7 +40,7 @@ import javax.persistence.Version;
  * characteristics.
  * </p>
  * 
- * @author <a href="mailto:openwms@googlemail.com">Heiko Scherrer</a>
+ * @author <a href="mailto:scherrer@users.sourceforge.net">Heiko Scherrer</a>
  * @version $Revision$
  * @since 0.1
  * @see org.openwms.common.domain.Location
@@ -49,7 +50,7 @@ import javax.persistence.Version;
 @NamedQueries( {
         @NamedQuery(name = LocationType.NQ_FIND_ALL, query = "select l from LocationType l"),
         @NamedQuery(name = LocationType.NQ_FIND_BY_UNIQUE_QUERY, query = "select l from LocationType l where l.type = ?1") })
-public class LocationType extends AbstractEntity implements DomainObject, Serializable {
+public class LocationType extends AbstractEntity implements DomainObject<Long>, Serializable {
 
     /**
      * The serialVersionUID
@@ -64,6 +65,10 @@ public class LocationType extends AbstractEntity implements DomainObject, Serial
     /**
      * Query to find <strong>one</strong> {@link LocationType} by its natural
      * key.
+     * <ul>
+     * <li>Query parameter index <strong>1</strong> : The name of the
+     * LocationType to search for.</li>
+     * </ul>
      */
     public static final String NQ_FIND_BY_UNIQUE_QUERY = "LocationType.findByUniqueId";
 
@@ -84,7 +89,8 @@ public class LocationType extends AbstractEntity implements DomainObject, Serial
     /**
      * Type of this {@link LocationType}.
      */
-    @Column(name = "TYPE", unique = true)
+    @Column(name = "C_TYPE", unique = true)
+    @OrderBy
     private String type;
 
     /**
@@ -141,6 +147,7 @@ public class LocationType extends AbstractEntity implements DomainObject, Serial
      * 
      * @return The technical, unique key
      */
+    @Override
     public Long getId() {
         return this.id;
     }

@@ -32,7 +32,7 @@ public class InvalidPasswordException extends Exception {
     /**
      * The serialVersionUID.
      */
-    private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 8109794333683306511L;
 
     /**
      * Create a new InvalidPasswordException.
