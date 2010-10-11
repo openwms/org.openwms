@@ -54,7 +54,7 @@ import org.slf4j.LoggerFactory;
 /**
  * An <code>User</code> represents the user of the system.
  * 
- * @author <a href="mailto:openwms@googlemail.com">Heiko Scherrer</a>
+ * @author <a href="mailto:scherrer@users.sourceforge.net">Heiko Scherrer</a>
  * @version $Revision$
  * @since 0.1
  */
@@ -253,7 +253,8 @@ public class User extends AbstractEntity implements Serializable {
     /**
      * Change the unique username of this {@link User} to <tt>username</tt>.
      * 
-     * @param username The new username to set
+     * @param username
+     *            The new username to set
      */
     public void setUsername(String username) {
         this.username = username;

@@ -36,7 +36,7 @@ import org.openwms.common.domain.AbstractEntity;
 /**
  * An Email.
  * 
- * @author <a href="mailto:openwms@googlemail.com">Heiko Scherrer</a>
+ * @author <a href="mailto:scherrer@users.sourceforge.net">Heiko Scherrer</a>
  * @version $Revision$
  * @since 0.1
  * @see org.openwms.common.domain.system.usermanagement.User
@@ -46,7 +46,7 @@ import org.openwms.common.domain.AbstractEntity;
 public class Email extends AbstractEntity implements Serializable {
 
     /**
-     * The serialVersionUID
+     * The serialVersionUID.
      */
     private static final long serialVersionUID = 3182027866592095069L;
 

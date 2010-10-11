@@ -30,6 +30,7 @@ import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OrderBy;
 import javax.persistence.Table;
 import javax.persistence.Version;
 
@@ -51,7 +52,7 @@ import org.openwms.common.domain.AbstractEntity;
 public class SecurityObject extends AbstractEntity implements Serializable {
 
     /**
-     * The serialVersionUID
+     * The serialVersionUID.
      */
     private static final long serialVersionUID = 7585736035228078754L;
 
@@ -77,6 +78,7 @@ public class SecurityObject extends AbstractEntity implements Serializable {
      * Name of the SecurityObject.
      */
     @Column(name = "C_NAME", unique = true)
+    @OrderBy
     private String name;
 
     /**

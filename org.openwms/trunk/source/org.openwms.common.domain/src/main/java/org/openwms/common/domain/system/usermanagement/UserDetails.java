@@ -33,7 +33,7 @@ import javax.persistence.Lob;
 /**
  * Detail information about an {@link User}.
  * 
- * @author <a href="mailto:openwms@googlemail.com">Heiko Scherrer</a>
+ * @author <a href="mailto:scherrer@users.sourceforge.net">Heiko Scherrer</a>
  * @version $Revision$
  * @since 0.1
  */
@@ -41,7 +41,7 @@ import javax.persistence.Lob;
 public class UserDetails implements Serializable {
 
     /**
-     * The serialVersionUID
+     * The serialVersionUID.
      */
     private static final long serialVersionUID = 664778075559767489L;
 
@@ -51,7 +51,7 @@ public class UserDetails implements Serializable {
      * {@link User}s sex.
      * </p>
      * 
-     * @author <a href="mailto:openwms@googlemail.com">Heiko Scherrer</a>
+     * @author <a href="mailto:scherrer@users.sourceforge.net">Heiko Scherrer</a>
      * @version $Revision$
      * @since 0.1
      */

@@ -31,7 +31,7 @@ import javax.persistence.TemporalType;
 /**
  * A Problem.
  * 
- * @author <a href="mailto:openwms@googlemail.com">Heiko Scherrer</a>
+ * @author <a href="mailto:scherrer@users.sourceforge.net">Heiko Scherrer</a>
  * @version $Revision$
  * @since 0.1
  */
@@ -39,7 +39,7 @@ import javax.persistence.TemporalType;
 public class Problem implements Serializable {
 
     /**
-     * The serialVersionUID
+     * The serialVersionUID.
      */
     private static final long serialVersionUID = 2923793250934936203L;
 
@@ -73,7 +73,8 @@ public class Problem implements Serializable {
     /**
      * Create a new {@link Problem} with a message text.
      * 
-     * @param message text as String
+     * @param message
+     *            text as String
      */
     public Problem(String message) {
         this();
@@ -83,8 +84,10 @@ public class Problem implements Serializable {
     /**
      * Create a new {@link Problem} with a message text and a message number.
      * 
-     * @param message text as String
-     * @param messageNo message number
+     * @param message
+     *            text as String
+     * @param messageNo
+     *            message number
      */
     public Problem(String message, int messageNo) {
         this();

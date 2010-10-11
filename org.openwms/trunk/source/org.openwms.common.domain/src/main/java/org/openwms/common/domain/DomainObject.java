@@ -20,14 +20,16 @@
  */
 package org.openwms.common.domain;
 
+import java.io.Serializable;
+
 /**
  * A DomainObject.
  * 
- * @author <a href="mailto:openwms@googlemail.com">Heiko Scherrer</a>
+ * @author <a href="mailto:scherrer@users.sourceforge.net">Heiko Scherrer</a>
  * @version $Revision: $
  * @since 0.1
  */
-public interface DomainObject {
+public interface DomainObject<ID extends Serializable> {
 
     /**
      * Check whether the persistent domain class instance is transient or not.
@@ -43,5 +45,12 @@ public interface DomainObject {
      * @return the version number
      */
     long getVersion();
+
+    /**
+     * Return the technical key.
+     * 
+     * @return The technical, unique key
+     */
+    ID getId();
 
 }

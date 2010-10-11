@@ -20,17 +20,20 @@
  */
 package org.openwms.common.domain.values;
 
+import java.util.Arrays;
+import java.util.List;
+
 /**
  * A WeightUnit.
  * <p>
  * In SI format.
  * </p>
  * 
- * @author <a href="mailto:openwms@googlemail.com">Heiko Scherrer</a>
+ * @author <a href="mailto:scherrer@users.sourceforge.net">Heiko Scherrer</a>
  * @version $Revision$
  * @since 0.1
  */
-public enum WeightUnit {
+public enum WeightUnit implements UnitType {
 
     /**
      * Milligram.
@@ -50,6 +53,7 @@ public enum WeightUnit {
     T(1);
 
     private Long baseUnit;
+    private static UnitType[] all = { WeightUnit.MG, WeightUnit.G, WeightUnit.KG, WeightUnit.T };
 
     /**
      * Create a new WeightUnit.
@@ -62,11 +66,26 @@ public enum WeightUnit {
     }
 
     /**
-     * Return the base unit.
-     * 
-     * @return The base unit of the weight
+     * {@inheritDoc}
      */
-    public long getBaseUnit() {
+    @Override
+    public long getBaseUnitValue() {
         return this.baseUnit;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public List<UnitType> getAll() {
+        return Arrays.asList(all);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public UnitType getBaseUnit() {
+        return KG;
     }
 }

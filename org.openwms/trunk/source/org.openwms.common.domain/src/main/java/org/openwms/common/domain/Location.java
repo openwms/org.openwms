@@ -59,7 +59,7 @@ import org.openwms.common.domain.system.Message;
  * Multiple {@link Location}s can be grouped together to a
  * {@link LocationGroup}.
  * 
- * @author <a href="mailto:openwms@googlemail.com">Heiko Scherrer</a>
+ * @author <a href="mailto:scherrer@users.sourceforge.net">Heiko Scherrer</a>
  * @version $Revision$
  * @since 0.1
  * @see org.openwms.common.domain.LocationGroup
@@ -70,7 +70,7 @@ import org.openwms.common.domain.system.Message;
         @NamedQuery(name = Location.NQ_FIND_ALL, query = "select l from Location l"),
         @NamedQuery(name = Location.NQ_FIND_BY_UNIQUE_QUERY, query = "select l from Location l where l.locationId = ?1"),
         @NamedQuery(name = Location.NQ_FIND_ALL_EAGER, query = "select l from Location l left join fetch l.messages left join fetch l.locationType") })
-public class Location extends AbstractEntity implements DomainObject, Serializable {
+public class Location extends AbstractEntity implements DomainObject<Long>, Serializable {
 
     /**
      * The serialVersionUID
@@ -263,6 +263,7 @@ public class Location extends AbstractEntity implements DomainObject, Serializab
      * 
      * @return The technical, unique key
      */
+    @Override
     public Long getId() {
         return this.id;
     }

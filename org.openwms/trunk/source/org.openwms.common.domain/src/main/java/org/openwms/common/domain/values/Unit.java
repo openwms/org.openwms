@@ -29,7 +29,7 @@ package org.openwms.common.domain.values;
  * @version $Revision$
  * @since 0.1
  */
-public interface Unit<T> {
+public interface Unit<T extends UnitType> {
 
     /**
      * Convert this unit into <tt>unit</tt>.

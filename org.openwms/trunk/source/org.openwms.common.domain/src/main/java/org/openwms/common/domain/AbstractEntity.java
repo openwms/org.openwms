@@ -57,13 +57,15 @@ public abstract class AbstractEntity implements Serializable {
 
     public static class AbstractEntityListener {
         @PrePersist
-        public void onPrePersist(AbstractEntity abstractEntity) {
+        public void onPreInsert(AbstractEntity abstractEntity) {
             abstractEntity.uid();
         }
     }
 
     private String uid() {
-        if (uid == null) uid = UUID.randomUUID().toString();
+        if (uid == null) {
+            uid = UUID.randomUUID().toString();
+        }
         return uid;
     }
 

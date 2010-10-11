@@ -49,7 +49,7 @@ import org.openwms.common.domain.values.LocationGroupState;
  * Used to group {@link Location}s with same characteristics.
  * </p>
  * 
- * @author <a href="mailto:openwms@googlemail.com">Heiko Scherrer</a>
+ * @author <a href="mailto:scherrer@users.sourceforge.net">Heiko Scherrer</a>
  * @version $Revision$
  * @since 0.1
  * @see org.openwms.common.domain.Location
@@ -58,7 +58,7 @@ import org.openwms.common.domain.values.LocationGroupState;
 @Table(name = "COR_LOCATION_GROUP")
 @NamedQueries( { @NamedQuery(name = "LocationGroup.findAll", query = "select lg from LocationGroup lg"),
         @NamedQuery(name = "LocationGroup.findByName", query = "select lg from LocationGroup lg where lg.name = ?1") })
-public class LocationGroup extends AbstractEntity implements DomainObject, Serializable {
+public class LocationGroup extends AbstractEntity implements DomainObject<Long>, Serializable {
 
     /**
      * The serialVersionUID
@@ -190,6 +190,7 @@ public class LocationGroup extends AbstractEntity implements DomainObject, Seria
      * 
      * @return The technical unique key
      */
+    @Override
     public Long getId() {
         return this.id;
     }

@@ -23,21 +23,32 @@ package org.openwms.common.domain.values;
 import java.io.Serializable;
 import java.math.BigDecimal;
 
+import javax.persistence.Embeddable;
+
 /**
  * A Weight - Describes a weight in real world, always including a unit and a
  * value.
  * 
- * @author <a href="mailto:openwms@googlemail.com">Heiko Scherrer</a>
+ * @author <a href="mailto:scherrer@users.sourceforge.net">Heiko Scherrer</a>
  * @version $Revision$
  * @since 0.1
  */
+@Embeddable
 public class Weight implements Comparable<Weight>, Unit<WeightUnit>, Serializable {
 
     /**
-     * The serialVersionUID
+     * The serialVersionUID.
      */
     private static final long serialVersionUID = -8849107834046064278L;
+
+    /**
+     * Weights unit.
+     */
     private WeightUnit unit;
+
+    /**
+     * Weight amount.
+     */
     private BigDecimal value;
 
     /* ----------------------------- methods ------------------- */
@@ -57,6 +68,32 @@ public class Weight implements Comparable<Weight>, Unit<WeightUnit>, Serializabl
      */
     public Weight(BigDecimal value, WeightUnit unit) {
         this.value = value;
+        this.unit = unit;
+    }
+
+    /**
+     * Create a new Weight.
+     * 
+     * @param value
+     *            The value of the weight as int
+     * @param unit
+     *            The unit of measure
+     */
+    public Weight(int value, WeightUnit unit) {
+        this.value = new BigDecimal(value);
+        this.unit = unit;
+    }
+
+    /**
+     * Create a new Weight.
+     * 
+     * @param value
+     *            The value of the weight as double
+     * @param unit
+     *            The unit of measure
+     */
+    public Weight(double value, WeightUnit unit) {
+        this.value = new BigDecimal(value);
         this.unit = unit;
     }
 

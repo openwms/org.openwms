@@ -23,13 +23,16 @@ package org.openwms.common.exception;
 /**
  * A InsufficientValueException.
  * 
- * @author <a href="mailto:openwms@googlemail.com">Heiko Scherrer</a>
+ * @author <a href="mailto:scherrer@users.sourceforge.net">Heiko Scherrer</a>
  * @version $Revision$
  * @since 0.1
  */
 public class InsufficientValueException extends RuntimeException {
 
-    private static final long serialVersionUID = 1L;
+    /**
+     * The serialVersionUID.
+     */
+    private static final long serialVersionUID = -8277589341696613509L;
 
     /**
      * Create a new InsufficientValueException.

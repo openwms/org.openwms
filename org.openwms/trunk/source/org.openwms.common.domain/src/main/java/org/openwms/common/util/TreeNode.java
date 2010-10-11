@@ -28,7 +28,7 @@ import java.util.Map;
  * 
  * @param <T>
  *            The type of the node.
- * @author <a href="mailto:openwms@googlemail.com">Heiko Scherrer</a>
+ * @author <a href="mailto:scherrer@users.sourceforge.net">Heiko Scherrer</a>
  * @version $Revision$
  * @since 0.1
  */
@@ -66,12 +66,12 @@ public interface TreeNode<T> {
      * <li>For persisting tree state. That means that identifiers should be
      * serializable when some JSF features are used, e.g. client-side state
      * saving.</li>
-     * <li>For constructing client identifiers. Client identifier for tree nodes
-     * consists of {@link Object#toString()} representations of identifier
+     * <li>For constructing client identifiers. Client identifier for tree
+     * nodes consists of {@link Object#toString()} representations of identifier
      * separated with {@link NamingContainer#SEPARATOR_CHAR} chars. String
      * representation of identifier should be a valid XML ID, e.g. conform to
-     * this: <a href="http://www.w3.org/TR/xml11/#NT-Name"> XML Name
-     * Production</a> production.</li>
+     * this: <a href="http://www.w3.org/TR/xml11/#NT-Name"> XML Name Production</a>
+     * production.</li>
      * </ol>
      * 
      * @return {@link Iterator} of {@link Map.Entry} instances containing
@@ -121,8 +121,8 @@ public interface TreeNode<T> {
     /**
      * Setter for parent {@link TreeNode}.
      * 
-     * @param parent
-     *            - {@link TreeNode} to set as parent
+     * @param parent -
+     *            {@link TreeNode} to set as parent
      */
     void setParent(TreeNode<T> parent);
 }

@@ -35,7 +35,7 @@ import org.openwms.common.domain.AbstractEntity;
 /**
  * A Preference - Could be an user-, role- or system preference.
  * 
- * @author <a href="mailto:openwms@googlemail.com">Heiko Scherrer</a>
+ * @author <a href="mailto:scherrer@users.sourceforge.net">Heiko Scherrer</a>
  * @version $Revision$
  * @since 0.1
  */
@@ -44,7 +44,7 @@ import org.openwms.common.domain.AbstractEntity;
 public class Preference extends AbstractEntity implements Serializable {
 
     /**
-     * The serialVersionUID
+     * The serialVersionUID.
      */
     private static final long serialVersionUID = 4396571221433949201L;
 

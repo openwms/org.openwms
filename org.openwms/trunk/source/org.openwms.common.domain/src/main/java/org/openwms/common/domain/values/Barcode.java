@@ -30,7 +30,7 @@ import org.apache.commons.lang.StringUtils;
 /**
  * A Barcode.
  * 
- * @author <a href="mailto:openwms@googlemail.com">Heiko Scherrer</a>
+ * @author <a href="mailto:scherrer@users.sourceforge.net">Heiko Scherrer</a>
  * @version $Revision$
  * @since 0.1
  */
@@ -38,7 +38,7 @@ import org.apache.commons.lang.StringUtils;
 public class Barcode implements Serializable {
 
     /**
-     * The serialVersionUID
+     * The serialVersionUID.
      */
     private static final long serialVersionUID = 7743388968799876214L;
 
@@ -46,11 +46,11 @@ public class Barcode implements Serializable {
      * A BARCODE_ALIGN.
      * <p>
      * The {@link BARCODE_ALIGN} defines whether the Barcode is applied
-     * <code>LEFT</code> or <code>RIGHT</code>. Only be used when padding is
-     * activated.
+     * <code>LEFT</code> or <code>RIGHT</code>. Only be used when padding
+     * is activated.
      * </p>
      * 
-     * @author <a href="mailto:openwms@googlemail.com">Heiko Scherrer</a>
+     * @author <a href="mailto:scherrer@users.sourceforge.net">Heiko Scherrer</a>
      * @version $Revision$
      * @since 0.1
      */
@@ -116,9 +116,9 @@ public class Barcode implements Serializable {
      *            The value of the Barcode as String
      */
     public Barcode(String value) {
-    	adjustBarcode(value);
+        adjustBarcode(value);
     }
-    
+
     private void adjustBarcode(String value) {
         if (value == null) {
             throw new IllegalArgumentException("Cannot create a barcode without value");
@@ -129,7 +129,7 @@ public class Barcode implements Serializable {
         } else {
             this.value = value;
         }
-    	
+
     }
 
     /**
@@ -202,11 +202,13 @@ public class Barcode implements Serializable {
     /**
      * Set the Barcode value.
      * 
-     * @param value The value to set
+     * @param value
+     *            The value to set
      */
     public void setValue(String value) {
-    	adjustBarcode(value);
-	}
+        adjustBarcode(value);
+    }
+
     /**
      * Get the length.
      * 
