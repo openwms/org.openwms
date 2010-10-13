@@ -22,6 +22,7 @@ package org.openwms.common.integration.jpa;
 
 import java.io.Serializable;
 
+import org.openwms.common.domain.AbstractEntity;
 import org.openwms.common.integration.GenericDao;
 
 /**
@@ -37,7 +38,7 @@ import org.openwms.common.integration.GenericDao;
  * @see org.openwms.common.integration.jpa.AbstractGenericJpaDao
  * @see org.openwms.common.integration.GenericDao
  */
-public class GenericJpaDaoImpl<T extends Serializable, ID extends Serializable> extends AbstractGenericJpaDao<T, ID>
+public class GenericJpaDaoImpl<T extends AbstractEntity, ID extends Serializable> extends AbstractGenericJpaDao<T, ID>
         implements GenericDao<T, ID> {
 
     /**
