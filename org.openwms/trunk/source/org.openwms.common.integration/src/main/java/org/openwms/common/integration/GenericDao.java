@@ -24,6 +24,8 @@ import java.io.Serializable;
 import java.util.List;
 import java.util.Map;
 
+import org.openwms.common.domain.AbstractEntity;
+
 /**
  * A GenericDao - Generic interface declaration for simple CRUD operations.
  * <p>
@@ -41,7 +43,7 @@ import java.util.Map;
  * @version $Revision$
  * @since 0.1
  */
-public interface GenericDao<T extends Serializable, ID extends Serializable> {
+public interface GenericDao<T extends AbstractEntity, ID extends Serializable> {
 
     /**
      * Suffix for the FIND_ALL named query.
@@ -80,15 +82,17 @@ public interface GenericDao<T extends Serializable, ID extends Serializable> {
      * @return List of found Entity classes
      */
     List<T> findByNamedParameters(String queryName, Map<String, ?> params);
-    
+
     /**
      * Use an own JPA query to fetch Entities.
      * 
-     * @param query The JPA query to execute
-     * @param values A list of values to use as parameters
+     * @param query
+     *            The JPA query to execute
+     * @param values
+     *            A list of values to use as parameters
      * @return A list of all Entities
      */
-    List<T> findByPositionalParameters(String query, Object...values);
+    List<T> findByPositionalParameters(String query, Object... values);
 
     /**
      * Find and return the Entity identified by the natural unique id.
