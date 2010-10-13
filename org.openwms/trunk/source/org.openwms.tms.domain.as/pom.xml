@@ -88,6 +88,7 @@
                     <dependency>
                         <groupId>${project.groupId}</groupId>
                         <artifactId>org.openwms.common.domain.as</artifactId>
+                        <version>${project.version}</version>
                         <type>swc</type>
                     </dependency>
 				</dependencies>
