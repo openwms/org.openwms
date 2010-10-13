@@ -50,10 +50,14 @@
 
 	<bean id="transportUnitService" class="org.openwms.common.service.spring.TransportUnitServiceImpl">
 		<property name="dao" ref="transportUnitDao" />
+        <property name="onRemovalListener" ref="onRemovalListener" />
 	</bean>
 
     <bean id="moduleManagementService" class="org.openwms.common.service.spring.ModuleManagementImpl">
         <property name="dao" ref="moduleDao" />
+    </bean>
+
+    <bean id="configurationService" class="org.openwms.common.service.spring.ConfigurationServiceImpl">
     </bean>
     
     <bean id="userDetailsService" class="org.openwms.common.service.spring.security.SecurityContextUserServiceImpl">

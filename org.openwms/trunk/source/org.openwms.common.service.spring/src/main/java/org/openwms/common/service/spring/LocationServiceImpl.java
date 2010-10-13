@@ -20,6 +20,7 @@
  */
 package org.openwms.common.service.spring;
 
+import java.util.Date;
 import java.util.List;
 
 import org.openwms.common.domain.Location;
@@ -56,9 +57,14 @@ public class LocationServiceImpl extends EntityServiceImpl<Location, Long> imple
      * {@inheritDoc}
      */
     @Override
-    @Transactional(readOnly = true)
+    @Transactional(readOnly = false)
     public List<Location> getAllLocations() {
-        return ((LocationDao) dao).getAllLocations();
+        List<Location> list = dao.getAllLocations();
+        for (Location location : list) {
+            location.setLastAccess(new Date());
+            dao.save(location);
+        }
+        return list;
     }
 
     /**
@@ -67,25 +73,41 @@ public class LocationServiceImpl extends EntityServiceImpl<Location, Long> imple
     @Override
     @Transactional(readOnly = true)
     public List<LocationType> getAllLocationTypes() {
-        logger.debug("Get all location types");
-        List<LocationType> list = locationTypeDao.findAll();
-        logger.debug("List:" + list.size());
-        return list;
+        return locationTypeDao.findAll();
     }
 
+    /**
+     * {@inheritDoc}
+     * 
+     * If the <code>locationType</code> is a transient one, it will be
+     * persisted otherwise saved.
+     */
     @Override
     public void createLocationType(LocationType locationType) {
-        locationTypeDao.persist(locationType);
-    }
-
-    @Override
-    public void deleteLocationTypes(List<LocationType> locationTypes) {
-        for (LocationType locationType : locationTypes) {
-            locationType = locationTypeDao.save(locationType);
-            locationTypeDao.remove(locationType);
+        if (locationType.isNew()) {
+            locationTypeDao.persist(locationType);
+        } else {
+            locationTypeDao.save(locationType);
         }
     }
 
+    /**
+     * {@inheritDoc}
+     * 
+     * The implementation uses the id to find the {@link LocationType} to be
+     * removed and will removed the type when found.
+     */
+    @Override
+    public void deleteLocationTypes(List<LocationType> locationTypes) {
+        for (LocationType locationType : locationTypes) {
+            LocationType lt = locationTypeDao.findById(locationType.getId());
+            locationTypeDao.remove(lt);
+        }
+    }
+
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public LocationType saveLocationType(LocationType locationType) {
         return locationTypeDao.save(locationType);

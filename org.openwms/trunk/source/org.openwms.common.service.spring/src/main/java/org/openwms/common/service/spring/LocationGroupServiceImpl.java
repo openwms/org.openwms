@@ -27,7 +27,7 @@ import org.openwms.common.domain.LocationGroup;
 import org.openwms.common.domain.values.LocationGroupState;
 import org.openwms.common.integration.LocationGroupDao;
 import org.openwms.common.service.LocationGroupService;
-import org.openwms.common.service.exception.ServiceException;
+import org.openwms.common.service.exception.ServiceRuntimeException;
 import org.openwms.common.util.TreeNode;
 import org.openwms.common.util.TreeNodeImpl;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -59,12 +59,13 @@ public class LocationGroupServiceImpl extends EntityServiceImpl<LocationGroup, L
      * {@inheritDoc}
      */
     @Override
-    public void changeGroupState(LocationGroup locationGroup) throws ServiceException {
+    public void changeGroupState(LocationGroup locationGroup) {
         logger.debug("change group state called");
         if (null != locationGroup && locationGroup.getParent() != null
                 && locationGroup.getParent().getGroupStateIn() == LocationGroupState.NOT_AVAILABLE
                 && locationGroup.getGroupStateIn() == LocationGroupState.AVAILABLE) {
-            throw new ServiceException("Not allowed to change GroupStateIn, parent locationGroup is not available");
+            throw new ServiceRuntimeException(
+                    "Not allowed to change GroupStateIn, parent locationGroup is not available");
         }
 
         // Attach
