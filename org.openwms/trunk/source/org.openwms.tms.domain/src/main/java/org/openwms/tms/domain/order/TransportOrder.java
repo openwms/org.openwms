@@ -39,12 +39,12 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.persistence.Version;
 
+import org.openwms.common.domain.AbstractEntity;
 import org.openwms.common.domain.DomainObject;
 import org.openwms.common.domain.Location;
 import org.openwms.common.domain.LocationGroup;
 import org.openwms.common.domain.TransportUnit;
 import org.openwms.common.domain.values.Problem;
-import org.openwms.common.exception.InsufficientValueException;
 import org.openwms.tms.domain.values.PriorityLevel;
 import org.openwms.tms.domain.values.TransportOrderState;
 
@@ -68,7 +68,7 @@ import org.openwms.tms.domain.values.TransportOrderState;
         @NamedQuery(name = TransportOrder.NQ_FIND_BY_TU, query = "select to from TransportOrder to where to.transportUnit = :transportUnit"),
         @NamedQuery(name = TransportOrder.NQ_FIND_FOR_TU_IN_STATE, query = "select to from TransportOrder to where to.transportUnit = :transportUnit and to.state in (:states)"),
         @NamedQuery(name = TransportOrder.NQ_FIND_ORDERS_TO_START, query = "select to from TransportOrder to where to.transportUnit = :transportUnit and to.state in (INITIALIZED, INTERRUPTED) order by to.priority DESC, to.creationDate") })
-public class TransportOrder implements DomainObject, Serializable {
+public class TransportOrder extends AbstractEntity implements DomainObject<Long>, Serializable {
 
     /**
      * The serialVersionUID
@@ -228,6 +228,7 @@ public class TransportOrder implements DomainObject, Serializable {
      * 
      * @return The unique technical key
      */
+    @Override
     public Long getId() {
         return this.id;
     }
@@ -240,6 +241,7 @@ public class TransportOrder implements DomainObject, Serializable {
      *         <code>false</code> : Entity already exists on the persistent
      *         storage
      */
+    @Override
     public boolean isNew() {
         return (this.id == null);
     }
@@ -311,22 +313,22 @@ public class TransportOrder implements DomainObject, Serializable {
 
     private void validateInitializationCondition() {
         if (transportUnit == null || (targetLocation == null && targetLocationGroup == null)) {
-            throw new InsufficientValueException("Not all properties are set to switch transportOrder in next state");
+            throw new IllegalStateException("Not all properties set to turn TransportOrder into next state");
         }
     }
 
     private void validateStateChange(TransportOrderState newState) {
         if (newState == null) {
-            throw new IllegalStateException("transportState cannot be null");
+            throw new IllegalStateException("New TransportState cannot be null");
         }
         if (getState().compareTo(newState) > 0) {
             // Don't allow to turn back the state!
-            throw new IllegalStateException("Turning back state of transportOrder not allowed");
+            throw new IllegalStateException("Turning back the state of a TransportOrder is not allowed");
         }
         if (getState() == TransportOrderState.CREATED) {
             if (newState != TransportOrderState.INITIALIZED && newState != TransportOrderState.CANCELED) {
                 // Don't allow to except the initialization
-                throw new IllegalStateException("TransportOrder must be initialized after creation");
+                throw new IllegalStateException("The TransportOrder must first be initialized after creation");
             }
             validateInitializationCondition();
         }
@@ -339,14 +341,15 @@ public class TransportOrder implements DomainObject, Serializable {
      *            The new state to set
      * @throws IllegalStateException
      *             in case
+     *             <ul>
      *             <li>the newState is <code>null</code> or</li>
      *             <li>the newState is less than the old state or</li>
      *             <li>the TransportOrder is in state CREATED and shall be
      *             manually turned into something else then INITIALIZED or
      *             CANCELED</li>
-     * @throws InsufficientValueException
-     *             in case the TransportOrder is CREATED and shall be turned
-     *             into INITIALIZED but is incomplete.
+     *             <li>the TransportOrder is CREATED and shall be INITIALIZED
+     *             but is incomplete</li>
+     *             </ul>
      */
     public void setState(TransportOrderState newState) {
         validateStateChange(newState);
@@ -458,6 +461,7 @@ public class TransportOrder implements DomainObject, Serializable {
      * 
      * @return The version field
      */
+    @Override
     public long getVersion() {
         return this.version;
     }
