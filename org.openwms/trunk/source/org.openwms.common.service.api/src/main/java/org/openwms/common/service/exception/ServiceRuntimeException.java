@@ -4,7 +4,7 @@
  * This file is part of openwms.org.
  *
  * openwms.org is free software: you can redistribute it and/or modify
- * it under the terms of the GNU Lesser General Public License as
+ * it under the terms of the GNU Lesser General Public License as 
  * published by the Free Software Foundation, either version 3 of the
  * License, or (at your option) any later version.
  *
@@ -23,59 +23,54 @@ package org.openwms.common.service.exception;
 import java.io.Serializable;
 
 /**
- * An UserNotFoundException.
- * <p>
- * Thrown when the requested user was not found.
- * </p>
+ * A ServiceRuntimeException. Unchecked application exception.
  * 
- * @author <a href="mailto:russelltina@users.sourceforge.net">Tina Russell</a>
+ * @author <a href="mailto:scherrer@users.sourceforge.net">Heiko Scherrer</a>
  * @version $Revision: $
  * @since 0.1
  */
-public class UserNotFoundException extends ServiceRuntimeException implements Serializable {
+public class ServiceRuntimeException extends RuntimeException implements Serializable {
 
     /**
      * The serialVersionUID
      */
-    private static final long serialVersionUID = -5592508830188199188L;
+    private static final long serialVersionUID = 3091182786979000919L;
 
     /**
-     * Create a new UserNotFoundException.
-     * 
+     * Create a new ServiceRuntimeException.
      */
-    public UserNotFoundException() {
-        super();
-    }
+    public ServiceRuntimeException() {}
 
     /**
-     * Create a new UserNotFoundException.
+     * Create a new ServiceRuntimeException with a message text.
      * 
      * @param message
      *            Message text as String
      */
-    public UserNotFoundException(String message) {
+    public ServiceRuntimeException(String message) {
         super(message);
     }
 
     /**
-     * Create a new UserNotFoundException.
+     * Create a new ServiceRuntimeException with a cause exception.
      * 
      * @param cause
      *            The cause exception
      */
-    public UserNotFoundException(Throwable cause) {
+    public ServiceRuntimeException(Throwable cause) {
         super(cause);
     }
 
     /**
-     * Create a new UserNotFoundException.
+     * Create a new ServiceRuntimeException with a message text and the cause
+     * exception.
      * 
      * @param message
      *            Message text as String
      * @param cause
      *            The cause exception
      */
-    public UserNotFoundException(String message, Throwable cause) {
+    public ServiceRuntimeException(String message, Throwable cause) {
         super(message, cause);
     }
 
