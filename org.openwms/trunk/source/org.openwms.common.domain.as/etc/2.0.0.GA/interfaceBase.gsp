@@ -54,8 +54,10 @@ package ${jClass.as3Type.packageName} {<%
     if (as3Imports.size() > 0) {%>
 <%
     }
-    for (as3Import in as3Imports) {%>
-    import ${as3Import};<%
+    for (as3Import in as3Imports) {
+        if (as3Import != 'java.io.Serializable') {%>
+    import ${as3Import};
+        <%}
     }
 
     ///////////////////////////////////////////////////////////////////////////
@@ -90,6 +92,8 @@ package ${jClass.as3Type.packageName} {<%
             }
             if (jProperty.readable && jProperty.name == 'new') {%>
         function isNew():${jProperty.as3Type.name};<%
+            } else if (jProperty.readable && (jProperty.name == 'version' || jProperty.name == 'id')) {%>
+<%
             } else if (jProperty.readable)
             {%>
         function ${jProperty.name}():${jProperty.as3Type.name};<%
