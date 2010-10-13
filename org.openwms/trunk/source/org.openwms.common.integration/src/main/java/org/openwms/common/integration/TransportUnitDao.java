@@ -36,18 +36,4 @@ import org.openwms.common.domain.TransportUnit;
  * @see org.openwms.common.integration
  * @see org.openwms.common.domain.TransportUnit
  */
-public interface TransportUnitDao extends GenericDao<TransportUnit, Long> {
-
-    /**
-     * Name of the <code>NamedQuery</code> to find all {@link TransportUnit}
-     * Entities.
-     */
-    String NQ_FIND_ALL = "TransportUnit.findAll";
-
-    /**
-     * Name of the <code>NamedQuery</code> to find a {@link TransportUnit} by
-     * the natural key.
-     */
-    String NQ_FIND_BY_UNIQUE_QUERY = "TransportUnit.findByBarcode";
-
-}
+public interface TransportUnitDao extends GenericDao<TransportUnit, Long> {}
