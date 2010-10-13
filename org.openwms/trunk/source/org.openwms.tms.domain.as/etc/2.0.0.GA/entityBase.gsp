@@ -114,7 +114,7 @@ package ${jClass.as3Type.packageName} {
 <%
     }
     for (jProperty in jClass.properties) {%>
-        private var _${jProperty.name}:${jProperty.as3Type.name};<%
+        protected var _${jProperty.name}:${jProperty.as3Type.name};<%
     }
 
     ///////////////////////////////////////////////////////////////////////////
@@ -147,7 +147,7 @@ package ${jClass.as3Type.packageName} {
         if (jProperty != jClass.uid) {
             if (jProperty.readable || jProperty.writable) {%>
 <%
-                if (jProperty.writable || jProperty.name == 'version') {%>
+                if (jProperty.writable && jProperty.name != 'version') {%>
         public function set ${jProperty.name}(value:${jProperty.as3Type.name}):void {
             _${jProperty.name} = value;
         }<%
@@ -156,7 +156,7 @@ package ${jClass.as3Type.packageName} {
         public function isNew():${jProperty.as3Type.name} {
             return true;
         }<%
-                } else if (jProperty.readable) {%>
+                } else if (jProperty.readable  && jProperty.name != 'version') {%>
         public function get ${jProperty.name}():${jProperty.as3Type.name} {
             return _${jProperty.name};
         }<%
@@ -185,7 +185,11 @@ package ${jClass.as3Type.packageName} {
         public function set ${jProperty.name}(value:${jProperty.as3Type.name}):void {
         }<%
                 }
-                if (jProperty.readable) {%>
+                if (jProperty.readable && jProperty.name == 'new') {%>
+        public function isNew():${jProperty.as3Type.name} {
+            return true;
+        }<%
+                } else if (jProperty.readable) {%>
         public function get ${jProperty.name}():${jProperty.as3Type.name} {
             return ${jProperty.as3Type.nullValue};
         }<%
@@ -213,6 +217,9 @@ package ${jClass.as3Type.packageName} {
     }
 
     for (jProperty in jClass.properties) {
+        if (jProperty.name == 'version') {
+            continue;
+        }
         if (jProperty.as3Type.isNumber()) {%>
                 _${jProperty.name} = function(o:*):Number { return (o is Number ? o as Number : Number.NaN) } (input.readObject());<%
         }
@@ -260,7 +267,11 @@ package ${jClass.as3Type.packageName} {
                 super.writeExternal(output);<%
     }
 
-    for (jProperty in jClass.properties) {%>
+    for (jProperty in jClass.properties) { 
+        if (jProperty.name == 'version') {
+            continue;
+        }
+        %>
                 output.writeObject(_${jProperty.name});<%
     }%>
             }<%
