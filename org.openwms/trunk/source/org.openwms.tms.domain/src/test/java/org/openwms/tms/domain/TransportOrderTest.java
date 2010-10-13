@@ -29,7 +29,6 @@ import org.openwms.common.domain.LocationGroup;
 import org.openwms.common.domain.LocationPK;
 import org.openwms.common.domain.TransportUnit;
 import org.openwms.common.domain.TransportUnitType;
-import org.openwms.common.exception.InsufficientValueException;
 import org.openwms.common.test.AbstractJpaSpringContextTests;
 import org.openwms.tms.domain.order.TransportOrder;
 import org.openwms.tms.domain.values.TransportOrderState;
@@ -54,7 +53,7 @@ public class TransportOrderTest extends AbstractJpaSpringContextTests {
             transportOrder.setState(TransportOrderState.INITIALIZED);
             fail("Exception expected while switching to next state without transportUnit");
         }
-        catch (InsufficientValueException tme) {
+        catch (IllegalStateException ise) {
             logger.debug("OK:Exception while switching to next state without transportUnit");
         }
 
@@ -66,7 +65,7 @@ public class TransportOrderTest extends AbstractJpaSpringContextTests {
             transportOrder.setState(TransportOrderState.INITIALIZED);
             fail("TransportOrder must not be switched in next mode without setting a target");
         }
-        catch (InsufficientValueException tme) {
+        catch (IllegalStateException ise) {
             logger.debug("OK:Exception while switching to next state without target");
         }
 
@@ -76,9 +75,8 @@ public class TransportOrderTest extends AbstractJpaSpringContextTests {
             transportOrder.setState(TransportOrderState.INITIALIZED);
             logger.debug("transportUnit set and target set");
         }
-        catch (Exception tme) {
+        catch (Exception e) {
             fail("TransportOrder could be switched in next mode");
-
         }
 
         TransportOrder transportOrder2 = new TransportOrder();
@@ -89,7 +87,7 @@ public class TransportOrderTest extends AbstractJpaSpringContextTests {
             transportOrder.setState(TransportOrderState.INITIALIZED);
             logger.debug("transportUnit set and targetLocationGroup set");
         }
-        catch (Exception tme) {
+        catch (Exception e) {
             fail("TransportOrder could be switched in next mode");
         }
 
