@@ -20,19 +20,16 @@
  */
 package org.openwms.common.service.exception;
 
+import java.io.Serializable;
+
 /**
- * A ServiceException.
- * <p>
- * Is used as an application exception thrown by the service layer. This type of
- * exception is <strong>NOT</strong> used as an system exception. Furthermore
- * it shall indicate occurring exceptions in the service layer.
- * </p>
+ * A ServiceException. Checked application exception.
  * 
  * @author <a href="mailto:openwms@googlemail.com">Heiko Scherrer</a>
  * @version $Revision$
  * @since 0.1
  */
-public class ServiceException extends RuntimeException {
+public class ServiceException extends Exception implements Serializable {
 
     /**
      * The serialVersionUID

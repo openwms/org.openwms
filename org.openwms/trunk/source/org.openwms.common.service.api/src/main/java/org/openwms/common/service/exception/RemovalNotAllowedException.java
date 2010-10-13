@@ -23,11 +23,12 @@ package org.openwms.common.service.exception;
 import java.io.Serializable;
 
 /**
- * A RemovalNotAllowedException.
+ * A RemovalNotAllowedException. Used to indicate that a service is not allowed
+ * to remove an entity.
  * 
  * @author <a href="mailto:russelltina@users.sourceforge.net">Tina Russell</a>
  * @version $Revision: $
- * 
+ * @since 0.1
  */
 public class RemovalNotAllowedException extends ServiceException implements Serializable {
 
