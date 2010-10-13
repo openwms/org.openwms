@@ -24,6 +24,7 @@ import java.io.Serializable;
 import java.lang.reflect.ParameterizedType;
 import java.util.List;
 
+import org.openwms.common.domain.AbstractEntity;
 import org.openwms.common.integration.GenericDao;
 import org.openwms.common.service.EntityService;
 import org.slf4j.Logger;
@@ -47,7 +48,7 @@ import org.springframework.transaction.annotation.Transactional;
  */
 @Service
 @Transactional
-public abstract class EntityServiceImpl<T extends Serializable, ID extends Serializable> implements EntityService<T>,
+public abstract class EntityServiceImpl<T extends AbstractEntity, ID extends Serializable> implements EntityService<T>,
         ApplicationContextAware {
 
     /**
@@ -104,8 +105,11 @@ public abstract class EntityServiceImpl<T extends Serializable, ID extends Seria
     @Override
     @Transactional(readOnly = true)
     public List<T> findAll() {
+        logger.debug("Loading transportOders");
         resolveTypeClass();
-        return dao.findAll();
+        List<T> list = dao.findAll();
+        logger.debug("size is" + list.size());
+        return list;
     }
 
     /**

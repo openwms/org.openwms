@@ -29,7 +29,7 @@ import org.openwms.common.domain.system.usermanagement.UserPassword;
 import org.openwms.common.exception.InvalidPasswordException;
 import org.openwms.common.integration.system.usermanagement.RoleDao;
 import org.openwms.common.integration.system.usermanagement.UserDao;
-import org.openwms.common.service.exception.ServiceException;
+import org.openwms.common.service.exception.ServiceRuntimeException;
 import org.openwms.common.service.exception.UserNotFoundException;
 import org.openwms.common.service.management.UserService;
 import org.openwms.common.service.spring.EntityServiceImpl;
@@ -81,7 +81,7 @@ public class UserServiceImpl extends EntityServiceImpl<User, Long> implements Us
     public User save(User user) {
         if (null == user) {
             logger.warn("Calling save with null as argument");
-            throw new ServiceException("The instance of the User to be removed is NULL");
+            throw new ServiceRuntimeException("The instance of the User to be removed is NULL");
         }
         if (user.isNew()) {
             addEntity(user);
@@ -96,7 +96,7 @@ public class UserServiceImpl extends EntityServiceImpl<User, Long> implements Us
     public void remove(User user) {
         if (null == user) {
             logger.warn("Calling remove with null as argument");
-            throw new ServiceException("The instance of the User to be remove is NULL");
+            throw new ServiceRuntimeException("The instance of the User to be remove is NULL");
         }
         if (user.isNew()) {
             logger.warn("The User instance that shall be removed is not persist yet, no need to remove");
@@ -149,7 +149,7 @@ public class UserServiceImpl extends EntityServiceImpl<User, Long> implements Us
     public boolean changeUserPassword(UserPassword userPassword) {
         if (userPassword.getPassword() == null || userPassword.getPassword().isEmpty()) {
             logger.warn("Null or an empty String is not allowed for a new password");
-            throw new ServiceException("Null or an empty String is not allowed for a new password");
+            throw new ServiceRuntimeException("Null or an empty String is not allowed for a new password");
         }
         User entity = dao.findByUniqueId(userPassword.getUser().getUsername());
         if (entity == null) {

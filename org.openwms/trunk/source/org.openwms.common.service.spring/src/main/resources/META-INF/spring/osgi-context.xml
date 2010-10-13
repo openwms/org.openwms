@@ -36,6 +36,9 @@
 	<osgi:reference id="userDao" interface="org.openwms.common.integration.system.usermanagement.UserDao" />
     <osgi:reference id="roleDao" interface="org.openwms.common.integration.system.usermanagement.RoleDao" />
 	<osgi:reference id="moduleDao" interface="org.openwms.common.integration.ModuleDao" />
+    
+    <!-- Helpers and delegates -->
+    <osgi:reference id="onRemovalListener" interface="org.openwms.common.service.OnRemovalListener" cardinality="0..1" />
 
 	<!-- exports -->
 	<osgi:service ref="locationGroupService" interface="org.openwms.common.service.LocationGroupService" />
@@ -44,5 +47,6 @@
     <osgi:service ref="transportUnitService" interface="org.openwms.common.service.TransportUnitService" />
     <osgi:service ref="moduleManagementService" interface="org.openwms.common.service.ModuleManagementService" />
     <osgi:service ref="userDetailsService" interface="org.springframework.security.core.userdetails.UserDetailsService" />
+    <osgi:service ref="configurationService" interface="org.openwms.common.service.ConfigurationService" />
 
 </beans>

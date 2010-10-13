@@ -33,7 +33,7 @@ import org.openwms.common.domain.TransportUnitType;
 import org.openwms.common.domain.values.Barcode;
 import org.openwms.common.integration.GenericDao;
 import org.openwms.common.service.TransportUnitService;
-import org.openwms.common.service.exception.ServiceException;
+import org.openwms.common.service.exception.ServiceRuntimeException;
 import org.openwms.common.test.AbstractJpaSpringContextTests;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -92,7 +92,8 @@ public class TransportServiceTest extends AbstractJpaSpringContextTests {
         try {
             transportService.createTransportUnit(new Barcode("KNOWN"), transportUnitType, locationPk);
             fail("Must throw a ServiceException while trying to create an already known TransportUnit");
-        } catch (ServiceException se) {
+        }
+        catch (ServiceRuntimeException se) {
             logger.debug("OK:ServiceException expected while trying to create an already known TransportUnit");
             se.printStackTrace();
         }
@@ -105,7 +106,8 @@ public class TransportServiceTest extends AbstractJpaSpringContextTests {
             transportService.createTransportUnit(new Barcode("4711"), transportUnitType, new LocationPK("UNKNOWN",
                     "UNKNOWN", "UNKNOWN", "UNKNOWN", "UNKNOWN"));
             fail("Must throw a ServiceException while trying to create a TransportUnit with an unknown actual Location");
-        } catch (ServiceException se) {
+        }
+        catch (ServiceRuntimeException se) {
             logger
                     .debug("OK:ServiceException expected while trying to create a TransportUnit with an unknown actual Location");
             se.printStackTrace();
@@ -124,7 +126,8 @@ public class TransportServiceTest extends AbstractJpaSpringContextTests {
         try {
             transportService.moveTransportUnit(new Barcode("TEST"), targetLocationPk);
             fail("Must throw a ServiceException while trying to create a TransportUnit with unknown Barcode");
-        } catch (ServiceException se) {
+        }
+        catch (ServiceRuntimeException se) {
             logger.debug("OK:ServiceException expected while trying to create a TransportUnit with unknown Barcode");
             se.printStackTrace();
         }
