@@ -22,6 +22,7 @@ package org.openwms.common.integration.jpa;
 
 import java.io.Serializable;
 import java.lang.reflect.ParameterizedType;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
@@ -29,6 +30,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
+import org.openwms.common.domain.AbstractEntity;
 import org.openwms.common.integration.GenericDao;
 import org.openwms.common.integration.exception.TooManyEntitiesFoundException;
 import org.slf4j.Logger;
@@ -65,7 +67,7 @@ import org.springframework.transaction.annotation.Transactional;
  */
 @Transactional
 @Repository
-public abstract class AbstractGenericJpaDao<T extends Serializable, ID extends Serializable> implements
+public abstract class AbstractGenericJpaDao<T extends AbstractEntity, ID extends Serializable> implements
         GenericDao<T, ID> {
 
     @Autowired
@@ -124,7 +126,9 @@ public abstract class AbstractGenericJpaDao<T extends Serializable, ID extends S
     @Transactional(readOnly = true)
     @SuppressWarnings("unchecked")
     public List<T> findAll() {
-        return em.createNamedQuery(getFindAllQuery()).getResultList();
+        List<T> all = em.createNamedQuery(getFindAllQuery()).getResultList();
+        if (all == null) all = Collections.emptyList();
+        return all;
     }
 
     /**
