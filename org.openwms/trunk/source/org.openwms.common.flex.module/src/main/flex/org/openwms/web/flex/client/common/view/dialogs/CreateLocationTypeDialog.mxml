@@ -47,9 +47,9 @@
 
 
             private function createLocationType():void {
-                if (ValidationUtil.validateField(lengthTxt, numberVal) &&
-                    ValidationUtil.validateField(widthTxt, numberVal) &&
-                    ValidationUtil.validateField(heightTxt, numberVal) &&
+                if (ValidationUtil.validateAndFormat(lengthTxt, numberVal) &&
+                    ValidationUtil.validateAndFormat(widthTxt, numberVal) &&
+                    ValidationUtil.validateAndFormat(heightTxt, numberVal) &&
                     stringVal.validate().type == ValidationResultEvent.VALID) {
                     var event:LocationTypeEvent=new LocationTypeEvent(LocationTypeEvent.CREATE_LOCATION_TYPE);
                     var locationType:LocationType=new LocationType();

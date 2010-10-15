@@ -45,9 +45,9 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional
 public class TransportOrderStateTracker implements ApplicationListener<TransportServiceEvent> {
 
-    private TransportOrderStateDelegate transportOrderStateDelegate;
     private final Logger logger = LoggerFactory.getLogger(getClass());
-
+    // Do not autowire
+    private TransportOrderStateDelegate transportOrderStateDelegate;
     private TransportOrderDao dao;
 
     /**
@@ -72,7 +72,9 @@ public class TransportOrderStateTracker implements ApplicationListener<Transport
     @SuppressWarnings("unused")
     @PostConstruct
     private void initialize() {
-        this.transportOrderStateDelegate = new DefaultOrderStateDelegate(this.dao);
+        if (transportOrderStateDelegate == null) {
+            this.transportOrderStateDelegate = new DefaultOrderStateDelegate(this.dao);
+        }
     }
 
     /**

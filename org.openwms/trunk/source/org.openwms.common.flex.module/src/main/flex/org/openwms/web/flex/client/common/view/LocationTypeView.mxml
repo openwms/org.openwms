@@ -21,10 +21,10 @@
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
 -->
-<mx:Canvas xmlns:mx="http://www.adobe.com/2006/mxml" width="100%" height="100%" backgroundColor="#C2DAEF" show="onShow()">
+<mx:Canvas xmlns:mx="http://www.adobe.com/2006/mxml" width="100%" height="100%" backgroundColor="#C2DAEF" show="onShow()" implements="org.openwms.web.flex.client.ISecured">
 
     <mx:Metadata>
-        [Name("locationTypeView")]
+        [Name]
         [ManagedEvent(name="SAVE_LOCATION_TYPE")]
         [ManagedEvent(name="LOAD_ALL_LOCATION_TYPES")]
     </mx:Metadata>
@@ -52,6 +52,11 @@
             [Bindable]
             public var changed:Boolean=false;
 
+            public function getSecuredObjectNames():ArrayCollection {
+                var securedObjects:Array  = ["wsss"];
+                return ArrayCollection(securedObjects);
+            }
+            
             /**
              * OnShow load all LocationTypes if they weren't loaded before.
              */
@@ -84,16 +89,16 @@
 
             private function save():void {
                 if (changed && 
-                    ValidationUtil.validateField(lengthTxt,numberVal) &&
-                    ValidationUtil.validateField(widthTxt,numberVal) &&
-                    ValidationUtil.validateField(heightTxt,numberVal)) {
+                    ValidationUtil.validateAndFormat(lengthTxt, numberVal) &&
+                    ValidationUtil.validateAndFormat(widthTxt, numberVal) &&
+                    ValidationUtil.validateAndFormat(heightTxt, numberVal)) {
                     	
 	                var cw1:ChangeWatcher = BindingUtils.bindProperty(selected, "length", lengthTxt, "text");
 	                var cw2:ChangeWatcher = BindingUtils.bindProperty(selected, "width", widthTxt, "text");
 	                var cw3:ChangeWatcher = BindingUtils.bindProperty(selected, "height", heightTxt, "text");
 	                var cw4:ChangeWatcher = BindingUtils.bindProperty(selected, "description", descriptionTxt, "text");
-                    var event:LocationTypeEvent=new LocationTypeEvent(LocationTypeEvent.SAVE_LOCATION_TYPE);
-                    event.data=selected;
+                    var event:LocationTypeEvent = new LocationTypeEvent(LocationTypeEvent.SAVE_LOCATION_TYPE);
+                    event.data = selected;
                     dispatchEvent(event);
                     selected = null;
                     cw1.unwatch();
@@ -105,14 +110,14 @@
             }
 
             private function refresh():void {
-                var event:LocationTypeEvent=new LocationTypeEvent(LocationTypeEvent.LOAD_ALL_LOCATION_TYPES);
+                var event:LocationTypeEvent = new LocationTypeEvent(LocationTypeEvent.LOAD_ALL_LOCATION_TYPES);
                 dispatchEvent(event);
-                selected=null;
+                selected = null;
                 changed = false;
             }
 
             private function validate(event:Event):void {
-            	changed = changed || ValidationUtil.validateField(event.currentTarget as TextInput,numberVal);
+            	changed = changed || ValidationUtil.validateAndFormat(event.currentTarget as TextInput, numberVal);
             }
         ]]>
     </mx:Script>

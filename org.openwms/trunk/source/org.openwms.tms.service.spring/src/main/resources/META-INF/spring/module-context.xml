@@ -39,4 +39,11 @@
     <bean id="transportTracker" class="org.openwms.tms.service.impl.TransportOrderStateTracker">
         <property name="dao" ref="transportOrderDao" />
     </bean>
+
+    <bean id="tuRemovalListener" class="org.openwms.tms.service.impl.TransportUnitRemovalListener">
+    </bean>
+
+    <bean id="toUtil" class="org.openwms.tms.service.util.TransportOrderUtil">
+        <constructor-arg ref="transportOrderDao"/>
+    </bean>
 </beans>

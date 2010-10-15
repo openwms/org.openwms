@@ -21,16 +21,20 @@
 package org.openwms.tms.service.order.delegate;
 
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import org.openwms.common.domain.TransportUnit;
 import org.openwms.tms.domain.order.TransportOrder;
 import org.openwms.tms.domain.values.TransportOrderState;
 import org.openwms.tms.integration.TransportOrderDao;
 import org.openwms.tms.service.impl.TransportOrderStateDelegate;
+import org.openwms.tms.service.util.TransportOrderUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 /**
@@ -43,16 +47,20 @@ import org.springframework.stereotype.Service;
 @Service
 public class DefaultOrderStateDelegate implements TransportOrderStateDelegate {
 
+    private final Logger logger = LoggerFactory.getLogger(getClass());
     protected TransportOrderDao dao;
+    @Autowired
+    protected TransportOrderUtil util;
 
     public DefaultOrderStateDelegate(TransportOrderDao dao) {
         this.dao = dao;
+        this.util = new TransportOrderUtil(this.dao);
+        logger.debug("Setting done");
     }
 
-    /**
-     * Logger instance can be used by subclasses.
-     */
-    private final Logger logger = LoggerFactory.getLogger(getClass());
+    public void setUtil(TransportOrderUtil util) {
+        this.util = util;
+    }
 
     /**
      * @see org.openwms.tms.service.impl.TransportOrderStateDelegate#afterCreation(java.lang.Long)
@@ -61,12 +69,11 @@ public class DefaultOrderStateDelegate implements TransportOrderStateDelegate {
     public void afterCreation(TransportUnit transportUnit) {
         Map<String, Object> params = new HashMap<String, Object>();
         params.put("transportUnit", transportUnit);
-        params.put("states", new Enum[] { TransportOrderState.CREATED });
+        Set<TransportOrderState> states = new HashSet<TransportOrderState>(2);
+        states.add(TransportOrderState.CREATED);
+        params.put("states", states);
         List<TransportOrder> transportOrders = dao
                 .findByNamedParameters(TransportOrder.NQ_FIND_FOR_TU_IN_STATE, params);
-        if (logger.isDebugEnabled()) {
-            logger.debug("List:" + transportOrders.size());
-        }
         for (TransportOrder transportOrder : transportOrders) {
             if (logger.isDebugEnabled()) {
                 logger.debug("Initialize TransportOrder :" + transportOrder.getId());
@@ -151,23 +158,15 @@ public class DefaultOrderStateDelegate implements TransportOrderStateDelegate {
             }
             return false;
         }
-
-        // Check for other active transports
-        Map<String, Object> params = new HashMap<String, Object>();
-        params.put("transportUnit", transportOrder.getTransportUnit());
-        params.put("states", new Object[] { TransportOrderState.STARTED, TransportOrderState.INTERRUPTED });
-        List<TransportOrder> others = dao.findByNamedParameters(TransportOrder.NQ_FIND_FOR_TU_IN_STATE, params);
-        if (others == null) {
-            if (logger.isDebugEnabled()) {
-                logger.debug("There is an already started one");
-            }
-            return false;
+        List<TransportOrder> others = util.findActiveOrders(transportOrder.getTransportUnit());
+        if (others.isEmpty()) {
+            transportOrder.setState(TransportOrderState.STARTED);
+            return true;
         }
         if (logger.isDebugEnabled()) {
-            logger.debug("No active transportOrder found for transportUnit : " + transportOrder.getTransportUnit());
+            logger.debug("An already started TransportOrder exists for the TransportUnit : "
+                    + transportOrder.getTransportUnit());
         }
-
-        transportOrder.setState(TransportOrderState.STARTED);
-        return true;
+        return false;
     }
 }

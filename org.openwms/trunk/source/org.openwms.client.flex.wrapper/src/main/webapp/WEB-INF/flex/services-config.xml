@@ -94,14 +94,26 @@
                     <source>transportService</source>
                 </properties>
             </destination>
+            <destination id="configurationServiceRemote">
+                <channels>
+                    <channel ref="my-graniteamf" />
+                </channels>
+                <properties>
+                    <factory>springFactory</factory>
+                    <source>configurationService</source>
+                </properties>
+            </destination>
         </service>
     </services>
 
     <factories>
         <factory id="tideSpringFactory"
             class="org.granite.tide.spring.SpringServiceFactory" />
-        <factory id="springFactory"
-            class="org.granite.spring.SpringServiceFactory" />
+        <factory id="springFactory" class="org.granite.spring.SpringServiceFactory">
+            <properties>
+                <enable-exception-logging>true</enable-exception-logging>
+            </properties>
+        </factory>
     </factories>
 
     <channels>

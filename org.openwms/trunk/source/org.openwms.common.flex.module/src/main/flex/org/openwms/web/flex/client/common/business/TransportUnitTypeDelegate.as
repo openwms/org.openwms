@@ -18,8 +18,8 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
-package org.openwms.web.flex.client.common.business
-{
+package org.openwms.web.flex.client.common.business {
+	
     import mx.collections.ArrayCollection;
     import mx.controls.Alert;
     
@@ -41,8 +41,8 @@ package org.openwms.web.flex.client.common.business
      */
     [Name("transportUnitTypeDelegate")]
     [ManagedEvent(name="LOAD_ALL_TRANSPORT_UNIT_TYPES")]
-    public class TransportUnitTypeDelegate
-    {
+    public class TransportUnitTypeDelegate {
+    	
         [In]
         [Bindable]
         public var tideContext:Context;
@@ -52,21 +52,16 @@ package org.openwms.web.flex.client.common.business
     	public var commonModelLocator:CommonModelLocator;
         private var transportUnitType:TransportUnitType;
 
-        public function TransportUnitTypeDelegate():void
-        {
-        }
+        public function TransportUnitTypeDelegate():void { }
 
         /**
          * Call to load all TransportUnitTypes from the service.
          */
         [Observer("LOAD_ALL_TRANSPORT_UNIT_TYPES")]
-        public function getTransportUnitTypes():void
-        {
+        public function getTransportUnitTypes():void {
         	tideContext.transportUnitService.getAllTransportUnitTypes(onTransportUnitTypesLoaded, onFault);
         }
-        
-        private function onTransportUnitTypesLoaded(event:TideResultEvent):void
-        {
+        private function onTransportUnitTypesLoaded(event:TideResultEvent):void {
             commonModelLocator.allTransportUnitTypes = event.result as ArrayCollection;        	
         }
         
@@ -74,16 +69,12 @@ package org.openwms.web.flex.client.common.business
          * Call to create a new TransportUnitType.
          */
         [Observer("CREATE_TRANSPORT_UNIT_TYPE")]
-        public function createTransportUnitType(event:TransportUnitTypeEvent):void
-        {
-            if (event.data != null)
-            {
+        public function createTransportUnitType(event:TransportUnitTypeEvent):void {
+            if (event.data != null) {
                 tideContext.transportUnitService.createTransportUnitType(event.data as TransportUnitType, onTransportUnitTypeCreated, onFault);
             }
         }
-
-        private function onTransportUnitTypeCreated(event:TideResultEvent):void
-        {
+        private function onTransportUnitTypeCreated(event:TideResultEvent):void {
             dispatchEvent(new TransportUnitTypeEvent(TransportUnitTypeEvent.LOAD_ALL_TRANSPORT_UNIT_TYPES));
         }
 
@@ -91,16 +82,12 @@ package org.openwms.web.flex.client.common.business
          * Call to delete a TransportUnitType.
          */
         [Observer("DELETE_TRANSPORT_UNIT_TYPE")]
-        public function deleteTransportUnitTypes(event:TransportUnitTypeEvent):void
-        {
-            if (event.data != null)
-            {
+        public function deleteTransportUnitTypes(event:TransportUnitTypeEvent):void {
+            if (event.data != null) {
                 tideContext.transportUnitService.deleteTransportUnitTypes(event.data as ArrayCollection, onTransportUnitTypeDeleted, onFault);
             }
         }
-
-        private function onTransportUnitTypeDeleted(event:TideResultEvent):void
-        {
+        private function onTransportUnitTypeDeleted(event:TideResultEvent):void {
             dispatchEvent(new TransportUnitTypeEvent(TransportUnitTypeEvent.LOAD_ALL_TRANSPORT_UNIT_TYPES));
         }
 
@@ -108,16 +95,12 @@ package org.openwms.web.flex.client.common.business
          * Call to save an already existing TransportUnitType.
          */
         [Observer("SAVE_TRANSPORT_UNIT_TYPE")]
-        public function saveTransportUnitType(event:TransportUnitTypeEvent):void
-        {
-            if (event.data != null)
-            {
+        public function saveTransportUnitType(event:TransportUnitTypeEvent):void {
+            if (event.data != null) {
                 tideContext.transportUnitService.saveTransportUnitType(event.data as TransportUnitType, onTransportUnitTypeSaved, onFault);
             }
         }
-
-        private function onTransportUnitTypeSaved(event:TideResultEvent):void
-        {
+        private function onTransportUnitTypeSaved(event:TideResultEvent):void {
             dispatchEvent(new TransportUnitTypeEvent(TransportUnitTypeEvent.LOAD_ALL_TRANSPORT_UNIT_TYPES));
         }
 
@@ -126,32 +109,26 @@ package org.openwms.web.flex.client.common.business
          */
         [Observer("LOAD_TUT_RULES")]
         public function loadRules(event:TransportUnitTypeEvent):void {
-            if (event.data != null)
-            {
+            if (event.data != null) {
             	transportUnitType = event.data as TransportUnitType;
                 tideContext.transportUnitService.loadRules(transportUnitType.type, onRulesLoaded, onFault);
             }
         }
-
-        private function onFault(event:TideFaultEvent):void
-        {
-            trace("Error executing operation on Transport Unit service:"+event.fault);
-            Alert.show("Error executing operation on Transport Unit service");
-        }
-
-        private function onRulesLoaded(event:TideResultEvent):void
-        {
+        private function onRulesLoaded(event:TideResultEvent):void {
             var rules:ArrayCollection = event.result as ArrayCollection;
             for each (var rule:Rule in rules) {
                 if (rule is TypePlacingRule) {
-                    trace("Rule added as Placing Rule");
                     transportUnitType.typePlacingRules.addItem(rule);
                 }
                 if (rule is TypeStackingRule) {
-                    trace("Rule added as Stacking Rule");
                     transportUnitType.typeStackingRules.addItem(rule);
                 }
             }
+        }
+
+        private function onFault(event:TideFaultEvent):void {
+            trace("Error executing operation on Transport Unit service:" + event.fault);
+            Alert.show("Error executing operation on Transport Unit service");
         }
     }
 }

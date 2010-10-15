@@ -88,7 +88,6 @@
                     if (locations[i].locationGroup == null) {
                         continue;
                     }
-                    trace("Moving" + locations[i].locationGroup.id);
                     if (locations[i].locationGroup.id == selectedLocationGroup.id) {
                         selectedLocations.addItem(locations[i]);
                     }
@@ -99,7 +98,7 @@
                 if (selectedLocationGroup.parent != null) {
                     return selectedLocationGroup.parent.name;
                 } else {
-                    return "NULL";
+                    return "--";
                 }
             }
 
@@ -111,7 +110,7 @@
                 if (item.locationGroup != null) {
                     return item.locationGroup[dg.dataField];
                 }
-                return "NULL";
+                return "--";
             }
 
             private function refresh() : void {
@@ -132,7 +131,7 @@
         <mx:Tree id="myTree" showRoot="false" width="236" dataProvider="{commonModelLocator.locationGroupTree}" dataDescriptor="{new TreeDataDescriptor()}" labelFunction="locationGroupLabel" change="onTreeClick(event)" height="95%">
         </mx:Tree>
         <mx:Canvas width="100%" height="95%">
-            <x:XPanel x="258" y="0" width="100%" height="300" layout="absolute" title="Details" titleIcon="@Embed(source='/assets/images/LocationGroup.png')" toolTipBtn1="Refresh" onClickBtn1="refresh" iconBtn1="@Embed(source='assets/images/icons/refresh.png')">
+            <x:XPanel x="0" y="0" width="100%" height="300" layout="absolute" title="Details" titleIcon="@Embed(source='/assets/images/LocationGroup.png')" toolTipBtn1="Refresh" onClickBtn1="refresh" iconBtn1="@Embed(source='assets/images/icons/refresh.png')">
                 <mx:CheckBox x="190" y="146" label="Infeed allowed"/>
                 <mx:CheckBox x="305" y="146" label="Outfeed allowed"/>
                 <mx:CheckBox x="190" y="176" label="Counting active"/>
@@ -153,16 +152,7 @@
                 <mx:Label text="{selectedLocationGroup.groupType}" width="100%" x="190" y="120"/>
                 <mx:Label text="{selectedLocationGroup.systemCode}" width="100%" x="188" y="234"/>
             </x:XPanel>
-            <mx:Panel width="250" height="250" layout="absolute" x="0" y="0" title="Fill Level">
-                <!--
-                     <mx:PieChart x="0" y="0" id="piechart1" width="100%" height="100%">
-                     <mx:series>
-                     <mx:PieSeries displayName="Series 1"/>
-                     </mx:series>
-                     </mx:PieChart>
-                -->
-            </mx:Panel>
-            <mx:DataGrid id="locationsList" allowMultipleSelection="true" sortableColumns="true" x="0" y="351" width="100%" dataProvider="{selectedLocations}" height="100%">
+            <mx:DataGrid id="locationsList" allowMultipleSelection="true" sortableColumns="true" x="0" y="341" width="100%" dataProvider="{selectedLocations}" height="100%">
                 <mx:columns>
                     <mx:DataGridColumn dataField="area" labelFunction="locationIdField" editable="false" width="50">
                         <mx:headerRenderer>
@@ -201,7 +191,7 @@
                     <mx:DataGridColumn headerText="Last Access" dataField="lastAccess" editable="false"/>
                 </mx:columns>
             </mx:DataGrid>
-            <mx:HBox verticalAlign="middle" backgroundColor="#C6FFC7" width="100%" x="0" y="318" backgroundAlpha="1.0">
+            <mx:HBox verticalAlign="middle" backgroundColor="#C6FFC7" width="100%" x="0" y="308" backgroundAlpha="1.0">
                 <mx:Label text="Locations" fontSize="16"/>
                 <mx:VRule height="10"/>
             </mx:HBox>
