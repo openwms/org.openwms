@@ -33,6 +33,9 @@
 
     <mx:Script>
         <![CDATA[
+            import org.openwms.web.flex.client.util.ValidationUtil;
+            import mx.formatters.Formatter;
+            import mx.utils.ObjectUtil;
             import mx.effects.Blur;
             import flash.utils.ByteArray;
             import mx.events.ValidationResultEvent;
@@ -60,31 +63,28 @@
             [In]
             [Bindable]
             public var modelLocator : ModelLocator;
+            private var watchers : Dictionary = new Dictionary();
+            private var filter : DropShadowFilter = new DropShadowFilter(6, 45, 0x202020, 0.5, 4, 4, 1, 2, false);
 
             [Observer("userSelectionChanged")]
-            private function init() : void
-            {
+            private function init() : void {
                 userImg.source = getUserImage();
-                shadowImage();
-            }
-            
-            /**
-             * Callback method. To be called when a new user image was saved.
-             */ 
-            public function notify():void
-            {
-            	refresh();
+                userImg.filters = [filter];
             }
 
-            private function showFileUploadDialog() : void
-            {
-                if (modelLocator.selectedUser == null)
-                {
+            /**
+             * Callback method. To be called when a new user image was saved.
+             */
+            public function notify() : void {
+                refresh();
+            }
+
+            private function showFileUploadDialog() : void {
+                if (modelLocator.selectedUser == null) {
                     Alert.show("Select a User first");
                     return;
                 }
-                if (isNaN(modelLocator.selectedUser.id))
-                {
+                if (isNaN(modelLocator.selectedUser.id)) {
                     Alert.show("Please save the User first to add an Image");
                     return;
                 }
@@ -93,107 +93,67 @@
                 PopUpManager.centerPopUp(pop1);
             }
 
-            private function fireSaveUserEvent() : void
-            {
-                if (stringVal.validate().type == ValidationResultEvent.VALID &&
-                    checkExpirationDate())
-                {
+            private function fireSaveUserEvent() : void {
+                if (stringVal.validate().type == ValidationResultEvent.VALID && checkExpirationDate()) {
                     dispatchEvent(new UserEvent(UserEvent.SAVE_USER));
-                
                 }
             }
-            
-            private function checkExpirationDate():Boolean
-            {
-            	if (expirationDt.text == null || expirationDt.text == "")
-            	{
-            		modelLocator.selectedUser.expirationDate = null;
-            		return true;
-            	}
-            	if (dateVal.validate().type == ValidationResultEvent.VALID)
-                {
-                   return true;
+
+            private function checkExpirationDate() : Boolean {
+                if (expirationDateDt.selectedDate == null) {
+                	if (modelLocator.selectedUser != null) {
+                        modelLocator.selectedUser.expirationDate = null;
+                    }
+                    return true;
                 }
+                if (ValidationUtil.validateAndFormat(expirationDateDt, dateVal) && ObjectUtil.dateCompare(ModelLocator.today(), expirationDateDt.selectedDate) < 1) {
+                    modelLocator.selectedUser.expirationDate = expirationDateDt.selectedDate;
+                    return true;
+                }
+                Alert.show("Please enter a valid expiration date");
                 return false;
             }
 
-            private function refresh() : void
-            {
+            private function refresh() : void {
                 dispatchEvent(new UserEvent(UserEvent.LOAD_ALL_USERS));
             }
 
-            private function showChangePasswordDialog() : void
-            {
+            private function showChangePasswordDialog() : void {
                 var pop : ChangePasswordDialog = ChangePasswordDialog(PopUpManager.createPopUp(this, ChangePasswordDialog, true));
                 PopUpManager.centerPopUp(pop);
             }
 
-            private function setEditable(event : Event) : void
-            {
+            private function setEditable(event : Event) : void {
                 event.currentTarget.editable = true;
             }
 
-            private function getUserImage() : BitmapAsset
-            {
+            private function getUserImage() : BitmapAsset {
                 var asset : BitmapAsset;
-                if (modelLocator.selectedUser != null)
-                {
+                if (modelLocator.selectedUser != null) {
                     var user : User = modelLocator.selectedUser;
-                    if (UserHelper.haveDetails(user))
-                    {
-                        if (user.userDetails.sex == UserDetails$SEX.MALE)
-                        {
+                    if (UserHelper.haveDetails(user)) {
+                        if (user.userDetails.sex == UserDetails$SEX.MALE) {
                             asset = new manImage() as BitmapAsset;
-                        } else if (user.userDetails.sex == UserDetails$SEX.FEMALE)
-                        {
+                        } else if (user.userDetails.sex == UserDetails$SEX.FEMALE) {
                             asset = new womanImage() as BitmapAsset;
-                        } else
-                        {
+                        } else {
                             asset = new uniSexImage() as BitmapAsset;
                         }
-                    }
-                    else
-                    {
+                    } else {
                         asset = new uniSexImage() as BitmapAsset;
                     }
-                }
-                else
-                {
+                } else {
                     asset = new uniSexImage() as BitmapAsset;
                 }
                 return asset;
             }
-
-            private function shadowImage() : void
-            {
-                var filter : DropShadowFilter = new DropShadowFilter();
-                filter.blurX = 4;
-                filter.blurY = 4;
-                filter.quality = 2;
-                filter.alpha = 0.5;
-                filter.angle = 45;
-                filter.color = 0x202020;
-                filter.distance = 6;
-                filter.inner = false;
-                userImg.filters = [filter];
-            }
-            
         ]]>
     </mx:Script>
-
-    <!--
-         <mx:RegExpValidator source="{usernameTi}" property="text" flags="gmi" valid="fireSaveUserEvent()"
-         expression="_*" noMatchError="Username not allowed!" trigger="{saveUserBtn}" triggerEvent="click" />
-    -->
 
     <mx:Binding source="usernameTi.text" destination="modelLocator.selectedUser.username"/>
     <mx:Binding source="fullnameTi.text" destination="modelLocator.selectedUser.fullname"/>
     <mx:Binding source="descriptionTi.text" destination="modelLocator.selectedUser.userDetails.description"/>
     <mx:Binding source="phoneNoTi.text" destination="modelLocator.selectedUser.userDetails.phoneNo"/>
-    <!--
-         <mx:Binding source="emailTi.text"
-         destination="modelLocator.selectedUser.userDetails.email.getItemAt(0).emailAddress"/>
-    -->
     <mx:Binding source="skypeNameTi.text" destination="modelLocator.selectedUser.userDetails.skypeName"/>
     <mx:Binding source="departmentTi.text" destination="modelLocator.selectedUser.userDetails.department"/>
     <mx:Binding source="officeTi.text" destination="modelLocator.selectedUser.userDetails.office"/>
@@ -201,11 +161,10 @@
     <mx:Binding source="sexRb.selection.value as UserDetails$SEX" destination="modelLocator.selectedUser.userDetails.sex"/>
     <mx:Binding source="enabledChk.selected" destination="modelLocator.selectedUser.enabled"/>
     <mx:Binding source="lockedChk.selected" destination="modelLocator.selectedUser.locked"/>
-    
-    <mx:DateFormatter id="dateFormatter" formatString="{ModelLocator.SIMPLE_DT_FORMAT}"/>
-    <mx:DateValidator id="dateVal" source="{expirationDt}" property="selectedDate" inputFormat="{ModelLocator.SIMPLE_DT_FORMAT}"/>
+
+    <mx:DateValidator id="dateVal" property="selectedDate" inputFormat="{ModelLocator.SIMPLE_DT_FORMAT}"/>
     <mx:StringValidator id="stringVal" minLength="1" source="{usernameTi}" property="text"/>
-    
+
     <mx:HBox width="95%" verticalAlign="middle" backgroundColor="#B6CFEF" x="10" y="10">
         <mx:Label text="User Settings" fontSize="24"/>
         <mx:VRule height="10"/>
@@ -224,72 +183,61 @@
     <mx:HRule x="9" y="53" width="95%"/>
     <mx:Canvas x="10" y="63" width="95%" height="100%">
         <mx:Panel x="10" y="10" width="560" height="507" layout="absolute" title="Details">
-            <mx:Form width="402" x="128" y="10" height="100%">
-
-                <mx:FormItem label="Username" required="true" width="100%">
-                    <mx:TextInput id="usernameTi" text="{modelLocator.selectedUser.username}" editable="false" click="setEditable(event)" width="250"/>
-                </mx:FormItem>
-
-                <mx:FormItem label="Fullname" required="false" width="100%">
-                    <mx:TextInput id="fullnameTi" text="{modelLocator.selectedUser.fullname}" width="250"/>
-                </mx:FormItem>
-
-                <mx:FormItem label="Description" required="false" width="100%">
-                    <mx:TextArea id="descriptionTi" text="{modelLocator.selectedUser.userDetails.description}" width="250"/>
-                </mx:FormItem>
-
-                <mx:FormItem label="Phone" required="false" width="100%">
-                    <mx:TextInput id="phoneNoTi" text="{modelLocator.selectedUser.userDetails.phoneNo}" width="250"/>
-                </mx:FormItem>
-                <!--
-                     <mx:FormItem label="Email" required="false"> <mx:TextInput id="emailTi"
-                     text="{modelLocator.selectedUser.userDetails.email.getItemAt(0).emailAddress}" width="250" /> </mx:FormItem>
-                -->
-                <mx:FormItem label="Skype" required="false" width="100%">
-                    <mx:TextInput id="skypeNameTi" text="{modelLocator.selectedUser.userDetails.skypeName}" width="250"/>
-                </mx:FormItem>
-
-                <mx:FormItem label="Department" required="false" width="100%">
-                    <mx:TextInput id="departmentTi" text="{modelLocator.selectedUser.userDetails.department}" width="250"/>
-                </mx:FormItem>
-
-                <mx:FormItem label="Office" required="false" width="100%">
-                    <mx:TextInput id="officeTi" text="{modelLocator.selectedUser.userDetails.office}" width="250"/>
-                </mx:FormItem>
-
-                <mx:FormItem label="Sex" width="100%">
-                    <mx:Tile width="250" direction="vertical">
-                        <mx:RadioButtonGroup id="sexRb" selectedValue="{modelLocator.selectedUser.userDetails.sex}"/>
-                        <mx:RadioButton value="{UserDetails$SEX.MALE}" label="Male" group="{sexRb}"/>
-                        <mx:RadioButton value="{UserDetails$SEX.FEMALE}" label="Female" group="{sexRb}"/>
-                    </mx:Tile>
-                </mx:FormItem>
-
-                <mx:FormItem label="Comment" required="false" width="100%">
-                    <mx:TextArea id="tiComment" text="{modelLocator.selectedUser.userDetails.comment}" width="250"/>
-                </mx:FormItem>
-
-                <mx:FormItem required="false" width="100%">
-                    <mx:CheckBox id="enabledChk" label="Enabled" selected="{modelLocator.selectedUser.enabled}" />
-                </mx:FormItem>
-
-                <mx:FormItem required="false" width="100%">
-                    <mx:CheckBox id="lockedChk" label="Locked" selected="{modelLocator.selectedUser.locked}"/>
-                </mx:FormItem>
-
-                <mx:FormItem label="Expires" required="false" width="100%">
-                    <mx:DateField id="expirationDt" editable="true" formatString="{ModelLocator.SIMPLE_DT_FORMAT}" width="250" selectedDate="{modelLocator.selectedUser.expirationDate}"/>
-                </mx:FormItem>
-
-            </mx:Form>
-            <mx:Image id="userImg" source="{modelLocator.selectedUser.userDetails.image}" width="100" height="150" click="showFileUploadDialog()" x="10" y="10" toolTip="Click to change the picture of the User" />
+            <mx:Accordion width="402" height="447" x="128" y="10">
+                <mx:Canvas label="User" width="100%" height="100%">
+                    <mx:Form>
+                        <mx:FormItem label="Username" required="true" width="100%">
+                            <mx:TextInput id="usernameTi" text="{modelLocator.selectedUser.username}" editable="false" click="setEditable(event)" width="250"/>
+                        </mx:FormItem>
+                        <mx:FormItem label="Fullname" required="false" width="100%" y="30">
+                            <mx:TextInput id="fullnameTi" text="{modelLocator.selectedUser.fullname}" width="250"/>
+                        </mx:FormItem>
+                        <mx:FormItem label="Description" required="false" width="100%" y="60">
+                            <mx:TextArea id="descriptionTi" text="{modelLocator.selectedUser.userDetails.description}" width="250"/>
+                        </mx:FormItem>
+                    </mx:Form>
+                </mx:Canvas>
+                <mx:Canvas label="User Details" width="100%" height="100%">
+                    <mx:Form>
+                        <mx:FormItem label="Phone" required="false" width="100%">
+                            <mx:TextInput id="phoneNoTi" text="{modelLocator.selectedUser.userDetails.phoneNo}" width="250"/>
+                        </mx:FormItem>
+                        <mx:FormItem label="Skype" required="false" width="100%" y="30">
+                            <mx:TextInput id="skypeNameTi" text="{modelLocator.selectedUser.userDetails.skypeName}" width="250"/>
+                        </mx:FormItem>
+                        <mx:FormItem label="Department" required="false" width="100%" y="60">
+                            <mx:TextInput id="departmentTi" text="{modelLocator.selectedUser.userDetails.department}" width="250"/>
+                        </mx:FormItem>
+                        <mx:FormItem label="Office" required="false" width="100%" y="90">
+                            <mx:TextInput id="officeTi" text="{modelLocator.selectedUser.userDetails.office}" width="250"/>
+                        </mx:FormItem>
+                        <mx:FormItem label="Sex" width="100%" y="120">
+                            <mx:Tile width="250" direction="vertical">
+                                <mx:RadioButtonGroup id="sexRb" selectedValue="{modelLocator.selectedUser.userDetails.sex}"/>
+                                <mx:RadioButton value="{UserDetails$SEX.MALE}" label="Male" group="{sexRb}"/>
+                                <mx:RadioButton value="{UserDetails$SEX.FEMALE}" label="Female" group="{sexRb}"/>
+                            </mx:Tile>
+                        </mx:FormItem>
+                        <mx:FormItem label="Comment" required="false" width="100%" y="180">
+                            <mx:TextArea id="tiComment" text="{modelLocator.selectedUser.userDetails.comment}" width="250"/>
+                        </mx:FormItem>
+                        <mx:FormItem required="false" width="100%" y="240">
+                            <mx:CheckBox id="enabledChk" label="Enabled" selected="{modelLocator.selectedUser.enabled}"/>
+                        </mx:FormItem>
+                        <mx:FormItem required="false" width="100%" y="270">
+                            <mx:CheckBox id="lockedChk" label="Locked" selected="{modelLocator.selectedUser.locked}"/>
+                        </mx:FormItem>
+                        <mx:FormItem label="Expiration Date" required="false" width="100%" y="300">
+                            <mx:DateField id="expirationDateDt" editable="true" selectableRange="{{rangeStart : new Date()}}" formatString="{ModelLocator.SIMPLE_DT_FORMAT}" width="250" selectedDate="{modelLocator.selectedUser.expirationDate}"/>
+                        </mx:FormItem>
+                    </mx:Form>
+                </mx:Canvas>
+                <mx:Canvas label="Assigned Roles" width="100%" height="100%">
+                    <mx:List x="10" y="10" width="380" height="363" alternatingItemColors="[#EEEEEE, #FFFFFF]"/>
+                </mx:Canvas>
+            </mx:Accordion>
+            <mx:Image id="userImg" source="{modelLocator.selectedUser.userDetails.image}" width="100" height="150" click="showFileUploadDialog()" x="10" y="10" toolTip="Click to change the picture of the User"/>
             <mx:VRule x="118" y="10" height="447"/>
-        </mx:Panel>
-        <mx:Panel x="578" y="10" width="100%" height="299" layout="absolute" title="Preferences">
-            <mx:List width="95%" height="239" x="10" y="10"/>
-        </mx:Panel>
-        <mx:Panel x="578" y="317" width="100%" height="200" layout="absolute" title="Assigned Roles">
-            <mx:List height="140" width="95%" x="10" y="10" dataProvider="{modelLocator.selectedUser.roles}"/>
         </mx:Panel>
 
     </mx:Canvas>

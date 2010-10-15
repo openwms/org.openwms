@@ -53,4 +53,9 @@
         destination="userServiceRemote"
         showBusyCursor="true"/>
 
+    <granite:SecureRemoteObject
+        id="configurationService"
+        destination="configurationServiceRemote"
+        showBusyCursor="true"/>
+
 </mx:Canvas>

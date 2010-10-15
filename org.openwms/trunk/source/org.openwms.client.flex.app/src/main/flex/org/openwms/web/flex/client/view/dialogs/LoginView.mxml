@@ -22,7 +22,7 @@
  */
 -->
 <mx:TitleWindow xmlns:mx="http://www.adobe.com/2006/mxml" width="300" height="220" backgroundColor="#FFFFFF"
-	backgroundAlpha="0.5" borderStyle="solid" alpha="1" borderThickness="3" title="Application Login" creationComplete="onShow();">
+	backgroundAlpha="0.5" borderStyle="solid" alpha="1" borderThickness="3" title="Application Login" show="onShow();" creationComplete="onShow();">
 
     <mx:Metadata>
         [Name]
@@ -46,6 +46,7 @@
             
             private function onShow():void {
             	myUser.setFocus();
+            	PopUpManager.centerPopUp(this);
             }
             
             private function onLogin(username:String, password:String):void {
