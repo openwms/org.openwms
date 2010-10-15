@@ -49,6 +49,7 @@
             <menuitem label="Users" action="{SwitchScreenEvent.SHOW_USER_MGMT_VIEW}" />
             <menuitem label="Roles" action="{SwitchScreenEvent.SHOW_ROLE_MGMT_VIEW}" />
             <menuitem label="Modules" action="{SwitchScreenEvent.SHOW_MODULE_MGMT_VIEW}" />
+            <menuitem label="Settings" action="{SwitchScreenEvent.SHOW_SETTING_MGMT_VIEW}" />
         </menuitem>
     </mx:XMLList>
 
@@ -64,6 +65,7 @@
             <view:ModuleManagementView name="{SwitchScreenEvent.SHOW_MODULE_MGMT_VIEW}" />
  			<view:UserManagementView name="{SwitchScreenEvent.SHOW_USER_MGMT_VIEW}" />
             <view:RoleManagementView name="{SwitchScreenEvent.SHOW_ROLE_MGMT_VIEW}" />
+            <view:SettingManagementView name="{SwitchScreenEvent.SHOW_SETTING_MGMT_VIEW}" />
 		</mx:ViewStack>
         </mx:HBox>
 	</mx:VBox>

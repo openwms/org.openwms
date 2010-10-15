@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+/*
+ * openwms.org, the Open Warehouse Management System.
+ *
+ * This file is part of openwms.org.
+ *
+ * openwms.org is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as 
+ * published by the Free Software Foundation, either version 3 of the
+ * License, or (at your option) any later version.
+ *
+ * openwms.org is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with this software. If not, write to the Free
+ * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
+ * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
+ */
+-->
+<mx:Canvas xmlns:mx="http://www.adobe.com/2006/mxml" width="100%" height="100%" backgroundColor="#C2DAEF" creationComplete="init();">
+    <mx:states>
+        <mx:State name="BooleanState">
+            <mx:RemoveChild target="{textinput1}"/>
+            <mx:AddChild relativeTo="{panel1}" position="lastChild">
+                <mx:CheckBox x="178" y="139" label="Checkbox"/>
+            </mx:AddChild>
+        </mx:State>
+        <mx:State name="ModuleScope">
+            <mx:SetProperty target="{hrule1}" name="y" value="194"/>
+            <mx:SetProperty target="{textinput1}" name="y" value="166"/>
+            <mx:SetProperty target="{combobox1}" name="y" value="140"/>
+            <mx:SetProperty target="{savePropertyBtn}" name="y" value="204"/>
+            <mx:SetProperty target="{textarea1}" name="y" value="88"/>
+            <mx:SetProperty target="{label1}" name="y" value="89"/>
+            <mx:SetProperty target="{label2}" name="y" value="142"/>
+            <mx:SetProperty target="{label3}" name="y" value="168"/>
+            <mx:AddChild relativeTo="{label1}" position="before">
+                <mx:Label x="10" y="62" text="Module" fontWeight="bold"/>
+            </mx:AddChild>
+            <mx:AddChild relativeTo="{label4}" position="before">
+                <mx:ComboBox text="{modelLocator.selectedUser.username}" width="228" x="178" y="60"/>
+            </mx:AddChild>
+        </mx:State>
+        <mx:State name="RoleScope">
+            <mx:SetProperty target="{hrule1}" name="y" value="196"/>
+            <mx:SetProperty target="{textinput1}" name="y" value="168"/>
+            <mx:SetProperty target="{combobox1}" name="y" value="142"/>
+            <mx:SetProperty target="{savePropertyBtn}" name="y" value="206"/>
+            <mx:SetProperty target="{label1}" name="y" value="91"/>
+            <mx:SetProperty target="{label2}" name="y" value="144"/>
+            <mx:SetProperty target="{label3}" name="y" value="170"/>
+            <mx:SetProperty target="{textarea1}" name="y" value="90"/>
+            <mx:AddChild relativeTo="{label1}" position="before">
+                <mx:Label x="10" y="62" text="Role" fontWeight="bold"/>
+            </mx:AddChild>
+            <mx:AddChild relativeTo="{label4}" position="before">
+                <mx:ComboBox text="{modelLocator.selectedUser.username}" width="228" x="178" y="60"/>
+            </mx:AddChild>
+        </mx:State>
+    </mx:states>
+
+    <mx:Metadata>
+        [Name]
+        [ManagedEvent(name="LOAD_ALL_PROPERTIES")]
+    </mx:Metadata>
+
+    <mx:Script>
+        <![CDATA[
+        	import org.openwms.web.flex.client.event.PropertyEvent;
+        	import org.openwms.web.flex.client.model.ModelLocator;
+        
+            [In]
+            [Bindable]
+            public var modelLocator:ModelLocator;
+        
+            private function init() : void {
+                dispatchEvent(new PropertyEvent(PropertyEvent.LOAD_ALL_PROPERTIES));
+            }
+        ]]>
+    </mx:Script>
+    <mx:HBox x="10" y="10" width="95%" verticalAlign="middle" backgroundColor="#FFA6A6">
+        <mx:Label x="10" y="10" text="Properties" fontSize="24"/>
+        <mx:VRule height="10"/>
+        <mx:Button id="addRoleBtn" buttonMode="true" mouseChildren="false" toolTip="Create a new Role" icon="@Embed(source='/assets/images/Users--plus.png')"/>
+        <mx:VRule height="10"/>
+        <mx:Button id="removeRoleBtn" buttonMode="true" mouseChildren="false" toolTip="Delete an existing Role" icon="@Embed(source='/assets/images/Users--minus.png')"/>
+        <mx:VRule height="10"/>
+        <mx:Button id="saveRoleBtn" buttonMode="true" mouseChildren="false" toolTip="Save a modified Role" icon="@Embed(source='/assets/images/Users--save.png')"/>
+        <mx:VRule height="10"/>
+        <mx:Button id="refreshRoleBtn" buttonMode="true" mouseChildren="false" toolTip="Refresh the list of Roles" icon="@Embed(source='assets/images/icons/refresh.png')"/>
+    </mx:HBox>
+    <mx:HRule x="9" y="53" width="95%"/>
+    <mx:HBox x="10" y="63" width="95%" height="95%">
+        <mx:Accordion x="10" y="63" width="207" height="80%">
+            <mx:Canvas label="Application Properties" width="100%" height="100%">
+                <mx:List x="0" y="0" alternatingItemColors="[#EEEEEE, #FFFFFF]" width="100%" height="100%"></mx:List>
+            </mx:Canvas>
+            <mx:Canvas label="Module Properties" width="100%" height="100%">
+                <mx:List x="0" y="0" alternatingItemColors="[#EEEEEE, #FFFFFF]" width="100%" height="100%"></mx:List>
+            </mx:Canvas>
+            <mx:Canvas label="Role Properties" width="100%" height="100%">
+                <mx:List x="0" y="0" alternatingItemColors="[#EEEEEE, #FFFFFF]" width="100%" height="100%"></mx:List>
+            </mx:Canvas>
+        </mx:Accordion>
+        <mx:Panel x="218" y="63" height="80%" layout="absolute" title="Details" width="100%" id="panel1">
+            <mx:TextInput text="{modelLocator.selectedUser.username}" width="228" x="178" y="8"/>
+            <mx:TextInput text="{modelLocator.selectedUser.username}" width="228" x="178" y="139" id="textinput1"/>
+            <mx:ComboBox dataProvider="{modelLocator.allProperties}" width="228" x="178" y="113" id="combobox1">
+            </mx:ComboBox>
+            <mx:ComboBox text="{modelLocator.selectedUser.username}" width="228" x="178" y="34"/>
+            <mx:Label x="10" y="10" text="Property Name" fontWeight="bold" id="label4"/>
+            <mx:Label x="10" y="36" text="Scope" fontWeight="bold"/>
+            <mx:Label x="10" y="62" text="Description" id="label1"/>
+            <mx:Label x="10" y="115" text="Type" id="label2"/>
+            <mx:Label x="10" y="141" text="Value" id="label3"/>
+            <mx:TextArea x="178" y="61" width="228" id="textarea1"/>
+            <mx:HRule x="10" y="167" width="95%" id="hrule1"/>
+            <mx:Button id="savePropertyBtn" buttonMode="true" mouseChildren="false" toolTip="Save a modified Role" icon="@Embed(source='/assets/images/Users--save.png')" x="178" y="177"/>
+        </mx:Panel>
+    </mx:HBox>
+</mx:Canvas>
