@@ -26,6 +26,8 @@ package org.openwms.web.flex.client.module {
     import mx.collections.XMLListCollection;
     import mx.controls.Alert;
     import mx.events.ModuleEvent;
+    import mx.logging.ILogger;
+    import mx.logging.Log;
     import mx.modules.IModuleInfo;
     import mx.modules.ModuleManager;
     
@@ -47,6 +49,7 @@ package org.openwms.web.flex.client.module {
     [Name("moduleLocator")]
     [ManagedEvent(name="MODULE_CONFIG_CHANGED")]
     [ManagedEvent(name="MODULES_CONFIGURED")]
+    [ManagedEvent(name="MODULE_LOADED")]
     [ManagedEvent(name="MODULE_UNLOADED")]
     [Bindable]
     public class ModuleLocator {
@@ -59,6 +62,7 @@ package org.openwms.web.flex.client.module {
 
         private var toRemove : Module;
         private var applicationDomain : ApplicationDomain = new ApplicationDomain(ApplicationDomain.currentDomain);
+        private static var logger : ILogger = Log.getLogger("org.openwms.web.flex.client.module.ModuleLocator");
 
         public function ModuleLocator() {
         }
@@ -71,6 +75,7 @@ package org.openwms.web.flex.client.module {
          */
         [Observer("LOAD_ALL_MODULES")]
         public function loadModulesFromService() : void {
+        	trace("Loading all module definitions from the database");
             tideContext.moduleManagementService.getModules(onModulesLoad, onFault);
         }
 
@@ -219,7 +224,6 @@ package org.openwms.web.flex.client.module {
         private function onModulesLoad(event : TideResultEvent) : void {
             modelLocator.allModules = event.result as ArrayCollection;
             modelLocator.isInitialized = true;
-            //dispatchEvent(new ApplicationEvent(ApplicationEvent.MODULES_CONFIGURED));
             startAllModules();
         }
 
@@ -235,8 +239,10 @@ package org.openwms.web.flex.client.module {
          * on startup and tries to start each Module if it hasn't been loaded so far.
          */
         private function startAllModules() : void {
+        	var noModulesLoaded:Boolean = true;
             for each (var module : Module in modelLocator.allModules) {
                 if (module.loadOnStartup) {
+                	noModulesLoaded = false;
                     if (modelLocator.loadedModules.containsKey(module.url)) {
                         module.loaded = true;
                         continue;
@@ -244,8 +250,11 @@ package org.openwms.web.flex.client.module {
                     trace("Trying to load module : " + module.url);
                     loadModule(module);
                 } else {
-                    //trace("Module not set to be loaded on startup : " + module.moduleName);
+                    logger.debug("Module not set to be loaded on startup : " + module.moduleName);
                 }
+            }
+            if (noModulesLoaded) {
+                dispatchEvent(new ApplicationEvent(ApplicationEvent.MODULES_CONFIGURED));
             }
         }
 
@@ -282,7 +291,7 @@ package org.openwms.web.flex.client.module {
                     mInf.release();
                     return;
                 } else {
-                    trace("Module was not loaded before, nothing to unload");
+                    logger.debug("Module was not loaded before, nothing to unload");
                 }
             }
             trace("No module to unload with url: " + module.url);
@@ -333,7 +342,7 @@ package org.openwms.web.flex.client.module {
             var appModule : Object = e.module.factory.create();
             if (appModule is IApplicationModule) {
                 appModule.start(applicationDomain);
-                fireChangedEvent(appModule as IApplicationModule);
+                fireLoadedEvent(appModule as IApplicationModule);
             }
             var mInf : IModuleInfo = (modelLocator.loadedModules.get(module.url) as IModuleInfo);
             mInf.removeEventListener(ModuleEvent.READY, onModuleLoaded);
@@ -365,7 +374,17 @@ package org.openwms.web.flex.client.module {
 
         /**
          * Fire an event to notify others that a module was successfully unloaded.
-         * The event data (e.data) contains the changed module.
+         * The event data (e.data) contains the module that was loaded.
+         */
+        private function fireLoadedEvent(module : IApplicationModule) : void {
+            var e : ApplicationEvent = new ApplicationEvent(ApplicationEvent.MODULE_LOADED);
+            e.data = module;
+            dispatchEvent(e);
+        }
+
+        /**
+         * Fire an event to notify others that a module was successfully unloaded.
+         * The event data (e.data) contains the module that was unloaded.
          */
         private function fireUnloadedEvent(module : IApplicationModule) : void {
             var e : ApplicationEvent = new ApplicationEvent(ApplicationEvent.MODULE_UNLOADED);

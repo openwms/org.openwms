@@ -22,6 +22,7 @@ package org.openwms.web.flex.client.model
 {
 
     import mx.collections.ArrayCollection;
+    import mx.formatters.DateFormatter;
     
     import org.openwms.common.domain.Module;
     import org.openwms.common.domain.system.usermanagement.User;
@@ -60,6 +61,8 @@ package org.openwms.web.flex.client.model
         public const DIRECTORY_NAME:String = "data";
         public static const DT_FORMAT_STRING:String = "DD.MM.YYYY HH:NN:SS";
         public static const SIMPLE_DT_FORMAT:String = "DD.MM.YYYY";
+        public const dateFormatter:DateFormatter = new DateFormatter();
+        public const dateTimeFormatter:DateFormatter = new DateFormatter();
 
         // --------------------------------------------------------------------
         // User and Role Management
@@ -78,6 +81,11 @@ package org.openwms.web.flex.client.model
         public var selectedModule:Module = null;
         
         // --------------------------------------------------------------------
+        // Module Management
+        // --------------------------------------------------------------------
+        public var allProperties:ArrayCollection = new ArrayCollection();
+
+        // --------------------------------------------------------------------
         // Security
         // --------------------------------------------------------------------
         // Credentials, set by the login screen
@@ -95,6 +103,8 @@ package org.openwms.web.flex.client.model
          */
         public function ModelLocator()
         {
+        	dateFormatter.formatString = SIMPLE_DT_FORMAT;
+        	dateTimeFormatter.formatString = DT_FORMAT_STRING;
         }
 
         /**
@@ -104,6 +114,12 @@ package org.openwms.web.flex.client.model
         public static function addView(pos:int, view:Object):void
         {
 
+        }
+        
+        public static function today():Date {
+        	var today:Date = new Date();
+        	today.setHours(0,0,0,0);
+        	return today;
         }
 
         /**
