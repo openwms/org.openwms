@@ -18,8 +18,9 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
-package org.openwms.web.flex.client.tms.business
-{
+package org.openwms.web.flex.client.tms.business {
+    
+    import flash.events.Event;
     
     import mx.collections.ArrayCollection;
     import mx.controls.Alert;
@@ -40,8 +41,8 @@ package org.openwms.web.flex.client.tms.business
      */
     [Name("transportsDelegate")]
     [ManagedEvent(name="LOAD_TRANSPORT_ORDERS")]
-    public class TransportsDelegate
-    {
+    public class TransportsDelegate {
+    	
         [In]
         [Bindable]
         public var tideContext:Context;
@@ -49,31 +50,29 @@ package org.openwms.web.flex.client.tms.business
         [Bindable]
         public var tmsModelLocator:TMSModelLocator;            
 
-        public function TransportsDelegate():void
-        {
-        }
+        public function TransportsDelegate():void { }
 
         /**
          * Call to load all TransportOrders from the service.
          */
         [Observer("LOAD_TRANSPORT_ORDERS")]
-        public function getAllTransports():void
-        {
+        public function getAllTransports():void {
+        	trace("Load all orders");
         	tideContext.transportService.findAll(onTransportsLoaded, onFault);
+        	trace("Service called");
         }
-        private function onTransportsLoaded(event:TideResultEvent):void
-        {
+        private function onTransportsLoaded(event:TideResultEvent):void {
+        	trace("got all orders");
             tmsModelLocator.allTransportOrders = event.result as ArrayCollection;
+            trace("and return");
         }
         
         [Observer("CREATE_TRANSPORT_ORDER")]
-        public function createTransportOrder(event:TransportOrderEvent):void
-        {
+        public function createTransportOrder(event:TransportOrderEvent):void {
         	var transportOrder:TransportOrder = event.data as TransportOrder; 
             tideContext.transportService.createTransportOrder(transportOrder.transportUnit.barcode, transportOrder.targetLocationGroup, transportOrder.targetLocation, transportOrder.priority, onTransportCreated, onFault);
         }
-        private function onTransportCreated(event:TideResultEvent):void
-        {
+        private function onTransportCreated(event:TideResultEvent):void {
         	trace("TransportOrder successfully created");
             dispatchEvent(new TransportOrderEvent(TransportOrderEvent.LOAD_TRANSPORT_ORDERS));
         }
@@ -82,15 +81,12 @@ package org.openwms.web.flex.client.tms.business
          * Call to cancel one or more TransportOrders.
          */
         [Observer("CANCEL_TRANSPORT_ORDER")]
-        public function cancelTransportOrder(event:TransportOrderEvent):void
-        {
+        public function cancelTransportOrder(event:TransportOrderEvent):void {
             tideContext.transportService.cancelTransportOrders(event.data.ids as ArrayCollection, event.data.state as TransportOrderState, onTransportsCanceled, onFault);
         }
-        private function onTransportsCanceled(event:TideResultEvent):void
-        {
+        private function onTransportsCanceled(event:TideResultEvent):void {
             dispatchEvent(new TransportOrderEvent(TransportOrderEvent.LOAD_TRANSPORT_ORDERS));
-        	if ((event.result as ArrayCollection).length > 0)
-        	{
+        	if ((event.result as ArrayCollection).length > 0) {
         		Alert.show("Not all Transport Orders could be canceled!");
         	}
         }
@@ -99,33 +95,30 @@ package org.openwms.web.flex.client.tms.business
          * Call to redirect one or more TransportOrders.
          */
         [Observer("REDIRECT_TRANSPORT_ORDER")]
-        public function redirectTransportOrders(event:TransportOrderEvent):void
-        {
+        public function redirectTransportOrders(event:TransportOrderEvent):void {
             tideContext.transportService.redirectTransportOrders(event.data as ArrayCollection, onTransportsRedirected, onFault);
         }
-        private function onTransportsRedirected(event:TideResultEvent):void
-        {
+        private function onTransportsRedirected(event:TideResultEvent):void {
             dispatchEvent(new TransportOrderEvent(TransportOrderEvent.LOAD_TRANSPORT_ORDERS));
-            if ((event.result as ArrayCollection).length > 0)
-            {
+            if ((event.result as ArrayCollection).length > 0) {
                 Alert.show("Not all Transport Orders could be redirected!");
             }
         }
 
-          
+        /**
+         * Call to remove a TransportOrder.
+         */
         [Observer("DELETE_TRANSPORT_ORDER")]
-        public function deleteTransportOrder(event:TransportOrderEvent):void
-        {
+        public function deleteTransportOrder(event:TransportOrderEvent):void {
             var transportOrder:TransportOrder = event.data as TransportOrder; 
             tideContext.transportService.remove(transportOrder, onTransportDeleted, onFault);
         }
-        private function onTransportDeleted(event:TideResultEvent):void
-        {
+        private function onTransportDeleted(event:TideResultEvent):void {
             dispatchEvent(new TransportOrderEvent(TransportOrderEvent.LOAD_TRANSPORT_ORDERS));
         }
 
-        private function onFault(event:TideFaultEvent):void
-        {
+        private function onFault(event:TideFaultEvent):void {
+        	trace("Error executing operation on Transports service:" + event.fault);
             Alert.show("Error executing operation on Transports service");
         }
     }

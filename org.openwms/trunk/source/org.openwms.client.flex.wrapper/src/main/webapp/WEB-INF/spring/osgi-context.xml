@@ -33,5 +33,6 @@
     <osgi:reference id="moduleManagementService" interface="org.openwms.common.service.ModuleManagementService" />
     <osgi:reference id="transportService" interface="org.openwms.tms.service.TransportOrderService" />
     <osgi:reference id="userDetailsService" interface="org.springframework.security.core.userdetails.UserDetailsService" />
+    <osgi:reference id="configurationService" interface="org.openwms.common.service.ConfigurationService" />
     
 </beans>

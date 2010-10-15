@@ -34,28 +34,24 @@
 			import org.openwms.web.flex.client.util.ValidationUtil;
 			import org.openwms.web.flex.client.common.event.TransportUnitTypeEvent;
 			import org.openwms.common.domain.TransportUnitType;
-			import org.openwms.web.flex.client.common.event.TransportUnitEvent;
 			import mx.managers.PopUpManager;
 			import flash.events.KeyboardEvent;
 			
-			private function init():void
-			{
+			private function init():void {
 				typeTxt.setFocus();
                 this.addEventListener(KeyboardEvent.KEY_DOWN, keyEventHandler);
                 PopUpManager.centerPopUp(this);
 			}
 
-            private function closeDialog(event:Event=null):void
-            {
+            private function closeDialog(event:Event = null):void {
                 this.removeEventListener(KeyboardEvent.KEY_DOWN, keyEventHandler);
                 PopUpManager.removePopUp(this);
             }
             
-            private function createTransportUnitType():void
-            {
-                if (ValidationUtil.validateField(lengthTxt, numberVal) &&
-                    ValidationUtil.validateField(widthTxt, numberVal) &&
-                    ValidationUtil.validateField(heightTxt, numberVal) &&
+            private function createTransportUnitType():void {
+                if (ValidationUtil.validateAndFormat(lengthTxt, numberVal) &&
+                    ValidationUtil.validateAndFormat(widthTxt, numberVal) &&
+                    ValidationUtil.validateAndFormat(heightTxt, numberVal) &&
                     ValidationUtil.validateAndFormat(weightTareTxt, doubleVal, numberFmt) &&
                     ValidationUtil.validateAndFormat(weightMaxTxt, doubleVal, numberFmt) &&
                     stringVal.validate().type == ValidationResultEvent.VALID) {
@@ -76,10 +72,8 @@
                     }
             }
 
-	        private function keyEventHandler(event:KeyboardEvent):void
-            {
-                if(event.keyCode == 27)
-                {
+	        private function keyEventHandler(event:KeyboardEvent):void {
+                if(event.keyCode == 27) {
                    closeDialog(event);
                    return;
                 }

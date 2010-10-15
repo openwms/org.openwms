@@ -81,23 +81,20 @@
              * Initialize data structures in model or fire events to do so.
              */
             private function onShow():void {
-                if (commonModelLocator.allLocationTypes.length == 0)
-                {
+                if (commonModelLocator.allLocationTypes.length == 0) {
                     dispatchEvent(new LocationTypeEvent(LocationTypeEvent.LOAD_ALL_LOCATION_TYPES));
                 }
-                if (commonModelLocator.allTransportUnitTypes.length == 0)
-                {
+                if (commonModelLocator.allTransportUnitTypes.length == 0) {
                     dispatchEvent(new TransportUnitTypeEvent(TransportUnitTypeEvent.LOAD_ALL_TRANSPORT_UNIT_TYPES));
                 }
-                else
-                {
-                    selected=commonModelLocator.allTransportUnitTypes.getItemAt(0) as TransportUnitType;
+                else {
+                    selected = commonModelLocator.allTransportUnitTypes.getItemAt(0) as TransportUnitType;
                 }
             }
 
             private function showCreateTransportUnitTypeDialog():void {
-                var pop:CreateTransportUnitTypeDialog=CreateTransportUnitTypeDialog(PopUpManager.createPopUp(this, CreateTransportUnitTypeDialog, true));
-                PopUpManager.centerPopUp(pop);
+                var pop:CreateTransportUnitTypeDialog = CreateTransportUnitTypeDialog(PopUpManager.createPopUp(this, CreateTransportUnitTypeDialog, true));
+                // PopUpManager.centerPopUp(pop);
             }
 
             private function showDeleteTransportUnitTypeDialog():void {
@@ -160,7 +157,7 @@
             
             private function retAllowedLocationType(item:*):String {
             	var tpr:TypePlacingRule = item as TypePlacingRule;
-            	return tpr.allowedLocationType.type+" - "+tpr.allowedLocationType.description;
+            	return tpr.allowedLocationType.type + " - " + tpr.allowedLocationType.description;
             }
             
             private function assignAllowedLocationTypes():void {
@@ -183,7 +180,7 @@
             }
 
             private function labelFunctionLocationType(item:LocationType):String {
-                return item.type+" - "+item.description;
+                return item.type + " - " + item.description;
             }
             
             private function removeAllowedLocationTypes():void {

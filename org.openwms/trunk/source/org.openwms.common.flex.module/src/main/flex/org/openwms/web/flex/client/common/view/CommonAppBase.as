@@ -51,6 +51,8 @@ package org.openwms.web.flex.client.common.view {
         public var commonViewStack : ViewStack;
         [In]
         public var tideContext : Context;
+        [Bindable]
+        public var securityObjects : ArrayCollection;
 
         /**
          * Constructor.
@@ -67,12 +69,14 @@ package org.openwms.web.flex.client.common.view {
         public function start(applicationDomain : ApplicationDomain=null) : void {
             trace("Add context to main context in applicationDomain : " + applicationDomain);
             Spring.getInstance().addModule(CommonAppBase, applicationDomain);
+            securityObjects = buildSecuredObjectsList();
         }
 
         /**
          * In a second step Tide tries to start the module calling this method. Here are all components added to the TideContext.
          */
         public function init(tide : Tide) : void {
+        	// Child components are not initialized yet
             trace("Add components to Tide context");
             tide.addComponents([CommonModelLocator, TransportUnitTypeDelegate, TransportUnitDelegate, LocationDelegate, LocationGroupDelegate]);
         }
@@ -105,7 +109,7 @@ package org.openwms.web.flex.client.common.view {
          * to allow or deny certain functionality within the user interface.
          */
         public function getSecurityObjects() : ArrayCollection {
-            return new ArrayCollection();
+            return securityObjects;
         }
 
         /**
@@ -130,5 +134,29 @@ package org.openwms.web.flex.client.common.view {
             trace("Destroying module : " + getModuleName());
             Spring.getInstance().removeModule(CommonAppBase);
         }
+
+        /**
+         * Find all secured objects and return the list to the main app.
+         */        
+        private function buildSecuredObjectsList():ArrayCollection {
+        	var sItems:ArrayCollection = new ArrayCollection();
+        	if(commonMenuBar == null) {
+        		trace("MenuBar is null");
+        	}
+            if(commonViewStack == null) {
+                trace("ViewStack is null");
+                return sItems;
+            }
+        	trace("Analyze menuBarItems, size ="+commonMenuBar.menuBarItems.length);
+            trace("Analyze commonViewStack, size ="+commonViewStack.getChildren().length);
+        	for each (var mItem:* in commonMenuBar.menuBarItems) {
+        		trace("Fetch item : "+mItem);
+        	}
+        	for each (var sItem:* in commonViewStack.getChildren()) {
+        		trace("View stack item : "+sItem);
+        	}
+        	return sItems;
+        }
+        
     }
 }

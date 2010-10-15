@@ -96,9 +96,9 @@ package org.openwms.web.flex.client.common.business
             dispatchEvent(new TransportUnitEvent(TransportUnitEvent.LOAD_TRANSPORT_UNITS));
         }
 
-        private function onFault(event:TideFaultEvent):void
-        {
-            Alert.show("Error executing operation on Location service");
+        private function onFault(event:TideFaultEvent):void {
+        	trace("Error executing operation on Transport Unit service:" + event.fault);
+            Alert.show("Error executing operation on Transport Unit service");
         }
     }
 }

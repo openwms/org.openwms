@@ -58,36 +58,28 @@
     		[Bindable]
             public var tmsModelLocator:TMSModelLocator;
             
-    		private function onShow():void
-    		{
-                if (tmsModelLocator.allTransportOrders.length == 0)
-                {
+    		private function onShow():void {
+                if (tmsModelLocator.allTransportOrders.length == 0) {
                     dispatchEvent(new TransportOrderEvent(TransportOrderEvent.LOAD_TRANSPORT_ORDERS));
                 }
-                if (commonModelLocator.allTransportUnits.length == 0)
-                {
+                if (commonModelLocator.allTransportUnits.length == 0) {
                     dispatchEvent(new TransportUnitEvent(TransportUnitEvent.LOAD_TRANSPORT_UNITS));
                 }
-                if (commonModelLocator.allLocations.length == 0)
-                {
+                if (commonModelLocator.allLocations.length == 0) {
                     dispatchEvent(new LocationEvent(LocationEvent.LOAD_ALL_LOCATIONS));
                 }
-                if (commonModelLocator.allLocationGroups.length == 0)
-                {
+                if (commonModelLocator.allLocationGroups.length == 0) {
                     dispatchEvent(new LocationGroupEvent(LocationGroupEvent.LOAD_ALL_LOCATION_GROUPS));
                 }
     		}
     		
-            private function showCreateTransportOrderDialog():void
-            {
+            private function showCreateTransportOrderDialog():void {
                 var pop1:CreateTransportOrderDialog=CreateTransportOrderDialog(PopUpManager.createPopUp(this, CreateTransportOrderDialog, true));
                 PopUpManager.centerPopUp(pop1);
             }
             
-            private function showCancelTransportOrdersDialog():void
-            {
-            	if (transportOrdersLst.selectedIndices.length == 0)
-            	{
+            private function showCancelTransportOrdersDialog():void {
+            	if (transportOrdersLst.selectedIndices.length == 0) {
                     Alert.show("Please select at least one Transport Order to delete");
                     return;             		
             	}
@@ -97,58 +89,46 @@
                 PopUpManager.centerPopUp(pop);
             }
 
-            private function showRedirectTransportOrderDialog():void
-            {
+            private function showRedirectTransportOrderDialog():void {
                 var pop1:RedirectTransportOrderDialog = RedirectTransportOrderDialog(PopUpManager.createPopUp(this, RedirectTransportOrderDialog, true));
                 pop1.items = new ArrayCollection(transportOrdersLst.selectedItems);
                 PopUpManager.centerPopUp(pop1);
             }
 
-            private function refresh():void
-            {
+            private function refresh():void {
                 var event:TransportOrderEvent = new TransportOrderEvent(TransportOrderEvent.LOAD_TRANSPORT_ORDERS);
                 dispatchEvent(event);
             }
             
-            private function formatAsDate(item:Object, dg:DataGridColumn):String
-            {
-                if (item[dg.dataField] != null)
-                {
+            private function formatAsDate(item:Object, dg:DataGridColumn):String {
+                if (item[dg.dataField] != null) {
                     return dateFormatter.format(item[dg.dataField]);
                 }
                 return "--";
             }
 
-            private function formatAsString(item:Object, dg:DataGridColumn):String
-            {
-                if (item[dg.dataField] != null)
-                {
+            private function formatAsString(item:Object, dg:DataGridColumn):String {
+                if (item[dg.dataField] != null) {
                     return String(item[dg.dataField].toString());
                 }
                 return "--";
             }
 
-            private function formatBarcode(item:Object, dg:DataGridColumn):String
-            {
-                if (item[dg.dataField] != null)
-                {
+            private function formatBarcode(item:Object, dg:DataGridColumn):String {
+                if (item[dg.dataField] != null) {
                     return String(item[dg.dataField].barcode);
                 }
                 return "--";
             }
 
-            private function formatLocationGroup(item:Object, dg:DataGridColumn):String
-            {
-                if (item[dg.dataField] != null)
-                {
+            private function formatLocationGroup(item:Object, dg:DataGridColumn):String {
+                if (item[dg.dataField] != null) {
                     return String(item[dg.dataField].name);
                 }
                 return "--";
             }
-            private function formatAsActualLocation(item:Object, dg:DataGridColumn):String
-            {
-                if (item[dg.dataField] != null)
-                {
+            private function formatAsActualLocation(item:Object, dg:DataGridColumn):String {
+                if (item[dg.dataField] != null) {
                     return String(item[dg.dataField].actualLocation);
                 }
                 return "--";

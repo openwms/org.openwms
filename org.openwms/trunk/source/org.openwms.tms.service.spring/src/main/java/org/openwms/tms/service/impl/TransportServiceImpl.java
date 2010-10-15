@@ -56,9 +56,6 @@ import org.springframework.transaction.annotation.Transactional;
 public class TransportServiceImpl extends EntityServiceImpl<TransportOrder, Long> implements
         TransportOrderService<TransportOrder> {
 
-    /**
-     * Generic Repository DAO.
-     */
     @Autowired
     @Qualifier("transportOrderDao")
     protected TransportOrderDao dao;
@@ -121,6 +118,10 @@ public class TransportServiceImpl extends EntityServiceImpl<TransportOrder, Long
     @Override
     public TransportOrder createTransportOrder(Barcode barcode, LocationGroup targetLocationGroup,
             Location targetLocation, PriorityLevel priority) {
+        if (logger.isDebugEnabled()) {
+            logger.debug("Create TransportOrder with Barcode " + barcode + ", to LocationGroup " + targetLocationGroup
+                    + ", to Location " + targetLocation + ", with Priority " + priority + " ...");
+        }
         if (barcode == null) {
             throw new TransportOrderServiceException("Barcode cannot be null when creating a TransportOrder");
         }
@@ -152,6 +153,9 @@ public class TransportServiceImpl extends EntityServiceImpl<TransportOrder, Long
         dao.persist(transportOrder);
         ctx.publishEvent(new TransportServiceEvent(transportOrder.getTransportUnit(),
                 TransportServiceEvent.TYPE.TRANSPORT_CREATED));
+        if (logger.isDebugEnabled()) {
+            logger.debug("... created");
+        }
         return transportOrder;
     }
 
@@ -173,9 +177,9 @@ public class TransportServiceImpl extends EntityServiceImpl<TransportOrder, Long
                     logger.debug("TransportOrder " + transportOrder.getId() + " successfully set to:" + state);
                 }
             }
-            catch (RuntimeException e) {
+            catch (IllegalStateException ise) {
                 logger.error("Could not cancel TransportOrder with ID:" + transportOrder.getId());
-                Problem problem = new Problem(e.getMessage());
+                Problem problem = new Problem(ise.getMessage());
                 transportOrder.setProblem(problem);
                 failure.add(transportOrder.getId().intValue());
             }
