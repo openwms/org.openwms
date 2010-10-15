@@ -36,6 +36,7 @@ package org.openwms.web.flex.client.event
         public static const SHOW_MODULE_MGMT_VIEW:String = "moduleManagementView";
         public static const SHOW_USER_MGMT_VIEW:String = "userManagementView";
         public static const SHOW_ROLE_MGMT_VIEW:String = "roleManagementView";
+        public static const SHOW_SETTING_MGMT_VIEW:String = "settingManagementView";
         
         public static var eventTypes:Array;
 

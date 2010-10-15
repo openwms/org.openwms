@@ -18,27 +18,24 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
-package org.openwms.web.flex.client {
-	
-	import mx.collections.ArrayCollection;
+package org.openwms.web.flex.client.event {
+    import flash.events.Event;
 
     /**
-     * A ISecured. A module implementing this interface participates in the security
-     * concept of the main application. The module returns a list of UI objects that
-     * shall be included into the security realm of the application and can be assigned
-     * to Roles and Users. 
+     * A PropertyEvent.
      *
-     * @author <a href="mailto:russelltina@users.sourceforge.net">Tina Russell</a>
+     * @author <a href="mailto:openwms@googlemail.com">Heiko Scherrer</a>
      * @version $Revision: 700 $
      */
-	public interface ISecured {
-		
-		/**
-		 * Return a list of UI object identifiers that are aware of security 
-		 * settings. List entries are expected as Strings, ids of the UI objects.
-		 * 
-		 * @return The list of secured objects
-		 */
-		function getSecuredObjectNames():ArrayCollection;
-	}
+    public class PropertyEvent extends Event {
+    	
+        public static const LOAD_ALL_PROPERTIES:String = "LOAD_ALL_PROPERTIES";
+
+        public var data:*;
+
+        public function PropertyEvent(type:String, bubbles:Boolean = true, cancelable:Boolean = false) {
+            super(type, bubbles, cancelable);
+        }
+
+    }
 }
