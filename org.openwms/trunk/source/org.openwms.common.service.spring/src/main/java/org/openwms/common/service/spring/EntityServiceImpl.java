@@ -105,10 +105,8 @@ public abstract class EntityServiceImpl<T extends AbstractEntity, ID extends Ser
     @Override
     @Transactional(readOnly = true)
     public List<T> findAll() {
-        logger.debug("Loading transportOders");
         resolveTypeClass();
         List<T> list = dao.findAll();
-        logger.debug("size is" + list.size());
         return list;
     }
 
