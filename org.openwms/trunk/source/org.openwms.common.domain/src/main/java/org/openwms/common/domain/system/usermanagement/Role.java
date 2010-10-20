@@ -45,7 +45,7 @@ import javax.persistence.NamedQuery;
  */
 @Entity
 @NamedQueries( {
-        @NamedQuery(name = Role.NQ_FIND_ALL, query = "select distinct(r) from Role r left join fetch r.users left join fetch r.grants order by name"),
+        @NamedQuery(name = Role.NQ_FIND_ALL, query = "select distinct(r) from Role r left join fetch r.users left join fetch r.grants order by r.name"),
         @NamedQuery(name = Role.NQ_FIND_BY_UNIQUE_QUERY, query = "select r from Role r where r.name = ?1") })
 public class Role extends SecurityObject implements Serializable {
 
@@ -60,9 +60,9 @@ public class Role extends SecurityObject implements Serializable {
     public static final String NQ_FIND_ALL = "Role.findAll";
 
     /**
-     * Query to find <strong>one</strong> {@link Role} by its natural key.
-     * <li>Query parameter index <strong>1</strong> : The name of the Role to
-     * search for.</li>
+     * Query to find <strong>one</strong> {@link Role} by its natural key. <li>
+     * Query parameter index <strong>1</strong> : The name of the Role to search
+     * for.</li>
      */
     public static final String NQ_FIND_BY_UNIQUE_QUERY = "Role.findByRolename";
 
@@ -223,9 +223,9 @@ public class Role extends SecurityObject implements Serializable {
      * 
      * @param grant
      *            The {@link SecurityObject} to add to this Role
-     * @return <code>true</code> if the {@link SecurityObject} was
-     *         successfully removed from the Set of {@link SecurityObject}s,
-     *         otherwise <code>false</code>
+     * @return <code>true</code> if the {@link SecurityObject} was successfully
+     *         removed from the Set of {@link SecurityObject}s, otherwise
+     *         <code>false</code>
      */
     public boolean removeGrant(SecurityObject grant) {
         if (grant == null) {
