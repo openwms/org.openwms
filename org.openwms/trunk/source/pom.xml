@@ -113,6 +113,26 @@
                 <role>developer</role>
             </roles>
         </developer>
+        <developer>
+            <id>russelltina</id>
+            <name>Tina Russell</name>
+            <email>russelltina@users.sourceforge.net</email>
+            <url>https://sourceforge.net/users/russelltina</url>
+            <timezone>-7</timezone>
+            <roles>
+                <role>developer</role>
+            </roles>
+        </developer>
+	<developer>
+	    <id>flogy</id>
+            <name>Florian Gyger</name>
+            <email>flogy@users.sourceforge.net</email>
+            <url>https://sourceforge.net/users/flogy</url>
+            <timezone>+1</timezone>
+            <roles>
+	        <role>developer</role>
+            </roles>
+         </developer>
     </developers>
 
     <mailingLists>
@@ -174,7 +194,7 @@
 
                 <module>org.openwms.client.flex.app</module>
                 <module>org.openwms.client.flex.lib</module>
-                <module>org.openwms.client.flex.wrapper</module>
+                <!-- module>org.openwms.client.flex.wrapper</module-->
 
                 <module>org.openwms.common.domain</module>
                 <module>org.openwms.common.domain.as</module>
@@ -205,7 +225,7 @@
         <profile>
             <id>domain</id>
             <modules>
-                <module>org.openwms.common.integration</module>
+                <module>org.openwms.client.flex.wrapper</module>
             </modules>
         </profile>
         <profile>
@@ -830,6 +850,12 @@
                 <groupId>org.postgresql</groupId>
                 <artifactId>com.springsource.org.postgresql.jdbc4</artifactId>
                 <version>8.3.604</version>
+            </dependency>
+            <dependency>
+                <groupId>org.openwms</groupId>
+	        <artifactId>oracle.jdbc.driver</artifactId>
+                <version>6.0.0</version>
+                <scope>provided</scope>
             </dependency>
 
             <!-- JPA Provider Libraries -->
