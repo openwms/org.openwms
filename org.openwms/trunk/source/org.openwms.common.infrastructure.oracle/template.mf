@@ -1,0 +1,14 @@
+Manifest-Version: 1.0
+Bundle-Vendor: openwms.org
+Bundle-Version: 0.0.1.SNAPSHOT
+Bundle-Name: org.openwms.common.infrastructure.oracle
+Bundle-ManifestVersion: 2
+Bundle-SymbolicName: org.openwms.common.infrastructure.oracle
+Import-Library: 
+ org.springframework.spring;version="[3.0, 3.1)"
+Import-Bundle: 
+ com.springsource.org.apache.commons.dbcp;version="1.2.2.osgi",
+ ojdbc6;version="0"
+Import-Template: 
+ javax.sql;version="0"
+ 
