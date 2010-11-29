@@ -34,7 +34,7 @@ import javax.persistence.Transient;
 import javax.persistence.Version;
 
 /**
- * A Module.
+ * A Module is a definition of a Flex Module and is used to persist some initial information about these modules.
  * 
  * @author <a href="mailto:scherrer@users.sourceforge.net">Heiko Scherrer</a>
  * @version $Revision: $
