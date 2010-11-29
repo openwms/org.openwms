@@ -21,7 +21,7 @@
 package org.openwms.common.domain;
 
 /**
- * A Rule.
+ * A Rule. Marker interface to decorate a rules type.
  * 
  * @author <a href="mailto:scherrer@users.sourceforge.net">Heiko Scherrer</a>
  * @version $Revision: $

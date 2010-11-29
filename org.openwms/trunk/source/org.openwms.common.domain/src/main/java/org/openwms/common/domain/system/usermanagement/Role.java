@@ -34,9 +34,9 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 
 /**
- * A Role is grouping multiple {@link User}s concerning security aspects.
+ * A Role is grouping multiple {@link User}s regarding security aspects.
  * <p>
- * Security access policies are assigned to Roles instead of {@link User}s.
+ * Security access policies are assigned to Roles instead of to {@link User}s directly.
  * </p>
  * 
  * @author <a href="mailto:scherrer@users.sourceforge.net">Heiko Scherrer</a>
@@ -49,40 +49,37 @@ import javax.persistence.NamedQuery;
         @NamedQuery(name = Role.NQ_FIND_BY_UNIQUE_QUERY, query = "select r from Role r where r.name = ?1") })
 public class Role extends SecurityObject implements Serializable {
 
-    /**
-     * The serialVersionUID.
-     */
     private static final long serialVersionUID = -4133301834284932221L;
 
     /**
-     * Query to find all {@link Role}s.
+     * Query to find all <code>Role</code>s.
      */
     public static final String NQ_FIND_ALL = "Role.findAll";
 
     /**
-     * Query to find <strong>one</strong> {@link Role} by its natural key. <li>
-     * Query parameter index <strong>1</strong> : The name of the Role to search
+     * Query to find <strong>one</strong> <code>Role</code> by its natural key. <li>
+     * Query parameter index <strong>1</strong> : The name of the <code>Role</code> to search
      * for.</li>
      */
     public static final String NQ_FIND_BY_UNIQUE_QUERY = "Role.findByRolename";
 
     /* ------------------- collection mapping ------------------- */
     /**
-     * All {@link User}s belonging to this Role.
+     * All {@link User}s assigned to the <code>Role</code>.
      */
     @ManyToMany(cascade = { CascadeType.PERSIST })
     @JoinTable(name = "APP_ROLE_USER", joinColumns = @JoinColumn(name = "ROLE_ID"), inverseJoinColumns = @JoinColumn(name = "USER_ID"))
     private Set<User> users = new HashSet<User>();
 
     /**
-     * All {@link Preference}s linked to this Role.
+     * All {@link Preference}s linked to the <code>Role</code>.
      */
     @ManyToMany(cascade = { CascadeType.PERSIST, CascadeType.MERGE })
     @JoinTable(name = "APP_ROLE_PREFERENCE", joinColumns = @JoinColumn(name = "ROLE_ID"), inverseJoinColumns = @JoinColumn(name = "PREFERENCE_ID"))
     private Set<Preference> preferences = new HashSet<Preference>();
 
     /**
-     * All {@link SecurityObject}s belonging to this Role.
+     * All {@link SecurityObject}s assigned to the <code>Role</code>.
      */
     @ManyToMany(cascade = { CascadeType.PERSIST, CascadeType.MERGE })
     @JoinTable(name = "APP_ROLE_ROLE", joinColumns = @JoinColumn(name = "ROLE_ID"), inverseJoinColumns = @JoinColumn(name = "GRANT_ID"))
@@ -90,49 +87,49 @@ public class Role extends SecurityObject implements Serializable {
 
     /* ----------------------------- methods ------------------- */
     /**
-     * Accessed by persistence provider.
+     * Accessed by the persistence provider.
      */
     @SuppressWarnings("unused")
     private Role() {}
 
     /**
-     * Create a new Role with a name.
+     * Create a new <code>Role</code> with a name.
      * 
      * @param name
-     *            The name of the Role
+     *            The name of the <code>Role</code>
      */
     public Role(String name) {
         super(name);
     }
 
     /**
-     * Create a new Role with name and description.
+     * Create a new <code>Role</code> with a name and a description.
      * 
      * @param name
-     *            The name of the Role
+     *            The name of the <code>Role</code>
      * @param description
-     *            The description text of the Role
+     *            The description text of the <code>Role</code>
      */
     public Role(String name, String description) {
         super(name, description);
     }
 
     /**
-     * Get all {@link User}s belonging to this Role.
+     * Return all {@link User}s assigned to the <code>Role</code>.
      * 
-     * @return A Set of all {@link User}s belonging to this Role
+     * @return A set of all {@link User}s belonging to the <code>Role</code>
      */
     public Set<User> getUsers() {
         return Collections.unmodifiableSet(users);
     }
 
     /**
-     * Add a existing {@link User} to this Role.
+     * Add an existing {@link User} to the <code>Role</code>.
      * 
      * @param user
-     *            The {@link User} to add to this Role
-     * @return true if the {@link User} was new in the collection of
-     *         {@link User}s, otherwise false
+     *            The {@link User} to be added
+     * @return <code>true</code> if the {@link User} was new in the collection of
+     *         {@link User}s, otherwise <code>false</code>
      * @throws IllegalArgumentException
      *             if user is <code>null</code>
      */
@@ -144,10 +141,10 @@ public class Role extends SecurityObject implements Serializable {
     }
 
     /**
-     * Remove a {@link User} from this role.
+     * Remove a {@link User} from the <code>Role</code>.
      * 
      * @param user
-     *            The {@link User} to be removed.
+     *            The {@link User} to be removed
      * @throws IllegalArgumentException
      *             if user is <code>null</code>
      */
@@ -159,11 +156,11 @@ public class Role extends SecurityObject implements Serializable {
     }
 
     /**
-     * Set all {@link User}s belonging to this Role. Already existing
+     * Set all {@link User}s belonging to this <code>Role</code>. Already existing
      * {@link User}s will be removed.
      * 
      * @param users
-     *            A Set of {@link User}s to assign to this Role
+     *            A set of {@link User}s to be assigned to the <code>Role</code>
      * @throws IllegalArgumentException
      *             if users is <code>null</code>
      */
@@ -175,41 +172,41 @@ public class Role extends SecurityObject implements Serializable {
     }
 
     /**
-     * Get all {@link Preference}s of this Role.
+     * Return all {@link Preference}s of the <code>Role</code>.
      * 
-     * @return A Set of all {@link Preference}s of this Role
+     * @return A set of all {@link Preference}s belonging to the <code>Role</code>
      */
     public Set<Preference> getPreferences() {
         return preferences;
     }
 
     /**
-     * Set all {@link Preference}s belonging to this Role. Already existing
+     * Set all {@link Preference}s belonging to the <code>Role</code>. Already existing
      * {@link Preference}s will be removed.
      * 
      * @param preferences
-     *            A Set of {@link Preference}s to assign to this Role.
+     *            A set of {@link Preference}s to be assigned to the <code>Role</code>
      */
     public void setPreferences(Set<Preference> preferences) {
         this.preferences = preferences;
     }
 
     /**
-     * Get all {@link SecurityObject}s belonging to this Role.
+     * Return all {@link SecurityObject}s belonging to the <code>Role</code>.
      * 
-     * @return A Set of all {@link SecurityObject}s belonging to this Role
+     * @return A set of all {@link SecurityObject}s belonging to this Role
      */
     public Set<SecurityObject> getGrants() {
         return Collections.unmodifiableSet(grants);
     }
 
     /**
-     * Add a existing {@link SecurityObject} to this Role.
+     * Add an existing {@link SecurityObject} to the <code>Role</code>.
      * 
      * @param grant
-     *            The {@link SecurityObject} to add to this Role
-     * @return <code>true</code> if the {@link SecurityObject} was new in the
-     *         Set of {@link SecurityObject}s, otherwise <code>false</code>
+     *            The {@link SecurityObject} to be added to the <code>Role</code>.
+     * @return <code>true</code> if the {@link SecurityObject} was new to the
+     *         collection of {@link SecurityObject}s, otherwise <code>false</code>
      */
     public boolean addGrant(SecurityObject grant) {
         if (grant == null) {
@@ -219,12 +216,12 @@ public class Role extends SecurityObject implements Serializable {
     }
 
     /**
-     * Add a existing {@link SecurityObject} to this Role.
+     * Add an existing {@link SecurityObject} to the <code>Role</code>.
      * 
      * @param grant
-     *            The {@link SecurityObject} to add to this Role
+     *            The {@link SecurityObject} to be added to the <code>Role</code>
      * @return <code>true</code> if the {@link SecurityObject} was successfully
-     *         removed from the Set of {@link SecurityObject}s, otherwise
+     *         removed from the set of {@link SecurityObject}s, otherwise
      *         <code>false</code>
      */
     public boolean removeGrant(SecurityObject grant) {
@@ -235,11 +232,11 @@ public class Role extends SecurityObject implements Serializable {
     }
 
     /**
-     * Set all {@link SecurityObject}s belonging to this Role. Already existing
+     * Set all {@link SecurityObject}s belonging to the <code>Role</code>. Already existing
      * {@link SecurityObject}s will be removed.
      * 
      * @param grants
-     *            A Set of {@link SecurityObject}s to assign to this Role
+     *            A set of {@link SecurityObject}s to be assigned to the <code>Role</code>
      */
     public void setGrants(Set<SecurityObject> grants) {
         if (grants == null) {

@@ -31,9 +31,10 @@ import javax.persistence.UniqueConstraint;
 import javax.persistence.Version;
 
 import org.openwms.common.domain.AbstractEntity;
+import org.openwms.common.domain.DomainObject;
 
 /**
- * A Preference - Could be an user-, role- or system preference.
+ * A Preference, could be an user-, role- or system preference.
  * 
  * @author <a href="mailto:scherrer@users.sourceforge.net">Heiko Scherrer</a>
  * @version $Revision$
@@ -41,11 +42,8 @@ import org.openwms.common.domain.AbstractEntity;
  */
 @Entity
 @Table(name = "APP_PREFERENCE", uniqueConstraints = @UniqueConstraint(columnNames = { "C_KEY", "C_VALUE" }))
-public class Preference extends AbstractEntity implements Serializable {
+public class Preference extends AbstractEntity implements DomainObject<Long>, Serializable {
 
-    /**
-     * The serialVersionUID.
-     */
     private static final long serialVersionUID = 4396571221433949201L;
 
     /**
@@ -57,7 +55,7 @@ public class Preference extends AbstractEntity implements Serializable {
     private Long id;
 
     /**
-     * Key value of the {@link Preference}.
+     * Key value of the <code>Preference</code>.
      */
     @Column(name = "C_KEY")
     private String key;
@@ -69,31 +67,31 @@ public class Preference extends AbstractEntity implements Serializable {
     private String type;
 
     /**
-     * The value of the {@link Preference}.
+     * The value of the <code>Preference</code>.
      */
     @Column(name = "C_VALUE")
     private String value;
 
     /**
-     * A float representation of the value.
+     * Float representation of the value.
      */
     @Column(name = "C_FLOAT_VALUE")
     private Float floatValue;
 
     /**
-     * Description text of the {@link Preference}.
+     * Description text of the <code>Preference</code>.
      */
     @Column(name = "C_DESCRIPTION")
     private String description;
 
     /**
-     * A minimum for the value.
+     * Minimum value.
      */
     @Column(name = "C_MINIMUM")
     private int minimum;
 
     /**
-     * A maximum for the value.
+     * Maximum value.
      */
     @Column(name = "C_MAXIMUM")
     private int maximum;
@@ -107,21 +105,28 @@ public class Preference extends AbstractEntity implements Serializable {
 
     /* ----------------------------- methods ------------------- */
     /**
-     * Create a {@link Preference}.
+     * Create a <code>Preference</code>.
      */
     public Preference() {}
 
     /**
-     * Return the unique technical key.
-     * 
-     * @return The unique technical key
+     * {@inheritDoc}
      */
+    @Override
     public Long getId() {
         return this.id;
     }
+    
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public boolean isNew() {
+    	return this.id == null;
+    }
 
     /**
-     * Return the type of the {@link Preference}.
+     * Return the type of the <code>Preference</code>.
      * 
      * @return The type as String
      */
@@ -130,7 +135,7 @@ public class Preference extends AbstractEntity implements Serializable {
     }
 
     /**
-     * Set the type of the {@link Preference}.
+     * Set the type of the <code>Preference</code>.
      * 
      * @param type
      *            The type to set as String
@@ -140,16 +145,16 @@ public class Preference extends AbstractEntity implements Serializable {
     }
 
     /**
-     * Return the value of the {@link Preference}.
+     * Return the value of the <code>Preference</code>.
      * 
-     * @return The value of the {@link Preference}
+     * @return The value of the <code>Preference</code>
      */
     public String getValue() {
         return this.value;
     }
 
     /**
-     * Set the value of the {@link Preference}.
+     * Set the value of the <code>Preference</code>.
      * 
      * @param value
      *            The value to set
@@ -159,16 +164,16 @@ public class Preference extends AbstractEntity implements Serializable {
     }
 
     /**
-     * Get the key of the {@link Preference}.
+     * Return the key of the <code>Preference</code>.
      * 
-     * @return The key of the {@link Preference}
+     * @return The key of the <code>Preference</code>
      */
     public String getKey() {
         return this.key;
     }
 
     /**
-     * Set the key of this {@link Preference}.
+     * Set the key of the <code>Preference</code>.
      * 
      * @param key
      *            The key to set
@@ -178,16 +183,16 @@ public class Preference extends AbstractEntity implements Serializable {
     }
 
     /**
-     * Get the <code>floatValue</code> of the {@link Preference}.
+     * Get the <code>floatValue</code> of the <code>Preference</code>.
      * 
-     * @return The <code>floatValue</code> of the {@link Preference}
+     * @return The <code>floatValue</code> of the <code>Preference</code>
      */
     public Float getFloatValue() {
         return this.floatValue;
     }
 
     /**
-     * Set the <code>floatValue</code> of the {@link Preference}.
+     * Set the <code>floatValue</code> of the <code>Preference</code>.
      * 
      * @param floatValue
      *            The <code>floatValue</code> to set
@@ -197,7 +202,7 @@ public class Preference extends AbstractEntity implements Serializable {
     }
 
     /**
-     * Return the description of this {@link Preference}.
+     * Return the description of the <code>Preference</code>.
      * 
      * @return The description as String
      */
@@ -206,7 +211,7 @@ public class Preference extends AbstractEntity implements Serializable {
     }
 
     /**
-     * Set a description for this {@link Preference}.
+     * Set a description for the <code>Preference</code>.
      * 
      * @param description
      *            The description to set
@@ -216,7 +221,7 @@ public class Preference extends AbstractEntity implements Serializable {
     }
 
     /**
-     * Return the possible minimum value of this {@link Preference}.
+     * Return the possible minimum value of the <code>Preference</code>.
      * 
      * @return The possible minimum value
      */
@@ -225,7 +230,7 @@ public class Preference extends AbstractEntity implements Serializable {
     }
 
     /**
-     * Set a possible minimum value for this {@link Preference}.
+     * Set a possible minimum value for the <code>Preference</code>.
      * 
      * @param minimum
      *            The possible minimum value to set
@@ -235,7 +240,7 @@ public class Preference extends AbstractEntity implements Serializable {
     }
 
     /**
-     * Return the possible maximum value of this {@link Preference}.
+     * Return the possible maximum value of the <code>Preference</code>.
      * 
      * @return The possible maximum value
      */
@@ -244,7 +249,7 @@ public class Preference extends AbstractEntity implements Serializable {
     }
 
     /**
-     * Set a possible maximum integer value for this {@link Preference}.
+     * Set a possible maximum integer value for the <code>Preference</code>.
      * 
      * @param maximum
      *            The possible maximum value to set
@@ -254,10 +259,9 @@ public class Preference extends AbstractEntity implements Serializable {
     }
 
     /**
-     * JPA optimistic locking.
-     * 
-     * @return The version field
+     * {@inheritDoc}
      */
+    @Override
     public long getVersion() {
         return version;
     }

@@ -35,9 +35,10 @@ import javax.persistence.Table;
 import javax.persistence.Version;
 
 import org.openwms.common.domain.AbstractEntity;
+import org.openwms.common.domain.DomainObject;
 
 /**
- * A SecurityObject.
+ * A SecurityObject is the superclass of Roles and Grants and combines common used properties.
  * 
  * @author <a href="mailto:scherrer@users.sourceforge.net">Heiko Scherrer</a>
  * @version $Revision: $
@@ -46,127 +47,134 @@ import org.openwms.common.domain.AbstractEntity;
 @Entity
 @Table(name = "APP_ROLE")
 @Inheritance
-@NamedQueries( {
-        @NamedQuery(name = SecurityObject.NQ_FIND_ALL, query = "select g from SecurityObject g"),
-        @NamedQuery(name = SecurityObject.NQ_FIND_BY_UNIQUE_QUERY, query = "select g from SecurityObject g where g.name = ?1") })
-public class SecurityObject extends AbstractEntity implements Serializable {
+@NamedQueries({
+		@NamedQuery(name = SecurityObject.NQ_FIND_ALL, query = "select g from SecurityObject g"),
+		@NamedQuery(name = SecurityObject.NQ_FIND_BY_UNIQUE_QUERY, query = "select g from SecurityObject g where g.name = ?1") })
+public class SecurityObject extends AbstractEntity implements DomainObject<Long>, Serializable {
 
-    /**
-     * The serialVersionUID.
-     */
-    private static final long serialVersionUID = 7585736035228078754L;
+	private static final long serialVersionUID = 7585736035228078754L;
 
-    /**
-     * Query to find all {@link SecurityObject}s.
-     */
-    public static final String NQ_FIND_ALL = "SecurityObject.findAll";
-    /**
-     * Query to find <strong>one</strong> {@link SecurityObject} by its natural
-     * key.
-     */
-    public static final String NQ_FIND_BY_UNIQUE_QUERY = "SecurityObject.findByRolename";
+	/**
+	 * Query to find all {@link SecurityObject}s.
+	 */
+	public static final String NQ_FIND_ALL = "SecurityObject.findAll";
 
-    /**
-     * Unique technical key.
-     */
-    @Id
-    @Column(name = "ID")
-    @GeneratedValue
-    private Long id;
+	/**
+	 * Query to find <strong>one</strong> {@link SecurityObject} by its natural
+	 * key.<li>
+	 * Query parameter index <strong>1</strong> : The name of the
+	 * <code>SecurityObject</code> to search for.</li>
+	 */
+	public static final String NQ_FIND_BY_UNIQUE_QUERY = "SecurityObject.findByRolename";
 
-    /**
-     * Name of the SecurityObject.
-     */
-    @Column(name = "C_NAME", unique = true)
-    @OrderBy
-    private String name;
+	/**
+	 * Unique technical key.
+	 */
+	@Id
+	@Column(name = "ID")
+	@GeneratedValue
+	private Long id;
 
-    /**
-     * SecurityObject description.
-     */
-    @Column(name = "DESCRIPTION")
-    private String description;
+	/**
+	 * Unique name of the <code>SecurityObject</code>.
+	 */
+	@Column(name = "C_NAME", unique = true)
+	@OrderBy
+	private String name;
 
-    /**
-     * Version field.
-     */
-    @Version
-    @Column(name = "C_VERSION")
-    private long version;
+	/**
+	 * Description of the <code>SecurityObject</code>.
+	 */
+	@Column(name = "DESCRIPTION")
+	private String description;
 
-    /* ----------------------------- methods ------------------- */
-    /**
-     * Accessed by persistence provider.
-     */
-    protected SecurityObject() {}
+	/**
+	 * Version field.
+	 */
+	@Version
+	@Column(name = "C_VERSION")
+	private long version;
 
-    /**
-     * Create a new SecurityObject with a name.
-     * 
-     * @param name
-     *            The name of the SecurityObject
-     */
-    public SecurityObject(String name) {
-        this.name = name;
-    }
+	/* ----------------------------- methods ------------------- */
+	/**
+	 * Accessed by persistence provider.
+	 */
+	protected SecurityObject() {
+	}
 
-    /**
-     * Create a new SecurityObject with name and description.
-     * 
-     * @param name
-     *            The name of the SecurityObject
-     * @param description
-     *            The description text of the SecurityObject
-     */
-    public SecurityObject(String name, String description) {
-        this.name = name;
-        this.description = description;
-    }
+	/**
+	 * Create a new <code>SecurityObject</code> with a name.
+	 * 
+	 * @param name
+	 *            The name of the <code>SecurityObject</code>
+	 */
+	public SecurityObject(String name) {
+		this.name = name;
+	}
 
-    /**
-     * Return the technical key.
-     * 
-     * @return The unique technical key
-     */
-    public Long getId() {
-        return this.id;
-    }
+	/**
+	 * Create a new <code>SecurityObject</code> with name and description.
+	 * 
+	 * @param name
+	 *            The name of the <code>SecurityObject</code>
+	 * @param description
+	 *            The description text of the <code>SecurityObject</code>
+	 */
+	public SecurityObject(String name, String description) {
+		this.name = name;
+		this.description = description;
+	}
 
-    /**
-     * Get the name.
-     * 
-     * @return The name of the SecurityObject
-     */
-    public String getName() {
-        return name;
-    }
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public Long getId() {
+		return this.id;
+	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public boolean isNew() {
+		return this.id == null;
+	}
 
-    /**
-     * Return the description.
-     * 
-     * @return The description of the SecurityObject as text
-     */
-    public String getDescription() {
-        return description;
-    }
+	/**
+	 * Returns the name.
+	 * 
+	 * @return The name of the <code>SecurityObject</code>
+	 */
+	public String getName() {
+		return name;
+	}
 
-    /**
-     * Set the description for this SecurityObject.
-     * 
-     * @param description
-     *            The description of the SecurityObject as text
-     */
-    public void setDescription(String description) {
-        this.description = description;
-    }
+	/**
+	 * Returns the description text.
+	 * 
+	 * @return The description of the <code>SecurityObject</code> as text
+	 */
+	public String getDescription() {
+		return description;
+	}
 
-    /**
-     * JPA optimistic locking.
-     * 
-     * @return The version field
-     */
-    public long getVersion() {
-        return version;
-    }
+	/**
+	 * Set the description for the <code>SecurityObject</code>.
+	 * 
+	 * @param description
+	 *            The description of the <code>SecurityObject</code> as text
+	 */
+	public void setDescription(String description) {
+		this.description = description;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public long getVersion() {
+		return version;
+	}
 
 }

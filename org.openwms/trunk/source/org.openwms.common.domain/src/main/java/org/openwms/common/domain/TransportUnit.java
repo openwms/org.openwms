@@ -55,11 +55,11 @@ import org.openwms.common.domain.values.Barcode;
 import org.openwms.common.domain.values.TransportUnitState;
 
 /**
- * A TransportUnit - Something like a box, toad, bin or palette that has to be
- * moved.
+ * A TransportUnit is something like a box, a toad, a bin or a palette that has
+ * to be moved around.
  * <p>
- * Used as a container to transport items and <code>LoadUnit</code>s. It can
- * be moved between {@link Location}s.
+ * Used as a container to transport items and <code>LoadUnit</code>s. It can be
+ * moved between {@link Location}s.
  * </p>
  * 
  * @author <a href="mailto:scherrer@users.sourceforge.net">Heiko Scherrer</a>
@@ -68,537 +68,545 @@ import org.openwms.common.domain.values.TransportUnitState;
  */
 @Entity
 @Table(name = "COR_TRANSPORT_UNIT", uniqueConstraints = @UniqueConstraint(columnNames = { "BARCODE" }))
-@NamedQueries( {
-        @NamedQuery(name = TransportUnit.NQ_FIND_ALL, query = "select tu from TransportUnit tu"),
-        @NamedQuery(name = TransportUnit.NQ_FIND_BY_UNIQUE_QUERY, query = "select tu from TransportUnit tu where tu.barcode = ?1") })
-public class TransportUnit extends AbstractEntity implements DomainObject<Long>, Serializable {
+@NamedQueries({
+		@NamedQuery(name = TransportUnit.NQ_FIND_ALL, query = "select tu from TransportUnit tu"),
+		@NamedQuery(name = TransportUnit.NQ_FIND_BY_UNIQUE_QUERY, query = "select tu from TransportUnit tu where tu.barcode = ?1") })
+public class TransportUnit extends AbstractEntity implements
+		DomainObject<Long>, Serializable {
 
-    /**
-     * The serialVersionUID
-     */
-    private static final long serialVersionUID = 4799247366681079321L;
+	private static final long serialVersionUID = 4799247366681079321L;
 
-    /**
-     * Name of the <code>NamedQuery</code> to find all {@link TransportUnit}
-     * Entities.
-     */
-    public static final String NQ_FIND_ALL = "TransportUnit.findAll";
+	/**
+	 * Name of the <code>NamedQuery</code> to find all
+	 * <code>TransportUnit</code> Entities.
+	 */
+	public static final String NQ_FIND_ALL = "TransportUnit.findAll";
 
-    /**
-     * Query to find <strong>one</strong> {@link TransportUnit} by its natural
-     * key.
-     * <ul>
-     * <li>Query parameter index <strong>1</strong> : The name of the
-     * TransportUnit to search for.</li>
-     * </ul>
-     */
-    public static final String NQ_FIND_BY_UNIQUE_QUERY = "TransportUnit.findByBarcode";
+	/**
+	 * Query to find <strong>one</strong> <code>TransportUnit</code> by its
+	 * natural key.
+	 * <ul>
+	 * <li>Query parameter index <strong>1</strong> : The name of the
+	 * <code>TransportUnit</code> to search for.</li>
+	 * </ul>
+	 */
+	public static final String NQ_FIND_BY_UNIQUE_QUERY = "TransportUnit.findByBarcode";
 
-    /**
-     * Unique technical key.
-     */
-    @Id
-    @Column(name = "ID")
-    @GeneratedValue
-    private Long id;
+	/**
+	 * Unique technical key.
+	 */
+	@Id
+	@Column(name = "ID")
+	@GeneratedValue
+	private Long id;
 
-    /**
-     * Unique natural key.
-     */
-    @Column(name = "BARCODE")
-    @OrderBy
-    private Barcode barcode;
+	/**
+	 * Unique natural key.
+	 */
+	@Column(name = "BARCODE")
+	@OrderBy
+	private Barcode barcode;
 
-    /**
-     * Indicates whether the {@link TransportUnit} is empty or not.
-     */
-    @Column(name = "EMPTY")
-    private Boolean empty;
+	/**
+	 * Indicates whether the <code>TransportUnit</code> is empty or not
+	 * (nullable).
+	 */
+	@Column(name = "EMPTY")
+	private Boolean empty;
 
-    /**
-     * Date when the {@link TransportUnit} has been created.
-     */
-    @Temporal(TemporalType.TIMESTAMP)
-    @Column(name = "CREATION_DATE")
-    private Date creationDate = new Date();
+	/**
+	 * Date when the <code>TransportUnit</code> has been created.
+	 */
+	@Temporal(TemporalType.TIMESTAMP)
+	@Column(name = "CREATION_DATE")
+	private Date creationDate = new Date();
 
-    /**
-     * Date when this {@link TransportUnit} moved to the actual {@link Location} .
-     */
-    @Temporal(TemporalType.TIMESTAMP)
-    @Column(name = "ACTUAL_LOCATION_DATE")
-    private Date actualLocationDate;
+	/**
+	 * Date when the <code>TransportUnit</code> has been moved to the current
+	 * {@link Location}.
+	 */
+	@Temporal(TemporalType.TIMESTAMP)
+	@Column(name = "ACTUAL_LOCATION_DATE")
+	private Date actualLocationDate;
 
-    /**
-     * Date of last inventory check.
-     */
-    @Temporal(TemporalType.TIMESTAMP)
-    @Column(name = "INVENTORY_DATE")
-    private Date inventoryDate;
+	/**
+	 * Date of last inventory check.
+	 */
+	@Temporal(TemporalType.TIMESTAMP)
+	@Column(name = "INVENTORY_DATE")
+	private Date inventoryDate;
 
-    /**
-     * Weight of this {@link TransportUnit}.
-     */
-    @Column(name = "WEIGHT")
-    private BigDecimal weight = new BigDecimal(0);
+	/**
+	 * Weight of the <code>TransportUnit</code>.
+	 */
+	@Column(name = "WEIGHT")
+	private BigDecimal weight = new BigDecimal(0);
 
-    /**
-     * State of this {@link TransportUnit}.
-     */
-    @Column(name = "STATE")
-    @Enumerated(EnumType.STRING)
-    private TransportUnitState state = TransportUnitState.AVAILABLE;
+	/**
+	 * State of the <code>TransportUnit</code>. Default: {@value} .
+	 */
+	@Column(name = "STATE")
+	@Enumerated(EnumType.STRING)
+	private TransportUnitState state = TransportUnitState.AVAILABLE;
 
-    /**
-     * Version field.
-     */
-    @Version
-    @Column(name = "C_VERSION")
-    private long version;
+	/**
+	 * Version field.
+	 */
+	@Version
+	@Column(name = "C_VERSION")
+	private long version;
 
-    /* ------------------- collection mapping ------------------- */
-    /**
-     * The actual {@link Location} of the {@link TransportUnit}.
-     */
-    @ManyToOne
-    @JoinColumn(name = "ACTUAL_LOCATION", nullable = false)
-    private Location actualLocation;
+	/* ------------------- collection mapping ------------------- */
+	/**
+	 * The current {@link Location} of the <code>TransportUnit</code>.
+	 */
+	@ManyToOne
+	@JoinColumn(name = "ACTUAL_LOCATION", nullable = false)
+	private Location actualLocation;
 
-    /**
-     * The target {@link Location} of the {@link TransportUnit}.<br>
-     * This property will be set when a <code>TransportOrder</code> is
-     * started.
-     */
-    @ManyToOne
-    @JoinColumn(name = "TARGET_LOCATION")
-    private Location targetLocation;
+	/**
+	 * The target {@link Location} of the <code>TransportUnit</code>.<br>
+	 * This property will be set when a <code>TransportOrder</code> is started.
+	 */
+	@ManyToOne
+	@JoinColumn(name = "TARGET_LOCATION")
+	private Location targetLocation;
 
-    /**
-     * The {@link TransportUnitType} of this {@link TransportUnit}.
-     */
-    @ManyToOne
-    @JoinColumn(name = "TRANSPORT_UNIT_TYPE", nullable = false)
-    private TransportUnitType transportUnitType;
+	/**
+	 * The {@link TransportUnitType} of the <code>TransportUnit</code>.
+	 */
+	@ManyToOne
+	@JoinColumn(name = "TRANSPORT_UNIT_TYPE", nullable = false)
+	private TransportUnitType transportUnitType;
 
-    /**
-     * Owning {@link TransportUnit}.
-     */
-    @ManyToOne
-    @JoinColumn(name = "PARENT")
-    private TransportUnit parent;
+	/**
+	 * Owning <code>TransportUnit</code>.
+	 */
+	@ManyToOne
+	@JoinColumn(name = "PARENT")
+	private TransportUnit parent;
 
-    /**
-     * The <code>User</code> who performed the last inventory action on this
-     * {@link TransportUnit}.
-     */
-    @ManyToOne
-    @JoinColumn(name = "INVENTORY_USER")
-    private User inventoryUser;
+	/**
+	 * The <code>User</code> who performed the last inventory action on the
+	 * <code>TransportUnit</code>.
+	 */
+	@ManyToOne
+	@JoinColumn(name = "INVENTORY_USER")
+	private User inventoryUser;
 
-    /**
-     * A Set of all child {@link TransportUnit}s, ordered by id.
-     */
-    @OneToMany(mappedBy = "parent", cascade = { CascadeType.MERGE, CascadeType.PERSIST })
-    @OrderBy("id DESC")
-    private Set<TransportUnit> children = new HashSet<TransportUnit>();
+	/**
+	 * A set of all child <code>TransportUnit</code>s, ordered by id.
+	 */
+	@OneToMany(mappedBy = "parent", cascade = { CascadeType.MERGE,
+			CascadeType.PERSIST })
+	@OrderBy("id DESC")
+	private Set<TransportUnit> children = new HashSet<TransportUnit>();
 
-    /**
-     * A Map of errors occurred on this {@link TransportUnit}.
-     */
-    @OneToMany(cascade = CascadeType.ALL)
-    @JoinTable(name = "COR_TRANSPORT_UNIT_ERROR", joinColumns = @JoinColumn(name = "TRANSPORT_UNIT_ID"), inverseJoinColumns = @JoinColumn(name = "ERROR_ID"))
-    private Map<Date, UnitError> errors = new HashMap<Date, UnitError>();
+	/**
+	 * A Map of errors occurred on the <code>TransportUnit</code>.
+	 */
+	@OneToMany(cascade = CascadeType.ALL)
+	@JoinTable(name = "COR_TRANSPORT_UNIT_ERROR", joinColumns = @JoinColumn(name = "TRANSPORT_UNIT_ID"), inverseJoinColumns = @JoinColumn(name = "ERROR_ID"))
+	private Map<Date, UnitError> errors = new HashMap<Date, UnitError>();
 
-    /* ----------------------------- methods ------------------- */
-    /**
-     * Accessed by persistence provider.
-     */
-    @SuppressWarnings("unused")
-    private TransportUnit() {}
+	/* ----------------------------- methods ------------------- */
+	/**
+	 * Accessed by persistence provider.
+	 */
+	@SuppressWarnings("unused")
+	private TransportUnit() {
+	}
 
-    /**
-     * Create a new {@link TransportUnit} with a unique unitId. The unitId is
-     * used to create a {@link Barcode}.
-     * 
-     * @param unitId
-     *            The unique identifier of the {@link TransportUnit} as String
-     */
-    public TransportUnit(String unitId) {
-        this.barcode = new Barcode(unitId);
-    }
+	/**
+	 * Create a new <code>TransportUnit</code> with an unique id. The id is used
+	 * to create a {@link Barcode}.
+	 * 
+	 * @param unitId
+	 *            The unique identifier of the <code>TransportUnit</code>
+	 */
+	public TransportUnit(String unitId) {
+		this.barcode = new Barcode(unitId);
+	}
 
-    /**
-     * Create a new {@link TransportUnit} with a unique {@link Barcode}.
-     * 
-     * @param barcode
-     *            The unique identifier of this {@link TransportUnit} is the
-     *            {@link Barcode}
-     */
-    public TransportUnit(Barcode barcode) {
-        this.barcode = barcode;
-    }
+	/**
+	 * Create a new <code>TransportUnit</code> with an unique {@link Barcode}.
+	 * 
+	 * @param barcode
+	 *            The unique identifier of this <code>TransportUnit</code> is
+	 *            the {@link Barcode}
+	 */
+	public TransportUnit(Barcode barcode) {
+		this.barcode = barcode;
+	}
 
-    /**
-     * Return the unique technical key.
-     * 
-     * @return id.
-     */
-    @Override
-    public Long getId() {
-        return id;
-    }
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public Long getId() {
+		return id;
+	}
 
-    /**
-     * Checks if the instance is transient.
-     * 
-     * @return - true: Entity is not present on the persistent storage.<br> -
-     *         false : Entity already exists on the persistence storage
-     */
-    @Override
-    public boolean isNew() {
-        return (this.id == null);
-    }
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public boolean isNew() {
+		return (this.id == null);
+	}
 
-    /**
-     * Get the actual {@link Location} of this {@link TransportUnit}.
-     * 
-     * @return The {@link Location} where this {@link TransportUnit} is
-     *         currently placed on
-     */
-    public Location getActualLocation() {
-        return actualLocation;
-    }
+	/**
+	 * Get the actual {@link Location} of the <code>TransportUnit</code>.
+	 * 
+	 * @return The {@link Location} where the <code>TransportUnit</code> is
+	 *         placed on
+	 */
+	public Location getActualLocation() {
+		return actualLocation;
+	}
 
-    /**
-     * Set this {@link TransportUnit} to the actual {@link Location}.
-     * 
-     * @param actualLocation
-     *            The {@link Location} where this {@link TransportUnit} shall be
-     *            moved to
-     */
-    public void setActualLocation(Location actualLocation) {
-        this.actualLocation = actualLocation;
-        this.actualLocationDate = new Date();
-    }
+	/**
+	 * Put the <code>TransportUnit</code> on a {@link Location}.
+	 * 
+	 * @param actualLocation
+	 *            The new {@link Location} of the <code>TransportUnit</code>
+	 */
+	public void setActualLocation(Location actualLocation) {
+		this.actualLocation = actualLocation;
+		this.actualLocationDate = new Date();
+	}
 
-    /**
-     * Get the target {@link Location} of this {@link TransportUnit}. This
-     * property is not <tt>NULL</tt> when an active <tt>TransportOrder</tt>
-     * exists.
-     * 
-     * @return Location.
-     */
-    public Location getTargetLocation() {
-        return this.targetLocation;
-    }
+	/**
+	 * Get the target {@link Location} of the <code>TransportUnit</code>. This
+	 * property can not be <code>null</code> when an active
+	 * <code>TransportOrder</code> exists.
+	 * 
+	 * @return The target location
+	 */
+	public Location getTargetLocation() {
+		return this.targetLocation;
+	}
 
-    /**
-     * Set the target {@link Location} of this {@link TransportUnit}. Shall
-     * only be set when an active <tt>TransportOder</tt> exist.
-     * 
-     * @param targetLocation
-     *            The target {@link Location} where this {@link TransportUnit}
-     *            shall be transported to
-     */
-    public void setTargetLocation(Location targetLocation) {
-        this.targetLocation = targetLocation;
-    }
+	/**
+	 * Set the target {@link Location} of the <code>TransportUnit</code>. Shall
+	 * only be set in combination with an active <code>TransportOder</code>.
+	 * 
+	 * @param targetLocation
+	 *            The target {@link Location} where this
+	 *            <code>TransportUnit</code> shall be transported to
+	 */
+	public void setTargetLocation(Location targetLocation) {
+		this.targetLocation = targetLocation;
+	}
 
-    /**
-     * Indicates whether the {@link TransportUnit} is empty or not.
-     * 
-     * @return true if empty, otherwise false
-     */
-    public Boolean isEmpty() {
-        return this.empty;
-    }
+	/**
+	 * Indicates whether the <code>TransportUnit</code> is empty or not.
+	 * 
+	 * @return <code>true</code> if empty, <code>false</code> if not empty,
+	 *         <code>null</code> when not defined
+	 */
+	public Boolean isEmpty() {
+		return this.empty;
+	}
 
-    /**
-     * Sets this {@link TransportUnit} to be empty.
-     * 
-     * @param empty
-     *            true to mark the {@link TransportUnit} as empty
-     */
-    public void setEmpty(Boolean empty) {
-        this.empty = empty;
-    }
+	/**
+	 * Marks the <code>TransportUnit</code> to be empty.
+	 * 
+	 * @param empty
+	 *            <code>true</code> to mark the <code>TransportUnit</code> as
+	 *            empty, <code>false</code> to mark it as not empty and
+	 *            <code>null</code> for no definition
+	 */
+	public void setEmpty(Boolean empty) {
+		this.empty = empty;
+	}
 
-    /**
-     * Returns the <code>User</code> who did the last inventory action on this
-     * {@link TransportUnit}.
-     * 
-     * @return The user who did the last inventory check
-     */
-    public User getInventoryUser() {
-        return this.inventoryUser;
-    }
+	/**
+	 * Returns the {@link User} who performed the last inventory action on the
+	 * <code>TransportUnit</code>.
+	 * 
+	 * @return The {@link User} who did the last inventory check
+	 */
+	public User getInventoryUser() {
+		return this.inventoryUser;
+	}
 
-    /**
-     * Set the <code>User</code> who did the last inventory action on this
-     * {@link TransportUnit}.
-     * 
-     * @param inventoryUser
-     *            The {@link User} who did the last inventory check
-     */
-    public void setInventoryUser(User inventoryUser) {
-        this.inventoryUser = inventoryUser;
-    }
+	/**
+	 * Set the {@link User}> who performed the last inventory action on the
+	 * <code>TransportUnit</code>.
+	 * 
+	 * @param inventoryUser
+	 *            The {@link User} who did the last inventory check
+	 */
+	public void setInventoryUser(User inventoryUser) {
+		this.inventoryUser = inventoryUser;
+	}
 
-    /**
-     * Number of {@link TransportUnit}s belonging to this {@link TransportUnit}.
-     * 
-     * @return The number of all {@link TransportUnit}s belonging to this one
-     */
-    public int getNoTransportUnits() {
-        return this.children.size();
-    }
+	/**
+	 * Number of <code>TransportUnit</code>s belonging to the
+	 * <code>TransportUnit</code>.
+	 * 
+	 * @return The number of all <code>TransportUnit</code>s belonging to this
+	 *         one
+	 */
+	public int getNoTransportUnits() {
+		return this.children.size();
+	}
 
-    /**
-     * Returns the date when the {@link TransportUnit} was created.
-     * 
-     * @return The date when this {@link TransportUnit} was created
-     */
-    public Date getCreationDate() {
-        return this.creationDate;
-    }
+	/**
+	 * Returns the creation date of the <code>TransportUnit</code>.
+	 * 
+	 * @return The creation date
+	 */
+	public Date getCreationDate() {
+		return this.creationDate;
+	}
 
-    /**
-     * Returns the date when this {@link TransportUnit} moved to the
-     * actualLocation.
-     * 
-     * @return The timestamp when this {@link TransportUnit} moved the last time
-     */
-    public Date getActualLocationDate() {
-        return this.actualLocationDate;
-    }
+	/**
+	 * Returns the date when the <code>TransportUnit</code> moved to the
+	 * actualLocation.
+	 * 
+	 * @return The timestamp when the <code>TransportUnit</code> moved the last
+	 *         time
+	 */
+	public Date getActualLocationDate() {
+		return this.actualLocationDate;
+	}
 
-    /**
-     * Returns the timestamp of the last inventory check of this
-     * {@link TransportUnit}.
-     * 
-     * @return The timestamp of the last inventory check of this
-     *         {@link TransportUnit}.
-     */
-    public Date getInventoryDate() {
-        return this.inventoryDate;
-    }
+	/**
+	 * Returns the timestamp of the last inventory check of the
+	 * <code>TransportUnit</code>.
+	 * 
+	 * @return The timestamp of the last inventory check of the
+	 *         <code>TransportUnit</code>.
+	 */
+	public Date getInventoryDate() {
+		return this.inventoryDate;
+	}
 
-    /**
-     * Set the timestamp of the last inventory action of this
-     * {@link TransportUnit}.
-     * 
-     * @param inventoryDate
-     *            The timestamp of the last inventory check
-     */
-    public void setInventoryDate(Date inventoryDate) {
-        this.inventoryDate = inventoryDate;
-    }
+	/**
+	 * Set the timestamp of the last inventory action of the
+	 * <code>TransportUnit</code>.
+	 * 
+	 * @param inventoryDate
+	 *            The timestamp of the last inventory check
+	 */
+	public void setInventoryDate(Date inventoryDate) {
+		this.inventoryDate = inventoryDate;
+	}
 
-    /**
-     * Returns the current weight of this {@link TransportUnit}.
-     * 
-     * @return The current weight of this {@link TransportUnit}
-     */
-    public BigDecimal getWeight() {
-        return this.weight;
-    }
+	/**
+	 * Returns the current weight of the <code>TransportUnit</code>.
+	 * 
+	 * @return The current weight of the <code>TransportUnit</code>
+	 */
+	public BigDecimal getWeight() {
+		return this.weight;
+	}
 
-    /**
-     * Sets the current weight of this {@link TransportUnit}.
-     * 
-     * @param weight
-     *            The current weight of this {@link TransportUnit}
-     */
-    public void setWeight(BigDecimal weight) {
-        this.weight = weight;
-    }
+	/**
+	 * Sets the current weight of the <code>TransportUnit</code>.
+	 * 
+	 * @param weight
+	 *            The current weight of the <code>TransportUnit</code>
+	 */
+	public void setWeight(BigDecimal weight) {
+		this.weight = weight;
+	}
 
-    /**
-     * Get all errors that occurred on this {@link TransportUnit}.
-     * 
-     * @return A Map of all occurred {@link UnitError}s on this
-     *         {@link TransportUnit}
-     */
-    public Map<Date, UnitError> getErrors() {
-        return Collections.unmodifiableMap(errors);
-    }
+	/**
+	 * Get all errors that have occurred on the <code>TransportUnit</code>.
+	 * 
+	 * @return A Map of all occurred {@link UnitError}s on the
+	 *         <code>TransportUnit</code>
+	 */
+	public Map<Date, UnitError> getErrors() {
+		return Collections.unmodifiableMap(errors);
+	}
 
-    /**
-     * Add an error for this {@link TransportUnit}.
-     * 
-     * @param error
-     *            An {@link UnitError} to add
-     * @return The key, or null in case the {@link UnitError} wasn't put into
-     *         the Map
-     */
-    public UnitError addError(UnitError error) {
-        if (error == null) {
-            throw new IllegalArgumentException("Error may not be null!");
-        }
-        return errors.put(new Date(), error);
-    }
+	/**
+	 * Add an error to the <code>TransportUnit</code>.
+	 * 
+	 * @param error
+	 *            An {@link UnitError} to be added
+	 * @return The key.
+	 * @throws IllegalArgumentException
+	 *             when something went wrong
+	 */
+	public UnitError addError(UnitError error) {
+		if (error == null) {
+			throw new IllegalArgumentException("Error may not be null!");
+		}
+		return errors.put(new Date(), error);
+	}
 
-    /**
-     * Get the state of this {@link TransportUnit}.
-     * 
-     * @return The current state of this {@link TransportUnit}
-     */
-    public TransportUnitState getState() {
-        return this.state;
-    }
+	/**
+	 * Return the state of the <code>TransportUnit</code>.
+	 * 
+	 * @return The current state of the <code>TransportUnit</code>
+	 */
+	public TransportUnitState getState() {
+		return this.state;
+	}
 
-    /**
-     * Set the state of this {@link TransportUnit}.
-     * 
-     * @param state
-     *            The state to set on this {@link TransportUnit}
-     */
-    public void setState(TransportUnitState state) {
-        this.state = state;
-    }
+	/**
+	 * Set the state of the <code>TransportUnit</code>.
+	 * 
+	 * @param state
+	 *            The state to set on the <code>TransportUnit</code>
+	 */
+	public void setState(TransportUnitState state) {
+		this.state = state;
+	}
 
-    /**
-     * Get the {@link TransportUnitType} of this {@link TransportUnit}.
-     * 
-     * @return The {@link TransportUnitType} this {@link TransportUnit} belongs
-     *         to
-     */
-    public TransportUnitType getTransportUnitType() {
-        return this.transportUnitType;
-    }
+	/**
+	 * Return the {@link TransportUnitType} of the <code>TransportUnit</code>.
+	 * 
+	 * @return The {@link TransportUnitType} the <code>TransportUnit</code>
+	 *         belongs to
+	 */
+	public TransportUnitType getTransportUnitType() {
+		return this.transportUnitType;
+	}
 
-    /**
-     * Set the {@link TransportUnitType} of this {@link TransportUnit}.
-     * 
-     * @param transportUnitType
-     *            The type to which this {@link TransportUnit} belongs to
-     */
-    public void setTransportUnitType(TransportUnitType transportUnitType) {
-        this.transportUnitType = transportUnitType;
-    }
+	/**
+	 * Set the {@link TransportUnitType} of the <code>TransportUnit</code>.
+	 * 
+	 * @param transportUnitType
+	 *            The type of the <code>TransportUnit</code>
+	 */
+	public void setTransportUnitType(TransportUnitType transportUnitType) {
+		this.transportUnitType = transportUnitType;
+	}
 
-    /**
-     * Return the {@link Barcode} of the {@link TransportUnit}.
-     * 
-     * @return Barcode
-     */
-    public Barcode getBarcode() {
-        return barcode;
-    }
+	/**
+	 * Return the {@link Barcode} of the <code>TransportUnit</code>.
+	 * 
+	 * @return The current {@link Barcode}
+	 */
+	public Barcode getBarcode() {
+		return barcode;
+	}
 
-    /**
-     * Set the {@link Barcode} of the {@link TransportUnit}.
-     * 
-     * @param barcode
-     *            The {@link Barcode} to set for this {@link TransportUnit}
-     */
-    public void setBarcode(Barcode barcode) {
-        this.barcode = barcode;
-    }
+	/**
+	 * Set the {@link Barcode} of the <code>TransportUnit</code>.
+	 * 
+	 * @param barcode
+	 *            The {@link Barcode} to be set on the
+	 *            <code>TransportUnit</code>
+	 */
+	public void setBarcode(Barcode barcode) {
+		this.barcode = barcode;
+	}
 
-    /**
-     * Get the parent.
-     * 
-     * @return the parent.
-     */
-    public TransportUnit getParent() {
-        return parent;
-    }
+	/**
+	 * Returns the parent <code>TransportUnit</code>.
+	 * 
+	 * @return the parent.
+	 */
+	public TransportUnit getParent() {
+		return parent;
+	}
 
-    /**
-     * Set the parent.
-     * 
-     * @param parent
-     *            The parent to set.
-     */
-    public void setParent(TransportUnit parent) {
-        this.parent = parent;
-    }
+	/**
+	 * Set a parent <code>TransportUnit</code>.
+	 * 
+	 * @param parent
+	 *            The parent to set.
+	 */
+	public void setParent(TransportUnit parent) {
+		this.parent = parent;
+	}
 
-    /**
-     * Get all child {@link TransportUnit}s.
-     * 
-     * @return the transportUnits.
-     */
-    public Set<TransportUnit> getChildren() {
-        return Collections.unmodifiableSet(children);
-    }
+	/**
+	 * Get all child <code>TransportUnit</code>s.
+	 * 
+	 * @return the transportUnits.
+	 */
+	public Set<TransportUnit> getChildren() {
+		return Collections.unmodifiableSet(children);
+	}
 
-    /**
-     * Add a {@link TransportUnit} to children.
-     * 
-     * @param transportUnit
-     *            The {@link TransportUnit} to add to the list of children
-     */
-    public void addChild(TransportUnit transportUnit) {
-        if (transportUnit == null) {
-            throw new IllegalArgumentException("Child transportUnit is null!");
-        }
+	/**
+	 * Add a <code>TransportUnit</code> to the children.
+	 * 
+	 * @param transportUnit
+	 *            The <code>TransportUnit</code> to be added to the list of
+	 *            children
+	 * @throws IllegalArgumentException
+	 *             when transportUnit is <code>null</code>
+	 */
+	public void addChild(TransportUnit transportUnit) {
+		if (transportUnit == null) {
+			throw new IllegalArgumentException("Child transportUnit is null!");
+		}
 
-        if (transportUnit.getParent() != null) {
-            if (transportUnit.getParent().equals(this)) {
-                // if this instance is already the parent, we just return
-                return;
-            } else {
-                // disconnect post from it's current relationship
-                transportUnit.getParent().children.remove(this);
-            }
-        }
+		if (transportUnit.getParent() != null) {
+			if (transportUnit.getParent().equals(this)) {
+				// if this instance is already the parent, we just return
+				return;
+			} else {
+				// disconnect post from it's current relationship
+				transportUnit.getParent().children.remove(this);
+			}
+		}
 
-        // make this instance the new parent
-        transportUnit.setParent(this);
-        children.add(transportUnit);
-    }
+		// make this instance the new parent
+		transportUnit.setParent(this);
+		children.add(transportUnit);
+	}
 
-    /**
-     * Remove a {@link TransportUnit} from the collection of children.
-     * 
-     * @param transportUnit
-     *            The {@link TransportUnit} to be removed from the list of
-     *            children
-     */
-    public void removeChild(TransportUnit transportUnit) {
-        if (transportUnit == null) {
-            throw new IllegalArgumentException("Child transportUnit is null!");
-        }
+	/**
+	 * Remove a <code>TransportUnit</code> from the list of children.
+	 * 
+	 * @param transportUnit
+	 *            The <code>TransportUnit</code> to be removed from the list of
+	 *            children
+	 * @throws IllegalArgumentException
+	 *             when transportUnit is <code>null</code> or any other failure occurs
+	 */
+	public void removeChild(TransportUnit transportUnit) {
+		if (transportUnit == null) {
+			throw new IllegalArgumentException("Child transportUnit is null!");
+		}
 
-        // make sure we are the parent before we break the relationship
-        if (transportUnit.parent != null && transportUnit.getParent().equals(this)) {
-            transportUnit.setParent(null);
-            children.remove(transportUnit);
-        } else {
-            throw new IllegalArgumentException("Child transportUnit not associated with this instance");
-        }
-    }
+		// make sure we are the parent before we break the relationship
+		if (transportUnit.parent != null
+				&& transportUnit.getParent().equals(this)) {
+			transportUnit.setParent(null);
+			children.remove(transportUnit);
+		} else {
+			throw new IllegalArgumentException(
+					"Child transportUnit not associated with this instance");
+		}
+	}
 
-    /**
-     * Set the actualLocationDate.
-     * 
-     * @param actualLocationDate
-     *            The actualLocationDate to set.
-     */
-    public void setActualLocationDate(Date actualLocationDate) {
-        this.actualLocationDate = actualLocationDate;
-    }
+	/**
+	 * Set the actualLocationDate.
+	 * 
+	 * @param actualLocationDate
+	 *            The actualLocationDate to set.
+	 */
+	public void setActualLocationDate(Date actualLocationDate) {
+		this.actualLocationDate = actualLocationDate;
+	}
 
-    /**
-     * JPA optimistic locking.
-     * 
-     * @return The version field.
-     */
-    @Override
-    public long getVersion() {
-        return this.version;
-    }
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public long getVersion() {
+		return this.version;
+	}
 
-    /**
-     * Return the {@link Barcode} as String.
-     * 
-     * @see java.lang.Object#toString()
-     * @return String
-     */
-    @Override
-    public String toString() {
-        return this.barcode.toString();
-    }
+	/**
+	 * Return the {@link Barcode} as String.
+	 * 
+	 * @see java.lang.Object#toString()
+	 * @return String
+	 */
+	@Override
+	public String toString() {
+		return this.barcode.toString();
+	}
 }

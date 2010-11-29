@@ -19,6 +19,6 @@
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
 /**
- * This package contains essential value classes.
+ * Contains value classes.
  */
 package org.openwms.common.domain.values;

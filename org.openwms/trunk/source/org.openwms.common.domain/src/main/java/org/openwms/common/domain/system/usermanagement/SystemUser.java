@@ -23,21 +23,19 @@ package org.openwms.common.domain.system.usermanagement;
 import java.io.Serializable;
 
 /**
- * A SystemUser.
+ * A SystemUser is granted with all privileges and omits all security constraints.
  * 
  * @author <a href="mailto:russelltina@users.sourceforge.net">Tina Russell</a>
  * @version $Revision: $
  * @since 0.1
+ * @see org.openwms.common.domain.system.usermanagement.User
  */
 public class SystemUser extends User implements Serializable {
 
-    /**
-     * The serialVersionUID.
-     */
     private static final long serialVersionUID = -7575215406745881912L;
 
     /**
-     * The fullname of the system user.
+     * The defined fullname of the system user.
      */
     public static final String SYSTEM_USERNAME = "OPENWMS";
 

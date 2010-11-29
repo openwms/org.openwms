@@ -46,9 +46,6 @@ import javax.persistence.Version;
         @NamedQuery(name = Module.NQ_FIND_BY_UNIQUE_QUERY, query = "select m from Module m where m.moduleName = ?1") })
 public class Module extends AbstractEntity implements DomainObject<Long>, Serializable {
 
-    /**
-     * The serialVersionUID
-     */
     private static final long serialVersionUID = 7358306395032979355L;
 
     /**
@@ -58,6 +55,7 @@ public class Module extends AbstractEntity implements DomainObject<Long>, Serial
 
     /**
      * Query to find <strong>one</strong> {@link Module} by its natural key.
+     * <li>Query parameter index <strong>1</strong> : The moduleName of the Module to search for.</li>
      */
     public static final String NQ_FIND_BY_UNIQUE_QUERY = "Module.findByModuleName";
 
@@ -70,41 +68,38 @@ public class Module extends AbstractEntity implements DomainObject<Long>, Serial
     private Long id;
 
     /**
-     * The unique name of the module (business key).
+     * Unique name of the Module (natural key, unique, not-null).
      */
     @Column(name = "MODULE_NAME", unique = true, nullable = false)
     private String moduleName;
 
     /**
-     * The URL where to load this module (unique).
+     * URL where to load this Module from (unique, not-null).
      */
     @Column(name = "URL", unique = true, nullable = false)
     private String url;
 
     /**
-     * Property used on client side to store whether the module is loaded or
-     * not.
+     * Flag used on client-side to store whether the Module is loaded or not. Default:{@value}.
      */
     @Transient
     private boolean loaded = false;
 
     /**
-     * <code>true</code> when the module should be loaded on application
-     * startup.
+     * <code>true</code> when the Module should be loaded on application startup. Default:{@value}.
      */
     @Column(name = "LOAD_ON_STARTUP")
     private boolean loadOnStartup = true;
 
     /**
-     * Defines the startup order compared with other modules. Modules with lower
-     * startupOrders are loaded earlier.
+     * Defines the startup order compared with other Modules. Modules with lower startupOrders are loaded before.
      */
     @Column(name = "STARTUP_ORDER")
     @OrderBy
     private int startupOrder;
 
     /**
-     * A description field for this module.
+     * A description text of the Module. Default:{@value}.
      */
     @Column(name = "DESCRIPTION")
     private String description = "--";
@@ -127,7 +122,7 @@ public class Module extends AbstractEntity implements DomainObject<Long>, Serial
      * Create a new Module.
      * 
      * @param moduleName
-     *            Module name
+     *            The unique Module name
      */
     public Module(String moduleName) {
         super();
@@ -137,8 +132,8 @@ public class Module extends AbstractEntity implements DomainObject<Long>, Serial
     /**
      * Create a new Module.
      * 
-     * @param moduleName
-     * @param url
+     * @param moduleName The unique Module name
+     * @param url The unique URL
      */
     public Module(String moduleName, String url) {
         super();
@@ -300,13 +295,12 @@ public class Module extends AbstractEntity implements DomainObject<Long>, Serial
     }
 
     /**
-     * Uses the moduleName for comparison, because this is unique and not null.
+     * Compares the moduleName, because it is unique and not-null.
      * 
-     * @see java.lang.Object#equals(java.lang.Object)
+     * @see org.openwms.common.domain.AbstractEntity#equals(java.lang.Object)
      */
     @Override
     public boolean equals(Object obj) {
-        // TODO [russelltina] : Use super+
         if (this == obj) {
             return true;
         }
