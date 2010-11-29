@@ -19,6 +19,6 @@
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
 /**
- * This package contains essential base classes belonging to user and role management.
+ * Contains domain classes regarding user and rolemanagement.
  */
 package org.openwms.common.domain.system.usermanagement;

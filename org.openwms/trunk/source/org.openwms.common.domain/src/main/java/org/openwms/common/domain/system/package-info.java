@@ -19,6 +19,6 @@
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
 /**
- * This package contains essential base classes used by other domain classes.
+ * Contains essential domain classes of the the CORE Module.
  */
 package org.openwms.common.domain.system;

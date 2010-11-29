@@ -33,11 +33,7 @@ import javax.persistence.UniqueConstraint;
 import javax.persistence.Version;
 
 /**
- * A TypeStackingRule - Which {@link TransportUnitType}s on others.
- * <p>
- * Defines which {@link TransportUnitType} may be placed on the which other
- * {@link TransportUnitType}.
- * </p>
+ * A TypeStackingRule defines which {@link TransportUnitType} can be stacked on others.
  * 
  * @author <a href="mailto:scherrer@users.sourceforge.net">Heiko Scherrer</a>
  * @version $Revision$
@@ -49,9 +45,6 @@ import javax.persistence.Version;
         "NO_TRANSPORT_UNITS", "ALLOWED_TRANSPORT_UNIT_TYPE" }))
 public class TypeStackingRule extends AbstractEntity implements DomainObject<Long>, Serializable, Rule {
 
-    /**
-     * The serialVersionUID
-     */
     private static final long serialVersionUID = 8695359002320051884L;
 
     /**
@@ -71,14 +64,14 @@ public class TypeStackingRule extends AbstractEntity implements DomainObject<Lon
 
     /**
      * Number of {@link TransportUnitType}s that may be placed on the owning
-     * {@link TransportUnitType}.
+     * {@link TransportUnitType} (not-null).
      */
     @Column(name = "NO_TRANSPORT_UNITS", nullable = false)
     private short noTransportUnits;
 
     /**
      * The allowed {@link TransportUnitType} that may be placed on the owning
-     * {@link TransportUnitType}.
+     * {@link TransportUnitType} (not-null).
      */
     @ManyToOne
     @JoinColumn(name = "ALLOWED_TRANSPORT_UNIT_TYPE", nullable = false)
@@ -93,20 +86,20 @@ public class TypeStackingRule extends AbstractEntity implements DomainObject<Lon
 
     /* ----------------------------- methods ------------------- */
     /**
-     * Create a new {@link TypeStackingRule}.
+     * Create a new <code>TypeStackingRule</code>.
      */
     @SuppressWarnings("unused")
     private TypeStackingRule() {}
 
     /**
-     * Create a new {@link TypeStackingRule}. Define how many
+     * Create a new <code>TypeStackingRule</code>. Define how many
      * {@link org.openwms.common.domain.TransportUnit}s of the
      * allowedTransportUnitType may stacked on this {@link TransportUnitType}.
      * 
      * @param noTransportUnits
-     *            The number of allowed TransportUnits
+     *            The number of allowed {@link org.openwms.common.domain.TransportUnit}s
      * @param allowedTransportUnitType
-     *            The allowed TransportUnitType
+     *            The allowed {@link TransportUnitType}
      */
     public TypeStackingRule(short noTransportUnits, TransportUnitType allowedTransportUnitType) {
         this.noTransportUnits = noTransportUnits;
@@ -114,9 +107,7 @@ public class TypeStackingRule extends AbstractEntity implements DomainObject<Lon
     }
 
     /**
-     * Return the unique technical key.
-     * 
-     * @return The id
+     * {@inheritDoc}
      */
     @Override
     public Long getId() {
@@ -161,9 +152,7 @@ public class TypeStackingRule extends AbstractEntity implements DomainObject<Lon
     }
 
     /**
-     * JPA optimistic locking.
-     * 
-     * @return The version field
+     * {@inheritDoc}
      */
     @Override
     public long getVersion() {

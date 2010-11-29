@@ -19,6 +19,6 @@
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
 /**
- * This package contains common exception classes.
+ * Contains common exception classes.
  */
 package org.openwms.common.exception;

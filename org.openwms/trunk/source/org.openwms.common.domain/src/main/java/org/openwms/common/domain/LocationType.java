@@ -33,10 +33,10 @@ import javax.persistence.Table;
 import javax.persistence.Version;
 
 /**
- * A LocationType - Defines a type for {@link Location}s.
+ * A LocationType defines a type for {@link Location}s.
  * <p>
  * Type of a {@link org.openwms.common.domain.Location}.<br>
- * Used to describe {@link org.openwms.common.domain.Location}s that have same
+ * Used to group {@link org.openwms.common.domain.Location}s with the same
  * characteristics.
  * </p>
  * 
@@ -52,29 +52,26 @@ import javax.persistence.Version;
         @NamedQuery(name = LocationType.NQ_FIND_BY_UNIQUE_QUERY, query = "select l from LocationType l where l.type = ?1") })
 public class LocationType extends AbstractEntity implements DomainObject<Long>, Serializable {
 
-    /**
-     * The serialVersionUID
-     */
     private static final long serialVersionUID = 7694581168374440182L;
 
     /**
-     * Query to find all {@link LocationType}s.
+     * Query to find all <code>LocationType</code>s.
      */
     public static final String NQ_FIND_ALL = "LocationType.findAll";
 
     /**
-     * Query to find <strong>one</strong> {@link LocationType} by its natural
+     * Query to find <strong>one</strong> <code>LocationType</code> by its natural
      * key.
      * <ul>
      * <li>Query parameter index <strong>1</strong> : The name of the
-     * LocationType to search for.</li>
+     * <code>LocationType</code> to search for.</li>
      * </ul>
      */
     public static final String NQ_FIND_BY_UNIQUE_QUERY = "LocationType.findByUniqueId";
 
     /**
      * Default value of the description, by default
-     * {@value #DEF_TYPE_DESCRIPTION}.
+     * {@value}.
      */
     public static final String DEF_TYPE_DESCRIPTION = "--";
 
@@ -87,32 +84,32 @@ public class LocationType extends AbstractEntity implements DomainObject<Long>, 
     private Long id;
 
     /**
-     * Type of this {@link LocationType}.
+     * Type of the <code>LocationType</code> (unique).
      */
     @Column(name = "C_TYPE", unique = true)
     @OrderBy
     private String type;
 
     /**
-     * Description of this {@link LocationType}.
+     * Description of the <code>LocationType</code>. Default: {@value}.
      */
     @Column(name = "DESCRIPTION")
     private String description = DEF_TYPE_DESCRIPTION;
 
     /**
-     * Length of this {@link LocationType}.
+     * Length of the <code>LocationType</code>. Default: {@value}.
      */
     @Column(name = "LENGTH")
     private int length = 0;
 
     /**
-     * Width of this {@link LocationType}.
+     * Width of the <code>LocationType</code>. Default: {@value}. 
      */
     @Column(name = "WIDTH")
     private int width = 0;
 
     /**
-     * Height of this {@link LocationType}.
+     * Height of the <code>LocationType</code>. Default: {@value}.
      */
     @Column(name = "HEIGHT")
     private int height = 0;
@@ -126,13 +123,13 @@ public class LocationType extends AbstractEntity implements DomainObject<Long>, 
 
     /* ----------------------------- methods ------------------- */
     /**
-     * Accessed by persistence provider.
+     * Accessed by the persistence provider.
      */
     @SuppressWarnings("unused")
     private LocationType() {}
 
     /**
-     * Create a new {@link LocationType} with a unique natural key.
+     * Create a new <code>LocationType</code> with an unique natural key.
      * 
      * @param type
      *            Unique type
@@ -143,9 +140,7 @@ public class LocationType extends AbstractEntity implements DomainObject<Long>, 
     }
 
     /**
-     * Return the technical key.
-     * 
-     * @return The technical, unique key
+     * {@inheritDoc}
      */
     @Override
     public Long getId() {
@@ -161,25 +156,25 @@ public class LocationType extends AbstractEntity implements DomainObject<Long>, 
     }
 
     /**
-     * Get the unique identifier of this {@link LocationType}.
+     * Returns the unique identifier of the <code>LocationType</code>.
      * 
-     * @return type
+     * @return type The Type
      */
     public String getType() {
         return this.type;
     }
 
     /**
-     * Get the length of this {@link LocationType}.
+     * Returns the length of the <code>LocationType</code>.
      * 
-     * @return length
+     * @return length The Length
      */
     public int getLength() {
         return this.length;
     }
 
     /**
-     * Set the length of this {@link LocationType}.
+     * Set the length of this <code>LocationType</code>.
      * 
      * @param length
      *            The length of this type
@@ -189,16 +184,16 @@ public class LocationType extends AbstractEntity implements DomainObject<Long>, 
     }
 
     /**
-     * Get the width of this {@link LocationType}.
+     * Returns the width of this <code>LocationType</code>.
      * 
-     * @return width
+     * @return width The Width
      */
     public int getWidth() {
         return this.width;
     }
 
     /**
-     * Set the width of this {@link LocationType}.
+     * Set the width of this <code>LocationType</code>.
      * 
      * @param width
      *            The width of this type
@@ -208,16 +203,16 @@ public class LocationType extends AbstractEntity implements DomainObject<Long>, 
     }
 
     /**
-     * Get the description of this {@link LocationType}.
+     * Returns the description of this <code>LocationType</code>.
      * 
-     * @return description
+     * @return description The description text
      */
     public String getDescription() {
         return this.description;
     }
 
     /**
-     * Set the description of this {@link LocationType}.
+     * Set the description of the <code>LocationType</code>.
      * 
      * @param description
      *            The description text of this type
@@ -227,16 +222,16 @@ public class LocationType extends AbstractEntity implements DomainObject<Long>, 
     }
 
     /**
-     * Get the height of this {@link LocationType}.
+     * Returns the height of the <code>LocationType</code>.
      * 
-     * @return height
+     * @return height The Height
      */
     public int getHeight() {
         return this.height;
     }
 
     /**
-     * Set the height of this {@link LocationType}.
+     * Set the height of this <code>LocationType</code>.
      * 
      * @param height
      *            The height of this type
