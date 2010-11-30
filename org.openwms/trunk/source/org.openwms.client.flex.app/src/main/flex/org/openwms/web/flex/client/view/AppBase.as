@@ -52,6 +52,13 @@ package org.openwms.web.flex.client.view {
     import org.openwms.web.flex.client.util.DisplayUtility;
     import org.openwms.web.flex.client.view.dialogs.LoginView;
 
+    /**
+     * An AppBase class is the main Flex Application of the CORE framework. It
+     * cares about all the essential stuff like security and Tide framework initialization
+     * and instantiates the main menu bar and the viw stack. 
+     *
+     * @version $Revision$
+     */
     public class AppBase extends Application {
 
         [In]
@@ -93,13 +100,13 @@ package org.openwms.web.flex.client.view {
         /**
          * Suppress warnings and add a constructor.
          */
-        public function AppBase() {
-        }
+        public function AppBase() { }
 
         /**
          * Called in pre-initialize phase of the application.
-         *
          * Put your code here, to initialize 3rd party frameworks.
+         *
+         * @param event
          */
         public function preInit(event : Event) : void {
             Spring.getInstance().initApplication();
@@ -108,7 +115,6 @@ package org.openwms.web.flex.client.view {
 
         /**
          * Called in initialize phase of the application.
-         *
          * Put your code here, to initialize application specific structures.
          */
         public function init() : void {
