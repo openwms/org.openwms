@@ -21,14 +21,20 @@
 package org.openwms.web.flex.client.model {
 
     /**
-     * A Constants class.
+     * A simple Constants class to store some global definitions.
      *
-     * @author <a href="mailto:openwms@googlemail.com">Heiko Scherrer</a>
-     * @version $Revision: 700 $
+     * @version $Revision$
      */
     public class Constants {
+    	
+    	/**
+    	 * Name of the ModuleManagement backend service.
+    	 */
         public static const MODULEMGMT_SERVICE : String = "moduleManagementService";
-        public static const USERMGMT_SERVICE : String = "userService";
 
+        /**
+         * Name of the UserManagement backend service.
+         */
+        public static const USERMGMT_SERVICE : String = "userService";
     }
 }

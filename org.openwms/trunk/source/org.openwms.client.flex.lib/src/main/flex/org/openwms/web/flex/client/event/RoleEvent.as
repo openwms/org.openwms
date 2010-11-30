@@ -26,7 +26,7 @@ package org.openwms.web.flex.client.event
      * An RoleEvent.
      *
      * @author <a href="mailto:openwms@googlemail.com">Heiko Scherrer</a>
-     * @version $Revision: 788 $
+     * @version $Revision$
      */
     public class RoleEvent extends Event
     {

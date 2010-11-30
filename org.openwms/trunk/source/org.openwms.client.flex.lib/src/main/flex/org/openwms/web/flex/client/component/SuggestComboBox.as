@@ -31,7 +31,7 @@ package org.openwms.web.flex.client.component
 	 * A SuggestComboBox.
 	 *
 	 * @author <a href="mailto:openwms@googlemail.com">Heiko Scherrer</a>
-	 * @version $Revision: 796 $
+	 * @version $Revision$
 	 */
 	public class SuggestComboBox extends ComboBox
 	{

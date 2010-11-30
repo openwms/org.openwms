@@ -28,7 +28,7 @@ package org.openwms.web.flex.client.util {
      * A ValidationUtil.
      *
      * @author <a href="mailto:openwms@googlemail.com">Heiko Scherrer</a>
-     * @version $Revision: 700 $
+     * @version $Revision$
      */
     public final class ValidationUtil {
 

@@ -18,19 +18,19 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
-package org.openwms.web.flex.client
-{
+package org.openwms.web.flex.client {
     import mx.collections.ArrayCollection;
     
-
     /**
-     * A IObserver.
+     * An IObserver is notified about an object that references the IObserver.
      *
-     * @author <a href="mailto:russelltina@users.sourceforge.net">Tina Russell</a>
-     * @version $Revision: 700 $
+     * @version $Revision$
      */
-    public interface IObserver
-    {
+    public interface IObserver {
+    	
+    	/**
+    	 * Callback method.
+    	 */
         function notify():void;
     }
 }

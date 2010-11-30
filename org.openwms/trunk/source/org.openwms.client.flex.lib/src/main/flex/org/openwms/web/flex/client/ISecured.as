@@ -23,19 +23,18 @@ package org.openwms.web.flex.client {
 	import mx.collections.ArrayCollection;
 
     /**
-     * A ISecured. A module implementing this interface participates in the security
-     * concept of the main application. The module returns a list of UI objects that
+     * An ISecured implementation participates in the security
+     * context of the CORE Flex Application. The Module returns a list of objects that
      * shall be included into the security realm of the application and can be assigned
      * to Roles and Users. 
      *
-     * @author <a href="mailto:russelltina@users.sourceforge.net">Tina Russell</a>
-     * @version $Revision: 700 $
+     * @version $Revision$
      */
 	public interface ISecured {
 		
 		/**
-		 * Return a list of UI object identifiers that are aware of security 
-		 * settings. List entries are expected as Strings, ids of the UI objects.
+		 * Returns a list of (UI) object identifiers that are aware of security 
+		 * settings. All list entries are expected as Strings (ids of the UI objects).
 		 * 
 		 * @return The list of secured objects
 		 */

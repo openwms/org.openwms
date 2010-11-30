@@ -19,18 +19,17 @@
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
 package org.openwms.web.flex.client.command {
+	
     import flash.events.EventDispatcher;
-
     import mx.rpc.events.FaultEvent;
-
     import org.granite.events.SecurityEvent;
     import org.openwms.web.flex.client.event.EventBroker;
 
     /**
-     * An AbstractCommand.
+     * DEPRECATED An AbstractCommand.
      *
      * @author <a href="mailto:openwms@googlemail.com">Heiko Scherrer</a>
-     * @version $Revision: 700 $
+     * @version $Revision$
      */
     public class AbstractCommand extends EventDispatcher {
 

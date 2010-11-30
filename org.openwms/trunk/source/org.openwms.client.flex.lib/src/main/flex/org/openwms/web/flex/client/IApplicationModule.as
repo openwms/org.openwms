@@ -18,58 +18,70 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
-package org.openwms.web.flex.client
-{
+package org.openwms.web.flex.client {
+	
     import flash.events.IEventDispatcher;
-    import flash.system.ApplicationDomain;
-    
+    import flash.system.ApplicationDomain;    
     import mx.collections.ArrayCollection;
     import mx.collections.XMLListCollection;
     
     /**
-     * An IApplicationModule.
+     * An IApplicationModule defines the contract between the major openwms.org
+     * CORE Flex Application and Flex Modules that shall be loaded into the
+     * application domain. An implementation class is typically an ITideModule as well.
      *
-     * @author <a href="mailto:openwms@googlemail.com">Heiko Scherrer</a>
-     * @version $Revision: 700 $
+     * @version $Revision$
+     * @see org.granite.tide.ITideModule
      */
-    public interface IApplicationModule extends IEventDispatcher 
-    {
+    public interface IApplicationModule extends IEventDispatcher {
         /**
-         * This method returns a list of menu items which shall be expaned to the main
+         * Returns a list of menu items which shall be integrated to the main
          * application menu bar.
+         *
+         * @return A list of XML menu items. 
          */
         function getMainMenuItems():XMLListCollection;
 
         /**
-         * This method returns a list of views which shall be populated to the parent
+         * Returns a list of views which shall be populated to the parent
          * application.
+         *
+         * @return A list of DisplayObjects
          */
         function getViews():ArrayCollection;
 
         /**
-         * This method returns the name of the module as unique String identifier.
+         * Returns the name of the module as an unique String.
+         *
+         * @return the module name as String
          */
         function getModuleName():String;
         
         /**
-         * This method returns the current version of the module as String.
+         * Returns the current version of the module as a String.
+         *
+         * @return The version number as String
          */
         function getModuleVersion():String;
         
         /**
-         * This method returns a list of items which are handled as SecuityObjects.
-         * A SecurityObject can be assigned to a Role and is monitored by the SecurityHandler
-         * to allow or deny certain functionality within the user interface.
+         * Returns a list of items which are handled as SecuityObjects.
+         * A SecurityObject can be assigned to a Role and is monitored by a SecurityHandler
+         * to allow or deny certain actions within the user interface.
+         *
+         * @return A list of SecurityObjects
          */
         function getSecurityObjects():ArrayCollection;
 
         /**
-         * Do additional initial work when the module is loaded.
+         * Does additional initial stuff when the Module is loaded.
+         *
+         * @param The ApplicationDomain of the main Application
          */
         function initializeModule(applicationDomain:ApplicationDomain = null):void;
 
         /**
-         * Do addtional cleanup work before the module is unloaded.
+         * Does addtional cleanup stuff before the Module is unloaded.
          */
         function destroyModule():void;
     }

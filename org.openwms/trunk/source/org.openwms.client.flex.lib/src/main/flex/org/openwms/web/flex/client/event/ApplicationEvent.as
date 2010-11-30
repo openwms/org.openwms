@@ -18,38 +18,79 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
-package org.openwms.web.flex.client.event
-{
+package org.openwms.web.flex.client.event {
     import flash.events.Event;
 
     /**
-     * An ApplicationEvent.
+     * An ApplicationEvent used for some management purpose.
      *
-     * @author <a href="mailto:openwms@googlemail.com">Heiko Scherrer</a>
-     * @version $Revision: 700 $
+     * @version $Revision$
      */
-    public class ApplicationEvent extends Event
-    {
+    public class ApplicationEvent extends Event {
+    	
+    	/**
+    	 * Name of the Event to load all modules.
+    	 */
         public static const LOAD_ALL_MODULES:String = "LOAD_ALL_MODULES";
+        /**
+         * Name of the Event to unload all modules.
+         */
         public static const UNLOAD_ALL_MODULES:String = "UNLOAD_ALL_MODULES";
+        /**
+         * Name of the Event to signal that the module configuration has changed.
+         */
         public static const MODULE_CONFIG_CHANGED:String = "MODULE_CONFIG_CHANGED";
+        /**
+         * Name of the Event to signal that the module configuration has finished. 
+         */
         public static const MODULES_CONFIGURED:String = "MODULES_CONFIGURED";
+        /**
+         * Name of the Event to save a Module.
+         */
         public static const SAVE_MODULE:String = "SAVE_MODULE";
+        /**
+         * Name of the Event to delete a Module.
+         */
         public static const DELETE_MODULE:String = "DELETE_MODULE";
+        /**
+         * Name of the Event to load a single Module.
+         */
         public static const LOAD_MODULE:String = "LOAD_MODULE";
+        /**
+         * Name of the Event to unload a single Module.
+         */
         public static const UNLOAD_MODULE:String = "UNLOAD_MODULE";
+        /**
+         * Name of the Event to signal that a Module was successfully loaded.
+         */
         public static const MODULE_LOADED:String = "MODULE_LOADED";
+        /**
+         * Name of the Event to signal that a Module was successfully unloaded.
+         */
         public static const MODULE_UNLOADED:String = "MODULE_UNLOADED";
+        /**
+         * Name of the Event to save the startupOrders of a list of Modules.
+         */
         public static const SAVE_STARTUP_ORDERS:String = "SAVE_STARTUP_ORDERS";
-
+        /**
+         * Name of the Event to signal that an User successfully logged in.
+         */
         public static const APP_LOGIN_OK:String = "APP_LOGIN_OK";
+        /**
+         * Name of the Event to force an User logout.
+         */
         public static const LOGOUT:String = "APP_LOGOUT";
+        
+        /**
+         * Store arbitrary data.
+         */
         public var data:*;
 
-        public function ApplicationEvent(type:String, bubbles:Boolean = true, cancelable:Boolean = false)
-        {
+        /**
+         * Constructor.
+         */
+        public function ApplicationEvent(type:String, bubbles:Boolean = true, cancelable:Boolean = false) {
             super(type, bubbles, cancelable);
         }
-
     }
 }
