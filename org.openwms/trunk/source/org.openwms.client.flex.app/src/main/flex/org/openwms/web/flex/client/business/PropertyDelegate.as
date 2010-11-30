@@ -34,7 +34,7 @@ package org.openwms.web.flex.client.business {
      * A PropertyDelegate.
      *
      * @author <a href="mailto:openwms@googlemail.com">Heiko Scherrer</a>
-     * @version $Revision: 700 $
+     * @version $Revision$
      */
     [Name("propertyDelegate")]
     [ManagedEvent(name="LOAD_ALL_PROPERTIES")]

@@ -33,7 +33,7 @@ package org.openwms.web.flex.client.command {
      * A LogoutCommand.
      *
      * @author <a href="mailto:openwms@googlemail.com">Heiko Scherrer</a>
-     * @version $Revision: 700 $
+     * @version $Revision$
      */
     public class LogoutCommand extends AbstractCommand implements IResponder, ICommand {
 

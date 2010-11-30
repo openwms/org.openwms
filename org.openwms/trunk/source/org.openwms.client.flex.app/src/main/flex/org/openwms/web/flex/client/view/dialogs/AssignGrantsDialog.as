@@ -30,7 +30,7 @@ package org.openwms.web.flex.client.view.dialogs {
      * An AssignGrantsDialog.
      *
      * @author <a href="mailto:russelltina@users.sourceforge.net">Tina Russell</a>
-     * @version $Revision: 700 $
+     * @version $Revision$
      */
     [Name]
     [Bindable]

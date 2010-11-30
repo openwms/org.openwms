@@ -36,7 +36,7 @@ package org.openwms.web.flex.client.business {
      * A RoleDelegate.
      *
      * @author <a href="mailto:russelltina@users.sourceforge.net">Tina Russell</a>
-     * @version $Revision: 700 $
+     * @version $Revision$
      */
     [Name("roleController")]
     [ManagedEvent(name="LOAD_ALL_ROLES")]
