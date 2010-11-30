@@ -23,11 +23,7 @@ package org.openwms.common.integration.exception;
 import java.io.Serializable;
 
 /**
- * A DataNotFoundException - When data expected but not found.
- * <p>
- * This type of {@link DataException} signals that the expected data was not
- * found in the persistence layer.
- * </p>
+ * A DataNotFoundException is thrown to signal that data was expected but not found.
  * 
  * @author <a href="mailto:openwms@googlemail.com">Heiko Scherrer</a>
  * @version $Revision$
@@ -39,7 +35,7 @@ public class DataNotFoundException extends DataException {
     private static final long serialVersionUID = 2524686849100170713L;
 
     /**
-     * Create a new DataNotFoundException with a message text and the cause
+     * Create a new <code>DataNotFoundException</code> with a message text and the cause
      * exception.
      * 
      * @param message
@@ -52,7 +48,7 @@ public class DataNotFoundException extends DataException {
     }
 
     /**
-     * Create a new DataNotFoundException with a message text.
+     * Create a new <code>DataNotFoundException</code> with a message text.
      * 
      * @param message
      *            Message text as String
@@ -62,10 +58,10 @@ public class DataNotFoundException extends DataException {
     }
 
     /**
-     * Create a new DataNotFoundException with the id of the expected Entity.
+     * Create a new <code>DataNotFoundException</code> with the id of the expected entity.
      * 
      * @param id
-     *            Id of the expected Entity
+     *            Id of the expected entity
      */
     public DataNotFoundException(Serializable id) {
         super("Entity class not found in persistence layer, id: " + id);

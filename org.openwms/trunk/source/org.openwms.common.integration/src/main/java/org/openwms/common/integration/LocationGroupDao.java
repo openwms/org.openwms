@@ -23,12 +23,8 @@ package org.openwms.common.integration;
 import org.openwms.common.domain.LocationGroup;
 
 /**
- * A LocationGroupDao - Adds specific functionality concerning
- * {@link LocationGroup} Entity classes.
- * <p>
- * Adds additional behavior to the {@link GenericDao} to operate on
- * {@link LocationGroup} Entity classes.
- * </p>
+ * A LocationGroupDao adds particular functionality regarding
+ * {@link LocationGroup} entity classes.
  * 
  * @author <a href="mailto:openwms@googlemail.com">Heiko Scherrer</a>
  * @version $Revision$
@@ -40,7 +36,7 @@ public interface LocationGroupDao extends GenericDao<LocationGroup, Long> {
 
     /**
      * Name of the <code>NamedQuery</code> to find all {@link LocationGroup}
-     * Entities.
+     * entities.
      */
     String NQ_FIND_ALL = "LocationGroup.findAll";
 

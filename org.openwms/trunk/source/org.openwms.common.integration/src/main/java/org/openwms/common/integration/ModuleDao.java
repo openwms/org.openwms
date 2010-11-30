@@ -23,10 +23,11 @@ package org.openwms.common.integration;
 import org.openwms.common.domain.Module;
 
 /**
- * A ModuleDao.
+ * A ModuleDao adds particular functionality regarding {@link Module} entity
+ * classes.
  * 
  * @author <a href="mailto:openwms@googlemail.com">Heiko Scherrer</a>
- * @version $Revision: $
+ * @version $Revision$
  * 
  */
 public interface ModuleDao extends GenericDao<Module, Long> {
