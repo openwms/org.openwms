@@ -24,7 +24,7 @@ package org.openwms.common.domain.system;
  * A PropertyScope defines the used scope of preference settings.
  * 
  * @author <a href="mailto:scherrer@users.sourceforge.net">Heiko Scherrer</a>
- * @version $Revision: $
+ * @version $Revision$
  * @since 0.1
  */
 public enum PropertyScope {

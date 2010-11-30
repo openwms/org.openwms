@@ -26,7 +26,7 @@ import java.io.Serializable;
  * A SystemUser is granted with all privileges and omits all security constraints.
  * 
  * @author <a href="mailto:russelltina@users.sourceforge.net">Tina Russell</a>
- * @version $Revision: $
+ * @version $Revision$
  * @since 0.1
  * @see org.openwms.common.domain.system.usermanagement.User
  */

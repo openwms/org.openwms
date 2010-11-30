@@ -24,7 +24,7 @@ package org.openwms.common.domain.values;
  * A TransportUnitState defines a set of states for <code>TransportUnit</code>s.
  * 
  * @author <a href="mailto:russelltina@users.sourceforge.net">Tina Russell</a>
- * @version $Revision: 930 $
+ * @version $Revision$
  * @since 0.1
  * @see org.openwms.common.domain.TransportUnit;
  */
