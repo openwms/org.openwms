@@ -19,6 +19,6 @@
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
 /**
- * This package contains case domain classes necessary for the TMS extension.
+ * Contains essential domain classes of the TMS module.
  */
 package org.openwms.tms.domain.order;
