@@ -40,7 +40,7 @@ import javax.persistence.Table;
 import javax.persistence.Version;
 
 /**
- * A TransportUnitType defines a type for {@link TransportUnit}s
+ * A TransportUnitType defines a type for {@link TransportUnit}s.
  * <p>
  * Typically stores static attributes of a {@link TransportUnit} such as the
  * length, the height, aso. So it is possible to group and characterize

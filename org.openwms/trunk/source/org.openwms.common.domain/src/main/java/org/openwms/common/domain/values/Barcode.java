@@ -28,7 +28,7 @@ import javax.persistence.Embeddable;
 import org.apache.commons.lang.StringUtils;
 
 /**
- * A Barcode defines a unique label.
+ * A Barcode defines an unique label.
  * 
  * @author <a href="mailto:scherrer@users.sourceforge.net">Heiko Scherrer</a>
  * @version $Revision$
