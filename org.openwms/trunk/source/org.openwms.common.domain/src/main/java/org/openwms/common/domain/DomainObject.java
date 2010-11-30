@@ -23,7 +23,7 @@ package org.openwms.common.domain;
 import java.io.Serializable;
 
 /**
- * A DomainObject, implementations of this class offer some common
+ * A DomainObject, implementations of this interface offer some common
  * functionality of all domain objects.<br>
  * Each domain object:
  * <ul>
