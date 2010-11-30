@@ -53,10 +53,10 @@ import org.openwms.common.domain.system.Message;
  * A Location, defines a place within a warehouse.
  * <p>
  * Could be something like a storage location in the stock as well as a location
- * on a conveyer. Also virtual and error locations can be described with the
- * {@link Location} entity.
+ * on a conveyer. Also virtual or error locations can be represented with the
+ * <code>Location</code> entity.
  * </p>
- * Multiple {@link Location}s can be grouped together to a {@link LocationGroup}
+ * Multiple <code>Location</code>s can be grouped together to a {@link LocationGroup}
  * .
  * 
  * @author <a href="mailto:scherrer@users.sourceforge.net">Heiko Scherrer</a>
