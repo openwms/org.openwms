@@ -21,34 +21,33 @@
 package org.openwms.tms.domain.values;
 
 /**
- * A TransportOrderState - A {@link org.openwms.tms.domain.order.TransportOrder}
- * must be in one of these states.
+ * A TransportOrderState defines alll possible states of {@link org.openwms.tms.domain.order.TransportOrder}s.
  * 
  * @author <a href="mailto:russelltina@users.sourceforge.net">Tina Russell</a>
- * @version $Revision: $
+ * @version $Revision$
  * @since 0.1
  * @see org.openwms.tms.domain.order.TransportOrder
  */
 public enum TransportOrderState {
 
     /**
-     * Status of new created TransportOrders.
+     * Status of new created <code>TransportOrder</code>s.
      */
     CREATED,
 
     /**
-     * Status of a full initialized TransportOrder, ready to be started.
+     * Status of a full initialized <code>TransportOrder</code>, ready to be started.
      */
     INITIALIZED,
 
     /**
-     * A started TransportOrder, active to be executed. Only one per
-     * TransportUnit allowed.
+     * A started <code>TransportOrder</code>, active to be executed. Only one per
+     * <code>TransportUnit</code> allowed.
      */
     STARTED,
 
     /**
-     * Status to indicate that the TransportOrder is paused. Not active anymore.
+     * Status to indicate that the <code>TransportOrder</code> is paused. Not active anymore.
      */
     INTERRUPTED,
 

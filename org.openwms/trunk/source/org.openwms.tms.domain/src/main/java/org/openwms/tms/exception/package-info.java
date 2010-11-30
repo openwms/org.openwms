@@ -19,6 +19,6 @@
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
 /**
- * This package contains exception classes for the TMS extension.
+ * Contains exception classes used by the domain package of the TMS module.
  */
 package org.openwms.tms.exception;

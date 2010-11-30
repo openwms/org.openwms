@@ -36,7 +36,7 @@ import org.openwms.tms.domain.values.TransportOrderState;
 /**
  * A TransportOrderTest.
  * 
- * @author <a href="heiko.scherrer@gmx.de">Heiko Scherrer</a>
+ * @author <a href="mailto:russelltina@users.sourceforge.net">Tina Russell</a>
  * @version $Revision$
  * @since 0.1
  */

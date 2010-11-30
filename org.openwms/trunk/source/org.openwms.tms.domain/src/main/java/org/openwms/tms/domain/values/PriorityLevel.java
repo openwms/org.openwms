@@ -21,13 +21,10 @@
 package org.openwms.tms.domain.values;
 
 /**
- * A PriorityLevel.
- * <p>
- * Is used to prioritize {@link org.openwms.tms.domain.order.TransportOrder}s.
- * </p>
+ * A PriorityLevel is used to prioritize {@link org.openwms.tms.domain.order.TransportOrder}s.
  * 
  * @author <a href="mailto:openwms@googlemail.com">Heiko Scherrer</a>
- * @version $Revision: 810 $
+ * @version $Revision$
  * @since 0.1
  * @see org.openwms.tms.domain.order.TransportOrder
  */
