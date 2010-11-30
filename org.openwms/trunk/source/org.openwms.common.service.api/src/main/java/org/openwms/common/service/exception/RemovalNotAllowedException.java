@@ -27,7 +27,7 @@ import java.io.Serializable;
  * to remove an entity.
  * 
  * @author <a href="mailto:russelltina@users.sourceforge.net">Tina Russell</a>
- * @version $Revision: $
+ * @version $Revision$
  * @since 0.1
  */
 public class RemovalNotAllowedException extends ServiceException implements Serializable {

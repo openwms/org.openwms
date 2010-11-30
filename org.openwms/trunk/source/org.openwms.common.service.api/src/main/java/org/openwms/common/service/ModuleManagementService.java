@@ -28,7 +28,7 @@ import org.openwms.common.domain.Module;
  * A ModuleManagementService.
  * 
  * @author <a href="mailto:openwms@googlemail.com">Heiko Scherrer</a>
- * @version $Revision: $
+ * @version $Revision$
  * @see 0.1
  */
 public interface ModuleManagementService<T extends Module> extends EntityService<Module> {

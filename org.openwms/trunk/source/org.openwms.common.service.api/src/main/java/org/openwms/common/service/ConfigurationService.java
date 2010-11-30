@@ -29,7 +29,7 @@ import org.openwms.common.domain.values.Unit;
  * A ConfigurationService.
  * 
  * @author <a href="mailto:russelltina@users.sourceforge.net">Tina Russell</a>
- * @version $Revision: $
+ * @version $Revision$
  * 
  */
 public interface ConfigurationService<T extends Preference> extends EntityService<T> {

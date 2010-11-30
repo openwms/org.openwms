@@ -26,7 +26,7 @@ import java.io.Serializable;
  * A ServiceRuntimeException. Unchecked application exception.
  * 
  * @author <a href="mailto:scherrer@users.sourceforge.net">Heiko Scherrer</a>
- * @version $Revision: $
+ * @version $Revision$
  * @since 0.1
  */
 public class ServiceRuntimeException extends RuntimeException implements Serializable {

@@ -29,7 +29,7 @@ import org.openwms.common.service.exception.RemovalNotAllowedException;
  * entity of type <code>T</code> is removed.
  * 
  * @author <a href="mailto:russelltina@users.sourceforge.net">Tina Russell</a>
- * @version $Revision: $
+ * @version $Revision$
  * @since 0.1
  */
 public interface OnRemovalListener<T extends AbstractEntity> {
