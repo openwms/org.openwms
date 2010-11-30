@@ -24,7 +24,7 @@ import java.util.Arrays;
 import java.util.List;
 
 /**
- * A WeightUnit.
+ * A WeightUnit is a concrete set of all possible weights.
  * <p>
  * In SI format.
  * </p>
@@ -56,7 +56,7 @@ public enum WeightUnit implements UnitType {
     private static UnitType[] all = { WeightUnit.MG, WeightUnit.G, WeightUnit.KG, WeightUnit.T };
 
     /**
-     * Create a new WeightUnit.
+     * Create a new <code>WeightUnit</code>.
      * 
      * @param baseUnit
      *            The base unit of the weight

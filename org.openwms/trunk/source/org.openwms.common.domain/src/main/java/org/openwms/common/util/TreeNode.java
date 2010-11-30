@@ -24,7 +24,7 @@ import java.util.Iterator;
 import java.util.Map;
 
 /**
- * A TreeNode.
+ * A TreeNode is define a tree data structure.
  * 
  * @param <T>
  *            The type of the node.

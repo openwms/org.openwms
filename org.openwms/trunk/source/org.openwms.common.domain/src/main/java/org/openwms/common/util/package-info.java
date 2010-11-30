@@ -19,6 +19,6 @@
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
 /**
- * Contains common utility classes.
+ * Contains common used utility and helper classes.
  */
 package org.openwms.common.util;

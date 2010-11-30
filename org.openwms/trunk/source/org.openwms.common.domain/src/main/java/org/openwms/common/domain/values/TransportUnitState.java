@@ -21,10 +21,7 @@
 package org.openwms.common.domain.values;
 
 /**
- * A TransportUnitState.
- * <p>
- * All states belonging to a {@link org.openwms.common.domain.TransportUnit;}.
- * </p>
+ * A TransportUnitState defines a set of states for <code>TransportUnit</code>s.
  * 
  * @author <a href="mailto:russelltina@users.sourceforge.net">Tina Russell</a>
  * @version $Revision: 930 $

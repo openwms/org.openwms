@@ -30,13 +30,11 @@ import javax.persistence.Table;
 import javax.persistence.Version;
 
 import org.openwms.common.domain.AbstractEntity;
+import org.openwms.common.domain.DomainObject;
 
 /**
- * An UnitError.
- * <p>
- * Describes errors occurring on <code>TransportUnit</code>s as well as
- * <code>LoadUnit</code>s and others.
- * </p>
+ * An UnitError describes errors occurring on <code>TransportUnit</code>s on
+ * <code>LoadUnit</code>s or others.
  * 
  * @author <a href="mailto:scherrer@users.sourceforge.net">Heiko Scherrer</a>
  * @version $Revision$
@@ -44,110 +42,114 @@ import org.openwms.common.domain.AbstractEntity;
  */
 @Entity
 @Table(name = "COR_UNIT_ERROR")
-public class UnitError extends AbstractEntity implements Serializable {
+public class UnitError extends AbstractEntity implements DomainObject<Long>, Serializable {
 
-    /**
-     * The serialVersionUID
-     */
-    private static final long serialVersionUID = -716902051194734598L;
+	private static final long serialVersionUID = -716902051194734598L;
 
-    /**
-     * Unique technical key.
-     */
-    @Id
-    @Column(name = "ID")
-    @GeneratedValue
-    private Long id;
+	/**
+	 * Unique technical key.
+	 */
+	@Id
+	@Column(name = "ID")
+	@GeneratedValue
+	private Long id;
 
-    /**
-     * Error number.
-     */
-    @Column(name = "ERROR_NO")
-    private String errorNo;
+	/**
+	 * Error number.
+	 */
+	@Column(name = "ERROR_NO")
+	private String errorNo;
 
-    /**
-     * Error message text.
-     */
-    @Column(name = "ERROR_TEXT")
-    private String errorText;
+	/**
+	 * Error message text.
+	 */
+	@Column(name = "ERROR_TEXT")
+	private String errorText;
 
-    /**
-     * Version field.
-     */
-    @Version
-    @Column(name = "C_VERSION")
-    private long version;
+	/**
+	 * Version field.
+	 */
+	@Version
+	@Column(name = "C_VERSION")
+	private long version;
 
-    /* ----------------------------- methods ------------------- */
-    /**
-     * Create a new UnitError.
-     */
-    public UnitError() {}
+	/* ----------------------------- methods ------------------- */
+	/**
+	 * Create a new <code>UnitError</code>.
+	 */
+	public UnitError() {
+	}
 
-    /**
-     * Create a new UnitError with an error number.
-     * 
-     * @param errorNo
-     *            The error number
-     */
-    public UnitError(String errorNo) {
-        this.errorNo = errorNo;
-    }
+	/**
+	 * Create a new <code>UnitError</code> with an error number.
+	 * 
+	 * @param errorNo
+	 *            The error number
+	 */
+	public UnitError(String errorNo) {
+		this.errorNo = errorNo;
+	}
 
-    /**
-     * Return the unique technical key.
-     * 
-     * @return The unique technical key
-     */
-    public Long getId() {
-        return id;
-    }
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public Long getId() {
+		return id;
+	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public boolean isNew() {
+		return this.id == null;
+	}
 
-    /**
-     * Return the error number.
-     * 
-     * @return The error number
-     */
-    public String getErrorNo() {
-        return errorNo;
-    }
+	/**
+	 * Return the error number.
+	 * 
+	 * @return The error number
+	 */
+	public String getErrorNo() {
+		return errorNo;
+	}
 
-    /**
-     * Set the error number.
-     * 
-     * @param errorNo
-     *            The errorNo to set.
-     */
-    public void setErrorNo(String errorNo) {
-        this.errorNo = errorNo;
-    }
+	/**
+	 * Set the error number.
+	 * 
+	 * @param errorNo
+	 *            The errorNo to set.
+	 */
+	public void setErrorNo(String errorNo) {
+		this.errorNo = errorNo;
+	}
 
-    /**
-     * Return the error text.
-     * 
-     * @return The error text
-     */
-    public String getErrorText() {
-        return errorText;
-    }
+	/**
+	 * Return the error text.
+	 * 
+	 * @return The error text
+	 */
+	public String getErrorText() {
+		return errorText;
+	}
 
-    /**
-     * Set the error text.
-     * 
-     * @param errorText
-     *            The errorText to set.
-     */
-    public void setErrorText(String errorText) {
-        this.errorText = errorText;
-    }
+	/**
+	 * Set the error text.
+	 * 
+	 * @param errorText
+	 *            The errorText to set.
+	 */
+	public void setErrorText(String errorText) {
+		this.errorText = errorText;
+	}
 
-    /**
-     * JPA optimistic locking.
-     * 
-     * @return The version field.
-     */
-    public long getVersion() {
-        return version;
-    }
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public long getVersion() {
+		return version;
+	}
 
 }

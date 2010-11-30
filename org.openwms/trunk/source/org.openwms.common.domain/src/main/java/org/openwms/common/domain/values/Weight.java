@@ -26,7 +26,7 @@ import java.math.BigDecimal;
 import javax.persistence.Embeddable;
 
 /**
- * A Weight - Describes a weight in real world, always including a unit and a
+ * A Weight represents a real world weight, that comes with an <code>Unit</code> and a
  * value.
  * 
  * @author <a href="mailto:scherrer@users.sourceforge.net">Heiko Scherrer</a>
@@ -36,18 +36,15 @@ import javax.persistence.Embeddable;
 @Embeddable
 public class Weight implements Comparable<Weight>, Unit<WeightUnit>, Serializable {
 
-    /**
-     * The serialVersionUID.
-     */
     private static final long serialVersionUID = -8849107834046064278L;
 
     /**
-     * Weights unit.
+     * The unit of the <code>Weight</code>.
      */
     private WeightUnit unit;
 
     /**
-     * Weight amount.
+     * The amount of the <code>Weight</code>.
      */
     private BigDecimal value;
 
@@ -59,10 +56,10 @@ public class Weight implements Comparable<Weight>, Unit<WeightUnit>, Serializabl
     private Weight() {}
 
     /**
-     * Create a new Weight.
+     * Create a new <code>Weight</code>.
      * 
      * @param value
-     *            The value of the weight
+     *            The value of the <code>Weight</code>
      * @param unit
      *            The unit of measure
      */
@@ -72,10 +69,10 @@ public class Weight implements Comparable<Weight>, Unit<WeightUnit>, Serializabl
     }
 
     /**
-     * Create a new Weight.
+     * Create a new <code>Weight</code>.
      * 
      * @param value
-     *            The value of the weight as int
+     *            The value of the <code>Weight</code> as int
      * @param unit
      *            The unit of measure
      */
@@ -85,10 +82,10 @@ public class Weight implements Comparable<Weight>, Unit<WeightUnit>, Serializabl
     }
 
     /**
-     * Create a new Weight.
+     * Create a new <code>Weight</code>.
      * 
      * @param value
-     *            The value of the weight as double
+     *            The value of the <code>Weight</code> as double
      * @param unit
      *            The unit of measure
      */
@@ -98,7 +95,7 @@ public class Weight implements Comparable<Weight>, Unit<WeightUnit>, Serializabl
     }
 
     /**
-     * Get the unit.
+     * Returns the unit of the <code>Weight</code>.
      * 
      * @return The unit.
      */
@@ -107,7 +104,7 @@ public class Weight implements Comparable<Weight>, Unit<WeightUnit>, Serializabl
     }
 
     /**
-     * Get the value.
+     * Returns the value of the <code>Weight</code>.
      * 
      * @return The value.
      */

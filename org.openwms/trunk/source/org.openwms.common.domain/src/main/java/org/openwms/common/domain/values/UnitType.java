@@ -23,7 +23,7 @@ package org.openwms.common.domain.values;
 import java.util.List;
 
 /**
- * A UnitType.
+ * An UnitType is a concrete unit definition.
  * 
  * @author <a href="mailto:scherrer@users.sourceforge.net">Heiko Scherrer</a>
  * @version $Revision: $
