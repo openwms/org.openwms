@@ -19,6 +19,6 @@
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
 /**
- * Contains domain classes regarding user and rolemanagement.
+ * Contains domain classes regarding user and role management.
  */
 package org.openwms.common.domain.system.usermanagement;

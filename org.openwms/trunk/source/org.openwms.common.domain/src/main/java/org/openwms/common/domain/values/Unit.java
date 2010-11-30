@@ -21,7 +21,7 @@
 package org.openwms.common.domain.values;
 
 /**
- * A Unit.
+ * Just a simple Unit definition.
  * 
  * @param <T>
  *            Type of Unit
@@ -32,7 +32,7 @@ package org.openwms.common.domain.values;
 public interface Unit<T extends UnitType> {
 
     /**
-     * Convert this unit into <tt>unit</tt>.
+     * Convert this unit into another <code>Unit</code>.
      * 
      * @param unit
      *            The unit to convert to

@@ -33,9 +33,10 @@ import javax.persistence.TemporalType;
 import javax.persistence.Version;
 
 import org.openwms.common.domain.AbstractEntity;
+import org.openwms.common.domain.DomainObject;
 
 /**
- * A Message - Predefined message.
+ * A Message can be used to store useful information on other domain objects. 
  * 
  * @author <a href="mailto:scherrer@users.sourceforge.net">Heiko Scherrer</a>
  * @version $Revision$
@@ -43,11 +44,8 @@ import org.openwms.common.domain.AbstractEntity;
  */
 @Entity
 @Table(name = "APP_MESSAGE")
-public class Message extends AbstractEntity implements Serializable {
+public class Message extends AbstractEntity implements DomainObject<Long>, Serializable {
 
-    /**
-     * The serialVersionUID
-     */
     private static final long serialVersionUID = 7836132529431969528L;
 
     /**
@@ -71,7 +69,7 @@ public class Message extends AbstractEntity implements Serializable {
     private String messageText;
 
     /**
-     * Timestamp when the {@link Message} was created.
+     * Timestamp when the <code>Message</code> was created.
      */
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "CREATED")
@@ -92,7 +90,7 @@ public class Message extends AbstractEntity implements Serializable {
     private Message() {}
 
     /**
-     * Create a new Message with message number and message text.
+     * Create a new <code>Message</code> with message number and message text.
      * 
      * @param messageNo
      *            The message number
@@ -106,12 +104,19 @@ public class Message extends AbstractEntity implements Serializable {
     }
 
     /**
-     * Return unique technical key.
-     * 
-     * @return The unique technical key
+     * {@inheritDoc}
      */
+    @Override
     public Long getId() {
         return id;
+    }
+    
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public boolean isNew() {
+    	return this.id == null;
     }
 
     /**
@@ -153,7 +158,7 @@ public class Message extends AbstractEntity implements Serializable {
     }
 
     /**
-     * Return the date when this {@link Message} was created.
+     * Return the date when this <code>Message</code> was created.
      * 
      * @return The date of creation
      */
@@ -162,10 +167,9 @@ public class Message extends AbstractEntity implements Serializable {
     }
 
     /**
-     * JPA optimistic locking.
-     * 
-     * @return The version field
+     * {@inheritDoc}
      */
+    @Override
     public long getVersion() {
         return this.version;
     }

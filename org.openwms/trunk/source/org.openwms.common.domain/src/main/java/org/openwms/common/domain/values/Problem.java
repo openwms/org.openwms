@@ -29,7 +29,7 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
 /**
- * A Problem.
+ * A Problem is used to signal an occurred failure.
  * 
  * @author <a href="mailto:scherrer@users.sourceforge.net">Heiko Scherrer</a>
  * @version $Revision$
@@ -38,40 +38,37 @@ import javax.persistence.TemporalType;
 @Embeddable
 public class Problem implements Serializable {
 
-    /**
-     * The serialVersionUID.
-     */
     private static final long serialVersionUID = 2923793250934936203L;
 
     /**
-     * Timestamp when the {@link Problem} occurred.
+     * Timestamp when the <code>Problem</code> occurred.
      */
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "OCCURRED")
     private Date occurred;
 
     /**
-     * Message number of this {@link Problem}.
+     * Message number of the <code>Problem</code>.
      */
     @Column(name = "MESSAGE_NO")
     private int messageNo;
 
     /**
-     * Message text as String about the {@link Problem}.
+     * Message text about the <code>Problem</code>.
      */
     @Column(name = "MESSAGE")
     private String message;
 
     /* ----------------------------- methods ------------------- */
     /**
-     * Creates a new {@link Problem}.
+     * Creates a new <code>Problem</code> instance.
      */
     public Problem() {
         this.occurred = new Date();
     }
 
     /**
-     * Create a new {@link Problem} with a message text.
+     * Create a new <code>Problem</code> instance with a message text.
      * 
      * @param message
      *            text as String
@@ -82,7 +79,7 @@ public class Problem implements Serializable {
     }
 
     /**
-     * Create a new {@link Problem} with a message text and a message number.
+     * Create a new <code>Problem</code> instance with a message text and a message number.
      * 
      * @param message
      *            text as String
@@ -96,7 +93,7 @@ public class Problem implements Serializable {
     }
 
     /**
-     * Get the Date when occurred.
+     * Return the Date when the <code>Problem</code> has occurred.
      * 
      * @return Date when occurred.
      */
@@ -105,7 +102,7 @@ public class Problem implements Serializable {
     }
 
     /**
-     * Set the Date when occurred.
+     * Set the Date when the <code>Problem</code> occurred.
      * 
      * @param occurred
      *            The Date to set.

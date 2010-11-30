@@ -26,7 +26,7 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 /**
- * A TreeNodeImpl.
+ * A TreeNodeImpl is a simple implementation of a {@link TreeNode}.
  * 
  * @param <T>
  *            The type of the node.
@@ -36,9 +36,6 @@ import java.util.Map;
  */
 public class TreeNodeImpl<T> implements TreeNode<T>, Serializable {
 
-    /**
-     * The serialVersionUID
-     */
     private static final long serialVersionUID = 5032295350189152303L;
 
     private T data;
