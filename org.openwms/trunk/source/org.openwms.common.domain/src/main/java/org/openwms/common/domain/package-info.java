@@ -19,6 +19,6 @@
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
 /**
- * Contains essential domain classes used by all layers of the application.
+ * Contains essential domain classes of the COMMON module.
  */
 package org.openwms.common.domain;
