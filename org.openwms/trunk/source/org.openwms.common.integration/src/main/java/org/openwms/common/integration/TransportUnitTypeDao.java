@@ -23,12 +23,8 @@ package org.openwms.common.integration;
 import org.openwms.common.domain.TransportUnitType;
 
 /**
- * A TransportUnitTypeDao - Adds specific functionality concerning
- * {@link TransportUnitType} Entity classes.
- * <p>
- * Adds additional behavior to the {@link GenericDao} to operate on
- * {@link TransportUnitType} Entity classes.
- * </p>
+ * A TransportUnitTypeDao adds particular functionality regarding
+ * {@link TransportUnitType} entity classes.
  * 
  * @author <a href="mailto:openwms@googlemail.com">Heiko Scherrer</a>
  * @version $Revision$

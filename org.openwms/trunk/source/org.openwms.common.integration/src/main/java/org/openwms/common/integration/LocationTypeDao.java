@@ -23,15 +23,11 @@ package org.openwms.common.integration;
 import org.openwms.common.domain.LocationType;
 
 /**
- * A LocationTypeDao - Adds specific functionality concerning {@link LocationType}
- * Entity classes.
- * <p>
- * Adds additional behavior to the {@link GenericDao} to operate on
- * {@link LocationType} Entity classes.
- * </p>
+ * A LocationTypeDao adds particular functionality regarding {@link LocationType}
+ * entity classes.
  * 
  * @author <a href="mailto:openwms@googlemail.com">Heiko Scherrer</a>
- * @version $Revision: 710 $
+ * @version $Revision$
  * @since 0.1
  * @see org.openwms.common.integration.GenericDao
  * @see org.openwms.common.domain.LocationType

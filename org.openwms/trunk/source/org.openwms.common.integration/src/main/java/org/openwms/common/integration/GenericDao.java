@@ -27,114 +27,115 @@ import java.util.Map;
 import org.openwms.common.domain.AbstractEntity;
 
 /**
- * A GenericDao - Generic interface declaration for simple CRUD operations.
+ * A GenericDao is a generic interface declaration that defines simple CRUD
+ * operations.
  * <p>
  * This interface provides basic functionality to create/read/update and remove
- * Entity classes. Entities can be POJOs without any ORM dependencies. Merely
- * the implementation of this interface knows about the way the Entity is been
- * persisted.
+ * entity classes. Entities can be simple POJO classes without any ORM
+ * dependencies. Merely implementations of this interface knows about the way
+ * the entity is been persisted.
  * </p>
  * 
  * @param <T>
- *            Any serializable type, mostly an Entity class type
+ *            Any serializable type, mostly an entity class type
  * @param <ID>
- *            The type of the Entity class' unique id
+ *            The type of the entity class' unique id
  * @author <a href="mailto:openwms@googlemail.com">Heiko Scherrer</a>
  * @version $Revision$
  * @since 0.1
  */
 public interface GenericDao<T extends AbstractEntity, ID extends Serializable> {
 
-    /**
-     * Suffix for the FIND_ALL named query.
-     */
-    final static String FIND_ALL = ".findAll";
+	/**
+	 * Suffix for the FIND_ALL named query.
+	 */
+	final static String FIND_ALL = ".findAll";
 
-    /**
-     * Suffix for the FIND_BY_ID named query.
-     */
-    final static String FIND_BY_ID = ".findById";
+	/**
+	 * Suffix for the FIND_BY_ID named query.
+	 */
+	final static String FIND_BY_ID = ".findById";
 
-    /**
-     * Find and return the Entity identified by the technical key.
-     * 
-     * @param id
-     *            Unique technical key to find the Entity
-     * @return Entity class identified by id
-     */
-    T findById(ID id);
+	/**
+	 * Find and return the entity identified by the technical key.
+	 * 
+	 * @param id
+	 *            Unique technical key to find the entity
+	 * @return Entity class identified by id
+	 */
+	T findById(ID id);
 
-    /**
-     * Find all entities and return them in a {@link java.util.List}.
-     * 
-     * @return List of all Entity classes
-     */
-    List<T> findAll();
+	/**
+	 * Find all entities and return them as a {@link java.util.List}.
+	 * 
+	 * @return List of all entities
+	 */
+	List<T> findAll();
 
-    /**
-     * Use a named query to find all Entities. Pass in the name of the JPA
-     * <code>NamedQuery</code> and a parameter map.
-     * 
-     * @param queryName
-     *            Defined name of the NamedQuery.
-     * @param params
-     *            Map of parameters to pass to the query
-     * @return List of found Entity classes
-     */
-    List<T> findByNamedParameters(String queryName, Map<String, ?> params);
+	/**
+	 * Use a named query to find all entities. Pass in the name of the
+	 * <code>NamedQuery</code> and a parameter map.
+	 * 
+	 * @param queryName
+	 *            Defined name of the NamedQuery.
+	 * @param params
+	 *            Map of parameters to pass to the query
+	 * @return List of found entity classes
+	 */
+	List<T> findByNamedParameters(String queryName, Map<String, ?> params);
 
-    /**
-     * Use an own JPA query to fetch Entities.
-     * 
-     * @param query
-     *            The JPA query to execute
-     * @param values
-     *            A list of values to use as parameters
-     * @return A list of all Entities
-     */
-    List<T> findByPositionalParameters(String query, Object... values);
+	/**
+	 * Use an own JPA query to fetch entities.
+	 * 
+	 * @param query
+	 *            The JPA query to execute
+	 * @param values
+	 *            A list of values to use as parameters
+	 * @return A list of all entities
+	 */
+	List<T> findByPositionalParameters(String query, Object... values);
 
-    /**
-     * Find and return the Entity identified by the natural unique id.
-     * 
-     * @param id
-     *            Natural key to find the Entity (also known as business key)
-     * @return The found Entity
-     */
-    T findByUniqueId(Serializable id);
+	/**
+	 * Find and return the entity identified by the natural unique id.
+	 * 
+	 * @param id
+	 *            Natural key to find the entity (also known as business key)
+	 * @return The found entity
+	 */
+	T findByUniqueId(Serializable id);
 
-    /**
-     * Synchronize an Entity with the persistence layer and return it.
-     * 
-     * @param entity
-     *            Entity instance to be synchronized with the persistence layer
-     * @return The synchronized Entity instance. If JPA as implementation is
-     *         used, the returned instance is in managed state.
-     */
-    T save(T entity);
+	/**
+	 * Synchronize an entity with the persistence layer and return it.
+	 * 
+	 * @param entity
+	 *            Entity instance to be synchronized with the persistence layer
+	 * @return The synchronized entity instance. If JPA is
+	 *         used as implementation, the returned instance is managed.
+	 */
+	T save(T entity);
 
-    /**
-     * Removes an already persistent Entity.
-     * 
-     * @param entity
-     *            Entity instance to be removed
-     */
-    void remove(T entity);
+	/**
+	 * Removes an already persistent entity.
+	 * 
+	 * @param entity
+	 *            Entity instance to be removed
+	 */
+	void remove(T entity);
 
-    /**
-     * Persist a transient entity.
-     * 
-     * @param entity
-     *            Entity instance to be persisted
-     */
-    void persist(T entity);
+	/**
+	 * Persist a transient entity.
+	 * 
+	 * @param entity
+	 *            Entity instance to be persisted
+	 */
+	void persist(T entity);
 
-    /**
-     * Set the type of Entity to deal with.
-     * 
-     * @param persistentClass
-     *            Class type of the Entity instance
-     */
-    void setPersistentClass(Class<T> persistentClass);
+	/**
+	 * Set the type of entity to deal with.
+	 * 
+	 * @param persistentClass
+	 *            Class type of the entity instance
+	 */
+	void setPersistentClass(Class<T> persistentClass);
 
 }

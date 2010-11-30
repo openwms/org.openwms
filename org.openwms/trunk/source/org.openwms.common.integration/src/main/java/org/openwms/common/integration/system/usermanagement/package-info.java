@@ -19,6 +19,6 @@
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
 /**
- * Repository interfaces; implementations perform data access operations on classes belonging to the user management.
+ * Repository interface definitions of the CORE module. Repositories are also well known as DAOs.
  */
 package org.openwms.common.integration.system.usermanagement;

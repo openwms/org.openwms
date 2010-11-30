@@ -25,12 +25,8 @@ import org.openwms.common.domain.system.usermanagement.UserPassword;
 import org.openwms.common.integration.GenericDao;
 
 /**
- * An UserDao - Adds specific functionality concerning {@link User} Entity
+ * An UserDao adds particular functionality regarding {@link User} entity
  * classes.
- * <p>
- * Adds additional behavior to the {@link GenericDao} to operate on {@link User}
- * Entity classes.
- * </p>
  * 
  * @author <a href="mailto:openwms@googlemail.com">Heiko Scherrer</a>
  * @version $Revision$
@@ -41,12 +37,11 @@ import org.openwms.common.integration.GenericDao;
 public interface UserDao extends GenericDao<User, Long> {
 
     /**
-     * Search and return an {@link User} with its userName and password, stored
-     * in userPassword.
+     * Find and return an {@link User} by his userName and password.
      * 
      * @param userPassword
-     *            Stores the userName and password.
-     * @return The User when found, otherwise <code>null</code>
+     *            Holds the userName and password.
+     * @return The {@link User} if found, otherwise might be <code>null</code>
      */
     User findByNameAndPassword(UserPassword userPassword);
 }

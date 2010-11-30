@@ -25,12 +25,8 @@ import java.util.List;
 import org.openwms.common.domain.Location;
 
 /**
- * A LocationDao - Adds specific functionality concerning {@link Location}
- * Entity classes.
- * <p>
- * Adds additional behavior to the {@link GenericDao} to operate on
- * {@link Location} Entity classes.
- * </p>
+ * A LocationDao adds particular functionality regarding {@link Location}
+ * entity classes.
  * 
  * @author <a href="mailto:openwms@googlemail.com">Heiko Scherrer</a>
  * @version $Revision$

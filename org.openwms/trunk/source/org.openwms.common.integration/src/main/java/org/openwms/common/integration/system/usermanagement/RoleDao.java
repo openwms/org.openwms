@@ -24,13 +24,11 @@ import org.openwms.common.domain.system.usermanagement.Role;
 import org.openwms.common.integration.GenericDao;
 
 /**
- * A RoleDao.
- * <p>
- * Right now no interface, just to be compliant.
- * </p>
+ * A RoleDao adds particular functionality regarding
+ * {@link Role} entity classes.
  * 
  * @author <a href="mailto:russelltina@users.sourceforge.net">Tina Russell</a>
- * @version $Revision: $
+ * @version $Revision$
  * @since 0.1
  */
 public interface RoleDao extends GenericDao<Role, Long> {
