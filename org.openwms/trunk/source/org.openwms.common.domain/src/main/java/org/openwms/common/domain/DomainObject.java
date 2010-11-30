@@ -33,7 +33,7 @@ import java.io.Serializable;
  * </ul>
  * 
  * @author <a href="mailto:scherrer@users.sourceforge.net">Heiko Scherrer</a>
- * @version $Revision: $
+ * @version $Revision$
  * @since 0.1
  */
 public interface DomainObject<ID extends Serializable> {

@@ -43,7 +43,7 @@ import javax.persistence.PrePersist;
  * The uid property is useful on the ActionScript client application.
  * 
  * @author <a href="mailto:russelltina@users.sourceforge.net">Tina Russell</a>
- * @version $Revision: $
+ * @version $Revision$
  * @since 0.1
  */
 @MappedSuperclass
@@ -86,7 +86,7 @@ public abstract class AbstractEntity implements Serializable {
      * An AbstractEntityListener. Forces the creation of the uid before the entity is persisted.
      * 
      * @author <a href="mailto:russelltina@users.sourceforge.net">Tina Russell</a>
-     * @version $Revision: $
+     * @version $Revision$
      * @since 0.1
      */
     public static class AbstractEntityListener {
