@@ -20,12 +20,23 @@
  */
 package org.openwms.common.domain {
 
+    /**
+     * A Module is a definition of a Flex Module and is used to persist some
+     * initial information about these modules.
+     * 
+     * @version $Revision$
+     * @since 0.1
+     */
     [Bindable]
     [RemoteClass(alias="org.openwms.common.domain.Module")]
     public class Module extends ModuleBase {
     	
-    	public function toString():String
-    	{
+        /**
+         * Return the moduleName.
+         *
+         * @return the moduleName
+         */
+    	public function toString():String {
     		return this.moduleName;
     	}
     }

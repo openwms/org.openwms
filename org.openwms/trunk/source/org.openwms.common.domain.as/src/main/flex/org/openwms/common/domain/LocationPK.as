@@ -20,15 +20,30 @@
  */
 package org.openwms.common.domain {
 
+    /**
+     * A LocationPK, is a value type and is used as an unique natural key of
+     * <code>Location</code> entities.
+     * 
+     * @version $Revision$
+     * @since 0.1
+     * @see org.openwms.common.domain.Location
+     */
     [Bindable]
     [RemoteClass(alias="org.openwms.common.domain.LocationPK")]
     public class LocationPK extends LocationPKBase {
     	
-        public function LocationPK(area:String = null, aisle:String = null, x:String = null, y:String = null, z:String = null)
-        {
+        /**
+         * Creates a new LocationPK.
+         *
+         * @param area The area
+         * @param aisle The aisle
+         * @param x The x dimension
+         * @param y The y dimension
+         * @param z The z dimension
+         */
+        public function LocationPK(area:String = null, aisle:String = null, x:String = null, y:String = null, z:String = null) {
             super();
-            if (area != null && aisle != null && x != null && y != null && z != null)
-            {
+            if (area != null && aisle != null && x != null && y != null && z != null) {
 	            _area = area;
 	            _aisle = aisle;
 	            _x = x;
@@ -37,8 +52,12 @@ package org.openwms.common.domain {
             }
         }
         
-        public function toString():String
-        {
+        /**
+         * Returns area/aisle/x/y/z as String.
+         *
+         * @return 'area/aisle/x/y/z'
+         */
+        public function toString():String {
         	return _area+"/"+_aisle+"/"+_x+"/"+_y+"/"+_z;
         }
     }

@@ -20,26 +20,43 @@
  */
 package org.openwms.common.domain.values {
 
+	/**
+	 * A Barcode defines an unique label.
+	 * 
+	 * @version $Revision$
+	 * @since 0.1
+	 */
     [Bindable]
     [RemoteClass(alias="org.openwms.common.domain.values.Barcode")]
     public class Barcode extends BarcodeBase {
     	
-    	public function Barcode(value:String = null):void
-    	{
+    	/**
+    	 * Create a new Barcode with a value.
+    	 *
+    	 * @param The new value
+    	 */
+    	public function Barcode(value:String = null):void {
     		super();
-            if (value != null)
-            {
+            if (value != null) {
                 _value = value;
             }
     	}
     	
-        public function toString():String
-        {
+    	/**
+    	 * Returns the value.
+    	 *
+    	 * @return the value
+    	 */
+        public function toString():String {
             return this.value;
         }
         
-        public function isEmpty():Boolean
-        {
+        /**
+         * Check if the Barcode is null or empty.
+         *
+         * @return <code>true</code> if null or empty, otherwise <code>false</code>
+         */
+        public function isEmpty():Boolean {
         	return ((this.value == null||this.value.length == 0) ? true : false);
         }
     }

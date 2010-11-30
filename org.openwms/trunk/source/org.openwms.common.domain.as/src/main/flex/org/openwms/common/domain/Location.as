@@ -20,21 +20,41 @@
  */
 package org.openwms.common.domain {
 
+	/**
+	 * A Location, defines a place within a warehouse.
+	 * <p>
+	 * Could be something like a storage location in the stock as well as a location
+	 * on a conveyer. Also virtual or error locations can be represented with the
+	 * <code>Location</code> entity.
+	 * </p>
+	 * Multiple <code>Location</code>s can be grouped together to a <code>LocationGroup</code>.
+	 * 
+	 * @version $Revision$
+	 * @since 0.1
+	 * @see org.openwms.common.domain.LocationGroup
+	 */
     [Bindable]
     [RemoteClass(alias="org.openwms.common.domain.Location")]
     public class Location extends LocationBase {
     	
-        public function Location(pk:LocationPK = null)
-        {
+    	/**
+    	 * Creates a new Location with a unique LocationPK.
+    	 *
+    	 * @param pk The locationPk to set
+    	 */
+        public function Location(pk:LocationPK = null) {
             super();
-            if (pk != null)
-            {
+            if (pk != null) {
                 _locationId = pk;
             }
         }
 
-    	public function toString():String
-    	{
+        /**
+         * Returns the locationId in the format area/aisle/x/y/z.
+         *
+         * @return area/aisle/x/y/z
+         */
+    	public function toString():String {
     		return _locationId.area+"/"+_locationId.aisle+"/"+_locationId.x+"/"+_locationId.y+"/"+_locationId.z;
     	}
     }

@@ -22,28 +22,53 @@ package org.openwms.common.domain {
 	
 	import mx.controls.dataGridClasses.DataGridColumn;
 
+	/**
+	 * A TransportUnit is something like a box, a toad, a bin or a palette that has
+	 * to be moved around.
+	 * <p>
+	 * Used as a container to transport items and <code>LoadUnit</code>s. It can be
+	 * moved between <code>Location</code>s.
+	 * </p>
+	 * 
+	 * @version $Revision$
+	 * @since 0.1
+	 */
     [Bindable]
     [RemoteClass(alias="org.openwms.common.domain.TransportUnit")]
     public class TransportUnit extends TransportUnitBase {
     	
-    	public function isEmpty():Boolean
-    	{
+    	/**
+    	 * Checks whether the <code>TransportUnit</code> is empty or not.
+    	 *
+    	 * @return <code>true</code> when empty, otherise <code>false</code>
+    	 */
+    	public function isEmpty():Boolean {
     		return _empty;
     	}
 
-        public function formatBarcode(item:Object, dg:DataGridColumn):String
-        {
-            if (item[dg.dataField] != null)
-            {
+        /**
+         * Resolve the <code>Barcode</code> from them items field dg.
+         *
+         * @param item The item to investigate
+         * @param dg The datagrid column
+         * @return The Barcode or '--' when <code>null</code>
+         */
+        public function formatBarcode(item:Object, dg:DataGridColumn):String {
+            if (item[dg.dataField] != null) {
                 return String(item[dg.dataField].barcode);
             }
             return "--";
         }
 
-        public function formatLocation(item:Object, dg:DataGridColumn):String
-        {
-            if (item[dg.dataField] != null)
-            {
+        /**
+         * Resolve the <code>Location</code> from them items field dg.
+         *
+         * @param item The item to investigate
+         * @param dg The datagrid column
+         * @return The <code>Location</code> or '--' when <code>null</code>
+         */
+        public function formatLocation(item:Object, dg:DataGridColumn):String {
+            if (item[dg.dataField] != null) {
                 return String(item[dg.dataField].actualLocation);
             }
             return "--";

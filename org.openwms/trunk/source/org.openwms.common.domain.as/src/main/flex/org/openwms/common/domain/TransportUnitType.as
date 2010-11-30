@@ -22,29 +22,50 @@ package org.openwms.common.domain {
 
     import mx.collections.ArrayCollection;
 
+    /**
+     * A TransportUnitType defines a type for <code>TransportUnit</code>s.
+     * <p>
+     * Typically stores static attributes of a <code>TransportUnit</code> such
+     * as the length, the height, etc. So it's possible to group 
+     * <code>TransportUnit</code>s with same characteristics,
+     * </p>
+     * 
+     * @version $Revision$
+     * @since 0.1
+     * @see org.openwms.common.domain.TransportUnit
+     */
     [Bindable]
     [RemoteClass(alias="org.openwms.common.domain.TransportUnitType")]
     public class TransportUnitType extends TransportUnitTypeBase {
     	
-    	public function TransportUnitType():void
-    	{
-    		if (this._typePlacingRules == null)
-    		{
+        /**
+         * Create a new <code>TransportUnitType</code> and initialize
+         * collections.
+         */
+    	public function TransportUnitType():void {
+    		if (this._typePlacingRules == null) {
     			this._typePlacingRules = new ArrayCollection();
     		}
-            if (this._typeStackingRules == null)
-            {
+            if (this._typeStackingRules == null) {
                 this._typeStackingRules = new ArrayCollection();
             }
     	}
 
-        public function toString():String
-        {
+    	/**
+    	 * Returns the type.
+    	 *
+    	 * @return The type
+    	 */
+        public function toString():String {
             return this._type;
         }
         
-        public function deepCopy():TransportUnitType
-        {
+        /**
+         * Does a deep copy and creates a new instance.
+         *
+         * @return a new instance of the <code>TransportUnitType</code>
+         */
+        public function deepCopy():TransportUnitType {
         	var copy:TransportUnitType = new TransportUnitType();
         	copy._type = this._type;
         	copy._description = this._description;

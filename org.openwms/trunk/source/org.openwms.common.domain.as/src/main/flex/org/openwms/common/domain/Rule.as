@@ -20,6 +20,12 @@
  */
 package org.openwms.common.domain {
 
+    /**
+     * A Rule used as marker interface.
+     * 
+     * @version $Revision$
+     * @since 0.1
+     */
     public interface Rule {
     }
 }

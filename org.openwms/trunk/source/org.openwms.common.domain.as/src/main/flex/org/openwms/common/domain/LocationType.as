@@ -20,12 +20,27 @@
  */
 package org.openwms.common.domain {
 
+    /**
+     * A LocationType defines a type for <code>Location</code>s.
+     * <p>
+     * Type of a <code>Location</code>.<br>
+     * Used to group <code>Location</code>s with same characteristics.
+     * </p>
+     * 
+     * @version $Revision$
+     * @since 0.1
+     * @see org.openwms.common.domain.Location
+     */
     [Bindable]
     [RemoteClass(alias="org.openwms.common.domain.LocationType")]
     public class LocationType extends LocationTypeBase {
     	
-    	public function withType(type:String):void
-    	{
+        /**
+         * Set the type of the <code>LocationType</code>.
+         *
+         * @param type The type to set
+         */
+    	public function withType(type:String):void {
     		this._type = type;
     	}
     }
