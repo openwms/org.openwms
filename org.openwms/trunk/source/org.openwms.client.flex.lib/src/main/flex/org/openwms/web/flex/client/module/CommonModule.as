@@ -18,36 +18,33 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
-package org.openwms.web.flex.client.module
-{
+package org.openwms.web.flex.client.module {
+	
     import flash.events.Event;
-    
     import mx.events.FlexEvent;
     import mx.modules.ModuleBase;
 
     /**
-     * A CommonModule.
+     * A CommonModule is the superclass of all Flex Modules which shall be loaded
+     * into the CORE Flex Application.
      *
-     * @author <a href="mailto:openwms@googlemail.com">Heiko Scherrer</a>
-     * @version $Revision: 870 $
+     * @version $Revision$
      */
-     public class CommonModule extends ModuleBase
-    {
+     public class CommonModule extends ModuleBase {
+
         /**
-         * CommonModule.
+         * Constructor registers the CREATION_COMPLETE event.
          */
-        public function CommonModule()
-        {
+        public function CommonModule() {
             super();
             this.addEventListener(FlexEvent.CREATION_COMPLETE, onCreationComplete);
         }
 
         /**
-         * This method returns a list of menu items which shall be expaned to the main
-         * application menu bar.
+         * Callback, is called when the FlexEvent.CREATION_COMPLETE is fired.
+         * Override initApp to hook in.
          */
-        public function onCreationComplete(e:Event):void
-        {
+        public function onCreationComplete(e:Event):void {
         	trace("Creation of Module completed");
             initApp();
         }
@@ -55,8 +52,7 @@ package org.openwms.web.flex.client.module
         /**
          * Override to do initial work when FlexEvent.CREATION_COMPLETE is fired.
          */
-        protected function initApp():void
-        {
+        protected function initApp():void {
         }
     }
 }

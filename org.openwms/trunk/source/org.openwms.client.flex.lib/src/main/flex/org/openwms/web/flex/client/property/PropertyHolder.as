@@ -27,7 +27,7 @@ package org.openwms.web.flex.client.property
      * A PropertyHolder.
      *
      * @author <a href="mailto:openwms@googlemail.com">Heiko Scherrer</a>
-     * @version $Revision: 700 $
+     * @version $Revision$
      */
     [Name("propertyHolder")]
     [Bindable]

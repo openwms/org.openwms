@@ -28,7 +28,7 @@ package org.openwms.web.flex.client.event
      * An EventBroker.
      *
      * @author <a href="mailto:openwms@googlemail.com">Heiko Scherrer</a>
-     * @version $Revision: 235 $
+     * @version $Revision$
      * @since 0.1
      */
     [Bindable]

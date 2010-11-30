@@ -40,10 +40,13 @@ package org.openwms.web.flex.client.module {
     import org.openwms.web.flex.client.model.ModelLocator;
 
     /**
-     * A ModuleLocator.
+     * A ModuleLocator is the main implementation that cares about handling
+     * with Flex Modules with the CORE Flex Application.
+     * It is a Tide component and can be injected by name=moduleLocator.
+     * It fires the following Tide Events:
+     * MODULE_CONFIG_CHANGED, MODULES_CONFIGURED, MODULE_LOADED, MODULE_UNLOADED.
      *
-     * @author <a href="mailto:openwms@googlemail.com">Heiko Scherrer</a>
-     * @version $Revision: 235 $
+     * @version $Revision$
      * @since 0.1
      */
     [Name("moduleLocator")]
@@ -53,10 +56,15 @@ package org.openwms.web.flex.client.module {
     [ManagedEvent(name="MODULE_UNLOADED")]
     [Bindable]
     public class ModuleLocator {
-        private static var instance : ModuleLocator;
 
+        /**
+         * Needs a Model to work on.
+         */
         [In]
         public var modelLocator : ModelLocator;
+        /**
+         * Needs a TideContext.
+         */        
         [In]
         public var tideContext : Context;
 
@@ -64,14 +72,16 @@ package org.openwms.web.flex.client.module {
         private var applicationDomain : ApplicationDomain = new ApplicationDomain(ApplicationDomain.currentDomain);
         private static var logger : ILogger = Log.getLogger("org.openwms.web.flex.client.module.ModuleLocator");
 
-        public function ModuleLocator() {
-        }
+        /**
+         * Simple constructor used by the Tide framework.
+         */
+        public function ModuleLocator() { }
 
         /**
          * Usually this method is called when the application is initialized,
          * to load all modules and module configuration from the service.
-         * After this startup configuration is read, the application can really
-         * LOAD the swf modules into it.
+         * After this startup configuration is read, the application can then
+         * LOAD the swf modules.
          */
         [Observer("LOAD_ALL_MODULES")]
         public function loadModulesFromService() : void {
@@ -79,6 +89,10 @@ package org.openwms.web.flex.client.module {
             tideContext.moduleManagementService.getModules(onModulesLoad, onFault);
         }
 
+        /**
+         * Is called when the UNLOAD_ALL_MODULES is fired to unload all Modules.
+         * It iterates through the list of loadedModules and triggers unloading each of them.
+         */
         [Observer("UNLOAD_ALL_MODULES")]
         public function unloadAllModules() : void {
         	for each (var url:String in modelLocator.loadedModules.keys) {
@@ -89,7 +103,10 @@ package org.openwms.web.flex.client.module {
         }
 
         /**
-         * Tries to save the module data via the service.
+         * Tries to save the module data via a service call.
+         * Is called when the SAVE_MODULE event is fired.
+         * 
+         * @param event An ApplicationEvent that holds the Module to be saved in its data field
          */
         [Observer("SAVE_MODULE")]
         public function saveModule(event : ApplicationEvent) : void {
@@ -97,7 +114,10 @@ package org.openwms.web.flex.client.module {
         }
 
         /**
-         * Tries to remove the module data via the service.
+         * Tries to remove the module data via a service call.
+         * Is called when the DELETE_MODULE event is fired.
+         * 
+         * @param event An ApplicationEvent that holds the Module to be removed in its data field
          */
         [Observer("DELETE_MODULE")]
         public function deleteModule(event : ApplicationEvent) : void {
@@ -106,8 +126,11 @@ package org.openwms.web.flex.client.module {
         }
         
         /**
-         * A collection of modules is passed to the service to store the startupOrder properties.
-         * The startupOrders must be calculated before.
+         * A collection of modules is passed to the service to save the startupOrder properties.
+         * The startupOrders must be calculated and ordered before. Is called when the
+         * SAVE_STARTUP_ORDERS event is fired.
+         * 
+         * @param event An ApplicationEvent holds a list of Modules that shall be updated
          */
         [Observer("SAVE_STARTUP_ORDERS")]
         public function saveStartupOrders(event : ApplicationEvent) : void {
@@ -115,9 +138,9 @@ package org.openwms.web.flex.client.module {
         }
 
         /**
-         * This methods firts checks whether the module is known as module.
-         * Then we try to load the module and set the loaded flag to true. If something goes
-         * wrong we set loaded to false.
+         * Checks whether the module a registered Module and calls loadModule to load it.
+         *
+         * @param event An ApplicationEvent holds the Module to be loaded within the data property
          */
         [Observer("LOAD_MODULE")]
         public function onLoadModule(event : ApplicationEvent) : void {
@@ -134,7 +157,9 @@ package org.openwms.web.flex.client.module {
         }
         
         /**
-         * This method tries to unload a module. The module must be known.
+         * Checks whether the module a registered Module and calls unloadModule to unload it.
+         *
+         * @param event An ApplicationEvent holds the Module to be unloaded within the data property
          */
         [Observer("UNLOAD_MODULE")]
         public function onUnloadModule(event : ApplicationEvent) : void {
@@ -152,6 +177,8 @@ package org.openwms.web.flex.client.module {
 
         /**
          * Returns an ArrayCollection of MenuItems of all loaded modules.
+         *
+         * @param stdItems A list of standard items that are included in the result list per default
          */
         public function getActiveMenuItems(stdItems : XMLListCollection=null) : XMLListCollection {
             var all : XMLListCollection = new XMLListCollection();
@@ -180,8 +207,10 @@ package org.openwms.web.flex.client.module {
         }
 
         /**
-         * Checks whether a module is known as module.
-         * Returns true only if the module is registered, otherwise false.
+         * Check whether the module is in the list of persistend modules.
+         *
+         * @param module The Module to be checked
+         * @return <code>true</code> when the module is known, otherwise <code>false</code>
          */
         public function isRegistered(module : Module) : Boolean {
             if (module == null) {
@@ -196,8 +225,10 @@ package org.openwms.web.flex.client.module {
         }
 
         /**
-         * Checks whether a module is loaded.
-         * Returns true if the module is loaded, otherwise false.
+         * Checks whether a module as loaded before.
+         *
+         * @param moduleName The name of the Module to check
+         * @return <code>true</code> if the module was loaded, otherwise <code>false</code>.
          */
         public function isLoaded(moduleName : String) : Boolean {
             if (moduleName == null) {
@@ -262,7 +293,7 @@ package org.openwms.web.flex.client.module {
             var mInf : IModuleInfo = ModuleManager.getModule(module.url);
             if (mInf != null) {
                 if (mInf.loaded) {
-                	module.loaded = true;
+                    module.loaded = true;
                     trace("Module was already loaded : " + module.moduleName);
                     return;
                 } else {

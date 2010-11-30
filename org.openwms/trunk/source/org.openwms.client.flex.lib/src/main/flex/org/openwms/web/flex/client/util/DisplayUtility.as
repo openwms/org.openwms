@@ -26,7 +26,7 @@ package org.openwms.web.flex.client.util {
      * A DisplayUtility.
      *
      * @author <a href="mailto:openwms@googlemail.com">Heiko Scherrer</a>
-     * @version $Revision: 700 $
+     * @version $Revision$
      */
     public final class DisplayUtility {
         public function DisplayUtility() {

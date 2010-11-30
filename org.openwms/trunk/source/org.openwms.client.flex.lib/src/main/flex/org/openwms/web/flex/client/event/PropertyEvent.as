@@ -25,7 +25,7 @@ package org.openwms.web.flex.client.event {
      * A PropertyEvent.
      *
      * @author <a href="mailto:openwms@googlemail.com">Heiko Scherrer</a>
-     * @version $Revision: 700 $
+     * @version $Revision$
      */
     public class PropertyEvent extends Event {
     	

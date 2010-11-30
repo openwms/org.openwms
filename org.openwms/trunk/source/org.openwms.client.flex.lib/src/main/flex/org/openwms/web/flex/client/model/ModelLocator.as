@@ -18,27 +18,24 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
-package org.openwms.web.flex.client.model
-{
+package org.openwms.web.flex.client.model{
 
     import mx.collections.ArrayCollection;
     import mx.formatters.DateFormatter;
-    
     import org.openwms.common.domain.Module;
     import org.openwms.common.domain.system.usermanagement.User;
     import org.openwms.web.flex.client.HashMap;
     import org.openwms.web.flex.client.event.SwitchScreenEvent;
 
     /**
-     * A ModelLocator.
+     * A ModelLocator is the main model backing bean to store session data.
+     * It is a Tide component and can be injected by name=modelLocator.
      *
-     * @author <a href="mailto:openwms@googlemail.com">Heiko Scherrer</a>
      * @version $Revision$
      */
     [Name("modelLocator")]
     [Bindable]
-    public class ModelLocator
-    {
+    public class ModelLocator {
 
         // --------------------------------------------------------------------
         // Default Views
@@ -57,32 +54,79 @@ package org.openwms.web.flex.client.model
         // Used to control the main viewStack
         public var actualView:String = SwitchScreenEvent.SHOW_STARTSCREEN;
         public var authenticated:Boolean = false;
+        /**
+         * Upload URL for file uploads.
+         */
         public const UPLOAD_URL:String = "/openwms/upload";
+        /**
+         * Directory name on the server, where to store the uploaded files.
+         */
         public const DIRECTORY_NAME:String = "data";
+        /**
+         * Date format including the time.
+         */
         public static const DT_FORMAT_STRING:String = "DD.MM.YYYY HH:NN:SS";
+        /**
+         * Date format without timestamp.
+         */
         public static const SIMPLE_DT_FORMAT:String = "DD.MM.YYYY";
+        /**
+         * A DateFormatter that uses the SIMPLE_DT_FORMAT.
+         */
         public const dateFormatter:DateFormatter = new DateFormatter();
+        /**
+         * Another DateFormatter that uses the DT_FORMAT_STRING.
+         */
         public const dateTimeFormatter:DateFormatter = new DateFormatter();
 
         // --------------------------------------------------------------------
         // User and Role Management
         // --------------------------------------------------------------------
+        /**
+         * Collection of all Users.
+         */
         public var allUsers:ArrayCollection = new ArrayCollection();
+        /**
+         * Collection of all Roles.
+         */
         public var allRoles:ArrayCollection = new ArrayCollection();
+        /**
+         * The current selected User in the UserManagement view.
+         */
         public var selectedUser:User = null;
+        /**
+         * DEPRECATED
+         */
         public var image:Object;
 
         // --------------------------------------------------------------------
         // Module Management
         // --------------------------------------------------------------------
+        /**
+         * Collection of all Modules.
+         */
         public var allModules:ArrayCollection = new ArrayCollection();
+        /**
+         * A Map of all loaded Modules. The map key is the URL, the value is
+         * the IModuleInfo instance.
+         */
         public var loadedModules:HashMap = new HashMap();
+        /**
+         * A Map of all unloaded Modules. The map key is the URL, the value is
+         * the IModuleInfo instance.
+         */
         public var unloadedModules:HashMap = new HashMap();
+        /**
+         * The current selected Module in the ModuleManagement view.
+         */
         public var selectedModule:Module = null;
         
         // --------------------------------------------------------------------
-        // Module Management
+        // Property Management
         // --------------------------------------------------------------------
+        /**
+         * Collection of all Properties.
+         */
         public var allProperties:ArrayCollection = new ArrayCollection();
 
         // --------------------------------------------------------------------
@@ -99,10 +143,9 @@ package org.openwms.web.flex.client.model
         public static const WIDTH_DATETIME:Number = 60;
         
         /**
-         * Constructor.
+         * Constructor. Does some initializations of the dateFormatters.
          */
-        public function ModelLocator()
-        {
+        public function ModelLocator() {
         	dateFormatter.formatString = SIMPLE_DT_FORMAT;
         	dateTimeFormatter.formatString = DT_FORMAT_STRING;
         }

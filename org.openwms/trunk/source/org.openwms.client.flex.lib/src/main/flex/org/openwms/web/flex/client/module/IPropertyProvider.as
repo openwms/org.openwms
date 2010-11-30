@@ -18,20 +18,21 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
-package org.openwms.web.flex.client.module
-{
+package org.openwms.web.flex.client.module {
+    
     import flash.utils.Dictionary;
     
     /**
-     * An IPropertyProvider.
+     * An IPropertyProvider can provide custom properties to the main application.
+     * A Module implementing this interface can hook into the CORE Property Management.
      *
-     * @author <a href="mailto:openwms@googlemail.com">Heiko Scherrer</a>
-     * @version $Revision: 700 $
+     * @version $Revision$
      */
-    public interface IPropertyProvider 
-    {
+    public interface IPropertyProvider {
+        
         /**
-         * Load and return a Dictionary of properties that shall be loaded into the main application domain.
+         * Return a Dictionary of properties that shall be loaded into the main
+         * application domain.
          * 
          * @return The properties to include.
          */

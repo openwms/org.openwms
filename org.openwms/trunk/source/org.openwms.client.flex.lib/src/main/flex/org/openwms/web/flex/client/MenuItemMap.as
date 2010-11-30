@@ -23,6 +23,9 @@ package org.openwms.web.flex.client
     import mx.collections.ArrayCollection;
     import mx.collections.XMLListCollection;
 
+    /**
+     * DEPRECATED
+     */
     public class MenuItemMap extends HashMap
     {
         /**
