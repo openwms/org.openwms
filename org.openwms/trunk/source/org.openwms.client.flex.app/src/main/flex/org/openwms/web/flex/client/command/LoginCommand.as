@@ -32,7 +32,7 @@ package org.openwms.web.flex.client.command {
      * A LoginCommand.
      *
      * @author <a href="mailto:openwms@googlemail.com">Heiko Scherrer</a>
-     * @version $Revision: 700 $
+     * @version $Revision$
      */
     public class LoginCommand extends AbstractCommand implements IResponder, ICommand {
 

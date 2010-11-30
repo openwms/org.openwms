@@ -24,7 +24,7 @@ package org.openwms.web.flex.client.helper {
      * A ServiceHolder.
      *
      * @author <a href="mailto:openwms@googlemail.com">Heiko Scherrer</a>
-     * @version $Revision: 700 $
+     * @version $Revision$
      */
     public class ServiceHolder {
 
