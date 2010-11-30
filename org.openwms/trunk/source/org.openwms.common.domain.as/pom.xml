@@ -39,6 +39,7 @@
 	<build>
 		<finalName>${project.artifactId}-${project.version}</finalName>
 		<sourceDirectory>${project.basedir}/src/main/flex</sourceDirectory>
+        <testSourceDirectory>${project.basedir}/src/test/flex</testSourceDirectory>
 		<plugins>
         <!-- 
 			<plugin>
@@ -168,6 +169,7 @@
 			<plugin>
 				<groupId>org.sonatype.flexmojos</groupId>
 				<artifactId>flexmojos-maven-plugin</artifactId>
+				<version>3.3.0</version>
 				<reportSets>
 					<reportSet>
 						<id>flex-reports</id>
@@ -175,8 +177,7 @@
 							<report>asdoc-report</report>
 						</reports>
 						<configuration>
-							<windowTitle>AsDoc</windowTitle>
-							<footer>openwms.org</footer>
+							<footer>www.openwms.org</footer>
 							<sourcePaths>
 								<sourcePath>${project.basedir}/src/main/flex/</sourcePath>
 								<sourcePath>${project.build.directory}/generated-sources/flexmojos/</sourcePath>

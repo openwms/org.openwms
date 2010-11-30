@@ -20,17 +20,36 @@
  */
 package org.openwms.common.domain {
 
+    /**
+     * A TypePlacingRule defines which <code>TransportUnitType</code>s can be
+     * located on which <code>LocationType</code>s.
+     * <p>
+     * A privilegeLevel defines the order of all allowed <code>LocationType</code>s.
+     * </p>
+     * 
+     * @version $Revision$
+     * @since 0.1
+     * @see org.openwms.common.domain.TransportUnitType
+     */
     [Bindable]
     [RemoteClass(alias="org.openwms.common.domain.TypePlacingRule")]
     public class TypePlacingRule extends TypePlacingRuleBase {
     	
-    	public function withTransportUnitType(transportUnitType:TransportUnitType)
-    	{
+        /**
+         * Add a <code>TransportUnitType</code> to this rule.
+         *
+         * @param transportUnitType The type to add
+         */
+    	public function withTransportUnitType(transportUnitType:TransportUnitType) {
     		this._transportUnitType = transportUnitType;
     	}
     	
-    	public function withLocationType(locationType:LocationType)
-    	{
+        /**
+         * Add a <code>LocationType</code> to this rule.
+         *
+         * @param locationType The type to add
+         */
+    	public function withLocationType(locationType:LocationType) {
     		this._allowedLocationType = locationType;
     	}
     }

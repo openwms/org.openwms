@@ -20,11 +20,26 @@
  */
 package org.openwms.common.domain {
 
+    /**
+     * A LocationGroup, used to group Locations logically.
+     * <p>
+     * Used to group Locations with same characteristics.
+     * </p>
+     * 
+     * @version $Revision$
+     * @since 0.1
+     * @see org.openwms.common.domain.Location
+     */
     [Bindable]
     [RemoteClass(alias="org.openwms.common.domain.LocationGroup")]
     public class LocationGroup extends LocationGroupBase {
-        public function toString():String
-        {
+        
+        /**
+         * Returns the name.
+         *
+         * @return The name
+         */
+        public function toString():String {
             return name;
         }
     }
