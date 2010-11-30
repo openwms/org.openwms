@@ -27,9 +27,9 @@ import java.io.Serializable;
  * functionality of all domain objects.<br>
  * Each domain object:
  * <ul>
- * <li>shall have a optimistic locking field</li>
- * <li>should know if it is a transient or persisted instance</li>
- * <li>should offer its technical key value</li>
+ * <li>shall have an optimistic locking field</li>
+ * <li>shall know if it is a transient or persisted instance</li>
+ * <li>shall offer the technical key value</li>
  * </ul>
  * 
  * @author <a href="mailto:scherrer@users.sourceforge.net">Heiko Scherrer</a>
