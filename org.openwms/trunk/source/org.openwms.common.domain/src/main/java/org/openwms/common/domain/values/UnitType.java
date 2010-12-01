@@ -39,14 +39,14 @@ public interface UnitType {
     long getBaseUnitValue();
 
     /**
-     * Return all sub types of this {@link UnitType}.
+     * Return all sub types of the <code>UnitType</code>.
      * 
      * @return a list of sub types.
      */
     List<UnitType> getAll();
 
     /**
-     * Return the base unit type of this {@link UnitType}.
+     * Return the base unit type of the <code>UnitType</code>.
      * 
      * @return The base unit type
      */

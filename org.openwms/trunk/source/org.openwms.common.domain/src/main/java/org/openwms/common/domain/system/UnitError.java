@@ -33,7 +33,7 @@ import org.openwms.common.domain.AbstractEntity;
 import org.openwms.common.domain.DomainObject;
 
 /**
- * An UnitError describes errors occurring on <code>TransportUnit</code>s on
+ * An UnitError represents an error occurring on <code>TransportUnit</code>s, on
  * <code>LoadUnit</code>s or others.
  * 
  * @author <a href="mailto:scherrer@users.sourceforge.net">Heiko Scherrer</a>

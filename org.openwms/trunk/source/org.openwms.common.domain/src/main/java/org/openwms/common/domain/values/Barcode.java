@@ -41,8 +41,10 @@ public class Barcode implements Serializable {
 
 	/**
 	 * A BARCODE_ALIGN defines whether the <code>Barcode</code> is applied
-	 * <code>LEFT</code> or <code>RIGHT</code>. Only be used when padding is
-	 * activated. </p>
+	 * <code>LEFT</code> or <code>RIGHT</code>.
+	 * <p>
+	 * Only be used when padding is activated.
+	 * </p>
 	 * 
 	 * @author <a href="mailto:scherrer@users.sourceforge.net">Heiko
 	 *         Scherrer</a>

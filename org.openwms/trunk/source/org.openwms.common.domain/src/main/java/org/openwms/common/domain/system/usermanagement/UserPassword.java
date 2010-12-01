@@ -38,7 +38,7 @@ import org.openwms.common.domain.AbstractEntity;
 import org.openwms.common.domain.DomainObject;
 
 /**
- * Encapsulated the password of an {@link User}.
+ * Encapsulates the password of an {@link User}.
  * <p>
  * When an {@link User} changes his password, the current password is stored to the
  * history list of passwords.
