@@ -24,7 +24,7 @@ package org.openwms.tms.service;
  * A TransportOrderServiceException.
  *
  * @author <a href="mailto:russelltina@users.sourceforge.net">Tina Russell</a>
- * @version $Revision: $
+ * @version $Revision$
  *
  */
 public class TransportOrderServiceException extends RuntimeException {
