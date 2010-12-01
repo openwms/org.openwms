@@ -20,8 +20,13 @@
  */
 package org.openwms.common.domain.system {
 
+    /**
+     * A Message encapsulates a message text and a message number.
+     * 
+     * @version $Revision$
+     * @since 0.1
+     */
     [Bindable]
     [RemoteClass(alias="org.openwms.common.domain.system.Message")]
-    public class Message extends MessageBase {
-    }
+    public class Message extends MessageBase { }
 }

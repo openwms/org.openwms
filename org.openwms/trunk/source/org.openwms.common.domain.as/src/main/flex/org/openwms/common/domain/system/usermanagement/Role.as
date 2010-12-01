@@ -20,14 +20,35 @@
  */
 package org.openwms.common.domain.system.usermanagement {
 
+	/**
+	 * A Role is grouping multiple <code>User</code>s regarding security aspects.
+	 * <p>
+	 * Security access policies are assigned to Roles instead of to <code>User</code>s directly.
+	 * </p>
+	 * 
+	 * @version $Revision$
+	 * @since 0.1
+	 */
     [Bindable]
     [RemoteClass(alias="org.openwms.common.domain.system.usermanagement.Role")]
     public class Role extends RoleBase {
 
+        /**
+         * Constructor.
+         *
+         * @param name The unique name of the role
+         * @param description A descriptive text
+         */
         public function Role(name : String=null, description : String=null) {
             this._name = name;
             this._description = description;
         }
+        
+        /**
+         * Simple setter of the name as a helper method on the AS side ;-).
+         *
+         * @param value The name to set
+         */
         public function set name(value:String):void {
             _name = value;
         }

@@ -26,6 +26,5 @@ package org.openwms.common.domain {
      * @version $Revision$
      * @since 0.1
      */
-    public interface Rule {
-    }
+    public interface Rule { }
 }

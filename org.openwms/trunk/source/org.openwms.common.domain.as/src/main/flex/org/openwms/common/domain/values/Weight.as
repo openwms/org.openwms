@@ -20,8 +20,14 @@
  */
 package org.openwms.common.domain.values {
 
+	/**
+	 * A Weight represents a real world weight, that comes with an <code>Unit</code> and a
+	 * value.
+	 * 
+	 * @version $Revision$
+	 * @since 0.1
+	 */
     [Bindable]
     [RemoteClass(alias="org.openwms.common.domain.values.Weight")]
-    public class Weight extends WeightBase {
-    }
+    public class Weight extends WeightBase { }
 }
