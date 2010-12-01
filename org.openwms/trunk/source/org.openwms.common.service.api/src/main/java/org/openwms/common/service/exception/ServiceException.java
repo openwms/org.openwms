@@ -23,7 +23,7 @@ package org.openwms.common.service.exception;
 import java.io.Serializable;
 
 /**
- * A ServiceException. Checked application exception.
+ * A ServiceException a checked application exception.
  * 
  * @author <a href="mailto:openwms@googlemail.com">Heiko Scherrer</a>
  * @version $Revision$
@@ -31,9 +31,6 @@ import java.io.Serializable;
  */
 public class ServiceException extends Exception implements Serializable {
 
-    /**
-     * The serialVersionUID
-     */
     private static final long serialVersionUID = 3091182786979000919L;
 
     /**

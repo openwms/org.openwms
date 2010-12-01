@@ -23,7 +23,7 @@ package org.openwms.common.service.exception;
 import java.io.Serializable;
 
 /**
- * A ServiceRuntimeException. Unchecked application exception.
+ * A ServiceRuntimeException an unchecked application exception.
  * 
  * @author <a href="mailto:scherrer@users.sourceforge.net">Heiko Scherrer</a>
  * @version $Revision$
@@ -31,9 +31,6 @@ import java.io.Serializable;
  */
 public class ServiceRuntimeException extends RuntimeException implements Serializable {
 
-    /**
-     * The serialVersionUID
-     */
     private static final long serialVersionUID = 3091182786979000919L;
 
     /**

@@ -30,7 +30,7 @@ import org.openwms.common.domain.TransportUnitType;
 import org.openwms.common.domain.values.Barcode;
 
 /**
- * A TransportService - Extends the {@link EntityService} interface about some
+ * A TransportService is an extension of the {@link EntityService} interface about some
  * useful methods regarding the general handling with {@link TransportUnit}s.
  * 
  * @param <T>
