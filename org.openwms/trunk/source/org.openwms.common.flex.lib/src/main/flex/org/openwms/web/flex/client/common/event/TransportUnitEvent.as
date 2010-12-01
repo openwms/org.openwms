@@ -26,7 +26,7 @@ package org.openwms.web.flex.client.common.event
      * A TransportUnitEvent.
      *
      * @author <a href="mailto:openwms@googlemail.com">Heiko Scherrer</a>
-     * @version $Revision: 700 $
+     * @version $Revision$
      */
     public class TransportUnitEvent extends Event
     {

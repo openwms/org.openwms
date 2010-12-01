@@ -28,7 +28,7 @@ import org.openwms.common.util.event.RootApplicationEvent;
  * A RootApplicationEvent.
  * 
  * @author <a href="mailto:russelltina@users.sourceforge.net">Tina Russell</a>
- * @version $Revision: $
+ * @version $Revision$
  * 
  */
 public class TransportServiceEvent extends RootApplicationEvent implements Serializable {
