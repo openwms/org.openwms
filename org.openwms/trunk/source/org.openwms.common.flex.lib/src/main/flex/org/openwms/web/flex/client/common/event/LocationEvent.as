@@ -26,7 +26,7 @@ package org.openwms.web.flex.client.common.event
      * A LocationEvent.
      *
      * @author <a href="mailto:openwms@googlemail.com">Heiko Scherrer</a>
-     * @version $Revision: 876 $
+     * @version $Revision$
      */
     public class LocationEvent extends Event
     {

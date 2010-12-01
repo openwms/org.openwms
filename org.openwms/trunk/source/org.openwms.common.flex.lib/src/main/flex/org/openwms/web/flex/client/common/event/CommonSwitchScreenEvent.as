@@ -26,7 +26,7 @@ package org.openwms.web.flex.client.common.event
      * A CommonSwitchScreenEvent.
      *
      * @author <a href="mailto:openwms@googlemail.com">Heiko Scherrer</a>
-     * @version $Revision: 796 $
+     * @version $Revision$
      */
     public class CommonSwitchScreenEvent extends SwitchScreenEvent
     {

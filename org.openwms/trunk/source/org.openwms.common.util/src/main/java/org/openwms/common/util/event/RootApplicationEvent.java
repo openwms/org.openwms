@@ -28,7 +28,7 @@ import org.springframework.context.ApplicationEvent;
  * A RootApplicationEvent.
  * 
  * @author <a href="mailto:russelltina@users.sourceforge.net">Tina Russell</a>
- * @version $Revision: $
+ * @version $Revision$
  * 
  */
 public class RootApplicationEvent extends ApplicationEvent implements Serializable {
