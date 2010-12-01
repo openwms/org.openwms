@@ -31,7 +31,7 @@ import org.springframework.stereotype.Repository;
  * </p>
  * 
  * @author <a href="mailto:russelltina@users.sourceforge.net">Tina Russell</a>
- * @version $Revision: $
+ * @version $Revision$
  * @since 0.1
  */
 @Repository
