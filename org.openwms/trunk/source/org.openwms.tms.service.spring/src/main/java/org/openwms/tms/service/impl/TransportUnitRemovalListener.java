@@ -41,7 +41,7 @@ import org.springframework.transaction.annotation.Transactional;
  * removal of {@link TransportUnit}s.
  * 
  * @author <a href="mailto:openwms@googlemail.com">Heiko Scherrer</a>
- * @version $Revision: $
+ * @version $Revision$
  * @since 0.1
  */
 @Service
