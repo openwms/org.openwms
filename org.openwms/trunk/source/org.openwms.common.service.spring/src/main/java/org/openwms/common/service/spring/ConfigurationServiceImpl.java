@@ -29,14 +29,18 @@ import org.openwms.common.domain.values.Unit;
 import org.openwms.common.domain.values.Weight;
 import org.openwms.common.domain.values.WeightUnit;
 import org.openwms.common.service.ConfigurationService;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  * A ConfigurationServiceImpl.
  * 
  * @author <a href="mailto:openwms@googlemail.com">Heiko Scherrer</a>
- * @version $Revision: $
+ * @version $Revision$
  * @since 0.1
  */
+@Transactional
+@Service
 public class ConfigurationServiceImpl extends EntityServiceImpl<Preference, Long> implements
         ConfigurationService<Preference> {
 

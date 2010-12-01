@@ -36,7 +36,7 @@ import org.springframework.security.core.userdetails.UserDetails;
  * </p>
  * 
  * @author <a href="mailto:russelltina@users.sourceforge.net">Tina Russell</a>
- * @version $Revision: $
+ * @version $Revision$
  * @since 0.1
  * @see org.springframework.security.core.GrantedAuthority
  * @see org.springframework.security.core.userdetails.UserDetails
