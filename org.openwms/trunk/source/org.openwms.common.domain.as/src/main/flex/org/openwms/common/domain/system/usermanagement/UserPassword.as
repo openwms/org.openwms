@@ -20,10 +20,27 @@
  */
 package org.openwms.common.domain.system.usermanagement {
 
+	/**
+	 * Encapsulates the password of an <code>User</code>.
+	 * <p>
+	 * When an <code>User</code> changes his password, the current password is stored to the
+	 * history list of passwords.
+	 * </p>
+	 * 
+	 * @version $Revision$
+	 * @since 0.1
+	 * @see org.openwms.common.domain.system.usermanagement.User
+	 */
     [Bindable]
     [RemoteClass(alias="org.openwms.common.domain.system.usermanagement.UserPassword")]
     public class UserPassword extends UserPasswordBase {
 
+        /**
+         * Constructor.
+         *
+         * @param user The owning <code>User</code>
+         * @param password The password to store for the <code>User</code>
+         */
         public function UserPassword(user : User, password : String) : void {
             this._user = user;
             this._password = password;

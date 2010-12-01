@@ -20,6 +20,13 @@
  */
 package org.openwms.common.domain.system {
 
+    /**
+     * An UnitError represents an error occurring on <code>TransportUnit</code>s, on
+     * <code>LoadUnit</code>s or others.
+     * 
+     * @version $Revision$
+     * @since 0.1
+     */
     [Bindable]
     [RemoteClass(alias="org.openwms.common.domain.system.UnitError")]
     public class UnitError extends UnitErrorBase {

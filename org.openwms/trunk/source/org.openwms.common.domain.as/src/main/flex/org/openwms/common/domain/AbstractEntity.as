@@ -23,12 +23,10 @@ package org.openwms.common.domain {
 	/**
 	 * An AbstractEntity used as a base class for all domain classes.
 	 * 
-	 * @author <a href="mailto:russelltina@users.sourceforge.net">Tina Russell</a>
 	 * @version $Revision$
 	 * @since 0.1
 	 */
     [Bindable]
     [RemoteClass(alias="org.openwms.common.domain.AbstractEntity")]
-    public class AbstractEntity extends AbstractEntityBase {
-    }
+    public class AbstractEntity extends AbstractEntityBase { }
 }

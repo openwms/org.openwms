@@ -40,7 +40,7 @@ package org.openwms.common.domain {
          *
          * @param transportUnitType The type to add
          */
-    	public function withTransportUnitType(transportUnitType:TransportUnitType) {
+    	public function withTransportUnitType(transportUnitType:TransportUnitType):void {
     		this._transportUnitType = transportUnitType;
     	}
     	
@@ -49,7 +49,7 @@ package org.openwms.common.domain {
          *
          * @param locationType The type to add
          */
-    	public function withLocationType(locationType:LocationType) {
+    	public function withLocationType(locationType:LocationType):void {
     		this._allowedLocationType = locationType;
     	}
     }

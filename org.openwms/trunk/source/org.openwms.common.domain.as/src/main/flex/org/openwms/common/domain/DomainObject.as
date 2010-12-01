@@ -29,7 +29,6 @@ package org.openwms.common.domain {
 	 * <li>shall know if it is a transient or persisted instance</li>
 	 * </ul>
 	 * 
-	 * @author <a href="mailto:russelltina@users.sourceforge.net">Tina Russell</a>
 	 * @version $Revision$
 	 * @since 0.1
 	 */

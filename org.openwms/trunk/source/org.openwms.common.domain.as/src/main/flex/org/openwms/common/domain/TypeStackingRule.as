@@ -30,6 +30,5 @@ package org.openwms.common.domain {
      */
     [Bindable]
     [RemoteClass(alias="org.openwms.common.domain.TypeStackingRule")]
-    public class TypeStackingRule extends TypeStackingRuleBase {
-    }
+    public class TypeStackingRule extends TypeStackingRuleBase { }
 }

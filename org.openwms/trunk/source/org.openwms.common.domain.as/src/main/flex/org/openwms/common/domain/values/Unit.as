@@ -20,6 +20,12 @@
  */
 package org.openwms.common.domain.values {
 
-    public interface Unit {
-    }
+	/**
+	 * Just a simple Unit definition.
+	 * 
+	 * @version $Revision$
+	 * @since 0.1
+	 */
+    public interface Unit { }
+
 }

@@ -20,8 +20,14 @@
  */
 package org.openwms.common.domain.system.usermanagement {
 
+	/**
+	 * Detail information about an <code>User</code>.
+	 * 
+	 * @version $Revision$
+	 * @since 0.1
+	 * @see org.openwms.common.domain.system.usermanagement.User
+	 */
     [Bindable]
     [RemoteClass(alias="org.openwms.common.domain.system.usermanagement.UserDetails")]
-    public class UserDetails extends UserDetailsBase {
-    }
+    public class UserDetails extends UserDetailsBase { }
 }

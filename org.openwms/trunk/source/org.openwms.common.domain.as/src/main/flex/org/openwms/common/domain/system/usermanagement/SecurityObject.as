@@ -20,8 +20,13 @@
  */
 package org.openwms.common.domain.system.usermanagement {
 
+	/**
+	 * A SecurityObject is the superclass of Roles and Grants and combines common used properties.
+	 * 
+	 * @version $Revision$
+	 * @since 0.1
+	 */
     [Bindable]
     [RemoteClass(alias="org.openwms.common.domain.system.usermanagement.SecurityObject")]
-    public class SecurityObject extends SecurityObjectBase {
-    }
+    public class SecurityObject extends SecurityObjectBase { }
 }

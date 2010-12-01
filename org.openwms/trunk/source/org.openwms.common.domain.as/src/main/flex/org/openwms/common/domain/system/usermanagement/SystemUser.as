@@ -20,8 +20,14 @@
  */
 package org.openwms.common.domain.system.usermanagement {
 
+	/**
+	 * A SystemUser is granted with all privileges and omits all security constraints.
+	 * 
+	 * @version $Revision$
+	 * @since 0.1
+	 * @see org.openwms.common.domain.system.usermanagement.User
+	 */
     [Bindable]
     [RemoteClass(alias="org.openwms.common.domain.system.usermanagement.SystemUser")]
-    public class SystemUser extends SystemUserBase {
-    }
+    public class SystemUser extends SystemUserBase { }
 }

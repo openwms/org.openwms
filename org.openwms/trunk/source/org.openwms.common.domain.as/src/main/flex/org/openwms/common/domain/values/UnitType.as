@@ -22,12 +22,33 @@ package org.openwms.common.domain.values {
 
     import mx.collections.ListCollectionView;
 
+	/**
+	 * An UnitType is a concrete unit definition.
+	 * 
+	 * @version $Revision$
+	 * @since 0.1
+	 */
     public interface UnitType {
 
+	    /**
+	     * Return all sub types of the <code>UnitType</code>.
+	     * 
+	     * @return a list of sub types.
+	     */
         function get all():ListCollectionView;
 
+	    /**
+	     * Return the base unit type of the <code>UnitType</code>.
+	     * 
+	     * @return The base unit type
+	     */
         function get baseUnit():UnitType;
 
+	    /**
+	     * Return the value of the base unit.
+	     * 
+	     * @return The value of the base unit of the weight
+	     */
         function get baseUnitValue():Number;
     }
 }

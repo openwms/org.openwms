@@ -20,8 +20,13 @@
  */
 package org.openwms.common.domain.system.usermanagement {
 
+	/**
+	 * An User represents a human user of the system.
+	 * 
+	 * @version $Revision$
+	 * @since 0.1
+	 */
     [Bindable]
     [RemoteClass(alias="org.openwms.common.domain.system.usermanagement.User")]
-    public class User extends UserBase {
-    }
+    public class User extends UserBase { }
 }
