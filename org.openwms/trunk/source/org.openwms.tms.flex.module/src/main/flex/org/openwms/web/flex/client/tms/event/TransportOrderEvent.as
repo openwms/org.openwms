@@ -26,7 +26,7 @@ package org.openwms.web.flex.client.tms.event
      * A TransportOrderEvent.
      *
      * @author <a href="mailto:openwms@googlemail.com">Heiko Scherrer</a>
-     * @version $Revision: 700 $
+     * @version $Revision$
      */
     public class TransportOrderEvent extends Event
     {

@@ -29,7 +29,7 @@ package org.openwms.web.flex.client.tms.model
      * A TMSModelLocator.
      *
      * @author <a href="mailto:openwms@googlemail.com">Heiko Scherrer</a>
-     * @version $Revision: 796 $
+     * @version $Revision$
      */
     [Name("tmsModelLocator")]
     [Bindable]

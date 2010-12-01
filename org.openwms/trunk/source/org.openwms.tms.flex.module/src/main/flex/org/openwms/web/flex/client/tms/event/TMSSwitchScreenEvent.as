@@ -27,7 +27,7 @@ package org.openwms.web.flex.client.tms.event
      * A TMSSwitchScreenEvent.
      *
      * @author <a href="mailto:openwms@googlemail.com">Heiko Scherrer</a>
-     * @version $Revision: 796 $
+     * @version $Revision$
      */
     public class TMSSwitchScreenEvent extends SwitchScreenEvent
     {
