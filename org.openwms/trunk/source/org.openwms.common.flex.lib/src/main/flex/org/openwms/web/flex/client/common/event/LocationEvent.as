@@ -35,7 +35,7 @@ package org.openwms.web.flex.client.common.event
         public static const DELETE_LOCATION:String = "DELETE_LOCATION";
         public static const SAVE_LOCATION:String = "SAVE_LOCATION";
         
-        public var data:*;        
+        public var data:*;
 
         public function LocationEvent(type:String, bubbles:Boolean = true, cancelable:Boolean = false)
         {

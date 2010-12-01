@@ -18,8 +18,8 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
-package org.openwms.web.flex.client.common.event
-{
+package org.openwms.web.flex.client.common.event {
+	
     import flash.events.Event;
 
     /**
@@ -28,12 +28,14 @@ package org.openwms.web.flex.client.common.event
      * @author <a href="mailto:openwms@googlemail.com">Heiko Scherrer</a>
      * @version $Revision$
      */
-    public class LocationGroupEvent extends Event
-    {
+    public class LocationGroupEvent extends Event {
+    	
         public static const LOAD_ALL_LOCATION_GROUPS:String = "LOAD_ALL_LOCATION_GROUPS";
+        public static const SAVE_LOCATION_GROUP:String = "SAVE_LOCATION_GROUP";
+        
+        public var data:*;
 
-        public function LocationGroupEvent(type:String, bubbles:Boolean = true, cancelable:Boolean = false)
-        {
+        public function LocationGroupEvent(type:String, bubbles:Boolean = true, cancelable:Boolean = false) {
             super(type, bubbles, cancelable);
         }
 
