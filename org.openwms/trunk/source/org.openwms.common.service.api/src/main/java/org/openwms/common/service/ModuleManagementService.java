@@ -25,7 +25,7 @@ import java.util.List;
 import org.openwms.common.domain.Module;
 
 /**
- * A ModuleManagementService.
+ * A ModuleManagementService offers some functionality for common module management tasks.
  * 
  * @author <a href="mailto:openwms@googlemail.com">Heiko Scherrer</a>
  * @version $Revision$

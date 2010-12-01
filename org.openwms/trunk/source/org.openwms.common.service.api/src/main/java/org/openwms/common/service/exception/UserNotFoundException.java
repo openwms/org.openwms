@@ -23,10 +23,7 @@ package org.openwms.common.service.exception;
 import java.io.Serializable;
 
 /**
- * An UserNotFoundException.
- * <p>
- * Thrown when the requested user was not found.
- * </p>
+ * An UserNotFoundException is thrown when the requested user was not found.
  * 
  * @author <a href="mailto:russelltina@users.sourceforge.net">Tina Russell</a>
  * @version $Revision$
@@ -34,14 +31,10 @@ import java.io.Serializable;
  */
 public class UserNotFoundException extends ServiceRuntimeException implements Serializable {
 
-    /**
-     * The serialVersionUID
-     */
     private static final long serialVersionUID = -5592508830188199188L;
 
     /**
      * Create a new UserNotFoundException.
-     * 
      */
     public UserNotFoundException() {
         super();

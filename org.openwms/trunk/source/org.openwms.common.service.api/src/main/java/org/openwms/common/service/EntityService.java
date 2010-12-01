@@ -24,7 +24,7 @@ import java.io.Serializable;
 import java.util.List;
 
 /**
- * An EntityService - Generic interface definition of a service to perform
+ * An EntityService is a generic interface definition of a service to offer
  * simple create/read/update and remove functionality.
  * <p>
  * Basically the service is responsible to access the persistence integration
@@ -41,56 +41,56 @@ import java.util.List;
  */
 public interface EntityService<T extends Serializable> {
 
-    /**
-     * Find all Entity classes of type clazz.
-     * 
-     * @param <T>
-     *            Any serializable type, mostly an Entity class type
-     * @param clazz
-     *            Class of the Entity to find
-     * @return A {@link java.util.List} of all found Entities
-     */
-    // TODO [scherrer] : To be removed
-    @Deprecated
-    List<T> findAll(Class<T> clazz);
+	/**
+	 * Find all Entity classes of type clazz.
+	 * 
+	 * @param <T>
+	 *            Any serializable type, mostly an Entity class type
+	 * @param clazz
+	 *            Class of the Entity to find
+	 * @return A {@link java.util.List} of all found Entities
+	 */
+	// TODO [scherrer] : To be removed
+	@Deprecated
+	List<T> findAll(Class<T> clazz);
 
-    /**
-     * Save an Entity of type T.
-     * 
-     * @param <T>
-     *            Any serializable type, mostly an Entity class type
-     * @param entity
-     *            Entity instance to be saved
-     * @return The saved Entity instance
-     */
-    T save(T entity);
+	/**
+	 * Save an Entity of type T.
+	 * 
+	 * @param <T>
+	 *            Any serializable type, mostly an Entity class type
+	 * @param entity
+	 *            Entity instance to be saved
+	 * @return The saved Entity instance
+	 */
+	T save(T entity);
 
-    /**
-     * Find all Entities of type T.
-     * 
-     * @param <T>
-     *            Any serializable type, mostly an Entity class type
-     * @return A {@link java.util.List} of all found Entities
-     */
-    List<T> findAll();
+	/**
+	 * Find all Entities of type T.
+	 * 
+	 * @param <T>
+	 *            Any serializable type, mostly an Entity class type
+	 * @return A {@link java.util.List} of all found Entities
+	 */
+	List<T> findAll();
 
-    /**
-     * Removes a persistent Entity.
-     * 
-     * @param <T>
-     *            Any serializable type, mostly an Entity class type
-     * @param entity
-     *            Entity instance to be removed
-     */
-    void remove(T entity);
+	/**
+	 * Removes a persistent Entity.
+	 * 
+	 * @param <T>
+	 *            Any serializable type, mostly an Entity class type
+	 * @param entity
+	 *            Entity instance to be removed
+	 */
+	void remove(T entity);
 
-    /**
-     * Add a new entity to the persistent storage.
-     * 
-     * @param <T>
-     *            Any serializable type, mostly an Entity class type
-     * @param newEntity
-     *            Transient Entity instance to persist
-     */
-    void addEntity(T newEntity);
+	/**
+	 * Add a new entity to the persistent storage.
+	 * 
+	 * @param <T>
+	 *            Any serializable type, mostly an Entity class type
+	 * @param newEntity
+	 *            Transient Entity instance to persist
+	 */
+	void addEntity(T newEntity);
 }

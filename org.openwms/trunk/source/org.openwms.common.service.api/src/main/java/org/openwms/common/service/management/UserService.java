@@ -28,7 +28,7 @@ import org.openwms.common.domain.system.usermanagement.UserPassword;
 import org.openwms.common.service.EntityService;
 
 /**
- * An UserService - Extends the {@link EntityService} interface about some
+ * An UserService extends the {@link EntityService} interface about some
  * useful methods regarding the general handling with {@link User}s.
  * 
  * @param <T>

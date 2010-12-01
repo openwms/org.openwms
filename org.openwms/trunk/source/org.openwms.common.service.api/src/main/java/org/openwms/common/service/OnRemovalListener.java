@@ -24,9 +24,9 @@ import org.openwms.common.domain.AbstractEntity;
 import org.openwms.common.service.exception.RemovalNotAllowedException;
 
 /**
- * A OnRemovalListener. An implementation can hook into lifecycle of an entity
- * class. A class implementing this interface is used as a callback before an
- * entity of type <code>T</code> is removed.
+ * An OnRemovalListener is an implementation to hook into the lifecycle of an
+ * entity class. A class implementing this interface is called before an entity
+ * of type <code>T</code> is removed.
  * 
  * @author <a href="mailto:russelltina@users.sourceforge.net">Tina Russell</a>
  * @version $Revision$
@@ -34,16 +34,16 @@ import org.openwms.common.service.exception.RemovalNotAllowedException;
  */
 public interface OnRemovalListener<T extends AbstractEntity> {
 
-    /**
-     * Do something prior the <code>entity</code> instance is removed.
-     * 
-     * @param entity
-     *            The instance to be removed.
-     * @throws RemovalNotAllowedException
-     *             in case when removal is allowed but it is not possible for
-     *             the implementation to execute further operations.
-     * @return <code>true</code> if removal is allowed, otherwise
-     *         <code>false</code>
-     */
-    boolean preRemove(T entity) throws RemovalNotAllowedException;
+	/**
+	 * Do something prior the <code>entity</code> instance is been removed.
+	 * 
+	 * @param entity
+	 *            The instance to be removed.
+	 * @throws RemovalNotAllowedException
+	 *             in case when removal is allowed but it is not possible for
+	 *             the implementation to execute further operations.
+	 * @return <code>true</code> if removal is allowed, otherwise
+	 *         <code>false</code>
+	 */
+	boolean preRemove(T entity) throws RemovalNotAllowedException;
 }

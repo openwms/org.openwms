@@ -23,58 +23,55 @@ package org.openwms.common.service.exception;
 import java.io.Serializable;
 
 /**
- * A RemovalNotAllowedException. Used to indicate that a service is not allowed
- * to remove an entity.
+ * A RemovalNotAllowedException is thrown to indicate that the caller is not
+ * allowed to remove an entity.
  * 
  * @author <a href="mailto:russelltina@users.sourceforge.net">Tina Russell</a>
  * @version $Revision$
  * @since 0.1
  */
-public class RemovalNotAllowedException extends ServiceException implements Serializable {
+public class RemovalNotAllowedException extends ServiceException implements
+		Serializable {
 
-    /**
-     * The serialVersionUID
-     */
-    private static final long serialVersionUID = -5592508830188199188L;
+	private static final long serialVersionUID = -5592508830188199188L;
 
-    /**
-     * Create a new RemovalNotAllowedException.
-     * 
-     */
-    public RemovalNotAllowedException() {
-        super();
-    }
+	/**
+	 * Create a new RemovalNotAllowedException.
+	 */
+	public RemovalNotAllowedException() {
+		super();
+	}
 
-    /**
-     * Create a new RemovalNotAllowedException.
-     * 
-     * @param message
-     *            Message text as String
-     */
-    public RemovalNotAllowedException(String message) {
-        super(message);
-    }
+	/**
+	 * Create a new RemovalNotAllowedException.
+	 * 
+	 * @param message
+	 *            Message text as String
+	 */
+	public RemovalNotAllowedException(String message) {
+		super(message);
+	}
 
-    /**
-     * Create a new RemovalNotAllowedException.
-     * 
-     * @param cause
-     *            The cause exception
-     */
-    public RemovalNotAllowedException(Throwable cause) {
-        super(cause);
-    }
+	/**
+	 * Create a new RemovalNotAllowedException.
+	 * 
+	 * @param cause
+	 *            The cause exception
+	 */
+	public RemovalNotAllowedException(Throwable cause) {
+		super(cause);
+	}
 
-    /**
-     * Create a new RemovalNotAllowedException.
-     * 
-     * @param message
-     *            Message text as String
-     * @param cause
-     *            The cause exception
-     */
-    public RemovalNotAllowedException(String message, Throwable cause) {
-        super(message, cause);
-    }
+	/**
+	 * Create a new RemovalNotAllowedException.
+	 * 
+	 * @param message
+	 *            Message text as String
+	 * @param cause
+	 *            The cause exception
+	 */
+	public RemovalNotAllowedException(String message, Throwable cause) {
+		super(message, cause);
+	}
 
 }

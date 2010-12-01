@@ -19,6 +19,6 @@
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
 /**
- * Exception classes that can be thrown by classes belonging to the service layer.
+ * Exception classes that are thrown by the service layer implementation.
  */
 package org.openwms.common.service.exception;
