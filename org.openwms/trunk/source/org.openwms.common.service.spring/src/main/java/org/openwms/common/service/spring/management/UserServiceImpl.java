@@ -119,8 +119,8 @@ public class UserServiceImpl extends EntityServiceImpl<User, Long> implements Us
      */
     @Override
     public void removeRoles(List<Role> roles) {
-        for (Role role : roles) {
-            role = roleDao.findById(role.getId());
+        for (Role r : roles) {
+            Role role = roleDao.findById(r.getId());
             roleDao.remove(role);
         }
     }
@@ -158,8 +158,7 @@ public class UserServiceImpl extends EntityServiceImpl<User, Long> implements Us
         try {
             entity.setPassword(userPassword.getPassword());
             return true;
-        }
-        catch (InvalidPasswordException ipe) {
+        } catch (InvalidPasswordException ipe) {
             return false;
         }
     }
