@@ -41,7 +41,7 @@ import org.springframework.stereotype.Service;
  * A DefaultOrderStateDelegate.
  * 
  * @author <a href="mailto:russelltina@users.sourceforge.net">Tina Russell</a>
- * @version $Revision: $
+ * @version $Revision$
  * @since 0.1
  */
 @Service
