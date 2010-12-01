@@ -37,7 +37,7 @@ package org.openwms.web.flex.client.tms.business {
      * A TransportsDelegate.
      *
      * @author <a href="mailto:openwms@googlemail.com">Heiko Scherrer</a>
-     * @version $Revision: 700 $
+     * @version $Revision$
      */
     [Name("transportsDelegate")]
     [ManagedEvent(name="LOAD_TRANSPORT_ORDERS")]
