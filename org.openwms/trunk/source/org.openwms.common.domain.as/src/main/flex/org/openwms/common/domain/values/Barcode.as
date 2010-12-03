@@ -20,14 +20,14 @@
  */
 package org.openwms.common.domain.values {
 
+    [Bindable]
+    [RemoteClass(alias="org.openwms.common.domain.values.Barcode")]
 	/**
 	 * A Barcode defines an unique label.
 	 * 
 	 * @version $Revision$
 	 * @since 0.1
 	 */
-    [Bindable]
-    [RemoteClass(alias="org.openwms.common.domain.values.Barcode")]
     public class Barcode extends BarcodeBase {
     	
     	/**

@@ -22,6 +22,8 @@ package org.openwms.common.domain.values {
 
     import org.granite.util.Enum;
 
+    [Bindable]
+    [RemoteClass(alias="org.openwms.common.domain.values.LocationGroupState")]
 	/**
 	 * A LocationGroupState defines possible states used for <code>LocationGroup<code>s.
 	 * 
@@ -29,8 +31,6 @@ package org.openwms.common.domain.values {
 	 * @since 0.1
 	 * @see org.openwms.common.domain.LocationGroup
 	 */
-    [Bindable]
-    [RemoteClass(alias="org.openwms.common.domain.values.LocationGroupState")]
     public class LocationGroupState extends Enum {
 
 	    /**

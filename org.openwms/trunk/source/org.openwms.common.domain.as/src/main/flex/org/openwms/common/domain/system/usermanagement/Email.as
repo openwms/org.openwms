@@ -20,6 +20,8 @@
  */
 package org.openwms.common.domain.system.usermanagement {
 
+    [Bindable]
+    [RemoteClass(alias="org.openwms.common.domain.system.usermanagement.Email")]
 	/**
 	 * An Email, encapsulates the email address of an <code>User</code>.
 	 * 
@@ -27,7 +29,5 @@ package org.openwms.common.domain.system.usermanagement {
 	 * @since 0.1
 	 * @see org.openwms.common.domain.system.usermanagement.User
 	 */
-    [Bindable]
-    [RemoteClass(alias="org.openwms.common.domain.system.usermanagement.Email")]
     public class Email extends EmailBase { }
 }

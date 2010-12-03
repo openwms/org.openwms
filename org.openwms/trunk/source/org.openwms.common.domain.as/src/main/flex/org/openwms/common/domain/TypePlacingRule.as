@@ -20,6 +20,8 @@
  */
 package org.openwms.common.domain {
 
+    [Bindable]
+    [RemoteClass(alias="org.openwms.common.domain.TypePlacingRule")]
     /**
      * A TypePlacingRule defines which <code>TransportUnitType</code>s can be
      * located on which <code>LocationType</code>s.
@@ -31,8 +33,6 @@ package org.openwms.common.domain {
      * @since 0.1
      * @see org.openwms.common.domain.TransportUnitType
      */
-    [Bindable]
-    [RemoteClass(alias="org.openwms.common.domain.TypePlacingRule")]
     public class TypePlacingRule extends TypePlacingRuleBase {
     	
         /**

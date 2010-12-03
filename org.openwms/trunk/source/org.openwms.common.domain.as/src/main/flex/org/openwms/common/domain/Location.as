@@ -20,6 +20,8 @@
  */
 package org.openwms.common.domain {
 
+    [Bindable]
+    [RemoteClass(alias="org.openwms.common.domain.Location")]
 	/**
 	 * A Location, defines a place within a warehouse.
 	 * <p>
@@ -33,8 +35,6 @@ package org.openwms.common.domain {
 	 * @since 0.1
 	 * @see org.openwms.common.domain.LocationGroup
 	 */
-    [Bindable]
-    [RemoteClass(alias="org.openwms.common.domain.Location")]
     public class Location extends LocationBase {
     	
     	/**

@@ -20,13 +20,13 @@
  */
 package org.openwms.common.domain.system.usermanagement {
 
+    [Bindable]
+    [RemoteClass(alias="org.openwms.common.domain.system.usermanagement.Preference")]
 	/**
 	 * A Preference, could be an user-, role- or system preference.
 	 * 
 	 * @version $Revision$
 	 * @since 0.1
 	 */
-    [Bindable]
-    [RemoteClass(alias="org.openwms.common.domain.system.usermanagement.Preference")]
     public class Preference extends PreferenceBase { }
 }

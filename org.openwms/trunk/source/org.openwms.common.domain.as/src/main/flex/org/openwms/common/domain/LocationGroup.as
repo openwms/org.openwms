@@ -20,6 +20,8 @@
  */
 package org.openwms.common.domain {
 
+    [Bindable]
+    [RemoteClass(alias="org.openwms.common.domain.LocationGroup")]
     /**
      * A LocationGroup, used to group Locations logically.
      * <p>
@@ -30,8 +32,6 @@ package org.openwms.common.domain {
      * @since 0.1
      * @see org.openwms.common.domain.Location
      */
-    [Bindable]
-    [RemoteClass(alias="org.openwms.common.domain.LocationGroup")]
     public class LocationGroup extends LocationGroupBase {
         
         /**

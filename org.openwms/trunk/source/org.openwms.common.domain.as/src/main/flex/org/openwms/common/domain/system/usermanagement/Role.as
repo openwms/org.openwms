@@ -20,6 +20,8 @@
  */
 package org.openwms.common.domain.system.usermanagement {
 
+    [Bindable]
+    [RemoteClass(alias="org.openwms.common.domain.system.usermanagement.Role")]
 	/**
 	 * A Role is grouping multiple <code>User</code>s regarding security aspects.
 	 * <p>
@@ -29,8 +31,6 @@ package org.openwms.common.domain.system.usermanagement {
 	 * @version $Revision$
 	 * @since 0.1
 	 */
-    [Bindable]
-    [RemoteClass(alias="org.openwms.common.domain.system.usermanagement.Role")]
     public class Role extends RoleBase {
 
         /**

@@ -22,6 +22,8 @@ package org.openwms.common.domain.values {
 
     import org.granite.util.Enum;
 
+    [Bindable]
+    [RemoteClass(alias="org.openwms.common.domain.values.WeightUnit")]
 	/**
 	 * A WeightUnit is a concrete set of all possible weights.
 	 * <p>
@@ -31,8 +33,6 @@ package org.openwms.common.domain.values {
 	 * @version $Revision$
 	 * @since 0.1
 	 */
-    [Bindable]
-    [RemoteClass(alias="org.openwms.common.domain.values.WeightUnit")]
     public class WeightUnit extends Enum {
 
 	    /**
