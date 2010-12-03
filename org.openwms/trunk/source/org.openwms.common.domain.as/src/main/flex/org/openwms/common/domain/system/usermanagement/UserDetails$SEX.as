@@ -22,6 +22,8 @@ package org.openwms.common.domain.system.usermanagement {
 
     import org.granite.util.Enum;
 
+    [Bindable]
+    [RemoteClass(alias="org.openwms.common.domain.system.usermanagement.UserDetails$SEX")]
     /**
      * The <code>User</code>s sex.
      * 
@@ -29,8 +31,6 @@ package org.openwms.common.domain.system.usermanagement {
      * @since 0.1
      * @see org.openwms.common.domain.system.usermanagement.User
      */
-    [Bindable]
-    [RemoteClass(alias="org.openwms.common.domain.system.usermanagement.UserDetails$SEX")]
     public class UserDetails$SEX extends Enum {
 
         /**

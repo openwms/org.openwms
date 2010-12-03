@@ -22,6 +22,8 @@ package org.openwms.common.domain {
 	
 	import mx.controls.dataGridClasses.DataGridColumn;
 
+    [Bindable]
+    [RemoteClass(alias="org.openwms.common.domain.TransportUnit")]
 	/**
 	 * A TransportUnit is something like a box, a toad, a bin or a palette that has
 	 * to be moved around.
@@ -33,8 +35,6 @@ package org.openwms.common.domain {
 	 * @version $Revision$
 	 * @since 0.1
 	 */
-    [Bindable]
-    [RemoteClass(alias="org.openwms.common.domain.TransportUnit")]
     public class TransportUnit extends TransportUnitBase {
     	
     	/**

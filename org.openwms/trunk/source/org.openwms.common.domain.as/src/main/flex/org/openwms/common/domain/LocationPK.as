@@ -20,6 +20,8 @@
  */
 package org.openwms.common.domain {
 
+    [Bindable]
+    [RemoteClass(alias="org.openwms.common.domain.LocationPK")]
     /**
      * A LocationPK, is a value type and is used as an unique natural key of
      * <code>Location</code> entities.
@@ -28,8 +30,6 @@ package org.openwms.common.domain {
      * @since 0.1
      * @see org.openwms.common.domain.Location
      */
-    [Bindable]
-    [RemoteClass(alias="org.openwms.common.domain.LocationPK")]
     public class LocationPK extends LocationPKBase {
     	
         /**

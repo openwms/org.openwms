@@ -20,6 +20,8 @@
  */
 package org.openwms.common.domain.system {
 
+    [Bindable]
+    [RemoteClass(alias="org.openwms.common.domain.system.UnitError")]
     /**
      * An UnitError represents an error occurring on <code>TransportUnit</code>s, on
      * <code>LoadUnit</code>s or others.
@@ -27,8 +29,6 @@ package org.openwms.common.domain.system {
      * @version $Revision$
      * @since 0.1
      */
-    [Bindable]
-    [RemoteClass(alias="org.openwms.common.domain.system.UnitError")]
     public class UnitError extends UnitErrorBase {
     }
 }

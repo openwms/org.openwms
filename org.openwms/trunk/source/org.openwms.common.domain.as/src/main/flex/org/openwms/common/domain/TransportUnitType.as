@@ -22,6 +22,8 @@ package org.openwms.common.domain {
 
     import mx.collections.ArrayCollection;
 
+    [Bindable]
+    [RemoteClass(alias="org.openwms.common.domain.TransportUnitType")]
     /**
      * A TransportUnitType defines a type for <code>TransportUnit</code>s.
      * <p>
@@ -34,8 +36,6 @@ package org.openwms.common.domain {
      * @since 0.1
      * @see org.openwms.common.domain.TransportUnit
      */
-    [Bindable]
-    [RemoteClass(alias="org.openwms.common.domain.TransportUnitType")]
     public class TransportUnitType extends TransportUnitTypeBase {
     	
         /**

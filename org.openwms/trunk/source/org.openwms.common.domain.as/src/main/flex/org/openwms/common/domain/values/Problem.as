@@ -20,13 +20,13 @@
  */
 package org.openwms.common.domain.values {
 
+    [Bindable]
+    [RemoteClass(alias="org.openwms.common.domain.values.Problem")]
 	/**
 	 * A Problem is used to signal an occurred failure.
 	 * 
 	 * @version $Revision$
 	 * @since 0.1
 	 */
-    [Bindable]
-    [RemoteClass(alias="org.openwms.common.domain.values.Problem")]
     public class Problem extends ProblemBase { }
 }

@@ -24,6 +24,12 @@ package org.openwms.common.domain.values {
 
     [Bindable]
     [RemoteClass(alias="org.openwms.common.domain.values.TransportUnitState")]
+    /**
+     * A TransportUnitState defines possible states used for <code>TransportUnit<code>s.
+     * 
+     * @version $Revision$
+     * @since 0.1
+     */
     public class TransportUnitState extends Enum {
 
 	    /**

@@ -20,6 +20,8 @@
  */
 package org.openwms.common.domain {
 
+    [Bindable]
+    [RemoteClass(alias="org.openwms.common.domain.LocationType")]
     /**
      * A LocationType defines a type for <code>Location</code>s.
      * <p>
@@ -31,8 +33,6 @@ package org.openwms.common.domain {
      * @since 0.1
      * @see org.openwms.common.domain.Location
      */
-    [Bindable]
-    [RemoteClass(alias="org.openwms.common.domain.LocationType")]
     public class LocationType extends LocationTypeBase {
     	
         /**

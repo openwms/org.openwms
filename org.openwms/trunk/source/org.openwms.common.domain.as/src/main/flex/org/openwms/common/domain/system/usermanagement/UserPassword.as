@@ -20,6 +20,8 @@
  */
 package org.openwms.common.domain.system.usermanagement {
 
+    [Bindable]
+    [RemoteClass(alias="org.openwms.common.domain.system.usermanagement.UserPassword")]
 	/**
 	 * Encapsulates the password of an <code>User</code>.
 	 * <p>
@@ -31,8 +33,6 @@ package org.openwms.common.domain.system.usermanagement {
 	 * @since 0.1
 	 * @see org.openwms.common.domain.system.usermanagement.User
 	 */
-    [Bindable]
-    [RemoteClass(alias="org.openwms.common.domain.system.usermanagement.UserPassword")]
     public class UserPassword extends UserPasswordBase {
 
         /**

@@ -20,6 +20,8 @@
  */
 package org.openwms.common.domain {
 
+    [Bindable]
+    [RemoteClass(alias="org.openwms.common.domain.TypeStackingRule")]
     /**
      * A TypeStackingRule defines which <code>TransportUnitType</code>s can be
      * stacked on others.
@@ -28,7 +30,5 @@ package org.openwms.common.domain {
      * @since 0.1
      * @see org.openwms.common.domain.TransportUnitType
      */
-    [Bindable]
-    [RemoteClass(alias="org.openwms.common.domain.TypeStackingRule")]
     public class TypeStackingRule extends TypeStackingRuleBase { }
 }

@@ -22,6 +22,8 @@ package org.openwms.common.domain.values {
 
     import org.granite.util.Enum;
 
+    [Bindable]
+    [RemoteClass(alias="org.openwms.common.domain.values.Barcode$BARCODE_ALIGN")]
     /**
      * A Barcode$BARCODE_ALIGN defines whether the <code>Barcode</code> is applied
      * <code>LEFT</code> or <code>RIGHT</code>.
@@ -32,8 +34,6 @@ package org.openwms.common.domain.values {
      * @version $Revision$
      * @since 0.1
      */
-    [Bindable]
-    [RemoteClass(alias="org.openwms.common.domain.values.Barcode$BARCODE_ALIGN")]
     public class Barcode$BARCODE_ALIGN extends Enum {
 
         /**

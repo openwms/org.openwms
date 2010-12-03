@@ -22,14 +22,14 @@ package org.openwms.common.domain.system {
 
     import org.granite.util.Enum;
 
+    [Bindable]
+    [RemoteClass(alias="org.openwms.common.domain.system.PropertyScope")]
     /**
      * A PropertyScope defines the used scope of preference settings.
      * 
      * @version $Revision$
      * @since 0.1
      */
-    [Bindable]
-    [RemoteClass(alias="org.openwms.common.domain.system.PropertyScope")]
     public class PropertyScope extends Enum {
 
         /**
