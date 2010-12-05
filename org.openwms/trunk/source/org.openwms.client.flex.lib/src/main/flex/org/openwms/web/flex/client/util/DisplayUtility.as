@@ -19,18 +19,19 @@
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
 package org.openwms.web.flex.client.util {
+    import mx.binding.utils.BindingUtils;
+    import mx.binding.utils.ChangeWatcher;
     import mx.collections.ArrayCollection;
     import mx.containers.ViewStack;
 
     /**
      * A DisplayUtility.
      *
-     * @author <a href="mailto:openwms@googlemail.com">Heiko Scherrer</a>
      * @version $Revision$
      */
     public final class DisplayUtility {
-        public function DisplayUtility() {
-        }
+    	
+        public function DisplayUtility() { }
 
         public static function getView(viewId : String, viewStack : ViewStack) : int {
             if (viewStack.getChildByName(viewId) == null) {
@@ -41,6 +42,25 @@ package org.openwms.web.flex.client.util {
 
         public static function getListOfValues(list : ArrayCollection, name : String) : ArrayCollection {
             return null;
+        }
+        
+        /**
+         * Encapsulates the boring binding and un-binding stuff.
+         * 
+         * @param bindings A list of bindings to bind
+         * @param command Optional provide an anonymous function to be executed between binding and unbinding
+         */
+        public static function bindProperties(bindings:ArrayCollection, command:Function = null):void {
+        	var watchers:ArrayCollection = new ArrayCollection();
+        	for each (var binding:BindingProperty in bindings) {
+        		watchers.addItem(BindingUtils.bindProperty(binding.site, binding.sitePropertyName, binding.host, binding.hostPropertyName));
+        	}
+        	if (command != null) {
+        		command();
+        	}
+        	for each (var watcher:ChangeWatcher in watchers) {
+        		watcher.unwatch();
+        	}
         }
 
     }
