@@ -20,14 +20,29 @@
  */
 package org.openwms.common.domain.values {
 
+    import flash.utils.ByteArray;
+
     /**
-     * A Weight represents a real world weight, that comes with an <code>Unit</code> and a
-     * value.
+     * An ImageProvider stores an image file.
      * 
-     * @version $Revision$
+     * @version $Revision: 1027 $
      * @since 0.1
      */
-    [Bindable]
-    [RemoteClass(alias="org.openwms.common.domain.values.Weight")]
-    public class Weight extends WeightBase { }
+    public interface ImageProvider {
+
+	    /**
+	     * Change the image of the <code>User</code>.
+	     * 
+	     * @param value
+	     *            The new image to set.
+	     */
+        function set image(value:ByteArray):void;
+
+	    /**
+	     * Returns an image of the <code>User</code>.
+	     * 
+	     * @return The current image.
+	     */
+        function get image():ByteArray;
+    }
 }
