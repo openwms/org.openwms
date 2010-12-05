@@ -82,7 +82,6 @@ package ${jClass.as3Type.packageName} {<%
 
     ///////////////////////////////////////////////////////////////////////////
     // Write Public Getter/Setter.
-
     for (jProperty in jClass.properties) {
 
         if (jProperty.readable || jProperty.writable) {%>
@@ -96,7 +95,7 @@ package ${jClass.as3Type.packageName} {<%
 <%
             } else if (jProperty.readable)
             {%>
-        function ${jProperty.name}():${jProperty.as3Type.name};<%
+        function get ${jProperty.name}():${jProperty.as3Type.name};<%
             }
         }
     }%>
