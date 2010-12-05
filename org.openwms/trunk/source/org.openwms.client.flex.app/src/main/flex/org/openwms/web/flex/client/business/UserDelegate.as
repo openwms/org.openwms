@@ -35,7 +35,6 @@ package org.openwms.web.flex.client.business {
      * An UserDelegate. Handles all interaction with the server-side userService.
      * Provides simple CRUD methods.
      *
-     * @author <a href="mailto:openwms@googlemail.com">Heiko Scherrer</a>
      * @version $Revision$
      */
     [Name("userController")]
@@ -138,7 +137,7 @@ package org.openwms.web.flex.client.business {
 
         private function onFault(event : TideFaultEvent) : void {
             trace("Error executing operation on User service:" + event.fault);
-            Alert.show("Error executing operation on User service");
+            Alert.show("Cannot proceed action in user management, try reloading the view!");
         }
     }
 }
