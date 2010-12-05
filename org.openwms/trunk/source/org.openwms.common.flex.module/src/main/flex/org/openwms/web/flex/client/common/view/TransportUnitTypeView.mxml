@@ -22,10 +22,6 @@
  */
 -->
 <mx:Canvas xmlns:mx="http://www.adobe.com/2006/mxml" width="100%" height="100%" show="onShow()" backgroundColor="#C2DAEF" xmlns:comp="org.openwms.web.flex.client.component.*">
-    <mx:states>
-        <mx:State name="noImage"/>
-        <mx:State name="imageAvail"/>
-    </mx:states>
 
     <mx:Metadata>
         [Name("transportUnitTypeView")]
@@ -47,6 +43,8 @@
 
     <mx:Script>
         <![CDATA[
+        	import mx.binding.utils.ChangeWatcher;
+        	import mx.controls.Image;
         	import org.granite.tide.spring.Context;
         	import mx.events.DragEvent;
             import mx.events.ListEvent;
@@ -58,6 +56,7 @@
             import org.openwms.common.domain.TypePlacingRule;
             import org.openwms.common.domain.TypeStackingRule;
             import org.openwms.common.domain.TransportUnitType;
+            import org.openwms.common.domain.values.ImageProvider;
             import org.openwms.web.flex.client.common.event.TransportUnitTypeEvent;
             import org.openwms.web.flex.client.common.event.LocationTypeEvent;
             import org.openwms.web.flex.client.common.model.CommonModelLocator;
@@ -66,6 +65,8 @@
             import org.openwms.web.flex.client.common.view.dialogs.AssignmentLocationTypeDialog;
             import org.openwms.web.flex.client.common.view.dialogs.ConfirmDeletionTransportUnitTypesDialog;
             import org.openwms.web.flex.client.component.ListDialog;
+            import org.openwms.web.flex.client.util.BindingProperty;
+            import org.openwms.web.flex.client.util.DisplayUtility;
             import org.openwms.web.flex.client.util.ValidationUtil;
 
             [In]
@@ -76,6 +77,8 @@
             public var tideContext:Context;
             [Bindable]
             private var selected:TransportUnitType;
+            [Bindable]
+            private var hasImage:Boolean = selected is ImageProvider;
 
             /**
              * Initialize data structures in model or fire events to do so.
@@ -132,22 +135,23 @@
                     ValidationUtil.validateAndFormat(widthTxt, numberVal) &&
                     ValidationUtil.validateAndFormat(weightTareTxt, numberVal, numberFmt) &&
                     ValidationUtil.validateAndFormat(weightMaxTxt, numberVal, numberFmt)) {
-
-                    BindingUtils.bindProperty(selected, "length", lengthTxt, "text");
-                    BindingUtils.bindProperty(selected, "width", widthTxt, "text");
-                    BindingUtils.bindProperty(selected, "height", heightTxt, "text");
-                    BindingUtils.bindProperty(selected, "weightTare", weightTareTxt, "text");
-                    BindingUtils.bindProperty(selected, "weightMax", weightMaxTxt, "text");
-                    BindingUtils.bindProperty(selected, "description", descriptionTxt, "text");
-                    BindingUtils.bindProperty(selected, "compatibility", compatibilityTxt, "text");
-                    BindingUtils.bindProperty(selected, "typePlacingRules", allowedLocationTypeLst, "dataProvider");
-                    BindingUtils.bindProperty(selected, "typeStackingRules", allowedTransportUnitTypeLst, "dataProvider");
-
-                    var event:TransportUnitTypeEvent=new TransportUnitTypeEvent(TransportUnitTypeEvent.SAVE_TRANSPORT_UNIT_TYPE);
-                    event.data=selected;
-                    dispatchEvent(event);
+                    var bindings:Array = [new BindingProperty(selected, "length", lengthTxt, "text"),
+                                          new BindingProperty(selected, "width", widthTxt, "text"),  
+                                          new BindingProperty(selected, "height", heightTxt, "text"),  
+                                          new BindingProperty(selected, "weightTare", weightTareTxt, "text"),  
+                                          new BindingProperty(selected, "weightMax", weightMaxTxt, "text"),  
+                                          new BindingProperty(selected, "description", descriptionTxt, "text"),  
+                                          new BindingProperty(selected, "compatibility", compatibilityTxt, "text"),  
+                                          new BindingProperty(selected, "typePlacingRules", allowedLocationTypeLst, "dataProvider"),  
+                                          new BindingProperty(selected, "typeStackingRules", allowedTransportUnitTypeLst, "dataProvider")];
+                    DisplayUtility.bindProperties(new ArrayCollection(bindings), function execute():void {
+                            var event:TransportUnitTypeEvent=new TransportUnitTypeEvent(TransportUnitTypeEvent.SAVE_TRANSPORT_UNIT_TYPE);
+                            event.data=selected;
+                            dispatchEvent(event);
+                        });
+                    selected = null;                            
                 } else {
-                	Alert.show("Data not valid");
+                	Alert.show("Some TransportUnitType data is not valid, please verify changes!");
                 }
             }
 
@@ -239,7 +243,7 @@
         </mx:DataGrid>
     </mx:HBox>
     <mx:HBox y="236" x="9" width="95%">
-        <mx:Canvas backgroundColor="#E8FB91" backgroundAlpha="0.5">
+        <mx:Canvas backgroundColor="#E8FB91" backgroundAlpha="0.5" width="100%">
             <mx:Label x="10" y="10" text="Transport Unit Type Details" fontWeight="bold"/>
 
             <mx:Label x="10" y="38" text="Type" width="130" textAlign="right"/>
@@ -263,22 +267,15 @@
             <mx:Label x="10" y="197" text="Description" textAlign="right" width="130"/>
             <mx:TextArea id="descriptionTxt" x="148" y="196" text="{selected.description}" height="64"/>
 
-            <mx:Label x="10" y="267" text="Compatibility" textAlign="right" width="130"/>
-            <mx:HBox x="148" y="266" width="160" height="64" horizontalGap="0">
-	            <mx:TextArea id="compatibilityTxt" text="{selected.compatibility}" height="100%" width="100%"/>
-                <mx:VBox height="100%" width="16" verticalAlign="middle">
-		            <mx:Image height="16" width="16" buttonMode="true" mouseChildren="false" source="@Embed(source='assets/images/icons/plus.png')"/>
-		            <mx:Image height="16" width="16" buttonMode="true" mouseChildren="false" source="@Embed(source='assets/images/icons/minus.png')"/>
-                </mx:VBox>
-            </mx:HBox>
+            <mx:Label x="10" y="267" text="Compatibility" textAlign="right" width="130" />
+            <mx:TextArea x="148" y="266" id="compatibilityTxt" width="160" height="64" text="{selected.compatibility}"/>
 
             <mx:VRule x="316" y="38" height="300"/>
+            <mx:VRule x="574" y="38" height="300"/>
             <mx:VRule x="34" y="36" height="310" strokeWidth="0"/>
 
             <mx:Label text="Allowed on these Location Types :" fontWeight="bold" x="326" y="38"/>
-            <!--
-            <comp:XTextArea x="326" y="61" width="240" height="103" id="allowedLocationTypeLst" listToDisplay="{selected.typePlacingRules}" formatFunction="{retAllowedLocationType}" plusToolTip="Allow Location Types where this Transport Unit Type can be placed on" minusToolTip="Forbid Location Types where this Transport Unit Type can be placed on" plusClick="{assignAllowedLocationTypes}" minusClick="{removeAllowedLocationTypes}"/>
-            -->
+
             <mx:HBox x="326" y="61" width="240" height="103" horizontalGap="0">
                 <mx:List id="allowedLocationTypeLst" width="100%" height="100%" labelFunction="retAllowedLocationType" dataProvider="{selected.typePlacingRules}" dragEnabled="true" dropEnabled="true" dragMoveEnabled="true" dragDrop="onDragComplete(event);"/>
 	            <mx:VBox height="100%" width="16" verticalAlign="middle">
@@ -295,11 +292,9 @@
                 </mx:VBox>
             </mx:HBox>
 
-            <mx:HRule x="326" y="305" width="286" strokeWidth="0"/>
-        </mx:Canvas>
-        <mx:Canvas backgroundColor="#E8FB91" width="100%" height="100%" backgroundAlpha="0.5">
-            <mx:Label x="10" y="10" text="Image" fontWeight="bold"/>
-            <mx:Image x="10" y="36"/>
+            <mx:HRule x="326" y="305" width="286" strokeWidth="0" visible="{hasImage}" />
+            <mx:Label x="584" y="38" text="Image" fontWeight="bold" visible="{hasImage}" />
+            <mx:Image x="584" y="61" visible="{hasImage}" />
         </mx:Canvas>
     </mx:HBox>
 </mx:Canvas>
