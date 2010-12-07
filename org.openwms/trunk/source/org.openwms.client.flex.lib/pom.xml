@@ -135,6 +135,31 @@
 		</plugins>
 	</build>
 
+    <reporting>
+        <plugins>
+            <plugin>
+                <groupId>org.sonatype.flexmojos</groupId>
+                <artifactId>flexmojos-maven-plugin</artifactId>
+                <version>3.3.0</version>
+                <reportSets>
+                    <reportSet>
+                        <id>flex-reports</id>
+                        <reports>
+                            <report>asdoc-report</report>
+                        </reports>
+                        <configuration>
+                            <footer>www.openwms.org</footer>
+                            <sourcePaths>
+                                <path>${basedir}/src/main/resources</path>
+                                <path>${basedir}/src/main/flex</path>
+                            </sourcePaths>
+                        </configuration>
+                    </reportSet>
+                </reportSets>
+            </plugin>
+        </plugins>
+    </reporting>
+
 	<repositories>
 		<repository>
 			<id>sonatype-public</id>

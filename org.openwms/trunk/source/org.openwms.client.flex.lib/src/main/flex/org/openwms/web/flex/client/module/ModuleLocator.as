@@ -20,6 +20,7 @@
  */
 package org.openwms.web.flex.client.module {
 
+    import flash.events.EventDispatcher;
     import flash.system.ApplicationDomain;
     
     import mx.collections.ArrayCollection;
@@ -55,7 +56,7 @@ package org.openwms.web.flex.client.module {
     [ManagedEvent(name="MODULE_LOADED")]
     [ManagedEvent(name="MODULE_UNLOADED")]
     [Bindable]
-    public class ModuleLocator {
+    public class ModuleLocator extends EventDispatcher {
 
         /**
          * Needs a Model to work on.
