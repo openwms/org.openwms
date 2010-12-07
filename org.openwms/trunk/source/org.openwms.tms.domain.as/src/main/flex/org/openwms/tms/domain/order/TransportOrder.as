@@ -22,12 +22,21 @@ package org.openwms.tms.domain.order {
 
     [Bindable]
     [RemoteClass(alias="org.openwms.tms.domain.order.TransportOrder")]
+    /**
+     * A TransportOrder is used to move <code>TransportUnit</code>s from a current
+     * <code>Location</code> to a target <code>Location</code>.
+     * 
+     * @version $Revision$
+     * @since 0.1
+     */
     public class TransportOrder extends TransportOrderBase {
     	
     	import org.openwms.tms.domain.values.TransportOrderState;
     	
-    	public function TransportOrder()
-    	{
+    	/**
+    	 * Constructor. Setting the state to CREATED.
+    	 */
+    	public function TransportOrder() {
     		this.state = TransportOrderState.CREATED;
     	}
     }
