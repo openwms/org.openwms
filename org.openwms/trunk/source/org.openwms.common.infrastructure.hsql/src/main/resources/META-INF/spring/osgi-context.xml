@@ -26,6 +26,6 @@
     xsi:schemaLocation="http://www.springframework.org/schema/osgi http://www.springframework.org/schema/osgi/spring-osgi-1.2.xsd
 		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">
 
-    <osgi:service ref="dataSource" interface="javax.sql.DataSource" />
+    <osgi:service ref="wmsDataSource" interface="javax.sql.DataSource" />
 
 </beans>

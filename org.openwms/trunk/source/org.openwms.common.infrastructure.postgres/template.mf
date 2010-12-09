@@ -8,8 +8,7 @@ Import-Library:
  org.springframework.spring;version="[3.0, 3.1)"
 Import-Bundle: 
  com.springsource.org.apache.commons.dbcp;version="1.2.2.osgi",
- com.springsource.org.postgresql.jdbc4;version="8.3.604",
- com.springsource.org.hsqldb;version="1.8.0.9"
+ com.springsource.org.postgresql.jdbc4;version="8.3.604"
 Import-Template: 
  javax.sql;version="0"
  
