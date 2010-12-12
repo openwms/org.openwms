@@ -1,0 +1,19 @@
+Manifest-Version: 1.0
+Bundle-Vendor: openwms.org
+Bundle-Version: 0.0.1.SNAPSHOT
+Bundle-Name: org.openwms.common.domain
+Bundle-ManifestVersion: 2
+Bundle-SymbolicName: org.openwms.common.domain
+Import-Bundle: 
+ com.springsource.javax.persistence;version="1.0.0",
+ com.springsource.org.apache.commons.lang;version="2.4.0"
+Excluded-Imports: 
+ org.openwms.common.framework.test.*,
+ org.openwms.common.test.*,
+ org.junit.*
+Excluded-Exports: 
+ org.junit.*
+Require-Bundle: 
+ com.springsource.org.hibernate,
+ com.springsource.javassist
+ 

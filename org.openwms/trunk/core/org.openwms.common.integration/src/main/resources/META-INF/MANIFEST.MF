@@ -1,0 +1,19 @@
+Manifest-Version: 1.0
+Archiver-Version: Plexus Archiver
+Created-By: Apache Maven
+Built-By: heiko
+Build-Jdk: 1.6.0_16
+Export-Package: org.openwms.common.integration;version="0.0.1.SNAPSHOT
+ ",org.openwms.common.integration.exception;version="0.0.1.SNAPSHOT",o
+ rg.openwms.common.integration.system.usermanagement;version="0.0.1.SN
+ APSHOT";uses:="org.openwms.common.integration"
+Import-Bundle: org.openwms.common.domain;version="[0.0.1.SNAPSHOT, 0.0
+ .1.SNAPSHOT]",com.springsource.javax.persistence;version="[1.0.0, 1.0
+ .0]"
+Bundle-Vendor: openwms.org
+Bundle-Version: 0.0.1.SNAPSHOT
+Tool: Bundlor 1.0.0.RELEASE
+Bundle-Name: org.openwms.common.integration
+Bundle-ManifestVersion: 2
+Bundle-SymbolicName: org.openwms.common.integration
+

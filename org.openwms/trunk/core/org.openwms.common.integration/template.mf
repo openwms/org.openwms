@@ -1,0 +1,9 @@
+Manifest-Version: 1.0
+Bundle-Vendor: openwms.org
+Bundle-Version: 0.0.1.SNAPSHOT
+Bundle-Name: org.openwms.common.integration
+Bundle-ManifestVersion: 2
+Bundle-SymbolicName: org.openwms.common.integration
+Import-Bundle: 
+ org.openwms.common.domain;version="[0.0.1.SNAPSHOT, 0.0.1.SNAPSHOT]",
+ com.springsource.javax.persistence;version="[1.0.0, 1.0.0]"
