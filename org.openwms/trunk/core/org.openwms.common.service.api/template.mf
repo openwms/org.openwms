@@ -1,0 +1,8 @@
+Manifest-Version: 1.0
+Bundle-Vendor: openwms.org
+Bundle-Version: 0.0.1.SNAPSHOT
+Bundle-Name: org.openwms.common.service.api
+Bundle-ManifestVersion: 2
+Bundle-SymbolicName: org.openwms.common.service.api
+Import-Bundle: 
+ org.openwms.common.domain;version="0.0.1.SNAPSHOT"
