@@ -15,12 +15,17 @@ Import-Bundle:
  org.openwms.tms.domain;version="0.0.1.SNAPSHOT",
  org.openwms.tms.util;version="0.0.1.SNAPSHOT",
  org.openwms.tms.integration;version="0.0.1.SNAPSHOT",
- org.openwms.tms.service.api;version="0.0.1.SNAPSHOT"
+ org.openwms.tms.service.api;version="0.0.1.SNAPSHOT",
+ com.springsource.org.hibernate;version="3.2.6.ga"
 Import-Template: 
  javax.annotation;version="0"
 Import-Package: 
+ org.hibernate.proxy; version="0.0.0",
  org.springframework.context.weaving;version="[3.0, 3.1)",
  org.springframework.transaction.aspectj;version="[3.0, 3.1)"
+Require-Bundle: 
+ com.springsource.org.hibernate,
+ com.springsource.javassist
 Excluded-Exports: 
  org.openwms.common,
  org.openwms.common.domain.*,
@@ -32,6 +37,5 @@ Excluded-Imports:
  org.openwms.common.framework.test.*,
  org.openwms.common.test.*,
  org.springframework.test.*,
- org.junit.*,
- org.hibernate.*
+ org.junit.*
  
