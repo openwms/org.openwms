@@ -7,12 +7,6 @@ Bundle-SymbolicName: org.openwms.core.domain
 Import-Bundle: 
  com.springsource.javax.persistence;version="1.0.0",
  com.springsource.org.apache.commons.lang;version="2.4.0"
-Excluded-Imports: 
- org.openwms.core.framework.test.*,
- org.openwms.core.test.*,
- org.junit.*
-Excluded-Exports: 
- org.junit.*
 Require-Bundle: 
  com.springsource.org.hibernate,
  com.springsource.javassist
