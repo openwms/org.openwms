@@ -18,16 +18,16 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
-package org.openwms.common.service.spring;
+package org.openwms.core.service.spring;
 
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
-import org.openwms.common.domain.Module;
-import org.openwms.common.integration.ModuleDao;
-import org.openwms.common.service.ModuleManagementService;
-import org.openwms.common.service.exception.ServiceRuntimeException;
+import org.openwms.core.domain.Module;
+import org.openwms.core.integration.ModuleDao;
+import org.openwms.core.service.ModuleManagementService;
+import org.openwms.core.service.exception.ServiceRuntimeException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
@@ -49,7 +49,7 @@ public class ModuleManagementImpl extends EntityServiceImpl<Module, Long> implem
     protected ModuleDao dao;
 
     /**
-     * @see org.openwms.common.service.ModuleManagementService#getModules()
+     * @see org.openwms.core.service.ModuleManagementService#getModules()
      */
     @Override
     @Transactional(readOnly = true)
@@ -58,7 +58,7 @@ public class ModuleManagementImpl extends EntityServiceImpl<Module, Long> implem
     }
 
     /**
-     * @see org.openwms.common.service.ModuleManagementService#login()
+     * @see org.openwms.core.service.ModuleManagementService#login()
      */
     @Override
     @Transactional(readOnly = true)
@@ -67,7 +67,7 @@ public class ModuleManagementImpl extends EntityServiceImpl<Module, Long> implem
     }
 
     /**
-     * @see org.openwms.common.service.ModuleManagementService#saveStartupOrder(java.util.List)
+     * @see org.openwms.core.service.ModuleManagementService#saveStartupOrder(java.util.List)
      */
     @Override
     public void saveStartupOrder(List<Module> modules) {
@@ -80,7 +80,7 @@ public class ModuleManagementImpl extends EntityServiceImpl<Module, Long> implem
     /**
      * {@inheritDoc}
      * 
-     * @see org.openwms.common.service.spring.EntityServiceImpl#remove(org.openwms.common.domain.AbstractEntity)
+     * @see org.openwms.core.service.spring.EntityServiceImpl#remove(org.openwms.core.domain.AbstractEntity)
      */
     @Override
     public void remove(Module entity) {
@@ -100,7 +100,7 @@ public class ModuleManagementImpl extends EntityServiceImpl<Module, Long> implem
      * 
      * Additionally the startup order is calculated for new modules.
      * 
-     * @see org.openwms.common.service.spring.EntityServiceImpl#save(org.openwms.common.domain.AbstractEntity)
+     * @see org.openwms.core.service.spring.EntityServiceImpl#save(org.openwms.core.domain.AbstractEntity)
      */
     @Override
     public Module save(Module entity) {

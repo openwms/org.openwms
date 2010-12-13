@@ -18,15 +18,15 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
-package org.openwms.common.service.spring;
+package org.openwms.core.service.spring;
 
 import java.io.Serializable;
 import java.lang.reflect.ParameterizedType;
 import java.util.List;
 
-import org.openwms.common.domain.AbstractEntity;
-import org.openwms.common.integration.GenericDao;
-import org.openwms.common.service.EntityService;
+import org.openwms.core.domain.AbstractEntity;
+import org.openwms.core.integration.GenericDao;
+import org.openwms.core.service.EntityService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeansException;

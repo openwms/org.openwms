@@ -36,21 +36,8 @@
 	<context:annotation-config />
     <tx:annotation-driven />
 
-	<bean id="locationService" class="org.openwms.common.service.spring.LocationServiceImpl">
-		<property name="dao" ref="locationDao" />
-	</bean>
-
-	<bean id="locationGroupService" class="org.openwms.common.service.spring.LocationGroupServiceImpl">
-		<property name="dao" ref="locationGroupDao" />
-	</bean>
-
 	<bean id="userService" class="org.openwms.common.service.spring.management.UserServiceImpl">
 		<property name="dao" ref="userDao" />
-	</bean>
-
-	<bean id="transportUnitService" class="org.openwms.common.service.spring.TransportUnitServiceImpl">
-		<property name="dao" ref="transportUnitDao" />
-        <property name="onRemovalListener" ref="onRemovalListener" />
 	</bean>
 
     <bean id="moduleManagementService" class="org.openwms.common.service.spring.ModuleManagementImpl">

@@ -18,17 +18,17 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
-package org.openwms.common.service.spring;
+package org.openwms.core.service.spring;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.openwms.common.domain.system.usermanagement.Preference;
-import org.openwms.common.domain.values.Unit;
-import org.openwms.common.domain.values.Weight;
-import org.openwms.common.domain.values.WeightUnit;
-import org.openwms.common.service.ConfigurationService;
+import org.openwms.core.domain.system.usermanagement.Preference;
+import org.openwms.core.domain.values.Unit;
+import org.openwms.core.domain.values.Weight;
+import org.openwms.core.domain.values.WeightUnit;
+import org.openwms.core.service.ConfigurationService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 

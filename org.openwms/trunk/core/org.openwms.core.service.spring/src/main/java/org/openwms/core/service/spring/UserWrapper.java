@@ -18,20 +18,20 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
-package org.openwms.common.service.spring;
+package org.openwms.core.service.spring;
 
 import java.util.ArrayList;
 import java.util.Collection;
 
-import org.openwms.common.domain.system.usermanagement.Role;
-import org.openwms.common.domain.system.usermanagement.User;
+import org.openwms.core.domain.system.usermanagement.Role;
+import org.openwms.core.domain.system.usermanagement.User;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 /**
  * An UserWrapper.
  * <p>
- * Used as an adapter between openwms roles and grants and Springs
+ * Used as an adapter between openwms.org roles and grants and Springs
  * {@link GrantedAuthority} objects.
  * </p>
  * 
@@ -43,9 +43,6 @@ import org.springframework.security.core.userdetails.UserDetails;
  */
 public class UserWrapper implements UserDetails {
 
-    /**
-     * The serialVersionUID
-     */
     private static final long serialVersionUID = -3974637197176782047L;
     private User user;
 

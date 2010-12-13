@@ -22,7 +22,6 @@ Excluded-Exports:
  org.openwms.core,
  org.openwms.core.domain.*,
  org.openwms.core.service.transport*,
- org.openwms.tms.*,
  org.openwms.core.service.management.*,
  org.openwms.core.dao.*
 Excluded-Imports: 
