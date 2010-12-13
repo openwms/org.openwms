@@ -21,4 +21,4 @@
 /**
  * Exception classes that are thrown by the service layer implementation.
  */
-package org.openwms.common.service.exception;
+package org.openwms.core.service.exception;
