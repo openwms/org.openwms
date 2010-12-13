@@ -19,6 +19,6 @@
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
 /**
- * Repository interface definitions of the COMMON module. Repositories are also well known as DAOs.
+ * Repository interface definitions of the CORE module. Repositories are also well known as DAOs.
  */
-package org.openwms.common.integration;
+package org.openwms.core.integration;

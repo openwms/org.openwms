@@ -18,11 +18,11 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
-package org.openwms.common.integration.system.usermanagement;
+package org.openwms.core.integration.system.usermanagement;
 
-import org.openwms.common.domain.system.usermanagement.User;
-import org.openwms.common.domain.system.usermanagement.UserPassword;
-import org.openwms.common.integration.GenericDao;
+import org.openwms.core.domain.system.usermanagement.User;
+import org.openwms.core.domain.system.usermanagement.UserPassword;
+import org.openwms.core.integration.GenericDao;
 
 /**
  * An UserDao adds particular functionality regarding {@link User} entity
@@ -31,8 +31,8 @@ import org.openwms.common.integration.GenericDao;
  * @author <a href="mailto:openwms@googlemail.com">Heiko Scherrer</a>
  * @version $Revision$
  * @since 0.1
- * @see org.openwms.common.integration.GenericDao
- * @see org.openwms.common.domain.system.usermanagement.User
+ * @see org.openwms.core.integration.GenericDao
+ * @see org.openwms.core.domain.system.usermanagement.User
  */
 public interface UserDao extends GenericDao<User, Long> {
 

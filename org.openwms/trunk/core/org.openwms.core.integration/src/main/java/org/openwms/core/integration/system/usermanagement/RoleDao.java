@@ -18,10 +18,10 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
-package org.openwms.common.integration.system.usermanagement;
+package org.openwms.core.integration.system.usermanagement;
 
-import org.openwms.common.domain.system.usermanagement.Role;
-import org.openwms.common.integration.GenericDao;
+import org.openwms.core.domain.system.usermanagement.Role;
+import org.openwms.core.integration.GenericDao;
 
 /**
  * A RoleDao adds particular functionality regarding

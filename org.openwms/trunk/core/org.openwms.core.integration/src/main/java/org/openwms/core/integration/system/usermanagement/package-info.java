@@ -21,4 +21,4 @@
 /**
  * Repository interface definitions of the CORE module. Repositories are also well known as DAOs.
  */
-package org.openwms.common.integration.system.usermanagement;
+package org.openwms.core.integration.system.usermanagement;

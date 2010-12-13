@@ -18,9 +18,9 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
-package org.openwms.common.integration;
+package org.openwms.core.integration;
 
-import org.openwms.common.domain.Module;
+import org.openwms.core.domain.Module;
 
 /**
  * A ModuleDao adds particular functionality regarding {@link Module} entity

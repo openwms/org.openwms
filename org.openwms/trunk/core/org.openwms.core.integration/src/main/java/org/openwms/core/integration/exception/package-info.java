@@ -19,6 +19,6 @@
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
 /**
- * Contains exception classes thrown by the data access layer, also referred to as integration layer of the COMMON module.
+ * Contains exception classes thrown by the data access layer, also referred to as integration layer of the CORE module.
  */
-package org.openwms.common.integration.exception;
+package org.openwms.core.integration.exception;

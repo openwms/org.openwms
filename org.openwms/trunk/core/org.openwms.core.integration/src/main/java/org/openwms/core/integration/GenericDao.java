@@ -18,13 +18,13 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
-package org.openwms.common.integration;
+package org.openwms.core.integration;
 
 import java.io.Serializable;
 import java.util.List;
 import java.util.Map;
 
-import org.openwms.common.domain.AbstractEntity;
+import org.openwms.core.domain.AbstractEntity;
 
 /**
  * A GenericDao is a generic interface declaration that defines simple CRUD
