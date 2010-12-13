@@ -26,7 +26,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<parent>
 		<groupId>org.openwms</groupId>
-		<artifactId>org.openwms</artifactId>
+		<artifactId>org.openwms.app</artifactId>
 		<version>0.0.1-SNAPSHOT</version>
 	</parent>
 	<artifactId>org.openwms.client.flex.lib</artifactId>

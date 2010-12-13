@@ -121,10 +121,10 @@
 						<template>${project.basedir}/etc/2.0.0.GA/interface.gsp</template>
 					</interfaceTemplate>
 					<includeJavaClasses>
-						<class>org.openwms.core.domain.*</class>
+						<class>org.openwms.common.domain.*</class>
 					</includeJavaClasses>
                     <excludeJavaClasses>
-                        <class>org.openwms.core.domain.system.usermanagement.User$1</class>
+                        <class>org.openwms.common.domain.system.usermanagement.User$1</class>
                     </excludeJavaClasses>
 					<sourcePaths>
 						<sourcePath>${project.basedir}/src/main/flex/</sourcePath>
