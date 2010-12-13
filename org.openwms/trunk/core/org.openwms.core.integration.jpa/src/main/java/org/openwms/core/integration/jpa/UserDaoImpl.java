@@ -18,17 +18,17 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
-package org.openwms.common.integration.jpa;
+package org.openwms.core.integration.jpa;
 
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.openwms.common.domain.system.usermanagement.Role;
-import org.openwms.common.domain.system.usermanagement.SystemUser;
-import org.openwms.common.domain.system.usermanagement.User;
-import org.openwms.common.domain.system.usermanagement.UserPassword;
-import org.openwms.common.integration.system.usermanagement.UserDao;
+import org.openwms.core.domain.system.usermanagement.Role;
+import org.openwms.core.domain.system.usermanagement.SystemUser;
+import org.openwms.core.domain.system.usermanagement.User;
+import org.openwms.core.domain.system.usermanagement.UserPassword;
+import org.openwms.core.integration.system.usermanagement.UserDao;
 import org.springframework.stereotype.Repository;
 
 /**
@@ -37,15 +37,15 @@ import org.springframework.stereotype.Repository;
  * @author <a href="mailto:openwms@googlemail.com">Heiko Scherrer</a>
  * @version $Revision$
  * @since 0.1
- * @see org.openwms.common.integration.jpa.AbstractGenericJpaDao
- * @see org.openwms.common.integration.system.usermanagement.UserDao
+ * @see org.openwms.core.integration.jpa.AbstractGenericJpaDao
+ * @see org.openwms.core.integration.system.usermanagement.UserDao
  */
 @Repository
 public class UserDaoImpl extends AbstractGenericJpaDao<User, Long> implements UserDao {
 
     /**
      * @return Name of the query
-     * @see org.openwms.common.integration.jpa.AbstractGenericJpaDao#getFindAllQuery()
+     * @see org.openwms.core.integration.jpa.AbstractGenericJpaDao#getFindAllQuery()
      */
     @Override
     protected String getFindAllQuery() {
@@ -54,7 +54,7 @@ public class UserDaoImpl extends AbstractGenericJpaDao<User, Long> implements Us
 
     /**
      * @return Name of the query
-     * @see org.openwms.common.integration.jpa.AbstractGenericJpaDao#getFindByUniqueIdQuery()
+     * @see org.openwms.core.integration.jpa.AbstractGenericJpaDao#getFindByUniqueIdQuery()
      */
     @Override
     protected String getFindByUniqueIdQuery() {
@@ -63,10 +63,9 @@ public class UserDaoImpl extends AbstractGenericJpaDao<User, Long> implements Us
 
     /**
      * @return List of all {@link User}s
-     * @see org.openwms.common.integration.jpa.AbstractGenericJpaDao#findAll()
+     * @see org.openwms.core.integration.jpa.AbstractGenericJpaDao#findAll()
      */
     @Override
-    @SuppressWarnings("unchecked")
     public List<User> findAll() {
         return super.findByPositionalParameters(User.NQ_FIND_ALL_ORDERED);
     }

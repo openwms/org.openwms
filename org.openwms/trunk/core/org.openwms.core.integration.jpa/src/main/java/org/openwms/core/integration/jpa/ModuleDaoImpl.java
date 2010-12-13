@@ -18,22 +18,21 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
-package org.openwms.common.integration.jpa;
+package org.openwms.core.integration.jpa;
 
-import org.openwms.common.domain.Module;
-import org.openwms.common.integration.ModuleDao;
+import org.openwms.core.domain.Module;
+import org.openwms.core.integration.ModuleDao;
 
 /**
  * A ModuleDao.
  * 
  * @author <a href="mailto:openwms@googlemail.com">Heiko Scherrer</a>
  * @version $Revision: $
- * 
  */
 public class ModuleDaoImpl extends AbstractGenericJpaDao<Module, Long> implements ModuleDao {
 
     /**
-     * @see org.openwms.common.integration.jpa.AbstractGenericJpaDao#getFindAllQuery()
+     * @see org.openwms.core.integration.jpa.AbstractGenericJpaDao#getFindAllQuery()
      */
     @Override
     protected String getFindAllQuery() {
@@ -41,7 +40,7 @@ public class ModuleDaoImpl extends AbstractGenericJpaDao<Module, Long> implement
     }
 
     /**
-     * @see org.openwms.common.integration.jpa.AbstractGenericJpaDao#getFindByUniqueIdQuery()
+     * @see org.openwms.core.integration.jpa.AbstractGenericJpaDao#getFindByUniqueIdQuery()
      */
     @Override
     protected String getFindByUniqueIdQuery() {

@@ -18,12 +18,12 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
-package org.openwms.common.integration.jpa;
+package org.openwms.core.integration.jpa;
 
 import java.io.Serializable;
 
-import org.openwms.common.domain.AbstractEntity;
-import org.openwms.common.integration.GenericDao;
+import org.openwms.core.domain.AbstractEntity;
+import org.openwms.core.integration.GenericDao;
 
 /**
  * A GenericJpaDaoImpl - Adds generic finder methods to query Entity classes.
@@ -35,18 +35,18 @@ import org.openwms.common.integration.GenericDao;
  * @author <a href="mailto:openwms@googlemail.com">Heiko Scherrer</a>
  * @version $Revision$
  * @since 0.1
- * @see org.openwms.common.integration.jpa.AbstractGenericJpaDao
- * @see org.openwms.common.integration.GenericDao
+ * @see org.openwms.core.integration.jpa.AbstractGenericJpaDao
+ * @see org.openwms.core.integration.GenericDao
  */
 public class GenericJpaDaoImpl<T extends AbstractEntity, ID extends Serializable> extends AbstractGenericJpaDao<T, ID>
         implements GenericDao<T, ID> {
 
     /**
      * Concatenates the simple class name of the persistent class with the
-     * default prefix {@link org.openwms.common.integration.FIND_ALL}.
+     * default prefix {@link org.openwms.core.integration.FIND_ALL}.
      * 
      * @return Name of the query
-     * @see org.openwms.common.integration.jpa.AbstractGenericJpaDao#getFindAllQuery()
+     * @see org.openwms.core.integration.jpa.AbstractGenericJpaDao#getFindAllQuery()
      */
     @Override
     protected String getFindAllQuery() {
@@ -55,10 +55,10 @@ public class GenericJpaDaoImpl<T extends AbstractEntity, ID extends Serializable
 
     /**
      * Concatenates the simple class name of the persistent class with the
-     * default prefix {@link org.openwms.common.integration.FIND_BY_ID}.
+     * default prefix {@link org.openwms.core.integration.FIND_BY_ID}.
      * 
      * @return Name of the query
-     * @see org.openwms.common.integration.jpa.AbstractGenericJpaDao#getFindByUniqueIdQuery()
+     * @see org.openwms.core.integration.jpa.AbstractGenericJpaDao#getFindByUniqueIdQuery()
      */
     @Override
     protected String getFindByUniqueIdQuery() {

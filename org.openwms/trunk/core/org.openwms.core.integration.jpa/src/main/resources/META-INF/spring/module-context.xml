@@ -43,15 +43,6 @@
     <!-- Used for the exception translation 
     <bean class="org.springframework.dao.annotation.PersistenceExceptionTranslationPostProcessor"/>
     -->
-    <bean id="locationDao" class="org.openwms.common.integration.jpa.LocationDaoImpl"/>
-
-    <bean id="locationTypeDao" class="org.openwms.common.integration.jpa.LocationTypeDaoImpl"/>
-
-    <bean id="locationGroupDao" class="org.openwms.common.integration.jpa.LocationGroupDaoImpl"/>
-
-    <bean id="transportUnitDao" class="org.openwms.common.integration.jpa.TransportUnitDaoImpl"/>
-
-    <bean id="transportUnitTypeDao" class="org.openwms.common.integration.jpa.TransportUnitTypeDaoImpl"/>
 
     <bean id="userDao" class="org.openwms.common.integration.jpa.UserDaoImpl"/>
     

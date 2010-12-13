@@ -18,7 +18,7 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
-package org.openwms.common.integration.jpa.system.usermanagement;
+package org.openwms.core.integration.jpa.system.usermanagement;
 
 import static junit.framework.Assert.assertEquals;
 import static junit.framework.Assert.assertNotSame;
@@ -28,9 +28,9 @@ import javax.persistence.PersistenceException;
 import javax.persistence.Query;
 
 import org.junit.Test;
-import org.openwms.common.domain.system.usermanagement.Role;
-import org.openwms.common.domain.system.usermanagement.User;
-import org.openwms.common.test.AbstractJpaSpringContextTests;
+import org.openwms.core.domain.system.usermanagement.Role;
+import org.openwms.core.domain.system.usermanagement.User;
+import org.openwms.core.test.AbstractJpaSpringContextTests;
 import org.springframework.transaction.annotation.Transactional;
 
 /**
