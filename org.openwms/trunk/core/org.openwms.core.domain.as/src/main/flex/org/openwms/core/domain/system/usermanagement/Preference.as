@@ -18,10 +18,10 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
-package org.openwms.common.domain.system.usermanagement {
+package org.openwms.core.domain.system.usermanagement {
 
     [Bindable]
-    [RemoteClass(alias="org.openwms.common.domain.system.usermanagement.Preference")]
+    [RemoteClass(alias="org.openwms.core.domain.system.usermanagement.Preference")]
 	/**
 	 * A Preference, could be an user-, role- or system preference.
 	 * 
