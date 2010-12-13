@@ -18,10 +18,10 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
-package org.openwms.common.domain {
+package org.openwms.core.domain {
 
     [Bindable]
-    [RemoteClass(alias="org.openwms.common.domain.Module")]
+    [RemoteClass(alias="org.openwms.core.domain.Module")]
     /**
      * A Module is a definition of a Flex Module and is used to persist some
      * initial information about these modules.

@@ -18,16 +18,16 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
-package org.openwms.common.domain.system.usermanagement {
+package org.openwms.core.domain.system.usermanagement {
 
     [Bindable]
-    [RemoteClass(alias="org.openwms.common.domain.system.usermanagement.Email")]
+    [RemoteClass(alias="org.openwms.core.domain.system.usermanagement.Email")]
 	/**
 	 * An Email, encapsulates the email address of an <code>User</code>.
 	 * 
 	 * @version $Revision$
 	 * @since 0.1
-	 * @see org.openwms.common.domain.system.usermanagement.User
+	 * @see org.openwms.core.domain.system.usermanagement.User
 	 */
     public class Email extends EmailBase { }
 }

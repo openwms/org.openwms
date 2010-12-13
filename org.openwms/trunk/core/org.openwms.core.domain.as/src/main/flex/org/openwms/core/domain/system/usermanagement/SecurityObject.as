@@ -18,10 +18,10 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
-package org.openwms.common.domain.system.usermanagement {
+package org.openwms.core.domain.system.usermanagement {
 
     [Bindable]
-    [RemoteClass(alias="org.openwms.common.domain.system.usermanagement.SecurityObject")]
+    [RemoteClass(alias="org.openwms.core.domain.system.usermanagement.SecurityObject")]
 	/**
 	 * A SecurityObject is the superclass of Roles and Grants and combines common used properties.
 	 * 
