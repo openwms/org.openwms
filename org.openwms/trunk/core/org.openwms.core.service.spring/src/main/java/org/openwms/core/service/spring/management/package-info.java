@@ -21,4 +21,4 @@
 /**
  * This package provides business logic for the user management.
  */
-package org.openwms.common.service.spring.management;
+package org.openwms.core.service.spring.management;

@@ -18,16 +18,16 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
-package org.openwms.common.service.spring.util;
+package org.openwms.core.service.spring.util;
 
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import org.openwms.common.domain.AbstractEntity;
-import org.openwms.common.domain.DomainObject;
-import org.openwms.common.integration.GenericDao;
+import org.openwms.core.domain.AbstractEntity;
+import org.openwms.core.domain.DomainObject;
+import org.openwms.core.integration.GenericDao;
 
 /**
  * A ServiceHelper. Collection of useful utility methods to convert and deal

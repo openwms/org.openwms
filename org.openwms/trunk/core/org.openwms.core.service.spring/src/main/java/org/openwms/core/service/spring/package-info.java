@@ -21,4 +21,4 @@
 /**
  * This package provides common used business logic.
  */
-package org.openwms.common.service.spring;
+package org.openwms.core.service.spring;
