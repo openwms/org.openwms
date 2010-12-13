@@ -21,4 +21,4 @@
 /**
  * Contains often used value classes.
  */
-package org.openwms.common.domain.values;
+package org.openwms.core.domain.values;

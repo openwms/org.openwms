@@ -18,7 +18,7 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
-package org.openwms.common.domain.system.usermanagement;
+package org.openwms.core.domain.system.usermanagement;
 
 import static javax.persistence.GenerationType.AUTO;
 
@@ -34,8 +34,8 @@ import javax.persistence.OrderBy;
 import javax.persistence.Table;
 import javax.persistence.Version;
 
-import org.openwms.common.domain.AbstractEntity;
-import org.openwms.common.domain.DomainObject;
+import org.openwms.core.domain.AbstractEntity;
+import org.openwms.core.domain.DomainObject;
 
 /**
  * Encapsulates the password of an {@link User}.
@@ -47,7 +47,7 @@ import org.openwms.common.domain.DomainObject;
  * @author <a href="mailto:scherrer@users.sourceforge.net">Heiko Scherrer</a>
  * @version $Revision$
  * @since 0.1
- * @see org.openwms.common.domain.system.usermanagement.User
+ * @see org.openwms.core.domain.system.usermanagement.User
  */
 @Entity
 @Table(name = "APP_USER_PASSWORD")

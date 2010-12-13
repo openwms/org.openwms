@@ -21,4 +21,4 @@
 /**
  * Contains essential domain classes that belong to the CORE Module.
  */
-package org.openwms.common.domain.system;
+package org.openwms.core.domain.system;

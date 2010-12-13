@@ -19,6 +19,6 @@
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
 /**
- * Contains essential domain classes of the COMMON module.
+ * Contains essential domain classes of the CORE module.
  */
-package org.openwms.common.domain;
+package org.openwms.core.domain;

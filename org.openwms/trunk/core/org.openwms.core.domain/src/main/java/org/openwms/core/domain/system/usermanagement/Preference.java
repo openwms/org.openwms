@@ -18,7 +18,7 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
-package org.openwms.common.domain.system.usermanagement;
+package org.openwms.core.domain.system.usermanagement;
 
 import java.io.Serializable;
 
@@ -30,8 +30,8 @@ import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 import javax.persistence.Version;
 
-import org.openwms.common.domain.AbstractEntity;
-import org.openwms.common.domain.DomainObject;
+import org.openwms.core.domain.AbstractEntity;
+import org.openwms.core.domain.DomainObject;
 
 /**
  * A Preference, could be an user-, role- or system preference.

@@ -21,4 +21,4 @@
 /**
  * Contains domain classes regarding the user and role management.
  */
-package org.openwms.common.domain.system.usermanagement;
+package org.openwms.core.domain.system.usermanagement;

@@ -18,7 +18,7 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
-package org.openwms.common.domain.system.usermanagement;
+package org.openwms.core.domain.system.usermanagement;
 
 import java.io.Serializable;
 
@@ -30,7 +30,7 @@ import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.Lob;
 
-import org.openwms.common.domain.values.ImageProvider;
+import org.openwms.core.domain.values.ImageProvider;
 
 /**
  * Detailed information about an <code>User</code>.
@@ -38,7 +38,7 @@ import org.openwms.common.domain.values.ImageProvider;
  * @author <a href="mailto:scherrer@users.sourceforge.net">Heiko Scherrer</a>
  * @version $Revision$
  * @since 0.1
- * @see org.openwms.common.domain.system.usermanagement.User
+ * @see org.openwms.core.domain.system.usermanagement.User
  */
 @Embeddable
 public class UserDetails implements ImageProvider, Serializable {
