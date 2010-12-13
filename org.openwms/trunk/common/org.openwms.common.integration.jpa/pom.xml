@@ -26,7 +26,7 @@
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <groupId>org.openwms</groupId>
-        <artifactId>org.openwms</artifactId>
+        <artifactId>org.openwms.common</artifactId>
         <version>0.0.1-SNAPSHOT</version>
     </parent>
     <artifactId>org.openwms.common.integration.jpa</artifactId>
@@ -123,7 +123,7 @@
         <!-- Project dependencies -->
         <dependency>
             <groupId>${project.groupId}</groupId>
-            <artifactId>org.openwms.common.infrastructure.hsql</artifactId>
+            <artifactId>org.openwms.core.infrastructure.hsql</artifactId>
             <scope>test</scope>
         </dependency>
         <dependency>
@@ -136,7 +136,7 @@
         </dependency>
         <dependency>
             <groupId>${project.groupId}</groupId>
-            <artifactId>org.openwms.common.framework.test</artifactId>
+            <artifactId>org.openwms.core.framework.test</artifactId>
             <type>test-jar</type>
             <scope>test</scope>
         </dependency>

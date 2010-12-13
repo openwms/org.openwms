@@ -1,26 +1,26 @@
 Manifest-Version: 1.0
 Bundle-Vendor: openwms.org
 Bundle-Version: 0.0.1.SNAPSHOT
-Bundle-Name: org.openwms.common.integration.jpa
+Bundle-Name: org.openwms.core.integration.jpa
 Bundle-ManifestVersion: 2
-Bundle-SymbolicName: org.openwms.common.integration.jpa
+Bundle-SymbolicName: org.openwms.core.integration.jpa
 Import-Library: 
  org.springframework.spring;version="[3.0, 3.1)"
 Import-Bundle: 
  com.springsource.javax.persistence;version="1.0.0",
- org.openwms.common.domain;version="0.0.1.SNAPSHOT",
+ org.openwms.core.domain;version="0.0.1.SNAPSHOT",
  org.openwms.tms.domain;version="0.0.1.SNAPSHOT",
- org.openwms.common.integration;version="0.0.1.SNAPSHOT",
+ org.openwms.core.integration;version="0.0.1.SNAPSHOT",
  com.springsource.org.hibernate;version="3.2.6.ga"
 Excluded-Imports: 
- org.openwms.common.framework.test.*,
- org.openwms.common.test.*,
+ org.openwms.core.framework.test.*,
+ org.openwms.core.test.*,
  org.springframework.test.*,
  org.junit.*,
  junit.framework.*
 Excluded-Exports: 
- org.openwms.common.framework.test.*,
- org.openwms.common.test.*,
+ org.openwms.core.framework.test.*,
+ org.openwms.core.test.*,
  org.springframework.test.*,
  org.junit.*
 Require-Bundle: 
