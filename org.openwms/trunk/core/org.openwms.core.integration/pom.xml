@@ -26,10 +26,10 @@
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <groupId>org.openwms</groupId>
-        <artifactId>org.openwms</artifactId>
+        <artifactId>org.openwms.core</artifactId>
         <version>0.0.1-SNAPSHOT</version>
     </parent>
-    <artifactId>org.openwms.common.integration</artifactId>
+    <artifactId>org.openwms.core.integration</artifactId>
     <packaging>jar</packaging>
     <name>${project.artifactId}</name>
     <properties>
@@ -60,7 +60,7 @@
         <!-- Project dependencies -->
         <dependency>
             <groupId>${project.groupId}</groupId>
-            <artifactId>org.openwms.common.domain</artifactId>
+            <artifactId>org.openwms.core.domain</artifactId>
         </dependency>
     </dependencies>
 </project>

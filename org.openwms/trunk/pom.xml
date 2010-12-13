@@ -66,9 +66,9 @@
     </distributionManagement>
 
     <scm>
-        <connection>scm:svn:http://openwms2005.svn.sourceforge.net/svnroot/openwms2005/org.openwms/trunk/source</connection>
-        <developerConnection>scm:svn:https://openwms2005.svn.sourceforge.net/svnroot/openwms2005/org.openwms/trunk/source</developerConnection>
-        <url>http://openwms2005.svn.sourceforge.net/viewvc/openwms2005/org.openwms/trunk/source</url>
+        <connection>scm:svn:http://openwms2005.svn.sourceforge.net/svnroot/openwms2005/org.openwms/trunk</connection>
+        <developerConnection>scm:svn:https://openwms2005.svn.sourceforge.net/svnroot/openwms2005/org.openwms/trunk</developerConnection>
+        <url>http://openwms2005.svn.sourceforge.net/viewvc/openwms2005/org.openwms/trunk</url>
     </scm>
 
     <organization>
@@ -168,6 +168,25 @@
 
     <profiles>
         <profile>
+            <id>public</id>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+            <properties>
+                <!-- Web Site deployment -->
+                <distribution.serverId>shell.sourceforge.net</distribution.serverId>
+                <distribution.serverProtocol>scp</distribution.serverProtocol>
+                <distribution.serverUrl.rootPath>shell.sourceforge.net/home/groups/o/op/openwms2005/htdocs</distribution.serverUrl.rootPath>
+                <distribution.serverUrl.sourcePath>${distribution.serverUrl.rootPath}/development/reference/${project.version}</distribution.serverUrl.sourcePath>
+                <distribution.serverUrl.docsPath>${distribution.serverUrl.rootPath}/docs</distribution.serverUrl.docsPath>
+                <!-- Maven Repo Artifact deployment -->
+                <distribution.repo.serverId>shell.sourceforge.net</distribution.repo.serverId>
+                <distribution.repo.serverProtocol>scp:</distribution.repo.serverProtocol>
+                <distribution.repo.serverUrl.rootPath>shell.sourceforge.net/home/groups/o/op/openwms2005/htdocs/repo/releases</distribution.repo.serverUrl.rootPath>
+                <distribution.repo.snapshot.serverUrl.rootPath>shell.sourceforge.net/home/groups/o/op/openwms2005/htdocs/repo/snapshots</distribution.repo.snapshot.serverUrl.rootPath>
+            </properties>
+        </profile>
+        <profile>
             <id>private</id>
             <properties>
                 <!-- Web Site deployment -->
@@ -184,7 +203,7 @@
             </properties>
         </profile>
         <profile>
-            <id>all</id>
+            <id>alls</id>
             <modules>
                 <module>org.openwms.app</module>
                 <module>org.openwms.app.plan</module>
@@ -221,6 +240,14 @@
             </modules>
         </profile>
         <profile>
+            <id>all</id>
+            <modules>
+                <module>core</module>
+                <module>common</module>
+				<module>tms</module>
+            </modules>
+        </profile>
+        <profile>
             <id>domain</id>
             <modules>
                 <module>org.openwms.common.domain.as</module>
@@ -244,25 +271,6 @@
                     </plugin>
 	            </plugins>
             </build>
-        </profile>
-        <profile>
-            <id>public</id>
-            <activation>
-                <activeByDefault>true</activeByDefault>
-            </activation>
-            <properties>
-                <!-- Web Site deployment -->
-                <distribution.serverId>shell.sourceforge.net</distribution.serverId>
-                <distribution.serverProtocol>scp</distribution.serverProtocol>
-                <distribution.serverUrl.rootPath>shell.sourceforge.net/home/groups/o/op/openwms2005/htdocs</distribution.serverUrl.rootPath>
-                <distribution.serverUrl.sourcePath>${distribution.serverUrl.rootPath}/development/reference/${project.version}</distribution.serverUrl.sourcePath>
-                <distribution.serverUrl.docsPath>${distribution.serverUrl.rootPath}/docs</distribution.serverUrl.docsPath>
-                <!-- Maven Repo Artifact deployment -->
-                <distribution.repo.serverId>shell.sourceforge.net</distribution.repo.serverId>
-                <distribution.repo.serverProtocol>scp:</distribution.repo.serverProtocol>
-                <distribution.repo.serverUrl.rootPath>shell.sourceforge.net/home/groups/o/op/openwms2005/htdocs/repo/releases</distribution.repo.serverUrl.rootPath>
-                <distribution.repo.snapshot.serverUrl.rootPath>shell.sourceforge.net/home/groups/o/op/openwms2005/htdocs/repo/snapshots</distribution.repo.snapshot.serverUrl.rootPath>
-            </properties>
         </profile>
     </profiles>
 
@@ -584,7 +592,7 @@
                             <linksource>true</linksource>
                             <overview>${basedir}/overview.html</overview>
                             <source>${project.build.sourceCompilerLevel}</source>
-                            <stylesheetfile>src/site/css/openwms-jdoc.css</stylesheetfile>
+                            <stylesheetfile>${basedir}/src/site/css/openwms-jdoc.css</stylesheetfile>
                             <verbose>true</verbose>
                         </configuration>
                     </reportSet>

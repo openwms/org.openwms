@@ -26,10 +26,10 @@
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <groupId>org.openwms</groupId>
-        <artifactId>org.openwms</artifactId>
+        <artifactId>org.openwms.core</artifactId>
         <version>0.0.1-SNAPSHOT</version>
     </parent>
-    <artifactId>org.openwms.common.infrastructure.configuration</artifactId>
+    <artifactId>org.openwms.core.infrastructure.configuration</artifactId>
     <packaging>pom</packaging>
     <name>${project.artifactId}</name>
     <properties>
@@ -70,7 +70,7 @@
                         </goals>
                         <configuration>
                             <groupId>org.openwms</groupId>
-                            <artifactId>org.openwms.common.infrastructure.configuration</artifactId>
+                            <artifactId>org.openwms.core.infrastructure.configuration</artifactId>
                             <version>${project.version}</version>
                             <packaging>properties</packaging>
                             <file>src/org.openwms.infrastructure.configuration.properties</file>
@@ -93,7 +93,7 @@
                             <repositoryId>repo.sourceforge.net</repositoryId>
                             <url>${distribution.repo.serverProtocol}//${distribution.repo.snapshot.serverUrl.rootPath}</url>
                             <groupId>org.openwms</groupId>
-                            <artifactId>org.openwms.common.infrastructure.configuration</artifactId>
+                            <artifactId>org.openwms.core.infrastructure.configuration</artifactId>
                             <version>${project.version}</version>
                             <packaging>properties</packaging>
                             <file>src/org.openwms.infrastructure.configuration.properties</file>

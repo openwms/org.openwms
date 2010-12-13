@@ -26,10 +26,10 @@
 	<modelVersion>4.0.0</modelVersion>
 	<parent>
 		<groupId>org.openwms</groupId>
-		<artifactId>org.openwms</artifactId>
+		<artifactId>org.openwms.core</artifactId>
 		<version>0.0.1-SNAPSHOT</version>
 	</parent>
-	<artifactId>org.openwms.common.domain.as</artifactId>
+	<artifactId>org.openwms.core.domain.as</artifactId>
 	<packaging>swc</packaging>
 	<name>${project.artifactId}</name>
 	<properties>
@@ -121,10 +121,10 @@
 						<template>${project.basedir}/etc/2.0.0.GA/interface.gsp</template>
 					</interfaceTemplate>
 					<includeJavaClasses>
-						<class>org.openwms.common.domain.*</class>
+						<class>org.openwms.core.domain.*</class>
 					</includeJavaClasses>
                     <excludeJavaClasses>
-                        <class>org.openwms.common.domain.system.usermanagement.User$1</class>
+                        <class>org.openwms.core.domain.system.usermanagement.User$1</class>
                     </excludeJavaClasses>
 					<sourcePaths>
 						<sourcePath>${project.basedir}/src/main/flex/</sourcePath>
@@ -219,7 +219,7 @@
 	<dependencies>
 		<dependency>
 			<groupId>${project.groupId}</groupId>
-			<artifactId>org.openwms.common.domain</artifactId>
+			<artifactId>org.openwms.core.domain</artifactId>
             <scope>provided</scope>
 		</dependency>
 		<dependency>

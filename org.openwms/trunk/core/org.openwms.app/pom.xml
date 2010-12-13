@@ -26,7 +26,7 @@
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <groupId>org.openwms</groupId>
-        <artifactId>org.openwms</artifactId>
+        <artifactId>org.openwms.core</artifactId>
         <version>0.0.1-SNAPSHOT</version>
     </parent>
     <artifactId>org.openwms.app</artifactId>
@@ -44,8 +44,8 @@
                 <configuration>
                     <outputFile>target/${project.artifactId}.par</outputFile>
                     <applicationVersion>1.0.0</applicationVersion>
-                    <applicationSymbolicName>OpenWMS</applicationSymbolicName>
-                    <applicationDescription>OpenWMS OSGi PAR Bundle</applicationDescription>
+                    <applicationSymbolicName>OpenWMS.org</applicationSymbolicName>
+                    <applicationDescription>OpenWMS.org OSGi PAR Bundle</applicationDescription>
                     <applicationName>${project.artifactId}</applicationName>
                 </configuration>
             </plugin>
@@ -63,7 +63,7 @@
                         <configuration>
                             <outputDirectory>${project.build.directory}/usr</outputDirectory>
                             <overWriteIfNewer>true</overWriteIfNewer>
-                            <excludeArtifactIds>org.openwms.common.domain,org.openwms.common.integration,org.openwms.common.integration.hibernate,org.openwms.common.integration.jpa,org.openwms.common.service.api,org.openwms.common.service.spring,org.openwms.client.flex.wrapper</excludeArtifactIds>
+                            <excludeArtifactIds>org.openwms.core.domain,org.openwms.core.integration,org.openwms.core.integration.hibernate,org.openwms.core.integration.jpa,org.openwms.core.service.api,org.openwms.core.service.spring,org.openwms.client.flex.wrapper</excludeArtifactIds>
                             <excludeGroupIds>javax.transaction,javax.persistence,org.junit,org.slf4j,org.springframework,com.springsource.dmserver,org.apache.log4j</excludeGroupIds>
                         </configuration>
                     </execution>
@@ -75,44 +75,44 @@
     <dependencies>
         <dependency>
             <groupId>${project.groupId}</groupId>
-            <artifactId>org.openwms.common.domain</artifactId>
+            <artifactId>org.openwms.core.domain</artifactId>
             <version>${project.version}</version>
         </dependency>
         <dependency>
             <groupId>${project.groupId}</groupId>
-            <artifactId>org.openwms.common.infrastructure.configuration</artifactId>
+            <artifactId>org.openwms.core.infrastructure.configuration</artifactId>
             <version>${project.version}</version>
             <type>properties</type>
         </dependency>
         <dependency>
             <groupId>${project.groupId}</groupId>
-            <artifactId>org.openwms.common.infrastructure.postgres</artifactId>
+            <artifactId>org.openwms.core.infrastructure.postgres</artifactId>
             <version>${project.version}</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>${project.groupId}</groupId>
-            <artifactId>org.openwms.common.integration</artifactId>
+            <artifactId>org.openwms.core.integration</artifactId>
             <version>${project.version}</version>
         </dependency>
         <dependency>
             <groupId>${project.groupId}</groupId>
-            <artifactId>org.openwms.common.integration.hibernate</artifactId>
+            <artifactId>org.openwms.core.integration.hibernate</artifactId>
             <version>${project.version}</version>
         </dependency>
         <dependency>
             <groupId>${project.groupId}</groupId>
-            <artifactId>org.openwms.common.integration.jpa</artifactId>
+            <artifactId>org.openwms.core.integration.jpa</artifactId>
             <version>${project.version}</version>
         </dependency>
         <dependency>
             <groupId>${project.groupId}</groupId>
-            <artifactId>org.openwms.common.service.api</artifactId>
+            <artifactId>org.openwms.core.service.api</artifactId>
             <version>${project.version}</version>
         </dependency>
         <dependency>
             <groupId>${project.groupId}</groupId>
-            <artifactId>org.openwms.common.service.spring</artifactId>
+            <artifactId>org.openwms.core.service.spring</artifactId>
             <version>${project.version}</version>
         </dependency>
         <dependency>

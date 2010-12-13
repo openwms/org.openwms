@@ -1,8 +1,8 @@
 Manifest-Version: 1.0
 Bundle-Vendor: openwms.org
 Bundle-Version: 0.0.1.SNAPSHOT
-Bundle-Name: org.openwms.common.service.api
+Bundle-Name: org.openwms.core.service.api
 Bundle-ManifestVersion: 2
-Bundle-SymbolicName: org.openwms.common.service.api
+Bundle-SymbolicName: org.openwms.core.service.api
 Import-Bundle: 
- org.openwms.common.domain;version="0.0.1.SNAPSHOT"
+ org.openwms.core.domain;version="0.0.1.SNAPSHOT"

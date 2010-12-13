@@ -26,10 +26,10 @@
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <groupId>org.openwms</groupId>
-        <artifactId>org.openwms</artifactId>
+        <artifactId>org.openwms.core</artifactId>
         <version>0.0.1-SNAPSHOT</version>
     </parent>
-    <artifactId>org.openwms.common.service.spring</artifactId>
+    <artifactId>org.openwms.core.service.spring</artifactId>
     <packaging>jar</packaging>
     <name>${project.artifactId}</name>
     <properties>
@@ -130,28 +130,28 @@
         <!-- Project dependencies -->
         <dependency>
             <groupId>${project.groupId}</groupId>
-            <artifactId>org.openwms.common.util</artifactId>
+            <artifactId>org.openwms.core.util</artifactId>
         </dependency>
         <dependency>
             <groupId>${project.groupId}</groupId>
-            <artifactId>org.openwms.common.domain</artifactId>
+            <artifactId>org.openwms.core.domain</artifactId>
         </dependency>
         <dependency>
             <groupId>${project.groupId}</groupId>
-            <artifactId>org.openwms.common.service.api</artifactId>
+            <artifactId>org.openwms.core.service.api</artifactId>
         </dependency>
         <dependency>
             <groupId>${project.groupId}</groupId>
-            <artifactId>org.openwms.common.integration</artifactId>
+            <artifactId>org.openwms.core.integration</artifactId>
         </dependency>
         <dependency>
             <groupId>${project.groupId}</groupId>
-            <artifactId>org.openwms.common.integration.jpa</artifactId>
+            <artifactId>org.openwms.core.integration.jpa</artifactId>
             <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>${project.groupId}</groupId>
-            <artifactId>org.openwms.common.framework.test</artifactId>
+            <artifactId>org.openwms.core.framework.test</artifactId>
             <type>test-jar</type>
             <scope>test</scope>
         </dependency>
