@@ -249,9 +249,27 @@
             </modules>
         </profile>
         <profile>
-            <id>domain</id>
+            <id>app</id>
             <modules>
-                <module>org.openwms.common.domain.as</module>
+                <module>app</module>
+            </modules>
+        </profile>
+        <profile>
+            <id>core</id>
+            <modules>
+                <module>core</module>
+            </modules>
+        </profile>
+        <profile>
+            <id>common</id>
+            <modules>
+                <module>common</module>
+            </modules>
+        </profile>
+        <profile>
+            <id>tms</id>
+            <modules>
+                <module>tms</module>
             </modules>
         </profile>
         <profile>
