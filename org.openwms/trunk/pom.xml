@@ -242,6 +242,7 @@
         <profile>
             <id>all</id>
             <modules>
+                <module>app</module>
                 <module>core</module>
                 <module>common</module>
 				<module>tms</module>

@@ -99,16 +99,19 @@
         <dependency>
             <groupId>${project.groupId}</groupId>
             <artifactId>org.openwms.core.infrastructure.postgres</artifactId>
+            <version>${project.version}</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>${project.groupId}</groupId>
             <artifactId>org.openwms.core.integration</artifactId>
+            <version>${project.version}</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>${project.groupId}</groupId>
             <artifactId>org.openwms.core.domain</artifactId>
+            <version>${project.version}</version>
             <scope>provided</scope>
         </dependency>
     </dependencies>

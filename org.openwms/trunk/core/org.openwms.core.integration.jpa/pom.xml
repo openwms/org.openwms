@@ -124,19 +124,23 @@
         <dependency>
             <groupId>${project.groupId}</groupId>
             <artifactId>org.openwms.core.infrastructure.hsql</artifactId>
+            <version>${project.version}</version>
             <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>${project.groupId}</groupId>
             <artifactId>org.openwms.core.integration</artifactId>
+            <version>${project.version}</version>
         </dependency>
         <dependency>
             <groupId>${project.groupId}</groupId>
             <artifactId>org.openwms.core.domain</artifactId>
+            <version>${project.version}</version>
         </dependency>
         <dependency>
             <groupId>${project.groupId}</groupId>
             <artifactId>org.openwms.core.framework.test</artifactId>
+            <version>${project.version}</version>
             <type>test-jar</type>
             <scope>test</scope>
         </dependency>
