@@ -52,7 +52,7 @@
         <site>
             <id>${distribution.serverId}</id>
             <name>OpenWMS.org WebSite</name>
-            <url>${distribution.serverProtocol}://${distribution.serverUrl.sourcePath}/core</url>
+            <url>${distribution.serverProtocol}://${distribution.serverUrl.sourcePath}/app</url>
         </site>
     </distributionManagement>
 
@@ -62,37 +62,40 @@
         <url>http://openwms2005.svn.sourceforge.net/viewvc/openwms2005/org.openwms/trunk/app</url>
     </scm>
 
-    <dependencies>
-        <!-- Project dependencies -->
-        <dependency>
-            <groupId>${project.groupId}</groupId>
-            <artifactId>org.openwms.core.domain</artifactId>
-            <version>${project.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>${project.groupId}</groupId>
-            <artifactId>org.openwms.client.flex.lib</artifactId>
-            <version>${project.version}</version>
-            <type>swc</type>
-        </dependency>
-        <dependency>
-            <groupId>${project.groupId}</groupId>
-            <artifactId>org.openwms.client.flex.app</artifactId>
-            <version>${project.version}</version>
-            <type>swf</type>
-        </dependency>
-        <dependency>
-            <groupId>${project.groupId}</groupId>
-            <artifactId>org.openwms.client.flex.wrapper</artifactId>
-            <version>${project.version}</version>
-            <type>war</type>
-        </dependency>
-    </dependencies>
+	<dependencyManagement>
+	    <dependencies>
+	        <!-- Project dependencies -->
+	        <dependency>
+	            <groupId>${project.groupId}</groupId>
+	            <artifactId>org.openwms.core.domain</artifactId>
+	            <version>${project.version}</version>
+	        </dependency>
+	        <dependency>
+	            <groupId>${project.groupId}</groupId>
+	            <artifactId>org.openwms.client.flex.lib</artifactId>
+	            <version>${project.version}</version>
+	            <type>swc</type>
+	        </dependency>
+	        <dependency>
+	            <groupId>${project.groupId}</groupId>
+	            <artifactId>org.openwms.client.flex.app</artifactId>
+	            <version>${project.version}</version>
+	            <type>swf</type>
+	        </dependency>
+	        <dependency>
+	            <groupId>${project.groupId}</groupId>
+	            <artifactId>org.openwms.client.flex.wrapper</artifactId>
+	            <version>${project.version}</version>
+	            <type>war</type>
+	        </dependency>
+	    </dependencies>
+	</dependencyManagement>
+	
     <profiles>
         <profile>
             <id>all</id>
             <modules>
-                <module>org.openwms.app</module>
+                <module>org.openwms.app.par</module>
                 <module>org.openwms.app.plan</module>
                 <module>org.openwms.client.flex.app</module>
                 <module>org.openwms.client.flex.lib</module>
