@@ -29,7 +29,7 @@
         <artifactId>org.openwms.core</artifactId>
         <version>0.0.1-SNAPSHOT</version>
     </parent>
-    <artifactId>org.openwms.app</artifactId>
+    <artifactId>org.openwms.app.par</artifactId>
     <packaging>par</packaging>
     <name>${project.artifactId}</name>
     <properties>
