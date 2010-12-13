@@ -21,4 +21,4 @@
 /**
  * Interfaces of the service layer; implementations provide business logic to operate on common classes of the user management.
  */
-package org.openwms.common.service.management;
+package org.openwms.core.service.management;

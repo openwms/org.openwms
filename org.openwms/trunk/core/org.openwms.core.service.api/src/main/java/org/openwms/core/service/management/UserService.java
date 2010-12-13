@@ -18,14 +18,14 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
-package org.openwms.common.service.management;
+package org.openwms.core.service.management;
 
 import java.util.List;
 
-import org.openwms.common.domain.system.usermanagement.Role;
-import org.openwms.common.domain.system.usermanagement.User;
-import org.openwms.common.domain.system.usermanagement.UserPassword;
-import org.openwms.common.service.EntityService;
+import org.openwms.core.domain.system.usermanagement.Role;
+import org.openwms.core.domain.system.usermanagement.User;
+import org.openwms.core.domain.system.usermanagement.UserPassword;
+import org.openwms.core.service.EntityService;
 
 /**
  * An UserService extends the {@link EntityService} interface about some
@@ -36,7 +36,7 @@ import org.openwms.common.service.EntityService;
  * @author <a href="mailto:openwms@googlemail.com">Heiko Scherrer</a>
  * @version $Revision$
  * @since 0.1
- * @see org.openwms.common.service.EntityService
+ * @see org.openwms.core.service.EntityService
  */
 public interface UserService<T extends User> extends EntityService<T> {
 

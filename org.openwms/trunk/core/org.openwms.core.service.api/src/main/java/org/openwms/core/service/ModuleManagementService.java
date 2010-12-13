@@ -18,11 +18,11 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
-package org.openwms.common.service;
+package org.openwms.core.service;
 
 import java.util.List;
 
-import org.openwms.common.domain.Module;
+import org.openwms.core.domain.Module;
 
 /**
  * A ModuleManagementService offers some functionality for common module management tasks.

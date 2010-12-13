@@ -19,6 +19,6 @@
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
 /**
- * Interface definitions of the COMMON Module service layer.
+ * Interface definitions of the CORE Module service layer.
  */
-package org.openwms.common.service;
+package org.openwms.core.service;
