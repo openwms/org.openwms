@@ -18,10 +18,10 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
-package org.openwms.common.integration.jpa;
+package org.openwms.core.integration.jpa;
 
-import org.openwms.common.domain.system.usermanagement.Role;
-import org.openwms.common.integration.system.usermanagement.RoleDao;
+import org.openwms.core.domain.system.usermanagement.Role;
+import org.openwms.core.integration.system.usermanagement.RoleDao;
 import org.springframework.stereotype.Repository;
 
 /**
@@ -38,7 +38,7 @@ import org.springframework.stereotype.Repository;
 public class RoleDaoImpl extends AbstractGenericJpaDao<Role, Long> implements RoleDao {
 
     /**
-     * @see org.openwms.common.integration.jpa.AbstractGenericJpaDao#getFindAllQuery()
+     * @see org.openwms.core.integration.jpa.AbstractGenericJpaDao#getFindAllQuery()
      */
     @Override
     protected String getFindAllQuery() {
@@ -46,7 +46,7 @@ public class RoleDaoImpl extends AbstractGenericJpaDao<Role, Long> implements Ro
     }
 
     /**
-     * @see org.openwms.common.integration.jpa.AbstractGenericJpaDao#getFindByUniqueIdQuery()
+     * @see org.openwms.core.integration.jpa.AbstractGenericJpaDao#getFindByUniqueIdQuery()
      */
     @Override
     protected String getFindByUniqueIdQuery() {

@@ -31,11 +31,6 @@
     <osgi:reference id="entityManagerFactory" interface="javax.persistence.EntityManagerFactory" />
 
     <!-- exports -->
-	<osgi:service ref="locationDao" interface="org.openwms.common.integration.LocationDao"/>
-    <osgi:service ref="locationTypeDao" interface="org.openwms.common.integration.LocationTypeDao"/>
-    <osgi:service ref="locationGroupDao" interface="org.openwms.common.integration.LocationGroupDao"/>
-    <osgi:service ref="transportUnitDao" interface="org.openwms.common.integration.TransportUnitDao"/>
-    <osgi:service ref="transportUnitTypeDao" interface="org.openwms.common.integration.TransportUnitTypeDao"/>
     <osgi:service ref="userDao" interface="org.openwms.common.integration.system.usermanagement.UserDao"/>
     <osgi:service ref="roleDao" interface="org.openwms.common.integration.system.usermanagement.RoleDao"/>
     <osgi:service ref="moduleDao" interface="org.openwms.common.integration.ModuleDao"/>

@@ -21,4 +21,4 @@
 /**
  * This package contains classes belonging to the integration layer using JPA. Implementation classes following the DAO (or Repository) pattern.
  */
-package org.openwms.common.integration.jpa;
+package org.openwms.core.integration.jpa;

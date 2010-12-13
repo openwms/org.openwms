@@ -18,7 +18,7 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
-package org.openwms.common.integration.jpa;
+package org.openwms.core.integration.jpa;
 
 import java.io.Serializable;
 import java.lang.reflect.ParameterizedType;
@@ -30,9 +30,9 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
-import org.openwms.common.domain.AbstractEntity;
-import org.openwms.common.integration.GenericDao;
-import org.openwms.common.integration.exception.TooManyEntitiesFoundException;
+import org.openwms.core.domain.AbstractEntity;
+import org.openwms.core.integration.GenericDao;
+import org.openwms.core.integration.exception.TooManyEntitiesFoundException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
