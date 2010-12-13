@@ -21,4 +21,4 @@
 /**
  * Contains common used utility and helper classes.
  */
-package org.openwms.common.util;
+package org.openwms.core.util;

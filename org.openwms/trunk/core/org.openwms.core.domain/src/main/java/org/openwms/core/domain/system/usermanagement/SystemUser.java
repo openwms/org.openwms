@@ -18,7 +18,7 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
-package org.openwms.common.domain.system.usermanagement;
+package org.openwms.core.domain.system.usermanagement;
 
 import java.io.Serializable;
 
@@ -28,7 +28,7 @@ import java.io.Serializable;
  * @author <a href="mailto:russelltina@users.sourceforge.net">Tina Russell</a>
  * @version $Revision$
  * @since 0.1
- * @see org.openwms.common.domain.system.usermanagement.User
+ * @see org.openwms.core.domain.system.usermanagement.User
  */
 public class SystemUser extends User implements Serializable {
 
