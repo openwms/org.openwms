@@ -19,6 +19,6 @@
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
 /**
- * Interfaces of the service layer; implementations provide business logic to operate on common classes of the user management.
+ * Interfaces of the service layer; implementations provide business logic to operate on common classes.
  */
 package org.openwms.common.service.management;

@@ -28,17 +28,19 @@ import org.openwms.common.domain.Rule;
 import org.openwms.common.domain.TransportUnit;
 import org.openwms.common.domain.TransportUnitType;
 import org.openwms.common.domain.values.Barcode;
+import org.openwms.core.service.EntityService;
 
 /**
- * A TransportService is an extension of the {@link EntityService} interface about some
- * useful methods regarding the general handling with {@link TransportUnit}s.
+ * A TransportService is an extension of the {@link EntityService} interface
+ * about some useful methods regarding the general handling with
+ * {@link TransportUnit}s.
  * 
  * @param <T>
  *            Any kind of {@link TransportUnit}
  * @author <a href="mailto:openwms@googlemail.com">Heiko Scherrer</a>
  * @version $Revision$
  * @since 0.1
- * @see org.openwms.common.service.EntityService
+ * @see org.openwms.core.service.EntityService
  */
 public interface TransportUnitService<T extends TransportUnit> extends EntityService<TransportUnit> {
 

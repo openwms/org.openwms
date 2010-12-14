@@ -23,7 +23,8 @@ package org.openwms.common.service;
 import java.util.List;
 
 import org.openwms.common.domain.LocationGroup;
-import org.openwms.common.util.TreeNode;
+import org.openwms.core.service.EntityService;
+import org.openwms.core.util.TreeNode;
 
 /**
  * A LocationGroupService - Extends the {@link EntityService} interface about
@@ -39,7 +40,7 @@ import org.openwms.common.util.TreeNode;
  * @author <a href="mailto:openwms@googlemail.com">Heiko Scherrer</a>
  * @version $Revision$
  * @since 0.1
- * @see org.openwms.common.service.EntityService
+ * @see org.openwms.core.service.EntityService
  */
 public interface LocationGroupService<T extends LocationGroup> extends EntityService<T> {
 
@@ -79,5 +80,6 @@ public interface LocationGroupService<T extends LocationGroup> extends EntitySer
      *            The {@link LocationGroup} to save
      * @return The saved {@link LocationGroup}
      */
+    @Override
     T save(T locationGroup);
 }
