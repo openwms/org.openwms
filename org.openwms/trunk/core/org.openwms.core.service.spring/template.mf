@@ -1,15 +1,16 @@
 Manifest-Version: 1.0
-Bundle-Vendor: openwms.org
-Bundle-Version: 0.0.1.SNAPSHOT
-Bundle-Name: org.openwms.core.service.spring
+Bundle-Vendor: ${project.groupId}
+Bundle-Version: ${bundle.version}
+Bundle-Name: ${project.artifactId}
 Bundle-ManifestVersion: 2
-Bundle-SymbolicName: org.openwms.core.service.spring
+Bundle-SymbolicName: ${project.artifactId}
 Import-Library: 
  org.springframework.spring;version="[3.0, 3.1)"
 Import-Bundle: 
  com.springsource.javax.persistence;version="1.0.0",
  com.springsource.org.apache.commons.lang;version="2.4.0",
- com.springsource.net.sf.ehcache;version="[1.6.2,1.6.2]",
+ com.springsource.net.sf.ehcache;version="[1.6.2, 1.6.2]",
+ org.springframework.security.core;version="[3.0, 3.1)",
  org.openwms.core.domain;version="0.0.1.SNAPSHOT",
  org.openwms.core.integration;version="0.0.1.SNAPSHOT",
  org.openwms.core.service.api;version="0.0.1.SNAPSHOT"
@@ -18,16 +19,10 @@ Import-Template:
 Import-Package: 
  org.springframework.context.weaving;version="[3.0, 3.1)",
  org.springframework.transaction.aspectj;version="[3.0, 3.1)"
-Excluded-Exports: 
- org.openwms.core,
- org.openwms.core.domain.*,
- org.openwms.core.service.transport*,
- org.openwms.core.service.management.*,
- org.openwms.core.dao.*
 Excluded-Imports: 
- org.openwms.core.framework.test.*,
- org.openwms.core.test.*,
+ org.openwms.core.*,
  org.springframework.test.*,
- org.junit.*,
- org.hibernate.*
+ org.springframework.beans.*,
+ org.springframework.cache.*,
+ org.springframework.security.*
  

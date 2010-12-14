@@ -33,11 +33,10 @@
     <packaging>pom</packaging>
     <name>${project.artifactId}</name>
     <properties>
-        <moduleDir>..</moduleDir>
+        <moduleDir>../..</moduleDir>
     </properties>
     <build>
         <plugins>
- 
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-resources-plugin</artifactId>
@@ -48,17 +47,16 @@
                             <goal>copy-resources</goal>
                         </goals>
                         <configuration>
-                            <outputDirectory>${basedir}/target</outputDirectory>
+                            <outputDirectory>${project.basedir}/target</outputDirectory>
                             <resources>
                                 <resource>
-                                    <directory>src</directory>
+                                    <directory>${project.basedir}/src</directory>
                                 </resource>
                             </resources>
                         </configuration>
                     </execution>
                 </executions>
             </plugin>
-
             <plugin>
                 <artifactId>maven-install-plugin</artifactId>
                 <executions>
@@ -73,13 +71,12 @@
                             <artifactId>org.openwms.core.infrastructure.configuration</artifactId>
                             <version>${project.version}</version>
                             <packaging>properties</packaging>
-                            <file>src/org.openwms.infrastructure.configuration.properties</file>
+                            <file>${project.basedir}/src/org.openwms.core.infrastructure.configuration.properties</file>
                             <createChecksum>true</createChecksum>
                         </configuration>
                     </execution>
                 </executions>
             </plugin>
-
             <plugin>
                 <artifactId>maven-deploy-plugin</artifactId>
                 <executions>
@@ -96,12 +93,11 @@
                             <artifactId>org.openwms.core.infrastructure.configuration</artifactId>
                             <version>${project.version}</version>
                             <packaging>properties</packaging>
-                            <file>src/org.openwms.infrastructure.configuration.properties</file>
+                            <file>${project.basedir}/src/org.openwms.core.infrastructure.configuration.properties</file>
                         </configuration>
                     </execution>
                 </executions>
             </plugin>
-
         </plugins>
     </build>
 </project>

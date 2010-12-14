@@ -33,8 +33,7 @@
 	<packaging>swc</packaging>
 	<name>${project.artifactId}</name>
 	<properties>
-		<moduleDir>..</moduleDir>
-		<property.org.graniteds-core.version>1.2.0_SP1</property.org.graniteds-core.version>
+		<moduleDir>../..</moduleDir>
 	</properties>
 	<build>
 		<finalName>${project.artifactId}-${project.version}</finalName>
@@ -143,7 +142,7 @@
                             <goal>copy-dependencies</goal>
                         </goals>
                         <configuration>
-                            <outputDirectory>libs</outputDirectory>
+                            <outputDirectory>${project.basedir}/libs</outputDirectory>
                             <overWriteIfNewer>true</overWriteIfNewer>
                             <includeGroupIds></includeGroupIds>
                             <excludeGroupIds>com.adobe.flex.framework</excludeGroupIds>
@@ -169,9 +168,9 @@
 						<configuration>
 							<footer>www.openwms.org</footer>
 							<sourcePaths>
-                                <path>${basedir}/src/main/resources</path>
-                                <path>${basedir}/src/main/flex</path>
-                                <path>${basedir}/target/generated-sources/flexmojos/</path>
+                                <path>${project.basedir}/src/main/resources</path>
+                                <path>${project.basedir}/src/main/flex</path>
+                                <path>${project.basedir}/target/generated-sources/flexmojos/</path>
 							</sourcePaths>
 						</configuration>
 					</reportSet>
@@ -220,13 +219,13 @@
 		<dependency>
 			<groupId>${project.groupId}</groupId>
 			<artifactId>org.openwms.core.domain</artifactId>
-			<version>${project.version}</version>
             <scope>provided</scope>
 		</dependency>
 		<dependency>
 			<groupId>com.adobe.flex.framework</groupId>
 			<artifactId>flex-framework</artifactId>
 			<type>pom</type>
+			<scope>provided</scope>
 		</dependency>
 		<dependency>
 			<groupId>org.graniteds</groupId>
