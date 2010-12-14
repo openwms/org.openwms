@@ -6,5 +6,3 @@ Bundle-ManifestVersion: 2
 Bundle-SymbolicName: ${project.artifactId}
 Import-Library: 
  org.springframework.spring;version="[3.0, 3.1)"
-
- 

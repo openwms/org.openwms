@@ -99,6 +99,12 @@
             <artifactId>com.springsource.javax.transaction</artifactId>
             <scope>provided</scope>
         </dependency>
+
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>com.springsource.org.apache.commons.lang</artifactId>
+            <scope>provided</scope>
+        </dependency>
         
         <!-- Test database driver -->
         <dependency>
