@@ -90,6 +90,7 @@
             <groupId>org.openwms</groupId>
             <artifactId>oracle.jdbc.driver</artifactId>
             <scope>provided</scope>
+            <optional>true</optional>
         </dependency>
        
         <!-- Project dependencies -->
