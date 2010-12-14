@@ -62,5 +62,10 @@
             <groupId>${project.groupId}</groupId>
             <artifactId>org.openwms.common.domain</artifactId>
         </dependency>
+        <dependency>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>org.openwms.core.integration</artifactId>
+            <version>${core.version}</version>
+        </dependency>
     </dependencies>
 </project>

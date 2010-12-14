@@ -23,15 +23,16 @@ package org.openwms.common.integration;
 import java.util.List;
 
 import org.openwms.common.domain.Location;
+import org.openwms.core.integration.GenericDao;
 
 /**
- * A LocationDao adds particular functionality regarding {@link Location}
- * entity classes.
+ * A LocationDao adds particular functionality regarding {@link Location} entity
+ * classes.
  * 
  * @author <a href="mailto:openwms@googlemail.com">Heiko Scherrer</a>
  * @version $Revision$
  * @since 0.1
- * @see org.openwms.common.integration.GenericDao
+ * @see org.openwms.core.integration.GenericDao
  * @see org.openwms.common.domain.Location
  */
 public interface LocationDao extends GenericDao<Location, Long> {

@@ -21,6 +21,7 @@
 package org.openwms.common.integration;
 
 import org.openwms.common.domain.TransportUnit;
+import org.openwms.core.integration.GenericDao;
 
 /**
  * A TransportUnitDao adds particular functionality regarding
@@ -29,7 +30,7 @@ import org.openwms.common.domain.TransportUnit;
  * @author <a href="mailto:openwms@googlemail.com">Heiko Scherrer</a>
  * @version $Revision$
  * @since 0.1
- * @see org.openwms.common.integration
+ * @see org.openwms.core.integration.GenericDao
  * @see org.openwms.common.domain.TransportUnit
  */
 public interface TransportUnitDao extends GenericDao<TransportUnit, Long> {}

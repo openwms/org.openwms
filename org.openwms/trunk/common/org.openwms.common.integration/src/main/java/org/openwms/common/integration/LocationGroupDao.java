@@ -21,6 +21,7 @@
 package org.openwms.common.integration;
 
 import org.openwms.common.domain.LocationGroup;
+import org.openwms.core.integration.GenericDao;
 
 /**
  * A LocationGroupDao adds particular functionality regarding
@@ -29,7 +30,7 @@ import org.openwms.common.domain.LocationGroup;
  * @author <a href="mailto:openwms@googlemail.com">Heiko Scherrer</a>
  * @version $Revision$
  * @since 0.1
- * @see org.openwms.common.integration.GenericDao
+ * @see org.openwms.core.integration.GenericDao
  * @see org.openwms.common.domain.LocationGroup
  */
 public interface LocationGroupDao extends GenericDao<LocationGroup, Long> {
