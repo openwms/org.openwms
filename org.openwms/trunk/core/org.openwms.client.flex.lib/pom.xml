@@ -26,15 +26,14 @@
 	<modelVersion>4.0.0</modelVersion>
 	<parent>
 		<groupId>org.openwms</groupId>
-		<artifactId>org.openwms.app</artifactId>
+		<artifactId>org.openwms.core</artifactId>
 		<version>0.0.1-SNAPSHOT</version>
 	</parent>
 	<artifactId>org.openwms.client.flex.lib</artifactId>
 	<packaging>swc</packaging>
 	<name>${project.artifactId}</name>
 	<properties>
-		<moduleDir>..</moduleDir>
-		<template.version>2.0.0</template.version>
+		<moduleDir>../..</moduleDir>
 	</properties>
 	<build>
 		<finalName>${project.artifactId}-${project.version}</finalName>
@@ -101,7 +100,6 @@
 			        <dependency>
 			            <groupId>${project.groupId}</groupId>
 			            <artifactId>org.openwms.core.domain.as</artifactId>
-			            <version>${core.version}</version>
 			            <type>swc</type>
 			        </dependency>
 				</dependencies>
@@ -216,16 +214,11 @@
             <groupId>org.springframework</groupId>
             <artifactId>org.springframework.spring-library</artifactId>
             <type>libd</type>
+            <scope>provided</scope>
         </dependency>
-		<dependency>
-			<groupId>${project.groupId}</groupId>
-			<artifactId>org.openwms.common.domain.as</artifactId>
-			<type>swc</type>
-		</dependency>
         <dependency>
             <groupId>${project.groupId}</groupId>
             <artifactId>org.openwms.core.domain.as</artifactId>
-            <version>${core.version}</version>
             <type>swc</type>
             <scope>internal</scope>
         </dependency>
