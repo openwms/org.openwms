@@ -32,8 +32,12 @@ import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 import javax.persistence.Version;
 
+import org.openwms.core.domain.AbstractEntity;
+import org.openwms.core.domain.DomainObject;
+
 /**
- * A TypeStackingRule defines which {@link TransportUnitType} can be stacked on others.
+ * A TypeStackingRule defines which {@link TransportUnitType} can be stacked on
+ * others.
  * 
  * @author <a href="mailto:scherrer@users.sourceforge.net">Heiko Scherrer</a>
  * @version $Revision$
@@ -97,7 +101,8 @@ public class TypeStackingRule extends AbstractEntity implements DomainObject<Lon
      * allowedTransportUnitType may stacked on this {@link TransportUnitType}.
      * 
      * @param noTransportUnits
-     *            The number of allowed {@link org.openwms.common.domain.TransportUnit}s
+     *            The number of allowed
+     *            {@link org.openwms.common.domain.TransportUnit}s
      * @param allowedTransportUnitType
      *            The allowed {@link TransportUnitType}
      */
