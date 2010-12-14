@@ -36,6 +36,7 @@
     <name>OpenWMS.org TMS Project</name>
     <properties>
         <moduleDir>.</moduleDir>
+        <core.version>0.0.1-SNAPSHOT</core.version>
     </properties>
 
     <distributionManagement>
