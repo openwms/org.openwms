@@ -32,9 +32,9 @@
 	<mx:Script>
 	<![CDATA[
 		import org.openwms.web.flex.client.event.UserEvent;
-    	import org.openwms.common.domain.system.usermanagement.User;
-    	import org.openwms.common.domain.system.usermanagement.UserDetails;
-    	import org.openwms.common.domain.system.usermanagement.UserDetails$SEX;
+    	import org.openwms.core.domain.system.usermanagement.User;
+    	import org.openwms.core.domain.system.usermanagement.UserDetails;
+    	import org.openwms.core.domain.system.usermanagement.UserDetails$SEX;
     	import org.openwms.web.flex.client.helper.UserHelper;
     	import mx.effects.Fade;
     	import mx.effects.Blur;

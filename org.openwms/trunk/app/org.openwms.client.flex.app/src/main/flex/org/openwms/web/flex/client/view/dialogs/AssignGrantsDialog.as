@@ -23,8 +23,8 @@ package org.openwms.web.flex.client.view.dialogs {
 	import flash.events.KeyboardEvent;
 	import mx.collections.ArrayCollection;
 	import mx.managers.PopUpManager;
-	import org.openwms.common.domain.system.usermanagement.Role;
-	import org.openwms.common.domain.system.usermanagement.SecurityObject;
+	import org.openwms.core.domain.system.usermanagement.Role;
+	import org.openwms.core.domain.system.usermanagement.SecurityObject;
 
     /**
      * An AssignGrantsDialog.

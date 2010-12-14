@@ -26,8 +26,8 @@ package org.openwms.web.flex.client.business {
     import org.granite.tide.events.TideFaultEvent;
     import org.granite.tide.events.TideResultEvent;
     import org.granite.tide.spring.Context;
-    import org.openwms.common.domain.system.usermanagement.User;
-    import org.openwms.common.domain.system.usermanagement.UserPassword;
+    import org.openwms.core.domain.system.usermanagement.User;
+    import org.openwms.core.domain.system.usermanagement.UserPassword;
     import org.openwms.web.flex.client.event.UserEvent;
     import org.openwms.web.flex.client.model.ModelLocator;
 

@@ -98,6 +98,12 @@
 						<version>${granite.version}</version>
 						<type>swc</type>
 					</dependency>
+			        <dependency>
+			            <groupId>${project.groupId}</groupId>
+			            <artifactId>org.openwms.core.domain.as</artifactId>
+			            <version>${core.version}</version>
+			            <type>swc</type>
+			        </dependency>
 				</dependencies>
 			</plugin>
             <plugin>
@@ -216,6 +222,13 @@
 			<artifactId>org.openwms.common.domain.as</artifactId>
 			<type>swc</type>
 		</dependency>
+        <dependency>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>org.openwms.core.domain.as</artifactId>
+            <version>${core.version}</version>
+            <type>swc</type>
+            <scope>internal</scope>
+        </dependency>
         
         <!-- Adobe Flex Framework -->
 		<dependency>

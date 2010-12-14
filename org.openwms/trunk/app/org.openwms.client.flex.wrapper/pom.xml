@@ -171,6 +171,26 @@
             <scope>provided</scope>
         </dependency>
 
+        <!-- CORE Project dependencies -->
+        <dependency>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>org.openwms.core.framework.test</artifactId>
+            <version>${core.version}</version>
+            <type>test-jar</type>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>org.openwms.core.domain</artifactId>
+            <version>${core.version}</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>org.openwms.core.service.api</artifactId>
+            <version>${core.version}</version>
+            <scope>provided</scope>
+        </dependency>
         <!-- Project dependencies -->
         <dependency>
             <groupId>${project.groupId}</groupId>
@@ -187,17 +207,6 @@
             <groupId>${project.groupId}</groupId>
             <artifactId>org.openwms.tms.flex.module</artifactId>
             <type>swf</type>
-        </dependency>
-        <dependency>
-            <groupId>${project.groupId}</groupId>
-            <artifactId>org.openwms.common.framework.test</artifactId>
-            <type>test-jar</type>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>${project.groupId}</groupId>
-            <artifactId>org.openwms.common.domain</artifactId>
-            <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>${project.groupId}</groupId>

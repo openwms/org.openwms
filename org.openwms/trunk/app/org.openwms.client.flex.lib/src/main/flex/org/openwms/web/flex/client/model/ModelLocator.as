@@ -22,8 +22,8 @@ package org.openwms.web.flex.client.model{
 
     import mx.collections.ArrayCollection;
     import mx.formatters.DateFormatter;
-    import org.openwms.common.domain.Module;
-    import org.openwms.common.domain.system.usermanagement.User;
+    import org.openwms.core.domain.Module;
+    import org.openwms.core.domain.system.usermanagement.User;
     import org.openwms.web.flex.client.HashMap;
     import org.openwms.web.flex.client.event.SwitchScreenEvent;
 
