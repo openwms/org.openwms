@@ -21,4 +21,4 @@
 /**
  * This package provides common utility classes regarding event handling.
  */
-package org.openwms.common.util.event;
+package org.openwms.core.util.event;
