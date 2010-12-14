@@ -22,6 +22,7 @@ package org.openwms.common.integration.jpa;
 
 import org.openwms.common.domain.TransportUnit;
 import org.openwms.common.integration.TransportUnitDao;
+import org.openwms.core.integration.jpa.AbstractGenericJpaDao;
 import org.springframework.stereotype.Repository;
 
 /**
@@ -30,7 +31,7 @@ import org.springframework.stereotype.Repository;
  * @author <a href="mailto:openwms@googlemail.com">Heiko Scherrer</a>
  * @version $Revision$
  * @since 0.1
- * @see org.openwms.common.integration.jpa.AbstractGenericJpaDao
+ * @see org.openwms.core.integration.jpa.AbstractGenericJpaDao
  * @see org.openwms.common.integration.TransportUnitDao
  */
 @Repository
@@ -38,7 +39,7 @@ public class TransportUnitDaoImpl extends AbstractGenericJpaDao<TransportUnit, L
 
     /**
      * @return Name of the query
-     * @see org.openwms.common.integration.jpa.AbstractGenericJpaDao#getFindAllQuery()
+     * @see org.openwms.core.integration.jpa.AbstractGenericJpaDao#getFindAllQuery()
      */
     @Override
     protected String getFindAllQuery() {
@@ -47,7 +48,7 @@ public class TransportUnitDaoImpl extends AbstractGenericJpaDao<TransportUnit, L
 
     /**
      * @return Name of the query
-     * @see org.openwms.common.integration.jpa.AbstractGenericJpaDao#getFindByUniqueIdQuery()
+     * @see org.openwms.core.integration.jpa.AbstractGenericJpaDao#getFindByUniqueIdQuery()
      */
     @Override
     protected String getFindByUniqueIdQuery() {
