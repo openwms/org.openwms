@@ -18,12 +18,10 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
-package org.openwms.web.flex.client.common.model
-{
+package org.openwms.web.flex.client.common.model {
 
     import mx.collections.ArrayCollection;
-    
-    import org.openwms.web.flex.client.model.TreeNode;
+    import org.openwms.web.flex.client.common.model.TreeNode;
     
     /**
      * A CommonModelLocator.
@@ -33,8 +31,7 @@ package org.openwms.web.flex.client.common.model
      */
     [Name("commonModelLocator")]
     [Bindable]
-    public class CommonModelLocator
-    {
+    public class CommonModelLocator {
 
         public static const DT_FORMAT_STRING:String = "DD.MM.YYYY HH:NN:SS";
         
@@ -58,8 +55,6 @@ package org.openwms.web.flex.client.common.model
         /**
          * Constructor.
          */
-        public function CommonModelLocator()
-        {
-        }
+        public function CommonModelLocator() { }
     }
 }

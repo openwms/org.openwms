@@ -33,7 +33,7 @@
     <packaging>jar</packaging>
     <name>${project.artifactId}</name>
     <properties>
-        <moduleDir>..</moduleDir>
+        <moduleDir>../..</moduleDir>
         <openwms.configuration.version>0.0.1-SNAPSHOT</openwms.configuration.version>
     </properties>
     <build>
@@ -92,10 +92,12 @@
         <dependency>
             <groupId>javax.persistence</groupId>
             <artifactId>com.springsource.javax.persistence</artifactId>
+            <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>javax.transaction</groupId>
             <artifactId>com.springsource.javax.transaction</artifactId>
+            <scope>provided</scope>
         </dependency>
         
         <!-- Test database driver -->
@@ -124,30 +126,7 @@
         <dependency>
             <groupId>net.sourceforge.ehcache</groupId>
             <artifactId>com.springsource.net.sf.ehcache</artifactId>
-            <version>1.6.2</version>
-        </dependency>
-
-        <!-- Project dependencies -->
-        <dependency>
-            <groupId>${project.groupId}</groupId>
-            <artifactId>org.openwms.common.util</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>${project.groupId}</groupId>
-            <artifactId>org.openwms.common.domain</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>${project.groupId}</groupId>
-            <artifactId>org.openwms.common.service.api</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>${project.groupId}</groupId>
-            <artifactId>org.openwms.common.integration</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>${project.groupId}</groupId>
-            <artifactId>org.openwms.common.integration.jpa</artifactId>
-            <scope>test</scope>
+            <scope>provided</scope>
         </dependency>
 
         <!-- CORE Project dependencies -->
@@ -165,9 +144,9 @@
         </dependency>
         <dependency>
             <groupId>${project.groupId}</groupId>
-            <artifactId>org.openwms.core.integration.jpa</artifactId>
+            <artifactId>org.openwms.core.service.api</artifactId>
             <version>${core.version}</version>
-            <scope>test</scope>
+            <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>${project.groupId}</groupId>
@@ -177,10 +156,44 @@
         </dependency>
         <dependency>
             <groupId>${project.groupId}</groupId>
+            <artifactId>org.openwms.core.integration.jpa</artifactId>
+            <version>${core.version}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>${project.groupId}</groupId>
             <artifactId>org.openwms.core.framework.test</artifactId>
             <version>${core.version}</version>
             <type>test-jar</type>
             <scope>test</scope>
         </dependency>
+
+        <!-- Project dependencies -->
+        <dependency>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>org.openwms.common.util</artifactId>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>org.openwms.common.domain</artifactId>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>org.openwms.common.service.api</artifactId>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>org.openwms.common.integration</artifactId>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>org.openwms.common.integration.jpa</artifactId>
+            <scope>test</scope>
+        </dependency>
+
     </dependencies>
 </project>

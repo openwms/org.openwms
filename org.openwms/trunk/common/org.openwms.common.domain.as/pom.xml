@@ -33,7 +33,7 @@
 	<packaging>swc</packaging>
 	<name>${project.artifactId}</name>
 	<properties>
-		<moduleDir>..</moduleDir>
+		<moduleDir>../..</moduleDir>
 		<property.org.graniteds-core.version>1.2.0_SP1</property.org.graniteds-core.version>
 	</properties>
 	<build>

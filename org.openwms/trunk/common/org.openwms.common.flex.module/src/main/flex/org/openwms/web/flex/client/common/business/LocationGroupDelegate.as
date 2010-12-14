@@ -18,8 +18,8 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
-package org.openwms.web.flex.client.common.business
-{
+package org.openwms.web.flex.client.common.business {
+	
     import mx.collections.ArrayCollection;
     import mx.controls.Alert;
     
@@ -28,7 +28,7 @@ package org.openwms.web.flex.client.common.business
     import org.granite.tide.spring.Context;
     import org.openwms.web.flex.client.common.event.LocationGroupEvent;
     import org.openwms.web.flex.client.common.model.CommonModelLocator;
-    import org.openwms.web.flex.client.model.TreeNode;
+    import org.openwms.web.flex.client.common.model.TreeNode;
 
     /**
      * A LocationGroupDelegate.
@@ -37,8 +37,7 @@ package org.openwms.web.flex.client.common.business
      * @version $Revision$
      */
     [Name("locationGroupDelegate")]
-    public class LocationGroupDelegate
-    {
+    public class LocationGroupDelegate {
         [In]
         [Bindable]
         public var tideContext:Context;
@@ -46,31 +45,32 @@ package org.openwms.web.flex.client.common.business
         [Bindable]
         public var commonModelLocator:CommonModelLocator;            
 
-        public function LocationGroupDelegate():void
-        {
-        }
+        /**
+         * Default constructor.
+         */
+        public function LocationGroupDelegate():void { }
 
+        /**
+         * Load all LocationGroups from the service.
+         *
+         * @param event Not used here
+         */
         [Observer("LOAD_ALL_LOCATION_GROUPS")]
-        public function getLocationGroups(event:LocationGroupEvent):void
-        {
+        public function getLocationGroups(event:LocationGroupEvent):void {
             tideContext.locationGroupService.getLocationGroupsAsList(onLocationGroupsLoaded, onFault);
         }
 
-        private function onLocationGroupsLoaded(event:TideResultEvent):void
-        {
+        private function onLocationGroupsLoaded(event:TideResultEvent):void {
         	commonModelLocator.allLocationGroups = event.result as ArrayCollection;
             // Setup tree if not set before
-            if (null == commonModelLocator.locationGroupTree)
-            {
+            if (null == commonModelLocator.locationGroupTree) {
                 commonModelLocator.locationGroupTree = new TreeNode();
                 commonModelLocator.locationGroupTree.build(commonModelLocator.allLocationGroups);
             }
         }
 
-        private function onFault(event:TideFaultEvent):void
-        {
+        private function onFault(event:TideFaultEvent):void {
             Alert.show("Error when loading Location Groups");
         }
     }
-            
 }

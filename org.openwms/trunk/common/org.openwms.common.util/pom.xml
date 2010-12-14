@@ -33,7 +33,7 @@
     <packaging>jar</packaging>
     <name>${project.artifactId}</name>
     <properties>
-        <moduleDir>..</moduleDir>
+        <moduleDir>../..</moduleDir>
         <openwms.configuration.version>0.0.1-SNAPSHOT</openwms.configuration.version>
     </properties>
     <build>

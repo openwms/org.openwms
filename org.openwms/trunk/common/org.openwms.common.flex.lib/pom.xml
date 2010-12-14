@@ -167,6 +167,7 @@
 	</pluginRepositories>
 
 	<dependencies>
+	    <!-- Spring Framework -->
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>org.springframework.spring-library</artifactId>
@@ -181,6 +182,7 @@
         <dependency>
             <groupId>${project.groupId}</groupId>
             <artifactId>org.openwms.client.flex.lib</artifactId>
+            <version>${core.version}</version>
             <type>swc</type>
         </dependency>
 		<dependency>

@@ -32,16 +32,16 @@
     <!-- Scripts -->
     <mx:Script>
         <![CDATA[
-        	import org.openwms.web.flex.client.model.TreeNode;
+            import mx.collections.ArrayCollection;
         	import org.openwms.common.domain.values.LocationGroupState;
-        	import org.openwms.web.flex.client.common.event.CommonSwitchScreenEvent;
             import org.openwms.common.domain.LocationGroup;
             import org.openwms.web.flex.client.event.SwitchScreenEvent;
-        	import org.openwms.web.flex.client.model.TreeDataDescriptor;
+            import org.openwms.web.flex.client.common.event.CommonSwitchScreenEvent;
         	import org.openwms.web.flex.client.common.event.LocationGroupEvent;
             import org.openwms.web.flex.client.common.event.LocationEvent;
+            import org.openwms.web.flex.client.common.model.TreeDataDescriptor;
+            import org.openwms.web.flex.client.common.model.TreeNode;
             import org.openwms.web.flex.client.common.model.CommonModelLocator;
-            import mx.collections.ArrayCollection;
 
 	        [In]
 	        [Bindable]
