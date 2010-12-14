@@ -32,7 +32,7 @@ import org.junit.Test;
 import org.openwms.common.domain.LocationType;
 import org.openwms.common.domain.TransportUnitType;
 import org.openwms.common.domain.TypePlacingRule;
-import org.openwms.common.test.AbstractJpaSpringContextTests;
+import org.openwms.core.test.AbstractJpaSpringContextTests;
 import org.springframework.transaction.annotation.Transactional;
 
 /**
@@ -59,25 +59,22 @@ public class TransportUnitTypeTest extends AbstractJpaSpringContextTests {
         try {
             entityManager.persist(transportUnitType2);
             fail("Expecting exception when persisting existing entity with same identifier!");
-        }
-        catch (PersistenceException pe) {}
+        } catch (PersistenceException pe) {}
         TransportUnitType tt = null;
         try {
-            tt = (TransportUnitType) entityManager.createNamedQuery(TransportUnitType.NQ_FIND_BY_NAME).setParameter(1,
-                    "JU_TEST").getSingleResult();
-        }
-        catch (EntityNotFoundException nre) {
+            tt = (TransportUnitType) entityManager.createNamedQuery(TransportUnitType.NQ_FIND_BY_NAME)
+                    .setParameter(1, "JU_TEST").getSingleResult();
+        } catch (EntityNotFoundException nre) {
             assertNotNull("TransportUnitType should be SAVED before", tt);
         }
 
         entityManager.remove(tt);
 
         try {
-            tt = (TransportUnitType) entityManager.createNamedQuery(TransportUnitType.NQ_FIND_BY_NAME).setParameter(1,
-                    "JU_TEST").getSingleResult();
+            tt = (TransportUnitType) entityManager.createNamedQuery(TransportUnitType.NQ_FIND_BY_NAME)
+                    .setParameter(1, "JU_TEST").getSingleResult();
             assertNull("TransportUnitType should be REMOVED before", tt);
-        }
-        catch (EntityNotFoundException nre) {
+        } catch (EntityNotFoundException nre) {
             // okay
         }
     }
@@ -103,8 +100,7 @@ public class TransportUnitTypeTest extends AbstractJpaSpringContextTests {
             transportUnitType = (TransportUnitType) entityManager.createNamedQuery(TransportUnitType.NQ_FIND_BY_NAME)
                     .setParameter(1, "JU_TEST").getSingleResult();
             assertNull("TransportUnitType should be REMOVED before", transportUnitType);
-        }
-        catch (EntityNotFoundException nre) {
+        } catch (EntityNotFoundException nre) {
             // okay here
         }
     }

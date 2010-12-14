@@ -24,6 +24,7 @@ import java.util.List;
 
 import org.openwms.common.domain.Location;
 import org.openwms.common.integration.LocationDao;
+import org.openwms.core.integration.jpa.AbstractGenericJpaDao;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -33,7 +34,7 @@ import org.springframework.transaction.annotation.Transactional;
  * @author <a href="mailto:openwms@googlemail.com">Heiko Scherrer</a>
  * @version $Revision$
  * @since 0.1
- * @see org.openwms.common.integration.jpa.AbstractGenericJpaDao
+ * @see org.openwms.core.integration.jpa.AbstractGenericJpaDao
  * @see org.openwms.common.integration.LocationDao
  */
 @Repository
@@ -41,7 +42,7 @@ public class LocationDaoImpl extends AbstractGenericJpaDao<Location, Long> imple
 
     /**
      * @return Name of the query
-     * @see org.openwms.common.integration.jpa.AbstractGenericJpaDao#getFindAllQuery()
+     * @see org.openwms.core.integration.jpa.AbstractGenericJpaDao#getFindAllQuery()
      */
     @Override
     protected String getFindAllQuery() {
@@ -50,7 +51,7 @@ public class LocationDaoImpl extends AbstractGenericJpaDao<Location, Long> imple
 
     /**
      * @return Name of the query
-     * @see org.openwms.common.integration.jpa.AbstractGenericJpaDao#getFindByUniqueIdQuery()
+     * @see org.openwms.core.integration.jpa.AbstractGenericJpaDao#getFindByUniqueIdQuery()
      */
     @Override
     protected String getFindByUniqueIdQuery() {
@@ -63,7 +64,6 @@ public class LocationDaoImpl extends AbstractGenericJpaDao<Location, Long> imple
      */
     @Override
     @Transactional(readOnly = true)
-    @SuppressWarnings("unchecked")
     public List<Location> getAllLocations() {
         return super.findByPositionalParameters(Location.NQ_FIND_ALL_EAGER);
     }

@@ -31,7 +31,7 @@ import org.openwms.common.domain.LocationGroup;
 import org.openwms.common.domain.LocationPK;
 import org.openwms.common.integration.LocationDao;
 import org.openwms.common.integration.LocationGroupDao;
-import org.openwms.common.test.AbstractJpaSpringContextTests;
+import org.openwms.core.test.AbstractJpaSpringContextTests;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.transaction.BeforeTransaction;

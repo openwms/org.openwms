@@ -34,7 +34,7 @@ import org.openwms.common.domain.TransportUnitType;
 import org.openwms.common.domain.system.UnitError;
 import org.openwms.common.domain.values.Barcode;
 import org.openwms.common.domain.values.Barcode.BARCODE_ALIGN;
-import org.openwms.common.test.AbstractJpaSpringContextTests;
+import org.openwms.core.test.AbstractJpaSpringContextTests;
 import org.springframework.transaction.annotation.Transactional;
 
 /**
@@ -121,8 +121,7 @@ public class TransportUnitTest extends AbstractJpaSpringContextTests {
             entityManager.merge(transportUnit);
             logger.debug("Also without targetLocation must be okay.");
         } catch (PersistenceException pe) {
-            logger
-                    .debug("NOT OK:Execption while persisting TransportUnit with known actualLocation and transportUnitType!");
+            logger.debug("NOT OK:Execption while persisting TransportUnit with known actualLocation and transportUnitType!");
             fail("Persisting transportUnit with known actualLocation and transportUnitType not committed!");
         }
     }

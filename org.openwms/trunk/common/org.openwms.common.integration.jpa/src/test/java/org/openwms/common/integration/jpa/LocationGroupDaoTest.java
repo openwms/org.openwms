@@ -29,7 +29,7 @@ import static junit.framework.Assert.fail;
 import org.junit.Test;
 import org.openwms.common.domain.LocationGroup;
 import org.openwms.common.integration.LocationGroupDao;
-import org.openwms.common.test.AbstractJpaSpringContextTests;
+import org.openwms.core.test.AbstractJpaSpringContextTests;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 
