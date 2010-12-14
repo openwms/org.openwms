@@ -33,13 +33,14 @@ import org.openwms.common.domain.TransportUnit;
 import org.openwms.common.domain.TransportUnitType;
 import org.openwms.common.domain.TypePlacingRule;
 import org.openwms.common.domain.values.Barcode;
-import org.openwms.common.integration.GenericDao;
 import org.openwms.common.integration.TransportUnitDao;
-import org.openwms.common.service.OnRemovalListener;
 import org.openwms.common.service.TransportUnitService;
-import org.openwms.common.service.exception.RemovalNotAllowedException;
-import org.openwms.common.service.exception.ServiceRuntimeException;
-import org.openwms.common.service.spring.util.ServiceHelper;
+import org.openwms.core.integration.GenericDao;
+import org.openwms.core.service.OnRemovalListener;
+import org.openwms.core.service.exception.RemovalNotAllowedException;
+import org.openwms.core.service.exception.ServiceRuntimeException;
+import org.openwms.core.service.spring.EntityServiceImpl;
+import org.openwms.core.service.spring.util.ServiceHelper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
@@ -51,7 +52,7 @@ import org.springframework.transaction.annotation.Transactional;
  * @author <a href="mailto:openwms@googlemail.com">Heiko Scherrer</a>
  * @version $Revision$
  * @since 0.1
- * @see org.openwms.common.service.spring.EntityServiceImpl
+ * @see org.openwms.core.service.spring.EntityServiceImpl
  */
 @Service
 @Transactional
@@ -202,8 +203,8 @@ public class TransportUnitServiceImpl extends EntityServiceImpl<TransportUnit, L
     /**
      * {@inheritDoc}
      * 
-     * A ServiceRuntimeException is thrown when other {@link TransportUnit}s
-     * are placed on a {@link TransportUnit} that shall be removed. Also
+     * A ServiceRuntimeException is thrown when other {@link TransportUnit}s are
+     * placed on a {@link TransportUnit} that shall be removed. Also
      * {@link TransportUnit} with active TransportOrders won't be removed, if a
      * proper delegate exists.
      */
@@ -214,6 +215,7 @@ public class TransportUnitServiceImpl extends EntityServiceImpl<TransportUnit, L
             // first try to delete depending ones, afterwards the parent
             // units...
             Collections.sort(tus, new Comparator<TransportUnit>() {
+                @Override
                 public int compare(TransportUnit o1, TransportUnit o2) {
                     return o1.getChildren().isEmpty() == true ? -1 : 1;
                 };
@@ -227,8 +229,7 @@ public class TransportUnitServiceImpl extends EntityServiceImpl<TransportUnit, L
                     if (logger.isDebugEnabled()) {
                         logger.debug("Successfully marked TransportUnit for removal : " + tu.getId());
                     }
-                }
-                catch (RemovalNotAllowedException e) {
+                } catch (RemovalNotAllowedException e) {
                     logger.error("Not allowed to remove TransportUnit with id : " + tu.getId());
                 }
             }

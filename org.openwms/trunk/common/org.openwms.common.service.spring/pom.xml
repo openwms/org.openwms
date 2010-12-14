@@ -151,8 +151,26 @@
         </dependency>
         <dependency>
             <groupId>${project.groupId}</groupId>
+            <artifactId>org.openwms.core.domain</artifactId>
+            <version>${core.version}</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>org.openwms.core.integration</artifactId>
+            <version>${core.version}</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>org.openwms.core.service.spring</artifactId>
+            <version>${core.version}</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>${project.groupId}</groupId>
             <artifactId>org.openwms.core.framework.test</artifactId>
-            <version>${project.version}</version>
+            <version>${core.version}</version>
             <type>test-jar</type>
             <scope>test</scope>
         </dependency>
