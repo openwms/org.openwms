@@ -20,14 +20,10 @@
  */
 package org.openwms.core.service.spring;
 
-import java.math.BigDecimal;
-import java.util.ArrayList;
 import java.util.List;
 
 import org.openwms.core.domain.system.usermanagement.Preference;
 import org.openwms.core.domain.values.Unit;
-import org.openwms.core.domain.values.Weight;
-import org.openwms.core.domain.values.WeightUnit;
 import org.openwms.core.service.ConfigurationService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -45,7 +41,7 @@ public class ConfigurationServiceImpl extends EntityServiceImpl<Preference, Long
         ConfigurationService<Preference> {
 
     /**
-     * @see org.openwms.common.service.ConfigurationService#findApplicationProperties()
+     * @see org.openwms.core.service.ConfigurationService#findApplicationProperties()
      */
     @Override
     public List<Preference> findApplicationProperties() {
@@ -59,12 +55,11 @@ public class ConfigurationServiceImpl extends EntityServiceImpl<Preference, Long
     }
 
     /**
-     * @see org.openwms.common.service.ConfigurationService#getAllUnits()
+     * @see org.openwms.core.service.ConfigurationService#getAllUnits()
      */
     @Override
     public List<? extends Unit> getAllUnits() {
-        List<Unit> units = new ArrayList<Unit>();
-        units.add(new Weight(new BigDecimal(1), WeightUnit.G));
-        return units;
+        // TODO [scherrer] Auto-generated method stub
+        return null;
     }
 }
