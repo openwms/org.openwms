@@ -149,6 +149,8 @@
             <artifactId>org.openwms.common.integration.jpa</artifactId>
             <scope>test</scope>
         </dependency>
+
+        <!-- CORE Project dependencies -->
         <dependency>
             <groupId>${project.groupId}</groupId>
             <artifactId>org.openwms.core.domain</artifactId>
@@ -160,6 +162,12 @@
             <artifactId>org.openwms.core.integration</artifactId>
             <version>${core.version}</version>
             <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>org.openwms.core.integration.jpa</artifactId>
+            <version>${core.version}</version>
+            <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>${project.groupId}</groupId>
