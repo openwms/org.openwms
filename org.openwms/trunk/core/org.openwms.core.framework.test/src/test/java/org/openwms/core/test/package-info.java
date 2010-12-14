@@ -21,4 +21,4 @@
 /**
  * This package contains helper classes that can can be extended by test classes.
  */
-package org.openwms.common.test;
+package org.openwms.core.test;
