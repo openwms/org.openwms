@@ -99,6 +99,12 @@
                         <version>${granite.version}</version>
 						<type>swc</type>
 					</dependency>
+			        <dependency>
+			            <groupId>${project.groupId}</groupId>
+			            <artifactId>org.openwms.core.domain.as</artifactId>
+			            <version>${core.version}</version>
+			            <type>swc</type>
+			        </dependency>
 				</dependencies>
 				<configuration>
 					<resourceBundlePath>${project.basedir}/src/main/resources</resourceBundlePath>
@@ -123,10 +129,7 @@
 					<includeJavaClasses>
 						<class>org.openwms.common.domain.*</class>
 					</includeJavaClasses>
-                    <excludeJavaClasses>
-                        <class>org.openwms.common.domain.system.usermanagement.User$1</class>
-                    </excludeJavaClasses>
-					<sourcePaths>
+                    <sourcePaths>
 						<sourcePath>${project.basedir}/src/main/flex/</sourcePath>
 						<sourcePath>${project.build.directory}/generated-sources/flexmojos/</sourcePath>
 					</sourcePaths>
@@ -222,6 +225,19 @@
 			<artifactId>org.openwms.common.domain</artifactId>
             <scope>provided</scope>
 		</dependency>
+        <dependency>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>org.openwms.core.domain</artifactId>
+            <version>${core.version}</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>org.openwms.core.domain.as</artifactId>
+            <version>${core.version}</version>
+            <type>swc</type>
+            <scope>internal</scope>
+        </dependency>
 		<dependency>
 			<groupId>com.adobe.flex.framework</groupId>
 			<artifactId>flex-framework</artifactId>
