@@ -18,7 +18,7 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
-package org.openwms.common.util.event;
+package org.openwms.core.util.event;
 
 import java.io.Serializable;
 
@@ -29,13 +29,9 @@ import org.springframework.context.ApplicationEvent;
  * 
  * @author <a href="mailto:russelltina@users.sourceforge.net">Tina Russell</a>
  * @version $Revision$
- * 
  */
 public class RootApplicationEvent extends ApplicationEvent implements Serializable {
 
-    /**
-     * The serialVersionUID
-     */
     private static final long serialVersionUID = -2454660395280026756L;
 
     /**
