@@ -30,12 +30,12 @@
 		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-3.0.xsd
 		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.0.xsd">
 
-    <osgix:cm-properties id="global.properties" persistent-id="org.openwms.common.infrastructure.configuration-${openwms.configuration.version}" />
+    <osgix:cm-properties id="global.properties" persistent-id="org.openwms.core.infrastructure.configuration-${openwms.configuration.version}" />
     <context:property-placeholder properties-ref="global.properties" />
 
     <!-- Used for Springs annotation processing -->
     <context:annotation-config />
-    <context:component-scan base-package="org.openwms.common.integration.jpa" />
+    <context:component-scan base-package="org.openwms.core.integration.jpa" />
 
     <!-- See ch. 10.2 -->
     <tx:annotation-driven transaction-manager="transactionManager" />
@@ -44,9 +44,9 @@
     <bean class="org.springframework.dao.annotation.PersistenceExceptionTranslationPostProcessor"/>
     -->
 
-    <bean id="userDao" class="org.openwms.common.integration.jpa.UserDaoImpl"/>
+    <bean id="userDao" class="org.openwms.core.integration.jpa.UserDaoImpl"/>
     
-    <bean id="roleDao" class="org.openwms.common.integration.jpa.RoleDaoImpl"/>
+    <bean id="roleDao" class="org.openwms.core.integration.jpa.RoleDaoImpl"/>
 
-    <bean id="moduleDao" class="org.openwms.common.integration.jpa.ModuleDaoImpl" />
+    <bean id="moduleDao" class="org.openwms.core.integration.jpa.ModuleDaoImpl" />
 </beans>
