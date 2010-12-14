@@ -29,8 +29,8 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.persistence.Version;
 
-import org.openwms.common.domain.AbstractEntity;
-import org.openwms.common.domain.DomainObject;
+import org.openwms.core.domain.AbstractEntity;
+import org.openwms.core.domain.DomainObject;
 
 /**
  * An UnitError represents an error occurring on <code>TransportUnit</code>s, on
@@ -44,112 +44,111 @@ import org.openwms.common.domain.DomainObject;
 @Table(name = "COR_UNIT_ERROR")
 public class UnitError extends AbstractEntity implements DomainObject<Long>, Serializable {
 
-	private static final long serialVersionUID = -716902051194734598L;
+    private static final long serialVersionUID = -716902051194734598L;
 
-	/**
-	 * Unique technical key.
-	 */
-	@Id
-	@Column(name = "ID")
-	@GeneratedValue
-	private Long id;
+    /**
+     * Unique technical key.
+     */
+    @Id
+    @Column(name = "ID")
+    @GeneratedValue
+    private Long id;
 
-	/**
-	 * Error number.
-	 */
-	@Column(name = "ERROR_NO")
-	private String errorNo;
+    /**
+     * Error number.
+     */
+    @Column(name = "ERROR_NO")
+    private String errorNo;
 
-	/**
-	 * Error message text.
-	 */
-	@Column(name = "ERROR_TEXT")
-	private String errorText;
+    /**
+     * Error message text.
+     */
+    @Column(name = "ERROR_TEXT")
+    private String errorText;
 
-	/**
-	 * Version field.
-	 */
-	@Version
-	@Column(name = "C_VERSION")
-	private long version;
+    /**
+     * Version field.
+     */
+    @Version
+    @Column(name = "C_VERSION")
+    private long version;
 
-	/* ----------------------------- methods ------------------- */
-	/**
-	 * Create a new <code>UnitError</code>.
-	 */
-	public UnitError() {
-	}
+    /* ----------------------------- methods ------------------- */
+    /**
+     * Create a new <code>UnitError</code>.
+     */
+    public UnitError() {}
 
-	/**
-	 * Create a new <code>UnitError</code> with an error number.
-	 * 
-	 * @param errorNo
-	 *            The error number
-	 */
-	public UnitError(String errorNo) {
-		this.errorNo = errorNo;
-	}
+    /**
+     * Create a new <code>UnitError</code> with an error number.
+     * 
+     * @param errorNo
+     *            The error number
+     */
+    public UnitError(String errorNo) {
+        this.errorNo = errorNo;
+    }
 
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public Long getId() {
-		return id;
-	}
-	
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public boolean isNew() {
-		return this.id == null;
-	}
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public Long getId() {
+        return id;
+    }
 
-	/**
-	 * Return the error number.
-	 * 
-	 * @return The error number
-	 */
-	public String getErrorNo() {
-		return errorNo;
-	}
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public boolean isNew() {
+        return this.id == null;
+    }
 
-	/**
-	 * Set the error number.
-	 * 
-	 * @param errorNo
-	 *            The errorNo to set.
-	 */
-	public void setErrorNo(String errorNo) {
-		this.errorNo = errorNo;
-	}
+    /**
+     * Return the error number.
+     * 
+     * @return The error number
+     */
+    public String getErrorNo() {
+        return errorNo;
+    }
 
-	/**
-	 * Return the error text.
-	 * 
-	 * @return The error text
-	 */
-	public String getErrorText() {
-		return errorText;
-	}
+    /**
+     * Set the error number.
+     * 
+     * @param errorNo
+     *            The errorNo to set.
+     */
+    public void setErrorNo(String errorNo) {
+        this.errorNo = errorNo;
+    }
 
-	/**
-	 * Set the error text.
-	 * 
-	 * @param errorText
-	 *            The errorText to set.
-	 */
-	public void setErrorText(String errorText) {
-		this.errorText = errorText;
-	}
+    /**
+     * Return the error text.
+     * 
+     * @return The error text
+     */
+    public String getErrorText() {
+        return errorText;
+    }
 
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public long getVersion() {
-		return version;
-	}
+    /**
+     * Set the error text.
+     * 
+     * @param errorText
+     *            The errorText to set.
+     */
+    public void setErrorText(String errorText) {
+        this.errorText = errorText;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public long getVersion() {
+        return version;
+    }
 
 }

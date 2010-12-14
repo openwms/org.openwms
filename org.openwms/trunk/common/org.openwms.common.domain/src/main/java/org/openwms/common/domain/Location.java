@@ -48,6 +48,8 @@ import javax.persistence.UniqueConstraint;
 import javax.persistence.Version;
 
 import org.openwms.common.domain.system.Message;
+import org.openwms.core.domain.AbstractEntity;
+import org.openwms.core.domain.DomainObject;
 
 /**
  * A Location, defines a place within a warehouse.
@@ -56,8 +58,8 @@ import org.openwms.common.domain.system.Message;
  * on a conveyer. Also virtual or error locations can be represented with the
  * <code>Location</code> entity.
  * </p>
- * Multiple <code>Location</code>s can be grouped together to a {@link LocationGroup}
- * .
+ * Multiple <code>Location</code>s can be grouped together to a
+ * {@link LocationGroup} .
  * 
  * @author <a href="mailto:scherrer@users.sourceforge.net">Heiko Scherrer</a>
  * @version $Revision$
@@ -65,590 +67,585 @@ import org.openwms.common.domain.system.Message;
  * @see org.openwms.common.domain.LocationGroup
  */
 @Entity
-@Table(name = "COR_LOCATION", uniqueConstraints = @UniqueConstraint(columnNames = {
-		"AREA", "AISLE", "X", "Y", "Z" }))
+@Table(name = "COR_LOCATION", uniqueConstraints = @UniqueConstraint(columnNames = { "AREA", "AISLE", "X", "Y", "Z" }))
 @NamedQueries({
-		@NamedQuery(name = Location.NQ_FIND_ALL, query = "select l from Location l"),
-		@NamedQuery(name = Location.NQ_FIND_BY_UNIQUE_QUERY, query = "select l from Location l where l.locationId = ?1"),
-		@NamedQuery(name = Location.NQ_FIND_ALL_EAGER, query = "select l from Location l left join fetch l.messages left join fetch l.locationType") })
-public class Location extends AbstractEntity implements DomainObject<Long>,
-		Serializable {
+        @NamedQuery(name = Location.NQ_FIND_ALL, query = "select l from Location l"),
+        @NamedQuery(name = Location.NQ_FIND_BY_UNIQUE_QUERY, query = "select l from Location l where l.locationId = ?1"),
+        @NamedQuery(name = Location.NQ_FIND_ALL_EAGER, query = "select l from Location l left join fetch l.messages left join fetch l.locationType") })
+public class Location extends AbstractEntity implements DomainObject<Long>, Serializable {
 
-	private static final long serialVersionUID = 6958794248591576907L;
+    private static final long serialVersionUID = 6958794248591576907L;
 
-	/**
-	 * Query to find all <code>Location</code>s.
-	 */
-	public static final String NQ_FIND_ALL = "Location.findAll";
+    /**
+     * Query to find all <code>Location</code>s.
+     */
+    public static final String NQ_FIND_ALL = "Location.findAll";
 
-	/**
-	 * Query to find all <code>Location</code>s and all {@link Message}s, eager
-	 * loaded.
-	 */
-	public static final String NQ_FIND_ALL_EAGER = "Location.findAllEager";
+    /**
+     * Query to find all <code>Location</code>s and all {@link Message}s, eager
+     * loaded.
+     */
+    public static final String NQ_FIND_ALL_EAGER = "Location.findAllEager";
 
-	/**
-	 * Query to find <strong>one</strong> <code>Location</code> by its natural
-	 * key. <li>Query parameter index <strong>1</strong> : The locationId of the
-	 * <code>Location</code> to search for.</li>
-	 */
-	public static final String NQ_FIND_BY_UNIQUE_QUERY = "Location.findByLocationPK";
+    /**
+     * Query to find <strong>one</strong> <code>Location</code> by its natural
+     * key. <li>Query parameter index <strong>1</strong> : The locationId of the
+     * <code>Location</code> to search for.</li>
+     */
+    public static final String NQ_FIND_BY_UNIQUE_QUERY = "Location.findByLocationPK";
 
-	/**
-	 * Unique technical key.
-	 */
-	@Id
-	@Column(name = "ID")
-	@GeneratedValue
-	private Long id;
+    /**
+     * Unique technical key.
+     */
+    @Id
+    @Column(name = "ID")
+    @GeneratedValue
+    private Long id;
 
-	/**
-	 * Unique natural key.
-	 */
-	@Embedded
-	private LocationPK locationId;
+    /**
+     * Unique natural key.
+     */
+    @Embedded
+    private LocationPK locationId;
 
-	/**
-	 * Description of the <code>Location</code>.
-	 */
-	@Column(name = "DESCRIPTION")
-	private String description;
+    /**
+     * Description of the <code>Location</code>.
+     */
+    @Column(name = "DESCRIPTION")
+    private String description;
 
-	/**
-	 * Maximum number of {@link org.openwms.common.domain.TransportUnit}s placed
-	 * on this <code>Location</code>. Default:{@value} .
-	 */
-	@Column(name = "NO_MAX_TRANSPORT_UNITS")
-	private short noMaxTransportUnits = 1;
+    /**
+     * Maximum number of {@link org.openwms.common.domain.TransportUnit}s placed
+     * on this <code>Location</code>. Default:{@value} .
+     */
+    @Column(name = "NO_MAX_TRANSPORT_UNITS")
+    private short noMaxTransportUnits = 1;
 
-	/**
-	 * Maximum allowed weight on this <code>Location</code>.
-	 */
-	@Column(name = "MAXIMUM_WEIGHT", scale = 3)
-	private BigDecimal maximumWeight;
+    /**
+     * Maximum allowed weight on this <code>Location</code>.
+     */
+    @Column(name = "MAXIMUM_WEIGHT", scale = 3)
+    private BigDecimal maximumWeight;
 
-	/**
-	 * Date of last change. When a
-	 * {@link org.openwms.common.domain.TransportUnit} is moving to or away from
-	 * this <code>Location</code>, lastAccess will be updated. This is necessary
-	 * to find old {@link org.openwms.common.domain.TransportUnit}s as well as
-	 * for inventory calculation.
-	 */
-	@Temporal(TemporalType.TIMESTAMP)
-	@Column(name = "LAST_ACCESS")
-	private Date lastAccess;
+    /**
+     * Date of last change. When a
+     * {@link org.openwms.common.domain.TransportUnit} is moving to or away from
+     * this <code>Location</code>, lastAccess will be updated. This is necessary
+     * to find old {@link org.openwms.common.domain.TransportUnit}s as well as
+     * for inventory calculation.
+     */
+    @Temporal(TemporalType.TIMESTAMP)
+    @Column(name = "LAST_ACCESS")
+    private Date lastAccess;
 
-	/**
-	 * Flag to indicate whether {@link org.openwms.common.domain.TransportUnit}s
-	 * should be counted on this <code>Location</code> or not. Default:{@value}
-	 * .
-	 */
-	@Column(name = "COUNTING_ACTIVE")
-	private boolean countingActive = false;
+    /**
+     * Flag to indicate whether {@link org.openwms.common.domain.TransportUnit}s
+     * should be counted on this <code>Location</code> or not. Default:{@value}
+     * .
+     */
+    @Column(name = "COUNTING_ACTIVE")
+    private boolean countingActive = false;
 
-	/**
-	 * Reserved for stock check procedure and inventory calculation.
-	 * Default:{@value} .
-	 */
-	@Column(name = "CHECK_STATE")
-	private String checkState = "--";
+    /**
+     * Reserved for stock check procedure and inventory calculation.
+     * Default:{@value} .
+     */
+    @Column(name = "CHECK_STATE")
+    private String checkState = "--";
 
-	/**
-	 * Shall this <code>Location</code> be integrated in the calculation of
-	 * {@link org.openwms.common.domain.TransportUnit}s of the parent
-	 * {@link org.openwms.common.domain.LocationGroup}.
-	 * <p>
-	 * <code>true</code> : <code>Location</code> is included in calculation of
-	 * {@link org.openwms.common.domain.TransportUnit}s.<br>
-	 * <code>false</code>: <code>Location</code> is not included in calculation
-	 * of {@link org.openwms.common.domain.TransportUnit}s.
-	 * </p>
-	 */
-	@Column(name = "LOCATION_GROUP_COUNTING_ACTIVE")
-	private boolean locationGroupCountingActive = false;
+    /**
+     * Shall this <code>Location</code> be integrated in the calculation of
+     * {@link org.openwms.common.domain.TransportUnit}s of the parent
+     * {@link org.openwms.common.domain.LocationGroup}.
+     * <p>
+     * <code>true</code> : <code>Location</code> is included in calculation of
+     * {@link org.openwms.common.domain.TransportUnit}s.<br>
+     * <code>false</code>: <code>Location</code> is not included in calculation
+     * of {@link org.openwms.common.domain.TransportUnit}s.
+     * </p>
+     */
+    @Column(name = "LOCATION_GROUP_COUNTING_ACTIVE")
+    private boolean locationGroupCountingActive = false;
 
-	/**
-	 * Signals the incoming state of this <code>Location</code>.
-	 * <code>Location</code>s which are blocked for incoming cannot pick up
-	 * {@link org.openwms.common.domain.TransportUnit}s. Default:{@value} .
-	 * <p>
-	 * <code>true</code> : <code>Location</code> is ready to pick up
-	 * {@link org.openwms.common.domain.TransportUnit}s.<br>
-	 * <code>false</code>: <code>Location</code> is locked, and cannot pick up
-	 * {@link org.openwms.common.domain.TransportUnit}s.
-	 * </p>
-	 */
-	@Column(name = "INCOMING_ACTIVE")
-	private boolean incomingActive = true;
+    /**
+     * Signals the incoming state of this <code>Location</code>.
+     * <code>Location</code>s which are blocked for incoming cannot pick up
+     * {@link org.openwms.common.domain.TransportUnit}s. Default:{@value} .
+     * <p>
+     * <code>true</code> : <code>Location</code> is ready to pick up
+     * {@link org.openwms.common.domain.TransportUnit}s.<br>
+     * <code>false</code>: <code>Location</code> is locked, and cannot pick up
+     * {@link org.openwms.common.domain.TransportUnit}s.
+     * </p>
+     */
+    @Column(name = "INCOMING_ACTIVE")
+    private boolean incomingActive = true;
 
-	/**
-	 * Signals the outgoing state of this <code>Location</code>.
-	 * <code>Location</code>s which are blocked for outgoing cannot release
-	 * {@link org.openwms.common.domain.TransportUnit}s. Default:{@value} .
-	 * <p>
-	 * <code>true</code> : <code>Location</code> is enabled for outgoing
-	 * <code>Transport</code>s<br>
-	 * <code>false</code>: <code>Location</code> is locked,
-	 * {@link org.openwms.common.domain.TransportUnit}s can't leave this
-	 * <code>Location</code>.
-	 * </p>
-	 */
-	@Column(name = "OUTGOING_ACTIVE")
-	private boolean outgoingActive = true;
+    /**
+     * Signals the outgoing state of this <code>Location</code>.
+     * <code>Location</code>s which are blocked for outgoing cannot release
+     * {@link org.openwms.common.domain.TransportUnit}s. Default:{@value} .
+     * <p>
+     * <code>true</code> : <code>Location</code> is enabled for outgoing
+     * <code>Transport</code>s<br>
+     * <code>false</code>: <code>Location</code> is locked,
+     * {@link org.openwms.common.domain.TransportUnit}s can't leave this
+     * <code>Location</code>.
+     * </p>
+     */
+    @Column(name = "OUTGOING_ACTIVE")
+    private boolean outgoingActive = true;
 
-	/**
-	 * The PLC is able to change the state of a <code>Location</code>. This
-	 * property stores the last state, received from the PLC. Default:{@value} .
-	 * <p>
-	 * -1: Not defined.<br>
-	 * 0 : No PLC error, everything okay.
-	 * </p>
-	 */
-	@Column(name = "PLC_STATE")
-	private short plcState = 0;
+    /**
+     * The PLC is able to change the state of a <code>Location</code>. This
+     * property stores the last state, received from the PLC. Default:{@value} .
+     * <p>
+     * -1: Not defined.<br>
+     * 0 : No PLC error, everything okay.
+     * </p>
+     */
+    @Column(name = "PLC_STATE")
+    private short plcState = 0;
 
-	/**
-	 * Determines whether the <code>Location</code> is considered in the
-	 * allocation procedure. Default:{@value} .
-	 * <p>
-	 * <code>true</code> : This <code>Location</code> will be considered in
-	 * storage calculation by an allocation procedure.<br>
-	 * <code>false</code> : This <code>Location</code> will not be considered in
-	 * the allocation process.
-	 * </p>
-	 */
-	@Column(name = "CONSIDERED_IN_ALLOCATION")
-	private boolean consideredInAllocation = true;
+    /**
+     * Determines whether the <code>Location</code> is considered in the
+     * allocation procedure. Default:{@value} .
+     * <p>
+     * <code>true</code> : This <code>Location</code> will be considered in
+     * storage calculation by an allocation procedure.<br>
+     * <code>false</code> : This <code>Location</code> will not be considered in
+     * the allocation process.
+     * </p>
+     */
+    @Column(name = "CONSIDERED_IN_ALLOCATION")
+    private boolean consideredInAllocation = true;
 
-	/**
-	 * Version field.
-	 */
-	@Version
-	@Column(name = "C_VERSION")
-	private long version;
+    /**
+     * Version field.
+     */
+    @Version
+    @Column(name = "C_VERSION")
+    private long version;
 
-	/* ------------------- collection mapping ------------------- */
-	/**
-	 * The {@link LocationType} where the <code>Location</code> belongs to.
-	 */
-	@ManyToOne
-	@JoinColumn(name = "LOCATION_TYPE")
-	private LocationType locationType;
+    /* ------------------- collection mapping ------------------- */
+    /**
+     * The {@link LocationType} where the <code>Location</code> belongs to.
+     */
+    @ManyToOne
+    @JoinColumn(name = "LOCATION_TYPE")
+    private LocationType locationType;
 
-	/**
-	 * The {@link LocationGroup} where the <code>Location</code> belongs to.
-	 */
-	@ManyToOne
-	@JoinColumn(name = "LOCATION_GROUP")
-	private LocationGroup locationGroup;
+    /**
+     * The {@link LocationGroup} where the <code>Location</code> belongs to.
+     */
+    @ManyToOne
+    @JoinColumn(name = "LOCATION_GROUP")
+    private LocationGroup locationGroup;
 
-	/**
-	 * Stored {@link Message}s for this <code>Location</code>.
-	 */
-	@OneToMany(cascade = { CascadeType.ALL })
-	@JoinTable(name = "COR_LOCATION_MESSAGE", joinColumns = @JoinColumn(name = "LOCATION_ID"), inverseJoinColumns = @JoinColumn(name = "MESSAGE_ID"))
-	private Set<Message> messages = new HashSet<Message>();
+    /**
+     * Stored {@link Message}s for this <code>Location</code>.
+     */
+    @OneToMany(cascade = { CascadeType.ALL })
+    @JoinTable(name = "COR_LOCATION_MESSAGE", joinColumns = @JoinColumn(name = "LOCATION_ID"), inverseJoinColumns = @JoinColumn(name = "MESSAGE_ID"))
+    private Set<Message> messages = new HashSet<Message>();
 
-	/**
-	 * Create a new <code>Location</code> with the business key.
-	 * 
-	 * @param locationId
-	 *            The unique natural key of the <code>Location</code>
-	 */
-	public Location(LocationPK locationId) {
-		this.locationId = locationId;
-	}
+    /**
+     * Create a new <code>Location</code> with the business key.
+     * 
+     * @param locationId
+     *            The unique natural key of the <code>Location</code>
+     */
+    public Location(LocationPK locationId) {
+        this.locationId = locationId;
+    }
 
-	/* ----------------------------- methods ------------------- */
-	/**
-	 * Accessed by persistence provider.
-	 */
-	@SuppressWarnings("unused")
-	private Location() {
-	}
+    /* ----------------------------- methods ------------------- */
+    /**
+     * Accessed by persistence provider.
+     */
+    @SuppressWarnings("unused")
+    private Location() {}
 
-	/**
-	 * Add a new {@link Message} to this <code>Location</code>.
-	 * 
-	 * @param message
-	 *            The {@link Message} to be added
-	 * @return <code>true</code> if the {@link Message} is new in the collection
-	 *         of messages, otherwise <code>false</code>
-	 */
-	public boolean addMessage(Message message) {
-		if (message == null) {
-			throw new IllegalArgumentException("Message may not be null!");
-		}
-		return this.messages.add(message);
-	}
+    /**
+     * Add a new {@link Message} to this <code>Location</code>.
+     * 
+     * @param message
+     *            The {@link Message} to be added
+     * @return <code>true</code> if the {@link Message} is new in the collection
+     *         of messages, otherwise <code>false</code>
+     */
+    public boolean addMessage(Message message) {
+        if (message == null) {
+            throw new IllegalArgumentException("Message may not be null!");
+        }
+        return this.messages.add(message);
+    }
 
-	/**
-	 * Returns the checkState to indicate the stock check procedure.
-	 * 
-	 * @return The checkState
-	 */
-	public String getCheckState() {
-		return this.checkState;
-	}
+    /**
+     * Returns the checkState to indicate the stock check procedure.
+     * 
+     * @return The checkState
+     */
+    public String getCheckState() {
+        return this.checkState;
+    }
 
-	/**
-	 * Determine whether the <code>Location</code> is considered during
-	 * allocation.
-	 * 
-	 * @return <code>true</code> when considered in allocation, otherwise
-	 *         <code>false</code>
-	 */
-	public boolean isConsideredInAllocation() {
-		return this.consideredInAllocation;
-	}
+    /**
+     * Determine whether the <code>Location</code> is considered during
+     * allocation.
+     * 
+     * @return <code>true</code> when considered in allocation, otherwise
+     *         <code>false</code>
+     */
+    public boolean isConsideredInAllocation() {
+        return this.consideredInAllocation;
+    }
 
-	/**
-	 * Determine whether {@link org.openwms.common.domain.TransportUnit}s should
-	 * be counted on this <code>Location</code> or not.
-	 * 
-	 * @return <code>true</code> when counting is active, otherwise
-	 *         <code>false</code>
-	 */
-	public boolean isCountingActive() {
-		return this.countingActive;
-	}
+    /**
+     * Determine whether {@link org.openwms.common.domain.TransportUnit}s should
+     * be counted on this <code>Location</code> or not.
+     * 
+     * @return <code>true</code> when counting is active, otherwise
+     *         <code>false</code>
+     */
+    public boolean isCountingActive() {
+        return this.countingActive;
+    }
 
-	/**
-	 * Returns the description of the <code>Location</code>
-	 * 
-	 * @return The description text
-	 */
-	public String getDescription() {
-		return this.description;
-	}
+    /**
+     * Returns the description of the <code>Location</code>
+     * 
+     * @return The description text
+     */
+    public String getDescription() {
+        return this.description;
+    }
 
-	/**
-	 * Return the technical key.
-	 * 
-	 * @return The technical, unique key
-	 */
-	@Override
-	public Long getId() {
-		return this.id;
-	}
+    /**
+     * Return the technical key.
+     * 
+     * @return The technical, unique key
+     */
+    @Override
+    public Long getId() {
+        return this.id;
+    }
 
-	/**
-	 * Determine whether incoming mode is activated and
-	 * {@link org.openwms.common.domain.TransportUnit}s can be put on this
-	 * <code>Location</code>.
-	 * 
-	 * @return <code>true</code> when incoming mode is activated, otherwise
-	 *         <code>false</code>
-	 */
-	public boolean isIncomingActive() {
-		return this.incomingActive;
-	}
+    /**
+     * Determine whether incoming mode is activated and
+     * {@link org.openwms.common.domain.TransportUnit}s can be put on this
+     * <code>Location</code>.
+     * 
+     * @return <code>true</code> when incoming mode is activated, otherwise
+     *         <code>false</code>
+     */
+    public boolean isIncomingActive() {
+        return this.incomingActive;
+    }
 
-	/**
-	 * Return the date when the <code>Location</code> was updated the last time.
-	 * 
-	 * @return Timestamp of the last update
-	 */
-	public Date getLastAccess() {
-		return this.lastAccess;
-	}
+    /**
+     * Return the date when the <code>Location</code> was updated the last time.
+     * 
+     * @return Timestamp of the last update
+     */
+    public Date getLastAccess() {
+        return this.lastAccess;
+    }
 
-	/**
-	 * Return the {@link org.openwms.common.domain.LocationGroup} where the
-	 * <code>Location</code> belongs to.
-	 * 
-	 * @return The {@link org.openwms.common.domain.LocationGroup} of the
-	 *         <code>Location</code>
-	 */
-	public LocationGroup getLocationGroup() {
-		return this.locationGroup;
-	}
+    /**
+     * Return the {@link org.openwms.common.domain.LocationGroup} where the
+     * <code>Location</code> belongs to.
+     * 
+     * @return The {@link org.openwms.common.domain.LocationGroup} of the
+     *         <code>Location</code>
+     */
+    public LocationGroup getLocationGroup() {
+        return this.locationGroup;
+    }
 
-	/**
-	 * Determine whether the <code>Location</code> is part of the parent
-	 * {@link org.openwms.common.domain.LocationGroup}s calculation procedure of
-	 * {@link org.openwms.common.domain.TransportUnit}s.
-	 * 
-	 * @return <code>true</code> if calculation is activated, otherwise
-	 *         <code>false</code>
-	 */
-	public boolean isLocationGroupCountingActive() {
-		return this.locationGroupCountingActive;
-	}
+    /**
+     * Determine whether the <code>Location</code> is part of the parent
+     * {@link org.openwms.common.domain.LocationGroup}s calculation procedure of
+     * {@link org.openwms.common.domain.TransportUnit}s.
+     * 
+     * @return <code>true</code> if calculation is activated, otherwise
+     *         <code>false</code>
+     */
+    public boolean isLocationGroupCountingActive() {
+        return this.locationGroupCountingActive;
+    }
 
-	/**
-	 * Returns the locationId (natural key) of the <code>Location</code>.
-	 * 
-	 * @return The locationId
-	 */
-	public LocationPK getLocationId() {
-		return this.locationId;
-	}
+    /**
+     * Returns the locationId (natural key) of the <code>Location</code>.
+     * 
+     * @return The locationId
+     */
+    public LocationPK getLocationId() {
+        return this.locationId;
+    }
 
-	/**
-	 * Returns the type of <code>Location</code>.
-	 * 
-	 * @return The type
-	 */
-	public LocationType getLocationType() {
-		return this.locationType;
-	}
+    /**
+     * Returns the type of <code>Location</code>.
+     * 
+     * @return The type
+     */
+    public LocationType getLocationType() {
+        return this.locationType;
+    }
 
-	/**
-	 * Return the maximum allowed weight on the <code>Location</code>.
-	 * 
-	 * @return The maximum allowed weight
-	 */
-	public BigDecimal getMaximumWeight() {
-		return this.maximumWeight;
-	}
+    /**
+     * Return the maximum allowed weight on the <code>Location</code>.
+     * 
+     * @return The maximum allowed weight
+     */
+    public BigDecimal getMaximumWeight() {
+        return this.maximumWeight;
+    }
 
-	/**
-	 * Returns an unmodifiable Set of {@link Message}s stored for the
-	 * <code>Location</code>.
-	 * 
-	 * @return An unmodifiable Set
-	 */
-	public Set<Message> getMessages() {
-		return Collections.unmodifiableSet(messages);
-	}
+    /**
+     * Returns an unmodifiable Set of {@link Message}s stored for the
+     * <code>Location</code>.
+     * 
+     * @return An unmodifiable Set
+     */
+    public Set<Message> getMessages() {
+        return Collections.unmodifiableSet(messages);
+    }
 
-	/**
-	 * Returns the maximum number of
-	 * {@link org.openwms.common.domain.TransportUnit}s allowed on the
-	 * <code>Location</code>.
-	 * 
-	 * @return The maximum number of
-	 *         {@link org.openwms.common.domain.TransportUnit}s
-	 */
-	public short getNoMaxTransportUnits() {
-		return this.noMaxTransportUnits;
-	}
+    /**
+     * Returns the maximum number of
+     * {@link org.openwms.common.domain.TransportUnit}s allowed on the
+     * <code>Location</code>.
+     * 
+     * @return The maximum number of
+     *         {@link org.openwms.common.domain.TransportUnit}s
+     */
+    public short getNoMaxTransportUnits() {
+        return this.noMaxTransportUnits;
+    }
 
-	/**
-	 * Determine whether outgoing mode is activated and
-	 * {@link org.openwms.common.domain.TransportUnit}s can leave this
-	 * <code>Location</code>.
-	 * 
-	 * @return <code>true</code> when outgoing mode is activated, otherwise
-	 *         <code>false</code>
-	 */
-	public boolean isOutgoingActive() {
-		return this.outgoingActive;
-	}
+    /**
+     * Determine whether outgoing mode is activated and
+     * {@link org.openwms.common.domain.TransportUnit}s can leave this
+     * <code>Location</code>.
+     * 
+     * @return <code>true</code> when outgoing mode is activated, otherwise
+     *         <code>false</code>
+     */
+    public boolean isOutgoingActive() {
+        return this.outgoingActive;
+    }
 
-	/**
-	 * Return the current set plc state.
-	 * 
-	 * @return the plc state
-	 */
-	public short getPlcState() {
-		return this.plcState;
-	}
+    /**
+     * Return the current set plc state.
+     * 
+     * @return the plc state
+     */
+    public short getPlcState() {
+        return this.plcState;
+    }
 
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public long getVersion() {
-		return this.version;
-	}
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public long getVersion() {
+        return this.version;
+    }
 
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public boolean isNew() {
-		return this.id == null;
-	}
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public boolean isNew() {
+        return this.id == null;
+    }
 
-	/**
-	 * Remove a {@link Message} from the <code>Location</code>.
-	 * 
-	 * @param message
-	 *            The {@link Message} to be removed
-	 * @return <code>true</code> if the {@link Message} was found and could be
-	 *         removed, otherwise <code>false</code>
-	 * @throws IllegalArgumentException
-	 *             when message is <code>null</code>
-	 */
-	public boolean removeMessage(Message message) {
-		if (message == null) {
-			throw new IllegalArgumentException("Message may not be null!");
-		}
-		return this.messages.remove(message);
-	}
+    /**
+     * Remove a {@link Message} from the <code>Location</code>.
+     * 
+     * @param message
+     *            The {@link Message} to be removed
+     * @return <code>true</code> if the {@link Message} was found and could be
+     *         removed, otherwise <code>false</code>
+     * @throws IllegalArgumentException
+     *             when message is <code>null</code>
+     */
+    public boolean removeMessage(Message message) {
+        if (message == null) {
+            throw new IllegalArgumentException("Message may not be null!");
+        }
+        return this.messages.remove(message);
+    }
 
-	/**
-	 * Change the checkState of the <code>Location</code>.
-	 * 
-	 * @param checkState
-	 *            The new state to set
-	 */
-	public void setCheckState(String checkState) {
-		this.checkState = checkState;
-	}
+    /**
+     * Change the checkState of the <code>Location</code>.
+     * 
+     * @param checkState
+     *            The new state to set
+     */
+    public void setCheckState(String checkState) {
+        this.checkState = checkState;
+    }
 
-	/**
-	 * Change the behavior whether the <code>Location</code> shall be considered
-	 * in the allocation procedure or not.
-	 * 
-	 * @param consideredInAllocation
-	 *            <code>true</code> allocation active, otherwise
-	 *            <code>false</code>
-	 */
-	public void setConsideredInAllocation(boolean consideredInAllocation) {
-		this.consideredInAllocation = consideredInAllocation;
-	}
+    /**
+     * Change the behavior whether the <code>Location</code> shall be considered
+     * in the allocation procedure or not.
+     * 
+     * @param consideredInAllocation
+     *            <code>true</code> allocation active, otherwise
+     *            <code>false</code>
+     */
+    public void setConsideredInAllocation(boolean consideredInAllocation) {
+        this.consideredInAllocation = consideredInAllocation;
+    }
 
-	/**
-	 * Change the behavior whether the <code>Location</code> shall be considered
-	 * in the calculation of {@link org.openwms.common.domain.TransportUnit}s or
-	 * not.
-	 * 
-	 * @param countingActive
-	 *            <code>true</code> counting active, otherwise
-	 *            <code>false</code>
-	 */
-	public void setCountingActive(boolean countingActive) {
-		this.countingActive = countingActive;
-	}
+    /**
+     * Change the behavior whether the <code>Location</code> shall be considered
+     * in the calculation of {@link org.openwms.common.domain.TransportUnit}s or
+     * not.
+     * 
+     * @param countingActive
+     *            <code>true</code> counting active, otherwise
+     *            <code>false</code>
+     */
+    public void setCountingActive(boolean countingActive) {
+        this.countingActive = countingActive;
+    }
 
-	/**
-	 * Change the description of the <code>Location</code>.
-	 * 
-	 * @param description
-	 *            The new description text
-	 */
-	public void setDescription(String description) {
-		this.description = description;
-	}
+    /**
+     * Change the description of the <code>Location</code>.
+     * 
+     * @param description
+     *            The new description text
+     */
+    public void setDescription(String description) {
+        this.description = description;
+    }
 
-	/**
-	 * Change the incoming state of the <code>Location</code>.
-	 * 
-	 * @param incomingActive
-	 *            <code>true</code> The <code>Location</code> can pick up
-	 *            {@link org.openwms.common.domain.TransportUnit}s, otherwise
-	 *            <code>false</code>
-	 */
-	public void setIncomingActive(boolean incomingActive) {
-		this.incomingActive = incomingActive;
-	}
+    /**
+     * Change the incoming state of the <code>Location</code>.
+     * 
+     * @param incomingActive
+     *            <code>true</code> The <code>Location</code> can pick up
+     *            {@link org.openwms.common.domain.TransportUnit}s, otherwise
+     *            <code>false</code>
+     */
+    public void setIncomingActive(boolean incomingActive) {
+        this.incomingActive = incomingActive;
+    }
 
-	/**
-	 * Change the date when the <code>Location</code> was updated the last time.
-	 * 
-	 * @param lastAccess
-	 *            The date of change.
-	 */
-	public void setLastAccess(Date lastAccess) {
-		this.lastAccess = lastAccess;
-	}
+    /**
+     * Change the date when the <code>Location</code> was updated the last time.
+     * 
+     * @param lastAccess
+     *            The date of change.
+     */
+    public void setLastAccess(Date lastAccess) {
+        this.lastAccess = lastAccess;
+    }
 
-	/**
-	 * Add this <code>Location</code> to the <code>locationGroup</code>. When
-	 * the argument is <code>null</code> an existing {@link LocationGroup} is
-	 * removed from the <code>Location</code>.
-	 * 
-	 * @param locationGroup
-	 *            The {@link LocationGroup} to be assigned
-	 */
-	public void setLocationGroup(LocationGroup locationGroup) {
-		if (locationGroup != null) {
-			this.setLocationGroupCountingActive(locationGroup
-					.isLocationGroupCountingActive());
-		}
-		this.locationGroup = locationGroup;
-	}
+    /**
+     * Add this <code>Location</code> to the <code>locationGroup</code>. When
+     * the argument is <code>null</code> an existing {@link LocationGroup} is
+     * removed from the <code>Location</code>.
+     * 
+     * @param locationGroup
+     *            The {@link LocationGroup} to be assigned
+     */
+    public void setLocationGroup(LocationGroup locationGroup) {
+        if (locationGroup != null) {
+            this.setLocationGroupCountingActive(locationGroup.isLocationGroupCountingActive());
+        }
+        this.locationGroup = locationGroup;
+    }
 
-	/**
-	 * Define whether or not the <code>Location</code> shall be considered in
-	 * counting {@link org.openwms.common.domain.TransportUnit}s of the parent
-	 * {@link LocationGroup}.
-	 * 
-	 * @param locationGroupCountingActive
-	 *            <code>true</code> if considered, otherwise <code>false</code>
-	 */
-	public void setLocationGroupCountingActive(
-			boolean locationGroupCountingActive) {
-		this.locationGroupCountingActive = locationGroupCountingActive;
-	}
+    /**
+     * Define whether or not the <code>Location</code> shall be considered in
+     * counting {@link org.openwms.common.domain.TransportUnit}s of the parent
+     * {@link LocationGroup}.
+     * 
+     * @param locationGroupCountingActive
+     *            <code>true</code> if considered, otherwise <code>false</code>
+     */
+    public void setLocationGroupCountingActive(boolean locationGroupCountingActive) {
+        this.locationGroupCountingActive = locationGroupCountingActive;
+    }
 
-	/**
-	 * Change the type of the <code>Location</code>.
-	 * 
-	 * @param locationType
-	 *            The new type to set
-	 */
-	public void setLocationType(LocationType locationType) {
-		this.locationType = locationType;
-	}
+    /**
+     * Change the type of the <code>Location</code>.
+     * 
+     * @param locationType
+     *            The new type to set
+     */
+    public void setLocationType(LocationType locationType) {
+        this.locationType = locationType;
+    }
 
-	/**
-	 * Change the maximum allowed weight of the <code>Location</code>.
-	 * 
-	 * @param maximumWeight
-	 *            The new weight to set
-	 */
-	public void setMaximumWeight(BigDecimal maximumWeight) {
-		this.maximumWeight = maximumWeight;
-	}
+    /**
+     * Change the maximum allowed weight of the <code>Location</code>.
+     * 
+     * @param maximumWeight
+     *            The new weight to set
+     */
+    public void setMaximumWeight(BigDecimal maximumWeight) {
+        this.maximumWeight = maximumWeight;
+    }
 
-	/**
-	 * Change the maximum number of
-	 * {@link org.openwms.common.domain.TransportUnit}s allowed on the
-	 * <code>Location</code>.
-	 * 
-	 * @param noMaxTransportUnits
-	 *            The number of {@link org.openwms.common.domain.TransportUnit}s
-	 *            to set
-	 */
-	public void setNoMaxTransportUnits(short noMaxTransportUnits) {
-		this.noMaxTransportUnits = noMaxTransportUnits;
-	}
+    /**
+     * Change the maximum number of
+     * {@link org.openwms.common.domain.TransportUnit}s allowed on the
+     * <code>Location</code>.
+     * 
+     * @param noMaxTransportUnits
+     *            The number of {@link org.openwms.common.domain.TransportUnit}s
+     *            to set
+     */
+    public void setNoMaxTransportUnits(short noMaxTransportUnits) {
+        this.noMaxTransportUnits = noMaxTransportUnits;
+    }
 
-	/**
-	 * Change the outgoing state of the <code>Location</code>.
-	 * 
-	 * @param outgoingActive
-	 *            <code>true</code>
-	 *            {@link org.openwms.common.domain.TransportUnit}s can be moved
-	 *            away from the <code>Location</code>, otherwise
-	 *            <code>false</code>
-	 */
-	public void setOutgoingActive(boolean outgoingActive) {
-		this.outgoingActive = outgoingActive;
-	}
+    /**
+     * Change the outgoing state of the <code>Location</code>.
+     * 
+     * @param outgoingActive
+     *            <code>true</code>
+     *            {@link org.openwms.common.domain.TransportUnit}s can be moved
+     *            away from the <code>Location</code>, otherwise
+     *            <code>false</code>
+     */
+    public void setOutgoingActive(boolean outgoingActive) {
+        this.outgoingActive = outgoingActive;
+    }
 
-	/**
-	 * Change the current plc state.
-	 * 
-	 * @param plcState
-	 *            The new state to set
-	 */
-	public void setPlcState(short plcState) {
-		this.plcState = plcState;
-	}
+    /**
+     * Change the current plc state.
+     * 
+     * @param plcState
+     *            The new state to set
+     */
+    public void setPlcState(short plcState) {
+        this.plcState = plcState;
+    }
 
-	/**
-	 * Return the {@link LocationPK} as String.
-	 * 
-	 * @see org.openwms.common.domain.LocationPK#toString()
-	 * @return String locationId
-	 */
-	@Override
-	public String toString() {
-		return this.locationId.toString();
-	}
+    /**
+     * Return the {@link LocationPK} as String.
+     * 
+     * @see org.openwms.common.domain.LocationPK#toString()
+     * @return String locationId
+     */
+    @Override
+    public String toString() {
+        return this.locationId.toString();
+    }
 
-	/**
-	 * On update or insert the lastAccess is updated to the current date. (JPA
-	 * lifecycle callback method).
-	 */
-	@PrePersist
-	@PreUpdate
-	protected void preUpdate() {
-		lastAccess = new Date();
-	}
+    /**
+     * On update or insert the lastAccess is updated to the current date. (JPA
+     * lifecycle callback method).
+     */
+    @PrePersist
+    @PreUpdate
+    protected void preUpdate() {
+        lastAccess = new Date();
+    }
 }

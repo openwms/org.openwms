@@ -32,11 +32,11 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.persistence.Version;
 
-import org.openwms.common.domain.AbstractEntity;
-import org.openwms.common.domain.DomainObject;
+import org.openwms.core.domain.AbstractEntity;
+import org.openwms.core.domain.DomainObject;
 
 /**
- * A Message can be used to store useful information on other domain objects. 
+ * A Message can be used to store useful information on other domain objects.
  * 
  * @author <a href="mailto:scherrer@users.sourceforge.net">Heiko Scherrer</a>
  * @version $Revision$
@@ -110,13 +110,13 @@ public class Message extends AbstractEntity implements DomainObject<Long>, Seria
     public Long getId() {
         return id;
     }
-    
+
     /**
      * {@inheritDoc}
      */
     @Override
     public boolean isNew() {
-    	return this.id == null;
+        return this.id == null;
     }
 
     /**

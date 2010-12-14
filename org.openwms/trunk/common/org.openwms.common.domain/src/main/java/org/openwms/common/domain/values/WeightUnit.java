@@ -23,6 +23,8 @@ package org.openwms.common.domain.values;
 import java.util.Arrays;
 import java.util.List;
 
+import org.openwms.core.domain.values.UnitType;
+
 /**
  * A WeightUnit is a concrete set of all possible weights.
  * <p>

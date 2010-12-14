@@ -32,6 +32,9 @@ import javax.persistence.OrderBy;
 import javax.persistence.Table;
 import javax.persistence.Version;
 
+import org.openwms.core.domain.AbstractEntity;
+import org.openwms.core.domain.DomainObject;
+
 /**
  * A LocationType defines a type for {@link Location}s.
  * <p>
@@ -47,7 +50,7 @@ import javax.persistence.Version;
  */
 @Entity
 @Table(name = "COR_LOCATION_TYPE")
-@NamedQueries( {
+@NamedQueries({
         @NamedQuery(name = LocationType.NQ_FIND_ALL, query = "select l from LocationType l"),
         @NamedQuery(name = LocationType.NQ_FIND_BY_UNIQUE_QUERY, query = "select l from LocationType l where l.type = ?1") })
 public class LocationType extends AbstractEntity implements DomainObject<Long>, Serializable {
@@ -60,8 +63,8 @@ public class LocationType extends AbstractEntity implements DomainObject<Long>, 
     public static final String NQ_FIND_ALL = "LocationType.findAll";
 
     /**
-     * Query to find <strong>one</strong> <code>LocationType</code> by its natural
-     * key.
+     * Query to find <strong>one</strong> <code>LocationType</code> by its
+     * natural key.
      * <ul>
      * <li>Query parameter index <strong>1</strong> : The name of the
      * <code>LocationType</code> to search for.</li>
@@ -70,8 +73,7 @@ public class LocationType extends AbstractEntity implements DomainObject<Long>, 
     public static final String NQ_FIND_BY_UNIQUE_QUERY = "LocationType.findByUniqueId";
 
     /**
-     * Default value of the description, by default
-     * {@value}.
+     * Default value of the description, by default * {@value} .
      */
     public static final String DEF_TYPE_DESCRIPTION = "--";
 
@@ -91,25 +93,25 @@ public class LocationType extends AbstractEntity implements DomainObject<Long>, 
     private String type;
 
     /**
-     * Description of the <code>LocationType</code>. Default: {@value}.
+     * Description of the <code>LocationType</code>. Default: {@value} .
      */
     @Column(name = "DESCRIPTION")
     private String description = DEF_TYPE_DESCRIPTION;
 
     /**
-     * Length of the <code>LocationType</code>. Default: {@value}.
+     * Length of the <code>LocationType</code>. Default: {@value} .
      */
     @Column(name = "LENGTH")
     private int length = 0;
 
     /**
-     * Width of the <code>LocationType</code>. Default: {@value}. 
+     * Width of the <code>LocationType</code>. Default: {@value} .
      */
     @Column(name = "WIDTH")
     private int width = 0;
 
     /**
-     * Height of the <code>LocationType</code>. Default: {@value}.
+     * Height of the <code>LocationType</code>. Default: {@value} .
      */
     @Column(name = "HEIGHT")
     private int height = 0;
