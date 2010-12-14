@@ -30,7 +30,7 @@
         http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-3.0.xsd
 		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.0.xsd">
 
-    <osgix:cm-properties id="global.properties" persistent-id="org.openwms.common.infrastructure.configuration-${openwms.configuration.version}" />
+    <osgix:cm-properties id="global.properties" persistent-id="org.openwms.core.infrastructure.configuration-${openwms.configuration.version}" />
     <context:property-placeholder properties-ref="global.properties" />
 
     <!-- Hibernate does not require a LTW
