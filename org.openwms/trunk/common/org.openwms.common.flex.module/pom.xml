@@ -33,8 +33,7 @@
 	<packaging>swf</packaging>
 	<name>${project.artifactId}</name>
 	<properties>
-		<moduleDir>..</moduleDir>
-		<template.version>2.0.0</template.version>
+		<moduleDir>../..</moduleDir>
 	</properties>
 	<build>
 		<finalName>${project.artifactId}-${project.version}</finalName>
@@ -170,11 +169,15 @@
 	</pluginRepositories>
 
 	<dependencies>
+	    <!-- Spring Framework -->
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>org.springframework.spring-library</artifactId>
             <type>libd</type>
+            <scope>provided</scope>
         </dependency>
+        
+        <!-- Project dependencies -->
 		<dependency>
 			<groupId>${project.groupId}</groupId>
 			<artifactId>org.openwms.common.domain.as</artifactId>
@@ -182,19 +185,23 @@
 		</dependency>
         <dependency>
             <groupId>${project.groupId}</groupId>
-            <artifactId>org.openwms.client.flex.lib</artifactId>
-            <type>swc</type>
-        </dependency>
-        <dependency>
-            <groupId>${project.groupId}</groupId>
             <artifactId>org.openwms.common.flex.lib</artifactId>
             <type>swc</type>
         </dependency>
-		<dependency>
-			<groupId>com.adobe.flex.framework</groupId>
-			<artifactId>flex-framework</artifactId>
-			<type>pom</type>
-		</dependency>
+
+        <!-- CORE Project dependencies -->
+        <dependency>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>org.openwms.client.flex.lib</artifactId>
+            <version>${core.version}</version>
+            <type>swc</type>
+        </dependency>
+
+        <dependency>
+            <groupId>com.adobe.flex.framework</groupId>
+            <artifactId>flex-framework</artifactId>
+            <type>pom</type>
+        </dependency>
 		<dependency>
 			<groupId>org.graniteds</groupId>
 			<artifactId>granite-essentials-swc</artifactId>

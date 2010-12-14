@@ -18,7 +18,13 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
-/**
- * Contains common used utility and helper classes.
- */
-package org.openwms.common.util;
+package org.openwms.common.domain.values {
+
+    import flash.utils.ByteArray;
+
+    public interface ImageProvider {
+
+        function set image(value:ByteArray):void;
+        function get image():ByteArray;
+    }
+}

@@ -35,21 +35,12 @@
     <packaging>pom</packaging>
     <name>OpenWMS.org COMMON Project</name>
     <properties>
-        <moduleDir>.</moduleDir>
+        <moduleDir>..</moduleDir>
         <core.version>0.0.1-SNAPSHOT</core.version>
+        <bundle.version>0.0.1.SNAPSHOT</bundle.version>
     </properties>
 
     <distributionManagement>
-        <repository>
-            <id>${distribution.repo.serverId}</id>
-            <name>OpenWMS.org Release Repository</name>
-            <url>${distribution.repo.serverProtocol}//${distribution.repo.serverUrl.rootPath}</url>
-        </repository>
-        <snapshotRepository>
-            <id>${distribution.repo.serverId}</id>
-            <name>OpenWMS.org Snapshot Repository</name>
-            <url>${distribution.repo.serverProtocol}//${distribution.repo.snapshot.serverUrl.rootPath}</url>
-        </snapshotRepository>
         <site>
             <id>${distribution.serverId}</id>
             <name>OpenWMS.org WebSite</name>
@@ -66,6 +57,20 @@
     <profiles>
         <profile>
             <id>all</id>
+            <modules>
+                <module>org.openwms.common.domain</module>
+                <module>org.openwms.common.domain.as</module>
+                <module>org.openwms.common.flex.lib</module>
+                <module>org.openwms.common.flex.module</module>
+                <module>org.openwms.common.integration</module>
+                <module>org.openwms.common.integration.jpa</module>
+                <module>org.openwms.common.service.api</module>
+                <module>org.openwms.common.service.spring</module>
+                <module>org.openwms.common.util</module>
+            </modules>
+        </profile>
+        <profile>
+            <id>common</id>
             <modules>
                 <module>org.openwms.common.domain</module>
                 <module>org.openwms.common.domain.as</module>
