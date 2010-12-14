@@ -33,8 +33,7 @@
 	<packaging>swc</packaging>
 	<name>${project.artifactId}</name>
 	<properties>
-		<moduleDir>..</moduleDir>
-		<template.version>2.0.0</template.version>
+		<moduleDir>../..</moduleDir>
 	</properties>
 	<build>
 		<finalName>${project.artifactId}-${project.version}</finalName>
@@ -172,6 +171,7 @@
             <groupId>org.springframework</groupId>
             <artifactId>org.springframework.spring-library</artifactId>
             <type>libd</type>
+            <scope>provided</scope>
         </dependency>
 		<dependency>
 			<groupId>${project.groupId}</groupId>
