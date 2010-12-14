@@ -113,7 +113,7 @@
 						<template>${project.basedir}/etc/2.0.0.GA/entity.gsp</template>
 					</entityTemplate>
 					<enumTemplate>
-						<template>${project.basedir}/etc/2.0.0.GA/enum.gsp</template>
+					   <template>${project.basedir}/etc/2.0.0.GA/enum.gsp</template>
 					</enumTemplate>
 					<interfaceTemplate>
 						<template>${project.basedir}/etc/2.0.0.GA/interfaceBase.gsp</template>
@@ -225,7 +225,6 @@
 			<groupId>com.adobe.flex.framework</groupId>
 			<artifactId>flex-framework</artifactId>
 			<type>pom</type>
-			<scope>provided</scope>
 		</dependency>
 		<dependency>
 			<groupId>org.graniteds</groupId>

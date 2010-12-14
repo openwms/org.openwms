@@ -72,6 +72,27 @@
                 <module>org.openwms.core.service.api</module>
                 <module>org.openwms.core.service.spring</module>
                 <module>org.openwms.core.util</module>
+                <module>org.openwms.client.flex.lib</module>
+            </modules>
+        </profile>
+        <profile>
+            <id>core</id>
+            <modules>
+                <module>org.openwms.core.domain</module>
+                <module>org.openwms.core.domain.as</module>
+                <module>org.openwms.core.framework.test</module>
+                <module>org.openwms.core.infrastructure.configuration</module>
+                <module>org.openwms.core.infrastructure.hsql</module>
+                <module>org.openwms.core.infrastructure.oracle</module>
+                <module>org.openwms.core.infrastructure.postgres</module>
+                <module>org.openwms.core.integration</module>
+                <module>org.openwms.core.integration.eclipselink</module>
+                <module>org.openwms.core.integration.hibernate</module>
+                <module>org.openwms.core.integration.jpa</module>
+                <module>org.openwms.core.service.api</module>
+                <module>org.openwms.core.service.spring</module>
+                <module>org.openwms.core.util</module>
+                <module>org.openwms.client.flex.lib</module>
             </modules>
         </profile>
     </profiles>
