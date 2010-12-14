@@ -24,7 +24,15 @@
 <persistence version="1.0" xmlns="http://java.sun.com/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:schemaLocation="http://java.sun.com/xml/ns/persistence http://java.sun.com/xml/ns/persistence/persistence_1_0.xsd">
     <persistence-unit name="OpenWMS-test-durable" transaction-type="RESOURCE_LOCAL">
+        <class>org.openwms.core.domain.system.usermanagement.Email</class>
+        <class>org.openwms.core.domain.system.usermanagement.Preference</class>
+        <class>org.openwms.core.domain.system.usermanagement.Role</class>
+        <class>org.openwms.core.domain.system.usermanagement.User</class>
+        <class>org.openwms.core.domain.system.usermanagement.UserDetails</class>
+        <class>org.openwms.core.domain.system.usermanagement.UserPassword</class>
         <class>org.openwms.core.domain.Module</class>
+        <class>org.openwms.core.domain.values.Unit</class>
+<!--
         <class>org.openwms.common.domain.Location</class>
         <class>org.openwms.common.domain.LocationPK</class>
         <class>org.openwms.common.domain.LocationGroup</class>
@@ -35,18 +43,12 @@
         <class>org.openwms.common.domain.TypeStackingRule</class>
         <class>org.openwms.common.domain.system.Message</class>
         <class>org.openwms.common.domain.system.UnitError</class>
-        <class>org.openwms.core.domain.system.usermanagement.Email</class>
-        <class>org.openwms.core.domain.system.usermanagement.Preference</class>
-        <class>org.openwms.core.domain.system.usermanagement.Role</class>
-        <class>org.openwms.core.domain.system.usermanagement.User</class>
-        <class>org.openwms.core.domain.system.usermanagement.UserDetails</class>
-        <class>org.openwms.core.domain.system.usermanagement.UserPassword</class>
         <class>org.openwms.common.domain.values.Barcode</class>
         <class>org.openwms.common.domain.values.Problem</class>
-        <class>org.openwms.core.domain.values.Unit</class>
         <class>org.openwms.common.domain.values.Weight</class>
         <class>org.openwms.common.domain.values.WeightUnit</class>
         <class>org.openwms.tms.domain.order.TransportOrder</class>
+-->
         <exclude-unlisted-classes />
         <properties>
             <property name="hibernate.show_sql" value="true"/>

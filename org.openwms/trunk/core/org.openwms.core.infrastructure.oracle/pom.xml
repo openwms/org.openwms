@@ -33,7 +33,7 @@
     <packaging>jar</packaging>
     <name>${project.artifactId}</name>
     <properties>
-        <moduleDir>..</moduleDir>
+        <moduleDir>../..</moduleDir>
         <openwms.configuration.version>0.0.1-SNAPSHOT</openwms.configuration.version>
     </properties>
     <build>
@@ -97,7 +97,6 @@
         <dependency>
             <groupId>${project.groupId}</groupId>
             <artifactId>org.openwms.core.infrastructure.configuration</artifactId>
-            <version>${openwms.configuration.version}</version>
             <type>properties</type>
             <scope>runtime</scope>
         </dependency>
