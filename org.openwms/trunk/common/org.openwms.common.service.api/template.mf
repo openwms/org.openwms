@@ -5,4 +5,6 @@ Bundle-Name: org.openwms.common.service.api
 Bundle-ManifestVersion: 2
 Bundle-SymbolicName: org.openwms.common.service.api
 Import-Bundle: 
- org.openwms.common.domain;version="0.0.1.SNAPSHOT"
+ org.openwms.common.domain;version="0.0.1.SNAPSHOT",
+ org.openwms.core.domain;version="0.0.1.SNAPSHOT",
+ org.openwms.core.service.api;version="0.0.1.SNAPSHOT"
