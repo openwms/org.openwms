@@ -25,9 +25,10 @@ import java.util.List;
 
 import org.openwms.common.domain.Location;
 import org.openwms.common.domain.LocationType;
-import org.openwms.common.integration.GenericDao;
 import org.openwms.common.integration.LocationDao;
 import org.openwms.common.service.LocationService;
+import org.openwms.core.integration.GenericDao;
+import org.openwms.core.service.spring.EntityServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
@@ -39,7 +40,7 @@ import org.springframework.transaction.annotation.Transactional;
  * @author <a href="mailto:openwms@googlemail.com">Heiko Scherrer</a>
  * @version $Revision$
  * @since 0.1
- * @see org.openwms.common.service.spring.EntityServiceImpl
+ * @see org.openwms.core.service.spring.EntityServiceImpl
  */
 @Service
 @Transactional
@@ -79,8 +80,8 @@ public class LocationServiceImpl extends EntityServiceImpl<Location, Long> imple
     /**
      * {@inheritDoc}
      * 
-     * If the <code>locationType</code> is a transient one, it will be
-     * persisted otherwise saved.
+     * If the <code>locationType</code> is a transient one, it will be persisted
+     * otherwise saved.
      */
     @Override
     public void createLocationType(LocationType locationType) {

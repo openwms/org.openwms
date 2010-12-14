@@ -27,9 +27,10 @@ import org.openwms.common.domain.LocationGroup;
 import org.openwms.common.domain.values.LocationGroupState;
 import org.openwms.common.integration.LocationGroupDao;
 import org.openwms.common.service.LocationGroupService;
-import org.openwms.common.service.exception.ServiceRuntimeException;
-import org.openwms.common.util.TreeNode;
-import org.openwms.common.util.TreeNodeImpl;
+import org.openwms.core.service.exception.ServiceRuntimeException;
+import org.openwms.core.service.spring.EntityServiceImpl;
+import org.openwms.core.util.TreeNode;
+import org.openwms.core.util.TreeNodeImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
@@ -41,7 +42,7 @@ import org.springframework.transaction.annotation.Transactional;
  * @author <a href="mailto:openwms@googlemail.com">Heiko Scherrer</a>
  * @version $Revision$
  * @since 0.1
- * @see org.openwms.common.service.spring.EntityServiceImpl
+ * @see org.openwms.core.service.spring.EntityServiceImpl
  */
 @Service
 @Transactional

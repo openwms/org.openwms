@@ -30,7 +30,7 @@
 			http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.0.xsd
 			http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-3.0.xsd">
 
-    <osgix:cm-properties id="global.properties" persistent-id="org.openwms.common.infrastructure.configuration-${openwms.configuration.version}" />
+    <osgix:cm-properties id="global.properties" persistent-id="org.openwms.core.infrastructure.configuration-${openwms.configuration.version}" />
     <context:property-placeholder properties-ref="global.properties" />
 
 	<context:annotation-config />
@@ -44,37 +44,9 @@
 		<property name="dao" ref="locationGroupDao" />
 	</bean>
 
-	<bean id="userService" class="org.openwms.common.service.spring.management.UserServiceImpl">
-		<property name="dao" ref="userDao" />
-	</bean>
-
 	<bean id="transportUnitService" class="org.openwms.common.service.spring.TransportUnitServiceImpl">
 		<property name="dao" ref="transportUnitDao" />
         <property name="onRemovalListener" ref="onRemovalListener" />
 	</bean>
 
-    <bean id="moduleManagementService" class="org.openwms.common.service.spring.ModuleManagementImpl">
-        <property name="dao" ref="moduleDao" />
-    </bean>
-
-    <bean id="configurationService" class="org.openwms.common.service.spring.ConfigurationServiceImpl">
-    </bean>
-    
-    <bean id="userDetailsService" class="org.openwms.common.service.spring.security.SecurityContextUserServiceImpl">
-        <property name="systemUser" value="${system.user}" />
-        <property name="systemPassword" value="${system.password}" />
-    </bean>
-    
-    <bean id="userCache" class="org.springframework.security.core.userdetails.cache.EhCacheBasedUserCache">
-        <property name="cache" ref="ehCache" />
-    </bean>
-    
-    <bean id="ehCache" class="org.springframework.cache.ehcache.EhCacheFactoryBean">
-        <property name="cacheManager" ref="cacheManager" />
-    </bean>
-    
-    <bean id="cacheManager" class="org.springframework.cache.ehcache.EhCacheManagerFactoryBean">
-        <property name="configLocation" value="classpath:/ehcache.xml" />
-    </bean>
-    
 </beans>
