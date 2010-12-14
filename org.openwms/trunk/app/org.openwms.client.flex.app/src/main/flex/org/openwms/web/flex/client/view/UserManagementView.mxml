@@ -51,14 +51,11 @@
             /**
              * Load all users when the view is loaded.
              */
-            private function init():void
-            {
-            	if (modelLocator.allRoles.length == 0)
-            	{
+            private function init():void {
+            	if (modelLocator.allRoles.length == 0) {
                     dispatchEvent(new UserEvent(UserEvent.LOAD_ALL_USERS));
                 }
-                if (modelLocator.allRoles.length == 0)
-                {
+                if (modelLocator.allRoles.length == 0) {
                 	dispatchEvent(new UserEvent(RoleEvent.LOAD_ALL_ROLES));
                 }
             }

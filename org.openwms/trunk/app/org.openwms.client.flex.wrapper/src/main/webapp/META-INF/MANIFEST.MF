@@ -36,18 +36,18 @@ Import-Package: com.springsource.server.web.dm;version="[2.0.0, 3.0.0)
  version="[2.4.0,2.5.0]",javax.transaction,javax.xml.namespace,javax.x
  ml.parsers,javax.xml.transform,javax.xml.transform.dom,javax.xml.tran
  sform.stream,javax.xml.xpath,org.hibernate.proxy;version="0.0.0",org.
- openwms.common.service.management,org.slf4j;version="1.5.10",org.spri
- ngframework.beans;version="[3.0, 3.1)",org.springframework.beans.fact
- ory;version="[3.0, 3.1)",org.springframework.beans.factory.annotation
- ;version="[3.0, 3.1)",org.springframework.context;version="[3.0, 3.1)
- ",org.springframework.context.weaving;version="[3.0, 3.1)",org.spring
- framework.security.access;version="[3.0, 3.1)",org.springframework.se
- curity.authentication;version="[3.0, 3.1)",org.springframework.securi
- ty.core;version="[3.0, 3.1)",org.springframework.security.core.contex
- t;version="[3.0, 3.1)",org.springframework.transaction.aspectj;versio
- n="[3.0, 3.1)",org.springframework.web.context;version="[3.0, 3.1)",o
- rg.springframework.web.context.request;version="[3.0, 3.1)",org.sprin
- gframework.web.context.support;version="[3.0, 3.1)",org.w3c.dom,org.w
- 3c.dom.traversal,org.xml.sax,org.xml.sax.ext,org.xml.sax.helpers
+ openwms.core.service.management,org.slf4j;version="1.5.10",org.spring
+ framework.beans;version="[3.0, 3.1)",org.springframework.beans.factor
+ y;version="[3.0, 3.1)",org.springframework.beans.factory.annotation;v
+ ersion="[3.0, 3.1)",org.springframework.context;version="[3.0, 3.1)",
+ org.springframework.context.weaving;version="[3.0, 3.1)",org.springfr
+ amework.security.access;version="[3.0, 3.1)",org.springframework.secu
+ rity.authentication;version="[3.0, 3.1)",org.springframework.security
+ .core;version="[3.0, 3.1)",org.springframework.security.core.context;
+ version="[3.0, 3.1)",org.springframework.transaction.aspectj;version=
+ "[3.0, 3.1)",org.springframework.web.context;version="[3.0, 3.1)",org
+ .springframework.web.context.request;version="[3.0, 3.1)",org.springf
+ ramework.web.context.support;version="[3.0, 3.1)",org.w3c.dom,org.w3c
+ .dom.traversal,org.xml.sax,org.xml.sax.ext,org.xml.sax.helpers
 Bundle-SymbolicName: org.openwms.zz.client.flex.wrapper
 

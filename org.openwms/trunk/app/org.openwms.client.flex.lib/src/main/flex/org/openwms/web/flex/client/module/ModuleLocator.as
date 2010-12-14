@@ -35,7 +35,7 @@ package org.openwms.web.flex.client.module {
     import org.granite.tide.events.TideFaultEvent;
     import org.granite.tide.events.TideResultEvent;
     import org.granite.tide.spring.Context;
-    import org.openwms.common.domain.Module;
+    import org.openwms.core.domain.Module;
     import org.openwms.web.flex.client.IApplicationModule;
     import org.openwms.web.flex.client.event.ApplicationEvent;
     import org.openwms.web.flex.client.model.ModelLocator;

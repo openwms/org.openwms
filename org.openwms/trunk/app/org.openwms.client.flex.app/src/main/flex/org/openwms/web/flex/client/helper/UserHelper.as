@@ -21,8 +21,8 @@
 package org.openwms.web.flex.client.helper
 {
 
-    import org.openwms.common.domain.system.usermanagement.User;
-    import org.openwms.common.domain.system.usermanagement.UserDetails$SEX;
+    import org.openwms.core.domain.system.usermanagement.User;
+    import org.openwms.core.domain.system.usermanagement.UserDetails$SEX;
 
     /**
      * An UserHelper.

@@ -100,6 +100,12 @@
 					</dependency>
                     <dependency>
                         <groupId>${project.groupId}</groupId>
+                        <artifactId>org.openwms.core.domain.as</artifactId>
+                        <version>${core.version}</version>
+                        <type>swc</type>
+                    </dependency>
+                    <dependency>
+                        <groupId>${project.groupId}</groupId>
                         <artifactId>org.openwms.common.domain.as</artifactId>
                         <version>${project.version}</version>
                         <type>swc</type>
@@ -250,9 +256,16 @@
         <!-- Project dependencies -->
 		<dependency>
 			<groupId>${project.groupId}</groupId>
-			<artifactId>org.openwms.common.domain.as</artifactId>
+			<artifactId>org.openwms.core.domain.as</artifactId>
+			<version>${core.version}</version>
 			<type>swc</type>
+			<scope>internal</scope>
 		</dependency>
+        <dependency>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>org.openwms.common.domain.as</artifactId>
+            <type>swc</type>
+        </dependency>
         <dependency>
             <groupId>${project.groupId}</groupId>
             <artifactId>org.openwms.tms.domain.as</artifactId>

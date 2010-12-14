@@ -35,8 +35,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.openwms.common.domain.system.usermanagement.User;
-import org.openwms.common.service.management.UserService;
+import org.openwms.core.domain.system.usermanagement.User;
+import org.openwms.core.service.management.UserService;
 import org.springframework.web.context.WebApplicationContext;
 import org.springframework.web.context.support.WebApplicationContextUtils;
 
@@ -69,7 +69,7 @@ public class UploadServlet extends HttpServlet {
      *      javax.servlet.http.HttpServletResponse)
      */
     @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException { }
+    protected void doGet(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {}
 
     /**
      * Try to resolve the post request parameter named <i>Filedata</i> and read

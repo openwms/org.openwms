@@ -26,7 +26,7 @@ package org.openwms.web.flex.client.business {
     import org.granite.tide.events.TideFaultEvent;
     import org.granite.tide.events.TideResultEvent;
     import org.granite.tide.spring.Context;
-    import org.openwms.common.domain.values.Unit;
+    import org.openwms.core.domain.values.Unit;
     import org.openwms.common.domain.values.Weight;
     import org.openwms.web.flex.client.model.ModelLocator;
     
