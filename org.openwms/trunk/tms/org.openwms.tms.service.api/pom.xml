@@ -26,14 +26,14 @@
 	<modelVersion>4.0.0</modelVersion>
 	<parent>
 		<groupId>org.openwms</groupId>
-		<artifactId>org.openwms</artifactId>
+		<artifactId>org.openwms.tms</artifactId>
 		<version>0.0.1-SNAPSHOT</version>
 	</parent>
 	<artifactId>org.openwms.tms.service.api</artifactId>
 	<packaging>jar</packaging>
 	<name>${project.artifactId}</name>
 	<properties>
-		<moduleDir>..</moduleDir>
+		<moduleDir>../..</moduleDir>
 	</properties>
 	<build>
 		<plugins>
@@ -51,18 +51,34 @@
 		</plugins>
 	</build>
 	<dependencies>
+        <dependency>
+            <groupId>javax.persistence</groupId>
+            <artifactId>com.springsource.javax.persistence</artifactId>
+            <scope>provided</scope>
+        </dependency>
         <!-- Project dependencies -->
 		<dependency>
 			<groupId>${project.groupId}</groupId>
-			<artifactId>org.openwms.common.domain</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>${project.groupId}</groupId>
-			<artifactId>org.openwms.tms.domain</artifactId>
+			<artifactId>org.openwms.core.domain</artifactId>
+		    <version>${core.version}</version>
+            <scope>provided</scope>
 		</dependency>
         <dependency>
             <groupId>${project.groupId}</groupId>
-            <artifactId>org.openwms.common.service.api</artifactId>
+            <artifactId>org.openwms.core.service.api</artifactId>
+            <version>${core.version}</version>
+            <scope>provided</scope>
         </dependency>
+        <dependency>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>org.openwms.common.domain</artifactId>
+            <version>${common.version}</version>
+            <scope>provided</scope>
+        </dependency>
+		<dependency>
+			<groupId>${project.groupId}</groupId>
+			<artifactId>org.openwms.tms.domain</artifactId>
+            <scope>provided</scope>
+		</dependency>
 	</dependencies>
 </project>

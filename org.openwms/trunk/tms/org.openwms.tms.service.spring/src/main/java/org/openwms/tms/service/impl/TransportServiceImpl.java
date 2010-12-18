@@ -28,8 +28,8 @@ import org.openwms.common.domain.LocationGroup;
 import org.openwms.common.domain.TransportUnit;
 import org.openwms.common.domain.values.Barcode;
 import org.openwms.common.domain.values.Problem;
-import org.openwms.common.integration.GenericDao;
-import org.openwms.common.service.spring.EntityServiceImpl;
+import org.openwms.core.integration.GenericDao;
+import org.openwms.core.service.spring.EntityServiceImpl;
 import org.openwms.tms.domain.order.TransportOrder;
 import org.openwms.tms.domain.values.PriorityLevel;
 import org.openwms.tms.domain.values.TransportOrderState;
@@ -48,7 +48,7 @@ import org.springframework.transaction.annotation.Transactional;
  * @author <a href="mailto:openwms@googlemail.com">Heiko Scherrer</a>
  * @version $Revision$
  * @since 0.1
- * @see org.openwms.common.service.spring.EntityServiceImpl
+ * @see org.openwms.core.service.spring.EntityServiceImpl
  * @see org.openwms.tms.service.TransportOrderService
  */
 @Service("transportService")
@@ -151,8 +151,10 @@ public class TransportServiceImpl extends EntityServiceImpl<TransportOrder, Long
         }
         addEntity(transportOrder);
         dao.persist(transportOrder);
+        /*
         ctx.publishEvent(new TransportServiceEvent(transportOrder.getTransportUnit(),
                 TransportServiceEvent.TYPE.TRANSPORT_CREATED));
+                */
         if (logger.isDebugEnabled()) {
             logger.debug("... created");
         }
@@ -171,8 +173,10 @@ public class TransportServiceImpl extends EntityServiceImpl<TransportOrder, Long
         for (TransportOrder transportOrder : transportOrders) {
             try {
                 transportOrder.setState(state);
+                /*
                 ctx.publishEvent(new TransportServiceEvent(transportOrder.getId(),
                         TransportServiceEvent.TYPE.TRANSPORT_CANCELED));
+                        */
                 if (logger.isDebugEnabled()) {
                     logger.debug("TransportOrder " + transportOrder.getId() + " successfully set to:" + state);
                 }

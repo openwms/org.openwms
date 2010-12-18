@@ -33,29 +33,18 @@
     <packaging>war</packaging>
     <name>${project.artifactId}</name>
     <properties>
-        <moduleDir>..</moduleDir>
+        <moduleDir>../..</moduleDir>
         <packed.app>${project.groupId}.client.flex.app</packed.app>
     </properties>
-    <scm>
-        <connection>
-            scm:svn:https://openwms2005.svn.sourceforge.net/svnroot/openwms2005/org.openwms/trunk/source/org.openwms.client.flex.wrapper
-        </connection>
-        <developerConnection>
-            scm:svn:https://openwms2005.svn.sourceforge.net/svnroot/openwms2005/org.openwms/trunk/source/org.openwms.client.flex.wrapper
-        </developerConnection>
-        <url>
-            https://openwms2005.svn.sourceforge.net/svnroot/openwms2005/org.openwms/trunk/source/org.openwms.client.flex.wrapper
-        </url>
-    </scm>
     <build>
-        <sourceDirectory>src/main/java</sourceDirectory>
+        <sourceDirectory>${project.basedir}/src/main/java</sourceDirectory>
         <finalName>${project.artifactId}</finalName>
         <plugins>
             <plugin>
                 <groupId>com.springsource.bundlor</groupId>
                 <artifactId>com.springsource.bundlor.maven</artifactId>
                 <configuration>
-                    <outputPath>${basedir}/src/main/webapp</outputPath>
+                    <outputPath>${project.basedir}/src/main/webapp</outputPath>
                 </configuration>
                 <executions>
                     <execution>
@@ -71,7 +60,7 @@
                 <configuration>
                     <finalName>${project.artifactId}</finalName>
                     <archive>
-                        <manifestFile>src/main/webapp/META-INF/MANIFEST.MF</manifestFile>
+                        <manifestFile>${project.basedir}/src/main/webapp/META-INF/MANIFEST.MF</manifestFile>
                     </archive>
                     <outputFileNameMapping>@{artifactId}@.@{extension}@</outputFileNameMapping>
                 </configuration>
@@ -155,22 +144,32 @@
         <dependency>
             <groupId>org.springframework.security</groupId>
             <artifactId>org.springframework.security.core</artifactId>
-            <version>${spring.version}</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>org.springframework.security</groupId>
             <artifactId>org.springframework.security.web</artifactId>
-            <version>${spring.version}</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>org.springframework.security</groupId>
             <artifactId>org.springframework.security.config</artifactId>
-            <version>${spring.version}</version>
+            <version>3.0.3.RELEASE</version>
             <scope>provided</scope>
         </dependency>
 
+        <dependency>
+            <groupId>javax.persistence</groupId>
+            <artifactId>com.springsource.javax.persistence</artifactId>
+            <scope>provided</scope>
+        </dependency>
+
+        <!-- Project dependencies -->
+        <dependency>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>org.openwms.client.flex.app</artifactId>
+            <type>swf</type>
+        </dependency>
         <!-- CORE Project dependencies -->
         <dependency>
             <groupId>${project.groupId}</groupId>
@@ -191,36 +190,36 @@
             <version>${core.version}</version>
             <scope>provided</scope>
         </dependency>
-        <!-- Project dependencies -->
-        <dependency>
-            <groupId>${project.groupId}</groupId>
-            <artifactId>org.openwms.client.flex.app</artifactId>
-            <type>swf</type>
-            <scope>provided</scope>
-        </dependency>
+        <!-- COMMON Project dependencies -->
         <dependency>
             <groupId>${project.groupId}</groupId>
             <artifactId>org.openwms.common.flex.module</artifactId>
+            <version>${common.version}</version>
             <type>swf</type>
         </dependency>
         <dependency>
             <groupId>${project.groupId}</groupId>
+            <artifactId>org.openwms.common.service.api</artifactId>
+            <version>${common.version}</version>
+            <scope>provided</scope>
+        </dependency>
+        <!-- TMS Project dependencies -->
+        <dependency>
+            <groupId>${project.groupId}</groupId>
             <artifactId>org.openwms.tms.flex.module</artifactId>
+            <version>${tms.version}</version>
             <type>swf</type>
         </dependency>
         <dependency>
             <groupId>${project.groupId}</groupId>
             <artifactId>org.openwms.tms.domain</artifactId>
-            <scope>provided</scope>
-        </dependency>
-        <dependency>
-            <groupId>${project.groupId}</groupId>
-            <artifactId>org.openwms.common.service.api</artifactId>
+            <version>${tms.version}</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>${project.groupId}</groupId>
             <artifactId>org.openwms.tms.service.api</artifactId>
+            <version>${tms.version}</version>
             <scope>provided</scope>
         </dependency>
 

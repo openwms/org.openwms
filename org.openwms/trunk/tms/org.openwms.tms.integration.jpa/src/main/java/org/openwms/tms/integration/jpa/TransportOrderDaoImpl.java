@@ -23,7 +23,7 @@ package org.openwms.tms.integration.jpa;
 import java.util.List;
 
 import org.openwms.common.domain.LocationGroup;
-import org.openwms.common.integration.jpa.AbstractGenericJpaDao;
+import org.openwms.core.integration.jpa.AbstractGenericJpaDao;
 import org.openwms.tms.domain.order.TransportOrder;
 import org.openwms.tms.integration.TransportOrderDao;
 import org.springframework.stereotype.Repository;

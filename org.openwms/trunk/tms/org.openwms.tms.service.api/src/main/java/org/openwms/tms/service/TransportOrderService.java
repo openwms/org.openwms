@@ -25,7 +25,7 @@ import java.util.List;
 import org.openwms.common.domain.Location;
 import org.openwms.common.domain.LocationGroup;
 import org.openwms.common.domain.values.Barcode;
-import org.openwms.common.service.EntityService;
+import org.openwms.core.service.EntityService;
 import org.openwms.tms.domain.order.TransportOrder;
 import org.openwms.tms.domain.values.PriorityLevel;
 import org.openwms.tms.domain.values.TransportOrderState;

@@ -36,6 +36,6 @@
 	
     <!-- exports -->
     <osgi:service ref="transportService" interface="org.openwms.tms.service.TransportOrderService"/>
-    <osgi:service ref="tuRemovalListener" interface="org.openwms.common.service.OnRemovalListener"/>
+    <osgi:service ref="tuRemovalListener" interface="org.openwms.core.service.OnRemovalListener"/>
 
 </beans>

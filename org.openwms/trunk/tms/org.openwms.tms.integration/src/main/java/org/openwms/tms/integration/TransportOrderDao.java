@@ -23,7 +23,7 @@ package org.openwms.tms.integration;
 import java.util.List;
 
 import org.openwms.common.domain.LocationGroup;
-import org.openwms.common.integration.GenericDao;
+import org.openwms.core.integration.GenericDao;
 import org.openwms.tms.domain.order.TransportOrder;
 
 /**
@@ -33,7 +33,7 @@ import org.openwms.tms.domain.order.TransportOrder;
  * @author <a href="mailto:openwms@googlemail.com">Heiko Scherrer</a>
  * @version $Revision$
  * @since 0.1
- * @see org.openwms.common.integration.GenericDao
+ * @see org.openwms.core.integration.GenericDao
  * @see org.openwms.tms.domain.order.TransportOrder
  */
 public interface TransportOrderDao extends GenericDao<TransportOrder, Long> {
