@@ -1,19 +1,14 @@
 Manifest-Version: 1.0
-Bundle-Vendor: openwms.org
-Bundle-Version: 0.0.1.SNAPSHOT
-Bundle-Name: org.openwms.tms.domain
+Bundle-Vendor: ${project.groupId}
+Bundle-Version: ${bundle.version}
+Bundle-Name: ${project.artifactId}
 Bundle-ManifestVersion: 2
-Bundle-SymbolicName: org.openwms.tms.domain
+Bundle-SymbolicName: ${project.artifactId}
 Import-Bundle: 
  com.springsource.javax.persistence;version="1.0.0",
  com.springsource.org.apache.commons.lang;version="2.4.0",
+ org.openwms.core.domain;version="[0.0.1.SNAPSHOT, 0.0.1.SNAPSHOT]",
  org.openwms.common.domain;version="[0.0.1.SNAPSHOT, 0.0.1.SNAPSHOT]"
-Excluded-Imports: 
- org.openwms.common.framework.test.*,
- org.openwms.common.test.*,
- org.junit.*
-Excluded-Exports: 
- org.junit.*
 Require-Bundle: 
  com.springsource.org.hibernate,
  com.springsource.javassist

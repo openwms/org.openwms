@@ -35,21 +35,13 @@
     <packaging>pom</packaging>
     <name>OpenWMS.org TMS Project</name>
     <properties>
-        <moduleDir>.</moduleDir>
+        <moduleDir>..</moduleDir>
         <core.version>0.0.1-SNAPSHOT</core.version>
+        <common.version>0.0.1-SNAPSHOT</common.version>
+        <bundle.version>0.0.1.SNAPSHOT</bundle.version>
     </properties>
 
     <distributionManagement>
-        <repository>
-            <id>${distribution.repo.serverId}</id>
-            <name>OpenWMS.org Release Repository</name>
-            <url>${distribution.repo.serverProtocol}//${distribution.repo.serverUrl.rootPath}</url>
-        </repository>
-        <snapshotRepository>
-            <id>${distribution.repo.serverId}</id>
-            <name>OpenWMS.org Snapshot Repository</name>
-            <url>${distribution.repo.serverProtocol}//${distribution.repo.snapshot.serverUrl.rootPath}</url>
-        </snapshotRepository>
         <site>
             <id>${distribution.serverId}</id>
             <name>OpenWMS.org WebSite</name>
@@ -66,6 +58,19 @@
     <profiles>
         <profile>
             <id>all</id>
+            <modules>
+                <module>org.openwms.tms.domain</module>
+                <module>org.openwms.tms.domain.as</module>
+                <module>org.openwms.tms.flex.module</module>
+                <module>org.openwms.tms.integration</module>
+                <module>org.openwms.tms.integration.jpa</module>
+                <module>org.openwms.tms.service.api</module>
+                <module>org.openwms.tms.service.spring</module>
+                <module>org.openwms.tms.util</module>
+            </modules>
+        </profile>
+        <profile>
+            <id>tms</id>
             <modules>
                 <module>org.openwms.tms.domain</module>
                 <module>org.openwms.tms.domain.as</module>

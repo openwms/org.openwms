@@ -29,7 +29,7 @@ import org.openwms.common.domain.LocationGroup;
 import org.openwms.common.domain.LocationPK;
 import org.openwms.common.domain.TransportUnit;
 import org.openwms.common.domain.TransportUnitType;
-import org.openwms.common.test.AbstractJpaSpringContextTests;
+import org.openwms.core.test.AbstractJpaSpringContextTests;
 import org.openwms.tms.domain.order.TransportOrder;
 import org.openwms.tms.domain.values.TransportOrderState;
 

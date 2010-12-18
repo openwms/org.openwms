@@ -82,11 +82,6 @@
             <artifactId>org.springframework.security.web</artifactId>
             <scope>provided</scope>
         </dependency>
-        <dependency>
-            <groupId>org.springframework.security</groupId>
-            <artifactId>org.springframework.security.config</artifactId>
-            <scope>provided</scope>
-        </dependency>
 
         <!-- JEE API -->
         <dependency>

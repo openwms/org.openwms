@@ -35,21 +35,14 @@
     <packaging>pom</packaging>
     <name>OpenWMS.org Application</name>
     <properties>
-        <moduleDir>.</moduleDir>
+        <moduleDir>..</moduleDir>
+        <bundle.version>0.0.1.SNAPSHOT</bundle.version>
         <core.version>0.0.1-SNAPSHOT</core.version>
+        <common.version>0.0.1-SNAPSHOT</common.version>
+        <tms.version>0.0.1-SNAPSHOT</tms.version>
     </properties>
 
     <distributionManagement>
-        <repository>
-            <id>${distribution.repo.serverId}</id>
-            <name>OpenWMS.org Release Repository</name>
-            <url>${distribution.repo.serverProtocol}//${distribution.repo.serverUrl.rootPath}</url>
-        </repository>
-        <snapshotRepository>
-            <id>${distribution.repo.serverId}</id>
-            <name>OpenWMS.org Snapshot Repository</name>
-            <url>${distribution.repo.serverProtocol}//${distribution.repo.snapshot.serverUrl.rootPath}</url>
-        </snapshotRepository>
         <site>
             <id>${distribution.serverId}</id>
             <name>OpenWMS.org WebSite</name>
@@ -62,6 +55,18 @@
         <developerConnection>scm:svn:https://openwms2005.svn.sourceforge.net/svnroot/openwms2005/org.openwms/trunk/app</developerConnection>
         <url>http://openwms2005.svn.sourceforge.net/viewvc/openwms2005/org.openwms/trunk/app</url>
     </scm>
+
+    <profiles>
+        <profile>
+            <id>all</id>
+            <modules>
+                <module>org.openwms.app.par</module>
+                <module>org.openwms.app.plan</module>
+                <module>org.openwms.client.flex.app</module>
+                <module>org.openwms.client.flex.wrapper</module>
+            </modules>
+        </profile>
+    </profiles>
 
 	<dependencyManagement>
 	    <dependencies>
@@ -92,17 +97,4 @@
 	    </dependencies>
 	</dependencyManagement>
 	
-    <profiles>
-        <profile>
-            <id>all</id>
-            <modules>
-                <module>org.openwms.app.par</module>
-                <module>org.openwms.app.plan</module>
-                <module>org.openwms.client.flex.app</module>
-                <module>org.openwms.client.flex.lib</module>
-                <module>org.openwms.client.flex.wrapper</module>
-            </modules>
-        </profile>
-    </profiles>
-
 </project>

@@ -26,13 +26,15 @@
     xsi:schemaLocation="http://www.springframework.org/schema/osgi http://www.springframework.org/schema/osgi/spring-osgi-1.2.xsd
         http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">
 
-	<osgi:reference id="locationGroupService" interface="org.openwms.common.service.LocationGroupService" />
-	<osgi:reference id="locationService" interface="org.openwms.common.service.LocationService" />
-	<osgi:reference id="userService" interface="org.openwms.common.service.management.UserService" />
-	<osgi:reference id="transportUnitService" interface="org.openwms.common.service.TransportUnitService" />
-    <osgi:reference id="moduleManagementService" interface="org.openwms.common.service.ModuleManagementService" />
-    <osgi:reference id="transportService" interface="org.openwms.tms.service.TransportOrderService" />
+    <osgi:reference id="userService" interface="org.openwms.core.service.management.UserService" />
+    <osgi:reference id="moduleManagementService" interface="org.openwms.core.service.ModuleManagementService" />
     <osgi:reference id="userDetailsService" interface="org.springframework.security.core.userdetails.UserDetailsService" />
-    <osgi:reference id="configurationService" interface="org.openwms.common.service.ConfigurationService" />
+    <osgi:reference id="configurationService" interface="org.openwms.core.service.ConfigurationService" />
+
+	<osgi:reference id="locationGroupService" interface="org.openwms.common.service.LocationGroupService" cardinality="0..1" />
+	<osgi:reference id="locationService" interface="org.openwms.common.service.LocationService" cardinality="0..1" />
+	<osgi:reference id="transportUnitService" interface="org.openwms.common.service.TransportUnitService" cardinality="0..1" />
+
+    <osgi:reference id="transportService" interface="org.openwms.tms.service.TransportOrderService" />
     
 </beans>

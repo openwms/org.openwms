@@ -26,14 +26,14 @@
 	<modelVersion>4.0.0</modelVersion>
 	<parent>
 		<groupId>org.openwms</groupId>
-		<artifactId>org.openwms</artifactId>
+		<artifactId>org.openwms.tms</artifactId>
 		<version>0.0.1-SNAPSHOT</version>
 	</parent>
 	<artifactId>org.openwms.tms.domain.as</artifactId>
 	<packaging>swc</packaging>
 	<name>${project.artifactId}</name>
 	<properties>
-		<moduleDir>..</moduleDir>
+		<moduleDir>../..</moduleDir>
 		<property.org.graniteds-core.version>1.2.0_SP1</property.org.graniteds-core.version>
 	</properties>
 	<build>
@@ -87,8 +87,14 @@
 					</dependency>
                     <dependency>
                         <groupId>${project.groupId}</groupId>
+                        <artifactId>org.openwms.core.domain.as</artifactId>
+                        <version>${core.version}</version>
+                        <type>swc</type>
+                    </dependency>
+                    <dependency>
+                        <groupId>${project.groupId}</groupId>
                         <artifactId>org.openwms.common.domain.as</artifactId>
-                        <version>${project.version}</version>
+                        <version>${common.version}</version>
                         <type>swc</type>
                     </dependency>
 				</dependencies>
@@ -194,14 +200,29 @@
 	</pluginRepositories>
 
 	<dependencies>
-		<dependency>
-			<groupId>${project.groupId}</groupId>
-			<artifactId>org.openwms.common.domain</artifactId>
+        <dependency>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>org.openwms.core.domain</artifactId>
+            <version>${core.version}</version>
             <scope>provided</scope>
-		</dependency>
+        </dependency>
+        <dependency>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>org.openwms.core.domain.as</artifactId>
+            <version>${core.version}</version>
+            <scope>internal</scope>
+            <type>swc</type>
+        </dependency>
+        <dependency>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>org.openwms.common.domain</artifactId>
+            <version>${common.version}</version>
+            <scope>provided</scope>
+        </dependency>
         <dependency>
             <groupId>${project.groupId}</groupId>
             <artifactId>org.openwms.common.domain.as</artifactId>
+            <version>${common.version}</version>
             <scope>internal</scope>
             <type>swc</type>
         </dependency>

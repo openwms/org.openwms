@@ -33,7 +33,7 @@
     <packaging>pom</packaging>
     <name>${project.artifactId}</name>
     <properties>
-        <moduleDir>..</moduleDir>
+        <moduleDir>../..</moduleDir>
         <openwms.configuration.version>0.0.1-SNAPSHOT</openwms.configuration.version>
     </properties>
     <build>
@@ -169,22 +169,16 @@
             <artifactId>org.springframework.security.core</artifactId>
             <scope>provided</scope>
         </dependency>
-        <dependency>
-            <groupId>org.springframework.security</groupId>
-            <artifactId>org.springframework.security.config</artifactId>
-            <scope>provided</scope>
-        </dependency>
-
-        <!-- Project Core dependencies -->
+        <!-- Project CORE dependencies -->
         <dependency>
             <groupId>${project.groupId}</groupId>
             <artifactId>org.openwms.core.util</artifactId>
-            <version>${project.version}</version>
+            <version>${core.version}</version>
         </dependency>
         <dependency>
             <groupId>${project.groupId}</groupId>
             <artifactId>org.openwms.core.domain</artifactId>
-            <version>${project.version}</version>
+            <version>${core.version}</version>
         </dependency>
         <dependency>
             <groupId>${project.groupId}</groupId>
@@ -196,64 +190,95 @@
         <dependency>
             <groupId>${project.groupId}</groupId>
             <artifactId>org.openwms.core.infrastructure.postgres</artifactId>
-            <version>${project.version}</version>
+            <version>${core.version}</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>${project.groupId}</groupId>
             <artifactId>org.openwms.core.integration</artifactId>
-            <version>${project.version}</version>
+            <version>${core.version}</version>
         </dependency>
         <dependency>
             <groupId>${project.groupId}</groupId>
             <artifactId>org.openwms.core.integration.hibernate</artifactId>
-            <version>${project.version}</version>
+            <version>${core.version}</version>
         </dependency>
         <dependency>
             <groupId>${project.groupId}</groupId>
             <artifactId>org.openwms.core.integration.jpa</artifactId>
-            <version>${project.version}</version>
+            <version>${core.version}</version>
         </dependency>
         <dependency>
             <groupId>${project.groupId}</groupId>
             <artifactId>org.openwms.core.service.api</artifactId>
-            <version>${project.version}</version>
+            <version>${core.version}</version>
         </dependency>
         <dependency>
             <groupId>${project.groupId}</groupId>
             <artifactId>org.openwms.core.service.spring</artifactId>
-            <version>${project.version}</version>
+            <version>${core.version}</version>
+        </dependency>
+        <!-- Project COMMON dependencies -->
+        <dependency>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>org.openwms.common.util</artifactId>
+            <version>${common.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>org.openwms.common.domain</artifactId>
+            <version>${common.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>org.openwms.common.integration</artifactId>
+            <version>${common.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>org.openwms.common.integration.jpa</artifactId>
+            <version>${common.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>org.openwms.common.service.api</artifactId>
+            <version>${common.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>org.openwms.common.service.spring</artifactId>
+            <version>${common.version}</version>
         </dependency>
         <!-- Project TMS dependencies -->
         <dependency>
             <groupId>${project.groupId}</groupId>
             <artifactId>org.openwms.tms.util</artifactId>
-            <version>${project.version}</version>
+            <version>${tms.version}</version>
         </dependency>
         <dependency>
             <groupId>${project.groupId}</groupId>
             <artifactId>org.openwms.tms.domain</artifactId>
-            <version>${project.version}</version>
+            <version>${tms.version}</version>
         </dependency>
         <dependency>
             <groupId>${project.groupId}</groupId>
             <artifactId>org.openwms.tms.integration</artifactId>
-            <version>${project.version}</version>
+            <version>${tms.version}</version>
         </dependency>
         <dependency>
             <groupId>${project.groupId}</groupId>
             <artifactId>org.openwms.tms.integration.jpa</artifactId>
-            <version>${project.version}</version>
+            <version>${tms.version}</version>
         </dependency>
         <dependency>
             <groupId>${project.groupId}</groupId>
             <artifactId>org.openwms.tms.service.api</artifactId>
-            <version>${project.version}</version>
+            <version>${tms.version}</version>
         </dependency>
         <dependency>
             <groupId>${project.groupId}</groupId>
             <artifactId>org.openwms.tms.service.spring</artifactId>
-            <version>${project.version}</version>
+            <version>${tms.version}</version>
         </dependency>
         <!-- Project client dependencies -->
         <dependency>
@@ -282,6 +307,11 @@
         <dependency>
             <groupId>org.apache.commons</groupId>
             <artifactId>com.springsource.org.apache.commons.dbcp</artifactId>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>com.springsource.org.apache.commons.lang</artifactId>
             <scope>provided</scope>
         </dependency>
         <dependency>

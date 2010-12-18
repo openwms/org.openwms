@@ -26,11 +26,16 @@
         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:schemaLocation="http://www.springsource.org/schema/dm-server/plan 
                             http://www.springsource.org/schema/dm-server/plan/springsource-dm-server-plan.xsd">
-    <artifact type="configuration" name="org.openwms.common.infrastructure.configuration-${openwms.configuration.version}" version="0"/>
-    <artifact type="bundle" name="org.openwms.common.infrastructure.postgres" version="[0.0.1.SNAPSHOT,1.0)"/>
+    <artifact type="configuration" name="org.openwms.core.infrastructure.configuration-0.0.1-SNAPSHOT" version="0"/>
+    <artifact type="bundle" name="org.openwms.core.infrastructure.postgres" version="[0.0.1.SNAPSHOT,1.0)"/>
+    <artifact type="bundle" name="org.openwms.core.domain" version="[0.0.1.SNAPSHOT,1.0)"/>
     <artifact type="bundle" name="org.openwms.common.domain" version="[0.0.1.SNAPSHOT,1.0)"/>
     <artifact type="bundle" name="org.openwms.tms.domain" version="[0.0.1.SNAPSHOT,1.0)"/>
-    <artifact type="bundle" name="org.openwms.common.integration.hibernate" version="[0.0.1.SNAPSHOT,1.0)"/>
+    <artifact type="bundle" name="org.openwms.core.integration.hibernate" version="[0.0.1.SNAPSHOT,1.0)"/>
+    <artifact type="bundle" name="org.openwms.core.integration" version="[0.0.1.SNAPSHOT,1.0)"/>
+    <artifact type="bundle" name="org.openwms.core.integration.jpa" version="[0.0.1.SNAPSHOT,1.0)"/>
+    <artifact type="bundle" name="org.openwms.core.service.api" version="[0.0.1.SNAPSHOT,1.0)"/>
+    <artifact type="bundle" name="org.openwms.core.service.spring" version="[0.0.1.SNAPSHOT,1.0)"/>
     <artifact type="bundle" name="org.openwms.common.integration" version="[0.0.1.SNAPSHOT,1.0)"/>
     <artifact type="bundle" name="org.openwms.common.integration.jpa" version="[0.0.1.SNAPSHOT,1.0)"/>
     <artifact type="bundle" name="org.openwms.common.service.api" version="[0.0.1.SNAPSHOT,1.0)"/>

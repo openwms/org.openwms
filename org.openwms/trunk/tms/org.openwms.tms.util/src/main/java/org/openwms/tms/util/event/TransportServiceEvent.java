@@ -22,16 +22,15 @@ package org.openwms.tms.util.event;
 
 import java.io.Serializable;
 
-import org.openwms.common.util.event.RootApplicationEvent;
+import org.springframework.context.ApplicationEvent;
 
 /**
- * A RootApplicationEvent.
+ * A TransportServiceEvent.
  * 
  * @author <a href="mailto:russelltina@users.sourceforge.net">Tina Russell</a>
  * @version $Revision$
- * 
  */
-public class TransportServiceEvent extends RootApplicationEvent implements Serializable {
+public class TransportServiceEvent extends ApplicationEvent implements Serializable {
 
     public enum TYPE {
 
@@ -48,9 +47,6 @@ public class TransportServiceEvent extends RootApplicationEvent implements Seria
 
     private TYPE type;
 
-    /**
-     * The serialVersionUID
-     */
     private static final long serialVersionUID = -2454660395280026756L;
 
     /**
