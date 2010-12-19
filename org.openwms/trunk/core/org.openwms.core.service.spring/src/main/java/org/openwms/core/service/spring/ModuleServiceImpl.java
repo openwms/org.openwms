@@ -33,7 +33,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 /**
- * A ModuleManagementImpl is a Spring powered transactional service using a
+ * A ModuleServiceImpl is a Spring powered transactional service using a
  * ModuleDao to perform database actions.
  * 
  * @author <a href="mailto:openwms@googlemail.com">Heiko Scherrer</a>
@@ -42,7 +42,7 @@ import org.springframework.transaction.annotation.Transactional;
  */
 @Service
 @Transactional
-public class ModuleManagementImpl extends EntityServiceImpl<Module, Long> implements ModuleService<Module> {
+public class ModuleServiceImpl extends EntityServiceImpl<Module, Long> implements ModuleService<Module> {
 
     @Autowired
     protected ModuleDao dao;
