@@ -35,7 +35,6 @@ package org.openwms.web.flex.client.business {
     /**
      * A RoleDelegate.
      *
-     * @author <a href="mailto:russelltina@users.sourceforge.net">Tina Russell</a>
      * @version $Revision$
      */
     [Name("roleController")]
@@ -52,50 +51,63 @@ package org.openwms.web.flex.client.business {
         [In]
         public var modelLocator : ModelLocator;
 
-        public function RoleDelegate() : void {
-        }
+        public function RoleDelegate() : void { }
 
+        /**
+         * Fetch a list of all roles from the service.
+         */
         [Observer("LOAD_ALL_ROLES")]
         [Observer("ROLE_ADDED")]
         [Observer("ROLE_SAVED")]
         public function getRoles() : void {
-            tideContext.userService.findAllRoles(onRolesLoaded, onFault);
+            tideContext.roleService.findAll(onRolesLoaded, onFault);
         }
-
         private function onRolesLoaded(event : TideResultEvent) : void {
             modelLocator.allRoles = event.result as ArrayCollection;
         }
 
+        /**
+         * Save a new Role.
+         *
+         * @param event The raised RoleEvent that holds the new Role within the data property.
+         */
         [Observer("ADD_ROLE")]
         public function addRole(event : RoleEvent) : void {
             if (event.data is Role) {
-                tideContext.userService.saveRole(event.data as Role, onRoleAdded, onFault);
+                tideContext.roleService.save(event.data as Role, onRoleAdded, onFault);
             }
         }
-
         private function onRoleAdded(event : TideResultEvent) : void {
             dispatchEvent(new RoleEvent(RoleEvent.ROLE_ADDED));
         }
 
+        /**
+         * Save an existing Role.
+         *
+         * @param event The raised RoleEvent that holds the Role within the data property.
+         */
         [Observer("SAVE_ROLE")]
         public function saveRole(event : RoleEvent) : void {
             if (event.data is Role) {
-                tideContext.userService.saveRole(event.data as Role, onRoleSaved, onFault);
+                tideContext.roleService.save(event.data as Role, onRoleSaved, onFault);
             }
         }
-
         private function onRoleSaved(event : TideResultEvent) : void {
             dispatchEvent(new RoleEvent(RoleEvent.LOAD_ALL_ROLES));
             dispatchEvent(new RoleEvent(RoleEvent.ROLE_SAVED));
         }
 
+        /**
+         * Delete a Role.
+         *
+         * @param event The raised RoleEvent that holds an ArrayCollection of Roles to delete within the data property.
+         */
         [Observer("DELETE_ROLE")]
         public function deleteRoles(event : RoleEvent) : void {
             if (event.data != null) {
-                tideContext.userService.removeRoles(event.data as ArrayCollection, onRoleDeleted, onFault);
+                tideContext.roleService.remove(event.data as ArrayCollection, onRoleDeleted, onFault);
             }
         }
-
         private function onRoleDeleted(event : TideResultEvent) : void {
             dispatchEvent(new RoleEvent(RoleEvent.LOAD_ALL_ROLES));
         }
@@ -104,7 +116,6 @@ package org.openwms.web.flex.client.business {
             trace("Error executing operation on Role service:" + event.fault);
             logger.error("ERROR accessing Role : " + event.fault);
             Alert.show("Error executing operation on Role service");
-            dispatchEvent(new RoleEvent(RoleEvent.LOAD_ALL_ROLES));
         }
     }
 }

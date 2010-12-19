@@ -44,13 +44,18 @@
         showBusyCursor="true"/>
 
     <granite:SecureRemoteObject
-        id="moduleManagementService"
-        destination="moduleManagementServiceRemote"
+        id="moduleService"
+        destination="moduleServiceRemote"
         showBusyCursor="true"/>
 
     <granite:SecureRemoteObject
         id="userService"
         destination="userServiceRemote"
+        showBusyCursor="true"/>
+
+    <granite:SecureRemoteObject
+        id="roleService"
+        destination="roleServiceRemote"
         showBusyCursor="true"/>
 
     <granite:SecureRemoteObject

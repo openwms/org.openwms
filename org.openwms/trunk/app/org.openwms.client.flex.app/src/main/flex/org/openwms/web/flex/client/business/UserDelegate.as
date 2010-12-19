@@ -46,8 +46,7 @@ package org.openwms.web.flex.client.business {
         [In]
         public var modelLocator : ModelLocator;
 
-        public function UserDelegate() : void {
-        }
+        public function UserDelegate() : void { }
 
         /**
          * Fetch a list of all users from the service.
@@ -56,7 +55,6 @@ package org.openwms.web.flex.client.business {
         public function getUsers() : void {
             tideContext.userService.findAll(onUsersLoaded, onFault);
         }
-
         private function onUsersLoaded(event : TideResultEvent) : void {
             modelLocator.allUsers = event.result as ArrayCollection;
             if (modelLocator.allUsers.length > 0) {
@@ -75,7 +73,6 @@ package org.openwms.web.flex.client.business {
         public function addUser() : void {
             tideContext.userService.getTemplate("PSEUDO", onUserAdded, onFault);
         }
-
         private function onUserAdded(event : TideResultEvent) : void {
             var user : User = User(event.result);
             user.username = "";
@@ -89,7 +86,6 @@ package org.openwms.web.flex.client.business {
         public function saveUser() : void {
             tideContext.userService.save(modelLocator.selectedUser, onUserSaved, onFault);
         }
-
         private function onUserSaved(event : TideResultEvent) : void {
             dispatchEvent(new UserEvent(UserEvent.LOAD_ALL_USERS));
         }
@@ -130,9 +126,8 @@ package org.openwms.web.flex.client.business {
                 tideContext.userService.changeUserPassword(uPassword, onPasswordChanged, onFault);
             }
         }
-
         private function onPasswordChanged(event : TideResultEvent) : void {
-            trace("Users has changed password");
+            trace("User password has been changed");
         }
 
         private function onFault(event : TideFaultEvent) : void {
