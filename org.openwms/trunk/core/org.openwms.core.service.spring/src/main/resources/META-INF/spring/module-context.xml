@@ -38,12 +38,13 @@
 
 	<bean id="userService" class="org.openwms.core.service.spring.UserServiceImpl" />
 
-    <bean id="moduleService" class="org.openwms.core.service.spring.ModuleManagementImpl">
+    <bean id="roleService" class="org.openwms.core.service.spring.RoleServiceImpl" />
+
+    <bean id="moduleService" class="org.openwms.core.service.spring.ModuleServiceImpl">
         <property name="dao" ref="moduleDao" />
     </bean>
 
-    <bean id="configurationService" class="org.openwms.core.service.spring.ConfigurationServiceImpl">
-    </bean>
+    <bean id="configurationService" class="org.openwms.core.service.spring.ConfigurationServiceImpl" />
     
     <bean id="userDetailsService" class="org.openwms.core.service.spring.security.SecurityContextUserServiceImpl">
         <property name="systemUser" value="${system.user}" />
