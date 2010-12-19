@@ -33,14 +33,31 @@ import org.openwms.core.domain.Module;
  * @version $Revision$
  * @see 0.1
  */
-public interface ModuleService<T extends Module> extends EntityService<Module> {
+public interface ModuleService {
 
     /**
      * Return a list of all persisted modules.
      * 
-     * @return A list of modules.
+     * @return A list of modules or an empty list when no Modules exist
      */
-    List<Module> getModules();
+    List<Module> findAll();
+
+    /**
+     * Save a Module.
+     * 
+     * @param module
+     *            Module instance to be saved
+     * @return The saved Module instance
+     */
+    Module save(Module module);
+
+    /**
+     * Removes a persistent Module instance.
+     * 
+     * @param module
+     *            Module instance to be removed
+     */
+    void remove(Module module);
 
     /**
      * Force a login. Call this method and try to access the security filter
@@ -54,7 +71,7 @@ public interface ModuleService<T extends Module> extends EntityService<Module> {
      * before.
      * 
      * @param modules
-     *            The list of modules to modify
+     *            The list of modules to be modified
      */
     void saveStartupOrder(List<Module> modules);
 
