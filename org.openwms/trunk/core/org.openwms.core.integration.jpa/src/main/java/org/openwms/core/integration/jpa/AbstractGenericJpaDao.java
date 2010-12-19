@@ -203,7 +203,7 @@ public abstract class AbstractGenericJpaDao<T extends AbstractEntity, ID extends
     @Transactional
     public void persist(T entity) {
         beforeUpdate(entity);
-        em.persist(entity);
+        em.persist(em.merge(entity));
     }
 
     /**
@@ -215,8 +215,8 @@ public abstract class AbstractGenericJpaDao<T extends AbstractEntity, ID extends
     protected abstract String getFindAllQuery();
 
     /**
-     * Returns the name of the <code>NamedQuery</code> to find an Entity by
-     * the business key.
+     * Returns the name of the <code>NamedQuery</code> to find an Entity by the
+     * business key.
      * 
      * @return Name of the query
      */

@@ -31,8 +31,8 @@
     <osgi:reference id="entityManagerFactory" interface="javax.persistence.EntityManagerFactory" />
 
     <!-- exports -->
-    <osgi:service ref="userDao" interface="org.openwms.core.integration.system.usermanagement.UserDao"/>
-    <osgi:service ref="roleDao" interface="org.openwms.core.integration.system.usermanagement.RoleDao"/>
+    <osgi:service ref="userDao" interface="org.openwms.core.integration.UserDao"/>
+    <osgi:service ref="roleDao" interface="org.openwms.core.integration.RoleDao"/>
     <osgi:service ref="moduleDao" interface="org.openwms.core.integration.ModuleDao"/>
 
 </beans>
