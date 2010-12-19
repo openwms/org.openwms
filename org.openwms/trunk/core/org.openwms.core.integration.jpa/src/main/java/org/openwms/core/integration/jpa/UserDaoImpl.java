@@ -28,7 +28,7 @@ import org.openwms.core.domain.system.usermanagement.Role;
 import org.openwms.core.domain.system.usermanagement.SystemUser;
 import org.openwms.core.domain.system.usermanagement.User;
 import org.openwms.core.domain.system.usermanagement.UserPassword;
-import org.openwms.core.integration.system.usermanagement.UserDao;
+import org.openwms.core.integration.UserDao;
 import org.springframework.stereotype.Repository;
 
 /**
@@ -38,7 +38,7 @@ import org.springframework.stereotype.Repository;
  * @version $Revision$
  * @since 0.1
  * @see org.openwms.core.integration.jpa.AbstractGenericJpaDao
- * @see org.openwms.core.integration.system.usermanagement.UserDao
+ * @see org.openwms.core.integration.UserDao
  */
 @Repository
 public class UserDaoImpl extends AbstractGenericJpaDao<User, Long> implements UserDao {

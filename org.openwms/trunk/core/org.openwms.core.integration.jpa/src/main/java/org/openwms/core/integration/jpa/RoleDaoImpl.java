@@ -21,7 +21,7 @@
 package org.openwms.core.integration.jpa;
 
 import org.openwms.core.domain.system.usermanagement.Role;
-import org.openwms.core.integration.system.usermanagement.RoleDao;
+import org.openwms.core.integration.RoleDao;
 import org.springframework.stereotype.Repository;
 
 /**
