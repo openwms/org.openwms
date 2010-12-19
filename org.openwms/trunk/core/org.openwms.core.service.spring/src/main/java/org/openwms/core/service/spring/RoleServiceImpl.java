@@ -23,7 +23,7 @@ package org.openwms.core.service.spring;
 import java.util.List;
 
 import org.openwms.core.domain.system.usermanagement.Role;
-import org.openwms.core.integration.system.usermanagement.RoleDao;
+import org.openwms.core.integration.RoleDao;
 import org.openwms.core.service.RoleService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
