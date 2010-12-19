@@ -36,11 +36,9 @@
 	<context:annotation-config />
     <tx:annotation-driven />
 
-	<bean id="userService" class="org.openwms.core.service.spring.management.UserServiceImpl">
-		<property name="dao" ref="userDao" />
-	</bean>
+	<bean id="userService" class="org.openwms.core.service.spring.UserServiceImpl" />
 
-    <bean id="moduleManagementService" class="org.openwms.core.service.spring.ModuleManagementImpl">
+    <bean id="moduleService" class="org.openwms.core.service.spring.ModuleManagementImpl">
         <property name="dao" ref="moduleDao" />
     </bean>
 

@@ -33,11 +33,11 @@
 	<osgi:reference id="moduleDao" interface="org.openwms.core.integration.ModuleDao" />
     
     <!-- Helpers and delegates -->
-    <osgi:reference id="onRemovalListener" interface="org.openwms.core.service.OnRemovalListener" cardinality="0..1" />
+    <osgi:reference id="onRemovalListener" interface="org.openwms.core.service.listener.OnRemovalListener" cardinality="0..1" />
 
 	<!-- exports -->
-	<osgi:service ref="userService" interface="org.openwms.core.service.management.UserService" />
-    <osgi:service ref="moduleManagementService" interface="org.openwms.core.service.ModuleManagementService" />
+	<osgi:service ref="userService" interface="org.openwms.core.service.UserService" />
+    <osgi:service ref="moduleService" interface="org.openwms.core.service.ModuleService" />
     <osgi:service ref="userDetailsService" interface="org.springframework.security.core.userdetails.UserDetailsService" />
     <osgi:service ref="configurationService" interface="org.openwms.core.service.ConfigurationService" />
 
