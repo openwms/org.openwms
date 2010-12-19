@@ -28,8 +28,8 @@
 
 	<!-- imports -->
 	<osgi:reference id="transactionManager" interface="org.springframework.transaction.PlatformTransactionManager" />
-	<osgi:reference id="userDao" interface="org.openwms.core.integration.system.usermanagement.UserDao" />
-    <osgi:reference id="roleDao" interface="org.openwms.core.integration.system.usermanagement.RoleDao" />
+	<osgi:reference id="userDao" interface="org.openwms.core.integration.UserDao" />
+    <osgi:reference id="roleDao" interface="org.openwms.core.integration.RoleDao" />
 	<osgi:reference id="moduleDao" interface="org.openwms.core.integration.ModuleDao" />
     
     <!-- Helpers and delegates -->

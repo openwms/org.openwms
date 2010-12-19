@@ -26,7 +26,7 @@ import org.openwms.core.domain.system.usermanagement.User;
 import org.openwms.core.domain.system.usermanagement.UserDetails;
 import org.openwms.core.domain.system.usermanagement.UserPassword;
 import org.openwms.core.exception.InvalidPasswordException;
-import org.openwms.core.integration.system.usermanagement.UserDao;
+import org.openwms.core.integration.UserDao;
 import org.openwms.core.service.UserService;
 import org.openwms.core.service.exception.ServiceRuntimeException;
 import org.openwms.core.service.exception.UserNotFoundException;
