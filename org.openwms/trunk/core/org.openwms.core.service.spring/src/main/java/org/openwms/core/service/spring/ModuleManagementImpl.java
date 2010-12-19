@@ -26,10 +26,9 @@ import java.util.List;
 
 import org.openwms.core.domain.Module;
 import org.openwms.core.integration.ModuleDao;
-import org.openwms.core.service.ModuleManagementService;
+import org.openwms.core.service.ModuleService;
 import org.openwms.core.service.exception.ServiceRuntimeException;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -43,10 +42,9 @@ import org.springframework.transaction.annotation.Transactional;
  */
 @Service
 @Transactional
-public class ModuleManagementImpl extends EntityServiceImpl<Module, Long> implements ModuleManagementService<Module> {
+public class ModuleManagementImpl extends EntityServiceImpl<Module, Long> implements ModuleService<Module> {
 
     @Autowired
-    @Qualifier("moduleDao")
     protected ModuleDao dao;
 
     /**

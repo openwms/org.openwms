@@ -22,19 +22,18 @@ package org.openwms.core.service.spring.management;
 
 import java.util.List;
 
-import org.openwms.core.domain.system.usermanagement.Role;
 import org.openwms.core.domain.system.usermanagement.User;
 import org.openwms.core.domain.system.usermanagement.UserDetails;
 import org.openwms.core.domain.system.usermanagement.UserPassword;
 import org.openwms.core.exception.InvalidPasswordException;
-import org.openwms.core.integration.system.usermanagement.RoleDao;
 import org.openwms.core.integration.system.usermanagement.UserDao;
+import org.openwms.core.service.UserService;
 import org.openwms.core.service.exception.ServiceRuntimeException;
 import org.openwms.core.service.exception.UserNotFoundException;
-import org.openwms.core.service.management.UserService;
 import org.openwms.core.service.spring.EntityServiceImpl;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -47,24 +46,30 @@ import org.springframework.transaction.annotation.Transactional;
  * @author <a href="mailto:openwms@googlemail.com">Heiko Scherrer</a>
  * @version $Revision$
  * @since 0.1
- * @see org.openwms.core.service.spring.EntityServiceImpl
- * @see org.openwms.core.integration.system.usermanagement.RoleDao;
  * @see org.openwms.core.integration.system.usermanagement.UserDao;
  */
 @Service
 @Transactional
-public class UserServiceImpl extends EntityServiceImpl<User, Long> implements UserService<User> {
+public class UserServiceImpl implements UserService {
+
+    private Logger logger = LoggerFactory.getLogger(this.getClass());
 
     @Autowired
-    @Qualifier("userDao")
     protected UserDao dao;
-
-    @Autowired
-    @Qualifier("roleDao")
-    private RoleDao roleDao;
 
     /**
      * {@inheritDoc}
+     */
+    @Override
+    public List<User> findAll() {
+        return dao.findAll();
+    }
+
+    /**
+     * {@inheritDoc}
+     * 
+     * @throws UserNotFoundException
+     *             when no User was found with this username.
      */
     @Override
     public void uploadImageFile(String username, byte[] image) {
@@ -81,6 +86,9 @@ public class UserServiceImpl extends EntityServiceImpl<User, Long> implements Us
 
     /**
      * {@inheritDoc}
+     * 
+     * @throws ServiceRuntimeException
+     *             when user is <code>null</code>
      */
     @Override
     public User save(User user) {
@@ -89,13 +97,16 @@ public class UserServiceImpl extends EntityServiceImpl<User, Long> implements Us
             throw new ServiceRuntimeException("The instance of the User to be removed is NULL");
         }
         if (user.isNew()) {
-            addEntity(user);
+            dao.persist(user);
         }
-        return super.save(user);
+        return dao.save(user);
     }
 
     /**
      * {@inheritDoc}
+     * 
+     * @throws ServiceRuntimeException
+     *             when user is <code>null</code>
      */
     @Override
     public void remove(User user) {
@@ -104,7 +115,7 @@ public class UserServiceImpl extends EntityServiceImpl<User, Long> implements Us
             throw new ServiceRuntimeException("The instance of the User to be remove is NULL");
         }
         if (user.isNew()) {
-            logger.warn("The User instance that shall be removed is not persist yet, no need to remove");
+            logger.warn("The User instance to be removed is not persist yet, no need to remove");
         } else {
             dao.remove(dao.findById(user.getId()));
         }
@@ -112,6 +123,8 @@ public class UserServiceImpl extends EntityServiceImpl<User, Long> implements Us
 
     /**
      * {@inheritDoc}
+     * 
+     * Marked as <code>readOnly</code> transactional method.
      */
     @Override
     @Transactional(readOnly = true)
@@ -121,40 +134,17 @@ public class UserServiceImpl extends EntityServiceImpl<User, Long> implements Us
 
     /**
      * {@inheritDoc}
-     */
-    @Override
-    public void removeRoles(List<Role> roles) {
-        for (Role r : roles) {
-            Role role = roleDao.findById(r.getId());
-            roleDao.remove(role);
-        }
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public Role saveRole(Role role) {
-        return roleDao.save(role);
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    @Transactional(readOnly = true)
-    public List<Role> findAllRoles() {
-        return roleDao.findAll();
-    }
-
-    /**
-     * {@inheritDoc}
+     * 
+     * @throws ServiceRuntimeException
+     *             when userPassword is <code>null</code>
+     * @throws UserNotFoundException
+     *             when no User exists
      */
     @Override
     public boolean changeUserPassword(UserPassword userPassword) {
-        if (userPassword.getPassword() == null || userPassword.getPassword().isEmpty()) {
-            logger.warn("Null or an empty String is not allowed for a new password");
-            throw new ServiceRuntimeException("Null or an empty String is not allowed for a new password");
+        if (userPassword == null) {
+            logger.warn("No userPassword set");
+            throw new ServiceRuntimeException("Error while changing the user password, new value was null");
         }
         User entity = dao.findByUniqueId(userPassword.getUser().getUsername());
         if (entity == null) {
@@ -164,6 +154,7 @@ public class UserServiceImpl extends EntityServiceImpl<User, Long> implements Us
             entity.setPassword(userPassword.getPassword());
             return true;
         } catch (InvalidPasswordException ipe) {
+            logger.info(ipe.getMessage());
             return false;
         }
     }
