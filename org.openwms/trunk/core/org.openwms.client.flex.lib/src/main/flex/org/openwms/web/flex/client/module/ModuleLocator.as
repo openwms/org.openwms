@@ -87,7 +87,7 @@ package org.openwms.web.flex.client.module {
         [Observer("LOAD_ALL_MODULES")]
         public function loadModulesFromService() : void {
         	trace("Loading all module definitions from the database");
-            tideContext.moduleManagementService.getModules(onModulesLoad, onFault);
+            tideContext.moduleService.findAll(onModulesLoad, onFault);
         }
 
         /**
@@ -111,7 +111,7 @@ package org.openwms.web.flex.client.module {
          */
         [Observer("SAVE_MODULE")]
         public function saveModule(event : ApplicationEvent) : void {
-            tideContext.moduleManagementService.save(event.data as Module, onModuleSaved, onFault);
+            tideContext.moduleService.save(event.data as Module, onModuleSaved, onFault);
         }
 
         /**
@@ -123,7 +123,7 @@ package org.openwms.web.flex.client.module {
         [Observer("DELETE_MODULE")]
         public function deleteModule(event : ApplicationEvent) : void {
             toRemove = event.data as Module;
-            tideContext.moduleManagementService.remove(event.data as Module, onModuleRemoved, onFault);
+            tideContext.moduleService.remove(event.data as Module, onModuleRemoved, onFault);
         }
         
         /**
@@ -135,7 +135,7 @@ package org.openwms.web.flex.client.module {
          */
         [Observer("SAVE_STARTUP_ORDERS")]
         public function saveStartupOrders(event : ApplicationEvent) : void {
-            tideContext.moduleManagementService.saveStartupOrder(event.data as ArrayCollection, onStartupOrdersSaved, onFault);
+            tideContext.moduleService.saveStartupOrder(event.data as ArrayCollection, onStartupOrdersSaved, onFault);
         }
 
         /**
@@ -501,7 +501,7 @@ package org.openwms.web.flex.client.module {
 
         private function onFault(event : TideFaultEvent) : void {
             trace("Error executing operation on ModuleManagement service:" + event.fault);
-            Alert.show("Error executing operation on ModuleManagement service");
+            Alert.show("Error executing operation on ModuleManagement service"+ event.fault);
         }
 
     }
