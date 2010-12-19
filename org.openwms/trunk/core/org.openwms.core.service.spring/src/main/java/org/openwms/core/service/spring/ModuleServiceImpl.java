@@ -28,6 +28,8 @@ import org.openwms.core.domain.Module;
 import org.openwms.core.integration.ModuleDao;
 import org.openwms.core.service.ModuleService;
 import org.openwms.core.service.exception.ServiceRuntimeException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -42,7 +44,9 @@ import org.springframework.transaction.annotation.Transactional;
  */
 @Service
 @Transactional
-public class ModuleServiceImpl extends EntityServiceImpl<Module, Long> implements ModuleService<Module> {
+public class ModuleServiceImpl implements ModuleService {
+
+    private Logger logger = LoggerFactory.getLogger(this.getClass());
 
     @Autowired
     protected ModuleDao dao;
@@ -54,7 +58,7 @@ public class ModuleServiceImpl extends EntityServiceImpl<Module, Long> implement
      */
     @Override
     @Transactional(readOnly = true)
-    public List<Module> getModules() {
+    public List<Module> findAll() {
         return dao.findAll();
     }
 
@@ -77,12 +81,19 @@ public class ModuleServiceImpl extends EntityServiceImpl<Module, Long> implement
      * It is expected that the list of modules is already pre-ordered in their
      * startupOrder. Each Module's startupOrder is synchronized with the
      * persistence storage. No other data is updated.
+     * 
+     * @throws ServiceRuntimeException
+     *             when modules is <code>null</code>
      */
     @Override
     public void saveStartupOrder(List<Module> modules) {
+        if (modules == null) {
+            throw new ServiceRuntimeException("List of modules to store the startupOrder for is null");
+        }
         for (Module module : modules) {
             Module toSave = dao.findById(module.getId());
             toSave.setStartupOrder(module.getStartupOrder());
+            dao.save(toSave);
         }
     }
 
@@ -93,25 +104,29 @@ public class ModuleServiceImpl extends EntityServiceImpl<Module, Long> implement
      * transient instance the method returns with no further action.
      * 
      * @throws ServiceRuntimeException
-     *             when the Module to remove is <code>null</code>
+     *             when the Module was not found or is <code>null</code>
      */
     @Override
-    public void remove(Module entity) {
-        if (entity.isNew()) {
+    public void remove(Module module) {
+        if (module == null) {
+            throw new ServiceRuntimeException("Module to be removed is null");
+        }
+        if (module.isNew()) {
             logger.info("Do not remove a transient Module");
             return;
         }
-        Module rem = dao.findById(entity.getId());
+        Module rem = dao.findById(module.getId());
         if (rem == null) {
             throw new ServiceRuntimeException("Module to be removed not found, probably it was removed before");
         }
-        super.remove(rem);
+        dao.remove(rem);
     }
 
     /**
      * {@inheritDoc}
      * 
-     * Additionally the startup order is calculated for new modules.
+     * Additionally to save, the startup order is re-calculated for a new
+     * Module.
      */
     @Override
     public Module save(Module entity) {
@@ -127,6 +142,6 @@ public class ModuleServiceImpl extends EntityServiceImpl<Module, Long> implement
                 entity.setStartupOrder(all.get(all.size() - 1).getStartupOrder() + 1);
             }
         }
-        return super.save(entity);
+        return dao.save(entity);
     }
 }
