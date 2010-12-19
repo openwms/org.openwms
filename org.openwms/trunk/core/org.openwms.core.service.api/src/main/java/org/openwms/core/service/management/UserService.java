@@ -20,6 +20,8 @@
  */
 package org.openwms.core.service.management;
 
+import java.util.List;
+
 import org.openwms.core.domain.system.usermanagement.Role;
 import org.openwms.core.domain.system.usermanagement.User;
 import org.openwms.core.domain.system.usermanagement.UserPassword;
@@ -29,60 +31,63 @@ import org.openwms.core.service.EntityService;
  * An UserService extends the {@link EntityService} interface about some useful
  * methods regarding the general handling of {@link User}s and {@link Role}s.
  * 
- * @param <T>
- *            Type of User
  * @author <a href="mailto:openwms@googlemail.com">Heiko Scherrer</a>
  * @version $Revision$
  * @since 0.1
- * @see org.openwms.core.service.EntityService
  */
-public interface UserService<T extends User> extends EntityService<T> {
-
-    /**
-     * Call this method to store an image for an {@link User}.
-     * 
-     * @param username
-     *            Username of the User
-     * @param image
-     *            Image as byte[]
-     */
-    void uploadImageFile(String username, byte[] image);
-
-    /**
-     * Return an transient {@link User} Entity class, serving as a template.
-     * 
-     * @param username
-     *            Username of the {@link User}
-     * @return An empty template {@link User} instance
-     */
-    T getTemplate(String username);
-
-    /**
-     * Save the given {@link User} Entity or persist it when it is transient.
-     * 
-     * @param user
-     *            {@link User} Entity to persist
-     * @return Saved {@link User} Entity instance
-     */
-    @Override
-    T save(T user);
-
-    /**
-     * Remove {@link User} Entity from the persistence storage.
-     * 
-     * @param user
-     *            {@link User} Entity to be removed
-     */
-    @Override
-    void remove(T user);
+public interface UserService {
 
 /**
      * Change the current password of the {@link User}.
      * 
      * @param userPassword
      *            The new {@link UserPassword) to change
-     * @return <code>true</code> if the password could be changed
-     *         successfully, otherwise <code>false</code>.
+     * @return <code>true</code> if the password could be changed successfully.
+     *         <code>false</code> when the new password conflicts with the rules defined for passwords.
      */
     boolean changeUserPassword(UserPassword userPassword);
+
+    /**
+     * Find and return all {@link User}s.
+     * 
+     * @return A list of all {@link User}s
+     */
+    List<User> findAll();
+
+    /**
+     * Call this method to store an image for an {@link User}.
+     * 
+     * @param username
+     *            Username of the {@link User}
+     * @param image
+     *            Image to be saved as byte[]
+     */
+    void uploadImageFile(String username, byte[] image);
+
+    /**
+     * Return an transient {@link User} entity object, serving as a template.
+     * 
+     * @param username
+     *            Username of the {@link User}
+     * @return An empty template {@link User} instance
+     */
+    User getTemplate(String username);
+
+    /**
+     * Update the given {@link User} or persist it when it is transient.
+     * 
+     * @param user
+     *            {@link User} entity to persist
+     * @return Updated {@link User} entity instance
+     */
+    User save(User user);
+
+    /**
+     * Remove an {@link User} from the persistent storage.
+     * 
+     * @param user
+     *            {@link User} entity to be removed
+     */
+    void remove(User user);
+
 }
