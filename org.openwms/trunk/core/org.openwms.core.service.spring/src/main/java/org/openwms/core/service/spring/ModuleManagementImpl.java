@@ -34,7 +34,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 /**
- * A ModuleManagementImpl.
+ * A ModuleManagementImpl is a Spring powered transactional service using a
+ * ModuleDao to perform database actions.
  * 
  * @author <a href="mailto:openwms@googlemail.com">Heiko Scherrer</a>
  * @version $Revision: $
@@ -49,7 +50,9 @@ public class ModuleManagementImpl extends EntityServiceImpl<Module, Long> implem
     protected ModuleDao dao;
 
     /**
-     * @see org.openwms.core.service.ModuleManagementService#getModules()
+     * {@inheritDoc}
+     * 
+     * Marked as <code>readOnly</code> transactional method.
      */
     @Override
     @Transactional(readOnly = true)
@@ -58,7 +61,11 @@ public class ModuleManagementImpl extends EntityServiceImpl<Module, Long> implem
     }
 
     /**
-     * @see org.openwms.core.service.ModuleManagementService#login()
+     * {@inheritDoc}
+     * 
+     * Marked as <code>readOnly</code> transactional method. Only a trace
+     * message is written. This method is solely responsible to activate the
+     * security filter chain.
      */
     @Override
     @Transactional(readOnly = true)
@@ -67,7 +74,11 @@ public class ModuleManagementImpl extends EntityServiceImpl<Module, Long> implem
     }
 
     /**
-     * @see org.openwms.core.service.ModuleManagementService#saveStartupOrder(java.util.List)
+     * {@inheritDoc}
+     * 
+     * It is expected that the list of modules is already pre-ordered in their
+     * startupOrder. Each Module's startupOrder is synchronized with the
+     * persistence storage. No other data is updated.
      */
     @Override
     public void saveStartupOrder(List<Module> modules) {
@@ -80,7 +91,11 @@ public class ModuleManagementImpl extends EntityServiceImpl<Module, Long> implem
     /**
      * {@inheritDoc}
      * 
-     * @see org.openwms.core.service.spring.EntityServiceImpl#remove(org.openwms.core.domain.AbstractEntity)
+     * In this case a Module is been removed. But if the Module entity is a
+     * transient instance the method returns with no further action.
+     * 
+     * @throws ServiceRuntimeException
+     *             when the Module to remove is <code>null</code>
      */
     @Override
     public void remove(Module entity) {
@@ -99,8 +114,6 @@ public class ModuleManagementImpl extends EntityServiceImpl<Module, Long> implem
      * {@inheritDoc}
      * 
      * Additionally the startup order is calculated for new modules.
-     * 
-     * @see org.openwms.core.service.spring.EntityServiceImpl#save(org.openwms.core.domain.AbstractEntity)
      */
     @Override
     public Module save(Module entity) {

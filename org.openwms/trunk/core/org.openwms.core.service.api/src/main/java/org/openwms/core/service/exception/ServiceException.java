@@ -23,7 +23,7 @@ package org.openwms.core.service.exception;
 import java.io.Serializable;
 
 /**
- * A ServiceException a checked application exception.
+ * A ServiceException is a checked application exception.
  * 
  * @author <a href="mailto:openwms@googlemail.com">Heiko Scherrer</a>
  * @version $Revision$

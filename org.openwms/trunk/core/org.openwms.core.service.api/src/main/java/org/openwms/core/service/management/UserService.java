@@ -20,19 +20,17 @@
  */
 package org.openwms.core.service.management;
 
-import java.util.List;
-
 import org.openwms.core.domain.system.usermanagement.Role;
 import org.openwms.core.domain.system.usermanagement.User;
 import org.openwms.core.domain.system.usermanagement.UserPassword;
 import org.openwms.core.service.EntityService;
 
 /**
- * An UserService extends the {@link EntityService} interface about some
- * useful methods regarding the general handling with {@link User}s.
+ * An UserService extends the {@link EntityService} interface about some useful
+ * methods regarding the general handling of {@link User}s and {@link Role}s.
  * 
  * @param <T>
- *            A type of User
+ *            Type of User
  * @author <a href="mailto:openwms@googlemail.com">Heiko Scherrer</a>
  * @version $Revision$
  * @since 0.1
@@ -41,7 +39,7 @@ import org.openwms.core.service.EntityService;
 public interface UserService<T extends User> extends EntityService<T> {
 
     /**
-     * Call this method to store an image of an {@link User}.
+     * Call this method to store an image for an {@link User}.
      * 
      * @param username
      *            Username of the User
@@ -66,6 +64,7 @@ public interface UserService<T extends User> extends EntityService<T> {
      *            {@link User} Entity to persist
      * @return Saved {@link User} Entity instance
      */
+    @Override
     T save(T user);
 
     /**
@@ -74,33 +73,10 @@ public interface UserService<T extends User> extends EntityService<T> {
      * @param user
      *            {@link User} Entity to be removed
      */
+    @Override
     void remove(T user);
 
-    /**
-     * Return a List of all persisted Roles.
-     * 
-     * @return The List of Roles or <code>null</code> when no Roles exist.
-     */
-    List<Role> findAllRoles();
-
-    /**
-     * Save an already existed Role object and return the saved instance.
-     * 
-     * @param role
-     *            The Role to save.
-     * @return The saved Role.
-     */
-    Role saveRole(Role role);
-
-    /**
-     * Remove a List of Roles from the persistence layer.
-     * 
-     * @param roles
-     *            The List of Roles to remove.
-     */
-    void removeRoles(List<Role> roles);
-
-    /**
+/**
      * Change the current password of the {@link User}.
      * 
      * @param userPassword

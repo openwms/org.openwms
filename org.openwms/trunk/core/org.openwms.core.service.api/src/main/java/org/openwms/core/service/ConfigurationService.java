@@ -26,34 +26,36 @@ import org.openwms.core.domain.system.usermanagement.Preference;
 import org.openwms.core.domain.values.Unit;
 
 /**
- * A ConfigurationService.
+ * A ConfigurationService is responsible to handle all application properties.
+ * Whereby properties have particular defined scopes, e.g. some properties have
+ * a global scope which means Application Scope and some others are only valid
+ * for a certain Module.
  * 
  * @author <a href="mailto:russelltina@users.sourceforge.net">Tina Russell</a>
  * @version $Revision$
- * 
+ * @since 0.1
+ * @see org.openwms.core.domain.system.PropertyScope
  */
 public interface ConfigurationService<T extends Preference> extends EntityService<T> {
 
     /**
-     * FIXME [russelltina] Comment this
+     * Find and return all properties in Application Scope.
      * 
-     * @return
+     * @return a list of these properties
      */
     List<Preference> findApplicationProperties();
-
-    // methods for each module
-
-    /**
-     * Get all unit types supported by this module.
-     * 
-     * @return
-     */
-    List<? extends Unit> getAllUnits();
 
     /**
      * Find and return all properties belonging to this module.
      * 
-     * @return
+     * @return a list of these properties
      */
     List<Preference> findModuleProperties();
+
+    /**
+     * Get all unit types supported by this module.
+     * 
+     * @return A list of these units
+     */
+    List<? extends Unit> getAllUnits();
 }

@@ -39,12 +39,17 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 /**
- * An UserServiceImpl.
+ * An UserServiceImpl is the Spring supported transactional implementation of a
+ * general {@link UserService}. Currently it is responsible for Users and Roles
+ * and uses therefore a UserDao and a RoleDao for CRUD functionality. Extends
+ * the {@link EntityServiceImpl} for general functionality.
  * 
  * @author <a href="mailto:openwms@googlemail.com">Heiko Scherrer</a>
  * @version $Revision$
  * @since 0.1
  * @see org.openwms.core.service.spring.EntityServiceImpl
+ * @see org.openwms.core.integration.system.usermanagement.RoleDao;
+ * @see org.openwms.core.integration.system.usermanagement.UserDao;
  */
 @Service
 @Transactional

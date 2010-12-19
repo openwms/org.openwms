@@ -29,11 +29,8 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 /**
- * An UserWrapper.
- * <p>
- * Used as an adapter between openwms.org roles and grants and Springs
- * {@link GrantedAuthority} objects.
- * </p>
+ * An UserWrapper is used as an adapter between openwms.org roles and grants and
+ * Springs {@link GrantedAuthority} objects.
  * 
  * @author <a href="mailto:russelltina@users.sourceforge.net">Tina Russell</a>
  * @version $Revision$
@@ -48,7 +45,6 @@ public class UserWrapper implements UserDetails {
 
     /**
      * Create a new SecurityContextUserServiceImpl.UserWrapper.
-     * 
      */
     public UserWrapper(User user) {
         this.user = user;
