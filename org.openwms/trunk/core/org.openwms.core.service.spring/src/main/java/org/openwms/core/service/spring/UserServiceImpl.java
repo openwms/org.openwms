@@ -18,7 +18,7 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
-package org.openwms.core.service.spring.management;
+package org.openwms.core.service.spring;
 
 import java.util.List;
 
@@ -30,7 +30,6 @@ import org.openwms.core.integration.system.usermanagement.UserDao;
 import org.openwms.core.service.UserService;
 import org.openwms.core.service.exception.ServiceRuntimeException;
 import org.openwms.core.service.exception.UserNotFoundException;
-import org.openwms.core.service.spring.EntityServiceImpl;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
