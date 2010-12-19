@@ -23,7 +23,7 @@ package org.openwms.core.service.exception;
 import java.io.Serializable;
 
 /**
- * A ServiceRuntimeException an unchecked application exception.
+ * A ServiceRuntimeException is an unchecked application exception.
  * 
  * @author <a href="mailto:scherrer@users.sourceforge.net">Heiko Scherrer</a>
  * @version $Revision$

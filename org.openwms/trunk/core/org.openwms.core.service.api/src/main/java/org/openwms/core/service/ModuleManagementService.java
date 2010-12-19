@@ -25,7 +25,9 @@ import java.util.List;
 import org.openwms.core.domain.Module;
 
 /**
- * A ModuleManagementService offers some functionality for common module management tasks.
+ * A ModuleManagementService offers some functionality for common module
+ * management tasks. Handling modules is an essential functionality of the core
+ * openwms.org application.
  * 
  * @author <a href="mailto:openwms@googlemail.com">Heiko Scherrer</a>
  * @version $Revision$
@@ -34,9 +36,9 @@ import org.openwms.core.domain.Module;
 public interface ModuleManagementService<T extends Module> extends EntityService<Module> {
 
     /**
-     * Return a List of all persisted modules.
+     * Return a list of all persisted modules.
      * 
-     * @return A List of modules.
+     * @return A list of modules.
      */
     List<Module> getModules();
 

@@ -27,6 +27,7 @@ import java.util.List;
 import org.openwms.core.domain.AbstractEntity;
 import org.openwms.core.integration.GenericDao;
 import org.openwms.core.service.EntityService;
+import org.openwms.core.service.exception.ServiceRuntimeException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeansException;
@@ -36,27 +37,29 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 /**
- * An EntityServiceImpl.
+ * An EntityServiceImpl serves as a generic service that offers some basic CRUD
+ * functionality.
  * 
  * @param <T>
- *            Any serializable type, mostly an Entity class type
+ *            Any type of AbstractEntity.
  * @param <ID>
  *            The type of the Entity class' unique id
  * @author <a href="mailto:openwms@googlemail.com">Heiko Scherrer</a>
  * @version $Revision$
  * @since 0.1
+ * @see org.openwms.core.domain.AbstractEntity
  */
 @Service
 @Transactional
 public abstract class EntityServiceImpl<T extends AbstractEntity, ID extends Serializable> implements EntityService<T>,
         ApplicationContextAware {
 
+    private Class<T> persistentClass;
+
     /**
      * Generic Repository DAO.
      */
     protected GenericDao<T, ID> dao;
-
-    private Class<T> persistentClass;
 
     /**
      * Reference to the {@link ApplicationContext} instance.
@@ -114,17 +117,6 @@ public abstract class EntityServiceImpl<T extends AbstractEntity, ID extends Ser
      * {@inheritDoc}
      */
     @Override
-    @Transactional(readOnly = true)
-    public List<T> findAll(Class<T> clazz) {
-        resolveTypeClass();
-        dao.setPersistentClass(clazz);
-        return dao.findAll();
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
     public T save(T entity) {
         resolveTypeClass();
         dao.setPersistentClass(persistentClass);
@@ -148,9 +140,11 @@ public abstract class EntityServiceImpl<T extends AbstractEntity, ID extends Ser
     @Override
     public void addEntity(T newEntity) {
         // FIXME [scherrer] : All entities shall extend a superclass Entity with
-        // isNew()
-        // method, to check this here
+        // isNew() method, to check this here
         resolveTypeClass();
+        if (newEntity == null) {
+            throw new ServiceRuntimeException("Entity to persist is null! Type of entity class is " + persistentClass);
+        }
         dao.persist(newEntity);
     }
 }

@@ -29,7 +29,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 /**
- * A ConfigurationServiceImpl.
+ * A ConfigurationServiceImpl is the concrete implementation of a
+ * ConfigurationService.
  * 
  * @author <a href="mailto:openwms@googlemail.com">Heiko Scherrer</a>
  * @version $Revision$
@@ -41,25 +42,26 @@ public class ConfigurationServiceImpl extends EntityServiceImpl<Preference, Long
         ConfigurationService<Preference> {
 
     /**
-     * @see org.openwms.core.service.ConfigurationService#findApplicationProperties()
+     * {@inheritDoc}
      */
     @Override
     public List<Preference> findApplicationProperties() {
         return null;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public List<Preference> findModuleProperties() {
-        // TODO [scherrer] Auto-generated method stub
         return null;
     }
 
     /**
-     * @see org.openwms.core.service.ConfigurationService#getAllUnits()
+     * {@inheritDoc}
      */
     @Override
     public List<? extends Unit> getAllUnits() {
-        // TODO [scherrer] Auto-generated method stub
         return null;
     }
 }

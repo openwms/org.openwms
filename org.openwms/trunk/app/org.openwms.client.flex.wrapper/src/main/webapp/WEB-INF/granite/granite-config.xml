@@ -52,8 +52,10 @@
     
     <tide-components>
         <!-- List of component matchers, see 'Enabling components' section -->
+        <tide-component type="org\.openwms\.core\.service\..*"/>
+        <tide-component type="org\.openwms\.core\.service\.management\..*"/>
+        <tide-component type="org\.openwms\.core\.service\.spring\..*"/>
         <tide-component type="org\.openwms\.common\.service\..*"/>
-        <tide-component type="org\.openwms\.common\.service\.management\..*"/>
         <tide-component type="org\.openwms\.common\.service\.spring\..*"/>
         <tide-component type="org\.openwms\.tms\.service\..*"/>
         <tide-component type="org\.openwms\.tms\.service\.impl\..*"/>
