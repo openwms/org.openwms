@@ -18,14 +18,13 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
-package org.openwms.core.service.management;
+package org.openwms.core.service;
 
 import java.util.List;
 
 import org.openwms.core.domain.system.usermanagement.Role;
 import org.openwms.core.domain.system.usermanagement.User;
 import org.openwms.core.domain.system.usermanagement.UserPassword;
-import org.openwms.core.service.EntityService;
 
 /**
  * An UserService extends the {@link EntityService} interface about some useful
