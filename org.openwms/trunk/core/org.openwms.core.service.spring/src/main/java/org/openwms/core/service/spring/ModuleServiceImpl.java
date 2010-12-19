@@ -34,7 +34,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 /**
  * A ModuleServiceImpl is a Spring powered transactional service using a
- * ModuleDao to perform database actions.
+ * ModuleDao to perform database operations.
  * 
  * @author <a href="mailto:openwms@googlemail.com">Heiko Scherrer</a>
  * @version $Revision: $
