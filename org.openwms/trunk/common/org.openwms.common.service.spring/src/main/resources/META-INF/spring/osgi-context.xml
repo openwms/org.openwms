@@ -35,7 +35,7 @@
     <osgi:reference id="transportUnitTypeDao" interface="org.openwms.common.integration.TransportUnitTypeDao" />
     
     <!-- Helpers and delegates -->
-    <osgi:reference id="onRemovalListener" interface="org.openwms.core.service.OnRemovalListener" cardinality="0..1" />
+    <osgi:reference id="onRemovalListener" interface="org.openwms.core.service.listener.OnRemovalListener" cardinality="0..1" />
 
 	<!-- exports -->
 	<osgi:service ref="locationGroupService" interface="org.openwms.common.service.LocationGroupService" />

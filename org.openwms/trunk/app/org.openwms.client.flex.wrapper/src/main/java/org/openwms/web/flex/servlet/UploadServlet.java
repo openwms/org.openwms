@@ -36,7 +36,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.openwms.core.domain.system.usermanagement.User;
-import org.openwms.core.service.management.UserService;
+import org.openwms.core.service.UserService;
 import org.springframework.web.context.WebApplicationContext;
 import org.springframework.web.context.support.WebApplicationContextUtils;
 
@@ -91,9 +91,8 @@ public class UploadServlet extends HttpServlet {
      *             If the request for the POST could not be handled
      * @see javax.servlet.http.HttpServlet#doPost(javax.servlet.http.HttpServletRequest,
      *      javax.servlet.http.HttpServletResponse),
-     *      org.openwms.common.service.management.UserService
+     *      org.openwms.common.service.UserService
      */
-    @SuppressWarnings("unchecked")
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
 
@@ -104,7 +103,7 @@ public class UploadServlet extends HttpServlet {
         MultipartRequest parser = new ServletMultipartRequest(req, ".", MultipartRequest.MAX_READ_BYTES);
         WebApplicationContext context = WebApplicationContextUtils
                 .getRequiredWebApplicationContext(getServletContext());
-        UserService<User> userService = (UserService<User>) context.getBean("userService");
+        UserService userService = (UserService) context.getBean("userService");
         for (Enumeration e = parser.getFileParameterNames(); e.hasMoreElements();) {
             String name = (String) e.nextElement();
             if ("Filedata".equals(name)) {

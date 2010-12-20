@@ -37,6 +37,7 @@
 
 	<!-- exports -->
 	<osgi:service ref="userService" interface="org.openwms.core.service.UserService" />
+	<osgi:service ref="roleService" interface="org.openwms.core.service.RoleService" />
     <osgi:service ref="moduleService" interface="org.openwms.core.service.ModuleService" />
     <osgi:service ref="userDetailsService" interface="org.springframework.security.core.userdetails.UserDetailsService" />
     <osgi:service ref="configurationService" interface="org.openwms.core.service.ConfigurationService" />
