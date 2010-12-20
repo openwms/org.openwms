@@ -154,7 +154,6 @@
         <dependency>
             <groupId>org.springframework.security</groupId>
             <artifactId>org.springframework.security.config</artifactId>
-            <version>3.0.3.RELEASE</version>
             <scope>provided</scope>
         </dependency>
 

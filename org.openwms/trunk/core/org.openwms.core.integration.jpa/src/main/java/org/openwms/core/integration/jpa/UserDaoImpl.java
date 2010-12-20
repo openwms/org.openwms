@@ -107,6 +107,7 @@ public class UserDaoImpl extends AbstractGenericJpaDao<User, Long> implements Us
     @Override
     public void remove(User user) {
         if (isSuperUser(user)) {
+            logger.info("Not allowed to remove system user, return quietly");
             return;
         }
         for (Role role : user.getRoles()) {

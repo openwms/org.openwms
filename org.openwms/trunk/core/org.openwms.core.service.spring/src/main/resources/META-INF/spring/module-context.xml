@@ -40,9 +40,7 @@
 
     <bean id="roleService" class="org.openwms.core.service.spring.RoleServiceImpl" />
 
-    <bean id="moduleService" class="org.openwms.core.service.spring.ModuleServiceImpl">
-        <property name="dao" ref="moduleDao" />
-    </bean>
+    <bean id="moduleService" class="org.openwms.core.service.spring.ModuleServiceImpl" />
 
     <bean id="configurationService" class="org.openwms.core.service.spring.ConfigurationServiceImpl" />
     

@@ -203,7 +203,7 @@ public abstract class AbstractGenericJpaDao<T extends AbstractEntity, ID extends
     @Transactional
     public void persist(T entity) {
         beforeUpdate(entity);
-        em.persist(em.merge(entity));
+        em.persist(entity);
     }
 
     /**

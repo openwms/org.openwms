@@ -839,6 +839,11 @@
                 <artifactId>org.springframework.security.core</artifactId>
                 <version>${spring.security.version}</version>
             </dependency>
+            <dependency>
+                <groupId>org.springframework.security</groupId>
+                <artifactId>org.springframework.security.config</artifactId>
+                <version>3.0.3.RELEASE</version>
+            </dependency>
 
             <!-- JEE API -->
             <dependency>
