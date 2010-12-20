@@ -66,7 +66,7 @@
         <!-- Project dependencies -->
         <dependency>
             <groupId>${project.groupId}</groupId>
-            <artifactId>org.openwms.core.framework.test</artifactId>
+            <artifactId>org.openwms.core.test</artifactId>
             <type>test-jar</type>
             <scope>test</scope>
         </dependency>

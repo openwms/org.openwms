@@ -203,7 +203,7 @@
             </properties>
         </profile>
         <profile>
-            <id>alls</id>
+            <id>some</id>
             <modules>
                 <module>org.openwms.app</module>
                 <module>org.openwms.app.plan</module>
@@ -216,7 +216,7 @@
                 <module>org.openwms.common.domain.as</module>
                 <module>org.openwms.common.flex.lib</module>
                 <module>org.openwms.common.flex.module</module>
-                <module>org.openwms.common.framework.test</module>
+                <module>org.openwms.common.test</module>
                 <module>org.openwms.common.infrastructure.configuration</module>
                 <module>org.openwms.common.infrastructure.hsql</module>
                 <module>org.openwms.common.infrastructure.oracle</module>
@@ -241,6 +241,9 @@
         </profile>
         <profile>
             <id>all</id>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
             <modules>
                 <module>app</module>
                 <module>core</module>
@@ -843,7 +846,7 @@
             <dependency>
                 <groupId>org.springframework.security</groupId>
                 <artifactId>org.springframework.security.config</artifactId>
-                <version>3.0.3.RELEASE</version>
+                <version>${spring.security.version}</version>
             </dependency>
 
             <!-- JEE API -->
