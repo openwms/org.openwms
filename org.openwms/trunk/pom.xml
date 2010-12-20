@@ -28,7 +28,7 @@
     <artifactId>org.openwms</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <packaging>pom</packaging>
-    <name>Main Project</name>
+    <name>OpenWMS.org Project</name>
     <description>This is an Open Source Software (OSS) project</description>
     <url>http://www.openwms.org</url>
     <inceptionYear>2005</inceptionYear>
