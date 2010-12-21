@@ -33,7 +33,7 @@
     <artifactId>org.openwms.tms</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <packaging>pom</packaging>
-    <name>OpenWMS.org TMS Project</name>
+    <name>OpenWMS.org TMS</name>
     <properties>
         <moduleDir>..</moduleDir>
         <core.version>0.0.1-SNAPSHOT</core.version>

@@ -33,7 +33,7 @@
     <artifactId>org.openwms.common</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <packaging>pom</packaging>
-    <name>OpenWMS.org COMMON Project</name>
+    <name>OpenWMS.org COMMON</name>
     <properties>
         <moduleDir>..</moduleDir>
         <core.version>0.0.1-SNAPSHOT</core.version>

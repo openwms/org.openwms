@@ -157,7 +157,7 @@
 		</plugins>
 	</build>
 
-	<reporting>
+	<!-- reporting>
 		<plugins>
 			<plugin>
 				<groupId>org.sonatype.flexmojos</groupId>
@@ -182,7 +182,7 @@
 			</plugin>
 
 		</plugins>
-	</reporting>
+	</reporting-->
 
 	<repositories>
 		<repository>

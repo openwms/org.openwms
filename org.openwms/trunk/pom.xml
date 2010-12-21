@@ -626,6 +626,29 @@
     
         <plugins>
             <plugin>
+                <groupId>org.sonatype.flexmojos</groupId>
+                <artifactId>flexmojos-maven-plugin</artifactId>
+                <version>3.5.0</version>
+                <reportSets>
+                    <reportSet>
+                        <id>flex-reports</id>
+                        <reports>
+                            <report>asdoc-report</report>
+                        </reports>
+                        <configuration>
+                            <aggregate>true</aggregate>
+                            <mainTitle>OpenWMS.org ActionScript Documentation</mainTitle>
+                            <windowTitle>OpenWMS.org ActionScript Documentation</windowTitle>
+                            <footer>www.openwms.org</footer>
+                            <sourcePaths>
+                                <path>${basedir}/src/main/resources</path>
+                                <path>${basedir}/src/main/flex</path>
+                            </sourcePaths>
+                        </configuration>
+                    </reportSet>
+                </reportSets>
+            </plugin>
+            <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-javadoc-plugin</artifactId>
                 <version>2.6.1</version>
