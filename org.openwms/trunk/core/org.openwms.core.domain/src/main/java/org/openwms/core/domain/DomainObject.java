@@ -24,40 +24,43 @@ import java.io.Serializable;
 
 /**
  * A DomainObject, implementations of this interface offer some common
- * functionality of all domain objects.<br>
+ * functionality of all domain objects.
+ * <p>
  * Each domain object:
  * <ul>
  * <li>shall have an optimistic locking field</li>
  * <li>shall know if it is a transient or persisted instance</li>
  * <li>shall offer the technical key value</li>
  * </ul>
+ * </p>
  * 
  * @author <a href="mailto:scherrer@users.sourceforge.net">Heiko Scherrer</a>
  * @version $Revision$
  * @since 0.1
+ * @serial
  */
 public interface DomainObject<ID extends Serializable> {
 
-	/**
-	 * Check whether the persistent domain object is transient or not.
-	 * 
-	 * @return <code>true</code> if transient (not persisted before), otherwise
-	 *         <code>false</code>.
-	 */
-	boolean isNew();
+    /**
+     * Check whether the persistent domain object is transient or not.
+     * 
+     * @return <code>true</code> if transient (not persisted before), otherwise
+     *         <code>false</code>.
+     */
+    boolean isNew();
 
-	/**
-	 * Each persistent domain class must have an optimistic locking field.
-	 * 
-	 * @return the version number
-	 */
-	long getVersion();
+    /**
+     * Each persistent domain class must have an optimistic locking field.
+     * 
+     * @return the version number
+     */
+    long getVersion();
 
-	/**
-	 * Return the technical key.
-	 * 
-	 * @return The technical, unique key
-	 */
-	ID getId();
+    /**
+     * Return the technical key.
+     * 
+     * @return The technical, unique key
+     */
+    ID getId();
 
 }
