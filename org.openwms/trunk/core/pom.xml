@@ -33,7 +33,7 @@
     <artifactId>org.openwms.core</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <packaging>pom</packaging>
-    <name>OpenWMS.org CORE Project</name>
+    <name>OpenWMS.org CORE</name>
     <properties>
         <moduleDir>..</moduleDir>
         <property.org.graniteds-core.version>1.2.0_SP1</property.org.graniteds-core.version>
