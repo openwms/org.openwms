@@ -25,58 +25,58 @@ import java.util.List;
 
 /**
  * An EntityService is a generic interface definition for a service to offer
- * simple create/read/update and remove functionality.
+ * simple CRUD functionality.
  * <p>
- * Basically the service is responsible to access the persistence integration
- * layer. Even though the service declares the transaction boundary and handles
- * exception translation.
+ * Basically the service is responsible to access the persistence layer. Even
+ * though the service declares the transaction boundary and handles exception
+ * translation.
  * </p>
  * 
  * @param <T>
- *            Any serializable type, mostly an Entity class type
- * @author <a href="mailto:openwms@googlemail.com">Heiko Scherrer</a>
+ *            Any serializable type, mostly an entity class type
+ * @author <a href="mailto:openwms@gmail.com">Heiko Scherrer</a>
  * @version $Revision$
  * @since 0.1
  */
 public interface EntityService<T extends Serializable> {
 
     /**
-     * Save an Entity of type <code>T</code>.
+     * Save an entity of type <code>T</code>.
      * 
      * @param <T>
-     *            Any serializable type, mostly an Entity class type
+     *            Any serializable type, mostly an entity class type
      * @param entity
      *            Entity instance to be saved
-     * @return The saved Entity instance
+     * @return The saved entity instance
      */
     T save(T entity);
 
     /**
-     * Find all Entities of type <code>T</code>.
+     * Find all entities of type <code>T</code>.
      * 
      * @param <T>
-     *            Any serializable type, mostly an Entity class type
-     * @return A {@link java.util.List} of all found Entities
+     *            Any serializable type, mostly an entity class type
+     * @return A list of all found entities
      */
     List<T> findAll();
 
     /**
-     * Removes a persistent Entity instance.
+     * Removes a persistent entity instance.
      * 
      * @param <T>
-     *            Any serializable type, mostly an Entity class type
+     *            Any serializable type, mostly an entity class type
      * @param entity
      *            Entity instance to be removed
      */
     void remove(T entity);
 
     /**
-     * Add a new Entity to the persistent storage.
+     * Add a new entity to the persistent storage.
      * 
      * @param <T>
-     *            Any serializable type, mostly an Entity class type
+     *            Any serializable type, mostly an entity class type
      * @param newEntity
-     *            Transient Entity instance to persist
+     *            Transient entity instance to persist
      */
     void addEntity(T newEntity);
 }

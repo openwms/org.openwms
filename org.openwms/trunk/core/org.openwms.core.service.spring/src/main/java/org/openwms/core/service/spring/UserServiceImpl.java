@@ -37,12 +37,14 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 /**
- * An UserServiceImpl is the Spring supported transactional implementation of a
- * general {@link UserService}. Currently it is responsible for Users and Roles
- * and uses therefore a UserDao and a RoleDao for CRUD functionality. Extends
- * the {@link EntityServiceImpl} for general functionality.
+ * An UserServiceImpl is a Spring supported transactional implementation of a
+ * general {@link UserService}. Using Spring 2 annotations support autowiring
+ * collaborators like DAOs therefore XML configuration becomes obsolete. This
+ * class is marked with Springs {@link Service} annotation to benefit from
+ * Springs exception translation interceptor. Traditional CRUD operations are
+ * delegated to an {@link UserDao}.
  * 
- * @author <a href="mailto:openwms@googlemail.com">Heiko Scherrer</a>
+ * @author <a href="mailto:openwms@gmail.com">Heiko Scherrer</a>
  * @version $Revision$
  * @since 0.1
  * @see org.openwms.core.integration.system.usermanagement.UserDao;
@@ -53,6 +55,9 @@ public class UserServiceImpl implements UserService {
 
     private Logger logger = LoggerFactory.getLogger(this.getClass());
 
+    /**
+     * Instance of an {@link UserDao}. <i>Autowired</i>.
+     */
     @Autowired
     protected UserDao dao;
 
@@ -152,7 +157,8 @@ public class UserServiceImpl implements UserService {
         try {
             entity.setPassword(userPassword.getPassword());
             return true;
-        } catch (InvalidPasswordException ipe) {
+        }
+        catch (InvalidPasswordException ipe) {
             logger.info(ipe.getMessage());
             return false;
         }

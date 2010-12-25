@@ -36,11 +36,12 @@ import org.springframework.transaction.annotation.Transactional;
 
 /**
  * A ModuleServiceImpl is a Spring powered transactional service using a
- * ModuleDao to perform database operations.
+ * {@link ModuleDao} to perform simple CRUD operations.
  * 
- * @author <a href="mailto:openwms@googlemail.com">Heiko Scherrer</a>
+ * @author <a href="mailto:openwms@gmail.com">Heiko Scherrer</a>
  * @version $Revision: $
  * @since 0.1
+ * @see org.openwms.core.integration.ModuleDao
  */
 @Service
 @Transactional
@@ -48,6 +49,9 @@ public class ModuleServiceImpl implements ModuleService {
 
     private Logger logger = LoggerFactory.getLogger(this.getClass());
 
+    /**
+     * Instance of a {@link ModuleDao}. <i>Autowired</i>.
+     */
     @Autowired
     protected ModuleDao dao;
 
@@ -78,9 +82,9 @@ public class ModuleServiceImpl implements ModuleService {
     /**
      * {@inheritDoc}
      * 
-     * It is expected that the list of modules is already pre-ordered in their
-     * startupOrder. Each Module's startupOrder is synchronized with the
-     * persistence storage. No other data is updated.
+     * It is expected that the list of {@link Module}s is already pre-ordered
+     * in their startupOrder. Each {@link Module}'s startupOrder is
+     * synchronized with the persistence storage. No other data is updated.
      * 
      * @throws ServiceRuntimeException
      *             when modules is <code>null</code>
@@ -100,11 +104,11 @@ public class ModuleServiceImpl implements ModuleService {
     /**
      * {@inheritDoc}
      * 
-     * In this case a Module is been removed. But if the Module entity is a
-     * transient instance the method returns with no further action.
+     * In this case a {@link Module} is been removed. But if the {@link Module}
+     * entity is a transient instance the method returns with no further action.
      * 
      * @throws ServiceRuntimeException
-     *             when the Module was not found or is <code>null</code>
+     *             when the {@link Module} was not found or is <code>null</code>
      */
     @Override
     public void remove(Module module) {
@@ -125,8 +129,7 @@ public class ModuleServiceImpl implements ModuleService {
     /**
      * {@inheritDoc}
      * 
-     * Additionally to save, the startup order is re-calculated for a new
-     * Module.
+     * Additionally the startup order is re-calculated for a new {@link Module}.
      */
     @Override
     public Module save(Module entity) {

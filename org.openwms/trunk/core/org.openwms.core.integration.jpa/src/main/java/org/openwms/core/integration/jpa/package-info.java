@@ -19,6 +19,6 @@
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
 /**
- * This package contains classes belonging to the integration layer using JPA. Implementation classes following the DAO (or Repository) pattern.
+ * This package contains classes that belong to the integration layer implemented with JPA. Implementation classes follow the DAO (or Repository) pattern.
  */
 package org.openwms.core.integration.jpa;

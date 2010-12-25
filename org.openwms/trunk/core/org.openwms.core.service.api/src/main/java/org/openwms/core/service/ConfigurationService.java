@@ -31,12 +31,12 @@ import org.openwms.core.domain.values.Unit;
  * a global scope which means Application Scope and some others are only valid
  * for a certain Module.
  * 
- * @author <a href="mailto:russelltina@users.sourceforge.net">Tina Russell</a>
+ * @author <a href="mailto:openwms@gmail.com">Heiko Scherrer</a>
  * @version $Revision$
  * @since 0.1
  * @see org.openwms.core.domain.system.PropertyScope
  */
-public interface ConfigurationService<T extends Preference> extends EntityService<T> {
+public interface ConfigurationService {
 
     /**
      * Find and return all properties in Application Scope.
@@ -46,14 +46,14 @@ public interface ConfigurationService<T extends Preference> extends EntityServic
     List<Preference> findApplicationProperties();
 
     /**
-     * Find and return all properties belonging to this module.
+     * Find and return all properties belonging to this Module.
      * 
      * @return a list of these properties
      */
     List<Preference> findModuleProperties();
 
     /**
-     * Get all unit types supported by this module.
+     * Get all unit types supported by this Module.
      * 
      * @return A list of these units
      */

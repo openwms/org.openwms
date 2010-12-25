@@ -22,27 +22,27 @@ package org.openwms.core.service;
 
 import java.util.List;
 
-import org.openwms.core.domain.system.usermanagement.Role;
 import org.openwms.core.domain.system.usermanagement.User;
 import org.openwms.core.domain.system.usermanagement.UserPassword;
 
 /**
- * An UserService extends the {@link EntityService} interface about some useful
- * methods regarding the general handling of {@link User}s and {@link Role}s.
+ * An UserService offers business functionality regarding handling of
+ * {@link User}s.
  * 
- * @author <a href="mailto:openwms@googlemail.com">Heiko Scherrer</a>
+ * @author <a href="mailto:openwms@gmail.com">Heiko Scherrer</a>
  * @version $Revision$
  * @since 0.1
  */
 public interface UserService {
 
-/**
+    /**
      * Change the current password of the {@link User}.
      * 
      * @param userPassword
      *            The new {@link UserPassword) to change
-     * @return <code>true</code> if the password could be changed successfully.
-     *         <code>false</code> when the new password conflicts with the rules defined for passwords.
+     * @return <code>true</code> if the password was changed successfully.
+     *         <code>false</code> when the new password conflicts with the
+     *         rules defined for passwords.
      */
     boolean changeUserPassword(UserPassword userPassword);
 
@@ -64,7 +64,8 @@ public interface UserService {
     void uploadImageFile(String username, byte[] image);
 
     /**
-     * Return an transient {@link User} entity object, serving as a template.
+     * Return a transient {@link User} entity object, serving as a template. The
+     * returned {@link User} has only set the username.
      * 
      * @param username
      *            Username of the {@link User}
@@ -73,7 +74,7 @@ public interface UserService {
     User getTemplate(String username);
 
     /**
-     * Update the given {@link User} or persist it when it is transient.
+     * Update the given {@link User} or persist it when it is a transient one.
      * 
      * @param user
      *            {@link User} entity to persist

@@ -25,16 +25,21 @@ import org.openwms.core.integration.RoleDao;
 import org.springframework.stereotype.Repository;
 
 /**
- * A RoleDaoImpl.
+ * A RoleDaoImpl is an extension of a {@link AbstractGenericJpaDao} about
+ * functionality regarding {@link Role}s. The stereotype annotation
+ * {@link Repository} marks this class as DAO in the architecture and enables
+ * exception translation and component scanning.
  * <p>
- * Right now no implementation, just to be compliant.
+ * So far there is no implementation, just to be compliant.
  * </p>
  * 
  * @author <a href="mailto:russelltina@users.sourceforge.net">Tina Russell</a>
  * @version $Revision$
  * @since 0.1
+ * @see org.openwms.core.integration.jpa.AbstractGenericJpaDao
+ * @see org.openwms.core.integration.RoleDao
  */
-@Repository
+@Repository("roleDao")
 public class RoleDaoImpl extends AbstractGenericJpaDao<Role, Long> implements RoleDao {
 
     /**

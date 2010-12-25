@@ -27,7 +27,7 @@ package org.openwms.core.integration.exception;
  * regarding data access errors.
  * </p>
  * 
- * @author <a href="mailto:openwms@googlemail.com">Heiko Scherrer</a>
+ * @author <a href="mailto:openwms@gmail.com">Heiko Scherrer</a>
  * @version $Revision$
  * @since 0.1
  */
@@ -63,7 +63,8 @@ public class DataException extends RuntimeException {
     }
 
     /**
-     * Create a new <code>DataException</code> with a message text and the cause exception.
+     * Create a new <code>DataException</code> with a message text and the
+     * cause exception.
      * 
      * @param message
      *            Message text as String

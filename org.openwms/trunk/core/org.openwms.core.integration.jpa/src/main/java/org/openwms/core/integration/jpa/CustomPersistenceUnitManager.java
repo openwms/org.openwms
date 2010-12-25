@@ -33,10 +33,10 @@ import org.springframework.orm.jpa.persistenceunit.MutablePersistenceUnitInfo;
  * implementation and adds support for multiple jar files with Entity classes.
  * </p>
  * 
- * @author <a href="mailto:openwms@googlemail.com">Heiko Scherrer</a>
+ * @author <a href="mailto:openwms@gmail.com">Heiko Scherrer</a>
  * @version $Revision$
  * @since 0.1
- * @deprecated as an OSGi environment is used since 0.1
+ * @deprecated as OSGi is used since 0.1
  */
 @Deprecated
 public class CustomPersistenceUnitManager extends DefaultPersistenceUnitManager {

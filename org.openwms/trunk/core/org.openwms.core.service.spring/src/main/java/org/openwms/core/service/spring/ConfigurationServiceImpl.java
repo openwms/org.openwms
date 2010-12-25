@@ -29,17 +29,17 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 /**
- * A ConfigurationServiceImpl is the concrete implementation of a
- * ConfigurationService.
+ * A ConfigurationServiceImpl is a transactional Spring powered service
+ * implementation.
  * 
- * @author <a href="mailto:openwms@googlemail.com">Heiko Scherrer</a>
+ * @author <a href="mailto:openwms@gmail.com">Heiko Scherrer</a>
  * @version $Revision$
  * @since 0.1
+ * @see org.openwms.core.service.ConfigurationService
  */
 @Transactional
 @Service
-public class ConfigurationServiceImpl extends EntityServiceImpl<Preference, Long> implements
-        ConfigurationService<Preference> {
+public class ConfigurationServiceImpl implements ConfigurationService {
 
     /**
      * {@inheritDoc}

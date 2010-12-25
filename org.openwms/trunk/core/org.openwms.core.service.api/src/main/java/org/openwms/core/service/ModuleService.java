@@ -26,36 +26,37 @@ import org.openwms.core.domain.Module;
 
 /**
  * A ModuleService offers some functionality for common module management tasks.
- * Handling modules is an essential functionality of the core openwms.org
- * application.
+ * Handling modules is an essential functionality of the CORE openwms.org
+ * project.
  * 
- * @author <a href="mailto:openwms@googlemail.com">Heiko Scherrer</a>
+ * @author <a href="mailto:openwms@gmail.com">Heiko Scherrer</a>
  * @version $Revision$
- * @see 0.1
+ * @since 0.1
  */
 public interface ModuleService {
 
     /**
-     * Return a list of all persisted modules.
+     * Return a list of all persisted {@link Module}s.
      * 
-     * @return A list of modules or an empty list when no Modules exist
+     * @return A list of {@link Module}s or an empty list when no
+     *         {@link Module}s exist
      */
     List<Module> findAll();
 
     /**
-     * Save a Module.
+     * Save a {@link Module}.
      * 
      * @param module
-     *            Module instance to be saved
-     * @return The saved Module instance
+     *            {@link Module} instance to be saved
+     * @return The saved {@link Module} instance
      */
     Module save(Module module);
 
     /**
-     * Removes a persistent Module instance.
+     * Removes a persistent {@link Module} instance.
      * 
      * @param module
-     *            Module instance to be removed
+     *            {@link Module} instance to be removed
      */
     void remove(Module module);
 
@@ -66,12 +67,12 @@ public interface ModuleService {
     void login();
 
     /**
-     * For a list of modules the startupOrder is saved. The startupOrder
-     * property of all modules in the list must already be calculated and saved
-     * before.
+     * For a list of {@link Module}s the startupOrder is saved. The
+     * startupOrder property of all {@link Module}s in the list must already be
+     * calculated and saved before.
      * 
      * @param modules
-     *            The list of modules to be modified
+     *            The list of {@link Module}s to be modified
      */
     void saveStartupOrder(List<Module> modules);
 

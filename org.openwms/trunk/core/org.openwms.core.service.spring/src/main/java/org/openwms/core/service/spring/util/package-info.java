@@ -19,6 +19,6 @@
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
 /**
- * Repository (DAO) interface definitions of the CORE module.
+ * This package provides utilities used by services in the CORE project.
  */
-package org.openwms.core.integration;
+package org.openwms.core.service.spring.util;

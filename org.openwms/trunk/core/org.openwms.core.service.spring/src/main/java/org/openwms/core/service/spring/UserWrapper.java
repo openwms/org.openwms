@@ -24,13 +24,14 @@ import java.util.ArrayList;
 import java.util.Collection;
 
 import org.openwms.core.domain.system.usermanagement.Role;
+import org.openwms.core.domain.system.usermanagement.SecurityObject;
 import org.openwms.core.domain.system.usermanagement.User;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 /**
- * An UserWrapper is used as an adapter between openwms.org roles and grants and
- * Springs {@link GrantedAuthority} objects.
+ * An UserWrapper is used as an adapter between {@link Role}s or
+ * {@link SecurityObject}s and Spring's {@link GrantedAuthority} objects.
  * 
  * @author <a href="mailto:russelltina@users.sourceforge.net">Tina Russell</a>
  * @version $Revision$
@@ -44,7 +45,7 @@ public class UserWrapper implements UserDetails {
     private User user;
 
     /**
-     * Create a new SecurityContextUserServiceImpl.UserWrapper.
+     * Create a new UserWrapper.
      */
     public UserWrapper(User user) {
         this.user = user;
@@ -116,5 +117,4 @@ public class UserWrapper implements UserDetails {
     public boolean isEnabled() {
         return user.isEnabled();
     }
-
 }

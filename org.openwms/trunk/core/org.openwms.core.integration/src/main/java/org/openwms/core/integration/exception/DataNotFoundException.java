@@ -23,9 +23,10 @@ package org.openwms.core.integration.exception;
 import java.io.Serializable;
 
 /**
- * A DataNotFoundException is thrown to signal that data was expected but not found.
+ * A DataNotFoundException is thrown to signal that data was expected but not
+ * found.
  * 
- * @author <a href="mailto:openwms@googlemail.com">Heiko Scherrer</a>
+ * @author <a href="mailto:openwms@gmail.com">Heiko Scherrer</a>
  * @version $Revision$
  * @since 0.1
  * @see org.openwms.core.integration.exception.DataException
@@ -35,8 +36,8 @@ public class DataNotFoundException extends DataException {
     private static final long serialVersionUID = 2524686849100170713L;
 
     /**
-     * Create a new <code>DataNotFoundException</code> with a message text and the cause
-     * exception.
+     * Create a new <code>DataNotFoundException</code> with a message text and
+     * the cause exception.
      * 
      * @param message
      *            Message text as String
@@ -58,7 +59,8 @@ public class DataNotFoundException extends DataException {
     }
 
     /**
-     * Create a new <code>DataNotFoundException</code> with the id of the expected entity.
+     * Create a new <code>DataNotFoundException</code> with the id of the
+     * expected entity.
      * 
      * @param id
      *            Id of the expected entity

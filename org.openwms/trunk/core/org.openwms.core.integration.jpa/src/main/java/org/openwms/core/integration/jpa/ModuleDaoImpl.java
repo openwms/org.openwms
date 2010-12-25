@@ -21,14 +21,26 @@
 package org.openwms.core.integration.jpa;
 
 import org.openwms.core.domain.Module;
+import org.openwms.core.domain.system.usermanagement.Role;
 import org.openwms.core.integration.ModuleDao;
+import org.springframework.stereotype.Repository;
 
 /**
- * A ModuleDao.
+ * A ModuleDao is an extension of a {@link AbstractGenericJpaDao} about
+ * functionality regarding {@link Role}s. The stereotype annotation
+ * {@link Repository} marks this class as DAO in the architecture and enables
+ * exception translation and component scanning.
+ * <p>
+ * So far there is no implementation, just to be compliant.
+ * </p>
  * 
- * @author <a href="mailto:openwms@googlemail.com">Heiko Scherrer</a>
+ * @author <a href="mailto:openwms@gmail.com">Heiko Scherrer</a>
  * @version $Revision: $
+ * @since 0.1
+ * @see org.openwms.core.integration.jpa.AbstractGenericJpaDao
+ * @see org.openwms.core.integration.ModuleDao
  */
+@Repository("moduleDao")
 public class ModuleDaoImpl extends AbstractGenericJpaDao<Module, Long> implements ModuleDao {
 
     /**

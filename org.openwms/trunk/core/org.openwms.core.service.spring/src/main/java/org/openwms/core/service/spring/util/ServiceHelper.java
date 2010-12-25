@@ -22,6 +22,7 @@ package org.openwms.core.service.spring.util;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
@@ -30,8 +31,8 @@ import org.openwms.core.domain.DomainObject;
 import org.openwms.core.integration.GenericDao;
 
 /**
- * A ServiceHelper. Collection of useful utility methods to convert and deal
- * with domain objects.
+ * A ServiceHelper. Collection of common used utility methods to convert and
+ * deal with domain objects.
  * 
  * @author <a href="mailto:russelltina@users.sourceforge.net">Tina Russell</a>
  * @version $Revision$
@@ -40,21 +41,22 @@ import org.openwms.core.integration.GenericDao;
 public final class ServiceHelper {
 
     /**
-     * Pass in a list of detached entity classes and retrieve a list of managed
-     * ones.
+     * Returns a list of managed entities from a collection of detached
+     * entities. Each entity in <code>detachedEntities</code> is reloaded with
+     * the <code>dao</code>.
      * 
      * @param <T>
      *            The type of entity
      * @param <ID>
      *            The type of entity's primary key
      * @param detachedEntities
-     *            The list of detached entities
+     *            A collection of detached entities
      * @param dao
-     *            An instance of a DAO to use for conversion
+     *            An instance of a DAO to use for reloading
      * @return The list of managed entities or an empty list
      */
     public static <T extends AbstractEntity & DomainObject<ID>, ID extends Serializable> List<T> managedEntities(
-            List<T> detachedEntities, GenericDao<T, ID> dao) {
+            Collection<T> detachedEntities, GenericDao<T, ID> dao) {
         if (detachedEntities == null || detachedEntities.isEmpty()) {
             return Collections.emptyList();
         }

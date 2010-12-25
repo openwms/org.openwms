@@ -52,10 +52,9 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional
 public class SecurityContextUserServiceImpl implements UserDetailsService {
 
-    /**
-     * Logger instance can be used by subclasses.
-     */
-    protected Logger logger = LoggerFactory.getLogger(this.getClass());
+    private Logger logger = LoggerFactory.getLogger(this.getClass());
+    private String systemUser;
+    private String systemPassword;
 
     @Autowired
     @Qualifier("userDao")
@@ -63,9 +62,6 @@ public class SecurityContextUserServiceImpl implements UserDetailsService {
 
     @Autowired
     protected UserCache userCache;
-
-    private String systemUser;
-    private String systemPassword;
 
     /**
      * Set the systemUser.
