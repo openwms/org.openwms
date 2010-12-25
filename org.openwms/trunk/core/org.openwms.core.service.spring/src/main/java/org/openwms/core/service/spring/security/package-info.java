@@ -19,6 +19,6 @@
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
 /**
- * Repository (DAO) interface definitions of the CORE module.
+ * This package provides services regarding security aspects of the CORE project, implemented with the Spring framework.
  */
-package org.openwms.core.integration;
+package org.openwms.core.service.spring.security;

@@ -28,8 +28,6 @@ import org.openwms.core.domain.AbstractEntity;
 import org.openwms.core.integration.GenericDao;
 import org.openwms.core.service.EntityService;
 import org.openwms.core.service.exception.ServiceRuntimeException;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeansException;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
@@ -37,21 +35,27 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 /**
- * An EntityServiceImpl serves as a generic service that offers some basic CRUD
- * functionality.
+ * An EntityServiceImpl is a generic service that offers some basic CRUD
+ * functionality. It is a transactional Spring service annotated with Springs
+ * {@link Service} to activate exception translation.
+ * 
+ * By implementing {@link ApplicationContextAware} the EntityServiceImpl gets
+ * the current {@link ApplicationContext} injected, thats useful to publish
+ * events.
  * 
  * @param <T>
  *            Any type of AbstractEntity.
  * @param <ID>
  *            The type of the Entity class' unique id
- * @author <a href="mailto:openwms@googlemail.com">Heiko Scherrer</a>
+ * @author <a href="mailto:openwms@gmail.com">Heiko Scherrer</a>
  * @version $Revision$
  * @since 0.1
  * @see org.openwms.core.domain.AbstractEntity
+ * @see org.openwms.core.service.EntityService
  */
 @Service
 @Transactional
-public abstract class EntityServiceImpl<T extends AbstractEntity, ID extends Serializable> implements EntityService<T>,
+public class EntityServiceImpl<T extends AbstractEntity, ID extends Serializable> implements EntityService<T>,
         ApplicationContextAware {
 
     private Class<T> persistentClass;
@@ -65,11 +69,6 @@ public abstract class EntityServiceImpl<T extends AbstractEntity, ID extends Ser
      * Reference to the {@link ApplicationContext} instance.
      */
     protected ApplicationContext ctx;
-
-    /**
-     * Logger instance can be used by subclasses.
-     */
-    protected Logger logger = LoggerFactory.getLogger(this.getClass());
 
     /**
      * {@inheritDoc}
@@ -90,16 +89,6 @@ public abstract class EntityServiceImpl<T extends AbstractEntity, ID extends Ser
      */
     public void setDao(GenericDao<T, ID> dao) {
         this.dao = dao;
-    }
-
-    @SuppressWarnings("unchecked")
-    private void resolveTypeClass() {
-        if (persistentClass == null) {
-            if (getClass().getGenericSuperclass() != null) {
-                this.persistentClass = (Class<T>) ((ParameterizedType) getClass().getGenericSuperclass())
-                        .getActualTypeArguments()[0];
-            }
-        }
     }
 
     /**
@@ -147,4 +136,15 @@ public abstract class EntityServiceImpl<T extends AbstractEntity, ID extends Ser
         }
         dao.persist(newEntity);
     }
+
+    @SuppressWarnings("unchecked")
+    private void resolveTypeClass() {
+        if (persistentClass == null) {
+            if (getClass().getGenericSuperclass() != null) {
+                this.persistentClass = (Class<T>) ((ParameterizedType) getClass().getGenericSuperclass())
+                        .getActualTypeArguments()[0];
+            }
+        }
+    }
+
 }

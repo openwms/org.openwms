@@ -25,35 +25,36 @@ import java.util.List;
 import org.openwms.core.domain.system.usermanagement.Role;
 
 /**
- * A RoleService.
+ * A RoleService provides business functionality regarding {@link Role}s.
  * 
- * @author <a href="mailto:scherrer@users.sourceforge.net">Heiko Scherrer</a>
+ * @author <a href="mailto:openwms@gmail.com">Heiko Scherrer</a>
  * @version $Revision$
  * @since 0.1
  */
 public interface RoleService {
 
     /**
-     * Return a list of all persisted Roles.
+     * Return a list of all persisted {@link Role}s.
      * 
-     * @return A list of Roles or an empty list when no Roles exist.
+     * @return A list of {@link Role}s or an empty list when no {@link Role}s
+     *         exist.
      */
     List<Role> findAll();
 
     /**
-     * Save an already existed Role object and return the updated instance.
+     * Save an already existed {@link Role} and return the updated instance.
      * 
      * @param role
-     *            The Role to save.
-     * @return The saved Role.
+     *            The {@link Role} to save.
+     * @return The saved {@link Role}.
      */
     Role save(Role role);
 
     /**
-     * Remove a list of Roles from the persistent storage.
+     * Remove a list of {@link Role}s from the persistent storage.
      * 
      * @param roles
-     *            The list of Roles to remove.
+     *            The list of {@link Role}s to remove.
      */
     void remove(List<Role> roles);
 

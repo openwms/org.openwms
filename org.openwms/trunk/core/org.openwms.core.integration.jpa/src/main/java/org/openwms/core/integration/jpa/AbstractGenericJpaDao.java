@@ -37,7 +37,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.orm.jpa.support.JpaDaoSupport;
-import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 /**
@@ -46,9 +45,7 @@ import org.springframework.transaction.annotation.Transactional;
  * <p>
  * This {@link GenericDao} implementation extends Springs {@link JpaDaoSupport},
  * to have a benefit from Springs exception translation and transaction
- * management.<br>
- * The stereotype annotation {@link Repository} marks this class as DAO in the
- * architecture and enables exception translation and component scanning.<br>
+ * management.
  * </p>
  * <p>
  * Furthermore an {@link AbstractGenericJpaDao} has transactional behavior
@@ -59,27 +56,25 @@ import org.springframework.transaction.annotation.Transactional;
  *            Any serializable type, mostly an Entity class type.
  * @param <ID>
  *            The type of the Entity class' unique id
- * @author <a href="mailto:openwms@googlemail.com">Heiko Scherrer</a>
+ * @author <a href="mailto:openwms@gmail.com">Heiko Scherrer</a>
  * @version $Revision$
  * @since 0.1
  * @see org.springframework.stereotype.Repository
  * @see org.springframework.transaction.annotation.Transactional
  */
 @Transactional
-@Repository
 public abstract class AbstractGenericJpaDao<T extends AbstractEntity, ID extends Serializable> implements
         GenericDao<T, ID> {
 
     @Autowired
     @PersistenceContext
     private EntityManager em;
+    private Class<T> persistentClass;
 
     /**
      * Logger instance can be used by subclasses.
      */
     protected Logger logger = LoggerFactory.getLogger(this.getClass());
-
-    private Class<T> persistentClass;
 
     /**
      * Create a new AbstractGenericJpaDao.
@@ -98,7 +93,7 @@ public abstract class AbstractGenericJpaDao<T extends AbstractEntity, ID extends
      * 
      * @return Entity class type.
      */
-    public Class<T> getPersistentClass() {
+    protected Class<T> getPersistentClass() {
         return persistentClass;
     }
 
@@ -215,8 +210,8 @@ public abstract class AbstractGenericJpaDao<T extends AbstractEntity, ID extends
     protected abstract String getFindAllQuery();
 
     /**
-     * Returns the name of the <code>NamedQuery</code> to find an Entity by the
-     * business key.
+     * Returns the name of the <code>NamedQuery</code> to find an Entity by
+     * the business key.
      * 
      * @return Name of the query
      */

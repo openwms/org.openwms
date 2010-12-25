@@ -30,6 +30,4 @@ import org.openwms.core.domain.system.usermanagement.Role;
  * @version $Revision$
  * @since 0.1
  */
-public interface RoleDao extends GenericDao<Role, Long> {
-
-}
+public interface RoleDao extends GenericDao<Role, Long> { }

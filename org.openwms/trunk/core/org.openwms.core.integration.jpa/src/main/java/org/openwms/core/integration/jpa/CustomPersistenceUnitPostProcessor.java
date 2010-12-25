@@ -37,11 +37,11 @@ import org.springframework.util.ResourceUtils;
  * An extension of the default Spring implementation.
  * </p>
  * 
- * @author <a href="mailto:openwms@googlemail.com">Heiko Scherrer</a>
+ * @author <a href="mailto:openwms@gmail.com">Heiko Scherrer</a>
  * @version $Revision$
  * @see org.springframework.orm.jpa.persistenceunit.PersistenceUnitPostProcessor
  * @since 0.1
- * @deprecated as an OSGi environment is used since 0.1
+ * @deprecated as OSGi is used since 0.1
  */
 @Deprecated
 public class CustomPersistenceUnitPostProcessor implements PersistenceUnitPostProcessor {
@@ -65,15 +65,16 @@ public class CustomPersistenceUnitPostProcessor implements PersistenceUnitPostPr
                     jarFiles.add(resource);
                 }
             }
-        } catch (IOException ex) {
+        }
+        catch (IOException ex) {
             throw new IllegalArgumentException("Cannot load persistence jar file from ", ex);
         }
     }
 
     /**
-     * Specify multiple locations of <code>persistence.xml</code> files to load.
-     * These locations can be specified as Spring resource locations and/or as a
-     * location patterns.
+     * Specify multiple locations of <code>persistence.xml</code> files to
+     * load. These locations can be specified as Spring resource locations
+     * and/or as a location patterns.
      * <p>
      * Default is "classpath*:META-INF/persistence.xml".
      * </p>
@@ -100,7 +101,8 @@ public class CustomPersistenceUnitPostProcessor implements PersistenceUnitPostPr
             for (Resource resource : jarFiles) {
                 pui.addJarFileUrl(resource.getURL());
             }
-        } catch (IOException e) {
+        }
+        catch (IOException e) {
             throw new IllegalArgumentException("Cannot parse persistence unit from " + pui.getPersistenceUnitName(), e);
         }
     }

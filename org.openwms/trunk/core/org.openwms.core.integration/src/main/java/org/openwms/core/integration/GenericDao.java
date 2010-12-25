@@ -30,7 +30,7 @@ import org.openwms.core.domain.AbstractEntity;
  * A GenericDao is a generic interface declaration that defines simple CRUD
  * operations.
  * <p>
- * This interface provides basic functionality to create/read/update and remove
+ * This interface provides basic functionality to create/read/update and delete
  * entity classes. Entities can be simple POJO classes without any ORM
  * dependencies. Merely implementations of this interface knows about the way
  * the entity is been persisted.
@@ -40,7 +40,7 @@ import org.openwms.core.domain.AbstractEntity;
  *            Any serializable type, mostly an entity class type
  * @param <ID>
  *            The type of the entity class' unique id
- * @author <a href="mailto:openwms@googlemail.com">Heiko Scherrer</a>
+ * @author <a href="mailto:openwms@gmail.com">Heiko Scherrer</a>
  * @version $Revision$
  * @since 0.1
  */

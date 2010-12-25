@@ -23,10 +23,10 @@ package org.openwms.core.integration.exception;
 import java.io.Serializable;
 
 /**
- * A TooManyEntriesFoundException is thrown when a single result was expected but more
- * than one was found.
+ * A TooManyEntriesFoundException is thrown when a single result was expected
+ * but more than one objects were found.
  * 
- * @author <a href="mailto:openwms@googlemail.com">Heiko Scherrer</a>
+ * @author <a href="mailto:openwms@gmail.com">Heiko Scherrer</a>
  * @version $Revision$
  * @since 0.1
  * @see org.openwms.core.integration.exception.DataException
@@ -36,7 +36,8 @@ public class TooManyEntitiesFoundException extends DataException {
     private static final long serialVersionUID = 4569016268461941846L;
 
     /**
-     * Create a new <code>TooManyEntriesFoundException</code> with a message text.
+     * Create a new <code>TooManyEntriesFoundException</code> with a message
+     * text.
      * 
      * @param message
      *            Message test as String
@@ -46,8 +47,8 @@ public class TooManyEntitiesFoundException extends DataException {
     }
 
     /**
-     * Create a new <code>TooManyEntriesFoundException</code> with a message text and the
-     * cause exception.
+     * Create a new <code>TooManyEntriesFoundException</code> with a message
+     * text and the cause exception.
      * 
      * @param message
      *            Message text as String
@@ -59,8 +60,8 @@ public class TooManyEntitiesFoundException extends DataException {
     }
 
     /**
-     * Create a new <code>TooManyEntriesFoundException</code> with the id of the expected
-     * entity.
+     * Create a new <code>TooManyEntriesFoundException</code> with the id of
+     * the expected entity.
      * 
      * @param id
      *            Id of the expected entity

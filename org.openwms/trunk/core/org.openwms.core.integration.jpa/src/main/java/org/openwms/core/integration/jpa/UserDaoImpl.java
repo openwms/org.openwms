@@ -32,15 +32,18 @@ import org.openwms.core.integration.UserDao;
 import org.springframework.stereotype.Repository;
 
 /**
- * An UserDaoImpl.
+ * An UserDaoImpl is an extension of a {@link AbstractGenericJpaDao} about
+ * functionality regarding {@link User}s. The stereotype annotation
+ * {@link Repository} marks this class as DAO in the architecture and enables
+ * exception translation and component scanning.
  * 
- * @author <a href="mailto:openwms@googlemail.com">Heiko Scherrer</a>
+ * @author <a href="mailto:openwms@gmail.com">Heiko Scherrer</a>
  * @version $Revision$
  * @since 0.1
  * @see org.openwms.core.integration.jpa.AbstractGenericJpaDao
  * @see org.openwms.core.integration.UserDao
  */
-@Repository
+@Repository("userDao")
 public class UserDaoImpl extends AbstractGenericJpaDao<User, Long> implements UserDao {
 
     /**

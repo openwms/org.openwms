@@ -25,6 +25,7 @@ import java.util.List;
 import org.openwms.core.domain.system.usermanagement.Role;
 import org.openwms.core.integration.RoleDao;
 import org.openwms.core.service.RoleService;
+import org.openwms.core.service.exception.ServiceRuntimeException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,10 +33,16 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 /**
- * A RoleServiceImpl.
+ * A RoleServiceImpl is a Spring supported transactional implementation of a
+ * general {@link RoleService}. Using Spring 2 annotations support autowiring
+ * collaborators like DAOs therefore XML configuration becomes obsolete. This
+ * class is marked with Springs {@link Service} annotation to benefit from
+ * Springs exception translation interceptor. Traditional CRUD operations are
+ * delegated to an {@link RoleDao}.
  * 
- * @author <a href="mailto:scherrer@users.sourceforge.net">Heiko Scherrer</a>
+ * @author <a href="mailto:openwms@gmail.com">Heiko Scherrer</a>
  * @version $Revision$
+ * @since 0.1
  * @see org.openwms.core.integration.system.usermanagement.RoleDao;
  */
 @Service
@@ -44,6 +51,9 @@ public class RoleServiceImpl implements RoleService {
 
     private Logger logger = LoggerFactory.getLogger(this.getClass());
 
+    /**
+     * Instance of a {@link RoleDao}. <i>Autowired</i>.
+     */
     @Autowired
     protected RoleDao dao;
 
@@ -52,8 +62,8 @@ public class RoleServiceImpl implements RoleService {
      */
     @Override
     public void remove(List<Role> roles) {
-        if (roles == null) {
-            logger.debug("Nothing to remove");
+        if (roles == null || roles.isEmpty()) {
+            logger.debug("Nothing to remove just return.");
             return;
         }
         for (Role r : roles) {
@@ -64,9 +74,15 @@ public class RoleServiceImpl implements RoleService {
 
     /**
      * {@inheritDoc}
+     * 
+     * @throws ServiceRuntimeException
+     *             when role is <code>null</code>
      */
     @Override
     public Role save(Role role) {
+        if (role == null) {
+            throw new ServiceRuntimeException("Cannot save role because it is NULL");
+        }
         return dao.save(role);
     }
 
