@@ -41,6 +41,8 @@ import org.openwms.core.service.exception.ServiceRuntimeException;
 import org.openwms.core.service.listener.OnRemovalListener;
 import org.openwms.core.service.spring.EntityServiceImpl;
 import org.openwms.core.service.spring.util.ServiceHelper;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
@@ -58,6 +60,8 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional
 public class TransportUnitServiceImpl extends EntityServiceImpl<TransportUnit, Long> implements
         TransportUnitService<TransportUnit> {
+
+    private Logger logger = LoggerFactory.getLogger(this.getClass());
 
     @Autowired
     @Qualifier("transportUnitDao")
@@ -203,8 +207,8 @@ public class TransportUnitServiceImpl extends EntityServiceImpl<TransportUnit, L
     /**
      * {@inheritDoc}
      * 
-     * A ServiceRuntimeException is thrown when other {@link TransportUnit}s are
-     * placed on a {@link TransportUnit} that shall be removed. Also
+     * A ServiceRuntimeException is thrown when other {@link TransportUnit}s
+     * are placed on a {@link TransportUnit} that shall be removed. Also
      * {@link TransportUnit} with active TransportOrders won't be removed, if a
      * proper delegate exists.
      */
@@ -229,7 +233,8 @@ public class TransportUnitServiceImpl extends EntityServiceImpl<TransportUnit, L
                     if (logger.isDebugEnabled()) {
                         logger.debug("Successfully marked TransportUnit for removal : " + tu.getId());
                     }
-                } catch (RemovalNotAllowedException e) {
+                }
+                catch (RemovalNotAllowedException e) {
                     logger.error("Not allowed to remove TransportUnit with id : " + tu.getId());
                 }
             }

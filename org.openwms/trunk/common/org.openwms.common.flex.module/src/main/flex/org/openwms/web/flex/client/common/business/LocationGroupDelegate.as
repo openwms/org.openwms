@@ -33,7 +33,7 @@ package org.openwms.web.flex.client.common.business {
     /**
      * A LocationGroupDelegate.
      *
-     * @author <a href="mailto:openwms@googlemail.com">Heiko Scherrer</a>
+     * @author <a href="mailto:openwms@gmail.com">Heiko Scherrer</a>
      * @version $Revision$
      */
     [Name("locationGroupDelegate")]
