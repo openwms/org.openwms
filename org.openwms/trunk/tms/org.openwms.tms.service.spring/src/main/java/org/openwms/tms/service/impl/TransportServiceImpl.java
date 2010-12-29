@@ -36,7 +36,8 @@ import org.openwms.tms.domain.values.TransportOrderState;
 import org.openwms.tms.integration.TransportOrderDao;
 import org.openwms.tms.service.TransportOrderService;
 import org.openwms.tms.service.TransportOrderServiceException;
-import org.openwms.tms.util.event.TransportServiceEvent;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
@@ -55,6 +56,8 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional
 public class TransportServiceImpl extends EntityServiceImpl<TransportOrder, Long> implements
         TransportOrderService<TransportOrder> {
+
+    private Logger logger = LoggerFactory.getLogger(this.getClass());
 
     @Autowired
     @Qualifier("transportOrderDao")
@@ -152,9 +155,10 @@ public class TransportServiceImpl extends EntityServiceImpl<TransportOrder, Long
         addEntity(transportOrder);
         dao.persist(transportOrder);
         /*
-        ctx.publishEvent(new TransportServiceEvent(transportOrder.getTransportUnit(),
-                TransportServiceEvent.TYPE.TRANSPORT_CREATED));
-                */
+         * ctx.publishEvent(new
+         * TransportServiceEvent(transportOrder.getTransportUnit(),
+         * TransportServiceEvent.TYPE.TRANSPORT_CREATED));
+         */
         if (logger.isDebugEnabled()) {
             logger.debug("... created");
         }
@@ -174,9 +178,10 @@ public class TransportServiceImpl extends EntityServiceImpl<TransportOrder, Long
             try {
                 transportOrder.setState(state);
                 /*
-                ctx.publishEvent(new TransportServiceEvent(transportOrder.getId(),
-                        TransportServiceEvent.TYPE.TRANSPORT_CANCELED));
-                        */
+                 * ctx.publishEvent(new
+                 * TransportServiceEvent(transportOrder.getId(),
+                 * TransportServiceEvent.TYPE.TRANSPORT_CANCELED));
+                 */
                 if (logger.isDebugEnabled()) {
                     logger.debug("TransportOrder " + transportOrder.getId() + " successfully set to:" + state);
                 }
