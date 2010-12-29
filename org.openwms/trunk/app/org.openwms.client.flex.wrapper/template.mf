@@ -68,5 +68,6 @@ Excluded-Imports:
  org.granite.*,
  org.springframework.test.*,
  org.openwms.web.servlet.*,
+ org.openwms.core.service.*,
  org.junit.*,
  http.utils.*
