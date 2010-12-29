@@ -12,7 +12,9 @@ Import-Bundle:
  com.springsource.org.hibernate.annotations;version="[3.4.0.GA, 3.4.0.GA]";import-scope:=application,
  com.springsource.org.hibernate.annotations.common;version="[3.3.0.ga, 3.3.0.ga]";import-scope:=application,
  com.springsource.org.hibernate.ejb;version="[3.4.0.GA, 3.4.0.GA]";import-scope:=application
- org.openwms.core.domain;version="0.0.1.SNAPSHOT"
+ org.openwms.core.domain;version="0.0.1.SNAPSHOT",
+ org.openwms.common.domain;version="0.0.1.SNAPSHOT",
+ org.openwms.tms.domain;version="0.0.1.SNAPSHOT"
 Import-Template: 
  javax.persistence;version="[1.0.0, 1.0.0]",
  javax.sql;version="0"

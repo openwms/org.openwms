@@ -32,7 +32,7 @@
         <class>org.openwms.core.domain.system.usermanagement.UserPassword</class>
         <class>org.openwms.core.domain.Module</class>
         <class>org.openwms.core.domain.values.Unit</class>
-<!--
+<!---->
         <class>org.openwms.common.domain.Location</class>
         <class>org.openwms.common.domain.LocationPK</class>
         <class>org.openwms.common.domain.LocationGroup</class>
@@ -48,7 +48,7 @@
         <class>org.openwms.common.domain.values.Weight</class>
         <class>org.openwms.common.domain.values.WeightUnit</class>
         <class>org.openwms.tms.domain.order.TransportOrder</class>
--->
+
         <exclude-unlisted-classes />
         <properties>
             <property name="hibernate.show_sql" value="true"/>
