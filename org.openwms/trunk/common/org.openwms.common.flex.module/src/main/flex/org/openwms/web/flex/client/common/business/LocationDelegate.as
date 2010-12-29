@@ -18,8 +18,8 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
-package org.openwms.web.flex.client.common.business
-{
+package org.openwms.web.flex.client.common.business {
+	
     import mx.collections.ArrayCollection;
     import mx.controls.Alert;
     
@@ -35,14 +35,14 @@ package org.openwms.web.flex.client.common.business
     /**
      * A LocationDelegate.
      *
-     * @author <a href="mailto:openwms@googlemail.com">Heiko Scherrer</a>
+     * @author <a href="mailto:openwms@gmail.com">Heiko Scherrer</a>
      * @version $Revision$
      */
     [Name("locationDelegate")]
     [ManagedEvent(name="LOAD_ALL_LOCATION_TYPES")]
     [ManagedEvent(name="LOAD_ALL_LOCATIONS")]
-    public class LocationDelegate
-    {
+    public class LocationDelegate {
+    	
         [In]
         [Bindable]
         public var tideContext:Context;
@@ -50,50 +50,40 @@ package org.openwms.web.flex.client.common.business
 	    [Bindable]
 	    public var commonModelLocator:CommonModelLocator;            
 
-        public function LocationDelegate():void
-        {
-        }
+        public function LocationDelegate():void { }
 
         /**
          * Call to load all Locations from the service.
          */
         [Observer("LOAD_ALL_LOCATIONS")]
-        public function getLocations():void
-        {
+        public function getLocations():void {
             tideContext.locationService.getAllLocations(onLocationsLoaded, onFault);
         }
-        private function onLocationsLoaded(event:TideResultEvent):void
-        {
+        private function onLocationsLoaded(event:TideResultEvent):void {
             commonModelLocator.allLocations = event.result as ArrayCollection;
         }
 
         [Observer("CREATE_LOCATION")]
-        public function createLocation(event:LocationEvent):void
-        {
+        public function createLocation(event:LocationEvent):void {
             tideContext.locationService.addEntity(event.data as Location, onLocationCreated, onFault);
         }
-        private function onLocationCreated(event:TideResultEvent):void
-        {
+        private function onLocationCreated(event:TideResultEvent):void {
             dispatchEvent(new LocationEvent(LocationEvent.LOAD_ALL_LOCATIONS));
         }
 
         [Observer("DELETE_LOCATION")]
-        public function deleteLocation(event:LocationEvent):void
-        {
+        public function deleteLocation(event:LocationEvent):void {
             tideContext.locationService.remove(event.data as Location, onLocationDeleted, onFault);
         }
-        private function onLocationDeleted(event:TideResultEvent):void
-        {
+        private function onLocationDeleted(event:TideResultEvent):void {
             dispatchEvent(new LocationEvent(LocationEvent.LOAD_ALL_LOCATIONS));
         }
 
         [Observer("SAVE_LOCATION")]
-        public function saveLocation(event:LocationEvent):void
-        {
+        public function saveLocation(event:LocationEvent):void {
             tideContext.locationService.save(event.data as Location, onLocationSaved, onFault);
         }
-        private function onLocationSaved(event:TideResultEvent):void
-        {
+        private function onLocationSaved(event:TideResultEvent):void {
             dispatchEvent(new LocationEvent(LocationEvent.LOAD_ALL_LOCATIONS));
         }
 
@@ -101,49 +91,40 @@ package org.openwms.web.flex.client.common.business
          * Call to load all LocationTypes from the service.
          */
         [Observer("LOAD_ALL_LOCATION_TYPES")]
-        public function getLocationTypes():void
-        {
+        public function getLocationTypes():void {
             tideContext.locationService.getAllLocationTypes(onLocationTypesLoaded, onFault);
         }
-        private function onLocationTypesLoaded(event:TideResultEvent):void
-        {
+        private function onLocationTypesLoaded(event:TideResultEvent):void {
             commonModelLocator.allLocationTypes = event.result as ArrayCollection;
         }
         
         [Observer("CREATE_LOCATION_TYPE")]
-        public function createLocationType(event:LocationTypeEvent):void
-        {
+        public function createLocationType(event:LocationTypeEvent):void {
             tideContext.locationService.createLocationType(event.data as LocationType, onLocationTypeCreated, onFault);
         }
-        private function onLocationTypeCreated(event:TideResultEvent):void
-        {
+        private function onLocationTypeCreated(event:TideResultEvent):void {
             dispatchEvent(new LocationTypeEvent(LocationTypeEvent.LOAD_ALL_LOCATION_TYPES));
         }
 
         [Observer("DELETE_LOCATION_TYPE")]
-        public function deleteLocationType(event:LocationTypeEvent):void
-        {
+        public function deleteLocationType(event:LocationTypeEvent):void {
             tideContext.locationService.deleteLocationTypes(event.data as ArrayCollection, onLocationTypesDeleted, onFault);
         }
-        private function onLocationTypesDeleted(event:TideResultEvent):void
-        {
+        private function onLocationTypesDeleted(event:TideResultEvent):void {
             dispatchEvent(new LocationTypeEvent(LocationTypeEvent.LOAD_ALL_LOCATION_TYPES));
         }
 
         [Observer("SAVE_LOCATION_TYPE")]
-        public function saveLocationType(event:LocationTypeEvent):void
-        {
+        public function saveLocationType(event:LocationTypeEvent):void {
             tideContext.locationService.saveLocationType(event.data as LocationType, onLocationTypesSaved, onFault);
         }
-        private function onLocationTypesSaved(event:TideResultEvent):void
-        {
+        private function onLocationTypesSaved(event:TideResultEvent):void {
             dispatchEvent(new LocationTypeEvent(LocationTypeEvent.LOAD_ALL_LOCATION_TYPES));
         }
 
-        private function onFault(event:TideFaultEvent):void
-        {
+        private function onFault(event:TideFaultEvent):void {
         	trace("Error executing operation on Location service:"+event.fault);
-            Alert.show("Error executing operation on Location service");
+            Alert.show("Error executing operation on Location service:"+event.fault);
         }
     }
 }

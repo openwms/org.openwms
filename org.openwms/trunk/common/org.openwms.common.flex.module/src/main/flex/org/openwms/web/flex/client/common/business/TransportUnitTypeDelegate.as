@@ -36,7 +36,7 @@ package org.openwms.web.flex.client.common.business {
     /**
      * A TransportUnitTypeDelegate.
      *
-     * @author <a href="mailto:openwms@googlemail.com">Heiko Scherrer</a>
+     * @author <a href="mailto:openwms@gmail.com">Heiko Scherrer</a>
      * @version $Revision: 771 $
      */
     [Name("transportUnitTypeDelegate")]
@@ -128,7 +128,7 @@ package org.openwms.web.flex.client.common.business {
 
         private function onFault(event:TideFaultEvent):void {
             trace("Error executing operation on Transport Unit service:" + event.fault);
-            Alert.show("Error executing operation on Transport Unit service");
+            Alert.show("Error executing operation on Transport Unit service:"+ event.fault);
         }
     }
 }

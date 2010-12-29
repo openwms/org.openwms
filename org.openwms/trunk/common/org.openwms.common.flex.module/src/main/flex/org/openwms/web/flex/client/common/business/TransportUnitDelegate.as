@@ -18,8 +18,7 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
-package org.openwms.web.flex.client.common.business
-{
+package org.openwms.web.flex.client.common.business {
     
     import mx.collections.ArrayCollection;
     import mx.controls.Alert;
@@ -34,14 +33,13 @@ package org.openwms.web.flex.client.common.business
     /**
      * A TransportUnitDelegate.
      *
-     * @author <a href="mailto:openwms@googlemail.com">Heiko Scherrer</a>
+     * @author <a href="mailto:openwms@gmail.com">Heiko Scherrer</a>
      * @version $Revision$
      */
     [Name("transportUnitDelegate")]
     [ManagedEvent(name="LOAD_TRANSPORT_UNITS")]
     [ManagedEvent(name="TRANSPORT_UNIT_CREATED")]
-    public class TransportUnitDelegate
-    {
+    public class TransportUnitDelegate {
 
         [In]
         [Bindable]
@@ -50,49 +48,39 @@ package org.openwms.web.flex.client.common.business
         [Bindable]
         public var commonModelLocator:CommonModelLocator;            
 
-        public function TransportUnitDelegate():void
-        {
-        }
+        public function TransportUnitDelegate():void { }
 
         [Observer("LOAD_TRANSPORT_UNITS")]
-        public function getTransportUnits():void
-        {
+        public function getTransportUnits():void {
         	tideContext.transportUnitService.getAllTransportUnits(onTransportUnitsLoaded, onFault);
         }
-        private function onTransportUnitsLoaded(event:TideResultEvent):void
-        {
+        private function onTransportUnitsLoaded(event:TideResultEvent):void {
             commonModelLocator.allTransportUnits = event.result as ArrayCollection;
         }
         
         [Observer("CREATE_TRANSPORT_UNIT")]
-        public function createTransportUnit(event:TransportUnitEvent):void
-        {
+        public function createTransportUnit(event:TransportUnitEvent):void {
         	var transportUnit:TransportUnit = event.data as TransportUnit;
         	tideContext.transportUnitService.createTransportUnit(transportUnit.barcode, transportUnit.transportUnitType, transportUnit.actualLocation.locationId, onTransportUnitCreated, onFault);
         }
-        private function onTransportUnitCreated(event:TideResultEvent):void
-        {
+        private function onTransportUnitCreated(event:TideResultEvent):void {
             dispatchEvent(new TransportUnitEvent(TransportUnitEvent.LOAD_TRANSPORT_UNITS));
             dispatchEvent(new TransportUnitEvent(TransportUnitEvent.TRANSPORT_UNIT_CREATED));
         }
         
         [Observer("DELETE_TRANSPORT_UNIT")]
-        public function deleteTransportUnits(event:TransportUnitEvent):void
-        {
+        public function deleteTransportUnits(event:TransportUnitEvent):void {
         	tideContext.transportUnitService.deleteTransportUnits(event.data as ArrayCollection, onTransportUnitDeleted, onFault);
         }
-        private function onTransportUnitDeleted(event:TideResultEvent):void
-        {
+        private function onTransportUnitDeleted(event:TideResultEvent):void {
             dispatchEvent(new TransportUnitEvent(TransportUnitEvent.LOAD_TRANSPORT_UNITS));
         }
 
         [Observer("SAVE_TRANSPORT_UNIT")]
-        public function saveTransportUnits(event:TransportUnitEvent):void
-        {
+        public function saveTransportUnits(event:TransportUnitEvent):void {
             tideContext.transportUnitService.save(event.data as TransportUnit, onTransportUnitSaved, onFault);
         }
-        private function onTransportUnitSaved(event:TideResultEvent):void
-        {
+        private function onTransportUnitSaved(event:TideResultEvent):void {
             dispatchEvent(new TransportUnitEvent(TransportUnitEvent.LOAD_TRANSPORT_UNITS));
         }
 

@@ -31,6 +31,8 @@ import org.openwms.core.service.exception.ServiceRuntimeException;
 import org.openwms.core.service.spring.EntityServiceImpl;
 import org.openwms.core.util.TreeNode;
 import org.openwms.core.util.TreeNodeImpl;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
@@ -48,6 +50,8 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional
 public class LocationGroupServiceImpl extends EntityServiceImpl<LocationGroup, Long> implements
         LocationGroupService<LocationGroup> {
+
+    private Logger logger = LoggerFactory.getLogger(this.getClass());
 
     /**
      * Generic Repository DAO.
