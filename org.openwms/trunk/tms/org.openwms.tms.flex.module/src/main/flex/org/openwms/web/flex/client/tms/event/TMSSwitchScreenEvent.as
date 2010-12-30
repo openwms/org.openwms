@@ -18,25 +18,23 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
-package org.openwms.web.flex.client.tms.event
-{
+package org.openwms.web.flex.client.tms.event {
+	
     import org.openwms.web.flex.client.event.SwitchScreenEvent;    
     import mx.collections.ArrayCollection;
 
     /**
      * A TMSSwitchScreenEvent.
      *
-     * @author <a href="mailto:openwms@googlemail.com">Heiko Scherrer</a>
+     * @author <a href="mailto:scherrer@users.sourceforge.net">Heiko Scherrer</a>
      * @version $Revision$
+     * @since 0.1
      */
-    public class TMSSwitchScreenEvent extends SwitchScreenEvent
-    {
+    public class TMSSwitchScreenEvent extends SwitchScreenEvent {
         public static const SHOW_TRANSPORT_ORDERS_VIEW:String = "tmsTransportOrdersView";
         
-        public function TMSSwitchScreenEvent(type:String, bubbles:Boolean = true, cancelable:Boolean = false)
-        {
+        public function TMSSwitchScreenEvent(type:String, bubbles:Boolean = true, cancelable:Boolean = false) {
             super(type, bubbles, cancelable);
         }
-
     }
 }

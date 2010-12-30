@@ -26,8 +26,9 @@ package org.openwms.web.flex.client.command {
     /**
      * A ShowStartscreenCommand.
      *
-     * @author <a href="mailto:openwms@googlemail.com">Heiko Scherrer</a>
+     * @author <a href="mailto:scherrer@users.sourceforge.net">Heiko Scherrer</a>
      * @version $Revision$
+     * @since 0.1
      */
     public class ShowStartscreenCommand extends AbstractCommand implements ICommand {
 

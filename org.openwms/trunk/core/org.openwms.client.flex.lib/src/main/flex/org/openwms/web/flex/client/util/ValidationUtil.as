@@ -19,6 +19,7 @@
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
 package org.openwms.web.flex.client.util {
+	
     import mx.controls.TextInput;
     import mx.events.ValidationResultEvent;
     import mx.formatters.Formatter;
@@ -27,13 +28,13 @@ package org.openwms.web.flex.client.util {
     /**
      * A ValidationUtil.
      *
-     * @author <a href="mailto:openwms@googlemail.com">Heiko Scherrer</a>
+     * @author <a href="mailto:scherrer@users.sourceforge.net">Heiko Scherrer</a>
      * @version $Revision$
+     * @since 0.1
      */
     public final class ValidationUtil {
 
-        public function ValidationUtil() {
-        }
+        public function ValidationUtil() { }
 
         /**
          * Use a validator <code>val</code> to validate <code>obj</code>.

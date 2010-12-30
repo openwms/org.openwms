@@ -40,6 +40,12 @@ package org.openwms.web.flex.client.module {
     import org.openwms.web.flex.client.event.ApplicationEvent;
     import org.openwms.web.flex.client.model.ModelLocator;
 
+    [Name("moduleLocator")]
+    [ManagedEvent(name="MODULE_CONFIG_CHANGED")]
+    [ManagedEvent(name="MODULES_CONFIGURED")]
+    [ManagedEvent(name="MODULE_LOADED")]
+    [ManagedEvent(name="MODULE_UNLOADED")]
+    [Bindable]
     /**
      * A ModuleLocator is the main implementation that cares about handling
      * with Flex Modules with the CORE Flex Application.
@@ -47,15 +53,10 @@ package org.openwms.web.flex.client.module {
      * It fires the following Tide Events:
      * MODULE_CONFIG_CHANGED, MODULES_CONFIGURED, MODULE_LOADED, MODULE_UNLOADED.
      *
+     * @author <a href="mailto:scherrer@users.sourceforge.net">Heiko Scherrer</a>
      * @version $Revision$
      * @since 0.1
      */
-    [Name("moduleLocator")]
-    [ManagedEvent(name="MODULE_CONFIG_CHANGED")]
-    [ManagedEvent(name="MODULES_CONFIGURED")]
-    [ManagedEvent(name="MODULE_LOADED")]
-    [ManagedEvent(name="MODULE_UNLOADED")]
-    [Bindable]
     public class ModuleLocator extends EventDispatcher {
 
         /**

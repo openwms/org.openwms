@@ -18,27 +18,24 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
-package org.openwms.web.flex.client.property
-{
-	import flash.utils.Dictionary;
-	
+package org.openwms.web.flex.client.property {
 
+	import flash.utils.Dictionary;
+
+    [Name("propertyHolder")]
+    [Bindable]
     /**
      * A PropertyHolder.
      *
-     * @author <a href="mailto:openwms@googlemail.com">Heiko Scherrer</a>
+     * @author <a href="mailto:scherrer@users.sourceforge.net">Heiko Scherrer</a>
      * @version $Revision$
+     * @since 0.1
      */
-    [Name("propertyHolder")]
-    [Bindable]
-    public class PropertyHolder 
-    {
+    public class PropertyHolder  {
     	public var appProps:Dictionary = new Dictionary();
     	public var moduleProps:Dictionary = new Dictionary();
     	public var roleProps:Dictionary = new Dictionary();
     	public var userProps:Dictionary = new Dictionary();
-    	
     	public function PropertyHolder() {}
-    	
     }
 }

@@ -18,18 +18,19 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
-package org.openwms.web.flex.client.tms.event
-{
+package org.openwms.web.flex.client.tms.event {
+	
     import flash.events.Event;
 
     /**
      * A TransportOrderEvent.
      *
-     * @author <a href="mailto:openwms@googlemail.com">Heiko Scherrer</a>
+     * @author <a href="mailto:scherrer@users.sourceforge.net">Heiko Scherrer</a>
      * @version $Revision$
+     * @since 0.1
      */
-    public class TransportOrderEvent extends Event
-    {
+    public class TransportOrderEvent extends Event {
+    	
         public static const LOAD_TRANSPORT_ORDERS:String = "LOAD_TRANSPORT_ORDERS";
         public static const CREATE_TRANSPORT_ORDER:String = "CREATE_TRANSPORT_ORDER";
         public static const DELETE_TRANSPORT_ORDER:String = "DELETE_TRANSPORT_ORDER";
@@ -38,10 +39,8 @@ package org.openwms.web.flex.client.tms.event
         
         public var data:*;
 
-        public function TransportOrderEvent(type:String, bubbles:Boolean = true, cancelable:Boolean = false)
-        {
+        public function TransportOrderEvent(type:String, bubbles:Boolean = true, cancelable:Boolean = false) {
             super(type, bubbles, cancelable);
         }
-
     }
 }

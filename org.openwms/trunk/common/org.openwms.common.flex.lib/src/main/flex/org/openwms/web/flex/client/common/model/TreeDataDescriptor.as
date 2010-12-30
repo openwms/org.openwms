@@ -30,8 +30,9 @@ package org.openwms.web.flex.client.common.model {
     /**
      * A TreeDataDescriptor.
      *
-     * @author <a href="mailto:openwms@googlemail.com">Heiko Scherrer</a>
+     * @author <a href="mailto:scherrer@users.sourceforge.net">Heiko Scherrer</a>
      * @version $Revision$
+     * @since 0.1
      */
     public class TreeDataDescriptor implements mx.controls.treeClasses.ITreeDataDescriptor {
         

@@ -18,8 +18,8 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
-package org.openwms.web.flex.client.common.factory
-{
+package org.openwms.web.flex.client.common.factory {
+	
 	import org.openwms.common.domain.Location;
 	import org.openwms.common.domain.LocationPK;
 	import org.openwms.web.flex.client.component.LocationSelector;
@@ -27,19 +27,17 @@ package org.openwms.web.flex.client.common.factory
     /**
      * A DOFactory.
      *
-     * @author <a href="mailto:openwms@googlemail.com">Heiko Scherrer</a>
+     * @author <a href="mailto:scherrer@users.sourceforge.net">Heiko Scherrer</a>
      * @version $Revision: 700 $
+     * @since 0.1
      */
-    public class DOFactory
-    {
+    public class DOFactory {
 
         /**
          * Returns a transient new Location instance.
          */
-        public static function newLocation(s:String):Location
-        {
+        public static function newLocation(s:String):Location {
             return new Location(new LocationPK(s, s, s, s, s));
         }
-
     }
 }

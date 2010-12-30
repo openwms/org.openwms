@@ -40,7 +40,7 @@ import org.springframework.transaction.annotation.Transactional;
  * A TransportUnitRemovalListener. Is implemented as a Voter to allow the
  * removal of {@link TransportUnit}s.
  * 
- * @author <a href="mailto:openwms@googlemail.com">Heiko Scherrer</a>
+ * @author <a href="mailto:scherrer@users.sourceforge.net">Heiko Scherrer</a>
  * @version $Revision$
  * @since 0.1
  */

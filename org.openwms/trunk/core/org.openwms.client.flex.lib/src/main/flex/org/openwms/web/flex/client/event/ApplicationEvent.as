@@ -24,7 +24,9 @@ package org.openwms.web.flex.client.event {
     /**
      * An ApplicationEvent used for some management purpose.
      *
+     * @author <a href="mailto:scherrer@users.sourceforge.net">Heiko Scherrer</a>
      * @version $Revision$
+     * @since 0.1
      */
     public class ApplicationEvent extends Event {
     	

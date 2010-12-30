@@ -32,16 +32,18 @@ package org.openwms.web.flex.client.business {
     import org.openwms.web.flex.client.event.RoleEvent;
     import org.openwms.web.flex.client.model.ModelLocator;
 
-    /**
-     * A RoleDelegate.
-     *
-     * @version $Revision$
-     */
     [Name("roleController")]
     [ManagedEvent(name="LOAD_ALL_ROLES")]
     [ManagedEvent(name="ROLE_ADDED")]
     [ManagedEvent(name="ROLE_SAVED")]
     [Bindable]
+    /**
+     * A RoleDelegate.
+     *
+     * @author <a href="mailto:scherrer@users.sourceforge.net">Heiko Scherrer</a>
+     * @version $Revision$
+     * @since 0.1
+     */
     public class RoleDelegate {
 
         private static var logger : ILogger = Log.getLogger("org.openwms.web.flex.client.business.RoleDelegate");

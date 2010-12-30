@@ -24,7 +24,9 @@ package org.openwms.web.flex.client {
     /**
      * An IObserver is notified about an object that references the IObserver.
      *
+     * @author <a href="mailto:scherrer@users.sourceforge.net">Heiko Scherrer</a>
      * @version $Revision$
+     * since 0.1
      */
     public interface IObserver {
     	

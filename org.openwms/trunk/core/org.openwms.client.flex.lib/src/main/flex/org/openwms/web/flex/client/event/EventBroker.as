@@ -18,45 +18,34 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
-package org.openwms.web.flex.client.event
-{
+package org.openwms.web.flex.client.event {
 
     import flash.events.Event;
     import flash.events.EventDispatcher;
 
+    [Bindable]
     /**
      * An EventBroker.
      *
-     * @author <a href="mailto:openwms@googlemail.com">Heiko Scherrer</a>
+     * @author <a href="mailto:scherrer@users.sourceforge.net">Heiko Scherrer</a>
      * @version $Revision$
      * @since 0.1
      */
-    [Bindable]
-    public class EventBroker extends EventDispatcher
-    {
+    public class EventBroker extends EventDispatcher {
         private static var instance:EventBroker;
 
-        public function EventBroker(enforcer:SingletonEnforcer)
-        {
-        }
+        public function EventBroker(enforcer:SingletonEnforcer) { }
 
-        public static function getInstance():EventBroker
-        {
-            if (instance == null)
-            {
+        public static function getInstance():EventBroker {
+            if (instance == null) {
                 instance = new EventBroker(new SingletonEnforcer);
             }
             return instance;
         }
 
-        public function dispatchEvt(e:Event):void
-        {
+        public function dispatchEvt(e:Event):void {
             dispatchEvent(e);
         }
-
     }
 }
-
-class SingletonEnforcer
-{
-}
+class SingletonEnforcer { }

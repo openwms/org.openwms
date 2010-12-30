@@ -18,46 +18,38 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
-package org.openwms.web.flex.client
-{
+package org.openwms.web.flex.client {
+	
     import mx.collections.ArrayCollection;
     import mx.collections.XMLListCollection;
 
     /**
      * DEPRECATED
      */
-    public class MenuItemMap extends HashMap
-    {
+    public class MenuItemMap extends HashMap {
+    	
         /**
          * MenuItemMap.
          */
-        public function MenuItemMap(dataProvider:XMLListCollection)
-        {
+        public function MenuItemMap(dataProvider:XMLListCollection) {
             super();
             var appendOthers:Boolean = false;
-            for each (var item:XML in dataProvider)
-            {
-                if (item.hasOwnProperty("@targetPos"))
-                {
+            for each (var item:XML in dataProvider) {
+                if (item.hasOwnProperty("@targetPos")) {
                     trace("Put " + item.@label + " to target position " + item.@targetPos);
                     put(parseInt(item.@targetPos), item);
                 }
-                else
-                {
+                else {
                     appendOthers = true;
                 }
             }
-            if (appendOthers)
-            {
+            if (appendOthers) {
                 // Do it once again and append unknowns to the end...
-                for each (item in dataProvider)
-                {
-                    if (!item.hasOwnProperty("@targetPos"))
-                    {
+                for each (item in dataProvider) {
+                    if (!item.hasOwnProperty("@targetPos")) {
                         var i:int = getKeys().length;
                         var pos:int = 0;
-                        if (i > 0)
-                        {
+                        if (i > 0) {
                             pos = getKeys()[i - 1];
                             pos++;
                         }

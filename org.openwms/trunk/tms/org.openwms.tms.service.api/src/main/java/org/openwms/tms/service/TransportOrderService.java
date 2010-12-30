@@ -40,7 +40,7 @@ import org.openwms.tms.domain.values.TransportOrderState;
  * 
  * @param <T>
  *            Any kind of {@link TransportOrder}
- * @author <a href="mailto:openwms@googlemail.com">Heiko Scherrer</a>
+ * @author <a href="mailto:scherrer@users.sourceforge.net">Heiko Scherrer</a>
  * @version $Revision$
  * @since 0.1
  * @see org.openwms.common.service.EntityService

@@ -41,7 +41,7 @@ import org.slf4j.LoggerFactory;
  * behavior.
  * </p>
  * 
- * @author <a href="mailto:openwms@googlemail.com">Heiko Scherrer</a>
+ * @author <a href="mailto:scherrer@users.sourceforge.net">Heiko Scherrer</a>
  * @since 0.1
  * @version $Revision$
  */

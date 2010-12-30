@@ -23,6 +23,7 @@ package org.openwms.web.flex.client.util {
     /**
      * A BindingProperty object encapsulates source and target used by BindingUtils.
      *
+     * @author <a href="mailto:scherrer@users.sourceforge.net">Heiko Scherrer</a>
      * @version $Revision: 1019 $
      * @since 0.1
      */
@@ -70,6 +71,5 @@ package org.openwms.web.flex.client.util {
         public function get hostPropertyName():String {
             return _hostPropertyName;
         }
-
 	}
 }

@@ -34,7 +34,7 @@ import org.springframework.stereotype.Repository;
  * So far there is no implementation, just to be compliant.
  * </p>
  * 
- * @author <a href="mailto:openwms@gmail.com">Heiko Scherrer</a>
+ * @author <a href="mailto:scherrer@users.sourceforge.net">Heiko Scherrer</a>
  * @version $Revision: $
  * @since 0.1
  * @see org.openwms.core.integration.jpa.AbstractGenericJpaDao

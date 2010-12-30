@@ -31,15 +31,17 @@ package org.openwms.web.flex.client.business {
     import org.openwms.web.flex.client.event.UserEvent;
     import org.openwms.web.flex.client.model.ModelLocator;
 
+    [Name("userController")]
+    [ManagedEvent(name="LOAD_ALL_USERS")]
+    [Bindable]
     /**
      * An UserDelegate. Handles all interaction with the server-side userService.
      * Provides simple CRUD methods.
      *
+     * @author <a href="mailto:scherrer@users.sourceforge.net">Heiko Scherrer</a>
      * @version $Revision$
+     * @since 0.1
      */
-    [Name("userController")]
-    [ManagedEvent(name="LOAD_ALL_USERS")]
-    [Bindable]
     public class UserDelegate {
         [In]
         public var tideContext : Context;

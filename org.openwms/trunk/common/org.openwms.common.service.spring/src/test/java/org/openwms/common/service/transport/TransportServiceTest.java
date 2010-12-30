@@ -42,7 +42,7 @@ import org.springframework.test.context.ContextConfiguration;
 /**
  * A TransportServiceTest.
  * 
- * @author <a href="mailto:openwms@googlemail.com">Heiko Scherrer</a>
+ * @author <a href="mailto:scherrer@users.sourceforge.net">Heiko Scherrer</a>
  * @version $Revision$
  */
 @ContextConfiguration("classpath:META-INF/spring/TransportServiceTest-context.xml")
