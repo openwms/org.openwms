@@ -36,8 +36,9 @@ package org.openwms.web.flex.client.common.business {
     /**
      * A TransportUnitTypeDelegate.
      *
-     * @author <a href="mailto:openwms@gmail.com">Heiko Scherrer</a>
+     * @author <a href="mailto:scherrer@users.sourceforge.net">Heiko Scherrer</a>
      * @version $Revision: 771 $
+     * @since 0.1
      */
     [Name("transportUnitTypeDelegate")]
     [ManagedEvent(name="LOAD_ALL_TRANSPORT_UNIT_TYPES")]

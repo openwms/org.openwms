@@ -18,50 +18,43 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
-package org.openwms.web.flex.client.common.view.dialogs
-{
+package org.openwms.web.flex.client.common.view.dialogs {
 
     import flash.events.Event;
-    
     import mx.collections.ArrayCollection;
-    
     import org.openwms.common.domain.TransportUnitType;
     import org.openwms.web.flex.client.common.event.TransportUnitTypeEvent;
     
     /**
      * A ConfirmDeletionTransportUnitTypesDialog.
      *
-     * @author <a href="mailto:openwms@googlemail.com">Heiko Scherrer</a>
+     * @author <a href="mailto:scherrer@users.sourceforge.net">Heiko Scherrer</a>
      * @version $Revision: 796 $
+     * @since 0.1
      */
     [Name]
     [ManagedEvent(name="DELETE_TRANSPORT_UNIT_TYPE")]
     [Bindable]
-    public class ConfirmDeletionTransportUnitTypesDialog extends ConfirmDeletionDialog
-    {
+    public class ConfirmDeletionTransportUnitTypesDialog extends ConfirmDeletionDialog {
 
         /**
          * Used to construct the instance.
          */
-        public function ConfirmDeletionTransportUnitTypesDialog()
-        {
+        public function ConfirmDeletionTransportUnitTypesDialog() {
         	super();
         	super.title = "Delete selected Transport Unit Types";
         	super.messageText = "Delete selected Transport Unit Types";
         }
         
-        override protected function accept(e:Event):void
-        {
+        override protected function accept(e:Event):void {
             var event:TransportUnitTypeEvent = new TransportUnitTypeEvent(TransportUnitTypeEvent.DELETE_TRANSPORT_UNIT_TYPE);
             event.data = deleteLst.dataProvider as ArrayCollection;
             dispatchEvent(event);
             closeDialog();
         }
         
-        override protected function formatFunction(item:*):String
-        {
+        override protected function formatFunction(item:*):String {
             return (item as TransportUnitType).type+"\t"+(item as TransportUnitType).description;
         }
-        
      }
 }

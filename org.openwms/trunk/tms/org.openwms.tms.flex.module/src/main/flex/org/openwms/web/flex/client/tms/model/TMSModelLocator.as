@@ -18,23 +18,21 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
-package org.openwms.web.flex.client.tms.model
-{
+package org.openwms.web.flex.client.tms.model {
 
     import mx.collections.ArrayCollection;
-    
     import org.openwms.tms.domain.values.TransportOrderState;
 
     /**
      * A TMSModelLocator.
      *
-     * @author <a href="mailto:openwms@googlemail.com">Heiko Scherrer</a>
+     * @author <a href="mailto:scherrer@users.sourceforge.net">Heiko Scherrer</a>
      * @version $Revision$
+     * @since 0.1
      */
     [Name("tmsModelLocator")]
     [Bindable]
-    public class TMSModelLocator
-    {
+    public class TMSModelLocator {
 
         public var allTransportOrders:ArrayCollection = new ArrayCollection();
         public var allStates:ArrayCollection = new ArrayCollection(TransportOrderState.constants);
@@ -46,8 +44,7 @@ package org.openwms.web.flex.client.tms.model
         /**
          * Constructor.
          */
-        public function TMSModelLocator()
-        {
+        public function TMSModelLocator() {
             allStates.removeItemAt(allStates.getItemIndex(TransportOrderState.CREATED));
             allStates.removeItemAt(allStates.getItemIndex(TransportOrderState.INITIALIZED));
             allStates.removeItemAt(allStates.getItemIndex(TransportOrderState.STARTED));

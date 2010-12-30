@@ -27,7 +27,7 @@ import org.openwms.core.domain.system.usermanagement.UserPassword;
  * An UserDao adds particular functionality regarding {@link User} entity
  * classes.
  * 
- * @author <a href="mailto:openwms@gmail.com">Heiko Scherrer</a>
+ * @author <a href="mailto:scherrer@users.sourceforge.net">Heiko Scherrer</a>
  * @version $Revision$
  * @since 0.1
  * @see org.openwms.core.integration.GenericDao

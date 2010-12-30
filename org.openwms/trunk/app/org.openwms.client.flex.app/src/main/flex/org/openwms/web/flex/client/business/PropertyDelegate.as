@@ -30,15 +30,16 @@ package org.openwms.web.flex.client.business {
     import org.openwms.common.domain.values.Weight;
     import org.openwms.web.flex.client.model.ModelLocator;
     
-    /**
-     * A PropertyDelegate.
-     *
-     * @author <a href="mailto:openwms@googlemail.com">Heiko Scherrer</a>
-     * @version $Revision$
-     */
     [Name("propertyDelegate")]
     [ManagedEvent(name="LOAD_ALL_PROPERTIES")]
     [Bindable]
+    /**
+     * A PropertyDelegate.
+     *
+     * @author <a href="mailto:scherrer@users.sourceforge.net">Heiko Scherrer</a>
+     * @version $Revision$
+     * @since 0.1
+     */
     public class PropertyDelegate {
 
         [In]

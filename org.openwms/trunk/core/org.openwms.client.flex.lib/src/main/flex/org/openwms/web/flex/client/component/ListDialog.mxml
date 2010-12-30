@@ -70,6 +70,7 @@
              * Should the dialogue been closed after submit?
              */
             public var closeDialogOnSubmit:Boolean = true;
+            
             /**
              * Do initial things, like setting the focus and title text and register event handlers.
              */

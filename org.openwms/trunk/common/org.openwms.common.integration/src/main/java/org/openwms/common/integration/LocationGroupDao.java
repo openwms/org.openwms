@@ -27,7 +27,7 @@ import org.openwms.core.integration.GenericDao;
  * A LocationGroupDao adds particular functionality regarding
  * {@link LocationGroup} entity classes.
  * 
- * @author <a href="mailto:openwms@googlemail.com">Heiko Scherrer</a>
+ * @author <a href="mailto:scherrer@users.sourceforge.net">Heiko Scherrer</a>
  * @version $Revision$
  * @since 0.1
  * @see org.openwms.core.integration.GenericDao

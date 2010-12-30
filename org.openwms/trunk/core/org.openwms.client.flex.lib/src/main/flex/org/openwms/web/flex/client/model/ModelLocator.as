@@ -31,7 +31,9 @@ package org.openwms.web.flex.client.model{
      * A ModelLocator is the main model backing bean to store session data.
      * It is a Tide component and can be injected by name=modelLocator.
      *
+     * @author <a href="mailto:scherrer@users.sourceforge.net">Heiko Scherrer</a>
      * @version $Revision$
+     * @since 0.1
      */
     [Name("modelLocator")]
     [Bindable]
@@ -154,10 +156,7 @@ package org.openwms.web.flex.client.model{
          * Access the views array and add the viewObject to the defined
          * position. The postion is mandatory for the viewStack.
          */
-        public static function addView(pos:int, view:Object):void
-        {
-
-        }
+        public static function addView(pos:int, view:Object):void { }
         
         public static function today():Date {
         	var today:Date = new Date();
@@ -168,15 +167,11 @@ package org.openwms.web.flex.client.model{
         /**
          * Search the viewObject from the array of views and remove it.
          */
-        public static function removeView(view:Object):void
-        {
-        }
+        public static function removeView(view:Object):void { }
 
         /**
          * Shift the view to a new position.
          **/
-        public static function moveView(destPos:int, view:Object):void
-        {
-        }
+        public static function moveView(destPos:int, view:Object):void { }
     }
 }

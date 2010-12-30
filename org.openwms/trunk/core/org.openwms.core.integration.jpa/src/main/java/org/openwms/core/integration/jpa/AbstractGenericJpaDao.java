@@ -56,7 +56,7 @@ import org.springframework.transaction.annotation.Transactional;
  *            Any serializable type, mostly an Entity class type.
  * @param <ID>
  *            The type of the Entity class' unique id
- * @author <a href="mailto:openwms@gmail.com">Heiko Scherrer</a>
+ * @author <a href="mailto:scherrer@users.sourceforge.net">Heiko Scherrer</a>
  * @version $Revision$
  * @since 0.1
  * @see org.springframework.stereotype.Repository

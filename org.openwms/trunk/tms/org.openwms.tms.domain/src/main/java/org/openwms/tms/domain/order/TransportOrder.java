@@ -52,7 +52,7 @@ import org.openwms.tms.domain.values.TransportOrderState;
  * A TransportOrder is used to move {@link TransportUnit}s from a current
  * {@link Location} to a target {@link Location}.
  * 
- * @author <a href="mailto:openwms@googlemail.com">Heiko Scherrer</a>
+ * @author <a href="mailto:scherrer@users.sourceforge.net">Heiko Scherrer</a>
  * @version $Revision$
  * @since 0.1
  * @see org.openwms.common.domain.TransportUnit

@@ -18,13 +18,10 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
-package org.openwms.web.flex.client.common.view.dialogs
-{
+package org.openwms.web.flex.client.common.view.dialogs {
 
     import flash.events.Event;
-    
     import mx.collections.ArrayCollection;
-    
     import org.openwms.common.domain.Location;
     import org.openwms.common.domain.LocationType;
     import org.openwms.web.flex.client.common.event.LocationEvent;
@@ -32,37 +29,33 @@ package org.openwms.web.flex.client.common.view.dialogs
     /**
      * A ConfirmDeletionLocationDialog.
      *
-     * @author <a href="mailto:openwms@googlemail.com">Heiko Scherrer</a>
+     * @author <a href="mailto:scherrer@users.sourceforge.net">Heiko Scherrer</a>
      * @version $Revision: 796 $
+     * @since 0.1
      */
     [Name]
     [ManagedEvent(name="DELETE_LOCATION")]
     [Bindable]
-    public class ConfirmDeletionLocationDialog extends ConfirmDeletionDialog
-    {
+    public class ConfirmDeletionLocationDialog extends ConfirmDeletionDialog {
 
         /**
          * Used to construct the instance.
          */
-        public function ConfirmDeletionLocationDialog()
-        {
+        public function ConfirmDeletionLocationDialog() {
             super();
             super.title = "Delete selected Locations";
             super.messageText = "Delete selected Locations";
         }
         
-        override protected function accept(e:Event):void
-        {
+        override protected function accept(e:Event):void {
             var event:LocationEvent = new LocationEvent(LocationEvent.DELETE_LOCATION);
             event.data = (deleteLst.dataProvider as ArrayCollection).getItemAt(0);
             dispatchEvent(event);
             closeDialog();
         }
         
-        override protected function formatFunction(item:*):String
-        {
+        override protected function formatFunction(item:*):String {
             return (item as Location).locationId.toString()+"\t"+(item as Location).description;
         }
-        
      }
 }

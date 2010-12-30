@@ -26,7 +26,7 @@ import java.io.Serializable;
  * A TooManyEntriesFoundException is thrown when a single result was expected
  * but more than one objects were found.
  * 
- * @author <a href="mailto:openwms@gmail.com">Heiko Scherrer</a>
+ * @author <a href="mailto:scherrer@users.sourceforge.net">Heiko Scherrer</a>
  * @version $Revision$
  * @since 0.1
  * @see org.openwms.core.integration.exception.DataException

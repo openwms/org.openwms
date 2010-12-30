@@ -27,12 +27,21 @@ package org.openwms.web.flex.client.util {
     /**
      * A DisplayUtility.
      *
+     * @author <a href="mailto:scherrer@users.sourceforge.netm">Heiko Scherrer</a>
      * @version $Revision$
+     * @since 0.1
      */
     public final class DisplayUtility {
     	
         public function DisplayUtility() { }
 
+        /**
+         * Resolve the view with a given <code>viewId</code> from a <code>viewStack</code>.
+         * 
+         * @param viewId The id of the the view to resolve
+         * @param viewStack The ViewStack where the view should be resolved from
+         * @return ViewStack index
+         */
         public static function getView(viewId : String, viewStack : ViewStack) : int {
             if (viewStack.getChildByName(viewId) == null) {
                 return -1;
@@ -40,7 +49,13 @@ package org.openwms.web.flex.client.util {
             return viewStack.getChildIndex(viewStack.getChildByName(viewId));
         }
 
-        public static function getListOfValues(list : ArrayCollection, name : String) : ArrayCollection {
+        /**
+         * Not implemented yet.
+         * 
+         * @param list
+         * @param name
+         */
+        private static function getListOfValues(list : ArrayCollection, name : String) : ArrayCollection {
             return null;
         }
         
@@ -62,6 +77,5 @@ package org.openwms.web.flex.client.util {
         		watcher.unwatch();
         	}
         }
-
     }
 }

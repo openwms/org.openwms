@@ -23,8 +23,9 @@ package org.openwms.web.flex.client.helper {
     /**
      * A ServiceHolder.
      *
-     * @author <a href="mailto:openwms@googlemail.com">Heiko Scherrer</a>
+     * @author <a href="mailto:scherrer@users.sourceforge.net">Heiko Scherrer</a>
      * @version $Revision$
+     * @since 0.1
      */
     public class ServiceHolder {
 
@@ -33,8 +34,7 @@ package org.openwms.web.flex.client.helper {
         /**
          * Used to construct the Singleton instance.
          */
-        public function ServiceHolder(enforcer:SingletonEnforcer) {
-        }
+        public function ServiceHolder(enforcer:SingletonEnforcer) { }
 
         /**
          * Return the instance of ModelLocator which is implemented
@@ -46,7 +46,6 @@ package org.openwms.web.flex.client.helper {
             }
             return instance;
         }
-
     }
 }
 

@@ -18,8 +18,7 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
-package org.openwms.web.flex.client.event
-{
+package org.openwms.web.flex.client.event {
     import flash.events.Event;
     
     import mx.collections.ArrayCollection;
@@ -27,36 +26,31 @@ package org.openwms.web.flex.client.event
     /**
      * A SwitchScreenEvent.
      *
-     * @author <a href="mailto:openwms@googlemail.com">Heiko Scherrer</a>
+     * @author <a href="mailto:scherrer@users.sourceforge.net">Heiko Scherrer</a>
      * @version $Revision$
+     * @since 0.1
      */
-    public class SwitchScreenEvent extends Event
-    {
+    public class SwitchScreenEvent extends Event {
         public static const SHOW_STARTSCREEN:String = "emptyScreenView";
         public static const SHOW_MODULE_MGMT_VIEW:String = "moduleManagementView";
         public static const SHOW_USER_MGMT_VIEW:String = "userManagementView";
         public static const SHOW_ROLE_MGMT_VIEW:String = "roleManagementView";
         public static const SHOW_SETTING_MGMT_VIEW:String = "settingManagementView";
-        
         public static var eventTypes:Array;
 
-        public function SwitchScreenEvent(type:String, bubbles:Boolean = true, cancelable:Boolean = false)
-        {
+        public function SwitchScreenEvent(type:String, bubbles:Boolean = true, cancelable:Boolean = false) {
         	eventTypes = new Array();
             super(type, bubbles, cancelable);
         }
         
-        public static function addType(type:String):void
-        {
+        public static function addType(type:String):void {
         	eventTypes.push(type);
         }
         
-        public static function removeType(type:String):void
-        {
+        public static function removeType(type:String):void {
         	var col:ArrayCollection = new ArrayCollection(eventTypes);
         	col.removeItemAt(eventTypes.indexOf(type));
         	eventTypes = col.toArray();
         }
-
     }
 }

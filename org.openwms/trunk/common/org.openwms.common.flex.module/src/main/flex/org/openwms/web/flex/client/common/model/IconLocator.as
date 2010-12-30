@@ -18,27 +18,21 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
-package org.openwms.web.flex.client.common.model
-{
-
+package org.openwms.web.flex.client.common.model {
 
     /**
      * An IconLocator.
      *
-     * @author <a href="mailto:openwms@googlemail.com">Heiko Scherrer</a>
+     * @author <a href="mailto:scherrer@users.sourceforge.net">Heiko Scherrer</a>
      * @version $Revision$
+     * @since 0.1
      */
     [Bindable]
-    public class IconLocator
-    {
+    public class IconLocator {
 
         //[Embed(source="/assets/icons/fuegue/user--plus.png")]
         public static var iconUserAdd:Class
 
-
-        public function IconLocator()
-        {
-        }
-
+        public function IconLocator() { }
     }
 }

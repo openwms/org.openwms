@@ -33,7 +33,7 @@ import org.springframework.orm.jpa.persistenceunit.MutablePersistenceUnitInfo;
  * implementation and adds support for multiple jar files with Entity classes.
  * </p>
  * 
- * @author <a href="mailto:openwms@gmail.com">Heiko Scherrer</a>
+ * @author <a href="mailto:scherrer@users.sourceforge.net">Heiko Scherrer</a>
  * @version $Revision$
  * @since 0.1
  * @deprecated as OSGi is used since 0.1

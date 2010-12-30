@@ -18,18 +18,17 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
-package org.openwms.web.flex.client.event
-{
+package org.openwms.web.flex.client.event {
     import flash.events.Event;
 
     /**
      * An UserEvent.
      *
-     * @author <a href="mailto:openwms@googlemail.com">Heiko Scherrer</a>
+     * @author <a href="mailto:scherrer@users.sourceforge.net">Heiko Scherrer</a>
      * @version $Revision$
+     * @since 0.1
      */
-    public class UserEvent extends Event
-    {
+    public class UserEvent extends Event {
         public static const LOAD_ALL_USERS:String = "LOAD_ALL_USERS";
         public static const ADD_USER:String = "ADD_USER";
         public static const SAVE_USER:String = "SAVE_USER";
@@ -41,10 +40,8 @@ package org.openwms.web.flex.client.event
 
         public var data:*;
 
-        public function UserEvent(type:String, bubbles:Boolean = true, cancelable:Boolean = false)
-        {
+        public function UserEvent(type:String, bubbles:Boolean = true, cancelable:Boolean = false) {
             super(type, bubbles, cancelable);
         }
-
     }
 }
