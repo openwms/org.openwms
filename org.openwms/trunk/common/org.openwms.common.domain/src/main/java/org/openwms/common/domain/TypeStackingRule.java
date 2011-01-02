@@ -45,7 +45,7 @@ import org.openwms.core.domain.DomainObject;
  * @see org.openwms.common.domain.TransportUnitType
  */
 @Entity
-@Table(name = "COR_TYPE_STACKING_RULE", uniqueConstraints = @UniqueConstraint(columnNames = { "TRANSPORT_UNIT_TYPE",
+@Table(name = "COM_TYPE_STACKING_RULE", uniqueConstraints = @UniqueConstraint(columnNames = { "TRANSPORT_UNIT_TYPE",
         "NO_TRANSPORT_UNITS", "ALLOWED_TRANSPORT_UNIT_TYPE" }))
 public class TypeStackingRule extends AbstractEntity implements DomainObject<Long>, Serializable, Rule {
 

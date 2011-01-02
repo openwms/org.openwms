@@ -48,7 +48,7 @@ import org.openwms.core.domain.DomainObject;
  * @see org.openwms.common.domain.TransportUnitType
  */
 @Entity
-@Table(name = "COR_TYPE_PLACING_RULE", uniqueConstraints = @UniqueConstraint(columnNames = { "TRANSPORT_UNIT_TYPE",
+@Table(name = "COM_TYPE_PLACING_RULE", uniqueConstraints = @UniqueConstraint(columnNames = { "TRANSPORT_UNIT_TYPE",
         "PRIVILEGE_LEVEL", "ALLOWED_LOCATION_TYPE" }))
 public class TypePlacingRule extends AbstractEntity implements DomainObject<Long>, Serializable, Rule {
 

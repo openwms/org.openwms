@@ -79,6 +79,24 @@
 					<output>${project.build.directory}/${project.artifactId}.swf</output>
 				</configuration>
 				<dependencies>
+                    <dependency>
+                        <groupId>${project.groupId}</groupId>
+                        <artifactId>org.openwms.client.flex.lib</artifactId>
+                        <version>${core.version}</version>
+                        <type>swc</type>
+                    </dependency>
+                    <dependency>
+                        <groupId>${project.groupId}</groupId>
+                        <artifactId>org.openwms.common.domain.as</artifactId>
+                        <version>${project.version}</version>
+                        <type>swc</type>
+                    </dependency>
+                    <dependency>
+                        <groupId>${project.groupId}</groupId>
+                        <artifactId>org.openwms.common.flex.lib</artifactId>
+                        <version>${project.version}</version>
+                        <type>swc</type>
+                    </dependency>
 					<dependency>
 						<groupId>com.adobe.flex</groupId>
 						<artifactId>compiler</artifactId>
@@ -176,18 +194,6 @@
             <type>libd</type>
             <scope>provided</scope>
         </dependency>
-        
-        <!-- Project dependencies -->
-		<dependency>
-			<groupId>${project.groupId}</groupId>
-			<artifactId>org.openwms.common.domain.as</artifactId>
-			<type>swc</type>
-		</dependency>
-        <dependency>
-            <groupId>${project.groupId}</groupId>
-            <artifactId>org.openwms.common.flex.lib</artifactId>
-            <type>swc</type>
-        </dependency>
 
         <!-- CORE Project dependencies -->
         <dependency>
@@ -195,6 +201,23 @@
             <artifactId>org.openwms.client.flex.lib</artifactId>
             <version>${core.version}</version>
             <type>swc</type>
+            <scope>internal</scope>
+        </dependency>
+        
+        <!-- Project dependencies -->
+		<dependency>
+			<groupId>${project.groupId}</groupId>
+			<artifactId>org.openwms.common.domain.as</artifactId>
+            <version>${project.version}</version>
+			<type>swc</type>
+            <scope>internal</scope>
+		</dependency>
+        <dependency>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>org.openwms.common.flex.lib</artifactId>
+            <version>${project.version}</version>
+            <type>swc</type>
+            <scope>internal</scope>
         </dependency>
 
         <dependency>

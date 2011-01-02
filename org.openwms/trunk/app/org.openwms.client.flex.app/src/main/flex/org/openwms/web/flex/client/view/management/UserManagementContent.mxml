@@ -131,7 +131,7 @@
                 var asset : BitmapAsset;
                 if (modelLocator.selectedUser != null) {
                     var user : User = modelLocator.selectedUser;
-                    if (UserHelper.haveDetails(user)) {
+                    if (UserHelper.hasDetails(user)) {
                         if (user.userDetails.sex == UserDetails$SEX.MALE) {
                             asset = new manImage() as BitmapAsset;
                         } else if (user.userDetails.sex == UserDetails$SEX.FEMALE) {
@@ -233,7 +233,7 @@
                     </mx:Form>
                 </mx:Canvas>
                 <mx:Canvas label="Assigned Roles" width="100%" height="100%">
-                    <mx:List x="10" y="10" width="380" height="363" alternatingItemColors="[#EEEEEE, #FFFFFF]"/>
+                    <mx:List x="10" y="10" width="380" height="363" alternatingItemColors="[#EEEEEE, #FFFFFF]" dataProvider="{modelLocator.selectedUser.roles}"/>
                 </mx:Canvas>
             </mx:Accordion>
             <mx:Image id="userImg" source="{modelLocator.selectedUser.userDetails.image}" width="100" height="150" click="showFileUploadDialog()" x="10" y="10" toolTip="Click to change the picture of the User"/>

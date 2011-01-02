@@ -18,15 +18,12 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
-package org.openwms.common.domain.system {
+package org.openwms.core.domain.system {
 
     [Bindable]
-    [RemoteClass(alias="org.openwms.common.domain.system.Message")]
-    /**
-     * A Message encapsulates a message text and a message number.
-     * 
-     * @version $Revision$
-     * @since 0.1
-     */
-    public class Message extends MessageBase { }
+    [RemoteClass(alias="org.openwms.core.domain.system.Message")]
+    public class Message extends MessageBase {
+
+        
+    }
 }

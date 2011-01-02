@@ -240,6 +240,20 @@
             </modules>
         </profile>
         <profile>
+            <id>client</id>
+            <modules>
+                <module>core/org.openwms.client.flex.lib</module>
+                <module>core/org.openwms.core.domain.as</module>
+                <module>common/org.openwms.common.flex.lib</module>
+                <module>common/org.openwms.common.domain.as</module>
+                <module>common/org.openwms.common.flex.module</module>
+                <module>tms/org.openwms.tms.domain.as</module>
+                <module>tms/org.openwms.tms.flex.module</module>
+                <module>app/org.openwms.client.flex.app</module>
+                <module>app/org.openwms.client.flex.wrapper</module>
+            </modules>
+        </profile>
+        <profile>
             <id>all</id>
             <activation>
                 <activeByDefault>true</activeByDefault>
@@ -336,7 +350,7 @@
                 <enabled>false</enabled>
             </releases>
         </pluginRepository>
-<!-- -->
+<!--
         <pluginRepository>
             <id>com.springsource.repository.bundles.release</id>
             <name>SpringSource Enterprise Bundle Repository - Releases</name>
@@ -353,7 +367,7 @@
                 <enabled>false</enabled>
             </snapshots>
         </pluginRepository>
-
+ -->
     </pluginRepositories>
     <repositories>
         <repository>
@@ -372,7 +386,7 @@
                 <enabled>false</enabled>
             </releases>
         </repository>
-<!-- -->
+<!-- 
         <repository>
             <id>com.springsource.repository.bundles.release</id>
             <name>SpringSource Enterprise Bundle Repository - SpringSource Bundle Releases</name>
@@ -437,7 +451,7 @@
                 <enabled>false</enabled>
             </snapshots>
         </repository>
-
+-->
     </repositories>
 
     <build>
@@ -530,6 +544,13 @@
                     <artifactId>maven-dependency-plugin</artifactId>
                     <version>2.1</version>
                 </plugin>
+                
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-javadoc-plugin</artifactId>
+                    <version>2.6.1</version>
+                </plugin>
+                
             </plugins>
         </pluginManagement>
 
@@ -651,7 +672,6 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-javadoc-plugin</artifactId>
-                <version>2.6.1</version>
                 <inherited>true</inherited>
                 <reportSets>
                     <reportSet>
@@ -702,11 +722,11 @@
                 </configuration>
             </plugin>
 
-            <plugin>
+            <!-- plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-changelog-plugin</artifactId>
                 <version>2.1</version>
-            </plugin>
+            </plugin-->
 
             <plugin>
                 <groupId>org.codehaus.mojo</groupId>

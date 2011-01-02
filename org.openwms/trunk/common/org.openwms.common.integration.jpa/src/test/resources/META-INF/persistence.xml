@@ -32,7 +32,7 @@
         <class>org.openwms.common.domain.TransportUnitType</class>
         <class>org.openwms.common.domain.TypePlacingRule</class>
         <class>org.openwms.common.domain.TypeStackingRule</class>
-        <class>org.openwms.common.domain.system.Message</class>
+        <class>org.openwms.core.domain.system.Message</class>
         <class>org.openwms.common.domain.system.UnitError</class>
         <class>org.openwms.core.domain.system.usermanagement.Email</class>
         <class>org.openwms.core.domain.system.usermanagement.Preference</class>

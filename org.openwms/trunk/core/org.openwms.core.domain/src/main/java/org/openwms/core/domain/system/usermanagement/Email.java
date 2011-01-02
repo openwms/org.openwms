@@ -43,158 +43,156 @@ import org.openwms.core.domain.DomainObject;
  * @see org.openwms.core.domain.system.usermanagement.User
  */
 @Entity
-@Table(name = "APP_EMAIL", uniqueConstraints = @UniqueConstraint(columnNames = {
-		"USERNAME", "ADDRESS" }))
-public class Email extends AbstractEntity implements DomainObject<Long>,
-		Serializable {
+@Table(name = "COR_EMAIL", uniqueConstraints = @UniqueConstraint(columnNames = { "USERNAME", "ADDRESS" }))
+public class Email extends AbstractEntity implements DomainObject<Long>, Serializable {
 
-	private static final long serialVersionUID = 3182027866592095069L;
+    private static final long serialVersionUID = 3182027866592095069L;
 
-	/**
-	 * Unique technical key.
-	 */
-	@Id
-	@GeneratedValue
-	@ManyToOne
-	private Long id;
+    /**
+     * Unique technical key.
+     */
+    @Id
+    @GeneratedValue
+    @ManyToOne
+    private Long id;
 
-	/**
-	 * Unique identifier of the <code>Email</code> (not-null).
-	 */
-	@Column(name = "USERNAME", nullable = false)
-	private String username;
+    /**
+     * Unique identifier of the <code>Email</code> (not-null).
+     */
+    @Column(name = "USERNAME", nullable = false)
+    private String username;
 
-	/**
-	 * The email address as String (not-null).
-	 */
-	@Column(name = "ADDRESS", nullable = false)
-	private String emailAddress;
+    /**
+     * The email address as String (not-null).
+     */
+    @Column(name = "ADDRESS", nullable = false)
+    private String emailAddress;
 
-	/**
-	 * The fullname of the <code>Email</code>.
-	 */
-	@Column(name = "FULL_NAME")
-	private String fullName;
+    /**
+     * The fullname of the <code>Email</code>.
+     */
+    @Column(name = "FULL_NAME")
+    private String fullName;
 
-	/**
-	 * Version field.
-	 */
-	@Version
-	@Column(name = "C_VERSION")
-	private long version;
+    /**
+     * Version field.
+     */
+    @Version
+    @Column(name = "C_VERSION")
+    private long version;
 
-	/* ----------------------------- methods ------------------- */
-	/**
-	 * Accessed by persistence provider.
-	 */
-	@SuppressWarnings("unused")
-	private Email() {
-	}
+    /* ----------------------------- methods ------------------- */
+    /**
+     * Accessed by persistence provider.
+     */
+    @SuppressWarnings("unused")
+    private Email() {}
 
-	/**
-	 * Create a new <code>Email</code> with an username and an emailAddress.
-	 * 
-	 * @param username
-	 *            The name of the <code>User</code>
-	 * @param emailAddress
-	 *            The email address of the <code>User</code>
-	 */
-	public Email(String username, String emailAddress) {
-		assert username != null && !"".equals(username);
-		assert emailAddress != null && !"".equals(emailAddress);
-		this.username = username;
-		this.emailAddress = emailAddress;
-	}
+    /**
+     * Create a new <code>Email</code> with an username and an emailAddress.
+     * 
+     * @param username
+     *            The name of the <code>User</code>
+     * @param emailAddress
+     *            The email address of the <code>User</code>
+     */
+    public Email(String username, String emailAddress) {
+        assert username != null && !"".equals(username);
+        assert emailAddress != null && !"".equals(emailAddress);
+        this.username = username;
+        this.emailAddress = emailAddress;
+    }
 
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public Long getId() {
-		return id;
-	}
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public Long getId() {
+        return id;
+    }
 
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public boolean isNew() {
-		return this.id == null;
-	}
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public boolean isNew() {
+        return this.id == null;
+    }
 
-	/**
-	 * Returns the name of the <code>User</code> who owns the <code>Email</code>.
-	 * 
-	 * @return The username as String
-	 */
-	public String getUsername() {
-		return this.username;
-	}
+    /**
+     * Returns the name of the <code>User</code> who owns the
+     * <code>Email</code>.
+     * 
+     * @return The username as String
+     */
+    public String getUsername() {
+        return this.username;
+    }
 
-	/**
-	 * Assign the <code>Email</code> to an <code>User</code>.
-	 * 
-	 * @param username
-	 *            Name of the <code>User</code>.
-	 */
-	public void setUsername(String username) {
-		this.username = username;
-	}
+    /**
+     * Assign the <code>Email</code> to an <code>User</code>.
+     * 
+     * @param username
+     *            Name of the <code>User</code>.
+     */
+    public void setUsername(String username) {
+        this.username = username;
+    }
 
-	/**
-	 * Return the emailAddress.
-	 * 
-	 * @return The emailAddress.
-	 */
-	public String getEmailAddress() {
-		return emailAddress;
-	}
+    /**
+     * Return the emailAddress.
+     * 
+     * @return The emailAddress.
+     */
+    public String getEmailAddress() {
+        return emailAddress;
+    }
 
-	/**
-	 * Set the emailAddress.
-	 * 
-	 * @param emailAddress
-	 *            The emailAddress to set.
-	 */
-	public void setEmailAddress(String emailAddress) {
-		this.emailAddress = emailAddress;
-	}
+    /**
+     * Set the emailAddress.
+     * 
+     * @param emailAddress
+     *            The emailAddress to set.
+     */
+    public void setEmailAddress(String emailAddress) {
+        this.emailAddress = emailAddress;
+    }
 
-	/**
-	 * Return the fullName.
-	 * 
-	 * @return The fullName.
-	 */
-	public String getFullName() {
-		return fullName;
-	}
+    /**
+     * Return the fullName.
+     * 
+     * @return The fullName.
+     */
+    public String getFullName() {
+        return fullName;
+    }
 
-	/**
-	 * Set the fullName.
-	 * 
-	 * @param fullName
-	 *            The fullName to set.
-	 */
-	public void setFullName(String fullName) {
-		this.fullName = fullName;
-	}
+    /**
+     * Set the fullName.
+     * 
+     * @param fullName
+     *            The fullName to set.
+     */
+    public void setFullName(String fullName) {
+        this.fullName = fullName;
+    }
 
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public long getVersion() {
-		return version;
-	}
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public long getVersion() {
+        return version;
+    }
 
-	/**
-	 * Return the emailAddress.
-	 * 
-	 * @see java.lang.Object#toString()
-	 * @return As String
-	 */
-	@Override
-	public String toString() {
-		return emailAddress;
-	}
+    /**
+     * Return the emailAddress.
+     * 
+     * @see java.lang.Object#toString()
+     * @return As String
+     */
+    @Override
+    public String toString() {
+        return emailAddress;
+    }
 }

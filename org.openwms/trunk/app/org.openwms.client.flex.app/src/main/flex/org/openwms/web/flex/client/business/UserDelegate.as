@@ -35,8 +35,10 @@ package org.openwms.web.flex.client.business {
     [ManagedEvent(name="LOAD_ALL_USERS")]
     [Bindable]
     /**
-     * An UserDelegate. Handles all interaction with the server-side userService.
+     * An UserDelegate. Handles all interaction with the userService.
      * Provides simple CRUD methods.
+     * Fires Tide events : LOAD_ALL_USERS
+     * Is named as : userController
      *
      * @author <a href="mailto:scherrer@users.sourceforge.net">Heiko Scherrer</a>
      * @version $Revision$
@@ -44,16 +46,26 @@ package org.openwms.web.flex.client.business {
      */
     public class UserDelegate {
         [In]
+        /**
+         * Injected TideContext.
+         */
         public var tideContext : Context;
         [In]
+        /**
+         * Injected ModelLocator.
+         */
         public var modelLocator : ModelLocator;
 
+        /**
+         * Constructor.
+         */
         public function UserDelegate() : void { }
 
+        [Observer("LOAD_ALL_USERS")]
         /**
          * Fetch a list of all users from the service.
+         * Tide event observers : LOAD_ALL_USERS
          */
-        [Observer("LOAD_ALL_USERS")]
         public function getUsers() : void {
             tideContext.userService.findAll(onUsersLoaded, onFault);
         }
@@ -68,10 +80,11 @@ package org.openwms.web.flex.client.business {
             }
         }
 
+        [Observer("ADD_USER")]
         /**
          * Call the service to create a new user.
+         * Tide event observers : ADD_USER
          */
-        [Observer("ADD_USER")]
         public function addUser() : void {
             tideContext.userService.getTemplate("PSEUDO", onUserAdded, onFault);
         }
@@ -81,10 +94,11 @@ package org.openwms.web.flex.client.business {
             modelLocator.selectedUser = user;
         }
 
+        [Observer("SAVE_USER")]
         /**
          * Call to save User data of the current selected User.
+         * Tide event observers : SAVE_USER
          */
-        [Observer("SAVE_USER")]
         public function saveUser() : void {
             tideContext.userService.save(modelLocator.selectedUser, onUserSaved, onFault);
         }
@@ -92,10 +106,11 @@ package org.openwms.web.flex.client.business {
             dispatchEvent(new UserEvent(UserEvent.LOAD_ALL_USERS));
         }
 
+        [Observer("DELETE_USER")]
         /**
          * Call to delete an existing User.
+         * Tide event observers : DELETE_USER
          */
-        [Observer("DELETE_USER")]
         public function deleteUser() : void {
             if (isNaN(modelLocator.selectedUser.id)) {
                 modelLocator.selectedUser = modelLocator.allUsers.getItemAt(0) as User;
@@ -105,7 +120,11 @@ package org.openwms.web.flex.client.business {
         }
 
         [Deprecated]
-        public function onUserDeleted(event : TideResultEvent) : void {
+        /**
+         * 
+         * @param event
+         */
+        private function onUserDeleted(event : TideResultEvent) : void {
             var len : int = modelLocator.allUsers.length;
             for (var i : int = 0; i < len; i++) {
                 if (modelLocator.selectedUser.id == modelLocator.allUsers[i].id) {
@@ -118,10 +137,13 @@ package org.openwms.web.flex.client.business {
             }
         }
 
+        [Observer("CHANGE_USER_PASSWORD")]
         /**
          * Call to change the current User's password.
+         * Tide event observers : CHANGE_USER_PASSWORD
+         * 
+         * @param event The UserEvent that stores in its data variable the User and the password as String.
          */
-        [Observer("CHANGE_USER_PASSWORD")]
         public function changeUserPassword(event : UserEvent) : void {
             if (event.data != null) {
                 var uPassword : UserPassword = new UserPassword(event.data.user as User, event.data.password as String);

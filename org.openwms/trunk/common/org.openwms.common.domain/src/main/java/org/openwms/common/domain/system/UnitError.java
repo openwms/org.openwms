@@ -33,15 +33,15 @@ import org.openwms.core.domain.AbstractEntity;
 import org.openwms.core.domain.DomainObject;
 
 /**
- * An UnitError represents an error occurring on <code>TransportUnit</code>s, on
- * <code>LoadUnit</code>s or others.
+ * An UnitError represents an error occurring on <code>TransportUnit</code>s,
+ * on <code>LoadUnit</code>s or others.
  * 
  * @author <a href="mailto:scherrer@users.sourceforge.net">Heiko Scherrer</a>
  * @version $Revision$
  * @since 0.1
  */
 @Entity
-@Table(name = "COR_UNIT_ERROR")
+@Table(name = "COM_UNIT_ERROR")
 public class UnitError extends AbstractEntity implements DomainObject<Long>, Serializable {
 
     private static final long serialVersionUID = -716902051194734598L;

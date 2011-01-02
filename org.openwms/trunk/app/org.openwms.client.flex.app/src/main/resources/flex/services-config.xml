@@ -37,6 +37,7 @@
                     <entityManagerFactoryBeanName>
                         entityManagerFactory
                     </entityManagerFactoryBeanName>
+                    <scope>session</scope>
                 </properties>
             </destination>
             <destination id="locationServiceRemote">
@@ -66,6 +67,15 @@
                     <source>userService</source>
                 </properties>
             </destination>
+            <destination id="roleServiceRemote">
+                <channels>
+                    <channel ref="my-graniteamf"/>
+                </channels>
+                <properties>
+                    <factory>springFactory</factory>
+                    <source>roleService</source>
+                </properties>
+            </destination>
             <destination id="transportUnitServiceRemote">
                 <channels>
                     <channel ref="my-graniteamf"/>
@@ -75,13 +85,13 @@
                     <source>transportUnitService</source>
                 </properties>
             </destination>
-            <destination id="moduleManagementServiceRemote">
+            <destination id="moduleServiceRemote">
                 <channels>
                     <channel ref="my-graniteamf" />
                 </channels>
                 <properties>
                     <factory>springFactory</factory>
-                    <source>moduleManagementService</source>
+                    <source>moduleService</source>
                 </properties>
             </destination>
             <destination id="transportServiceRemote">
@@ -93,14 +103,26 @@
                     <source>transportService</source>
                 </properties>
             </destination>
+            <destination id="configurationServiceRemote">
+                <channels>
+                    <channel ref="my-graniteamf" />
+                </channels>
+                <properties>
+                    <factory>springFactory</factory>
+                    <source>configurationService</source>
+                </properties>
+            </destination>
         </service>
     </services>
 
     <factories>
         <factory id="tideSpringFactory"
             class="org.granite.tide.spring.SpringServiceFactory" />
-        <factory id="springFactory"
-            class="org.granite.spring.SpringServiceFactory" />
+        <factory id="springFactory" class="org.granite.spring.SpringServiceFactory">
+            <properties>
+                <enable-exception-logging>true</enable-exception-logging>
+            </properties>
+        </factory>
     </factories>
 
     <channels>

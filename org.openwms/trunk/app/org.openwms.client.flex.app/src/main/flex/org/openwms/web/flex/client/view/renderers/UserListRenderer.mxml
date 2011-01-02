@@ -80,7 +80,7 @@
 		 */ 
 		private function setUserImage():void {
 			var asset:BitmapAsset;
-			if (UserHelper.haveDetails(userData)) {
+			if (UserHelper.hasDetails(userData)) {
 				if (userData.userDetails.image != null) {
 					img.data = userData.userDetails.image;
 					return;
