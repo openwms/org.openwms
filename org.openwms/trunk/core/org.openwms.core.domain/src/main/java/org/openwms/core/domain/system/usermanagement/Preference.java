@@ -41,7 +41,7 @@ import org.openwms.core.domain.DomainObject;
  * @since 0.1
  */
 @Entity
-@Table(name = "APP_PREFERENCE", uniqueConstraints = @UniqueConstraint(columnNames = { "C_KEY", "C_VALUE" }))
+@Table(name = "COR_PREFERENCE", uniqueConstraints = @UniqueConstraint(columnNames = { "C_KEY", "C_VALUE" }))
 public class Preference extends AbstractEntity implements DomainObject<Long>, Serializable {
 
     private static final long serialVersionUID = 4396571221433949201L;
@@ -75,13 +75,13 @@ public class Preference extends AbstractEntity implements DomainObject<Long>, Se
     /**
      * Float representation of the value.
      */
-    @Column(name = "C_FLOAT_VALUE")
+    @Column(name = "FLOAT_VALUE")
     private Float floatValue;
 
     /**
      * Description text of the <code>Preference</code>.
      */
-    @Column(name = "C_DESCRIPTION")
+    @Column(name = "DESCRIPTION")
     private String description;
 
     /**
@@ -116,13 +116,13 @@ public class Preference extends AbstractEntity implements DomainObject<Long>, Se
     public Long getId() {
         return this.id;
     }
-    
+
     /**
      * {@inheritDoc}
      */
     @Override
     public boolean isNew() {
-    	return this.id == null;
+        return this.id == null;
     }
 
     /**

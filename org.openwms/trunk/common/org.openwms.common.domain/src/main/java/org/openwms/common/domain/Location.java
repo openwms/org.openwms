@@ -47,9 +47,9 @@ import javax.persistence.TemporalType;
 import javax.persistence.UniqueConstraint;
 import javax.persistence.Version;
 
-import org.openwms.common.domain.system.Message;
 import org.openwms.core.domain.AbstractEntity;
 import org.openwms.core.domain.DomainObject;
+import org.openwms.core.domain.system.Message;
 
 /**
  * A Location, defines a place within a warehouse.
@@ -67,8 +67,8 @@ import org.openwms.core.domain.DomainObject;
  * @see org.openwms.common.domain.LocationGroup
  */
 @Entity
-@Table(name = "COR_LOCATION", uniqueConstraints = @UniqueConstraint(columnNames = { "AREA", "AISLE", "X", "Y", "Z" }))
-@NamedQueries({
+@Table(name = "COM_LOCATION", uniqueConstraints = @UniqueConstraint(columnNames = { "AREA", "AISLE", "X", "Y", "Z" }))
+@NamedQueries( {
         @NamedQuery(name = Location.NQ_FIND_ALL, query = "select l from Location l"),
         @NamedQuery(name = Location.NQ_FIND_BY_UNIQUE_QUERY, query = "select l from Location l where l.locationId = ?1"),
         @NamedQuery(name = Location.NQ_FIND_ALL_EAGER, query = "select l from Location l left join fetch l.messages left join fetch l.locationType") })
@@ -82,14 +82,15 @@ public class Location extends AbstractEntity implements DomainObject<Long>, Seri
     public static final String NQ_FIND_ALL = "Location.findAll";
 
     /**
-     * Query to find all <code>Location</code>s and all {@link Message}s, eager
-     * loaded.
+     * Query to find all <code>Location</code>s and all {@link Message}s,
+     * eager loaded.
      */
     public static final String NQ_FIND_ALL_EAGER = "Location.findAllEager";
 
     /**
-     * Query to find <strong>one</strong> <code>Location</code> by its natural
-     * key. <li>Query parameter index <strong>1</strong> : The locationId of the
+     * Query to find <strong>one</strong> <code>Location</code> by its
+     * natural key.
+     * <li>Query parameter index <strong>1</strong> : The locationId of the
      * <code>Location</code> to search for.</li>
      */
     public static final String NQ_FIND_BY_UNIQUE_QUERY = "Location.findByLocationPK";
@@ -115,8 +116,8 @@ public class Location extends AbstractEntity implements DomainObject<Long>, Seri
     private String description;
 
     /**
-     * Maximum number of {@link org.openwms.common.domain.TransportUnit}s placed
-     * on this <code>Location</code>. Default:{@value} .
+     * Maximum number of {@link org.openwms.common.domain.TransportUnit}s
+     * placed on this <code>Location</code>. Default:{@value} .
      */
     @Column(name = "NO_MAX_TRANSPORT_UNITS")
     private short noMaxTransportUnits = 1;
@@ -130,9 +131,9 @@ public class Location extends AbstractEntity implements DomainObject<Long>, Seri
     /**
      * Date of last change. When a
      * {@link org.openwms.common.domain.TransportUnit} is moving to or away from
-     * this <code>Location</code>, lastAccess will be updated. This is necessary
-     * to find old {@link org.openwms.common.domain.TransportUnit}s as well as
-     * for inventory calculation.
+     * this <code>Location</code>, lastAccess will be updated. This is
+     * necessary to find old {@link org.openwms.common.domain.TransportUnit}s
+     * as well as for inventory calculation.
      */
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "LAST_ACCESS")
@@ -140,15 +141,13 @@ public class Location extends AbstractEntity implements DomainObject<Long>, Seri
 
     /**
      * Flag to indicate whether {@link org.openwms.common.domain.TransportUnit}s
-     * should be counted on this <code>Location</code> or not. Default:{@value}
-     * .
+     * should be counted on this <code>Location</code> or not. Default:{@value} .
      */
     @Column(name = "COUNTING_ACTIVE")
     private boolean countingActive = false;
 
     /**
-     * Reserved for stock check procedure and inventory calculation.
-     * Default:{@value} .
+     * Reserved for stock check procedure and inventory calculation. Default:{@value} .
      */
     @Column(name = "CHECK_STATE")
     private String checkState = "--";
@@ -158,13 +157,13 @@ public class Location extends AbstractEntity implements DomainObject<Long>, Seri
      * {@link org.openwms.common.domain.TransportUnit}s of the parent
      * {@link org.openwms.common.domain.LocationGroup}.
      * <p>
-     * <code>true</code> : <code>Location</code> is included in calculation of
-     * {@link org.openwms.common.domain.TransportUnit}s.<br>
-     * <code>false</code>: <code>Location</code> is not included in calculation
-     * of {@link org.openwms.common.domain.TransportUnit}s.
+     * <code>true</code> : <code>Location</code> is included in calculation
+     * of {@link org.openwms.common.domain.TransportUnit}s.<br>
+     * <code>false</code>: <code>Location</code> is not included in
+     * calculation of {@link org.openwms.common.domain.TransportUnit}s.
      * </p>
      */
-    @Column(name = "LOCATION_GROUP_COUNTING_ACTIVE")
+    @Column(name = "LG_COUNTING_ACTIVE")
     private boolean locationGroupCountingActive = false;
 
     /**
@@ -174,8 +173,8 @@ public class Location extends AbstractEntity implements DomainObject<Long>, Seri
      * <p>
      * <code>true</code> : <code>Location</code> is ready to pick up
      * {@link org.openwms.common.domain.TransportUnit}s.<br>
-     * <code>false</code>: <code>Location</code> is locked, and cannot pick up
-     * {@link org.openwms.common.domain.TransportUnit}s.
+     * <code>false</code>: <code>Location</code> is locked, and cannot pick
+     * up {@link org.openwms.common.domain.TransportUnit}s.
      * </p>
      */
     @Column(name = "INCOMING_ACTIVE")
@@ -213,8 +212,8 @@ public class Location extends AbstractEntity implements DomainObject<Long>, Seri
      * <p>
      * <code>true</code> : This <code>Location</code> will be considered in
      * storage calculation by an allocation procedure.<br>
-     * <code>false</code> : This <code>Location</code> will not be considered in
-     * the allocation process.
+     * <code>false</code> : This <code>Location</code> will not be
+     * considered in the allocation process.
      * </p>
      */
     @Column(name = "CONSIDERED_IN_ALLOCATION")
@@ -246,7 +245,7 @@ public class Location extends AbstractEntity implements DomainObject<Long>, Seri
      * Stored {@link Message}s for this <code>Location</code>.
      */
     @OneToMany(cascade = { CascadeType.ALL })
-    @JoinTable(name = "COR_LOCATION_MESSAGE", joinColumns = @JoinColumn(name = "LOCATION_ID"), inverseJoinColumns = @JoinColumn(name = "MESSAGE_ID"))
+    @JoinTable(name = "COM_LOCATION_MESSAGE", joinColumns = @JoinColumn(name = "LOCATION_ID"), inverseJoinColumns = @JoinColumn(name = "MESSAGE_ID"))
     private Set<Message> messages = new HashSet<Message>();
 
     /**
@@ -271,8 +270,8 @@ public class Location extends AbstractEntity implements DomainObject<Long>, Seri
      * 
      * @param message
      *            The {@link Message} to be added
-     * @return <code>true</code> if the {@link Message} is new in the collection
-     *         of messages, otherwise <code>false</code>
+     * @return <code>true</code> if the {@link Message} is new in the
+     *         collection of messages, otherwise <code>false</code>
      */
     public boolean addMessage(Message message) {
         if (message == null) {
@@ -302,8 +301,8 @@ public class Location extends AbstractEntity implements DomainObject<Long>, Seri
     }
 
     /**
-     * Determine whether {@link org.openwms.common.domain.TransportUnit}s should
-     * be counted on this <code>Location</code> or not.
+     * Determine whether {@link org.openwms.common.domain.TransportUnit}s
+     * should be counted on this <code>Location</code> or not.
      * 
      * @return <code>true</code> when counting is active, otherwise
      *         <code>false</code>
@@ -344,7 +343,8 @@ public class Location extends AbstractEntity implements DomainObject<Long>, Seri
     }
 
     /**
-     * Return the date when the <code>Location</code> was updated the last time.
+     * Return the date when the <code>Location</code> was updated the last
+     * time.
      * 
      * @return Timestamp of the last update
      */
@@ -365,8 +365,8 @@ public class Location extends AbstractEntity implements DomainObject<Long>, Seri
 
     /**
      * Determine whether the <code>Location</code> is part of the parent
-     * {@link org.openwms.common.domain.LocationGroup}s calculation procedure of
-     * {@link org.openwms.common.domain.TransportUnit}s.
+     * {@link org.openwms.common.domain.LocationGroup}s calculation procedure
+     * of {@link org.openwms.common.domain.TransportUnit}s.
      * 
      * @return <code>true</code> if calculation is activated, otherwise
      *         <code>false</code>
@@ -489,8 +489,8 @@ public class Location extends AbstractEntity implements DomainObject<Long>, Seri
     }
 
     /**
-     * Change the behavior whether the <code>Location</code> shall be considered
-     * in the allocation procedure or not.
+     * Change the behavior whether the <code>Location</code> shall be
+     * considered in the allocation procedure or not.
      * 
      * @param consideredInAllocation
      *            <code>true</code> allocation active, otherwise
@@ -501,9 +501,9 @@ public class Location extends AbstractEntity implements DomainObject<Long>, Seri
     }
 
     /**
-     * Change the behavior whether the <code>Location</code> shall be considered
-     * in the calculation of {@link org.openwms.common.domain.TransportUnit}s or
-     * not.
+     * Change the behavior whether the <code>Location</code> shall be
+     * considered in the calculation of
+     * {@link org.openwms.common.domain.TransportUnit}s or not.
      * 
      * @param countingActive
      *            <code>true</code> counting active, otherwise
@@ -536,7 +536,8 @@ public class Location extends AbstractEntity implements DomainObject<Long>, Seri
     }
 
     /**
-     * Change the date when the <code>Location</code> was updated the last time.
+     * Change the date when the <code>Location</code> was updated the last
+     * time.
      * 
      * @param lastAccess
      *            The date of change.
@@ -546,9 +547,9 @@ public class Location extends AbstractEntity implements DomainObject<Long>, Seri
     }
 
     /**
-     * Add this <code>Location</code> to the <code>locationGroup</code>. When
-     * the argument is <code>null</code> an existing {@link LocationGroup} is
-     * removed from the <code>Location</code>.
+     * Add this <code>Location</code> to the <code>locationGroup</code>.
+     * When the argument is <code>null</code> an existing
+     * {@link LocationGroup} is removed from the <code>Location</code>.
      * 
      * @param locationGroup
      *            The {@link LocationGroup} to be assigned
@@ -566,7 +567,8 @@ public class Location extends AbstractEntity implements DomainObject<Long>, Seri
      * {@link LocationGroup}.
      * 
      * @param locationGroupCountingActive
-     *            <code>true</code> if considered, otherwise <code>false</code>
+     *            <code>true</code> if considered, otherwise
+     *            <code>false</code>
      */
     public void setLocationGroupCountingActive(boolean locationGroupCountingActive) {
         this.locationGroupCountingActive = locationGroupCountingActive;

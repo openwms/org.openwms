@@ -32,31 +32,44 @@ package org.openwms.web.flex.client.common.business {
     import org.openwms.web.flex.client.common.event.LocationTypeEvent;
     import org.openwms.web.flex.client.common.model.CommonModelLocator;
 
+    [Name("locationDelegate")]
+    [ManagedEvent(name="LOAD_ALL_LOCATION_TYPES")]
+    [ManagedEvent(name="LOAD_ALL_LOCATIONS")]
     /**
-     * A LocationDelegate.
+     * A LocationDelegate serves as a controller and is responsible for all interactions with the service layer
+     * regarding the handling with Locations and LocationTypes.
+     * Fires Tide events : LOAD_ALL_LOCATION_TYPES, LOAD_ALL_LOCATIONS
+     * Is named as : locationDelegate
      *
      * @author <a href="mailto:scherrer@users.sourceforge.net">Heiko Scherrer</a>
      * @version $Revision$
      * @since 0.1
      */
-    [Name("locationDelegate")]
-    [ManagedEvent(name="LOAD_ALL_LOCATION_TYPES")]
-    [ManagedEvent(name="LOAD_ALL_LOCATIONS")]
     public class LocationDelegate {
     	
         [In]
         [Bindable]
+        /**
+         * Injected TideContext.
+         */
         public var tideContext:Context;
 	    [In]
 	    [Bindable]
+	    /**
+	     * Injected Model.
+	     */
 	    public var commonModelLocator:CommonModelLocator;            
 
+        /**
+         * Constructor.
+         */
         public function LocationDelegate():void { }
 
-        /**
-         * Call to load all Locations from the service.
-         */
         [Observer("LOAD_ALL_LOCATIONS")]
+        /**
+         * Loads all Locations from the service layer.
+         * Tide event observers : LOAD_ALL_LOCATIONS
+         */
         public function getLocations():void {
             tideContext.locationService.getAllLocations(onLocationsLoaded, onFault);
         }
@@ -65,6 +78,12 @@ package org.openwms.web.flex.client.common.business {
         }
 
         [Observer("CREATE_LOCATION")]
+        /**
+         * Creates a new Location by calling the corresponding service.
+         * Tide event observers : CREATE_LOCATION
+         * 
+         * @param event A LocationEvent that stores the new Location in its data field.
+         */
         public function createLocation(event:LocationEvent):void {
             tideContext.locationService.addEntity(event.data as Location, onLocationCreated, onFault);
         }
@@ -73,6 +92,12 @@ package org.openwms.web.flex.client.common.business {
         }
 
         [Observer("DELETE_LOCATION")]
+        /**
+         * Removes an existing Location by calling the corresponding service.
+         * Tide event observers : DELETE_LOCATION
+         * 
+         * @param event A LocationEvent that stores the Location to be removed in its data field.
+         */
         public function deleteLocation(event:LocationEvent):void {
             tideContext.locationService.remove(event.data as Location, onLocationDeleted, onFault);
         }
@@ -81,6 +106,12 @@ package org.openwms.web.flex.client.common.business {
         }
 
         [Observer("SAVE_LOCATION")]
+        /**
+         * Updates an existing Location by calling the corresponding service.
+         * Tide event observers : SAVE_LOCATION
+         * 
+         * @param event A LocationEvent that stores the Location to be updated in its data field.
+         */
         public function saveLocation(event:LocationEvent):void {
             tideContext.locationService.save(event.data as Location, onLocationSaved, onFault);
         }
@@ -88,18 +119,27 @@ package org.openwms.web.flex.client.common.business {
             dispatchEvent(new LocationEvent(LocationEvent.LOAD_ALL_LOCATIONS));
         }
 
-        /**
-         * Call to load all LocationTypes from the service.
-         */
         [Observer("LOAD_ALL_LOCATION_TYPES")]
+        /**
+         * Loads all LocationTypes from the service.
+         * Tide event observers : LOAD_ALL_LOCATION_TYPES
+         */
         public function getLocationTypes():void {
+            trace("Loading all LocationTypes....");
             tideContext.locationService.getAllLocationTypes(onLocationTypesLoaded, onFault);
         }
         private function onLocationTypesLoaded(event:TideResultEvent):void {
+            trace("LocationTypes loaded, result:"+event.result);
             commonModelLocator.allLocationTypes = event.result as ArrayCollection;
         }
         
         [Observer("CREATE_LOCATION_TYPE")]
+        /**
+         * Creates a new LocationType by calling the corresponding service.
+         * Tide event observers : CREATE_LOCATION_TYPE
+         * 
+         * @param event A LocationTypeEvent that stores the new LocationType in its data field.
+         */
         public function createLocationType(event:LocationTypeEvent):void {
             tideContext.locationService.createLocationType(event.data as LocationType, onLocationTypeCreated, onFault);
         }
@@ -108,6 +148,12 @@ package org.openwms.web.flex.client.common.business {
         }
 
         [Observer("DELETE_LOCATION_TYPE")]
+        /**
+         * Removes an existing LocationType by calling the corresponding service.
+         * Tide event observers : DELETE_LOCATION_TYPE
+         * 
+         * @param event A LocationTypeEvent that stores the LocationType to be removed in its data field.
+         */
         public function deleteLocationType(event:LocationTypeEvent):void {
             tideContext.locationService.deleteLocationTypes(event.data as ArrayCollection, onLocationTypesDeleted, onFault);
         }
@@ -116,6 +162,12 @@ package org.openwms.web.flex.client.common.business {
         }
 
         [Observer("SAVE_LOCATION_TYPE")]
+        /**
+         * Updates an existing LocationType by calling the corresponding service.
+         * Tide event observers : SAVE_LOCATION_TYPE
+         * 
+         * @param event A LocationTypeEvent that stores the LocationType to be updated in its data field.
+         */
         public function saveLocationType(event:LocationTypeEvent):void {
             tideContext.locationService.saveLocationType(event.data as LocationType, onLocationTypesSaved, onFault);
         }
@@ -125,7 +177,7 @@ package org.openwms.web.flex.client.common.business {
 
         private function onFault(event:TideFaultEvent):void {
         	trace("Error executing operation on Location service:"+event.fault);
-            Alert.show("Error executing operation on Location service:"+event.fault);
+            Alert.show("Error executing operation on Location service");
         }
     }
 }

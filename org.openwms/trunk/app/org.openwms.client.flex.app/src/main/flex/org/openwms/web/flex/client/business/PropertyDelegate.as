@@ -34,7 +34,10 @@ package org.openwms.web.flex.client.business {
     [ManagedEvent(name="LOAD_ALL_PROPERTIES")]
     [Bindable]
     /**
-     * A PropertyDelegate.
+     * A PropertyDelegate serves as a controller and is responsible for all interactions with the service layer
+     * regarding the handling with Properties.
+     * Fires Tide events : LOAD_ALL_PROPERTIES
+     * Is named as : propertyDelegate
      *
      * @author <a href="mailto:scherrer@users.sourceforge.net">Heiko Scherrer</a>
      * @version $Revision$
@@ -43,13 +46,26 @@ package org.openwms.web.flex.client.business {
     public class PropertyDelegate {
 
         [In]
+        /**
+         * Injected TideContext.
+         */
         public var tideContext : Context;
         [In]
+        /**
+         * Injected ModelLocator.
+         */
         public var modelLocator : ModelLocator;
 
+        /**
+         * Constructor.
+         */
         public function PropertyDelegate() : void { }
 
         [Observer("LOAD_ALL_PROPERTIES")]
+        /**
+         * Connect to the ConfigurationService and find all units.
+         * Tide event observers : LOAD_ALL_PROPERTIES
+         */
         public function findProperties() : void {
             tideContext.configurationService.getAllUnits(onPropertiesLoaded, onFault);
         }
@@ -60,7 +76,7 @@ package org.openwms.web.flex.client.business {
         			for each (var i:* in type.constants) {
         				trace("c:"+i);
         			}
-        		  modelLocator.allProperties.addItem((prop as Weight).unit);
+        		    modelLocator.allProperties.addItem((prop as Weight).unit);
         		}
         	}
         }

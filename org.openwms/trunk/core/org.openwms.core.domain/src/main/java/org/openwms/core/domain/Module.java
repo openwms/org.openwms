@@ -34,14 +34,15 @@ import javax.persistence.Transient;
 import javax.persistence.Version;
 
 /**
- * A Module is a definition of a Flex Module and is used to persist some initial information about these modules.
+ * A Module is a definition of a Flex Module and is used to persist some initial
+ * information about these modules.
  * 
  * @author <a href="mailto:scherrer@users.sourceforge.net">Heiko Scherrer</a>
  * @version $Revision$
  * @since 0.1
  */
 @Entity
-@Table(name = "APP_MODULE")
+@Table(name = "COR_MODULE")
 @NamedQueries( { @NamedQuery(name = Module.NQ_FIND_ALL, query = "select m from Module m order by m.startupOrder"),
         @NamedQuery(name = Module.NQ_FIND_BY_UNIQUE_QUERY, query = "select m from Module m where m.moduleName = ?1") })
 public class Module extends AbstractEntity implements DomainObject<Long>, Serializable {
@@ -55,7 +56,8 @@ public class Module extends AbstractEntity implements DomainObject<Long>, Serial
 
     /**
      * Query to find <strong>one</strong> {@link Module} by its natural key.
-     * <li>Query parameter index <strong>1</strong> : The moduleName of the Module to search for.</li>
+     * <li>Query parameter index <strong>1</strong> : The moduleName of the
+     * Module to search for.</li>
      */
     public static final String NQ_FIND_BY_UNIQUE_QUERY = "Module.findByModuleName";
 
@@ -80,19 +82,22 @@ public class Module extends AbstractEntity implements DomainObject<Long>, Serial
     private String url;
 
     /**
-     * Flag used on client-side to store whether the Module is loaded or not. Default:{@value}.
+     * Flag used on client-side to store whether the Module is loaded or not.
+     * Default:{@value}.
      */
     @Transient
     private boolean loaded = false;
 
     /**
-     * <code>true</code> when the Module should be loaded on application startup. Default:{@value}.
+     * <code>true</code> when the Module should be loaded on application
+     * startup. Default:{@value}.
      */
     @Column(name = "LOAD_ON_STARTUP")
     private boolean loadOnStartup = true;
 
     /**
-     * Defines the startup order compared with other Modules. Modules with lower startupOrders are loaded before.
+     * Defines the startup order compared with other Modules. Modules with lower
+     * startupOrders are loaded before.
      */
     @Column(name = "STARTUP_ORDER")
     @OrderBy
@@ -132,8 +137,10 @@ public class Module extends AbstractEntity implements DomainObject<Long>, Serial
     /**
      * Create a new Module.
      * 
-     * @param moduleName The unique Module name
-     * @param url The unique URL
+     * @param moduleName
+     *            The unique Module name
+     * @param url
+     *            The unique URL
      */
     public Module(String moduleName, String url) {
         super();

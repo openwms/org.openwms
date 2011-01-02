@@ -26,6 +26,8 @@ package org.openwms.web.flex.client.view.dialogs {
 	import org.openwms.core.domain.system.usermanagement.Role;
 	import org.openwms.core.domain.system.usermanagement.SecurityObject;
 
+    [Name]
+    [Bindable]
     /**
      * An AssignGrantsDialog.
      *
@@ -33,9 +35,11 @@ package org.openwms.web.flex.client.view.dialogs {
      * @version $Revision$
      * @since 0.1
      */
-    [Name]
-    [Bindable]
 	public class AssignGrantsDialog extends AssignUsersDialog {
+	    
+		/**
+		 * Constructor.
+		 */
 		public function AssignGrantsDialog() { }
 		
 		override protected function init():void {

@@ -18,7 +18,7 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
-package org.openwms.common.domain.system;
+package org.openwms.core.domain.system;
 
 import java.io.Serializable;
 import java.util.Date;
@@ -43,7 +43,7 @@ import org.openwms.core.domain.DomainObject;
  * @since 0.1
  */
 @Entity
-@Table(name = "APP_MESSAGE")
+@Table(name = "COR_MESSAGE")
 public class Message extends AbstractEntity implements DomainObject<Long>, Serializable {
 
     private static final long serialVersionUID = 7836132529431969528L;

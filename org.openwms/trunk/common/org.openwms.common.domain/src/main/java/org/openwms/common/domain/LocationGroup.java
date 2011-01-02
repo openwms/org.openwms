@@ -57,8 +57,8 @@ import org.openwms.core.domain.DomainObject;
  * @see org.openwms.common.domain.Location
  */
 @Entity
-@Table(name = "COR_LOCATION_GROUP")
-@NamedQueries({ @NamedQuery(name = "LocationGroup.findAll", query = "select lg from LocationGroup lg"),
+@Table(name = "COM_LOCATION_GROUP")
+@NamedQueries( { @NamedQuery(name = "LocationGroup.findAll", query = "select lg from LocationGroup lg"),
         @NamedQuery(name = "LocationGroup.findByName", query = "select lg from LocationGroup lg where lg.name = ?1") })
 public class LocationGroup extends AbstractEntity implements DomainObject<Long>, Serializable {
 
@@ -123,7 +123,8 @@ public class LocationGroup extends AbstractEntity implements DomainObject<Long>,
     private LocationGroupState groupStateOut = LocationGroupState.AVAILABLE;
 
     /**
-     * Maximum fill level of the <code>LocationGroup</code>. Default: {@value} .
+     * Maximum fill level of the <code>LocationGroup</code>. Default:
+     * {@value} .
      */
     @Column(name = "MAX_FILL_LEVEL")
     private float maxFillLevel = 0;
@@ -396,7 +397,8 @@ public class LocationGroup extends AbstractEntity implements DomainObject<Long>,
     /**
      * Return all child <code>LocationGroup</code>.
      * 
-     * @return A set of all <code>LocationGroup</code> having this one as parent
+     * @return A set of all <code>LocationGroup</code> having this one as
+     *         parent
      */
     public Set<LocationGroup> getLocationGroups() {
         return locationGroups;
@@ -407,8 +409,8 @@ public class LocationGroup extends AbstractEntity implements DomainObject<Long>,
      * 
      * @param locationGroup
      *            The <code>LocationGroup</code> to be added as a child
-     * @return <code>true</code> if the <code>LocationGroup</code> was new in
-     *         the collection of <code>LocationGroup</code>s, otherwise
+     * @return <code>true</code> if the <code>LocationGroup</code> was new
+     *         in the collection of <code>LocationGroup</code>s, otherwise
      *         <code>false</code>
      */
     public boolean addLocationGroup(LocationGroup locationGroup) {
@@ -426,10 +428,10 @@ public class LocationGroup extends AbstractEntity implements DomainObject<Long>,
      * Remove a <code>LocationGroup</code> from the list of children.
      * 
      * @param locationGroup
-     *            The <code>LocationGroup</code> to be removed from the list of
-     *            children
-     * @return <code>true</code> if the <code>LocationGroup</code> was found and
-     *         could be removed, otherwise <code>false</code>
+     *            The <code>LocationGroup</code> to be removed from the list
+     *            of children
+     * @return <code>true</code> if the <code>LocationGroup</code> was found
+     *         and could be removed, otherwise <code>false</code>
      */
     public boolean removeLocationGroup(LocationGroup locationGroup) {
         if (locationGroup == null) {
@@ -474,8 +476,8 @@ public class LocationGroup extends AbstractEntity implements DomainObject<Long>,
      * 
      * @param location
      *            The {@link Location} to be removed from the list of children
-     * @return <code>true</code> if the {@link Location} was found and could be
-     *         removed, otherwise <code>false</code>
+     * @return <code>true</code> if the {@link Location} was found and could
+     *         be removed, otherwise <code>false</code>
      */
     public boolean removeLocation(Location location) {
         if (location == null) {

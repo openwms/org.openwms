@@ -21,10 +21,9 @@
 package org.openwms.web.flex.client.helper {
 
     import org.openwms.core.domain.system.usermanagement.User;
-    import org.openwms.core.domain.system.usermanagement.UserDetails$SEX;
 
     /**
-     * An UserHelper.
+     * An UserHelper is a utility class to centralize often used methods according to user handling.
      *
      * @author <a href="mailto:scherrer@users.sourceforge.net">Heiko Scherrer</a>
      * @version $Revision$
@@ -32,31 +31,17 @@ package org.openwms.web.flex.client.helper {
      */
     public final class UserHelper {
     	
-    	/**
-    	 * Constructor.
-    	 */
-        public function UserHelper() { }
-
-        public static function haveDetails(userData:User):Boolean {
+        /**
+         * Check whether the User has UserDetails.
+         *  
+         * @param userData The User to check.
+         * @return <code>true</code> when the User has UserDetails, otherwise <code>false</code>.
+         */
+        public static function hasDetails(userData:User):Boolean {
             if (userData != null && userData.userDetails != null) {
                 return true;
             }
             return false;
         }
-
-        public static function bindUserDetailsSEXtoRBG(sex:UserDetails$SEX):UserDetails$SEX {
-            if (sex != null) {
-                return sex;
-            } else {
-                return null;
-            }
-        }
-
-        public static function isNew(user:User):Boolean {
-            if (null == user || isNaN(user.id)) {
-                return true;
-            }
-            return false;
-        }
-    }
+   }
 }

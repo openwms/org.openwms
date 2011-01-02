@@ -56,8 +56,8 @@ import org.openwms.core.domain.DomainObject;
  * @see org.openwms.common.domain.TransportUnit
  */
 @Entity
-@Table(name = "COR_TRANSPORT_UNIT_TYPE")
-@NamedQueries({
+@Table(name = "COM_TRANSPORT_UNIT_TYPE")
+@NamedQueries( {
         @NamedQuery(name = TransportUnitType.NQ_FIND_ALL, query = "select tut from TransportUnitType tut order by tut.type"),
         @NamedQuery(name = TransportUnitType.NQ_FIND_BY_NAME, query = "select tut from TransportUnitType tut where tut.type = ?1") })
 public class TransportUnitType extends AbstractEntity implements DomainObject<Long>, Serializable {
@@ -70,8 +70,8 @@ public class TransportUnitType extends AbstractEntity implements DomainObject<Lo
     public static final String NQ_FIND_ALL = "TransportUnitType.findAll";
 
     /**
-     * Query to find <strong>one</strong> <code>TransportUnitType</code> by its
-     * natural key.
+     * Query to find <strong>one</strong> <code>TransportUnitType</code> by
+     * its natural key.
      * <ul>
      * <li>Query parameter index <strong>1</strong> : The name of the
      * <code>TransportUnitType</code> to search for.</li>
@@ -163,19 +163,19 @@ public class TransportUnitType extends AbstractEntity implements DomainObject<Lo
      * A collection of all {@link TransportUnit}s belonging to this type.
      */
     @OneToMany(mappedBy = "transportUnitType")
-    @JoinTable(name = "COR_TU_UNIT_TYPE", joinColumns = @JoinColumn(name = "TRANSPORT_UNIT_TYPE_ID"), inverseJoinColumns = @JoinColumn(name = "TRANSPORT_UNIT_ID"))
+    @JoinTable(name = "COM_TU_UNIT_TYPE", joinColumns = @JoinColumn(name = "TRANSPORT_UNIT_TYPE_ID"), inverseJoinColumns = @JoinColumn(name = "TRANSPORT_UNIT_ID"))
     private Set<TransportUnit> transportUnits = new HashSet<TransportUnit>();
 
     /**
-     * Describes other <code>TransportUnitType</code>s and how many of these may
-     * be stacked on the <code>TransportUnitType</code>.
+     * Describes other <code>TransportUnitType</code>s and how many of these
+     * may be stacked on the <code>TransportUnitType</code>.
      */
     @OneToMany(mappedBy = "transportUnitType", cascade = { CascadeType.ALL })
     private Set<TypeStackingRule> typeStackingRules = new HashSet<TypeStackingRule>();
 
     /**
-     * A Set of {@link TypePlacingRule}s store all possible {@link LocationType}
-     * s of the <code>TransportUnitType</code>.
+     * A Set of {@link TypePlacingRule}s store all possible
+     * {@link LocationType} s of the <code>TransportUnitType</code>.
      */
     @OneToMany(mappedBy = "transportUnitType", cascade = { CascadeType.PERSIST, CascadeType.MERGE })
     private Set<TypePlacingRule> typePlacingRules = new HashSet<TypePlacingRule>();
@@ -391,8 +391,8 @@ public class TransportUnitType extends AbstractEntity implements DomainObject<Lo
      * 
      * @param typePlacingRule
      *            The rule to be removed
-     * @return <code>true</code> when the rule was removed gracefully, otherwise
-     *         <code>false</code>
+     * @return <code>true</code> when the rule was removed gracefully,
+     *         otherwise <code>false</code>
      */
     public boolean removeTypePlacingRule(TypePlacingRule typePlacingRule) {
         if (typePlacingRule == null) {
@@ -413,8 +413,8 @@ public class TransportUnitType extends AbstractEntity implements DomainObject<Lo
 
     /**
      * Assign a Set of {@link TypePlacingRule}s to the
-     * <code>TransportUnitType</code>. Already existing {@link TypePlacingRule}s
-     * will be removed.
+     * <code>TransportUnitType</code>. Already existing
+     * {@link TypePlacingRule}s will be removed.
      * 
      * @param typePlacingRules
      *            The rules to set
@@ -438,8 +438,8 @@ public class TransportUnitType extends AbstractEntity implements DomainObject<Lo
     /**
      * Assign a Set of {@link TypeStackingRule}s. A {@link TypeStackingRule}
      * determines which <code>TransportUnitType</code>s can be placed on the
-     * <code>TransportUnitType</code>. Already existing {@link TypeStackingRule}
-     * s will be removed.
+     * <code>TransportUnitType</code>. Already existing
+     * {@link TypeStackingRule} s will be removed.
      * 
      * @param typeStackingRules
      *            The rules to set
