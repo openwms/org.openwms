@@ -85,14 +85,14 @@
             <scope>provided</scope>
         </dependency>
 
-        <!-- Database libraries -->
+        <!-- Database libraries 
         <dependency>
             <groupId>org.openwms</groupId>
             <artifactId>oracle.jdbc.driver</artifactId>
             <scope>provided</scope>
             <optional>true</optional>
         </dependency>
-       
+       -->
         <!-- Project dependencies -->
         <dependency>
             <groupId>${project.groupId}</groupId>
