@@ -46,7 +46,7 @@
             import org.openwms.core.domain.system.usermanagement.User;
             import org.openwms.core.domain.system.usermanagement.UserDetails$SEX;
             import org.openwms.web.flex.client.event.UserEvent;
-            import org.openwms.web.flex.client.helper.UserHelper;
+            import org.openwms.web.flex.client.util.UserHelper;
             import org.openwms.web.flex.client.model.ModelLocator;
             import org.openwms.web.flex.client.view.dialogs.FileUploadDialog;
             import org.openwms.web.flex.client.view.dialogs.ChangePasswordDialog;

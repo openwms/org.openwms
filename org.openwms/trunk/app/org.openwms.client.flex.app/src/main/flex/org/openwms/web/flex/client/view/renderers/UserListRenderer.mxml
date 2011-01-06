@@ -35,7 +35,7 @@
     	import org.openwms.core.domain.system.usermanagement.User;
     	import org.openwms.core.domain.system.usermanagement.UserDetails;
     	import org.openwms.core.domain.system.usermanagement.UserDetails$SEX;
-    	import org.openwms.web.flex.client.helper.UserHelper;
+    	import org.openwms.web.flex.client.util.UserHelper;
     	import mx.effects.Fade;
     	import mx.effects.Blur;
     	import mx.effects.Parallel;
