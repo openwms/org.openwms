@@ -187,7 +187,7 @@
 	<repositories>
 		<repository>
 			<id>granite-repo</id>
-			<url>http://download.java.net/maven/2/</url>
+			<url>http://repo2.maven.org/maven2</url>
 			<releases>
 				<enabled>true</enabled>
 			</releases>
