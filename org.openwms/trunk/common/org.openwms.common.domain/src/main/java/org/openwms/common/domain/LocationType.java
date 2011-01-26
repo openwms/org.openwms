@@ -50,7 +50,7 @@ import org.openwms.core.domain.DomainObject;
  */
 @Entity
 @Table(name = "COM_LOCATION_TYPE")
-@NamedQueries( {
+@NamedQueries({
         @NamedQuery(name = LocationType.NQ_FIND_ALL, query = "select l from LocationType l"),
         @NamedQuery(name = LocationType.NQ_FIND_BY_UNIQUE_QUERY, query = "select l from LocationType l where l.type = ?1") })
 public class LocationType extends AbstractEntity implements DomainObject<Long>, Serializable {

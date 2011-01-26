@@ -21,7 +21,8 @@
 package org.openwms.common.domain.values;
 
 /**
- * A LocationGroupState defines possible states used for <code>LocationGroup<code>s.
+ * A LocationGroupState defines possible states used for
+ * <code>LocationGroup</code>s.
  * 
  * @author <a href="mailto:russelltina@users.sourceforge.net">Tina Russell</a>
  * @version $Revision$

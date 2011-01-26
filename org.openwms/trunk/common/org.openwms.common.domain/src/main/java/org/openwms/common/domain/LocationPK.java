@@ -37,150 +37,146 @@ import javax.persistence.Embeddable;
 @Embeddable
 public class LocationPK implements Serializable {
 
-	private static final long serialVersionUID = 7370071817754524569L;
+    private static final long serialVersionUID = 7370071817754524569L;
 
-	/**
-	 * Expresses the area where the <code>Location</code> belongs to.
-	 */
-	@Column(name = "AREA", nullable = false)
-	private String area;
+    /**
+     * Expresses the area where the <code>Location</code> belongs to.
+     */
+    @Column(name = "AREA", nullable = false)
+    private String area;
 
-	/**
-	 * Expresses the aisle where the <code>Location</code> belongs to.
-	 */
-	@Column(name = "AISLE", nullable = false)
-	private String aisle;
+    /**
+     * Expresses the aisle where the <code>Location</code> belongs to.
+     */
+    @Column(name = "AISLE", nullable = false)
+    private String aisle;
 
-	/**
-	 * Expresses the dimension x where this <code>Location</code> belongs to.
-	 */
-	@Column(name = "X", nullable = false)
-	private String x;
+    /**
+     * Expresses the dimension x where this <code>Location</code> belongs to.
+     */
+    @Column(name = "X", nullable = false)
+    private String x;
 
-	/**
-	 * Expresses the dimension y where this <code>Location</code> belongs to.
-	 */
-	@Column(name = "Y", nullable = false)
-	private String y;
+    /**
+     * Expresses the dimension y where this <code>Location</code> belongs to.
+     */
+    @Column(name = "Y", nullable = false)
+    private String y;
 
-	/**
-	 * Expresses the dimension z where this <code>Location</code> belongs to.
-	 */
-	@Column(name = "Z", nullable = false)
-	private String z;
+    /**
+     * Expresses the dimension z where this <code>Location</code> belongs to.
+     */
+    @Column(name = "Z", nullable = false)
+    private String z;
 
-	/* ----------------------------- methods ------------------- */
-	@SuppressWarnings("unused")
-	private LocationPK() {
-	}
+    /* ----------------------------- methods ------------------- */
+    @SuppressWarnings("unused")
+    private LocationPK() {}
 
-	/**
-	 * Create a new LocationPK.
-	 * 
-	 * @param area
-	 *            Area where the <code>Location</code> belongs to
-	 * @param aisle
-	 *            Aisle where the <code>Location</code> belongs to
-	 * @param x
-	 *            Dimension x where the <code>Location</code> belongs to
-	 * @param y
-	 *            Dimension y where the <code>Location</code> belongs to
-	 * @param z
-	 *            Dimension z where the <code>Location</code> belongs to
-	 */
-	public LocationPK(String area, String aisle, String x, String y, String z) {
-		this.area = area;
-		this.aisle = aisle;
-		this.x = x;
-		this.y = y;
-		this.z = z;
-	}
+    /**
+     * Create a new LocationPK.
+     * 
+     * @param area
+     *            Area where the <code>Location</code> belongs to
+     * @param aisle
+     *            Aisle where the <code>Location</code> belongs to
+     * @param x
+     *            Dimension x where the <code>Location</code> belongs to
+     * @param y
+     *            Dimension y where the <code>Location</code> belongs to
+     * @param z
+     *            Dimension z where the <code>Location</code> belongs to
+     */
+    public LocationPK(String area, String aisle, String x, String y, String z) {
+        this.area = area;
+        this.aisle = aisle;
+        this.x = x;
+        this.y = y;
+        this.z = z;
+    }
 
-	/**
-	 * Get the area region.
-	 * 
-	 * @return The area
-	 */
-	public String getArea() {
-		return this.area;
-	}
+    /**
+     * Get the area region.
+     * 
+     * @return The area
+     */
+    public String getArea() {
+        return this.area;
+    }
 
-	/**
-	 * Get the aisle region.
-	 * 
-	 * @return The aisle
-	 */
-	public String getAisle() {
-		return this.aisle;
-	}
+    /**
+     * Get the aisle region.
+     * 
+     * @return The aisle
+     */
+    public String getAisle() {
+        return this.aisle;
+    }
 
-	/**
-	 * Get the x dimension.
-	 * 
-	 * @return The x dimension
-	 */
-	public String getX() {
-		return this.x;
-	}
+    /**
+     * Get the x dimension.
+     * 
+     * @return The x dimension
+     */
+    public String getX() {
+        return this.x;
+    }
 
-	/**
-	 * Get the y dimension.
-	 * 
-	 * @return The y dimension
-	 */
-	public String getY() {
-		return this.y;
-	}
+    /**
+     * Get the y dimension.
+     * 
+     * @return The y dimension
+     */
+    public String getY() {
+        return this.y;
+    }
 
-	/**
-	 * Get the z dimension.
-	 * 
-	 * @return The z dimension
-	 */
-	public String getZ() {
-		return this.z;
-	}
+    /**
+     * Get the z dimension.
+     * 
+     * @return The z dimension
+     */
+    public String getZ() {
+        return this.z;
+    }
 
-	/**
-	 * {@inheritDoc}
-	 * 
-	 * @see java.lang.Object#equals()
-	 */
-	@Override
-	public boolean equals(Object o) {
-		if (o == this) {
-			return true;
-		}
-		if (!(o instanceof LocationPK)) {
-			return false;
-		}
-		LocationPK other = (LocationPK) o;
-		return this.y.equals(other.y) && this.x.equals(other.x)
-				&& this.area.equals(other.area) && this.z.equals(other.z)
-				&& this.aisle.equals(other.aisle);
-	}
+    /**
+     * {@inheritDoc}
+     * 
+     * @see java.lang.Object#equals()
+     */
+    @Override
+    public boolean equals(Object o) {
+        if (o == this) {
+            return true;
+        }
+        if (!(o instanceof LocationPK)) {
+            return false;
+        }
+        LocationPK other = (LocationPK) o;
+        return this.y.equals(other.y) && this.x.equals(other.x) && this.area.equals(other.area)
+                && this.z.equals(other.z) && this.aisle.equals(other.aisle);
+    }
 
-	/**
-	 * {@inheritDoc}
-	 * 
-	 * @see java.lang.Object#hashCode()
-	 */
-	@Override
-	public int hashCode() {
-		return this.y.hashCode() ^ this.x.hashCode() ^ this.area.hashCode()
-				^ this.z.hashCode() ^ this.aisle.hashCode();
-	}
+    /**
+     * {@inheritDoc}
+     * 
+     * @see java.lang.Object#hashCode()
+     */
+    @Override
+    public int hashCode() {
+        return this.y.hashCode() ^ this.x.hashCode() ^ this.area.hashCode() ^ this.z.hashCode() ^ this.aisle.hashCode();
+    }
 
-	/**
-	 * Return a String like {AREA/AISLE/X/Y/Z}.
-	 * 
-	 * @see java.lang.Object#toString()
-	 * @return String
-	 */
-	@Override
-	public String toString() {
-		return "{" + this.area + "/" + this.aisle + "/" + this.x + "/" + this.y
-				+ "/" + this.z + "}";
-	}
+    /**
+     * Return a String like {AREA/AISLE/X/Y/Z}.
+     * 
+     * @see java.lang.Object#toString()
+     * @return String
+     */
+    @Override
+    public String toString() {
+        return "{" + this.area + "/" + this.aisle + "/" + this.x + "/" + this.y + "/" + this.z + "}";
+    }
 
 }
