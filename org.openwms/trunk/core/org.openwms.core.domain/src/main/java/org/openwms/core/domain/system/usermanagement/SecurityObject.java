@@ -47,7 +47,7 @@ import org.openwms.core.domain.DomainObject;
 @Entity
 @Table(name = "COR_ROLE")
 @Inheritance
-@NamedQueries( {
+@NamedQueries({
         @NamedQuery(name = SecurityObject.NQ_FIND_ALL, query = "select g from SecurityObject g"),
         @NamedQuery(name = SecurityObject.NQ_FIND_BY_UNIQUE_QUERY, query = "select g from SecurityObject g where g.name = ?1") })
 public class SecurityObject extends AbstractEntity implements DomainObject<Long>, Serializable {
@@ -61,8 +61,7 @@ public class SecurityObject extends AbstractEntity implements DomainObject<Long>
 
     /**
      * Query to find <strong>one</strong> {@link SecurityObject} by its natural
-     * key.
-     * <li> Query parameter index <strong>1</strong> : The name of the
+     * key. <li>Query parameter index <strong>1</strong> : The name of the
      * <code>SecurityObject</code> to search for.</li>
      */
     public static final String NQ_FIND_BY_UNIQUE_QUERY = "SecurityObject.findByRolename";

@@ -34,6 +34,8 @@ import java.io.Serializable;
  * </ul>
  * </p>
  * 
+ * @param <ID>
+ *            Expected as a persistent entity class
  * @author <a href="mailto:scherrer@users.sourceforge.net">Heiko Scherrer</a>
  * @version $Revision$
  * @since 0.1

@@ -61,7 +61,7 @@ import org.slf4j.LoggerFactory;
  */
 @Entity
 @Table(name = "COR_USER")
-@NamedQueries( {
+@NamedQueries({
         @NamedQuery(name = User.NQ_FIND_ALL, query = "SELECT u FROM User u"),
         @NamedQuery(name = User.NQ_FIND_ALL_ORDERED, query = "SELECT u FROM User u ORDER BY u.username"),
         @NamedQuery(name = User.NQ_FIND_BY_USERNAME, query = "SELECT u FROM User u WHERE u.username = ?1"),
@@ -86,19 +86,18 @@ public class User extends AbstractEntity implements DomainObject<Long>, Serializ
     public static final String NQ_FIND_ALL_ORDERED = "User.findAllOrdered";
 
     /**
-     * Query to find <strong>one</strong> <code>User</code> by his userName.
-     * <li> Query parameter index <strong>1</strong> : The userName of the
+     * Query to find <strong>one</strong> <code>User</code> by his userName. <li>
+     * Query parameter index <strong>1</strong> : The userName of the
      * <code>User</code> to search for.</li>
      */
     public static final String NQ_FIND_BY_USERNAME = "User.findByUsername";
 
     /**
-     * Query to find <strong>one</strong> <code>User</code> by his userName
-     * and password.
-     * <li>Query parameter name <strong>username</strong> : The userName of
-     * the <code>User</code> to search for.</li>
-     * <li>Query parameter name <strong>password</strong> : The current
-     * password of the <code>User</code> to search for.</li>
+     * Query to find <strong>one</strong> <code>User</code> by his userName and
+     * password. <li>Query parameter name <strong>username</strong> : The
+     * userName of the <code>User</code> to search for.</li> <li>Query parameter
+     * name <strong>password</strong> : The current password of the
+     * <code>User</code> to search for.</li>
      */
     public static final String NQ_FIND_BY_USERNAME_PASSWORD = "User.findByUsernameAndPassword";
 
@@ -148,7 +147,7 @@ public class User extends AbstractEntity implements DomainObject<Long>, Serializ
      * Current password of the <code>User</code>.
      */
     @Column(name = "C_PASSWORD")
-    protected String password;
+    private String password;
 
     /**
      * <code>true</code> if the <code>User</code> is enabled. Default:{@value} .
@@ -259,8 +258,8 @@ public class User extends AbstractEntity implements DomainObject<Long>, Serializ
     /**
      * Is the <code>User</code> authenticated by an external system?
      * 
-     * @return <code>true</code> if the <code>User</code> was authenticated
-     *         by an external system, otherwise <code>false</code>.
+     * @return <code>true</code> if the <code>User</code> was authenticated by
+     *         an external system, otherwise <code>false</code>.
      */
     public boolean isExternalUser() {
         return this.extern;
@@ -270,9 +269,8 @@ public class User extends AbstractEntity implements DomainObject<Long>, Serializ
      * Change the authentication method of the <code>User</code>.
      * 
      * @param externalUser
-     *            <code>true</code> if the <code>User</code> was
-     *            authenticated by an external system, otherwise
-     *            <code>false</code>.
+     *            <code>true</code> if the <code>User</code> was authenticated
+     *            by an external system, otherwise <code>false</code>.
      */
     public void setExternalUser(boolean externalUser) {
         this.extern = externalUser;
@@ -295,8 +293,8 @@ public class User extends AbstractEntity implements DomainObject<Long>, Serializ
      *            Allowed to be null
      */
     public void setLastPasswordChange(Date lastPasswordChange) {
-    // do nothing, only used for JavaBeans compliance to support generation
-    // of AS classes.
+        // do nothing, only used for JavaBeans compliance to support generation
+        // of AS classes.
     }
 
     /**
@@ -348,6 +346,14 @@ public class User extends AbstractEntity implements DomainObject<Long>, Serializ
         }
     }
 
+    /**
+     * Check whether the new password is in the history list of passwords.
+     * 
+     * @param password
+     *            The password to verify
+     * @return <code>true</code> if the password is valid, otherwise
+     *         <code>false</code>
+     */
     protected boolean isPasswordValid(String password) {
         if (passwords.contains(new UserPassword(this, password))) {
             return false;
@@ -382,8 +388,8 @@ public class User extends AbstractEntity implements DomainObject<Long>, Serializ
     /**
      * Determines whether the <code>User</code> is enabled.
      * 
-     * @return <code>true</code> if the <code>User</code> is enabled,
-     *         otherwise <code>false</code>.
+     * @return <code>true</code> if the <code>User</code> is enabled, otherwise
+     *         <code>false</code>.
      */
     public boolean isEnabled() {
         return this.enabled;
@@ -428,8 +434,8 @@ public class User extends AbstractEntity implements DomainObject<Long>, Serializ
     }
 
     /**
-     * Define the {@link Role}s of the <code>User</code>. Existing
-     * {@link Role}s will be overridden.
+     * Define the {@link Role}s of the <code>User</code>. Existing {@link Role}s
+     * will be overridden.
      * 
      * @param roles
      *            The new list of {@link Role}s.
@@ -475,8 +481,8 @@ public class User extends AbstractEntity implements DomainObject<Long>, Serializ
      */
     @Deprecated
     public void setPasswords(List<UserPassword> passwords) {
-    // do nothing, only used for JavaBeans compliance to support generation
-    // of AS classes.
+        // do nothing, only used for JavaBeans compliance to support generation
+        // of AS classes.
     }
 
     /**
@@ -508,8 +514,8 @@ public class User extends AbstractEntity implements DomainObject<Long>, Serializ
     }
 
     /**
-     * Set all {@link Preference}s of the <code>User</code>. Already
-     * existing {@link Preference}s will be overridden.
+     * Set all {@link Preference}s of the <code>User</code>. Already existing
+     * {@link Preference}s will be overridden.
      * 
      * @param preferences
      *            A set of {@link Preference}s to be set.

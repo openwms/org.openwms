@@ -43,7 +43,7 @@ import javax.persistence.Version;
  */
 @Entity
 @Table(name = "COR_MODULE")
-@NamedQueries( { @NamedQuery(name = Module.NQ_FIND_ALL, query = "select m from Module m order by m.startupOrder"),
+@NamedQueries({ @NamedQuery(name = Module.NQ_FIND_ALL, query = "select m from Module m order by m.startupOrder"),
         @NamedQuery(name = Module.NQ_FIND_BY_UNIQUE_QUERY, query = "select m from Module m where m.moduleName = ?1") })
 public class Module extends AbstractEntity implements DomainObject<Long>, Serializable {
 
@@ -55,9 +55,9 @@ public class Module extends AbstractEntity implements DomainObject<Long>, Serial
     public static final String NQ_FIND_ALL = "Module.findAll";
 
     /**
-     * Query to find <strong>one</strong> {@link Module} by its natural key.
-     * <li>Query parameter index <strong>1</strong> : The moduleName of the
-     * Module to search for.</li>
+     * Query to find <strong>one</strong> {@link Module} by its natural key. <li>
+     * Query parameter index <strong>1</strong> : The moduleName of the Module
+     * to search for.</li>
      */
     public static final String NQ_FIND_BY_UNIQUE_QUERY = "Module.findByModuleName";
 
@@ -83,14 +83,14 @@ public class Module extends AbstractEntity implements DomainObject<Long>, Serial
 
     /**
      * Flag used on client-side to store whether the Module is loaded or not.
-     * Default:{@value}.
+     * Default:{@value} .
      */
     @Transient
     private boolean loaded = false;
 
     /**
      * <code>true</code> when the Module should be loaded on application
-     * startup. Default:{@value}.
+     * startup. Default:{@value} .
      */
     @Column(name = "LOAD_ON_STARTUP")
     private boolean loadOnStartup = true;
@@ -104,7 +104,7 @@ public class Module extends AbstractEntity implements DomainObject<Long>, Serial
     private int startupOrder;
 
     /**
-     * A description text of the Module. Default:{@value}.
+     * A description text of the Module. Default:{@value} .
      */
     @Column(name = "DESCRIPTION")
     private String description = "--";
@@ -284,6 +284,7 @@ public class Module extends AbstractEntity implements DomainObject<Long>, Serial
      * Uses the moduleName for calculation, because this is unique and not null.
      * 
      * @see java.lang.Object#hashCode()
+     * @return The hashCode
      */
     @Override
     public int hashCode() {
@@ -305,6 +306,9 @@ public class Module extends AbstractEntity implements DomainObject<Long>, Serial
      * Compares the moduleName, because it is unique and not-null.
      * 
      * @see org.openwms.common.domain.AbstractEntity#equals(java.lang.Object)
+     * @param obj
+     *            The object to compare
+     * @return <code>true</code> if equal otherwise <code>false</code>
      */
     @Override
     public boolean equals(Object obj) {
@@ -332,6 +336,7 @@ public class Module extends AbstractEntity implements DomainObject<Long>, Serial
      * Returns the moduleName.
      * 
      * @see java.lang.Object#toString()
+     * @return The moduleName
      */
     @Override
     public String toString() {

@@ -155,6 +155,8 @@ public class UserPassword extends AbstractEntity implements DomainObject<Long>, 
 
     /**
      * @see java.lang.Object#hashCode()
+     * 
+     * @return The HashCode
      */
     @Override
     public int hashCode() {
@@ -167,19 +169,37 @@ public class UserPassword extends AbstractEntity implements DomainObject<Long>, 
 
     /**
      * @see java.lang.Object#equals(java.lang.Object)
+     * 
+     * @param obj
+     *            The object to compare
+     * @return <code>true</code> if equal, otherwise <code>false</code>
      */
     @Override
     public boolean equals(Object obj) {
-        if (this == obj) return true;
-        if (!super.equals(obj)) return false;
-        if (!(obj instanceof UserPassword)) return false;
+        if (this == obj) {
+            return true;
+        }
+        if (!super.equals(obj)) {
+            return false;
+        }
+        if (!(obj instanceof UserPassword)) {
+            return false;
+        }
         final UserPassword other = (UserPassword) obj;
         if (password == null) {
-            if (other.password != null) return false;
-        } else if (!password.equals(other.password)) return false;
+            if (other.password != null) {
+                return false;
+            }
+        } else if (!password.equals(other.password)) {
+            return false;
+        }
         if (user == null) {
-            if (other.user != null) return false;
-        } else if (!user.equals(other.user)) return false;
+            if (other.user != null) {
+                return false;
+            }
+        } else if (!user.equals(other.user)) {
+            return false;
+        }
         return true;
     }
 
@@ -187,6 +207,7 @@ public class UserPassword extends AbstractEntity implements DomainObject<Long>, 
      * Return the persistent id as String or an empty String.
      * 
      * @see java.lang.Object#toString()
+     * @return The id or an empty String
      */
     @Override
     public String toString() {

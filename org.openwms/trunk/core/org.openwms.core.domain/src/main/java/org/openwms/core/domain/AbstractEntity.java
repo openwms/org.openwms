@@ -31,14 +31,15 @@ import javax.persistence.PrePersist;
 /**
  * An AbstractEntity used as a base class for all domain classes.
  * 
- * Adds an unique identified to each subclassed domain class that is usually created
- * when the class is instantiated on the client tier. At least this uid is created before
- * the instance is persisted the first time. The uid may not be mistaken with the id property
- * that is usually used for database identity (primary key) or with a business key column.
+ * Adds an unique identified to each subclassed domain class that is usually
+ * created when the class is instantiated on the client tier. At least this uid
+ * is created before the instance is persisted the first time. The uid may not
+ * be mistaken with the id property that is usually used for database identity
+ * (primary key) or with a business key column.
  * 
- * This class has an inner static declared class that is registered as a JPA EntityListener and
- * forces to create an uid if not already done before. This assures that each persisted entity
- * does have an uid.
+ * This class has an inner static declared class that is registered as a JPA
+ * EntityListener and forces to create an uid if not already done before. This
+ * assures that each persisted entity does have an uid.
  * 
  * The uid property is useful on the ActionScript client application.
  * 
@@ -47,13 +48,13 @@ import javax.persistence.PrePersist;
  * @since 0.1
  */
 @MappedSuperclass
-@EntityListeners( { AbstractEntity.AbstractEntityListener.class })
+@EntityListeners({ AbstractEntity.AbstractEntityListener.class })
 public abstract class AbstractEntity implements Serializable {
 
     private static final long serialVersionUID = 827478159133738540L;
 
     /**
-     * Unique identifier column, used for ActionScript clients. 
+     * Unique identifier column, used for ActionScript clients.
      */
     /* "UUID" and "UID" are Oracle reserved keywords -> "ENTITY_UID" */
     @Column(name = "ENTITY_UID", unique = true, nullable = false, updatable = false, length = 36)
@@ -63,6 +64,7 @@ public abstract class AbstractEntity implements Serializable {
      * {@inheritDoc}
      * 
      * Compare the uid property fields.
+     * 
      * @see java.lang.Object#equals()
      */
     @Override
@@ -73,7 +75,7 @@ public abstract class AbstractEntity implements Serializable {
     /**
      * {@inheritDoc}
      * 
-     * Delegates to java.lang.String#hashCode()
+     * Delegates to java.lang.String#hashCode().
      * 
      * @see java.lang.String#hashCode()
      */
@@ -83,13 +85,22 @@ public abstract class AbstractEntity implements Serializable {
     }
 
     /**
-     * An AbstractEntityListener. Forces the creation of the uid before the entity is persisted.
+     * An AbstractEntityListener. Forces the creation of the uid before the
+     * entity is persisted.
      * 
-     * @author <a href="mailto:russelltina@users.sourceforge.net">Tina Russell</a>
+     * @author <a href="mailto:russelltina@users.sourceforge.net">Tina
+     *         Russell</a>
      * @version $Revision$
      * @since 0.1
      */
     public static class AbstractEntityListener {
+
+        /**
+         * Before a new entity is persisted we generated an UUID for it.
+         * 
+         * @param abstractEntity
+         *            The entity to persist
+         */
         @PrePersist
         public void onPreInsert(AbstractEntity abstractEntity) {
             abstractEntity.uid();
