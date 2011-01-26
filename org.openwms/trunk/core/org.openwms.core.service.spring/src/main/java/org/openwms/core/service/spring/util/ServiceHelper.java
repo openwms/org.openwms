@@ -41,6 +41,11 @@ import org.openwms.core.integration.GenericDao;
 public final class ServiceHelper {
 
     /**
+     * Hide Constructor.
+     */
+    private ServiceHelper() {}
+
+    /**
      * Returns a list of managed entities from a collection of detached
      * entities. Each entity in <code>detachedEntities</code> is reloaded with
      * the <code>dao</code>.

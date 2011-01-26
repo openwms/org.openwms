@@ -22,6 +22,7 @@ package org.openwms.core.service.spring.security;
 
 import org.openwms.core.domain.system.usermanagement.SystemUser;
 import org.openwms.core.domain.system.usermanagement.User;
+import org.openwms.core.exception.InvalidPasswordException;
 import org.openwms.core.integration.GenericDao;
 import org.openwms.core.service.spring.UserWrapper;
 import org.slf4j.Logger;
@@ -58,10 +59,10 @@ public class SecurityContextUserServiceImpl implements UserDetailsService {
 
     @Autowired
     @Qualifier("userDao")
-    protected GenericDao<User, Long> dao;
+    private GenericDao<User, Long> dao;
 
     @Autowired
-    protected UserCache userCache;
+    private UserCache userCache;
 
     /**
      * Set the systemUser.
@@ -87,10 +88,16 @@ public class SecurityContextUserServiceImpl implements UserDetailsService {
 
     /**
      * @see org.springframework.security.core.userdetails.UserDetailsService#loadUserByUsername(java.lang.String)
+     * 
+     * @param username
+     *            User's username to search for
+     * @return A wrapper object
+     * @throws UsernameNotFoundException
+     *             in case the User was not found or the password was not valid
      */
     @Transactional(readOnly = true)
     @Override
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+    public UserDetails loadUserByUsername(String username) {
 
         UserDetails ud = userCache.getUserFromCache(username);
 
@@ -101,7 +108,13 @@ public class SecurityContextUserServiceImpl implements UserDetailsService {
         User user = null;
 
         if (systemUser.equals(username)) {
-            user = new SystemUser(systemUser, systemPassword);
+            try {
+                user = new SystemUser(systemUser);
+                user.setPassword(systemPassword);
+            } catch (InvalidPasswordException e) {
+                logger.debug("SystemUser tried to login with a password that is not valid");
+                throw new UsernameNotFoundException("User with username not found:" + username);
+            }
         } else {
             user = dao.findByUniqueId(username);
             if (user == null) {
