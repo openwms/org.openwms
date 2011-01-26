@@ -60,8 +60,8 @@ import org.openwms.core.domain.system.usermanagement.User;
  * A TransportUnit is something like a box, a toad, a bin or a palette that has
  * to be moved around.
  * <p>
- * Used as a container to transport items and <code>LoadUnit</code>s. It can
- * be moved between {@link Location}s.
+ * Used as a container to transport items and <code>LoadUnit</code>s. It can be
+ * moved between {@link Location}s.
  * </p>
  * 
  * @author <a href="mailto:scherrer@users.sourceforge.net">Heiko Scherrer</a>
@@ -70,7 +70,7 @@ import org.openwms.core.domain.system.usermanagement.User;
  */
 @Entity
 @Table(name = "COM_TRANSPORT_UNIT", uniqueConstraints = @UniqueConstraint(columnNames = { "BARCODE" }))
-@NamedQueries( {
+@NamedQueries({
         @NamedQuery(name = TransportUnit.NQ_FIND_ALL, query = "select tu from TransportUnit tu"),
         @NamedQuery(name = TransportUnit.NQ_FIND_BY_UNIQUE_QUERY, query = "select tu from TransportUnit tu where tu.barcode = ?1") })
 public class TransportUnit extends AbstractEntity implements DomainObject<Long>, Serializable {
@@ -167,8 +167,7 @@ public class TransportUnit extends AbstractEntity implements DomainObject<Long>,
 
     /**
      * The target {@link Location} of the <code>TransportUnit</code>.<br>
-     * This property will be set when a <code>TransportOrder</code> is
-     * started.
+     * This property will be set when a <code>TransportOrder</code> is started.
      */
     @ManyToOne
     @JoinColumn(name = "TARGET_LOCATION")
@@ -218,8 +217,8 @@ public class TransportUnit extends AbstractEntity implements DomainObject<Long>,
     private TransportUnit() {}
 
     /**
-     * Create a new <code>TransportUnit</code> with an unique id. The id is
-     * used to create a {@link Barcode}.
+     * Create a new <code>TransportUnit</code> with an unique id. The id is used
+     * to create a {@link Barcode}.
      * 
      * @param unitId
      *            The unique identifier of the <code>TransportUnit</code>
@@ -277,8 +276,8 @@ public class TransportUnit extends AbstractEntity implements DomainObject<Long>,
     }
 
     /**
-     * Get the target {@link Location} of the <code>TransportUnit</code>.
-     * This property can not be <code>null</code> when an active
+     * Get the target {@link Location} of the <code>TransportUnit</code>. This
+     * property can not be <code>null</code> when an active
      * <code>TransportOrder</code> exists.
      * 
      * @return The target location
@@ -288,9 +287,8 @@ public class TransportUnit extends AbstractEntity implements DomainObject<Long>,
     }
 
     /**
-     * Set the target {@link Location} of the <code>TransportUnit</code>.
-     * Shall only be set in combination with an active
-     * <code>TransportOder</code>.
+     * Set the target {@link Location} of the <code>TransportUnit</code>. Shall
+     * only be set in combination with an active <code>TransportOder</code>.
      * 
      * @param targetLocation
      *            The target {@link Location} where this
@@ -314,8 +312,8 @@ public class TransportUnit extends AbstractEntity implements DomainObject<Long>,
      * Marks the <code>TransportUnit</code> to be empty.
      * 
      * @param empty
-     *            <code>true</code> to mark the <code>TransportUnit</code>
-     *            as empty, <code>false</code> to mark it as not empty and
+     *            <code>true</code> to mark the <code>TransportUnit</code> as
+     *            empty, <code>false</code> to mark it as not empty and
      *            <code>null</code> for no definition
      */
     public void setEmpty(Boolean empty) {
@@ -347,8 +345,8 @@ public class TransportUnit extends AbstractEntity implements DomainObject<Long>,
      * Number of <code>TransportUnit</code>s belonging to the
      * <code>TransportUnit</code>.
      * 
-     * @return The number of all <code>TransportUnit</code>s belonging to
-     *         this one
+     * @return The number of all <code>TransportUnit</code>s belonging to this
+     *         one
      */
     public int getNoTransportUnits() {
         return this.children.size();
@@ -367,8 +365,8 @@ public class TransportUnit extends AbstractEntity implements DomainObject<Long>,
      * Returns the date when the <code>TransportUnit</code> moved to the
      * actualLocation.
      * 
-     * @return The timestamp when the <code>TransportUnit</code> moved the
-     *         last time
+     * @return The timestamp when the <code>TransportUnit</code> moved the last
+     *         time
      */
     public Date getActualLocationDate() {
         return this.actualLocationDate;
@@ -561,11 +559,11 @@ public class TransportUnit extends AbstractEntity implements DomainObject<Long>,
      * Remove a <code>TransportUnit</code> from the list of children.
      * 
      * @param transportUnit
-     *            The <code>TransportUnit</code> to be removed from the list
-     *            of children
+     *            The <code>TransportUnit</code> to be removed from the list of
+     *            children
      * @throws IllegalArgumentException
-     *             when transportUnit is <code>null</code> or any other
-     *             failure occurs
+     *             when transportUnit is <code>null</code> or any other failure
+     *             occurs
      */
     public void removeChild(TransportUnit transportUnit) {
         if (transportUnit == null) {

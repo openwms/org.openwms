@@ -118,9 +118,9 @@ public class Weight implements Comparable<Weight>, Unit<WeightUnit>, Serializabl
      * {@inheritDoc}
      */
     @Override
-    public void convertTo(WeightUnit unit) {
-        value = value.scaleByPowerOfTen((this.getUnit().ordinal() - unit.ordinal()) * 3);
-        this.unit = unit;
+    public void convertTo(WeightUnit unt) {
+        value = value.scaleByPowerOfTen((this.getUnit().ordinal() - unt.ordinal()) * 3);
+        this.unit = unt;
     }
 
     /**
