@@ -23,7 +23,8 @@ package org.openwms.core.domain.system.usermanagement;
 import java.io.Serializable;
 
 /**
- * A SystemUser is granted with all privileges and omits all security constraints.
+ * A SystemUser is granted with all privileges and omits all security
+ * constraints.
  * 
  * @author <a href="mailto:russelltina@users.sourceforge.net">Tina Russell</a>
  * @version $Revision$
@@ -41,10 +42,12 @@ public class SystemUser extends User implements Serializable {
 
     /**
      * Create a new SystemUser.
+     * 
+     * @param username
+     *            User's username
      */
-    public SystemUser(String username, String password) {
+    public SystemUser(String username) {
         super(username);
-        this.password = password;
         this.setFullname(SYSTEM_USERNAME);
     }
 

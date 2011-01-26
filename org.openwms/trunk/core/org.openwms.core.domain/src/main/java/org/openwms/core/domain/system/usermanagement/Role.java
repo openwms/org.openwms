@@ -45,7 +45,7 @@ import javax.persistence.NamedQuery;
  * @since 0.1
  */
 @Entity
-@NamedQueries( {
+@NamedQueries({
         @NamedQuery(name = Role.NQ_FIND_ALL, query = "select distinct(r) from Role r left join fetch r.users left join fetch r.grants order by r.name"),
         @NamedQuery(name = Role.NQ_FIND_BY_UNIQUE_QUERY, query = "select r from Role r where r.name = ?1") })
 public class Role extends SecurityObject implements Serializable {
@@ -58,9 +58,8 @@ public class Role extends SecurityObject implements Serializable {
     public static final String NQ_FIND_ALL = "Role.findAll";
 
     /**
-     * Query to find <strong>one</strong> <code>Role</code> by its natural
-     * key.
-     * <li> Query parameter index <strong>1</strong> : The name of the
+     * Query to find <strong>one</strong> <code>Role</code> by its natural key.
+     * <li>Query parameter index <strong>1</strong> : The name of the
      * <code>Role</code> to search for.</li>
      */
     public static final String NQ_FIND_BY_UNIQUE_QUERY = "Role.findByRolename";
@@ -162,8 +161,7 @@ public class Role extends SecurityObject implements Serializable {
      * existing {@link User}s will be removed.
      * 
      * @param users
-     *            A set of {@link User}s to be assigned to the
-     *            <code>Role</code>
+     *            A set of {@link User}s to be assigned to the <code>Role</code>
      * @throws IllegalArgumentException
      *             if users is <code>null</code>
      */
@@ -185,8 +183,8 @@ public class Role extends SecurityObject implements Serializable {
     }
 
     /**
-     * Set all {@link Preference}s belonging to the <code>Role</code>.
-     * Already existing {@link Preference}s will be removed.
+     * Set all {@link Preference}s belonging to the <code>Role</code>. Already
+     * existing {@link Preference}s will be removed.
      * 
      * @param preferences
      *            A set of {@link Preference}s to be assigned to the
@@ -228,9 +226,9 @@ public class Role extends SecurityObject implements Serializable {
      * @param grant
      *            The {@link SecurityObject} to be added to the
      *            <code>Role</code>
-     * @return <code>true</code> if the {@link SecurityObject} was
-     *         successfully removed from the set of {@link SecurityObject}s,
-     *         otherwise <code>false</code>
+     * @return <code>true</code> if the {@link SecurityObject} was successfully
+     *         removed from the set of {@link SecurityObject}s, otherwise
+     *         <code>false</code>
      */
     public boolean removeGrant(SecurityObject grant) {
         if (grant == null) {
