@@ -349,13 +349,13 @@ public class User extends AbstractEntity implements DomainObject<Long>, Serializ
     /**
      * Check whether the new password is in the history list of passwords.
      * 
-     * @param password
+     * @param pw
      *            The password to verify
      * @return <code>true</code> if the password is valid, otherwise
      *         <code>false</code>
      */
-    protected boolean isPasswordValid(String password) {
-        if (passwords.contains(new UserPassword(this, password))) {
+    protected boolean isPasswordValid(String pw) {
+        if (passwords.contains(new UserPassword(this, pw))) {
             return false;
         }
         return true;

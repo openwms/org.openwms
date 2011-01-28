@@ -76,7 +76,7 @@ public class EntityServiceImpl<T extends AbstractEntity, ID extends Serializable
      * @see org.springframework.context.ApplicationContextAware#setApplicationContext(org.springframework.context.ApplicationContext)
      */
     @Override
-    public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
+    public void setApplicationContext(ApplicationContext applicationContext) {
         this.ctx = applicationContext;
     }
 

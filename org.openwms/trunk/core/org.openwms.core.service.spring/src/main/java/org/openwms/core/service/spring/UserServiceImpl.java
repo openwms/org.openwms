@@ -157,8 +157,7 @@ public class UserServiceImpl implements UserService {
         try {
             entity.setPassword(userPassword.getPassword());
             return true;
-        }
-        catch (InvalidPasswordException ipe) {
+        } catch (InvalidPasswordException ipe) {
             logger.info(ipe.getMessage());
             return false;
         }

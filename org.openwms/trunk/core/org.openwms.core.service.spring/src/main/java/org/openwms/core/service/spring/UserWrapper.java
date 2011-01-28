@@ -24,18 +24,18 @@ import java.util.ArrayList;
 import java.util.Collection;
 
 import org.openwms.core.domain.system.usermanagement.Role;
-import org.openwms.core.domain.system.usermanagement.SecurityObject;
 import org.openwms.core.domain.system.usermanagement.User;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 /**
- * An UserWrapper is used as an adapter between {@link Role}s or
- * {@link SecurityObject}s and Spring's {@link GrantedAuthority} objects.
+ * An UserWrapper is used as an adapter between {@link Role}s or SecurityObjects
+ * and Spring's {@link GrantedAuthority} objects.
  * 
  * @author <a href="mailto:russelltina@users.sourceforge.net">Tina Russell</a>
  * @version $Revision$
  * @since 0.1
+ * @see org.openwms.core.domain.system.usermanagement.SecurityObject
  * @see org.springframework.security.core.GrantedAuthority
  * @see org.springframework.security.core.userdetails.UserDetails
  */
@@ -46,6 +46,9 @@ public class UserWrapper implements UserDetails {
 
     /**
      * Create a new UserWrapper.
+     * 
+     * @param user
+     *            The User to wrap
      */
     public UserWrapper(User user) {
         this.user = user;
@@ -54,6 +57,7 @@ public class UserWrapper implements UserDetails {
 
     /**
      * @see org.springframework.security.core.userdetails.UserDetails#getAuthorities()
+     * @return the authorities, sorted by natural key (never <code>null</code>)
      */
     @SuppressWarnings("serial")
     @Override
@@ -72,6 +76,7 @@ public class UserWrapper implements UserDetails {
 
     /**
      * @see org.springframework.security.core.userdetails.UserDetails#getPassword()
+     * @return the password (never <code>null</code>)
      */
     @Override
     public String getPassword() {
@@ -80,6 +85,7 @@ public class UserWrapper implements UserDetails {
 
     /**
      * @see org.springframework.security.core.userdetails.UserDetails#getUsername()
+     * @return the username (never <code>null</code>)
      */
     @Override
     public String getUsername() {
@@ -88,6 +94,8 @@ public class UserWrapper implements UserDetails {
 
     /**
      * @see org.springframework.security.core.userdetails.UserDetails#isAccountNonExpired()
+     * @return <code>true</code> if the user's account is valid (ie
+     *         non-expired), <code>false</code> if no longer valid (ie expired)
      */
     @Override
     public boolean isAccountNonExpired() {
@@ -96,6 +104,8 @@ public class UserWrapper implements UserDetails {
 
     /**
      * @see org.springframework.security.core.userdetails.UserDetails#isAccountNonLocked()
+     * @return <code>true</code> if the user is not locked, <code>false</code>
+     *         otherwise
      */
     @Override
     public boolean isAccountNonLocked() {
@@ -104,6 +114,8 @@ public class UserWrapper implements UserDetails {
 
     /**
      * @see org.springframework.security.core.userdetails.UserDetails#isCredentialsNonExpired()
+     * @return <code>true</code> if the user's credentials are valid (ie
+     *         non-expired), <code>false</code> if no longer valid (ie expired)
      */
     @Override
     public boolean isCredentialsNonExpired() {
@@ -112,6 +124,8 @@ public class UserWrapper implements UserDetails {
 
     /**
      * @see org.springframework.security.core.userdetails.UserDetails#isEnabled()
+     * @return <code>true</code> if the user is enabled, <code>false</code>
+     *         otherwise
      */
     @Override
     public boolean isEnabled() {
