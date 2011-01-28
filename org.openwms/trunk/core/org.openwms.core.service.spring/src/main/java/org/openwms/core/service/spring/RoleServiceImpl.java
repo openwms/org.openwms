@@ -37,7 +37,7 @@ import org.springframework.transaction.annotation.Transactional;
  * general {@link RoleService}. Using Spring 2 annotations support autowiring
  * collaborators like DAOs therefore XML configuration becomes obsolete. This
  * class is marked with Springs {@link Service} annotation to benefit from
- * Springs exception translation interceptor. Traditional CRUD operations are
+ * Springs exception translation intercepter. Traditional CRUD operations are
  * delegated to an {@link RoleDao}.
  * 
  * @author <a href="mailto:scherrer@users.sourceforge.net">Heiko Scherrer</a>

@@ -43,8 +43,6 @@ public interface EntityService<T extends Serializable> {
     /**
      * Save an entity of type <code>T</code>.
      * 
-     * @param <T>
-     *            Any serializable type, mostly an entity class type
      * @param entity
      *            Entity instance to be saved
      * @return The saved entity instance
@@ -54,8 +52,6 @@ public interface EntityService<T extends Serializable> {
     /**
      * Find all entities of type <code>T</code>.
      * 
-     * @param <T>
-     *            Any serializable type, mostly an entity class type
      * @return A list of all found entities
      */
     List<T> findAll();
@@ -63,8 +59,6 @@ public interface EntityService<T extends Serializable> {
     /**
      * Removes a persistent entity instance.
      * 
-     * @param <T>
-     *            Any serializable type, mostly an entity class type
      * @param entity
      *            Entity instance to be removed
      */
@@ -73,8 +67,6 @@ public interface EntityService<T extends Serializable> {
     /**
      * Add a new entity to the persistent storage.
      * 
-     * @param <T>
-     *            Any serializable type, mostly an entity class type
      * @param newEntity
      *            Transient entity instance to persist
      */

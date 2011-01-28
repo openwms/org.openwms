@@ -28,6 +28,8 @@ import org.openwms.core.service.exception.RemovalNotAllowedException;
  * class implementing this interface is called before an entity of type
  * <code>T</code> is removed.
  * 
+ * @param <T>
+ *            Any kind of AbstractEntity
  * @author <a href="mailto:russelltina@users.sourceforge.net">Tina Russell</a>
  * @version $Revision$
  * @since 0.1
