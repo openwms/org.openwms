@@ -84,7 +84,7 @@
                             <overWriteIfNewer>true</overWriteIfNewer>
                             <includeGroupIds></includeGroupIds>
                             <excludeGroupIds>
-                                javax.transaction,javax.persistence,org.junit,org.slf4j,org.springframework,com.springsource.dmserver,org.apache.log4j
+                                javax.transaction,javax.persistence,org.junit,org.slf4j,com.springsource.dmserver,org.apache.log4j
                             </excludeGroupIds>
                         </configuration>
                     </execution>
@@ -157,6 +157,12 @@
             <groupId>org.springframework</groupId>
             <artifactId>org.springframework.spring-library</artifactId>
             <type>libd</type>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>org.springframework.aspects</artifactId>
+            <version>${spring.version}</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
@@ -328,6 +334,11 @@
             <groupId>net.sourceforge.ehcache</groupId>
             <artifactId>com.springsource.net.sf.ehcache</artifactId>
             <version>1.6.2</version>
+        </dependency>
+        <dependency>
+            <groupId>org.graniteds</groupId>
+            <artifactId>granite-core</artifactId>
+            <scope>provided</scope>
         </dependency>
     </dependencies>
 </project>
