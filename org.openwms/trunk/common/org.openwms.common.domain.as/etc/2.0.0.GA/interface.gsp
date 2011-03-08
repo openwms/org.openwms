@@ -54,8 +54,10 @@ package ${jClass.as3Type.packageName} {<%
     if (as3Imports.size() > 0) {%>
 <%
     }
-    for (as3Import in as3Imports) {%>
-    import ${as3Import};<%
+    for (as3Import in as3Imports) {
+        if (as3Import != 'java.io.Serializable') {%>
+    import ${as3Import};
+        <%}
     }
 
     ///////////////////////////////////////////////////////////////////////////

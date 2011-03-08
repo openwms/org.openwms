@@ -128,7 +128,12 @@
 					</interfaceTemplate>
 					<includeJavaClasses>
 						<class>org.openwms.common.domain.*</class>
+                        <class>org.openwms.core.domain.AbstractEntity</class>
+                        <class>org.openwms.core.domain.DomainObject</class>
 					</includeJavaClasses>
+                    <excludeJavaClasses>
+                        <class>org.openwms.core.domain.system.usermanagement.User$1</class>
+                    </excludeJavaClasses>
                     <sourcePaths>
 						<sourcePath>${project.basedir}/src/main/flex/</sourcePath>
 						<sourcePath>${project.build.directory}/generated-sources/flexmojos/</sourcePath>

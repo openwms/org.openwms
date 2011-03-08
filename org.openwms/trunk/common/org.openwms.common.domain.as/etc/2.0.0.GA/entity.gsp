@@ -75,7 +75,7 @@ package ${jClass.as3Type.packageName} {<%
             // TODO: Gas3 empty generated setter.
         }<%
                 }
-                if (jProperty.readable) {%>
+                if (jProperty.readable && jProperty.name != 'new') {%>
         override public function get ${jProperty.name}():${jProperty.as3Type.name} {
             // TODO: Gas3 default generated getter.
             return ${jProperty.as3Type.nullValue};
