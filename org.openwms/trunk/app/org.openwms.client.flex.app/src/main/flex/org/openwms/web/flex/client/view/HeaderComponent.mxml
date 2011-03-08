@@ -57,7 +57,7 @@
         <mx:Image height="100%" source="@Embed('assets/images/openwms_header.png')" />
         <mx:VBox height="100%" width="100%" horizontalAlign="right" verticalAlign="bottom">
             <mx:HBox id="loggedInUserBox" width="100%" horizontalAlign="right">
-                <mx:LinkButton label="{identity.username}" color="#E9EBEB" cornerRadius="4"/>
+                <mx:Label text="{identity.username}" color="#E9EBEB" />
                 <mx:Image width="16" source="@Embed('assets/images/icons/user--anonymous.png')"/>
             </mx:HBox>
             <mx:HBox id="logoutBox" width="100%" horizontalAlign="right">
