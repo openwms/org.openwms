@@ -4,7 +4,7 @@
  * This file is part of openwms.org.
  *
  * openwms.org is free software: you can redistribute it and/or modify
- * it under the terms of the GNU Lesser General Public License as 
+ * it under the terms of the GNU Lesser General Public License as
  * published by the Free Software Foundation, either version 3 of the
  * License, or (at your option) any later version.
  *
@@ -20,14 +20,34 @@
  */
 package org.openwms.core.domain {
 
-    [Bindable]
-    [RemoteClass(alias="org.openwms.core.domain.AbstractEntity")]
     /**
-     * An AbstractEntity used as a base class for all domain classes.
-     * 
+     * A DomainObject, implementations of this interface offer some
+     * functionality common to all domain objects.<br>
+     * Each domain object:
+     * <ul>
+     * <li>shall have an optimistic locking field</li>
+     * <li>shall know if it is a transient or persisted instance</li>
+     * </ul>
+     *
      * @version $Revision: 1106 $
      * @since 0.1
      */
-    public class AbstractEntity extends AbstractEntityBase {
+    public interface DomainObject {
+
+        /**
+         * Check whether the persistent domain object is transient or not.
+         *
+         * @return <code>true</code> if transient (not persisted before), otherwise
+         *         <code>false</code>.
+         */
+        function isNew():Boolean;
+
+        /**
+         * Each persistent domain class must have an optimistic locking field.
+         *
+         * @return the version number
+         */
+        function get version():Number;
     }
 }
+
