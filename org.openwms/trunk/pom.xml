@@ -324,7 +324,7 @@
         <moduleDir>.</moduleDir>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <jdkVersion>1.6</jdkVersion>
-        <spring.version>3.0.3.RELEASE</spring.version>
+        <spring.version>3.0.5.RELEASE</spring.version>
         <spring.security.version>3.0.3.RELEASE</spring.security.version>
         <hibernate.version>3.2.6.GA</hibernate.version>
         <granite.version>2.1.0.GA</granite.version>
