@@ -22,6 +22,7 @@ package org.openwms.web.flex.client.model{
 
     import mx.collections.ArrayCollection;
     import mx.formatters.DateFormatter;
+    
     import org.openwms.core.domain.Module;
     import org.openwms.core.domain.system.usermanagement.User;
     import org.openwms.web.flex.client.HashMap;
@@ -137,6 +138,12 @@ package org.openwms.web.flex.client.model{
         // Credentials, set by the login screen
         public var isInitialized:Boolean = false;
         public var securityObjectNames:ArrayCollection = new ArrayCollection();
+        /**
+         * Flag to indicate that the app is locked. All modules remain in loaded state and the login
+         * dialogue is shown.
+         */
+        public var SCREEN_LOCKED:Boolean = false;
+        public var viewBeforeLock:String = SwitchScreenEvent.SHOW_STARTSCREEN;
 
         // WIDTH
         public static const WIDTH_ID:Number = 70;
