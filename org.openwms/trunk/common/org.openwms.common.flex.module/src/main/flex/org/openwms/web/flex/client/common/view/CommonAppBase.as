@@ -20,12 +20,12 @@
  */
 package org.openwms.web.flex.client.common.view {
     import flash.system.ApplicationDomain;
-    
+
     import mx.collections.ArrayCollection;
     import mx.collections.XMLListCollection;
     import mx.containers.ViewStack;
     import mx.controls.MenuBar;
-    
+
     import org.granite.tide.ITideModule;
     import org.granite.tide.Tide;
     import org.granite.tide.spring.Context;
@@ -40,6 +40,13 @@ package org.openwms.web.flex.client.common.view {
     import org.openwms.web.flex.client.module.CommonModule;
 
     [Name("CommonAppBase")]
+    /**
+     * Base class of COMMON Module.
+     *
+     * @author <a href="mailto:scherrer@users.sourceforge.net">Heiko Scherrer</a>
+     * @version $Revision: 1203 $
+     * @since 0.1
+     */
     public class CommonAppBase extends CommonModule implements IApplicationModule, ITideModule {
 
         [In]
@@ -66,7 +73,7 @@ package org.openwms.web.flex.client.common.view {
          * the main applicationDomain, that means the context of the main application is extended with the subcontext of
          * this module.
          */
-        public function start(applicationDomain : ApplicationDomain=null) : void {
+        public function start(applicationDomain : ApplicationDomain = null) : void {
             trace("Add context to main context in applicationDomain : " + applicationDomain);
             Spring.getInstance().addModule(CommonAppBase, applicationDomain);
             securityObjects = buildSecuredObjectsList();
@@ -74,9 +81,11 @@ package org.openwms.web.flex.client.common.view {
 
         /**
          * In a second step Tide tries to start the module calling this method. Here are all components added to the TideContext.
+         *
+         * @param tide not used here
          */
         public function init(tide : Tide) : void {
-        	// Child components are not initialized yet
+            // Child components are not initialized yet
             trace("Add components to Tide context");
             tide.addComponents([CommonModelLocator, TransportUnitTypeDelegate, TransportUnitDelegate, LocationDelegate, LocationGroupDelegate]);
         }
@@ -93,14 +102,14 @@ package org.openwms.web.flex.client.common.view {
          * This method returns the name of the module as unique String identifier.
          */
         public function getModuleName() : String {
-            return "OPENWMS.ORG CORE MODULE";
+            return "OPENWMS.ORG COMMON MODULE";
         }
 
         /**
          * This method returns the current version of the module as String.
          */
         public function getModuleVersion():String {
-        	return "1.0.0";
+            return "1.0.0";
         }
 
         /**
@@ -139,24 +148,25 @@ package org.openwms.web.flex.client.common.view {
          * Find all secured objects and return the list to the main app.
          */        
         private function buildSecuredObjectsList():ArrayCollection {
-        	var sItems:ArrayCollection = new ArrayCollection();
-        	if(commonMenuBar == null) {
-        		trace("MenuBar is null");
-        	}
+            var sItems:ArrayCollection = new ArrayCollection();
+            if(commonMenuBar == null) {
+                trace("MenuBar is null");
+            }
             if(commonViewStack == null) {
                 trace("ViewStack is null");
                 return sItems;
             }
-        	trace("Analyze menuBarItems, size ="+commonMenuBar.menuBarItems.length);
+            trace("Analyze menuBarItems, size ="+commonMenuBar.menuBarItems.length);
             trace("Analyze commonViewStack, size ="+commonViewStack.getChildren().length);
-        	for each (var mItem:* in commonMenuBar.menuBarItems) {
-        		trace("Fetch item : "+mItem);
-        	}
-        	for each (var sItem:* in commonViewStack.getChildren()) {
-        		trace("View stack item : "+sItem);
-        	}
-        	return sItems;
+            for each (var mItem:* in commonMenuBar.menuBarItems) {
+                trace("Fetch item : "+mItem);
+            }
+            for each (var sItem:* in commonViewStack.getChildren()) {
+                trace("View stack item : "+sItem);
+            }
+            return sItems;
         }
-        
+
     }
 }
+

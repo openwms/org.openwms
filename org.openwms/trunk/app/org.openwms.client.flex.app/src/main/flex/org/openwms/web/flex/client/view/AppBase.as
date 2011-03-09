@@ -22,7 +22,7 @@ package org.openwms.web.flex.client.view {
     import flash.display.DisplayObject;
     import flash.events.Event;
     import flash.system.ApplicationDomain;
-    
+
     import mx.collections.ArrayCollection;
     import mx.collections.XMLListCollection;
     import mx.containers.ViewStack;
@@ -35,7 +35,7 @@ package org.openwms.web.flex.client.view {
     import mx.managers.DragManager;
     import mx.managers.PopUpManager;
     import mx.modules.ModuleManager;
-    
+
     import org.granite.tide.spring.Context;
     import org.granite.tide.spring.Identity;
     import org.granite.tide.spring.Spring;
@@ -55,7 +55,7 @@ package org.openwms.web.flex.client.view {
     /**
      * An AppBase class is the main Flex Application of the CORE framework. This class
      * cares about all the essential stuff like security and Tide framework initialization
-     * and instantiates the main menu bar and the view stack. 
+     * and instantiates the main menu bar and the view stack.
      *
      * @author <a href="mailto:scherrer@users.sourceforge.net">Heiko Scherrer</a>
      * @version $Revision$
@@ -143,7 +143,7 @@ package org.openwms.web.flex.client.view {
 
         /**
          * Called when a menu item of the main menu bar is clicked.
-         * 
+         *
          * @param event The MenuEvent
          */
         public function onMenuChange(event : MenuEvent) : void {
@@ -160,7 +160,7 @@ package org.openwms.web.flex.client.view {
         /**
          * Called when logout is proceeded and the application should switch to the initial screen (with login dialog).
          * Tide event observers : APP_LOGOUT
-         * 
+         *
          * @param event Unused
          */
         public function logout(event : ApplicationEvent) : void {
@@ -174,11 +174,11 @@ package org.openwms.web.flex.client.view {
          * Called when screen lock is requested and the application should switch to the initial screen (with login dialog).
          * No modules are unloaded.
          * Tide event observers : APP_LOCK
-         * 
+         *
          * @param event Unused
          */
         public function lock(event : ApplicationEvent) : void {
-        	modelLocator.SCREEN_LOCKED = true;
+            modelLocator.SCREEN_LOCKED = true;
             modelLocator.actualView = SwitchScreenEvent.SHOW_STARTSCREEN;
             appViewStack.selectedIndex = DisplayUtility.getView(SwitchScreenEvent.SHOW_STARTSCREEN, appViewStack);
         }
@@ -187,14 +187,15 @@ package org.openwms.web.flex.client.view {
         /**
          * Called when the user logged in successfully.
          * Tide event observers : APP_LOGIN_OK
-         * 
+         *
          * @param event Unused
          */
         public function loggedIn(event : ApplicationEvent) : void {
-        	if (modelLocator.SCREEN_LOCKED) {
-        	   modelLocator.SCREEN_LOCKED = false;
-        	   modelLocator.actualView = modelLocator.viewBeforeLock;
-        	}
+            if (modelLocator.SCREEN_LOCKED) {
+                modelLocator.SCREEN_LOCKED = false;
+                modelLocator.viewLockedBy = null;
+                modelLocator.actualView = modelLocator.viewBeforeLock;
+            }
             tideContext.raiseEvent(ApplicationEvent.LOAD_ALL_MODULES);
         }
 
@@ -202,14 +203,14 @@ package org.openwms.web.flex.client.view {
         /**
          * In the case a Module was successfully unloaded, menues and views must be re-organized.
          * Tide event observers : MODULE_UNLOADED
-         * 
+         *
          * @param event event.data stores the IApplicationModule
          */
         public function moduleUnloaded(event : ApplicationEvent) : void {
             if (event.data != null && event.data is IApplicationModule) {
                 var appModule : IApplicationModule = (event.data as IApplicationModule);
                 mainMenuBar.dataProvider = moduleLocator.getActiveMenuItems(new XMLListCollection(stdMenu));
-                removeViewsFromStack(appModule);
+                    //removeViewsFromStack(appModule);
             }
         }
 
@@ -217,7 +218,7 @@ package org.openwms.web.flex.client.view {
         /**
          * In the case a Module was successfully loaded menues and views must be re-organized.
          * Tide event observers : MODULE_LOADED
-         * 
+         *
          * @param event event.data stores the IApplicationModule
          */
         public function moduleConfigChanged(event : ApplicationEvent) : void {
@@ -234,7 +235,7 @@ package org.openwms.web.flex.client.view {
          * When all modules are loaded and started properly an MODULES_CONFIGURED event is fired,
          * the standard menu is loaded then by default.
          * Tide event observers : MODULES_CONFIGURED
-         * 
+         *
          * @param event Unused
          */
         public function modulesConfigured(event : ApplicationEvent) : void {
@@ -273,3 +274,4 @@ package org.openwms.web.flex.client.view {
 
     }
 }
+

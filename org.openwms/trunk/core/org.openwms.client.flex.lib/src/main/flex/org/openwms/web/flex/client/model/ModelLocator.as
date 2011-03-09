@@ -22,7 +22,7 @@ package org.openwms.web.flex.client.model{
 
     import mx.collections.ArrayCollection;
     import mx.formatters.DateFormatter;
-    
+
     import org.openwms.core.domain.Module;
     import org.openwms.core.domain.system.usermanagement.User;
     import org.openwms.web.flex.client.HashMap;
@@ -123,7 +123,7 @@ package org.openwms.web.flex.client.model{
          * The current selected Module in the ModuleManagement view.
          */
         public var selectedModule:Module = null;
-        
+
         // --------------------------------------------------------------------
         // Property Management
         // --------------------------------------------------------------------
@@ -144,19 +144,20 @@ package org.openwms.web.flex.client.model{
          */
         public var SCREEN_LOCKED:Boolean = false;
         public var viewBeforeLock:String = SwitchScreenEvent.SHOW_STARTSCREEN;
+        public var viewLockedBy:String;
 
         // WIDTH
         public static const WIDTH_ID:Number = 70;
         public static const WIDTH_DATE:Number = 40;
         public static const WIDTH_TIME:Number = 40;
         public static const WIDTH_DATETIME:Number = 60;
-        
+
         /**
          * Constructor. Does some initializations of the dateFormatters.
          */
         public function ModelLocator() {
-        	dateFormatter.formatString = SIMPLE_DT_FORMAT;
-        	dateTimeFormatter.formatString = DT_FORMAT_STRING;
+            dateFormatter.formatString = SIMPLE_DT_FORMAT;
+            dateTimeFormatter.formatString = DT_FORMAT_STRING;
         }
 
         /**
@@ -164,11 +165,11 @@ package org.openwms.web.flex.client.model{
          * position. The postion is mandatory for the viewStack.
          */
         public static function addView(pos:int, view:Object):void { }
-        
+
         public static function today():Date {
-        	var today:Date = new Date();
-        	today.setHours(0,0,0,0);
-        	return today;
+            var today:Date = new Date();
+            today.setHours(0,0,0,0);
+            return today;
         }
 
         /**
@@ -182,3 +183,4 @@ package org.openwms.web.flex.client.model{
         public static function moveView(destPos:int, view:Object):void { }
     }
 }
+

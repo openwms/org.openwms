@@ -56,7 +56,7 @@
             public function onShow():void {
                 if (!identity.loggedIn) {
                 	if (modelLocator.SCREEN_LOCKED) {
-                        showLoginDialog("Screen locked");
+                        showLoginDialog("Application locked by "+modelLocator.viewLockedBy);
                 	} else {
                         showLoginDialog("Not logged in");
                     }
