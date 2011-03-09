@@ -31,16 +31,26 @@
 
 	<mx:Script>
         <![CDATA[
-        	import org.openwms.web.flex.client.event.ApplicationEvent;
-            
+            import mx.controls.Alert;
             import mx.managers.PopUpManager;
             import org.granite.tide.events.TideResultEvent;
             import org.granite.tide.events.TideFaultEvent;
             import org.granite.tide.spring.Identity;
-
+            import org.openwms.web.flex.client.event.ApplicationEvent;
+            import org.openwms.web.flex.client.model.ModelLocator;
+            
             [In]
             [Bindable]
+            /**
+             * Injected Granite identity object.
+             */
             public var identity:Identity;
+            [In]
+            [Bindable]
+            /**
+             * Injected Model.
+             */
+            public var modelLocator : ModelLocator;
             [Bindable]
             public var loginMessageText:String = "";
             
@@ -50,6 +60,12 @@
             }
             
             private function onLogin(username:String, password:String):void {
+                if (modelLocator.SCREEN_LOCKED) {
+                    if (modelLocator.viewLockedBy != username) {
+                        Alert.show("Only user "+ modelLocator.viewLockedBy +" can unlock the application");
+                        return;
+                    }
+                }
                 identity.login(username, password, loginOk, loginError);        
             }
 
