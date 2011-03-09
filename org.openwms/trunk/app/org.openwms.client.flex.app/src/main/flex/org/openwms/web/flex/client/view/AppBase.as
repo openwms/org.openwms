@@ -169,6 +169,20 @@ package org.openwms.web.flex.client.view {
             tideContext.raiseEvent(ApplicationEvent.UNLOAD_ALL_MODULES);
         }
 
+        [Observer("APP_LOCK")]
+        /**
+         * Called when screen lock is requested and the application should switch to the initial screen (with login dialog).
+         * No modules are unloaded.
+         * Tide event observers : APP_LOCK
+         * 
+         * @param event Unused
+         */
+        public function lock(event : ApplicationEvent) : void {
+        	modelLocator.SCREEN_LOCKED = true;
+            modelLocator.actualView = SwitchScreenEvent.SHOW_STARTSCREEN;
+            appViewStack.selectedIndex = DisplayUtility.getView(SwitchScreenEvent.SHOW_STARTSCREEN, appViewStack);
+        }
+
         [Observer("APP_LOGIN_OK")]
         /**
          * Called when the user logged in successfully.
@@ -177,6 +191,10 @@ package org.openwms.web.flex.client.view {
          * @param event Unused
          */
         public function loggedIn(event : ApplicationEvent) : void {
+        	if (modelLocator.SCREEN_LOCKED) {
+        	   modelLocator.SCREEN_LOCKED = false;
+        	   modelLocator.actualView = modelLocator.viewBeforeLock;
+        	}
             tideContext.raiseEvent(ApplicationEvent.LOAD_ALL_MODULES);
         }
 

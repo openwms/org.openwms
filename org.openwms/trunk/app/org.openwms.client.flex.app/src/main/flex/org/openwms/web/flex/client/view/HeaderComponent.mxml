@@ -26,6 +26,7 @@
     <mx:Metadata>
         [Name]
         [ManagedEvent(name="APP_LOGOUT")]
+        [ManagedEvent(name="APP_LOCK")]
     </mx:Metadata>
 
     <mx:Script>
@@ -38,15 +39,29 @@
 
             [In]
             [Bindable]
+            /**
+             * Injected Granite identity object.
+             */
             public var identity:Identity;
+            [In]
+            [Bindable]
+            /**
+             * Injected Model.
+             */
+            public var modelLocator : ModelLocator;
     		
     		private function logout(event:MouseEvent = null):void {
                 identity.logout();
     			dispatchEvent(new ApplicationEvent(ApplicationEvent.LOGOUT));
     		}
     		
-    		public function getSecuredObjectNames():ArrayCollection
-    		{
+            private function lock(event:MouseEvent = null):void {
+            	modelLocator.viewBeforeLock = modelLocator.actualView;
+                identity.logout();
+                dispatchEvent(new ApplicationEvent(ApplicationEvent.LOCK));
+            }
+
+    		public function getSecuredObjectNames():ArrayCollection {
     			var securedObjects:ArrayCollection = new ArrayCollection();
     			//FIX securedObjects.addItem(loggedInUserBox.id, logoutBox.id);
     			return securedObjects;
@@ -55,10 +70,14 @@
     </mx:Script>
     <mx:HBox width="100%" height="66" horizontalAlign="left">
         <mx:Image height="100%" source="@Embed('assets/images/openwms_header.png')" />
-        <mx:VBox height="100%" width="100%" horizontalAlign="right" verticalAlign="bottom">
+        <mx:VBox height="100%" width="100%" horizontalAlign="right" verticalAlign="bottom" verticalGap="0">
             <mx:HBox id="loggedInUserBox" width="100%" horizontalAlign="right">
                 <mx:Label text="{identity.username}" color="#E9EBEB" />
                 <mx:Image width="16" source="@Embed('assets/images/icons/user--anonymous.png')"/>
+            </mx:HBox>
+            <mx:HBox id="lockBox" width="100%" horizontalAlign="right">
+                <mx:LinkButton label="lock" color="#E9EBEB" click="lock();"/>
+                <mx:Image width="16" source="@Embed('assets/images/icons/logout.png')"/>
             </mx:HBox>
             <mx:HBox id="logoutBox" width="100%" horizontalAlign="right">
                 <mx:LinkButton label="logout" color="#E9EBEB" click="logout();"/>

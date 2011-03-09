@@ -82,6 +82,10 @@ package org.openwms.web.flex.client.event {
          * Name of the Event to force an User logout.
          */
         public static const LOGOUT:String = "APP_LOGOUT";
+        /**
+         * Name of the Event to force a screen lock.
+         */
+        public static const LOCK:String = "APP_LOCK";
         
         /**
          * Store arbitrary data.

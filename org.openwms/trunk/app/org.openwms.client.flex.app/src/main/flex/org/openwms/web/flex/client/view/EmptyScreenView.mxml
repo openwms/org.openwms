@@ -21,7 +21,7 @@
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
 -->
-<mx:Canvas xmlns:mx="http://www.adobe.com/2006/mxml" width="100%" height="100%" creationComplete="onShow()" show="onShow()">
+<mx:Canvas xmlns:mx="http://www.adobe.com/2006/mxml" width="100%" height="100%" creationComplete="onShow()">
 	
     <mx:Metadata>
         [Name]
@@ -32,24 +32,38 @@
         
             import mx.managers.PopUpManager;
             import org.openwms.web.flex.client.view.dialogs.LoginView;
+            import org.openwms.web.flex.client.model.ModelLocator;
             import org.granite.tide.spring.Identity;
             
             [In]
             [Bindable]
+            /**
+             * Injected Granite identity object.
+             */
             public var identity:Identity;
+	        [In]
+	        [Bindable]
+	        /**
+	         * Injected Model.
+	         */
+	        public var modelLocator : ModelLocator;
 
             [Bindable]
             public var loginView:LoginView;
         
-            private function onShow():void {
-                if (!identity.loggedIn)
-                {
-                    showLoginDialog("Not logged in");
+            [Observer("APP_LOCK")]
+            [Observer("APP_LOGOUT")]
+            public function onShow():void {
+                if (!identity.loggedIn) {
+                	if (modelLocator.SCREEN_LOCKED) {
+                        showLoginDialog("Screen locked");
+                	} else {
+                        showLoginDialog("Not logged in");
+                    }
                 }
             }
     
-            private function showLoginDialog(text:String):void
-            {
+            private function showLoginDialog(text:String):void {
                 loginView = LoginView(PopUpManager.createPopUp(this, LoginView, true));
                 loginView.loginMessageText = text;
                 PopUpManager.centerPopUp(loginView);
