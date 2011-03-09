@@ -22,7 +22,7 @@ package org.openwms.web.flex.client.module {
 
     import flash.events.EventDispatcher;
     import flash.system.ApplicationDomain;
-    
+
     import mx.collections.ArrayCollection;
     import mx.collections.XMLListCollection;
     import mx.controls.Alert;
@@ -31,7 +31,7 @@ package org.openwms.web.flex.client.module {
     import mx.logging.Log;
     import mx.modules.IModuleInfo;
     import mx.modules.ModuleManager;
-    
+
     import org.granite.tide.events.TideFaultEvent;
     import org.granite.tide.events.TideResultEvent;
     import org.granite.tide.spring.Context;
@@ -87,7 +87,7 @@ package org.openwms.web.flex.client.module {
          */
         [Observer("LOAD_ALL_MODULES")]
         public function loadModulesFromService() : void {
-        	trace("Loading all module definitions from the database");
+            trace("Loading all module definitions from the database");
             tideContext.moduleService.findAll(onModulesLoad, onFault);
         }
 
@@ -97,17 +97,17 @@ package org.openwms.web.flex.client.module {
          */
         [Observer("UNLOAD_ALL_MODULES")]
         public function unloadAllModules() : void {
-        	for each (var url:String in modelLocator.loadedModules.keys) {
-        		var module:Module = new Module();
-        		module.url = url;
-        		unloadModule(module);
-        	}
+            for each (var url:String in modelLocator.loadedModules.keys) {
+                var module:Module = new Module();
+                module.url = url;
+                unloadModule(module);
+            }
         }
 
         /**
          * Tries to save the module data via a service call.
          * Is called when the SAVE_MODULE event is fired.
-         * 
+         *
          * @param event An ApplicationEvent that holds the Module to be saved in its data field
          */
         [Observer("SAVE_MODULE")]
@@ -118,7 +118,7 @@ package org.openwms.web.flex.client.module {
         /**
          * Tries to remove the module data via a service call.
          * Is called when the DELETE_MODULE event is fired.
-         * 
+         *
          * @param event An ApplicationEvent that holds the Module to be removed in its data field
          */
         [Observer("DELETE_MODULE")]
@@ -126,12 +126,12 @@ package org.openwms.web.flex.client.module {
             toRemove = event.data as Module;
             tideContext.moduleService.remove(event.data as Module, onModuleRemoved, onFault);
         }
-        
+
         /**
          * A collection of modules is passed to the service to save the startupOrder properties.
          * The startupOrders must be calculated and ordered before. Is called when the
          * SAVE_STARTUP_ORDERS event is fired.
-         * 
+         *
          * @param event An ApplicationEvent holds a list of Modules that shall be updated
          */
         [Observer("SAVE_STARTUP_ORDERS")]
@@ -157,7 +157,7 @@ package org.openwms.web.flex.client.module {
             }
             loadModule(module);
         }
-        
+
         /**
          * Checks whether the module a registered Module and calls unloadModule to unload it.
          *
@@ -237,13 +237,13 @@ package org.openwms.web.flex.client.module {
                 return false;
             }
             for each (var mInf:IModuleInfo in modelLocator.loadedModules.values) {
-	            if ((mInf.data as Module).moduleName == moduleName) {
-	                return true;
-	            }
+                if ((mInf.data as Module).moduleName == moduleName) {
+                    return true;
+                }
             }
             return false;
         }
-        
+
         // +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
         //
         // privates
@@ -264,7 +264,7 @@ package org.openwms.web.flex.client.module {
          * Callback when startupOrder was saved for a list of modules.
          */
         private function onStartupOrdersSaved(event : TideResultEvent) : void {
-        	// We do not need to update the list of modules here, keep quite
+            // We do not need to update the list of modules here, keep quite
         }
 
         /**
@@ -272,10 +272,10 @@ package org.openwms.web.flex.client.module {
          * on startup and tries to start each Module if it hasn't been loaded so far.
          */
         private function startAllModules() : void {
-        	var noModulesLoaded:Boolean = true;
+            var noModulesLoaded:Boolean = true;
             for each (var module : Module in modelLocator.allModules) {
                 if (module.loadOnStartup) {
-                	noModulesLoaded = false;
+                    noModulesLoaded = false;
                     if (modelLocator.loadedModules.containsKey(module.url)) {
                         module.loaded = true;
                         continue;
@@ -309,7 +309,7 @@ package org.openwms.web.flex.client.module {
             }
             trace("No module to load with url: " + module.url);
         }
-        
+
         private function unloadModule(module : Module):void {
             var mInf : IModuleInfo = ModuleManager.getModule(module.url);
             if (mInf != null) {
@@ -507,3 +507,4 @@ package org.openwms.web.flex.client.module {
 
     }
 }
+
