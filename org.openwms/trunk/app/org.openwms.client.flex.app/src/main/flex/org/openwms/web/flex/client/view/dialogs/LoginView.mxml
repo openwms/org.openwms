@@ -77,6 +77,8 @@
         
             private function loginError(event:TideFaultEvent):void {
                 loginMessageText = event.fault.faultString;
+                myPass.text = "";
+                myPass.setFocus();
             }
 
         ]]>
