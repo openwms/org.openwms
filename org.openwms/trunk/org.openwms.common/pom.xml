@@ -35,7 +35,7 @@
     <packaging>pom</packaging>
     <name>OpenWMS.org COMMON</name>
     <properties>
-        <moduleDir>..</moduleDir>
+        <moduleDir>../..</moduleDir>
         <core.version>0.0.1-SNAPSHOT</core.version>
         <bundle.version>0.0.1.SNAPSHOT</bundle.version>
     </properties>
@@ -44,14 +44,14 @@
         <site>
             <id>${distribution.serverId}</id>
             <name>OpenWMS.org WebSite</name>
-            <url>${distribution.serverProtocol}://${distribution.serverUrl.sourcePath}/common</url>
+            <url>${distribution.serverProtocol}://${distribution.serverUrl.sourcePath}/org.openwms.common</url>
         </site>
     </distributionManagement>
 
     <scm>
-        <connection>scm:svn:http://openwms2005.svn.sourceforge.net/svnroot/openwms2005/org.openwms/trunk/common</connection>
-        <developerConnection>scm:svn:https://openwms2005.svn.sourceforge.net/svnroot/openwms2005/org.openwms/trunk/common</developerConnection>
-        <url>http://openwms2005.svn.sourceforge.net/viewvc/openwms2005/org.openwms/trunk/common</url>
+        <connection>scm:svn:http://openwms2005.svn.sourceforge.net/svnroot/openwms2005/org.openwms/trunk/org.openwms.common</connection>
+        <developerConnection>scm:svn:https://openwms2005.svn.sourceforge.net/svnroot/openwms2005/org.openwms/trunk/org.openwms.common</developerConnection>
+        <url>http://openwms2005.svn.sourceforge.net/viewvc/openwms2005/org.openwms/trunk/org.openwms.common</url>
     </scm>
 
     <profiles>

@@ -33,7 +33,7 @@
 	<packaging>swc</packaging>
 	<name>${project.artifactId}</name>
 	<properties>
-		<moduleDir>../..</moduleDir>
+		<moduleDir>../../..</moduleDir>
 		<property.org.graniteds-core.version>1.2.0_SP1</property.org.graniteds-core.version>
 	</properties>
 	<build>
@@ -41,21 +41,6 @@
 		<sourceDirectory>${project.basedir}/src/main/flex</sourceDirectory>
         <testSourceDirectory>${project.basedir}/src/test/flex</testSourceDirectory>
 		<plugins>
-        <!-- 
-			<plugin>
-				<artifactId>maven-clean-plugin</artifactId>
-				<configuration>
-					<filesets>
-						<fileset>
-							<directory>src/main/flex/org</directory>
-							<includes>
-								<include>**</include>
-							</includes>
-						</fileset>
-					</filesets>
-				</configuration>
-			</plugin>
-             -->
             <plugin>
                 <artifactId>maven-clean-plugin</artifactId>
                 <configuration>

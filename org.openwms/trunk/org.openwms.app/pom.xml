@@ -35,7 +35,7 @@
     <packaging>pom</packaging>
     <name>OpenWMS.org Application</name>
     <properties>
-        <moduleDir>..</moduleDir>
+        <moduleDir>../..</moduleDir>
         <bundle.version>0.0.1.SNAPSHOT</bundle.version>
         <core.version>0.0.1-SNAPSHOT</core.version>
         <common.version>0.0.1-SNAPSHOT</common.version>
@@ -46,14 +46,14 @@
         <site>
             <id>${distribution.serverId}</id>
             <name>OpenWMS.org WebSite</name>
-            <url>${distribution.serverProtocol}://${distribution.serverUrl.sourcePath}/app</url>
+            <url>${distribution.serverProtocol}://${distribution.serverUrl.sourcePath}/org.openwms.app</url>
         </site>
     </distributionManagement>
 
     <scm>
-        <connection>scm:svn:http://openwms2005.svn.sourceforge.net/svnroot/openwms2005/org.openwms/trunk/app</connection>
-        <developerConnection>scm:svn:https://openwms2005.svn.sourceforge.net/svnroot/openwms2005/org.openwms/trunk/app</developerConnection>
-        <url>http://openwms2005.svn.sourceforge.net/viewvc/openwms2005/org.openwms/trunk/app</url>
+        <connection>scm:svn:http://openwms2005.svn.sourceforge.net/svnroot/openwms2005/org.openwms/trunk/org.openwms.app</connection>
+        <developerConnection>scm:svn:https://openwms2005.svn.sourceforge.net/svnroot/openwms2005/org.openwms/trunk/org.openwms.app</developerConnection>
+        <url>http://openwms2005.svn.sourceforge.net/viewvc/openwms2005/org.openwms/trunk/org.openwms.app</url>
     </scm>
 
     <profiles>
