@@ -48,11 +48,11 @@
             <item name="YourKit" href="http://www.yourkit.com/" />
         </links>
 
-        <menu name="OpenWMS" ref="parent">
-            <item name="Main Site" href="../../../developerIndex.html" />
+        <menu name="OpenWMS" inherit="top" ref="parent">
+            <item name="Main Site" href="../../../../developerIndex.html" />
         </menu>
 
-        <menu name="Project" ref="reports" />
+        <menu name="Project" ref="reports" inherit="top" />
         
         <menu name="Modules" ref="modules" />
         

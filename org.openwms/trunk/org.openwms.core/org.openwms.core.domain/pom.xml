@@ -32,7 +32,7 @@
     <artifactId>org.openwms.core.domain</artifactId>
     <name>${project.artifactId}</name>
     <properties>
-        <moduleDir>../..</moduleDir>
+        <moduleDir>../../..</moduleDir>
     </properties>
     <build>
         <plugins>

@@ -33,7 +33,7 @@
 	<packaging>swf</packaging>
 	<name>${project.artifactId}</name>
 	<properties>
-		<moduleDir>..</moduleDir>
+		<moduleDir>../../..</moduleDir>
 	</properties>
 	<build>
 		<finalName>${project.artifactId}-${project.version}</finalName>

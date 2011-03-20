@@ -307,23 +307,6 @@
 
     <pluginRepositories>
         <pluginRepository>
-            <id>org.openwms.release</id>
-            <name>OpenWMS.org Sourceforge Maven Repository Releases</name>
-            <url>http://openwms2005.sourceforge.net/repo/releases</url>
-            <snapshots>
-                <enabled>false</enabled>
-            </snapshots>
-        </pluginRepository>
-        <pluginRepository>
-            <id>org.openwms.snapshots</id>
-            <name>OpenWMS.org Sourceforge Maven Repository Snapshots</name>
-            <url>http://openwms2005.sourceforge.net/repo/snapshots</url>
-            <releases>
-                <enabled>false</enabled>
-            </releases>
-        </pluginRepository>
-<!---->
-        <pluginRepository>
             <id>com.springsource.repository.bundles.release</id>
             <name>SpringSource Enterprise Bundle Repository - Releases</name>
             <url>http://repository.springsource.com/maven/bundles/release</url>
@@ -339,7 +322,16 @@
                 <enabled>false</enabled>
             </snapshots>
         </pluginRepository>
- 
+        <pluginRepository>
+            <id>central</id>
+            <url>http://repo1.maven.org/maven2/</url>
+            <releases>
+                <enabled>true</enabled>
+            </releases>
+            <snapshots>
+                <enabled>true</enabled>
+            </snapshots>
+        </pluginRepository> 
     </pluginRepositories>
     <repositories>
         <repository>
@@ -789,6 +781,7 @@
                 <version>2.3.1</version>
                 <configuration>
                     <xrefLocation>${project.reporting.outputDirectory}/../xref</xrefLocation>
+                    <xmlOutput>true</xmlOutput>
                     <effort>Max</effort>
                     <threshold>High</threshold>
                     <failOnError>false</failOnError>

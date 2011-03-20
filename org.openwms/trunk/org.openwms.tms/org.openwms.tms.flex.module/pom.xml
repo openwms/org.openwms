@@ -33,7 +33,7 @@
 	<packaging>swf</packaging>
 	<name>${project.artifactId}</name>
 	<properties>
-		<moduleDir>../..</moduleDir>
+		<moduleDir>../../..</moduleDir>
 		<template.version>2.0.0</template.version>
 	</properties>
 	<build>

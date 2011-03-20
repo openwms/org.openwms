@@ -35,7 +35,7 @@
     <packaging>pom</packaging>
     <name>OpenWMS.org CORE</name>
     <properties>
-        <moduleDir>..</moduleDir>
+        <moduleDir>../..</moduleDir>
         <property.org.graniteds-core.version>1.2.0_SP1</property.org.graniteds-core.version>
         <bundle.version>0.0.1.SNAPSHOT</bundle.version>
     </properties>
@@ -44,14 +44,14 @@
         <site>
             <id>${distribution.serverId}</id>
             <name>OpenWMS.org WebSite</name>
-            <url>${distribution.serverProtocol}://${distribution.serverUrl.sourcePath}/core</url>
+            <url>${distribution.serverProtocol}://${distribution.serverUrl.sourcePath}/org.openwms.core</url>
         </site>
     </distributionManagement>
 
     <scm>
-        <connection>scm:svn:http://openwms2005.svn.sourceforge.net/svnroot/openwms2005/org.openwms/trunk/core</connection>
-        <developerConnection>scm:svn:https://openwms2005.svn.sourceforge.net/svnroot/openwms2005/org.openwms/trunk/core</developerConnection>
-        <url>http://openwms2005.svn.sourceforge.net/viewvc/openwms2005/org.openwms/trunk/core</url>
+        <connection>scm:svn:http://openwms2005.svn.sourceforge.net/svnroot/openwms2005/org.openwms/trunk/org.openwms.core</connection>
+        <developerConnection>scm:svn:https://openwms2005.svn.sourceforge.net/svnroot/openwms2005/org.openwms/trunk/org.openwms.core</developerConnection>
+        <url>http://openwms2005.svn.sourceforge.net/viewvc/openwms2005/org.openwms/trunk/org.openwms.core</url>
     </scm>
     
     <profiles>

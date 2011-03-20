@@ -33,7 +33,7 @@
     <packaging>pom</packaging>
     <name>${project.artifactId}</name>
     <properties>
-        <moduleDir>../..</moduleDir>
+        <moduleDir>../../..</moduleDir>
     </properties>
     <build>
         <plugins>
