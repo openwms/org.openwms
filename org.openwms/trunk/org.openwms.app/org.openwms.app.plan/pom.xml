@@ -137,7 +137,7 @@
                         <configuration>
                             <repositoryId>repo.sourceforge.net</repositoryId>
                             <url>
-                                ${distribution.repo.serverProtocol}//${distribution.repo.snapshot.serverUrl.rootPath}
+                                ${distribution.repo.serverProtocol}://${distribution.repo.snapshot.serverUrl.rootPath}
                             </url>
                             <groupId>${project.groupId}</groupId>
                             <artifactId>${project.artifactId}</artifactId>
