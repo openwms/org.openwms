@@ -73,7 +73,7 @@
 
     <organization>
         <name>openwms.org</name>
-        <url>openwms.org</url>
+        <url>www.openwms.org</url>
     </organization>
 
     <developers>
@@ -182,8 +182,8 @@
                 <!-- Maven Repo Artifact deployment -->
                 <distribution.repo.serverId>shell.sourceforge.net</distribution.repo.serverId>
                 <distribution.repo.serverProtocol>scp</distribution.repo.serverProtocol>
-                <distribution.repo.serverUrl.rootPath>shell.sourceforge.net/home/groups/o/op/openwms2005/htdocs/repo/releases</distribution.repo.serverUrl.rootPath>
-                <distribution.repo.snapshot.serverUrl.rootPath>shell.sourceforge.net/home/groups/o/op/openwms2005/htdocs/repo/snapshots</distribution.repo.snapshot.serverUrl.rootPath>
+                <distribution.repo.serverUrl.rootPath>shell.sourceforge.net/home/project-web/openwms2005/htdocs/repo/releases</distribution.repo.serverUrl.rootPath>
+                <distribution.repo.snapshot.serverUrl.rootPath>shell.sourceforge.net/home/project-web/openwms2005/htdocs/repo/snapshots</distribution.repo.snapshot.serverUrl.rootPath>
             </properties>
         </profile>
         <profile>
