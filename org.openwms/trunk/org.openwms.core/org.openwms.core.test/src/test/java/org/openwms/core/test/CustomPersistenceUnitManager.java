@@ -36,7 +36,7 @@ import org.springframework.orm.jpa.persistenceunit.MutablePersistenceUnitInfo;
  * OSGi application.
  * </p>
  * 
- * @author <a href="mailto:scherrer@users.sourceforge.net">Heiko Scherrer</a>
+ * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  * @since 0.1
  * @see org.springframework.orm.jpa.persistenceunit.PersistenceUnitManager
  * @see org.springframework.orm.jpa.persistenceunit.DefaultPersistenceUnitManager

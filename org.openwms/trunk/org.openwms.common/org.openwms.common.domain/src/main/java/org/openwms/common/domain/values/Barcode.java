@@ -30,7 +30,7 @@ import org.apache.commons.lang.StringUtils;
 /**
  * A Barcode defines an unique label.
  * 
- * @author <a href="mailto:scherrer@users.sourceforge.net">Heiko Scherrer</a>
+ * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  * @version $Revision$
  * @since 0.1
  */
@@ -46,7 +46,7 @@ public class Barcode implements Serializable {
      * Only be used when padding is activated.
      * </p>
      * 
-     * @author <a href="mailto:scherrer@users.sourceforge.net">Heiko
+     * @author <a href="mailto:scherrer@openwms.org">Heiko
      *         Scherrer</a>
      * @version $Revision$
      * @since 0.1

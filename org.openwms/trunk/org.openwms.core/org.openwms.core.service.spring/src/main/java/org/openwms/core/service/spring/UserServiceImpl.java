@@ -44,7 +44,7 @@ import org.springframework.transaction.annotation.Transactional;
  * Springs exception translation interceptor. Traditional CRUD operations are
  * delegated to an {@link UserDao}.
  * 
- * @author <a href="mailto:scherrer@users.sourceforge.net">Heiko Scherrer</a>
+ * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  * @version $Revision$
  * @since 0.1
  * @see org.openwms.core.integration.system.usermanagement.UserDao;

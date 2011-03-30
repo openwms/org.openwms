@@ -31,7 +31,7 @@ import org.openwms.core.domain.values.Unit;
  * a global scope which means Application Scope and some others are only valid
  * for a certain Module.
  * 
- * @author <a href="mailto:scherrer@users.sourceforge.net">Heiko Scherrer</a>
+ * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  * @version $Revision$
  * @since 0.1
  * @see org.openwms.core.domain.system.PropertyScope

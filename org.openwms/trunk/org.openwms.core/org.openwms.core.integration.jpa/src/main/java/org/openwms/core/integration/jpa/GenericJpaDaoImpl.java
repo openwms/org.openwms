@@ -32,7 +32,7 @@ import org.openwms.core.integration.GenericDao;
  *            Any serializable type, mostly an Entity class type.
  * @param <ID>
  *            The type of the Entity class' unique id
- * @author <a href="mailto:scherrer@users.sourceforge.net">Heiko Scherrer</a>
+ * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  * @version $Revision$
  * @since 0.1
  * @see org.openwms.core.integration.jpa.AbstractGenericJpaDao

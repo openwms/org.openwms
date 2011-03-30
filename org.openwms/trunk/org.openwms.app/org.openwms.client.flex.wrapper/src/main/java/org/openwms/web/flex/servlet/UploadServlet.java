@@ -43,7 +43,7 @@ import org.springframework.web.context.support.WebApplicationContextUtils;
 /**
  * An UploadServlet.
  * 
- * @author <a href="mailto:scherrer@users.sourceforge.net">Heiko Scherrer</a>
+ * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  * @version $Revision$
  * @since 0.1
  */

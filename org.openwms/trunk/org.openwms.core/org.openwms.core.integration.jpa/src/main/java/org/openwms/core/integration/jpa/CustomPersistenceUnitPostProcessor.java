@@ -37,7 +37,7 @@ import org.springframework.util.ResourceUtils;
  * An extension of the default Spring implementation.
  * </p>
  * 
- * @author <a href="mailto:scherrer@users.sourceforge.net">Heiko Scherrer</a>
+ * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  * @version $Revision$
  * @see org.springframework.orm.jpa.persistenceunit.PersistenceUnitPostProcessor
  * @since 0.1

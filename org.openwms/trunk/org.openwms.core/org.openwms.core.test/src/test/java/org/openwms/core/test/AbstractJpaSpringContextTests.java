@@ -40,7 +40,7 @@ import org.springframework.transaction.annotation.Transactional;
  * {@link EntityManagerFactory} is initialized within the ApplicationContext.
  * </p>
  * 
- * @author <a href="mailto:scherrer@users.sourceforge.net">Heiko Scherrer</a>
+ * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  * @since 0.1
  * @see org.springframework.test.context.junit4.SpringJUnit4ClassRunner
  * @see org.springframework.test.context.transaction.TransactionConfiguration

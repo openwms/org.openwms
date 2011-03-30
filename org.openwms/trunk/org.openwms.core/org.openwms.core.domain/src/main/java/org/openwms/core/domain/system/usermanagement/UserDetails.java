@@ -35,7 +35,7 @@ import org.openwms.core.domain.values.ImageProvider;
 /**
  * Detailed information about an <code>User</code>.
  * 
- * @author <a href="mailto:scherrer@users.sourceforge.net">Heiko Scherrer</a>
+ * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  * @version $Revision$
  * @since 0.1
  * @see org.openwms.core.domain.system.usermanagement.User
@@ -48,7 +48,7 @@ public class UserDetails implements ImageProvider, Serializable {
     /**
      * The <code>User</code>s sex.
      * 
-     * @author <a href="mailto:scherrer@users.sourceforge.net">Heiko Scherrer</a>
+     * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
      * @version $Revision$
      * @since 0.1
      * @see org.openwms.common.domain.system.usermanagement.User

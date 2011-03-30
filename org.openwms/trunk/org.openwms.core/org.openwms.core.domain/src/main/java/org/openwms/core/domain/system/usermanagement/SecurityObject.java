@@ -40,7 +40,7 @@ import org.openwms.core.domain.DomainObject;
  * A SecurityObject is the superclass of Roles and Grants and combines common
  * used properties.
  * 
- * @author <a href="mailto:scherrer@users.sourceforge.net">Heiko Scherrer</a>
+ * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  * @version $Revision$
  * @since 0.1
  */

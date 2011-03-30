@@ -27,7 +27,7 @@ import org.openwms.core.domain.system.usermanagement.Role;
 /**
  * A RoleService provides business functionality regarding {@link Role}s.
  * 
- * @author <a href="mailto:scherrer@users.sourceforge.net">Heiko Scherrer</a>
+ * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  * @version $Revision$
  * @since 0.1
  */
