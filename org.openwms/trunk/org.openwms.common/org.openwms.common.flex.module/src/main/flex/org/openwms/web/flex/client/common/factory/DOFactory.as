@@ -27,7 +27,7 @@ package org.openwms.web.flex.client.common.factory {
     /**
      * A DOFactory.
      *
-     * @author <a href="mailto:scherrer@users.sourceforge.net">Heiko Scherrer</a>
+     * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
      * @version $Revision: 700 $
      * @since 0.1
      */

@@ -26,7 +26,7 @@ package org.openwms.web.flex.client.tms.event {
     /**
      * A TMSSwitchScreenEvent.
      *
-     * @author <a href="mailto:scherrer@users.sourceforge.net">Heiko Scherrer</a>
+     * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
      * @version $Revision$
      * @since 0.1
      */

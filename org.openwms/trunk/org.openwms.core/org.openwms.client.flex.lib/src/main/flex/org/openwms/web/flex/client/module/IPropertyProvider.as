@@ -26,7 +26,7 @@ package org.openwms.web.flex.client.module {
      * An IPropertyProvider can provide custom properties to the main application.
      * A Module implementing this interface can hook into the CORE Property Management.
      *
-     * @author <a href="mailto:scherrer@users.sourceforge.netm">Heiko Scherrer</a>
+     * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
      * @version $Revision$
      * @since 0.1
      */

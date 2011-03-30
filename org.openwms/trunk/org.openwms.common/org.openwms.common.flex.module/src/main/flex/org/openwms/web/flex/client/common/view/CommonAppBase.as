@@ -43,7 +43,7 @@ package org.openwms.web.flex.client.common.view {
     /**
      * Base class of COMMON Module.
      *
-     * @author <a href="mailto:scherrer@users.sourceforge.net">Heiko Scherrer</a>
+     * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
      * @version $Revision: 1203 $
      * @since 0.1
      */

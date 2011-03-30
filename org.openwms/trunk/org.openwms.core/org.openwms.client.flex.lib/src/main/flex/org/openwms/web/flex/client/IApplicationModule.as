@@ -30,7 +30,7 @@ package org.openwms.web.flex.client {
      * CORE Flex Application and Flex Modules that shall be loaded into the
      * application domain. An implementation class is typically an ITideModule as well.
      *
-     * @author <a href="mailto:scherrer@users.sourceforge.net">Heiko Scherrer</a>
+     * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
      * @version $Revision$
      * @see org.granite.tide.ITideModule
      * @since 0.1

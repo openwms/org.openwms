@@ -53,7 +53,7 @@ package org.openwms.web.flex.client.module {
      * It fires the following Tide Events:
      * MODULE_CONFIG_CHANGED, MODULES_CONFIGURED, MODULE_LOADED, MODULE_UNLOADED.
      *
-     * @author <a href="mailto:scherrer@users.sourceforge.net">Heiko Scherrer</a>
+     * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
      * @version $Revision$
      * @since 0.1
      */
