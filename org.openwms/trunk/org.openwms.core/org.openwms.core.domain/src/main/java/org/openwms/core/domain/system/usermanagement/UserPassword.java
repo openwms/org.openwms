@@ -44,7 +44,7 @@ import org.openwms.core.domain.DomainObject;
  * the history list of passwords.
  * </p>
  * 
- * @author <a href="mailto:scherrer@users.sourceforge.net">Heiko Scherrer</a>
+ * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  * @version $Revision$
  * @since 0.1
  * @see org.openwms.core.domain.system.usermanagement.User

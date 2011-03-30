@@ -36,7 +36,7 @@ import org.openwms.core.domain.DomainObject;
  * An UnitError represents an error occurring on <code>TransportUnit</code>s,
  * on <code>LoadUnit</code>s or others.
  * 
- * @author <a href="mailto:scherrer@users.sourceforge.net">Heiko Scherrer</a>
+ * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  * @version $Revision$
  * @since 0.1
  */

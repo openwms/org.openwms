@@ -37,7 +37,7 @@ import org.openwms.core.domain.DomainObject;
 /**
  * An Email, encapsulates the email address of an <code>User</code>.
  * 
- * @author <a href="mailto:scherrer@users.sourceforge.net">Heiko Scherrer</a>
+ * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  * @version $Revision$
  * @since 0.1
  * @see org.openwms.core.domain.system.usermanagement.User

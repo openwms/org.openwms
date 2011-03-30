@@ -26,7 +26,7 @@ import java.io.Serializable;
  * A DataNotFoundException is thrown to signal that data was expected but not
  * found.
  * 
- * @author <a href="mailto:scherrer@users.sourceforge.net">Heiko Scherrer</a>
+ * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  * @version $Revision$
  * @since 0.1
  * @see org.openwms.core.integration.exception.DataException

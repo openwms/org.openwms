@@ -23,7 +23,7 @@ package org.openwms.core.domain.system;
 /**
  * A PropertyScope defines the used scope of preference settings.
  * 
- * @author <a href="mailto:scherrer@users.sourceforge.net">Heiko Scherrer</a>
+ * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  * @version $Revision$
  * @since 0.1
  */

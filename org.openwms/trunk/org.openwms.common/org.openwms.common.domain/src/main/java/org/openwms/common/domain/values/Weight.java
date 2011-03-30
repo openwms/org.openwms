@@ -31,7 +31,7 @@ import org.openwms.core.domain.values.Unit;
  * A Weight represents a real world weight, that comes with an <code>Unit</code>
  * and a value.
  * 
- * @author <a href="mailto:scherrer@users.sourceforge.net">Heiko Scherrer</a>
+ * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  * @version $Revision$
  * @since 0.1
  */
