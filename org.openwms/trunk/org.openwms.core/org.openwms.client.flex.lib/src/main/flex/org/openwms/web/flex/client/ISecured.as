@@ -28,7 +28,7 @@ package org.openwms.web.flex.client {
      * shall be included into the security realm of the application and can be assigned
      * to Roles and Users. 
      *
-     * @author <a href="mailto:scherrer@users.sourceforge.net">Heiko Scherrer</a>
+     * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
      * @version $Revision$
      * @since 0.1
      */

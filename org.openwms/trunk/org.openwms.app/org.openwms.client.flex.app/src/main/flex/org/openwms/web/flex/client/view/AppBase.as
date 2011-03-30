@@ -57,7 +57,7 @@ package org.openwms.web.flex.client.view {
      * cares about all the essential stuff like security and Tide framework initialization
      * and instantiates the main menu bar and the view stack.
      *
-     * @author <a href="mailto:scherrer@users.sourceforge.net">Heiko Scherrer</a>
+     * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
      * @version $Revision$
      * @since 0.1
      */

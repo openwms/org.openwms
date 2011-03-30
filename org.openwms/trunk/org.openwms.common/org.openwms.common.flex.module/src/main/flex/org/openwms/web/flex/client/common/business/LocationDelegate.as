@@ -41,7 +41,7 @@ package org.openwms.web.flex.client.common.business {
      * Fires Tide events : LOAD_ALL_LOCATION_TYPES, LOAD_ALL_LOCATIONS
      * Is named as : locationDelegate
      *
-     * @author <a href="mailto:scherrer@users.sourceforge.net">Heiko Scherrer</a>
+     * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
      * @version $Revision$
      * @since 0.1
      */
