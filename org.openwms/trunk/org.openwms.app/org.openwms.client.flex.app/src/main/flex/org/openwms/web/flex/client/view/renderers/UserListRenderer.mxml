@@ -72,7 +72,7 @@
     	    userFullname.text = userData.fullname;
         	userName.text = userData.username;
         	setUserImage();
-        	MoveItem();
+        	moveItem();
         }
         
 		/**
@@ -86,17 +86,13 @@
 					return;
 				}
 				if (userData.userDetails.sex == UserDetails$SEX.MALE) {
-					trace("User has details, setting MAN");
 				 	asset = new manImage() as BitmapAsset;
 				} else if (userData.userDetails.sex == UserDetails$SEX.FEMALE) {
-					trace("User has details, setting FEMALE");
 					asset = new womanImage() as BitmapAsset;
 				} else {
-					trace("User has details, setting UNISEX");
 					asset = new uniSexImage() as BitmapAsset;
 				}
 			} else {
-				trace("User has no details, setting Image to UNISEX");
 				asset = new uniSexImage() as BitmapAsset;
 			}
 			img.source=asset;
@@ -115,7 +111,7 @@
 		/**
 		 * Move this item from the left side into the surrounding container.
 		 */
-        public function MoveItem():void {
+        public function moveItem():void {
 			var parallel:Parallel = new Parallel(); 
 			parallel.target = userListItem; 
 			

@@ -125,11 +125,9 @@ package org.openwms.web.flex.client.common.business {
          * Tide event observers : LOAD_ALL_LOCATION_TYPES
          */
         public function getLocationTypes():void {
-            trace("Loading all LocationTypes....");
             tideContext.locationService.getAllLocationTypes(onLocationTypesLoaded, onFault);
         }
         private function onLocationTypesLoaded(event:TideResultEvent):void {
-            trace("LocationTypes loaded, result:"+event.result);
             commonModelLocator.allLocationTypes = event.result as ArrayCollection;
         }
         
