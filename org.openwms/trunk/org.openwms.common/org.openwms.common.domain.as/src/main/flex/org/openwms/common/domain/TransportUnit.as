@@ -74,5 +74,14 @@ package org.openwms.common.domain {
             return "--";
         }
     	
+    	/**
+    	 * For compliance.
+    	 * 
+    	 * @param value New date
+    	 */
+        public function set creationDate(value:Date):void {
+            // Not allowed
+        }
+    	
     }
 }

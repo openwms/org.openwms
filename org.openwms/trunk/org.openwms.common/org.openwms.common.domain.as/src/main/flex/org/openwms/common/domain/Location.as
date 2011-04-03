@@ -55,7 +55,7 @@ package org.openwms.common.domain {
          * @param value The locationPk to set
          */
         public function set locationId(value:LocationPK):void {
-            _locationId = value;
+            // Not allowed
         }
 
 

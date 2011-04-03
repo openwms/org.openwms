@@ -147,7 +147,7 @@
         ]]>
     </mx:Script>
 
-    <mx:HBox x="10" y="10" verticalAlign="middle" backgroundColor="#C6FFC7" width="95%">
+    <mx:HBox x="10" y="10" verticalAlign="middle" backgroundColor="#C6FFC7" backgroundAlpha="0.5" width="95%" >
         <mx:Label x="10" y="10" text="Locations" fontSize="24"/>
         <mx:VRule height="10"/>
         <mx:Button id="saveLocationBtn" buttonMode="true" mouseChildren="false" toolTip="Save an existing Location" icon="@Embed(source='/assets/images/Location--Save.png')" click="saveLocation()"/>
