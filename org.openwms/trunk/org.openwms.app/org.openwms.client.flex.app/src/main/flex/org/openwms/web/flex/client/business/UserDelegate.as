@@ -71,12 +71,8 @@ package org.openwms.web.flex.client.business {
         }
         private function onUsersLoaded(event : TideResultEvent) : void {
             modelLocator.allUsers = event.result as ArrayCollection;
-            if (modelLocator.allUsers.length > 0) {
-                if (modelLocator.selectedUser == null) {
-                    modelLocator.selectedUser = modelLocator.allUsers[0];
-                } else {
-                    modelLocator.selectedUser = modelLocator.allUsers[(event.result as ArrayCollection).getItemIndex(modelLocator.selectedUser)];
-                }
+            if (modelLocator.allUsers.length > 0 && modelLocator.selectedUser == null) {
+                modelLocator.selectedUser = modelLocator.allUsers.getItemAt(0) as User;
             }
         }
 
@@ -120,10 +116,6 @@ package org.openwms.web.flex.client.business {
         }
 
         [Deprecated]
-        /**
-         * 
-         * @param event
-         */
         private function onUserDeleted(event : TideResultEvent) : void {
             var len : int = modelLocator.allUsers.length;
             for (var i : int = 0; i < len; i++) {
@@ -141,7 +133,7 @@ package org.openwms.web.flex.client.business {
         /**
          * Call to change the current User's password.
          * Tide event observers : CHANGE_USER_PASSWORD
-         * 
+         *
          * @param event The UserEvent that stores in its data variable the User and the password as String.
          */
         public function changeUserPassword(event : UserEvent) : void {
@@ -156,7 +148,8 @@ package org.openwms.web.flex.client.business {
 
         private function onFault(event : TideFaultEvent) : void {
             trace("Error executing operation on User service:" + event.fault);
-            Alert.show("Cannot proceed action in user management, try reloading the view!");
+            Alert.show("Cannot proceed action in user management, try reloading!");
         }
     }
 }
+

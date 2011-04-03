@@ -4,7 +4,7 @@
  * This file is part of openwms.org.
  *
  * openwms.org is free software: you can redistribute it and/or modify
- * it under the terms of the GNU Lesser General Public License as 
+ * it under the terms of the GNU Lesser General Public License as
  * published by the Free Software Foundation, either version 3 of the
  * License, or (at your option) any later version.
  *
@@ -22,11 +22,23 @@ package org.openwms.core.domain.system.usermanagement {
 
     [Bindable]
     [RemoteClass(alias="org.openwms.core.domain.system.usermanagement.User")]
-	/**
-	 * An User represents a human user of the system.
-	 * 
-	 * @version $Revision$
-	 * @since 0.1
-	 */
-    public class User extends UserBase { }
+    /**
+     * An User represents a human user of the system.
+     *
+     * @version $Revision$
+     * @since 0.1
+     */
+    public class User extends UserBase {
+
+        /**
+         * Constructor.
+         * Preset fields. Per default a user is enabled to log in, not locked and no external user.
+         */
+        public function User() {
+            this._enabled = true;
+            this._locked = false;
+            this._extern = false;
+        }
+    }
 }
+

@@ -33,3 +33,4 @@ package org.openwms.core.domain.system.usermanagement {
         }
     }
 }
+
