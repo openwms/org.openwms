@@ -56,7 +56,7 @@ package org.openwms.web.flex.client.business {
          * Injected TideContext.
          */
         public var tideContext : Context;
-        
+
         [In]
         /**
          * Injected ModelLocator.
@@ -68,9 +68,7 @@ package org.openwms.web.flex.client.business {
          */
         public function RoleDelegate() : void { }
 
-        [Observer("LOAD_ALL_ROLES")]
-        [Observer("ROLE_ADDED")]
-        [Observer("ROLE_SAVED")]
+        [Observer("LOAD_ALL_ROLES","ROLE_ADDED","ROLE_SAVED")]
         /**
          * Fetch a list of all roles from the service.
          * Tide event observers : LOAD_ALL_ROLES, ROLE_ADDED, ROLE_SAVED
@@ -138,3 +136,4 @@ package org.openwms.web.flex.client.business {
         }
     }
 }
+
