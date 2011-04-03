@@ -149,7 +149,7 @@
         </dependency>
         <dependency>
             <groupId>${project.groupId}</groupId>
-            <artifactId>org.openwms.common.infrastructure.hsql</artifactId>
+            <artifactId>org.openwms.core.infrastructure.hsql</artifactId>
             <version>${common.version}</version>
             <scope>test</scope>
         </dependency>
