@@ -49,7 +49,7 @@
             <menuitem label="Users" action="{SwitchScreenEvent.SHOW_USER_MGMT_VIEW}" />
             <menuitem label="Roles" action="{SwitchScreenEvent.SHOW_ROLE_MGMT_VIEW}" />
             <menuitem label="Modules" action="{SwitchScreenEvent.SHOW_MODULE_MGMT_VIEW}" />
-            <menuitem label="Settings" action="{SwitchScreenEvent.SHOW_SETTING_MGMT_VIEW}" />
+            <!-- menuitem label="Settings" action="{SwitchScreenEvent.SHOW_SETTING_MGMT_VIEW}" /-->
         </menuitem>
     </mx:XMLList>
 
