@@ -79,6 +79,11 @@ public class TransportOrderStateTracker implements ApplicationListener<Applicati
     }
 
     /**
+     * Event switching. Delegate all {@link TransportServiceEvent}s to a
+     * delegate.
+     * 
+     * @param e
+     *            Hopefully a {@link TransportServiceEvent}.
      * @see org.springframework.context.ApplicationListener#onApplicationEvent(org.springframework.context.ApplicationEvent)
      */
     @Override

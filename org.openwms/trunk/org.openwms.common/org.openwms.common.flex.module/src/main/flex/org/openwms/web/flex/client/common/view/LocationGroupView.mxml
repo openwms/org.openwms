@@ -182,7 +182,7 @@
                 <mx:Label text="{selectedLocationGroup.groupType}" width="100%" x="190" y="120"/>
 
                 <mx:ComboBox id="groupStateInCmb" x="188" y="144" dataProvider="{LocationGroupState.constants}" />
-                <mx:ComboBox id="groupStateOutCmb" x="188" y="174" editable="false" dataProvider="{LocationGroupState.constants}" />
+                <mx:ComboBox id="groupStateOutCmb" x="188" y="174" dataProvider="{LocationGroupState.constants}" />
                 <mx:CheckBox x="277" y="206" label="Counting active" selected="{selectedLocationGroup.locationGroupCountingActive}"/>
 
                 <mx:Label x="10" y="208" text="Maximum Fill Level" textAlign="right" width="170"/>

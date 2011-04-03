@@ -36,6 +36,7 @@ import org.openwms.tms.domain.values.TransportOrderState;
 import org.openwms.tms.integration.TransportOrderDao;
 import org.openwms.tms.service.TransportOrderService;
 import org.openwms.tms.service.TransportOrderServiceException;
+import org.openwms.tms.util.event.TransportServiceEvent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -154,11 +155,9 @@ public class TransportServiceImpl extends EntityServiceImpl<TransportOrder, Long
         }
         addEntity(transportOrder);
         dao.persist(transportOrder);
-        /*
-         * ctx.publishEvent(new
-         * TransportServiceEvent(transportOrder.getTransportUnit(),
-         * TransportServiceEvent.TYPE.TRANSPORT_CREATED));
-         */
+        ctx.publishEvent(new TransportServiceEvent(transportOrder.getTransportUnit(),
+                TransportServiceEvent.TYPE.TRANSPORT_CREATED));
+
         if (logger.isDebugEnabled()) {
             logger.debug("... created");
         }
@@ -185,8 +184,7 @@ public class TransportServiceImpl extends EntityServiceImpl<TransportOrder, Long
                 if (logger.isDebugEnabled()) {
                     logger.debug("TransportOrder " + transportOrder.getId() + " successfully set to:" + state);
                 }
-            }
-            catch (IllegalStateException ise) {
+            } catch (IllegalStateException ise) {
                 logger.error("Could not cancel TransportOrder with ID:" + transportOrder.getId());
                 Problem problem = new Problem(ise.getMessage());
                 transportOrder.setProblem(problem);
@@ -213,8 +211,7 @@ public class TransportServiceImpl extends EntityServiceImpl<TransportOrder, Long
                     logger.debug("TransportOrder " + transportOrder.getId() + " successfully redirected to:"
                             + targetLocationGroup.getName());
                 }
-            }
-            catch (RuntimeException e) {
+            } catch (RuntimeException e) {
                 logger.error("Could not redirect TransportOrder with ID:" + transportOrder.getId());
                 Problem problem = new Problem(e.getMessage());
                 transportOrder.setProblem(problem);

@@ -56,40 +56,31 @@
             [Bindable]
             public var commonModelLocator:CommonModelLocator;
 
-            private function init():void
-            {
+            private function init():void {
             	barcodeTxt.setFocus();
             	this.addEventListener(KeyboardEvent.KEY_DOWN, keyEventHandler);
                 PopUpManager.centerPopUp(this);
             }
             
-            private function closeDialog(event:Event=null):void
-            {
+            private function closeDialog(event:Event=null):void {
             	this.removeEventListener(KeyboardEvent.KEY_DOWN, keyEventHandler);
                 PopUpManager.removePopUp(this);
             }
             
-            private function createTransportOrder():void
-            {
+            private function createTransportOrder():void {
             	// First do some checks...
-            	if (!targetLocationGroupChk.selected && !targetLocationChk.selected)
-            	{
+            	if (!targetLocationGroupChk.selected && !targetLocationChk.selected) {
             		Alert.show("Please select at least one target for the Transport");
             		return;
             	}
             	var event:TransportOrderEvent = new TransportOrderEvent(TransportOrderEvent.CREATE_TRANSPORT_ORDER);
-            	var transportOrder:TransportOrder = new TransportOrder();
-            	if (targetLocationGroupChk.selected)
-            	{
+            	var transportOrder:TransportOrder = new TransportOrder(new TransportUnit(barcodeTxt.text));
+            	if (targetLocationGroupChk.selected) {
             		transportOrder.targetLocationGroup = targetLocationGroupCmb.selectedItem as LocationGroup;
             	}
-                if (targetLocationChk.selected)
-                {
+                if (targetLocationChk.selected) {
                     transportOrder.targetLocation = targetLocationCmb.selectedItem as Location;
                 }
-                var transportUnit:TransportUnit = new TransportUnit();
-                transportUnit.barcode = new Barcode(barcodeTxt.text);
-            	transportOrder.transportUnit =  transportUnit;
             	transportOrder.priority = priorityCmb.selectedItem as PriorityLevel;
             	trace("Creating TransportOrder :"+barcodeTxt.text+transportOrder.state+transportOrder.targetLocationGroup);
             	event.data = transportOrder;
@@ -97,26 +88,14 @@
             	closeDialog();
             }
             
-	        private function keyEventHandler(event:KeyboardEvent):void
-	        {
-	            if(event.keyCode == 27)
-	            {
+	        private function keyEventHandler(event:KeyboardEvent):void {
+	            if(event.keyCode == 27) {
 	               closeDialog(event);
 	               return;
 	            }
 	        }
 	        
-	        // TODO: Merhe with LocationGroupView and move to lib project
-            private function getListAsComboBoxList(list:ArrayCollection):ArrayCollection {
-            	var result:ArrayCollection = new ArrayCollection();
-                for (var i:uint = 0; i < list.length; i++) {
-                    result.addItem((list[i] as LocationGroup).name);
-                }
-                return result;
-            }
-            
-            private function getLabel(item:Location):String
-            {
+            private function getLabel(item:Location):String {
             	return item.locationId.area+'/'+item.locationId.aisle+'/'+item.locationId.x+'/'+item.locationId.y+'/'+item.locationId.z;
             }
     	]]>
