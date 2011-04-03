@@ -100,15 +100,17 @@
             }
 
             private function checkExpirationDate() : Boolean {
-                if (expirationDateDt.selectedDate == null) {
+                if (expirationDateDt == null || expirationDateDt.selectedDate == null) {
                 	if (modelLocator.selectedUser != null) {
                         modelLocator.selectedUser.expirationDate = null;
                     }
                     return true;
                 }
-                if (ValidationUtil.validateAndFormat(expirationDateDt, dateVal) && ObjectUtil.dateCompare(ModelLocator.today(), expirationDateDt.selectedDate) < 1) {
-                    modelLocator.selectedUser.expirationDate = expirationDateDt.selectedDate;
-                    return true;
+                if (modelLocator.selectedUser != null && 
+                    ValidationUtil.validateAndFormat(expirationDateDt, dateVal) &&
+                    ObjectUtil.dateCompare(ModelLocator.today(), expirationDateDt.selectedDate) < 1) {
+                        modelLocator.selectedUser.expirationDate = expirationDateDt.selectedDate;
+                        return true;
                 }
                 Alert.show("Please enter a valid expiration date");
                 return false;
@@ -228,7 +230,7 @@
                             <mx:CheckBox id="lockedChk" label="Locked" selected="{modelLocator.selectedUser.locked}"/>
                         </mx:FormItem>
                         <mx:FormItem label="Expiration Date" required="false" width="100%" y="300">
-                            <mx:DateField id="expirationDateDt" editable="true" selectableRange="{{rangeStart : new Date()}}" formatString="{ModelLocator.SIMPLE_DT_FORMAT}" width="250" selectedDate="{modelLocator.selectedUser.expirationDate}"/>
+                            <mx:DateField id="expirationDateDt" editable="true" selectableRange="{{rangeStart : new Date()}}" formatString="{ModelLocator.SIMPLE_DT_FORMAT}" width="250" selectedDate="{modelLocator.selectedUser == null ? null : modelLocator.selectedUser.expirationDate}"/>
                         </mx:FormItem>
                     </mx:Form>
                 </mx:Canvas>
