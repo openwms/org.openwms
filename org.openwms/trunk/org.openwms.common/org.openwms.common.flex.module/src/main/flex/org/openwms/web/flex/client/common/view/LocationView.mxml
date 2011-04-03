@@ -216,7 +216,6 @@
             <mx:Label text="Location Type" width="130" textAlign="right" x="10" y="187"/>
             <mx:ComboBox id="locationTypeCB" labelField="type" prompt="n/a" selectedIndex="{commonModelLocator.allLocationTypes.getItemIndex(selected.locationType)}" dataProvider="{commonModelLocator.allLocationTypes}" width="200" x="148" y="185"/>
             <mx:Text x="148" y="217" text="{locationTypeCB.selectedItem.description}" width="200"/>
-            <mx:Text x="148" y="447" text="{selected.lastAccess}" width="200"/>
             <mx:HRule x="10" y="243" width="350"/>
 
             <mx:Label text="Max. Transport Units" width="130" textAlign="right" x="10" y="253"/>
@@ -234,7 +233,7 @@
             <mx:CheckBox id="consideredInAllocationChk" x="148" y="423" label="Considered in Allocation" selected="{selected.consideredInAllocation}"/>
 
             <mx:Label x="72" y="447" text="Last Access"/>
-            <mx:Text id="lastAccessTxt" x="148" y="463" width="200" />
+            <mx:Text id="lastAccessTxt" x="148" y="447" width="200" />
 
             <mx:Label x="80" y="473" text="Messages"/>
             <mx:TextArea x="148" y="472" width="180" height="64"/>
