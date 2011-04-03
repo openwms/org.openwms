@@ -115,55 +115,46 @@
             <name>Tina Russell</name>
             <email>russelltina@users.sourceforge.net</email>
             <url>https://sourceforge.net/users/russelltina</url>
+            <organization>University of Oregon</organization>
+            <organizationUrl>http://www.uoregon.edu</organizationUrl>
             <timezone>-7</timezone>
             <roles>
                 <role>developer</role>
             </roles>
         </developer>
-	<developer>
-	    <id>flogy</id>
+        <developer>
+            <id>flogy</id>
             <name>Florian Gyger</name>
-            <email>flogy@users.sourceforge.net</email>
+            <email>fgyger@openwms.org</email>
             <url>https://sourceforge.net/users/flogy</url>
             <timezone>+1</timezone>
             <roles>
-	        <role>developer</role>
+                <role>developer</role>
+		<role>supporter</role>
             </roles>
-         </developer>
+        </developer>
     </developers>
 
     <mailingLists>
         <mailingList>
             <name>OpenWMS.org Public Mailing list</name>
-            <subscribe>
-                http://lists.sourceforge.net/lists/listinfo/openwms2005-public
-			</subscribe>
-            <unsubscribe>
-                http://lists.sourceforge.net/lists/listinfo/openwms2005-public
-			</unsubscribe>
-            <archive>
-                http://sourceforge.net/mailarchive/forum.php?forum_name=openwms2005-public
-			</archive>
+            <subscribe>http://lists.sourceforge.net/lists/listinfo/openwms2005-public</subscribe>
+            <unsubscribe>http://lists.sourceforge.net/lists/listinfo/openwms2005-public</unsubscribe>
+            <archive>http://sourceforge.net/mailarchive/forum.php?forum_name=openwms2005-public</archive>
             <post>openwms2005-public@lists.sourceforge.net</post>
         </mailingList>
         <mailingList>
             <name>OpenWMS.org Development Mailing list</name>
-            <subscribe>
-                http://lists.sourceforge.net/lists/listinfo/openwms2005-development
-			</subscribe>
-            <unsubscribe>
-                http://lists.sourceforge.net/lists/listinfo/openwms2005-development
-			</unsubscribe>
-            <archive>
-                http://sourceforge.net/mailarchive/forum.php?forum_name=openwms2005-development
-			</archive>
+            <subscribe>http://lists.sourceforge.net/lists/listinfo/openwms2005-development</subscribe>
+            <unsubscribe>http://lists.sourceforge.net/lists/listinfo/openwms2005-development</unsubscribe>
+            <archive>http://sourceforge.net/mailarchive/forum.php?forum_name=openwms2005-development</archive>
             <post>openwms2005-development@lists.sourceforge.net</post>
         </mailingList>
     </mailingLists>
 
     <ciManagement>
         <system>Hudson</system>
-        <url>http://openwms.blogsite.org:81</url>
+        <url>http://openwms.blogsite.org:8180</url>
     </ciManagement>
 
     <profiles>
@@ -217,6 +208,15 @@
             </modules>
         </profile>
         <profile>
+            <id>cclient</id>
+            <modules>
+                <module>org.openwms.common/org.openwms.common.flex.lib</module>
+                <module>org.openwms.common/org.openwms.common.flex.module</module>
+                <module>org.openwms.app/org.openwms.client.flex.app</module>
+                <module>org.openwms.app/org.openwms.client.flex.wrapper</module>
+            </modules>
+        </profile>
+        <profile>
             <id>all</id>
             <activation>
                 <activeByDefault>true</activeByDefault>
@@ -255,7 +255,7 @@
         <profile>
             <id>release</id>
             <build>
-    	        <plugins>
+                <plugins>
                     <plugin>
                         <artifactId>maven-javadoc-plugin</artifactId>
                         <executions>
@@ -275,7 +275,7 @@
                             <source>${project.build.sourceCompilerLevel}</source>
                             <stylesheetfile>${basedir}/src/site/css/openwms-jdoc.css</stylesheetfile>
                             <verbose>true</verbose>
-                        </configuration>                        
+                        </configuration>
                     </plugin>
                     <plugin>
                         <artifactId>maven-source-plugin</artifactId>
@@ -287,7 +287,7 @@
                             </execution>
                         </executions>
                     </plugin>
-	            </plugins>
+                </plugins>
             </build>
         </profile>
     </profiles>
@@ -299,7 +299,7 @@
         <spring.version>3.0.5.RELEASE</spring.version>
         <spring.security.version>3.0.3.RELEASE</spring.security.version>
         <hibernate.version>3.2.6.GA</hibernate.version>
-        <granite.version>2.1.0.GA</granite.version>
+        <granite.version>2.2.0.GA</granite.version>
         <flex.version>3.2.0.3958</flex.version>
         <maven.compile.targetLevel>${jdkVersion}</maven.compile.targetLevel>
         <maven.compile.sourceLevel>${jdkVersion}</maven.compile.sourceLevel>
@@ -331,7 +331,7 @@
             <snapshots>
                 <enabled>true</enabled>
             </snapshots>
-        </pluginRepository> 
+        </pluginRepository>
     </pluginRepositories>
     <repositories>
         <repository>
@@ -350,7 +350,7 @@
                 <enabled>false</enabled>
             </releases>
         </repository>
-<!-- -->
+        <!-- -->
         <repository>
             <id>com.springsource.repository.bundles.release</id>
             <name>SpringSource Enterprise Bundle Repository - SpringSource Bundle Releases</name>
@@ -426,7 +426,7 @@
                     <artifactId>maven-resources-plugin</artifactId>
                     <version>2.4.1</version>
                 </plugin>
-                
+
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-source-plugin</artifactId>
@@ -508,13 +508,13 @@
                     <artifactId>maven-dependency-plugin</artifactId>
                     <version>2.1</version>
                 </plugin>
-                
+
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-javadoc-plugin</artifactId>
                     <version>2.6.1</version>
                 </plugin>
-                
+
             </plugins>
         </pluginManagement>
 
@@ -559,17 +559,12 @@
                     <target>${maven.compile.targetLevel}</target>
                 </configuration>
             </plugin>
-            <!--
-
-                <plugin> <groupId>org.codehaus.mojo</groupId> <artifactId>cobertura-maven-plugin</artifactId>
-                <configuration> <check> <branchRate>70</branchRate> <lineRate>75</lineRate>
-                <haltOnFailure>false</haltOnFailure> <totalBranchRate>75</totalBranchRate>
-                <totalLineRate>80</totalLineRate> <packageLineRate>80</packageLineRate>
-                <packageBranchRate>65</packageBranchRate> <regexes> <regex> <pattern>org.openwms.*</pattern>
-                <branchRate>50</branchRate> <lineRate>50</lineRate> </regex> </regexes> </check> </configuration>
-                <executions> <execution> <goals> <goal>clean</goal> <goal>check</goal> </goals> </execution>
-                </executions> </plugin>
-            -->
+            <!-- <plugin> <groupId>org.codehaus.mojo</groupId> <artifactId>cobertura-maven-plugin</artifactId> <configuration> 
+                <check> <branchRate>70</branchRate> <lineRate>75</lineRate> <haltOnFailure>false</haltOnFailure> <totalBranchRate>75</totalBranchRate> 
+                <totalLineRate>80</totalLineRate> <packageLineRate>80</packageLineRate> <packageBranchRate>65</packageBranchRate> <regexes> 
+                <regex> <pattern>org.openwms.*</pattern> <branchRate>50</branchRate> <lineRate>50</lineRate> </regex> </regexes> </check> 
+                </configuration> <executions> <execution> <goals> <goal>clean</goal> <goal>check</goal> </goals> </execution> </executions> 
+                </plugin> -->
             <plugin>
                 <artifactId>maven-assembly-plugin</artifactId>
                 <configuration>
@@ -597,7 +592,7 @@
     </build>
 
     <reporting>
-    
+
         <plugins>
             <plugin>
                 <groupId>org.sonatype.flexmojos</groupId>
@@ -653,9 +648,11 @@
                                 <version>4.6</version>
                             </docletArtifact>
                             <additionalparam>
-                            -inferrel -inferdep -quiet -hide java.* -collpackages java.util.* 
-                            -qualify -postfixpackage -nodefontname Tahoma -nodefontsize 9 -nodefontpackagesize 7
-                            -link http://static.springsource.org/spring/docs/${spring.version}/javadoc-api</additionalparam>
+                                -inferrel -inferdep -quiet -hide java.* -collpackages java.util.*
+                                -qualify
+                                -postfixpackage -nodefontname Tahoma -nodefontsize 9 -nodefontpackagesize 7
+                                -link
+                                http://static.springsource.org/spring/docs/${spring.version}/javadoc-api</additionalparam>
                         </configuration>
                     </reportSet>
                 </reportSets>
@@ -675,11 +672,8 @@
                 </configuration>
             </plugin>
 
-            <!-- plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-changelog-plugin</artifactId>
-                <version>2.1</version>
-            </plugin-->
+            <!-- plugin> <groupId>org.apache.maven.plugins</groupId> <artifactId>maven-changelog-plugin</artifactId> <version>2.1</version> 
+                </plugin -->
 
             <plugin>
                 <groupId>org.codehaus.mojo</groupId>
@@ -1035,7 +1029,7 @@
                 <artifactId>granite-swc</artifactId>
                 <version>${granite.version}</version>
                 <type>swc</type>
-            </dependency>    
+            </dependency>
             <dependency>
                 <groupId>org.graniteds</groupId>
                 <artifactId>granite-essentials-swc</artifactId>
@@ -1073,149 +1067,35 @@
                 <version>20071011</version>
                 <type>swc</type>
             </dependency>
-        
-            <!-- Project dependencies 
-            <dependency>
-                <groupId>${project.groupId}</groupId>
-                <artifactId>org.openwms.common.util</artifactId>
-                <version>${project.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>${project.groupId}</groupId>
-                <artifactId>org.openwms.common.domain</artifactId>
-                <version>${project.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>${project.groupId}</groupId>
-                <artifactId>org.openwms.common.domain.as</artifactId>
-                <version>${project.version}</version>
-                <type>swc</type>
-            </dependency>
-            <dependency>
-                <groupId>${project.groupId}</groupId>
-                <artifactId>org.openwms.common.infrastructure.configuration</artifactId>
-                <version>${project.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>${project.groupId}</groupId>
-                <artifactId>org.openwms.common.infrastructure.postgres</artifactId>
-                <version>${project.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>${project.groupId}</groupId>
-                <artifactId>org.openwms.common.infrastructure.oracle</artifactId>
-                <version>${project.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>${project.groupId}</groupId>
-                <artifactId>org.openwms.common.infrastructure.hsql</artifactId>
-                <version>${project.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>${project.groupId}</groupId>
-                <artifactId>org.openwms.common.integration</artifactId>
-                <version>${project.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>${project.groupId}</groupId>
-                <artifactId>org.openwms.common.integration.hibernate</artifactId>
-                <version>${project.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>${project.groupId}</groupId>
-                <artifactId>org.openwms.common.integration.jpa</artifactId>
-                <version>${project.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>${project.groupId}</groupId>
-                <artifactId>org.openwms.common.service.api</artifactId>
-                <version>${project.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>${project.groupId}</groupId>
-                <artifactId>org.openwms.common.service.spring</artifactId>
-                <version>${project.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>${project.groupId}</groupId>
-                <artifactId>org.openwms.common.framework.test</artifactId>
-                <version>${project.version}</version>
-                <type>test-jar</type>
-                <scope>test</scope>
-            </dependency>
-            <dependency>
-                <groupId>${project.groupId}</groupId>
-                <artifactId>org.openwms.common.flex.lib</artifactId>
-                <version>${project.version}</version>
-                <type>swc</type>
-            </dependency>
-            <dependency>
-                <groupId>${project.groupId}</groupId>
-                <artifactId>org.openwms.common.flex.module</artifactId>
-                <version>${project.version}</version>
-                <type>swf</type>
-            </dependency>
-            <dependency>
-                <groupId>${project.groupId}</groupId>
-                <artifactId>org.openwms.tms.util</artifactId>
-                <version>${project.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>${project.groupId}</groupId>
-                <artifactId>org.openwms.tms.domain</artifactId>
-                <version>${project.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>${project.groupId}</groupId>
-                <artifactId>org.openwms.tms.domain.as</artifactId>
-                <version>${project.version}</version>
-                <type>swc</type>
-            </dependency>
-            <dependency>
-                <groupId>${project.groupId}</groupId>
-                <artifactId>org.openwms.tms.integration</artifactId>
-                <version>${project.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>${project.groupId}</groupId>
-                <artifactId>org.openwms.tms.integration.jpa</artifactId>
-                <version>${project.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>${project.groupId}</groupId>
-                <artifactId>org.openwms.tms.service.api</artifactId>
-                <version>${project.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>${project.groupId}</groupId>
-                <artifactId>org.openwms.tms.service.spring</artifactId>
-                <version>${project.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>${project.groupId}</groupId>
-                <artifactId>org.openwms.tms.flex.module</artifactId>
-                <version>${project.version}</version>
-                <type>swf</type>
-            </dependency>
-            <dependency>
-                <groupId>${project.groupId}</groupId>
-                <artifactId>org.openwms.client.flex.lib</artifactId>
-                <version>${project.version}</version>
-                <type>swc</type>
-            </dependency>
-            <dependency>
-                <groupId>${project.groupId}</groupId>
-                <artifactId>org.openwms.client.flex.ss</artifactId>
-                <version>${project.version}</version>
-                <type>swf</type>
-            </dependency>
-            <dependency>
-                <groupId>${project.groupId}</groupId>
-                <artifactId>org.openwms.client.flex.wrapper</artifactId>
-                <version>${project.version}</version>
-                <type>war</type>
-            </dependency>
-            -->
+
+            <!-- Project dependencies <dependency> <groupId>${project.groupId}</groupId> <artifactId>org.openwms.common.util</artifactId> 
+                <version>${project.version}</version> </dependency> <dependency> <groupId>${project.groupId}</groupId> <artifactId>org.openwms.common.domain</artifactId> 
+                <version>${project.version}</version> </dependency> <dependency> <groupId>${project.groupId}</groupId> <artifactId>org.openwms.common.domain.as</artifactId> 
+                <version>${project.version}</version> <type>swc</type> </dependency> <dependency> <groupId>${project.groupId}</groupId> <artifactId>org.openwms.common.infrastructure.configuration</artifactId> 
+                <version>${project.version}</version> </dependency> <dependency> <groupId>${project.groupId}</groupId> <artifactId>org.openwms.common.infrastructure.postgres</artifactId> 
+                <version>${project.version}</version> </dependency> <dependency> <groupId>${project.groupId}</groupId> <artifactId>org.openwms.common.infrastructure.oracle</artifactId> 
+                <version>${project.version}</version> </dependency> <dependency> <groupId>${project.groupId}</groupId> <artifactId>org.openwms.common.infrastructure.hsql</artifactId> 
+                <version>${project.version}</version> </dependency> <dependency> <groupId>${project.groupId}</groupId> <artifactId>org.openwms.common.integration</artifactId> 
+                <version>${project.version}</version> </dependency> <dependency> <groupId>${project.groupId}</groupId> <artifactId>org.openwms.common.integration.hibernate</artifactId> 
+                <version>${project.version}</version> </dependency> <dependency> <groupId>${project.groupId}</groupId> <artifactId>org.openwms.common.integration.jpa</artifactId> 
+                <version>${project.version}</version> </dependency> <dependency> <groupId>${project.groupId}</groupId> <artifactId>org.openwms.common.service.api</artifactId> 
+                <version>${project.version}</version> </dependency> <dependency> <groupId>${project.groupId}</groupId> <artifactId>org.openwms.common.service.spring</artifactId> 
+                <version>${project.version}</version> </dependency> <dependency> <groupId>${project.groupId}</groupId> <artifactId>org.openwms.common.framework.test</artifactId> 
+                <version>${project.version}</version> <type>test-jar</type> <scope>test</scope> </dependency> <dependency> <groupId>${project.groupId}</groupId> 
+                <artifactId>org.openwms.common.flex.lib</artifactId> <version>${project.version}</version> <type>swc</type> </dependency> 
+                <dependency> <groupId>${project.groupId}</groupId> <artifactId>org.openwms.common.flex.module</artifactId> <version>${project.version}</version> 
+                <type>swf</type> </dependency> <dependency> <groupId>${project.groupId}</groupId> <artifactId>org.openwms.tms.util</artifactId> 
+                <version>${project.version}</version> </dependency> <dependency> <groupId>${project.groupId}</groupId> <artifactId>org.openwms.tms.domain</artifactId> 
+                <version>${project.version}</version> </dependency> <dependency> <groupId>${project.groupId}</groupId> <artifactId>org.openwms.tms.domain.as</artifactId> 
+                <version>${project.version}</version> <type>swc</type> </dependency> <dependency> <groupId>${project.groupId}</groupId> <artifactId>org.openwms.tms.integration</artifactId> 
+                <version>${project.version}</version> </dependency> <dependency> <groupId>${project.groupId}</groupId> <artifactId>org.openwms.tms.integration.jpa</artifactId> 
+                <version>${project.version}</version> </dependency> <dependency> <groupId>${project.groupId}</groupId> <artifactId>org.openwms.tms.service.api</artifactId> 
+                <version>${project.version}</version> </dependency> <dependency> <groupId>${project.groupId}</groupId> <artifactId>org.openwms.tms.service.spring</artifactId> 
+                <version>${project.version}</version> </dependency> <dependency> <groupId>${project.groupId}</groupId> <artifactId>org.openwms.tms.flex.module</artifactId> 
+                <version>${project.version}</version> <type>swf</type> </dependency> <dependency> <groupId>${project.groupId}</groupId> <artifactId>org.openwms.client.flex.lib</artifactId> 
+                <version>${project.version}</version> <type>swc</type> </dependency> <dependency> <groupId>${project.groupId}</groupId> <artifactId>org.openwms.client.flex.ss</artifactId> 
+                <version>${project.version}</version> <type>swf</type> </dependency> <dependency> <groupId>${project.groupId}</groupId> <artifactId>org.openwms.client.flex.wrapper</artifactId> 
+                <version>${project.version}</version> <type>war</type> </dependency> -->
         </dependencies>
     </dependencyManagement>
 

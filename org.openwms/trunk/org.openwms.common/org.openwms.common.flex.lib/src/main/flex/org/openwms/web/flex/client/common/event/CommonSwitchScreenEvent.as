@@ -18,8 +18,8 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
-package org.openwms.web.flex.client.common.event
-{
+package org.openwms.web.flex.client.common.event {
+
     import org.openwms.web.flex.client.event.SwitchScreenEvent;    
 
     /**
@@ -29,18 +29,17 @@ package org.openwms.web.flex.client.common.event
      * @version $Revision$
      * @since 0.1
      */
-    public class CommonSwitchScreenEvent extends SwitchScreenEvent
-    {
+    public class CommonSwitchScreenEvent extends SwitchScreenEvent {
+
         public static const SHOW_TRANSPORTUNIT_VIEW:String = "transportUnitView";
         public static const SHOW_TRANSPORTUNITTYPE_VIEW:String = "transportUnitTypeView";
         public static const SHOW_LOCATIONTYPE_VIEW:String = "locationTypeView";
         public static const SHOW_LOCATION_VIEW:String = "locationView";
         public static const SHOW_LOCATIONGROUP_VIEW:String = "locationGroupView";
-        
-        public function CommonSwitchScreenEvent(type:String, bubbles:Boolean = true, cancelable:Boolean = false)
-        {
+
+        public function CommonSwitchScreenEvent(type:String, bubbles:Boolean = true, cancelable:Boolean = false) {
             super(type, bubbles, cancelable);
         }
-
     }
 }
+

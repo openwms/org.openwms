@@ -54,35 +54,31 @@
             [In]
             [Bindable]
             public var commonModelLocator:CommonModelLocator;
+            
             [Bindable]
             private var selected:TransportUnit;
+            
             private var tu:TransportUnit = new TransportUnit();
             
     		public function onStartup():void {
-    			if (commonModelLocator.allTransportUnits.length == 0)
-                {
+    			if (commonModelLocator.allTransportUnits.length == 0) {
                     dispatchEvent(new TransportUnitEvent(TransportUnitEvent.LOAD_TRANSPORT_UNITS));
                 }
-                if (commonModelLocator.allLocations.length == 0)
-                {
+                if (commonModelLocator.allLocations.length == 0) {
                     dispatchEvent(new LocationEvent(LocationEvent.LOAD_ALL_LOCATIONS));
                 }
-                if (commonModelLocator.allTransportUnitTypes.length == 0)
-                {
+                if (commonModelLocator.allTransportUnitTypes.length == 0) {
                     dispatchEvent(new TransportUnitTypeEvent(TransportUnitTypeEvent.LOAD_ALL_TRANSPORT_UNIT_TYPES));
                 }
     		}
     		
-            private function showCreateTransportUnitDialog():void
-            {
+            private function showCreateTransportUnitDialog():void {
                 var pop:CreateTransportUnitDialog = CreateTransportUnitDialog(PopUpManager.createPopUp(this, CreateTransportUnitDialog, true));
                 PopUpManager.centerPopUp(pop);
             }
             
-            private function deleteTransportUnitDialog():void
-            {
-                if (transportUnitsGrid.selectedIndices.length == 0)
-                {
+            private function deleteTransportUnitDialog():void {
+                if (transportUnitsGrid.selectedIndices.length == 0) {
                     Alert.show("Please select at least one Transport Unit to delete");
                     return;                	
                 }
@@ -92,8 +88,7 @@
                 PopUpManager.centerPopUp(pop);
             }
 
-            private function showDetails():void
-            {
+            private function showDetails():void {
                 var pop:TransportUnitDetailsDialog = TransportUnitDetailsDialog(PopUpManager.createPopUp(this, TransportUnitDetailsDialog, true));
                 pop.transportUnits = new ArrayCollection(transportUnitsGrid.selectedItems);
                 PopUpManager.centerPopUp(pop);            	
@@ -105,17 +100,14 @@
                 actualLocationCmb.selectedItem = selected.actualLocation;
             }
 
-            private function refresh():void
-            {
+            private function refresh():void {
                 selected = null;
                 var event:TransportUnitEvent = new TransportUnitEvent(TransportUnitEvent.LOAD_TRANSPORT_UNITS);
                 dispatchEvent(event);
             }
             
-            private function save():void
-            {
-                if (selected == null)
-                {
+            private function save():void {
+                if (selected == null) {
                 	Alert.show("Select a TransportUnit first");
                 	return
                 }
@@ -124,19 +116,15 @@
                 dispatchEvent(event);
             }
 
-	        public static function formatBarcode(item:Object, dg:DataGridColumn):String
-	        {
-	            if (item[dg.dataField] != null)
-	            {
+	        public static function formatBarcode(item:Object, dg:DataGridColumn):String {
+	            if (item[dg.dataField] != null) {
 	                return String(item[dg.dataField].barcode);
 	            }
 	            return "--";
 	        }
 
-            private function formatDateField(item:Object, dg:DataGridColumn):String
-            {
-                if (item.creationDate != null)
-                {
+            private function formatDateField(item:Object, dg:DataGridColumn):String {
+                if (item.creationDate != null) {
                     return dateFormatter.format(item.creationDate);
                 }
                 return "n/a";
