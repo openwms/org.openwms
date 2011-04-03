@@ -35,11 +35,11 @@
         <![CDATA[
         	import mx.controls.Alert;
         	import mx.managers.PopUpManager;
+            import org.openwms.web.flex.client.util.DisplayUtility;
+            import org.openwms.web.flex.client.util.BindingProperty;
             import org.openwms.web.flex.client.common.event.LocationEvent;
             import org.openwms.web.flex.client.common.event.LocationTypeEvent;
             import org.openwms.web.flex.client.common.event.LocationGroupEvent;
-            import org.openwms.web.flex.client.common.view.dialogs.CreateLocationDialog;
-        	import org.openwms.web.flex.client.common.view.dialogs.ConfirmDeletionLocationDialog;
         	import org.openwms.common.domain.LocationGroup;
         	import org.openwms.common.domain.LocationType;
         	import org.openwms.common.domain.Location;
@@ -47,139 +47,108 @@
             import mx.controls.dataGridClasses.DataGridColumn;
             import mx.collections.ArrayCollection;
             import mx.events.ListEvent;
+
             [In]
             [Bindable]
+            /**
+             * Inject.
+             */
             public var commonModelLocator:CommonModelLocator;
+
             [Bindable]
             private var selected:Location;
+
             [Bindable]
             private var listLocationGroups:ArrayCollection=new ArrayCollection();
 
-            private function onShow():void
-            {
-                if (commonModelLocator.allLocations.length == 0)
-                {
+            private function onShow():void {
+                if (commonModelLocator.allLocations.length == 0) {
                     dispatchEvent(new LocationEvent(LocationEvent.LOAD_ALL_LOCATIONS));
                 }
-                if (commonModelLocator.allLocationTypes.length == 0)
-                {
+                if (commonModelLocator.allLocationTypes.length == 0) {
                 	dispatchEvent(new LocationTypeEvent(LocationTypeEvent.LOAD_ALL_LOCATION_TYPES));
                 }
-                if (commonModelLocator.allLocationGroups.length == 0)
-                {
+                if (commonModelLocator.allLocationGroups.length == 0) {
                 	dispatchEvent(new LocationGroupEvent(LocationGroupEvent.LOAD_ALL_LOCATION_GROUPS));
                 }
             }
 
-            private function onRowClick(event:ListEvent):void
-            {
+            private function onRowClick(event:ListEvent):void {
             	selected = event.currentTarget.selectedItem as Location;
-            }
-
-// Remove
-            private function setLocationType():void
-            {
-                var locGroup:int=-1;
-                for each (var type:LocationType in commonModelLocator.allLocationTypes)
-                {
-                    if (type.id == selected.locationType.id)
-                    {
-                        locGroup=commonModelLocator.allLocationTypes.getItemIndex(type);
-                    }
+                locationGroupCB.selectedIndex = commonModelLocator.allLocationGroups.getItemIndex(selected.locationGroup);
+                locationTypeCB.selectedIndex = commonModelLocator.allLocationTypes.getItemIndex(selected.locationType);
+                if (selected.lastAccess != null) {
+                    lastAccessTxt.text = commonModelLocator.dateTimeFormatter.format(selected.lastAccess);
                 }
-                locationTypeCB.selectedIndex=locGroup;
-            }
-// Remove
-            private function setLocationGroup():void
-            {
-                var locGroup:int=-1;
-                for each (var l:LocationGroup in commonModelLocator.allLocationGroups)
-                {
-                    if (l.id == selected.locationGroup.id)
-                    {
-                        locGroup=commonModelLocator.allLocationGroups.getItemIndex(l);
-                    }
-                }
-                locationGroupCB.selectedIndex=locGroup;
             }
 
-            private function locationIdField(item:Object, dg:DataGridColumn):String
-            {
-                return item.locationId[dg.dataField];
+            private function locationIdField(item:Object, dg:DataGridColumn):String {
+                return item[dg.dataField];
             }
 
-            private function locationGroupField(item:Object, dg:DataGridColumn):String
-            {
-                if (item.locationGroup != null)
-                {
+            private function locationGroupField(item:Object, dg:DataGridColumn):String {
+                if (item.locationGroup != null) {
                     return item.locationGroup[dg.dataField];
                 }
                 return "n/a";
             }
 
-            private function showCreateLocationDialog():void
-            {
-                var pop:CreateLocationDialog = CreateLocationDialog(PopUpManager.createPopUp(this, CreateLocationDialog, true));
-                PopUpManager.centerPopUp(pop);
-            }
-
-            private function showDeleteLocationDialog():void
-            {
-                if (locationsList.selectedIndices.length == 0)
-                {
-                    Alert.show("Please select a Location to delete");
-                    return;                 
+            private function formatDateField(item:Object, dg:DataGridColumn):String {
+                if (item.lastAccess != null) {
+                    return commonModelLocator.dateTimeFormatter.format(item.lastAccess);
                 }
-                var pop:ConfirmDeletionLocationDialog = ConfirmDeletionLocationDialog(PopUpManager.createPopUp(this, ConfirmDeletionLocationDialog, true));
-                pop.messageText = "Delete selected Locations";
-                pop.items = new ArrayCollection(locationsList.selectedItems);
-                PopUpManager.centerPopUp(pop);
+                return "n/a";
             }
 
-            private function saveLocation():void
-            {
-                var event:LocationEvent = new LocationEvent(LocationEvent.SAVE_LOCATION);
-                event.data = selected;
-                dispatchEvent(event);
+            private function sortLocationGroup(obj1:Object, obj2:Object):int {
+                var name1:String = obj1.locationGroup != null ? obj1.locationGroup.name : "";
+                var name2:String = obj2.locationGroup != null ? obj2.locationGroup.name : "";
+                
+                if(name1 < name2) {
+                    return -1;
+                } else  if(name1 > name2) {
+                    return 1;
+                } else {
+                    return 0;
+                }
             }
 
-            private function refresh():void
-            {
+            /**
+             * Action on button save Loactions.
+             */
+            private function saveLocation():void {
+               var bindings:Array = [new BindingProperty(selected, "description", descriptionTxt, "text"),
+                                     new BindingProperty(selected, "locationGroup", locationGroupCB, "selectedItem"),  
+                                     new BindingProperty(selected, "locationType", locationTypeCB, "selectedItem"),  
+                                     new BindingProperty(selected, "noMaxTransportUnits", noMaxTransportUnitsTxt, "value"),
+                                     new BindingProperty(selected, "plcState", plcStateTxt, "text"),
+                                     new BindingProperty(selected, "countingActive", countingActiveChk, "selected"),
+                                     new BindingProperty(selected, "incomingActive", incomingActiveChk, "selected"),
+                                     new BindingProperty(selected, "outgoingActive", outgoingActiveChk, "selected"),
+                                     new BindingProperty(selected, "consideredInAllocation", consideredInAllocationChk, "selected")];
+                                     
+                DisplayUtility.bindProperties(new ArrayCollection(bindings), function execute():void {
+                        var event:LocationEvent = new LocationEvent(LocationEvent.SAVE_LOCATION);
+                        event.data=selected;
+                        dispatchEvent(event);
+                    });
+                selected = null;                            
+            }
+
+            /**
+             * Action on button refresh Loactions.
+             */
+            private function refresh():void {
             	selected = null;
                 var event:LocationEvent = new LocationEvent(LocationEvent.LOAD_ALL_LOCATIONS);
                 dispatchEvent(event);
             }
 
-            private function formatDateField(item:Object, dg:DataGridColumn):String
-            {
-                if (item.lastAccess != null)
-                {
-                    return dateFormatter.format(item.lastAccess);
-                }
-                return "n/a";
-            }
         ]]>
     </mx:Script>
 
-    <mx:Binding destination="descriptionTxt.text" source="selected.description" />
-    <mx:Binding destination="locationGroupCB.selectedItem" source="selected.locationGroup" />
-    <mx:Binding destination="locationGroupCountingActiveChk.selected" source="selected.locationGroupCountingActive" />
-    <mx:Binding destination="locationTypeCB.selectedItem" source="selected.locationType" />
-    <mx:Binding destination="noMaxTransportUnitsTxt.value" source="selected.noMaxTransportUnits" />
-    <mx:Binding destination="plcStateTxt.text" source="String(selected.plcState)" />
-    <mx:Binding destination="countingActiveChk.selected" source="selected.countingActive" />
-    <mx:Binding destination="incomingActiveChk.selected" source="selected.incomingActive" />
-    <mx:Binding destination="outgoingActiveChk.selected" source="selected.outgoingActive" />
-    <mx:Binding destination="consideredInAllocationChk.selected" source="selected.consideredInAllocation" />
-
-    <mx:DateFormatter id="dateFormatter" formatString="{CommonModelLocator.DT_FORMAT_STRING}"/>
-
     <mx:HBox x="10" y="10" verticalAlign="middle" backgroundColor="#C6FFC7" width="95%">
         <mx:Label x="10" y="10" text="Locations" fontSize="24"/>
-        <mx:VRule height="10"/>
-        <mx:Button id="addLocationBtn" buttonMode="true" mouseChildren="false" toolTip="Create a new Location" icon="@Embed(source='/assets/images/Location--Add.png')" click="showCreateLocationDialog()"/>
-        <mx:VRule height="10"/>
-        <mx:Button id="removeLocationBtn" buttonMode="true" mouseChildren="false" toolTip="Delete an existing Location" icon="@Embed(source='/assets/images/Location--Delete.png')" click="showDeleteLocationDialog()"/>
         <mx:VRule height="10"/>
         <mx:Button id="saveLocationBtn" buttonMode="true" mouseChildren="false" toolTip="Save an existing Location" icon="@Embed(source='/assets/images/Location--Save.png')" click="saveLocation()"/>
         <mx:VRule height="10"/>
@@ -189,18 +158,18 @@
     <mx:HBox height="100%" width="95%" x="10" y="63">
         <mx:DataGrid id="locationsList" allowMultipleSelection="true" sortableColumns="true" height="95%" width="100%" dataProvider="{commonModelLocator.allLocations}" change="onRowClick(event)">
             <mx:columns>
-                <mx:DataGridColumn dataField="area" labelFunction="locationIdField" editable="false" width="45">
+                <mx:DataGridColumn dataField="locationId" labelFunction="locationIdField" editable="false" width="45">
                     <mx:headerRenderer>
                         <mx:Component>
                             <mx:Label text="Area" styleName="headerArea"/>
                         </mx:Component>
                     </mx:headerRenderer>
                 </mx:DataGridColumn>
-                <mx:DataGridColumn headerText="Aisle" dataField="aisle" labelFunction="locationIdField" editable="false" width="45"/>
-                <mx:DataGridColumn headerText="X" dataField="x" labelFunction="locationIdField" editable="false" width="45"/>
-                <mx:DataGridColumn headerText="Y" dataField="y" labelFunction="locationIdField" editable="false" width="45"/>
-                <mx:DataGridColumn headerText="Z" dataField="z" labelFunction="locationIdField" editable="false" width="45"/>
-                <mx:DataGridColumn headerText="Location Group" dataField="name" labelFunction="locationGroupField" editable="false"/>
+                <mx:DataGridColumn headerText="Aisle" dataField="locationId" labelFunction="locationIdField" editable="false" width="45"/>
+                <mx:DataGridColumn headerText="X" dataField="locationId" labelFunction="locationIdField" editable="false" width="45"/>
+                <mx:DataGridColumn headerText="Y" dataField="locationId" labelFunction="locationIdField" editable="false" width="45"/>
+                <mx:DataGridColumn headerText="Z" dataField="locationId" labelFunction="locationIdField" editable="false" width="45"/>
+                <mx:DataGridColumn headerText="Location Group" dataField="locationGroup" sortCompareFunction="sortLocationGroup" editable="false"/>
                 <mx:DataGridColumn headerText="Description" dataField="description" editable="true"/>
                 <mx:DataGridColumn headerText="Counting Active" dataField="countingActive" editable="true">
                     <mx:itemRenderer>
@@ -265,13 +234,12 @@
             <mx:CheckBox id="consideredInAllocationChk" x="148" y="423" label="Considered in Allocation" selected="{selected.consideredInAllocation}"/>
 
             <mx:Label x="72" y="447" text="Last Access"/>
-            <mx:Text id="lastAccessTxt" x="148" y="463" width="200" text="{dateFormatter.format(selected.lastAccess)}"/>
+            <mx:Text id="lastAccessTxt" x="148" y="463" width="200" />
 
             <mx:Label x="80" y="473" text="Messages"/>
             <mx:TextArea x="148" y="472" width="180" height="64"/>
             <mx:VRule x="10" y="253" width="1" height="309" strokeWidth="0"/>
-            <mx:Image x="332" y="473" height="16" width="16" mouseChildren="false" source="@Embed(source='assets/images/icons/plus.png')"/>
-            <mx:Image x="332" y="497" height="16" width="16" mouseChildren="false" source="@Embed(source='assets/images/icons/minus.png')"/>
+            <mx:Image x="332" y="473" height="16" width="16" mouseChildren="false" source="@Embed(source='assets/images/icons/minus.png')"/>
 
         </mx:Canvas>
     </mx:HBox>

@@ -18,8 +18,8 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
-package org.openwms.web.flex.client.common.event
-{
+package org.openwms.web.flex.client.common.event {
+
     import flash.events.Event;
 
     /**
@@ -29,19 +29,18 @@ package org.openwms.web.flex.client.common.event
      * @version $Revision$
      * @since 0.1
      */
-    public class LocationTypeEvent extends Event
-    {
+    public class LocationTypeEvent extends Event {
+
         public static const LOAD_ALL_LOCATION_TYPES:String = "LOAD_ALL_LOCATION_TYPES";
         public static const CREATE_LOCATION_TYPE:String = "CREATE_LOCATION_TYPE";
         public static const DELETE_LOCATION_TYPE:String = "DELETE_LOCATION_TYPE";
         public static const SAVE_LOCATION_TYPE:String = "SAVE_LOCATION_TYPE";
-        
+
         public var data:*;
 
-        public function LocationTypeEvent(type:String, bubbles:Boolean = true, cancelable:Boolean = false)
-        {
+        public function LocationTypeEvent(type:String, bubbles:Boolean = true, cancelable:Boolean = false) {
             super(type, bubbles, cancelable);
         }
-
     }
 }
+

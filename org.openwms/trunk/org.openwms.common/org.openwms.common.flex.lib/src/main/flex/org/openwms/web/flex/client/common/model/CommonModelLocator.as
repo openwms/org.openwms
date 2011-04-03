@@ -21,8 +21,11 @@
 package org.openwms.web.flex.client.common.model {
 
     import mx.collections.ArrayCollection;
+    import mx.formatters.DateFormatter;
     import org.openwms.web.flex.client.common.model.TreeNode;
-    
+
+    [Name("commonModelLocator")]
+    [Bindable]
     /**
      * A CommonModelLocator.
      *
@@ -30,32 +33,74 @@ package org.openwms.web.flex.client.common.model {
      * @version $Revision$
      * @since 0.1
      */
-    [Name("commonModelLocator")]
-    [Bindable]
     public class CommonModelLocator {
 
+        // --------------------------------------------------------------------
+        // General stuff
+        // --------------------------------------------------------------------
+        /**
+         * Date format including the time.
+         */
         public static const DT_FORMAT_STRING:String = "DD.MM.YYYY HH:NN:SS";
-        
+        /**
+         * Date format without timestamp.
+         */
+        public static const SIMPLE_DT_FORMAT:String = "DD.MM.YYYY";
+        /**
+         * A DateFormatter that uses the DT_FORMAT_STRING.
+         */
+        public const dateTimeFormatter:DateFormatter = new DateFormatter();
+        /**
+         * A DateFormatter that uses the SIMPLE_DT_FORMAT.
+         */
+        public const dateFormatter:DateFormatter = new DateFormatter();
+        /**
+         * Collection of all TransportUnitTypes.
+         */
         public var allTransportUnitTypes:ArrayCollection = new ArrayCollection();
+        /**
+         * Collection of all TransportUnits.
+         */
         public var allTransportUnits:ArrayCollection = new ArrayCollection();
+        /**
+         * Collection of all Locations.
+         */
         public var allLocations:ArrayCollection = new ArrayCollection();
+        /**
+         * Collection of all LocationTypes.
+         */
         public var allLocationTypes:ArrayCollection = new ArrayCollection();
-        public var securityObjects:ArrayCollection = new ArrayCollection();
 
+        // --------------------------------------------------------------------
         // LocationGroupView
+        // --------------------------------------------------------------------
+        /**
+         * Collection of all LocationGroups.
+         */
         public var allLocationGroups:ArrayCollection = new ArrayCollection();
+        /**
+         * Generated Tree of all groups.
+         */
         public var locationGroupTree:TreeNode;
         public static const WIDTH_LOCATION_GROUP_NAME:Number = 60;
 
-        // LocationView        
+        // --------------------------------------------------------------------
+        // LocationView
+        // --------------------------------------------------------------------
         public static const WIDTH_LOCATION:Number = 80;
 
+        // --------------------------------------------------------------------
         // TransportUnitView
+        // --------------------------------------------------------------------
         public static const WIDTH_BARCODE:Number = 80;
 
         /**
          * Constructor.
          */
-        public function CommonModelLocator() { }
+        public function CommonModelLocator() {
+            dateFormatter.formatString = SIMPLE_DT_FORMAT;
+            dateTimeFormatter.formatString = DT_FORMAT_STRING;
+        }
     }
 }
+

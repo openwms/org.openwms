@@ -18,8 +18,8 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
-package org.openwms.web.flex.client.common.event
-{
+package org.openwms.web.flex.client.common.event {
+
     import flash.events.Event;
 
     /**
@@ -29,8 +29,8 @@ package org.openwms.web.flex.client.common.event
      * @version $Revision$
      * @since 0.1
      */
-    public class TransportUnitTypeEvent extends Event
-    {
+    public class TransportUnitTypeEvent extends Event {
+
         public static const LOAD_ALL_TRANSPORT_UNIT_TYPES:String = "LOAD_ALL_TRANSPORT_UNIT_TYPES";
         public static const CREATE_TRANSPORT_UNIT_TYPE:String = "CREATE_TRANSPORT_UNIT_TYPE";
         public static const DELETE_TRANSPORT_UNIT_TYPE:String = "DELETE_TRANSPORT_UNIT_TYPE";
@@ -39,10 +39,10 @@ package org.openwms.web.flex.client.common.event
 
         public var data:*;
 
-        public function TransportUnitTypeEvent(type:String, bubbles:Boolean = true, cancelable:Boolean = false)
-        {
+        public function TransportUnitTypeEvent(type:String, bubbles:Boolean = true, cancelable:Boolean = false) {
             super(type, bubbles, cancelable);
         }
-
     }
 }
+
+
