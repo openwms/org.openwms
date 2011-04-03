@@ -21,6 +21,7 @@
 package org.openwms.common.domain {
 	
 	import mx.controls.dataGridClasses.DataGridColumn;
+	import org.openwms.common.domain.values.Barcode;
 
     [Bindable]
     [RemoteClass(alias="org.openwms.common.domain.TransportUnit")]
@@ -36,6 +37,17 @@ package org.openwms.common.domain {
 	 * @since 0.1
 	 */
     public class TransportUnit extends TransportUnitBase {
+    	
+    	/**
+    	 * Allows to create a TransportUnit with a given Barcode.
+    	 * 
+    	 * @param barcode The barcode as String
+    	 */
+    	public function TransportUnit(barcode:String = null) {
+    	   if (barcode != null) {
+    	   	  this._barcode = new Barcode(barcode);
+    	   }
+    	}
     	
     	/**
     	 * Checks whether the <code>TransportUnit</code> is empty or not.

@@ -31,12 +31,18 @@ package org.openwms.tms.domain.order {
      */
     public class TransportOrder extends TransportOrderBase {
     	
+    	import org.openwms.common.domain.TransportUnit;
     	import org.openwms.tms.domain.values.TransportOrderState;
     	
     	/**
-    	 * Constructor. Setting the state to CREATED.
+    	 * Constructor. Setting the state to CREATED. Allows to set a TransportUnit.
+    	 *
+    	 * @param transportUnit The TransportUnit for this order.
     	 */
-    	public function TransportOrder() {
+    	public function TransportOrder(transportUnit:TransportUnit = null) {
+    		if (transportUnit != null) {
+    			this._transportUnit = transportUnit;
+    		}
     		this.state = TransportOrderState.CREATED;
     	}
     }

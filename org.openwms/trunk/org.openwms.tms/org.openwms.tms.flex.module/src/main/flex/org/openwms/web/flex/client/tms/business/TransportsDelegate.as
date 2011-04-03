@@ -19,12 +19,12 @@
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
 package org.openwms.web.flex.client.tms.business {
-    
+
     import flash.events.Event;
-    
+
     import mx.collections.ArrayCollection;
     import mx.controls.Alert;
-    
+
     import org.granite.tide.events.TideFaultEvent;
     import org.granite.tide.events.TideResultEvent;
     import org.granite.tide.spring.Context;
@@ -43,7 +43,7 @@ package org.openwms.web.flex.client.tms.business {
     [Name("transportsDelegate")]
     [ManagedEvent(name="LOAD_TRANSPORT_ORDERS")]
     public class TransportsDelegate {
-    	
+
         [In]
         [Bindable]
         public var tideContext:Context;
@@ -58,23 +58,18 @@ package org.openwms.web.flex.client.tms.business {
          */
         [Observer("LOAD_TRANSPORT_ORDERS")]
         public function getAllTransports():void {
-        	trace("Load all orders");
-        	tideContext.transportService.findAll(onTransportsLoaded, onFault);
-        	trace("Service called");
+            tideContext.transportService.findAll(onTransportsLoaded, onFault);
         }
         private function onTransportsLoaded(event:TideResultEvent):void {
-        	trace("got all orders");
             tmsModelLocator.allTransportOrders = event.result as ArrayCollection;
-            trace("and return");
         }
-        
+
         [Observer("CREATE_TRANSPORT_ORDER")]
         public function createTransportOrder(event:TransportOrderEvent):void {
-        	var transportOrder:TransportOrder = event.data as TransportOrder; 
+            var transportOrder:TransportOrder = event.data as TransportOrder; 
             tideContext.transportService.createTransportOrder(transportOrder.transportUnit.barcode, transportOrder.targetLocationGroup, transportOrder.targetLocation, transportOrder.priority, onTransportCreated, onFault);
         }
         private function onTransportCreated(event:TideResultEvent):void {
-        	trace("TransportOrder successfully created");
             dispatchEvent(new TransportOrderEvent(TransportOrderEvent.LOAD_TRANSPORT_ORDERS));
         }
 
@@ -87,9 +82,9 @@ package org.openwms.web.flex.client.tms.business {
         }
         private function onTransportsCanceled(event:TideResultEvent):void {
             dispatchEvent(new TransportOrderEvent(TransportOrderEvent.LOAD_TRANSPORT_ORDERS));
-        	if ((event.result as ArrayCollection).length > 0) {
-        		Alert.show("Not all Transport Orders could be canceled!");
-        	}
+            if ((event.result as ArrayCollection).length > 0) {
+                Alert.show("Not all Transport Orders could be canceled!");
+            }
         }
 
         /**
@@ -119,8 +114,9 @@ package org.openwms.web.flex.client.tms.business {
         }
 
         private function onFault(event:TideFaultEvent):void {
-        	trace("Error executing operation on Transports service:" + event.fault);
+            trace("Error executing operation on Transports service:" + event.fault);
             Alert.show("Error executing operation on Transports service");
         }
     }
 }
+

@@ -31,6 +31,13 @@ import org.openwms.common.domain.TransportUnit;
  */
 public interface TransportOrderStateDelegate {
 
+    /**
+     * An actions that shall be triggered after a TransportOrder has bees
+     * created.
+     * 
+     * @param transportUnit
+     *            The TransportUnit for that the order was started.
+     */
     void afterCreation(TransportUnit transportUnit);
 
     void onCancel(Long id);
