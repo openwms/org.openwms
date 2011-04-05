@@ -154,7 +154,7 @@
 
     <ciManagement>
         <system>Hudson</system>
-        <url>http://openwms.blogsite.org:8180</url>
+        <url>http://openwms.blogsite.org:8181</url>
     </ciManagement>
 
     <profiles>
