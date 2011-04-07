@@ -67,6 +67,7 @@
                 <module>org.openwms.common.service.api</module>
                 <module>org.openwms.common.service.spring</module>
                 <module>org.openwms.common.util</module>
+                <!-- module>org.openwms.common.infrastructure.engine</module-->
             </modules>
         </profile>
         <profile>
@@ -81,6 +82,7 @@
                 <module>org.openwms.common.service.api</module>
                 <module>org.openwms.common.service.spring</module>
                 <module>org.openwms.common.util</module>
+                <!-- module>org.openwms.common.infrastructure.engine</module-->
             </modules>
         </profile>
     </profiles>

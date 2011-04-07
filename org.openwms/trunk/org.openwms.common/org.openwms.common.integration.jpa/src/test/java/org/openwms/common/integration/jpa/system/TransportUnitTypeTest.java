@@ -24,10 +24,10 @@ import static junit.framework.Assert.assertNotNull;
 import static junit.framework.Assert.assertNull;
 import static junit.framework.Assert.fail;
 
-import javax.persistence.EntityNotFoundException;
+import javax.persistence.NoResultException;
 import javax.persistence.PersistenceException;
 
-import org.junit.Ignore;
+import org.junit.Before;
 import org.junit.Test;
 import org.openwms.common.domain.LocationType;
 import org.openwms.common.domain.TransportUnitType;
@@ -44,64 +44,73 @@ import org.springframework.transaction.annotation.Transactional;
  */
 @Transactional
 public class TransportUnitTypeTest extends AbstractJpaSpringContextTests {
-    // TODO [russelltina] : Check
+
+    private TransportUnitType transportUnitType;
+
+    /**
+     * Setup data.
+     */
+    @Before
+    public void onBefore() {
+        transportUnitType = new TransportUnitType("TUT1");
+        entityManager.persist(transportUnitType);
+        entityManager.flush();
+        entityManager.clear();
+    }
 
     /**
      * Test unique constraint on type.
      */
-    @Ignore
     @Test
-    public final void testTransportUnitType() {
-        TransportUnitType transportUnitType = new TransportUnitType("JU_TEST");
-        TransportUnitType transportUnitType2 = new TransportUnitType("JU_TEST");
-
-        entityManager.persist(transportUnitType);
+    public final void testDuplicateTransportUnitType() {
         try {
-            entityManager.persist(transportUnitType2);
+            entityManager.persist(new TransportUnitType("TUT1"));
             fail("Expecting exception when persisting existing entity with same identifier!");
-        } catch (PersistenceException pe) {}
-        TransportUnitType tt = null;
-        try {
-            tt = (TransportUnitType) entityManager.createNamedQuery(TransportUnitType.NQ_FIND_BY_NAME)
-                    .setParameter(1, "JU_TEST").getSingleResult();
-        } catch (EntityNotFoundException nre) {
-            assertNotNull("TransportUnitType should be SAVED before", tt);
-        }
-
-        entityManager.remove(tt);
-
-        try {
-            tt = (TransportUnitType) entityManager.createNamedQuery(TransportUnitType.NQ_FIND_BY_NAME)
-                    .setParameter(1, "JU_TEST").getSingleResult();
-            assertNull("TransportUnitType should be REMOVED before", tt);
-        } catch (EntityNotFoundException nre) {
-            // okay
+        } catch (PersistenceException pe) {
+            logger.debug("OK:Exceptiuon must been thrown when persisting TUT with same identifier.");
         }
     }
 
-    @Ignore
+    /**
+     * Test removal of TUT.
+     */
     @Test
-    public final void testCascadingTypePlacingRule() {
-        TransportUnitType transportUnitType = new TransportUnitType("JU_TEST");
-        LocationType locationType = new LocationType("JU_LOC_TYPE");
-        TypePlacingRule typePlacingRule = new TypePlacingRule(transportUnitType, locationType, 1);
-
-        transportUnitType.addTypePlacingRule(typePlacingRule);
-
-        entityManager.persist(locationType);
-        entityManager.persist(transportUnitType);
-
-        TypePlacingRule tpr = entityManager.find(TypePlacingRule.class, Long.valueOf(1));
-        assertNotNull("TypePlacingRule should be cascaded SAVED before", tpr);
-
+    public final void testRemovalOfTransportUnitType() {
+        transportUnitType = entityManager.merge(transportUnitType);
+        transportUnitType = (TransportUnitType) entityManager.createNamedQuery(TransportUnitType.NQ_FIND_BY_NAME)
+                .setParameter(1, "TUT1").getSingleResult();
         entityManager.remove(transportUnitType);
-
         try {
             transportUnitType = (TransportUnitType) entityManager.createNamedQuery(TransportUnitType.NQ_FIND_BY_NAME)
-                    .setParameter(1, "JU_TEST").getSingleResult();
+                    .setParameter(1, "TUT1").getSingleResult();
             assertNull("TransportUnitType should be REMOVED before", transportUnitType);
-        } catch (EntityNotFoundException nre) {
-            // okay here
+        } catch (NoResultException nre) {
+            logger.debug("OK:No Entity found, it was removed.");
+        }
+    }
+
+    /**
+     * Test that removal a TUT with referenced Rules is not allowed.
+     */
+    @Test
+    public final void testCascadingTypePlacingRule() {
+        LocationType locationType = new LocationType("JU_LOC_TYPE");
+        entityManager.persist(locationType);
+
+        TypePlacingRule typePlacingRule = new TypePlacingRule(transportUnitType, locationType, 1);
+        transportUnitType.addTypePlacingRule(typePlacingRule);
+        transportUnitType = entityManager.merge(transportUnitType);
+
+        TypePlacingRule tpr = entityManager.find(TypePlacingRule.class, Long.valueOf(1));
+        assertNotNull("TypePlacingRule should be cascade persisted", tpr);
+
+        entityManager.remove(transportUnitType);
+        try {
+            transportUnitType = (TransportUnitType) entityManager.createNamedQuery(TransportUnitType.NQ_FIND_BY_NAME)
+                    .setParameter(1, "TUT1").getSingleResult();
+            assertNull("TransportUnitType is not allowed to be REMOVED before", transportUnitType);
+        } catch (PersistenceException pe) {
+            logger.debug("OK:No Entity found, it was removed.");
         }
     }
 }

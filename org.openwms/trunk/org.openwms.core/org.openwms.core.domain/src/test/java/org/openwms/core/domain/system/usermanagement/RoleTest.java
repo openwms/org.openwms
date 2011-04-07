@@ -28,8 +28,6 @@ import javax.persistence.PersistenceException;
 
 import org.junit.Before;
 import org.junit.Test;
-import org.openwms.core.domain.system.usermanagement.Role;
-import org.openwms.core.domain.system.usermanagement.User;
 import org.openwms.core.test.AbstractJpaSpringContextTests;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -49,6 +47,9 @@ public class RoleTest extends AbstractJpaSpringContextTests {
     private User knownUser;
     private Role knownRole;
 
+    /**
+     * Setup data.
+     */
     @Before
     public void onBefore() {
         knownUser = new User(KNOWN_USER);
@@ -73,13 +74,13 @@ public class RoleTest extends AbstractJpaSpringContextTests {
      * Adding null to the list of users must fail.
      */
     @Test
-    public final void testAddingUserToRole() {
+    public final void testAddUserToRole() {
         Role role = new Role("Rolename");
         try {
             role.addUser(null);
             fail("Not allowed to call addUser() with null");
         } catch (IllegalArgumentException iae) {
-            logger.debug("OK:Adding null user not allowed");
+            logger.debug("OK:Adding null to users is not allowed");
         }
     }
 
@@ -93,7 +94,7 @@ public class RoleTest extends AbstractJpaSpringContextTests {
             role.addGrant(null);
             fail("Not allowed to call addGrant() with null");
         } catch (IllegalArgumentException iae) {
-            logger.debug("OK:Adding null grant not allowed");
+            logger.debug("OK:Adding null to grants is not allowed");
         }
     }
 
@@ -107,7 +108,7 @@ public class RoleTest extends AbstractJpaSpringContextTests {
             role.removeUser(null);
             fail("Not allowed to call removeUser() with null");
         } catch (IllegalArgumentException iae) {
-            logger.debug("OK:Removing null user not allowed");
+            logger.debug("OK:Removing null from users is not allowed");
         }
     }
 
@@ -121,21 +122,35 @@ public class RoleTest extends AbstractJpaSpringContextTests {
             role.removeGrant(null);
             fail("Not allowed to call removeGrant() with null");
         } catch (IllegalArgumentException iae) {
-            logger.debug("OK:Removing null grant not allowed");
+            logger.debug("OK:Removing null from grants is not allowed");
         }
     }
 
     /**
-     * Setting th elist of users to null is not allowed.
+     * Setting the list of grants to null is not allowed.
      */
     @Test
-    public final void testAddUsersToRole() {
+    public final void testSetGrantsOfRole() {
+        Role role = new Role("Rolename");
+        try {
+            role.setGrants(null);
+            fail("Not allowed to call setGrants() with null");
+        } catch (IllegalArgumentException iae) {
+            logger.debug("OK:Setting grants to null is not allowed");
+        }
+    }
+
+    /**
+     * Setting the list of grants to null is not allowed.
+     */
+    @Test
+    public final void testSetUsersOfRole() {
         Role role = new Role("Rolename");
         try {
             role.setUsers(null);
             fail("Not allowed to call setUsers() with null");
         } catch (IllegalArgumentException iae) {
-            logger.debug("OK:Setting null to Set of users not allowed");
+            logger.debug("OK:Setting users to null is not allowed");
         }
     }
 
