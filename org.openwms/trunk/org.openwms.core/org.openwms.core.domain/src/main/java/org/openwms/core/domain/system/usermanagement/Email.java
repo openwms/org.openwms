@@ -53,6 +53,7 @@ public class Email extends AbstractEntity implements DomainObject<Long>, Seriali
      */
     @Id
     @GeneratedValue
+    // CHECK [scherrer] : what is this??
     @ManyToOne
     private Long id;
 
@@ -97,8 +98,8 @@ public class Email extends AbstractEntity implements DomainObject<Long>, Seriali
      *            The email address of the <code>User</code>
      */
     public Email(String username, String emailAddress) {
-        assert username != null && !"".equals(username);
-        assert emailAddress != null && !"".equals(emailAddress);
+        assert username != null && !username.equals("");
+        assert emailAddress != null && emailAddress.equals("");
         this.username = username;
         this.emailAddress = emailAddress;
     }
@@ -120,8 +121,8 @@ public class Email extends AbstractEntity implements DomainObject<Long>, Seriali
     }
 
     /**
-     * Returns the name of the <code>User</code> who owns the
-     * <code>Email</code>.
+     * Returns the name of the <code>User</code> who owns the <code>Email</code>
+     * .
      * 
      * @return The username as String
      */

@@ -112,6 +112,7 @@ public class Role extends SecurityObject implements Serializable {
      *            The description text of the <code>Role</code>
      */
     public Role(String name, String description) {
+        // TODO [scherrer] : be compliant to other tests and assert for null
         super(name, description);
     }
 
