@@ -128,17 +128,6 @@ public class Module extends AbstractEntity implements DomainObject<Long>, Serial
      * 
      * @param moduleName
      *            The unique Module name
-     */
-    public Module(String moduleName) {
-        super();
-        this.moduleName = moduleName;
-    }
-
-    /**
-     * Create a new Module.
-     * 
-     * @param moduleName
-     *            The unique Module name
      * @param url
      *            The unique URL
      */
@@ -172,6 +161,9 @@ public class Module extends AbstractEntity implements DomainObject<Long>, Serial
      *            The moduleName to set.
      */
     public void setModuleName(String moduleName) {
+        if (null == moduleName || moduleName.isEmpty()) {
+            throw new IllegalArgumentException("Not allowed to set moduleName to null or an empty String");
+        }
         this.moduleName = moduleName;
     }
 
@@ -191,6 +183,9 @@ public class Module extends AbstractEntity implements DomainObject<Long>, Serial
      *            The url to set.
      */
     public void setUrl(String url) {
+        if (null == url || url.isEmpty()) {
+            throw new IllegalArgumentException("Not allowed to set url to null or an empty String");
+        }
         this.url = url;
     }
 
