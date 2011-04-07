@@ -21,12 +21,12 @@
 package org.openwms.core.integration.jpa.system.usermanagement;
 
 import static junit.framework.Assert.assertEquals;
-import static junit.framework.Assert.assertNotSame;
+import static junit.framework.Assert.assertFalse;
 import static junit.framework.Assert.fail;
 
 import javax.persistence.PersistenceException;
-import javax.persistence.Query;
 
+import org.junit.Before;
 import org.junit.Test;
 import org.openwms.core.domain.system.usermanagement.Role;
 import org.openwms.core.domain.system.usermanagement.User;
@@ -45,8 +45,103 @@ public class RoleTest extends AbstractJpaSpringContextTests {
 
     private static final String TEST_ROLE = "ROLE_TEST";
     private static final String KNOWN_USER = "KNOWN_USER";
-    private static final String UNKNOWN_USER = "UNKNOWN_USER";
+    private static final String KNOWN_ROLE = "KNOWN_ROLE";
+    private User knownUser;
+    private Role knownRole;
 
+    @Before
+    public void onBefore() {
+        knownUser = new User(KNOWN_USER);
+        knownRole = new Role(KNOWN_ROLE);
+        entityManager.persist(knownRole);
+        entityManager.persist(knownUser);
+        entityManager.flush();
+        entityManager.clear();
+    }
+
+    /**
+     * Simple POJOS test to test setters only.
+     */
+    @Test
+    public final void testRoleInstanciation() {
+        Role role = new Role("Rolename", "Description");
+        assertEquals("Rolename doesnt match", "Rolename", role.getName());
+        assertEquals("Description doesnt match", "Description", role.getDescription());
+    }
+
+    /**
+     * Adding null to the list of users must fail.
+     */
+    @Test
+    public final void testAddingUserToRole() {
+        Role role = new Role("Rolename");
+        try {
+            role.addUser(null);
+            fail("Not allowed to call addUser() with null");
+        } catch (IllegalArgumentException iae) {
+            logger.debug("OK:Adding null user not allowed");
+        }
+    }
+
+    /**
+     * Adding null to the list of grants must fail.
+     */
+    @Test
+    public final void testAddGrantToRole() {
+        Role role = new Role("Rolename");
+        try {
+            role.addGrant(null);
+            fail("Not allowed to call addGrant() with null");
+        } catch (IllegalArgumentException iae) {
+            logger.debug("OK:Adding null grant not allowed");
+        }
+    }
+
+    /**
+     * Removing null from the list of users must fail.
+     */
+    @Test
+    public final void testRemoveUserFromRole() {
+        Role role = new Role("Rolename");
+        try {
+            role.removeUser(null);
+            fail("Not allowed to call removeUser() with null");
+        } catch (IllegalArgumentException iae) {
+            logger.debug("OK:Removing null user not allowed");
+        }
+    }
+
+    /**
+     * Removing null from the list of grants must fail.
+     */
+    @Test
+    public final void testRemoveGrantFromRole() {
+        Role role = new Role("Rolename");
+        try {
+            role.removeGrant(null);
+            fail("Not allowed to call removeGrant() with null");
+        } catch (IllegalArgumentException iae) {
+            logger.debug("OK:Removing null grant not allowed");
+        }
+    }
+
+    /**
+     * Setting th elist of users to null is not allowed.
+     */
+    @Test
+    public final void testAddUsersToRole() {
+        Role role = new Role("Rolename");
+        try {
+            role.setUsers(null);
+            fail("Not allowed to call setUsers() with null");
+        } catch (IllegalArgumentException iae) {
+            logger.debug("OK:Setting null to Set of users not allowed");
+        }
+    }
+
+    /**
+     * Creating two roles with same id must fail.
+     */
     @Test
     public final void testRoleConstraint() {
         Role role = new Role(TEST_ROLE);
@@ -56,74 +151,38 @@ public class RoleTest extends AbstractJpaSpringContextTests {
             entityManager.persist(role);
             entityManager.persist(role2);
             fail("No unique constraint on rolename");
-        }
-        catch (PersistenceException pe) {
+        } catch (PersistenceException pe) {
             logger.debug("OK:Tested unique constraint on rolename.");
         }
     }
 
+    /**
+     * Testing some persist / merging transient entities and removal of roles.
+     */
     @Test
-    public final void testRoleInstanciation() {
-        Role role = new Role("Rolename", "Description");
-        assertEquals("Rolename doesnt match", "Rolename", role.getName());
-        assertEquals("Description doesnt match", "Description", role.getDescription());
-    }
+    public final void testLifecycle() {
+        knownRole.addUser(knownUser);
+        knownRole = entityManager.merge(knownRole);
+        knownRole.addUser(new User("TRANSIENT_USER"));
+        knownRole = entityManager.merge(knownRole);
 
-    @Test
-    public final void testAddingUserToRole() {
-        Role role = new Role("Rolename");
-        try {
-            role.addUser(null);
-            fail("Not allowed to call addUser() with null");
-        }
-        catch (Exception e) {
-            logger.debug("OK:Adding null user not allowed");
-        }
-    }
+        Role role2 = (Role) entityManager.createQuery("select r from Role r where r.name = :rolename")
+                .setParameter("rolename", KNOWN_ROLE).getSingleResult();
+        assertEquals("Users must be persisted with Role", 2, role2.getUsers().size());
+        assertFalse("Role must be persisted", knownRole.isNew());
 
-    @Test
-    public final void testAddingUsersToRole() {
-        Role role = new Role("Rolename");
-        try {
-            role.setUsers(null);
-            fail("Not allowed to call setUsers() with null");
-        }
-        catch (Exception e) {
-            logger.debug("OK:Setting null to Set of users not allowed");
-        }
-    }
+        entityManager.remove(knownRole);
 
-    @Test
-    public final void testRoleLifecycle() {
-        Role role = new Role(TEST_ROLE);
-        User knownUser = new User(KNOWN_USER);
-
-        entityManager.persist(knownUser);
-
-        role.addUser(knownUser);
-
-        entityManager.merge(role);
-
-        Query query = entityManager.createQuery("select count(u) from User u where u.username = :username");
-        query.setParameter("username", knownUser.getUsername());
-        Long cnt = (Long) query.getSingleResult();
-        assertEquals("User must be persisted with Role", 1, cnt.intValue());
-
-        query = entityManager.createQuery("select r from Role r where r.name = :rolename");
-        query.setParameter("rolename", role.getName());
-        role = (Role) query.getSingleResult();
-        assertNotSame("Role must be persisted", 0, role.getId());
-
-        entityManager.remove(role);
-
-        query = entityManager.createQuery("select count(r) from Role r where r.name = :rolename");
-        query.setParameter("rolename", role.getName());
-        cnt = (Long) query.getSingleResult();
+        Long cnt = (Long) entityManager.createQuery("select count(r) from Role r where r.name = :rolename")
+                .setParameter("rolename", KNOWN_ROLE).getSingleResult();
         assertEquals("Role must be removed", 0, cnt.intValue());
 
-        query = entityManager.createQuery("select count(u) from User u where u.username = :username");
-        query.setParameter("username", knownUser.getUsername());
-        cnt = (Long) query.getSingleResult();
+        cnt = (Long) entityManager.createQuery("select count(u) from User u where u.username = :username")
+                .setParameter("username", KNOWN_USER).getSingleResult();
         assertEquals("User may not be removed", 1, cnt.intValue());
+
+        cnt = (Long) entityManager.createQuery("select count(u) from User u where u.username = :username")
+                .setParameter("username", "TRANSIENT_USER").getSingleResult();
+        assertEquals("Transient User may not be removed", 1, cnt.intValue());
     }
 }
