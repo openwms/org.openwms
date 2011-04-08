@@ -29,7 +29,6 @@ import javax.persistence.PersistenceException;
 import org.junit.Before;
 import org.junit.Test;
 import org.openwms.core.test.AbstractJpaSpringContextTests;
-import org.springframework.transaction.annotation.Transactional;
 
 /**
  * A RoleTest.
@@ -38,7 +37,6 @@ import org.springframework.transaction.annotation.Transactional;
  * @version $Revision: 1252 $
  * @since 0.1
  */
-@Transactional
 public class RoleTest extends AbstractJpaSpringContextTests {
 
     private static final String TEST_ROLE = "ROLE_TEST";

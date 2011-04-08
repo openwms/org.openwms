@@ -705,7 +705,7 @@
                 <artifactId>maven-checkstyle-plugin</artifactId>
                 <version>2.4</version>
                 <configuration>
-                    <xrefLocation>${project.reporting.outputDirectory}/../xref</xrefLocation>
+                    <xrefLocation>${project.reporting.outputDirectory}/${moduleDir}/xref</xrefLocation>
                     <enableRulesSummary>false</enableRulesSummary>
                     <configLocation>http://openwms2005.sourceforge.net/rules/checkstyle/checkstyle.xml</configLocation>
                     <headerLocation>http://openwms2005.sourceforge.net/rules/checkstyle/checkstyle-license.txt</headerLocation>

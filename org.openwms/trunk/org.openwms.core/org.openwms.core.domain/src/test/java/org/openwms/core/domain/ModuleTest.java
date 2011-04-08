@@ -22,6 +22,7 @@ package org.openwms.core.domain;
 
 import static junit.framework.Assert.assertEquals;
 import static junit.framework.Assert.assertFalse;
+import static junit.framework.Assert.assertNotSame;
 import static junit.framework.Assert.assertTrue;
 import static junit.framework.Assert.fail;
 
@@ -47,6 +48,7 @@ public class ModuleTest extends AbstractJpaSpringContextTests {
         assertEquals("Module2.moduleName", "Module2", m2.getModuleName());
         assertEquals("Module2.url", "Url", m2.getUrl());
         assertTrue(m2.isNew());
+        assertNotSame("Same name and url", m2.equals(new Module("Module2", "Url")));
     }
 
     /**
