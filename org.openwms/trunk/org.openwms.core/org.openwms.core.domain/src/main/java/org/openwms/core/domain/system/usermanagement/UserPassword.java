@@ -152,6 +152,7 @@ public class UserPassword extends AbstractEntity implements DomainObject<Long>, 
 
     /**
      * @see java.lang.Object#hashCode()
+     * @return the hashCode
      */
     @Override
     public int hashCode() {
@@ -163,7 +164,14 @@ public class UserPassword extends AbstractEntity implements DomainObject<Long>, 
     }
 
     /**
-     * @see java.lang.Object#equals(java.lang.Object)
+     * Comparison is done with the businesskey (user and password).
+     * {@link AbstractEntity#equals(Object)} is not called to avoid comparison
+     * with the UUID.
+     * 
+     * @see AbstractEntity#equals(java.lang.Object)
+     * @param obj
+     *            The other to compare
+     * @return <code>true</code> if equals otherwise <code>false</code>
      */
     @Override
     public boolean equals(Object obj) {

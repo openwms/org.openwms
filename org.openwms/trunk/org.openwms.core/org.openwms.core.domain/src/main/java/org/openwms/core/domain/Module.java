@@ -159,6 +159,8 @@ public class Module extends AbstractEntity implements DomainObject<Long>, Serial
      * 
      * @param moduleName
      *            The moduleName to set.
+     * @throws IllegalArgumentException
+     *             in case the new moduleName is null or empty
      */
     public void setModuleName(String moduleName) {
         if (null == moduleName || moduleName.isEmpty()) {
@@ -181,6 +183,8 @@ public class Module extends AbstractEntity implements DomainObject<Long>, Serial
      * 
      * @param url
      *            The url to set.
+     * @throws IllegalArgumentException
+     *             in case the new url is null or empty
      */
     public void setUrl(String url) {
         if (null == url || url.isEmpty()) {
