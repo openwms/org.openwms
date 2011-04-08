@@ -52,6 +52,36 @@ public class ModuleTest extends AbstractJpaSpringContextTests {
     }
 
     /**
+     * Test that it is not allowed to set the moduleName to null.
+     */
+    @Test
+    public final void testChangingModuleName() {
+        Module m = new Module("Module", "url");
+        try {
+            m.setModuleName(null);
+            fail("Not allowed to set the moduleName to null");
+        } catch (IllegalArgumentException iae) {
+            logger.debug("OK: Exception setting moduleName to null is not allowed");
+        }
+
+    }
+
+    /**
+     * Test that it is not allowed to set the url to null.
+     */
+    @Test
+    public final void testChangingUrl() {
+        Module m = new Module("Module", "url");
+        try {
+            m.setUrl(null);
+            fail("Not allowed to set the url to null");
+        } catch (IllegalArgumentException iae) {
+            logger.debug("OK: Exception setting url to null is not allowed");
+        }
+
+    }
+
+    /**
      * Test persisting an incomplete module.
      */
     @Test
