@@ -63,7 +63,7 @@ public class ModuleTest extends AbstractJpaSpringContextTests {
         } catch (IllegalArgumentException iae) {
             logger.debug("OK: Exception setting moduleName to null is not allowed");
         }
-
+        m.setModuleName("OK");
     }
 
     /**
@@ -78,7 +78,7 @@ public class ModuleTest extends AbstractJpaSpringContextTests {
         } catch (IllegalArgumentException iae) {
             logger.debug("OK: Exception setting url to null is not allowed");
         }
-
+        m.setUrl("uri");
     }
 
     /**
