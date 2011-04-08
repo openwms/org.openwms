@@ -276,55 +276,11 @@ public class Module extends AbstractEntity implements DomainObject<Long>, Serial
     }
 
     /**
-     * Uses the moduleName for calculation, because this is unique and not null.
-     * 
-     * @see java.lang.Object#hashCode()
-     * @return The hashCode
-     */
-    @Override
-    public int hashCode() {
-        final int prime = 31;
-        int result = super.hashCode();
-        result = prime * result + ((moduleName == null) ? 0 : moduleName.hashCode());
-        return result;
-    }
-
-    /**
      * {@inheritDoc}
      */
     @Override
     public long getVersion() {
         return this.version;
-    }
-
-    /**
-     * Compares the moduleName, because it is unique and not-null.
-     * 
-     * @see org.openwms.common.domain.AbstractEntity#equals(java.lang.Object)
-     * @param obj
-     *            The object to compare
-     * @return <code>true</code> if equal otherwise <code>false</code>
-     */
-    @Override
-    public boolean equals(Object obj) {
-        if (this == obj) {
-            return true;
-        }
-        if (!super.equals(obj)) {
-            return false;
-        }
-        if (!(obj instanceof Module)) {
-            return false;
-        }
-        final Module other = (Module) obj;
-        if (moduleName == null) {
-            if (other.moduleName != null) {
-                return false;
-            }
-        } else if (!moduleName.equals(other.moduleName)) {
-            return false;
-        }
-        return true;
     }
 
     /**

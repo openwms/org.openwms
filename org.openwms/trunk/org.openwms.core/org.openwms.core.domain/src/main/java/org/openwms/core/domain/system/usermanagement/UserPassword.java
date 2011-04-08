@@ -20,14 +20,11 @@
  */
 package org.openwms.core.domain.system.usermanagement;
 
-import static javax.persistence.GenerationType.AUTO;
-
 import java.io.Serializable;
 import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.OrderBy;
@@ -60,7 +57,6 @@ public class UserPassword extends AbstractEntity implements DomainObject<Long>, 
      */
     @Id
     @Column(name = "ID")
-    @GeneratedValue(strategy = AUTO)
     private Long id;
 
     /**
@@ -99,6 +95,7 @@ public class UserPassword extends AbstractEntity implements DomainObject<Long>, 
      *            The password as String to assign.
      */
     public UserPassword(User user, String password) {
+        // TODO [scherrer] : Be compliant and assert for null
         this.user = user;
         this.password = password;
     }
@@ -155,8 +152,6 @@ public class UserPassword extends AbstractEntity implements DomainObject<Long>, 
 
     /**
      * @see java.lang.Object#hashCode()
-     * 
-     * @return The HashCode
      */
     @Override
     public int hashCode() {
@@ -169,23 +164,16 @@ public class UserPassword extends AbstractEntity implements DomainObject<Long>, 
 
     /**
      * @see java.lang.Object#equals(java.lang.Object)
-     * 
-     * @param obj
-     *            The object to compare
-     * @return <code>true</code> if equal, otherwise <code>false</code>
      */
     @Override
     public boolean equals(Object obj) {
         if (this == obj) {
             return true;
         }
-        if (!super.equals(obj)) {
-            return false;
-        }
         if (!(obj instanceof UserPassword)) {
             return false;
         }
-        final UserPassword other = (UserPassword) obj;
+        UserPassword other = (UserPassword) obj;
         if (password == null) {
             if (other.password != null) {
                 return false;

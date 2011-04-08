@@ -22,6 +22,7 @@ package org.openwms.core.domain.system;
 
 import static junit.framework.Assert.assertEquals;
 import static junit.framework.Assert.assertNotNull;
+import static junit.framework.Assert.assertNotSame;
 
 import org.junit.Test;
 import org.openwms.core.test.AbstractJpaSpringContextTests;
@@ -40,6 +41,7 @@ public class MessageTest extends AbstractJpaSpringContextTests {
         assertNotNull("Creation date must be set", m.getCreated());
         assertEquals("Expected the message", "Test message", m.getMessageText());
         assertEquals("Expected a message number", 4711, m.getMessageNo());
+        assertNotSame("Same name and url", m.equals(new Message(4711, "Test message")));
     }
 
 }

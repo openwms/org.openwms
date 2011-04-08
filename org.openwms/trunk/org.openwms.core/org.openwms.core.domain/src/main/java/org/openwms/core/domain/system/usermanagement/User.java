@@ -293,6 +293,7 @@ public class User extends AbstractEntity implements DomainObject<Long>, Serializ
      *            Allowed to be null
      */
     public void setLastPasswordChange(Date lastPasswordChange) {
+        // TODO [scherrer] : remove this and change the AS class
         // do nothing, only used for JavaBeans compliance to support generation
         // of AS classes.
     }
@@ -338,9 +339,13 @@ public class User extends AbstractEntity implements DomainObject<Long>, Serializ
      */
     public void setPassword(String password) throws InvalidPasswordException {
         if (isPasswordValid(password)) {
-            storeOldPassword(this.password);
-            this.password = password;
-            this.lastPasswordChange = new Date();
+            if (this.password != null && this.password.equals(password)) {
+                logger.debug("Setting to the same as current password");
+            } else {
+                storeOldPassword(this.password);
+                this.password = password;
+                this.lastPasswordChange = new Date();
+            }
         } else {
             throw new InvalidPasswordException("Password is not confirm with the defined password rules");
         }
@@ -364,7 +369,7 @@ public class User extends AbstractEntity implements DomainObject<Long>, Serializ
     private void storeOldPassword(String oldPassword) {
         if (oldPassword == null || oldPassword.isEmpty()) {
             if (logger.isDebugEnabled()) {
-                logger.debug("The first time the password can be null, dont store the null password");
+                logger.debug("In case the old password is null, dont store it in history");
             }
             return;
         }
@@ -373,7 +378,7 @@ public class User extends AbstractEntity implements DomainObject<Long>, Serializ
             Collections.sort(passwords, new Comparator<UserPassword>() {
                 @Override
                 public int compare(UserPassword o1, UserPassword o2) {
-                    return o2.getPasswordChanged().compareTo(o1.getPasswordChanged());
+                    return o1.getPasswordChanged().compareTo(o2.getPasswordChanged());
                 }
             });
             if (logger.isDebugEnabled()) {
@@ -381,7 +386,7 @@ public class User extends AbstractEntity implements DomainObject<Long>, Serializ
             }
             UserPassword pw = passwords.get(passwords.size() - 1);
             pw.setUser(null);
-            passwords.remove(passwords.get(passwords.size() - 1));
+            passwords.remove(passwords.get(0));
         }
     }
 
