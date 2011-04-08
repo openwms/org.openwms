@@ -63,6 +63,12 @@ public class ModuleTest extends AbstractJpaSpringContextTests {
         } catch (IllegalArgumentException iae) {
             logger.debug("OK: Exception setting moduleName to null is not allowed");
         }
+        try {
+            m.setModuleName("");
+            fail("Not allowed to set the moduleName to an empty String");
+        } catch (IllegalArgumentException iae) {
+            logger.debug("OK: Exception setting moduleName to an empty String is not allowed");
+        }
         m.setModuleName("OK");
     }
 
@@ -77,6 +83,12 @@ public class ModuleTest extends AbstractJpaSpringContextTests {
             fail("Not allowed to set the url to null");
         } catch (IllegalArgumentException iae) {
             logger.debug("OK: Exception setting url to null is not allowed");
+        }
+        try {
+            m.setUrl("");
+            fail("Not allowed to set the url to an empty String");
+        } catch (IllegalArgumentException iae) {
+            logger.debug("OK: Exception setting url to an empty String is not allowed");
         }
         m.setUrl("uri");
     }
