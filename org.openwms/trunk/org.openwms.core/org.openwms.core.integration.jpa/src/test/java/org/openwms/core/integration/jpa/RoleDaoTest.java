@@ -106,11 +106,14 @@ public class RoleDaoTest extends AbstractJpaSpringContextTests {
      * Test merging detached roles.
      */
     @Test
-    public final void testFindAll2() {
+    public final void testMerge() {
         Role role = findRole(ROLE_ADMIN);
         entityManager.clear();
         role.setDescription("Only admins");
         role = dao.save(role);
+        entityManager.flush();
+        entityManager.clear();
+        role = findRole(ROLE_ADMIN);
         assertEquals("", role.getDescription(), "Only admins");
     }
 
