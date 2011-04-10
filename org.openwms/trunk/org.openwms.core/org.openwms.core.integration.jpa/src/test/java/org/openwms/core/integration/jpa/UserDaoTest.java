@@ -26,11 +26,17 @@ import static junit.framework.Assert.assertNotNull;
 import static junit.framework.Assert.assertTrue;
 import static junit.framework.Assert.fail;
 
+import java.util.List;
+
 import javax.persistence.NoResultException;
 
 import org.junit.Before;
 import org.junit.Test;
+import org.openwms.core.domain.system.usermanagement.Role;
+import org.openwms.core.domain.system.usermanagement.SystemUser;
 import org.openwms.core.domain.system.usermanagement.User;
+import org.openwms.core.domain.system.usermanagement.UserPassword;
+import org.openwms.core.exception.InvalidPasswordException;
 import org.openwms.core.integration.UserDao;
 import org.openwms.core.test.AbstractJpaSpringContextTests;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -45,16 +51,25 @@ public class UserDaoTest extends AbstractJpaSpringContextTests {
 
     @Autowired
     private UserDao dao;
+    private User user;
     private String SYS_USER = "Sys";
     private String OP_USER = "Operator";
+    private String ROLE_ADMIN = "ROLE_ADMIN";
+    private String ROLE_ANONYMOUS = "ROLE_ANONYMOUS";
 
     /**
      * Setup two roles.
+     * 
+     * @throws InvalidPasswordException
      */
     @Before
-    public void onBefore() {
+    public void onBefore() throws InvalidPasswordException {
         entityManager.persist(new User(SYS_USER));
-        entityManager.persist(new User(OP_USER));
+        user = new User(OP_USER);
+        user.setPassword("TEST");
+        entityManager.persist(user);
+        entityManager.persist(new Role(ROLE_ADMIN));
+        entityManager.persist(new Role(ROLE_ANONYMOUS));
     }
 
     /**
@@ -75,18 +90,44 @@ public class UserDaoTest extends AbstractJpaSpringContextTests {
     }
 
     /**
-     * Testing to remove roles.
+     * Testing to remove system user.
+     */
+    @Test
+    public final void testRemoveSysUser() {
+        entityManager.persist(new SystemUser(SystemUser.SYSTEM_USERNAME));
+        User user = findUser(SystemUser.SYSTEM_USERNAME);
+        assertTrue("Should be a system user", user instanceof SystemUser);
+        dao.remove(user);
+        entityManager.flush();
+        entityManager.clear();
+        assertTrue("Superuser may not be deleted", findUser(SystemUser.SYSTEM_USERNAME) instanceof SystemUser);
+    }
+
+    /**
+     * Testing to remove users.
      */
     @Test
     public final void testRemove() {
         User user = findUser(SYS_USER);
         assertNotNull("User must have been persisted before", user);
+        List<Role> roles = entityManager.createNamedQuery(Role.NQ_FIND_ALL).getResultList();
+        for (Role role : roles) {
+            role.addUser(user);
+        }
+        entityManager.flush();
+        entityManager.clear();
+        user = findUser(SYS_USER);
         dao.remove(user);
         try {
             findUser(SYS_USER);
             fail("User has to be removed and an exception is expected");
         } catch (NoResultException nre) {
             logger.debug("OK: User was removed before");
+        }
+        roles = entityManager.createNamedQuery(Role.NQ_FIND_ALL).getResultList();
+        assertTrue("Roles may not been deleted", roles.size() == 2);
+        for (Role role : roles) {
+            assertTrue("No users assigned to each role", role.getUsers().size() == 0);
         }
     }
 
@@ -99,6 +140,12 @@ public class UserDaoTest extends AbstractJpaSpringContextTests {
         assertFalse("2 persisted users have to be found, avoid cheating", dao.findAll().size() == 1);
         assertNotNull("Find user by username", dao.findByUniqueId(SYS_USER));
         assertTrue("Find user by query", dao.findByPositionalParameters(User.NQ_FIND_BY_USERNAME, SYS_USER).size() == 1);
+    }
+
+    @Test
+    public final void testFindByUsernameAndPassword() {
+        assertTrue("User by password must be found",
+                dao.findByNameAndPassword(new UserPassword(user, "TEST")) instanceof User);
     }
 
     /**
@@ -120,4 +167,5 @@ public class UserDaoTest extends AbstractJpaSpringContextTests {
         return (User) entityManager.createNamedQuery(User.NQ_FIND_BY_USERNAME).setParameter(1, userName)
                 .getSingleResult();
     }
+
 }
