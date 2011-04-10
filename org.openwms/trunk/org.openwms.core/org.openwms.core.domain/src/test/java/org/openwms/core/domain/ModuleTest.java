@@ -34,7 +34,7 @@ import org.openwms.core.test.AbstractJpaSpringContextTests;
 /**
  * A ModuleTest.
  * 
- * @author <a href="mailto:scherrer@users.sourceforge.net">Heiko Scherrer</a>
+ * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  * @version $Revision: $
  */
 public class ModuleTest extends AbstractJpaSpringContextTests {
