@@ -52,7 +52,7 @@ public interface LocationGroupService<T extends LocationGroup> extends EntitySer
      * <strong>all</strong> child {@link LocationGroup}s of the
      * <tt>locationGroup</tt> Entity.
      * 
-     * @param T
+     * @param locationGroup
      *            The {@link LocationGroup} to change
      */
     void changeGroupState(T locationGroup);
@@ -76,7 +76,7 @@ public interface LocationGroupService<T extends LocationGroup> extends EntitySer
      * Save an already persisted {@link LocationGroup} and return the saved
      * instance.
      * 
-     * @param T
+     * @param locationGroup
      *            The {@link LocationGroup} to save
      * @return The saved {@link LocationGroup}
      */
