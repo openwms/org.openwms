@@ -36,16 +36,14 @@ import org.openwms.core.integration.exception.TooManyEntitiesFoundException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.orm.jpa.support.JpaDaoSupport;
 import org.springframework.transaction.annotation.Transactional;
 
 /**
  * An AbstractGenericJpaDao - Extend this DAO implementation to inherit simple
  * JPA CRUD operations.
  * <p>
- * This {@link GenericDao} implementation extends Springs {@link JpaDaoSupport},
- * to have a benefit from Springs exception translation and transaction
- * management.
+ * This {@link GenericDao} implementation acts as a transactional superclass to
+ * have a benefit from Springs exception translation and transaction management.
  * </p>
  * <p>
  * Furthermore an {@link AbstractGenericJpaDao} has transactional behavior
@@ -210,8 +208,8 @@ public abstract class AbstractGenericJpaDao<T extends AbstractEntity, ID extends
     protected abstract String getFindAllQuery();
 
     /**
-     * Returns the name of the <code>NamedQuery</code> to find an Entity by
-     * the business key.
+     * Returns the name of the <code>NamedQuery</code> to find an Entity by the
+     * business key.
      * 
      * @return Name of the query
      */

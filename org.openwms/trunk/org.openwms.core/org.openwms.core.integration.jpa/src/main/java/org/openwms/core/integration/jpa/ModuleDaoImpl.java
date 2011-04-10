@@ -44,7 +44,7 @@ import org.springframework.stereotype.Repository;
 public class ModuleDaoImpl extends AbstractGenericJpaDao<Module, Long> implements ModuleDao {
 
     /**
-     * @see org.openwms.core.integration.jpa.AbstractGenericJpaDao#getFindAllQuery()
+     * {@inheritDoc}
      */
     @Override
     protected String getFindAllQuery() {
@@ -52,7 +52,7 @@ public class ModuleDaoImpl extends AbstractGenericJpaDao<Module, Long> implement
     }
 
     /**
-     * @see org.openwms.core.integration.jpa.AbstractGenericJpaDao#getFindByUniqueIdQuery()
+     * {@inheritDoc}
      */
     @Override
     protected String getFindByUniqueIdQuery() {
