@@ -34,7 +34,7 @@ import org.springframework.stereotype.Repository;
  * @see org.openwms.core.integration.jpa.AbstractGenericJpaDao
  * @see org.openwms.common.integration.LocationTypeDao
  */
-@Repository
+@Repository("locationTypeDao")
 public class LocationTypeDaoImpl extends AbstractGenericJpaDao<LocationType, Long> implements LocationTypeDao {
 
     /**

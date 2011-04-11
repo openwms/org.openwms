@@ -33,7 +33,7 @@ import org.openwms.common.domain.LocationType;
 import org.openwms.common.domain.TransportUnitType;
 import org.openwms.common.domain.TypePlacingRule;
 import org.openwms.core.test.AbstractJpaSpringContextTests;
-import org.springframework.transaction.annotation.Transactional;
+import org.springframework.test.context.ContextConfiguration;
 
 /**
  * A TransportUnitTypeTest.
@@ -42,7 +42,7 @@ import org.springframework.transaction.annotation.Transactional;
  * @version $Revision$
  * @since 0.1
  */
-@Transactional
+@ContextConfiguration("classpath:/org/openwms/common/integration/jpa/Test-context.xml")
 public class TransportUnitTypeTest extends AbstractJpaSpringContextTests {
 
     private TransportUnitType transportUnitType;

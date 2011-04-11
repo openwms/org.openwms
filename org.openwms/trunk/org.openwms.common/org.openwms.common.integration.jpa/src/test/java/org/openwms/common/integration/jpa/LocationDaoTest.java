@@ -48,11 +48,11 @@ import org.springframework.test.context.ContextConfiguration;
  * @version $Revision$
  * @since 0.1
  */
-@ContextConfiguration("classpath:META-INF/spring/LocationDaoTest-context.xml")
+@ContextConfiguration("classpath:/org/openwms/common/integration/jpa/Test-context.xml")
 public class LocationDaoTest extends AbstractJpaSpringContextTests {
 
     @Autowired
-    @Qualifier("locationDaoTest")
+    @Qualifier("locationDao")
     private LocationDao locationDao;
     private List<Location> locations;
 
