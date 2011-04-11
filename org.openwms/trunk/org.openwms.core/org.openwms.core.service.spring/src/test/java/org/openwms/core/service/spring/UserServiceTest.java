@@ -36,6 +36,7 @@ import org.openwms.core.service.exception.ServiceRuntimeException;
 import org.openwms.core.service.exception.UserNotFoundException;
 import org.openwms.core.test.AbstractJpaSpringContextTests;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.test.context.ContextConfiguration;
 
 /**
  * A UserServiceTest.
@@ -43,6 +44,7 @@ import org.springframework.beans.factory.annotation.Autowired;
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  * @version $Revision: $
  */
+@ContextConfiguration("classpath:/org/openwms/core/service/spring/Test-context.xml")
 public class UserServiceTest extends AbstractJpaSpringContextTests {
 
     @Autowired
