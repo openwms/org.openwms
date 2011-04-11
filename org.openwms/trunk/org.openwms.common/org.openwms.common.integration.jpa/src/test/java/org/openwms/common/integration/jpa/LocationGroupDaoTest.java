@@ -31,6 +31,7 @@ import org.openwms.common.domain.LocationGroup;
 import org.openwms.common.integration.LocationGroupDao;
 import org.openwms.core.test.AbstractJpaSpringContextTests;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.test.context.ContextConfiguration;
 
 /**
@@ -43,7 +44,8 @@ import org.springframework.test.context.ContextConfiguration;
 @ContextConfiguration("classpath:META-INF/spring/LocationTest-context.xml")
 public class LocationGroupDaoTest extends AbstractJpaSpringContextTests {
 
-    @Autowired(required = true)
+    @Autowired
+    @Qualifier("locationGroupDao")
     private LocationGroupDao dao;
 
     /**
