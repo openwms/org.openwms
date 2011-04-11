@@ -29,7 +29,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.beans.factory.annotation.Required;
 import org.springframework.security.core.userdetails.UserCache;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -54,14 +53,14 @@ import org.springframework.transaction.annotation.Transactional;
 public class SecurityContextUserServiceImpl implements UserDetailsService {
 
     private Logger logger = LoggerFactory.getLogger(this.getClass());
-    private String systemUser;
-    private String systemPassword;
+    private String systemUser = "openwms";
+    private String systemPassword = "openwms";
 
     @Autowired
     @Qualifier("userDao")
     private GenericDao<User, Long> dao;
 
-    @Autowired
+    @Autowired(required = false)
     private UserCache userCache;
 
     /**
@@ -70,7 +69,6 @@ public class SecurityContextUserServiceImpl implements UserDetailsService {
      * @param systemUser
      *            The systemUser to set.
      */
-    @Required
     public void setSystemUser(String systemUser) {
         this.systemUser = systemUser;
     }
@@ -81,7 +79,6 @@ public class SecurityContextUserServiceImpl implements UserDetailsService {
      * @param systemPassword
      *            The systemPassword to set.
      */
-    @Required
     public void setSystemPassword(String systemPassword) {
         this.systemPassword = systemPassword;
     }
