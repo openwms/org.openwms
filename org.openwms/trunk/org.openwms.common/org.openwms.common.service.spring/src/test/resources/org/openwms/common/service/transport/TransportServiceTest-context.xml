@@ -22,27 +22,18 @@
  */  
 -->
 <beans xmlns="http://www.springframework.org/schema/beans"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd">
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">
 
-	<bean id="locationDao" class="org.openwms.common.dao.core.LocationDaoImpl">
-		<property name="entityManagerFactory" ref="entityManagerFactory"/>
-	</bean>
+    <bean id="locationDao" class="org.openwms.common.integration.jpa.LocationDaoImpl" />
 
-	<bean id="transportUnitDao" class="org.openwms.common.dao.core.TransportUnitDaoImpl">
-		<property name="entityManagerFactory" ref="entityManagerFactory"/>
-	</bean>
+    <bean id="transportUnitTypeDao" class="org.openwms.common.integration.jpa.TransportUnitTypeDaoImpl" />
 
-	<bean id="transportUnitTypeDao" class="org.openwms.common.dao.core.TransportUnitTypeDaoImpl" >
-		<property name="entityManagerFactory" ref="entityManagerFactory"/>
-	</bean>
+    <bean id="transportUnitDao" class="org.openwms.common.integration.jpa.TransportUnitDaoImpl" />
 
-	<bean id="transportOrderDao" class="org.openwms.common.dao.core.TransportOrderDaoImpl" >
-		<property name="entityManagerFactory" ref="entityManagerFactory"/>
-	</bean>
 
-	<bean id="transportService" class="org.openwms.common.service.TransportServiceImpl">
-		<property name="transportOrderDao" ref="transportOrderDao"/>
-		<property name="transportUnitDao" ref="transportUnitDao"/>
-		<property name="locationDao" ref="locationDao"/>
-	</bean>
+    <bean id="transportUnitService" class="org.openwms.common.service.spring.TransportUnitServiceImpl">
+        <property name="dao" ref="transportUnitDao" />
+    </bean>
+
 </beans>
