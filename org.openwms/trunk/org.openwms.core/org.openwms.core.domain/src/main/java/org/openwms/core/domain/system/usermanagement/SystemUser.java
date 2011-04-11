@@ -22,6 +22,8 @@ package org.openwms.core.domain.system.usermanagement;
 
 import java.io.Serializable;
 
+import javax.persistence.Entity;
+
 /**
  * A SystemUser is granted with all privileges and omits all security
  * constraints.
@@ -31,6 +33,7 @@ import java.io.Serializable;
  * @since 0.1
  * @see org.openwms.core.domain.system.usermanagement.User
  */
+@Entity
 public class SystemUser extends User implements Serializable {
 
     private static final long serialVersionUID = -7575215406745881912L;
@@ -39,6 +42,11 @@ public class SystemUser extends User implements Serializable {
      * The defined fullname of the system user.
      */
     public static final String SYSTEM_USERNAME = "OPENWMS";
+
+    /**
+     * Create a new SystemUser.
+     */
+    protected SystemUser() {}
 
     /**
      * Create a new SystemUser.
