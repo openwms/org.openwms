@@ -34,7 +34,7 @@ import org.springframework.stereotype.Repository;
  * @see org.openwms.core.integration.jpa.AbstractGenericJpaDao
  * @see org.openwms.common.integration.TransportUnitDao
  */
-@Repository
+@Repository("transportUnitDao")
 public class TransportUnitDaoImpl extends AbstractGenericJpaDao<TransportUnit, Long> implements TransportUnitDao {
 
     /**

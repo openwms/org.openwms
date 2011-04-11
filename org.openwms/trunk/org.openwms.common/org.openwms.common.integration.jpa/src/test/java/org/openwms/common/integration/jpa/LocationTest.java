@@ -43,12 +43,12 @@ import org.springframework.test.context.transaction.BeforeTransaction;
  * @version $Revision$
  * @since 0.1
  */
-@ContextConfiguration("classpath:META-INF/spring/LocationTest-context.xml")
+@ContextConfiguration("classpath:/org/openwms/common/integration/jpa/Test-context.xml")
 public class LocationTest extends AbstractJpaSpringContextTests {
 
-    @Autowired(required = true)
+    @Autowired
     protected LocationDao locationDao;
-    @Autowired(required = true)
+    @Autowired
     protected LocationGroupDao locationGroupDao;
 
     LocationGroup locationGroup = new LocationGroup("TEST_LOCATION_GROUP1");

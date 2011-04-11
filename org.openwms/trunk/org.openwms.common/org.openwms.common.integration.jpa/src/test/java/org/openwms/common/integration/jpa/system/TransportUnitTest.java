@@ -35,7 +35,7 @@ import org.openwms.common.domain.system.UnitError;
 import org.openwms.common.domain.values.Barcode;
 import org.openwms.common.domain.values.Barcode.BARCODE_ALIGN;
 import org.openwms.core.test.AbstractJpaSpringContextTests;
-import org.springframework.transaction.annotation.Transactional;
+import org.springframework.test.context.ContextConfiguration;
 
 /**
  * A TransportUnitTest.
@@ -44,7 +44,7 @@ import org.springframework.transaction.annotation.Transactional;
  * @version $Revision$
  * @since 0.1
  */
-@Transactional
+@ContextConfiguration("classpath:/org/openwms/common/integration/jpa/Test-context.xml")
 public class TransportUnitTest extends AbstractJpaSpringContextTests {
 
     /**
