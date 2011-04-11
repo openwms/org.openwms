@@ -56,10 +56,10 @@ public class UserDaoTest extends AbstractJpaSpringContextTests {
     @Qualifier("userDao")
     private UserDao dao;
     private User user;
-    private String SYS_USER = "Sys";
-    private String OP_USER = "Operator";
-    private String ROLE_ADMIN = "ROLE_ADMIN";
-    private String ROLE_ANONYMOUS = "ROLE_ANONYMOUS";
+    private static final String SYS_USER = "Sys";
+    private static final String OP_USER = "Operator";
+    private static final String ROLE_ADMIN = "ROLE_ADMIN";
+    private static final String ROLE_ANONYMOUS = "ROLE_ANONYMOUS";
 
     /**
      * Setup two roles.
@@ -82,15 +82,15 @@ public class UserDaoTest extends AbstractJpaSpringContextTests {
     @Test
     public final void testPersist() {
         dao.persist(new User("Guest"));
-        User user;
+        User u;
         try {
-            user = findUser("Unknown");
+            u = findUser("Unknown");
             fail("Didn't persist the user");
         } catch (NoResultException nre) {
             logger.debug("OK: Searching unknown users must force an exception");
         }
-        user = findUser("Guest");
-        assertNotNull("User must have been persisted before", user);
+        u = findUser("Guest");
+        assertNotNull("User must have been persisted before", u);
     }
 
     /**
@@ -99,9 +99,9 @@ public class UserDaoTest extends AbstractJpaSpringContextTests {
     @Test
     public final void testRemoveSysUser() {
         entityManager.persist(new SystemUser(SystemUser.SYSTEM_USERNAME));
-        User user = findUser(SystemUser.SYSTEM_USERNAME);
-        assertTrue("Should be a system user", user instanceof SystemUser);
-        dao.remove(user);
+        User u = findUser(SystemUser.SYSTEM_USERNAME);
+        assertTrue("Should be a system user", u instanceof SystemUser);
+        dao.remove(u);
         entityManager.flush();
         entityManager.clear();
         assertTrue("Superuser may not be deleted", findUser(SystemUser.SYSTEM_USERNAME) instanceof SystemUser);
@@ -110,18 +110,19 @@ public class UserDaoTest extends AbstractJpaSpringContextTests {
     /**
      * Testing to remove users.
      */
+    @SuppressWarnings("unchecked")
     @Test
     public final void testRemove() {
-        User user = findUser(SYS_USER);
-        assertNotNull("User must have been persisted before", user);
+        User u = findUser(SYS_USER);
+        assertNotNull("User must have been persisted before", u);
         List<Role> roles = entityManager.createNamedQuery(Role.NQ_FIND_ALL).getResultList();
         for (Role role : roles) {
-            role.addUser(user);
+            role.addUser(u);
         }
         entityManager.flush();
         entityManager.clear();
-        user = findUser(SYS_USER);
-        dao.remove(user);
+        u = findUser(SYS_USER);
+        dao.remove(u);
         try {
             findUser(SYS_USER);
             fail("User has to be removed and an exception is expected");
@@ -146,6 +147,9 @@ public class UserDaoTest extends AbstractJpaSpringContextTests {
         assertTrue("Find user by query", dao.findByPositionalParameters(User.NQ_FIND_BY_USERNAME, SYS_USER).size() == 1);
     }
 
+    /**
+     * Test find by name and password.
+     */
     @Test
     public final void testFindByUsernameAndPassword() {
         assertTrue("User by password must be found",
@@ -157,14 +161,14 @@ public class UserDaoTest extends AbstractJpaSpringContextTests {
      */
     @Test
     public final void testMerge() {
-        User user = findUser(SYS_USER);
+        User u = findUser(SYS_USER);
         entityManager.clear();
-        user.setFullname("sys");
-        user = dao.save(user);
+        u.setFullname("sys");
+        u = dao.save(u);
         entityManager.flush();
         entityManager.clear();
-        user = findUser(SYS_USER);
-        assertEquals("Must be persisted", user.getFullname(), "sys");
+        u = findUser(SYS_USER);
+        assertEquals("Must be persisted", u.getFullname(), "sys");
     }
 
     private User findUser(String userName) {

@@ -120,7 +120,9 @@ public abstract class AbstractGenericJpaDao<T extends AbstractEntity, ID extends
     @SuppressWarnings("unchecked")
     public List<T> findAll() {
         List<T> all = em.createNamedQuery(getFindAllQuery()).getResultList();
-        if (all == null) all = Collections.emptyList();
+        if (all == null) {
+            all = Collections.emptyList();
+        }
         return all;
     }
 
