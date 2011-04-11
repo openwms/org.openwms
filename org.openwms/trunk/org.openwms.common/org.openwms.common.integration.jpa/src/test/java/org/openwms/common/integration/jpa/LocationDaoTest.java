@@ -38,6 +38,7 @@ import org.openwms.common.integration.LocationDao;
 import org.openwms.core.domain.system.Message;
 import org.openwms.core.test.AbstractJpaSpringContextTests;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.test.context.ContextConfiguration;
 
 /**
@@ -51,6 +52,7 @@ import org.springframework.test.context.ContextConfiguration;
 public class LocationDaoTest extends AbstractJpaSpringContextTests {
 
     @Autowired
+    @Qualifier("locationDaoTest")
     private LocationDao locationDao;
     private List<Location> locations;
 
