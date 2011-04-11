@@ -31,7 +31,6 @@
 
     <context:property-placeholder location="classpath:jdbc.test.properties" />
     <context:annotation-config />
-    <context:component-scan base-package="org.openwms" />
     <tx:annotation-driven />
     <!-- TODO [scherrer]: Is this necessary? Test! -->
     <aop:aspectj-autoproxy />
