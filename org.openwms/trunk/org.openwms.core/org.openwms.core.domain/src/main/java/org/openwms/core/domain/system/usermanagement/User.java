@@ -207,8 +207,7 @@ public class User extends AbstractEntity implements DomainObject<Long>, Serializ
     /**
      * Accessed by persistence provider.
      */
-    @SuppressWarnings("unused")
-    private User() {}
+    protected User() {}
 
     /**
      * Create a new <code>User</code> with an username.
