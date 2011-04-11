@@ -32,7 +32,7 @@
     </appender>
 
     <category name="org.openwms">
-        <priority value="WARN" />
+        <priority value="DEBUG" />
     </category>
 
     <category name="org.hibernate">
