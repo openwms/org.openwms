@@ -49,12 +49,12 @@ public interface GenericDao<T extends AbstractEntity, ID extends Serializable> {
     /**
      * Suffix for the FIND_ALL named query.
      */
-    final static String FIND_ALL = ".findAll";
+    String FIND_ALL = ".findAll";
 
     /**
      * Suffix for the FIND_BY_ID named query.
      */
-    final static String FIND_BY_ID = ".findById";
+    String FIND_BY_ID = ".findById";
 
     /**
      * Find and return the entity identified by the technical key.

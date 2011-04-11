@@ -30,4 +30,6 @@ import org.openwms.core.domain.Module;
  * @version $Revision$
  * @since 0.1
  */
-public interface ModuleDao extends GenericDao<Module, Long> {}
+public interface ModuleDao extends GenericDao<Module, Long> {
+
+}
