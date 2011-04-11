@@ -49,8 +49,8 @@ public class RoleDaoTest extends AbstractJpaSpringContextTests {
     @Autowired
     @Qualifier("roleDao")
     private RoleDao dao;
-    private String ROLE_ADMIN = "ROLE_ADMIN";
-    private String ROLE_ANONYMOUS = "ROLE_ANONYMOUS";
+    private static final String ROLE_ADMIN = "ROLE_ADMIN";
+    private static final String ROLE_ANONYMOUS = "ROLE_ANONYMOUS";
 
     /**
      * Setup two roles.

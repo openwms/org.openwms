@@ -43,7 +43,7 @@ import org.springframework.stereotype.Repository;
 public class RoleDaoImpl extends AbstractGenericJpaDao<Role, Long> implements RoleDao {
 
     /**
-     * @see org.openwms.core.integration.jpa.AbstractGenericJpaDao#getFindAllQuery()
+     * {@inheritDoc}
      */
     @Override
     protected String getFindAllQuery() {
@@ -51,7 +51,7 @@ public class RoleDaoImpl extends AbstractGenericJpaDao<Role, Long> implements Ro
     }
 
     /**
-     * @see org.openwms.core.integration.jpa.AbstractGenericJpaDao#getFindByUniqueIdQuery()
+     * {@inheritDoc}
      */
     @Override
     protected String getFindByUniqueIdQuery() {
