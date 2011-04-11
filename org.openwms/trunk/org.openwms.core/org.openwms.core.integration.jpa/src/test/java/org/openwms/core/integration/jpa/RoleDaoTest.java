@@ -34,6 +34,8 @@ import org.openwms.core.domain.system.usermanagement.Role;
 import org.openwms.core.integration.RoleDao;
 import org.openwms.core.test.AbstractJpaSpringContextTests;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.test.context.ContextConfiguration;
 
 /**
  * A RoleDaoTest.
@@ -41,9 +43,11 @@ import org.springframework.beans.factory.annotation.Autowired;
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  * @version $Revision: $
  */
+@ContextConfiguration("classpath:/org/openwms/core/integration/jpa/Test-context.xml")
 public class RoleDaoTest extends AbstractJpaSpringContextTests {
 
     @Autowired
+    @Qualifier("roleDao")
     private RoleDao dao;
     private String ROLE_ADMIN = "ROLE_ADMIN";
     private String ROLE_ANONYMOUS = "ROLE_ANONYMOUS";
