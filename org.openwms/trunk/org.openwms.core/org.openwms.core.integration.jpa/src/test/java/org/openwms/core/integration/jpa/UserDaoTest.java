@@ -40,6 +40,8 @@ import org.openwms.core.exception.InvalidPasswordException;
 import org.openwms.core.integration.UserDao;
 import org.openwms.core.test.AbstractJpaSpringContextTests;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.test.context.ContextConfiguration;
 
 /**
  * A UserDaoTest.
@@ -47,9 +49,11 @@ import org.springframework.beans.factory.annotation.Autowired;
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  * @version $Revision: $
  */
+@ContextConfiguration("classpath:/org/openwms/core/integration/jpa/Test-context.xml")
 public class UserDaoTest extends AbstractJpaSpringContextTests {
 
     @Autowired
+    @Qualifier("userDao")
     private UserDao dao;
     private User user;
     private String SYS_USER = "Sys";
