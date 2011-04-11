@@ -32,7 +32,6 @@ import org.openwms.common.domain.TransportUnit;
 import org.openwms.common.domain.TransportUnitType;
 import org.openwms.common.domain.values.Barcode;
 import org.openwms.common.service.TransportUnitService;
-import org.openwms.core.integration.GenericDao;
 import org.openwms.core.service.exception.ServiceRuntimeException;
 import org.openwms.core.test.AbstractJpaSpringContextTests;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -45,24 +44,12 @@ import org.springframework.test.context.ContextConfiguration;
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  * @version $Revision$
  */
-@ContextConfiguration("classpath:META-INF/spring/TransportServiceTest-context.xml")
+@ContextConfiguration
 public class TransportServiceTest extends AbstractJpaSpringContextTests {
 
     @Autowired
     @Qualifier("transportUnitService")
     protected TransportUnitService transportService;
-
-    @Autowired
-    @Qualifier("locationDao")
-    protected GenericDao<Location, Long> locationDao;
-
-    @Autowired
-    @Qualifier("transportUnitTypeDao")
-    protected GenericDao<TransportUnitType, String> transportUnitTypeDao;
-
-    @Autowired
-    @Qualifier("transportUnitDao")
-    protected GenericDao<TransportUnit, Long> transportUnitDao;
 
     LocationPK locationPk = new LocationPK("AREA", "AISLE", "X", "Y", "Z");
     Location actualLocation = new Location(locationPk);
@@ -71,20 +58,14 @@ public class TransportServiceTest extends AbstractJpaSpringContextTests {
     TransportUnitType transportUnitType = new TransportUnitType("TestType");
     TransportUnit transportUnit = new TransportUnit("KNOWN");
 
-    public TransportServiceTest() {
-        super();
-        // setPopulateProtectedVariables(true);
-    }
-
     @Before
-    public void inTransaction() {
-        locationDao.persist(actualLocation);
-        actualLocation = locationDao.save(actualLocation);
-        locationDao.persist(targetLocation);
-        transportUnitTypeDao.persist(transportUnitType);
+    public void onBefore() {
+        entityManager.persist(actualLocation);
+        entityManager.persist(targetLocation);
+        entityManager.persist(transportUnitType);
         transportUnit.setTransportUnitType(transportUnitType);
         transportUnit.setActualLocation(actualLocation);
-        transportUnitDao.persist(transportUnit);
+        entityManager.persist(transportUnit);
     }
 
     @Test
