@@ -133,6 +133,17 @@
 		<role>supporter</role>
             </roles>
         </developer>
+        <developer>
+            <id>mischazurich</id>
+            <name>Mischa Farbstein</name>
+            <email>mischazurich@users.sourceforge.net</email>
+            <url>https://sourceforge.net/users/mischazurich</url>
+            <timezone>+1</timezone>
+            <roles>
+                <role>developer</role>
+		<role>moderator</role>
+            </roles>
+        </developer>
     </developers>
 
     <mailingLists>
@@ -705,7 +716,7 @@
                 <artifactId>maven-checkstyle-plugin</artifactId>
                 <version>2.4</version>
                 <configuration>
-                    <xrefLocation>${project.reporting.outputDirectory}/${moduleDir}/xref</xrefLocation>
+                    <xrefLocation>${project.reporting.outputDirectory}/../../xref</xrefLocation>
                     <enableRulesSummary>false</enableRulesSummary>
                     <configLocation>http://openwms2005.sourceforge.net/rules/checkstyle/checkstyle.xml</configLocation>
                     <headerLocation>http://openwms2005.sourceforge.net/rules/checkstyle/checkstyle-license.txt</headerLocation>
