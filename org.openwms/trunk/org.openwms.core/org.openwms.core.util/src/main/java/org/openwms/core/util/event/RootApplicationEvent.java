@@ -38,6 +38,7 @@ public class RootApplicationEvent extends ApplicationEvent implements Serializab
      * Create a new RootApplicationEvent.
      * 
      * @param source
+     *            The event sender
      */
     public RootApplicationEvent(Object source) {
         super(source);
