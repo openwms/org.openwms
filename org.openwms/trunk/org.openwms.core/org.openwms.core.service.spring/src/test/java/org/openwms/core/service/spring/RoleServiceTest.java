@@ -21,6 +21,9 @@
 package org.openwms.core.service.spring;
 
 import static junit.framework.Assert.assertEquals;
+import static junit.framework.Assert.assertFalse;
+import static junit.framework.Assert.assertNotNull;
+import static junit.framework.Assert.fail;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -29,6 +32,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.openwms.core.domain.system.usermanagement.Role;
 import org.openwms.core.service.RoleService;
+import org.openwms.core.service.exception.ServiceRuntimeException;
 import org.openwms.core.test.AbstractJpaSpringContextTests;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
@@ -85,6 +89,52 @@ public class RoleServiceTest extends AbstractJpaSpringContextTests {
         srv.remove(roles);
         assertEquals("Expect to have no roles", 0, entityManager.createNamedQuery(Role.NQ_FIND_ALL).getResultList()
                 .size());
+    }
+
+    /**
+     * Test to call save with null argument.
+     */
+    @Test
+    public final void testSaveWithNull() {
+        try {
+            srv.save(null);
+            fail("Should throw an exception when calling with null");
+        } catch (ServiceRuntimeException sre) {
+            logger.debug("OK: Exception when try to call save with null argument:" + sre.getMessage());
+        }
+    }
+
+    /**
+     * Test to save a transient role.
+     */
+    @Test
+    public final void testSaveTransient() {
+        Role role = null;
+        try {
+            role = srv.save(new Role("ROLE_ANONYMOUS"));
+        } catch (Exception e) {
+            fail("Exception thrown during saving a role");
+        }
+        assertNotNull("Expected to return a role", role);
+        assertFalse("Expect the role as persisted", role.isNew());
+    }
+
+    /**
+     * Test to save a detached role.
+     */
+    @Test
+    public final void testSaveDetached() {
+        Role role = findRole("ROLE_ADMIN");
+        Role roleSaved = null;
+        role.setDescription("Test description");
+        try {
+            roleSaved = srv.save(role);
+        } catch (Exception e) {
+            fail("Exception thrown during saving a role");
+        }
+        assertNotNull("Expected to return a role", roleSaved);
+        assertFalse("Expect the role as persisted", roleSaved.isNew());
+        assertEquals("Expected that description was saved", "Test description", roleSaved.getDescription());
     }
 
     private Role findRole(String roleName) {
