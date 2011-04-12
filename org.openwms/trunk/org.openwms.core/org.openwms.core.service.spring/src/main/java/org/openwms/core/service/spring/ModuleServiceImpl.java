@@ -53,7 +53,7 @@ public class ModuleServiceImpl implements ModuleService {
      * Instance of a {@link ModuleDao}. <i>Autowired</i>.
      */
     @Autowired
-    protected ModuleDao dao;
+    private ModuleDao dao;
 
     /**
      * {@inheritDoc}
@@ -82,9 +82,9 @@ public class ModuleServiceImpl implements ModuleService {
     /**
      * {@inheritDoc}
      * 
-     * It is expected that the list of {@link Module}s is already pre-ordered
-     * in their startupOrder. Each {@link Module}'s startupOrder is
-     * synchronized with the persistence storage. No other data is updated.
+     * It is expected that the list of {@link Module}s is already pre-ordered in
+     * their startupOrder. Each {@link Module}'s startupOrder is synchronized
+     * with the persistence storage. No other data is updated.
      * 
      * @throws ServiceRuntimeException
      *             when modules is <code>null</code>
