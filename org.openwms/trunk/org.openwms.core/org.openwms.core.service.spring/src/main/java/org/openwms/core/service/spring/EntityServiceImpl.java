@@ -28,7 +28,6 @@ import org.openwms.core.domain.AbstractEntity;
 import org.openwms.core.integration.GenericDao;
 import org.openwms.core.service.EntityService;
 import org.openwms.core.service.exception.ServiceRuntimeException;
-import org.springframework.beans.BeansException;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
 import org.springframework.stereotype.Service;

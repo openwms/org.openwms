@@ -59,7 +59,7 @@ public class UserServiceImpl implements UserService {
      * Instance of an {@link UserDao}. <i>Autowired</i>.
      */
     @Autowired
-    protected UserDao dao;
+    private UserDao dao;
 
     /**
      * {@inheritDoc}

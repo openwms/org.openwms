@@ -55,7 +55,7 @@ public class RoleServiceImpl implements RoleService {
      * Instance of a {@link RoleDao}. <i>Autowired</i>.
      */
     @Autowired
-    protected RoleDao dao;
+    private RoleDao dao;
 
     /**
      * {@inheritDoc}
@@ -66,9 +66,13 @@ public class RoleServiceImpl implements RoleService {
             logger.debug("Nothing to remove just return.");
             return;
         }
+        Role role;
         for (Role r : roles) {
-            Role role = dao.findById(r.getId());
-            dao.remove(role);
+            role = r.isNew() ? dao.findByUniqueId(r.getName()) : dao.findById(r.getId());
+            if (role != null) {
+                dao.remove(role);
+            }
+            role = null;
         }
     }
 
