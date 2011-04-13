@@ -42,7 +42,6 @@ import org.springframework.test.context.ContextConfiguration;
  * 
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  * @version $Revision: $
- * 
  */
 @ContextConfiguration("classpath:/org/openwms/core/service/spring/Test-context.xml")
 public class RoleServiceTest extends AbstractJpaSpringContextTests {
@@ -50,6 +49,9 @@ public class RoleServiceTest extends AbstractJpaSpringContextTests {
     @Autowired
     private RoleService srv;
 
+    /**
+     * Setting up some test data.
+     */
     @Before
     public void onBefore() {
         entityManager.persist(new Role("ROLE_ADMIN"));
