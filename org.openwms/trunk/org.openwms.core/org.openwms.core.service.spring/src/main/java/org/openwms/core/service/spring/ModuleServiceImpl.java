@@ -49,9 +49,6 @@ public class ModuleServiceImpl implements ModuleService {
 
     private Logger logger = LoggerFactory.getLogger(this.getClass());
 
-    /**
-     * Instance of a {@link ModuleDao}. <i>Autowired</i>.
-     */
     @Autowired
     private ModuleDao dao;
 
@@ -115,13 +112,18 @@ public class ModuleServiceImpl implements ModuleService {
         if (module == null) {
             throw new ServiceRuntimeException("Module to be removed is null");
         }
+        Module rem = null;
         if (module.isNew()) {
-            logger.info("Do not remove a transient Module");
-            return;
-        }
-        Module rem = dao.findById(module.getId());
-        if (rem == null) {
-            throw new ServiceRuntimeException("Module to be removed not found, probably it was removed before");
+            rem = dao.findByUniqueId(module.getModuleName());
+            if (rem == null) {
+                logger.info("Do not remove a transient Module");
+                return;
+            }
+        } else {
+            rem = dao.findById(module.getId());
+            if (rem == null) {
+                throw new ServiceRuntimeException("Module to be removed not found, probably it was removed before");
+            }
         }
         dao.remove(rem);
     }
@@ -132,8 +134,11 @@ public class ModuleServiceImpl implements ModuleService {
      * Additionally the startup order is re-calculated for a new {@link Module}.
      */
     @Override
-    public Module save(Module entity) {
-        if (entity.isNew()) {
+    public Module save(Module module) {
+        if (module == null) {
+            throw new ServiceRuntimeException("Module to be saved is null");
+        }
+        if (module.isNew()) {
             List<Module> all = dao.findAll();
             if (!all.isEmpty()) {
                 Collections.sort(all, new Comparator<Module>() {
@@ -142,9 +147,12 @@ public class ModuleServiceImpl implements ModuleService {
                         return o1.getStartupOrder() >= o2.getStartupOrder() ? 1 : -1;
                     }
                 });
-                entity.setStartupOrder(all.get(all.size() - 1).getStartupOrder() + 1);
+                for (Module module2 : all) {
+                    System.out.println("L:" + module2.getModuleName() + module2.getStartupOrder());
+                }
+                module.setStartupOrder(all.get(all.size() - 1).getStartupOrder() + 1);
             }
         }
-        return dao.save(entity);
+        return dao.save(module);
     }
 }
