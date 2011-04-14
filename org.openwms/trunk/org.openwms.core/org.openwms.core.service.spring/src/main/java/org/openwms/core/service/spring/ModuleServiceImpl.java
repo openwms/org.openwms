@@ -147,9 +147,6 @@ public class ModuleServiceImpl implements ModuleService {
                         return o1.getStartupOrder() >= o2.getStartupOrder() ? 1 : -1;
                     }
                 });
-                for (Module module2 : all) {
-                    System.out.println("L:" + module2.getModuleName() + module2.getStartupOrder());
-                }
                 module.setStartupOrder(all.get(all.size() - 1).getStartupOrder() + 1);
             }
         }
