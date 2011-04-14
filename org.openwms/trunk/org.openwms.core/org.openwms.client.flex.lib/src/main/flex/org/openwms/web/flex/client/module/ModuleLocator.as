@@ -59,15 +59,16 @@ package org.openwms.web.flex.client.module {
      */
     public class ModuleLocator extends EventDispatcher {
 
+        [In]
         /**
          * Needs a Model to work on.
          */
-        [In]
         public var modelLocator : ModelLocator;
+
+        [In]
         /**
          * Needs a TideContext.
          */        
-        [In]
         public var tideContext : Context;
 
         private var toRemove : Module;
@@ -79,23 +80,23 @@ package org.openwms.web.flex.client.module {
          */
         public function ModuleLocator() { }
 
+        [Observer("LOAD_ALL_MODULES")]
         /**
          * Usually this method is called when the application is initialized,
          * to load all modules and module configuration from the service.
          * After this startup configuration is read, the application can then
          * LOAD the swf modules.
          */
-        [Observer("LOAD_ALL_MODULES")]
         public function loadModulesFromService() : void {
             trace("Loading all module definitions from the database");
             tideContext.moduleService.findAll(onModulesLoad, onFault);
         }
 
+        [Observer("UNLOAD_ALL_MODULES")]
         /**
          * Is called when the UNLOAD_ALL_MODULES is fired to unload all Modules.
          * It iterates through the list of loadedModules and triggers unloading each of them.
          */
-        [Observer("UNLOAD_ALL_MODULES")]
         public function unloadAllModules() : void {
             for each (var url:String in modelLocator.loadedModules.keys) {
                 var module:Module = new Module();
@@ -104,29 +105,30 @@ package org.openwms.web.flex.client.module {
             }
         }
 
+        [Observer("SAVE_MODULE")]
         /**
          * Tries to save the module data via a service call.
          * Is called when the SAVE_MODULE event is fired.
          *
          * @param event An ApplicationEvent that holds the Module to be saved in its data field
          */
-        [Observer("SAVE_MODULE")]
         public function saveModule(event : ApplicationEvent) : void {
             tideContext.moduleService.save(event.data as Module, onModuleSaved, onFault);
         }
 
+        [Observer("DELETE_MODULE")]
         /**
          * Tries to remove the module data via a service call.
          * Is called when the DELETE_MODULE event is fired.
          *
          * @param event An ApplicationEvent that holds the Module to be removed in its data field
          */
-        [Observer("DELETE_MODULE")]
         public function deleteModule(event : ApplicationEvent) : void {
             toRemove = event.data as Module;
             tideContext.moduleService.remove(event.data as Module, onModuleRemoved, onFault);
         }
 
+        [Observer("SAVE_STARTUP_ORDERS")]
         /**
          * A collection of modules is passed to the service to save the startupOrder properties.
          * The startupOrders must be calculated and ordered before. Is called when the
@@ -134,17 +136,16 @@ package org.openwms.web.flex.client.module {
          *
          * @param event An ApplicationEvent holds a list of Modules that shall be updated
          */
-        [Observer("SAVE_STARTUP_ORDERS")]
         public function saveStartupOrders(event : ApplicationEvent) : void {
             tideContext.moduleService.saveStartupOrder(event.data as ArrayCollection, onStartupOrdersSaved, onFault);
         }
 
+        [Observer("LOAD_MODULE")]
         /**
          * Checks whether the module a registered Module and calls loadModule to load it.
          *
          * @param event An ApplicationEvent holds the Module to be loaded within the data property
          */
-        [Observer("LOAD_MODULE")]
         public function onLoadModule(event : ApplicationEvent) : void {
             var module : Module = event.data as Module;
             if (module == null) {
@@ -158,12 +159,12 @@ package org.openwms.web.flex.client.module {
             loadModule(module);
         }
 
+        [Observer("UNLOAD_MODULE")]
         /**
          * Checks whether the module a registered Module and calls unloadModule to unload it.
          *
          * @param event An ApplicationEvent holds the Module to be unloaded within the data property
          */
-        [Observer("UNLOAD_MODULE")]
         public function onUnloadModule(event : ApplicationEvent) : void {
             var module : Module = event.data as Module;
             if (module == null) {
