@@ -28,6 +28,8 @@ package org.openwms.web.flex.client.model{
     import org.openwms.web.flex.client.HashMap;
     import org.openwms.web.flex.client.event.SwitchScreenEvent;
 
+    [Name("modelLocator")]
+    [Bindable]
     /**
      * A ModelLocator is the main model backing bean to store session data.
      * It is a Tide component and can be injected by name=modelLocator.
@@ -36,8 +38,6 @@ package org.openwms.web.flex.client.model{
      * @version $Revision$
      * @since 0.1
      */
-    [Name("modelLocator")]
-    [Bindable]
     public class ModelLocator {
 
         // --------------------------------------------------------------------
