@@ -63,6 +63,14 @@ public class ModuleServiceTest extends AbstractJpaSpringContextTests {
     }
 
     /**
+     * Test findAll.
+     */
+    @Test
+    public final void testFindAll() {
+        assertTrue("Expect to find two modules", srv.findAll().size() == 2);
+    }
+
+    /**
      * Test exception when calling with null.
      */
     @Test
