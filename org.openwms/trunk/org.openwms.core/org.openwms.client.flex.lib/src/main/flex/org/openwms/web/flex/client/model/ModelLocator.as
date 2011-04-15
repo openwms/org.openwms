@@ -20,12 +20,13 @@
  */
 package org.openwms.web.flex.client.model{
 
+    import flash.utils.Dictionary;
+    
     import mx.collections.ArrayCollection;
     import mx.formatters.DateFormatter;
-
+    
     import org.openwms.core.domain.Module;
     import org.openwms.core.domain.system.usermanagement.User;
-    import org.openwms.web.flex.client.HashMap;
     import org.openwms.web.flex.client.event.SwitchScreenEvent;
 
     [Name("modelLocator")]
@@ -113,12 +114,12 @@ package org.openwms.web.flex.client.model{
          * A Map of all loaded Modules. The map key is the URL, the value is
          * the IModuleInfo instance.
          */
-        public var loadedModules:HashMap = new HashMap();
+        public var loadedModules:Dictionary = new Dictionary();
         /**
          * A Map of all unloaded Modules. The map key is the URL, the value is
          * the IModuleInfo instance.
          */
-        public var unloadedModules:HashMap = new HashMap();
+        public var unloadedModules:Dictionary = new Dictionary();
         /**
          * The current selected Module in the ModuleManagement view.
          */
