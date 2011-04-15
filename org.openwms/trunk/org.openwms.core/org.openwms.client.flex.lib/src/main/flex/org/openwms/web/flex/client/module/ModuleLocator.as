@@ -22,7 +22,7 @@ package org.openwms.web.flex.client.module {
 
     import flash.events.EventDispatcher;
     import flash.system.ApplicationDomain;
-
+    
     import mx.collections.ArrayCollection;
     import mx.collections.XMLListCollection;
     import mx.controls.Alert;
@@ -31,7 +31,7 @@ package org.openwms.web.flex.client.module {
     import mx.logging.Log;
     import mx.modules.IModuleInfo;
     import mx.modules.ModuleManager;
-
+    
     import org.granite.tide.events.TideFaultEvent;
     import org.granite.tide.events.TideResultEvent;
     import org.granite.tide.spring.Context;
@@ -98,7 +98,7 @@ package org.openwms.web.flex.client.module {
          * It iterates through the list of loadedModules and triggers unloading each of them.
          */
         public function unloadAllModules() : void {
-            for each (var url:String in modelLocator.loadedModules.keys) {
+            for each (var url:String in modelLocator.loadedModules) {
                 var module:Module = new Module();
                 module.url = url;
                 unloadModule(module);
@@ -191,10 +191,10 @@ package org.openwms.web.flex.client.module {
                 }
             }
             for each (var module : Module in modelLocator.allModules) {
-                if (modelLocator.loadedModules.containsKey(module.url)) {
+                if (modelLocator.loadedModules[module.url] != null) {
                     // Get an handle to IApplicationModule here to retrieve the list of items
                     // not like it is here to get the info from the db
-                    var mInf : IModuleInfo = modelLocator.loadedModules.get(module.url) as IModuleInfo;
+                    var mInf : IModuleInfo = modelLocator.loadedModules[module.url] as IModuleInfo;
                     var appModule : Object = mInf.factory.create();
                     if (appModule is IApplicationModule) {
                         var tree : XMLListCollection = appModule.getMainMenuItems();
@@ -237,8 +237,8 @@ package org.openwms.web.flex.client.module {
             if (moduleName == null) {
                 return false;
             }
-            for each (var mInf:IModuleInfo in modelLocator.loadedModules.values) {
-                if ((mInf.data as Module).moduleName == moduleName) {
+            for each (var url:String in modelLocator.loadedModules) {
+                if ((modelLocator.loadedModules[url].data as Module).moduleName == moduleName) {
                     return true;
                 }
             }
@@ -277,7 +277,7 @@ package org.openwms.web.flex.client.module {
             for each (var module : Module in modelLocator.allModules) {
                 if (module.loadOnStartup) {
                     noModulesLoaded = false;
-                    if (modelLocator.loadedModules.containsKey(module.url)) {
+                    if (modelLocator.loadedModules[module.url] != null) {
                         module.loaded = true;
                         continue;
                     }
@@ -303,7 +303,7 @@ package org.openwms.web.flex.client.module {
                     mInf.addEventListener(ModuleEvent.READY, onModuleLoaded, false, 0, true);
                     mInf.addEventListener(ModuleEvent.ERROR, onModuleLoaderError);
                     mInf.data = module;
-                    modelLocator.loadedModules.put(module.url, mInf);
+                    modelLocator.loadedModules[module.url] = mInf;
                     mInf.load(applicationDomain);
                     return;
                 }
@@ -319,7 +319,7 @@ package org.openwms.web.flex.client.module {
                     mInf.addEventListener(ModuleEvent.UNLOAD, onModuleUnloaded);
                     mInf.addEventListener(ModuleEvent.ERROR, onModuleLoaderError);
                     mInf.data = module;
-                    modelLocator.unloadedModules.put(module.url, mInf);
+                    modelLocator.unloadedModules[module.url] = mInf;
                     appModule.destroyModule();
                     mInf.unload();
                     mInf.release();
@@ -369,16 +369,16 @@ package org.openwms.web.flex.client.module {
             trace("Successfully loaded module: " + e.module.url);
             var module : Module = (e.module.data as Module);
             module.loaded = true;
-            if (!modelLocator.loadedModules.containsKey(module.url)) {
-                modelLocator.loadedModules.put(module.url, ModuleManager.getModule(module.url));
+            if (modelLocator.loadedModules[module.url] == null) {
+                modelLocator.loadedModules[module.url] = ModuleManager.getModule(module.url);
             }
-            modelLocator.unloadedModules.remove(module.url);
+            delete modelLocator.unloadedModules[module.url];
             var appModule : Object = e.module.factory.create();
             if (appModule is IApplicationModule) {
                 appModule.start(applicationDomain);
                 fireLoadedEvent(appModule as IApplicationModule);
             }
-            var mInf : IModuleInfo = (modelLocator.loadedModules.get(module.url) as IModuleInfo);
+            var mInf : IModuleInfo = modelLocator.loadedModules[module.url] as IModuleInfo;
             mInf.removeEventListener(ModuleEvent.READY, onModuleLoaded);
             mInf.removeEventListener(ModuleEvent.ERROR, onModuleLoaderError);
         }
@@ -393,15 +393,15 @@ package org.openwms.web.flex.client.module {
             trace("Successfully hard-unloaded Module with URL : " + e.module.url);
             var module : Module = (e.module.data as Module);
             module.loaded = false;
-            if (!modelLocator.unloadedModules.containsKey(module.url)) {
-                modelLocator.unloadedModules.put(module.url, ModuleManager.getModule(module.url));
+            if (modelLocator.unloadedModules[module.url] == null) {
+                modelLocator.unloadedModules[module.url] == ModuleManager.getModule(module.url);
             }
-            modelLocator.loadedModules.remove(module.url);
+            delete modelLocator.loadedModules[module.url];
             var appModule : Object = e.module.factory.create();
             if (appModule is IApplicationModule) {
                 fireUnloadedEvent(appModule as IApplicationModule);
             }
-            var mInf : IModuleInfo = (modelLocator.unloadedModules.get(module.url) as IModuleInfo);
+            var mInf : IModuleInfo = modelLocator.unloadedModules[module.url] as IModuleInfo;
             mInf.removeEventListener(ModuleEvent.UNLOAD, onModuleUnloaded);
             mInf.removeEventListener(ModuleEvent.ERROR, onModuleLoaderError);
         }
@@ -435,13 +435,13 @@ package org.openwms.web.flex.client.module {
                 if (e.module.data != null) {
                     var module : Module = (e.module.data as Module);
                     module.loaded = false;
-                    var mInf : IModuleInfo = (modelLocator.loadedModules.get(module.url) as IModuleInfo);
+                    var mInf : IModuleInfo = modelLocator.loadedModules[module.url] as IModuleInfo;
                     if (mInf != null) {
                         // TODO: Also remove other listeners here
                         mInf.removeEventListener(ModuleEvent.ERROR, onModuleLoaderError);
-                        modelLocator.unloadedModules.put(module.url, mInf);
+                        modelLocator.unloadedModules[module.url] = mInf;
                     }
-                    modelLocator.loadedModules.remove(module.url);
+                    delete modelLocator.loadedModules[module.url];
                 }
                 Alert.show("Loading/Unloading a module [" + e.module.url + "] failed with error : " + e.errorText);
             } else {
@@ -467,11 +467,11 @@ package org.openwms.web.flex.client.module {
             if (!found) {
                 modelLocator.allModules.addItem(module);
             }
-            if (modelLocator.loadedModules.containsKey(module.url)) {
-                modelLocator.loadedModules.put(module.url, ModuleManager.getModule(module.url));
+            if (modelLocator.loadedModules[module.url] != null) {
+                modelLocator.loadedModules[module.url] = ModuleManager.getModule(module.url);
             }
-            if (modelLocator.unloadedModules.containsKey(module.url)) {
-                modelLocator.unloadedModules.put(module.url, ModuleManager.getModule(module.url));
+            if (modelLocator.unloadedModules[module.url] != null) {
+                modelLocator.unloadedModules[module.url] = ModuleManager.getModule(module.url);
             }
         }
 
