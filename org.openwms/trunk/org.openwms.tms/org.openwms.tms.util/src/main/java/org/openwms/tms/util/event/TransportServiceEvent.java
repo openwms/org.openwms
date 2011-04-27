@@ -22,26 +22,50 @@ package org.openwms.tms.util.event;
 
 import java.io.Serializable;
 
-import org.springframework.context.ApplicationEvent;
+import org.openwms.core.util.event.RootApplicationEvent;
 
 /**
  * A TransportServiceEvent.
  * 
  * @author <a href="mailto:russelltina@users.sourceforge.net">Tina Russell</a>
  * @version $Revision$
+ * @since 0.1
  */
-public class TransportServiceEvent extends ApplicationEvent implements Serializable {
+public class TransportServiceEvent extends RootApplicationEvent implements Serializable {
 
+    /**
+     * All possible types of this event.
+     * 
+     * @author <a href="mailto:russelltina@users.sourceforge.net">Tina
+     *         Russell</a>
+     * @version $Revision$
+     * @since 0.1
+     */
     public enum TYPE {
 
+        /**
+         * A TransportOrder was created.
+         */
         TRANSPORT_CREATED,
 
+        /**
+         * A TransportOrder was interrupted.
+         */
         TRANSPORT_INTERRUPTED,
 
+        /**
+         * A TransportOrder was set on failure.
+         */
         TRANSPORT_ONFAILURE,
 
+        /**
+         * A TransportOrder was canceled.
+         */
         TRANSPORT_CANCELED,
 
+        /**
+         * A TransportOrder was finished.
+         */
         TRANSPORT_FINISHED
     }
 
@@ -53,20 +77,29 @@ public class TransportServiceEvent extends ApplicationEvent implements Serializa
      * Create a new RootApplicationEvent.
      * 
      * @param source
+     *            Event source
      */
     public TransportServiceEvent(Object source) {
         super(source);
     }
 
+    /**
+     * Create a new TransportServiceEvent.
+     * 
+     * @param source
+     *            Event source
+     * @param type
+     *            Event type
+     */
     public TransportServiceEvent(Object source, TYPE type) {
         super(source);
         this.type = type;
     }
 
     /**
-     * FIXME [russelltina] Comment this
+     * Return the type of event.
      * 
-     * @return
+     * @return The event type
      */
     public TYPE getType() {
         return type;
