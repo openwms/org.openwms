@@ -82,11 +82,14 @@
             <name>Heiko Scherrer</name>
             <email>scherrer@openwms.org</email>
             <url>https://sourceforge.net/users/scherrer</url>
-            <timezone>+1</timezone>
+            <organization>openwms.org</organization>
+            <organizationUrl>http://www.openwms.org</organizationUrl>
+            <timezone>CET</timezone>
             <roles>
-                <role>project founder</role>
-                <role>developer</role>
-                <role>deployer</role>
+                <role>Project Lead</role>
+                <role>Architect</role>
+                <role>Developer</role>
+                <role>Deployer</role>
             </roles>
         </developer>
         <developer>
@@ -94,10 +97,10 @@
             <name>Frank Lauer</name>
             <email>flauer99@users.sourceforge.net</email>
             <url>https://sourceforge.net/users/flauer99</url>
-            <timezone>+1</timezone>
+            <timezone>CET</timezone>
             <roles>
-                <role>developer</role>
-                <role>site master</role>
+                <role>Java Developer</role>
+                <role>Site Master</role>
             </roles>
         </developer>
         <developer>
@@ -105,9 +108,9 @@
             <name>Michael Schmut</name>
             <email>smudo99@users.sourceforge.net</email>
             <url>https://sourceforge.net/users/smudo99</url>
-            <timezone>+1</timezone>
+            <timezone>CET</timezone>
             <roles>
-                <role>developer</role>
+                <role>Java Developer</role>
             </roles>
         </developer>
         <developer>
@@ -117,9 +120,9 @@
             <url>https://sourceforge.net/users/russelltina</url>
             <organization>University of Oregon</organization>
             <organizationUrl>http://www.uoregon.edu</organizationUrl>
-            <timezone>-7</timezone>
+            <timezone>PDT</timezone>
             <roles>
-                <role>developer</role>
+                <role>Flex Developer</role>
             </roles>
         </developer>
         <developer>
@@ -127,10 +130,10 @@
             <name>Florian Gyger</name>
             <email>fgyger@openwms.org</email>
             <url>https://sourceforge.net/users/flogy</url>
-            <timezone>+1</timezone>
+            <timezone>CET</timezone>
             <roles>
-                <role>developer</role>
-		<role>supporter</role>
+                <role>Developer</role>
+                <role>Supporter</role>
             </roles>
         </developer>
         <developer>
@@ -138,13 +141,19 @@
             <name>Mischa Farbstein</name>
             <email>mischazurich@users.sourceforge.net</email>
             <url>https://sourceforge.net/users/mischazurich</url>
-            <timezone>+1</timezone>
+            <timezone>CET</timezone>
             <roles>
-                <role>developer</role>
-		<role>moderator</role>
+                <role>Developer</role>
+                <role>Moderator</role>
             </roles>
         </developer>
     </developers>
+    <contributors>
+        <contributor>
+            <name>Arul Narayanan</name>
+            <timezone>IST</timezone>
+        </contributor>
+    </contributors>
 
     <mailingLists>
         <mailingList>
