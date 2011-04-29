@@ -587,12 +587,36 @@
                     <target>${maven.compile.targetLevel}</target>
                 </configuration>
             </plugin>
-            <!-- <plugin> <groupId>org.codehaus.mojo</groupId> <artifactId>cobertura-maven-plugin</artifactId> <configuration> 
-                <check> <branchRate>70</branchRate> <lineRate>75</lineRate> <haltOnFailure>false</haltOnFailure> <totalBranchRate>75</totalBranchRate> 
-                <totalLineRate>80</totalLineRate> <packageLineRate>80</packageLineRate> <packageBranchRate>65</packageBranchRate> <regexes> 
-                <regex> <pattern>org.openwms.*</pattern> <branchRate>50</branchRate> <lineRate>50</lineRate> </regex> </regexes> </check> 
-                </configuration> <executions> <execution> <goals> <goal>clean</goal> <goal>check</goal> </goals> </execution> </executions> 
-                </plugin> -->
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>cobertura-maven-plugin</artifactId>
+                <configuration>
+                    <check>
+                        <branchRate>70</branchRate>
+                        <lineRate>75</lineRate>
+                        <haltOnFailure>false</haltOnFailure>
+                        <totalBranchRate>75</totalBranchRate>
+                        <totalLineRate>80</totalLineRate>
+                        <packageLineRate>80</packageLineRate>
+                        <packageBranchRate>65</packageBranchRate>
+                        <regexes>
+                            <regex>
+                                <pattern>org.openwms.*</pattern>
+                                <branchRate>50</branchRate>
+                                <lineRate>50</lineRate>
+                            </regex>
+                        </regexes>
+                    </check>
+                </configuration>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>clean</goal>
+                            <goal>check</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
             <plugin>
                 <artifactId>maven-assembly-plugin</artifactId>
                 <configuration>
@@ -782,7 +806,7 @@
                     <xrefLocation>${project.reporting.outputDirectory}/../xref</xrefLocation>
                     <xmlOutput>true</xmlOutput>
                     <effort>Max</effort>
-                    <threshold>High</threshold>
+                    <threshold>Low</threshold>
                     <failOnError>false</failOnError>
                     <findbugsXmlOutput>true</findbugsXmlOutput>
                     <findbugsXmlOutputDirectory>target/site</findbugsXmlOutputDirectory>
