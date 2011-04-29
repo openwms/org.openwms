@@ -23,7 +23,8 @@ package org.openwms.tms.service.impl;
 import org.openwms.common.domain.TransportUnit;
 
 /**
- * A TransportOrderStateDelegate.
+ * A TransportOrderStateDelegate. Is called after state changes on a
+ * TransportOrder have been performed.
  * 
  * @author <a href="mailto:russelltina@users.sourceforge.net">Tina Russell</a>
  * @version $Revision$
@@ -32,19 +33,47 @@ import org.openwms.common.domain.TransportUnit;
 public interface TransportOrderStateDelegate {
 
     /**
-     * An actions that shall be triggered after a TransportOrder has bees
+     * An action that should be triggered after a TransportOrder has been
      * created.
      * 
      * @param transportUnit
-     *            The TransportUnit for that the order was started.
+     *            The {@link TransportUnit} of the corresponding TransportOrder
      */
     void afterCreation(TransportUnit transportUnit);
 
+    /**
+     * An action that should be triggered after a TransportOrder has been
+     * canceled.
+     * 
+     * @param id
+     *            The id of the TransportOrder
+     */
     void onCancel(Long id);
 
+    /**
+     * An action that should be triggered after a TransportOrder has been
+     * finished successfully.
+     * 
+     * @param id
+     *            The id of the TransportOrder
+     */
     void afterFinish(Long id);
 
+    /**
+     * An action that should be triggered after a TransportOrder has been set on
+     * failure.
+     * 
+     * @param id
+     *            The id of the TransportOrder
+     */
     void onFailure(Long id);
 
+    /**
+     * An action that should be triggered after a TransportOrder has been
+     * interrupted.
+     * 
+     * @param id
+     *            The id of the TransportOrder
+     */
     void onInterrupt(Long id);
 }
