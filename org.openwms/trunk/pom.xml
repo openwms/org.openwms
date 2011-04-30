@@ -84,7 +84,7 @@
             <url>https://sourceforge.net/users/scherrer</url>
             <organization>openwms.org</organization>
             <organizationUrl>http://www.openwms.org</organizationUrl>
-            <timezone>CET</timezone>
+            <timezone>+2</timezone>
             <roles>
                 <role>Project Lead</role>
                 <role>Architect</role>
@@ -97,7 +97,9 @@
             <name>Frank Lauer</name>
             <email>flauer99@users.sourceforge.net</email>
             <url>https://sourceforge.net/users/flauer99</url>
-            <timezone>CET</timezone>
+            <organization>Aberle GmbH</organization>
+            <organizationUrl>http://www.a-s.de</organizationUrl>
+            <timezone>+2</timezone>
             <roles>
                 <role>Java Developer</role>
                 <role>Site Master</role>
@@ -108,7 +110,9 @@
             <name>Michael Schmut</name>
             <email>smudo99@users.sourceforge.net</email>
             <url>https://sourceforge.net/users/smudo99</url>
-            <timezone>CET</timezone>
+            <organization>IBM</organization>
+            <organizationUrl>http://www.ibm.com</organizationUrl>
+            <timezone>+2</timezone>
             <roles>
                 <role>Java Developer</role>
             </roles>
@@ -120,7 +124,7 @@
             <url>https://sourceforge.net/users/russelltina</url>
             <organization>University of Oregon</organization>
             <organizationUrl>http://www.uoregon.edu</organizationUrl>
-            <timezone>PDT</timezone>
+            <timezone>-7</timezone>
             <roles>
                 <role>Flex Developer</role>
             </roles>
@@ -130,7 +134,9 @@
             <name>Florian Gyger</name>
             <email>fgyger@openwms.org</email>
             <url>https://sourceforge.net/users/flogy</url>
-            <timezone>CET</timezone>
+            <organization>Swisslog AG</organization>
+            <organizationUrl>http://www.swisslog.com</organizationUrl>
+            <timezone>+2</timezone>
             <roles>
                 <role>Developer</role>
                 <role>Supporter</role>
@@ -141,7 +147,9 @@
             <name>Mischa Farbstein</name>
             <email>mischazurich@users.sourceforge.net</email>
             <url>https://sourceforge.net/users/mischazurich</url>
-            <timezone>CET</timezone>
+            <organization>Trivadis AG</organization>
+            <organizationUrl>http://www.trivadis.com</organizationUrl>
+            <timezone>+2</timezone>
             <roles>
                 <role>Developer</role>
                 <role>Moderator</role>
@@ -151,7 +159,7 @@
     <contributors>
         <contributor>
             <name>Arul Narayanan</name>
-            <timezone>IST</timezone>
+            <timezone>+5</timezone>
         </contributor>
     </contributors>
 
