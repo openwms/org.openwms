@@ -594,6 +594,7 @@
                     <optimize>true</optimize>
                     <source>${maven.compile.sourceLevel}</source>
                     <target>${maven.compile.targetLevel}</target>
+                    <encoding>${project.build.sourceEncoding}</encoding>
                 </configuration>
             </plugin>
             <plugin>
