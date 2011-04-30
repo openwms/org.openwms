@@ -34,8 +34,7 @@ import org.openwms.tms.integration.TransportOrderDao;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Component;
 
 /**
  * A TransportOrderUtil.
@@ -44,15 +43,14 @@ import org.springframework.stereotype.Service;
  * @version $Revision$
  * @since 0.1
  */
-@Service
+@Component
 public class TransportOrderUtil {
 
     private final Logger logger = LoggerFactory.getLogger(getClass());
 
-    @Autowired
-    @Qualifier("transportOrderDao")
     private TransportOrderDao dao;
 
+    @Autowired
     public TransportOrderUtil(TransportOrderDao dao) {
         this.dao = dao;
     }

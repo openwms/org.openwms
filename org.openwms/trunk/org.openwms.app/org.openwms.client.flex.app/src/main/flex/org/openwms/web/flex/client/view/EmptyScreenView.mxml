@@ -41,19 +41,26 @@
              * Injected Granite identity object.
              */
             public var identity:Identity;
+            
 	        [In]
 	        [Bindable]
-	        /**
+            /**
 	         * Injected Model.
 	         */
 	        public var modelLocator : ModelLocator;
 
             [Bindable]
+            /**
+             * Behind-the-model.
+             */
             public var loginView:LoginView;
         
-            [Observer("APP_LOCK")]
-            [Observer("APP_LOGOUT")]
+            [Observer("APP_LOCK","APP_LOGOUT")]
+            /**
+             * Whats going on? On logout or lock event we show this dialogue.
+             */
             public function onShow():void {
+                trace("Check for login");
                 if (!identity.loggedIn) {
                 	if (modelLocator.SCREEN_LOCKED) {
                         showLoginDialog("Application locked by "+modelLocator.viewLockedBy);

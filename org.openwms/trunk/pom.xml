@@ -325,6 +325,7 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <jdkVersion>1.6</jdkVersion>
         <spring.version>3.0.5.RELEASE</spring.version>
+        <spring.osgi.version>1.2.1</spring.osgi.version>
         <spring.security.version>3.0.3.RELEASE</spring.security.version>
         <hibernate.version>3.2.6.GA</hibernate.version>
         <granite.version>2.2.0.GA</granite.version>
@@ -865,17 +866,6 @@
                 <type>libd</type>
             </dependency>
             <dependency>
-                <groupId>org.springframework.osgi</groupId>
-                <artifactId>org.springframework.osgi-library</artifactId>
-                <version>1.1.2.B</version>
-                <type>libd</type>
-            </dependency>
-            <dependency>
-                <groupId>org.springframework.osgi</groupId>
-                <artifactId>spring-osgi-core</artifactId>
-                <version>1.2.1</version>
-            </dependency>
-            <dependency>
                 <groupId>org.springframework</groupId>
                 <artifactId>org.springframework.test</artifactId>
                 <version>${spring.version}</version>
@@ -911,7 +901,34 @@
                 <artifactId>org.springframework.security.config</artifactId>
                 <version>${spring.security.version}</version>
             </dependency>
-
+            <!-- Spring DM Libraries 
+            <dependency>
+                <groupId>org.springframework.osgi</groupId>
+                <artifactId>org.springframework.osgi-library</artifactId>
+                <version>1.1.2.B</version>
+                <type>libd</type>
+            </dependency>-->
+            <dependency>
+                <groupId>org.springframework.osgi</groupId>
+                <artifactId>org.springframework.osgi.core</artifactId>
+                <version>${spring.osgi.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework.osgi</groupId>
+                <artifactId>org.springframework.osgi.extender</artifactId>
+                <version>${spring.osgi.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework.osgi</groupId>
+                <artifactId>org.springframework.osgi.io</artifactId>
+                <version>${spring.osgi.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework.osgi</groupId>
+                <artifactId>org.springframework.osgi.web</artifactId>
+                <version>${spring.osgi.version}</version>
+            </dependency>
+            
             <!-- JEE API -->
             <dependency>
                 <groupId>javax.persistence</groupId>

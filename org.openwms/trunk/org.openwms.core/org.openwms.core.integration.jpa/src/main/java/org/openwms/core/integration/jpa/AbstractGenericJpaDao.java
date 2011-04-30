@@ -176,7 +176,6 @@ public abstract class AbstractGenericJpaDao<T extends AbstractEntity, ID extends
      * {@inheritDoc}
      */
     @Override
-    @Transactional
     public T save(T entity) {
         beforeUpdate(entity);
         return em.merge(entity);
@@ -186,7 +185,6 @@ public abstract class AbstractGenericJpaDao<T extends AbstractEntity, ID extends
      * {@inheritDoc}
      */
     @Override
-    @Transactional
     public void remove(T entity) {
         em.remove(entity);
     }
@@ -195,7 +193,6 @@ public abstract class AbstractGenericJpaDao<T extends AbstractEntity, ID extends
      * {@inheritDoc}
      */
     @Override
-    @Transactional
     public void persist(T entity) {
         beforeUpdate(entity);
         em.persist(entity);

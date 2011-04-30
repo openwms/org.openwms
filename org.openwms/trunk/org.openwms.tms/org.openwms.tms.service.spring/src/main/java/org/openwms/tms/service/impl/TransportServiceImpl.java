@@ -23,6 +23,8 @@ package org.openwms.tms.service.impl;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.annotation.PostConstruct;
+
 import org.openwms.common.domain.Location;
 import org.openwms.common.domain.LocationGroup;
 import org.openwms.common.domain.TransportUnit;
@@ -61,7 +63,6 @@ public class TransportServiceImpl extends EntityServiceImpl<TransportOrder, Long
     private Logger logger = LoggerFactory.getLogger(this.getClass());
 
     @Autowired
-    @Qualifier("transportOrderDao")
     protected TransportOrderDao dao;
 
     @Autowired
@@ -75,6 +76,12 @@ public class TransportServiceImpl extends EntityServiceImpl<TransportOrder, Long
     @Autowired
     @Qualifier("locationGroupDao")
     private GenericDao<LocationGroup, Long> locationGroupDao;
+
+    @SuppressWarnings("unused")
+    @PostConstruct
+    private void init() {
+        super.dao = dao;
+    }
 
     /**
      * {@inheritDoc}
@@ -153,14 +160,10 @@ public class TransportServiceImpl extends EntityServiceImpl<TransportOrder, Long
         if (priority != null) {
             transportOrder.setPriority(priority);
         }
-        addEntity(transportOrder);
+        // addEntity(transportOrder);
         dao.persist(transportOrder);
         ctx.publishEvent(new TransportServiceEvent(transportOrder.getTransportUnit(),
                 TransportServiceEvent.TYPE.TRANSPORT_CREATED));
-
-        if (logger.isDebugEnabled()) {
-            logger.debug("... created");
-        }
         return transportOrder;
     }
 
@@ -176,11 +179,8 @@ public class TransportServiceImpl extends EntityServiceImpl<TransportOrder, Long
         for (TransportOrder transportOrder : transportOrders) {
             try {
                 transportOrder.setState(state);
-                /*
-                 * ctx.publishEvent(new
-                 * TransportServiceEvent(transportOrder.getId(),
-                 * TransportServiceEvent.TYPE.TRANSPORT_CANCELED));
-                 */
+                ctx.publishEvent(new TransportServiceEvent(transportOrder.getId(),
+                        TransportServiceEvent.TYPE.TRANSPORT_CANCELED));
                 if (logger.isDebugEnabled()) {
                     logger.debug("TransportOrder " + transportOrder.getId() + " successfully set to:" + state);
                 }

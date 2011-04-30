@@ -20,15 +20,10 @@
  */
 package org.openwms.tms.service.impl;
 
-import javax.annotation.PostConstruct;
-
 import org.openwms.common.domain.TransportUnit;
-import org.openwms.tms.integration.TransportOrderDao;
-import org.openwms.tms.service.order.delegate.DefaultOrderStateDelegate;
+import org.openwms.tms.service.delegate.TransportOrderStateDelegate;
 import org.openwms.tms.util.event.TransportServiceEvent;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.context.ApplicationEvent;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationListener;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -40,24 +35,17 @@ import org.springframework.transaction.annotation.Transactional;
  * @version $Revision$
  * @since 0.1
  * @see org.openwms.tms.service.order.delegate.DefaultOrderStateDelegate
- * @see org.openwms.tms.service.impl.TransportOrderStateDelegate
+ * @see org.openwms.tms.service.delegate.TransportOrderStateDelegate
  */
 @Service
 @Transactional
-public class TransportOrderStateTracker implements ApplicationListener<ApplicationEvent> {
+public class TransportOrderStateTracker implements ApplicationListener<TransportServiceEvent> {
 
-    private final Logger logger = LoggerFactory.getLogger(getClass());
-    // Do not autowire
+    @Autowired
     private TransportOrderStateDelegate transportOrderStateDelegate;
-    private TransportOrderDao dao;
 
     /**
-     * Create a new TransportOrderStateTracker.
-     */
-    public TransportOrderStateTracker() {}
-
-    /**
-     * Set the delegate implementation that tracks the next order states.
+     * Override the delegate implementation that tracks the next order states.
      * 
      * @param transportOrderStateDelegate
      *            The delegate to use
@@ -66,35 +54,15 @@ public class TransportOrderStateTracker implements ApplicationListener<Applicati
         this.transportOrderStateDelegate = transportOrderStateDelegate;
     }
 
-    public void setDao(TransportOrderDao dao) {
-        this.dao = dao;
-    }
-
-    @SuppressWarnings("unused")
-    @PostConstruct
-    private void initialize() {
-        if (transportOrderStateDelegate == null) {
-            this.transportOrderStateDelegate = new DefaultOrderStateDelegate(this.dao);
-        }
-    }
-
     /**
-     * Event switching. Delegate all {@link TransportServiceEvent}s to a
-     * delegate.
+     * Delegate all {@link TransportServiceEvent}s to a delegate synchronously.
      * 
-     * @param e
-     *            Hopefully a {@link TransportServiceEvent}.
+     * @param event
+     *            A {@link TransportServiceEvent}.
      * @see org.springframework.context.ApplicationListener#onApplicationEvent(org.springframework.context.ApplicationEvent)
      */
     @Override
-    public void onApplicationEvent(ApplicationEvent e) {
-        if (!(e instanceof TransportServiceEvent)) {
-            return;
-        }
-        TransportServiceEvent event = (TransportServiceEvent) e;
-        if (logger.isDebugEnabled()) {
-            logger.debug("Got event :" + event.getType());
-        }
+    public void onApplicationEvent(TransportServiceEvent event) {
         switch (event.getType()) {
         case TRANSPORT_CREATED:
             transportOrderStateDelegate.afterCreation((TransportUnit) event.getSource());

@@ -30,6 +30,7 @@ import org.openwms.core.domain.system.usermanagement.User;
 import org.openwms.core.domain.system.usermanagement.UserPassword;
 import org.openwms.core.integration.UserDao;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  * An UserDaoImpl is an extension of a {@link AbstractGenericJpaDao} about
@@ -44,6 +45,7 @@ import org.springframework.stereotype.Repository;
  * @see org.openwms.core.integration.UserDao
  */
 @Repository("userDao")
+@Transactional
 public class UserDaoImpl extends AbstractGenericJpaDao<User, Long> implements UserDao {
 
     /**
