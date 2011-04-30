@@ -38,7 +38,6 @@
         	import mx.collections.Sort;
             
             import mx.collections.ArrayCollection;
-            import org.openwms.web.flex.client.module.ModuleLocator;
             import org.openwms.core.domain.Module;
             import org.openwms.web.flex.client.event.ApplicationEvent;
             import org.openwms.web.flex.client.model.ModelLocator;
@@ -48,14 +47,18 @@
 
             [In]
             [Bindable]
+            /**
+             * We need to have Granites Identity injected.
+             */
             public var identity:Identity;
+            
+            /**
+             * We want to operate on the model.
+             */
             [In]
             [Bindable]
-            public var modelLocator:ModelLocator;            
-            [In]
-            [Bindable]
-            public var moduleLocator:ModuleLocator;
-        
+            public var modelLocator:ModelLocator; 
+                       
             private function init():void {
                 newBtn.enabled = true;
                 saveBtn.enabled = false;

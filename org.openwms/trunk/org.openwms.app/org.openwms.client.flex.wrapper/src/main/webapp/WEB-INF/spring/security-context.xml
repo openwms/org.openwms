@@ -36,7 +36,9 @@
     <beans:bean id="entryPoint" class="org.springframework.security.web.authentication.Http403ForbiddenEntryPoint"/>
     
     <authentication-manager alias="authenticationManager">
-		<authentication-provider user-service-ref="userDetailsService" />
+		<authentication-provider user-service-ref="userDetailsService">
+            <!-- password-encoder hash="sha-256"><salt-source user-property="username"/></password-encoder-->
+        </authentication-provider>
     </authentication-manager>
 
     <global-method-security secured-annotations="enabled" jsr250-annotations="enabled"/>

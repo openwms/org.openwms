@@ -32,7 +32,6 @@ import org.openwms.tms.service.util.TransportOrderUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -48,30 +47,30 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional
 public class TransportUnitRemovalListener implements OnRemovalListener<TransportUnit> {
 
+    private final Logger logger = LoggerFactory.getLogger(getClass());
+
     @Autowired
     private TransportOrderUtil util;
 
     @Autowired
-    @Qualifier("transportOrderDao")
     protected TransportOrderDao dao;
-
-    private final Logger logger = LoggerFactory.getLogger(getClass());
 
     /**
      * {@inheritDoc}
      * 
-     * The implementation verifies that no active {@link TransportOrder}s
-     * exist, before a {@link TransportUnit} is going to be removed.
+     * The implementation verifies that no active {@link TransportOrder}s exist,
+     * before a {@link TransportUnit} is going to be removed.
      * <ul>
      * <li>In case where already 'started' {@link TransportOrder}s exist it is
      * not allowed to remove the {@link TransportUnit} therefore an exception is
      * thrown.</li>
-     * <li>If {@link TransportOrder}s in a state less than 'started' exist
-     * they will be canceled and removed. The removal of the
-     * {@link TransportUnit} is accepted.</li>
+     * <li>If {@link TransportOrder}s in a state less than 'started' exist they
+     * will be canceled and removed. The removal of the {@link TransportUnit} is
+     * accepted.</li>
      * </ul>
      * 
-     * @see org.openwms.common.service.OnRemovalListener#preRemove(org.openwms.common.domain.AbstractEntity).
+     * @see org.openwms.common.service.OnRemovalListener#preRemove(org.openwms.common.domain.AbstractEntity)
+     *      .
      * @throws An
      *             {@link RemovalNotAllowedException} when active
      *             {@link TransportOrder}s exist for the {@link TransportUnit}
@@ -79,9 +78,6 @@ public class TransportUnitRemovalListener implements OnRemovalListener<Transport
      */
     @Override
     public boolean preRemove(TransportUnit entity) throws RemovalNotAllowedException {
-        if (logger.isDebugEnabled()) {
-            logger.debug("Check whether it is allowed to remove TransportUnit with id : " + entity.getId());
-        }
         if (!util.findActiveOrders(entity).isEmpty()) {
             logger.warn("Active TransportOrder for the TransportUnit with the id " + entity.getId() + " exist");
             throw new RemovalNotAllowedException("Active TransportOrder for the TransportUnit with the id "
@@ -90,8 +86,7 @@ public class TransportUnitRemovalListener implements OnRemovalListener<Transport
         try {
             cancelInitializedOnes(entity);
             return true;
-        }
-        catch (IllegalStateException ise) {
+        } catch (IllegalStateException ise) {
             logger.warn("For one or more created TransportOrders it is not allowed to cancel them");
             throw new RemovalNotAllowedException(
                     "For one or more created TransportOrders it is not allowed to cancel them");

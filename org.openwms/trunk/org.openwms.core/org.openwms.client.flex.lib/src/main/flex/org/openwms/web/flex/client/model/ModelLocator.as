@@ -21,10 +21,10 @@
 package org.openwms.web.flex.client.model{
 
     import flash.utils.Dictionary;
-    
+
     import mx.collections.ArrayCollection;
     import mx.formatters.DateFormatter;
-    
+
     import org.openwms.core.domain.Module;
     import org.openwms.core.domain.system.usermanagement.User;
     import org.openwms.web.flex.client.event.SwitchScreenEvent;
@@ -58,6 +58,7 @@ package org.openwms.web.flex.client.model{
         // Used to control the main viewStack
         public var actualView:String = SwitchScreenEvent.SHOW_STARTSCREEN;
         public var authenticated:Boolean = false;
+        public var fired:Boolean = false;
         /**
          * Upload URL for file uploads.
          */

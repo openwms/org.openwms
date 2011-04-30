@@ -60,9 +60,10 @@ public class LocationDaoTest extends AbstractJpaSpringContextTests {
      * Persist a location for each test execution.
      */
     @Before
-    public void onSetUpInTransaction() {
-        locationDao.persist(new Location(new LocationPK("area", "aisle", "x", "y", "z")));
-        // TODO [scherrer] Do we need to flush and clear after persist?
+    public void onBefore() {
+        entityManager.persist(new Location(new LocationPK("area", "aisle", "x", "y", "z")));
+        entityManager.flush();
+        entityManager.clear();
     }
 
     /**
@@ -70,8 +71,7 @@ public class LocationDaoTest extends AbstractJpaSpringContextTests {
      */
     @Test
     public final void testFindAll() {
-        assertNotNull("Cannot query a list of all Locations", locationDao.findAll());
-        logger.debug("OK:All Location found by query");
+        assertTrue("Cannot query a list of all Locations", locationDao.findAll().size() > 0);
     }
 
     /**

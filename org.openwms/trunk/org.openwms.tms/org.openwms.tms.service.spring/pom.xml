@@ -66,14 +66,15 @@
             <scope>provided</scope>
 		</dependency>
         <dependency>
-            <groupId>org.springframework.osgi</groupId>
-            <artifactId>org.springframework.osgi-library</artifactId>
-            <type>libd</type>
-            <scope>provided</scope>
-        </dependency>
-        <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>org.springframework.instrument</artifactId>
+            <scope>provided</scope>
+        </dependency>
+        <!-- OSGi Libraries -->
+        <dependency>
+            <groupId>org.osgi</groupId>
+            <artifactId>org.osgi.compendium</artifactId>
+            <version>4.1.0</version>
             <scope>provided</scope>
         </dependency>
 

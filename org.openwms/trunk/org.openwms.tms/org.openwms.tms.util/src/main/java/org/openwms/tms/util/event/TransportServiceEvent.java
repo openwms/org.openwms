@@ -33,6 +33,10 @@ import org.openwms.core.util.event.RootApplicationEvent;
  */
 public class TransportServiceEvent extends RootApplicationEvent implements Serializable {
 
+    private TYPE type;
+
+    private static final long serialVersionUID = -2454660395280026756L;
+
     /**
      * All possible types of this event.
      * 
@@ -68,10 +72,6 @@ public class TransportServiceEvent extends RootApplicationEvent implements Seria
          */
         TRANSPORT_FINISHED
     }
-
-    private TYPE type;
-
-    private static final long serialVersionUID = -2454660395280026756L;
 
     /**
      * Create a new RootApplicationEvent.

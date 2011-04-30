@@ -112,6 +112,6 @@ public class LocationGroupDaoTest extends AbstractJpaSpringContextTests {
         parent.removeLocationGroup(child);
         assertNull("The parent has to be removed as LocationGroup from the child", child.getParent());
         assertTrue("The number of child LocationGroups must be decreased by one", noChildren - 1 == parent
-                .getLocationGroups().size());;
+                .getLocationGroups().size());
     }
 }

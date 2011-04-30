@@ -35,7 +35,6 @@
 
     <!-- Hibernate does not require a LTW
     <context:load-time-weaver aspectj-weaving="on"/>-->
-
     <tx:annotation-driven transaction-manager="transactionManager" mode="aspectj"/>
 
     <!-- Used for the exception translation -->

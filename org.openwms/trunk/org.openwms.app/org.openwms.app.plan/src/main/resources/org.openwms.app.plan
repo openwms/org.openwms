@@ -44,4 +44,5 @@
     <artifact type="bundle" name="org.openwms.tms.integration.jpa" version="[0.0.1.SNAPSHOT,1.0)"/>
     <artifact type="bundle" name="org.openwms.tms.service.api" version="[0.0.1.SNAPSHOT,1.0)"/>
     <artifact type="bundle" name="org.openwms.tms.service.spring" version="[0.0.1.SNAPSHOT,1.0)"/>
+    <!-- artifact type="bundle" name="org.openwms.common.infrastructure.engine" version="[0.0.1.SNAPSHOT,1.0)"/-->
 </plan>

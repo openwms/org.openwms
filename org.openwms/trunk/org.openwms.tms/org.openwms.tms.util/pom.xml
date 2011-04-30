@@ -66,16 +66,9 @@
             <scope>provided</scope>
         </dependency>
         <dependency>
-            <groupId>org.springframework.osgi</groupId>
-            <artifactId>org.springframework.osgi-library</artifactId>
-            <type>libd</type>
-            <scope>provided</scope>
-        </dependency>
-        <dependency>
             <groupId>${project.groupId}</groupId>
             <artifactId>org.openwms.core.util</artifactId>
             <version>${core.version}</version>
-            <scope>provided</scope>
         </dependency>
     </dependencies>
 </project>

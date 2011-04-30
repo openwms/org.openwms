@@ -65,22 +65,6 @@
             <type>libd</type>
             <scope>provided</scope>
         </dependency>
-        <dependency>
-            <groupId>org.springframework</groupId>
-            <artifactId>org.springframework.instrument</artifactId>
-            <scope>provided</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework.osgi</groupId>
-            <artifactId>org.springframework.osgi-library</artifactId>
-            <type>libd</type>
-            <scope>provided</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework.osgi</groupId>
-            <artifactId>spring-osgi-core</artifactId>
-            <scope>provided</scope>
-        </dependency>
 
         <!-- JPA Provider -->
         <dependency>
