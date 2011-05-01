@@ -56,7 +56,7 @@
                         </goals>
                         <configuration>
                             <stripVersion>true</stripVersion>
-                            <outputDirectory>${basedir}/target</outputDirectory>
+                            <outputDirectory>${project.build.directory}/repository/usr</outputDirectory>
                             <resources>
                                 <resource>
                                     <directory>src/main/resources</directory>
@@ -72,6 +72,7 @@
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-dependency-plugin</artifactId>
                 <executions>
+                    <!-- Copy all to usr -->
                     <execution>
                         <id>copy-dependencies</id>
                         <phase>package</phase>
@@ -80,22 +81,35 @@
                         </goals>
                         <configuration>
                             <stripVersion>false</stripVersion>
-                            <outputDirectory>${project.build.directory}/usr</outputDirectory>
+                            <outputDirectory>${project.build.directory}/repository/usr</outputDirectory>
                             <overWriteIfNewer>true</overWriteIfNewer>
-                            <includeGroupIds></includeGroupIds>
-                            <excludeGroupIds>
-                                javax.transaction,javax.persistence,org.junit,org.slf4j,com.springsource.dmserver,org.apache.log4j
-                            </excludeGroupIds>
+                            <excludeArtifactIds>org.openwms.client.flex.wrapper</excludeArtifactIds>
+                            <excludeGroupIds>javax.transaction,javax.persistence,org.junit,org.slf4j,com.springsource.dmserver,org.apache.log4j</excludeGroupIds>
                         </configuration>
                     </execution>
+                    <!-- Copy all to usr -->
                     <execution>
-                        <id>copy</id>
+                        <id>copy-app</id>
                         <phase>package</phase>
                         <goals>
                             <goal>copy-dependencies</goal>
                         </goals>
                         <configuration>
-                            <outputDirectory>${project.build.directory}/usr</outputDirectory>
+                            <stripVersion>false</stripVersion>
+                            <outputDirectory>${project.build.directory}/pickup</outputDirectory>
+                            <overWriteIfNewer>true</overWriteIfNewer>
+                            <includeArtifactIds>org.openwms.client.flex.wrapper</includeArtifactIds>
+                            <excludeGroupIds>javax.transaction,javax.persistence,org.junit,org.slf4j,com.springsource.dmserver,org.apache.log4j</excludeGroupIds>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>copy-security</id>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>copy-dependencies</goal>
+                        </goals>
+                        <configuration>
+                            <outputDirectory>${project.build.directory}/repository/usr</outputDirectory>
                             <overWriteIfNewer>true</overWriteIfNewer>
                             <includeGroupIds>org.springframework.security</includeGroupIds>
                             <overWriteSnapshots>true</overWriteSnapshots>
