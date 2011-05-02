@@ -22,29 +22,26 @@ package org.openwms.tms.service;
 
 /**
  * A TransportOrderServiceException.
- *
+ * 
  * @author <a href="mailto:russelltina@users.sourceforge.net">Tina Russell</a>
  * @version $Revision$
- *
+ * @since 0.1
  */
 public class TransportOrderServiceException extends RuntimeException {
 
-    /**
-     * The serialVersionUID
-     */
     private static final long serialVersionUID = 7532336077611264311L;
 
     /**
      * Create a new TransportOrderServiceException.
      * 
      */
-    public TransportOrderServiceException() {
-    }
+    public TransportOrderServiceException() {}
 
     /**
      * Create a new TransportOrderServiceException.
      * 
      * @param message
+     *            Message text as String
      */
     public TransportOrderServiceException(String message) {
         super(message);
@@ -54,6 +51,7 @@ public class TransportOrderServiceException extends RuntimeException {
      * Create a new TransportOrderServiceException.
      * 
      * @param cause
+     *            The cause exception
      */
     public TransportOrderServiceException(Throwable cause) {
         super(cause);
@@ -63,7 +61,9 @@ public class TransportOrderServiceException extends RuntimeException {
      * Create a new TransportOrderServiceException.
      * 
      * @param message
+     *            Message text as String
      * @param cause
+     *            The cause exception
      */
     public TransportOrderServiceException(String message, Throwable cause) {
         super(message, cause);
