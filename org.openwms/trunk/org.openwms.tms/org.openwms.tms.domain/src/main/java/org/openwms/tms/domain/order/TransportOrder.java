@@ -63,8 +63,7 @@ import org.openwms.tms.domain.values.TransportOrderState;
 @NamedQueries({
         @NamedQuery(name = TransportOrder.NQ_FIND_ALL, query = "select to from TransportOrder to"),
         @NamedQuery(name = TransportOrder.NQ_FIND_BY_TU, query = "select to from TransportOrder to where to.transportUnit = :transportUnit"),
-        @NamedQuery(name = TransportOrder.NQ_FIND_FOR_TU_IN_STATE, query = "select to from TransportOrder to where to.transportUnit = :transportUnit and to.state in (:states) order by to.state, id"),
-        @NamedQuery(name = TransportOrder.NQ_FIND_ORDERS_TO_START, query = "select to from TransportOrder to where to.transportUnit = :transportUnit and to.state in (INITIALIZED, INTERRUPTED) order by to.priority DESC, to.creationDate") })
+        @NamedQuery(name = TransportOrder.NQ_FIND_FOR_TU_IN_STATE, query = "select to from TransportOrder to where to.transportUnit = :transportUnit and to.state in (:states) order by to.priority DESC, to.state, id") })
 public class TransportOrder extends AbstractEntity implements DomainObject<Long>, Serializable {
 
     private static final long serialVersionUID = 4586898047981474230L;
@@ -90,17 +89,6 @@ public class TransportOrder extends AbstractEntity implements DomainObject<Long>
      * {@link TransportOrderState}s.</li>
      */
     public static final String NQ_FIND_FOR_TU_IN_STATE = "TransportOrder.findActiveToForTu";
-
-    /**
-     * Query to find all <code>TransportOrder</code>s for a particular
-     * {@link TransportUnit} that can be started. Ready transports are in state
-     * {@link TransportOrderState#INITIALIZED} or
-     * {@link TransportOrderState#INTERRUPTED}. The list of possible transports
-     * is sorted by priority and creationDate. <li>Query parameter name
-     * <strong>transportUnit</strong> : The {@link TransportUnit} to search for.
-     * </li>
-     */
-    public static final String NQ_FIND_ORDERS_TO_START = "TransportOrder.findOrdersToStartForTu";
 
     /**
      * Unique technical key.
