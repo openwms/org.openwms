@@ -207,8 +207,8 @@ public class TransportUnitServiceImpl extends EntityServiceImpl<TransportUnit, L
     /**
      * {@inheritDoc}
      * 
-     * A ServiceRuntimeException is thrown when other {@link TransportUnit}s
-     * are placed on a {@link TransportUnit} that shall be removed. Also
+     * A ServiceRuntimeException is thrown when other {@link TransportUnit}s are
+     * placed on a {@link TransportUnit} that shall be removed. Also
      * {@link TransportUnit} with active TransportOrders won't be removed, if a
      * proper delegate exists.
      */
@@ -221,7 +221,7 @@ public class TransportUnitServiceImpl extends EntityServiceImpl<TransportUnit, L
             Collections.sort(tus, new Comparator<TransportUnit>() {
                 @Override
                 public int compare(TransportUnit o1, TransportUnit o2) {
-                    return o1.getChildren().isEmpty() == true ? -1 : 1;
+                    return o1.getChildren().isEmpty() ? -1 : 1;
                 };
             });
             for (TransportUnit tu : tus) {
@@ -233,9 +233,10 @@ public class TransportUnitServiceImpl extends EntityServiceImpl<TransportUnit, L
                     if (logger.isDebugEnabled()) {
                         logger.debug("Successfully marked TransportUnit for removal : " + tu.getId());
                     }
-                }
-                catch (RemovalNotAllowedException e) {
-                    logger.error("Not allowed to remove TransportUnit with id : " + tu.getId());
+                } catch (RemovalNotAllowedException rnae) {
+                    logger.error("Not allowed to remove TransportUnit with id : " + tu.getId() + " with reason: "
+                            + rnae.getLocalizedMessage());
+                    throw new ServiceRuntimeException(rnae.getLocalizedMessage());
                 }
             }
         }
@@ -285,7 +286,9 @@ public class TransportUnitServiceImpl extends EntityServiceImpl<TransportUnit, L
      * @param transportUnit
      *            The TransportUnit to be removed
      * @throws RemovalNotAllowedException
-     *             thrown by the voter
+     *             In case it is not allowed to remove the TransportUnit,
+     *             probably because depending items exist (like
+     *             TransportOrders).
      */
     private void delete(TransportUnit transportUnit) throws RemovalNotAllowedException {
         if (logger.isDebugEnabled() && onRemovalListener == null) {
