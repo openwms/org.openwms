@@ -20,21 +20,13 @@
  */
 package org.openwms.tms.service.util;
 
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.HashSet;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
-import java.util.Set;
 
-import org.openwms.common.domain.TransportUnit;
-import org.openwms.tms.domain.order.TransportOrder;
 import org.openwms.tms.domain.values.TransportOrderState;
-import org.openwms.tms.integration.TransportOrderDao;
+import org.openwms.tms.util.event.TransportServiceEvent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 
 /**
  * A TransportOrderUtil.
@@ -43,74 +35,44 @@ import org.springframework.stereotype.Component;
  * @version $Revision$
  * @since 0.1
  */
-@Component
-public class TransportOrderUtil {
+public final class TransportOrderUtil {
 
     private final Logger logger = LoggerFactory.getLogger(getClass());
 
-    private TransportOrderDao dao;
+    /**
+     * Hide constructor of utility classes.
+     */
+    private TransportOrderUtil() {}
 
-    @Autowired
-    public TransportOrderUtil(TransportOrderDao dao) {
-        this.dao = dao;
+    public static TransportServiceEvent.TYPE convertToEventType(TransportOrderState newState) {
+        switch (newState) {
+        case FINISHED:
+            return TransportServiceEvent.TYPE.TRANSPORT_FINISHED;
+        case CANCELED:
+            return TransportServiceEvent.TYPE.TRANSPORT_CANCELED;
+        case INTERRUPTED:
+            return TransportServiceEvent.TYPE.TRANSPORT_INTERRUPTED;
+        case ONFAILURE:
+            return TransportServiceEvent.TYPE.TRANSPORT_ONFAILURE;
+        }
+        return TransportServiceEvent.TYPE.TRANSPORT_CANCELED;
     }
 
     /**
-     * Find and return a list of {@link TransportOrder}s in state
-     * {@link TransportOrderState#STARTED} or
-     * {@link TransportOrderState#INTERRUPTED}.
+     * Unfortunately Flex clients can't handle Long values and only understand
+     * integers. Hence we need a small utility method to convert one list in
+     * another.
      * 
-     * @param transportUnit
-     *            The {@link TransportUnit} to search for
-     * @return A list of {@link TransportOrder}s or an empty list
+     * @param values
+     *            The list of intergers to be converted
+     * @return a new list of long values
      */
-    public List<TransportOrder> findActiveOrders(TransportUnit transportUnit) {
-        Map<String, Object> params = new HashMap<String, Object>();
-        params.put("transportUnit", transportUnit);
-        Set<TransportOrderState> states = new HashSet<TransportOrderState>(2);
-        states.add(TransportOrderState.STARTED);
-        states.add(TransportOrderState.INTERRUPTED);
-        params.put("states", states);
-        List<TransportOrder> others = dao.findByNamedParameters(TransportOrder.NQ_FIND_FOR_TU_IN_STATE, params);
-        if (others == null || others.isEmpty()) {
-            if (logger.isDebugEnabled()) {
-                logger.debug("No active TransportOrders found for TransportUnit with ID : " + transportUnit.getId());
-            }
-            return Collections.emptyList();
+    public static List<Long> getLongList(List<Integer> values) {
+        List<Long> longList = new ArrayList<Long>(values.size());
+        for (Integer number : values) {
+            longList.add(number.longValue());
         }
-        if (logger.isDebugEnabled()) {
-            logger.debug("Active TransportOrder found for TransportUnit with ID : " + transportUnit.getId());
-        }
-        return others;
+        return longList;
     }
 
-    /**
-     * Find and return all {@link TransportOrder}s which are waiting to be
-     * started, that means in state {@link TransportOrderState#CREATED} and
-     * {@link TransportOrderState#INITIALIZED}.
-     * 
-     * @param transportUnit
-     *            The {@link TransportUnit} to search for
-     * @return A list of {@link TransportOrder}s or an empty list
-     */
-    public List<TransportOrder> findOrdersToStart(TransportUnit transportUnit) {
-        Map<String, Object> params = new HashMap<String, Object>();
-        params.put("transportUnit", transportUnit);
-        Set<TransportOrderState> states = new HashSet<TransportOrderState>(2);
-        states.add(TransportOrderState.CREATED);
-        states.add(TransportOrderState.INITIALIZED);
-        params.put("states", states);
-        List<TransportOrder> others = dao.findByNamedParameters(TransportOrder.NQ_FIND_FOR_TU_IN_STATE, params);
-        if (others == null) {
-            if (logger.isDebugEnabled()) {
-                logger.debug("No initialized TransportOrders found for TransportUnit with ID : "
-                        + transportUnit.getId());
-            }
-            return Collections.emptyList();
-        }
-        if (logger.isDebugEnabled()) {
-            logger.debug("Initialized TransportOrder found for TransportUnit with ID : " + transportUnit.getId());
-        }
-        return others;
-    }
 }
