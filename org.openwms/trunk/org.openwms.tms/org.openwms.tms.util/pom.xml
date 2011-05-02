@@ -70,5 +70,10 @@
             <artifactId>org.openwms.core.util</artifactId>
             <version>${core.version}</version>
         </dependency>
+        <dependency>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>org.openwms.tms.domain</artifactId>
+            <scope>provided</scope>
+        </dependency>
     </dependencies>
 </project>
