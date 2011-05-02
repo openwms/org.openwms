@@ -38,16 +38,29 @@
             import mx.collections.ArrayCollection;
             import mx.managers.PopUpManager;
             import flash.events.KeyboardEvent;
+            
             [Inject]
             [Bindable]
+            /**
+             * Inject a model to work on.
+             */
             public var tmsModelLocator:TMSModelLocator;
+            
             [Bindable]
+            /**
+             * Preset a list of TransportOrders to be canceled.
+             */
             public var items:ArrayCollection;
+            
+            [Bindable]
+            /**
+             * Preset a message text to be shown in the dialogue header.
+             */
+            public var messageText:String = new String("Do you want to cancel selected Transport Orders ?");
+            
             [Bindable]
             private var allStates:ArrayCollection;
-            [Bindable]
-            public var messageText:String = new String("Do you want to cancel selected Transport Orders ?");
-
+            
             protected function init():void {
                 cancelOrdersBtn.setFocus();
                 this.addEventListener(KeyboardEvent.KEY_DOWN, keyEventHandler);
@@ -78,7 +91,13 @@
             }
             
             protected function formatFunction(item:*):String {
-                return item.id+"\twith Barcode\t"+item.transportUnit.barcode+(item.targetLocation == null ? "":"\tto Location\t"+item.targetLocation)+(item.targetLocationGroup == null ? "":"\tto Location Group\t"+item.targetLocationGroup);
+                if (item == null) {
+                   return "--";
+                }
+                return item.id + "\twith Barcode\t" + 
+                      (item.transportUnit == null ? "--" : item.transportUnit.barcode) +
+                      (item.targetLocation == null ? "" : "\tto Location\t" + item.targetLocation)+
+                      (item.targetLocationGroup == null ? "":"\tto Location Group\t"+item.targetLocationGroup);
             }
                         
         ]]>

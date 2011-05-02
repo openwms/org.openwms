@@ -110,6 +110,7 @@
                     </includeJavaClasses>
                     <excludeJavaClasses>
                         <class>org.openwms.core.domain.system.usermanagement.User$1</class>
+                        <class>org.openwms.tms.domain.order.TransportOrder$1</class>
                     </excludeJavaClasses>
 					<sourcePaths>
 						<sourcePath>${project.basedir}/src/main/flex/</sourcePath>

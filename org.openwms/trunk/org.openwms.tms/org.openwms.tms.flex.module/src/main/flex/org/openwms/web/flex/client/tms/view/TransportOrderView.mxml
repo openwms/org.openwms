@@ -158,7 +158,9 @@
 	    <mx:VRule height="10"/>
 	    <mx:Button id="createTransportOrderBtn" buttonMode="true" mouseChildren="false" toolTip="Create a new Transport Order" icon="@Embed(source='/assets/images/TransportOrder--Add.png')" click="showCreateTransportOrderDialog()"/>
 	    <mx:VRule height="10"/>
-	    <mx:Button id="cancelTransportOrderBtn" buttonMode="true" mouseChildren="false" toolTip="Cancel an existing Transport Order" icon="@Embed(source='/assets/images/TransportOrder--Cancel.png')" click="showCancelTransportOrdersDialog()" />
+	    <mx:Button id="deleteTransportOrderBtn" buttonMode="true" mouseChildren="false" toolTip="Delete an existing Transport Order" icon="@Embed(source='/assets/images/TransportOrder--Delete.png')" click="showCancelTransportOrdersDialog()" />
+        <mx:VRule height="10"/>
+        <mx:Button id="cancelTransportOrderBtn" buttonMode="true" mouseChildren="false" toolTip="Cancel an existing Transport Order" icon="@Embed(source='/assets/images/TransportOrder--Cancel.png')" click="showCancelTransportOrdersDialog()" />
         <mx:VRule height="10"/>
         <mx:Button id="refreshTransportOrdersBtn" buttonMode="true" mouseChildren="false" toolTip="Refresh the list of Transport Orders" icon="@Embed(source='assets/images/icons/refresh.png')" click="refresh()" />
 	    <mx:VRule height="10"/>
