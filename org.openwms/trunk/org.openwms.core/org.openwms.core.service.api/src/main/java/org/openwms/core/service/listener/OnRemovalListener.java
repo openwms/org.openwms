@@ -44,8 +44,8 @@ public interface OnRemovalListener<T extends AbstractEntity> {
      * @return <code>true</code> if removal is allowed, otherwise
      *         <code>false</code>
      * @throws RemovalNotAllowedException
-     *             in case when removal is allowed but it is not possible for
-     *             the implementation to execute the remove operation.
+     *             In case it is not allowed to remove the entity, because
+     *             depending items exist
      */
     boolean preRemove(T entity) throws RemovalNotAllowedException;
 }
