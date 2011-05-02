@@ -5,12 +5,12 @@ Bundle-Name: org.openwms.core.integration.eclipselink
 Bundle-ManifestVersion: 2
 Bundle-SymbolicName: org.openwms.core.integration.eclipselink
 Import-Library: 
- org.springframework.spring;version="[3.0, 3.1)",
- org.eclipse.persistence;version="[1.0.0,1.0.0]"
+ org.springframework.spring;version="${spring.version}",
+ org.eclipse.persistence;version="1.0.0"
 Import-Bundle: 
  org.springframework.instrument;version="3.0.0.RELEASE"
 Import-Template: 
- javax.persistence;version="[1.0.0, 1.0.0]",
+ javax.persistence;version="1.0.0",
  javax.sql;version="0"
 Import-Package: 
  org.aspectj.asm; version="0.0.0",

@@ -5,7 +5,7 @@ Bundle-Name: ${project.artifactId}
 Bundle-ManifestVersion: 2
 Bundle-SymbolicName: ${project.artifactId}
 Import-Library: 
- org.springframework.spring;version="[3.0, 3.1)"
+ org.springframework.spring;version="${spring.version}"
 Import-Bundle: 
  com.springsource.org.apache.commons.dbcp;version="1.2.2.osgi",
  com.springsource.org.postgresql.jdbc4;version="8.3.604"
