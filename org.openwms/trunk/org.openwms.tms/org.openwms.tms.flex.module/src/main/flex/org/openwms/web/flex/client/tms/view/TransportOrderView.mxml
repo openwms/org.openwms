@@ -101,6 +101,7 @@
             }
             
             private function formatAsDate(item:Object, dg:DataGridColumn):String {
+                trace("Date:"+item[dg.dataField]);
                 if (item[dg.dataField] != null) {
                     return dateFormatter.format(item[dg.dataField]);
                 }

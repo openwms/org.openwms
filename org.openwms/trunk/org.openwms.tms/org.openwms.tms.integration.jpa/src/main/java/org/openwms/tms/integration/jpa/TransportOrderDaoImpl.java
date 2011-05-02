@@ -109,13 +109,16 @@ public class TransportOrderDaoImpl extends AbstractGenericJpaDao<TransportOrder,
         List<TransportOrder> others = super.findByNamedParameters(TransportOrder.NQ_FIND_FOR_TU_IN_STATE, params);
         if (others == null || others.isEmpty()) {
             if (logger.isDebugEnabled()) {
-                logger.debug("No TransportOrders found for TransportUnit: " + transportUnit);
+                logger.debug("No TransportOrders for TransportUnit [" + transportUnit + "] in on of the states "
+                        + Arrays.toString(states) + " found");
             }
             return Collections.emptyList();
         }
         if (logger.isDebugEnabled()) {
-            logger.debug("TransportOrders for TransportUnit [" + transportUnit + "] in state [" + states + "] found");
+            logger.debug("TransportOrders for TransportUnit [" + transportUnit + "] in state "
+                    + Arrays.toString(states) + " found");
         }
         return others;
     }
+
 }
