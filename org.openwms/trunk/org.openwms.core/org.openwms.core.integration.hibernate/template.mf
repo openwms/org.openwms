@@ -5,7 +5,7 @@ Bundle-Name: ${project.artifactId}
 Bundle-ManifestVersion: 2
 Bundle-SymbolicName: ${project.artifactId}
 Import-Library: 
- org.springframework.spring;version="[3.0, 3.1)"
+ org.springframework.spring;version="${spring.version}"
 Import-Bundle: 
  com.springsource.javax.persistence;version="1.0.0",
  com.springsource.org.hibernate;version="[3.3.2.GA,3.3.2.GA]";import-scope:=application,
@@ -23,6 +23,6 @@ Require-Bundle:
  com.springsource.javassist
 Import-Package: 
  org.hibernate.proxy; version="0.0.0",
- org.springframework.context.weaving;version="[3.0, 3.1)",
- org.springframework.transaction.aspectj;version="[3.0, 3.1)"
+ org.springframework.context.weaving;version="${spring.version}",
+ org.springframework.transaction.aspectj;version="${spring.version}"
  
