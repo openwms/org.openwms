@@ -25,9 +25,6 @@ import java.util.List;
 
 import org.openwms.tms.domain.values.TransportOrderState;
 import org.openwms.tms.util.event.TransportServiceEvent;
-import org.openwms.tms.util.event.TransportServiceEvent.TYPE;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * A TransportOrderUtil.
@@ -38,13 +35,18 @@ import org.slf4j.LoggerFactory;
  */
 public final class TransportOrderUtil {
 
-    private final Logger logger = LoggerFactory.getLogger(getClass());
-
     /**
      * Hide constructor of utility classes.
      */
     private TransportOrderUtil() {}
 
+    /**
+     * Match a {@link TransportOrderState} to a type of event.
+     * 
+     * @param newState
+     *            The state to be checked
+     * @return the certain type event that matches to newState
+     */
     public static TransportServiceEvent.TYPE convertToEventType(TransportOrderState newState) {
         switch (newState) {
         case FINISHED:
@@ -55,8 +57,9 @@ public final class TransportOrderUtil {
             return TransportServiceEvent.TYPE.TRANSPORT_INTERRUPTED;
         case ONFAILURE:
             return TransportServiceEvent.TYPE.TRANSPORT_ONFAILURE;
+        default:
+            return TransportServiceEvent.TYPE.TRANSPORT_CANCELED;
         }
-        return TransportServiceEvent.TYPE.TRANSPORT_CANCELED;
     }
 
     /**

@@ -19,6 +19,6 @@
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
 /**
- * This package provides common utility classes regarding event handling.
+ * This package provides common event classes of the TMS bundle.
  */
 package org.openwms.tms.util.event;
