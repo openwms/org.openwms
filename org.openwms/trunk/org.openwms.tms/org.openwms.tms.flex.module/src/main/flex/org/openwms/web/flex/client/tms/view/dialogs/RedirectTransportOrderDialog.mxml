@@ -41,25 +41,21 @@
     		[Bindable]
             public var items:ArrayCollection;
 
-            private function init():void 
-    	    {
+            private function init():void {
     	    	targetLocationGroupCmb.setFocus();
                 this.addEventListener(KeyboardEvent.KEY_DOWN, keyEventHandler);
                 PopUpManager.centerPopUp(this);    		
     	    }
 
-            private function closeDialog(event:Event=null):void
-            {
+            private function closeDialog(event:Event=null):void {
                 this.removeEventListener(KeyboardEvent.KEY_DOWN, keyEventHandler);
                 PopUpManager.removePopUp(this);
             }
 
-            private function redirectTransportOrders():void
-            {
+            private function redirectTransportOrders():void {
                 var event:TransportOrderEvent = new TransportOrderEvent(TransportOrderEvent.REDIRECT_TRANSPORT_ORDER);
                 var ids:ArrayCollection = new ArrayCollection();
-                for each (var order:TransportOrder in redirectLst.dataProvider)
-                {
+                for each (var order:TransportOrder in redirectLst.dataProvider) {
                 	ids.addItem(order.id);
                 }
                 event.data = ids;
@@ -67,17 +63,14 @@
                 closeDialog();
             }
 
-            private function keyEventHandler(event:KeyboardEvent):void
-            {
-                if(event.keyCode == 27)
-                {
+            private function keyEventHandler(event:KeyboardEvent):void {
+                if(event.keyCode == 27) {
                    closeDialog(event);
                    return;
                 }
             }
     	    
-            private function formatFunction(item:*):String
-            {
+            private function formatFunction(item:*):String {
                 return item.id+"\twith Barcode\t"+item.transportUnit.barcode+(item.targetLocation == null ? "":"\tto Location\t"+item.targetLocation)+(item.targetLocationGroup == null ? "":"\tto Location Group\t"+item.targetLocationGroup);
             }
 
