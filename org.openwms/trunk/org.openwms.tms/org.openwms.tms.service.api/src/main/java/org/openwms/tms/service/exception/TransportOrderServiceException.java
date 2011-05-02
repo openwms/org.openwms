@@ -33,9 +33,10 @@ public class TransportOrderServiceException extends RuntimeException {
 
     /**
      * Create a new TransportOrderServiceException.
-     * 
      */
-    public TransportOrderServiceException() {}
+    public TransportOrderServiceException() {
+        super();
+    }
 
     /**
      * Create a new TransportOrderServiceException.

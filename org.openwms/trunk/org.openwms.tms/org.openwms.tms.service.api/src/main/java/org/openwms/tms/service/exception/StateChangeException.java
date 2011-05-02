@@ -33,7 +33,6 @@ public class StateChangeException extends Exception {
 
     /**
      * Create a new StateChangeException.
-     * 
      */
     public StateChangeException() {
         super();
@@ -43,6 +42,7 @@ public class StateChangeException extends Exception {
      * Create a new StateChangeException.
      * 
      * @param message
+     *            Message text as String
      */
     public StateChangeException(String message) {
         super(message);
@@ -52,6 +52,7 @@ public class StateChangeException extends Exception {
      * Create a new StateChangeException.
      * 
      * @param cause
+     *            The cause exception
      */
     public StateChangeException(Throwable cause) {
         super(cause);
@@ -61,7 +62,9 @@ public class StateChangeException extends Exception {
      * Create a new StateChangeException.
      * 
      * @param message
+     *            Message text as String
      * @param cause
+     *            The cause exception
      */
     public StateChangeException(String message, Throwable cause) {
         super(message, cause);
