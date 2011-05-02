@@ -19,6 +19,6 @@
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
 /**
- * Interfaces of the TMS service layer; implementations provide business logic specific to TMS.
+ * Exception classes of the TMS module.
  */
-package org.openwms.tms.service;
+package org.openwms.tms.service.exception;
