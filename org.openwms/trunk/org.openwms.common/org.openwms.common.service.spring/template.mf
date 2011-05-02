@@ -5,12 +5,12 @@ Bundle-Name: ${project.artifactId}
 Bundle-ManifestVersion: 2
 Bundle-SymbolicName: ${project.artifactId}
 Import-Library: 
- org.springframework.spring;version="[3.0, 3.1)"
+ org.springframework.spring;version="${spring.version}"
 Import-Bundle: 
  com.springsource.javax.persistence;version="1.0.0",
  com.springsource.org.apache.commons.lang;version="2.4.0",
- com.springsource.net.sf.ehcache;version="[1.6.2,1.6.2]",
- org.springframework.security.core;version="[3.0, 3.1)",
+ com.springsource.net.sf.ehcache;version="1.6.2",
+ org.springframework.security.core;version="${spring.security.version}",
  org.openwms.core.domain;version="0.0.1.SNAPSHOT",
  org.openwms.core.integration;version="0.0.1.SNAPSHOT",
  org.openwms.common.domain;version="0.0.1.SNAPSHOT",
@@ -19,8 +19,8 @@ Import-Bundle:
 Import-Template: 
  javax.annotation;version="0"
 Import-Package: 
- org.springframework.context.weaving;version="[3.0, 3.1)",
- org.springframework.transaction.aspectj;version="[3.0, 3.1)"
+ org.springframework.context.weaving;version="${spring.version}",
+ org.springframework.transaction.aspectj;version="${spring.version}"
 Excluded-Imports: 
  org.openwms.core.framework.test.*,
  org.springframework.test.* 
