@@ -79,6 +79,8 @@ public class TransportOrderStateTracker implements ApplicationListener<Transport
         case TRANSPORT_FINISHED:
             transportOrderStateDelegate.afterFinish((Long) event.getSource());
             break;
+        default:
+            break;
         }
     }
 

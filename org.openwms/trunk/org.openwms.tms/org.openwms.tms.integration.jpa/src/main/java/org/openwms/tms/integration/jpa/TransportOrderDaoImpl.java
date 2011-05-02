@@ -20,11 +20,17 @@
  */
 package org.openwms.tms.integration.jpa;
 
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.openwms.common.domain.LocationGroup;
+import org.openwms.common.domain.TransportUnit;
 import org.openwms.core.integration.jpa.AbstractGenericJpaDao;
 import org.openwms.tms.domain.order.TransportOrder;
+import org.openwms.tms.domain.values.TransportOrderState;
 import org.openwms.tms.integration.TransportOrderDao;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
@@ -71,9 +77,10 @@ public class TransportOrderDaoImpl extends AbstractGenericJpaDao<TransportOrder,
      */
     @Override
     public int getNumberOfTransportOrders(final LocationGroup locationGroup) {
-        return (Integer) getEm().createNativeQuery(
-                "select count(*) from TransportOrder to where to.targetLocationGroup = :locationGroup", Integer.class)
-                .setParameter("locationGroup", locationGroup).getSingleResult();
+        return (Integer) getEm()
+                .createNativeQuery(
+                        "select count(*) from TransportOrder to where to.targetLocationGroup = :locationGroup",
+                        Integer.class).setParameter("locationGroup", locationGroup).getSingleResult();
     }
 
     /**
@@ -86,5 +93,29 @@ public class TransportOrderDaoImpl extends AbstractGenericJpaDao<TransportOrder,
     public List<TransportOrder> findByIds(List<Long> ids) {
         return getEm().createQuery("select to from TransportOrder to where to.id in (:ids)").setParameter("ids", ids)
                 .getResultList();
+    }
+
+    /**
+     * {@inheritDoc}
+     * 
+     * @see org.openwms.tms.integration.TransportOrderDao#findForTUinState(org.openwms.common.domain.TransportUnit,
+     *      org.openwms.tms.domain.values.TransportOrderState[])
+     */
+    @Override
+    public List<TransportOrder> findForTUinState(TransportUnit transportUnit, TransportOrderState... states) {
+        Map<String, Object> params = new HashMap<String, Object>();
+        params.put("transportUnit", transportUnit);
+        params.put("states", Arrays.asList(states));
+        List<TransportOrder> others = super.findByNamedParameters(TransportOrder.NQ_FIND_FOR_TU_IN_STATE, params);
+        if (others == null || others.isEmpty()) {
+            if (logger.isDebugEnabled()) {
+                logger.debug("No TransportOrders found for TransportUnit: " + transportUnit);
+            }
+            return Collections.emptyList();
+        }
+        if (logger.isDebugEnabled()) {
+            logger.debug("TransportOrders for TransportUnit [" + transportUnit + "] in state [" + states + "] found");
+        }
+        return others;
     }
 }

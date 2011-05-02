@@ -23,8 +23,10 @@ package org.openwms.tms.integration;
 import java.util.List;
 
 import org.openwms.common.domain.LocationGroup;
+import org.openwms.common.domain.TransportUnit;
 import org.openwms.core.integration.GenericDao;
 import org.openwms.tms.domain.order.TransportOrder;
+import org.openwms.tms.domain.values.TransportOrderState;
 
 /**
  * A TransportOrderDao - Adds specific functionality concerning
@@ -49,12 +51,27 @@ public interface TransportOrderDao extends GenericDao<TransportOrder, Long> {
     int getNumberOfTransportOrders(LocationGroup locationGroup);
 
     /**
-     * Find and retrieve a list of {@link TransportOrder}s.
+     * Find and retrieve a list of {@link TransportOrder}s, searched by a list
+     * of their ids.
      * 
      * @param ids
      *            A list of technical keys of the orders to search for
      * @return The list of {@link TransportOrder}s.
      */
     List<TransportOrder> findByIds(List<Long> ids);
+
+    /**
+     * Find a list of {@link TransportOrder}s within defined states for a given
+     * {@link TransportUnit}. The implementation does never return
+     * <code>null</code>. In case no {@link TransportOrder}s are found an empty
+     * List is returned.
+     * 
+     * @param transportUnit
+     *            The {@link TransportUnit} to search for
+     * @param states
+     *            An arbitrary array of states
+     * @return A list of {@link TransportOrder}s or an empty list.
+     */
+    List<TransportOrder> findForTUinState(TransportUnit transportUnit, TransportOrderState... states);
 
 }
