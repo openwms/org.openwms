@@ -37,6 +37,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  * A DefaultOrderStateDelegate. Lazy instantiated only when needed. Thus it is
@@ -46,8 +48,9 @@ import org.springframework.stereotype.Component;
  * @version $Revision$
  * @since 0.1
  */
-@Component
 @Lazy
+@Component
+@Transactional(propagation = Propagation.MANDATORY)
 public class DefaultOrderStateDelegate implements TransportOrderStateDelegate {
 
     private final Logger logger = LoggerFactory.getLogger(getClass());
@@ -97,7 +100,7 @@ public class DefaultOrderStateDelegate implements TransportOrderStateDelegate {
      */
     @Override
     public void afterFinish(Long id) {
-        findAndStart(id);
+        startNextForTu(id);
     }
 
     /**
@@ -107,7 +110,7 @@ public class DefaultOrderStateDelegate implements TransportOrderStateDelegate {
      */
     @Override
     public void onCancel(Long id) {
-        findAndStart(id);
+        // findAndStart(id);
     }
 
     /**
@@ -117,7 +120,33 @@ public class DefaultOrderStateDelegate implements TransportOrderStateDelegate {
      */
     @Override
     public void onFailure(Long id) {
-        findAndStart(id);
+        startNextForTu(id);
+    }
+
+    private void startNextForTu(Long id) {
+        TransportOrder transportOrder = dao.findById(id);
+        if (null == transportOrder) {
+            logger.warn("TransportOrder with id:" + id + " could not be loaded");
+            return;
+        }
+        List<TransportOrder> transportOrders = findInState(transportOrder.getTransportUnit(),
+                TransportOrderState.INITIALIZED);
+        if (transportOrders == null) {
+            if (logger.isDebugEnabled()) {
+                logger.debug("No waiting TransportOrders for TransportUnit [" + transportOrder.getTransportUnit()
+                        + "] found");
+            }
+            return;
+        }
+        for (TransportOrder to : transportOrders) {
+            try {
+                starter.start(to);
+                break;
+            } catch (StateChangeException sce) {
+                // Not starting a transport here is not a problem, so be quiet
+                logger.warn(sce.getMessage());
+            }
+        }
     }
 
     /**
@@ -127,7 +156,7 @@ public class DefaultOrderStateDelegate implements TransportOrderStateDelegate {
      */
     @Override
     public void onInterrupt(Long id) {
-        findAndStart(id);
+        // findAndStart(id);
     }
 
     private boolean initialize(TransportOrder transportOrder) {
@@ -136,20 +165,6 @@ public class DefaultOrderStateDelegate implements TransportOrderStateDelegate {
             logger.debug("TransportOrder " + transportOrder.getId() + " INITIALIZED");
         }
         return true;
-    }
-
-    private void findAndStart(Long id) {
-        TransportOrder orderToStart = dao.findById(id);
-        if (null == orderToStart) {
-            logger.warn("No TransportOrder with id:" + id + " found");
-            return;
-        }
-        try {
-            starter.start(orderToStart);
-        } catch (StateChangeException sce) {
-            // Not starting a transport here is not a problem, so be quiet
-            logger.warn(sce.getMessage());
-        }
     }
 
     private List<TransportOrder> findInState(TransportUnit transportUnit, TransportOrderState... orderStates) {

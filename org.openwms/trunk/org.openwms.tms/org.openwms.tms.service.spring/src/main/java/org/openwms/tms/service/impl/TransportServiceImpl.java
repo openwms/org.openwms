@@ -37,7 +37,8 @@ import org.openwms.tms.domain.values.PriorityLevel;
 import org.openwms.tms.domain.values.TransportOrderState;
 import org.openwms.tms.integration.TransportOrderDao;
 import org.openwms.tms.service.TransportOrderService;
-import org.openwms.tms.service.TransportOrderServiceException;
+import org.openwms.tms.service.exception.TransportOrderServiceException;
+import org.openwms.tms.util.TransportOrderUtil;
 import org.openwms.tms.util.event.TransportServiceEvent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -173,19 +174,21 @@ public class TransportServiceImpl extends EntityServiceImpl<TransportOrder, Long
      * @see org.openwms.tms.service.TransportOrderService#cancelTransportOrders(java.util.List)
      */
     @Override
+    @Transactional(noRollbackFor = { IllegalStateException.class })
     public List<Integer> cancelTransportOrders(List<Integer> ids, TransportOrderState state) {
         List<Integer> failure = new ArrayList<Integer>(ids.size());
-        List<TransportOrder> transportOrders = dao.findByIds(getLongList(ids));
+        List<TransportOrder> transportOrders = dao.findByIds(TransportOrderUtil.getLongList(ids));
         for (TransportOrder transportOrder : transportOrders) {
             try {
-                transportOrder.setState(state);
-                ctx.publishEvent(new TransportServiceEvent(transportOrder.getId(),
-                        TransportServiceEvent.TYPE.TRANSPORT_CANCELED));
                 if (logger.isDebugEnabled()) {
-                    logger.debug("TransportOrder " + transportOrder.getId() + " successfully set to:" + state);
+                    logger.debug("Trying to set state of TransportOrder [" + transportOrder.getId() + "] to: " + state);
                 }
+                transportOrder.setState(state);
+                ctx.publishEvent(new TransportServiceEvent(transportOrder.getId(), TransportOrderUtil
+                        .convertToEventType(state)));
             } catch (IllegalStateException ise) {
-                logger.error("Could not cancel TransportOrder with ID:" + transportOrder.getId());
+                logger.error("Could not change state of TransportOrder: [" + transportOrder.getId()
+                        + "] with reason : " + ise.getMessage());
                 Problem problem = new Problem(ise.getMessage());
                 transportOrder.setProblem(problem);
                 failure.add(transportOrder.getId().intValue());
@@ -203,14 +206,10 @@ public class TransportServiceImpl extends EntityServiceImpl<TransportOrder, Long
     @Override
     public List<Integer> redirectTransportOrders(List<Integer> ids, LocationGroup targetLocationGroup) {
         List<Integer> failure = new ArrayList<Integer>(ids.size());
-        List<TransportOrder> transportOrders = dao.findByIds(getLongList(ids));
+        List<TransportOrder> transportOrders = dao.findByIds(TransportOrderUtil.getLongList(ids));
         for (TransportOrder transportOrder : transportOrders) {
             try {
                 transportOrder.setTargetLocationGroup(targetLocationGroup);
-                if (logger.isDebugEnabled()) {
-                    logger.debug("TransportOrder " + transportOrder.getId() + " successfully redirected to:"
-                            + targetLocationGroup.getName());
-                }
             } catch (RuntimeException e) {
                 logger.error("Could not redirect TransportOrder with ID:" + transportOrder.getId());
                 Problem problem = new Problem(e.getMessage());
@@ -221,11 +220,4 @@ public class TransportServiceImpl extends EntityServiceImpl<TransportOrder, Long
         return failure;
     }
 
-    private List<Long> getLongList(List<Integer> values) {
-        List<Long> longList = new ArrayList<Long>(values.size());
-        for (Integer number : values) {
-            longList.add(number.longValue());
-        }
-        return longList;
-    }
 }

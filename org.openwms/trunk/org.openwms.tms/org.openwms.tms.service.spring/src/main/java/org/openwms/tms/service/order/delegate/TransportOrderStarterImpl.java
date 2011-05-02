@@ -26,9 +26,9 @@ import org.openwms.common.domain.Location;
 import org.openwms.common.domain.LocationGroup;
 import org.openwms.tms.domain.order.TransportOrder;
 import org.openwms.tms.domain.values.TransportOrderState;
+import org.openwms.tms.integration.TransportOrderDao;
 import org.openwms.tms.service.delegate.TransportOrderStarter;
 import org.openwms.tms.service.exception.StateChangeException;
-import org.openwms.tms.service.util.TransportOrderUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -44,12 +44,12 @@ import org.springframework.transaction.annotation.Transactional;
  * @since 0.1
  */
 @Component
-@Transactional(propagation = Propagation.MANDATORY)
+@Transactional(propagation = Propagation.MANDATORY, noRollbackFor = { StateChangeException.class })
 public class TransportOrderStarterImpl implements TransportOrderStarter {
 
     private final Logger logger = LoggerFactory.getLogger(getClass());
     @Autowired
-    private TransportOrderUtil util;
+    private TransportOrderDao dao;
 
     /**
      * {@inheritDoc}
@@ -75,14 +75,15 @@ public class TransportOrderStarterImpl implements TransportOrderStarter {
         if (loc != null && !loc.isIncomingActive()) {
             throw new StateChangeException("Cannot start the TransportOrder because TargetLocation is blocked");
         }
-        List<TransportOrder> others = util.findActiveOrders(transportOrder.getTransportUnit());
+        List<TransportOrder> others = dao.findForTUinState(transportOrder.getTransportUnit(),
+                TransportOrderState.STARTED, TransportOrderState.INTERRUPTED);
         if (!others.isEmpty()) {
             throw new StateChangeException(
                     "Cannot start the TransportOrder because one or more active TransportOrders exist");
         }
         transportOrder.setState(TransportOrderState.STARTED);
         if (logger.isDebugEnabled()) {
-            logger.debug("TransportOrder " + transportOrder.getId() + " set to STARTED");
+            logger.debug("TransportOrder " + transportOrder.getId() + " started at " + transportOrder.getStartDate());
         }
     }
 

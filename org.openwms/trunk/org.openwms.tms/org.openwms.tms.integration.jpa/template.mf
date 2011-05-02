@@ -5,7 +5,7 @@ Bundle-Name: ${project.artifactId}
 Bundle-ManifestVersion: 2
 Bundle-SymbolicName: ${project.artifactId}
 Import-Library: 
- org.springframework.spring;version="[3.0, 3.1)"
+ org.springframework.spring;version="${spring.version}"
 Import-Bundle: 
  com.springsource.javax.persistence;version="1.0.0",
  org.openwms.core.domain;version="0.0.1.SNAPSHOT",
@@ -20,8 +20,8 @@ Require-Bundle:
 Import-Package: 
  org.hibernate.proxy; version="0.0.0",
  javax.sql;version="0",
- org.springframework.context.weaving;version="[3.0, 3.1)",
- org.springframework.transaction.aspectj;version="[3.0, 3.1)"
+ org.springframework.context.weaving;version="${spring.version}",
+ org.springframework.transaction.aspectj;version="${spring.version}"
 Excluded-Imports: 
  org.openwms.common.framework.test.*,
  org.openwms.common.test.*,
