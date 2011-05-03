@@ -178,6 +178,11 @@ package org.openwms.web.flex.client.view {
          * @param event Unused
          */
         public function lock(event : ApplicationEvent) : void {
+            if (modelLocator.fired) {
+                modelLocator.fired = false;
+                return;
+            }
+            trace("hhhh");
             modelLocator.SCREEN_LOCKED = true;
             modelLocator.actualView = SwitchScreenEvent.SHOW_STARTSCREEN;
             appViewStack.selectedIndex = DisplayUtility.getView(SwitchScreenEvent.SHOW_STARTSCREEN, appViewStack);

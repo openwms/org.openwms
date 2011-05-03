@@ -148,7 +148,7 @@ public class ModuleServiceTest extends AbstractJpaSpringContextTests {
         Module persisted = findByName("TMS");
         srv.remove(persisted);
         try {
-            persisted = findByName("TMS");
+            findByName("TMS");
             fail("Should throw an exception, we expect that the persisted entity TMS was removed");
         } catch (NoResultException nre) {
             logger.debug("OK: No result, persisted module TMS was removed");

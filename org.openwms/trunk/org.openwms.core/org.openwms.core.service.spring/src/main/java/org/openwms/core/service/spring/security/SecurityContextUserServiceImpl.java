@@ -97,11 +97,9 @@ public class SecurityContextUserServiceImpl implements UserDetailsService {
     public UserDetails loadUserByUsername(String username) {
 
         UserDetails ud = userCache.getUserFromCache(username);
-
-        if (ud != null) {
-            logger.debug("User found in cache");
-            return ud;
-        }
+        /**
+         * if (ud != null) { logger.debug("User found in cache"); return ud; }
+         */
         User user = null;
 
         if (systemUser.equals(username)) {

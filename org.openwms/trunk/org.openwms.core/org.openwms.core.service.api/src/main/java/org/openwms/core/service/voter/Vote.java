@@ -18,7 +18,16 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
+package org.openwms.core.service.voter;
+
 /**
- * This package contains classes that can can be extended by test classes.
+ * A Vote. Holds all information used by {@link DecisionVoter}s to vote for or
+ * against. Currently implemented only as superclass for particular votes.
+ * 
+ * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
+ * @version $Revision: $
+ * @since 0.1
  */
-package org.openwms.core.test;
+public class Vote {
+
+}

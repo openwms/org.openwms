@@ -20,8 +20,6 @@
  */
 package org.openwms.core.service.exception;
 
-import java.io.Serializable;
-
 /**
  * A ServiceException is a checked application exception.
  * 
@@ -29,20 +27,15 @@ import java.io.Serializable;
  * @version $Revision$
  * @since 0.1
  */
-public class ServiceException extends Exception implements Serializable {
+public class ServiceException extends Exception {
 
-    private static final long serialVersionUID = 3091182786979000919L;
-
-    /**
-     * Create a new ServiceException.
-     */
-    public ServiceException() {}
+    private static final long serialVersionUID = -4416392376427389375L;
 
     /**
      * Create a new ServiceException with a message text.
      * 
      * @param message
-     *            Message text as String
+     *            Detail message
      */
     public ServiceException(String message) {
         super(message);
@@ -52,7 +45,7 @@ public class ServiceException extends Exception implements Serializable {
      * Create a new ServiceException with a cause exception.
      * 
      * @param cause
-     *            The cause exception
+     *            Root cause
      */
     public ServiceException(Throwable cause) {
         super(cause);
@@ -63,9 +56,9 @@ public class ServiceException extends Exception implements Serializable {
      * exception.
      * 
      * @param message
-     *            Message text as String
+     *            Detail message
      * @param cause
-     *            The cause exception
+     *            Root cause
      */
     public ServiceException(String message, Throwable cause) {
         super(message, cause);

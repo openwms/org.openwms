@@ -18,51 +18,51 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
-package org.openwms.core.service.exception;
+package org.openwms.core.service.voter;
 
-import java.io.Serializable;
+import org.openwms.core.service.exception.ServiceException;
 
 /**
- * A RemovalNotAllowedException is thrown to indicate that the caller is not
- * allowed to remove an entity.
+ * A DeniedException. Is thrown by {@link DecisionVoter}s in case a business
+ * action is not allowed to be fulfilled.
  * 
- * @author <a href="mailto:russelltina@users.sourceforge.net">Tina Russell</a>
- * @version $Revision$
+ * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
+ * @version $Revision: $
  * @since 0.1
  */
-public class RemovalNotAllowedException extends ServiceException implements Serializable {
+public class DeniedException extends ServiceException {
 
-    private static final long serialVersionUID = -5592508830188199188L;
+    private static final long serialVersionUID = -7312236498183224626L;
 
     /**
-     * Create a new RemovalNotAllowedException.
+     * Create a new DeniedException.
      * 
      * @param message
      *            Detail message
      */
-    public RemovalNotAllowedException(String message) {
+    public DeniedException(String message) {
         super(message);
     }
 
     /**
-     * Create a new RemovalNotAllowedException.
+     * Create a new DeniedException.
      * 
      * @param cause
      *            Root cause
      */
-    public RemovalNotAllowedException(Throwable cause) {
+    public DeniedException(Throwable cause) {
         super(cause);
     }
 
     /**
-     * Create a new RemovalNotAllowedException.
+     * Create a new DeniedException.
      * 
      * @param message
      *            Detail message
      * @param cause
      *            Root cause
      */
-    public RemovalNotAllowedException(String message, Throwable cause) {
+    public DeniedException(String message, Throwable cause) {
         super(message, cause);
     }
 
