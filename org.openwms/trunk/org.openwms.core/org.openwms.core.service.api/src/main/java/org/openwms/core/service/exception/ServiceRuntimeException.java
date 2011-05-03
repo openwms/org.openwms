@@ -34,15 +34,10 @@ public class ServiceRuntimeException extends RuntimeException implements Seriali
     private static final long serialVersionUID = 3091182786979000919L;
 
     /**
-     * Create a new ServiceRuntimeException.
-     */
-    public ServiceRuntimeException() {}
-
-    /**
      * Create a new ServiceRuntimeException with a message text.
      * 
      * @param message
-     *            Message text as String
+     *            Detail message
      */
     public ServiceRuntimeException(String message) {
         super(message);
@@ -52,7 +47,7 @@ public class ServiceRuntimeException extends RuntimeException implements Seriali
      * Create a new ServiceRuntimeException with a cause exception.
      * 
      * @param cause
-     *            The cause exception
+     *            Root cause
      */
     public ServiceRuntimeException(Throwable cause) {
         super(cause);
@@ -63,9 +58,9 @@ public class ServiceRuntimeException extends RuntimeException implements Seriali
      * exception.
      * 
      * @param message
-     *            Message text as String
+     *            Detail message
      * @param cause
-     *            The cause exception
+     *            Root cause
      */
     public ServiceRuntimeException(String message, Throwable cause) {
         super(message, cause);

@@ -18,7 +18,24 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
+package org.openwms.core.service.voter;
+
 /**
- * This package contains classes that can can be extended by test classes.
+ * A DecisionVoter. Is asked to vote for a business action.
+ * 
+ * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
+ * @version $Revision: $
+ * @since 0.1
  */
-package org.openwms.core.test;
+public interface DecisionVoter<T extends Vote> {
+
+    /**
+     * The implementation has to vote for it's particular vote on also
+     * particular rules implemented by the voter.
+     * 
+     * @throws DeniedException
+     *             is thrown when the voter does not vote for the action to be
+     *             allowed.
+     */
+    void voteFor(T vote) throws DeniedException;
+}
