@@ -18,51 +18,48 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
-package org.openwms.tms.service.exception;
+package org.openwms.tms.service.impl;
 
-import org.openwms.core.service.exception.ServiceException;
+import org.openwms.common.domain.Location;
+import org.openwms.common.domain.LocationGroup;
+import org.openwms.core.service.voter.Vote;
 
 /**
- * A StateChangeException.
+ * A RedirectVote.
  * 
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  * @version $Revision: $
  * @since 0.1
  */
-public class StateChangeException extends ServiceException {
+public class RedirectVote extends Vote {
 
-    private static final long serialVersionUID = 7844172843875393420L;
+    private LocationGroup locationGroup;
+    private Location location;
 
     /**
-     * Create a new StateChangeException.
+     * Create a new RedirectVote.
      * 
-     * @param message
-     *            Detail message
      */
-    public StateChangeException(String message) {
-        super(message);
+    public RedirectVote(LocationGroup targetLocationGroup, Location targetLocation) {
+        this.locationGroup = targetLocationGroup;
+        this.location = targetLocation;
     }
 
     /**
-     * Create a new StateChangeException.
+     * Get the location.
      * 
-     * @param cause
-     *            Root cause
+     * @return the location.
      */
-    public StateChangeException(Throwable cause) {
-        super(cause);
+    public Location getLocation() {
+        return location;
     }
 
     /**
-     * Create a new StateChangeException.
+     * Get the locationGroup.
      * 
-     * @param message
-     *            Detail message
-     * @param cause
-     *            Root cause
+     * @return the locationGroup.
      */
-    public StateChangeException(String message, Throwable cause) {
-        super(message, cause);
+    public LocationGroup getLocationGroup() {
+        return locationGroup;
     }
-
 }

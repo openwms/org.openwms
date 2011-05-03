@@ -18,51 +18,35 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
-package org.openwms.tms.service.exception;
+package org.openwms.tms.service.impl;
 
-import org.openwms.core.service.exception.ServiceException;
+import org.openwms.core.service.voter.DecisionVoter;
+import org.openwms.core.service.voter.DeniedException;
 
 /**
- * A StateChangeException.
+ * A TargetAcceptedVoter.
  * 
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  * @version $Revision: $
  * @since 0.1
  */
-public class StateChangeException extends ServiceException {
-
-    private static final long serialVersionUID = 7844172843875393420L;
+public class TargetAcceptedVoter implements DecisionVoter<RedirectVote> {
 
     /**
-     * Create a new StateChangeException.
-     * 
-     * @param message
-     *            Detail message
+     * @see org.openwms.tms.service.voter.DecisionVoter#voteFor(org.openwms.tms.service.voter.Vote)
      */
-    public StateChangeException(String message) {
-        super(message);
-    }
-
-    /**
-     * Create a new StateChangeException.
-     * 
-     * @param cause
-     *            Root cause
-     */
-    public StateChangeException(Throwable cause) {
-        super(cause);
-    }
-
-    /**
-     * Create a new StateChangeException.
-     * 
-     * @param message
-     *            Detail message
-     * @param cause
-     *            Root cause
-     */
-    public StateChangeException(String message, Throwable cause) {
-        super(message, cause);
+    @Override
+    public void voteFor(RedirectVote vote) throws DeniedException {
+        if (null != vote.getLocationGroup()) {
+            if (vote.getLocationGroup().isInfeedBlocked()) {
+                throw new DeniedException("The targetLocationGroup is blocked and is not accepted as target");
+            }
+        }
+        if (null != vote.getLocation()) {
+            if (vote.getLocation().isInfeedBlocked()) {
+                throw new DeniedException("The targetLocation is blocked and is not accepted as target");
+            }
+        }
     }
 
 }

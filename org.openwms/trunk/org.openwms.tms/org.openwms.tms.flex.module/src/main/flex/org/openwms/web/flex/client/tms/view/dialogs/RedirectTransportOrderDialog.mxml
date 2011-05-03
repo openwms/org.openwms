@@ -58,7 +58,7 @@
                 for each (var order:TransportOrder in redirectLst.dataProvider) {
                 	ids.addItem(order.id);
                 }
-                event.data = ids;
+                event.data = {ids:ids, targetLocationGroup:targetLocationGroupCmb.selectedItem, targetLocation:targetLocationCmb.selectedItem};
                 dispatchEvent(event);
                 closeDialog();
             }
