@@ -20,7 +20,6 @@
  */
 package org.openwms.common.domain;
 
-import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Collections;
 import java.util.Date;
@@ -47,6 +46,7 @@ import javax.persistence.TemporalType;
 import javax.persistence.UniqueConstraint;
 import javax.persistence.Version;
 
+import org.openwms.common.domain.types.Target;
 import org.openwms.core.domain.AbstractEntity;
 import org.openwms.core.domain.DomainObject;
 import org.openwms.core.domain.system.Message;
@@ -72,7 +72,7 @@ import org.openwms.core.domain.system.Message;
         @NamedQuery(name = Location.NQ_FIND_ALL, query = "select l from Location l"),
         @NamedQuery(name = Location.NQ_FIND_BY_UNIQUE_QUERY, query = "select l from Location l where l.locationId = ?1"),
         @NamedQuery(name = Location.NQ_FIND_ALL_EAGER, query = "select l from Location l left join fetch l.messages left join fetch l.locationType") })
-public class Location extends AbstractEntity implements DomainObject<Long>, Serializable {
+public class Location extends AbstractEntity implements DomainObject<Long>, Target {
 
     private static final long serialVersionUID = 6958794248591576907L;
 
@@ -344,6 +344,16 @@ public class Location extends AbstractEntity implements DomainObject<Long>, Seri
     }
 
     /**
+     * Check whether infeed is blocked and moving {@link TransportUnit}s to here
+     * is forbidden.
+     * 
+     * @return <code>true</code> is blocked, otherwise <code>false</code>
+     */
+    public boolean isInfeedBlocked() {
+        return !this.incomingActive;
+    }
+
+    /**
      * Return the date when the <code>Location</code> was updated the last time.
      * 
      * @return Timestamp of the last update
@@ -434,6 +444,16 @@ public class Location extends AbstractEntity implements DomainObject<Long>, Seri
      */
     public boolean isOutgoingActive() {
         return this.outgoingActive;
+    }
+
+    /**
+     * Check whether outfeed is blocked and moving {@link TransportUnit}s from
+     * here is forbidden.
+     * 
+     * @return <code>true</code> is blocked, otherwise <code>false</code>
+     */
+    public boolean isOutfeedBlocked() {
+        return !this.outgoingActive;
     }
 
     /**
