@@ -152,8 +152,7 @@ public class UserDaoTest extends AbstractJpaSpringContextTests {
      */
     @Test
     public final void testFindByUsernameAndPassword() {
-        assertTrue("User by password must be found",
-                dao.findByNameAndPassword(new UserPassword(user, "TEST")) instanceof User);
+        assertNotNull("User by password must be found", dao.findByNameAndPassword(new UserPassword(user, "TEST")));
     }
 
     /**
