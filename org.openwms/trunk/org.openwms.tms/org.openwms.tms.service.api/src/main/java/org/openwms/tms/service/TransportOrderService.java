@@ -101,10 +101,10 @@ public interface TransportOrderService<T extends TransportOrder> extends EntityS
     T createTransportOrder(Barcode barcode, Location targetLocation, PriorityLevel priority);
 
     /**
-     * Try to cancel a list of {@link TransportOrder}s.
+     * Try to turn a list of {@link TransportOrder}s into state.
      * 
      * @param transportOrders
-     *            The IDs of {@link TransportOrder}s to be canceled
+     *            The IDs of {@link TransportOrder}s
      * @param state
      *            The state to change all orders to
      * @return A list of {@link TransportOrder} IDs that have not been canceled
@@ -117,12 +117,17 @@ public interface TransportOrderService<T extends TransportOrder> extends EntityS
      * {@link LocationGroup}.
      * 
      * @param transportOrders
-     *            The IDs of {@link TransportOrder}s to be canceled
+     *            The IDs of {@link TransportOrder}s to be redirected
      * @param targetLocationGroup
-     *            The target {@link LocationGroup} for the orders
-     * @return A list of {@link TransportOrder} IDs that have not been
-     *         redirected successfully
+     *            The new target {@link LocationGroup} for the
+     *            {@link TransportOrder}s or <code>null</code>
+     * @param targetLocation
+     *            The new target {@link Location} for the {@link TransportOrder}
+     *            s, or <code>null</code>
+     * @return A list of {@link TransportOrder} IDs that couldn't be redirected
+     *         successfully
      */
-    List<Integer> redirectTransportOrders(List<Integer> transportOrders, LocationGroup targetLocationGroup);
+    List<Integer> redirectTransportOrders(List<Integer> transportOrders, LocationGroup targetLocationGroup,
+            Location targetLocation);
 
 }
