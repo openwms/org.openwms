@@ -26,7 +26,7 @@ import org.junit.Test;
 import org.openwms.core.test.AbstractJpaSpringContextTests;
 
 /**
- * A EmailTest.
+ * An EmailTest.
  * 
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  * @version $Revision: $
@@ -36,23 +36,22 @@ public class EmailTest extends AbstractJpaSpringContextTests {
     @Test
     public final void testConstruction() {
         try {
-            Email e1 = new Email(null, null);
+            new Email(null, null);
             fail("Not allowed to create an email without user and address");
         } catch (AssertionError e) {
             logger.debug("Not allowed to create an email without user and address");
         }
         try {
-            Email e1 = new Email("Test", null);
+            new Email("Test", null);
             fail("Not allowed to create an email without address");
         } catch (AssertionError e) {
             logger.debug("Not allowed to create an email without address");
         }
         try {
-            Email e1 = new Email(null, "force something, still no mail check");
+            new Email(null, "force something, still no mail check");
             fail("Not allowed to create an email without user");
         } catch (AssertionError e) {
             logger.debug("Not allowed to create an email without user");
         }
-
     }
 }
