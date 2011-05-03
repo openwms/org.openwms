@@ -51,7 +51,7 @@
             [In]
             [Bindable]
             /**
-             * Inject.
+             * Inject a model to work on.
              */
             public var commonModelLocator:CommonModelLocator;
 
