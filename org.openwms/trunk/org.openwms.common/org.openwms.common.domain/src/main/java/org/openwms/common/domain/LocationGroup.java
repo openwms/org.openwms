@@ -20,7 +20,6 @@
  */
 package org.openwms.common.domain;
 
-import java.io.Serializable;
 import java.util.Collections;
 import java.util.Date;
 import java.util.HashSet;
@@ -41,6 +40,7 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.persistence.Version;
 
+import org.openwms.common.domain.types.Target;
 import org.openwms.common.domain.values.LocationGroupState;
 import org.openwms.core.domain.AbstractEntity;
 import org.openwms.core.domain.DomainObject;
@@ -60,7 +60,7 @@ import org.openwms.core.domain.DomainObject;
 @Table(name = "COM_LOCATION_GROUP")
 @NamedQueries({ @NamedQuery(name = "LocationGroup.findAll", query = "select lg from LocationGroup lg"),
         @NamedQuery(name = "LocationGroup.findByName", query = "select lg from LocationGroup lg where lg.name = ?1") })
-public class LocationGroup extends AbstractEntity implements DomainObject<Long>, Serializable {
+public class LocationGroup extends AbstractEntity implements DomainObject<Long>, Target {
 
     private static final long serialVersionUID = -885742169116552293L;
 
@@ -245,6 +245,24 @@ public class LocationGroup extends AbstractEntity implements DomainObject<Long>,
      * @return <code>true</code> if blocked, otherwise <code>false</code>.
      */
     public boolean isInfeedBlocked() {
+        return !isInfeedAllowed();
+    }
+
+    /**
+     * Check whether outfeed is allowed for the <code>LocationGroup</code>.
+     * 
+     * @return <code>true</code> if allowed, otherwise <code>false</code>.
+     */
+    public boolean isOutfeedAllowed() {
+        return (getGroupStateIn() == LocationGroupState.AVAILABLE);
+    }
+
+    /**
+     * Check whether outfeed of the <code>LocationGroup</code> is blocked.
+     * 
+     * @return <code>true</code> if blocked, otherwise <code>false</code>.
+     */
+    public boolean isOutfeedBlocked() {
         return !isInfeedAllowed();
     }
 
