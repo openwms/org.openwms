@@ -32,7 +32,7 @@
             http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-3.0.xsd">
 
 
-    <context:component-scan base-package="org.openwms.tms.service" />
+    <context:component-scan base-package="org.openwms.tms.service.spring" />
     <context:annotation-config />
     <tx:annotation-driven />
 
