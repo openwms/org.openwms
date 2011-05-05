@@ -20,59 +20,34 @@
  */
 package org.openwms.tms.domain.values;
 
+import java.util.Comparator;
+
+import org.openwms.tms.domain.order.TransportOrder;
+
 /**
- * A PriorityLevel is used to prioritize
- * {@link org.openwms.tms.domain.order.TransportOrder}s.
+ * A TransportStartComparator.
  * 
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
- * @version $Revision$
+ * @version $Revision: $
  * @since 0.1
- * @see org.openwms.tms.domain.order.TransportOrder
  */
-public enum PriorityLevel {
+public class TransportStartComparator implements Comparator<TransportOrder> {
 
     /**
-     * Lowest priority.
+     * @see java.util.Comparator#compare(java.lang.Object, java.lang.Object)
      */
-    LOWEST(10),
-
-    /**
-     * Low priority.
-     */
-    LOW(20),
-
-    /**
-     * Standard priority.
-     */
-    NORMAL(30),
-
-    /**
-     * High priority.
-     */
-    HIGH(40),
-
-    /**
-     * Highest priority.
-     */
-    HIGHEST(50);
-
-    private int order;
-
-    /**
-     * Create a new PriorityLevel.
-     * 
-     */
-    private PriorityLevel(int order) {
-        this.order = order;
+    @Override
+    public int compare(TransportOrder o1, TransportOrder o2) {
+        if (o1.getPriority().getOrder() > o2.getPriority().getOrder()) {
+            return -1;
+        } else if (o1.getPriority().getOrder() < o2.getPriority().getOrder()) {
+            return 1;
+        }
+        if (o1.getId() < o2.getId()) {
+            return -1;
+        } else if (o1.getId() > o2.getId()) {
+            return 1;
+        }
+        return 0;
     }
-
-    /**
-     * Get the order.
-     * 
-     * @return the order.
-     */
-    public int getOrder() {
-        return order;
-    }
-
 }

@@ -21,12 +21,14 @@
 package org.openwms.tms.service.spring.delegate;
 
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import org.openwms.common.domain.TransportUnit;
 import org.openwms.tms.domain.order.TransportOrder;
+import org.openwms.tms.domain.values.TransportStartComparator;
 import org.openwms.tms.domain.values.TransportOrderState;
 import org.openwms.tms.integration.TransportOrderDao;
 import org.openwms.tms.service.delegate.TransportOrderStarter;
@@ -133,6 +135,7 @@ public class DefaultOrderStateDelegate implements TransportOrderStateDelegate {
         }
         List<TransportOrder> transportOrders = findInState(transportOrder.getTransportUnit(),
                 TransportOrderState.INITIALIZED);
+        Collections.sort(transportOrders, new TransportStartComparator());
         if (transportOrders == null) {
             if (logger.isDebugEnabled()) {
                 logger.debug("No waiting TransportOrders for TransportUnit [" + transportOrder.getTransportUnit()
@@ -145,8 +148,11 @@ public class DefaultOrderStateDelegate implements TransportOrderStateDelegate {
                 starter.start(to);
                 break;
             } catch (StateChangeException sce) {
-                // Not starting a transport here is not a problem, so be quiet
-                logger.warn(sce.getMessage());
+                if (logger.isDebugEnabled()) {
+                    // Not starting a transport here is not a problem, so be
+                    // quiet
+                    logger.debug(sce.getMessage());
+                }
             }
         }
     }
@@ -163,6 +169,7 @@ public class DefaultOrderStateDelegate implements TransportOrderStateDelegate {
 
     private boolean initialize(TransportOrder transportOrder) {
         transportOrder.setState(TransportOrderState.INITIALIZED);
+        transportOrder.setSourceLocation(transportOrder.getTransportUnit().getActualLocation());
         if (logger.isDebugEnabled()) {
             logger.debug("TransportOrder " + transportOrder.getId() + " INITIALIZED");
         }
