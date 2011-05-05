@@ -67,10 +67,9 @@ public class TransportUnitRemovalListener implements OnRemovalListener<Transport
      * 
      * @see org.openwms.common.service.OnRemovalListener#preRemove(org.openwms.common.domain.AbstractEntity)
      *      .
-     * @throws An
-     *             {@link RemovalNotAllowedException} when active
-     *             {@link TransportOrder}s exist for the {@link TransportUnit}
-     *             entity.
+     * @throws {@link RemovalNotAllowedException} when active
+     *         {@link TransportOrder}s exist for the {@link TransportUnit}
+     *         entity.
      */
     @Override
     public boolean preRemove(TransportUnit entity) throws RemovalNotAllowedException {
@@ -96,11 +95,6 @@ public class TransportUnitRemovalListener implements OnRemovalListener<Transport
         }
     }
 
-    /**
-     * FIXME [scherrer] Comment this
-     * 
-     * @param entity
-     */
     private void unlinkFinishedOrders(TransportUnit transportUnit) {
         if (logger.isDebugEnabled()) {
             logger.debug("Trying to unlink finished and failed TransportOrders for TransportUnit: " + transportUnit);
@@ -120,15 +114,7 @@ public class TransportUnitRemovalListener implements OnRemovalListener<Transport
         }
     }
 
-    /**
-     * FIXME [scherrer] Comment this
-     * 
-     * @param entity
-     */
     private void unlinkCanceledOrders(TransportUnit transportUnit) {
-        if (logger.isDebugEnabled()) {
-            logger.debug("Trying to unlink finished and failed TransportOrders for TransportUnit: " + transportUnit);
-        }
         List<TransportOrder> transportOrders = dao.findForTUinState(transportUnit, TransportOrderState.CANCELED);
         if (!transportOrders.isEmpty()) {
             for (TransportOrder transportOrder : transportOrders) {
