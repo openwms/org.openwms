@@ -81,7 +81,10 @@ public class TransportServiceImpl extends EntityServiceImpl<TransportOrder, Long
     @Qualifier("locationGroupDao")
     private GenericDao<LocationGroup, Long> locationGroupDao;
 
-    // 0..* voters
+    /**
+     * 0..* voters, can be overridden and extended with XML configuration. So
+     * far we define only one (default) voter direcly.
+     */
     @Autowired(required = false)
     @Qualifier("targetAcceptedVoter")
     private List<DecisionVoter<RedirectVote>> redirectVoters;
