@@ -106,11 +106,13 @@ public class DefaultOrderStateDelegate implements TransportOrderStateDelegate {
     /**
      * {@inheritDoc}
      * 
+     * On cancel try to start the next one.
+     * 
      * @see org.openwms.tms.service.delegate.TransportOrderStateDelegate#onCancel(java.lang.Long)
      */
     @Override
     public void onCancel(Long id) {
-        // findAndStart(id);
+        startNextForTu(id);
     }
 
     /**
@@ -156,7 +158,7 @@ public class DefaultOrderStateDelegate implements TransportOrderStateDelegate {
      */
     @Override
     public void onInterrupt(Long id) {
-        // findAndStart(id);
+        startNextForTu(id);
     }
 
     private boolean initialize(TransportOrder transportOrder) {

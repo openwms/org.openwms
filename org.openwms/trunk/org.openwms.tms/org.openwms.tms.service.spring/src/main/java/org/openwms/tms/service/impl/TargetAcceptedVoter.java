@@ -22,17 +22,24 @@ package org.openwms.tms.service.impl;
 
 import org.openwms.core.service.voter.DecisionVoter;
 import org.openwms.core.service.voter.DeniedException;
+import org.springframework.context.annotation.Lazy;
+import org.springframework.stereotype.Component;
 
 /**
- * A TargetAcceptedVoter.
+ * A TargetAcceptedVoter. Votes for a {@link RedirectVote} whether the target
+ * location or the target locationGroup is enabled for infeed.
  * 
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  * @version $Revision: $
  * @since 0.1
  */
+@Lazy
+@Component("targetAcceptedVoter")
 public class TargetAcceptedVoter implements DecisionVoter<RedirectVote> {
 
     /**
+     * {@inheritDoc} Simple check for infeed blocked.
+     * 
      * @see org.openwms.tms.service.voter.DecisionVoter#voteFor(org.openwms.tms.service.voter.Vote)
      */
     @Override

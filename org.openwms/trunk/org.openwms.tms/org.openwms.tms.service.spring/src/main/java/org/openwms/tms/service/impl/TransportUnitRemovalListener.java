@@ -48,9 +48,8 @@ import org.springframework.transaction.annotation.Transactional;
 public class TransportUnitRemovalListener implements OnRemovalListener<TransportUnit> {
 
     private final Logger logger = LoggerFactory.getLogger(getClass());
-
     @Autowired
-    protected TransportOrderDao dao;
+    private TransportOrderDao dao;
 
     /**
      * {@inheritDoc}

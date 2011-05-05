@@ -25,7 +25,8 @@ import org.openwms.common.domain.LocationGroup;
 import org.openwms.core.service.voter.Vote;
 
 /**
- * A RedirectVote.
+ * A RedirectVote. Encapsulates a targetLocationGroup and a targetLocation to
+ * vote for as targets.
  * 
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  * @version $Revision: $
@@ -39,6 +40,10 @@ public class RedirectVote extends Vote {
     /**
      * Create a new RedirectVote.
      * 
+     * @param targetLocationGroup
+     *            The target {@link LocationGroup} to vote for
+     * @param targetLocation
+     *            The target {@link Location} to vote for
      */
     public RedirectVote(LocationGroup targetLocationGroup, Location targetLocation) {
         this.locationGroup = targetLocationGroup;
