@@ -32,8 +32,9 @@ import org.openwms.tms.integration.TransportOrderDao;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.Assert;
 
 /**
  * A TransportUnitRemovalListener. Is implemented as a Voter to allow the
@@ -43,7 +44,7 @@ import org.springframework.transaction.annotation.Transactional;
  * @version $Revision$
  * @since 0.1
  */
-@Service
+@Component
 @Transactional
 public class TransportUnitRemovalListener implements OnRemovalListener<TransportUnit> {
 
@@ -67,13 +68,13 @@ public class TransportUnitRemovalListener implements OnRemovalListener<Transport
      * 
      * @see org.openwms.common.service.OnRemovalListener#preRemove(org.openwms.common.domain.AbstractEntity)
      *      .
-     * @throws {@link RemovalNotAllowedException} when active
-     *         {@link TransportOrder}s exist for the {@link TransportUnit}
-     *         entity.
+     * @throws RemovalNotAllowedException
+     *             when active {@link TransportOrder}s exist for the
+     *             {@link TransportUnit} entity.
      */
     @Override
     public boolean preRemove(TransportUnit entity) throws RemovalNotAllowedException {
-        assert entity != null;
+        Assert.notNull(entity, "Not allowed to call with null argument");
         if (logger.isDebugEnabled()) {
             logger.debug("Someone is trying to remove the TransportUnit [" + entity
                     + " ], check for existing TransportOrders");

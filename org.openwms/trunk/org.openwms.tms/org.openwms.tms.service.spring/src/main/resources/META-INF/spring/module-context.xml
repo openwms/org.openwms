@@ -36,6 +36,6 @@
     <context:annotation-config />
     <tx:annotation-driven />
 
-    <bean id="tuRemovalListener" class="org.openwms.tms.service.impl.TransportUnitRemovalListener" />
+    <bean id="tuRemovalListener" class="org.openwms.tms.service.spring.TransportUnitRemovalListener" />
 
 </beans>
