@@ -40,6 +40,7 @@ import org.openwms.tms.domain.values.TransportOrderState;
 import org.openwms.tms.integration.TransportOrderDao;
 import org.openwms.tms.service.TransportOrderService;
 import org.openwms.tms.service.exception.TransportOrderServiceException;
+import org.openwms.tms.service.spring.voter.RedirectVote;
 import org.openwms.tms.util.TransportOrderUtil;
 import org.openwms.tms.util.event.TransportServiceEvent;
 import org.slf4j.Logger;
