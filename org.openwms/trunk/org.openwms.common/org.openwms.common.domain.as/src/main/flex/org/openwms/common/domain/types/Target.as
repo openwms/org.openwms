@@ -20,6 +20,12 @@
  */
 package org.openwms.common.domain.types {
 
+    /**
+     * A Target is used for TransportOrders and is only a marker interface.
+     * 
+     * @version $Revision: 1039 $
+     * @since 0.1
+     */
     public interface Target {
     }
 }
