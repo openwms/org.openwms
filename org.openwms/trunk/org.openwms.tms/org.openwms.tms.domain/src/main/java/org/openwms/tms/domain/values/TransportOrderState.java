@@ -21,7 +21,8 @@
 package org.openwms.tms.domain.values;
 
 /**
- * A TransportOrderState defines alll possible states of {@link org.openwms.tms.domain.order.TransportOrder}s.
+ * A TransportOrderState defines alll possible states of
+ * {@link org.openwms.tms.domain.order.TransportOrder}s.
  * 
  * @author <a href="mailto:russelltina@users.sourceforge.net">Tina Russell</a>
  * @version $Revision$
@@ -33,37 +34,55 @@ public enum TransportOrderState {
     /**
      * Status of new created <code>TransportOrder</code>s.
      */
-    CREATED,
+    CREATED(10),
 
     /**
-     * Status of a full initialized <code>TransportOrder</code>, ready to be started.
+     * Status of a full initialized <code>TransportOrder</code>, ready to be
+     * started.
      */
-    INITIALIZED,
+    INITIALIZED(20),
 
     /**
-     * A started <code>TransportOrder</code>, active to be executed. Only one per
-     * <code>TransportUnit</code> allowed.
+     * A started and active<code>TransportOrder</code>, ready to be executed.
      */
-    STARTED,
+    STARTED(30),
 
     /**
-     * Status to indicate that the <code>TransportOrder</code> is paused. Not active anymore.
+     * Status to indicate that the <code>TransportOrder</code> is paused. Not
+     * active anymore.
      */
-    INTERRUPTED,
+    INTERRUPTED(40),
 
     /**
-     * Status to indicate a failure on the TransportOrder. Not active anymore.
+     * Status to indicate a failure on the <code>TransportOrder</code>. Not
+     * active anymore.
      */
-    ONFAILURE,
+    ONFAILURE(50),
 
     /**
-     * Status of a aborted TransportOrder. Not active anymore.
+     * Status of a aborted <code>TransportOrder</code>. Not active anymore.
      */
-    CANCELED,
+    CANCELED(60),
 
     /**
-     * Status to indicate that the TransportOrder completed successfully.
+     * Status to indicate that the <code>TransportOrder</code> completed
+     * successfully.
      */
-    FINISHED;
+    FINISHED(70);
+
+    private int order;
+
+    private TransportOrderState(int sortOrder) {
+        this.order = sortOrder;
+    }
+
+    /**
+     * Get the order.
+     * 
+     * @return the order.
+     */
+    public int getOrder() {
+        return order;
+    }
 
 }

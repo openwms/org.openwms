@@ -58,10 +58,6 @@ public enum PriorityLevel {
 
     private int order;
 
-    /**
-     * Create a new PriorityLevel.
-     * 
-     */
     private PriorityLevel(int order) {
         this.order = order;
     }
