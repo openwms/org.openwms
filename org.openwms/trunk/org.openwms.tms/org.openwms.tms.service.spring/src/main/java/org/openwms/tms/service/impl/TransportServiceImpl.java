@@ -80,6 +80,9 @@ public class TransportServiceImpl extends EntityServiceImpl<TransportOrder, Long
     @Qualifier("locationGroupDao")
     private GenericDao<LocationGroup, Long> locationGroupDao;
 
+    // 0..* voters
+    @Autowired(required = false)
+    @Qualifier("targetAcceptedVoter")
     private List<DecisionVoter<RedirectVote>> redirectVoters;
 
     @SuppressWarnings("unused")
@@ -223,6 +226,8 @@ public class TransportServiceImpl extends EntityServiceImpl<TransportOrder, Long
      * @see org.openwms.tms.service.TransportOrderService#redirectTransportOrders(java.util.List,
      *      org.openwms.common.domain.LocationGroup,
      *      org.openwms.common.domain.Location)
+     * @throws TransportOrderServiceException
+     *             when both targets are <code>null</code>
      */
     @Override
     public List<Integer> redirectTransportOrders(List<Integer> ids, LocationGroup targetLocationGroup,
@@ -233,7 +238,7 @@ public class TransportServiceImpl extends EntityServiceImpl<TransportOrder, Long
             tLocationGroup = locationGroupDao.findByUniqueId(targetLocationGroup.getName());
         }
         if (null != targetLocation) {
-            locationDao.findByUniqueId(targetLocation.getLocationId());
+            tLocation = locationDao.findByUniqueId(targetLocation.getLocationId());
         }
         if (null == tLocation && null == tLocationGroup) {
             throw new TransportOrderServiceException(
@@ -243,7 +248,9 @@ public class TransportServiceImpl extends EntityServiceImpl<TransportOrder, Long
         List<TransportOrder> transportOrders = dao.findByIds(TransportOrderUtil.getLongList(ids));
         for (TransportOrder transportOrder : transportOrders) {
             try {
-                voteOnVoters(new RedirectVote(targetLocationGroup, targetLocation));
+                if (null != redirectVoters) {
+                    voteOnVoters(new RedirectVote(targetLocationGroup, targetLocation));
+                }
                 if (null != tLocationGroup) {
                     transportOrder.setTargetLocationGroup(tLocationGroup);
                 }

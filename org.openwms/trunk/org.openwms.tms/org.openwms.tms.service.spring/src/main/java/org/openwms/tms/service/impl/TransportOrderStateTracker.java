@@ -25,19 +25,19 @@ import org.openwms.tms.service.delegate.TransportOrderStateDelegate;
 import org.openwms.tms.util.event.TransportServiceEvent;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationListener;
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
 /**
- * A TransportOrderStateTracker.
+ * A TransportOrderStateTracker. A listener adapter that delegates to an
+ * instance of {@link TransportOrderStateDelegate}.
  * 
  * @author <a href="mailto:russelltina@users.sourceforge.net">Tina Russell</a>
  * @version $Revision$
  * @since 0.1
- * @see org.openwms.tms.service.order.delegate.DefaultOrderStateDelegate
  * @see org.openwms.tms.service.delegate.TransportOrderStateDelegate
  */
-@Service
+@Component
 @Transactional
 public class TransportOrderStateTracker implements ApplicationListener<TransportServiceEvent> {
 
