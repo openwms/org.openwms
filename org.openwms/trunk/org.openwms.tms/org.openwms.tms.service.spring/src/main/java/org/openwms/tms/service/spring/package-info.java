@@ -21,4 +21,4 @@
 /**
  * This package provides business logic to perform common actions of the transport management.
  */
-package org.openwms.tms.service.impl;
+package org.openwms.tms.service.spring;
