@@ -45,8 +45,11 @@ package org.openwms.web.flex.client.view {
     import org.openwms.web.flex.client.business.PropertyDelegate;
     import org.openwms.web.flex.client.business.RoleDelegate;
     import org.openwms.web.flex.client.business.UserDelegate;
+    import org.openwms.web.flex.client.business.I18nDelegate;
     import org.openwms.web.flex.client.event.ApplicationEvent;
+    import org.openwms.web.flex.client.event.I18nEvent;
     import org.openwms.web.flex.client.event.SwitchScreenEvent;
+    import org.openwms.web.flex.client.model.I18nMap;
     import org.openwms.web.flex.client.model.ModelLocator;
     import org.openwms.web.flex.client.module.ModuleLocator;
     import org.openwms.web.flex.client.util.DisplayUtility;
@@ -115,7 +118,7 @@ package org.openwms.web.flex.client.view {
          * TideContext instance.
          */
         public var tideContext : Context = Spring.getInstance().getSpringContext();
-        Spring.getInstance().addComponents([ModelLocator, ModuleLocator, UserDelegate, RoleDelegate, PropertyDelegate]);
+        Spring.getInstance().addComponents([ModelLocator, ModuleLocator, UserDelegate, RoleDelegate, PropertyDelegate, I18nMap, I18nDelegate]);
 
 
         /**
@@ -139,6 +142,8 @@ package org.openwms.web.flex.client.view {
          */
         public function init() : void {
             tideContext.mainAppUI = this;
+            trace("Load all internationalized texts");
+            tideContext.raiseEvent(I18nEvent.LOAD_ALL);
         }
 
         /**
@@ -182,7 +187,6 @@ package org.openwms.web.flex.client.view {
                 modelLocator.fired = false;
                 return;
             }
-            trace("hhhh");
             modelLocator.SCREEN_LOCKED = true;
             modelLocator.actualView = SwitchScreenEvent.SHOW_STARTSCREEN;
             appViewStack.selectedIndex = DisplayUtility.getView(SwitchScreenEvent.SHOW_STARTSCREEN, appViewStack);

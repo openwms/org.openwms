@@ -34,16 +34,9 @@
     <context:property-placeholder properties-ref="global.properties" />
 
 	<context:annotation-config />
+    <context:component-scan base-package="org.openwms.core.service.spring" />
     <tx:annotation-driven />
 
-	<bean id="userService" class="org.openwms.core.service.spring.UserServiceImpl" />
-
-    <bean id="roleService" class="org.openwms.core.service.spring.RoleServiceImpl" />
-
-    <bean id="moduleService" class="org.openwms.core.service.spring.ModuleServiceImpl" />
-
-    <bean id="configurationService" class="org.openwms.core.service.spring.ConfigurationServiceImpl" />
-    
     <bean id="userDetailsService" class="org.openwms.core.service.spring.security.SecurityContextUserServiceImpl">
         <property name="systemUser" value="${system.user}" />
         <property name="systemPassword" value="${system.password}" />

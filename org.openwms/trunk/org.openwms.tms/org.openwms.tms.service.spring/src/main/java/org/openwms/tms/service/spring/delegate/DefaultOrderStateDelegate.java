@@ -28,8 +28,8 @@ import java.util.Map;
 
 import org.openwms.common.domain.TransportUnit;
 import org.openwms.tms.domain.order.TransportOrder;
-import org.openwms.tms.domain.values.TransportStartComparator;
 import org.openwms.tms.domain.values.TransportOrderState;
+import org.openwms.tms.domain.values.TransportStartComparator;
 import org.openwms.tms.integration.TransportOrderDao;
 import org.openwms.tms.service.delegate.TransportOrderStarter;
 import org.openwms.tms.service.delegate.TransportOrderStateDelegate;
@@ -43,7 +43,7 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 /**
- * A DefaultOrderStateDelegate. Lazy instantiated only when needed. Thus it is
+ * A DefaultOrderStateDelegate. Lazy instantiated, only when needed. Thus it is
  * possible to override this bean and prevent instantiation.
  * 
  * @author <a href="mailto:russelltina@users.sourceforge.net">Tina Russell</a>
@@ -74,7 +74,9 @@ public class DefaultOrderStateDelegate implements TransportOrderStateDelegate {
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritDoc} Search for already {@link TransportOrderState#CREATED}
+     * {@link TransportOrder}s for this transportUnit and try to initialize
+     * them. When initialization is done try to start them.
      * 
      * @see org.openwms.tms.service.delegate.TransportOrderStateDelegate#afterCreation(java.lang.Long)
      */
@@ -96,7 +98,8 @@ public class DefaultOrderStateDelegate implements TransportOrderStateDelegate {
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritDoc} Just search the next TransportOrder for the TransportUnit
+     * and try to start it.
      * 
      * @see org.openwms.tms.service.delegate.TransportOrderStateDelegate#afterFinish(java.lang.Long)
      */
@@ -108,7 +111,8 @@ public class DefaultOrderStateDelegate implements TransportOrderStateDelegate {
     /**
      * {@inheritDoc}
      * 
-     * On cancel try to start the next one.
+     * Just search the next TransportOrder for the TransportUnit and try to
+     * start it.
      * 
      * @see org.openwms.tms.service.delegate.TransportOrderStateDelegate#onCancel(java.lang.Long)
      */
@@ -119,6 +123,9 @@ public class DefaultOrderStateDelegate implements TransportOrderStateDelegate {
 
     /**
      * {@inheritDoc}
+     * 
+     * Just search the next TransportOrder for the TransportUnit and try to
+     * start it.
      * 
      * @see org.openwms.tms.service.delegate.TransportOrderStateDelegate#onFailure(java.lang.Long)
      */
@@ -159,6 +166,9 @@ public class DefaultOrderStateDelegate implements TransportOrderStateDelegate {
 
     /**
      * {@inheritDoc}
+     * 
+     * Just search the next TransportOrder for the TransportUnit and try to
+     * start it.
      * 
      * @see org.openwms.tms.service.delegate.TransportOrderStateDelegate#onInterrupt(java.lang.Long)
      */

@@ -18,16 +18,34 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
-package org.openwms.core.domain.system {
+package org.openwms.web.flex.client.util{
 
+    import flash.utils.Dictionary;
+    import flash.utils.Proxy;
+    import flash.utils.flash_proxy;
+
+    [Name]
     [Bindable]
-    [RemoteClass(alias="org.openwms.core.domain.system.Message")]
     /**
-     * A Message can be assigned to any other kind of entity.
+     * A ModelLocator is the main model backing bean to store session data.
+     * It is a Tide component and can be injected by name=modelLocator.
      *
-     * @version $Revision: 1106 $
+     * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
+     * @version $Revision: 1301 $
      * @since 0.1
      */
-    public class Message extends MessageBase { }
+    public class I18nUtil {
+
+        /**
+         * Constructor.
+         */
+        public function I18nUtil() : void {
+            super();
+        }
+
+        static function trans(... args):String {
+            //args[0]
+        }
+    }
 }
 

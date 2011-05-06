@@ -18,50 +18,39 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
-package org.openwms.core.service.spring;
+package org.openwms.core.integration.jpa;
 
-import java.util.List;
-
-import org.openwms.core.domain.system.usermanagement.Preference;
-import org.openwms.core.domain.values.Unit;
-import org.openwms.core.service.ConfigurationService;
-import org.springframework.stereotype.Service;
+import org.openwms.core.domain.system.I18n;
+import org.openwms.core.integration.I18nRepository;
+import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 /**
- * A ConfigurationServiceImpl is a transactional Spring powered service
- * implementation.
+ * A I18nRepositoryImpl.
  * 
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
- * @version $Revision$
+ * @version $Revision: $
  * @since 0.1
- * @see org.openwms.core.service.ConfigurationService
  */
-@Transactional
-@Service("configurationService")
-public class ConfigurationServiceImpl implements ConfigurationService {
+@Repository("i18nRepo")
+@Transactional(propagation = Propagation.MANDATORY)
+public class I18nRepositoryImpl extends AbstractGenericJpaDao<I18n, Long> implements I18nRepository {
 
     /**
-     * {@inheritDoc}
+     * @see org.openwms.core.integration.jpa.AbstractGenericJpaDao#getFindAllQuery()
      */
     @Override
-    public List<Preference> findApplicationProperties() {
-        return null;
+    protected String getFindAllQuery() {
+        return I18n.NQ_FIND_ALL;
     }
 
     /**
-     * {@inheritDoc}
+     * @see org.openwms.core.integration.jpa.AbstractGenericJpaDao#getFindByUniqueIdQuery()
      */
     @Override
-    public List<Preference> findModuleProperties() {
-        return null;
+    protected String getFindByUniqueIdQuery() {
+        return I18n.NQ_FIND_BY_UNIQUE_QUERY;
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public List<? extends Unit> getAllUnits() {
-        return null;
-    }
 }

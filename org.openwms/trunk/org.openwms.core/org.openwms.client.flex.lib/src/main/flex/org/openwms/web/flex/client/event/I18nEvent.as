@@ -18,16 +18,37 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
-package org.openwms.core.domain.system {
+package org.openwms.web.flex.client.event {
+    
+    import flash.events.Event;
 
-    [Bindable]
-    [RemoteClass(alias="org.openwms.core.domain.system.Message")]
     /**
-     * A Message can be assigned to any other kind of entity.
+     * An I18nEvent.
      *
-     * @version $Revision: 1106 $
+     * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
+     * @version $Revision: 1241 $
      * @since 0.1
      */
-    public class Message extends MessageBase { }
-}
+    public class I18nEvent extends Event {
+    	/**
+    	 * Trigger to load all texts from the backend.
+    	 */
+        public static const LOAD_ALL:String = "I18N_LOAD_ALL";
 
+        /**
+         * Generic field to store data.
+         */
+        public var data:*;
+
+        /**
+         * Constructor.
+         *
+         * @param type The type of event, defined in this class
+         * @param bubbles Shall the event re-fired, default is true
+         * @param cancelable Is it possible to cancel bubbling, default is false.
+         */
+        public function I18nEvent(type:String, bubbles:Boolean = true, cancelable:Boolean = false) {
+            super(type, bubbles, cancelable);
+        }
+    }
+}

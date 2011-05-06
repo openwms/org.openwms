@@ -4,7 +4,7 @@
  * This file is part of openwms.org.
  *
  * openwms.org is free software: you can redistribute it and/or modify
- * it under the terms of the GNU Lesser General Public License as
+ * it under the terms of the GNU Lesser General Public License as 
  * published by the Free Software Foundation, either version 3 of the
  * License, or (at your option) any later version.
  *
@@ -18,16 +18,17 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
-package org.openwms.core.domain.system {
+package org.openwms.core.integration;
 
-    [Bindable]
-    [RemoteClass(alias="org.openwms.core.domain.system.Message")]
-    /**
-     * A Message can be assigned to any other kind of entity.
-     *
-     * @version $Revision: 1106 $
-     * @since 0.1
-     */
-    public class Message extends MessageBase { }
+import org.openwms.core.domain.system.I18n;
+
+/**
+ * A I18nRepository.
+ * 
+ * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
+ * @version $Revision: $
+ * @since 0.1
+ */
+public interface I18nRepository extends GenericDao<I18n, Long> {
+
 }
-

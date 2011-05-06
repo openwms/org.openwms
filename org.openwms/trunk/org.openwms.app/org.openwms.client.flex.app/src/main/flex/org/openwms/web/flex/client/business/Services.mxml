@@ -49,6 +49,11 @@
         showBusyCursor="true"/>
 
     <granite:SecureRemoteObject
+        id="i18nService"
+        destination="i18nServiceRemote"
+        showBusyCursor="false"/>
+
+    <granite:SecureRemoteObject
         id="userService"
         destination="userServiceRemote"
         showBusyCursor="true"/>
