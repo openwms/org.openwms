@@ -23,6 +23,7 @@ package org.openwms.tms.domain;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.fail;
 
+import org.junit.Before;
 import org.junit.Test;
 import org.openwms.common.domain.Location;
 import org.openwms.common.domain.LocationGroup;
@@ -43,8 +44,15 @@ import org.openwms.tms.domain.values.TransportOrderState;
 public class TransportOrderTest extends AbstractJpaSpringContextTests {
 
     /**
+     * Setup data.
+     */
+    @Before
+    public void onBefore() {}
+
+    /**
      * Test method for
-     * {@link org.openwms.tms.domain.order.TransportOrder#setState(org.openwms.tms.domain.order.TransportOrder.TRANSPORT_ORDER_STATE)} .
+     * {@link org.openwms.tms.domain.order.TransportOrder#setState(org.openwms.tms.domain.order.TransportOrder.TRANSPORT_ORDER_STATE)}
+     * .
      */
     @Test
     public final void testSetState() {
@@ -52,20 +60,18 @@ public class TransportOrderTest extends AbstractJpaSpringContextTests {
         try {
             transportOrder.setState(TransportOrderState.INITIALIZED);
             fail("Exception expected while switching to next state without transportUnit");
-        }
-        catch (IllegalStateException ise) {
+        } catch (IllegalStateException ise) {
             logger.debug("OK:Exception while switching to next state without transportUnit");
         }
 
-        assertEquals("TransportOrder must remain in state CREATED:", TransportOrderState.CREATED, transportOrder
-                .getState());
+        assertEquals("TransportOrder must remain in state CREATED:", TransportOrderState.CREATED,
+                transportOrder.getState());
         TransportUnit transportUnit = new TransportUnit("TEST_UNIT");
         transportOrder.setTransportUnit(transportUnit);
         try {
             transportOrder.setState(TransportOrderState.INITIALIZED);
             fail("TransportOrder must not be switched in next mode without setting a target");
-        }
-        catch (IllegalStateException ise) {
+        } catch (IllegalStateException ise) {
             logger.debug("OK:Exception while switching to next state without target");
         }
 
@@ -74,8 +80,7 @@ public class TransportOrderTest extends AbstractJpaSpringContextTests {
         try {
             transportOrder.setState(TransportOrderState.INITIALIZED);
             logger.debug("transportUnit set and target set");
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             fail("TransportOrder could be switched in next mode");
         }
 
@@ -86,8 +91,7 @@ public class TransportOrderTest extends AbstractJpaSpringContextTests {
         try {
             transportOrder.setState(TransportOrderState.INITIALIZED);
             logger.debug("transportUnit set and targetLocationGroup set");
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             fail("TransportOrder could be switched in next mode");
         }
 

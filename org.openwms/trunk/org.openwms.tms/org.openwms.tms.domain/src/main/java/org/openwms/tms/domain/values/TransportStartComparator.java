@@ -25,15 +25,29 @@ import java.util.Comparator;
 import org.openwms.tms.domain.order.TransportOrder;
 
 /**
- * A TransportStartComparator.
+ * A TransportStartComparator. I used to sort TransportOrders is a particular
+ * order. Unfortunately some fields of the TransportOrder class are defined as
+ * Enums for a better handling in business logic. Persisting these fields as
+ * Strings makes it impossible to do a proper sorting in the database with JPA.
+ * Hence we must do it with Comparators in the application layer.
  * 
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  * @version $Revision: $
  * @since 0.1
+ * @see {@link org.openwms.tms.domain.values.PriorityLevel}
  */
 public class TransportStartComparator implements Comparator<TransportOrder> {
 
     /**
+     * First the priority or orders is compared, when both are equals the id is
+     * compared too.
+     * 
+     * @param o1
+     *            FirstOrder to compare
+     * @param o2
+     *            Second order to compare
+     * @return a negative integer, zero, or a positive integer as the first
+     *         argument is less than, equal to, or greater than the second.
      * @see java.util.Comparator#compare(java.lang.Object, java.lang.Object)
      */
     @Override

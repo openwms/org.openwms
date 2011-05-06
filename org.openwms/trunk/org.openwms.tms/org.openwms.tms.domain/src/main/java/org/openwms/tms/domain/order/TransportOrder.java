@@ -203,15 +203,6 @@ public class TransportOrder extends AbstractEntity implements DomainObject<Long>
 
     /* ----------------------------- methods ------------------- */
     /**
-     * Create a new <code>TransportOrder</code>, set the creationDate and
-     * initial state.
-     */
-    public TransportOrder() {
-        this.creationDate = new Date();
-        this.state = TransportOrderState.CREATED;
-    }
-
-    /**
      * {@inheritDoc}
      */
     @Override
@@ -267,6 +258,8 @@ public class TransportOrder extends AbstractEntity implements DomainObject<Long>
 
     /**
      * Assign a {@link TransportUnit} to the <code>TransportOrder</code>.
+     * Setting the {@link TransportUnit} to <code>null</code> is allowed here to
+     * unlink both.
      * 
      * @param transportUnit
      *            The transportUnit to be assigned
@@ -299,6 +292,20 @@ public class TransportOrder extends AbstractEntity implements DomainObject<Long>
         }
     }
 
+    /**
+     * Validate whether a state change is valid or not. States must be changed
+     * in a defined order. Mostly the order is defined by the ordering if the
+     * states in {@link TransportOrderState} enum class. But some other rules
+     * are checked here too and an exception is thrown in case the sequence of
+     * states is violated.
+     * 
+     * @param newState
+     *            The new state of the order
+     * @throws IllegalStateException
+     *             when <li>newState is <code>null</code> or</li><li>the state
+     *             shall be turned back to a prior state or</li><li>when the
+     *             caller tries to leap the state {@link INITIALIZED}</li>
+     */
     protected void validateStateChange(TransportOrderState newState) {
         if (newState == null) {
             throw new IllegalStateException("New TransportState cannot be set to null");
@@ -317,20 +324,20 @@ public class TransportOrder extends AbstractEntity implements DomainObject<Long>
     }
 
     /**
-     * Change the state of the <code>TransportOrder</code>.
+     * Change the state of the <code>TransportOrder</code> regarding some rules.
      * 
      * @param newState
-     *            The new state to set
+     *            The new state of the order
      * @throws IllegalStateException
      *             in case
      *             <ul>
      *             <li>the newState is <code>null</code> or</li>
      *             <li>the newState is less than the old state or</li>
-     *             <li>the <code>TransportOrder</code> is in state CREATED and
-     *             shall be manually turned into something else then INITIALIZED
-     *             or CANCELED</li>
-     *             <li>the <code>TransportOrder</code> is CREATED and shall be
-     *             INITIALIZED but it is incomplete</li>
+     *             <li>the <code>TransportOrder</code> is in state
+     *             {@link CREATED} and shall be manually turned into something
+     *             else then {@link INITIALIZED} or {@link CANCELED}</li>
+     *             <li>the <code>TransportOrder</code> is {@link CREATED} and
+     *             shall be {@link INITIALIZED} but it is incomplete</li>
      *             </ul>
      */
     public void setState(TransportOrderState newState) {
@@ -344,6 +351,8 @@ public class TransportOrder extends AbstractEntity implements DomainObject<Long>
         case CANCELED:
             endDate = new Date();
             break;
+        default:
+            return;
         }
         state = newState;
     }
