@@ -38,7 +38,8 @@
             import org.granite.tide.spring.Identity;
             import org.openwms.web.flex.client.event.ApplicationEvent;
             import org.openwms.web.flex.client.model.ModelLocator;
-            
+            import org.openwms.web.flex.client.model.I18nMap;
+            import flash.utils.Proxy;
             [In]
             [Bindable]
             /**
@@ -51,6 +52,12 @@
              * Injected Model.
              */
             public var modelLocator : ModelLocator;
+            [In("i18nMap")]
+            [Bindable]
+            /**
+             * Injected i18n;
+             */
+            public var i18n : I18nMap;
             [Bindable]
             public var loginMessageText:String = "";
             
@@ -60,9 +67,11 @@
             }
             
             private function onLogin(username:String, password:String):void {
+                trace("found"+i18n["core_allg_text"]);
+                trace("found"+i18n['core_allg_text']);
                 if (modelLocator.SCREEN_LOCKED) {
                     if (modelLocator.viewLockedBy != username) {
-                        Alert.show("Only user "+ modelLocator.viewLockedBy +" can unlock the application");
+                        //Alert.show(i18n['core_allg_text']+ modelLocator.viewLockedBy +" can unlock the application");
                         return;
                     }
                 }

@@ -43,12 +43,11 @@ import org.springframework.transaction.annotation.Transactional;
  * @since 0.1
  * @see org.openwms.core.integration.ModuleDao
  */
-@Service
 @Transactional
+@Service("moduleService")
 public class ModuleServiceImpl implements ModuleService {
 
     private Logger logger = LoggerFactory.getLogger(this.getClass());
-
     @Autowired
     private ModuleDao dao;
 

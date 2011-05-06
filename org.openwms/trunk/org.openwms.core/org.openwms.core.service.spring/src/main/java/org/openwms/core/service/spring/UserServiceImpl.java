@@ -49,15 +49,11 @@ import org.springframework.transaction.annotation.Transactional;
  * @since 0.1
  * @see org.openwms.core.integration.system.usermanagement.UserDao;
  */
-@Service
 @Transactional
+@Service("userService")
 public class UserServiceImpl implements UserService {
 
     private Logger logger = LoggerFactory.getLogger(this.getClass());
-
-    /**
-     * Instance of an {@link UserDao}. <i>Autowired</i>.
-     */
     @Autowired
     private UserDao dao;
 

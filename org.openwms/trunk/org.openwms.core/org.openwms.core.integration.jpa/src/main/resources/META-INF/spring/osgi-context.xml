@@ -37,5 +37,6 @@
     <osgi:service ref="userDao" interface="org.openwms.core.integration.UserDao" />
     <osgi:service ref="roleDao" interface="org.openwms.core.integration.RoleDao" />
     <osgi:service ref="moduleDao" interface="org.openwms.core.integration.ModuleDao" />
+    <osgi:service ref="i18nRepo" interface="org.openwms.core.integration.I18nRepository" />
 
 </beans>

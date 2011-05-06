@@ -94,6 +94,15 @@
                     <source>moduleService</source>
                 </properties>
             </destination>
+            <destination id="i18nServiceRemote">
+                <channels>
+                    <channel ref="my-graniteamf" />
+                </channels>
+                <properties>
+                    <factory>springFactory</factory>
+                    <source>i18nService</source>
+                </properties>
+            </destination>
             <destination id="transportServiceRemote">
                 <channels>
                     <channel ref="my-graniteamf" />

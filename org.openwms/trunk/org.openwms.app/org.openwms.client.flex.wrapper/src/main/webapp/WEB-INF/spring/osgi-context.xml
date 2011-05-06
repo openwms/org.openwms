@@ -29,6 +29,7 @@
     <osgi:reference id="userService" interface="org.openwms.core.service.UserService" />
     <osgi:reference id="roleService" interface="org.openwms.core.service.RoleService" />
     <osgi:reference id="moduleService" interface="org.openwms.core.service.ModuleService" />
+    <osgi:reference id="i18nService" interface="org.openwms.core.service.I18nService" />
     <osgi:reference id="userDetailsService" interface="org.springframework.security.core.userdetails.UserDetailsService" />
     <osgi:reference id="configurationService" interface="org.openwms.core.service.ConfigurationService" />
 

@@ -52,8 +52,8 @@ import org.springframework.transaction.annotation.Transactional;
  * @see org.openwms.core.domain.AbstractEntity
  * @see org.openwms.core.service.EntityService
  */
-@Service
 @Transactional
+@Service
 public class EntityServiceImpl<T extends AbstractEntity, ID extends Serializable> implements EntityService<T>,
         ApplicationContextAware {
 

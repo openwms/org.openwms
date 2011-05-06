@@ -84,7 +84,7 @@
                     return;             		
             	}
                 var pop:CancelTransportOrdersDialog = CancelTransportOrdersDialog(PopUpManager.createPopUp(this, CancelTransportOrdersDialog, true));
-                pop.messageText = "Delete selected Transport Units";
+                pop.messageText = "Finish Transport Orders";
                 pop.items = new ArrayCollection(transportOrdersLst.selectedItems);
                 PopUpManager.centerPopUp(pop);
             }
@@ -159,7 +159,7 @@
 	    <mx:VRule height="10"/>
 	    <mx:Button id="createTransportOrderBtn" buttonMode="true" mouseChildren="false" toolTip="Create a new Transport Order" icon="@Embed(source='/assets/images/TransportOrder--Add.png')" click="showCreateTransportOrderDialog()"/>
         <mx:VRule height="10"/>
-        <mx:Button id="cancelTransportOrderBtn" buttonMode="true" mouseChildren="false" toolTip="Change state of an existing Transport Order" icon="@Embed(source='/assets/images/TransportOrder--Cancel.png')" click="showCancelTransportOrdersDialog()" />
+        <mx:Button id="cancelTransportOrderBtn" buttonMode="true" mouseChildren="false" toolTip="Finish one or more existing Transport Orders" icon="@Embed(source='/assets/images/TransportOrder--Cancel.png')" click="showCancelTransportOrdersDialog()" />
         <mx:VRule height="10"/>
         <mx:Button id="refreshTransportOrdersBtn" buttonMode="true" mouseChildren="false" toolTip="Refresh the list of Transport Orders" icon="@Embed(source='assets/images/icons/refresh.png')" click="refresh()" />
 	    <mx:VRule height="10"/>

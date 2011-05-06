@@ -45,15 +45,11 @@ import org.springframework.transaction.annotation.Transactional;
  * @since 0.1
  * @see org.openwms.core.integration.system.usermanagement.RoleDao;
  */
-@Service
 @Transactional
+@Service("roleService")
 public class RoleServiceImpl implements RoleService {
 
     private Logger logger = LoggerFactory.getLogger(this.getClass());
-
-    /**
-     * Instance of a {@link RoleDao}. <i>Autowired</i>.
-     */
     @Autowired
     private RoleDao dao;
 

@@ -20,8 +20,6 @@
  */
 package org.openwms.core.domain.system.usermanagement;
 
-import java.io.Serializable;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -42,7 +40,7 @@ import org.openwms.core.domain.DomainObject;
  */
 @Entity
 @Table(name = "COR_PREFERENCE", uniqueConstraints = @UniqueConstraint(columnNames = { "C_KEY", "C_VALUE" }))
-public class Preference extends AbstractEntity implements DomainObject<Long>, Serializable {
+public class Preference extends AbstractEntity implements DomainObject<Long> {
 
     private static final long serialVersionUID = 4396571221433949201L;
 

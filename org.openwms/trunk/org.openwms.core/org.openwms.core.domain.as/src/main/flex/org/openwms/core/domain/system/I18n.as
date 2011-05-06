@@ -21,13 +21,13 @@
 package org.openwms.core.domain.system {
 
     [Bindable]
-    [RemoteClass(alias="org.openwms.core.domain.system.Message")]
+    [RemoteClass(alias="org.openwms.core.domain.system.I18n")]
     /**
-     * A Message can be assigned to any other kind of entity.
+     * An I18n is a translation entity.
      *
      * @version $Revision: 1106 $
      * @since 0.1
      */
-    public class Message extends MessageBase { }
+    public class I18n extends I18nBase { }
 }
 

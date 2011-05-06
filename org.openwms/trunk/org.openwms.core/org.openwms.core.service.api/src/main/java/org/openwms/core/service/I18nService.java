@@ -18,50 +18,42 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
-package org.openwms.core.service.spring;
+package org.openwms.core.service;
 
 import java.util.List;
 
-import org.openwms.core.domain.system.usermanagement.Preference;
-import org.openwms.core.domain.values.Unit;
-import org.openwms.core.service.ConfigurationService;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
+import org.openwms.core.domain.system.I18n;
 
 /**
- * A ConfigurationServiceImpl is a transactional Spring powered service
- * implementation.
+ * An I18nService.
  * 
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
- * @version $Revision$
+ * @version $Revision: $
  * @since 0.1
- * @see org.openwms.core.service.ConfigurationService
  */
-@Transactional
-@Service("configurationService")
-public class ConfigurationServiceImpl implements ConfigurationService {
+public interface I18nService {
 
     /**
-     * {@inheritDoc}
+     * Find and return a list of all translations.
+     * 
+     * @return all translations
      */
-    @Override
-    public List<Preference> findApplicationProperties() {
-        return null;
-    }
+    List<I18n> findAllTranslations();
 
     /**
-     * {@inheritDoc}
+     * Save one translation, this can be a new one all an already existing one.
+     * 
+     * @param translation
+     *            Translation to save or persist
      */
-    @Override
-    public List<Preference> findModuleProperties() {
-        return null;
-    }
+    void saveTranslation(I18n translation);
 
     /**
-     * {@inheritDoc}
+     * Save a list of translations. Elements of the list can be transient or
+     * persisted entities.
+     * 
+     * @param translations
+     *            The list of translations to save or persist.
      */
-    @Override
-    public List<? extends Unit> getAllUnits() {
-        return null;
-    }
+    void saveTranslations(List<I18n> translations);
 }

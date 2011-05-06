@@ -22,46 +22,51 @@ package org.openwms.core.service.spring;
 
 import java.util.List;
 
-import org.openwms.core.domain.system.usermanagement.Preference;
-import org.openwms.core.domain.values.Unit;
-import org.openwms.core.service.ConfigurationService;
+import org.openwms.core.domain.system.I18n;
+import org.openwms.core.integration.I18nRepository;
+import org.openwms.core.service.I18nService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 /**
- * A ConfigurationServiceImpl is a transactional Spring powered service
- * implementation.
+ * An I18nServiceImpl.
  * 
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
- * @version $Revision$
+ * @version $Revision: $
  * @since 0.1
- * @see org.openwms.core.service.ConfigurationService
  */
 @Transactional
-@Service("configurationService")
-public class ConfigurationServiceImpl implements ConfigurationService {
+@Service("i18nService")
+public class I18nServiceImpl implements I18nService {
+
+    @Autowired
+    private I18nRepository repo;
 
     /**
-     * {@inheritDoc}
+     * @see org.openwms.core.service.I18nService#findAllTranslations()
      */
     @Override
-    public List<Preference> findApplicationProperties() {
-        return null;
+    public List<I18n> findAllTranslations() {
+        return repo.findAll();
     }
 
     /**
-     * {@inheritDoc}
+     * @see org.openwms.core.service.I18nService#saveTranslation(org.openwms.core.domain.system.I18n)
      */
     @Override
-    public List<Preference> findModuleProperties() {
-        return null;
+    public void saveTranslation(I18n translation) {
+        repo.save(translation);
     }
 
     /**
-     * {@inheritDoc}
+     * @see org.openwms.core.service.I18nService#saveTranslations(java.util.List)
      */
     @Override
-    public List<? extends Unit> getAllUnits() {
-        return null;
+    public void saveTranslations(List<I18n> translations) {
+        for (I18n i18n : translations) {
+            repo.save(i18n);
+        }
     }
+
 }

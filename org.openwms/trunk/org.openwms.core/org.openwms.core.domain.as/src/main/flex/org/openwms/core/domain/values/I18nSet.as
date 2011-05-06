@@ -18,16 +18,16 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
-package org.openwms.core.domain.system {
+package org.openwms.core.domain.values {
 
     [Bindable]
-    [RemoteClass(alias="org.openwms.core.domain.system.Message")]
+    [RemoteClass(alias="org.openwms.core.domain.values.I18nSet")]
     /**
-     * A Message can be assigned to any other kind of entity.
+     * An I18nSet encapsulates arbitrary lanuages.
      *
      * @version $Revision: 1106 $
      * @since 0.1
      */
-    public class Message extends MessageBase { }
+    public class I18nSet extends I18nSetBase { }
 }
 
