@@ -66,6 +66,15 @@
                 <module>org.openwms.client.flex.wrapper</module>
             </modules>
         </profile>
+        <profile>
+            <id>app</id>
+            <modules>
+                <module>org.openwms.app.par</module>
+                <module>org.openwms.app.plan</module>
+                <module>org.openwms.client.flex.app</module>
+                <module>org.openwms.client.flex.wrapper</module>
+            </modules>
+        </profile>
     </profiles>
 
 	<dependencyManagement>
