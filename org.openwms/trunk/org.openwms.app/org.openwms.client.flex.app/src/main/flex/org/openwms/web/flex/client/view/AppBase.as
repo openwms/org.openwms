@@ -22,7 +22,7 @@ package org.openwms.web.flex.client.view {
     import flash.display.DisplayObject;
     import flash.events.Event;
     import flash.system.ApplicationDomain;
-
+    
     import mx.collections.ArrayCollection;
     import mx.collections.XMLListCollection;
     import mx.containers.ViewStack;
@@ -35,20 +35,21 @@ package org.openwms.web.flex.client.view {
     import mx.managers.DragManager;
     import mx.managers.PopUpManager;
     import mx.modules.ModuleManager;
-
+    import mx.resources.ResourceManager;
+    
     import org.granite.tide.spring.Context;
     import org.granite.tide.spring.Identity;
     import org.granite.tide.spring.Spring;
     import org.openwms.common.domain.values.Weight;
     import org.openwms.tms.domain.order.TransportOrder;
     import org.openwms.web.flex.client.IApplicationModule;
+    import org.openwms.web.flex.client.business.I18nDelegate;
     import org.openwms.web.flex.client.business.PropertyDelegate;
     import org.openwms.web.flex.client.business.RoleDelegate;
     import org.openwms.web.flex.client.business.UserDelegate;
-    import org.openwms.web.flex.client.business.I18nDelegate;
     import org.openwms.web.flex.client.event.ApplicationEvent;
-    import org.openwms.web.flex.client.event.I18nEvent;
     import org.openwms.web.flex.client.event.SwitchScreenEvent;
+    import org.openwms.web.flex.client.event.I18nEvent;
     import org.openwms.web.flex.client.model.I18nMap;
     import org.openwms.web.flex.client.model.ModelLocator;
     import org.openwms.web.flex.client.module.ModuleLocator;
@@ -142,6 +143,10 @@ package org.openwms.web.flex.client.view {
          */
         public function init() : void {
             tideContext.mainAppUI = this;
+            var l:Array = ResourceManager.getInstance().localeChain;
+            for each (var s:String in l){
+            	trace("LOCALE:"+s);
+            } 
             trace("Load all internationalized texts");
             tideContext.raiseEvent(I18nEvent.LOAD_ALL);
         }

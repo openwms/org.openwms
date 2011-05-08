@@ -87,6 +87,7 @@ public class DefaultOrderStateDelegate implements TransportOrderStateDelegate {
             boolean go = initialize(transportOrder);
             if (go) {
                 try {
+                    logger.debug("STATE IS 1"+transportOrder.getState());
                     starter.start(transportOrder);
                 } catch (StateChangeException sce) {
                     // Not starting a transport here is not a problem, so be
@@ -178,7 +179,12 @@ public class DefaultOrderStateDelegate implements TransportOrderStateDelegate {
     }
 
     private boolean initialize(TransportOrder transportOrder) {
-        transportOrder.setState(TransportOrderState.INITIALIZED);
+    	try {
+    		transportOrder.setState(TransportOrderState.INITIALIZED);
+    	} catch (IllegalStateException ise) {
+    		logger.info("Could not initialize TransportOrder ["+transportOrder.getId()+"]. Message:"+ise.getMessage());
+    		return false;
+    	}
         transportOrder.setSourceLocation(transportOrder.getTransportUnit().getActualLocation());
         if (logger.isDebugEnabled()) {
             logger.debug("TransportOrder " + transportOrder.getId() + " INITIALIZED");
