@@ -86,11 +86,11 @@
             
             private function showCancelTransportOrdersDialog():void {
             	if (transportOrdersLst.selectedIndices.length == 0) {
-                    Alert.show("Please select at least one Transport Order to delete");
+                    Alert.show("Please select at least one Transport Order to complete");
                     return;             		
             	}
                 var pop:CancelTransportOrdersDialog = CancelTransportOrdersDialog(PopUpManager.createPopUp(this, CancelTransportOrdersDialog, true));
-                pop.messageText = "Finish Transport Orders";
+                pop.messageText = "Complete Transport Orders";
                 pop.items = new ArrayCollection(transportOrdersLst.selectedItems);
                 PopUpManager.centerPopUp(pop);
             }
@@ -156,17 +156,13 @@
 	    <mx:VRule height="10"/>
 	    <mx:Button id="createTransportOrderBtn" buttonMode="true" mouseChildren="false" toolTip="Create a new Transport Order" icon="@Embed(source='/assets/images/TransportOrder--Add.png')" click="showCreateTransportOrderDialog()"/>
         <mx:VRule height="10"/>
-        <mx:Button id="cancelTransportOrderBtn" buttonMode="true" mouseChildren="false" toolTip="Finish one or more existing Transport Orders" icon="@Embed(source='/assets/images/TransportOrder--Cancel.png')" click="showCancelTransportOrdersDialog()" />
+        <mx:Button id="cancelTransportOrderBtn" buttonMode="true" mouseChildren="false" toolTip="Complete one or more existing Transport Orders" icon="@Embed(source='/assets/images/TransportOrder--Cancel.png')" click="showCancelTransportOrdersDialog()" />
         <mx:VRule height="10"/>
         <mx:Button id="refreshTransportOrdersBtn" buttonMode="true" mouseChildren="false" toolTip="Refresh the list of Transport Orders" icon="@Embed(source='assets/images/icons/refresh.png')" click="refresh()" />
 	    <mx:VRule height="10"/>
 	    <mx:Button id="showTransportOrderHistoryBtn" buttonMode="true" mouseChildren="false" toolTip="Show history of a Transport Order" icon="@Embed(source='/assets/images/TransportOrder--History.png')" click="showCreateTransportOrderDialog()" />
 	    <mx:VRule height="10"/>
 	    <mx:Button id="redirectTransportOrderBtn" buttonMode="true" mouseChildren="false" toolTip="Redirect one or more Transport Orders to a new target" icon="@Embed(source='/assets/images/TransportOrder--Redirect.png')" click="showRedirectTransportOrderDialog()"/>
-	    <mx:VRule height="10"/>
-	    <mx:Button id="stateTransportOrderBtn" buttonMode="true" mouseChildren="false" toolTip="Change state of a Transport Order" icon="@Embed(source='/assets/images/TransportOrder--State.png')" click="showCreateTransportOrderDialog()" />
-        <mx:VRule height="10"/>
-        <mx:Button id="deleteTransportOrderBtn" buttonMode="true" mouseChildren="false" toolTip="Delete an existing Transport Order" icon="@Embed(source='/assets/images/TransportOrder--Delete.png')" click="showCancelTransportOrdersDialog()" />
 	</mx:HBox>
 	<mx:HRule x="10" y="53" width="95%"/>
 
