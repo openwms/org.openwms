@@ -44,7 +44,8 @@ package org.openwms.web.flex.client.util{
         }
 
         static function trans(... args):String {
-            //args[0]
+            //args[0].
+            return "";
         }
     }
 }

@@ -156,7 +156,51 @@
     </mx:HBox>
     <mx:HRule x="9" y="53" width="95%"/>
     <mx:HBox height="100%" width="95%" x="10" y="63">
-        <mx:DataGrid id="locationsList" allowMultipleSelection="true" sortableColumns="true" height="95%" width="100%" dataProvider="{commonModelLocator.allLocations}" change="onRowClick(event)">
+        <mx:Canvas id="locationDetailsPnl" backgroundColor="#C6FFC7" backgroundAlpha="0.5" height="100%" width="325">
+            
+            <mx:Image x="10" y="10" mouseChildren="false" source="@Embed(source='/assets/images/Location.png')"/>
+            <mx:Label text="Location" fontWeight="bold" textAlign="left" x="34" y="10"/>
+            <mx:Text text="{selected.locationId.toString()}" width="212" fontWeight="bold" x="95" y="10"/>
+            
+            <mx:Label text="Description" textAlign="left" x="10" y="34"/>
+            <mx:TextArea id="descriptionTxt" text="{selected.description}" width="200" height="64" x="95" y="33"/>
+            <mx:HRule x="10" y="400" width="297"/>
+            <mx:HRule x="10" y="10" width="360" strokeWidth="0"/>
+            
+            <mx:Image x="10" y="410" mouseChildren="false" source="@Embed(source='/assets/images/LocationGroup.png')"/>
+            <mx:Label text="Location Group" textAlign="left" x="34" y="414" fontWeight="bold"/>
+            <mx:ComboBox id="locationGroupCB" labelField="name" prompt="n/a" selectedIndex="{commonModelLocator.allLocationGroups.getItemIndex(selected)}" dataProvider="{commonModelLocator.allLocationGroups}" width="200" x="95" y="440"/>
+            <mx:CheckBox id="locationGroupCountingActiveChk" x="83" y="470" label="Counting Active in Location Group" selected="{selected.locationGroupCountingActive}"/>
+            <mx:HRule x="8" y="500" width="297"/>
+            
+            <mx:Image x="10" y="510" mouseChildren="false" source="@Embed(source='/assets/images/LocationType.png')"/>
+            <mx:Label text="Location Type" textAlign="left" x="34" y="510" fontWeight="bold"/>
+            <mx:ComboBox id="locationTypeCB" labelField="type" prompt="n/a" selectedIndex="{commonModelLocator.allLocationTypes.getItemIndex(selected.locationType)}" dataProvider="{commonModelLocator.allLocationTypes}" width="200" x="95" y="562"/>
+            <mx:Text x="95" y="536" text="{locationTypeCB.selectedItem.description}"/>
+            
+            <mx:Label text="Max. Transport Units" textAlign="left" x="10" y="105"/>
+            <mx:NumericStepper id="noMaxTransportUnitsTxt" value="{selected.noMaxTransportUnits}" width="40" x="255" y="103"/>
+            
+            <mx:Label text="Check State" textAlign="left" x="10" y="251"/>
+            <mx:Text id="checkStateTxt" text="{selected.checkState}" x="95" y="251"/>
+            
+            <mx:Label text="PLC State" textAlign="left" x="10" y="303"/>
+            <mx:TextInput id="plcStateTxt" text="{selected.plcState}" width="40" x="95" y="301"/>
+            
+            <mx:CheckBox id="countingActiveChk" x="95" y="191" label="Counting Active" selected="{selected.countingActive}"/>
+            <mx:CheckBox id="incomingActiveChk" x="95" y="131" label="Incoming Active" selected="{selected.incomingActive}"/>
+            <mx:CheckBox id="outgoingActiveChk" x="95" y="161" label="Outgoing Active" selected="{selected.outgoingActive}"/>
+            <mx:CheckBox id="consideredInAllocationChk" x="95" y="221" label="Considered in Allocation" selected="{selected.consideredInAllocation}"/>
+            
+            <mx:Label x="10" y="277" text="Last Access"/>
+            <mx:Text id="lastAccessTxt" x="95" y="277" text="{selected.lastAccess}"/>
+            
+            <mx:Label x="10" y="329" text="Messages"/>
+            <mx:TextArea x="95" y="328" width="180" height="64"/>
+            <mx:Image x="283" y="328" height="16" width="16" mouseChildren="false" source="@Embed(source='assets/images/icons/minus.png')"/>
+        
+        </mx:Canvas>
+        <mx:DataGrid id="locationsList" allowMultipleSelection="true" sortableColumns="true" height="100%" width="100%" dataProvider="{commonModelLocator.allLocations}" change="onRowClick(event)">
             <mx:columns>
                 <mx:DataGridColumn dataField="locationId" labelFunction="locationIdField" editable="false" width="45">
                     <mx:headerRenderer>
@@ -195,51 +239,5 @@
                 <mx:DataGridColumn headerText="Last Access" dataField="lastAccess" labelFunction="formatDateField" editable="false" />
             </mx:columns>
         </mx:DataGrid>
-        <mx:Canvas id="locationDetailsPnl" x="618" y="63" backgroundColor="#C6FFC7" backgroundAlpha="0.5">
-
-            <mx:Image x="10" y="10" mouseChildren="false" source="@Embed(source='/assets/images/Location.png')"/>
-            <mx:Label text="Location" fontWeight="bold" width="130" textAlign="right" x="10" y="12"/>
-            <mx:Text text="{selected.locationId.toString()}" width="100%" fontWeight="bold" x="148" y="12"/>
-
-            <mx:Label text="Description" width="130" textAlign="right" x="10" y="38"/>
-            <mx:TextArea id="descriptionTxt" text="{selected.description}" width="200" height="64" x="148" y="37"/>
-            <mx:HRule x="10" y="109" width="350"/>
-            <mx:HRule x="10" y="10" width="360" strokeWidth="0"/>
-
-            <mx:Image x="10" y="119" mouseChildren="false" source="@Embed(source='/assets/images/LocationGroup.png')"/>
-            <mx:Label text="Location Group" width="130" textAlign="right" x="10" y="119"/>
-            <mx:ComboBox id="locationGroupCB" labelField="name" prompt="n/a" selectedIndex="{commonModelLocator.allLocationGroups.getItemIndex(selected)}" dataProvider="{commonModelLocator.allLocationGroups}" width="200" x="148" y="117"/>
-            <mx:CheckBox id="locationGroupCountingActiveChk" x="148" y="147" label="Counting Active in Location Group" selected="{selected.locationGroupCountingActive}"/>
-            <mx:HRule x="10" y="177" width="350"/>
-
-            <mx:Image x="10" y="187" mouseChildren="false" source="@Embed(source='/assets/images/LocationType.png')"/>
-            <mx:Label text="Location Type" width="130" textAlign="right" x="10" y="187"/>
-            <mx:ComboBox id="locationTypeCB" labelField="type" prompt="n/a" selectedIndex="{commonModelLocator.allLocationTypes.getItemIndex(selected.locationType)}" dataProvider="{commonModelLocator.allLocationTypes}" width="200" x="148" y="185"/>
-            <mx:Text x="148" y="217" text="{locationTypeCB.selectedItem.description}" width="200"/>
-            <mx:HRule x="10" y="243" width="350"/>
-
-            <mx:Label text="Max. Transport Units" width="130" textAlign="right" x="10" y="253"/>
-            <mx:NumericStepper id="noMaxTransportUnitsTxt" value="{selected.noMaxTransportUnits}" width="40" x="148" y="251"/>
-
-            <mx:Label text="Check State" width="130" textAlign="right" x="10" y="279"/>
-            <mx:Text id="checkStateTxt" text="{selected.checkState}" width="200" x="148" y="279"/>
-
-            <mx:Label text="PLC State" width="130" textAlign="right" x="10" y="305"/>
-            <mx:TextInput id="plcStateTxt" text="{selected.plcState}" width="40" x="148" y="303"/>
-
-            <mx:CheckBox id="countingActiveChk" x="148" y="333" label="Counting Active" selected="{selected.countingActive}"/>
-            <mx:CheckBox id="incomingActiveChk" x="148" y="363" label="Incoming Active" selected="{selected.incomingActive}"/>
-            <mx:CheckBox id="outgoingActiveChk" x="148" y="393" label="Outgoing Active" selected="{selected.outgoingActive}"/>
-            <mx:CheckBox id="consideredInAllocationChk" x="148" y="423" label="Considered in Allocation" selected="{selected.consideredInAllocation}"/>
-
-            <mx:Label x="72" y="447" text="Last Access"/>
-            <mx:Text id="lastAccessTxt" x="148" y="447" width="200" />
-
-            <mx:Label x="80" y="473" text="Messages"/>
-            <mx:TextArea x="148" y="472" width="180" height="64"/>
-            <mx:VRule x="10" y="253" width="1" height="309" strokeWidth="0"/>
-            <mx:Image x="332" y="473" height="16" width="16" mouseChildren="false" source="@Embed(source='assets/images/icons/minus.png')"/>
-
-        </mx:Canvas>
     </mx:HBox>
 </mx:Canvas>

@@ -21,7 +21,7 @@
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
 -->
-<mx:Canvas xmlns:mx="http://www.adobe.com/2006/mxml" width="100%" height="100%" show="onShow();" backgroundColor="#C2DAEF">
+<mx:Canvas xmlns:mx="http://www.adobe.com/2006/mxml" width="100%" height="100%" show="onShow();">
 
     <mx:Metadata>
         [Name("transportOrderView")]
@@ -33,6 +33,7 @@
 
 	<mx:Script>
     	<![CDATA[
+    		import mx.events.ListEvent;
     		import org.openwms.web.flex.client.model.ModelLocator;
     		import mx.collections.ArrayCollection;
     		import mx.controls.Alert;
@@ -51,12 +52,17 @@
             [Inject]
             [Bindable]
             public var modelLocator:ModelLocator;            
-            [Inject]
+            [In]
             [Bindable]
-            public var commonModelLocator:CommonModelLocator;            
+            /**
+             * Inject a model to work on.
+             */
+            public var commonModelLocator:CommonModelLocator;
     		[Inject]
     		[Bindable]
             public var tmsModelLocator:TMSModelLocator;
+    		[Bindable]
+            private var selected:TransportOrder;
             
     		private function onShow():void {
                 if (tmsModelLocator.allTransportOrders.length == 0) {
@@ -134,12 +140,64 @@
                 }
                 return "--";
             }
+
+            private function onRowClick(event:ListEvent):void {
+            	selected = event.currentTarget.selectedItem as TransportOrder;
+                targetLocationGroupCB.selectedIndex = commonModelLocator.allLocationGroups.getItemIndex(selected.targetLocationGroup);
+                targetLocationCB.selectedIndex = commonModelLocator.allLocations.getItemIndex(selected.targetLocation);
+            }
     	]]>
 	</mx:Script>
 	
 	<mx:DateFormatter id="dateFormatter" formatString="{CommonModelLocator.DT_FORMAT_STRING}"/>
 	
-	<mx:DataGrid id="transportOrdersLst" width="95%" height="400" allowMultipleSelection="true" dataProvider="{tmsModelLocator.allTransportOrders}" y="63" x="10">
+	<mx:HBox x="10" y="10" verticalAlign="middle" width="95%" backgroundColor="#F9FBB7">
+	    <mx:Label x="10" y="10" text="Transport Orders" fontSize="24"/>
+	    <mx:VRule height="10"/>
+	    <mx:Button id="createTransportOrderBtn" buttonMode="true" mouseChildren="false" toolTip="Create a new Transport Order" icon="@Embed(source='/assets/images/TransportOrder--Add.png')" click="showCreateTransportOrderDialog()"/>
+        <mx:VRule height="10"/>
+        <mx:Button id="cancelTransportOrderBtn" buttonMode="true" mouseChildren="false" toolTip="Finish one or more existing Transport Orders" icon="@Embed(source='/assets/images/TransportOrder--Cancel.png')" click="showCancelTransportOrdersDialog()" />
+        <mx:VRule height="10"/>
+        <mx:Button id="refreshTransportOrdersBtn" buttonMode="true" mouseChildren="false" toolTip="Refresh the list of Transport Orders" icon="@Embed(source='assets/images/icons/refresh.png')" click="refresh()" />
+	    <mx:VRule height="10"/>
+	    <mx:Button id="showTransportOrderHistoryBtn" buttonMode="true" mouseChildren="false" toolTip="Show history of a Transport Order" icon="@Embed(source='/assets/images/TransportOrder--History.png')" click="showCreateTransportOrderDialog()" />
+	    <mx:VRule height="10"/>
+	    <mx:Button id="redirectTransportOrderBtn" buttonMode="true" mouseChildren="false" toolTip="Redirect one or more Transport Orders to a new target" icon="@Embed(source='/assets/images/TransportOrder--Redirect.png')" click="showRedirectTransportOrderDialog()"/>
+	    <mx:VRule height="10"/>
+	    <mx:Button id="stateTransportOrderBtn" buttonMode="true" mouseChildren="false" toolTip="Change state of a Transport Order" icon="@Embed(source='/assets/images/TransportOrder--State.png')" click="showCreateTransportOrderDialog()" />
+        <mx:VRule height="10"/>
+        <mx:Button id="deleteTransportOrderBtn" buttonMode="true" mouseChildren="false" toolTip="Delete an existing Transport Order" icon="@Embed(source='/assets/images/TransportOrder--Delete.png')" click="showCancelTransportOrdersDialog()" />
+	</mx:HBox>
+	<mx:HRule x="10" y="53" width="95%"/>
+
+	<mx:HBox y="63" x="10" width="95%" height="95%">
+	<mx:Canvas width="325" height="100%" backgroundColor="#F9FBB7">
+		<mx:Label x="34" y="10" text="Transport Order" fontWeight="bold"/>
+		<mx:Label x="146" y="36" text="{selected.id}" id="idLbl"/>
+		<mx:Label x="146" y="62" text="{selected.transportUnit}" id="transportUnitLbl"/>
+		<mx:Label x="146" y="218" text="{selected.creationDate}" id="creationDateLbl"/>
+		<mx:Label x="146" y="244" text="{selected.dateUpdated}" id="dateUpdatedLbl"/>
+		<mx:Label x="146" y="270" text="{selected.startDate}" id="startDateLbl"/>
+		<mx:Label x="146" y="296" text="{selected.endDate}" id="endDateLbl"/>
+		<mx:Label x="146" y="140" text="{selected.sourceLocation}" id="sourceLocationLbl"/>
+		<mx:Label x="10" y="62" text="Transport Unit"/>
+		<mx:Label x="10" y="88" text="State"/>
+		<mx:Label x="10" y="114" text="Priority"/>
+		<mx:Label x="10" y="140" text="Source Location"/>
+		<mx:Label x="10" y="166" text="Target Location"/>
+		<mx:Label x="10" y="192" text="Target Location Group"/>
+		<mx:Label x="10" y="218" text="Created"/>
+		<mx:Label x="10" y="244" text="Last Access"/>
+		<mx:Label x="10" y="270" text="Started"/>
+		<mx:Label x="10" y="296" text="Finished"/>
+		<mx:Label x="10" y="36" text="ID"/>
+		<mx:Image x="10" y="10" source="@Embed(source='/assets/images/TransportOrder.png')"/>
+		<mx:ComboBox x="146" y="86" id="stateCB" />
+		<mx:ComboBox x="146" y="112" id="priorityCB" />
+		<mx:ComboBox x="146" y="190" id="targetLocationGroupCB" />
+		<mx:ComboBox x="146" y="164" id="targetLocationCB" />
+	</mx:Canvas>
+	<mx:DataGrid id="transportOrdersLst" allowMultipleSelection="true" change="onRowClick(event)" dataProvider="{tmsModelLocator.allTransportOrders}" height="100%" width="100%">
 		<mx:columns>
 			<mx:DataGridColumn headerText="ID" dataField="id" width="{ModelLocator.WIDTH_ID}" />
             <mx:DataGridColumn headerText="Transport Unit" dataField="transportUnit" width="{CommonModelLocator.WIDTH_BARCODE}" labelFunction="formatBarcode" />
@@ -154,22 +212,5 @@
 			<mx:DataGridColumn headerText="Finished" dataField="endDate" width="{ModelLocator.WIDTH_DATETIME}" labelFunction="formatAsDate"/>
 		</mx:columns>
 	</mx:DataGrid>
-	<mx:HBox x="10" y="10" verticalAlign="middle" width="95%" backgroundColor="#F9FBB7">
-	    <mx:Label x="10" y="10" text="Transport Orders" fontSize="24"/>
-	    <mx:VRule height="10"/>
-	    <mx:Button id="createTransportOrderBtn" buttonMode="true" mouseChildren="false" toolTip="Create a new Transport Order" icon="@Embed(source='/assets/images/TransportOrder--Add.png')" click="showCreateTransportOrderDialog()"/>
-        <mx:VRule height="10"/>
-        <mx:Button id="cancelTransportOrderBtn" buttonMode="true" mouseChildren="false" toolTip="Finish one or more existing Transport Orders" icon="@Embed(source='/assets/images/TransportOrder--Cancel.png')" click="showCancelTransportOrdersDialog()" />
-        <mx:VRule height="10"/>
-        <mx:Button id="refreshTransportOrdersBtn" buttonMode="true" mouseChildren="false" toolTip="Refresh the list of Transport Orders" icon="@Embed(source='assets/images/icons/refresh.png')" click="refresh()" />
-	    <mx:VRule height="10"/>
-	    <mx:Button id="showTransportOrderHistoryBtn" buttonMode="true" mouseChildren="false" toolTip="Show history of a Transport Order" icon="@Embed(source='/assets/images/TransportOrder--History.png')" click="showCreateTransportOrderDialog()" />
-	    <mx:VRule height="10"/>
-	    <mx:Button id="redirectTransportOrderBtn" buttonMode="true" mouseChildren="false" toolTip="Redirect one or more Transport Orders" icon="@Embed(source='/assets/images/TransportOrder--Redirect.png')" click="showRedirectTransportOrderDialog()"/>
-	    <mx:VRule height="10"/>
-	    <mx:Button id="stateTransportOrderBtn" buttonMode="true" mouseChildren="false" toolTip="Change state of a Transport Order" icon="@Embed(source='/assets/images/TransportOrder--State.png')" click="showCreateTransportOrderDialog()" />
-        <mx:VRule height="10"/>
-        <mx:Button id="deleteTransportOrderBtn" buttonMode="true" mouseChildren="false" toolTip="Delete an existing Transport Order" icon="@Embed(source='/assets/images/TransportOrder--Delete.png')" click="showCancelTransportOrdersDialog()" />
 	</mx:HBox>
-	<mx:HRule x="10" y="53" width="95%"/>
 </mx:Canvas>
