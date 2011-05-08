@@ -61,7 +61,7 @@ import org.openwms.tms.domain.values.TransportOrderState;
 @Entity
 @Table(name = "TMS_TRANSPORT_ORDER")
 @NamedQueries({
-        @NamedQuery(name = TransportOrder.NQ_FIND_ALL, query = "select to from TransportOrder to"),
+        @NamedQuery(name = TransportOrder.NQ_FIND_ALL, query = "select to from TransportOrder to order by to.id"),
         @NamedQuery(name = TransportOrder.NQ_FIND_BY_TU, query = "select to from TransportOrder to where to.transportUnit = :transportUnit"),
         @NamedQuery(name = TransportOrder.NQ_FIND_FOR_TU_IN_STATE, query = "select to from TransportOrder to where to.transportUnit = :transportUnit and to.state in (:states)") })
 public class TransportOrder extends AbstractEntity implements DomainObject<Long>, Serializable {
