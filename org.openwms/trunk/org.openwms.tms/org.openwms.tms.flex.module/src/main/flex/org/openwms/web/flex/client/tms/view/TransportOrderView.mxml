@@ -38,12 +38,15 @@
     		import mx.collections.ArrayCollection;
     		import mx.controls.Alert;
     		import mx.controls.dataGridClasses.DataGridColumn;
+            import mx.formatters.DateFormatter;
     		import org.openwms.web.flex.client.common.event.LocationGroupEvent;
     		import org.openwms.web.flex.client.common.event.LocationEvent;
     		import org.openwms.web.flex.client.common.event.TransportUnitEvent;
     		import org.openwms.web.flex.client.common.model.CommonModelLocator;
     		import org.openwms.web.flex.client.tms.event.TransportOrderEvent;
     		import org.openwms.tms.domain.order.TransportOrder;
+            import org.openwms.tms.domain.values.TransportOrderState;
+            import org.openwms.tms.domain.values.PriorityLevel;
     		import org.openwms.web.flex.client.tms.model.TMSModelLocator;
     		import org.openwms.web.flex.client.tms.view.dialogs.CreateTransportOrderDialog;
             import org.openwms.web.flex.client.tms.view.dialogs.CancelTransportOrdersDialog;
@@ -63,6 +66,8 @@
             public var tmsModelLocator:TMSModelLocator;
     		[Bindable]
             private var selected:TransportOrder;
+            [Bindable]
+            private var dateTimeFormatter:DateFormatter;
             
     		private function onShow():void {
                 if (tmsModelLocator.allTransportOrders.length == 0) {
@@ -77,6 +82,7 @@
                 if (commonModelLocator.allLocationGroups.length == 0) {
                     dispatchEvent(new LocationGroupEvent(LocationGroupEvent.LOAD_ALL_LOCATION_GROUPS));
                 }
+                dateTimeFormatter = tmsModelLocator.dateTimeFormatter;
     		}
     		
             private function showCreateTransportOrderDialog():void {
@@ -109,7 +115,7 @@
             private function formatAsDate(item:Object, dg:DataGridColumn):String {
                 trace("Date:"+item[dg.dataField]);
                 if (item[dg.dataField] != null) {
-                    return dateFormatter.format(item[dg.dataField]);
+                    return tmsModelLocator.dateFormatter.format(item[dg.dataField]);
                 }
                 return "--";
             }
@@ -145,6 +151,13 @@
             	selected = event.currentTarget.selectedItem as TransportOrder;
                 targetLocationGroupCB.selectedIndex = commonModelLocator.allLocationGroups.getItemIndex(selected.targetLocationGroup);
                 targetLocationCB.selectedIndex = commonModelLocator.allLocations.getItemIndex(selected.targetLocation);
+                stateCB.selectedItem = selected.state;
+                priorityCB.selectedItem = selected.priority;
+                if (selected.transportUnit != null) {
+                    transportUnitLbl.text = selected.transportUnit.barcode.toString();
+                } else {
+                    transportUnitLbl.text = "--";
+                }
             }
     	]]>
 	</mx:Script>
@@ -167,31 +180,42 @@
 	<mx:HRule x="10" y="53" width="95%"/>
 
 	<mx:HBox y="63" x="10" width="95%" height="95%">
-	<mx:Canvas width="325" height="100%" backgroundColor="#F9FBB7">
+	<mx:Canvas height="100%" backgroundColor="#F9FBB7">
+        <mx:Image x="10" y="10" source="@Embed(source='/assets/images/TransportOrder.png')"/>
 		<mx:Label x="34" y="10" text="Transport Order" fontWeight="bold"/>
+
+        <mx:Label x="10" y="36" text="ID"/>
 		<mx:Label x="146" y="36" text="{selected.id}" id="idLbl"/>
-		<mx:Label x="146" y="62" text="{selected.transportUnit}" id="transportUnitLbl"/>
-		<mx:Label x="146" y="218" text="{selected.creationDate}" id="creationDateLbl"/>
-		<mx:Label x="146" y="244" text="{selected.dateUpdated}" id="dateUpdatedLbl"/>
-		<mx:Label x="146" y="270" text="{selected.startDate}" id="startDateLbl"/>
-		<mx:Label x="146" y="296" text="{selected.endDate}" id="endDateLbl"/>
-		<mx:Label x="146" y="140" text="{selected.sourceLocation}" id="sourceLocationLbl"/>
-		<mx:Label x="10" y="62" text="Transport Unit"/>
-		<mx:Label x="10" y="88" text="State"/>
-		<mx:Label x="10" y="114" text="Priority"/>
-		<mx:Label x="10" y="140" text="Source Location"/>
-		<mx:Label x="10" y="166" text="Target Location"/>
-		<mx:Label x="10" y="192" text="Target Location Group"/>
-		<mx:Label x="10" y="218" text="Created"/>
-		<mx:Label x="10" y="244" text="Last Access"/>
-		<mx:Label x="10" y="270" text="Started"/>
-		<mx:Label x="10" y="296" text="Finished"/>
-		<mx:Label x="10" y="36" text="ID"/>
-		<mx:Image x="10" y="10" source="@Embed(source='/assets/images/TransportOrder.png')"/>
-		<mx:ComboBox x="146" y="86" id="stateCB" />
-		<mx:ComboBox x="146" y="112" id="priorityCB" />
-		<mx:ComboBox x="146" y="190" id="targetLocationGroupCB" />
-		<mx:ComboBox x="146" y="164" id="targetLocationCB" />
+
+        <mx:Label x="10" y="62" text="Transport Unit"/>
+		<mx:Label x="146" y="62" id="transportUnitLbl"/>
+
+        <mx:Label x="10" y="88" text="State"/>
+        <mx:ComboBox x="146" y="86" id="stateCB" dataProvider="{TransportOrderState.constants}"/>
+
+        <mx:Label x="10" y="114" text="Priority"/>
+        <mx:ComboBox x="146" y="112" id="priorityCB" dataProvider="{PriorityLevel.constants}"/>
+
+        <mx:Label x="10" y="140" text="Source Location"/>
+        <mx:Label x="146" y="140" text="{selected.sourceLocation}" id="sourceLocationLbl"/>
+
+        <mx:Label x="10" y="166" text="Target Location"/>
+        <mx:ComboBox x="146" y="164" id="targetLocationCB" dataProvider="{commonModelLocator.allLocations}"/>
+
+        <mx:Label x="10" y="192" text="Target Location Group"/>
+        <mx:ComboBox x="146" y="190" id="targetLocationGroupCB" dataProvider="{commonModelLocator.allLocationGroups}"/>
+
+        <mx:Label x="10" y="218" text="Created"/>
+        <mx:Label x="146" y="218" text="{dateTimeFormatter.format(selected.creationDate)}" id="creationDateLbl"/>
+
+        <mx:Label x="10" y="244" text="Last Access"/>
+        <mx:Label x="146" y="244" text="{dateTimeFormatter.format(selected.dateUpdated)}" id="dateUpdatedLbl"/>
+
+        <mx:Label x="10" y="270" text="Started"/>
+        <mx:Label x="146" y="270" text="{dateTimeFormatter.format(selected.startDate)}" id="startDateLbl"/>
+
+        <mx:Label x="10" y="296" text="Finished"/>
+		<mx:Label x="146" y="296" text="{dateTimeFormatter.format(selected.endDate)}" id="endDateLbl"/>
 	</mx:Canvas>
 	<mx:DataGrid id="transportOrdersLst" allowMultipleSelection="true" change="onRowClick(event)" dataProvider="{tmsModelLocator.allTransportOrders}" height="100%" width="100%">
 		<mx:columns>
