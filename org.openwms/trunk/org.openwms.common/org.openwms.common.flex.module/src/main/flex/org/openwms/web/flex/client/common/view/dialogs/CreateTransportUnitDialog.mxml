@@ -21,7 +21,7 @@
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
 -->
-<mx:Panel xmlns:mx="http://www.adobe.com/2006/mxml" width="506" height="358" title="Create Transport Units" fontSize="12" creationComplete="init();" xmlns:comp="org.openwms.web.flex.client.component.*">
+<mx:Panel xmlns:mx="http://www.adobe.com/2006/mxml" height="358" title="Create Transport Units" fontSize="12" creationComplete="init();" xmlns:comp="org.openwms.web.flex.client.component.*">
 
     <mx:Metadata>
         [Name]

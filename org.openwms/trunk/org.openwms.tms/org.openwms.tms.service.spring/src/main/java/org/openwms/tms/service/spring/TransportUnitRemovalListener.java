@@ -81,8 +81,8 @@ public class TransportUnitRemovalListener implements OnRemovalListener<Transport
         }
         if (!dao.findForTUinState(entity, TransportOrderState.STARTED, TransportOrderState.INTERRUPTED).isEmpty()) {
             logger.warn("Active TransportOrder for the TransportUnit with the id " + entity.getId() + " exist");
-            throw new RemovalNotAllowedException("Active TransportOrder for the TransportUnit with the id "
-                    + entity.getId() + " exist");
+            throw new RemovalNotAllowedException("Active TransportOrder for the TransportUnit with the id " + entity
+                    + " exist");
         }
         try {
             cancelInitializedOrders(entity);

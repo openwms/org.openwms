@@ -352,7 +352,7 @@ public class TransportOrder extends AbstractEntity implements DomainObject<Long>
             endDate = new Date();
             break;
         default:
-            return;
+            break;
         }
         state = newState;
     }

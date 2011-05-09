@@ -235,7 +235,7 @@ public class TransportUnit extends AbstractEntity implements DomainObject<Long>,
      *            the {@link Barcode}
      */
     public TransportUnit(Barcode barcode) {
-        this.barcode = barcode;
+        this.barcode = new Barcode(barcode.adjustBarcode(barcode.getValue()));
     }
 
     /**
