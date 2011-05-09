@@ -81,7 +81,6 @@ public class TransportOrderStarterImpl implements TransportOrderStarter {
             throw new StateChangeException(
                     "Cannot start the TransportOrder because one or more active TransportOrders exist");
         }
-        logger.debug("STATE IS NOW"+transportOrder.getState());
         transportOrder.setState(TransportOrderState.STARTED);
         if (logger.isDebugEnabled()) {
             logger.debug("TransportOrder " + transportOrder.getId() + " started at " + transportOrder.getStartDate());
