@@ -101,8 +101,8 @@ public class TransportUnitServiceImpl extends EntityServiceImpl<TransportUnit, L
         if (location == null) {
             throw new ServiceRuntimeException("Location " + actualLocation + " not found");
         }
-        TransportUnitType type;
-        if (null == (type = transportUnitTypeDao.findByUniqueId(transportUnitType.getType()))) {
+        TransportUnitType type = transportUnitTypeDao.findByUniqueId(transportUnitType.getType());
+        if (null == (type)) {
             throw new ServiceRuntimeException("TransportUnitType " + transportUnitType + " not found");
         }
         transportUnit = new TransportUnit(barcode);

@@ -19,10 +19,10 @@
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
 package org.openwms.web.flex.client.common.business {
-    
+
     import mx.collections.ArrayCollection;
     import mx.controls.Alert;
-    
+
     import org.granite.tide.events.TideFaultEvent;
     import org.granite.tide.events.TideResultEvent;
     import org.granite.tide.spring.Context;
@@ -53,25 +53,25 @@ package org.openwms.web.flex.client.common.business {
 
         [Observer("LOAD_TRANSPORT_UNITS")]
         public function getTransportUnits():void {
-        	tideContext.transportUnitService.getAllTransportUnits(onTransportUnitsLoaded, onFault);
+            tideContext.transportUnitService.getAllTransportUnits(onTransportUnitsLoaded, onFault);
         }
         private function onTransportUnitsLoaded(event:TideResultEvent):void {
             commonModelLocator.allTransportUnits = event.result as ArrayCollection;
         }
-        
+
         [Observer("CREATE_TRANSPORT_UNIT")]
         public function createTransportUnit(event:TransportUnitEvent):void {
-        	var transportUnit:TransportUnit = event.data as TransportUnit;
-        	tideContext.transportUnitService.createTransportUnit(transportUnit.barcode, transportUnit.transportUnitType, transportUnit.actualLocation.locationId, onTransportUnitCreated, onFault);
+            var transportUnit:TransportUnit = event.data as TransportUnit;
+            tideContext.transportUnitService.createTransportUnit(transportUnit.barcode, transportUnit.transportUnitType, transportUnit.actualLocation.locationId, onTransportUnitCreated, onFault);
         }
         private function onTransportUnitCreated(event:TideResultEvent):void {
             dispatchEvent(new TransportUnitEvent(TransportUnitEvent.LOAD_TRANSPORT_UNITS));
             dispatchEvent(new TransportUnitEvent(TransportUnitEvent.TRANSPORT_UNIT_CREATED));
         }
-        
+
         [Observer("DELETE_TRANSPORT_UNIT")]
         public function deleteTransportUnits(event:TransportUnitEvent):void {
-        	tideContext.transportUnitService.deleteTransportUnits(event.data as ArrayCollection, onTransportUnitDeleted, onFault);
+            tideContext.transportUnitService.deleteTransportUnits(event.data as ArrayCollection, onTransportUnitDeleted, onFault);
         }
         private function onTransportUnitDeleted(event:TideResultEvent):void {
             dispatchEvent(new TransportUnitEvent(TransportUnitEvent.LOAD_TRANSPORT_UNITS));
@@ -86,8 +86,9 @@ package org.openwms.web.flex.client.common.business {
         }
 
         private function onFault(event:TideFaultEvent):void {
-        	trace("Error executing operation on Transport Unit service:" + event.fault);
+            trace("Error executing operation on Transport Unit service:" + event.fault);
             Alert.show("Error executing operation on Transport Unit service");
         }
     }
 }
+

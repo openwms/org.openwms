@@ -24,6 +24,8 @@ import java.io.Serializable;
 
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
+import javax.persistence.PostPersist;
+import javax.persistence.PostUpdate;
 
 import org.apache.commons.lang.StringUtils;
 
@@ -46,8 +48,7 @@ public class Barcode implements Serializable {
      * Only be used when padding is activated.
      * </p>
      * 
-     * @author <a href="mailto:scherrer@openwms.org">Heiko
-     *         Scherrer</a>
+     * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
      * @version $Revision$
      * @since 0.1
      */
@@ -78,7 +79,7 @@ public class Barcode implements Serializable {
     /**
      * Defines the maximum length of characters. Default: {@value} .
      */
-    private static int length = 16;
+    private static int length = 20;
 
     /**
      * The alignment of the <code>Barcode</code>. Could be something of
@@ -114,7 +115,14 @@ public class Barcode implements Serializable {
         adjustBarcode(value);
     }
 
-    private void adjustBarcode(String val) {
+    @SuppressWarnings("unused")
+    @PostPersist
+    @PostUpdate
+    private void init() {
+        adjustBarcode(value);
+    }
+
+    public String adjustBarcode(String val) {
         if (val == null) {
             throw new IllegalArgumentException("Cannot create a barcode without value");
         }
@@ -124,7 +132,7 @@ public class Barcode implements Serializable {
         } else {
             this.value = val;
         }
-
+        return this.value;
     }
 
     /**
@@ -163,7 +171,7 @@ public class Barcode implements Serializable {
      *            <code>true</code> if <code>Barcode</code> should be padded,
      *            otherwise <code>false</code>.
      */
-    public static void setPadded(boolean p) {
+    static void setPadded(boolean p) {
         padded = p;
     }
 
@@ -182,7 +190,7 @@ public class Barcode implements Serializable {
      * @param p
      *            The padding character to use
      */
-    public static void setPadder(char p) {
+    static void setPadder(char p) {
         padder = p;
         padded = true;
     }
@@ -221,7 +229,7 @@ public class Barcode implements Serializable {
      * @param l
      *            The length to set
      */
-    public static void setLength(int l) {
+    static void setLength(int l) {
         length = l;
     }
 

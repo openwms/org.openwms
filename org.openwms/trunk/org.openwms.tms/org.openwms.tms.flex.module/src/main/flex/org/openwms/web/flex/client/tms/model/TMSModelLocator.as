@@ -21,6 +21,7 @@
 package org.openwms.web.flex.client.tms.model {
 
     import mx.collections.ArrayCollection;
+    import mx.formatters.DateFormatter;
     import org.openwms.tms.domain.values.TransportOrderState;
 
     /**
@@ -36,6 +37,25 @@ package org.openwms.web.flex.client.tms.model {
 
         public var allTransportOrders:ArrayCollection = new ArrayCollection();
         public var allStates:ArrayCollection = new ArrayCollection(TransportOrderState.constants);
+        // --------------------------------------------------------------------
+        // General stuff
+        // --------------------------------------------------------------------
+        /**
+         * Date format including the time.
+         */
+        public static const DT_FORMAT_STRING:String = "DD.MM.YYYY HH:NN:SS";
+        /**
+         * Date format without timestamp.
+         */
+        public static const SIMPLE_DT_FORMAT:String = "DD.MM.YYYY";
+        /**
+         * A DateFormatter that uses the DT_FORMAT_STRING.
+         */
+        public const dateTimeFormatter:DateFormatter = new DateFormatter();
+        /**
+         * A DateFormatter that uses the SIMPLE_DT_FORMAT.
+         */
+        public const dateFormatter:DateFormatter = new DateFormatter();
 
         // TransportOrderView
         public static const WIDTH_STATE:Number = 70;
@@ -48,6 +68,9 @@ package org.openwms.web.flex.client.tms.model {
             allStates.removeItemAt(allStates.getItemIndex(TransportOrderState.CREATED));
             allStates.removeItemAt(allStates.getItemIndex(TransportOrderState.INITIALIZED));
             allStates.removeItemAt(allStates.getItemIndex(TransportOrderState.STARTED));
+            dateFormatter.formatString = SIMPLE_DT_FORMAT;
+            dateTimeFormatter.formatString = DT_FORMAT_STRING;
         }
     }
 }
+
