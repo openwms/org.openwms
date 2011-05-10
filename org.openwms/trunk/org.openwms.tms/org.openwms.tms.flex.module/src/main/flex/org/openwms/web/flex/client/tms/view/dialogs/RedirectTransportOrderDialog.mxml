@@ -71,7 +71,10 @@
             }
     	    
             private function formatFunction(item:*):String {
-                return item.id+"\twith Barcode\t"+item.transportUnit.barcode+(item.targetLocation == null ? "":"\tto Location\t"+item.targetLocation)+(item.targetLocationGroup == null ? "":"\tto Location Group\t"+item.targetLocationGroup);
+                return item.id + "\twith Barcode\t" + 
+                      (item.transportUnit == null ? "--" : item.transportUnit.barcode) +
+                      (item.targetLocation == null ? "" : "\tto Location\t" + item.targetLocation)+
+                      (item.targetLocationGroup == null ? "":"\tto Location Group\t"+item.targetLocationGroup);
             }
 
     	]]>

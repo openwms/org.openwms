@@ -113,7 +113,6 @@
             }
             
             private function formatAsDate(item:Object, dg:DataGridColumn):String {
-                trace("Date:"+item[dg.dataField]);
                 if (item[dg.dataField] != null) {
                     return tmsModelLocator.dateFormatter.format(item[dg.dataField]);
                 }
@@ -153,6 +152,11 @@
                 targetLocationCB.selectedIndex = commonModelLocator.allLocations.getItemIndex(selected.targetLocation);
                 stateCB.selectedItem = selected.state;
                 priorityCB.selectedItem = selected.priority;
+                if ([TransportOrderState.FINISHED, TransportOrderState.ONFAILURE, TransportOrderState.CANCELED].indexOf(selected.state) < 0) {
+                    redirectTransportOrderBtn.enabled = true;
+                } else {
+                    redirectTransportOrderBtn.enabled = false;
+                }
                 if (selected.transportUnit != null) {
                     transportUnitLbl.text = selected.transportUnit.barcode.toString();
                 } else {
@@ -161,8 +165,6 @@
             }
     	]]>
 	</mx:Script>
-	
-	<mx:DateFormatter id="dateFormatter" formatString="{CommonModelLocator.DT_FORMAT_STRING}"/>
 	
 	<mx:HBox x="10" y="10" verticalAlign="middle" width="95%" backgroundColor="#F9FBB7">
 	    <mx:Label x="10" y="10" text="Transport Orders" fontSize="24"/>
