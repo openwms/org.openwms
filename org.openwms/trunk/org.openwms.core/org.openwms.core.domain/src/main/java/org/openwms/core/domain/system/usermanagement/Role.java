@@ -33,6 +33,8 @@ import javax.persistence.ManyToMany;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 
+import org.openwms.core.util.validation.AssertUtils;
+
 /**
  * A Role is grouping multiple {@link User}s regarding security aspects.
  * <p>
@@ -112,8 +114,9 @@ public class Role extends SecurityObject implements Serializable {
      *            The description text of the <code>Role</code>
      */
     public Role(String name, String description) {
-        // TODO [scherrer] : be compliant to other tests and assert for null
         super(name, description);
+        AssertUtils.notNull(name, "Role name must not be null");
+        AssertUtils.notNull(description, "Role description must not be null");
     }
 
     /**
@@ -136,9 +139,7 @@ public class Role extends SecurityObject implements Serializable {
      *             if user is <code>null</code>
      */
     public boolean addUser(User user) {
-        if (user == null) {
-            throw new IllegalArgumentException("User cannot be null.");
-        }
+        AssertUtils.notNull(user, "User to add must not be null");
         return this.users.add(user);
     }
 
@@ -151,9 +152,7 @@ public class Role extends SecurityObject implements Serializable {
      *             if user is <code>null</code>
      */
     public void removeUser(User user) {
-        if (user == null) {
-            throw new IllegalArgumentException("User cannot be null.");
-        }
+        AssertUtils.notNull(user, "User to remove must not be null");
         this.users.remove(user);
     }
 
@@ -167,9 +166,7 @@ public class Role extends SecurityObject implements Serializable {
      *             if users is <code>null</code>
      */
     public void setUsers(Set<User> users) {
-        if (users == null) {
-            throw new IllegalArgumentException("Users cannot be null.");
-        }
+        AssertUtils.notNull(users, "Set of Users must not be null");
         this.users = users;
     }
 
@@ -215,9 +212,7 @@ public class Role extends SecurityObject implements Serializable {
      *         <code>false</code>
      */
     public boolean addGrant(SecurityObject grant) {
-        if (grant == null) {
-            throw new IllegalArgumentException("Grant to add cannot be null.");
-        }
+        AssertUtils.notNull(grant, "Grant to add must not be null");
         return this.grants.add(grant);
     }
 
@@ -232,9 +227,7 @@ public class Role extends SecurityObject implements Serializable {
      *         <code>false</code>
      */
     public boolean removeGrant(SecurityObject grant) {
-        if (grant == null) {
-            throw new IllegalArgumentException("Grant to remove cannot be null.");
-        }
+        AssertUtils.notNull(grant, "Grant to remove must not be null");
         return this.grants.remove(grant);
     }
 
@@ -247,9 +240,7 @@ public class Role extends SecurityObject implements Serializable {
      *            <code>Role</code>
      */
     public void setGrants(Set<SecurityObject> grants) {
-        if (grants == null) {
-            throw new IllegalArgumentException("Set of SecurityObjects cannot be null.");
-        }
+        AssertUtils.notNull(grants, "Set of Grants must not be null");
         this.grants = grants;
     }
 }

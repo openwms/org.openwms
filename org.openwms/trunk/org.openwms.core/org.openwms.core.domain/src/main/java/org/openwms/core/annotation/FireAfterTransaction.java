@@ -28,7 +28,8 @@ import java.lang.annotation.Target;
 import java.util.EventObject;
 
 /**
- * A FireAfterTransaction.
+ * A FireAfterTransaction. Used to send a list of events after the current
+ * transaction has finished successfully.
  * 
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  * @version $Revision: $

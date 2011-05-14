@@ -33,6 +33,8 @@ import javax.persistence.Table;
 import javax.persistence.Transient;
 import javax.persistence.Version;
 
+import org.openwms.core.util.validation.AssertUtils;
+
 /**
  * A Module is a definition of a Flex Module and is used to persist some initial
  * information about these modules.
@@ -160,12 +162,10 @@ public class Module extends AbstractEntity implements DomainObject<Long>, Serial
      * @param moduleName
      *            The moduleName to set.
      * @throws IllegalArgumentException
-     *             in case the new moduleName is null or empty
+     *             in case the new moduleName is <code>null</code> or empty
      */
     public void setModuleName(String moduleName) {
-        if (null == moduleName || moduleName.isEmpty()) {
-            throw new IllegalArgumentException("Not allowed to set moduleName to null or an empty String");
-        }
+        AssertUtils.notNull(moduleName, "Not allowed to set the moduleName to null or an empty String");
         this.moduleName = moduleName;
     }
 
@@ -184,12 +184,10 @@ public class Module extends AbstractEntity implements DomainObject<Long>, Serial
      * @param url
      *            The url to set.
      * @throws IllegalArgumentException
-     *             in case the new url is null or empty
+     *             in case the new url is <code>null</code> or empty
      */
     public void setUrl(String url) {
-        if (null == url || url.isEmpty()) {
-            throw new IllegalArgumentException("Not allowed to set url to null or an empty String");
-        }
+        AssertUtils.notNull(moduleName, "Not allowed to set the url to null or an empty String");
         this.url = url;
     }
 

@@ -25,6 +25,7 @@ import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.OrderBy;
@@ -33,6 +34,7 @@ import javax.persistence.Version;
 
 import org.openwms.core.domain.AbstractEntity;
 import org.openwms.core.domain.DomainObject;
+import org.openwms.core.util.validation.AssertUtils;
 
 /**
  * Encapsulates the password of an {@link User}.
@@ -56,6 +58,7 @@ public class UserPassword extends AbstractEntity implements DomainObject<Long>, 
      * Unique technical key.
      */
     @Id
+    @GeneratedValue
     @Column(name = "ID")
     private Long id;
 
@@ -95,7 +98,8 @@ public class UserPassword extends AbstractEntity implements DomainObject<Long>, 
      *            The password as String to assign.
      */
     public UserPassword(User user, String password) {
-        // TODO [scherrer] : Be compliant and assert for null
+        AssertUtils.notNull(user, "User must not be null");
+        AssertUtils.notNull(password, "Password must not be null");
         this.user = user;
         this.password = password;
     }
@@ -164,7 +168,7 @@ public class UserPassword extends AbstractEntity implements DomainObject<Long>, 
     }
 
     /**
-     * Comparison is done with the businesskey (user and password).
+     * Comparison is done with the business-key (user and password).
      * {@link AbstractEntity#equals(Object)} is not called to avoid comparison
      * with the UUID.
      * 

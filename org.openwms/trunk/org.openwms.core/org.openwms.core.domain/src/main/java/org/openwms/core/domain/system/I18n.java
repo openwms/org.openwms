@@ -37,7 +37,7 @@ import org.openwms.core.domain.DomainObject;
 import org.openwms.core.domain.values.I18nSet;
 
 /**
- * A I18n.
+ * An I18n.
  * 
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  * @version $Revision: $
@@ -91,8 +91,11 @@ public class I18n extends AbstractEntity implements DomainObject<Long> {
      * Create a new I18n.
      * 
      * @param key
+     *            The key to access this translation
      * @param module
+     *            Defines a group where this entity belongs to
      * @param lang
+     *            A set of languages
      */
     public I18n(String key, String module, I18nSet lang) {
         super();
@@ -105,7 +108,9 @@ public class I18n extends AbstractEntity implements DomainObject<Long> {
      * Create a new I18n.
      * 
      * @param key
+     *            The key to access this translation
      * @param module
+     *            Defines a group where this entity belongs to
      */
     public I18n(String key, String module) {
         super();
@@ -113,6 +118,11 @@ public class I18n extends AbstractEntity implements DomainObject<Long> {
         this.module = module;
     }
 
+    /**
+     * After loading combine <code>module</code> and <code>key</code> and store
+     * in in a transient field <code>cKey</code>. This field acts as a combined
+     * identifier.
+     */
     @PostLoad
     protected void onLoad() {
         this.cKey = this.module + this.key;
@@ -128,6 +138,8 @@ public class I18n extends AbstractEntity implements DomainObject<Long> {
     }
 
     /**
+     * {@inheritDoc}
+     * 
      * @see org.openwms.core.domain.DomainObject#isNew()
      */
     @Override
@@ -136,6 +148,8 @@ public class I18n extends AbstractEntity implements DomainObject<Long> {
     }
 
     /**
+     * {@inheritDoc}
+     * 
      * @see org.openwms.core.domain.DomainObject#getVersion()
      */
     @Override
@@ -144,6 +158,8 @@ public class I18n extends AbstractEntity implements DomainObject<Long> {
     }
 
     /**
+     * {@inheritDoc}
+     * 
      * @see org.openwms.core.domain.DomainObject#getId()
      */
     @Override
