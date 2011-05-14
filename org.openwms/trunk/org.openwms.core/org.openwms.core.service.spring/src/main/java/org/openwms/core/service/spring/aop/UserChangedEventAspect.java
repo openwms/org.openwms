@@ -56,11 +56,15 @@ public class UserChangedEventAspect implements ApplicationContextAware {
     }
 
     /**
-     * FIXME [scherrer] Comment this
+     * Only {@link ApplicationEvent}s are created and published over Springs
+     * {@link ApplicationContext}.
      * 
      * @param publisher
+     *            The instance that is publishing the event
      * @param events
+     *            A list of event classes to fire
      * @throws Throwable
+     *             Any exception is re-thrown
      */
     public void fireUserEvent(Object publisher, FireAfterTransaction events) throws Throwable {
         for (int i = 0; i < events.events().length; i++) {

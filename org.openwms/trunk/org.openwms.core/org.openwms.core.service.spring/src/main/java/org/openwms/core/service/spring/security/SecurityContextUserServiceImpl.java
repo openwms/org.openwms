@@ -72,6 +72,8 @@ public class SecurityContextUserServiceImpl implements UserDetailsService, Appli
     private Ehcache cache;
 
     /**
+     * {@inheritDoc}
+     * 
      * @see org.springframework.context.ApplicationListener#onApplicationEvent(org.springframework.context.ApplicationEvent)
      */
     @Override
