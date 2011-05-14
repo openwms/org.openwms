@@ -44,6 +44,8 @@ public class I18nServiceImpl implements I18nService {
     private I18nRepository repo;
 
     /**
+     * {@inheritDoc}
+     * 
      * @see org.openwms.core.service.I18nService#findAllTranslations()
      */
     @Override
@@ -52,6 +54,8 @@ public class I18nServiceImpl implements I18nService {
     }
 
     /**
+     * {@inheritDoc}
+     * 
      * @see org.openwms.core.service.I18nService#saveTranslation(org.openwms.core.domain.system.I18n)
      */
     @Override
@@ -60,6 +64,8 @@ public class I18nServiceImpl implements I18nService {
     }
 
     /**
+     * {@inheritDoc}
+     * 
      * @see org.openwms.core.service.I18nService#saveTranslations(java.util.List)
      */
     @Override
