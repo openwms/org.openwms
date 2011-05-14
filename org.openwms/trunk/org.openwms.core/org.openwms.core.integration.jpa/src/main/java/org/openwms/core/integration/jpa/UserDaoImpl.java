@@ -30,6 +30,7 @@ import org.openwms.core.domain.system.usermanagement.User;
 import org.openwms.core.domain.system.usermanagement.UserPassword;
 import org.openwms.core.integration.UserDao;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 /**
@@ -45,7 +46,7 @@ import org.springframework.transaction.annotation.Transactional;
  * @see org.openwms.core.integration.UserDao
  */
 @Repository("userDao")
-@Transactional
+@Transactional(propagation = Propagation.MANDATORY)
 public class UserDaoImpl extends AbstractGenericJpaDao<User, Long> implements UserDao {
 
     /**
