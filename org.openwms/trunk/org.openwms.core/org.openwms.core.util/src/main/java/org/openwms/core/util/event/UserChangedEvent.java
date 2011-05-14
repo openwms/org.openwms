@@ -23,23 +23,25 @@ package org.openwms.core.util.event;
 import org.springframework.context.ApplicationEvent;
 
 /**
- * A RootApplicationEvent.
+ * An UserChangedEvent is fired to notify listeners about changes on an
+ * <code>User</code> configuration. A listener could probably evict a cache of
+ * users.
  * 
- * @author <a href="mailto:russelltina@users.sourceforge.net">Tina Russell</a>
- * @version $Revision$
+ * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
+ * @version $Revision: $
  * @since 0.1
  */
-public class RootApplicationEvent extends ApplicationEvent {
+public class UserChangedEvent extends ApplicationEvent {
 
-    private static final long serialVersionUID = -2454660395280026756L;
+    private static final long serialVersionUID = 9137035549610051152L;
 
     /**
-     * Create a new RootApplicationEvent.
+     * Create a new UserChangedEvent.
      * 
      * @param source
-     *            The event sender
+     *            The <code>User</code> that has changed or <code>null</code>
      */
-    public RootApplicationEvent(Object source) {
+    public UserChangedEvent(Object source) {
         super(source);
     }
 
