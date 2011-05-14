@@ -33,6 +33,7 @@ import javax.persistence.Version;
 
 import org.openwms.core.domain.AbstractEntity;
 import org.openwms.core.domain.DomainObject;
+import org.openwms.core.util.validation.AssertUtils;
 
 /**
  * An Email, encapsulates the email address of an <code>User</code>.
@@ -98,6 +99,8 @@ public class Email extends AbstractEntity implements DomainObject<Long>, Seriali
      *            The email address of the <code>User</code>
      */
     public Email(String username, String emailAddress) {
+        AssertUtils.isNotEmpty(username, "Username must not be null or empty");
+        AssertUtils.isNotEmpty(emailAddress, "EmailAddress must not be null or empty");
         assert username != null && !username.equals("");
         assert emailAddress != null && emailAddress.equals("");
         this.username = username;

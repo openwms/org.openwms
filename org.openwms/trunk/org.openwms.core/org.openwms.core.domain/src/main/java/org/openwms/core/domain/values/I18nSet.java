@@ -24,11 +24,13 @@ import javax.persistence.Column;
 import javax.persistence.Embeddable;
 
 /**
- * A I18nSet.
+ * An I18nSet. Encapsulates different languages. Used as an embedded value type
+ * in {@link org.openwms.core.domain.system.I18n}
  * 
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  * @version $Revision: $
  * @since 0.1
+ * @see org.openwms.core.domain.system.I18n
  */
 @Embeddable
 public class I18nSet {
@@ -53,8 +55,11 @@ public class I18nSet {
      * Create a new I18nSet.
      * 
      * @param en_US
+     *            US English language
      * @param de_DE
+     *            German Germany language
      * @param fr_FR
+     *            French language
      */
     public I18nSet(String en_US, String de_DE, String fr_FR) {
         super();
