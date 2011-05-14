@@ -29,7 +29,6 @@ import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
 import org.springframework.core.io.support.ResourcePatternResolver;
 import org.springframework.orm.jpa.persistenceunit.MutablePersistenceUnitInfo;
 import org.springframework.orm.jpa.persistenceunit.PersistenceUnitPostProcessor;
-import org.springframework.util.ResourceUtils;
 
 /**
  * A CustomPersistenceUnitPostProcessor.
@@ -59,7 +58,6 @@ public class CustomPersistenceUnitPostProcessor implements PersistenceUnitPostPr
     private void resolveJarFiles() {
         try {
             for (int i = 0; i < persistenceJarFiles.length; i++) {
-                System.out.println("--" + ResourceUtils.getURL(persistenceJarFiles[i]));
                 Resource[] resources = this.resourcePatternResolver.getResources(persistenceJarFiles[i]);
                 for (Resource resource : resources) {
                     jarFiles.add(resource);

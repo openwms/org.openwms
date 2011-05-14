@@ -65,6 +65,7 @@ public class UserDaoTest extends AbstractJpaSpringContextTests {
      * Setup two roles.
      * 
      * @throws InvalidPasswordException
+     *             In case of any error
      */
     @Before
     public void onBefore() throws InvalidPasswordException {
