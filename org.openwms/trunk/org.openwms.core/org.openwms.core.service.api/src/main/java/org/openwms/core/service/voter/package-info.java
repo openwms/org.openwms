@@ -18,27 +18,7 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
-package org.openwms.core.service.voter;
-
 /**
- * A DecisionVoter. Is asked to vote for a business action.
- * 
- * @param <T> Any type of Vote
- * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
- * @version $Revision: $
- * @since 0.1
+ * Types, exceptions and interfaces related to the voter pattern.
  */
-public interface DecisionVoter<T extends Vote> {
-
-    /**
-     * The implementation has to vote for it's particular vote on also
-     * particular rules implemented by the voter.
-     * 
-     * @param vote
-     *            The vote to vote for
-     * @throws DeniedException
-     *             is thrown when the voter does not vote for the action to be
-     *             allowed.
-     */
-    void voteFor(T vote) throws DeniedException;
-}
+package org.openwms.core.service.voter;
