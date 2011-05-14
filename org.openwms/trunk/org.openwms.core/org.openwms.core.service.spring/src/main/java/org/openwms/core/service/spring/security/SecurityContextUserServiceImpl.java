@@ -20,15 +20,19 @@
  */
 package org.openwms.core.service.spring.security;
 
+import net.sf.ehcache.Ehcache;
+
 import org.openwms.core.domain.system.usermanagement.SystemUser;
 import org.openwms.core.domain.system.usermanagement.User;
 import org.openwms.core.exception.InvalidPasswordException;
 import org.openwms.core.integration.GenericDao;
 import org.openwms.core.service.spring.UserWrapper;
+import org.openwms.core.util.event.UserChangedEvent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.context.ApplicationListener;
 import org.springframework.security.core.userdetails.UserCache;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -50,7 +54,7 @@ import org.springframework.transaction.annotation.Transactional;
  */
 @Service
 @Transactional
-public class SecurityContextUserServiceImpl implements UserDetailsService {
+public class SecurityContextUserServiceImpl implements UserDetailsService, ApplicationListener<UserChangedEvent> {
 
     private Logger logger = LoggerFactory.getLogger(this.getClass());
     private String systemUser = "openwms";
@@ -62,6 +66,21 @@ public class SecurityContextUserServiceImpl implements UserDetailsService {
 
     @Autowired(required = false)
     private UserCache userCache;
+
+    @Autowired(required = false)
+    @Qualifier("ehCache")
+    private Ehcache cache;
+
+    /**
+     * @see org.springframework.context.ApplicationListener#onApplicationEvent(org.springframework.context.ApplicationEvent)
+     */
+    @Override
+    public void onApplicationEvent(UserChangedEvent event) {
+        if (logger.isDebugEnabled() && cache != null) {
+            logger.debug("User changed, clear cache");
+            cache.removeAll();
+        }
+    }
 
     /**
      * Set the systemUser.
@@ -97,9 +116,12 @@ public class SecurityContextUserServiceImpl implements UserDetailsService {
     public UserDetails loadUserByUsername(String username) {
 
         UserDetails ud = userCache.getUserFromCache(username);
-        /**
-         * if (ud != null) { logger.debug("User found in cache"); return ud; }
-         */
+        if (ud != null) {
+            logger.debug("User found in cache");
+            return ud;
+        } else {
+            logger.debug("User not cached, try to resolve");
+        }
         User user = null;
 
         if (systemUser.equals(username)) {

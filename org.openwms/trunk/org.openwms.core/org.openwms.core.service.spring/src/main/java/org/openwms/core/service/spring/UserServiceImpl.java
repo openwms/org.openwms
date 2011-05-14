@@ -22,6 +22,7 @@ package org.openwms.core.service.spring;
 
 import java.util.List;
 
+import org.openwms.core.annotation.FireAfterTransaction;
 import org.openwms.core.domain.system.usermanagement.User;
 import org.openwms.core.domain.system.usermanagement.UserDetails;
 import org.openwms.core.domain.system.usermanagement.UserPassword;
@@ -30,6 +31,7 @@ import org.openwms.core.integration.UserDao;
 import org.openwms.core.service.UserService;
 import org.openwms.core.service.exception.ServiceRuntimeException;
 import org.openwms.core.service.exception.UserNotFoundException;
+import org.openwms.core.util.event.UserChangedEvent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -53,7 +55,7 @@ import org.springframework.transaction.annotation.Transactional;
 @Service("userService")
 public class UserServiceImpl implements UserService {
 
-    private Logger logger = LoggerFactory.getLogger(this.getClass());
+    private static final Logger logger = LoggerFactory.getLogger(UserServiceImpl.class);
     @Autowired
     private UserDao dao;
 
@@ -72,6 +74,7 @@ public class UserServiceImpl implements UserService {
      *             when no User was found with this username.
      */
     @Override
+    @FireAfterTransaction(events = { UserChangedEvent.class })
     public void uploadImageFile(String username, byte[] image) {
         User user = dao.findByUniqueId(username);
         if (user == null) {
@@ -91,6 +94,7 @@ public class UserServiceImpl implements UserService {
      *             when user is <code>null</code>
      */
     @Override
+    @FireAfterTransaction(events = { UserChangedEvent.class })
     public User save(User user) {
         if (null == user) {
             logger.warn("Calling save with null as argument");
@@ -109,6 +113,7 @@ public class UserServiceImpl implements UserService {
      *             when user is <code>null</code>
      */
     @Override
+    @FireAfterTransaction(events = { UserChangedEvent.class })
     public void remove(User user) {
         if (null == user) {
             logger.warn("Calling remove with null as argument");
@@ -141,6 +146,7 @@ public class UserServiceImpl implements UserService {
      *             when no User exists
      */
     @Override
+    @FireAfterTransaction(events = { UserChangedEvent.class })
     public boolean changeUserPassword(UserPassword userPassword) {
         if (userPassword == null) {
             logger.warn("No userPassword set");
@@ -158,5 +164,4 @@ public class UserServiceImpl implements UserService {
             return false;
         }
     }
-
 }
