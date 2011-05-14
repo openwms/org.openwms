@@ -21,7 +21,6 @@
 package org.openwms.core.test;
 
 import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
 import javax.persistence.PersistenceContext;
 
 import org.junit.runner.RunWith;
@@ -37,7 +36,8 @@ import org.springframework.transaction.annotation.Transactional;
  * <p>
  * An abstract superclass suitable for unit tests that run with Spring's
  * {@link SpringJUnit4ClassRunner}. A datasource instance and an
- * {@link EntityManagerFactory} is initialized within the ApplicationContext.
+ * {@link javax.persistence.EntityManagerFactory} is initialized within the
+ * ApplicationContext.
  * </p>
  * 
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
