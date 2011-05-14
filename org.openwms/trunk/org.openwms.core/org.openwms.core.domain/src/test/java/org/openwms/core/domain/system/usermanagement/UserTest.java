@@ -63,7 +63,7 @@ public class UserTest extends AbstractJpaSpringContextTests {
                 // changes aren't done within the same millisecond
                 Thread.sleep(100);
             } catch (InterruptedException e) {
-                e.printStackTrace();
+                logger.debug("Error" + e.getMessage());
             }
         }
         // Verify that the password list was sorted in the correct order.
@@ -81,7 +81,7 @@ public class UserTest extends AbstractJpaSpringContextTests {
         try {
             u.setPassword(password);
         } catch (InvalidPasswordException e) {
-            e.printStackTrace();
+            logger.debug("Error" + e.getMessage());
         }
     }
 }
