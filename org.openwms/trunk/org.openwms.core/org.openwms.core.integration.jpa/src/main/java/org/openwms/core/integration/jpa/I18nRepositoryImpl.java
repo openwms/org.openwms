@@ -38,6 +38,8 @@ import org.springframework.transaction.annotation.Transactional;
 public class I18nRepositoryImpl extends AbstractGenericJpaDao<I18n, Long> implements I18nRepository {
 
     /**
+     * {@inheritDoc}
+     * 
      * @see org.openwms.core.integration.jpa.AbstractGenericJpaDao#getFindAllQuery()
      */
     @Override
@@ -46,6 +48,8 @@ public class I18nRepositoryImpl extends AbstractGenericJpaDao<I18n, Long> implem
     }
 
     /**
+     * {@inheritDoc}
+     * 
      * @see org.openwms.core.integration.jpa.AbstractGenericJpaDao#getFindByUniqueIdQuery()
      */
     @Override
