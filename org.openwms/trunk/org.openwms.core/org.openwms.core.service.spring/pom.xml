@@ -65,6 +65,20 @@
             <type>libd</type>
             <scope>provided</scope>
         </dependency>
+        <!-- Weaver and AOP -->
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>org.springframework.instrument</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>org.springframework.aspects</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.aspectj</groupId>
+            <artifactId>org.aspectj-library</artifactId>
+            <type>libd</type>
+        </dependency>
         <!-- Spring Security -->
         <dependency>
             <groupId>org.springframework.security</groupId>
@@ -107,14 +121,6 @@
         <dependency>
             <groupId>org.hibernate</groupId>
             <artifactId>org.hibernate.ejb-library</artifactId>
-            <type>libd</type>
-            <scope>test</scope>
-        </dependency>
-
-        <!-- Weaver -->
-        <dependency>
-            <groupId>org.aspectj</groupId>
-            <artifactId>org.aspectj-library</artifactId>
             <type>libd</type>
             <scope>test</scope>
         </dependency>
