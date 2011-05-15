@@ -48,7 +48,7 @@ public class LocationServiceImpl extends EntityServiceImpl<Location, Long> imple
 
     @Autowired
     @Qualifier("locationDao")
-    protected LocationDao dao;
+    private LocationDao dao;
 
     @Autowired
     @Qualifier("locationTypeDao")

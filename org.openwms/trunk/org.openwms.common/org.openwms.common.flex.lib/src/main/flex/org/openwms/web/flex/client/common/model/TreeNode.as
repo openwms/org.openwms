@@ -18,8 +18,8 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
-package org.openwms.web.flex.client.common.model
-{
+package org.openwms.web.flex.client.common.model {
+
     import mx.collections.ArrayCollection;
     import flash.utils.Dictionary;
     import mx.controls.Alert;
@@ -32,156 +32,124 @@ package org.openwms.web.flex.client.common.model
      * @version $Revision$
      * @since 0.1
      */
-    public class TreeNode
-    {
+    public class TreeNode {
         private var _parent:TreeNode;
         private var _child:ArrayCollection;
         private var _data:Object;
         private var _list:ArrayCollection;
 
-        public function TreeNode()
-        {
-        }
+        public function TreeNode() { }
 
-        public function build(list:ArrayCollection):void
-        {
+        public function build(list:ArrayCollection):void {
             _list = list;
             createTree(this);
         }
 
-        public function setData(obj:Object):void
-        {
+        public function setData(obj:Object):void {
             _data = obj;
         }
 
-        public function getData():Object
-        {
+        public function getData():Object {
             return _data;
         }
 
-        public function setParent(node:TreeNode):void
-        {
+        public function setParent(node:TreeNode):void {
             _parent = node;
         }
 
-        private function getParent():TreeNode
-        {
+        private function getParent():TreeNode {
             return _parent;
         }
 
-        public function getChild(key:Object):TreeNode
-        {
-            if (_child == null)
-            {
+        public function getChild(key:Object):TreeNode {
+            if (_child == null) {
                 return null;
             }
-            for (var i:uint = 0; i < _child.length; i++)
-            {
-                if (_child[i].getData().id == key)
-                {
+            for (var i:uint = 0; i < _child.length; i++) {
+                if (_child[i].getData().id == key) {
                     return _child[i];
                 }
             }
             return null;
         }
 
-        private function addChild(node:TreeNode):void
-        {
-            if (_child == null)
-            {
+        private function addChild(node:TreeNode):void {
+            if (_child == null) {
                 _child = new ArrayCollection();
             }
             _child.addItem(node);
         }
 
-        public function get children():ArrayCollection
-        {
+        public function get children():ArrayCollection {
             return _child;
         }
 
 
-        private function createTree(root:TreeNode):TreeNode
-        {
+        private function createTree(root:TreeNode):TreeNode {
             var r:TreeNode;
-            for (var i:uint = 0; i < _list.length; i++)
-            {
+            for (var i:uint = 0; i < _list.length; i++) {
                 r = searchForNode(_list[i], root);
             }
-            trace("----Start tracing tree----");
             traceTree(root, 0);
             return root;
         }
 
-        private function searchForNode(lg:LocationGroup, root:TreeNode):TreeNode
-        {
-            trace("Node details :" + lg.name + ", Parent:" + lg.parent, " Root:" + root.getData());
+        private function searchForNode(lg:LocationGroup, root:TreeNode):TreeNode {
+            //trace("Node details :" + lg.name + ", Parent:" + lg.parent, " Root:" + root.getData());
             var node:TreeNode;
-            if (lg.parent == null)
-            {
-                trace("--Parent == null");
+            if (lg.parent == null) {
+                //trace("--Parent == null");
                 node = root.getChild(lg.id);
-                if (node == null)
-                {
-                    trace("--Parent has no child set");
+                if (node == null) {
+                    //trace("--Parent has no child set");
                     var n1:TreeNode = new TreeNode();
                     n1.setData(lg);
                     n1.setParent(root);
                     root.addChild(n1);
-                    trace("--n1 looks like:[" + n1.getParent() + "], [" + n1.getData() + "]");
-                    trace("--Adding n1 as child of root:");
+                    //trace("--n1 looks like:[" + n1.getParent() + "], [" + n1.getData() + "]");
+                    //trace("--Adding n1 as child of root:");
                     return n1;
                 }
-                else
-                {
-                    trace("--Child of it:" + node.getData());
+                else {
+                    //trace("--Child of it:" + node.getData());
                 }
                 return node;
             }
-            else
-            {
-                trace("Parent is not null, Parent =" + lg.parent.name);
+            else {
+                //trace("Parent is not null, Parent =" + lg.parent.name);
                 node = searchForNode(lg.parent, root);
-                trace("After coming back from search for " + lg.parent);
+                //trace("After coming back from search for " + lg.parent);
                 var child:TreeNode = node.getChild(lg.id);
-                if (child == null)
-                {
+                if (child == null) {
                     child = new TreeNode();
                     child.setData(lg);
                     child.setParent(node);
                     node.addChild(child);
-                    trace("Added lg as child of node");
+                        //trace("Added lg as child of node");
                 }
                 return child;
             }
         }
 
-        private function traceTree(tree:TreeNode, level:uint):void
-        {
-            //trace("start trace");
-            if (tree != null)
-            {
+        private function traceTree(tree:TreeNode, level:uint):void {
+            if (tree != null) {
                 var _level:uint = level + 1;
                 var l:String = "";
-                for (var i:uint = 0; i < _level; i++)
-                {
+                for (var i:uint = 0; i < _level; i++) {
                     l = l + "-";
                 }
-                if (tree.getData() != null)
-                {
-                    trace(l + "" + tree.getData().name);
+                if (tree.getData() != null) {
+                    ////trace(l + "" + tree.getData().name);
                 }
                 var f:ArrayCollection = tree.children;
-                if (f != null)
-                {
-                    //trace(l+"Tracing Children:"+f.length);
-                    for (var x:uint; x < f.length; x++)
-                    {
+                if (f != null) {
+                    for (var x:uint; x < f.length; x++) {
                         traceTree(f[x], _level);
                     }
                 }
             }
         }
-
-
     }
 }
+
+

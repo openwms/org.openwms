@@ -65,7 +65,7 @@ public class TransportUnitServiceImpl extends EntityServiceImpl<TransportUnit, L
 
     @Autowired
     @Qualifier("transportUnitDao")
-    protected TransportUnitDao dao;
+    private TransportUnitDao dao;
 
     @Autowired
     @Qualifier("locationDao")
@@ -102,7 +102,7 @@ public class TransportUnitServiceImpl extends EntityServiceImpl<TransportUnit, L
             throw new ServiceRuntimeException("Location " + actualLocation + " not found");
         }
         TransportUnitType type = transportUnitTypeDao.findByUniqueId(transportUnitType.getType());
-        if (null == (type)) {
+        if (null == type) {
             throw new ServiceRuntimeException("TransportUnitType " + transportUnitType + " not found");
         }
         transportUnit = new TransportUnit(barcode);

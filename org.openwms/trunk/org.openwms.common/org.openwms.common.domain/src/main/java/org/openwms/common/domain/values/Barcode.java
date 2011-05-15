@@ -122,6 +122,14 @@ public class Barcode implements Serializable {
         adjustBarcode(value);
     }
 
+    /**
+     * Force the Barcode to be aligned to the determined rules regarding
+     * padding, alignment.
+     * 
+     * @param val
+     *            The old Barcode as String
+     * @return The new aligned Barcode
+     */
     public String adjustBarcode(String val) {
         if (val == null) {
             throw new IllegalArgumentException("Cannot create a barcode without value");

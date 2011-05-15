@@ -71,9 +71,15 @@
 
             [In]
             [Bindable]
+            /**
+             * Inject a model to work on.
+             */
             public var commonModelLocator:CommonModelLocator;            
             [In]
             [Bindable]
+            /**
+             * Injected TideContext.
+             */
             public var tideContext:Context;
             [Bindable]
             private var selected:TransportUnitType;

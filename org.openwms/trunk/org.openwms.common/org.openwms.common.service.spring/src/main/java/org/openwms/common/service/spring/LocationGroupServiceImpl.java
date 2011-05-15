@@ -21,7 +21,6 @@
 package org.openwms.common.service.spring;
 
 import java.util.List;
-import java.util.Set;
 
 import org.openwms.common.domain.LocationGroup;
 import org.openwms.common.domain.values.LocationGroupState;
@@ -53,34 +52,22 @@ public class LocationGroupServiceImpl extends EntityServiceImpl<LocationGroup, L
 
     private Logger logger = LoggerFactory.getLogger(this.getClass());
 
-    /**
-     * Generic Repository DAO.
-     */
     @Autowired
     @Qualifier("locationGroupDao")
-    protected LocationGroupDao dao;
+    private LocationGroupDao dao;
 
     /**
      * {@inheritDoc}
      */
     @Override
     public void changeGroupState(LocationGroup locationGroup) {
-        logger.debug("change group state called");
-        if (null != locationGroup && locationGroup.getParent() != null
-                && locationGroup.getParent().getGroupStateIn() == LocationGroupState.NOT_AVAILABLE
-                && locationGroup.getGroupStateIn() == LocationGroupState.AVAILABLE) {
-            throw new ServiceRuntimeException(
-                    "Not allowed to change GroupStateIn, parent locationGroup is not available");
+        logger.debug("CGS LocationGroup on service called");
+        if (locationGroup.isNew()) {
+            throw new ServiceRuntimeException("LocationGroup " + locationGroup.getName()
+                    + " is new and must be persisted before save");
         }
-
-        // Attach
-        locationGroup = dao.save(locationGroup);
-        Set<LocationGroup> childs = locationGroup.getLocationGroups();
-        for (LocationGroup child : childs) {
-            child.setGroupStateIn(locationGroup.getGroupStateIn());
-            child.setGroupStateOut(locationGroup.getGroupStateOut());
-            changeGroupState(child);
-        }
+        LocationGroup persisted = dao.findById(locationGroup.getId());
+        changeGroupState(persisted, locationGroup);
     }
 
     /**
@@ -88,8 +75,67 @@ public class LocationGroupServiceImpl extends EntityServiceImpl<LocationGroup, L
      */
     @Override
     public LocationGroup save(LocationGroup locationGroup) {
-        logger.debug("Save LocationGroup on service called");
-        return dao.save(locationGroup);
+        if (locationGroup.isNew()) {
+            throw new ServiceRuntimeException("LocationGroup " + locationGroup.getName()
+                    + " is new and must be persisted before save");
+        }
+        LocationGroup persisted = dao.findById(locationGroup.getId());
+        changeGroupState(persisted, locationGroup);
+        return mergeLocationGroup(persisted, locationGroup);
+    }
+
+    /**
+     * Save changed fields by setting them directly. Merging the instance
+     * automatically will not work.
+     * 
+     * @param persisted
+     *            The instance read from the persisted storage
+     * @param locationGroup
+     * 
+     * @return The merged persisted object
+     */
+    protected LocationGroup mergeLocationGroup(LocationGroup persisted, LocationGroup locationGroup) {
+        persisted.setDescription(locationGroup.getDescription());
+        persisted.setMaxFillLevel(locationGroup.getMaxFillLevel());
+        persisted.setLocationGroupCountingActive(locationGroup.isLocationGroupCountingActive());
+        return persisted;
+    }
+
+    /**
+     * Regarding at least one groupState has changed the state is set on the
+     * {@link LocationGroup} directly. Whether a state change is allowed or not
+     * is checked within the {@link LocationGroup} itself but we do a basic
+     * check before. When the parent {@link LocationGroup} is blocked the
+     * current {@link LocationGroup} cannot be turned to AVAILABLE.
+     * 
+     * @param persisted
+     *            The instance read from the persisted storage
+     * @param locationGroup
+     *            The instance holding the new values to save
+     * @throws ServiceRuntimeException
+     *             when a state change is not allowed
+     */
+    protected void changeGroupState(LocationGroup persisted, LocationGroup locationGroup) {
+        if (persisted.getGroupStateIn() != locationGroup.getGroupStateIn()) {
+            // GroupStateIn changed
+            if (locationGroup.getParent() != null
+                    && locationGroup.getParent().getGroupStateIn() == LocationGroupState.NOT_AVAILABLE
+                    && locationGroup.getGroupStateIn() == LocationGroupState.AVAILABLE) {
+                throw new ServiceRuntimeException(
+                        "Not allowed to change GroupStateIn, parent locationGroup is not available");
+            }
+            persisted.setGroupStateIn(locationGroup.getGroupStateIn(), persisted);
+        }
+        if (persisted.getGroupStateOut() != locationGroup.getGroupStateOut()) {
+            // GroupStateOut changed
+            if (locationGroup.getParent() != null
+                    && locationGroup.getParent().getGroupStateOut() == LocationGroupState.NOT_AVAILABLE
+                    && locationGroup.getGroupStateOut() == LocationGroupState.AVAILABLE) {
+                throw new ServiceRuntimeException(
+                        "Not allowed to change GroupStateOut, parent locationGroup is not available");
+            }
+            persisted.setGroupStateOut(locationGroup.getGroupStateOut(), persisted);
+        }
     }
 
     /**

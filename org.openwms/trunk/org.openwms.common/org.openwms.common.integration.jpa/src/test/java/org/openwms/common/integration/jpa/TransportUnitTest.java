@@ -33,7 +33,6 @@ import org.openwms.common.domain.TransportUnit;
 import org.openwms.common.domain.TransportUnitType;
 import org.openwms.common.domain.system.UnitError;
 import org.openwms.common.domain.values.Barcode;
-import org.openwms.common.domain.values.Barcode.BARCODE_ALIGN;
 import org.openwms.core.test.AbstractJpaSpringContextTests;
 import org.springframework.test.context.ContextConfiguration;
 
@@ -131,10 +130,6 @@ public class TransportUnitTest extends AbstractJpaSpringContextTests {
      */
     @Test
     public final void testTUwithErrors() {
-        Barcode.setPadder('0');
-        Barcode.setLength(20);
-        Barcode.setAlignment(BARCODE_ALIGN.RIGHT);
-        Barcode.setPadded(true);
         TransportUnit transportUnit = new TransportUnit(new Barcode("TEST_TU3"));
         TransportUnitType transportUnitType = new TransportUnitType("WELL_KNOWN_TUT_4");
         Location location = new Location(new LocationPK("KNOWN3", "KNOWN3", "KNOWN3", "KNOWN3", "KNOWN3"));

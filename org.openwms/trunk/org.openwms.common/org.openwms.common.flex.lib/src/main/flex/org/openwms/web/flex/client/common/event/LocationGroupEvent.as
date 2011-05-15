@@ -19,7 +19,7 @@
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
 package org.openwms.web.flex.client.common.event {
-	
+
     import flash.events.Event;
 
     /**
@@ -30,10 +30,15 @@ package org.openwms.web.flex.client.common.event {
      * @since 0.1
      */
     public class LocationGroupEvent extends Event {
-    	
+
         public static const LOAD_ALL_LOCATION_GROUPS:String = "LOAD_ALL_LOCATION_GROUPS";
         public static const SAVE_LOCATION_GROUP:String = "SAVE_LOCATION_GROUP";
-        
+        public static const CHANGE_STATE:String = "LG.CHANGE_STATE";
+        /**
+         * This type of event is fired when the list of LocationGroups in the model is refreshed.
+         */
+        public static const COLLECTION_REFRESHED:String = "LG.COLL_LOCATION_GROUPS_REFRESHED";
+
         public var data:*;
 
         public function LocationGroupEvent(type:String, bubbles:Boolean = true, cancelable:Boolean = false) {
@@ -42,3 +47,4 @@ package org.openwms.web.flex.client.common.event {
 
     }
 }
+
