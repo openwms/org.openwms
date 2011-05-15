@@ -4,7 +4,7 @@
  * This file is part of openwms.org.
  *
  * openwms.org is free software: you can redistribute it and/or modify
- * it under the terms of the GNU Lesser General Public License as 
+ * it under the terms of the GNU Lesser General Public License as
  * published by the Free Software Foundation, either version 3 of the
  * License, or (at your option) any later version.
  *
@@ -20,6 +20,8 @@
  */
 package org.openwms.common.domain {
 
+    import org.openwms.common.domain.values.LocationGroupState;
+
     [Bindable]
     [RemoteClass(alias="org.openwms.common.domain.LocationGroup")]
     /**
@@ -27,13 +29,13 @@ package org.openwms.common.domain {
      * <p>
      * Used to group Locations with same characteristics.
      * </p>
-     * 
+     *
      * @version $Revision$
      * @since 0.1
      * @see org.openwms.common.domain.Location
      */
     public class LocationGroup extends LocationGroupBase {
-        
+
         /**
          * Returns the name.
          *
@@ -42,5 +44,24 @@ package org.openwms.common.domain {
         public function toString():String {
             return name;
         }
+
+        /**
+         * Set the groupStateIn.
+         *
+         * @param the new state
+         */
+        public function set groupStateIn(value:LocationGroupState):void {
+            _groupStateIn = value;
+        }
+
+        /**
+         * Set the groupStateOut.
+         *
+         * @param the new state
+         */
+        public function set groupStateOut(value:LocationGroupState):void {
+            _groupStateOut = value;
+        }
     }
 }
+
