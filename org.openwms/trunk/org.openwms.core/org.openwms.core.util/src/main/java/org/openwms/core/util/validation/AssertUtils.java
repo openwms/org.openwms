@@ -70,7 +70,7 @@ public abstract class AssertUtils {
      * @see java.lang.String#isEmpty()
      */
     public static void isNotEmpty(String str, String message) {
-        if (str.isEmpty()) {
+        if (null == str || str.isEmpty()) {
             throw new IllegalArgumentException(message);
         }
     }

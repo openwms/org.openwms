@@ -38,19 +38,19 @@ public class EmailTest extends AbstractJpaSpringContextTests {
         try {
             new Email(null, null);
             fail("Not allowed to create an email without user and address");
-        } catch (AssertionError e) {
+        } catch (IllegalArgumentException iae) {
             logger.debug("Not allowed to create an email without user and address");
         }
         try {
             new Email("Test", null);
             fail("Not allowed to create an email without address");
-        } catch (AssertionError e) {
+        } catch (IllegalArgumentException iae) {
             logger.debug("Not allowed to create an email without address");
         }
         try {
             new Email(null, "force something, still no mail check");
             fail("Not allowed to create an email without user");
-        } catch (AssertionError e) {
+        } catch (IllegalArgumentException iae) {
             logger.debug("Not allowed to create an email without user");
         }
     }

@@ -20,8 +20,6 @@
  */
 package org.openwms.core.domain;
 
-import java.io.Serializable;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -47,7 +45,7 @@ import org.openwms.core.util.validation.AssertUtils;
 @Table(name = "COR_MODULE")
 @NamedQueries({ @NamedQuery(name = Module.NQ_FIND_ALL, query = "select m from Module m order by m.startupOrder"),
         @NamedQuery(name = Module.NQ_FIND_BY_UNIQUE_QUERY, query = "select m from Module m where m.moduleName = ?1") })
-public class Module extends AbstractEntity implements DomainObject<Long>, Serializable {
+public class Module extends AbstractEntity implements DomainObject<Long> {
 
     private static final long serialVersionUID = 7358306395032979355L;
 
@@ -165,7 +163,7 @@ public class Module extends AbstractEntity implements DomainObject<Long>, Serial
      *             in case the new moduleName is <code>null</code> or empty
      */
     public void setModuleName(String moduleName) {
-        AssertUtils.notNull(moduleName, "Not allowed to set the moduleName to null or an empty String");
+        AssertUtils.isNotEmpty(moduleName, "Not allowed to set the moduleName to null or an empty String");
         this.moduleName = moduleName;
     }
 
@@ -187,7 +185,7 @@ public class Module extends AbstractEntity implements DomainObject<Long>, Serial
      *             in case the new url is <code>null</code> or empty
      */
     public void setUrl(String url) {
-        AssertUtils.notNull(moduleName, "Not allowed to set the url to null or an empty String");
+        AssertUtils.isNotEmpty(url, "Not allowed to set the url to null or an empty String");
         this.url = url;
     }
 

@@ -21,13 +21,14 @@
 package org.openwms.core.exception;
 
 /**
- * An InvalidPasswordException - indicates that a password is not confirm with the defined rules.
+ * An InvalidPasswordException - indicates that a password is not confirm with
+ * the defined rules.
  * 
  * @author <a href="mailto:russelltina@users.sourceforge.net">Tina Russell</a>
  * @version $Revision$
  * @since 0.1
  */
-public class InvalidPasswordException extends Exception {
+public class InvalidPasswordException extends DomainModelException {
 
     private static final long serialVersionUID = 8109794333683306511L;
 
@@ -35,7 +36,7 @@ public class InvalidPasswordException extends Exception {
      * Create a new InvalidPasswordException.
      */
     public InvalidPasswordException() {
-    	super();
+        super();
     }
 
     /**

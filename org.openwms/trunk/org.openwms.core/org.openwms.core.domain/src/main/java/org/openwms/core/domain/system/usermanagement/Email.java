@@ -20,8 +20,6 @@
  */
 package org.openwms.core.domain.system.usermanagement;
 
-import java.io.Serializable;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -45,7 +43,7 @@ import org.openwms.core.util.validation.AssertUtils;
  */
 @Entity
 @Table(name = "COR_EMAIL", uniqueConstraints = @UniqueConstraint(columnNames = { "USERNAME", "ADDRESS" }))
-public class Email extends AbstractEntity implements DomainObject<Long>, Serializable {
+public class Email extends AbstractEntity implements DomainObject<Long> {
 
     private static final long serialVersionUID = 3182027866592095069L;
 

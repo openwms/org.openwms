@@ -20,7 +20,6 @@
  */
 package org.openwms.core.domain.system.usermanagement;
 
-import java.io.Serializable;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
@@ -50,7 +49,7 @@ import org.openwms.core.util.validation.AssertUtils;
 @NamedQueries({
         @NamedQuery(name = Role.NQ_FIND_ALL, query = "select distinct(r) from Role r left join fetch r.users left join fetch r.grants order by r.name"),
         @NamedQuery(name = Role.NQ_FIND_BY_UNIQUE_QUERY, query = "select r from Role r where r.name = ?1") })
-public class Role extends SecurityObject implements Serializable {
+public class Role extends SecurityObject {
 
     private static final long serialVersionUID = -4133301834284932221L;
 
