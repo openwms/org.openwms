@@ -11,18 +11,26 @@ Import-Bundle:
  com.springsource.org.apache.commons.lang;version="2.4.0",
  com.springsource.net.sf.ehcache;version="1.6.2",
  org.springframework.security.core;version="${spring.security.version}",
+ org.openwms.core.util;version="0.0.1.SNAPSHOT",
  org.openwms.core.domain;version="0.0.1.SNAPSHOT",
  org.openwms.core.integration;version="0.0.1.SNAPSHOT",
  org.openwms.core.service.api;version="0.0.1.SNAPSHOT"
 Import-Template: 
  javax.annotation;version="0"
 Import-Package: 
- org.springframework.context.weaving;version="${spring.version}",
- org.springframework.transaction.aspectj;version="${spring.version}"
+ org.aspectj.internal.lang.annotation,
+ org.aspectj.internal.lang.reflect,
+ org.aspectj.lang,
+ org.aspectj.lang.annotation,
+ org.aspectj.lang.internal.lang,
+ org.aspectj.lang.reflect,
+ org.aspectj.runtime.internal,
+ org.aspectj.runtime.reflect,
+ org.springframework.context.weaving,
+ org.springframework.transaction.aspectj
 Excluded-Imports: 
  org.openwms.core.*,
  org.springframework.test.*,
  org.springframework.beans.*,
  org.springframework.cache.*,
  org.springframework.security.*
- 
