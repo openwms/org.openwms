@@ -1,8 +1,8 @@
 Manifest-Version: 1.0
 Export-Package: org.openwms.web.flex.security;version="0.0.1.SNAPSHOT"
  ;uses:="org.granite.messaging.service.security,org.springframework.be
- ans.factory.annotation,org.springframework.context,org.springframewor
- k.security.authentication,org.springframework.security.core"
+ ans.factory.annotation,org.springframework.security.authentication,or
+ g.springframework.security.core"
 Bundle-ClassPath: .,WEB-INF/lib/granite-core.jar,WEB-INF/lib/granite-e
  clipselink.jar,WEB-INF/lib/granite-hibernate.jar,WEB-INF/lib/granite-
  spring.jar,WEB-INF/lib/granite-toplink.jar,WEB-INF/lib/pell-multipart
