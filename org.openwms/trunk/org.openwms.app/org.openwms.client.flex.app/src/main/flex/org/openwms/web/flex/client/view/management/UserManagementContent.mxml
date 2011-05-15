@@ -51,6 +51,13 @@
             import org.openwms.web.flex.client.view.dialogs.FileUploadDialog;
             import org.openwms.web.flex.client.view.dialogs.ChangePasswordDialog;
 
+            [In]
+            [Bindable]
+            /**
+             * Inject the model.
+             */
+            public var modelLocator : ModelLocator;
+
             [Bindable]
             [Embed(source="/assets/images/userDefaultUniSex.jpg")]
             private var uniSexImage : Class;
@@ -60,14 +67,12 @@
             [Bindable]
             [Embed(source="/assets/images/userDefaultWoman.jpg")]
             private var womanImage : Class;
-            [In]
-            [Bindable]
-            public var modelLocator : ModelLocator;
             private var watchers : Dictionary = new Dictionary();
             private var filter : DropShadowFilter = new DropShadowFilter(6, 45, 0x202020, 0.5, 4, 4, 1, 2, false);
 
             [Observer("userSelectionChanged")]
             private function init() : void {
+                trace("User selection changed");
                 userImg.source = getUserImage();
                 userImg.filters = [filter];
             }
