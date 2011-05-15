@@ -280,7 +280,7 @@ public class User extends AbstractEntity implements DomainObject<Long> {
      * @return The date when the password has changed recently.
      */
     public Date getLastPasswordChange() {
-        return this.lastPasswordChange;
+        return lastPasswordChange == null ? null : new Date(lastPasswordChange.getTime());
     }
 
     /**
@@ -414,7 +414,7 @@ public class User extends AbstractEntity implements DomainObject<Long> {
      * @return The expiration date.
      */
     public Date getExpirationDate() {
-        return this.expirationDate;
+        return expirationDate == null ? null : new Date(expirationDate.getTime());
     }
 
     /**
@@ -424,7 +424,9 @@ public class User extends AbstractEntity implements DomainObject<Long> {
      *            The new expiration date to sez.
      */
     public void setExpirationDate(Date expirationDate) {
-        this.expirationDate = expirationDate;
+        if (expirationDate != null) {
+            this.expirationDate = new Date(expirationDate.getTime());
+        }
     }
 
     /**

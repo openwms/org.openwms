@@ -150,7 +150,7 @@ public class UserPassword extends AbstractEntity implements DomainObject<Long> {
      * @return The date when the password was changed.
      */
     public Date getPasswordChanged() {
-        return passwordChanged;
+        return passwordChanged == null ? null : new Date(passwordChanged.getTime());
     }
 
     /**

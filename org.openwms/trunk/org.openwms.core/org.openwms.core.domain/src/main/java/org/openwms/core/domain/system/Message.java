@@ -162,7 +162,7 @@ public class Message extends AbstractEntity implements DomainObject<Long> {
      * @return The date of creation
      */
     public Date getCreated() {
-        return created;
+        return created == null ? null : new Date(created.getTime());
     }
 
     /**
