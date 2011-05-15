@@ -18,43 +18,50 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
-package org.openwms.core.domain.system.usermanagement;
-
-import javax.persistence.Entity;
+package org.openwms.core.exception;
 
 /**
- * A SystemUser is granted with all privileges and omits all security
- * constraints.
+ * A StateChangeException indicates that it was not allowed to switch the state
+ * of an entity.
  * 
- * @author <a href="mailto:russelltina@users.sourceforge.net">Tina Russell</a>
- * @version $Revision$
+ * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
+ * @version $Revision: $
  * @since 0.1
- * @see org.openwms.core.domain.system.usermanagement.User
  */
-@Entity
-public class SystemUser extends User {
+public class StateChangeException extends DomainModelException {
 
-    private static final long serialVersionUID = -7575215406745881912L;
-
-    /**
-     * The defined fullname of the system user.
-     */
-    public static final String SYSTEM_USERNAME = "OPENWMS";
+    private static final long serialVersionUID = 7844172843875393420L;
 
     /**
-     * Create a new SystemUser.
-     */
-    protected SystemUser() {}
-
-    /**
-     * Create a new SystemUser.
+     * Create a new StateChangeException.
      * 
-     * @param username
-     *            User's username
+     * @param message
+     *            Detail message
      */
-    public SystemUser(String username) {
-        super(username);
-        this.setFullname(SYSTEM_USERNAME);
+    public StateChangeException(String message) {
+        super(message);
+    }
+
+    /**
+     * Create a new StateChangeException.
+     * 
+     * @param cause
+     *            Root cause
+     */
+    public StateChangeException(Throwable cause) {
+        super(cause);
+    }
+
+    /**
+     * Create a new StateChangeException.
+     * 
+     * @param message
+     *            Detail message
+     * @param cause
+     *            Root cause
+     */
+    public StateChangeException(String message, Throwable cause) {
+        super(message, cause);
     }
 
 }

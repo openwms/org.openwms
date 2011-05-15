@@ -20,7 +20,6 @@
  */
 package org.openwms.core.domain.system;
 
-import java.io.Serializable;
 import java.util.Date;
 
 import javax.persistence.Column;
@@ -44,7 +43,7 @@ import org.openwms.core.domain.DomainObject;
  */
 @Entity
 @Table(name = "COR_MESSAGE")
-public class Message extends AbstractEntity implements DomainObject<Long>, Serializable {
+public class Message extends AbstractEntity implements DomainObject<Long> {
 
     private static final long serialVersionUID = 7836132529431969528L;
 

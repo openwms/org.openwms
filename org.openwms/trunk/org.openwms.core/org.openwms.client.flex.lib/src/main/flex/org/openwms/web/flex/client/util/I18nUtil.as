@@ -27,8 +27,7 @@ package org.openwms.web.flex.client.util{
     [Name]
     [Bindable]
     /**
-     * A ModelLocator is the main model backing bean to store session data.
-     * It is a Tide component and can be injected by name=modelLocator.
+     * An I18nUtil is a helper class for i18n translations.
      *
      * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
      * @version $Revision: 1301 $
@@ -43,7 +42,14 @@ package org.openwms.web.flex.client.util{
             super();
         }
 
-        static function trans(... args):String {
+        /**
+         * Translate a paramterized String into the language set by the user.
+         * The first argument is expected to be the String, the rest arbitrary parameters.
+         *
+         * @param args An arbitrary list. At least the first parameter must be set as the
+         * String to be translated
+         */
+        public static function trans(... args):String {
             //args[0].
             return "";
         }

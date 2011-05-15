@@ -20,6 +20,8 @@
  */
 package org.openwms.core.domain.values;
 
+import java.io.Serializable;
+
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
 
@@ -33,8 +35,9 @@ import javax.persistence.Embeddable;
  * @see org.openwms.core.domain.system.I18n
  */
 @Embeddable
-public class I18nSet {
+public class I18nSet implements Serializable {
 
+    private static final long serialVersionUID = 2259073810167027049L;
     /**
      * Length of each column.
      */

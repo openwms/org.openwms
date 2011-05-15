@@ -32,12 +32,12 @@ package org.openwms.web.flex.client.util {
      * @since 0.1
      */
     public final class DisplayUtility {
-    	
+
         public function DisplayUtility() { }
 
         /**
          * Resolve the view with a given <code>viewId</code> from a <code>viewStack</code>.
-         * 
+         *
          * @param viewId The id of the the view to resolve
          * @param viewStack The ViewStack where the view should be resolved from
          * @return ViewStack index
@@ -50,32 +50,31 @@ package org.openwms.web.flex.client.util {
         }
 
         /**
-         * Not implemented yet.
-         * 
-         * @param list
-         * @param name
-         */
-        private static function getListOfValues(list : ArrayCollection, name : String) : ArrayCollection {
-            return null;
-        }
-        
-        /**
          * Encapsulates the boring binding and un-binding stuff.
-         * 
+         *
          * @param bindings A list of bindings to bind
          * @param command Optional provide an anonymous function to be executed between binding and unbinding
          */
         public static function bindProperties(bindings:ArrayCollection, command:Function = null):void {
-        	var watchers:ArrayCollection = new ArrayCollection();
-        	for each (var binding:BindingProperty in bindings) {
-        		watchers.addItem(BindingUtils.bindProperty(binding.site, binding.sitePropertyName, binding.host, binding.hostPropertyName));
-        	}
-        	if (command != null) {
-        		command();
-        	}
-        	for each (var watcher:ChangeWatcher in watchers) {
-        		watcher.unwatch();
-        	}
+            var watchers:ArrayCollection = new ArrayCollection();
+            for each (var binding:BindingProperty in bindings) {
+                watchers.addItem(BindingUtils.bindProperty(binding.site, binding.sitePropertyName, binding.host, binding.hostPropertyName));
+            }
+            if (command != null) {
+                try {
+                    command();
+                } catch (e:Error) {
+                    throw e;
+                } finally {
+                    for each (var watcher:ChangeWatcher in watchers) {
+                        watcher.unwatch();
+                    }
+                }
+            }
+            for each (var watcher:ChangeWatcher in watchers) {
+                watcher.unwatch();
+            }
         }
     }
 }
+
