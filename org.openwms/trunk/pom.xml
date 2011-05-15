@@ -627,7 +627,7 @@
             <plugin>
                 <artifactId>maven-compiler-plugin</artifactId>
                 <configuration>
-                    <debug>false</debug>
+                    <debug>true</debug>
                     <optimize>true</optimize>
                     <source>${maven.compile.sourceLevel}</source>
                     <target>${maven.compile.targetLevel}</target>
