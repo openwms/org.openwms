@@ -35,7 +35,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.openwms.core.domain.system.usermanagement.User;
 import org.openwms.core.service.UserService;
 import org.springframework.web.context.WebApplicationContext;
 import org.springframework.web.context.support.WebApplicationContextUtils;
@@ -74,9 +73,11 @@ public class UploadServlet extends HttpServlet {
     /**
      * Try to resolve the post request parameter named <i>Filedata</i> and read
      * the data. That data is interpreted as image data. An {@link UserService}
-     * is used to assign the image to an {@link User}. The {@link User}s
-     * username must be a part of the request. Append a request parameter with
-     * the name <i>selectedUser</i>.
+     * is used to assign the image to an
+     * {@link org.openwms.core.domain.system.usermanagement.User}. The
+     * {@link org.openwms.core.domain.system.usermanagement.User}s username must
+     * be a part of the request. Append a request parameter with the name
+     * <i>selectedUser</i>.
      * 
      * @param req
      *            An {@link HttpServletRequest} object that contains the request
