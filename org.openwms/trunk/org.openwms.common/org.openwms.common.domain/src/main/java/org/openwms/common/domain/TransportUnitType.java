@@ -20,7 +20,6 @@
  */
 package org.openwms.common.domain;
 
-import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.HashSet;
 import java.util.Set;
@@ -60,7 +59,7 @@ import org.openwms.core.domain.DomainObject;
 @NamedQueries({
         @NamedQuery(name = TransportUnitType.NQ_FIND_ALL, query = "select tut from TransportUnitType tut order by tut.type"),
         @NamedQuery(name = TransportUnitType.NQ_FIND_BY_NAME, query = "select tut from TransportUnitType tut where tut.type = ?1") })
-public class TransportUnitType extends AbstractEntity implements DomainObject<Long>, Serializable {
+public class TransportUnitType extends AbstractEntity implements DomainObject<Long> {
 
     private static final long serialVersionUID = -8223409025971215884L;
 
@@ -80,8 +79,8 @@ public class TransportUnitType extends AbstractEntity implements DomainObject<Lo
     public static final String NQ_FIND_BY_NAME = "TransportUnitType.findByID";
 
     /**
-     * Default description of the <code>TransportUnitType</code>. Default * * *
-     * {@value} .
+     * Default description of the <code>TransportUnitType</code>. Default
+     * value}.
      */
     public static final String DEF_TYPE_DESCRIPTION = "--";
 
