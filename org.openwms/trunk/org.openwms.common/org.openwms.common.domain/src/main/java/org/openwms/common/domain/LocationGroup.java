@@ -117,10 +117,24 @@ public class LocationGroup extends AbstractEntity implements DomainObject<Long>,
     private LocationGroupState groupStateIn = LocationGroupState.AVAILABLE;
 
     /**
+     * References the <code>LocationGroup</code> that locked this
+     * <code>LocationGroup</code> for infeed.
+     */
+    @Column(name = "IN_LOCKER")
+    private LocationGroup stateInLocker;
+
+    /**
      * State of outfeed. Default: {@value} .
      */
     @Column(name = "GROUP_STATE_OUT")
     private LocationGroupState groupStateOut = LocationGroupState.AVAILABLE;
+
+    /**
+     * References the <code>LocationGroup</code> that locked this
+     * <code>LocationGroup</code> for outfeed.
+     */
+    @Column(name = "OUT_LOCKER")
+    private LocationGroup stateOutLocker;
 
     /**
      * Maximum fill level of the <code>LocationGroup</code>. Default: * {@value}
@@ -271,9 +285,27 @@ public class LocationGroup extends AbstractEntity implements DomainObject<Long>,
      * 
      * @param groupStateIn
      *            The state to set
+     * @param locker
+     *            The <code>LocationGroup</code> that wants to lock/unlock this
+     *            <code>LocationGroup</code>.
      */
-    public void setGroupStateIn(LocationGroupState groupStateIn) {
-        this.groupStateIn = groupStateIn;
+    public void setGroupStateIn(LocationGroupState groupStateIn, LocationGroup locker) {
+        if (this.groupStateIn == LocationGroupState.NOT_AVAILABLE && groupStateIn == LocationGroupState.AVAILABLE
+                && (this.stateInLocker == null || this.stateInLocker.equals(locker))) {
+            this.groupStateIn = groupStateIn;
+            this.stateInLocker = null;
+            for (LocationGroup child : locationGroups) {
+                child.setGroupStateIn(groupStateIn, locker);
+            }
+        }
+        if (this.groupStateIn == LocationGroupState.AVAILABLE && groupStateIn == LocationGroupState.NOT_AVAILABLE
+                && (this.stateInLocker == null || this.stateInLocker.equals(locker))) {
+            this.groupStateIn = groupStateIn;
+            this.stateInLocker = locker;
+            for (LocationGroup child : locationGroups) {
+                child.setGroupStateIn(groupStateIn, locker);
+            }
+        }
     }
 
     /**
@@ -290,9 +322,27 @@ public class LocationGroup extends AbstractEntity implements DomainObject<Long>,
      * 
      * @param groupStateOut
      *            The state to set
+     * @param locker
+     *            The <code>LocationGroup</code> that wants to lock/unlock this
+     *            <code>LocationGroup</code>.
      */
-    public void setGroupStateOut(LocationGroupState groupStateOut) {
-        this.groupStateOut = groupStateOut;
+    public void setGroupStateOut(LocationGroupState groupStateOut, LocationGroup locker) {
+        if (this.groupStateOut == LocationGroupState.NOT_AVAILABLE && groupStateOut == LocationGroupState.AVAILABLE
+                && (this.stateOutLocker == null || this.stateOutLocker.equals(locker))) {
+            this.groupStateOut = groupStateOut;
+            this.stateOutLocker = null;
+            for (LocationGroup child : locationGroups) {
+                child.setGroupStateOut(groupStateOut, locker);
+            }
+        }
+        if (this.groupStateOut == LocationGroupState.AVAILABLE && groupStateOut == LocationGroupState.NOT_AVAILABLE
+                && (this.stateOutLocker == null || this.stateOutLocker.equals(locker))) {
+            this.groupStateOut = groupStateOut;
+            this.stateOutLocker = locker;
+            for (LocationGroup child : locationGroups) {
+                child.setGroupStateOut(groupStateOut, locker);
+            }
+        }
     }
 
     /**
@@ -540,6 +590,46 @@ public class LocationGroup extends AbstractEntity implements DomainObject<Long>,
      */
     public void setLocationGroupCountingActive(boolean locationGroupCountingActive) {
         this.locationGroupCountingActive = locationGroupCountingActive;
+    }
+
+    /**
+     * {@inheritDoc}
+     * 
+     * @see java.lang.Object#hashCode()
+     */
+    @Override
+    public int hashCode() {
+        final int prime = 31;
+        int result = super.hashCode();
+        result = prime * result + ((name == null) ? 0 : name.hashCode());
+        return result;
+    }
+
+    /**
+     * {@inheritDoc}
+     * 
+     * @see java.lang.Object#equals(java.lang.Object)
+     */
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (!super.equals(obj)) {
+            return false;
+        }
+        if (!(obj instanceof LocationGroup)) {
+            return false;
+        }
+        LocationGroup other = (LocationGroup) obj;
+        if (name == null) {
+            if (other.name != null) {
+                return false;
+            }
+        } else if (!name.equals(other.name)) {
+            return false;
+        }
+        return true;
     }
 
     /**

@@ -20,8 +20,6 @@
  */
 package org.openwms.common.domain;
 
-import java.io.Serializable;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -53,7 +51,7 @@ import org.openwms.core.domain.DomainObject;
 @NamedQueries({
         @NamedQuery(name = LocationType.NQ_FIND_ALL, query = "select l from LocationType l"),
         @NamedQuery(name = LocationType.NQ_FIND_BY_UNIQUE_QUERY, query = "select l from LocationType l where l.type = ?1") })
-public class LocationType extends AbstractEntity implements DomainObject<Long>, Serializable {
+public class LocationType extends AbstractEntity implements DomainObject<Long> {
 
     private static final long serialVersionUID = 7694581168374440182L;
 

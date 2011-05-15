@@ -20,8 +20,6 @@
  */
 package org.openwms.common.domain;
 
-import java.io.Serializable;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -50,7 +48,7 @@ import org.openwms.core.domain.DomainObject;
 @Entity
 @Table(name = "COM_TYPE_PLACING_RULE", uniqueConstraints = @UniqueConstraint(columnNames = { "TRANSPORT_UNIT_TYPE",
         "PRIVILEGE_LEVEL", "ALLOWED_LOCATION_TYPE" }))
-public class TypePlacingRule extends AbstractEntity implements DomainObject<Long>, Serializable, Rule {
+public class TypePlacingRule extends AbstractEntity implements DomainObject<Long>, Rule {
 
     private static final long serialVersionUID = 9095722886493210159L;
 

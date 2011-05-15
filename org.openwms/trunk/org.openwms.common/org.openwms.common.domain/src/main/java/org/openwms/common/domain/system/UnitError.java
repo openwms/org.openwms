@@ -20,8 +20,6 @@
  */
 package org.openwms.common.domain.system;
 
-import java.io.Serializable;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -33,8 +31,8 @@ import org.openwms.core.domain.AbstractEntity;
 import org.openwms.core.domain.DomainObject;
 
 /**
- * An UnitError represents an error occurring on <code>TransportUnit</code>s,
- * on <code>LoadUnit</code>s or others.
+ * An UnitError represents an error occurring on <code>TransportUnit</code>s, on
+ * <code>LoadUnit</code>s or others.
  * 
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  * @version $Revision$
@@ -42,7 +40,7 @@ import org.openwms.core.domain.DomainObject;
  */
 @Entity
 @Table(name = "COM_UNIT_ERROR")
-public class UnitError extends AbstractEntity implements DomainObject<Long>, Serializable {
+public class UnitError extends AbstractEntity implements DomainObject<Long> {
 
     private static final long serialVersionUID = -716902051194734598L;
 

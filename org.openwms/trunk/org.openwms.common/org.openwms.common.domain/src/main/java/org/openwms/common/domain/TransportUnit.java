@@ -20,7 +20,6 @@
  */
 package org.openwms.common.domain;
 
-import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Collections;
 import java.util.Date;
@@ -73,7 +72,7 @@ import org.openwms.core.domain.system.usermanagement.User;
 @NamedQueries({
         @NamedQuery(name = TransportUnit.NQ_FIND_ALL, query = "select tu from TransportUnit tu"),
         @NamedQuery(name = TransportUnit.NQ_FIND_BY_UNIQUE_QUERY, query = "select tu from TransportUnit tu where tu.barcode = ?1") })
-public class TransportUnit extends AbstractEntity implements DomainObject<Long>, Serializable {
+public class TransportUnit extends AbstractEntity implements DomainObject<Long> {
 
     private static final long serialVersionUID = 4799247366681079321L;
 
