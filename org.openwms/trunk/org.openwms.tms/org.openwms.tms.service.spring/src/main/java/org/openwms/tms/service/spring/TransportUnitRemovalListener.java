@@ -24,6 +24,7 @@ import java.util.List;
 
 import org.openwms.common.domain.TransportUnit;
 import org.openwms.common.domain.values.Problem;
+import org.openwms.core.exception.StateChangeException;
 import org.openwms.core.service.exception.RemovalNotAllowedException;
 import org.openwms.core.service.listener.OnRemovalListener;
 import org.openwms.tms.domain.order.TransportOrder;
@@ -140,13 +141,19 @@ public class TransportUnitRemovalListener implements OnRemovalListener<Transport
                 TransportOrderState.INITIALIZED);
         if (!transportOrders.isEmpty()) {
             for (TransportOrder transportOrder : transportOrders) {
-                transportOrder.setState(TransportOrderState.CANCELED);
-                transportOrder.setProblem(new Problem("TransportUnit " + transportUnit
-                        + " was removed, order was canceled"));
-                transportOrder.setTransportUnit(null);
-                dao.save(transportOrder);
-                if (logger.isDebugEnabled()) {
-                    logger.debug("Successfully unlinked and canceled TransportOrder: " + transportOrder.getId());
+                try {
+                    transportOrder.setState(TransportOrderState.CANCELED);
+                    transportOrder.setProblem(new Problem("TransportUnit " + transportUnit
+                            + " was removed, order was canceled"));
+                    transportOrder.setTransportUnit(null);
+                    if (logger.isDebugEnabled()) {
+                        logger.debug("Successfully unlinked and canceled TransportOrder: " + transportOrder.getId());
+                    }
+                } catch (StateChangeException sce) {
+                    transportOrder.setProblem(new Problem(sce.getMessage()));
+                }
+                finally {
+                    dao.save(transportOrder);
                 }
             }
         }

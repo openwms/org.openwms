@@ -20,8 +20,8 @@
  */
 package org.openwms.tms.service.delegate;
 
+import org.openwms.core.exception.StateChangeException;
 import org.openwms.tms.domain.order.TransportOrder;
-import org.openwms.tms.service.exception.StateChangeException;
 
 /**
  * A TransportOrderStarter.
