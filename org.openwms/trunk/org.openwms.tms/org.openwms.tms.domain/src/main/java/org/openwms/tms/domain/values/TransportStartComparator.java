@@ -20,6 +20,7 @@
  */
 package org.openwms.tms.domain.values;
 
+import java.io.Serializable;
 import java.util.Comparator;
 
 import org.openwms.tms.domain.order.TransportOrder;
@@ -36,7 +37,9 @@ import org.openwms.tms.domain.order.TransportOrder;
  * @since 0.1
  * @see {@link org.openwms.tms.domain.values.PriorityLevel}
  */
-public class TransportStartComparator implements Comparator<TransportOrder> {
+public class TransportStartComparator implements Comparator<TransportOrder>, Serializable {
+
+    private static final long serialVersionUID = -5977273516346830448L;
 
     /**
      * First the priority or orders is compared, when both are equals the id is

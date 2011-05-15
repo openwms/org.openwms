@@ -45,6 +45,7 @@ import org.openwms.common.domain.TransportUnit;
 import org.openwms.common.domain.values.Problem;
 import org.openwms.core.domain.AbstractEntity;
 import org.openwms.core.domain.DomainObject;
+import org.openwms.core.exception.StateChangeException;
 import org.openwms.tms.domain.values.PriorityLevel;
 import org.openwms.tms.domain.values.TransportOrderState;
 
@@ -301,25 +302,29 @@ public class TransportOrder extends AbstractEntity implements DomainObject<Long>
      * 
      * @param newState
      *            The new state of the order
-     * @throws IllegalStateException
+     * @throws StateChangeException
      *             when <li>newState is <code>null</code> or</li><li>the state
      *             shall be turned back to a prior state or</li><li>when the
      *             caller tries to leap the state {@link INITIALIZED}</li>
      */
-    protected void validateStateChange(TransportOrderState newState) {
+    protected void validateStateChange(TransportOrderState newState) throws StateChangeException {
         if (newState == null) {
-            throw new IllegalStateException("New TransportState cannot be set to null");
+            throw new StateChangeException("New TransportState cannot be set to null");
         }
         if (getState().compareTo(newState) > 0) {
             // Don't allow to turn back the state!
-            throw new IllegalStateException("Turning back the state of a TransportOrder is not allowed");
+            throw new StateChangeException("Turning back the state of a TransportOrder is not allowed");
         }
         if (getState() == TransportOrderState.CREATED) {
             if (newState != TransportOrderState.INITIALIZED && newState != TransportOrderState.CANCELED) {
                 // Don't allow to except the initialization
-                throw new IllegalStateException("A new TransportOrder must first be initialized or be canceled");
+                throw new StateChangeException("A new TransportOrder must first be initialized or be canceled");
             }
-            validateInitializationCondition();
+            try {
+                validateInitializationCondition();
+            } catch (IllegalStateException ise) {
+                throw new StateChangeException(ise);
+            }
         }
     }
 
@@ -328,7 +333,7 @@ public class TransportOrder extends AbstractEntity implements DomainObject<Long>
      * 
      * @param newState
      *            The new state of the order
-     * @throws IllegalStateException
+     * @throws StateChangeException
      *             in case
      *             <ul>
      *             <li>the newState is <code>null</code> or</li>
@@ -340,7 +345,7 @@ public class TransportOrder extends AbstractEntity implements DomainObject<Long>
      *             shall be {@link INITIALIZED} but it is incomplete</li>
      *             </ul>
      */
-    public void setState(TransportOrderState newState) {
+    public void setState(TransportOrderState newState) throws StateChangeException {
         validateStateChange(newState);
         switch (newState) {
         case STARTED:

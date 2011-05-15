@@ -30,6 +30,7 @@ import org.openwms.common.domain.LocationGroup;
 import org.openwms.common.domain.TransportUnit;
 import org.openwms.common.domain.values.Barcode;
 import org.openwms.common.domain.values.Problem;
+import org.openwms.core.exception.StateChangeException;
 import org.openwms.core.integration.GenericDao;
 import org.openwms.core.service.spring.EntityServiceImpl;
 import org.openwms.core.service.voter.DecisionVoter;
@@ -213,10 +214,10 @@ public class TransportServiceImpl extends EntityServiceImpl<TransportOrder, Long
                 transportOrder.setState(state);
                 ctx.publishEvent(new TransportServiceEvent(transportOrder.getId(), TransportOrderUtil
                         .convertToEventType(state)));
-            } catch (IllegalStateException ise) {
+            } catch (StateChangeException sce) {
                 logger.error("Could not turn TransportOrder: [" + transportOrder.getId() + "] into " + state
-                        + " with reason : " + ise.getMessage());
-                Problem problem = new Problem(ise.getMessage());
+                        + " with reason : " + sce.getMessage());
+                Problem problem = new Problem(sce.getMessage());
                 transportOrder.setProblem(problem);
                 failure.add(transportOrder.getId().intValue());
             }

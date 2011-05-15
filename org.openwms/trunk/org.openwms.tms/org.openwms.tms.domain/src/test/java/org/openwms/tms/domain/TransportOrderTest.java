@@ -30,6 +30,7 @@ import org.openwms.common.domain.LocationGroup;
 import org.openwms.common.domain.LocationPK;
 import org.openwms.common.domain.TransportUnit;
 import org.openwms.common.domain.TransportUnitType;
+import org.openwms.core.exception.StateChangeException;
 import org.openwms.core.test.AbstractJpaSpringContextTests;
 import org.openwms.tms.domain.order.TransportOrder;
 import org.openwms.tms.domain.values.TransportOrderState;
@@ -60,7 +61,7 @@ public class TransportOrderTest extends AbstractJpaSpringContextTests {
         try {
             transportOrder.setState(TransportOrderState.INITIALIZED);
             fail("Exception expected while switching to next state without transportUnit");
-        } catch (IllegalStateException ise) {
+        } catch (StateChangeException sce) {
             logger.debug("OK:Exception while switching to next state without transportUnit");
         }
 
@@ -71,7 +72,7 @@ public class TransportOrderTest extends AbstractJpaSpringContextTests {
         try {
             transportOrder.setState(TransportOrderState.INITIALIZED);
             fail("TransportOrder must not be switched in next mode without setting a target");
-        } catch (IllegalStateException ise) {
+        } catch (StateChangeException sce) {
             logger.debug("OK:Exception while switching to next state without target");
         }
 

@@ -27,13 +27,13 @@ import java.util.List;
 import java.util.Map;
 
 import org.openwms.common.domain.TransportUnit;
+import org.openwms.core.exception.StateChangeException;
 import org.openwms.tms.domain.order.TransportOrder;
 import org.openwms.tms.domain.values.TransportOrderState;
 import org.openwms.tms.domain.values.TransportStartComparator;
 import org.openwms.tms.integration.TransportOrderDao;
 import org.openwms.tms.service.delegate.TransportOrderStarter;
 import org.openwms.tms.service.delegate.TransportOrderStateDelegate;
-import org.openwms.tms.service.exception.StateChangeException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -180,9 +180,9 @@ public class DefaultOrderStateDelegate implements TransportOrderStateDelegate {
     private boolean initialize(TransportOrder transportOrder) {
         try {
             transportOrder.setState(TransportOrderState.INITIALIZED);
-        } catch (IllegalStateException ise) {
+        } catch (StateChangeException sce) {
             logger.info("Could not initialize TransportOrder [" + transportOrder.getId() + "]. Message:"
-                    + ise.getMessage());
+                    + sce.getMessage());
             return false;
         }
         transportOrder.setSourceLocation(transportOrder.getTransportUnit().getActualLocation());

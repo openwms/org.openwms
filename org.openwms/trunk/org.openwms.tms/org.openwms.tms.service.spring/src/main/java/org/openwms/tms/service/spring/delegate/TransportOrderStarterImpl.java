@@ -24,11 +24,11 @@ import java.util.List;
 
 import org.openwms.common.domain.Location;
 import org.openwms.common.domain.LocationGroup;
+import org.openwms.core.exception.StateChangeException;
 import org.openwms.tms.domain.order.TransportOrder;
 import org.openwms.tms.domain.values.TransportOrderState;
 import org.openwms.tms.integration.TransportOrderDao;
 import org.openwms.tms.service.delegate.TransportOrderStarter;
-import org.openwms.tms.service.exception.StateChangeException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
