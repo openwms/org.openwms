@@ -22,9 +22,12 @@ package org.openwms.web.flex.client.common.model {
 
     import mx.collections.ArrayCollection;
     import mx.formatters.DateFormatter;
+    import mx.events.CollectionEvent;
+    import org.openwms.web.flex.client.common.event.LocationGroupEvent;
     import org.openwms.web.flex.client.common.model.TreeNode;
 
     [Name("commonModelLocator")]
+    [ManagedEvent(name="LG.COLL_LOCATION_GROUPS_REFRESHED")]
     [Bindable]
     /**
      * A CommonModelLocator.
@@ -35,6 +38,7 @@ package org.openwms.web.flex.client.common.model {
      */
     public class CommonModelLocator {
 
+        private var registered:Boolean = false;
         // --------------------------------------------------------------------
         // General stuff
         // --------------------------------------------------------------------
@@ -70,7 +74,6 @@ package org.openwms.web.flex.client.common.model {
          * Collection of all LocationTypes.
          */
         public var allLocationTypes:ArrayCollection = new ArrayCollection();
-
         // --------------------------------------------------------------------
         // LocationGroupView
         // --------------------------------------------------------------------
@@ -100,6 +103,26 @@ package org.openwms.web.flex.client.common.model {
         public function CommonModelLocator() {
             dateFormatter.formatString = SIMPLE_DT_FORMAT;
             dateTimeFormatter.formatString = DT_FORMAT_STRING;
+        }
+
+        /**
+         * Register event listeners to all managed collections. A Tide event is fired on
+         * collectionChange event. This is useful to update any visual components that
+         * rely on these collections dynamically. Registration happens only the first time,
+         * hence it doesn't matter how often this method is called.
+         */
+        public function registerEventListeners() : void {
+            if (registered) {
+                return;
+            }
+            trace("Binding event listeners");
+            allLocationGroups.addEventListener(CollectionEvent.COLLECTION_CHANGE, fireEvent);
+            registered = true;
+        }
+
+        private function fireEvent(e:Event):void {
+            trace("Fire coll changed event");
+            dispatchEvent(new LocationGroupEvent(LocationGroupEvent.COLLECTION_REFRESHED));
         }
     }
 }
