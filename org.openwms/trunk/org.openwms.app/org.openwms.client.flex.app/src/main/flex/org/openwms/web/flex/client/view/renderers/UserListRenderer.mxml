@@ -26,7 +26,7 @@
 
     <mx:Metadata>
         [Name]
-        [ManagedEvent(name="LOAD_ALL_USERS")]
+        [Event(name="userSelectionChanged", type="flash.events.Event")]
     </mx:Metadata>
 
 	<mx:Script>
@@ -48,6 +48,23 @@
     	import mx.controls.Alert;
 		import org.openwms.web.flex.client.model.ModelLocator;
 
+        [In]
+        [Bindable]
+        /**
+         * Inject the model.
+         */
+        public var modelLocator:ModelLocator;            
+        [Bindable]
+        /**
+         * User data preset by the surrounding userList.
+         */
+        public var userData:User;
+        [Bindable]
+        /**
+         * Default CSS style class.
+         */
+        public var style:String = "userListItem";
+
 		[Bindable]
 		[Embed(source="/assets/images/userDefaultUniSex.jpg")]
        	private var uniSexImage:Class;
@@ -57,13 +74,6 @@
 		[Bindable]
 		[Embed(source="/assets/images/userDefaultWoman.jpg")]
        	private var womanImage:Class;
-        [In]
-        [Bindable]
-        public var modelLocator:ModelLocator;            
-        [Bindable]
-        public var userData:User;
-        [Bindable]
-        public var style:String = "userListItem";
 
 		/**
 		 * Initializing the component. Filling all fields with user data.
@@ -133,10 +143,6 @@
 		}
     ]]>
 	</mx:Script>
-
-	<mx:Metadata>
-		[Event(name="userSelectionChanged", type="flash.events.Event")]
-	</mx:Metadata>
 
 	<mx:HBox id="userListItem" width="95%" height="40" useHandCursor="true" mouseChildren="false" buttonMode="true"
 		horizontalScrollPolicy="off" verticalScrollPolicy="off" click="setSelectedItem()" styleName="{style}" horizontalGap="8">

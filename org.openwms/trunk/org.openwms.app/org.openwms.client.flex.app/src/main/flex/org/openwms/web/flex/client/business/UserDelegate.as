@@ -96,6 +96,7 @@ package org.openwms.web.flex.client.business {
          * Tide event observers : SAVE_USER
          */
         public function saveUser() : void {
+            trace("SEX"+modelLocator.selectedUser.userDetails.sex);
             tideContext.userService.save(modelLocator.selectedUser, onUserSaved, onFault);
         }
         private function onUserSaved(event : TideResultEvent) : void {
