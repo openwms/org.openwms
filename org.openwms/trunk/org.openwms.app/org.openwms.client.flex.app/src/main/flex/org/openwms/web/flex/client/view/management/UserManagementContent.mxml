@@ -33,13 +33,13 @@
 
     <mx:Script>
         <![CDATA[
-            import org.openwms.web.flex.client.util.ValidationUtil;
             import mx.formatters.Formatter;
             import mx.utils.ObjectUtil;
             import mx.effects.Blur;
             import flash.utils.ByteArray;
             import mx.events.ValidationResultEvent;
             import mx.managers.PopUpManager;
+            import mx.collections.ArrayCollection;
             import mx.controls.Alert;
             import mx.core.BitmapAsset;
             import mx.validators.RegExpValidationResult;
@@ -48,6 +48,9 @@
             import org.openwms.web.flex.client.event.UserEvent;
             import org.openwms.web.flex.client.util.UserHelper;
             import org.openwms.web.flex.client.model.ModelLocator;
+            import org.openwms.web.flex.client.util.DisplayUtility;
+            import org.openwms.web.flex.client.util.BindingProperty;
+            import org.openwms.web.flex.client.util.ValidationUtil;
             import org.openwms.web.flex.client.view.dialogs.FileUploadDialog;
             import org.openwms.web.flex.client.view.dialogs.ChangePasswordDialog;
 
@@ -67,7 +70,6 @@
             [Bindable]
             [Embed(source="/assets/images/userDefaultWoman.jpg")]
             private var womanImage : Class;
-            private var watchers : Dictionary = new Dictionary();
             private var filter : DropShadowFilter = new DropShadowFilter(6, 45, 0x202020, 0.5, 4, 4, 1, 2, false);
 
             [Observer("userSelectionChanged")]
@@ -98,9 +100,28 @@
                 PopUpManager.centerPopUp(pop1);
             }
 
+            /**
+             * Fire an event to reload all users.
+             */
+            private function refresh() : void {
+                dispatchEvent(new UserEvent(UserEvent.LOAD_ALL_USERS));
+            }
+
             private function fireSaveUserEvent() : void {
                 if (stringVal.validate().type == ValidationResultEvent.VALID && checkExpirationDate()) {
-                    dispatchEvent(new UserEvent(UserEvent.SAVE_USER));
+                    var bindings:Array = [new BindingProperty(modelLocator.selectedUser, "username", usernameTi, "text"),
+                                          new BindingProperty(modelLocator.selectedUser, "fullname", fullnameTi, "text"),  
+                                          new BindingProperty(modelLocator.selectedUser.userDetails, "description", descriptionTi, "text"),  
+                                          new BindingProperty(modelLocator.selectedUser.userDetails, "phoneNo", phoneNoTi, "text"),
+                                          new BindingProperty(modelLocator.selectedUser.userDetails, "skypeName", skypeNameTi, "text"),
+                                          new BindingProperty(modelLocator.selectedUser.userDetails, "department", departmentTi, "text"),
+                                          new BindingProperty(modelLocator.selectedUser.userDetails, "office", officeTi, "text"),
+                                          new BindingProperty(modelLocator.selectedUser.userDetails, "comment", tiComment, "text"),
+                                          new BindingProperty(modelLocator.selectedUser.userDetails, "sex", sexRb.selection, "value", UserDetails$SEX),
+                                          new BindingProperty(modelLocator.selectedUser, "enabled", enabledChk, "selected"),
+                                          new BindingProperty(modelLocator.selectedUser, "locked", lockedChk, "selected")];
+                    DisplayUtility.bindProperties(new ArrayCollection(bindings), function execute():void {
+                            dispatchEvent(new UserEvent(UserEvent.SAVE_USER))});
                 }
             }
 
@@ -119,10 +140,6 @@
                 }
                 Alert.show("Please enter a valid expiration date");
                 return false;
-            }
-
-            private function refresh() : void {
-                dispatchEvent(new UserEvent(UserEvent.LOAD_ALL_USERS));
             }
 
             private function showChangePasswordDialog() : void {
@@ -156,7 +173,7 @@
             }
         ]]>
     </mx:Script>
-
+<!-- 
     <mx:Binding source="usernameTi.text" destination="modelLocator.selectedUser.username"/>
     <mx:Binding source="fullnameTi.text" destination="modelLocator.selectedUser.fullname"/>
     <mx:Binding source="descriptionTi.text" destination="modelLocator.selectedUser.userDetails.description"/>
@@ -168,7 +185,7 @@
     <mx:Binding source="sexRb.selection.value as UserDetails$SEX" destination="modelLocator.selectedUser.userDetails.sex"/>
     <mx:Binding source="enabledChk.selected" destination="modelLocator.selectedUser.enabled"/>
     <mx:Binding source="lockedChk.selected" destination="modelLocator.selectedUser.locked"/>
-
+ -->
     <mx:DateValidator id="dateVal" property="selectedDate" inputFormat="{ModelLocator.SIMPLE_DT_FORMAT}"/>
     <mx:StringValidator id="stringVal" minLength="1" source="{usernameTi}" property="text"/>
 

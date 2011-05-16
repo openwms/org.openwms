@@ -58,7 +58,11 @@ package org.openwms.web.flex.client.util {
         public static function bindProperties(bindings:ArrayCollection, command:Function = null):void {
             var watchers:ArrayCollection = new ArrayCollection();
             for each (var binding:BindingProperty in bindings) {
-                watchers.addItem(BindingUtils.bindProperty(binding.site, binding.sitePropertyName, binding.host, binding.hostPropertyName));
+                if (binding.clazz == null) {
+                    watchers.addItem(BindingUtils.bindProperty(binding.site, binding.sitePropertyName, binding.host, binding.hostPropertyName));
+                } else {
+                    watchers.addItem(BindingUtils.bindProperty(binding.site, binding.sitePropertyName, binding.host as binding.clazz, binding.hostPropertyName));
+                }
             }
             if (command != null) {
                 try {

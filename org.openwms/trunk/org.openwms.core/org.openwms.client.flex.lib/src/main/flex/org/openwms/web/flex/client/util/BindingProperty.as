@@ -27,23 +27,31 @@ package org.openwms.web.flex.client.util {
      * @version $Revision: 1019 $
      * @since 0.1
      */
-	public class BindingProperty {
-		
-		private var _site:Object;
-		private var _sitePropertyName:String;
-		private var _host:Object;
-		private var _hostPropertyName:String;
-		
-		/**
-		 * Create a new BindingProperty.
-		 */
-		public function BindingProperty(site:Object, sitePropertyName:String, host:Object, hostPropertyName:String) {
-			this._site = site;
-			this._sitePropertyName = sitePropertyName;
-			this._host = host;
-			this._hostPropertyName = hostPropertyName;
-		}
-		
+    public class BindingProperty {
+
+        private var _site:Object;
+        private var _sitePropertyName:String;
+        private var _host:*;
+        private var _hostPropertyName:String;
+        private var _clazz:Class;
+
+        /**
+         * Create a new BindingProperty.
+         *
+         * @param site The visual component that should be bound
+         * @param sitePropertyName The property name of the site component
+         * @param host The target object
+         * @param hostPropertyName The name of the target property
+         * @param hostObjectType Class of the target property or null
+         */
+        public function BindingProperty(site:Object, sitePropertyName:String, host:Object, hostPropertyName:String, hostObjectType:Class = null) {
+            this._site = site;
+            this._sitePropertyName = sitePropertyName;
+            this._host = host;
+            this._clazz = hostObjectType;
+            this._hostPropertyName = hostPropertyName;
+        }
+
         public function set site(value:Object):void {
             _site = value;
         }
@@ -71,5 +79,13 @@ package org.openwms.web.flex.client.util {
         public function get hostPropertyName():String {
             return _hostPropertyName;
         }
-	}
+
+        public function set clazz(value:Class):void {
+            _clazz = value;
+        }
+        public function get clazz():Class {
+            return _clazz;
+        }
+    }
 }
+

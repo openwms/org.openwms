@@ -45,3 +45,4 @@ package org.openwms.web.flex.client.event {
         }
     }
 }
+
