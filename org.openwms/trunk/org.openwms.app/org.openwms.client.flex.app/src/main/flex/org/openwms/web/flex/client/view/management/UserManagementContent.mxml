@@ -72,11 +72,40 @@
             private var womanImage : Class;
             private var filter : DropShadowFilter = new DropShadowFilter(6, 45, 0x202020, 0.5, 4, 4, 1, 2, false);
 
-            [Observer("userSelectionChanged")]
+            [Observer("USER.SELECTION_CHANGED")]
             private function init() : void {
-                trace("User selection changed");
+                trace("User selection changed in content");
                 userImg.source = getUserImage();
                 userImg.filters = [filter];
+                if (modelLocator.selectedUser == null) {
+                    setFormElements(false);
+                } else {
+                    setFormElements(true);
+                }
+            }
+            
+            private function setFormElements(value : Boolean = true) : void {
+            trace("1");
+                usernameTi.editable = value;
+            trace("1");
+                fullnameTi.editable = value;
+            trace("1");
+                descriptionTi.editable = value;
+            trace("1");
+                phoneNoTi.editable = value;
+            trace("1");
+                skypeNameTi.editable = value;
+            trace("1");
+                departmentTi.editable = value;
+            trace("1");
+                officeTi.editable = value;
+            trace("1");
+                tiComment.editable = value;
+            trace("1");
+                enabledChk.enabled = value;
+            trace("1");
+                lockedChk.enabled = value;
+            trace("1");
             }
 
             /**
@@ -108,7 +137,8 @@
             }
 
             private function fireSaveUserEvent() : void {
-                if (stringVal.validate().type == ValidationResultEvent.VALID && checkExpirationDate()) {
+            trace("Selected is "+sexRb.selection.value);
+                if (modelLocator.selectedUser != null && stringVal.validate().type == ValidationResultEvent.VALID && checkExpirationDate()) {
                     var bindings:Array = [new BindingProperty(modelLocator.selectedUser, "username", usernameTi, "text"),
                                           new BindingProperty(modelLocator.selectedUser, "fullname", fullnameTi, "text"),  
                                           new BindingProperty(modelLocator.selectedUser.userDetails, "description", descriptionTi, "text"),  
@@ -117,7 +147,6 @@
                                           new BindingProperty(modelLocator.selectedUser.userDetails, "department", departmentTi, "text"),
                                           new BindingProperty(modelLocator.selectedUser.userDetails, "office", officeTi, "text"),
                                           new BindingProperty(modelLocator.selectedUser.userDetails, "comment", tiComment, "text"),
-                                          new BindingProperty(modelLocator.selectedUser.userDetails, "sex", sexRb.selection, "value", UserDetails$SEX),
                                           new BindingProperty(modelLocator.selectedUser, "enabled", enabledChk, "selected"),
                                           new BindingProperty(modelLocator.selectedUser, "locked", lockedChk, "selected")];
                     DisplayUtility.bindProperties(new ArrayCollection(bindings), function execute():void {
@@ -182,10 +211,10 @@
     <mx:Binding source="departmentTi.text" destination="modelLocator.selectedUser.userDetails.department"/>
     <mx:Binding source="officeTi.text" destination="modelLocator.selectedUser.userDetails.office"/>
     <mx:Binding source="tiComment.text" destination="modelLocator.selectedUser.userDetails.comment"/>
-    <mx:Binding source="sexRb.selection.value as UserDetails$SEX" destination="modelLocator.selectedUser.userDetails.sex"/>
     <mx:Binding source="enabledChk.selected" destination="modelLocator.selectedUser.enabled"/>
     <mx:Binding source="lockedChk.selected" destination="modelLocator.selectedUser.locked"/>
  -->
+    <mx:Binding source="sexRb.selection.value as UserDetails$SEX" destination="modelLocator.selectedUser.userDetails.sex"/>
     <mx:DateValidator id="dateVal" property="selectedDate" inputFormat="{ModelLocator.SIMPLE_DT_FORMAT}"/>
     <mx:StringValidator id="stringVal" minLength="1" source="{usernameTi}" property="text"/>
 

@@ -114,8 +114,8 @@
 		 * When the User has no UserDetails, a new set is instantiated.
 		 */
 		public function setSelectedItem():void {
-			modelLocator.selectedUser = User(this.userData); 
-       		dispatchEvent(new Event(UserEvent.USER_SELECTION_CHANGED, true));
+			modelLocator.selectedUser = this.userData; 
+       		dispatchEvent(new Event("userSelectionChanged", true));
 		}
 		
 		/**
