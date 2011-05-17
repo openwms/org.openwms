@@ -27,7 +27,7 @@
     <mx:Metadata>
         [Name("userList")]
         [ManagedEvent(name="LOAD_ALL_USERS")]
-        [ManagedEvent(name="userSelectionChanged")]
+        [ManagedEvent(name="USER.SELECTION_CHANGED")]
     </mx:Metadata>
 
 	<mx:Script>
@@ -50,6 +50,7 @@
 			public function userAdded():void { }
 			
 			private function onUserSelectionChanged(event:Event):void {
+                trace("User selection changed");
 				event.currentTarget.style = "selectedUserListItem";
 				if (lastSelectedListObject != null && lastSelectedListObject != event.currentTarget) {
 					lastSelectedListObject.style = "userListItem";
