@@ -235,63 +235,55 @@
     </mx:HBox>
     <mx:HRule x="9" y="53" width="95%"/>
     <mx:Canvas x="10" y="63" width="95%" height="100%">
-        <mx:Panel x="10" y="10" width="560" height="507" layout="absolute" title="Details">
-            <mx:Accordion width="402" height="447" x="128" y="10">
-                <mx:Canvas label="User" width="100%" height="100%">
-                    <mx:Form>
-                        <mx:FormItem label="Username" required="true" width="100%">
-                            <mx:TextInput id="usernameTi" text="{modelLocator.selectedUser.username}" editable="false" click="setEditable(event)" width="250"/>
-                        </mx:FormItem>
-                        <mx:FormItem label="Fullname" required="false" width="100%" y="30">
-                            <mx:TextInput id="fullnameTi" text="{modelLocator.selectedUser.fullname}" width="250"/>
-                        </mx:FormItem>
-                        <mx:FormItem label="Description" required="false" width="100%" y="60">
-                            <mx:TextArea id="descriptionTi" text="{modelLocator.selectedUser.userDetails.description}" width="250"/>
-                        </mx:FormItem>
-                    </mx:Form>
-                </mx:Canvas>
-                <mx:Canvas label="User Details" width="100%" height="100%">
-                    <mx:Form>
-                        <mx:FormItem label="Phone" required="false" width="100%">
-                            <mx:TextInput id="phoneNoTi" text="{modelLocator.selectedUser.userDetails.phoneNo}" width="250"/>
-                        </mx:FormItem>
-                        <mx:FormItem label="Skype" required="false" width="100%" y="30">
-                            <mx:TextInput id="skypeNameTi" text="{modelLocator.selectedUser.userDetails.skypeName}" width="250"/>
-                        </mx:FormItem>
-                        <mx:FormItem label="Department" required="false" width="100%" y="60">
-                            <mx:TextInput id="departmentTi" text="{modelLocator.selectedUser.userDetails.department}" width="250"/>
-                        </mx:FormItem>
-                        <mx:FormItem label="Office" required="false" width="100%" y="90">
-                            <mx:TextInput id="officeTi" text="{modelLocator.selectedUser.userDetails.office}" width="250"/>
-                        </mx:FormItem>
-                        <mx:FormItem label="Sex" width="100%" y="120">
-                            <mx:Tile width="250" direction="vertical">
-                                <mx:RadioButtonGroup id="sexRb" selectedValue="{modelLocator.selectedUser.userDetails.sex}"/>
-                                <mx:RadioButton value="{UserDetails$SEX.MALE}" label="Male" group="{sexRb}"/>
-                                <mx:RadioButton value="{UserDetails$SEX.FEMALE}" label="Female" group="{sexRb}"/>
-                            </mx:Tile>
-                        </mx:FormItem>
-                        <mx:FormItem label="Comment" required="false" width="100%" y="180">
-                            <mx:TextArea id="tiComment" text="{modelLocator.selectedUser.userDetails.comment}" width="250"/>
-                        </mx:FormItem>
-                        <mx:FormItem required="false" width="100%" y="240">
-                            <mx:CheckBox id="enabledChk" label="Enabled" selected="{modelLocator.selectedUser.enabled}"/>
-                        </mx:FormItem>
-                        <mx:FormItem required="false" width="100%" y="270">
-                            <mx:CheckBox id="lockedChk" label="Locked" selected="{modelLocator.selectedUser.locked}"/>
-                        </mx:FormItem>
-                        <mx:FormItem label="Expiration Date" required="false" width="100%" y="300">
-                            <mx:DateField id="expirationDateDt" editable="true" selectableRange="{{rangeStart : new Date()}}" formatString="{ModelLocator.SIMPLE_DT_FORMAT}" width="250" selectedDate="{modelLocator.selectedUser == null ? null : modelLocator.selectedUser.expirationDate}"/>
-                        </mx:FormItem>
-                    </mx:Form>
-                </mx:Canvas>
-                <mx:Canvas label="Assigned Roles" width="100%" height="100%">
-                    <mx:List x="10" y="10" width="380" height="363" alternatingItemColors="[#EEEEEE, #FFFFFF]" dataProvider="{modelLocator.selectedUser.roles}"/>
-                </mx:Canvas>
-            </mx:Accordion>
+        <mx:Canvas x="10" y="10" width="560" layout="absolute" title="Details" height="100%">
             <mx:Image id="userImg" source="{modelLocator.selectedUser.userDetails.image}" width="100" height="150" click="showFileUploadDialog()" x="10" y="10" toolTip="Click to change the picture of the User"/>
-            <mx:VRule x="118" y="10" height="447"/>
-        </mx:Panel>
+            <mx:VRule x="118" y="10" height="540"/>
+            <mx:Form x="128" y="10">
+                <mx:FormItem label="Username" required="true" width="100%">
+                    <mx:TextInput id="usernameTi" text="{modelLocator.selectedUser.username}" editable="false" click="setEditable(event)" width="250"/>
+                </mx:FormItem>
+                <mx:FormItem label="Fullname" required="false" width="100%" y="30">
+                    <mx:TextInput id="fullnameTi" text="{modelLocator.selectedUser.fullname}" width="250"/>
+                </mx:FormItem>
+                <mx:FormItem label="Description" required="false" width="100%" y="60">
+                    <mx:TextArea id="descriptionTi" text="{modelLocator.selectedUser.userDetails.description}" width="250"/>
+                </mx:FormItem>
+                <mx:FormItem label="Phone" required="false" width="100%">
+                    <mx:TextInput id="phoneNoTi" text="{modelLocator.selectedUser.userDetails.phoneNo}" width="250"/>
+                </mx:FormItem>
+                <mx:FormItem label="Skype" required="false" width="100%">
+                    <mx:TextInput id="skypeNameTi" text="{modelLocator.selectedUser.userDetails.skypeName}" width="250"/>
+                </mx:FormItem>
+                <mx:FormItem label="Department" required="false" width="100%">
+                    <mx:TextInput id="departmentTi" text="{modelLocator.selectedUser.userDetails.department}" width="250"/>
+                </mx:FormItem>
+                <mx:FormItem label="Office" required="false" width="100%">
+                    <mx:TextInput id="officeTi" text="{modelLocator.selectedUser.userDetails.office}" width="250"/>
+                </mx:FormItem>
+                <mx:FormItem label="Sex" width="100%">
+                    <mx:Tile width="250" direction="vertical">
+                        <mx:RadioButtonGroup id="sexRb" selectedValue="{modelLocator.selectedUser.userDetails.sex}"/>
+                        <mx:RadioButton value="{UserDetails$SEX.MALE}" label="Male" group="{sexRb}"/>
+                        <mx:RadioButton value="{UserDetails$SEX.FEMALE}" label="Female" group="{sexRb}"/>
+                    </mx:Tile>
+                </mx:FormItem>
+                <mx:FormItem label="Comment" required="false" width="100%">
+                    <mx:TextArea id="tiComment" text="{modelLocator.selectedUser.userDetails.comment}" width="250"/>
+                </mx:FormItem>
+                <mx:FormItem required="false" width="100%">
+                    <mx:CheckBox id="enabledChk" label="Enabled" selected="{modelLocator.selectedUser.enabled}"/>
+                </mx:FormItem>
+                <mx:FormItem required="false" width="100%">
+                    <mx:CheckBox id="lockedChk" label="Locked" selected="{modelLocator.selectedUser.locked}"/>
+                </mx:FormItem>
+                <mx:FormItem label="Expiration Date" required="false" width="100%">
+                    <mx:DateField id="expirationDateDt" editable="true" selectableRange="{{rangeStart : new Date()}}" formatString="{ModelLocator.SIMPLE_DT_FORMAT}" width="250" selectedDate="{modelLocator.selectedUser == null ? null : modelLocator.selectedUser.expirationDate}"/>
+                </mx:FormItem>
+                <mx:FormItem label="Roles" required="false" width="100%">
+                    <mx:List height="63" alternatingItemColors="[#EEEEEE, #FFFFFF]" dataProvider="{modelLocator.selectedUser.roles}" width="100%"/>
+                </mx:FormItem>
+            </mx:Form>
+        </mx:Canvas>
 
     </mx:Canvas>
 </mx:Canvas>
