@@ -72,9 +72,8 @@
             private var womanImage : Class;
             private var filter : DropShadowFilter = new DropShadowFilter(6, 45, 0x202020, 0.5, 4, 4, 1, 2, false);
 
-            [Observer("USER.SELECTION_CHANGED")]
-            private function init() : void {
-                trace("User selection changed in content");
+            [Observer("USER.SELECTION_CHANGED","USER.USER_SAVED")]
+            public function init() : void {
                 userImg.source = getUserImage();
                 userImg.filters = [filter];
                 if (modelLocator.selectedUser == null) {
@@ -85,27 +84,20 @@
             }
             
             private function setFormElements(value : Boolean = true) : void {
-            trace("1");
+                deleteUserBtn.enabled = value;
+                saveUserBtn.enabled = value;
+                changePasswordBtn.enabled = value;
+                changePictureBtn.enabled = value;
                 usernameTi.editable = value;
-            trace("1");
                 fullnameTi.editable = value;
-            trace("1");
                 descriptionTi.editable = value;
-            trace("1");
                 phoneNoTi.editable = value;
-            trace("1");
                 skypeNameTi.editable = value;
-            trace("1");
                 departmentTi.editable = value;
-            trace("1");
                 officeTi.editable = value;
-            trace("1");
                 tiComment.editable = value;
-            trace("1");
                 enabledChk.enabled = value;
-            trace("1");
                 lockedChk.enabled = value;
-            trace("1");
             }
 
             /**
@@ -128,6 +120,15 @@
                 pop1.callback = this;
                 PopUpManager.centerPopUp(pop1);
             }
+            
+            [Observer("USER.USER_ADDED")]
+            public function onUserAdded(event) : void {
+                if (modelLocator.selectedUser == null) {
+                    setFormElements(false);
+                } else {
+                    setFormElements(true);
+                }
+            }
 
             /**
              * Fire an event to reload all users.
@@ -136,8 +137,11 @@
                 dispatchEvent(new UserEvent(UserEvent.LOAD_ALL_USERS));
             }
 
+            private function addUser() : void {
+                dispatchEvent(new UserEvent(UserEvent.ADD_USER));
+            }
+
             private function fireSaveUserEvent() : void {
-            trace("Selected is "+sexRb.selection.value);
                 if (modelLocator.selectedUser != null && stringVal.validate().type == ValidationResultEvent.VALID && checkExpirationDate()) {
                     var bindings:Array = [new BindingProperty(modelLocator.selectedUser, "username", usernameTi, "text"),
                                           new BindingProperty(modelLocator.selectedUser, "fullname", fullnameTi, "text"),  
@@ -179,12 +183,15 @@
             private function setEditable(event : Event) : void {
                 event.currentTarget.editable = true;
             }
-
+            
             private function getUserImage() : BitmapAsset {
                 var asset : BitmapAsset;
                 if (modelLocator.selectedUser != null) {
                     var user : User = modelLocator.selectedUser;
                     if (UserHelper.hasDetails(user)) {
+                        if (user.userDetails.image != null) {
+                            return user.userDetails.image as BitmapAsset;
+                        }
                         if (user.userDetails.sex == UserDetails$SEX.MALE) {
                             asset = new manImage() as BitmapAsset;
                         } else if (user.userDetails.sex == UserDetails$SEX.FEMALE) {
@@ -202,18 +209,7 @@
             }
         ]]>
     </mx:Script>
-<!-- 
-    <mx:Binding source="usernameTi.text" destination="modelLocator.selectedUser.username"/>
-    <mx:Binding source="fullnameTi.text" destination="modelLocator.selectedUser.fullname"/>
-    <mx:Binding source="descriptionTi.text" destination="modelLocator.selectedUser.userDetails.description"/>
-    <mx:Binding source="phoneNoTi.text" destination="modelLocator.selectedUser.userDetails.phoneNo"/>
-    <mx:Binding source="skypeNameTi.text" destination="modelLocator.selectedUser.userDetails.skypeName"/>
-    <mx:Binding source="departmentTi.text" destination="modelLocator.selectedUser.userDetails.department"/>
-    <mx:Binding source="officeTi.text" destination="modelLocator.selectedUser.userDetails.office"/>
-    <mx:Binding source="tiComment.text" destination="modelLocator.selectedUser.userDetails.comment"/>
-    <mx:Binding source="enabledChk.selected" destination="modelLocator.selectedUser.enabled"/>
-    <mx:Binding source="lockedChk.selected" destination="modelLocator.selectedUser.locked"/>
- -->
+
     <mx:Binding source="sexRb.selection.value as UserDetails$SEX" destination="modelLocator.selectedUser.userDetails.sex"/>
     <mx:DateValidator id="dateVal" property="selectedDate" inputFormat="{ModelLocator.SIMPLE_DT_FORMAT}"/>
     <mx:StringValidator id="stringVal" minLength="1" source="{usernameTi}" property="text"/>
@@ -221,7 +217,7 @@
     <mx:HBox width="95%" verticalAlign="middle" backgroundColor="#B6CFEF" x="10" y="10">
         <mx:Label text="User Settings" fontSize="24"/>
         <mx:VRule height="10"/>
-        <mx:Button id="addUserBtn" buttonMode="true" mouseChildren="false" toolTip="Create a new User" icon="@Embed(source='/assets/images/User--plus.png')" click="dispatchEvent(new UserEvent(UserEvent.ADD_USER));"/>
+        <mx:Button id="addUserBtn" buttonMode="true" mouseChildren="false" toolTip="Create a new User" icon="@Embed(source='/assets/images/User--plus.png')" click="addUser()"/>
         <mx:VRule height="10"/>
         <mx:Button id="deleteUserBtn" buttonMode="true" mouseChildren="false" toolTip="Delete an User" icon="@Embed(source='/assets/images/User--minus.png')" click="dispatchEvent(new UserEvent(UserEvent.DELETE_USER));"/>
         <mx:VRule height="10"/>
@@ -234,13 +230,13 @@
         <mx:Button id="changePictureBtn" buttonMode="true" mouseChildren="false" toolTip="Change the picture of the current User" icon="@Embed(source='assets/images/icons/picture--edit.png')" click="showFileUploadDialog()"/>
     </mx:HBox>
     <mx:HRule x="9" y="53" width="95%"/>
-    <mx:Canvas x="10" y="63" width="95%" height="100%">
-        <mx:Canvas x="10" y="10" width="560" layout="absolute" title="Details" height="100%">
+    <mx:Canvas x="10" y="63" width="95%" height="100%" backgroundColor="#B6CFEF">
+        <mx:Canvas x="10" y="10" width="560" height="100%">
             <mx:Image id="userImg" source="{modelLocator.selectedUser.userDetails.image}" width="100" height="150" click="showFileUploadDialog()" x="10" y="10" toolTip="Click to change the picture of the User"/>
             <mx:VRule x="118" y="10" height="540"/>
             <mx:Form x="128" y="10">
                 <mx:FormItem label="Username" required="true" width="100%">
-                    <mx:TextInput id="usernameTi" text="{modelLocator.selectedUser.username}" editable="false" click="setEditable(event)" width="250"/>
+                    <mx:TextInput id="usernameTi" text="{modelLocator.selectedUser.username}" click="setEditable(event)" width="250"/>
                 </mx:FormItem>
                 <mx:FormItem label="Fullname" required="false" width="100%" y="30">
                     <mx:TextInput id="fullnameTi" text="{modelLocator.selectedUser.fullname}" width="250"/>

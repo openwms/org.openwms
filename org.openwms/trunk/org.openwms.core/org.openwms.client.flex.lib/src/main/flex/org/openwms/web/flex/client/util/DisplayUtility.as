@@ -61,6 +61,8 @@ package org.openwms.web.flex.client.util {
                 if (binding.clazz == null) {
                     watchers.addItem(BindingUtils.bindProperty(binding.site, binding.sitePropertyName, binding.host, binding.hostPropertyName));
                 } else {
+                    trace("Binding host:"+binding.host);
+                    trace("Binding class:"+binding.clazz);
                     watchers.addItem(BindingUtils.bindProperty(binding.site, binding.sitePropertyName, binding.host as binding.clazz, binding.hostPropertyName));
                 }
             }
