@@ -33,6 +33,8 @@ package org.openwms.web.flex.client.business {
 
     [Name("userController")]
     [ManagedEvent(name="LOAD_ALL_USERS")]
+    [ManagedEvent(name="USER.USER_ADDED")]
+    [ManagedEvent(name="USER.USER_SAVED")]
     [Bindable]
     /**
      * An UserDelegate. Handles all interaction with the userService.
@@ -61,10 +63,10 @@ package org.openwms.web.flex.client.business {
          */
         public function UserDelegate() : void { }
 
-        [Observer("LOAD_ALL_USERS")]
+        [Observer("LOAD_ALL_USERS", "USER.USER_ADDED")]
         /**
          * Fetch a list of all users from the service.
-         * Tide event observers : LOAD_ALL_USERS
+         * Tide event observers : LOAD_ALL_USERS, USER.USER_ADDED
          */
         public function getUsers() : void {
             tideContext.userService.findAll(onUsersLoaded, onFault);
@@ -88,6 +90,7 @@ package org.openwms.web.flex.client.business {
             var user : User = User(event.result);
             user.username = "";
             modelLocator.selectedUser = user;
+            dispatchEvent(new UserEvent(UserEvent.USER_ADDED));
         }
 
         [Observer("SAVE_USER")]
@@ -96,11 +99,12 @@ package org.openwms.web.flex.client.business {
          * Tide event observers : SAVE_USER
          */
         public function saveUser() : void {
-            trace("SEX"+modelLocator.selectedUser.userDetails.sex);
             tideContext.userService.save(modelLocator.selectedUser, onUserSaved, onFault);
         }
         private function onUserSaved(event : TideResultEvent) : void {
-            dispatchEvent(new UserEvent(UserEvent.LOAD_ALL_USERS));
+            modelLocator.selectedUser = null;
+            getUsers();
+            dispatchEvent(new UserEvent(UserEvent.USER_SAVED));
         }
 
         [Observer("DELETE_USER")]
@@ -109,6 +113,9 @@ package org.openwms.web.flex.client.business {
          * Tide event observers : DELETE_USER
          */
         public function deleteUser() : void {
+            if (modelLocator.selectedUser == null) {
+                return;
+            }
             if (isNaN(modelLocator.selectedUser.id)) {
                 modelLocator.selectedUser = modelLocator.allUsers.getItemAt(0) as User;
                 return;

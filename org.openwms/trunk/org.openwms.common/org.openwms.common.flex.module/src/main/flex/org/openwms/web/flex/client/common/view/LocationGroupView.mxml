@@ -175,6 +175,9 @@
 
             private function getTreeIcon(item:Object):Class {
                 var node:TreeNode = item as TreeNode;
+                if (node.getData() == null) {
+                    return nodeIcon;
+                }
                 var lg:LocationGroup = node.getData() as LocationGroup;
                 if (node.children == null) {
                     if (lg.groupStateIn == LocationGroupState.NOT_AVAILABLE ||

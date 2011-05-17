@@ -43,14 +43,13 @@
             public var modelLocator:ModelLocator;            
 			private var lastSelectedListObject:Object = null;
 			
-            [Observer("USER_ADDED")]
+            [Observer("USER.USER_ADDED")]
             /**
              * Do something when a user was added. Currently nothing happens here.
              */
 			public function userAdded():void { }
 			
 			private function onUserSelectionChanged(event:Event):void {
-                trace("User selection changed");
 				event.currentTarget.style = "selectedUserListItem";
 				if (lastSelectedListObject != null && lastSelectedListObject != event.currentTarget) {
 					lastSelectedListObject.style = "userListItem";
