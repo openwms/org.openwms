@@ -30,6 +30,9 @@ package org.openwms.web.flex.client.common.business {
     import org.openwms.web.flex.client.common.event.TransportUnitEvent;
     import org.openwms.web.flex.client.common.model.CommonModelLocator;
 
+    [Name("transportUnitDelegate")]
+    [ManagedEvent(name="LOAD_TRANSPORT_UNITS")]
+    [ManagedEvent(name="TRANSPORT_UNIT_CREATED")]
     /**
      * A TransportUnitDelegate.
      *
@@ -37,18 +40,24 @@ package org.openwms.web.flex.client.common.business {
      * @version $Revision$
      * @since 0.1
      */
-    [Name("transportUnitDelegate")]
-    [ManagedEvent(name="LOAD_TRANSPORT_UNITS")]
-    [ManagedEvent(name="TRANSPORT_UNIT_CREATED")]
     public class TransportUnitDelegate {
 
         [In]
         [Bindable]
+        /**
+         * Injected TideContext.
+         */
         public var tideContext:Context;
-        [In]
-        [Bindable]
+	    [Inject]
+	    [Bindable]
+	    /**
+	     * Injected Model.
+	     */
         public var commonModelLocator:CommonModelLocator;            
 
+        /**
+         * Default constructor.
+         */
         public function TransportUnitDelegate():void { }
 
         [Observer("LOAD_TRANSPORT_UNITS")]

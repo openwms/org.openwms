@@ -46,8 +46,11 @@
             import org.openwms.web.flex.client.common.view.dialogs.ConfirmDeletionLocationTypeDialog;
             import org.openwms.web.flex.client.common.view.dialogs.CreateLocationTypeDialog;
 
-            [In]
-            [Bindable]
+		    [Inject]
+		    [Bindable]
+		    /**
+		     * Injected Model.
+		     */
             public var commonModelLocator:CommonModelLocator;
             [Bindable]
             private var selected:LocationType;

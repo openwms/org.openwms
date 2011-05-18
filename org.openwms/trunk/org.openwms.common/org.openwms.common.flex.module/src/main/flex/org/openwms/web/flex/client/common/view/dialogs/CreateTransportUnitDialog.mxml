@@ -38,25 +38,25 @@
     		import org.openwms.web.flex.client.common.event.TransportUnitEvent;
     		import org.openwms.web.flex.client.common.model.CommonModelLocator;
 
-            [In]
-            [Bindable]
+		    [Inject]
+		    [Bindable]
+		    /**
+		     * Injected Model.
+		     */
             public var commonModelLocator:CommonModelLocator;
     	
-            private function init():void
-            {
+            private function init():void {
             	barcodeTxt.setFocus();
                 this.addEventListener(KeyboardEvent.KEY_DOWN, keyEventHandler);
                 PopUpManager.centerPopUp(this);
             }
             
-            private function closeDialog(event:Event):void
-            {
+            private function closeDialog(event:Event):void {
             	this.removeEventListener(KeyboardEvent.KEY_DOWN, keyEventHandler);
                 PopUpManager.removePopUp(this);
             }
             
-            private function createTransportUnit():void
-            {
+            private function createTransportUnit():void {
                 var actualLocation:Location = locationCmb.selectedItem as Location;
                 var tuType:TransportUnitType = new TransportUnitType();
                 tuType.type = tuTypeTxt.text;
@@ -71,25 +71,23 @@
                 dispatchEvent(event);
             }
             
+            [Observer("TRANSPORT_UNIT_CREATED")]
             /**
              * When a Role was successfully added reset the form to add a new Role.
+             * 
+             * @param event Currently not used
              */
-            [Observer("TRANSPORT_UNIT_CREATED")]
-            public function onTransportUnitCreated(event:TransportUnitEvent):void
-            {
+            public function onTransportUnitCreated(event:TransportUnitEvent):void {
                 barcodeTxt.text = "";
                 barcodeTxt.setFocus();
             }
 
-	        private function keyEventHandler(event:KeyboardEvent):void
-	        {
-	            if(event.keyCode == 27)
-	            {
+	        private function keyEventHandler(event:KeyboardEvent):void {
+	            if(event.keyCode == 27) {
 	               closeDialog(event);
 	               return;
 	            }
-	            if(event.keyCode == Keyboard.ENTER)
-                {
+	            if(event.keyCode == Keyboard.ENTER) {
                 	createTransportUnit();
                 }
 	        }

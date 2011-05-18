@@ -21,12 +21,15 @@
 package org.openwms.web.flex.client.tms.view {
 
     import flash.system.ApplicationDomain;
-
+    
     import mx.collections.ArrayCollection;
     import mx.collections.XMLListCollection;
     import mx.containers.ViewStack;
     import mx.controls.MenuBar;
-
+    import mx.messaging.ChannelSet;
+    import mx.messaging.config.ServerConfig;
+    
+    import org.granite.rpc.remoting.mxml.SecureRemoteObject;
     import org.granite.tide.ITideModule;
     import org.granite.tide.Tide;
     import org.granite.tide.spring.Spring;
@@ -57,6 +60,8 @@ package org.openwms.web.flex.client.tms.view {
         public var tmsMenuBar:MenuBar;
         [Bindable]
         public var tmsViewStack:ViewStack;
+        [Bindable]
+		private var transportService:SecureRemoteObject = new SecureRemoteObject("transportServiceRemote");
 
         /**
          * Default constructor.
@@ -72,6 +77,7 @@ package org.openwms.web.flex.client.tms.view {
          */
         public function start(applicationDomain:ApplicationDomain = null):void {
             trace("Starting Tide context in applicationDomain : "+applicationDomain);
+            setupServices([transportService]);
             Spring.getInstance().addModule(TMSAppBase, applicationDomain);
         }
 
@@ -83,6 +89,16 @@ package org.openwms.web.flex.client.tms.view {
         public function init(tide:Tide):void {
             trace("Add components to Tide context");
             tide.addComponents([TMSModelLocator, TransportsDelegate]);
+        }
+
+       private function setupServices(services:Array) : void {
+        	var endpoint:String = ServerConfig.getChannel("my-graniteamf").endpoint;
+        	for each (var service:SecureRemoteObject in services) {
+	            service.endpoint = endpoint;
+	            service.showBusyCursor = true;
+	            service.channelSet = new ChannelSet();
+	            service.channelSet.addChannel(ServerConfig.getChannel("my-graniteamf"));        		
+        	}
         }
 
         /**

@@ -35,8 +35,11 @@
     		import mx.collections.ArrayCollection;
     		import mx.managers.PopUpManager;
     		import org.openwms.web.flex.client.common.model.CommonModelLocator;
-            [In]
-            [Bindable]
+		    [Inject]
+		    [Bindable]
+		    /**
+		     * Injected Model.
+		     */
             public var commonModelLocator:CommonModelLocator;
     		[Bindable]
             public var items:ArrayCollection;

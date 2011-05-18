@@ -41,9 +41,6 @@
 	<mx:Style source="assets/css/main.css" />
 	<mx:Style source="assets/css/styles.css" />
 	
-	<!-- Services -->
-	<business:Services />
-
     <mx:XMLList id="stdMenu">
         <menuitem label="Application">
             <menuitem label="Users" action="{SwitchScreenEvent.SHOW_USER_MGMT_VIEW}" />

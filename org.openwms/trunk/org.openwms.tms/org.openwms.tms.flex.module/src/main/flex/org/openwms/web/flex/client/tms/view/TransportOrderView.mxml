@@ -55,7 +55,7 @@
             [Inject]
             [Bindable]
             public var modelLocator:ModelLocator;            
-            [In]
+            [Inject]
             [Bindable]
             /**
              * Inject a model to work on.

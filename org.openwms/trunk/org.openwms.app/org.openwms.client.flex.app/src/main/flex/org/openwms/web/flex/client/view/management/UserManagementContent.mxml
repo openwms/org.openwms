@@ -122,7 +122,7 @@
             }
             
             [Observer("USER.USER_ADDED")]
-            public function onUserAdded(event) : void {
+            public function onUserAdded(event:Event) : void {
                 if (modelLocator.selectedUser == null) {
                     setFormElements(false);
                 } else {
@@ -190,28 +190,21 @@
                     var user : User = modelLocator.selectedUser;
                     if (UserHelper.hasDetails(user)) {
                         if (user.userDetails.image != null) {
-                            asset = new BitmapAsset(modelLocator.selectedUser.userDetails.image as BitmapAsset);
-                            trace("Assign userimage");
+                            asset = modelLocator.selectedUser.userDetails.image as BitmapAsset;
                         } else if (user.userDetails.sex == UserDetails$SEX.MALE) {
                             asset = new manImage() as BitmapAsset;
-                            trace("Assign manimage");
                         } else if (user.userDetails.sex == UserDetails$SEX.FEMALE) {
                             asset = new womanImage() as BitmapAsset;
-                            trace("Assign womanimage");
                         } else {
-                            trace("Assign nothing");
                             return;
                         }
                     } else {
-                    trace("Assign uniimage");
                         asset = new uniSexImage() as BitmapAsset;
                     }
                 } else {
-                trace("Assign uniimage");
                     asset = new uniSexImage() as BitmapAsset;
                 }
                 userImg.source = asset;
-                trace("Redraw");
                 userImg.invalidateDisplayList();
                 userImg.initialize();
             }

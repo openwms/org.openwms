@@ -25,6 +25,9 @@ package org.openwms.web.flex.client.common.view.dialogs {
     import org.openwms.common.domain.TransportUnitType;
     import org.openwms.web.flex.client.common.event.TransportUnitTypeEvent;
     
+    [Name]
+    [ManagedEvent(name="DELETE_TRANSPORT_UNIT_TYPE")]
+    [Bindable]
     /**
      * A ConfirmDeletionTransportUnitTypesDialog.
      *
@@ -32,9 +35,6 @@ package org.openwms.web.flex.client.common.view.dialogs {
      * @version $Revision: 796 $
      * @since 0.1
      */
-    [Name]
-    [ManagedEvent(name="DELETE_TRANSPORT_UNIT_TYPE")]
-    [Bindable]
     public class ConfirmDeletionTransportUnitTypesDialog extends ConfirmDeletionDialog {
 
         /**

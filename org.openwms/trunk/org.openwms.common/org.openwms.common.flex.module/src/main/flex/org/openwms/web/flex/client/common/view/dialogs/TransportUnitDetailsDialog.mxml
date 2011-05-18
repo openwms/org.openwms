@@ -36,8 +36,11 @@
             import org.openwms.common.domain.values.TransportUnitState;
     		import org.openwms.web.flex.client.common.model.CommonModelLocator;
 
-            [Inject]
-            [Bindable]
+		    [Inject]
+		    [Bindable]
+		    /**
+		     * Injected Model.
+		     */
             public var commonModelLocator:CommonModelLocator;
             [Bindable]
             public var transportUnits:ArrayCollection;
@@ -49,13 +52,11 @@
             [Bindable]
             private var tus:ArrayCollection;
     		
-    		private function init():void
-    		{
+    		private function init():void {
                 this.addEventListener(KeyboardEvent.KEY_DOWN, keyEventHandler);
                 PopUpManager.centerPopUp(this);
                 
-                if (transportUnits != null && transportUnits.length == 1)
-                {
+                if (transportUnits != null && transportUnits.length == 1) {
                     // Single marked
                     transportUnit = transportUnits.getItemAt(0) as TransportUnit;
                     actualLocationCmb.selectedItem = transportUnit.actualLocation;
@@ -63,61 +64,41 @@
                     stateCmb.selectedItem = transportUnit.state;
                     targetLocationCmb.selectedItem = transportUnit.targetLocation;
                     transportUnitTypeCmb.selectedItem = transportUnit.transportUnitType;
-                    /*
-                    for (var i:int = 0; i < transportUnitTypeCmb.dataProvider.length; i++)
-                    {
-                    	var tuType:TransportUnitType = ArrayCollection(transportUnitTypeCmb.dataProvider).getItemAt(i) as TransportUnitType;
-                    	if ( tuType.type == transportUnit.transportUnitType.type)
-                    	{
-                    		transportUnitTypeCmb.selectedItem = tuType;
-                    		transportUnitTypeCmb.dropdown.dataProvider = transportUnitTypeCmb.dataProvider;
-                    		break;
-                    	}
-                    }*/
                     tus = new ArrayCollection(commonModelLocator.allTransportUnits.toArray());
                 }
-                if (transportUnits != null && transportUnits.length > 1)
-                {
+                if (transportUnits != null && transportUnits.length > 1) {
                     // Multiple marked
                     markedMultiple = true;
                 }
     		}
     		
-            private function closeDialog(event:Event):void
-            {
+            private function closeDialog(event:Event):void {
                 this.removeEventListener(KeyboardEvent.KEY_DOWN, keyEventHandler);
                 PopUpManager.removePopUp(this);
             }
 
-    		private function getParent():String
-    		{
-    			if(transportUnit.parent != null)
-    			{
+    		private function getParent():String {
+    			if(transportUnit.parent != null) {
                     return transportUnit.parent.barcode.toString();
     			}
     			return null;
     		}
 
-            private function getID():String
-            {
-                if(isNaN(transportUnit.id))
-                {
+            private function getID():String {
+                if(isNaN(transportUnit.id)) {
                     return "(No ID)";
                 }
                 return "(ID "+transportUnit.id+")";
             }
 
-            private function keyEventHandler(event:KeyboardEvent):void
-            {
-                if(event.keyCode == 27)
-                {
+            private function keyEventHandler(event:KeyboardEvent):void {
+                if(event.keyCode == 27) {
                    closeDialog(event);
                    return;
                 }
             }
             
-            private function transportUnitDataChanged(event:Event):void
-            {
+            private function transportUnitDataChanged(event:Event):void {
             	trace("Event fired:"+event.currentTarget.valueOf().valueOf());
             	trace("Event fired:"+event.target.valueOf().valueOf());
             }

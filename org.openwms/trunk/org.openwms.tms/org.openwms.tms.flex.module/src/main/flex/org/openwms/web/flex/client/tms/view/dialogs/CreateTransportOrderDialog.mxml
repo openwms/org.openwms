@@ -49,11 +49,17 @@
             import flash.events.KeyboardEvent;
             import mx.controls.CheckBox;
             
-            [In]
-	        [Bindable]
+		    [Inject]
+		    [Bindable]
+		    /**
+		     * Injected Model.
+		     */
 	        public var modelLocator:ModelLocator;
-            [In]
-            [Bindable]
+		    [Inject]
+		    [Bindable]
+		    /**
+		     * Injected Model.
+		     */
             public var commonModelLocator:CommonModelLocator;
 
             private function init():void {

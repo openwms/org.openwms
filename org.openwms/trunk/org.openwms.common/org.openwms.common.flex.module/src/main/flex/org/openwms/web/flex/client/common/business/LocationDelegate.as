@@ -53,7 +53,7 @@ package org.openwms.web.flex.client.common.business {
          * Injected TideContext.
          */
         public var tideContext:Context;
-	    [In]
+	    [Inject]
 	    [Bindable]
 	    /**
 	     * Injected Model.

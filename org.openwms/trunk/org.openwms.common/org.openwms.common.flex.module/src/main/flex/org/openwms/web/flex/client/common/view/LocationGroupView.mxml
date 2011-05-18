@@ -47,7 +47,7 @@
             import org.openwms.common.domain.values.LocationGroupState;
             import org.openwms.common.domain.LocationGroup;
 
-	        [In]
+	        [Inject]
 	        [Bindable]
             /**
              * Inject a model to work on.
@@ -72,7 +72,6 @@
             
             [Observer("LG.COLL_LOCATION_GROUPS_REFRESHED")]
             public function refreshTree() : void {
-                trace("Refresh tree fired");
                 locationGroupTree.dataProvider.refresh();
             }
 
@@ -99,6 +98,8 @@
 
             /**
              * On a change event of one of the state comboboxes, fire an event to save the new state directly.
+             * 
+             * @param event Currently not used
              */
             private function changeState(event : Event):void {
                 var bindings:Array = [new BindingProperty(selected, "groupStateIn", groupStateInCmb, "selectedItem"),

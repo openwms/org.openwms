@@ -34,9 +34,12 @@ package org.openwms.web.flex.client.view {
     import mx.logging.Log;
     import mx.managers.DragManager;
     import mx.managers.PopUpManager;
+    import mx.messaging.ChannelSet;
+    import mx.messaging.config.ServerConfig;
     import mx.modules.ModuleManager;
     import mx.resources.ResourceManager;
     
+    import org.granite.rpc.remoting.mxml.SecureRemoteObject;
     import org.granite.tide.spring.Context;
     import org.granite.tide.spring.Identity;
     import org.granite.tide.spring.Spring;
@@ -48,14 +51,13 @@ package org.openwms.web.flex.client.view {
     import org.openwms.web.flex.client.business.RoleDelegate;
     import org.openwms.web.flex.client.business.UserDelegate;
     import org.openwms.web.flex.client.event.ApplicationEvent;
-    import org.openwms.web.flex.client.event.SwitchScreenEvent;
     import org.openwms.web.flex.client.event.I18nEvent;
+    import org.openwms.web.flex.client.event.SwitchScreenEvent;
     import org.openwms.web.flex.client.model.I18nMap;
     import org.openwms.web.flex.client.model.ModelLocator;
     import org.openwms.web.flex.client.module.ModuleLocator;
     import org.openwms.web.flex.client.util.DisplayUtility;
     import org.openwms.web.flex.client.view.dialogs.LoginView;
-
     /**
      * An AppBase class is the main Flex Application of the CORE framework. This class
      * cares about all the essential stuff like security and Tide framework initialization
@@ -113,6 +115,16 @@ package org.openwms.web.flex.client.view {
         private var dragManager : DragManager;
         private static var log : ILogger = Log.getLogger("org.openwms.web.flex.client.view.App");
         private static var _link : Array = [org.openwms.tms.domain.order.TransportOrder,org.openwms.common.domain.values.Weight];
+        [Bindable]
+		private var moduleService:SecureRemoteObject = new SecureRemoteObject("moduleServiceRemote");
+        [Bindable]
+		private var userService:SecureRemoteObject = new SecureRemoteObject("userServiceRemote");
+        [Bindable]
+		private var roleService:SecureRemoteObject = new SecureRemoteObject("roleServiceRemote");
+        [Bindable]
+		private var i18nService:SecureRemoteObject = new SecureRemoteObject("i18nServiceRemote");
+        [Bindable]
+		private var configurationService:SecureRemoteObject = new SecureRemoteObject("configurationServiceRemote");
 
         [Bindable]
         /**
@@ -147,8 +159,19 @@ package org.openwms.web.flex.client.view {
             for each (var s:String in l){
             	trace("LOCALE:"+s);
             } 
+            setupServices([moduleService, roleService, userService, i18nService, configurationService]);
             trace("Load all internationalized texts");
             tideContext.raiseEvent(I18nEvent.LOAD_ALL);
+        }
+        
+        private function setupServices(services:Array) : void {
+        	var endpoint:String = ServerConfig.getChannel("my-graniteamf").endpoint;
+        	for each (var service:SecureRemoteObject in services) {
+	            service.endpoint = endpoint;
+	            service.showBusyCursor = true;
+	            service.channelSet = new ChannelSet();
+	            service.channelSet.addChannel(ServerConfig.getChannel("my-graniteamf"));        		
+        	}
         }
 
         /**
