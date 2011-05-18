@@ -70,7 +70,7 @@
 			}
 		}
 		
-		private function closeDialog(event:Event):void {
+		private function closeDialog(event:Event = null):void {
 			fileRef.cancel();
 			fileRef.removeEventListener(Event.COMPLETE,completeEvent);
 			fileRef.removeEventListener(Event.SELECT,selectEvent);
@@ -100,6 +100,7 @@
 			btn_upload.enabled = false;
 			tmpFileName = fileRef.name;
 			callback.notify();
+            closeDialog();
 		}
 		
 		private function uploadFile(endpoint:String):void {

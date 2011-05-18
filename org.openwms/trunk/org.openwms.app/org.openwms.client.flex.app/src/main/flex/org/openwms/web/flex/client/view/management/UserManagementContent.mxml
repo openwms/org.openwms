@@ -74,7 +74,7 @@
 
             [Observer("USER.SELECTION_CHANGED","USER.USER_SAVED")]
             public function init() : void {
-                userImg.source = getUserImage();
+                setUserImage();
                 userImg.filters = [filter];
                 if (modelLocator.selectedUser == null) {
                     setFormElements(false);
@@ -184,28 +184,36 @@
                 event.currentTarget.editable = true;
             }
             
-            private function getUserImage() : BitmapAsset {
+            private function setUserImage() : void {
                 var asset : BitmapAsset;
                 if (modelLocator.selectedUser != null) {
                     var user : User = modelLocator.selectedUser;
                     if (UserHelper.hasDetails(user)) {
                         if (user.userDetails.image != null) {
-                            return user.userDetails.image as BitmapAsset;
-                        }
-                        if (user.userDetails.sex == UserDetails$SEX.MALE) {
+                            asset = new BitmapAsset(modelLocator.selectedUser.userDetails.image as BitmapAsset);
+                            trace("Assign userimage");
+                        } else if (user.userDetails.sex == UserDetails$SEX.MALE) {
                             asset = new manImage() as BitmapAsset;
+                            trace("Assign manimage");
                         } else if (user.userDetails.sex == UserDetails$SEX.FEMALE) {
                             asset = new womanImage() as BitmapAsset;
+                            trace("Assign womanimage");
                         } else {
-                            asset = new uniSexImage() as BitmapAsset;
+                            trace("Assign nothing");
+                            return;
                         }
                     } else {
+                    trace("Assign uniimage");
                         asset = new uniSexImage() as BitmapAsset;
                     }
                 } else {
+                trace("Assign uniimage");
                     asset = new uniSexImage() as BitmapAsset;
                 }
-                return asset;
+                userImg.source = asset;
+                trace("Redraw");
+                userImg.invalidateDisplayList();
+                userImg.initialize();
             }
         ]]>
     </mx:Script>

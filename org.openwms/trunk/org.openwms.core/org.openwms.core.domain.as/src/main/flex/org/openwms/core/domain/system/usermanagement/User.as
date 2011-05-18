@@ -38,6 +38,7 @@ package org.openwms.core.domain.system.usermanagement {
             this._enabled = true;
             this._locked = false;
             this._extern = false;
+            this._userDetails = new UserDetails();
         }
     }
 }
