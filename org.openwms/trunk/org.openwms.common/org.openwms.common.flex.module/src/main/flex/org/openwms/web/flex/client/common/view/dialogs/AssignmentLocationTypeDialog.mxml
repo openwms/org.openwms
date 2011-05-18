@@ -23,6 +23,10 @@
 -->
 <mx:TitleWindow xmlns:mx="http://www.adobe.com/2006/mxml" layout="absolute" width="528" height="350" title="Assign Location Types to Transport Unit Type" fontSize="12" creationComplete="init();">
 
+    <mx:Metadata>
+        [Name("assignmentLTDialog")]
+    </mx:Metadata>
+
     <mx:Script>
     	<![CDATA[
     		import org.openwms.web.flex.client.common.event.TransportUnitTypeEvent;
@@ -35,26 +39,28 @@
     		import org.openwms.web.flex.client.common.model.CommonModelLocator;
     		import mx.collections.ArrayCollection;
 
+		    [Inject]
+		    [Bindable]
+		    /**
+		     * Injected Model.
+		     */
+            public var commonModelLocator:CommonModelLocator;
             [Bindable]
-            private var commonModelLocator:CommonModelLocator = CommonModelLocator.getInstance();
+            public var transportUnitType:TransportUnitType;
+
             [Bindable]
             private var notAssigned:ArrayCollection = new ArrayCollection();
             [Bindable]
             private var assigned:ArrayCollection = new ArrayCollection();
             [Bindable]
             private var rules:ListCollectionView;
-            [Bindable]
-            public var transportUnitType:TransportUnitType;
             private var changed:Boolean = false;
 
-            private function init():void
-            {
+            private function init():void {
             	rules = transportUnitType.typePlacingRules;
                 notAssigned = new ArrayCollection(commonModelLocator.allLocationTypes.toArray());
-            	if (rules != null && rules.length > 0)
-            	{
-            	    for each (var rule:TypePlacingRule in rules)
-            	    {
+            	if (rules != null && rules.length > 0) {
+            	    for each (var rule:TypePlacingRule in rules) {
                         notAssigned.removeItemAt(notAssigned.getItemIndex(rule.allowedLocationType));
                         assigned.addItem(rule.allowedLocationType);
                     }
@@ -63,25 +69,20 @@
                 PopUpManager.centerPopUp(this);
             }
 
-            private function closeDialog(event:Event=null):void
-            {
+            private function closeDialog(event:Event=null):void {
                 this.removeEventListener(KeyboardEvent.KEY_DOWN, keyEventHandler);
                 PopUpManager.removePopUp(this);
             }
 
-            private function keyEventHandler(event:KeyboardEvent):void
-            {
-                if(event.keyCode == 27)
-                {
+            private function keyEventHandler(event:KeyboardEvent):void {
+                if(event.keyCode == 27) {
                    closeDialog(event);
                    return;
                 }
             }
 
-            private function accept(e:Event):void
-            {
-            	if (changed)
-            	{
+            private function accept(e:Event):void {
+            	if (changed) {
                     var event:TransportUnitTypeEvent = new TransportUnitTypeEvent(TransportUnitTypeEvent.SAVE_ALLOWED_LOCATION_TYPES);
                     event.data = {tuType:transportUnitType.type, newAssigned:assigned, newNotAssigned:notAssigned};
                     event.dispatch();
@@ -89,25 +90,20 @@
                 closeDialog();
             }
 
-            private function formatFunction(item:*):String
-            {
+            private function formatFunction(item:*):String {
                 return (item as LocationType).type+"\t"+(item as LocationType).description;
             }
             
-            private function moveRight():void
-            {
-            	for each (var locationType:LocationType in allLocationTypesLst.selectedItems)
-            	{
+            private function moveRight():void {
+            	for each (var locationType:LocationType in allLocationTypesLst.selectedItems) {
             		notAssigned.removeItemAt(notAssigned.getItemIndex(locationType));
             		assigned.addItem(locationType);
             		changed = true;
             	}
             }
             		
-            private function moveLeft():void
-            {
-                for each (var locationType:LocationType in assLocationTypesLst.selectedItems)
-                {
+            private function moveLeft():void {
+                for each (var locationType:LocationType in assLocationTypesLst.selectedItems) {
                     assigned.removeItemAt(assigned.getItemIndex(locationType));
                     notAssigned.addItem(locationType);
                     changed = true;

@@ -25,6 +25,9 @@ package org.openwms.web.flex.client.common.view.dialogs {
     import org.openwms.common.domain.LocationType;
     import org.openwms.web.flex.client.common.event.LocationTypeEvent;
     
+    [Name]
+    [ManagedEvent(name="DELETE_LOCATION_TYPE")]
+    [Bindable]
     /**
      * A ConfirmDeletionLocationTypeDialog.
      *
@@ -32,9 +35,6 @@ package org.openwms.web.flex.client.common.view.dialogs {
      * @version $Revision: 796 $
      * @since 0.1
      */
-    [Name]
-    [ManagedEvent(name="DELETE_LOCATION_TYPE")]
-    [Bindable]
     public class ConfirmDeletionLocationTypeDialog extends ConfirmDeletionDialog {
 
         /**

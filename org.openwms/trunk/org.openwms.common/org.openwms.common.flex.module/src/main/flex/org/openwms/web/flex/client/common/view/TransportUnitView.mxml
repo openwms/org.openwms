@@ -51,8 +51,11 @@
             import org.openwms.web.flex.client.common.view.dialogs.TransportUnitDetailsDialog;
     		import mx.managers.PopUpManager;
     		
-            [In]
-            [Bindable]
+		    [Inject]
+		    [Bindable]
+		    /**
+		     * Injected Model.
+		     */
             public var commonModelLocator:CommonModelLocator;
             
             [Bindable]

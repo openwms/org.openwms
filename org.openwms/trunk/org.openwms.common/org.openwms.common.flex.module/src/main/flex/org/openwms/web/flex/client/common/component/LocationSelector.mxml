@@ -39,19 +39,20 @@
 
             [In]
             [Bindable]
+            /**
+             * Inject model.
+             */
             public var modelLocator:ModelLocator;
             private var all:Array = modelLocator.allLocations.toArray();
             private var regEx:RegExp;
             
-            private function check():void
-            {
+            private function check():void {
                 var i:int =0;
                 var temp:Array = all.filter(filter);
                 inputTxt.text = temp[0];
             }
             
-            private function filter(element:*, index:int, arr:Array):Boolean
-            {
+            private function filter(element:*, index:int, arr:Array):Boolean {
                 regEx = new RegExp(inputTxt.text);
                 return (regEx.test(element as String));
             }

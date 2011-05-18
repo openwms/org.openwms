@@ -48,7 +48,7 @@
             import mx.collections.ArrayCollection;
             import mx.events.ListEvent;
 
-            [In]
+            [Inject]
             [Bindable]
             /**
              * Inject a model to work on.

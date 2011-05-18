@@ -69,7 +69,7 @@
             import org.openwms.web.flex.client.util.DisplayUtility;
             import org.openwms.web.flex.client.util.ValidationUtil;
 
-            [In]
+            [Inject]
             [Bindable]
             /**
              * Inject a model to work on.

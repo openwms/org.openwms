@@ -20,12 +20,16 @@
  */
 package org.openwms.web.flex.client.common.view {
     import flash.system.ApplicationDomain;
-
+    
     import mx.collections.ArrayCollection;
     import mx.collections.XMLListCollection;
     import mx.containers.ViewStack;
     import mx.controls.MenuBar;
-
+    import mx.messaging.ChannelSet;
+    import mx.messaging.config.ServerConfig;
+    
+    import org.granite.reflect.Type;
+    import org.granite.rpc.remoting.mxml.SecureRemoteObject;
     import org.granite.tide.ITideModule;
     import org.granite.tide.Tide;
     import org.granite.tide.spring.Context;
@@ -49,18 +53,31 @@ package org.openwms.web.flex.client.common.view {
      */
     public class CommonAppBase extends CommonModule implements IApplicationModule, ITideModule {
 
-        [In]
-        [Bindable]
+	    [Inject]
+	    [Bindable]
+	    /**
+	     * Injected Model.
+	     */
         public var modelLocator : ModelLocator;
+        [In]
+	    /**
+	     * Injected context object.
+	     */
+        public var tideContext : Context;
+
         [Bindable]
         public var commonMenuBar : MenuBar;
         [Bindable]
         public var commonViewStack : ViewStack;
-        [In]
-        public var tideContext : Context;
         [Bindable]
         public var securityObjects : ArrayCollection;
-
+        [Bindable]
+		private var locationService:SecureRemoteObject = new SecureRemoteObject("locationServiceRemote");
+        [Bindable]
+		private var locationGroupService:SecureRemoteObject = new SecureRemoteObject("locationGroupServiceRemote");
+        [Bindable]
+		private var transportUnitService:SecureRemoteObject = new SecureRemoteObject("transportUnitServiceRemote");
+		private var childDomain : ApplicationDomain;
         /**
          * Constructor.
          */
@@ -75,6 +92,8 @@ package org.openwms.web.flex.client.common.view {
          */
         public function start(applicationDomain : ApplicationDomain = null) : void {
             trace("Add context to main context in applicationDomain : " + applicationDomain);
+            childDomain = applicationDomain;
+            setupServices([locationService, locationGroupService, transportUnitService]);
             Spring.getInstance().addModule(CommonAppBase, applicationDomain);
             securityObjects = buildSecuredObjectsList();
         }
@@ -85,9 +104,18 @@ package org.openwms.web.flex.client.common.view {
          * @param tide not used here
          */
         public function init(tide : Tide) : void {
-            // Child components are not initialized yet
             trace("Add components to Tide context");
             tide.addComponents([CommonModelLocator, TransportUnitTypeDelegate, TransportUnitDelegate, LocationDelegate, LocationGroupDelegate]);
+        }
+
+       private function setupServices(services:Array) : void {
+        	var endpoint:String = ServerConfig.getChannel("my-graniteamf").endpoint;
+        	for each (var service:SecureRemoteObject in services) {
+	            service.endpoint = endpoint;
+	            service.showBusyCursor = true;
+	            service.channelSet = new ChannelSet();
+	            service.channelSet.addChannel(ServerConfig.getChannel("my-graniteamf"));        		
+        	}
         }
 
         /**
@@ -141,6 +169,7 @@ package org.openwms.web.flex.client.common.view {
          */
         public function destroyModule() : void {
             trace("Destroying module : " + getModuleName());
+            Type.unregisterDomain(childDomain);
             Spring.getInstance().removeModule(CommonAppBase);
         }
 
