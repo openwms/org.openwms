@@ -29,6 +29,7 @@ package org.openwms.web.flex.client.business {
     import org.granite.tide.events.TideResultEvent;
     import org.granite.tide.spring.Context;
     import org.openwms.core.domain.system.usermanagement.Role;
+    import org.openwms.web.flex.client.event.ApplicationEvent;
     import org.openwms.web.flex.client.event.RoleEvent;
     import org.openwms.web.flex.client.model.ModelLocator;
 
@@ -36,6 +37,7 @@ package org.openwms.web.flex.client.business {
     [ManagedEvent(name="LOAD_ALL_ROLES")]
     [ManagedEvent(name="ROLE_ADDED")]
     [ManagedEvent(name="ROLE_SAVED")]
+    [ManagedEvent(name="APP.SECURED_COMPONENTS_LOADED")]
     [Bindable]
     /**
      * A RoleDelegate serves as a controller and is responsible for all interactions with the service layer
@@ -66,9 +68,10 @@ package org.openwms.web.flex.client.business {
         /**
          * Constructor.
          */
-        public function RoleDelegate() : void { }
+        public function RoleDelegate() : void {
+        }
 
-        [Observer("LOAD_ALL_ROLES","ROLE_ADDED","ROLE_SAVED")]
+        [Observer("LOAD_ALL_ROLES", "ROLE_ADDED", "ROLE_SAVED")]
         /**
          * Fetch a list of all roles from the service.
          * Tide event observers : LOAD_ALL_ROLES, ROLE_ADDED, ROLE_SAVED
@@ -76,6 +79,7 @@ package org.openwms.web.flex.client.business {
         public function getRoles() : void {
             tideContext.roleService.findAll(onRolesLoaded, onFault);
         }
+
         private function onRolesLoaded(event : TideResultEvent) : void {
             modelLocator.allRoles = event.result as ArrayCollection;
         }
@@ -92,6 +96,7 @@ package org.openwms.web.flex.client.business {
                 tideContext.roleService.save(event.data as Role, onRoleAdded, onFault);
             }
         }
+
         private function onRoleAdded(event : TideResultEvent) : void {
             dispatchEvent(new RoleEvent(RoleEvent.ROLE_ADDED));
         }
@@ -108,6 +113,7 @@ package org.openwms.web.flex.client.business {
                 tideContext.roleService.save(event.data as Role, onRoleSaved, onFault);
             }
         }
+
         private function onRoleSaved(event : TideResultEvent) : void {
             dispatchEvent(new RoleEvent(RoleEvent.LOAD_ALL_ROLES));
             dispatchEvent(new RoleEvent(RoleEvent.ROLE_SAVED));
@@ -125,8 +131,30 @@ package org.openwms.web.flex.client.business {
                 tideContext.roleService.remove(event.data as ArrayCollection, onRoleDeleted, onFault);
             }
         }
+
         private function onRoleDeleted(event : TideResultEvent) : void {
             dispatchEvent(new RoleEvent(RoleEvent.LOAD_ALL_ROLES));
+        }
+
+        [Observer("APP.MERGE_SECURITY_BLACKLIST")]
+        /**
+         * Load all relevant UIComponents for a module.
+         * Tide event observers : APP.MERGE_SECURITY_BLACKLIST
+         *
+         * @param event The raised must have the moduleName and a list of grants in its data field, otherwise an exception is thrown.
+         */
+        public function mergeGrants(event : RoleEvent) : void {
+            if (event.data != null) {
+                tideContext.securityService.mergeGrants(event.data.moduleName as String, event.data.grants as ArrayCollection, onGrantsMerged, onFault);
+            } else {
+                // throw Error();
+            }
+        }
+
+        private function onGrantsMerged(event : TideResultEvent) : void {
+            var e : ApplicationEvent = new ApplicationEvent(ApplicationEvent.SECURED_COMPONENTS_LOADED);
+            e.data = event.result as ArrayCollection;
+            dispatchEvent(e);
         }
 
         private function onFault(event : TideFaultEvent) : void {
