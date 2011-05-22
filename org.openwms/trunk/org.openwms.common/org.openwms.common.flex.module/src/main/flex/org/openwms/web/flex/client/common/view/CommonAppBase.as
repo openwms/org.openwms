@@ -20,14 +20,14 @@
  */
 package org.openwms.web.flex.client.common.view {
     import flash.system.ApplicationDomain;
-    
+
     import mx.collections.ArrayCollection;
     import mx.collections.XMLListCollection;
     import mx.containers.ViewStack;
     import mx.controls.MenuBar;
     import mx.messaging.ChannelSet;
     import mx.messaging.config.ServerConfig;
-    
+
     import org.granite.reflect.Type;
     import org.granite.rpc.remoting.mxml.SecureRemoteObject;
     import org.granite.tide.ITideModule;
@@ -35,15 +35,17 @@ package org.openwms.web.flex.client.common.view {
     import org.granite.tide.spring.Context;
     import org.granite.tide.spring.Spring;
     import org.openwms.web.flex.client.IApplicationModule;
+    import org.openwms.web.flex.client.event.ApplicationEvent;
+    import org.openwms.web.flex.client.model.ModelLocator;
+    import org.openwms.web.flex.client.module.CommonModule;
     import org.openwms.web.flex.client.common.business.LocationDelegate;
     import org.openwms.web.flex.client.common.business.LocationGroupDelegate;
     import org.openwms.web.flex.client.common.business.TransportUnitDelegate;
     import org.openwms.web.flex.client.common.business.TransportUnitTypeDelegate;
     import org.openwms.web.flex.client.common.model.CommonModelLocator;
-    import org.openwms.web.flex.client.model.ModelLocator;
-    import org.openwms.web.flex.client.module.CommonModule;
 
     [Name("CommonAppBase")]
+    [ManagedEvent(name="CME.LOAD_SECURITY_BLACKLIST")]
     /**
      * Base class of COMMON Module.
      *
@@ -53,16 +55,22 @@ package org.openwms.web.flex.client.common.view {
      */
     public class CommonAppBase extends CommonModule implements IApplicationModule, ITideModule {
 
-	    [Inject]
-	    [Bindable]
-	    /**
-	     * Injected Model.
-	     */
+        [Inject]
+        [Bindable]
+        /**
+         * Injected Model.
+         */
         public var modelLocator : ModelLocator;
+        [Inject]
+        [Bindable]
+        /**
+         * Injected Model of Module.
+         */
+        public var commonModelLocator : CommonModelLocator;
         [In]
-	    /**
-	     * Injected context object.
-	     */
+        /**
+         * Injected context object.
+         */
         public var tideContext : Context;
 
         [Bindable]
@@ -70,14 +78,13 @@ package org.openwms.web.flex.client.common.view {
         [Bindable]
         public var commonViewStack : ViewStack;
         [Bindable]
-        public var securityObjects : ArrayCollection;
+        private var locationService : SecureRemoteObject = new SecureRemoteObject("locationServiceRemote");
         [Bindable]
-		private var locationService:SecureRemoteObject = new SecureRemoteObject("locationServiceRemote");
+        private var locationGroupService : SecureRemoteObject = new SecureRemoteObject("locationGroupServiceRemote");
         [Bindable]
-		private var locationGroupService:SecureRemoteObject = new SecureRemoteObject("locationGroupServiceRemote");
-        [Bindable]
-		private var transportUnitService:SecureRemoteObject = new SecureRemoteObject("transportUnitServiceRemote");
-		private var childDomain : ApplicationDomain;
+        private var transportUnitService : SecureRemoteObject = new SecureRemoteObject("transportUnitServiceRemote");
+        private var childDomain : ApplicationDomain;
+
         /**
          * Constructor.
          */
@@ -90,12 +97,12 @@ package org.openwms.web.flex.client.common.view {
          * the main applicationDomain, that means the context of the main application is extended with the subcontext of
          * this module.
          */
-        public function start(applicationDomain : ApplicationDomain = null) : void {
+        public function start(applicationDomain : ApplicationDomain=null) : void {
             trace("Add context to main context in applicationDomain : " + applicationDomain);
             childDomain = applicationDomain;
             setupServices([locationService, locationGroupService, transportUnitService]);
             Spring.getInstance().addModule(CommonAppBase, applicationDomain);
-            securityObjects = buildSecuredObjectsList();
+            readAndMergeGrantsList();
         }
 
         /**
@@ -108,14 +115,14 @@ package org.openwms.web.flex.client.common.view {
             tide.addComponents([CommonModelLocator, TransportUnitTypeDelegate, TransportUnitDelegate, LocationDelegate, LocationGroupDelegate]);
         }
 
-       private function setupServices(services:Array) : void {
-        	var endpoint:String = ServerConfig.getChannel("my-graniteamf").endpoint;
-        	for each (var service:SecureRemoteObject in services) {
-	            service.endpoint = endpoint;
-	            service.showBusyCursor = true;
-	            service.channelSet = new ChannelSet();
-	            service.channelSet.addChannel(ServerConfig.getChannel("my-graniteamf"));        		
-        	}
+        private function setupServices(services : Array) : void {
+            var endpoint : String = ServerConfig.getChannel("my-graniteamf").endpoint;
+            for each (var service : SecureRemoteObject in services) {
+                service.endpoint = endpoint;
+                service.showBusyCursor = true;
+                service.channelSet = new ChannelSet();
+                service.channelSet.addChannel(ServerConfig.getChannel("my-graniteamf"));
+            }
         }
 
         /**
@@ -136,7 +143,7 @@ package org.openwms.web.flex.client.common.view {
         /**
          * This method returns the current version of the module as String.
          */
-        public function getModuleVersion():String {
+        public function getModuleVersion() : String {
             return "1.0.0";
         }
 
@@ -146,7 +153,7 @@ package org.openwms.web.flex.client.common.view {
          * to allow or deny certain functionality within the user interface.
          */
         public function getSecurityObjects() : ArrayCollection {
-            return securityObjects;
+            return null;
         }
 
         /**
@@ -175,27 +182,13 @@ package org.openwms.web.flex.client.common.view {
 
         /**
          * Find all secured objects and return the list to the main app.
-         */        
-        private function buildSecuredObjectsList():ArrayCollection {
-            var sItems:ArrayCollection = new ArrayCollection();
-            if(commonMenuBar == null) {
-                trace("MenuBar is null");
-            }
-            if(commonViewStack == null) {
-                trace("ViewStack is null");
-                return sItems;
-            }
-            trace("Analyze menuBarItems, size ="+commonMenuBar.menuBarItems.length);
-            trace("Analyze commonViewStack, size ="+commonViewStack.getChildren().length);
-            for each (var mItem:* in commonMenuBar.menuBarItems) {
-                trace("Fetch item : "+mItem);
-            }
-            for each (var sItem:* in commonViewStack.getChildren()) {
-                trace("View stack item : "+sItem);
-            }
-            return sItems;
+         */
+        private function readAndMergeGrantsList() : void {
+            var blacklisted : ArrayCollection = new ArrayCollection();
+            // Import XML into blacklisted
+            var event : ApplicationEvent = new ApplicationEvent(ApplicationEvent.MERGE_SECURITY_BLACKLIST);
+            event.data = {moduleName: "COMMON", grants: blacklisted};
+            dispatchEvent(event);
         }
-
     }
 }
-
