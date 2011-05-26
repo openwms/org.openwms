@@ -34,6 +34,7 @@ package org.openwms.web.flex.client.common.view {
     import org.granite.tide.Tide;
     import org.granite.tide.spring.Context;
     import org.granite.tide.spring.Spring;
+    import org.openwms.core.domain.system.usermanagement.Grant;
     import org.openwms.web.flex.client.IApplicationModule;
     import org.openwms.web.flex.client.event.ApplicationEvent;
     import org.openwms.web.flex.client.model.ModelLocator;
@@ -44,8 +45,9 @@ package org.openwms.web.flex.client.common.view {
     import org.openwms.web.flex.client.common.business.TransportUnitTypeDelegate;
     import org.openwms.web.flex.client.common.model.CommonModelLocator;
 
-    [Name("CommonAppBase")]
-    [ManagedEvent(name="CME.LOAD_SECURITY_BLACKLIST")]
+    [Name]
+    [ManagedEvent(name="APP.MERGE_SECURITY_BLACKLIST")]
+    [Event(name="APP.MERGE_SECURITY_BLACKLIST")]
     /**
      * Base class of COMMON Module.
      *
@@ -83,7 +85,9 @@ package org.openwms.web.flex.client.common.view {
         private var locationGroupService : SecureRemoteObject = new SecureRemoteObject("locationGroupServiceRemote");
         [Bindable]
         private var transportUnitService : SecureRemoteObject = new SecureRemoteObject("transportUnitServiceRemote");
+        [Bindable]
         private var childDomain : ApplicationDomain;
+        var blacklisted : ArrayCollection = new ArrayCollection();
 
         /**
          * Constructor.
@@ -93,26 +97,38 @@ package org.openwms.web.flex.client.common.view {
         }
 
         /**
-         * This method is called first from the ModuleLocator to do the first initial work. The module registers itself on
-         * the main applicationDomain, that means the context of the main application is extended with the subcontext of
-         * this module.
-         */
-        public function start(applicationDomain : ApplicationDomain=null) : void {
-            trace("Add context to main context in applicationDomain : " + applicationDomain);
-            childDomain = applicationDomain;
-            setupServices([locationService, locationGroupService, transportUnitService]);
-            Spring.getInstance().addModule(CommonAppBase, applicationDomain);
-            readAndMergeGrantsList();
-        }
-
-        /**
          * In a second step Tide tries to start the module calling this method. Here are all components added to the TideContext.
          *
          * @param tide not used here
          */
         public function init(tide : Tide) : void {
             trace("Add components to Tide context");
-            tide.addComponents([CommonModelLocator, TransportUnitTypeDelegate, TransportUnitDelegate, LocationDelegate, LocationGroupDelegate]);
+            if (modelLocator == null) {
+                trace("COMMON in init1 loator is null");
+            }
+            tide.addComponents([CommonAppBase, CommonModelLocator, TransportUnitTypeDelegate, TransportUnitDelegate, LocationDelegate, LocationGroupDelegate]);
+            if (modelLocator == null) {
+                trace("COMMON in init2 loator is null");
+            }
+        }
+
+        /**
+         * This method is called first from the ModuleLocator to do the first initial work. The module registers itself on
+         * the main applicationDomain, that means the context of the main application is extended with the subcontext of
+         * this module.
+         */
+        public function start(applicationDomain : ApplicationDomain=null) : void {
+            trace("Add context to main context in applicationDomain");
+            if (modelLocator == null) {
+                trace("COMMON in start1 loator is null");
+            }
+            childDomain = applicationDomain;
+            Spring.getInstance().addModule(CommonApp, applicationDomain);
+            setupServices([locationService, locationGroupService, transportUnitService]);
+            readAndMergeGrantsList();
+            if (modelLocator == null) {
+                trace("COMMON in start2 loator is null");
+            }
         }
 
         private function setupServices(services : Array) : void {
@@ -153,7 +169,7 @@ package org.openwms.web.flex.client.common.view {
          * to allow or deny certain functionality within the user interface.
          */
         public function getSecurityObjects() : ArrayCollection {
-            return null;
+            return blacklisted;
         }
 
         /**
@@ -176,7 +192,7 @@ package org.openwms.web.flex.client.common.view {
          */
         public function destroyModule() : void {
             trace("Destroying module : " + getModuleName());
-            Type.unregisterDomain(childDomain);
+            //Type.unregisterDomain(childDomain);
             Spring.getInstance().removeModule(CommonAppBase);
         }
 
@@ -184,11 +200,18 @@ package org.openwms.web.flex.client.common.view {
          * Find all secured objects and return the list to the main app.
          */
         private function readAndMergeGrantsList() : void {
-            var blacklisted : ArrayCollection = new ArrayCollection();
+            //var blacklisted : ArrayCollection = new ArrayCollection();
+            blacklisted.addItem(new Grant("test"));
             // Import XML into blacklisted
+            trace("Set grants");
             var event : ApplicationEvent = new ApplicationEvent(ApplicationEvent.MERGE_SECURITY_BLACKLIST);
             event.data = {moduleName: "COMMON", grants: blacklisted};
             dispatchEvent(event);
+            if (tideContext != null) {
+                tideContext.raiseEvent(ApplicationEvent.MERGE_SECURITY_BLACKLIST);
+            } else {
+                trace("Context is null");
+            }
         }
     }
 }

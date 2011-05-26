@@ -21,7 +21,7 @@
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
 -->
-<mx:Canvas xmlns:mx="http://www.adobe.com/2006/mxml" width="100%" height="66" backgroundImage="@Embed(source='assets/images/openwms_banner.jpg')" backgroundSize="100%" implements="org.openwms.web.flex.client.ISecured">
+<mx:Canvas xmlns:mx="http://www.adobe.com/2006/mxml" width="100%" height="66" backgroundImage="@Embed(source='assets/images/openwms_banner.jpg')" backgroundSize="100%">
 
     <mx:Metadata>
         [Name]
@@ -44,7 +44,7 @@
              */
             public var identity:Identity;
             
-            [In]
+            [Inject]
             [Bindable]
             /**
              * Injected Model.
@@ -64,11 +64,6 @@
                 dispatchEvent(new ApplicationEvent(ApplicationEvent.LOCK));
             }
 
-    		public function getSecuredObjectNames():ArrayCollection {
-    			var securedObjects:ArrayCollection = new ArrayCollection();
-    			//FIX securedObjects.addItem(loggedInUserBox.id, logoutBox.id);
-    			return securedObjects;
-    		}
     	]]>
     </mx:Script>
     <mx:HBox width="100%" height="66" horizontalAlign="left">

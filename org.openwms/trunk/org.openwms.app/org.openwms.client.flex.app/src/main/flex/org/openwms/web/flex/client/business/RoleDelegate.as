@@ -27,6 +27,7 @@ package org.openwms.web.flex.client.business {
 
     import org.granite.tide.events.TideFaultEvent;
     import org.granite.tide.events.TideResultEvent;
+    import org.granite.tide.events.TideContextEvent;
     import org.granite.tide.spring.Context;
     import org.openwms.core.domain.system.usermanagement.Role;
     import org.openwms.web.flex.client.event.ApplicationEvent;
@@ -143,15 +144,19 @@ package org.openwms.web.flex.client.business {
          *
          * @param event The raised must have the moduleName and a list of grants in its data field, otherwise an exception is thrown.
          */
-        public function mergeGrants(event : RoleEvent) : void {
-            if (event.data != null) {
-                tideContext.securityService.mergeGrants(event.data.moduleName as String, event.data.grants as ArrayCollection, onGrantsMerged, onFault);
+        public function mergeGrants(event : *) : void {
+            trace("Set grants2");
+            var e : ApplicationEvent = event as ApplicationEvent;
+            if (e.data != null) {
+                trace("Set grants3");
+                tideContext.securityService.mergeGrants(e.data.moduleName as String, e.data.grants as ArrayCollection, onGrantsMerged, onFault);
             } else {
                 // throw Error();
             }
         }
 
         private function onGrantsMerged(event : TideResultEvent) : void {
+            trace("Set grants4");
             var e : ApplicationEvent = new ApplicationEvent(ApplicationEvent.SECURED_COMPONENTS_LOADED);
             e.data = event.result as ArrayCollection;
             dispatchEvent(e);

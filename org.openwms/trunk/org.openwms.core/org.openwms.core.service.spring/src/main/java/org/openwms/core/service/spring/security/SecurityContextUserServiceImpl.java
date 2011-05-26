@@ -119,10 +119,14 @@ public class SecurityContextUserServiceImpl implements UserDetailsService, Appli
 
         UserDetails ud = userCache.getUserFromCache(username);
         if (ud != null) {
-            logger.debug("User found in cache");
+            if (logger.isDebugEnabled()) {
+                logger.debug("User found in cache");
+            }
             return ud;
         } else {
-            logger.debug("User not cached, try to resolve");
+            if (logger.isDebugEnabled()) {
+                logger.debug("User not cached, try to resolve");
+            }
         }
         User user = null;
 
