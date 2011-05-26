@@ -36,6 +36,7 @@
             import org.granite.tide.events.TideResultEvent;
             import org.granite.tide.events.TideFaultEvent;
             import org.granite.tide.spring.Identity;
+            import org.openwms.core.domain.system.usermanagement.User;
             import org.openwms.web.flex.client.event.ApplicationEvent;
             import org.openwms.web.flex.client.model.ModelLocator;
             import org.openwms.web.flex.client.model.I18nMap;
@@ -80,6 +81,7 @@
 
             private function loginOk(event:TideResultEvent):void {
                 loginMessageText = null;
+                modelLocator.userLoggedin = modelLocator.allUsers.getItemAt(modelLocator.allUsers.getItemIndex(new User(identity.username))) as User;
                 dispatchEvent(new ApplicationEvent(ApplicationEvent.APP_LOGIN_OK));
                 PopUpManager.removePopUp(this);
             }

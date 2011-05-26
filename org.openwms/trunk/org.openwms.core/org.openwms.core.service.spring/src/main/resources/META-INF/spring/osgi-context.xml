@@ -32,6 +32,7 @@
     <osgi:reference id="roleDao" interface="org.openwms.core.integration.RoleDao" />
 	<osgi:reference id="moduleDao" interface="org.openwms.core.integration.ModuleDao" />
     <osgi:reference id="i18nRepo" interface="org.openwms.core.integration.I18nRepository" />
+    <osgi:reference id="securityObjectDao" interface="org.openwms.core.integration.SecurityObjectDao" />
     
     <!-- Helpers and delegates -->
     <osgi:reference id="onRemovalListener" interface="org.openwms.core.service.listener.OnRemovalListener" cardinality="0..1" />

@@ -1,7 +1,7 @@
 /*
  * openwms.org, the Open Warehouse Management System.
  *
- * This file is part of openwms.org.
+ * This file is part -of openwms.org.
  *
  * openwms.org is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as
@@ -32,9 +32,14 @@ package org.openwms.core.domain.system.usermanagement {
 
         /**
          * Constructor.
-         * Preset fields. Per default a user is enabled to log in, not locked and no external user.
+         * Preset fields. Per default a user is enabled to log in, is not locked and is no external user.
+         *
+         * @param username Optional username to set
          */
-        public function User() {
+        public function User(username : String=null) {
+            if (null != username) {
+                this._username = username;
+            }
             this._enabled = true;
             this._locked = false;
             this._extern = false;

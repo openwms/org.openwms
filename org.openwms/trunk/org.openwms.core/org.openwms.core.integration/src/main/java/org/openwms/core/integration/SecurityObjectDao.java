@@ -18,14 +18,25 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
-package org.openwms.core.domain.system.usermanagement {
+package org.openwms.core.integration;
 
-    [Bindable]
-    [RemoteClass(alias="org.openwms.core.domain.system.usermanagement.Grant")]
-    public class Grant extends GrantBase {
-    	
-    	public function Grant(name:String) {
-    	   this._name = name;
-    	}
-    }
+import java.util.List;
+
+import org.openwms.core.domain.system.usermanagement.Grant;
+import org.openwms.core.domain.system.usermanagement.SecurityObject;
+
+/**
+ * A SecurityDao.
+ * 
+ * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
+ * @version $Revision: 1198 $
+ * @since 0.1
+ */
+public interface SecurityObjectDao {
+
+    List<Grant> findAllOfModule(String moduleName);
+
+    SecurityObject merge(SecurityObject entity);
+
+    void delete(List<Grant> grants);
 }

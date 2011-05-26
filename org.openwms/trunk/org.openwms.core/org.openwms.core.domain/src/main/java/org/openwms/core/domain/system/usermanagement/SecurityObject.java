@@ -21,8 +21,6 @@
 package org.openwms.core.domain.system.usermanagement;
 
 import javax.persistence.Column;
-import javax.persistence.DiscriminatorColumn;
-import javax.persistence.DiscriminatorType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -46,7 +44,6 @@ import org.openwms.core.domain.DomainObject;
  */
 @Entity
 @Table(name = "COR_ROLE")
-@DiscriminatorColumn(name = "TYPE", discriminatorType = DiscriminatorType.STRING)
 @Inheritance
 @NamedQueries({
         @NamedQuery(name = SecurityObject.NQ_FIND_ALL, query = "select g from SecurityObject g"),

@@ -25,7 +25,8 @@
     xmlns:view="org.openwms.web.flex.client.common.view.*">
     
     <mx:Metadata>
-        [Name("CommonApp")]
+        [Name]
+        [Event(name="APP.MERGE_SECURITY_BLACKLIST")]
     </mx:Metadata>
     
     <mx:Script>

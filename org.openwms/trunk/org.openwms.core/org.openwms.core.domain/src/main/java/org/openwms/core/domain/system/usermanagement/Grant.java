@@ -49,7 +49,7 @@ public class Grant extends SecurityObject {
     public Grant(String moduleName, String grantName) {
         super();
         AssertUtils.isNotEmpty(moduleName, "An empty or null moduleName is not allowed");
-        super.setName(moduleName.toUpperCase() + grantName);
+        super.setName(moduleName.toLowerCase() + grantName);
     }
 
 }

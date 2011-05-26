@@ -44,6 +44,7 @@ package org.openwms.web.flex.client.view {
     import org.granite.tide.spring.Context;
     import org.granite.tide.spring.Identity;
     import org.granite.tide.spring.Spring;
+    import org.openwms.core.domain.system.usermanagement.Grant;
     import org.openwms.common.domain.values.Weight;
     import org.openwms.tms.domain.order.TransportOrder;
     import org.openwms.web.flex.client.IApplicationModule;
@@ -58,6 +59,7 @@ package org.openwms.web.flex.client.view {
     import org.openwms.web.flex.client.model.ModelLocator;
     import org.openwms.web.flex.client.module.ModuleLocator;
     import org.openwms.web.flex.client.util.DisplayUtility;
+    import org.openwms.web.flex.client.util.Security;
     import org.openwms.web.flex.client.view.dialogs.LoginView;
 
     /**
@@ -127,13 +129,15 @@ package org.openwms.web.flex.client.view {
         private var i18nService : SecureRemoteObject = new SecureRemoteObject("i18nServiceRemote");
         [Bindable]
         private var configurationService : SecureRemoteObject = new SecureRemoteObject("configurationServiceRemote");
+        [Bindable]
+        private var securityService : SecureRemoteObject = new SecureRemoteObject("securityServiceRemote");
 
         [Bindable]
         /**
          * TideContext instance.
          */
         public var tideContext : Context = Spring.getInstance().getSpringContext();
-        Spring.getInstance().addComponents([ModelLocator, ModuleLocator, UserDelegate, RoleDelegate, PropertyDelegate, I18nMap, I18nDelegate]);
+        Spring.getInstance().addComponents([Security, ModelLocator, ModuleLocator, UserDelegate, RoleDelegate, PropertyDelegate, I18nMap, I18nDelegate]);
 
 
         /**
@@ -266,7 +270,12 @@ package org.openwms.web.flex.client.view {
                 var appModule : IApplicationModule = (event.data as IApplicationModule);
                 mainMenuBar.dataProvider = moduleLocator.getActiveMenuItems(new XMLListCollection(stdMenu));
                 addViewsToViewStack(appModule);
-                appModule.initializeModule(applicationDomain);
+
+                for each (var sObject : Grant in appModule.getSecurityObjects()) {
+                    trace("Adding securityObject:" + sObject);
+                    modelLocator.securityObjects[sObject.name] = sObject;
+                }
+                    //appModule.initializeModule(applicationDomain);
             }
         }
 
@@ -298,7 +307,7 @@ package org.openwms.web.flex.client.view {
             // TODO: In Flex 3.5 replace with addAll()
             // modelLocator.securityObjectNames.addAll(event.data as ArrayCollection);
             for each (var sObject : * in(event.data as ArrayCollection)) {
-                modelLocator.securityObjectNames.addItem(sObject);
+                modelLocator.securityObjects.addItem(sObject);
             }
         }
 

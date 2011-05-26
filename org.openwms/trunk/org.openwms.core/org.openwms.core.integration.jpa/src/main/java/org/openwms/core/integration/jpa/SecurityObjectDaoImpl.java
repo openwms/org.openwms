@@ -18,50 +18,59 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
-package org.openwms.core.service.spring;
+package org.openwms.core.integration.jpa;
 
 import java.util.List;
+
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 
 import org.openwms.core.domain.system.usermanagement.Grant;
 import org.openwms.core.domain.system.usermanagement.SecurityObject;
 import org.openwms.core.integration.SecurityObjectDao;
-import org.openwms.core.service.SecurityService;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 /**
- * A SecurityServiceImpl.
+ * A SecurityDaoImpl.
  * 
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
- * @version $Revision: 1240 $
+ * @version $Revision: 1198 $
  * @since 0.1
  */
 @Transactional
-@Service("securityService")
-public class SecurityServiceImpl implements SecurityService {
+@Repository("securityObjectDao")
+public class SecurityObjectDaoImpl implements SecurityObjectDao {
 
-    @Autowired
-    @Qualifier("securityObjectDao")
-    private SecurityObjectDao dao;
+    @PersistenceContext
+    private EntityManager em;
 
     /**
-     * @see org.openwms.core.service.SecurityService#mergeGrants(java.lang.String,
-     *      java.util.List)
+     * @see org.openwms.core.integration.SecurityObjectDao#delete(java.util.List)
      */
     @Override
-    public List<Grant> mergeGrants(String moduleName, List<Grant> grants) {
-        List<Grant> persisted = dao.findAllOfModule(moduleName);
-        SecurityObject merged = null;
+    public void delete(List<Grant> grants) {
         for (Grant grant : grants) {
-            merged = dao.merge(grant);
-            if (persisted.contains(merged)) {
-                persisted.remove(merged);
-            }
+            em.remove(em.merge(grant));
         }
-        // delete sublist
-        dao.delete(persisted);
-        return persisted;
     }
+
+    /**
+     * @see org.openwms.core.integration.SecurityObjectDao#findAllOfModule(java.lang.String)
+     */
+    @SuppressWarnings("unchecked")
+    @Override
+    public List<Grant> findAllOfModule(String moduleName) {
+        return em.createQuery("select g from Grant g where g.name like :moduleName")
+                .setParameter("moduleName", moduleName).getResultList();
+    }
+
+    /**
+     * @see org.openwms.core.integration.SecurityObjectDao#merge(org.openwms.core.domain.system.usermanagement.SecurityObject)
+     */
+    @Override
+    public SecurityObject merge(SecurityObject entity) {
+        return em.merge(entity);
+    }
+
 }

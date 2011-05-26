@@ -32,6 +32,7 @@
     <osgi:reference id="i18nService" interface="org.openwms.core.service.I18nService" />
     <osgi:reference id="userDetailsService" interface="org.springframework.security.core.userdetails.UserDetailsService" />
     <osgi:reference id="configurationService" interface="org.openwms.core.service.ConfigurationService" />
+    <osgi:reference id="securityService" interface="org.openwms.core.service.SecurityService" />
 
 	<osgi:reference id="locationGroupService" interface="org.openwms.common.service.LocationGroupService" cardinality="0..1" />
 	<osgi:reference id="locationService" interface="org.openwms.common.service.LocationService" cardinality="0..1" />

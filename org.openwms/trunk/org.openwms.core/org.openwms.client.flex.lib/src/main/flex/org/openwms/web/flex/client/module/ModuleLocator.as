@@ -22,7 +22,7 @@ package org.openwms.web.flex.client.module {
 
     import flash.events.EventDispatcher;
     import flash.system.ApplicationDomain;
-    
+
     import mx.collections.ArrayCollection;
     import mx.collections.XMLListCollection;
     import mx.controls.Alert;
@@ -31,7 +31,7 @@ package org.openwms.web.flex.client.module {
     import mx.logging.Log;
     import mx.modules.IModuleInfo;
     import mx.modules.ModuleManager;
-    
+
     import org.granite.tide.events.TideFaultEvent;
     import org.granite.tide.events.TideResultEvent;
     import org.granite.tide.spring.Context;
@@ -68,7 +68,7 @@ package org.openwms.web.flex.client.module {
         [In]
         /**
          * Needs a TideContext.
-         */        
+         */
         public var tideContext : Context;
 
         private var toRemove : Module;
@@ -78,7 +78,8 @@ package org.openwms.web.flex.client.module {
         /**
          * Simple constructor used by the Tide framework.
          */
-        public function ModuleLocator() { }
+        public function ModuleLocator() {
+        }
 
         [Observer("LOAD_ALL_MODULES")]
         /**
@@ -98,8 +99,8 @@ package org.openwms.web.flex.client.module {
          * It iterates through the list of loadedModules and triggers unloading each of them.
          */
         public function unloadAllModules() : void {
-            for each (var url:String in modelLocator.loadedModules) {
-                var module:Module = new Module();
+            for each (var url : String in modelLocator.loadedModules) {
+                var module : Module = new Module();
                 module.url = url;
                 unloadModule(module);
             }
@@ -237,7 +238,7 @@ package org.openwms.web.flex.client.module {
             if (moduleName == null) {
                 return false;
             }
-            for each (var url:String in modelLocator.loadedModules) {
+            for each (var url : String in modelLocator.loadedModules) {
                 if ((modelLocator.loadedModules[url].data as Module).moduleName == moduleName) {
                     return true;
                 }
@@ -273,7 +274,7 @@ package org.openwms.web.flex.client.module {
          * on startup and tries to start each Module if it hasn't been loaded so far.
          */
         private function startAllModules() : void {
-            var noModulesLoaded:Boolean = true;
+            var noModulesLoaded : Boolean = true;
             for each (var module : Module in modelLocator.allModules) {
                 if (module.loadOnStartup) {
                     noModulesLoaded = false;
@@ -292,7 +293,7 @@ package org.openwms.web.flex.client.module {
             }
         }
 
-        private function loadModule(module : Module):void {
+        private function loadModule(module : Module) : void {
             var mInf : IModuleInfo = ModuleManager.getModule(module.url);
             if (mInf != null) {
                 if (mInf.loaded) {
@@ -311,7 +312,7 @@ package org.openwms.web.flex.client.module {
             trace("No module to load with url: " + module.url);
         }
 
-        private function unloadModule(module : Module):void {
+        private function unloadModule(module : Module) : void {
             var mInf : IModuleInfo = ModuleManager.getModule(module.url);
             if (mInf != null) {
                 if (mInf.loaded) {
@@ -375,6 +376,7 @@ package org.openwms.web.flex.client.module {
             delete modelLocator.unloadedModules[module.url];
             var appModule : Object = e.module.factory.create();
             if (appModule is IApplicationModule) {
+                //Spring.getInstance().addModule(appModule, applicationDomain);
                 appModule.start(applicationDomain);
                 fireLoadedEvent(appModule as IApplicationModule);
             }
@@ -503,7 +505,7 @@ package org.openwms.web.flex.client.module {
 
         private function onFault(event : TideFaultEvent) : void {
             trace("Error executing operation on ModuleManagement service:" + event.fault);
-            Alert.show("Error executing operation on ModuleManagement service"+ event.fault);
+            Alert.show("Error executing operation on ModuleManagement service" + event.fault);
         }
 
     }

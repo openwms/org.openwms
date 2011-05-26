@@ -21,14 +21,14 @@
 package org.openwms.web.flex.client.tms.view {
 
     import flash.system.ApplicationDomain;
-    
+
     import mx.collections.ArrayCollection;
     import mx.collections.XMLListCollection;
     import mx.containers.ViewStack;
     import mx.controls.MenuBar;
     import mx.messaging.ChannelSet;
     import mx.messaging.config.ServerConfig;
-    
+
     import org.granite.rpc.remoting.mxml.SecureRemoteObject;
     import org.granite.tide.ITideModule;
     import org.granite.tide.Tide;
@@ -51,17 +51,17 @@ package org.openwms.web.flex.client.tms.view {
 
         [Inject]
         [Bindable]
-        public var modelLocator:ModelLocator;
+        public var modelLocator : ModelLocator;
         [Bindable]
-        public var menuCollection:ArrayCollection;
+        public var menuCollection : ArrayCollection;
         [Bindable]
-        public var menuBarItemsCollection:XMLListCollection;
+        public var menuBarItemsCollection : XMLListCollection;
         [Bindable]
-        public var tmsMenuBar:MenuBar;
+        public var tmsMenuBar : MenuBar;
         [Bindable]
-        public var tmsViewStack:ViewStack;
+        public var tmsViewStack : ViewStack;
         [Bindable]
-		private var transportService:SecureRemoteObject = new SecureRemoteObject("transportServiceRemote");
+        private var transportService : SecureRemoteObject = new SecureRemoteObject("transportServiceRemote");
 
         /**
          * Default constructor.
@@ -75,10 +75,16 @@ package org.openwms.web.flex.client.tms.view {
          * the main applicationDomain, that means the context of the main application is extended with the subcontext of
          * this module.
          */
-        public function start(applicationDomain:ApplicationDomain = null):void {
-            trace("Starting Tide context in applicationDomain : "+applicationDomain);
+        public function start(applicationDomain : ApplicationDomain=null) : void {
+            trace("Starting Tide context in applicationDomain : " + applicationDomain);
+            if (modelLocator == null) {
+                trace("TMS in start1 loator is null");
+            }
             setupServices([transportService]);
             Spring.getInstance().addModule(TMSAppBase, applicationDomain);
+            if (modelLocator == null) {
+                trace("TMS in start2 loator is null");
+            }
         }
 
         /**
@@ -86,40 +92,46 @@ package org.openwms.web.flex.client.tms.view {
          *
          * @param tide not used here
          */
-        public function init(tide:Tide):void {
+        public function init(tide : Tide) : void {
             trace("Add components to Tide context");
+            if (modelLocator == null) {
+                trace("TMS in init1 loator is null");
+            }
             tide.addComponents([TMSModelLocator, TransportsDelegate]);
+            if (modelLocator == null) {
+                trace("TMS in init2 loator is null");
+            }
         }
 
-       private function setupServices(services:Array) : void {
-        	var endpoint:String = ServerConfig.getChannel("my-graniteamf").endpoint;
-        	for each (var service:SecureRemoteObject in services) {
-	            service.endpoint = endpoint;
-	            service.showBusyCursor = true;
-	            service.channelSet = new ChannelSet();
-	            service.channelSet.addChannel(ServerConfig.getChannel("my-graniteamf"));        		
-        	}
+        private function setupServices(services : Array) : void {
+            var endpoint : String = ServerConfig.getChannel("my-graniteamf").endpoint;
+            for each (var service : SecureRemoteObject in services) {
+                service.endpoint = endpoint;
+                service.showBusyCursor = true;
+                service.channelSet = new ChannelSet();
+                service.channelSet.addChannel(ServerConfig.getChannel("my-graniteamf"));
+            }
         }
 
         /**
          * This method returns a list of menu items which shall be expaned to the main
          * application menu bar.
          */
-        public function getMainMenuItems():XMLListCollection {
+        public function getMainMenuItems() : XMLListCollection {
             return tmsMenuBar.dataProvider as XMLListCollection;
         }
 
         /**
          * This method returns the name of the module as unique String identifier.
          */
-        public function getModuleName():String {
+        public function getModuleName() : String {
             return "OPENWMS.ORG TMS MODULE";
         }
 
         /**
          * This method returns the current version of the module as String.
          */
-        public function getModuleVersion():String {
+        public function getModuleVersion() : String {
             return "1.0.0";
         }
 
@@ -128,7 +140,7 @@ package org.openwms.web.flex.client.tms.view {
          * A SecurityObject can be assigned to a Role and is monitored by the SecurityHandler
          * to allow or deny certain functionality within the user interface.
          */
-        public function getSecurityObjects():ArrayCollection {
+        public function getSecurityObjects() : ArrayCollection {
             return new ArrayCollection();
         }
 
@@ -136,21 +148,21 @@ package org.openwms.web.flex.client.tms.view {
          * This method returns a list of views which shall be populated to the parent
          * application.
          */
-        public function getViews():ArrayCollection {
+        public function getViews() : ArrayCollection {
             return new ArrayCollection(tmsViewStack.getChildren());
         }
 
         /**
          * Do additional initial work when the module is loaded.
          */
-        public function initializeModule(applicationDomain:ApplicationDomain = null):void {
+        public function initializeModule(applicationDomain : ApplicationDomain=null) : void {
             trace("Initialize module : " + getModuleName());
         }
 
         /**
          * Do addtional cleanup work before the module is unloaded.
          */
-        public function destroyModule():void {
+        public function destroyModule() : void {
             trace("Destroying module : " + getModuleName());
             Spring.getInstance().removeModule(TMSAppBase);
         }

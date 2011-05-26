@@ -18,7 +18,7 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
-package org.openwms.web.flex.client.model{
+package org.openwms.web.flex.client.model {
 
     import flash.utils.Dictionary;
 
@@ -44,45 +44,45 @@ package org.openwms.web.flex.client.model{
         // --------------------------------------------------------------------
         // Default Views
         // --------------------------------------------------------------------
-        public static const MAIN_VIEW_STACK_LOGIN_VIEW:uint = 0;
-        public static const MAIN_VIEW_STACK_EMPTY_VIEW:uint = 1;
-        public static const MAIN_VIEW_STACK_MODULE_MGMT_VIEW:uint = 2;
-        public static const MAIN_VIEW_STACK_USER_MGMT_VIEW:uint = 3;
-        public static const MAIN_VIEW_STACK_LOCATION_VIEW:uint = 4;
-        public static const MAIN_VIEW_STACK_LOCATIONGROUP_VIEW:uint = 5;
-        public static const MAIN_VIEW_STACK_TRANSPORTUNIT_VIEW:uint = 6;
+        public static const MAIN_VIEW_STACK_LOGIN_VIEW : uint = 0;
+        public static const MAIN_VIEW_STACK_EMPTY_VIEW : uint = 1;
+        public static const MAIN_VIEW_STACK_MODULE_MGMT_VIEW : uint = 2;
+        public static const MAIN_VIEW_STACK_USER_MGMT_VIEW : uint = 3;
+        public static const MAIN_VIEW_STACK_LOCATION_VIEW : uint = 4;
+        public static const MAIN_VIEW_STACK_LOCATIONGROUP_VIEW : uint = 5;
+        public static const MAIN_VIEW_STACK_TRANSPORTUNIT_VIEW : uint = 6;
 
         // --------------------------------------------------------------------
         // Main Application Management
         // --------------------------------------------------------------------
         // Used to control the main viewStack
-        public var actualView:String = SwitchScreenEvent.SHOW_STARTSCREEN;
-        public var authenticated:Boolean = false;
-        public var fired:Boolean = false;
+        public var actualView : String = SwitchScreenEvent.SHOW_STARTSCREEN;
+        public var authenticated : Boolean = false;
+        public var fired : Boolean = false;
         /**
          * Upload URL for file uploads.
          */
-        public const UPLOAD_URL:String = "/openwms/upload";
+        public const UPLOAD_URL : String = "/openwms/upload";
         /**
          * Directory name on the server, where to store the uploaded files.
          */
-        public const DIRECTORY_NAME:String = "data";
+        public const DIRECTORY_NAME : String = "data";
         /**
          * Date format including the time.
          */
-        public static const DT_FORMAT_STRING:String = "DD.MM.YYYY HH:NN:SS";
+        public static const DT_FORMAT_STRING : String = "DD.MM.YYYY HH:NN:SS";
         /**
          * Date format without timestamp.
          */
-        public static const SIMPLE_DT_FORMAT:String = "DD.MM.YYYY";
+        public static const SIMPLE_DT_FORMAT : String = "DD.MM.YYYY";
         /**
          * A DateFormatter that uses the SIMPLE_DT_FORMAT.
          */
-        public const dateFormatter:DateFormatter = new DateFormatter();
+        public const dateFormatter : DateFormatter = new DateFormatter();
         /**
          * Another DateFormatter that uses the DT_FORMAT_STRING.
          */
-        public const dateTimeFormatter:DateFormatter = new DateFormatter();
+        public const dateTimeFormatter : DateFormatter = new DateFormatter();
 
         // --------------------------------------------------------------------
         // User and Role Management
@@ -90,19 +90,23 @@ package org.openwms.web.flex.client.model{
         /**
          * Collection of all Users.
          */
-        public var allUsers:ArrayCollection = new ArrayCollection();
+        public var allUsers : ArrayCollection = new ArrayCollection();
         /**
          * Collection of all Roles.
          */
-        public var allRoles:ArrayCollection = new ArrayCollection();
+        public var allRoles : ArrayCollection = new ArrayCollection();
         /**
          * The current selected User in the UserManagement view.
          */
-        public var selectedUser:User = null;
+        public var selectedUser : User = null;
+        /**
+         * The current logged in User.
+         */
+        public var userLoggedin : User = null;
         /**
          * DEPRECATED
          */
-        public var image:Object;
+        public var image : Object;
 
         // --------------------------------------------------------------------
         // Module Management
@@ -110,21 +114,21 @@ package org.openwms.web.flex.client.model{
         /**
          * Collection of all Modules.
          */
-        public var allModules:ArrayCollection = new ArrayCollection();
+        public var allModules : ArrayCollection = new ArrayCollection();
         /**
          * A Map of all loaded Modules. The map key is the URL, the value is
          * the IModuleInfo instance.
          */
-        public var loadedModules:Dictionary = new Dictionary();
+        public var loadedModules : Dictionary = new Dictionary();
         /**
          * A Map of all unloaded Modules. The map key is the URL, the value is
          * the IModuleInfo instance.
          */
-        public var unloadedModules:Dictionary = new Dictionary();
+        public var unloadedModules : Dictionary = new Dictionary();
         /**
          * The current selected Module in the ModuleManagement view.
          */
-        public var selectedModule:Module = null;
+        public var selectedModule : Module = null;
 
         // --------------------------------------------------------------------
         // Property Management
@@ -132,27 +136,28 @@ package org.openwms.web.flex.client.model{
         /**
          * Collection of all Properties.
          */
-        public var allProperties:ArrayCollection = new ArrayCollection();
+        public var allProperties : ArrayCollection = new ArrayCollection();
 
         // --------------------------------------------------------------------
         // Security
         // --------------------------------------------------------------------
         // Credentials, set by the login screen
-        public var isInitialized:Boolean = false;
-        public var securityObjectNames:ArrayCollection = new ArrayCollection();
+        public var isInitialized : Boolean = false;
+        public var securityObjects : Dictionary = new Dictionary();
+        public var securityObjectNames : ArrayCollection = new ArrayCollection();
         /**
          * Flag to indicate that the app is locked. All modules remain in loaded state and the login
          * dialogue is shown.
          */
-        public var SCREEN_LOCKED:Boolean = false;
-        public var viewBeforeLock:String = SwitchScreenEvent.SHOW_STARTSCREEN;
-        public var viewLockedBy:String;
+        public var SCREEN_LOCKED : Boolean = false;
+        public var viewBeforeLock : String = SwitchScreenEvent.SHOW_STARTSCREEN;
+        public var viewLockedBy : String;
 
         // WIDTH
-        public static const WIDTH_ID:Number = 70;
-        public static const WIDTH_DATE:Number = 40;
-        public static const WIDTH_TIME:Number = 40;
-        public static const WIDTH_DATETIME:Number = 60;
+        public static const WIDTH_ID : Number = 70;
+        public static const WIDTH_DATE : Number = 40;
+        public static const WIDTH_TIME : Number = 40;
+        public static const WIDTH_DATETIME : Number = 60;
 
         /**
          * Constructor. Does some initializations of the dateFormatters.
@@ -166,23 +171,26 @@ package org.openwms.web.flex.client.model{
          * Access the views array and add the viewObject to the defined
          * position. The postion is mandatory for the viewStack.
          */
-        public static function addView(pos:int, view:Object):void { }
+        public static function addView(pos : int, view : Object) : void {
+        }
 
-        public static function today():Date {
-            var today:Date = new Date();
-            today.setHours(0,0,0,0);
+        public static function today() : Date {
+            var today : Date = new Date();
+            today.setHours(0, 0, 0, 0);
             return today;
         }
 
         /**
          * Search the viewObject from the array of views and remove it.
          */
-        public static function removeView(view:Object):void { }
+        public static function removeView(view : Object) : void {
+        }
 
         /**
          * Shift the view to a new position.
          **/
-        public static function moveView(destPos:int, view:Object):void { }
+        public static function moveView(destPos : int, view : Object) : void {
+        }
     }
 }
 
