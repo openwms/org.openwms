@@ -23,6 +23,7 @@ package org.openwms.core.service.spring;
 import java.util.List;
 
 import org.openwms.core.domain.system.usermanagement.Role;
+import org.openwms.core.domain.system.usermanagement.SecurityObject;
 import org.openwms.core.integration.RoleDao;
 import org.openwms.core.service.RoleService;
 import org.openwms.core.service.exception.ServiceRuntimeException;
@@ -82,6 +83,12 @@ public class RoleServiceImpl implements RoleService {
     public Role save(Role role) {
         if (role == null) {
             throw new ServiceRuntimeException("Cannot save role because it is NULL");
+        }
+        logger.debug("Grants:" + role.getGrants().size());
+        if (role.getGrants().size() > 0) {
+            for (SecurityObject grant : role.getGrants()) {
+                logger.debug("GR:" + grant.getId());
+            }
         }
         return dao.save(role);
     }

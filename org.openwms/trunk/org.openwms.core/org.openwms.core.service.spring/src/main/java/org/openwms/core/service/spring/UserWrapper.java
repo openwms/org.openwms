@@ -24,6 +24,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 
 import org.openwms.core.domain.system.usermanagement.Role;
+import org.openwms.core.domain.system.usermanagement.SecurityObject;
 import org.openwms.core.domain.system.usermanagement.User;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -63,11 +64,11 @@ public class UserWrapper implements UserDetails {
     @Override
     public Collection<GrantedAuthority> getAuthorities() {
         Collection<GrantedAuthority> authorities = new ArrayList<GrantedAuthority>();
-        for (final Role role : user.getRoles()) {
+        for (final SecurityObject grant : user.getGrants()) {
             authorities.add(new GrantedAuthority() {
                 @Override
                 public String getAuthority() {
-                    return role.getName();
+                    return grant.getName();
                 }
             });
         }
