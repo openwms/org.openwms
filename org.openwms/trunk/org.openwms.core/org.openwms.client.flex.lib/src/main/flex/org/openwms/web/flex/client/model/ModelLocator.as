@@ -96,13 +96,13 @@ package org.openwms.web.flex.client.model {
          */
         public var allRoles : ArrayCollection = new ArrayCollection();
         /**
+         * Collection of all Grants (Security Objects).
+         */
+        public var securityObjects : ArrayCollection = new ArrayCollection();
+        /**
          * The current selected User in the UserManagement view.
          */
         public var selectedUser : User = null;
-        /**
-         * The current logged in User.
-         */
-        public var userLoggedin : User = null;
         /**
          * DEPRECATED
          */
@@ -143,8 +143,6 @@ package org.openwms.web.flex.client.model {
         // --------------------------------------------------------------------
         // Credentials, set by the login screen
         public var isInitialized : Boolean = false;
-        public var securityObjects : Dictionary = new Dictionary();
-        public var securityObjectNames : ArrayCollection = new ArrayCollection();
         /**
          * Flag to indicate that the app is locked. All modules remain in loaded state and the login
          * dialogue is shown.
@@ -171,8 +169,7 @@ package org.openwms.web.flex.client.model {
          * Access the views array and add the viewObject to the defined
          * position. The postion is mandatory for the viewStack.
          */
-        public static function addView(pos : int, view : Object) : void {
-        }
+        public static function addView(pos : int, view : Object) : void { }
 
         public static function today() : Date {
             var today : Date = new Date();
@@ -183,14 +180,12 @@ package org.openwms.web.flex.client.model {
         /**
          * Search the viewObject from the array of views and remove it.
          */
-        public static function removeView(view : Object) : void {
-        }
+        public static function removeView(view : Object) : void {}
 
         /**
          * Shift the view to a new position.
          **/
-        public static function moveView(destPos : int, view : Object) : void {
-        }
+        public static function moveView(destPos : int, view : Object) : void { }
     }
 }
 

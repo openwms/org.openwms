@@ -19,12 +19,12 @@
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
 package org.openwms.web.flex.client {
-
+	
     import flash.events.IEventDispatcher;
-    import flash.system.ApplicationDomain;
+    import flash.system.ApplicationDomain;    
     import mx.collections.ArrayCollection;
     import mx.collections.XMLListCollection;
-
+    
     /**
      * An IApplicationModule defines the contract between the major openwms.org
      * CORE Flex Application and Flex Modules that shall be loaded into the
@@ -40,9 +40,9 @@ package org.openwms.web.flex.client {
          * Returns a list of menu items which shall be integrated to the main
          * application menu bar.
          *
-         * @return A list of XML menu items.
+         * @return A list of XML menu items. 
          */
-        function getMainMenuItems() : XMLListCollection;
+        function getMainMenuItems():XMLListCollection;
 
         /**
          * Returns a list of views which shall be populated to the parent
@@ -50,22 +50,22 @@ package org.openwms.web.flex.client {
          *
          * @return A list of DisplayObjects
          */
-        function getViews() : ArrayCollection;
+        function getViews():ArrayCollection;
 
         /**
          * Returns the name of the module as an unique String.
          *
          * @return the module name as String
          */
-        function getModuleName() : String;
-
+        function getModuleName():String;
+        
         /**
          * Returns the current version of the module as a String.
          *
          * @return The version number as String
          */
-        function getModuleVersion() : String;
-
+        function getModuleVersion():String;
+        
         /**
          * Returns a list of items which are handled as SecuityObjects.
          * A SecurityObject can be assigned to a Role and is monitored by a SecurityHandler
@@ -73,18 +73,18 @@ package org.openwms.web.flex.client {
          *
          * @return A list of SecurityObjects
          */
-        function getSecurityObjects() : ArrayCollection;
+        function getSecurityObjects():ArrayCollection;
 
         /**
          * Does additional initial stuff when the Module is loaded.
          *
          * @param The ApplicationDomain of the main Application
          */
-        function initializeModule(applicationDomain : ApplicationDomain=null) : void;
+        function initializeModule(applicationDomain:ApplicationDomain = null):void;
 
         /**
          * Does addtional cleanup stuff before the Module is unloaded.
          */
-        function destroyModule() : void;
+        function destroyModule():void;
     }
 }
