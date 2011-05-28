@@ -41,29 +41,41 @@
             import mx.managers.PopUpManager;
             import mx.collections.ArrayCollection;
 
-            [In]
+            [Inject]
             [Bindable]
+            /**
+             * Injected Model.
+             */
             public var modelLocator:ModelLocator;            
             [Bindable]
+            /**
+             * A list of all SecurityObjects. The already assigned security objects are removed from the original list.
+             */
             protected var notAssigned:ArrayCollection = new ArrayCollection();
             [Bindable]
+            /**
+             * A list of SecurityObjects that are new and shall be assigned to the Role.
+             */
             protected var toAssign:ListCollectionView;
             [Bindable]
+            /**
+             * A list of SecurityObjects that are already assigned to the Role.
+             */
             public var assigned:ListCollectionView;
             [Bindable]
+            /**
+             * The Role itself.
+             */
             public var role:Role;
+
             private var changed:Boolean = false;
 
-            protected function init():void
-            {
+            protected function init():void {
                 notAssigned = new ArrayCollection(modelLocator.allUsers.toArray());
                 toAssign = assigned;
-                for each (var user:User in toAssign)
-                {
-                	for each (var u:User in notAssigned)
-                	{
-                		if (user.username == u.username)
-                		{
+                for each (var user:User in toAssign) {
+                	for each (var u:User in notAssigned) {
+                		if (user.username == u.username) {
                             notAssigned.removeItemAt(notAssigned.getItemIndex(u));
                         }
                 	}
@@ -72,41 +84,33 @@
                 PopUpManager.centerPopUp(this);
             }
             
-            protected function getTitle():String
-            {
+            protected function getTitle():String {
             	return "Assign Users to Role : "+role.name;
             }
             
-            protected function closeDialog(event:Event=null):void
-            {
+            protected function closeDialog(event:Event=null):void {
                 this.removeEventListener(KeyboardEvent.KEY_DOWN, keyEventHandler);
                 PopUpManager.removePopUp(this);
             }
 
-            protected function keyEventHandler(event:KeyboardEvent):void
-            {
-                if(event.keyCode == 27)
-                {
+            protected function keyEventHandler(event:KeyboardEvent):void {
+                if(event.keyCode == 27) {
                    closeDialog(event);
                 }
             }
 
-            protected function accept(e:Event):void
-            {
+            protected function accept(e:Event):void {
             	toAssign.refresh();
             	assigned = toAssign;
                 closeDialog();
             }
 
-            protected function formatFunction(item:*):String
-            {
+            protected function formatFunction(item:*):String {
                 return (item as User).username+" - "+(item as User).fullname;
             }
             
-            private function moveRight():void
-            {
-                for each (var item:* in allLst.selectedItems)
-                {
+            private function moveRight():void {
+                for each (var item:* in allLst.selectedItems) {
                     toAssign.addItem(notAssigned.removeItemAt(notAssigned.getItemIndex(item)));
                     toAssign.itemUpdated(item);
                     changed = true;
@@ -115,10 +119,8 @@
                 sortList(notAssigned);
             }
                     
-            private function moveLeft():void
-            {
-                for each (var item:* in assLst.selectedItems)
-                {
+            private function moveLeft():void {
+                for each (var item:* in assLst.selectedItems) {
                     notAssigned.addItem(toAssign.removeItemAt(toAssign.getItemIndex(item)));
                     notAssigned.itemUpdated(item);
                     changed = true;
@@ -127,8 +129,7 @@
                 sortList(notAssigned);
             }
             
-            private function sortList(list:ListCollectionView):ListCollectionView
-            {
+            private function sortList(list:ListCollectionView):ListCollectionView {
             	var sortField:SortField = new SortField();
                 sortField.name = getSortField();
                 sortField.numeric = false;
@@ -139,18 +140,15 @@
                 return list;
             }
             
-            protected function getSortField():String
-            {
+            protected function getSortField():String {
             	return "fullname";
             }
             
-            protected function getAssignedLabel():String
-            {
+            protected function getAssignedLabel():String {
             	return "Assigned Users";
             }
 
-            protected function getNotAssignedLabel():String
-            {
+            protected function getNotAssignedLabel():String {
                 return "All Users";
             }
         ]]>

@@ -19,12 +19,13 @@
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
 package org.openwms.web.flex.client.view.dialogs {
-	
-	import flash.events.KeyboardEvent;
-	import mx.collections.ArrayCollection;
-	import mx.managers.PopUpManager;
-	import org.openwms.core.domain.system.usermanagement.Role;
-	import org.openwms.core.domain.system.usermanagement.SecurityObject;
+
+    import flash.events.KeyboardEvent;
+    import mx.collections.ArrayCollection;
+    import mx.managers.PopUpManager;
+    import org.openwms.core.domain.system.usermanagement.Grant;
+    import org.openwms.core.domain.system.usermanagement.Role;
+    import org.openwms.core.domain.system.usermanagement.SecurityObject;
 
     [Name]
     [Bindable]
@@ -35,37 +36,37 @@ package org.openwms.web.flex.client.view.dialogs {
      * @version $Revision$
      * @since 0.1
      */
-	public class AssignGrantsDialog extends AssignUsersDialog {
-	    
-		/**
-		 * Constructor.
-		 */
-		public function AssignGrantsDialog() { }
-		
-		override protected function init():void {
-            notAssigned = new ArrayCollection(modelLocator.securityObjectNames.toArray());
+    public class AssignGrantsDialog extends AssignUsersDialog {
+
+        /**
+         * Constructor.
+         */
+        public function AssignGrantsDialog() { }
+
+        override protected function init():void {
+            notAssigned = new ArrayCollection(modelLocator.securityObjects.toArray());
             toAssign = assigned;
-            for each (var role:Role in toAssign) {
-                for each (var r:Role in notAssigned) {
-                    if (role.name == r.name) {
-                        notAssigned.removeItemAt(notAssigned.getItemIndex(r));
+            for each (var grant:Grant in toAssign) {
+                for each (var g:Grant in notAssigned) {
+                    if (grant.name == g.name) {
+                        notAssigned.removeItemAt(notAssigned.getItemIndex(g));
                     }
                 }
             }
             this.addEventListener(KeyboardEvent.KEY_DOWN, keyEventHandler);
             PopUpManager.centerPopUp(this);
-		}
-		
-		override protected function getTitle():String {
-			return "Assign Grants to Role : "+role.name;
-		}
-		
+        }
+
+        override protected function getTitle():String {
+            return "Assign Grants to Role : " + role.name;
+        }
+
         override protected function formatFunction(item:*):String {
             return (item == null ? " " : (item as SecurityObject).name+" - "+(item as SecurityObject).description);
         }
-        
+
         override protected function getSortField():String {
-        	return "name";
+            return "name";
         }
 
         override protected function getAssignedLabel():String {
@@ -75,5 +76,7 @@ package org.openwms.web.flex.client.view.dialogs {
         override protected function getNotAssignedLabel():String {
             return "All Grants";
         }
-	}
+
+    }
 }
+

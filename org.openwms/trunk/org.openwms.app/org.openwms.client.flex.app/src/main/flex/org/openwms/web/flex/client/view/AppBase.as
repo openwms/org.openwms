@@ -19,7 +19,6 @@
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
 package org.openwms.web.flex.client.view {
-
     import flash.display.DisplayObject;
     import flash.events.Event;
     import flash.system.ApplicationDomain;
@@ -59,9 +58,8 @@ package org.openwms.web.flex.client.view {
     import org.openwms.web.flex.client.model.ModelLocator;
     import org.openwms.web.flex.client.module.ModuleLocator;
     import org.openwms.web.flex.client.util.DisplayUtility;
-    import org.openwms.web.flex.client.util.Security;
+    import org.openwms.web.flex.client.util.SecurityUtil;
     import org.openwms.web.flex.client.view.dialogs.LoginView;
-
     /**
      * An AppBase class is the main Flex Application of the CORE framework. This class
      * cares about all the essential stuff like security and Tide framework initialization
@@ -73,19 +71,19 @@ package org.openwms.web.flex.client.view {
      */
     public class AppBase extends Application {
 
-        [In]
+        [Inject]
         [Bindable]
         /**
          * Injected Model.
          */
         public var modelLocator : ModelLocator;
-        [In]
+        [Inject]
         [Bindable]
         /**
          * Injected Module controller.
          */
         public var moduleLocator : ModuleLocator;
-        [In]
+        [Inject]
         [Bindable]
         /**
          * Injected Tide identity object.
@@ -111,6 +109,12 @@ package org.openwms.web.flex.client.view {
          * ViewStack defined in the mxml page.
          */
         public var appViewStack : ViewStack;
+        [Bindable]
+        /**
+         * TideContext instance.
+         */
+        public var tideContext : Context = Spring.getInstance().getSpringContext();
+        Spring.getInstance().addComponents([SecurityUtil, ModelLocator, ModuleLocator, UserDelegate, RoleDelegate, PropertyDelegate, I18nMap, I18nDelegate]);
 
         private var applicationDomain : ApplicationDomain = new ApplicationDomain(ApplicationDomain.currentDomain);
         // Manager classes are loaded to the application domain
@@ -118,66 +122,58 @@ package org.openwms.web.flex.client.view {
         private var popUpManager : PopUpManager;
         private var dragManager : DragManager;
         private static var log : ILogger = Log.getLogger("org.openwms.web.flex.client.view.App");
-        private static var _link : Array = [org.openwms.tms.domain.order.TransportOrder, org.openwms.common.domain.values.Weight];
+        private static var _link : Array = [org.openwms.tms.domain.order.TransportOrder,org.openwms.common.domain.values.Weight];
         [Bindable]
-        private var moduleService : SecureRemoteObject = new SecureRemoteObject("moduleServiceRemote");
+        private var moduleService:SecureRemoteObject = new SecureRemoteObject("moduleServiceRemote");
         [Bindable]
-        private var userService : SecureRemoteObject = new SecureRemoteObject("userServiceRemote");
+        private var userService:SecureRemoteObject = new SecureRemoteObject("userServiceRemote");
         [Bindable]
-        private var roleService : SecureRemoteObject = new SecureRemoteObject("roleServiceRemote");
+        private var roleService:SecureRemoteObject = new SecureRemoteObject("roleServiceRemote");
         [Bindable]
-        private var i18nService : SecureRemoteObject = new SecureRemoteObject("i18nServiceRemote");
+        private var i18nService:SecureRemoteObject = new SecureRemoteObject("i18nServiceRemote");
         [Bindable]
-        private var configurationService : SecureRemoteObject = new SecureRemoteObject("configurationServiceRemote");
+        private var configurationService:SecureRemoteObject = new SecureRemoteObject("configurationServiceRemote");
         [Bindable]
         private var securityService : SecureRemoteObject = new SecureRemoteObject("securityServiceRemote");
-
-        [Bindable]
-        /**
-         * TideContext instance.
-         */
-        public var tideContext : Context = Spring.getInstance().getSpringContext();
-        Spring.getInstance().addComponents([Security, ModelLocator, ModuleLocator, UserDelegate, RoleDelegate, PropertyDelegate, I18nMap, I18nDelegate]);
-
 
         /**
          * Suppress warnings and add a constructor.
          */
-        public function AppBase() {
-        }
+        public function AppBase() { }
 
         /**
          * Called in pre-initialize phase of the application.
          * Put your code here, to initialize 3rd party frameworks.
          *
-         * @param event
+         * @param event Unused
          */
         public function preInit(event : Event) : void {
             Spring.getInstance().initApplication();
         }
 
         /**
-         * Called in initialize phase of the application.
-         * Put your code here, to initialize application specific structures.
+         * Called within initialize phase of the application.
+         * Put your code here, to start application specific structures.
          */
         public function init() : void {
             tideContext.mainAppUI = this;
-            var l : Array = ResourceManager.getInstance().localeChain;
-            for each (var s : String in l) {
-                trace("LOCALE:" + s);
-            }
+            var l:Array = ResourceManager.getInstance().localeChain;
+            for each (var s:String in l){
+                trace("LOCALE:"+s);
+            } 
             setupServices([moduleService, roleService, userService, i18nService, configurationService]);
             trace("Load all internationalized texts");
+            trace("Logged in?"+identity.isLoggedIn());
             tideContext.raiseEvent(I18nEvent.LOAD_ALL);
         }
 
-        private function setupServices(services : Array) : void {
-            var endpoint : String = ServerConfig.getChannel("my-graniteamf").endpoint;
-            for each (var service : SecureRemoteObject in services) {
+        private function setupServices(services:Array) : void {
+            var endpoint:String = ServerConfig.getChannel("my-graniteamf").endpoint;
+            for each (var service:SecureRemoteObject in services) {
                 service.endpoint = endpoint;
                 service.showBusyCursor = true;
                 service.channelSet = new ChannelSet();
-                service.channelSet.addChannel(ServerConfig.getChannel("my-graniteamf"));
+                service.channelSet.addChannel(ServerConfig.getChannel("my-graniteamf"));        		
             }
         }
 
@@ -267,14 +263,10 @@ package org.openwms.web.flex.client.view {
          */
         public function moduleConfigChanged(event : ApplicationEvent) : void {
             if (event.data != null && event.data is IApplicationModule) {
-                var appModule : IApplicationModule = (event.data as IApplicationModule);
+                var appModule : IApplicationModule = event.data as IApplicationModule;
                 mainMenuBar.dataProvider = moduleLocator.getActiveMenuItems(new XMLListCollection(stdMenu));
                 addViewsToViewStack(appModule);
-
-                for each (var sObject : Grant in appModule.getSecurityObjects()) {
-                    trace("Adding securityObject:" + sObject);
-                    modelLocator.securityObjects[sObject.name] = sObject;
-                }
+                addSecurityObjects(appModule);
                     //appModule.initializeModule(applicationDomain);
             }
         }
@@ -289,25 +281,19 @@ package org.openwms.web.flex.client.view {
          */
         public function modulesConfigured(event : ApplicationEvent) : void {
             mainMenuBar.dataProvider = moduleLocator.getActiveMenuItems(new XMLListCollection(stdMenu));
-            //modelLocator.securityObjectNames = getStdSecurityObjects();
         }
 
-        /*
-           private function getStdSecurityObjects() : ArrayCollection {
-           for each (var mInfo : IModuleInfo in modelLocator.loadedModules) {
-           modelLocator.addAll((mInfo.factory.create() as IApplicationModule).getSecurityObjects());
-           }
-           }
-         */
-        [Observer("APP.SECURED_COMPONENTS_LOADED")]
+        [Observer("APP.SECURITY_OBJECTS_REFRESHED")]
         /**
-         *
          */
-        public function onSecuredComponentsLoaded(event : ApplicationEvent) : void {
-            // TODO: In Flex 3.5 replace with addAll()
-            // modelLocator.securityObjectNames.addAll(event.data as ArrayCollection);
-            for each (var sObject : * in(event.data as ArrayCollection)) {
-                modelLocator.securityObjects.addItem(sObject);
+        public function secureObjectsRefreshed(event : ApplicationEvent) : void {
+            if (event.data != null) {
+                var securityObjects:ArrayCollection = event.data as ArrayCollection;
+                for each (var grant : Grant in securityObjects) {
+                    if (!modelLocator.securityObjects.contains(grant)) {
+                        modelLocator.securityObjects.addItem(grant);
+                    }
+                }
             }
         }
 
@@ -333,6 +319,14 @@ package org.openwms.web.flex.client.view {
             for each (var view : DisplayObject in views) {
                 appViewStack.addChild(view as DisplayObject);
             }
+        }
+
+        private function addSecurityObjects(module : IApplicationModule) : void {
+            trace("Loading all security objects from the new module");
+            var securityObjects:ArrayCollection = module.getSecurityObjects();
+            var event:ApplicationEvent = new ApplicationEvent(ApplicationEvent.MERGE_GRANTS);
+            event.data = {moduleName : module.getModuleName(), grants : securityObjects};
+            dispatchEvent(event);
         }
 
     }
