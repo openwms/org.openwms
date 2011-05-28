@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<grants>
+    <grant>
+        <name>COMMON_add_roles_button</name>
+        <description>Ability to add new Roles</description>
+    </grant>
+    <grant>
+        <name>COMMON_save_role_button</name>
+        <description>Ability to save changes on a Role</description>
+    </grant>
+    <grant>
+        <name>COMMON_remove_role_button</name>
+        <description>Ability to remove an existing Role</description>
+    </grant>
+    <grant>
+        <name>COMMON_assign_grants_button</name>
+        <description>Assign Grants to a Role</description>
+    </grant>
+    <grant>
+        <name>COMMON_assign_users_button</name>
+        <description>Assign Users to a Role</description>
+    </grant>
+</grants>
