@@ -20,38 +20,32 @@
  */
 package org.openwms.web.flex.client.util {
 
-    import org.granite.tide.spring.Identity;
+    import mx.core.ByteArrayAsset;
 
-    [Name]
-    [Bindable]
     /**
-     * A SecurityUtil.
+     * A XMLUtil.
      *
      * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
      * @version $Revision: 1301 $
      * @since 0.1
      */
-    public class SecurityUtil {
-
-        [Inject]
-        /**
-         * Injected Tide identity object.
-         */
-        public var identity : Identity;
+    public final class XMLUtil {
 
         /**
          * Constructor.
          */
-        public function SecurityUtil() : void {
+        public function XMLUtil() : void {
             super();
         }
 
         /**
          *
          */
-        public function hasPermissions(grantName : String) : Boolean {
-            return identity.ifAllGranted(grantName);
-        }
+        public static function getXML(clazz:*) : XML {
+            var ba:ByteArrayAsset = ByteArrayAsset( clazz );
+            var xml:XML = new XML( ba.readUTFBytes( ba.length ) );
+            return xml;
+        }    
     }
 }
 

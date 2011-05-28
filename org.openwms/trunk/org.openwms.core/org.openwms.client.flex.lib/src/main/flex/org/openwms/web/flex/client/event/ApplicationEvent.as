@@ -33,78 +33,89 @@ package org.openwms.web.flex.client.event {
         /**
          * Name of the Event to load all modules.
          */
-        public static const LOAD_ALL_MODULES : String = "LOAD_ALL_MODULES";
+        public static const LOAD_ALL_MODULES:String = "LOAD_ALL_MODULES";
         /**
          * Name of the Event to unload all modules.
          */
-        public static const UNLOAD_ALL_MODULES : String = "UNLOAD_ALL_MODULES";
+        public static const UNLOAD_ALL_MODULES:String = "UNLOAD_ALL_MODULES";
         /**
          * Name of the Event to signal that the module configuration has changed.
          */
-        public static const MODULE_CONFIG_CHANGED : String = "MODULE_CONFIG_CHANGED";
+        public static const MODULE_CONFIG_CHANGED:String = "MODULE_CONFIG_CHANGED";
         /**
          * Name of the Event to signal that the module configuration has finished.
          */
-        public static const MODULES_CONFIGURED : String = "MODULES_CONFIGURED";
+        public static const MODULES_CONFIGURED:String = "MODULES_CONFIGURED";
         /**
          * Name of the Event to save a Module.
          */
-        public static const SAVE_MODULE : String = "SAVE_MODULE";
+        public static const SAVE_MODULE:String = "SAVE_MODULE";
         /**
          * Name of the Event to delete a Module.
          */
-        public static const DELETE_MODULE : String = "DELETE_MODULE";
+        public static const DELETE_MODULE:String = "DELETE_MODULE";
         /**
          * Name of the Event to load a single Module.
          */
-        public static const LOAD_MODULE : String = "LOAD_MODULE";
+        public static const LOAD_MODULE:String = "LOAD_MODULE";
         /**
          * Name of the Event to unload a single Module.
          */
-        public static const UNLOAD_MODULE : String = "UNLOAD_MODULE";
+        public static const UNLOAD_MODULE:String = "UNLOAD_MODULE";
         /**
          * Name of the Event to signal that a Module was successfully loaded.
          */
-        public static const MODULE_LOADED : String = "MODULE_LOADED";
+        public static const MODULE_LOADED:String = "MODULE_LOADED";
         /**
          * Name of the Event to signal that a Module was successfully unloaded.
          */
-        public static const MODULE_UNLOADED : String = "MODULE_UNLOADED";
+        public static const MODULE_UNLOADED:String = "MODULE_UNLOADED";
         /**
          * Name of the Event to save the startupOrders of a list of Modules.
          */
-        public static const SAVE_STARTUP_ORDERS : String = "SAVE_STARTUP_ORDERS";
+        public static const SAVE_STARTUP_ORDERS:String = "SAVE_STARTUP_ORDERS";
         /**
          * Name of the Event to signal that an User successfully logged in.
          */
-        public static const APP_LOGIN_OK : String = "APP_LOGIN_OK";
+        public static const APP_LOGIN_OK:String = "APP_LOGIN_OK";
         /**
          * Name of the Event to force an User logout.
          */
-        public static const LOGOUT : String = "APP_LOGOUT";
+        public static const LOGOUT:String = "APP_LOGOUT";
         /**
          * Name of the Event to force a screen lock.
          */
-        public static const LOCK : String = "APP_LOCK";
+        public static const LOCK:String = "APP_LOCK";
         /**
-         * Name of the Event to load all blacklisted UIComponents from the service.
+         * Name of the Event to merge grants with the backend.
          */
-        public static const MERGE_SECURITY_BLACKLIST : String = "APP.MERGE_SECURITY_BLACKLIST";
+        public static const MERGE_GRANTS:String = "APP.MERGE_GRANTS";
         /**
-         * Name of the Event whenever a set of secured components was loaded from the backend.
+         * Name of the Event when security objects were updated.
          */
-        public static const SECURED_COMPONENTS_LOADED : String = "APP.SECURED_COMPONENTS_LOADED";
+        public static const SECURITY_OBJECTS_REFRESHED:String = "APP.SECURITY_OBJECTS_REFRESHED";
 
         /**
          * Store arbitrary data.
          */
-        public var data : *;
+        public var data:*;
 
         /**
          * Constructor.
          */
-        public function ApplicationEvent(type : String, bubbles : Boolean=true, cancelable : Boolean=false) {
-            super(type, bubbles, cancelable);
+        public function ApplicationEvent(type:String) {
+            super(type, true, false);
         }
+
+        public override function clone():Event {
+            var e:ApplicationEvent = new ApplicationEvent(type);
+            e.data = data;
+            return e;
+        }
+
+        public override function toString():String {
+            return formatToString("ApplicationEvent","type");
+        } 
     }
 }
+
