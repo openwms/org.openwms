@@ -147,16 +147,6 @@ public class SecurityObject extends AbstractEntity implements DomainObject<Long>
     }
 
     /**
-     * Set the name.
-     * 
-     * @param name
-     *            The name to set.
-     */
-    protected void setName(String name) {
-        this.name = name;
-    }
-
-    /**
      * Returns the description text.
      * 
      * @return The description of the <code>SecurityObject</code> as text
@@ -181,6 +171,54 @@ public class SecurityObject extends AbstractEntity implements DomainObject<Long>
     @Override
     public long getVersion() {
         return version;
+    }
+
+    /**
+     * Only use the name.
+     * 
+     * @see java.lang.Object#hashCode()
+     */
+    @Override
+    public int hashCode() {
+        final int prime = 31;
+        int result = super.hashCode();
+        result = prime * result + ((name == null) ? 0 : name.hashCode());
+        return result;
+    }
+
+    /**
+     * Compare the name;
+     * 
+     * @see java.lang.Object#equals(java.lang.Object)
+     */
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (!(obj instanceof SecurityObject)) {
+            System.out.println("NoTTTTTT" + obj);
+            return false;
+        }
+        SecurityObject other = (SecurityObject) obj;
+        if (name == null) {
+            if (other.name != null) {
+                return false;
+            }
+        } else if (!name.equals(other.name)) {
+            return false;
+        }
+        return true;
+    }
+
+    /**
+     * Return the name.
+     * 
+     * @return the name
+     */
+    @Override
+    public String toString() {
+        return this.name;
     }
 
 }

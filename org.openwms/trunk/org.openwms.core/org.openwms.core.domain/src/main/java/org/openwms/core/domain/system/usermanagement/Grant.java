@@ -23,8 +23,6 @@ package org.openwms.core.domain.system.usermanagement;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 
-import org.openwms.core.util.validation.AssertUtils;
-
 /**
  * A Grant.
  * 
@@ -39,17 +37,18 @@ public class Grant extends SecurityObject {
     private static final long serialVersionUID = 2061059874657176727L;
 
     /**
-     * Create a new Grant.
-     * 
-     * @param moduleName
-     *            The name of module where the grant belong to
-     * @param grantName
-     *            The name of the grant
+     * @see org.openwms.core.domain.system.usermanagement.SecurityObject#equals(java.lang.Object)
      */
-    public Grant(String moduleName, String grantName) {
-        super();
-        AssertUtils.isNotEmpty(moduleName, "An empty or null moduleName is not allowed");
-        super.setName(moduleName.toLowerCase() + grantName);
+    @Override
+    public boolean equals(Object obj) {
+        return super.equals(obj);
     }
 
+    /**
+     * @see org.openwms.core.domain.system.usermanagement.SecurityObject#hashCode()
+     */
+    @Override
+    public int hashCode() {
+        return super.hashCode();
+    }
 }
