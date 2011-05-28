@@ -23,30 +23,30 @@ package org.openwms.web.flex.client.util {
     import flash.utils.Dictionary;
     import flash.utils.Proxy;
     import flash.utils.flash_proxy;
-    import org.openwms.web.flex.client.model.ModelLocator;
+    import org.granite.tide.spring.Identity;
     import org.openwms.core.domain.system.usermanagement.Grant;
 
     [Name]
     [Bindable]
     /**
-     * A Security.
+     * A SecurityUtil.
      *
      * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
      * @version $Revision: 1301 $
      * @since 0.1
      */
-    public class Security {
+    public class SecurityUtil {
 
         [Inject]
         /**
-         * Injected Model.
+         * Injected Tide identity object.
          */
-        private static var modelLocator : ModelLocator;
+        public static var identity : Identity;
 
         /**
          * Constructor.
          */
-        public function Security() : void {
+        public function SecurityUtil() : void {
             super();
         }
 
@@ -54,12 +54,7 @@ package org.openwms.web.flex.client.util {
          *
          */
         public static function hasPermissions(grantName : String) : Boolean {
-            if (null != modelLocator.securityObjects[grantName]) {
-                // check logged in user and his roles for permission
-                var grant : Grant = modelLocator.securityObjects[grantName];
-                return modelLocator.userLoggedin.roles.grants.contains(grant);
-            }
-            return false;
+            return identity.ifAllGranted(grantName);
         }
     }
 }
