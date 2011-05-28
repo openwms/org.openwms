@@ -372,9 +372,11 @@
         <spring.version>3.0.5.RELEASE</spring.version>
         <spring.osgi.version>1.2.1</spring.osgi.version>
         <spring.security.version>3.0.3.RELEASE</spring.security.version>
-        <hibernate.version>3.2.6.GA</hibernate.version>
+        <hibernate.version>3.4.0.GA</hibernate.version>
         <granite.version>2.2.0.GA</granite.version>
         <flex.version>3.2.0.3958</flex.version>
+	<slf4j.version>1.5.10</slf4j.version>
+	<junit.version>4.7.0</junit.version>
         <maven.compile.targetLevel>${jdkVersion}</maven.compile.targetLevel>
         <maven.compile.sourceLevel>${jdkVersion}</maven.compile.sourceLevel>
     </properties>
@@ -424,7 +426,6 @@
                 <enabled>false</enabled>
             </releases>
         </repository>
-        <!-- -->
         <repository>
             <id>com.springsource.repository.bundles.release</id>
             <name>SpringSource Enterprise Bundle Repository - SpringSource Bundle Releases</name>
@@ -489,7 +490,6 @@
                 <enabled>false</enabled>
             </snapshots>
         </repository>
-
     </repositories>
 
     <build>
@@ -1007,7 +1007,7 @@
             <dependency>
                 <groupId>org.hibernate</groupId>
                 <artifactId>org.hibernate.ejb-library</artifactId>
-                <version>3.4.0.GA</version>
+                <version>${hibernate.version}</version>
                 <type>libd</type>
             </dependency>
             <dependency>
@@ -1033,38 +1033,38 @@
             <dependency>
                 <groupId>org.junit</groupId>
                 <artifactId>com.springsource.org.junit</artifactId>
-                <version>4.7.0</version>
+                <version>${junit.version}</version>
             </dependency>
 
             <!-- SLF4J API -->
             <dependency>
                 <groupId>org.slf4j</groupId>
                 <artifactId>com.springsource.slf4j.api</artifactId>
-                <version>1.5.10</version>
+                <version>${slf4j.version}</version>
             </dependency>
             <!-- SLF4J Binding to log4j -->
             <dependency>
                 <groupId>org.slf4j</groupId>
                 <artifactId>com.springsource.slf4j.log4j</artifactId>
-                <version>1.5.10</version>
+                <version>${slf4j.version}</version>
             </dependency>
             <!-- Bridge from JCL to SLF4J -->
             <dependency>
                 <groupId>org.slf4j</groupId>
                 <artifactId>com.springsource.slf4j.org.apache.commons.logging</artifactId>
-                <version>1.5.10</version>
+                <version>${slf4j.version}</version>
             </dependency>
             <!-- Bridge from java.util.Logging to SLF4J -->
             <dependency>
                 <groupId>org.slf4j</groupId>
                 <artifactId>com.springsource.slf4j.bridge</artifactId>
-                <version>1.5.10</version>
+                <version>${slf4j.version}</version>
             </dependency>
             <!-- Bridge from log4j to SLF4J -->
             <dependency>
                 <groupId>org.slf4j</groupId>
                 <artifactId>com.springsource.slf4j.org.apache.log4j</artifactId>
-                <version>1.5.10</version>
+                <version>${slf4j.version}</version>
             </dependency>
             <!-- Log4j Logging API -->
             <dependency>
@@ -1130,34 +1130,6 @@
                 <type>swc</type>
             </dependency>
 
-            <!-- Project dependencies <dependency> <groupId>${project.groupId}</groupId> <artifactId>org.openwms.common.util</artifactId> 
-                <version>${project.version}</version> </dependency> <dependency> <groupId>${project.groupId}</groupId> <artifactId>org.openwms.common.domain</artifactId> 
-                <version>${project.version}</version> </dependency> <dependency> <groupId>${project.groupId}</groupId> <artifactId>org.openwms.common.domain.as</artifactId> 
-                <version>${project.version}</version> <type>swc</type> </dependency> <dependency> <groupId>${project.groupId}</groupId> <artifactId>org.openwms.common.infrastructure.configuration</artifactId> 
-                <version>${project.version}</version> </dependency> <dependency> <groupId>${project.groupId}</groupId> <artifactId>org.openwms.common.infrastructure.postgres</artifactId> 
-                <version>${project.version}</version> </dependency> <dependency> <groupId>${project.groupId}</groupId> <artifactId>org.openwms.common.infrastructure.oracle</artifactId> 
-                <version>${project.version}</version> </dependency> <dependency> <groupId>${project.groupId}</groupId> <artifactId>org.openwms.common.infrastructure.hsql</artifactId> 
-                <version>${project.version}</version> </dependency> <dependency> <groupId>${project.groupId}</groupId> <artifactId>org.openwms.common.integration</artifactId> 
-                <version>${project.version}</version> </dependency> <dependency> <groupId>${project.groupId}</groupId> <artifactId>org.openwms.common.integration.hibernate</artifactId> 
-                <version>${project.version}</version> </dependency> <dependency> <groupId>${project.groupId}</groupId> <artifactId>org.openwms.common.integration.jpa</artifactId> 
-                <version>${project.version}</version> </dependency> <dependency> <groupId>${project.groupId}</groupId> <artifactId>org.openwms.common.service.api</artifactId> 
-                <version>${project.version}</version> </dependency> <dependency> <groupId>${project.groupId}</groupId> <artifactId>org.openwms.common.service.spring</artifactId> 
-                <version>${project.version}</version> </dependency> <dependency> <groupId>${project.groupId}</groupId> <artifactId>org.openwms.common.framework.test</artifactId> 
-                <version>${project.version}</version> <type>test-jar</type> <scope>test</scope> </dependency> <dependency> <groupId>${project.groupId}</groupId> 
-                <artifactId>org.openwms.common.flex.lib</artifactId> <version>${project.version}</version> <type>swc</type> </dependency> 
-                <dependency> <groupId>${project.groupId}</groupId> <artifactId>org.openwms.common.flex.module</artifactId> <version>${project.version}</version> 
-                <type>swf</type> </dependency> <dependency> <groupId>${project.groupId}</groupId> <artifactId>org.openwms.tms.util</artifactId> 
-                <version>${project.version}</version> </dependency> <dependency> <groupId>${project.groupId}</groupId> <artifactId>org.openwms.tms.domain</artifactId> 
-                <version>${project.version}</version> </dependency> <dependency> <groupId>${project.groupId}</groupId> <artifactId>org.openwms.tms.domain.as</artifactId> 
-                <version>${project.version}</version> <type>swc</type> </dependency> <dependency> <groupId>${project.groupId}</groupId> <artifactId>org.openwms.tms.integration</artifactId> 
-                <version>${project.version}</version> </dependency> <dependency> <groupId>${project.groupId}</groupId> <artifactId>org.openwms.tms.integration.jpa</artifactId> 
-                <version>${project.version}</version> </dependency> <dependency> <groupId>${project.groupId}</groupId> <artifactId>org.openwms.tms.service.api</artifactId> 
-                <version>${project.version}</version> </dependency> <dependency> <groupId>${project.groupId}</groupId> <artifactId>org.openwms.tms.service.spring</artifactId> 
-                <version>${project.version}</version> </dependency> <dependency> <groupId>${project.groupId}</groupId> <artifactId>org.openwms.tms.flex.module</artifactId> 
-                <version>${project.version}</version> <type>swf</type> </dependency> <dependency> <groupId>${project.groupId}</groupId> <artifactId>org.openwms.client.flex.lib</artifactId> 
-                <version>${project.version}</version> <type>swc</type> </dependency> <dependency> <groupId>${project.groupId}</groupId> <artifactId>org.openwms.client.flex.ss</artifactId> 
-                <version>${project.version}</version> <type>swf</type> </dependency> <dependency> <groupId>${project.groupId}</groupId> <artifactId>org.openwms.client.flex.wrapper</artifactId> 
-                <version>${project.version}</version> <type>war</type> </dependency> -->
         </dependencies>
     </dependencyManagement>
 
