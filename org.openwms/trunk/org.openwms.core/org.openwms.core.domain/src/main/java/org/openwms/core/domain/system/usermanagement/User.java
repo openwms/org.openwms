@@ -439,6 +439,20 @@ public class User extends AbstractEntity implements DomainObject<Long> {
     }
 
     /**
+     * Flatten roles and grants and return a list of all grants this user has
+     * assigned.
+     * 
+     * @return A list of all grants
+     */
+    public List<SecurityObject> getGrants() {
+        List<SecurityObject> grants = new ArrayList<SecurityObject>();
+        for (Role role : getRoles()) {
+            grants.addAll(role.getGrants());
+        }
+        return Collections.unmodifiableList(grants);
+    }
+
+    /**
      * Define the {@link Role}s of the <code>User</code>. Existing {@link Role}s
      * will be overridden.
      * 
