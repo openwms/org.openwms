@@ -33,6 +33,8 @@ package org.openwms.web.flex.client.tms.view {
     import org.granite.tide.ITideModule;
     import org.granite.tide.Tide;
     import org.granite.tide.spring.Spring;
+    import org.openwms.core.domain.system.usermanagement.Grant;
+    import org.openwms.web.flex.client.util.XMLUtil;
     import org.openwms.web.flex.client.IApplicationModule;
     import org.openwms.web.flex.client.model.ModelLocator;
     import org.openwms.web.flex.client.module.CommonModule;
@@ -62,6 +64,11 @@ package org.openwms.web.flex.client.tms.view {
         public var tmsViewStack : ViewStack;
         [Bindable]
         private var transportService : SecureRemoteObject = new SecureRemoteObject("transportServiceRemote");
+        [Bindable]
+        private var childDomain : ApplicationDomain;
+        [Embed(source="/assets/security/secured-objects.xml", mimeType="application/octet-stream")]
+        private var _xml:Class;
+        private var blacklisted : ArrayCollection = new ArrayCollection();
 
         /**
          * Default constructor.
@@ -75,16 +82,12 @@ package org.openwms.web.flex.client.tms.view {
          * the main applicationDomain, that means the context of the main application is extended with the subcontext of
          * this module.
          */
-        public function start(applicationDomain : ApplicationDomain=null) : void {
-            trace("Starting Tide context in applicationDomain : " + applicationDomain);
-            if (modelLocator == null) {
-                trace("TMS in start1 loator is null");
-            }
-            setupServices([transportService]);
+        public function start(applicationDomain : ApplicationDomain = null) : void {
+            trace("Starting Tide context in applicationDomain");
+            childDomain = applicationDomain;
             Spring.getInstance().addModule(TMSAppBase, applicationDomain);
-            if (modelLocator == null) {
-                trace("TMS in start2 loator is null");
-            }
+            setupServices([transportService]);
+            readAndMergeGrantsList();
         }
 
         /**
@@ -125,7 +128,7 @@ package org.openwms.web.flex.client.tms.view {
          * This method returns the name of the module as unique String identifier.
          */
         public function getModuleName() : String {
-            return "OPENWMS.ORG TMS MODULE";
+            return "TMS";
         }
 
         /**
@@ -141,7 +144,7 @@ package org.openwms.web.flex.client.tms.view {
          * to allow or deny certain functionality within the user interface.
          */
         public function getSecurityObjects() : ArrayCollection {
-            return new ArrayCollection();
+            return blacklisted;
         }
 
         /**
@@ -165,6 +168,19 @@ package org.openwms.web.flex.client.tms.view {
         public function destroyModule() : void {
             trace("Destroying module : " + getModuleName());
             Spring.getInstance().removeModule(TMSAppBase);
+        }
+
+        /**
+         * Find all secured objects and return the list to the main app.
+         */
+        private function readAndMergeGrantsList() : void {
+            if (blacklisted.length > 0) {
+                return;
+            }
+            var xml:XML = XMLUtil.getXML(new _xml());
+            for each (var g:XML in xml.grant) {
+                blacklisted.addItem(new Grant(g.name, g.description));
+            }
         }
     }
 }
