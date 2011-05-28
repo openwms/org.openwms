@@ -4,7 +4,7 @@
  * This file is part of openwms.org.
  *
  * openwms.org is free software: you can redistribute it and/or modify
- * it under the terms of the GNU Lesser General Public License as 
+ * it under the terms of the GNU Lesser General Public License as
  * published by the Free Software Foundation, either version 3 of the
  * License, or (at your option) any later version.
  *
@@ -22,10 +22,27 @@ package org.openwms.core.domain.system.usermanagement {
 
     [Bindable]
     [RemoteClass(alias="org.openwms.core.domain.system.usermanagement.Grant")]
+    /**
+     * A Grant is a security object.
+     *
+     * @version $Revision: 1106 $
+     * @since 0.1
+     */
     public class Grant extends GrantBase {
-    	
-    	public function Grant(name:String) {
-    	   this._name = name;
-    	}
+
+        /**
+         * Constructor.
+         *
+         * @param name Name of the grant
+         */
+        public function Grant(name:String = null, description:String = null) {
+            if (name != null) {
+                this._name = name;
+            }
+            if (description != null) {
+                this._description = description;
+            }
+        }
     }
 }
+
