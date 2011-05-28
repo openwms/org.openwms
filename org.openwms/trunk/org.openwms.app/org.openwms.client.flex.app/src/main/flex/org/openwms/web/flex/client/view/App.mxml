@@ -28,6 +28,7 @@
 
     <mx:Metadata>
         [Name("application")]
+        [ManagedEvent(name="APP.MERGE_GRANTS")]
     </mx:Metadata>
 
     <mx:Script>

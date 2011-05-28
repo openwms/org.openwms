@@ -64,12 +64,12 @@
             
             private function onShow():void {
             	myUser.setFocus();
-            	PopUpManager.centerPopUp(this);
+                trace("Logged in2?"+identity.isLoggedIn())
+                PopUpManager.centerPopUp(this);
             }
             
             private function onLogin(username:String, password:String):void {
-                trace("found"+i18n["core_allg_text"]);
-                trace("found"+i18n['core_allg_text']);
+                trace("Logged in3?"+identity.isLoggedIn())
                 if (modelLocator.SCREEN_LOCKED) {
                     if (modelLocator.viewLockedBy != username) {
                         //Alert.show(i18n['core_allg_text']+ modelLocator.viewLockedBy +" can unlock the application");
@@ -77,12 +77,18 @@
                     }
                 }
                 identity.login(username, password, loginOk, loginError);        
+                trace("Logged in4?"+identity.isLoggedIn())
             }
 
             private function loginOk(event:TideResultEvent):void {
+                trace("Logged in5?"+identity.isLoggedIn())
+                trace("any"+identity.ifAnyGranted('COMMON_add_roles_button'));
+                trace("all"+identity.ifAllGranted('COMMON_add_roles_button'));
+                trace("not"+identity.ifNotGranted('COMMON_add_roles_button'));
+                trace("not"+identity.ifNotGranted('COMMON_remove_role_button'));
                 loginMessageText = null;
-                modelLocator.userLoggedin = modelLocator.allUsers.getItemAt(modelLocator.allUsers.getItemIndex(new User(identity.username))) as User;
                 dispatchEvent(new ApplicationEvent(ApplicationEvent.APP_LOGIN_OK));
+                trace("Logged in6?"+identity.isLoggedIn())
                 PopUpManager.removePopUp(this);
             }
         
