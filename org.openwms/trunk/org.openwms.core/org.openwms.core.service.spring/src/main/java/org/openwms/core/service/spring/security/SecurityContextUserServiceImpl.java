@@ -78,8 +78,10 @@ public class SecurityContextUserServiceImpl implements UserDetailsService, Appli
      */
     @Override
     public void onApplicationEvent(UserChangedEvent event) {
-        if (logger.isDebugEnabled() && cache != null) {
+        if (logger.isDebugEnabled()) {
             logger.debug("User changed, clear cache");
+        }
+        if (cache != null) {
             cache.removeAll();
         }
     }
@@ -135,19 +137,18 @@ public class SecurityContextUserServiceImpl implements UserDetailsService, Appli
                 user = new SystemUser(systemUser);
                 user.setPassword(systemPassword);
             } catch (InvalidPasswordException e) {
-                logger.debug("SystemUser tried to login with a password that is not valid");
-                throw new UsernameNotFoundException("User with username not found:" + username);
+                logger.debug("SystemUser tried to login with an invalid password");
+                throw new UsernameNotFoundException("User " + username + " not found");
             }
         } else {
             user = dao.findByUniqueId(username);
             if (user == null) {
                 logger.debug("User does not exist in database");
-                throw new UsernameNotFoundException("User with username not found:" + username);
+                throw new UsernameNotFoundException("User " + username + " not found");
             }
         }
         ud = new UserWrapper(user);
         userCache.putUserInCache(ud);
-        logger.debug("User found, return the wrapper");
         return ud;
     }
 }

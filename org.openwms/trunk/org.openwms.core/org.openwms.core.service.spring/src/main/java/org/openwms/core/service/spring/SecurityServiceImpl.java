@@ -20,12 +20,14 @@
  */
 package org.openwms.core.service.spring;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.openwms.core.domain.system.usermanagement.Grant;
-import org.openwms.core.domain.system.usermanagement.SecurityObject;
 import org.openwms.core.integration.SecurityObjectDao;
 import org.openwms.core.service.SecurityService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
@@ -42,6 +44,7 @@ import org.springframework.transaction.annotation.Transactional;
 @Service("securityService")
 public class SecurityServiceImpl implements SecurityService {
 
+    private Logger logger = LoggerFactory.getLogger(this.getClass());
     @Autowired
     @Qualifier("securityObjectDao")
     private SecurityObjectDao dao;
@@ -52,16 +55,25 @@ public class SecurityServiceImpl implements SecurityService {
      */
     @Override
     public List<Grant> mergeGrants(String moduleName, List<Grant> grants) {
-        List<Grant> persisted = dao.findAllOfModule(moduleName);
-        SecurityObject merged = null;
+        if (logger.isDebugEnabled()) {
+            logger.debug("Merging grants of module:" + moduleName);
+        }
+        List<Grant> persisted = dao.findAllOfModule(moduleName + "%");
+        List<Grant> result = new ArrayList<Grant>(persisted.size());
+        result.addAll(persisted);
+        Grant merged = null;
         for (Grant grant : grants) {
-            merged = dao.merge(grant);
-            if (persisted.contains(merged)) {
-                persisted.remove(merged);
+            if (!persisted.contains(grant)) {
+                merged = (Grant) dao.merge(grant);
+                result.add(merged);
+                if (persisted.contains(merged)) {
+                    persisted.remove(merged);
+                }
+            } else {
+                persisted.remove(grant);
             }
         }
-        // delete sublist
         dao.delete(persisted);
-        return persisted;
+        return result;
     }
 }

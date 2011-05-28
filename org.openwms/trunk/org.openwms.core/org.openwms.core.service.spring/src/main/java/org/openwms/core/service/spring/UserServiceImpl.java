@@ -161,7 +161,7 @@ public class UserServiceImpl implements UserService {
             return true;
         } catch (InvalidPasswordException ipe) {
             logger.info(ipe.getMessage());
-            return false;
+            throw new ServiceRuntimeException("Password pattern does not match the defined rules", ipe);
         }
     }
 }

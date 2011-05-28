@@ -42,8 +42,8 @@
 	<osgi:service ref="roleService" interface="org.openwms.core.service.RoleService" />
     <osgi:service ref="moduleService" interface="org.openwms.core.service.ModuleService" />
     <osgi:service ref="i18nService" interface="org.openwms.core.service.I18nService" />
+    <osgi:service ref="securityService" interface="org.openwms.core.service.SecurityService" />
     <osgi:service ref="userDetailsService" interface="org.springframework.security.core.userdetails.UserDetailsService" />
     <osgi:service ref="configurationService" interface="org.openwms.core.service.ConfigurationService" />
-    <osgi:service ref="securityService" interface="org.openwms.core.service.SecurityService" />
 
 </beans>
