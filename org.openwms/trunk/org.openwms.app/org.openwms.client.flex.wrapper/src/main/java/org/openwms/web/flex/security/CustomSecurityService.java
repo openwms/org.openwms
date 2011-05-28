@@ -98,6 +98,7 @@ public class CustomSecurityService extends AbstractSecurityService {
      */
     @Override
     public void login(Object credentials) {
+        logger.debug("Trying to log in");
         List<String> decodedCredentials = Arrays.asList(decodeBase64Credentials(credentials));
 
         HttpGraniteContext context = (HttpGraniteContext) GraniteContext.getCurrentInstance();

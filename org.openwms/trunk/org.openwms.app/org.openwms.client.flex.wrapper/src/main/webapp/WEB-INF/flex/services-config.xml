@@ -34,10 +34,6 @@
                 </channels>
                 <properties>
                     <factory>tideSpringFactory</factory>
-                    <entityManagerFactoryBeanName>
-                        entityManagerFactory
-                    </entityManagerFactoryBeanName>
-                    <scope>session</scope>
                 </properties>
             </destination>
         </service>
