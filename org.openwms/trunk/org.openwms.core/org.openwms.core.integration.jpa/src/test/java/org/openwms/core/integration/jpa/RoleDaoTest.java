@@ -41,7 +41,7 @@ import org.springframework.test.context.ContextConfiguration;
  * A RoleDaoTest.
  * 
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
- * @version $Revision: $
+ * @version $Revision$
  */
 @ContextConfiguration("classpath:/org/openwms/core/integration/jpa/Test-context.xml")
 public class RoleDaoTest extends AbstractJpaSpringContextTests {

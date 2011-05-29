@@ -33,7 +33,7 @@ import org.openwms.tms.domain.order.TransportOrder;
  * Hence we must do it with Comparators in the application layer.
  * 
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
- * @version $Revision: $
+ * @version $Revision$
  * @since 0.1
  * @see {@link org.openwms.tms.domain.values.PriorityLevel}
  */

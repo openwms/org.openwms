@@ -25,7 +25,7 @@ package org.openwms.core.exception;
  * of an entity.
  * 
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
- * @version $Revision: $
+ * @version $Revision$
  * @since 0.1
  */
 public class StateChangeException extends DomainModelException {

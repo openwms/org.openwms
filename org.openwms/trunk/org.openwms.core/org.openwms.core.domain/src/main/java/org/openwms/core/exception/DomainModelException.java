@@ -25,7 +25,7 @@ package org.openwms.core.exception;
  * domain model layer.
  * 
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
- * @version $Revision: $
+ * @version $Revision$
  * @since 0.1
  */
 public class DomainModelException extends Exception {

@@ -25,7 +25,7 @@ package org.openwms.core.domain.system {
     /**
      * An I18n is a translation entity.
      *
-     * @version $Revision: 1106 $
+     * @version $Revision$
      * @since 0.1
      */
     public class I18n extends I18nBase { }

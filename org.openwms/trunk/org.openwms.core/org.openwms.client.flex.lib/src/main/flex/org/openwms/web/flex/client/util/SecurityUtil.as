@@ -28,7 +28,7 @@ package org.openwms.web.flex.client.util {
      * A SecurityUtil.
      *
      * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
-     * @version $Revision: 1301 $
+     * @version $Revision$
      * @since 0.1
      */
     public class SecurityUtil {

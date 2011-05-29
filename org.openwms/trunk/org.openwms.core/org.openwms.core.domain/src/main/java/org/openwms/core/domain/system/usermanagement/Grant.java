@@ -27,7 +27,7 @@ import javax.persistence.Entity;
  * A Grant.
  * 
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
- * @version $Revision: 1364 $
+ * @version $Revision$
  * @since 0.1
  */
 @Entity

@@ -26,7 +26,7 @@ package org.openwms.web.flex.client.event {
      * An I18nEvent.
      *
      * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
-     * @version $Revision: 1241 $
+     * @version $Revision$
      * @since 0.1
      */
     public class I18nEvent extends Event {

@@ -40,7 +40,7 @@ import org.springframework.transaction.annotation.Transactional;
  * A TransportOrderStarterImpl.
  * 
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
- * @version $Revision: $
+ * @version $Revision$
  * @since 0.1
  */
 @Component

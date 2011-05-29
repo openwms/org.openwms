@@ -30,7 +30,7 @@ package org.openwms.web.flex.client.util{
      * An I18nUtil is a helper class for i18n translations.
      *
      * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
-     * @version $Revision: 1301 $
+     * @version $Revision$
      * @since 0.1
      */
     public class I18nUtil {

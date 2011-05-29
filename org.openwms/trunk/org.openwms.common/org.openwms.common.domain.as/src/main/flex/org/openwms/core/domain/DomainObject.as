@@ -29,7 +29,7 @@ package org.openwms.core.domain {
      * <li>shall know if it is a transient or persisted instance</li>
      * </ul>
      *
-     * @version $Revision: 1106 $
+     * @version $Revision$
      * @since 0.1
      */
     public interface DomainObject {

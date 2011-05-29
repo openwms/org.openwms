@@ -28,7 +28,7 @@ import org.openwms.core.domain.system.usermanagement.Grant;
  * A SecurityService.
  * 
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
- * @version $Revision: $
+ * @version $Revision$
  * @since 0.1
  */
 public interface SecurityService {

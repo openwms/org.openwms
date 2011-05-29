@@ -39,7 +39,7 @@ package org.openwms.web.flex.client.business {
      * Is named as : i18nController
      *
      * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
-     * @version $Revision: 1247 $
+     * @version $Revision$
      * @since 0.1
      */
     public class I18nDelegate {

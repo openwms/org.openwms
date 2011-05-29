@@ -42,7 +42,7 @@ import org.springframework.test.context.ContextConfiguration;
  * A UserServiceTest.
  * 
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
- * @version $Revision: $
+ * @version $Revision$
  */
 @ContextConfiguration("classpath:/org/openwms/core/service/spring/Test-context.xml")
 public class UserServiceTest extends AbstractJpaSpringContextTests {

@@ -25,7 +25,7 @@ package org.openwms.core.domain.system.usermanagement {
     /**
      * A Grant is a security object.
      *
-     * @version $Revision: 1106 $
+     * @version $Revision$
      * @since 0.1
      */
     public class Grant extends GrantBase {

@@ -28,7 +28,7 @@ import org.openwms.core.domain.system.I18n;
  * An I18nService.
  * 
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
- * @version $Revision: $
+ * @version $Revision$
  * @since 0.1
  */
 public interface I18nService {

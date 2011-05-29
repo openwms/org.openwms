@@ -24,7 +24,7 @@ package org.openwms.common.domain.types;
  * A Target.
  * 
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
- * @version $Revision: $
+ * @version $Revision$
  * @since 0.1
  */
 public interface Target {

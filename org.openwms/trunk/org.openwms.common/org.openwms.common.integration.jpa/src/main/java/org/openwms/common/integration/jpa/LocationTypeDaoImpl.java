@@ -29,7 +29,7 @@ import org.springframework.stereotype.Repository;
  * A LocationTypeDaoImpl.
  * 
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
- * @version $Revision: 817 $
+ * @version $Revision$
  * @since 0.1
  * @see org.openwms.core.integration.jpa.AbstractGenericJpaDao
  * @see org.openwms.common.integration.LocationTypeDao

@@ -26,7 +26,7 @@ import org.openwms.core.domain.system.I18n;
  * A I18nRepository.
  * 
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
- * @version $Revision: $
+ * @version $Revision$
  * @since 0.1
  */
 public interface I18nRepository extends GenericDao<I18n, Long> {
