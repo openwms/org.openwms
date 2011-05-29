@@ -23,14 +23,17 @@ package org.openwms.core.service.spring;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.openwms.core.annotation.FireAfterTransaction;
+import org.openwms.core.domain.system.usermanagement.Grant;
+import org.openwms.core.integration.SecurityObjectDao;
+import org.openwms.core.service.SecurityService;
+import org.openwms.core.util.event.UserChangedEvent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.openwms.core.annotation.FireAfterTransaction;
-import org.openwms.core.util.event.UserChangedEvent;
 
 /**
  * A SecurityServiceImpl.

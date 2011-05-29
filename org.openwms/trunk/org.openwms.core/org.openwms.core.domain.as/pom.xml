@@ -108,6 +108,7 @@
 						<class>org.openwms.core.domain.*</class>
 					</includeJavaClasses>
                     <excludeJavaClasses>
+		    <exclude>**.package-info</exclude> 
                         <class>org.openwms.core.domain.system.usermanagement.User$1</class>
                     </excludeJavaClasses>
 					<sourcePaths>

@@ -109,6 +109,7 @@
                         <class>org.openwms.core.domain.DomainObject</class>
                     </includeJavaClasses>
                     <excludeJavaClasses>
+		    <exclude>**.package-info</exclude> 
                         <class>org.openwms.core.domain.system.usermanagement.User$1</class>
                         <class>org.openwms.tms.domain.order.TransportOrder$1</class>
                     </excludeJavaClasses>

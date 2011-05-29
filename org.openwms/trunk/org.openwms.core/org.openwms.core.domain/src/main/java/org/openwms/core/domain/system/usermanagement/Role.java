@@ -72,7 +72,7 @@ public class Role extends SecurityObject {
     public static final String NQ_FIND_BY_UNIQUE_QUERY = "Role.findByRolename";
 
     @Column(name = "IMMUTABLE")
-    private boolean immutable = false;
+    private Boolean immutable = false;
 
     /* ------------------- collection mapping ------------------- */
     /**
@@ -116,7 +116,7 @@ public class Role extends SecurityObject {
             return this;
         }
 
-        public Builder setImmutable(boolean immutable) {
+        public Builder setImmutable(Boolean immutable) {
             this.role.immutable = immutable;
             return this;
         }
@@ -141,7 +141,7 @@ public class Role extends SecurityObject {
      * 
      * @return the immutable.
      */
-    public boolean isImmutable() {
+    public Boolean getImmutable() {
         return immutable;
     }
 
