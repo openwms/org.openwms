@@ -32,9 +32,11 @@ package org.openwms.web.flex.client.module {
     import mx.modules.IModuleInfo;
     import mx.modules.ModuleManager;
 
+    import org.granite.tide.spring.Identity;
     import org.granite.tide.events.TideFaultEvent;
     import org.granite.tide.events.TideResultEvent;
     import org.granite.tide.spring.Context;
+
     import org.openwms.core.domain.Module;
     import org.openwms.web.flex.client.IApplicationModule;
     import org.openwms.web.flex.client.event.ApplicationEvent;
@@ -59,17 +61,21 @@ package org.openwms.web.flex.client.module {
      */
     public class ModuleLocator extends EventDispatcher {
 
-        [In]
+        [Inject]
         /**
          * Needs a Model to work on.
          */
         public var modelLocator : ModelLocator;
-
-        [In]
+        [Inject]
         /**
          * Needs a TideContext.
          */
         public var tideContext : Context;
+        [Inject]
+        /**
+         * Injected Tide identity object.
+         */
+        public var identity : Identity;
 
         private var toRemove : Module;
         private var applicationDomain : ApplicationDomain = new ApplicationDomain(ApplicationDomain.currentDomain);

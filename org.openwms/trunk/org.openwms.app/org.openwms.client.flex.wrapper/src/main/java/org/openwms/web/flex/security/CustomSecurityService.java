@@ -21,33 +21,38 @@
 package org.openwms.web.flex.security;
 
 import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.granite.context.GraniteContext;
-import org.granite.logging.Logger;
 import org.granite.messaging.service.security.AbstractSecurityContext;
 import org.granite.messaging.service.security.AbstractSecurityService;
 import org.granite.messaging.service.security.SecurityServiceException;
 import org.granite.messaging.webapp.HttpGraniteContext;
-import org.granite.spring.security.SpringSecurity3Service;
+import org.granite.spring.security.AbstractSpringSecurity3Interceptor;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.BeanFactoryUtils;
-import org.springframework.beans.factory.annotation.Required;
 import org.springframework.context.ApplicationContext;
 import org.springframework.security.access.AccessDeniedException;
+import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
-import org.springframework.security.authentication.DisabledException;
-import org.springframework.security.authentication.LockedException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.web.context.HttpRequestResponseHolder;
+import org.springframework.security.web.context.HttpSessionSecurityContextRepository;
+import org.springframework.security.web.context.SecurityContextRepository;
 import org.springframework.web.context.support.WebApplicationContextUtils;
 
 /**
@@ -59,50 +64,53 @@ import org.springframework.web.context.support.WebApplicationContextUtils;
  */
 public class CustomSecurityService extends AbstractSecurityService {
 
-    private static final Logger logger = Logger.getLogger(CustomSecurityService.class);
+    private Logger logger = LoggerFactory.getLogger(this.getClass());
 
-    private static final String SPRING_AUTHENTICATION_TOKEN = SpringSecurity3Service.class.getName()
-            + ".SPRING_AUTHENTICATION_TOKEN";
+    private static final String FILTER_APPLIED = "__spring_security_scpf_applied";
 
     private AuthenticationManager authenticationManager = null;
-    private String authenticationManagerBeanName = "authenticationManager";
+    private SecurityContextRepository securityContextRepository = new HttpSessionSecurityContextRepository();
+    private AbstractSpringSecurity3Interceptor securityInterceptor = null;
+    private String authenticationManagerBeanName = null;
+    private Method getRequest = null;
+    private Method getResponse = null;
 
-    /**
-     * Inject an
-     * org.springframework.security.authentication.AuthenticationManager.
-     * 
-     * @param authenticationManager
-     *            The manager
-     */
-    @Required
+    public CustomSecurityService() {
+        logger.debug("Starting Spring 3 Security Service!");
+        try {
+            getRequest = HttpRequestResponseHolder.class.getDeclaredMethod("getRequest");
+            getRequest.setAccessible(true);
+            getResponse = HttpRequestResponseHolder.class.getDeclaredMethod("getResponse");
+            getResponse.setAccessible(true);
+        } catch (Exception e) {
+            throw new RuntimeException("Could not get methods from HttpRequestResponseHolder", e);
+        }
+    }
+
     public void setAuthenticationManager(AuthenticationManager authenticationManager) {
         this.authenticationManager = authenticationManager;
     }
 
-    /**
-     * {@inheritDoc}
-     * 
-     * @see org.granite.messaging.service.security.SecurityService#configure(java.util.Map)
-     */
-    @Override
-    public void configure(Map<String, String> params) {
-        if (params.containsKey("authentication-manager-bean-name")) {
-            authenticationManagerBeanName = params.get("authentication-manager-bean-name");
-        }
+    public void setSecurityContextRepository(SecurityContextRepository securityContextRepository) {
+        this.securityContextRepository = securityContextRepository;
     }
 
-    /**
-     * {@inheritDoc}
-     * 
-     * @see org.granite.messaging.service.security.SecurityService#login(java.lang.Object)
-     */
+    public void setSecurityInterceptor(AbstractSpringSecurity3Interceptor securityInterceptor) {
+        this.securityInterceptor = securityInterceptor;
+    }
+
+    @Override
+    public void configure(Map<String, String> params) {
+        if (params.containsKey("authentication-manager-bean-name"))
+            authenticationManagerBeanName = params.get("authentication-manager-bean-name");
+    }
+
     @Override
     public void login(Object credentials) {
-        logger.debug("Trying to log in");
         List<String> decodedCredentials = Arrays.asList(decodeBase64Credentials(credentials));
 
-        HttpGraniteContext context = (HttpGraniteContext) GraniteContext.getCurrentInstance();
-        HttpServletRequest httpRequest = context.getRequest();
+        HttpGraniteContext graniteContext = (HttpGraniteContext) GraniteContext.getCurrentInstance();
+        HttpServletRequest httpRequest = graniteContext.getRequest();
 
         String user = decodedCredentials.get(0);
         String password = decodedCredentials.get(1);
@@ -115,35 +123,36 @@ public class CustomSecurityService extends AbstractSecurityService {
 
             try {
                 Authentication authentication = authenticationManager.authenticate(auth);
-                SecurityContextHolder.getContext().setAuthentication(authentication);
-                httpRequest.getSession().setAttribute(SPRING_AUTHENTICATION_TOKEN, authentication);
-            } catch (DisabledException de) {
-                logger.error("DisabledException");
-                throw SecurityServiceException.newAccessDeniedException(de.getMessage());
-            } catch (LockedException le) {
-                logger.error("LockedException");
-                throw SecurityServiceException.newAccessDeniedException(le.getMessage());
-            } catch (BadCredentialsException bce) {
-                logger.error("BadCredentialsException");
-                throw SecurityServiceException.newInvalidCredentialsException(bce.getMessage());
+
+                HttpRequestResponseHolder holder = new HttpRequestResponseHolder(graniteContext.getRequest(),
+                        graniteContext.getResponse());
+                SecurityContext securityContext = securityContextRepository.loadContext(holder);
+                securityContext.setAuthentication(authentication);
+                SecurityContextHolder.setContext(securityContext);
+                try {
+                    securityContextRepository.saveContext(securityContext,
+                            (HttpServletRequest) getRequest.invoke(holder),
+                            (HttpServletResponse) getResponse.invoke(holder));
+                } catch (Exception e) {
+                    logger.error("Could not save context after authentication", e);
+                }
+            } catch (BadCredentialsException e) {
+                throw SecurityServiceException.newInvalidCredentialsException(e.getMessage());
             }
         }
+
+        logger.debug("Logged In!");
     }
 
-    /**
-     * Resolve the AuthenticationManager by name.
-     * 
-     * @param ctx
-     *            Springs ApplicationContext
-     * @param managerBeanName
-     *            The beanName defined for the AuthenticationManager in the
-     *            Spring configuration
-     */
-    private void lookupAuthenticationManager(ApplicationContext ctx, String managerBeanName) {
+    public void lookupAuthenticationManager(ApplicationContext ctx, String authenticationManagerBeanName)
+            throws SecurityServiceException {
+        logger.debug("lookup");
+        if (this.authenticationManager != null) return;
 
         Map<String, AuthenticationManager> authManagers = BeanFactoryUtils.beansOfTypeIncludingAncestors(ctx,
                 AuthenticationManager.class);
-        String beanName = managerBeanName == null ? "_authenticationManager" : managerBeanName;
+        String beanName = authenticationManagerBeanName == null ? "_authenticationManager"
+                : authenticationManagerBeanName;
         this.authenticationManager = authManagers.get(beanName);
         if (authenticationManager == null) {
             try {
@@ -155,101 +164,107 @@ public class CustomSecurityService extends AbstractSecurityService {
         return;
     }
 
-    /**
-     * {@inheritDoc}
-     * 
-     * @see org.granite.messaging.service.security.SecurityService#authorize(org.granite.messaging.service.security.AbstractSecurityContext)
-     */
     @Override
     public Object authorize(AbstractSecurityContext context) throws Exception {
+        logger.debug("Authorize: %s", context);
+        logger.debug("Is %s secured? %b", context.getDestination().getId(), context.getDestination().isSecured());
+
         startAuthorization(context);
 
-        Authentication authentication = getAuthentication();
+        HttpGraniteContext graniteContext = (HttpGraniteContext) GraniteContext.getCurrentInstance();
+
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        HttpRequestResponseHolder holder = null;
+
+        if (graniteContext.getRequest().getAttribute(FILTER_APPLIED) == null) {
+            holder = new HttpRequestResponseHolder(graniteContext.getRequest(), graniteContext.getResponse());
+            SecurityContext contextBeforeChainExecution = securityContextRepository.loadContext(holder);
+            SecurityContextHolder.setContext(contextBeforeChainExecution);
+            if (isAuthenticated(authentication))
+                contextBeforeChainExecution.setAuthentication(authentication);
+            else
+                authentication = contextBeforeChainExecution.getAuthentication();
+        }
+
         if (context.getDestination().isSecured()) {
-            if (!isAuthenticated(authentication)) {
+            logger.debug("Destination is secured:" + context.getDestination().getId());
+            if (!isAuthenticated(authentication) || authentication instanceof AnonymousAuthenticationToken) {
+                logger.debug("Is not authenticated!");
                 throw SecurityServiceException.newNotLoggedInException("User not logged in");
             }
             if (!userCanAccessService(context, authentication)) {
+                logger.debug("Access denied for: %s", authentication.getName());
                 throw SecurityServiceException.newAccessDeniedException("User not in required role");
             }
         }
-        if (isAuthenticated(authentication)) {
-            SecurityContext securityContext = SecurityContextHolder.getContext();
-            securityContext.setAuthentication(authentication);
-        }
 
         try {
-            return endAuthorization(context);
+            Object returnedObject = securityInterceptor != null ? securityInterceptor.invoke(context)
+                    : endAuthorization(context);
+
+            return returnedObject;
+        } catch (AccessDeniedException e) {
+            throw SecurityServiceException.newAccessDeniedException(e.getMessage());
         } catch (InvocationTargetException e) {
             handleAuthorizationExceptions(e);
             throw e;
         }
+        finally {
+            if (graniteContext.getRequest().getAttribute(FILTER_APPLIED) == null) {
+                SecurityContext contextAfterChainExecution = SecurityContextHolder.getContext();
+                SecurityContextHolder.clearContext();
+                try {
+                    securityContextRepository.saveContext(contextAfterChainExecution,
+                            (HttpServletRequest) getRequest.invoke(holder),
+                            (HttpServletResponse) getResponse.invoke(holder));
+                } catch (Exception e) {
+                    logger.error("Could not extract wrapped context from holder", e);
+                }
+            }
+        }
     }
 
-    /**
-     * {@inheritDoc}
-     * 
-     * @see org.granite.messaging.service.security.SecurityService#logout()
-     */
     @Override
     public void logout() {
         HttpGraniteContext context = (HttpGraniteContext) GraniteContext.getCurrentInstance();
-        context.getSession().invalidate();
+        HttpSession session = context.getSession(false);
+        if (session != null && securityContextRepository.containsContext(context.getRequest())) session.invalidate();
+
+        SecurityContextHolder.clearContext();
     }
 
-    /**
-     * {@inheritDoc}
-     */
     protected boolean isUserInRole(Authentication authentication, String role) {
+        logger.debug("isUserInRole");
         for (GrantedAuthority ga : authentication.getAuthorities()) {
-            if (ga.getAuthority().matches(role)) {
-                return true;
-            }
+            if (ga.getAuthority().matches(role)) return true;
         }
         return false;
     }
 
-    /**
-     * {@inheritDoc}
-     */
     protected boolean isAuthenticated(Authentication authentication) {
+        logger.debug("isAuthenticated");
         return authentication != null && authentication.isAuthenticated();
     }
 
-    /**
-     * {@inheritDoc}
-     */
     protected boolean userCanAccessService(AbstractSecurityContext context, Authentication authentication) {
+        logger.debug("Is authenticated as: %s", authentication.getName());
+
         for (String role : context.getDestination().getRoles()) {
             if (isUserInRole(authentication, role)) {
+                logger.debug("Allowed access to %s in role %s", authentication.getName(), role);
                 return true;
             }
+            logger.debug("Access denied for %s not in role %s", authentication.getName(), role);
         }
         return false;
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    protected Authentication getAuthentication() {
-        HttpGraniteContext context = (HttpGraniteContext) GraniteContext.getCurrentInstance();
-        HttpServletRequest httpRequest = context.getRequest();
-        Authentication authentication = (Authentication) httpRequest.getSession().getAttribute(
-                SPRING_AUTHENTICATION_TOKEN);
-
-        return authentication;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
     protected void handleAuthorizationExceptions(InvocationTargetException e) {
         for (Throwable t = e; t != null; t = t.getCause()) {
             // Don't create a dependency to javax.ejb in SecurityService...
             if (t instanceof SecurityException || t instanceof AccessDeniedException
-                    || "javax.ejb.EJBAccessException".equals(t.getClass().getName())) {
+                    || "javax.ejb.EJBAccessException".equals(t.getClass().getName()))
                 throw SecurityServiceException.newAccessDeniedException(t.getMessage());
-            }
         }
     }
 

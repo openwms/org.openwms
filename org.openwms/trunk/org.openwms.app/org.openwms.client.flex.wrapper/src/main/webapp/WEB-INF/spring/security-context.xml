@@ -21,26 +21,44 @@
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */  
 -->
-<beans:beans
-    xmlns="http://www.springframework.org/schema/security"
+<beans
+    xmlns="http://www.springframework.org/schema/beans"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xmlns:beans="http://www.springframework.org/schema/beans"
+    xmlns:security="http://www.springframework.org/schema/security"
+    xmlns:graniteds="http://www.graniteds.org/config"
 	xsi:schemaLocation="
 	    http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
-		http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security-3.0.3.xsd">
+		http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security-3.0.3.xsd
+        http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security-3.0.xsd
+        http://www.graniteds.org/config http://www.graniteds.org/public/dtd/2.2.0/granite-config-2.2.xsd">
 
-    <http entry-point-ref="entryPoint">
-        <anonymous enabled="true"/>
-    </http>
+    <security:http entry-point-ref="entryPoint">
+        <security:form-login />
+        <security:anonymous />
+        <security:http-basic />
+        <security:logout />
+        <security:remember-me />
+    </security:http>
     
-    <beans:bean id="entryPoint" class="org.springframework.security.web.authentication.Http403ForbiddenEntryPoint"/>
+    <bean id="entryPoint" class="org.springframework.security.web.authentication.Http403ForbiddenEntryPoint"/>
     
-    <authentication-manager alias="authenticationManager">
-		<authentication-provider user-service-ref="userDetailsService">
+    <!-- bean id="accessDecisionManager" class="org.springframework.security.access.vote.UnanimousBased">
+        <property name="decisionVoters">
+            <list>
+              <ref bean="customVoter" />
+              <bean class="org.springframework.security.access.vote.RoleVoter" />
+              <bean class="org.springframework.security.access.vote.AuthenticatedVoter" />
+            </list>
+        </property>
+    </bean-->
+    
+    <security:authentication-manager alias="authenticationManager">
+		<security:authentication-provider user-service-ref="userDetailsService">
             <!-- password-encoder hash="sha-256"><salt-source user-property="username"/></password-encoder-->
-        </authentication-provider>
-    </authentication-manager>
+        </security:authentication-provider>
+    </security:authentication-manager>
 
-    <global-method-security secured-annotations="enabled" jsr250-annotations="enabled"/>
-
-</beans:beans>
+    <graniteds:tide-identity />
+    
+</beans>

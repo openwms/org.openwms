@@ -24,7 +24,7 @@
 <mx:Canvas xmlns:mx="http://www.adobe.com/2006/mxml" width="100%" height="100%" show="onShow();">
 
     <mx:Metadata>
-        [Name("transportOrderView")]
+        [Name]
         [ManagedEvent(name="LOAD_TRANSPORT_ORDERS")]
         [ManagedEvent(name="LOAD_TRANSPORT_UNITS")]
         [ManagedEvent(name="LOAD_ALL_LOCATIONS")]
@@ -34,26 +34,39 @@
 	<mx:Script>
     	<![CDATA[
     		import mx.events.ListEvent;
-    		import org.openwms.web.flex.client.model.ModelLocator;
     		import mx.collections.ArrayCollection;
     		import mx.controls.Alert;
     		import mx.controls.dataGridClasses.DataGridColumn;
+            import mx.managers.PopUpManager;
             import mx.formatters.DateFormatter;
-    		import org.openwms.web.flex.client.common.event.LocationGroupEvent;
+            
+            import org.granite.tide.spring.Identity;
+            
+    		import org.openwms.web.flex.client.model.ModelLocator;
+            import org.openwms.web.flex.client.common.event.LocationGroupEvent;
     		import org.openwms.web.flex.client.common.event.LocationEvent;
     		import org.openwms.web.flex.client.common.event.TransportUnitEvent;
     		import org.openwms.web.flex.client.common.model.CommonModelLocator;
-    		import org.openwms.web.flex.client.tms.event.TransportOrderEvent;
     		import org.openwms.tms.domain.order.TransportOrder;
             import org.openwms.tms.domain.values.TransportOrderState;
             import org.openwms.tms.domain.values.PriorityLevel;
     		import org.openwms.web.flex.client.tms.model.TMSModelLocator;
+            import org.openwms.web.flex.client.tms.event.TransportOrderEvent;
     		import org.openwms.web.flex.client.tms.view.dialogs.CreateTransportOrderDialog;
             import org.openwms.web.flex.client.tms.view.dialogs.CancelTransportOrdersDialog;
             import org.openwms.web.flex.client.tms.view.dialogs.RedirectTransportOrderDialog;
-            import mx.managers.PopUpManager;
+
             [Inject]
             [Bindable]
+            /**
+             * Injected Tide identity object.
+             */
+            public var identity : Identity;
+            [Inject]
+            [Bindable]
+            /**
+             * Inject a model to work on.
+             */
             public var modelLocator:ModelLocator;            
             [Inject]
             [Bindable]
@@ -168,16 +181,16 @@
 	
 	<mx:HBox x="10" y="10" verticalAlign="middle" width="95%" backgroundColor="#F9FBB7">
 	    <mx:Label x="10" y="10" text="Transport Orders" fontSize="24"/>
-	    <mx:VRule height="10"/>
-	    <mx:Button id="createTransportOrderBtn" buttonMode="true" mouseChildren="false" toolTip="Create a new Transport Order" icon="@Embed(source='/assets/images/TransportOrder--Add.png')" click="showCreateTransportOrderDialog()"/>
-        <mx:VRule height="10"/>
-        <mx:Button id="cancelTransportOrderBtn" buttonMode="true" mouseChildren="false" toolTip="Complete one or more existing Transport Orders" icon="@Embed(source='/assets/images/TransportOrder--Cancel.png')" click="showCancelTransportOrdersDialog()" />
-        <mx:VRule height="10"/>
+	    <mx:VRule height="10" visible="{identity.ifAllGranted('TMS_create_TO_button')}" />
+	    <mx:Button id="createTransportOrderBtn" visible="{identity.ifAllGranted('TMS_create_TO_button')}" buttonMode="true" mouseChildren="false" toolTip="Create a new Transport Order" icon="@Embed(source='/assets/images/TransportOrder--Add.png')" click="showCreateTransportOrderDialog()"/>
+        <mx:VRule height="10" visible="{identity.ifAllGranted('TMS_cancel_TO_button')}" />
+        <mx:Button id="cancelTransportOrderBtn" visible="{identity.ifAllGranted('TMS_cancel_TO_button')}" buttonMode="true" mouseChildren="false" toolTip="Complete one or more existing Transport Orders" icon="@Embed(source='/assets/images/TransportOrder--Cancel.png')" click="showCancelTransportOrdersDialog()" />
+        <mx:VRule height="10" />
         <mx:Button id="refreshTransportOrdersBtn" buttonMode="true" mouseChildren="false" toolTip="Refresh the list of Transport Orders" icon="@Embed(source='assets/images/icons/refresh.png')" click="refresh()" />
-	    <mx:VRule height="10"/>
-	    <mx:Button id="showTransportOrderHistoryBtn" buttonMode="true" mouseChildren="false" toolTip="Show history of a Transport Order" icon="@Embed(source='/assets/images/TransportOrder--History.png')" click="showCreateTransportOrderDialog()" />
-	    <mx:VRule height="10"/>
-	    <mx:Button id="redirectTransportOrderBtn" buttonMode="true" mouseChildren="false" toolTip="Redirect one or more Transport Orders to a new target" icon="@Embed(source='/assets/images/TransportOrder--Redirect.png')" click="showRedirectTransportOrderDialog()"/>
+	    <mx:VRule height="10" visible="{identity.ifAllGranted('TMS_show_TO_history_button')}" />
+	    <mx:Button id="showTransportOrderHistoryBtn" visible="{identity.ifAllGranted('TMS_show_TO_history_button')}" buttonMode="true" mouseChildren="false" toolTip="Show history of a Transport Order" icon="@Embed(source='/assets/images/TransportOrder--History.png')" click="showCreateTransportOrderDialog()" />
+	    <mx:VRule height="10" visible="{identity.ifAllGranted('TMS_redirect_TO_button')}" />
+	    <mx:Button id="redirectTransportOrderBtn" visible="{identity.ifAllGranted('TMS_redirect_TO_button')}" buttonMode="true" mouseChildren="false" toolTip="Redirect one or more Transport Orders to a new target" icon="@Embed(source='/assets/images/TransportOrder--Redirect.png')" click="showRedirectTransportOrderDialog()"/>
 	</mx:HBox>
 	<mx:HRule x="10" y="53" width="95%"/>
 

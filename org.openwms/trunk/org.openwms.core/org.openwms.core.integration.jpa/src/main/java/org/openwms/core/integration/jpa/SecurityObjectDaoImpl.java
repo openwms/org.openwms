@@ -56,6 +56,15 @@ public class SecurityObjectDaoImpl implements SecurityObjectDao {
     }
 
     /**
+     * @see org.openwms.core.integration.SecurityObjectDao#findAll()
+     */
+    @SuppressWarnings("unchecked")
+    @Override
+    public List<SecurityObject> findAll() {
+        return em.createQuery("select g from Grant g").getResultList();
+    }
+
+    /**
      * @see org.openwms.core.integration.SecurityObjectDao#findAllOfModule(java.lang.String)
      */
     @SuppressWarnings("unchecked")

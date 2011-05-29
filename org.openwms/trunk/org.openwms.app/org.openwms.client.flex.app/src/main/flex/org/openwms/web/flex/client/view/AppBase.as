@@ -43,6 +43,7 @@ package org.openwms.web.flex.client.view {
     import org.granite.tide.spring.Context;
     import org.granite.tide.spring.Identity;
     import org.granite.tide.spring.Spring;
+
     import org.openwms.core.domain.system.usermanagement.Grant;
     import org.openwms.common.domain.values.Weight;
     import org.openwms.tms.domain.order.TransportOrder;
@@ -59,6 +60,7 @@ package org.openwms.web.flex.client.view {
     import org.openwms.web.flex.client.module.ModuleLocator;
     import org.openwms.web.flex.client.util.DisplayUtility;
     import org.openwms.web.flex.client.util.SecurityUtil;
+    import org.openwms.web.flex.client.util.XMLUtil;
     import org.openwms.web.flex.client.view.dialogs.LoginView;
     /**
      * An AppBase class is the main Flex Application of the CORE framework. This class
@@ -135,6 +137,9 @@ package org.openwms.web.flex.client.view {
         private var configurationService:SecureRemoteObject = new SecureRemoteObject("configurationServiceRemote");
         [Bindable]
         private var securityService : SecureRemoteObject = new SecureRemoteObject("securityServiceRemote");
+        [Embed(source="/assets/security/secured-objects.xml", mimeType="application/octet-stream")]
+        private var _xml:Class;
+        private var blacklisted : ArrayCollection = new ArrayCollection();
 
         /**
          * Suppress warnings and add a constructor.
@@ -161,10 +166,9 @@ package org.openwms.web.flex.client.view {
             for each (var s:String in l){
                 trace("LOCALE:"+s);
             } 
-            setupServices([moduleService, roleService, userService, i18nService, configurationService]);
-            trace("Load all internationalized texts");
-            trace("Logged in?"+identity.isLoggedIn());
+            setupServices([moduleService, roleService, userService, i18nService, configurationService, securityService]);
             tideContext.raiseEvent(I18nEvent.LOAD_ALL);
+            readAndMergeGrantsList();
         }
 
         private function setupServices(services:Array) : void {
@@ -175,6 +179,22 @@ package org.openwms.web.flex.client.view {
                 service.channelSet = new ChannelSet();
                 service.channelSet.addChannel(ServerConfig.getChannel("my-graniteamf"));        		
             }
+        }
+
+        /**
+         * Load all main security objects and merge them with the backend
+         */
+        private function readAndMergeGrantsList() : void {
+            if (blacklisted.length > 0) {
+                return;
+            }
+            var xml:XML = XMLUtil.getXML(new _xml());
+            for each (var g:XML in xml.grant) {
+                blacklisted.addItem(new Grant(g.name, g.description));
+            }
+            var event:ApplicationEvent = new ApplicationEvent(ApplicationEvent.MERGE_GRANTS);
+            event.data = {moduleName : "APP", grants : blacklisted};
+            dispatchEvent(event);
         }
 
         /**
@@ -200,6 +220,7 @@ package org.openwms.web.flex.client.view {
          * @param event Unused
          */
         public function logout(event : ApplicationEvent) : void {
+            trace("Logout.");
             modelLocator.actualView = SwitchScreenEvent.SHOW_STARTSCREEN;
             appViewStack.selectedIndex = DisplayUtility.getView(SwitchScreenEvent.SHOW_STARTSCREEN, appViewStack);
             tideContext.raiseEvent(ApplicationEvent.UNLOAD_ALL_MODULES);
@@ -322,7 +343,6 @@ package org.openwms.web.flex.client.view {
         }
 
         private function addSecurityObjects(module : IApplicationModule) : void {
-            trace("Loading all security objects from the new module");
             var securityObjects:ArrayCollection = module.getSecurityObjects();
             var event:ApplicationEvent = new ApplicationEvent(ApplicationEvent.MERGE_GRANTS);
             event.data = {moduleName : module.getModuleName(), grants : securityObjects};

@@ -31,10 +31,15 @@
 
     <mx:Script>
     	<![CDATA[
-    		import org.openwms.web.flex.client.model.ModelLocator;
+            import mx.controls.Alert;
     		import mx.collections.ArrayCollection;
-    		import org.openwms.web.flex.client.event.ApplicationEvent;
+            
             import org.granite.tide.spring.Identity;
+            import org.granite.tide.events.TideFaultEvent;
+            import org.granite.tide.events.TideResultEvent;
+            
+            import org.openwms.web.flex.client.model.ModelLocator;
+    		import org.openwms.web.flex.client.event.ApplicationEvent;
             import org.openwms.web.flex.client.ISecured;
 
             [In]
@@ -53,15 +58,27 @@
             
     		private function logout(event:MouseEvent = null):void {
                 identity.logout();
-    			dispatchEvent(new ApplicationEvent(ApplicationEvent.LOGOUT));
+                identity.isLoggedIn(onResult, onFault);
     		}
     		
             private function lock(event:MouseEvent = null):void {
             	modelLocator.viewBeforeLock = modelLocator.actualView;
-                modelLocator.viewLockedBy = identity.username;
+                modelLocator.viewLockedBy = new String(identity.username);
                 modelLocator.fired = true;
                 identity.logout();
                 dispatchEvent(new ApplicationEvent(ApplicationEvent.LOCK));
+            }
+
+            private function onResult(event : TideResultEvent) : void {
+                identity.isLoggedIn(onResult2, onFault);
+            }
+            private function onResult2(event : TideResultEvent) : void {
+                dispatchEvent(new ApplicationEvent(ApplicationEvent.LOGOUT));
+            }
+    
+            private function onFault(event : TideFaultEvent) : void {
+                trace("Error executing operation on security service:" + event.fault);
+                Alert.show("Error executing operation on security service");
             }
 
     	]]>

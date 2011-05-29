@@ -40,7 +40,6 @@
 
             import org.granite.tide.spring.Context;
             import org.granite.tide.spring.Identity;
-            import org.granite.tide.events.TideResultEvent;
 
             import org.openwms.core.domain.system.usermanagement.SecurityObject;
             import org.openwms.core.domain.system.usermanagement.User;
@@ -81,17 +80,10 @@
                 if (modelLocator.allUsers.length == 0) {
                     dispatchEvent(new UserEvent(UserEvent.LOAD_ALL_USERS));
                 }
-                trace("any"+iden.ifAnyGranted('COMMON_add_roles_button', reHandler));
-                trace("all"+iden.ifAllGranted('COMMON_add_roles_button', reHandler));
-                trace("not"+iden.ifNotGranted('COMMON_add_roles_button', reHandler));
-                trace("not"+iden.ifNotGranted('COMMON_remove_role_button', reHandler));
+                trace("all"+iden.ifAllGranted('COMMON_assign_grants_button'));
+                trace("any"+iden.ifAnyGranted('COMMON_assign_grants_button'));
             }
             
-            private function reHandler(event:TideResultEvent):void {
-                res = event.result as Boolean;
-                trace("res:"+res);
-            } 
-
             private function onRowClick(event:ListEvent):void {
                 selected = event.currentTarget.selectedItem as Role;
             }
@@ -216,12 +208,12 @@
     <mx:HBox x="10" y="10" width="95%" verticalAlign="middle" backgroundColor="#FFA6A6">
         <mx:Label x="10" y="10" text="Roles" fontSize="24"/>
         <mx:VRule height="10"/>
-        <mx:Button id="addRoleBtn" visible="{iden.ifAnyGranted('COMMON_add_roles_button')}" buttonMode="true" mouseChildren="false" toolTip="Create a new Role" icon="@Embed(source='/assets/images/Users--plus.png')" click="add()"/>
-        <mx:VRule height="10" visible="{iden.ifAnyGranted('COMMON_add_roles_button')}"/>
-        <mx:Button id="removeRoleBtn" visible="{iden.ifAnyGranted('COMMON_remove_role_button')}" buttonMode="true" mouseChildren="false" toolTip="Delete an existing Role" icon="@Embed(source='/assets/images/Users--minus.png')" click="remove()"/>
-        <mx:VRule height="10" visible="{iden.ifAnyGranted('COMMON_remove_role_button')}"/>
-        <mx:Button id="saveRoleBtn" visible="{iden.ifAnyGranted('COMMON_save_role_button')}" buttonMode="true" mouseChildren="false" toolTip="Save a modified Role" icon="@Embed(source='/assets/images/Users--save.png')" click="save()"/>
-        <mx:VRule height="10" visible="{iden.ifAnyGranted('COMMON_save_role_button')}" />
+        <mx:Button id="addRoleBtn" visible="{iden.ifAllGranted('COMMON_add_roles_button')}" buttonMode="true" mouseChildren="false" toolTip="Create a new Role" icon="@Embed(source='/assets/images/Users--plus.png')" click="add()"/>
+        <mx:VRule height="10" visible="{iden.ifAllGranted('COMMON_add_roles_button')}"/>
+        <mx:Button id="removeRoleBtn" visible="{iden.ifAllGranted('COMMON_remove_role_button')}" buttonMode="true" mouseChildren="false" toolTip="Delete an existing Role" icon="@Embed(source='/assets/images/Users--minus.png')" click="remove()"/>
+        <mx:VRule height="10" visible="{iden.ifAllGranted('COMMON_remove_role_button')}"/>
+        <mx:Button id="saveRoleBtn" visible="{iden.ifAllGranted('COMMON_save_role_button')}" buttonMode="true" mouseChildren="false" toolTip="Save a modified Role" icon="@Embed(source='/assets/images/Users--save.png')" click="save()"/>
+        <mx:VRule height="10" visible="{iden.ifAllGranted('COMMON_save_role_button')}" />
         <mx:Button id="refreshRoleBtn" buttonMode="true" mouseChildren="false" toolTip="Refresh the list of Roles" icon="@Embed(source='assets/images/icons/refresh.png')" click="refresh()"/>
     </mx:HBox>
     <mx:HRule x="9" y="53" width="95%"/>
@@ -237,18 +229,18 @@
 	            <mx:VBox width="50%">
 	                <mx:HBox verticalAlign="middle" backgroundColor="#FFA6A6" width="100%" backgroundAlpha="0.5" horizontalGap="8" height="25">
 	                    <mx:Label x="10" y="10" text="Assigned Grants" fontSize="10"/>
-	                    <mx:VRule height="10" visible="{iden.ifAnyGranted('COMMON_assign_grants_button')}"/>
-	                    <mx:Button id="assignedGrantsBtn" visible="{iden.ifAnyGranted('COMMON_assign_grants_button')}" width="22" height="22" buttonMode="true" mouseChildren="false" toolTip="Assign Grants to the selected Role" click="addGrants()" icon="@Embed(source='assets/images/icons/grant--add.png')"/>
+	                    <mx:VRule height="10" visible="{iden.ifAllGranted('COMMON_assign_grants_button')}"/>
+	                    <mx:Button id="assignedGrantsBtn" visible="{iden.ifAllGranted('COMMON_assign_grants_button')}" width="22" height="22" buttonMode="true" mouseChildren="false" toolTip="Assign Grants to the selected Role" click="addGrants()" icon="@Embed(source='assets/images/icons/grant--add.png')"/>
 	                </mx:HBox>
 	                <mx:List id="grantsLst" height="200" width="100%" allowMultipleSelection="true" labelFunction="formatGrant" dataProvider="{selected.grants}"/>
 	            </mx:VBox>
 	            <mx:VBox width="50%">
 			        <mx:HBox verticalAlign="middle" backgroundColor="#FFA6A6" width="100%" height="25" backgroundAlpha="0.5">
 			            <mx:Label x="10" y="10" text="Assigned Users" fontSize="10"/>
-			            <mx:VRule height="10" visible="{iden.ifAnyGranted('COMMON_assign_users_button')}"/>
-			            <mx:Button id="assignedUsersBtn" visible="{iden.ifAnyGranted('COMMON_assign_users_button')}" width="22" height="22" buttonMode="true" mouseChildren="false" toolTip="Assign Users to the selected Role" click="addUsers()" icon="@Embed(source='/assets/images/User--plus.png')"/>
-			            <mx:VRule height="10" visible="{iden.ifAnyGranted('COMMON_assign_users_button')}"/>
-			            <mx:Button id="removeUsersBtn" visible="{iden.ifAnyGranted('COMMON_assign_users_button')}" width="22" height="22" buttonMode="true" mouseChildren="false" toolTip="Remove Users from the selected Role" click="removeUsers()" icon="@Embed(source='/assets/images/User--minus.png')"/>
+			            <mx:VRule height="10" visible="{iden.ifAllGranted('COMMON_assign_users_button')}"/>
+			            <mx:Button id="assignedUsersBtn" visible="{iden.ifAllGranted('COMMON_assign_users_button')}" width="22" height="22" buttonMode="true" mouseChildren="false" toolTip="Assign Users to the selected Role" click="addUsers()" icon="@Embed(source='/assets/images/User--plus.png')"/>
+			            <mx:VRule height="10" visible="{iden.ifAllGranted('COMMON_assign_users_button')}"/>
+			            <mx:Button id="removeUsersBtn" visible="{iden.ifAllGranted('COMMON_assign_users_button')}" width="22" height="22" buttonMode="true" mouseChildren="false" toolTip="Remove Users from the selected Role" click="removeUsers()" icon="@Embed(source='/assets/images/User--minus.png')"/>
 			        </mx:HBox>
 	                <mx:List id="usersLst" height="200" width="100%" allowMultipleSelection="true" labelFunction="formatUser" dataProvider="{selected.users}" />
 	            </mx:VBox>

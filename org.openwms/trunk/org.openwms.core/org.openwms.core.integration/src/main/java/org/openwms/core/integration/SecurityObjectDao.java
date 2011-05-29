@@ -34,6 +34,8 @@ import org.openwms.core.domain.system.usermanagement.SecurityObject;
  */
 public interface SecurityObjectDao {
 
+    List<SecurityObject> findAll();
+
     List<Grant> findAllOfModule(String moduleName);
 
     SecurityObject merge(SecurityObject entity);

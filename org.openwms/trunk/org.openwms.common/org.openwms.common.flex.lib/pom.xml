@@ -60,7 +60,6 @@
 					</warnings>
 					<allowSourcePathOverlap>true</allowSourcePathOverlap>
                     <keepAs3Metadatas>
-                        <keepAs3Metadata>Protected</keepAs3Metadata>
                         <keepAs3Metadata>Bindable</keepAs3Metadata>
                         <keepAs3Metadata>Managed</keepAs3Metadata>
                         <keepAs3Metadata>ChangeEvent</keepAs3Metadata>
@@ -74,7 +73,9 @@
                         <keepAs3Metadata>Out</keepAs3Metadata>
                         <keepAs3Metadata>Observer</keepAs3Metadata>
                         <keepAs3Metadata>ManagedEvent</keepAs3Metadata>
+                        <keepAs3Metadata>PostConstruct</keepAs3Metadata>
                         <keepAs3Metadata>Destroy</keepAs3Metadata>
+                        <keepAs3Metadata>Protected</keepAs3Metadata>
                     </keepAs3Metadatas>
 					<output>${project.build.directory}/${project.artifactId}.swc</output>
 				</configuration>

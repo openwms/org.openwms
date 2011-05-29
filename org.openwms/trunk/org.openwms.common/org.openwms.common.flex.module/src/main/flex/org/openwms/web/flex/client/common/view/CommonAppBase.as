@@ -28,12 +28,15 @@ package org.openwms.web.flex.client.common.view {
     import mx.controls.MenuBar;
     import mx.messaging.ChannelSet;
     import mx.messaging.config.ServerConfig;
+
     import org.granite.reflect.Type;
     import org.granite.rpc.remoting.mxml.SecureRemoteObject;
     import org.granite.tide.ITideModule;
     import org.granite.tide.Tide;
     import org.granite.tide.spring.Context;
     import org.granite.tide.spring.Spring;
+    import org.granite.tide.spring.Identity;
+
     import org.openwms.core.domain.system.usermanagement.Grant;
     import org.openwms.web.flex.client.util.XMLUtil;
     import org.openwms.web.flex.client.IApplicationModule;
@@ -68,6 +71,12 @@ package org.openwms.web.flex.client.common.view {
          * Injected context object.
          */
         public var tideContext : Context;
+        [Inject]
+        [Bindable]
+        /**
+         * Injected Tide identity object.
+         */
+        public var identity : Identity;
 
         [Bindable]
         public var commonMenuBar : MenuBar;

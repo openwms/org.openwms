@@ -23,7 +23,7 @@
 -->
 <!DOCTYPE granite-config PUBLIC
     "-//Granite Data Services//DTD granite-config internal//EN"
-    "http://www.graniteds.org/public/dtd/2.1.0/granite-config.dtd">
+    "http://www.graniteds.org/public/dtd/2.2.0/granite-config.dtd">
 
 <granite-config scan="false">
 <!--  
@@ -45,13 +45,19 @@
             <include type="java.lang.Enum"/>
         </externalizer>
    	</externalizers>
-    
+
+    <exception-converters>
+        <exception-converter type="org.granite.tide.spring.SpringValidationExceptionConverter"/>
+    </exception-converters>
+
     <security type="org.openwms.web.flex.security.CustomSecurityService">
         <param name="authentication-manager-bean-name" value="authenticationManager"/>
     </security>
     
     <tide-components>
         <!-- List of component matchers, see 'Enabling components' section -->
+        <tide-component instance-of="org.granite.tide.spring.security.Identity3" />
+        <tide-component annotated-with="org.springframework.stereotype.Service" />
         <tide-component type="org\.openwms\.core\.service\..*"/>
         <tide-component type="org\.openwms\.core\.service\.spring\..*"/>
         <tide-component type="org\.openwms\.core\.service\.spring\.security\..*"/>

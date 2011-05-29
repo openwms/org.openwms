@@ -76,4 +76,5 @@ public class SecurityServiceImpl implements SecurityService {
         dao.delete(persisted);
         return result;
     }
+
 }
