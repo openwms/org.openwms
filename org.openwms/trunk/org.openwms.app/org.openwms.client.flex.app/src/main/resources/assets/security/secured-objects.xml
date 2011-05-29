@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<grants>
+    <grant>
+        <name>APP_User_Management</name>
+        <description>Permission to create a new TransportOrder</description>
+    </grant>
+    <grant>
+        <name>APP_Role_Management</name>
+        <description>Permission to cancel active TransportOrders</description>
+    </grant>
+    <grant>
+        <name>APP_Module_Management</name>
+        <description>Permission to see the history of a TransportOrder</description>
+    </grant>
+</grants>
