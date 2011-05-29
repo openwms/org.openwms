@@ -63,7 +63,7 @@
             public var loginMessageText:String = "";
             
             private function onShow():void {
-                identity.logout();
+                //identity.logout();
             	myUser.setFocus();
                 PopUpManager.centerPopUp(this);
             }

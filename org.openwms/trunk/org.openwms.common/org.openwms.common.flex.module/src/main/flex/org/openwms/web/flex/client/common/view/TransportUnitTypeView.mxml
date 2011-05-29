@@ -45,13 +45,16 @@
         <![CDATA[
         	import mx.binding.utils.ChangeWatcher;
         	import mx.controls.Image;
-        	import org.granite.tide.spring.Context;
         	import mx.events.DragEvent;
             import mx.events.ListEvent;
         	import mx.binding.utils.BindingUtils;
             import mx.collections.ArrayCollection;
             import mx.controls.Alert;
             import mx.managers.PopUpManager;
+            
+            import org.granite.tide.spring.Context;
+        	import org.granite.tide.spring.Identity;
+            
             import org.openwms.common.domain.LocationType;
             import org.openwms.common.domain.TypePlacingRule;
             import org.openwms.common.domain.TypeStackingRule;
@@ -74,8 +77,14 @@
             /**
              * Inject a model to work on.
              */
-            public var commonModelLocator:CommonModelLocator;            
-            [In]
+            public var commonModelLocator:CommonModelLocator;     
+            [Inject]
+            [Bindable]
+            /**
+             * We need to have Granites Identity injected.
+             */
+            public var identity:Identity;
+            [Inject]
             [Bindable]
             /**
              * Injected TideContext.
@@ -226,11 +235,11 @@
     <mx:HBox x="10" y="10" verticalAlign="middle" backgroundColor="#E8FB91" width="95%">
         <mx:Label x="10" y="10" text="Transport Unit Types" fontSize="24"/>
         <mx:VRule height="10"/>
-        <mx:Button id="addTUTBtn" buttonMode="true" mouseChildren="false" toolTip="Create a new Transport Unit Type" icon="@Embed(source='/assets/images/TransportUnitType--Add.png')" click="showCreateTransportUnitTypeDialog()"/>
+        <mx:Button id="addTUTBtn" enabled="{identity.ifAllGranted('COMMON_add_tut_button')}" buttonMode="true" mouseChildren="false" toolTip="Create a new Transport Unit Type" icon="@Embed(source='/assets/images/TransportUnitType--Add.png')" click="showCreateTransportUnitTypeDialog()"/>
         <mx:VRule height="10"/>
-        <mx:Button id="removeTUTBtn" buttonMode="true" mouseChildren="false" toolTip="Delete an existing Transport Unit Type" icon="@Embed(source='/assets/images/TransportUnitType--Delete.png')" click="showDeleteTransportUnitTypeDialog()"/>
+        <mx:Button id="removeTUTBtn" enabled="{identity.ifAllGranted('COMMON_delete_tut_button')}" buttonMode="true" mouseChildren="false" toolTip="Delete an existing Transport Unit Type" icon="@Embed(source='/assets/images/TransportUnitType--Delete.png')" click="showDeleteTransportUnitTypeDialog()"/>
         <mx:VRule height="10"/>
-        <mx:Button id="saveTUTBtn" buttonMode="true" mouseChildren="false" toolTip="Save an existing Transport Unit Type" icon="@Embed(source='/assets/images/TransportUnitType--Save.png')" click="saveTransportUnitType()" />
+        <mx:Button id="saveTUTBtn" enabled="{identity.ifAllGranted('COMMON_save_tut_button')}" buttonMode="true" mouseChildren="false" toolTip="Save an existing Transport Unit Type" icon="@Embed(source='/assets/images/TransportUnitType--Save.png')" click="saveTransportUnitType()" />
         <mx:VRule height="10"/>
         <mx:Button id="refreshBtn" buttonMode="true" mouseChildren="false" toolTip="Refresh the list of Transport Unit Types" icon="@Embed(source='assets/images/icons/refresh.png')" click="refresh()"/>
     </mx:HBox>

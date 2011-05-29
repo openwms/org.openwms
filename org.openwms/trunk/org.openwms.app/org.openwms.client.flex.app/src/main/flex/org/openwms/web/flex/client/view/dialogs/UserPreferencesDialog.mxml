@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:TitleWindow xmlns:mx="http://www.adobe.com/2006/mxml" layout="absolute" title="Change Preferences" creationComplete="onCreate();">
+
+	<mx:Script>
+		<![CDATA[
+			import mx.managers.PopUpManager;
+	
+			private function onCreate() : void {
+				this.addEventListener(KeyboardEvent.KEY_DOWN, keyEventHandler);
+                PopUpManager.centerPopUp(this);
+			}		
+
+            private function closeDialog(event:Event):void {
+            	this.removeEventListener(KeyboardEvent.KEY_DOWN, keyEventHandler);
+                PopUpManager.removePopUp(this);
+            }
+
+	        private function keyEventHandler(event:KeyboardEvent):void {
+	            if(event.keyCode == 27) {
+	               closeDialog(event);
+                }
+	        }
+
+		]]>
+	</mx:Script>
+	
+	<mx:Form x="10" y="10">
+		<mx:FormHeading label="Username" width="100%"/>
+		<mx:FormItem label="Fullname">
+			<mx:TextInput id="fullnameTxt" />
+		</mx:FormItem>
+			<mx:FormItem label="Language">
+			<mx:List></mx:List>
+		</mx:FormItem>
+        <mx:FormItem label="Description">
+            <mx:TextArea id="descriptionTxt" />
+        </mx:FormItem>
+        <mx:FormItem label="Phone">
+            <mx:TextInput id="phoneNoTxt" />
+        </mx:FormItem>
+        <mx:FormItem label="Skype">
+            <mx:TextInput id="skypeNameTxt" />
+        </mx:FormItem>
+        <mx:FormItem label="Department">
+            <mx:TextInput id="departmentTxt" />
+        </mx:FormItem>
+        <mx:FormItem label="Office">
+            <mx:TextInput id="officeTxt" />
+        </mx:FormItem>
+		<mx:FormItem label="New Password">
+			<mx:TextInput id="newPwTxt1" />
+		</mx:FormItem>
+		<mx:FormItem label="Repeat Password">
+			<mx:TextInput id="newPwTxt2" />
+		</mx:FormItem>
+		<mx:HBox horizontalAlign="center" width="100%">
+			<mx:Button id="createBtn" label="Save" />
+			<mx:Button id="cancelBtn" label="Cancel" />
+		</mx:HBox>
+	</mx:Form>
+</mx:TitleWindow>

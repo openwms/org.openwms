@@ -80,6 +80,7 @@
                         }
                 	}
                 }
+                this.setFocus();
                 this.addEventListener(KeyboardEvent.KEY_DOWN, keyEventHandler);
                 PopUpManager.centerPopUp(this);
             }

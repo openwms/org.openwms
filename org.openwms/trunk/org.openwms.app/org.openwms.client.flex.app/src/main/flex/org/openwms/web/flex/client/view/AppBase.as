@@ -223,6 +223,7 @@ package org.openwms.web.flex.client.view {
             trace("Logout.");
             modelLocator.actualView = SwitchScreenEvent.SHOW_STARTSCREEN;
             appViewStack.selectedIndex = DisplayUtility.getView(SwitchScreenEvent.SHOW_STARTSCREEN, appViewStack);
+            appViewStack.validateDisplayList();
             tideContext.raiseEvent(ApplicationEvent.UNLOAD_ALL_MODULES);
         }
 

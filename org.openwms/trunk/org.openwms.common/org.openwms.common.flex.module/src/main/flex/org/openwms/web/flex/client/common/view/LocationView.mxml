@@ -35,25 +35,34 @@
         <![CDATA[
         	import mx.controls.Alert;
         	import mx.managers.PopUpManager;
+            import mx.controls.dataGridClasses.DataGridColumn;
+            import mx.collections.ArrayCollection;
+            import mx.events.ListEvent;
+			
+        	import org.granite.tide.spring.Identity;
+        	
+        	import org.openwms.common.domain.LocationGroup;
+        	import org.openwms.common.domain.LocationType;
+        	import org.openwms.common.domain.Location;
             import org.openwms.web.flex.client.util.DisplayUtility;
             import org.openwms.web.flex.client.util.BindingProperty;
             import org.openwms.web.flex.client.common.event.LocationEvent;
             import org.openwms.web.flex.client.common.event.LocationTypeEvent;
             import org.openwms.web.flex.client.common.event.LocationGroupEvent;
-        	import org.openwms.common.domain.LocationGroup;
-        	import org.openwms.common.domain.LocationType;
-        	import org.openwms.common.domain.Location;
-            import org.openwms.web.flex.client.common.model.CommonModelLocator;
-            import mx.controls.dataGridClasses.DataGridColumn;
-            import mx.collections.ArrayCollection;
-            import mx.events.ListEvent;
-
+        	import org.openwms.web.flex.client.common.model.CommonModelLocator;
+            
             [Inject]
             [Bindable]
             /**
              * Inject a model to work on.
              */
             public var commonModelLocator:CommonModelLocator;
+            [Inject]
+            [Bindable]
+            /**
+             * We need to have Granites Identity injected.
+             */
+            public var identity:Identity;
 
             [Bindable]
             private var selected:Location;
@@ -150,17 +159,17 @@
     <mx:HBox x="10" y="10" verticalAlign="middle" backgroundColor="#C6FFC7" backgroundAlpha="0.5" width="95%" >
         <mx:Label x="10" y="10" text="Locations" fontSize="24"/>
         <mx:VRule height="10"/>
-        <mx:Button id="saveLocationBtn" buttonMode="true" mouseChildren="false" toolTip="Save an existing Location" icon="@Embed(source='/assets/images/Location--Save.png')" click="saveLocation()"/>
+        <mx:Button id="saveLocationBtn" enabled="{identity.ifAllGranted('COMMON_save_location_button')}" buttonMode="true" mouseChildren="false" toolTip="Save an existing Location" icon="@Embed(source='/assets/images/Location--Save.png')" click="saveLocation()"/>
         <mx:VRule height="10"/>
         <mx:Button id="refreshLocationBtn" buttonMode="true" mouseChildren="false" toolTip="Refresh the list of Locations" icon="@Embed(source='assets/images/icons/refresh.png')" click="refresh()"/>
     </mx:HBox>
     <mx:HRule x="9" y="53" width="95%"/>
     <mx:HBox height="100%" width="95%" x="10" y="63">
-        <mx:Canvas id="locationDetailsPnl" backgroundColor="#C6FFC7" backgroundAlpha="0.5" height="100%" width="325">
+        <mx:Canvas id="locationDetailsPnl" backgroundColor="#C6FFC7" backgroundAlpha="0.5">
             
             <mx:Image x="10" y="10" mouseChildren="false" source="@Embed(source='/assets/images/Location.png')"/>
             <mx:Label text="Location" fontWeight="bold" textAlign="left" x="34" y="10"/>
-            <mx:Text text="{selected.locationId.toString()}" width="212" fontWeight="bold" x="95" y="10"/>
+            <mx:Text text="{selected.locationId.toString()}" fontWeight="bold" x="95" y="10"/>
             
             <mx:Label text="Description" textAlign="left" x="10" y="34"/>
             <mx:TextArea id="descriptionTxt" text="{selected.description}" width="200" height="64" x="95" y="33"/>
@@ -169,13 +178,13 @@
             
             <mx:Image x="10" y="410" mouseChildren="false" source="@Embed(source='/assets/images/LocationGroup.png')"/>
             <mx:Label text="Location Group" textAlign="left" x="34" y="414" fontWeight="bold"/>
-            <mx:ComboBox id="locationGroupCB" labelField="name" prompt="n/a" selectedIndex="{commonModelLocator.allLocationGroups.getItemIndex(selected)}" dataProvider="{commonModelLocator.allLocationGroups}" width="200" x="95" y="440"/>
-            <mx:CheckBox id="locationGroupCountingActiveChk" x="83" y="470" label="Counting Active in Location Group" selected="{selected.locationGroupCountingActive}"/>
+            <mx:ComboBox id="locationGroupCB" labelField="name" prompt="n/a" selectedIndex="{commonModelLocator.allLocationGroups.getItemIndex(selected)}" dataProvider="{commonModelLocator.allLocationGroups}" x="95" y="440"/>
+            <mx:CheckBox id="locationGroupCountingActiveChk" x="95" y="470" label="Counting Active in Location Group" selected="{selected.locationGroupCountingActive}"/>
             <mx:HRule x="8" y="500" width="297"/>
             
             <mx:Image x="10" y="510" mouseChildren="false" source="@Embed(source='/assets/images/LocationType.png')"/>
             <mx:Label text="Location Type" textAlign="left" x="34" y="510" fontWeight="bold"/>
-            <mx:ComboBox id="locationTypeCB" labelField="type" prompt="n/a" selectedIndex="{commonModelLocator.allLocationTypes.getItemIndex(selected.locationType)}" dataProvider="{commonModelLocator.allLocationTypes}" width="200" x="95" y="562"/>
+            <mx:ComboBox id="locationTypeCB" labelField="type" prompt="n/a" selectedIndex="{commonModelLocator.allLocationTypes.getItemIndex(selected.locationType)}" dataProvider="{commonModelLocator.allLocationTypes}" x="95" y="562"/>
             <mx:Text x="95" y="536" text="{locationTypeCB.selectedItem.description}"/>
             
             <mx:Label text="Max. Transport Units" textAlign="left" x="10" y="105"/>
@@ -200,7 +209,7 @@
             <mx:Image x="283" y="328" height="16" width="16" mouseChildren="false" source="@Embed(source='assets/images/icons/minus.png')"/>
         
         </mx:Canvas>
-        <mx:DataGrid id="locationsList" allowMultipleSelection="true" sortableColumns="true" height="100%" width="100%" dataProvider="{commonModelLocator.allLocations}" change="onRowClick(event)">
+        <mx:DataGrid id="locationsList" allowMultipleSelection="true" sortableColumns="true" dataProvider="{commonModelLocator.allLocations}" change="onRowClick(event)" height="100%" width="100%">
             <mx:columns>
                 <mx:DataGridColumn dataField="locationId" labelFunction="locationIdField" editable="false" width="45">
                     <mx:headerRenderer>

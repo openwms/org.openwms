@@ -31,27 +31,36 @@
 
     <mx:Script>
         <![CDATA[
-        	import org.openwms.web.flex.client.util.DisplayUtility;
-        	import org.openwms.web.flex.client.util.BindingProperty;
         	import mx.binding.utils.ChangeWatcher;
             import mx.binding.utils.BindingUtils;
             import mx.events.ListEvent;
             import mx.collections.ArrayCollection;
             import mx.controls.Alert;
             import mx.managers.PopUpManager;
+			
+			import org.granite.tide.spring.Identity;
+            
             import org.openwms.common.domain.LocationType;
-            import org.openwms.web.flex.client.util.ValidationUtil;
             import org.openwms.web.flex.client.common.event.LocationTypeEvent;
             import org.openwms.web.flex.client.common.model.CommonModelLocator;
             import org.openwms.web.flex.client.common.view.dialogs.ConfirmDeletionLocationTypeDialog;
             import org.openwms.web.flex.client.common.view.dialogs.CreateLocationTypeDialog;
-
+			import org.openwms.web.flex.client.util.ValidationUtil;
+            import org.openwms.web.flex.client.util.DisplayUtility;
+        	import org.openwms.web.flex.client.util.BindingProperty;
+        	
 		    [Inject]
 		    [Bindable]
 		    /**
 		     * Injected Model.
 		     */
             public var commonModelLocator:CommonModelLocator;
+            [Inject]
+            [Bindable]
+            /**
+             * We need to have Granites Identity injected.
+             */
+            public var identity:Identity;
             [Bindable]
             private var selected:LocationType;
             [Bindable]
@@ -130,17 +139,38 @@
     <mx:HBox x="10" y="10" verticalAlign="middle" width="95%" backgroundColor="#C6FFC7">
         <mx:Label x="10" y="10" text="Location Types" fontSize="24"/>
         <mx:VRule height="10"/>
-        <mx:Button id="addBtn" buttonMode="true" mouseChildren="false" toolTip="Create a new Location Type" icon="@Embed(source='/assets/images/LocationType--Add.png')" click="showCreateLocationTypeDialog()"/>
+        <mx:Button id="addBtn" enabled="{identity.ifAllGranted('COMMON_add_location_type_button')}" buttonMode="true" mouseChildren="false" toolTip="Create a new Location Type" icon="@Embed(source='/assets/images/LocationType--Add.png')" click="showCreateLocationTypeDialog()"/>
         <mx:VRule height="10"/>
-        <mx:Button id="removeBtn" buttonMode="true" mouseChildren="false" toolTip="Delete an existing Location Type" icon="@Embed(source='/assets/images/LocationType--Delete.png')" click="showDeleteLocationTypeDialog()"/>
+        <mx:Button id="removeBtn" enabled="{identity.ifAllGranted('COMMON_delete_location_types_button')}" buttonMode="true" mouseChildren="false" toolTip="Delete an existing Location Type" icon="@Embed(source='/assets/images/LocationType--Delete.png')" click="showDeleteLocationTypeDialog()"/>
         <mx:VRule height="10"/>
-        <mx:Button id="saveBtn" buttonMode="true" mouseChildren="false" toolTip="Save an existing Location Type" icon="@Embed(source='/assets/images/LocationType--Save.png')" click="save()"/>
+        <mx:Button id="saveBtn" enabled="{identity.ifAllGranted('COMMON_save_location_type_button')}" buttonMode="true" mouseChildren="false" toolTip="Save an existing Location Type" icon="@Embed(source='/assets/images/LocationType--Save.png')" click="save()"/>
         <mx:VRule height="10"/>
         <mx:Button id="refreshBtn" buttonMode="true" mouseChildren="false" toolTip="Refresh the list of Location Types" icon="@Embed(source='assets/images/icons/refresh.png')" click="refresh()"/>
     </mx:HBox>
     <mx:HRule x="10" y="53" width="95%"/>
     <mx:HBox x="10" y="63" width="95%" height="100%">
-        <mx:DataGrid id="locationTypeGrd" dataProvider="{commonModelLocator.allLocationTypes}" height="200" allowMultipleSelection="true" width="100%" change="onChange(event)">
+        <mx:Canvas id="locationTypeDetailsPnl" backgroundColor="#C6FFC7" backgroundAlpha="0.5" height="95%">
+            
+            <mx:Image x="10" y="10" mouseChildren="false" source="@Embed(source='/assets/images/LocationType.png')"/>
+            <mx:Label text="Location Type" fontWeight="bold" textAlign="left" x="34" y="8"/>
+            <mx:Text text="{selected.type}" fontWeight="bold" x="148" y="34"/>
+            
+            <mx:Label text="Description" textAlign="left" x="10" y="60"/>
+            <mx:Label text="Type" textAlign="left" x="10" y="34"/>
+            <mx:TextArea id="descriptionTxt" keyUp="{changed = true;}" text="{selected.description}" width="200" height="64" x="148" y="59"/>
+            <mx:HRule x="10" y="406" width="350" strokeWidth="0"/>
+            
+            <mx:Label text="Length" textAlign="left" x="10" y="133"/>
+            <mx:TextInput id="lengthTxt" keyUp="validate(event)" text="{selected.length}" width="60" x="148" y="131" textAlign="right"/>
+            
+            <mx:Label text="Width" textAlign="left" x="10" y="159"/>
+            <mx:TextInput id="widthTxt" keyUp="validate(event)" text="{selected.width}" width="60" x="148" y="157" textAlign="right"/>
+            
+            <mx:Label text="Height" textAlign="left" x="10" y="185"/>
+            <mx:TextInput id="heightTxt" keyUp="validate(event)" text="{selected.height}" width="60" x="148" y="183" textAlign="right"/>
+        
+        </mx:Canvas>
+        <mx:DataGrid id="locationTypeGrd" dataProvider="{commonModelLocator.allLocationTypes}" height="95%" allowMultipleSelection="true" width="100%" change="onChange(event)">
             <mx:columns>
                 <mx:DataGridColumn headerText="Type" dataField="type" width="50"/>
                 <mx:DataGridColumn headerText="Length" dataField="length" width="50"/>
@@ -149,27 +179,6 @@
                 <mx:DataGridColumn headerText="Description" dataField="description"/>
             </mx:columns>
         </mx:DataGrid>
-        <mx:Canvas id="locationTypeDetailsPnl" backgroundColor="#C6FFC7" backgroundAlpha="0.5" height="200">
-
-            <mx:Image x="10" y="10" mouseChildren="false" source="@Embed(source='/assets/images/LocationType.png')"/>
-            <mx:Label text="Location Type" fontWeight="bold" width="130" textAlign="right" x="10" y="12"/>
-            <mx:Text text="{selected.type}" width="100%" fontWeight="bold" x="148" y="12"/>
-
-            <mx:Label text="Description" width="130" textAlign="right" x="10" y="38"/>
-            <mx:TextArea id="descriptionTxt" keyUp="{changed = true;}" text="{selected.description}" width="200" height="64" x="148" y="37"/>
-            <mx:HRule x="10" y="109" width="330"/>
-            <mx:HRule x="10" y="197" width="350" strokeWidth="0"/>
-
-            <mx:Label text="Length" width="130" textAlign="right" x="10" y="119"/>
-            <mx:TextInput id="lengthTxt" keyUp="validate(event)" text="{selected.length}" width="60" x="148" y="117" textAlign="right"/>
-
-            <mx:Label text="Width" width="130" textAlign="right" x="10" y="145"/>
-            <mx:TextInput id="widthTxt" keyUp="validate(event)" text="{selected.width}" width="60" x="148" y="143" textAlign="right"/>
-
-            <mx:Label text="Height" width="130" textAlign="right" x="10" y="171"/>
-            <mx:TextInput id="heightTxt" keyUp="validate(event)" text="{selected.height}" width="60" x="148" y="169" textAlign="right"/>
-
-        </mx:Canvas>
     </mx:HBox>
 
 </mx:Canvas>

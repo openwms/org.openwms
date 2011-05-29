@@ -22,7 +22,7 @@
  */
 -->
 <mx:Panel xmlns:mx="http://www.adobe.com/2006/mxml" xmlns="*" width="400" height="269" verticalScrollPolicy="off"
-	horizontalScrollPolicy="off" creationComplete="initComp();" title="File Upload" fontSize="12">
+	horizontalScrollPolicy="off" show="onShow();" creationComplete="onShow();" title="File Upload" fontSize="12">
 
     <mx:Metadata>
         [Name]
@@ -40,31 +40,34 @@
 	    import mx.rpc.events.*;
 	    import mx.managers.PopUpManager;
 		
-        [In]
+        [Inject]
         [Bindable]
+        /**
+         * Inject a model.
+         */
         public var modelLocator:ModelLocator;            
-	    [Bindable]
-		public var iconClass:Class; 
+	    
         [Bindable]
+        /**
+         * Pass in any callback function of type IObserver that is called when
+         * the transfer completes successfully.
+         */
         public var callback:IObserver; 
-		
-	    [Bindable] public var parentObjectId: Number;
-		[Bindable] public var parentLoreCategory: String;
-		[Bindable] public var parentLoreAuthor: String;
-		[Bindable] public var parentObject: Object;
 		
 		private var tmpFileName: String;
 	    private var fileRef:FileReference;
 	
-        private function initComp():void {
+        private function onShow():void {
             fileRef = new FileReference();
             fileRef.addEventListener(Event.COMPLETE, completeEvent);
             fileRef.addEventListener(Event.SELECT, selectEvent);
             fileRef.addEventListener(ProgressEvent.PROGRESS, progressEvent);
-			this.addEventListener(KeyboardEvent.KEY_DOWN, keyboardEventHandler);
+			this.addEventListener(KeyboardEvent.KEY_DOWN, keyEventHandler);
+            browseBtn.setFocus();
+			PopUpManager.centerPopUp(this);
         }
 		
-		private function keyboardEventHandler(event:KeyboardEvent):void {
+		private function keyEventHandler(event:KeyboardEvent):void {
 			if(event.keyCode == 27) {
 			     closeDialog(event);
 			}
@@ -75,7 +78,7 @@
 			fileRef.removeEventListener(Event.COMPLETE,completeEvent);
 			fileRef.removeEventListener(Event.SELECT,selectEvent);
 			fileRef.removeEventListener(ProgressEvent.PROGRESS,progressEvent);
-			this.removeEventListener(KeyboardEvent.KEY_DOWN,keyboardEventHandler);
+			this.removeEventListener(KeyboardEvent.KEY_DOWN,keyEventHandler);
 			PopUpManager.removePopUp(this);
 		}
 		
@@ -84,7 +87,7 @@
 		}
 		
 		private function selectEvent(event:Event):void {
-			btn_upload.enabled = true;
+			uploadBtn.enabled = true;
 			filename.text = fileRef.name;
 			progressBar.setProgress(0, 100);
 			progressBar.label = "Loading 0%";			
@@ -97,7 +100,7 @@
 		private function completeEvent(event:Event):void {
 			progressBar.label = "Complete.";
 			filename.text += " uploaded";
-			btn_upload.enabled = false;
+			uploadBtn.enabled = false;
 			tmpFileName = fileRef.name;
 			callback.notify();
             closeDialog();
@@ -135,8 +138,8 @@
 		</mx:Form>
 	</mx:Canvas>
 	<mx:HBox width="100%" horizontalAlign="center">
-		<mx:Button width="80" label="Browse" click="fileRef.browse()" />
-		<mx:Button width="80" label="Upload" id="btn_upload" enabled="false" click="uploadFile(uploadURL.text)" />
-		<mx:Button width="80" label="Close" id="closeBtn" enabled="true" click="closeDialog(event);" />
+		<mx:Button id="browseBtn" width="80" label="Browse" click="fileRef.browse()" />
+		<mx:Button id="uploadBtn" width="80" label="Upload" enabled="false" click="uploadFile(uploadURL.text)" />
+		<mx:Button id="closeBtn" width="80" label="Close" enabled="true" click="closeDialog(event);" />
 	</mx:HBox>
 </mx:Panel>
