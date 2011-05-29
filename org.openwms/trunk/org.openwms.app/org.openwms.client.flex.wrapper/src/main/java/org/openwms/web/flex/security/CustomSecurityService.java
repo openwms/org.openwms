@@ -76,7 +76,6 @@ public class CustomSecurityService extends AbstractSecurityService {
     private Method getResponse = null;
 
     public CustomSecurityService() {
-        logger.debug("Starting Spring 3 Security Service!");
         try {
             getRequest = HttpRequestResponseHolder.class.getDeclaredMethod("getRequest");
             getRequest.setAccessible(true);
@@ -140,13 +139,10 @@ public class CustomSecurityService extends AbstractSecurityService {
                 throw SecurityServiceException.newInvalidCredentialsException(e.getMessage());
             }
         }
-
-        logger.debug("Logged In!");
     }
 
     public void lookupAuthenticationManager(ApplicationContext ctx, String authenticationManagerBeanName)
             throws SecurityServiceException {
-        logger.debug("lookup");
         if (this.authenticationManager != null) return;
 
         Map<String, AuthenticationManager> authManagers = BeanFactoryUtils.beansOfTypeIncludingAncestors(ctx,
@@ -166,9 +162,6 @@ public class CustomSecurityService extends AbstractSecurityService {
 
     @Override
     public Object authorize(AbstractSecurityContext context) throws Exception {
-        logger.debug("Authorize: %s", context);
-        logger.debug("Is %s secured? %b", context.getDestination().getId(), context.getDestination().isSecured());
-
         startAuthorization(context);
 
         HttpGraniteContext graniteContext = (HttpGraniteContext) GraniteContext.getCurrentInstance();
@@ -187,13 +180,12 @@ public class CustomSecurityService extends AbstractSecurityService {
         }
 
         if (context.getDestination().isSecured()) {
-            logger.debug("Destination is secured:" + context.getDestination().getId());
             if (!isAuthenticated(authentication) || authentication instanceof AnonymousAuthenticationToken) {
                 logger.debug("Is not authenticated!");
                 throw SecurityServiceException.newNotLoggedInException("User not logged in");
             }
             if (!userCanAccessService(context, authentication)) {
-                logger.debug("Access denied for: %s", authentication.getName());
+                logger.debug("Access denied for {0}", authentication.getName());
                 throw SecurityServiceException.newAccessDeniedException("User not in required role");
             }
         }
@@ -234,7 +226,6 @@ public class CustomSecurityService extends AbstractSecurityService {
     }
 
     protected boolean isUserInRole(Authentication authentication, String role) {
-        logger.debug("isUserInRole");
         for (GrantedAuthority ga : authentication.getAuthorities()) {
             if (ga.getAuthority().matches(role)) return true;
         }
@@ -242,19 +233,16 @@ public class CustomSecurityService extends AbstractSecurityService {
     }
 
     protected boolean isAuthenticated(Authentication authentication) {
-        logger.debug("isAuthenticated");
         return authentication != null && authentication.isAuthenticated();
     }
 
     protected boolean userCanAccessService(AbstractSecurityContext context, Authentication authentication) {
-        logger.debug("Is authenticated as: %s", authentication.getName());
-
         for (String role : context.getDestination().getRoles()) {
             if (isUserInRole(authentication, role)) {
-                logger.debug("Allowed access to %s in role %s", authentication.getName(), role);
+                logger.debug("Allowed access to {0} in role {1}", authentication.getName(), role);
                 return true;
             }
-            logger.debug("Access denied for %s not in role %s", authentication.getName(), role);
+            logger.debug("Access denied for {0} not in role {1}", authentication.getName(), role);
         }
         return false;
     }
