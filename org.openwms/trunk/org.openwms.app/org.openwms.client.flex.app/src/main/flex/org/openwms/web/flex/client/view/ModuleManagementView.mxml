@@ -22,6 +22,14 @@
  */
 -->
 <mx:Canvas xmlns:mx="http://www.adobe.com/2006/mxml" width="100%" height="100%" backgroundAlpha="0.0" creationComplete="init()">
+    <mx:states>
+        <mx:State name="selectedLoaded">
+        	<mx:SetStyle target="{loadBtn}" name="icon" value="stopIcon" />
+        </mx:State>
+        <mx:State name="selectedUnLoaded">
+        	<mx:SetStyle target="{loadBtn}" name="icon" value="startIcon" />
+        </mx:State>
+    </mx:states>
 
     <mx:Metadata>
         [Name("moduleManagementView")]
@@ -36,16 +44,17 @@
         <![CDATA[
         	import mx.collections.SortField;
         	import mx.collections.Sort;
-            
             import mx.collections.ArrayCollection;
+            import mx.events.ListEvent;
+            import mx.events.DragEvent;
+
+            import org.granite.tide.spring.Identity;
+            
             import org.openwms.core.domain.Module;
             import org.openwms.web.flex.client.event.ApplicationEvent;
             import org.openwms.web.flex.client.model.ModelLocator;
-            import mx.events.ListEvent;
-            import mx.events.DragEvent;
-            import org.granite.tide.spring.Identity;
 
-            [In]
+            [Inject]
             [Bindable]
             /**
              * We need to have Granites Identity injected.
@@ -55,10 +64,15 @@
             /**
              * We want to operate on the model.
              */
-            [In]
+            [Inject]
             [Bindable]
             public var modelLocator:ModelLocator; 
-                       
+
+			[Embed("/assets/images/Module--start.png")] 
+     		public var startIcon: Class; 
+            [Embed("/assets/images/Module--stop.png")] 
+     		public var stopIcon: Class;
+     		 
             private function init():void {
                 newBtn.enabled = true;
                 saveBtn.enabled = false;
@@ -132,6 +146,7 @@
 
             private function onRowClick( event:ListEvent ):void {
                 modelLocator.selectedModule = (event.currentTarget.selectedItem) as Module;
+                currentState = (modelLocator.selectedModule.loaded ? 'selectedLoaded' : 'selectedUnLoaded');
                 enableTextFields(true);
                 deleteBtn.enabled = true;
             }
@@ -187,6 +202,14 @@
     <mx:StringValidator minLength="1" tooShortError="URL is required" source="{urlTxt}" required="true" property="text"/>
 		<mx:HBox x="10" y="10" width="95%" verticalAlign="middle" backgroundColor="#EAFF00" backgroundAlpha="0.5">
 		    <mx:Label x="10" y="10" text="Modules" fontSize="24"/>
+		    <mx:VRule height="10" visible="{identity.ifAllGranted('APP_add_module_button')}"/>
+		    <mx:Button id="newBtn" visible="{identity.ifAllGranted('APP_add_module_button')}" buttonMode="true" mouseChildren="false" toolTip="Add a new Module" icon="@Embed(source='/assets/images/Module--add.png')" click="newModule()" />
+		    <mx:VRule height="10" visible="{identity.ifAllGranted('APP_delete_module_button')}"/>
+		    <mx:Button id="deleteBtn" visible="{identity.ifAllGranted('APP_delete_module_button')}" buttonMode="true" mouseChildren="false" toolTip="Remove an existing Module" icon="@Embed(source='/assets/images/Module--minus.png')" click="deleteModule()"/>
+		    <mx:VRule height="10" visible="{identity.ifAllGranted('APP_save_module_button')}"/>
+		    <mx:Button id="saveBtn" visible="{identity.ifAllGranted('APP_save_module_button')}" buttonMode="true" mouseChildren="false" toolTip="Save an existing Module" icon="@Embed(source='/assets/images/Module--save.png')" click="saveModule()"/>
+		    <mx:VRule height="10" visible="{identity.ifAllGranted('APP_load_module_button')}"/>
+		    <mx:Button id="loadBtn" visible="{identity.ifAllGranted('APP_load_module_button')}" buttonMode="true" mouseChildren="false" toolTip="{(modelLocator.selectedModule == null || modelLocator.selectedModule.loaded) ? 'Unload' : 'Load'} the selected Module" click="loadModule()" enabled="{(modelLocator.selectedModule == null || modelLocator.selectedModule.moduleName == '') ? false : true}"/>
 		</mx:HBox>
 		<mx:HRule x="9" y="53" width="95%"/>
 		<mx:VBox width="95%" x="10" y="63">
@@ -207,10 +230,7 @@
 					              <mx:CheckBox id="loadOnStartupChk" change="onChange()" x="95" y="98" selected="{modelLocator.selectedModule.loadOnStartup}"/>
 					          </mx:FormItem>
 					</mx:Form>
-					      <mx:Button id="newBtn" label="New" x="10" y="140" click="newModule()" />
-					      <mx:Button id="saveBtn" label="Save" x="67" y="140" click="saveModule()"/>
-					      <mx:Button id="deleteBtn" label="Delete" x="129" y="140" click="deleteModule()"/>
-					      <mx:Button id="loadBtn" label="{(modelLocator.selectedModule == null || modelLocator.selectedModule.loaded) ? 'Unload' : 'Load'}" x="200" y="140" click="loadModule()" enabled="{(modelLocator.selectedModule == null || modelLocator.selectedModule.moduleName == '') ? false : true}"/>
+					<mx:Label x="10" y="142" text="To change the startup order of Modules drag and drop the Modules in the list." width="100%" height="100%"/>
 					</mx:Canvas>
 				</mx:Canvas>
 		</mx:VBox>

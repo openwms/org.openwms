@@ -21,7 +21,7 @@
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
 -->
-<mx:Canvas xmlns:mx="http://www.adobe.com/2006/mxml" width="100%" height="100%" creationComplete="onShow()">
+<mx:Canvas xmlns:mx="http://www.adobe.com/2006/mxml" width="100%" height="100%" creationComplete="onShow()" show="onShow()">
 	
     <mx:Metadata>
         [Name]
@@ -55,7 +55,7 @@
              */
             public var loginView:LoginView;
         
-            [Observer("APP_LOCK","APP_LOGOUT")]
+            [Observer("APP_LOCK")]
             /**
              * Whats going on? On logout or lock event we show this dialogue.
              */

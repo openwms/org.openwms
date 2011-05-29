@@ -54,6 +54,7 @@ package org.openwms.web.flex.client.view.dialogs {
                 }
             }
             this.addEventListener(KeyboardEvent.KEY_DOWN, keyEventHandler);
+            this.setFocus();
             PopUpManager.centerPopUp(this);
         }
 

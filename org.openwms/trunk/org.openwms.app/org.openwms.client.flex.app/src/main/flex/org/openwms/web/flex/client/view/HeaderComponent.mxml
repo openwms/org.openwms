@@ -31,6 +31,8 @@
 
     <mx:Script>
     	<![CDATA[
+    		import mx.managers.PopUpManager;
+    		import org.openwms.web.flex.client.view.dialogs.UserPreferencesDialog;
             import mx.controls.Alert;
     		import mx.collections.ArrayCollection;
             
@@ -56,6 +58,11 @@
              */
             public var modelLocator : ModelLocator;
             
+            private function showPrefs(event:MouseEvent = null) : void {
+            	var pop : UserPreferencesDialog = UserPreferencesDialog(PopUpManager.createPopUp(this, UserPreferencesDialog, true));
+                PopUpManager.centerPopUp(pop);
+            }
+            
     		private function logout(event:MouseEvent = null):void {
                 identity.logout();
                 identity.isLoggedIn(onResult, onFault);
@@ -70,9 +77,11 @@
             }
 
             private function onResult(event : TideResultEvent) : void {
+            	trace("Got result1");
                 identity.isLoggedIn(onResult2, onFault);
             }
             private function onResult2(event : TideResultEvent) : void {
+            	trace("Got result2");
                 dispatchEvent(new ApplicationEvent(ApplicationEvent.LOGOUT));
             }
     
@@ -87,7 +96,7 @@
         <mx:Image height="100%" source="@Embed('assets/images/openwms_header.png')" />
         <mx:VBox height="100%" width="100%" horizontalAlign="right" verticalAlign="bottom" verticalGap="0">
             <mx:HBox id="loggedInUserBox" width="100%" horizontalAlign="right">
-                <mx:Label text="{identity.username}" color="#E9EBEB" />
+                <mx:LinkButton label="{identity.username}" click="showPrefs();" color="#E9EBEB" />
                 <mx:Image width="16" source="@Embed('assets/images/icons/user--anonymous.png')"/>
             </mx:HBox>
             <mx:HBox id="lockBox" width="100%" horizontalAlign="right">

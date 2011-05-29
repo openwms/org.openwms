@@ -33,16 +33,19 @@
 
     <mx:Script>
         <![CDATA[
+            import flash.utils.ByteArray;
             import mx.formatters.Formatter;
             import mx.utils.ObjectUtil;
             import mx.effects.Blur;
-            import flash.utils.ByteArray;
             import mx.events.ValidationResultEvent;
             import mx.managers.PopUpManager;
             import mx.collections.ArrayCollection;
             import mx.controls.Alert;
             import mx.core.BitmapAsset;
             import mx.validators.RegExpValidationResult;
+
+            import org.granite.tide.spring.Identity;
+
             import org.openwms.core.domain.system.usermanagement.User;
             import org.openwms.core.domain.system.usermanagement.UserDetails$SEX;
             import org.openwms.web.flex.client.event.UserEvent;
@@ -54,7 +57,13 @@
             import org.openwms.web.flex.client.view.dialogs.FileUploadDialog;
             import org.openwms.web.flex.client.view.dialogs.ChangePasswordDialog;
 
-            [In]
+            [Inject]
+            [Bindable]
+            /**
+             * We need to have Granites Identity injected.
+             */
+            public var identity:Identity;
+            [Inject]
             [Bindable]
             /**
              * Inject the model.
@@ -74,7 +83,7 @@
 
             [Observer("USER.SELECTION_CHANGED","USER.USER_SAVED")]
             public function init() : void {
-                setUserImage();
+                //setUserImage();
                 userImg.filters = [filter];
                 if (modelLocator.selectedUser == null) {
                     setFormElements(false);
@@ -218,17 +227,17 @@
     <mx:HBox width="95%" verticalAlign="middle" backgroundColor="#B6CFEF" x="10" y="10">
         <mx:Label text="User Settings" fontSize="24"/>
         <mx:VRule height="10"/>
-        <mx:Button id="addUserBtn" buttonMode="true" mouseChildren="false" toolTip="Create a new User" icon="@Embed(source='/assets/images/User--plus.png')" click="addUser()"/>
+        <mx:Button id="addUserBtn" enabled="{identity.ifAllGranted('APP_add_user_button')}" buttonMode="true" mouseChildren="false" toolTip="Create a new User" icon="@Embed(source='/assets/images/User--plus.png')" click="addUser()"/>
         <mx:VRule height="10"/>
-        <mx:Button id="deleteUserBtn" buttonMode="true" mouseChildren="false" toolTip="Delete an User" icon="@Embed(source='/assets/images/User--minus.png')" click="dispatchEvent(new UserEvent(UserEvent.DELETE_USER));"/>
+        <mx:Button id="deleteUserBtn" enabled="{identity.ifAllGranted('APP_delete_user_button')}" buttonMode="true" mouseChildren="false" toolTip="Delete an User" icon="@Embed(source='/assets/images/User--minus.png')" click="dispatchEvent(new UserEvent(UserEvent.DELETE_USER));"/>
         <mx:VRule height="10"/>
-        <mx:Button id="saveUserBtn" buttonMode="true" mouseChildren="false" toolTip="Save an already existing User" icon="@Embed(source='/assets/images/User--save.png')" click="fireSaveUserEvent()"/>
+        <mx:Button id="saveUserBtn" enabled="{identity.ifAllGranted('APP_save_user_button')}" buttonMode="true" mouseChildren="false" toolTip="Save an already existing User" icon="@Embed(source='/assets/images/User--save.png')" click="fireSaveUserEvent()"/>
         <mx:VRule height="10"/>
         <mx:Button id="refreshUserBtn" buttonMode="true" mouseChildren="false" toolTip="Refresh the list of Users" icon="@Embed(source='assets/images/icons/refresh.png')" click="refresh()"/>
         <mx:VRule height="10"/>
-        <mx:Button id="changePasswordBtn" buttonMode="true" mouseChildren="false" toolTip="Change the current User Password" icon="@Embed(source='assets/images/icons/key--edit.png')" click="showChangePasswordDialog()"/>
+        <mx:Button id="changePasswordBtn" enabled="{identity.ifAllGranted('APP_change_user_pw_button')}" buttonMode="true" mouseChildren="false" toolTip="Change the current User Password" icon="@Embed(source='assets/images/icons/key--edit.png')" click="showChangePasswordDialog()"/>
         <mx:VRule height="10"/>
-        <mx:Button id="changePictureBtn" buttonMode="true" mouseChildren="false" toolTip="Change the picture of the current User" icon="@Embed(source='assets/images/icons/picture--edit.png')" click="showFileUploadDialog()"/>
+        <mx:Button id="changePictureBtn" enabled="{identity.ifAllGranted('APP_change_user_picture_button')}" buttonMode="true" mouseChildren="false" toolTip="Change the picture of the current User" icon="@Embed(source='assets/images/icons/picture--edit.png')" click="showFileUploadDialog()"/>
     </mx:HBox>
     <mx:HRule x="9" y="53" width="95%"/>
     <mx:Canvas x="10" y="63" width="95%" height="100%" backgroundColor="#B6CFEF">

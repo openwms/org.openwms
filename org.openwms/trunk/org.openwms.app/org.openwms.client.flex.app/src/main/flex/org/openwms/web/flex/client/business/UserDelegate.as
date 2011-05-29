@@ -47,12 +47,12 @@ package org.openwms.web.flex.client.business {
      * @since 0.1
      */
     public class UserDelegate {
-        [In]
+        [Inject]
         /**
          * Injected TideContext.
          */
         public var tideContext : Context;
-        [In]
+        [Inject]
         /**
          * Injected ModelLocator.
          */

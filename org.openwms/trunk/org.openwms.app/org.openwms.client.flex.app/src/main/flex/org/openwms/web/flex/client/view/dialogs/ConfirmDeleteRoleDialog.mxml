@@ -40,41 +40,34 @@
             [Bindable]
             public var messageText:String = new String("Do you really want to delete?");
 
-            protected function init():void
-            {
+            protected function init():void {
                 deleteBtn.setFocus();
                 this.addEventListener(KeyboardEvent.KEY_DOWN, keyEventHandler);
                 PopUpManager.centerPopUp(this);
             }
 
-            protected function closeDialog(event:Event=null):void
-            {
+            protected function closeDialog(event:Event=null):void {
                 this.removeEventListener(KeyboardEvent.KEY_DOWN, keyEventHandler);
                 PopUpManager.removePopUp(this);
             }
 
-            protected function accept(e:Event):void
-            {
+            protected function accept(e:Event):void {
                 var event:RoleEvent = new RoleEvent(RoleEvent.DELETE_ROLE);
                 event.data = deleteLst.dataProvider as ArrayCollection;
                 dispatchEvent(event);
                 closeDialog();
             }
 
-            protected function keyEventHandler(event:KeyboardEvent):void
-            {
-                if(event.keyCode == 27)
-                {
+            protected function keyEventHandler(event:KeyboardEvent):void {
+                if(event.keyCode == 27) {
                    closeDialog(event);
                    return;
                 }
             }
             
-            protected function formatFunction(item:*):String
-            {
+            protected function formatFunction(item:*):String {
                 return "Role "+item.name+"\t - "+item.description;
             }
-                        
         ]]>
     </mx:Script>
     <mx:Canvas width="100%">

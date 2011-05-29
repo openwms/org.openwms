@@ -40,16 +40,22 @@
 
             import mx.managers.PopUpManager;
             import flash.events.KeyboardEvent;
-            [In]
+            
+            [Inject]
             [Bindable]
+            /**
+             * Inject the model.
+             */
             public var modelLocator:ModelLocator;
+            
             [Bindable]
+            /**
+             * Use this dialogue to edit an existing Role and pass in the Role to change.
+             */
             public var roleToChange:Role;
             
-            private function init():void
-            {
-            	if (roleToChange != null)
-            	{
+            private function init():void {
+            	if (roleToChange != null) {
             		createBtn.label = "Save";
             		nameTxt.text = roleToChange.name;
             		descriptionTxt.text = roleToChange.description;
@@ -59,20 +65,16 @@
                 PopUpManager.centerPopUp(this);
             }
 
-            private function submit():void
-            {
-            	if (stringVal.validate().type == ValidationResultEvent.VALID)
-            	{
+            private function submit():void {
+            	if (stringVal.validate().type == ValidationResultEvent.VALID) {
             		var event:RoleEvent;
-            		if (roleToChange == null)
-            		{
+            		if (roleToChange == null) {
                         event = new RoleEvent(RoleEvent.ADD_ROLE);
                         var role:Role = new Role(formatRoleName(nameTxt.text), descriptionTxt.text);
                         event.data = role;
                         dispatchEvent(event);
                     }
-                    else
-                    {
+                    else {
                         nameTxt.text = formatRoleName(nameTxt.text);
                         BindingUtils.bindProperty(roleToChange, "name", nameTxt, "text");
                         BindingUtils.bindProperty(roleToChange, "description", descriptionTxt, "text");
@@ -85,36 +87,32 @@
                 nameTxt.setFocus();
             }
             
-            private function formatRoleName(roleName:String):String
-            {
+            private function formatRoleName(roleName:String):String {
             	var result:String = roleName.toUpperCase();
-            	if (result.substring(0,5) != "ROLE_")
-            	{
+            	if (result.substring(0,5) != "ROLE_") {
             		result = "ROLE_"+result;
             	}
             	return result;
             }
 
-            private function closeDialog(event:Event=null):void
-            {
+            private function closeDialog(event:Event=null):void {
                 this.removeEventListener(KeyboardEvent.KEY_DOWN, keyEventHandler);
                 PopUpManager.removePopUp(this);
             }
 
-            private function keyEventHandler(event:KeyboardEvent):void
-            {
-                if(event.keyCode == 27)
-                {
+            private function keyEventHandler(event:KeyboardEvent):void {
+                if(event.keyCode == 27) {
                    closeDialog(event);
                 }
             }
             
             /**
              * When a Role was successfully added reset the form to add a new Role.
+             * 
+             * @param event unused
              */
             [Observer("ROLE_ADDED")]
-            public function onRoleAdded(event:RoleEvent):void
-            {
+            public function onRoleAdded(event:RoleEvent):void {
             	nameTxt.text = "";
             	descriptionTxt.text = "";
             	nameTxt.setFocus();

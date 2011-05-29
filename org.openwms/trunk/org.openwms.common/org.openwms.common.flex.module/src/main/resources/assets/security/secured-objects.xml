@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <grants>
+	<!-- Menu bar -->
     <grant>
         <name>COMMON_Transport_Unit_Types</name>
         <description>Open the screen of Transport Unit Types</description>
@@ -20,24 +21,52 @@
         <name>COMMON_Location_Groups</name>
         <description>Open the screen of Location Groups</description>
     </grant>
+	<!-- Transport Unit Types screen -->
     <grant>
-        <name>COMMON_add_roles_button</name>
-        <description>Ability to add new Roles</description>
+        <name>COMMON_add_tut_button</name>
+        <description>Permission to add a new Transport Unit Type</description>
     </grant>
     <grant>
-        <name>COMMON_save_role_button</name>
-        <description>Ability to save changes on a Role</description>
+        <name>COMMON_delete_tut_button</name>
+        <description>Permission to delete existing Transport Unit Types</description>
     </grant>
     <grant>
-        <name>COMMON_remove_role_button</name>
-        <description>Ability to remove an existing Role</description>
+        <name>COMMON_save_tut_button</name>
+        <description>Permission to save changes on a Transport Unit Type</description>
+    </grant>
+	<!-- Transport Units screen -->
+    <grant>
+        <name>COMMON_add_tu_button</name>
+        <description>Permission to add a new Transport Unit</description>
     </grant>
     <grant>
-        <name>COMMON_assign_grants_button</name>
-        <description>Assign Grants to a Role</description>
+        <name>COMMON_delete_tu_button</name>
+        <description>Permission to delete existing Transport Units</description>
     </grant>
     <grant>
-        <name>COMMON_assign_users_button</name>
-        <description>Assign Users to a Role</description>
+        <name>COMMON_save_tu_button</name>
+        <description>Permission to save changes on a Transport Unit</description>
+    </grant>
+    <grant>
+        <name>COMMON_show_tu_history_button</name>
+        <description>Permission to see the history of a Transport Unit</description>
+    </grant>
+	<!-- Location Types screen -->
+    <grant>
+        <name>COMMON_add_location_type_button</name>
+        <description>Permission to add new Location Types</description>
+    </grant>
+    <grant>
+        <name>COMMON_delete_location_types_button</name>
+        <description>Permission to delete existing Location Types</description>
+    </grant>
+    <grant>
+        <name>COMMON_save_location_type_button</name>
+        <description>Permission to save changes on a Location Type</description>
+    </grant>
+	<!-- Locations screen -->
+    <grant>
+        <name>COMMON_save_location_button</name>
+        <description>Permission to save changes on a Location</description>
     </grant>
 </grants>
