@@ -165,7 +165,7 @@
     </mx:HBox>
     <mx:HRule x="9" y="53" width="95%"/>
     <mx:HBox height="100%" width="95%" x="10" y="63">
-        <mx:Canvas id="locationDetailsPnl" backgroundColor="#C6FFC7" backgroundAlpha="0.5">
+        <mx:Canvas id="locationDetailsPnl" backgroundColor="#C6FFC7" backgroundAlpha="0.5" height="100%">
             
             <mx:Image x="10" y="10" mouseChildren="false" source="@Embed(source='/assets/images/Location.png')"/>
             <mx:Label text="Location" fontWeight="bold" textAlign="left" x="34" y="10"/>
