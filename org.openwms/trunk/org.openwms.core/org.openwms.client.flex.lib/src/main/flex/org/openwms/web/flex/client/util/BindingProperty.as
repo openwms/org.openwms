@@ -24,7 +24,7 @@ package org.openwms.web.flex.client.util {
      * A BindingProperty object encapsulates source and target used by BindingUtils.
      *
      * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
-     * @version $Revision: 1019 $
+     * @version $Revision$
      * @since 0.1
      */
     public class BindingProperty {

@@ -39,7 +39,7 @@ import org.springframework.transaction.annotation.Transactional;
  * {@link ModuleDao} to perform simple CRUD operations.
  * 
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
- * @version $Revision: $
+ * @version $Revision$
  * @since 0.1
  * @see org.openwms.core.integration.ModuleDao
  */

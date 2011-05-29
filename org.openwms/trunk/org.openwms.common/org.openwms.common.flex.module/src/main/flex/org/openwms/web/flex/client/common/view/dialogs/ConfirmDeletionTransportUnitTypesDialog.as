@@ -32,7 +32,7 @@ package org.openwms.web.flex.client.common.view.dialogs {
      * A ConfirmDeletionTransportUnitTypesDialog.
      *
      * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
-     * @version $Revision: 796 $
+     * @version $Revision$
      * @since 0.1
      */
     public class ConfirmDeletionTransportUnitTypesDialog extends ConfirmDeletionDialog {

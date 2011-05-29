@@ -59,7 +59,7 @@ import org.springframework.web.context.support.WebApplicationContextUtils;
  * A CustomSecurityService.
  * 
  * @author <a href="mailto:russelltina@users.sourceforge.net">Tina Russell</a>
- * @version $Revision: 700 $
+ * @version $Revision$
  * @since 0.1
  */
 public class CustomSecurityService extends AbstractSecurityService {

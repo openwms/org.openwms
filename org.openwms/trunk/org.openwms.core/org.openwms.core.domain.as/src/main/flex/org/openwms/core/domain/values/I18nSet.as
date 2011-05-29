@@ -25,7 +25,7 @@ package org.openwms.core.domain.values {
     /**
      * An I18nSet encapsulates arbitrary lanuages.
      *
-     * @version $Revision: 1106 $
+     * @version $Revision$
      * @since 0.1
      */
     public class I18nSet extends I18nSetBase { }

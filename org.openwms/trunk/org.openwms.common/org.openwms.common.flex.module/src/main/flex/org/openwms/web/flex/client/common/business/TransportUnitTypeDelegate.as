@@ -39,7 +39,7 @@ package org.openwms.web.flex.client.common.business {
      * A TransportUnitTypeDelegate.
      *
      * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
-     * @version $Revision: 771 $
+     * @version $Revision$
      * @since 0.1
      */
     public class TransportUnitTypeDelegate {

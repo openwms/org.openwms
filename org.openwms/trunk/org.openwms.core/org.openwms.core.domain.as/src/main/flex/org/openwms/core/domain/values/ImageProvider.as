@@ -25,7 +25,7 @@ package org.openwms.core.domain.values {
     /**
      * An ImageProvider stores an image file.
      * 
-     * @version $Revision: 1027 $
+     * @version $Revision$
      * @since 0.1
      */
     public interface ImageProvider {

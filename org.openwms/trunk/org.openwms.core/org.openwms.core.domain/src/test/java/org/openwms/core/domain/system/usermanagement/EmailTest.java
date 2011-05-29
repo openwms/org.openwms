@@ -29,7 +29,7 @@ import org.openwms.core.test.AbstractJpaSpringContextTests;
  * An EmailTest.
  * 
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
- * @version $Revision: $
+ * @version $Revision$
  */
 public class EmailTest extends AbstractJpaSpringContextTests {
 

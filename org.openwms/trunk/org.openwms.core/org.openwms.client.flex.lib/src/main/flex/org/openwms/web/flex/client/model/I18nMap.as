@@ -31,7 +31,7 @@ package org.openwms.web.flex.client.model{
      * It is a Tide component and can be injected by name=modelLocator.
      *
      * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
-     * @version $Revision: 1301 $
+     * @version $Revision$
      * @since 0.1
      */
     public dynamic class I18nMap extends Proxy {

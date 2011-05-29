@@ -27,7 +27,7 @@ import org.openwms.tms.domain.order.TransportOrder;
  * A TransportOrderStarter.
  * 
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
- * @version $Revision: $
+ * @version $Revision$
  * @since 0.1
  */
 public interface TransportOrderStarter {

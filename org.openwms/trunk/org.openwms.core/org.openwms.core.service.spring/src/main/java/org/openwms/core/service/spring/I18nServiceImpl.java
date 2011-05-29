@@ -33,7 +33,7 @@ import org.springframework.transaction.annotation.Transactional;
  * An I18nServiceImpl.
  * 
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
- * @version $Revision: $
+ * @version $Revision$
  * @since 0.1
  */
 @Transactional

@@ -34,7 +34,7 @@ import org.openwms.core.test.AbstractJpaSpringContextTests;
  * A RoleTest.
  * 
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
- * @version $Revision: 1252 $
+ * @version $Revision$
  * @since 0.1
  */
 public class RoleTest extends AbstractJpaSpringContextTests {

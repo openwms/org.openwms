@@ -55,7 +55,7 @@ package org.openwms.web.flex.client.common.view {
      * Base class of COMMON Module.
      *
      * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
-     * @version $Revision: 1203 $
+     * @version $Revision$
      * @since 0.1
      */
     public class CommonAppBase extends CommonModule implements IApplicationModule, ITideModule {

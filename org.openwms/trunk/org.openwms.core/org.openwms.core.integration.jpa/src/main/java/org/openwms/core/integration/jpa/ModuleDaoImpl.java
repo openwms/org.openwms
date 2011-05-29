@@ -34,7 +34,7 @@ import org.springframework.stereotype.Repository;
  * </p>
  * 
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
- * @version $Revision: $
+ * @version $Revision$
  * @since 0.1
  * @see org.openwms.core.integration.jpa.AbstractGenericJpaDao
  * @see org.openwms.core.integration.ModuleDao

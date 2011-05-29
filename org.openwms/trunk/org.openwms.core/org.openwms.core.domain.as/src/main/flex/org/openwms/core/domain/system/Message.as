@@ -25,7 +25,7 @@ package org.openwms.core.domain.system {
     /**
      * A Message can be assigned to any other kind of entity.
      *
-     * @version $Revision: 1106 $
+     * @version $Revision$
      * @since 0.1
      */
     public class Message extends MessageBase { }

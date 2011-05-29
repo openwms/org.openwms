@@ -40,7 +40,7 @@ import org.openwms.core.domain.values.I18nSet;
  * An I18n.
  * 
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
- * @version $Revision: $
+ * @version $Revision$
  * @since 0.1
  */
 @Entity

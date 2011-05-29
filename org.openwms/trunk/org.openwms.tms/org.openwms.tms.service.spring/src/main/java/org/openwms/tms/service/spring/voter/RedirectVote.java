@@ -29,7 +29,7 @@ import org.openwms.core.service.voter.Vote;
  * vote for as targets.
  * 
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
- * @version $Revision: $
+ * @version $Revision$
  * @since 0.1
  */
 public class RedirectVote extends Vote {

@@ -30,7 +30,7 @@ import org.springframework.transaction.annotation.Transactional;
  * A I18nRepositoryImpl.
  * 
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
- * @version $Revision: $
+ * @version $Revision$
  * @since 0.1
  */
 @Repository("i18nRepo")

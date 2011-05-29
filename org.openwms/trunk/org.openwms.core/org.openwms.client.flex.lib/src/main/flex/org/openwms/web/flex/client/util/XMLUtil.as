@@ -26,7 +26,7 @@ package org.openwms.web.flex.client.util {
      * A XMLUtil.
      *
      * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
-     * @version $Revision: 1301 $
+     * @version $Revision$
      * @since 0.1
      */
     public final class XMLUtil {
