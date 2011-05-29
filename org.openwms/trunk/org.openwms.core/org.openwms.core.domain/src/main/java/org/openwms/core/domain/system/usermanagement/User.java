@@ -21,6 +21,7 @@
 package org.openwms.core.domain.system.usermanagement;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
@@ -216,6 +217,19 @@ public class User extends AbstractEntity implements DomainObject<Long> {
      */
     public User(String username) {
         this.username = username;
+    }
+
+    /**
+     * Create a new <code>User</code> with an username.
+     * 
+     * @param username
+     *            The unique name of the user
+     * @param password
+     *            The password of the user
+     */
+    protected User(String username, String password) {
+        this.username = username;
+        this.password = password;
     }
 
     /**
@@ -450,6 +464,17 @@ public class User extends AbstractEntity implements DomainObject<Long> {
             grants.addAll(role.getGrants());
         }
         return Collections.unmodifiableList(grants);
+    }
+
+    /**
+     * Add a new {@link Role} to the list of all {@link Role}s.
+     * 
+     * @param role
+     *            The new {@link Role} to add
+     * @return <code>true</code> as specified by {@link Collection#add(Object)}
+     */
+    public boolean addRole(Role role) {
+        return this.roles.add(role);
     }
 
     /**

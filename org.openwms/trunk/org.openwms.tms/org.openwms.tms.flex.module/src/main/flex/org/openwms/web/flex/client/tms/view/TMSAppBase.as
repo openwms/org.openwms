@@ -97,13 +97,7 @@ package org.openwms.web.flex.client.tms.view {
          */
         public function init(tide : Tide) : void {
             trace("Add components to Tide context");
-            if (modelLocator == null) {
-                trace("TMS in init1 loator is null");
-            }
             tide.addComponents([TMSModelLocator, TransportsDelegate]);
-            if (modelLocator == null) {
-                trace("TMS in init2 loator is null");
-            }
         }
 
         private function setupServices(services : Array) : void {

@@ -32,20 +32,15 @@
 			http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-3.0.xsd
             http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-3.0.xsd">
 
-    <osgix:cm-properties id="global.properties"
+    <osgix:cm-properties id="globals"
         persistent-id="org.openwms.core.infrastructure.configuration-${openwms.configuration.version}" />
-    <context:property-placeholder properties-ref="global.properties" />
+    <context:property-placeholder properties-ref="globals" />
 
     <context:annotation-config />
     <context:component-scan base-package="org.openwms.core.service.spring" />
     <context:load-time-weaver aspectj-weaving="on" />
 
     <tx:annotation-driven order="10" />
-
-    <bean id="userDetailsService" class="org.openwms.core.service.spring.security.SecurityContextUserServiceImpl">
-        <property name="systemUser" value="${system.user}" />
-        <property name="systemPassword" value="${system.password}" />
-    </bean>
 
     <bean id="userCache" class="org.springframework.security.core.userdetails.cache.EhCacheBasedUserCache">
         <property name="cache" ref="ehCache" />

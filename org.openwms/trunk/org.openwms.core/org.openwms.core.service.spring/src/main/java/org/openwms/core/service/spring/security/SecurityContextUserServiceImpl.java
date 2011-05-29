@@ -22,16 +22,16 @@ package org.openwms.core.service.spring.security;
 
 import net.sf.ehcache.Ehcache;
 
-import org.openwms.core.domain.system.usermanagement.SystemUser;
 import org.openwms.core.domain.system.usermanagement.User;
-import org.openwms.core.exception.InvalidPasswordException;
 import org.openwms.core.integration.GenericDao;
+import org.openwms.core.service.UserService;
 import org.openwms.core.service.spring.UserWrapper;
 import org.openwms.core.util.event.UserChangedEvent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.ApplicationListener;
 import org.springframework.security.core.userdetails.UserCache;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -52,19 +52,23 @@ import org.springframework.transaction.annotation.Transactional;
  * @since 0.1
  * @see org.springframework.security.core.userdetails.UserDetailsService
  */
-@Service
 @Transactional
+@Service("userDetailsService")
 public class SecurityContextUserServiceImpl implements UserDetailsService, ApplicationListener<UserChangedEvent> {
 
     private Logger logger = LoggerFactory.getLogger(this.getClass());
+    @Value("#{ globals['system.user'] }")
     private String systemUser = "openwms";
-    private String systemPassword = "openwms";
 
     @Autowired
     @Qualifier("userDao")
     private GenericDao<User, Long> dao;
 
+    @Autowired
+    private UserService userService;
+
     @Autowired(required = false)
+    @Qualifier("userCache")
     private UserCache userCache;
 
     @Autowired(required = false)
@@ -84,26 +88,6 @@ public class SecurityContextUserServiceImpl implements UserDetailsService, Appli
         if (cache != null) {
             cache.removeAll();
         }
-    }
-
-    /**
-     * Set the systemUser.
-     * 
-     * @param systemUser
-     *            The systemUser to set.
-     */
-    public void setSystemUser(String systemUser) {
-        this.systemUser = systemUser;
-    }
-
-    /**
-     * Set the systemPassword.
-     * 
-     * @param systemPassword
-     *            The systemPassword to set.
-     */
-    public void setSystemPassword(String systemPassword) {
-        this.systemPassword = systemPassword;
     }
 
     /**
@@ -131,15 +115,11 @@ public class SecurityContextUserServiceImpl implements UserDetailsService, Appli
             }
         }
         User user = null;
-
+        logger.debug("Systemuser = " + systemUser);
         if (systemUser.equals(username)) {
-            try {
-                user = new SystemUser(systemUser);
-                user.setPassword(systemPassword);
-            } catch (InvalidPasswordException e) {
-                logger.debug("SystemUser tried to login with an invalid password");
-                throw new UsernameNotFoundException("User " + username + " not found");
-            }
+            logger.debug("Test system");
+            user = userService.createSystemUser();
+            logger.debug("got" + user);
         } else {
             user = dao.findByUniqueId(username);
             if (user == null) {

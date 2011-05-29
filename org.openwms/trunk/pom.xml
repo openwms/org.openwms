@@ -375,8 +375,8 @@
         <hibernate.version>3.4.0.GA</hibernate.version>
         <granite.version>2.2.0.GA</granite.version>
         <flex.version>3.2.0.3958</flex.version>
-	<slf4j.version>1.5.10</slf4j.version>
-	<junit.version>4.7.0</junit.version>
+	   <slf4j.version>1.5.10</slf4j.version>
+	   <junit.version>4.7.0</junit.version>
         <maven.compile.targetLevel>${jdkVersion}</maven.compile.targetLevel>
         <maven.compile.sourceLevel>${jdkVersion}</maven.compile.sourceLevel>
     </properties>

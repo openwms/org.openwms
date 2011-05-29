@@ -52,8 +52,8 @@ public class SystemUser extends User {
      * @param username
      *            User's username
      */
-    public SystemUser(String username) {
-        super(username);
+    public SystemUser(String username, String password) {
+        super(username, password);
         this.setFullname(SYSTEM_USERNAME);
     }
 

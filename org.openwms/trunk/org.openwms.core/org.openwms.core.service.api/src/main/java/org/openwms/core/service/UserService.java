@@ -22,6 +22,7 @@ package org.openwms.core.service;
 
 import java.util.List;
 
+import org.openwms.core.domain.system.usermanagement.SystemUser;
 import org.openwms.core.domain.system.usermanagement.User;
 import org.openwms.core.domain.system.usermanagement.UserPassword;
 
@@ -35,7 +36,7 @@ import org.openwms.core.domain.system.usermanagement.UserPassword;
  */
 public interface UserService {
 
-    /**
+/**
      * Change the current password of the {@link User}.
      * 
      * @param userPassword
@@ -89,5 +90,12 @@ public interface UserService {
      *            {@link User} entity to be removed
      */
     void remove(User user);
+
+    /**
+     * Create and return the SystemUser with all existing roles.
+     * 
+     * @return the SystemUser
+     */
+    SystemUser createSystemUser();
 
 }

@@ -25,6 +25,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -56,6 +57,8 @@ public class Role extends SecurityObject {
 
     private static final long serialVersionUID = -4133301834284932221L;
 
+    public static final String ROLE_PREFIX = "ROLE_";
+
     /**
      * Query to find all <code>Role</code>s.
      */
@@ -67,6 +70,9 @@ public class Role extends SecurityObject {
      * <code>Role</code> to search for.</li>
      */
     public static final String NQ_FIND_BY_UNIQUE_QUERY = "Role.findByRolename";
+
+    @Column(name = "IMMUTABLE")
+    private boolean immutable = false;
 
     /* ------------------- collection mapping ------------------- */
     /**
@@ -97,6 +103,29 @@ public class Role extends SecurityObject {
     @SuppressWarnings("unused")
     private Role() {}
 
+    public static class Builder {
+
+        private Role role;
+
+        public Builder(String name) {
+            this.role = new Role(name);
+        }
+
+        public Builder withDescription(String description) {
+            this.role.setDescription(description);
+            return this;
+        }
+
+        public Builder setImmutable(boolean immutable) {
+            this.role.immutable = immutable;
+            return this;
+        }
+
+        public Role build() {
+            return this.role;
+        }
+    }
+
     /**
      * Create a new <code>Role</code> with a name.
      * 
@@ -105,6 +134,15 @@ public class Role extends SecurityObject {
      */
     public Role(String name) {
         super(name);
+    }
+
+    /**
+     * Get the immutable.
+     * 
+     * @return the immutable.
+     */
+    public boolean isImmutable() {
+        return immutable;
     }
 
     /**
@@ -117,14 +155,13 @@ public class Role extends SecurityObject {
      */
     public Role(String name, String description) {
         super(name, description);
-        AssertUtils.notNull(name, "Role name must not be null");
         AssertUtils.notNull(description, "Role description must not be null");
     }
 
     /**
      * Return all {@link User}s assigned to the <code>Role</code>.
      * 
-     * @return A set of all {@link User}s belonging to the <code>Role</code>
+     * @return A Set of all {@link User}s belonging to the <code>Role</code>
      */
     public Set<User> getUsers() {
         return Collections.unmodifiableSet(users);
@@ -159,11 +196,10 @@ public class Role extends SecurityObject {
     }
 
     /**
-     * Set all {@link User}s belonging to this <code>Role</code>. Already
-     * existing {@link User}s will be removed.
+     * Set all {@link User}s belonging to this <code>Role</code>.
      * 
      * @param users
-     *            A set of {@link User}s to be assigned to the <code>Role</code>
+     *            A Set of {@link User}s to be assigned to the <code>Role</code>
      * @throws IllegalArgumentException
      *             if users is <code>null</code>
      */
@@ -175,7 +211,7 @@ public class Role extends SecurityObject {
     /**
      * Return all {@link Preference}s of the <code>Role</code>.
      * 
-     * @return A set of all {@link Preference}s belonging to the
+     * @return A Set of all {@link Preference}s belonging to the
      *         <code>Role</code>
      */
     public Set<Preference> getPreferences() {
@@ -183,11 +219,10 @@ public class Role extends SecurityObject {
     }
 
     /**
-     * Set all {@link Preference}s belonging to the <code>Role</code>. Already
-     * existing {@link Preference}s will be removed.
+     * Set all {@link Preference}s belonging to the <code>Role</code>.
      * 
      * @param preferences
-     *            A set of {@link Preference}s to be assigned to the
+     *            A Set of {@link Preference}s to be assigned to the
      *            <code>Role</code>
      */
     public void setPreferences(Set<Preference> preferences) {
@@ -197,7 +232,7 @@ public class Role extends SecurityObject {
     /**
      * Return all {@link SecurityObject}s belonging to the <code>Role</code>.
      * 
-     * @return A set of all {@link SecurityObject}s belonging to this Role
+     * @return A Set of all {@link SecurityObject}s belonging to this Role
      */
     public Set<SecurityObject> getGrants() {
         return Collections.unmodifiableSet(grants);

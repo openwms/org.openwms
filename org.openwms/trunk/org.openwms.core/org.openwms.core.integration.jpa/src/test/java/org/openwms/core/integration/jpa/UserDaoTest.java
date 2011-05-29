@@ -99,7 +99,7 @@ public class UserDaoTest extends AbstractJpaSpringContextTests {
      */
     @Test
     public final void testRemoveSysUser() {
-        entityManager.persist(new SystemUser(SystemUser.SYSTEM_USERNAME));
+        entityManager.persist(new SystemUser(SystemUser.SYSTEM_USERNAME, "pass"));
         User u = findUser(SystemUser.SYSTEM_USERNAME);
         assertTrue("Should be a system user", u instanceof SystemUser);
         dao.remove(u);

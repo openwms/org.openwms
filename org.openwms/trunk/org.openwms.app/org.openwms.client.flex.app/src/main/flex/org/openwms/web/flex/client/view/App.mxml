@@ -44,10 +44,9 @@
 	
     <mx:XMLList id="stdMenu">
         <menuitem label="Application">
-            <menuitem label="Users" action="{SwitchScreenEvent.SHOW_USER_MGMT_VIEW}" />
-            <menuitem label="Roles" action="{SwitchScreenEvent.SHOW_ROLE_MGMT_VIEW}" />
-            <menuitem label="Modules" action="{SwitchScreenEvent.SHOW_MODULE_MGMT_VIEW}" />
-            <!-- menuitem label="Settings" action="{SwitchScreenEvent.SHOW_SETTING_MGMT_VIEW}" /-->
+            <menuitem label="Users" enabled="{identity.ifAllGranted('APP_User_Management')}" action="{SwitchScreenEvent.SHOW_USER_MGMT_VIEW}" />
+            <menuitem label="Roles" enabled="{identity.ifAllGranted('APP_Role_Management')}" action="{SwitchScreenEvent.SHOW_ROLE_MGMT_VIEW}" />
+            <menuitem label="Modules" enabled="{identity.ifAllGranted('APP_Module_Management')}" action="{SwitchScreenEvent.SHOW_MODULE_MGMT_VIEW}" />
         </menuitem>
     </mx:XMLList>
 

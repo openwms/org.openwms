@@ -42,11 +42,11 @@
             <mx:MenuBar id="commonMenuBar" labelField="@label">
                 <mx:XMLList>
                     <menuitem label="Configuration">
-                        <menuitem label="Transport Unit Types" action="{CommonSwitchScreenEvent.SHOW_TRANSPORTUNITTYPE_VIEW}" />
-                        <menuitem label="Transport Units" action="{CommonSwitchScreenEvent.SHOW_TRANSPORTUNIT_VIEW}" />
-                        <menuitem label="Location Types" action="{CommonSwitchScreenEvent.SHOW_LOCATIONTYPE_VIEW}" />
-                        <menuitem label="Locations" action="{CommonSwitchScreenEvent.SHOW_LOCATION_VIEW}" />
-                        <menuitem label="Location Groups" action="{CommonSwitchScreenEvent.SHOW_LOCATIONGROUP_VIEW}" />
+                        <menuitem label="Transport Unit Types" enabled="{identity.ifAllGranted('COMMON_Transport_Unit_Types')}" action="{CommonSwitchScreenEvent.SHOW_TRANSPORTUNITTYPE_VIEW}" />
+                        <menuitem label="Transport Units" enabled="{identity.ifAllGranted('COMMON_Transport_Units')}" action="{CommonSwitchScreenEvent.SHOW_TRANSPORTUNIT_VIEW}" />
+                        <menuitem label="Location Types" enabled="{identity.ifAllGranted('COMMON_Location_Types')}" action="{CommonSwitchScreenEvent.SHOW_LOCATIONTYPE_VIEW}" />
+                        <menuitem label="Locations" enabled="{identity.ifAllGranted('COMMON_Locations')}" action="{CommonSwitchScreenEvent.SHOW_LOCATION_VIEW}" />
+                        <menuitem label="Location Groups" enabled="{identity.ifAllGranted('COMMON_Location_Groups')}" action="{CommonSwitchScreenEvent.SHOW_LOCATIONGROUP_VIEW}" />
                     </menuitem>
                 </mx:XMLList>
             </mx:MenuBar>

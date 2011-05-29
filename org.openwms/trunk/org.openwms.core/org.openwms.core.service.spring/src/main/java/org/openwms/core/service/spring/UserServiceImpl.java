@@ -20,13 +20,18 @@
  */
 package org.openwms.core.service.spring;
 
+import java.util.HashSet;
 import java.util.List;
 
 import org.openwms.core.annotation.FireAfterTransaction;
+import org.openwms.core.domain.system.usermanagement.Role;
+import org.openwms.core.domain.system.usermanagement.SecurityObject;
+import org.openwms.core.domain.system.usermanagement.SystemUser;
 import org.openwms.core.domain.system.usermanagement.User;
 import org.openwms.core.domain.system.usermanagement.UserDetails;
 import org.openwms.core.domain.system.usermanagement.UserPassword;
 import org.openwms.core.exception.InvalidPasswordException;
+import org.openwms.core.integration.SecurityObjectDao;
 import org.openwms.core.integration.UserDao;
 import org.openwms.core.service.UserService;
 import org.openwms.core.service.exception.ServiceRuntimeException;
@@ -35,6 +40,7 @@ import org.openwms.core.util.event.UserChangedEvent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -58,6 +64,13 @@ public class UserServiceImpl implements UserService {
     private static final Logger logger = LoggerFactory.getLogger(UserServiceImpl.class);
     @Autowired
     private UserDao dao;
+    @Autowired
+    private SecurityObjectDao securityObjectDao;
+
+    @Value("#{ globals['system.user'] }")
+    private String systemUsername;
+    @Value("#{ globals['system.password'] }")
+    private String systemPassword;
 
     /**
      * {@inheritDoc}
@@ -135,6 +148,22 @@ public class UserServiceImpl implements UserService {
     @Transactional(readOnly = true)
     public User getTemplate(String username) {
         return new User(username);
+    }
+
+    /**
+     * {@inheritDoc}
+     * 
+     * Marked as <code>readOnly</code> transactional method.
+     */
+    @Override
+    @Transactional(readOnly = true)
+    public SystemUser createSystemUser() {
+        SystemUser sys = new SystemUser(systemUsername, systemPassword);
+        Role role = new Role.Builder(Role.ROLE_PREFIX + "SYSTEM").withDescription("SuperUsers Role").setImmutable(true)
+                .build();
+        role.setGrants(new HashSet<SecurityObject>(securityObjectDao.findAll()));
+        sys.addRole(role);
+        return sys;
     }
 
     /**

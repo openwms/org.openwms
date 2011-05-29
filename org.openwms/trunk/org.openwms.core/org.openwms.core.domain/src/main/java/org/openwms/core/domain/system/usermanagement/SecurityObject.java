@@ -33,6 +33,7 @@ import javax.persistence.Version;
 
 import org.openwms.core.domain.AbstractEntity;
 import org.openwms.core.domain.DomainObject;
+import org.openwms.core.util.validation.AssertUtils;
 
 /**
  * A SecurityObject is the superclass of Roles and Grants and combines common
@@ -105,6 +106,7 @@ public class SecurityObject extends AbstractEntity implements DomainObject<Long>
      *            The name of the <code>SecurityObject</code>
      */
     public SecurityObject(String name) {
+        AssertUtils.notNull(name, "SecurityObject name must not be null");
         this.name = name;
     }
 
