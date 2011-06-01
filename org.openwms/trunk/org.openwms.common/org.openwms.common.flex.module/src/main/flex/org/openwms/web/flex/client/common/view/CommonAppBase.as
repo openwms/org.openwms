@@ -48,9 +48,8 @@ package org.openwms.web.flex.client.common.view {
     import org.openwms.web.flex.client.model.ModelLocator;
     import org.openwms.web.flex.client.module.CommonModule;
 
-    [Name]
-    [ManagedEvent(name="APP.MERGE_SECURITY_BLACKLIST")]
-    [Event(name="APP.MERGE_SECURITY_BLACKLIST")]
+    [Name("CommonApp")]
+    [Bindable]
     /**
      * Base class of COMMON Module.
      *
@@ -61,36 +60,22 @@ package org.openwms.web.flex.client.common.view {
     public class CommonAppBase extends CommonModule implements IApplicationModule, ITideModule {
 
         [Inject]
-        [Bindable]
         /**
          * Injected Model.
          */
         public var modelLocator : ModelLocator;
-        [In]
-        /**
-         * Injected context object.
-         */
-        public var tideContext : Context;
         [Inject]
-        [Bindable]
         /**
          * Injected Tide identity object.
          */
         public var identity : Identity;
 
-        [Bindable]
         public var commonMenuBar : MenuBar;
-        [Bindable]
         public var commonViewStack : ViewStack;
-        [Bindable]
         public var securityObjects : ArrayCollection;
-        [Bindable]
         private var locationService:SecureRemoteObject = new SecureRemoteObject("locationServiceRemote");
-        [Bindable]
         private var locationGroupService:SecureRemoteObject = new SecureRemoteObject("locationGroupServiceRemote");
-        [Bindable]
         private var transportUnitService : SecureRemoteObject = new SecureRemoteObject("transportUnitServiceRemote");
-        [Bindable]
         private var childDomain : ApplicationDomain;
         [Embed(source="/assets/security/secured-objects.xml", mimeType="application/octet-stream")]
         private var _xml:Class;
@@ -109,7 +94,7 @@ package org.openwms.web.flex.client.common.view {
          * @param tide not used here
          */
         public function init(tide : Tide) : void {
-            trace("Add components to Tide context");
+            trace("Add components of the COMMON module to Tide context");
             tide.addComponents([CommonAppBase, CommonModelLocator, TransportUnitTypeDelegate, TransportUnitDelegate, LocationDelegate, LocationGroupDelegate]);
         }
 
@@ -119,9 +104,8 @@ package org.openwms.web.flex.client.common.view {
          * this module.
          */
         public function start(applicationDomain : ApplicationDomain = null) : void {
-            trace("Add context to main context in applicationDomain");
+            trace("Starting COMMON module");
             childDomain = applicationDomain;
-            Spring.getInstance().addModule(CommonApp, applicationDomain);
             setupServices([locationService, locationGroupService, transportUnitService]);
             readAndMergeGrantsList();
         }
@@ -130,7 +114,7 @@ package org.openwms.web.flex.client.common.view {
             var endpoint:String = ServerConfig.getChannel("my-graniteamf").endpoint;
             for each (var service:SecureRemoteObject in services) {
                 service.endpoint = endpoint;
-                service.showBusyCursor = true;
+                service.showBusyCursor = false;
                 service.channelSet = new ChannelSet();
                 service.channelSet.addChannel(ServerConfig.getChannel("my-graniteamf"));        		
             }
@@ -187,8 +171,6 @@ package org.openwms.web.flex.client.common.view {
          */
         public function destroyModule() : void {
             trace("Destroying module : " + getModuleName());
-            //Type.unregisterDomain(childDomain);
-            Spring.getInstance().removeModule(CommonAppBase);
         }
 
         /**

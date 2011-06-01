@@ -35,7 +35,7 @@ package org.openwms.web.flex.client.tms.business {
     import org.openwms.web.flex.client.tms.event.TransportOrderEvent;
     import org.openwms.web.flex.client.tms.model.TMSModelLocator;
 
-    [Name("transportsDelegate")]
+    [Name]
     [ManagedEvent(name="LOAD_TRANSPORT_ORDERS")]
     /**
      * A TransportsDelegate.
@@ -46,13 +46,13 @@ package org.openwms.web.flex.client.tms.business {
      */
     public class TransportsDelegate {
 
-        [In]
+        [Inject]
         [Bindable]
         /**
          * Injected TideContext.
          */
         public var tideContext : Context;
-        [In]
+        [Inject]
         [Bindable]
         /**
          * Inject a model to work on.

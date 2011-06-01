@@ -21,13 +21,7 @@
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
 -->
-<view:CommonAppBase xmlns:mx="http://www.adobe.com/2006/mxml" xmlns:module="org.openwms.web.flex.client.module.*"
-    xmlns:view="org.openwms.web.flex.client.common.view.*">
-    
-    <mx:Metadata>
-        [Name]
-        [Event(name="APP.MERGE_SECURITY_BLACKLIST")]
-    </mx:Metadata>
+<view:CommonAppBase xmlns:mx="http://www.adobe.com/2006/mxml" xmlns:view="org.openwms.web.flex.client.common.view.*">
     
     <mx:Script>
     	<![CDATA[

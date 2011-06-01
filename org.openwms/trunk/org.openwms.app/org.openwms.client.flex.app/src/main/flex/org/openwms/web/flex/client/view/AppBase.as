@@ -32,18 +32,21 @@ package org.openwms.web.flex.client.view {
     import mx.events.MenuEvent;
     import mx.logging.ILogger;
     import mx.logging.Log;
+    import mx.logging.targets.TraceTarget;
     import mx.managers.DragManager;
     import mx.managers.PopUpManager;
     import mx.messaging.ChannelSet;
     import mx.messaging.config.ServerConfig;
     import mx.modules.ModuleManager;
     import mx.resources.ResourceManager;
+    import mx.resources.IResourceManager;
 
     import org.granite.rpc.remoting.mxml.SecureRemoteObject;
     import org.granite.tide.spring.Context;
     import org.granite.tide.spring.Identity;
     import org.granite.tide.spring.Spring;
 
+    import org.openwms.core.domain.Module;
     import org.openwms.core.domain.system.usermanagement.Grant;
     import org.openwms.common.domain.values.Weight;
     import org.openwms.tms.domain.order.TransportOrder;
@@ -126,6 +129,8 @@ package org.openwms.web.flex.client.view {
         private static var log : ILogger = Log.getLogger("org.openwms.web.flex.client.view.App");
         private static var _link : Array = [org.openwms.tms.domain.order.TransportOrder,org.openwms.common.domain.values.Weight];
         [Bindable]
+        private var rman : IResourceManager = ResourceManager.getInstance();
+        [Bindable]
         private var moduleService:SecureRemoteObject = new SecureRemoteObject("moduleServiceRemote");
         [Bindable]
         private var userService:SecureRemoteObject = new SecureRemoteObject("userServiceRemote");
@@ -161,8 +166,11 @@ package org.openwms.web.flex.client.view {
          * Put your code here, to start application specific structures.
          */
         public function init() : void {
+            var t:TraceTarget = new TraceTarget();
+            t.filters = ["org.openwms.*"];
+            Log.addTarget(t);
             tideContext.mainAppUI = this;
-            var l:Array = ResourceManager.getInstance().localeChain;
+            var l:Array = rman.localeChain;
             for each (var s:String in l){
                 trace("LOCALE:"+s);
             } 
@@ -204,7 +212,7 @@ package org.openwms.web.flex.client.view {
          */
         public function onMenuChange(event : MenuEvent) : void {
             if (appViewStack.getChildByName(event.item.@action) == null) {
-                Alert.show("Screen with name " + event.item.@action + " not found!");
+                Alert.show(rman.getString("appError", "screenNameNotFound", [event.item.@action]));
                 return;
             }
             dispatchEvent(new SwitchScreenEvent(event.item.@action));
@@ -220,7 +228,6 @@ package org.openwms.web.flex.client.view {
          * @param event Unused
          */
         public function logout(event : ApplicationEvent) : void {
-            trace("Logout.");
             modelLocator.actualView = SwitchScreenEvent.SHOW_STARTSCREEN;
             appViewStack.selectedIndex = DisplayUtility.getView(SwitchScreenEvent.SHOW_STARTSCREEN, appViewStack);
             appViewStack.validateDisplayList();
@@ -261,7 +268,7 @@ package org.openwms.web.flex.client.view {
             tideContext.raiseEvent(ApplicationEvent.LOAD_ALL_MODULES);
         }
 
-        [Observer("MODULE_UNLOADED")]
+        [Observer("APP.BEFORE_MODULE_UNLOAD")]
         /**
          * In the case a Module was successfully unloaded, menues and views must be re-organized.
          * Tide event observers : MODULE_UNLOADED
@@ -269,11 +276,18 @@ package org.openwms.web.flex.client.view {
          * @param event event.data stores the IApplicationModule
          */
         public function moduleUnloaded(event : ApplicationEvent) : void {
-            if (event.data != null && event.data is IApplicationModule) {
-                var appModule : IApplicationModule = (event.data as IApplicationModule);
+            if (event.data != null && !modelLocator.unloadedModules.hasOwnProperty((event.data.module as Module).url)) {
+                var appModule : IApplicationModule = (event.data.appModule as IApplicationModule);
                 mainMenuBar.dataProvider = moduleLocator.getActiveMenuItems(new XMLListCollection(stdMenu));
-                    //removeViewsFromStack(appModule);
+                removeViewsFromStack(appModule);
             }
+            fireReadyToUnload(event);
+        }
+
+        private function fireReadyToUnload(event : ApplicationEvent) {
+            var e:ApplicationEvent = new ApplicationEvent(ApplicationEvent.READY_TO_UNLOAD);
+            e.data = event.data
+            dispatchEvent(e);
         }
 
         [Observer("MODULE_LOADED")]
@@ -289,7 +303,7 @@ package org.openwms.web.flex.client.view {
                 mainMenuBar.dataProvider = moduleLocator.getActiveMenuItems(new XMLListCollection(stdMenu));
                 addViewsToViewStack(appModule);
                 addSecurityObjects(appModule);
-                    //appModule.initializeModule(applicationDomain);
+                this.validateNow();
             }
         }
 

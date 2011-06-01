@@ -24,6 +24,8 @@ package org.openwms.web.flex.client.tms.model {
     import mx.formatters.DateFormatter;
     import org.openwms.tms.domain.values.TransportOrderState;
 
+    [Name]
+    [Bindable]
     /**
      * A TMSModelLocator.
      *
@@ -31,8 +33,6 @@ package org.openwms.web.flex.client.tms.model {
      * @version $Revision$
      * @since 0.1
      */
-    [Name("tmsModelLocator")]
-    [Bindable]
     public class TMSModelLocator {
 
         public var allTransportOrders:ArrayCollection = new ArrayCollection();

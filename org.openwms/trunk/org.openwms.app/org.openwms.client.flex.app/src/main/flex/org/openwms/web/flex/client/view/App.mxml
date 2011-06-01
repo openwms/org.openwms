@@ -29,6 +29,7 @@
     <mx:Metadata>
         [Name("application")]
         [ManagedEvent(name="APP.MERGE_GRANTS")]
+	[ManagedEvent(name="APP.READY_TO_UNLOAD")]
     </mx:Metadata>
 
     <mx:Script>

@@ -33,6 +33,9 @@ package org.openwms.web.flex.client.tms.view {
     import org.granite.tide.ITideModule;
     import org.granite.tide.Tide;
     import org.granite.tide.spring.Spring;
+    import org.granite.tide.spring.Context;
+    import org.granite.tide.spring.Identity;
+
     import org.openwms.core.domain.system.usermanagement.Grant;
     import org.openwms.web.flex.client.util.XMLUtil;
     import org.openwms.web.flex.client.IApplicationModule;
@@ -40,8 +43,10 @@ package org.openwms.web.flex.client.tms.view {
     import org.openwms.web.flex.client.module.CommonModule;
     import org.openwms.web.flex.client.tms.business.TransportsDelegate;
     import org.openwms.web.flex.client.tms.model.TMSModelLocator;
+    import org.openwms.web.flex.client.tms.view.TransportOrderView;
 
-    [Name("TMSAppBase")]
+    [Name("TMSApp")]
+    [Bindable]
     /**
      * Base class of TMS Module.
      *
@@ -52,24 +57,25 @@ package org.openwms.web.flex.client.tms.view {
     public class TMSAppBase extends CommonModule implements IApplicationModule, ITideModule {
 
         [Inject]
-        [Bindable]
+        /**
+         * Injected a model.
+         */
         public var modelLocator : ModelLocator;
-        [Bindable]
-        public var menuCollection : ArrayCollection;
-        [Bindable]
+        [Inject]
+        /**
+         * Injected Tide identity object.
+         */
+        public var identity : Identity;
+        private var menuCollection : ArrayCollection;
         public var menuBarItemsCollection : XMLListCollection;
-        [Bindable]
         public var tmsMenuBar : MenuBar;
-        [Bindable]
         public var tmsViewStack : ViewStack;
-        [Bindable]
         private var transportService : SecureRemoteObject = new SecureRemoteObject("transportServiceRemote");
-        [Bindable]
         private var childDomain : ApplicationDomain;
         [Embed(source="/assets/security/secured-objects.xml", mimeType="application/octet-stream")]
         private var _xml:Class;
         private var blacklisted : ArrayCollection = new ArrayCollection();
-
+        private var transportOrderView: TransportOrderView;
         /**
          * Default constructor.
          */
@@ -78,33 +84,32 @@ package org.openwms.web.flex.client.tms.view {
         }
 
         /**
-         * This method is called first from the ModuleLocator to do the first initial work. The module registers itself on
-         * the main applicationDomain, that means the context of the main application is extended with the subcontext of
-         * this module.
-         */
-        public function start(applicationDomain : ApplicationDomain = null) : void {
-            trace("Starting Tide context in applicationDomain");
-            childDomain = applicationDomain;
-            Spring.getInstance().addModule(TMSAppBase, applicationDomain);
-            setupServices([transportService]);
-            readAndMergeGrantsList();
-        }
-
-        /**
          * In a second step Tide tries to start the module calling this method. Here are all components added to the TideContext.
          *
          * @param tide not used here
          */
         public function init(tide : Tide) : void {
-            trace("Add components to Tide context");
-            tide.addComponents([TMSModelLocator, TransportsDelegate]);
+            trace("Add components of the TMS module to Tide context");
+            tide.addComponents([TMSAppBase,TransportOrderView, TMSModelLocator, TransportsDelegate]);
+        }
+
+        /**
+         * This method is called first from the ModuleLocator to do the first initial work. The module registers itself on
+         * the main applicationDomain, that means the context of the main application is extended with the subcontext of
+         * this module.
+         */
+        public function start(applicationDomain : ApplicationDomain = null) : void {
+            trace("Starting TMS module");
+            childDomain = applicationDomain;
+            setupServices([transportService]);
+            readAndMergeGrantsList();
         }
 
         private function setupServices(services : Array) : void {
             var endpoint : String = ServerConfig.getChannel("my-graniteamf").endpoint;
             for each (var service : SecureRemoteObject in services) {
                 service.endpoint = endpoint;
-                service.showBusyCursor = true;
+                service.showBusyCursor = false;
                 service.channelSet = new ChannelSet();
                 service.channelSet.addChannel(ServerConfig.getChannel("my-graniteamf"));
             }
@@ -161,7 +166,6 @@ package org.openwms.web.flex.client.tms.view {
          */
         public function destroyModule() : void {
             trace("Destroying module : " + getModuleName());
-            Spring.getInstance().removeModule(TMSAppBase);
         }
 
         /**
@@ -178,5 +182,4 @@ package org.openwms.web.flex.client.tms.view {
         }
     }
 }
-
 

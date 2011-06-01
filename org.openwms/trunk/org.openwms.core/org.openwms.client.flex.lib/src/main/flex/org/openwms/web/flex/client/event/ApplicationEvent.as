@@ -62,6 +62,8 @@ package org.openwms.web.flex.client.event {
          * Name of the Event to unload a single Module.
          */
         public static const UNLOAD_MODULE:String = "UNLOAD_MODULE";
+        public static const BEFORE_MODULE_UNLOAD:String = "APP.BEFORE_MODULE_UNLOAD";
+        public static const READY_TO_UNLOAD:String = "APP.READY_TO_UNLOAD";
         /**
          * Name of the Event to signal that a Module was successfully loaded.
          */
@@ -107,12 +109,22 @@ package org.openwms.web.flex.client.event {
             super(type, true, false);
         }
 
+        /**
+         * Just a copy of the event itself including the data field.
+         *
+         * @return a copy of this
+         */
         public override function clone():Event {
             var e:ApplicationEvent = new ApplicationEvent(type);
             e.data = data;
             return e;
         }
 
+        /**
+         * Simple override.
+         *
+         * @return the type of event
+         */
         public override function toString():String {
             return formatToString("ApplicationEvent","type");
         } 

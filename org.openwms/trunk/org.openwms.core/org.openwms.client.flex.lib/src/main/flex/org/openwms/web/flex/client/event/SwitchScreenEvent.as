@@ -20,7 +20,6 @@
  */
 package org.openwms.web.flex.client.event {
     import flash.events.Event;
-    
     import mx.collections.ArrayCollection;
 
     /**
@@ -38,19 +37,41 @@ package org.openwms.web.flex.client.event {
         public static const SHOW_SETTING_MGMT_VIEW:String = "settingManagementView";
         public static var eventTypes:Array;
 
+        /**
+         * Constructor.
+         */
         public function SwitchScreenEvent(type:String, bubbles:Boolean = true, cancelable:Boolean = false) {
-        	eventTypes = new Array();
+            eventTypes = new Array();
             super(type, bubbles, cancelable);
         }
-        
-        public static function addType(type:String):void {
-        	eventTypes.push(type);
+
+        public function addType(type:String):void {
+            eventTypes.push(type);
         }
-        
-        public static function removeType(type:String):void {
-        	var col:ArrayCollection = new ArrayCollection(eventTypes);
-        	col.removeItemAt(eventTypes.indexOf(type));
-        	eventTypes = col.toArray();
+
+        public function removeType(type:String):void {
+            var col:ArrayCollection = new ArrayCollection(eventTypes);
+            col.removeItemAt(eventTypes.indexOf(type));
+            eventTypes = col.toArray();
         }
+
+        /**
+         * Just a copy of the event itself.
+         *
+         * @return a copy of this
+         */
+        public override function clone():Event {
+            return new SwitchScreenEvent(type);
+        }
+
+        /**
+         * Simple override.
+         *
+         * @return the type of event
+         */
+        public override function toString():String {
+            return formatToString("SwitchScreenEvent","type");
+        } 
     }
 }
+

@@ -29,14 +29,44 @@ package org.openwms.web.flex.client.event {
      * @since 0.1
      */
     public class PropertyEvent extends Event {
-    	
+
+        /**
+         * Type of event to load all Property entities from the backend.
+         */
         public static const LOAD_ALL_PROPERTIES:String = "LOAD_ALL_PROPERTIES";
 
+        /**
+         * Store arbitrary data.
+         */
         public var data:*;
 
+        /**
+         * Constructor.
+         */
         public function PropertyEvent(type:String, bubbles:Boolean = true, cancelable:Boolean = false) {
             super(type, bubbles, cancelable);
         }
 
+        /**
+         * Just a copy of the event itself including the data field.
+         *
+         * @return a copy of this
+         */
+        public override function clone():Event {
+            var e:PropertyEvent = new PropertyEvent(type);
+            e.data = data;
+            return e;
+        }
+
+        /**
+         * Simple override.
+         *
+         * @return the type of event
+         */
+        public override function toString():String {
+            return formatToString("PropertyEvent","type");
+        } 
+
     }
 }
+

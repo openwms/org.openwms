@@ -24,7 +24,7 @@
 <mx:Canvas xmlns:mx="http://www.adobe.com/2006/mxml" width="100%" height="100%" backgroundColor="#C2DAEF" show="onShow()">
 
     <mx:Metadata>
-        [Name("locationView")]
+        [Name]
         [ManagedEvent(name="LOAD_ALL_LOCATIONS")]
         [ManagedEvent(name="LOAD_ALL_LOCATION_TYPES")]
         [ManagedEvent(name="LOAD_ALL_LOCATION_GROUPS")]

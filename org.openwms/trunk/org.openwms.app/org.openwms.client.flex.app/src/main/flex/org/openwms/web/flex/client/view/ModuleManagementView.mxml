@@ -24,15 +24,17 @@
 <mx:Canvas xmlns:mx="http://www.adobe.com/2006/mxml" width="100%" height="100%" backgroundAlpha="0.0" creationComplete="init()">
     <mx:states>
         <mx:State name="selectedLoaded">
-        	<mx:SetStyle target="{loadBtn}" name="icon" value="stopIcon" />
+        	<mx:SetStyle target="{loadBtn}" name="icon" value="{stopIcon}" />
+            <mx:SetProperty target="{loadBtn}" name="toolTip" value="Module is currently loaded, click to unload" />
         </mx:State>
         <mx:State name="selectedUnLoaded">
-        	<mx:SetStyle target="{loadBtn}" name="icon" value="startIcon" />
+        	<mx:SetStyle target="{loadBtn}" name="icon" value="{startIcon}" />
+            <mx:SetProperty target="{loadBtn}" name="toolTip" value="Module is currently unloaded, click to load" />
         </mx:State>
     </mx:states>
 
     <mx:Metadata>
-        [Name("moduleManagementView")]
+        [Name("moduleScreen")]
         [ManagedEvent(name="SAVE_MODULE")]
         [ManagedEvent(name="DELETE_MODULE")]
         [ManagedEvent(name="LOAD_MODULE")]
@@ -57,27 +59,50 @@
             [Inject]
             [Bindable]
             /**
-             * We need to have Granites Identity injected.
+             * Inject identity to ensure security.
              */
             public var identity:Identity;
             
-            /**
-             * We want to operate on the model.
-             */
             [Inject]
             [Bindable]
+            /**
+             * Inject a model.
+             */
             public var modelLocator:ModelLocator; 
-
-			[Embed("/assets/images/Module--start.png")] 
-     		public var startIcon: Class; 
-            [Embed("/assets/images/Module--stop.png")] 
+            
+            [Bindable]
+			[Embed(source="/assets/images/Module--start.png")] 
+     		public var startIcon: Class;
+            [Bindable] 
+            [Embed(source="/assets/images/Module--stop.png")] 
      		public var stopIcon: Class;
-     		 
+            [Embed(source="/assets/images/Module--disabled.png")] 
+            public var disabledIcon: Class;
+            
+            [Observer("MODULE_UNLOADED")]
+            /**
+             * After a Module was unloaded as well as after this screen was created, we check the state of the Module
+             * to set the button icon properly.
+             *
+             * @param event Unused
+             */
+            public function onUnloaded(event:ApplicationEvent = null):void { checkState(); }
+            
+            [Observer("MODULE_LOADED")]
+            /**
+             * After a Module was loaded as well as after this screen was created, we check the state of the Module
+             * to set the button icon properly.
+             *
+             * @param event Unused
+             */
+            public function onLoaded(event:ApplicationEvent = null) : void { checkState(); }
+            
             private function init():void {
                 newBtn.enabled = true;
                 saveBtn.enabled = false;
                 deleteBtn.enabled = false;
                 enableTextFields(false);
+                checkState();
             }
             
             private function newModule():void {
@@ -88,6 +113,19 @@
                 newBtn.enabled = false;
                 enableTextFields(true);
                 moduleNameTxt.setFocus();
+            }
+
+            private function checkState():void {
+                if (modelLocator == null || loadBtn == null) {
+                    return;
+                }
+                if (modelLocator.selectedModule != null && modelLocator.selectedModule.loaded) {
+                    loadBtn.setStyle("icon", stopIcon);
+                } else if(modelLocator.selectedModule != null && !modelLocator.selectedModule.loaded) {
+                    loadBtn.setStyle("icon", startIcon);
+                } else {
+                    loadBtn.setStyle("icon", disabledIcon);
+                }
             }
 
             private function saveModule():void {
@@ -149,6 +187,7 @@
                 currentState = (modelLocator.selectedModule.loaded ? 'selectedLoaded' : 'selectedUnLoaded');
                 enableTextFields(true);
                 deleteBtn.enabled = true;
+                checkState();
             }
             
             private function onDragComplete(event:DragEvent):void {
@@ -186,7 +225,6 @@
                         return m;
                     }
                 }
-                trace("Not found return : "+module);
                 return null;
             }
 
@@ -209,7 +247,7 @@
 		    <mx:VRule height="10" visible="{identity.ifAllGranted('APP_save_module_button')}"/>
 		    <mx:Button id="saveBtn" visible="{identity.ifAllGranted('APP_save_module_button')}" buttonMode="true" mouseChildren="false" toolTip="Save an existing Module" icon="@Embed(source='/assets/images/Module--save.png')" click="saveModule()"/>
 		    <mx:VRule height="10" visible="{identity.ifAllGranted('APP_load_module_button')}"/>
-		    <mx:Button id="loadBtn" visible="{identity.ifAllGranted('APP_load_module_button')}" buttonMode="true" mouseChildren="false" toolTip="{(modelLocator.selectedModule == null || modelLocator.selectedModule.loaded) ? 'Unload' : 'Load'} the selected Module" click="loadModule()" enabled="{(modelLocator.selectedModule == null || modelLocator.selectedModule.moduleName == '') ? false : true}"/>
+		    <mx:Button id="loadBtn" visible="{identity.ifAllGranted('APP_load_module_button')}" buttonMode="true" mouseChildren="false" click="loadModule()" enabled="{(modelLocator.selectedModule == null || modelLocator.selectedModule.moduleName == '') ? false : true}"/>
 		</mx:HBox>
 		<mx:HRule x="9" y="53" width="95%"/>
 		<mx:VBox width="95%" x="10" y="63">

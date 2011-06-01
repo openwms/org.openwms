@@ -19,7 +19,7 @@
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
 package org.openwms.web.flex.client.event {
-    
+
     import flash.events.Event;
 
     /**
@@ -30,9 +30,9 @@ package org.openwms.web.flex.client.event {
      * @since 0.1
      */
     public class I18nEvent extends Event {
-    	/**
-    	 * Trigger to load all texts from the backend.
-    	 */
+        /**
+         * Trigger to load all texts from the backend.
+         */
         public static const LOAD_ALL:String = "I18N_LOAD_ALL";
 
         /**
@@ -50,5 +50,26 @@ package org.openwms.web.flex.client.event {
         public function I18nEvent(type:String, bubbles:Boolean = true, cancelable:Boolean = false) {
             super(type, bubbles, cancelable);
         }
+
+        /**
+         * Just a copy of the event itself including the data field.
+         *
+         * @return a copy of this
+         */
+        public override function clone():Event {
+            var e:I18nEvent = new I18nEvent(type);
+            e.data = data;
+            return e;
+        }
+
+        /**
+         * Simple override.
+         *
+         * @return the type of event
+         */
+        public override function toString():String {
+            return formatToString("I18nEvent","type");
+        } 
     }
 }
+

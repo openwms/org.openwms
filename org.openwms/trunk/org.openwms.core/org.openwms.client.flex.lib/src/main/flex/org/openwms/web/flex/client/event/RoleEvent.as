@@ -19,7 +19,7 @@
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
 package org.openwms.web.flex.client.event {
-	
+
     import flash.events.Event;
 
     /**
@@ -30,17 +30,63 @@ package org.openwms.web.flex.client.event {
      * @since 0.1
      */
     public class RoleEvent extends Event {
+
+        /**
+         * Type of event to load all Roles from the backend.
+         */
         public static const LOAD_ALL_ROLES:String = "LOAD_ALL_ROLES";
+        /**
+         * Type of event to add a new Role. The Role to add must be stored in the data property.
+         */
         public static const ADD_ROLE:String = "ADD_ROLE";
+        /**
+         * Type of event to save an existing Role. The Role to save must be stored in the data property.
+         */
         public static const SAVE_ROLE:String = "SAVE_ROLE";
+        /**
+         * Type of event to delete an existing Role. The Role to delete must be stored in the data property.
+         */
         public static const DELETE_ROLE:String = "DELETE_ROLE";
+        /**
+         * Type of event that is fired when a Role was added successfully.
+         */
         public static const ROLE_ADDED:String = "ROLE_ADDED";
+        /**
+         * Type of event that is fired when a Role was saved successfully.
+         */
         public static const ROLE_SAVED:String = "ROLE_SAVED";
 
+        /**
+         * Store arbitrary data.
+         */
         public var data:*;
 
+        /**
+         * Constructor.
+         */
         public function RoleEvent(type:String, bubbles:Boolean = true, cancelable:Boolean = false) {
             super(type, bubbles, cancelable);
         }
+
+        /**
+         * Just a copy of the event itself including the data field.
+         *
+         * @return a copy of this
+         */
+        public override function clone():Event {
+            var e:RoleEvent = new RoleEvent(type);
+            e.data = data;
+            return e;
+        }
+
+        /**
+         * Simple override.
+         *
+         * @return the type of event
+         */
+        public override function toString():String {
+            return formatToString("RoleEvent","type");
+        } 
     }
 }
+
