@@ -24,7 +24,7 @@
 <mx:Canvas xmlns:mx="http://www.adobe.com/2006/mxml" xmlns:comp="org.openwms.web.flex.client.component.*" width="100%" height="100%" show="onShow()" backgroundColor="#C2DAEF">
 
     <mx:Metadata>
-        [Name("transportUnitView")]
+        [Name]
         [ManagedEvent(name="LOAD_TRANSPORT_UNITS")]
         [ManagedEvent(name="LOAD_ALL_LOCATIONS")]
         [ManagedEvent(name="LOAD_ALL_TRANSPORT_UNIT_TYPES")]

@@ -60,7 +60,7 @@
             [Inject]
             [Bindable]
             /**
-             * We need to have Granites Identity injected.
+             * Inject identity to ensure security.
              */
             public var identity:Identity;
             [Inject]

@@ -21,8 +21,7 @@
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
 -->
-<view:TMSAppBase xmlns:mx="http://www.adobe.com/2006/mxml" xmlns:module="org.openwms.web.flex.client.module.*"
-	xmlns:view="org.openwms.web.flex.client.tms.view.*">
+<view:TMSAppBase xmlns:mx="http://www.adobe.com/2006/mxml" xmlns:view="org.openwms.web.flex.client.tms.view.*">
 	
 	<mx:Script>
 		<![CDATA[
@@ -38,7 +37,7 @@
 			<mx:MenuBar id="tmsMenuBar" labelField="@label">
 				<mx:XMLList>
 					<menuitem label="Transport Management">
-						<menuitem label="Transport Orders" enabled="true" action="{TMSSwitchScreenEvent.SHOW_TRANSPORT_ORDERS_VIEW}"/>
+						<menuitem label="Transport Orders" enabled="{identity.ifAllGranted('TMS_TransportOrders_screen')}" action="{TMSSwitchScreenEvent.SHOW_TRANSPORT_ORDERS_VIEW}"/>
 					</menuitem>
 				</mx:XMLList>
 			</mx:MenuBar>

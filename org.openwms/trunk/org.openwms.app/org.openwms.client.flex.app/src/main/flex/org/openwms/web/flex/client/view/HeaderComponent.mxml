@@ -77,11 +77,9 @@
             }
 
             private function onResult(event : TideResultEvent) : void {
-            	trace("Got result1");
                 identity.isLoggedIn(onResult2, onFault);
             }
             private function onResult2(event : TideResultEvent) : void {
-            	trace("Got result2");
                 dispatchEvent(new ApplicationEvent(ApplicationEvent.LOGOUT));
             }
     

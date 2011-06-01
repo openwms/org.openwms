@@ -26,7 +26,7 @@ package org.openwms.web.flex.client.common.model {
     import org.openwms.web.flex.client.common.event.LocationGroupEvent;
     import org.openwms.web.flex.client.common.model.TreeNode;
 
-    [Name("commonModelLocator")]
+    [Name]
     [ManagedEvent(name="LG.COLL_LOCATION_GROUPS_REFRESHED")]
     [Bindable]
     /**

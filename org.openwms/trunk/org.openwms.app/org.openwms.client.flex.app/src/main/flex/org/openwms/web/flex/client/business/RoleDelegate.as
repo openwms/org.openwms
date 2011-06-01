@@ -140,7 +140,6 @@ package org.openwms.web.flex.client.business {
          * @param event The raised must have the moduleName and a list of grants in its data field, otherwise an exception is thrown.
          */
         public function mergeGrants(event : ApplicationEvent) : void {
-            trace("Got event to merge all security objects");
             if (event.data != null) {
                 tideContext.securityService.mergeGrants(event.data.moduleName as String, event.data.grants as ArrayCollection, onGrantsMerged, onFault);
             } else {

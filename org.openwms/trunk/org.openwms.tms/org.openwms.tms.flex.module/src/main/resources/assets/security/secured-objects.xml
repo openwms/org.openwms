@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <grants>
     <grant>
+        <name>TMS_TransportOrders_screen</name>
+        <description>Open the screen of TransportOrders</description>
+    </grant>
+    <grant>
         <name>TMS_create_TO_button</name>
         <description>Permission to create a new TransportOrder</description>
     </grant>
