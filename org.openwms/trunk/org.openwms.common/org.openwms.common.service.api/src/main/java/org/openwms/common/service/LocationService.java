@@ -24,6 +24,7 @@ import java.util.List;
 
 import org.openwms.common.domain.Location;
 import org.openwms.common.domain.LocationType;
+import org.openwms.core.domain.system.Message;
 import org.openwms.core.service.EntityService;
 
 /**
@@ -50,6 +51,17 @@ public interface LocationService<T extends Location> extends EntityService<Locat
      * @return All {@link Location}s as a list
      */
     List<T> getAllLocations();
+
+    /**
+     * Removes a list of {@link Message}s from a Location.
+     * 
+     * @param id
+     *            The technical key of the Location
+     * @param messages
+     *            The messages to be removed
+     * @return The updated Location
+     */
+    Location removeMessages(Long id, List<Message> messages);
 
     /**
      * Return a list of all {@link LocationType}s not sorted and not filtered in

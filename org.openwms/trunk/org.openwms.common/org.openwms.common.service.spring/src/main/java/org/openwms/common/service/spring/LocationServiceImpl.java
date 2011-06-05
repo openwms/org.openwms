@@ -27,7 +27,9 @@ import org.openwms.common.domain.Location;
 import org.openwms.common.domain.LocationType;
 import org.openwms.common.integration.LocationDao;
 import org.openwms.common.service.LocationService;
+import org.openwms.core.domain.system.Message;
 import org.openwms.core.integration.GenericDao;
+import org.openwms.core.service.exception.ServiceRuntimeException;
 import org.openwms.core.service.spring.EntityServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -42,8 +44,8 @@ import org.springframework.transaction.annotation.Transactional;
  * @since 0.1
  * @see org.openwms.core.service.spring.EntityServiceImpl
  */
-@Service
 @Transactional
+@Service
 public class LocationServiceImpl extends EntityServiceImpl<Location, Long> implements LocationService<Location> {
 
     @Autowired
@@ -66,6 +68,20 @@ public class LocationServiceImpl extends EntityServiceImpl<Location, Long> imple
             dao.save(location);
         }
         return list;
+    }
+
+    /**
+     * @see org.openwms.common.service.LocationService#removeMessages(java.lang.Long,
+     *      java.util.List)
+     */
+    @Override
+    public Location removeMessages(Long id, List<Message> messages) {
+        Location location = dao.findById(id);
+        if (null == location) {
+            throw new ServiceRuntimeException("Location with pk " + id + " not found, probably it was removed before");
+        }
+        location.removeMessages(messages.toArray(new Message[messages.size()]));
+        return location;
     }
 
     /**
