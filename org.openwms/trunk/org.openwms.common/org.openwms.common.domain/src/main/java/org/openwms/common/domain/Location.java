@@ -21,6 +21,7 @@
 package org.openwms.common.domain;
 
 import java.math.BigDecimal;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.Date;
 import java.util.HashSet;
@@ -482,20 +483,20 @@ public class Location extends AbstractEntity implements DomainObject<Long>, Targ
     }
 
     /**
-     * Remove a {@link Message} from the <code>Location</code>.
+     * Remove one or more {@link Message}s from this <code>Location</code>.
      * 
-     * @param message
-     *            The {@link Message} to be removed
-     * @return <code>true</code> if the {@link Message} was found and could be
-     *         removed, otherwise <code>false</code>
+     * @param messages
+     *            An array of {@link Message}s to be removed
+     * @return <code>true</code> if the {@link Message}s were found and removed,
+     *         otherwise <code>false</code>
      * @throws IllegalArgumentException
-     *             when message is <code>null</code>
+     *             when messages is <code>null</code>
      */
-    public boolean removeMessage(Message message) {
-        if (message == null) {
+    public boolean removeMessages(Message... messages) {
+        if (messages == null) {
             throw new IllegalArgumentException("Message may not be null!");
         }
-        return this.messages.remove(message);
+        return this.messages.removeAll(Arrays.asList(messages));
     }
 
     /**

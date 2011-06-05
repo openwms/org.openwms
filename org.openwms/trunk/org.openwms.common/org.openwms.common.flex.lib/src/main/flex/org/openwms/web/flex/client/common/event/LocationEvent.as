@@ -31,14 +31,52 @@ package org.openwms.web.flex.client.common.event {
      */
     public class LocationEvent extends Event {
 
+        /**
+         * Event to load all Locations from the backend service.
+         */
         public static const LOAD_ALL_LOCATIONS:String = "LOAD_ALL_LOCATIONS";
+        /**
+         * Event to store the Location saved in data.
+         */
         public static const SAVE_LOCATION:String = "SAVE_LOCATION";
+        /**
+         * Event to remove one or more Messages from a Location.
+         * 
+         * data is expected to hold an object with {id:id, messages:ArrayCollection of Messages}
+         */
+        public static const REMOVE_MESSAGES:String = "LOC.REMOVE_MESSAGES";
 
+        /**
+         * Store arbitrary data.
+         */
         public var data:*;
 
+        /**
+         * Constructor.
+         */
         public function LocationEvent(type:String, bubbles:Boolean = true, cancelable:Boolean = false) {
             super(type, bubbles, cancelable);
         }
+
+        /**
+         * Just a copy of the event itself including the data field.
+         *
+         * @return a copy of this
+         */
+        public override function clone():Event {
+            var e:LocationEvent = new LocationEvent(type);
+            e.data = data;
+            return e;
+        }
+
+        /**
+         * Simple override.
+         *
+         * @return the type of event
+         */
+        public override function toString():String {
+            return formatToString("LocationEvent","type");
+        } 
 
     }
 }

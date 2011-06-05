@@ -178,7 +178,7 @@ package org.openwms.web.flex.client.view {
             tideContext.raiseEvent(I18nEvent.LOAD_ALL);
             readAndMergeGrantsList();
         }
-
+        
         private function setupServices(services:Array) : void {
             var endpoint:String = ServerConfig.getChannel("my-graniteamf").endpoint;
             for each (var service:SecureRemoteObject in services) {
@@ -284,7 +284,7 @@ package org.openwms.web.flex.client.view {
             fireReadyToUnload(event);
         }
 
-        private function fireReadyToUnload(event : ApplicationEvent) {
+        private function fireReadyToUnload(event : ApplicationEvent) : void {
             var e:ApplicationEvent = new ApplicationEvent(ApplicationEvent.READY_TO_UNLOAD);
             e.data = event.data
             dispatchEvent(e);

@@ -28,6 +28,16 @@ package org.openwms.core.domain.system {
      * @version $Revision$
      * @since 0.1
      */
-    public class Message extends MessageBase { }
+    public class Message extends MessageBase {
+
+        /**
+         * Return the messageNo and messageText.
+         *
+         * @return the messageNo:messageText
+         */
+        public function toString():String {
+            return this._messageNo + ":" + this._messageText;
+        }
+    }
 }
 

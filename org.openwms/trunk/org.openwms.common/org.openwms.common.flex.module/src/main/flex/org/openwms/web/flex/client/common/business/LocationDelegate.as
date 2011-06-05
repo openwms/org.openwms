@@ -47,7 +47,7 @@ package org.openwms.web.flex.client.common.business {
      */
     public class LocationDelegate {
     	
-        [In]
+        [Inject]
         [Bindable]
         /**
          * Injected TideContext.
@@ -116,6 +116,20 @@ package org.openwms.web.flex.client.common.business {
             tideContext.locationService.save(event.data as Location, onLocationSaved, onFault);
         }
         private function onLocationSaved(event:TideResultEvent):void {
+            dispatchEvent(new LocationEvent(LocationEvent.LOAD_ALL_LOCATIONS));
+        }
+
+        [Observer("LOC.REMOVE_MESSAGES")]
+        /**
+         * Remove a list of Messages from a Location.
+         * Tide event observers : LOC.REMOVE_MESSAGES
+         * 
+         * @param event A LocationEvent with data = {id:id, messages:ArrayCollection of Messages to be removed}
+         */
+        public function removeMessages(event:LocationEvent):void {
+            tideContext.locationService.removeMessages(event.data.id, event.data.messages, onMessagesRemoved, onFault);
+        }
+        private function onMessagesRemoved(event:TideResultEvent):void {
             dispatchEvent(new LocationEvent(LocationEvent.LOAD_ALL_LOCATIONS));
         }
 

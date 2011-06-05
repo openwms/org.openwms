@@ -20,9 +20,8 @@
  */
 package org.openwms.web.flex.client.util{
 
-    import flash.utils.Dictionary;
-    import flash.utils.Proxy;
-    import flash.utils.flash_proxy;
+    import mx.resources.IResourceManager;
+    import mx.resources.ResourceManager;
 
     [Name]
     [Bindable]
@@ -34,6 +33,9 @@ package org.openwms.web.flex.client.util{
      * @since 0.1
      */
     public class I18nUtil {
+
+		public static const APP_ERROR:String = "appError";
+		public static const APP_MAIN:String = "appMain";
 
         /**
          * Constructor.
@@ -49,9 +51,9 @@ package org.openwms.web.flex.client.util{
          * @param args An arbitrary list. At least the first parameter must be set as the
          * String to be translated
          */
-        public static function trans(... args):String {
-            //args[0].
-            return "";
+        public static function trans(bundle:String, key:String, ... args):String {
+            trace("Test:"+ResourceManager.getInstance().getString(bundle, key));
+            return ResourceManager.getInstance().getString(bundle, key, args);
         }
     }
 }

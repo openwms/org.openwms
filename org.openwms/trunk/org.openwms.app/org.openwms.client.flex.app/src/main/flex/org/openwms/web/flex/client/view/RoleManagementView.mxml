@@ -32,6 +32,7 @@
 
     <mx:Script>
         <![CDATA[
+        	import org.openwms.web.flex.client.util.I18nUtil;
             import mx.managers.PopUpManager;
             import mx.controls.Alert;
             import mx.controls.dataGridClasses.DataGridColumn;
@@ -65,11 +66,6 @@
              * Injected Tide identity object.
              */
             public var iden : Identity;
-            [In]
-            /**
-             * Injected context.
-             */
-            public var tideContext:Context;
             [Bindable]
             private var selected:Role;
             [Bindable]
@@ -82,9 +78,7 @@
                 }
             }
             
-            private function onRowClick(event:ListEvent):void {
-                selected = event.currentTarget.selectedItem as Role;
-            }
+            private function onRowClick(event:ListEvent):void { selected = event.currentTarget.selectedItem as Role; }
 
             /**
              * Double clicking an entry opens the edit dialogue.
@@ -164,11 +158,11 @@
              */
             private function removeUsers():void {
                 if (selected == null) {
-                    Alert.show("Please select a Role to remove a User from");
+                	Alert.show(I18nUtil.trans(I18nUtil.APP_MAIN, "info_role_select_role"));
                     return;
                 }
                 if (usersLst.selectedItems.length == 0) {
-                    Alert.show("Please select one or more Users to be removed from this Role");
+                    Alert.show(I18nUtil.trans(I18nUtil.APP_MAIN, "info_role_select_users"));
                     return;
                 }
             	for each (var selectedUser:User in usersLst.selectedItems) {

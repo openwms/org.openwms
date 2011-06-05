@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<actionScriptProperties mainApplicationPath="org/openwms/web/flex/client/module/CommonModule.as" version="3">
+<actionScriptProperties mainApplicationPath="org/openwms/web/flex/client/common/model/CommonModelLocator.as" version="3">
   <compiler additionalCompilerArguments="" copyDependentFiles="false" enableModuleDebug="true" generateAccessible="false" htmlExpressInstall="true" htmlGenerate="false" htmlHistoryManagement="false" htmlPlayerVersion="9.0.124" htmlPlayerVersionCheck="true" outputFolderPath="target/classes" sourceFolderPath="src/main/flex" strict="true" useApolloConfig="false" verifyDigests="true" warn="true">
     <compilerSourcePath>
       <compilerSourcePathEntry kind="1" linkType="1" path="src/main/flex"/>
@@ -12,7 +12,7 @@
     <sourceAttachmentPath/>
   </compiler>
   <applications>
-    <application path="org/openwms/web/flex/client/module/CommonModule.as"/>
+    <application path="org/openwms/web/flex/client/common/model/CommonModelLocator.as"/>
   </applications>
   <modules/>
   <buildCSSFiles/>

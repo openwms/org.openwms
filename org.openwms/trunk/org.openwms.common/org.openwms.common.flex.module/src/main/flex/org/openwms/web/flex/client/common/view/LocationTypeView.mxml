@@ -21,7 +21,7 @@
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
 -->
-<mx:Canvas xmlns:mx="http://www.adobe.com/2006/mxml" width="100%" height="100%" backgroundColor="#C2DAEF" show="onShow()" implements="org.openwms.web.flex.client.ISecured">
+<mx:Canvas xmlns:mx="http://www.adobe.com/2006/mxml" width="100%" height="100%" backgroundColor="#C2DAEF" show="onShow()">
 
     <mx:Metadata>
         [Name]
@@ -58,19 +58,14 @@
             [Inject]
             [Bindable]
             /**
-             * We need to have Granites Identity injected.
+             * Inject identity.
              */
             public var identity:Identity;
             [Bindable]
             private var selected:LocationType;
             [Bindable]
-            public var changed:Boolean=false;
+            private var changed:Boolean=false;
 
-            public function getSecuredObjectNames():ArrayCollection {
-                var securedObjects:Array  = ["wsss"];
-                return ArrayCollection(securedObjects);
-            }
-            
             /**
              * OnShow load all LocationTypes if they weren't loaded before.
              */
