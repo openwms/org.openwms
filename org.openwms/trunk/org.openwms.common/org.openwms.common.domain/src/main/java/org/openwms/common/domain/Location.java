@@ -72,7 +72,7 @@ import org.openwms.core.domain.system.Message;
 @NamedQueries({
         @NamedQuery(name = Location.NQ_FIND_ALL, query = "select l from Location l"),
         @NamedQuery(name = Location.NQ_FIND_BY_UNIQUE_QUERY, query = "select l from Location l where l.locationId = ?1"),
-        @NamedQuery(name = Location.NQ_FIND_ALL_EAGER, query = "select l from Location l left join fetch l.messages left join fetch l.locationType") })
+        @NamedQuery(name = Location.NQ_FIND_ALL_EAGER, query = "select distinct l from Location l left join fetch l.messages left join fetch l.locationType") })
 public class Location extends AbstractEntity implements DomainObject<Long>, Target {
 
     private static final long serialVersionUID = 6958794248591576907L;
