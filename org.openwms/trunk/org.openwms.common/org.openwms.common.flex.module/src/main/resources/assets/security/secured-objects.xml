@@ -69,4 +69,8 @@
         <name>COMMON_save_location_button</name>
         <description>Permission to save changes on a Location</description>
     </grant>
+    <grant>
+        <name>COMMON_change_location_mxTu_stepper</name>
+        <description>Permission to change the maximum number of Transport Units for a Location</description>
+    </grant>
 </grants>
