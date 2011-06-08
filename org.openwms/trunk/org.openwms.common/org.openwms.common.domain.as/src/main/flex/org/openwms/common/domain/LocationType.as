@@ -4,7 +4,7 @@
  * This file is part of openwms.org.
  *
  * openwms.org is free software: you can redistribute it and/or modify
- * it under the terms of the GNU Lesser General Public License as 
+ * it under the terms of the GNU Lesser General Public License as
  * published by the Free Software Foundation, either version 3 of the
  * License, or (at your option) any later version.
  *
@@ -28,20 +28,23 @@ package org.openwms.common.domain {
      * Type of a <code>Location</code>.<br>
      * Used to group <code>Location</code>s with same characteristics.
      * </p>
-     * 
+     *
      * @version $Revision$
      * @since 0.1
      * @see org.openwms.common.domain.Location
      */
     public class LocationType extends LocationTypeBase {
-    	
+
         /**
          * Set the type of the <code>LocationType</code>.
          *
          * @param type The type to set
          */
-    	public function withType(type:String):void {
-    		this._type = type;
-    	}
+        public function set type(value:String):void {
+            _type = value;
+        }
+
     }
 }
+
+
