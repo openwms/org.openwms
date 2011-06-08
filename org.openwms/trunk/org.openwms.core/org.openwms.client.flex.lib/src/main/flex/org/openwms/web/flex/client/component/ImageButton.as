@@ -44,9 +44,9 @@ package org.openwms.web.flex.client.component {
          */
         public function ImageButton() {
             super();
-            addEventListener(MouseEvent.CLICK, onClick);
-            addEventListener("enabledChanged", onEnabled);
             buttonMode = true;
+            addEventListener("enabledChanged", onEnabled);
+            addEventListener(MouseEvent.CLICK, onClick);
         }
 
         /**
@@ -55,7 +55,6 @@ package org.openwms.web.flex.client.component {
          * @param event: unused
          */
         private function onEnabled(event : Event):void {
-            var filter:BitmapFilter = new ColorMatrixFilter(matrix);
             var matrix:Array = new Array();
 
             if (enabled) {
@@ -63,13 +62,13 @@ package org.openwms.web.flex.client.component {
                 matrix = matrix.concat([0, 1, 0, 0, 0]);
                 matrix = matrix.concat([0, 0, 1, 0, 0]);
                 matrix = matrix.concat([0, 0, 0, 1, 0]);
-            }
-            else {
+            } else {
                 matrix = matrix.concat([0.31, 0.61, 0.08, 0, 0]);
                 matrix = matrix.concat([0.31, 0.61, 0.08, 0, 0]);
                 matrix = matrix.concat([0.31, 0.61, 0.08, 0, 0]);
                 matrix = matrix.concat([0, 0, 0, 1, 0]);
             }
+            var filter:BitmapFilter = new ColorMatrixFilter(matrix);
             filters = new Array(filter) ;
             buttonMode = enabled ;
         }
