@@ -33,11 +33,15 @@ package org.openwms.web.flex.client.common.model {
      * @since 0.1
      */
     public class TreeNode {
+
         private var _parent:TreeNode;
         private var _child:ArrayCollection;
         private var _data:Object;
         private var _list:ArrayCollection;
 
+        /**
+         * Constructor.
+         */
         public function TreeNode() { }
 
         public function build(list:ArrayCollection):void {
@@ -73,17 +77,16 @@ package org.openwms.web.flex.client.common.model {
             return null;
         }
 
+        public function get children():ArrayCollection {
+            return _child;
+        }
+
         private function addChild(node:TreeNode):void {
             if (_child == null) {
                 _child = new ArrayCollection();
             }
             _child.addItem(node);
         }
-
-        public function get children():ArrayCollection {
-            return _child;
-        }
-
 
         private function createTree(root:TreeNode):TreeNode {
             var r:TreeNode;
