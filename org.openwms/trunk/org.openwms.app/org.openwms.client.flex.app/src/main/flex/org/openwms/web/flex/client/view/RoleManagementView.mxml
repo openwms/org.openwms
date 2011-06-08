@@ -28,6 +28,7 @@
         [ManagedEvent(name="LOAD_ALL_USERS")]
         [ManagedEvent(name="LOAD_ALL_ROLES")]
         [ManagedEvent(name="SAVE_ROLE")]
+        [ResourceBundle("appMain")]
     </mx:Metadata>
 
     <mx:Script>
@@ -72,6 +73,7 @@
             private var res:Boolean;
 
             private function init():void {
+                resourceManager.localeChain = ["en_US"];
                 dispatchEvent(new RoleEvent(RoleEvent.LOAD_ALL_ROLES));
                 if (modelLocator.allUsers.length == 0) {
                     dispatchEvent(new UserEvent(UserEvent.LOAD_ALL_USERS));

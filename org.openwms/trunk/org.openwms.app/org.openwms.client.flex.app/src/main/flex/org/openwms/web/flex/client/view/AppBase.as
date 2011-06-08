@@ -178,7 +178,7 @@ package org.openwms.web.flex.client.view {
             tideContext.raiseEvent(I18nEvent.LOAD_ALL);
             readAndMergeGrantsList();
         }
-        
+
         private function setupServices(services:Array) : void {
             var endpoint:String = ServerConfig.getChannel("my-graniteamf").endpoint;
             for each (var service:SecureRemoteObject in services) {
@@ -212,7 +212,7 @@ package org.openwms.web.flex.client.view {
          */
         public function onMenuChange(event : MenuEvent) : void {
             if (appViewStack.getChildByName(event.item.@action) == null) {
-                Alert.show(rman.getString("appError", "screenNameNotFound", [event.item.@action]));
+                Alert.show(rman.getString("appError", "error_screenNameNotFound", [event.item.@action]));
                 return;
             }
             dispatchEvent(new SwitchScreenEvent(event.item.@action));
