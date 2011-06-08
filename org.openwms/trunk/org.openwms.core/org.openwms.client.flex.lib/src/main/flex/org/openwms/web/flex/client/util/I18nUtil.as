@@ -34,8 +34,8 @@ package org.openwms.web.flex.client.util{
      */
     public class I18nUtil {
 
-		public static const APP_ERROR:String = "appError";
-		public static const APP_MAIN:String = "appMain";
+        public static const APP_ERROR:String = "appError";
+        public static const APP_MAIN:String = "appMain";
 
         /**
          * Constructor.
@@ -52,7 +52,6 @@ package org.openwms.web.flex.client.util{
          * String to be translated
          */
         public static function trans(bundle:String, key:String, ... args):String {
-            trace("Test:"+ResourceManager.getInstance().getString(bundle, key));
             return ResourceManager.getInstance().getString(bundle, key, args);
         }
     }
