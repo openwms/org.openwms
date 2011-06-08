@@ -41,8 +41,8 @@ package org.openwms.common.domain {
          *
          * @return The name
          */
-        public function toString():String {
-            return name;
+        public function toString() : String {
+            return _name;
         }
 
         /**
@@ -50,7 +50,7 @@ package org.openwms.common.domain {
          *
          * @param the new state
          */
-        public function set groupStateIn(value:LocationGroupState):void {
+        public function set groupStateIn(value : LocationGroupState) : void {
             _groupStateIn = value;
         }
 
@@ -59,7 +59,7 @@ package org.openwms.common.domain {
          *
          * @param the new state
          */
-        public function set groupStateOut(value:LocationGroupState):void {
+        public function set groupStateOut(value : LocationGroupState) : void {
             _groupStateOut = value;
         }
     }

@@ -20,6 +20,8 @@
  */
 package org.openwms.common.domain {
 
+    import mx.collections.ListCollectionView;
+
     [Bindable]
     [RemoteClass(alias="org.openwms.common.domain.Location")]
     /**
@@ -67,6 +69,16 @@ package org.openwms.common.domain {
         public function toString():String {
             return _locationId.area+"/"+_locationId.aisle+"/"+_locationId.x+"/"+_locationId.y+"/"+_locationId.z;
         }
+
+        /**
+         * Set the collection of messages.
+         *
+         * @param value The list of messages
+         */
+        public function set messages(value:ListCollectionView) : void {
+            _messages = value;
+        }
+
     }
 }
 
