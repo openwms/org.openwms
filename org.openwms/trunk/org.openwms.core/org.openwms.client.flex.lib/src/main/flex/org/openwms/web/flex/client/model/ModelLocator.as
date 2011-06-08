@@ -78,11 +78,11 @@ package org.openwms.web.flex.client.model {
         /**
          * A DateFormatter that uses the SIMPLE_DT_FORMAT.
          */
-        public const dateFormatter : DateFormatter = new DateFormatter();
+        public static const dateFormatter : DateFormatter = new DateFormatter();
         /**
          * Another DateFormatter that uses the DT_FORMAT_STRING.
          */
-        public const dateTimeFormatter : DateFormatter = new DateFormatter();
+        public static const dateTimeFormatter : DateFormatter = new DateFormatter();
 
         // --------------------------------------------------------------------
         // User and Role Management
