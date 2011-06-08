@@ -19,10 +19,10 @@
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
 package org.openwms.web.flex.client.common.business {
-	
+
     import mx.collections.ArrayCollection;
     import mx.controls.Alert;
-    
+
     import org.granite.tide.events.TideFaultEvent;
     import org.granite.tide.events.TideResultEvent;
     import org.granite.tide.spring.Context;
@@ -46,19 +46,19 @@ package org.openwms.web.flex.client.common.business {
      * @since 0.1
      */
     public class LocationDelegate {
-    	
+
         [Inject]
         [Bindable]
         /**
          * Injected TideContext.
          */
         public var tideContext:Context;
-	    [Inject]
-	    [Bindable]
-	    /**
-	     * Injected Model.
-	     */
-	    public var commonModelLocator:CommonModelLocator;            
+        [Inject]
+        [Bindable]
+        /**
+         * Injected Model.
+         */
+        public var commonModelLocator:CommonModelLocator;            
 
         /**
          * Constructor.
@@ -81,7 +81,7 @@ package org.openwms.web.flex.client.common.business {
         /**
          * Creates a new Location by calling the corresponding service.
          * Tide event observers : CREATE_LOCATION
-         * 
+         *
          * @param event A LocationEvent that stores the new Location in its data field.
          */
         public function createLocation(event:LocationEvent):void {
@@ -95,7 +95,7 @@ package org.openwms.web.flex.client.common.business {
         /**
          * Removes an existing Location by calling the corresponding service.
          * Tide event observers : DELETE_LOCATION
-         * 
+         *
          * @param event A LocationEvent that stores the Location to be removed in its data field.
          */
         public function deleteLocation(event:LocationEvent):void {
@@ -109,7 +109,7 @@ package org.openwms.web.flex.client.common.business {
         /**
          * Updates an existing Location by calling the corresponding service.
          * Tide event observers : SAVE_LOCATION
-         * 
+         *
          * @param event A LocationEvent that stores the Location to be updated in its data field.
          */
         public function saveLocation(event:LocationEvent):void {
@@ -123,11 +123,11 @@ package org.openwms.web.flex.client.common.business {
         /**
          * Remove a list of Messages from a Location.
          * Tide event observers : LOC.REMOVE_MESSAGES
-         * 
+         *
          * @param event A LocationEvent with data = {id:id, messages:ArrayCollection of Messages to be removed}
          */
         public function removeMessages(event:LocationEvent):void {
-            tideContext.locationService.removeMessages(event.data.id, event.data.messages, onMessagesRemoved, onFault);
+            tideContext.locationService.removeMessages(event.data.id as Number, event.data.messages as ArrayCollection, onMessagesRemoved, onFault);
         }
         private function onMessagesRemoved(event:TideResultEvent):void {
             dispatchEvent(new LocationEvent(LocationEvent.LOAD_ALL_LOCATIONS));
@@ -144,12 +144,12 @@ package org.openwms.web.flex.client.common.business {
         private function onLocationTypesLoaded(event:TideResultEvent):void {
             commonModelLocator.allLocationTypes = event.result as ArrayCollection;
         }
-        
+
         [Observer("CREATE_LOCATION_TYPE")]
         /**
          * Creates a new LocationType by calling the corresponding service.
          * Tide event observers : CREATE_LOCATION_TYPE
-         * 
+         *
          * @param event A LocationTypeEvent that stores the new LocationType in its data field.
          */
         public function createLocationType(event:LocationTypeEvent):void {
@@ -163,7 +163,7 @@ package org.openwms.web.flex.client.common.business {
         /**
          * Removes an existing LocationType by calling the corresponding service.
          * Tide event observers : DELETE_LOCATION_TYPE
-         * 
+         *
          * @param event A LocationTypeEvent that stores the LocationType to be removed in its data field.
          */
         public function deleteLocationType(event:LocationTypeEvent):void {
@@ -177,7 +177,7 @@ package org.openwms.web.flex.client.common.business {
         /**
          * Updates an existing LocationType by calling the corresponding service.
          * Tide event observers : SAVE_LOCATION_TYPE
-         * 
+         *
          * @param event A LocationTypeEvent that stores the LocationType to be updated in its data field.
          */
         public function saveLocationType(event:LocationTypeEvent):void {
@@ -188,8 +188,9 @@ package org.openwms.web.flex.client.common.business {
         }
 
         private function onFault(event:TideFaultEvent):void {
-        	trace("Error executing operation on Location service:"+event.fault);
+            trace("Error executing operation on Location service:"+event.fault);
             Alert.show("Error executing operation on Location service");
         }
     }
 }
+
