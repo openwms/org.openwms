@@ -21,7 +21,7 @@
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
 -->
-<mx:Canvas xmlns:mx="http://www.adobe.com/2006/mxml" xmlns:x="org.openwms.web.flex.client.component.*" width="100%" height="100%" backgroundColor="#C2DAEF" show="onShow();">
+<mx:Canvas xmlns:mx="http://www.adobe.com/2006/mxml"  xmlns:comm="org.openwms.web.flex.client.common.component.*" xmlns:core="org.openwms.web.flex.client.component.*" width="100%" height="100%" backgroundColor="#C2DAEF" show="onShow();">
 
     <mx:Metadata>
         [Name]
@@ -44,6 +44,8 @@
             import org.openwms.web.flex.client.common.model.TreeDataDescriptor;
             import org.openwms.web.flex.client.common.model.TreeNode;
             import org.openwms.web.flex.client.common.model.CommonModelLocator;
+            import org.openwms.web.flex.client.common.helper.LocationGroupFormatter;
+            import org.openwms.web.flex.client.common.helper.LocationFormatter;
             import org.openwms.common.domain.values.LocationGroupState;
             import org.openwms.common.domain.LocationGroup;
 
@@ -71,12 +73,17 @@
             private var leafIconLocked:Class;
             
             [Observer("LG.COLL_LOCATION_GROUPS_REFRESHED")]
+            /**
+             * Refresh the dataProvider of the tree UIComponent.
+             *
+             * Observed event: LG.COLL_LOCATION_GROUPS_REFRESHED
+             */
             public function refreshTree() : void {
                 locationGroupTree.dataProvider.refresh();
             }
 
             /**
-             * When the screen is opened, try to load all Locations and LocationGroups, when not already done before.
+             * When the screen is shown, try to load all Locations and LocationGroups (when not already done before).
              */
             private function onShow() : void {
                 if (commonModelLocator.allLocationGroups.length == 0) {
@@ -90,7 +97,7 @@
             /**
              * Fire an event to save the selected LocationGroup.
              */
-            private function saveLocationGroup():void {
+            private function saveLocationGroup() : void {
                 var event:LocationGroupEvent = new LocationGroupEvent(LocationGroupEvent.SAVE_LOCATION_GROUP);
                 event.data = selected;
                 dispatchEvent(event);
@@ -101,7 +108,7 @@
              * 
              * @param event Currently not used
              */
-            private function changeState(event : Event):void {
+            private function changeState(event : Event) : void {
                 var bindings:Array = [new BindingProperty(selected, "groupStateIn", groupStateInCmb, "selectedItem"),
                                     new BindingProperty(selected, "groupStateOut", groupStateOutCmb, "selectedItem")];
                 DisplayUtility.bindProperties(new ArrayCollection(bindings), function execute():void {
@@ -114,17 +121,18 @@
             /**
              * Fire an event to reload all LocationGroups.
              */
-            private function refresh() : void {
+            private function reload() : void {
                 dispatchEvent(new LocationGroupEvent(LocationGroupEvent.LOAD_ALL_LOCATION_GROUPS));
             }
 
+            [Deprecated]
             private function switchView(e:Event) : void {
                 // fire event
             }
 
             private function onTreeClick(event : Event) : void {
                 selected = event.target.selectedItem.getData() as LocationGroup;
-                selectedParent = formatParentLocationGroup();
+                selectedParent = LocationGroupFormatter.formatParentLocationGroup(selected);
                 groupStateInCmb.selectedIndex = LocationGroupState.constants.indexOf(selected.groupStateIn);
                 groupStateOutCmb.selectedIndex = LocationGroupState.constants.indexOf(selected.groupStateOut);
                 showLocations();
@@ -141,37 +149,6 @@
                         selectedLocations.addItem(locations[i]);
                     }
                 }
-            }
-
-            private function formatLocationGroup(item : Object) : String {
-                if (item != null) {
-                    if (item.getData() != null) {
-                        return item.getData()['name'];
-                    } else {
-                        return "";
-                    }
-                } else {
-                    return "";
-                }
-            }
-
-            private function formatParentLocationGroup() : String {
-                if (selected.parent != null) {
-                    return selected.parent.name;
-                } else {
-                    return "--";
-                }
-            }
-
-            private function locationIdField(item : Object, dg : DataGridColumn) : String {
-                return item.locationId[dg.dataField];
-            }
-
-            private function locationGroupField(item : Object, dg : DataGridColumn) : String {
-                if (item.locationGroup != null) {
-                    return item.locationGroup[dg.dataField];
-                }
-                return "--";
             }
 
             private function getTreeIcon(item:Object):Class {
@@ -199,17 +176,17 @@
     <mx:HBox x="10" y="10" verticalAlign="middle" backgroundColor="#C6FFC7" width="95%">
         <mx:Label x="10" y="10" text="Location Groups" fontSize="24"/>
         <mx:VRule height="10"/>
-        <mx:Button id="refreshBtn" buttonMode="true" mouseChildren="false" toolTip="Refresh Location Groups" icon="@Embed(source='assets/images/icons/refresh.png')" click="refresh()"/>
+        <mx:Button id="reloadBtn" buttonMode="true" mouseChildren="false" toolTip="Reload Location Groups" icon="@Embed(source='assets/images/icons/refresh.png')" click="reload()"/>
         <mx:VRule height="10"/>
         <mx:Button id="saveLocationGroupBtn" buttonMode="true" mouseChildren="false" toolTip="Save an existing Location Group" icon="@Embed(source='/assets/images/Location--Save.png')" click="saveLocationGroup()"/>
     </mx:HBox>
     <mx:HRule x="10" y="53" width="95%"/>
     <mx:HBox x="10" y="63" verticalAlign="top" height="100%" width="95%">
 
-        <mx:Tree id="locationGroupTree" showRoot="false" width="236" iconFunction="getTreeIcon" dataProvider="{commonModelLocator.locationGroupTree}" dataDescriptor="{new TreeDataDescriptor()}" labelFunction="formatLocationGroup" change="onTreeClick(event)" height="95%" />
+        <mx:Tree id="locationGroupTree" showRoot="false" width="236" iconFunction="getTreeIcon" dataProvider="{commonModelLocator.locationGroupTree}" dataDescriptor="{new TreeDataDescriptor()}" labelFunction="{LocationGroupFormatter.formatLocationGroup}" change="onTreeClick(event)" height="95%" />
 
         <mx:Canvas width="100%" height="95%">
-            <x:XPanel x="0" y="0" width="100%" height="300" layout="absolute" title="Details" titleIcon="@Embed(source='/assets/images/LocationGroup.png')" toolTipBtn1="Switch View" onClickBtn1="switchView" iconBtn1="@Embed(source='assets/images/icons/switchView--small.png')">
+            <core:XPanel x="0" y="0" width="100%" height="300" layout="absolute" title="Details" titleIcon="@Embed(source='/assets/images/LocationGroup.png')" toolTipBtn1="Switch View" onClickBtn1="switchView" iconBtn1="@Embed(source='assets/images/icons/switchView--small.png')">
 
                 <mx:HBox x="10" y="10" width="95%" height="25" borderStyle="solid" alpha="0.5" backgroundColor="#C2DAEF">
                     <mx:Label text="Location Group" fontSize="16" textDecoration="normal" width="170" textAlign="right" fontWeight="bold"/>
@@ -240,21 +217,22 @@
 
                 <mx:Label x="10" y="234" text="System Code" textAlign="right" width="170"/>
                 <mx:Label text="{selected.systemCode}" width="100%" x="188" y="234"/>
-            </x:XPanel>
+            </core:XPanel>
             <mx:DataGrid id="locationsList" allowMultipleSelection="true" sortableColumns="true" x="0" y="341" width="100%" dataProvider="{selectedLocations}" height="100%">
                 <mx:columns>
-                    <mx:DataGridColumn dataField="area" labelFunction="locationIdField" editable="false" width="50">
+                    <mx:DataGridColumn dataField="area" labelFunction="{LocationFormatter.locationIdField}" editable="false" width="50">
                         <mx:headerRenderer>
                             <mx:Component>
                                 <mx:Label text="Area" styleName="headerArea"/>
                             </mx:Component>
                         </mx:headerRenderer>
                     </mx:DataGridColumn>
-                    <mx:DataGridColumn headerText="Aisle" dataField="aisle" labelFunction="locationIdField" editable="false" width="50"/>
-                    <mx:DataGridColumn headerText="X" dataField="x" labelFunction="locationIdField" editable="false" width="50"/>
-                    <mx:DataGridColumn headerText="Y" dataField="y" labelFunction="locationIdField" editable="false" width="50"/>
-                    <mx:DataGridColumn headerText="Z" dataField="z" labelFunction="locationIdField" editable="false" width="50"/>
-                    <mx:DataGridColumn headerText="Location Group" dataField="name" labelFunction="locationGroupField" editable="false"/>
+                    <comm:CoordinateColumn column="area" headerText="Area" labelFunction="{LocationFormatter.locationIdField}" editable="false" width="45" />
+                    <comm:CoordinateColumn column="aisle" headerText="Aisle" labelFunction="{LocationFormatter.locationIdField}" editable="false" width="45"/>
+                    <comm:CoordinateColumn column="x" headerText="X" labelFunction="{LocationFormatter.locationIdField}" editable="false" width="45"/>
+                    <comm:CoordinateColumn column="y" headerText="Y" labelFunction="{LocationFormatter.locationIdField}" editable="false" width="45"/>
+                    <comm:CoordinateColumn column="z" headerText="Z" labelFunction="{LocationFormatter.locationIdField}" editable="false" width="45"/>
+                    <mx:DataGridColumn headerText="Location Group" dataField="name" labelFunction="{LocationGroupFormatter.locationGroupField}" editable="false"/>
                     <mx:DataGridColumn headerText="Description" dataField="description" editable="true"/>
                     <mx:DataGridColumn headerText="Counting Active" dataField="countingActive" editable="true">
                         <mx:itemRenderer>

@@ -53,7 +53,7 @@
                     stringVal.validate().type == ValidationResultEvent.VALID) {
                     var event:LocationTypeEvent=new LocationTypeEvent(LocationTypeEvent.CREATE_LOCATION_TYPE);
                     var locationType:LocationType=new LocationType();
-                    locationType.withType(typeTxt.text);
+                    locationType.type = typeTxt.text;
                     locationType.length=int(lengthTxt.text);
                     locationType.width=int(widthTxt.text);
                     locationType.height=int(heightTxt.text);

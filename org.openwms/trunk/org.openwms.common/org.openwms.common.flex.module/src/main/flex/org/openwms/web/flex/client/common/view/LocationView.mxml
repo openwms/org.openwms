@@ -21,7 +21,7 @@
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
 -->
-<mx:Canvas xmlns:mx="http://www.adobe.com/2006/mxml" xmlns:comm="org.openwms.web.flex.client.common.component.*" width="100%" height="100%" backgroundColor="#C2DAEF" show="onShow()">
+<mx:Canvas xmlns:mx="http://www.adobe.com/2006/mxml" xmlns:comm="org.openwms.web.flex.client.common.component.*" xmlns:cor="org.openwms.web.flex.client.component.*" width="100%" height="100%" backgroundColor="#C2DAEF" show="onShow()">
 
     <mx:Metadata>
         [Name]
@@ -37,7 +37,6 @@
         	import org.openwms.core.domain.system.Message;
         	import mx.controls.Alert;
         	import mx.managers.PopUpManager;
-            import mx.controls.dataGridClasses.DataGridColumn;
             import mx.collections.ArrayCollection;
             import mx.events.ListEvent;
             import flash.events.MouseEvent;
@@ -52,6 +51,7 @@
             import org.openwms.web.flex.client.common.event.LocationEvent;
             import org.openwms.web.flex.client.common.event.LocationTypeEvent;
             import org.openwms.web.flex.client.common.event.LocationGroupEvent;
+            import org.openwms.web.flex.client.common.helper.LocationFormatter;
         	import org.openwms.web.flex.client.common.model.CommonModelLocator;
             
             [Inject]
@@ -130,24 +130,6 @@
             }
 
 			/**   ------------------ Format functions ------------------   **/
-            private function locationIdField(item:Object, dg:DataGridColumn):String {
-                return item.locationId[dg.dataField];
-            }
-
-            private function locationGroupField(item:Object, dg:DataGridColumn):String {
-                if (item.locationGroup != null) {
-                    return item.locationGroup[dg.dataField];
-                }
-                return "n/a";
-            }
-
-            private function formatDateField(item:Object, dg:DataGridColumn):String {
-                if (item.lastAccess != null) {
-                    return commonModelLocator.dateTimeFormatter.format(item.lastAccess);
-                }
-                return "n/a";
-            }
-
             private function formatMessage(item:Message):String {
                 return item.toString();
             }
@@ -189,7 +171,7 @@
             <mx:HRule x="10" y="10" width="360" strokeWidth="0"/>
             
             <mx:Label text="Max. Transport Units" textAlign="left" x="10" y="105"/>
-            <mx:NumericStepper id="noMaxTransportUnitsTxt" value="{selected.noMaxTransportUnits}" width="40" x="255" y="103"/>
+            <mx:NumericStepper id="noMaxTransportUnitsTxt" enabled="{identity.ifAllGranted('COMMON_change_location_mxTu_stepper')}" value="{selected.noMaxTransportUnits}" width="40" x="255" y="103"/>
             
             <mx:Label text="Check State" textAlign="left" x="10" y="251"/>
             <mx:Text id="checkStateTxt" text="{selected.checkState}" x="95" y="251"/>
@@ -207,7 +189,7 @@
             
             <mx:Label x="10" y="329" text="Messages"/>
             <mx:List id="messagesLst" labelFunction="formatMessage" dataProvider="{selected.messages}" allowMultipleSelection="true" x="95" y="328" width="180" height="64"/>
-            <mx:Image x="283" y="328" height="16" width="16" enabled="{selected.messages.length > 0}" mouseChildren="false" source="@Embed(source='assets/images/icons/minus.png')" click="removeMessage(event);"/>
+            <cor:ImageButton x="283" y="328" height="16" width="16" enabled="{selected &amp;&amp; selected.messages.length > 0}" mouseChildren="false" source="@Embed(source='assets/images/icons/minus.png')" click="removeMessage(event);"/>
 
             <mx:HRule x="10" y="400" width="297"/>
             <mx:Image x="10" y="410" mouseChildren="false" source="@Embed(source='/assets/images/LocationGroup.png')"/>
@@ -224,11 +206,11 @@
         </mx:Canvas>
         <mx:DataGrid id="locationsList" allowMultipleSelection="true" sortableColumns="true" dataProvider="{commonModelLocator.allLocations}" change="onRowClick(event)" height="100%" width="100%">
             <mx:columns>
-            	<comm:CoordinateColumn column="area" headerText="Area" dataField="area" labelFunction="locationIdField" editable="false" width="45" />
-                <comm:CoordinateColumn column="aisle" headerText="Aisle" dataField="aisle" labelFunction="locationIdField" editable="false" width="45"/>
-                <comm:CoordinateColumn column="x" headerText="X" dataField="x" labelFunction="locationIdField" editable="false" width="45"/>
-                <comm:CoordinateColumn column="y" headerText="Y" dataField="y" labelFunction="locationIdField" editable="false" width="45"/>
-                <comm:CoordinateColumn column="z" headerText="Z" dataField="z" labelFunction="locationIdField" editable="false" width="45"/>
+            	<comm:CoordinateColumn column="area" headerText="Area" labelFunction="{LocationFormatter.locationIdField}" editable="false" width="45" />
+                <comm:CoordinateColumn column="aisle" headerText="Aisle" labelFunction="{LocationFormatter.locationIdField}" editable="false" width="45"/>
+                <comm:CoordinateColumn column="x" headerText="X" labelFunction="{LocationFormatter.locationIdField}" editable="false" width="45"/>
+                <comm:CoordinateColumn column="y" headerText="Y" labelFunction="{LocationFormatter.locationIdField}" editable="false" width="45"/>
+                <comm:CoordinateColumn column="z" headerText="Z" labelFunction="{LocationFormatter.locationIdField}" editable="false" width="45"/>
                 <mx:DataGridColumn headerText="Location Group" dataField="locationGroup" editable="false"/>
                 <mx:DataGridColumn headerText="Description" dataField="description" editable="true"/>
                 <mx:DataGridColumn headerText="Counting Active" dataField="countingActive" editable="true">
@@ -252,7 +234,7 @@
                         </mx:Component>
                     </mx:itemRenderer>
                 </mx:DataGridColumn>
-                <mx:DataGridColumn headerText="Last Access" dataField="lastAccess" labelFunction="formatDateField" editable="false" />
+                <mx:DataGridColumn headerText="Last Access" dataField="lastAccess" labelFunction="{LocationFormatter.formatDateField}" editable="false" />
             </mx:columns>
         </mx:DataGrid>
     </mx:HBox>
