@@ -21,61 +21,76 @@
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
 -->
-<mx:Panel xmlns:mx="http://www.adobe.com/2006/mxml" height="248" creationComplete="init();" show="deleteBtn.setFocus();" title="Delete Roles" width="398">
+<mx:Panel xmlns:mx="http://www.adobe.com/2006/mxml" creationComplete="onShow();" show="onShow();" 
+ title="{I18nUtil.trans(I18nUtil.APP_MAIN, 'txt_delete_roles_title')}" width="398" height="248">
 
     <mx:Metadata>
         [Name("confirmDeleteRoleDialog")]
         [ManagedEvent(name="DELETE_ROLE")]
+        [ResourceBundle("appMain")]
     </mx:Metadata>
 
     <mx:Script>
         <![CDATA[
-        	import org.openwms.web.flex.client.event.RoleEvent;
+            import flash.events.KeyboardEvent;
             import mx.controls.listClasses.ListData;
             import mx.collections.ArrayCollection;
             import mx.managers.PopUpManager;
-            import flash.events.KeyboardEvent;
-            [Bindable]
-            public var items:ArrayCollection;
-            [Bindable]
-            public var messageText:String = new String("Do you really want to delete?");
+            
+            import org.openwms.web.flex.client.event.RoleEvent;
+            import org.openwms.web.flex.client.util.I18nUtil;
 
-            protected function init():void {
+            [Bindable]
+            /**
+             * The list of Roles to be deleted.
+             */
+            public var items : ArrayCollection;
+            [Bindable]
+            /**
+             * Message to display.
+             */
+            public var messageText : String = I18nUtil.trans(I18nUtil.APP_MAIN, "txt_delete_roles_confirmation");
+            private var entityName : String = I18nUtil.trans(I18nUtil.APP_MAIN, "entity_role");
+            
+            protected function onShow() : void {
                 deleteBtn.setFocus();
                 this.addEventListener(KeyboardEvent.KEY_DOWN, keyEventHandler);
                 PopUpManager.centerPopUp(this);
             }
 
-            protected function closeDialog(event:Event=null):void {
+            protected function closeDialog(event : Event = null) : void {
                 this.removeEventListener(KeyboardEvent.KEY_DOWN, keyEventHandler);
                 PopUpManager.removePopUp(this);
             }
 
-            protected function accept(e:Event):void {
-                var event:RoleEvent = new RoleEvent(RoleEvent.DELETE_ROLE);
-                event.data = deleteLst.dataProvider as ArrayCollection;
-                dispatchEvent(event);
-                closeDialog();
+            protected function accept(event : Event) : void {
+                var e : RoleEvent = new RoleEvent(RoleEvent.DELETE_ROLE);
+                e.data = deleteLst.dataProvider as ArrayCollection;
+                dispatchEvent(e);
+                closeDialog(event);
             }
 
-            protected function keyEventHandler(event:KeyboardEvent):void {
+            protected function cancel(event : Event) : void {
+                closeDialog(event);
+            }
+
+            protected function keyEventHandler(event : KeyboardEvent) : void {
                 if(event.keyCode == 27) {
                    closeDialog(event);
-                   return;
                 }
             }
             
-            protected function formatFunction(item:*):String {
-                return "Role "+item.name+"\t - "+item.description;
+            protected function formatFunction(item : *) : String {
+                return entityName + " " + item.name + "\t - " + item.description;
             }
         ]]>
     </mx:Script>
     <mx:Canvas width="100%">
         <mx:Label id="messageTxt" text="{messageText}" fontSize="20" textAlign="center" y="10"  width="100%"/>
-        <mx:List id="deleteLst" height="112" labelFunction="formatFunction" dataProvider="{items}" enabled="true" alternatingItemColors="[#B7BABC, #FFFFFF]" y="53" x="10"  width="358"/>
+        <mx:List id="deleteLst" labelFunction="formatFunction" dataProvider="{items}" enabled="true" alternatingItemColors="[#B7BABC, #FFFFFF]" y="53" x="10"  width="358" height="112" />
         <mx:HBox horizontalAlign="center" x="0" y="173" width="100%">
-            <mx:Button id="deleteBtn" label="Delete" click="accept(event)" fontSize="12"/>
-            <mx:Button id="cancelBtn" label="Cancel" click="closeDialog(event)" fontSize="12"/>
+            <mx:Button id="deleteBtn" label="{I18nUtil.trans(I18nUtil.APP_MAIN, 'btn_delete')}" click="accept(event)" fontSize="12"/>
+            <mx:Button id="cancelBtn" label="{I18nUtil.trans(I18nUtil.APP_MAIN, 'btn_cancel')}" click="cancel(event)" fontSize="12"/>
         </mx:HBox>
     </mx:Canvas>
 </mx:Panel>

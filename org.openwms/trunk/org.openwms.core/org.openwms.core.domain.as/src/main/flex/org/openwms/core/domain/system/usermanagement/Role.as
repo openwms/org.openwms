@@ -22,16 +22,21 @@ package org.openwms.core.domain.system.usermanagement {
 
     [Bindable]
     [RemoteClass(alias="org.openwms.core.domain.system.usermanagement.Role")]
-	/**
-	 * A Role is grouping multiple <code>User</code>s regarding security aspects.
-	 * <p>
-	 * Security access policies are assigned to Roles instead of to <code>User</code>s directly.
-	 * </p>
-	 * 
-	 * @version $Revision$
-	 * @since 0.1
-	 */
+    /**
+     * A Role is grouping multiple <code>User</code>s regarding security aspects.
+     * <p>
+     * Security access policies are assigned to Roles instead of to <code>User</code>s directly.
+     * </p>
+     *
+     * @version $Revision$
+     * @since 0.1
+     */
     public class Role extends RoleBase {
+
+        /**
+         * Prefix used for any Roles name.
+         */
+        public static const PREFIX : String = "ROLE_";
 
         /**
          * Constructor.
@@ -43,7 +48,7 @@ package org.openwms.core.domain.system.usermanagement {
             this._name = name;
             this._description = description;
         }
-        
+
         /**
          * Simple setter of the name as a helper method on the AS side ;-).
          *
@@ -54,3 +59,4 @@ package org.openwms.core.domain.system.usermanagement {
         }
     }
 }
+

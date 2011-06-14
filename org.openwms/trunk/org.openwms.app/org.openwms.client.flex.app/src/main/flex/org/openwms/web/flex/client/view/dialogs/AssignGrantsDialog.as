@@ -26,9 +26,11 @@ package org.openwms.web.flex.client.view.dialogs {
     import org.openwms.core.domain.system.usermanagement.Grant;
     import org.openwms.core.domain.system.usermanagement.Role;
     import org.openwms.core.domain.system.usermanagement.SecurityObject;
+    import org.openwms.web.flex.client.util.I18nUtil;
 
     [Name]
     [Bindable]
+    [ResourceBundle("appMain")]
     /**
      * An AssignGrantsDialog.
      *
@@ -43,11 +45,11 @@ package org.openwms.web.flex.client.view.dialogs {
          */
         public function AssignGrantsDialog() { }
 
-        override protected function init():void {
+        override protected function onCreationComplete() : void {
             notAssigned = new ArrayCollection(modelLocator.securityObjects.toArray());
             toAssign = assigned;
-            for each (var grant:Grant in toAssign) {
-                for each (var g:Grant in notAssigned) {
+            for each (var grant : Grant in toAssign) {
+                for each (var g : Grant in notAssigned) {
                     if (grant.name == g.name) {
                         notAssigned.removeItemAt(notAssigned.getItemIndex(g));
                     }
@@ -58,25 +60,20 @@ package org.openwms.web.flex.client.view.dialogs {
             PopUpManager.centerPopUp(this);
         }
 
-        override protected function getTitle():String {
-            return "Assign Grants to Role : " + role.name;
-        }
+        override protected function formatFunction(item : *) : String { return (item == null ? " " : (item as SecurityObject).name + " - " + (item as SecurityObject).description); }
 
-        override protected function formatFunction(item:*):String {
-            return (item == null ? " " : (item as SecurityObject).name+" - "+(item as SecurityObject).description);
-        }
+        override protected function getTitle():String { return I18nUtil.trans(I18nUtil.APP_MAIN, "txt_assignGrants_title", role.name); }
 
-        override protected function getSortField():String {
-            return "name";
-        }
+        /**
+         * Sort Grants by name.
+         *
+         * @return The name of the Grant.
+         */
+        override protected function getSortField():String { return "name"; }
 
-        override protected function getAssignedLabel():String {
-            return "Assigned Grants";
-        }
+        override protected function getAssignedLabel():String { return I18nUtil.trans(I18nUtil.APP_MAIN, "lbl_assignGrants_assigned"); }
 
-        override protected function getNotAssignedLabel():String {
-            return "All Grants";
-        }
+        override protected function getNotAssignedLabel():String { return I18nUtil.trans(I18nUtil.APP_MAIN, "lbl_assignGrants_not_assigned"); }
 
     }
 }

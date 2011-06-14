@@ -22,7 +22,7 @@
  */
 -->
 <mx:Canvas xmlns:mx="http://www.adobe.com/2006/mxml" showEffect="Fade" width="100%" height="40"
-	creationComplete="init()">
+	creationComplete="onCreate();">
 
     <mx:Metadata>
         [Name]
@@ -31,54 +31,55 @@
 
 	<mx:Script>
 	<![CDATA[
-		import org.openwms.web.flex.client.event.UserEvent;
-    	import org.openwms.core.domain.system.usermanagement.User;
-    	import org.openwms.core.domain.system.usermanagement.UserDetails;
-    	import org.openwms.core.domain.system.usermanagement.UserDetails$SEX;
-    	import org.openwms.web.flex.client.util.UserHelper;
     	import mx.effects.Fade;
     	import mx.effects.Blur;
     	import mx.effects.Parallel;
     	import mx.effects.Move;
     	import mx.core.IUIComponent;
-    	import mx.managers.DragManager;
     	import mx.core.UIComponent;
     	import mx.core.BitmapAsset;
     	import mx.core.DragSource;
     	import mx.controls.Alert;
-		import org.openwms.web.flex.client.model.ModelLocator;
+        import mx.managers.DragManager;
 
-        [In]
+		import org.openwms.web.flex.client.model.ModelLocator;
+        import org.openwms.web.flex.client.event.UserEvent;
+        import org.openwms.web.flex.client.util.UserHelper;
+        import org.openwms.core.domain.system.usermanagement.User;
+        import org.openwms.core.domain.system.usermanagement.UserDetails;
+        import org.openwms.core.domain.system.usermanagement.UserDetails$SEX;
+
+        [Inject]
         [Bindable]
         /**
          * Inject the model.
          */
-        public var modelLocator:ModelLocator;            
+        public var modelLocator : ModelLocator;            
         [Bindable]
         /**
          * User data preset by the surrounding userList.
          */
-        public var userData:User;
+        public var userData : User;
         [Bindable]
         /**
          * Default CSS style class.
          */
-        public var style:String = "userListItem";
+        public var style : String = "userListItem";
 
 		[Bindable]
-		[Embed(source="/assets/images/userDefaultUniSex.jpg")]
-       	private var uniSexImage:Class;
+		[Embed(source = "/assets/images/userDefaultUniSex.jpg")]
+       	private var uniSexImage : Class;
 		[Bindable]
-		[Embed(source="/assets/images/userDefaultMan.jpg")]
-       	private var manImage:Class;
+		[Embed(source = "/assets/images/userDefaultMan.jpg")]
+       	private var manImage : Class;
 		[Bindable]
-		[Embed(source="/assets/images/userDefaultWoman.jpg")]
-       	private var womanImage:Class;
+		[Embed(source = "/assets/images/userDefaultWoman.jpg")]
+       	private var womanImage : Class;
 
 		/**
 		 * Initializing the component. Filling all fields with user data.
 		 */
-        private function init():void {
+        private function onCreate() : void {
     	    userFullname.text = userData.fullname;
         	userName.text = userData.username;
         	setUserImage();
@@ -88,8 +89,8 @@
 		/**
 		 * Setting the small user preview image depending on the user's sex.
 		 */ 
-		private function setUserImage():void {
-			var asset:BitmapAsset;
+		private function setUserImage() : void {
+			var asset : BitmapAsset;
 			if (UserHelper.hasDetails(userData)) {
 				if (userData.userDetails.image != null) {
 					img.data = userData.userDetails.image;
@@ -105,7 +106,7 @@
 			} else {
 				asset = new uniSexImage() as BitmapAsset;
 			}
-			img.source=asset;
+			img.source = asset;
 		}
 
 		/**
@@ -113,7 +114,7 @@
 		 * It also sends an Event to change settings in the main content panel
 		 * When the User has no UserDetails, a new set is instantiated.
 		 */
-		public function setSelectedItem():void {
+		public function setSelectedItem() : void {
 			modelLocator.selectedUser = this.userData; 
        		dispatchEvent(new Event("userSelectionChanged", true));
 		}
@@ -121,7 +122,7 @@
 		/**
 		 * Move this item from the left side into the surrounding container.
 		 */
-        public function moveItem():void {
+        public function moveItem() : void {
 			var parallel:Parallel = new Parallel(); 
 			parallel.target = userListItem; 
 			

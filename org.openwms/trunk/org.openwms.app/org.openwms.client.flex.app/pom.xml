@@ -61,13 +61,9 @@
 						<duplicateArgumentNames>false</duplicateArgumentNames>
 					</warnings>
                     <resourceBundlePath>${basedir}/src/main/resources/assets/locale/{locale}</resourceBundlePath>
-                    <locales>
-                        <locale>en_US</locale>
-                        <locale>de_DE</locale>
-                    </locales>
                     <compiledLocales>
-                        <locale>en_US</locale>
                         <locale>de_DE</locale>
+                        <locale>en_US</locale>
                     </compiledLocales>
 					<allowSourcePathOverlap>true</allowSourcePathOverlap>
                     <keepAs3Metadatas>

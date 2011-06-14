@@ -21,125 +21,154 @@
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
 -->
-<mx:Panel xmlns:mx="http://www.adobe.com/2006/mxml" xmlns="*" width="400" height="269" verticalScrollPolicy="off"
-	horizontalScrollPolicy="off" show="onShow();" creationComplete="onShow();" title="File Upload" fontSize="12">
+<mx:Panel xmlns:mx="http://www.adobe.com/2006/mxml" verticalScrollPolicy="off" horizontalScrollPolicy="off" 
+ show="onShow();" creationComplete="onShow();" title="{I18nUtil.trans(I18nUtil.APP_MAIN, 'txt_file_upload_title')}" fontSize="12" width="400" height="269">
 
     <mx:Metadata>
         [Name]
         [ManagedEvent(name="LOAD_ALL_USERS")]
+        [ResourceBundle("appMain")]
     </mx:Metadata>
 
 	<mx:Script>
-	<![CDATA[
-		import org.openwms.web.flex.client.model.ModelLocator;
-		import org.openwms.web.flex.client.IObserver;
-	    import mx.controls.Alert;
-		import flash.events.*;
-	    import flash.net.FileReference;
-	    import flash.net.URLRequest;
-	    import mx.rpc.events.*;
-	    import mx.managers.PopUpManager;
-		
-        [Inject]
-        [Bindable]
-        /**
-         * Inject a model.
-         */
-        public var modelLocator:ModelLocator;            
-	    
-        [Bindable]
-        /**
-         * Pass in any callback function of type IObserver that is called when
-         * the transfer completes successfully.
-         */
-        public var callback:IObserver; 
-		
-		private var tmpFileName: String;
-	    private var fileRef:FileReference;
-	
-        private function onShow():void {
-            fileRef = new FileReference();
-            fileRef.addEventListener(Event.COMPLETE, completeEvent);
-            fileRef.addEventListener(Event.SELECT, selectEvent);
-            fileRef.addEventListener(ProgressEvent.PROGRESS, progressEvent);
-			this.addEventListener(KeyboardEvent.KEY_DOWN, keyEventHandler);
-            browseBtn.setFocus();
-			PopUpManager.centerPopUp(this);
-        }
-		
-		private function keyEventHandler(event:KeyboardEvent):void {
-			if(event.keyCode == 27) {
-			     closeDialog(event);
-			}
-		}
-		
-		private function closeDialog(event:Event = null):void {
-			fileRef.cancel();
-			fileRef.removeEventListener(Event.COMPLETE,completeEvent);
-			fileRef.removeEventListener(Event.SELECT,selectEvent);
-			fileRef.removeEventListener(ProgressEvent.PROGRESS,progressEvent);
-			this.removeEventListener(KeyboardEvent.KEY_DOWN,keyEventHandler);
-			PopUpManager.removePopUp(this);
-		}
-		
-		private function ioErrorEvent(event:IOErrorEvent):void {
-			Alert.show("IOError:" + event.text);
-		}
-		
-		private function selectEvent(event:Event):void {
-			uploadBtn.enabled = true;
-			filename.text = fileRef.name;
-			progressBar.setProgress(0, 100);
-			progressBar.label = "Loading 0%";			
-		}
-	
-		private function progressEvent(event:ProgressEvent):void {
-			progressBar.setProgress(event.bytesLoaded, event.bytesTotal);
-		}
-	
-		private function completeEvent(event:Event):void {
-			progressBar.label = "Complete.";
-			filename.text += " uploaded";
-			uploadBtn.enabled = false;
-			tmpFileName = fileRef.name;
-			callback.notify();
-            closeDialog();
-		}
-		
-		private function uploadFile(endpoint:String):void {
-			var request:URLRequest = new URLRequest(modelLocator.UPLOAD_URL);
-			var params:URLVariables = new URLVariables();
-			request.contentType = "multipart/form-data";
-   	 		params.directoryName = modelLocator.DIRECTORY_NAME;
-   	 		params.selectedUser = modelLocator.selectedUser.username;
-    		request.data = params;
-    		fileRef.upload(request);
-			progressBar.label = "Uploading...";		
-		}
-		
-	]]>
+    	<![CDATA[
+    		import flash.events.*;
+    	    import flash.net.FileReference;
+    	    import flash.net.URLRequest;
+            import mx.controls.Alert;
+    	    import mx.rpc.events.*;
+    	    import mx.managers.PopUpManager;
+
+            import org.openwms.web.flex.client.model.ModelLocator;
+            import org.openwms.web.flex.client.IObserver;
+            import org.openwms.web.flex.client.util.I18nUtil;
+    		
+            [Inject]
+            [Bindable]
+            /**
+             * Inject a model.
+             */
+            public var modelLocator : ModelLocator;            
+            [Bindable]
+            /**
+             * Pass in any callback function of type IObserver that is called when
+             * the transfer completes successfully.
+             */
+            public var callback : IObserver; 
+    		private var tmpFileName : String;
+    	    private var fileRef : FileReference;
+    	
+            private function onShow() : void {
+                fileRef = new FileReference();
+                fileRef.addEventListener(Event.COMPLETE, completeEvent);
+                fileRef.addEventListener(Event.SELECT, selectEvent);
+                fileRef.addEventListener(ProgressEvent.PROGRESS, progressEvent);
+    			this.addEventListener(KeyboardEvent.KEY_DOWN, keyEventHandler);
+                browseBtn.setFocus();
+    			PopUpManager.centerPopUp(this);
+            }
+    		
+    		private function keyEventHandler(event : KeyboardEvent) : void {
+    			if(event.keyCode == 27) {
+                    closeDialog(event);
+    			}
+    		}
+    		
+            /**
+             * Cancel upload in progress, unregister listeners and close the dialog.
+             *
+             * @param event Unused
+             */
+    		protected function closeDialog(event : Event = null) : void {
+    			fileRef.cancel();
+    			fileRef.removeEventListener(Event.COMPLETE, completeEvent);
+    			fileRef.removeEventListener(Event.SELECT, selectEvent);
+    			fileRef.removeEventListener(ProgressEvent.PROGRESS, progressEvent);
+    			this.removeEventListener(KeyboardEvent.KEY_DOWN, keyEventHandler);
+    			PopUpManager.removePopUp(this);
+    		}
+
+            /**
+             * Open browse dialog.
+             *
+             * @param event Unused
+             */
+            protected function browse(event : Event) : void {
+                fileRef.browse();
+            }            
+    		
+            /**
+             * Call closeDialog.
+             *
+             * @param event Unused
+             */
+            protected function cancel(event : Event) : void {
+                closeDialog(event);
+            }            
+
+            /**
+             * Upload file.
+             *
+             * @param event Unused
+             */
+            protected function submit(event : Event) : void {
+                uploadFile(uploadURL.text);
+            }            
+
+    		private function ioErrorEvent(event : IOErrorEvent) : void {
+    			Alert.show("IOError: " + event.text);
+    		}
+    		
+    		private function selectEvent(event : Event) : void {
+    			uploadBtn.enabled = true;
+    			filename.text = fileRef.name;
+    			progressBar.setProgress(0, 100);
+    			progressBar.label = I18nUtil.trans(I18nUtil.APP_MAIN, "lbl_file_upload_progress_start");
+    		}
+    	
+    		private function progressEvent(event : ProgressEvent) : void {
+    			progressBar.setProgress(event.bytesLoaded, event.bytesTotal);
+    		}
+    	
+    		private function completeEvent(event : Event) : void {
+    			progressBar.label = I18nUtil.trans(I18nUtil.APP_MAIN, "lbl_file_upload_completed");
+    			filename.text += I18nUtil.trans(I18nUtil.APP_MAIN, "txt_file_upload_uploaded");
+    			uploadBtn.enabled = false;
+    			tmpFileName = fileRef.name;
+    			callback.notify();
+                closeDialog();
+    		}
+    		
+    		private function uploadFile(endpoint : String) : void {
+    			var request : URLRequest = new URLRequest(modelLocator.UPLOAD_URL);
+    			var params : URLVariables = new URLVariables();
+    			request.contentType = "multipart/form-data";
+       	 		params.directoryName = modelLocator.DIRECTORY_NAME;
+       	 		params.selectedUser = modelLocator.selectedUser.username;
+        		request.data = params;
+        		fileRef.upload(request);
+    			progressBar.label = I18nUtil.trans(I18nUtil.APP_MAIN, "lbl_file_upload_progresssing");
+    		}
+    		
+    	]]>
 	</mx:Script>
 	<mx:Canvas width="375">
 		<mx:Form y="10" height="160" width="355">
-			<mx:FormItem label="Upload URL :" fontSize="14" width="100%">
+			<mx:FormItem label="{I18nUtil.trans(I18nUtil.APP_MAIN, 'lbl_file_upload_url')}" fontSize="14" width="100%">
 				<mx:TextInput id="uploadURL" width="100%" color="#2c2c2c" text="{'/upload'}" enabled="false" />
 			</mx:FormItem>
-			
-			<mx:FormItem label="Selected File :" fontSize="14" width="100%">
+			<mx:FormItem label="{I18nUtil.trans(I18nUtil.APP_MAIN, 'lbl_file_upload_selected_file')}" fontSize="14" width="100%">
 				<mx:TextInput id="filename" enabled="false" width="100%"/>
 			</mx:FormItem>
-			
 			<mx:HRule width="100%" tabEnabled="false" />
-			
-			<mx:FormItem label="Progress :" width="100%" fontSize="14">
+			<mx:FormItem label="{I18nUtil.trans(I18nUtil.APP_MAIN, 'lbl_file_upload_progress')}" width="100%" fontSize="14">
 				<mx:ProgressBar id="progressBar" mode="manual" width="100%"/>
 			</mx:FormItem>
-		
 		</mx:Form>
 	</mx:Canvas>
 	<mx:HBox width="100%" horizontalAlign="center">
-		<mx:Button id="browseBtn" width="80" label="Browse" click="fileRef.browse()" />
-		<mx:Button id="uploadBtn" width="80" label="Upload" enabled="false" click="uploadFile(uploadURL.text)" />
-		<mx:Button id="closeBtn" width="80" label="Close" enabled="true" click="closeDialog(event);" />
+		<mx:Button id="browseBtn" width="80" label="{I18nUtil.trans(I18nUtil.APP_MAIN, 'btn_browse')}" click="browse(event);" />
+		<mx:Button id="uploadBtn" width="80" label="{I18nUtil.trans(I18nUtil.APP_MAIN, 'btn_upload')}" enabled="false" click="submit(event);" />
+		<mx:Button id="closeBtn" width="80" label="{I18nUtil.trans(I18nUtil.APP_MAIN, 'btn_close')}" enabled="true" click="cancel(event);" />
 	</mx:HBox>
 </mx:Panel>

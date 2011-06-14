@@ -38,6 +38,7 @@
     	<![CDATA[
     		import org.openwms.web.flex.client.event.SwitchScreenEvent;
             import org.openwms.web.flex.client.util.DisplayUtility;
+            import org.openwms.web.flex.client.util.I18nUtil;
     	]]>
     </mx:Script>
 
@@ -46,10 +47,10 @@
 	<mx:Style source="assets/css/styles.css" />
 	
     <mx:XMLList id="stdMenu">
-        <menuitem label="Application">
-            <menuitem label="Users" enabled="{identity.ifAllGranted('APP_User_Management')}" action="{SwitchScreenEvent.SHOW_USER_MGMT_VIEW}" />
-            <menuitem label="Roles" enabled="{identity.ifAllGranted('APP_Role_Management')}" action="{SwitchScreenEvent.SHOW_ROLE_MGMT_VIEW}" />
-            <menuitem label="Modules" enabled="{identity.ifAllGranted('APP_Module_Management')}" action="{SwitchScreenEvent.SHOW_MODULE_MGMT_VIEW}" />
+        <menuitem label="{I18nUtil.trans(I18nUtil.APP_MAIN, 'menu_app_applicaton')}">
+            <menuitem label="{I18nUtil.trans(I18nUtil.APP_MAIN, 'menu_app_users')}" enabled="{identity.ifAllGranted('APP_User_Management')}" action="{SwitchScreenEvent.SHOW_USER_MGMT_VIEW}" />
+            <menuitem label="{I18nUtil.trans(I18nUtil.APP_MAIN, 'menu_app_roles')}" enabled="{identity.ifAllGranted('APP_Role_Management')}" action="{SwitchScreenEvent.SHOW_ROLE_MGMT_VIEW}" />
+            <menuitem label="{I18nUtil.trans(I18nUtil.APP_MAIN, 'menu_app_modules')}" enabled="{identity.ifAllGranted('APP_Module_Management')}" action="{SwitchScreenEvent.SHOW_MODULE_MGMT_VIEW}" />
         </menuitem>
     </mx:XMLList>
 
