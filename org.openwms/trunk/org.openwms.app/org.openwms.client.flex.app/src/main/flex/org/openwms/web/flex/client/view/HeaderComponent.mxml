@@ -27,12 +27,12 @@
         [Name]
         [ManagedEvent(name="APP_LOGOUT")]
         [ManagedEvent(name="APP_LOCK")]
+        [ResourceBundle("appError")]
     </mx:Metadata>
 
     <mx:Script>
     	<![CDATA[
     		import mx.managers.PopUpManager;
-    		import org.openwms.web.flex.client.view.dialogs.UserPreferencesDialog;
             import mx.controls.Alert;
     		import mx.collections.ArrayCollection;
             
@@ -43,6 +43,8 @@
             import org.openwms.web.flex.client.model.ModelLocator;
     		import org.openwms.web.flex.client.event.ApplicationEvent;
             import org.openwms.web.flex.client.ISecured;
+            import org.openwms.web.flex.client.util.I18nUtil;
+            import org.openwms.web.flex.client.view.dialogs.UserPreferencesDialog;
 
             [In]
             [Bindable]
@@ -77,15 +79,12 @@
             }
 
             private function onResult(event : TideResultEvent) : void {
-                identity.isLoggedIn(onResult2, onFault);
-            }
-            private function onResult2(event : TideResultEvent) : void {
                 dispatchEvent(new ApplicationEvent(ApplicationEvent.LOGOUT));
             }
     
             private function onFault(event : TideFaultEvent) : void {
-                trace("Error executing operation on security service:" + event.fault);
-                Alert.show("Error executing operation on security service");
+                trace("LOGOUT:Error executing operation on security service:" + event.fault);
+                Alert.show(I18nUtil.trans(I18nUtil.APP_ERROR, 'error_logout_failed'));
             }
 
     	]]>
@@ -98,11 +97,11 @@
                 <mx:Image width="16" source="@Embed('assets/images/icons/user--anonymous.png')"/>
             </mx:HBox>
             <mx:HBox id="lockBox" width="100%" horizontalAlign="right">
-                <mx:LinkButton label="lock" color="#E9EBEB" click="lock();"/>
+                <mx:LinkButton label="{I18nUtil.trans(I18nUtil.APP_MAIN, 'btn_header_lock')}" color="#E9EBEB" click="lock();"/>
                 <mx:Image width="16" source="@Embed('assets/images/icons/logout.png')"/>
             </mx:HBox>
             <mx:HBox id="logoutBox" width="100%" horizontalAlign="right">
-                <mx:LinkButton label="logout" color="#E9EBEB" click="logout();"/>
+                <mx:LinkButton label="{I18nUtil.trans(I18nUtil.APP_MAIN, 'btn_header_logout')}" color="#E9EBEB" click="logout();"/>
                 <mx:Image width="16" source="@Embed('assets/images/icons/logout.png')"/>
             </mx:HBox>
         </mx:VBox>

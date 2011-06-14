@@ -26,15 +26,18 @@ package org.openwms.web.flex.client.business {
     import org.granite.tide.events.TideFaultEvent;
     import org.granite.tide.events.TideResultEvent;
     import org.granite.tide.spring.Context;
+
     import org.openwms.core.domain.system.usermanagement.User;
     import org.openwms.core.domain.system.usermanagement.UserPassword;
     import org.openwms.web.flex.client.event.UserEvent;
     import org.openwms.web.flex.client.model.ModelLocator;
+    import org.openwms.web.flex.client.util.I18nUtil;
 
     [Name("userController")]
     [ManagedEvent(name="LOAD_ALL_USERS")]
     [ManagedEvent(name="USER.USER_ADDED")]
     [ManagedEvent(name="USER.USER_SAVED")]
+    [ResourceBundle("appError")]
     [Bindable]
     /**
      * An UserDelegate. Handles all interaction with the userService.
@@ -150,13 +153,11 @@ package org.openwms.web.flex.client.business {
                 tideContext.userService.changeUserPassword(uPassword, onPasswordChanged, onFault);
             }
         }
-        private function onPasswordChanged(event : TideResultEvent) : void {
-            trace("User password has been changed");
-        }
+        private function onPasswordChanged(event : TideResultEvent) : void { }
 
         private function onFault(event : TideFaultEvent) : void {
             trace("Error executing operation on User service:" + event.fault);
-            Alert.show("Cannot proceed action in user management, try reloading!");
+            Alert.show(I18nUtil.trans(I18nUtil.APP_ERROR, 'error_user_service_operation'));
         }
     }
 }

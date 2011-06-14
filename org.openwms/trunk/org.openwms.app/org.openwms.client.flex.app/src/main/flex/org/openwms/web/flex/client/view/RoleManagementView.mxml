@@ -21,7 +21,7 @@
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
 -->
-<mx:Canvas xmlns:mx="http://www.adobe.com/2006/mxml" width="100%" height="100%" backgroundColor="#C2DAEF" creationComplete="init()">
+<mx:Canvas xmlns:mx="http://www.adobe.com/2006/mxml" xmlns:cor="org.openwms.web.flex.client.component.*" width="100%" height="100%" backgroundColor="#C2DAEF" creationComplete="init()">
 
     <mx:Metadata>
         [Name]
@@ -33,7 +33,6 @@
 
     <mx:Script>
         <![CDATA[
-        	import org.openwms.web.flex.client.util.I18nUtil;
             import mx.managers.PopUpManager;
             import mx.controls.Alert;
             import mx.controls.dataGridClasses.DataGridColumn;
@@ -54,13 +53,14 @@
             import org.openwms.web.flex.client.view.dialogs.AssignGrantsDialog;
         	import org.openwms.web.flex.client.view.dialogs.ConfirmDeleteRoleDialog;
         	import org.openwms.web.flex.client.view.dialogs.CreateRoleDialog;
-            
+            import org.openwms.web.flex.client.util.I18nUtil;
+                        
             [Inject]
             [Bindable]
             /**
              * Injected Model.
              */
-            public var modelLocator:ModelLocator;            
+            public var modelLocator : ModelLocator;            
             [Inject]
             [Bindable]
             /**
@@ -68,16 +68,11 @@
              */
             public var iden : Identity;
             [Bindable]
-            private var selected:Role;
-            [Bindable]
-            private var res:Boolean;
+            private var selected : Role = null;
 
-            private function init():void {
-                resourceManager.localeChain = ["en_US"];
+            private function init() : void {
+                if (modelLocator.allUsers.length == 0) { dispatchEvent(new UserEvent(UserEvent.LOAD_ALL_USERS)); }
                 dispatchEvent(new RoleEvent(RoleEvent.LOAD_ALL_ROLES));
-                if (modelLocator.allUsers.length == 0) {
-                    dispatchEvent(new UserEvent(UserEvent.LOAD_ALL_USERS));
-                }
             }
             
             private function onRowClick(event:ListEvent):void { selected = event.currentTarget.selectedItem as Role; }
@@ -85,11 +80,11 @@
             /**
              * Double clicking an entry opens the edit dialogue.
              */ 
-            private function onDoubleClick(event:MouseEvent):void {
+            private function onDoubleClick(event : MouseEvent) : void {
             	selected = event.currentTarget.selectedItem as Role;
-                var pop:CreateRoleDialog = CreateRoleDialog(PopUpManager.createPopUp(this, CreateRoleDialog, true));
+                var pop : CreateRoleDialog = CreateRoleDialog(PopUpManager.createPopUp(this, CreateRoleDialog, true));
                 pop.roleToChange = event.currentTarget.selectedItem as Role;
-                pop.title = "Change Role settings";
+                pop.title = I18nUtil.trans(I18nUtil.APP_MAIN, "info_role_title_change_role");
                 PopUpManager.centerPopUp(pop);
             }
 
@@ -118,10 +113,12 @@
              * Fire event to save the selected Role.
              */
             private function save():void {
+            /**
                 if (lst.selectedIndices.length == 0) {
-                    Alert.show("Please select a Role to save");
+                    Alert.show(I18nUtil.trans(I18nUtil.APP_MAIN, "info_role_select_role_to_save"));
                     return;                 
                 }
+                */
                 var event:RoleEvent = new RoleEvent(RoleEvent.SAVE_ROLE);
                 event.data = selected;
                 dispatchEvent(event);
@@ -132,7 +129,7 @@
              */
             private function addUsers():void {
                 if (selected == null) {
-                    Alert.show("Please select a Role to add a User for");
+                    Alert.show(I18nUtil.trans(I18nUtil.APP_MAIN, "info_role_select_role_add_user"));
                     return;
                 }
                 var pop:AssignUsersDialog = AssignUsersDialog(PopUpManager.createPopUp(this, AssignUsersDialog, true));
@@ -146,7 +143,7 @@
              */
             private function addGrants():void {
                 if (selected == null) {
-                    Alert.show("Please select a Role to assign Grants to it");
+                    Alert.show(I18nUtil.trans(I18nUtil.APP_MAIN, "info_role_select_role_assign_grants"));
                     return;
                 }
                 var pop:AssignGrantsDialog = AssignGrantsDialog(PopUpManager.createPopUp(this, AssignGrantsDialog, true));
@@ -160,11 +157,11 @@
              */
             private function removeUsers():void {
                 if (selected == null) {
-                	Alert.show(I18nUtil.trans(I18nUtil.APP_MAIN, "info_role_select_role"));
+                	Alert.show(I18nUtil.trans(I18nUtil.APP_MAIN, "info_role_select_role_to_remove"));
                     return;
                 }
                 if (usersLst.selectedItems.length == 0) {
-                    Alert.show(I18nUtil.trans(I18nUtil.APP_MAIN, "info_role_select_users"));
+                    Alert.show(I18nUtil.trans(I18nUtil.APP_MAIN, "info_role_select_role_to_remove_users"));
                     return;
                 }
             	for each (var selectedUser:User in usersLst.selectedItems) {
@@ -200,41 +197,41 @@
     </mx:Script>
 
     <mx:HBox x="10" y="10" width="95%" verticalAlign="middle" backgroundColor="#FFA6A6">
-        <mx:Label x="10" y="10" text="Roles" fontSize="24"/>
+        <mx:Label x="10" y="10" text="{I18nUtil.trans(I18nUtil.APP_MAIN, 'txt_role_screen_header')}" fontSize="24"/>
         <mx:VRule height="10"/>
-        <mx:Button id="addRoleBtn" visible="{iden.ifAllGranted('APP_add_roles_button')}" buttonMode="true" mouseChildren="false" toolTip="Create a new Role" icon="@Embed(source='/assets/images/Users--plus.png')" click="add()"/>
-        <mx:VRule height="10" visible="{iden.ifAllGranted('APP_add_roles_button')}"/>
-        <mx:Button id="removeRoleBtn" visible="{iden.ifAllGranted('APP_remove_role_button')}" buttonMode="true" mouseChildren="false" toolTip="Delete an existing Role" icon="@Embed(source='/assets/images/Users--minus.png')" click="remove()"/>
-        <mx:VRule height="10" visible="{iden.ifAllGranted('APP_remove_role_button')}"/>
-        <mx:Button id="saveRoleBtn" visible="{iden.ifAllGranted('APP_save_role_button')}" buttonMode="true" mouseChildren="false" toolTip="Save a modified Role" icon="@Embed(source='/assets/images/Users--save.png')" click="save()"/>
-        <mx:VRule height="10" visible="{iden.ifAllGranted('APP_save_role_button')}" />
-        <mx:Button id="refreshRoleBtn" buttonMode="true" mouseChildren="false" toolTip="Refresh the list of Roles" icon="@Embed(source='assets/images/icons/refresh.png')" click="refresh()"/>
+        <mx:Button id="addRoleBtn" enabled="{iden.ifAllGranted('APP_add_roles_button')}" toolTip="{I18nUtil.trans(I18nUtil.APP_MAIN, 'ttip_role_add_role')}" icon="@Embed(source='/assets/images/Users--plus.png')" click="add()"/>
+        <mx:VRule height="10" />
+        <mx:Button id="removeRoleBtn" enabled="{selected &amp;&amp; iden.ifAllGranted('APP_remove_role_button')}" toolTip="{I18nUtil.trans(I18nUtil.APP_MAIN, 'ttip_role_delete_role')}" icon="@Embed(source='/assets/images/Users--minus.png')" click="remove()"/>
+        <mx:VRule height="10" />
+        <mx:Button id="saveRoleBtn" enabled="{selected &amp;&amp; iden.ifAllGranted('APP_save_role_button')}" toolTip="{I18nUtil.trans(I18nUtil.APP_MAIN, 'ttip_role_save_role')}" icon="@Embed(source='/assets/images/Users--save.png')" click="save()"/>
+        <mx:VRule height="10" />
+        <mx:Button id="refreshRoleBtn" toolTip="{I18nUtil.trans(I18nUtil.APP_MAIN, 'ttip_role_reload_roles')}" icon="@Embed(source='assets/images/icons/refresh.png')" click="refresh()"/>
     </mx:HBox>
     <mx:HRule x="9" y="53" width="95%"/>
     <mx:VBox height="100%" width="95%" x="10" y="63">
         <mx:VBox width="100%">
             <mx:DataGrid id="lst" height="200" width="100%" allowMultipleSelection="true" dataProvider="{modelLocator.allRoles}" change="onRowClick(event);" doubleClickEnabled="true" doubleClick="onDoubleClick(event);">
                 <mx:columns>
-                    <mx:DataGridColumn headerText="Name" dataField="name" editable="false" width="100"/>
-                    <mx:DataGridColumn headerText="Description" dataField="description" editable="false"/>
+                    <mx:DataGridColumn headerText="{I18nUtil.trans(I18nUtil.APP_MAIN, 'entity_role_name')}" dataField="name" editable="false" width="100"/>
+                    <mx:DataGridColumn headerText="{I18nUtil.trans(I18nUtil.APP_MAIN, 'entity_role_description')}" dataField="description" editable="false"/>
                 </mx:columns>
             </mx:DataGrid>
             <mx:HBox width="100%">
 	            <mx:VBox width="50%">
 	                <mx:HBox verticalAlign="middle" backgroundColor="#FFA6A6" width="100%" backgroundAlpha="0.5" horizontalGap="8" height="25">
-	                    <mx:Label x="10" y="10" text="Assigned Grants" fontSize="10"/>
+	                    <mx:Label x="10" y="10" text="{I18nUtil.trans(I18nUtil.APP_MAIN, 'txt_role_assigned_grants')}" fontSize="10"/>
 	                    <mx:VRule height="10" visible="{iden.ifAllGranted('APP_assign_grants_button')}"/>
-	                    <mx:Button id="assignedGrantsBtn" visible="{iden.ifAllGranted('APP_assign_grants_button')}" width="22" height="22" buttonMode="true" mouseChildren="false" toolTip="Assign Grants to the selected Role" click="addGrants()" icon="@Embed(source='assets/images/icons/grant--add.png')"/>
+	                    <cor:ImageButton id="assignedGrantsBtn" visible="{iden.ifAllGranted('APP_assign_grants_button')}" toolTip="{I18nUtil.trans(I18nUtil.APP_MAIN, 'ttip_role_assign_grants')}" click="addGrants()" source="@Embed(source='assets/images/icons/grant--add.png')"/>
 	                </mx:HBox>
 	                <mx:List id="grantsLst" height="200" width="100%" allowMultipleSelection="true" labelFunction="formatGrant" dataProvider="{selected.grants}"/>
 	            </mx:VBox>
 	            <mx:VBox width="50%">
 			        <mx:HBox verticalAlign="middle" backgroundColor="#FFA6A6" width="100%" height="25" backgroundAlpha="0.5">
-			            <mx:Label x="10" y="10" text="Assigned Users" fontSize="10"/>
-			            <mx:VRule height="10" visible="{iden.ifAllGranted('APP_assign_users_button')}"/>
-			            <mx:Button id="assignedUsersBtn" visible="{iden.ifAllGranted('APP_assign_users_button')}" width="22" height="22" buttonMode="true" mouseChildren="false" toolTip="Assign Users to the selected Role" click="addUsers()" icon="@Embed(source='/assets/images/User--plus.png')"/>
-			            <mx:VRule height="10" visible="{iden.ifAllGranted('APP_assign_users_button')}"/>
-			            <mx:Button id="removeUsersBtn" visible="{iden.ifAllGranted('APP_assign_users_button')}" width="22" height="22" buttonMode="true" mouseChildren="false" toolTip="Remove Users from the selected Role" click="removeUsers()" icon="@Embed(source='/assets/images/User--minus.png')"/>
+			            <mx:Label x="10" y="10" text="{I18nUtil.trans(I18nUtil.APP_MAIN, 'txt_role_assigned_users')}" fontSize="10"/>
+			            <mx:VRule height="10" />
+			            <cor:ImageButton id="assignedUsersBtn" enabled="{iden.ifAllGranted('APP_assign_users_button')}" toolTip="{I18nUtil.trans(I18nUtil.APP_MAIN, 'ttip_role_assign_users')}" click="addUsers()" source="@Embed(source='/assets/images/User--plus.png')"/>
+			            <mx:VRule height="10" />
+			            <cor:ImageButton id="removeUsersBtn" enabled="{iden.ifAllGranted('APP_assign_users_button')}" toolTip="{I18nUtil.trans(I18nUtil.APP_MAIN, 'ttip_role_remove_users_from_role')}" click="removeUsers()" source="@Embed(source='/assets/images/User--minus.png')"/>
 			        </mx:HBox>
 	                <mx:List id="usersLst" height="200" width="100%" allowMultipleSelection="true" labelFunction="formatUser" dataProvider="{selected.users}" />
 	            </mx:VBox>

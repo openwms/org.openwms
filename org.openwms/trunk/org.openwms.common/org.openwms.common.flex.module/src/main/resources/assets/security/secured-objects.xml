@@ -73,4 +73,17 @@
         <name>COMMON_change_location_mxTu_stepper</name>
         <description>Permission to change the maximum number of Transport Units for a Location</description>
     </grant>
+    <!-- Location Groups screen -->
+    <grant>
+        <name>COMMON_LG_change_group_state_in</name>
+        <description>Permission to change the groupStateIn of a LocationGroup</description>
+    </grant>
+    <grant>
+        <name>COMMON_LG_change_group_state_out</name>
+        <description>Permission to change the groupStateOut of a LocationGroup</description>
+    </grant>
+    <grant>
+        <name>COMMON_LG_change_max_fill_level</name>
+        <description>Permission to change the maxFillLevel of a LocationGroup</description>
+    </grant>
 </grants>

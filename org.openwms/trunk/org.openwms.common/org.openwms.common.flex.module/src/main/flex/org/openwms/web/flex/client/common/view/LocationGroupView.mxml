@@ -35,6 +35,9 @@
     <mx:Script>
         <![CDATA[
             import mx.collections.ArrayCollection;
+
+            import org.granite.tide.spring.Identity;
+
             import org.openwms.web.flex.client.util.DisplayUtility;
             import org.openwms.web.flex.client.util.BindingProperty;
             import org.openwms.web.flex.client.event.SwitchScreenEvent;
@@ -49,6 +52,12 @@
             import org.openwms.common.domain.values.LocationGroupState;
             import org.openwms.common.domain.LocationGroup;
 
+            [Inject]
+            [Bindable]
+            /**
+             * We need to have Granites Identity injected.
+             */
+            public var identity:Identity;
 	        [Inject]
 	        [Bindable]
             /**
@@ -87,7 +96,7 @@
              */
             private function onShow() : void {
                 if (commonModelLocator.allLocationGroups.length == 0) {
-                    dispatchEvent(new LocationGroupEvent(LocationGroupEvent.LOAD_ALL_LOCATION_GROUPS));
+                    reload();
                 }
                 if (commonModelLocator.allLocations.length == 0) {
                     dispatchEvent(new LocationEvent(LocationEvent.LOAD_ALL_LOCATIONS));
@@ -141,11 +150,9 @@
             private function showLocations() : void {
                 var locations : ArrayCollection = commonModelLocator.allLocations;
                 selectedLocations.removeAll();
-                for (var i : uint = 0; i < locations.length; i++) {
-                    if (locations[i].locationGroup == null) {
-                        continue;
-                    }
-                    if (locations[i].locationGroup.id == selected.id) {
+                for (var i : int = 0; i < locations.length; i++) {
+                    if (locations[i].locationGroup != null &&
+                        locations[i].locationGroup.id == selected.id) {
                         selectedLocations.addItem(locations[i]);
                     }
                 }
@@ -205,18 +212,18 @@
                 <mx:Label text="{selected.groupType}" width="100%" x="190" y="120"/>
 
                 <mx:Label x="10" y="146" text="Infeed" textAlign="right" width="170"/>
-                <mx:ComboBox id="groupStateInCmb" x="188" y="144" dataProvider="{LocationGroupState.constants}" change="changeState(event)" />
+                <mx:ComboBox id="groupStateInCmb" editable="{identity.ifAllGranted('COMMON_LG_change_group_state_in')}" dataProvider="{LocationGroupState.constants}" change="changeState(event)" x="188" y="144" />
 
                 <mx:Label x="10" y="176" text="Outfeed" textAlign="right" width="170"/>
-                <mx:ComboBox id="groupStateOutCmb" x="188" y="174" dataProvider="{LocationGroupState.constants}" change="changeState(event)" />
+                <mx:ComboBox id="groupStateOutCmb" editable="{identity.ifAllGranted('COMMON_LG_change_group_state_out')}" dataProvider="{LocationGroupState.constants}" change="changeState(event)" x="188" y="174" />
 
-                <mx:CheckBox x="277" y="206" label="Counting active" selected="{selected.locationGroupCountingActive}"/>
+                <mx:CheckBox label="Counting active" selected="{selected.locationGroupCountingActive}" x="277" y="206" />
 
-                <mx:Label x="10" y="208" text="Maximum Fill Level" textAlign="right" width="170"/>
-                <mx:NumericStepper x="190" y="206" value="{selected.maxFillLevel}" minimum="0" maximum="100" />
+                <mx:Label text="Maximum Fill Level" textAlign="right" width="170" x="10" y="208" />
+                <mx:NumericStepper value="{selected.maxFillLevel}" deactivate="{identity &amp;&amp; !identity.ifAllGranted('COMMON_LG_change_max_fill_level')}" minimum="0" maximum="100" x="190" y="206" />
 
-                <mx:Label x="10" y="234" text="System Code" textAlign="right" width="170"/>
-                <mx:Label text="{selected.systemCode}" width="100%" x="188" y="234"/>
+                <mx:Label text="System Code" textAlign="right" width="170" x="10" y="234" />
+                <mx:Label text="{selected.systemCode}" width="100%" x="188" y="234" />
             </core:XPanel>
             <mx:DataGrid id="locationsList" allowMultipleSelection="true" sortableColumns="true" x="0" y="341" width="100%" dataProvider="{selectedLocations}" height="100%">
                 <mx:columns>

@@ -35,7 +35,7 @@
 			import org.openwms.web.flex.client.event.UserEvent;
 			import org.openwms.web.flex.client.model.ModelLocator;
 		
-            [In]
+            [Inject]
             [Bindable]
             /**
              * Inject the model.
@@ -45,7 +45,8 @@
 			
             [Observer("USER.USER_ADDED")]
             /**
-             * Do something when a user was added. Currently nothing happens here.
+             * Currently does nothing.
+             * Tide event observers : USER.USER_ADDED
              */
 			public function userAdded():void { }
 			

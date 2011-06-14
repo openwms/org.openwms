@@ -22,23 +22,24 @@ package org.openwms.web.flex.client.business {
 
     import mx.collections.ArrayCollection;
     import mx.controls.Alert;
-    import mx.logging.ILogger;
-    import mx.logging.Log;
 
     import org.granite.tide.events.TideFaultEvent;
     import org.granite.tide.events.TideResultEvent;
     import org.granite.tide.events.TideContextEvent;
     import org.granite.tide.spring.Context;
+
     import org.openwms.core.domain.system.usermanagement.Role;
     import org.openwms.web.flex.client.event.ApplicationEvent;
     import org.openwms.web.flex.client.event.RoleEvent;
     import org.openwms.web.flex.client.model.ModelLocator;
+    import org.openwms.web.flex.client.util.I18nUtil;
 
     [Name("roleController")]
     [ManagedEvent(name="LOAD_ALL_ROLES")]
     [ManagedEvent(name="ROLE_ADDED")]
     [ManagedEvent(name="ROLE_SAVED")]
     [ManagedEvent(name="APP.SECURITY_OBJECTS_REFRESHED")]
+    [ResourceBundle("appError")]
     [Bindable]
     /**
      * A RoleDelegate serves as a controller and is responsible for all interactions with the service layer
@@ -52,15 +53,13 @@ package org.openwms.web.flex.client.business {
      */
     public class RoleDelegate {
 
-        private static var logger : ILogger = Log.getLogger("org.openwms.web.flex.client.business.RoleDelegate");
-
-        [In]
+        [Inject]
         /**
          * Injected TideContext.
          */
         public var tideContext : Context;
 
-        [In]
+        [Inject]
         /**
          * Injected ModelLocator.
          */
@@ -154,8 +153,7 @@ package org.openwms.web.flex.client.business {
 
         private function onFault(event : TideFaultEvent) : void {
             trace("Error executing operation on Role service:" + event.fault);
-            logger.error("ERROR accessing Role : " + event.fault);
-            Alert.show("Error executing operation on Role service");
+            Alert.show(I18nUtil.trans(I18nUtil.APP_ERROR, 'error_role_service_operation'));
         }
     }
 }

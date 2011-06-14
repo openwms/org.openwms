@@ -21,22 +21,23 @@
 package org.openwms.web.flex.client.business {
 
     import mx.controls.Alert;
-    
+
     import org.as3commons.reflect.Type;
     import org.granite.tide.events.TideFaultEvent;
     import org.granite.tide.events.TideResultEvent;
     import org.granite.tide.spring.Context;
+
     import org.openwms.core.domain.values.Unit;
     import org.openwms.common.domain.values.Weight;
     import org.openwms.web.flex.client.model.ModelLocator;
-    
+
     [Name("propertyDelegate")]
     [ManagedEvent(name="LOAD_ALL_PROPERTIES")]
     [Bindable]
     /**
      * A PropertyDelegate serves as a controller and is responsible for all interactions with the service layer
      * regarding the handling with Properties.
-     * Fires Tide events : LOAD_ALL_PROPERTIES
+     * Fire Tide events : LOAD_ALL_PROPERTIES
      * Is named as : propertyDelegate
      *
      * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
@@ -45,12 +46,12 @@ package org.openwms.web.flex.client.business {
      */
     public class PropertyDelegate {
 
-        [In]
+        [Inject]
         /**
          * Injected TideContext.
          */
         public var tideContext : Context;
-        [In]
+        [Inject]
         /**
          * Injected ModelLocator.
          */
@@ -70,15 +71,12 @@ package org.openwms.web.flex.client.business {
             tideContext.configurationService.getAllUnits(onPropertiesLoaded, onFault);
         }
         private function onPropertiesLoaded(event : TideResultEvent) : void {
-        	for each (var prop:Unit in event.result) {
-        		if (prop is Weight) {
-        			var type:Type = Type.forInstance((prop as Weight).unit);
-        			for each (var i:* in type.constants) {
-        				trace("c:"+i);
-        			}
-        		    modelLocator.allProperties.addItem((prop as Weight).unit);
-        		}
-        	}
+            for each (var prop:Unit in event.result) {
+                if (prop is Weight) {
+                    var type:Type = Type.forInstance((prop as Weight).unit);
+                    modelLocator.allProperties.addItem((prop as Weight).unit);
+                }
+            }
         }
 
         private function onFault(event : TideFaultEvent) : void {
@@ -87,3 +85,4 @@ package org.openwms.web.flex.client.business {
         }
     }
 }
+

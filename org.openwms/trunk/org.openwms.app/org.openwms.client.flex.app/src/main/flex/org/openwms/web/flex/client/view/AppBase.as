@@ -64,6 +64,7 @@ package org.openwms.web.flex.client.view {
     import org.openwms.web.flex.client.util.DisplayUtility;
     import org.openwms.web.flex.client.util.SecurityUtil;
     import org.openwms.web.flex.client.util.XMLUtil;
+    import org.openwms.web.flex.client.util.I18nUtil;
     import org.openwms.web.flex.client.view.dialogs.LoginView;
     /**
      * An AppBase class is the main Flex Application of the CORE framework. This class
@@ -166,27 +167,16 @@ package org.openwms.web.flex.client.view {
          * Put your code here, to start application specific structures.
          */
         public function init() : void {
-            var t:TraceTarget = new TraceTarget();
-            t.filters = ["org.openwms.*"];
-            Log.addTarget(t);
+            rman.localeChain = ["de_DE"];
             tideContext.mainAppUI = this;
             var l:Array = rman.localeChain;
             for each (var s:String in l){
                 trace("LOCALE:"+s);
-            } 
+            }
+            //rman.localeChain = ["de_DE"];
             setupServices([moduleService, roleService, userService, i18nService, configurationService, securityService]);
             tideContext.raiseEvent(I18nEvent.LOAD_ALL);
             readAndMergeGrantsList();
-        }
-
-        private function setupServices(services:Array) : void {
-            var endpoint:String = ServerConfig.getChannel("my-graniteamf").endpoint;
-            for each (var service:SecureRemoteObject in services) {
-                service.endpoint = endpoint;
-                service.showBusyCursor = true;
-                service.channelSet = new ChannelSet();
-                service.channelSet.addChannel(ServerConfig.getChannel("my-graniteamf"));        		
-            }
         }
 
         /**
@@ -212,7 +202,7 @@ package org.openwms.web.flex.client.view {
          */
         public function onMenuChange(event : MenuEvent) : void {
             if (appViewStack.getChildByName(event.item.@action) == null) {
-                Alert.show(rman.getString("appError", "error_screenNameNotFound", [event.item.@action]));
+                Alert.show(I18nUtil.trans(I18nUtil.APP_ERROR, 'error_screenNameNotFound', [event.item.@action]));
                 return;
             }
             dispatchEvent(new SwitchScreenEvent(event.item.@action));
@@ -284,12 +274,6 @@ package org.openwms.web.flex.client.view {
             fireReadyToUnload(event);
         }
 
-        private function fireReadyToUnload(event : ApplicationEvent) : void {
-            var e:ApplicationEvent = new ApplicationEvent(ApplicationEvent.READY_TO_UNLOAD);
-            e.data = event.data
-            dispatchEvent(e);
-        }
-
         [Observer("MODULE_LOADED")]
         /**
          * In the case a Module was successfully loaded menues and views must be re-organized.
@@ -354,6 +338,28 @@ package org.openwms.web.flex.client.view {
             var views : ArrayCollection = module.getViews();
             for each (var view : DisplayObject in views) {
                 appViewStack.addChild(view as DisplayObject);
+            }
+        }
+
+        private function fireReadyToUnload(event : ApplicationEvent) : void {
+            var e:ApplicationEvent = new ApplicationEvent(ApplicationEvent.READY_TO_UNLOAD);
+            e.data = event.data
+            dispatchEvent(e);
+        }
+
+        private function setUpLogging() : void {
+            var t:TraceTarget = new TraceTarget();
+            t.filters = ["org.openwms.*"];
+            Log.addTarget(t);
+        }
+
+        private function setupServices(services:Array) : void {
+            var endpoint:String = ServerConfig.getChannel("my-graniteamf").endpoint;
+            for each (var service:SecureRemoteObject in services) {
+                service.endpoint = endpoint;
+                service.showBusyCursor = true;
+                service.channelSet = new ChannelSet();
+                service.channelSet.addChannel(ServerConfig.getChannel("my-graniteamf"));                
             }
         }
 
