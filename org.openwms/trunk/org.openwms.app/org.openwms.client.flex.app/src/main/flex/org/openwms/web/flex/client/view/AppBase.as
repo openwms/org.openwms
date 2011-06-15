@@ -55,6 +55,7 @@ package org.openwms.web.flex.client.view {
     import org.openwms.web.flex.client.business.PropertyDelegate;
     import org.openwms.web.flex.client.business.RoleDelegate;
     import org.openwms.web.flex.client.business.UserDelegate;
+    import org.openwms.web.flex.client.business.SecurityDelegate;
     import org.openwms.web.flex.client.event.ApplicationEvent;
     import org.openwms.web.flex.client.event.I18nEvent;
     import org.openwms.web.flex.client.event.SwitchScreenEvent;
@@ -66,6 +67,7 @@ package org.openwms.web.flex.client.view {
     import org.openwms.web.flex.client.util.XMLUtil;
     import org.openwms.web.flex.client.util.I18nUtil;
     import org.openwms.web.flex.client.view.dialogs.LoginView;
+
     /**
      * An AppBase class is the main Flex Application of the CORE framework. This class
      * cares about all the essential stuff like security and Tide framework initialization
@@ -120,7 +122,7 @@ package org.openwms.web.flex.client.view {
          * TideContext instance.
          */
         public var tideContext : Context = Spring.getInstance().getSpringContext();
-        Spring.getInstance().addComponents([SecurityUtil, ModelLocator, ModuleLocator, UserDelegate, RoleDelegate, PropertyDelegate, I18nMap, I18nDelegate]);
+        Spring.getInstance().addComponents([SecurityUtil, ModelLocator, ModuleLocator, UserDelegate, RoleDelegate, PropertyDelegate, I18nMap, I18nDelegate, SecurityDelegate]);
 
         private var applicationDomain : ApplicationDomain = new ApplicationDomain(ApplicationDomain.currentDomain);
         // Manager classes are loaded to the application domain
@@ -128,29 +130,30 @@ package org.openwms.web.flex.client.view {
         private var popUpManager : PopUpManager;
         private var dragManager : DragManager;
         private static var log : ILogger = Log.getLogger("org.openwms.web.flex.client.view.App");
-        private static var _link : Array = [org.openwms.tms.domain.order.TransportOrder,org.openwms.common.domain.values.Weight];
+        private static var _link : Array = [org.openwms.tms.domain.order.TransportOrder, org.openwms.common.domain.values.Weight];
         [Bindable]
         private var rman : IResourceManager = ResourceManager.getInstance();
         [Bindable]
-        private var moduleService:SecureRemoteObject = new SecureRemoteObject("moduleServiceRemote");
+        private var moduleService : SecureRemoteObject = new SecureRemoteObject("moduleServiceRemote");
         [Bindable]
-        private var userService:SecureRemoteObject = new SecureRemoteObject("userServiceRemote");
+        private var userService : SecureRemoteObject = new SecureRemoteObject("userServiceRemote");
         [Bindable]
-        private var roleService:SecureRemoteObject = new SecureRemoteObject("roleServiceRemote");
+        private var roleService : SecureRemoteObject = new SecureRemoteObject("roleServiceRemote");
         [Bindable]
-        private var i18nService:SecureRemoteObject = new SecureRemoteObject("i18nServiceRemote");
+        private var i18nService : SecureRemoteObject = new SecureRemoteObject("i18nServiceRemote");
         [Bindable]
-        private var configurationService:SecureRemoteObject = new SecureRemoteObject("configurationServiceRemote");
+        private var configurationService : SecureRemoteObject = new SecureRemoteObject("configurationServiceRemote");
         [Bindable]
         private var securityService : SecureRemoteObject = new SecureRemoteObject("securityServiceRemote");
         [Embed(source="/assets/security/secured-objects.xml", mimeType="application/octet-stream")]
-        private var _xml:Class;
+        private var _xml : Class;
         private var blacklisted : ArrayCollection = new ArrayCollection();
 
         /**
          * Suppress warnings and add a constructor.
          */
-        public function AppBase() { }
+        public function AppBase() {
+        }
 
         /**
          * Called in pre-initialize phase of the application.
@@ -160,6 +163,7 @@ package org.openwms.web.flex.client.view {
          */
         public function preInit(event : Event) : void {
             Spring.getInstance().initApplication();
+            rman.localeChain = [modelLocator.availableLocales[0]];
         }
 
         /**
@@ -167,13 +171,7 @@ package org.openwms.web.flex.client.view {
          * Put your code here, to start application specific structures.
          */
         public function init() : void {
-            rman.localeChain = ["de_DE"];
             tideContext.mainAppUI = this;
-            var l:Array = rman.localeChain;
-            for each (var s:String in l){
-                trace("LOCALE:"+s);
-            }
-            //rman.localeChain = ["de_DE"];
             setupServices([moduleService, roleService, userService, i18nService, configurationService, securityService]);
             tideContext.raiseEvent(I18nEvent.LOAD_ALL);
             readAndMergeGrantsList();
@@ -186,12 +184,12 @@ package org.openwms.web.flex.client.view {
             if (blacklisted.length > 0) {
                 return;
             }
-            var xml:XML = XMLUtil.getXML(new _xml());
-            for each (var g:XML in xml.grant) {
+            var xml : XML = XMLUtil.getXML(new _xml());
+            for each (var g : XML in xml.grant) {
                 blacklisted.addItem(new Grant(g.name, g.description));
             }
-            var event:ApplicationEvent = new ApplicationEvent(ApplicationEvent.MERGE_GRANTS);
-            event.data = {moduleName : "APP", grants : blacklisted};
+            var event : ApplicationEvent = new ApplicationEvent(ApplicationEvent.MERGE_GRANTS);
+            event.data = {moduleName: "APP", grants: blacklisted};
             dispatchEvent(event);
         }
 
@@ -242,10 +240,10 @@ package org.openwms.web.flex.client.view {
             appViewStack.selectedIndex = DisplayUtility.getView(SwitchScreenEvent.SHOW_STARTSCREEN, appViewStack);
         }
 
-        [Observer("APP_LOGIN_OK")]
+        [Observer("APP.LOGIN_OK")]
         /**
          * Called when the user logged in successfully.
-         * Tide event observers : APP_LOGIN_OK
+         * Tide event observers : APP.LOGIN_OK
          *
          * @param event Unused
          */
@@ -256,6 +254,7 @@ package org.openwms.web.flex.client.view {
                 modelLocator.actualView = modelLocator.viewBeforeLock;
             }
             tideContext.raiseEvent(ApplicationEvent.LOAD_ALL_MODULES);
+            rman.update();
         }
 
         [Observer("APP.BEFORE_MODULE_UNLOAD")]
@@ -305,10 +304,14 @@ package org.openwms.web.flex.client.view {
 
         [Observer("APP.SECURITY_OBJECTS_REFRESHED")]
         /**
+         * Adds a list of new security objects to the model.
+         * Tide event observers : APP.SECURITY_OBJECTS_REFRESHED
+         *
+         * @param event event.data is expected to hold an ArrayCollection of new securityObjects
          */
         public function secureObjectsRefreshed(event : ApplicationEvent) : void {
             if (event.data != null) {
-                var securityObjects:ArrayCollection = event.data as ArrayCollection;
+                var securityObjects : ArrayCollection = event.data as ArrayCollection;
                 for each (var grant : Grant in securityObjects) {
                     if (!modelLocator.securityObjects.contains(grant)) {
                         modelLocator.securityObjects.addItem(grant);
@@ -342,31 +345,31 @@ package org.openwms.web.flex.client.view {
         }
 
         private function fireReadyToUnload(event : ApplicationEvent) : void {
-            var e:ApplicationEvent = new ApplicationEvent(ApplicationEvent.READY_TO_UNLOAD);
+            var e : ApplicationEvent = new ApplicationEvent(ApplicationEvent.READY_TO_UNLOAD);
             e.data = event.data
             dispatchEvent(e);
         }
 
         private function setUpLogging() : void {
-            var t:TraceTarget = new TraceTarget();
+            var t : TraceTarget = new TraceTarget();
             t.filters = ["org.openwms.*"];
             Log.addTarget(t);
         }
 
-        private function setupServices(services:Array) : void {
-            var endpoint:String = ServerConfig.getChannel("my-graniteamf").endpoint;
-            for each (var service:SecureRemoteObject in services) {
+        private function setupServices(services : Array) : void {
+            var endpoint : String = ServerConfig.getChannel("my-graniteamf").endpoint;
+            for each (var service : SecureRemoteObject in services) {
                 service.endpoint = endpoint;
                 service.showBusyCursor = true;
                 service.channelSet = new ChannelSet();
-                service.channelSet.addChannel(ServerConfig.getChannel("my-graniteamf"));                
+                service.channelSet.addChannel(ServerConfig.getChannel("my-graniteamf"));
             }
         }
 
         private function addSecurityObjects(module : IApplicationModule) : void {
-            var securityObjects:ArrayCollection = module.getSecurityObjects();
-            var event:ApplicationEvent = new ApplicationEvent(ApplicationEvent.MERGE_GRANTS);
-            event.data = {moduleName : module.getModuleName(), grants : securityObjects};
+            var securityObjects : ArrayCollection = module.getSecurityObjects();
+            var event : ApplicationEvent = new ApplicationEvent(ApplicationEvent.MERGE_GRANTS);
+            event.data = {moduleName: module.getModuleName(), grants: securityObjects};
             dispatchEvent(event);
         }
 

@@ -1,21 +1,35 @@
 <?xml version="1.0" encoding="utf-8"?>
 <mx:TitleWindow xmlns:mx="http://www.adobe.com/2006/mxml" layout="absolute" title="Change Preferences" creationComplete="onCreate();">
 
+    <mx:Metadata>
+        [Name]
+        [ResourceBundle("appMain")]
+    </mx:Metadata>
+
 	<mx:Script>
 		<![CDATA[
 			import mx.managers.PopUpManager;
-	
+            import org.openwms.web.flex.client.model.ModelLocator;
+
+            [Inject]
+            [Bindable]
+            /**
+             * Injected ModelLocator.
+             */
+            public var modelLocator : ModelLocator;
+            
 			private function onCreate() : void {
+                cancelBtn.setFocus();
 				this.addEventListener(KeyboardEvent.KEY_DOWN, keyEventHandler);
                 PopUpManager.centerPopUp(this);
 			}		
 
-            private function closeDialog(event:Event):void {
+            private function closeDialog(event : Event) : void {
             	this.removeEventListener(KeyboardEvent.KEY_DOWN, keyEventHandler);
                 PopUpManager.removePopUp(this);
             }
 
-	        private function keyEventHandler(event:KeyboardEvent):void {
+	        private function keyEventHandler(event : KeyboardEvent) : void {
 	            if(event.keyCode == 27) {
 	               closeDialog(event);
                 }
@@ -26,6 +40,9 @@
 	
 	<mx:Form x="10" y="10">
 		<mx:FormHeading label="Username" width="100%"/>
+        <mx:ComboBox id="localesCB" 
+        dataProvider="{modelLocator.availableLocales}"/>
+        
 		<mx:FormItem label="Fullname">
 			<mx:TextInput id="fullnameTxt" />
 		</mx:FormItem>

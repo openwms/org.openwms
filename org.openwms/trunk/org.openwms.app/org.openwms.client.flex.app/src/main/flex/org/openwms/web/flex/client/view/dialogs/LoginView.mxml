@@ -26,7 +26,7 @@
 
     <mx:Metadata>
         [Name]
-        [ManagedEvent(name="APP_LOGIN_OK")]
+        [ManagedEvent(name="APP.REQUEST_LOGIN")]
         [ResourceBundle("appMain")]
     </mx:Metadata>
 
@@ -58,6 +58,9 @@
              */
             public var modelLocator : ModelLocator;
             [Bindable]
+            /**
+             * The message text.
+             */
             public var loginMessageText : String = "";
             
             private function onShow() : void {
@@ -70,17 +73,20 @@
                     modelLocator.viewLockedBy != username) {
                     return;
                 }
-                identity.login(username, password, loginOk, loginError);        
+                var event : ApplicationEvent = new ApplicationEvent(ApplicationEvent.APP_REQUEST_LOGIN);
+                event.data = {username:username, password:password};
+                dispatchEvent(event);
             }
 
-            private function loginOk(event : TideResultEvent) : void {
+            [Observer("APP.LOGIN_OK")]
+            public function loginOk(event : ApplicationEvent) : void {
                 loginMessageText = null;
-                dispatchEvent(new ApplicationEvent(ApplicationEvent.APP_LOGIN_OK));
                 PopUpManager.removePopUp(this);
             }
         
-            private function loginError(event : TideFaultEvent) : void {
-                loginMessageText = event.fault.faultString;
+            [Observer("APP.LOGIN_NOK")]
+            public function loginError(event : ApplicationEvent) : void {
+                loginMessageText = event.data.event.fault.faultString;
                 myPass.text = "";
                 myPass.setFocus();
             }
