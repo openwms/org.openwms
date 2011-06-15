@@ -59,6 +59,7 @@ package org.openwms.web.flex.client.model {
         public var actualView : String = SwitchScreenEvent.SHOW_STARTSCREEN;
         public var authenticated : Boolean = false;
         public var fired : Boolean = false;
+        public var availableLocales : Array = ["en_US", "de_DE"];
         /**
          * Upload URL for file uploads.
          */
@@ -103,6 +104,11 @@ package org.openwms.web.flex.client.model {
          * The current selected User in the UserManagement view.
          */
         public var selectedUser : User = null;
+        /**
+         * The current logged in User.
+         */
+        public var loggedInUser : User = null;
+        [Deprecated]
         /**
          * DEPRECATED
          */
@@ -166,10 +172,22 @@ package org.openwms.web.flex.client.model {
         }
 
         /**
+         * Call to update the current set locale. The date format of the dateFormatter instances
+         * is set to the locale accordingly.
+         *
+         * @param locale The locale as String
+         */
+        public function updateLocale(locale : String) : void {
+
+        }
+
+        [Deprecated]
+        /**
          * Access the views array and add the viewObject to the defined
          * position. The postion is mandatory for the viewStack.
          */
-        public static function addView(pos : int, view : Object) : void { }
+        public static function addView(pos : int, view : Object) : void {
+        }
 
         public static function today() : Date {
             var today : Date = new Date();
@@ -177,15 +195,19 @@ package org.openwms.web.flex.client.model {
             return today;
         }
 
+        [Deprecated]
         /**
          * Search the viewObject from the array of views and remove it.
          */
-        public static function removeView(view : Object) : void {}
+        public static function removeView(view : Object) : void {
+        }
 
+        [Deprecated]
         /**
          * Shift the view to a new position.
          **/
-        public static function moveView(destPos : int, view : Object) : void { }
+        public static function moveView(destPos : int, view : Object) : void {
+        }
     }
 }
 

@@ -26,6 +26,7 @@ import java.util.Collection;
 import org.openwms.core.domain.system.usermanagement.Role;
 import org.openwms.core.domain.system.usermanagement.SecurityObject;
 import org.openwms.core.domain.system.usermanagement.User;
+import org.openwms.core.service.UserHolder;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
@@ -40,7 +41,7 @@ import org.springframework.security.core.userdetails.UserDetails;
  * @see org.springframework.security.core.GrantedAuthority
  * @see org.springframework.security.core.userdetails.UserDetails
  */
-public class UserWrapper implements UserDetails {
+public class UserWrapper implements UserDetails, UserHolder {
 
     private static final long serialVersionUID = -3974637197176782047L;
     private User user;
@@ -55,6 +56,14 @@ public class UserWrapper implements UserDetails {
     public UserWrapper(User user) {
         this.user = user;
         this.user.getRoles().size();
+    }
+
+    /**
+     * @see org.openwms.core.service.UserHolder#getUser()
+     */
+    @Override
+    public User getUser() {
+        return this.user;
     }
 
     /**

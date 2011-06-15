@@ -68,9 +68,10 @@ package org.openwms.web.flex.client.business {
         /**
          * Constructor.
          */
-        public function RoleDelegate() : void { }
+        public function RoleDelegate() : void {
+        }
 
-        [Observer("LOAD_ALL_ROLES","ROLE_ADDED","ROLE_SAVED")]
+        [Observer("LOAD_ALL_ROLES", "ROLE_ADDED", "ROLE_SAVED")]
         /**
          * Fetch a list of all roles from the service.
          * Tide event observers : LOAD_ALL_ROLES, ROLE_ADDED, ROLE_SAVED
@@ -78,6 +79,7 @@ package org.openwms.web.flex.client.business {
         public function getRoles() : void {
             tideContext.roleService.findAll(onRolesLoaded, onFault);
         }
+
         private function onRolesLoaded(event : TideResultEvent) : void {
             modelLocator.allRoles = event.result as ArrayCollection;
         }
@@ -94,6 +96,7 @@ package org.openwms.web.flex.client.business {
                 tideContext.roleService.save(event.data as Role, onRoleAdded, onFault);
             }
         }
+
         private function onRoleAdded(event : TideResultEvent) : void {
             dispatchEvent(new RoleEvent(RoleEvent.ROLE_ADDED));
         }
@@ -110,6 +113,7 @@ package org.openwms.web.flex.client.business {
                 tideContext.roleService.save(event.data as Role, onRoleSaved, onFault);
             }
         }
+
         private function onRoleSaved(event : TideResultEvent) : void {
             dispatchEvent(new RoleEvent(RoleEvent.LOAD_ALL_ROLES));
             dispatchEvent(new RoleEvent(RoleEvent.ROLE_SAVED));
@@ -127,6 +131,7 @@ package org.openwms.web.flex.client.business {
                 tideContext.roleService.remove(event.data as ArrayCollection, onRoleDeleted, onFault);
             }
         }
+
         private function onRoleDeleted(event : TideResultEvent) : void {
             dispatchEvent(new RoleEvent(RoleEvent.LOAD_ALL_ROLES));
         }
@@ -145,6 +150,7 @@ package org.openwms.web.flex.client.business {
                 // throw Error();
             }
         }
+
         private function onGrantsMerged(event : TideResultEvent) : void {
             var e : ApplicationEvent = new ApplicationEvent(ApplicationEvent.SECURITY_OBJECTS_REFRESHED);
             e.data = event.result as ArrayCollection;
@@ -152,7 +158,7 @@ package org.openwms.web.flex.client.business {
         }
 
         private function onFault(event : TideFaultEvent) : void {
-            trace("Error executing operation on Role service:" + event.fault);
+            trace("Error executing operation on Role service2:" + event);
             Alert.show(I18nUtil.trans(I18nUtil.APP_ERROR, 'error_role_service_operation'));
         }
     }

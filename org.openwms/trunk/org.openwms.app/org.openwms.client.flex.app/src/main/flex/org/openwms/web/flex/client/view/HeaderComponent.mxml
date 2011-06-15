@@ -93,7 +93,7 @@
         <mx:Image height="100%" source="@Embed('assets/images/openwms_header.png')" />
         <mx:VBox height="100%" width="100%" horizontalAlign="right" verticalAlign="bottom" verticalGap="0">
             <mx:HBox id="loggedInUserBox" width="100%" horizontalAlign="right">
-                <mx:LinkButton label="{identity.username}" click="showPrefs();" color="#E9EBEB" />
+                <mx:LinkButton label="{modelLocator.loggedInUser.username}" click="showPrefs();" color="#E9EBEB" />
                 <mx:Image width="16" source="@Embed('assets/images/icons/user--anonymous.png')"/>
             </mx:HBox>
             <mx:HBox id="lockBox" width="100%" horizontalAlign="right">
