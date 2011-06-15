@@ -44,6 +44,7 @@ public class UserWrapper implements UserDetails {
 
     private static final long serialVersionUID = -3974637197176782047L;
     private User user;
+    private Collection<GrantedAuthority> authorities = null;
 
     /**
      * Create a new UserWrapper.
@@ -63,14 +64,16 @@ public class UserWrapper implements UserDetails {
     @SuppressWarnings("serial")
     @Override
     public Collection<GrantedAuthority> getAuthorities() {
-        Collection<GrantedAuthority> authorities = new ArrayList<GrantedAuthority>();
-        for (final SecurityObject grant : user.getGrants()) {
-            authorities.add(new GrantedAuthority() {
-                @Override
-                public String getAuthority() {
-                    return grant.getName();
-                }
-            });
+        if (null == authorities) {
+            authorities = new ArrayList<GrantedAuthority>();
+            for (final SecurityObject grant : user.getGrants()) {
+                authorities.add(new GrantedAuthority() {
+                    @Override
+                    public String getAuthority() {
+                        return grant.getName();
+                    }
+                });
+            }
         }
         return authorities;
     }
