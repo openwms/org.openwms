@@ -40,7 +40,7 @@ public abstract class AssertUtils {
      *             if <code>obj</code> is <code>null</code>
      */
     public static void notNull(Object obj, String msg) {
-        if (obj == null) {
+        if (null == obj) {
             throw new IllegalArgumentException(msg);
         }
     }

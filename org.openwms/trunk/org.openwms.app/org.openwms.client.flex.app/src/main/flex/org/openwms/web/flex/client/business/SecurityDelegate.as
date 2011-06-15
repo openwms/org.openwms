@@ -39,10 +39,9 @@ package org.openwms.web.flex.client.business {
     [ResourceBundle("appError")]
     [Bindable]
     /**
-     * An UserDelegate. Handles all interaction with the userService.
-     * Provides simple CRUD methods.
-     * Fires Tide events : LOAD_ALL_USERS
-     * Is named as : userController
+     * A SecurityDelegate.
+     * Fires Tide events : APP.LOGIN_OK, APP.LOGIN_NOK
+     * Is named as : securityController
      *
      * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
      * @version $Revision: 1425 $
@@ -68,8 +67,7 @@ package org.openwms.web.flex.client.business {
         /**
          * Constructor.
          */
-        public function SecurityDelegate() : void {
-        }
+        public function SecurityDelegate() : void { }
 
         [Observer("APP.REQUEST_LOGIN")]
         /**
@@ -81,6 +79,7 @@ package org.openwms.web.flex.client.business {
         }
 
         private function loginOk(event : TideResultEvent) : void {
+            trace("CALL SERVICE:");
             tideContext.securityContextHelper.getLoggedInUser(onComplete, onFault);
         }
 

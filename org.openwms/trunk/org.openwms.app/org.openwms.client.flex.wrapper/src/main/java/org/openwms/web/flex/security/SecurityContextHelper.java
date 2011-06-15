@@ -22,24 +22,31 @@ package org.openwms.web.flex.security;
 
 import org.openwms.core.domain.system.usermanagement.User;
 import org.openwms.core.service.UserHolder;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 /**
- * @author heiko
+ * A SecurityContextHelper.
  * 
+ * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
+ * @version $Revision: 1409 $
+ * @since 0.1
  */
 @Service("securityContextHelper")
 public class SecurityContextHelper {
 
+    private Logger logger = LoggerFactory.getLogger(this.getClass());
+
     public User getLoggedInUser() {
-        System.out.println("Helper");
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        if (auth instanceof UserHolder) {
-            return ((UserHolder) auth).getUser();
+        logger.debug("Helper:" + auth.getPrincipal());
+        if (auth.getPrincipal() instanceof UserHolder) {
+            return ((UserHolder) auth.getPrincipal()).getUser();
         }
-        System.out.println("Not an User");
+        logger.debug("Not an User");
         return null;
     }
 }

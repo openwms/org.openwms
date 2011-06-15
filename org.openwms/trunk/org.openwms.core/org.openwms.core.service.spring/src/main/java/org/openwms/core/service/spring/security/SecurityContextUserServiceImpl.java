@@ -56,7 +56,7 @@ import org.springframework.transaction.annotation.Transactional;
 @Service("userDetailsService")
 public class SecurityContextUserServiceImpl implements UserDetailsService, ApplicationListener<UserChangedEvent> {
 
-    private Logger logger = LoggerFactory.getLogger(this.getClass());
+    private final Logger logger = LoggerFactory.getLogger(SecurityContextUserServiceImpl.class);
     @Value("#{ globals['system.user'] }")
     private String systemUser = "openwms";
 
@@ -82,10 +82,10 @@ public class SecurityContextUserServiceImpl implements UserDetailsService, Appli
      */
     @Override
     public void onApplicationEvent(UserChangedEvent event) {
-        if (logger.isDebugEnabled()) {
-            logger.debug("User changed, clear cache");
-        }
         if (cache != null) {
+            if (logger.isDebugEnabled()) {
+                logger.debug("UserChangedEvent -> clear cache");
+            }
             cache.removeAll();
         }
     }
@@ -102,28 +102,22 @@ public class SecurityContextUserServiceImpl implements UserDetailsService, Appli
     @Transactional(readOnly = true)
     @Override
     public UserDetails loadUserByUsername(String username) {
-
         UserDetails ud = userCache.getUserFromCache(username);
-        if (ud != null) {
+        if (null != ud) {
             if (logger.isDebugEnabled()) {
                 logger.debug("User found in cache");
             }
             return ud;
-        } else {
-            if (logger.isDebugEnabled()) {
-                logger.debug("User not cached, try to resolve");
-            }
+        }
+        if (logger.isDebugEnabled()) {
+            logger.debug("User not cached, try to resolve");
         }
         User user = null;
-        logger.debug("Systemuser = " + systemUser);
         if (systemUser.equals(username)) {
-            logger.debug("Test system");
             user = userService.createSystemUser();
-            logger.debug("got" + user);
         } else {
             user = dao.findByUniqueId(username);
-            if (user == null) {
-                logger.debug("User does not exist in database");
+            if (null == user) {
                 throw new UsernameNotFoundException("User " + username + " not found");
             }
         }

@@ -47,7 +47,7 @@ import org.springframework.transaction.annotation.Transactional;
 @Service("moduleService")
 public class ModuleServiceImpl implements ModuleService {
 
-    private Logger logger = LoggerFactory.getLogger(this.getClass());
+    private final Logger logger = LoggerFactory.getLogger(this.getClass());
     @Autowired
     private ModuleDao dao;
 
