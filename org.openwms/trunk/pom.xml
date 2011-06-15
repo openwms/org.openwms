@@ -978,6 +978,11 @@
                 <artifactId>com.springsource.org.apache.commons.collections</artifactId>
                 <version>3.2.1</version>
             </dependency>
+            <dependency>
+                <groupId>org.apache.commons</groupId>
+                <artifactId>com.springsource.org.apache.commons.beanutils</artifactId>
+                <version>1.8.0</version>
+            </dependency>
 
             <!-- Database libraries -->
             <dependency>

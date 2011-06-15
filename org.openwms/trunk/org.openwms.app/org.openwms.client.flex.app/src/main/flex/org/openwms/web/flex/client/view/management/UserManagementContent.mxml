@@ -91,7 +91,7 @@
             [Observer("USER.SELECTION_CHANGED","USER.USER_SAVED")]
             public function onCreated() : void {
                 userImg.filters = [filter];
-                setFormElements(!modelLocator.selectedUser == null);
+                setFormElements(!(modelLocator.selectedUser == null));
             }
             
             [Deprecated]
@@ -101,7 +101,7 @@
              * observer events on one method this method will be removed (GDS bug).
              * Tide event observers : USER.USER_ADDED
              */
-            public function onUserAdded(event : Event) : void { setFormElements(!modelLocator.selectedUser == null); }
+            public function onUserAdded(event : Event) : void { setFormElements(!(modelLocator.selectedUser == null)); }
 
             /**
              * Callback method. To be called when a new user image was saved.
@@ -109,12 +109,8 @@
             public function notify() : void { refresh(); }
 
             private function showFileUploadDialog() : void {
-                if (modelLocator.selectedUser == null) {
-                    Alert.show(I18nUtil.trans(I18nUtil.APP_MAIN, "info_user_select_user"));
-                    return;
-                }
-                if (isNaN(modelLocator.selectedUser.id)) {
-                    Alert.show(I18nUtil.trans(I18nUtil.APP_MAIN, "info_user_save_user_before_image"));
+                if (modelLocator.selectedUser == null || isNaN(modelLocator.selectedUser.id)) {
+                    Alert.show(I18nUtil.trans(I18nUtil.APP_MAIN, "info_user_save_user_before"));
                     return;
                 }
                 var pop1 : FileUploadDialog = FileUploadDialog(PopUpManager.createPopUp(this, FileUploadDialog, true));
@@ -126,6 +122,19 @@
 
             private function addUser() : void { dispatchEvent(new UserEvent(UserEvent.ADD_USER)); }
 
+            private function deleteUser() : void {
+                if (modelLocator.selectedUser == null) {
+                    Alert.show(I18nUtil.trans(I18nUtil.APP_MAIN, "info_user_save_user_before"));
+                    return;
+                }
+                if (isNaN(modelLocator.selectedUser.id)) {
+                    modelLocator.selectedUser = null;
+                    modelLocator.selectedUser = modelLocator.allUsers.getItemAt(0) as User;
+                    return;
+                }
+                dispatchEvent(new UserEvent(UserEvent.DELETE_USER));
+            }
+            
             private function fireSaveUserEvent() : void {
                 if (modelLocator.selectedUser != null && stringVal.validate().type == ValidationResultEvent.VALID && checkExpirationDate()) {
                     var bindings : Array = [new BindingProperty(modelLocator.selectedUser, "username", usernameTi, "text"),
@@ -176,8 +185,12 @@
             }
 
             private function showChangePasswordDialog() : void {
-                var pop : ChangePasswordDialog = ChangePasswordDialog(PopUpManager.createPopUp(this, ChangePasswordDialog, true));
-                PopUpManager.centerPopUp(pop);
+                if (modelLocator.selectedUser == null || isNaN(modelLocator.selectedUser.id)) {
+                    Alert.show(I18nUtil.trans(I18nUtil.APP_MAIN, "info_user_save_user_before"));
+                } else {
+                    var pop : ChangePasswordDialog = ChangePasswordDialog(PopUpManager.createPopUp(this, ChangePasswordDialog, true));
+                    PopUpManager.centerPopUp(pop);
+                }
             }
 
             private function setEditable(event : Event) : void { event.currentTarget.editable = true; }
@@ -218,7 +231,7 @@
         <mx:VRule height="10"/>
         <mx:Button id="addUserBtn" enabled="{identity.ifAllGranted('APP_add_user_button')}" buttonMode="true" mouseChildren="false" toolTip="{I18nUtil.trans(I18nUtil.APP_MAIN, 'ttip_user_add_user')}" icon="@Embed(source='/assets/images/User--plus.png')" click="addUser()"/>
         <mx:VRule height="10"/>
-        <mx:Button id="deleteUserBtn" enabled="{identity.ifAllGranted('APP_delete_user_button')}" buttonMode="true" mouseChildren="false" toolTip="{I18nUtil.trans(I18nUtil.APP_MAIN, 'ttip_user_delete_user')}" icon="@Embed(source='/assets/images/User--minus.png')" click="dispatchEvent(new UserEvent(UserEvent.DELETE_USER));"/>
+        <mx:Button id="deleteUserBtn" enabled="{identity.ifAllGranted('APP_delete_user_button')}" buttonMode="true" mouseChildren="false" toolTip="{I18nUtil.trans(I18nUtil.APP_MAIN, 'ttip_user_delete_user')}" icon="@Embed(source='/assets/images/User--minus.png')" click="deleteUser();"/>
         <mx:VRule height="10"/>
         <mx:Button id="saveUserBtn" enabled="{identity.ifAllGranted('APP_save_user_button')}" buttonMode="true" mouseChildren="false" toolTip="{I18nUtil.trans(I18nUtil.APP_MAIN, 'ttip_user_save_user')}" icon="@Embed(source='/assets/images/User--save.png')" click="fireSaveUserEvent()"/>
         <mx:VRule height="10"/>

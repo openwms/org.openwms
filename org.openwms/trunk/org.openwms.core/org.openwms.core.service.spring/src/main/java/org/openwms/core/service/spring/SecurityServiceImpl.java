@@ -46,7 +46,7 @@ import org.springframework.transaction.annotation.Transactional;
 @Service("securityService")
 public class SecurityServiceImpl implements SecurityService {
 
-    private Logger logger = LoggerFactory.getLogger(this.getClass());
+    private final Logger logger = LoggerFactory.getLogger(this.getClass());
     @Autowired
     @Qualifier("securityObjectDao")
     private SecurityObjectDao dao;

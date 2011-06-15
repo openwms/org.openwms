@@ -116,13 +116,6 @@ package org.openwms.web.flex.client.business {
          * Tide event observers : DELETE_USER
          */
         public function deleteUser() : void {
-            if (modelLocator.selectedUser == null) {
-                return;
-            }
-            if (isNaN(modelLocator.selectedUser.id)) {
-                modelLocator.selectedUser = modelLocator.allUsers.getItemAt(0) as User;
-                return;
-            }
             tideContext.userService.remove(modelLocator.selectedUser, onUserDeleted, onFault);
         }
 
