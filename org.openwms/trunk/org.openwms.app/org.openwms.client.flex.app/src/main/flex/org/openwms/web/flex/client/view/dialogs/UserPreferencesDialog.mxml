@@ -52,6 +52,11 @@
                 newPwTxt2.enabled = true;
             }
 
+            private function onClickPw2() : void {
+                newPwTxt1.enabled = true;
+                newPwTxt2.enabled = true;
+            }
+
             private function onSave() : void {
                 if (isPasswordValid()) {
                     closeDialog();
@@ -99,7 +104,7 @@
 			<mx:TextInput id="newPwTxt1" displayAsPassword="true" click="onClickPw1()" />
 		</mx:FormItem>
 		<mx:FormItem label="{I18nUtil.trans(I18nUtil.APP_MAIN, 'txt_user_pref_password2')}">
-			<mx:TextInput id="newPwTxt2" displayAsPassword="true" />
+			<mx:TextInput id="newPwTxt2" displayAsPassword="true" click="onClickPw2()" />
 		</mx:FormItem>
 		<mx:HBox horizontalAlign="center" width="100%">
 			<mx:Button id="createBtn" label="{I18nUtil.trans(I18nUtil.APP_MAIN, 'btn_save')}" click="onSave()" />
