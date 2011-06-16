@@ -79,13 +79,11 @@ package org.openwms.web.flex.client.business {
         }
 
         private function loginOk(event : TideResultEvent) : void {
-            trace("CALL SERVICE:");
             tideContext.securityContextHelper.getLoggedInUser(onComplete, onFault);
         }
 
         private function onComplete(event : TideResultEvent) : void {
             modelLocator.loggedInUser = event.result as User;
-            trace("Logged in user:" + modelLocator.loggedInUser);
             dispatchEvent(new ApplicationEvent(ApplicationEvent.APP_LOGIN_OK));
         }
 
