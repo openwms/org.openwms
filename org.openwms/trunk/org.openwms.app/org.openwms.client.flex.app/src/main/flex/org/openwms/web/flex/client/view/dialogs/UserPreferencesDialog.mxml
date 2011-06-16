@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<mx:TitleWindow xmlns:mx="http://www.adobe.com/2006/mxml" layout="absolute" title="Change Preferences" creationComplete="onCreate();">
+<mx:TitleWindow xmlns:mx="http://www.adobe.com/2006/mxml" layout="absolute" title="{I18nUtil.trans(I18nUtil.APP_MAIN, 'txt_user_pref_title')}" creationComplete="onCreate();">
 
     <mx:Metadata>
         [Name]
@@ -9,7 +9,10 @@
 	<mx:Script>
 		<![CDATA[
 			import mx.managers.PopUpManager;
+            import mx.resources.ResourceManager
+            
             import org.openwms.web.flex.client.model.ModelLocator;
+            import org.openwms.web.flex.client.util.I18nUtil;
 
             [Inject]
             [Bindable]
@@ -19,12 +22,16 @@
             public var modelLocator : ModelLocator;
             
 			private function onCreate() : void {
+                newPwTxt1.enabled = false;
+                newPwTxt2.enabled = false;            
                 cancelBtn.setFocus();
 				this.addEventListener(KeyboardEvent.KEY_DOWN, keyEventHandler);
                 PopUpManager.centerPopUp(this);
 			}		
 
-            private function closeDialog(event : Event) : void {
+            private function closeDialog(event : Event = null) : void {
+                newPwTxt1.enabled = false;
+                newPwTxt2.enabled = false;            
             	this.removeEventListener(KeyboardEvent.KEY_DOWN, keyEventHandler);
                 PopUpManager.removePopUp(this);
             }
@@ -34,45 +41,69 @@
 	               closeDialog(event);
                 }
 	        }
+            
+            private function localeChanged() : void {
+                ResourceManager.getInstance().localeChain = [localesCB.selectedItem];
+                ResourceManager.getInstance().update();
+            }
+            
+            private function onClickPw1() : void {
+                newPwTxt1.enabled = true;
+                newPwTxt2.enabled = true;
+            }
+
+            private function onSave() : void {
+                if (isPasswordValid()) {
+                    closeDialog();
+                }
+            }
+
+            private function onCancel() : void {
+                closeDialog();
+            }
+            
+            private function isPasswordValid() : Boolean {
+                if (newPwTxt1.enabled && newPwTxt2.enabled) {
+                    return (newPwTxt1.text == newPwTxt2.text);
+                }
+                return true;
+            }
 
 		]]>
 	</mx:Script>
 	
 	<mx:Form x="10" y="10">
-		<mx:FormHeading label="Username" width="100%"/>
-        <mx:ComboBox id="localesCB" 
-        dataProvider="{modelLocator.availableLocales}"/>
-        
-		<mx:FormItem label="Fullname">
-			<mx:TextInput id="fullnameTxt" />
+		<mx:FormHeading label="{I18nUtil.trans(I18nUtil.APP_MAIN, 'lbl_user_pref_title')}" width="100%"/>
+		<mx:FormItem label="{I18nUtil.trans(I18nUtil.APP_MAIN, 'entity_user_fullname')}">
+			<mx:TextInput id="fullnameTxt" text="{modelLocator.loggedInUser.fullname}" />
 		</mx:FormItem>
-			<mx:FormItem label="Language">
-			<mx:List></mx:List>
+        <mx:FormItem label="{I18nUtil.trans(I18nUtil.APP_MAIN, 'txt_user_pref_language')}">
+            <mx:ComboBox id="localesCB" dataProvider="{modelLocator.availableLocales}" change="localeChanged()"/>
+        </mx:FormItem>        
+        <mx:FormItem label="{I18nUtil.trans(I18nUtil.APP_MAIN, 'entity_user_description')}">
+            <mx:TextArea id="descriptionTxt" text="{modelLocator.loggedInUser.userDetails.description}" />
+        </mx:FormItem>
+        <mx:FormItem label="{I18nUtil.trans(I18nUtil.APP_MAIN, 'entity_user_phone')}">
+            <mx:TextInput id="phoneNoTxt" text="{modelLocator.loggedInUser.userDetails.phoneNo}" />
+        </mx:FormItem>
+        <mx:FormItem label="{I18nUtil.trans(I18nUtil.APP_MAIN, 'entity_user_skypeName')}">
+            <mx:TextInput id="skypeNameTxt" text="{modelLocator.loggedInUser.userDetails.skypeName}" />
+        </mx:FormItem>
+        <mx:FormItem label="{I18nUtil.trans(I18nUtil.APP_MAIN, 'entity_user_department')}">
+            <mx:TextInput id="departmentTxt" text="{modelLocator.loggedInUser.userDetails.department}" />
+        </mx:FormItem>
+        <mx:FormItem label="{I18nUtil.trans(I18nUtil.APP_MAIN, 'entity_user_office')}">
+            <mx:TextInput id="officeTxt" text="{modelLocator.loggedInUser.userDetails.office}" />
+        </mx:FormItem>
+		<mx:FormItem label="{I18nUtil.trans(I18nUtil.APP_MAIN, 'txt_user_pref_password1')}">
+			<mx:TextInput id="newPwTxt1" displayAsPassword="true" click="onClickPw1()" />
 		</mx:FormItem>
-        <mx:FormItem label="Description">
-            <mx:TextArea id="descriptionTxt" />
-        </mx:FormItem>
-        <mx:FormItem label="Phone">
-            <mx:TextInput id="phoneNoTxt" />
-        </mx:FormItem>
-        <mx:FormItem label="Skype">
-            <mx:TextInput id="skypeNameTxt" />
-        </mx:FormItem>
-        <mx:FormItem label="Department">
-            <mx:TextInput id="departmentTxt" />
-        </mx:FormItem>
-        <mx:FormItem label="Office">
-            <mx:TextInput id="officeTxt" />
-        </mx:FormItem>
-		<mx:FormItem label="New Password">
-			<mx:TextInput id="newPwTxt1" />
-		</mx:FormItem>
-		<mx:FormItem label="Repeat Password">
-			<mx:TextInput id="newPwTxt2" />
+		<mx:FormItem label="{I18nUtil.trans(I18nUtil.APP_MAIN, 'txt_user_pref_password2')}">
+			<mx:TextInput id="newPwTxt2" displayAsPassword="true" />
 		</mx:FormItem>
 		<mx:HBox horizontalAlign="center" width="100%">
-			<mx:Button id="createBtn" label="Save" />
-			<mx:Button id="cancelBtn" label="Cancel" />
+			<mx:Button id="createBtn" label="{I18nUtil.trans(I18nUtil.APP_MAIN, 'btn_save')}" click="onSave()" />
+			<mx:Button id="cancelBtn" label="{I18nUtil.trans(I18nUtil.APP_MAIN, 'btn_cancel')}" click="onCancel()" />
 		</mx:HBox>
 	</mx:Form>
 </mx:TitleWindow>

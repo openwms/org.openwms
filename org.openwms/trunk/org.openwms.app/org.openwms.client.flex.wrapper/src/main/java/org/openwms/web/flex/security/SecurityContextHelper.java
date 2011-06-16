@@ -22,14 +22,12 @@ package org.openwms.web.flex.security;
 
 import org.openwms.core.domain.system.usermanagement.User;
 import org.openwms.core.service.UserHolder;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 /**
- * A SecurityContextHelper.
+ * A SecurityContextHelper. Has some helper methods around the SecurityContext.
  * 
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  * @version $Revision: 1409 $
@@ -38,15 +36,25 @@ import org.springframework.stereotype.Service;
 @Service("securityContextHelper")
 public class SecurityContextHelper {
 
-    private Logger logger = LoggerFactory.getLogger(this.getClass());
-
-    public User getLoggedInUser() {
+    /**
+     * Helper method for rich clients to extract the current User from the
+     * SecurityContext.
+     * <p>
+     * Therefore it is assumed that Spring Security's {@link Authentication}
+     * object stores the current {@link User} object as Principal. Whenever the
+     * type of Principal does not match to our own User class, <code>null</code>
+     * is returned.
+     * </p>
+     * 
+     * @return The User logged in, or <code>null</code>
+     * @see org.openwms.core.service.UserHolder
+     * @see org.springframework.security.core.Authentication
+     */
+    public final User getLoggedInUser() {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        logger.debug("Helper:" + auth.getPrincipal());
         if (auth.getPrincipal() instanceof UserHolder) {
             return ((UserHolder) auth.getPrincipal()).getUser();
         }
-        logger.debug("Not an User");
         return null;
     }
 }
