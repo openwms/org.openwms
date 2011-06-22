@@ -65,33 +65,33 @@
             /**
              * Inject identity to ensure security.
              */
-            public var identity:Identity;
+            public var identity : Identity;
             
             [Inject]
             [Bindable]
             /**
              * Inject a model.
              */
-            public var modelLocator:ModelLocator; 
+            public var modelLocator : ModelLocator; 
             
             [Bindable]
 			[Embed(source="/assets/images/Module--start.png")] 
             /**
              * Icon for button when module is ready to be started.
              */
-     		public var startIcon: Class;
+     		public var startIcon : Class;
             [Bindable] 
             [Embed(source="/assets/images/Module--stop.png")] 
             /**
              * Icon for button when module is started and can be stopped.
              */
-     		public var stopIcon: Class;
+     		public var stopIcon : Class;
             [Bindable] 
             [Embed(source="/assets/images/Module--disabled.png")] 
             /**
              * Icon for button when the state of the module is undefined or no module is selected.
              */
-            public var disabledIcon: Class;
+            public var disabledIcon : Class;
             
             [Observer("MODULE_UNLOADED")]
             /**
@@ -238,8 +238,7 @@
             private function isLoadEnabled() : Boolean {
             trace("in role:"+identity.ifAllGranted('APP_load_module_button'));
             trace("cond:"+!(modelLocator.selectedModule == null || modelLocator.selectedModule.moduleName == ''));
-                return identity.ifAllGranted('APP_load_module_button') &&
-                       !(modelLocator.selectedModule == null || modelLocator.selectedModule.moduleName == '');
+                return identity.ifAllGranted('APP_load_module_button') && !(modelLocator.selectedModule == null || modelLocator.selectedModule.moduleName == '');
             }
         ]]>
     </mx:Script>
@@ -260,7 +259,7 @@
 		    <mx:VRule height="10" />
 		    <mx:Button id="saveBtn" enabled="{identity.ifAllGranted('APP_save_module_button')}" buttonMode="true" mouseChildren="false" toolTip="{I18nUtil.trans(I18nUtil.APP_MAIN, 'ttip_module_save')}" icon="@Embed(source='/assets/images/Module--save.png')" click="saveModule()"/>
 		    <mx:VRule height="10" />
-		    <mx:Button id="loadBtn" enabled="{isLoadEnabled()}" buttonMode="true" mouseChildren="false" click="loadModule()" />
+		    <mx:Button id="loadBtn" enabled="{identity.ifAllGranted('APP_load_module_button') &amp;&amp; !(modelLocator.selectedModule == null || modelLocator.selectedModule.moduleName == '')}" buttonMode="true" mouseChildren="false" click="loadModule()" />
 		</mx:HBox>
 		<mx:HRule x="9" y="53" width="95%"/>
 		<mx:VBox width="95%" x="10" y="63">
