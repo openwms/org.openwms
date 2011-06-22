@@ -412,6 +412,7 @@ package org.openwms.web.flex.client.module {
             delete modelLocator.unloadedModules[module.url];
             var appModule : Object = e.module.factory.create();
             if (appModule is IApplicationModule) {
+                trace("Adding appModule to core Spring context+++"+(Object(appModule).constructor as Class));
                 Spring.getInstance().addModule(Object(appModule).constructor as Class, _applicationDomain);
                 appModule.start(_applicationDomain);
                 fireLoadedEvent(appModule as IApplicationModule);

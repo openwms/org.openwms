@@ -32,8 +32,7 @@
     </mx:Metadata>
 
     <mx:Style>
-        .multipleImageButtonStyle
-        {
+        .multipleImageButtonStyle {
             up-skin: Embed("/assets/images/TransportUnit--Add.png");
             down-skin: Embed("/assets/images/TransportUnit--Delete.png");
             over-skin: Embed("/assets/images/TransportUnit--Edit.png");
