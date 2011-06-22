@@ -46,7 +46,7 @@
             import org.openwms.web.flex.client.util.I18nUtil;
             import org.openwms.web.flex.client.view.dialogs.UserPreferencesDialog;
 
-            [In]
+            [Inject]
             [Bindable]
             /**
              * Injected Granite identity object.

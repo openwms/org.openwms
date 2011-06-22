@@ -19,10 +19,11 @@
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
 package org.openwms.web.flex.client.event {
+
     import flash.events.Event;
 
     /**
-     * A PropertyEvent.
+     * A PropertyEvent. Used to signal any actions around Property entites.
      *
      * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
      * @version $Revision$
@@ -33,17 +34,17 @@ package org.openwms.web.flex.client.event {
         /**
          * Type of event to load all Property entities from the backend.
          */
-        public static const LOAD_ALL_PROPERTIES:String = "LOAD_ALL_PROPERTIES";
+        public static const LOAD_ALL_PROPERTIES : String = "LOAD_ALL_PROPERTIES";
 
         /**
          * Store arbitrary data.
          */
-        public var data:*;
+        public var data : *;
 
         /**
          * Constructor.
          */
-        public function PropertyEvent(type:String, bubbles:Boolean = true, cancelable:Boolean = false) {
+        public function PropertyEvent(type : String, bubbles : Boolean=true, cancelable : Boolean=false) {
             super(type, bubbles, cancelable);
         }
 
@@ -52,8 +53,8 @@ package org.openwms.web.flex.client.event {
          *
          * @return a copy of this
          */
-        public override function clone():Event {
-            var e:PropertyEvent = new PropertyEvent(type);
+        public override function clone() : Event {
+            var e : PropertyEvent = new PropertyEvent(type);
             e.data = data;
             return e;
         }
@@ -63,9 +64,9 @@ package org.openwms.web.flex.client.event {
          *
          * @return the type of event
          */
-        public override function toString():String {
-            return formatToString("PropertyEvent","type");
-        } 
+        public override function toString() : String {
+            return formatToString("PropertyEvent", "type");
+        }
 
     }
 }
