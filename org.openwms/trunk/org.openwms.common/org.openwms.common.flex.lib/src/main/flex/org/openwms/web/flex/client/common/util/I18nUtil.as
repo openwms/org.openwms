@@ -18,26 +18,32 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
-package org.openwms.web.flex.client.module {
+package org.openwms.web.flex.client.common.util {
 
-    import flash.utils.Dictionary;
+    import mx.resources.IResourceManager;
+    import mx.resources.ResourceManager;
 
+    [Name]
+    [Bindable]
     /**
-     * An IPropertyProvider can provide custom properties to the main application.
-     * A Module implementing this interface can hook into the core Property Management.
+     * An I18nUtil is an extention of the core I18nUtil to provide properties definitions specific to the COMMON module.
+     * It is a simple extension class to avoid multiple import declarations within the classes that are using I18nUtil.
      *
      * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
-     * @version $Revision$
+     * @version $Revision: 1422 $
      * @since 0.1
      */
-    public interface IPropertyProvider {
+    public class I18nUtil extends org.openwms.web.flex.client.util.I18nUtil {
+
+        public static const COMMON_ERROR : String = "commonError";
+        public static const COMMON_MAIN : String = "commonMain";
 
         /**
-         * Return a Dictionary of properties that shall be loaded into the main
-         * application domain.
-         *
-         * @return The properties to include.
+         * Constructor.
          */
-        function loadProperties() : Dictionary;
+        public function I18nUtil() : void {
+            super();
+        }
     }
 }
+

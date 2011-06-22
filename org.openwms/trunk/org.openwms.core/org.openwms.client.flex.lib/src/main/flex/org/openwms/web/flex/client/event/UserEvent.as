@@ -19,10 +19,11 @@
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
 package org.openwms.web.flex.client.event {
+
     import flash.events.Event;
 
     /**
-     * An UserEvent.
+     * An UserEvent. Used to signal all actions around User entities.
      *
      * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
      * @version $Revision$
@@ -33,47 +34,47 @@ package org.openwms.web.flex.client.event {
         /**
          * Type of event to load all User entities from the backend.
          */
-        public static const LOAD_ALL_USERS:String = "LOAD_ALL_USERS";
+        public static const LOAD_ALL_USERS : String = "LOAD_ALL_USERS";
         /**
          * Type of event to add a new User. The User to add must be stored in the data property
          */
-        public static const ADD_USER:String = "ADD_USER";
+        public static const ADD_USER : String = "ADD_USER";
         /**
          * Type of event that is fired when an User was added successfully.
          */
-        public static const USER_ADDED:String = "USER.USER_ADDED";
+        public static const USER_ADDED : String = "USER.USER_ADDED";
 
         /**
          * Type of event to save an existing User. The User to add must be stored in the data property
          */
-        public static const SAVE_USER:String = "SAVE_USER";
+        public static const SAVE_USER : String = "SAVE_USER";
         /**
          * Type of event that is fired when an User was saved successfully.
          */
-        public static const USER_SAVED:String = "USER.USER_SAVED";
+        public static const USER_SAVED : String = "USER.USER_SAVED";
 
         /**
          * Type of event to delete an existing User. The User to add must be stored in the data property
          */
-        public static const DELETE_USER:String = "DELETE_USER";
+        public static const DELETE_USER : String = "DELETE_USER";
         /**
          * Type of event to change the Users password. The User to add must be stored in the data property
          */
-        public static const CHANGE_USER_PASSWORD:String = "CHANGE_USER_PASSWORD";
+        public static const CHANGE_USER_PASSWORD : String = "CHANGE_USER_PASSWORD";
         /**
          * Type of event that is fired whenever the selection of Users in the UserManagement screen has changed.
          */
-        public static const USER_SELECTION_CHANGED:String = "USER.SELECTION_CHANGED";
+        public static const USER_SELECTION_CHANGED : String = "USER.SELECTION_CHANGED";
 
         /**
          * Store arbitrary data.
          */
-        public var data:*;
+        public var data : *;
 
         /**
          * Constructor.
          */
-        public function UserEvent(type:String, bubbles:Boolean = true, cancelable:Boolean = false) {
+        public function UserEvent(type : String, bubbles : Boolean=true, cancelable : Boolean=false) {
             super(type, bubbles, cancelable);
         }
 
@@ -82,8 +83,8 @@ package org.openwms.web.flex.client.event {
          *
          * @return a copy of this
          */
-        public override function clone():Event {
-            var e:UserEvent = new UserEvent(type);
+        public override function clone() : Event {
+            var e : UserEvent = new UserEvent(type);
             e.data = data;
             return e;
         }
@@ -93,9 +94,9 @@ package org.openwms.web.flex.client.event {
          *
          * @return the type of event
          */
-        public override function toString():String {
-            return formatToString("UserEvent","type");
-        } 
+        public override function toString() : String {
+            return formatToString("UserEvent", "type");
+        }
     }
 }
 

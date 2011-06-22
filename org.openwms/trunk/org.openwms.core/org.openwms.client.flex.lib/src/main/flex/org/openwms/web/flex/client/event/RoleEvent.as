@@ -23,7 +23,7 @@ package org.openwms.web.flex.client.event {
     import flash.events.Event;
 
     /**
-     * A RoleEvent.
+     * A RoleEvent. Used to signal actions around Role entities.
      *
      * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
      * @version $Revision$
@@ -34,37 +34,37 @@ package org.openwms.web.flex.client.event {
         /**
          * Type of event to load all Roles from the backend.
          */
-        public static const LOAD_ALL_ROLES:String = "LOAD_ALL_ROLES";
+        public static const LOAD_ALL_ROLES : String = "LOAD_ALL_ROLES";
         /**
          * Type of event to add a new Role. The Role to add must be stored in the data property.
          */
-        public static const ADD_ROLE:String = "ADD_ROLE";
+        public static const ADD_ROLE : String = "ADD_ROLE";
         /**
          * Type of event to save an existing Role. The Role to save must be stored in the data property.
          */
-        public static const SAVE_ROLE:String = "SAVE_ROLE";
+        public static const SAVE_ROLE : String = "SAVE_ROLE";
         /**
          * Type of event to delete an existing Role. The Role to delete must be stored in the data property.
          */
-        public static const DELETE_ROLE:String = "DELETE_ROLE";
+        public static const DELETE_ROLE : String = "DELETE_ROLE";
         /**
          * Type of event that is fired when a Role was added successfully.
          */
-        public static const ROLE_ADDED:String = "ROLE_ADDED";
+        public static const ROLE_ADDED : String = "ROLE_ADDED";
         /**
          * Type of event that is fired when a Role was saved successfully.
          */
-        public static const ROLE_SAVED:String = "ROLE_SAVED";
+        public static const ROLE_SAVED : String = "ROLE_SAVED";
 
         /**
          * Store arbitrary data.
          */
-        public var data:*;
+        public var data : *;
 
         /**
          * Constructor.
          */
-        public function RoleEvent(type:String, bubbles:Boolean = true, cancelable:Boolean = false) {
+        public function RoleEvent(type : String, bubbles : Boolean=true, cancelable : Boolean=false) {
             super(type, bubbles, cancelable);
         }
 
@@ -73,8 +73,8 @@ package org.openwms.web.flex.client.event {
          *
          * @return a copy of this
          */
-        public override function clone():Event {
-            var e:RoleEvent = new RoleEvent(type);
+        public override function clone() : Event {
+            var e : RoleEvent = new RoleEvent(type);
             e.data = data;
             return e;
         }
@@ -84,9 +84,9 @@ package org.openwms.web.flex.client.event {
          *
          * @return the type of event
          */
-        public override function toString():String {
-            return formatToString("RoleEvent","type");
-        } 
+        public override function toString() : String {
+            return formatToString("RoleEvent", "type");
+        }
     }
 }
 

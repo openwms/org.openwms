@@ -178,15 +178,6 @@ package org.openwms.web.flex.client.model {
          * @param locale The locale as String
          */
         public function updateLocale(locale : String) : void {
-
-        }
-
-        [Deprecated]
-        /**
-         * Access the views array and add the viewObject to the defined
-         * position. The postion is mandatory for the viewStack.
-         */
-        public static function addView(pos : int, view : Object) : void {
         }
 
         public static function today() : Date {
@@ -195,19 +186,6 @@ package org.openwms.web.flex.client.model {
             return today;
         }
 
-        [Deprecated]
-        /**
-         * Search the viewObject from the array of views and remove it.
-         */
-        public static function removeView(view : Object) : void {
-        }
-
-        [Deprecated]
-        /**
-         * Shift the view to a new position.
-         **/
-        public static function moveView(destPos : int, view : Object) : void {
-        }
     }
 }
 

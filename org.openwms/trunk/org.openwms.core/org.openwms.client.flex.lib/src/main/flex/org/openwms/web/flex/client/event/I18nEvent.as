@@ -30,15 +30,16 @@ package org.openwms.web.flex.client.event {
      * @since 0.1
      */
     public class I18nEvent extends Event {
+
         /**
          * Trigger to load all texts from the backend.
          */
-        public static const LOAD_ALL:String = "I18N_LOAD_ALL";
+        public static const LOAD_ALL : String = "I18N_LOAD_ALL";
 
         /**
          * Generic field to store data.
          */
-        public var data:*;
+        public var data : *;
 
         /**
          * Constructor.
@@ -47,7 +48,7 @@ package org.openwms.web.flex.client.event {
          * @param bubbles Shall the event re-fired, default is true
          * @param cancelable Is it possible to cancel bubbling, default is false.
          */
-        public function I18nEvent(type:String, bubbles:Boolean = true, cancelable:Boolean = false) {
+        public function I18nEvent(type : String, bubbles : Boolean=true, cancelable : Boolean=false) {
             super(type, bubbles, cancelable);
         }
 
@@ -56,8 +57,8 @@ package org.openwms.web.flex.client.event {
          *
          * @return a copy of this
          */
-        public override function clone():Event {
-            var e:I18nEvent = new I18nEvent(type);
+        public override function clone() : Event {
+            var e : I18nEvent = new I18nEvent(type);
             e.data = data;
             return e;
         }
@@ -67,9 +68,9 @@ package org.openwms.web.flex.client.event {
          *
          * @return the type of event
          */
-        public override function toString():String {
-            return formatToString("I18nEvent","type");
-        } 
+        public override function toString() : String {
+            return formatToString("I18nEvent", "type");
+        }
     }
 }
 

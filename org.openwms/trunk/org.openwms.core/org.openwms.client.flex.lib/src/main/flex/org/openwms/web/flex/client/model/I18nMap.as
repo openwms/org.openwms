@@ -18,7 +18,7 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
-package org.openwms.web.flex.client.model{
+package org.openwms.web.flex.client.model {
 
     import flash.utils.Dictionary;
     import flash.utils.Proxy;
@@ -27,8 +27,7 @@ package org.openwms.web.flex.client.model{
     [Name("i18nMap")]
     [Bindable]
     /**
-     * A ModelLocator is the main model backing bean to store session data.
-     * It is a Tide component and can be injected by name=modelLocator.
+     * An I18nMap. Acts as a dynamic Proxy implementation to store all i18n translations.
      *
      * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
      * @version $Revision$
@@ -36,7 +35,7 @@ package org.openwms.web.flex.client.model{
      */
     public dynamic class I18nMap extends Proxy {
 
-        private var map:Dictionary = new Dictionary();
+        private var map : Dictionary = new Dictionary();
 
         /**
          * Constructor.
@@ -45,14 +44,11 @@ package org.openwms.web.flex.client.model{
             super();
         }
 
-        flash_proxy override function getProperty(name:*):* {
-            trace("jjjjjjj");
+        flash_proxy override function getProperty(name : *) : * {
             return map[name];
         }
 
-        flash_proxy override function setProperty(name:*, value:*):void {
-            trace("KEY:"+name);
-            trace("VALUE:"+value);
+        flash_proxy override function setProperty(name : *, value : *) : void {
             map[(name as String)] = value;
         }
     }

@@ -29,6 +29,8 @@
         [ManagedEvent(name="LOAD_ALL_LOCATION_GROUPS")]
         [ManagedEvent(name="SAVE_LOCATION_GROUP")]
         [ManagedEvent(name="LG.CHANGE_STATE")]
+        [ResourceBundle("commonMain")]
+        [ResourceBundle("commonError")]
     </mx:Metadata>
 
     <!-- Scripts -->
@@ -40,8 +42,6 @@
 
             import org.openwms.web.flex.client.util.DisplayUtility;
             import org.openwms.web.flex.client.util.BindingProperty;
-            import org.openwms.web.flex.client.event.SwitchScreenEvent;
-            import org.openwms.web.flex.client.common.event.CommonSwitchScreenEvent;
         	import org.openwms.web.flex.client.common.event.LocationGroupEvent;
             import org.openwms.web.flex.client.common.event.LocationEvent;
             import org.openwms.web.flex.client.common.model.TreeDataDescriptor;
@@ -49,6 +49,7 @@
             import org.openwms.web.flex.client.common.model.CommonModelLocator;
             import org.openwms.web.flex.client.common.helper.LocationGroupFormatter;
             import org.openwms.web.flex.client.common.helper.LocationFormatter;
+            import org.openwms.web.flex.client.common.util.I18nUtil;
             import org.openwms.common.domain.values.LocationGroupState;
             import org.openwms.common.domain.LocationGroup;
 
@@ -134,11 +135,6 @@
                 dispatchEvent(new LocationGroupEvent(LocationGroupEvent.LOAD_ALL_LOCATION_GROUPS));
             }
 
-            [Deprecated]
-            private function switchView(e:Event) : void {
-                // fire event
-            }
-
             private function onTreeClick(event : Event) : void {
                 selected = event.target.selectedItem.getData() as LocationGroup;
                 selectedParent = LocationGroupFormatter.formatParentLocationGroup(selected);
@@ -181,11 +177,11 @@
     </mx:Script>
 
     <mx:HBox x="10" y="10" verticalAlign="middle" backgroundColor="#C6FFC7" width="95%">
-        <mx:Label x="10" y="10" text="Location Groups" fontSize="24"/>
+        <mx:Label x="10" y="10" text="{I18nUtil.trans(I18nUtil.COMMON_MAIN, 'txt_locationGroupView_header')}" fontSize="24"/>
         <mx:VRule height="10"/>
-        <mx:Button id="reloadBtn" buttonMode="true" mouseChildren="false" toolTip="Reload Location Groups" icon="@Embed(source='assets/images/icons/refresh.png')" click="reload()"/>
+        <mx:Button id="reloadBtn" buttonMode="true" mouseChildren="false" toolTip="{I18nUtil.trans(I18nUtil.COMMON_MAIN, 'ttip_locationGroup_reload_groups')}" icon="@Embed(source='assets/images/icons/refresh.png')" click="reload()"/>
         <mx:VRule height="10"/>
-        <mx:Button id="saveLocationGroupBtn" buttonMode="true" mouseChildren="false" toolTip="Save an existing Location Group" icon="@Embed(source='/assets/images/Location--Save.png')" click="saveLocationGroup()"/>
+        <mx:Button id="saveLocationGroupBtn" buttonMode="true" mouseChildren="false" toolTip="{I18nUtil.trans(I18nUtil.COMMON_MAIN, 'ttip_locationGroup_save_group')}" icon="@Embed(source='/assets/images/Location--Save.png')" click="saveLocationGroup()"/>
     </mx:HBox>
     <mx:HRule x="10" y="53" width="95%"/>
     <mx:HBox x="10" y="63" verticalAlign="top" height="100%" width="95%">
@@ -193,7 +189,7 @@
         <mx:Tree id="locationGroupTree" showRoot="false" width="236" iconFunction="getTreeIcon" dataProvider="{commonModelLocator.locationGroupTree}" dataDescriptor="{new TreeDataDescriptor()}" labelFunction="{LocationGroupFormatter.formatLocationGroup}" change="onTreeClick(event)" height="95%" />
 
         <mx:Canvas width="100%" height="95%">
-            <core:XPanel x="0" y="0" width="100%" height="300" layout="absolute" title="Details" titleIcon="@Embed(source='/assets/images/LocationGroup.png')" toolTipBtn1="Switch View" onClickBtn1="switchView" iconBtn1="@Embed(source='assets/images/icons/switchView--small.png')">
+            <core:XPanel x="0" y="0" width="100%" height="300" layout="absolute" title="{I18nUtil.trans(I18nUtil.COMMON_MAIN, 'txt_locationGroupView_details_header')}" titleIcon="@Embed(source='/assets/images/LocationGroup.png')" toolTipBtn1="Switch View" onClickBtn1="switchView" iconBtn1="@Embed(source='assets/images/icons/switchView--small.png')">
 
                 <mx:HBox x="10" y="10" width="95%" height="25" borderStyle="solid" alpha="0.5" backgroundColor="#C2DAEF">
                     <mx:Label text="Location Group" fontSize="16" textDecoration="normal" width="170" textAlign="right" fontWeight="bold"/>

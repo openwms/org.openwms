@@ -19,7 +19,7 @@
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
 package org.openwms.web.flex.client.module {
-	
+
     import flash.events.Event;
     import mx.events.FlexEvent;
     import mx.modules.ModuleBase;
@@ -32,7 +32,7 @@ package org.openwms.web.flex.client.module {
      * @version $Revision$
      * @since 0.1
      */
-     public class CommonModule extends ModuleBase {
+    public class CommonModule extends ModuleBase {
 
         /**
          * Constructor registers the CREATION_COMPLETE event.
@@ -46,15 +46,15 @@ package org.openwms.web.flex.client.module {
          * Callback, is called when the FlexEvent.CREATION_COMPLETE is fired.
          * Override initApp to hook in.
          */
-        public function onCreationComplete(e:Event):void {
-        	trace("Creation of Module completed");
+        public function onCreationComplete(e : Event) : void {
+            trace("Creation of Module completed");
             initApp();
         }
 
         /**
          * Override to do initial work when FlexEvent.CREATION_COMPLETE is fired.
          */
-        protected function initApp():void {
+        protected function initApp() : void {
         }
     }
 }
