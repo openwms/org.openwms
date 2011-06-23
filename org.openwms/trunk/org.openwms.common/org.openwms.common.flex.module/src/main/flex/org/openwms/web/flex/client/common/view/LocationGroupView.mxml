@@ -30,7 +30,7 @@
         [ManagedEvent(name="SAVE_LOCATION_GROUP")]
         [ManagedEvent(name="LG.CHANGE_STATE")]
         [ResourceBundle("commonMain")]
-        [ResourceBundle("commonError")]
+        [ResourceBundle("commonEntity")]
     </mx:Metadata>
 
     <!-- Scripts -->
@@ -192,78 +192,70 @@
             <core:XPanel x="0" y="0" width="100%" height="300" layout="absolute" title="{I18nUtil.trans(I18nUtil.COMMON_MAIN, 'txt_locationGroupView_details_header')}" titleIcon="@Embed(source='/assets/images/LocationGroup.png')" toolTipBtn1="Switch View" onClickBtn1="switchView" iconBtn1="@Embed(source='assets/images/icons/switchView--small.png')">
 
                 <mx:HBox x="10" y="10" width="95%" height="25" borderStyle="solid" alpha="0.5" backgroundColor="#C2DAEF">
-                    <mx:Label text="Location Group" fontSize="16" textDecoration="normal" width="170" textAlign="right" fontWeight="bold"/>
+                    <mx:Label text="{I18nUtil.trans(I18nUtil.COMMON_ENTITY, 'entity_locationGroup')}" fontSize="16" textDecoration="normal" width="170" textAlign="right" fontWeight="bold"/>
                     <mx:Label text="{selected.name}" fontSize="16" textDecoration="normal" width="100%" toolTip="{selected.name}"/>
                 </mx:HBox>
 
                 <mx:HBox x="10" y="43" width="95%" height="18">
-                    <mx:Label text="Parent Location Group" width="170" textAlign="right"/>
+                    <mx:Label text="{I18nUtil.trans(I18nUtil.COMMON_ENTITY, 'entity_locationGroup_parent')}" width="170" textAlign="right"/>
                     <mx:Label text="{selectedParent}" width="100%"/>
                 </mx:HBox>
 
-                <mx:Label x="10" y="69" text="Description" textAlign="right" width="170"/>
+                <mx:Label x="10" y="69" text="{I18nUtil.trans(I18nUtil.COMMON_ENTITY, 'entity_locationGroup_description')}" textAlign="right" width="170"/>
                 <mx:TextArea x="188" y="68" width="200" text="{selected.description}"/>
 
-                <mx:Label x="10" y="120" text="Group Type" textAlign="right" width="170"/>
+                <mx:Label x="10" y="120" text="{I18nUtil.trans(I18nUtil.COMMON_ENTITY, 'entity_locationGroup_groupType')}" textAlign="right" width="170"/>
                 <mx:Label text="{selected.groupType}" width="100%" x="190" y="120"/>
 
-                <mx:Label x="10" y="146" text="Infeed" textAlign="right" width="170"/>
+                <mx:Label x="10" y="146" text="{I18nUtil.trans(I18nUtil.COMMON_ENTITY, 'entity_locationGroup_groupStateIn')}" textAlign="right" width="170"/>
                 <mx:ComboBox id="groupStateInCmb" editable="{identity.ifAllGranted('COMMON_LG_change_group_state_in')}" dataProvider="{LocationGroupState.constants}" change="changeState(event)" x="188" y="144" />
 
-                <mx:Label x="10" y="176" text="Outfeed" textAlign="right" width="170"/>
+                <mx:Label x="10" y="176" text="{I18nUtil.trans(I18nUtil.COMMON_ENTITY, 'entity_locationGroup_groupStateOut')}" textAlign="right" width="170"/>
                 <mx:ComboBox id="groupStateOutCmb" editable="{identity.ifAllGranted('COMMON_LG_change_group_state_out')}" dataProvider="{LocationGroupState.constants}" change="changeState(event)" x="188" y="174" />
 
-                <mx:CheckBox label="Counting active" selected="{selected.locationGroupCountingActive}" x="277" y="206" />
+                <mx:CheckBox label="{I18nUtil.trans(I18nUtil.COMMON_ENTITY, 'entity_locationGroup_countingActive')}" selected="{selected.locationGroupCountingActive}" x="277" y="206" />
 
-                <mx:Label text="Maximum Fill Level" textAlign="right" width="170" x="10" y="208" />
+                <mx:Label text="{I18nUtil.trans(I18nUtil.COMMON_ENTITY, 'entity_locationGroup_maxFillLevel')}" textAlign="right" width="170" x="10" y="208" />
                 <mx:NumericStepper value="{selected.maxFillLevel}" deactivate="{identity &amp;&amp; !identity.ifAllGranted('COMMON_LG_change_max_fill_level')}" minimum="0" maximum="100" x="190" y="206" />
 
-                <mx:Label text="System Code" textAlign="right" width="170" x="10" y="234" />
+                <mx:Label text="{I18nUtil.trans(I18nUtil.COMMON_ENTITY, 'entity_locationGroup_systemCode')}" textAlign="right" width="170" x="10" y="234" />
                 <mx:Label text="{selected.systemCode}" width="100%" x="188" y="234" />
             </core:XPanel>
             <mx:DataGrid id="locationsList" allowMultipleSelection="true" sortableColumns="true" x="0" y="341" width="100%" dataProvider="{selectedLocations}" height="100%">
                 <mx:columns>
-                    <mx:DataGridColumn dataField="area" labelFunction="{LocationFormatter.locationIdField}" editable="false" width="50">
-                        <mx:headerRenderer>
-                            <mx:Component>
-                                <mx:Label text="Area" styleName="headerArea"/>
-                            </mx:Component>
-                        </mx:headerRenderer>
-                    </mx:DataGridColumn>
-                    <comm:CoordinateColumn column="area" headerText="Area" labelFunction="{LocationFormatter.locationIdField}" editable="false" width="45" />
-                    <comm:CoordinateColumn column="aisle" headerText="Aisle" labelFunction="{LocationFormatter.locationIdField}" editable="false" width="45"/>
-                    <comm:CoordinateColumn column="x" headerText="X" labelFunction="{LocationFormatter.locationIdField}" editable="false" width="45"/>
-                    <comm:CoordinateColumn column="y" headerText="Y" labelFunction="{LocationFormatter.locationIdField}" editable="false" width="45"/>
-                    <comm:CoordinateColumn column="z" headerText="Z" labelFunction="{LocationFormatter.locationIdField}" editable="false" width="45"/>
-                    <mx:DataGridColumn headerText="Location Group" dataField="name" labelFunction="{LocationGroupFormatter.locationGroupField}" editable="false"/>
-                    <mx:DataGridColumn headerText="Description" dataField="description" editable="true"/>
-                    <mx:DataGridColumn headerText="Counting Active" dataField="countingActive" editable="true">
+                    <comm:CoordinateColumn column="area" headerText="{I18nUtil.trans(I18nUtil.COMMON_ENTITY, 'entity_location_locationId_area')}" labelFunction="{LocationFormatter.locationIdField}" editable="false" width="45" />
+                    <comm:CoordinateColumn column="aisle" headerText="{I18nUtil.trans(I18nUtil.COMMON_ENTITY, 'entity_location_locationId_aisle')}" labelFunction="{LocationFormatter.locationIdField}" editable="false" width="45"/>
+                    <comm:CoordinateColumn column="x" headerText="{I18nUtil.trans(I18nUtil.COMMON_ENTITY, 'entity_location_locationId_x')}" labelFunction="{LocationFormatter.locationIdField}" editable="false" width="45"/>
+                    <comm:CoordinateColumn column="y" headerText="{I18nUtil.trans(I18nUtil.COMMON_ENTITY, 'entity_location_locationId_y')}" labelFunction="{LocationFormatter.locationIdField}" editable="false" width="45"/>
+                    <comm:CoordinateColumn column="z" headerText="{I18nUtil.trans(I18nUtil.COMMON_ENTITY, 'entity_location_locationId_z')}" labelFunction="{LocationFormatter.locationIdField}" editable="false" width="45"/>
+                    <mx:DataGridColumn headerText="{I18nUtil.trans(I18nUtil.COMMON_ENTITY, 'entity_location_locationGroup')}" dataField="name" labelFunction="{LocationGroupFormatter.locationGroupField}" editable="false"/>
+                    <mx:DataGridColumn headerText="{I18nUtil.trans(I18nUtil.COMMON_ENTITY, 'entity_location_description')}" dataField="description" editable="true"/>
+                    <mx:DataGridColumn headerText="{I18nUtil.trans(I18nUtil.COMMON_ENTITY, 'entity_location_countingActive')}" dataField="countingActive" editable="true">
                         <mx:itemRenderer>
                             <mx:Component>
                                 <mx:CheckBox/>
                             </mx:Component>
                         </mx:itemRenderer>
                     </mx:DataGridColumn>
-                    <mx:DataGridColumn headerText="Incoming Active" dataField="incomingActive" editable="true">
+                    <mx:DataGridColumn headerText="{I18nUtil.trans(I18nUtil.COMMON_ENTITY, 'entity_location_incomingActive')}" dataField="incomingActive" editable="true">
                         <mx:itemRenderer>
                             <mx:Component>
                                 <mx:CheckBox/>
                             </mx:Component>
                         </mx:itemRenderer>
                     </mx:DataGridColumn>
-                    <mx:DataGridColumn headerText="Outgoing Active" dataField="outgoingActive" editable="true">
+                    <mx:DataGridColumn headerText="{I18nUtil.trans(I18nUtil.COMMON_ENTITY, 'entity_location_outgoingActive')}" dataField="outgoingActive" editable="true">
                         <mx:itemRenderer>
                             <mx:Component>
                                 <mx:CheckBox/>
                             </mx:Component>
                         </mx:itemRenderer>
                     </mx:DataGridColumn>
-                    <mx:DataGridColumn headerText="Last Access" dataField="lastAccess" editable="false"/>
+                    <mx:DataGridColumn headerText="{I18nUtil.trans(I18nUtil.COMMON_ENTITY, 'entity_location_lastAccess')}" dataField="lastAccess" editable="false"/>
                 </mx:columns>
             </mx:DataGrid>
             <mx:HBox verticalAlign="middle" backgroundColor="#C6FFC7" width="100%" x="0" y="308" backgroundAlpha="1.0">
-                <mx:Label text="Locations" fontSize="16"/>
-                <mx:VRule height="10"/>
+                <mx:Label text="{I18nUtil.trans(I18nUtil.COMMON_MAIN, 'txt_locationGroupView_headerLocations')}" fontSize="16"/>
             </mx:HBox>
         </mx:Canvas>
     </mx:HBox>

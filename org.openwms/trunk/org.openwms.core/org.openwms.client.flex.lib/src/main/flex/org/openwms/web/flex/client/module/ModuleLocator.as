@@ -88,7 +88,9 @@ package org.openwms.web.flex.client.module {
         /**
          * Simple constructor used by the Tide framework.
          */
-        public function ModuleLocator() { Type.registerDomain(_applicationDomain); }
+        public function ModuleLocator() {
+            Type.registerDomain(_applicationDomain);
+        }
 
         [Observer("LOAD_ALL_MODULES")]
         /**
@@ -111,7 +113,7 @@ package org.openwms.web.flex.client.module {
             for (var url : String in modelLocator.loadedModules) {
                 var module : Module = new Module();
                 module.url = url;
-                trace("Trigger unload for:"+url);
+                trace("Trigger unload for:" + url);
                 beforeUnload(module);
             }
         }
@@ -329,7 +331,7 @@ package org.openwms.web.flex.client.module {
                     mInf.addEventListener(ModuleEvent.READY, onModuleLoaded, false, 0, false);
                     mInf.addEventListener(ModuleEvent.ERROR, onModuleLoaderError);
                     mInf.data = module;
-                    trace("Putting in loadedModules:"+module.url);
+                    trace("Putting in loadedModules:" + module.url);
                     modelLocator.loadedModules[module.url] = mInf;
                     mInf.load(_applicationDomain);
                     return;
@@ -340,8 +342,8 @@ package org.openwms.web.flex.client.module {
 
         private function beforeUnload(module : Module) : void {
             var mInf : IModuleInfo = ModuleManager.getModule(module.url);
-            trace("testL:"+modelLocator.loadedModules.hasOwnProperty(module.url));
-            trace("Before unloading of module:"+module.url);
+            trace("testL:" + modelLocator.loadedModules.hasOwnProperty(module.url));
+            trace("Before unloading of module:" + module.url);
             var appModule : IApplicationModule = mInf.factory.create() as IApplicationModule;
             fireBeforeUnloadEvent(appModule, mInf, module);
             return;
@@ -393,7 +395,7 @@ package org.openwms.web.flex.client.module {
 
         private function fireBeforeUnloadEvent(appModule : IApplicationModule, mInf : IModuleInfo, module : Module) : void {
             var e : ApplicationEvent = new ApplicationEvent(ApplicationEvent.BEFORE_MODULE_UNLOAD);
-            e.data = {appModule : appModule, mInf : mInf, module : module};
+            e.data = {appModule: appModule, mInf: mInf, module: module};
             dispatchEvent(e);
         }
 
@@ -412,7 +414,7 @@ package org.openwms.web.flex.client.module {
             delete modelLocator.unloadedModules[module.url];
             var appModule : Object = e.module.factory.create();
             if (appModule is IApplicationModule) {
-                trace("Adding appModule to core Spring context+++"+(Object(appModule).constructor as Class));
+                trace("Adding appModule to core Spring context+++" + (Object(appModule).constructor as Class));
                 Spring.getInstance().addModule(Object(appModule).constructor as Class, _applicationDomain);
                 appModule.start(_applicationDomain);
                 fireLoadedEvent(appModule as IApplicationModule);

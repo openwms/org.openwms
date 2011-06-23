@@ -57,6 +57,9 @@
     <profiles>
         <profile>
             <id>all</id>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
             <modules>
                 <module>org.openwms.core.domain</module>
                 <module>org.openwms.core.domain.as</module>

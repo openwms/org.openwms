@@ -414,6 +414,9 @@
             <id>org.openwms.release</id>
             <name>OpenWMS.org Sourceforge Maven Repository Releases</name>
             <url>http://openwms2005.sourceforge.net/repo/releases</url>
+            <releases>
+                <enabled>true</enabled>
+            </releases>
             <snapshots>
                 <enabled>false</enabled>
             </snapshots>
@@ -425,6 +428,9 @@
             <releases>
                 <enabled>false</enabled>
             </releases>
+            <snapshots>
+                <enabled>true</enabled>
+            </snapshots>
         </repository>
         <repository>
             <id>com.springsource.repository.bundles.release</id>
