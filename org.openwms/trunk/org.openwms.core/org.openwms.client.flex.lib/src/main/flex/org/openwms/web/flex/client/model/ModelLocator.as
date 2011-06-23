@@ -108,11 +108,6 @@ package org.openwms.web.flex.client.model {
          * The current logged in User.
          */
         public var loggedInUser : User = null;
-        [Deprecated]
-        /**
-         * DEPRECATED
-         */
-        public var image : Object;
 
         // --------------------------------------------------------------------
         // Module Management
