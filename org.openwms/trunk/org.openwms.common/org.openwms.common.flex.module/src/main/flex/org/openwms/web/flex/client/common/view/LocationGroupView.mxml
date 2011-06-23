@@ -189,7 +189,7 @@
         <mx:Tree id="locationGroupTree" showRoot="false" width="236" iconFunction="getTreeIcon" dataProvider="{commonModelLocator.locationGroupTree}" dataDescriptor="{new TreeDataDescriptor()}" labelFunction="{LocationGroupFormatter.formatLocationGroup}" change="onTreeClick(event)" height="95%" />
 
         <mx:Canvas width="100%" height="95%">
-            <core:XPanel x="0" y="0" width="100%" height="300" layout="absolute" title="{I18nUtil.trans(I18nUtil.COMMON_MAIN, 'txt_locationGroupView_details_header')}" titleIcon="@Embed(source='/assets/images/LocationGroup.png')" toolTipBtn1="Switch View" onClickBtn1="switchView" iconBtn1="@Embed(source='assets/images/icons/switchView--small.png')">
+            <core:XPanel x="0" y="0" width="100%" height="300" layout="absolute" title="{I18nUtil.trans(I18nUtil.COMMON_MAIN, 'txt_locationGroupView_details_header')}" titleIcon="@Embed(source='/assets/images/LocationGroup.png')">
 
                 <mx:HBox x="10" y="10" width="95%" height="25" borderStyle="solid" alpha="0.5" backgroundColor="#C2DAEF">
                     <mx:Label text="{I18nUtil.trans(I18nUtil.COMMON_ENTITY, 'entity_locationGroup')}" fontSize="16" textDecoration="normal" width="170" textAlign="right" fontWeight="bold"/>
