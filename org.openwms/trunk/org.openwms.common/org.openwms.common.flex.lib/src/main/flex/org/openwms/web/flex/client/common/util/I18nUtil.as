@@ -20,7 +20,6 @@
  */
 package org.openwms.web.flex.client.common.util {
 
-    import mx.resources.IResourceManager;
     import mx.resources.ResourceManager;
     import org.openwms.web.flex.client.util.I18nUtil;
 
@@ -54,6 +53,17 @@ package org.openwms.web.flex.client.common.util {
          */
         public function I18nUtil() : void {
             super();
+        }
+
+        /**
+         * Translate a paramterized String into the language set by the user.
+         * The first argument is expected to be the String, the rest arbitrary parameters.
+         *
+         * @param args An arbitrary list. At least the first parameter must be set as the
+         * String to be translated
+         */
+        public static function trans(bundle : String, key : String, ... args) : String {
+            return ResourceManager.getInstance().getString(bundle, key, args);
         }
     }
 }
