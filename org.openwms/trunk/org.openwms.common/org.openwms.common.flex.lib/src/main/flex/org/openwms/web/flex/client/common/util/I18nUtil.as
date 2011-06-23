@@ -22,6 +22,7 @@ package org.openwms.web.flex.client.common.util {
 
     import mx.resources.IResourceManager;
     import mx.resources.ResourceManager;
+    import org.openwms.web.flex.client.util.I18nUtil;
 
     [Name]
     [Bindable]
@@ -35,8 +36,18 @@ package org.openwms.web.flex.client.common.util {
      */
     public class I18nUtil extends org.openwms.web.flex.client.util.I18nUtil {
 
+        /**
+         * Used as bundle resource name for all errors within the COMMON module.
+         */
         public static const COMMON_ERROR : String = "commonError";
+        /**
+         * Used as bundle resource name for all texts within the COMMON module.
+         */
         public static const COMMON_MAIN : String = "commonMain";
+        /**
+         * Used as bundle resource name for all entity translations within the COMMON module.
+         */
+        public static const COMMON_ENTITY : String = "commonEntity";
 
         /**
          * Constructor.
