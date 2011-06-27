@@ -408,6 +408,38 @@
                 <enabled>true</enabled>
             </snapshots>
         </pluginRepository>
+        <pluginRepository>
+            <id>sonatype-public</id>
+            <url>http://repository.sonatype.org/content/groups/flexgroup</url>
+            <releases>
+                <enabled>true</enabled>
+            </releases>
+            <snapshots>
+                <enabled>true</enabled>
+            </snapshots>
+        </pluginRepository>
+        <pluginRepository>
+            <id>org.openwms.release</id>
+            <name>OpenWMS.org Sourceforge Maven Repository Releases</name>
+            <url>http://openwms2005.sourceforge.net/repo/releases</url>
+            <releases>
+                <enabled>true</enabled>
+            </releases>
+            <snapshots>
+                <enabled>false</enabled>
+            </snapshots>
+        </pluginRepository>
+        <pluginRepository>
+            <id>org.openwms.snapshots</id>
+            <name>OpenWMS.org Sourceforge Maven Repository Snapshots</name>
+            <url>http://openwms2005.sourceforge.net/repo/snapshots</url>
+            <releases>
+                <enabled>false</enabled>
+            </releases>
+            <snapshots>
+                <enabled>true</enabled>
+            </snapshots>
+        </pluginRepository>
     </pluginRepositories>
     <repositories>
         <repository>
