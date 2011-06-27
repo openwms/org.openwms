@@ -58,3 +58,4 @@ package org.openwms.web.flex.client.module {
         }
     }
 }
+
