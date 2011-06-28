@@ -440,6 +440,16 @@
                 <enabled>true</enabled>
             </snapshots>
         </pluginRepository>
+        <pluginRepository>
+            <id>as3commons</id>
+            <url>http://dev.yoolab.org/maven/content/repositories/snapshots</url>
+            <releases>
+                <enabled>true</enabled>
+            </releases>
+            <snapshots>
+                <enabled>true</enabled>
+            </snapshots>
+        </pluginRepository>
     </pluginRepositories>
     <repositories>
         <repository>
@@ -578,7 +588,7 @@
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-assembly-plugin</artifactId>
-                    <version>2.2-beta-5</version>
+                    <version>2.2.1</version>
                 </plugin>
 
                 <plugin>
@@ -626,6 +636,11 @@
                     <artifactId>maven-javadoc-plugin</artifactId>
                     <version>2.6.1</version>
                 </plugin>
+		
+                <plugin>
+                    <artifactId>maven-release-plugin</artifactId>
+                    <version>2.1</version>
+                </plugin>		
 
             </plugins>
         </pluginManagement>
