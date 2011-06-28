@@ -441,13 +441,23 @@
             </snapshots>
         </pluginRepository>
         <pluginRepository>
-            <id>as3commons</id>
+            <id>yoolab.org-snapshots</id>
             <url>http://dev.yoolab.org/maven/content/repositories/snapshots</url>
+            <releases>
+                <enabled>false</enabled>
+            </releases>
+            <snapshots>
+                <enabled>true</enabled>
+            </snapshots>
+        </pluginRepository>
+        <pluginRepository>
+            <id>yoolab.org-releases</id>
+            <url>http://dev.yoolab.org/maven/content/repositories/releases</url>
             <releases>
                 <enabled>true</enabled>
             </releases>
             <snapshots>
-                <enabled>true</enabled>
+                <enabled>false</enabled>
             </snapshots>
         </pluginRepository>
     </pluginRepositories>
