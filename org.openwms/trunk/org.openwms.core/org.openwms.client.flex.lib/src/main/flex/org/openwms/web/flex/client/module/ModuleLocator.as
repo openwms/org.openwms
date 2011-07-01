@@ -46,11 +46,11 @@ package org.openwms.web.flex.client.module {
     import org.openwms.web.flex.client.model.ModelLocator;
 
     [Name]
-    [ManagedEvent(name="MODULE_CONFIG_CHANGED")]
-    [ManagedEvent(name="MODULES_CONFIGURED")]
-    [ManagedEvent(name="MODULE_LOADED")]
-    [ManagedEvent(name="MODULE_UNLOADED")]
-    [ManagedEvent(name="APP.BEFORE_MODULE_UNLOAD")]
+    [ManagedEvent(name = "MODULE_CONFIG_CHANGED")]
+    [ManagedEvent(name = "MODULES_CONFIGURED")]
+    [ManagedEvent(name = "MODULE_LOADED")]
+    [ManagedEvent(name = "MODULE_UNLOADED")]
+    [ManagedEvent(name = "APP.BEFORE_MODULE_UNLOAD")]
     [Bindable]
     /**
      * A ModuleLocator is the main implementation that cares about handling
@@ -70,11 +70,13 @@ package org.openwms.web.flex.client.module {
          * Needs a Model to work on.
          */
         public var modelLocator : ModelLocator;
+
         [Inject]
         /**
          * Needs a TideContext.
          */
         public var tideContext : Context;
+
         [Inject]
         /**
          * Injected Tide identity object.
@@ -82,7 +84,9 @@ package org.openwms.web.flex.client.module {
         public var identity : Identity;
 
         private var toRemove : Module;
+
         private var _applicationDomain : ApplicationDomain = new ApplicationDomain(ApplicationDomain.currentDomain);
+
         private static var logger : ILogger = Log.getLogger("org.openwms.web.flex.client.module.ModuleLocator");
 
         /**
@@ -98,8 +102,10 @@ package org.openwms.web.flex.client.module {
          * to load all modules and module configuration from the service.
          * After this startup configuration is read, the application can then
          * LOAD the swf modules.
+         *
+         * @param event Unused
          */
-        public function loadModulesFromService() : void {
+        public function loadModulesFromService(event : ApplicationEvent) : void {
             trace("Loading all module definitions from the database");
             tideContext.moduleService.findAll(onModulesLoad, onFault);
         }
@@ -108,13 +114,13 @@ package org.openwms.web.flex.client.module {
         /**
          * Is called when the UNLOAD_ALL_MODULES is fired to unload all Modules.
          * It iterates through the list of loadedModules and triggers unloading each of them.
+         *
+         * @param event Unused
          */
-        public function unloadAllModules() : void {
+        public function unloadAllModules(event : ApplicationEvent) : void {
             for (var url : String in modelLocator.loadedModules) {
-                var module : Module = new Module();
-                module.url = url;
-                trace("Trigger unload for:" + url);
-                beforeUnload(module);
+                trace("Do unloading for:" + url);
+                triggerUnload(modelLocator.loadedModules[url].data.module as Module);
             }
         }
 
@@ -188,8 +194,8 @@ package org.openwms.web.flex.client.module {
                 trace("Module was not found in list of registered modules");
                 return;
             }
-            delete modelLocator.loadedModules[module.url];
-            beforeUnload(module);
+
+            triggerUnload(module);
         }
 
         [Observer("APP.READY_TO_UNLOAD")]
@@ -199,7 +205,6 @@ package org.openwms.web.flex.client.module {
          * @param event An ApplicationEvent holds the Module to be unloaded within the data property
          */
         public function readyToUnload(event : ApplicationEvent) : void {
-            trace("Got ready to unload event");
             var module : Module = event.data.module as Module;
             var mInf : IModuleInfo = event.data.mInf as IModuleInfo;
             var appModule : IApplicationModule = event.data.appModule as IApplicationModule;
@@ -305,6 +310,7 @@ package org.openwms.web.flex.client.module {
             for each (var module : Module in modelLocator.allModules) {
                 if (module.loadOnStartup) {
                     noModulesLoaded = false;
+                    // TODO: Remove the following expression
                     if (modelLocator.loadedModules[module.url] != null) {
                         module.loaded = true;
                         continue;
@@ -328,9 +334,9 @@ package org.openwms.web.flex.client.module {
                     trace("Module was already loaded : " + module.moduleName);
                     return;
                 } else {
-                    mInf.addEventListener(ModuleEvent.READY, onModuleLoaded, false, 0, false);
+                    mInf.addEventListener(ModuleEvent.READY, onModuleLoaded, false, 0, true);
                     mInf.addEventListener(ModuleEvent.ERROR, onModuleLoaderError);
-                    mInf.data = module;
+                    mInf.data = {module: module, mInf: mInf, appModule: null};
                     trace("Putting in loadedModules:" + module.url);
                     modelLocator.loadedModules[module.url] = mInf;
                     mInf.load(_applicationDomain);
@@ -338,14 +344,15 @@ package org.openwms.web.flex.client.module {
                 }
             }
             trace("No module to load with url: " + module.url);
+            // TODO: Show ALert box to user
         }
 
-        private function beforeUnload(module : Module) : void {
-            var mInf : IModuleInfo = ModuleManager.getModule(module.url);
-            trace("testL:" + modelLocator.loadedModules.hasOwnProperty(module.url));
-            trace("Before unloading of module:" + module.url);
-            var appModule : IApplicationModule = mInf.factory.create() as IApplicationModule;
-            fireBeforeUnloadEvent(appModule, mInf, module);
+        //
+        private function triggerUnload(module : Module) : void {
+            var mInf : IModuleInfo = modelLocator.loadedModules[module.url];
+            trace("Before unloading of module: " + module.url);
+            delete modelLocator.loadedModules[module.url];
+            fireBeforeUnloadEvent(mInf.data.appModule, mInf, mInf.data.module);
             return;
         }
 
@@ -353,12 +360,16 @@ package org.openwms.web.flex.client.module {
             if (!modelLocator.unloadedModules.hasOwnProperty(module.url)) {
                 mInf.addEventListener(ModuleEvent.UNLOAD, onModuleUnloaded);
                 mInf.addEventListener(ModuleEvent.ERROR, onModuleLoaderError);
-                mInf.data = module;
+                mInf.data = {module: module, mInf: mInf, appModule: appModule};
                 modelLocator.unloadedModules[module.url] = mInf;
-                Spring.getInstance().removeModule(Object(appModule).constructor as Class)
-                appModule.destroyModule();
+                try {
+                    appModule.destroyModule();
+                } catch (e : Error) {
+                    trace("Error on destroying Module: " + e.message);
+                }
+                //Spring.getInstance().initApplication();
                 mInf.unload();
-                mInf.release();
+                //mInf.release();
                 return;
             } else {
                 logger.debug("Module was not loaded before, nothing to unload");
@@ -406,58 +417,57 @@ package org.openwms.web.flex.client.module {
          */
         private function onModuleLoaded(e : ModuleEvent) : void {
             trace("Successfully loaded module: " + e.module.url);
-            var module : Module = (e.module.data as Module);
-            module.loaded = true;
-            if (modelLocator.loadedModules[module.url] == null) {
-                modelLocator.loadedModules[module.url] = ModuleManager.getModule(module.url);
-            }
-            delete modelLocator.unloadedModules[module.url];
+            (e.module.data.module as Module).loaded = true;
+
+            delete modelLocator.unloadedModules[e.module.url];
+            modelLocator.loadedModules[e.module.url] = e.module;
+
             var appModule : Object = e.module.factory.create();
             if (appModule is IApplicationModule) {
-                trace("Adding appModule to core Spring context+++" + (Object(appModule).constructor as Class));
-                Spring.getInstance().addModule(Object(appModule).constructor as Class, _applicationDomain);
+                e.module.data.appModule = appModule as IApplicationModule;
+                //Spring.getInstance().addModule(Object(appModule).constructor as Class, _applicationDomain);
                 appModule.start(_applicationDomain);
-                fireLoadedEvent(appModule as IApplicationModule);
             } else {
                 trace("Module that was loaded is not an IApplicationModule");
             }
-            var mInf : IModuleInfo = modelLocator.loadedModules[module.url] as IModuleInfo;
-            mInf.removeEventListener(ModuleEvent.READY, onModuleLoaded);
-            mInf.removeEventListener(ModuleEvent.ERROR, onModuleLoaderError);
+            e.module.removeEventListener(ModuleEvent.READY, onModuleLoaded);
+            e.module.removeEventListener(ModuleEvent.ERROR, onModuleLoaderError);
+            if (appModule is IApplicationModule) {
+                fireLoadedEvent(e.module.data);
+            }
         }
 
         /**
          * This method is called when an application module was successfully unloaded. Unloading
-         * a module is usually triggered by the Module Management screen. As a result an event is
-         * fired to inform the main application about the unload. For instance the main application
-         * could rebuild the menu bar.
+         * a module is usually triggered by the Module Management screen or on logout. As a result an event is
+         * fired to inform the main application about the unload process. For instance the main application
+         * could rebuild the menu bar and organize the main ViewStack.
          */
         private function onModuleUnloaded(e : ModuleEvent) : void {
             trace("Successfully hard-unloaded Module with URL : " + e.module.url);
-            var module : Module = (e.module.data as Module);
-            module.loaded = false;
-            if (modelLocator.unloadedModules[module.url] == null) {
-                modelLocator.unloadedModules[module.url] == ModuleManager.getModule(module.url);
-            }
-            delete modelLocator.loadedModules[module.url];
-            var appModule : Object = e.module.factory.create();
+            (e.module.data.module as Module).loaded = false;
+
+            delete modelLocator.loadedModules[e.module.url];
+            modelLocator.unloadedModules[e.module.url] == e.module;
+
+            var appModule : Object = e.module.data.appModule;
+            e.module.removeEventListener(ModuleEvent.UNLOAD, onModuleUnloaded);
+            e.module.removeEventListener(ModuleEvent.ERROR, onModuleLoaderError);
             if (appModule is IApplicationModule) {
                 fireUnloadedEvent(appModule as IApplicationModule);
             } else {
                 trace("Module that was unloaded is not an IApplicationModule");
             }
-            var mInf : IModuleInfo = modelLocator.unloadedModules[module.url] as IModuleInfo;
-            mInf.removeEventListener(ModuleEvent.UNLOAD, onModuleUnloaded);
-            mInf.removeEventListener(ModuleEvent.ERROR, onModuleLoaderError);
+            e.module.release();
         }
 
         /**
          * Fire an event to notify others that a module was successfully unloaded.
          * The event data (e.data) contains the module that was loaded.
          */
-        private function fireLoadedEvent(module : IApplicationModule) : void {
+        private function fireLoadedEvent(data : Object) : void {
             var e : ApplicationEvent = new ApplicationEvent(ApplicationEvent.MODULE_LOADED);
-            e.data = module;
+            e.data = data;
             dispatchEvent(e);
         }
 

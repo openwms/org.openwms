@@ -45,11 +45,17 @@ package org.openwms.web.flex.client.model {
         // Default Views
         // --------------------------------------------------------------------
         public static const MAIN_VIEW_STACK_LOGIN_VIEW : uint = 0;
+
         public static const MAIN_VIEW_STACK_EMPTY_VIEW : uint = 1;
+
         public static const MAIN_VIEW_STACK_MODULE_MGMT_VIEW : uint = 2;
+
         public static const MAIN_VIEW_STACK_USER_MGMT_VIEW : uint = 3;
+
         public static const MAIN_VIEW_STACK_LOCATION_VIEW : uint = 4;
+
         public static const MAIN_VIEW_STACK_LOCATIONGROUP_VIEW : uint = 5;
+
         public static const MAIN_VIEW_STACK_TRANSPORTUNIT_VIEW : uint = 6;
 
         // --------------------------------------------------------------------
@@ -57,29 +63,38 @@ package org.openwms.web.flex.client.model {
         // --------------------------------------------------------------------
         // Used to control the main viewStack
         public var actualView : String = SwitchScreenEvent.SHOW_STARTSCREEN;
+
         public var authenticated : Boolean = false;
+
         public var fired : Boolean = false;
+
         public var availableLocales : Array = ["en_US", "de_DE"];
+
         /**
          * Upload URL for file uploads.
          */
         public const UPLOAD_URL : String = "/openwms/upload";
+
         /**
          * Directory name on the server, where to store the uploaded files.
          */
         public const DIRECTORY_NAME : String = "data";
+
         /**
          * Date format including the time.
          */
         public static const DT_FORMAT_STRING : String = "DD.MM.YYYY HH:NN:SS";
+
         /**
          * Date format without timestamp.
          */
         public static const SIMPLE_DT_FORMAT : String = "DD.MM.YYYY";
+
         /**
          * A DateFormatter that uses the SIMPLE_DT_FORMAT.
          */
         public static const dateFormatter : DateFormatter = new DateFormatter();
+
         /**
          * Another DateFormatter that uses the DT_FORMAT_STRING.
          */
@@ -92,18 +107,22 @@ package org.openwms.web.flex.client.model {
          * Collection of all Users.
          */
         public var allUsers : ArrayCollection = new ArrayCollection();
+
         /**
          * Collection of all Roles.
          */
         public var allRoles : ArrayCollection = new ArrayCollection();
+
         /**
          * Collection of all Grants (Security Objects).
          */
         public var securityObjects : ArrayCollection = new ArrayCollection();
+
         /**
          * The current selected User in the UserManagement view.
          */
         public var selectedUser : User = null;
+
         /**
          * The current logged in User.
          */
@@ -113,19 +132,23 @@ package org.openwms.web.flex.client.model {
         // Module Management
         // --------------------------------------------------------------------
         /**
-         * Collection of all Modules.
+         * Collection of all Modules contains all Modules loaded form the backend.
+         * Typed: Module
          */
         public var allModules : ArrayCollection = new ArrayCollection();
+
         /**
          * A Map of all loaded Modules. The map key is the URL, the value is
          * the IModuleInfo instance.
          */
         public var loadedModules : Dictionary = new Dictionary();
+
         /**
          * A Map of all unloaded Modules. The map key is the URL, the value is
          * the IModuleInfo instance.
          */
         public var unloadedModules : Dictionary = new Dictionary();
+
         /**
          * The current selected Module in the ModuleManagement view.
          */
@@ -144,18 +167,24 @@ package org.openwms.web.flex.client.model {
         // --------------------------------------------------------------------
         // Credentials, set by the login screen
         public var isInitialized : Boolean = false;
+
         /**
          * Flag to indicate that the app is locked. All modules remain in loaded state and the login
          * dialogue is shown.
          */
         public var SCREEN_LOCKED : Boolean = false;
+
         public var viewBeforeLock : String = SwitchScreenEvent.SHOW_STARTSCREEN;
+
         public var viewLockedBy : String;
 
         // WIDTH
         public static const WIDTH_ID : Number = 70;
+
         public static const WIDTH_DATE : Number = 40;
+
         public static const WIDTH_TIME : Number = 40;
+
         public static const WIDTH_DATETIME : Number = 60;
 
         /**
