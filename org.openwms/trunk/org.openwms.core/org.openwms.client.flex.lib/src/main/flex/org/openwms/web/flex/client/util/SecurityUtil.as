@@ -47,7 +47,7 @@ package org.openwms.web.flex.client.util {
         }
 
         /**
-         *
+         * Use GDS identiy to check the grant with name grantName for permission.
          */
         public function hasPermissions(grantName : String) : Boolean {
             return identity.ifAllGranted(grantName);

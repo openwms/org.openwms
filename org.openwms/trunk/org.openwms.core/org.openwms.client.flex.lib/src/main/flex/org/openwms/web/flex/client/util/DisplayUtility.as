@@ -19,6 +19,7 @@
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
 package org.openwms.web.flex.client.util {
+
     import mx.binding.utils.BindingUtils;
     import mx.binding.utils.ChangeWatcher;
     import mx.collections.ArrayCollection;
@@ -33,7 +34,11 @@ package org.openwms.web.flex.client.util {
      */
     public final class DisplayUtility {
 
-        public function DisplayUtility() { }
+        /**
+         * Constructor.
+         */
+        public function DisplayUtility() {
+        }
 
         /**
          * Resolve the view with a given <code>viewId</code> from a <code>viewStack</code>.
@@ -55,9 +60,9 @@ package org.openwms.web.flex.client.util {
          * @param bindings A list of bindings to bind
          * @param command Optional provide an anonymous function to be executed between binding and unbinding
          */
-        public static function bindProperties(bindings:ArrayCollection, command:Function = null):void {
-            var watchers:ArrayCollection = new ArrayCollection();
-            for each (var binding:BindingProperty in bindings) {
+        public static function bindProperties(bindings : ArrayCollection, command : Function=null) : void {
+            var watchers : ArrayCollection = new ArrayCollection();
+            for each (var binding : BindingProperty in bindings) {
                 if (binding.clazz == null) {
                     watchers.addItem(BindingUtils.bindProperty(binding.site, binding.sitePropertyName, binding.host, binding.hostPropertyName));
                 } else {
@@ -67,15 +72,15 @@ package org.openwms.web.flex.client.util {
             if (command != null) {
                 try {
                     command();
-                } catch (e:Error) {
+                } catch (e : Error) {
                     throw e;
                 } finally {
-                    for each (var watcher:ChangeWatcher in watchers) {
+                    for each (var watcher : ChangeWatcher in watchers) {
                         watcher.unwatch();
                     }
                 }
             }
-            for each (var watcher:ChangeWatcher in watchers) {
+            for each (var watcher : ChangeWatcher in watchers) {
                 watcher.unwatch();
             }
         }

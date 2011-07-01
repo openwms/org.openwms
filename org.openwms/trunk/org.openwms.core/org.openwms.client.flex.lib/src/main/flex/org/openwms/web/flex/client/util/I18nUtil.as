@@ -18,7 +18,7 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
-package org.openwms.web.flex.client.util{
+package org.openwms.web.flex.client.util {
 
     import mx.resources.IResourceManager;
     import mx.resources.ResourceManager;
@@ -34,8 +34,15 @@ package org.openwms.web.flex.client.util{
      */
     public class I18nUtil {
 
-        public static const APP_ERROR:String = "appError";
-        public static const APP_MAIN:String = "appMain";
+        /**
+         * Shortcut for ResourceBundle appError to refer to all application errors.
+         */
+        public static const APP_ERROR : String = "appError";
+
+        /**
+         * Shortcut for ResourceBundle appMain to all texts and messages in the main application.
+         */
+        public static const APP_MAIN : String = "appMain";
 
         /**
          * Constructor.
@@ -51,7 +58,7 @@ package org.openwms.web.flex.client.util{
          * @param args An arbitrary list. At least the first parameter must be set as the
          * String to be translated
          */
-        public static function trans(bundle:String, key:String, ... args):String {
+        public static function trans(bundle : String, key : String, ... args) : String {
             return ResourceManager.getInstance().getString(bundle, key, args);
         }
     }
