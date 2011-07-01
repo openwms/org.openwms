@@ -100,7 +100,9 @@
              *
              * @param event Unused
              */
-            public function onUnloaded(event : ApplicationEvent = null) : void { checkState(); }
+            public function onUnloaded(event : ApplicationEvent = null) : void {
+                checkState();
+            }
             
             [Observer("MODULE_LOADED")]
             /**
@@ -109,7 +111,9 @@
              *
              * @param event Unused
              */
-            public function onLoaded(event : ApplicationEvent = null) : void { checkState(); }
+            public function onLoaded(event : ApplicationEvent = null) : void {
+                checkState();
+            }
             
             private function init() : void {
                 newBtn.enabled = true;

@@ -33,9 +33,9 @@ package org.openwms.web.flex.client.business {
     import org.openwms.web.flex.client.model.ModelLocator;
     import org.openwms.web.flex.client.util.I18nUtil;
 
-    [Name("securityController")]
-    [ManagedEvent(name="APP.LOGIN_OK")]
-    [ManagedEvent(name="APP.LOGIN_NOK")]
+    [Name("securityDelegate")]
+    [ManagedEvent(name = "APP.LOGIN_OK")]
+    [ManagedEvent(name = "APP.LOGIN_NOK")]
     [ResourceBundle("appError")]
     [Bindable]
     /**
@@ -48,16 +48,19 @@ package org.openwms.web.flex.client.business {
      * @since 0.1
      */
     public class SecurityDelegate {
+
         [Inject]
         /**
          * Injected TideContext.
          */
         public var tideContext : Context;
+
         [Inject]
         /**
          * Injected ModelLocator.
          */
         public var modelLocator : ModelLocator;
+
         [Inject]
         /**
          * Injected Tide identity object.
@@ -67,7 +70,8 @@ package org.openwms.web.flex.client.business {
         /**
          * Constructor.
          */
-        public function SecurityDelegate() : void { }
+        public function SecurityDelegate() : void {
+        }
 
         [Observer("APP.REQUEST_LOGIN")]
         /**

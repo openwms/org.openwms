@@ -30,6 +30,9 @@
         [Name("application")]
         [ManagedEvent(name="APP.MERGE_GRANTS")]
 	    [ManagedEvent(name="APP.READY_TO_UNLOAD")]
+        [ManagedEvent(name="LOAD_ALL_MODULES")]
+        [ManagedEvent(name="UNLOAD_ALL_MODULES")]
+        [ManagedEvent(name="I18N_LOAD_ALL")]
         [ResourceBundle("appMain")]
         [ResourceBundle("appError")]
     </mx:Metadata>

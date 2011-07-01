@@ -60,31 +60,31 @@
              */
             public var modelLocator : ModelLocator;
             
-            private function showPrefs(event:MouseEvent = null) : void {
+            private function showPrefs(event : MouseEvent = null) : void {
             	var pop : UserPreferencesDialog = UserPreferencesDialog(PopUpManager.createPopUp(this, UserPreferencesDialog, true));
                 PopUpManager.centerPopUp(pop);
             }
             
-    		private function logout(event:MouseEvent = null):void {
-                identity.logout();
-                identity.isLoggedIn(onResult, onFault);
+            /**
+             * Click on logout button.
+             *
+             * @param event Unused
+             */
+    		private function logout(event : MouseEvent = null) : void {
+                modelLocator.fired = true;
+                dispatchEvent(new ApplicationEvent(ApplicationEvent.LOGOUT));
     		}
     		
-            private function lock(event:MouseEvent = null):void {
+            /**
+             * Click on lock button.
+             *
+             * @param event Unused
+             */
+            private function lock(event : MouseEvent = null) : void {
             	modelLocator.viewBeforeLock = modelLocator.actualView;
-                modelLocator.viewLockedBy = new String(identity.username);
+                modelLocator.viewLockedBy = modelLocator.loggedInUser.username;
                 modelLocator.fired = true;
-                identity.logout();
                 dispatchEvent(new ApplicationEvent(ApplicationEvent.LOCK));
-            }
-
-            private function onResult(event : TideResultEvent) : void {
-                dispatchEvent(new ApplicationEvent(ApplicationEvent.LOGOUT));
-            }
-    
-            private function onFault(event : TideFaultEvent) : void {
-                trace("LOGOUT:Error executing operation on security service:" + event.fault);
-                Alert.show(I18nUtil.trans(I18nUtil.APP_ERROR, 'error_logout_failed'));
             }
 
     	]]>

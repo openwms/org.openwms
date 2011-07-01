@@ -27,6 +27,7 @@
     <mx:Metadata>
         [Name]
         [ManagedEvent(name="APP.REQUEST_LOGIN")]
+        [ManagedEvent(name="APP.UNLOCK")]
         [ResourceBundle("appMain")]
     </mx:Metadata>
 
@@ -69,8 +70,10 @@
             }
             
             private function onLogin(username : String, password : String) : void {
-                if (modelLocator.SCREEN_LOCKED &&
-                    modelLocator.viewLockedBy != username) {
+                if (modelLocator.SCREEN_LOCKED) {
+                    if (modelLocator.viewLockedBy == username) {
+                        dispatchEvent(new ApplicationEvent(ApplicationEvent.APP_UNLOCK));
+                    }
                     return;
                 }
                 var event : ApplicationEvent = new ApplicationEvent(ApplicationEvent.APP_REQUEST_LOGIN);

@@ -29,10 +29,11 @@ package org.openwms.web.flex.client.business {
     import org.granite.tide.events.TideResultEvent;
     import org.granite.tide.spring.Context;
     import org.openwms.core.domain.system.I18n;
+    import org.openwms.web.flex.client.event.I18nEvent;
     import org.openwms.web.flex.client.model.I18nMap;
     import flash.utils.Proxy;
 
-    [Name("i18nController")]
+    [Name("i18nDelegate")]
     [Bindable]
     /**
      * A I18nDelegate is responsible to do all interactions with the backend I18nService. Loading translations and updating them.
@@ -46,13 +47,13 @@ package org.openwms.web.flex.client.business {
 
         private static var logger : ILogger = Log.getLogger("org.openwms.web.flex.client.business.I18nDelegate");
 
-        [In]
+        [Inject]
         /**
          * Injected TideContext.
          */
         public var tideContext : Context;
 
-        [In("i18nMap")]
+        [Inject("i18nMap")]
         /**
          * Injected i18n dictionary.
          */
@@ -61,19 +62,23 @@ package org.openwms.web.flex.client.business {
         /**
          * Constructor.
          */
-        public function I18nDelegate() : void { }
+        public function I18nDelegate() : void {
+        }
 
         [Observer("I18N_LOAD_ALL")]
         /**
          * Fetch a list of all i18n translations from the service.
          * Tide event observers : I18N_LOAD_ALL
+         *
+         * @param event Unused
          */
-        public function loadI18n() : void {
+        public function loadI18n(event : I18nEvent) : void {
             tideContext.i18nService.findAllTranslations(onI18nLoaded, onFault);
         }
+
         private function onI18nLoaded(event : TideResultEvent) : void {
-            var translations:ArrayCollection =  event.result as ArrayCollection;
-            for each (var translation:I18n in translations) {
+            var translations : ArrayCollection = event.result as ArrayCollection;
+            for each (var translation : I18n in translations) {
                 i18nMap[translation.cKey] = translation.lang;
             }
         }

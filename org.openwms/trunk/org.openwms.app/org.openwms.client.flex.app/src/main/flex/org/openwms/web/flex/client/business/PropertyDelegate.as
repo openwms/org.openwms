@@ -30,6 +30,7 @@ package org.openwms.web.flex.client.business {
     import org.openwms.core.domain.values.Unit;
     import org.openwms.common.domain.values.Weight;
     import org.openwms.web.flex.client.model.ModelLocator;
+    import org.openwms.web.flex.client.event.PropertyEvent;
 
     [Name("propertyDelegate")]
     [ManagedEvent(name="LOAD_ALL_PROPERTIES")]
@@ -66,8 +67,10 @@ package org.openwms.web.flex.client.business {
         /**
          * Connect to the ConfigurationService and find all units.
          * Tide event observers : LOAD_ALL_PROPERTIES
+         *
+         * @param event Unused
          */
-        public function findProperties() : void {
+        public function findProperties(event : PropertyEvent) : void {
             tideContext.configurationService.getAllUnits(onPropertiesLoaded, onFault);
         }
         private function onPropertiesLoaded(event : TideResultEvent) : void {

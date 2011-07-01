@@ -33,10 +33,10 @@ package org.openwms.web.flex.client.business {
     import org.openwms.web.flex.client.model.ModelLocator;
     import org.openwms.web.flex.client.util.I18nUtil;
 
-    [Name("userController")]
-    [ManagedEvent(name="LOAD_ALL_USERS")]
-    [ManagedEvent(name="USER.USER_ADDED")]
-    [ManagedEvent(name="USER.USER_SAVED")]
+    [Name("userDelegate")]
+    [ManagedEvent(name = "LOAD_ALL_USERS")]
+    [ManagedEvent(name = "USER.USER_ADDED")]
+    [ManagedEvent(name = "USER.USER_SAVED")]
     [ResourceBundle("appError")]
     [Bindable]
     /**
@@ -50,11 +50,13 @@ package org.openwms.web.flex.client.business {
      * @since 0.1
      */
     public class UserDelegate {
+
         [Inject]
         /**
          * Injected TideContext.
          */
         public var tideContext : Context;
+
         [Inject]
         /**
          * Injected ModelLocator.
@@ -64,16 +66,20 @@ package org.openwms.web.flex.client.business {
         /**
          * Constructor.
          */
-        public function UserDelegate() : void { }
+        public function UserDelegate() : void {
+        }
 
-        [Observer("LOAD_ALL_USERS", "USER.USER_ADDED")]
+        [Observer("LOAD_ALL_USERS")]
         /**
          * Fetch a list of all users from the service.
          * Tide event observers : LOAD_ALL_USERS, USER.USER_ADDED
+         *
+         * @param event Unused
          */
-        public function getUsers() : void {
+        public function loadUsers(event : UserEvent=null) : void {
             tideContext.userService.findAll(onUsersLoaded, onFault);
         }
+
         private function onUsersLoaded(event : TideResultEvent) : void {
             modelLocator.allUsers = event.result as ArrayCollection;
             if (modelLocator.allUsers.length > 0 && modelLocator.selectedUser == null) {
@@ -85,14 +91,18 @@ package org.openwms.web.flex.client.business {
         /**
          * Call the service to create a new user.
          * Tide event observers : ADD_USER
+         *
+         * @param event Unused
          */
-        public function addUser() : void {
+        public function addUser(event : UserEvent) : void {
             tideContext.userService.getTemplate("PSEUDO", onUserAdded, onFault);
         }
+
         private function onUserAdded(event : TideResultEvent) : void {
             var user : User = User(event.result);
             user.username = "";
             modelLocator.selectedUser = user;
+            loadUsers();
             dispatchEvent(new UserEvent(UserEvent.USER_ADDED));
         }
 
@@ -100,13 +110,16 @@ package org.openwms.web.flex.client.business {
         /**
          * Call to save User data of the current selected User.
          * Tide event observers : SAVE_USER
+         *
+         * @param event Unused
          */
-        public function saveUser() : void {
+        public function saveUser(event : UserEvent) : void {
             tideContext.userService.save(modelLocator.selectedUser, onUserSaved, onFault);
         }
+
         private function onUserSaved(event : TideResultEvent) : void {
             modelLocator.selectedUser = null;
-            getUsers();
+            loadUsers();
             dispatchEvent(new UserEvent(UserEvent.USER_SAVED));
         }
 
@@ -114,8 +127,10 @@ package org.openwms.web.flex.client.business {
         /**
          * Call to delete an existing User.
          * Tide event observers : DELETE_USER
+         *
+         * @param event Unused
          */
-        public function deleteUser() : void {
+        public function deleteUser(event : UserEvent) : void {
             tideContext.userService.remove(modelLocator.selectedUser, onUserDeleted, onFault);
         }
 
@@ -146,7 +161,9 @@ package org.openwms.web.flex.client.business {
                 tideContext.userService.changeUserPassword(uPassword, onPasswordChanged, onFault);
             }
         }
-        private function onPasswordChanged(event : TideResultEvent) : void { }
+
+        private function onPasswordChanged(event : TideResultEvent) : void {
+        }
 
         private function onFault(event : TideFaultEvent) : void {
             trace("Error executing operation on User service:" + event.fault);
