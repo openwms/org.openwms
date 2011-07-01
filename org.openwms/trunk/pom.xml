@@ -248,6 +248,7 @@
             <modules>
                 <module>org.openwms.common/org.openwms.common.flex.lib</module>
                 <module>org.openwms.common/org.openwms.common.flex.module</module>
+                <module>org.openwms.core/org.openwms.client.flex.lib</module>
                 <module>org.openwms.app/org.openwms.client.flex.app</module>
                 <module>org.openwms.app/org.openwms.client.flex.wrapper</module>
             </modules>
@@ -373,7 +374,7 @@
         <spring.osgi.version>1.2.1</spring.osgi.version>
         <spring.security.version>3.0.3.RELEASE</spring.security.version>
         <hibernate.version>3.4.0.GA</hibernate.version>
-        <granite.version>2.2.0.GA</granite.version>
+        <granite.version>2.2.1.GA</granite.version>
         <flex.version>3.2.0.3958</flex.version>
 	    <slf4j.version>1.5.10</slf4j.version>
 	    <junit.version>4.7.0</junit.version>
@@ -720,7 +721,6 @@
                 </executions>
             </plugin>
         </plugins>
-
     </build>
 
     <reporting>

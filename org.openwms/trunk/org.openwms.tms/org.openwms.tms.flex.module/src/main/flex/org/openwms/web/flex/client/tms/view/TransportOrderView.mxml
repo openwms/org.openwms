@@ -24,7 +24,7 @@
 <mx:Canvas xmlns:mx="http://www.adobe.com/2006/mxml" width="100%" height="100%" show="onShow();">
 
     <mx:Metadata>
-        [Name("transportOrderView")]
+        [Name]
         [ManagedEvent(name="LOAD_TRANSPORT_ORDERS")]
         [ManagedEvent(name="LOAD_TRANSPORT_UNITS")]
         [ManagedEvent(name="LOAD_ALL_LOCATIONS")]
@@ -67,25 +67,25 @@
             /**
              * Inject a model to work on.
              */
-            public var modelLocator:ModelLocator;            
+            public var modelLocator : ModelLocator;            
             [Inject]
             [Bindable]
             /**
              * Inject a model to work on.
              */
-            public var commonModelLocator:CommonModelLocator;
+            public var commonModelLocator : CommonModelLocator;
     		[Inject]
     		[Bindable]
             /**
              * Inject a TMS model.
              */
-            public var tmsModelLocator:TMSModelLocator;
+            public var tmsModelLocator : TMSModelLocator;
     		[Bindable]
-            private var selected:TransportOrder;
+            private var selected : TransportOrder;
             [Bindable]
-            private var dateTimeFormatter:DateFormatter;
+            private var dateTimeFormatter : DateFormatter;
             
-    		private function onShow():void {
+    		private function onShow() : void {
                 if (tmsModelLocator.allTransportOrders.length == 0) {
                     dispatchEvent(new TransportOrderEvent(TransportOrderEvent.LOAD_TRANSPORT_ORDERS));
                 }

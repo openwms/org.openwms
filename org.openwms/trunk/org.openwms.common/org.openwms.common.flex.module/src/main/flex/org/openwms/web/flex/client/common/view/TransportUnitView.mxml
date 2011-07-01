@@ -59,20 +59,20 @@
 		    /**
 		     * Injected Model.
 		     */
-            public var commonModelLocator:CommonModelLocator;
+            public var commonModelLocator : CommonModelLocator;
             [Inject]
             [Bindable]
             /**
              * We need to have Granites Identity injected.
              */
-            public var identity:Identity;
+            public var identity : Identity;
             
             [Bindable]
-            private var selected:TransportUnit;
+            private var selected : TransportUnit;
+             
+            private var tu : TransportUnit = new TransportUnit();
             
-            private var tu:TransportUnit = new TransportUnit();
-            
-    		private function onShow():void {
+    		private function onShow() : void {
     			if (commonModelLocator.allTransportUnits.length == 0) {
                     dispatchEvent(new TransportUnitEvent(TransportUnitEvent.LOAD_TRANSPORT_UNITS));
                 }
@@ -84,58 +84,58 @@
                 }
     		}
     		
-            private function showCreateTransportUnitDialog():void {
-                var pop:CreateTransportUnitDialog = CreateTransportUnitDialog(PopUpManager.createPopUp(this, CreateTransportUnitDialog, true));
+            private function showCreateTransportUnitDialog() : void {
+                var pop : CreateTransportUnitDialog = CreateTransportUnitDialog(PopUpManager.createPopUp(this, CreateTransportUnitDialog, true));
                 PopUpManager.centerPopUp(pop);
             }
             
-            private function deleteTransportUnitDialog():void {
+            private function deleteTransportUnitDialog() : void {
                 if (transportUnitsGrid.selectedIndices.length == 0) {
                     Alert.show("Please select at least one Transport Unit to delete");
                     return;                	
                 }
-                var pop:ConfirmDeletionDialog = ConfirmDeletionDialog(PopUpManager.createPopUp(this, ConfirmDeletionDialog, true));
+                var pop : ConfirmDeletionDialog = ConfirmDeletionDialog(PopUpManager.createPopUp(this, ConfirmDeletionDialog, true));
                 pop.messageText = "Delete selected Transport Units";
                 pop.items = new ArrayCollection(transportUnitsGrid.selectedItems);
                 PopUpManager.centerPopUp(pop);
             }
 
-            private function showDetails():void {
+            private function showDetails() : void {
                 var pop:TransportUnitDetailsDialog = TransportUnitDetailsDialog(PopUpManager.createPopUp(this, TransportUnitDetailsDialog, true));
                 pop.transportUnits = new ArrayCollection(transportUnitsGrid.selectedItems);
                 PopUpManager.centerPopUp(pop);            	
             }
 
-            private function onRowClick(event:ListEvent):void {
+            private function onRowClick(event : ListEvent) : void {
                 selected = event.currentTarget.selectedItem as TransportUnit;
                 stateCmb.selectedItem = selected.state;
                 actualLocationCmb.selectedItem = selected.actualLocation;
             }
 
-            private function refresh():void {
+            private function refresh() : void {
                 selected = null;
-                var event:TransportUnitEvent = new TransportUnitEvent(TransportUnitEvent.LOAD_TRANSPORT_UNITS);
+                var event : TransportUnitEvent = new TransportUnitEvent(TransportUnitEvent.LOAD_TRANSPORT_UNITS);
                 dispatchEvent(event);
             }
             
-            private function save():void {
+            private function save() : void {
                 if (selected == null) {
                 	Alert.show("Select a TransportUnit first");
                 	return
                 }
-                var event:TransportUnitEvent = new TransportUnitEvent(TransportUnitEvent.SAVE_TRANSPORT_UNIT);
+                var event : TransportUnitEvent = new TransportUnitEvent(TransportUnitEvent.SAVE_TRANSPORT_UNIT);
                 event.data = selected;
                 dispatchEvent(event);
             }
 
-	        public static function formatBarcode(item:Object, dg:DataGridColumn):String {
+	        public static function formatBarcode(item : Object, dg : DataGridColumn) : String {
 	            if (item[dg.dataField] != null) {
 	                return String(item[dg.dataField].barcode);
 	            }
 	            return "--";
 	        }
 
-            private function formatDateField(item:Object, dg:DataGridColumn):String {
+            private function formatDateField(item : Object, dg : DataGridColumn) : String {
                 if (item.creationDate != null) {
                     return dateFormatter.format(item.creationDate);
                 }

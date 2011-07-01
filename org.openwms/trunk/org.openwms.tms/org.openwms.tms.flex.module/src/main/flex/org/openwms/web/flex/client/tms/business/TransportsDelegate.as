@@ -35,8 +35,8 @@ package org.openwms.web.flex.client.tms.business {
     import org.openwms.web.flex.client.tms.event.TransportOrderEvent;
     import org.openwms.web.flex.client.tms.model.TMSModelLocator;
 
-    [Name]
-    [ManagedEvent(name="LOAD_TRANSPORT_ORDERS")]
+    [Name("transportsDelegate")]
+    [Bindable]
     /**
      * A TransportsDelegate.
      *
@@ -47,13 +47,12 @@ package org.openwms.web.flex.client.tms.business {
     public class TransportsDelegate {
 
         [Inject]
-        [Bindable]
         /**
          * Injected TideContext.
          */
         public var tideContext : Context;
+
         [Inject]
-        [Bindable]
         /**
          * Inject a model to work on.
          */
@@ -62,13 +61,17 @@ package org.openwms.web.flex.client.tms.business {
         /**
          * Default constructor.
          */
-        public function TransportsDelegate() : void { }
+        public function TransportsDelegate() : void {
+        }
 
         [Observer("LOAD_TRANSPORT_ORDERS")]
         /**
          * Load all TransportOrders from the backend.
+         * Tide event observers : LOAD_TRANSPORT_ORDERS
+         *
+         * @param event Unused
          */
-        public function getAllTransports() : void {
+        public function getAllTransports(event : TransportOrderEvent=null) : void {
             tideContext.transportService.findAll(onTransportsLoaded, onFault);
         }
 
@@ -79,6 +82,7 @@ package org.openwms.web.flex.client.tms.business {
         [Observer("CREATE_TRANSPORT_ORDER")]
         /**
          * Create a new TransportOrder.
+         * Tide event observers : CREATE_TRANSPORT_ORDER
          *
          * @param event Expected to hold the new TransportOrder in its data field
          */
@@ -88,12 +92,13 @@ package org.openwms.web.flex.client.tms.business {
         }
 
         private function onTransportCreated(event : TideResultEvent) : void {
-            dispatchEvent(new TransportOrderEvent(TransportOrderEvent.LOAD_TRANSPORT_ORDERS));
+            getAllTransports();
         }
 
         [Observer("CANCEL_TRANSPORT_ORDER")]
         /**
          * Turn the state of TransportOrders in a new state.
+         * Tide event observers : CANCEL_TRANSPORT_ORDER
          *
          * @param event Expected to store an object with the list of TransportOrder called ids,
          *              and the new state with name state
@@ -103,15 +108,16 @@ package org.openwms.web.flex.client.tms.business {
         }
 
         private function onTransportsCanceled(event : TideResultEvent) : void {
-            dispatchEvent(new TransportOrderEvent(TransportOrderEvent.LOAD_TRANSPORT_ORDERS));
+            getAllTransports();
             if ((event.result as ArrayCollection).length > 0) {
-                Alert.show("Not all Transport Orders could be canceled!");
+                Alert.show("Not all Transport Orders have been canceled!");
             }
         }
 
         [Observer("REDIRECT_TRANSPORT_ORDER")]
         /**
          * Redirect one or more TransportOrders to a new target.
+         * Tide event observers : REDIRECT_TRANSPORT_ORDER
          *
          * @param event Expected to store an object with the list of TransportOrders called ids,
          *              the new target LocationGroup as targetLocationGroup and the new target
@@ -122,25 +128,25 @@ package org.openwms.web.flex.client.tms.business {
         }
 
         private function onTransportsRedirected(event : TideResultEvent) : void {
-            dispatchEvent(new TransportOrderEvent(TransportOrderEvent.LOAD_TRANSPORT_ORDERS));
+            getAllTransports();
             if ((event.result as ArrayCollection).length > 0) {
-                Alert.show("Not all Transport Orders could be redirected!");
+                Alert.show("Not all Transport Orders have been redirected!");
             }
         }
 
         [Observer("DELETE_TRANSPORT_ORDER")]
         /**
          * Call to remove a TransportOrder.
+         * Tide event observers : DELETE_TRANSPORT_ORDER
          *
          * @param event Expected to hold the TransportOrder to be deleted in its data field
          */
         public function deleteTransportOrder(event : TransportOrderEvent) : void {
-            var transportOrder : TransportOrder = event.data as TransportOrder;
-            tideContext.transportService.remove(transportOrder, onTransportDeleted, onFault);
+            tideContext.transportService.remove(event.data as TransportOrder, onTransportDeleted, onFault);
         }
 
         private function onTransportDeleted(event : TideResultEvent) : void {
-            dispatchEvent(new TransportOrderEvent(TransportOrderEvent.LOAD_TRANSPORT_ORDERS));
+            getAllTransports();
         }
 
         private function onFault(event : TideFaultEvent) : void {

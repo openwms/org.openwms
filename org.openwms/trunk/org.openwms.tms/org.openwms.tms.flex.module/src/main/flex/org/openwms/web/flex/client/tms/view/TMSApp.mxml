@@ -21,32 +21,191 @@
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
 -->
-<view:TMSAppBase xmlns:mx="http://www.adobe.com/2006/mxml" xmlns:view="org.openwms.web.flex.client.tms.view.*">
-	
-	<mx:Script>
+<cor:CommonModule xmlns:mx="http://www.adobe.com/2006/mxml" xmlns:view="org.openwms.web.flex.client.tms.view.*"
+    xmlns:cor="org.openwms.web.flex.client.module.*" implements="org.granite.tide.ITideModule,org.openwms.web.flex.client.IApplicationModule">
+
+    <mx:Metadata>
+        [Name]
+    </mx:Metadata>
+
+    <mx:Script>
 		<![CDATA[
 			import org.openwms.web.flex.client.event.SwitchScreenEvent;
 			import org.openwms.web.flex.client.model.ModelLocator;
 			import org.openwms.web.flex.client.util.DisplayUtility;
 			import org.openwms.web.flex.client.tms.event.TMSSwitchScreenEvent;
+
+    import flash.system.ApplicationDomain;
+
+    import mx.collections.ArrayCollection;
+    import mx.collections.XMLListCollection;
+    import mx.containers.ViewStack;
+    import mx.controls.MenuBar;
+    import mx.messaging.ChannelSet;
+    import mx.messaging.config.ServerConfig;
+
+    import org.granite.rpc.remoting.mxml.SecureRemoteObject;
+    import org.granite.tide.ITideModule;
+    import org.granite.tide.Tide;
+    import org.granite.tide.spring.Spring;
+    import org.granite.tide.spring.Context;
+    import org.granite.tide.spring.Identity;
+
+    import org.openwms.core.domain.system.usermanagement.Grant;
+    import org.openwms.web.flex.client.util.XMLUtil;
+    import org.openwms.web.flex.client.IApplicationModule;
+    import org.openwms.web.flex.client.model.ModelLocator;
+    import org.openwms.web.flex.client.module.CommonModule;
+    import org.openwms.web.flex.client.tms.business.TransportsDelegate;
+    import org.openwms.web.flex.client.tms.model.TMSModelLocator;
+    import org.openwms.web.flex.client.tms.view.TransportOrderView;
+
+        [Inject]
+        [Bindable]
+        /**
+         * Injected a model.
+         */
+        public var modelLocator : ModelLocator;
+
+        [Inject]
+        [Bindable]
+        /**
+         * Injected Tide identity object.
+         */
+        public var identity : Identity;
+
+        private var _transportService : SecureRemoteObject = new SecureRemoteObject("transportServiceRemote");
+
+// TODO remove
+        private var _childDomain : ApplicationDomain;
+
+        [Embed(source = "/assets/security/secured-objects.xml", mimeType = "application/octet-stream")]
+        private var _xml : Class;
+
+        private var _blacklisted : ArrayCollection = new ArrayCollection();
+
+        private var _views : ArrayCollection;
+
+        /**
+         * In a second step Tide tries to start the module calling this method. Here are all components added to the TideContext.
+         *
+         * @param tide not used here
+         */
+        public function init(tide : Tide) : void {
+            tide.addComponents([TMSApp, TMSModelLocator, TransportsDelegate]);
+        }
+
+        /**
+         * This method is called first from the ModuleLocator to do the first initial work. The module registers itself on
+         * the main applicationDomain, that means the context of the main application is extended with the subcontext of
+         * this module.
+         */
+        public function start(applicationDomain : ApplicationDomain=null) : void {
+            _views = new ArrayCollection(tmsViewStack.getChildren());
+            _childDomain = applicationDomain;
+            Spring.getInstance().addModule(TMSApp, applicationDomain);
+            Spring.getInstance().addComponents([TMSApp, TMSModelLocator, TransportsDelegate]);
+            setupServices([_transportService]);
+            readAndMergeGrantsList();
+        }
+
+        private function setupServices(services : Array) : void {
+            var endpoint : String = ServerConfig.getChannel("my-graniteamf").endpoint;
+            for each (var service : SecureRemoteObject in services) {
+                service.endpoint = endpoint;
+                service.showBusyCursor = false;
+                service.channelSet = new ChannelSet();
+                service.channelSet.addChannel(ServerConfig.getChannel("my-graniteamf"));
+            }
+        }
+
+        /**
+         * This method returns a list of menu items which shall be expaned to the main
+         * application menu bar.
+         */
+        public function getMainMenuItems() : XMLListCollection {
+            return tmsMenuBar.dataProvider as XMLListCollection;
+        }
+
+        /**
+         * This method returns the name of the module as unique String identifier.
+         */
+        public function getModuleName() : String {
+            return "TMS";
+        }
+
+        /**
+         * This method returns the current version of the module as String.
+         */
+        public function getModuleVersion() : String {
+            return "1.0.0";
+        }
+
+        /**
+         * This method returns a list of items which are handled as SecuityObjects.
+         * A SecurityObject can be assigned to a Role and is monitored by the SecurityHandler
+         * to allow or deny certain functionality within the user interface.
+         */
+        public function getSecurityObjects() : ArrayCollection {
+            return _blacklisted;
+        }
+
+        /**
+         * This method returns a list of views which shall be populated to the parent
+         * application.
+         */
+        public function getViews() : ArrayCollection {
+            return _views;
+        }
+
+        /**
+         * Do additional initial work when the module is loaded.
+         */
+        public function initializeModule(applicationDomain : ApplicationDomain=null) : void {
+            trace("Initialize module : " + getModuleName());
+        }
+
+        /**
+         * Do addtional cleanup work before the module is unloaded.
+         */
+        public function destroyModule() : void {
+            trace("Destroying module : " + getModuleName());
+            Spring.getInstance().removeModule(TMSApp);
+        }
+
+        /**
+         * Find all secured objects and return the list to the main app.
+         */
+        private function readAndMergeGrantsList() : void {
+            if (_blacklisted.length > 0) {
+                return;
+            }
+            var xml : XML = XMLUtil.getXML(new _xml());
+            for each (var g : XML in xml.grant) {
+                _blacklisted.addItem(new Grant(g.name, g.description));
+            }
+        }
+
+
 		]]>
-	</mx:Script>
+    </mx:Script>
 
-	<mx:VBox height="100%" width="100%" verticalGap="0" backgroundColor="#C2DAEF">
-		<mx:Canvas width="100%" height="25" backgroundSize="100%">
-			<mx:MenuBar id="tmsMenuBar" labelField="@label">
-				<mx:XMLList>
-					<menuitem label="Transport Management">
-						<menuitem label="Transport Orders" enabled="{identity.ifAllGranted('TMS_TransportOrders_screen')}" action="{TMSSwitchScreenEvent.SHOW_TRANSPORT_ORDERS_VIEW}"/>
-					</menuitem>
-				</mx:XMLList>
-			</mx:MenuBar>
-		</mx:Canvas>
-		<mx:HBox width="100%" height="100%" horizontalAlign="center" verticalAlign="middle">
-			<mx:ViewStack id="tmsViewStack" selectedIndex="{DisplayUtility.getView(modelLocator.actualView, tmsViewStack)}">
-				<view:TransportOrderView name="tmsTransportOrdersView" />
-			</mx:ViewStack>
-		</mx:HBox>
-	</mx:VBox>
+    <mx:VBox height="100%" width="100%" verticalGap="0" backgroundColor="#C2DAEF">
+        <mx:Canvas width="100%" height="25" backgroundSize="100%">
+            <mx:MenuBar id="tmsMenuBar" labelField="@label">
+                <mx:XMLList>
+                    <menuitem label="Transport Management">
+                        <menuitem label="Transport Orders" enabled="{identity.ifAllGranted('TMS_TransportOrders_screen')}"
+                            action="{TMSSwitchScreenEvent.SHOW_TRANSPORT_ORDERS_VIEW}" />
+                    </menuitem>
+                </mx:XMLList>
+            </mx:MenuBar>
+        </mx:Canvas>
+        <mx:HBox width="100%" height="100%" horizontalAlign="center" verticalAlign="middle">
+            <mx:ViewStack id="tmsViewStack" selectedIndex="{DisplayUtility.getView(modelLocator.actualView, tmsViewStack)}">
+                <view:TransportOrderView name="{TMSSwitchScreenEvent.SHOW_TRANSPORT_ORDERS_VIEW}" />
+            </mx:ViewStack>
+        </mx:HBox>
+    </mx:VBox>
 
-</view:TMSAppBase>
+</cor:CommonModule>

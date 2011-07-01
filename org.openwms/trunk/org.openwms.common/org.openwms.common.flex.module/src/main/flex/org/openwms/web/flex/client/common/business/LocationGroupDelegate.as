@@ -41,35 +41,36 @@ package org.openwms.web.flex.client.common.business {
      * @since 0.1
      */
     public class LocationGroupDelegate {
-        [In]
+
+        [Inject]
         [Bindable]
         /**
          * Injected TideContext.
          */
-        public var tideContext:Context;
+        public var tideContext : Context;
         [Inject]
         [Bindable]
         /**
          * Inject a model to work on.
          */
-        public var commonModelLocator:CommonModelLocator;            
+        public var commonModelLocator : CommonModelLocator;            
 
         /**
          * Default constructor.
          */
-        public function LocationGroupDelegate():void { }
+        public function LocationGroupDelegate() : void { }
 
         [Observer("LOAD_ALL_LOCATION_GROUPS")]
         /**
          * Load all LocationGroups from the service.
          *
-         * @param event Not used here
+         * @param event Unused
          */
-        public function getLocationGroups(event:LocationGroupEvent):void {
+        public function getLocationGroups(event : LocationGroupEvent) : void {
             commonModelLocator.registerEventListeners();
             tideContext.locationGroupService.getLocationGroupsAsList(onLocationGroupsLoaded, onFault);
         }
-        private function onLocationGroupsLoaded(event:TideResultEvent):void {
+        private function onLocationGroupsLoaded(event : TideResultEvent) : void {
             commonModelLocator.allLocationGroups = event.result as ArrayCollection;
             // Setup tree if not set before
             if (null == commonModelLocator.locationGroupTree) {
@@ -110,7 +111,7 @@ package org.openwms.web.flex.client.common.business {
             dispatchEvent(new LocationGroupEvent(LocationGroupEvent.LOAD_ALL_LOCATION_GROUPS));
         }
 
-        private function onFault(event:TideFaultEvent):void {
+        private function onFault(event : TideFaultEvent) : void {
             trace("Error executing operation on Location Group service:" + event.fault);
             Alert.show("Error executing an operation on Location Group service");
         }

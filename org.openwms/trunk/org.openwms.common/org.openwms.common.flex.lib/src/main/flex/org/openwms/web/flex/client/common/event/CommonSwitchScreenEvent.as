@@ -20,7 +20,8 @@
  */
 package org.openwms.web.flex.client.common.event {
 
-    import org.openwms.web.flex.client.event.SwitchScreenEvent;    
+    import flash.events.Event
+    import org.openwms.web.flex.client.event.SwitchScreenEvent;
 
     /**
      * A CommonSwitchScreenEvent.
@@ -31,14 +32,54 @@ package org.openwms.web.flex.client.common.event {
      */
     public class CommonSwitchScreenEvent extends SwitchScreenEvent {
 
-        public static const SHOW_TRANSPORTUNIT_VIEW:String = "transportUnitView";
-        public static const SHOW_TRANSPORTUNITTYPE_VIEW:String = "transportUnitTypeView";
-        public static const SHOW_LOCATIONTYPE_VIEW:String = "locationTypeView";
-        public static const SHOW_LOCATION_VIEW:String = "locationView";
-        public static const SHOW_LOCATIONGROUP_VIEW:String = "locationGroupView";
+        /**
+         * Name of the COMMON:TransportUnitView.
+         */
+        public static const SHOW_TRANSPORTUNIT_VIEW : String = "transportUnitView";
 
-        public function CommonSwitchScreenEvent(type:String, bubbles:Boolean = true, cancelable:Boolean = false) {
+        /**
+         * Name of the COMMON:TransportUnitTypeView.
+         */
+        public static const SHOW_TRANSPORTUNITTYPE_VIEW : String = "transportUnitTypeView";
+
+        /**
+         * Name of the COMMON:LocationTypeView.
+         */
+        public static const SHOW_LOCATIONTYPE_VIEW : String = "locationTypeView";
+
+        /**
+         * Name of the COMMON:LocationView.
+         */
+        public static const SHOW_LOCATION_VIEW : String = "locationView";
+
+        /**
+         * Name of the COMMON:LocationGroupView.
+         */
+        public static const SHOW_LOCATIONGROUP_VIEW : String = "locationGroupView";
+
+        /**
+         * Constructor.
+         */
+        public function CommonSwitchScreenEvent(type : String, bubbles : Boolean=true, cancelable : Boolean=false) {
             super(type, bubbles, cancelable);
+        }
+
+        /**
+         * Just a copy of the event itself.
+         *
+         * @return a copy of this
+         */
+        public override function clone() : Event {
+            return new CommonSwitchScreenEvent(type);
+        }
+
+        /**
+         * Simple override.
+         *
+         * @return the type of event
+         */
+        public override function toString() : String {
+            return formatToString("CommonSwitchScreenEvent", "type");
         }
     }
 }

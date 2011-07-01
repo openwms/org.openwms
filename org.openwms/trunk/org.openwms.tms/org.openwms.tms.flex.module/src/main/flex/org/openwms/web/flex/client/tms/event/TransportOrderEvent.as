@@ -19,7 +19,7 @@
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
 package org.openwms.web.flex.client.tms.event {
-	
+
     import flash.events.Event;
 
     /**
@@ -30,17 +30,62 @@ package org.openwms.web.flex.client.tms.event {
      * @since 0.1
      */
     public class TransportOrderEvent extends Event {
-    	
-        public static const LOAD_TRANSPORT_ORDERS:String = "LOAD_TRANSPORT_ORDERS";
-        public static const CREATE_TRANSPORT_ORDER:String = "CREATE_TRANSPORT_ORDER";
-        public static const DELETE_TRANSPORT_ORDER:String = "DELETE_TRANSPORT_ORDER";
-        public static const CANCEL_TRANSPORT_ORDER:String = "CANCEL_TRANSPORT_ORDER";
-        public static const REDIRECT_TRANSPORT_ORDER:String = "REDIRECT_TRANSPORT_ORDER";
-        
-        public var data:*;
 
-        public function TransportOrderEvent(type:String, bubbles:Boolean = true, cancelable:Boolean = false) {
+        /**
+         * Name of the Event to load all TransportOrders from the backend.
+         */
+        public static const LOAD_TRANSPORT_ORDERS : String = "LOAD_TRANSPORT_ORDERS";
+
+        /**
+         * Name of the Event to create a new TransportOrder. Property data is expected as the TransportOrder to be created.
+         */
+        public static const CREATE_TRANSPORT_ORDER : String = "CREATE_TRANSPORT_ORDER";
+
+        /**
+         * Name of the Event to delete an existing TransportOrder. Property data is expected as the TransportOrder to be removed.
+         */
+        public static const DELETE_TRANSPORT_ORDER : String = "DELETE_TRANSPORT_ORDER";
+
+        /**
+         * Name of the Event to cancel an active TransportOrder. Property data is expected as the TransportOrder to be canceled.
+         */
+        public static const CANCEL_TRANSPORT_ORDER : String = "CANCEL_TRANSPORT_ORDER";
+
+        /**
+         * Name of the Event to redirect a TransportOrder. Property data is expected as the TransportOrder to be redirected.
+         */
+        public static const REDIRECT_TRANSPORT_ORDER : String = "REDIRECT_TRANSPORT_ORDER";
+
+        /**
+         * Store arbitrary data.
+         */
+        public var data : *;
+
+        /**
+         * Constructor.
+         */
+        public function TransportOrderEvent(type : String, bubbles : Boolean=true, cancelable : Boolean=false) {
             super(type, bubbles, cancelable);
+        }
+
+        /**
+         * Just a copy of the event itself including the data field.
+         *
+         * @return a copy of this
+         */
+        public override function clone() : Event {
+            var e : TransportOrderEvent = new TransportOrderEvent(type);
+            e.data = data;
+            return e;
+        }
+
+        /**
+         * Simple override.
+         *
+         * @return the type of event
+         */
+        public override function toString() : String {
+            return formatToString("TransportOrderEvent", "type");
         }
     }
 }

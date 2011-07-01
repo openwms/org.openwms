@@ -19,9 +19,10 @@
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
 package org.openwms.web.flex.client.tms.event {
-	
-    import org.openwms.web.flex.client.event.SwitchScreenEvent;    
+
+    import flash.events.Event
     import mx.collections.ArrayCollection;
+    import org.openwms.web.flex.client.event.SwitchScreenEvent;
 
     /**
      * A TMSSwitchScreenEvent.
@@ -31,10 +32,35 @@ package org.openwms.web.flex.client.tms.event {
      * @since 0.1
      */
     public class TMSSwitchScreenEvent extends SwitchScreenEvent {
-        public static const SHOW_TRANSPORT_ORDERS_VIEW:String = "tmsTransportOrdersView";
-        
-        public function TMSSwitchScreenEvent(type:String, bubbles:Boolean = true, cancelable:Boolean = false) {
+
+        /**
+         * Name of the TMS:TransportOrdersView.
+         */
+        public static const SHOW_TRANSPORT_ORDERS_VIEW : String = "tmsTransportOrdersView";
+
+        /**
+         * Constructor.
+         */
+        public function TMSSwitchScreenEvent(type : String, bubbles : Boolean=true, cancelable : Boolean=false) {
             super(type, bubbles, cancelable);
+        }
+
+        /**
+         * Just a copy of the event itself.
+         *
+         * @return a copy of this
+         */
+        public override function clone() : Event {
+            return new TMSSwitchScreenEvent(type);
+        }
+
+        /**
+         * Simple override.
+         *
+         * @return the type of event
+         */
+        public override function toString() : String {
+            return formatToString("TMSSwitchScreenEvent", "type");
         }
     }
 }

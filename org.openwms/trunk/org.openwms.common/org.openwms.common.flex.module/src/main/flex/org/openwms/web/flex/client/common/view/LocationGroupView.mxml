@@ -88,7 +88,7 @@
              *
              * Observed event: LG.COLL_LOCATION_GROUPS_REFRESHED
              */
-            public function refreshTree() : void {
+            public function refreshTree(event : LocationGroupEvent) : void {
                 locationGroupTree.dataProvider.refresh();
             }
 
