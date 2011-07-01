@@ -44,7 +44,7 @@ package org.openwms.web.flex.client.event {
         /**
          * Constructor.
          */
-        public function PropertyEvent(type : String, bubbles : Boolean=true, cancelable : Boolean=false) {
+        public function PropertyEvent(type : String, bubbles : Boolean = true, cancelable : Boolean = false) {
             super(type, bubbles, cancelable);
         }
 

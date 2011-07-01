@@ -36,22 +36,27 @@ package org.openwms.web.flex.client.event {
          * Show the start screen : emptyScreenView.
          */
         public static const SHOW_STARTSCREEN : String = "emptyScreenView";
+
         /**
          * Show the Modue Management screen : moduleManagementView.
          */
         public static const SHOW_MODULE_MGMT_VIEW : String = "moduleManagementView";
+
         /**
          * Show the User Management screen : userManagementView.
          */
         public static const SHOW_USER_MGMT_VIEW : String = "userManagementView";
+
         /**
          * Show the Role Management screen : roleManagementView.
          */
         public static const SHOW_ROLE_MGMT_VIEW : String = "roleManagementView";
+
         /**
          * Show the Settings/Properties screen : settingManagementView.
          */
         public static const SHOW_SETTING_MGMT_VIEW : String = "settingManagementView";
+
         /**
          * Stores all event types in an Array.
          */
