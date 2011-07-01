@@ -27,10 +27,6 @@
 
     <mx:Metadata>
         [Name]
-        [ManagedEvent(name="SAVE_MODULE")]
-        [ManagedEvent(name="DELETE_MODULE")]
-        [ManagedEvent(name="LOAD_MODULE")]
-        [ManagedEvent(name="UNLOAD_MODULE")]
         [ManagedEvent(name="LOAD_ALL_USERS")]
         [ManagedEvent(name="LOAD_ALL_ROLES")]
     </mx:Metadata>

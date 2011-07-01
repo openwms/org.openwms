@@ -246,18 +246,6 @@
 		    </snapshots>
 		</repository>
 	</repositories>
-	<pluginRepositories>
-		<pluginRepository>
-			<id>sonatype-public</id>
-			<url>http://repository.sonatype.org/content/groups/forge</url>
-			<releases>
-				<enabled>true</enabled>
-			</releases>
-			<snapshots>
-				<enabled>true</enabled>
-			</snapshots>
-		</pluginRepository>
-	</pluginRepositories>
 
 	<dependencies>
         <!-- Spring Framework -->

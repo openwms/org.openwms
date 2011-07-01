@@ -48,9 +48,9 @@
              * Currently does nothing.
              * Tide event observers : USER.USER_ADDED
              */
-			public function userAdded():void { }
+			public function userAdded(event : UserEvent) : void { }
 			
-			private function onUserSelectionChanged(event:Event):void {
+			private function onUserSelectionChanged(event : Event) : void {
 				event.currentTarget.style = "selectedUserListItem";
 				if (lastSelectedListObject != null && lastSelectedListObject != event.currentTarget) {
 					lastSelectedListObject.style = "userListItem";

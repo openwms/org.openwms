@@ -34,11 +34,11 @@ package org.openwms.web.flex.client.business {
     import org.openwms.web.flex.client.model.ModelLocator;
     import org.openwms.web.flex.client.util.I18nUtil;
 
-    [Name("roleController")]
-    [ManagedEvent(name="LOAD_ALL_ROLES")]
-    [ManagedEvent(name="ROLE_ADDED")]
-    [ManagedEvent(name="ROLE_SAVED")]
-    [ManagedEvent(name="APP.SECURITY_OBJECTS_REFRESHED")]
+    [Name("roleDelegate")]
+    [ManagedEvent(name = "LOAD_ALL_ROLES")]
+    [ManagedEvent(name = "ROLE_ADDED")]
+    [ManagedEvent(name = "ROLE_SAVED")]
+    [ManagedEvent(name = "APP.SECURITY_OBJECTS_REFRESHED")]
     [ResourceBundle("appError")]
     [Bindable]
     /**
@@ -71,12 +71,15 @@ package org.openwms.web.flex.client.business {
         public function RoleDelegate() : void {
         }
 
-        [Observer("LOAD_ALL_ROLES", "ROLE_ADDED", "ROLE_SAVED")]
+        [Observer("LOAD_ALL_ROLES")]
         /**
          * Fetch a list of all roles from the service.
-         * Tide event observers : LOAD_ALL_ROLES, ROLE_ADDED, ROLE_SAVED
+         * Tide event observers : LOAD_ALL_ROLES
+         *
+         * @param event Unused
          */
-        public function getRoles() : void {
+        public function getRoles(event : RoleEvent=null) : void {
+            trace("Loading Roles");
             tideContext.roleService.findAll(onRolesLoaded, onFault);
         }
 
@@ -101,6 +104,17 @@ package org.openwms.web.flex.client.business {
             dispatchEvent(new RoleEvent(RoleEvent.ROLE_ADDED));
         }
 
+        [Observer("ROLE_ADDED")]
+        /**
+         * Fired whenever a new Role was successfully saved. A reload of all Roles is triggered.
+         * Tide event observers : ROLE_ADDED
+         *
+         * @param event Unused
+         */
+        public function roleAdded(event : RoleEvent) : void {
+            getRoles();
+        }
+
         [Observer("SAVE_ROLE")]
         /**
          * Save an existing Role.
@@ -117,6 +131,17 @@ package org.openwms.web.flex.client.business {
         private function onRoleSaved(event : TideResultEvent) : void {
             dispatchEvent(new RoleEvent(RoleEvent.LOAD_ALL_ROLES));
             dispatchEvent(new RoleEvent(RoleEvent.ROLE_SAVED));
+        }
+
+        [Observer("ROLE_SAVED")]
+        /**
+         * Fired whenever a new Role was successfully saved. A reload of all Roles is triggered.
+         * Tide event observers : ROLE_SAVED
+         *
+         * @param event Unused
+         */
+        public function roleSaved(event : RoleEvent) : void {
+            getRoles();
         }
 
         [Observer("DELETE_ROLE")]

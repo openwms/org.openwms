@@ -87,9 +87,12 @@
             /**
              * After creation do some minor setup and enable form fields.
              * Tide event observers : USER.SELECTION_CHANGED, USER.USER_SAVED
+             *
+             * @param event Unused
              */
-            [Observer("USER.SELECTION_CHANGED","USER.USER_SAVED")]
-            public function onCreated() : void {
+            [Observer("USER.SELECTION_CHANGED")]
+            [Observer("USER.USER_SAVED")]
+            public function onCreated(event : UserEvent = null) : void {
                 userImg.filters = [filter];
                 setFormElements(!(modelLocator.selectedUser == null));
             }

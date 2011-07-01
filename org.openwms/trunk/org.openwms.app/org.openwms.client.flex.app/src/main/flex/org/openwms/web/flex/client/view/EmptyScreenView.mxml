@@ -21,58 +21,58 @@
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
 -->
-<mx:Canvas xmlns:mx="http://www.adobe.com/2006/mxml" width="100%" height="100%" creationComplete="onShow()" show="onShow()">
+<mx:Canvas xmlns:mx="http://www.adobe.com/2006/mxml" width="100%" height="100%" creationComplete="onCreate()">
 	
     <mx:Metadata>
         [Name]
+        [ResourceBundle("appMain")]
     </mx:Metadata>
 
     <mx:Script>
         <![CDATA[
         
             import mx.managers.PopUpManager;
-            import org.openwms.web.flex.client.view.dialogs.LoginView;
-            import org.openwms.web.flex.client.model.ModelLocator;
+
             import org.granite.tide.spring.Identity;
+
+            import org.openwms.web.flex.client.view.dialogs.LoginView;
+            import org.openwms.web.flex.client.event.ApplicationEvent;
+            import org.openwms.web.flex.client.model.ModelLocator;
+            import org.openwms.web.flex.client.util.I18nUtil;
             
-            [In]
+            [Inject]
             [Bindable]
             /**
              * Injected Granite identity object.
              */
             public var identity : Identity;
             
-	        [In]
+	        [Inject]
 	        [Bindable]
             /**
 	         * Injected Model.
 	         */
 	        public var modelLocator : ModelLocator;
 
-            [Bindable]
-            /**
-             * Behind-the-model.
-             */
-            public var loginView : LoginView;
+            private var _loginView : LoginView;
         
-            [Observer("APP_LOCK")]
             /**
              * Whats going on? On logout or lock event we show this dialogue.
+             *
+             * @param event Unused
              */
-            public function onShow():void {
-                if (!identity.loggedIn) {
-                	if (modelLocator.SCREEN_LOCKED) {
-                        showLoginDialog("Application locked by "+modelLocator.viewLockedBy);
-                	} else {
-                        showLoginDialog("Not logged in");
-                    }
+            public function onCreate(event : ApplicationEvent = null) : void {
+            	if (modelLocator.SCREEN_LOCKED) {
+                    showLoginDialog(I18nUtil.trans(I18nUtil.APP_MAIN, 'txt_login_locked_by', modelLocator.viewLockedBy));
+            	} else if (!identity.loggedIn) {
+                    showLoginDialog(I18nUtil.trans(I18nUtil.APP_MAIN, 'txt_login_not_logged_in'));
                 }
             }
-    
-            private function showLoginDialog(text:String):void {
-                loginView = LoginView(PopUpManager.createPopUp(this, LoginView, true));
-                loginView.loginMessageText = text;
-                PopUpManager.centerPopUp(loginView);
+            
+            private function showLoginDialog(text : String) : void {
+                _loginView = LoginView(PopUpManager.createPopUp(this, LoginView, true));
+                _loginView.loginMessageText = text;
+                PopUpManager.centerPopUp(_loginView);
             }
             
         ]]>
