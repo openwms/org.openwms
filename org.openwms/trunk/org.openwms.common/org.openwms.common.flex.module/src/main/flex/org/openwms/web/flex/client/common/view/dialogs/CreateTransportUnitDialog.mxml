@@ -77,12 +77,12 @@
              * 
              * @param event Currently not used
              */
-            public function onTransportUnitCreated(event:TransportUnitEvent):void {
+            public function onTransportUnitCreated(event : TransportUnitEvent) : void {
                 barcodeTxt.text = "";
                 barcodeTxt.setFocus();
             }
 
-	        private function keyEventHandler(event:KeyboardEvent):void {
+	        private function keyEventHandler(event : KeyboardEvent) : void {
 	            if(event.keyCode == 27) {
 	               closeDialog(event);
 	               return;

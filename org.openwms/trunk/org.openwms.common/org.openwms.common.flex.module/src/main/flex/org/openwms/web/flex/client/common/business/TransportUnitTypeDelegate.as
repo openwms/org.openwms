@@ -19,10 +19,10 @@
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
 package org.openwms.web.flex.client.common.business {
-	
+
     import mx.collections.ArrayCollection;
     import mx.controls.Alert;
-    
+
     import org.granite.tide.events.TideFaultEvent;
     import org.granite.tide.events.TideResultEvent;
     import org.granite.tide.spring.Context;
@@ -43,20 +43,20 @@ package org.openwms.web.flex.client.common.business {
      * @since 0.1
      */
     public class TransportUnitTypeDelegate {
-    	
+
         [In]
         [Bindable]
-	    /**
-	     * Injected Context object.
-	     */
+        /**
+         * Injected Context object.
+         */
         public var tideContext:Context;
 
-	    [Inject]
-	    [Bindable]
-	    /**
-	     * Injected Model.
-	     */
-    	public var commonModelLocator:CommonModelLocator;
+        [Inject]
+        [Bindable]
+        /**
+         * Injected Model.
+         */
+        public var commonModelLocator:CommonModelLocator;
         private var transportUnitType:TransportUnitType;
 
         public function TransportUnitTypeDelegate():void { }
@@ -65,23 +65,23 @@ package org.openwms.web.flex.client.common.business {
         /**
          * Call to load all TransportUnitTypes from the service.
          */
-        public function getTransportUnitTypes():void {
-        	tideContext.transportUnitService.getAllTransportUnitTypes(onTransportUnitTypesLoaded, onFault);
+        public function getTransportUnitTypes(event : TransportUnitTypeEvent) : void {
+            tideContext.transportUnitService.getAllTransportUnitTypes(onTransportUnitTypesLoaded, onFault);
         }
-        private function onTransportUnitTypesLoaded(event:TideResultEvent):void {
+        private function onTransportUnitTypesLoaded(event : TideResultEvent) : void {
             commonModelLocator.allTransportUnitTypes = event.result as ArrayCollection;        	
         }
-        
+
         [Observer("CREATE_TRANSPORT_UNIT_TYPE")]
         /**
          * Call to create a new TransportUnitType.
          */
-        public function createTransportUnitType(event:TransportUnitTypeEvent):void {
+        public function createTransportUnitType(event : TransportUnitTypeEvent) : void {
             if (event.data != null) {
                 tideContext.transportUnitService.createTransportUnitType(event.data as TransportUnitType, onTransportUnitTypeCreated, onFault);
             }
         }
-        private function onTransportUnitTypeCreated(event:TideResultEvent):void {
+        private function onTransportUnitTypeCreated(event : TideResultEvent) : void {
             dispatchEvent(new TransportUnitTypeEvent(TransportUnitTypeEvent.LOAD_ALL_TRANSPORT_UNIT_TYPES));
         }
 
@@ -89,12 +89,12 @@ package org.openwms.web.flex.client.common.business {
         /**
          * Call to delete a TransportUnitType.
          */
-        public function deleteTransportUnitTypes(event:TransportUnitTypeEvent):void {
+        public function deleteTransportUnitTypes(event : TransportUnitTypeEvent) : void {
             if (event.data != null) {
                 tideContext.transportUnitService.deleteTransportUnitTypes(event.data as ArrayCollection, onTransportUnitTypeDeleted, onFault);
             }
         }
-        private function onTransportUnitTypeDeleted(event:TideResultEvent):void {
+        private function onTransportUnitTypeDeleted(event : TideResultEvent) : void {
             dispatchEvent(new TransportUnitTypeEvent(TransportUnitTypeEvent.LOAD_ALL_TRANSPORT_UNIT_TYPES));
         }
 
@@ -102,12 +102,12 @@ package org.openwms.web.flex.client.common.business {
         /**
          * Call to save an already existing TransportUnitType.
          */
-        public function saveTransportUnitType(event:TransportUnitTypeEvent):void {
+        public function saveTransportUnitType(event : TransportUnitTypeEvent) : void {
             if (event.data != null) {
                 tideContext.transportUnitService.saveTransportUnitType(event.data as TransportUnitType, onTransportUnitTypeSaved, onFault);
             }
         }
-        private function onTransportUnitTypeSaved(event:TideResultEvent):void {
+        private function onTransportUnitTypeSaved(event : TideResultEvent) : void {
             dispatchEvent(new TransportUnitTypeEvent(TransportUnitTypeEvent.LOAD_ALL_TRANSPORT_UNIT_TYPES));
         }
 
@@ -115,13 +115,13 @@ package org.openwms.web.flex.client.common.business {
         /**
          * Lazy load all Rules belonging to a TransportUnitType.
          */
-        public function loadRules(event:TransportUnitTypeEvent):void {
+        public function loadRules(event : TransportUnitTypeEvent) : void {
             if (event.data != null) {
-            	transportUnitType = event.data as TransportUnitType;
+                transportUnitType = event.data as TransportUnitType;
                 tideContext.transportUnitService.loadRules(transportUnitType.type, onRulesLoaded, onFault);
             }
         }
-        private function onRulesLoaded(event:TideResultEvent):void {
+        private function onRulesLoaded(event : TideResultEvent) : void {
             var rules:ArrayCollection = event.result as ArrayCollection;
             for each (var rule:Rule in rules) {
                 if (rule is TypePlacingRule) {
@@ -133,9 +133,10 @@ package org.openwms.web.flex.client.common.business {
             }
         }
 
-        private function onFault(event:TideFaultEvent):void {
+        private function onFault(event : TideFaultEvent) : void {
             trace("Error executing operation on Transport Unit service:" + event.fault);
             Alert.show("Error executing operation on Transport Unit service:"+ event.fault);
         }
     }
 }
+

@@ -48,20 +48,20 @@ package org.openwms.web.flex.client.common.business {
          * Injected TideContext.
          */
         public var tideContext:Context;
-	    [Inject]
-	    [Bindable]
-	    /**
-	     * Injected Model.
-	     */
+        [Inject]
+        [Bindable]
+        /**
+         * Injected Model.
+         */
         public var commonModelLocator:CommonModelLocator;            
 
         /**
          * Default constructor.
          */
-        public function TransportUnitDelegate():void { }
+        public function TransportUnitDelegate( ) : void { }
 
         [Observer("LOAD_TRANSPORT_UNITS")]
-        public function getTransportUnits():void {
+        public function getTransportUnits(event : TransportUnitEvent) : void {
             tideContext.transportUnitService.getAllTransportUnits(onTransportUnitsLoaded, onFault);
         }
         private function onTransportUnitsLoaded(event:TideResultEvent):void {
@@ -69,32 +69,32 @@ package org.openwms.web.flex.client.common.business {
         }
 
         [Observer("CREATE_TRANSPORT_UNIT")]
-        public function createTransportUnit(event:TransportUnitEvent):void {
+        public function createTransportUnit(event : TransportUnitEvent) : void {
             var transportUnit:TransportUnit = event.data as TransportUnit;
             tideContext.transportUnitService.createTransportUnit(transportUnit.barcode, transportUnit.transportUnitType, transportUnit.actualLocation.locationId, onTransportUnitCreated, onFault);
         }
-        private function onTransportUnitCreated(event:TideResultEvent):void {
+        private function onTransportUnitCreated(event : TideResultEvent) : void {
             dispatchEvent(new TransportUnitEvent(TransportUnitEvent.LOAD_TRANSPORT_UNITS));
             dispatchEvent(new TransportUnitEvent(TransportUnitEvent.TRANSPORT_UNIT_CREATED));
         }
 
         [Observer("DELETE_TRANSPORT_UNIT")]
-        public function deleteTransportUnits(event:TransportUnitEvent):void {
+        public function deleteTransportUnits(event : TransportUnitEvent) : void {
             tideContext.transportUnitService.deleteTransportUnits(event.data as ArrayCollection, onTransportUnitDeleted, onFault);
         }
-        private function onTransportUnitDeleted(event:TideResultEvent):void {
+        private function onTransportUnitDeleted(event : TideResultEvent) : void {
             dispatchEvent(new TransportUnitEvent(TransportUnitEvent.LOAD_TRANSPORT_UNITS));
         }
 
         [Observer("SAVE_TRANSPORT_UNIT")]
-        public function saveTransportUnits(event:TransportUnitEvent):void {
+        public function saveTransportUnits(event : TransportUnitEvent) : void {
             tideContext.transportUnitService.save(event.data as TransportUnit, onTransportUnitSaved, onFault);
         }
-        private function onTransportUnitSaved(event:TideResultEvent):void {
+        private function onTransportUnitSaved(event : TideResultEvent) : void {
             dispatchEvent(new TransportUnitEvent(TransportUnitEvent.LOAD_TRANSPORT_UNITS));
         }
 
-        private function onFault(event:TideFaultEvent):void {
+        private function onFault(event : TideFaultEvent) : void {
             trace("Error executing operation on Transport Unit service:" + event.fault);
             Alert.show("Error executing operation on Transport Unit service");
         }

@@ -45,7 +45,7 @@ package org.openwms.web.flex.client.tms.view {
     import org.openwms.web.flex.client.tms.model.TMSModelLocator;
     import org.openwms.web.flex.client.tms.view.TransportOrderView;
 
-    [Name("TMSApp")]
+    [Name]
     [Bindable]
     /**
      * Base class of TMS Module.
@@ -61,21 +61,34 @@ package org.openwms.web.flex.client.tms.view {
          * Injected a model.
          */
         public var modelLocator : ModelLocator;
+
         [Inject]
         /**
          * Injected Tide identity object.
          */
         public var identity : Identity;
+
         private var menuCollection : ArrayCollection;
+
         public var menuBarItemsCollection : XMLListCollection;
+
         public var tmsMenuBar : MenuBar;
+
         public var tmsViewStack : ViewStack;
+
         private var transportService : SecureRemoteObject = new SecureRemoteObject("transportServiceRemote");
+
         private var childDomain : ApplicationDomain;
-        [Embed(source="/assets/security/secured-objects.xml", mimeType="application/octet-stream")]
-        private var _xml:Class;
+
+        [Embed(source = "/assets/security/secured-objects.xml", mimeType = "application/octet-stream")]
+        private var _xml : Class;
+
         private var blacklisted : ArrayCollection = new ArrayCollection();
-        private var transportOrderView: TransportOrderView;
+
+        private var transportOrderView : TransportOrderView;
+
+        private var _views : ArrayCollection;
+
         /**
          * Default constructor.
          */
@@ -90,7 +103,7 @@ package org.openwms.web.flex.client.tms.view {
          */
         public function init(tide : Tide) : void {
             trace("Add components of the TMS module to Tide context");
-            tide.addComponents([TMSAppBase,TransportOrderView, TMSModelLocator, TransportsDelegate]);
+            tide.addComponents([TMSAppBase, TransportOrderView, TMSModelLocator, TransportsDelegate]);
         }
 
         /**
@@ -98,8 +111,9 @@ package org.openwms.web.flex.client.tms.view {
          * the main applicationDomain, that means the context of the main application is extended with the subcontext of
          * this module.
          */
-        public function start(applicationDomain : ApplicationDomain = null) : void {
+        public function start(applicationDomain : ApplicationDomain=null) : void {
             trace("Starting TMS module");
+            _views = new ArrayCollection(tmsViewStack.getChildren());
             childDomain = applicationDomain;
             setupServices([transportService]);
             readAndMergeGrantsList();
@@ -151,7 +165,7 @@ package org.openwms.web.flex.client.tms.view {
          * application.
          */
         public function getViews() : ArrayCollection {
-            return new ArrayCollection(tmsViewStack.getChildren());
+            return _views;
         }
 
         /**
@@ -175,8 +189,8 @@ package org.openwms.web.flex.client.tms.view {
             if (blacklisted.length > 0) {
                 return;
             }
-            var xml:XML = XMLUtil.getXML(new _xml());
-            for each (var g:XML in xml.grant) {
+            var xml : XML = XMLUtil.getXML(new _xml());
+            for each (var g : XML in xml.grant) {
                 blacklisted.addItem(new Grant(g.name, g.description));
             }
         }
