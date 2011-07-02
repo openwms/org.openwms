@@ -31,16 +31,53 @@ package org.openwms.web.flex.client.common.event {
      */
     public class LocationTypeEvent extends Event {
 
-        public static const LOAD_ALL_LOCATION_TYPES:String = "LOAD_ALL_LOCATION_TYPES";
-        public static const CREATE_LOCATION_TYPE:String = "CREATE_LOCATION_TYPE";
-        public static const DELETE_LOCATION_TYPE:String = "DELETE_LOCATION_TYPE";
-        public static const SAVE_LOCATION_TYPE:String = "SAVE_LOCATION_TYPE";
+        /**
+         * Event to load all LocationTypes from the backend service.
+         */
+        public static const LOAD_ALL_LOCATION_TYPES : String = "LOAD_ALL_LOCATION_TYPES";
+        /**
+         * Event to create a new LocationType stored in the data field.
+         */
+        public static const CREATE_LOCATION_TYPE : String = "CREATE_LOCATION_TYPE";
+        /**
+         * Event to delete the LocationType stored in the data field.
+         */
+        public static const DELETE_LOCATION_TYPE : String = "DELETE_LOCATION_TYPE";
+        /**
+         * Event to save the LocationType stored in the data field.
+         */
+        public static const SAVE_LOCATION_TYPE : String = "SAVE_LOCATION_TYPE";
 
-        public var data:*;
+        /**
+         * Store arbitrary data.
+         */
+        public var data : *;
 
-        public function LocationTypeEvent(type:String, bubbles:Boolean = true, cancelable:Boolean = false) {
+        /**
+         * Constructor.
+         */
+        public function LocationTypeEvent(type : String, bubbles : Boolean=true, cancelable : Boolean=false) {
             super(type, bubbles, cancelable);
+        }
+
+        /**
+         * Just a copy of the event itself including the data field.
+         *
+         * @return a copy of this
+         */
+        public override function clone() : Event {
+            var e : LocationTypeEvent = new LocationTypeEvent(type);
+            e.data = data;
+            return e;
+        }
+
+        /**
+         * Simple override.
+         *
+         * @return the type of event
+         */
+        public override function toString() : String {
+            return formatToString("LocationTypeEvent", "type");
         }
     }
 }
-

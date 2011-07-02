@@ -31,20 +31,56 @@ package org.openwms.web.flex.client.common.event {
      */
     public class LocationGroupEvent extends Event {
 
-        public static const LOAD_ALL_LOCATION_GROUPS:String = "LOAD_ALL_LOCATION_GROUPS";
-        public static const SAVE_LOCATION_GROUP:String = "SAVE_LOCATION_GROUP";
-        public static const CHANGE_STATE:String = "LG.CHANGE_STATE";
         /**
-         * This type of event is fired when the list of LocationGroups in the model is refreshed.
+         * This type of event to trigger a reload of all LocationGroup entities.
          */
-        public static const COLLECTION_REFRESHED:String = "LG.COLL_LOCATION_GROUPS_REFRESHED";
+        public static const LOAD_ALL_LOCATION_GROUPS : String = "LOAD_ALL_LOCATION_GROUPS";
+        /**
+         * This type of event to save changes on an existing LocationGroup.
+         * The data field is expected to store the LocationGroup to save.
+         */
+        public static const SAVE_LOCATION_GROUP : String = "SAVE_LOCATION_GROUP";
+        /**
+         * This type of event is fired to change the state of a LocationGroup.
+         * The data field is expected to store the LocationGroup to save.
+         */
+        public static const CHANGE_STATE : String = "LG.CHANGE_STATE";
+        /**
+         * This type of event is fired when the list of LocationGroups in the model was refreshed.
+         */
+        public static const COLLECTION_REFRESHED : String = "LG.COLL_LOCATION_GROUPS_REFRESHED";
 
-        public var data:*;
+        /**
+         * Store arbitrary data.
+         */
+        public var data : *;
 
-        public function LocationGroupEvent(type:String, bubbles:Boolean = true, cancelable:Boolean = false) {
+        /**
+         * Constructor.
+         */
+        public function LocationGroupEvent(type : String, bubbles : Boolean=true, cancelable : Boolean=false) {
             super(type, bubbles, cancelable);
         }
 
+        /**
+         * Just a copy of the event itself including the data field.
+         *
+         * @return a copy of this
+         */
+        public override function clone() : Event {
+            var e : LocationGroupEvent = new LocationGroupEvent(type);
+            e.data = data;
+            return e;
+        }
+
+        /**
+         * Simple override.
+         *
+         * @return the type of event
+         */
+        public override function toString() : String {
+            return formatToString("LocationGroupEvent", "type");
+        }
     }
 }
 

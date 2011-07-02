@@ -33,19 +33,17 @@ package org.openwms.web.flex.client.common.component {
      */
     public class CoordinateColumn extends DataGridColumn {
 
-        public var column:String;
+        public var column : String;
 
         /**
          * Constructor.
          */
-        public function CoordinateColumn(columnName:String=null) {
+        public function CoordinateColumn(columnName : String=null) {
             this.sortCompareFunction = sortCoordinate;
             super(columnName);
         }
 
-        private function sortCoordinate(obj1:Object, obj2:Object):int {
-            //var name1:String = obj1.locationId[column] != null ? obj1.locationId[column] : "";
-            //var name2:String = obj2.locationId[column] != null ? obj2.locationId[column] : "";
+        private function sortCoordinate(obj1 : Object, obj2 : Object) : int {
             return (obj1.locationId[column] > obj2.locationId[column]) ? -1 : 1;
         }
 
