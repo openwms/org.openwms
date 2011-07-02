@@ -161,7 +161,7 @@
     </mx:HBox>
     <mx:HRule x="9" y="53" width="95%"/>
     <mx:HBox height="100%" width="95%" x="10" y="63">
-        <mx:Canvas id="locationDetailsPnl" backgroundColor="#C6FFC7" backgroundAlpha="0.5" height="100%">
+        <mx:Canvas id="locationDetailsPnl" backgroundColor="#C6FFC7" backgroundAlpha="0.5" height="95%">
             
             <mx:Image x="10" y="10" mouseChildren="false" source="@Embed(source='/assets/images/Location.png')"/>
             <mx:Label text="{I18nUtil.trans(I18nUtil.COMMON_ENTITY, 'entity_location')}" fontWeight="bold" textAlign="left" x="34" y="10"/>
@@ -205,7 +205,7 @@
             <mx:Text x="95" y="562" text="{selected.locationType.description}"/>
                     
         </mx:Canvas>
-        <mx:DataGrid id="locationsList" allowMultipleSelection="true" sortableColumns="true" dataProvider="{commonModelLocator.allLocations}" change="onRowClick(event)" height="100%" width="100%">
+        <mx:DataGrid id="locationsList" allowMultipleSelection="true" sortableColumns="true" dataProvider="{commonModelLocator.allLocations}" change="onRowClick(event)" height="95%" width="100%">
             <mx:columns>
             	<comm:CoordinateColumn column="area" headerText="{I18nUtil.trans(I18nUtil.COMMON_ENTITY, 'entity_location_locationId_area')}" labelFunction="{LocationFormatter.locationIdField}" editable="false" width="45" />
                 <comm:CoordinateColumn column="aisle" headerText="{I18nUtil.trans(I18nUtil.COMMON_ENTITY, 'entity_location_locationId_aisle')}" labelFunction="{LocationFormatter.locationIdField}" editable="false" width="45"/>
