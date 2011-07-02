@@ -158,9 +158,9 @@ package org.openwms.web.flex.client.model {
         // Property Management
         // --------------------------------------------------------------------
         /**
-         * Collection of all Properties.
+         * Collection of all Properties of type APPLICATION.
          */
-        public var allProperties : ArrayCollection = new ArrayCollection();
+        public var allApplicationProperties : ArrayCollection = new ArrayCollection();
 
         // --------------------------------------------------------------------
         // Security
