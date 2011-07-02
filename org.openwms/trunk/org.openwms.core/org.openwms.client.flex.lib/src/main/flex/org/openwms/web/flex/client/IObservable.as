@@ -30,7 +30,7 @@ package org.openwms.web.flex.client {
      * @version $Revision$
      * since 0.1
      */
-    public interface IObserver {
+    public interface IObservable {
 
         /**
          * Callback method.
