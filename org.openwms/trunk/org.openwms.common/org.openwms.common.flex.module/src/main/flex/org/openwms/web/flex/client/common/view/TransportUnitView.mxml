@@ -29,6 +29,7 @@
         [ManagedEvent(name="LOAD_ALL_LOCATIONS")]
         [ManagedEvent(name="LOAD_ALL_TRANSPORT_UNIT_TYPES")]
         [ManagedEvent(name="DELETE_TRANSPORT_UNIT")]
+        [ResourceBundle("commonMain")]
     </mx:Metadata>
 
 	<mx:Script>
@@ -53,6 +54,7 @@
     		import org.openwms.web.flex.client.common.view.dialogs.CreateTransportUnitDialog;
     		import org.openwms.web.flex.client.common.view.dialogs.ConfirmDeletionDialog;
             import org.openwms.web.flex.client.common.view.dialogs.TransportUnitDetailsDialog;
+            import org.openwms.web.flex.client.common.util.I18nUtil;
     		
 		    [Inject]
 		    [Bindable]

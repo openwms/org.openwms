@@ -29,6 +29,7 @@
         [ManagedEvent(name="LOAD_ALL_LOCATION_TYPES")]
         [ManagedEvent(name="LOAD_TUT_RULES")]
         [ManagedEvent(name="SAVE_TRANSPORT_UNIT_TYPE")]
+        [ResourceBundle("commonMain")]
     </mx:Metadata>
 
     <mx:Style>
@@ -66,6 +67,7 @@
             import org.openwms.web.flex.client.common.view.dialogs.CreateTransportUnitTypeDialog;
             import org.openwms.web.flex.client.common.view.dialogs.AssignmentLocationTypeDialog;
             import org.openwms.web.flex.client.common.view.dialogs.ConfirmDeletionTransportUnitTypesDialog;
+            import org.openwms.web.flex.client.common.util.I18nUtil;
             import org.openwms.web.flex.client.component.ListDialog;
             import org.openwms.web.flex.client.util.BindingProperty;
             import org.openwms.web.flex.client.util.DisplayUtility;
@@ -76,28 +78,28 @@
             /**
              * Inject a model to work on.
              */
-            public var commonModelLocator:CommonModelLocator;     
+            public var commonModelLocator : CommonModelLocator;     
             [Inject]
             [Bindable]
             /**
              * We need to have Granites Identity injected.
              */
-            public var identity:Identity;
+            public var identity : Identity;
             [Inject]
             [Bindable]
             /**
              * Injected TideContext.
              */
-            public var tideContext:Context;
+            public var tideContext : Context;
             [Bindable]
-            private var selected:TransportUnitType;
+            private var selected : TransportUnitType;
             [Bindable]
-            private var hasImage:Boolean = selected is ImageProvider;
+            private var hasImage : Boolean = selected is ImageProvider;
 
             /**
              * Initialize data structures in model or fire events to do so.
              */
-            private function onShow():void {
+            private function onShow() : void {
                 if (commonModelLocator.allLocationTypes.length == 0) {
                     dispatchEvent(new LocationTypeEvent(LocationTypeEvent.LOAD_ALL_LOCATION_TYPES));
                 }
@@ -109,24 +111,24 @@
                 }
             }
 
-            private function showCreateTransportUnitTypeDialog():void {
+            private function showCreateTransportUnitTypeDialog() : void {
                 var pop:CreateTransportUnitTypeDialog = CreateTransportUnitTypeDialog(PopUpManager.createPopUp(this, CreateTransportUnitTypeDialog, true));
                 // PopUpManager.centerPopUp(pop);
             }
 
-            private function showDeleteTransportUnitTypeDialog():void {
+            private function showDeleteTransportUnitTypeDialog() : void {
                 if (transportUnitTypeGrd.selectedIndices.length == 0) {
                     Alert.show("Please select at least one TransportUnitType to delete");
                     return;
                 }
                 selected = null;
-                var pop:ConfirmDeletionTransportUnitTypesDialog=ConfirmDeletionTransportUnitTypesDialog(PopUpManager.createPopUp(this, ConfirmDeletionTransportUnitTypesDialog, true));
-                pop.messageText="Delete selected Transport Unit Types";
-                pop.items=new ArrayCollection(transportUnitTypeGrd.selectedItems);
+                var pop : ConfirmDeletionTransportUnitTypesDialog = ConfirmDeletionTransportUnitTypesDialog(PopUpManager.createPopUp(this, ConfirmDeletionTransportUnitTypesDialog, true));
+                pop.messageText = "Delete selected Transport Unit Types";
+                pop.items = new ArrayCollection(transportUnitTypeGrd.selectedItems);
                 PopUpManager.centerPopUp(pop);
             }
 
-            private function changeSelection(event:ListEvent):void {
+            private function changeSelection(event : ListEvent) : void {
                 selected = event.currentTarget.selectedItem as TransportUnitType;
                 weightTareTxt.text = numberFmt.format(weightTareTxt.text);
                 weightMaxTxt.text = numberFmt.format(weightMaxTxt.text);
@@ -137,30 +139,30 @@
                     if (selected.typeStackingRules.length > 0) {
                         selected.typeStackingRules.removeAll();
                     }
-	                var e:TransportUnitTypeEvent = new TransportUnitTypeEvent(TransportUnitTypeEvent.LOAD_TUT_RULES);
+	                var e : TransportUnitTypeEvent = new TransportUnitTypeEvent(TransportUnitTypeEvent.LOAD_TUT_RULES);
 	                e.data = selected;
 	                dispatchEvent(e);
                 }
             }
 
-            private function saveTransportUnitType():void {
+            private function saveTransportUnitType() : void {
                 if (ValidationUtil.validateAndFormat(heightTxt, numberVal) &&
                     ValidationUtil.validateAndFormat(lengthTxt, numberVal) &&
                     ValidationUtil.validateAndFormat(widthTxt, numberVal) &&
                     ValidationUtil.validateAndFormat(weightTareTxt, numberVal, numberFmt) &&
                     ValidationUtil.validateAndFormat(weightMaxTxt, numberVal, numberFmt)) {
-                    var bindings:Array = [new BindingProperty(selected, "length", lengthTxt, "text"),
-                                          new BindingProperty(selected, "width", widthTxt, "text"),  
-                                          new BindingProperty(selected, "height", heightTxt, "text"),  
-                                          new BindingProperty(selected, "weightTare", weightTareTxt, "text"),  
-                                          new BindingProperty(selected, "weightMax", weightMaxTxt, "text"),  
-                                          new BindingProperty(selected, "description", descriptionTxt, "text"),  
-                                          new BindingProperty(selected, "compatibility", compatibilityTxt, "text"),  
-                                          new BindingProperty(selected, "typePlacingRules", allowedLocationTypeLst, "dataProvider"),  
-                                          new BindingProperty(selected, "typeStackingRules", allowedTransportUnitTypeLst, "dataProvider")];
-                    DisplayUtility.bindProperties(new ArrayCollection(bindings), function execute():void {
-                            var event:TransportUnitTypeEvent=new TransportUnitTypeEvent(TransportUnitTypeEvent.SAVE_TRANSPORT_UNIT_TYPE);
-                            event.data=selected;
+                    var bindings : Array = [new BindingProperty(selected, "length", lengthTxt, "text"),
+                                            new BindingProperty(selected, "width", widthTxt, "text"),  
+                                            new BindingProperty(selected, "height", heightTxt, "text"),  
+                                            new BindingProperty(selected, "weightTare", weightTareTxt, "text"),  
+                                            new BindingProperty(selected, "weightMax", weightMaxTxt, "text"),  
+                                            new BindingProperty(selected, "description", descriptionTxt, "text"),  
+                                            new BindingProperty(selected, "compatibility", compatibilityTxt, "text"),  
+                                            new BindingProperty(selected, "typePlacingRules", allowedLocationTypeLst, "dataProvider"),  
+                                            new BindingProperty(selected, "typeStackingRules", allowedTransportUnitTypeLst, "dataProvider")];
+                    DisplayUtility.bindProperties(new ArrayCollection(bindings), function execute() : void {
+                            var event : TransportUnitTypeEvent = new TransportUnitTypeEvent(TransportUnitTypeEvent.SAVE_TRANSPORT_UNIT_TYPE);
+                            event.data = selected;
                             dispatchEvent(event);
                         });
                     selected = null;                            
@@ -169,7 +171,7 @@
                 }
             }
 
-            private function refresh():void {
+            private function refresh() : void {
                 dispatchEvent(new TransportUnitTypeEvent(TransportUnitTypeEvent.LOAD_ALL_TRANSPORT_UNIT_TYPES));
             }
             
@@ -178,15 +180,15 @@
             	return tpr.allowedLocationType.type + " - " + tpr.allowedLocationType.description;
             }
             
-            private function assignAllowedLocationTypes():void {
+            private function assignAllowedLocationTypes() : void {
                 var pop:ListDialog = ListDialog(PopUpManager.createPopUp(this, ListDialog, true));
                 pop.panelHeaderText = "Assign a new Location Type";
                 pop.labelText = pop.panelHeaderText;
                 pop.submitBtnText = "Assign";
-                var toBeAssigned:ArrayCollection = commonModelLocator.allLocationTypes;
-                var index:int = -1;
-                for each (var rule:TypePlacingRule in selected.typePlacingRules) {
-                	for (var j:int = 0; j < toBeAssigned.length; j++) {
+                var toBeAssigned : ArrayCollection = commonModelLocator.allLocationTypes;
+                var index : int = -1;
+                for each (var rule : TypePlacingRule in selected.typePlacingRules) {
+                	for (var j : int = 0; j < toBeAssigned.length; j++) {
                         if (rule.allowedLocationType.type == (toBeAssigned[j] as LocationType).type) {
 		                    toBeAssigned.removeItemAt(j);
                         }
@@ -197,12 +199,12 @@
                 PopUpManager.centerPopUp(pop);
             }
 
-            private function labelFunctionLocationType(item:LocationType):String {
+            private function labelFunctionLocationType(item : LocationType) : String {
                 return item.type + " - " + item.description;
             }
             
-            private function removeAllowedLocationTypes():void {
-                var pop:ListDialog = ListDialog(PopUpManager.createPopUp(this, ListDialog, true));
+            private function removeAllowedLocationTypes() : void {
+                var pop : ListDialog = ListDialog(PopUpManager.createPopUp(this, ListDialog, true));
                 pop.panelHeaderText = "Forbid Location Types";
                 pop.labelText = "Location Types to forbid";
                 pop.submitBtnText = "Remove";
@@ -210,7 +212,7 @@
                 PopUpManager.centerPopUp(pop);
             }
             
-            private function onDragComplete(event:DragEvent):void {
+            private function onDragComplete(event : DragEvent) : void {
             	/*
                 var e:ApplicationEvent = new ApplicationEvent(ApplicationEvent.SAVE_MODULE);
                 var value:Object = event.dragSource.dataForFormat('items');
