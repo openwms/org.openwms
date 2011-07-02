@@ -19,20 +19,22 @@
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
 package org.openwms.web.flex.client {
+
     import mx.collections.ArrayCollection;
-    
+
     /**
-     * An IObserver is notified about an object that references the IObserver.
+     * An IObservable is used as a callback. An UIComponent or any other Actionscript
+     * class implementing this interface can sent a notification to interested Observers
      *
      * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
      * @version $Revision$
      * since 0.1
      */
     public interface IObserver {
-    	
-    	/**
-    	 * Callback method.
-    	 */
-        function notify():void;
+
+        /**
+         * Callback method.
+         */
+        function notify() : void;
     }
 }
