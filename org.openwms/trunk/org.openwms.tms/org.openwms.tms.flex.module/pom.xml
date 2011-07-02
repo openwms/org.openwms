@@ -38,8 +38,8 @@
 	</properties>
 	<build>
 		<finalName>${project.artifactId}-${project.version}</finalName>
-		<sourceDirectory>src/main/flex</sourceDirectory>
-		<testSourceDirectory>src/test/flex</testSourceDirectory>
+		<sourceDirectory>${project.basedir}/src/main/flex</sourceDirectory>
+		<testSourceDirectory>${project.basedir}/src/test/flex</testSourceDirectory>
 		<plugins>
 			<plugin>
 				<groupId>org.sonatype.flexmojos</groupId>
