@@ -32,15 +32,16 @@
 
 	<mx:Script>
     	<![CDATA[
-    		import flash.events.*;
+    		import flash.events.Event;
+            import flash.events.KeyboardEvent;
+            import flash.events.ProgressEvent;
     	    import flash.net.FileReference;
     	    import flash.net.URLRequest;
             import mx.controls.Alert;
-    	    import mx.rpc.events.*;
     	    import mx.managers.PopUpManager;
 
             import org.openwms.web.flex.client.model.ModelLocator;
-            import org.openwms.web.flex.client.IObserver;
+            import org.openwms.web.flex.client.IObservable;
             import org.openwms.web.flex.client.util.I18nUtil;
     		
             [Inject]
@@ -51,10 +52,10 @@
             public var modelLocator : ModelLocator;            
             [Bindable]
             /**
-             * Pass in any callback function of type IObserver that is called when
+             * Pass in any callback function of type IObservable that is called when
              * the transfer completes successfully.
              */
-            public var callback : IObserver; 
+            public var callback : IObservable; 
     		private var tmpFileName : String;
     	    private var fileRef : FileReference;
     	
@@ -93,7 +94,7 @@
              *
              * @param event Unused
              */
-            protected function browse(event : Event) : void {
+            protected function browse(event : Event = null) : void {
                 fileRef.browse();
             }            
     		
@@ -102,8 +103,8 @@
              *
              * @param event Unused
              */
-            protected function cancel(event : Event) : void {
-                closeDialog(event);
+            protected function cancel(event : Event = null) : void {
+                closeDialog();
             }            
 
             /**
@@ -111,7 +112,7 @@
              *
              * @param event Unused
              */
-            protected function submit(event : Event) : void {
+            protected function submit(event : Event = null) : void {
                 uploadFile(uploadURL.text);
             }            
 
