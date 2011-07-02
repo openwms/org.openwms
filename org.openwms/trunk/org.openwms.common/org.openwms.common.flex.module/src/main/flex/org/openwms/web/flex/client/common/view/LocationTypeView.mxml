@@ -27,6 +27,8 @@
         [Name]
         [ManagedEvent(name="SAVE_LOCATION_TYPE")]
         [ManagedEvent(name="LOAD_ALL_LOCATION_TYPES")]
+        [ResourceBundle("commonMain")]        
+        [ResourceBundle("commonEntity")]        
     </mx:Metadata>
 
     <mx:Script>
@@ -148,31 +150,31 @@
         <mx:Canvas id="locationTypeDetailsPnl" backgroundColor="#C6FFC7" backgroundAlpha="0.5" height="95%">
             
             <mx:Image x="10" y="10" mouseChildren="false" source="@Embed(source='/assets/images/LocationType.png')"/>
-            <mx:Label text="{I18nUtil.trans(I18nUtil.COMMON_MAIN, 'ttip_locationTypeView_reloadBtn')}" fontWeight="bold" textAlign="left" x="34" y="8"/>
+            <mx:Label text="{I18nUtil.trans(I18nUtil.COMMON_MAIN, 'txt_locationTypeView_header')}" fontWeight="bold" textAlign="left" x="34" y="8"/>
             <mx:Text text="{selected.type}" fontWeight="bold" x="148" y="34"/>
             
-            <mx:Label text="{I18nUtil.trans(I18nUtil.COMMON_MAIN, 'entity_locationType_description')}" textAlign="left" x="10" y="60"/>
-            <mx:Label text="{I18nUtil.trans(I18nUtil.COMMON_MAIN, 'entity_locationType_type')}" textAlign="left" x="10" y="34"/>
+            <mx:Label text="{I18nUtil.trans(I18nUtil.COMMON_ENTITY, 'entity_locationType_description')}" textAlign="left" x="10" y="60"/>
+            <mx:Label text="{I18nUtil.trans(I18nUtil.COMMON_ENTITY, 'entity_locationType_type')}" textAlign="left" x="10" y="34"/>
             <mx:TextArea id="descriptionTxt" keyUp="{changed = true;}" text="{selected.description}" width="200" height="64" x="148" y="59"/>
             <mx:HRule x="10" y="406" width="350" strokeWidth="0"/>
             
-            <mx:Label text="{I18nUtil.trans(I18nUtil.COMMON_MAIN, 'entity_locationType_length')}" textAlign="left" x="10" y="133"/>
+            <mx:Label text="{I18nUtil.trans(I18nUtil.COMMON_ENTITY, 'entity_locationType_length')}" textAlign="left" x="10" y="133"/>
             <mx:TextInput id="lengthTxt" keyUp="validate(event)" text="{selected.length}" width="60" x="148" y="131" textAlign="right"/>
             
-            <mx:Label text="{I18nUtil.trans(I18nUtil.COMMON_MAIN, 'entity_locationType_width')}" textAlign="left" x="10" y="159"/>
+            <mx:Label text="{I18nUtil.trans(I18nUtil.COMMON_ENTITY, 'entity_locationType_width')}" textAlign="left" x="10" y="159"/>
             <mx:TextInput id="widthTxt" keyUp="validate(event)" text="{selected.width}" width="60" x="148" y="157" textAlign="right"/>
             
-            <mx:Label text="{I18nUtil.trans(I18nUtil.COMMON_MAIN, 'entity_locationType_height')}" textAlign="left" x="10" y="185"/>
+            <mx:Label text="{I18nUtil.trans(I18nUtil.COMMON_ENTITY, 'entity_locationType_height')}" textAlign="left" x="10" y="185"/>
             <mx:TextInput id="heightTxt" keyUp="validate(event)" text="{selected.height}" width="60" x="148" y="183" textAlign="right"/>
         
         </mx:Canvas>
         <mx:DataGrid id="locationTypeGrd" dataProvider="{commonModelLocator.allLocationTypes}" height="95%" allowMultipleSelection="true" width="100%" change="onChange(event)">
             <mx:columns>
-                <mx:DataGridColumn headerText="{I18nUtil.trans(I18nUtil.COMMON_MAIN, 'entity_locationType_type')}" dataField="type" width="50"/>
-                <mx:DataGridColumn headerText="{I18nUtil.trans(I18nUtil.COMMON_MAIN, 'entity_locationType_length')}" dataField="length" width="50"/>
-                <mx:DataGridColumn headerText="{I18nUtil.trans(I18nUtil.COMMON_MAIN, 'entity_locationType_width')}" dataField="width" width="50"/>
-                <mx:DataGridColumn headerText="{I18nUtil.trans(I18nUtil.COMMON_MAIN, 'entity_locationType_height')}" dataField="height" width="50"/>
-                <mx:DataGridColumn headerText="{I18nUtil.trans(I18nUtil.COMMON_MAIN, 'entity_locationType_description')}" dataField="description"/>
+                <mx:DataGridColumn headerText="{I18nUtil.trans(I18nUtil.COMMON_ENTITY, 'entity_locationType_type')}" dataField="type" width="50"/>
+                <mx:DataGridColumn headerText="{I18nUtil.trans(I18nUtil.COMMON_ENTITY, 'entity_locationType_length')}" dataField="length" width="50"/>
+                <mx:DataGridColumn headerText="{I18nUtil.trans(I18nUtil.COMMON_ENTITY, 'entity_locationType_width')}" dataField="width" width="50"/>
+                <mx:DataGridColumn headerText="{I18nUtil.trans(I18nUtil.COMMON_ENTITY, 'entity_locationType_height')}" dataField="height" width="50"/>
+                <mx:DataGridColumn headerText="{I18nUtil.trans(I18nUtil.COMMON_ENTITY, 'entity_locationType_description')}" dataField="description"/>
             </mx:columns>
         </mx:DataGrid>
     </mx:HBox>
