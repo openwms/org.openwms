@@ -197,8 +197,8 @@
 	</mx:HBox>
 	<mx:HRule x="10" y="53" width="95%"/>
 
-	<mx:HBox y="63" x="10" width="95%" height="95%">
-	<mx:Canvas height="100%" backgroundColor="#F9FBB7">
+	<mx:HBox y="63" x="10" width="95%" height="100%">
+	<mx:Canvas height="95%" backgroundColor="#F9FBB7">
         <mx:Image x="10" y="10" source="@Embed(source='/assets/images/TransportOrder.png')"/>
 		<mx:Label x="34" y="10" text="Transport Order" fontWeight="bold"/>
 
@@ -235,7 +235,7 @@
         <mx:Label x="10" y="296" text="Finished"/>
 		<mx:Label x="146" y="296" text="{dateTimeFormatter.format(selected.endDate)}" id="endDateLbl"/>
 	</mx:Canvas>
-	<mx:DataGrid id="transportOrdersLst" allowMultipleSelection="true" change="onRowClick(event)" dataProvider="{tmsModelLocator.allTransportOrders}" height="100%" width="100%">
+	<mx:DataGrid id="transportOrdersLst" allowMultipleSelection="true" change="onRowClick(event)" dataProvider="{tmsModelLocator.allTransportOrders}" height="95%" width="100%">
 		<mx:columns>
 			<mx:DataGridColumn headerText="ID" dataField="id" width="{ModelLocator.WIDTH_ID}" />
             <mx:DataGridColumn headerText="Transport Unit" dataField="transportUnit" width="{CommonModelLocator.WIDTH_BARCODE}" labelFunction="formatBarcode" />
