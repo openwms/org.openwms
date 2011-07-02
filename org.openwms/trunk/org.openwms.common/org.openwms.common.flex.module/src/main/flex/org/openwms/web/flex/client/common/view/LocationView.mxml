@@ -139,10 +139,9 @@
             private function sortLocationGroup(obj1 : Object, obj2 : Object) : int {
                 var name1 : String = obj1.locationGroup != null ? obj1.locationGroup.name : "";
                 var name2 : String = obj2.locationGroup != null ? obj2.locationGroup.name : "";
-                
-                if(name1 < name2) {
+                if (name1 < name2) {
                     return -1;
-                } else  if(name1 > name2) {
+                } else  if (name1 > name2) {
                     return 1;
                 } else {
                     return 0;
