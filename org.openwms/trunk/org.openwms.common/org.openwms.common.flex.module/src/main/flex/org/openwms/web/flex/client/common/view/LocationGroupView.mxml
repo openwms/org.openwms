@@ -58,13 +58,13 @@
             /**
              * We need to have Granites Identity injected.
              */
-            public var identity:Identity;
+            public var identity : Identity;
 	        [Inject]
 	        [Bindable]
             /**
              * Inject a model to work on.
              */
-	        public var commonModelLocator:CommonModelLocator;
+	        public var commonModelLocator : CommonModelLocator;
 
             [Bindable]
             private var selected : LocationGroup;
@@ -74,19 +74,20 @@
             private var selectedLocations : ArrayCollection = new ArrayCollection();
             [Bindable]
             [Embed("/assets/images/LocationGroup.png")]
-            private var nodeIcon:Class;
+            private var nodeIcon : Class;
             [Bindable]
             [Embed("/assets/images/LocationGroup--Leaf.png")]
-            private var leafIcon:Class;
+            private var leafIcon : Class;
             [Bindable]
             [Embed("/assets/images/LocationGroup--Leaf--Locked.png")]
-            private var leafIconLocked:Class;
+            private var leafIconLocked : Class;
             
             [Observer("LG.COLL_LOCATION_GROUPS_REFRESHED")]
             /**
              * Refresh the dataProvider of the tree UIComponent.
-             *
              * Observed event: LG.COLL_LOCATION_GROUPS_REFRESHED
+             *
+             * @param event Unused
              */
             public function refreshTree(event : LocationGroupEvent) : void {
                 locationGroupTree.dataProvider.refresh();
@@ -121,8 +122,8 @@
             private function changeState(event : Event) : void {
                 var bindings:Array = [new BindingProperty(selected, "groupStateIn", groupStateInCmb, "selectedItem"),
                                     new BindingProperty(selected, "groupStateOut", groupStateOutCmb, "selectedItem")];
-                DisplayUtility.bindProperties(new ArrayCollection(bindings), function execute():void {
-                        var evt:LocationGroupEvent = new LocationGroupEvent(LocationGroupEvent.CHANGE_STATE);
+                DisplayUtility.bindProperties(new ArrayCollection(bindings), function execute() : void {
+                        var evt : LocationGroupEvent = new LocationGroupEvent(LocationGroupEvent.CHANGE_STATE);
                         evt.data = selected;
                         dispatchEvent(evt);
                 });
@@ -154,12 +155,12 @@
                 }
             }
 
-            private function getTreeIcon(item:Object):Class {
-                var node:TreeNode = item as TreeNode;
+            private function getTreeIcon(item : Object) : Class {
+                var node : TreeNode = item as TreeNode;
                 if (node.getData() == null) {
                     return nodeIcon;
                 }
-                var lg:LocationGroup = node.getData() as LocationGroup;
+                var lg : LocationGroup = node.getData() as LocationGroup;
                 if (node.children == null) {
                     if (lg.groupStateIn == LocationGroupState.NOT_AVAILABLE ||
                         lg.groupStateOut == LocationGroupState.NOT_AVAILABLE) {
