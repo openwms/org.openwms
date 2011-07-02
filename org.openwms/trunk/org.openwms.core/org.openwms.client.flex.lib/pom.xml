@@ -51,6 +51,7 @@
 					<sourcePaths>
 						<path>${basedir}/src/main/resources</path>
 						<path>${basedir}/src/main/flex</path>
+                        <path>${basedir}/src/main/resources/assets/locale/{locale}</path>
 					</sourcePaths>
 					<contextRoot>openwms</contextRoot>
 					<sourceFile>org/openwms/web/flex/client/lib/module/CommonModule.as</sourceFile>
@@ -58,6 +59,11 @@
 						<arrayTostringChanges>true</arrayTostringChanges>
 						<duplicateArgumentNames>false</duplicateArgumentNames>
 					</warnings>
+                    <resourceBundlePath>${basedir}/src/main/resources/assets/locale/{locale}</resourceBundlePath>
+                    <compiledLocales>
+                        <locale>de_DE</locale>
+                        <locale>en_US</locale>
+                    </compiledLocales>
 					<allowSourcePathOverlap>true</allowSourcePathOverlap>
                     <keepAs3Metadatas>
                         <keepAs3Metadata>Protected</keepAs3Metadata>
