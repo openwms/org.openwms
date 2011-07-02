@@ -37,7 +37,7 @@ package org.openwms.web.flex.client.component {
      */
     public class ImageButton extends Image {
 
-        private var enabledChanged:Boolean = false;
+        private var enabledChanged : Boolean = false;
 
         /**
          * Constructor.
@@ -54,8 +54,8 @@ package org.openwms.web.flex.client.component {
          *
          * @param event: unused
          */
-        private function onEnabled(event : Event):void {
-            var matrix:Array = new Array();
+        private function onEnabled(event : Event) : void {
+            var matrix : Array = new Array();
 
             if (enabled) {
                 matrix = matrix.concat([1, 0, 0, 0, 0]);
@@ -68,12 +68,12 @@ package org.openwms.web.flex.client.component {
                 matrix = matrix.concat([0.31, 0.61, 0.08, 0, 0]);
                 matrix = matrix.concat([0, 0, 0, 1, 0]);
             }
-            var filter:BitmapFilter = new ColorMatrixFilter(matrix);
-            filters = new Array(filter) ;
-            buttonMode = enabled ;
+            var filter : BitmapFilter = new ColorMatrixFilter(matrix);
+            filters = new Array(filter);
+            buttonMode = enabled;
         }
 
-        private function onClick(event : MouseEvent):void {
+        private function onClick(event : MouseEvent) : void {
             if (!enabled) {
                 event.stopImmediatePropagation();
                 return;
@@ -81,5 +81,3 @@ package org.openwms.web.flex.client.component {
         }
     }
 }
-
-

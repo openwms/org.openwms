@@ -23,7 +23,7 @@ package org.openwms.web.flex.client.util {
     import mx.core.ByteArrayAsset;
 
     /**
-     * A XMLUtil.
+     * A XMLUtil. Utility class to do basic XML handling.
      *
      * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
      * @version $Revision$
@@ -39,13 +39,16 @@ package org.openwms.web.flex.client.util {
         }
 
         /**
+         * Convert a class that is embedded as XML file into a XML representation.
          *
+         * @param clazz The class to convert
+         * @return The converted class as XML instance
          */
-        public static function getXML(clazz:*) : XML {
-            var ba:ByteArrayAsset = ByteArrayAsset( clazz );
-            var xml:XML = new XML( ba.readUTFBytes( ba.length ) );
+        public static function getXML(clazz : *) : XML {
+            var ba : ByteArrayAsset = ByteArrayAsset(clazz);
+            var xml : XML = new XML(ba.readUTFBytes(ba.length));
             return xml;
-        }    
+        }
     }
 }
 

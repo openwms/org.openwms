@@ -25,7 +25,7 @@ package org.openwms.web.flex.client.util {
     [Name]
     [Bindable]
     /**
-     * A SecurityUtil.
+     * A SecurityUtil. Utility class to do some security related checks. Uses GDS Identity.
      *
      * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
      * @version $Revision$
