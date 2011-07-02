@@ -180,9 +180,9 @@
     <mx:HBox x="10" y="10" verticalAlign="middle" backgroundColor="#C6FFC7" width="95%">
         <mx:Label x="10" y="10" text="{I18nUtil.trans(I18nUtil.COMMON_MAIN, 'txt_locationGroupView_header')}" fontSize="24"/>
         <mx:VRule height="10"/>
-        <mx:Button id="reloadBtn" buttonMode="true" mouseChildren="false" toolTip="{I18nUtil.trans(I18nUtil.COMMON_MAIN, 'ttip_locationGroup_reload_groups')}" icon="@Embed(source='assets/images/icons/refresh.png')" click="reload()"/>
-        <mx:VRule height="10"/>
         <mx:Button id="saveLocationGroupBtn" buttonMode="true" mouseChildren="false" toolTip="{I18nUtil.trans(I18nUtil.COMMON_MAIN, 'ttip_locationGroup_save_group')}" icon="@Embed(source='/assets/images/Location--Save.png')" click="saveLocationGroup()"/>
+        <mx:VRule height="10"/>
+        <mx:Button id="reloadBtn" buttonMode="true" mouseChildren="false" toolTip="{I18nUtil.trans(I18nUtil.COMMON_MAIN, 'ttip_locationGroup_reload_groups')}" icon="@Embed(source='assets/images/icons/refresh.png')" click="reload()"/>
     </mx:HBox>
     <mx:HRule x="10" y="53" width="95%"/>
     <mx:HBox x="10" y="63" verticalAlign="top" height="100%" width="95%">
