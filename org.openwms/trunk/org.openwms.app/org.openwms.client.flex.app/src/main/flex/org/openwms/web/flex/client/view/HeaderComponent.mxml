@@ -42,7 +42,6 @@
             
             import org.openwms.web.flex.client.model.ModelLocator;
     		import org.openwms.web.flex.client.event.ApplicationEvent;
-            import org.openwms.web.flex.client.ISecured;
             import org.openwms.web.flex.client.util.I18nUtil;
             import org.openwms.web.flex.client.view.dialogs.UserPreferencesDialog;
 
@@ -51,7 +50,7 @@
             /**
              * Injected Granite identity object.
              */
-            public var identity:Identity;
+            public var identity : Identity;
             
             [Inject]
             [Bindable]
