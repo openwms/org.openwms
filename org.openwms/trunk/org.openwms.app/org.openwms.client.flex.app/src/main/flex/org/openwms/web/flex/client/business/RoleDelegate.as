@@ -183,7 +183,7 @@ package org.openwms.web.flex.client.business {
         }
 
         private function onFault(event : TideFaultEvent) : void {
-            trace("Error executing operation on Role service2:" + event);
+            trace("Error executing operation on RoleService: " + event);
             Alert.show(I18nUtil.trans(I18nUtil.APP_ERROR, 'error_role_service_operation'));
         }
     }

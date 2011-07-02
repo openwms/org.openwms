@@ -13,6 +13,10 @@
         <name>APP_Module_Management</name>
         <description>Permission to see the history of a TransportOrder</description>
     </grant>
+    <grant>
+        <name>APP_Preferences</name>
+        <description>Permission to manage all Preferences</description>
+    </grant>
     <!-- User management screen -->
     <grant>
         <name>APP_add_user_button</name>

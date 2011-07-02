@@ -54,6 +54,7 @@
             <menuitem label="{I18nUtil.trans(I18nUtil.APP_MAIN, 'menu_app_users')}" enabled="{identity.ifAllGranted('APP_User_Management')}" action="{SwitchScreenEvent.SHOW_USER_MGMT_VIEW}" />
             <menuitem label="{I18nUtil.trans(I18nUtil.APP_MAIN, 'menu_app_roles')}" enabled="{identity.ifAllGranted('APP_Role_Management')}" action="{SwitchScreenEvent.SHOW_ROLE_MGMT_VIEW}" />
             <menuitem label="{I18nUtil.trans(I18nUtil.APP_MAIN, 'menu_app_modules')}" enabled="{identity.ifAllGranted('APP_Module_Management')}" action="{SwitchScreenEvent.SHOW_MODULE_MGMT_VIEW}" />
+            <menuitem label="{I18nUtil.trans(I18nUtil.APP_MAIN, 'menu_app_preferences')}" enabled="{identity.ifAllGranted('APP_Preferences')}" action="{SwitchScreenEvent.SHOW_SETTING_MGMT_VIEW}" />
         </menuitem>
     </mx:XMLList>
 
