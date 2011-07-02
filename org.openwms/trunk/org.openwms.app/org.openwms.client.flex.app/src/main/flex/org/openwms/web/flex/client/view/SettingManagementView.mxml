@@ -100,7 +100,7 @@
     <mx:HBox x="10" y="63" width="95%" height="95%">
         <mx:Accordion x="10" y="63" width="207" height="80%">
             <mx:Canvas label="Application Properties" width="100%" height="100%">
-                <mx:List x="0" y="0" alternatingItemColors="[#EEEEEE, #FFFFFF]" width="100%" height="100%"></mx:List>
+                <mx:List x="0" y="0" dataProvider="{modelLocator.allApplicationProperties}" alternatingItemColors="[#EEEEEE, #FFFFFF]" width="100%" height="100%"></mx:List>
             </mx:Canvas>
             <mx:Canvas label="Module Properties" width="100%" height="100%">
                 <mx:List x="0" y="0" alternatingItemColors="[#EEEEEE, #FFFFFF]" width="100%" height="100%"></mx:List>
@@ -112,7 +112,7 @@
         <mx:Panel x="218" y="63" height="80%" layout="absolute" title="Details" width="100%" id="panel1">
             <mx:TextInput text="{modelLocator.selectedUser.username}" width="228" x="178" y="8"/>
             <mx:TextInput text="{modelLocator.selectedUser.username}" width="228" x="178" y="139" id="textinput1"/>
-            <mx:ComboBox dataProvider="{modelLocator.allProperties}" width="228" x="178" y="113" id="combobox1">
+            <mx:ComboBox dataProvider="{modelLocator.allApplicationProperties}" width="228" x="178" y="113" id="combobox1">
             </mx:ComboBox>
             <mx:ComboBox text="{modelLocator.selectedUser.username}" width="228" x="178" y="34"/>
             <mx:Label x="10" y="10" text="Property Name" fontWeight="bold" id="label4"/>

@@ -84,19 +84,30 @@
             private var womanImage : Class;
             private var filter : DropShadowFilter = new DropShadowFilter(6, 45, 0x202020, 0.5, 4, 4, 1, 2, false);
 
+            [Observer("USER.USER_SAVED")]
             /**
              * After creation do some minor setup and enable form fields.
-             * Tide event observers : USER.SELECTION_CHANGED, USER.USER_SAVED
+             * Tide event observers : USER.USER_SAVED
              *
              * @param event Unused
              */
-            [Observer("USER.SELECTION_CHANGED")]
-            [Observer("USER.USER_SAVED")]
             public function onCreated(event : UserEvent = null) : void {
                 userImg.filters = [filter];
                 setFormElements(!(modelLocator.selectedUser == null));
             }
             
+            [Observer("USER.SELECTION_CHANGED")]
+            /**
+             * Called when a new User was chosen.
+             * Tide event observers : USER.SELECTION_CHANGED
+             *
+             * @param event Unused
+             */
+            public function onUserSelectionChanged(event : UserEvent = null) : void {
+                userImg.filters = [filter];
+                setFormElements(!(modelLocator.selectedUser == null));
+            }
+
             [Deprecated]
             [Observer("USER.USER_ADDED")]
             /**
@@ -104,10 +115,14 @@
              * observer events on one method this method will be removed (GDS bug).
              * Tide event observers : USER.USER_ADDED
              */
-            public function onUserAdded(event : Event) : void { setFormElements(!(modelLocator.selectedUser == null)); }
+            public function onUserAdded(event : Event) : void {
+                setFormElements(!(modelLocator.selectedUser == null));
+            }
 
             /**
              * Callback method. To be called when a new user image was saved.
+             *
+             * @see org.openwms.web.flex.client.IObserver#notify()
              */
             public function notify() : void {
                 refresh();

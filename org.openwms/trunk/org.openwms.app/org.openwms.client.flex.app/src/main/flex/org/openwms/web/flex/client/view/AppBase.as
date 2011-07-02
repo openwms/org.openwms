@@ -60,6 +60,7 @@ package org.openwms.web.flex.client.view {
     import org.openwms.web.flex.client.event.ApplicationEvent;
     import org.openwms.web.flex.client.event.I18nEvent;
     import org.openwms.web.flex.client.event.SwitchScreenEvent;
+    import org.openwms.web.flex.client.event.PropertyEvent;
     import org.openwms.web.flex.client.model.I18nMap;
     import org.openwms.web.flex.client.model.ModelLocator;
     import org.openwms.web.flex.client.module.ModuleLocator;
@@ -196,6 +197,7 @@ package org.openwms.web.flex.client.view {
             tideContext.mainAppUI = this;
             setupServices([moduleService, roleService, userService, i18nService, configurationService, securityService]);
             dispatchEvent(new I18nEvent(I18nEvent.LOAD_ALL));
+            dispatchEvent(new PropertyEvent(PropertyEvent.LOAD_ALL_PROPERTIES));
             tideContext.raiseEvent(I18nEvent.LOAD_ALL);
             readAndMergeGrantsList();
         }

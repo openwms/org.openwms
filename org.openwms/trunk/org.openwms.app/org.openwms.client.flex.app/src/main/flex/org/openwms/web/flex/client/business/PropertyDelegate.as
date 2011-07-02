@@ -21,24 +21,26 @@
 package org.openwms.web.flex.client.business {
 
     import mx.controls.Alert;
+    import mx.collections.ArrayCollection;
 
     import org.as3commons.reflect.Type;
     import org.granite.tide.events.TideFaultEvent;
     import org.granite.tide.events.TideResultEvent;
     import org.granite.tide.spring.Context;
 
+    import org.openwms.core.domain.system.usermanagement.Preference;
     import org.openwms.core.domain.values.Unit;
     import org.openwms.common.domain.values.Weight;
     import org.openwms.web.flex.client.model.ModelLocator;
     import org.openwms.web.flex.client.event.PropertyEvent;
+    import org.openwms.web.flex.client.util.I18nUtil;
 
     [Name("propertyDelegate")]
-    [ManagedEvent(name="LOAD_ALL_PROPERTIES")]
+    [ResourceBundle("appError")]
     [Bindable]
     /**
      * A PropertyDelegate serves as a controller and is responsible for all interactions with the service layer
      * regarding the handling with Properties.
-     * Fire Tide events : LOAD_ALL_PROPERTIES
      * Is named as : propertyDelegate
      *
      * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
@@ -52,6 +54,7 @@ package org.openwms.web.flex.client.business {
          * Injected TideContext.
          */
         public var tideContext : Context;
+
         [Inject]
         /**
          * Injected ModelLocator.
@@ -61,7 +64,8 @@ package org.openwms.web.flex.client.business {
         /**
          * Constructor.
          */
-        public function PropertyDelegate() : void { }
+        public function PropertyDelegate() : void {
+        }
 
         [Observer("LOAD_ALL_PROPERTIES")]
         /**
@@ -71,20 +75,26 @@ package org.openwms.web.flex.client.business {
          * @param event Unused
          */
         public function findProperties(event : PropertyEvent) : void {
-            tideContext.configurationService.getAllUnits(onPropertiesLoaded, onFault);
+            tideContext.configurationService.findApplicationProperties(onPropertiesLoaded, onFault);
         }
+
         private function onPropertiesLoaded(event : TideResultEvent) : void {
-            for each (var prop:Unit in event.result) {
+            modelLocator.allApplicationProperties = event.result as ArrayCollection;
+            trace("LOADED:" + modelLocator.allApplicationProperties.length);
+        }
+
+        private function onUnitsLoaded(event : TideResultEvent) : void {
+            for each (var prop : Unit in event.result) {
                 if (prop is Weight) {
-                    var type:Type = Type.forInstance((prop as Weight).unit);
-                    modelLocator.allProperties.addItem((prop as Weight).unit);
+                    var type : Type = Type.forInstance((prop as Weight).unit);
+                    modelLocator.allApplicationProperties.addItem((prop as Weight).unit);
                 }
             }
         }
 
         private function onFault(event : TideFaultEvent) : void {
-            trace("Error accessing ConfigurationService : " + event.fault);
-            Alert.show("Error accessing ConfigurationService");
+            trace("Error executing operation on ConfigurationService: " + event);
+            Alert.show(I18nUtil.trans(I18nUtil.APP_ERROR, 'error_configuration_service_operation'));
         }
     }
 }

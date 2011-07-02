@@ -59,6 +59,11 @@
              */
             public var modelLocator : ModelLocator;
             
+            /**
+             * Click on user button.
+             *
+             * @param event Unused
+             */
             private function showPrefs(event : MouseEvent = null) : void {
             	var pop : UserPreferencesDialog = UserPreferencesDialog(PopUpManager.createPopUp(this, UserPreferencesDialog, true));
                 PopUpManager.centerPopUp(pop);

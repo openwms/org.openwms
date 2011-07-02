@@ -1,12 +1,35 @@
 <?xml version="1.0" encoding="utf-8"?>
-<mx:TitleWindow xmlns:mx="http://www.adobe.com/2006/mxml" layout="absolute" title="{I18nUtil.trans(I18nUtil.APP_MAIN, 'txt_user_pref_title')}" creationComplete="onCreate();">
+<!--
+/*
+ * openwms.org, the Open Warehouse Management System.
+ *
+ * This file is part of openwms.org.
+ *
+ * openwms.org is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as 
+ * published by the Free Software Foundation, either version 3 of the
+ * License, or (at your option) any later version.
+ *
+ * openwms.org is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with this software. If not, write to the Free
+ * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
+ * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
+ */
+-->
+<mx:TitleWindow xmlns:mx="http://www.adobe.com/2006/mxml" 
+    title="{I18nUtil.trans(I18nUtil.APP_MAIN, 'txt_user_pref_title')}" creationComplete="onCreate();">
 
     <mx:Metadata>
         [Name]
         [ResourceBundle("appMain")]
     </mx:Metadata>
 
-	<mx:Script>
+    <mx:Script>
 		<![CDATA[
 			import mx.managers.PopUpManager;
             import mx.resources.ResourceManager
@@ -22,6 +45,7 @@
             public var modelLocator : ModelLocator;
             
 			private function onCreate() : void {
+                //localesCB.selectedItem = 
                 newPwTxt1.enabled = false;
                 newPwTxt2.enabled = false;            
                 cancelBtn.setFocus();
@@ -75,16 +99,16 @@
             }
 
 		]]>
-	</mx:Script>
-	
-	<mx:Form x="10" y="10">
-		<mx:FormHeading label="{I18nUtil.trans(I18nUtil.APP_MAIN, 'lbl_user_pref_title')}" width="100%"/>
-		<mx:FormItem label="{I18nUtil.trans(I18nUtil.APP_MAIN, 'entity_user_fullname')}">
-			<mx:TextInput id="fullnameTxt" text="{modelLocator.loggedInUser.fullname}" />
-		</mx:FormItem>
+    </mx:Script>
+
+    <mx:Form x="10" y="10">
+        <mx:FormHeading label="{I18nUtil.trans(I18nUtil.APP_MAIN, 'lbl_user_pref_title')}" width="100%" />
+        <mx:FormItem label="{I18nUtil.trans(I18nUtil.APP_MAIN, 'entity_user_fullname')}">
+            <mx:TextInput id="fullnameTxt" text="{modelLocator.loggedInUser.fullname}" />
+        </mx:FormItem>
         <mx:FormItem label="{I18nUtil.trans(I18nUtil.APP_MAIN, 'txt_user_pref_language')}">
-            <mx:ComboBox id="localesCB" dataProvider="{modelLocator.availableLocales}" change="localeChanged()"/>
-        </mx:FormItem>        
+            <mx:ComboBox id="localesCB" dataProvider="{modelLocator.availableLocales}" change="localeChanged()" />
+        </mx:FormItem>
         <mx:FormItem label="{I18nUtil.trans(I18nUtil.APP_MAIN, 'entity_user_description')}">
             <mx:TextArea id="descriptionTxt" text="{modelLocator.loggedInUser.userDetails.description}" />
         </mx:FormItem>
@@ -100,15 +124,15 @@
         <mx:FormItem label="{I18nUtil.trans(I18nUtil.APP_MAIN, 'entity_user_office')}">
             <mx:TextInput id="officeTxt" text="{modelLocator.loggedInUser.userDetails.office}" />
         </mx:FormItem>
-		<mx:FormItem label="{I18nUtil.trans(I18nUtil.APP_MAIN, 'txt_user_pref_password1')}">
-			<mx:TextInput id="newPwTxt1" displayAsPassword="true" click="onClickPw1()" />
-		</mx:FormItem>
-		<mx:FormItem label="{I18nUtil.trans(I18nUtil.APP_MAIN, 'txt_user_pref_password2')}">
-			<mx:TextInput id="newPwTxt2" displayAsPassword="true" click="onClickPw2()" />
-		</mx:FormItem>
-		<mx:HBox horizontalAlign="center" width="100%">
-			<mx:Button id="createBtn" label="{I18nUtil.trans(I18nUtil.APP_MAIN, 'btn_save')}" click="onSave()" />
-			<mx:Button id="cancelBtn" label="{I18nUtil.trans(I18nUtil.APP_MAIN, 'btn_cancel')}" click="onCancel()" />
-		</mx:HBox>
-	</mx:Form>
+        <mx:FormItem label="{I18nUtil.trans(I18nUtil.APP_MAIN, 'txt_user_pref_password1')}">
+            <mx:TextInput id="newPwTxt1" displayAsPassword="true" click="onClickPw1()" />
+        </mx:FormItem>
+        <mx:FormItem label="{I18nUtil.trans(I18nUtil.APP_MAIN, 'txt_user_pref_password2')}">
+            <mx:TextInput id="newPwTxt2" displayAsPassword="true" click="onClickPw2()" />
+        </mx:FormItem>
+        <mx:HBox horizontalAlign="center" width="100%">
+            <mx:Button id="saveBtn" label="{I18nUtil.trans(I18nUtil.APP_MAIN, 'btn_save')}" click="onSave()" />
+            <mx:Button id="cancelBtn" label="{I18nUtil.trans(I18nUtil.APP_MAIN, 'btn_cancel')}" click="onCancel()" />
+        </mx:HBox>
+    </mx:Form>
 </mx:TitleWindow>
