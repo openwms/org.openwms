@@ -31,16 +31,57 @@ package org.openwms.web.flex.client.common.event {
      */
     public class TransportUnitTypeEvent extends Event {
 
-        public static const LOAD_ALL_TRANSPORT_UNIT_TYPES:String = "LOAD_ALL_TRANSPORT_UNIT_TYPES";
-        public static const CREATE_TRANSPORT_UNIT_TYPE:String = "CREATE_TRANSPORT_UNIT_TYPE";
-        public static const DELETE_TRANSPORT_UNIT_TYPE:String = "DELETE_TRANSPORT_UNIT_TYPE";
-        public static const SAVE_TRANSPORT_UNIT_TYPE:String = "SAVE_TRANSPORT_UNIT_TYPE";
-        public static const LOAD_TUT_RULES:String = "LOAD_TUT_RULES";
+        /**
+         * Event to load all TransportUnitTypes from the backend service.
+         */
+        public static const LOAD_ALL_TRANSPORT_UNIT_TYPES : String = "LOAD_ALL_TRANSPORT_UNIT_TYPES";
+        /**
+         * Event to create a new TransportUnitType stored in the data field.
+         */
+        public static const CREATE_TRANSPORT_UNIT_TYPE : String = "CREATE_TRANSPORT_UNIT_TYPE";
+        /**
+         * Event to delete the TransportUnitType stored in the data field.
+         */
+        public static const DELETE_TRANSPORT_UNIT_TYPE : String = "DELETE_TRANSPORT_UNIT_TYPE";
+        /**
+         * Event to save the TransportUnitType stored in the data field.
+         */
+        public static const SAVE_TRANSPORT_UNIT_TYPE : String = "SAVE_TRANSPORT_UNIT_TYPE";
+        /**
+         * Event to load all rules of a TransportUnitType.
+         */
+        public static const LOAD_TUT_RULES : String = "LOAD_TUT_RULES";
 
-        public var data:*;
+        /**
+         * Store arbitrary data.
+         */
+        public var data : *;
 
-        public function TransportUnitTypeEvent(type:String, bubbles:Boolean = true, cancelable:Boolean = false) {
+        /**
+         * Constructor.
+         */
+        public function TransportUnitTypeEvent(type : String, bubbles : Boolean=true, cancelable : Boolean=false) {
             super(type, bubbles, cancelable);
+        }
+
+        /**
+         * Just a copy of the event itself including the data field.
+         *
+         * @return a copy of this
+         */
+        public override function clone() : Event {
+            var e : TransportUnitTypeEvent = new TransportUnitTypeEvent(type);
+            e.data = data;
+            return e;
+        }
+
+        /**
+         * Simple override.
+         *
+         * @return the type of event
+         */
+        public override function toString() : String {
+            return formatToString("TransportUnitTypeEvent", "type");
         }
     }
 }

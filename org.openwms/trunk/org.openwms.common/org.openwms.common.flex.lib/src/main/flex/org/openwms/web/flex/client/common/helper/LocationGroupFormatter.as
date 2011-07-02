@@ -55,7 +55,7 @@ package org.openwms.web.flex.client.common.helper {
         public static function formatParentLocationGroup(locationGroup : LocationGroup) : String {
             if (locationGroup.parent != null) {
                 return locationGroup.parent.name;
-            } 
+            }
             return "--";
         }
 
@@ -73,8 +73,6 @@ package org.openwms.web.flex.client.common.helper {
             }
             return "--";
         }
-
-
     }
 }
 
