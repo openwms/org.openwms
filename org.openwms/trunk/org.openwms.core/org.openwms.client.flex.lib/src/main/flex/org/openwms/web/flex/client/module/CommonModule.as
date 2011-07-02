@@ -25,7 +25,7 @@ package org.openwms.web.flex.client.module {
     import mx.modules.ModuleBase;
 
     /**
-     * A CommonModule is the superclass of all Flex Modules which shall be loaded
+     * A CommonModule is the superclass of all Flex Modules that can be loaded
      * into the CORE Flex Application.
      *
      * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
@@ -44,7 +44,7 @@ package org.openwms.web.flex.client.module {
 
         /**
          * Callback, is called when the FlexEvent.CREATION_COMPLETE is fired.
-         * Override initApp to hook in.
+         * Override initApp() to hook in.
          */
         public function onCreationComplete(e : Event) : void {
             trace("Creation of Module completed");

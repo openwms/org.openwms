@@ -21,92 +21,103 @@
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
 -->
-<mx:TitleWindow xmlns:mx="http://www.adobe.com/2006/mxml" layout="absolute" creationComplete="init()" dropShadowEnabled="true" showCloseButton="true" close="onCancel(event)" width="342" height="261">
+<mx:TitleWindow xmlns:mx="http://www.adobe.com/2006/mxml" layout="absolute" creationComplete="onCreate()" dropShadowEnabled="true" showCloseButton="true" close="onClose(event)" width="342" height="261">
+
+    <mx:Metadata>
+        [ResourceBundle("corLibMain")]
+    </mx:Metadata>
 
     <mx:Script>
     	<![CDATA[
     		import mx.collections.ArrayCollection;
-    		import flash.events.Event;
             import mx.managers.PopUpManager;
+    		import flash.events.Event;
             import flash.events.KeyboardEvent;
+            
+            import org.openwms.web.flex.client.util.I18nUtil;
     		
     		[Bindable]
     		/**
     		 * Bind to a list of available items.
     		 */
-    		public var listToDisplay:ArrayCollection;
+    		public var listToDisplay : ArrayCollection;
             [Bindable]
             /**
              * The list of selected items.
              */
-            public var selectedItems:ArrayCollection;
+            public var selectedItems : ArrayCollection;
             [Bindable]
             /**
              * Text of the dialkogue header.
              */
-            public var panelHeaderText:String = "NO TITLE SET";
+            public var panelHeaderText : String = I18nUtil.trans(I18nUtil.COR_LIB_MAIN, 'txt_ListDialog_panelHeaderText');
             [Bindable]
             /**
              * Text of the message hint.
              */
-            public var labelText:String = "NO LABEL SET";
+            public var labelText : String = I18nUtil.trans(I18nUtil.COR_LIB_MAIN, 'lbl_ListDialog_labelText');
             [Bindable]
             /**
              * Used as labelFunction for the list entries.
              */
-            public var formatFunction:Function;
+            public var formatFunction : Function;
             [Bindable]
             /**
              * Text of the submit button.
              */
-            public var submitBtnText:String = "Submit";
+            public var submitBtnText : String = I18nUtil.trans(I18nUtil.COR_LIB_MAIN, 'btn_submit');
             [Bindable]
             /**
              * Text of the cancel button.
              */
-            public var cancelBtnText:String = "Cancel";
+            public var cancelBtnText : String = I18nUtil.trans(I18nUtil.COR_LIB_MAIN, 'btn_cancel');
             [Bindable]
             /**
              * Should the dialogue been closed after submit?
              */
-            public var closeDialogOnSubmit:Boolean = true;
+            public var closeDialogOnSubmit : Boolean = true;
             
             /**
              * Do initial things, like setting the focus and title text and register event handlers.
              */
-            protected function init():void {
+            protected function onCreate() : void {
             	this.title = panelHeaderText;
                 this.addEventListener(KeyboardEvent.KEY_DOWN, keyEventHandler);
-                PopUpManager.centerPopUp(this);
                 submitBtn.setFocus();
+                PopUpManager.centerPopUp(this);
             }
+            
             /**
              * On form submit, update the list of selectedItems.
              * 
-             * @param event A MouseEvent
+             * @param event Unused
              */
-            public function onSubmit(event:MouseEvent):void {
+            public function onSubmit(event : MouseEvent) : void {
             	selectedItems = new ArrayCollection(list.selectedItems);
             	if (closeDialogOnSubmit) {
-            		onCancel();
+            		onClose();
             	}
             }
+            
             /**
              * Pressing the cancel button will just close the dialog.
              * 
-             * @param event An Event, can be <code>null</code>
+             * @param event Unused
              */
-            protected function onCancel(event:Event = null):void {
+            protected function onClose(event : Event = null) : void {
                 this.removeEventListener(KeyboardEvent.KEY_DOWN, keyEventHandler);
                 PopUpManager.removePopUp(this);
             } 
+            
             /**
              * Binding the CR key to the cancel operation.
              * 
              * @param event A KexboardEvent
              */
-            protected function keyEventHandler(event:KeyboardEvent):void {
-                if(event.keyCode == 27) { onCancel(); }
+            protected function keyEventHandler(event : KeyboardEvent) : void {
+                if(event.keyCode == 27) {
+                    onClose();
+                }
             }
     	]]>
     </mx:Script>
@@ -116,7 +127,7 @@
 	    <mx:List id="list" width="95%" height="138" labelFunction="{formatFunction}" allowMultipleSelection="true" dataProvider="{listToDisplay}" alternatingItemColors="[#B7BABC, #FFFFFF]" y="39" x="10"/>
 	    <mx:HBox width="100%" horizontalAlign="center">
 	        <mx:Button id="submitBtn" label="{submitBtnText}" click="onSubmit(event)" fontSize="12"/>
-	        <mx:Button id="cancelBtn" label="{cancelBtnText}" click="onCancel(event)" fontSize="12"/>
+	        <mx:Button id="cancelBtn" label="{cancelBtnText}" click="onClose(event)" fontSize="12"/>
 	    </mx:HBox>
     </mx:VBox>
 </mx:TitleWindow>

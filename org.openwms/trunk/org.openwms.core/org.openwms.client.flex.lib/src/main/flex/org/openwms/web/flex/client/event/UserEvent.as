@@ -23,7 +23,7 @@ package org.openwms.web.flex.client.event {
     import flash.events.Event;
 
     /**
-     * An UserEvent. Used to signal all actions around User entities.
+     * An UserEvent. Used to trigger actions regarding User entities.
      *
      * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
      * @version $Revision$
@@ -43,7 +43,6 @@ package org.openwms.web.flex.client.event {
          * Type of event that is fired when an User was added successfully.
          */
         public static const USER_ADDED : String = "USER.USER_ADDED";
-
         /**
          * Type of event to save an existing User. The User to add must be stored in the data property
          */
@@ -52,7 +51,6 @@ package org.openwms.web.flex.client.event {
          * Type of event that is fired when an User was saved successfully.
          */
         public static const USER_SAVED : String = "USER.USER_SAVED";
-
         /**
          * Type of event to delete an existing User. The User to add must be stored in the data property
          */
@@ -99,4 +97,3 @@ package org.openwms.web.flex.client.event {
         }
     }
 }
-

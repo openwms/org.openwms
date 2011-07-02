@@ -71,8 +71,14 @@ package org.openwms.web.flex.client.event {
          */
         public static const UNLOAD_MODULE : String = "UNLOAD_MODULE";
 
+        /**
+         * Name of the Event to notify components before a Module is unloaded.
+         */
         public static const BEFORE_MODULE_UNLOAD : String = "APP.BEFORE_MODULE_UNLOAD";
 
+        /**
+         * Name of the Event to notify the ModuleManager that the Module can be unloaded.
+         */
         public static const READY_TO_UNLOAD : String = "APP.READY_TO_UNLOAD";
 
         /**

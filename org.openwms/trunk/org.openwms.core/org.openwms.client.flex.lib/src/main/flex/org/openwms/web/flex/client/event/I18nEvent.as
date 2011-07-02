@@ -23,7 +23,7 @@ package org.openwms.web.flex.client.event {
     import flash.events.Event;
 
     /**
-     * An I18nEvent.
+     * An I18nEvent. Used to do all handling regarding internationalization and localization.
      *
      * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
      * @version $Revision$

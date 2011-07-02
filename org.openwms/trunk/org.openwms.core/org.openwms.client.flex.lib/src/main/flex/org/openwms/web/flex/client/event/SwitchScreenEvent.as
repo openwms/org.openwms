@@ -24,7 +24,7 @@ package org.openwms.web.flex.client.event {
     import mx.collections.ArrayCollection;
 
     /**
-     * A SwitchScreenEvent. Used to execute screen changes.
+     * A SwitchScreenEvent. Used to perform screen changes.
      *
      * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
      * @version $Revision$
@@ -108,4 +108,3 @@ package org.openwms.web.flex.client.event {
         }
     }
 }
-

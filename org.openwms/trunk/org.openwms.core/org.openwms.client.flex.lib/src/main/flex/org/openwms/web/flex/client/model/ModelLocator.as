@@ -33,7 +33,7 @@ package org.openwms.web.flex.client.model {
     [Bindable]
     /**
      * A ModelLocator is the main model backing bean to store session data.
-     * It is a Tide component and can be injected by name=modelLocator.
+     * It is a Tide component and can be injected by name:modelLocator.
      *
      * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
      * @version $Revision$

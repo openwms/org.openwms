@@ -23,7 +23,7 @@ package org.openwms.web.flex.client.event {
     import flash.events.Event;
 
     /**
-     * A RoleEvent. Used to signal actions around Role entities.
+     * A RoleEvent. Used to trigger actions regarding Role entities.
      *
      * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
      * @version $Revision$
@@ -94,4 +94,3 @@ package org.openwms.web.flex.client.event {
         }
     }
 }
-

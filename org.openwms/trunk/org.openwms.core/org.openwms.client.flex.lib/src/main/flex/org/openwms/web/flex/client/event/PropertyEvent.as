@@ -23,7 +23,7 @@ package org.openwms.web.flex.client.event {
     import flash.events.Event;
 
     /**
-     * A PropertyEvent. Used to signal any actions around Property entites.
+     * A PropertyEvent. Used to trigger actions regarding Property entites.
      *
      * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
      * @version $Revision$
@@ -44,7 +44,7 @@ package org.openwms.web.flex.client.event {
         /**
          * Constructor.
          */
-        public function PropertyEvent(type : String, bubbles : Boolean = true, cancelable : Boolean = false) {
+        public function PropertyEvent(type : String, bubbles : Boolean=true, cancelable : Boolean=false) {
             super(type, bubbles, cancelable);
         }
 
@@ -67,7 +67,5 @@ package org.openwms.web.flex.client.event {
         public override function toString() : String {
             return formatToString("PropertyEvent", "type");
         }
-
     }
 }
-

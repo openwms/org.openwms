@@ -45,6 +45,16 @@ package org.openwms.web.flex.client.util {
         public static const APP_MAIN : String = "appMain";
 
         /**
+         * Shortcut for ResourceBundle corLibError to refer to all defined errors within the core library.
+         */
+        public static const COR_LIB_ERROR : String = "corLibError";
+
+        /**
+         * Shortcut for ResourceBundle corLibMain to all texts and messages in the core library.
+         */
+        public static const COR_LIB_MAIN : String = "corLibMain";
+
+        /**
          * Constructor.
          */
         public function I18nUtil() : void {

@@ -63,7 +63,7 @@
                     button1.addEventListener(MouseEvent.MOUSE_OVER, onOver);
                     button1.addEventListener(MouseEvent.MOUSE_OUT, onOut);
                     if (iconBtn1 != null) {
-                    	var i:Image = new Image();
+                    	var i : Image = new Image();
                     	i.source = iconBtn1;
                     	button1.addChild(i);
                     }
@@ -78,7 +78,7 @@
                     button2.addEventListener(MouseEvent.MOUSE_OVER, onOver);
                     button2.addEventListener(MouseEvent.MOUSE_OUT, onOut);
                     if (iconBtn2 != null) {
-                        var j:Image = new Image();
+                        var j : Image = new Image();
                         j.source = iconBtn2;
                         button2.addChild(j);
                     }

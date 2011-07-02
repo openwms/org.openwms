@@ -30,18 +30,24 @@ package org.openwms.web.flex.client.util {
      * @since 0.1
      */
     public final class UserHelper {
-    	
+
+        /**
+         * Constructor.
+         */
+        public function UserHelper() {
+        }
+
         /**
          * Check whether the User has UserDetails.
-         *  
+         *
          * @param userData The User to check.
          * @return <code>true</code> when the User has UserDetails, otherwise <code>false</code>.
          */
-        public static function hasDetails(userData:User):Boolean {
+        public static function hasDetails(userData : User) : Boolean {
             if (userData != null && userData.userDetails != null) {
                 return true;
             }
             return false;
         }
-   }
+    }
 }

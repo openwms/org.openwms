@@ -26,7 +26,7 @@ package org.openwms.web.flex.client.util {
     import mx.containers.ViewStack;
 
     /**
-     * A DisplayUtility.
+     * A DisplayUtility. Utility class used by UIComponents for switch screen handling or property bindings.
      *
      * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
      * @version $Revision$
