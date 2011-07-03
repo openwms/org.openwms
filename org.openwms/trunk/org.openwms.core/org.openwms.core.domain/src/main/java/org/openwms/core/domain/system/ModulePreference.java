@@ -18,46 +18,50 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
-package org.openwms.core.service;
+package org.openwms.core.domain.system;
 
-import java.util.List;
-
-import org.openwms.core.domain.system.AbstractPreference;
-import org.openwms.core.domain.values.Unit;
+import javax.persistence.DiscriminatorValue;
+import javax.persistence.Entity;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
+import javax.persistence.Table;
 
 /**
- * A ConfigurationService is responsible to handle all application properties.
- * Whereby properties have particular defined scopes, e.g. some properties have
- * a global scope which means Application Scope and some others are only valid
- * for a certain Module.
+ * A ModulePreference.
  * 
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
- * @version $Revision$
+ * @version $Revision: $
  * @since 0.1
- * @see org.openwms.core.domain.system.PropertyScope
  */
-public interface ConfigurationService {
+@Entity
+@DiscriminatorValue("MODULE")
+@Table(name = "COR_MODULE_PREFERENCE")
+@NamedQueries({ @NamedQuery(name = ModulePreference.NQ_FIND_ALL, query = "SELECT mp FROM ModulePreference mp") })
+public class ModulePreference extends AbstractPreference {
 
-    List<AbstractPreference> findAll();
-
-    /**
-     * Find and return all properties in Application Scope.
-     * 
-     * @return a list of these properties
-     */
-    List<AbstractPreference> findApplicationProperties();
+    private static final long serialVersionUID = 7318848112643933488L;
 
     /**
-     * Find and return all properties belonging to this Module.
-     * 
-     * @return a list of these properties
+     * Query to find all <code>ModulePreference</code>s.
      */
-    List<AbstractPreference> findModuleProperties();
+    public static final String NQ_FIND_ALL = "ModulePreference" + FIND_ALL;
 
     /**
-     * Get all unit types supported by this Module.
+     * Create a new ModulePreference.
      * 
-     * @return A list of these units
      */
-    List<? extends Unit> getAllUnits();
+    protected ModulePreference() {
+        super();
+    }
+
+    /**
+     * Create a new ModulePreference.
+     * 
+     * @param key
+     */
+    public ModulePreference(String module, String key) {
+        super(key);
+        super.setOwner(module);
+    }
+
 }

@@ -20,19 +20,22 @@
  */
 package org.openwms.web.flex.client.business {
 
-    import mx.controls.Alert;
     import mx.collections.ArrayCollection;
-
+    import mx.controls.Alert;
+    
     import org.as3commons.reflect.Type;
     import org.granite.tide.events.TideFaultEvent;
     import org.granite.tide.events.TideResultEvent;
     import org.granite.tide.spring.Context;
-
-    import org.openwms.core.domain.system.usermanagement.Preference;
-    import org.openwms.core.domain.values.Unit;
     import org.openwms.common.domain.values.Weight;
-    import org.openwms.web.flex.client.model.ModelLocator;
+    import org.openwms.core.domain.system.AbstractPreference;
+    import org.openwms.core.domain.system.ApplicationPreference;
+    import org.openwms.core.domain.system.ModulePreference;
+    import org.openwms.core.domain.system.usermanagement.UserPreference;
+    import org.openwms.core.domain.values.Unit;
     import org.openwms.web.flex.client.event.PropertyEvent;
+    import org.openwms.web.flex.client.model.ModelLocator;
+    import org.openwms.web.flex.client.model.PreferencesModel;
     import org.openwms.web.flex.client.util.I18nUtil;
 
     [Name("propertyDelegate")]
@@ -61,6 +64,12 @@ package org.openwms.web.flex.client.business {
          */
         public var modelLocator : ModelLocator;
 
+        [Inject]
+        /**
+         * Injected PreferencesModel.
+         */
+        public var prefsModel : PreferencesModel;
+
         /**
          * Constructor.
          */
@@ -75,12 +84,19 @@ package org.openwms.web.flex.client.business {
          * @param event Unused
          */
         public function findProperties(event : PropertyEvent) : void {
-            tideContext.configurationService.findApplicationProperties(onPropertiesLoaded, onFault);
+            tideContext.configurationService.findAll(onPropertiesLoaded, onFault);
         }
 
         private function onPropertiesLoaded(event : TideResultEvent) : void {
-            modelLocator.allApplicationProperties = event.result as ArrayCollection;
-            trace("LOADED:" + modelLocator.allApplicationProperties.length);
+        	for each (var pref : AbstractPreference in event.result as ArrayCollection) {
+        		if (pref is ApplicationPreference) {
+		            prefsModel.appPrefs.addItem(pref);
+        		} else if (pref is ModulePreference) {
+        			prefsModel.modulePrefs.addItem(pref);
+        		} else if (pref is UserPreference) {
+        			prefsModel.userPrefs.addItem(pref);
+        		}
+        	}
         }
 
         private function onUnitsLoaded(event : TideResultEvent) : void {

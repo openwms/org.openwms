@@ -144,6 +144,7 @@
 
             private function addUser() : void {
                 dispatchEvent(new UserEvent(UserEvent.ADD_USER));
+                usernameTi.setFocus();
             }
 
             private function deleteUser() : void {

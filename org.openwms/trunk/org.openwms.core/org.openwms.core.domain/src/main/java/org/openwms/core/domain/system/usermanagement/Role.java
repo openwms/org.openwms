@@ -35,6 +35,7 @@ import javax.persistence.ManyToMany;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 
+import org.openwms.core.domain.system.AbstractPreference;
 import org.openwms.core.util.validation.AssertUtils;
 
 /**
@@ -83,11 +84,11 @@ public class Role extends SecurityObject {
     private Set<User> users = new HashSet<User>();
 
     /**
-     * All {@link Preference}s linked to the <code>Role</code>.
+     * All {@link AbstractPreference}s linked to the <code>Role</code>.
      */
     @ManyToMany(cascade = { CascadeType.PERSIST, CascadeType.MERGE })
     @JoinTable(name = "COR_ROLE_PREFERENCE", joinColumns = @JoinColumn(name = "ROLE_ID"), inverseJoinColumns = @JoinColumn(name = "PREFERENCE_ID"))
-    private Set<Preference> preferences = new HashSet<Preference>();
+    private Set<AbstractPreference> preferences = new HashSet<AbstractPreference>();
 
     /**
      * All {@link SecurityObject}s assigned to the <code>Role</code>.
@@ -209,23 +210,23 @@ public class Role extends SecurityObject {
     }
 
     /**
-     * Return all {@link Preference}s of the <code>Role</code>.
+     * Return all {@link AbstractPreference}s of the <code>Role</code>.
      * 
-     * @return A Set of all {@link Preference}s belonging to the
+     * @return A Set of all {@link AbstractPreference}s belonging to the
      *         <code>Role</code>
      */
-    public Set<Preference> getPreferences() {
+    public Set<AbstractPreference> getPreferences() {
         return preferences;
     }
 
     /**
-     * Set all {@link Preference}s belonging to the <code>Role</code>.
+     * Set all {@link AbstractPreference}s belonging to the <code>Role</code>.
      * 
      * @param preferences
-     *            A Set of {@link Preference}s to be assigned to the
+     *            A Set of {@link AbstractPreference}s to be assigned to the
      *            <code>Role</code>
      */
-    public void setPreferences(Set<Preference> preferences) {
+    public void setPreferences(Set<AbstractPreference> preferences) {
         this.preferences = preferences;
     }
 
