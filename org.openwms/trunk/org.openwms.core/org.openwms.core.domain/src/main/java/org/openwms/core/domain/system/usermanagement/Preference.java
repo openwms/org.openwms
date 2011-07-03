@@ -22,14 +22,18 @@ package org.openwms.core.domain.system.usermanagement;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.Table;
-import javax.persistence.UniqueConstraint;
 import javax.persistence.Version;
 
 import org.openwms.core.domain.AbstractEntity;
 import org.openwms.core.domain.DomainObject;
+import org.openwms.core.domain.system.PropertyScope;
 
 /**
  * A Preference, could be an user-, role- or system preference.
@@ -39,10 +43,30 @@ import org.openwms.core.domain.DomainObject;
  * @since 0.1
  */
 @Entity
-@Table(name = "COR_PREFERENCE", uniqueConstraints = @UniqueConstraint(columnNames = { "C_KEY", "C_VALUE" }))
+@Table(name = "COR_PREFERENCE")
+@NamedQueries({ @NamedQuery(name = Preference.NQ_FIND_ALL, query = "SELECT p FROM Preference p"),
+        @NamedQuery(name = Preference.NQ_FIND_BY_UNIQUE_ID, query = "SELECT p FROM Preference p WHERE p.key = ?1"),
+        @NamedQuery(name = Preference.NQ_FIND_BY_TYPE, query = "SELECT p FROM Preference p WHERE p.type = :type") })
 public class Preference extends AbstractEntity implements DomainObject<Long> {
 
     private static final long serialVersionUID = 4396571221433949201L;
+
+    /**
+     * Query to find all <code>Preference</code>s.
+     */
+    public static final String NQ_FIND_ALL = "Preference" + FIND_ALL;
+    /**
+     * Query to find <strong>one</strong> <code>Preference</code> by its natural
+     * key. <li>Query parameter index <strong>1</strong> : The key of the
+     * <code>Preference</code> to search for.</li>
+     */
+    public static final String NQ_FIND_BY_UNIQUE_ID = "Preference" + FIND_BY_ID;
+    /**
+     * Query to find all <code>Preference</code>s of a certain type.<li>Query
+     * parameter name <strong>type</strong> : The type of
+     * <code>Preference</code>s to search for.</li>
+     */
+    public static final String NQ_FIND_BY_TYPE = "Preference.findByType";
 
     /**
      * Unique technical key.
@@ -62,7 +86,8 @@ public class Preference extends AbstractEntity implements DomainObject<Long> {
      * The type of the value.
      */
     @Column(name = "C_TYPE")
-    private String type;
+    @Enumerated(EnumType.STRING)
+    private PropertyScope type;
 
     /**
      * The value of the <code>Preference</code>.
@@ -103,9 +128,18 @@ public class Preference extends AbstractEntity implements DomainObject<Long> {
 
     /* ----------------------------- methods ------------------- */
     /**
-     * Create a <code>Preference</code>.
+     * Accessed by persistence provider.
      */
-    public Preference() {}
+    protected Preference() {
+        super();
+    }
+
+    /**
+     * Create a <code>Preference</code> with a key.
+     */
+    public Preference(String key) {
+        this.key = key;
+    }
 
     /**
      * {@inheritDoc}
@@ -126,9 +160,9 @@ public class Preference extends AbstractEntity implements DomainObject<Long> {
     /**
      * Return the type of the <code>Preference</code>.
      * 
-     * @return The type as String
+     * @return The type
      */
-    public String getType() {
+    public PropertyScope getType() {
         return this.type;
     }
 
@@ -136,9 +170,9 @@ public class Preference extends AbstractEntity implements DomainObject<Long> {
      * Set the type of the <code>Preference</code>.
      * 
      * @param type
-     *            The type to set as String
+     *            The type to set
      */
-    public void setType(String type) {
+    public void setType(PropertyScope type) {
         this.type = type;
     }
 

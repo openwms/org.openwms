@@ -207,7 +207,9 @@ public class User extends AbstractEntity implements DomainObject<Long> {
     /**
      * Accessed by persistence provider.
      */
-    protected User() {}
+    protected User() {
+        super();
+    }
 
     /**
      * Create a new <code>User</code> with an username.

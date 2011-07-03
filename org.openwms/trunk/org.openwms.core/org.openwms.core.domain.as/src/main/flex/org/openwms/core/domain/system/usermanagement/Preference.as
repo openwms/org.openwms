@@ -20,15 +20,32 @@
  */
 package org.openwms.core.domain.system.usermanagement {
 
+    import org.openwms.core.domain.system.PropertyScope;
+
     [Bindable]
-    [RemoteClass(alias="org.openwms.core.domain.system.usermanagement.Preference")]
+    [RemoteClass(alias = "org.openwms.core.domain.system.usermanagement.Preference")]
     /**
      * A Preference, could be an user-, role- or system preference.
      *
      * @version $Revision$
      * @since 0.1
      */
-    public class Preference extends PreferenceBase { }
+    public class Preference extends PreferenceBase {
+
+        /**
+         * Constructor.
+         * Define at least a key for a Preference.
+         *
+         * @param key The key to set
+         * @param value The value of the Preference
+         */
+        public function Preference(key : String=null, value : String=null, type : PropertyScope=null) {
+            this._key = key;
+            this._value = value;
+            this._type = type;
+        }
+
+    }
 
 }
 
