@@ -88,6 +88,7 @@ package org.openwms.web.flex.client.business {
         }
 
         private function onPropertiesLoaded(event : TideResultEvent) : void {
+        	prefsModel.clearAll();
         	for each (var pref : AbstractPreference in event.result as ArrayCollection) {
         		if (pref is ApplicationPreference) {
 		            prefsModel.appPrefs.addItem(pref);
