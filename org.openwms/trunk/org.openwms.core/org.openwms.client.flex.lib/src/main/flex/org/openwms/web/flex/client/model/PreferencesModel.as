@@ -41,5 +41,11 @@ package org.openwms.web.flex.client.model {
 		public function PreferencesModel() {
 		}
 		
+		public function clearAll() : void {
+			appPrefs.removeAll();
+			modulePrefs.removeAll();
+			userPrefs.removeAll();
+		}
+		
 	}
 }
