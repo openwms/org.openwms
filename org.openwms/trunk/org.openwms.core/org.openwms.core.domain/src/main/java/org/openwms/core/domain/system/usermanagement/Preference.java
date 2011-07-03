@@ -21,11 +21,10 @@
 package org.openwms.core.domain.system.usermanagement;
 
 import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
+import javax.persistence.DiscriminatorColumn;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.MappedSuperclass;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
@@ -33,7 +32,6 @@ import javax.persistence.Version;
 
 import org.openwms.core.domain.AbstractEntity;
 import org.openwms.core.domain.DomainObject;
-import org.openwms.core.domain.system.PropertyScope;
 
 /**
  * A Preference, could be an user-, role- or system preference.
@@ -42,8 +40,9 @@ import org.openwms.core.domain.system.PropertyScope;
  * @version $Revision$
  * @since 0.1
  */
-@Entity
+@MappedSuperclass
 @Table(name = "COR_PREFERENCE")
+@DiscriminatorColumn(name = "C_TYPE")
 @NamedQueries({ @NamedQuery(name = Preference.NQ_FIND_ALL, query = "SELECT p FROM Preference p"),
         @NamedQuery(name = Preference.NQ_FIND_BY_UNIQUE_ID, query = "SELECT p FROM Preference p WHERE p.key = ?1"),
         @NamedQuery(name = Preference.NQ_FIND_BY_TYPE, query = "SELECT p FROM Preference p WHERE p.type = :type") })
@@ -81,13 +80,6 @@ public class Preference extends AbstractEntity implements DomainObject<Long> {
      */
     @Column(name = "C_KEY")
     private String key;
-
-    /**
-     * The type of the value.
-     */
-    @Column(name = "C_TYPE")
-    @Enumerated(EnumType.STRING)
-    private PropertyScope type;
 
     /**
      * The value of the <code>Preference</code>.
@@ -155,25 +147,6 @@ public class Preference extends AbstractEntity implements DomainObject<Long> {
     @Override
     public boolean isNew() {
         return this.id == null;
-    }
-
-    /**
-     * Return the type of the <code>Preference</code>.
-     * 
-     * @return The type
-     */
-    public PropertyScope getType() {
-        return this.type;
-    }
-
-    /**
-     * Set the type of the <code>Preference</code>.
-     * 
-     * @param type
-     *            The type to set
-     */
-    public void setType(PropertyScope type) {
-        this.type = type;
     }
 
     /**
