@@ -20,11 +20,19 @@
  */
 package org.openwms.core.service.spring;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
+import org.openwms.core.domain.system.PropertyScope;
 import org.openwms.core.domain.system.usermanagement.Preference;
 import org.openwms.core.domain.values.Unit;
+import org.openwms.core.integration.GenericDao;
 import org.openwms.core.service.ConfigurationService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -39,14 +47,25 @@ import org.springframework.transaction.annotation.Transactional;
  */
 @Transactional
 @Service("configurationService")
-public class ConfigurationServiceImpl implements ConfigurationService {
+public class ConfigurationServiceImpl extends EntityServiceImpl<Preference, Long> implements ConfigurationService {
+
+    private final Logger logger = LoggerFactory.getLogger(this.getClass());
+
+    /**
+     * Generic Repository DAO.
+     */
+    @Autowired
+    @Qualifier("preferencesDao")
+    protected GenericDao<Preference, Long> dao;
 
     /**
      * {@inheritDoc}
      */
     @Override
     public List<Preference> findApplicationProperties() {
-        return null;
+        Map<String, Object> params = new HashMap<String, Object>();
+        params.put("type", PropertyScope.APPLICATION);
+        return dao.findByNamedParameters(Preference.NQ_FIND_BY_TYPE, params);
     }
 
     /**

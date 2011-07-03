@@ -8,6 +8,7 @@ Import-Library:
  org.springframework.spring;version="${spring.version}"
 Import-Bundle: 
  com.springsource.javax.persistence;version="1.0.0",
+ com.springsource.net.sf.cglib;version="2.2.0",
  org.openwms.core.domain;version="0.0.1.SNAPSHOT",
  org.openwms.core.integration;version="0.0.1.SNAPSHOT",
  com.springsource.org.apache.commons.lang;version="2.4.0",

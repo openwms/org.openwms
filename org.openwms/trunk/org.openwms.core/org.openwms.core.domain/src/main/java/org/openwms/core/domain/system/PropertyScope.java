@@ -29,23 +29,23 @@ package org.openwms.core.domain.system;
  */
 public enum PropertyScope {
 
-	/**
-	 * Application wide.
-	 */
+    /**
+     * These kind of preferences belong to the base system.
+     */
     APPLICATION,
 
     /**
-     * <code>Module</code> wide.
+     * These kind of preferences are specific for a <code>Module</code>.
      */
     MODULE,
 
     /**
-     * Valid for a <code>Role</code>.
+     * These kind of preferences belong to a particular <code>Role</code>.
      */
     ROLE,
 
     /**
-     * Valid for a <code>User</code>.
+     * These kind of preferences belong to a certain <code>User</code>.
      */
     USER;
 

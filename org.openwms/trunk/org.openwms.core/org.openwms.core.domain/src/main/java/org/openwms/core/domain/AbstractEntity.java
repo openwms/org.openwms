@@ -54,6 +54,16 @@ public abstract class AbstractEntity implements Serializable {
     private static final long serialVersionUID = 827478159133738540L;
 
     /**
+     * Suffix for the FIND_ALL named query.
+     */
+    public static final String FIND_ALL = ".findAll";
+
+    /**
+     * Suffix for the FIND_BY_ID named query.
+     */
+    public static final String FIND_BY_ID = ".findById";
+
+    /**
      * Unique identifier column, used for ActionScript clients.
      */
     /* "UUID" and "UID" are Oracle reserved keywords -> "ENTITY_UID" */
