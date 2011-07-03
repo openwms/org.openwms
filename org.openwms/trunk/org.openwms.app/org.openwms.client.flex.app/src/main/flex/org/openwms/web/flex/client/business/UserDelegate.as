@@ -22,19 +22,16 @@ package org.openwms.web.flex.client.business {
 
     import mx.collections.ArrayCollection;
     import mx.controls.Alert;
-    import flash.system.Capabilities;
-
+    
     import org.granite.tide.events.TideFaultEvent;
     import org.granite.tide.events.TideResultEvent;
     import org.granite.tide.spring.Context;
-
-    import org.openwms.core.domain.system.usermanagement.Preference;
     import org.openwms.core.domain.system.usermanagement.User;
     import org.openwms.core.domain.system.usermanagement.UserPassword;
-    import org.openwms.core.domain.system.PropertyScope;
     import org.openwms.web.flex.client.event.UserEvent;
     import org.openwms.web.flex.client.model.ModelLocator;
     import org.openwms.web.flex.client.util.I18nUtil;
+    import org.openwms.web.flex.client.util.UserHelper;
 
     [Name("userDelegate")]
     [ManagedEvent(name = "LOAD_ALL_USERS")]
@@ -102,11 +99,9 @@ package org.openwms.web.flex.client.business {
         }
 
         private function onUserAdded(event : TideResultEvent) : void {
-            var user : User = User(event.result);
-            user.username = "";
-            user.preferences.addItem(new Preference("defaultLanguage", Capabilities.language, PropertyScope.USER));
+            var user : User = UserHelper.initializeUser(User(event.result));
             modelLocator.selectedUser = user;
-            loadUsers();
+            //loadUsers();
             dispatchEvent(new UserEvent(UserEvent.USER_ADDED));
         }
 

@@ -197,11 +197,11 @@ public class User extends AbstractEntity implements DomainObject<Long> {
     private List<UserPassword> passwords = new ArrayList<UserPassword>();
 
     /**
-     * All {@link Preference}s of the <code>User</code>.
+     * All {@link UserPreference}s of the <code>User</code>.
      */
-    @OneToMany(cascade = CascadeType.ALL)
-    @JoinTable(name = "COR_USER_PREFERENCE", joinColumns = @JoinColumn(name = "ROLE_ID"), inverseJoinColumns = @JoinColumn(name = "PREF_ID"))
-    private Set<Preference> preferences = new HashSet<Preference>();
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    @JoinTable(name = "COR_USER_PREFERENCE", joinColumns = @JoinColumn(name = "USER_ID"), inverseJoinColumns = @JoinColumn(name = "ID"))
+    private Set<UserPreference> preferences = new HashSet<UserPreference>();
 
     /* ----------------------------- methods ------------------- */
     /**
@@ -551,22 +551,22 @@ public class User extends AbstractEntity implements DomainObject<Long> {
     }
 
     /**
-     * Get all {@link Preference}s of the <code>User</code>.
+     * Get all {@link UserPreference}s of the <code>User</code>.
      * 
-     * @return A set of all {@link Preference}s.
+     * @return A set of all {@link UserPreference}s.
      */
-    public Set<Preference> getPreferences() {
+    public Set<UserPreference> getPreferences() {
         return preferences;
     }
 
     /**
-     * Set all {@link Preference}s of the <code>User</code>. Already existing
-     * {@link Preference}s will be overridden.
+     * Set all {@link UserPreference}s of the <code>User</code>. Already
+     * existing {@link UserPreference}s will be overridden.
      * 
      * @param preferences
-     *            A set of {@link Preference}s to be set.
+     *            A set of {@link UserPreference}s to be set.
      */
-    public void setPreferences(Set<Preference> preferences) {
+    public void setPreferences(Set<UserPreference> preferences) {
         this.preferences = preferences;
     }
 

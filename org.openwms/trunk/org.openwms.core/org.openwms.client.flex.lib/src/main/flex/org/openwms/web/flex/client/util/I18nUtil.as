@@ -45,6 +45,11 @@ package org.openwms.web.flex.client.util {
         public static const APP_MAIN : String = "appMain";
 
         /**
+         * Shortcut for ResourceBundle appEntity to store all property names of entites classes in the main application.
+         */
+        public static const APP_ENTITY : String = "appEntity";
+
+        /**
          * Shortcut for ResourceBundle corLibError to refer to all defined errors within the core library.
          */
         public static const COR_LIB_ERROR : String = "corLibError";

@@ -21,6 +21,7 @@
 package org.openwms.web.flex.client.util {
 
     import org.openwms.core.domain.system.usermanagement.User;
+    import org.openwms.core.domain.system.usermanagement.UserPreference;
 
     /**
      * An UserHelper is a utility class to centralize often used methods according to user handling.
@@ -48,6 +49,12 @@ package org.openwms.web.flex.client.util {
                 return true;
             }
             return false;
+        }
+        
+        public static function initializeUser(user : User) : User {
+            user.username = "";
+            user.preferences.addItem(new UserPreference(user, "defaultLanguage", "en_US"));
+            return user;
         }
     }
 }

@@ -18,46 +18,57 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
-package org.openwms.core.service;
+package org.openwms.core.domain.system.usermanagement;
 
-import java.util.List;
+import javax.persistence.DiscriminatorValue;
+import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.PrePersist;
+import javax.persistence.Table;
 
 import org.openwms.core.domain.system.AbstractPreference;
-import org.openwms.core.domain.values.Unit;
 
 /**
- * A ConfigurationService is responsible to handle all application properties.
- * Whereby properties have particular defined scopes, e.g. some properties have
- * a global scope which means Application Scope and some others are only valid
- * for a certain Module.
+ * A UserPreference.
  * 
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
- * @version $Revision$
+ * @version $Revision: $
  * @since 0.1
- * @see org.openwms.core.domain.system.PropertyScope
  */
-public interface ConfigurationService {
+@Entity
+@DiscriminatorValue("USER")
+@Table(name = "COR_USER_PREFERENCE")
+public class UserPreference extends AbstractPreference {
 
-    List<AbstractPreference> findAll();
+    private static final long serialVersionUID = -6569559231034802554L;
 
-    /**
-     * Find and return all properties in Application Scope.
-     * 
-     * @return a list of these properties
-     */
-    List<AbstractPreference> findApplicationProperties();
-
-    /**
-     * Find and return all properties belonging to this Module.
-     * 
-     * @return a list of these properties
-     */
-    List<AbstractPreference> findModuleProperties();
+    @ManyToOne
+    @JoinColumn(name = "USER_ID", nullable = false)
+    private User user;
 
     /**
-     * Get all unit types supported by this Module.
+     * Create a new UserPreference.
      * 
-     * @return A list of these units
      */
-    List<? extends Unit> getAllUnits();
+    protected UserPreference() {
+        super();
+    }
+
+    /**
+     * Create a new UserPreference.
+     * 
+     * @param key
+     */
+    public UserPreference(String username, String key) {
+        super(key);
+        super.setOwner(username);
+    }
+
+    @PrePersist
+    protected void onPersist() {
+        if (super.getOwner() == null || super.getOwner() != this.user.getUsername()) {
+            super.setOwner(this.user.getUsername());
+        }
+    }
 }

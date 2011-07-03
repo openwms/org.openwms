@@ -23,7 +23,7 @@ package org.openwms.web.flex.client.view {
     import flash.display.DisplayObject;
     import flash.events.Event;
     import flash.system.ApplicationDomain;
-
+    
     import mx.collections.ArrayCollection;
     import mx.collections.XMLListCollection;
     import mx.containers.ViewStack;
@@ -39,35 +39,35 @@ package org.openwms.web.flex.client.view {
     import mx.messaging.ChannelSet;
     import mx.messaging.config.ServerConfig;
     import mx.modules.ModuleManager;
-    import mx.resources.ResourceManager;
     import mx.resources.IResourceManager;
-
+    import mx.resources.ResourceManager;
+    
     import org.granite.rpc.remoting.mxml.SecureRemoteObject;
     import org.granite.tide.spring.Context;
     import org.granite.tide.spring.Identity;
     import org.granite.tide.spring.Spring;
-
+    import org.openwms.common.domain.values.Weight;
     import org.openwms.core.domain.Module;
     import org.openwms.core.domain.system.usermanagement.Grant;
-    import org.openwms.common.domain.values.Weight;
     import org.openwms.tms.domain.order.TransportOrder;
     import org.openwms.web.flex.client.IApplicationModule;
     import org.openwms.web.flex.client.business.I18nDelegate;
     import org.openwms.web.flex.client.business.PropertyDelegate;
     import org.openwms.web.flex.client.business.RoleDelegate;
-    import org.openwms.web.flex.client.business.UserDelegate;
     import org.openwms.web.flex.client.business.SecurityDelegate;
+    import org.openwms.web.flex.client.business.UserDelegate;
     import org.openwms.web.flex.client.event.ApplicationEvent;
     import org.openwms.web.flex.client.event.I18nEvent;
-    import org.openwms.web.flex.client.event.SwitchScreenEvent;
     import org.openwms.web.flex.client.event.PropertyEvent;
+    import org.openwms.web.flex.client.event.SwitchScreenEvent;
     import org.openwms.web.flex.client.model.I18nMap;
     import org.openwms.web.flex.client.model.ModelLocator;
+    import org.openwms.web.flex.client.model.PreferencesModel;
     import org.openwms.web.flex.client.module.ModuleLocator;
     import org.openwms.web.flex.client.util.DisplayUtility;
+    import org.openwms.web.flex.client.util.I18nUtil;
     import org.openwms.web.flex.client.util.SecurityUtil;
     import org.openwms.web.flex.client.util.XMLUtil;
-    import org.openwms.web.flex.client.util.I18nUtil;
     import org.openwms.web.flex.client.view.dialogs.LoginView;
 
     /**
@@ -131,7 +131,7 @@ package org.openwms.web.flex.client.view {
          * TideContext instance.
          */
         public var tideContext : Context = Spring.getInstance().getSpringContext();
-        Spring.getInstance().addComponents([SecurityUtil, ModelLocator, ModuleLocator, UserDelegate, RoleDelegate, PropertyDelegate, I18nMap, I18nDelegate, SecurityDelegate]);
+        Spring.getInstance().addComponents([SecurityUtil, ModelLocator, ModuleLocator, UserDelegate, RoleDelegate, PropertyDelegate, I18nMap, I18nDelegate, SecurityDelegate, PreferencesModel]);
 
         private var applicationDomain : ApplicationDomain = new ApplicationDomain(ApplicationDomain.currentDomain);
 

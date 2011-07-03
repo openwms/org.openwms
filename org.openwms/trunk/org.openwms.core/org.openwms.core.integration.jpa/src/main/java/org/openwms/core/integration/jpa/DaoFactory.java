@@ -20,7 +20,7 @@
  */
 package org.openwms.core.integration.jpa;
 
-import org.openwms.core.domain.system.usermanagement.Preference;
+import org.openwms.core.domain.system.AbstractPreference;
 import org.openwms.core.integration.GenericDao;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -36,14 +36,14 @@ import org.springframework.context.annotation.Configuration;
 public class DaoFactory {
 
     @Bean
-    public GenericDao<Preference, Long> preferenceDao() {
-        return new AbstractGenericJpaDao<Preference, Long>() {
+    public GenericDao<AbstractPreference, Long> preferenceDao() {
+        return new AbstractGenericJpaDao<AbstractPreference, Long>() {
             /**
              * @see org.openwms.core.integration.jpa.AbstractGenericJpaDao#getFindAllQuery()
              */
             @Override
             protected String getFindAllQuery() {
-                return Preference.NQ_FIND_ALL;
+                return AbstractPreference.NQ_FIND_ALL;
             }
 
             /**
@@ -51,7 +51,7 @@ public class DaoFactory {
              */
             @Override
             protected String getFindByUniqueIdQuery() {
-                return Preference.NQ_FIND_BY_UNIQUE_ID;
+                return AbstractPreference.NQ_FIND_BY_UNIQUE_ID;
             }
         };
     }

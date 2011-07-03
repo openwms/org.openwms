@@ -20,12 +20,13 @@
  */
 package org.openwms.core.service.spring;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
-import org.openwms.core.domain.system.PropertyScope;
-import org.openwms.core.domain.system.usermanagement.Preference;
+import javax.annotation.PostConstruct;
+
+import org.openwms.core.domain.system.AbstractPreference;
+import org.openwms.core.domain.system.ApplicationPreference;
+import org.openwms.core.domain.system.ModulePreference;
 import org.openwms.core.domain.values.Unit;
 import org.openwms.core.integration.GenericDao;
 import org.openwms.core.service.ConfigurationService;
@@ -47,7 +48,8 @@ import org.springframework.transaction.annotation.Transactional;
  */
 @Transactional
 @Service("configurationService")
-public class ConfigurationServiceImpl extends EntityServiceImpl<Preference, Long> implements ConfigurationService {
+public class ConfigurationServiceImpl extends EntityServiceImpl<AbstractPreference, Long> implements
+        ConfigurationService {
 
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
@@ -56,24 +58,41 @@ public class ConfigurationServiceImpl extends EntityServiceImpl<Preference, Long
      */
     @Autowired
     @Qualifier("preferencesDao")
-    protected GenericDao<Preference, Long> dao;
+    protected GenericDao<AbstractPreference, Long> dao;
+
+    /**
+     * Create a new ConfigurationServiceImpl.
+     * 
+     */
+    @PostConstruct
+    public void setDao() {
+        super.setDao(dao);
+    }
 
     /**
      * {@inheritDoc}
+     * 
+     * @see org.openwms.core.service.spring.EntityServiceImpl#findAll()
      */
     @Override
-    public List<Preference> findApplicationProperties() {
-        Map<String, Object> params = new HashMap<String, Object>();
-        params.put("type", PropertyScope.APPLICATION);
-        return dao.findByNamedParameters(Preference.NQ_FIND_BY_TYPE, params);
+    public List<AbstractPreference> findAll() {
+        return super.findAll();
     }
 
     /**
      * {@inheritDoc}
      */
     @Override
-    public List<Preference> findModuleProperties() {
-        return null;
+    public List<AbstractPreference> findApplicationProperties() {
+        return dao.findByNamedParameters(ApplicationPreference.NQ_FIND_ALL, null);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public List<AbstractPreference> findModuleProperties() {
+        return dao.findByNamedParameters(ModulePreference.NQ_FIND_ALL, null);
     }
 
     /**

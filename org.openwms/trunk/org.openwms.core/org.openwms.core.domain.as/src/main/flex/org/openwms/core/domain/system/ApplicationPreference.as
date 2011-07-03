@@ -18,34 +18,23 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
-package org.openwms.core.domain.system.usermanagement {
-
-    import org.openwms.core.domain.system.PropertyScope;
+package org.openwms.core.domain.system {
 
     [Bindable]
-    [RemoteClass(alias = "org.openwms.core.domain.system.usermanagement.Preference")]
-    /**
-     * A Preference, could be an user-, role- or system preference.
-     *
-     * @version $Revision$
-     * @since 0.1
-     */
-    public class Preference extends PreferenceBase {
+    [RemoteClass(alias="org.openwms.core.domain.system.ApplicationPreference")]
+    public class ApplicationPreference extends ApplicationPreferenceBase {
 
         /**
          * Constructor.
-         * Define at least a key for a Preference.
+         * Define at least a key for a ApplicationPreference.
          *
          * @param key The key to set
          * @param value The value of the Preference
          */
-        public function Preference(key : String=null, value : String=null, type : PropertyScope=null) {
+        public function ApplicationPreference(key : String=null, value : String=null) {
             this._key = key;
             this._value = value;
-            this._type = type;
+            this._owner = "Application";
         }
-
     }
-
 }
-
