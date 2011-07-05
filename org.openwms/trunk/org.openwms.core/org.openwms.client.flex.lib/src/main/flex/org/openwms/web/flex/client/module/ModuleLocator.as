@@ -46,11 +46,11 @@ package org.openwms.web.flex.client.module {
     import org.openwms.web.flex.client.model.ModelLocator;
 
     [Name]
-    [ManagedEvent(name="MODULE_CONFIG_CHANGED")]
-    [ManagedEvent(name="MODULES_CONFIGURED")]
-    [ManagedEvent(name="MODULE_LOADED")]
-    [ManagedEvent(name="MODULE_UNLOADED")]
-    [ManagedEvent(name="APP.BEFORE_MODULE_UNLOAD")]
+    [ManagedEvent(name = "MODULE_CONFIG_CHANGED")]
+    [ManagedEvent(name = "MODULES_CONFIGURED")]
+    [ManagedEvent(name = "MODULE_LOADED")]
+    [ManagedEvent(name = "MODULE_UNLOADED")]
+    [ManagedEvent(name = "APP.BEFORE_MODULE_UNLOAD")]
     [Bindable]
     /**
      * A ModuleLocator is the main implementation that cares about handling
@@ -119,7 +119,6 @@ package org.openwms.web.flex.client.module {
          */
         public function unloadAllModules(event : ApplicationEvent) : void {
             for (var url : String in modelLocator.loadedModules) {
-                trace("Do unloading for:" + url);
                 triggerUnload(modelLocator.loadedModules[url].data.module as Module);
             }
         }

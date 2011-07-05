@@ -23,7 +23,7 @@ package org.openwms.web.flex.client.view {
     import flash.display.DisplayObject;
     import flash.events.Event;
     import flash.system.ApplicationDomain;
-    
+
     import mx.collections.ArrayCollection;
     import mx.collections.XMLListCollection;
     import mx.containers.ViewStack;
@@ -41,7 +41,7 @@ package org.openwms.web.flex.client.view {
     import mx.modules.ModuleManager;
     import mx.resources.IResourceManager;
     import mx.resources.ResourceManager;
-    
+
     import org.granite.rpc.remoting.mxml.SecureRemoteObject;
     import org.granite.tide.spring.Context;
     import org.granite.tide.spring.Identity;
@@ -274,6 +274,7 @@ package org.openwms.web.flex.client.view {
                 modelLocator.fired = false;
                 return;
             }
+            modelLocator.fired = true;
             modelLocator.SCREEN_LOCKED = true;
             modelLocator.actualView = SwitchScreenEvent.SHOW_STARTSCREEN;
             appViewStack.selectedIndex = DisplayUtility.getView(SwitchScreenEvent.SHOW_STARTSCREEN, appViewStack);
@@ -305,6 +306,7 @@ package org.openwms.web.flex.client.view {
                 modelLocator.SCREEN_LOCKED = false;
                 modelLocator.viewLockedBy = "";
                 modelLocator.actualView = modelLocator.viewBeforeLock;
+                PopUpManager.removePopUp(_loginView);
             } else {
                 dispatchEvent(new ApplicationEvent(ApplicationEvent.LOAD_ALL_MODULES));
             }

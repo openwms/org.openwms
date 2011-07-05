@@ -30,14 +30,12 @@
 
     <mx:Script>
         <![CDATA[
-        
             import mx.managers.PopUpManager;
 
             import org.granite.tide.spring.Identity;
 
             import org.openwms.web.flex.client.view.dialogs.LoginView;
             import org.openwms.web.flex.client.event.ApplicationEvent;
-            import org.openwms.web.flex.client.model.ModelLocator;
             import org.openwms.web.flex.client.util.I18nUtil;
             
             [Inject]
@@ -47,13 +45,6 @@
              */
             public var identity : Identity;
             
-	        [Inject]
-	        [Bindable]
-            /**
-	         * Injected Model.
-	         */
-	        public var modelLocator : ModelLocator;
-
             private var _loginView : LoginView;
         
             /**
@@ -62,9 +53,7 @@
              * @param event Unused
              */
             public function onCreate(event : ApplicationEvent = null) : void {
-            	if (modelLocator.SCREEN_LOCKED) {
-                    showLoginDialog(I18nUtil.trans(I18nUtil.APP_MAIN, 'txt_login_locked_by', modelLocator.viewLockedBy));
-            	} else if (!identity.loggedIn) {
+                if (!identity.loggedIn) {
                     showLoginDialog(I18nUtil.trans(I18nUtil.APP_MAIN, 'txt_login_not_logged_in'));
                 }
             }
