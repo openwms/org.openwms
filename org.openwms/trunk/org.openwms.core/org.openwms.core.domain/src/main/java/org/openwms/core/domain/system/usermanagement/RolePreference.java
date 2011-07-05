@@ -30,44 +30,45 @@ import javax.persistence.Table;
 import org.openwms.core.domain.system.AbstractPreference;
 
 /**
- * A UserPreference.
+ * A RolePreference.
  * 
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  * @version $Revision: $
  * @since 0.1
  */
 @Entity
-@DiscriminatorValue("USER")
-@Table(name = "COR_USER_PREFERENCE")
-public class UserPreference extends AbstractPreference {
+@DiscriminatorValue("ROLE")
+@Table(name = "COR_ROLE_PREFERENCE")
+public class RolePreference extends AbstractPreference {
 
-    private static final long serialVersionUID = -6569559231034802554L;
+    private static final long serialVersionUID = 8267024349554036680L;
 
     @ManyToOne
-    @JoinColumn(name = "USER_ID", nullable = false)
-    private User user;
+    @JoinColumn(name = "ROLE_ID", nullable = false)
+    private Role role;
 
     /**
-     * Create a new UserPreference.
+     * Create a new RolePreference.
      */
-    protected UserPreference() {
+    protected RolePreference() {
         super();
     }
 
     /**
-     * Create a new UserPreference.
+     * Create a new RolePreference.
      * 
      * @param key
      */
-    public UserPreference(String username, String key) {
+    public RolePreference(String rolename, String key) {
         super(key);
-        super.setOwner(username);
+        super.setOwner(rolename);
     }
 
     @PrePersist
     protected void onPersist() {
-        if (super.getOwner() == null || super.getOwner() != this.user.getUsername()) {
-            super.setOwner(this.user.getUsername());
+        if (super.getOwner() == null || super.getOwner() != this.role.getName()) {
+            super.setOwner(this.role.getName());
         }
     }
+
 }

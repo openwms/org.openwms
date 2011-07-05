@@ -36,5 +36,14 @@ package org.openwms.core.domain.system {
             this._value = value;
             this._owner = "Application";
         }
+
+    	/**
+    	 * Return "Application".
+    	 * 
+    	 * @return Application
+    	 */
+    	override public function toString() : String {
+    		return "Application";
+    	}
     }
 }

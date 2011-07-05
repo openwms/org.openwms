@@ -159,7 +159,7 @@
             /**
              * Remove Users from an already existing Role.
              */
-            private function removeUsers():void {
+            private function removeUsers() : void {
                 if (selected == null) {
                 	Alert.show(I18nUtil.trans(I18nUtil.APP_MAIN, "info_role_select_role_to_remove"));
                     return;
@@ -168,7 +168,7 @@
                     Alert.show(I18nUtil.trans(I18nUtil.APP_MAIN, "info_role_select_role_to_remove_users"));
                     return;
                 }
-            	for each (var selectedUser:User in usersLst.selectedItems) {
+            	for each (var selectedUser : User in usersLst.selectedItems) {
             		for each (var user:User in selected.users) {
                         if (user.username == selectedUser.username) {
                         	selected.users.removeItemAt(selected.users.getItemIndex(user));
@@ -180,22 +180,21 @@
             /**
              * Reload the list of Roles.
              */
-            private function refresh():void {
-                trace("Trigger Loading Roles");
+            private function refresh() : void {
                 dispatchEvent(new RoleEvent(RoleEvent.LOAD_ALL_ROLES));
             }
             
             /**
              * Define how User information is displayed.
              */
-            private function formatUser(item:*):String {
+            private function formatUser(item : *) : String {
             	return (item as User).fullname+" ("+(item as User).username+")";
             }
 
             /**
              * Define how Grant information is displayed.
              */
-            private function formatGrant(item:*):String {
+            private function formatGrant(item : *) : String {
                 return (item as SecurityObject).description + " (" + (item as SecurityObject).name + ")";
             }
         ]]>

@@ -63,6 +63,10 @@ package org.openwms.web.flex.client.event {
          * Type of event that is fired whenever the selection of Users in the UserManagement screen has changed.
          */
         public static const USER_SELECTION_CHANGED : String = "USER.SELECTION_CHANGED";
+        /**
+         * Type of event that is fired whenever the list of Users has changed.
+         */
+        public static const USER_COLLECTION_CHANGED : String = "USER.COLLECTION_CHANGED";
 
         /**
          * Store arbitrary data.
