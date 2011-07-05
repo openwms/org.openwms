@@ -87,7 +87,6 @@
             private function lock(event : MouseEvent = null) : void {
             	modelLocator.viewBeforeLock = modelLocator.actualView;
                 modelLocator.viewLockedBy = modelLocator.loggedInUser.username;
-                modelLocator.fired = true;
                 dispatchEvent(new ApplicationEvent(ApplicationEvent.LOCK));
             }
 
