@@ -21,15 +21,18 @@
 package org.openwms.web.flex.client.model {
 
     import flash.utils.Dictionary;
-
+    
     import mx.collections.ArrayCollection;
+    import mx.events.CollectionEvent;
     import mx.formatters.DateFormatter;
-
+    
     import org.openwms.core.domain.Module;
     import org.openwms.core.domain.system.usermanagement.User;
     import org.openwms.web.flex.client.event.SwitchScreenEvent;
+    import org.openwms.web.flex.client.event.UserEvent;
 
     [Name("modelLocator")]
+    [ManagedEvent("USER.COLLECTION_CHANGED")]
     [Bindable]
     /**
      * A ModelLocator is the main model backing bean to store session data.
@@ -193,6 +196,7 @@ package org.openwms.web.flex.client.model {
         public function ModelLocator() {
             dateFormatter.formatString = SIMPLE_DT_FORMAT;
             dateTimeFormatter.formatString = DT_FORMAT_STRING;
+            allUsers.addEventListener(CollectionEvent.COLLECTION_CHANGE, onUserCollectionChanged);
         }
 
         /**
@@ -208,6 +212,10 @@ package org.openwms.web.flex.client.model {
             var today : Date = new Date();
             today.setHours(0, 0, 0, 0);
             return today;
+        }
+        
+        private function onUserCollectionChanged(event : CollectionEvent) : void {
+        	dispatchEvent(new UserEvent(UserEvent.USER_COLLECTION_CHANGED));
         }
 
     }

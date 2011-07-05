@@ -26,19 +26,33 @@
     <mx:Metadata>
         [Name]
         [ManagedEvent(name="LOAD_ALL_PROPERTIES")]
+        [ManagedEvent(name="LOAD_ALL_USERS")]
+        [ManagedEvent(name="LOAD_ALL_ROLES")]
         [ResourceBundle("appMain")]
         [ResourceBundle("appEntity")]
     </mx:Metadata>
 
     <mx:Script>
         <![CDATA[
+        	import mx.collections.ArrayCollection;
+        	import mx.managers.PopUpManager;
         	import mx.events.ListEvent;
 
-        	import org.openwms.web.flex.client.model.PreferencesModel;
         	import org.openwms.core.domain.system.AbstractPreference;
+        	import org.openwms.web.flex.client.event.RoleEvent;
+        	import org.openwms.web.flex.client.event.UserEvent;
         	import org.openwms.web.flex.client.event.PropertyEvent;
+        	import org.openwms.web.flex.client.model.ModelLocator;
+        	import org.openwms.web.flex.client.model.PreferencesModel;
             import org.openwms.web.flex.client.util.I18nUtil;
+        	import org.openwms.web.flex.client.view.dialogs.CreatePreferenceDialog;
 
+            [Inject]
+            [Bindable]
+            /**
+             * Inject the model.
+             */
+            public var modelLocator : ModelLocator;
             [Inject]
             [Bindable]
             /**
@@ -49,7 +63,18 @@
             private var selected : AbstractPreference;
         
             private function onCreate() : void {
+            	if(modelLocator.allUsers.length == 0) {
+            		dispatchEvent(new UserEvent(UserEvent.LOAD_ALL_USERS));
+            	}
+            	if(modelLocator.allRoles.length == 0) {
+            		dispatchEvent(new RoleEvent(RoleEvent.LOAD_ALL_ROLES));
+            	}
                 reload();
+            }
+            
+            private function create() : void {
+                var pop : CreatePreferenceDialog = CreatePreferenceDialog(PopUpManager.createPopUp(this, CreatePreferenceDialog, true));
+                PopUpManager.centerPopUp(pop);
             }
             
             private function reload() : void {
@@ -57,14 +82,20 @@
             }
             
             private function onSelect(event : ListEvent) : void {
-            	selected = event.currentTarget as AbstractPreference;
+            	selected = event.currentTarget.selectedItem as AbstractPreference;
+            	typeCmb.selectedItem = selected;
+            }
+            
+            private function labelPreference(item : *) : String {
+            	trace("Preference:"+(item as AbstractPreference).toString());
+            	return (item as AbstractPreference).toString();
             }
         ]]>
     </mx:Script>
     <mx:HBox x="10" y="10" width="95%" verticalAlign="middle" backgroundColor="#FFA6A6">
         <mx:Label x="10" y="10" text="{I18nUtil.trans(I18nUtil.APP_MAIN, 'txt_preferences_screen_header')}" fontSize="24"/>
         <mx:VRule height="10"/>
-        <mx:Button id="addBtn" buttonMode="true" mouseChildren="false" toolTip="{I18nUtil.trans(I18nUtil.APP_MAIN, 'ttip_preferences_screen_add_pref')}" icon="@Embed(source='/assets/images/Users--plus.png')"/>
+        <mx:Button id="addBtn" click="create();" buttonMode="true" mouseChildren="false" toolTip="{I18nUtil.trans(I18nUtil.APP_MAIN, 'ttip_preferences_screen_add_pref')}" icon="@Embed(source='/assets/images/Users--plus.png')"/>
         <mx:VRule height="10"/>
         <mx:Button id="deleteBtn" buttonMode="true" mouseChildren="false" toolTip="{I18nUtil.trans(I18nUtil.APP_MAIN, 'ttip_preferences_screen_delete_user')}" icon="@Embed(source='/assets/images/Users--minus.png')"/>
         <mx:VRule height="10"/>
@@ -76,13 +107,16 @@
     <mx:HBox x="10" y="63" width="95%" height="100%">
         <mx:Accordion x="10" y="63" width="300" height="95%">
             <mx:Canvas label="{I18nUtil.trans(I18nUtil.APP_MAIN, 'lbl_preferences_screen_app_prefs')}" width="100%" height="100%">
-                <mx:List id="appPrefsLst" labelField="key" dataProvider="{prefs.appPrefs}" change="onSelect(event)" alternatingItemColors="[#EEEEEE, #FFFFFF]" width="100%" height="100%" x="0" y="0" />
+                <mx:List id="appPrefsLst" labelField="key" dataProvider="{prefs.appPrefs}" itemClick="onSelect(event)" alternatingItemColors="[#EEEEEE, #FFFFFF]" width="100%" height="100%" x="0" y="0" />
             </mx:Canvas>
             <mx:Canvas label="{I18nUtil.trans(I18nUtil.APP_MAIN, 'lbl_preferences_screen_module_prefs')}" width="100%" height="100%">
-                <mx:List id="modPrefsLst" labelField="key" dataProvider="{prefs.modulePrefs}" change="onSelect(event)" alternatingItemColors="[#EEEEEE, #FFFFFF]" width="100%" height="100%" x="0" y="0" />
+                <mx:List id="modPrefsLst" labelField="key" dataProvider="{prefs.modulePrefs}" itemClick="onSelect(event)" alternatingItemColors="[#EEEEEE, #FFFFFF]" width="100%" height="100%" x="0" y="0" />
+            </mx:Canvas>
+            <mx:Canvas label="{I18nUtil.trans(I18nUtil.APP_MAIN, 'lbl_preferences_screen_role_prefs')}" width="100%" height="100%">
+                <mx:List id="rolePrefsLst" labelField="key" dataProvider="{prefs.rolePrefs}" itemClick="onSelect(event)" alternatingItemColors="[#EEEEEE, #FFFFFF]" width="100%" height="100%" x="0" y="0" />
             </mx:Canvas>
             <mx:Canvas label="{I18nUtil.trans(I18nUtil.APP_MAIN, 'lbl_preferences_screen_user_prefs')}" width="100%" height="100%">
-                <mx:List id="userPrefsLst" labelField="key" dataProvider="{prefs.userPrefs}" change="onSelect(event)" alternatingItemColors="[#EEEEEE, #FFFFFF]" width="100%" height="100%" x="0" y="0" />
+                <mx:List id="userPrefsLst" labelField="key" dataProvider="{prefs.userPrefs}" itemClick="onSelect(event)" alternatingItemColors="[#EEEEEE, #FFFFFF]" width="100%" height="100%" x="0" y="0" />
             </mx:Canvas>
         </mx:Accordion>
         <mx:Panel id="detailsPnl" title="{I18nUtil.trans(I18nUtil.APP_MAIN, 'lbl_preferences_screen_details')}" height="95%" layout="absolute" width="100%">
@@ -96,7 +130,7 @@
             <mx:TextArea id="textarea1" text="{selected.description}" x="178" y="61" width="228" />
 
             <mx:Label id="typeLbl" text="{I18nUtil.trans(I18nUtil.APP_ENTITY, 'entity_preference_type')}" x="10" y="115" />
-            <mx:ComboBox id="typeCmb" width="228" x="178" y="113" />
+            <mx:ComboBox id="typeCmb" dataProvider="{PreferencesModel.types}" width="228" x="178" y="113" />
 
             <mx:Label id="valueLbl" text="{I18nUtil.trans(I18nUtil.APP_ENTITY, 'entity_preference_value')}" x="10" y="141" />
             <mx:TextInput id="valueTxt" text="{selected.value}" width="228" x="178" y="139" />

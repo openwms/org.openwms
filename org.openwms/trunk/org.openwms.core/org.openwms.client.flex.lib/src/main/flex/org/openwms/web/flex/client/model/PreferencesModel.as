@@ -22,6 +22,12 @@ package org.openwms.web.flex.client.model {
 	
 	import mx.collections.ArrayCollection;
 	
+	import org.granite.tide.events.TideResultEvent;
+	import org.openwms.core.domain.system.ApplicationPreference;
+	import org.openwms.core.domain.system.ModulePreference;
+	import org.openwms.core.domain.system.usermanagement.RolePreference;
+	import org.openwms.core.domain.system.usermanagement.UserPreference;
+	
     [Name("prefs")]
     [Bindable]
     /**
@@ -34,17 +40,44 @@ package org.openwms.web.flex.client.model {
      */
 	public class PreferencesModel {
 		
+        [Inject]
+        /**
+         * Inject the model.
+         */
+        public var modelLocator : ModelLocator;
 		public var appPrefs : ArrayCollection = new ArrayCollection();
 		public var modulePrefs : ArrayCollection = new ArrayCollection();
+		public var rolePrefs : ArrayCollection = new ArrayCollection();
 		public var userPrefs : ArrayCollection = new ArrayCollection();
+
+		public static const APPLICATION : String = "Application";
+		public static const MODULE : String = "Module";
+		public var owners : ArrayCollection = new ArrayCollection([APPLICATION, MODULE]);
+		public static const types : Array = [ApplicationPreference, ModulePreference, RolePreference, UserPreference];
 		
+		/**
+		 * Constructor.
+		 */
 		public function PreferencesModel() {
 		}
 		
+		/**
+		 * Clear all collections.
+		 */
 		public function clearAll() : void {
 			appPrefs.removeAll();
 			modulePrefs.removeAll();
+			rolePrefs.removeAll();
 			userPrefs.removeAll();
+		}
+		
+		[Observer("USER.COLLECTION_CHANGED")]
+		public function onUsersLoaded(event : TideResultEvent) : void {
+			owners.removeAll();
+			owners.addItem(APPLICATION);
+			owners.addItem(MODULE);
+			owners.toArray().push(modelLocator.allRoles.source);
+			owners.toArray().push(modelLocator.allUsers.source);
 		}
 		
 	}

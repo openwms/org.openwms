@@ -26,7 +26,7 @@ package org.openwms.core.domain.system.usermanagement {
 
         /**
          * Constructor.
-         * Define at least a username and a key for a UserPreference.
+         * Define at least an User and a key for a UserPreference.
          *
          * @param user The User who owns the Preference
          * @param key The key to set
@@ -40,5 +40,14 @@ package org.openwms.core.domain.system.usermanagement {
             this._key = key;
             this._value = value;
         }
+
+    	/**
+    	 * Return "User".
+    	 * 
+    	 * @return User
+    	 */
+    	override public function toString() : String {
+    		return "User";
+    	}
     }
 }

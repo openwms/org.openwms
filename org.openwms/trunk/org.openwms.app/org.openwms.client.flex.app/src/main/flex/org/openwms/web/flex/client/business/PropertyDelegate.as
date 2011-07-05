@@ -31,6 +31,7 @@ package org.openwms.web.flex.client.business {
     import org.openwms.core.domain.system.AbstractPreference;
     import org.openwms.core.domain.system.ApplicationPreference;
     import org.openwms.core.domain.system.ModulePreference;
+    import org.openwms.core.domain.system.usermanagement.RolePreference;
     import org.openwms.core.domain.system.usermanagement.UserPreference;
     import org.openwms.core.domain.values.Unit;
     import org.openwms.web.flex.client.event.PropertyEvent;
@@ -94,6 +95,8 @@ package org.openwms.web.flex.client.business {
 		            prefsModel.appPrefs.addItem(pref);
         		} else if (pref is ModulePreference) {
         			prefsModel.modulePrefs.addItem(pref);
+        		} else if (pref is RolePreference) {
+        			prefsModel.rolePrefs.addItem(pref);
         		} else if (pref is UserPreference) {
         			prefsModel.userPrefs.addItem(pref);
         		}
