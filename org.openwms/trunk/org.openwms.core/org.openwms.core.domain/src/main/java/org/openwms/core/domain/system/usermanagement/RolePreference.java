@@ -30,7 +30,8 @@ import javax.persistence.Table;
 import org.openwms.core.domain.system.AbstractPreference;
 
 /**
- * A RolePreference.
+ * A RolePreference. Used to store settings in Role scope, only valid for the
+ * assigned Role.
  * 
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  * @version $Revision: $

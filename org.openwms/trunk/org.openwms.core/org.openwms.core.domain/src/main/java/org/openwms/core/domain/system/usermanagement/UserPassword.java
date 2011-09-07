@@ -36,9 +36,9 @@ import org.openwms.core.domain.DomainObject;
 import org.openwms.core.util.validation.AssertUtils;
 
 /**
- * Encapsulates the password of an {@link User}.
+ * Encapsulates the {@link User}s password.
  * <p>
- * When an {@link User} changes his password, the current password is stored to
+ * When an {@link User} changes his password, the current password is added to
  * the history list of passwords.
  * </p>
  * 

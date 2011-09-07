@@ -32,7 +32,7 @@ package org.openwms.web.flex.client.model {
     import org.openwms.web.flex.client.event.UserEvent;
 
     [Name("modelLocator")]
-    [ManagedEvent("USER.COLLECTION_CHANGED")]
+    [ManagedEvent(name = "USER.COLLECTION_CHANGED")]
     [Bindable]
     /**
      * A ModelLocator is the main model backing bean to store session data.
@@ -208,6 +208,11 @@ package org.openwms.web.flex.client.model {
         public function updateLocale(locale : String) : void {
         }
 
+		/**
+		 * Return the actual date.
+		 * 
+		 * @return the actual date.
+		 */
         public static function today() : Date {
             var today : Date = new Date();
             today.setHours(0, 0, 0, 0);

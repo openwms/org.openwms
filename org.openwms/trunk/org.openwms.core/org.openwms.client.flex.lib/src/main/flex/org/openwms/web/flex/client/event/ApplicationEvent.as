@@ -112,6 +112,16 @@ package org.openwms.web.flex.client.event {
         public static const APP_LOGIN_NOK : String = "APP.LOGIN_NOK";
 
         /**
+         * Name of the Event to signal that passed credentials are valid.
+         */
+        public static const APP_CREDENTIALS_VALID : String = "APP.CREDENTIALS_VALID";
+
+        /**
+         * Name of the Event to signal that passed credentials aren't valid.
+         */
+        public static const APP_CREDENTIALS_INVALID : String = "APP.CREDENTIALS_INVALID";
+
+        /**
          * Name of the Event to force an User logout.
          */
         public static const LOGOUT : String = "APP_LOGOUT";

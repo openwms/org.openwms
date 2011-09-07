@@ -13,7 +13,7 @@ Import-Bundle:
  org.openwms.common.integration;version="0.0.1.SNAPSHOT",
  org.openwms.tms.domain;version="0.0.1.SNAPSHOT",
  org.openwms.tms.integration;version="0.0.1.SNAPSHOT",
- com.springsource.org.hibernate;version="3.2.6.ga"
+ com.springsource.org.hibernate;version="${osgi.hibernate}"
 Require-Bundle: 
  com.springsource.org.hibernate,
  com.springsource.javassist

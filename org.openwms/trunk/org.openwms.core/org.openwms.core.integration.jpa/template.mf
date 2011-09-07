@@ -12,7 +12,7 @@ Import-Bundle:
  org.openwms.core.domain;version="0.0.1.SNAPSHOT",
  org.openwms.core.integration;version="0.0.1.SNAPSHOT",
  com.springsource.org.apache.commons.lang;version="2.4.0",
- com.springsource.org.hibernate;version="3.2.6.ga"
+ com.springsource.org.hibernate;version="${osgi.hibernate}"
 Require-Bundle: 
  com.springsource.org.hibernate,
  com.springsource.javassist

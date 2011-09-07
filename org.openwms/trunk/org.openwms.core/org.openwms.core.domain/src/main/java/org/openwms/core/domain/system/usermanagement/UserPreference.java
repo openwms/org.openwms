@@ -30,7 +30,8 @@ import javax.persistence.Table;
 import org.openwms.core.domain.system.AbstractPreference;
 
 /**
- * A UserPreference.
+ * An UserPreference. Used to store settings in User scope, only valid for the
+ * assigned User.
  * 
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  * @version $Revision: $
@@ -57,13 +58,20 @@ public class UserPreference extends AbstractPreference {
     /**
      * Create a new UserPreference.
      * 
+     * @param username
+     *            The User's username is set as owner of this preference
      * @param key
+     *            The key of this preference
      */
     public UserPreference(String username, String key) {
         super(key);
         super.setOwner(username);
     }
 
+    /**
+     * On persisting a new UserPreference, the User's name is set as owner of
+     * the preference.
+     */
     @PrePersist
     protected void onPersist() {
         if (super.getOwner() == null || super.getOwner() != this.user.getUsername()) {

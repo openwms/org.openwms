@@ -27,7 +27,7 @@ import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 
 /**
- * A ApplicationPreference.
+ * An ApplicationPreference. Used to store settings in application scope.
  * 
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  * @version $Revision: $

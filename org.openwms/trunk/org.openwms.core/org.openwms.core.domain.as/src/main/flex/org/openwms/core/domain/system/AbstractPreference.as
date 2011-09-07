@@ -23,14 +23,14 @@ package org.openwms.core.domain.system {
     [Bindable]
     [RemoteClass(alias="org.openwms.core.domain.system.AbstractPreference")]
     public class AbstractPreference extends AbstractPreferenceBase {
-    	
-    	/**
-    	 * Return "Common".
-    	 * 
-    	 * @return Common
-    	 */
-    	public function toString() : String {
-    		return "Common";
-    	}
+
+        /**
+         * Return "Common".
+         *
+         * @return Common
+         */
+        public function toString() : String {
+            return "Preference";
+        }
     }
 }

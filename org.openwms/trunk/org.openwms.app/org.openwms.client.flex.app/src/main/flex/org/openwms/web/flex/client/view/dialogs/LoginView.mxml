@@ -70,13 +70,16 @@
             }
             
             private function onLogin(username : String, password : String) : void {
+                var event : ApplicationEvent;
                 if (modelLocator.SCREEN_LOCKED) {
                     if (modelLocator.viewLockedBy == username) {
-                        dispatchEvent(new ApplicationEvent(ApplicationEvent.APP_UNLOCK));
+                        event = new ApplicationEvent(ApplicationEvent.APP_UNLOCK);
+                        event.data = {username:username, password:password};
+                        dispatchEvent(event);
                     }
                     return;
                 }
-                var event : ApplicationEvent = new ApplicationEvent(ApplicationEvent.APP_REQUEST_LOGIN);
+                event = new ApplicationEvent(ApplicationEvent.APP_REQUEST_LOGIN);
                 event.data = {username:username, password:password};
                 dispatchEvent(event);
             }

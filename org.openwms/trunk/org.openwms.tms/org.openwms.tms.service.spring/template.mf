@@ -17,7 +17,7 @@ Import-Bundle:
  org.openwms.tms.util;version="0.0.1.SNAPSHOT",
  org.openwms.tms.integration;version="0.0.1.SNAPSHOT",
  org.openwms.tms.service.api;version="0.0.1.SNAPSHOT",
- com.springsource.org.hibernate;version="3.2.6.ga"
+ com.springsource.org.hibernate;version="${osgi.hibernate}"
 Import-Template: 
  javax.annotation;version="0"
 Import-Package: 

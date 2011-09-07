@@ -4,7 +4,7 @@
  * This file is part of openwms.org.
  *
  * openwms.org is free software: you can redistribute it and/or modify
- * it under the terms of the GNU Lesser General Public License as 
+ * it under the terms of the GNU Lesser General Public License as
  * published by the Free Software Foundation, either version 3 of the
  * License, or (at your option) any later version.
  *
@@ -33,21 +33,21 @@ package org.openwms.core.domain.system.usermanagement {
          * @param value The value of the Preference
          */
         public function RolePreference(role : Role=null, key : String=null, value : String=null) {
-        	if (role != null) {
-            	this._owner = role.name;
-            	this._role = role;
-         	}
+            if (role != null) {
+                this._owner = role.name;
+                this._role = role;
+            }
             this._key = key;
             this._value = value;
         }
 
-    	/**
-    	 * Return "Role".
-    	 * 
-    	 * @return Role
-    	 */
-    	override public function toString() : String {
-    		return "Role";
-    	}
+        /**
+         * Return "Role".
+         *
+         * @return Role
+         */
+        override public function toString() : String {
+            return "Role Preference";
+        }
     }
 }

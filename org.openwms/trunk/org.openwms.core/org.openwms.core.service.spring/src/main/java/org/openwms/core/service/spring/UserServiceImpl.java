@@ -193,4 +193,12 @@ public class UserServiceImpl implements UserService {
             throw new ServiceRuntimeException("Password pattern does not match the defined rules", ipe);
         }
     }
+
+    /**
+     * @see org.openwms.core.service.UserService#checkCredentials(org.openwms.core.domain.system.usermanagement.UserPassword)
+     */
+    @Override
+    public boolean checkCredentials(UserPassword userPassword) {
+        return dao.findByNameAndPassword(userPassword) == null ? false : true;
+    }
 }

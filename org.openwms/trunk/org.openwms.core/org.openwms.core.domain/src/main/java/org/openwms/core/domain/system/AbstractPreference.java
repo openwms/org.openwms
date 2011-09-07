@@ -135,6 +135,9 @@ public abstract class AbstractPreference extends AbstractEntity implements Domai
 
     /**
      * Create a <code>AbstractPreference</code> with a key.
+     * 
+     * @param key
+     *            The key of this preference.
      */
     public AbstractPreference(String key) {
         this.key = key;
