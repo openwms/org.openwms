@@ -34,8 +34,10 @@ package org.openwms.web.flex.client.business {
     import org.openwms.web.flex.client.util.I18nUtil;
 
     [Name("securityDelegate")]
-    [ManagedEvent(name = "APP.LOGIN_OK")]
-    [ManagedEvent(name = "APP.LOGIN_NOK")]
+    [ManagedEvent(name="APP.LOGIN_OK")]
+    [ManagedEvent(name="APP.LOGIN_NOK")]
+    [ManagedEvent(name="APP.CREDENTIALS_VALID")]
+    [ManagedEvent(name="APP.CREDENTIALS_INVALID")]
     [ResourceBundle("appError")]
     [Bindable]
     /**
@@ -77,9 +79,31 @@ package org.openwms.web.flex.client.business {
         /**
          * Force an GDS remote login call.
          * Tide event observers : APP.REQUEST_LOGIN
+         *
+         * @param event expected to store data.username and data.password as credentials
          */
         public function login(event : ApplicationEvent) : void {
             identity.login(event.data.username, event.data.password, loginOk, onFault);
+        }
+
+        [Observer("APP.UNLOCK")]
+        /**
+         * Call a service to check whether the credentials are valid.
+         * Tide event observers : APP.CHECK_CREDENTIAL
+         *
+         * @param event expected to store data.username and data.password as credentials
+         */
+        public function unlock(event : ApplicationEvent) : void {
+            tideContext.securityContextHelper.checkCredentials(event.data.username, event.data.password, onValid, onFault);
+        }
+
+        private function onValid(event : TideResultEvent) : void {
+            var res : Boolean = event.result as Boolean;
+            if (res) {
+                dispatchEvent(new ApplicationEvent(ApplicationEvent.APP_CREDENTIALS_VALID));
+            } else {
+                dispatchEvent(new ApplicationEvent(ApplicationEvent.APP_CREDENTIALS_INVALID));
+            }
         }
 
         private function loginOk(event : TideResultEvent) : void {

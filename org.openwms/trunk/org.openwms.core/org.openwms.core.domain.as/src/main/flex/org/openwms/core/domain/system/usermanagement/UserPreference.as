@@ -33,21 +33,21 @@ package org.openwms.core.domain.system.usermanagement {
          * @param value The value of the Preference
          */
         public function UserPreference(user : User=null, key : String=null, value : String=null) {
-        	if (user != null) {
-            	this._owner = user.username;
-            	this._user = user;
-         	}
+            if (user != null) {
+                this._owner = user.username;
+                this._user = user;
+            }
             this._key = key;
             this._value = value;
         }
 
-    	/**
-    	 * Return "User".
-    	 * 
-    	 * @return User
-    	 */
-    	override public function toString() : String {
-    		return "User";
-    	}
+        /**
+         * Return "User".
+         *
+         * @return User
+         */
+        override public function toString() : String {
+            return "User Preference";
+        }
     }
 }

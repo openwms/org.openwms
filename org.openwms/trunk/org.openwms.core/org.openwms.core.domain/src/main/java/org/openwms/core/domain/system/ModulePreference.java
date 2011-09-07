@@ -27,7 +27,7 @@ import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 
 /**
- * A ModulePreference.
+ * A ModulePreference. Used to store settings in Module scope.
  * 
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  * @version $Revision: $

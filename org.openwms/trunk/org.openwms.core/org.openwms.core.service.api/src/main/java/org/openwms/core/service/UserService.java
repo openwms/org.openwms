@@ -48,6 +48,15 @@ public interface UserService {
     boolean changeUserPassword(UserPassword userPassword);
 
     /**
+     * 
+     * FIXME [scherrer] Comment this
+     * 
+     * @param userPassword
+     * @return
+     */
+    boolean checkCredentials(UserPassword userPassword);
+
+    /**
      * Find and return all {@link User}s.
      * 
      * @return A list of all {@link User}s

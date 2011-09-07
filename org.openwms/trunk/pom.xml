@@ -370,16 +370,22 @@
         <moduleDir>.</moduleDir>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <jdkVersion>1.6</jdkVersion>
-        <spring.version>3.0.5.RELEASE</spring.version>
+        <spring.version>3.0.6.RELEASE</spring.version>
         <spring.osgi.version>1.2.1</spring.osgi.version>
-        <spring.security.version>3.0.3.RELEASE</spring.security.version>
-        <hibernate.version>3.4.0.GA</hibernate.version>
+        <spring.security.version>3.0.4.RELEASE</spring.security.version>
+        <hibernate.version>3.4.0.GA-A</hibernate.version>
         <granite.version>2.2.1.GA</granite.version>
         <flex.version>3.2.0.3958</flex.version>
 	    <slf4j.version>1.5.10</slf4j.version>
 	    <junit.version>4.7.0</junit.version>
         <maven.compile.targetLevel>${jdkVersion}</maven.compile.targetLevel>
         <maven.compile.sourceLevel>${jdkVersion}</maven.compile.sourceLevel>
+        <!-- OSGi header versions -->
+        <osgi.spring>${spring.version}</osgi.spring>
+        <osgi.hibernate>3.3.2.GA</osgi.hibernate>
+        <osgi.hibernate.annotations>3.4.0.GA-A</osgi.hibernate.annotations>
+        <osgi.hibernate.annotations.common>3.3.0.ga</osgi.hibernate.annotations.common>
+        <osgi.hibernate.ejb>3.4.0.GA-A</osgi.hibernate.ejb>
     </properties>
 
     <pluginRepositories>

@@ -21,7 +21,11 @@
 package org.openwms.web.flex.security;
 
 import org.openwms.core.domain.system.usermanagement.User;
+import org.openwms.core.domain.system.usermanagement.UserPassword;
 import org.openwms.core.service.UserHolder;
+import org.openwms.core.service.UserService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
@@ -35,6 +39,10 @@ import org.springframework.stereotype.Service;
  */
 @Service("securityContextHelper")
 public class SecurityContextHelper {
+
+    @Autowired
+    @Qualifier("userService")
+    private UserService userService;
 
     /**
      * Helper method for rich clients to extract the current User from the
@@ -56,5 +64,9 @@ public class SecurityContextHelper {
             return ((UserHolder) auth.getPrincipal()).getUser();
         }
         return null;
+    }
+
+    public final boolean checkCredentials(String username, char[] password) {
+        return userService.checkCredentials(new UserPassword(new User(username), password.toString()));
     }
 }

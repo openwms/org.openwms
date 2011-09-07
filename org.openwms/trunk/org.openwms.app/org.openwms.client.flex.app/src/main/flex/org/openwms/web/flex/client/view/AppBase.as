@@ -167,7 +167,7 @@ package org.openwms.web.flex.client.view {
         [Bindable]
         private var securityService : SecureRemoteObject = new SecureRemoteObject("securityServiceRemote");
 
-        [Embed(source = "/assets/security/secured-objects.xml", mimeType = "application/octet-stream")]
+        [Embed(source="/assets/security/secured-objects.xml", mimeType="application/octet-stream")]
         private var _xml : Class;
 
         private var blacklisted : ArrayCollection = new ArrayCollection();
@@ -283,15 +283,19 @@ package org.openwms.web.flex.client.view {
             PopUpManager.centerPopUp(_loginView);
         }
 
-        [Observer("APP.UNLOCK")]
+        [Observer("APP.CREDENTIALS_VALID")]
         /**
          * Called to unlock the application.
-         * Tide event observers : APP.UNLOCK
+         * Tide event observers : APP.CREDENTIALS_VALID
          *
          * @param event Unused
          */
         public function unlock(event : ApplicationEvent) : void {
-            loggedIn();
+            modelLocator.SCREEN_LOCKED = false;
+            modelLocator.viewLockedBy = "";
+            modelLocator.actualView = modelLocator.viewBeforeLock;
+            PopUpManager.removePopUp(_loginView);
+            rman.update();
         }
 
         [Observer("APP.LOGIN_OK")]
@@ -302,14 +306,7 @@ package org.openwms.web.flex.client.view {
          * @param event Unused
          */
         public function loggedIn(event : ApplicationEvent=null) : void {
-            if (modelLocator.SCREEN_LOCKED) {
-                modelLocator.SCREEN_LOCKED = false;
-                modelLocator.viewLockedBy = "";
-                modelLocator.actualView = modelLocator.viewBeforeLock;
-                PopUpManager.removePopUp(_loginView);
-            } else {
-                dispatchEvent(new ApplicationEvent(ApplicationEvent.LOAD_ALL_MODULES));
-            }
+            dispatchEvent(new ApplicationEvent(ApplicationEvent.LOAD_ALL_MODULES));
             rman.update();
         }
 

@@ -38,13 +38,13 @@ package org.openwms.core.domain.system {
             this._owner = module;
         }
 
-    	/**
-    	 * Return "Module".
-    	 * 
-    	 * @return Module
-    	 */
-    	override public function toString() : String {
-    		return "Module";
-    	}
+        /**
+         * Return "Module".
+         *
+         * @return Module
+         */
+        override public function toString() : String {
+            return "Module Preference";
+        }
     }
 }
