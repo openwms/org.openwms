@@ -95,11 +95,11 @@
     <mx:HBox x="10" y="10" width="95%" verticalAlign="middle" backgroundColor="#FFA6A6">
         <mx:Label x="10" y="10" text="{I18nUtil.trans(I18nUtil.APP_MAIN, 'txt_preferences_screen_header')}" fontSize="24"/>
         <mx:VRule height="10"/>
-        <mx:Button id="addBtn" click="create();" buttonMode="true" mouseChildren="false" toolTip="{I18nUtil.trans(I18nUtil.APP_MAIN, 'ttip_preferences_screen_add_pref')}" icon="@Embed(source='/assets/images/Users--plus.png')"/>
+        <mx:Button id="addBtn" click="create();" buttonMode="true" mouseChildren="false" toolTip="{I18nUtil.trans(I18nUtil.APP_MAIN, 'ttip_preferences_screen_add_pref')}" icon="@Embed(source='/assets/images/Preference--plus.png')"/>
         <mx:VRule height="10"/>
-        <mx:Button id="deleteBtn" buttonMode="true" mouseChildren="false" toolTip="{I18nUtil.trans(I18nUtil.APP_MAIN, 'ttip_preferences_screen_delete_user')}" icon="@Embed(source='/assets/images/Users--minus.png')"/>
+        <mx:Button id="deleteBtn" buttonMode="true" mouseChildren="false" toolTip="{I18nUtil.trans(I18nUtil.APP_MAIN, 'ttip_preferences_screen_delete_user')}" icon="@Embed(source='/assets/images/Preference--minus.png')"/>
         <mx:VRule height="10"/>
-        <mx:Button id="saveBtn" buttonMode="true" mouseChildren="false" toolTip="{I18nUtil.trans(I18nUtil.APP_MAIN, 'ttip_preferences_screen_save_user')}" icon="@Embed(source='/assets/images/Users--save.png')"/>
+        <mx:Button id="saveBtn" buttonMode="true" mouseChildren="false" toolTip="{I18nUtil.trans(I18nUtil.APP_MAIN, 'ttip_preferences_screen_save_user')}" icon="@Embed(source='/assets/images/Preference--save.png')"/>
         <mx:VRule height="10"/>
         <mx:Button id="reloadBtn" click="reload();" buttonMode="true" mouseChildren="false" toolTip="{I18nUtil.trans(I18nUtil.APP_MAIN, 'ttip_preferences_screen_reload_users')}" icon="@Embed(source='assets/images/icons/refresh.png')"/>
     </mx:HBox>
@@ -145,7 +145,7 @@
             <mx:TextInput id="maximumTxt" text="{selected.maximum}" width="228" x="178" y="215" />
 
             <mx:HRule id="hrule1" x="12" y="245" width="95%" />
-            <mx:Button id="saveBtn2" buttonMode="true" mouseChildren="false" toolTip="{I18nUtil.trans(I18nUtil.APP_MAIN, 'ttip_preferences_screen_save_user')}" icon="@Embed(source='/assets/images/Users--save.png')" x="178" y="255"/>
+            <mx:Button id="saveBtn2" buttonMode="true" mouseChildren="false" toolTip="{I18nUtil.trans(I18nUtil.APP_MAIN, 'ttip_preferences_screen_save_user')}" icon="@Embed(source='/assets/images/Preference--save.png')" x="178" y="255"/>
         </mx:Panel>
     </mx:HBox>
 </mx:Canvas>
