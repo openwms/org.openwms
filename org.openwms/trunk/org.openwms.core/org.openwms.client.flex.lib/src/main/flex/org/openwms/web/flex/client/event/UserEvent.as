@@ -48,6 +48,10 @@ package org.openwms.web.flex.client.event {
          */
         public static const SAVE_USER : String = "SAVE_USER";
         /**
+         *
+         */
+        public static const SAVE_USER_PROFILE : String = "USER.SAVE_USER_PROFILE";
+        /**
          * Type of event that is fired when an User was saved successfully.
          */
         public static const USER_SAVED : String = "USER.USER_SAVED";

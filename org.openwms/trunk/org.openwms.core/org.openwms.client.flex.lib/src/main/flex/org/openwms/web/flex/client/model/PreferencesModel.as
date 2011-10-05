@@ -23,12 +23,15 @@ package org.openwms.web.flex.client.model {
     import mx.collections.ArrayCollection;
 
     import org.granite.tide.events.TideResultEvent;
+    import org.openwms.core.domain.system.AbstractPreference;
     import org.openwms.core.domain.system.ApplicationPreference;
     import org.openwms.core.domain.system.ModulePreference;
     import org.openwms.core.domain.system.usermanagement.RolePreference;
     import org.openwms.core.domain.system.usermanagement.UserPreference;
+    import org.openwms.web.flex.client.util.I18nUtil;
 
     [Name("prefs")]
+    [ResourceBundle("corLibMain")]
     [Bindable]
     /**
      * A PreferencesModel stores all Preferences
@@ -53,7 +56,7 @@ package org.openwms.web.flex.client.model {
         public static const APPLICATION : String = "Application";
         public static const MODULE : String = "Module";
         public var owners : ArrayCollection = new ArrayCollection([APPLICATION, MODULE]);
-        public static const types : Array = [ApplicationPreference, ModulePreference, RolePreference, UserPreference];
+        public const types : Array = [new ApplicationPreference(), new ModulePreference(), new RolePreference(), new UserPreference()];
 
         /**
          * Constructor.
@@ -71,6 +74,39 @@ package org.openwms.web.flex.client.model {
             userPrefs.removeAll();
         }
 
+        /**
+         * Filter a list of AbstractPreferences, find out which type and assign each one
+         * to the list of preference types.
+         *
+         * @param preferences The list to examine and to filter
+         */
+        public function assignPreferences(preferences : ArrayCollection) : void {
+            this.clearAll();
+            for each (var pref : AbstractPreference in preferences) {
+                if (pref is ApplicationPreference) {
+                    this.appPrefs.addItem(pref);
+                } else if (pref is ModulePreference) {
+                    this.modulePrefs.addItem(pref);
+                } else if (pref is RolePreference) {
+                    this.rolePrefs.addItem(pref);
+                } else if (pref is UserPreference) {
+                    this.userPrefs.addItem(pref);
+                }
+            }
+        }
+
+        /**
+         * Define how a Preference name is displayed.
+         */
+        public function formatType(item : *) : String {
+            return I18nUtil.trans(I18nUtil.COR_LIB_MAIN, "txt_preferences_" + item.toString());
+        }
+
+        /**
+         * Whenever the collection of Users change, update the list preferences.
+         *
+         * @param event not used
+         */
         [Observer("USER.COLLECTION_CHANGED")]
         public function onUsersLoaded(event : TideResultEvent) : void {
             owners.removeAll();

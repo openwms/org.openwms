@@ -53,7 +53,7 @@ package org.openwms.web.flex.client.util {
         
         public static function initializeUser(user : User) : User {
             user.username = "";
-            user.preferences.addItem(new UserPreference(user, "defaultLanguage", "en_US"));
+            user.preferences.addItem(new UserPreference("defaultLanguage", "en_US"));
             return user;
         }
     }

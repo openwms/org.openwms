@@ -61,8 +61,8 @@
 					</warnings>
                     <resourceBundlePath>${basedir}/src/main/resources/assets/locale/{locale}</resourceBundlePath>
                     <compiledLocales>
-                        <locale>de_DE</locale>
                         <locale>en_US</locale>
+                        <locale>de_DE</locale>
                     </compiledLocales>
 					<allowSourcePathOverlap>true</allowSourcePathOverlap>
                     <keepAs3Metadatas>
