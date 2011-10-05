@@ -20,12 +20,16 @@
  */
 package org.openwms.web.flex.security;
 
+import org.granite.messaging.service.security.SecurityServiceException;
 import org.openwms.core.domain.system.usermanagement.User;
-import org.openwms.core.domain.system.usermanagement.UserPassword;
 import org.openwms.core.service.UserHolder;
-import org.openwms.core.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.BadCredentialsException;
+import org.springframework.security.authentication.DisabledException;
+import org.springframework.security.authentication.LockedException;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
@@ -41,8 +45,8 @@ import org.springframework.stereotype.Service;
 public class SecurityContextHelper {
 
     @Autowired
-    @Qualifier("userService")
-    private UserService userService;
+    @Qualifier("authenticationManager")
+    private AuthenticationManager authManager;
 
     /**
      * Helper method for rich clients to extract the current User from the
@@ -66,7 +70,18 @@ public class SecurityContextHelper {
         return null;
     }
 
-    public final boolean checkCredentials(String username, char[] password) {
-        return userService.checkCredentials(new UserPassword(new User(username), password.toString()));
+    public final boolean checkCredentials(String username, String password) {
+        try {
+            authManager.authenticate(new UsernamePasswordAuthenticationToken(username, password));
+            return true;
+        } catch (DisabledException de) {
+            throw SecurityServiceException.newAccessDeniedException(de.getMessage());
+        } catch (LockedException le) {
+            throw SecurityServiceException.newAccessDeniedException(le.getMessage());
+        } catch (BadCredentialsException bce) {
+            throw SecurityServiceException.newInvalidCredentialsException(bce.getMessage());
+        } catch (Exception x) {
+            return false;
+        }
     }
 }
