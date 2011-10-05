@@ -39,6 +39,6 @@
     <osgi:service ref="moduleDao" interface="org.openwms.core.integration.ModuleDao" />
     <osgi:service ref="i18nRepo" interface="org.openwms.core.integration.I18nRepository" />
     <osgi:service ref="securityObjectDao" interface="org.openwms.core.integration.SecurityObjectDao" />
-    <osgi:service ref="preferenceDao" interface="org.openwms.core.integration.GenericDao" />
+    <osgi:service ref="preferencesJpaDao" interface="org.openwms.core.integration.PreferenceWriter" />
 
 </beans>
