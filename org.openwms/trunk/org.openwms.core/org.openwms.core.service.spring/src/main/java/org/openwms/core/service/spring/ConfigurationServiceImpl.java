@@ -22,18 +22,20 @@ package org.openwms.core.service.spring;
 
 import java.util.List;
 
-import javax.annotation.PostConstruct;
-
 import org.openwms.core.domain.system.AbstractPreference;
 import org.openwms.core.domain.system.ApplicationPreference;
 import org.openwms.core.domain.system.ModulePreference;
+import org.openwms.core.domain.system.PreferenceKey;
 import org.openwms.core.domain.values.Unit;
-import org.openwms.core.integration.GenericDao;
+import org.openwms.core.integration.PreferenceDao;
+import org.openwms.core.integration.PreferenceWriter;
 import org.openwms.core.service.ConfigurationService;
+import org.openwms.core.util.event.MergePropertiesEvent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.context.ApplicationListener;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -49,24 +51,36 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional
 @Service("configurationService")
 public class ConfigurationServiceImpl extends EntityServiceImpl<AbstractPreference, Long> implements
-        ConfigurationService {
+        ConfigurationService, ApplicationListener<MergePropertiesEvent> {
 
-    private final Logger logger = LoggerFactory.getLogger(this.getClass());
+    private final Logger logger = LoggerFactory.getLogger(ConfigurationServiceImpl.class);
 
     /**
      * Generic Repository DAO.
      */
     @Autowired
-    @Qualifier("preferencesDao")
-    protected GenericDao<AbstractPreference, Long> dao;
+    @Qualifier("preferencesJpaDao")
+    protected PreferenceWriter<Long> dao;
+    @Autowired
+    @Qualifier("preferencesFileDao")
+    private PreferenceDao<PreferenceKey> fileDao;
 
     /**
-     * Create a new ConfigurationServiceImpl.
-     * 
+     * @see org.springframework.context.ApplicationListener#onApplicationEvent(org.springframework.context.ApplicationEvent)
      */
-    @PostConstruct
-    public void setDao() {
-        super.setDao(dao);
+    @Override
+    public void onApplicationEvent(MergePropertiesEvent event) {
+        mergeApplicationProperties();
+    }
+
+    private void mergeApplicationProperties() {
+        List<AbstractPreference> prefs = fileDao.findAll();
+        List<AbstractPreference> persistedPrefs = dao.findAll();
+        for (AbstractPreference pref : prefs) {
+            if (!persistedPrefs.contains(pref)) {
+                dao.save(pref);
+            }
+        }
     }
 
     /**
@@ -76,23 +90,23 @@ public class ConfigurationServiceImpl extends EntityServiceImpl<AbstractPreferen
      */
     @Override
     public List<AbstractPreference> findAll() {
-        return super.findAll();
+        return dao.findAll();
     }
 
     /**
      * {@inheritDoc}
      */
     @Override
-    public List<AbstractPreference> findApplicationProperties() {
-        return dao.findByNamedParameters(ApplicationPreference.NQ_FIND_ALL, null);
+    public List<ApplicationPreference> findApplicationProperties() {
+        return dao.findByType(ApplicationPreference.class);
     }
 
     /**
      * {@inheritDoc}
      */
     @Override
-    public List<AbstractPreference> findModuleProperties() {
-        return dao.findByNamedParameters(ModulePreference.NQ_FIND_ALL, null);
+    public List<ModulePreference> findModuleProperties() {
+        return dao.findByType(ModulePreference.class);
     }
 
     /**

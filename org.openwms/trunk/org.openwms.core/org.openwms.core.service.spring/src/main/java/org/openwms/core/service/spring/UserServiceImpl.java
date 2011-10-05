@@ -30,9 +30,11 @@ import org.openwms.core.domain.system.usermanagement.SystemUser;
 import org.openwms.core.domain.system.usermanagement.User;
 import org.openwms.core.domain.system.usermanagement.UserDetails;
 import org.openwms.core.domain.system.usermanagement.UserPassword;
+import org.openwms.core.domain.system.usermanagement.UserPreference;
 import org.openwms.core.exception.InvalidPasswordException;
 import org.openwms.core.integration.SecurityObjectDao;
 import org.openwms.core.integration.UserDao;
+import org.openwms.core.service.ConfigurationService;
 import org.openwms.core.service.UserService;
 import org.openwms.core.service.exception.ServiceRuntimeException;
 import org.openwms.core.service.exception.UserNotFoundException;
@@ -66,6 +68,8 @@ public class UserServiceImpl implements UserService {
     private UserDao dao;
     @Autowired
     private SecurityObjectDao securityObjectDao;
+    @Autowired
+    private ConfigurationService confSrv;
 
     @Value("#{ globals['system.user'] }")
     private String systemUsername;
@@ -172,7 +176,7 @@ public class UserServiceImpl implements UserService {
      * @throws ServiceRuntimeException
      *             when userPassword is <code>null</code>
      * @throws UserNotFoundException
-     *             when no User exists
+     *             when no such User exist
      */
     @Override
     @FireAfterTransaction(events = { UserChangedEvent.class })
@@ -191,6 +195,31 @@ public class UserServiceImpl implements UserService {
         } catch (InvalidPasswordException ipe) {
             logger.info(ipe.getMessage());
             throw new ServiceRuntimeException("Password pattern does not match the defined rules", ipe);
+        }
+    }
+
+    /**
+     * {@inheritDoc}
+     * 
+     * @throws ServiceRuntimeException
+     *             when userPassword is <code>null</code>
+     * @throws UserNotFoundException
+     *             when no such User exist
+     * @see org.openwms.core.service.UserService#saveUserProfile(org.openwms.core.domain.system.usermanagement.User,
+     *      org.openwms.core.domain.system.usermanagement.UserPassword,
+     *      org.openwms.core.domain.system.usermanagement.UserPreference[])
+     */
+    @Override
+    public void saveUserProfile(User user, UserPassword userPassword, UserPreference... prefs) {
+        // first check for valid password
+        changeUserPassword(userPassword);
+
+        // second save User
+        save(user);
+
+        // last save preferences
+        for (UserPreference preference : prefs) {
+            confSrv.save(preference);
         }
     }
 
