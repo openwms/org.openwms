@@ -37,12 +37,12 @@ public class DataNotFoundException extends DataException {
 
     /**
      * Create a new <code>DataNotFoundException</code> with a message text and
-     * the cause exception.
+     * the root exception.
      * 
      * @param message
      *            Message text as String
      * @param cause
-     *            The cause exception
+     *            The root exception
      */
     public DataNotFoundException(String message, Throwable cause) {
         super(message, cause);

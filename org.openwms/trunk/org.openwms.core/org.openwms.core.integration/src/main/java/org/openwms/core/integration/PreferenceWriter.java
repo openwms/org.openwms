@@ -21,42 +21,34 @@
 package org.openwms.core.integration;
 
 import java.io.Serializable;
-import java.util.List;
 
 import org.openwms.core.domain.system.AbstractPreference;
 
 /**
- * A PreferenceDao.
+ * A PreferenceWriter.
  * 
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  * @version $Revision: $
  * @since 0.1
  */
-public interface PreferenceDao<ID extends Serializable> {
+public interface PreferenceWriter<ID extends Serializable> extends PreferenceDao<ID> {
 
     /**
-     * Find and return the entity identified by the natural unique key.
+     * Synchronize an entity with the persistence layer and return it.
      * 
-     * @param id
-     *            Natural key to find the entity (also known as business key)
-     * @return The found entity
+     * @param entity
+     *            Entity instance to be synchronized with the persistence layer
+     * @return The synchronized entity instance. If JPA is used as
+     *         implementation, the returned instance is managed.
      */
-    AbstractPreference findByKey(ID id);
+    <T extends AbstractPreference> T save(T entity);
 
     /**
-     * Find all preferences of a particular type.
+     * Removes an already persistent entity.
      * 
-     * @param clazz
-     *            The type to search for
-     * @return A list of entities
+     * @param entity
+     *            Entity instance to be removed
      */
-    <T extends AbstractPreference> List<T> findByType(Class<T> clazz);
-
-    /**
-     * Find all entities and return them as a {@link java.util.List}.
-     * 
-     * @return List of all entities
-     */
-    List<AbstractPreference> findAll();
+    void remove(AbstractPreference entity);
 
 }

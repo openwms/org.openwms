@@ -53,23 +53,23 @@ public class DataException extends RuntimeException {
     }
 
     /**
-     * Create a new <code>DataException</code> with the cause exception.
+     * Create a new <code>DataException</code> with the root exception.
      * 
      * @param cause
-     *            The cause exception
+     *            The root exception
      */
     public DataException(Throwable cause) {
         super(cause);
     }
 
     /**
-     * Create a new <code>DataException</code> with a message text and the
-     * cause exception.
+     * Create a new <code>DataException</code> with a message text and the root
+     * exception.
      * 
      * @param message
      *            Message text as String
      * @param cause
-     *            The cause exception
+     *            The root exception
      */
     public DataException(String message, Throwable cause) {
         super(message, cause);

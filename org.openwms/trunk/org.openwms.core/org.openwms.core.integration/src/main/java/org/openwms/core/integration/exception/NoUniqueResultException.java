@@ -20,54 +20,54 @@
  */
 package org.openwms.core.integration.exception;
 
-import java.io.Serializable;
-
 /**
- * A TooManyEntriesFoundException is thrown when a single result was expected
- * but more than one objects were found.
+ * A NoUniqueResultException.
  * 
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
- * @version $Revision$
+ * @version $Revision: $
  * @since 0.1
- * @see org.openwms.core.integration.exception.DataException
  */
-public class TooManyEntitiesFoundException extends DataException {
+public class NoUniqueResultException extends DataException {
 
-    private static final long serialVersionUID = 4569016268461941846L;
+    private static final long serialVersionUID = -7411247631016989719L;
 
     /**
-     * Create a new <code>TooManyEntriesFoundException</code> with a message
-     * text.
+     * Create a new <code>NoUniqueResultException</code>.
+     */
+    public NoUniqueResultException() {}
+
+    /**
+     * Create a new <code>NoUniqueResultException</code> with a message text.
      * 
      * @param message
-     *            Message test as String
+     *            Message text as String
      */
-    public TooManyEntitiesFoundException(String message) {
+    public NoUniqueResultException(String message) {
         super(message);
     }
 
     /**
-     * Create a new <code>TooManyEntriesFoundException</code> with a message
-     * text and the root exception.
+     * Create a new <code>NoUniqueResultException</code> with the root
+     * exception.
+     * 
+     * @param cause
+     *            The root exception
+     */
+    public NoUniqueResultException(Throwable cause) {
+        super(cause);
+    }
+
+    /**
+     * Create a new <code>NoUniqueResultException</code> with a message text and
+     * the root exception.
      * 
      * @param message
      *            Message text as String
      * @param cause
      *            The root exception
      */
-    public TooManyEntitiesFoundException(String message, Throwable cause) {
+    public NoUniqueResultException(String message, Throwable cause) {
         super(message, cause);
-    }
-
-    /**
-     * Create a new <code>TooManyEntriesFoundException</code> with the id of the
-     * expected entity.
-     * 
-     * @param id
-     *            Id of the expected entity
-     */
-    public TooManyEntitiesFoundException(Serializable id) {
-        super("Persistence layer returned more than expected entities for id: " + id);
     }
 
 }

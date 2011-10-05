@@ -77,7 +77,7 @@ public interface GenericDao<T extends AbstractEntity, ID extends Serializable> {
      * <code>NamedQuery</code> and a parameter map.
      * 
      * @param queryName
-     *            Defined name of the NamedQuery.
+     *            Defined name of the NamedQuery
      * @param params
      *            Map of parameters to pass to the query
      * @return List of found entity classes
@@ -87,13 +87,13 @@ public interface GenericDao<T extends AbstractEntity, ID extends Serializable> {
     /**
      * Use an own JPA query to fetch entities.
      * 
-     * @param query
-     *            The JPA query to execute
+     * @param queryName
+     *            Defined name of the NamedQuery
      * @param values
      *            A list of values to use as parameters
      * @return A list of all entities
      */
-    List<T> findByPositionalParameters(String query, Object... values);
+    List<T> findByPositionalParameters(String queryName, Object... values);
 
     /**
      * Find and return the entity identified by the natural unique id.
