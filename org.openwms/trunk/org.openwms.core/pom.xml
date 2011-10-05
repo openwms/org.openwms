@@ -71,6 +71,7 @@
                 <module>org.openwms.core.integration</module>
                 <module>org.openwms.core.integration.eclipselink</module>
                 <module>org.openwms.core.integration.hibernate</module>
+                <module>org.openwms.core.integration.file</module>
                 <module>org.openwms.core.integration.jpa</module>
                 <module>org.openwms.core.service.api</module>
                 <module>org.openwms.core.service.spring</module>
@@ -91,6 +92,7 @@
                 <module>org.openwms.core.integration</module>
                 <module>org.openwms.core.integration.eclipselink</module>
                 <module>org.openwms.core.integration.hibernate</module>
+                <module>org.openwms.core.integration.file</module>
                 <module>org.openwms.core.integration.jpa</module>
                 <module>org.openwms.core.service.api</module>
                 <module>org.openwms.core.service.spring</module>
@@ -159,9 +161,14 @@
 	        </dependency>
 	        <dependency>
 	            <groupId>${project.groupId}</groupId>
-	            <artifactId>org.openwms.core.integration.jpa</artifactId>
+	            <artifactId>org.openwms.core.integration.file</artifactId>
 	            <version>${project.version}</version>
 	        </dependency>
+            <dependency>
+                <groupId>${project.groupId}</groupId>
+                <artifactId>org.openwms.core.integration.jpa</artifactId>
+                <version>${project.version}</version>
+            </dependency>
 	        <dependency>
 	            <groupId>${project.groupId}</groupId>
 	            <artifactId>org.openwms.core.service.api</artifactId>
