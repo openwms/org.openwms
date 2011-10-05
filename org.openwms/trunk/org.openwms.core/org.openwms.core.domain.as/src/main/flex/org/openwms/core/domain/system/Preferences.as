@@ -20,40 +20,14 @@
  */
 package org.openwms.core.domain.system {
 
-    import org.openwms.core.domain.system.PropertyScope;
-
     [Bindable]
-    [RemoteClass(alias="org.openwms.core.domain.system.ModulePreference")]
+    [RemoteClass(alias="org.openwms.core.domain.system.Preferences")]
     /**
-     * A ModulePreference is a preference assigned to a particular Module only.
+     * A Preferences object is a collection of any type of AbstractPreferences.
      *
      * @version $Revision: 1425 $
      * @since 0.1
      */
-    public class ModulePreference extends ModulePreferenceBase {
-
-        /**
-         * Constructor.
-         * Define at least a key for a ModulePreference.
-         *
-         * @param module The Module where the Preference belongs to
-         * @param key The key to set
-         * @param value The value of the Preference
-         */
-        public function ModulePreference(module : String=null, key : String=null, value : String=null) {
-            this._type = PropertyScope.MODULE;
-            this._owner = module;
-            this._key = key;
-            this._value = value;
-        }
-
-        /**
-         * Return "Module".
-         *
-         * @return Module
-         */
-        override public function toString() : String {
-            return "Module";
-        }
+    public class Preferences extends PreferencesBase {
     }
 }

@@ -18,42 +18,31 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
-package org.openwms.core.domain.system.usermanagement {
-
-    import org.openwms.core.domain.system.PropertyScope;
+package org.openwms.core.domain.system {
 
     [Bindable]
-    [RemoteClass(alias="org.openwms.core.domain.system.usermanagement.RolePreference")]
+    [RemoteClass(alias="org.openwms.core.domain.system.PreferenceKey")]
     /**
-     * A RolePreference is a preference assigned to a particular Role only.
+     * A PreferenceKey encapsulates fields of a particular preference that
+     * are used as unique key in the scope of the type of preference.
      *
      * @version $Revision: 1425 $
      * @since 0.1
      */
-    public class RolePreference extends RolePreferenceBase {
+    public class PreferenceKey extends PreferenceKeyBase {
+
+        /**
+         * An array of all fields used as key.
+         */
+        public var keys : Array;
 
         /**
          * Constructor.
-         * Define at least a Role and a key for a RolePreference.
          *
-         * @param owner The Role who owns the Preference
-         * @param key The key to set
-         * @param value The value of the Preference
+         * @param args An array of fields used as key
          */
-        public function RolePreference(owner : String=null, key : String=null, value : String=null) {
-            this._type = PropertyScope.ROLE;
-            this._owner = owner;
-            this._key = key;
-            this._value = value;
-        }
-
-        /**
-         * Return "Role".
-         *
-         * @return Role
-         */
-        override public function toString() : String {
-            return "Role";
+        public function PreferenceKey(... args) {
+            keys = args;
         }
     }
 }

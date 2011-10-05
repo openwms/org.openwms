@@ -20,8 +20,16 @@
  */
 package org.openwms.core.domain.system {
 
+    import org.openwms.core.domain.system.PropertyScope;
+
     [Bindable]
     [RemoteClass(alias="org.openwms.core.domain.system.ApplicationPreference")]
+    /**
+     * An ApplicationPreference is a preference assigned to the whole application.
+     *
+     * @version $Revision: 1425 $
+     * @since 0.1
+     */
     public class ApplicationPreference extends ApplicationPreferenceBase {
 
         /**
@@ -32,18 +40,18 @@ package org.openwms.core.domain.system {
          * @param value The value of the Preference
          */
         public function ApplicationPreference(key : String=null, value : String=null) {
+            this._type = PropertyScope.APPLICATION;
             this._key = key;
             this._value = value;
-            this._owner = "Application";
         }
 
-    	/**
-    	 * Return "Application".
-    	 * 
-    	 * @return Application
-    	 */
-    	override public function toString() : String {
-    		return "Application";
-    	}
+        /**
+         * Return "Application".
+         *
+         * @return Application
+         */
+        override public function toString() : String {
+            return "Application";
+        }
     }
 }
