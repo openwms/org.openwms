@@ -1,0 +1,25 @@
+Manifest-Version: 1.0
+Bundle-Vendor: ${project.groupId}
+Bundle-Version: ${bundle.version}
+Bundle-Name: ${project.artifactId}
+Bundle-ManifestVersion: 2
+Bundle-SymbolicName: ${project.artifactId}
+Import-Library: 
+ org.springframework.spring;version="${spring.version}"
+Import-Bundle: 
+ org.openwms.core.util;version="0.0.1.SNAPSHOT",
+ org.openwms.core.domain;version="0.0.1.SNAPSHOT",
+ org.openwms.core.integration;version="0.0.1.SNAPSHOT",
+ com.springsource.javax.persistence;version="1.0.0",
+ com.springsource.org.apache.commons.lang;version="2.4.0"
+Excluded-Imports: 
+ org.openwms.core.framework.test.*,
+ org.openwms.core.test.*,
+ org.springframework.test.*,
+ org.junit.*,
+ junit.framework.*
+Excluded-Exports: 
+ org.openwms.core.framework.test.*,
+ org.openwms.core.test.*,
+ org.springframework.test.*,
+ org.junit.*
