@@ -62,10 +62,10 @@ import org.slf4j.LoggerFactory;
 @Entity
 @Table(name = "COR_USER")
 @NamedQueries({
-        @NamedQuery(name = User.NQ_FIND_ALL, query = "SELECT u FROM User u"),
-        @NamedQuery(name = User.NQ_FIND_ALL_ORDERED, query = "SELECT u FROM User u ORDER BY u.username"),
-        @NamedQuery(name = User.NQ_FIND_BY_USERNAME, query = "SELECT u FROM User u WHERE u.username = ?1"),
-        @NamedQuery(name = User.NQ_FIND_BY_USERNAME_PASSWORD, query = "SELECT u FROM User u WHERE u.username = :username and u.password = :password") })
+        @NamedQuery(name = User.NQ_FIND_ALL, query = "select u from User u"),
+        @NamedQuery(name = User.NQ_FIND_ALL_ORDERED, query = "select u from User u order by u.username"),
+        @NamedQuery(name = User.NQ_FIND_BY_USERNAME, query = "select u from User u where u.username = ?1"),
+        @NamedQuery(name = User.NQ_FIND_BY_USERNAME_PASSWORD, query = "select u from User u where u.username = :username and u.password = :password") })
 public class User extends AbstractEntity implements DomainObject<Long> {
 
     private static final long serialVersionUID = -1116645053773805413L;
@@ -138,7 +138,9 @@ public class User extends AbstractEntity implements DomainObject<Long> {
 
     /**
      * <code>true</code> if this <code>User</code> is locked and has not the
-     * permission to login anymore. Default:{@value} .
+     * permission to login anymore. This field is used and set by the
+     * application itself, e.g. when the expirationDate of the account expires.
+     * Default:{@value} .
      */
     @Column(name = "LOCKED")
     private boolean locked = false;
@@ -150,7 +152,9 @@ public class User extends AbstractEntity implements DomainObject<Long> {
     private String password;
 
     /**
-     * <code>true</code> if the <code>User</code> is enabled. Default:{@value} .
+     * <code>true</code> if the <code>User</code> is enabled. This field can be
+     * managed by the user interface to manually lock an User to login.
+     * Default:{@value} .
      */
     @Column(name = "C_ENABLED")
     private boolean enabled = true;
@@ -193,17 +197,17 @@ public class User extends AbstractEntity implements DomainObject<Long> {
      * Password history of the <code>User</code>.
      */
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
-    @JoinTable(name = "COR_USER_PASSWORD", joinColumns = @JoinColumn(name = "USER_ID"), inverseJoinColumns = @JoinColumn(name = "PASSWORD_ID"))
+    @JoinTable(name = "COR_USER_PASSWORD_JOIN", joinColumns = @JoinColumn(name = "USER_ID"), inverseJoinColumns = @JoinColumn(name = "PASSWORD_ID"))
     private List<UserPassword> passwords = new ArrayList<UserPassword>();
 
     /**
      * All {@link UserPreference}s of the <code>User</code>.
      */
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
-    @JoinTable(name = "COR_USER_PREFERENCE", joinColumns = @JoinColumn(name = "USER_ID"), inverseJoinColumns = @JoinColumn(name = "ID"))
+    @OneToMany(cascade = CascadeType.ALL)
+    @JoinTable(name = "COR_USER_PREFERENCE_JOIN", joinColumns = @JoinColumn(name = "USER_ID"), inverseJoinColumns = @JoinColumn(name = "ID"))
     private Set<UserPreference> preferences = new HashSet<UserPreference>();
 
-    /* ----------------------------- methods ------------------- */
+    /* ----------------------------- constructors ------------------- */
     /**
      * Accessed by persistence provider.
      */
@@ -234,6 +238,7 @@ public class User extends AbstractEntity implements DomainObject<Long> {
         this.password = password;
     }
 
+    /* ----------------------------- methods ------------------- */
     /**
      * {@inheritDoc}
      */

@@ -58,6 +58,9 @@ public class Role extends SecurityObject {
 
     private static final long serialVersionUID = -4133301834284932221L;
 
+    /**
+     * The default prefix String for each created <code>Role</code>.
+     */
     public static final String ROLE_PREFIX = "ROLE_";
 
     /**
@@ -72,6 +75,9 @@ public class Role extends SecurityObject {
      */
     public static final String NQ_FIND_BY_UNIQUE_QUERY = "Role.findByRolename";
 
+    /**
+     * Whether or not this <code>Role</code> is immutable. Default {@value} .
+     */
     @Column(name = "IMMUTABLE")
     private Boolean immutable = false;
 
@@ -80,21 +86,21 @@ public class Role extends SecurityObject {
      * All {@link User}s assigned to the <code>Role</code>.
      */
     @ManyToMany(cascade = { CascadeType.PERSIST, CascadeType.MERGE })
-    @JoinTable(name = "COR_ROLE_USER", joinColumns = @JoinColumn(name = "ROLE_ID"), inverseJoinColumns = @JoinColumn(name = "USER_ID"))
+    @JoinTable(name = "COR_ROLE_USER_JOIN", joinColumns = @JoinColumn(name = "ROLE_ID"), inverseJoinColumns = @JoinColumn(name = "USER_ID"))
     private Set<User> users = new HashSet<User>();
 
     /**
      * All {@link AbstractPreference}s linked to the <code>Role</code>.
      */
     @ManyToMany(cascade = { CascadeType.PERSIST, CascadeType.MERGE })
-    @JoinTable(name = "COR_ROLE_PREFERENCE", joinColumns = @JoinColumn(name = "ROLE_ID"), inverseJoinColumns = @JoinColumn(name = "PREFERENCE_ID"))
+    @JoinTable(name = "COR_ROLE_PREFERENCE_JOIN", joinColumns = @JoinColumn(name = "ROLE_ID"), inverseJoinColumns = @JoinColumn(name = "PREFERENCE_ID"))
     private Set<AbstractPreference> preferences = new HashSet<AbstractPreference>();
 
     /**
      * All {@link SecurityObject}s assigned to the <code>Role</code>.
      */
     @ManyToMany(cascade = { CascadeType.ALL }, fetch = FetchType.EAGER)
-    @JoinTable(name = "COR_ROLE_ROLE", joinColumns = @JoinColumn(name = "ROLE_ID"), inverseJoinColumns = @JoinColumn(name = "GRANT_ID"))
+    @JoinTable(name = "COR_ROLE_ROLE_JOIN", joinColumns = @JoinColumn(name = "ROLE_ID"), inverseJoinColumns = @JoinColumn(name = "GRANT_ID"))
     private Set<SecurityObject> grants = new HashSet<SecurityObject>();
 
     /* ----------------------------- methods ------------------- */

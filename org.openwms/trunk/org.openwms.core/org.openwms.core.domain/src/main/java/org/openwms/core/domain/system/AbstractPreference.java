@@ -21,7 +21,6 @@
 package org.openwms.core.domain.system;
 
 import javax.persistence.Column;
-import javax.persistence.DiscriminatorColumn;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -30,26 +29,30 @@ import javax.persistence.InheritanceType;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
-import javax.persistence.UniqueConstraint;
 import javax.persistence.Version;
+import javax.xml.bind.annotation.XmlAttribute;
+import javax.xml.bind.annotation.XmlTransient;
+import javax.xml.bind.annotation.XmlType;
+import javax.xml.bind.annotation.XmlValue;
 
+import org.apache.commons.lang.builder.ToStringBuilder;
+import org.apache.commons.lang.builder.ToStringStyle;
 import org.openwms.core.domain.AbstractEntity;
 import org.openwms.core.domain.DomainObject;
 
 /**
- * A AbstractPreference, could be an user-, role- or system preference.
+ * A AbstractPreference is a superclass for all other preferences within the
+ * application.
  * 
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  * @version $Revision$
  * @since 0.1
  */
+@XmlType(name = "abstractPreference", propOrder = { "description" }, namespace = "http://www.openwms.org/schema/preferences")
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
-@Table(name = "COR_PREFERENCE", uniqueConstraints = @UniqueConstraint(columnNames = { "C_OWNER", "C_KEY" }))
-@DiscriminatorColumn(name = "C_TYPE")
-@NamedQueries({
-        @NamedQuery(name = AbstractPreference.NQ_FIND_ALL, query = "SELECT p FROM AbstractPreference p"),
-        @NamedQuery(name = AbstractPreference.NQ_FIND_BY_UNIQUE_ID, query = "SELECT p FROM AbstractPreference p WHERE p.key = :key and p.owner = :owner") })
+@Table(name = "COR_PREFERENCE")
+@NamedQueries({ @NamedQuery(name = AbstractPreference.NQ_FIND_ALL, query = "select p from AbstractPreference p") })
 public abstract class AbstractPreference extends AbstractEntity implements DomainObject<Long> {
 
     private static final long serialVersionUID = 4396571221433949201L;
@@ -59,70 +62,61 @@ public abstract class AbstractPreference extends AbstractEntity implements Domai
      */
     public static final String NQ_FIND_ALL = "AbstractPreference" + FIND_ALL;
     /**
-     * Query to find <strong>one</strong> <code>AbstractPreference</code> by its
-     * natural key.
-     * <p>
-     * <li>Query parameter name <strong>key</strong> : The key of the
-     * <code>AbstractPreference</code> to search for.</li>
-     * <li>Query parameter name <strong>owner</strong> : The owner of the
-     * <code>AbstractPreference</code> to search for.</li>
-     * </p>
-     */
-    public static final String NQ_FIND_BY_UNIQUE_ID = "AbstractPreference" + FIND_BY_ID;
-
-    /**
      * Unique technical key.
      */
+    @XmlTransient
     @Id
-    @Column(name = "ID")
+    @Column(name = "C_ID")
     @GeneratedValue
     private Long id;
 
     /**
-     * Owner of the <code>AbstractPreference</code>.
-     */
-    @Column(name = "C_OWNER")
-    private String owner;
-
-    /**
-     * Key value of the <code>AbstractPreference</code>.
-     */
-    @Column(name = "C_KEY")
-    private String key;
-
-    /**
      * The value of the <code>AbstractPreference</code>.
      */
+    @XmlAttribute(name = "val")
     @Column(name = "C_VALUE")
     private String value;
 
     /**
      * Float representation of the value.
      */
-    @Column(name = "FLOAT_VALUE")
+    @XmlAttribute(name = "floatValue")
+    @Column(name = "C_FLOAT_VALUE")
     private Float floatValue;
 
     /**
      * Description text of the <code>AbstractPreference</code>.
      */
-    @Column(name = "DESCRIPTION")
+    @XmlValue
+    @Column(name = "C_DESCRIPTION")
     private String description;
 
     /**
      * Minimum value.
      */
+    @XmlAttribute(name = "minimum")
     @Column(name = "C_MINIMUM")
-    private int minimum;
+    private int minimum = 0;
 
     /**
      * Maximum value.
      */
+    @XmlAttribute(name = "maximum")
     @Column(name = "C_MAXIMUM")
-    private int maximum;
+    private int maximum = 0;
+
+    /**
+     * Flag to remember if the preference was originally imported from a file
+     * and cannot be deleted.
+     */
+    @XmlTransient
+    @Column(name = "C_FROM_FILE")
+    private boolean fromFile = true;
 
     /**
      * Version field.
      */
+    @XmlTransient
     @Version
     @Column(name = "C_VERSION")
     private long version;
@@ -132,16 +126,6 @@ public abstract class AbstractPreference extends AbstractEntity implements Domai
      * Accessed by persistence provider.
      */
     protected AbstractPreference() {}
-
-    /**
-     * Create a <code>AbstractPreference</code> with a key.
-     * 
-     * @param key
-     *            The key of this preference.
-     */
-    public AbstractPreference(String key) {
-        this.key = key;
-    }
 
     /* ----------------------------- inherited ------------------- */
     /**
@@ -168,85 +152,7 @@ public abstract class AbstractPreference extends AbstractEntity implements Domai
         return version;
     }
 
-    /**
-     * Return the key concatenated with value.
-     * 
-     * @see java.lang.Object#toString()
-     * @return As String
-     */
-    @Override
-    public String toString() {
-        return key + value;
-    }
-
-    /**
-     * {@inheritDoc}
-     * 
-     * @see java.lang.Object#hashCode()
-     */
-    @Override
-    public int hashCode() {
-        final int prime = 31;
-        int result = super.hashCode();
-        result = prime * result + ((key == null) ? 0 : key.hashCode());
-        result = prime * result + ((owner == null) ? 0 : owner.hashCode());
-        return result;
-    }
-
-    /**
-     * {@inheritDoc}
-     * 
-     * @see java.lang.Object#equals(java.lang.Object)
-     */
-    @Override
-    public boolean equals(Object obj) {
-        if (this == obj) {
-            return true;
-        }
-        if (!super.equals(obj)) {
-            return false;
-        }
-        if (!(obj instanceof AbstractPreference)) {
-            return false;
-        }
-        AbstractPreference other = (AbstractPreference) obj;
-        if (key == null) {
-            if (other.key != null) {
-                return false;
-            }
-        } else if (!key.equals(other.key)) {
-            return false;
-        }
-        if (owner == null) {
-            if (other.owner != null) {
-                return false;
-            }
-        } else if (!owner.equals(other.owner)) {
-            return false;
-        }
-        return true;
-    }
-
     /* ----------------------------- methods ------------------- */
-    /**
-     * Get the owner.
-     * 
-     * @return the owner.
-     */
-    public String getOwner() {
-        return owner;
-    }
-
-    /**
-     * Set the owner.
-     * 
-     * @param owner
-     *            The owner to set.
-     */
-    protected void setOwner(String owner) {
-        this.owner = owner;
-    }
-
     /**
      * Return the value of the <code>AbstractPreference</code>.
      * 
@@ -264,25 +170,6 @@ public abstract class AbstractPreference extends AbstractEntity implements Domai
      */
     public void setValue(String value) {
         this.value = value;
-    }
-
-    /**
-     * Return the key of the <code>AbstractPreference</code>.
-     * 
-     * @return The key of the <code>AbstractPreference</code>
-     */
-    public String getKey() {
-        return this.key;
-    }
-
-    /**
-     * Set the key of the <code>AbstractPreference</code>.
-     * 
-     * @param key
-     *            The key to set
-     */
-    public void setKey(String key) {
-        this.value = key;
     }
 
     /**
@@ -362,4 +249,47 @@ public abstract class AbstractPreference extends AbstractEntity implements Domai
     public void setMaximum(int maximum) {
         this.maximum = maximum;
     }
+
+    /**
+     * Get the fromFile.
+     * 
+     * @return the fromFile.
+     */
+    public boolean isFromFile() {
+        return fromFile;
+    }
+
+    /**
+     * Return all fields as concatenated String.
+     * 
+     * @return fields as String
+     */
+    public String getPropertiesAsString() {
+        ToStringBuilder.setDefaultStyle(ToStringStyle.SIMPLE_STYLE);
+        return new ToStringBuilder(this).append(getFields()).append(getValue()).append(getDescription())
+                .append(getFloatValue()).append(getMinimum()).append(getMaximum()).toString();
+    }
+
+    /**
+     * Return all fields in an object array.
+     * 
+     * @return fields as array
+     */
+    protected abstract Object[] getFields();
+
+    /**
+     * Return the particular type the preference belongs to.
+     * 
+     * @return The type of the preference
+     */
+    public abstract PropertyScope getType();
+
+    /**
+     * Return a {@link PreferenceKey} as a key representation of this
+     * preference.
+     * 
+     * @return A {@link PreferenceKey}
+     */
+    public abstract PreferenceKey getPrefKey();
+
 }

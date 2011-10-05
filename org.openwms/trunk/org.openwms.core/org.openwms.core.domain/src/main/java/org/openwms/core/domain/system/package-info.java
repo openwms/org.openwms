@@ -21,4 +21,7 @@
 /**
  * Contains essential domain classes that belong to the CORE Module.
  */
+@javax.xml.bind.annotation.XmlAccessorType(javax.xml.bind.annotation.XmlAccessType.FIELD)
+@javax.xml.bind.annotation.XmlSchema(namespace = "http//www.openwms.org/schema/preferences")
 package org.openwms.core.domain.system;
+

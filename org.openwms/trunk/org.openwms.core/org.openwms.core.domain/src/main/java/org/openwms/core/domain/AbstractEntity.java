@@ -27,6 +27,7 @@ import javax.persistence.Column;
 import javax.persistence.EntityListeners;
 import javax.persistence.MappedSuperclass;
 import javax.persistence.PrePersist;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
  * An AbstractEntity used as a base class for all domain classes.
@@ -47,6 +48,7 @@ import javax.persistence.PrePersist;
  * @version $Revision$
  * @since 0.1
  */
+@XmlTransient
 @MappedSuperclass
 @EntityListeners({ AbstractEntity.AbstractEntityListener.class })
 public abstract class AbstractEntity implements Serializable {
@@ -67,6 +69,7 @@ public abstract class AbstractEntity implements Serializable {
      * Unique identifier column, used for ActionScript clients.
      */
     /* "UUID" and "UID" are Oracle reserved keywords -> "ENTITY_UID" */
+    @XmlTransient
     @Column(name = "ENTITY_UID", unique = true, nullable = false, updatable = false, length = 36)
     private String uid;
 
@@ -103,6 +106,7 @@ public abstract class AbstractEntity implements Serializable {
      * @version $Revision$
      * @since 0.1
      */
+    @XmlTransient
     public static class AbstractEntityListener {
 
         /**
