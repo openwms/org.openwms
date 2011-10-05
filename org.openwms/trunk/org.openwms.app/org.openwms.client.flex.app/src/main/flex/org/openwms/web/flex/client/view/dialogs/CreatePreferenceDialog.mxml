@@ -45,10 +45,11 @@
 		    import org.openwms.web.flex.client.model.PreferencesModel;
             
 	        [Inject]
+	        [Bindable]
 	        /**
 	         * Injected PreferencesModel.
 	         */
-	        public var prefsModel : PreferencesModel;
+	        public var prefs : PreferencesModel;
             
             private function onCreate() : void {
                 ownerCmb.setFocus();
@@ -79,7 +80,7 @@
     </mx:Script>
     
 	<mx:Label x="10" y="10" text="{I18nUtil.trans(I18nUtil.APP_ENTITY, 'entity_preference_owner')}" fontSize="22" width="140" textAlign="right" id="ownerLbl"/>
-    <mx:ComboBox id="ownerCmb" dataProvider="{prefsModel.owners}" width="200" fontSize="22" x="158" y="8" />
+    <mx:ComboBox id="ownerCmb" width="200" fontSize="22" x="158" y="8" />
 
 	<mx:Label x="10" y="51" text="{I18nUtil.trans(I18nUtil.APP_ENTITY, 'entity_preference_key')}" fontSize="22" width="140" textAlign="right" id="keyLbl"/>
     <mx:TextInput id="keyTxt" width="200" fontSize="22" x="158" y="49" />
@@ -88,7 +89,7 @@
     <mx:TextArea id="descriptionTxt" x="158" y="91" width="200" height="73" fontSize="22" />
 
 	<mx:Label x="10" y="174" text="{I18nUtil.trans(I18nUtil.APP_ENTITY, 'entity_preference_type')}" fontSize="22" width="140" textAlign="right" id="typeLbl"/>
-	<mx:ComboBox id="typeCmb" dataProvider="{PreferencesModel.types}" x="158" y="171" fontSize="22" width="200" />
+	<mx:ComboBox id="typeCmb" dataProvider="{prefs.types}" labelFunction="{prefs.formatType}"  x="158" y="171" fontSize="22" width="200" />
 
 	<mx:Label x="10" y="218" text="{I18nUtil.trans(I18nUtil.APP_ENTITY, 'entity_preference_value')}" fontSize="22" width="140" textAlign="right" id="valueLbl"/>
     <mx:TextInput id="valueTxt" width="200" fontSize="22" x="158" y="216" />

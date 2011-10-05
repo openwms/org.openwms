@@ -76,4 +76,17 @@
         <name>APP_load_module_button</name>
         <description>Ability to load or unload Modules</description>
     </grant>
+    <!-- Preferences management screen -->
+    <grant>
+        <name>APP_add_preference_button</name>
+        <description>Ability to add new Preferences</description>
+    </grant>
+    <grant>
+        <name>APP_delete_preference_button</name>
+        <description>Ability to remove Preferences</description>
+    </grant>
+    <grant>
+        <name>APP_save_preference_button</name>
+        <description>Ability to save changes on a Preference</description>
+    </grant>
 </grants>

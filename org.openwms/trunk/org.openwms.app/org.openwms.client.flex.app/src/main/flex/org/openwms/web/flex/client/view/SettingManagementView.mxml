@@ -21,7 +21,7 @@
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
 -->
-<mx:Canvas xmlns:mx="http://www.adobe.com/2006/mxml" width="100%" height="100%" backgroundColor="#C2DAEF" creationComplete="onCreate()">
+<mx:Canvas xmlns:mx="http://www.adobe.com/2006/mxml" width="100%" height="100%" backgroundColor="#C2DAEF" creationComplete="onCreate()" currentState="appPrefState">
 
     <mx:Metadata>
         [Name]
@@ -34,11 +34,18 @@
 
     <mx:Script>
         <![CDATA[
+        	import mx.events.FlexEvent;
         	import mx.collections.ArrayCollection;
         	import mx.managers.PopUpManager;
         	import mx.events.ListEvent;
 
+            import org.granite.tide.spring.Identity;
+
         	import org.openwms.core.domain.system.AbstractPreference;
+        	import org.openwms.core.domain.system.ApplicationPreference;
+        	import org.openwms.core.domain.system.ModulePreference;
+        	import org.openwms.core.domain.system.usermanagement.RolePreference;
+        	import org.openwms.core.domain.system.usermanagement.UserPreference;
         	import org.openwms.web.flex.client.event.RoleEvent;
         	import org.openwms.web.flex.client.event.UserEvent;
         	import org.openwms.web.flex.client.event.PropertyEvent;
@@ -59,8 +66,22 @@
              * Injected Model.
              */
             public var prefs : PreferencesModel;
+            [Inject]
             [Bindable]
-            private var selected : AbstractPreference;
+            /**
+             * Injected Tide identity object.
+             */
+            public var iden : Identity;
+            [Bindable]
+            private var selected : AbstractPreference = null;
+            [Bindable]
+            private var selAppPref : ApplicationPreference = null;
+            [Bindable]
+            private var selModPref : ModulePreference = null;
+            [Bindable]
+            private var selRolePref : RolePreference = null;
+            [Bindable]
+            private var selUserPref : UserPreference = null;
         
             private function onCreate() : void {
             	if(modelLocator.allUsers.length == 0) {
@@ -90,26 +111,56 @@
             	trace("Preference:"+(item as AbstractPreference).toString());
             	return (item as AbstractPreference).toString();
             }
+            
+            private function appPrefStateEntered(event : FlexEvent) : void {
+            	trace("Entered State ApplicationPreferenced");
+            	if (appPrefsLst.selectedItem == null && prefs.appPrefs.length > 0) {
+            		appPrefsLst.selectedItem = prefs.appPrefs.getItemAt(0);
+            	}
+           		selected = appPrefsLst.selectedItem as ApplicationPreference;
+            	typeCmb.enabled = false;
+            	ownerTxt.editable = false;
+            }
+            private function onAppPrefSelect(event : ListEvent) : void {
+            	selected = event.currentTarget.selectedItem as ApplicationPreference;
+            	typeCmb.selectedIndex = prefs.types.indexOf(selected);
+            }
+
+            private function modPrefStateEntered(event : FlexEvent) : void {
+            	trace("Entered State ModulePreferenced");
+            	if (modPrefsLst.selectedItem == null && prefs.modulePrefs.length > 0) {
+            		modPrefsLst.selectedItem = prefs.modulePrefs.getItemAt(0);
+            	}
+           		selected = modPrefsLst.selectedItem as ModulePreference;
+            	typeCmb.enabled = true;
+            	ownerTxt.editable = true;
+            }
         ]]>
     </mx:Script>
     <mx:HBox x="10" y="10" width="95%" verticalAlign="middle" backgroundColor="#FFA6A6">
         <mx:Label x="10" y="10" text="{I18nUtil.trans(I18nUtil.APP_MAIN, 'txt_preferences_screen_header')}" fontSize="24"/>
         <mx:VRule height="10"/>
-        <mx:Button id="addBtn" click="create();" buttonMode="true" mouseChildren="false" toolTip="{I18nUtil.trans(I18nUtil.APP_MAIN, 'ttip_preferences_screen_add_pref')}" icon="@Embed(source='/assets/images/Preference--plus.png')"/>
+        <mx:Button id="addBtn" enabled="{selected &amp;&amp; iden.ifAllGranted('APP_add_preference_button')}" click="create();" buttonMode="true" mouseChildren="false" toolTip="{I18nUtil.trans(I18nUtil.APP_MAIN, 'ttip_preferences_screen_add_pref')}" icon="@Embed(source='/assets/images/Preference--plus.png')"/>
         <mx:VRule height="10"/>
-        <mx:Button id="deleteBtn" buttonMode="true" mouseChildren="false" toolTip="{I18nUtil.trans(I18nUtil.APP_MAIN, 'ttip_preferences_screen_delete_user')}" icon="@Embed(source='/assets/images/Preference--minus.png')"/>
+        <mx:Button id="deleteBtn" enabled="{selected &amp;&amp; !selected.fromFile &amp;&amp; iden.ifAllGranted('APP_delete_preference_button')}" buttonMode="true" mouseChildren="false" toolTip="{I18nUtil.trans(I18nUtil.APP_MAIN, 'ttip_preferences_screen_delete_user')}" icon="@Embed(source='/assets/images/Preference--minus.png')"/>
         <mx:VRule height="10"/>
-        <mx:Button id="saveBtn" buttonMode="true" mouseChildren="false" toolTip="{I18nUtil.trans(I18nUtil.APP_MAIN, 'ttip_preferences_screen_save_user')}" icon="@Embed(source='/assets/images/Preference--save.png')"/>
+        <mx:Button id="saveBtn" enabled="{selected &amp;&amp; iden.ifAllGranted('APP_save_preference_button')}" buttonMode="true" mouseChildren="false" toolTip="{I18nUtil.trans(I18nUtil.APP_MAIN, 'ttip_preferences_screen_save_user')}" icon="@Embed(source='/assets/images/Preference--save.png')"/>
         <mx:VRule height="10"/>
         <mx:Button id="reloadBtn" click="reload();" buttonMode="true" mouseChildren="false" toolTip="{I18nUtil.trans(I18nUtil.APP_MAIN, 'ttip_preferences_screen_reload_users')}" icon="@Embed(source='assets/images/icons/refresh.png')"/>
     </mx:HBox>
     <mx:HRule x="9" y="53" width="95%"/>
+
+    <mx:states>
+        <mx:State name="appPrefState" enterState="appPrefStateEntered(event)" exitState="modPrefStateEntered(event)"/>
+        <mx:State name="modPrefState" />
+    </mx:states>
+
     <mx:HBox x="10" y="63" width="95%" height="100%">
         <mx:Accordion x="10" y="63" width="300" height="95%">
-            <mx:Canvas label="{I18nUtil.trans(I18nUtil.APP_MAIN, 'lbl_preferences_screen_app_prefs')}" width="100%" height="100%">
-                <mx:List id="appPrefsLst" labelField="key" dataProvider="{prefs.appPrefs}" itemClick="onSelect(event)" alternatingItemColors="[#EEEEEE, #FFFFFF]" width="100%" height="100%" x="0" y="0" />
+            <mx:Canvas label="{I18nUtil.trans(I18nUtil.APP_MAIN, 'lbl_preferences_screen_app_prefs')}" width="100%" height="100%"  show="appPrefStateEntered(event)">
+                <mx:List id="appPrefsLst" labelField="key" dataProvider="{prefs.appPrefs}" itemClick="onAppPrefSelect(event)" alternatingItemColors="[#EEEEEE, #FFFFFF]" width="100%" height="100%" x="0" y="0" />
             </mx:Canvas>
-            <mx:Canvas label="{I18nUtil.trans(I18nUtil.APP_MAIN, 'lbl_preferences_screen_module_prefs')}" width="100%" height="100%">
+            <mx:Canvas label="{I18nUtil.trans(I18nUtil.APP_MAIN, 'lbl_preferences_screen_module_prefs')}" width="100%" height="100%" show="modPrefStateEntered(event)">
                 <mx:List id="modPrefsLst" labelField="key" dataProvider="{prefs.modulePrefs}" itemClick="onSelect(event)" alternatingItemColors="[#EEEEEE, #FFFFFF]" width="100%" height="100%" x="0" y="0" />
             </mx:Canvas>
             <mx:Canvas label="{I18nUtil.trans(I18nUtil.APP_MAIN, 'lbl_preferences_screen_role_prefs')}" width="100%" height="100%">
@@ -121,31 +172,35 @@
         </mx:Accordion>
         <mx:Panel id="detailsPnl" title="{I18nUtil.trans(I18nUtil.APP_MAIN, 'lbl_preferences_screen_details')}" height="95%" layout="absolute" width="100%">
             <mx:Label  id="keyLbl" text="{I18nUtil.trans(I18nUtil.APP_ENTITY, 'entity_preference_key')}" fontWeight="bold" x="10" y="10" />
-            <mx:TextInput id="keyTxt" text="{selected.key}" width="228" x="178" y="8"/>
+            <mx:TextInput id="keyTxt" width="228" x="178" y="8"/>
             
-            <mx:Label id="ownerLbl" text="{I18nUtil.trans(I18nUtil.APP_ENTITY, 'entity_preference_owner')}" fontWeight="bold" x="10" y="36" />
-            <mx:TextInput id="ownerTxt" text="{selected.owner}" width="228" x="178" y="34"/>
+            <mx:Label id="descriptionLbl" text="{I18nUtil.trans(I18nUtil.APP_ENTITY, 'entity_preference_description')}" x="10" y="36" />
+            <mx:TextArea id="textarea1" text="{selected.description}" x="178" y="35" width="228" />
 
-            <mx:Label id="descriptionLbl" text="{I18nUtil.trans(I18nUtil.APP_ENTITY, 'entity_preference_description')}" x="10" y="62" />
-            <mx:TextArea id="textarea1" text="{selected.description}" x="178" y="61" width="228" />
+            <mx:HRule id="hrule0" x="10" y="87" width="95%" />
 
-            <mx:Label id="typeLbl" text="{I18nUtil.trans(I18nUtil.APP_ENTITY, 'entity_preference_type')}" x="10" y="115" />
-            <mx:ComboBox id="typeCmb" dataProvider="{PreferencesModel.types}" width="228" x="178" y="113" />
+            <mx:Label id="typeLbl" text="{I18nUtil.trans(I18nUtil.APP_ENTITY, 'entity_preference_type')}" x="10" y="99" />
+            <mx:ComboBox id="typeCmb" dataProvider="{prefs.types}" labelFunction="{prefs.formatType}" width="228" x="178" y="97" />
 
-            <mx:Label id="valueLbl" text="{I18nUtil.trans(I18nUtil.APP_ENTITY, 'entity_preference_value')}" x="10" y="141" />
-            <mx:TextInput id="valueTxt" text="{selected.value}" width="228" x="178" y="139" />
+            <mx:Label id="ownerLbl" text="{I18nUtil.trans(I18nUtil.APP_ENTITY, 'entity_preference_owner')}" fontWeight="normal" x="10" y="126" />
+            <mx:TextInput id="ownerTxt" width="228" x="178" y="124"/>
 
-            <mx:Label id="floatValueLbl" text="{I18nUtil.trans(I18nUtil.APP_ENTITY, 'entity_preference_floatValue')}" x="10" y="167" />
-            <mx:TextInput id="floatValueTxt" text="{selected.floatValue}" width="228" x="178" y="165" />
+            <mx:HRule id="hrule2" x="10" y="154" width="95%" />
 
-            <mx:Label id="minimumLbl" text="{I18nUtil.trans(I18nUtil.APP_ENTITY, 'entity_preference_minimum')}" x="10" y="193" />
-            <mx:TextInput id="minimumTxt" text="{selected.minimum}" width="228" x="178" y="191" />
+            <mx:Label id="valueLbl" text="{I18nUtil.trans(I18nUtil.APP_ENTITY, 'entity_preference_value')}" x="10" y="166" />
+            <mx:TextInput id="valueTxt" text="{selected.value}" width="228" x="178" y="164" />
 
-            <mx:Label id="maximumLbl" text="{I18nUtil.trans(I18nUtil.APP_ENTITY, 'entity_preference_maximum')}" x="10" y="219" />
-            <mx:TextInput id="maximumTxt" text="{selected.maximum}" width="228" x="178" y="215" />
+            <mx:Label id="floatValueLbl" text="{I18nUtil.trans(I18nUtil.APP_ENTITY, 'entity_preference_floatValue')}" x="10" y="192" />
+            <mx:TextInput id="floatValueTxt" text="{selected.floatValue}" width="228" x="178" y="190" />
 
-            <mx:HRule id="hrule1" x="12" y="245" width="95%" />
-            <mx:Button id="saveBtn2" buttonMode="true" mouseChildren="false" toolTip="{I18nUtil.trans(I18nUtil.APP_MAIN, 'ttip_preferences_screen_save_user')}" icon="@Embed(source='/assets/images/Preference--save.png')" x="178" y="255"/>
+            <mx:Label id="minimumLbl" text="{I18nUtil.trans(I18nUtil.APP_ENTITY, 'entity_preference_minimum')}" x="10" y="218" />
+            <mx:TextInput id="minimumTxt" text="{selected.minimum}" width="228" x="178" y="216" />
+
+            <mx:Label id="maximumLbl" text="{I18nUtil.trans(I18nUtil.APP_ENTITY, 'entity_preference_maximum')}" x="10" y="244" />
+            <mx:TextInput id="maximumTxt" text="{selected.maximum}" width="228" x="178" y="240" />
+
+            <mx:HRule id="hrule1" x="10" y="270" width="95%" />
+            <mx:Button id="saveBtn2" buttonMode="true" mouseChildren="false" toolTip="{I18nUtil.trans(I18nUtil.APP_MAIN, 'ttip_preferences_screen_save_user')}" icon="@Embed(source='/assets/images/Preference--save.png')" x="178" y="280"/>
         </mx:Panel>
     </mx:HBox>
 </mx:Canvas>

@@ -22,17 +22,12 @@ package org.openwms.web.flex.client.business {
 
     import mx.collections.ArrayCollection;
     import mx.controls.Alert;
-    
+
     import org.as3commons.reflect.Type;
     import org.granite.tide.events.TideFaultEvent;
     import org.granite.tide.events.TideResultEvent;
     import org.granite.tide.spring.Context;
     import org.openwms.common.domain.values.Weight;
-    import org.openwms.core.domain.system.AbstractPreference;
-    import org.openwms.core.domain.system.ApplicationPreference;
-    import org.openwms.core.domain.system.ModulePreference;
-    import org.openwms.core.domain.system.usermanagement.RolePreference;
-    import org.openwms.core.domain.system.usermanagement.UserPreference;
     import org.openwms.core.domain.values.Unit;
     import org.openwms.web.flex.client.event.PropertyEvent;
     import org.openwms.web.flex.client.model.ModelLocator;
@@ -89,18 +84,7 @@ package org.openwms.web.flex.client.business {
         }
 
         private function onPropertiesLoaded(event : TideResultEvent) : void {
-        	prefsModel.clearAll();
-        	for each (var pref : AbstractPreference in event.result as ArrayCollection) {
-        		if (pref is ApplicationPreference) {
-		            prefsModel.appPrefs.addItem(pref);
-        		} else if (pref is ModulePreference) {
-        			prefsModel.modulePrefs.addItem(pref);
-        		} else if (pref is RolePreference) {
-        			prefsModel.rolePrefs.addItem(pref);
-        		} else if (pref is UserPreference) {
-        			prefsModel.userPrefs.addItem(pref);
-        		}
-        	}
+            prefsModel.assignPreferences(event.result as ArrayCollection);
         }
 
         private function onUnitsLoaded(event : TideResultEvent) : void {

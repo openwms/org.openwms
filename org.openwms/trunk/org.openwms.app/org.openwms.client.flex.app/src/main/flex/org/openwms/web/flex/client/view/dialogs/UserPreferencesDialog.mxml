@@ -27,13 +27,16 @@
     <mx:Metadata>
         [Name]
         [ResourceBundle("appMain")]
+        [ManagedEvent(name="USER.SAVE_USER_PROFILE")]
     </mx:Metadata>
 
     <mx:Script>
 		<![CDATA[
+            import mx.collections.ArrayCollection;
 			import mx.managers.PopUpManager;
             import mx.resources.ResourceManager
             
+            import org.openwms.web.flex.client.event.UserEvent;
             import org.openwms.web.flex.client.model.ModelLocator;
             import org.openwms.web.flex.client.util.I18nUtil;
 
@@ -74,17 +77,29 @@
             private function onClickPw1() : void {
                 newPwTxt1.enabled = true;
                 newPwTxt2.enabled = true;
+                newPwTxt1.setFocus();
             }
 
             private function onClickPw2() : void {
                 newPwTxt1.enabled = true;
                 newPwTxt2.enabled = true;
+                newPwTxt2.setFocus();
             }
 
             private function onSave() : void {
                 if (isPasswordValid()) {
-                    closeDialog();
+                    var event : UserEvent = new UserEvent(UserEvent.SAVE_USER_PROFILE);
+                    //event.data = {user : modelLocator.loggedInUser, password : newPwTxt1.text, preferences : localesCB.selectedItem as };
+                    trace("SAVE user:"+event.data.user);
+                    trace("SAVE uPass:"+event.data.password);
+                    trace("SAVE pref:"+event.data.preferences);
+                    dispatchEvent(event);
                 }
+            }
+            
+            [Observer("USER.USER_SAVED")]
+            public function onUserSaved(event : UserEvent) : void {
+                closeDialog();
             }
 
             private function onCancel() : void {
