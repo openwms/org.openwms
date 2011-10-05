@@ -33,7 +33,8 @@
 	<osgi:reference id="moduleDao" interface="org.openwms.core.integration.ModuleDao" />
     <osgi:reference id="i18nRepo" interface="org.openwms.core.integration.I18nRepository" />
     <osgi:reference id="securityObjectDao" interface="org.openwms.core.integration.SecurityObjectDao" />
-    <osgi:reference id="preferencesDao" interface="org.openwms.core.integration.GenericDao" />
+    <osgi:reference id="preferencesJpaDao" interface="org.openwms.core.integration.PreferenceWriter" />
+    <osgi:reference id="preferencesFileDao" interface="org.openwms.core.integration.PreferenceDao" />
     
     <!-- Helpers and delegates -->
     <osgi:reference id="onRemovalListener" interface="org.openwms.core.service.listener.OnRemovalListener" cardinality="0..1" />
