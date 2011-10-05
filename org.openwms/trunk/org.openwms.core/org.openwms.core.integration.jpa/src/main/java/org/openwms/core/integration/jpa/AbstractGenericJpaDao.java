@@ -107,7 +107,6 @@ public abstract class AbstractGenericJpaDao<T extends AbstractEntity, ID extends
      * {@inheritDoc}
      */
     @Override
-    @Transactional(readOnly = true)
     public T findById(ID id) {
         return em.find(getPersistentClass(), id);
     }
@@ -116,7 +115,6 @@ public abstract class AbstractGenericJpaDao<T extends AbstractEntity, ID extends
      * {@inheritDoc}
      */
     @Override
-    @Transactional(readOnly = true)
     @SuppressWarnings("unchecked")
     public List<T> findAll() {
         List<T> all = em.createNamedQuery(getFindAllQuery()).getResultList();
@@ -130,7 +128,6 @@ public abstract class AbstractGenericJpaDao<T extends AbstractEntity, ID extends
      * {@inheritDoc}
      */
     @Override
-    @Transactional(readOnly = true)
     @SuppressWarnings("unchecked")
     public List<T> findByNamedParameters(String queryName, Map<String, ?> params) {
         Query queryObject = em.createNamedQuery(queryName);
@@ -146,7 +143,6 @@ public abstract class AbstractGenericJpaDao<T extends AbstractEntity, ID extends
      * {@inheritDoc}
      */
     @Override
-    @Transactional(readOnly = true)
     @SuppressWarnings("unchecked")
     public List<T> findByPositionalParameters(String queryName, Object... values) {
         Query queryObject = em.createNamedQuery(queryName);
@@ -162,7 +158,6 @@ public abstract class AbstractGenericJpaDao<T extends AbstractEntity, ID extends
      * {@inheritDoc}
      */
     @Override
-    @Transactional(readOnly = true)
     @SuppressWarnings("unchecked")
     public T findByUniqueId(Serializable id) {
         List<T> result = em.createNamedQuery(getFindByUniqueIdQuery()).setParameter(1, id).getResultList();
