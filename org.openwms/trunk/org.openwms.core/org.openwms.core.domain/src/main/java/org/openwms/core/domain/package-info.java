@@ -21,4 +21,5 @@
 /**
  * Contains essential domain classes of the CORE module.
  */
+@javax.xml.bind.annotation.XmlAccessorType(javax.xml.bind.annotation.XmlAccessType.NONE)
 package org.openwms.core.domain;

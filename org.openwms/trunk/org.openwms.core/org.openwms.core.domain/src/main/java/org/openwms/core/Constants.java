@@ -18,9 +18,22 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
+package org.openwms.core;
+
 /**
- * Contains domain classes regarding the user and role management.
+ * A Constants class collects general used static constants.
+ * 
+ * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
+ * @version $Revision: $
+ * @since 0.1
  */
-@javax.xml.bind.annotation.XmlAccessorType(javax.xml.bind.annotation.XmlAccessType.FIELD)
-@javax.xml.bind.annotation.XmlSchema(namespace = "http://www.openwms.org/schema/usermanagement")
-package org.openwms.core.domain.system.usermanagement;
+public class Constants {
+
+    /**
+     * Path to the initial application properties file. This constant can be
+     * referenced by Springs Value annotation. Value is {@value} . appProps is
+     * declared in Springs XML configuration.
+     */
+    public static final String APPLICATION_INITIAL_PROPERTIES = "#{ appProps['application.initial.properties'] }";
+
+}

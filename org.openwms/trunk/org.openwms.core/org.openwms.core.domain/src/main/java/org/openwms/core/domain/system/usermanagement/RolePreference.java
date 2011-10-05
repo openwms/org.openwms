@@ -20,14 +20,19 @@
  */
 package org.openwms.core.domain.system.usermanagement;
 
-import javax.persistence.DiscriminatorValue;
+import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.PrePersist;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.Table;
+import javax.persistence.UniqueConstraint;
+import javax.xml.bind.annotation.XmlAttribute;
+import javax.xml.bind.annotation.XmlTransient;
+import javax.xml.bind.annotation.XmlType;
 
 import org.openwms.core.domain.system.AbstractPreference;
+import org.openwms.core.domain.system.PreferenceKey;
+import org.openwms.core.domain.system.PropertyScope;
 
 /**
  * A RolePreference. Used to store settings in Role scope, only valid for the
@@ -37,39 +42,156 @@ import org.openwms.core.domain.system.AbstractPreference;
  * @version $Revision: $
  * @since 0.1
  */
+@XmlType(name = "rolePreference", namespace = "http://www.openwms.org/schema/usermanagement")
 @Entity
-@DiscriminatorValue("ROLE")
-@Table(name = "COR_ROLE_PREFERENCE")
+@Table(name = "COR_ROLE_PREFERENCE", uniqueConstraints = @UniqueConstraint(columnNames = { "C_TYPE", "C_OWNER", "C_KEY" }))
 public class RolePreference extends AbstractPreference {
 
     private static final long serialVersionUID = 8267024349554036680L;
+    /**
+     * Type of this preference. Default is {@value} .
+     */
+    @XmlTransient
+    @Enumerated(EnumType.STRING)
+    @Column(name = "C_TYPE")
+    private PropertyScope type = PropertyScope.ROLE;
 
-    @ManyToOne
-    @JoinColumn(name = "ROLE_ID", nullable = false)
-    private Role role;
+    /**
+     * Owner of the <code>RolePreference</code>.
+     */
+    @XmlAttribute(name = "owner", required = true)
+    @Column(name = "C_OWNER")
+    private String owner;
+
+    /**
+     * Key value of the <code>RolePreference</code>.
+     */
+    @XmlAttribute(name = "key", required = true)
+    @Column(name = "C_KEY")
+    private String key;
 
     /**
      * Create a new RolePreference.
      */
-    protected RolePreference() {
+    RolePreference() {
         super();
     }
 
     /**
-     * Create a new RolePreference.
+     * Create a new RolePreference. Defined for the JAXB implementation.
      * 
+     * @param rolename
+     *            The name of the Role that owns this preference
      * @param key
+     *            the key
      */
     public RolePreference(String rolename, String key) {
-        super(key);
-        super.setOwner(rolename);
+        // Called from the client.
+        super();
+        this.owner = rolename;
+        this.key = key;
     }
 
-    @PrePersist
-    protected void onPersist() {
-        if (super.getOwner() == null || super.getOwner() != this.role.getName()) {
-            super.setOwner(this.role.getName());
+    /**
+     * Get the key.
+     * 
+     * @return the key.
+     */
+    public String getKey() {
+        return key;
+    }
+
+    /**
+     * Get the owner.
+     * 
+     * @return the owner.
+     */
+    public String getOwner() {
+        return owner;
+    }
+
+    /**
+     * {@inheritDoc}
+     * 
+     * @see org.openwms.core.domain.system.AbstractPreference#getType()
+     */
+    @Override
+    public PropertyScope getType() {
+        return PropertyScope.ROLE;
+    }
+
+    /**
+     * {@inheritDoc}
+     * 
+     * @see org.openwms.core.domain.system.AbstractPreference#getFields()
+     */
+    @Override
+    protected Object[] getFields() {
+        return new Object[] { this.getType(), this.getOwner(), this.getKey() };
+    }
+
+    /**
+     * {@inheritDoc}
+     * 
+     * @see org.openwms.core.domain.system.AbstractPreference#getPrefKey()
+     */
+    @Override
+    public PreferenceKey getPrefKey() {
+        return new PreferenceKey(this.getType(), this.getOwner(), this.getKey());
+    }
+
+    /**
+     * {@inheritDoc}
+     * 
+     * Uses key, owner and type for hashCode calculation.
+     * 
+     * @see java.lang.Object#hashCode()
+     */
+    @Override
+    public int hashCode() {
+        final int prime = 31;
+        int result = super.hashCode();
+        result = prime * result + ((key == null) ? 0 : key.hashCode());
+        result = prime * result + ((owner == null) ? 0 : owner.hashCode());
+        result = prime * result + ((type == null) ? 0 : type.hashCode());
+        return result;
+    }
+
+    /**
+     * {@inheritDoc}
+     * 
+     * Comparison done with key, owner and type fields. Not delegated to super
+     * class.
+     * 
+     * @see java.lang.Object#equals(java.lang.Object)
+     */
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
         }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        RolePreference other = (RolePreference) obj;
+        if (key == null) {
+            if (other.key != null) {
+                return false;
+            }
+        } else if (!key.equals(other.key)) {
+            return false;
+        }
+        if (owner == null) {
+            if (other.owner != null) {
+                return false;
+            }
+        } else if (!owner.equals(other.owner)) {
+            return false;
+        }
+        if (type != other.type) {
+            return false;
+        }
+        return true;
     }
 
 }

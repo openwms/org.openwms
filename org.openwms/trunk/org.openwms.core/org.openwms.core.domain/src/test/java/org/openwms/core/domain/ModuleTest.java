@@ -103,7 +103,7 @@ public class ModuleTest extends AbstractJpaSpringContextTests {
             entityManager.persist(m1);
             fail("Businesskey not complete");
         } catch (PersistenceException pe) {
-            logger.debug("OK:Must fail, we wait for an url");
+            logger.debug("OK: Must fail, we wait for an url");
         }
     }
 
@@ -115,7 +115,7 @@ public class ModuleTest extends AbstractJpaSpringContextTests {
         Module m1 = new Module("Module1", "url");
         try {
             entityManager.persist(m1);
-            logger.debug("OK:BusinessKey is complete");
+            logger.debug("OK: BusinessKey is complete");
         } catch (PersistenceException pe) {
             fail("Businesskey not complete");
         }
@@ -123,7 +123,7 @@ public class ModuleTest extends AbstractJpaSpringContextTests {
             m1.setUrl(null);
             fail("Url cannot be set to null");
         } catch (IllegalArgumentException iae) {
-            logger.debug("OK:Setting url to null is not allowed");
+            logger.debug("OK: Setting url to null is not allowed");
         }
     }
 
