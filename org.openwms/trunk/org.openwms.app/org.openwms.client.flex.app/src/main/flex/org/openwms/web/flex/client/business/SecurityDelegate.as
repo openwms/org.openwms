@@ -94,14 +94,15 @@ package org.openwms.web.flex.client.business {
          * @param event expected to store data.username and data.password as credentials
          */
         public function unlock(event : ApplicationEvent) : void {
-            tideContext.securityContextHelper.checkCredentials(event.data.username, event.data.password, onValid, onFault);
+            tideContext.securityContextHelper.checkCredentials(event.data.username, event.data.password, onValid, onLoginError);
         }
 
         private function onValid(event : TideResultEvent) : void {
             var res : Boolean = event.result as Boolean;
-            if (res) {
+            if (res == true) {
                 dispatchEvent(new ApplicationEvent(ApplicationEvent.APP_CREDENTIALS_VALID));
             } else {
+                trace("Invalid credentials");
                 dispatchEvent(new ApplicationEvent(ApplicationEvent.APP_CREDENTIALS_INVALID));
             }
         }
@@ -113,6 +114,12 @@ package org.openwms.web.flex.client.business {
         private function onComplete(event : TideResultEvent) : void {
             modelLocator.loggedInUser = event.result as User;
             dispatchEvent(new ApplicationEvent(ApplicationEvent.APP_LOGIN_OK));
+        }
+
+        private function onLoginError(event : TideFaultEvent) : void {
+            var e : ApplicationEvent = new ApplicationEvent(ApplicationEvent.APP_CREDENTIALS_INVALID);
+            e.data = {event: event};
+            dispatchEvent(e);
         }
 
         private function onFault(event : TideFaultEvent) : void {

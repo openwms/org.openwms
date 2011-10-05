@@ -22,7 +22,7 @@ package org.openwms.web.flex.client.business {
 
     import mx.collections.ArrayCollection;
     import mx.controls.Alert;
-    
+
     import org.granite.tide.events.TideFaultEvent;
     import org.granite.tide.events.TideResultEvent;
     import org.granite.tide.spring.Context;
@@ -34,9 +34,9 @@ package org.openwms.web.flex.client.business {
     import org.openwms.web.flex.client.util.UserHelper;
 
     [Name("userDelegate")]
-    [ManagedEvent(name = "LOAD_ALL_USERS")]
-    [ManagedEvent(name = "USER.USER_ADDED")]
-    [ManagedEvent(name = "USER.USER_SAVED")]
+    [ManagedEvent(name="LOAD_ALL_USERS")]
+    [ManagedEvent(name="USER.USER_ADDED")]
+    [ManagedEvent(name="USER.USER_SAVED")]
     [ResourceBundle("appError")]
     [Bindable]
     /**
@@ -110,10 +110,10 @@ package org.openwms.web.flex.client.business {
          * Call to save User data of the current selected User.
          * Tide event observers : SAVE_USER
          *
-         * @param event Unused
+         * @param event data variable holds the User to store
          */
         public function saveUser(event : UserEvent) : void {
-            tideContext.userService.save(modelLocator.selectedUser, onUserSaved, onFault);
+            tideContext.userService.save(event.data as User, onUserSaved, onFault);
         }
 
         private function onUserSaved(event : TideResultEvent) : void {
@@ -162,6 +162,20 @@ package org.openwms.web.flex.client.business {
         }
 
         private function onPasswordChanged(event : TideResultEvent) : void {
+        }
+
+        [Observer("USER.SAVE_USER_PROFILE")]
+        /**
+         */
+        public function saveUserProfile(event : UserEvent) : void {
+            if (event.data != null) {
+                var uPassword : UserPassword = new UserPassword(event.data.user as User, event.data.password as String);
+                tideContext.userService.saveUserProfile(event.data.user as User, uPassword, event.data.preferences as Array, onUserProfileSaved, onFault);
+            }
+        }
+
+        private function onUserProfileSaved(event : TideResultEvent) : void {
+            dispatchEvent(new UserEvent(UserEvent.USER_SAVED));
         }
 
         private function onFault(event : TideFaultEvent) : void {

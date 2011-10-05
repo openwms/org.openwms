@@ -65,7 +65,7 @@
             public var loginMessageText : String = "";
             
             private function onShow() : void {
-            	myUser.setFocus();
+            	userTxt.setFocus();
                 PopUpManager.centerPopUp(this);
             }
             
@@ -76,6 +76,9 @@
                         event = new ApplicationEvent(ApplicationEvent.APP_UNLOCK);
                         event.data = {username:username, password:password};
                         dispatchEvent(event);
+                    } else {
+                        loginMessageText = I18nUtil.trans(I18nUtil.APP_MAIN, 'txt_login_locked_by', modelLocator.viewLockedBy);
+                        resetFields();
                     }
                     return;
                 }
@@ -93,8 +96,23 @@
             [Observer("APP.LOGIN_NOK")]
             public function loginError(event : ApplicationEvent) : void {
                 loginMessageText = event.data.event.fault.faultString;
-                myPass.text = "";
-                myPass.setFocus();
+                resetFields(false, true);
+            }
+            
+            [Observer("APP.CREDENTIALS_INVALID")]
+            public function onInvalidCredentials(event : ApplicationEvent) : void {
+                loginError(event);
+            }
+
+            private function resetFields(resetUserField : Boolean = true, resetPasswordField : Boolean = true) : void {
+                if (resetPasswordField == true) {
+                    passTxt.text = "";
+                    passTxt.setFocus();
+                }
+                if (resetUserField == true) {
+                    userTxt.text = "";
+                    userTxt.setFocus();
+                }
             }
         ]]>
 	</mx:Script>
@@ -102,14 +120,14 @@
 	<mx:Form width="100%" height="100%">
 		<mx:FormHeading label="{I18nUtil.trans(I18nUtil.APP_MAIN, 'lbl_login_title')}" />
 		<mx:FormItem label="{I18nUtil.trans(I18nUtil.APP_MAIN, 'lbl_login_username')}">
-			<mx:TextInput id="myUser" enter="myPass.setFocus();"/>
+			<mx:TextInput id="userTxt" enter="passTxt.setFocus();"/>
 		</mx:FormItem>
 		<mx:FormItem label="{I18nUtil.trans(I18nUtil.APP_MAIN, 'lbl_login_password')}">
-			<mx:TextInput id="myPass" displayAsPassword="true" enter="onLogin(myUser.text, myPass.text)"/>
+			<mx:TextInput id="passTxt" displayAsPassword="true" enter="onLogin(userTxt.text, passTxt.text)"/>
 		</mx:FormItem>
 		<mx:Text text="{loginMessageText}"/>
 		<mx:FormItem>
-			<mx:Button label="{I18nUtil.trans(I18nUtil.APP_MAIN, 'btn_login')}" click="onLogin(myUser.text, myPass.text)" />
+			<mx:Button label="{I18nUtil.trans(I18nUtil.APP_MAIN, 'btn_login')}" click="onLogin(userTxt.text, passTxt.text)" />
 		</mx:FormItem>
 	</mx:Form>
 

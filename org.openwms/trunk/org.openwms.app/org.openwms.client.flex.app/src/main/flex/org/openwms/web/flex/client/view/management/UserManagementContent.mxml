@@ -172,7 +172,14 @@
                                             new BindingProperty(modelLocator.selectedUser.userDetails, "comment", tiComment, "text"),
                                             new BindingProperty(modelLocator.selectedUser, "enabled", enabledChk, "selected"),
                                             new BindingProperty(modelLocator.selectedUser, "locked", lockedChk, "selected")];
-                    DisplayUtility.bindProperties(new ArrayCollection(bindings), function execute():void { dispatchEvent(new UserEvent(UserEvent.SAVE_USER))}); }
+                    DisplayUtility.bindProperties(new ArrayCollection(bindings),
+                        function execute():void {
+                            var event : UserEvent = new UserEvent(UserEvent.SAVE_USER);
+                            event.data = modelLocator.selectedUser;
+                            dispatchEvent(event);
+                        }
+                    );
+                }
             }
 
             private function setFormElements(value : Boolean = true) : void {
