@@ -20,23 +20,29 @@
  */
 package org.openwms.core.domain.system.usermanagement {
 
+    import org.openwms.core.domain.system.PropertyScope;
+
     [Bindable]
     [RemoteClass(alias="org.openwms.core.domain.system.usermanagement.UserPreference")]
+    /**
+     * An UserPreference is a preference assigned to a particular User only.
+     *
+     * @version $Revision: 1425 $
+     * @since 0.1
+     */
     public class UserPreference extends UserPreferenceBase {
 
         /**
          * Constructor.
          * Define at least an User and a key for a UserPreference.
          *
-         * @param user The User who owns the Preference
+         * @param owner The username of the User who owns this Preference
          * @param key The key to set
          * @param value The value of the Preference
          */
-        public function UserPreference(user : User=null, key : String=null, value : String=null) {
-            if (user != null) {
-                this._owner = user.username;
-                this._user = user;
-            }
+        public function UserPreference(owner : String=null, key : String=null, value : String=null) {
+            this._type = PropertyScope.USER;
+            this._owner = owner;
             this._key = key;
             this._value = value;
         }
@@ -47,7 +53,7 @@ package org.openwms.core.domain.system.usermanagement {
          * @return User
          */
         override public function toString() : String {
-            return "User Preference";
+            return "User";
         }
     }
 }

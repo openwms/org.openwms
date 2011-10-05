@@ -25,9 +25,9 @@ package org.openwms.core.domain.system {
     public class AbstractPreference extends AbstractPreferenceBase {
 
         /**
-         * Return "Common".
+         * Return "Preference".
          *
-         * @return Common
+         * @return Preference
          */
         public function toString() : String {
             return "Preference";
