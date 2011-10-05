@@ -23,6 +23,8 @@ package org.openwms.core.service;
 import java.util.List;
 
 import org.openwms.core.domain.system.AbstractPreference;
+import org.openwms.core.domain.system.ApplicationPreference;
+import org.openwms.core.domain.system.ModulePreference;
 import org.openwms.core.domain.values.Unit;
 
 /**
@@ -45,14 +47,24 @@ public interface ConfigurationService {
      * 
      * @return a list of these properties
      */
-    List<AbstractPreference> findApplicationProperties();
+    List<ApplicationPreference> findApplicationProperties();
 
     /**
      * Find and return all properties belonging to this Module.
      * 
      * @return a list of these properties
      */
-    List<AbstractPreference> findModuleProperties();
+    List<ModulePreference> findModuleProperties();
+
+    /**
+     * Update the given {@link AbstractPreference} or persist it when it is a
+     * transient one.
+     * 
+     * @param preference
+     *            {@link AbstractPreference} entity to persist
+     * @return Updated {@link AbstractPreference} entity instance
+     */
+    AbstractPreference save(AbstractPreference preference);
 
     /**
      * Get all unit types supported by this Module.

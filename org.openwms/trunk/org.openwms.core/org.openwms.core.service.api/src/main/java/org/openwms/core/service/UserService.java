@@ -25,6 +25,7 @@ import java.util.List;
 import org.openwms.core.domain.system.usermanagement.SystemUser;
 import org.openwms.core.domain.system.usermanagement.User;
 import org.openwms.core.domain.system.usermanagement.UserPassword;
+import org.openwms.core.domain.system.usermanagement.UserPreference;
 
 /**
  * An UserService offers business functionality regarding handling of
@@ -48,7 +49,6 @@ public interface UserService {
     boolean changeUserPassword(UserPassword userPassword);
 
     /**
-     * 
      * FIXME [scherrer] Comment this
      * 
      * @param userPassword
@@ -91,6 +91,15 @@ public interface UserService {
      * @return Updated {@link User} entity instance
      */
     User save(User user);
+
+    /**
+     * FIXME [scherrer] Comment this
+     * 
+     * @param user
+     * @param userPassword
+     * @param prefs
+     */
+    void saveUserProfile(User user, UserPassword userPassword, UserPreference... prefs);
 
     /**
      * Remove an {@link User} from the persistent storage.
