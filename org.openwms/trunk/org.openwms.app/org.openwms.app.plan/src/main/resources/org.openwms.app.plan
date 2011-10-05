@@ -33,6 +33,7 @@
     <artifact type="bundle" name="org.openwms.tms.domain" version="[0.0.1.SNAPSHOT,1.0)"/>
     <artifact type="bundle" name="org.openwms.core.integration.hibernate" version="[0.0.1.SNAPSHOT,1.0)"/>
     <artifact type="bundle" name="org.openwms.core.integration" version="[0.0.1.SNAPSHOT,1.0)"/>
+    <artifact type="bundle" name="org.openwms.core.integration.file" version="[0.0.1.SNAPSHOT,1.0)"/>
     <artifact type="bundle" name="org.openwms.core.integration.jpa" version="[0.0.1.SNAPSHOT,1.0)"/>
     <artifact type="bundle" name="org.openwms.core.service.api" version="[0.0.1.SNAPSHOT,1.0)"/>
     <artifact type="bundle" name="org.openwms.core.service.spring" version="[0.0.1.SNAPSHOT,1.0)"/>
