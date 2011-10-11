@@ -39,6 +39,7 @@ import org.openwms.core.service.UserService;
 import org.openwms.core.service.exception.ServiceRuntimeException;
 import org.openwms.core.service.exception.UserNotFoundException;
 import org.openwms.core.util.event.UserChangedEvent;
+import org.openwms.core.util.validation.AssertUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -63,7 +64,7 @@ import org.springframework.transaction.annotation.Transactional;
 @Service("userService")
 public class UserServiceImpl implements UserService {
 
-    private final Logger logger = LoggerFactory.getLogger(UserServiceImpl.class);
+    private final static Logger logger = LoggerFactory.getLogger(UserServiceImpl.class);
     @Autowired
     private UserDao dao;
     @Autowired
@@ -107,16 +108,13 @@ public class UserServiceImpl implements UserService {
     /**
      * {@inheritDoc}
      * 
-     * @throws ServiceRuntimeException
+     * @throws IllegalArgumentException
      *             when user is <code>null</code>
      */
     @Override
     @FireAfterTransaction(events = { UserChangedEvent.class })
     public User save(User user) {
-        if (null == user) {
-            logger.warn("Calling save with null as argument");
-            throw new ServiceRuntimeException("The instance of the User to be removed is NULL");
-        }
+        AssertUtils.notNull(user, "The instance of the User to be saved is NULL");
         if (user.isNew()) {
             dao.persist(user);
         }
@@ -126,16 +124,13 @@ public class UserServiceImpl implements UserService {
     /**
      * {@inheritDoc}
      * 
-     * @throws ServiceRuntimeException
+     * @throws IllegalArgumentException
      *             when user is <code>null</code>
      */
     @Override
     @FireAfterTransaction(events = { UserChangedEvent.class })
     public void remove(User user) {
-        if (null == user) {
-            logger.warn("Calling remove with null as argument");
-            throw new ServiceRuntimeException("The instance of the User to be remove is NULL");
-        }
+        AssertUtils.notNull(user, "The instance of the User to be removed is NULL");
         if (user.isNew()) {
             logger.warn("The User instance to be removed is not persist yet, no need to remove");
         } else {
@@ -173,6 +168,8 @@ public class UserServiceImpl implements UserService {
     /**
      * {@inheritDoc}
      * 
+     * @throws IllegalArgumentException
+     *             when userPassword is <code>null</code>
      * @throws ServiceRuntimeException
      *             when userPassword is <code>null</code>
      * @throws UserNotFoundException
@@ -181,10 +178,7 @@ public class UserServiceImpl implements UserService {
     @Override
     @FireAfterTransaction(events = { UserChangedEvent.class })
     public boolean changeUserPassword(UserPassword userPassword) {
-        if (userPassword == null) {
-            logger.warn("No userPassword set");
-            throw new ServiceRuntimeException("Error while changing the user password, new value was null");
-        }
+        AssertUtils.notNull(userPassword, "Error while changing the user password, new value was null");
         User entity = dao.findByUniqueId(userPassword.getUser().getUsername());
         if (entity == null) {
             throw new UserNotFoundException("User not found, probably not persisted before");
@@ -201,10 +195,6 @@ public class UserServiceImpl implements UserService {
     /**
      * {@inheritDoc}
      * 
-     * @throws ServiceRuntimeException
-     *             when userPassword is <code>null</code>
-     * @throws UserNotFoundException
-     *             when no such User exist
      * @see org.openwms.core.service.UserService#saveUserProfile(org.openwms.core.domain.system.usermanagement.User,
      *      org.openwms.core.domain.system.usermanagement.UserPassword,
      *      org.openwms.core.domain.system.usermanagement.UserPreference[])

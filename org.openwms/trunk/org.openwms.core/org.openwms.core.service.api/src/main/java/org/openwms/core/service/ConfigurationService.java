@@ -22,9 +22,9 @@ package org.openwms.core.service;
 
 import java.util.List;
 
+import org.openwms.core.domain.preferences.ApplicationPreference;
+import org.openwms.core.domain.preferences.ModulePreference;
 import org.openwms.core.domain.system.AbstractPreference;
-import org.openwms.core.domain.system.ApplicationPreference;
-import org.openwms.core.domain.system.ModulePreference;
 import org.openwms.core.domain.values.Unit;
 
 /**

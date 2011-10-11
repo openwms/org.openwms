@@ -23,9 +23,9 @@ package org.openwms.web.flex.client.model {
     import mx.collections.ArrayCollection;
 
     import org.granite.tide.events.TideResultEvent;
+    import org.openwms.core.domain.preferences.ApplicationPreference;
+    import org.openwms.core.domain.preferences.ModulePreference;
     import org.openwms.core.domain.system.AbstractPreference;
-    import org.openwms.core.domain.system.ApplicationPreference;
-    import org.openwms.core.domain.system.ModulePreference;
     import org.openwms.core.domain.system.usermanagement.RolePreference;
     import org.openwms.core.domain.system.usermanagement.UserPreference;
     import org.openwms.web.flex.client.util.I18nUtil;

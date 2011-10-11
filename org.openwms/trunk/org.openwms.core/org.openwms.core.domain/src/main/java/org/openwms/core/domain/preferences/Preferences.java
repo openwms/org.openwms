@@ -18,7 +18,7 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
-package org.openwms.core.domain.system;
+package org.openwms.core.domain.preferences;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -33,6 +33,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 import javax.xml.bind.annotation.XmlType;
 
+import org.openwms.core.domain.system.AbstractPreference;
 import org.openwms.core.domain.system.usermanagement.RolePreference;
 import org.openwms.core.domain.system.usermanagement.UserPreference;
 

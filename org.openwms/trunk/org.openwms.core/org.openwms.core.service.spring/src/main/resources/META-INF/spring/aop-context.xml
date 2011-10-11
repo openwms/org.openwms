@@ -28,10 +28,16 @@
 		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-3.0.xsd">
 
     <aop:config>
-        <aop:pointcut id="checkEventAnnotation" expression="execution(@org.openwms.core.annotation.FireAfterTransaction * *.*(..)) and target(publisher) and @annotation(events)"/>
+        <aop:pointcut id="checkEventAnnotationPC" expression="execution(@org.openwms.core.annotation.FireAfterTransaction * *.*(..)) and target(publisher) and @annotation(events)"/>
+        <aop:pointcut id="publicServiceMethodsPC" expression="execution(public * *(..)) and @within(org.springframework.stereotype.Service)" />
+        
+        <aop:aspect ref="coreServiceAdvice" order="4">
+            <aop:after-throwing method="afterThrowing"
+                pointcut-ref="publicServiceMethodsPC" throwing="ex" />
+        </aop:aspect>
         <aop:aspect ref="userChangedEventAspect" order="5">
             <aop:after-returning method="fireUserEvent"
-                pointcut-ref="checkEventAnnotation" />
+                pointcut-ref="checkEventAnnotationPC" />
         </aop:aspect>
     </aop:config>
 

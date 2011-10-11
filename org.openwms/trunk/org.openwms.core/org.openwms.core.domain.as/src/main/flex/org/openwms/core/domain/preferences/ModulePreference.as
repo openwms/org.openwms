@@ -18,12 +18,12 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
-package org.openwms.core.domain.system {
+package org.openwms.core.domain.preferences {
 
     import org.openwms.core.domain.system.PropertyScope;
 
     [Bindable]
-    [RemoteClass(alias="org.openwms.core.domain.system.ModulePreference")]
+    [RemoteClass(alias="org.openwms.core.domain.preferences.ModulePreference")]
     /**
      * A ModulePreference is a preference assigned to a particular Module only.
      *

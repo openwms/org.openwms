@@ -25,9 +25,9 @@ import static org.junit.Assert.fail;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.openwms.core.domain.preferences.ApplicationPreference;
+import org.openwms.core.domain.preferences.ModulePreference;
 import org.openwms.core.domain.system.AbstractPreference;
-import org.openwms.core.domain.system.ApplicationPreference;
-import org.openwms.core.domain.system.ModulePreference;
 import org.openwms.core.domain.system.PreferenceKey;
 import org.openwms.core.domain.system.PropertyScope;
 import org.openwms.core.domain.system.usermanagement.UserPreference;

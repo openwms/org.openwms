@@ -29,9 +29,9 @@ import javax.annotation.PostConstruct;
 import javax.xml.transform.stream.StreamSource;
 
 import org.openwms.core.Constants;
+import org.openwms.core.domain.preferences.Preferences;
 import org.openwms.core.domain.system.AbstractPreference;
 import org.openwms.core.domain.system.PreferenceKey;
-import org.openwms.core.domain.system.Preferences;
 import org.openwms.core.integration.PreferenceDao;
 import org.openwms.core.integration.exception.DataException;
 import org.openwms.core.integration.exception.NoUniqueResultException;

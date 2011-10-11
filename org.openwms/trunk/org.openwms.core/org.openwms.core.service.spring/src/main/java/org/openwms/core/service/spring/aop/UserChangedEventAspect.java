@@ -23,8 +23,8 @@ package org.openwms.core.service.spring.aop;
 import java.util.EventObject;
 
 import org.openwms.core.annotation.FireAfterTransaction;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
-import org.springframework.context.ApplicationContextAware;
 import org.springframework.context.ApplicationEvent;
 import org.springframework.stereotype.Component;
 
@@ -36,24 +36,15 @@ import org.springframework.stereotype.Component;
  * @since 0.1
  */
 @Component("userChangedEventAspect")
-public class UserChangedEventAspect implements ApplicationContextAware {
+public class UserChangedEventAspect {
 
+    @Autowired
     private ApplicationContext ctx;
 
     /**
      * Create a new UserChangedEventAspect.
      */
     public UserChangedEventAspect() {}
-
-    /**
-     * {@inheritDoc}
-     * 
-     * @see org.springframework.context.ApplicationContextAware#setApplicationContext(org.springframework.context.ApplicationContext)
-     */
-    @Override
-    public void setApplicationContext(ApplicationContext applicationContext) {
-        this.ctx = applicationContext;
-    }
 
     /**
      * Only {@link ApplicationEvent}s are created and published over Springs

@@ -18,7 +18,7 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
-package org.openwms.core.domain.system;
+package org.openwms.core.domain.preferences;
 
 import java.io.File;
 
@@ -31,6 +31,7 @@ import javax.xml.validation.Schema;
 import javax.xml.validation.SchemaFactory;
 
 import org.junit.Test;
+import org.openwms.core.domain.system.AbstractPreference;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -57,7 +58,7 @@ public class ApplicationPreferenceTest {
         Schema schema = schemaFactory.newSchema(new File("../../src/schema/preferences.xsd"));
         // Schema schema = schemaFactory.newSchema(new
         // URL("http://www.openwms.org/schema/preferences.xsd"));
-        JAXBContext ctx = JAXBContext.newInstance("org.openwms.core.domain.system");
+        JAXBContext ctx = JAXBContext.newInstance("org.openwms.core.domain.preferences");
         Unmarshaller unmarshaller = ctx.createUnmarshaller();
         unmarshaller.setSchema(schema);
         unmarshaller.setEventHandler(new ValidationEventHandler() {

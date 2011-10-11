@@ -18,7 +18,7 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
-package org.openwms.core.domain.system;
+package org.openwms.core.domain.preferences;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -32,25 +32,28 @@ import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlTransient;
 import javax.xml.bind.annotation.XmlType;
 
+import org.openwms.core.domain.system.AbstractPreference;
+import org.openwms.core.domain.system.PreferenceKey;
+import org.openwms.core.domain.system.PropertyScope;
+
 /**
- * A ModulePreference. Used to store settings in Module scope.
+ * An ApplicationPreference is used to store a setting in application scope.
  * 
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  * @version $Revision: $
  * @since 0.1
  */
-@XmlType(name = "modulePreference", namespace = "http://www.openwms.org/schema/preferences")
+@XmlType(name = "applicationPreference", namespace = "http://www.openwms.org/schema/preferences")
 @Entity
-@Table(name = "COR_MODULE_PREFERENCE", uniqueConstraints = @UniqueConstraint(columnNames = { "C_TYPE", "C_OWNER",
-        "C_KEY" }))
-@NamedQueries({ @NamedQuery(name = ModulePreference.NQ_FIND_ALL, query = "select mp from ModulePreference mp") })
-public class ModulePreference extends AbstractPreference {
+@Table(name = "COR_APP_PREFERENCE", uniqueConstraints = @UniqueConstraint(columnNames = { "C_TYPE", "C_KEY" }))
+@NamedQueries({ @NamedQuery(name = ApplicationPreference.NQ_FIND_ALL, query = "select ap from ApplicationPreference ap") })
+public class ApplicationPreference extends AbstractPreference {
 
-    private static final long serialVersionUID = 7318848112643933488L;
+    private static final long serialVersionUID = -2942285512161603092L;
     /**
-     * Query to find all <code>ModulePreference</code>s.
+     * Query to find all <code>ApplicationPreference</code>s.
      */
-    public static final String NQ_FIND_ALL = "ModulePreference" + FIND_ALL;
+    public static final String NQ_FIND_ALL = "ApplicationPreference" + FIND_ALL;
 
     /**
      * Type of this preference. Default is {@value} .
@@ -58,41 +61,31 @@ public class ModulePreference extends AbstractPreference {
     @XmlTransient
     @Enumerated(EnumType.STRING)
     @Column(name = "C_TYPE")
-    private PropertyScope type = PropertyScope.MODULE;
+    private PropertyScope type = PropertyScope.APPLICATION;
 
     /**
-     * Owner of the <code>AbstractPreference</code>.
-     */
-    @XmlAttribute(name = "owner", required = true)
-    @Column(name = "C_OWNER")
-    private String owner;
-
-    /**
-     * Key value of the <code>AbstractPreference</code>.
+     * Key value of the preference.
      */
     @XmlAttribute(name = "key", required = true)
     @Column(name = "C_KEY")
     private String key;
 
     /**
-     * Create a new ModulePreference. Defined for the JAXB implementation.
+     * Create a new ApplicationPreference. Defined for the JAXB implementation.
      */
-    ModulePreference() {
+    public ApplicationPreference() {
         super();
     }
 
     /**
-     * Create a new ModulePreference.
+     * Create a new ApplicationPreference.
      * 
-     * @param owner
-     *            The name of the owning module
      * @param key
      *            the key
      */
-    public ModulePreference(String owner, String key) {
+    public ApplicationPreference(String key) {
         // Called from the client.
         super();
-        this.owner = owner;
         this.key = key;
     }
 
@@ -102,16 +95,7 @@ public class ModulePreference extends AbstractPreference {
      * @return the key.
      */
     public String getKey() {
-        return key;
-    }
-
-    /**
-     * Get the owner.
-     * 
-     * @return the owner.
-     */
-    public String getOwner() {
-        return owner;
+        return this.key;
     }
 
     /**
@@ -131,7 +115,7 @@ public class ModulePreference extends AbstractPreference {
      */
     @Override
     protected Object[] getFields() {
-        return new Object[] { this.getType(), this.getOwner(), this.getKey() };
+        return new Object[] { this.getType(), this.getKey() };
     }
 
     /**
@@ -141,13 +125,13 @@ public class ModulePreference extends AbstractPreference {
      */
     @Override
     public PreferenceKey getPrefKey() {
-        return new PreferenceKey(this.getType(), this.getOwner(), this.getKey());
+        return new PreferenceKey(this.getType(), this.getKey());
     }
 
     /**
      * {@inheritDoc}
      * 
-     * Uses key, owner and type for hashCode calculation.
+     * Uses key and type for hashCode calculation.
      * 
      * @see java.lang.Object#hashCode()
      */
@@ -156,7 +140,6 @@ public class ModulePreference extends AbstractPreference {
         final int prime = 31;
         int result = super.hashCode();
         result = prime * result + ((key == null) ? 0 : key.hashCode());
-        result = prime * result + ((owner == null) ? 0 : owner.hashCode());
         result = prime * result + ((type == null) ? 0 : type.hashCode());
         return result;
     }
@@ -164,8 +147,7 @@ public class ModulePreference extends AbstractPreference {
     /**
      * {@inheritDoc}
      * 
-     * Comparison done with key, owner and type fields. Not delegated to super
-     * class.
+     * Comparison done with key and type fields. Not delegated to super class.
      * 
      * @see java.lang.Object#equals(java.lang.Object)
      */
@@ -177,19 +159,12 @@ public class ModulePreference extends AbstractPreference {
         if (getClass() != obj.getClass()) {
             return false;
         }
-        ModulePreference other = (ModulePreference) obj;
+        ApplicationPreference other = (ApplicationPreference) obj;
         if (key == null) {
             if (other.key != null) {
                 return false;
             }
         } else if (!key.equals(other.key)) {
-            return false;
-        }
-        if (owner == null) {
-            if (other.owner != null) {
-                return false;
-            }
-        } else if (!owner.equals(other.owner)) {
             return false;
         }
         if (type != other.type) {

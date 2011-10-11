@@ -22,9 +22,9 @@ package org.openwms.core.service.spring;
 
 import java.util.List;
 
+import org.openwms.core.domain.preferences.ApplicationPreference;
+import org.openwms.core.domain.preferences.ModulePreference;
 import org.openwms.core.domain.system.AbstractPreference;
-import org.openwms.core.domain.system.ApplicationPreference;
-import org.openwms.core.domain.system.ModulePreference;
 import org.openwms.core.domain.system.PreferenceKey;
 import org.openwms.core.domain.values.Unit;
 import org.openwms.core.integration.PreferenceDao;
@@ -53,7 +53,7 @@ import org.springframework.transaction.annotation.Transactional;
 public class ConfigurationServiceImpl extends EntityServiceImpl<AbstractPreference, Long> implements
         ConfigurationService, ApplicationListener<MergePropertiesEvent> {
 
-    private final Logger logger = LoggerFactory.getLogger(ConfigurationServiceImpl.class);
+    private final static Logger logger = LoggerFactory.getLogger(ConfigurationServiceImpl.class);
 
     /**
      * Generic Repository DAO.
