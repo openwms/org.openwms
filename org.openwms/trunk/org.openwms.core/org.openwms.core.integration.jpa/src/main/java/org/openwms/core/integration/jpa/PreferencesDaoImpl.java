@@ -26,9 +26,9 @@ import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
+import org.openwms.core.domain.preferences.ApplicationPreference;
+import org.openwms.core.domain.preferences.ModulePreference;
 import org.openwms.core.domain.system.AbstractPreference;
-import org.openwms.core.domain.system.ApplicationPreference;
-import org.openwms.core.domain.system.ModulePreference;
 import org.openwms.core.domain.system.usermanagement.UserPreference;
 import org.openwms.core.integration.PreferenceWriter;
 import org.openwms.core.util.exception.WrongClassTypeException;

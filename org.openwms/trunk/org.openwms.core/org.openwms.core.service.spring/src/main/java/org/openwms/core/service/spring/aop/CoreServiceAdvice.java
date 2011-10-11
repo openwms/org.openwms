@@ -18,21 +18,37 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
-package org.openwms.core.annotation;
+package org.openwms.core.service.spring.aop;
 
-import java.lang.annotation.Documented;
-import java.lang.annotation.Retention;
-import java.lang.annotation.RetentionPolicy;
+import org.openwms.core.service.exception.ServiceRuntimeException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Component;
 
 /**
- * A Enum.
+ * A CoreServiceAdvice.
  * 
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
- * @version $Revision$
+ * @version $Revision: $
  * @since 0.1
  */
-@Retention(RetentionPolicy.RUNTIME)
-@Documented
-public @interface Enum {
+@Component("coreServiceAdvice")
+public class CoreServiceAdvice {
 
+    private final static Logger logger = LoggerFactory.getLogger(CoreServiceAdvice.class);
+
+    /**
+     * FIXME [scherrer] Comment this
+     * 
+     * @param ex
+     */
+    public void afterThrowing(Throwable ex) {
+        if (logger.isWarnEnabled()) {
+            logger.warn("Service Layer Exception: " + ex);
+        }
+        if (ServiceRuntimeException.class.equals(ex)) {
+            return;
+        }
+        throw new ServiceRuntimeException(ex);
+    }
 }

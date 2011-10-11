@@ -176,8 +176,11 @@ public class ModuleServiceTest extends AbstractJpaSpringContextTests {
         try {
             srv.save(new Module("WMS", "org.openwms.wms.swf"));
             fail("Should throw an exception when trying to store an existing one");
-        } catch (DataAccessException dae) {
-            logger.debug("OK: Exception thrown when calling save with null" + dae);
+        } catch (ServiceRuntimeException sre) {
+            if (!(sre.getCause() instanceof DataAccessException)) {
+                fail("Should throw a nested DataAccessException when trying to store an existing one");
+            }
+            logger.debug("OK: Exception thrown when calling save with null" + sre.getCause().getMessage());
         }
     }
 

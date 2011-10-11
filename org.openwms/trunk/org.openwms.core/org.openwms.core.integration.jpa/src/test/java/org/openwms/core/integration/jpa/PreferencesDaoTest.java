@@ -29,8 +29,8 @@ import javax.persistence.PersistenceContext;
 
 import org.junit.Before;
 import org.junit.Test;
+import org.openwms.core.domain.preferences.ApplicationPreference;
 import org.openwms.core.domain.system.AbstractPreference;
-import org.openwms.core.domain.system.ApplicationPreference;
 import org.openwms.core.integration.PreferenceWriter;
 import org.openwms.core.test.AbstractJpaSpringContextTests;
 import org.springframework.beans.factory.annotation.Autowired;

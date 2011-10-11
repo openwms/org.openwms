@@ -68,8 +68,11 @@ public class UserServiceTest extends AbstractJpaSpringContextTests {
         try {
             srv.uploadImageFile("UNKNOWN", new byte[222]);
             fail("Should throw an exception when calling with unknown user");
-        } catch (UserNotFoundException unfe) {
-            logger.debug("OK: User unknown" + unfe.getMessage());
+        } catch (ServiceRuntimeException sre) {
+            if (!(sre.getCause() instanceof UserNotFoundException)) {
+                fail("Should throw a nested UserNotFoundException when calling with unknown user");
+            }
+            logger.debug("OK: User unknown" + sre.getCause().getMessage());
         }
         srv.uploadImageFile("KNOWN", new byte[222]);
         User user = findUser("KNOWN");
@@ -167,8 +170,11 @@ public class UserServiceTest extends AbstractJpaSpringContextTests {
         try {
             srv.changeUserPassword(new UserPassword(new User("UNKNOWN"), "password"));
             fail("Should throw an exception when calling with null");
-        } catch (UserNotFoundException unfe) {
-            logger.debug("OK: null:" + unfe.getMessage());
+        } catch (ServiceRuntimeException sre) {
+            if (!(sre.getCause() instanceof UserNotFoundException)) {
+                fail("Should throw a nested UserNotFoundException when calling with null");
+            }
+            logger.debug("OK: null:" + sre.getCause().getMessage());
         }
     }
 
