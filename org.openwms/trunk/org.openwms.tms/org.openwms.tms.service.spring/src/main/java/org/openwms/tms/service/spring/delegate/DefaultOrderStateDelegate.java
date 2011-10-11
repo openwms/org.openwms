@@ -28,9 +28,9 @@ import java.util.Map;
 
 import org.openwms.common.domain.TransportUnit;
 import org.openwms.core.exception.StateChangeException;
+import org.openwms.tms.domain.comparator.TransportStartComparator;
 import org.openwms.tms.domain.order.TransportOrder;
 import org.openwms.tms.domain.values.TransportOrderState;
-import org.openwms.tms.domain.values.TransportStartComparator;
 import org.openwms.tms.integration.TransportOrderDao;
 import org.openwms.tms.service.delegate.TransportOrderStarter;
 import org.openwms.tms.service.delegate.TransportOrderStateDelegate;
