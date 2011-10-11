@@ -34,7 +34,6 @@
 
     <mx:Script>
     	<![CDATA[
-    		import org.openwms.core.domain.system.ApplicationPreference;
             import flash.events.KeyboardEvent;
     		import mx.binding.utils.BindingUtils;
             import mx.managers.PopUpManager;
@@ -43,6 +42,7 @@
 
             import org.openwms.web.flex.client.util.I18nUtil;
 		    import org.openwms.web.flex.client.model.PreferencesModel;
+            import org.openwms.core.domain.preferences.ApplicationPreference;
             
 	        [Inject]
 	        [Bindable]

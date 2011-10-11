@@ -18,12 +18,13 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
-package org.openwms.tms.domain.values;
+package org.openwms.tms.domain.comparator;
 
 import java.io.Serializable;
 import java.util.Comparator;
 
 import org.openwms.tms.domain.order.TransportOrder;
+import org.openwms.tms.domain.values.PriorityLevel;
 
 /**
  * A TransportStartComparator. I used to sort TransportOrders is a particular
