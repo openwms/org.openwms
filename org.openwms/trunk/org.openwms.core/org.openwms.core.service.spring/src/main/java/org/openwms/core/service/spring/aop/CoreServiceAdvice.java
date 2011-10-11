@@ -26,11 +26,15 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
 /**
- * A CoreServiceAdvice.
+ * A CoreServiceAdvice triggered when an exception is thrown in the Core service
+ * layer bundle. So far it is only used for exception translation into a
+ * {@link ServiceRuntimeException}. Activation is done in XML instead of using
+ * Springs AOP annotations.
  * 
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  * @version $Revision: $
  * @since 0.1
+ * @see org.openwms.core.service.exception.ServiceRuntimeException
  */
 @Component("coreServiceAdvice")
 public class CoreServiceAdvice {
@@ -38,9 +42,15 @@ public class CoreServiceAdvice {
     private final static Logger logger = LoggerFactory.getLogger(CoreServiceAdvice.class);
 
     /**
-     * FIXME [scherrer] Comment this
+     * Called after an exception is thrown by classes of the Core service layer.
+     * If the exception is not of type {@link ServiceRuntimeException} it is
+     * wrapped by a new {@link ServiceRuntimeException}. Turn tracing to level
+     * <p>
+     * WARN to log the root cause.
+     * </p>
      * 
      * @param ex
+     *            The root exception that is thrown
      */
     public void afterThrowing(Throwable ex) {
         if (logger.isWarnEnabled()) {
