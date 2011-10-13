@@ -56,13 +56,12 @@ import org.openwms.core.domain.DomainObject;
 public abstract class AbstractPreference extends AbstractEntity implements DomainObject<Long> {
 
     private static final long serialVersionUID = 4396571221433949201L;
-
     /**
      * Query to find all <code>AbstractPreference</code>s.
      */
     public static final String NQ_FIND_ALL = "AbstractPreference" + FIND_ALL;
     /**
-     * Unique technical key.
+     * /** Unique technical key.
      */
     @XmlTransient
     @Id

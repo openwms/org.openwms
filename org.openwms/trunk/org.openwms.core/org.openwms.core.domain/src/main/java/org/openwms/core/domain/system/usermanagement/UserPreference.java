@@ -24,6 +24,8 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 import javax.xml.bind.annotation.XmlAttribute;
@@ -45,9 +47,14 @@ import org.openwms.core.domain.system.PropertyScope;
 @XmlType(name = "userPreference", namespace = "http://www.openwms.org/schema/usermanagement")
 @Entity
 @Table(name = "COR_USER_PREFERENCE", uniqueConstraints = @UniqueConstraint(columnNames = { "C_TYPE", "C_OWNER", "C_KEY" }))
+@NamedQueries({ @NamedQuery(name = UserPreference.NQ_FIND_ALL, query = "select up from UserPreference up") })
 public class UserPreference extends AbstractPreference {
 
     private static final long serialVersionUID = -6569559231034802554L;
+    /**
+     * Query to find all <code>UserPreference</code>s.
+     */
+    public static final String NQ_FIND_ALL = "UserPreference" + FIND_ALL;
 
     /**
      * Type of this preference. Default is {@value} .

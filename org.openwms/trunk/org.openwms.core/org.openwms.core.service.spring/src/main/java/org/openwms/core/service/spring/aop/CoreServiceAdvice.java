@@ -20,16 +20,21 @@
  */
 package org.openwms.core.service.spring.aop;
 
+import org.apache.commons.lang.time.StopWatch;
+import org.aspectj.lang.ProceedingJoinPoint;
 import org.openwms.core.service.exception.ServiceRuntimeException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
 /**
- * A CoreServiceAdvice triggered when an exception is thrown in the Core service
- * layer bundle. So far it is only used for exception translation into a
- * {@link ServiceRuntimeException}. Activation is done in XML instead of using
- * Springs AOP annotations.
+ * A CoreServiceAdvice is used as AOP aspect for Core services. So far it is
+ * used for exception translation into a {@link ServiceRuntimeException} and
+ * time consumption tracing. Activation is done in XML instead of using Springs
+ * AOP annotations.
+ * <p>
+ * The advice can be referenced by name <code>coreServiceAdvice</code>
+ * </p>
  * 
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  * @version $Revision: $
@@ -40,6 +45,34 @@ import org.springframework.stereotype.Component;
 public class CoreServiceAdvice {
 
     private final static Logger logger = LoggerFactory.getLogger(CoreServiceAdvice.class);
+
+    /**
+     * Called around any service invocation to log time consumption of the
+     * method call.
+     * 
+     * @param pjp
+     *            the ProceedingJoinPoint object
+     * @return the return value of the service method invocation
+     * @throws Throwable
+     *             any exception thrown by the method invocation
+     */
+    public Object around(ProceedingJoinPoint pjp) throws Throwable {
+        StopWatch sw = null;
+        if (logger.isDebugEnabled()) {
+            sw = new StopWatch();
+            sw.start();
+            logger.debug(">> Calling " + pjp.toShortString());
+        }
+        try {
+            return pjp.proceed();
+        }
+        finally {
+            if (logger.isDebugEnabled() && sw != null) {
+                sw.stop();
+                logger.debug("<< took about [ms] " + sw.getTime());
+            }
+        }
+    }
 
     /**
      * Called after an exception is thrown by classes of the Core service layer.
