@@ -13,25 +13,25 @@ package org.openwms.tms.domain.values {
     [RemoteClass(alias="org.openwms.tms.domain.values.PriorityLevel")]
     public class PriorityLevel extends Enum {
 
-        public static const LOWEST : PriorityLevel = new PriorityLevel("LOWEST", _);
-        public static const LOW : PriorityLevel = new PriorityLevel("LOW", _);
-        public static const NORMAL : PriorityLevel = new PriorityLevel("NORMAL", _);
-        public static const HIGH : PriorityLevel = new PriorityLevel("HIGH", _);
-        public static const HIGHEST : PriorityLevel = new PriorityLevel("HIGHEST", _);
+        public static const LOWEST:PriorityLevel = new PriorityLevel("LOWEST", _);
+        public static const LOW:PriorityLevel = new PriorityLevel("LOW", _);
+        public static const NORMAL:PriorityLevel = new PriorityLevel("NORMAL", _);
+        public static const HIGH:PriorityLevel = new PriorityLevel("HIGH", _);
+        public static const HIGHEST:PriorityLevel = new PriorityLevel("HIGHEST", _);
 
-        function PriorityLevel(value : String=null, restrictor : *=null) {
+        function PriorityLevel(value:String = null, restrictor:* = null) {
             super((value || LOWEST.name), restrictor);
         }
 
-        override protected function getConstants() : Array {
+        override protected function getConstants():Array {
             return constants;
         }
 
-        public static function get constants() : Array {
+        public static function get constants():Array {
             return [LOWEST, LOW, NORMAL, HIGH, HIGHEST];
         }
 
-        public static function valueOf(name : String) : PriorityLevel {
+        public static function valueOf(name:String):PriorityLevel {
             return PriorityLevel(LOWEST.constantOf(name));
         }
     }

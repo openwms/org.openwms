@@ -29,8 +29,12 @@
 
     <aop:config>
         <aop:pointcut id="checkEventAnnotationPC" expression="execution(@org.openwms.core.annotation.FireAfterTransaction * *.*(..)) and target(publisher) and @annotation(events)"/>
-        <aop:pointcut id="publicServiceMethodsPC" expression="execution(public * *(..)) and @within(org.springframework.stereotype.Service)" />
+        <aop:pointcut id="publicServiceMethodsPC" expression="execution(public * org.openwms.core.service.spring.*.*(..))" />
         
+        <aop:aspect ref="coreServiceAdvice" order="3">
+            <aop:around method="around"
+                pointcut-ref="publicServiceMethodsPC" />
+        </aop:aspect>
         <aop:aspect ref="coreServiceAdvice" order="4">
             <aop:after-throwing method="afterThrowing"
                 pointcut-ref="publicServiceMethodsPC" throwing="ex" />
