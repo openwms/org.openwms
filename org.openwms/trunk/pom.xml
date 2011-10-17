@@ -156,12 +156,6 @@
             </roles>
         </developer>
     </developers>
-    <contributors>
-        <contributor>
-            <name>Arul Narayanan</name>
-            <timezone>+5</timezone>
-        </contributor>
-    </contributors>
 
     <mailingLists>
         <mailingList>
