@@ -35,7 +35,6 @@ import org.openwms.core.integration.GenericDao;
 import org.openwms.core.integration.exception.TooManyEntitiesFoundException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 
 /**
@@ -64,7 +63,6 @@ import org.springframework.transaction.annotation.Transactional;
 public abstract class AbstractGenericJpaDao<T extends AbstractEntity, ID extends Serializable> implements
         GenericDao<T, ID> {
 
-    @Autowired
     @PersistenceContext
     private EntityManager em;
     private Class<T> persistentClass;

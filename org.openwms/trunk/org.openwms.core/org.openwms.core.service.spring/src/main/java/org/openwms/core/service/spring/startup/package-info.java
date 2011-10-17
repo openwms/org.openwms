@@ -18,30 +18,7 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
-package org.openwms.core.util.event;
-
-
 /**
- * An UserChangedEvent is fired to notify listeners about changes on an
- * <code>User</code> configuration. A listener could probably evict a cache of
- * users.
- * 
- * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
- * @version $Revision$
- * @since 0.1
+ * This package contains framework classes regarding the application lifecycle.
  */
-public class UserChangedEvent extends RootApplicationEvent {
-
-    private static final long serialVersionUID = 9137035549610051152L;
-
-    /**
-     * Create a new UserChangedEvent.
-     * 
-     * @param source
-     *            The <code>User</code> that has changed or <code>null</code>
-     */
-    public UserChangedEvent(Object source) {
-        super(source);
-    }
-
-}
+package org.openwms.core.service.spring.startup;

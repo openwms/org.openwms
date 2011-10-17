@@ -75,7 +75,8 @@ public class Role extends SecurityObject {
     public static final String NQ_FIND_BY_UNIQUE_QUERY = "Role.findByRolename";
 
     /**
-     * Whether or not this <code>Role</code> is immutable. Default {@value} .
+     * Whether or not this <code>Role</code> is immutable. Immutable
+     * <code>Role</code>s can't be modified. Default {@value} .
      */
     @Column(name = "IMMUTABLE")
     private Boolean immutable = false;
@@ -107,26 +108,61 @@ public class Role extends SecurityObject {
      * Accessed by the persistence provider.
      */
     @SuppressWarnings("unused")
-    private Role() {}
+    private Role() {
+        super();
+    }
 
+    /**
+     * A builder class to construct <code>Role</code> instances.
+     * 
+     * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
+     * @version $Revision$
+     * @since 0.1
+     */
     public static class Builder {
 
         private Role role;
 
+        /**
+         * Create a new Builder.
+         * 
+         * @param name
+         *            The name of the <code>Role</code>
+         */
         public Builder(String name) {
             this.role = new Role(name);
         }
 
+        /**
+         * Add a description text to the <code>Role</code>.
+         * 
+         * @param description
+         *            as String
+         * @return the builder instance
+         */
         public Builder withDescription(String description) {
             this.role.setDescription(description);
             return this;
         }
 
+        /**
+         * Set the <code>Role</code> to be immutable.
+         * 
+         * @param immutable
+         *            <code>true</code> if immutable, otherwise
+         *            <code>false</code>
+         * @return the builder instance
+         */
         public Builder setImmutable(Boolean immutable) {
             this.role.immutable = immutable;
             return this;
         }
 
+        /**
+         * Finally build and return the <code>Role</code> instance.
+         * 
+         * @return the constructed <code>Role</code>
+         */
         public Role build() {
             return this.role;
         }
@@ -285,5 +321,43 @@ public class Role extends SecurityObject {
     public void setGrants(Set<SecurityObject> grants) {
         AssertUtils.notNull(grants, "Set of Grants must not be null");
         this.grants = grants;
+    }
+
+    /**
+     * {@inheritDoc}
+     * 
+     * @see java.lang.Object#hashCode()
+     */
+    @Override
+    public int hashCode() {
+        final int prime = 31;
+        int result = 1;
+        result = super.hashCode();
+        result = prime * result + "ROLE".hashCode();
+        return result;
+    }
+
+    /**
+     * {@inheritDoc}
+     * 
+     * @see java.lang.Object#equals(java.lang.Object)
+     */
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (!(obj instanceof Role)) {
+            return false;
+        }
+        Role other = (Role) obj;
+        if (this.getName() == null) {
+            if (other.getName() != null) {
+                return false;
+            }
+        } else if (!this.getName().equals(other.getName())) {
+            return false;
+        }
+        return true;
     }
 }

@@ -35,7 +35,7 @@ import java.util.Arrays;
 public class PreferenceKey implements Serializable {
 
     private static final long serialVersionUID = -3139108412851851406L;
-    private Serializable fields[];
+    private Serializable[] fields;
 
     /**
      * Create a new PreferenceKey with a variable array of fields.
@@ -64,8 +64,8 @@ public class PreferenceKey implements Serializable {
     /**
      * Use all fields for comparison.
      * 
-     * @param The
-     *            other object to compare to
+     * @param obj
+     *            The other object to compare to
      * @return See java.lang.Object#equals(java.lang.Object)
      * @see java.lang.Object#equals(java.lang.Object)
      */

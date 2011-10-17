@@ -56,7 +56,7 @@ import org.springframework.transaction.annotation.Transactional;
 @Service("userDetailsService")
 public class SecurityContextUserServiceImpl implements UserDetailsService, ApplicationListener<UserChangedEvent> {
 
-    private final Logger logger = LoggerFactory.getLogger(SecurityContextUserServiceImpl.class);
+    private static final Logger logger = LoggerFactory.getLogger(SecurityContextUserServiceImpl.class);
     @Value("#{ globals['system.user'] }")
     private String systemUser = "openwms";
 

@@ -29,22 +29,33 @@ import org.springframework.context.ApplicationEvent;
 import org.springframework.stereotype.Component;
 
 /**
- * An applicationContextAware UserChangedEventAspect.
+ * An UserChangedEventAspect fires events after the method invocation completes.
+ * It's main purpose is to fire events after a transaction succeeds, therby the
+ * advice must be enabled around Spring's Transaction advice.
+ * <p>
+ * Use the {@link FireAfterTransaction} event and declare some type of events
+ * inside the <code>value</code> attribute. Instances of these events will then
+ * be fired after the transaction completes
+ * </p>
+ * Example: <blockquote>
+ * 
+ * <pre>
+ * &#064;FireAfterTransaction(events = { UserChangedEvent.class })
+ * public User save(User user) { .. }
+ * </pre>
+ * 
+ * </blockquote>
  * 
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  * @version $Revision$
  * @since 0.1
+ * @see org.openwms.core.annotation.FireAfterTransaction
  */
 @Component("userChangedEventAspect")
 public class UserChangedEventAspect {
 
     @Autowired
     private ApplicationContext ctx;
-
-    /**
-     * Create a new UserChangedEventAspect.
-     */
-    public UserChangedEventAspect() {}
 
     /**
      * Only {@link ApplicationEvent}s are created and published over Springs

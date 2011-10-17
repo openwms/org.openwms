@@ -38,8 +38,8 @@ import org.openwms.core.domain.system.usermanagement.RolePreference;
 import org.openwms.core.domain.system.usermanagement.UserPreference;
 
 /**
- * An instance of Preferences represents the root element of a XML preferences
- * file.
+ * An instance of <code>Preferences</code> represents the root element of a
+ * preferences XML file.
  * 
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  * @version $Revision: 1475 $
@@ -55,7 +55,7 @@ public class Preferences implements Serializable {
     @XmlElements({ @XmlElement(name = "module", type = ModulePreference.class),
             @XmlElement(name = "application", type = ApplicationPreference.class),
             @XmlElement(name = "user", type = UserPreference.class) })
-    protected List<AbstractPreference> applicationOrUserOrModule;
+    private List<AbstractPreference> applicationOrUserOrModule;
     @XmlTransient
     private List<ApplicationPreference> applications;
     @XmlTransient
@@ -165,6 +165,10 @@ public class Preferences implements Serializable {
      * Return a list of preferences filtered by a specific type, defined by the
      * parameter clazz.
      * 
+     * @param <T>
+     *            Expected types <code>ApplicationPreference</code>,
+     *            <code>ModulePreference</code>, <code>RolePreference</code>
+     *            <code>UserPreference</code>
      * @param clazz
      *            The class type of the preference to filter for
      * @return a list of {@link AbstractPreference}s but only of type clazz.
@@ -179,6 +183,9 @@ public class Preferences implements Serializable {
         }
         if (UserPreference.class.equals(clazz)) {
             return (List<T>) getUsers();
+        }
+        if (RolePreference.class.equals(clazz)) {
+            return (List<T>) getRoles();
         }
         return Collections.<T> emptyList();
     }

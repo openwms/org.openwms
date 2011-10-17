@@ -43,58 +43,60 @@ public class I18nSet implements Serializable {
      */
     public static final int LENGTH = 1024;
     @Column(name = "EN_US", length = LENGTH)
-    private String en_US;
+    private String enUs;
     @Column(name = "DE_DE", length = LENGTH)
-    private String de_DE;
+    private String deDe;
     @Column(name = "FR_FR", length = LENGTH)
-    private String fr_FR;
+    private String frFr;
 
     /**
      * Create a new I18nSet.
      */
-    protected I18nSet() {}
+    protected I18nSet() {
+        super();
+    }
 
     /**
      * Create a new I18nSet.
      * 
-     * @param en_US
+     * @param enUs
      *            US English language
-     * @param de_DE
+     * @param deDe
      *            German Germany language
-     * @param fr_FR
+     * @param frFr
      *            French language
      */
-    public I18nSet(String en_US, String de_DE, String fr_FR) {
+    public I18nSet(String enUs, String deDe, String frFr) {
         super();
-        this.en_US = en_US;
-        this.de_DE = de_DE;
-        this.fr_FR = fr_FR;
+        this.enUs = enUs;
+        this.deDe = deDe;
+        this.frFr = frFr;
     }
 
     /**
-     * Get the de_DE.
+     * Get the German translation.
      * 
-     * @return the de_DE.
+     * @return the deDe property
      */
-    public String getDe_DE() {
-        return de_DE;
+    public String getDeDe() {
+        return deDe;
     }
 
     /**
-     * Get the en_US.
+     * Get the American English translation.
      * 
-     * @return the en_US.
+     * @return the enUs property
      */
-    public String getEn_US() {
-        return en_US;
+    public String getEnUs() {
+        return enUs;
     }
 
     /**
-     * Get the fr_FR.
+     * Get the French translation.
      * 
-     * @return the fr_FR.
+     * @return the frFr property
      */
-    public String getFr_FR() {
-        return fr_FR;
+    public String getFrFr() {
+        return frFr;
     }
 }

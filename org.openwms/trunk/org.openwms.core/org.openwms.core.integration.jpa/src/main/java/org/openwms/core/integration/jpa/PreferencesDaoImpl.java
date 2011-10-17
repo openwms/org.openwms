@@ -29,6 +29,7 @@ import javax.persistence.PersistenceContext;
 import org.openwms.core.domain.preferences.ApplicationPreference;
 import org.openwms.core.domain.preferences.ModulePreference;
 import org.openwms.core.domain.system.AbstractPreference;
+import org.openwms.core.domain.system.usermanagement.RolePreference;
 import org.openwms.core.domain.system.usermanagement.UserPreference;
 import org.openwms.core.integration.PreferenceWriter;
 import org.openwms.core.util.exception.WrongClassTypeException;
@@ -70,6 +71,9 @@ public class PreferencesDaoImpl implements PreferenceWriter<Long> {
         }
         if (ModulePreference.class.equals(clazz)) {
             return (List<T>) em.createNamedQuery(ModulePreference.NQ_FIND_ALL);
+        }
+        if (RolePreference.class.equals(clazz)) {
+            return (List<T>) em.createNamedQuery(RolePreference.NQ_FIND_ALL);
         }
         if (UserPreference.class.equals(clazz)) {
             return (List<T>) em.createNamedQuery(UserPreference.NQ_FIND_ALL);

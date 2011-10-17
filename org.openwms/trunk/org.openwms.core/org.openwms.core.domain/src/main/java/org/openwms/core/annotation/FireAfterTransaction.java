@@ -43,5 +43,7 @@ public @interface FireAfterTransaction {
     /**
      * An array of events that shall be fired after the methods completes.
      */
-    Class<? extends EventObject>[] events() default {};
+    Class<? extends EventObject>[] events() default {
+
+    };
 }

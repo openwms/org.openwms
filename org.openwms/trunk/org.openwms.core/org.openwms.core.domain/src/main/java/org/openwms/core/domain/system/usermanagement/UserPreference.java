@@ -35,6 +35,7 @@ import javax.xml.bind.annotation.XmlType;
 import org.openwms.core.domain.system.AbstractPreference;
 import org.openwms.core.domain.system.PreferenceKey;
 import org.openwms.core.domain.system.PropertyScope;
+import org.openwms.core.util.validation.AssertUtils;
 
 /**
  * An UserPreference. Used to store settings in User scope, only visible for the
@@ -96,6 +97,8 @@ public class UserPreference extends AbstractPreference {
     public UserPreference(String owner, String key) {
         // Called from the client.
         super();
+        AssertUtils.isNotEmpty(owner, "Not allowed to create an UserPreference with an empty owner");
+        AssertUtils.isNotEmpty(key, "Not allowed to create an UserPreference with an empty key");
         this.owner = owner;
         this.key = key;
     }
@@ -175,6 +178,9 @@ public class UserPreference extends AbstractPreference {
      */
     @Override
     public boolean equals(Object obj) {
+        if (null == obj) {
+            return false;
+        }
         if (this == obj) {
             return true;
         }

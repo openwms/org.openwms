@@ -44,7 +44,7 @@ import org.springframework.stereotype.Component;
 @Component("coreServiceAdvice")
 public class CoreServiceAdvice {
 
-    private final static Logger logger = LoggerFactory.getLogger(CoreServiceAdvice.class);
+    private static final Logger logger = LoggerFactory.getLogger(CoreServiceAdvice.class);
 
     /**
      * Called around any service invocation to log time consumption of the

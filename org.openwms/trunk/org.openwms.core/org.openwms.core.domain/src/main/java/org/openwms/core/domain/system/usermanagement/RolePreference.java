@@ -174,6 +174,9 @@ public class RolePreference extends AbstractPreference {
      */
     @Override
     public boolean equals(Object obj) {
+        if (null == obj) {
+            return false;
+        }
         if (this == obj) {
             return true;
         }

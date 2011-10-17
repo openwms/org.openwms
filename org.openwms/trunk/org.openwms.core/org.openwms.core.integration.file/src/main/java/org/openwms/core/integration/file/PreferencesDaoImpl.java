@@ -28,6 +28,7 @@ import java.util.Map;
 import javax.annotation.PostConstruct;
 import javax.xml.transform.stream.StreamSource;
 
+import org.apache.commons.lang.StringUtils;
 import org.openwms.core.Constants;
 import org.openwms.core.domain.preferences.Preferences;
 import org.openwms.core.domain.system.AbstractPreference;
@@ -62,10 +63,10 @@ public class PreferencesDaoImpl implements PreferenceDao<PreferenceKey>, Applica
     private Unmarshaller unmarshaller;
     @Autowired
     private ApplicationContext ctx;
-    private Resource fileResource;
     @Autowired
     @Value(Constants.APPLICATION_INITIAL_PROPERTIES)
     private String fileName;
+    private Resource fileResource;
     private Preferences preferences;
     private Map<PreferenceKey, AbstractPreference> prefs = new HashMap<PreferenceKey, AbstractPreference>();
 
@@ -76,16 +77,6 @@ public class PreferencesDaoImpl implements PreferenceDao<PreferenceKey>, Applica
      *            The name of the properties file
      */
     private PreferencesDaoImpl() {}
-
-    /**
-     * Set the fileName.
-     * 
-     * @param fileName
-     *            The fileName to set.
-     */
-    public void setFileName(String fileName) {
-        this.fileName = fileName;
-    }
 
     /**
      * @see org.openwms.core.integration.PreferenceDao#findByKey(PreferenceKey)
@@ -119,23 +110,9 @@ public class PreferencesDaoImpl implements PreferenceDao<PreferenceKey>, Applica
         reloadResources();
     }
 
-    private void reloadResources() {
-        preferences = null;
-        prefs.clear();
-        loadResources();
-    }
-
-    private void initResource() {
-        fileResource = ctx.getResource(fileName);
-        if (!fileResource.exists()) {
-            fileResource = ctx.getResource(INITIAL_PREFERENCES_FILE);
-            if (!fileResource.exists()) {
-                throw new ResourceNotFoundException("Resources with name " + fileName + ":" + INITIAL_PREFERENCES_FILE
-                        + " could not be resolved");
-            }
-        }
-    }
-
+    /**
+     * On bean initialization load all preferences into a Map.
+     */
     @PostConstruct
     public void loadResources() {
         if (preferences == null) {
@@ -153,6 +130,25 @@ public class PreferencesDaoImpl implements PreferenceDao<PreferenceKey>, Applica
                 throw new DataException("Exception while unmarshalling from " + fileName, xme);
             } catch (IOException ioe) {
                 throw new ResourceNotFoundException("Exception while accessing the resource with name " + fileName, ioe);
+            }
+        }
+    }
+
+    private void reloadResources() {
+        preferences = null;
+        prefs.clear();
+        loadResources();
+    }
+
+    private void initResource() {
+        if (StringUtils.isNotEmpty(fileName)) {
+            fileResource = ctx.getResource(fileName);
+        }
+        if (fileResource == null || !fileResource.exists()) {
+            fileResource = ctx.getResource(INITIAL_PREFERENCES_FILE);
+            if (!fileResource.exists()) {
+                throw new ResourceNotFoundException("Resources with name " + fileName + ":" + INITIAL_PREFERENCES_FILE
+                        + " could not be resolved");
             }
         }
     }

@@ -124,7 +124,9 @@ public abstract class AbstractPreference extends AbstractEntity implements Domai
     /**
      * Accessed by persistence provider.
      */
-    protected AbstractPreference() {}
+    protected AbstractPreference() {
+        super();
+    }
 
     /* ----------------------------- inherited ------------------- */
     /**
@@ -267,6 +269,78 @@ public abstract class AbstractPreference extends AbstractEntity implements Domai
         ToStringBuilder.setDefaultStyle(ToStringStyle.SIMPLE_STYLE);
         return new ToStringBuilder(this).append(getFields()).append(getValue()).append(getDescription())
                 .append(getFloatValue()).append(getMinimum()).append(getMaximum()).toString();
+    }
+
+    /**
+     * {@inheritDoc}
+     * 
+     * @see java.lang.Object#hashCode()
+     */
+    @Override
+    public int hashCode() {
+        final int prime = 31;
+        int result = 1;
+        result = prime * result + ((description == null) ? 0 : description.hashCode());
+        result = prime * result + ((floatValue == null) ? 0 : floatValue.hashCode());
+        result = prime * result + (fromFile ? 1231 : 1237);
+        result = prime * result + maximum;
+        result = prime * result + minimum;
+        result = prime * result + ((value == null) ? 0 : value.hashCode());
+        result = prime * result + (int) (version ^ (version >>> 32));
+        return result;
+    }
+
+    /**
+     * {@inheritDoc}
+     * 
+     * @see java.lang.Object#equals(java.lang.Object)
+     */
+    @Override
+    public boolean equals(Object obj) {
+        if (null == obj) {
+            return false;
+        }
+        if (this == obj) {
+            return true;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        AbstractPreference other = (AbstractPreference) obj;
+        if (description == null) {
+            if (other.description != null) {
+                return false;
+            }
+        } else if (!description.equals(other.description)) {
+            return false;
+        }
+        if (floatValue == null) {
+            if (other.floatValue != null) {
+                return false;
+            }
+        } else if (!floatValue.equals(other.floatValue)) {
+            return false;
+        }
+        if (fromFile != other.fromFile) {
+            return false;
+        }
+        if (maximum != other.maximum) {
+            return false;
+        }
+        if (minimum != other.minimum) {
+            return false;
+        }
+        if (value == null) {
+            if (other.value != null) {
+                return false;
+            }
+        } else if (!value.equals(other.value)) {
+            return false;
+        }
+        if (version != other.version) {
+            return false;
+        }
+        return true;
     }
 
     /**

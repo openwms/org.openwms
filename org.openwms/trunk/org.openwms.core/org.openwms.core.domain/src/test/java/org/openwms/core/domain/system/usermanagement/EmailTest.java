@@ -30,9 +30,13 @@ import org.openwms.core.test.AbstractJpaSpringContextTests;
  * 
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  * @version $Revision$
+ * @since 0.1
  */
 public class EmailTest extends AbstractJpaSpringContextTests {
 
+    /**
+     * Test construction of Email entities.
+     */
     @Test
     public final void testConstruction() {
         try {

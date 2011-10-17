@@ -46,12 +46,14 @@ import org.springframework.transaction.annotation.Transactional;
 @Service("securityService")
 public class SecurityServiceImpl implements SecurityService {
 
-    private final Logger logger = LoggerFactory.getLogger(this.getClass());
+    private static final Logger logger = LoggerFactory.getLogger(SecurityServiceImpl.class);
     @Autowired
     @Qualifier("securityObjectDao")
     private SecurityObjectDao dao;
 
     /**
+     * {@inheritDoc}
+     * 
      * @see org.openwms.core.service.SecurityService#mergeGrants(java.lang.String,
      *      java.util.List)
      */

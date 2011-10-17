@@ -119,7 +119,9 @@ public class UserDetails implements ImageProvider, Serializable {
     /**
      * Create a new <code>UserDetails</code> instance.
      */
-    public UserDetails() {}
+    public UserDetails() {
+        super();
+    }
 
     /**
      * Returns the <code>User</code>s current phone number.

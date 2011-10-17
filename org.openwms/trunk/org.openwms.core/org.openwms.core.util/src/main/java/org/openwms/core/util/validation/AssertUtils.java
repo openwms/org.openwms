@@ -27,7 +27,11 @@ package org.openwms.core.util.validation;
  * @version $Revision$
  * @since 0.1
  */
-public abstract class AssertUtils {
+public final class AssertUtils {
+
+    private AssertUtils() {
+
+    }
 
     /**
      * Asserts that <code>obj</code> is not <code>null</code> .
