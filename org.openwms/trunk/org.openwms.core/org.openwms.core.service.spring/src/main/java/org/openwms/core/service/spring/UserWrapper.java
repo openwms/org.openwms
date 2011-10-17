@@ -59,6 +59,8 @@ public class UserWrapper implements UserDetails, UserHolder {
     }
 
     /**
+     * {@inheritDoc}
+     * 
      * @see org.openwms.core.service.UserHolder#getUser()
      */
     @Override

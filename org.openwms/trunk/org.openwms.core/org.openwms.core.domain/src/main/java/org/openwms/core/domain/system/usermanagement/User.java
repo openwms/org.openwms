@@ -33,6 +33,7 @@ import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
@@ -53,11 +54,19 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * An User represents a human user of the system.
+ * An User represents a human user of the system. Typically some Roles are
+ * assigned to the <code>User</code> to setup security constraints. An
+ * <code>User</code> can also have own configuration settings in form of
+ * <code>UserPreference</code>s and certain user details, encapsulated in an
+ * <code>UserDetails</code> class that can be extended.
  * 
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  * @version $Revision$
  * @since 0.1
+ * @see org.openwms.core.domain.system.usermanagement.UserDetails
+ * @see org.openwms.core.domain.system.usermanagement.UserPreference
+ * @see org.openwms.core.domain.system.usermanagement.UserPassword
+ * @see org.openwms.core.domain.system.usermanagement.Role
  */
 @Entity
 @Table(name = "COR_USER")
@@ -190,21 +199,25 @@ public class User extends AbstractEntity implements DomainObject<Long> {
     /**
      * List of {@link Role}s granted to the <code>User</code>.
      */
-    @ManyToMany(mappedBy = "users")
+    @ManyToMany(mappedBy = "users", fetch = FetchType.EAGER, cascade = { CascadeType.ALL })
     private List<Role> roles = new ArrayList<Role>();
 
     /**
      * Password history of the <code>User</code>.
      */
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "user", cascade = { CascadeType.ALL })
     @JoinTable(name = "COR_USER_PASSWORD_JOIN", joinColumns = @JoinColumn(name = "USER_ID"), inverseJoinColumns = @JoinColumn(name = "PASSWORD_ID"))
+    // @JoinColumn(name = "C_OWNER", referencedColumnName = "C_USERNAME")
     private List<UserPassword> passwords = new ArrayList<UserPassword>();
 
     /**
      * All {@link UserPreference}s of the <code>User</code>.
      */
-    @OneToMany(cascade = CascadeType.ALL)
-    @JoinTable(name = "COR_USER_PREFERENCE_JOIN", joinColumns = @JoinColumn(name = "USER_ID"), inverseJoinColumns = @JoinColumn(name = "ID"))
+    @OneToMany(fetch = FetchType.EAGER, cascade = { CascadeType.ALL })
+    // @JoinTable(name = "COR_USER_PREFERENCE_JOIN", joinColumns =
+    // @JoinColumn(name = "USER_ID"), inverseJoinColumns = @JoinColumn(name =
+    // "ID"))
+    @JoinColumn(name = "C_OWNER", referencedColumnName = "USERNAME")
     private Set<UserPreference> preferences = new HashSet<UserPreference>();
 
     /* ----------------------------- constructors ------------------- */
@@ -581,5 +594,42 @@ public class User extends AbstractEntity implements DomainObject<Long> {
     @Override
     public long getVersion() {
         return this.version;
+    }
+
+    /**
+     * {@inheritDoc}
+     * 
+     * @see java.lang.Object#hashCode()
+     */
+    @Override
+    public int hashCode() {
+        final int prime = 31;
+        int result = 1;
+        result = prime * result + ((username == null) ? 0 : username.hashCode());
+        return result;
+    }
+
+    /**
+     * {@inheritDoc}
+     * 
+     * @see java.lang.Object#equals(java.lang.Object)
+     */
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (!(obj instanceof User)) {
+            return false;
+        }
+        User other = (User) obj;
+        if (username == null) {
+            if (other.username != null) {
+                return false;
+            }
+        } else if (!username.equals(other.username)) {
+            return false;
+        }
+        return true;
     }
 }

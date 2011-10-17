@@ -30,7 +30,8 @@ import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.stereotype.Component;
 
 /**
- * A LocalServiceInitializer.
+ * A LocalServiceInitializer. Fires a {@link MergePropertiesEvent} whenever the
+ * bundle is started or restarted.
  * 
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  * @version $Revision: $
@@ -39,16 +40,17 @@ import org.springframework.stereotype.Component;
 @Component
 public class LocalServiceInitializer implements ApplicationListener<ContextRefreshedEvent> {
 
-    private final Logger logger = LoggerFactory.getLogger(LocalServiceInitializer.class);
+    private static final Logger logger = LoggerFactory.getLogger(LocalServiceInitializer.class);
     @Autowired
     private ApplicationContext ctx;
 
     /**
+     * {@inheritDoc}
+     * 
      * @see org.springframework.context.ApplicationListener#onApplicationEvent(org.springframework.context.ApplicationEvent)
      */
     @Override
     public void onApplicationEvent(ContextRefreshedEvent event) {
-        System.out.println("CORE Service bundle started");
         logger.info("CORE Service bundle started");
         ctx.publishEvent(new MergePropertiesEvent(this));
     }

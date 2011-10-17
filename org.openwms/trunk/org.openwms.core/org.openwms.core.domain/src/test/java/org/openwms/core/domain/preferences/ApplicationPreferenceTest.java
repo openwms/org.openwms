@@ -36,7 +36,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * A ApplicationPreferenceTest.
+ * A ApplicationPreferenceTest. Test unmarshalling a valid XML document of
+ * preferences.
  * 
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  * @version $Revision: $
@@ -44,16 +45,17 @@ import org.slf4j.LoggerFactory;
  */
 public class ApplicationPreferenceTest {
 
-    private Logger logger = LoggerFactory.getLogger(this.getClass());
+    private static final Logger logger = LoggerFactory.getLogger(ApplicationPreferenceTest.class);
 
     /**
      * Just test to validate the given XML file against the schema declaration.
      * If the XML file is not compliant with the schema, the test will fail.
      * 
-     * @throws Exception
+     * @throws Throwable
+     *             any error
      */
     @Test
-    public void testReadPreferences() throws Exception {
+    public void testReadPreferences() throws Throwable {
         SchemaFactory schemaFactory = SchemaFactory.newInstance(XMLConstants.W3C_XML_SCHEMA_NS_URI);
         Schema schema = schemaFactory.newSchema(new File("../../src/schema/preferences.xsd"));
         // Schema schema = schemaFactory.newSchema(new
@@ -65,7 +67,7 @@ public class ApplicationPreferenceTest {
             @Override
             public boolean handleEvent(ValidationEvent event) {
                 RuntimeException ex = new RuntimeException(event.getMessage(), event.getLinkedException());
-                ex.printStackTrace();
+                logger.error(ex.getMessage());
                 throw ex;
             }
         });

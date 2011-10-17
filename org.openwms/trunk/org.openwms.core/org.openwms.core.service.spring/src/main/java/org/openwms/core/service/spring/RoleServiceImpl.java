@@ -49,7 +49,7 @@ import org.springframework.transaction.annotation.Transactional;
 @Service("roleService")
 public class RoleServiceImpl implements RoleService {
 
-    private final static Logger logger = LoggerFactory.getLogger(RoleServiceImpl.class);
+    private static final Logger logger = LoggerFactory.getLogger(RoleServiceImpl.class);
     @Autowired
     private RoleDao dao;
 

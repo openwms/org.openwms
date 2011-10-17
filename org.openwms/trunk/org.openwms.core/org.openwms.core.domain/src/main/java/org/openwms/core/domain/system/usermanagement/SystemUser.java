@@ -44,13 +44,17 @@ public class SystemUser extends User {
     /**
      * Create a new SystemUser.
      */
-    protected SystemUser() {}
+    protected SystemUser() {
+        super();
+    }
 
     /**
      * Create a new SystemUser.
      * 
      * @param username
-     *            User's username
+     *            SystemUser's username
+     * @param password
+     *            SystemUser's password
      */
     public SystemUser(String username, String password) {
         super(username, password);

@@ -40,7 +40,9 @@ public class ObjectFactory {
      * Create a new ObjectFactory that can be used to create new instances of
      * schema derived classes for package: org.openwms.core.domain.system.
      */
-    public ObjectFactory() {}
+    public ObjectFactory() {
+        super();
+    }
 
     /**
      * Create an instance of {@link UserPreference}.
@@ -51,4 +53,12 @@ public class ObjectFactory {
         return new UserPreference();
     }
 
+    /**
+     * Create an instance of {@link RolePreference}.
+     * 
+     * @return an instance of {@link RolePreference}
+     */
+    public RolePreference createRolePreference() {
+        return new RolePreference();
+    }
 }

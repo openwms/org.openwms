@@ -28,10 +28,11 @@ import org.openwms.core.exception.InvalidPasswordException;
 import org.openwms.core.test.AbstractJpaSpringContextTests;
 
 /**
- * A UserTest.
+ * An UserTest.
  * 
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  * @version $Revision$
+ * @since 0.1
  */
 public class UserTest extends AbstractJpaSpringContextTests {
 

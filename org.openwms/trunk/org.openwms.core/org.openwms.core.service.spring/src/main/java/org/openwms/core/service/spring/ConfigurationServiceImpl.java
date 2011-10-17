@@ -31,8 +31,6 @@ import org.openwms.core.integration.PreferenceDao;
 import org.openwms.core.integration.PreferenceWriter;
 import org.openwms.core.service.ConfigurationService;
 import org.openwms.core.util.event.MergePropertiesEvent;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.ApplicationListener;
@@ -53,19 +51,16 @@ import org.springframework.transaction.annotation.Transactional;
 public class ConfigurationServiceImpl extends EntityServiceImpl<AbstractPreference, Long> implements
         ConfigurationService, ApplicationListener<MergePropertiesEvent> {
 
-    private final static Logger logger = LoggerFactory.getLogger(ConfigurationServiceImpl.class);
-
-    /**
-     * Generic Repository DAO.
-     */
     @Autowired
     @Qualifier("preferencesJpaDao")
-    protected PreferenceWriter<Long> dao;
+    private PreferenceWriter<Long> dao;
     @Autowired
     @Qualifier("preferencesFileDao")
     private PreferenceDao<PreferenceKey> fileDao;
 
     /**
+     * {@inheritDoc}
+     * 
      * @see org.springframework.context.ApplicationListener#onApplicationEvent(org.springframework.context.ApplicationEvent)
      */
     @Override

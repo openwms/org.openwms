@@ -24,11 +24,22 @@ import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 
 /**
- * A Grant.
+ * A Grant encapsulates a permission to any kind of application object. Grants
+ * (permissions) to security aware application objects can be permitted or
+ * denied to <code>User</code>s or <code>Role</code>s, in order of the security
+ * configuration. Usually one or more <code>Grant</code>s are assigned to a
+ * <code>Role</code> and <code>User</code>s are assigned to one or more
+ * <code>Role</code>s.
+ * <p>
+ * UI permissions are managed with <code>Grant</code>s as well.
+ * </p>
  * 
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  * @version $Revision$
  * @since 0.1
+ * @see org.openwms.core.domain.system.usermanagement.User
+ * @see org.openwms.core.domain.system.usermanagement.Role
+ * @see org.openwms.core.domain.system.usermanagement.SecurityObject
  */
 @Entity
 @DiscriminatorValue("GRANT")
@@ -37,18 +48,40 @@ public class Grant extends SecurityObject {
     private static final long serialVersionUID = 2061059874657176727L;
 
     /**
-     * @see org.openwms.core.domain.system.usermanagement.SecurityObject#equals(java.lang.Object)
-     */
-    @Override
-    public boolean equals(Object obj) {
-        return super.equals(obj);
-    }
-
-    /**
+     * {@inheritDoc}
+     * 
      * @see org.openwms.core.domain.system.usermanagement.SecurityObject#hashCode()
      */
     @Override
     public int hashCode() {
-        return super.hashCode();
+        final int prime = 31;
+        int result = 1;
+        result = super.hashCode();
+        result = prime * result + "GRANT".hashCode();
+        return result;
+    }
+
+    /**
+     * {@inheritDoc}
+     * 
+     * @see org.openwms.core.domain.system.usermanagement.SecurityObject#equals(java.lang.Object)
+     */
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (!(obj instanceof Grant)) {
+            return false;
+        }
+        Grant other = (Grant) obj;
+        if (this.getName() == null) {
+            if (other.getName() != null) {
+                return false;
+            }
+        } else if (!this.getName().equals(other.getName())) {
+            return false;
+        }
+        return true;
     }
 }

@@ -43,6 +43,7 @@ import org.openwms.core.util.validation.AssertUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -64,10 +65,11 @@ import org.springframework.transaction.annotation.Transactional;
 @Service("userService")
 public class UserServiceImpl implements UserService {
 
-    private final static Logger logger = LoggerFactory.getLogger(UserServiceImpl.class);
+    private static final Logger logger = LoggerFactory.getLogger(UserServiceImpl.class);
     @Autowired
     private UserDao dao;
     @Autowired
+    @Qualifier("securityObjectDao")
     private SecurityObjectDao securityObjectDao;
     @Autowired
     private ConfigurationService confSrv;
@@ -115,6 +117,9 @@ public class UserServiceImpl implements UserService {
     @FireAfterTransaction(events = { UserChangedEvent.class })
     public User save(User user) {
         AssertUtils.notNull(user, "The instance of the User to be saved is NULL");
+        for (Role role : user.getRoles()) {
+            logger.debug("Role of user:" + role.getName());
+        }
         if (user.isNew()) {
             dao.persist(user);
         }
@@ -214,6 +219,8 @@ public class UserServiceImpl implements UserService {
     }
 
     /**
+     * {@inheritDoc}
+     * 
      * @see org.openwms.core.service.UserService#checkCredentials(org.openwms.core.domain.system.usermanagement.UserPassword)
      */
     @Override

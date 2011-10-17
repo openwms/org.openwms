@@ -97,7 +97,9 @@ public class SecurityObject extends AbstractEntity implements DomainObject<Long>
     /**
      * Accessed by persistence provider.
      */
-    protected SecurityObject() {}
+    protected SecurityObject() {
+        super();
+    }
 
     /**
      * Create a new <code>SecurityObject</code> with a name.
@@ -176,30 +178,32 @@ public class SecurityObject extends AbstractEntity implements DomainObject<Long>
     }
 
     /**
-     * Only use the name.
+     * {@inheritDoc}
      * 
      * @see java.lang.Object#hashCode()
      */
     @Override
     public int hashCode() {
         final int prime = 31;
-        int result = super.hashCode();
+        int result = 1;
         result = prime * result + ((name == null) ? 0 : name.hashCode());
         return result;
     }
 
     /**
-     * Compare the name;
+     * {@inheritDoc} Compare the name.
      * 
      * @see java.lang.Object#equals(java.lang.Object)
      */
     @Override
     public boolean equals(Object obj) {
+        if (null == obj) {
+            return false;
+        }
         if (this == obj) {
             return true;
         }
-        if (!(obj instanceof SecurityObject)) {
-            System.out.println("NoTTTTTT" + obj);
+        if (getClass() != obj.getClass()) {
             return false;
         }
         SecurityObject other = (SecurityObject) obj;

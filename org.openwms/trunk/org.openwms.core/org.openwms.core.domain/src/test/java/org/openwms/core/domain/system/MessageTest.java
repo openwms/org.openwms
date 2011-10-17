@@ -32,9 +32,13 @@ import org.openwms.core.test.AbstractJpaSpringContextTests;
  * 
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  * @version $Revision$
+ * @since 0.1
  */
 public class MessageTest extends AbstractJpaSpringContextTests {
 
+    /**
+     * Test construction and initialization of a Message object.
+     */
     @Test
     public final void testConstruction() {
         Message m = new Message(4711, "Test message");

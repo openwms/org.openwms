@@ -22,7 +22,6 @@ package org.openwms.core.domain.preferences;
 
 import javax.xml.bind.annotation.XmlRegistry;
 
-
 /**
  * An ObjectFactory allows you to programatically construct new instances of the
  * Java representation for XML content. The Java representation of XML content
@@ -41,7 +40,9 @@ public class ObjectFactory {
      * Create a new ObjectFactory that can be used to create new instances of
      * schema derived classes for package: org.openwms.core.domain.system.
      */
-    public ObjectFactory() {}
+    public ObjectFactory() {
+
+    }
 
     /**
      * Create an instance of {@link ModulePreference}.

@@ -27,7 +27,11 @@ package org.openwms.core;
  * @version $Revision: $
  * @since 0.1
  */
-public class Constants {
+public final class Constants {
+
+    private Constants() {
+
+    }
 
     /**
      * Path to the initial application properties file. This constant can be
