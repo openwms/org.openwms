@@ -30,11 +30,16 @@
         [ManagedEvent(name="SAVE_USER")]
         [ManagedEvent(name="DELETE_USER")]
         [ManagedEvent(name="LOAD_ALL_USERS")]
+        [ManagedEvent(name="LOAD_ALL_ROLES")]
         [ResourceBundle("appMain")]
     </mx:Metadata>
 
     <mx:Script>
         <![CDATA[
+            import org.openwms.web.flex.client.event.RoleEvent;
+            import org.openwms.core.domain.system.usermanagement.Role;
+            import org.openwms.web.flex.client.view.dialogs.AssignRoleDialog;
+            import org.openwms.web.flex.client.view.dialogs.AssignUsersDialog;
             import flash.utils.ByteArray;
             import mx.formatters.Formatter;
             import mx.utils.ObjectUtil;
@@ -92,6 +97,9 @@
              * @param event Unused
              */
             public function onCreated(event : UserEvent = null) : void {
+                if (modelLocator.allRoles.length == 0) {
+                    dispatchEvent(new RoleEvent(RoleEvent.LOAD_ALL_ROLES));
+                }
                 userImg.filters = [filter];
                 setFormElements(!(modelLocator.selectedUser == null));
             }
@@ -106,6 +114,11 @@
             public function onUserSelectionChanged(event : UserEvent = null) : void {
                 userImg.filters = [filter];
                 setFormElements(!(modelLocator.selectedUser == null));
+                if (modelLocator.selectedUser != null) {
+                    if (modelLocator.selectedUser.userDetails.sex == null) {
+                        this.sexRb.selection = null;
+                    }
+                }
             }
 
             [Deprecated]
@@ -253,6 +266,20 @@
                 userImg.invalidateDisplayList();
                 userImg.initialize();
             }
+            
+            private function addRole() : void {
+                var pop : AssignRoleDialog = AssignRoleDialog(PopUpManager.createPopUp(this, AssignRoleDialog, true));
+                var rolesToAssign : ArrayCollection = new ArrayCollection(modelLocator.allRoles.toArray());
+                for each (var role : Role in modelLocator.selectedUser.roles) {
+                    rolesToAssign.removeItemAt(rolesToAssign.getItemIndex(role));
+                }
+                pop.items = rolesToAssign;
+                PopUpManager.centerPopUp(pop);
+            }
+
+            private function removeRole() : void {
+                
+            }
         ]]>
     </mx:Script>
 
@@ -277,7 +304,7 @@
     </mx:HBox>
     <mx:HRule x="9" y="53" width="95%"/>
     <mx:Canvas x="10" y="63" width="95%" height="100%" backgroundColor="#B6CFEF">
-        <mx:Canvas x="10" y="10" width="560" height="100%">
+        <mx:Canvas x="10" y="10" height="100%" width="100%">
             <mx:Image id="userImg" source="{modelLocator.selectedUser.userDetails.image}" width="100" height="150" click="showFileUploadDialog()" x="10" y="10" toolTip="{I18nUtil.trans(I18nUtil.APP_MAIN, 'ttip_user_change_users_image')}"/>
             <mx:VRule x="118" y="10" height="540"/>
             <mx:Form x="128" y="10">
@@ -322,7 +349,13 @@
                     <mx:DateField id="expirationDateDt" editable="true" selectableRange="{{rangeStart : new Date()}}" formatString="{ModelLocator.SIMPLE_DT_FORMAT}" width="250" selectedDate="{modelLocator.selectedUser == null ? null : modelLocator.selectedUser.expirationDate}"/>
                 </mx:FormItem>
                 <mx:FormItem label="{I18nUtil.trans(I18nUtil.APP_MAIN, 'entity_user_roles')}" required="false" width="100%">
-                    <mx:List height="63" alternatingItemColors="[#EEEEEE, #FFFFFF]" dataProvider="{modelLocator.selectedUser.roles}" width="100%"/>
+                    <mx:HBox width="240" horizontalGap="0">
+                        <mx:List labelField="name" dataProvider="{modelLocator.selectedUser.roles}" width="100%" height="63" alternatingItemColors="[#EEEEEE, #FFFFFF]"/>
+                        <mx:VBox height="100%" width="16" verticalAlign="middle">
+                            <mx:Image click="addRole();" enabled="{modelLocator.allRoles.length > 0}" height="16" width="16" buttonMode="true" mouseChildren="false" source="@Embed(source='assets/images/icons/plus.png')"/>
+                            <mx:Image click="removeRole();" enabled="{modelLocator.allRoles.length > 0}" height="16" width="16" buttonMode="true" mouseChildren="false" source="@Embed(source='assets/images/icons/minus.png')"/>
+                        </mx:VBox>
+                    </mx:HBox>                    
                 </mx:FormItem>
             </mx:Form>
         </mx:Canvas>
