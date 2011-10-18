@@ -19,9 +19,6 @@
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
 /**
- * Contains essential domain classes that belong to the CORE Module. JAXB classes are assign to the schema http//www.openwms.org/schema/preferences
+ * Comparator classes for comparison of TMS domain objects.
  */
-@javax.xml.bind.annotation.XmlAccessorType(javax.xml.bind.annotation.XmlAccessType.FIELD)
-@javax.xml.bind.annotation.XmlSchema(namespace = "http//www.openwms.org/schema/preferences")
-package org.openwms.core.domain.system;
-
+package org.openwms.tms.domain.comparator;

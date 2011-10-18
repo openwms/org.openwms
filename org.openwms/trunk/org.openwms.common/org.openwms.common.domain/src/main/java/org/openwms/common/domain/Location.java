@@ -53,14 +53,13 @@ import org.openwms.core.domain.DomainObject;
 import org.openwms.core.domain.system.Message;
 
 /**
- * A Location, defines a place within a warehouse.
+ * A Location, represents some physical as well as virtual place in a warehouse.
  * <p>
- * Could be something like a storage location in the stock as well as a location
- * on a conveyer. Also virtual or error locations can be represented with the
+ * Could be something like a storage location in the stock or a location on a
+ * conveyer. Also virtual or error locations can be modeled with a
  * <code>Location</code> entity.
  * </p>
- * Multiple <code>Location</code>s can be grouped together to a
- * {@link LocationGroup} .
+ * Multiple <code>Location</code>s are grouped to a {@link LocationGroup} .
  * 
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  * @version $Revision$
@@ -83,15 +82,15 @@ public class Location extends AbstractEntity implements DomainObject<Long>, Targ
     public static final String NQ_FIND_ALL = "Location.findAll";
 
     /**
-     * Query to find all <code>Location</code>s and all {@link Message}s, eager
-     * loaded.
+     * Query to find all <code>Location</code>s with all {@link Message}s and
+     * {@link LocationType}s (eager loaded).
      */
     public static final String NQ_FIND_ALL_EAGER = "Location.findAllEager";
 
     /**
      * Query to find <strong>one</strong> <code>Location</code> by its natural
      * key. <li>Query parameter index <strong>1</strong> : The locationId of the
-     * <code>Location</code> to search for.</li>
+     * <code>Location</code> to search for</li>
      */
     public static final String NQ_FIND_BY_UNIQUE_QUERY = "Location.findByLocationPK";
 

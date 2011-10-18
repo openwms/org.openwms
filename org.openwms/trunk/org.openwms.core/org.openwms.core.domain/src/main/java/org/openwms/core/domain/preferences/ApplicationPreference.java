@@ -35,15 +35,24 @@ import javax.xml.bind.annotation.XmlType;
 import org.openwms.core.domain.system.AbstractPreference;
 import org.openwms.core.domain.system.PreferenceKey;
 import org.openwms.core.domain.system.PropertyScope;
+import org.openwms.core.util.validation.AssertUtils;
 
 /**
- * An ApplicationPreference is used to store a setting in application scope.
+ * An ApplicationPreference is used to store a configuration setting in
+ * application scope.
+ * <p>
+ * The table model of an <code>ApplicationPreference</code> spans an unique key
+ * over the columns C_TYPE and C_KEY.
+ * </p>
+ * <p>
+ * It's counterpart in the context of JAXB is the applicationPreference element.
+ * </p>
  * 
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  * @version $Revision: $
  * @since 0.1
  */
-@XmlType(name = "applicationPreference", namespace = "http://www.openwms.org/schema/preferences")
+@XmlType(name = "applicationPreference")
 @Entity
 @Table(name = "COR_APP_PREFERENCE", uniqueConstraints = @UniqueConstraint(columnNames = { "C_TYPE", "C_KEY" }))
 @NamedQueries({ @NamedQuery(name = ApplicationPreference.NQ_FIND_ALL, query = "select ap from ApplicationPreference ap") })
@@ -64,35 +73,37 @@ public class ApplicationPreference extends AbstractPreference {
     private PropertyScope type = PropertyScope.APPLICATION;
 
     /**
-     * Key value of the preference.
+     * Key of the preference (not nullable).
      */
     @XmlAttribute(name = "key", required = true)
-    @Column(name = "C_KEY")
+    @Column(name = "C_KEY", nullable = false)
     private String key;
 
     /**
-     * Create a new ApplicationPreference. Defined for the JAXB implementation.
+     * Create a new <code>ApplicationPreference</code>. Only defined by the JAXB
+     * implementation.
      */
-    public ApplicationPreference() {
-        super();
-    }
+    public ApplicationPreference() {}
 
     /**
-     * Create a new ApplicationPreference.
+     * Create a new <code>ApplicationPreference</code>.
      * 
      * @param key
      *            the key
+     * @throws IllegalArgumentException
+     *             when key is <code>null</code> or empty
      */
     public ApplicationPreference(String key) {
         // Called from the client.
         super();
+        AssertUtils.isNotEmpty(key, "Not allowed to create an ApplicationPreference with an empty key");
         this.key = key;
     }
 
     /**
      * Get the key.
      * 
-     * @return the key.
+     * @return the key
      */
     public String getKey() {
         return this.key;
@@ -121,6 +132,8 @@ public class ApplicationPreference extends AbstractPreference {
     /**
      * {@inheritDoc}
      * 
+     * Uses the type and key to create a {@link PreferenceKey} instance.
+     * 
      * @see org.openwms.core.domain.system.AbstractPreference#getPrefKey()
      */
     @Override
@@ -131,7 +144,7 @@ public class ApplicationPreference extends AbstractPreference {
     /**
      * {@inheritDoc}
      * 
-     * Uses key and type for hashCode calculation.
+     * Uses the type and the key for the hashCode calculation.
      * 
      * @see java.lang.Object#hashCode()
      */
@@ -147,7 +160,8 @@ public class ApplicationPreference extends AbstractPreference {
     /**
      * {@inheritDoc}
      * 
-     * Comparison done with key and type fields. Not delegated to super class.
+     * Comparison done with the type and the key fields. Not delegated to super
+     * class.
      * 
      * @see java.lang.Object#equals(java.lang.Object)
      */

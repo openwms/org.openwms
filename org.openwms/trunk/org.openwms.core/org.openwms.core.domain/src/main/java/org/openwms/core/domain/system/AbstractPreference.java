@@ -41,8 +41,11 @@ import org.openwms.core.domain.AbstractEntity;
 import org.openwms.core.domain.DomainObject;
 
 /**
- * A AbstractPreference is a superclass for all other preferences within the
- * application.
+ * An AbstractPreference is a superclass for all other preference classes within
+ * the application.
+ * <p>
+ * It encapsulates some common behavior of preference types.
+ * </p>
  * 
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  * @version $Revision$
@@ -60,8 +63,9 @@ public abstract class AbstractPreference extends AbstractEntity implements Domai
      * Query to find all <code>AbstractPreference</code>s.
      */
     public static final String NQ_FIND_ALL = "AbstractPreference" + FIND_ALL;
+
     /**
-     * /** Unique technical key.
+     * Unique technical key.
      */
     @XmlTransient
     @Id
@@ -70,14 +74,14 @@ public abstract class AbstractPreference extends AbstractEntity implements Domai
     private Long id;
 
     /**
-     * The value of the <code>AbstractPreference</code>.
+     * The String value of the <code>AbstractPreference</code>.
      */
     @XmlAttribute(name = "val")
     @Column(name = "C_VALUE")
     private String value;
 
     /**
-     * Float representation of the value.
+     * A float value of the <code>AbstractPreference</code>.
      */
     @XmlAttribute(name = "floatValue")
     @Column(name = "C_FLOAT_VALUE")
@@ -91,22 +95,22 @@ public abstract class AbstractPreference extends AbstractEntity implements Domai
     private String description;
 
     /**
-     * Minimum value.
+     * Minimum value. Default {@value} .
      */
     @XmlAttribute(name = "minimum")
     @Column(name = "C_MINIMUM")
     private int minimum = 0;
 
     /**
-     * Maximum value.
+     * Maximum value. Default {@value} .
      */
     @XmlAttribute(name = "maximum")
     @Column(name = "C_MAXIMUM")
     private int maximum = 0;
 
     /**
-     * Flag to remember if the preference was originally imported from a file
-     * and cannot be deleted.
+     * Flag to remember if the preference was originally imported from a file.
+     * Default {@value} .
      */
     @XmlTransient
     @Column(name = "C_FROM_FILE")
@@ -155,7 +159,7 @@ public abstract class AbstractPreference extends AbstractEntity implements Domai
 
     /* ----------------------------- methods ------------------- */
     /**
-     * Return the value of the <code>AbstractPreference</code>.
+     * Return the <code>value</code> of the <code>AbstractPreference</code>.
      * 
      * @return The value of the <code>AbstractPreference</code>
      */
@@ -164,7 +168,7 @@ public abstract class AbstractPreference extends AbstractEntity implements Domai
     }
 
     /**
-     * Set the value of the <code>AbstractPreference</code>.
+     * Set the <code>value</code> of the <code>AbstractPreference</code>.
      * 
      * @param value
      *            The value to set
@@ -176,8 +180,7 @@ public abstract class AbstractPreference extends AbstractEntity implements Domai
     /**
      * Get the <code>floatValue</code> of the <code>AbstractPreference</code>.
      * 
-     * @return The <code>floatValue</code> of the
-     *         <code>AbstractPreference</code>
+     * @return The floatValue of the preference
      */
     public Float getFloatValue() {
         return this.floatValue;
@@ -187,14 +190,15 @@ public abstract class AbstractPreference extends AbstractEntity implements Domai
      * Set the <code>floatValue</code> of the <code>AbstractPreference</code>.
      * 
      * @param floatValue
-     *            The <code>floatValue</code> to set
+     *            The floatValue to set
      */
     public void setFloatValue(Float floatValue) {
         this.floatValue = floatValue;
     }
 
     /**
-     * Return the description of the <code>AbstractPreference</code>.
+     * Return the <code>description</code> of the
+     * <code>AbstractPreference</code>.
      * 
      * @return The description as String
      */
@@ -203,7 +207,7 @@ public abstract class AbstractPreference extends AbstractEntity implements Domai
     }
 
     /**
-     * Set a description for the <code>AbstractPreference</code>.
+     * Set a <code>description</code> for the <code>AbstractPreference</code>.
      * 
      * @param description
      *            The description to set
@@ -241,8 +245,7 @@ public abstract class AbstractPreference extends AbstractEntity implements Domai
     }
 
     /**
-     * Set a possible maximum integer value for the
-     * <code>AbstractPreference</code>.
+     * Set a possible maximum value for the <code>AbstractPreference</code>.
      * 
      * @param maximum
      *            The possible maximum value to set
@@ -252,9 +255,10 @@ public abstract class AbstractPreference extends AbstractEntity implements Domai
     }
 
     /**
-     * Get the fromFile.
+     * Check whether the preference was originally imported from a file.
      * 
-     * @return the fromFile.
+     * @return <code>true</code> if imported from a file, otherwise
+     *         <code>false</code>
      */
     public boolean isFromFile() {
         return fromFile;
@@ -273,6 +277,10 @@ public abstract class AbstractPreference extends AbstractEntity implements Domai
 
     /**
      * {@inheritDoc}
+     * <p>
+     * Use all fields to calculate the hashCode and don't use the hashCode of
+     * the super class.
+     * </p>
      * 
      * @see java.lang.Object#hashCode()
      */
@@ -292,6 +300,9 @@ public abstract class AbstractPreference extends AbstractEntity implements Domai
 
     /**
      * {@inheritDoc}
+     * <p>
+     * Use all fields for comparison but don't call the super class.
+     * </p>
      * 
      * @see java.lang.Object#equals(java.lang.Object)
      */
@@ -344,25 +355,23 @@ public abstract class AbstractPreference extends AbstractEntity implements Domai
     }
 
     /**
-     * Return all fields in an object array.
+     * Return all fields as an array of objects.
      * 
      * @return fields as array
      */
     protected abstract Object[] getFields();
 
     /**
-     * Return the particular type the preference belongs to.
+     * Return the particular type of the preference.
      * 
      * @return The type of the preference
      */
     public abstract PropertyScope getType();
 
     /**
-     * Return a {@link PreferenceKey} as a key representation of this
-     * preference.
+     * Return a {@link PreferenceKey} of this preference.
      * 
      * @return A {@link PreferenceKey}
      */
     public abstract PreferenceKey getPrefKey();
-
 }

@@ -30,19 +30,25 @@ import javax.persistence.PrePersist;
 import javax.xml.bind.annotation.XmlTransient;
 
 /**
- * An AbstractEntity used as a base class for all domain classes.
- * 
- * Adds an unique identified to each subclassed domain class that is usually
- * created when the class is instantiated on the client tier. At least this uid
- * is created before the instance is persisted the first time. The uid may not
- * be mistaken with the id property that is usually used for database identity
- * (primary key) or with a business key column.
- * 
+ * An AbstractEntity, used as a base class for all domain classes.
+ * <p>
+ * Adds an unique identified to a subclassed domain class that is created when
+ * the class is instantiated on the client tier. At least this uid is created
+ * before the instance is persisted the first time. The uid may not be mistaken
+ * with the id property that is usually used for database identity (primary key)
+ * or with a business key column.
+ * </p>
+ * <p>
  * This class has an inner static declared class that is registered as a JPA
- * EntityListener and forces to create an uid if not already done before. This
- * assures that each persisted entity does have an uid.
- * 
- * The uid property is useful on the ActionScript client application.
+ * EntityListener and forces the creation of an uid if not already created
+ * before. This assures that each persisted entity has an uid.
+ * </p>
+ * <p>
+ * The uid property is used by the ActionScript client application to
+ * synchronize client-side entity instances with server-side ones.
+ * </p>
+ * <strong>NOTE:</strong></br>This class uses the uid for comparison with
+ * {@link #equals(Object)} and calculation of {@link #hashCode()}.
  * 
  * @author <a href="mailto:russelltina@users.sourceforge.net">Tina Russell</a>
  * @version $Revision$
@@ -54,14 +60,13 @@ import javax.xml.bind.annotation.XmlTransient;
 public abstract class AbstractEntity implements Serializable {
 
     private static final long serialVersionUID = 827478159133738540L;
-
+    private static final int UID_LENGTH = 36;
     /**
-     * Suffix for the FIND_ALL named query.
+     * Suffix for the FIND_ALL named query. Default {@value}
      */
     public static final String FIND_ALL = ".findAll";
-
     /**
-     * Suffix for the FIND_BY_ID named query.
+     * Suffix for the FIND_BY_ID named query. Default {@value}
      */
     public static final String FIND_BY_ID = ".findById";
 
@@ -70,13 +75,13 @@ public abstract class AbstractEntity implements Serializable {
      */
     /* "UUID" and "UID" are Oracle reserved keywords -> "ENTITY_UID" */
     @XmlTransient
-    @Column(name = "ENTITY_UID", unique = true, nullable = false, updatable = false, length = 36)
+    @Column(name = "ENTITY_UID", unique = true, nullable = false, updatable = false, length = UID_LENGTH)
     private String uid;
 
     /**
      * {@inheritDoc}
      * 
-     * Compare the uid property fields.
+     * Compare the uid property field.
      * 
      * @see java.lang.Object#equals()
      */
@@ -88,7 +93,7 @@ public abstract class AbstractEntity implements Serializable {
     /**
      * {@inheritDoc}
      * 
-     * Delegates to java.lang.String#hashCode().
+     * Use the uid to calculate the hashCode.
      * 
      * @see java.lang.String#hashCode()
      */
@@ -98,8 +103,8 @@ public abstract class AbstractEntity implements Serializable {
     }
 
     /**
-     * An AbstractEntityListener. Forces the creation of the uid before the
-     * entity is persisted.
+     * An AbstractEntityListener forces the creation of an uid before the entity
+     * is persisted.
      * 
      * @author <a href="mailto:russelltina@users.sourceforge.net">Tina
      *         Russell</a>
@@ -110,7 +115,7 @@ public abstract class AbstractEntity implements Serializable {
     public static class AbstractEntityListener {
 
         /**
-         * Before a new entity is persisted we generated an UUID for it.
+         * Before a new entity is persisted we generate an UUID for it.
          * 
          * @param abstractEntity
          *            The entity to persist
@@ -127,5 +132,4 @@ public abstract class AbstractEntity implements Serializable {
         }
         return uid;
     }
-
 }

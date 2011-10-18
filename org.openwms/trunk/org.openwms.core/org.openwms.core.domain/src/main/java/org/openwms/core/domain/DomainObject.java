@@ -23,46 +23,44 @@ package org.openwms.core.domain;
 import java.io.Serializable;
 
 /**
- * A DomainObject, implementations of this interface offer some common
- * functionality of all domain objects.
+ * A DomainObject, implementation classes offer basic functionality
+ * characteristic to all persisted domain objects.
  * <p>
  * Each domain object:
  * <ul>
- * <li>shall have an optimistic locking field</li>
- * <li>shall know if it is a transient or persisted instance</li>
- * <li>shall offer the technical key value</li>
+ * <li>must have a field for optimistic locking purpose</li>
+ * <li>must return whether it is a transient or persisted instance</li>
+ * <li>must return the technical key value to the caller</li>
  * </ul>
  * </p>
  * 
  * @param <ID>
- *            Expected as a persistent entity class
+ *            Type of technical key class
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  * @version $Revision$
  * @since 0.1
- * @serial
  */
 public interface DomainObject<ID extends Serializable> {
 
     /**
-     * Check whether the persistent domain object is transient or not.
+     * Check whether the instance is a transient or persisted one.
      * 
      * @return <code>true</code> if transient (not persisted before), otherwise
-     *         <code>false</code>.
+     *         <code>false</code>
      */
     boolean isNew();
 
     /**
-     * Each persistent domain class must have an optimistic locking field.
+     * Return the value of the optimistic locking field.
      * 
      * @return the version number
      */
     long getVersion();
 
     /**
-     * Return the technical key.
+     * Return the technical key value.
      * 
      * @return The technical, unique key
      */
     ID getId();
-
 }
