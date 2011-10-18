@@ -35,6 +35,7 @@ import javax.persistence.UniqueConstraint;
 import org.openwms.core.domain.AbstractEntity;
 import org.openwms.core.domain.DomainObject;
 import org.openwms.core.domain.values.I18nSet;
+import org.openwms.core.util.validation.AssertUtils;
 
 /**
  * An I18n entity stores multiple translations assigned to an unique key.
@@ -47,7 +48,7 @@ import org.openwms.core.domain.values.I18nSet;
 @Table(name = "COR_I18N", uniqueConstraints = @UniqueConstraint(columnNames = { "KEY", "MODULE" }))
 @NamedQueries({
         @NamedQuery(name = I18n.NQ_FIND_ALL, query = "select i from I18n i order by i.module, i.key"),
-        @NamedQuery(name = I18n.NQ_FIND_BY_UNIQUE_QUERY, query = "select i from I18n i where i.key = :key and i.module = :module") })
+        @NamedQuery(name = I18n.NQ_FIND_BY_UNIQUE_QUERY, query = "select i from I18n i where i.key = :key and i.moduleName = :moduleName") })
 public class I18n extends AbstractEntity implements DomainObject<Long> {
 
     private static final long serialVersionUID = -9176131734403683401L;
@@ -62,38 +63,45 @@ public class I18n extends AbstractEntity implements DomainObject<Long> {
     /**
      * The natural key is used as references in the application (not nullable).
      */
-    @Column(name = "KEY", nullable = false)
+    @Column(name = "C_KEY", nullable = false)
     private String key;
     /**
-     * The name of the owning <code>Module</code> where this translation set
+     * The name of the owning <code>Module</code> to which this translation set
      * belongs to. Default is {@value} .
      */
-    @Column(name = "MODULE")
-    private String module = "CORE";
-    @Column(name = "C_VERSION")
+    @Column(name = "C_MODULE_NAME")
+    private String moduleName = "CORE";
     /**
      * Version field.
      */
+    @Column(name = "C_VERSION")
     private Long version;
     /**
      * The translation set of this entity.
      */
     @Embedded
     private I18nSet lang;
+    /**
+     * The cKey is a transient field that is constructed after the entity is
+     * loaded from the persistent storage. Usually this field is accessed from
+     * the client application to have an unique identifier - a combination of
+     * the owning <code>moduleName</code> and the <code>key</code>.
+     */
     @Transient
     private String cKey;
 
     /**
-     * Query to find all <code>I18n</code> language entities.
+     * Query to find all <code>I18n</code> entities.
      */
     public static final String NQ_FIND_ALL = "I18n.findAll";
 
     /**
-     * Query to find <strong>one</strong> <code>Role</code> by its natural key.
-     * <li>Query parameter name <strong>key</strong> : The key of the
-     * <code>I18n</code> to search for</li> <li>Query parameter name
-     * <strong>module</strong> : The module where the <code>I18n</code> entity
-     * belongs to</li>
+     * Query to find <strong>one</strong> <code>I18n</code> by
+     * <code>moduleName</code> and <code>key</code>.<li>Query parameter name
+     * <strong>moduleName</strong> : The name of the <code>Module</code> where
+     * the <code>I18n</code> entity belongs to</li><li>Query parameter name
+     * <strong>key</strong> : The key of the <code>I18n</code> to search for</li>
+     * 
      */
     public static final String NQ_FIND_BY_UNIQUE_QUERY = "I18n.findByKeyModule";
 
@@ -107,17 +115,23 @@ public class I18n extends AbstractEntity implements DomainObject<Long> {
     /**
      * Create a new I18n.
      * 
+     * @param moduleName
+     *            The name of the <code>Module</code> where this entity belongs
+     *            to
      * @param key
      *            The key to access this translation
-     * @param module
-     *            Defines a group where this entity belongs to
      * @param lang
      *            A set of languages
+     * @throws IllegalArgumentException
+     *             when the <code>moduleName</code> or the <code>key</code> is
+     *             <code>null</code> or empty
      */
-    public I18n(String key, String module, I18nSet lang) {
+    public I18n(String moduleName, String key, I18nSet lang) {
         super();
+        AssertUtils.isNotEmpty(moduleName, "Not allowed to create an I18n instance with an empty moduleName");
+        AssertUtils.isNotEmpty(key, "Not allowed to create an I18n instance with an empty key");
+        this.moduleName = moduleName;
         this.key = key;
-        this.module = module;
         this.lang = lang;
     }
 
@@ -126,23 +140,26 @@ public class I18n extends AbstractEntity implements DomainObject<Long> {
      * 
      * @param key
      *            The key to access this translation
-     * @param module
-     *            Defines a group where this entity belongs to
+     * @param lang
+     *            A set of languages
+     * @throws IllegalArgumentException
+     *             when the <code>key</code> is <code>null</code> or empty
      */
-    public I18n(String key, String module) {
+    public I18n(String key, I18nSet lang) {
         super();
+        AssertUtils.isNotEmpty(key, "Not allowed to create an I18n instance with an empty key");
         this.key = key;
-        this.module = module;
+        this.lang = lang;
     }
 
     /**
-     * After loading the entity, combine the <code>module</code> field and the
-     * <code>key</code> field. Store the concatenated String in a transient
-     * field <code>cKey</code>. This field acts as a combined identifier.
+     * After loading the entity, combine the <code>moduleName</code> field and
+     * the <code>key</code> field. Store the concatenated String in a transient
+     * field <code>cKey</code>.
      */
     @PostLoad
     protected void onLoad() {
-        this.cKey = this.module + this.key;
+        this.cKey = this.moduleName + this.key;
     }
 
     /**
@@ -194,12 +211,12 @@ public class I18n extends AbstractEntity implements DomainObject<Long> {
     }
 
     /**
-     * Get the module.
+     * Get the moduleName.
      * 
-     * @return the module.
+     * @return the moduleName.
      */
-    public String getModule() {
-        return module;
+    public String getModuleName() {
+        return moduleName;
     }
 
     /**
@@ -210,5 +227,4 @@ public class I18n extends AbstractEntity implements DomainObject<Long> {
     public I18nSet getLang() {
         return lang;
     }
-
 }
