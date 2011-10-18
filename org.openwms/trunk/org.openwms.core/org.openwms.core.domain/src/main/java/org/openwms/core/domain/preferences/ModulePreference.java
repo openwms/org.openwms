@@ -35,15 +35,23 @@ import javax.xml.bind.annotation.XmlType;
 import org.openwms.core.domain.system.AbstractPreference;
 import org.openwms.core.domain.system.PreferenceKey;
 import org.openwms.core.domain.system.PropertyScope;
+import org.openwms.core.util.validation.AssertUtils;
 
 /**
- * A ModulePreference. Used to store settings in Module scope.
+ * A ModulePreference. Used to store configuration settings in Module scope.
+ * <p>
+ * The table model of an <code>ModulePreference</code> spans an unique key over
+ * the columns C_TYPE, C_OWNER and C_KEY.
+ * </p>
+ * <p>
+ * It's counterpart in the context of JAXB is the modulePreference element.
+ * </p>
  * 
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  * @version $Revision: $
  * @since 0.1
  */
-@XmlType(name = "modulePreference", namespace = "http://www.openwms.org/schema/preferences")
+@XmlType(name = "modulePreference")
 @Entity
 @Table(name = "COR_MODULE_PREFERENCE", uniqueConstraints = @UniqueConstraint(columnNames = { "C_TYPE", "C_OWNER",
         "C_KEY" }))
@@ -65,37 +73,40 @@ public class ModulePreference extends AbstractPreference {
     private PropertyScope type = PropertyScope.MODULE;
 
     /**
-     * Owner of the <code>AbstractPreference</code>.
+     * Owner of the <code>ModulePreference</code> (not nullable).
      */
     @XmlAttribute(name = "owner", required = true)
-    @Column(name = "C_OWNER")
+    @Column(name = "C_OWNER", nullable = false)
     private String owner;
 
     /**
-     * Key value of the <code>AbstractPreference</code>.
+     * Key of the <code>ModulePreference</code> (not nullable).
      */
     @XmlAttribute(name = "key", required = true)
-    @Column(name = "C_KEY")
+    @Column(name = "C_KEY", nullable = false)
     private String key;
 
     /**
-     * Create a new ModulePreference. Defined for the JAXB implementation.
+     * Create a new <code>ModulePreference</code>. Only defined by the JAXB
+     * implementation.
      */
-    public ModulePreference() {
-        super();
-    }
+    public ModulePreference() {}
 
     /**
-     * Create a new ModulePreference.
+     * Create a new <code>ModulePreference</code>.
      * 
      * @param owner
      *            The name of the owning module
      * @param key
      *            the key
+     * @throws IllegalArgumentException
+     *             when key or owner is <code>null</code> or empty
      */
     public ModulePreference(String owner, String key) {
         // Called from the client.
         super();
+        AssertUtils.isNotEmpty(owner, "Not allowed to create an ModulePreference with an empty owner");
+        AssertUtils.isNotEmpty(key, "Not allowed to create an ModulePreference with an empty key");
         this.owner = owner;
         this.key = key;
     }
@@ -103,7 +114,7 @@ public class ModulePreference extends AbstractPreference {
     /**
      * Get the key.
      * 
-     * @return the key.
+     * @return the key
      */
     public String getKey() {
         return key;
@@ -112,7 +123,7 @@ public class ModulePreference extends AbstractPreference {
     /**
      * Get the owner.
      * 
-     * @return the owner.
+     * @return the owner
      */
     public String getOwner() {
         return owner;
@@ -141,6 +152,9 @@ public class ModulePreference extends AbstractPreference {
     /**
      * {@inheritDoc}
      * 
+     * Uses the type, owner and the key to create a {@link PreferenceKey}
+     * instance.
+     * 
      * @see org.openwms.core.domain.system.AbstractPreference#getPrefKey()
      */
     @Override
@@ -151,7 +165,7 @@ public class ModulePreference extends AbstractPreference {
     /**
      * {@inheritDoc}
      * 
-     * Uses key, owner and type for hashCode calculation.
+     * Uses the type, owner and the key for the hashCode calculation.
      * 
      * @see java.lang.Object#hashCode()
      */
@@ -168,8 +182,8 @@ public class ModulePreference extends AbstractPreference {
     /**
      * {@inheritDoc}
      * 
-     * Comparison done with key, owner and type fields. Not delegated to super
-     * class.
+     * Comparison done with the type, owner and the key fields. Not delegated to
+     * super class.
      * 
      * @see java.lang.Object#equals(java.lang.Object)
      */
@@ -204,5 +218,4 @@ public class ModulePreference extends AbstractPreference {
         }
         return true;
     }
-
 }

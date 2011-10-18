@@ -19,6 +19,6 @@
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
 /**
- * 
+ * Listener interfaces can be implemented by services to listen to domain specific events.
  */
 package org.openwms.core.service.listener;

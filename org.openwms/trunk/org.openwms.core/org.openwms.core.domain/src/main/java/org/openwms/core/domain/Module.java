@@ -34,12 +34,15 @@ import javax.persistence.Version;
 import org.openwms.core.util.validation.AssertUtils;
 
 /**
- * A Module is a definition of a Flex Module and is used to persist some initial
- * information about these modules.
+ * A Module is a definition of a Flex Module and used to persist some basic
+ * information about a module. For example if the Flex Module should be loaded
+ * on application startup.
  * 
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  * @version $Revision$
  * @since 0.1
+ * @see org.openwms.core.domain.AbstractEntity
+ * @see org.openwms.core.domain.DomainObject
  */
 @Entity
 @Table(name = "COR_MODULE")
@@ -50,14 +53,15 @@ public class Module extends AbstractEntity implements DomainObject<Long> {
     private static final long serialVersionUID = 7358306395032979355L;
 
     /**
-     * Query to find all {@link Module}s.
+     * Query to find all <code>Module</code>s.
      */
     public static final String NQ_FIND_ALL = "Module.findAll";
 
     /**
-     * Query to find <strong>one</strong> {@link Module} by its natural key. <li>
-     * Query parameter index <strong>1</strong> : The moduleName of the Module
-     * to search for.</li>
+     * Query to find <strong>one</strong> <code>Module</code> by its natural
+     * key. <li>
+     * Query parameter index <strong>1</strong> : The <code>moduleName</code> of
+     * the <code>Module</code> to search for</li>
      */
     public static final String NQ_FIND_BY_UNIQUE_QUERY = "Module.findByModuleName";
 
@@ -70,41 +74,42 @@ public class Module extends AbstractEntity implements DomainObject<Long> {
     private Long id;
 
     /**
-     * Unique name of the Module (natural key, unique, not-null).
+     * Unique name of the <code>Module</code> (natural key, unique, not-null).
      */
     @Column(name = "MODULE_NAME", unique = true, nullable = false)
     private String moduleName;
 
     /**
-     * URL where to load this Module from (unique, not-null).
+     * URL from where to load this <code>Module</code> (unique, not-null).
      */
     @Column(name = "URL", unique = true, nullable = false)
     private String url;
 
     /**
-     * Flag used on client-side to store whether the Module is loaded or not.
-     * Default:{@value} .
+     * Flag used on the client side to store whether the <code>Module</code> is
+     * actually loaded or not. It's a dynamic value and not persisted. Default:
+     * * {@value} .
      */
     @Transient
     private boolean loaded = false;
 
     /**
-     * <code>true</code> when the Module should be loaded on application
-     * startup. Default:{@value} .
+     * <code>true</code> when the <code>Module</code> should be loaded on
+     * application startup. Default:{@value} .
      */
     @Column(name = "LOAD_ON_STARTUP")
     private boolean loadOnStartup = true;
 
     /**
-     * Defines the startup order compared with other Modules. Modules with lower
-     * startupOrders are loaded before.
+     * Defines the startup order compared with other Modules. Modules with a
+     * lower <code>startupOrder</code> are loaded before this one.
      */
     @Column(name = "STARTUP_ORDER")
     @OrderBy
     private int startupOrder;
 
     /**
-     * A description text of the Module. Default:{@value} .
+     * A description text of this <code>Module</code>. Default:{@value} .
      */
     @Column(name = "DESCRIPTION")
     private String description = "--";
@@ -124,15 +129,18 @@ public class Module extends AbstractEntity implements DomainObject<Long> {
     }
 
     /**
-     * Create a new Module.
+     * Create a new <code>Module</code>.
      * 
      * @param moduleName
-     *            The unique Module name
+     *            The unique <code>Module</code> name
      * @param url
      *            The unique URL
+     * @throws IllegalArgumentException
+     *             in case the new moduleName is <code>null</code> or empty
      */
     public Module(String moduleName, String url) {
         super();
+        AssertUtils.isNotEmpty(moduleName, "Not allowed to set the moduleName to null or an empty String");
         this.moduleName = moduleName;
         this.url = url;
     }
@@ -146,7 +154,7 @@ public class Module extends AbstractEntity implements DomainObject<Long> {
     }
 
     /**
-     * Get the moduleName.
+     * Get the <code>moduleName</code>.
      * 
      * @return the moduleName.
      */
@@ -155,10 +163,10 @@ public class Module extends AbstractEntity implements DomainObject<Long> {
     }
 
     /**
-     * Set the moduleName.
+     * Set the <code>moduleName</code>.
      * 
      * @param moduleName
-     *            The moduleName to set.
+     *            The moduleName to set
      * @throws IllegalArgumentException
      *             in case the new moduleName is <code>null</code> or empty
      */
@@ -168,19 +176,19 @@ public class Module extends AbstractEntity implements DomainObject<Long> {
     }
 
     /**
-     * Get the url.
+     * Get the <code>url</code>.
      * 
-     * @return the url.
+     * @return the url
      */
     public String getUrl() {
         return url;
     }
 
     /**
-     * Set the url.
+     * Set the <code>url</code>.
      * 
      * @param url
-     *            The url to set.
+     *            The url to set
      * @throws IllegalArgumentException
      *             in case the new url is <code>null</code> or empty
      */
@@ -190,9 +198,9 @@ public class Module extends AbstractEntity implements DomainObject<Long> {
     }
 
     /**
-     * Get the id.
+     * Get the <code>id</code>.
      * 
-     * @return the id.
+     * @return the id
      */
     @Override
     public Long getId() {
@@ -200,76 +208,77 @@ public class Module extends AbstractEntity implements DomainObject<Long> {
     }
 
     /**
-     * Get the loaded.
+     * Is the <code>Module</code> currently loaded.
      * 
-     * @return the loaded.
+     * @return <code>true</code> if loaded, otherwise <code>false</code>
      */
     public boolean isLoaded() {
         return loaded;
     }
 
     /**
-     * Set the loaded.
+     * Set the <code>loaded</code> flag.
      * 
      * @param loaded
-     *            The loaded to set.
+     *            The loaded to set
      */
     public void setLoaded(boolean loaded) {
         this.loaded = loaded;
     }
 
     /**
-     * Get the description.
+     * Get the <code>description</code>.
      * 
-     * @return the description.
+     * @return the description
      */
     public String getDescription() {
         return description;
     }
 
     /**
-     * Set the description.
+     * Set the <code>description</code>.
      * 
      * @param description
-     *            The description to set.
+     *            The description to set
      */
     public void setDescription(String description) {
         this.description = description;
     }
 
     /**
-     * Get the loadOnStartup.
+     * Should the <code>Module</code> be loaded on application startup.
      * 
-     * @return the loadOnStartup.
+     * @return <code>true</code> if the <code>Module</code> should be loaded on
+     *         application startup, otherwise <code>false</code>
      */
     public boolean isLoadOnStartup() {
         return loadOnStartup;
     }
 
     /**
-     * Set the loadOnStartup.
+     * Set the <code>loadOnStartup</code> flag.
      * 
      * @param loadOnStartup
-     *            The loadOnStartup to set.
+     *            The loadOnStartup to set
      */
     public void setLoadOnStartup(boolean loadOnStartup) {
         this.loadOnStartup = loadOnStartup;
     }
 
     /**
-     * Get the startupOrder.
+     * Get the <code>startupOrder</code>.
      * 
-     * @return the startupOrder.
+     * @return the startupOrder
      */
     public int getStartupOrder() {
         return startupOrder;
     }
 
     /**
-     * Set the startupOrder.
+     * Set the <code>startupOrder</code>.
      * 
      * @param startupOrder
-     *            The startupOrder to set.
+     *            The startupOrder to set
      */
     public void setStartupOrder(int startupOrder) {
         this.startupOrder = startupOrder;
@@ -284,7 +293,7 @@ public class Module extends AbstractEntity implements DomainObject<Long> {
     }
 
     /**
-     * Returns the moduleName.
+     * Returns the <code>moduleName</code>.
      * 
      * @see java.lang.Object#toString()
      * @return The moduleName
@@ -293,5 +302,4 @@ public class Module extends AbstractEntity implements DomainObject<Long> {
     public String toString() {
         return this.moduleName;
     }
-
 }

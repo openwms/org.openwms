@@ -3,20 +3,21 @@
 	<!-- Menu bar -->
     <grant>
         <name>APP_User_Management</name>
-        <description>Permission to create a new TransportOrder</description>
+        <description>Permission to control User Management</description>
     </grant>
     <grant>
         <name>APP_Role_Management</name>
-        <description>Permission to cancel active TransportOrders</description>
+        <description>Permission to control Role Management</description>
     </grant>
     <grant>
         <name>APP_Module_Management</name>
-        <description>Permission to see the history of a TransportOrder</description>
+        <description>Permission to control Module Management</description>
     </grant>
     <grant>
         <name>APP_Preferences</name>
         <description>Permission to manage all Preferences</description>
     </grant>
+    
     <!-- User management screen -->
     <grant>
         <name>APP_add_user_button</name>
@@ -38,6 +39,7 @@
         <name>APP_change_user_pw_button</name>
         <description>Ability to change the password of an existing User</description>
     </grant>
+    
 	<!-- Role management screen -->
     <grant>
         <name>APP_add_roles_button</name>
@@ -59,6 +61,7 @@
         <name>APP_assign_users_button</name>
         <description>Assign Users to a Role</description>
     </grant>
+    
 	<!-- Module management screen -->
     <grant>
         <name>APP_add_module_button</name>
@@ -76,6 +79,7 @@
         <name>APP_load_module_button</name>
         <description>Ability to load or unload Modules</description>
     </grant>
+    
     <!-- Preferences management screen -->
     <grant>
         <name>APP_add_preference_button</name>

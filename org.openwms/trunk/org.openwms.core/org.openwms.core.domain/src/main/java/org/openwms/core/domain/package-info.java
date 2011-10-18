@@ -19,7 +19,7 @@
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
 /**
- * Contains essential domain classes of the CORE module.
+ * Contains essential domain classes and interfaces of the CORE module.
  */
 @javax.xml.bind.annotation.XmlAccessorType(javax.xml.bind.annotation.XmlAccessType.NONE)
 package org.openwms.core.domain;

@@ -93,6 +93,8 @@ public class UserPreference extends AbstractPreference {
      *            The User's username is set as owner of this preference
      * @param key
      *            The key of this preference
+     * @throws IllegalArgumentException
+     *             when key or owner is <code>null</code> or empty
      */
     public UserPreference(String owner, String key) {
         // Called from the client.

@@ -46,16 +46,17 @@ import org.openwms.core.domain.system.usermanagement.UserPreference;
  * @since 0.1
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "", propOrder = { "applicationOrUserOrModule" })
-@XmlRootElement(name = "preferences", namespace = "http://www.openwms.org/schema/preferences")
+@XmlType(name = "", propOrder = { "applicationOrRoleOrUserOrModule" })
+@XmlRootElement(name = "preferences")
 public class Preferences implements Serializable {
 
     private static final long serialVersionUID = 4836136346473578215L;
 
     @XmlElements({ @XmlElement(name = "module", type = ModulePreference.class),
             @XmlElement(name = "application", type = ApplicationPreference.class),
+            @XmlElement(name = "role", type = RolePreference.class),
             @XmlElement(name = "user", type = UserPreference.class) })
-    private List<AbstractPreference> applicationOrUserOrModule;
+    private List<AbstractPreference> applicationOrRoleOrUserOrModule;
     @XmlTransient
     private List<ApplicationPreference> applications;
     @XmlTransient
@@ -66,27 +67,27 @@ public class Preferences implements Serializable {
     private List<RolePreference> roles;
 
     /**
-     * Gets the value of the applicationOrUserOrModule property. This method is
-     * called by the JAXB unmarshaller only.
+     * Gets the value of the applicationOrRoleOrUserOrModule property. This
+     * method is called by the JAXB unmarshaller only.
      * 
      * @return a list of all preferences
      */
-    public List<AbstractPreference> getApplicationOrUserOrModule() {
-        if (applicationOrUserOrModule == null) {
-            applicationOrUserOrModule = new ArrayList<AbstractPreference>();
+    public List<AbstractPreference> getApplicationOrRoleOrUserOrModule() {
+        if (applicationOrRoleOrUserOrModule == null) {
+            applicationOrRoleOrUserOrModule = new ArrayList<AbstractPreference>();
         }
-        return this.applicationOrUserOrModule;
+        return this.applicationOrRoleOrUserOrModule;
     }
 
     /**
-     * Return a list of all preferences. Simply calls
-     * {@link #getApplicationOrUserOrModule()}. Is only added due to naming
-     * purpose.
+     * Return a list of all preferences. Simple call to
+     * {@link #getApplicationOrRoleOrUserOrModule()}. Is only added due to
+     * naming purpose.
      * 
-     * @return a list of all preferences.
+     * @return a list of all preferences
      */
     public List<AbstractPreference> getAll() {
-        return this.getApplicationOrUserOrModule();
+        return this.getApplicationOrRoleOrUserOrModule();
     }
 
     /**
@@ -98,9 +99,9 @@ public class Preferences implements Serializable {
     public List<ApplicationPreference> getApplications() {
         if (applications == null) {
             applications = new ArrayList<ApplicationPreference>();
-            for (AbstractPreference pref : applicationOrUserOrModule) {
+            for (AbstractPreference pref : applicationOrRoleOrUserOrModule) {
                 if (pref instanceof ApplicationPreference) {
-                    applications.add(((ApplicationPreference) pref));
+                    applications.add((ApplicationPreference) pref);
                 }
             }
         }
@@ -116,9 +117,9 @@ public class Preferences implements Serializable {
     public List<ModulePreference> getModules() {
         if (modules == null) {
             modules = new ArrayList<ModulePreference>();
-            for (AbstractPreference pref : applicationOrUserOrModule) {
+            for (AbstractPreference pref : applicationOrRoleOrUserOrModule) {
                 if (pref instanceof ModulePreference) {
-                    modules.add(((ModulePreference) pref));
+                    modules.add((ModulePreference) pref);
                 }
             }
         }
@@ -134,9 +135,9 @@ public class Preferences implements Serializable {
     public List<UserPreference> getUsers() {
         if (users == null) {
             users = new ArrayList<UserPreference>();
-            for (AbstractPreference pref : applicationOrUserOrModule) {
+            for (AbstractPreference pref : applicationOrRoleOrUserOrModule) {
                 if (pref instanceof UserPreference) {
-                    users.add(((UserPreference) pref));
+                    users.add((UserPreference) pref);
                 }
             }
         }
@@ -152,9 +153,9 @@ public class Preferences implements Serializable {
     public List<RolePreference> getRoles() {
         if (roles == null) {
             roles = new ArrayList<RolePreference>();
-            for (AbstractPreference pref : applicationOrUserOrModule) {
+            for (AbstractPreference pref : applicationOrRoleOrUserOrModule) {
                 if (pref instanceof RolePreference) {
-                    roles.add(((RolePreference) pref));
+                    roles.add((RolePreference) pref);
                 }
             }
         }
@@ -166,12 +167,12 @@ public class Preferences implements Serializable {
      * parameter clazz.
      * 
      * @param <T>
-     *            Expected types <code>ApplicationPreference</code>,
+     *            Expected types are <code>ApplicationPreference</code>,
      *            <code>ModulePreference</code>, <code>RolePreference</code>
      *            <code>UserPreference</code>
      * @param clazz
      *            The class type of the preference to filter for
-     * @return a list of {@link AbstractPreference}s but only of type clazz.
+     * @return a list of T.
      */
     @SuppressWarnings("unchecked")
     public <T extends AbstractPreference> List<T> getOfType(Class<T> clazz) {

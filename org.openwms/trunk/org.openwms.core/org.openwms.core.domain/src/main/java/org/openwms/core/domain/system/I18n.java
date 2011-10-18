@@ -37,7 +37,7 @@ import org.openwms.core.domain.DomainObject;
 import org.openwms.core.domain.values.I18nSet;
 
 /**
- * An I18n.
+ * An I18n entity stores multiple translations assigned to an unique key.
  * 
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  * @version $Revision$
@@ -51,16 +51,33 @@ import org.openwms.core.domain.values.I18nSet;
 public class I18n extends AbstractEntity implements DomainObject<Long> {
 
     private static final long serialVersionUID = -9176131734403683401L;
+
+    /**
+     * The unique technical key.
+     */
     @Column(name = "ID")
     @Id
     @GeneratedValue
     private Long id;
+    /**
+     * The natural key is used as references in the application (not nullable).
+     */
     @Column(name = "KEY", nullable = false)
     private String key;
+    /**
+     * The name of the owning <code>Module</code> where this translation set
+     * belongs to. Default is {@value} .
+     */
     @Column(name = "MODULE")
     private String module = "CORE";
     @Column(name = "C_VERSION")
+    /**
+     * Version field.
+     */
     private Long version;
+    /**
+     * The translation set of this entity.
+     */
     @Embedded
     private I18nSet lang;
     @Transient
@@ -119,9 +136,9 @@ public class I18n extends AbstractEntity implements DomainObject<Long> {
     }
 
     /**
-     * After loading combine <code>module</code> and <code>key</code> and store
-     * in in a transient field <code>cKey</code>. This field acts as a combined
-     * identifier.
+     * After loading the entity, combine the <code>module</code> field and the
+     * <code>key</code> field. Store the concatenated String in a transient
+     * field <code>cKey</code>. This field acts as a combined identifier.
      */
     @PostLoad
     protected void onLoad() {
@@ -133,7 +150,7 @@ public class I18n extends AbstractEntity implements DomainObject<Long> {
      * 
      * @return the cKey.
      */
-    public String getcKey() {
+    public String getCKey() {
         return cKey;
     }
 
