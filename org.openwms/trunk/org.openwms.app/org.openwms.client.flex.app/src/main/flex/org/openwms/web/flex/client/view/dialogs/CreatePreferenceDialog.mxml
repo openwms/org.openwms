@@ -22,7 +22,7 @@
  */
 -->
 <mx:TitleWindow xmlns:mx="http://www.adobe.com/2006/mxml" title="{I18nUtil.trans(I18nUtil.APP_MAIN, 'txt_create_preference_title')}"
- backgroundColor="#F1F07C" creationComplete="onCreate();" width="400" height="458" layout="absolute">
+ backgroundColor="#F1F07C" creationComplete="onCreate();" width="500" height="458" layout="absolute">
 
     <mx:Metadata>
         [Name]
@@ -79,29 +79,29 @@
     	]]>
     </mx:Script>
     
-	<mx:Label x="10" y="10" text="{I18nUtil.trans(I18nUtil.APP_ENTITY, 'entity_preference_owner')}" fontSize="22" width="140" textAlign="right" id="ownerLbl"/>
-    <mx:ComboBox id="ownerCmb" width="200" fontSize="22" x="158" y="8" />
+	<mx:Label x="10" y="10" text="{I18nUtil.trans(I18nUtil.APP_ENTITY, 'entity_preference_owner')}" fontSize="22" textAlign="right" id="ownerLbl"/>
+    <mx:ComboBox id="ownerCmb" width="200" fontSize="22" x="270" y="7" />
 
-	<mx:Label x="10" y="51" text="{I18nUtil.trans(I18nUtil.APP_ENTITY, 'entity_preference_key')}" fontSize="22" width="140" textAlign="right" id="keyLbl"/>
-    <mx:TextInput id="keyTxt" width="200" fontSize="22" x="158" y="49" />
+	<mx:Label x="10" y="51" text="{I18nUtil.trans(I18nUtil.APP_ENTITY, 'entity_preference_key')}" fontSize="22" textAlign="right" id="keyLbl"/>
+    <mx:TextInput id="keyTxt" width="200" fontSize="22" x="270" y="49" />
 
-	<mx:Label x="10" y="92" text="{I18nUtil.trans(I18nUtil.APP_ENTITY, 'entity_preference_description')}" fontSize="22" width="140" textAlign="right" id="descriptionLbl"/>
-    <mx:TextArea id="descriptionTxt" x="158" y="91" width="200" height="73" fontSize="22" />
+	<mx:Label x="10" y="92" text="{I18nUtil.trans(I18nUtil.APP_ENTITY, 'entity_preference_description')}" fontSize="22" textAlign="right" id="descriptionLbl"/>
+    <mx:TextArea id="descriptionTxt" x="270" y="91" width="200" height="73" fontSize="22" />
 
-	<mx:Label x="10" y="174" text="{I18nUtil.trans(I18nUtil.APP_ENTITY, 'entity_preference_type')}" fontSize="22" width="140" textAlign="right" id="typeLbl"/>
-	<mx:ComboBox id="typeCmb" dataProvider="{prefs.types}" labelFunction="{prefs.formatType}"  x="158" y="171" fontSize="22" width="200" />
+	<mx:Label x="10" y="174" text="{I18nUtil.trans(I18nUtil.APP_ENTITY, 'entity_preference_type')}" fontSize="22" textAlign="right" id="typeLbl"/>
+	<mx:ComboBox id="typeCmb" dataProvider="{prefs.types}" labelFunction="{prefs.formatType}"  x="270" y="171" fontSize="22" width="200" />
 
-	<mx:Label x="10" y="218" text="{I18nUtil.trans(I18nUtil.APP_ENTITY, 'entity_preference_value')}" fontSize="22" width="140" textAlign="right" id="valueLbl"/>
-    <mx:TextInput id="valueTxt" width="200" fontSize="22" x="158" y="216" />
+	<mx:Label x="10" y="218" text="{I18nUtil.trans(I18nUtil.APP_ENTITY, 'entity_preference_value')}" fontSize="22" textAlign="right" id="valueLbl"/>
+    <mx:TextInput id="valueTxt" width="200" fontSize="22" x="270" y="216" />
 
-	<mx:Label x="10" y="259" text="{I18nUtil.trans(I18nUtil.APP_ENTITY, 'entity_preference_floatValue')}" fontSize="22" width="140" textAlign="right" id="floatValueLbl"/>
-    <mx:TextInput id="floatValueTxt" width="200" fontSize="22" x="158" y="257" />
+	<mx:Label x="10" y="259" text="{I18nUtil.trans(I18nUtil.APP_ENTITY, 'entity_preference_floatValue')}" fontSize="22" textAlign="right" id="floatValueLbl"/>
+    <mx:TextInput id="floatValueTxt" width="200" fontSize="22" x="270" y="257" />
 
-	<mx:Label x="10" y="300" text="{I18nUtil.trans(I18nUtil.APP_ENTITY, 'entity_preference_minimum')}" fontSize="22" width="140" textAlign="right" id="minimumLbl"/>
-    <mx:TextInput id="minimumTxt" width="200" fontSize="22" x="158" y="298" />
+	<mx:Label x="10" y="300" text="{I18nUtil.trans(I18nUtil.APP_ENTITY, 'entity_preference_minimum')}" fontSize="22" textAlign="right" id="minimumLbl"/>
+    <mx:TextInput id="minimumTxt" width="200" fontSize="22" x="270" y="298" />
 
-	<mx:Label x="10" y="341" text="{I18nUtil.trans(I18nUtil.APP_ENTITY, 'entity_preference_maximum')}" fontSize="22" width="140" textAlign="right" id="maximumLbl"/>
-    <mx:TextInput id="maximumTxt" width="200" fontSize="22" x="158" y="339" />
+	<mx:Label x="10" y="341" text="{I18nUtil.trans(I18nUtil.APP_ENTITY, 'entity_preference_maximum')}" fontSize="22" textAlign="right" id="maximumLbl"/>
+    <mx:TextInput id="maximumTxt" width="200" fontSize="22" x="270" y="339" />
 
 	<mx:HBox x="0" y="384" width="100%" horizontalAlign="center">
 		<mx:Button id="createBtn" label="{I18nUtil.trans(I18nUtil.APP_MAIN, 'btn_create')}" fontSize="12" click="create(event)"/>
