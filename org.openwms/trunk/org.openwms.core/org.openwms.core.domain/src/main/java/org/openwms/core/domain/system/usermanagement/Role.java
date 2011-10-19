@@ -40,13 +40,16 @@ import org.openwms.core.util.validation.AssertUtils;
 /**
  * A Role is grouping multiple {@link User}s regarding security aspects.
  * <p>
- * Security access policies are assigned to Roles instead of to {@link User}s
- * directly.
+ * Security access policies are assigned to <code>Role</code>s instead of to
+ * {@link User}s directly.
  * </p>
  * 
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  * @version $Revision$
  * @since 0.1
+ * @see org.openwms.core.domain.system.usermanagement.SecurityObject
+ * @see org.openwms.core.domain.system.usermanagement.User
+ * @see org.openwms.core.domain.system.usermanagement.Role
  */
 @Entity
 @DiscriminatorValue("ROLE")
@@ -58,19 +61,20 @@ public class Role extends SecurityObject {
     private static final long serialVersionUID = -4133301834284932221L;
 
     /**
-     * The default prefix String for each created <code>Role</code>.
+     * The default prefix String for each created <code>Role</code>. Name is * *
+     * * {@value} .
      */
     public static final String ROLE_PREFIX = "ROLE_";
 
     /**
-     * Query to find all <code>Role</code>s.
+     * Query to find all <code>Role</code>s. Name is {@value} .
      */
     public static final String NQ_FIND_ALL = "Role.findAll";
 
     /**
      * Query to find <strong>one</strong> <code>Role</code> by its natural key.
      * <li>Query parameter index <strong>1</strong> : The name of the
-     * <code>Role</code> to search for.</li>
+     * <code>Role</code> to search for.</li></br> Name is {@value} .
      */
     public static final String NQ_FIND_BY_UNIQUE_QUERY = "Role.findByRolename";
 
@@ -83,7 +87,7 @@ public class Role extends SecurityObject {
 
     /* ------------------- collection mapping ------------------- */
     /**
-     * All {@link User}s assigned to the <code>Role</code>.
+     * All {@link User}s assigned to this <code>Role</code>.
      */
     @ManyToMany(cascade = { CascadeType.PERSIST, CascadeType.MERGE })
     @JoinTable(name = "COR_ROLE_USER_JOIN", joinColumns = @JoinColumn(name = "ROLE_ID"), inverseJoinColumns = @JoinColumn(name = "USER_ID"))
@@ -103,15 +107,6 @@ public class Role extends SecurityObject {
     @JoinTable(name = "COR_ROLE_ROLE_JOIN", joinColumns = @JoinColumn(name = "ROLE_ID"), inverseJoinColumns = @JoinColumn(name = "GRANT_ID"))
     private Set<SecurityObject> grants = new HashSet<SecurityObject>();
 
-    /* ----------------------------- methods ------------------- */
-    /**
-     * Accessed by the persistence provider.
-     */
-    @SuppressWarnings("unused")
-    private Role() {
-        super();
-    }
-
     /**
      * A builder class to construct <code>Role</code> instances.
      * 
@@ -128,8 +123,11 @@ public class Role extends SecurityObject {
          * 
          * @param name
          *            The name of the <code>Role</code>
+         * @throws IllegalArgumentException
+         *             when name is <code>null</code> or empty
          */
         public Builder(String name) {
+            AssertUtils.isNotEmpty(name, "Not allowed to create a Role with an empty name");
             this.role = new Role(name);
         }
 
@@ -168,14 +166,41 @@ public class Role extends SecurityObject {
         }
     }
 
+    /* ----------------------------- methods ------------------- */
+    /**
+     * Accessed by the persistence provider.
+     */
+    @SuppressWarnings("unused")
+    private Role() {
+        super();
+    }
+
     /**
      * Create a new <code>Role</code> with a name.
      * 
      * @param name
      *            The name of the <code>Role</code>
+     * @throws IllegalArgumentException
+     *             when name is <code>null</code> or empty
      */
     public Role(String name) {
         super(name);
+        AssertUtils.isNotEmpty(name, "Not allowed to create a Role with an empty name");
+    }
+
+    /**
+     * Create a new <code>Role</code> with a name and a description.
+     * 
+     * @param name
+     *            The name of the <code>Role</code>
+     * @param description
+     *            The description text of the <code>Role</code>
+     * @throws IllegalArgumentException
+     *             when name is <code>null</code> or empty
+     */
+    public Role(String name, String description) {
+        super(name, description);
+        AssertUtils.isNotEmpty(name, "Not allowed to create a Role with an empty name");
     }
 
     /**
@@ -188,22 +213,10 @@ public class Role extends SecurityObject {
     }
 
     /**
-     * Create a new <code>Role</code> with a name and a description.
+     * Return an unmodifiable Set of all {@link User}s assigned to the
+     * <code>Role</code>.
      * 
-     * @param name
-     *            The name of the <code>Role</code>
-     * @param description
-     *            The description text of the <code>Role</code>
-     */
-    public Role(String name, String description) {
-        super(name, description);
-        AssertUtils.notNull(description, "Role description must not be null");
-    }
-
-    /**
-     * Return all {@link User}s assigned to the <code>Role</code>.
-     * 
-     * @return A Set of all {@link User}s belonging to the <code>Role</code>
+     * @return A Set of all {@link User}s assigned to the <code>Role</code>
      */
     public Set<User> getUsers() {
         return Collections.unmodifiableSet(users);
@@ -253,7 +266,7 @@ public class Role extends SecurityObject {
     /**
      * Return all {@link RolePreference}s of the <code>Role</code>.
      * 
-     * @return A Set of all {@link RolePreference}s belonging to the
+     * @return A Set of all {@link RolePreference}s assigned to the
      *         <code>Role</code>
      */
     public Set<RolePreference> getPreferences() {
@@ -272,7 +285,8 @@ public class Role extends SecurityObject {
     }
 
     /**
-     * Return all {@link SecurityObject}s belonging to the <code>Role</code>.
+     * Return an unmodifiable Set of all {@link SecurityObject}s belonging to
+     * the <code>Role</code>.
      * 
      * @return A Set of all {@link SecurityObject}s belonging to this Role
      */
@@ -289,6 +303,8 @@ public class Role extends SecurityObject {
      * @return <code>true</code> if the {@link SecurityObject} was new to the
      *         collection of {@link SecurityObject}s, otherwise
      *         <code>false</code>
+     * @throws IllegalArgumentException
+     *             if grant is <code>null</code>
      */
     public boolean addGrant(SecurityObject grant) {
         AssertUtils.notNull(grant, "Grant to add must not be null");
@@ -302,8 +318,10 @@ public class Role extends SecurityObject {
      *            The {@link SecurityObject} to be added to the
      *            <code>Role</code>
      * @return <code>true</code> if the {@link SecurityObject} was successfully
-     *         removed from the set of {@link SecurityObject}s, otherwise
+     *         removed from the Set of {@link SecurityObject}s, otherwise
      *         <code>false</code>
+     * @throws IllegalArgumentException
+     *             if grant is <code>null</code>
      */
     public boolean removeGrant(SecurityObject grant) {
         AssertUtils.notNull(grant, "Grant to remove must not be null");
@@ -311,12 +329,14 @@ public class Role extends SecurityObject {
     }
 
     /**
-     * Set all {@link SecurityObject}s belonging to the <code>Role</code>.
+     * Set all {@link SecurityObject}s assigned to the <code>Role</code>.
      * Already existing {@link SecurityObject}s will be removed.
      * 
      * @param grants
-     *            A set of {@link SecurityObject}s to be assigned to the
+     *            A Set of {@link SecurityObject}s to be assigned to the
      *            <code>Role</code>
+     * @throws IllegalArgumentException
+     *             if grants is <code>null</code>
      */
     public void setGrants(Set<SecurityObject> grants) {
         AssertUtils.notNull(grants, "Set of Grants must not be null");
@@ -325,6 +345,9 @@ public class Role extends SecurityObject {
 
     /**
      * {@inheritDoc}
+     * 
+     * Delegates to the superclass and uses the hashCode of the String ROLE for
+     * calculation.
      * 
      * @see java.lang.Object#hashCode()
      */
@@ -339,6 +362,9 @@ public class Role extends SecurityObject {
 
     /**
      * {@inheritDoc}
+     * 
+     * Does not delegate to the {@link SecurityObject#equals(Object)} and uses
+     * the name for comparison.
      * 
      * @see java.lang.Object#equals(java.lang.Object)
      */

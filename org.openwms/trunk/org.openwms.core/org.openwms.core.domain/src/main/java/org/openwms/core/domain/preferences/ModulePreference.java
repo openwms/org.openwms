@@ -38,7 +38,7 @@ import org.openwms.core.domain.system.PropertyScope;
 import org.openwms.core.util.validation.AssertUtils;
 
 /**
- * A ModulePreference. Used to store configuration settings in Module scope.
+ * A ModulePreference is used to store configuration settings in Module scope.
  * <p>
  * The table model of an <code>ModulePreference</code> spans an unique key over
  * the columns C_TYPE, C_OWNER and C_KEY.
@@ -51,7 +51,7 @@ import org.openwms.core.util.validation.AssertUtils;
  * @version $Revision: $
  * @since 0.1
  */
-@XmlType(name = "modulePreference")
+@XmlType(name = "modulePreference", namespace = "http://www.openwms.org/schema/preferences")
 @Entity
 @Table(name = "COR_MODULE_PREFERENCE", uniqueConstraints = @UniqueConstraint(columnNames = { "C_TYPE", "C_OWNER",
         "C_KEY" }))
@@ -60,7 +60,7 @@ public class ModulePreference extends AbstractPreference {
 
     private static final long serialVersionUID = 7318848112643933488L;
     /**
-     * Query to find all <code>ModulePreference</code>s.
+     * Query to find all <code>ModulePreference</code>s. Name is {@value} .
      */
     public static final String NQ_FIND_ALL = "ModulePreference" + FIND_ALL;
 

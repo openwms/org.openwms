@@ -34,7 +34,7 @@ import org.openwms.core.domain.DomainObject;
 import org.openwms.core.util.validation.AssertUtils;
 
 /**
- * An Email, encapsulates the email address of an <code>User</code>.
+ * An Email encapsulates the email address of an <code>User</code>.
  * 
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  * @version $Revision$
@@ -42,7 +42,7 @@ import org.openwms.core.util.validation.AssertUtils;
  * @see org.openwms.core.domain.system.usermanagement.User
  */
 @Entity
-@Table(name = "COR_EMAIL", uniqueConstraints = @UniqueConstraint(columnNames = { "USERNAME", "ADDRESS" }))
+@Table(name = "COR_EMAIL", uniqueConstraints = @UniqueConstraint(columnNames = { "C_USERNAME", "C_ADDRESS" }))
 public class Email extends AbstractEntity implements DomainObject<Long> {
 
     private static final long serialVersionUID = 3182027866592095069L;
@@ -57,21 +57,21 @@ public class Email extends AbstractEntity implements DomainObject<Long> {
     private Long id;
 
     /**
-     * Unique identifier of the <code>Email</code> (not-null).
+     * Unique identifier of the <code>Email</code> (not nullable).
      */
-    @Column(name = "USERNAME", nullable = false)
-    private String username;
+    @Column(name = "C_USERNAME", nullable = false)
+    private String userName;
 
     /**
-     * The email address as String (not-null).
+     * The email address as String (not nullable).
      */
-    @Column(name = "ADDRESS", nullable = false)
+    @Column(name = "C_ADDRESS", nullable = false)
     private String emailAddress;
 
     /**
-     * The fullname of the <code>Email</code>.
+     * The fullname of the <code>User</code>.
      */
-    @Column(name = "FULL_NAME")
+    @Column(name = "C_FULL_NAME")
     private String fullName;
 
     /**
@@ -86,22 +86,25 @@ public class Email extends AbstractEntity implements DomainObject<Long> {
      * Accessed by persistence provider.
      */
     @SuppressWarnings("unused")
-    private Email() {}
+    private Email() {
+
+    }
 
     /**
-     * Create a new <code>Email</code> with an username and an emailAddress.
+     * Create a new <code>Email</code> with an <code>userName</code> and an
+     * <code>emailAddress</code>.
      * 
-     * @param username
-     *            The name of the <code>User</code>
+     * @param userName
+     *            The name of the User
      * @param emailAddress
-     *            The email address of the <code>User</code>
+     *            The email address of the User
+     * @throws IllegalArgumentException
+     *             when userName or emailAddress is <code>null</code> or empty
      */
-    public Email(String username, String emailAddress) {
-        AssertUtils.isNotEmpty(username, "Username must not be null or empty");
+    public Email(String userName, String emailAddress) {
+        AssertUtils.isNotEmpty(userName, "Username must not be null or empty");
         AssertUtils.isNotEmpty(emailAddress, "EmailAddress must not be null or empty");
-        assert username != null && !username.equals("");
-        assert emailAddress != null && emailAddress.equals("");
-        this.username = username;
+        this.userName = userName;
         this.emailAddress = emailAddress;
     }
 
@@ -122,23 +125,23 @@ public class Email extends AbstractEntity implements DomainObject<Long> {
     }
 
     /**
-     * Returns the name of the <code>User</code> who owns the <code>Email</code>
-     * .
+     * Returns the name of the <code>User</code> who owns this
+     * <code>Email</code>.
      * 
-     * @return The username as String
+     * @return The userName as String
      */
-    public String getUsername() {
-        return this.username;
+    public String getUserName() {
+        return this.userName;
     }
 
     /**
      * Assign the <code>Email</code> to an <code>User</code>.
      * 
-     * @param username
+     * @param userName
      *            Name of the <code>User</code>.
      */
-    public void setUsername(String username) {
-        this.username = username;
+    public void setUserName(String userName) {
+        this.userName = userName;
     }
 
     /**
@@ -188,10 +191,10 @@ public class Email extends AbstractEntity implements DomainObject<Long> {
     }
 
     /**
-     * Return the emailAddress.
+     * Return the emailAddress as String.
      * 
      * @see java.lang.Object#toString()
-     * @return As String
+     * @return the emailAddress
      */
     @Override
     public String toString() {

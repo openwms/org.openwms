@@ -50,15 +50,16 @@ import javax.persistence.Version;
 import org.openwms.core.domain.AbstractEntity;
 import org.openwms.core.domain.DomainObject;
 import org.openwms.core.exception.InvalidPasswordException;
+import org.openwms.core.util.validation.AssertUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * An User represents a human user of the system. Typically some Roles are
- * assigned to the <code>User</code> to setup security constraints. An
- * <code>User</code> can also have own configuration settings in form of
+ * An User represents a human user of the system. Typically <code>Role</code>s
+ * are assigned to an <code>User</code> to setup security constraints.
+ * <code>User</code>s can also have their own configuration settings in form of
  * <code>UserPreference</code>s and certain user details, encapsulated in an
- * <code>UserDetails</code> class that can be extended.
+ * <code>UserDetails</code> object that tend to be extended.
  * 
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  * @version $Revision$
@@ -78,26 +79,23 @@ import org.slf4j.LoggerFactory;
 public class User extends AbstractEntity implements DomainObject<Long> {
 
     private static final long serialVersionUID = -1116645053773805413L;
-
-    /**
-     * Logger instance.
-     */
     private static final Logger logger = LoggerFactory.getLogger(User.class);
 
     /**
-     * Query to find all <code>User</code>s.
+     * Query to find all <code>User</code>s. Name is {@value} .
      */
     public static final String NQ_FIND_ALL = "User.findAll";
 
     /**
-     * Query to find all <code>User</code>s sorted by userName.
+     * Query to find all <code>User</code>s sorted by userName. Name is {@value}
+     * .
      */
     public static final String NQ_FIND_ALL_ORDERED = "User.findAllOrdered";
 
     /**
      * Query to find <strong>one</strong> <code>User</code> by his userName. <li>
      * Query parameter index <strong>1</strong> : The userName of the
-     * <code>User</code> to search for.</li>
+     * <code>User</code> to search for.</li></br> Name is {@value} .
      */
     public static final String NQ_FIND_BY_USERNAME = "User.findByUsername";
 
@@ -106,14 +104,14 @@ public class User extends AbstractEntity implements DomainObject<Long> {
      * password. <li>Query parameter name <strong>username</strong> : The
      * userName of the <code>User</code> to search for.</li> <li>Query parameter
      * name <strong>password</strong> : The current password of the
-     * <code>User</code> to search for.</li>
+     * <code>User</code> to search for.</li></br> Name is {@value} .
      */
     public static final String NQ_FIND_BY_USERNAME_PASSWORD = "User.findByUsernameAndPassword";
 
     /**
-     * The number of passwords to be stored in the history. When an
-     * <code>User</code> changes the password, the old password is saved in a
-     * Collection. Default:{@value} .
+     * The number of passwords to be stored in the password history. When an
+     * <code>User</code> changes the password, the old password is stored in a
+     * Collection. Default: {@value} .
      */
     public static final short NUMBER_STORED_PASSWORDS = 3;
 
@@ -126,14 +124,14 @@ public class User extends AbstractEntity implements DomainObject<Long> {
     private Long id;
 
     /**
-     * Unique identifier of this <code>User</code> (not-null).
+     * Unique identifier of this <code>User</code> (not nullable).
      */
     @Column(name = "USERNAME", unique = true, nullable = false)
     private String username;
 
     /**
      * <code>true</code> if the <code>User</code> is authenticated by an
-     * external system, otherwise <code>false</code>. Default:{@value} .
+     * external system, otherwise <code>false</code>. Default {@value} .
      */
     @Column(name = "EXTERN")
     private boolean extern = false;
@@ -147,9 +145,9 @@ public class User extends AbstractEntity implements DomainObject<Long> {
 
     /**
      * <code>true</code> if this <code>User</code> is locked and has not the
-     * permission to login anymore. This field is used and set by the
-     * application itself, e.g. when the expirationDate of the account expires.
-     * Default:{@value} .
+     * permission to login anymore. This field is set by the backend
+     * application, e.g. when the expirationDate of the account expires. Default
+     * * {@value} .
      */
     @Column(name = "LOCKED")
     private boolean locked = false;
@@ -162,15 +160,15 @@ public class User extends AbstractEntity implements DomainObject<Long> {
 
     /**
      * <code>true</code> if the <code>User</code> is enabled. This field can be
-     * managed by the user interface to manually lock an User to login.
-     * Default:{@value} .
+     * managed by the UI application to lock an User manually. Default {@value}
+     * .
      */
     @Column(name = "C_ENABLED")
     private boolean enabled = true;
 
     /**
-     * Date when the account expires. After expiration, the <code>User</code>
-     * cannot login anymore.
+     * Date when the account expires. After account expiration, the
+     * <code>User</code> cannot login anymore.
      */
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "EXPIRATION_DATE")
@@ -191,13 +189,16 @@ public class User extends AbstractEntity implements DomainObject<Long> {
 
     /* ------------------- collection mapping ------------------- */
     /**
-     * More detail information about the <code>User</code>.
+     * More detail information of the <code>User</code>.
      */
     @Embedded
     private UserDetails userDetails = new UserDetails();
 
     /**
-     * List of {@link Role}s granted to the <code>User</code>.
+     * List of {@link Role}s assigned to the <code>User</code>. In a JPA context
+     * eager loaded.
+     * 
+     * @see javax.persistence.FetchType
      */
     @ManyToMany(mappedBy = "users", fetch = FetchType.EAGER, cascade = { CascadeType.ALL })
     private List<Role> roles = new ArrayList<Role>();
@@ -211,7 +212,10 @@ public class User extends AbstractEntity implements DomainObject<Long> {
     private List<UserPassword> passwords = new ArrayList<UserPassword>();
 
     /**
-     * All {@link UserPreference}s of the <code>User</code>.
+     * The {@link UserPreference}s of the <code>User</code>. In a JPA context
+     * eager loaded.
+     * 
+     * @see javax.persistence.FetchType
      */
     @OneToMany(fetch = FetchType.EAGER, cascade = { CascadeType.ALL })
     // @JoinTable(name = "COR_USER_PREFERENCE_JOIN", joinColumns =
@@ -233,8 +237,12 @@ public class User extends AbstractEntity implements DomainObject<Long> {
      * 
      * @param username
      *            The unique name of the user
+     * @throws IllegalArgumentException
+     *             when username is <code>null</code> or empty
      */
     public User(String username) {
+        super();
+        AssertUtils.isNotEmpty(username, "Not allowed to create an User with an empty username");
         this.username = username;
     }
 
@@ -245,8 +253,13 @@ public class User extends AbstractEntity implements DomainObject<Long> {
      *            The unique name of the user
      * @param password
      *            The password of the user
+     * @throws IllegalArgumentException
+     *             when username or password is <code>null</code> or empty
      */
     protected User(String username, String password) {
+        super();
+        AssertUtils.isNotEmpty(username, "Not allowed to create an User with an empty username");
+        AssertUtils.isNotEmpty(password, "Not allowed to create an User with an empty password");
         this.username = username;
         this.password = password;
     }
@@ -269,7 +282,7 @@ public class User extends AbstractEntity implements DomainObject<Long> {
     }
 
     /**
-     * Return the username of the <code>User</code> (unique).
+     * Return the unique username of the <code>User</code>.
      * 
      * @return The current username
      */
@@ -278,20 +291,19 @@ public class User extends AbstractEntity implements DomainObject<Long> {
     }
 
     /**
-     * Change the current username of the <code>User</code>.
+     * Change the username of the <code>User</code>.
      * 
      * @param username
      *            The new username to set
      */
-    public void setUsername(String username) {
+    protected void setUsername(String username) {
         this.username = username;
     }
 
     /**
      * Is the <code>User</code> authenticated by an external system?
      * 
-     * @return <code>true</code> if the <code>User</code> was authenticated by
-     *         an external system, otherwise <code>false</code>.
+     * @return <code>true</code> if so, otherwise <code>false</code>
      */
     public boolean isExternalUser() {
         return this.extern;
@@ -309,31 +321,18 @@ public class User extends AbstractEntity implements DomainObject<Long> {
     }
 
     /**
-     * Return the date when the password was changed the last time.
+     * Return the date when the password has changed recently.
      * 
-     * @return The date when the password has changed recently.
+     * @return The date when the password has changed recently
      */
     public Date getLastPasswordChange() {
         return lastPasswordChange == null ? null : new Date(lastPasswordChange.getTime());
     }
 
     /**
-     * This method does not change the password. It only exists for JavaBeans
-     * compliance to support the generation of ActionScript classes.
-     * 
-     * @param lastPasswordChange
-     *            Allowed to be null
-     */
-    public void setLastPasswordChange(Date lastPasswordChange) {
-        // TODO [scherrer] : remove this and change the AS class
-        // do nothing, only used for JavaBeans compliance to support generation
-        // of AS classes.
-    }
-
-    /**
      * Check if the <code>User</code> is locked.
      * 
-     * @return <code>true</code> when locked, otherwise <code>false</code>.
+     * @return <code>true</code> if locked, otherwise <code>false</code>
      */
     public boolean isLocked() {
         return this.locked;
@@ -344,7 +343,7 @@ public class User extends AbstractEntity implements DomainObject<Long> {
      * 
      * @param locked
      *            <code>true</code> to lock the <code>User</code>,
-     *            <code>false</code> to unlock.
+     *            <code>false</code> to unlock
      */
     public void setLocked(boolean locked) {
         this.locked = locked;
@@ -353,46 +352,46 @@ public class User extends AbstractEntity implements DomainObject<Long> {
     /**
      * Returns the current password of the <code>User</code>.
      * 
-     * @return The current password as String.
+     * @return The current password as String
      */
     public String getPassword() {
         return this.password;
     }
 
     /**
-     * Checks if the new password is a valid password and changes the password
-     * for the <code>User</code>.
+     * Checks if the new password is a valid and change the password of this
+     * <code>User</code>.
      * 
      * @param password
-     *            The new password for the <code>User</code>.
+     *            The new password of this <code>User</code>
      * @throws InvalidPasswordException
      *             in case changing the password is not allowed or the new
-     *             password is invalid.
+     *             password is not valid
      */
     public void setPassword(String password) throws InvalidPasswordException {
+        if (this.password != null && this.password.equals(password)) {
+            logger.debug("Trying to set the new password equals to the current password");
+            return;
+        }
         if (isPasswordValid(password)) {
-            if (this.password != null && this.password.equals(password)) {
-                logger.debug("Setting to the same as current password");
-            } else {
-                storeOldPassword(this.password);
-                this.password = password;
-                this.lastPasswordChange = new Date();
-            }
+            storeOldPassword(this.password);
+            this.password = password;
+            this.lastPasswordChange = new Date();
         } else {
-            throw new InvalidPasswordException("Password is not confirm with the defined password rules");
+            throw new InvalidPasswordException("Password is not confirm with the defined rules");
         }
     }
 
     /**
-     * Check whether the new password is in the history list of passwords.
+     * Check whether the new password is in the history of former passwords.
      * 
-     * @param pw
+     * @param password
      *            The password to verify
      * @return <code>true</code> if the password is valid, otherwise
      *         <code>false</code>
      */
-    protected boolean isPasswordValid(String pw) {
-        if (passwords.contains(new UserPassword(this, pw))) {
+    protected boolean isPasswordValid(String password) {
+        if (passwords.contains(new UserPassword(this, password))) {
             return false;
         }
         return true;
@@ -401,7 +400,7 @@ public class User extends AbstractEntity implements DomainObject<Long> {
     private void storeOldPassword(String oldPassword) {
         if (oldPassword == null || oldPassword.isEmpty()) {
             if (logger.isDebugEnabled()) {
-                logger.debug("In case the old password is null, dont store it in history");
+                logger.debug("If the old password is null, do not store it in history");
             }
             return;
         }
@@ -414,7 +413,7 @@ public class User extends AbstractEntity implements DomainObject<Long> {
                 }
             });
             if (logger.isDebugEnabled()) {
-                logger.debug("Remove old password from list:" + passwords.get(passwords.size() - 1));
+                logger.debug("Remove the old password from the history: " + passwords.get(passwords.size() - 1));
             }
             UserPassword pw = passwords.get(passwords.size() - 1);
             pw.setUser(null);
@@ -423,10 +422,10 @@ public class User extends AbstractEntity implements DomainObject<Long> {
     }
 
     /**
-     * Determines whether the <code>User</code> is enabled.
+     * Determines whether the <code>User</code> is enabled or not.
      * 
      * @return <code>true</code> if the <code>User</code> is enabled, otherwise
-     *         <code>false</code>.
+     *         <code>false</code>
      */
     public boolean isEnabled() {
         return this.enabled;
@@ -436,47 +435,45 @@ public class User extends AbstractEntity implements DomainObject<Long> {
      * Enable or disable the <code>User</code>.
      * 
      * @param enabled
-     *            <code>true</code> when enabled, otherwise <code>false</code>.
+     *            <code>true</code> when enabled, otherwise <code>false</code>
      */
     public void setEnabled(boolean enabled) {
         this.enabled = enabled;
     }
 
     /**
-     * Returns the date when the account expires.
+     * Return the date when the account expires.
      * 
-     * @return The expiration date.
+     * @return The expiration date
      */
     public Date getExpirationDate() {
-        return expirationDate == null ? null : new Date(expirationDate.getTime());
+        return expirationDate;
     }
 
     /**
-     * Change the timepoint until the account expires.
+     * Change the date when the account expires.
      * 
      * @param expirationDate
-     *            The new expiration date to sez.
+     *            The new expiration date to set
      */
     public void setExpirationDate(Date expirationDate) {
-        if (expirationDate != null) {
-            this.expirationDate = new Date(expirationDate.getTime());
-        }
+        this.expirationDate = expirationDate;
     }
 
     /**
-     * Returns a list of all granted {@link Role}s.
+     * Returns a list of granted {@link Role}s.
      * 
-     * @return The list of granted {@link Role}s.
+     * @return The list of granted {@link Role}s
      */
     public List<Role> getRoles() {
         return this.roles;
     }
 
     /**
-     * Flatten roles and grants and return a list of all grants this user has
-     * assigned.
+     * Flatten {@link Role}s and {@link Grant}s and return an unmodifiable list
+     * of all {@link Grant}s assigned to this <code>User</code>.
      * 
-     * @return A list of all grants
+     * @return A list of all {@link Grant}s
      */
     public List<SecurityObject> getGrants() {
         List<SecurityObject> grants = new ArrayList<SecurityObject>();
@@ -487,29 +484,29 @@ public class User extends AbstractEntity implements DomainObject<Long> {
     }
 
     /**
-     * Add a new {@link Role} to the list of all {@link Role}s.
+     * Add a new {@link Role} to the list of {@link Role}s.
      * 
      * @param role
      *            The new {@link Role} to add
-     * @return <code>true</code> as specified by {@link Collection#add(Object)}
+     * @return see {@link Collection#add(Object)}
      */
     public boolean addRole(Role role) {
         return this.roles.add(role);
     }
 
     /**
-     * Define the {@link Role}s of the <code>User</code>. Existing {@link Role}s
+     * Set the {@link Role}s of this <code>User</code>. Existing {@link Role}s
      * will be overridden.
      * 
      * @param roles
-     *            The new list of {@link Role}s.
+     *            The new list of {@link Role}s
      */
     public void setRoles(List<Role> roles) {
         this.roles = roles;
     }
 
     /**
-     * Returns the fullname of the <code>User</code>.
+     * Return the fullname of the <code>User</code>.
      * 
      * @return The current fullname
      */
@@ -521,38 +518,25 @@ public class User extends AbstractEntity implements DomainObject<Long> {
      * Change the fullname of the <code>User</code>.
      * 
      * @param fullname
-     *            The new name to set
+     *            The new fullname to set
      */
     public void setFullname(String fullname) {
         this.fullname = fullname;
     }
 
     /**
-     * Returns a list of recently used passwords.
+     * Return a list of recently used passwords.
      * 
-     * @return A list of recently used passwords.
+     * @return A list of recently used passwords
      */
     public List<UserPassword> getPasswords() {
         return this.passwords;
     }
 
     /**
-     * The implementation does nothing. The method is defined to be compliant
-     * with JavaBeans and to generate appropriate ActionScript classes.
+     * Return the details of the <code>User</code>.
      * 
-     * @param passwords
-     *            A list of {@link UserPassword}s
-     */
-    @Deprecated
-    public void setPasswords(List<UserPassword> passwords) {
-        // do nothing, only used for JavaBeans compliance to support generation
-        // of AS classes.
-    }
-
-    /**
-     * Return details of the <code>User</code>.
-     * 
-     * @return The userDetails.
+     * @return The userDetails
      */
     public UserDetails getUserDetails() {
         return userDetails;
@@ -562,16 +546,16 @@ public class User extends AbstractEntity implements DomainObject<Long> {
      * Assign some details to the <code>User</code>.
      * 
      * @param userDetails
-     *            The userDetails to be set.
+     *            The userDetails to set
      */
     public void setUserDetails(UserDetails userDetails) {
         this.userDetails = userDetails;
     }
 
     /**
-     * Get all {@link UserPreference}s of the <code>User</code>.
+     * Get all {@link UserPreference}s of this <code>User</code>.
      * 
-     * @return A set of all {@link UserPreference}s.
+     * @return A set of all {@link UserPreference}s
      */
     public Set<UserPreference> getPreferences() {
         return preferences;
@@ -582,7 +566,7 @@ public class User extends AbstractEntity implements DomainObject<Long> {
      * existing {@link UserPreference}s will be overridden.
      * 
      * @param preferences
-     *            A set of {@link UserPreference}s to be set.
+     *            A set of {@link UserPreference}s to set
      */
     public void setPreferences(Set<UserPreference> preferences) {
         this.preferences = preferences;
@@ -599,6 +583,8 @@ public class User extends AbstractEntity implements DomainObject<Long> {
     /**
      * {@inheritDoc}
      * 
+     * Does not call the superclass. Uses the username for calculation.
+     * 
      * @see java.lang.Object#hashCode()
      */
     @Override
@@ -611,6 +597,8 @@ public class User extends AbstractEntity implements DomainObject<Long> {
 
     /**
      * {@inheritDoc}
+     * 
+     * Uses the username for comparison.
      * 
      * @see java.lang.Object#equals(java.lang.Object)
      */

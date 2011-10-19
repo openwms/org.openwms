@@ -26,7 +26,7 @@ import javax.persistence.Column;
 import javax.persistence.Embeddable;
 
 /**
- * An I18nSet. Encapsulates different languages. Used as an embedded value type
+ * An I18nSet encapsulates different languages. Used as an embedded value type
  * in {@link org.openwms.core.domain.system.I18n}
  * 
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
@@ -42,10 +42,19 @@ public class I18nSet implements Serializable {
      * Length of each column.
      */
     public static final int LENGTH = 1024;
+    /**
+     * American English language.
+     */
     @Column(name = "EN_US", length = LENGTH)
     private String enUs;
+    /**
+     * German language.
+     */
     @Column(name = "DE_DE", length = LENGTH)
     private String deDe;
+    /**
+     * French language.
+     */
     @Column(name = "FR_FR", length = LENGTH)
     private String frFr;
 
@@ -60,9 +69,9 @@ public class I18nSet implements Serializable {
      * Create a new I18nSet.
      * 
      * @param enUs
-     *            US English language
+     *            American English language
      * @param deDe
-     *            German Germany language
+     *            German language
      * @param frFr
      *            French language
      */

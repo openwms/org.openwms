@@ -24,9 +24,9 @@ import java.io.Serializable;
 import java.util.Arrays;
 
 /**
- * A PreferenceKey can be used as key in a Map like structure to group
- * preference instances. Unfortunately this class cannot be implemented as a JPA
- * embeddable, because JPA does not support inheritance of embeddables.
+ * A PreferenceKey can be used as a unique key object to group preference
+ * instances. Unfortunately this class cannot be implemented as a JPA
+ * embeddable, because of JPA does not support inheritance of embeddables.
  * 
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  * @version $Revision: $
@@ -38,7 +38,7 @@ public class PreferenceKey implements Serializable {
     private Serializable[] fields;
 
     /**
-     * Create a new PreferenceKey with a variable array of fields.
+     * Create a new <code>PreferenceKey</code> with a variable array of fields.
      * 
      * @param fields
      *            The array of fields to store as keys
@@ -48,9 +48,10 @@ public class PreferenceKey implements Serializable {
     }
 
     /**
-     * Use the hashCode of all fields.
+     * {@inheritDoc}
      * 
-     * @return hashCode
+     * Use of all fields for calculation of the hashCode.
+     * 
      * @see java.lang.Object#hashCode()
      */
     @Override
@@ -62,11 +63,10 @@ public class PreferenceKey implements Serializable {
     }
 
     /**
+     * {@inheritDoc}
+     * 
      * Use all fields for comparison.
      * 
-     * @param obj
-     *            The other object to compare to
-     * @return See java.lang.Object#equals(java.lang.Object)
      * @see java.lang.Object#equals(java.lang.Object)
      */
     @Override

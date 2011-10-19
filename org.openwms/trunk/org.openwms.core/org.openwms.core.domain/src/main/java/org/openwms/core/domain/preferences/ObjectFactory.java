@@ -41,7 +41,7 @@ public class ObjectFactory {
      * schema derived classes for package: org.openwms.core.domain.preferences.
      */
     public ObjectFactory() {
-
+        super();
     }
 
     /**

@@ -45,9 +45,9 @@ import org.openwms.core.util.validation.AssertUtils;
  * @since 0.1
  */
 @Entity
-@Table(name = "COR_I18N", uniqueConstraints = @UniqueConstraint(columnNames = { "KEY", "MODULE" }))
+@Table(name = "COR_I18N", uniqueConstraints = @UniqueConstraint(columnNames = { "C_KEY", "C_MODULE_NAME" }))
 @NamedQueries({
-        @NamedQuery(name = I18n.NQ_FIND_ALL, query = "select i from I18n i order by i.module, i.key"),
+        @NamedQuery(name = I18n.NQ_FIND_ALL, query = "select i from I18n i order by i.moduleName, i.key"),
         @NamedQuery(name = I18n.NQ_FIND_BY_UNIQUE_QUERY, query = "select i from I18n i where i.key = :key and i.moduleName = :moduleName") })
 public class I18n extends AbstractEntity implements DomainObject<Long> {
 

@@ -35,10 +35,11 @@ import javax.xml.bind.annotation.XmlType;
 import org.openwms.core.domain.system.AbstractPreference;
 import org.openwms.core.domain.system.PreferenceKey;
 import org.openwms.core.domain.system.PropertyScope;
+import org.openwms.core.util.validation.AssertUtils;
 
 /**
- * A RolePreference. Used to store settings in Role scope, only valid for the
- * assigned Role.
+ * A RolePreference is used to store settings in Role scope and is only valid
+ * for the assigned Role.
  * 
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  * @version $Revision: $
@@ -52,7 +53,7 @@ public class RolePreference extends AbstractPreference {
 
     private static final long serialVersionUID = 8267024349554036680L;
     /**
-     * Query to find all <code>RolePreference</code>s.
+     * Query to find all <code>RolePreference</code>s. Name is {@value} .
      */
     public static final String NQ_FIND_ALL = "RolePreference" + FIND_ALL;
     /**
@@ -78,23 +79,27 @@ public class RolePreference extends AbstractPreference {
     private String key;
 
     /**
-     * Create a new RolePreference.
+     * Create a new RolePreference. Defined for the JAXB implementation.
      */
     RolePreference() {
         super();
     }
 
     /**
-     * Create a new RolePreference. Defined for the JAXB implementation.
+     * Create a new RolePreference.
      * 
      * @param rolename
      *            The name of the Role that owns this preference
      * @param key
      *            the key
+     * @throws IllegalArgumentException
+     *             when rolename or key is <code>null</code> or empty
      */
     public RolePreference(String rolename, String key) {
         // Called from the client.
         super();
+        AssertUtils.isNotEmpty(owner, "Not allowed to create a RolePreference with an empty rolename");
+        AssertUtils.isNotEmpty(key, "Not allowed to create a RolePreference with an empty key");
         this.owner = rolename;
         this.key = key;
     }
@@ -109,9 +114,9 @@ public class RolePreference extends AbstractPreference {
     }
 
     /**
-     * Get the owner.
+     * Get the name of the <code>Role</code> as String.
      * 
-     * @return the owner.
+     * @return the rolename.
      */
     public String getOwner() {
         return owner;
@@ -139,6 +144,9 @@ public class RolePreference extends AbstractPreference {
 
     /**
      * {@inheritDoc}
+     * 
+     * Uses the type, owner and the key to create a {@link PreferenceKey}
+     * instance.
      * 
      * @see org.openwms.core.domain.system.AbstractPreference#getPrefKey()
      */
@@ -203,5 +211,4 @@ public class RolePreference extends AbstractPreference {
         }
         return true;
     }
-
 }

@@ -30,9 +30,9 @@ package org.openwms.core.domain.values;
 public interface ImageProvider {
 
     /**
-     * Returns an image of the <code>User</code>.
+     * Return the image of the <code>User</code>.
      * 
-     * @return The current image.
+     * @return The current image
      */
     byte[] getImage();
 
@@ -40,8 +40,7 @@ public interface ImageProvider {
      * Change the image of the <code>User</code>.
      * 
      * @param image
-     *            The new image to set.
+     *            The new image to set
      */
     void setImage(byte[] image);
-
 }

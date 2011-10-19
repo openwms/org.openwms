@@ -18,52 +18,32 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
-package org.openwms.web.flex.client.util {
+package org.openwms.web.flex.client.helper {
 
-    import mx.resources.IResourceManager;
     import mx.resources.ResourceManager;
+    import mx.utils.ArrayUtil;
 
     [Name]
     [Bindable]
     /**
-     * An I18nUtil is an utility class for i18n translations.
+     * An I18nHelper is a helper class for i18n functionality.
      *
      * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
-     * @version $Revision$
+     * @version $Revision: 1468 $
      * @since 0.1
      */
-    public class I18nUtil {
-
-        /**
-         * Shortcut for ResourceBundle appError to refer to all application errors.
-         */
-        public static const APP_ERROR : String = "appError";
-
-        /**
-         * Shortcut for ResourceBundle appMain to all texts and messages in the main application.
-         */
-        public static const APP_MAIN : String = "appMain";
-
-        /**
-         * Shortcut for ResourceBundle appEntity to store all property names of entites classes in the main application.
-         */
-        public static const APP_ENTITY : String = "appEntity";
-
-        /**
-         * Shortcut for ResourceBundle corLibError to refer to all defined errors within the core library.
-         */
-        public static const COR_LIB_ERROR : String = "corLibError";
-
-        /**
-         * Shortcut for ResourceBundle corLibMain to all texts and messages in the core library.
-         */
-        public static const COR_LIB_MAIN : String = "corLibMain";
+    public class I18nHelper {
 
         /**
          * Constructor.
          */
-        public function I18nUtil() : void {
+        public function I18nHelper() : void {
             super();
+        }
+        
+        public static function switchLanguage(language : String) : void {
+            ResourceManager.getInstance().localeChain = [language];
+            ResourceManager.getInstance().update();
         }
 
         /**

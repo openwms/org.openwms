@@ -21,8 +21,8 @@
 package org.openwms.core.exception;
 
 /**
- * An InvalidPasswordException - indicates that a password is not confirm with
- * the defined rules.
+ * An InvalidPasswordException indicates that a password is not confirm with the
+ * defined rules.
  * 
  * @author <a href="mailto:russelltina@users.sourceforge.net">Tina Russell</a>
  * @version $Revision$
@@ -70,5 +70,4 @@ public class InvalidPasswordException extends DomainModelException {
     public InvalidPasswordException(String message, Throwable cause) {
         super(message, cause);
     }
-
 }

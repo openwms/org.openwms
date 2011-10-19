@@ -38,5 +38,10 @@ package org.openwms.web.flex.client.model {
          * Name of the UserManagement backend service.
          */
         public static const USERMGMT_SERVICE : String = "userService";
+        
+        /**
+         * Name of the Preference used as default language setting.
+         */
+        public static const DEFAULT_LANG : String = "defaultLanguage";
     }
 }

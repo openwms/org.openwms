@@ -99,7 +99,8 @@ package org.openwms.web.flex.client.business {
         }
 
         private function onUserAdded(event : TideResultEvent) : void {
-            var user : User = UserHelper.initializeUser(User(event.result));
+            var user : User = event.result as User;
+            user.resetUsername();
             modelLocator.selectedUser = user;
             //loadUsers();
             dispatchEvent(new UserEvent(UserEvent.USER_ADDED));

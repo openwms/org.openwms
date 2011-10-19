@@ -23,7 +23,7 @@ package org.openwms.web.flex.client.view {
     import flash.display.DisplayObject;
     import flash.events.Event;
     import flash.system.ApplicationDomain;
-
+    
     import mx.collections.ArrayCollection;
     import mx.collections.XMLListCollection;
     import mx.containers.ViewStack;
@@ -41,7 +41,7 @@ package org.openwms.web.flex.client.view {
     import mx.modules.ModuleManager;
     import mx.resources.IResourceManager;
     import mx.resources.ResourceManager;
-
+    
     import org.granite.rpc.remoting.mxml.SecureRemoteObject;
     import org.granite.tide.spring.Context;
     import org.granite.tide.spring.Identity;
@@ -60,6 +60,8 @@ package org.openwms.web.flex.client.view {
     import org.openwms.web.flex.client.event.I18nEvent;
     import org.openwms.web.flex.client.event.PropertyEvent;
     import org.openwms.web.flex.client.event.SwitchScreenEvent;
+    import org.openwms.web.flex.client.helper.I18nHelper;
+    import org.openwms.web.flex.client.model.Constants;
     import org.openwms.web.flex.client.model.I18nMap;
     import org.openwms.web.flex.client.model.ModelLocator;
     import org.openwms.web.flex.client.model.PreferencesModel;
@@ -94,6 +96,13 @@ package org.openwms.web.flex.client.view {
          * Injected Module controller.
          */
         public var moduleLocator : ModuleLocator;
+
+        [Inject]
+        [Bindable]
+        /**
+         * Injected Module controller.
+         */
+        public var prefs : PreferencesModel;
 
         [Inject]
         [Bindable]
@@ -186,7 +195,7 @@ package org.openwms.web.flex.client.view {
          */
         public function preInit(event : Event) : void {
             Spring.getInstance().initApplication();
-            rman.localeChain = [modelLocator.availableLocales[0]];
+            I18nHelper.switchLanguage(modelLocator.availableLocales[1]);
         }
 
         /**
@@ -198,7 +207,8 @@ package org.openwms.web.flex.client.view {
             setupServices([moduleService, roleService, userService, i18nService, configurationService, securityService]);
             dispatchEvent(new I18nEvent(I18nEvent.LOAD_ALL));
             dispatchEvent(new PropertyEvent(PropertyEvent.LOAD_ALL_PROPERTIES));
-            tideContext.raiseEvent(I18nEvent.LOAD_ALL);
+            //tideContext.raiseEvent(PropertyEvent.LOAD_ALL_PROPERTIES);
+            //tideContext.raiseEvent(I18nEvent.LOAD_ALL);
             readAndMergeGrantsList();
         }
 
@@ -231,6 +241,18 @@ package org.openwms.web.flex.client.view {
             dispatchEvent(new SwitchScreenEvent(event.item.@action));
             modelLocator.actualView = event.item.@action;
             appViewStack.selectedIndex = appViewStack.getChildIndex(appViewStack.getChildByName(event.item.@action));
+        }
+
+        [Observer("PROPERTY.PROPERTIES_LOADED")]
+        /**
+         * @param event Unused
+         */
+        public function onPropertiesLoaded(event : PropertyEvent) : void {
+            // when props are loaded, go and change to the default language
+            if (prefs.getAppPreference(Constants.DEFAULT_LANG) != null) {
+                I18nHelper.switchLanguage(prefs.getAppPreference(Constants.DEFAULT_LANG).value);
+            } 
+            
         }
 
         [Observer("APP_LOGOUT")]

@@ -60,7 +60,7 @@ public abstract class AbstractPreference extends AbstractEntity implements Domai
 
     private static final long serialVersionUID = 4396571221433949201L;
     /**
-     * Query to find all <code>AbstractPreference</code>s.
+     * Query to find all <code>AbstractPreference</code>s. Name is {@value} .
      */
     public static final String NQ_FIND_ALL = "AbstractPreference" + FIND_ALL;
 

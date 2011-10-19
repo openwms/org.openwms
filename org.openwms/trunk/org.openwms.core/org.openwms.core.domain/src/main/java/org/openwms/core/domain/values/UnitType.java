@@ -34,14 +34,14 @@ public interface UnitType {
     /**
      * Return the value of the base unit.
      * 
-     * @return The value of the base unit of the weight
+     * @return The value of the base unit
      */
     long getBaseUnitValue();
 
     /**
      * Return all sub types of the <code>UnitType</code>.
      * 
-     * @return a list of sub types.
+     * @return a list of sub types
      */
     List<UnitType> getAll();
 

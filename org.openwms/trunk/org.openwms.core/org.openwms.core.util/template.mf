@@ -5,5 +5,5 @@ Bundle-Name: ${project.artifactId}
 Bundle-ManifestVersion: 2
 Bundle-SymbolicName: ${project.artifactId}
 Import-Library: 
- org.springframework.spring;version="${spring.version}"
+ org.springframework.spring;version="${osgi.spring}"
  

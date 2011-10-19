@@ -45,6 +45,10 @@ package org.openwms.core.domain.system.usermanagement {
             this._extern = false;
             this._userDetails = new UserDetails();
         }
+
+        public function resetUsername() : void {
+            _username = "";
+        }
     }
 }
 

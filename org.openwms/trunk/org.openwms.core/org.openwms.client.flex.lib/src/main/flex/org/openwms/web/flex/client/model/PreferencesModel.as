@@ -20,9 +20,12 @@
  */
 package org.openwms.web.flex.client.model {
 
+    import flash.utils.Dictionary;
+    
     import mx.collections.ArrayCollection;
-
+    
     import org.granite.tide.events.TideResultEvent;
+    import org.granite.util.DictionaryUtil;
     import org.openwms.core.domain.preferences.ApplicationPreference;
     import org.openwms.core.domain.preferences.ModulePreference;
     import org.openwms.core.domain.system.AbstractPreference;
@@ -48,7 +51,7 @@ package org.openwms.web.flex.client.model {
          * Inject the model.
          */
         public var modelLocator : ModelLocator;
-        public var appPrefs : ArrayCollection = new ArrayCollection();
+        private var appPrefs : Dictionary = new Dictionary();
         public var modulePrefs : ArrayCollection = new ArrayCollection();
         public var rolePrefs : ArrayCollection = new ArrayCollection();
         public var userPrefs : ArrayCollection = new ArrayCollection();
@@ -68,7 +71,8 @@ package org.openwms.web.flex.client.model {
          * Clear all collections.
          */
         public function clearAll() : void {
-            appPrefs.removeAll();
+            appPrefs = new Dictionary();
+            //appPrefs.removeAll();
             modulePrefs.removeAll();
             rolePrefs.removeAll();
             userPrefs.removeAll();
@@ -84,7 +88,9 @@ package org.openwms.web.flex.client.model {
             this.clearAll();
             for each (var pref : AbstractPreference in preferences) {
                 if (pref is ApplicationPreference) {
-                    this.appPrefs.addItem(pref);
+                    trace("Put into appprefs:"+(pref as ApplicationPreference).key);
+                    appPrefs[(pref as ApplicationPreference).key] = pref;
+                    //this.appPrefs.addItem(pref);
                 } else if (pref is ModulePreference) {
                     this.modulePrefs.addItem(pref);
                 } else if (pref is RolePreference) {
@@ -93,6 +99,18 @@ package org.openwms.web.flex.client.model {
                     this.userPrefs.addItem(pref);
                 }
             }
+        }
+        
+        public function getAppPreference(name : String) : ApplicationPreference {
+            return appPrefs[name];
+        }
+        
+        public function get appPrefsAsCollection() : ArrayCollection {
+            var ar : Array = DictionaryUtil.getValues(appPrefs);
+            if (ar.length > 0) {
+                return new ArrayCollection(ar);
+            }
+            return null;
         }
 
         /**

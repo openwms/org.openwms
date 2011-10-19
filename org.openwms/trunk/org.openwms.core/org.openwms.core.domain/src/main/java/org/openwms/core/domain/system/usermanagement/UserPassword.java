@@ -92,13 +92,15 @@ public class UserPassword extends AbstractEntity implements DomainObject<Long> {
      * Create a new <code>UserPassword</code>.
      * 
      * @param user
-     *            The {@link User} to assign.
+     *            The {@link User} to assign
      * @param password
-     *            The password as String to assign.
+     *            The password as String to assign
+     * @throws IllegalArgumentException
+     *             when user or password is <code>null</code> or empty
      */
     public UserPassword(User user, String password) {
         AssertUtils.notNull(user, "User must not be null");
-        AssertUtils.notNull(password, "Password must not be null");
+        AssertUtils.isNotEmpty(password, "Password must not be null");
         this.user = user;
         this.password = password;
     }
@@ -119,9 +121,9 @@ public class UserPassword extends AbstractEntity implements DomainObject<Long> {
     }
 
     /**
-     * Returns the {@link User} of this password.
+     * Return the {@link User} of this password.
      * 
-     * @return The {@link User} of this password.
+     * @return The {@link User} of this password
      */
     public User getUser() {
         return this.user;
@@ -131,33 +133,36 @@ public class UserPassword extends AbstractEntity implements DomainObject<Long> {
      * Change the {@link User}.
      * 
      * @param user
-     *            The new {@link User}.
+     *            The new {@link User}
      */
     public void setUser(User user) {
         this.user = user;
     }
 
     /**
-     * Returns the current password.
+     * Return the current password.
      * 
-     * @return The current password.
+     * @return The current password
      */
     public String getPassword() {
         return this.password;
     }
 
     /**
-     * Returns the date of the last password change.
+     * Return the date of the last password change.
      * 
-     * @return The date when the password was changed.
+     * @return The date when the password has changed
      */
     public Date getPasswordChanged() {
-        return passwordChanged == null ? null : new Date(passwordChanged.getTime());
+        return passwordChanged;
     }
 
     /**
+     * {@inheritDoc}
+     * 
+     * Does not call the superclass. Uses the password and user for calculation.
+     * 
      * @see java.lang.Object#hashCode()
-     * @return the hashCode
      */
     @Override
     public int hashCode() {
@@ -169,14 +174,14 @@ public class UserPassword extends AbstractEntity implements DomainObject<Long> {
     }
 
     /**
+     * 
+     * {@inheritDoc}
+     * 
      * Comparison is done with the business-key (user and password).
      * {@link AbstractEntity#equals(Object)} is not called to avoid comparison
      * with the UUID.
      * 
      * @see AbstractEntity#equals(java.lang.Object)
-     * @param obj
-     *            The other to compare
-     * @return <code>true</code> if equals otherwise <code>false</code>
      */
     @Override
     public boolean equals(Object obj) {

@@ -21,7 +21,7 @@
 package org.openwms.core.exception;
 
 /**
- * A StateChangeException indicates that it was not allowed to switch the state
+ * A StateChangeException indicates that it is not allowed to switch the state
  * of an entity.
  * 
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
@@ -63,5 +63,4 @@ public class StateChangeException extends DomainModelException {
     public StateChangeException(String message, Throwable cause) {
         super(message, cause);
     }
-
 }

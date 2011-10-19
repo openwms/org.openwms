@@ -5,7 +5,7 @@ Bundle-Name: org.openwms.core.integration.eclipselink
 Bundle-ManifestVersion: 2
 Bundle-SymbolicName: org.openwms.core.integration.eclipselink
 Import-Library: 
- org.springframework.spring;version="${spring.version}",
+ org.springframework.spring;version="${osgi.spring}",
  org.eclipse.persistence;version="1.0.0"
 Import-Bundle: 
  org.springframework.instrument;version="3.0.0.RELEASE"

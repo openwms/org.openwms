@@ -28,6 +28,16 @@ package org.openwms.core.domain.system {
      * @version $Revision$
      * @since 0.1
      */
-    public class I18n extends I18nBase { }
+    public class I18n extends I18nBase {
+
+        /**
+         * Return the concatenated key.
+         * 
+         * @return the concatenated key
+         */
+        public function get cKey():String {
+            return _cKey;
+        }
+    }
 }
 

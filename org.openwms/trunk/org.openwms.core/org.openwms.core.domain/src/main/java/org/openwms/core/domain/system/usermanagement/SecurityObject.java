@@ -42,6 +42,8 @@ import org.openwms.core.util.validation.AssertUtils;
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  * @version $Revision$
  * @since 0.1
+ * @see org.openwms.core.domain.system.usermanagement.Role
+ * @see org.openwms.core.domain.system.usermanagement.Grant
  */
 @Entity
 @Table(name = "COR_ROLE")
@@ -54,14 +56,14 @@ public class SecurityObject extends AbstractEntity implements DomainObject<Long>
     private static final long serialVersionUID = 7585736035228078754L;
 
     /**
-     * Query to find all {@link SecurityObject}s.
+     * Query to find all {@link SecurityObject}s. Name is {@value} .
      */
     public static final String NQ_FIND_ALL = "SecurityObject.findAll";
 
     /**
      * Query to find <strong>one</strong> {@link SecurityObject} by its natural
      * key. <li>Query parameter index <strong>1</strong> : The name of the
-     * <code>SecurityObject</code> to search for.</li>
+     * <code>SecurityObject</code> to search for.</li></br> Name is {@value} .
      */
     public static final String NQ_FIND_BY_UNIQUE_QUERY = "SecurityObject.findByRolename";
 

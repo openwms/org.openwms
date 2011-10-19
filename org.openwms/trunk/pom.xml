@@ -364,6 +364,7 @@
         <moduleDir>.</moduleDir>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <jdkVersion>1.6</jdkVersion>
+        <apache.common.lang.version>2.5.0</apache.common.lang.version>
         <spring.version>3.0.6.RELEASE</spring.version>
         <spring.osgi.version>1.2.1</spring.osgi.version>
         <spring.security.version>3.0.4.RELEASE</spring.security.version>
@@ -375,6 +376,7 @@
         <maven.compile.targetLevel>${jdkVersion}</maven.compile.targetLevel>
         <maven.compile.sourceLevel>${jdkVersion}</maven.compile.sourceLevel>
         <!-- OSGi header versions -->
+        <osgi.apache.common.lang.version>${apache.common.lang.version}</osgi.apache.common.lang.version>
         <osgi.spring>${spring.version}</osgi.spring>
         <osgi.hibernate>3.3.2.GA</osgi.hibernate>
         <osgi.hibernate.annotations>3.4.0.GA-A</osgi.hibernate.annotations>
@@ -1032,7 +1034,7 @@
             <dependency>
                 <groupId>org.apache.commons</groupId>
                 <artifactId>com.springsource.org.apache.commons.lang</artifactId>
-                <version>2.5.0</version>
+                <version>${apache.common.lang.version}</version>
             </dependency>
             <dependency>
                 <groupId>org.apache.commons</groupId>

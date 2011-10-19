@@ -50,11 +50,5 @@ package org.openwms.web.flex.client.util {
             }
             return false;
         }
-
-        public static function initializeUser(user : User) : User {
-            user.username = "";
-            // user.preferences.addItem(new UserPreference("defaultLanguage", "en_US"));
-            return user;
-        }
     }
 }

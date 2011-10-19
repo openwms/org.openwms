@@ -37,14 +37,15 @@ public class SystemUser extends User {
     private static final long serialVersionUID = -7575215406745881912L;
 
     /**
-     * The defined fullname of the system user.
+     * The defined fullname of the system user. Default {@value} .
      */
     public static final String SYSTEM_USERNAME = "OPENWMS";
 
     /**
      * Create a new SystemUser.
      */
-    protected SystemUser() {
+    @SuppressWarnings("unused")
+    private SystemUser() {
         super();
     }
 

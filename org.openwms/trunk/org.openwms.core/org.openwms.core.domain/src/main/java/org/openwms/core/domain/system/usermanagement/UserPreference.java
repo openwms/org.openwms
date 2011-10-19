@@ -94,7 +94,7 @@ public class UserPreference extends AbstractPreference {
      * @param key
      *            The key of this preference
      * @throws IllegalArgumentException
-     *             when key or owner is <code>null</code> or empty
+     *             when owner or key is <code>null</code> or empty
      */
     public UserPreference(String owner, String key) {
         // Called from the client.
