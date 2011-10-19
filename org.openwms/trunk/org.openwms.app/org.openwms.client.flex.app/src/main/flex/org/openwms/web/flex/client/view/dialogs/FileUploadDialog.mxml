@@ -22,7 +22,7 @@
  */
 -->
 <mx:Panel xmlns:mx="http://www.adobe.com/2006/mxml" verticalScrollPolicy="off" horizontalScrollPolicy="off" 
- show="onShow();" creationComplete="onShow();" title="{I18nUtil.trans(I18nUtil.APP_MAIN, 'txt_file_upload_title')}" fontSize="12" width="400" height="269">
+ show="onShow();" creationComplete="onShow();" title="{I18nUtil.trans(I18nUtil.APP_MAIN, 'txt_file_upload_title')}" fontSize="12" height="269">
 
     <mx:Metadata>
         [Name]
@@ -153,8 +153,8 @@
     		
     	]]>
 	</mx:Script>
-	<mx:Canvas width="375">
-		<mx:Form y="10" height="160" width="355">
+	<mx:Canvas>
+		<mx:Form y="10" height="160">
 			<mx:FormItem label="{I18nUtil.trans(I18nUtil.APP_MAIN, 'lbl_file_upload_url')}" fontSize="14" width="100%">
 				<mx:TextInput id="uploadURL" width="100%" color="#2c2c2c" text="{'/upload'}" enabled="false" />
 			</mx:FormItem>
@@ -168,8 +168,8 @@
 		</mx:Form>
 	</mx:Canvas>
 	<mx:HBox width="100%" horizontalAlign="center">
-		<mx:Button id="browseBtn" width="80" label="{I18nUtil.trans(I18nUtil.APP_MAIN, 'btn_browse')}" click="browse(event);" />
-		<mx:Button id="uploadBtn" width="80" label="{I18nUtil.trans(I18nUtil.APP_MAIN, 'btn_upload')}" enabled="false" click="submit(event);" />
-		<mx:Button id="closeBtn" width="80" label="{I18nUtil.trans(I18nUtil.APP_MAIN, 'btn_close')}" enabled="true" click="cancel(event);" />
+		<mx:Button id="browseBtn" label="{I18nUtil.trans(I18nUtil.APP_MAIN, 'btn_browse')}" click="browse(event);" />
+		<mx:Button id="uploadBtn" label="{I18nUtil.trans(I18nUtil.APP_MAIN, 'btn_upload')}" enabled="false" click="submit(event);" />
+		<mx:Button id="closeBtn" label="{I18nUtil.trans(I18nUtil.APP_MAIN, 'btn_close')}" enabled="true" click="cancel(event);" />
 	</mx:HBox>
 </mx:Panel>

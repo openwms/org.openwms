@@ -22,7 +22,7 @@
  */
 -->
 <mx:TitleWindow xmlns:mx="http://www.adobe.com/2006/mxml" title="{I18nUtil.trans(I18nUtil.APP_MAIN, 'txt_create_role_title')}"
- backgroundColor="#F1F07C" creationComplete="init();" width="400" height="250" layout="absolute">
+ backgroundColor="#F1F07C" creationComplete="init();" height="250" layout="absolute">
 
     <mx:Metadata>
         [Name]
@@ -129,13 +129,13 @@
     
     <mx:StringValidator id="stringVal" minLength="1" source="{nameTxt}" property="text"/>
     
-	<mx:Label x="10" y="10" text="{I18nUtil.trans(I18nUtil.APP_MAIN, 'entity_role_name')}" fontSize="22" width="140" textAlign="right"/>
+	<mx:Label x="10" y="10" text="{I18nUtil.trans(I18nUtil.APP_MAIN, 'entity_role_name')}" fontSize="22" textAlign="right"/>
     <mx:TextInput id="nameTxt" width="200" fontSize="22" x="158" y="8" />
 
-	<mx:Label x="10" y="51" text="{I18nUtil.trans(I18nUtil.APP_MAIN, 'entity_role_description')}" fontSize="22" width="140" textAlign="right"/>
+	<mx:Label x="10" y="51" text="{I18nUtil.trans(I18nUtil.APP_MAIN, 'entity_role_description')}" fontSize="22" textAlign="right"/>
     <mx:TextArea id="descriptionTxt" x="158" y="50" width="200" height="73" fontSize="22" />
 
-	<mx:HBox x="0" y="175" width="100%" horizontalAlign="center">
+	<mx:HBox x="0" y="175" horizontalAlign="center" width="100%">
 		<mx:Button id="createBtn" label="{I18nUtil.trans(I18nUtil.APP_MAIN, 'btn_create')}" fontSize="12" click="submit()"/>
 		<mx:Button id="cancelBtn" label="{I18nUtil.trans(I18nUtil.APP_MAIN, 'btn_cancel')}" fontSize="12" click="cancel(event)"/>
 	</mx:HBox>
