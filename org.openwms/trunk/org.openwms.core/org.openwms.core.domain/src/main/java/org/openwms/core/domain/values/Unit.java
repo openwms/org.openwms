@@ -38,5 +38,4 @@ public interface Unit<T extends UnitType> {
      *            The unit to convert to
      */
     void convertTo(T unit);
-
 }

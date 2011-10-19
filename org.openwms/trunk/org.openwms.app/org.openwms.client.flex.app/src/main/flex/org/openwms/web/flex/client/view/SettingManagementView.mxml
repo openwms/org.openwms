@@ -25,7 +25,7 @@
 
     <mx:Metadata>
         [Name]
-        [ManagedEvent(name="LOAD_ALL_PROPERTIES")]
+        [ManagedEvent(name="PROPERTY.LOAD_ALL_PROPERTIES")]
         [ManagedEvent(name="LOAD_ALL_USERS")]
         [ManagedEvent(name="LOAD_ALL_ROLES")]
         [ResourceBundle("appMain")]
@@ -108,14 +108,14 @@
             }
             
             private function labelPreference(item : *) : String {
-            	trace("Preference:"+(item as AbstractPreference).toString());
+            	trace("Preference:"+(item as     AbstractPreference).toString());
             	return (item as AbstractPreference).toString();
             }
             
             private function appPrefStateEntered(event : FlexEvent) : void {
             	trace("Entered State ApplicationPreferenced");
-            	if (appPrefsLst.selectedItem == null && prefs.appPrefs.length > 0) {
-            		appPrefsLst.selectedItem = prefs.appPrefs.getItemAt(0);
+            	if (appPrefsLst.selectedItem == null && prefs.appPrefsAsCollection.length > 0) {
+            		appPrefsLst.selectedItem = prefs.appPrefsAsCollection.getItemAt(0);
             	}
            		selected = appPrefsLst.selectedItem as ApplicationPreference;
             	typeCmb.enabled = false;
@@ -158,7 +158,7 @@
     <mx:HBox x="10" y="63" width="95%" height="100%">
         <mx:Accordion x="10" y="63" width="300" height="95%">
             <mx:Canvas label="{I18nUtil.trans(I18nUtil.APP_MAIN, 'lbl_preferences_screen_app_prefs')}" width="100%" height="100%"  show="appPrefStateEntered(event)">
-                <mx:List id="appPrefsLst" labelField="key" dataProvider="{prefs.appPrefs}" itemClick="onAppPrefSelect(event)" alternatingItemColors="[#EEEEEE, #FFFFFF]" width="100%" height="100%" x="0" y="0" />
+                <mx:List id="appPrefsLst" labelField="key" dataProvider="{prefs.appPrefsAsCollection}" itemClick="onAppPrefSelect(event)" alternatingItemColors="[#EEEEEE, #FFFFFF]" width="100%" height="100%" x="0" y="0" />
             </mx:Canvas>
             <mx:Canvas label="{I18nUtil.trans(I18nUtil.APP_MAIN, 'lbl_preferences_screen_module_prefs')}" width="100%" height="100%" show="modPrefStateEntered(event)">
                 <mx:List id="modPrefsLst" labelField="key" dataProvider="{prefs.modulePrefs}" itemClick="onSelect(event)" alternatingItemColors="[#EEEEEE, #FFFFFF]" width="100%" height="100%" x="0" y="0" />

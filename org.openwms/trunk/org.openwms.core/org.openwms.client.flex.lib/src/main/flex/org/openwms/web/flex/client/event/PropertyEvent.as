@@ -34,7 +34,11 @@ package org.openwms.web.flex.client.event {
         /**
          * Type of event to load all Property entities from the backend.
          */
-        public static const LOAD_ALL_PROPERTIES : String = "LOAD_ALL_PROPERTIES";
+        public static const LOAD_ALL_PROPERTIES : String = "PROPERTY.LOAD_ALL_PROPERTIES";
+        /**
+         * Type of event to notify that properties were loaded successfully.
+         */
+        public static const PROPERTIES_LOADED : String = "PROPERTY.PROPERTIES_LOADED";
 
         /**
          * Store arbitrary data.

@@ -50,6 +50,10 @@ public class Grant extends SecurityObject {
     /**
      * {@inheritDoc}
      * 
+     * Use the hashCode of the superclass with the hashCode of 'GRANT' to
+     * distinguish between <code>Grant</code>s and other
+     * <code>SecurityObject</code>s like <code>Role</code>s.
+     * 
      * @see org.openwms.core.domain.system.usermanagement.SecurityObject#hashCode()
      */
     @Override

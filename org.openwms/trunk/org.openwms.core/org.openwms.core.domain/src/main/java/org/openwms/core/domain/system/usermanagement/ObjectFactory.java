@@ -38,7 +38,8 @@ public class ObjectFactory {
 
     /**
      * Create a new ObjectFactory that can be used to create new instances of
-     * schema derived classes for package: org.openwms.core.domain.system.
+     * schema derived classes for package:
+     * org.openwms.core.domain.system.usermanagement.
      */
     public ObjectFactory() {
         super();

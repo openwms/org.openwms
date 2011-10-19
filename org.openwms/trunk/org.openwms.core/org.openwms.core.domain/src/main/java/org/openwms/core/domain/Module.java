@@ -53,7 +53,7 @@ public class Module extends AbstractEntity implements DomainObject<Long> {
     private static final long serialVersionUID = 7358306395032979355L;
 
     /**
-     * Query to find all <code>Module</code>s.
+     * Query to find all <code>Module</code>s. Name is {@value} .
      */
     public static final String NQ_FIND_ALL = "Module.findAll";
 
@@ -61,7 +61,7 @@ public class Module extends AbstractEntity implements DomainObject<Long> {
      * Query to find <strong>one</strong> <code>Module</code> by its natural
      * key. <li>
      * Query parameter index <strong>1</strong> : The <code>moduleName</code> of
-     * the <code>Module</code> to search for</li>
+     * the <code>Module</code> to search for</li></br>Name is {@value} .
      */
     public static final String NQ_FIND_BY_UNIQUE_QUERY = "Module.findByModuleName";
 

@@ -52,7 +52,7 @@ import org.openwms.core.util.validation.AssertUtils;
  * @version $Revision: $
  * @since 0.1
  */
-@XmlType(name = "applicationPreference")
+@XmlType(name = "applicationPreference", namespace = "http://www.openwms.org/schema/preferences")
 @Entity
 @Table(name = "COR_APP_PREFERENCE", uniqueConstraints = @UniqueConstraint(columnNames = { "C_TYPE", "C_KEY" }))
 @NamedQueries({ @NamedQuery(name = ApplicationPreference.NQ_FIND_ALL, query = "select ap from ApplicationPreference ap") })
@@ -60,7 +60,7 @@ public class ApplicationPreference extends AbstractPreference {
 
     private static final long serialVersionUID = -2942285512161603092L;
     /**
-     * Query to find all <code>ApplicationPreference</code>s.
+     * Query to find all <code>ApplicationPreference</code>s. Name is {@value} .
      */
     public static final String NQ_FIND_ALL = "ApplicationPreference" + FIND_ALL;
 

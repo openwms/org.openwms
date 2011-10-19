@@ -22,7 +22,7 @@ package org.openwms.web.flex.client.business {
 
     import mx.collections.ArrayCollection;
     import mx.controls.Alert;
-
+    
     import org.as3commons.reflect.Type;
     import org.granite.tide.events.TideFaultEvent;
     import org.granite.tide.events.TideResultEvent;
@@ -35,11 +35,13 @@ package org.openwms.web.flex.client.business {
     import org.openwms.web.flex.client.util.I18nUtil;
 
     [Name("propertyDelegate")]
+    [ManagedEvent(name = "PROPERTY.PROPERTIES_LOADED")]
     [ResourceBundle("appError")]
     [Bindable]
     /**
      * A PropertyDelegate serves as a controller and is responsible for all interactions with the service layer
      * regarding the handling with Properties.
+     * Fires Tide events : PROPERTY.PROPERTIES_LOADED
      * Is named as : propertyDelegate
      *
      * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
@@ -72,19 +74,19 @@ package org.openwms.web.flex.client.business {
         public function PropertyDelegate() : void {
         }
 
-        [Observer("LOAD_ALL_PROPERTIES")]
+        [Observer("PROPERTY.LOAD_ALL_PROPERTIES")]
         /**
          * Connect to the ConfigurationService and find all units.
-         * Tide event observers : LOAD_ALL_PROPERTIES
+         * Tide event observers : PROPERTY.LOAD_ALL_PROPERTIES
          *
          * @param event Unused
          */
         public function findProperties(event : PropertyEvent) : void {
             tideContext.configurationService.findAll(onPropertiesLoaded, onFault);
         }
-
         private function onPropertiesLoaded(event : TideResultEvent) : void {
             prefsModel.assignPreferences(event.result as ArrayCollection);
+            dispatchEvent(new PropertyEvent(PropertyEvent.PROPERTIES_LOADED));
         }
 
         private function onUnitsLoaded(event : TideResultEvent) : void {

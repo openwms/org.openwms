@@ -6,7 +6,7 @@ Bundle-ManifestVersion: 2
 Bundle-SymbolicName: ${project.artifactId}
 Import-Bundle: 
  com.springsource.javax.persistence;version="1.0.0",
- com.springsource.org.apache.commons.lang;version="2.4.0",
+ com.springsource.org.apache.commons.lang;version="${osgi.apache.common.lang.version}",
  org.openwms.core.domain;version="0.0.1.SNAPSHOT",
  org.openwms.common.domain;version="0.0.1.SNAPSHOT"
 Require-Bundle: 

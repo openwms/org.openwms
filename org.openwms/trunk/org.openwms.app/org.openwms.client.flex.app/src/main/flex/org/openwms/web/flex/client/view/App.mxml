@@ -33,6 +33,7 @@
         [ManagedEvent(name="LOAD_ALL_MODULES")]
         [ManagedEvent(name="UNLOAD_ALL_MODULES")]
         [ManagedEvent(name="I18N_LOAD_ALL")]
+        [ManagedEvent(name="PROPERTY.LOAD_ALL_PROPERTIES")]
         [ResourceBundle("appMain")]
         [ResourceBundle("appError")]
     </mx:Metadata>

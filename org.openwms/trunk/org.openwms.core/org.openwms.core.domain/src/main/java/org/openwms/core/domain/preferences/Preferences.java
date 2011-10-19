@@ -47,7 +47,7 @@ import org.openwms.core.domain.system.usermanagement.UserPreference;
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "", propOrder = { "applicationOrRoleOrUserOrModule" })
-@XmlRootElement(name = "preferences")
+@XmlRootElement(name = "preferences", namespace = "http://www.openwms.org/schema/preferences")
 public class Preferences implements Serializable {
 
     private static final long serialVersionUID = 4836136346473578215L;

@@ -5,13 +5,13 @@ Bundle-Name: ${project.artifactId}
 Bundle-ManifestVersion: 2
 Bundle-SymbolicName: ${project.artifactId}
 Import-Library: 
- org.springframework.spring;version="${spring.version}"
+ org.springframework.spring;version="${osgi.spring}"
 Import-Bundle: 
  com.springsource.javax.persistence;version="1.0.0",
  com.springsource.net.sf.cglib;version="2.2.0",
  org.openwms.core.domain;version="0.0.1.SNAPSHOT",
  org.openwms.core.integration;version="0.0.1.SNAPSHOT",
- com.springsource.org.apache.commons.lang;version="2.4.0",
+ com.springsource.org.apache.commons.lang;version="${osgi.apache.common.lang.version}",
  com.springsource.org.hibernate;version="${osgi.hibernate}"
 Require-Bundle: 
  com.springsource.org.hibernate,
@@ -19,8 +19,8 @@ Require-Bundle:
 Import-Package: 
  org.hibernate.proxy; version="0.0.0",
  javax.sql;version="0",
- org.springframework.context.weaving;version="${spring.version}",
- org.springframework.transaction.aspectj;version="${spring.version}"
+ org.springframework.context.weaving;version="${osgi.spring}",
+ org.springframework.transaction.aspectj;version="${osgi.spring}"
 Excluded-Imports: 
  org.openwms.core.framework.test.*,
  org.openwms.core.test.*,
