@@ -138,12 +138,9 @@ public class EntityServiceImpl<T extends AbstractEntity, ID extends Serializable
 
     @SuppressWarnings("unchecked")
     private void resolveTypeClass() {
-        if (persistentClass == null) {
-            if (getClass().getGenericSuperclass() != null) {
-                this.persistentClass = (Class<T>) ((ParameterizedType) getClass().getGenericSuperclass())
-                        .getActualTypeArguments()[0];
-            }
+        if (persistentClass == null && getClass().getGenericSuperclass() != null) {
+            this.persistentClass = (Class<T>) ((ParameterizedType) getClass().getGenericSuperclass())
+                    .getActualTypeArguments()[0];
         }
     }
-
 }
