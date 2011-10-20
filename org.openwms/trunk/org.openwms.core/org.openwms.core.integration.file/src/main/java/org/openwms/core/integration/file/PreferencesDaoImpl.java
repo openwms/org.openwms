@@ -57,6 +57,9 @@ import org.springframework.stereotype.Repository;
 @Repository("preferencesFileDao")
 public class PreferencesDaoImpl implements PreferenceDao<PreferenceKey>, ApplicationListener<PropertiesChangedEvent> {
 
+    /**
+     * The URL to the initial preferences XML file. Default {@value}
+     */
     public static final String INITIAL_PREFERENCES_FILE = "classpath:org/openwms/core/integration/file/initial-preferences.xml";
 
     @Autowired
@@ -76,9 +79,13 @@ public class PreferencesDaoImpl implements PreferenceDao<PreferenceKey>, Applica
      * @param fileName
      *            The name of the properties file
      */
-    private PreferencesDaoImpl() {}
+    private PreferencesDaoImpl() {
+
+    }
 
     /**
+     * {@inheritDoc}
+     * 
      * @see org.openwms.core.integration.PreferenceDao#findByKey(PreferenceKey)
      */
     @Override
@@ -87,6 +94,8 @@ public class PreferencesDaoImpl implements PreferenceDao<PreferenceKey>, Applica
     }
 
     /**
+     * {@inheritDoc}
+     * 
      * @see org.openwms.core.integration.PreferenceDao#findByType(org.openwms.core.domain.system.AbstractPreference)
      */
     @Override
@@ -95,6 +104,8 @@ public class PreferencesDaoImpl implements PreferenceDao<PreferenceKey>, Applica
     }
 
     /**
+     * {@inheritDoc}
+     * 
      * @see org.openwms.core.integration.PreferenceDao#findAll()
      */
     @Override
@@ -103,6 +114,8 @@ public class PreferencesDaoImpl implements PreferenceDao<PreferenceKey>, Applica
     }
 
     /**
+     * {@inheritDoc}
+     * 
      * @see org.springframework.context.ApplicationListener#onApplicationEvent(org.springframework.context.ApplicationEvent)
      */
     @Override
