@@ -26,34 +26,31 @@ import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Component;
 
 /**
- * A TargetAcceptedVoter. Votes for a {@link RedirectVote} whether the target
- * location or the target locationGroup is enabled for infeed.
+ * A TargetAcceptedVoter votes for a {@link RedirectVote} whether the target
+ * location or the target locationGroup is enabled for infeed. The class is lazy
+ * initialized.
  * 
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  * @version $Revision$
  * @since 0.1
+ * @see org.openwms.core.service.voter.DecisionVoter
  */
 @Lazy
 @Component("targetAcceptedVoter")
 public class TargetAcceptedVoter implements DecisionVoter<RedirectVote> {
 
     /**
-     * {@inheritDoc} Simple check for infeed blocked.
+     * {@inheritDoc} Simple check for blocked infeed.
      * 
      * @see org.openwms.tms.service.voter.DecisionVoter#voteFor(org.openwms.tms.service.voter.Vote)
      */
     @Override
     public void voteFor(RedirectVote vote) throws DeniedException {
-        if (null != vote.getLocationGroup()) {
-            if (vote.getLocationGroup().isInfeedBlocked()) {
-                throw new DeniedException("The targetLocationGroup is blocked and is not accepted as target");
-            }
+        if (null != vote.getLocationGroup() && vote.getLocationGroup().isInfeedBlocked()) {
+            throw new DeniedException("The targetLocationGroup is blocked and is not accepted as target");
         }
-        if (null != vote.getLocation()) {
-            if (vote.getLocation().isInfeedBlocked()) {
-                throw new DeniedException("The targetLocation is blocked and is not accepted as target");
-            }
+        if (null != vote.getLocation() && vote.getLocation().isInfeedBlocked()) {
+            throw new DeniedException("The targetLocation is blocked and is not accepted as target");
         }
     }
-
 }
