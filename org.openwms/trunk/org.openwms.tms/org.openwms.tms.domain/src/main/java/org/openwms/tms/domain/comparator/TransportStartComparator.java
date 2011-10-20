@@ -24,7 +24,6 @@ import java.io.Serializable;
 import java.util.Comparator;
 
 import org.openwms.tms.domain.order.TransportOrder;
-import org.openwms.tms.domain.values.PriorityLevel;
 
 /**
  * A TransportStartComparator. I used to sort TransportOrders is a particular
