@@ -34,7 +34,9 @@ public class ResourceNotFoundException extends RuntimeException {
     /**
      * Create a new <code>ResourceNotFoundException</code>.
      */
-    public ResourceNotFoundException() {}
+    public ResourceNotFoundException() {
+
+    }
 
     /**
      * Create a new <code>ResourceNotFoundException</code> with a message text.

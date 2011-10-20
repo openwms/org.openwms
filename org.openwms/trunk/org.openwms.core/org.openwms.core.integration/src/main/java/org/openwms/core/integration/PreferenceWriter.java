@@ -25,17 +25,23 @@ import java.io.Serializable;
 import org.openwms.core.domain.system.AbstractPreference;
 
 /**
- * A PreferenceWriter.
+ * A PreferenceWriter extends the {@link PreferenceDao} with functionality to
+ * save and remove {@link AbstractPreference}s.
  * 
+ * @param <ID>
+ *            The type of the entity class' unique id
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  * @version $Revision: $
  * @since 0.1
+ * @see org.openwms.core.integration.PreferenceDao
  */
 public interface PreferenceWriter<ID extends Serializable> extends PreferenceDao<ID> {
 
     /**
      * Synchronize an entity with the persistence layer and return it.
      * 
+     * @param <T>
+     *            Any subtype of {@link AbstractPreference}
      * @param entity
      *            Entity instance to be synchronized with the persistence layer
      * @return The synchronized entity instance. If JPA is used as
@@ -50,5 +56,4 @@ public interface PreferenceWriter<ID extends Serializable> extends PreferenceDao
      *            Entity instance to be removed
      */
     void remove(AbstractPreference entity);
-
 }

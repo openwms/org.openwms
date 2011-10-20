@@ -26,8 +26,11 @@ import java.util.List;
 import org.openwms.core.domain.system.AbstractPreference;
 
 /**
- * A PreferenceDao.
+ * A PreferenceDao offers basic functionality to find {@link AbstractPreference}
+ * s.
  * 
+ * @param <ID>
+ *            The type of the entity class' unique id
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  * @version $Revision: $
  * @since 0.1
@@ -46,6 +49,8 @@ public interface PreferenceDao<ID extends Serializable> {
     /**
      * Find all preferences of a particular type.
      * 
+     * @param <T>
+     *            Any subtype of {@link AbstractPreference}
      * @param clazz
      *            The type to search for
      * @return A list of entities
@@ -58,5 +63,4 @@ public interface PreferenceDao<ID extends Serializable> {
      * @return List of all entities
      */
     List<AbstractPreference> findAll();
-
 }
