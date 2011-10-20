@@ -34,7 +34,9 @@ public class NoUniqueResultException extends DataException {
     /**
      * Create a new <code>NoUniqueResultException</code>.
      */
-    public NoUniqueResultException() {}
+    public NoUniqueResultException() {
+
+    }
 
     /**
      * Create a new <code>NoUniqueResultException</code> with a message text.

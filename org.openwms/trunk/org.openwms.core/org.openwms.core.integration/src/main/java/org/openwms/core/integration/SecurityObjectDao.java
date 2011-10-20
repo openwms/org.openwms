@@ -34,11 +34,37 @@ import org.openwms.core.domain.system.usermanagement.SecurityObject;
  */
 public interface SecurityObjectDao {
 
+    /**
+     * 
+     * FIXME [scherrer] Comment this
+     * 
+     * @return
+     */
     List<SecurityObject> findAll();
 
+    /**
+     * 
+     * FIXME [scherrer] Comment this
+     * 
+     * @param moduleName
+     * @return
+     */
     List<Grant> findAllOfModule(String moduleName);
 
+    /**
+     * 
+     * FIXME [scherrer] Comment this
+     * 
+     * @param entity
+     * @return
+     */
     SecurityObject merge(SecurityObject entity);
 
+    /**
+     * 
+     * FIXME [scherrer] Comment this
+     * 
+     * @param grants
+     */
     void delete(List<Grant> grants);
 }
