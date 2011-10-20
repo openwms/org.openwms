@@ -140,7 +140,7 @@ public class TransportUnit extends AbstractEntity implements DomainObject<Long> 
      * Weight of the <code>TransportUnit</code>.
      */
     @Column(name = "WEIGHT")
-    private BigDecimal weight = new BigDecimal(0);
+    private BigDecimal weight = BigDecimal.ZERO;
 
     /**
      * State of the <code>TransportUnit</code>. Default: {@value} .
