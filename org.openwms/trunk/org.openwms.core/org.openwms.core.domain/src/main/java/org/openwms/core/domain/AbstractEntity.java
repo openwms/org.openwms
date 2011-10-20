@@ -47,7 +47,7 @@ import javax.xml.bind.annotation.XmlTransient;
  * The uid property is used by the ActionScript client application to
  * synchronize client-side entity instances with server-side ones.
  * </p>
- * <strong>NOTE:</strong></br>This class uses the uid for comparison with
+ * <strong>NOTE:</strong>This class uses the uid for comparison with
  * {@link #equals(Object)} and calculation of {@link #hashCode()}.
  * 
  * @author <a href="mailto:russelltina@users.sourceforge.net">Tina Russell</a>

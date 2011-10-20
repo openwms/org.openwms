@@ -21,7 +21,6 @@
 package org.openwms.core.domain.system.usermanagement;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
@@ -95,7 +94,10 @@ public class User extends AbstractEntity implements DomainObject<Long> {
     /**
      * Query to find <strong>one</strong> <code>User</code> by his userName. <li>
      * Query parameter index <strong>1</strong> : The userName of the
-     * <code>User</code> to search for.</li></br> Name is {@value} .
+     * <code>User</code> to search for.</li>
+     * <p>
+     * Name is {@value} .
+     * </p>
      */
     public static final String NQ_FIND_BY_USERNAME = "User.findByUsername";
 
@@ -104,7 +106,10 @@ public class User extends AbstractEntity implements DomainObject<Long> {
      * password. <li>Query parameter name <strong>username</strong> : The
      * userName of the <code>User</code> to search for.</li> <li>Query parameter
      * name <strong>password</strong> : The current password of the
-     * <code>User</code> to search for.</li></br> Name is {@value} .
+     * <code>User</code> to search for.</li>
+     * <p>
+     * Name is {@value} .
+     * </p>
      */
     public static final String NQ_FIND_BY_USERNAME_PASSWORD = "User.findByUsernameAndPassword";
 
@@ -488,7 +493,7 @@ public class User extends AbstractEntity implements DomainObject<Long> {
      * 
      * @param role
      *            The new {@link Role} to add
-     * @return see {@link Collection#add(Object)}
+     * @return see {@link java.util.Collection#add(Object)}
      */
     public boolean addRole(Role role) {
         return this.roles.add(role);

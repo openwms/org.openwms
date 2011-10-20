@@ -61,8 +61,8 @@ public class Role extends SecurityObject {
     private static final long serialVersionUID = -4133301834284932221L;
 
     /**
-     * The default prefix String for each created <code>Role</code>. Name is * *
-     * * {@value} .
+     * The default prefix String for each created <code>Role</code>. Name is *
+     * {@value} .
      */
     public static final String ROLE_PREFIX = "ROLE_";
 
@@ -74,7 +74,10 @@ public class Role extends SecurityObject {
     /**
      * Query to find <strong>one</strong> <code>Role</code> by its natural key.
      * <li>Query parameter index <strong>1</strong> : The name of the
-     * <code>Role</code> to search for.</li></br> Name is {@value} .
+     * <code>Role</code> to search for.</li>
+     * <p>
+     * Name is {@value} .
+     * </p>
      */
     public static final String NQ_FIND_BY_UNIQUE_QUERY = "Role.findByRolename";
 
