@@ -70,7 +70,7 @@ public abstract class AbstractGenericJpaDao<T extends AbstractEntity, ID extends
     /**
      * Logger instance can be used by subclasses.
      */
-    protected Logger logger = LoggerFactory.getLogger(this.getClass());
+    protected final Logger logger = LoggerFactory.getLogger(this.getClass());
 
     /**
      * Create a new AbstractGenericJpaDao.
@@ -214,7 +214,9 @@ public abstract class AbstractGenericJpaDao<T extends AbstractEntity, ID extends
      * @param entity
      *            The Entity that is updated
      */
-    protected void beforeUpdate(T entity) {}
+    protected void beforeUpdate(T entity) {
+
+    }
 
     /**
      * Subclasses can call this method to retrieve an shared

@@ -46,6 +46,8 @@ public class SecurityObjectDaoImpl implements SecurityObjectDao {
     private EntityManager em;
 
     /**
+     * {@inheritDoc}
+     * 
      * @see org.openwms.core.integration.SecurityObjectDao#delete(java.util.List)
      */
     @Override
@@ -56,6 +58,8 @@ public class SecurityObjectDaoImpl implements SecurityObjectDao {
     }
 
     /**
+     * {@inheritDoc}
+     * 
      * @see org.openwms.core.integration.SecurityObjectDao#findAll()
      */
     @SuppressWarnings("unchecked")
@@ -65,6 +69,8 @@ public class SecurityObjectDaoImpl implements SecurityObjectDao {
     }
 
     /**
+     * {@inheritDoc}
+     * 
      * @see org.openwms.core.integration.SecurityObjectDao#findAllOfModule(java.lang.String)
      */
     @SuppressWarnings("unchecked")
@@ -75,6 +81,8 @@ public class SecurityObjectDaoImpl implements SecurityObjectDao {
     }
 
     /**
+     * {@inheritDoc}
+     * 
      * @see org.openwms.core.integration.SecurityObjectDao#merge(org.openwms.core.domain.system.usermanagement.SecurityObject)
      */
     @Override
