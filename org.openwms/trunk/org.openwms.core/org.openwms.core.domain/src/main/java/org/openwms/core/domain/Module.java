@@ -61,7 +61,10 @@ public class Module extends AbstractEntity implements DomainObject<Long> {
      * Query to find <strong>one</strong> <code>Module</code> by its natural
      * key. <li>
      * Query parameter index <strong>1</strong> : The <code>moduleName</code> of
-     * the <code>Module</code> to search for</li></br>Name is {@value} .
+     * the <code>Module</code> to search for</li>
+     * <p>
+     * Name is {@value} .
+     * </p>
      */
     public static final String NQ_FIND_BY_UNIQUE_QUERY = "Module.findByModuleName";
 
