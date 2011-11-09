@@ -20,6 +20,8 @@
  */
 package org.openwms.core.domain.system.usermanagement {
 
+    import mx.collections.ArrayCollection;
+
     [Bindable]
     [RemoteClass(alias="org.openwms.core.domain.system.usermanagement.Role")]
     /**
@@ -54,9 +56,27 @@ package org.openwms.core.domain.system.usermanagement {
          *
          * @param value The name to set
          */
-        public function set name(value:String):void {
+        public function set name(value : String) : void {
             _name = value;
+        }
+
+        /**
+         * Find and return a Role in the collection of Roles with the same name like the first
+         * argument name.
+         *
+         * @param name The name of the Role to search for
+         * @param roles The collection of Roles to search in
+         * @return the Role when found, otherwise null
+         */
+        public static function findByName(name : String, roles : ArrayCollection) : Role {
+            for each (var role : * in roles) {
+                if (role is Role) {
+                    if (name == (role as Role).name) {
+                        return role as Role;
+                    }
+                }
+            }
+            return null;
         }
     }
 }
-

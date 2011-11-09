@@ -48,6 +48,15 @@ package org.openwms.core.domain.system.usermanagement {
         }
 
         /**
+         * Set the owner.
+         *
+         * @param value The username used as owner.
+         */
+        public function set owner(value : String) : void {
+            _owner = value;
+        }
+
+        /**
          * Return "User".
          *
          * @return User

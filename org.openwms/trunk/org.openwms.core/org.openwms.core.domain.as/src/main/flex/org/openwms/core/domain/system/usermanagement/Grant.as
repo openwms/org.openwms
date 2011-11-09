@@ -33,9 +33,10 @@ package org.openwms.core.domain.system.usermanagement {
         /**
          * Constructor.
          *
-         * @param name Name of the grant
+         * @param name Name of the Grant
+         * @param description Description of the Grant
          */
-        public function Grant(name:String = null, description:String = null) {
+        public function Grant(name : String=null, description : String=null) {
             if (name != null) {
                 this._name = name;
             }
@@ -43,6 +44,15 @@ package org.openwms.core.domain.system.usermanagement {
                 this._description = description;
             }
         }
+
+        /**
+         * Format the Grant as String: description (name).
+         *
+         * @param item The Grant object
+         * @return The formatted Grant
+         */
+        public static function formatWithDescriptionName(item : Grant) : String {
+            return item.description + " (" + item.name + ")";
+        }
     }
 }
-

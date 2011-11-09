@@ -20,6 +20,8 @@
  */
 package org.openwms.core.domain.system.usermanagement {
 
+    import mx.collections.ArrayCollection;
+
     [Bindable]
     [RemoteClass(alias="org.openwms.core.domain.system.usermanagement.User")]
     /**
@@ -46,9 +48,40 @@ package org.openwms.core.domain.system.usermanagement {
             this._userDetails = new UserDetails();
         }
 
+        /**
+         * Set the username to an empty String.
+         */
         public function resetUsername() : void {
             _username = "";
         }
+
+        /**
+         * Find and return an User in the collection of Users with the same username like the first
+         * argument username.
+         *
+         * @param username The username to search for
+         * @param users The collection of Users to search in
+         * @return the User when found, otherwise null
+         */
+        public static function findByName(username : String, users : ArrayCollection) : User {
+            for each (var user : * in users) {
+                if (user is User) {
+                    if (username == (user as User).username) {
+                        return user as User;
+                    }
+                }
+            }
+            return null;
+        }
+
+        /**
+         * Format the User as String: fullname (username).
+         *
+         * @param item Usually an Object selected in a List
+         * @return The User expressed by the String: fullname (username)
+         */
+        public static function formatWithFullnameUsername(item : *) : String {
+            return (item as User).fullname + " (" + (item as User).username + ")";
+        }
     }
 }
-
