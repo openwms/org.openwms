@@ -22,12 +22,13 @@ package org.openwms.web.flex.client.business {
 
     import mx.collections.ArrayCollection;
     import mx.controls.Alert;
-    
+
     import org.as3commons.reflect.Type;
     import org.granite.tide.events.TideFaultEvent;
     import org.granite.tide.events.TideResultEvent;
     import org.granite.tide.spring.Context;
     import org.openwms.common.domain.values.Weight;
+    import org.openwms.core.domain.system.AbstractPreference;
     import org.openwms.core.domain.values.Unit;
     import org.openwms.web.flex.client.event.PropertyEvent;
     import org.openwms.web.flex.client.model.ModelLocator;
@@ -35,12 +36,12 @@ package org.openwms.web.flex.client.business {
     import org.openwms.web.flex.client.util.I18nUtil;
 
     [Name("propertyDelegate")]
-    [ManagedEvent(name = "PROPERTY.PROPERTIES_LOADED")]
+    [ManagedEvent(name="PROPERTY.PROPERTIES_LOADED")]
     [ResourceBundle("appError")]
     [Bindable]
     /**
      * A PropertyDelegate serves as a controller and is responsible for all interactions with the service layer
-     * regarding the handling with Properties.
+     * regarding the handling with Preferences.
      * Fires Tide events : PROPERTY.PROPERTIES_LOADED
      * Is named as : propertyDelegate
      *
@@ -81,12 +82,65 @@ package org.openwms.web.flex.client.business {
          *
          * @param event Unused
          */
-        public function findProperties(event : PropertyEvent) : void {
+        public function findProperties(event : PropertyEvent=null) : void {
             tideContext.configurationService.findAll(onPropertiesLoaded, onFault);
         }
+
         private function onPropertiesLoaded(event : TideResultEvent) : void {
             prefsModel.assignPreferences(event.result as ArrayCollection);
             dispatchEvent(new PropertyEvent(PropertyEvent.PROPERTIES_LOADED));
+        }
+
+        [Observer("PREFERENCE.CREATE_PREFERENCE")]
+        /**
+         * Add a new Preference.
+         * Tide event observers : PREFERENCE.CREATE_PREFERENCE
+         *
+         * @param event The raised PropertyEvent that holds the AbstractPreference within the data property.
+         */
+        public function addPreference(event : PropertyEvent) : void {
+            if (event.data is AbstractPreference) {
+                tideContext.configurationService.save(event.data as AbstractPreference, onPreferenceAdded, onFault);
+            }
+        }
+
+        private function onPreferenceAdded(event : TideResultEvent) : void {
+            prefsModel.addPreference(event.result as AbstractPreference);
+        }
+
+        [Observer("PREFERENCE.SAVE_PREFERENCE")]
+        /**
+         * Save a selected Preference.
+         * Tide event observers : PREFERENCE.SAVE_PREFERENCE
+         *
+         * @param event Not used
+         */
+        public function savePreference(event : PropertyEvent) : void {
+            if (prefsModel.selected == null) {
+                Alert.show(I18nUtil.trans(I18nUtil.APP_ERROR, 'info_preferences_not_selected'));
+                return;
+            }
+            tideContext.configurationService.save(prefsModel.selected, onPreferenceSaved, onFault);
+        }
+
+        private function onPreferenceSaved(event : TideResultEvent) : void {
+            //findProperties();
+            prefsModel.addPreference(event.result as AbstractPreference);
+        }
+
+        [Observer("PREFERENCE.DELETE_PREFERENCE")]
+        /**
+         * Delete a selected Preference.
+         * Tide event observers : PREFERENCE.DELETE_PREFERENCE
+         *
+         * @param event Not used
+         */
+        public function removePreference(event : PropertyEvent) : void {
+            tideContext.configurationService.remove(prefsModel.selected, onPreferenceRemoved, onFault);
+        }
+
+        private function onPreferenceRemoved(event : TideResultEvent) : void {
+            findProperties();
         }
 
         private function onUnitsLoaded(event : TideResultEvent) : void {
@@ -104,4 +158,3 @@ package org.openwms.web.flex.client.business {
         }
     }
 }
-

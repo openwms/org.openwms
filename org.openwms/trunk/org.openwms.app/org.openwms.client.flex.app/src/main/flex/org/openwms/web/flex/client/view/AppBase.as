@@ -195,7 +195,7 @@ package org.openwms.web.flex.client.view {
          */
         public function preInit(event : Event) : void {
             Spring.getInstance().initApplication();
-            I18nHelper.switchLanguage(modelLocator.availableLocales[1]);
+            //I18nHelper.switchLanguage(modelLocator.availableLocales[0]);
         }
 
         /**
@@ -247,7 +247,7 @@ package org.openwms.web.flex.client.view {
         /**
          * @param event Unused
          */
-        public function onPropertiesLoaded(event : PropertyEvent) : void {
+        public function onPropertiesLoaded(event : PropertyEvent=null) : void {
             // when props are loaded, go and change to the default language
             if (prefs.getAppPreference(Constants.DEFAULT_LANG) != null) {
                 I18nHelper.switchLanguage(prefs.getAppPreference(Constants.DEFAULT_LANG).value);
