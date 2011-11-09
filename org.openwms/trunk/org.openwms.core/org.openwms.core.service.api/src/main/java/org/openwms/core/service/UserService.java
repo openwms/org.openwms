@@ -49,10 +49,11 @@ public interface UserService {
     boolean changeUserPassword(UserPassword userPassword);
 
     /**
-     * FIXME [scherrer] Comment this
+     * Check if an {@link UserPassword} is still valid.
      * 
      * @param userPassword
-     * @return
+     *            The UserPassword to check
+     * @return <code>true</code> if valid, otherwise <code>false</code>
      */
     boolean checkCredentials(UserPassword userPassword);
 
@@ -93,11 +94,15 @@ public interface UserService {
     User save(User user);
 
     /**
-     * FIXME [scherrer] Comment this
+     * Save changes on an {@link User} and in addition the User's password and
+     * preferences.
      * 
      * @param user
+     *            The modified User
      * @param userPassword
+     *            The User's password
      * @param prefs
+     *            An array of UserPreference objects
      */
     void saveUserProfile(User user, UserPassword userPassword, UserPreference... prefs);
 

@@ -28,10 +28,10 @@ import org.openwms.core.domain.system.AbstractPreference;
 import org.openwms.core.domain.values.Unit;
 
 /**
- * A ConfigurationService is responsible to handle all application properties.
- * Whereby properties have particular defined scopes, e.g. some properties have
- * a global scope which means Application Scope and some others are only valid
- * for a certain Module.
+ * A ConfigurationService is responsible to handle all application preferences.
+ * Whereby preferences have particular defined scopes, e.g. some preferences
+ * have a global scope which means Application Scope and some others are only
+ * valid for a certain Module.
  * 
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  * @version $Revision$
@@ -40,19 +40,24 @@ import org.openwms.core.domain.values.Unit;
  */
 public interface ConfigurationService {
 
+    /**
+     * Find and return all preferences.
+     * 
+     * @return a list of all preferences
+     */
     List<AbstractPreference> findAll();
 
     /**
-     * Find and return all properties in Application Scope.
+     * Find and return all preferences in Application Scope.
      * 
-     * @return a list of these properties
+     * @return a list of these preferences
      */
     List<ApplicationPreference> findApplicationProperties();
 
     /**
-     * Find and return all properties belonging to this Module.
+     * Find and return all preferences belonging to this Module.
      * 
-     * @return a list of these properties
+     * @return a list of these preferences
      */
     List<ModulePreference> findModuleProperties();
 
@@ -65,6 +70,14 @@ public interface ConfigurationService {
      * @return Updated {@link AbstractPreference} entity instance
      */
     AbstractPreference save(AbstractPreference preference);
+
+    /**
+     * Remove a {@link AbstractPreference}.
+     * 
+     * @param preference
+     *            The preferences to remove
+     */
+    void remove(AbstractPreference preference);
 
     /**
      * Get all unit types supported by this Module.
