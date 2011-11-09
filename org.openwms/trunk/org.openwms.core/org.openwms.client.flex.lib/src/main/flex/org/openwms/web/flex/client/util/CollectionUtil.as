@@ -20,35 +20,41 @@
  */
 package org.openwms.web.flex.client.util {
 
+    import flash.utils.Dictionary;
     import mx.collections.ArrayCollection;
-    import org.openwms.core.domain.system.usermanagement.User;
+    import org.granite.util.DictionaryUtil;
 
     /**
-     * An UserHelper is a utility class to centralize often used methods according to user handling.
+     * A CollectionUtil provides useful helper methods regarding Collections/Maps or tree-like structures.
      *
-     * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
-     * @version $Revision$
+     * @author <a href="mailto:russelltina@users.sourceforge.net">Tina Russell</a>
+     * @version $Revision: 1409 $
      * @since 0.1
      */
-    public final class UserHelper {
+    public final class CollectionUtil {
 
         /**
          * Constructor.
          */
-        public function UserHelper() {
+        public function CollectionUtil() {
         }
 
         /**
-         * Check whether the User has UserDetails.
+         * Get all values from the dictionary and return them as an ArrayCollection. When the dictionary
+         * has no values, the returned ArrayCollection is empty, but not null.
          *
-         * @param userData The User to check.
-         * @return <code>true</code> when the User has UserDetails, otherwise <code>false</code>.
+         * @param dictionary The Dictionary to convert
+         * @return The dictionary as ArrayCollection
          */
-        public static function hasDetails(userData : User) : Boolean {
-            if (userData != null && userData.userDetails != null) {
-                return true;
+        public static function toArrayCollection(dictionary : Dictionary) : ArrayCollection {
+            if (dictionary == null) {
+                return new ArrayCollection();
             }
-            return false;
+            var ar : Array = DictionaryUtil.getValues(dictionary);
+            if (ar.length > 0) {
+                return new ArrayCollection(ar);
+            }
+            return new ArrayCollection();
         }
     }
 }

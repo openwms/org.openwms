@@ -59,6 +59,9 @@ package org.openwms.web.flex.client.util {
          */
         public static function validateAndFormat(obj : Object, val : Validator, fmt : Formatter=null, property : Object=null) : Boolean {
             val.source = obj;
+            if (property == null) {
+                val.property = "text";
+            }
             if (val.validate().type == ValidationResultEvent.VALID) {
                 if (fmt != null) {
                     if (property == null) {

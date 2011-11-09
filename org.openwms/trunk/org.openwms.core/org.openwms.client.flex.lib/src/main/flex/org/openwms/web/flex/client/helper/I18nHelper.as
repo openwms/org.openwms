@@ -21,12 +21,11 @@
 package org.openwms.web.flex.client.helper {
 
     import mx.resources.ResourceManager;
-    import mx.utils.ArrayUtil;
 
     [Name]
     [Bindable]
     /**
-     * An I18nHelper is a helper class for i18n functionality.
+     * An I18nHelper is a helper class to support i18n functionality.
      *
      * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
      * @version $Revision: 1468 $
@@ -40,8 +39,14 @@ package org.openwms.web.flex.client.helper {
         public function I18nHelper() : void {
             super();
         }
-        
+
+        /**
+         * Switch the language of the application.
+         *
+         * @param language The language appreviation (i.e. en_US)
+         */
         public static function switchLanguage(language : String) : void {
+            trace("Switching language to: " + language);
             ResourceManager.getInstance().localeChain = [language];
             ResourceManager.getInstance().update();
         }
@@ -50,8 +55,11 @@ package org.openwms.web.flex.client.helper {
          * Translate a paramterized String into the language set by the user.
          * The first argument is expected to be the String, the rest arbitrary parameters.
          *
+         * @param bundle The I18n ResourceBundle
+         * @param key The key to lookup the translation
          * @param args An arbitrary list. At least the first parameter must be set as the
-         * String to be translated
+         *      String to be translated
+         * @return The translated interpolated String
          */
         public static function trans(bundle : String, key : String, ... args) : String {
             return ResourceManager.getInstance().getString(bundle, key, args);

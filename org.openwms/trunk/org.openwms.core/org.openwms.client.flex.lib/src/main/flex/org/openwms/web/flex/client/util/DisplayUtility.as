@@ -20,13 +20,17 @@
  */
 package org.openwms.web.flex.client.util {
 
+    import flash.events.KeyboardEvent;
+
     import mx.binding.utils.BindingUtils;
     import mx.binding.utils.ChangeWatcher;
     import mx.collections.ArrayCollection;
     import mx.containers.ViewStack;
+    import mx.core.UIComponent;
+    import mx.managers.PopUpManager;
 
     /**
-     * A DisplayUtility. Utility class used by UIComponents for switch screen handling or property bindings.
+     * A DisplayUtility class used by UIComponents for switch screen handling or property bindings.
      *
      * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
      * @version $Revision$
@@ -55,6 +59,17 @@ package org.openwms.web.flex.client.util {
         }
 
         /**
+         * Common used funtion to close a PopUp dialogue.
+         *
+         * @param dialogue The PopUp dialogue to close
+         * @param keyEventHandler The listener function to remove from the list of listeners
+         */
+        public static function closeDialog(dialogue : UIComponent, keyEventHandler : Function) : void {
+            dialogue.removeEventListener(KeyboardEvent.KEY_DOWN, keyEventHandler);
+            PopUpManager.removePopUp(dialogue);
+        }
+
+        /**
          * Encapsulates the boring binding and un-binding stuff.
          *
          * @param bindings A list of bindings to bind
@@ -63,6 +78,9 @@ package org.openwms.web.flex.client.util {
         public static function bindProperties(bindings : ArrayCollection, command : Function=null) : void {
             var watchers : ArrayCollection = new ArrayCollection();
             for each (var binding : BindingProperty in bindings) {
+                if (binding == null) {
+                    continue;
+                }
                 if (binding.clazz == null) {
                     watchers.addItem(BindingUtils.bindProperty(binding.site, binding.sitePropertyName, binding.host, binding.hostPropertyName));
                 } else {
@@ -73,11 +91,13 @@ package org.openwms.web.flex.client.util {
                 try {
                     command();
                 } catch (e : Error) {
+                    trace("Error during executing the command:" + e.message);
                     throw e;
                 } finally {
                     for each (var watcher : ChangeWatcher in watchers) {
                         watcher.unwatch();
                     }
+                    return;
                 }
             }
             for each (var watcher : ChangeWatcher in watchers) {
@@ -86,4 +106,3 @@ package org.openwms.web.flex.client.util {
         }
     }
 }
-
