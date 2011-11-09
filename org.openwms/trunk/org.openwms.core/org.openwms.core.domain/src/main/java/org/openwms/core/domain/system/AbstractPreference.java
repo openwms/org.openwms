@@ -265,6 +265,16 @@ public abstract class AbstractPreference extends AbstractEntity implements Domai
     }
 
     /**
+     * Set the fromFile.
+     * 
+     * @param fromFile
+     *            The fromFile to set.
+     */
+    public void setFromFile(boolean fromFile) {
+        this.fromFile = fromFile;
+    }
+
+    /**
      * Return all fields as concatenated String.
      * 
      * @return fields as String
