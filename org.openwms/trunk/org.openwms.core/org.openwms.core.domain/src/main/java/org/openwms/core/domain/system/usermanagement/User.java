@@ -94,10 +94,8 @@ public class User extends AbstractEntity implements DomainObject<Long> {
     /**
      * Query to find <strong>one</strong> <code>User</code> by his userName. <li>
      * Query parameter index <strong>1</strong> : The userName of the
-     * <code>User</code> to search for.</li>
-     * <p>
+     * <code>User</code> to search for.</li><br />
      * Name is {@value} .
-     * </p>
      */
     public static final String NQ_FIND_BY_USERNAME = "User.findByUsername";
 
@@ -106,10 +104,8 @@ public class User extends AbstractEntity implements DomainObject<Long> {
      * password. <li>Query parameter name <strong>username</strong> : The
      * userName of the <code>User</code> to search for.</li> <li>Query parameter
      * name <strong>password</strong> : The current password of the
-     * <code>User</code> to search for.</li>
-     * <p>
+     * <code>User</code> to search for.</li><br />
      * Name is {@value} .
-     * </p>
      */
     public static final String NQ_FIND_BY_USERNAME_PASSWORD = "User.findByUsernameAndPassword";
 
@@ -390,13 +386,13 @@ public class User extends AbstractEntity implements DomainObject<Long> {
     /**
      * Check whether the new password is in the history of former passwords.
      * 
-     * @param password
+     * @param pwd
      *            The password to verify
      * @return <code>true</code> if the password is valid, otherwise
      *         <code>false</code>
      */
-    protected boolean isPasswordValid(String password) {
-        if (passwords.contains(new UserPassword(this, password))) {
+    protected boolean isPasswordValid(String pwd) {
+        if (passwords.contains(new UserPassword(this, pwd))) {
             return false;
         }
         return true;

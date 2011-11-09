@@ -74,10 +74,15 @@ public class Role extends SecurityObject {
     /**
      * Query to find <strong>one</strong> <code>Role</code> by its natural key.
      * <li>Query parameter index <strong>1</strong> : The name of the
+<<<<<<< .mine
+     * <code>Role</code> to search for.</li><br />
+     * Name is {@value} .
+=======
      * <code>Role</code> to search for.</li>
      * <p>
      * Name is {@value} .
      * </p>
+>>>>>>> .r1522
      */
     public static final String NQ_FIND_BY_UNIQUE_QUERY = "Role.findByRolename";
 
