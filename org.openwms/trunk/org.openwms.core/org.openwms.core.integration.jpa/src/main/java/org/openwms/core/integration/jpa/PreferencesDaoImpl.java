@@ -99,15 +99,25 @@ public class PreferencesDaoImpl implements PreferenceWriter<Long> {
     /**
      * {@inheritDoc}
      * 
+     * Call {@link EntityManager#persist(Object)} for transient instances and
+     * {@link EntityManager#merge(Object)} for detached and managed ones.
+     * 
      * @see org.openwms.core.integration.PreferenceWriter#save(org.openwms.core.domain.system.AbstractPreference)
      */
     @Override
     public <T extends AbstractPreference> T save(T entity) {
+        if (entity.isNew()) {
+            em.persist(entity);
+        }
         return em.merge(entity);
     }
 
     /**
      * {@inheritDoc}
+     * 
+     * If <code>entity</code> is not already managed, call
+     * {@link EntityManager#merge(Object)} before to attach it to the
+     * persistence context.
      * 
      * @see org.openwms.core.integration.PreferenceWriter#remove(org.openwms.core.domain.system.AbstractPreference)
      */
@@ -115,6 +125,8 @@ public class PreferencesDaoImpl implements PreferenceWriter<Long> {
     public void remove(AbstractPreference entity) {
         if (em.contains(entity)) {
             em.remove(entity);
+        } else {
+            em.remove(em.merge(entity));
         }
     }
 
