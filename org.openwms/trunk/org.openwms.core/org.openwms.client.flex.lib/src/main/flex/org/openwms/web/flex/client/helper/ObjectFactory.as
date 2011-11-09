@@ -18,42 +18,36 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
-package org.openwms.web.flex.client.model {
+package org.openwms.web.flex.client.helper {
 
-    [Bindable]
+
+    [ResourceBundle("corLibMain")]
     /**
-     * A Constants class to store some global definitions.
+     * A NumberUtil encapsulates useful functions to validate and format Numbers.
      *
-     * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
-     * @version $Revision$
+     * @author <a href="mailto:russelltina@users.sourceforge.net">Tina Russell</a>
+     * @version $Revision: 1507 $
      * @since 0.1
      */
-    public final class Constants {
+    public class ObjectFactory {
 
         /**
          * Constructor.
          */
-        public function Constants() {
+        public function ObjectFactory() {
+        }
+        ;
+
+        /**
+         * Check whether value is not assigned.
+         *
+         * @param value The Number to check
+         * @return When value is not assigned return Constants.DEFAULT_NULL_NUMBER,
+         *       otherwise return the value as String.
+         */
+        public static function createApplicationPreference(value : Number) : String {
+            return value.toString();
         }
 
-        /**
-         * Name of the ModuleManagement backend service.
-         */
-        public static const MODULEMGMT_SERVICE : String = "moduleManagementService";
-
-        /**
-         * Name of the UserManagement backend service.
-         */
-        public static const USERMGMT_SERVICE : String = "userService";
-
-        /**
-         * Name of the Preference used as default language.
-         */
-        public static const DEFAULT_LANG : String = "defaultLanguage";
-
-        /**
-         * A String used to represent not assigned (or null) Number fields.
-         */
-        public static var DEFAULT_NULL_NUMBER : String = "DEFAULT_NULL_NUMBER";
     }
 }

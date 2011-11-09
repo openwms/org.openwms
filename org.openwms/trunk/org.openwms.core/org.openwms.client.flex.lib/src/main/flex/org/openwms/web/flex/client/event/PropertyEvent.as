@@ -23,7 +23,7 @@ package org.openwms.web.flex.client.event {
     import flash.events.Event;
 
     /**
-     * A PropertyEvent. Used to trigger actions regarding Property entites.
+     * A PropertyEvent is used to trigger actions regarding Preference entites.
      *
      * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
      * @version $Revision$
@@ -32,13 +32,33 @@ package org.openwms.web.flex.client.event {
     public class PropertyEvent extends Event {
 
         /**
-         * Type of event to load all Property entities from the backend.
+         * Type of event to load all Preference entities from the backend.
          */
         public static const LOAD_ALL_PROPERTIES : String = "PROPERTY.LOAD_ALL_PROPERTIES";
         /**
-         * Type of event to notify that properties were loaded successfully.
+         * Type of event to create a new Preference.
+         */
+        public static const PREFERENCE_CREATE_PREFERENCE : String = "PREFERENCE.CREATE_PREFERENCE";
+        /**
+         * Type of event to delete the selected Preference.
+         */
+        public static const PREFERENCE_DELETE_PREFERENCE : String = "PREFERENCE.DELETE_PREFERENCE";
+        /**
+         * Type of event to save the currently selected Preference.
+         */
+        public static const PREFERENCE_SAVE_PREFERENCE : String = "PREFERENCE.SAVE_PREFERENCE";
+        /**
+         * Type of event to notify that Preferences were loaded successfully.
          */
         public static const PROPERTIES_LOADED : String = "PROPERTY.PROPERTIES_LOADED";
+        /**
+         * Event is fired when the model updated its internal data structure of Preferences.
+         */
+        public static const PREFERENCE_MODEL_CHANGED : String = "PREFERENCE.MODEL_CHANGED";
+        /**
+         * Event is fired whenever a Preference is selected in the list of Preferences.
+         */
+        public static const PREFERENCE_SELECTION_CHANGED : String = "PREFERENCE.SELECTION_CHANGED";
 
         /**
          * Store arbitrary data.

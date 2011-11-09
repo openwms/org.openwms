@@ -20,7 +20,6 @@
  */
 package org.openwms.web.flex.client.util {
 
-    import mx.resources.IResourceManager;
     import mx.resources.ResourceManager;
 
     [Name]
@@ -70,6 +69,8 @@ package org.openwms.web.flex.client.util {
          * Translate a paramterized String into the language set by the user.
          * The first argument is expected to be the String, the rest arbitrary parameters.
          *
+         * @param bundle The bundle to search in
+         * @param key The key to search for
          * @param args An arbitrary list. At least the first parameter must be set as the
          * String to be translated
          */
@@ -78,4 +79,3 @@ package org.openwms.web.flex.client.util {
         }
     }
 }
-
