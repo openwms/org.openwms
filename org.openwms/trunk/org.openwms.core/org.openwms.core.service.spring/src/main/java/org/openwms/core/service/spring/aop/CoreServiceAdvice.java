@@ -65,8 +65,7 @@ public class CoreServiceAdvice {
         }
         try {
             return pjp.proceed();
-        }
-        finally {
+        } finally {
             if (logger.isDebugEnabled() && sw != null) {
                 sw.stop();
                 logger.debug("<< took about [ms] " + sw.getTime());

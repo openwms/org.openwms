@@ -39,7 +39,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 /**
  * A ConfigurationServiceImpl is a transactional Spring powered service
- * implementation.
+ * implementation to manage preferences.
  * 
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  * @version $Revision$
@@ -66,16 +66,6 @@ public class ConfigurationServiceImpl extends EntityServiceImpl<AbstractPreferen
     @Override
     public void onApplicationEvent(MergePropertiesEvent event) {
         mergeApplicationProperties();
-    }
-
-    private void mergeApplicationProperties() {
-        List<AbstractPreference> prefs = fileDao.findAll();
-        List<AbstractPreference> persistedPrefs = dao.findAll();
-        for (AbstractPreference pref : prefs) {
-            if (!persistedPrefs.contains(pref)) {
-                dao.save(pref);
-            }
-        }
     }
 
     /**
@@ -106,9 +96,39 @@ public class ConfigurationServiceImpl extends EntityServiceImpl<AbstractPreferen
 
     /**
      * {@inheritDoc}
+     * 
+     * @see org.openwms.core.service.spring.EntityServiceImpl#save(org.openwms.core.domain.AbstractEntity)
+     */
+    @Override
+    public AbstractPreference save(AbstractPreference entity) {
+        return dao.save(entity);
+    }
+
+    /**
+     * {@inheritDoc}
+     * 
+     * @see org.openwms.core.service.ConfigurationService#remove(org.openwms.core.domain.system.AbstractPreference)
+     */
+    @Override
+    public void remove(AbstractPreference preference) {
+        dao.remove(preference);
+    }
+
+    /**
+     * {@inheritDoc}
      */
     @Override
     public List<? extends Unit> getAllUnits() {
         return null;
+    }
+
+    private void mergeApplicationProperties() {
+        List<AbstractPreference> prefs = fileDao.findAll();
+        List<AbstractPreference> persistedPrefs = dao.findAll();
+        for (AbstractPreference pref : prefs) {
+            if (!persistedPrefs.contains(pref)) {
+                dao.save(pref);
+            }
+        }
     }
 }
