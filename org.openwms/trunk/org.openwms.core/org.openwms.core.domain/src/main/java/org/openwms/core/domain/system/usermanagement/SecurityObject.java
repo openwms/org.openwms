@@ -63,7 +63,8 @@ public class SecurityObject extends AbstractEntity implements DomainObject<Long>
     /**
      * Query to find <strong>one</strong> {@link SecurityObject} by its natural
      * key. <li>Query parameter index <strong>1</strong> : The name of the
-     * <code>SecurityObject</code> to search for.</li></br> Name is {@value} .
+     * <code>SecurityObject</code> to search for.</li><br />
+     * Name is {@value} .
      */
     public static final String NQ_FIND_BY_UNIQUE_QUERY = "SecurityObject.findByRolename";
 
