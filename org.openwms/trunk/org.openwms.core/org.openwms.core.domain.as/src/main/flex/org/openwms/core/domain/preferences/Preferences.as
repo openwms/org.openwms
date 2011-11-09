@@ -29,5 +29,11 @@ package org.openwms.core.domain.preferences {
      * @since 0.1
      */
     public class Preferences extends PreferencesBase {
+
+        /**
+         * Constructor.
+         */
+        public function Preferences() {
+        }
     }
 }

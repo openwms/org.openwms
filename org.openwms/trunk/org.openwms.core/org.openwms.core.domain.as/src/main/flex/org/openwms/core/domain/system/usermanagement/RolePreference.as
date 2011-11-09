@@ -48,6 +48,15 @@ package org.openwms.core.domain.system.usermanagement {
         }
 
         /**
+         * Set the owner.
+         *
+         * @param value The rolename used as owner.
+         */
+        public function set owner(value : String) : void {
+            _owner = value;
+        }
+
+        /**
          * Return "Role".
          *
          * @return Role
