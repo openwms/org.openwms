@@ -199,7 +199,7 @@ public class User extends AbstractEntity implements DomainObject<Long> {
      * List of {@link Role}s assigned to the <code>User</code>. In a JPA context
      * eager loaded.
      * 
-     * @see javax.persistence.FetchType
+     * @see javax.persistence.FetchType#EAGER
      */
     @ManyToMany(mappedBy = "users", fetch = FetchType.EAGER, cascade = { CascadeType.ALL })
     private List<Role> roles = new ArrayList<Role>();

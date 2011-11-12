@@ -49,10 +49,12 @@ package org.openwms.core.domain.system.usermanagement {
         }
 
         /**
-         * Set the username to an empty String.
+         * Set the username.
+         *
+         * @param value The username
          */
-        public function resetUsername() : void {
-            _username = "";
+        public function set username(value : String) : void {
+            _username = value;
         }
 
         /**

@@ -151,49 +151,94 @@
                 PopUpManager.centerPopUp(pop1);
             }
             
+            // --------------------- event handlers ---------------------
+
+            /**
+             * Refresh the list of Users.
+             */
             private function refresh() : void {
                 dispatchEvent(new UserEvent(UserEvent.LOAD_ALL_USERS));
             }
-
+            /**
+             * Add a new User.
+             */
             private function addUser() : void {
                 dispatchEvent(new UserEvent(UserEvent.ADD_USER));
                 usernameTi.setFocus();
             }
-
+            /**
+             * Delete the selected User.
+             */
             private function deleteUser() : void {
                 if (modelLocator.selectedUser == null) {
                     Alert.show(I18nUtil.trans(I18nUtil.APP_MAIN, "info_user_save_user_before"));
                     return;
                 }
                 if (isNaN(modelLocator.selectedUser.id)) {
+                    // it is a transient one
                     modelLocator.selectedUser = null;
-                    modelLocator.selectedUser = modelLocator.allUsers.getItemAt(0) as User;
+                    //modelLocator.selectedUser = modelLocator.allUsers.getItemAt(0) as User;
                     return;
                 }
                 dispatchEvent(new UserEvent(UserEvent.DELETE_USER));
             }
-            
-            private function fireSaveUserEvent() : void {
-                if (modelLocator.selectedUser != null && stringVal.validate().type == ValidationResultEvent.VALID && checkExpirationDate()) {
-                    var bindings : Array = [new BindingProperty(modelLocator.selectedUser, "username", usernameTi, "text"),
-                                            new BindingProperty(modelLocator.selectedUser, "fullname", fullnameTi, "text"),  
-                                            new BindingProperty(modelLocator.selectedUser.userDetails, "description", descriptionTi, "text"),  
-                                            new BindingProperty(modelLocator.selectedUser.userDetails, "phoneNo", phoneNoTi, "text"),
-                                            new BindingProperty(modelLocator.selectedUser.userDetails, "skypeName", skypeNameTi, "text"),
-                                            new BindingProperty(modelLocator.selectedUser.userDetails, "department", departmentTi, "text"),
-                                            new BindingProperty(modelLocator.selectedUser.userDetails, "office", officeTi, "text"),
-                                            new BindingProperty(modelLocator.selectedUser.userDetails, "comment", tiComment, "text"),
-                                            new BindingProperty(modelLocator.selectedUser, "enabled", enabledChk, "selected"),
-                                            new BindingProperty(modelLocator.selectedUser, "locked", lockedChk, "selected")];
-                    DisplayUtility.bindProperties(new ArrayCollection(bindings),
-                        function execute():void {
-                            var event : UserEvent = new UserEvent(UserEvent.SAVE_USER);
-                            event.data = modelLocator.selectedUser;
-                            dispatchEvent(event);
-                        }
-                    );
+            /**
+             * Save the selected User.
+             */
+            private function saveUser() : void {
+                if (modelLocator.selectedUser == null) {
+                    Alert.show(I18nUtil.trans(I18nUtil.APP_MAIN, "info_user_no_user_selected"));
+                    return;
                 }
+                if (stringVal.validate().type != ValidationResultEvent.VALID) {
+                    Alert.show(I18nUtil.trans(I18nUtil.APP_MAIN, "info_user_no_username_set"));
+                    return;
+                }
+                if (!checkExpirationDate()) {
+                    Alert.show(I18nUtil.trans(I18nUtil.APP_MAIN, "info_user_valid_expiration_date"));
+                    return;
+                }
+                var bindings : Array = [new BindingProperty(modelLocator.selectedUser, "username", usernameTi, "text"),
+                                        new BindingProperty(modelLocator.selectedUser, "fullname", fullnameTi, "text"),  
+                                        new BindingProperty(modelLocator.selectedUser.userDetails, "description", descriptionTi, "text"),  
+                                        new BindingProperty(modelLocator.selectedUser.userDetails, "phoneNo", phoneNoTi, "text"),
+                                        new BindingProperty(modelLocator.selectedUser.userDetails, "skypeName", skypeNameTi, "text"),
+                                        new BindingProperty(modelLocator.selectedUser.userDetails, "department", departmentTi, "text"),
+                                        new BindingProperty(modelLocator.selectedUser.userDetails, "office", officeTi, "text"),
+                                        new BindingProperty(modelLocator.selectedUser.userDetails, "comment", tiComment, "text"),
+                                        new BindingProperty(modelLocator.selectedUser, "enabled", enabledChk, "selected"),
+                                        new BindingProperty(modelLocator.selectedUser, "locked", lockedChk, "selected")];
+                DisplayUtility.bindProperties(new ArrayCollection(bindings),
+                    function execute():void {
+                        var event : UserEvent = new UserEvent(UserEvent.SAVE_USER);
+                        event.data = modelLocator.selectedUser;
+                        dispatchEvent(event);
+                    }
+                );
             }
+            /**
+             * Assign a Role to the selected User.
+             */
+            private function addRole() : void {
+                if (!checkUserSelected(modelLocator.selectedUser)) {
+                    return;
+                }
+                var pop : AssignRoleDialog = AssignRoleDialog(PopUpManager.createPopUp(this, AssignRoleDialog, true));
+                var rolesToAssign : ArrayCollection = new ArrayCollection(modelLocator.allRoles.toArray());
+                for each (var role : Role in modelLocator.selectedUser.roles) {
+                    rolesToAssign.removeItemAt(rolesToAssign.getItemIndex(role));
+                }
+                pop.items = rolesToAssign;
+                PopUpManager.centerPopUp(pop);
+            }
+            /**
+             * Remove a Role from the User's list of roles.
+             */
+            private function removeRole() : void {
+                
+            }
+            
+            // --------------------- helpers ---------------------
 
             private function setFormElements(value : Boolean = true) : void {
                 deleteUserBtn.enabled = value;
@@ -267,18 +312,12 @@
                 userImg.initialize();
             }
             
-            private function addRole() : void {
-                var pop : AssignRoleDialog = AssignRoleDialog(PopUpManager.createPopUp(this, AssignRoleDialog, true));
-                var rolesToAssign : ArrayCollection = new ArrayCollection(modelLocator.allRoles.toArray());
-                for each (var role : Role in modelLocator.selectedUser.roles) {
-                    rolesToAssign.removeItemAt(rolesToAssign.getItemIndex(role));
+            private function checkUserSelected(user : User) : Boolean {
+                if (user == null) {
+                    Alert.show(I18nUtil.trans(I18nUtil.APP_MAIN, "info_user_no_user_selected"));
+                    return false;
                 }
-                pop.items = rolesToAssign;
-                PopUpManager.centerPopUp(pop);
-            }
-
-            private function removeRole() : void {
-                
+                return true;
             }
         ]]>
     </mx:Script>
@@ -290,17 +329,17 @@
     <mx:HBox width="95%" verticalAlign="middle" backgroundColor="#B6CFEF" x="10" y="10">
         <mx:Label text="{I18nUtil.trans(I18nUtil.APP_MAIN, 'txt_user_screen_header')}" fontSize="24"/>
         <mx:VRule height="10"/>
-        <mx:Button id="addUserBtn" enabled="{identity.ifAllGranted('APP_add_user_button')}" buttonMode="true" mouseChildren="false" toolTip="{I18nUtil.trans(I18nUtil.APP_MAIN, 'ttip_user_add_user')}" icon="@Embed(source='/assets/images/User--plus.png')" click="addUser()"/>
+        <mx:Button id="addUserBtn" click="addUser()" enabled="{identity.ifAllGranted('APP_add_user_button')}" toolTip="{I18nUtil.trans(I18nUtil.APP_MAIN, 'ttip_user_add_user')}" icon="@Embed(source='/assets/images/User--plus.png')" buttonMode="true" mouseChildren="false" />
         <mx:VRule height="10"/>
-        <mx:Button id="deleteUserBtn" enabled="{identity.ifAllGranted('APP_delete_user_button')}" buttonMode="true" mouseChildren="false" toolTip="{I18nUtil.trans(I18nUtil.APP_MAIN, 'ttip_user_delete_user')}" icon="@Embed(source='/assets/images/User--minus.png')" click="deleteUser();"/>
+        <mx:Button id="deleteUserBtn" click="deleteUser();" enabled="{modelLocator.selectedUser &amp;&amp; identity.ifAllGranted('APP_delete_user_button')}" toolTip="{I18nUtil.trans(I18nUtil.APP_MAIN, 'ttip_user_delete_user')}" icon="@Embed(source='/assets/images/User--minus.png')" buttonMode="true" mouseChildren="false" />
         <mx:VRule height="10"/>
-        <mx:Button id="saveUserBtn" enabled="{identity.ifAllGranted('APP_save_user_button')}" buttonMode="true" mouseChildren="false" toolTip="{I18nUtil.trans(I18nUtil.APP_MAIN, 'ttip_user_save_user')}" icon="@Embed(source='/assets/images/User--save.png')" click="fireSaveUserEvent()"/>
+        <mx:Button id="saveUserBtn" click="saveUser();" enabled="{modelLocator.selectedUser &amp;&amp; identity.ifAllGranted('APP_save_user_button')}" toolTip="{I18nUtil.trans(I18nUtil.APP_MAIN, 'ttip_user_save_user')}" icon="@Embed(source='/assets/images/User--save.png')" buttonMode="true" mouseChildren="false" />
         <mx:VRule height="10"/>
-        <mx:Button id="refreshUserBtn" buttonMode="true" mouseChildren="false" toolTip="{I18nUtil.trans(I18nUtil.APP_MAIN, 'ttip_user_reload_users')}" icon="@Embed(source='assets/images/icons/refresh.png')" click="refresh()"/>
+        <mx:Button id="refreshUserBtn" click="refresh()" toolTip="{I18nUtil.trans(I18nUtil.APP_MAIN, 'ttip_user_reload_users')}" icon="@Embed(source='assets/images/icons/refresh.png')" buttonMode="true" mouseChildren="false" />
         <mx:VRule height="10"/>
-        <mx:Button id="changePasswordBtn" enabled="{identity.ifAllGranted('APP_change_user_pw_button')}" buttonMode="true" mouseChildren="false" toolTip="{I18nUtil.trans(I18nUtil.APP_MAIN, 'ttip_user_change_users_password')}" icon="@Embed(source='assets/images/icons/key--edit.png')" click="showChangePasswordDialog()"/>
+        <mx:Button id="changePasswordBtn" click="showChangePasswordDialog()" enabled="{modelLocator.selectedUser &amp;&amp; identity.ifAllGranted('APP_change_user_pw_button')}" toolTip="{I18nUtil.trans(I18nUtil.APP_MAIN, 'ttip_user_change_users_password')}" icon="@Embed(source='assets/images/icons/key--edit.png')" buttonMode="true" mouseChildren="false" />
         <mx:VRule height="10"/>
-        <mx:Button id="changePictureBtn" enabled="{identity.ifAllGranted('APP_change_user_picture_button')}" buttonMode="true" mouseChildren="false" toolTip="{I18nUtil.trans(I18nUtil.APP_MAIN, 'ttip_user_change_users_image')}" icon="@Embed(source='assets/images/icons/picture--edit.png')" click="showFileUploadDialog()"/>
+        <mx:Button id="changePictureBtn" click="showFileUploadDialog()" enabled="{modelLocator.selectedUser &amp;&amp; identity.ifAllGranted('APP_change_user_picture_button')}" toolTip="{I18nUtil.trans(I18nUtil.APP_MAIN, 'ttip_user_change_users_image')}" icon="@Embed(source='assets/images/icons/picture--edit.png')" buttonMode="true" mouseChildren="false" />
     </mx:HBox>
     <mx:HRule x="9" y="53" width="95%"/>
     <mx:Canvas x="10" y="63" width="95%" height="100%" backgroundColor="#B6CFEF">

@@ -20,10 +20,11 @@
  */
 package org.openwms.core.integration.file;
 
+import java.beans.PropertyChangeEvent;
 import java.io.IOException;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 import javax.annotation.PostConstruct;
 import javax.xml.transform.stream.StreamSource;
@@ -48,11 +49,19 @@ import org.springframework.oxm.XmlMappingException;
 import org.springframework.stereotype.Repository;
 
 /**
- * A PreferencesDaoImpl.
+ * A PreferencesDaoImpl reads a XML file of preferences and keeps them
+ * internally in a Map. An initial preferences file is expected to be at
+ * {@value #INITIAL_PREFERENCES_FILE} but this can be overridden with a property
+ * <i>application.initial.properties</i> in the configuration properties file.
+ * <p>
+ * On a {@link PropertyChangeEvent} the internal Map is cleared and reloaded.
+ * </p>
  * 
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  * @version $Revision: $
  * @since 0.1
+ * @see bundle org.openwms.core.infrastructure.configuration
+ * @see org.openwms.core.util.event.PropertiesChangedEvent
  */
 @Repository("preferencesFileDao")
 public class PreferencesDaoImpl implements PreferenceDao<PreferenceKey>, ApplicationListener<PropertiesChangedEvent> {
@@ -69,15 +78,12 @@ public class PreferencesDaoImpl implements PreferenceDao<PreferenceKey>, Applica
     @Autowired
     @Value(Constants.APPLICATION_INITIAL_PROPERTIES)
     private String fileName;
-    private Resource fileResource;
-    private Preferences preferences;
-    private Map<PreferenceKey, AbstractPreference> prefs = new HashMap<PreferenceKey, AbstractPreference>();
+    private volatile Resource fileResource;
+    private volatile Preferences preferences;
+    private Map<PreferenceKey, AbstractPreference> prefs = new ConcurrentHashMap<PreferenceKey, AbstractPreference>();
 
     /**
      * Create a new PreferencesDaoImpl.
-     * 
-     * @param fileName
-     *            The name of the properties file
      */
     private PreferencesDaoImpl() {
 
@@ -127,7 +133,7 @@ public class PreferencesDaoImpl implements PreferenceDao<PreferenceKey>, Applica
      * On bean initialization load all preferences into a Map.
      */
     @PostConstruct
-    public void loadResources() {
+    private void loadResources() {
         if (preferences == null) {
             initResource();
             try {

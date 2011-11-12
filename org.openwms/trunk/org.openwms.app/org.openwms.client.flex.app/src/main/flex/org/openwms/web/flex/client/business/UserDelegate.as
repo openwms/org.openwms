@@ -100,7 +100,7 @@ package org.openwms.web.flex.client.business {
 
         private function onUserAdded(event : TideResultEvent) : void {
             var user : User = event.result as User;
-            user.resetUsername();
+            user.username = "";
             modelLocator.selectedUser = user;
             //loadUsers();
             dispatchEvent(new UserEvent(UserEvent.USER_ADDED));
@@ -134,10 +134,13 @@ package org.openwms.web.flex.client.business {
             tideContext.userService.remove(modelLocator.selectedUser, onUserDeleted, onFault);
         }
 
-        [Deprecated]
+        /**
+         * After an User was successfully deleted, go and remove it from the model manually.
+         *
+         * @param event Unused
+         */
         private function onUserDeleted(event : TideResultEvent) : void {
-            var len : int = modelLocator.allUsers.length;
-            for (var i : int = 0; i < len; i++) {
+            for (var i : int = 0; i < modelLocator.allUsers.length; i++) {
                 if (modelLocator.selectedUser.id == modelLocator.allUsers[i].id) {
                     modelLocator.allUsers.removeItemAt(i);
                     if (modelLocator.allUsers.length > 0) {
