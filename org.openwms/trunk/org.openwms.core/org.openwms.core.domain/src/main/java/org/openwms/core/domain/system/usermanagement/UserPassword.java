@@ -210,14 +210,14 @@ public class UserPassword extends AbstractEntity implements DomainObject<Long> {
     }
 
     /**
-     * Return the persistent id as String or an empty String.
+     * Return the password as String.
      * 
      * @see java.lang.Object#toString()
-     * @return The id or an empty String
+     * @return The password
      */
     @Override
     public String toString() {
-        return (id == null ? "" : id.toString());
+        return this.getPassword();
     }
 
     /**
