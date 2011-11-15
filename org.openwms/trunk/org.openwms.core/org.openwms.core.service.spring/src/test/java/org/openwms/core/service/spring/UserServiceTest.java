@@ -179,12 +179,15 @@ public class UserServiceTest extends AbstractJpaSpringContextTests {
     }
 
     /**
-     * Test to change it now.
+     * Test to change the password of an User.
      */
     @Test
     public final void testChangePassword() {
-        boolean b = srv.changeUserPassword(new UserPassword(new User("KNOWN"), "password"));
-        assertTrue("Expected to be saved", b);
+        try {
+            srv.changeUserPassword(new UserPassword(new User("KNOWN"), "password"));
+        } catch (Exception e) {
+            fail("Something went wrong:" + e.getMessage());
+        }
     }
 
     private User findUser(String userName) {

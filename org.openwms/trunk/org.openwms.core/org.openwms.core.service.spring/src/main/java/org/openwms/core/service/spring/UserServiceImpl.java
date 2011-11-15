@@ -23,6 +23,7 @@ package org.openwms.core.service.spring;
 import java.util.HashSet;
 import java.util.List;
 
+import org.apache.commons.lang.StringUtils;
 import org.openwms.core.annotation.FireAfterTransaction;
 import org.openwms.core.domain.system.usermanagement.Role;
 import org.openwms.core.domain.system.usermanagement.SecurityObject;
@@ -116,10 +117,7 @@ public class UserServiceImpl implements UserService {
     @Override
     @FireAfterTransaction(events = { UserChangedEvent.class })
     public User save(User user) {
-        AssertUtils.notNull(user, "The instance of the User to be saved is NULL");
-        for (Role role : user.getRoles()) {
-            logger.debug("Role of user:" + role.getName());
-        }
+        AssertUtils.notNull(user, "The instance of the User to be saved may not be NULL");
         if (user.isNew()) {
             dao.persist(user);
         }
@@ -176,13 +174,13 @@ public class UserServiceImpl implements UserService {
      * @throws IllegalArgumentException
      *             when userPassword is <code>null</code>
      * @throws ServiceRuntimeException
-     *             when userPassword is <code>null</code>
+     *             when userPassword is not a valid password
      * @throws UserNotFoundException
      *             when no such User exist
      */
     @Override
     @FireAfterTransaction(events = { UserChangedEvent.class })
-    public boolean changeUserPassword(UserPassword userPassword) {
+    public void changeUserPassword(UserPassword userPassword) {
         AssertUtils.notNull(userPassword, "Error while changing the user password, new value was null");
         User entity = dao.findByUniqueId(userPassword.getUser().getUsername());
         if (entity == null) {
@@ -190,10 +188,10 @@ public class UserServiceImpl implements UserService {
         }
         try {
             entity.setPassword(userPassword.getPassword());
-            return true;
+            dao.save(entity);
         } catch (InvalidPasswordException ipe) {
             logger.info(ipe.getMessage());
-            throw new ServiceRuntimeException("Password pattern does not match the defined rules", ipe);
+            throw new ServiceRuntimeException("Password does not match the defined pattern", ipe);
         }
     }
 
@@ -205,17 +203,23 @@ public class UserServiceImpl implements UserService {
      *      org.openwms.core.domain.system.usermanagement.UserPreference[])
      */
     @Override
-    public void saveUserProfile(User user, UserPassword userPassword, UserPreference... prefs) {
-        // first check for valid password
-        changeUserPassword(userPassword);
-
+    public User saveUserProfile(User user, UserPassword userPassword, UserPreference... prefs) {
+        AssertUtils.notNull(user, "The user to save the profile is null");
+        if (userPassword != null && StringUtils.isNotEmpty(userPassword.getPassword())) {
+            try {
+                user.setPassword(userPassword.getPassword());
+            } catch (InvalidPasswordException ipe) {
+                logger.info(ipe.getMessage());
+                throw new ServiceRuntimeException("Password does not match the defined pattern", ipe);
+            }
+        }
         // second save User
-        save(user);
-
+        User u = save(user);
         // last save preferences
         for (UserPreference preference : prefs) {
             confSrv.save(preference);
         }
+        return u;
     }
 
     /**

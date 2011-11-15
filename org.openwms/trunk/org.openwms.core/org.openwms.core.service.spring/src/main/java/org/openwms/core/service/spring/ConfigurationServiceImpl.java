@@ -31,6 +31,9 @@ import org.openwms.core.integration.PreferenceDao;
 import org.openwms.core.integration.PreferenceWriter;
 import org.openwms.core.service.ConfigurationService;
 import org.openwms.core.util.event.MergePropertiesEvent;
+import org.openwms.core.util.validation.AssertUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.ApplicationListener;
@@ -50,6 +53,8 @@ import org.springframework.transaction.annotation.Transactional;
 @Service("configurationService")
 public class ConfigurationServiceImpl extends EntityServiceImpl<AbstractPreference, Long> implements
         ConfigurationService, ApplicationListener<MergePropertiesEvent> {
+
+    private static final Logger logger = LoggerFactory.getLogger(ConfigurationServiceImpl.class);
 
     @Autowired
     @Qualifier("preferencesJpaDao")
@@ -101,7 +106,19 @@ public class ConfigurationServiceImpl extends EntityServiceImpl<AbstractPreferen
      */
     @Override
     public AbstractPreference save(AbstractPreference entity) {
-        return dao.save(entity);
+        AssertUtils.notNull(entity, "Not allowed to call save with a NULL value");
+        List<? extends AbstractPreference> preferences = dao.findByType(entity.getClass());
+        if (preferences.contains(entity)) {
+            if (entity.isNew()) {
+                if (logger.isDebugEnabled()) {
+                    logger.debug("Fake. Do not save or persist an entity that is transient and duplicated");
+                    return entity;
+                }
+            }
+            return dao.save(entity);
+        }
+        dao.persist(entity);
+        return entity;
     }
 
     /**
