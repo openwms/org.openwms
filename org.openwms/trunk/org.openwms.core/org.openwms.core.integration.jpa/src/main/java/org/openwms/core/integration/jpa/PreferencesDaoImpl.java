@@ -67,16 +67,16 @@ public class PreferencesDaoImpl implements PreferenceWriter<Long> {
     @Override
     public <T extends AbstractPreference> List<T> findByType(Class<T> clazz) {
         if (ApplicationPreference.class.equals(clazz)) {
-            return (List<T>) em.createNamedQuery(ApplicationPreference.NQ_FIND_ALL);
+            return (List<T>) em.createNamedQuery(ApplicationPreference.NQ_FIND_ALL).getResultList();
         }
         if (ModulePreference.class.equals(clazz)) {
-            return (List<T>) em.createNamedQuery(ModulePreference.NQ_FIND_ALL);
+            return (List<T>) em.createNamedQuery(ModulePreference.NQ_FIND_ALL).getResultList();
         }
         if (RolePreference.class.equals(clazz)) {
-            return (List<T>) em.createNamedQuery(RolePreference.NQ_FIND_ALL);
+            return (List<T>) em.createNamedQuery(RolePreference.NQ_FIND_ALL).getResultList();
         }
         if (UserPreference.class.equals(clazz)) {
-            return (List<T>) em.createNamedQuery(UserPreference.NQ_FIND_ALL);
+            return (List<T>) em.createNamedQuery(UserPreference.NQ_FIND_ALL).getResultList();
         }
         throw new WrongClassTypeException("Type " + clazz + " not a valid Preferences type");
     }
@@ -111,6 +111,16 @@ public class PreferencesDaoImpl implements PreferenceWriter<Long> {
         }
         return em.merge(entity);
     }
+
+    /**
+     * {@inheritDoc}
+     * 
+     * @see org.openwms.core.integration.PreferenceWriter#persist(org.openwms.core.domain.system.AbstractPreference)
+     */
+    @Override
+    public <T extends AbstractPreference> void persist(T entity) {
+        em.persist(entity);
+    };
 
     /**
      * {@inheritDoc}
