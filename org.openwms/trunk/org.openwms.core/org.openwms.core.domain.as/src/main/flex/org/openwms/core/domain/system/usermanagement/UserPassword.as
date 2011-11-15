@@ -22,17 +22,17 @@ package org.openwms.core.domain.system.usermanagement {
 
     [Bindable]
     [RemoteClass(alias="org.openwms.core.domain.system.usermanagement.UserPassword")]
-	/**
-	 * Encapsulates the password of an <code>User</code>.
-	 * <p>
-	 * When an <code>User</code> changes his password, the current password is stored to the
-	 * history list of passwords.
-	 * </p>
-	 * 
-	 * @version $Revision$
-	 * @since 0.1
-	 * @see org.openwms.core.domain.system.usermanagement.User
-	 */
+    /**
+     * Encapsulates the password of an <code>User</code>.
+     * <p>
+     * When an <code>User</code> changes his password, the current password is stored to the
+     * history list of passwords.
+     * </p>
+     *
+     * @version $Revision$
+     * @since 0.1
+     * @see org.openwms.core.domain.system.usermanagement.User
+     */
     public class UserPassword extends UserPasswordBase {
 
         /**
@@ -41,9 +41,13 @@ package org.openwms.core.domain.system.usermanagement {
          * @param user The owning <code>User</code>
          * @param password The password to store for the <code>User</code>
          */
-        public function UserPassword(user : User, password : String) : void {
-            this._user = user;
-            this._password = password;
+        public function UserPassword(user : User=null, password : String=null) : void {
+            if (user != null) {
+                this._user = user;
+            }
+            if (password != null) {
+                this._password = password;
+            }
         }
     }
 }
