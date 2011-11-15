@@ -38,16 +38,24 @@ import org.openwms.core.domain.system.AbstractPreference;
 public interface PreferenceWriter<ID extends Serializable> extends PreferenceDao<ID> {
 
     /**
-     * Synchronize an entity with the persistence layer and return it.
+     * Save an entity with the persistence layer and return it.
      * 
      * @param <T>
      *            Any subtype of {@link AbstractPreference}
      * @param entity
      *            Entity instance to be synchronized with the persistence layer
      * @return The synchronized entity instance. If JPA is used as
-     *         implementation, the returned instance is managed.
+     *         implementation, the returned instance is managed
      */
     <T extends AbstractPreference> T save(T entity);
+
+    /**
+     * Force a persist of a new entity.
+     * 
+     * @param entity
+     *            The entity to persist
+     */
+    <T extends AbstractPreference> void persist(T entity);
 
     /**
      * Removes an already persistent entity.
