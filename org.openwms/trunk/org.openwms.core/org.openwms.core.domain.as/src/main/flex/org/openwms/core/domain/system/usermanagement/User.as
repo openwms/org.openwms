@@ -58,6 +58,19 @@ package org.openwms.core.domain.system.usermanagement {
         }
 
         /**
+         * Check whether the User has UserDetails.
+         *
+         * @param userData The User to check
+         * @return <code>true</code> when the User has UserDetails, otherwise <code>false</code>
+         */
+        public static function hasDetails(userData : User) : Boolean {
+            if (userData != null && userData.userDetails != null) {
+                return true;
+            }
+            return false;
+        }
+
+        /**
          * Find and return an User in the collection of Users with the same username like the first
          * argument username.
          *
