@@ -62,4 +62,15 @@ public class SystemUser extends User {
         this.setFullname(SYSTEM_USERNAME);
     }
 
+    /**
+     * Check whether <code>user</code> is the system user.
+     * 
+     * @param user
+     *            The user to check
+     * @return <code>true</code> if user is the system user, otherwise
+     *         <code>false</code>
+     */
+    public static final boolean isSuperUser(User user) {
+        return (user instanceof SystemUser);
+    }
 }
