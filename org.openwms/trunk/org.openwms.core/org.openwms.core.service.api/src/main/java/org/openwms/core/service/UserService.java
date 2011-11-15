@@ -37,16 +37,13 @@ import org.openwms.core.domain.system.usermanagement.UserPreference;
  */
 public interface UserService {
 
-/**
+    /**
      * Change the current password of the {@link User}.
      * 
      * @param userPassword
      *            The new {@link UserPassword) to change
-     * @return <code>true</code> if the password was changed successfully.
-     *         <code>false</code> when the new password conflicts with the
-     *         rules defined for passwords.
      */
-    boolean changeUserPassword(UserPassword userPassword);
+    void changeUserPassword(UserPassword userPassword);
 
     /**
      * Check if an {@link UserPassword} is still valid.
@@ -103,8 +100,9 @@ public interface UserService {
      *            The User's password
      * @param prefs
      *            An array of UserPreference objects
+     * @return The modified User instance
      */
-    void saveUserProfile(User user, UserPassword userPassword, UserPreference... prefs);
+    User saveUserProfile(User user, UserPassword userPassword, UserPreference... prefs);
 
     /**
      * Remove an {@link User} from the persistent storage.
