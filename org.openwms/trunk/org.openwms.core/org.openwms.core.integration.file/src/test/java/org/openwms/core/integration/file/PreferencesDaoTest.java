@@ -155,5 +155,4 @@ public class PreferencesDaoTest {
         }
         assertEquals("Not a valid transformed ApplicationPreference", expected, pref.getPropertiesAsString());
     }
-
 }
