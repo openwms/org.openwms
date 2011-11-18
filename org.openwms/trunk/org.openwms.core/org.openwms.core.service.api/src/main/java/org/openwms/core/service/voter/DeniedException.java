@@ -23,8 +23,8 @@ package org.openwms.core.service.voter;
 import org.openwms.core.service.exception.ServiceException;
 
 /**
- * A DeniedException. Is thrown by {@link DecisionVoter}s in case a business
- * action is not allowed to be fulfilled.
+ * A DeniedException is thrown by a {@link DecisionVoter}s in case a business
+ * action is not allowed to be executed.
  * 
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  * @version $Revision$
@@ -65,5 +65,4 @@ public class DeniedException extends ServiceException {
     public DeniedException(String message, Throwable cause) {
         super(message, cause);
     }
-
 }

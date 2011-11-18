@@ -25,7 +25,7 @@ import java.util.List;
 import org.openwms.core.domain.system.I18n;
 
 /**
- * An I18nService.
+ * An I18nService is responsible to find and save i18n translations.
  * 
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  * @version $Revision$
@@ -41,19 +41,11 @@ public interface I18nService {
     List<I18n> findAllTranslations();
 
     /**
-     * Save one translation, this can be a new one all an already existing one.
-     * 
-     * @param translation
-     *            Translation to save or persist
-     */
-    void saveTranslation(I18n translation);
-
-    /**
-     * Save a list of translations. Elements of the list can be transient or
-     * persisted entities.
+     * Save an arbitrary collection of translations. No matter, whether entities
+     * in the collection already exist or are new ones.
      * 
      * @param translations
-     *            The list of translations to save or persist.
+     *            An vararg of translations to save
      */
-    void saveTranslations(List<I18n> translations);
+    void saveTranslations(I18n... translations);
 }

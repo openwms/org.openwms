@@ -21,8 +21,9 @@
 package org.openwms.core.service.voter;
 
 /**
- * A Vote. Holds all information used by {@link DecisionVoter}s to vote for or
- * against. Currently implemented only as superclass for particular votes.
+ * A Vote stores all information used by {@link DecisionVoter}s to vote for or
+ * against an action that shall be executed. Acts as a superclass for certain
+ * votes.
  * 
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  * @version $Revision$

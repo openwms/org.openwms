@@ -23,7 +23,8 @@ package org.openwms.core.service.exception;
 import java.io.Serializable;
 
 /**
- * A ServiceRuntimeException is an unchecked application exception.
+ * A ServiceRuntimeException is an unchecked application exception thrown in
+ * service layer classes.
  * 
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  * @version $Revision$
@@ -65,5 +66,4 @@ public class ServiceRuntimeException extends RuntimeException implements Seriali
     public ServiceRuntimeException(String message, Throwable cause) {
         super(message, cause);
     }
-
 }
