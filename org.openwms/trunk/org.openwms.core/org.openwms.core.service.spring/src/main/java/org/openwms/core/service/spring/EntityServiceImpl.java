@@ -126,7 +126,7 @@ public class EntityServiceImpl<T extends AbstractEntity, ID extends Serializable
      * {@inheritDoc}
      */
     @Override
-    public void addEntity(T newEntity) {
+    public void add(T newEntity) {
         // FIXME [scherrer] : All entities shall extend a superclass Entity with
         // isNew() method, to check this here
         resolveTypeClass();

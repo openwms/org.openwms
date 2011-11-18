@@ -51,11 +51,14 @@ import org.springframework.transaction.annotation.Transactional;
 
 /**
  * An UserServiceImpl is a Spring supported transactional implementation of a
- * general {@link UserService}. Using Spring 2 annotations support autowiring
- * collaborators like DAOs therefore XML configuration becomes obsolete. This
- * class is marked with Springs {@link Service} annotation to benefit from
- * Springs exception translation interceptor. Traditional CRUD operations are
- * delegated to an {@link UserDao}.
+ * general {@link UserService}. Using Spring 2 annotation support autowires
+ * collaborators, therefore XML configuration becomes obsolete. This class is
+ * marked with Springs {@link Service} annotation to benefit from Springs
+ * exception translation intercepter. Traditional CRUD operations are delegated
+ * to an {@link UserDao}.
+ * <p>
+ * This implementation can be autowired with the name {@value #COMPONENT_NAME}.
+ * </p>
  * 
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  * @version $Revision$
@@ -63,7 +66,7 @@ import org.springframework.transaction.annotation.Transactional;
  * @see org.openwms.core.integration.system.usermanagement.UserDao;
  */
 @Transactional
-@Service("userService")
+@Service(UserServiceImpl.COMPONENT_NAME)
 public class UserServiceImpl implements UserService {
 
     private static final Logger logger = LoggerFactory.getLogger(UserServiceImpl.class);
@@ -74,11 +77,14 @@ public class UserServiceImpl implements UserService {
     private SecurityObjectDao securityObjectDao;
     @Autowired
     private ConfigurationService confSrv;
-
     @Value("#{ globals['system.user'] }")
     private String systemUsername;
     @Value("#{ globals['system.password'] }")
     private String systemPassword;
+    /**
+     * Springs service name.
+     */
+    public static final String COMPONENT_NAME = "userService";
 
     /**
      * {@inheritDoc}
@@ -112,12 +118,12 @@ public class UserServiceImpl implements UserService {
      * {@inheritDoc}
      * 
      * @throws IllegalArgumentException
-     *             when user is <code>null</code>
+     *             when <code>user</code> is <code>null</code>
      */
     @Override
     @FireAfterTransaction(events = { UserChangedEvent.class })
     public User save(User user) {
-        AssertUtils.notNull(user, "The instance of the User to be saved may not be NULL");
+        AssertUtils.notNull(user, "The instance of the User to be saved must not be null");
         if (user.isNew()) {
             dao.persist(user);
         }
@@ -128,14 +134,14 @@ public class UserServiceImpl implements UserService {
      * {@inheritDoc}
      * 
      * @throws IllegalArgumentException
-     *             when user is <code>null</code>
+     *             when <code>user</code> is <code>null</code>
      */
     @Override
     @FireAfterTransaction(events = { UserChangedEvent.class })
     public void remove(User user) {
-        AssertUtils.notNull(user, "The instance of the User to be removed is NULL");
+        AssertUtils.notNull(user, "The instance of the User to be removed is null");
         if (user.isNew()) {
-            logger.warn("The User instance to be removed is not persist yet, no need to remove");
+            logger.info("The User instance to be removed is not persist yet, no need to remove it");
         } else {
             dao.remove(dao.findById(user.getId()));
         }
@@ -160,6 +166,7 @@ public class UserServiceImpl implements UserService {
     @Override
     @Transactional(readOnly = true)
     public SystemUser createSystemUser() {
+        // CHECK [scherrer] : check this
         SystemUser sys = new SystemUser(systemUsername, systemPassword);
         Role role = new Role.Builder(Role.ROLE_PREFIX + "SYSTEM").withDescription("SuperUsers Role").setImmutable(true)
                 .build();
@@ -172,19 +179,19 @@ public class UserServiceImpl implements UserService {
      * {@inheritDoc}
      * 
      * @throws IllegalArgumentException
-     *             when userPassword is <code>null</code>
+     *             when <code>userPassword</code> is <code>null</code>
      * @throws ServiceRuntimeException
-     *             when userPassword is not a valid password
+     *             when <code>userPassword</code> is not a valid password
      * @throws UserNotFoundException
-     *             when no such User exist
+     *             when no {@link User} exist
      */
     @Override
     @FireAfterTransaction(events = { UserChangedEvent.class })
     public void changeUserPassword(UserPassword userPassword) {
-        AssertUtils.notNull(userPassword, "Error while changing the user password, new value was null");
+        AssertUtils.notNull(userPassword, "Error while changing the user password, new value is null");
         User entity = dao.findByUniqueId(userPassword.getUser().getUsername());
         if (entity == null) {
-            throw new UserNotFoundException("User not found, probably not persisted before");
+            throw new UserNotFoundException("User not found, probably not persisted before or has been removed");
         }
         try {
             entity.setPassword(userPassword.getPassword());
@@ -198,13 +205,16 @@ public class UserServiceImpl implements UserService {
     /**
      * {@inheritDoc}
      * 
+     * @throws IllegalArgumentException
+     *             when <code>user</code> is <code>null</code>
+     * 
      * @see org.openwms.core.service.UserService#saveUserProfile(org.openwms.core.domain.system.usermanagement.User,
      *      org.openwms.core.domain.system.usermanagement.UserPassword,
      *      org.openwms.core.domain.system.usermanagement.UserPreference[])
      */
     @Override
     public User saveUserProfile(User user, UserPassword userPassword, UserPreference... prefs) {
-        AssertUtils.notNull(user, "The user to save the profile is null");
+        AssertUtils.notNull(user, "Could not save the user profile because the argument user is null");
         if (userPassword != null && StringUtils.isNotEmpty(userPassword.getPassword())) {
             try {
                 user.setPassword(userPassword.getPassword());
@@ -213,22 +223,23 @@ public class UserServiceImpl implements UserService {
                 throw new ServiceRuntimeException("Password does not match the defined pattern", ipe);
             }
         }
-        // second save User
-        User u = save(user);
-        // last save preferences
         for (UserPreference preference : prefs) {
             confSrv.save(preference);
         }
-        return u;
+        return save(user);
     }
 
     /**
      * {@inheritDoc}
      * 
+     * @throws IllegalArgumentException
+     *             when <code>userPassword</code> is <code>null</code>
+     * 
      * @see org.openwms.core.service.UserService#checkCredentials(org.openwms.core.domain.system.usermanagement.UserPassword)
      */
     @Override
     public boolean checkCredentials(UserPassword userPassword) {
+        AssertUtils.notNull(userPassword, "Could not check credentials, because userPassword is null");
         return dao.findByNameAndPassword(userPassword) == null ? false : true;
     }
 }

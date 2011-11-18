@@ -19,6 +19,6 @@
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
 /**
- * This package provides service implementations of the CORE project, implemented with the Spring framework.
+ * This package contains service implementations of the CORE project, implemented with the Spring framework.
  */
 package org.openwms.core.service.spring;

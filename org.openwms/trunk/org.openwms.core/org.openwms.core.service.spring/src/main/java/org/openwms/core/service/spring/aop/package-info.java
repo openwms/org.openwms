@@ -19,6 +19,6 @@
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
 /**
- * This package includes AOP artifacts.
+ * This package contains AOP artifacts.
  */
 package org.openwms.core.service.spring.aop;

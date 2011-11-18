@@ -41,10 +41,11 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 /**
- * A SecurityContextUserServiceImpl.
+ * A SecurityContextUserServiceImpl extends Spring {@link UserDetailsService} to
+ * read <code>User</code>s and <code>Role</code>s from the persistent storage
+ * and wraps them into security objects.
  * <p>
- * An extended Spring {@link UserDetailsService} to read Users and Roles from
- * the openwms.org scheme and wrap into security objects.
+ * The advice can be referenced by name {@value #COMPONENT_NAME}.
  * </p>
  * 
  * @author <a href="mailto:russelltina@users.sourceforge.net">Tina Russell</a>
@@ -53,7 +54,7 @@ import org.springframework.transaction.annotation.Transactional;
  * @see org.springframework.security.core.userdetails.UserDetailsService
  */
 @Transactional
-@Service("userDetailsService")
+@Service(SecurityContextUserServiceImpl.COMPONENT_NAME)
 public class SecurityContextUserServiceImpl implements UserDetailsService, ApplicationListener<UserChangedEvent> {
 
     private static final Logger logger = LoggerFactory.getLogger(SecurityContextUserServiceImpl.class);
@@ -74,6 +75,10 @@ public class SecurityContextUserServiceImpl implements UserDetailsService, Appli
     @Autowired(required = false)
     @Qualifier("ehCache")
     private Ehcache cache;
+    /**
+     * Springs service name.
+     */
+    public static final String COMPONENT_NAME = "userDetailsService";
 
     /**
      * {@inheritDoc}

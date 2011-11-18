@@ -25,7 +25,7 @@ import java.util.List;
 import org.openwms.core.domain.system.usermanagement.Role;
 import org.openwms.core.integration.RoleDao;
 import org.openwms.core.service.RoleService;
-import org.openwms.core.service.exception.ServiceRuntimeException;
+import org.openwms.core.util.validation.AssertUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,11 +34,14 @@ import org.springframework.transaction.annotation.Transactional;
 
 /**
  * A RoleServiceImpl is a Spring supported transactional implementation of a
- * general {@link RoleService}. Using Spring 2 annotations support autowiring
- * collaborators like DAOs therefore XML configuration becomes obsolete. This
- * class is marked with Springs {@link Service} annotation to benefit from
- * Springs exception translation intercepter. Traditional CRUD operations are
- * delegated to an {@link RoleDao}.
+ * general {@link RoleService}. Using Spring 2 annotation support autowires
+ * collaborators, therefore XML configuration becomes obsolete. This class is
+ * marked with Springs {@link Service} annotation to benefit from Springs
+ * exception translation intercepter. Traditional CRUD operations are delegated
+ * to a {@link RoleDao} instance.
+ * <p>
+ * This implementation can be autowired with the name {@value #COMPONENT_NAME}.
+ * </p>
  * 
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  * @version $Revision$
@@ -46,44 +49,48 @@ import org.springframework.transaction.annotation.Transactional;
  * @see org.openwms.core.integration.system.usermanagement.RoleDao;
  */
 @Transactional
-@Service("roleService")
+@Service(RoleServiceImpl.COMPONENT_NAME)
 public class RoleServiceImpl implements RoleService {
 
     private static final Logger logger = LoggerFactory.getLogger(RoleServiceImpl.class);
     @Autowired
     private RoleDao dao;
+    /**
+     * Springs service name.
+     */
+    public static final String COMPONENT_NAME = "roleService";
 
     /**
      * {@inheritDoc}
+     * 
+     * @throws IllegalArgumentException
+     *             when <code>roles</code> is <code>null</code>
      */
     @Override
     public void remove(List<Role> roles) {
-        if (roles == null || roles.isEmpty()) {
-            logger.debug("Nothing to remove just return.");
-            return;
-        }
+        AssertUtils.notNull(roles, "Roles to be removed must not be null");
         Role role;
         for (Role r : roles) {
             role = r.isNew() ? dao.findByUniqueId(r.getName()) : dao.findById(r.getId());
             if (role != null) {
                 dao.remove(role);
+            } else {
+                if (logger.isInfoEnabled()) {
+                    logger.info("Role to remove could not be found. Role:" + role);
+                }
             }
-            role = null;
         }
     }
 
     /**
      * {@inheritDoc}
      * 
-     * @throws ServiceRuntimeException
-     *             when role is <code>null</code>
+     * @throws IllegalArgumentException
+     *             when <code>role</code> is <code>null</code>
      */
     @Override
     public Role save(Role role) {
-        if (role == null) {
-            throw new ServiceRuntimeException("Cannot save role because it is NULL");
-        }
-        // role.getGrants().size();
+        AssertUtils.notNull(role, "Role to be removed must not be null");
         return dao.save(role);
     }
 

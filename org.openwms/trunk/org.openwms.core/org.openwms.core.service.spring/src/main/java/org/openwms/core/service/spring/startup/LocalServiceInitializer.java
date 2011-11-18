@@ -30,7 +30,7 @@ import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.stereotype.Component;
 
 /**
- * A LocalServiceInitializer. Fires a {@link MergePropertiesEvent} whenever the
+ * A LocalServiceInitializer fires {@link MergePropertiesEvent}s whenever the
  * bundle is started or restarted.
  * 
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>

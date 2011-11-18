@@ -28,12 +28,14 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
 /**
- * A CoreServiceAdvice is used as AOP aspect for Core services. So far it is
- * used for exception translation into a {@link ServiceRuntimeException} and
- * time consumption tracing. Activation is done in XML instead of using Springs
- * AOP annotations.
+ * A CoreServiceAdvice is in conjunction with an AOP aspect for Core services.
  * <p>
- * The advice can be referenced by name <code>coreServiceAdvice</code>
+ * So far it is used to translate all exceptions into a
+ * {@link ServiceRuntimeException} and tracing of methods time consumption.
+ * Activation is done in XML instead of using Springs AOP annotations.
+ * </p>
+ * <p>
+ * The advice can be referenced by name {@value #COMPONENT_NAME}.
  * </p>
  * 
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
@@ -41,14 +43,18 @@ import org.springframework.stereotype.Component;
  * @since 0.1
  * @see org.openwms.core.service.exception.ServiceRuntimeException
  */
-@Component("coreServiceAdvice")
+@Component(CoreServiceAdvice.COMPONENT_NAME)
 public class CoreServiceAdvice {
 
     private static final Logger logger = LoggerFactory.getLogger(CoreServiceAdvice.class);
+    /**
+     * Springs component name.
+     */
+    public static final String COMPONENT_NAME = "coreServiceAdvice";
 
     /**
-     * Called around any service invocation to log time consumption of the
-     * method call.
+     * Called around any service method invocation to log time consumption of
+     * each method call.
      * 
      * @param pjp
      *            the ProceedingJoinPoint object
@@ -61,14 +67,14 @@ public class CoreServiceAdvice {
         if (logger.isDebugEnabled()) {
             sw = new StopWatch();
             sw.start();
-            logger.debug(">> Calling " + pjp.toShortString());
+            logger.debug("-->> Calling:" + pjp.toShortString());
         }
         try {
             return pjp.proceed();
         } finally {
             if (logger.isDebugEnabled() && sw != null) {
                 sw.stop();
-                logger.debug("<< took about [ms] " + sw.getTime());
+                logger.debug("<<-- took about [ms]:" + sw.getTime());
             }
         }
     }
@@ -76,9 +82,9 @@ public class CoreServiceAdvice {
     /**
      * Called after an exception is thrown by classes of the Core service layer.
      * If the exception is not of type {@link ServiceRuntimeException} it is
-     * wrapped by a new {@link ServiceRuntimeException}. Turn tracing to level
+     * wrapped by a new {@link ServiceRuntimeException}.
      * <p>
-     * WARN to log the root cause.
+     * Turn tracing to level WARN to log the root cause.
      * </p>
      * 
      * @param ex
@@ -88,7 +94,7 @@ public class CoreServiceAdvice {
         if (logger.isWarnEnabled()) {
             logger.warn("Service Layer Exception: " + ex);
         }
-        if (ServiceRuntimeException.class.equals(ex)) {
+        if (ex instanceof ServiceRuntimeException) {
             return;
         }
         throw new ServiceRuntimeException(ex);

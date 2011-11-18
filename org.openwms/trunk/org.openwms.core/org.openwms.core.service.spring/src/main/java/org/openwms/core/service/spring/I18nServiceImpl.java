@@ -25,6 +25,8 @@ import java.util.List;
 import org.openwms.core.domain.system.I18n;
 import org.openwms.core.integration.I18nRepository;
 import org.openwms.core.service.I18nService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -40,6 +42,7 @@ import org.springframework.transaction.annotation.Transactional;
 @Service("i18nService")
 public class I18nServiceImpl implements I18nService {
 
+    private static final Logger logger = LoggerFactory.getLogger(I18nServiceImpl.class);
     @Autowired
     private I18nRepository repo;
 
@@ -56,23 +59,20 @@ public class I18nServiceImpl implements I18nService {
     /**
      * {@inheritDoc}
      * 
-     * @see org.openwms.core.service.I18nService#saveTranslation(org.openwms.core.domain.system.I18n)
+     * @see org.openwms.core.service.I18nService#saveTranslations(org.openwms.core.domain.system.I18n[])
      */
     @Override
-    public void saveTranslation(I18n translation) {
-        repo.save(translation);
-    }
-
-    /**
-     * {@inheritDoc}
-     * 
-     * @see org.openwms.core.service.I18nService#saveTranslations(java.util.List)
-     */
-    @Override
-    public void saveTranslations(List<I18n> translations) {
+    public void saveTranslations(I18n... translations) {
+        if (null == translations) {
+            logger.warn("I18nService called to save translations but these are NULL");
+            return;
+        }
+        // TODO [scherrer] : extend repository to be compliant with lists,
+        // instead of looping through all elements
         for (I18n i18n : translations) {
+            // TODO [scherrer] : Is this implementation safe for persisted
+            // entities?
             repo.save(i18n);
         }
     }
-
 }
