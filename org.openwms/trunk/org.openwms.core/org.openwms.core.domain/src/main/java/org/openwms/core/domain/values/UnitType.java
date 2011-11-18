@@ -22,6 +22,8 @@ package org.openwms.core.domain.values;
 
 import java.util.List;
 
+import org.openwms.core.annotation.GlossaryTerm;
+
 /**
  * An UnitType is a concrete unit definition.
  * 
@@ -29,6 +31,7 @@ import java.util.List;
  * @version $Revision$
  * @since 0.1
  */
+@GlossaryTerm
 public interface UnitType {
 
     /**

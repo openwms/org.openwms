@@ -35,6 +35,7 @@ import javax.persistence.ManyToMany;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 
+import org.openwms.core.annotation.GlossaryTerm;
 import org.openwms.core.util.validation.AssertUtils;
 
 /**
@@ -51,6 +52,7 @@ import org.openwms.core.util.validation.AssertUtils;
  * @see org.openwms.core.domain.system.usermanagement.User
  * @see org.openwms.core.domain.system.usermanagement.Role
  */
+@GlossaryTerm
 @Entity
 @DiscriminatorValue("ROLE")
 @NamedQueries({
@@ -61,7 +63,7 @@ public class Role extends SecurityObject {
     private static final long serialVersionUID = -4133301834284932221L;
 
     /**
-     * The default prefix String for each created <code>Role</code>. Name is *
+     * The default prefix String for each created <code>Role</code>. Name is
      * {@value} .
      */
     public static final String ROLE_PREFIX = "ROLE_";
@@ -74,15 +76,10 @@ public class Role extends SecurityObject {
     /**
      * Query to find <strong>one</strong> <code>Role</code> by its natural key.
      * <li>Query parameter index <strong>1</strong> : The name of the
-<<<<<<< .mine
-     * <code>Role</code> to search for.</li><br />
-     * Name is {@value} .
-=======
      * <code>Role</code> to search for.</li>
      * <p>
      * Name is {@value} .
      * </p>
->>>>>>> .r1522
      */
     public static final String NQ_FIND_BY_UNIQUE_QUERY = "Role.findByRolename";
 

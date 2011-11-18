@@ -35,7 +35,9 @@ public class DomainModelException extends Exception {
     /**
      * Create a new DomainModelException.
      */
-    public DomainModelException() {}
+    public DomainModelException() {
+
+    }
 
     /**
      * Create a new DomainModelException.

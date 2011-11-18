@@ -18,9 +18,31 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
+package org.openwms.core.annotation;
+
+import java.lang.annotation.Documented;
+import java.lang.annotation.ElementType;
+import java.lang.annotation.Inherited;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+import java.lang.annotation.Target;
+
 /**
- * Contains domain classes regarding the user and role management. JAXB classes are assign to the schema http://www.openwms.org/schema/usermanagement
+ * A GlossaryTerm marks a Java type definition that occurs in the glossary of
+ * the user manual as a glossary term.
+ * 
+ * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
+ * @version $Revision: $
+ * @since 0.1
  */
-@javax.xml.bind.annotation.XmlAccessorType(javax.xml.bind.annotation.XmlAccessType.FIELD)
-@javax.xml.bind.annotation.XmlSchema(namespace = "http://www.openwms.org/schema/usermanagement")
-package org.openwms.core.domain.system.usermanagement;
+@Retention(RetentionPolicy.RUNTIME)
+@Target({ ElementType.TYPE })
+@Inherited
+@Documented
+public @interface GlossaryTerm {
+
+    /**
+     * The term used in the glossary. Default is {@value} .
+     */
+    String value() default "";
+}

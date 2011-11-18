@@ -22,6 +22,8 @@ package org.openwms.core.domain.system.usermanagement;
 
 import javax.persistence.Entity;
 
+import org.openwms.core.annotation.GlossaryTerm;
+
 /**
  * A SystemUser is granted with all privileges and omits all security
  * constraints.
@@ -31,6 +33,7 @@ import javax.persistence.Entity;
  * @since 0.1
  * @see org.openwms.core.domain.system.usermanagement.User
  */
+@GlossaryTerm
 @Entity
 public class SystemUser extends User {
 

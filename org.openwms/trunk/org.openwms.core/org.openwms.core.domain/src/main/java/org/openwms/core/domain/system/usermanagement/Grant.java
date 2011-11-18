@@ -23,6 +23,8 @@ package org.openwms.core.domain.system.usermanagement;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 
+import org.openwms.core.annotation.GlossaryTerm;
+
 /**
  * A Grant encapsulates a permission to any kind of application object. Grants
  * (permissions) to security aware application objects can be permitted or
@@ -41,6 +43,7 @@ import javax.persistence.Entity;
  * @see org.openwms.core.domain.system.usermanagement.Role
  * @see org.openwms.core.domain.system.usermanagement.SecurityObject
  */
+@GlossaryTerm
 @Entity
 @DiscriminatorValue("GRANT")
 public class Grant extends SecurityObject {
