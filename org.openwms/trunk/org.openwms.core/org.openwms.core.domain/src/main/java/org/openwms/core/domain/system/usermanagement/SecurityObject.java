@@ -31,6 +31,7 @@ import javax.persistence.OrderBy;
 import javax.persistence.Table;
 import javax.persistence.Version;
 
+import org.openwms.core.annotation.GlossaryTerm;
 import org.openwms.core.domain.AbstractEntity;
 import org.openwms.core.domain.DomainObject;
 import org.openwms.core.util.validation.AssertUtils;
@@ -45,6 +46,7 @@ import org.openwms.core.util.validation.AssertUtils;
  * @see org.openwms.core.domain.system.usermanagement.Role
  * @see org.openwms.core.domain.system.usermanagement.Grant
  */
+@GlossaryTerm
 @Entity
 @Table(name = "COR_ROLE")
 @Inheritance

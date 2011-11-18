@@ -46,6 +46,7 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.persistence.Version;
 
+import org.openwms.core.annotation.GlossaryTerm;
 import org.openwms.core.domain.AbstractEntity;
 import org.openwms.core.domain.DomainObject;
 import org.openwms.core.exception.InvalidPasswordException;
@@ -68,6 +69,7 @@ import org.slf4j.LoggerFactory;
  * @see org.openwms.core.domain.system.usermanagement.UserPassword
  * @see org.openwms.core.domain.system.usermanagement.Role
  */
+@GlossaryTerm
 @Entity
 @Table(name = "COR_USER")
 @NamedQueries({

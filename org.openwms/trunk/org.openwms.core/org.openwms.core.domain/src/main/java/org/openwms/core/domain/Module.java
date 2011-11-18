@@ -31,6 +31,7 @@ import javax.persistence.Table;
 import javax.persistence.Transient;
 import javax.persistence.Version;
 
+import org.openwms.core.annotation.GlossaryTerm;
 import org.openwms.core.util.validation.AssertUtils;
 
 /**
@@ -44,6 +45,7 @@ import org.openwms.core.util.validation.AssertUtils;
  * @see org.openwms.core.domain.AbstractEntity
  * @see org.openwms.core.domain.DomainObject
  */
+@GlossaryTerm
 @Entity
 @Table(name = "COR_MODULE")
 @NamedQueries({ @NamedQuery(name = Module.NQ_FIND_ALL, query = "select m from Module m order by m.startupOrder"),

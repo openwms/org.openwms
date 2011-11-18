@@ -31,6 +31,7 @@ import javax.persistence.OrderBy;
 import javax.persistence.Table;
 import javax.persistence.Version;
 
+import org.openwms.core.annotation.GlossaryTerm;
 import org.openwms.core.domain.AbstractEntity;
 import org.openwms.core.domain.DomainObject;
 import org.openwms.core.util.validation.AssertUtils;
@@ -47,6 +48,7 @@ import org.openwms.core.util.validation.AssertUtils;
  * @since 0.1
  * @see org.openwms.core.domain.system.usermanagement.User
  */
+@GlossaryTerm
 @Entity
 @Table(name = "COR_USER_PASSWORD")
 public class UserPassword extends AbstractEntity implements DomainObject<Long> {
@@ -94,9 +96,10 @@ public class UserPassword extends AbstractEntity implements DomainObject<Long> {
      * @param user
      *            The {@link User} to assign
      * @param password
-     *            The password as String to assign
+     *            The <code>password</code> as String to assign
      * @throws IllegalArgumentException
-     *             when user or password is <code>null</code> or empty
+     *             when <code>user</code> or <code>password</code> is
+     *             <code>null</code> or empty
      */
     public UserPassword(User user, String password) {
         AssertUtils.notNull(user, "User must not be null");

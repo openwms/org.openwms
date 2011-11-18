@@ -20,6 +20,8 @@
  */
 package org.openwms.core.domain.values;
 
+import org.openwms.core.annotation.GlossaryTerm;
+
 /**
  * Just a simple Unit definition.
  * 
@@ -29,6 +31,7 @@ package org.openwms.core.domain.values;
  * @version $Revision$
  * @since 0.1
  */
+@GlossaryTerm
 public interface Unit<T extends UnitType> {
 
     /**
