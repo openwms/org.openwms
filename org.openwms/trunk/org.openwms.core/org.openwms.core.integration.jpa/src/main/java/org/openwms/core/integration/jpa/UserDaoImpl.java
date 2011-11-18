@@ -37,7 +37,11 @@ import org.springframework.transaction.annotation.Transactional;
  * An UserDaoImpl is an extension of a {@link AbstractGenericJpaDao} about
  * functionality regarding {@link User}s. The stereotype annotation
  * {@link Repository} marks this class as DAO in the architecture and enables
- * exception translation and component scanning.
+ * exception translation and component scanning. It can be injected by name
+ * {@value #COMPONENT_NAME}.
+ * <p>
+ * All methods have to be invoked within an active transaction context.
+ * </p>
  * 
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  * @version $Revision$
@@ -45,9 +49,14 @@ import org.springframework.transaction.annotation.Transactional;
  * @see org.openwms.core.integration.jpa.AbstractGenericJpaDao
  * @see org.openwms.core.integration.UserDao
  */
-@Repository("userDao")
 @Transactional(propagation = Propagation.MANDATORY)
+@Repository(UserDaoImpl.COMPONENT_NAME)
 public class UserDaoImpl extends AbstractGenericJpaDao<User, Long> implements UserDao {
+
+    /**
+     * Springs component name.
+     */
+    public static final String COMPONENT_NAME = "userDao";
 
     /**
      * @return Name of the query

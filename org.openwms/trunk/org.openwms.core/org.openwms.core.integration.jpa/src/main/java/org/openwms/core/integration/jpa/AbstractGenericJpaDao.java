@@ -32,9 +32,10 @@ import javax.persistence.Query;
 
 import org.openwms.core.domain.AbstractEntity;
 import org.openwms.core.integration.GenericDao;
-import org.openwms.core.integration.exception.TooManyEntitiesFoundException;
+import org.openwms.core.integration.exception.NoUniqueResultException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 /**
@@ -59,7 +60,7 @@ import org.springframework.transaction.annotation.Transactional;
  * @see org.springframework.stereotype.Repository
  * @see org.springframework.transaction.annotation.Transactional
  */
-@Transactional
+@Transactional(propagation = Propagation.MANDATORY)
 public abstract class AbstractGenericJpaDao<T extends AbstractEntity, ID extends Serializable> implements
         GenericDao<T, ID> {
 
@@ -154,13 +155,19 @@ public abstract class AbstractGenericJpaDao<T extends AbstractEntity, ID extends
 
     /**
      * {@inheritDoc}
+     * 
+     * A {@link NoUniqueResultException} is thrown when more than one entity was
+     * found. In case of no result, <code>null</code> is returned.
+     * 
+     * @throws NoUniqueResultException
+     *             when more than one entity was found
      */
     @Override
     @SuppressWarnings("unchecked")
     public T findByUniqueId(Serializable id) {
         List<T> result = em.createNamedQuery(getFindByUniqueIdQuery()).setParameter(1, id).getResultList();
         if (result.size() > 1) {
-            throw new TooManyEntitiesFoundException(id);
+            throw new NoUniqueResultException(id);
         }
         return result.size() == 0 ? null : result.get(0);
     }

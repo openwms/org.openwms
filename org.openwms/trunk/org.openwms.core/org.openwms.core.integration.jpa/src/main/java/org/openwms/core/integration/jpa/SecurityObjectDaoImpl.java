@@ -29,21 +29,32 @@ import org.openwms.core.domain.system.usermanagement.Grant;
 import org.openwms.core.domain.system.usermanagement.SecurityObject;
 import org.openwms.core.integration.SecurityObjectDao;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 /**
- * A SecurityDaoImpl.
+ * A SecurityDaoImpl is a JPA implementation that is used as a repository to
+ * find, delete and save {@link SecurityObject}s. It can be injected by name
+ * {@value #COMPONENT_NAME}.
+ * <p>
+ * All methods have to be invoked within an active transaction context.
+ * </p>
  * 
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  * @version $Revision$
  * @since 0.1
  */
-@Transactional
-@Repository("securityObjectDao")
+@Transactional(propagation = Propagation.MANDATORY)
+@Repository(SecurityObjectDaoImpl.COMPONENT_NAME)
 public class SecurityObjectDaoImpl implements SecurityObjectDao {
 
     @PersistenceContext
     private EntityManager em;
+
+    /**
+     * Springs component name.
+     */
+    public static final String COMPONENT_NAME = "securityObjectDao";
 
     /**
      * {@inheritDoc}

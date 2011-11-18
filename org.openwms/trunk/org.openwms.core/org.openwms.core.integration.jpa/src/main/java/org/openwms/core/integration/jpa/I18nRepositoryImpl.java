@@ -27,15 +27,25 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 /**
- * A I18nRepositoryImpl.
+ * An I18nRepositoryImpl is responsible to find and retrieve i18n translation
+ * from the persistent storage. It can be injected by name
+ * {@value #COMPONENT_NAME}.
+ * <p>
+ * All methods have to be invoked within an active transaction context.
+ * </p>
  * 
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  * @version $Revision$
  * @since 0.1
  */
-@Repository("i18nRepo")
 @Transactional(propagation = Propagation.MANDATORY)
+@Repository(I18nRepositoryImpl.COMPONENT_NAME)
 public class I18nRepositoryImpl extends AbstractGenericJpaDao<I18n, Long> implements I18nRepository {
+
+    /**
+     * Springs component name.
+     */
+    public static final String COMPONENT_NAME = "i18nRepo";
 
     /**
      * {@inheritDoc}
