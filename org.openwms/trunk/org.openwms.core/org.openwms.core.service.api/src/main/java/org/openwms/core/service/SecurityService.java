@@ -25,7 +25,8 @@ import java.util.List;
 import org.openwms.core.domain.system.usermanagement.Grant;
 
 /**
- * A SecurityService.
+ * A SecurityService defines functionality to handle <code>SecurityObject</code>
+ * s, especially <code>Grant</code>s.
  * 
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  * @version $Revision$
@@ -34,15 +35,20 @@ import org.openwms.core.domain.system.usermanagement.Grant;
 public interface SecurityService {
 
     /**
-     * Merge a list of persisted/detached or transient grants of a particular
-     * module.
+     * Merge a list of persisted, detached or transient {@link Grant}s of a
+     * particular <code>Module</code>.
      * 
      * @param moduleName
      *            The moduleName
      * @param grants
-     *            The list of grants to merge
-     * @return All merged grants
+     *            The list of {@link Grant}s to merge
+     * @return All merged {@link Grant}s
      */
     List<Grant> mergeGrants(String moduleName, List<Grant> grants);
 
+    /**
+     * Force a login. Call this method to access the security filter chain. The
+     * implementation does not need to execute anything.
+     */
+    void login();
 }

@@ -24,12 +24,11 @@ import java.io.Serializable;
 import java.util.List;
 
 /**
- * An EntityService is a generic interface definition for a service to offer
- * simple CRUD functionality.
+ * An EntityService is a generic interface definition of a simple CRUD service.
  * <p>
- * Basically the service is responsible to access the persistence layer. Even
- * though the service declares the transaction boundary and handles exception
- * translation.
+ * Basically this service is responsible to encapsulate CRUD functionality and
+ * delegates to repository implementations. Furthermore the service spans the
+ * transaction boundary and handles exception translation.
  * </p>
  * 
  * @param <T>
@@ -44,31 +43,34 @@ public interface EntityService<T extends Serializable> {
      * Save an entity of type <code>T</code>.
      * 
      * @param entity
-     *            Entity instance to be saved
-     * @return The saved entity instance
+     *            Instance to be saved
+     * @return The saved instance
      */
     T save(T entity);
 
     /**
      * Find all entities of type <code>T</code>.
      * 
-     * @return A list of all found entities
+     * The result is specific to the implementation and can also be
+     * <code>null</code>.
+     * 
+     * @return A list of all entities
      */
     List<T> findAll();
 
     /**
-     * Removes a persistent entity instance.
+     * Removes an entity instance.
      * 
      * @param entity
-     *            Entity instance to be removed
+     *            Instance to be removed
      */
     void remove(T entity);
 
     /**
-     * Add a new entity to the persistent storage.
+     * Add an entity.
      * 
-     * @param newEntity
-     *            Transient entity instance to persist
+     * @param entity
+     *            New entity instance to be added
      */
-    void addEntity(T newEntity);
+    void add(T entity);
 }

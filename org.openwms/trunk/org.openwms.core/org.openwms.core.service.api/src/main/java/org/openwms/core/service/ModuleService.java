@@ -25,21 +25,23 @@ import java.util.List;
 import org.openwms.core.domain.Module;
 
 /**
- * A ModuleService offers some functionality for common module management tasks.
- * Handling modules is an essential functionality of the CORE openwms.org
- * project.
+ * A ModuleService offers functionality of common {@link Module} management
+ * tasks. Handling {@link Module}s is an essential functionality of the CORE
+ * openwms.org subproject. {@link Module}s can be created, saved, loaded or
+ * unloaded.
  * 
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  * @version $Revision$
  * @since 0.1
+ * @see import org.openwms.core.domain.Module
  */
 public interface ModuleService {
 
     /**
-     * Return a list of all persisted {@link Module}s.
+     * Return a list of all existing {@link Module}s.
      * 
-     * @return A list of {@link Module}s or an empty list when no
-     *         {@link Module}s exist
+     * @return A list of {@link Module}s or an empty list when no {@link Module}
+     *         s exist
      */
     List<Module> findAll();
 
@@ -53,27 +55,20 @@ public interface ModuleService {
     Module save(Module module);
 
     /**
-     * Removes a persistent {@link Module} instance.
+     * Remove an already existing {@link Module}.
      * 
      * @param module
-     *            {@link Module} instance to be removed
+     *            {@link Module} to be removed
      */
     void remove(Module module);
 
     /**
-     * Force a login. Call this method and try to access the security filter
-     * chain. The implementation does not need to execute any logic.
-     */
-    void login();
-
-    /**
-     * For a list of {@link Module}s the startupOrder is saved. The
-     * startupOrder property of all {@link Module}s in the list must already be
-     * calculated and saved before.
+     * Save the <code>startupOrder</code> for a list of {@link Module}s. The
+     * <code>startupOrder</code> of all {@link Module}s in the list
+     * <code>modules</code> has to be calculated before.
      * 
      * @param modules
-     *            The list of {@link Module}s to be modified
+     *            The list of {@link Module}s to be saved
      */
     void saveStartupOrder(List<Module> modules);
-
 }

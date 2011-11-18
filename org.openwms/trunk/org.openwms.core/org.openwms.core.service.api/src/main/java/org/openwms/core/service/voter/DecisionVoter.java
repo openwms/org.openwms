@@ -21,9 +21,10 @@
 package org.openwms.core.service.voter;
 
 /**
- * A DecisionVoter. Is asked to vote for a business action.
+ * A DecisionVoter is asked to vote for a business action.
  * 
- * @param <T> Any type of Vote
+ * @param <T>
+ *            Any type of Vote
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  * @version $Revision$
  * @since 0.1
@@ -31,14 +32,13 @@ package org.openwms.core.service.voter;
 public interface DecisionVoter<T extends Vote> {
 
     /**
-     * The implementation has to vote for it's particular vote on also
-     * particular rules implemented by the voter.
+     * The implementation has to vote for a certain vote on particular rules
+     * that are implemented by the voter.
      * 
      * @param vote
      *            The vote to vote for
      * @throws DeniedException
-     *             is thrown when the voter does not vote for the action to be
-     *             allowed.
+     *             is thrown when the voter cannot vote for the action
      */
     void voteFor(T vote) throws DeniedException;
 }

@@ -22,52 +22,50 @@ package org.openwms.core.service;
 
 import java.util.List;
 
-import org.openwms.core.domain.preferences.ApplicationPreference;
-import org.openwms.core.domain.preferences.ModulePreference;
 import org.openwms.core.domain.system.AbstractPreference;
-import org.openwms.core.domain.values.Unit;
 
 /**
- * A ConfigurationService is responsible to handle all application preferences.
- * Whereby preferences have particular defined scopes, e.g. some preferences
- * have a global scope which means Application Scope and some others are only
- * valid for a certain Module.
+ * A ConfigurationService is responsible to deal with preferences. Whereby
+ * preferences have particular defined scopes, e.g. some preferences are in a
+ * global scope which means they are visible and valid for the whole
+ * application. Others are only valid in a certain scope, probably only visible
+ * for a particular <code>Module</code>, <code>Role</code> or <code>User</code>.
+ * Other subclasses of {@link AbstractPreference} may be implemented as well.
  * 
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  * @version $Revision$
  * @since 0.1
+ * @see org.openwms.core.domain.system.AbstractPreference
  * @see org.openwms.core.domain.system.PropertyScope
  */
 public interface ConfigurationService {
 
     /**
-     * Find and return all preferences.
+     * Find and return all preferences. The order of elements is not guaranteed
+     * and is specific to the implementation.
      * 
      * @return a list of all preferences
      */
     List<AbstractPreference> findAll();
 
     /**
-     * Find and return all preferences in Application Scope.
+     * Find and return all preferences in the scope of the application.
      * 
-     * @return a list of these preferences
+     * @param <T>
+     *            Any subtype of {@link AbstractPreference}
+     * @param clazz
+     *            The class of preference to search for
+     * @return a list of preferences of type T
      */
-    List<ApplicationPreference> findApplicationProperties();
+    <T extends AbstractPreference> List<T> findByType(Class<T> clazz);
 
     /**
-     * Find and return all preferences belonging to this Module.
-     * 
-     * @return a list of these preferences
-     */
-    List<ModulePreference> findModuleProperties();
-
-    /**
-     * Update the given {@link AbstractPreference} or persist it when it is a
-     * transient one.
+     * Save the given {@link AbstractPreference} or persist it when it is a
+     * transient instance.
      * 
      * @param preference
-     *            {@link AbstractPreference} entity to persist
-     * @return Updated {@link AbstractPreference} entity instance
+     *            {@link AbstractPreference} entity to save
+     * @return Saved {@link AbstractPreference} entity instance
      */
     AbstractPreference save(AbstractPreference preference);
 
@@ -75,14 +73,7 @@ public interface ConfigurationService {
      * Remove a {@link AbstractPreference}.
      * 
      * @param preference
-     *            The preferences to remove
+     *            The {@link AbstractPreference} to remove
      */
     void remove(AbstractPreference preference);
-
-    /**
-     * Get all unit types supported by this Module.
-     * 
-     * @return A list of these units
-     */
-    List<? extends Unit> getAllUnits();
 }

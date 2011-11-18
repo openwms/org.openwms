@@ -23,8 +23,8 @@ package org.openwms.core.service.exception;
 import java.io.Serializable;
 
 /**
- * A RemovalNotAllowedException is thrown to indicate that the caller is not
- * allowed to remove an entity.
+ * A RemovalNotAllowedException is thrown when the caller is not allowed to
+ * remove an entity.
  * 
  * @author <a href="mailto:russelltina@users.sourceforge.net">Tina Russell</a>
  * @version $Revision$
@@ -65,5 +65,4 @@ public class RemovalNotAllowedException extends ServiceException implements Seri
     public RemovalNotAllowedException(String message, Throwable cause) {
         super(message, cause);
     }
-
 }

@@ -23,19 +23,19 @@ package org.openwms.core.service;
 import org.openwms.core.domain.system.usermanagement.User;
 
 /**
- * An UserHolder exposes an {@link User} object to its clients. The main purpose
- * of this interface is the strict disjunction between the API client and the
- * implementation class, that is kept in the impl bundle.
+ * An UserHolder exposes an {@link User} instance to it's clients. The main
+ * purpose of this interface is the strict disjunction between the API and the
+ * implementation class, that is kept separately in the <i>implementation</i>
+ * bundle.
  * 
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  * @version $Revision: 1484 $
  * @since 0.1
- * @see org.openwms.core.domain.system.usermanagement.User
  */
 public interface UserHolder {
 
     /**
-     * Return the shared {@link User} object.
+     * Return the wrapped {@link User} instance.
      * 
      * @return The wrapped {@link User}
      */

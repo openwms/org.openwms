@@ -21,7 +21,8 @@
 package org.openwms.core.service.exception;
 
 /**
- * A ServiceException is a checked application exception.
+ * A ServiceException is a checked application exception thrown in service layer
+ * classes.
  * 
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  * @version $Revision$
@@ -63,5 +64,4 @@ public class ServiceException extends Exception {
     public ServiceException(String message, Throwable cause) {
         super(message, cause);
     }
-
 }

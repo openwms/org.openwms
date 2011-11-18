@@ -28,20 +28,21 @@ import org.openwms.core.domain.system.usermanagement.UserPassword;
 import org.openwms.core.domain.system.usermanagement.UserPreference;
 
 /**
- * An UserService offers business functionality regarding handling of
+ * An UserService offers functionality according to the handling with
  * {@link User}s.
  * 
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  * @version $Revision$
  * @since 0.1
+ * @see org.openwms.core.domain.system.usermanagement.User
  */
 public interface UserService {
 
     /**
-     * Change the current password of the {@link User}.
+     * Change the current {@link User}s password.
      * 
      * @param userPassword
-     *            The new {@link UserPassword) to change
+     *            The {@link UserPassword) to change
      */
     void changeUserPassword(UserPassword userPassword);
 
@@ -49,7 +50,7 @@ public interface UserService {
      * Check if an {@link UserPassword} is still valid.
      * 
      * @param userPassword
-     *            The UserPassword to check
+     *            The {@link UserPassword} to check
      * @return <code>true</code> if valid, otherwise <code>false</code>
      */
     boolean checkCredentials(UserPassword userPassword);
@@ -57,7 +58,7 @@ public interface UserService {
     /**
      * Find and return all {@link User}s.
      * 
-     * @return A list of all {@link User}s
+     * @return The list of all {@link User}s
      */
     List<User> findAll();
 
@@ -67,17 +68,16 @@ public interface UserService {
      * @param username
      *            Username of the {@link User}
      * @param image
-     *            Image to be saved as byte[]
+     *            Image to be stored
      */
     void uploadImageFile(String username, byte[] image);
 
     /**
-     * Return a transient {@link User} entity object, serving as a template. The
-     * returned {@link User} has only set the username.
+     * Return a transient {@link User} entity object, serving as a template.
      * 
      * @param username
      *            Username of the {@link User}
-     * @return An empty template {@link User} instance
+     * @return An empty {@link User} template
      */
     User getTemplate(String username);
 
@@ -85,38 +85,37 @@ public interface UserService {
      * Update the given {@link User} or persist it when it is a transient one.
      * 
      * @param user
-     *            {@link User} entity to persist
-     * @return Updated {@link User} entity instance
+     *            {@link User} entity to save
+     * @return Saved {@link User} instance
      */
     User save(User user);
 
     /**
-     * Save changes on an {@link User} and in addition the User's password and
-     * preferences.
+     * Save changes on an {@link User} and additionally save the User's password
+     * and preferences.
      * 
      * @param user
-     *            The modified User
+     *            The {@link User} to change
      * @param userPassword
-     *            The User's password
+     *            The {@link User}s password
      * @param prefs
-     *            An array of UserPreference objects
-     * @return The modified User instance
+     *            An array of {@link UserPreference} objects
+     * @return The saved {@link User} instance
      */
     User saveUserProfile(User user, UserPassword userPassword, UserPreference... prefs);
 
     /**
-     * Remove an {@link User} from the persistent storage.
+     * Remove an {@link User}.
      * 
      * @param user
-     *            {@link User} entity to be removed
+     *            {@link User} to be removed
      */
     void remove(User user);
 
     /**
-     * Create and return the SystemUser with all existing roles.
+     * Create and return the {@link SystemUser}.
      * 
-     * @return the SystemUser
+     * @return the {@link SystemUser} instance
      */
     SystemUser createSystemUser();
-
 }
