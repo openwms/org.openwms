@@ -23,11 +23,13 @@ package org.openwms.core.integration;
 import org.openwms.core.domain.system.usermanagement.Role;
 
 /**
- * A RoleDao adds particular functionality regarding
- * {@link Role} entity classes.
+ * A RoleDao adds particular functionality to find and modifiy {@link Role}
+ * entity classes.
  * 
  * @author <a href="mailto:russelltina@users.sourceforge.net">Tina Russell</a>
  * @version $Revision$
  * @since 0.1
  */
-public interface RoleDao extends GenericDao<Role, Long> { }
+public interface RoleDao extends GenericDao<Role, Long> {
+
+}

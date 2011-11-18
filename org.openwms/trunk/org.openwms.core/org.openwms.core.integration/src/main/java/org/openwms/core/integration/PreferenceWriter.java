@@ -25,7 +25,7 @@ import java.io.Serializable;
 import org.openwms.core.domain.system.AbstractPreference;
 
 /**
- * A PreferenceWriter extends the {@link PreferenceDao} with functionality to
+ * A PreferenceWriter extends the {@link PreferenceDao} about functionality to
  * save and remove {@link AbstractPreference}s.
  * 
  * @param <ID>
@@ -52,6 +52,8 @@ public interface PreferenceWriter<ID extends Serializable> extends PreferenceDao
     /**
      * Force a persist of a new entity.
      * 
+     * @param <T>
+     *            Some kind ofAbstractPreference
      * @param entity
      *            The entity to persist
      */
