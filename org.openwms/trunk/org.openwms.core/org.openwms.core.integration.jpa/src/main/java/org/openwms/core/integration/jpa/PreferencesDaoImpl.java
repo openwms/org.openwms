@@ -34,19 +34,33 @@ import org.openwms.core.domain.system.usermanagement.UserPreference;
 import org.openwms.core.integration.PreferenceWriter;
 import org.openwms.core.util.exception.WrongClassTypeException;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
- * A PreferencesDaoImpl.
+ * A PreferencesDaoImpl is a JPA implementation of {@link PreferenceWriter} and
+ * implicitly of <code>PreferenceDao</code> to find, remove and save preference
+ * objects to the persistent storage. It can be injected by name
+ * {@value #COMPONENT_NAME}.
+ * <p>
+ * All methods have to be invoked within an active transaction context.
+ * </p>
  * 
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  * @version $Revision: $
  * @since 0.1
  */
-@Repository("preferencesJpaDao")
+@Transactional(propagation = Propagation.MANDATORY)
+@Repository(PreferencesDaoImpl.COMPONENT_NAME)
 public class PreferencesDaoImpl implements PreferenceWriter<Long> {
 
     @PersistenceContext
     private EntityManager em;
+
+    /**
+     * Springs component name.
+     */
+    public static final String COMPONENT_NAME = "preferencesJpaDao";
 
     /**
      * {@inheritDoc}

@@ -23,14 +23,17 @@ package org.openwms.core.integration.jpa;
 import org.openwms.core.domain.system.usermanagement.Role;
 import org.openwms.core.integration.RoleDao;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  * A RoleDaoImpl is an extension of a {@link AbstractGenericJpaDao} about
  * functionality regarding {@link Role}s. The stereotype annotation
- * {@link Repository} marks this class as DAO in the architecture and enables
- * exception translation and component scanning.
+ * {@link Repository} marks this class as a DAO in the architecture and enables
+ * exception translation and component scanning. It can be injected by name
+ * {@value #COMPONENT_NAME}.
  * <p>
- * So far there is no implementation, just to be compliant.
+ * All methods have to be invoked within an active transaction context.
  * </p>
  * 
  * @author <a href="mailto:russelltina@users.sourceforge.net">Tina Russell</a>
@@ -39,8 +42,14 @@ import org.springframework.stereotype.Repository;
  * @see org.openwms.core.integration.jpa.AbstractGenericJpaDao
  * @see org.openwms.core.integration.RoleDao
  */
-@Repository("roleDao")
+@Transactional(propagation = Propagation.MANDATORY)
+@Repository(RoleDaoImpl.COMPONENT_NAME)
 public class RoleDaoImpl extends AbstractGenericJpaDao<Role, Long> implements RoleDao {
+
+    /**
+     * Springs component name.
+     */
+    public static final String COMPONENT_NAME = "roleDao";
 
     /**
      * {@inheritDoc}
