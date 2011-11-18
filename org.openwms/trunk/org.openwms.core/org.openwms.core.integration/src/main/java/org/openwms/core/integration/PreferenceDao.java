@@ -26,8 +26,8 @@ import java.util.List;
 import org.openwms.core.domain.system.AbstractPreference;
 
 /**
- * A PreferenceDao offers basic functionality to find {@link AbstractPreference}
- * s.
+ * A PreferenceDao offers basic functionality to find and retrieve
+ * {@link AbstractPreference} s.
  * 
  * @param <ID>
  *            The type of the entity class' unique id

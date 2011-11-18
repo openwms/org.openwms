@@ -20,8 +20,11 @@
  */
 package org.openwms.core.integration.exception;
 
+import java.io.Serializable;
+
 /**
- * A NoUniqueResultException.
+ * A NoUniqueResultException is thrown when a single result was expected but
+ * multiple entities were found.
  * 
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  * @version $Revision: $
@@ -72,4 +75,14 @@ public class NoUniqueResultException extends DataException {
         super(message, cause);
     }
 
+    /**
+     * Create a new <code>NoUniqueResultException</code> with the id of the
+     * expected entity.
+     * 
+     * @param id
+     *            Id of the expected entity
+     */
+    public NoUniqueResultException(Serializable id) {
+        super("Persistence layer returned more than expected entities for id: " + id);
+    }
 }

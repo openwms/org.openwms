@@ -23,7 +23,7 @@ package org.openwms.core.integration.exception;
 import java.io.Serializable;
 
 /**
- * A DataNotFoundException is thrown to signal that data was expected but not
+ * A DataNotFoundException is thrown to indicate that data was expected but not
  * found.
  * 
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
@@ -68,5 +68,4 @@ public class DataNotFoundException extends DataException {
     public DataNotFoundException(Serializable id) {
         super("Entity class not found in persistence layer, id: " + id);
     }
-
 }

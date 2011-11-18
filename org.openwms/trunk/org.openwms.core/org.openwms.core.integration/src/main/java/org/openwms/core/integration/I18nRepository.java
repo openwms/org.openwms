@@ -23,7 +23,7 @@ package org.openwms.core.integration;
 import org.openwms.core.domain.system.I18n;
 
 /**
- * A I18nRepository.
+ * An I18nRepository is used to find and retrieve i18n translations.
  * 
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  * @version $Revision$

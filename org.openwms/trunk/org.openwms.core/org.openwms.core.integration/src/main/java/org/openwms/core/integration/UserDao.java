@@ -36,10 +36,10 @@ import org.openwms.core.domain.system.usermanagement.UserPassword;
 public interface UserDao extends GenericDao<User, Long> {
 
     /**
-     * Find and return an {@link User} by his userName and password.
+     * Find an {@link User} by his userName and password.
      * 
      * @param userPassword
-     *            Holds the userName and password.
+     *            Stores the userName and password.
      * @return The {@link User} if found, otherwise might be <code>null</code>
      */
     User findByNameAndPassword(UserPassword userPassword);

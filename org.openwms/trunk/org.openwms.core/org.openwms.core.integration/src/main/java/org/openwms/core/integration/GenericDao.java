@@ -100,7 +100,7 @@ public interface GenericDao<T extends AbstractEntity, ID extends Serializable> {
      * 
      * @param id
      *            Natural key to find the entity (also known as business key)
-     * @return The found entity
+     * @return The entity or <code>null</code>
      */
     T findByUniqueId(Serializable id);
 

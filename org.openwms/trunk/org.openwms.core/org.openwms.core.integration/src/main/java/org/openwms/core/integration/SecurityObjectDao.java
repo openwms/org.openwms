@@ -26,7 +26,8 @@ import org.openwms.core.domain.system.usermanagement.Grant;
 import org.openwms.core.domain.system.usermanagement.SecurityObject;
 
 /**
- * A SecurityDao.
+ * A SecurityDao is used to find, modify and delete {@link SecurityObject}s, in
+ * particular {@link Grant}s.
  * 
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  * @version $Revision$
@@ -35,36 +36,38 @@ import org.openwms.core.domain.system.usermanagement.SecurityObject;
 public interface SecurityObjectDao {
 
     /**
+     * Find and retrieve all {@link SecurityObject}s.
      * 
-     * FIXME [scherrer] Comment this
-     * 
-     * @return
+     * @return a list of {@link SecurityObject}s. <code>null</code> might be
+     *         possible as well, see the particular implementation
      */
     List<SecurityObject> findAll();
 
     /**
-     * 
-     * FIXME [scherrer] Comment this
+     * Find and retrieve all {@link SecurityObject}s that belong to a given
+     * <code>Module</code>.
      * 
      * @param moduleName
-     * @return
+     *            The name of the <code>Module</code>
+     * @return a list of {@link SecurityObject}s. <code>null</code> might be
+     *         possible as well, see the particular implementation
      */
     List<Grant> findAllOfModule(String moduleName);
 
     /**
-     * 
-     * FIXME [scherrer] Comment this
+     * Save a {@link SecurityObject} and return the updated instance.
      * 
      * @param entity
-     * @return
+     *            the {@link SecurityObject} to save
+     * @return the saved instance
      */
     SecurityObject merge(SecurityObject entity);
 
     /**
-     * 
-     * FIXME [scherrer] Comment this
+     * Delete a list of {@link Grant}s.
      * 
      * @param grants
+     *            the {@link Grant}s to delete
      */
     void delete(List<Grant> grants);
 }
