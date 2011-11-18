@@ -31,8 +31,8 @@ import org.openwms.core.domain.DomainObject;
 import org.openwms.core.integration.GenericDao;
 
 /**
- * A ServiceHelper. Collection of common used utility methods to convert and
- * deal with domain objects.
+ * A ServiceHelper centralizes common used utility methods to convert and deal
+ * with domain objects.
  * 
  * @author <a href="mailto:russelltina@users.sourceforge.net">Tina Russell</a>
  * @version $Revision$
@@ -59,7 +59,7 @@ public final class ServiceHelper {
      * @param detachedEntities
      *            A collection of detached entities
      * @param dao
-     *            An instance of a DAO to use for reloading
+     *            An instance of a DAO, used for reloading
      * @return The list of managed entities or an empty list
      */
     public static <T extends AbstractEntity & DomainObject<ID>, ID extends Serializable> List<T> managedEntities(

@@ -54,6 +54,19 @@ public class SecurityServiceImpl implements SecurityService {
     /**
      * {@inheritDoc}
      * 
+     * Marked as <code>readOnly</code> transactional method. Only a trace
+     * message is written. This method is solely responsible to activate the
+     * security filter chain.
+     */
+    @Override
+    @Transactional(readOnly = true)
+    public void login() {
+        logger.debug("Login successful!");
+    }
+
+    /**
+     * {@inheritDoc}
+     * 
      * @see org.openwms.core.service.SecurityService#mergeGrants(java.lang.String,
      *      java.util.List)
      */

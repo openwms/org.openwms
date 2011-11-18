@@ -28,6 +28,7 @@ import org.openwms.core.domain.Module;
 import org.openwms.core.integration.ModuleDao;
 import org.openwms.core.service.ModuleService;
 import org.openwms.core.service.exception.ServiceRuntimeException;
+import org.openwms.core.util.validation.AssertUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,7 +37,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 /**
  * A ModuleServiceImpl is a Spring powered transactional service using a
- * {@link ModuleDao} to perform simple CRUD operations.
+ * repository to execute simple CRUD operations. This implementation can be
+ * autowired with the name {@value #COMPONENT_NAME}.
  * 
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  * @version $Revision$
@@ -44,12 +46,16 @@ import org.springframework.transaction.annotation.Transactional;
  * @see org.openwms.core.integration.ModuleDao
  */
 @Transactional
-@Service("moduleService")
+@Service(ModuleServiceImpl.COMPONENT_NAME)
 public class ModuleServiceImpl implements ModuleService {
 
     private static final Logger logger = LoggerFactory.getLogger(ModuleServiceImpl.class);
     @Autowired
     private ModuleDao dao;
+    /**
+     * Springs component name.
+     */
+    public static final String COMPONENT_NAME = "moduleService";
 
     /**
      * {@inheritDoc}
@@ -65,31 +71,16 @@ public class ModuleServiceImpl implements ModuleService {
     /**
      * {@inheritDoc}
      * 
-     * Marked as <code>readOnly</code> transactional method. Only a trace
-     * message is written. This method is solely responsible to activate the
-     * security filter chain.
-     */
-    @Override
-    @Transactional(readOnly = true)
-    public void login() {
-        logger.debug("Login successful!");
-    }
-
-    /**
-     * {@inheritDoc}
+     * It is expected that the list of {@link Module}s is already ordered by
+     * their startup order. Each {@link Module}'s <code>startupOrder</code> is
+     * synchronized with the persistence storage.
      * 
-     * It is expected that the list of {@link Module}s is already pre-ordered in
-     * their startupOrder. Each {@link Module}'s startupOrder is synchronized
-     * with the persistence storage. No other data is updated.
-     * 
-     * @throws ServiceRuntimeException
+     * @throws IllegalArgumentException
      *             when modules is <code>null</code>
      */
     @Override
     public void saveStartupOrder(List<Module> modules) {
-        if (modules == null) {
-            throw new ServiceRuntimeException("List of modules to store the startupOrder for is null");
-        }
+        AssertUtils.notNull(modules, "List of modules to save the startupOrder, is null");
         for (Module module : modules) {
             Module toSave = dao.findById(module.getId());
             toSave.setStartupOrder(module.getStartupOrder());
@@ -100,17 +91,17 @@ public class ModuleServiceImpl implements ModuleService {
     /**
      * {@inheritDoc}
      * 
-     * In this case a {@link Module} is been removed. But if the {@link Module}
-     * entity is a transient instance the method returns with no further action.
+     * If the {@link Module} entity is a transient instance the method returns
+     * with no further action.
      * 
+     * @throws IllegalArgumentException
+     *             when <code>module</code> is <code>null</code>
      * @throws ServiceRuntimeException
-     *             when the {@link Module} was not found or is <code>null</code>
+     *             when the {@link Module} to remove was not found
      */
     @Override
     public void remove(Module module) {
-        if (module == null) {
-            throw new ServiceRuntimeException("Module to be removed is null");
-        }
+        AssertUtils.notNull(module, "Module to be removed must not be null");
         Module rem = null;
         if (module.isNew()) {
             rem = dao.findByUniqueId(module.getModuleName());
@@ -121,7 +112,7 @@ public class ModuleServiceImpl implements ModuleService {
         } else {
             rem = dao.findById(module.getId());
             if (rem == null) {
-                throw new ServiceRuntimeException("Module to be removed not found, probably it was removed before");
+                throw new ServiceRuntimeException("Module to be removed was not found, probably it was removed before");
             }
         }
         dao.remove(rem);
@@ -130,13 +121,15 @@ public class ModuleServiceImpl implements ModuleService {
     /**
      * {@inheritDoc}
      * 
-     * Additionally the startup order is re-calculated for a new {@link Module}.
+     * Additionally the <code>startupOrder</code> is re-calculated for a new
+     * {@link Module}.
+     * 
+     * @throws IllegalArgumentException
+     *             when <code>module</code> is <code>null</code>
      */
     @Override
     public Module save(Module module) {
-        if (module == null) {
-            throw new ServiceRuntimeException("Module to be saved is null");
-        }
+        AssertUtils.notNull(module, "Module to be saved must not be null");
         if (module.isNew()) {
             List<Module> all = dao.findAll();
             if (!all.isEmpty()) {
