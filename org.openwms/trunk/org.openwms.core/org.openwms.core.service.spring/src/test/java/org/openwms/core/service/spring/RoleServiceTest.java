@@ -76,9 +76,15 @@ public class RoleServiceTest extends AbstractJpaSpringContextTests {
      */
     @Test
     public final void testRemoveWithNull() {
-        srv.remove(null);
-        assertEquals("Expect to have 2 roles", 2, entityManager.createNamedQuery(Role.NQ_FIND_ALL).getResultList()
-                .size());
+        try {
+            srv.remove(null);
+            fail("Expected to catch an IllegalArgumentException when calling remove() with null");
+        } catch (ServiceRuntimeException sre) {
+            logger.debug("OK: ServiceRuntimeException when calling remove with null argument");
+            if (!(sre.getCause() instanceof IllegalArgumentException)) {
+                fail("IllegalArgumentException expected as root exception");
+            }
+        }
     }
 
     /**
