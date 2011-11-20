@@ -146,9 +146,16 @@ public class RoleServiceTest extends AbstractJpaSpringContextTests {
         assertEquals("Expected that description was saved", "Test description", roleSaved.getDescription());
     }
 
+    /**
+     * Test findAll.
+     */
+    @Test
+    public final void testFindAll() {
+        assertEquals("2 Roles are expected", 2, srv.findAll().size());
+    }
+
     private Role findRole(String roleName) {
         return (Role) entityManager.createNamedQuery(Role.NQ_FIND_BY_UNIQUE_QUERY).setParameter(1, roleName)
                 .getSingleResult();
     }
-
 }
