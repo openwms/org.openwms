@@ -29,6 +29,7 @@ import javax.persistence.NoResultException;
 
 import org.junit.Before;
 import org.junit.Test;
+import org.openwms.core.domain.system.usermanagement.SystemUser;
 import org.openwms.core.domain.system.usermanagement.User;
 import org.openwms.core.domain.system.usermanagement.UserPassword;
 import org.openwms.core.service.UserService;
@@ -132,7 +133,8 @@ public class UserServiceTest extends AbstractJpaSpringContextTests {
     }
 
     /**
-     * Test to remove.
+     * Test method for
+     * {@link org.openwms.core.service.spring.UserServiceImpl#remove(User)}.
      */
     @Test
     public final void testRemove() {
@@ -151,6 +153,10 @@ public class UserServiceTest extends AbstractJpaSpringContextTests {
     }
 
     /**
+     * Test method for
+     * {@link org.openwms.core.service.spring.UserServiceImpl#changeUserPassword(UserPassword)}
+     * .
+     * 
      * Test to call with null.
      */
     @Test
@@ -164,6 +170,10 @@ public class UserServiceTest extends AbstractJpaSpringContextTests {
     }
 
     /**
+     * Test method for
+     * {@link org.openwms.core.service.spring.UserServiceImpl#changeUserPassword(UserPassword)}
+     * .
+     * 
      * Test to change it for an unknown user.
      */
     @Test
@@ -180,6 +190,10 @@ public class UserServiceTest extends AbstractJpaSpringContextTests {
     }
 
     /**
+     * Test method for
+     * {@link org.openwms.core.service.spring.UserServiceImpl#changeUserPassword(UserPassword)}
+     * .
+     * 
      * Test to change the password of an User.
      */
     @Test
@@ -191,9 +205,42 @@ public class UserServiceTest extends AbstractJpaSpringContextTests {
         }
     }
 
+    /**
+     * Test method for
+     * {@link org.openwms.core.service.spring.UserServiceImpl#findAll()}.
+     */
+    @Test
+    public final void testFindAll() {
+        assertEquals("1 User is expected", 1, srv.findAll().size());
+    }
+
+    /**
+     * Test method for
+     * {@link org.openwms.core.service.spring.UserServiceImpl#getTemplate(String)}
+     * .
+     */
+    @Test
+    public final void testGetTemplate() {
+        User user = srv.getTemplate("TEST_USER");
+        assertTrue("Must be a new User", user.isNew());
+        assertEquals("Expected to get an User instance with the same username", "TEST_USER", user.getUsername());
+    }
+
+    /**
+     * Test method for
+     * {@link org.openwms.core.service.spring.UserServiceImpl#createSystemUser()}
+     * .
+     */
+    @Test
+    public final void testCreateSystemUser() {
+        User user = srv.createSystemUser();
+        assertTrue("Must be a new User", user.isNew());
+        assertTrue("Must be a SystemUser", user instanceof SystemUser);
+        assertEquals("Expected one Role", 1, user.getRoles().size());
+    }
+
     private User findUser(String userName) {
         return (User) entityManager.createNamedQuery(User.NQ_FIND_BY_USERNAME).setParameter(1, userName)
                 .getSingleResult();
     }
-
 }
