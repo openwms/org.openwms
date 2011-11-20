@@ -116,6 +116,7 @@
             <artifactId>com.springsource.org.hsqldb</artifactId>
             <scope>test</scope>
         </dependency>
+
         <dependency>
             <groupId>org.apache.commons</groupId>
             <artifactId>com.springsource.org.apache.commons.lang</artifactId>

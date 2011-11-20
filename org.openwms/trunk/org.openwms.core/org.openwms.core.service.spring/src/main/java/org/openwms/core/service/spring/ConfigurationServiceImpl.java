@@ -52,11 +52,11 @@ public class ConfigurationServiceImpl implements ConfigurationService, Applicati
 
     private static final Logger logger = LoggerFactory.getLogger(ConfigurationServiceImpl.class);
     @Autowired
-    @Qualifier("preferencesJpaDao")
-    private PreferenceWriter<Long> dao;
-    @Autowired
     @Qualifier("preferencesFileDao")
     private PreferenceDao<PreferenceKey> fileDao;
+    @Autowired
+    @Qualifier("preferencesJpaDao")
+    private PreferenceWriter<Long> dao;
     /**
      * Springs service name.
      */

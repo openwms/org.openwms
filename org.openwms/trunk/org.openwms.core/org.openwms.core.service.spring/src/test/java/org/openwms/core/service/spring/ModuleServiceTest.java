@@ -236,6 +236,7 @@ public class ModuleServiceTest extends AbstractJpaSpringContextTests {
                 .getSingleResult();
     }
 
+    @SuppressWarnings("unchecked")
     private List<Module> findAll() {
         return entityManager.createNamedQuery(Module.NQ_FIND_ALL).getResultList();
     }

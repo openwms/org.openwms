@@ -32,12 +32,12 @@ import org.springframework.test.context.transaction.TransactionConfiguration;
 import org.springframework.transaction.annotation.Transactional;
 
 /**
- * An AbstractJpaSpringContextTests. Transactional superclass for JUnit tests.
+ * An AbstractJpaSpringContextTests is a transactional superclass for JUnit
+ * tests.
  * <p>
- * An abstract superclass suitable for unit tests that run with Spring's
- * {@link SpringJUnit4ClassRunner}. A datasource instance and an
- * {@link javax.persistence.EntityManagerFactory} is initialized within the
- * ApplicationContext.
+ * Run with Spring's {@link SpringJUnit4ClassRunner}. A datasource instance and
+ * an {@link javax.persistence.EntityManagerFactory} is initialized within the
+ * application context.
  * </p>
  * 
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
