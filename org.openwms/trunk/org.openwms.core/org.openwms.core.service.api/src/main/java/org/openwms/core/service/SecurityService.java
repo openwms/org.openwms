@@ -42,7 +42,7 @@ public interface SecurityService {
      *            The moduleName
      * @param grants
      *            The list of {@link Grant}s to merge
-     * @return All merged {@link Grant}s
+     * @return All existing {@link Grant}s
      */
     List<Grant> mergeGrants(String moduleName, List<Grant> grants);
 
