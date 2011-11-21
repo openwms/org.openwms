@@ -30,6 +30,7 @@ package org.openwms.web.flex.client.model {
     import org.openwms.core.domain.system.usermanagement.User;
     import org.openwms.web.flex.client.event.SwitchScreenEvent;
     import org.openwms.web.flex.client.event.UserEvent;
+    import org.openwms.web.flex.client.event.ApplicationEvent;
 
     [Name("modelLocator")]
     [ManagedEvent(name="USER.COLLECTION_CHANGED")]
@@ -172,6 +173,16 @@ package org.openwms.web.flex.client.model {
             dateFormatter.formatString = SIMPLE_DT_FORMAT;
             dateTimeFormatter.formatString = DT_FORMAT_STRING;
             allUsers.addEventListener(CollectionEvent.COLLECTION_CHANGE, onUserCollectionChanged);
+        }
+
+        [Observer("APP.CLEAR_MODEL")]
+        /**
+         * Usually called after logout to reset model data.
+         *
+         * @param event Unused
+         */
+        public function clearModel(event : ApplicationEvent) : void {
+            this.selectedUser = null;
         }
 
         /**
