@@ -372,6 +372,7 @@ public class User extends AbstractEntity implements DomainObject<Long> {
      *             password is not valid
      */
     public void setPassword(String password) throws InvalidPasswordException {
+        // FIXME [scherrer] : Setting the same password should fail
         if (this.password != null && this.password.equals(password)) {
             logger.debug("Trying to set the new password equals to the current password");
             return;

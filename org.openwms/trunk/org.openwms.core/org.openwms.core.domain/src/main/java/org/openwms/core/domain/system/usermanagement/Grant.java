@@ -51,6 +51,35 @@ public class Grant extends SecurityObject {
     private static final long serialVersionUID = 2061059874657176727L;
 
     /**
+     * Create a new Grant.
+     */
+    public Grant() {
+        super();
+    }
+
+    /**
+     * Create a new Grant.
+     * 
+     * @param name
+     *            The name of the <code>Grant</code>
+     * @param description
+     *            The description text of the <code>Grant</code>
+     */
+    public Grant(String name, String description) {
+        super(name, description);
+    }
+
+    /**
+     * Create a new Grant.
+     * 
+     * @param name
+     *            The name of the <code>Grant</code>
+     */
+    public Grant(String name) {
+        super(name);
+    }
+
+    /**
      * {@inheritDoc}
      * 
      * Use the hashCode of the superclass with the hashCode of 'GRANT' to
