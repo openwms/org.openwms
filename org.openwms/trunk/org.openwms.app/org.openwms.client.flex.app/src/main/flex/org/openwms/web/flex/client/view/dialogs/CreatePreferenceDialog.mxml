@@ -182,7 +182,7 @@
     <mx:states>
         <mx:State name="appPrefState">
             <mx:AddChild>
-                <mx:TextInput id="ownerATxt" x="270" y="171" width="300" editable="false" fontSize="22"/>                
+                <mx:TextInput id="ownerATxt" x="270" y="171" width="300" enabled="false" fontSize="22"/>                
             </mx:AddChild>
         </mx:State>
         <mx:State name="modPrefState">

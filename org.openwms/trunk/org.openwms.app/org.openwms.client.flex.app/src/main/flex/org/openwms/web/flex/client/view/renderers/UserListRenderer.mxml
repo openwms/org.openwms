@@ -44,7 +44,6 @@
 
 		import org.openwms.web.flex.client.model.ModelLocator;
         import org.openwms.web.flex.client.event.UserEvent;
-        import org.openwms.web.flex.client.util.UserHelper;
         import org.openwms.core.domain.system.usermanagement.User;
         import org.openwms.core.domain.system.usermanagement.UserDetails;
         import org.openwms.core.domain.system.usermanagement.UserDetails$SEX;
@@ -91,7 +90,7 @@
 		 */ 
 		private function setUserImage() : void {
 			var asset : BitmapAsset;
-			if (UserHelper.hasDetails(userData)) {
+			if (User.hasDetails(userData)) {
 				if (userData.userDetails.image != null) {
 					img.data = userData.userDetails.image;
 					return;

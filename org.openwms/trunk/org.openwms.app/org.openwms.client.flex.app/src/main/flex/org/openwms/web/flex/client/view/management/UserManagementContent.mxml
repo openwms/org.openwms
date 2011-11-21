@@ -36,10 +36,6 @@
 
     <mx:Script>
         <![CDATA[
-            import org.openwms.web.flex.client.event.RoleEvent;
-            import org.openwms.core.domain.system.usermanagement.Role;
-            import org.openwms.web.flex.client.view.dialogs.AssignRoleDialog;
-            import org.openwms.web.flex.client.view.dialogs.AssignUsersDialog;
             import flash.utils.ByteArray;
             import mx.formatters.Formatter;
             import mx.utils.ObjectUtil;
@@ -53,17 +49,20 @@
 
             import org.granite.tide.spring.Identity;
 
+            import org.openwms.core.domain.system.usermanagement.Role;
             import org.openwms.core.domain.system.usermanagement.User;
             import org.openwms.core.domain.system.usermanagement.UserDetails$SEX;
+            import org.openwms.web.flex.client.event.RoleEvent;
             import org.openwms.web.flex.client.event.UserEvent;
-            import org.openwms.web.flex.client.util.UserHelper;
             import org.openwms.web.flex.client.model.ModelLocator;
-            import org.openwms.web.flex.client.util.DisplayUtility;
             import org.openwms.web.flex.client.util.BindingProperty;
+            import org.openwms.web.flex.client.util.DisplayUtility;
+            import org.openwms.web.flex.client.util.I18nUtil;
             import org.openwms.web.flex.client.util.ValidationUtil;
+            import org.openwms.web.flex.client.view.dialogs.AssignRoleDialog;
+            import org.openwms.web.flex.client.view.dialogs.AssignUsersDialog;
             import org.openwms.web.flex.client.view.dialogs.FileUploadDialog;
             import org.openwms.web.flex.client.view.dialogs.ChangePasswordDialog;
-            import org.openwms.web.flex.client.util.I18nUtil;
 
             [Inject]
             [Bindable]
@@ -121,7 +120,6 @@
                 }
             }
 
-            [Deprecated]
             [Observer("USER.USER_ADDED")]
             /**
              * After an user was added, enable form fields. When GraniteDS accepts multiple
@@ -129,7 +127,7 @@
              * Tide event observers : USER.USER_ADDED
              */
             public function onUserAdded(event : Event) : void {
-                setFormElements(!(modelLocator.selectedUser == null));
+                setFormElements();
             }
 
             /**
@@ -241,6 +239,7 @@
             // --------------------- helpers ---------------------
 
             private function setFormElements(value : Boolean = true) : void {
+                /*
                 deleteUserBtn.enabled = value;
                 saveUserBtn.enabled = value;
                 changePasswordBtn.enabled = value;
@@ -255,6 +254,7 @@
                 tiComment.editable = value;
                 enabledChk.enabled = value;
                 lockedChk.enabled = value;
+                */
             }
 
             private function checkExpirationDate() : Boolean {
@@ -283,15 +283,11 @@
                 }
             }
 
-            private function setEditable(event : Event) : void {
-                event.currentTarget.editable = true;
-            }
-            
             private function setUserImage() : void {
                 var asset : BitmapAsset;
                 if (modelLocator.selectedUser != null) {
                     var user : User = modelLocator.selectedUser;
-                    if (UserHelper.hasDetails(user)) {
+                    if (User.hasDetails(user)) {
                         if (user.userDetails.image != null) {
                             asset = modelLocator.selectedUser.userDetails.image as BitmapAsset;
                         } else if (user.userDetails.sex == UserDetails$SEX.MALE) {
@@ -348,44 +344,44 @@
             <mx:VRule x="118" y="10" height="540"/>
             <mx:Form x="128" y="10">
                 <mx:FormItem label="{I18nUtil.trans(I18nUtil.APP_MAIN, 'entity_user_username')}" required="true" width="100%">
-                    <mx:TextInput id="usernameTi" text="{modelLocator.selectedUser.username}" click="setEditable(event)" width="250"/>
+                    <mx:TextInput id="usernameTi" text="{modelLocator.selectedUser.username}" editable="{modelLocator.selectedUser}" width="250"/>
                 </mx:FormItem>
                 <mx:FormItem label="{I18nUtil.trans(I18nUtil.APP_MAIN, 'entity_user_fullname')}" required="false" width="100%" y="30">
-                    <mx:TextInput id="fullnameTi" text="{modelLocator.selectedUser.fullname}" width="250"/>
+                    <mx:TextInput id="fullnameTi" text="{modelLocator.selectedUser.fullname}" editable="{modelLocator.selectedUser}" width="250"/>
                 </mx:FormItem>
                 <mx:FormItem label="{I18nUtil.trans(I18nUtil.APP_MAIN, 'entity_user_description')}" required="false" width="100%" y="60">
-                    <mx:TextArea id="descriptionTi" text="{modelLocator.selectedUser.userDetails.description}" width="250"/>
+                    <mx:TextArea id="descriptionTi" text="{modelLocator.selectedUser.userDetails.description}" editable="{modelLocator.selectedUser}" width="250"/>
                 </mx:FormItem>
                 <mx:FormItem label="{I18nUtil.trans(I18nUtil.APP_MAIN, 'entity_user_phone')}" required="false" width="100%">
-                    <mx:TextInput id="phoneNoTi" text="{modelLocator.selectedUser.userDetails.phoneNo}" width="250"/>
+                    <mx:TextInput id="phoneNoTi" text="{modelLocator.selectedUser.userDetails.phoneNo}" editable="{modelLocator.selectedUser}" width="250"/>
                 </mx:FormItem>
                 <mx:FormItem label="{I18nUtil.trans(I18nUtil.APP_MAIN, 'entity_user_skypeName')}" required="false" width="100%">
-                    <mx:TextInput id="skypeNameTi" text="{modelLocator.selectedUser.userDetails.skypeName}" width="250"/>
+                    <mx:TextInput id="skypeNameTi" text="{modelLocator.selectedUser.userDetails.skypeName}" editable="{modelLocator.selectedUser}" width="250"/>
                 </mx:FormItem>
                 <mx:FormItem label="{I18nUtil.trans(I18nUtil.APP_MAIN, 'entity_user_department')}" required="false" width="100%">
-                    <mx:TextInput id="departmentTi" text="{modelLocator.selectedUser.userDetails.department}" width="250"/>
+                    <mx:TextInput id="departmentTi" text="{modelLocator.selectedUser.userDetails.department}" editable="{modelLocator.selectedUser}" width="250"/>
                 </mx:FormItem>
                 <mx:FormItem label="{I18nUtil.trans(I18nUtil.APP_MAIN, 'entity_user_office')}" required="false" width="100%">
-                    <mx:TextInput id="officeTi" text="{modelLocator.selectedUser.userDetails.office}" width="250"/>
+                    <mx:TextInput id="officeTi" text="{modelLocator.selectedUser.userDetails.office}" editable="{modelLocator.selectedUser}" width="250"/>
                 </mx:FormItem>
                 <mx:FormItem label="{I18nUtil.trans(I18nUtil.APP_MAIN, 'entity_user_sex')}" width="100%">
                     <mx:Tile width="250" direction="vertical">
-                        <mx:RadioButtonGroup id="sexRb" selectedValue="{modelLocator.selectedUser.userDetails.sex}"/>
-                        <mx:RadioButton value="{UserDetails$SEX.MALE}" label="{I18nUtil.trans(I18nUtil.APP_MAIN, 'entity_user_sex_male')}" group="{sexRb}"/>
-                        <mx:RadioButton value="{UserDetails$SEX.FEMALE}" label="{I18nUtil.trans(I18nUtil.APP_MAIN, 'entity_user_sex_female')}" group="{sexRb}"/>
+                        <mx:RadioButtonGroup id="sexRb" selectedValue="{modelLocator.selectedUser.userDetails.sex}" enabled="{modelLocator.selectedUser}"/>
+                        <mx:RadioButton value="{UserDetails$SEX.MALE}" label="{I18nUtil.trans(I18nUtil.APP_MAIN, 'entity_user_sex_male')}" enabled="{modelLocator.selectedUser}" group="{sexRb}"/>
+                        <mx:RadioButton value="{UserDetails$SEX.FEMALE}" label="{I18nUtil.trans(I18nUtil.APP_MAIN, 'entity_user_sex_female')}" enabled="{modelLocator.selectedUser}" group="{sexRb}"/>
                     </mx:Tile>
                 </mx:FormItem>
                 <mx:FormItem label="{I18nUtil.trans(I18nUtil.APP_MAIN, 'entity_user_comment')}" required="false" width="100%">
-                    <mx:TextArea id="tiComment" text="{modelLocator.selectedUser.userDetails.comment}" width="250"/>
+                    <mx:TextArea id="tiComment" text="{modelLocator.selectedUser.userDetails.comment}" editable="{modelLocator.selectedUser}" width="250"/>
                 </mx:FormItem>
                 <mx:FormItem required="false" width="100%">
-                    <mx:CheckBox id="enabledChk" label="{I18nUtil.trans(I18nUtil.APP_MAIN, 'entity_user_enabled')}" selected="{modelLocator.selectedUser.enabled}"/>
+                    <mx:CheckBox id="enabledChk" label="{I18nUtil.trans(I18nUtil.APP_MAIN, 'entity_user_enabled')}" enabled="{modelLocator.selectedUser}" selected="{modelLocator.selectedUser.enabled}"/>
                 </mx:FormItem>
                 <mx:FormItem required="false" width="100%">
-                    <mx:CheckBox id="lockedChk" label="{I18nUtil.trans(I18nUtil.APP_MAIN, 'entity_user_locked')}" selected="{modelLocator.selectedUser.locked}"/>
+                    <mx:CheckBox id="lockedChk" label="{I18nUtil.trans(I18nUtil.APP_MAIN, 'entity_user_locked')}" enabled="{modelLocator.selectedUser}" selected="{modelLocator.selectedUser.locked}"/>
                 </mx:FormItem>
                 <mx:FormItem label="{I18nUtil.trans(I18nUtil.APP_MAIN, 'entity_user_expirationDate')}" required="false" width="100%">
-                    <mx:DateField id="expirationDateDt" editable="true" selectableRange="{{rangeStart : new Date()}}" formatString="{ModelLocator.SIMPLE_DT_FORMAT}" width="250" selectedDate="{modelLocator.selectedUser == null ? null : modelLocator.selectedUser.expirationDate}"/>
+                    <mx:DateField id="expirationDateDt" enabled="{modelLocator.selectedUser}" selectableRange="{{rangeStart : new Date()}}" formatString="{ModelLocator.SIMPLE_DT_FORMAT}" width="250" selectedDate="{modelLocator.selectedUser == null ? null : modelLocator.selectedUser.expirationDate}"/>
                 </mx:FormItem>
                 <mx:FormItem label="{I18nUtil.trans(I18nUtil.APP_MAIN, 'entity_user_roles')}" required="false" width="100%">
                     <mx:HBox width="240" horizontalGap="0">

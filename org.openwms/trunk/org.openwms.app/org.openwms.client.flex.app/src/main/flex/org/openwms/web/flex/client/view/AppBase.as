@@ -23,7 +23,7 @@ package org.openwms.web.flex.client.view {
     import flash.display.DisplayObject;
     import flash.events.Event;
     import flash.system.ApplicationDomain;
-    
+
     import mx.collections.ArrayCollection;
     import mx.collections.XMLListCollection;
     import mx.containers.ViewStack;
@@ -41,7 +41,7 @@ package org.openwms.web.flex.client.view {
     import mx.modules.ModuleManager;
     import mx.resources.IResourceManager;
     import mx.resources.ResourceManager;
-    
+
     import org.granite.rpc.remoting.mxml.SecureRemoteObject;
     import org.granite.tide.spring.Context;
     import org.granite.tide.spring.Identity;
@@ -251,8 +251,8 @@ package org.openwms.web.flex.client.view {
             // when props are loaded, go and change to the default language
             if (prefs.getAppPreference(Constants.DEFAULT_LANG) != null) {
                 I18nHelper.switchLanguage(prefs.getAppPreference(Constants.DEFAULT_LANG).value);
-            } 
-            
+            }
+
         }
 
         [Observer("APP_LOGOUT")]
@@ -267,6 +267,8 @@ package org.openwms.web.flex.client.view {
                 modelLocator.fired = false;
                 return;
             }
+            dispatchEvent(new ApplicationEvent(ApplicationEvent.APP_CLEAR_MODEL));
+            tideContext.meta_clearCache();
             modelLocator.actualView = SwitchScreenEvent.SHOW_STARTSCREEN;
             appViewStack.selectedIndex = DisplayUtility.getView(SwitchScreenEvent.SHOW_STARTSCREEN, appViewStack);
             mainMenuBar.dataProvider = null;

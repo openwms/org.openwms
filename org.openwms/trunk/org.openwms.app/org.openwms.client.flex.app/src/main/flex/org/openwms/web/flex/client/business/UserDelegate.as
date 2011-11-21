@@ -31,7 +31,6 @@ package org.openwms.web.flex.client.business {
     import org.openwms.web.flex.client.event.UserEvent;
     import org.openwms.web.flex.client.model.ModelLocator;
     import org.openwms.web.flex.client.util.I18nUtil;
-    import org.openwms.web.flex.client.util.UserHelper;
 
     [Name("userDelegate")]
     [ManagedEvent(name="LOAD_ALL_USERS")]
@@ -166,19 +165,28 @@ package org.openwms.web.flex.client.business {
         }
 
         private function onPasswordChanged(event : TideResultEvent) : void {
+            // do nothing
         }
 
         [Observer("USER.SAVE_USER_PROFILE")]
         /**
+         * Call to save changes done in the UserPreferenceDialog. To change the Users password, or store UserPreferences.
+         * UserDetails can be saved as well.
+         *
+         * @param event data property is expected to store an object of type {User, UserPassword, [UserPreference]}
          */
         public function saveUserProfile(event : UserEvent) : void {
             if (event.data != null) {
-                var uPassword : UserPassword = new UserPassword(event.data.user as User, event.data.password as String);
-                tideContext.userService.saveUserProfile(event.data.user as User, uPassword, event.data.preferences as Array, onUserProfileSaved, onFault);
+                var pw : Object = null;
+                if (event.data.password != null) {
+                    pw = event.data.password;
+                }
+                tideContext.userService.saveUserProfile(event.data.user as User, event.data.password as UserPassword, event.data.preferences as Array, onUserProfileSaved, onFault);
             }
         }
 
         private function onUserProfileSaved(event : TideResultEvent) : void {
+            loadUsers();
             dispatchEvent(new UserEvent(UserEvent.USER_SAVED));
         }
 

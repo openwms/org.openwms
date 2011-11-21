@@ -33,11 +33,19 @@
     <mx:Script>
 		<![CDATA[
             import mx.collections.ArrayCollection;
+            import mx.controls.Alert;
 			import mx.managers.PopUpManager;
-            import mx.resources.ResourceManager
+            import mx.resources.ResourceManager;
             
-            import org.openwms.web.flex.client.event.UserEvent;
+            import org.openwms.core.domain.system.usermanagement.UserPassword;
+            import org.openwms.core.domain.system.usermanagement.UserPreference;
+            import org.openwms.core.domain.preferences.ApplicationPreference;
+            import org.openwms.web.flex.client.model.Constants;
             import org.openwms.web.flex.client.model.ModelLocator;
+            import org.openwms.web.flex.client.model.PreferencesModel;
+            import org.openwms.web.flex.client.event.UserEvent;
+            import org.openwms.web.flex.client.util.DisplayUtility;
+            import org.openwms.web.flex.client.util.BindingProperty;
             import org.openwms.web.flex.client.util.I18nUtil;
 
             [Inject]
@@ -46,9 +54,17 @@
              * Injected ModelLocator.
              */
             public var modelLocator : ModelLocator;
+            [Inject]
+            [Bindable]
+            /**
+             * Injected Model.
+             */
+            public var prefs : PreferencesModel;
             
 			private function onCreate() : void {
-                //localesCB.selectedItem = 
+                if (prefs.getAppPreference(Constants.DEFAULT_LANG) != null) {
+                    localesCB.selectedItem =  prefs.getAppPreference(Constants.DEFAULT_LANG).value;
+                }			    
                 newPwTxt1.enabled = false;
                 newPwTxt2.enabled = false;            
                 cancelBtn.setFocus();
@@ -88,16 +104,38 @@
 
             private function onSave() : void {
                 if (isPasswordValid()) {
-                    var event : UserEvent = new UserEvent(UserEvent.SAVE_USER_PROFILE);
-                    //event.data = {user : modelLocator.loggedInUser, password : newPwTxt1.text, preferences : localesCB.selectedItem as };
-                    trace("SAVE user:"+event.data.user);
-                    trace("SAVE uPass:"+event.data.password);
-                    trace("SAVE pref:"+event.data.preferences);
-                    dispatchEvent(event);
+                    var pref : UserPreference = new UserPreference(modelLocator.loggedInUser.username, Constants.DEFAULT_LANG, localesCB.selectedLabel);
+                    var pw : UserPassword = null;
+                    if (newPwTxt1.text != null && newPwTxt1.text.length > 0) {
+                        pw = new UserPassword(modelLocator.loggedInUser, newPwTxt1.text);
+                    }
+                    var bindings : Array = [new BindingProperty(modelLocator.loggedInUser, "fullname", fullnameTxt, "text"),  
+                                            new BindingProperty(modelLocator.loggedInUser.userDetails, "description", descriptionTxt, "text"),  
+                                            new BindingProperty(modelLocator.loggedInUser.userDetails, "phoneNo", phoneNoTxt, "text"),
+                                            new BindingProperty(modelLocator.loggedInUser.userDetails, "skypeName", skypeNameTxt, "text"),
+                                            new BindingProperty(modelLocator.loggedInUser.userDetails, "department", departmentTxt, "text"),
+                                            new BindingProperty(modelLocator.loggedInUser.userDetails, "office", officeTxt, "text")];
+                    DisplayUtility.bindProperties(new ArrayCollection(bindings),
+                        function execute():void {
+                            var event : UserEvent = new UserEvent(UserEvent.SAVE_USER_PROFILE);
+                            event.data = {user : modelLocator.loggedInUser, password : pw, preferences : [pref] };
+                            trace("SAVE user:"+event.data.user);
+                            trace("SAVE uPass:"+event.data.password);
+                            trace("SAVE pref:"+event.data.preferences);
+                            dispatchEvent(event);
+                        }
+                    );
+                } else {
+                    Alert.show(I18nUtil.trans(I18nUtil.APP_MAIN, "info_user_preference_password_invalid"));
                 }
             }
             
             [Observer("USER.USER_SAVED")]
+            /**
+             * After the User was saved, the dialogue is closed.
+             * 
+             * @param event Unused 
+             */
             public function onUserSaved(event : UserEvent) : void {
                 closeDialog();
             }
