@@ -22,7 +22,7 @@ package org.openwms.web.flex.client.module {
 
     import flash.events.EventDispatcher;
     import flash.system.ApplicationDomain;
-
+    
     import mx.collections.ArrayCollection;
     import mx.collections.XMLListCollection;
     import mx.controls.Alert;
@@ -31,19 +31,17 @@ package org.openwms.web.flex.client.module {
     import mx.logging.Log;
     import mx.modules.IModuleInfo;
     import mx.modules.ModuleManager;
-
+    
     import org.granite.reflect.Type;
-    import org.granite.tide.ITideModule;
     import org.granite.tide.events.TideFaultEvent;
     import org.granite.tide.events.TideResultEvent;
     import org.granite.tide.spring.Context;
-    import org.granite.tide.spring.Spring;
     import org.granite.tide.spring.Identity;
-
     import org.openwms.core.domain.Module;
     import org.openwms.web.flex.client.IApplicationModule;
     import org.openwms.web.flex.client.event.ApplicationEvent;
     import org.openwms.web.flex.client.model.ModelLocator;
+    import org.openwms.web.flex.client.util.I18nUtil;
 
     [Name]
     [ManagedEvent(name = "MODULE_CONFIG_CHANGED")]
@@ -51,6 +49,7 @@ package org.openwms.web.flex.client.module {
     [ManagedEvent(name = "MODULE_LOADED")]
     [ManagedEvent(name = "MODULE_UNLOADED")]
     [ManagedEvent(name = "APP.BEFORE_MODULE_UNLOAD")]
+    [ResourceBundle("corLibError")]
     [Bindable]
     /**
      * A ModuleLocator is the main implementation that cares about handling
@@ -485,22 +484,29 @@ package org.openwms.web.flex.client.module {
          */
         private function onModuleLoaderError(e : ModuleEvent) : void {
             if (e.module != null) {
-                trace("Loading/Unloading a module [" + e.module.url + "] failed with error : " + e.errorText);
-                if (e.module.data != null) {
+                trace("Loading / unloading a module [" + e.module.url + "] failed with error : " + e.errorText);
+                if (e.module.data != null && e.module.data is Module) {
+                    trace("1");
                     var module : Module = (e.module.data as Module);
+                    trace("2");
                     module.loaded = false;
+                    trace("3");
                     var mInf : IModuleInfo = modelLocator.loadedModules[module.url] as IModuleInfo;
+                    trace("4");
                     if (mInf != null) {
+                        trace("5");
                         // TODO: Also remove other listeners here
                         mInf.removeEventListener(ModuleEvent.ERROR, onModuleLoaderError);
+                        trace("6");
                         modelLocator.unloadedModules[module.url] = mInf;
                     }
+                    trace("7");
                     delete modelLocator.loadedModules[module.url];
                 }
-                Alert.show("Loading/Unloading a module [" + e.module.url + "] failed with error : " + e.errorText);
+                Alert.show(I18nUtil.trans(I18nUtil.COR_LIB_ERROR, "error_module_loading_details", e.module.url, e.errorText));
             } else {
-                trace("Loading/Unloading a module failed, no further module data available here");
-                Alert.show("Loading/Unloading a module failed, no further module data available here");
+                trace("Loading / unloading a module failed with error: "+e.errorText);
+                Alert.show(I18nUtil.trans(I18nUtil.COR_LIB_ERROR, "error_module_loading"));
             }
         }
 
@@ -557,7 +563,7 @@ package org.openwms.web.flex.client.module {
 
         private function onFault(event : TideFaultEvent) : void {
             trace("Error executing operation on ModuleManagement service:" + event.fault);
-            Alert.show("Error executing operation on ModuleManagement service" + event.fault);
+            Alert.show(I18nUtil.trans(I18nUtil.COR_LIB_ERROR, "error_module_general"));
         }
 
     }

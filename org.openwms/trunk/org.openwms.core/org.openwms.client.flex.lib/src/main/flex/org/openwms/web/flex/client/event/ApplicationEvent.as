@@ -137,6 +137,11 @@ package org.openwms.web.flex.client.event {
         public static const APP_UNLOCK : String = "APP.UNLOCK";
 
         /**
+         * Name of the Event to clear all data in model classes.
+         */
+        public static const APP_CLEAR_MODEL : String = "APP.CLEAR_MODEL";
+
+        /**
          * Name of the Event to merge grants with the backend.
          */
         public static const MERGE_GRANTS : String = "APP.MERGE_GRANTS";

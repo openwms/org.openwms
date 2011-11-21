@@ -22,12 +22,15 @@ package org.openwms.web.flex.client.model {
 
     import flash.utils.Dictionary;
     import mx.collections.ArrayCollection;
+    
     import org.granite.util.DictionaryUtil;
+
     import org.openwms.core.domain.preferences.ApplicationPreference;
     import org.openwms.core.domain.preferences.ModulePreference;
     import org.openwms.core.domain.system.AbstractPreference;
     import org.openwms.core.domain.system.usermanagement.RolePreference;
     import org.openwms.core.domain.system.usermanagement.UserPreference;
+    import org.openwms.web.flex.client.event.ApplicationEvent;
     import org.openwms.web.flex.client.event.PropertyEvent;
     import org.openwms.web.flex.client.util.I18nUtil;
 
@@ -190,6 +193,16 @@ package org.openwms.web.flex.client.model {
                 return assignValues(userPref, floatValue, description, minimumValue, maximumValue);
             }
             return null;
+        }
+
+        [Observer("APP.CLEAR_MODEL")]
+        /**
+         * Usually called after logout to reset model data.
+         *
+         * @param event Unused
+         */
+        public function clearModel(event : ApplicationEvent) : void {
+            this.selected = null;
         }
 
         private static function assignValues(preference : AbstractPreference, floatValue : Number=NaN, description : String=null, minimumValue : int=-1, maximumValue : int=-1) : AbstractPreference {
