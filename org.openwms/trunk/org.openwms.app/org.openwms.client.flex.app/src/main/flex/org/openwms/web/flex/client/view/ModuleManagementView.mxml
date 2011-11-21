@@ -47,6 +47,7 @@
 
     <mx:Script>
         <![CDATA[
+            import mx.events.ValidationResultEvent;
         	import mx.collections.SortField;
         	import mx.collections.Sort;
             import mx.collections.ArrayCollection;
@@ -147,6 +148,10 @@
             }
 
             private function saveModule() : void {
+                if ((moduleNameVal.validate().type != ValidationResultEvent.VALID) ||
+                    (urlVal.validate().type != ValidationResultEvent.VALID)) {
+                    return;        
+                }
                 saveBtn.enabled = false;
                 newBtn.enabled = true;
                 var e:ApplicationEvent = new ApplicationEvent(ApplicationEvent.SAVE_MODULE);
@@ -252,40 +257,41 @@
     <mx:Binding source="descriptionTxt.text" destination="modelLocator.selectedModule.description" />
     <mx:Binding source="loadOnStartupChk.selected" destination="modelLocator.selectedModule.loadOnStartup" />
 
-    <mx:StringValidator minLength="1" tooShortError="{I18nUtil.trans(I18nUtil.APP_ERROR, 'error_module_moduleName_required')}" source="{moduleNameTxt}" required="true" property="text"/>
-    <mx:StringValidator minLength="1" tooShortError="{I18nUtil.trans(I18nUtil.APP_ERROR, 'error_module_url_required')}" source="{urlTxt}" required="true" property="text"/>
-		<mx:HBox x="10" y="10" width="95%" verticalAlign="middle" backgroundColor="#EAFF00" backgroundAlpha="0.5">
-		    <mx:Label x="10" y="10" text="{I18nUtil.trans(I18nUtil.APP_MAIN, 'txt_module_screen_header')}" fontSize="24"/>
-		    <mx:VRule height="10" />
-		    <mx:Button id="newBtn" enabled="{identity.ifAllGranted('APP_add_module_button')}" buttonMode="true" mouseChildren="false" toolTip="{I18nUtil.trans(I18nUtil.APP_MAIN, 'ttip_module_add')}" icon="@Embed(source='/assets/images/Module--add.png')" click="newModule()" />
-		    <mx:VRule height="10" />
-		    <mx:Button id="deleteBtn" enabled="{identity.ifAllGranted('APP_delete_module_button')}" buttonMode="true" mouseChildren="false" toolTip="{I18nUtil.trans(I18nUtil.APP_MAIN, 'ttip_module_delete')}" icon="@Embed(source='/assets/images/Module--minus.png')" click="deleteModule()"/>
-		    <mx:VRule height="10" />
-		    <mx:Button id="saveBtn" enabled="{identity.ifAllGranted('APP_save_module_button')}" buttonMode="true" mouseChildren="false" toolTip="{I18nUtil.trans(I18nUtil.APP_MAIN, 'ttip_module_save')}" icon="@Embed(source='/assets/images/Module--save.png')" click="saveModule()"/>
-		    <mx:VRule height="10" />
-		    <mx:Button id="loadBtn" enabled="{identity.ifAllGranted('APP_load_module_button') &amp;&amp; !(modelLocator.selectedModule == null || modelLocator.selectedModule.moduleName == '')}" buttonMode="true" mouseChildren="false" click="loadModule()" />
-		</mx:HBox>
-		<mx:HRule x="9" y="53" width="95%"/>
-		<mx:VBox width="95%" x="10" y="63">
-				<mx:Canvas height="255" backgroundColor="#EAFF00" backgroundAlpha="0.5" width="100%">
-					<mx:List id="modulesGrid" dataProvider="{modelLocator.allModules}" labelField="moduleName" dragEnabled="true" dropEnabled="true" dragMoveEnabled="true" dragDrop="onDragComplete(event);" width="300" x="10" y="10" height="235" itemClick="onRowClick(event)" />
-					<mx:Canvas height="235" x="318" y="10">
-    					<mx:Form width="100%">
-    						<mx:FormItem label="{I18nUtil.trans(I18nUtil.APP_MAIN, 'entity_module_moduleName')}" required="true" x="10" y="10" >
-    						    <mx:TextInput id="moduleNameTxt" x="95" y="8" width="301" change="onChange()" text="{modelLocator.selectedModule.moduleName}" />
-    						</mx:FormItem>
-    						<mx:FormItem label="{I18nUtil.trans(I18nUtil.APP_MAIN, 'entity_module_url')}" required="true" x="10" y="40" >
-    							<mx:TextInput id="urlTxt" x="95" y="38" width="301" change="onChange()" text="{modelLocator.selectedModule.url}" />
-    						         </mx:FormItem>
-    					          <mx:FormItem label="{I18nUtil.trans(I18nUtil.APP_MAIN, 'entity_module_description')}" x="10" y="70" >
-    					          <mx:TextInput id="descriptionTxt" x="95" y="68" width="301" change="onChange()" text="{modelLocator.selectedModule.description}" />
-    					          </mx:FormItem>
-    					          <mx:FormItem label="{I18nUtil.trans(I18nUtil.APP_MAIN, 'lbl_module_loadOnStartup')}" x="10" y="100" >
-    					              <mx:CheckBox id="loadOnStartupChk" change="onChange()" x="95" y="98" selected="{modelLocator.selectedModule.loadOnStartup}"/>
-    					          </mx:FormItem>
-    					</mx:Form>
-    					<mx:Label x="10" y="142" text="{I18nUtil.trans(I18nUtil.APP_MAIN, 'txt_module_info_text')}" width="100%" height="100%"/>
-					</mx:Canvas>
+    <mx:StringValidator id="moduleNameVal" minLength="1" tooShortError="{I18nUtil.trans(I18nUtil.APP_ERROR, 'error_module_moduleName_required')}" source="{moduleNameTxt}" required="true" property="text"/>
+    <mx:StringValidator id="urlVal" minLength="1" tooShortError="{I18nUtil.trans(I18nUtil.APP_ERROR, 'error_module_url_required')}" source="{urlTxt}" required="true" property="text"/>
+
+	<mx:HBox x="10" y="10" width="95%" verticalAlign="middle" backgroundColor="#EAFF00" backgroundAlpha="0.5">
+	    <mx:Label x="10" y="10" text="{I18nUtil.trans(I18nUtil.APP_MAIN, 'txt_module_screen_header')}" fontSize="24"/>
+	    <mx:VRule height="10" />
+	    <mx:Button id="newBtn" enabled="{identity.ifAllGranted('APP_add_module_button')}" buttonMode="true" mouseChildren="false" toolTip="{I18nUtil.trans(I18nUtil.APP_MAIN, 'ttip_module_add')}" icon="@Embed(source='/assets/images/Module--add.png')" click="newModule()" />
+	    <mx:VRule height="10" />
+	    <mx:Button id="deleteBtn" enabled="{identity.ifAllGranted('APP_delete_module_button')}" buttonMode="true" mouseChildren="false" toolTip="{I18nUtil.trans(I18nUtil.APP_MAIN, 'ttip_module_delete')}" icon="@Embed(source='/assets/images/Module--minus.png')" click="deleteModule()"/>
+	    <mx:VRule height="10" />
+	    <mx:Button id="saveBtn" enabled="{identity.ifAllGranted('APP_save_module_button')}" buttonMode="true" mouseChildren="false" toolTip="{I18nUtil.trans(I18nUtil.APP_MAIN, 'ttip_module_save')}" icon="@Embed(source='/assets/images/Module--save.png')" click="saveModule()"/>
+	    <mx:VRule height="10" />
+	    <mx:Button id="loadBtn" enabled="{identity.ifAllGranted('APP_load_module_button') &amp;&amp; !(modelLocator.selectedModule == null || modelLocator.selectedModule.moduleName == '')}" buttonMode="true" mouseChildren="false" click="loadModule()" />
+	</mx:HBox>
+	<mx:HRule x="9" y="53" width="95%"/>
+	<mx:VBox width="95%" x="10" y="63">
+			<mx:Canvas height="255" backgroundColor="#EAFF00" backgroundAlpha="0.5" width="100%">
+				<mx:List id="modulesGrid" dataProvider="{modelLocator.allModules}" labelField="moduleName" dragEnabled="true" dropEnabled="true" dragMoveEnabled="true" dragDrop="onDragComplete(event);" width="300" x="10" y="10" height="235" itemClick="onRowClick(event)" />
+				<mx:Canvas height="235" x="318" y="10">
+					<mx:Form width="100%">
+						<mx:FormItem label="{I18nUtil.trans(I18nUtil.APP_MAIN, 'entity_module_moduleName')}" required="true" x="10" y="10" >
+						    <mx:TextInput id="moduleNameTxt" x="95" y="8" width="301" change="onChange()" text="{modelLocator.selectedModule.moduleName}" />
+						</mx:FormItem>
+						<mx:FormItem label="{I18nUtil.trans(I18nUtil.APP_MAIN, 'entity_module_url')}" required="true" x="10" y="40" >
+							<mx:TextInput id="urlTxt" x="95" y="38" width="301" change="onChange()" text="{modelLocator.selectedModule.url}" />
+						         </mx:FormItem>
+					          <mx:FormItem label="{I18nUtil.trans(I18nUtil.APP_MAIN, 'entity_module_description')}" x="10" y="70" >
+					          <mx:TextInput id="descriptionTxt" x="95" y="68" width="301" change="onChange()" text="{modelLocator.selectedModule.description}" />
+					          </mx:FormItem>
+					          <mx:FormItem label="{I18nUtil.trans(I18nUtil.APP_MAIN, 'lbl_module_loadOnStartup')}" x="10" y="100" >
+					              <mx:CheckBox id="loadOnStartupChk" change="onChange()" x="95" y="98" selected="{modelLocator.selectedModule.loadOnStartup}"/>
+					          </mx:FormItem>
+					</mx:Form>
+					<mx:Label x="10" y="142" text="{I18nUtil.trans(I18nUtil.APP_MAIN, 'txt_module_info_text')}" width="100%" height="100%"/>
 				</mx:Canvas>
-		</mx:VBox>
+			</mx:Canvas>
+	</mx:VBox>
 </mx:Canvas>

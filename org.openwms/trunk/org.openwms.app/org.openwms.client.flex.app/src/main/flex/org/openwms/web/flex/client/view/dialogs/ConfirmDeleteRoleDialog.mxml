@@ -22,7 +22,7 @@
  */
 -->
 <mx:Panel xmlns:mx="http://www.adobe.com/2006/mxml" creationComplete="onShow();" show="onShow();" 
- title="{I18nUtil.trans(I18nUtil.APP_MAIN, 'txt_delete_roles_title')}" width="398" height="248">
+ title="{I18nUtil.trans(I18nUtil.APP_MAIN, 'txt_delete_roles_title')}">
 
     <mx:Metadata>
         [Name("confirmDeleteRoleDialog")]

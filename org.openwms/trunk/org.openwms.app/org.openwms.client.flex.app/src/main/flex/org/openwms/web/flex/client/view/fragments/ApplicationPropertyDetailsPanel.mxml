@@ -105,7 +105,6 @@
              */
             public function onSelectionChanged(event : PropertyEvent) : void {
                 if (prefs.selected == null) {
-                    trace("No preference selected");
                     return;
                 }
                 var i : Number = -1;
@@ -148,22 +147,22 @@
     <mx:states>
         <mx:State name="appPrefState">
             <mx:AddChild>
-                <mx:TextInput id="ownerATxt" x="178" y="95" width="230" enabled="false" />                
+                <mx:TextInput id="ownerATxt" x="178" y="151" width="230" enabled="false" />                
             </mx:AddChild>
         </mx:State>
         <mx:State name="modPrefState">
             <mx:AddChild>
-                <mx:TextInput id="ownerMTxt" x="178" y="95" width="230" />                
+                <mx:TextInput id="ownerMTxt" x="178" y="151" width="230" />                
             </mx:AddChild>
         </mx:State>
         <mx:State name="rolePrefState">
             <mx:AddChild>
-                <mx:ComboBox id="ownerRCmb" labelField="name" x="178" y="95" width="230" />
+                <mx:ComboBox id="ownerRCmb" labelField="name" x="178" y="151" width="230" />
             </mx:AddChild>
         </mx:State>
         <mx:State name="userPrefState">
             <mx:AddChild>
-                <mx:ComboBox id="ownerUCmb" labelFunction="{User.formatWithFullnameUsername}" x="178" y="95" width="230" />                
+                <mx:ComboBox id="ownerUCmb" labelFunction="{User.formatWithFullnameUsername}" x="178" y="151" width="230" />                
             </mx:AddChild>
         </mx:State>
     </mx:states>
@@ -174,24 +173,24 @@
     <mx:TextInput id="keyTxt" width="230" x="178" y="8" editable="false"/>
     
     <mx:Label id="descriptionLbl" text="{I18nUtil.trans(I18nUtil.APP_ENTITY, 'entity_preference_description')}" x="10" y="36" />
-    <mx:TextArea id="descriptionTxt" text="{prefs.selected.description}" x="178" y="35" width="230" />
+    <mx:TextArea id="descriptionTxt" text="{prefs.selected.description}" x="178" y="35" width="230"  height="100"/>
 
-    <mx:Label id="ownerLbl" text="{I18nUtil.trans(I18nUtil.APP_ENTITY, 'entity_preference_owner')}" fontWeight="normal" x="10" y="97" />
+    <mx:Label id="ownerLbl" text="{I18nUtil.trans(I18nUtil.APP_ENTITY, 'entity_preference_owner')}" fontWeight="normal" x="10" y="153" />
 
-    <mx:HRule id="hrule0" x="10" y="87" width="398" />
+    <mx:HRule id="hrule0" x="10" y="143" width="398" />
 
-    <mx:Label id="valueLbl" text="{I18nUtil.trans(I18nUtil.APP_ENTITY, 'entity_preference_value')}" x="10" y="123" />
-    <mx:TextInput id="valueTxt" text="{prefs.selected.value}" width="230" x="178" y="121" />
+    <mx:Label id="valueLbl" text="{I18nUtil.trans(I18nUtil.APP_ENTITY, 'entity_preference_value')}" x="10" y="179" />
+    <mx:TextInput id="valueTxt" text="{prefs.selected.value}" width="230" x="178" y="177" />
 
-    <mx:Label id="floatValueLbl" text="{I18nUtil.trans(I18nUtil.APP_ENTITY, 'entity_preference_floatValue')}" x="10" y="149" />
-    <mx:TextInput id="floatValueTxt" text="{NumberUtil.formatFloatValue(prefs.selected.floatValue)}" focusIn="floatSelected(floatValueTxt);" width="230" x="178" y="147" />
+    <mx:Label id="floatValueLbl" text="{I18nUtil.trans(I18nUtil.APP_ENTITY, 'entity_preference_floatValue')}" x="10" y="205" />
+    <mx:TextInput id="floatValueTxt" text="{NumberUtil.formatFloatValue(prefs.selected.floatValue)}" focusIn="floatSelected(floatValueTxt);" width="230" x="178" y="203" />
 
-    <mx:Label id="minimumLbl" text="{I18nUtil.trans(I18nUtil.APP_ENTITY, 'entity_preference_minimum')}" x="10" y="175" />
-    <mx:TextInput id="minimumTxt" text="{prefs.selected.minimum}" width="230" x="178" y="173" />
+    <mx:Label id="minimumLbl" text="{I18nUtil.trans(I18nUtil.APP_ENTITY, 'entity_preference_minimum')}" x="10" y="231" />
+    <mx:TextInput id="minimumTxt" text="{prefs.selected.minimum}" width="230" x="178" y="229" />
 
-    <mx:Label id="maximumLbl" text="{I18nUtil.trans(I18nUtil.APP_ENTITY, 'entity_preference_maximum')}" x="10" y="201" />
-    <mx:TextInput id="maximumTxt" text="{prefs.selected.maximum}" width="230" x="178" y="199" />
+    <mx:Label id="maximumLbl" text="{I18nUtil.trans(I18nUtil.APP_ENTITY, 'entity_preference_maximum')}" x="10" y="257" />
+    <mx:TextInput id="maximumTxt" text="{prefs.selected.maximum}" width="230" x="178" y="255" />
 
-    <mx:Label id="fromFileLbl" text="{I18nUtil.trans(I18nUtil.APP_ENTITY, 'entity_preference_fromFile')}" x="10" y="227" />
-    <mx:CheckBox id="fromFileChk" enabled="false" selected="{prefs.selected.fromFile}" x="178" y="227" />
+    <mx:Label id="fromFileLbl" text="{I18nUtil.trans(I18nUtil.APP_ENTITY, 'entity_preference_fromFile')}" x="10" y="283" />
+    <mx:CheckBox id="fromFileChk" enabled="false" selected="{prefs.selected.fromFile}" x="178" y="283" />
 </mx:Panel>
