@@ -22,6 +22,7 @@ package org.openwms.core.service.spring.security;
 
 import net.sf.ehcache.Ehcache;
 
+import org.openwms.core.domain.system.usermanagement.SystemUser;
 import org.openwms.core.domain.system.usermanagement.User;
 import org.openwms.core.integration.GenericDao;
 import org.openwms.core.service.UserService;
@@ -59,7 +60,7 @@ public class SecurityContextUserServiceImpl implements UserDetailsService, Appli
 
     private static final Logger logger = LoggerFactory.getLogger(SecurityContextUserServiceImpl.class);
     @Value("#{ globals['system.user'] }")
-    private String systemUser = "openwms";
+    private String systemUser = SystemUser.SYSTEM_USERNAME;
 
     @Autowired
     @Qualifier("userDao")

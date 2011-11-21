@@ -26,6 +26,7 @@ import java.util.Collection;
 import org.openwms.core.domain.system.usermanagement.SecurityObject;
 import org.openwms.core.domain.system.usermanagement.User;
 import org.openwms.core.service.UserHolder;
+import org.openwms.core.util.validation.AssertUtils;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
@@ -54,6 +55,7 @@ public class UserWrapper implements UserDetails, UserHolder {
      *            The User to wrap
      */
     public UserWrapper(User user) {
+        AssertUtils.notNull(user, "Not allowed to create an UserWrapper with null argument");
         this.user = user;
         this.user.getRoles().size();
     }

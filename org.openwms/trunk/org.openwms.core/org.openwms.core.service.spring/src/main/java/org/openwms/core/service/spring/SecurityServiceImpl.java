@@ -28,6 +28,7 @@ import org.openwms.core.domain.system.usermanagement.Grant;
 import org.openwms.core.integration.SecurityObjectDao;
 import org.openwms.core.service.SecurityService;
 import org.openwms.core.util.event.UserChangedEvent;
+import org.openwms.core.util.validation.AssertUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -43,13 +44,17 @@ import org.springframework.transaction.annotation.Transactional;
  * @since 0.1
  */
 @Transactional
-@Service("securityService")
+@Service(SecurityServiceImpl.COMPONENT_NAME)
 public class SecurityServiceImpl implements SecurityService {
 
     private static final Logger logger = LoggerFactory.getLogger(SecurityServiceImpl.class);
     @Autowired
     @Qualifier("securityObjectDao")
     private SecurityObjectDao dao;
+    /**
+     * Springs component name.
+     */
+    public static final String COMPONENT_NAME = "securityService";
 
     /**
      * {@inheritDoc}
@@ -73,6 +78,7 @@ public class SecurityServiceImpl implements SecurityService {
     @Override
     @FireAfterTransaction(events = { UserChangedEvent.class })
     public List<Grant> mergeGrants(String moduleName, List<Grant> grants) {
+        AssertUtils.notNull(moduleName, "Modulename must not be null");
         if (logger.isDebugEnabled()) {
             logger.debug("Merging grants of module:" + moduleName);
         }
@@ -84,13 +90,14 @@ public class SecurityServiceImpl implements SecurityService {
             if (!persisted.contains(grant)) {
                 merged = (Grant) dao.merge(grant);
                 result.add(merged);
-                if (persisted.contains(merged)) {
-                    persisted.remove(merged);
-                }
+                // if (persisted.contains(merged)) {
+                // persisted.remove(merged);
+                // }
             } else {
                 persisted.remove(grant);
             }
         }
+        result.removeAll(persisted);
         dao.delete(persisted);
         return result;
     }

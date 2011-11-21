@@ -32,6 +32,8 @@ import org.junit.Test;
 import org.openwms.core.domain.system.usermanagement.SystemUser;
 import org.openwms.core.domain.system.usermanagement.User;
 import org.openwms.core.domain.system.usermanagement.UserPassword;
+import org.openwms.core.domain.system.usermanagement.UserPreference;
+import org.openwms.core.exception.InvalidPasswordException;
 import org.openwms.core.service.UserService;
 import org.openwms.core.service.exception.ServiceRuntimeException;
 import org.openwms.core.service.exception.UserNotFoundException;
@@ -180,12 +182,12 @@ public class UserServiceTest extends AbstractJpaSpringContextTests {
     public final void testChangePasswordUnknown() {
         try {
             srv.changeUserPassword(new UserPassword(new User("UNKNOWN"), "password"));
-            fail("Should throw an exception when calling with null");
+            fail("Should throw an exception when calling with an unknown user");
         } catch (ServiceRuntimeException sre) {
             if (!(sre instanceof UserNotFoundException)) {
-                fail("Should throw a nested UserNotFoundException when calling with null");
+                fail("Should throw an UserNotFoundException when calling with an unknown user");
             }
-            logger.debug("OK: null:" + sre.getMessage());
+            logger.debug("OK: UserNotFoundException:" + sre.getMessage());
         }
     }
 
@@ -198,10 +200,28 @@ public class UserServiceTest extends AbstractJpaSpringContextTests {
      */
     @Test
     public final void testChangePassword() {
+        srv.changeUserPassword(new UserPassword(new User("KNOWN"), "password"));
+    }
+
+    /**
+     * Test method for
+     * {@link org.openwms.core.service.spring.UserServiceImpl#changeUserPassword(UserPassword)}
+     * .
+     * 
+     * Test to change password to an invalid one.
+     */
+    @Test
+    public final void testChangePasswordInvalidPassword() {
+        srv.changeUserPassword(new UserPassword(new User("KNOWN"), "password"));
+        srv.changeUserPassword(new UserPassword(new User("KNOWN"), "password1"));
         try {
             srv.changeUserPassword(new UserPassword(new User("KNOWN"), "password"));
-        } catch (Exception e) {
-            fail("Something went wrong:" + e.getMessage());
+            fail("Should throw an exception when calling with an invalid password");
+        } catch (ServiceRuntimeException sre) {
+            if (!(sre.getCause() instanceof InvalidPasswordException)) {
+                fail("Should throw a nested InvalidPasswordException when calling with an invalid password");
+            }
+            logger.debug("OK: InvalidPasswordException:" + sre.getMessage());
         }
     }
 
@@ -237,6 +257,118 @@ public class UserServiceTest extends AbstractJpaSpringContextTests {
         assertTrue("Must be a new User", user.isNew());
         assertTrue("Must be a SystemUser", user instanceof SystemUser);
         assertEquals("Expected one Role", 1, user.getRoles().size());
+    }
+
+    /**
+     * Test method for
+     * {@link org.openwms.core.service.spring.UserServiceImpl#saveUserProfile(User, UserPassword, org.openwms.core.domain.system.usermanagement.UserPreference...)}
+     * .
+     */
+    @Test
+    public final void testSaveUserProfileUserNull() {
+        try {
+            srv.saveUserProfile(null, new UserPassword(new User("TEST"), "TEST"));
+            fail("Must throw an exception when invoking with null argument");
+        } catch (ServiceRuntimeException sre) {
+            if (!(sre.getCause() instanceof IllegalArgumentException)) {
+                fail("Expected to wrap an IllegalArgumentException when the user argument is null");
+            }
+        }
+    }
+
+    /**
+     * Test method for
+     * {@link org.openwms.core.service.spring.UserServiceImpl#saveUserProfile(User, UserPassword, org.openwms.core.domain.system.usermanagement.UserPreference...)}
+     * .
+     */
+    @Test
+    public final void testSaveUserProfileUserPreferencePasswordNull() {
+        User user = srv.saveUserProfile(new User("TEST"), null);
+        assertEquals("Must return the saved user", user, new User("TEST"));
+    }
+
+    /**
+     * Test method for
+     * {@link org.openwms.core.service.spring.UserServiceImpl#saveUserProfile(User, UserPassword, org.openwms.core.domain.system.usermanagement.UserPreference...)}
+     * .
+     */
+    @Test
+    public final void testSaveUserProfileUserWithPassword() {
+        User user = new User("TEST");
+        User u = srv.saveUserProfile(user, new UserPassword(user, "password"));
+        assertEquals("Must return the saved user", u, user);
+    }
+
+    /**
+     * Test method for
+     * {@link org.openwms.core.service.spring.UserServiceImpl#saveUserProfile(User, UserPassword, org.openwms.core.domain.system.usermanagement.UserPreference...)}
+     * .
+     */
+    @Test
+    public final void testSaveUserProfileUserWithInvalidPassword() {
+        User user = new User("TEST");
+        User u = srv.saveUserProfile(user, new UserPassword(user, "password"));
+        u = srv.saveUserProfile(u, new UserPassword(u, "password1"));
+        try {
+            u = srv.saveUserProfile(u, new UserPassword(user, "password"));
+            fail("Expected to catch an ServiceRuntimeException when the password is invalid");
+        } catch (ServiceRuntimeException sre) {
+            if (!(sre.getCause() instanceof InvalidPasswordException)) {
+                fail("Expected to catch an InvalidPasswordException when the password is invalid");
+            }
+        }
+        assertEquals("Must return the saved user", u, user);
+    }
+
+    /**
+     * Test method for
+     * {@link org.openwms.core.service.spring.UserServiceImpl#saveUserProfile(User, UserPassword, org.openwms.core.domain.system.usermanagement.UserPreference...)}
+     * .
+     */
+    @Test
+    public final void testSaveUserProfileWithPreference() {
+        User user = new User("TEST");
+        User u = srv.saveUserProfile(user, new UserPassword(user, "password"), new UserPreference(user.getUsername(),
+                "TEST"));
+        entityManager.flush();
+        entityManager.clear();
+        assertEquals("Must return the saved user", u, user);
+        assertEquals("Number of UserPreferences must be 1", 1, entityManager.find(User.class, u.getId())
+                .getPreferences().size());
+    }
+
+    /**
+     * Test method for
+     * {@link org.openwms.core.service.spring.UserServiceImpl#checkCredentials(UserPassword)}
+     * .
+     */
+    @Test(expected = ServiceRuntimeException.class)
+    public final void testCheckCredentialsWithNull() {
+        srv.checkCredentials(null);
+    }
+
+    /**
+     * Test method for
+     * {@link org.openwms.core.service.spring.UserServiceImpl#checkCredentials(UserPassword)}
+     * .
+     */
+    @Test
+    public final void testCheckCredentialsValid() {
+        User user = new User("TEST");
+        User u = srv.saveUserProfile(user, new UserPassword(user, "password"));
+        assertTrue(srv.checkCredentials(new UserPassword(u, "password")));
+    }
+
+    /**
+     * Test method for
+     * {@link org.openwms.core.service.spring.UserServiceImpl#checkCredentials(UserPassword)}
+     * .
+     */
+    @Test
+    public final void testCheckCredentialsInvalid() {
+        User user = new User("TEST");
+        User u = srv.saveUserProfile(user, new UserPassword(user, "password"));
+        assertFalse(srv.checkCredentials(new UserPassword(u, "password2")));
     }
 
     private User findUser(String userName) {
