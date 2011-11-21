@@ -25,6 +25,7 @@ import static junit.framework.Assert.assertNull;
 import static junit.framework.Assert.assertTrue;
 import static junit.framework.Assert.fail;
 
+import org.junit.Before;
 import org.junit.Test;
 import org.openwms.common.domain.Location;
 import org.openwms.common.domain.LocationGroup;
@@ -34,7 +35,6 @@ import org.openwms.common.integration.LocationGroupDao;
 import org.openwms.core.test.AbstractJpaSpringContextTests;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.transaction.BeforeTransaction;
 
 /**
  * A LocationTest.
@@ -56,11 +56,13 @@ public class LocationTest extends AbstractJpaSpringContextTests {
     Location actualLocation = new Location(new LocationPK("KNOWN", "KNOWN", "KNOWN", "KNOWN", "KNOWN"));
     Location virtualLocation = new Location(new LocationPK("VIRTUAL", "VIRTUAL", "VIRTUAL", "VIRTUAL", "VIRTUAL"));
 
-    @BeforeTransaction
+    @Before
     public void onSetUpInTransaction() throws Exception {
         locationGroupDao.persist(locationGroup);
         locationDao.persist(actualLocation);
         locationDao.persist(virtualLocation);
+        entityManager.flush();
+        entityManager.clear();
     }
 
     @Test
