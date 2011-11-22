@@ -30,6 +30,7 @@
 
 	<mx:Script>
 	<![CDATA[
+	    import org.openwms.core.domain.system.PreferenceKey;
 	    import mx.events.ListEvent;
 	    import mx.collections.ArrayCollection;
 	    import org.openwms.web.flex.client.util.CollectionUtil;
@@ -37,15 +38,10 @@
 	
 	    [Bindable]
         /**
-         * Name of the key property, used as labelField in the list.
-         */
-	    public var keyField : String;
-
-	    [Bindable]
-        /**
          * All Preferences shown in this list.
          */
-	    public var dataCollection : ArrayCollection;
+	    private var keys : ArrayCollection;
+	    private var dataDictionary : Dictionary;
 
         /**
          * Call to update the internal dataProvider model.
@@ -53,7 +49,8 @@
          * @para data Expected to get a Dictionary of preferences
          */
         public function updateModel(data : Dictionary) : void {
-            dataCollection = CollectionUtil.toArrayCollection(data);            
+            this.dataDictionary = data;
+            keys = CollectionUtil.toArrayCollection(data, true);            
         }
 
         /**
@@ -64,13 +61,18 @@
          */
         private function onSelected(event : ListEvent) : void {
             var e : PropertyEvent = new PropertyEvent("preferenceSelectionChanged");
-            e.data = event.currentTarget.selectedItem;
+            e.data = this.dataDictionary[event.currentTarget.selectedItem as PreferenceKey];
        		dispatchEvent(e);
         }
+
+        private function formatPreference(item : PreferenceKey) : String {
+            return item.toString();
+        }
+        
         
     ]]>
 	</mx:Script>
 
-    <mx:List id="prefsLst" labelField="{keyField}" itemClick="onSelected(event)" dataProvider="{dataCollection}" alternatingItemColors="[#EEEEEE, #FFFFFF]" width="100%" height="100%" x="0" y="0" />
+    <mx:List id="prefsLst" labelFunction="{formatPreference}" itemClick="onSelected(event)" dataProvider="{keys}" alternatingItemColors="[#EEEEEE, #FFFFFF]" width="100%" height="100%" x="0" y="0" />
   
 </mx:Canvas>
