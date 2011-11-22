@@ -59,11 +59,14 @@ public class I18nServiceImpl implements I18nService {
     /**
      * {@inheritDoc}
      * 
+     * When <code>translations</code> is <code>null</code> or is empty, method
+     * returns without any further action.
+     * 
      * @see org.openwms.core.service.I18nService#saveTranslations(org.openwms.core.domain.system.I18n[])
      */
     @Override
     public void saveTranslations(I18n... translations) {
-        if (null == translations) {
+        if (null == translations || translations.length == 0) {
             logger.warn("I18nService called to save translations but these are NULL");
             return;
         }
