@@ -42,7 +42,7 @@ public interface I18nService {
 
     /**
      * Save an arbitrary collection of translations. No matter, whether entities
-     * in the collection already exist or are new ones.
+     * in the collection already exist or not.
      * 
      * @param translations
      *            An vararg of translations to save
