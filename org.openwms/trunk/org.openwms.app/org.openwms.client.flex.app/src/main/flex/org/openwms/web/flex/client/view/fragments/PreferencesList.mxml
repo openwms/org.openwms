@@ -30,6 +30,8 @@
 
 	<mx:Script>
 		<![CDATA[
+		    import org.openwms.core.domain.system.PreferenceKey;
+		    import org.openwms.core.domain.system.AbstractPreference;
 		    import org.openwms.web.flex.client.util.CollectionUtil;
 		    import org.openwms.web.flex.client.view.renderers.PreferenceListRenderer;
 		    import org.openwms.web.flex.client.event.PropertyEvent;
@@ -51,10 +53,9 @@
                     var child : PreferenceListRenderer = child = new PreferenceListRenderer();
                     with (child) {
                         label = I18nUtil.trans(I18nUtil.APP_ENTITY, 'entity_preference_'+type.type.toString());
-                        dataCollection = CollectionUtil.toArrayCollection(type.dataDictionary);
+                        child.updateModel(type.dataDictionary);
                         percentHeight = 100;
                         percentWidth = 100;
-                        keyField = "key";                        
                     }
                     this.addChild(child);
                 }
