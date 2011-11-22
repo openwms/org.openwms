@@ -252,7 +252,7 @@ public class I18n extends AbstractEntity implements DomainObject<Long> {
         if (this == obj) {
             return true;
         }
-        if (getClass() != obj.getClass()) {
+        if (!(obj instanceof I18n)) {
             return false;
         }
         I18n other = (I18n) obj;
