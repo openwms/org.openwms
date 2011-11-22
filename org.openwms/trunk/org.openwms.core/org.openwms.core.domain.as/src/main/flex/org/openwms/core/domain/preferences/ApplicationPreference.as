@@ -20,6 +20,7 @@
  */
 package org.openwms.core.domain.preferences {
 
+    import org.openwms.core.domain.system.PreferenceKey;
     import org.openwms.core.domain.system.PropertyScope;
 
     [Bindable]
@@ -32,6 +33,8 @@ package org.openwms.core.domain.preferences {
      */
     public class ApplicationPreference extends ApplicationPreferenceBase {
 
+        private var _cKey : PreferenceKey;
+
         /**
          * Constructor.
          * Define at least a key for a ApplicationPreference.
@@ -43,6 +46,16 @@ package org.openwms.core.domain.preferences {
             this._type = PropertyScope.APPLICATION;
             this._key = key;
             this._value = value;
+        }
+
+        /**
+         * Create and return a PreferenceKey from the String 'Application' and key field.
+         * 
+         * @return the PreferenceKey
+         */
+        public override function createCKey() : PreferenceKey {
+            this._cKey = new PreferenceKey("Application", this._key);
+            return this._cKey;
         }
 
         /**

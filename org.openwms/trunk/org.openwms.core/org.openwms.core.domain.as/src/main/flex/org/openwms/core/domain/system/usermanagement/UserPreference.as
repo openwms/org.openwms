@@ -20,6 +20,7 @@
  */
 package org.openwms.core.domain.system.usermanagement {
 
+    import org.openwms.core.domain.system.PreferenceKey;
     import org.openwms.core.domain.system.PropertyScope;
 
     [Bindable]
@@ -32,6 +33,8 @@ package org.openwms.core.domain.system.usermanagement {
      */
     public class UserPreference extends UserPreferenceBase {
 
+        private var _cKey : PreferenceKey;
+        
         /**
          * Constructor.
          * Define at least an User and a key for a UserPreference.
@@ -45,6 +48,16 @@ package org.openwms.core.domain.system.usermanagement {
             this._owner = owner;
             this._key = key;
             this._value = value;
+        }
+
+        /**
+         * Create and return a PreferenceKey from the owner and key field.
+         * 
+         * @return the PreferenceKey
+         */
+        public override function createCKey() : PreferenceKey {
+            this._cKey = new PreferenceKey(this._owner, this._key);
+            return this._cKey;
         }
 
         /**

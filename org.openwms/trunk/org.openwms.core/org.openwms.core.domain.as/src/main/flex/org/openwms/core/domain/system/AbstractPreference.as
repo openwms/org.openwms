@@ -24,6 +24,10 @@ package org.openwms.core.domain.system {
     [RemoteClass(alias="org.openwms.core.domain.system.AbstractPreference")]
     public class AbstractPreference extends AbstractPreferenceBase {
 
+        public function createCKey() : PreferenceKey {
+            return null;
+        }
+
         /**
          * Return "Preference".
          *
