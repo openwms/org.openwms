@@ -27,6 +27,7 @@ import static org.junit.Assert.fail;
 import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
+import net.sf.ehcache.Ehcache;
 
 import org.junit.Test;
 import org.mockito.InjectMocks;
@@ -37,6 +38,7 @@ import org.openwms.core.integration.GenericDao;
 import org.openwms.core.service.UserService;
 import org.openwms.core.service.spring.UserWrapper;
 import org.openwms.core.test.AbstractMockitoTests;
+import org.openwms.core.util.event.UserChangedEvent;
 import org.springframework.security.core.userdetails.UserCache;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -51,7 +53,9 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 public class SecurityContextUserServiceImplTest extends AbstractMockitoTests {
 
     @Mock
-    private UserCache cache;
+    private UserCache userCache;
+    @Mock
+    private Ehcache cache;
     @Mock
     private GenericDao<User, Long> dao;
     @Mock
@@ -65,7 +69,10 @@ public class SecurityContextUserServiceImplTest extends AbstractMockitoTests {
      * .
      */
     @Test
-    public final void testOnApplicationEvent() {}
+    public final void testOnApplicationEventWithCache() {
+        srv.onApplicationEvent(new UserChangedEvent(this));
+        verify(cache).removeAll();
+    }
 
     /**
      * Test method for
@@ -76,12 +83,12 @@ public class SecurityContextUserServiceImplTest extends AbstractMockitoTests {
      */
     @Test
     public final void testLoadUserByUsernameFromCache() {
-        when(cache.getUserFromCache("TEST_USER")).thenReturn(new UserWrapper(new User("TEST_USER")));
+        when(userCache.getUserFromCache("TEST_USER")).thenReturn(new UserWrapper(new User("TEST_USER")));
         UserDetails cachedUser = srv.loadUserByUsername("TEST_USER");
 
         assertTrue(cachedUser instanceof UserWrapper);
         assertEquals(((UserWrapper) cachedUser).getUser(), new User("TEST_USER"));
-        verify(cache, never()).putUserInCache(new UserWrapper(new User("TEST_USER")));
+        verify(userCache, never()).putUserInCache(new UserWrapper(new User("TEST_USER")));
         verify(userService, never()).createSystemUser();
         verify(dao, never()).findByUniqueId("TEST_USER");
     }
@@ -97,7 +104,7 @@ public class SecurityContextUserServiceImplTest extends AbstractMockitoTests {
      */
     @Test
     public final void testLoadUserByUsernameSystemUser() {
-        when(cache.getUserFromCache(SystemUser.SYSTEM_USERNAME)).thenReturn(null);
+        when(userCache.getUserFromCache(SystemUser.SYSTEM_USERNAME)).thenReturn(null);
         when(userService.createSystemUser()).thenReturn(
                 new SystemUser(SystemUser.SYSTEM_USERNAME, SystemUser.SYSTEM_USERNAME));
         UserDetails cachedUser = srv.loadUserByUsername(SystemUser.SYSTEM_USERNAME);
@@ -106,7 +113,7 @@ public class SecurityContextUserServiceImplTest extends AbstractMockitoTests {
         verify(dao, never()).findByUniqueId(SystemUser.SYSTEM_USERNAME);
 
         assertTrue(cachedUser instanceof UserWrapper);
-        verify(cache).putUserInCache(((UserWrapper) cachedUser));
+        verify(userCache).putUserInCache(((UserWrapper) cachedUser));
         assertTrue(((UserWrapper) cachedUser).getUser() instanceof SystemUser);
     }
 
@@ -120,7 +127,7 @@ public class SecurityContextUserServiceImplTest extends AbstractMockitoTests {
      */
     @Test
     public final void testLoadUserByUsernameNotCached() {
-        when(cache.getUserFromCache("NOT_CACHED_USER")).thenReturn(null);
+        when(userCache.getUserFromCache("NOT_CACHED_USER")).thenReturn(null);
         when(dao.findByUniqueId("NOT_CACHED_USER")).thenReturn(new User("NOT_CACHED_USER"));
 
         UserDetails cachedUser = srv.loadUserByUsername("NOT_CACHED_USER");
@@ -129,7 +136,7 @@ public class SecurityContextUserServiceImplTest extends AbstractMockitoTests {
         verify(dao).findByUniqueId("NOT_CACHED_USER");
 
         assertTrue(cachedUser instanceof UserWrapper);
-        verify(cache).putUserInCache(((UserWrapper) cachedUser));
+        verify(userCache).putUserInCache(((UserWrapper) cachedUser));
         assertFalse(((UserWrapper) cachedUser).getUser() instanceof SystemUser);
     }
 
@@ -143,7 +150,7 @@ public class SecurityContextUserServiceImplTest extends AbstractMockitoTests {
      */
     @Test
     public final void testLoadUserByUsernameNotFound() {
-        when(cache.getUserFromCache("UNKNOWN_USER")).thenReturn(null);
+        when(userCache.getUserFromCache("UNKNOWN_USER")).thenReturn(null);
         when(dao.findByUniqueId("UNKNOWN_USER")).thenReturn(null);
 
         UserDetails cachedUser = null;
@@ -156,6 +163,6 @@ public class SecurityContextUserServiceImplTest extends AbstractMockitoTests {
 
         verify(userService, never()).createSystemUser();
         verify(dao).findByUniqueId("UNKNOWN_USER");
-        verify(cache, never()).putUserInCache(((UserWrapper) cachedUser));
+        verify(userCache, never()).putUserInCache(((UserWrapper) cachedUser));
     }
 }
