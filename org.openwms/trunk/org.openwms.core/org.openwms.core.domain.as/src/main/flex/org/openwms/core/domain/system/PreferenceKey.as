@@ -21,7 +21,6 @@
 package org.openwms.core.domain.system {
 
     [Bindable]
-    [RemoteClass(alias="org.openwms.core.domain.system.PreferenceKey")]
     /**
      * A PreferenceKey encapsulates fields of a particular preference that
      * are used as unique key in the scope of the type of preference.
@@ -29,20 +28,34 @@ package org.openwms.core.domain.system {
      * @version $Revision: 1425 $
      * @since 0.1
      */
-    public class PreferenceKey extends PreferenceKeyBase {
+    public class PreferenceKey {
 
         /**
-         * An array of all fields used as key.
+         * The owner of the preference.
          */
-        public var keys : Array;
+        private var _owner : String;
+        /**
+         * The key of the preference.
+         */
+        private var _key : String;
 
         /**
          * Constructor.
          *
          * @param args An array of fields used as key
          */
-        public function PreferenceKey(... args) {
-            keys = args;
+        public function PreferenceKey(owner : String, key : String) {
+            this._owner = owner;
+            this._key = key;
+        }
+
+        /**
+         * Return "Preference".
+         *
+         * @return Preference
+         */
+        public function toString() : String {
+            return this._owner+" - "+this._key;
         }
     }
 }
