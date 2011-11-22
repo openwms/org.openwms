@@ -227,4 +227,49 @@ public class I18n extends AbstractEntity implements DomainObject<Long> {
     public I18nSet getLang() {
         return lang;
     }
+
+    /**
+     * Use <code>key</code> and <code>moduleName</code> for calculation.
+     * 
+     * @see java.lang.Object#hashCode()
+     */
+    @Override
+    public int hashCode() {
+        final int prime = 31;
+        int result = 42;
+        result = prime * result + ((cKey == null) ? 0 : cKey.hashCode());
+        result = prime * result + ((moduleName == null) ? 0 : moduleName.hashCode());
+        return result;
+    }
+
+    /**
+     * Use <code>key</code> and <code>moduleName</code> for comparison.
+     * 
+     * @see java.lang.Object#equals(java.lang.Object)
+     */
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        I18n other = (I18n) obj;
+        if (key == null) {
+            if (other.key != null) {
+                return false;
+            }
+        } else if (!key.equals(other.key)) {
+            return false;
+        }
+        if (moduleName == null) {
+            if (other.moduleName != null) {
+                return false;
+            }
+        } else if (!moduleName.equals(other.moduleName)) {
+            return false;
+        }
+        return true;
+    }
 }
