@@ -21,7 +21,9 @@
 package org.openwms.web.flex.client.util {
 
     import flash.utils.Dictionary;
+    
     import mx.collections.ArrayCollection;
+    
     import org.granite.util.DictionaryUtil;
 
     /**
@@ -46,11 +48,16 @@ package org.openwms.web.flex.client.util {
          * @param dictionary The Dictionary to convert
          * @return The dictionary as ArrayCollection
          */
-        public static function toArrayCollection(dictionary : Dictionary) : ArrayCollection {
+        public static function toArrayCollection(dictionary : Dictionary, keys : Boolean = false) : ArrayCollection {
             if (dictionary == null) {
                 return new ArrayCollection();
             }
-            var ar : Array = DictionaryUtil.getValues(dictionary);
+            var ar : Array;
+            if (keys) {
+                ar = DictionaryUtil.getKeys(dictionary);
+            } else {
+                ar = DictionaryUtil.getValues(dictionary);
+            }
             if (ar.length > 0) {
                 return new ArrayCollection(ar);
             }

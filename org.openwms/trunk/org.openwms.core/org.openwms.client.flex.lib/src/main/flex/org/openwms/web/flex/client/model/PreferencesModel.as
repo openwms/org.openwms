@@ -101,13 +101,13 @@ package org.openwms.web.flex.client.model {
             this.clearAll();
             for each (var pref : AbstractPreference in preferences) {
                 if (pref is ApplicationPreference) {
-                    appPrefs[(pref as ApplicationPreference).key] = pref;
+                    appPrefs[(pref as ApplicationPreference).createCKey()] = pref;
                 } else if (pref is ModulePreference) {
-                    modulePrefs[(pref as ModulePreference).key] = pref;
+                    modulePrefs[(pref as ModulePreference).createCKey()] = pref;
                 } else if (pref is RolePreference) {
-                    rolePrefs[(pref as RolePreference).key] = pref;
+                    rolePrefs[(pref as RolePreference).createCKey()] = pref;
                 } else if (pref is UserPreference) {
-                    userPrefs[(pref as UserPreference).key] = pref;
+                    userPrefs[(pref as UserPreference).createCKey()] = pref;
                         //this.userPrefs.addItem(pref);
                 }
             }
@@ -121,13 +121,13 @@ package org.openwms.web.flex.client.model {
          */
         public function addPreference(preference : AbstractPreference) : void {
             if (preference is ApplicationPreference) {
-                appPrefs[(preference as ApplicationPreference).key] = preference;
+                appPrefs[(preference as ApplicationPreference).createCKey()] = preference;
             } else if (preference is ModulePreference) {
-                modulePrefs[(preference as ModulePreference).key] = preference;
+                modulePrefs[(preference as ModulePreference).createCKey()] = preference;
             } else if (preference is RolePreference) {
-                rolePrefs[(preference as RolePreference).key] = preference;
+                rolePrefs[(preference as RolePreference).createCKey()] = preference;
             } else if (preference is UserPreference) {
-                userPrefs[(preference as UserPreference).key] = preference;
+                userPrefs[(preference as UserPreference).createCKey()] = preference;
             }
         }
 
