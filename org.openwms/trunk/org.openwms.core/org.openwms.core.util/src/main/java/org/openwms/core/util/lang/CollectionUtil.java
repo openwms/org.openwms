@@ -20,7 +20,6 @@
  */
 package org.openwms.core.util.lang;
 
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -57,20 +56,6 @@ public final class CollectionUtil {
     }
 
     /**
-     * Return the vararg t as {@link List}. Uses standard
-     * {@link Arrays#asList(Object...)}.
-     * 
-     * @param <T>
-     *            Any type
-     * @param t
-     *            The vararg
-     * @return The vararg as {@link List}
-     */
-    public static <T> List<T> asList(T... t) {
-        return Arrays.asList(t);
-    }
-
-    /**
      * Convert a list into a {@link LinkedHashMap} using a {@link ListExtractor}
      * to determine the keys and values for the new Map.
      * 
@@ -82,10 +67,11 @@ public final class CollectionUtil {
      *            The list to convert
      * @param extractor
      *            To determine key and value for each list entry
-     * @return A created {@link LinkedHashMap}
+     * @return A created {@link LinkedHashMap} or an empty map when one of the
+     *         arguments is <code>null</code>
      */
     public static <K, V> Map<K, V> asHashMap(List<V> list, ListExtractor<K, V> extractor) {
-        if (list == null || list.isEmpty()) {
+        if (list == null || extractor == null || list.isEmpty()) {
             return Collections.<K, V> emptyMap();
         }
         Map<K, V> map = new LinkedHashMap<K, V>(list.size());
@@ -94,5 +80,4 @@ public final class CollectionUtil {
         }
         return map;
     }
-
 }
