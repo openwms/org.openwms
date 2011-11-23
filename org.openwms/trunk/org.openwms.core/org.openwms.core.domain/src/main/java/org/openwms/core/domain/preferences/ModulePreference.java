@@ -90,7 +90,9 @@ public class ModulePreference extends AbstractPreference {
      * Create a new <code>ModulePreference</code>. Only defined by the JAXB
      * implementation.
      */
-    public ModulePreference() {}
+    public ModulePreference() {
+        super();
+    }
 
     /**
      * Create a new <code>ModulePreference</code>.
