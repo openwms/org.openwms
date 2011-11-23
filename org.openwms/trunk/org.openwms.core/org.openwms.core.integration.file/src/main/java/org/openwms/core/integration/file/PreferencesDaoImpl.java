@@ -20,7 +20,6 @@
  */
 package org.openwms.core.integration.file;
 
-import java.beans.PropertyChangeEvent;
 import java.io.IOException;
 import java.util.List;
 import java.util.Map;
@@ -54,7 +53,7 @@ import org.springframework.stereotype.Repository;
  * {@value #INITIAL_PREFERENCES_FILE} but this can be overridden with a property
  * <i>application.initial.properties</i> in the configuration properties file.
  * <p>
- * On a {@link PropertyChangeEvent} the internal Map is cleared and reloaded.
+ * On a {@link PropertiesChangedEvent} the internal Map is cleared and reloaded.
  * </p>
  * 
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
@@ -64,7 +63,8 @@ import org.springframework.stereotype.Repository;
  * @see org.openwms.core.util.event.PropertiesChangedEvent
  */
 @Repository("preferencesFileDao")
-public class PreferencesDaoImpl implements PreferenceDao<PreferenceKey>, ApplicationListener<PropertiesChangedEvent> {
+public final class PreferencesDaoImpl implements PreferenceDao<PreferenceKey>,
+        ApplicationListener<PropertiesChangedEvent> {
 
     /**
      * The URL to the initial preferences XML file. Default {@value}

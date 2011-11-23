@@ -49,7 +49,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 @ContextConfiguration("classpath:/org/openwms/core/integration/file/Test-context.xml")
 public class PreferencesDaoTest {
 
-    protected Logger logger = LoggerFactory.getLogger(this.getClass());
+    private Logger logger = LoggerFactory.getLogger(this.getClass());
 
     @Autowired
     private PreferenceDao<PreferenceKey> dao;
