@@ -1245,6 +1245,16 @@
             <artifactId>com.springsource.org.apache.log4j</artifactId>
             <scope>provided</scope>
         </dependency>
+        <dependency>
+            <groupId>org.junit</groupId>
+            <artifactId>com.springsource.org.junit</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.mockito</groupId>
+            <artifactId>mockito-all</artifactId>  
+            <scope>test</scope>
+        </dependency>
     </dependencies>
 
 </project>
