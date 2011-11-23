@@ -86,7 +86,9 @@ public class Message extends AbstractEntity implements DomainObject<Long> {
      * Accessed by persistence provider.
      */
     @SuppressWarnings("unused")
-    private Message() {}
+    private Message() {
+        super();
+    }
 
     /**
      * Create a new <code>Message</code> with message number and message text.

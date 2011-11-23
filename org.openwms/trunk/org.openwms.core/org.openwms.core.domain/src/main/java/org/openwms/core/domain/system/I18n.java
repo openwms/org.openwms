@@ -229,6 +229,8 @@ public class I18n extends AbstractEntity implements DomainObject<Long> {
     }
 
     /**
+     * {@inheritDoc}
+     * 
      * Use <code>key</code> and <code>moduleName</code> for calculation.
      * 
      * @see java.lang.Object#hashCode()
@@ -243,6 +245,8 @@ public class I18n extends AbstractEntity implements DomainObject<Long> {
     }
 
     /**
+     * {@inheritDoc}
+     * 
      * Use <code>key</code> and <code>moduleName</code> for comparison.
      * 
      * @see java.lang.Object#equals(java.lang.Object)

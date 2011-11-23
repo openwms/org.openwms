@@ -18,9 +18,9 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
-@javax.xml.bind.annotation.XmlAccessorType(javax.xml.bind.annotation.XmlAccessType.FIELD)
-@javax.xml.bind.annotation.XmlSchema(namespace = "http//www.openwms.org/schema/preferences")
 /**
  * Contains classes dealing with preferences belonging to the schema http://www.openwms.org/schema/preferences.
  */
+@javax.xml.bind.annotation.XmlAccessorType(javax.xml.bind.annotation.XmlAccessType.FIELD)
+@javax.xml.bind.annotation.XmlSchema(namespace = "http//www.openwms.org/schema/preferences")
 package org.openwms.core.domain.preferences;

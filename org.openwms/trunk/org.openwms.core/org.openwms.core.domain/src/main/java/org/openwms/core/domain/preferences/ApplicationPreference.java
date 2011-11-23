@@ -83,7 +83,9 @@ public class ApplicationPreference extends AbstractPreference {
      * Create a new <code>ApplicationPreference</code>. Only defined by the JAXB
      * implementation.
      */
-    public ApplicationPreference() {}
+    public ApplicationPreference() {
+        super();
+    }
 
     /**
      * Create a new <code>ApplicationPreference</code>.
