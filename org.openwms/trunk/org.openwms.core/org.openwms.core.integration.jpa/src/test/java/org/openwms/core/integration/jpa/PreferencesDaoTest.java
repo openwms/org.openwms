@@ -51,17 +51,23 @@ public class PreferencesDaoTest extends AbstractJpaSpringContextTests {
     private EntityManager em;
     @Autowired
     @Qualifier("preferencesJpaDao")
-    protected PreferenceWriter<Long> dao;
+    private PreferenceWriter<Long> dao;
 
+    /**
+     * Setup some test data.
+     */
     @Before
-    public void onSetup() {
+    public final void onSetup() {
         em.persist(new ApplicationPreference("APP1"));
         em.flush();
         em.clear();
     }
 
+    /**
+     * Test whether the returned instance is the same.
+     */
     @Test
-    public void testEquality() {
+    public final void testEquality() {
         List<AbstractPreference> prefs = dao.findAll();
         AbstractPreference abPref = new ApplicationPreference("APP1");
         assertTrue(prefs.get(0).equals(abPref));
