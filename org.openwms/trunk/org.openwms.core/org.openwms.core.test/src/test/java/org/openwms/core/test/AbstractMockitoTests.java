@@ -61,10 +61,14 @@ public abstract class AbstractMockitoTests {
     /**
      * Do something before the mock objects are initialized.
      */
-    public void doBefore() {}
+    public void doBefore() {
+
+    }
 
     /**
      * Do something after each test run.
      */
-    public void doAfter() {}
+    public void doAfter() {
+
+    }
 }
