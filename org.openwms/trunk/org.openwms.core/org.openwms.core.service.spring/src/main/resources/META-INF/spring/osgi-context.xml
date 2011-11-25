@@ -48,4 +48,7 @@
     <osgi:service ref="userDetailsService" interface="org.springframework.security.core.userdetails.UserDetailsService" />
     <osgi:service ref="configurationService" interface="org.openwms.core.service.ConfigurationService" />
 
+    <osgi:service ref="passwordEncoder" interface="org.springframework.security.authentication.encoding.PasswordEncoder" />
+    <osgi:service ref="saltSource" interface="org.springframework.security.authentication.dao.SaltSource" />
+
 </beans>

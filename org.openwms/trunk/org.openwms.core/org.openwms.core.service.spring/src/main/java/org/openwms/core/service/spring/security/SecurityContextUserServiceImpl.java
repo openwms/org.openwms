@@ -26,6 +26,7 @@ import org.openwms.core.domain.system.usermanagement.SystemUser;
 import org.openwms.core.domain.system.usermanagement.User;
 import org.openwms.core.integration.GenericDao;
 import org.openwms.core.service.UserService;
+import org.openwms.core.service.spring.SystemUserWrapper;
 import org.openwms.core.service.spring.UserWrapper;
 import org.openwms.core.util.event.UserChangedEvent;
 import org.slf4j.Logger;
@@ -34,6 +35,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.ApplicationListener;
+import org.springframework.security.authentication.dao.SaltSource;
+import org.springframework.security.authentication.encoding.PasswordEncoder;
 import org.springframework.security.core.userdetails.UserCache;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -76,6 +79,12 @@ public class SecurityContextUserServiceImpl implements UserDetailsService, Appli
     @Autowired(required = false)
     @Qualifier("ehCache")
     private Ehcache cache;
+
+    @Autowired
+    private PasswordEncoder enc;
+    @Autowired
+    private SaltSource saltSource;
+
     /**
      * Springs service name.
      */
@@ -110,24 +119,20 @@ public class SecurityContextUserServiceImpl implements UserDetailsService, Appli
     public UserDetails loadUserByUsername(String username) {
         UserDetails ud = userCache.getUserFromCache(username);
         if (null != ud) {
-            if (logger.isDebugEnabled()) {
-                logger.debug("User already in cache");
-            }
             return ud;
-        }
-        if (logger.isDebugEnabled()) {
-            logger.debug("User not found in cache, try to resolve");
         }
         User user = null;
         if (systemUser.equals(username)) {
             user = userService.createSystemUser();
+            ud = new SystemUserWrapper(user);
+            ((SystemUserWrapper) ud).setPassword(enc.encodePassword(user.getPassword(), saltSource.getSalt(ud)));
         } else {
             user = dao.findByUniqueId(username);
             if (null == user) {
                 throw new UsernameNotFoundException("User " + username + " not found");
             }
+            ud = new UserWrapper(user);
         }
-        ud = new UserWrapper(user);
         userCache.putUserInCache(ud);
         return ud;
     }

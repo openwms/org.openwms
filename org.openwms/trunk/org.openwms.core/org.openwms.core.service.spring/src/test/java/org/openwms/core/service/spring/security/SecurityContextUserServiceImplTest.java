@@ -36,9 +36,12 @@ import org.openwms.core.domain.system.usermanagement.SystemUser;
 import org.openwms.core.domain.system.usermanagement.User;
 import org.openwms.core.integration.GenericDao;
 import org.openwms.core.service.UserService;
+import org.openwms.core.service.spring.SystemUserWrapper;
 import org.openwms.core.service.spring.UserWrapper;
 import org.openwms.core.test.AbstractMockitoTests;
 import org.openwms.core.util.event.UserChangedEvent;
+import org.springframework.security.authentication.dao.SaltSource;
+import org.springframework.security.authentication.encoding.PasswordEncoder;
 import org.springframework.security.core.userdetails.UserCache;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -60,6 +63,10 @@ public class SecurityContextUserServiceImplTest extends AbstractMockitoTests {
     private GenericDao<User, Long> dao;
     @Mock
     private UserService userService;
+    @Mock
+    private PasswordEncoder encoder;
+    @Mock
+    private SaltSource saltSource;
     @InjectMocks
     private SecurityContextUserServiceImpl srv;
 
@@ -104,9 +111,13 @@ public class SecurityContextUserServiceImplTest extends AbstractMockitoTests {
      */
     @Test
     public final void testLoadUserByUsernameSystemUser() {
+        SystemUser su = new SystemUser(SystemUser.SYSTEM_USERNAME, SystemUser.SYSTEM_USERNAME);
+        SystemUserWrapper suw = new SystemUserWrapper(su);
+
         when(userCache.getUserFromCache(SystemUser.SYSTEM_USERNAME)).thenReturn(null);
-        when(userService.createSystemUser()).thenReturn(
-                new SystemUser(SystemUser.SYSTEM_USERNAME, SystemUser.SYSTEM_USERNAME));
+        when(userService.createSystemUser()).thenReturn(su);
+        when(saltSource.getSalt(suw)).thenReturn(SystemUser.SYSTEM_USERNAME);
+        when(encoder.encodePassword(SystemUser.SYSTEM_USERNAME, saltSource)).thenReturn(SystemUser.SYSTEM_USERNAME);
         UserDetails cachedUser = srv.loadUserByUsername(SystemUser.SYSTEM_USERNAME);
 
         verify(userService).createSystemUser();
