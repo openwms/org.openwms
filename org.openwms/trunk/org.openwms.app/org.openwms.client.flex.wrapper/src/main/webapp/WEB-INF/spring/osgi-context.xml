@@ -39,5 +39,8 @@
 	<osgi:reference id="transportUnitService" interface="org.openwms.common.service.TransportUnitService" cardinality="0..1" />
 
     <osgi:reference id="transportService" interface="org.openwms.tms.service.TransportOrderService" cardinality="0..1" />
+
+    <osgi:reference id="passwordEncoder" interface="org.springframework.security.authentication.encoding.PasswordEncoder" />
+    <osgi:reference id="saltSource" interface="org.springframework.security.authentication.dao.SaltSource" />
     
 </beans>

@@ -57,7 +57,9 @@
     
     <security:authentication-manager alias="authenticationManager">
 		<security:authentication-provider user-service-ref="userDetailsService">
-            <!-- password-encoder hash="sha-256"><salt-source user-property="username"/></password-encoder-->
+            <security:password-encoder ref="passwordEncoder">
+                <security:salt-source ref="saltSource" />
+            </security:password-encoder>
         </security:authentication-provider>
     </security:authentication-manager>
 
