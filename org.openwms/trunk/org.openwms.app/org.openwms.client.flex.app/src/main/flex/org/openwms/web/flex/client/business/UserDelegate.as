@@ -165,7 +165,7 @@ package org.openwms.web.flex.client.business {
         }
 
         private function onPasswordChanged(event : TideResultEvent) : void {
-            // do nothing
+            loadUsers();
         }
 
         [Observer("USER.SAVE_USER_PROFILE")]
