@@ -47,15 +47,6 @@ public interface UserService {
     void changeUserPassword(UserPassword userPassword);
 
     /**
-     * Check if an {@link UserPassword} is still valid.
-     * 
-     * @param userPassword
-     *            The {@link UserPassword} to check
-     * @return <code>true</code> if valid, otherwise <code>false</code>
-     */
-    boolean checkCredentials(UserPassword userPassword);
-
-    /**
      * Find and return all {@link User}s.
      * 
      * @return The list of all {@link User}s
