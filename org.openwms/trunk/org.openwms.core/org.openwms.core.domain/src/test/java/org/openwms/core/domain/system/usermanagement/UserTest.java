@@ -46,10 +46,10 @@ public class UserTest extends AbstractJpaSpringContextTests {
         for (int i = 0; i <= User.NUMBER_STORED_PASSWORDS + 5; i++) {
             try {
                 if (i <= User.NUMBER_STORED_PASSWORDS) {
-                    u1.setPassword(String.valueOf(i));
+                    u1.changePassword(String.valueOf(i));
                 } else {
                     logger.debug("Number of password history exceeded, resetting to:0");
-                    u1.setPassword("0");
+                    u1.changePassword("0");
                 }
             } catch (InvalidPasswordException e) {
                 if (i <= User.NUMBER_STORED_PASSWORDS) {
@@ -80,7 +80,7 @@ public class UserTest extends AbstractJpaSpringContextTests {
 
     private void setPasswordSafety(User u, String password) {
         try {
-            u.setPassword(password);
+            u.changePassword(password);
         } catch (InvalidPasswordException e) {
             logger.debug("Error" + e.getMessage());
         }
