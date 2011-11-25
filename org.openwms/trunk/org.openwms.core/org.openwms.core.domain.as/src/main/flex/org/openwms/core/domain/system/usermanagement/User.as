@@ -58,6 +58,15 @@ package org.openwms.core.domain.system.usermanagement {
         }
 
         /**
+         * Do NOT allow to change the password this way.
+         *
+         * @param value The password
+         */
+        override public function set password(value : String) : void {
+            ;
+        }
+
+        /**
          * Check whether the User has UserDetails.
          *
          * @param userData The User to check
