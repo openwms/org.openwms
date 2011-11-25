@@ -162,4 +162,48 @@ public class UserWrapper implements UserDetails, UserHolder {
     public boolean isEnabled() {
         return user.isEnabled();
     }
+
+    /**
+     * @see java.lang.Object#hashCode()
+     */
+    @Override
+    public int hashCode() {
+        final int prime = 31;
+        int result = 1;
+        result = prime * result + ((authorities == null) ? 0 : authorities.hashCode());
+        result = prime * result + ((user == null) ? 0 : user.hashCode());
+        return result;
+    }
+
+    /**
+     * @see java.lang.Object#equals(java.lang.Object)
+     */
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        UserWrapper other = (UserWrapper) obj;
+        if (authorities == null) {
+            if (other.authorities != null) {
+                return false;
+            }
+        } else if (!authorities.equals(other.authorities)) {
+            return false;
+        }
+        if (user == null) {
+            if (other.user != null) {
+                return false;
+            }
+        } else if (!user.equals(other.user)) {
+            return false;
+        }
+        return true;
+    }
 }

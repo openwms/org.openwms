@@ -337,40 +337,6 @@ public class UserServiceTest extends AbstractJpaSpringContextTests {
                 .getPreferences().size());
     }
 
-    /**
-     * Test method for
-     * {@link org.openwms.core.service.spring.UserServiceImpl#checkCredentials(UserPassword)}
-     * .
-     */
-    @Test(expected = ServiceRuntimeException.class)
-    public final void testCheckCredentialsWithNull() {
-        srv.checkCredentials(null);
-    }
-
-    /**
-     * Test method for
-     * {@link org.openwms.core.service.spring.UserServiceImpl#checkCredentials(UserPassword)}
-     * .
-     */
-    @Test
-    public final void testCheckCredentialsValid() {
-        User user = new User("TEST");
-        User u = srv.saveUserProfile(user, new UserPassword(user, "password"));
-        assertTrue(srv.checkCredentials(new UserPassword(u, "password")));
-    }
-
-    /**
-     * Test method for
-     * {@link org.openwms.core.service.spring.UserServiceImpl#checkCredentials(UserPassword)}
-     * .
-     */
-    @Test
-    public final void testCheckCredentialsInvalid() {
-        User user = new User("TEST");
-        User u = srv.saveUserProfile(user, new UserPassword(user, "password"));
-        assertFalse(srv.checkCredentials(new UserPassword(u, "password2")));
-    }
-
     private User findUser(String userName) {
         return (User) entityManager.createNamedQuery(User.NQ_FIND_BY_USERNAME).setParameter(1, userName)
                 .getSingleResult();

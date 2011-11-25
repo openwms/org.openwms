@@ -46,6 +46,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.security.authentication.dao.SaltSource;
+import org.springframework.security.authentication.encoding.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -77,6 +79,10 @@ public class UserServiceImpl implements UserService {
     private SecurityObjectDao securityObjectDao;
     @Autowired
     private ConfigurationService confSrv;
+    @Autowired
+    private PasswordEncoder enc;
+    @Autowired
+    private SaltSource saltSource;
     @Value("#{ globals['system.user'] }")
     private String systemUsername;
     @Value("#{ globals['system.password'] }")
@@ -194,7 +200,8 @@ public class UserServiceImpl implements UserService {
             throw new UserNotFoundException("User not found, probably not persisted before or has been removed");
         }
         try {
-            entity.setPassword(userPassword.getPassword());
+            entity.changePassword(enc.encodePassword(userPassword.getPassword(),
+                    saltSource.getSalt(new UserWrapper(entity))));
             dao.save(entity);
         } catch (InvalidPasswordException ipe) {
             logger.info(ipe.getMessage());
@@ -213,11 +220,13 @@ public class UserServiceImpl implements UserService {
      *      org.openwms.core.domain.system.usermanagement.UserPreference[])
      */
     @Override
+    @FireAfterTransaction(events = { UserChangedEvent.class })
     public User saveUserProfile(User user, UserPassword userPassword, UserPreference... prefs) {
         AssertUtils.notNull(user, "Could not save the user profile because the argument user is null");
         if (userPassword != null && StringUtils.isNotEmpty(userPassword.getPassword())) {
             try {
-                user.setPassword(userPassword.getPassword());
+                user.changePassword(enc.encodePassword(userPassword.getPassword(),
+                        saltSource.getSalt(new UserWrapper(user))));
             } catch (InvalidPasswordException ipe) {
                 logger.info(ipe.getMessage());
                 throw new ServiceRuntimeException("Password does not match the defined pattern", ipe);
@@ -227,19 +236,5 @@ public class UserServiceImpl implements UserService {
             confSrv.save(preference);
         }
         return save(user);
-    }
-
-    /**
-     * {@inheritDoc}
-     * 
-     * @throws IllegalArgumentException
-     *             when <code>userPassword</code> is <code>null</code>
-     * 
-     * @see org.openwms.core.service.UserService#checkCredentials(org.openwms.core.domain.system.usermanagement.UserPassword)
-     */
-    @Override
-    public boolean checkCredentials(UserPassword userPassword) {
-        AssertUtils.notNull(userPassword, "Could not check credentials, because userPassword is null");
-        return dao.findByNameAndPassword(userPassword) == null ? false : true;
     }
 }
