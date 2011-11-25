@@ -71,7 +71,7 @@ public class UserDaoTest extends AbstractJpaSpringContextTests {
     public void onBefore() throws InvalidPasswordException {
         entityManager.persist(new User(SYS_USER));
         user = new User(OP_USER);
-        user.setPassword("TEST");
+        user.changePassword("TEST");
         entityManager.persist(user);
         entityManager.persist(new Role(ROLE_ADMIN));
         entityManager.persist(new Role(ROLE_ANONYMOUS));
