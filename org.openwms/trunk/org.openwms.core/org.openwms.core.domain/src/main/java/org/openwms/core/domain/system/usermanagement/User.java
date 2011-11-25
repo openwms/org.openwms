@@ -41,9 +41,11 @@ import javax.persistence.ManyToMany;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
+import javax.persistence.PostLoad;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.persistence.Transient;
 import javax.persistence.Version;
 
 import org.openwms.core.annotation.GlossaryTerm;
@@ -76,7 +78,7 @@ import org.slf4j.LoggerFactory;
         @NamedQuery(name = User.NQ_FIND_ALL, query = "select u from User u"),
         @NamedQuery(name = User.NQ_FIND_ALL_ORDERED, query = "select u from User u order by u.username"),
         @NamedQuery(name = User.NQ_FIND_BY_USERNAME, query = "select u from User u where u.username = ?1"),
-        @NamedQuery(name = User.NQ_FIND_BY_USERNAME_PASSWORD, query = "select u from User u where u.username = :username and u.password = :password") })
+        @NamedQuery(name = User.NQ_FIND_BY_USERNAME_PASSWORD, query = "select u from User u where u.username = :username and u.savedPassword = :password") })
 public class User extends AbstractEntity implements DomainObject<Long> {
 
     private static final long serialVersionUID = -1116645053773805413L;
@@ -156,10 +158,16 @@ public class User extends AbstractEntity implements DomainObject<Long> {
     private boolean locked = false;
 
     /**
-     * Current password of the <code>User</code>.
+     * The <code>User</code>'s password.
+     */
+    @Transient
+    private String password;
+
+    /**
+     * The <code>User</code>'s password.
      */
     @Column(name = "C_PASSWORD")
-    private String password;
+    private String savedPassword;
 
     /**
      * <code>true</code> if the <code>User</code> is enabled. This field can be
@@ -233,6 +241,7 @@ public class User extends AbstractEntity implements DomainObject<Long> {
      */
     protected User() {
         super();
+        onLoad();
     }
 
     /**
@@ -247,6 +256,7 @@ public class User extends AbstractEntity implements DomainObject<Long> {
         super();
         AssertUtils.isNotEmpty(username, "Not allowed to create an User with an empty username");
         this.username = username;
+        onLoad();
     }
 
     /**
@@ -282,6 +292,16 @@ public class User extends AbstractEntity implements DomainObject<Long> {
     @Override
     public boolean isNew() {
         return this.id == null;
+    }
+
+    /**
+     * After load, the saved password is copied to the transient one. The
+     * transient one can be overridden by the application to force a password
+     * change.
+     */
+    @PostLoad
+    public void onLoad() {
+        this.password = this.savedPassword;
     }
 
     /**
@@ -362,6 +382,17 @@ public class User extends AbstractEntity implements DomainObject<Long> {
     }
 
     /**
+     * Set the password that shall be stored as new password. Note, that this
+     * password is not directly saved.
+     * 
+     * @param password
+     *            The password to change to
+     */
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    /**
      * Checks if the new password is a valid and change the password of this
      * <code>User</code>.
      * 
@@ -371,19 +402,31 @@ public class User extends AbstractEntity implements DomainObject<Long> {
      *             in case changing the password is not allowed or the new
      *             password is not valid
      */
-    public void setPassword(String password) throws InvalidPasswordException {
+    public void changePassword(String password) throws InvalidPasswordException {
         // FIXME [scherrer] : Setting the same password should fail
-        if (this.password != null && this.password.equals(password)) {
+        if (this.savedPassword != null && this.savedPassword.equals(password)) {
             logger.debug("Trying to set the new password equals to the current password");
             return;
         }
         if (isPasswordValid(password)) {
             storeOldPassword(this.password);
+            this.savedPassword = password;
             this.password = password;
             this.lastPasswordChange = new Date();
         } else {
             throw new InvalidPasswordException("Password is not confirm with the defined rules");
         }
+    }
+
+    /**
+     * Checks whether the password is going to be changed from the application
+     * side.
+     * 
+     * @return <code>true</code> when the <code>password</code> is different to
+     *         the saved one, otherwise <code>false</code>
+     */
+    public boolean hasPasswordChanged() {
+        return (this.savedPassword.equals(this.password));
     }
 
     /**
