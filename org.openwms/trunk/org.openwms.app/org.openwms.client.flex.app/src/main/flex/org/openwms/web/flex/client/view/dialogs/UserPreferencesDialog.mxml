@@ -119,9 +119,6 @@
                         function execute():void {
                             var event : UserEvent = new UserEvent(UserEvent.SAVE_USER_PROFILE);
                             event.data = {user : modelLocator.loggedInUser, password : pw, preferences : [pref] };
-                            trace("SAVE user:"+event.data.user);
-                            trace("SAVE uPass:"+event.data.password);
-                            trace("SAVE pref:"+event.data.preferences);
                             dispatchEvent(event);
                         }
                     );
