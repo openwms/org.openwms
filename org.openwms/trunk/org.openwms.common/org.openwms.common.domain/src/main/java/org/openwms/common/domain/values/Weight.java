@@ -25,6 +25,7 @@ import java.math.BigDecimal;
 
 import javax.persistence.Embeddable;
 
+import org.openwms.core.annotation.GlossaryTerm;
 import org.openwms.core.domain.values.Unit;
 
 /**
@@ -35,6 +36,7 @@ import org.openwms.core.domain.values.Unit;
  * @version $Revision$
  * @since 0.1
  */
+@GlossaryTerm
 @Embeddable
 public class Weight implements Comparable<Weight>, Unit<WeightUnit>, Serializable {
 
@@ -55,7 +57,9 @@ public class Weight implements Comparable<Weight>, Unit<WeightUnit>, Serializabl
      * Accessed by persistence provider.
      */
     @SuppressWarnings("unused")
-    private Weight() {}
+    private Weight() {
+        super();
+    }
 
     /**
      * Create a new <code>Weight</code>.

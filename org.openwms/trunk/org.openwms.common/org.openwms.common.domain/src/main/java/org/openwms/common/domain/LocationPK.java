@@ -71,7 +71,9 @@ public class LocationPK implements Serializable {
 
     /* ----------------------------- methods ------------------- */
     @SuppressWarnings("unused")
-    private LocationPK() {}
+    private LocationPK() {
+        super();
+    }
 
     /**
      * Create a new LocationPK.

@@ -20,6 +20,8 @@
  */
 package org.openwms.common.domain.values;
 
+import org.openwms.core.annotation.GlossaryTerm;
+
 /**
  * A TransportUnitState defines a set of states for <code>TransportUnit</code>s.
  * 
@@ -28,6 +30,7 @@ package org.openwms.common.domain.values;
  * @since 0.1
  * @see org.openwms.common.domain.TransportUnit
  */
+@GlossaryTerm
 public enum TransportUnitState {
 
     /**

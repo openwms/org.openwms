@@ -38,6 +38,7 @@ import javax.persistence.OrderBy;
 import javax.persistence.Table;
 import javax.persistence.Version;
 
+import org.openwms.core.annotation.GlossaryTerm;
 import org.openwms.core.domain.AbstractEntity;
 import org.openwms.core.domain.DomainObject;
 
@@ -54,6 +55,7 @@ import org.openwms.core.domain.DomainObject;
  * @since 0.1
  * @see org.openwms.common.domain.TransportUnit
  */
+@GlossaryTerm
 @Entity
 @Table(name = "COM_TRANSPORT_UNIT_TYPE")
 @NamedQueries({
@@ -184,7 +186,9 @@ public class TransportUnitType extends AbstractEntity implements DomainObject<Lo
      * Accessed by persistence provider.
      */
     @SuppressWarnings("unused")
-    private TransportUnitType() {}
+    private TransportUnitType() {
+        super();
+    }
 
     /**
      * Create a new <code>TransportUnitType</code>.

@@ -20,6 +20,8 @@
  */
 package org.openwms.common.domain;
 
+import org.openwms.core.annotation.GlossaryTerm;
+
 /**
  * A Rule used as marker interface.
  * 
@@ -27,6 +29,7 @@ package org.openwms.common.domain;
  * @version $Revision$
  * @since 0.1
  */
+@GlossaryTerm
 public interface Rule {
 
 }

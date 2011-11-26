@@ -75,7 +75,9 @@ public class UnitError extends AbstractEntity implements DomainObject<Long> {
     /**
      * Create a new <code>UnitError</code>.
      */
-    public UnitError() {}
+    public UnitError() {
+        super();
+    }
 
     /**
      * Create a new <code>UnitError</code> with an error number.
@@ -148,5 +150,4 @@ public class UnitError extends AbstractEntity implements DomainObject<Long> {
     public long getVersion() {
         return version;
     }
-
 }

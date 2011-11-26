@@ -28,6 +28,7 @@ import javax.persistence.PostPersist;
 import javax.persistence.PostUpdate;
 
 import org.apache.commons.lang.StringUtils;
+import org.openwms.core.annotation.GlossaryTerm;
 
 /**
  * A Barcode defines an unique label.
@@ -36,6 +37,7 @@ import org.apache.commons.lang.StringUtils;
  * @version $Revision$
  * @since 0.1
  */
+@GlossaryTerm
 @Embeddable
 public class Barcode implements Serializable {
 
@@ -101,7 +103,9 @@ public class Barcode implements Serializable {
      * Accessed by persistence provider.
      */
     @SuppressWarnings("unused")
-    private Barcode() {}
+    private Barcode() {
+        super();
+    }
 
     /**
      * Create a new <code>Barcode</code> with a String.

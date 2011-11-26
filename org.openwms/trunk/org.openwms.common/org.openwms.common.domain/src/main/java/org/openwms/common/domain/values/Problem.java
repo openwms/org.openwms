@@ -28,6 +28,8 @@ import javax.persistence.Embeddable;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+import org.openwms.core.annotation.GlossaryTerm;
+
 /**
  * A Problem is used to signal an occurred failure.
  * 
@@ -35,6 +37,7 @@ import javax.persistence.TemporalType;
  * @version $Revision$
  * @since 0.1
  */
+@GlossaryTerm
 @Embeddable
 public class Problem implements Serializable {
 
@@ -79,7 +82,8 @@ public class Problem implements Serializable {
     }
 
     /**
-     * Create a new <code>Problem</code> instance with a message text and a message number.
+     * Create a new <code>Problem</code> instance with a message text and a
+     * message number.
      * 
      * @param message
      *            text as String
