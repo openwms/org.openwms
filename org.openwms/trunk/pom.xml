@@ -751,7 +751,7 @@
                                 <link>http://static.springsource.org/spring/docs/${spring.version}/javadoc-api</link>
                                 <link>http://static.springsource.org/spring-security/site/docs/3.0.x/apidocs</link>
                                 <link>http://commons.apache.org/lang/api-2.5</link>
-                                <link>http://download.oracle.com/javaee/5/api/javax/persistence</link>
+                                <link>http://docs.oracle.com/javaee/5/api/javax/persistence</link>
                             </links>
                             <excludePackageNames>org.openwms.web.flex.servlet</excludePackageNames>
                             <keywords>true</keywords>
