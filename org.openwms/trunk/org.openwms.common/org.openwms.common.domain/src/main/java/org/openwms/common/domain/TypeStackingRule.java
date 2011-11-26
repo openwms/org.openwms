@@ -30,6 +30,7 @@ import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 import javax.persistence.Version;
 
+import org.openwms.core.annotation.GlossaryTerm;
 import org.openwms.core.domain.AbstractEntity;
 import org.openwms.core.domain.DomainObject;
 
@@ -42,6 +43,7 @@ import org.openwms.core.domain.DomainObject;
  * @since 0.1
  * @see org.openwms.common.domain.TransportUnitType
  */
+@GlossaryTerm
 @Entity
 @Table(name = "COM_TYPE_STACKING_RULE", uniqueConstraints = @UniqueConstraint(columnNames = { "TRANSPORT_UNIT_TYPE",
         "NO_TRANSPORT_UNITS", "ALLOWED_TRANSPORT_UNIT_TYPE" }))
@@ -91,7 +93,9 @@ public class TypeStackingRule extends AbstractEntity implements DomainObject<Lon
      * Create a new <code>TypeStackingRule</code>.
      */
     @SuppressWarnings("unused")
-    private TypeStackingRule() {}
+    private TypeStackingRule() {
+        super();
+    }
 
     /**
      * Create a new <code>TypeStackingRule</code>. Define how many

@@ -51,6 +51,7 @@ import javax.persistence.Version;
 import org.openwms.common.domain.system.UnitError;
 import org.openwms.common.domain.values.Barcode;
 import org.openwms.common.domain.values.TransportUnitState;
+import org.openwms.core.annotation.GlossaryTerm;
 import org.openwms.core.domain.AbstractEntity;
 import org.openwms.core.domain.DomainObject;
 import org.openwms.core.domain.system.usermanagement.User;
@@ -67,6 +68,7 @@ import org.openwms.core.domain.system.usermanagement.User;
  * @version $Revision$
  * @since 0.1
  */
+@GlossaryTerm
 @Entity
 @Table(name = "COM_TRANSPORT_UNIT", uniqueConstraints = @UniqueConstraint(columnNames = { "BARCODE" }))
 @NamedQueries({
@@ -213,7 +215,9 @@ public class TransportUnit extends AbstractEntity implements DomainObject<Long> 
      * Accessed by persistence provider.
      */
     @SuppressWarnings("unused")
-    private TransportUnit() {}
+    private TransportUnit() {
+        super();
+    }
 
     /**
      * Create a new <code>TransportUnit</code> with an unique id. The id is used

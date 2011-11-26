@@ -20,6 +20,8 @@
  */
 package org.openwms.common.domain.types;
 
+import org.openwms.core.annotation.GlossaryTerm;
+
 /**
  * A Target.
  * 
@@ -27,6 +29,7 @@ package org.openwms.common.domain.types;
  * @version $Revision$
  * @since 0.1
  */
+@GlossaryTerm
 public interface Target {
 
 }

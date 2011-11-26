@@ -48,6 +48,7 @@ import javax.persistence.UniqueConstraint;
 import javax.persistence.Version;
 
 import org.openwms.common.domain.types.Target;
+import org.openwms.core.annotation.GlossaryTerm;
 import org.openwms.core.domain.AbstractEntity;
 import org.openwms.core.domain.DomainObject;
 import org.openwms.core.domain.system.Message;
@@ -66,6 +67,7 @@ import org.openwms.core.domain.system.Message;
  * @since 0.1
  * @see org.openwms.common.domain.LocationGroup
  */
+@GlossaryTerm
 @Entity
 @Table(name = "COM_LOCATION", uniqueConstraints = @UniqueConstraint(columnNames = { "AREA", "AISLE", "X", "Y", "Z" }))
 @NamedQueries({
@@ -262,7 +264,9 @@ public class Location extends AbstractEntity implements DomainObject<Long>, Targ
      * Accessed by persistence provider.
      */
     @SuppressWarnings("unused")
-    private Location() {}
+    private Location() {
+        super();
+    }
 
     /**
      * Add a new {@link Message} to this <code>Location</code>.

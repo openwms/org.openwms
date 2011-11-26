@@ -20,6 +20,8 @@
  */
 package org.openwms.common.domain.values;
 
+import org.openwms.core.annotation.GlossaryTerm;
+
 /**
  * A LocationGroupState defines possible states used for
  * <code>LocationGroup</code>s.
@@ -29,6 +31,7 @@ package org.openwms.common.domain.values;
  * @since 0.1
  * @see org.openwms.common.domain.LocationGroup
  */
+@GlossaryTerm
 public enum LocationGroupState {
 
     /**
@@ -40,5 +43,4 @@ public enum LocationGroupState {
      * Not available.
      */
     NOT_AVAILABLE;
-
 }

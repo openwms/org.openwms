@@ -30,6 +30,7 @@ import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 import javax.persistence.Version;
 
+import org.openwms.core.annotation.GlossaryTerm;
 import org.openwms.core.domain.AbstractEntity;
 import org.openwms.core.domain.DomainObject;
 
@@ -45,6 +46,7 @@ import org.openwms.core.domain.DomainObject;
  * @since 0.1
  * @see org.openwms.common.domain.TransportUnitType
  */
+@GlossaryTerm
 @Entity
 @Table(name = "COM_TYPE_PLACING_RULE", uniqueConstraints = @UniqueConstraint(columnNames = { "TRANSPORT_UNIT_TYPE",
         "PRIVILEGE_LEVEL", "ALLOWED_LOCATION_TYPE" }))
@@ -104,7 +106,9 @@ public class TypePlacingRule extends AbstractEntity implements DomainObject<Long
      * Create a new <code>TypePlacingRule</code>.
      */
     @SuppressWarnings("unused")
-    private TypePlacingRule() {}
+    private TypePlacingRule() {
+        super();
+    }
 
     /**
      * Create a new <code>TypePlacingRule</code> with privilegeLevel and

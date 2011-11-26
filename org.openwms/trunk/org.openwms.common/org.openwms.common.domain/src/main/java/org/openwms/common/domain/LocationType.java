@@ -30,6 +30,7 @@ import javax.persistence.OrderBy;
 import javax.persistence.Table;
 import javax.persistence.Version;
 
+import org.openwms.core.annotation.GlossaryTerm;
 import org.openwms.core.domain.AbstractEntity;
 import org.openwms.core.domain.DomainObject;
 
@@ -46,6 +47,7 @@ import org.openwms.core.domain.DomainObject;
  * @since 0.1
  * @see org.openwms.common.domain.Location
  */
+@GlossaryTerm
 @Entity
 @Table(name = "COM_LOCATION_TYPE")
 @NamedQueries({
@@ -126,7 +128,9 @@ public class LocationType extends AbstractEntity implements DomainObject<Long> {
      * Accessed by the persistence provider.
      */
     @SuppressWarnings("unused")
-    private LocationType() {}
+    private LocationType() {
+        super();
+    }
 
     /**
      * Create a new <code>LocationType</code> with an unique natural key.
