@@ -65,7 +65,7 @@ public class PreferencesDaoImpl implements PreferenceWriter<Long> {
     /**
      * {@inheritDoc}
      * 
-     * @see org.openwms.core.integration.PreferenceDao#findByKey(org.openwms.core.domain.system.PreferenceKey)
+     * @see org.openwms.core.integration.PreferenceDao#findByKey(java.io.Serializable)
      */
     @Override
     public AbstractPreference findByKey(Long id) {

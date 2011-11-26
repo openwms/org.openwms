@@ -100,25 +100,25 @@ public class TransportUnitType extends AbstractEntity implements DomainObject<Lo
     private String type;
 
     /**
-     * Description for this type. Default: {@value} .
+     * Description for this type.
      */
     @Column(name = "DESCRIPTION")
     private String description = DEF_TYPE_DESCRIPTION;
 
     /**
-     * Length of the <code>TransportUnitType</code>. Default: {@value} .
+     * Length of the <code>TransportUnitType</code>.
      */
     @Column(name = "LENGTH")
     private int length = 0;
 
     /**
-     * Width of the <code>TransportUnitType</code>. Default: {@value} .
+     * Width of the <code>TransportUnitType</code>.
      */
     @Column(name = "WIDTH")
     private int width = 0;
 
     /**
-     * Height of the <code>TransportUnitType</code>. Default: {@value} .
+     * Height of the <code>TransportUnitType</code>.
      */
     @Column(name = "HEIGHT")
     private int height = 0;

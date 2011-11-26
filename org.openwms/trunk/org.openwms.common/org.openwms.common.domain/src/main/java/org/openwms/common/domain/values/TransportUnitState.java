@@ -26,7 +26,7 @@ package org.openwms.common.domain.values;
  * @author <a href="mailto:russelltina@users.sourceforge.net">Tina Russell</a>
  * @version $Revision$
  * @since 0.1
- * @see org.openwms.common.domain.TransportUnit;
+ * @see org.openwms.common.domain.TransportUnit
  */
 public enum TransportUnitState {
 
@@ -44,5 +44,4 @@ public enum TransportUnitState {
      * The <code>TransportUnit</code> is not okay.
      */
     NOT_OK
-
 }

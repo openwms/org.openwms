@@ -78,7 +78,7 @@ public class DefaultOrderStateDelegate implements TransportOrderStateDelegate {
      * {@link TransportOrder}s for this transportUnit and try to initialize
      * them. When initialization is done try to start them.
      * 
-     * @see org.openwms.tms.service.delegate.TransportOrderStateDelegate#afterCreation(java.lang.Long)
+     * @see org.openwms.tms.service.delegate.TransportOrderStateDelegate#afterCreation(TransportUnit)
      */
     @Override
     public void afterCreation(TransportUnit transportUnit) {

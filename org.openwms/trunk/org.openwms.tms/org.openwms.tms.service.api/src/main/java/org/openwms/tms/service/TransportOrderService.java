@@ -43,7 +43,7 @@ import org.openwms.tms.domain.values.TransportOrderState;
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  * @version $Revision$
  * @since 0.1
- * @see org.openwms.common.service.EntityService
+ * @see org.openwms.core.service.EntityService
  */
 public interface TransportOrderService<T extends TransportOrder> extends EntityService<T> {
 

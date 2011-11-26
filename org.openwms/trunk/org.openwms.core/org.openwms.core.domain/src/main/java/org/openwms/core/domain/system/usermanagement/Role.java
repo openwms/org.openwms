@@ -85,7 +85,7 @@ public class Role extends SecurityObject {
 
     /**
      * Whether or not this <code>Role</code> is immutable. Immutable
-     * <code>Role</code>s can't be modified. Default {@value} .
+     * <code>Role</code>s can't be modified.
      */
     @Column(name = "IMMUTABLE")
     private Boolean immutable = false;

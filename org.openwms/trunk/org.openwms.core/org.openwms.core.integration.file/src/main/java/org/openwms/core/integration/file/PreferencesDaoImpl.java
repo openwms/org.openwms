@@ -59,7 +59,6 @@ import org.springframework.stereotype.Repository;
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  * @version $Revision: $
  * @since 0.1
- * @see bundle org.openwms.core.infrastructure.configuration
  * @see org.openwms.core.util.event.PropertiesChangedEvent
  */
 @Repository("preferencesFileDao")
@@ -92,7 +91,7 @@ public final class PreferencesDaoImpl implements PreferenceDao<PreferenceKey>,
     /**
      * {@inheritDoc}
      * 
-     * @see org.openwms.core.integration.PreferenceDao#findByKey(PreferenceKey)
+     * @see org.openwms.core.integration.PreferenceDao#findByKey(java.io.Serializable)
      */
     @Override
     public AbstractPreference findByKey(PreferenceKey id) {
@@ -102,7 +101,7 @@ public final class PreferencesDaoImpl implements PreferenceDao<PreferenceKey>,
     /**
      * {@inheritDoc}
      * 
-     * @see org.openwms.core.integration.PreferenceDao#findByType(org.openwms.core.domain.system.AbstractPreference)
+     * @see org.openwms.core.integration.PreferenceDao#findByType(Class)
      */
     @Override
     public <T extends AbstractPreference> List<T> findByType(Class<T> clazz) {

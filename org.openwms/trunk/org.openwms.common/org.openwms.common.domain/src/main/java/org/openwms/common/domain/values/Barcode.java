@@ -64,7 +64,7 @@ public class Barcode implements Serializable {
     }
 
     /**
-     * Define whether to use character padding or not. Default: {@value} .
+     * Define whether to use character padding or not.
      */
     private static boolean padded = true;
 
@@ -72,18 +72,18 @@ public class Barcode implements Serializable {
      * Defines a character used for padding.<br>
      * If the actually length of the <code>Barcode</code> is less than the
      * maximum defined <code>length</code> the rest will be filled with
-     * <code>padder</code> characters. Default: {@value} .
+     * <code>padder</code> characters.
      */
     private static char padder = '0';
 
     /**
-     * Defines the maximum length of characters. Default: {@value} .
+     * Defines the maximum length of characters.
      */
     private static int length = 20;
 
     /**
      * The alignment of the <code>Barcode</code>. Could be something of
-     * {@link BARCODE_ALIGN}. Default {@value} .
+     * {@link BARCODE_ALIGN}.
      */
     private static BARCODE_ALIGN alignment = BARCODE_ALIGN.RIGHT;
 

@@ -59,7 +59,7 @@ public class RolePreference extends AbstractPreference {
      */
     public static final String NQ_FIND_ALL = "RolePreference" + FIND_ALL;
     /**
-     * Type of this preference. Default is {@value} .
+     * Type of this preference.
      */
     @XmlTransient
     @Enumerated(EnumType.STRING)

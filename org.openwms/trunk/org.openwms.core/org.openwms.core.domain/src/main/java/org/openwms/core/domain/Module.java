@@ -90,15 +90,14 @@ public class Module extends AbstractEntity implements DomainObject<Long> {
 
     /**
      * Flag used on the client side to store whether the <code>Module</code> is
-     * actually loaded or not. It's a dynamic value and not persisted. Default:
-     * * {@value} .
+     * actually loaded or not. It's a dynamic value and not persisted.
      */
     @Transient
     private boolean loaded = false;
 
     /**
      * <code>true</code> when the <code>Module</code> should be loaded on
-     * application startup. Default:{@value} .
+     * application startup.
      */
     @Column(name = "LOAD_ON_STARTUP")
     private boolean loadOnStartup = true;
@@ -112,7 +111,7 @@ public class Module extends AbstractEntity implements DomainObject<Long> {
     private int startupOrder;
 
     /**
-     * A description text of this <code>Module</code>. Default:{@value} .
+     * A description text of this <code>Module</code>.
      */
     @Column(name = "DESCRIPTION")
     private String description = "--";

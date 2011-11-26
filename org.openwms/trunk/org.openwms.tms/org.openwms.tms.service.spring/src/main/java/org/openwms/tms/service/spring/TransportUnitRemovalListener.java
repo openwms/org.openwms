@@ -67,8 +67,7 @@ public class TransportUnitRemovalListener implements OnRemovalListener<Transport
      * accepted.</li>
      * </ul>
      * 
-     * @see org.openwms.common.service.OnRemovalListener#preRemove(org.openwms.common.domain.AbstractEntity)
-     *      .
+     * @see org.openwms.core.service.listener.OnRemovalListener#preRemove(org.openwms.core.domain.AbstractEntity)
      * @throws RemovalNotAllowedException
      *             when active {@link TransportOrder}s exist for the
      *             {@link TransportUnit} entity.
@@ -151,8 +150,7 @@ public class TransportUnitRemovalListener implements OnRemovalListener<Transport
                     }
                 } catch (StateChangeException sce) {
                     transportOrder.setProblem(new Problem(sce.getMessage()));
-                }
-                finally {
+                } finally {
                     dao.save(transportOrder);
                 }
             }

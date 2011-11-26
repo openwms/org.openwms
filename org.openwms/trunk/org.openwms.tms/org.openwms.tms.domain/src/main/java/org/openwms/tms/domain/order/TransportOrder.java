@@ -120,7 +120,7 @@ public class TransportOrder extends AbstractEntity implements DomainObject<Long>
      * the lower the priority.<br>
      * The priority level affects the execution of the
      * <code>TransportOrder</code>. An order with high priority will be
-     * processed faster than those with lower priority. Default: {@value} .
+     * processed faster than those with lower priority.
      */
     @Column(name = "PRIORITY")
     @Enumerated(EnumType.STRING)
@@ -154,7 +154,7 @@ public class TransportOrder extends AbstractEntity implements DomainObject<Long>
     private Date endDate;
 
     /**
-     * State of the <code>TransportOrder</code>. Default: {@value} .
+     * State of the <code>TransportOrder</code>.
      */
     @Column(name = "STATE")
     @Enumerated(EnumType.STRING)
@@ -305,7 +305,8 @@ public class TransportOrder extends AbstractEntity implements DomainObject<Long>
      * @throws StateChangeException
      *             when <li>newState is <code>null</code> or</li><li>the state
      *             shall be turned back to a prior state or</li><li>when the
-     *             caller tries to leap the state {@link INITIALIZED}</li>
+     *             caller tries to leap the state
+     *             {@link TransportOrderState#INITIALIZED}</li>
      */
     protected void validateStateChange(TransportOrderState newState) throws StateChangeException {
         if (newState == null) {
@@ -339,10 +340,13 @@ public class TransportOrder extends AbstractEntity implements DomainObject<Long>
      *             <li>the newState is <code>null</code> or</li>
      *             <li>the newState is less than the old state or</li>
      *             <li>the <code>TransportOrder</code> is in state
-     *             {@link CREATED} and shall be manually turned into something
-     *             else then {@link INITIALIZED} or {@link CANCELED}</li>
-     *             <li>the <code>TransportOrder</code> is {@link CREATED} and
-     *             shall be {@link INITIALIZED} but it is incomplete</li>
+     *             {@link TransportOrderState#CREATED} and shall be manually
+     *             turned into something else then
+     *             {@link TransportOrderState#INITIALIZED} or
+     *             {@link TransportOrderState#CANCELED}</li>
+     *             <li>the <code>TransportOrder</code> is
+     *             {@link TransportOrderState#CREATED} and shall be
+     *             {@link TransportOrderState#INITIALIZED} but it is incomplete</li>
      *             </ul>
      */
     public void setState(TransportOrderState newState) throws StateChangeException {

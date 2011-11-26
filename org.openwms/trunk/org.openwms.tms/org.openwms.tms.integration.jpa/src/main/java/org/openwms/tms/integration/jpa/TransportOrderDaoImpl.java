@@ -41,7 +41,7 @@ import org.springframework.transaction.annotation.Transactional;
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  * @version $Revision$
  * @since 0.1
- * @see org.openwms.common.integration.jpa.AbstractGenericJpaDao
+ * @see org.openwms.core.integration.jpa.AbstractGenericJpaDao
  * @see org.openwms.tms.integration.TransportOrderDao
  */
 @Transactional
@@ -52,7 +52,7 @@ public class TransportOrderDaoImpl extends AbstractGenericJpaDao<TransportOrder,
      * {@inheritDoc}
      * 
      * @return Name of the query
-     * @see org.openwms.common.integration.jpa.AbstractGenericJpaDao#getFindAllQuery()
+     * @see org.openwms.core.integration.jpa.AbstractGenericJpaDao#getFindAllQuery()
      */
     @Override
     protected String getFindAllQuery() {
@@ -63,7 +63,7 @@ public class TransportOrderDaoImpl extends AbstractGenericJpaDao<TransportOrder,
      * {@inheritDoc}
      * 
      * @return Name of the query
-     * @see org.openwms.common.integration.jpa.AbstractGenericJpaDao#getFindByUniqueIdQuery()
+     * @see org.openwms.core.integration.jpa.AbstractGenericJpaDao#getFindByUniqueIdQuery()
      */
     @Override
     protected String getFindByUniqueIdQuery() {

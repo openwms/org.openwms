@@ -91,25 +91,25 @@ public class LocationType extends AbstractEntity implements DomainObject<Long> {
     private String type;
 
     /**
-     * Description of the <code>LocationType</code>. Default: {@value} .
+     * Description of the <code>LocationType</code>.
      */
     @Column(name = "DESCRIPTION")
     private String description = DEF_TYPE_DESCRIPTION;
 
     /**
-     * Length of the <code>LocationType</code>. Default: {@value} .
+     * Length of the <code>LocationType</code>.
      */
     @Column(name = "LENGTH")
     private int length = 0;
 
     /**
-     * Width of the <code>LocationType</code>. Default: {@value} .
+     * Width of the <code>LocationType</code>.
      */
     @Column(name = "WIDTH")
     private int width = 0;
 
     /**
-     * Height of the <code>LocationType</code>. Default: {@value} .
+     * Height of the <code>LocationType</code>.
      */
     @Column(name = "HEIGHT")
     private int height = 0;

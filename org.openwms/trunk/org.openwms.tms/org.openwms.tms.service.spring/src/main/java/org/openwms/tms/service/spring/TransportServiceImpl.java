@@ -200,7 +200,8 @@ public class TransportServiceImpl extends EntityServiceImpl<TransportOrder, Long
     /**
      * {@inheritDoc}
      * 
-     * @see org.openwms.tms.service.TransportOrderService#cancelTransportOrders(java.util.List)
+     * @see org.openwms.tms.service.TransportOrderService#cancelTransportOrders(List,
+     *      TransportOrderState)
      */
     @Override
     public List<Integer> cancelTransportOrders(List<Integer> ids, TransportOrderState state) {

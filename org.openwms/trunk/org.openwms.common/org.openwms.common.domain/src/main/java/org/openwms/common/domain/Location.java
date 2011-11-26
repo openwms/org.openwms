@@ -116,7 +116,7 @@ public class Location extends AbstractEntity implements DomainObject<Long>, Targ
 
     /**
      * Maximum number of {@link org.openwms.common.domain.TransportUnit}s placed
-     * on this <code>Location</code>. Default:{@value} .
+     * on this <code>Location</code>.
      */
     @Column(name = "NO_MAX_TRANSPORT_UNITS")
     private short noMaxTransportUnits = 1;
@@ -140,15 +140,13 @@ public class Location extends AbstractEntity implements DomainObject<Long>, Targ
 
     /**
      * Flag to indicate whether {@link org.openwms.common.domain.TransportUnit}s
-     * should be counted on this <code>Location</code> or not. Default:{@value}
-     * .
+     * should be counted on this <code>Location</code> or not.
      */
     @Column(name = "COUNTING_ACTIVE")
     private boolean countingActive = false;
 
     /**
      * Reserved for stock check procedure and inventory calculation.
-     * Default:{@value} .
      */
     @Column(name = "CHECK_STATE")
     private String checkState = "--";
@@ -170,7 +168,7 @@ public class Location extends AbstractEntity implements DomainObject<Long>, Targ
     /**
      * Signals the incoming state of this <code>Location</code>.
      * <code>Location</code>s which are blocked for incoming cannot pick up
-     * {@link org.openwms.common.domain.TransportUnit}s. Default:{@value} .
+     * {@link org.openwms.common.domain.TransportUnit}s.
      * <p>
      * <code>true</code> : <code>Location</code> is ready to pick up
      * {@link org.openwms.common.domain.TransportUnit}s.<br>
@@ -184,7 +182,7 @@ public class Location extends AbstractEntity implements DomainObject<Long>, Targ
     /**
      * Signals the outgoing state of this <code>Location</code>.
      * <code>Location</code>s which are blocked for outgoing cannot release
-     * {@link org.openwms.common.domain.TransportUnit}s. Default:{@value} .
+     * {@link org.openwms.common.domain.TransportUnit}s.
      * <p>
      * <code>true</code> : <code>Location</code> is enabled for outgoing
      * <code>Transport</code>s<br>
@@ -198,7 +196,7 @@ public class Location extends AbstractEntity implements DomainObject<Long>, Targ
 
     /**
      * The PLC is able to change the state of a <code>Location</code>. This
-     * property stores the last state, received from the PLC. Default:{@value} .
+     * property stores the last state, received from the PLC.
      * <p>
      * -1: Not defined.<br>
      * 0 : No PLC error, everything okay.
@@ -209,7 +207,7 @@ public class Location extends AbstractEntity implements DomainObject<Long>, Targ
 
     /**
      * Determines whether the <code>Location</code> is considered in the
-     * allocation procedure. Default:{@value} .
+     * allocation procedure.
      * <p>
      * <code>true</code> : This <code>Location</code> will be considered in
      * storage calculation by an allocation procedure.<br>
