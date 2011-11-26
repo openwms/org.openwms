@@ -158,6 +158,7 @@ package org.openwms.web.flex.client.business {
         }
 
         private function onRoleDeleted(event : TideResultEvent) : void {
+            modelLocator.selectedRole = null;
             dispatchEvent(new RoleEvent(RoleEvent.LOAD_ALL_ROLES));
         }
 

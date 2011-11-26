@@ -36,6 +36,7 @@
 
     <mx:Script>
         <![CDATA[
+            import mx.events.CloseEvent;
             import flash.utils.ByteArray;
             import mx.formatters.Formatter;
             import mx.utils.ObjectUtil;
@@ -59,8 +60,6 @@
             import org.openwms.web.flex.client.util.DisplayUtility;
             import org.openwms.web.flex.client.util.I18nUtil;
             import org.openwms.web.flex.client.util.ValidationUtil;
-            import org.openwms.web.flex.client.view.dialogs.AssignRoleDialog;
-            import org.openwms.web.flex.client.view.dialogs.AssignUsersDialog;
             import org.openwms.web.flex.client.view.dialogs.FileUploadDialog;
             import org.openwms.web.flex.client.view.dialogs.ChangePasswordDialog;
 
@@ -100,7 +99,6 @@
                     dispatchEvent(new RoleEvent(RoleEvent.LOAD_ALL_ROLES));
                 }
                 userImg.filters = [filter];
-                setFormElements(!(modelLocator.selectedUser == null));
             }
             
             [Observer("USER.SELECTION_CHANGED")]
@@ -112,7 +110,6 @@
              */
             public function onUserSelectionChanged(event : UserEvent = null) : void {
                 userImg.filters = [filter];
-                setFormElements(!(modelLocator.selectedUser == null));
                 if (modelLocator.selectedUser != null) {
                     if (modelLocator.selectedUser.userDetails.sex == null) {
                         this.sexRb.selection = null;
@@ -127,7 +124,6 @@
              * Tide event observers : USER.USER_ADDED
              */
             public function onUserAdded(event : Event) : void {
-                setFormElements();
             }
 
             /**
@@ -214,48 +210,25 @@
                     }
                 );
             }
-            /**
-             * Assign a Role to the selected User.
-             */
-            private function addRole() : void {
-                if (!checkUserSelected(modelLocator.selectedUser)) {
-                    return;
+            
+            private function removeExpirationDate() : void {
+                if (modelLocator.selectedUser != null) {
+                    var alert : Alert = Alert.show("Remove expiration date?","Confirmation", Alert.YES | Alert.NO);
+                    alert.addEventListener(CloseEvent.CLOSE, onClose);
                 }
-                var pop : AssignRoleDialog = AssignRoleDialog(PopUpManager.createPopUp(this, AssignRoleDialog, true));
-                var rolesToAssign : ArrayCollection = new ArrayCollection(modelLocator.allRoles.toArray());
-                for each (var role : Role in modelLocator.selectedUser.roles) {
-                    rolesToAssign.removeItemAt(rolesToAssign.getItemIndex(role));
-                }
-                pop.items = rolesToAssign;
-                PopUpManager.centerPopUp(pop);
-            }
-            /**
-             * Remove a Role from the User's list of roles.
-             */
-            private function removeRole() : void {
-                
             }
             
-            // --------------------- helpers ---------------------
-
-            private function setFormElements(value : Boolean = true) : void {
-                /*
-                deleteUserBtn.enabled = value;
-                saveUserBtn.enabled = value;
-                changePasswordBtn.enabled = value;
-                changePictureBtn.enabled = value;
-                usernameTi.editable = value;
-                fullnameTi.editable = value;
-                descriptionTi.editable = value;
-                phoneNoTi.editable = value;
-                skypeNameTi.editable = value;
-                departmentTi.editable = value;
-                officeTi.editable = value;
-                tiComment.editable = value;
-                enabledChk.enabled = value;
-                lockedChk.enabled = value;
-                */
+            private function onClose(event : CloseEvent) : void {
+                switch (event.detail) {
+                    case Alert.YES:
+                        modelLocator.selectedUser.expirationDate = null;
+                        break;
+                    case Alert.NO:
+                        break;
+                }
             }
+
+            // --------------------- helpers ---------------------
 
             private function checkExpirationDate() : Boolean {
                 if (expirationDateDt == null || expirationDateDt.selectedDate == null) {
@@ -366,7 +339,7 @@
                 </mx:FormItem>
                 <mx:FormItem label="{I18nUtil.trans(I18nUtil.APP_MAIN, 'entity_user_sex')}" width="100%">
                     <mx:Tile width="250" direction="vertical">
-                        <mx:RadioButtonGroup id="sexRb" selectedValue="{modelLocator.selectedUser.userDetails.sex}" enabled="{modelLocator.selectedUser}"/>
+                        <mx:RadioButtonGroup id="sexRb" selectedValue="{modelLocator.selectedUser.userDetails.sex}" enabled="{modelLocator.selectedUser != null}"/>
                         <mx:RadioButton value="{UserDetails$SEX.MALE}" label="{I18nUtil.trans(I18nUtil.APP_MAIN, 'entity_user_sex_male')}" enabled="{modelLocator.selectedUser != null}" group="{sexRb}"/>
                         <mx:RadioButton value="{UserDetails$SEX.FEMALE}" label="{I18nUtil.trans(I18nUtil.APP_MAIN, 'entity_user_sex_female')}" enabled="{modelLocator.selectedUser != null}" group="{sexRb}"/>
                     </mx:Tile>
@@ -380,17 +353,11 @@
                 <mx:FormItem required="false" width="100%">
                     <mx:CheckBox id="lockedChk" label="{I18nUtil.trans(I18nUtil.APP_MAIN, 'entity_user_locked')}" enabled="{modelLocator.selectedUser != null}" selected="{modelLocator.selectedUser.locked}"/>
                 </mx:FormItem>
-                <mx:FormItem label="{I18nUtil.trans(I18nUtil.APP_MAIN, 'entity_user_expirationDate')}" required="false" width="100%">
-                    <mx:DateField id="expirationDateDt" enabled="{modelLocator.selectedUser != null}" selectableRange="{{rangeStart : new Date()}}" formatString="{ModelLocator.SIMPLE_DT_FORMAT}" width="250" selectedDate="{modelLocator.selectedUser == null ? null : modelLocator.selectedUser.expirationDate}"/>
+                <mx:FormItem label="{I18nUtil.trans(I18nUtil.APP_MAIN, 'entity_user_expirationDate')}" width="100%">
+                    <mx:DateField id="expirationDateDt" doubleClickEnabled="{true}" doubleClick="removeExpirationDate()" enabled="{modelLocator.selectedUser != null}" selectableRange="{{rangeStart : new Date()}}" formatString="{ModelLocator.SIMPLE_DT_FORMAT}" selectedDate="{modelLocator.selectedUser == null ? null : modelLocator.selectedUser.expirationDate}" width="250" />
                 </mx:FormItem>
                 <mx:FormItem label="{I18nUtil.trans(I18nUtil.APP_MAIN, 'entity_user_roles')}" required="false" width="100%">
-                    <mx:HBox width="240" horizontalGap="0">
-                        <mx:List labelField="name" dataProvider="{modelLocator.selectedUser.roles}" width="100%" height="63" alternatingItemColors="[#EEEEEE, #FFFFFF]"/>
-                        <mx:VBox height="100%" width="16" verticalAlign="middle">
-                            <mx:Image click="addRole();" enabled="{modelLocator.allRoles.length > 0}" height="16" width="16" buttonMode="true" mouseChildren="false" source="@Embed(source='assets/images/icons/plus.png')"/>
-                            <mx:Image click="removeRole();" enabled="{modelLocator.allRoles.length > 0}" height="16" width="16" buttonMode="true" mouseChildren="false" source="@Embed(source='assets/images/icons/minus.png')"/>
-                        </mx:VBox>
-                    </mx:HBox>                    
+                    <mx:List id="usersRolesLst" labelField="name" dataProvider="{modelLocator.selectedUser.roles}" width="250" height="68" alternatingItemColors="[#EEEEEE, #FFFFFF]"/>
                 </mx:FormItem>
             </mx:Form>
         </mx:Canvas>

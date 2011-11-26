@@ -22,7 +22,7 @@
  */
 -->
 <mx:Panel xmlns:mx="http://www.adobe.com/2006/mxml" creationComplete="onShow();" show="onShow();" 
- title="{I18nUtil.trans(I18nUtil.APP_MAIN, 'txt_delete_roles_title')}">
+ title="{I18nUtil.trans(I18nUtil.APP_MAIN, 'txt_delete_roles_title')}" width="568">
 
     <mx:Metadata>
         [Name("confirmDeleteRoleDialog")]
@@ -49,10 +49,12 @@
             /**
              * Message to display.
              */
-            public var messageText : String = I18nUtil.trans(I18nUtil.APP_MAIN, "txt_delete_roles_confirmation");
-            private var entityName : String = I18nUtil.trans(I18nUtil.APP_MAIN, "entity_role");
+            public var messageText : String;
+            private var entityName : String;
             
             protected function onShow() : void {
+                messageText = I18nUtil.trans(I18nUtil.APP_MAIN, "txt_delete_roles_confirmation");
+                entityName = I18nUtil.trans(I18nUtil.APP_MAIN, "entity_role");
                 deleteBtn.setFocus();
                 this.addEventListener(KeyboardEvent.KEY_DOWN, keyEventHandler);
                 PopUpManager.centerPopUp(this);
@@ -87,7 +89,7 @@
     </mx:Script>
     <mx:Canvas width="100%">
         <mx:Label id="messageTxt" text="{messageText}" fontSize="20" textAlign="center" y="10"  width="100%"/>
-        <mx:List id="deleteLst" labelFunction="formatFunction" dataProvider="{items}" enabled="true" alternatingItemColors="[#B7BABC, #FFFFFF]" y="53" x="10"  width="358" height="112" />
+        <mx:List id="deleteLst" labelFunction="formatFunction" dataProvider="{items}" enabled="true" alternatingItemColors="[#B7BABC, #FFFFFF]"  y="53" height="112" width="528" textAlign="left" x="10"/>            
         <mx:HBox horizontalAlign="center" x="0" y="173" width="100%">
             <mx:Button id="deleteBtn" label="{I18nUtil.trans(I18nUtil.APP_MAIN, 'btn_delete')}" click="accept(event)" fontSize="12"/>
             <mx:Button id="cancelBtn" label="{I18nUtil.trans(I18nUtil.APP_MAIN, 'btn_cancel')}" click="cancel(event)" fontSize="12"/>
