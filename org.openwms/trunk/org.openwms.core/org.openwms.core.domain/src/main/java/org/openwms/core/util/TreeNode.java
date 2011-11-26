@@ -74,7 +74,7 @@ public interface TreeNode<T> {
      * XML Name Production</a> production.</li>
      * </ol>
      * 
-     * @return {@link Iterator} of {@link Map.Entry} instances containing
+     * @return {@link Iterator} over Map.Entry instances containing
      *         {@link TreeNode} as values and their identifiers as keys
      * 
      */
