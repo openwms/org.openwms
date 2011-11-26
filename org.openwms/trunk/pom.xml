@@ -761,27 +761,26 @@
                             <stylesheetfile>${basedir}/src/site/css/openwms-jdoc.css</stylesheetfile>
                             <verbose>true</verbose>
                             <aggregate>true</aggregate>
-                            <doclet>org.umlgraph.doclet.UmlGraph</doclet>
-                            <!-- 
                             <doclet>gr.spinellis.umlgraph.doclet.UmlGraphDoc</doclet>
                             <docletArtifact>
                                 <groupId>gr.spinellis</groupId>
                                 <artifactId>UmlGraph</artifactId>
                                 <version>4.6</version>
                             </docletArtifact>
-                             -->
-                            <docletArtifact>
-                                <groupId>org.umlgraph</groupId>
-                                <artifactId>doclet</artifactId>
-                                <version>5.1</version>
-                            </docletArtifact>
                             <show>private</show>
                             <additionalparam>
+                                -inferrel -inferdep -quiet -hide java.* -collpackages java.util.*
+                                -postfixpackage -nodefontname Tahoma -nodefontsize 9 -nodefontpackagesize 7 -outputencoding UTF-8
+                                -link
+                                http://static.springsource.org/spring/docs/${spring.version}/javadoc-api
+                            </additionalparam>
+                            <!-- additionalparam>
                                 -inferrel -inferdep -quiet -hide java.* -collpackages java.util.*
                                 -qualify
                                 -postfixpackage -nodefontname Tahoma -nodefontsize 9 -nodefontpackagesize 7
                                 -link
-                                http://static.springsource.org/spring/docs/${spring.version}/javadoc-api</additionalparam>
+                                http://static.springsource.org/spring/docs/${spring.version}/javadoc-api
+                            </additionalparam-->
                         </configuration>
                     </reportSet>
                 </reportSets>
