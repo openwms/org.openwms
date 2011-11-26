@@ -762,11 +762,17 @@
                             <verbose>true</verbose>
                             <aggregate>true</aggregate>
                             <doclet>gr.spinellis.umlgraph.doclet.UmlGraphDoc</doclet>
+                            <!-- 
                             <docletArtifact>
                                 <groupId>gr.spinellis</groupId>
                                 <artifactId>UmlGraph</artifactId>
-                                <!-- version>4.6</version-->
-                                <version>5.4</version>
+                                <version>4.6</version>
+                            </docletArtifact>
+                             -->
+                            <docletArtifact>
+                                <groupId>org.umlgraph</groupId>
+                                <artifactId>doclet</artifactId>
+                                <version>5.1</version>
                             </docletArtifact>
                             <show>private</show>
                             <additionalparam>
