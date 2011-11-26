@@ -21,16 +21,17 @@
 package org.openwms.web.flex.client.model {
 
     import flash.utils.Dictionary;
-
+    
     import mx.collections.ArrayCollection;
     import mx.events.CollectionEvent;
     import mx.formatters.DateFormatter;
-
+    
     import org.openwms.core.domain.Module;
+    import org.openwms.core.domain.system.usermanagement.Role;
     import org.openwms.core.domain.system.usermanagement.User;
+    import org.openwms.web.flex.client.event.ApplicationEvent;
     import org.openwms.web.flex.client.event.SwitchScreenEvent;
     import org.openwms.web.flex.client.event.UserEvent;
-    import org.openwms.web.flex.client.event.ApplicationEvent;
 
     [Name("modelLocator")]
     [ManagedEvent(name="USER.COLLECTION_CHANGED")]
@@ -114,7 +115,10 @@ package org.openwms.web.flex.client.model {
          * The current logged in User.
          */
         public var loggedInUser : User = null;
-
+        /**
+         * The current selected Role in the RoleManagement view.
+         */
+        public var selectedRole : Role = null;
         // --------------------------------------------------------------------
         // Module Management
         // --------------------------------------------------------------------
