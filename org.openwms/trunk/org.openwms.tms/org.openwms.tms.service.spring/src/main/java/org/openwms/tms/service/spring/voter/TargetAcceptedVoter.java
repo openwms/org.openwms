@@ -42,7 +42,7 @@ public class TargetAcceptedVoter implements DecisionVoter<RedirectVote> {
     /**
      * {@inheritDoc} Simple check for blocked infeed.
      * 
-     * @see org.openwms.tms.service.voter.DecisionVoter#voteFor(org.openwms.tms.service.voter.Vote)
+     * @see org.openwms.core.service.voter.DecisionVoter#voteFor(org.openwms.core.service.voter.Vote)
      */
     @Override
     public void voteFor(RedirectVote vote) throws DeniedException {

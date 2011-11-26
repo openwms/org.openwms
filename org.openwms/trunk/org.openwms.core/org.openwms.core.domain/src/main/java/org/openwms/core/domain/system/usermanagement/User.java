@@ -136,7 +136,7 @@ public class User extends AbstractEntity implements DomainObject<Long> {
 
     /**
      * <code>true</code> if the <code>User</code> is authenticated by an
-     * external system, otherwise <code>false</code>. Default {@value} .
+     * external system, otherwise <code>false</code>.
      */
     @Column(name = "EXTERN")
     private boolean extern = false;
@@ -151,8 +151,7 @@ public class User extends AbstractEntity implements DomainObject<Long> {
     /**
      * <code>true</code> if this <code>User</code> is locked and has not the
      * permission to login anymore. This field is set by the backend
-     * application, e.g. when the expirationDate of the account expires. Default
-     * * {@value} .
+     * application, e.g. when the expirationDate of the account expires.
      */
     @Column(name = "LOCKED")
     private boolean locked = false;
@@ -171,8 +170,7 @@ public class User extends AbstractEntity implements DomainObject<Long> {
 
     /**
      * <code>true</code> if the <code>User</code> is enabled. This field can be
-     * managed by the UI application to lock an User manually. Default {@value}
-     * .
+     * managed by the UI application to lock an User manually.
      */
     @Column(name = "C_ENABLED")
     private boolean enabled = true;
@@ -456,7 +454,7 @@ public class User extends AbstractEntity implements DomainObject<Long> {
             Collections.sort(passwords, new Comparator<UserPassword>() {
                 @Override
                 public int compare(UserPassword o1, UserPassword o2) {
-                    return o1.getPasswordChanged().compareTo(o2.getPasswordChanged());
+                    return o2.getPasswordChanged().compareTo(o1.getPasswordChanged());
                 }
             });
             if (logger.isDebugEnabled()) {
@@ -464,7 +462,7 @@ public class User extends AbstractEntity implements DomainObject<Long> {
             }
             UserPassword pw = passwords.get(passwords.size() - 1);
             pw.setUser(null);
-            passwords.remove(passwords.get(0));
+            passwords.remove(pw);
         }
     }
 

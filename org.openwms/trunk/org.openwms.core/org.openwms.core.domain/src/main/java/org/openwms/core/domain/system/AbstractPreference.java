@@ -95,14 +95,14 @@ public abstract class AbstractPreference extends AbstractEntity implements Domai
     private String description;
 
     /**
-     * Minimum value. Default {@value} .
+     * Minimum value.
      */
     @XmlAttribute(name = "minimum")
     @Column(name = "C_MINIMUM")
     private int minimum = 0;
 
     /**
-     * Maximum value. Default {@value} .
+     * Maximum value.
      */
     @XmlAttribute(name = "maximum")
     @Column(name = "C_MAXIMUM")
@@ -110,7 +110,6 @@ public abstract class AbstractPreference extends AbstractEntity implements Domai
 
     /**
      * Flag to remember if the preference was originally imported from a file.
-     * Default {@value} .
      */
     @XmlTransient
     @Column(name = "C_FROM_FILE")

@@ -143,7 +143,7 @@ public class TransportUnit extends AbstractEntity implements DomainObject<Long> 
     private BigDecimal weight = BigDecimal.ZERO;
 
     /**
-     * State of the <code>TransportUnit</code>. Default: {@value} .
+     * State of the <code>TransportUnit</code>.
      */
     @Column(name = "STATE")
     @Enumerated(EnumType.STRING)

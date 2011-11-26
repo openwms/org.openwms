@@ -46,7 +46,7 @@ import org.springframework.transaction.annotation.Transactional;
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  * @version $Revision$
  * @since 0.1
- * @see org.openwms.core.integration.system.usermanagement.RoleDao;
+ * @see org.openwms.core.integration.system.usermanagement.RoleDao
  */
 @Transactional
 @Service(RoleServiceImpl.COMPONENT_NAME)

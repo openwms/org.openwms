@@ -33,7 +33,7 @@ import org.openwms.core.domain.Module;
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  * @version $Revision$
  * @since 0.1
- * @see import org.openwms.core.domain.Module
+ * @see org.openwms.core.domain.Module
  */
 public interface ModuleService {
 

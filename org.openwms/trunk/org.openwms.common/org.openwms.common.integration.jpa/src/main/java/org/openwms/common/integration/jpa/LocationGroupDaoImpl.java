@@ -62,7 +62,6 @@ public class LocationGroupDaoImpl extends AbstractGenericJpaDao<LocationGroup, L
      * 
      * @param entity
      *            LocationGroup to be updated
-     * @see org.openwms.core.integration.jpa.AbstractGenericJpaDao#beforeUpdate(java.io.Serializable)
      */
     @Override
     protected void beforeUpdate(LocationGroup entity) {

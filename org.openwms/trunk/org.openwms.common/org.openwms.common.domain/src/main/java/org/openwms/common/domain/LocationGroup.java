@@ -92,7 +92,7 @@ public class LocationGroup extends AbstractEntity implements DomainObject<Long>,
 
     /**
      * Is the <code>LocationGroup</code> included in the calculation of
-     * {@link org.openwms.common.domain.TransportUnit}s? Default: {@value}
+     * {@link org.openwms.common.domain.TransportUnit}s?
      * <p>
      * <code>true</code> : Location is included in the calculation of
      * {@link org.openwms.common.domain.TransportUnit}s.<br>
@@ -105,13 +105,12 @@ public class LocationGroup extends AbstractEntity implements DomainObject<Long>,
 
     /**
      * Number of {@link Location}s belonging to the <code>LocationGroup</code>.
-     * Default: {@value} .
      */
     @Column(name = "NO_LOCATIONS")
     private int noLocations = 0;
 
     /**
-     * State of infeed. Default: {@value} .
+     * State of infeed.
      */
     @Column(name = "GROUP_STATE_IN")
     private LocationGroupState groupStateIn = LocationGroupState.AVAILABLE;
@@ -124,7 +123,7 @@ public class LocationGroup extends AbstractEntity implements DomainObject<Long>,
     private LocationGroup stateInLocker;
 
     /**
-     * State of outfeed. Default: {@value} .
+     * State of outfeed.
      */
     @Column(name = "GROUP_STATE_OUT")
     private LocationGroupState groupStateOut = LocationGroupState.AVAILABLE;
@@ -137,8 +136,7 @@ public class LocationGroup extends AbstractEntity implements DomainObject<Long>,
     private LocationGroup stateOutLocker;
 
     /**
-     * Maximum fill level of the <code>LocationGroup</code>. Default: * {@value}
-     * .
+     * Maximum fill level of the <code>LocationGroup</code>.
      */
     @Column(name = "MAX_FILL_LEVEL")
     private float maxFillLevel = 0;

@@ -67,7 +67,7 @@ public class I18n extends AbstractEntity implements DomainObject<Long> {
     private String key;
     /**
      * The name of the owning <code>Module</code> to which this translation set
-     * belongs to. Default is {@value} .
+     * belongs to.
      */
     @Column(name = "C_MODULE_NAME")
     private String moduleName = "CORE";

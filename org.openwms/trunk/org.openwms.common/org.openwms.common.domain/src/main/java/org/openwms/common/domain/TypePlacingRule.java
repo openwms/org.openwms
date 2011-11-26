@@ -79,7 +79,7 @@ public class TypePlacingRule extends AbstractEntity implements DomainObject<Long
      * To forbid a {@link TransportUnitType} on a certain {@link LocationType}
      * the privilegeLevel must be set to -1.
      * </p>
-     * (not-null) Default: {@value} .
+     * (not-null)
      */
     @Column(name = "PRIVILEGE_LEVEL", nullable = false)
     private int privilegeLevel = 0;

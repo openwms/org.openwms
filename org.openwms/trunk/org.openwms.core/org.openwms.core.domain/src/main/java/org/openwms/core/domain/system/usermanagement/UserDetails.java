@@ -51,7 +51,7 @@ public class UserDetails implements ImageProvider, Serializable {
      * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
      * @version $Revision$
      * @since 0.1
-     * @see org.openwms.common.domain.system.usermanagement.User
+     * @see org.openwms.core.domain.system.usermanagement.User
      */
     public static enum SEX {
         /**

@@ -42,7 +42,7 @@ public interface UserService {
      * Change the current {@link User}s password.
      * 
      * @param userPassword
-     *            The {@link UserPassword) to change
+     *            The {@link UserPassword} to change
      */
     void changeUserPassword(UserPassword userPassword);
 

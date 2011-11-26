@@ -84,7 +84,7 @@ public abstract class AbstractEntity implements Serializable {
      * 
      * Compare the uid property field.
      * 
-     * @see java.lang.Object#equals()
+     * @see java.lang.Object#equals(Object)
      */
     @Override
     public boolean equals(Object o) {

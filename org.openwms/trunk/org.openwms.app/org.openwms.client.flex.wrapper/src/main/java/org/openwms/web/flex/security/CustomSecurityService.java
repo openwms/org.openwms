@@ -78,6 +78,9 @@ public class CustomSecurityService extends AbstractSecurityService {
     private Method getRequest = null;
     private Method getResponse = null;
 
+    /**
+     * Create a new CustomSecurityService.
+     */
     public CustomSecurityService() {
         try {
             getRequest = HttpRequestResponseHolder.class.getDeclaredMethod("getRequest");
@@ -174,7 +177,7 @@ public class CustomSecurityService extends AbstractSecurityService {
      * 
      * @param ctx
      *            Springs ApplicationContext
-     * @param managerBeanName
+     * @param authenticationManagerBeanName
      *            The beanName defined for the AuthenticationManager in the
      *            Spring configuration
      */
@@ -242,8 +245,7 @@ public class CustomSecurityService extends AbstractSecurityService {
         } catch (InvocationTargetException e) {
             handleAuthorizationExceptions(e);
             throw e;
-        }
-        finally {
+        } finally {
             if (graniteContext.getRequest().getAttribute(FILTER_APPLIED) == null) {
                 SecurityContext contextAfterChainExecution = SecurityContextHolder.getContext();
                 SecurityContextHolder.clearContext();
@@ -272,9 +274,6 @@ public class CustomSecurityService extends AbstractSecurityService {
         SecurityContextHolder.clearContext();
     }
 
-    /**
-     * {@inheritDoc}
-     */
     protected boolean isUserInRole(Authentication authentication, String role) {
         for (GrantedAuthority ga : authentication.getAuthorities()) {
             if (ga.getAuthority().matches(role)) return true;
@@ -282,16 +281,10 @@ public class CustomSecurityService extends AbstractSecurityService {
         return false;
     }
 
-    /**
-     * {@inheritDoc}
-     */
     protected boolean isAuthenticated(Authentication authentication) {
         return authentication != null && authentication.isAuthenticated();
     }
 
-    /**
-     * {@inheritDoc}
-     */
     protected boolean userCanAccessService(AbstractSecurityContext context, Authentication authentication) {
         for (String role : context.getDestination().getRoles()) {
             if (isUserInRole(authentication, role)) {
@@ -303,9 +296,6 @@ public class CustomSecurityService extends AbstractSecurityService {
         return false;
     }
 
-    /**
-     * {@inheritDoc}
-     */
     protected void handleAuthorizationExceptions(InvocationTargetException e) {
         for (Throwable t = e; t != null; t = t.getCause()) {
             // Don't create a dependency to javax.ejb in SecurityService...

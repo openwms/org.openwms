@@ -43,7 +43,7 @@ public class GenericJpaDaoImpl<T extends AbstractEntity, ID extends Serializable
 
     /**
      * Concatenates the simple class name of the persistent class with the
-     * default prefix {@link org.openwms.core.integration.FIND_ALL}.
+     * default prefix {@link GenericDao#FIND_ALL}.
      * 
      * @return Name of the query
      * @see org.openwms.core.integration.jpa.AbstractGenericJpaDao#getFindAllQuery()
@@ -55,7 +55,7 @@ public class GenericJpaDaoImpl<T extends AbstractEntity, ID extends Serializable
 
     /**
      * Concatenates the simple class name of the persistent class with the
-     * default prefix {@link org.openwms.core.integration.FIND_BY_ID}.
+     * default prefix {@link GenericDao#FIND_BY_ID}.
      * 
      * @return Name of the query
      * @see org.openwms.core.integration.jpa.AbstractGenericJpaDao#getFindByUniqueIdQuery()
