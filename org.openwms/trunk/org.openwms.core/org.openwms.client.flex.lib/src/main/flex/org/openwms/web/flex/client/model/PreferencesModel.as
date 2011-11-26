@@ -129,6 +129,7 @@ package org.openwms.web.flex.client.model {
             } else if (preference is UserPreference) {
                 userPrefs[(preference as UserPreference).createCKey()] = preference;
             }
+            dispatchEvent(new PropertyEvent(PropertyEvent.PREFERENCE_MODEL_CHANGED));
         }
 
         /**
