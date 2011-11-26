@@ -99,6 +99,18 @@
                 component.setSelection(0, component.text.length);
             }
             
+            [Observer("PREFERENCE.MODEL_CHANGED")]
+            /**
+             * After the model has changed, reset the key field.
+             * 
+             * @param event Unused
+             */
+            public function onModelChanged(event : PropertyEvent) : void {
+                if (prefs.selected == null) {
+                    this.currentState = "baseState";
+                }
+            }            
+            
             [Observer("PREFERENCE.SELECTION_CHANGED")]
             /**
              * Whenever a new Preference was selected assign the key appropriately and  
@@ -145,6 +157,9 @@
     </mx:Script>
 
     <mx:states>
+        <mx:State name="baseState">
+            <mx:SetProperty target="{keyTxt}" name="text" value="" />
+        </mx:State>
         <mx:State name="appPrefState">
             <mx:AddChild>
                 <mx:TextInput id="ownerATxt" x="178" y="151" width="230" enabled="false" />                

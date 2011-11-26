@@ -69,24 +69,23 @@
 	        public var prefs : PreferencesModel;
             
             private function onCreate() : void {
-                typeCmb.setFocus();
+                keyTxt.setFocus();
                 this.addEventListener(KeyboardEvent.KEY_DOWN, keyEventHandler);
                 PopUpManager.centerPopUp(this);
             }
 
             private function create(event : Event) : void {
+                keyTxt.setFocus();
+       	        try {
+                    var owner : String = getOwner();
+                } catch (err : Error) {
+                    Alert.show(I18nUtil.trans(I18nUtil.APP_MAIN, "txt_create_preference_information"), I18nUtil.trans(I18nUtil.APP_MAIN, "txt_title_information"));
+                    return;
+                }
             	if (stringVal.validate().type == ValidationResultEvent.VALID &&
             	    ValidationUtil.validateAndFormat(floatValueTxt, numberVal) &&
             	    ValidationUtil.validateAndFormat(minimumTxt, numberVal) &&
             	    ValidationUtil.validateAndFormat(maximumTxt, numberVal)) {
-            	        trace("Type:"+typeCmb.selectedItem.type);
-            	        trace("Key:"+keyTxt.text);
-            	        trace("Description:"+descriptionTxt.text);
-            	        trace("Owner:"+getOwner());
-            	        trace("Value:"+valueTxt.text);
-            	        trace("FloatValue:"+NumberUtil.strToNumber(floatValueTxt.text, NaN));
-            	        trace("Minimum:"+NumberUtil.strToInt(minimumTxt.text, -1));
-            	        trace("Maximum:"+NumberUtil.strToInt(maximumTxt.text, -1));
                         var newPref : AbstractPreference = PreferencesModel.createPreference(typeCmb.selectedItem.type as AbstractPreference,
                               keyTxt.text, descriptionTxt.text, getOwner(), valueTxt.text, NumberUtil.strToNumber(floatValueTxt.text, NaN),
                               NumberUtil.strToInt(minimumTxt.text, 0), NumberUtil.strToInt(maximumTxt.text, 0));
@@ -95,20 +94,23 @@
                         dispatchEvent(e);
                         closeDialog();
                 }
-                keyTxt.setFocus();
             }
             
             private function getOwner() : String {
+                var result : String;
                 if (this.currentState == "appPrefState") {
-                    return ownerATxt.text;
+                    result = I18nUtil.trans(I18nUtil.APP_ENTITY, 'entity_preference_Application')
                 } else if (this.currentState == "modPrefState") {
-                    return ownerMTxt.text;
+                    result = ownerMTxt.text;
                 } else if (this.currentState == "rolePrefState") {
-                    return (ownerRCmb.selectedItem as Role).name;
+                    result = ownerRCmb.selectedItem == null ? "" : (ownerRCmb.selectedItem as Role).name;
                 } else if (this.currentState == "userPrefState") {
-                    return (ownerUCmb.selectedItem as User).username;
+                    result = ownerUCmb.selectedItem ==  null ? "" : (ownerUCmb.selectedItem as User).username;
                 }
-                return "";
+                if (result == "") {
+                    throw new Error("No value chosen");
+                }
+                return result;
             }
             
             private function cancel(event : Event) : void {
@@ -182,53 +184,52 @@
     <mx:states>
         <mx:State name="appPrefState">
             <mx:AddChild>
-                <mx:TextInput id="ownerATxt" x="270" y="171" width="300" enabled="false" fontSize="22"/>                
+                <mx:TextInput id="ownerATxt" fontSize="22" tabIndex="3" x="270" y="171" width="300" enabled="false" />                
             </mx:AddChild>
         </mx:State>
         <mx:State name="modPrefState">
             <mx:AddChild>
-                <mx:TextInput id="ownerMTxt" x="270" y="171" width="300" fontSize="22"/>                
+                <mx:TextInput id="ownerMTxt" fontSize="22" tabIndex="3" x="270" y="171" width="300" />                
             </mx:AddChild>
         </mx:State>
         <mx:State name="rolePrefState">
             <mx:AddChild>
-                <mx:ComboBox id="ownerRCmb" labelField="name" x="270" y="171" width="300" fontSize="22"/>
+                <mx:ComboBox id="ownerRCmb" fontSize="22" tabIndex="3" labelField="name" x="270" y="171" width="300" />
             </mx:AddChild>
         </mx:State>
         <mx:State name="userPrefState">
             <mx:AddChild>
-                <mx:ComboBox id="ownerUCmb" labelFunction="{User.formatWithFullnameUsername}" x="270" y="171" width="300" fontSize="22"/>                
+                <mx:ComboBox id="ownerUCmb" fontSize="22" tabIndex="3" labelFunction="{User.formatWithFullnameUsername}" x="270" y="171" width="300" />                
             </mx:AddChild>
         </mx:State>
     </mx:states>
     
 	<mx:Label x="10" y="10" text="{I18nUtil.trans(I18nUtil.APP_ENTITY, 'entity_preference_type')}" fontSize="22" textAlign="right" id="typeLbl"/>
-	<mx:ComboBox id="typeCmb" dataProvider="{prefs.types}" labelFunction="{prefs.formatType}" change="onTypeChange(event)" x="270" y="7" fontSize="22" width="300" />
+	<mx:ComboBox id="typeCmb" dataProvider="{prefs.types}" labelFunction="{prefs.formatType}" change="onTypeChange(event)" tabIndex="0" x="270" y="7" fontSize="22" width="300" />
 
-	<mx:Label x="10" y="51" text="{I18nUtil.trans(I18nUtil.APP_ENTITY, 'entity_preference_key')}" fontSize="22" textAlign="right" id="keyLbl"/>
-    <mx:TextInput id="keyTxt" width="300" fontSize="22" x="270" y="49" />
+	<mx:Label id="keyLbl" text="{I18nUtil.trans(I18nUtil.APP_ENTITY, 'entity_preference_key')}" fontSize="22" textAlign="right" x="10" y="51"/>
+    <mx:TextInput id="keyTxt" fontSize="22" tabIndex="1" width="300" x="270" y="49" />
 
 	<mx:Label x="10" y="92" text="{I18nUtil.trans(I18nUtil.APP_ENTITY, 'entity_preference_description')}" fontSize="22" textAlign="right" id="descriptionLbl"/>
-    <mx:TextArea id="descriptionTxt" x="270" y="91" width="300" height="73" fontSize="22" />
+    <mx:TextArea id="descriptionTxt" fontSize="22" tabIndex="2" width="300" height="73" x="270" y="91" />
 
-	<mx:Label x="10" y="174" text="{I18nUtil.trans(I18nUtil.APP_ENTITY, 'entity_preference_owner')}" fontSize="22" textAlign="right" id="ownerLbl"/>
-    <!--mx:ComboBox id="ownerCmb" width="300" fontSize="22" x="270" y="171" /-->
+	<mx:Label id="ownerLbl" text="{I18nUtil.trans(I18nUtil.APP_ENTITY, 'entity_preference_owner')}" fontSize="22" textAlign="right" x="10" y="174" />
 
 	<mx:Label x="10" y="218" text="{I18nUtil.trans(I18nUtil.APP_ENTITY, 'entity_preference_value')}" fontSize="22" textAlign="right" id="valueLbl"/>
-    <mx:TextInput id="valueTxt" width="300" fontSize="22" x="270" y="216" />
+    <mx:TextInput id="valueTxt" fontSize="22" tabIndex="4" width="300" x="270" y="216" />
 
 	<mx:Label x="10" y="259" text="{I18nUtil.trans(I18nUtil.APP_ENTITY, 'entity_preference_floatValue')}" fontSize="22" textAlign="right" id="floatValueLbl"/>
-    <mx:TextInput id="floatValueTxt" restrict="0-9\\.\\-" maxChars="10" width="200" fontSize="22" x="270" y="257" />
+    <mx:TextInput id="floatValueTxt" restrict="0-9\\.\\-" maxChars="10" fontSize="22" tabIndex="5" width="200" x="270" y="257" />
 
 	<mx:Label x="10" y="300" text="{I18nUtil.trans(I18nUtil.APP_ENTITY, 'entity_preference_minimum')}" fontSize="22" textAlign="right" id="minimumLbl"/>
-    <mx:TextInput id="minimumTxt" restrict="0-9\\-" maxChars="10" width="200" fontSize="22" x="270" y="298" />
+    <mx:TextInput id="minimumTxt" restrict="0-9\\-" maxChars="10" fontSize="22" tabIndex="6" width="200" x="270" y="298" />
 
 	<mx:Label x="10" y="341" text="{I18nUtil.trans(I18nUtil.APP_ENTITY, 'entity_preference_maximum')}" fontSize="22" textAlign="right" id="maximumLbl"/>
-    <mx:TextInput id="maximumTxt" restrict="0-9\\-" maxChars="10" width="200" fontSize="22" x="270" y="339" />
+    <mx:TextInput id="maximumTxt" restrict="0-9\\-" maxChars="10" fontSize="22" tabIndex="7" width="200" x="270" y="339" />
 
 	<mx:HBox x="0" y="384" width="100%" horizontalAlign="center">
-		<mx:Button id="createBtn" label="{I18nUtil.trans(I18nUtil.APP_MAIN, 'btn_create')}" fontSize="12" click="create(event)"/>
-		<mx:Button id="cancelBtn" label="{I18nUtil.trans(I18nUtil.APP_MAIN, 'btn_cancel')}" fontSize="12" click="cancel(event)"/>
+		<mx:Button id="createBtn" label="{I18nUtil.trans(I18nUtil.APP_MAIN, 'btn_create')}" fontSize="12" tabIndex="8" click="create(event)"/>
+		<mx:Button id="cancelBtn" label="{I18nUtil.trans(I18nUtil.APP_MAIN, 'btn_cancel')}" fontSize="12" tabIndex="9" click="cancel(event)"/>
 	</mx:HBox>
 	
 </mx:TitleWindow>
