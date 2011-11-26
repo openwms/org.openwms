@@ -209,15 +209,14 @@ public class User extends AbstractEntity implements DomainObject<Long> {
      * 
      * @see javax.persistence.FetchType#EAGER
      */
-    @ManyToMany(mappedBy = "users", fetch = FetchType.EAGER, cascade = { CascadeType.ALL })
+    @ManyToMany(mappedBy = "users", fetch = FetchType.EAGER, cascade = { CascadeType.MERGE, CascadeType.REFRESH })
     private List<Role> roles = new ArrayList<Role>();
 
     /**
      * Password history of the <code>User</code>.
      */
-    @OneToMany(mappedBy = "user", cascade = { CascadeType.ALL })
+    @OneToMany(mappedBy = "user", cascade = { CascadeType.MERGE, CascadeType.REMOVE, CascadeType.REFRESH })
     @JoinTable(name = "COR_USER_PASSWORD_JOIN", joinColumns = @JoinColumn(name = "USER_ID"), inverseJoinColumns = @JoinColumn(name = "PASSWORD_ID"))
-    // @JoinColumn(name = "C_OWNER", referencedColumnName = "C_USERNAME")
     private List<UserPassword> passwords = new ArrayList<UserPassword>();
 
     /**
@@ -226,10 +225,7 @@ public class User extends AbstractEntity implements DomainObject<Long> {
      * 
      * @see javax.persistence.FetchType
      */
-    @OneToMany(fetch = FetchType.EAGER, cascade = { CascadeType.ALL })
-    // @JoinTable(name = "COR_USER_PREFERENCE_JOIN", joinColumns =
-    // @JoinColumn(name = "USER_ID"), inverseJoinColumns = @JoinColumn(name =
-    // "ID"))
+    @OneToMany(fetch = FetchType.EAGER, cascade = { CascadeType.MERGE, CascadeType.REMOVE, CascadeType.REFRESH })
     @JoinColumn(name = "C_OWNER", referencedColumnName = "USERNAME")
     private Set<UserPreference> preferences = new HashSet<UserPreference>();
 
