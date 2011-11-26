@@ -761,8 +761,9 @@
                             <stylesheetfile>${basedir}/src/site/css/openwms-jdoc.css</stylesheetfile>
                             <verbose>true</verbose>
                             <aggregate>true</aggregate>
-                            <doclet>gr.spinellis.umlgraph.doclet.UmlGraphDoc</doclet>
+                            <doclet>org.umlgraph.doclet.UmlGraph</doclet>
                             <!-- 
+                            <doclet>gr.spinellis.umlgraph.doclet.UmlGraphDoc</doclet>
                             <docletArtifact>
                                 <groupId>gr.spinellis</groupId>
                                 <artifactId>UmlGraph</artifactId>
