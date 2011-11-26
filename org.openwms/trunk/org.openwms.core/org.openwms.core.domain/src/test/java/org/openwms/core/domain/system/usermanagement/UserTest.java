@@ -74,7 +74,7 @@ public class UserTest extends AbstractJpaSpringContextTests {
                 oldPassword = pw.getPassword();
                 continue;
             }
-            assertTrue("Must be sorted ascending", Integer.valueOf(oldPassword) < Integer.valueOf(pw.getPassword()));
+            assertTrue("Must be sorted ascending", Integer.valueOf(oldPassword) > Integer.valueOf(pw.getPassword()));
         }
     }
 
