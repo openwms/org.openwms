@@ -213,7 +213,7 @@
             
             private function removeExpirationDate() : void {
                 if (modelLocator.selectedUser != null) {
-                    var alert : Alert = Alert.show("Remove expiration date?","Confirmation", Alert.YES | Alert.NO);
+                    var alert : Alert = Alert.show(I18nUtil.trans(I18nUtil.APP_MAIN, "txt_remove_expiration_date"),I18nUtil.trans(I18nUtil.APP_MAIN, "txt_title_confirmation"), Alert.YES | Alert.NO);
                     alert.addEventListener(CloseEvent.CLOSE, onClose);
                 }
             }
