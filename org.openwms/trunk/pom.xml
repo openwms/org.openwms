@@ -770,7 +770,7 @@
                             <show>private</show>
                             <additionalparam>
                                 -inferrel -inferdep -quiet -hide java.* -collpackages java.util.*
-                                -postfixpackage -nodefontname Tahoma -dotexecutable /usr/local/bin/dot -nodefontsize 9 -nodefontpackagesize 7 -outputencoding UTF-8
+                                -postfixpackage -nodefontname Tahoma -nodefontsize 9 -nodefontpackagesize 7 -outputencoding UTF-8
                                 -link
                                 http://static.springsource.org/spring/docs/${spring.version}/javadoc-api
                             </additionalparam>
