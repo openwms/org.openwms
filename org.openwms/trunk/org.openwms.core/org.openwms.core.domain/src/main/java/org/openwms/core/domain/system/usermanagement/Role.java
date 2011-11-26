@@ -63,8 +63,8 @@ public class Role extends SecurityObject {
     private static final long serialVersionUID = -4133301834284932221L;
 
     /**
-     * The default prefix String for each created <code>Role</code>. Name is
-     * {@value} .
+     * The default prefix String for each created <code>Role</code>. Name is * *
+     * * {@value} .
      */
     public static final String ROLE_PREFIX = "ROLE_";
 
@@ -94,21 +94,21 @@ public class Role extends SecurityObject {
     /**
      * All {@link User}s assigned to this <code>Role</code>.
      */
-    @ManyToMany(cascade = { CascadeType.PERSIST, CascadeType.MERGE })
+    @ManyToMany(cascade = { CascadeType.REFRESH, CascadeType.MERGE })
     @JoinTable(name = "COR_ROLE_USER_JOIN", joinColumns = @JoinColumn(name = "ROLE_ID"), inverseJoinColumns = @JoinColumn(name = "USER_ID"))
     private Set<User> users = new HashSet<User>();
 
     /**
      * All {@link RolePreference}s linked to the <code>Role</code>.
      */
-    @ManyToMany(cascade = { CascadeType.PERSIST, CascadeType.MERGE })
+    @ManyToMany(cascade = { CascadeType.REMOVE, CascadeType.REFRESH, CascadeType.MERGE })
     @JoinTable(name = "COR_ROLE_PREFERENCE_JOIN", joinColumns = @JoinColumn(name = "ROLE_ID"), inverseJoinColumns = @JoinColumn(name = "PREFERENCE_ID"))
     private Set<RolePreference> preferences = new HashSet<RolePreference>();
 
     /**
      * All {@link SecurityObject}s assigned to the <code>Role</code>.
      */
-    @ManyToMany(cascade = { CascadeType.ALL }, fetch = FetchType.EAGER)
+    @ManyToMany(cascade = { CascadeType.REFRESH, CascadeType.MERGE }, fetch = FetchType.EAGER)
     @JoinTable(name = "COR_ROLE_ROLE_JOIN", joinColumns = @JoinColumn(name = "ROLE_ID"), inverseJoinColumns = @JoinColumn(name = "GRANT_ID"))
     private Set<SecurityObject> grants = new HashSet<SecurityObject>();
 
