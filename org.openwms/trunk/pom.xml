@@ -813,10 +813,19 @@
                     <tagListOptions>
                         <tagClasses>
                             <tagClass>
-                                <displayName>Important Tags</displayName>
+                                <displayName>Important fixes that have to be done until the next release</displayName>
                                 <tags>
                                     <tag>
                                         <matchString>FIXME</matchString>
+                                        <matchType>ignoreCase</matchType>
+                                    </tag>
+                                </tags>
+                            </tagClass>
+                            <tagClass>
+                                <displayName>Things to verify and to check</displayName>
+                                <tags>
+                                    <tag>
+                                        <matchString>// check:</matchString>
                                         <matchType>ignoreCase</matchType>
                                     </tag>
                                 </tags>
