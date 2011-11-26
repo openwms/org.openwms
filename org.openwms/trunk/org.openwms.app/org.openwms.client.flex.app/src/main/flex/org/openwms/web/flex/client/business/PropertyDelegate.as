@@ -124,7 +124,6 @@ package org.openwms.web.flex.client.business {
         }
 
         private function onPreferenceSaved(event : TideResultEvent) : void {
-            //findProperties();
             prefsModel.addPreference(event.result as AbstractPreference);
         }
 
@@ -140,6 +139,7 @@ package org.openwms.web.flex.client.business {
         }
 
         private function onPreferenceRemoved(event : TideResultEvent) : void {
+            prefsModel.selected = null;
             findProperties();
         }
 

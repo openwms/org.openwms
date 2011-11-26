@@ -190,6 +190,9 @@ package org.openwms.web.flex.client.business {
             dispatchEvent(new UserEvent(UserEvent.USER_SAVED));
         }
 
+        private function onFaultPasswordChange(event : TideFaultEvent) : void {
+            Alert.show(I18nUtil.trans(I18nUtil.APP_ERROR, 'error_password_invalid'));
+        }
         private function onFault(event : TideFaultEvent) : void {
             trace("Error executing operation on User service:" + event.fault);
             Alert.show(I18nUtil.trans(I18nUtil.APP_ERROR, 'error_user_service_operation'));
