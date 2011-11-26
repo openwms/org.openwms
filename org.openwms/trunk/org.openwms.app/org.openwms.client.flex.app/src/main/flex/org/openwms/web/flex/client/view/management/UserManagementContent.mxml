@@ -344,44 +344,44 @@
             <mx:VRule x="118" y="10" height="540"/>
             <mx:Form x="128" y="10">
                 <mx:FormItem label="{I18nUtil.trans(I18nUtil.APP_MAIN, 'entity_user_username')}" required="true" width="100%">
-                    <mx:TextInput id="usernameTi" text="{modelLocator.selectedUser.username}" editable="{modelLocator.selectedUser}" width="250"/>
+                    <mx:TextInput id="usernameTi" text="{modelLocator.selectedUser.username}" editable="{modelLocator.selectedUser != null}" width="250"/>
                 </mx:FormItem>
                 <mx:FormItem label="{I18nUtil.trans(I18nUtil.APP_MAIN, 'entity_user_fullname')}" required="false" width="100%" y="30">
-                    <mx:TextInput id="fullnameTi" text="{modelLocator.selectedUser.fullname}" editable="{modelLocator.selectedUser}" width="250"/>
+                    <mx:TextInput id="fullnameTi" text="{modelLocator.selectedUser.fullname}" editable="{modelLocator.selectedUser != null}" width="250"/>
                 </mx:FormItem>
                 <mx:FormItem label="{I18nUtil.trans(I18nUtil.APP_MAIN, 'entity_user_description')}" required="false" width="100%" y="60">
-                    <mx:TextArea id="descriptionTi" text="{modelLocator.selectedUser.userDetails.description}" editable="{modelLocator.selectedUser}" width="250"/>
+                    <mx:TextArea id="descriptionTi" text="{modelLocator.selectedUser.userDetails.description}" editable="{modelLocator.selectedUser != null}" width="250"/>
                 </mx:FormItem>
                 <mx:FormItem label="{I18nUtil.trans(I18nUtil.APP_MAIN, 'entity_user_phone')}" required="false" width="100%">
-                    <mx:TextInput id="phoneNoTi" text="{modelLocator.selectedUser.userDetails.phoneNo}" editable="{modelLocator.selectedUser}" width="250"/>
+                    <mx:TextInput id="phoneNoTi" text="{modelLocator.selectedUser.userDetails.phoneNo}" editable="{modelLocator.selectedUser != null}" width="250"/>
                 </mx:FormItem>
                 <mx:FormItem label="{I18nUtil.trans(I18nUtil.APP_MAIN, 'entity_user_skypeName')}" required="false" width="100%">
-                    <mx:TextInput id="skypeNameTi" text="{modelLocator.selectedUser.userDetails.skypeName}" editable="{modelLocator.selectedUser}" width="250"/>
+                    <mx:TextInput id="skypeNameTi" text="{modelLocator.selectedUser.userDetails.skypeName}" editable="{modelLocator.selectedUser != null}" width="250"/>
                 </mx:FormItem>
                 <mx:FormItem label="{I18nUtil.trans(I18nUtil.APP_MAIN, 'entity_user_department')}" required="false" width="100%">
-                    <mx:TextInput id="departmentTi" text="{modelLocator.selectedUser.userDetails.department}" editable="{modelLocator.selectedUser}" width="250"/>
+                    <mx:TextInput id="departmentTi" text="{modelLocator.selectedUser.userDetails.department}" editable="{modelLocator.selectedUser != null}" width="250"/>
                 </mx:FormItem>
                 <mx:FormItem label="{I18nUtil.trans(I18nUtil.APP_MAIN, 'entity_user_office')}" required="false" width="100%">
-                    <mx:TextInput id="officeTi" text="{modelLocator.selectedUser.userDetails.office}" editable="{modelLocator.selectedUser}" width="250"/>
+                    <mx:TextInput id="officeTi" text="{modelLocator.selectedUser.userDetails.office}" editable="{modelLocator.selectedUser != null}" width="250"/>
                 </mx:FormItem>
                 <mx:FormItem label="{I18nUtil.trans(I18nUtil.APP_MAIN, 'entity_user_sex')}" width="100%">
                     <mx:Tile width="250" direction="vertical">
                         <mx:RadioButtonGroup id="sexRb" selectedValue="{modelLocator.selectedUser.userDetails.sex}" enabled="{modelLocator.selectedUser}"/>
-                        <mx:RadioButton value="{UserDetails$SEX.MALE}" label="{I18nUtil.trans(I18nUtil.APP_MAIN, 'entity_user_sex_male')}" enabled="{modelLocator.selectedUser}" group="{sexRb}"/>
-                        <mx:RadioButton value="{UserDetails$SEX.FEMALE}" label="{I18nUtil.trans(I18nUtil.APP_MAIN, 'entity_user_sex_female')}" enabled="{modelLocator.selectedUser}" group="{sexRb}"/>
+                        <mx:RadioButton value="{UserDetails$SEX.MALE}" label="{I18nUtil.trans(I18nUtil.APP_MAIN, 'entity_user_sex_male')}" enabled="{modelLocator.selectedUser != null}" group="{sexRb}"/>
+                        <mx:RadioButton value="{UserDetails$SEX.FEMALE}" label="{I18nUtil.trans(I18nUtil.APP_MAIN, 'entity_user_sex_female')}" enabled="{modelLocator.selectedUser != null}" group="{sexRb}"/>
                     </mx:Tile>
                 </mx:FormItem>
                 <mx:FormItem label="{I18nUtil.trans(I18nUtil.APP_MAIN, 'entity_user_comment')}" required="false" width="100%">
-                    <mx:TextArea id="tiComment" text="{modelLocator.selectedUser.userDetails.comment}" editable="{modelLocator.selectedUser}" width="250"/>
+                    <mx:TextArea id="tiComment" text="{modelLocator.selectedUser.userDetails.comment}" editable="{modelLocator.selectedUser != null}" width="250"/>
                 </mx:FormItem>
                 <mx:FormItem required="false" width="100%">
-                    <mx:CheckBox id="enabledChk" label="{I18nUtil.trans(I18nUtil.APP_MAIN, 'entity_user_enabled')}" enabled="{modelLocator.selectedUser}" selected="{modelLocator.selectedUser.enabled}"/>
+                    <mx:CheckBox id="enabledChk" label="{I18nUtil.trans(I18nUtil.APP_MAIN, 'entity_user_enabled')}" enabled="{modelLocator.selectedUser != null}" selected="{modelLocator.selectedUser.enabled}"/>
                 </mx:FormItem>
                 <mx:FormItem required="false" width="100%">
-                    <mx:CheckBox id="lockedChk" label="{I18nUtil.trans(I18nUtil.APP_MAIN, 'entity_user_locked')}" enabled="{modelLocator.selectedUser}" selected="{modelLocator.selectedUser.locked}"/>
+                    <mx:CheckBox id="lockedChk" label="{I18nUtil.trans(I18nUtil.APP_MAIN, 'entity_user_locked')}" enabled="{modelLocator.selectedUser != null}" selected="{modelLocator.selectedUser.locked}"/>
                 </mx:FormItem>
                 <mx:FormItem label="{I18nUtil.trans(I18nUtil.APP_MAIN, 'entity_user_expirationDate')}" required="false" width="100%">
-                    <mx:DateField id="expirationDateDt" enabled="{modelLocator.selectedUser}" selectableRange="{{rangeStart : new Date()}}" formatString="{ModelLocator.SIMPLE_DT_FORMAT}" width="250" selectedDate="{modelLocator.selectedUser == null ? null : modelLocator.selectedUser.expirationDate}"/>
+                    <mx:DateField id="expirationDateDt" enabled="{modelLocator.selectedUser != null}" selectableRange="{{rangeStart : new Date()}}" formatString="{ModelLocator.SIMPLE_DT_FORMAT}" width="250" selectedDate="{modelLocator.selectedUser == null ? null : modelLocator.selectedUser.expirationDate}"/>
                 </mx:FormItem>
                 <mx:FormItem label="{I18nUtil.trans(I18nUtil.APP_MAIN, 'entity_user_roles')}" required="false" width="100%">
                     <mx:HBox width="240" horizontalGap="0">
