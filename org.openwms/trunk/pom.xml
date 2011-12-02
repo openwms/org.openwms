@@ -358,6 +358,37 @@
                 </plugins>
             </build>
         </profile>
+        <profile>
+            <id>generate_glossary</id>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-javadoc-plugin</artifactId>
+                        <version>2.8</version>
+                        <configuration>
+                            <source>${project.build.sourceCompilerLevel}</source>
+                            <doclet>org.openwms.doclet.GlossaryGeneratorDoclet</doclet>
+                            <docletArtifact>
+                                <groupId>org.openwms</groupId>
+                                <artifactId>org.openwms.doclet</artifactId>
+                                <version>0.0.1-SNAPSHOT</version>
+                            </docletArtifact>
+                            <aggregate>true</aggregate>
+                            <inherited>true</inherited>
+                            <charset>${project.build.sourceEncoding}</charset>
+                            <encoding>${project.build.sourceEncoding}</encoding>
+                            <docencoding>${project.build.sourceEncoding}</docencoding>
+                            <breakiterator>true</breakiterator>
+                            <level>private</level>
+                            <show>private</show>
+                            <keywords>true</keywords>
+                            <useStandardDocletOptions>false</useStandardDocletOptions>
+                        </configuration>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
     </profiles>
 
     <properties>
@@ -602,6 +633,7 @@
                         <optimize>true</optimize>
                         <source>${maven.compile.sourceLevel}</source>
                         <target>${maven.compile.targetLevel}</target>
+                        <encoding>${project.build.sourceEncoding}</encoding>
                     </configuration>
                 </plugin>
 
