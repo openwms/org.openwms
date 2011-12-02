@@ -174,7 +174,7 @@ public class UserServiceImpl implements UserService {
     public SystemUser createSystemUser() {
         // CHECK [scherrer] : check this
         SystemUser sys = new SystemUser(systemUsername, systemPassword);
-        Role role = new Role.Builder(Role.ROLE_PREFIX + "SYSTEM").withDescription("SuperUsers Role").setImmutable(true)
+        Role role = new Role.Builder(SystemUser.SYSTEM_ROLE_NAME).withDescription("SuperUsers Role").setImmutable(true)
                 .build();
         role.setGrants(new HashSet<SecurityObject>(securityObjectDao.findAll()));
         sys.addRole(role);
