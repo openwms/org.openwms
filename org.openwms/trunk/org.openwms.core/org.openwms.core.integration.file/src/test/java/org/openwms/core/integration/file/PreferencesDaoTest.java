@@ -32,8 +32,6 @@ import org.openwms.core.domain.system.PreferenceKey;
 import org.openwms.core.domain.system.PropertyScope;
 import org.openwms.core.domain.system.usermanagement.UserPreference;
 import org.openwms.core.integration.PreferenceDao;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
@@ -48,8 +46,6 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration("classpath:/org/openwms/core/integration/file/Test-context.xml")
 public class PreferencesDaoTest {
-
-    private Logger logger = LoggerFactory.getLogger(this.getClass());
 
     @Autowired
     private PreferenceDao<PreferenceKey> dao;
