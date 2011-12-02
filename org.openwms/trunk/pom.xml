@@ -360,6 +360,8 @@
         </profile>
         <profile>
             <id>generate_glossary</id>
+            <!-- Call this profile together with all to generate the DocBook Glossary file -->
+            <!-- Note: The used doclet plugin is available on the private Nexus repository only -->
             <build>
                 <plugins>
                     <plugin>
