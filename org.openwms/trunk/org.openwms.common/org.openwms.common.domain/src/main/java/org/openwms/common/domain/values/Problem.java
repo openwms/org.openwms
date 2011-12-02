@@ -28,16 +28,14 @@ import javax.persistence.Embeddable;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
-import org.openwms.core.annotation.GlossaryTerm;
-
 /**
  * A Problem is used to signal an occurred failure.
  * 
+ * @GlossaryTerm
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  * @version $Revision$
  * @since 0.1
  */
-@GlossaryTerm
 @Embeddable
 public class Problem implements Serializable {
 

@@ -51,24 +51,23 @@ import javax.persistence.Version;
 import org.openwms.common.domain.system.UnitError;
 import org.openwms.common.domain.values.Barcode;
 import org.openwms.common.domain.values.TransportUnitState;
-import org.openwms.core.annotation.GlossaryTerm;
 import org.openwms.core.domain.AbstractEntity;
 import org.openwms.core.domain.DomainObject;
 import org.openwms.core.domain.system.usermanagement.User;
 
 /**
- * A TransportUnit is something like a box, a toad, a bin or a palette that has
- * to be moved around.
+ * A TransportUnit is an item like a box, a toad, a bin or a palette that is
+ * moved around within a warehouse and can carry goods.
  * <p>
- * Used as a container to transport items and <code>LoadUnit</code>s. It can be
- * moved between {@link Location}s.
+ * Used as container to transport items like <code>LoadUnit</code>s. It can be
+ * moved between <code>Location</code>s.
  * </p>
  * 
+ * @GlossaryTerm
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  * @version $Revision$
  * @since 0.1
  */
-@GlossaryTerm
 @Entity
 @Table(name = "COM_TRANSPORT_UNIT", uniqueConstraints = @UniqueConstraint(columnNames = { "BARCODE" }))
 @NamedQueries({

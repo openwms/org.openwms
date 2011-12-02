@@ -30,23 +30,24 @@ import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 import javax.persistence.Version;
 
-import org.openwms.core.annotation.GlossaryTerm;
 import org.openwms.core.domain.AbstractEntity;
 import org.openwms.core.domain.DomainObject;
 
 /**
- * A TypePlacingRule define what {@link TransportUnitType}s can be located on
- * which {@link LocationType}s.
+ * A TypePlacingRule is a <code>Rule</code> that defines which types of
+ * <code>TransportUnit</code>s (<code>TransportUnitType</code>s) can be put on
+ * which type of <code>Location</code> (<code>LocationType</code>).
  * <p>
- * A privilegeLevel defines the order of all allowed {@link LocationType}s.
+ * A privilegeLevel is defined to order a list of allowed
+ * <code>LocationType</code>s.
  * </p>
  * 
+ * @GlossaryTerm
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  * @version $Revision$
  * @since 0.1
  * @see org.openwms.common.domain.TransportUnitType
  */
-@GlossaryTerm
 @Entity
 @Table(name = "COM_TYPE_PLACING_RULE", uniqueConstraints = @UniqueConstraint(columnNames = { "TRANSPORT_UNIT_TYPE",
         "PRIVILEGE_LEVEL", "ALLOWED_LOCATION_TYPE" }))

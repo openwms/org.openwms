@@ -30,24 +30,19 @@ import javax.persistence.OrderBy;
 import javax.persistence.Table;
 import javax.persistence.Version;
 
-import org.openwms.core.annotation.GlossaryTerm;
 import org.openwms.core.domain.AbstractEntity;
 import org.openwms.core.domain.DomainObject;
 
 /**
- * A LocationType defines a type for {@link Location}s.
- * <p>
- * Type of a {@link org.openwms.common.domain.Location}.<br>
- * Used to group {@link org.openwms.common.domain.Location}s with the same
+ * A LocationType is the type of <code>Location</code>s with same
  * characteristics.
- * </p>
  * 
+ * @GlossaryTerm
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  * @version $Revision$
  * @since 0.1
  * @see org.openwms.common.domain.Location
  */
-@GlossaryTerm
 @Entity
 @Table(name = "COM_LOCATION_TYPE")
 @NamedQueries({

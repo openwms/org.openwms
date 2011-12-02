@@ -48,7 +48,6 @@ import javax.persistence.UniqueConstraint;
 import javax.persistence.Version;
 
 import org.openwms.common.domain.types.Target;
-import org.openwms.core.annotation.GlossaryTerm;
 import org.openwms.core.domain.AbstractEntity;
 import org.openwms.core.domain.DomainObject;
 import org.openwms.core.domain.system.Message;
@@ -62,12 +61,12 @@ import org.openwms.core.domain.system.Message;
  * </p>
  * Multiple <code>Location</code>s are grouped to a {@link LocationGroup} .
  * 
+ * @GlossaryTerm
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  * @version $Revision$
  * @since 0.1
  * @see org.openwms.common.domain.LocationGroup
  */
-@GlossaryTerm
 @Entity
 @Table(name = "COM_LOCATION", uniqueConstraints = @UniqueConstraint(columnNames = { "AREA", "AISLE", "X", "Y", "Z" }))
 @NamedQueries({

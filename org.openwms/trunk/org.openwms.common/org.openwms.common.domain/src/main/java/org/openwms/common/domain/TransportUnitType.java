@@ -38,24 +38,23 @@ import javax.persistence.OrderBy;
 import javax.persistence.Table;
 import javax.persistence.Version;
 
-import org.openwms.core.annotation.GlossaryTerm;
 import org.openwms.core.domain.AbstractEntity;
 import org.openwms.core.domain.DomainObject;
 
 /**
- * A TransportUnitType defines a type for {@link TransportUnit}s.
+ * A TransportUnitType is a type of a certain <code>TransportUnit</code>s.
  * <p>
- * Typically stores static attributes of a {@link TransportUnit} such as the
- * length, the height, aso. So it is possible to group and characterize
- * {@link TransportUnit}s.
+ * Typically to store some static attributes of <code>TransportUnit</code>s,
+ * such as the length, the height, or the weight of <code>TransportUnit</code>s.
+ * It is possible to group and characterize <code>TransportUnit</code>s.
  * </p>
  * 
+ * @GlossaryTerm
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  * @version $Revision$
  * @since 0.1
  * @see org.openwms.common.domain.TransportUnit
  */
-@GlossaryTerm
 @Entity
 @Table(name = "COM_TRANSPORT_UNIT_TYPE")
 @NamedQueries({

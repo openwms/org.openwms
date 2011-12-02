@@ -28,16 +28,18 @@ import javax.persistence.PostPersist;
 import javax.persistence.PostUpdate;
 
 import org.apache.commons.lang.StringUtils;
-import org.openwms.core.annotation.GlossaryTerm;
 
 /**
- * A Barcode defines an unique label.
+ * A Barcode is a printable item with an unique identifier to label
+ * <code>TransportUnit</code>s. The identifier has a defined number of
+ * characters whereas these characters are aligned either left or right. Non
+ * filled positions of a Barcode are padded with a so called padding character.
  * 
+ * @GlossaryTerm
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  * @version $Revision$
  * @since 0.1
  */
-@GlossaryTerm
 @Embeddable
 public class Barcode implements Serializable {
 

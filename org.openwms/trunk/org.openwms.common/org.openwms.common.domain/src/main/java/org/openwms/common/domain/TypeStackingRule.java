@@ -30,20 +30,20 @@ import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 import javax.persistence.Version;
 
-import org.openwms.core.annotation.GlossaryTerm;
 import org.openwms.core.domain.AbstractEntity;
 import org.openwms.core.domain.DomainObject;
 
 /**
- * A TypeStackingRule defines which {@link TransportUnitType} can be stacked on
- * others.
+ * A TypeStackingRule is a <code>Rule</code> that defines which
+ * <code>TransportUnitType</code> can be stacked on other types. Additionally a
+ * maximum number of <code>TransportUnit</code>s can be defined.
  * 
+ * @GlossaryTerm
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  * @version $Revision$
  * @since 0.1
  * @see org.openwms.common.domain.TransportUnitType
  */
-@GlossaryTerm
 @Entity
 @Table(name = "COM_TYPE_STACKING_RULE", uniqueConstraints = @UniqueConstraint(columnNames = { "TRANSPORT_UNIT_TYPE",
         "NO_TRANSPORT_UNITS", "ALLOWED_TRANSPORT_UNIT_TYPE" }))

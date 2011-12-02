@@ -23,7 +23,6 @@ package org.openwms.common.domain.values;
 import java.util.Arrays;
 import java.util.List;
 
-import org.openwms.core.annotation.GlossaryTerm;
 import org.openwms.core.domain.values.UnitType;
 
 /**
@@ -36,7 +35,6 @@ import org.openwms.core.domain.values.UnitType;
  * @version $Revision$
  * @since 0.1
  */
-@GlossaryTerm
 public enum WeightUnit implements UnitType {
 
     /**
