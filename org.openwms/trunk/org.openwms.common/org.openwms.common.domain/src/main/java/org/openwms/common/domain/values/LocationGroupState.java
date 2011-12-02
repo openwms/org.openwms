@@ -20,18 +20,16 @@
  */
 package org.openwms.common.domain.values;
 
-import org.openwms.core.annotation.GlossaryTerm;
-
 /**
  * A LocationGroupState defines possible states used for
  * <code>LocationGroup</code>s.
  * 
+ * @GlossaryTerm
  * @author <a href="mailto:russelltina@users.sourceforge.net">Tina Russell</a>
  * @version $Revision$
  * @since 0.1
  * @see org.openwms.common.domain.LocationGroup
  */
-@GlossaryTerm
 public enum LocationGroupState {
 
     /**

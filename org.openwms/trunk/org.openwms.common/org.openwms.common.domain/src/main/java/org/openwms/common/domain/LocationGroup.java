@@ -42,22 +42,20 @@ import javax.persistence.Version;
 
 import org.openwms.common.domain.types.Target;
 import org.openwms.common.domain.values.LocationGroupState;
-import org.openwms.core.annotation.GlossaryTerm;
 import org.openwms.core.domain.AbstractEntity;
 import org.openwms.core.domain.DomainObject;
 
 /**
- * A LocationGroup , used to group {@link Location}s logically.
- * <p>
- * Used to group {@link Location}s with same characteristics.
- * </p>
+ * A LocationGroup is a logical group of
+ * <code>Location<code>s, grouping together <code>Location</code>s with same
+ * characteristics.
  * 
+ * @GlossaryTerm
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  * @version $Revision$
  * @since 0.1
  * @see org.openwms.common.domain.Location
  */
-@GlossaryTerm
 @Entity
 @Table(name = "COM_LOCATION_GROUP")
 @NamedQueries({ @NamedQuery(name = "LocationGroup.findAll", query = "select lg from LocationGroup lg"),

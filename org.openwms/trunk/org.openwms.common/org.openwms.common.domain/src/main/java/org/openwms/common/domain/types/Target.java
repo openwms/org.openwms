@@ -20,16 +20,14 @@
  */
 package org.openwms.common.domain.types;
 
-import org.openwms.core.annotation.GlossaryTerm;
-
 /**
  * A Target.
  * 
+ * @GlossaryTerm
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  * @version $Revision$
  * @since 0.1
  */
-@GlossaryTerm
 public interface Target {
 
 }
