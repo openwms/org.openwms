@@ -22,16 +22,16 @@ package org.openwms.core.domain.values;
 
 import java.util.List;
 
-import org.openwms.core.annotation.GlossaryTerm;
-
 /**
- * An UnitType is a concrete unit definition.
+ * An UnitType is the type definition of an <code>Unit</code>. Each UnitType
+ * defines a base <code>Unit</code> of it's character. For example a UnitType of
+ * weights can define grams, kilograms or tons.
  * 
+ * @GlossaryTerm
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  * @version $Revision$
  * @since 0.1
  */
-@GlossaryTerm
 public interface UnitType {
 
     /**

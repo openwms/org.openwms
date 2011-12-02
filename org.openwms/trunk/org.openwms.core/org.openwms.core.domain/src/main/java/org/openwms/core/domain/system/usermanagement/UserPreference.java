@@ -32,21 +32,22 @@ import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlTransient;
 import javax.xml.bind.annotation.XmlType;
 
-import org.openwms.core.annotation.GlossaryTerm;
 import org.openwms.core.domain.system.AbstractPreference;
 import org.openwms.core.domain.system.PreferenceKey;
 import org.openwms.core.domain.system.PropertyScope;
 import org.openwms.core.util.validation.AssertUtils;
 
 /**
- * An UserPreference. Used to store settings in User scope, only visible for the
- * assigned User.
+ * An UserPreference is used to store settings specific to an <code>User</code>.
+ * It is always assigned to a particular <code>User</code> and not accessible
+ * from, nor valid for, other <code>User</code>s. UserPreferences cannot be
+ * overruled by any other type of <code>Preferences</code>.
  * 
+ * @GlossaryTerm
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  * @version $Revision: $
  * @since 0.1
  */
-@GlossaryTerm
 @XmlType(name = "userPreference", namespace = "http://www.openwms.org/schema/usermanagement")
 @Entity
 @Table(name = "COR_USER_PREFERENCE", uniqueConstraints = @UniqueConstraint(columnNames = { "C_TYPE", "C_OWNER", "C_KEY" }))

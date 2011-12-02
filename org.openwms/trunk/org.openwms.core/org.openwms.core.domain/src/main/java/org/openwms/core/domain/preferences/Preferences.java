@@ -38,9 +38,10 @@ import org.openwms.core.domain.system.usermanagement.RolePreference;
 import org.openwms.core.domain.system.usermanagement.UserPreference;
 
 /**
- * An instance of <code>Preferences</code> represents the root element of a
- * preferences XML file.
+ * An instance of a <code>Preferences</code> represents the root of a
+ * preferences XML file and aggregates all other types of preference.
  * 
+ * @GlossaryTerm
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  * @version $Revision: 1475 $
  * @since 0.1

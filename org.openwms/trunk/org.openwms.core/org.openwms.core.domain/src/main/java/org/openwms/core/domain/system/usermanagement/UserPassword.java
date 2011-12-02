@@ -31,24 +31,24 @@ import javax.persistence.OrderBy;
 import javax.persistence.Table;
 import javax.persistence.Version;
 
-import org.openwms.core.annotation.GlossaryTerm;
 import org.openwms.core.domain.AbstractEntity;
 import org.openwms.core.domain.DomainObject;
 import org.openwms.core.util.validation.AssertUtils;
 
 /**
- * Encapsulates the {@link User}s password.
+ * Is a representation of an <code>User</code> together with her password.
  * <p>
- * When an {@link User} changes his password, the current password is added to
- * the history list of passwords.
+ * When an <code>User</code> changes her password, the current password is added
+ * to a history list of passwords. This is necessary to omit <code>User</code>s
+ * from setting formerly used passwords.
  * </p>
  * 
+ * @GlossaryTerm
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  * @version $Revision$
  * @since 0.1
  * @see org.openwms.core.domain.system.usermanagement.User
  */
-@GlossaryTerm
 @Entity
 @Table(name = "COR_USER_PASSWORD")
 public class UserPassword extends AbstractEntity implements DomainObject<Long> {

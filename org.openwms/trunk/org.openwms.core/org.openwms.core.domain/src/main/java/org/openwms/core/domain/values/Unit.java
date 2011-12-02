@@ -20,18 +20,18 @@
  */
 package org.openwms.core.domain.values;
 
-import org.openwms.core.annotation.GlossaryTerm;
-
 /**
- * Just a simple Unit definition.
+ * A definition of any kind of unit used in the application. In general, Units
+ * are defined by a particular type of <code>UnitType</code> and a value. For
+ * example 42 grams is a weight, whereas weight is the Unit.
  * 
+ * @GlossaryTerm
  * @param <T>
  *            Type of Unit
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  * @version $Revision$
  * @since 0.1
  */
-@GlossaryTerm
 public interface Unit<T extends UnitType> {
 
     /**

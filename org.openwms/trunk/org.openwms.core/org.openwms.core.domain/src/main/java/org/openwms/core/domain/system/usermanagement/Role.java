@@ -35,16 +35,14 @@ import javax.persistence.ManyToMany;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 
-import org.openwms.core.annotation.GlossaryTerm;
 import org.openwms.core.util.validation.AssertUtils;
 
 /**
- * A Role is grouping multiple {@link User}s regarding security aspects.
- * <p>
- * Security access policies are assigned to <code>Role</code>s instead of to
- * {@link User}s directly.
- * </p>
+ * A Role is a group of <code>User</code>s. Basically more than one
+ * <code>User</code> belong to a Role. Security access policies are assigned to
+ * <code>Role</code>s instead of <code>User</code>s.
  * 
+ * @GlossaryTerm
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  * @version $Revision$
  * @since 0.1
@@ -52,7 +50,6 @@ import org.openwms.core.util.validation.AssertUtils;
  * @see org.openwms.core.domain.system.usermanagement.User
  * @see org.openwms.core.domain.system.usermanagement.Role
  */
-@GlossaryTerm
 @Entity
 @DiscriminatorValue("ROLE")
 @NamedQueries({

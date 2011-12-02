@@ -29,20 +29,19 @@ import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 import javax.persistence.Version;
 
-import org.openwms.core.annotation.GlossaryTerm;
 import org.openwms.core.domain.AbstractEntity;
 import org.openwms.core.domain.DomainObject;
 import org.openwms.core.util.validation.AssertUtils;
 
 /**
- * An Email encapsulates the email address of an <code>User</code>.
+ * An Email represents the email address of an <code>User</code>.
  * 
+ * @GlossaryTerm
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  * @version $Revision$
  * @since 0.1
  * @see org.openwms.core.domain.system.usermanagement.User
  */
-@GlossaryTerm
 @Entity
 @Table(name = "COR_EMAIL", uniqueConstraints = @UniqueConstraint(columnNames = { "C_USERNAME", "C_ADDRESS" }))
 public class Email extends AbstractEntity implements DomainObject<Long> {

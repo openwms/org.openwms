@@ -31,21 +31,20 @@ import javax.persistence.Table;
 import javax.persistence.Transient;
 import javax.persistence.Version;
 
-import org.openwms.core.annotation.GlossaryTerm;
 import org.openwms.core.util.validation.AssertUtils;
 
 /**
- * A Module is a definition of a Flex Module and used to persist some basic
- * information about a module. For example if the Flex Module should be loaded
- * on application startup.
+ * A Module represents an Adobe Flex Module and is used to store some basic
+ * information about that module, i.e. a name, an URL where the module from, or
+ * whether the Adobe Flex Module should be loaded on application startup.
  * 
+ * @GlossaryTerm
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  * @version $Revision$
  * @since 0.1
  * @see org.openwms.core.domain.AbstractEntity
  * @see org.openwms.core.domain.DomainObject
  */
-@GlossaryTerm
 @Entity
 @Table(name = "COR_MODULE")
 @NamedQueries({ @NamedQuery(name = Module.NQ_FIND_ALL, query = "select m from Module m order by m.startupOrder"),
