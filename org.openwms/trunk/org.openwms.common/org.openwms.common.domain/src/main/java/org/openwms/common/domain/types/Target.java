@@ -21,7 +21,9 @@
 package org.openwms.common.domain.types;
 
 /**
- * A Target.
+ * A Target is either a physical or a logical endpoint of any kind of order in a
+ * warehouse. A <code>TransportOrder</code> has a Target set, to where a
+ * <code>TransportUnit</code> has to be moved to.
  * 
  * @GlossaryTerm
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
