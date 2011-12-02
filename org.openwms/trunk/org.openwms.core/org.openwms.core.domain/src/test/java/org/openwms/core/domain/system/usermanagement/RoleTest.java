@@ -58,6 +58,10 @@ public class RoleTest extends AbstractJpaSpringContextTests {
         entityManager.clear();
     }
 
+    public final void mergeGlossaryTerms() throws Exception {
+
+    }
+
     /**
      * Simple POJOS test to test setters only.
      */

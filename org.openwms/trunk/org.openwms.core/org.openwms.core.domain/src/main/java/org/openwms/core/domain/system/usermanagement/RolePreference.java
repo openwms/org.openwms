@@ -32,21 +32,24 @@ import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlTransient;
 import javax.xml.bind.annotation.XmlType;
 
-import org.openwms.core.annotation.GlossaryTerm;
 import org.openwms.core.domain.system.AbstractPreference;
 import org.openwms.core.domain.system.PreferenceKey;
 import org.openwms.core.domain.system.PropertyScope;
 import org.openwms.core.util.validation.AssertUtils;
 
 /**
- * A RolePreference is used to store settings in Role scope and is only valid
- * for the assigned Role.
+ * A RolePreference is used to provide settings specific to an <code>Role</code>
+ * . These kind of <code>Preferences</code> is valid for the assigned Role only.
+ * <code>User</code>s assigned to a <code>Role</code> inherit these
+ * RolePreferences but a RolePreference can be overruled by an
+ * <code>UserPreference</code>. RolePreferences can be defined within a
+ * preferences file but also be created with the UI.
  * 
+ * @GlossaryTerm
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  * @version $Revision: $
  * @since 0.1
  */
-@GlossaryTerm
 @XmlType(name = "rolePreference", namespace = "http://www.openwms.org/schema/usermanagement")
 @Entity
 @Table(name = "COR_ROLE_PREFERENCE", uniqueConstraints = @UniqueConstraint(columnNames = { "C_TYPE", "C_OWNER", "C_KEY" }))

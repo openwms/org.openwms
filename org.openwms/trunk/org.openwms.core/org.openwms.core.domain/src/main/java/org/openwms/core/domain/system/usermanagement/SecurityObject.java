@@ -31,22 +31,21 @@ import javax.persistence.OrderBy;
 import javax.persistence.Table;
 import javax.persistence.Version;
 
-import org.openwms.core.annotation.GlossaryTerm;
 import org.openwms.core.domain.AbstractEntity;
 import org.openwms.core.domain.DomainObject;
 import org.openwms.core.util.validation.AssertUtils;
 
 /**
- * A SecurityObject is the superclass of Roles and Grants and combines common
- * used properties.
+ * A SecurityObject is the generalization of <code>Role</code>s and
+ * <code>Grant</code>s and combines common used properties of both.
  * 
+ * @GlossaryTerm
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  * @version $Revision$
  * @since 0.1
  * @see org.openwms.core.domain.system.usermanagement.Role
  * @see org.openwms.core.domain.system.usermanagement.Grant
  */
-@GlossaryTerm
 @Entity
 @Table(name = "COR_ROLE")
 @Inheritance

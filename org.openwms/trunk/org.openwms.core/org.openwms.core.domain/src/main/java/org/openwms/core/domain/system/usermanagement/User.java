@@ -48,7 +48,6 @@ import javax.persistence.TemporalType;
 import javax.persistence.Transient;
 import javax.persistence.Version;
 
-import org.openwms.core.annotation.GlossaryTerm;
 import org.openwms.core.domain.AbstractEntity;
 import org.openwms.core.domain.DomainObject;
 import org.openwms.core.exception.InvalidPasswordException;
@@ -57,12 +56,13 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * An User represents a human user of the system. Typically <code>Role</code>s
- * are assigned to an <code>User</code> to setup security constraints.
- * <code>User</code>s can also have their own configuration settings in form of
- * <code>UserPreference</code>s and certain user details, encapsulated in an
- * <code>UserDetails</code> object that tend to be extended.
+ * An User represents a human user of the system. Typically an User is assigned
+ * to one or more <code>Role</code>s to define security constraints. Users can
+ * have their own configuration settings in form of <code>UserPreference</code>s
+ * and certain user details, encapsulated in an <code>UserDetails</code> object
+ * that tend to be extended by projects.
  * 
+ * @GlossaryTerm
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  * @version $Revision$
  * @since 0.1
@@ -71,7 +71,6 @@ import org.slf4j.LoggerFactory;
  * @see org.openwms.core.domain.system.usermanagement.UserPassword
  * @see org.openwms.core.domain.system.usermanagement.Role
  */
-@GlossaryTerm
 @Entity
 @Table(name = "COR_USER")
 @NamedQueries({

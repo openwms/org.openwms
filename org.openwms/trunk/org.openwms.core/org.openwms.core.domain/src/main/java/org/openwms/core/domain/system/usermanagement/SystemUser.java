@@ -22,18 +22,21 @@ package org.openwms.core.domain.system.usermanagement;
 
 import javax.persistence.Entity;
 
-import org.openwms.core.annotation.GlossaryTerm;
-
 /**
- * A SystemUser is granted with all privileges and omits all security
- * constraints.
+ * A SystemUser is granted with all privileges and omits all defined security
+ * constraints. Whenever a SystemUser logs in, she is assigned to a virtual
+ * <code>Role</code> with the name ROLE_SYSTEM. Furthermore this kind of
+ * <code>Role</code> is immutable and it is not allowed for the SystemUser to
+ * change her <code>UserDetails</code> or <code>UserPassword</code>. Changing
+ * the <code>UserPassword</code> has to be done in the application configuration
+ * when the project is setup.
  * 
+ * @GlossaryTerm
  * @author <a href="mailto:russelltina@users.sourceforge.net">Tina Russell</a>
  * @version $Revision$
  * @since 0.1
  * @see org.openwms.core.domain.system.usermanagement.User
  */
-@GlossaryTerm
 @Entity
 public class SystemUser extends User {
 
@@ -43,6 +46,10 @@ public class SystemUser extends User {
      * The defined fullname of the system user. Default {@value} .
      */
     public static final String SYSTEM_USERNAME = "OPENWMS";
+    /**
+     * The virtual <code>Role</code> of the SystemUser.
+     */
+    public static final String SYSTEM_ROLE_NAME = "ROLE_SYSTEM";
 
     /**
      * Create a new SystemUser.
