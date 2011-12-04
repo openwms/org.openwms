@@ -41,13 +41,14 @@ import org.openwms.core.util.validation.AssertUtils;
  * An ApplicationPreference is used to store a configuration setting in
  * application scope.
  * <p>
- * The table model of an <code>ApplicationPreference</code> spans an unique key
- * over the columns C_TYPE and C_KEY.
+ * The table model of an ApplicationPreference spans an unique key over the
+ * columns C_TYPE and C_KEY.
  * </p>
  * <p>
  * It's counterpart in the context of JAXB is the applicationPreference element.
  * </p>
  * 
+ * @GlossaryTerm
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  * @version $Revision: $
  * @since 0.1
