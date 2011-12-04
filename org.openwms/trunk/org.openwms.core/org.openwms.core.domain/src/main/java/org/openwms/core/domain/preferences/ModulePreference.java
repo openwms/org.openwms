@@ -40,13 +40,14 @@ import org.openwms.core.util.validation.AssertUtils;
 /**
  * A ModulePreference is used to store configuration settings in Module scope.
  * <p>
- * The table model of an <code>ModulePreference</code> spans an unique key over
- * the columns C_TYPE, C_OWNER and C_KEY.
+ * The table model of an ModulePreference spans an unique key over the columns
+ * C_TYPE, C_OWNER and C_KEY.
  * </p>
  * <p>
  * It's counterpart in the context of JAXB is the modulePreference element.
  * </p>
  * 
+ * @GlossaryTerm
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  * @version $Revision: $
  * @since 0.1
