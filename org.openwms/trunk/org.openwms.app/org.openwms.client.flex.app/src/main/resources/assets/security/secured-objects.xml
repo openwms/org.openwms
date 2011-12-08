@@ -3,19 +3,19 @@
 	<!-- Menu bar -->
     <grant>
         <name>APP_User_Management</name>
-        <description>Permission to control User Management</description>
+        <description>Permission to open the User Management Screen</description>
     </grant>
     <grant>
         <name>APP_Role_Management</name>
-        <description>Permission to control Role Management</description>
+        <description>Permission to open the Role Management Screen</description>
     </grant>
     <grant>
         <name>APP_Module_Management</name>
-        <description>Permission to control Module Management</description>
+        <description>Permission to open the Module Management Screen</description>
     </grant>
     <grant>
         <name>APP_Preferences</name>
-        <description>Permission to manage all Preferences</description>
+        <description>Permission to open the Preferences Management Screen and manage all Preferences</description>
     </grant>
     
     <!-- User management screen -->
@@ -55,11 +55,11 @@
     </grant>
     <grant>
         <name>APP_assign_grants_button</name>
-        <description>Assign Grants to a Role</description>
+        <description>Assign to or remove Grants from a Role</description>
     </grant>
     <grant>
         <name>APP_assign_users_button</name>
-        <description>Assign Users to a Role</description>
+        <description>Assign to or remove Users from a Role</description>
     </grant>
     
 	<!-- Module management screen -->
@@ -91,6 +91,6 @@
     </grant>
     <grant>
         <name>APP_save_preference_button</name>
-        <description>Ability to save changes on a Preference</description>
+        <description>Ability to save changes made on a Preference</description>
     </grant>
 </grants>
