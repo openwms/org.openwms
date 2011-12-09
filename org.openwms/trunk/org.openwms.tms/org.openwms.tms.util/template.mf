@@ -1,9 +1,9 @@
 Manifest-Version: 1.0
-Bundle-Vendor: openwms.org
-Bundle-Version: 0.0.1.SNAPSHOT
-Bundle-Name: org.openwms.tms.util
+Bundle-Vendor: ${project.groupId}
+Bundle-Version: ${bundle.version}
+Bundle-Name: ${project.artifactId}
 Bundle-ManifestVersion: 2
-Bundle-SymbolicName: org.openwms.tms.util
+Bundle-SymbolicName: ${project.artifactId}
 Import-Library: 
  org.springframework.spring;version="${osgi.spring}"
  

@@ -1,8 +1,8 @@
 Manifest-Version: 1.0
-Bundle-Vendor: openwms.org
-Bundle-Version: 0.0.1.SNAPSHOT
-Bundle-Name: org.openwms.tms.service.api
+Bundle-Vendor: ${project.groupId}
+Bundle-Version: ${bundle.version}
+Bundle-Name: ${project.artifactId}
 Bundle-ManifestVersion: 2
-Bundle-SymbolicName: org.openwms.tms.service.api
+Bundle-SymbolicName: ${project.artifactId}
 Import-Bundle: 
- org.openwms.tms.domain;version="0.0.1.SNAPSHOT"
+ org.openwms.tms.domain;version="[0.0.1.SNAPSHOT, 0.1]"

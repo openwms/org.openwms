@@ -5,6 +5,6 @@ Bundle-Name: ${project.artifactId}
 Bundle-ManifestVersion: 2
 Bundle-SymbolicName: ${project.artifactId}
 Import-Bundle: 
- org.openwms.core.domain;version="0.0.1.SNAPSHOT",
- org.openwms.core.service.api;version="0.0.1.SNAPSHOT",
- org.openwms.common.domain;version="0.0.1.SNAPSHOT"
+ org.openwms.core.domain;version="[0.0.1.SNAPSHOT, 0.1]",
+ org.openwms.core.service.api;version="[0.0.1.SNAPSHOT, 0.1]",
+ org.openwms.common.domain;version="[0.0.1.SNAPSHOT, 0.1]"

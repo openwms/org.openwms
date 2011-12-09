@@ -7,8 +7,8 @@ Bundle-SymbolicName: ${project.artifactId}
 Import-Library: 
  org.springframework.spring;version="${osgi.spring}"
 Import-Bundle: 
- com.springsource.org.apache.commons.dbcp;version="1.2.2.osgi",
- com.springsource.org.postgresql.jdbc4;version="8.3.604"
+ com.springsource.org.apache.commons.dbcp;version="${osgi.apache.commons.dbcp.version}",
+ com.springsource.org.postgresql.jdbc4;version="${osgi.org.postgresql.jdbc4.version}"
 Import-Template: 
  javax.sql;version="0"
 Excluded-Imports:

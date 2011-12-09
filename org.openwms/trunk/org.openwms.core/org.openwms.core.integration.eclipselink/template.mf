@@ -1,16 +1,16 @@
 Manifest-Version: 1.0
-Bundle-Vendor: openwms.org
-Bundle-Version: 0.0.1.SNAPSHOT
-Bundle-Name: org.openwms.core.integration.eclipselink
+Bundle-Vendor: ${project.groupId}
+Bundle-Version: ${bundle.version}
+Bundle-Name: ${project.artifactId}
 Bundle-ManifestVersion: 2
-Bundle-SymbolicName: org.openwms.core.integration.eclipselink
+Bundle-SymbolicName: ${project.artifactId}
 Import-Library: 
  org.springframework.spring;version="${osgi.spring}",
- org.eclipse.persistence;version="1.0.0"
+ org.eclipse.persistence;version="${osgi.javax.persistence.version}"
 Import-Bundle: 
- org.springframework.instrument;version="3.0.0.RELEASE"
+ org.springframework.instrument;version="${osgi.spring}"
 Import-Template: 
- javax.persistence;version="1.0.0",
+ javax.persistence;version="${osgi.javax.persistence.version}",
  javax.sql;version="0"
 Import-Package: 
  org.aspectj.asm; version="0.0.0",

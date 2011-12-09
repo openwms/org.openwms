@@ -7,16 +7,16 @@ Bundle-SymbolicName: ${project.artifactId}
 Import-Library: 
  org.springframework.spring;version="${osgi.spring}"
 Import-Bundle: 
- com.springsource.javax.persistence;version="1.0.0",
+ com.springsource.javax.persistence;version="${osgi.javax.persistence.version}",
  com.springsource.org.hibernate;version="${osgi.hibernate}";import-scope:=application,
  com.springsource.org.hibernate.annotations;version="${osgi.hibernate.annotations}";import-scope:=application,
  com.springsource.org.hibernate.annotations.common;version="${osgi.hibernate.annotations.common}";import-scope:=application,
  com.springsource.org.hibernate.ejb;version="${osgi.hibernate.ejb}";import-scope:=application,
- org.openwms.core.domain;version="0.0.1.SNAPSHOT",
- org.openwms.common.domain;version="0.0.1.SNAPSHOT",
- org.openwms.tms.domain;version="0.0.1.SNAPSHOT"
+ org.openwms.core.domain;version="[0.0.1.SNAPSHOT, 0.1]",
+ org.openwms.common.domain;version="[0.0.1.SNAPSHOT, 0.1]",
+ org.openwms.tms.domain;version="[0.0.1.SNAPSHOT, 0.1]"
 Import-Template: 
- javax.persistence;version="[1.0.0, 1.0.0]",
+ javax.persistence;version="${osgi.javax.persistence.version}",
  javax.sql;version="0"
 Require-Bundle: 
  com.springsource.org.hibernate,
