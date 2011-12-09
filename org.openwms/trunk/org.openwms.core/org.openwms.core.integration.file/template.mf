@@ -7,11 +7,11 @@ Bundle-SymbolicName: ${project.artifactId}
 Import-Library: 
  org.springframework.spring;version="${osgi.spring}"
 Import-Bundle: 
- org.openwms.core.util;version="0.0.1.SNAPSHOT",
- org.openwms.core.domain;version="0.0.1.SNAPSHOT",
- org.openwms.core.integration;version="0.0.1.SNAPSHOT",
- com.springsource.javax.persistence;version="1.0.0",
- com.springsource.org.apache.commons.lang;version="${osgi.apache.common.lang.version}"
+ org.openwms.core.util;version="[0.0.1.SNAPSHOT, 0.1]",
+ org.openwms.core.domain;version="[0.0.1.SNAPSHOT, 0.1]",
+ org.openwms.core.integration;version="[0.0.1.SNAPSHOT, 0.1]",
+ com.springsource.javax.persistence;version="${osgi.javax.persistence.version}",
+ com.springsource.org.apache.commons.lang;version="${osgi.apache.commons.lang.version}"
 Excluded-Imports: 
  org.openwms.core.framework.test.*,
  org.openwms.core.test.*,

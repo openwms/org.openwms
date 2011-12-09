@@ -352,7 +352,6 @@
         <dependency>
             <groupId>net.sourceforge.ehcache</groupId>
             <artifactId>com.springsource.net.sf.ehcache</artifactId>
-            <version>1.6.2</version>
         </dependency>
         <dependency>
             <groupId>org.graniteds</groupId>

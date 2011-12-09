@@ -7,8 +7,8 @@ Bundle-SymbolicName: ${project.artifactId}
 Import-Library: 
  org.springframework.spring;version="${osgi.spring}"
 Import-Bundle: 
- com.springsource.org.apache.commons.dbcp;version="1.2.2.osgi",
- com.springsource.org.hsqldb;version="1.8.0.9"
+ com.springsource.org.apache.commons.dbcp;version="${osgi.apache.commons.lang.version}",
+ com.springsource.org.hsqldb;version="${osgi.org.hsqldb.version}"
 Import-Template: 
  javax.sql;version="0"
 Excluded-Imports:
