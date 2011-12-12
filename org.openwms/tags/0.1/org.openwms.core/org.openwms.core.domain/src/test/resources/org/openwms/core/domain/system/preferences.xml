@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<p:preferences xmlns:p="http://www.openwms.org/schema/preferences" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.openwms.org/schema/preferences ../../../../../../../../../../src/schema/preferences.xsd">
+    <application key="dd">p:application</application>
+    <application key="APP1"></application>
+    <application key="APP2"  floatValue="100.0" minimum="5" maximum="100" val="Some value">Description is used as element value</application>
+    <module owner="COMMON" key="sss"></module>
+    <module owner="CORE" key="CORE">This is also a description value</module>
+</p:preferences>
