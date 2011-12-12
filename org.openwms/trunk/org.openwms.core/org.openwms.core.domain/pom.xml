@@ -27,7 +27,7 @@
     <parent>
         <groupId>org.openwms</groupId>
         <artifactId>org.openwms.core</artifactId>
-        <version>0.1</version>
+        <version>0.1.1-SNAPSHOT</version>
     </parent>
     <artifactId>org.openwms.core.domain</artifactId>
     <name>${project.artifactId}</name>

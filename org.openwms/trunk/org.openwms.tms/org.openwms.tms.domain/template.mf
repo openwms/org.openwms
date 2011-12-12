@@ -7,8 +7,8 @@ Bundle-SymbolicName: ${project.artifactId}
 Import-Bundle: 
  com.springsource.javax.persistence;version="${osgi.javax.persistence.version}",
  com.springsource.org.apache.commons.lang;version="${osgi.apache.commons.lang.version}",
- org.openwms.core.domain;version="[0.0.1.SNAPSHOT, 0.1]",
- org.openwms.common.domain;version="[0.0.1.SNAPSHOT, 0.1]"
+ org.openwms.core.domain;version="[0.1, 0.2]",
+ org.openwms.common.domain;version="[0.1, 0.2]"
 Require-Bundle: 
  com.springsource.org.hibernate,
  com.springsource.javassist
