@@ -1,0 +1,241 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+/*
+ * openwms.org, the Open Warehouse Management System.
+ *
+ * This file is part of openwms.org.
+ *
+ * openwms.org is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as 
+ * published by the Free Software Foundation, either version 3 of the
+ * License, or (at your option) any later version.
+ *
+ * openwms.org is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with this software. If not, write to the Free
+ * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
+ * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
+ */
+-->
+<mx:Canvas xmlns:mx="http://www.adobe.com/2006/mxml" xmlns:comm="org.openwms.web.flex.client.common.component.*" xmlns:cor="org.openwms.web.flex.client.component.*" width="100%" height="100%" backgroundColor="#C2DAEF" show="onShow()">
+
+    <mx:Metadata>
+        [Name]
+        [ManagedEvent(name="LOAD_ALL_LOCATIONS")]
+        [ManagedEvent(name="LOAD_ALL_LOCATION_TYPES")]
+        [ManagedEvent(name="LOAD_ALL_LOCATION_GROUPS")]
+        [ManagedEvent(name="SAVE_LOCATION")]
+        [ManagedEvent(name="LOC.REMOVE_MESSAGES")]
+        [ResourceBundle("commonMain")]
+        [ResourceBundle("commonEntity")]
+    </mx:Metadata>
+
+    <mx:Script>
+        <![CDATA[
+        	import mx.controls.Alert;
+        	import mx.managers.PopUpManager;
+            import mx.collections.ArrayCollection;
+            import mx.events.ListEvent;
+            import flash.events.MouseEvent;
+			
+        	import org.granite.tide.spring.Identity;
+        	
+            import org.openwms.core.domain.system.Message;
+        	import org.openwms.common.domain.LocationGroup;
+        	import org.openwms.common.domain.LocationType;
+        	import org.openwms.common.domain.Location;
+            import org.openwms.web.flex.client.util.DisplayUtility;
+            import org.openwms.web.flex.client.util.BindingProperty;
+            import org.openwms.web.flex.client.common.event.LocationEvent;
+            import org.openwms.web.flex.client.common.event.LocationTypeEvent;
+            import org.openwms.web.flex.client.common.event.LocationGroupEvent;
+            import org.openwms.web.flex.client.common.helper.LocationFormatter;
+        	import org.openwms.web.flex.client.common.model.CommonModelLocator;
+            import org.openwms.web.flex.client.common.util.I18nUtil;
+            
+            [Inject]
+            [Bindable]
+            /**
+             * Inject a model to work on.
+             */
+            public var commonModelLocator : CommonModelLocator;
+            [Inject]
+            [Bindable]
+            /**
+             * We need to have Granites Identity injected.
+             */
+            public var identity : Identity;
+
+            [Bindable]
+            private var selected : Location;
+
+            private function onShow() : void {
+                if (commonModelLocator.allLocationTypes.length == 0) {
+                	dispatchEvent(new LocationTypeEvent(LocationTypeEvent.LOAD_ALL_LOCATION_TYPES));
+                }
+                if (commonModelLocator.allLocationGroups.length == 0) {
+                	dispatchEvent(new LocationGroupEvent(LocationGroupEvent.LOAD_ALL_LOCATION_GROUPS));
+                }
+                if (commonModelLocator.allLocations.length == 0) {
+                    reload();
+                }
+            }
+
+            private function onRowClick(event : ListEvent):void {
+            	selected = event.currentTarget.selectedItem as Location;
+                if (selected.lastAccess != null) {
+                    lastAccessTxt.text = commonModelLocator.dateTimeFormatter.format(selected.lastAccess);
+                }
+            }
+
+            /**
+             * Action on button save Loactions.
+             */
+            private function saveLocation() : void {
+               var bindings:Array = [new BindingProperty(selected, "description", descriptionTxt, "text"),
+                                     new BindingProperty(selected, "noMaxTransportUnits", noMaxTransportUnitsTxt, "value"),
+                                     new BindingProperty(selected, "plcState", plcStateTxt, "text"),
+                                     new BindingProperty(selected, "countingActive", countingActiveChk, "selected"),
+                                     new BindingProperty(selected, "incomingActive", incomingActiveChk, "selected"),
+                                     new BindingProperty(selected, "outgoingActive", outgoingActiveChk, "selected"),
+                                     new BindingProperty(selected, "consideredInAllocation", consideredInAllocationChk, "selected")];
+                                     
+                DisplayUtility.bindProperties(new ArrayCollection(bindings), function execute():void {
+                        var event:LocationEvent = new LocationEvent(LocationEvent.SAVE_LOCATION);
+                        event.data = selected;
+                        dispatchEvent(event);
+                    });
+                selected = null;                            
+            }
+
+            /**
+             * Action on button refresh Loactions.
+             */
+            private function reload() : void {
+            	selected = null;
+                dispatchEvent(new LocationEvent(LocationEvent.LOAD_ALL_LOCATIONS));
+            }
+            
+            private function removeMessage(event : MouseEvent) : void {
+            	if (messagesLst.selectedItems.length == 0) {
+            		Alert.show(I18nUtil.trans(I18nUtil.COMMON_MAIN, "info_locationView_select_message_to_remove"));
+            		return;
+            	}
+                var e : LocationEvent = new LocationEvent(LocationEvent.REMOVE_MESSAGES);
+                e.data = {id : selected.id, messages : messagesLst.selectedItems};
+                dispatchEvent(e);            	
+            }
+
+			/**   ------------------ Format functions ------------------   **/
+            private function formatMessage(item : Message) : String {
+                return item.toString();
+            }
+
+			/**   ------------------ Sort functions ------------------   **/
+            private function sortLocationGroup(obj1 : Object, obj2 : Object) : int {
+                var name1 : String = obj1.locationGroup != null ? obj1.locationGroup.name : "";
+                var name2 : String = obj2.locationGroup != null ? obj2.locationGroup.name : "";
+                if (name1 < name2) {
+                    return -1;
+                } else  if (name1 > name2) {
+                    return 1;
+                } else {
+                    return 0;
+                }
+            }
+
+        ]]>
+    </mx:Script>
+
+    <mx:HBox x="10" y="10" verticalAlign="middle" backgroundColor="#C6FFC7" backgroundAlpha="0.5" width="95%" >
+        <mx:Label x="10" y="10" text="{I18nUtil.trans(I18nUtil.COMMON_ENTITY, 'entity_location')}" fontSize="24"/>
+        <mx:VRule height="10"/>
+        <mx:Button id="saveLocationBtn" enabled="{identity.ifAllGranted('COMMON_save_location_button')}" buttonMode="true" mouseChildren="false" toolTip="{I18nUtil.trans(I18nUtil.COMMON_MAIN, 'ttip_locationView_save_location')}" icon="@Embed(source='/assets/images/Location--Save.png')" click="saveLocation()"/>
+        <mx:VRule height="10"/>
+        <mx:Button id="refreshLocationBtn" buttonMode="true" mouseChildren="false" toolTip="{I18nUtil.trans(I18nUtil.COMMON_MAIN, 'ttip_locationView_reload_locations')}" icon="@Embed(source='assets/images/icons/refresh.png')" click="reload()"/>
+    </mx:HBox>
+    <mx:HRule x="9" y="53" width="95%"/>
+    <mx:HBox height="100%" width="95%" x="10" y="63">
+        <mx:Canvas id="locationDetailsPnl" backgroundColor="#C6FFC7" backgroundAlpha="0.5" height="95%">
+            
+            <mx:Image x="10" y="10" mouseChildren="false" source="@Embed(source='/assets/images/Location.png')"/>
+            <mx:Label text="{I18nUtil.trans(I18nUtil.COMMON_ENTITY, 'entity_location')}" fontWeight="bold" textAlign="left" x="34" y="10"/>
+            <mx:Text text="{selected.locationId.toString()}" fontWeight="bold" x="95" y="10"/>
+            
+            <mx:Label text="{I18nUtil.trans(I18nUtil.COMMON_ENTITY, 'entity_location_description')}" textAlign="left" x="10" y="34"/>
+            <mx:TextArea id="descriptionTxt" text="{selected.description}" width="200" height="64" x="95" y="33"/>
+            <mx:HRule x="10" y="10" width="360" strokeWidth="0"/>
+            
+            <mx:Label text="{I18nUtil.trans(I18nUtil.COMMON_ENTITY, 'entity_location_noMaxTransportUnits')}" textAlign="left" x="10" y="105"/>
+            <mx:NumericStepper id="noMaxTransportUnitsTxt" enabled="{identity.ifAllGranted('COMMON_change_location_mxTu_stepper')}" value="{selected.noMaxTransportUnits}" width="40" x="255" y="103"/>
+            
+            <mx:Label text="{I18nUtil.trans(I18nUtil.COMMON_ENTITY, 'entity_location_checkState')}" textAlign="left" x="10" y="251"/>
+            <mx:Text id="checkStateTxt" text="{selected.checkState}" x="95" y="251"/>
+            
+            <mx:Label text="{I18nUtil.trans(I18nUtil.COMMON_ENTITY, 'entity_location_plcState')}" textAlign="left" x="10" y="303"/>
+            <mx:TextInput id="plcStateTxt" text="{selected.plcState}" width="40" x="95" y="301"/>
+            
+            <mx:CheckBox id="countingActiveChk" x="95" y="191" label="{I18nUtil.trans(I18nUtil.COMMON_ENTITY, 'entity_location_countingActive')}" selected="{selected.countingActive}"/>
+            <mx:CheckBox id="incomingActiveChk" x="95" y="131" label="{I18nUtil.trans(I18nUtil.COMMON_ENTITY, 'entity_location_incomingActive')}" selected="{selected.incomingActive}"/>
+            <mx:CheckBox id="outgoingActiveChk" x="95" y="161" label="{I18nUtil.trans(I18nUtil.COMMON_ENTITY, 'entity_location_outgoingActive')}" selected="{selected.outgoingActive}"/>
+            <mx:CheckBox id="consideredInAllocationChk" x="95" y="221" label="{I18nUtil.trans(I18nUtil.COMMON_ENTITY, 'entity_location_consideredInAllocation')}" selected="{selected.consideredInAllocation}"/>
+            
+            <mx:Label x="10" y="277" text="{I18nUtil.trans(I18nUtil.COMMON_ENTITY, 'entity_location_lastAccess')}"/>
+            <mx:Text id="lastAccessTxt" x="95" y="277" text="{selected.lastAccess}"/>
+            
+            <mx:Label x="10" y="329" text="{I18nUtil.trans(I18nUtil.COMMON_ENTITY, 'entity_location_messages')}"/>
+            <mx:List id="messagesLst" labelFunction="formatMessage" dataProvider="{selected.messages}" allowMultipleSelection="true" x="95" y="328" width="180" height="64"/>
+            <cor:ImageButton x="283" y="328" height="16" width="16" enabled="{selected &amp;&amp; selected.messages.length > 0}" mouseChildren="false" source="@Embed(source='assets/images/icons/minus.png')" click="removeMessage(event);"/>
+
+            <mx:HRule x="10" y="400" width="297"/>
+            <mx:Image x="10" y="410" mouseChildren="false" source="@Embed(source='/assets/images/LocationGroup.png')"/>
+            <mx:Label text="{I18nUtil.trans(I18nUtil.COMMON_ENTITY, 'entity_locationGroup')}" textAlign="left" x="34" y="414" fontWeight="bold"/>
+            <mx:Label id="locationGroupLbl" text="{selected.locationGroup.name}" x="95" y="440"/>
+            <mx:CheckBox id="locationGroupCountingActiveChk" x="95" y="470" label="{I18nUtil.trans(I18nUtil.COMMON_ENTITY, 'entity_location_locationGroupCountingActive')}" selected="{selected.locationGroupCountingActive}"/>
+
+            <mx:HRule x="8" y="500" width="297"/>
+            <mx:Image x="10" y="510" mouseChildren="false" source="@Embed(source='/assets/images/LocationType.png')"/>
+            <mx:Label text="{I18nUtil.trans(I18nUtil.COMMON_ENTITY, 'entity_locationType')}" textAlign="left" x="34" y="510" fontWeight="bold"/>
+            <mx:Label id="locationTypeLbl" text="{selected.locationType.type}" x="95" y="536"/>
+            <mx:Text x="95" y="562" text="{selected.locationType.description}"/>
+                    
+        </mx:Canvas>
+        <mx:DataGrid id="locationsList" allowMultipleSelection="true" sortableColumns="true" dataProvider="{commonModelLocator.allLocations}" change="onRowClick(event)" height="95%" width="100%">
+            <mx:columns>
+            	<comm:CoordinateColumn column="area" headerText="{I18nUtil.trans(I18nUtil.COMMON_ENTITY, 'entity_location_locationId_area')}" labelFunction="{LocationFormatter.locationIdField}" editable="false" width="45" />
+                <comm:CoordinateColumn column="aisle" headerText="{I18nUtil.trans(I18nUtil.COMMON_ENTITY, 'entity_location_locationId_aisle')}" labelFunction="{LocationFormatter.locationIdField}" editable="false" width="45"/>
+                <comm:CoordinateColumn column="x" headerText="{I18nUtil.trans(I18nUtil.COMMON_ENTITY, 'entity_location_locationId_x')}" labelFunction="{LocationFormatter.locationIdField}" editable="false" width="45"/>
+                <comm:CoordinateColumn column="y" headerText="{I18nUtil.trans(I18nUtil.COMMON_ENTITY, 'entity_location_locationId_y')}" labelFunction="{LocationFormatter.locationIdField}" editable="false" width="45"/>
+                <comm:CoordinateColumn column="z" headerText="{I18nUtil.trans(I18nUtil.COMMON_ENTITY, 'entity_location_locationId_z')}" labelFunction="{LocationFormatter.locationIdField}" editable="false" width="45"/>
+                <mx:DataGridColumn headerText="{I18nUtil.trans(I18nUtil.COMMON_ENTITY, 'entity_location_locationGroup')}" dataField="locationGroup" editable="false"/>
+                <mx:DataGridColumn headerText="{I18nUtil.trans(I18nUtil.COMMON_ENTITY, 'entity_location_description')}" dataField="description" editable="true"/>
+                <mx:DataGridColumn headerText="{I18nUtil.trans(I18nUtil.COMMON_ENTITY, 'entity_location_countingActive')}" dataField="countingActive" editable="true">
+                    <mx:itemRenderer>
+                        <mx:Component>
+                            <mx:CheckBox/>
+                        </mx:Component>
+                    </mx:itemRenderer>
+                </mx:DataGridColumn>
+                <mx:DataGridColumn headerText="{I18nUtil.trans(I18nUtil.COMMON_ENTITY, 'entity_location_incomingActive')}" dataField="incomingActive" editable="true">
+                    <mx:itemRenderer>
+                        <mx:Component>
+                            <mx:CheckBox/>
+                        </mx:Component>
+                    </mx:itemRenderer>
+                </mx:DataGridColumn>
+                <mx:DataGridColumn headerText="{I18nUtil.trans(I18nUtil.COMMON_ENTITY, 'entity_location_outgoingActive')}" dataField="outgoingActive" editable="true">
+                    <mx:itemRenderer>
+                        <mx:Component>
+                            <mx:CheckBox/>
+                        </mx:Component>
+                    </mx:itemRenderer>
+                </mx:DataGridColumn>
+                <mx:DataGridColumn headerText="{I18nUtil.trans(I18nUtil.COMMON_ENTITY, 'entity_location_lastAccess')}" dataField="lastAccess" labelFunction="{LocationFormatter.formatDateField}" editable="false" />
+            </mx:columns>
+        </mx:DataGrid>
+    </mx:HBox>
+</mx:Canvas>

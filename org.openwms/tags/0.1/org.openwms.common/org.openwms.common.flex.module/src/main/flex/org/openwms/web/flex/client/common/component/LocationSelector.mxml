@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+/*
+ * openwms.org, the Open Warehouse Management System.
+ *
+ * This file is part of openwms.org.
+ *
+ * openwms.org is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as 
+ * published by the Free Software Foundation, either version 3 of the
+ * License, or (at your option) any later version.
+ *
+ * openwms.org is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with this software. If not, write to the Free
+ * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
+ * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
+ */
+-->
+<mx:VBox xmlns:mx="http://www.adobe.com/2006/mxml" xmlns:comp="org.openwms.web.flex.client.common.component.*">
+
+    <mx:Metadata>
+        [Name]
+    </mx:Metadata>
+
+    <mx:Script>
+    	<![CDATA[
+    		
+            import org.openwms.web.flex.client.model.ModelLocator;
+
+            [Bindable]
+            public var value:String;
+            [Bindable]
+            public var labelText:String;
+
+            [In]
+            [Bindable]
+            /**
+             * Inject model.
+             */
+            public var modelLocator:ModelLocator;
+            private var all:Array = modelLocator.allLocations.toArray();
+            private var regEx:RegExp;
+            
+            private function check():void {
+                var i:int =0;
+                var temp:Array = all.filter(filter);
+                inputTxt.text = temp[0];
+            }
+            
+            private function filter(element:*, index:int, arr:Array):Boolean {
+                regEx = new RegExp(inputTxt.text);
+                return (regEx.test(element as String));
+            }
+    	]]>
+    </mx:Script>
+
+    <comp:SuggestComboBox id="inputTxt" width="70" fontSize="24" text="{value}"/>
+</mx:VBox>
