@@ -5,11 +5,11 @@ Bundle-Name: ${project.artifactId}
 Bundle-ManifestVersion: 2
 Bundle-SymbolicName: ${project.artifactId}
 Import-Bundle: 
- org.openwms.core.domain;version="[0.0.1.SNAPSHOT, 0.1]",
- org.openwms.core.integration;version="[0.0.1.SNAPSHOT, 0.1]",
- org.openwms.common.domain;version="[0.0.1.SNAPSHOT, 0.1]",
- org.openwms.common.integration;version="[0.0.1.SNAPSHOT, 0.1]",
- org.openwms.tms.domain;version="[0.0.1.SNAPSHOT, 0.1]",
+ org.openwms.core.domain;version="[0.1, 0.2]",
+ org.openwms.core.integration;version="[0.1, 0.2]",
+ org.openwms.common.domain;version="[0.1, 0.2]",
+ org.openwms.common.integration;version="[0.1, 0.2]",
+ org.openwms.tms.domain;version="[0.1, 0.2]",
  com.springsource.javax.persistence;version="${osgi.javax.persistence.version}"
 Excluded-Imports: 
  org.openwms.core.integration.*,

@@ -11,11 +11,11 @@ Import-Bundle:
  com.springsource.org.apache.commons.lang;version="${osgi.apache.commons.lang.version}",
  com.springsource.net.sf.ehcache;version="${osgi.net.sf.ehcache.version}",
  org.springframework.security.core;version="${osgi.spring.security.version}",
- org.openwms.core.domain;version="[0.0.1.SNAPSHOT, 0.1]",
- org.openwms.core.integration;version="[0.0.1.SNAPSHOT, 0.1]",
- org.openwms.common.domain;version="[0.0.1.SNAPSHOT, 0.1]",
- org.openwms.common.integration;version="[0.0.1.SNAPSHOT, 0.1]",
- org.openwms.common.service.api;version="[0.0.1.SNAPSHOT, 0.1]"
+ org.openwms.core.domain;version="[0.1, 0.2]",
+ org.openwms.core.integration;version="[0.1, 0.2]",
+ org.openwms.common.domain;version="[0.1, 0.2]",
+ org.openwms.common.integration;version="[0.1, 0.2]",
+ org.openwms.common.service.api;version="[0.1, 0.2]"
 Import-Template: 
  javax.annotation;version="0"
 Import-Package: 

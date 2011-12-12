@@ -9,8 +9,8 @@ Import-Library:
 Import-Bundle: 
  com.springsource.javax.persistence;version="${osgi.javax.persistence.version}",
  com.springsource.net.sf.cglib;version="2.2.0",
- org.openwms.core.domain;version="[0.0.1.SNAPSHOT, 0.1]",
- org.openwms.core.integration;version="[0.0.1.SNAPSHOT, 0.1]",
+ org.openwms.core.domain;version="[0.1, 0.2]",
+ org.openwms.core.integration;version="[0.1, 0.2]",
  com.springsource.org.apache.commons.lang;version="${osgi.apache.commons.lang.version}",
  com.springsource.org.hibernate;version="${osgi.hibernate}"
 Require-Bundle: 

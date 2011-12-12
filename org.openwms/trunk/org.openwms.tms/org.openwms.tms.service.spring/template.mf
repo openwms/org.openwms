@@ -10,13 +10,13 @@ Import-Bundle:
  com.springsource.javax.persistence;version="${osgi.javax.persistence.version}",
  com.springsource.org.apache.commons.lang;version="${osgi.apache.commons.lang.version}",
  com.springsource.net.sf.ehcache;version="${osgi.net.sf.ehcache.version}",
- org.openwms.common.domain;version="[0.0.1.SNAPSHOT, 0.1]",
- org.openwms.common.integration;version="[0.0.1.SNAPSHOT, 0.1]",
- org.openwms.common.service.api;version="[0.0.1.SNAPSHOT, 0.1]",
- org.openwms.tms.domain;version="[0.0.1.SNAPSHOT, 0.1]",
- org.openwms.tms.util;version="[0.0.1.SNAPSHOT, 0.1]",
- org.openwms.tms.integration;version="[0.0.1.SNAPSHOT, 0.1]",
- org.openwms.tms.service.api;version="[0.0.1.SNAPSHOT, 0.1]",
+ org.openwms.common.domain;version="[0.1, 0.2]",
+ org.openwms.common.integration;version="[0.1, 0.2]",
+ org.openwms.common.service.api;version="[0.1, 0.2]",
+ org.openwms.tms.domain;version="[0.1, 0.2]",
+ org.openwms.tms.util;version="[0.1, 0.2]",
+ org.openwms.tms.integration;version="[0.1, 0.2]",
+ org.openwms.tms.service.api;version="[0.1, 0.2]",
  com.springsource.org.hibernate;version="${osgi.hibernate}"
 Import-Template: 
  javax.annotation;version="0"
