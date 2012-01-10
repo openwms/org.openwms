@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+/*
+ * openwms.org, the Open Warehouse Management System.
+ *
+ * This file is part of openwms.org.
+ *
+ * openwms.org is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as 
+ * published by the Free Software Foundation, either version 3 of the
+ * License, or (at your option) any later version.
+ *
+ * openwms.org is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with this software. If not, write to the Free
+ * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
+ * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
+ */
+-->
+<mx:Panel xmlns:mx="http://www.adobe.com/2006/mxml" height="345" creationComplete="init();" show="cancelOrdersBtn.setFocus();" layout="absolute" title="Cancel Transport Orders" width="450">
+
+    <mx:Metadata>
+        [Name]
+        [ManagedEvent(name="CANCEL_TRANSPORT_ORDER")]
+    </mx:Metadata>
+
+    <mx:Script>
+        <![CDATA[
+        	import org.openwms.web.flex.client.tms.model.TMSModelLocator;
+        	import org.openwms.tms.domain.order.TransportOrder;
+        	import org.openwms.tms.domain.values.TransportOrderState;
+        	import org.openwms.web.flex.client.tms.event.TransportOrderEvent;
+            import mx.controls.listClasses.ListData;
+            import mx.collections.ArrayCollection;
+            import mx.managers.PopUpManager;
+            import flash.events.KeyboardEvent;
+            
+            [Inject]
+            [Bindable]
+            /**
+             * Inject a model to work on.
+             */
+            public var tmsModelLocator:TMSModelLocator;
+            
+            [Bindable]
+            /**
+             * Preset a list of TransportOrders to be canceled.
+             */
+            public var items:ArrayCollection;
+            
+            [Bindable]
+            /**
+             * Preset a message text to be shown in the dialogue header.
+             */
+            public var messageText:String = new String("Do you want to cancel selected Transport Orders ?");
+            
+            [Bindable]
+            private var allStates:ArrayCollection;
+            
+            protected function init():void {
+                cancelOrdersBtn.setFocus();
+                this.addEventListener(KeyboardEvent.KEY_DOWN, keyEventHandler);
+                PopUpManager.centerPopUp(this);
+            }
+
+            protected function closeDialog(event:Event=null):void {
+                this.removeEventListener(KeyboardEvent.KEY_DOWN, keyEventHandler);
+                PopUpManager.removePopUp(this);
+            }
+
+            protected function accept(e:Event):void {
+                var event:TransportOrderEvent = new TransportOrderEvent(TransportOrderEvent.CANCEL_TRANSPORT_ORDER);
+                var ids:ArrayCollection = new ArrayCollection();
+                for each (var order:TransportOrder in cancelLst.dataProvider) {
+                    ids.addItem(order.id);
+                }
+                event.data = {ids:ids, state:actionStatesCmb.selectedItem};
+                dispatchEvent(event);
+                closeDialog();
+            }
+
+            protected function keyEventHandler(event:KeyboardEvent):void {
+                if(event.keyCode == 27) {
+                   closeDialog(event);
+                   return;
+                }
+            }
+            
+            protected function formatFunction(item:*):String {
+                if (item == null) {
+                   return "--";
+                }
+                return item.id + "\twith Barcode\t" + 
+                      (item.transportUnit == null ? "--" : item.transportUnit.barcode) +
+                      (item.targetLocation == null ? "" : "\tto Location\t" + item.targetLocation)+
+                      (item.targetLocationGroup == null ? "":"\tto Location Group\t"+item.targetLocationGroup);
+            }
+                        
+        ]]>
+    </mx:Script>
+    <mx:Label id="messageTxt" text="{messageText}" fontSize="20" textAlign="center" y="10"  width="100%"/>
+    <mx:Button id="cancelOrdersBtn" label="OK" click="accept(event)" fontSize="12" x="10" y="270"/>
+    <mx:Button id="cancelBtn" label="Cancel" click="closeDialog(event)" fontSize="12" x="350" y="270"/>
+    <mx:ComboBox x="160" y="214" fontSize="24" width="260" id="actionStatesCmb" dataProvider="{tmsModelLocator.allStates}" selectedIndex="{tmsModelLocator.allStates.getItemIndex(TransportOrderState.CANCELED)}"/>
+    <mx:Label x="10" y="217" text="Action" fontSize="24"/>
+    <mx:List id="cancelLst" height="152" labelFunction="formatFunction" dataProvider="{items}" enabled="true" alternatingItemColors="[#B7BABC, #FFFFFF]" y="54" x="10"  width="410"/>
+</mx:Panel>

@@ -1,0 +1,235 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!--
+/*
+ * openwms.org, the Open Warehouse Management System.
+ *
+ * This file is part of openwms.org.
+ *
+ * openwms.org is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as 
+ * published by the Free Software Foundation, either version 3 of the
+ * License, or (at your option) any later version.
+ *
+ * openwms.org is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with this software. If not, write to the Free
+ * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
+ * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
+ */
+-->
+<mx:TitleWindow xmlns:mx="http://www.adobe.com/2006/mxml" xmlns:ui="org.openwms.web.flex.client.view.fragments.*"
+     title="{I18nUtil.trans(I18nUtil.APP_MAIN, 'txt_create_preference_title')}"
+     backgroundColor="#F1F07C" creationComplete="onCreate();" currentState="appPrefState" height="458" layout="absolute" width="600">
+
+    <mx:Metadata>
+        [Name]
+        [ManagedEvent(name="PREFERENCE.CREATE_PREFERENCE")]
+        [ResourceBundle("appMain")]
+        [ResourceBundle("appEntity")]
+    </mx:Metadata>
+
+    <mx:Script>
+    	<![CDATA[
+    	    import org.openwms.web.flex.client.util.ValidationUtil;
+    	    import mx.validators.NumberValidator;
+    	    import org.openwms.web.flex.client.util.NumberUtil;
+    	    import org.openwms.core.domain.system.AbstractPreference;
+    	    import org.openwms.web.flex.client.event.PropertyEvent;
+    	    import org.openwms.core.domain.system.usermanagement.Role;
+    	    import org.openwms.core.domain.system.usermanagement.UserPreference;
+    	    import org.openwms.core.domain.system.usermanagement.RolePreference;
+    	    import org.openwms.core.domain.preferences.ModulePreference;
+            import flash.events.KeyboardEvent;
+    		import mx.binding.utils.BindingUtils;
+            import mx.managers.PopUpManager;
+    		import mx.controls.Alert;
+    		import mx.events.ValidationResultEvent;
+
+    	    import org.openwms.web.flex.client.model.ModelLocator;
+            import org.openwms.web.flex.client.util.I18nUtil;
+		    import org.openwms.web.flex.client.model.PreferencesModel;
+            import org.openwms.core.domain.preferences.ApplicationPreference;
+    	    import org.openwms.core.domain.system.usermanagement.User;
+            
+	        [Inject]
+            [Bindable]
+            /**
+             * Inject the model.
+             */
+            public var model : ModelLocator;
+	        [Inject]
+	        [Bindable]
+	        /**
+	         * Injected PreferencesModel.
+	         */
+	        public var prefs : PreferencesModel;
+            
+            private function onCreate() : void {
+                keyTxt.setFocus();
+                this.addEventListener(KeyboardEvent.KEY_DOWN, keyEventHandler);
+                PopUpManager.centerPopUp(this);
+            }
+
+            private function create(event : Event) : void {
+                keyTxt.setFocus();
+       	        try {
+                    var owner : String = getOwner();
+                } catch (err : Error) {
+                    Alert.show(I18nUtil.trans(I18nUtil.APP_MAIN, "txt_create_preference_information"), I18nUtil.trans(I18nUtil.APP_MAIN, "txt_title_information"));
+                    return;
+                }
+            	if (stringVal.validate().type == ValidationResultEvent.VALID &&
+            	    ValidationUtil.validateAndFormat(floatValueTxt, numberVal) &&
+            	    ValidationUtil.validateAndFormat(minimumTxt, numberVal) &&
+            	    ValidationUtil.validateAndFormat(maximumTxt, numberVal)) {
+                        var newPref : AbstractPreference = PreferencesModel.createPreference(typeCmb.selectedItem.type as AbstractPreference,
+                              keyTxt.text, descriptionTxt.text, getOwner(), valueTxt.text, NumberUtil.strToNumber(floatValueTxt.text, NaN),
+                              NumberUtil.strToInt(minimumTxt.text, 0), NumberUtil.strToInt(maximumTxt.text, 0));
+                        var e : PropertyEvent = new PropertyEvent(PropertyEvent.PREFERENCE_CREATE_PREFERENCE);
+                        e.data = newPref;
+                        dispatchEvent(e);
+                        closeDialog();
+                }
+            }
+            
+            private function getOwner() : String {
+                var result : String;
+                if (this.currentState == "appPrefState") {
+                    result = I18nUtil.trans(I18nUtil.APP_ENTITY, 'entity_preference_Application')
+                } else if (this.currentState == "modPrefState") {
+                    result = ownerMTxt.text;
+                } else if (this.currentState == "rolePrefState") {
+                    result = ownerRCmb.selectedItem == null ? "" : (ownerRCmb.selectedItem as Role).name;
+                } else if (this.currentState == "userPrefState") {
+                    result = ownerUCmb.selectedItem ==  null ? "" : (ownerUCmb.selectedItem as User).username;
+                }
+                if (result == "") {
+                    throw new Error("No value chosen");
+                }
+                return result;
+            }
+            
+            private function cancel(event : Event) : void {
+                closeDialog(event);
+            }            
+
+            private function onTypeChange(event : Event) : void {
+                onSelectionChanged(event);
+            }
+            
+            private function keyEventHandler(event : KeyboardEvent) : void {
+                if (event.keyCode == 27) {
+                   closeDialog(event);
+                }
+            }
+                        
+            private function closeDialog(event : Event = null) : void {
+                this.removeEventListener(KeyboardEvent.KEY_DOWN, keyEventHandler);
+                PopUpManager.removePopUp(this);
+            }
+
+            /**
+             * Whenever a new Preference was selected assign the key appropriately and  
+             */
+            public function onSelectionChanged(event : Event) : void {
+                if (event.currentTarget.selectedItem == null) {
+                    trace("No preference selected");
+                    return;
+                }
+                var i : Number = -1;
+                var item : * = event.currentTarget.selectedItem.type;
+                if (item is ApplicationPreference) {
+                    this.currentState = "appPrefState";
+                    var appPref : ApplicationPreference = item as ApplicationPreference;
+                    //keyTxt.text = appPref.key == null ? "" : appPref.key;
+                    ownerATxt.text = I18nUtil.trans(I18nUtil.APP_ENTITY, 'entity_preference_Application');
+                } else if (item is ModulePreference) {
+                    this.currentState = "modPrefState";
+                    var modulePref : ModulePreference = item as ModulePreference;
+                    //keyTxt.text = modulePref.key == null ? "" : modulePref.key;
+                    ownerMTxt.text = modulePref.owner;
+                } else if (item is RolePreference) {
+                    this.currentState = "rolePrefState";
+                    var rolePref : RolePreference = item as RolePreference;
+                    //keyTxt.text = rolePref.key == null ? "" : rolePref.key;
+                    ownerRCmb.dataProvider = model.allRoles;
+                    i = model.allRoles.getItemIndex(Role.findByName(rolePref.owner, model.allRoles));
+                    ownerRCmb.selectedIndex = i;
+                    if (i < 0) {
+                        ownerRCmb.prompt = rolePref.owner;
+                    }
+                } else if (item is UserPreference) {
+                    this.currentState = "userPrefState";
+                    var userPref : UserPreference = item as UserPreference;
+                    //keyTxt.text = userPref.key == null ? "" : userPref.key;
+                    ownerUCmb.dataProvider = model.allUsers;
+                    i = model.allUsers.getItemIndex(User.findByName(userPref.owner, model.allUsers));
+                    ownerUCmb.selectedIndex = i;
+                    if (i < 0) {
+                        ownerUCmb.prompt = userPref.owner;
+                    }
+                }
+            }
+
+    	]]>
+    </mx:Script>
+
+    <mx:StringValidator id="stringVal" minLength="1" source="{keyTxt}" property="text"/>
+    <mx:NumberValidator id="numberVal" domain="real" required="false" />
+    
+    <mx:states>
+        <mx:State name="appPrefState">
+            <mx:AddChild>
+                <mx:TextInput id="ownerATxt" fontSize="22" tabIndex="3" x="270" y="171" width="300" enabled="false" />                
+            </mx:AddChild>
+        </mx:State>
+        <mx:State name="modPrefState">
+            <mx:AddChild>
+                <mx:TextInput id="ownerMTxt" fontSize="22" tabIndex="3" x="270" y="171" width="300" />                
+            </mx:AddChild>
+        </mx:State>
+        <mx:State name="rolePrefState">
+            <mx:AddChild>
+                <mx:ComboBox id="ownerRCmb" fontSize="22" tabIndex="3" labelField="name" x="270" y="171" width="300" />
+            </mx:AddChild>
+        </mx:State>
+        <mx:State name="userPrefState">
+            <mx:AddChild>
+                <mx:ComboBox id="ownerUCmb" fontSize="22" tabIndex="3" labelFunction="{User.formatWithFullnameUsername}" x="270" y="171" width="300" />                
+            </mx:AddChild>
+        </mx:State>
+    </mx:states>
+    
+	<mx:Label x="10" y="10" text="{I18nUtil.trans(I18nUtil.APP_ENTITY, 'entity_preference_type')}" fontSize="22" textAlign="right" id="typeLbl"/>
+	<mx:ComboBox id="typeCmb" dataProvider="{prefs.types}" labelFunction="{prefs.formatType}" change="onTypeChange(event)" tabIndex="0" x="270" y="7" fontSize="22" width="300" />
+
+	<mx:Label id="keyLbl" text="{I18nUtil.trans(I18nUtil.APP_ENTITY, 'entity_preference_key')}" fontSize="22" textAlign="right" x="10" y="51"/>
+    <mx:TextInput id="keyTxt" fontSize="22" tabIndex="1" width="300" x="270" y="49" />
+
+	<mx:Label x="10" y="92" text="{I18nUtil.trans(I18nUtil.APP_ENTITY, 'entity_preference_description')}" fontSize="22" textAlign="right" id="descriptionLbl"/>
+    <mx:TextArea id="descriptionTxt" fontSize="22" tabIndex="2" width="300" height="73" x="270" y="91" />
+
+	<mx:Label id="ownerLbl" text="{I18nUtil.trans(I18nUtil.APP_ENTITY, 'entity_preference_owner')}" fontSize="22" textAlign="right" x="10" y="174" />
+
+	<mx:Label x="10" y="218" text="{I18nUtil.trans(I18nUtil.APP_ENTITY, 'entity_preference_value')}" fontSize="22" textAlign="right" id="valueLbl"/>
+    <mx:TextInput id="valueTxt" fontSize="22" tabIndex="4" width="300" x="270" y="216" />
+
+	<mx:Label x="10" y="259" text="{I18nUtil.trans(I18nUtil.APP_ENTITY, 'entity_preference_floatValue')}" fontSize="22" textAlign="right" id="floatValueLbl"/>
+    <mx:TextInput id="floatValueTxt" restrict="0-9\\.\\-" maxChars="10" fontSize="22" tabIndex="5" width="200" x="270" y="257" />
+
+	<mx:Label x="10" y="300" text="{I18nUtil.trans(I18nUtil.APP_ENTITY, 'entity_preference_minimum')}" fontSize="22" textAlign="right" id="minimumLbl"/>
+    <mx:TextInput id="minimumTxt" restrict="0-9\\-" maxChars="10" fontSize="22" tabIndex="6" width="200" x="270" y="298" />
+
+	<mx:Label x="10" y="341" text="{I18nUtil.trans(I18nUtil.APP_ENTITY, 'entity_preference_maximum')}" fontSize="22" textAlign="right" id="maximumLbl"/>
+    <mx:TextInput id="maximumTxt" restrict="0-9\\-" maxChars="10" fontSize="22" tabIndex="7" width="200" x="270" y="339" />
+
+	<mx:HBox x="0" y="384" width="100%" horizontalAlign="center">
+		<mx:Button id="createBtn" label="{I18nUtil.trans(I18nUtil.APP_MAIN, 'btn_create')}" fontSize="12" tabIndex="8" click="create(event)"/>
+		<mx:Button id="cancelBtn" label="{I18nUtil.trans(I18nUtil.APP_MAIN, 'btn_cancel')}" fontSize="12" tabIndex="9" click="cancel(event)"/>
+	</mx:HBox>
+	
+</mx:TitleWindow>
