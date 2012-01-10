@@ -1,0 +1,8 @@
+Manifest-Version: 1.0
+Bundle-Vendor: ${project.groupId}
+Bundle-Version: ${bundle.version}
+Bundle-Name: ${project.artifactId}
+Bundle-ManifestVersion: 2
+Bundle-SymbolicName: ${project.artifactId}
+Import-Library: 
+ org.springframework.spring;version="${osgi.spring}"

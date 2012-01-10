@@ -1,0 +1,316 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+/*
+ * openwms.org, the Open Warehouse Management System.
+ *
+ * This file is part of openwms.org.
+ *
+ * openwms.org is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as 
+ * published by the Free Software Foundation, either version 3 of the
+ * License, or (at your option) any later version.
+ *
+ * openwms.org is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with this software. If not, write to the Free
+ * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
+ * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
+ */
+-->
+<mx:Canvas xmlns:mx="http://www.adobe.com/2006/mxml" width="100%" height="100%" show="onShow()" backgroundColor="#C2DAEF" xmlns:comp="org.openwms.web.flex.client.component.*">
+
+    <mx:Metadata>
+        [Name]
+        [ManagedEvent(name="LOAD_ALL_TRANSPORT_UNIT_TYPES")]
+        [ManagedEvent(name="LOAD_ALL_LOCATION_TYPES")]
+        [ManagedEvent(name="LOAD_TUT_RULES")]
+        [ManagedEvent(name="SAVE_TRANSPORT_UNIT_TYPE")]
+        [ResourceBundle("commonMain")]
+    </mx:Metadata>
+
+    <mx:Style>
+        .multipleImageButtonStyle {
+            up-skin: Embed("/assets/images/TransportUnit--Add.png");
+            down-skin: Embed("/assets/images/TransportUnit--Delete.png");
+            over-skin: Embed("/assets/images/TransportUnit--Edit.png");
+            disabled-skin: Embed("/assets/images/TransportUnit.png");
+        } 
+    </mx:Style>
+
+    <mx:Script>
+        <![CDATA[
+        	import mx.binding.utils.ChangeWatcher;
+        	import mx.controls.Image;
+        	import mx.events.DragEvent;
+            import mx.events.ListEvent;
+        	import mx.binding.utils.BindingUtils;
+            import mx.collections.ArrayCollection;
+            import mx.controls.Alert;
+            import mx.managers.PopUpManager;
+            
+            import org.granite.tide.spring.Context;
+        	import org.granite.tide.spring.Identity;
+            
+            import org.openwms.common.domain.LocationType;
+            import org.openwms.common.domain.TypePlacingRule;
+            import org.openwms.common.domain.TypeStackingRule;
+            import org.openwms.common.domain.TransportUnitType;
+            import org.openwms.common.domain.values.ImageProvider;
+            import org.openwms.web.flex.client.common.event.TransportUnitTypeEvent;
+            import org.openwms.web.flex.client.common.event.LocationTypeEvent;
+            import org.openwms.web.flex.client.common.model.CommonModelLocator;
+            import org.openwms.web.flex.client.common.view.dialogs.ConfirmDeletionDialog;
+            import org.openwms.web.flex.client.common.view.dialogs.CreateTransportUnitTypeDialog;
+            import org.openwms.web.flex.client.common.view.dialogs.AssignmentLocationTypeDialog;
+            import org.openwms.web.flex.client.common.view.dialogs.ConfirmDeletionTransportUnitTypesDialog;
+            import org.openwms.web.flex.client.common.util.I18nUtil;
+            import org.openwms.web.flex.client.component.ListDialog;
+            import org.openwms.web.flex.client.util.BindingProperty;
+            import org.openwms.web.flex.client.util.DisplayUtility;
+            import org.openwms.web.flex.client.util.ValidationUtil;
+
+            [Inject]
+            [Bindable]
+            /**
+             * Inject a model to work on.
+             */
+            public var commonModelLocator : CommonModelLocator;     
+            [Inject]
+            [Bindable]
+            /**
+             * We need to have Granites Identity injected.
+             */
+            public var identity : Identity;
+            [Inject]
+            [Bindable]
+            /**
+             * Injected TideContext.
+             */
+            public var tideContext : Context;
+            [Bindable]
+            private var selected : TransportUnitType;
+            [Bindable]
+            private var hasImage : Boolean = selected is ImageProvider;
+
+            /**
+             * Initialize data structures in model or fire events to do so.
+             */
+            private function onShow() : void {
+                if (commonModelLocator.allLocationTypes.length == 0) {
+                    dispatchEvent(new LocationTypeEvent(LocationTypeEvent.LOAD_ALL_LOCATION_TYPES));
+                }
+                if (commonModelLocator.allTransportUnitTypes.length == 0) {
+                    dispatchEvent(new TransportUnitTypeEvent(TransportUnitTypeEvent.LOAD_ALL_TRANSPORT_UNIT_TYPES));
+                }
+                else {
+                    selected = commonModelLocator.allTransportUnitTypes.getItemAt(0) as TransportUnitType;
+                }
+            }
+
+            private function showCreateTransportUnitTypeDialog() : void {
+                var pop:CreateTransportUnitTypeDialog = CreateTransportUnitTypeDialog(PopUpManager.createPopUp(this, CreateTransportUnitTypeDialog, true));
+                // PopUpManager.centerPopUp(pop);
+            }
+
+            private function showDeleteTransportUnitTypeDialog() : void {
+                if (transportUnitTypeGrd.selectedIndices.length == 0) {
+                    Alert.show("Please select at least one TransportUnitType to delete");
+                    return;
+                }
+                selected = null;
+                var pop : ConfirmDeletionTransportUnitTypesDialog = ConfirmDeletionTransportUnitTypesDialog(PopUpManager.createPopUp(this, ConfirmDeletionTransportUnitTypesDialog, true));
+                pop.messageText = "Delete selected Transport Unit Types";
+                pop.items = new ArrayCollection(transportUnitTypeGrd.selectedItems);
+                PopUpManager.centerPopUp(pop);
+            }
+
+            private function changeSelection(event : ListEvent) : void {
+                selected = event.currentTarget.selectedItem as TransportUnitType;
+                weightTareTxt.text = numberFmt.format(weightTareTxt.text);
+                weightMaxTxt.text = numberFmt.format(weightMaxTxt.text);
+                if (selected.typePlacingRules.length == 0 || selected.typeStackingRules.length == 0) {
+                	if (selected.typePlacingRules.length > 0) {
+                		selected.typePlacingRules.removeAll();
+                	}
+                    if (selected.typeStackingRules.length > 0) {
+                        selected.typeStackingRules.removeAll();
+                    }
+	                var e : TransportUnitTypeEvent = new TransportUnitTypeEvent(TransportUnitTypeEvent.LOAD_TUT_RULES);
+	                e.data = selected;
+	                dispatchEvent(e);
+                }
+            }
+
+            private function saveTransportUnitType() : void {
+                if (ValidationUtil.validateAndFormat(heightTxt, numberVal) &&
+                    ValidationUtil.validateAndFormat(lengthTxt, numberVal) &&
+                    ValidationUtil.validateAndFormat(widthTxt, numberVal) &&
+                    ValidationUtil.validateAndFormat(weightTareTxt, numberVal, numberFmt) &&
+                    ValidationUtil.validateAndFormat(weightMaxTxt, numberVal, numberFmt)) {
+                    var bindings : Array = [new BindingProperty(selected, "length", lengthTxt, "text"),
+                                            new BindingProperty(selected, "width", widthTxt, "text"),  
+                                            new BindingProperty(selected, "height", heightTxt, "text"),  
+                                            new BindingProperty(selected, "weightTare", weightTareTxt, "text"),  
+                                            new BindingProperty(selected, "weightMax", weightMaxTxt, "text"),  
+                                            new BindingProperty(selected, "description", descriptionTxt, "text"),  
+                                            new BindingProperty(selected, "compatibility", compatibilityTxt, "text"),  
+                                            new BindingProperty(selected, "typePlacingRules", allowedLocationTypeLst, "dataProvider"),  
+                                            new BindingProperty(selected, "typeStackingRules", allowedTransportUnitTypeLst, "dataProvider")];
+                    DisplayUtility.bindProperties(new ArrayCollection(bindings), function execute() : void {
+                            var event : TransportUnitTypeEvent = new TransportUnitTypeEvent(TransportUnitTypeEvent.SAVE_TRANSPORT_UNIT_TYPE);
+                            event.data = selected;
+                            dispatchEvent(event);
+                        });
+                    selected = null;                            
+                } else {
+                	Alert.show("Some TransportUnitType data is not valid, please verify changes!");
+                }
+            }
+
+            private function refresh() : void {
+                dispatchEvent(new TransportUnitTypeEvent(TransportUnitTypeEvent.LOAD_ALL_TRANSPORT_UNIT_TYPES));
+            }
+            
+            private function retAllowedLocationType(item:*):String {
+            	var tpr:TypePlacingRule = item as TypePlacingRule;
+            	return tpr.allowedLocationType.type + " - " + tpr.allowedLocationType.description;
+            }
+            
+            private function assignAllowedLocationTypes() : void {
+                var pop:ListDialog = ListDialog(PopUpManager.createPopUp(this, ListDialog, true));
+                pop.panelHeaderText = "Assign a new Location Type";
+                pop.labelText = pop.panelHeaderText;
+                pop.submitBtnText = "Assign";
+                var toBeAssigned : ArrayCollection = commonModelLocator.allLocationTypes;
+                var index : int = -1;
+                for each (var rule : TypePlacingRule in selected.typePlacingRules) {
+                	for (var j : int = 0; j < toBeAssigned.length; j++) {
+                        if (rule.allowedLocationType.type == (toBeAssigned[j] as LocationType).type) {
+		                    toBeAssigned.removeItemAt(j);
+                        }
+                	}
+                }
+                pop.listToDisplay = toBeAssigned;
+                pop.formatFunction = labelFunctionLocationType;
+                PopUpManager.centerPopUp(pop);
+            }
+
+            private function labelFunctionLocationType(item : LocationType) : String {
+                return item.type + " - " + item.description;
+            }
+            
+            private function removeAllowedLocationTypes() : void {
+                var pop : ListDialog = ListDialog(PopUpManager.createPopUp(this, ListDialog, true));
+                pop.panelHeaderText = "Forbid Location Types";
+                pop.labelText = "Location Types to forbid";
+                pop.submitBtnText = "Remove";
+                pop.formatFunction = retAllowedLocationType;
+                PopUpManager.centerPopUp(pop);
+            }
+            
+            private function onDragComplete(event : DragEvent) : void {
+            	/*
+                var e:ApplicationEvent = new ApplicationEvent(ApplicationEvent.SAVE_MODULE);
+                var value:Object = event.dragSource.dataForFormat('items');
+                var index:int = modulesGrid.calculateDropIndex(event);
+                if (value != null) {
+                    moduleLocator.selectedModule = getModule(value as Module);
+                    moduleLocator.selectedModule.startupOrder = index;
+                    e.data = moduleLocator.selectedModule;
+                    e.dispatch();
+                }
+                traceOut();
+                */
+            }
+
+        ]]>
+    </mx:Script>
+
+    <mx:NumberFormatter id="numberFmt" precision="2"/>
+    <mx:NumberValidator id="numberVal" property="text"/>
+
+    <mx:HBox x="10" y="10" verticalAlign="middle" backgroundColor="#E8FB91" width="95%">
+        <mx:Label x="10" y="10" text="Transport Unit Types" fontSize="24"/>
+        <mx:VRule height="10"/>
+        <mx:Button id="addTUTBtn" enabled="{identity.ifAllGranted('COMMON_add_tut_button')}" buttonMode="true" mouseChildren="false" toolTip="Create a new Transport Unit Type" icon="@Embed(source='/assets/images/TransportUnitType--Add.png')" click="showCreateTransportUnitTypeDialog()"/>
+        <mx:VRule height="10"/>
+        <mx:Button id="removeTUTBtn" enabled="{identity.ifAllGranted('COMMON_delete_tut_button')}" buttonMode="true" mouseChildren="false" toolTip="Delete an existing Transport Unit Type" icon="@Embed(source='/assets/images/TransportUnitType--Delete.png')" click="showDeleteTransportUnitTypeDialog()"/>
+        <mx:VRule height="10"/>
+        <mx:Button id="saveTUTBtn" enabled="{identity.ifAllGranted('COMMON_save_tut_button')}" buttonMode="true" mouseChildren="false" toolTip="Save an existing Transport Unit Type" icon="@Embed(source='/assets/images/TransportUnitType--Save.png')" click="saveTransportUnitType()" />
+        <mx:VRule height="10"/>
+        <mx:Button id="refreshBtn" buttonMode="true" mouseChildren="false" toolTip="Refresh the list of Transport Unit Types" icon="@Embed(source='assets/images/icons/refresh.png')" click="refresh()"/>
+    </mx:HBox>
+    <mx:HRule x="10" y="53" width="95%"/>
+    <mx:HBox x="10" y="63" width="95%">
+        <mx:DataGrid id="transportUnitTypeGrd" dataProvider="{commonModelLocator.allTransportUnitTypes}" change="changeSelection(event)" allowMultipleSelection="true" width="100%" height="165">
+            <mx:columns>
+                <mx:DataGridColumn headerText="Type" dataField="type" />
+                <mx:DataGridColumn headerText="Length" dataField="length" width="50"/>
+                <mx:DataGridColumn headerText="Width" dataField="width" width="50"/>
+                <mx:DataGridColumn headerText="Height" dataField="height" width="50"/>
+                <mx:DataGridColumn headerText="Weight Tare" dataField="weightTare" width="50"/>
+                <mx:DataGridColumn headerText="Maximal Weight" dataField="weightMax" width="50"/>
+                <mx:DataGridColumn headerText="Description" dataField="description"/>
+            </mx:columns>
+        </mx:DataGrid>
+    </mx:HBox>
+    <mx:HBox y="236" x="9" width="95%">
+        <mx:Canvas backgroundColor="#E8FB91" backgroundAlpha="0.5" width="100%">
+            <mx:Label x="10" y="10" text="Transport Unit Type Details" fontWeight="bold"/>
+
+            <mx:Label x="10" y="38" text="Type" width="130" textAlign="right"/>
+            <mx:Text x="148" y="38" id="transportUnitTypeTxt" text="{selected.type}" width="160" fontWeight="bold"/>
+
+            <mx:Label x="10" y="64" text="Height" textAlign="right" width="130"/>
+            <mx:TextInput id="heightTxt" x="148" y="62" text="{selected.height}"/>
+
+            <mx:Label x="10" y="92" text="Length" width="130" textAlign="right"/>
+            <mx:TextInput id="lengthTxt" x="148" y="90" text="{selected.length}"/>
+
+            <mx:Label x="10" y="118" text="Width" width="130" textAlign="right"/>
+            <mx:TextInput id="widthTxt" x="148" y="116" text="{selected.width}"/>
+
+            <mx:Label x="10" y="144" text="Weight Tare" textAlign="right" width="130"/>
+            <mx:TextInput id="weightTareTxt" x="148" y="142" text="{selected.weightTare}"/>
+
+            <mx:Label x="10" y="170" text="Weight max" textAlign="right" width="130"/>
+            <mx:TextInput id="weightMaxTxt" x="148" y="168" text="{selected.weightMax}"/>
+
+            <mx:Label x="10" y="197" text="Description" textAlign="right" width="130"/>
+            <mx:TextArea id="descriptionTxt" x="148" y="196" text="{selected.description}" height="64"/>
+
+            <mx:Label x="10" y="267" text="Compatibility" textAlign="right" width="130" />
+            <mx:TextArea x="148" y="266" id="compatibilityTxt" width="160" height="64" text="{selected.compatibility}"/>
+
+            <mx:VRule x="316" y="38" height="300"/>
+            <mx:VRule x="574" y="38" height="300"/>
+            <mx:VRule x="34" y="36" height="310" strokeWidth="0"/>
+
+            <mx:Label text="Allowed on these Location Types :" fontWeight="bold" x="326" y="38"/>
+
+            <mx:HBox x="326" y="61" width="240" height="103" horizontalGap="0">
+                <mx:List id="allowedLocationTypeLst" width="100%" height="100%" labelFunction="retAllowedLocationType" dataProvider="{selected.typePlacingRules}" dragEnabled="true" dropEnabled="true" dragMoveEnabled="true" dragDrop="onDragComplete(event);"/>
+	            <mx:VBox height="100%" width="16" verticalAlign="middle">
+	                <mx:Image height="16" width="16" buttonMode="true" mouseChildren="false" enabled="{selected != null}" toolTip="Allow Location Types where this Transport Unit Type can be placed on" source="@Embed(source='assets/images/icons/plus.png')" click="assignAllowedLocationTypes()"/>
+	                <mx:Image height="16" width="16" buttonMode="true" mouseChildren="false" source="@Embed(source='assets/images/icons/minus.png')" toolTip="Forbid Location Types where this Transport Unit Type can be placed on" click="removeAllowedLocationTypes()"/>
+	            </mx:VBox>
+            </mx:HBox>
+            <mx:Label text="Allowed on other Transport Unit Types :" fontWeight="bold" x="326" y="170"/>
+            <mx:HBox x="326" y="194" width="240" height="103" horizontalGap="0">
+                <mx:List id="allowedTransportUnitTypeLst" width="100%" height="100%" labelField="allowedTransportUnitType" dataProvider="{selected.typeStackingRules}" dragEnabled="true" dropEnabled="true" dragMoveEnabled="true" dragDrop="onDragComplete(event);"/>
+                <mx:VBox height="100%" width="16" verticalAlign="middle">
+                    <mx:Image height="16" width="16" buttonMode="true" mouseChildren="false" source="@Embed(source='assets/images/icons/plus.png')"/>
+                    <mx:Image height="16" width="16" buttonMode="true" mouseChildren="false" source="@Embed(source='assets/images/icons/minus.png')"/>
+                </mx:VBox>
+            </mx:HBox>
+
+            <mx:HRule x="326" y="305" width="286" strokeWidth="0" visible="{hasImage}" />
+            <mx:Label x="584" y="38" text="Image" fontWeight="bold" visible="{hasImage}" />
+            <mx:Image x="584" y="61" visible="{hasImage}" />
+        </mx:Canvas>
+    </mx:HBox>
+</mx:Canvas>

@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!--
+/*
+ * openwms.org, the Open Warehouse Management System.
+ *
+ * This file is part of openwms.org.
+ *
+ * openwms.org is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as 
+ * published by the Free Software Foundation, either version 3 of the
+ * License, or (at your option) any later version.
+ *
+ * openwms.org is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with this software. If not, write to the Free
+ * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
+ * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
+ */
+-->
+<view:AppBase xmlns:mx="http://www.adobe.com/2006/mxml" xmlns:business="org.openwms.web.flex.client.business.*"
+	xmlns:control="org.openwms.web.flex.client.control.*" xmlns:event="org.openwms.web.flex.client.event.*"
+	xmlns:view="org.openwms.web.flex.client.view.*" layout="absolute" backgroundGradientAlphas="[1.0, 1.0]"
+	backgroundGradientColors="[#FFFFFF, #FFFFFF]" creationComplete="init()" preinitialize="preInit(event)">
+
+    <mx:Metadata>
+        [Name("application")]
+        [ManagedEvent(name="APP.MERGE_GRANTS")]
+	    [ManagedEvent(name="APP.READY_TO_UNLOAD")]
+        [ManagedEvent(name="APP.CLEAR_MODEL")]
+        [ManagedEvent(name="LOAD_ALL_MODULES")]
+        [ManagedEvent(name="UNLOAD_ALL_MODULES")]
+        [ManagedEvent(name="I18N_LOAD_ALL")]
+        [ManagedEvent(name="PROPERTY.LOAD_ALL_PROPERTIES")]
+        [ResourceBundle("appMain")]
+        [ResourceBundle("appError")]
+    </mx:Metadata>
+
+    <mx:Script>
+    	<![CDATA[
+    		import org.openwms.web.flex.client.event.SwitchScreenEvent;
+            import org.openwms.web.flex.client.util.DisplayUtility;
+            import org.openwms.web.flex.client.util.I18nUtil;
+    	]]>
+    </mx:Script>
+
+	<!-- Styles -->
+	<mx:Style source="assets/css/main.css" />
+	<mx:Style source="assets/css/styles.css" />
+	
+    <mx:XMLList id="stdMenu">
+        <menuitem label="{I18nUtil.trans(I18nUtil.APP_MAIN, 'menu_app_applicaton')}">
+            <menuitem label="{I18nUtil.trans(I18nUtil.APP_MAIN, 'menu_app_users')}" enabled="{identity.ifAllGranted('APP_User_Management')}" action="{SwitchScreenEvent.SHOW_USER_MGMT_VIEW}" />
+            <menuitem label="{I18nUtil.trans(I18nUtil.APP_MAIN, 'menu_app_roles')}" enabled="{identity.ifAllGranted('APP_Role_Management')}" action="{SwitchScreenEvent.SHOW_ROLE_MGMT_VIEW}" />
+            <menuitem label="{I18nUtil.trans(I18nUtil.APP_MAIN, 'menu_app_modules')}" enabled="{identity.ifAllGranted('APP_Module_Management')}" action="{SwitchScreenEvent.SHOW_MODULE_MGMT_VIEW}" />
+            <menuitem label="{I18nUtil.trans(I18nUtil.APP_MAIN, 'menu_app_preferences')}" enabled="{identity.ifAllGranted('APP_Preferences')}" action="{SwitchScreenEvent.SHOW_SETTING_MGMT_VIEW}" />
+        </menuitem>
+    </mx:XMLList>
+
+	<mx:VBox height="100%" width="100%" verticalGap="0" backgroundColor="#C2DAEF">
+        <view:HeaderComponent />
+   		<mx:Canvas width="100%" height="25" backgroundImage="@Embed(source='assets/images/breadcrumbs.jpg')" backgroundSize="100%">
+			<mx:MenuBar id="mainMenuBar" labelField="@label" itemClick="onMenuChange(event);" color="#00286e" fontWeight="bold" fontSize="12" alpha="0.0">
+			</mx:MenuBar>
+		</mx:Canvas>
+		<mx:HBox width="100%" height="100%" horizontalAlign="center" verticalAlign="middle">
+		<mx:ViewStack id="appViewStack" selectedIndex="{identity.loggedIn ? DisplayUtility.getView(modelLocator.actualView,appViewStack) : DisplayUtility.getView(SwitchScreenEvent.SHOW_STARTSCREEN,appViewStack)}" width="100%" height="100%">
+            <view:EmptyScreenView name="{SwitchScreenEvent.SHOW_STARTSCREEN}" />
+            <view:ModuleManagementView name="{SwitchScreenEvent.SHOW_MODULE_MGMT_VIEW}" />
+ 			<view:UserManagementView name="{SwitchScreenEvent.SHOW_USER_MGMT_VIEW}" />
+            <view:RoleManagementView name="{SwitchScreenEvent.SHOW_ROLE_MGMT_VIEW}" />
+            <view:SettingManagementView name="{SwitchScreenEvent.SHOW_SETTING_MGMT_VIEW}" />
+		</mx:ViewStack>
+        </mx:HBox>
+	</mx:VBox>
+
+</view:AppBase>
