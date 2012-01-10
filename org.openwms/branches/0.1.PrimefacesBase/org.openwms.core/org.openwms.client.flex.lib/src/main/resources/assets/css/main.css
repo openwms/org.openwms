@@ -1,0 +1,98 @@
+/*
+ * openwms.org, the Open Warehouse Management System.
+ *
+ * This file is part of openwms.org.
+ *
+ * openwms.org is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as
+ * published by the Free Software Foundation, either version 3 of the
+ * License, or (at your option) any later version.
+ *
+ * openwms.org is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with this software. If not, write to the Free
+ * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
+ * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
+
+ * Main colors:
+ * blue		: 2e7bb1
+ * yellow	: e1e76b 
+ *
+ */
+Application {
+	paddingLeft: 5px;
+	paddingRight: 5px;
+	paddingTop: 5px;
+	paddingBottom: 5px;
+	horizontalAlign: "left";
+	backgroundGradientColors: #2E7BB1, #FFFFFF;
+	backgroundColor: #FFFFFF;
+	font-family: "Verdana";
+}
+
+.headerArea {
+	width: 200px;
+	textAlign: "center";
+}
+
+.userNameListFont {
+	font-size: 10pt;
+	font-weight: bold;
+	horizontalAlign: "left";
+}
+
+.userFullnameListFont {
+	font-size: 8pt;
+	horizontalAlign: "left";
+}
+
+.userListItem {
+	border-style: solid;
+	border-shickness: 2;
+	border-color: #f9f9f9;
+	fill-colors: #419af2, #0865c4;
+	fill-alphas: 1, 1;
+	drop-shadow-enabled: true;
+	topCornerRadius: 0;
+	bottomCornerRadius: 0;
+	corner-radius: 0;
+	header-height: 0;
+}
+
+.selectedUserListItem {
+	border-style: solid;
+	border-shickness: 2;
+	border-color: #f9f9f9;
+	fill-colors: #f1f07c, #f1f07c;
+	fill-alphas: 1, 1;
+	drop-shadow-enabled: true;
+	topCornerRadius: 0;
+	bottomCornerRadius: 0;
+	corner-radius: 0;
+	header-height: 0;
+	backgroundColor: #f1f07c;
+}
+
+.userListContainer {
+	paddingLeft: 0px;
+	paddingRight: 0px;
+	paddingTop: 0px;
+	paddingBottom: 0px;
+	horizontalAlign: "left";
+}
+
+.frameContainerSkin {
+	background-image: Embed("assets/images/frame_container_skin_blue.png", scaleGridLeft =
+		"10", scaleGridRight = "430", scaleGridTop = "60", scaleGridBottom =
+		"64");
+	background-size: "100%";
+}
+
+.panelSkin {
+	border-skin: Embed("assets/images/clearskin/panel_skin.png", scaleGridLeft = "10",
+		scaleGridRight = "274", scaleGridTop = "40", scaleGridBottom = "101");
+}

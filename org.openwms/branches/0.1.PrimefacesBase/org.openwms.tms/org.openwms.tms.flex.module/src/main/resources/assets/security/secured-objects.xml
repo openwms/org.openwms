@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<grants>
+    <grant>
+        <name>TMS_TransportOrders_screen</name>
+        <description>Open the screen of TransportOrders</description>
+    </grant>
+    <grant>
+        <name>TMS_create_TO_button</name>
+        <description>Permission to create a new TransportOrder</description>
+    </grant>
+    <grant>
+        <name>TMS_cancel_TO_button</name>
+        <description>Permission to cancel active TransportOrders</description>
+    </grant>
+    <grant>
+        <name>TMS_show_TO_history_button</name>
+        <description>Permission to see the history of a TransportOrder</description>
+    </grant>
+    <grant>
+        <name>TMS_redirect_TO_button</name>
+        <description>Permission to redirect active TransportOrders</description>
+    </grant>
+</grants>

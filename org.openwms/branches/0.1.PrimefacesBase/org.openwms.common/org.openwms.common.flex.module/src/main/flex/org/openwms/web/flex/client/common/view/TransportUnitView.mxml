@@ -1,0 +1,223 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+/*
+ * openwms.org, the Open Warehouse Management System.
+ *
+ * This file is part of openwms.org.
+ *
+ * openwms.org is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as 
+ * published by the Free Software Foundation, either version 3 of the
+ * License, or (at your option) any later version.
+ *
+ * openwms.org is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with this software. If not, write to the Free
+ * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
+ * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
+ */
+-->
+<mx:Canvas xmlns:mx="http://www.adobe.com/2006/mxml" xmlns:comp="org.openwms.web.flex.client.component.*" width="100%" height="100%" show="onShow()" backgroundColor="#C2DAEF">
+
+    <mx:Metadata>
+        [Name]
+        [ManagedEvent(name="LOAD_TRANSPORT_UNITS")]
+        [ManagedEvent(name="LOAD_ALL_LOCATIONS")]
+        [ManagedEvent(name="LOAD_ALL_TRANSPORT_UNIT_TYPES")]
+        [ManagedEvent(name="DELETE_TRANSPORT_UNIT")]
+        [ResourceBundle("commonMain")]
+    </mx:Metadata>
+
+	<mx:Script>
+    	<![CDATA[
+    		import flash.events.MouseEvent;
+    		import mx.controls.dataGridClasses.DataGridColumn;
+    		import mx.messaging.channels.StreamingAMFChannel;
+    		import mx.events.ListEvent;
+    		import mx.collections.ArrayCollection;
+    		import mx.controls.Alert;
+			import mx.managers.PopUpManager;
+    		
+			import org.granite.tide.spring.Identity;
+            
+            import org.openwms.common.domain.TransportUnit;
+            import org.openwms.common.domain.values.TransportUnitState;
+    		import org.openwms.web.flex.client.common.event.TransportUnitEvent;
+            import org.openwms.web.flex.client.common.event.LocationEvent;
+            import org.openwms.web.flex.client.common.event.TransportUnitTypeEvent;
+    		import org.openwms.web.flex.client.common.model.IconLocator;
+            import org.openwms.web.flex.client.common.model.CommonModelLocator;
+    		import org.openwms.web.flex.client.common.view.dialogs.CreateTransportUnitDialog;
+    		import org.openwms.web.flex.client.common.view.dialogs.ConfirmDeletionDialog;
+            import org.openwms.web.flex.client.common.view.dialogs.TransportUnitDetailsDialog;
+            import org.openwms.web.flex.client.common.util.I18nUtil;
+    		
+		    [Inject]
+		    [Bindable]
+		    /**
+		     * Injected Model.
+		     */
+            public var commonModelLocator : CommonModelLocator;
+            [Inject]
+            [Bindable]
+            /**
+             * We need to have Granites Identity injected.
+             */
+            public var identity : Identity;
+            
+            [Bindable]
+            private var selected : TransportUnit;
+             
+            private var tu : TransportUnit = new TransportUnit();
+            
+    		private function onShow() : void {
+    			if (commonModelLocator.allTransportUnits.length == 0) {
+                    dispatchEvent(new TransportUnitEvent(TransportUnitEvent.LOAD_TRANSPORT_UNITS));
+                }
+                if (commonModelLocator.allLocations.length == 0) {
+                    dispatchEvent(new LocationEvent(LocationEvent.LOAD_ALL_LOCATIONS));
+                }
+                if (commonModelLocator.allTransportUnitTypes.length == 0) {
+                    dispatchEvent(new TransportUnitTypeEvent(TransportUnitTypeEvent.LOAD_ALL_TRANSPORT_UNIT_TYPES));
+                }
+    		}
+    		
+            private function showCreateTransportUnitDialog() : void {
+                var pop : CreateTransportUnitDialog = CreateTransportUnitDialog(PopUpManager.createPopUp(this, CreateTransportUnitDialog, true));
+                PopUpManager.centerPopUp(pop);
+            }
+            
+            private function deleteTransportUnitDialog() : void {
+                if (transportUnitsGrid.selectedIndices.length == 0) {
+                    Alert.show("Please select at least one Transport Unit to delete");
+                    return;                	
+                }
+                var pop : ConfirmDeletionDialog = ConfirmDeletionDialog(PopUpManager.createPopUp(this, ConfirmDeletionDialog, true));
+                pop.messageText = "Delete selected Transport Units";
+                pop.items = new ArrayCollection(transportUnitsGrid.selectedItems);
+                PopUpManager.centerPopUp(pop);
+            }
+
+            private function showDetails() : void {
+                var pop:TransportUnitDetailsDialog = TransportUnitDetailsDialog(PopUpManager.createPopUp(this, TransportUnitDetailsDialog, true));
+                pop.transportUnits = new ArrayCollection(transportUnitsGrid.selectedItems);
+                PopUpManager.centerPopUp(pop);            	
+            }
+
+            private function onRowClick(event : ListEvent) : void {
+                selected = event.currentTarget.selectedItem as TransportUnit;
+                stateCmb.selectedItem = selected.state;
+                actualLocationCmb.selectedItem = selected.actualLocation;
+            }
+
+            private function refresh() : void {
+                selected = null;
+                var event : TransportUnitEvent = new TransportUnitEvent(TransportUnitEvent.LOAD_TRANSPORT_UNITS);
+                dispatchEvent(event);
+            }
+            
+            private function save() : void {
+                if (selected == null) {
+                	Alert.show("Select a TransportUnit first");
+                	return
+                }
+                var event : TransportUnitEvent = new TransportUnitEvent(TransportUnitEvent.SAVE_TRANSPORT_UNIT);
+                event.data = selected;
+                dispatchEvent(event);
+            }
+
+	        public static function formatBarcode(item : Object, dg : DataGridColumn) : String {
+	            if (item[dg.dataField] != null) {
+	                return String(item[dg.dataField].barcode);
+	            }
+	            return "--";
+	        }
+
+            private function formatDateField(item : Object, dg : DataGridColumn) : String {
+                if (item.creationDate != null) {
+                    return dateFormatter.format(item.creationDate);
+                }
+                return "n/a";
+            }
+    	]]>
+	</mx:Script>
+	
+    <mx:DateFormatter id="dateFormatter" formatString="{CommonModelLocator.DT_FORMAT_STRING}"/>
+
+	<mx:HBox x="10" y="10" verticalAlign="middle" width="95%" backgroundColor="#F9FBB7">
+	    <mx:Label x="10" y="10" text="Transport Units" fontSize="24"/>
+	    <mx:VRule height="10"/>
+	    <mx:Button id="addTransportUnitBtn" enabled="{identity.ifAllGranted('COMMON_add_tu_button')}" buttonMode="true" mouseChildren="false" toolTip="Create a new Transport Unit" icon="@Embed(source='/assets/images/TransportUnit--Add.png')" click="showCreateTransportUnitDialog()"/>
+	    <mx:VRule height="10"/>
+	    <mx:Button id="deleteTransportUnitBtn" enabled="{identity.ifAllGranted('COMMON_delete_tu_button')}" buttonMode="true" mouseChildren="false" toolTip="Delete an existing Transport Unit" icon="@Embed(source='/assets/images/TransportUnit--Delete.png')" click="deleteTransportUnitDialog()" />
+        <mx:VRule height="10"/>
+        <mx:Button id="saveTransportUnitBtn" enabled="{identity.ifAllGranted('COMMON_save_tu_button')}" buttonMode="true" mouseChildren="false" toolTip="Save an existing Transport Unit" icon="@Embed(source='/assets/images/TransportUnit--Save.png')" click="save()" />
+        <mx:VRule height="10"/>
+        <mx:Button id="refreshTransportUnitsBtn" buttonMode="true" mouseChildren="false" toolTip="Refresh the list of Transport Units" icon="@Embed(source='assets/images/icons/refresh.png')" click="refresh()"/>
+        <mx:VRule height="10"/>
+        <mx:Button id="showTransportUnitDetailsBtn" buttonMode="true" mouseChildren="false" toolTip="Show details of an existing Transport Unit" icon="@Embed(source='/assets/images/TransportUnit--Edit.png')" click="showDetails()" />
+        <mx:VRule height="10"/>
+	    <mx:Button id="showTransportUnitHistoryBtn" enabled="{identity.ifAllGranted('COMMON_show_tu_history_button')}" buttonMode="true" mouseChildren="false" toolTip="Show history information about an Transport Unit" icon="@Embed(source='/assets/images/TransportUnit--History.png')" click="deleteTransportUnitDialog()" />
+	</mx:HBox>
+    <mx:HRule x="10" y="53" width="95%"/>
+
+	<mx:HBox x="10" y="63" width="95%" height="100%">
+		<mx:Canvas height="95%" backgroundColor="#F9FBB7" backgroundAlpha="1.0">
+			
+			<mx:Label text="Transport Unit" fontWeight="bold" textAlign="left" x="34" y="10"/>
+			<mx:Label text="Transport Unit Type" fontWeight="bold" textAlign="left" x="34" y="396"/>
+		       <mx:Text text="{selected.barcode}" fontWeight="bold"  x="148" y="36"/>
+		       <mx:Text text="{selected.transportUnitType.type}" fontWeight="bold"  x="148" y="420"/>
+			
+			<mx:Label text="State" fontWeight="normal" width="130" textAlign="left" x="10" y="62"/>
+			<mx:Label text="Barcode" fontWeight="normal" width="130" textAlign="left" x="10" y="36"/>
+			<mx:Label text="Type" fontWeight="normal" width="130" textAlign="left" x="10" y="420"/>
+		       <comp:SuggestComboBox id="stateCmb" x="148" y="60" dataProvider="{TransportUnitState.constants}" />
+			
+			<mx:Label text="Current Location" fontWeight="normal" width="130" textAlign="left" x="10" y="90"/>
+			<comp:SuggestComboBox x="148" y="88" id="actualLocationCmb" dataProvider="{commonModelLocator.allLocations}"/>
+			
+			<mx:Label text="Moved at" fontWeight="normal" width="130" textAlign="left" x="10" y="116"/>
+		       <mx:Text text="{dateFormatter.format(selected.actualLocationDate)}" fontWeight="normal"  x="148" y="116"/>
+		       
+		       <mx:Label text="Last Inventory at" fontWeight="normal" width="130" textAlign="left" x="10" y="142"/>
+		       <mx:Text text="{(selected.inventoryDate == null) ? '--' : dateFormatter.format(selected.inventoryDate)}" fontWeight="normal"  x="148" y="142"/>
+		       
+		       <mx:Label text="Last Inventory by" fontWeight="normal" width="130" textAlign="left" x="10" y="168"/>
+		       <mx:Text text="{(selected.inventoryUser == null) ? '--' : selected.inventoryUser.username}" fontWeight="normal"  x="148" y="168"/>
+			
+			<mx:Label text="Created at" fontWeight="normal" width="130" textAlign="left" x="10" y="220"/>
+		       <mx:Text text="{dateFormatter.format(selected.creationDate)}" fontWeight="normal"  x="148" y="220"/>
+		       
+		       <mx:CheckBox id="emptyChk" x="148" y="261" label="Empty" selected="{selected.isEmpty()}"/>
+		       
+		       <mx:Label x="10" y="291" text="Weight" width="130" textAlign="left"/>
+		       <mx:Label id="weightLbl" x="148" y="291" text="{selected.weight}"/>
+			
+			<mx:Label text="Errors" fontWeight="normal" width="130" textAlign="left" x="10" y="317"/>
+		       <mx:List x="148" y="314" width="140" height="64" />
+			
+			<mx:Label text="Placed On" fontWeight="normal" width="130" textAlign="left" x="10" y="194"/>
+			<mx:Text text="{(selected.parent == null) ? '--' : selected.parent.barcode}" fontWeight="normal"  x="148" y="194"/>
+			
+			<mx:HRule x="10" y="386" width="309"/>
+			<mx:Image x="293" y="314" height="16" width="16" mouseChildren="false" source="@Embed(source='assets/images/icons/minus.png')"/>
+			<mx:Image x="10" y="10" source="@Embed(source='/assets/images/TransportUnit.png')"/>
+			<mx:Image x="10" y="396" source="@Embed(source='/assets/images/TransportUnitType.png')"/>
+		</mx:Canvas>
+		<mx:DataGrid id="transportUnitsGrid" height="95%" doubleClickEnabled="true" doubleClick="showDetails()" change="onRowClick(event)" allowMultipleSelection="true" dataProvider="{commonModelLocator.allTransportUnits}" width="100%">
+			<mx:columns>
+				<mx:DataGridColumn width="130" headerText="Barcode" dataField="barcode" />
+			          <mx:DataGridColumn width="80" headerText="Type" dataField="transportUnitType" />
+			          <mx:DataGridColumn width="100" headerText="State" dataField="state" />
+				<mx:DataGridColumn width="160" headerText="Current Location" dataField="actualLocation" />
+			          <mx:DataGridColumn width="130" headerText="Placed on" dataField="parent" labelFunction="formatBarcode" />
+			          <mx:DataGridColumn width="150" headerText="Created" dataField="creationDate" labelFunction="formatDateField"/>
+			</mx:columns>
+		</mx:DataGrid>
+	</mx:HBox>
+</mx:Canvas>
