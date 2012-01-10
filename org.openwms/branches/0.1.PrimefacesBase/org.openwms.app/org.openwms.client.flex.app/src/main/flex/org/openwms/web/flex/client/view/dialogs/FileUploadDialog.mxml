@@ -1,0 +1,175 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!--
+/*
+ * openwms.org, the Open Warehouse Management System.
+ *
+ * This file is part of openwms.org.
+ *
+ * openwms.org is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as 
+ * published by the Free Software Foundation, either version 3 of the
+ * License, or (at your option) any later version.
+ *
+ * openwms.org is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with this software. If not, write to the Free
+ * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
+ * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
+ */
+-->
+<mx:Panel xmlns:mx="http://www.adobe.com/2006/mxml" verticalScrollPolicy="off" horizontalScrollPolicy="off" 
+ show="onShow();" creationComplete="onShow();" title="{I18nUtil.trans(I18nUtil.APP_MAIN, 'txt_file_upload_title')}" fontSize="12" height="269">
+
+    <mx:Metadata>
+        [Name]
+        [ManagedEvent(name="LOAD_ALL_USERS")]
+        [ResourceBundle("appMain")]
+    </mx:Metadata>
+
+	<mx:Script>
+    	<![CDATA[
+    		import flash.events.Event;
+            import flash.events.KeyboardEvent;
+            import flash.events.ProgressEvent;
+    	    import flash.net.FileReference;
+    	    import flash.net.URLRequest;
+            import mx.controls.Alert;
+    	    import mx.managers.PopUpManager;
+
+            import org.openwms.web.flex.client.model.ModelLocator;
+            import org.openwms.web.flex.client.IObservable;
+            import org.openwms.web.flex.client.util.I18nUtil;
+    		
+            [Inject]
+            [Bindable]
+            /**
+             * Inject a model.
+             */
+            public var modelLocator : ModelLocator;            
+            [Bindable]
+            /**
+             * Pass in any callback function of type IObservable that is called when
+             * the transfer completes successfully.
+             */
+            public var callback : IObservable; 
+    		private var tmpFileName : String;
+    	    private var fileRef : FileReference;
+    	
+            private function onShow() : void {
+                fileRef = new FileReference();
+                fileRef.addEventListener(Event.COMPLETE, completeEvent);
+                fileRef.addEventListener(Event.SELECT, selectEvent);
+                fileRef.addEventListener(ProgressEvent.PROGRESS, progressEvent);
+    			this.addEventListener(KeyboardEvent.KEY_DOWN, keyEventHandler);
+                browseBtn.setFocus();
+    			PopUpManager.centerPopUp(this);
+            }
+    		
+    		private function keyEventHandler(event : KeyboardEvent) : void {
+    			if(event.keyCode == 27) {
+                    closeDialog(event);
+    			}
+    		}
+    		
+            /**
+             * Cancel upload in progress, unregister listeners and close the dialog.
+             *
+             * @param event Unused
+             */
+    		protected function closeDialog(event : Event = null) : void {
+    			fileRef.cancel();
+    			fileRef.removeEventListener(Event.COMPLETE, completeEvent);
+    			fileRef.removeEventListener(Event.SELECT, selectEvent);
+    			fileRef.removeEventListener(ProgressEvent.PROGRESS, progressEvent);
+    			this.removeEventListener(KeyboardEvent.KEY_DOWN, keyEventHandler);
+    			PopUpManager.removePopUp(this);
+    		}
+
+            /**
+             * Open browse dialog.
+             *
+             * @param event Unused
+             */
+            protected function browse(event : Event = null) : void {
+                fileRef.browse();
+            }            
+    		
+            /**
+             * Call closeDialog.
+             *
+             * @param event Unused
+             */
+            protected function cancel(event : Event = null) : void {
+                closeDialog();
+            }            
+
+            /**
+             * Upload file.
+             *
+             * @param event Unused
+             */
+            protected function submit(event : Event = null) : void {
+                uploadFile(uploadURL.text);
+            }            
+
+    		private function ioErrorEvent(event : IOErrorEvent) : void {
+    			Alert.show("IOError: " + event.text);
+    		}
+    		
+    		private function selectEvent(event : Event) : void {
+    			uploadBtn.enabled = true;
+    			filename.text = fileRef.name;
+    			progressBar.setProgress(0, 100);
+    			progressBar.label = I18nUtil.trans(I18nUtil.APP_MAIN, "lbl_file_upload_progress_start");
+    		}
+    	
+    		private function progressEvent(event : ProgressEvent) : void {
+    			progressBar.setProgress(event.bytesLoaded, event.bytesTotal);
+    		}
+    	
+    		private function completeEvent(event : Event) : void {
+    			progressBar.label = I18nUtil.trans(I18nUtil.APP_MAIN, "lbl_file_upload_completed");
+    			filename.text += I18nUtil.trans(I18nUtil.APP_MAIN, "txt_file_upload_uploaded");
+    			uploadBtn.enabled = false;
+    			tmpFileName = fileRef.name;
+    			callback.notify();
+                closeDialog();
+    		}
+    		
+    		private function uploadFile(endpoint : String) : void {
+    			var request : URLRequest = new URLRequest(modelLocator.UPLOAD_URL);
+    			var params : URLVariables = new URLVariables();
+    			request.contentType = "multipart/form-data";
+       	 		params.directoryName = modelLocator.DIRECTORY_NAME;
+       	 		params.selectedUser = modelLocator.selectedUser.username;
+        		request.data = params;
+        		fileRef.upload(request);
+    			progressBar.label = I18nUtil.trans(I18nUtil.APP_MAIN, "lbl_file_upload_progresssing");
+    		}
+    		
+    	]]>
+	</mx:Script>
+	<mx:Canvas>
+		<mx:Form y="10" height="160">
+			<mx:FormItem label="{I18nUtil.trans(I18nUtil.APP_MAIN, 'lbl_file_upload_url')}" fontSize="14" width="100%">
+				<mx:TextInput id="uploadURL" width="100%" color="#2c2c2c" text="{'/upload'}" enabled="false" />
+			</mx:FormItem>
+			<mx:FormItem label="{I18nUtil.trans(I18nUtil.APP_MAIN, 'lbl_file_upload_selected_file')}" fontSize="14" width="100%">
+				<mx:TextInput id="filename" enabled="false" width="100%"/>
+			</mx:FormItem>
+			<mx:HRule width="100%" tabEnabled="false" />
+			<mx:FormItem label="{I18nUtil.trans(I18nUtil.APP_MAIN, 'lbl_file_upload_progress')}" width="100%" fontSize="14">
+				<mx:ProgressBar id="progressBar" mode="manual" width="100%"/>
+			</mx:FormItem>
+		</mx:Form>
+	</mx:Canvas>
+	<mx:HBox width="100%" horizontalAlign="center">
+		<mx:Button id="browseBtn" label="{I18nUtil.trans(I18nUtil.APP_MAIN, 'btn_browse')}" click="browse(event);" />
+		<mx:Button id="uploadBtn" label="{I18nUtil.trans(I18nUtil.APP_MAIN, 'btn_upload')}" enabled="false" click="submit(event);" />
+		<mx:Button id="closeBtn" label="{I18nUtil.trans(I18nUtil.APP_MAIN, 'btn_close')}" enabled="true" click="cancel(event);" />
+	</mx:HBox>
+</mx:Panel>

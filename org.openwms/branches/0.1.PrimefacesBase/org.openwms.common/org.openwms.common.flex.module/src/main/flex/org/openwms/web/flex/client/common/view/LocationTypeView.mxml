@@ -1,0 +1,182 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+/*
+ * openwms.org, the Open Warehouse Management System.
+ *
+ * This file is part of openwms.org.
+ *
+ * openwms.org is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as 
+ * published by the Free Software Foundation, either version 3 of the
+ * License, or (at your option) any later version.
+ *
+ * openwms.org is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with this software. If not, write to the Free
+ * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
+ * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
+ */
+-->
+<mx:Canvas xmlns:mx="http://www.adobe.com/2006/mxml" width="100%" height="100%" backgroundColor="#C2DAEF" show="onShow()">
+
+    <mx:Metadata>
+        [Name]
+        [ManagedEvent(name="SAVE_LOCATION_TYPE")]
+        [ManagedEvent(name="LOAD_ALL_LOCATION_TYPES")]
+        [ResourceBundle("commonMain")]        
+        [ResourceBundle("commonEntity")]        
+    </mx:Metadata>
+
+    <mx:Script>
+        <![CDATA[
+        	import mx.binding.utils.ChangeWatcher;
+            import mx.binding.utils.BindingUtils;
+            import mx.events.ListEvent;
+            import mx.collections.ArrayCollection;
+            import mx.controls.Alert;
+            import mx.managers.PopUpManager;
+			
+			import org.granite.tide.spring.Identity;
+            
+            import org.openwms.common.domain.LocationType;
+            import org.openwms.web.flex.client.common.event.LocationTypeEvent;
+            import org.openwms.web.flex.client.common.model.CommonModelLocator;
+            import org.openwms.web.flex.client.common.view.dialogs.ConfirmDeletionLocationTypeDialog;
+            import org.openwms.web.flex.client.common.view.dialogs.CreateLocationTypeDialog;
+			import org.openwms.web.flex.client.util.ValidationUtil;
+            import org.openwms.web.flex.client.util.DisplayUtility;
+        	import org.openwms.web.flex.client.util.BindingProperty;
+            import org.openwms.web.flex.client.common.util.I18nUtil;
+        	
+		    [Inject]
+		    [Bindable]
+		    /**
+		     * Injected Model.
+		     */
+            public var commonModelLocator : CommonModelLocator;
+            [Inject]
+            [Bindable]
+            /**
+             * Inject identity.
+             */
+            public var identity : Identity;
+            [Bindable]
+            private var selected : LocationType;
+            [Bindable]
+            private var changed : Boolean = false;
+
+            /**
+             * OnShow load all LocationTypes if they weren't loaded before.
+             */
+            private function onShow() : void {
+                if (commonModelLocator.allLocationTypes.length == 0) {
+                    dispatchEvent(new LocationTypeEvent(LocationTypeEvent.LOAD_ALL_LOCATION_TYPES));
+                }
+            }
+
+            private function showCreateLocationTypeDialog() : void {
+                var pop : CreateLocationTypeDialog = CreateLocationTypeDialog(PopUpManager.createPopUp(this, CreateLocationTypeDialog, true));
+                PopUpManager.centerPopUp(pop);
+            }
+
+            private function showDeleteLocationTypeDialog() : void {
+                if (locationTypeGrd.selectedIndices.length == 0) {
+                    Alert.show(I18nUtil.trans(I18nUtil.COMMON_MAIN, "info_locationTypeView_select_locationType"));
+                    return;
+                }
+                selected = null;
+                var pop : ConfirmDeletionLocationTypeDialog = ConfirmDeletionLocationTypeDialog(PopUpManager.createPopUp(this, ConfirmDeletionLocationTypeDialog, true));
+                pop.messageText = I18nUtil.trans(I18nUtil.COMMON_MAIN, "txt_deleteLocationTypeDialog_header");
+                pop.items = new ArrayCollection(locationTypeGrd.selectedItems);
+                PopUpManager.centerPopUp(pop);
+            }
+
+            private function onChange(event:ListEvent) : void {
+                selected = event.currentTarget.selectedItem as LocationType;
+            }
+
+            private function save() : void {
+                if (changed && 
+                    ValidationUtil.validateAndFormat(lengthTxt, numberVal) &&
+                    ValidationUtil.validateAndFormat(widthTxt, numberVal) &&
+                    ValidationUtil.validateAndFormat(heightTxt, numberVal)) {
+                    	
+                    var bindings : Array = [new BindingProperty(selected, "length", lengthTxt, "text"),
+                                            new BindingProperty(selected, "width", widthTxt, "text"),  
+                                            new BindingProperty(selected, "height", heightTxt, "text"),  
+                                            new BindingProperty(selected, "description", descriptionTxt, "text")];
+                    DisplayUtility.bindProperties(new ArrayCollection(bindings), function execute() : void {
+                            var event : LocationTypeEvent = new LocationTypeEvent(LocationTypeEvent.SAVE_LOCATION_TYPE);
+                            event.data = selected;
+                            dispatchEvent(event);
+                        });
+                    selected = null;                            
+                    changed = false;
+                }
+            }
+
+            private function refresh() : void {
+                var event : LocationTypeEvent = new LocationTypeEvent(LocationTypeEvent.LOAD_ALL_LOCATION_TYPES);
+                dispatchEvent(event);
+                selected = null;
+                changed = false;
+            }
+
+            private function validate(event : Event) : void {
+            	changed = changed || ValidationUtil.validateAndFormat(event.currentTarget as TextInput, numberVal);
+            }
+        ]]>
+    </mx:Script>
+
+    <mx:NumberValidator id="numberVal" property="text"/>
+
+    <mx:HBox x="10" y="10" verticalAlign="middle" width="95%" backgroundColor="#C6FFC7">
+        <mx:Label x="10" y="10" text="{I18nUtil.trans(I18nUtil.COMMON_MAIN, 'txt_locationTypeView_header')}" fontSize="24"/>
+        <mx:VRule height="10"/>
+        <mx:Button id="addBtn" enabled="{identity.ifAllGranted('COMMON_add_location_type_button')}" buttonMode="true" mouseChildren="false" toolTip="{I18nUtil.trans(I18nUtil.COMMON_MAIN, 'ttip_locationTypeView_createBtn')}" icon="@Embed(source='/assets/images/LocationType--Add.png')" click="showCreateLocationTypeDialog()"/>
+        <mx:VRule height="10"/>
+        <mx:Button id="removeBtn" enabled="{identity.ifAllGranted('COMMON_delete_location_types_button')}" buttonMode="true" mouseChildren="false" toolTip="{I18nUtil.trans(I18nUtil.COMMON_MAIN, 'ttip_locationTypeView_deleteBtn')}" icon="@Embed(source='/assets/images/LocationType--Delete.png')" click="showDeleteLocationTypeDialog()"/>
+        <mx:VRule height="10"/>
+        <mx:Button id="saveBtn" enabled="{identity.ifAllGranted('COMMON_save_location_type_button')}" buttonMode="true" mouseChildren="false" toolTip="{I18nUtil.trans(I18nUtil.COMMON_MAIN, 'ttip_locationTypeView_saveBtn')}" icon="@Embed(source='/assets/images/LocationType--Save.png')" click="save()"/>
+        <mx:VRule height="10"/>
+        <mx:Button id="refreshBtn" buttonMode="true" mouseChildren="false" toolTip="{I18nUtil.trans(I18nUtil.COMMON_MAIN, 'ttip_locationTypeView_reloadBtn')}" icon="@Embed(source='assets/images/icons/refresh.png')" click="refresh()"/>
+    </mx:HBox>
+    <mx:HRule x="10" y="53" width="95%"/>
+    <mx:HBox x="10" y="63" width="95%" height="100%">
+        <mx:Canvas id="locationTypeDetailsPnl" backgroundColor="#C6FFC7" backgroundAlpha="0.5" height="95%">
+            
+            <mx:Image x="10" y="10" mouseChildren="false" source="@Embed(source='/assets/images/LocationType.png')"/>
+            <mx:Label text="{I18nUtil.trans(I18nUtil.COMMON_MAIN, 'txt_locationTypeView_header')}" fontWeight="bold" textAlign="left" x="34" y="8"/>
+            <mx:Text text="{selected.type}" fontWeight="bold" x="148" y="34"/>
+            
+            <mx:Label text="{I18nUtil.trans(I18nUtil.COMMON_ENTITY, 'entity_locationType_description')}" textAlign="left" x="10" y="60"/>
+            <mx:Label text="{I18nUtil.trans(I18nUtil.COMMON_ENTITY, 'entity_locationType_type')}" textAlign="left" x="10" y="34"/>
+            <mx:TextArea id="descriptionTxt" keyUp="{changed = true;}" text="{selected.description}" width="200" height="64" x="148" y="59"/>
+            <mx:HRule x="10" y="406" width="350" strokeWidth="0"/>
+            
+            <mx:Label text="{I18nUtil.trans(I18nUtil.COMMON_ENTITY, 'entity_locationType_length')}" textAlign="left" x="10" y="133"/>
+            <mx:TextInput id="lengthTxt" keyUp="validate(event)" text="{selected.length}" width="60" x="148" y="131" textAlign="right"/>
+            
+            <mx:Label text="{I18nUtil.trans(I18nUtil.COMMON_ENTITY, 'entity_locationType_width')}" textAlign="left" x="10" y="159"/>
+            <mx:TextInput id="widthTxt" keyUp="validate(event)" text="{selected.width}" width="60" x="148" y="157" textAlign="right"/>
+            
+            <mx:Label text="{I18nUtil.trans(I18nUtil.COMMON_ENTITY, 'entity_locationType_height')}" textAlign="left" x="10" y="185"/>
+            <mx:TextInput id="heightTxt" keyUp="validate(event)" text="{selected.height}" width="60" x="148" y="183" textAlign="right"/>
+        
+        </mx:Canvas>
+        <mx:DataGrid id="locationTypeGrd" dataProvider="{commonModelLocator.allLocationTypes}" height="95%" allowMultipleSelection="true" width="100%" change="onChange(event)">
+            <mx:columns>
+                <mx:DataGridColumn headerText="{I18nUtil.trans(I18nUtil.COMMON_ENTITY, 'entity_locationType_type')}" dataField="type" width="50"/>
+                <mx:DataGridColumn headerText="{I18nUtil.trans(I18nUtil.COMMON_ENTITY, 'entity_locationType_length')}" dataField="length" width="50"/>
+                <mx:DataGridColumn headerText="{I18nUtil.trans(I18nUtil.COMMON_ENTITY, 'entity_locationType_width')}" dataField="width" width="50"/>
+                <mx:DataGridColumn headerText="{I18nUtil.trans(I18nUtil.COMMON_ENTITY, 'entity_locationType_height')}" dataField="height" width="50"/>
+                <mx:DataGridColumn headerText="{I18nUtil.trans(I18nUtil.COMMON_ENTITY, 'entity_locationType_description')}" dataField="description"/>
+            </mx:columns>
+        </mx:DataGrid>
+    </mx:HBox>
+
+</mx:Canvas>

@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+/*
+ * openwms.org, the Open Warehouse Management System.
+ *
+ * This file is part of openwms.org.
+ *
+ * openwms.org is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as 
+ * published by the Free Software Foundation, either version 3 of the
+ * License, or (at your option) any later version.
+ *
+ * openwms.org is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with this software. If not, write to the Free
+ * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
+ * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
+ */
+-->
+<mx:Accordion xmlns:mx="http://www.adobe.com/2006/mxml" xmlns:Renderers="org.openwms.web.flex.client.view.renderers.*"
+	styleName="frameContainerSkin" creationComplete="onCreate()">
+
+    <mx:Metadata>
+        [Name]
+    </mx:Metadata>
+
+	<mx:Script>
+		<![CDATA[
+		    import org.openwms.core.domain.system.PreferenceKey;
+		    import org.openwms.core.domain.system.AbstractPreference;
+		    import org.openwms.web.flex.client.util.CollectionUtil;
+		    import org.openwms.web.flex.client.view.renderers.PreferenceListRenderer;
+		    import org.openwms.web.flex.client.event.PropertyEvent;
+			import org.openwms.web.flex.client.model.PreferencesModel;
+			import org.openwms.web.flex.client.util.I18nUtil;
+		
+            [Inject]
+            [Bindable]
+            /**
+             * Injected Model.
+             */
+            public var prefs : PreferencesModel;
+            
+            /**
+             * On creation add all panels to the Accordion. Do not use the Repeater component here.
+             */
+            private function onCreate() : void {
+                for each (var type : * in prefs.types) {
+                    var child : PreferenceListRenderer = child = new PreferenceListRenderer();
+                    with (child) {
+                        label = I18nUtil.trans(I18nUtil.APP_ENTITY, 'entity_preference_'+type.type.toString());
+                        child.updateModel(type.dataDictionary);
+                        percentHeight = 100;
+                        percentWidth = 100;
+                    }
+                    this.addChild(child);
+                }
+            }
+            
+            [Observer("PREFERENCE.MODEL_CHANGED")]
+            /**
+             * After the model has changed, notify the lists in order to refresh their transformed values.
+             * 
+             * @param event Unused
+             */
+            public function onModelChanged(event : PropertyEvent) : void {
+                var children : Array = this.getChildren();
+                for (var i:int = 0; i < children.length; i++) {
+                    (children[i] as PreferenceListRenderer).updateModel(prefs.types[i].dataDictionary as Dictionary);
+                }
+            }
+		]]>
+	</mx:Script>
+</mx:Accordion>
