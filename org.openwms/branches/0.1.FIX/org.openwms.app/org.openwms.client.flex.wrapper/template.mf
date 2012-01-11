@@ -1,0 +1,70 @@
+Manifest-Version: 1.0
+Bundle-Vendor: ${project.groupId}
+Bundle-Version: ${bundle.version}
+Bundle-Name: ${project.artifactId}
+Bundle-ManifestVersion: 2
+Bundle-SymbolicName: ${project.artifactId}
+Bundle-ClassPath: .,
+ WEB-INF/lib/granite-core.jar,
+ WEB-INF/lib/granite-eclipselink.jar,
+ WEB-INF/lib/granite-hibernate.jar,
+ WEB-INF/lib/granite-spring.jar,
+ WEB-INF/lib/granite-toplink.jar,
+ WEB-INF/lib/pell-multipart.jar
+Web-ContextPath: openwms
+Import-Library: 
+ org.springframework.spring;version="${osgi.spring}"
+Import-Bundle: 
+ org.springframework.security.core;version="${osgi.spring.security.version}",
+ org.springframework.security.web;version="${osgi.spring.security.version}",
+ org.springframework.security.config;version="${osgi.spring.security.version}",
+ com.springsource.org.hibernate;version="${osgi.hibernate}";import-scope:=application,
+ com.springsource.org.hibernate.annotations;version="${osgi.hibernate.annotations}";import-scope:=application,
+ com.springsource.org.hibernate.annotations.common;version="${osgi.hibernate.annotations.common}";import-scope:=application,
+ com.springsource.org.hibernate.ejb;version="${osgi.hibernate.ejb}";import-scope:=application,
+ org.springframework.web.servlet;version="${osgi.spring}",
+ com.springsource.org.apache.taglibs.standard;version="[1.1.2, 1.3)",
+ org.openwms.core.domain;version="[0.0.1.SNAPSHOT, 0.1]",
+ org.openwms.core.service.api;version="[0.0.1.SNAPSHOT, 0.1]",
+ org.openwms.common.domain;version="[0.0.1.SNAPSHOT, 0.1]",
+ org.openwms.common.service.api;version="[0.0.1.SNAPSHOT, 0.1]",
+ org.openwms.tms.domain;version="[0.0.1.SNAPSHOT, 0.1]",
+ org.openwms.tms.service.api;version="[0.0.1.SNAPSHOT, 0.1]",
+ com.springsource.org.postgresql.jdbc4;version="${osgi.org.postgresql.jdbc4.version}"
+Import-Package: 
+ org.slf4j;version="${slf4j.version}",
+ javax.xml.namespace,
+ javax.transaction,
+ javax.persistence,
+ javax.management,
+ javax.naming,
+ javax.xml.xpath,
+ javax.xml.parsers,
+ javax.xml.transform,
+ javax.xml.transform.stream,
+ javax.xml.transform.dom,
+ org.xml.sax,
+ org.xml.sax.helpers,
+ org.xml.sax.ext,
+ org.w3c.dom,
+ org.w3c.dom.traversal,
+ javax.servlet;version="[2.4.0,2.5.0]",
+ javax.servlet.http;version="[2.4.0,2.5.0]",
+ javax.servlet.resources;version="[2.4.0,2.5.0]",
+ com.springsource.server.web.dm;version="[2.0.0, 3.0.0)",
+ org.springframework.web.context;version="${osgi.spring}",
+ org.springframework.web.context.request;version="${osgi.spring}",
+ org.hibernate.proxy; version="0.0.0",
+ org.springframework.context.weaving;version="${osgi.spring}",
+ org.springframework.transaction.aspectj;version="${osgi.spring}"
+Excluded-Exports: 
+ org.openwms.common.framework.test.*,
+ org.openwms.common.test.*,
+ org.openwms.web.flex.servlet
+Excluded-Imports: 
+ org.granite.*,
+ org.springframework.test.*,
+ org.openwms.web.servlet.*,
+ org.openwms.core.service.*,
+ org.junit.*,
+ http.utils.*
