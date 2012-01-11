@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!--
+/*
+ * openwms.org, the Open Warehouse Management System.
+ *
+ * This file is part of openwms.org.
+ *
+ * openwms.org is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as 
+ * published by the Free Software Foundation, either version 3 of the
+ * License, or (at your option) any later version.
+ *
+ * openwms.org is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with this software. If not, write to the Free
+ * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
+ * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
+ */
+-->
+<mx:TitleWindow xmlns:mx="http://www.adobe.com/2006/mxml" layout="absolute" width="684" height="350" fontSize="12" title="{getTitle()}" creationComplete="onCreationComplete();">
+
+    <mx:Metadata>
+        [Name("assignUsersDialog")]
+        [ManagedEvent(name="USERS_ASSIGNED_TO_ROLE")]
+        [ResourceBundle("appMain")]
+    </mx:Metadata>
+
+    <mx:Script>
+        <![CDATA[
+            import mx.collections.ArrayCollection;
+            import mx.collections.Sort;
+            import mx.collections.SortField;
+            import mx.collections.ListCollectionView;
+            import mx.managers.PopUpManager;
+        	import mx.utils.ObjectUtil;
+        	import org.openwms.core.domain.system.usermanagement.User;
+        	import org.openwms.web.flex.client.event.RoleEvent;
+        	import org.openwms.core.domain.system.usermanagement.Role;
+        	import org.openwms.web.flex.client.model.ModelLocator;
+            import org.openwms.web.flex.client.util.I18nUtil;
+
+            [Inject]
+            [Bindable]
+            /**
+             * Injected Model.
+             */
+            public var modelLocator : ModelLocator;            
+            [Bindable]
+            /**
+             * A list of all SecurityObjects. The already assigned security objects are removed from the original list.
+             */
+            protected var notAssigned : ArrayCollection = new ArrayCollection();
+            [Bindable]
+            /**
+             * A list of SecurityObjects that are new and shall be assigned to the Role.
+             */
+            protected var toAssign : ListCollectionView;
+            [Bindable]
+            /**
+             * A list of SecurityObjects that are already assigned to the Role.
+             */
+            public var assigned : ListCollectionView;
+            [Bindable]
+            /**
+             * The Role itself.
+             */
+            public var role : Role;
+
+            private var changed : Boolean = false;
+
+            protected function onCreationComplete() : void {
+                notAssigned = new ArrayCollection(modelLocator.allUsers.toArray());
+                toAssign = assigned;
+                for each (var user : User in toAssign) {
+                	for each (var u : User in notAssigned) {
+                		if (user.username == u.username) {
+                            notAssigned.removeItemAt(notAssigned.getItemIndex(u));
+                        }
+                	}
+                }
+                this.setFocus();
+                this.addEventListener(KeyboardEvent.KEY_DOWN, keyEventHandler);
+                PopUpManager.centerPopUp(this);
+            }
+            
+            protected function closeDialog(event : Event = null) : void {
+                this.removeEventListener(KeyboardEvent.KEY_DOWN, keyEventHandler);
+                PopUpManager.removePopUp(this);
+            }
+
+            protected function keyEventHandler(event : KeyboardEvent) : void {
+                if (event.keyCode == 27) {
+                   closeDialog(event);
+                }
+            }
+
+            protected function accept(e : Event) : void {
+            	toAssign.refresh();
+            	assigned = toAssign;
+                closeDialog();
+            }
+
+            protected function formatFunction(item : *) : String {
+                return (item as User).username + " - " + (item as User).fullname;
+            }
+            
+            private function moveRight() : void {
+                for each (var item : * in allLst.selectedItems) {
+                    toAssign.addItem(notAssigned.removeItemAt(notAssigned.getItemIndex(item)));
+                    toAssign.itemUpdated(item);
+                    changed = true;
+                }
+                sortList(toAssign);
+                sortList(notAssigned);
+            }
+                    
+            private function moveLeft() : void {
+                for each (var item : * in assLst.selectedItems) {
+                    notAssigned.addItem(toAssign.removeItemAt(toAssign.getItemIndex(item)));
+                    notAssigned.itemUpdated(item);
+                    changed = true;
+                }
+                sortList(toAssign);
+                sortList(notAssigned);
+            }
+            
+            private function sortList(list : ListCollectionView) : ListCollectionView {
+            	var sortField:SortField = new SortField();
+                sortField.name = getSortField();
+                sortField.numeric = false;
+                var dataSort:Sort = new Sort();
+                dataSort.fields = [sortField];
+                list.sort = dataSort;
+                list.refresh();
+                return list;
+            }
+            
+            protected function getTitle() : String { return I18nUtil.trans(I18nUtil.APP_MAIN, "txt_assignUsers_title", role.name); }
+            
+            protected function getSortField() : String { return "fullname"; }
+            
+            protected function getAssignedLabel() : String { return I18nUtil.trans(I18nUtil.APP_MAIN, "lbl_assignUsers_assigned"); }
+
+            protected function getNotAssignedLabel() : String { return I18nUtil.trans(I18nUtil.APP_MAIN, "lbl_assignUsers_not_assigned"); }
+        ]]>
+    </mx:Script>
+    
+    <mx:Label id="notAssignedLbl" x="10" y="10" text="{getNotAssignedLabel()}" width="294"/>
+    <mx:List id="allLst" y="39" x="10" width="294" height="225" doubleClickEnabled="true" doubleClick="moveRight();" labelFunction="formatFunction" allowMultipleSelection="true" dataProvider="{notAssigned}" enabled="true" alternatingItemColors="[#B7BABC, #FFFFFF]"/>
+
+    <mx:Button x="312" y="117" buttonMode="true" mouseChildren="false" toolTip="{I18nUtil.trans(I18nUtil.APP_MAIN, 'ttip_assignUsers_move_right')}" icon="@Embed(source='assets/images/icons/arrow_right.png')" click="moveRight()"/>
+    <mx:Button x="312" y="147" buttonMode="true" mouseChildren="false" toolTip="{I18nUtil.trans(I18nUtil.APP_MAIN, 'ttip_assignUsers_move_left')}" icon="@Embed(source='assets/images/icons/arrow_left.png')" click="moveLeft()"/>
+
+    <mx:Label id="assignedLbl" x="360" y="10" text="{getAssignedLabel()}" width="294"/>
+    <mx:List id="assLst" y="39" x="360" width="294" height="225" doubleClickEnabled="true" doubleClick="moveLeft();" labelFunction="formatFunction" allowMultipleSelection="true" dataProvider="{toAssign}" enabled="true" alternatingItemColors="[#B7BABC, #FFFFFF]"/>
+
+    <mx:HBox width="100%" horizontalAlign="center" x="0" y="272">
+        <mx:Button id="setBtn" label="{I18nUtil.trans(I18nUtil.APP_MAIN, 'btn_accept')}" click="accept(event)" fontSize="12"/>
+        <mx:Button id="cancelBtn" label="{I18nUtil.trans(I18nUtil.APP_MAIN, 'btn_cancel')}" click="closeDialog(event)" fontSize="12"/>
+    </mx:HBox>
+    
+</mx:TitleWindow>

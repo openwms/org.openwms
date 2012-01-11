@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+/*
+ * openwms.org, the Open Warehouse Management System.
+ *
+ * This file is part of openwms.org.
+ *
+ * openwms.org is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as 
+ * published by the Free Software Foundation, either version 3 of the
+ * License, or (at your option) any later version.
+ *
+ * openwms.org is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with this software. If not, write to the Free
+ * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
+ * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
+ */
+-->
+<mx:TitleWindow xmlns:mx="http://www.adobe.com/2006/mxml" layout="absolute" width="528" height="350" title="Assign Location Types to Transport Unit Type" fontSize="12" creationComplete="init();">
+
+    <mx:Metadata>
+        [Name("assignmentLTDialog")]
+    </mx:Metadata>
+
+    <mx:Script>
+    	<![CDATA[
+    		import org.openwms.web.flex.client.common.event.TransportUnitTypeEvent;
+    		import org.openwms.web.flex.client.common.event.TransportUnitEvent;
+    		import org.openwms.common.domain.TransportUnitType;
+    		import mx.collections.ListCollectionView;
+    		import org.openwms.common.domain.TypePlacingRule;
+    		import mx.managers.PopUpManager;
+    		import org.openwms.common.domain.LocationType;
+    		import org.openwms.web.flex.client.common.model.CommonModelLocator;
+    		import mx.collections.ArrayCollection;
+
+		    [Inject]
+		    [Bindable]
+		    /**
+		     * Injected Model.
+		     */
+            public var commonModelLocator:CommonModelLocator;
+            [Bindable]
+            public var transportUnitType:TransportUnitType;
+
+            [Bindable]
+            private var notAssigned:ArrayCollection = new ArrayCollection();
+            [Bindable]
+            private var assigned:ArrayCollection = new ArrayCollection();
+            [Bindable]
+            private var rules:ListCollectionView;
+            private var changed:Boolean = false;
+
+            private function init():void {
+            	rules = transportUnitType.typePlacingRules;
+                notAssigned = new ArrayCollection(commonModelLocator.allLocationTypes.toArray());
+            	if (rules != null && rules.length > 0) {
+            	    for each (var rule:TypePlacingRule in rules) {
+                        notAssigned.removeItemAt(notAssigned.getItemIndex(rule.allowedLocationType));
+                        assigned.addItem(rule.allowedLocationType);
+                    }
+                }
+                this.addEventListener(KeyboardEvent.KEY_DOWN, keyEventHandler);
+                PopUpManager.centerPopUp(this);
+            }
+
+            private function closeDialog(event:Event=null):void {
+                this.removeEventListener(KeyboardEvent.KEY_DOWN, keyEventHandler);
+                PopUpManager.removePopUp(this);
+            }
+
+            private function keyEventHandler(event:KeyboardEvent):void {
+                if(event.keyCode == 27) {
+                   closeDialog(event);
+                   return;
+                }
+            }
+
+            private function accept(e:Event):void {
+            	if (changed) {
+                    var event:TransportUnitTypeEvent = new TransportUnitTypeEvent(TransportUnitTypeEvent.SAVE_ALLOWED_LOCATION_TYPES);
+                    event.data = {tuType:transportUnitType.type, newAssigned:assigned, newNotAssigned:notAssigned};
+                    event.dispatch();
+                }
+                closeDialog();
+            }
+
+            private function formatFunction(item:*):String {
+                return (item as LocationType).type+"\t"+(item as LocationType).description;
+            }
+            
+            private function moveRight():void {
+            	for each (var locationType:LocationType in allLocationTypesLst.selectedItems) {
+            		notAssigned.removeItemAt(notAssigned.getItemIndex(locationType));
+            		assigned.addItem(locationType);
+            		changed = true;
+            	}
+            }
+            		
+            private function moveLeft():void {
+                for each (var locationType:LocationType in assLocationTypesLst.selectedItems) {
+                    assigned.removeItemAt(assigned.getItemIndex(locationType));
+                    notAssigned.addItem(locationType);
+                    changed = true;
+                }
+            }
+    	]]>
+    </mx:Script>
+    
+	<mx:List id="allLocationTypesLst" width="202" height="225" labelFunction="formatFunction" allowMultipleSelection="true" dataProvider="{notAssigned}" enabled="true" alternatingItemColors="[#B7BABC, #FFFFFF]" y="39" x="10"/>
+	<mx:List id="assLocationTypesLst" width="202" height="225" labelFunction="formatFunction" allowMultipleSelection="true" dataProvider="{assigned}" enabled="true" alternatingItemColors="[#B7BABC, #FFFFFF]" y="39" x="296"/>
+	<mx:HBox width="100%" horizontalAlign="center" x="0" y="272">
+		<mx:Button id="saveBtn" label="Save" click="accept(event)" fontSize="12"/>
+		<mx:Button id="cancelBtn" label="Cancel" click="closeDialog(event)" fontSize="12"/>
+	</mx:HBox>
+	<mx:Label x="56" y="10" text="All Location Types"/>
+	<mx:Label x="316" y="10" text="Assigned Location Types"/>
+    <mx:Button x="234" y="117" buttonMode="true" mouseChildren="false" toolTip="Move Right" icon="@Embed(source='assets/images/icons/arrow_right.png')" click="moveRight()"/>
+	<mx:Button x="234" y="147" buttonMode="true" mouseChildren="false" toolTip="Move Left" icon="@Embed(source='assets/images/icons/arrow_left.png')" click="moveLeft()"/>
+	
+</mx:TitleWindow>

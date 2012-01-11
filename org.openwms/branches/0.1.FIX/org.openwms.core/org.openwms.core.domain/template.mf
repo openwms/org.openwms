@@ -1,0 +1,14 @@
+Manifest-Version: 1.0
+Bundle-Vendor: ${project.groupId}
+Bundle-Version: ${bundle.version}
+Bundle-Name: ${project.artifactId}
+Bundle-ManifestVersion: 2
+Bundle-SymbolicName: ${project.artifactId}
+Import-Bundle: 
+ com.springsource.javax.persistence;version="${osgi.javax.persistence.version}",
+ com.springsource.org.apache.commons.lang;version="${osgi.apache.commons.lang.version}"
+Require-Bundle: 
+ com.springsource.org.hibernate,
+ com.springsource.javassist
+Excluded-Imports:
+ javax.persistence
