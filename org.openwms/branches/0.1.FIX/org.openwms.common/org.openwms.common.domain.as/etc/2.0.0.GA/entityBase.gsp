@@ -38,7 +38,8 @@
         as3Imports.add("org.granite.util.Enum");
 
     for (jImport in jClass.imports) {
-        if (jImport.as3Type.hasPackage() && jImport.as3Type.packageName != jClass.as3Type.packageName)
+        if (jImport.as3Type.hasPackage() && jImport.as3Type.packageName != jClass.as3Type.packageName
+            && jImport.as3Type.qualifiedName != "java.io.Serializable")
             as3Imports.add(jImport.as3Type.qualifiedName);
     }
 
@@ -113,8 +114,12 @@ package ${jClass.as3Type.packageName} {
         private var __detachedState:String = null;
 <%
     }
-    for (jProperty in jClass.properties) {%>
-        protected var _${jProperty.name}:${jProperty.as3Type.name};<%
+    for (jProperty in jClass.properties) {
+        if (jProperty.as3Type.name == "Serializable") {
+        %>
+        protected var _${jProperty.name} : Object;
+        <%} else {%>
+        protected var _${jProperty.name} : ${jProperty.as3Type.name};<%}
     }
 
     ///////////////////////////////////////////////////////////////////////////
@@ -147,8 +152,10 @@ package ${jClass.as3Type.packageName} {
         if (jProperty != jClass.uid) {
             if (jProperty.readable || jProperty.writable) {%>
 <%
-                if (jProperty.writable || jProperty.name == 'version') {%>
-        public function set ${jProperty.name}(value:${jProperty.as3Type.name}):void {
+                if (jProperty.writable || jProperty.name == 'version') {
+                    if (jProperty.as3Type.name == "Serializable") {%>
+        public function set ${jProperty.name}(value:Object):void {<%} else {%>
+        public function set ${jProperty.name}(value:${jProperty.as3Type.name}):void {<%}%>
             _${jProperty.name} = value;
         }<%
                 }
@@ -156,8 +163,10 @@ package ${jClass.as3Type.packageName} {
         public function isNew():${jProperty.as3Type.name} {
             return true;
         }<%
-                } else if (jProperty.readable) {%>
-        public function get ${jProperty.name}():${jProperty.as3Type.name} {
+                } else if (jProperty.readable) {
+                    if (jProperty.as3Type.name == "Serializable") {%>
+        public function get ${jProperty.name}():Object {<%} else {%>
+        public function get ${jProperty.name}():${jProperty.as3Type.name} {<%}%>
             return _${jProperty.name};
         }<%
                 }
@@ -223,8 +232,10 @@ package ${jClass.as3Type.packageName} {
         else if (jProperty.isEnum()) {%>
                 _${jProperty.name} = Enum.readEnum(input) as ${jProperty.as3Type.name};<%
         }
-        else {%>
-                _${jProperty.name} = input.readObject() as ${jProperty.as3Type.name};<%
+        else {
+            if (jProperty.as3Type.name == "Serializable") {%>
+                _${jProperty.name} = input.readObject() as Object;<%} else {%>
+                _${jProperty.name} = input.readObject() as ${jProperty.as3Type.name};<% }
         }
     }%>
             }<%
