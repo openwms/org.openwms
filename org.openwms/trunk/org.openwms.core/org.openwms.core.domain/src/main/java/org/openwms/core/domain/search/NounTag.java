@@ -21,8 +21,9 @@
 package org.openwms.core.domain.search;
 
 /**
- * A NounTag.
+ * A NounTag represents a noun.
  * 
+ * @GlossaryTerm
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  * @version $Revision: $
  * @since 0.2
