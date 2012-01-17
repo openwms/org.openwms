@@ -64,6 +64,10 @@ public class ApplicationPreference extends AbstractPreference {
      * Query to find all <code>ApplicationPreference</code>s. Name is {@value} .
      */
     public static final String NQ_FIND_ALL = "ApplicationPreference" + FIND_ALL;
+    /**
+     * Query to find all <code>ApplicationPreference</code>s. Name is {@value} .
+     */
+    public static final String NQ_FIND_BY_OWNER = "ApplicationPreference" + FIND_ALL;
 
     /**
      * Type of this preference.

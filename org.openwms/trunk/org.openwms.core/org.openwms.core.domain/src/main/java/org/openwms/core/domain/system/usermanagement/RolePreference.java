@@ -53,7 +53,9 @@ import org.openwms.core.util.validation.AssertUtils;
 @XmlType(name = "rolePreference", namespace = "http://www.openwms.org/schema/usermanagement")
 @Entity
 @Table(name = "COR_ROLE_PREFERENCE", uniqueConstraints = @UniqueConstraint(columnNames = { "C_TYPE", "C_OWNER", "C_KEY" }))
-@NamedQueries({ @NamedQuery(name = RolePreference.NQ_FIND_ALL, query = "select rp from RolePreference rp") })
+@NamedQueries({
+        @NamedQuery(name = RolePreference.NQ_FIND_ALL, query = "select rp from RolePreference rp"),
+        @NamedQuery(name = RolePreference.NQ_FIND_BY_OWNER, query = "select rp from RolePreference rp where rp.owner = :owner") })
 public class RolePreference extends AbstractPreference {
 
     private static final long serialVersionUID = 8267024349554036680L;
@@ -61,6 +63,14 @@ public class RolePreference extends AbstractPreference {
      * Query to find all <code>RolePreference</code>s. Name is {@value} .
      */
     public static final String NQ_FIND_ALL = "RolePreference" + FIND_ALL;
+    /**
+     * Query to find <strong>all</strong> <code>RolePreference</code>s of a
+     * <code>Role</code>. <li>Query parameter name <strong>owner</strong> : The
+     * rolename of the <code>Role</code> to search for.</li><br />
+     * Name is {@value} .
+     */
+    public static final String NQ_FIND_BY_OWNER = "RolePreference" + FIND_BY_OWNER;
+
     /**
      * Type of this preference.
      */
