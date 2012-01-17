@@ -30,8 +30,10 @@ import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlType;
 
 /**
- * A Tag.
+ * A Tag represents a search keyword in the OpenWMS.org ActionSeach concept.
+ * Each {@link Action} consists of multiple Tags.
  * 
+ * @GlossaryTerm
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  * @version $Revision: $
  * @since 0.2

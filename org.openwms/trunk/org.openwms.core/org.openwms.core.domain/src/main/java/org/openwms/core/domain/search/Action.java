@@ -41,8 +41,12 @@ import javax.xml.bind.annotation.adapters.CollapsedStringAdapter;
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 
 /**
- * An Action.
+ * An Action represents a possible UI action an User can take. Each Action has a
+ * resulting URL to a webpage and a descriptive text that is displayed in the
+ * UI. Additionally a field <code>weight</code> is used to count how many times
+ * the User has chosen this Action.
  * 
+ * @GlossaryTerm
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  * @version $Revision: $
  * @since 0.2
