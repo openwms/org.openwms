@@ -66,6 +66,11 @@ public class Preferences implements Serializable {
     private List<UserPreference> users;
     @XmlTransient
     private List<RolePreference> roles;
+    /**
+     * All concrete types of AbstractPreference.
+     */
+    public static final Class<?>[] TYPES = { ApplicationPreference.class, ModulePreference.class, RolePreference.class,
+            UserPreference.class };
 
     /**
      * Gets the value of the applicationOrRoleOrUserOrModule property. This

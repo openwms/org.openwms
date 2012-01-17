@@ -22,6 +22,7 @@ package org.openwms.core.domain.system.usermanagement;
 
 import java.util.Collections;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
@@ -328,6 +329,23 @@ public class Role extends SecurityObject {
     public boolean removeGrant(SecurityObject grant) {
         AssertUtils.notNull(grant, "Grant to remove must not be null");
         return this.grants.remove(grant);
+    }
+
+    /**
+     * Add an existing {@link SecurityObject} to the <code>Role</code>.
+     * 
+     * @param grant
+     *            The {@link SecurityObject} to be added to the
+     *            <code>Role</code>
+     * @return <code>true</code> if the {@link SecurityObject} was successfully
+     *         removed from the Set of {@link SecurityObject}s, otherwise
+     *         <code>false</code>
+     * @throws IllegalArgumentException
+     *             if grant is <code>null</code>
+     */
+    public boolean removeGrants(List<SecurityObject> grants) {
+        AssertUtils.notNull(grants, "Grants to remove must not be null");
+        return this.grants.removeAll(grants);
     }
 
     /**

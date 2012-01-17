@@ -51,7 +51,9 @@ import org.openwms.core.util.validation.AssertUtils;
 @XmlType(name = "userPreference", namespace = "http://www.openwms.org/schema/usermanagement")
 @Entity
 @Table(name = "COR_USER_PREFERENCE", uniqueConstraints = @UniqueConstraint(columnNames = { "C_TYPE", "C_OWNER", "C_KEY" }))
-@NamedQueries({ @NamedQuery(name = UserPreference.NQ_FIND_ALL, query = "select up from UserPreference up") })
+@NamedQueries({
+        @NamedQuery(name = UserPreference.NQ_FIND_ALL, query = "select up from UserPreference up"),
+        @NamedQuery(name = UserPreference.NQ_FIND_BY_OWNER, query = "select up from UserPreference up where up.owner = :owner") })
 public class UserPreference extends AbstractPreference {
 
     private static final long serialVersionUID = -6569559231034802554L;
@@ -59,6 +61,13 @@ public class UserPreference extends AbstractPreference {
      * Query to find all <code>UserPreference</code>s.
      */
     public static final String NQ_FIND_ALL = "UserPreference" + FIND_ALL;
+    /**
+     * Query to find <strong>all</strong> <code>UserPreference</code>s of an
+     * <code>User</code>. <li>Query parameter name <strong>owner</strong> : The
+     * userName of the <code>User</code> to search for.</li><br />
+     * Name is {@value} .
+     */
+    public static final String NQ_FIND_BY_OWNER = "UserPreference" + FIND_BY_OWNER;
 
     /**
      * Type of this preference.

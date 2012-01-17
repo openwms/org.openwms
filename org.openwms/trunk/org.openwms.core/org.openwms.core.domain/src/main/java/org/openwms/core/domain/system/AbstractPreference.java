@@ -20,12 +20,15 @@
  */
 package org.openwms.core.domain.system;
 
+import java.io.Serializable;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
+import javax.persistence.Lob;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
@@ -63,6 +66,10 @@ public abstract class AbstractPreference extends AbstractEntity implements Domai
      * Query to find all <code>AbstractPreference</code>s. Name is {@value} .
      */
     public static final String NQ_FIND_ALL = "AbstractPreference" + FIND_ALL;
+    /**
+     * Suffix for the FIND_BY_OWNER named query. Default {@value}
+     */
+    public static final String FIND_BY_OWNER = ".findByOwner";
 
     /**
      * Unique technical key.
@@ -79,6 +86,14 @@ public abstract class AbstractPreference extends AbstractEntity implements Domai
     @XmlAttribute(name = "val")
     @Column(name = "C_VALUE")
     private String value;
+
+    /**
+     * A binary value for this <code>AbstractPreference</code>.
+     */
+    @XmlTransient
+    @Lob
+    @Column(name = "C_BINVALUE")
+    private Serializable binValue;
 
     /**
      * A float value of the <code>AbstractPreference</code>.
@@ -174,6 +189,25 @@ public abstract class AbstractPreference extends AbstractEntity implements Domai
      */
     public void setValue(String value) {
         this.value = value;
+    }
+
+    /**
+     * Get the binValue.
+     * 
+     * @return the binValue.
+     */
+    public Serializable getBinValue() {
+        return binValue;
+    }
+
+    /**
+     * Set the binValue.
+     * 
+     * @param binValue
+     *            The binValue to set.
+     */
+    public void setBinValue(Serializable binValue) {
+        this.binValue = binValue;
     }
 
     /**
@@ -297,6 +331,7 @@ public abstract class AbstractPreference extends AbstractEntity implements Domai
     public int hashCode() {
         final int prime = 31;
         int result = 1;
+        result = prime * result + ((binValue == null) ? 0 : binValue.hashCode());
         result = prime * result + ((description == null) ? 0 : description.hashCode());
         result = prime * result + ((floatValue == null) ? 0 : floatValue.hashCode());
         result = prime * result + (fromFile ? 1231 : 1237);
@@ -327,6 +362,13 @@ public abstract class AbstractPreference extends AbstractEntity implements Domai
             return false;
         }
         AbstractPreference other = (AbstractPreference) obj;
+        if (binValue == null) {
+            if (other.binValue != null) {
+                return false;
+            }
+        } else if (!binValue.equals(other.binValue)) {
+            return false;
+        }
         if (description == null) {
             if (other.description != null) {
                 return false;
