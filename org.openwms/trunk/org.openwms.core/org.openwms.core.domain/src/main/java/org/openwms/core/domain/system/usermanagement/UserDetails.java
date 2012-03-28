@@ -104,7 +104,7 @@ public class UserDetails implements ImageProvider, Serializable {
      * An image of the <code>User</code>. Lazy fetched.
      */
     @Lob
-    @Basic(fetch = FetchType.LAZY)
+    @Basic(fetch = FetchType.EAGER)
     @Column(name = "IMAGE")
     private byte[] image;
 
