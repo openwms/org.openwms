@@ -217,10 +217,23 @@ public class Action implements Serializable {
     }
 
     /**
-     * Increase weight plus one.
+     * Increase weight by 1 and return the new weight.
+     * 
+     * @param The
+     *            weight increased by 1
      */
-    public void increaseWeight() {
-        this.weight++;
+    public int increaseWeight() {
+        return this.weight++;
+    }
+
+    /**
+     * Decrease weight by 1 and return the new weight.
+     * 
+     * @param The
+     *            weight decreased by 1
+     */
+    public int decreaseWeight() {
+        return --this.weight;
     }
 
     /**
