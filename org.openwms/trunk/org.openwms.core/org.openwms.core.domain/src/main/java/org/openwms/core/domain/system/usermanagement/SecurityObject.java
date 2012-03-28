@@ -67,7 +67,7 @@ public class SecurityObject extends AbstractEntity implements DomainObject<Long>
      * <code>SecurityObject</code> to search for.</li><br />
      * Name is {@value} .
      */
-    public static final String NQ_FIND_BY_UNIQUE_QUERY = "SecurityObject.findByRolename";
+    public static final String NQ_FIND_BY_UNIQUE_QUERY = "SecurityObject.findByName";
 
     /**
      * Unique technical key.
