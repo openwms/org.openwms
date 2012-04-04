@@ -57,7 +57,7 @@ public class ApplicationPreferenceTest {
     @Test
     public void testReadPreferences() throws Throwable {
         SchemaFactory schemaFactory = SchemaFactory.newInstance(XMLConstants.W3C_XML_SCHEMA_NS_URI);
-        Schema schema = schemaFactory.newSchema(new File("../../src/schema/preferences.xsd"));
+        Schema schema = schemaFactory.newSchema(new File("src/test/resources/preferences.xsd"));
         // Schema schema = schemaFactory.newSchema(new
         // URL("http://www.openwms.org/schema/preferences.xsd"));
         JAXBContext ctx = JAXBContext.newInstance("org.openwms.core.domain.preferences");
