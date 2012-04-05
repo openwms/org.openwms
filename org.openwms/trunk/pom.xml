@@ -175,8 +175,8 @@
     </mailingLists>
 
     <ciManagement>
-        <system>Hudson</system>
-        <url>http://openwms.blogsite.org:8181</url>
+        <system>Jenkins</system>
+        <url>http://openwms.blogsite.org:81/jenkins</url>
     </ciManagement>
 
     <profiles>
@@ -423,7 +423,7 @@
                     <plugin>
                         <groupId>org.codehaus.mojo</groupId>
                         <artifactId>cobertura-maven-plugin</artifactId>
-                        <version>2.2</version>
+                        <version>2.3</version>
                         <configuration>
                             <formats>
                                 <format>xml</format>
