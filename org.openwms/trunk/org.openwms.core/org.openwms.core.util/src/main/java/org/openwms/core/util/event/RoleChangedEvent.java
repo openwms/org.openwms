@@ -21,24 +21,24 @@
 package org.openwms.core.util.event;
 
 /**
- * An UserChangedEvent is fired to notify listeners about changes on an
- * <code>User</code> instance. A listener could probably evict a cache of Users.
+ * A RoleChangedEvent is fired to notify listeners about changes on an
+ * <code>Role</code> instance. A listener could probably evict a cache of Roles.
  * 
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
- * @version $Revision$
- * @since 0.1
+ * @version $Revision: $
+ * @since 0.2
  */
-public class UserChangedEvent extends RootApplicationEvent {
+public class RoleChangedEvent extends RootApplicationEvent {
 
-    private static final long serialVersionUID = 9137035549610051152L;
+    private static final long serialVersionUID = 5841462185501374901L;
 
     /**
-     * Create a new UserChangedEvent.
+     * Create a new RoleChangedEvent.
      * 
      * @param source
-     *            The <code>User</code> that has changed or <code>null</code>
+     *            The <code>Role</code> that has changed or <code>null</code>
      */
-    public UserChangedEvent(Object source) {
+    public RoleChangedEvent(Object source) {
         super(source);
     }
 }

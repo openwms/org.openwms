@@ -40,5 +40,4 @@ public class MergePropertiesEvent extends RootApplicationEvent {
     public MergePropertiesEvent(Object source) {
         super(source);
     }
-
 }
