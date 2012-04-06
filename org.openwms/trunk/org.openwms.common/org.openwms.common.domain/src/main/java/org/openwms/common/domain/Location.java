@@ -485,18 +485,18 @@ public class Location extends AbstractEntity implements DomainObject<Long>, Targ
     /**
      * Remove one or more {@link Message}s from this <code>Location</code>.
      * 
-     * @param messages
+     * @param msgs
      *            An array of {@link Message}s to be removed
      * @return <code>true</code> if the {@link Message}s were found and removed,
      *         otherwise <code>false</code>
      * @throws IllegalArgumentException
      *             when messages is <code>null</code>
      */
-    public boolean removeMessages(Message... messages) {
-        if (messages == null) {
+    public boolean removeMessages(Message... msgs) {
+        if (msgs == null) {
             throw new IllegalArgumentException("Message may not be null!");
         }
-        return this.messages.removeAll(Arrays.asList(messages));
+        return this.messages.removeAll(Arrays.asList(msgs));
     }
 
     /**
