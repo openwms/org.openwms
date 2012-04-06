@@ -20,8 +20,6 @@
  */
 package org.openwms.core.util.event;
 
-import java.io.Serializable;
-
 import org.springframework.context.ApplicationEvent;
 
 /**
@@ -31,7 +29,7 @@ import org.springframework.context.ApplicationEvent;
  * @version $Revision$
  * @since 0.1
  */
-public class RootApplicationEvent extends ApplicationEvent implements Serializable {
+public class RootApplicationEvent extends ApplicationEvent {
 
     private static final long serialVersionUID = -2454660395280026756L;
 
@@ -44,5 +42,4 @@ public class RootApplicationEvent extends ApplicationEvent implements Serializab
     public RootApplicationEvent(Object source) {
         super(source);
     }
-
 }

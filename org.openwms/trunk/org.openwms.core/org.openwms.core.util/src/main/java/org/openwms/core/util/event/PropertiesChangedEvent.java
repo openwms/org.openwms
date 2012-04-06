@@ -25,7 +25,7 @@ package org.openwms.core.util.event;
  * 
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  * @version $Revision: $
- * 
+ * @since 0.2
  */
 public class PropertiesChangedEvent extends RootApplicationEvent {
 
@@ -40,5 +40,4 @@ public class PropertiesChangedEvent extends RootApplicationEvent {
     public PropertiesChangedEvent(Object source) {
         super(source);
     }
-
 }
