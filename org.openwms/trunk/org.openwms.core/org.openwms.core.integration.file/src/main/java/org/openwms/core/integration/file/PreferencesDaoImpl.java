@@ -39,6 +39,7 @@ import org.openwms.core.integration.exception.NoUniqueResultException;
 import org.openwms.core.integration.exception.ResourceNotFoundException;
 import org.openwms.core.util.event.PropertiesChangedEvent;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationListener;
@@ -46,6 +47,8 @@ import org.springframework.core.io.Resource;
 import org.springframework.oxm.Unmarshaller;
 import org.springframework.oxm.XmlMappingException;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  * A PreferencesDaoImpl reads a XML file of preferences and keeps them
@@ -61,32 +64,29 @@ import org.springframework.stereotype.Repository;
  * @since 0.1
  * @see org.openwms.core.util.event.PropertiesChangedEvent
  */
-@Repository("preferencesFileDao")
-public final class PreferencesDaoImpl implements PreferenceDao<PreferenceKey>,
-        ApplicationListener<PropertiesChangedEvent> {
+@Transactional(propagation = Propagation.MANDATORY)
+@Repository(PreferencesDaoImpl.COMPONENT_NAME)
+public class PreferencesDaoImpl implements PreferenceDao<PreferenceKey>, ApplicationListener<PropertiesChangedEvent> {
 
-    /**
-     * The URL to the initial preferences XML file. Default {@value}
-     */
+    /** The URL to the initial preferences XML file. Default {@value} */
     public static final String INITIAL_PREFERENCES_FILE = "classpath:org/openwms/core/integration/file/initial-preferences.xml";
+    /** Springs component name. */
+    public static final String COMPONENT_NAME = "preferencesFileDao";
 
-    @Autowired
-    private Unmarshaller unmarshaller;
     @Autowired
     private ApplicationContext ctx;
+
+    @Autowired
+    @Qualifier("preferencesUnmarshaller")
+    private Unmarshaller unmarshaller;
+
     @Autowired
     @Value(Constants.APPLICATION_INITIAL_PROPERTIES)
     private String fileName;
+
     private volatile Resource fileResource;
     private volatile Preferences preferences;
     private Map<PreferenceKey, AbstractPreference> prefs = new ConcurrentHashMap<PreferenceKey, AbstractPreference>();
-
-    /**
-     * Create a new PreferencesDaoImpl.
-     */
-    private PreferencesDaoImpl() {
-
-    }
 
     /**
      * {@inheritDoc}
@@ -106,6 +106,18 @@ public final class PreferencesDaoImpl implements PreferenceDao<PreferenceKey>,
     @Override
     public <T extends AbstractPreference> List<T> findByType(Class<T> clazz) {
         return preferences.getOfType(clazz);
+    }
+
+    /**
+     * {@inheritDoc}
+     * 
+     * @see org.openwms.core.integration.PreferenceDao#findByType(java.lang.Class,
+     *      java.lang.String)
+     */
+    @Override
+    public <T extends AbstractPreference> List<T> findByType(Class<T> clazz, String owner) {
+        // FIXME [scherrer] : delegate to preferences
+        return null;
     }
 
     /**
