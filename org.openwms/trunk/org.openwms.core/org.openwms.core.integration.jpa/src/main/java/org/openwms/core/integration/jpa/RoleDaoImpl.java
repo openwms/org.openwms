@@ -20,7 +20,10 @@
  */
 package org.openwms.core.integration.jpa;
 
+import java.util.List;
+
 import org.openwms.core.domain.system.usermanagement.Role;
+import org.openwms.core.domain.system.usermanagement.SecurityObject;
 import org.openwms.core.integration.RoleDao;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Propagation;
@@ -46,10 +49,25 @@ import org.springframework.transaction.annotation.Transactional;
 @Repository(RoleDaoImpl.COMPONENT_NAME)
 public class RoleDaoImpl extends AbstractGenericJpaDao<Role, Long> implements RoleDao {
 
-    /**
-     * Springs component name.
-     */
+    /** Springs component name. */
     public static final String COMPONENT_NAME = "roleDao";
+
+    /**
+     * {@inheritDoc}
+     * 
+     * @see org.openwms.core.integration.RoleDao#removeFromRole(org.openwms.core.domain.system.usermanagement.SecurityObject,
+     *      org.openwms.core.domain.system.usermanagement.Role)
+     */
+    @Override
+    public void removeFromRoles(List<SecurityObject> grants) {
+        List<Role> roles = findAll();
+        // FIXME [scherrer] : check this code!
+        getEm().flush();
+        for (Role role : roles) {
+            role.removeGrants(grants);
+            getEm().flush();
+        }
+    }
 
     /**
      * {@inheritDoc}
@@ -66,5 +84,4 @@ public class RoleDaoImpl extends AbstractGenericJpaDao<Role, Long> implements Ro
     protected String getFindByUniqueIdQuery() {
         return Role.NQ_FIND_BY_UNIQUE_QUERY;
     }
-
 }
