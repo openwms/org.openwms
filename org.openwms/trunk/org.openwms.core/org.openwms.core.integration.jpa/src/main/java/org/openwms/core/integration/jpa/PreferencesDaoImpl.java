@@ -26,11 +26,9 @@ import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
-import org.openwms.core.domain.preferences.ApplicationPreference;
-import org.openwms.core.domain.preferences.ModulePreference;
+import org.openwms.core.domain.AbstractEntity;
+import org.openwms.core.domain.preferences.Preferences;
 import org.openwms.core.domain.system.AbstractPreference;
-import org.openwms.core.domain.system.usermanagement.RolePreference;
-import org.openwms.core.domain.system.usermanagement.UserPreference;
 import org.openwms.core.integration.PreferenceWriter;
 import org.openwms.core.util.exception.WrongClassTypeException;
 import org.springframework.stereotype.Repository;
@@ -77,22 +75,23 @@ public class PreferencesDaoImpl implements PreferenceWriter<Long> {
      * 
      * @see org.openwms.core.integration.PreferenceDao#findByType(java.lang.Class)
      */
-    @SuppressWarnings("unchecked")
     @Override
+    @SuppressWarnings("unchecked")
     public <T extends AbstractPreference> List<T> findByType(Class<T> clazz) {
-        if (ApplicationPreference.class.equals(clazz)) {
-            return (List<T>) em.createNamedQuery(ApplicationPreference.NQ_FIND_ALL).getResultList();
-        }
-        if (ModulePreference.class.equals(clazz)) {
-            return (List<T>) em.createNamedQuery(ModulePreference.NQ_FIND_ALL).getResultList();
-        }
-        if (RolePreference.class.equals(clazz)) {
-            return (List<T>) em.createNamedQuery(RolePreference.NQ_FIND_ALL).getResultList();
-        }
-        if (UserPreference.class.equals(clazz)) {
-            return (List<T>) em.createNamedQuery(UserPreference.NQ_FIND_ALL).getResultList();
-        }
-        throw new WrongClassTypeException("Type " + clazz + " not a valid Preferences type");
+        return (List<T>) em.createNamedQuery(getQueryName(clazz) + AbstractEntity.FIND_ALL).getResultList();
+    }
+
+    /**
+     * {@inheritDoc}
+     * 
+     * @see org.openwms.core.integration.PreferenceDao#findByType(java.lang.Class,
+     *      java.lang.String)
+     */
+    @Override
+    @SuppressWarnings("unchecked")
+    public <T extends AbstractPreference> List<T> findByType(Class<T> clazz, String owner) {
+        return (List<T>) em.createNamedQuery(getQueryName(clazz) + AbstractPreference.FIND_BY_OWNER)
+                .setParameter("owner", owner).getResultList();
     }
 
     /**
@@ -154,4 +153,12 @@ public class PreferencesDaoImpl implements PreferenceWriter<Long> {
         }
     }
 
+    private <T extends AbstractPreference> String getQueryName(Class<T> clazz) {
+        for (int i = 0; i < Preferences.TYPES.length; i++) {
+            if (Preferences.TYPES[i].equals(clazz)) {
+                return clazz.getSimpleName();
+            }
+        }
+        throw new WrongClassTypeException("Type " + clazz + " not a valid Preferences type");
+    }
 }
