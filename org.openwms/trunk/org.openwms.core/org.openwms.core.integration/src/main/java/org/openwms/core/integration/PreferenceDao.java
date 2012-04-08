@@ -58,6 +58,20 @@ public interface PreferenceDao<ID extends Serializable> {
     <T extends AbstractPreference> List<T> findByType(Class<T> clazz);
 
     /**
+     * Find all preferences of a particular type and of an owner.
+     * 
+     * @param <T>
+     *            Any subtype of {@link AbstractPreference}
+     * @param clazz
+     *            The type to search for
+     * @param owner
+     *            The owner of the preferences
+     * @return A list of entities
+     * @since 0.2
+     */
+    <T extends AbstractPreference> List<T> findByType(Class<T> clazz, String owner);
+
+    /**
      * Find all entities and return them as a {@link java.util.List}.
      * 
      * @return List of all entities
