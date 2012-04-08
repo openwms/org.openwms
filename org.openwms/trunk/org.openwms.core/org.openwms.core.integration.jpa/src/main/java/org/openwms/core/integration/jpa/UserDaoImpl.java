@@ -59,6 +59,8 @@ public class UserDaoImpl extends AbstractGenericJpaDao<User, Long> implements Us
     public static final String COMPONENT_NAME = "userDao";
 
     /**
+     * {@inheritDoc}
+     * 
      * @return Name of the query
      * @see org.openwms.core.integration.jpa.AbstractGenericJpaDao#getFindAllQuery()
      */
@@ -68,6 +70,8 @@ public class UserDaoImpl extends AbstractGenericJpaDao<User, Long> implements Us
     }
 
     /**
+     * {@inheritDoc}
+     * 
      * @return Name of the query
      * @see org.openwms.core.integration.jpa.AbstractGenericJpaDao#getFindByUniqueIdQuery()
      */
@@ -77,6 +81,10 @@ public class UserDaoImpl extends AbstractGenericJpaDao<User, Long> implements Us
     }
 
     /**
+     * {@inheritDoc}
+     * 
+     * If no Users were found, <code>null</code> is returned.
+     * 
      * @return List of all {@link User}s
      * @see org.openwms.core.integration.jpa.AbstractGenericJpaDao#findAll()
      */
