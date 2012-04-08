@@ -33,6 +33,6 @@
 
     <context:component-scan base-package="org.openwms.core.integration.file" />
     <util:properties id="appProps" location="classpath:/org/openwms/core/integration/file/preferences.properties" />
-    <oxm:jaxb2-marshaller id="marshaller" contextPath="org.openwms.core.domain.preferences:org.openwms.core.domain.system.usermanagement"/>
+    <oxm:jaxb2-marshaller id="preferencesUnmarshaller" contextPath="org.openwms.core.domain.preferences:org.openwms.core.domain.system.usermanagement"/>
 
 </beans>
