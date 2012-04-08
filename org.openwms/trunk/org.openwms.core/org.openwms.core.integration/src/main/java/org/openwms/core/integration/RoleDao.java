@@ -20,7 +20,10 @@
  */
 package org.openwms.core.integration;
 
+import java.util.List;
+
 import org.openwms.core.domain.system.usermanagement.Role;
+import org.openwms.core.domain.system.usermanagement.SecurityObject;
 
 /**
  * A RoleDao adds particular functionality to find and modifiy {@link Role}
@@ -32,4 +35,14 @@ import org.openwms.core.domain.system.usermanagement.Role;
  */
 public interface RoleDao extends GenericDao<Role, Long> {
 
+    /**
+     * Remove a collection of {@link SecurityObject}s or <code>Grant</code>s
+     * from all Roles. This method is useful to unassign Grants before they're
+     * going to be removed.
+     * 
+     * @param grants
+     *            The collection of {@link SecurityObject}s to be unassigned
+     * @since 0.2
+     */
+    void removeFromRoles(List<SecurityObject> grants);
 }
