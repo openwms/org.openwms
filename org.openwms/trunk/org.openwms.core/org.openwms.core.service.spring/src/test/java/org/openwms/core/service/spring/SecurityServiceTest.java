@@ -35,6 +35,7 @@ import org.junit.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.openwms.core.domain.system.usermanagement.Grant;
+import org.openwms.core.integration.RoleDao;
 import org.openwms.core.integration.SecurityObjectDao;
 import org.openwms.core.test.AbstractMockitoTests;
 
@@ -49,6 +50,8 @@ public class SecurityServiceTest extends AbstractMockitoTests {
 
     @Mock
     private SecurityObjectDao dao;
+    @Mock
+    private RoleDao roleDao;
     @InjectMocks
     private SecurityServiceImpl srv;
 
@@ -95,6 +98,7 @@ public class SecurityServiceTest extends AbstractMockitoTests {
         // preparing mocks
         when(dao.findAllOfModule("TMS%")).thenReturn(persistedGrants);
         when(dao.merge(testGrant)).thenReturn(testGrant);
+        // when(roleDao.removeFromRoles(persistedGrants));
 
         // do test call
         List<Grant> result = srv.mergeGrants("TMS", newGrants);
@@ -124,9 +128,10 @@ public class SecurityServiceTest extends AbstractMockitoTests {
     public final void testMergeGrantsExisting() {
         // prepare data
         List<Grant> persistedGrants = new ArrayList<Grant>();
-        Grant testGrant = new Grant("TMS_NEW");
         persistedGrants.add(new Grant("TMS_NEW"));
+
         List<Grant> newGrants = new ArrayList<Grant>();
+        Grant testGrant = new Grant("TMS_NEW");
         newGrants.add(testGrant);
 
         // preparing mocks

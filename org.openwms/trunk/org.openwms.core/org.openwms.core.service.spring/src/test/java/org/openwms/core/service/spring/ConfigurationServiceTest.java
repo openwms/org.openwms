@@ -29,6 +29,7 @@ import static org.mockito.Mockito.when;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.List;
 
 import org.junit.Assert;
@@ -134,11 +135,11 @@ public class ConfigurationServiceTest extends AbstractMockitoTests {
     @Test
     public final void testFindByType() {
         filePrefs.add(new ModulePreference("CORE", "persPref2"));
-        when(writer.findByType(ModulePreference.class)).thenReturn(
+        when(writer.findByType(ModulePreference.class, "CORE")).thenReturn(
                 Arrays.asList(new ModulePreference[] { new ModulePreference("CORE", "persPref2") }));
 
-        List<ModulePreference> prefs = srv.findByType(ModulePreference.class);
-        verify(writer).findByType(ModulePreference.class);
+        Collection<ModulePreference> prefs = srv.findByType(ModulePreference.class, "CORE");
+        verify(writer).findByType(ModulePreference.class, "CORE");
         Assert.assertTrue(prefs.size() == 1);
     }
 
