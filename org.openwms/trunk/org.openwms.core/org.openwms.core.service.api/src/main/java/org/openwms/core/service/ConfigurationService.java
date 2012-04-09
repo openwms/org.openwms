@@ -20,7 +20,7 @@
  */
 package org.openwms.core.service;
 
-import java.util.List;
+import java.util.Collection;
 
 import org.openwms.core.domain.system.AbstractPreference;
 
@@ -44,30 +44,43 @@ public interface ConfigurationService {
      * Find and return all preferences. The order of elements is not guaranteed
      * and is specific to the implementation.
      * 
-     * @return a list of all preferences
+     * @return A Collection of all preferences
      */
-    List<AbstractPreference> findAll();
+    Collection<AbstractPreference> findAll();
 
     /**
-     * Find and return all preferences in the scope of the application.
+     * Find and return all preferences in the scope of a specific type of
+     * Preference and of an owner.
      * 
      * @param <T>
      *            Any subtype of {@link AbstractPreference}
      * @param clazz
      *            The class of preference to search for
-     * @return a list of preferences of type T
+     * @return A Collection of preferences of type T
      */
-    <T extends AbstractPreference> List<T> findByType(Class<T> clazz);
+    <T extends AbstractPreference> Collection<T> findByType(Class<T> clazz, String owner);
 
     /**
      * Save the given {@link AbstractPreference} or persist it when it is a
      * transient instance.
      * 
+     * @param <T>
+     *            Any subtype of {@link AbstractPreference}
      * @param preference
      *            {@link AbstractPreference} entity to save
      * @return Saved {@link AbstractPreference} entity instance
      */
-    AbstractPreference save(AbstractPreference preference);
+    <T extends AbstractPreference> T save(T preference);
+
+    /**
+     * Merge the given {@link AbstractPreference} or persist it when it is a
+     * transient instance.
+     * 
+     * @param preference
+     *            {@link AbstractPreference} entity to merge
+     * @return Merged {@link AbstractPreference} entity instance
+     */
+    AbstractPreference merge(AbstractPreference preference);
 
     /**
      * Remove a {@link AbstractPreference}.
