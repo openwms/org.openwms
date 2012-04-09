@@ -55,6 +55,11 @@ public class I18nServiceTest extends AbstractMockitoTests {
      */
     @Test
     public final void testFindAllTranslations() {
+        System.out.println("5%10:" + 5 % 10);
+        System.out.println("5/10:" + 5 / 10);
+        System.out.println("11%10:" + 13 % 10);
+        System.out.println("11/10:" + 13 / 10);
+
         // preparing mocks
         when(dao.findAll()).thenReturn(Arrays.asList(new I18n[] { new I18n() }));
 
