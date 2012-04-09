@@ -20,6 +20,7 @@
  */
 package org.openwms.core.service.spring;
 
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 
@@ -94,10 +95,16 @@ public class UserServiceImpl implements UserService {
 
     /**
      * {@inheritDoc}
+     * 
+     * Implementation is null-safe.
      */
     @Override
     public List<User> findAll() {
-        return dao.findAll();
+        List<User> users = dao.findAll();
+        if (users == null) {
+            users = Collections.emptyList();
+        }
+        return users;
     }
 
     /**

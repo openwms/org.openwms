@@ -21,7 +21,6 @@
 package org.openwms.core.service.spring;
 
 import java.util.Collections;
-import java.util.Comparator;
 import java.util.List;
 
 import org.openwms.core.domain.Module;
@@ -49,7 +48,7 @@ import org.springframework.transaction.annotation.Transactional;
 @Service(ModuleServiceImpl.COMPONENT_NAME)
 public class ModuleServiceImpl implements ModuleService {
 
-    private static final Logger logger = LoggerFactory.getLogger(ModuleServiceImpl.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(ModuleServiceImpl.class);
     @Autowired
     private ModuleDao dao;
     /**
@@ -106,7 +105,7 @@ public class ModuleServiceImpl implements ModuleService {
         if (module.isNew()) {
             rem = dao.findByUniqueId(module.getModuleName());
             if (rem == null) {
-                logger.info("Do not remove a transient Module");
+                LOGGER.info("Do not remove a transient Module");
                 return;
             }
         } else {
@@ -133,12 +132,7 @@ public class ModuleServiceImpl implements ModuleService {
         if (module.isNew()) {
             List<Module> all = dao.findAll();
             if (!all.isEmpty()) {
-                Collections.sort(all, new Comparator<Module>() {
-                    @Override
-                    public int compare(Module o1, Module o2) {
-                        return o1.getStartupOrder() >= o2.getStartupOrder() ? 1 : -1;
-                    }
-                });
+                Collections.sort(all, new Module.ModuleComparator());
                 module.setStartupOrder(all.get(all.size() - 1).getStartupOrder() + 1);
             }
         }
