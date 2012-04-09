@@ -21,10 +21,13 @@
 package org.openwms.core.service.spring;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import org.openwms.core.annotation.FireAfterTransaction;
 import org.openwms.core.domain.system.usermanagement.Grant;
+import org.openwms.core.domain.system.usermanagement.SecurityObject;
+import org.openwms.core.integration.RoleDao;
 import org.openwms.core.integration.SecurityObjectDao;
 import org.openwms.core.service.SecurityService;
 import org.openwms.core.util.event.UserChangedEvent;
@@ -51,10 +54,24 @@ public class SecurityServiceImpl implements SecurityService {
     @Autowired
     @Qualifier("securityObjectDao")
     private SecurityObjectDao dao;
+    @Autowired
+    @Qualifier("roleDao")
+    private RoleDao roleDao;
     /**
      * Springs component name.
      */
     public static final String COMPONENT_NAME = "securityService";
+
+    /**
+     * {@inheritDoc}
+     * 
+     * @see org.openwms.core.service.SecurityService#findAll()
+     */
+    @Override
+    public List<SecurityObject> findAll() {
+        List<SecurityObject> result = dao.findAll();
+        return result == null ? Collections.<SecurityObject> emptyList() : result;
+    }
 
     /**
      * {@inheritDoc}
@@ -83,8 +100,7 @@ public class SecurityServiceImpl implements SecurityService {
             logger.debug("Merging grants of module:" + moduleName);
         }
         List<Grant> persisted = dao.findAllOfModule(moduleName + "%");
-        List<Grant> result = new ArrayList<Grant>(persisted.size());
-        result.addAll(persisted);
+        List<Grant> result = new ArrayList<Grant>(persisted);
         Grant merged = null;
         for (Grant grant : grants) {
             if (!persisted.contains(grant)) {
@@ -98,7 +114,10 @@ public class SecurityServiceImpl implements SecurityService {
             }
         }
         result.removeAll(persisted);
-        dao.delete(persisted);
+        if (!persisted.isEmpty()) {
+            roleDao.removeFromRoles((List) persisted);
+            dao.delete(persisted);
+        }
         return result;
     }
 

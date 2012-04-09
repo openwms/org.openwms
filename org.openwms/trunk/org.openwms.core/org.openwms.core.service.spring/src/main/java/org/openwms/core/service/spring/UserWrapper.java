@@ -60,6 +60,8 @@ public class UserWrapper implements UserDetails, UserHolder {
         this.user.getRoles().size();
     }
 
+    protected void addDefaultGrants(Collection<GrantedAuthority> authorities) {}
+
     /**
      * {@inheritDoc}
      * 
@@ -89,6 +91,7 @@ public class UserWrapper implements UserDetails, UserHolder {
                     }
                 });
             }
+            addDefaultGrants(authorities);
         }
         return authorities;
     }
@@ -205,5 +208,13 @@ public class UserWrapper implements UserDetails, UserHolder {
             return false;
         }
         return true;
+    }
+
+    /**
+     * @see java.lang.Object#toString()
+     */
+    @Override
+    public String toString() {
+        return this.getUsername();
     }
 }

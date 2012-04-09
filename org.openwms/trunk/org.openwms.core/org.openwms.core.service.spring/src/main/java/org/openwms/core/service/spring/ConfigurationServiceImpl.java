@@ -20,6 +20,8 @@
  */
 package org.openwms.core.service.spring;
 
+import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 
 import org.openwms.core.domain.system.AbstractPreference;
@@ -57,9 +59,11 @@ public class ConfigurationServiceImpl implements ConfigurationService, Applicati
     @Autowired
     @Qualifier("preferencesJpaDao")
     private PreferenceWriter<Long> dao;
+
     /**
      * Springs service name.
      */
+    // FIXME [scherrer] : Move all these names into the interfaces
     public static final String COMPONENT_NAME = "configurationService";
 
     /**
@@ -78,27 +82,37 @@ public class ConfigurationServiceImpl implements ConfigurationService, Applicati
     /**
      * {@inheritDoc}
      * 
+     * No match returns an empty List ({@link Collections#emptyList()}).
+     * 
      * @see org.openwms.core.service.spring.EntityServiceImpl#findAll()
      */
     @Override
-    public List<AbstractPreference> findAll() {
-        return dao.findAll();
+    public Collection<AbstractPreference> findAll() {
+        Collection<AbstractPreference> result = dao.findAll();
+        return result == null ? Collections.<AbstractPreference> emptyList() : result;
     }
 
     /**
      * {@inheritDoc}
      * 
-     * @see org.openwms.core.service.ConfigurationService#findByType(java.lang.Class)
+     * If owner is set to <code>null</code> or is empty, all preferences of this
+     * type are returned. No match returns an empty List (
+     * {@link Collections#emptyList()}).
      */
     @Override
-    public <T extends AbstractPreference> List<T> findByType(Class<T> clazz) {
-        return dao.findByType(clazz);
+    public <T extends AbstractPreference> Collection<T> findByType(Class<T> clazz, String owner) {
+        Collection<T> result;
+        if (owner == null || owner.isEmpty()) {
+            result = dao.findByType(clazz);
+        }
+        result = dao.findByType(clazz, owner);
+        return result == null ? Collections.<T> emptyList() : result;
     }
 
     /**
      * {@inheritDoc}
      * 
-     * It is not allowed to call the implementation with a <code>null</code>
+     * Not allowed to call this implementation with a <code>null</code>
      * argument.
      * 
      * @throws IllegalArgumentException
@@ -106,21 +120,41 @@ public class ConfigurationServiceImpl implements ConfigurationService, Applicati
      * @see org.openwms.core.service.spring.EntityServiceImpl#save(org.openwms.core.domain.AbstractEntity)
      */
     @Override
-    public AbstractPreference save(AbstractPreference preference) {
-        AssertUtils.notNull(preference, "Not allowed to call save with a NULL preference");
+    public <T extends AbstractPreference> T save(T preference) {
+        AssertUtils.notNull(preference, "Not allowed to call save with a NULL argument");
         List<? extends AbstractPreference> preferences = dao.findByType(preference.getClass());
         if (preferences.contains(preference)) {
             if (preference.isNew()) {
                 if (logger.isDebugEnabled()) {
                     logger.debug("Fake. Do not save or persist an entity that is transient and duplicated");
                     // FIXME [scherrer] : Do not nothing. clone and merge!
-                    return preference;
                 }
+                return preference;
             }
             return dao.save(preference);
         }
         dao.persist(preference);
         return dao.save(preference);
+    }
+
+    /**
+     * {@inheritDoc}
+     * 
+     * Not allowed to call this implementation with a <code>null</code>
+     * argument.
+     * 
+     * @throws IllegalArgumentException
+     *             when <code>preference</code> is <code>null</code>
+     * @see org.openwms.core.service.ConfigurationService#merge(org.openwms.core.domain.system.AbstractPreference)
+     */
+    @Override
+    public AbstractPreference merge(AbstractPreference preference) {
+        AssertUtils.notNull(preference, "Not allowed to call merge with a NULL argument");
+        List<? extends AbstractPreference> preferences = dao.findByType(preference.getClass());
+        if (preferences.contains(preference)) {
+            return preference;
+        }
+        return this.save(preference);
     }
 
     /**
@@ -132,7 +166,7 @@ public class ConfigurationServiceImpl implements ConfigurationService, Applicati
      */
     @Override
     public void remove(AbstractPreference preference) {
-        AssertUtils.notNull(preference, "Not allowed to call remove with a NULL preference");
+        AssertUtils.notNull(preference, "Not allowed to call remove with a NULL argument");
         dao.remove(preference);
     }
 

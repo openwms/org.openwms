@@ -22,9 +22,11 @@ package org.openwms.core.service.spring;
 
 import java.util.List;
 
+import org.openwms.core.annotation.FireAfterTransaction;
 import org.openwms.core.domain.system.usermanagement.Role;
 import org.openwms.core.integration.RoleDao;
 import org.openwms.core.service.RoleService;
+import org.openwms.core.util.event.RoleChangedEvent;
 import org.openwms.core.util.validation.AssertUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -52,7 +54,7 @@ import org.springframework.transaction.annotation.Transactional;
 @Service(RoleServiceImpl.COMPONENT_NAME)
 public class RoleServiceImpl implements RoleService {
 
-    private static final Logger logger = LoggerFactory.getLogger(RoleServiceImpl.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(RoleServiceImpl.class);
     @Autowired
     private RoleDao dao;
     /**
@@ -67,6 +69,7 @@ public class RoleServiceImpl implements RoleService {
      *             when <code>roles</code> is <code>null</code>
      */
     @Override
+    @FireAfterTransaction(events = { RoleChangedEvent.class })
     public void remove(List<Role> roles) {
         AssertUtils.notNull(roles, "Roles to be removed must not be null");
         Role role;
@@ -75,8 +78,8 @@ public class RoleServiceImpl implements RoleService {
             if (role != null) {
                 dao.remove(role);
             } else {
-                if (logger.isInfoEnabled()) {
-                    logger.info("Role to remove could not be found. Role:" + role);
+                if (LOGGER.isInfoEnabled()) {
+                    LOGGER.info("Role to remove could not be found. Role:" + r);
                 }
             }
         }
@@ -89,6 +92,7 @@ public class RoleServiceImpl implements RoleService {
      *             when <code>role</code> is <code>null</code>
      */
     @Override
+    @FireAfterTransaction(events = { RoleChangedEvent.class })
     public Role save(Role role) {
         AssertUtils.notNull(role, "Role to be removed must not be null");
         return dao.save(role);

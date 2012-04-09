@@ -20,7 +20,11 @@
  */
 package org.openwms.core.service.spring;
 
+import java.util.Collection;
+
+import org.openwms.core.domain.system.usermanagement.SystemUser;
 import org.openwms.core.domain.system.usermanagement.User;
+import org.springframework.security.core.GrantedAuthority;
 
 /**
  * A SystemUserWrapper.
@@ -59,5 +63,19 @@ public class SystemUserWrapper extends UserWrapper {
      */
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    /**
+     * @see org.openwms.core.service.spring.UserWrapper#addDefaultGrants(java.util.Collection)
+     */
+    @SuppressWarnings("serial")
+    @Override
+    protected void addDefaultGrants(Collection<GrantedAuthority> authorities) {
+        authorities.add(new GrantedAuthority() {
+            @Override
+            public String getAuthority() {
+                return SystemUser.SYSTEM_ROLE_NAME;
+            }
+        });
     }
 }
