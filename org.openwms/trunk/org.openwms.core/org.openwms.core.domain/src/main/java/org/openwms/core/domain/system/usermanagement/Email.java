@@ -61,7 +61,7 @@ public class Email extends AbstractEntity implements DomainObject<Long> {
      * Unique identifier of the <code>Email</code> (not nullable).
      */
     @Column(name = "C_USERNAME", nullable = false)
-    private String userName;
+    private String username;
 
     /**
      * The email address as String (not nullable).
@@ -105,7 +105,7 @@ public class Email extends AbstractEntity implements DomainObject<Long> {
     public Email(String username, String emailAddress) {
         AssertUtils.isNotEmpty(username, "Username must not be null or empty");
         AssertUtils.isNotEmpty(emailAddress, "EmailAddress must not be null or empty");
-        this.userName = username;
+        this.username = username;
         this.emailAddress = emailAddress;
     }
 
@@ -129,10 +129,10 @@ public class Email extends AbstractEntity implements DomainObject<Long> {
      * Returns the name of the <code>User</code> who owns this
      * <code>Email</code>.
      * 
-     * @return The userName as String
+     * @return The username as String
      */
-    public String getUserName() {
-        return this.userName;
+    public String getUsername() {
+        return this.username;
     }
 
     /**
@@ -141,8 +141,8 @@ public class Email extends AbstractEntity implements DomainObject<Long> {
      * @param userName
      *            Name of the <code>User</code>.
      */
-    public void setUserName(String userName) {
-        this.userName = userName;
+    public void setUsername(String userName) {
+        this.username = userName;
     }
 
     /**
