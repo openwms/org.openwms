@@ -52,7 +52,7 @@ import org.springframework.transaction.annotation.Transactional;
 @Service(ConfigurationServiceImpl.COMPONENT_NAME)
 public class ConfigurationServiceImpl implements ConfigurationService, ApplicationListener<MergePropertiesEvent> {
 
-    private static final Logger logger = LoggerFactory.getLogger(ConfigurationServiceImpl.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(ConfigurationServiceImpl.class);
     @Autowired
     @Qualifier("preferencesFileDao")
     private PreferenceDao<PreferenceKey> fileDao;
@@ -102,10 +102,7 @@ public class ConfigurationServiceImpl implements ConfigurationService, Applicati
     @Override
     public <T extends AbstractPreference> Collection<T> findByType(Class<T> clazz, String owner) {
         Collection<T> result;
-        if (owner == null || owner.isEmpty()) {
-            result = dao.findByType(clazz);
-        }
-        result = dao.findByType(clazz, owner);
+        result = (owner == null || owner.isEmpty()) ? dao.findByType(clazz) : dao.findByType(clazz, owner);
         return result == null ? Collections.<T> emptyList() : result;
     }
 
@@ -125,8 +122,8 @@ public class ConfigurationServiceImpl implements ConfigurationService, Applicati
         List<? extends AbstractPreference> preferences = dao.findByType(preference.getClass());
         if (preferences.contains(preference)) {
             if (preference.isNew()) {
-                if (logger.isDebugEnabled()) {
-                    logger.debug("Fake. Do not save or persist an entity that is transient and duplicated");
+                if (LOGGER.isDebugEnabled()) {
+                    LOGGER.debug("Fake. Do not save or persist an entity that is transient and duplicated");
                     // FIXME [scherrer] : Do not nothing. clone and merge!
                 }
                 return preference;

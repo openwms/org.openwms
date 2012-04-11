@@ -42,7 +42,7 @@ import org.springframework.transaction.annotation.Transactional;
 @Service("i18nService")
 public class I18nServiceImpl implements I18nService {
 
-    private static final Logger logger = LoggerFactory.getLogger(I18nServiceImpl.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(I18nServiceImpl.class);
     @Autowired
     private I18nRepository repo;
 
@@ -67,7 +67,7 @@ public class I18nServiceImpl implements I18nService {
     @Override
     public void saveTranslations(I18n... translations) {
         if (null == translations || translations.length == 0) {
-            logger.warn("I18nService called to save translations but these are NULL");
+            LOGGER.warn("I18nService called to save translations but these are NULL");
             return;
         }
         // TODO [scherrer] : extend repository to be compliant with lists,

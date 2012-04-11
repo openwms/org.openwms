@@ -72,7 +72,7 @@ import org.springframework.transaction.annotation.Transactional;
 @Service(UserServiceImpl.COMPONENT_NAME)
 public class UserServiceImpl implements UserService {
 
-    private static final Logger logger = LoggerFactory.getLogger(UserServiceImpl.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(UserServiceImpl.class);
     @Autowired
     private UserDao dao;
     @Autowired
@@ -154,7 +154,7 @@ public class UserServiceImpl implements UserService {
     public void remove(User user) {
         AssertUtils.notNull(user, "The instance of the User to be removed is null");
         if (user.isNew()) {
-            logger.info("The User instance to be removed is not persist yet, no need to remove it");
+            LOGGER.info("The User instance to be removed is not persist yet, no need to remove it");
         } else {
             dao.remove(dao.findById(user.getId()));
         }
@@ -211,7 +211,7 @@ public class UserServiceImpl implements UserService {
                     saltSource.getSalt(new UserWrapper(entity))));
             dao.save(entity);
         } catch (InvalidPasswordException ipe) {
-            logger.info(ipe.getMessage());
+            LOGGER.info(ipe.getMessage());
             throw new ServiceRuntimeException("Password does not match the defined pattern", ipe);
         }
     }
@@ -235,7 +235,7 @@ public class UserServiceImpl implements UserService {
                 user.changePassword(enc.encodePassword(userPassword.getPassword(),
                         saltSource.getSalt(new UserWrapper(user))));
             } catch (InvalidPasswordException ipe) {
-                logger.info(ipe.getMessage());
+                LOGGER.info(ipe.getMessage());
                 throw new ServiceRuntimeException("Password does not match the defined pattern", ipe);
             }
         }

@@ -46,7 +46,7 @@ import org.springframework.stereotype.Component;
 @Component(CoreServiceAdvice.COMPONENT_NAME)
 public class CoreServiceAdvice {
 
-    private static final Logger logger = LoggerFactory.getLogger(CoreServiceAdvice.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(CoreServiceAdvice.class);
     /**
      * Springs component name.
      */
@@ -64,17 +64,17 @@ public class CoreServiceAdvice {
      */
     public Object around(ProceedingJoinPoint pjp) throws Throwable {
         StopWatch sw = null;
-        if (logger.isDebugEnabled()) {
+        if (LOGGER.isDebugEnabled()) {
             sw = new StopWatch();
             sw.start();
-            logger.debug("-->> Calling:" + pjp.toShortString());
+            LOGGER.debug("-->> Calling:" + pjp.toShortString());
         }
         try {
             return pjp.proceed();
         } finally {
-            if (logger.isDebugEnabled() && sw != null) {
+            if (LOGGER.isDebugEnabled() && sw != null) {
                 sw.stop();
-                logger.debug("<<-- took about [ms]:" + sw.getTime());
+                LOGGER.debug("<<-- took about [ms]:" + sw.getTime());
             }
         }
     }
@@ -91,8 +91,8 @@ public class CoreServiceAdvice {
      *            The root exception that is thrown
      */
     public void afterThrowing(Throwable ex) {
-        if (logger.isWarnEnabled()) {
-            logger.warn("Service Layer Exception: " + ex);
+        if (LOGGER.isWarnEnabled()) {
+            LOGGER.warn("Service Layer Exception: " + ex);
         }
         if (ex instanceof ServiceRuntimeException) {
             return;

@@ -167,6 +167,8 @@ public class UserWrapper implements UserDetails, UserHolder {
     }
 
     /**
+     * {@inheritDoc}
+     * 
      * @see java.lang.Object#hashCode()
      */
     @Override
@@ -179,6 +181,8 @@ public class UserWrapper implements UserDetails, UserHolder {
     }
 
     /**
+     * {@inheritDoc}
+     * 
      * @see java.lang.Object#equals(java.lang.Object)
      */
     @Override
@@ -211,6 +215,9 @@ public class UserWrapper implements UserDetails, UserHolder {
     }
 
     /**
+     * Return the Users username.
+     * 
+     * @return The username of the User
      * @see java.lang.Object#toString()
      */
     @Override
