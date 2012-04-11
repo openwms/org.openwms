@@ -97,8 +97,7 @@ public class EntityServiceImpl<T extends AbstractEntity, ID extends Serializable
     @Transactional(readOnly = true)
     public List<T> findAll() {
         resolveTypeClass();
-        List<T> list = dao.findAll();
-        return list;
+        return dao.findAll();
     }
 
     /**
@@ -118,8 +117,8 @@ public class EntityServiceImpl<T extends AbstractEntity, ID extends Serializable
     public void remove(T entity) {
         resolveTypeClass();
         dao.setPersistentClass(persistentClass);
-        entity = dao.save(entity);
-        dao.remove(entity);
+        T managedEntity = dao.save(entity);
+        dao.remove(managedEntity);
     }
 
     /**

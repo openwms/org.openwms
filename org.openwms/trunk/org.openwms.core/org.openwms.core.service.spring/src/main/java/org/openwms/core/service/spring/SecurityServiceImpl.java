@@ -50,7 +50,7 @@ import org.springframework.transaction.annotation.Transactional;
 @Service(SecurityServiceImpl.COMPONENT_NAME)
 public class SecurityServiceImpl implements SecurityService {
 
-    private static final Logger logger = LoggerFactory.getLogger(SecurityServiceImpl.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(SecurityServiceImpl.class);
     @Autowired
     @Qualifier("securityObjectDao")
     private SecurityObjectDao dao;
@@ -83,7 +83,7 @@ public class SecurityServiceImpl implements SecurityService {
     @Override
     @Transactional(readOnly = true)
     public void login() {
-        logger.debug("Login successful!");
+        LOGGER.debug("Login successful!");
     }
 
     /**
@@ -96,8 +96,8 @@ public class SecurityServiceImpl implements SecurityService {
     @FireAfterTransaction(events = { UserChangedEvent.class })
     public List<Grant> mergeGrants(String moduleName, List<Grant> grants) {
         AssertUtils.notNull(moduleName, "Modulename must not be null");
-        if (logger.isDebugEnabled()) {
-            logger.debug("Merging grants of module:" + moduleName);
+        if (LOGGER.isDebugEnabled()) {
+            LOGGER.debug("Merging grants of module:" + moduleName);
         }
         List<Grant> persisted = dao.findAllOfModule(moduleName + "%");
         List<Grant> result = new ArrayList<Grant>(persisted);
