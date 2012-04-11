@@ -80,7 +80,7 @@ import org.slf4j.LoggerFactory;
 public class User extends AbstractEntity implements DomainObject<Long> {
 
     private static final long serialVersionUID = -1116645053773805413L;
-    private static final Logger logger = LoggerFactory.getLogger(User.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(User.class);
 
     /**
      * Query to find all <code>User</code>s. Name is {@value} .
@@ -397,7 +397,7 @@ public class User extends AbstractEntity implements DomainObject<Long> {
     public void changePassword(String password) throws InvalidPasswordException {
         // FIXME [scherrer] : Setting the same password should fail
         if (this.savedPassword != null && this.savedPassword.equals(password)) {
-            logger.debug("Trying to set the new password equals to the current password");
+            LOGGER.debug("Trying to set the new password equals to the current password");
             return;
         }
         if (isPasswordValid(password)) {
@@ -438,8 +438,8 @@ public class User extends AbstractEntity implements DomainObject<Long> {
 
     private void storeOldPassword(String oldPassword) {
         if (oldPassword == null || oldPassword.isEmpty()) {
-            if (logger.isDebugEnabled()) {
-                logger.debug("If the old password is null, do not store it in history");
+            if (LOGGER.isDebugEnabled()) {
+                LOGGER.debug("If the old password is null, do not store it in history");
             }
             return;
         }
@@ -451,8 +451,8 @@ public class User extends AbstractEntity implements DomainObject<Long> {
                     return o2.getPasswordChanged().compareTo(o1.getPasswordChanged());
                 }
             });
-            if (logger.isDebugEnabled()) {
-                logger.debug("Remove the old password from the history: " + passwords.get(passwords.size() - 1));
+            if (LOGGER.isDebugEnabled()) {
+                LOGGER.debug("Remove the old password from the history: " + passwords.get(passwords.size() - 1));
             }
             UserPassword pw = passwords.get(passwords.size() - 1);
             pw.setUser(null);

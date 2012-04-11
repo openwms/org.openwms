@@ -333,14 +333,14 @@ public class Role extends SecurityObject {
     /**
      * Add an existing {@link SecurityObject} to the <code>Role</code>.
      * 
-     * @param grant
-     *            The {@link SecurityObject} to be added to the
+     * @param grants
+     *            A list of {@link SecurityObject}s to be removed from the
      *            <code>Role</code>
      * @return <code>true</code> if the {@link SecurityObject} was successfully
      *         removed from the Set of {@link SecurityObject}s, otherwise
      *         <code>false</code>
      * @throws IllegalArgumentException
-     *             if grant is <code>null</code>
+     *             if <code>grants</code> is <code>null</code>
      */
     public boolean removeGrants(List<SecurityObject> grants) {
         AssertUtils.notNull(grants, "Grants to remove must not be null");

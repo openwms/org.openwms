@@ -20,6 +20,7 @@
  */
 package org.openwms.core.domain;
 
+import java.io.Serializable;
 import java.util.Comparator;
 
 import javax.persistence.Column;
@@ -76,7 +77,18 @@ public class Module extends AbstractEntity implements DomainObject<Long> {
      * @version $Revision$
      * @since 0.2
      */
-    public static class ModuleComparator implements Comparator<Module> {
+    public static class ModuleComparator implements Comparator<Module>, Serializable {
+
+        private static final long serialVersionUID = 8749015473190257293L;
+
+        /**
+         * {@inheritDoc}
+         * 
+         * Return 1 when the startupOrder of o1 is greater or equals than the
+         * startupOrder of o2, -1 when it is less.
+         * 
+         * @see java.util.Comparator#compare(java.lang.Object, java.lang.Object)
+         */
         @Override
         public int compare(Module o1, Module o2) {
             return o1.getStartupOrder() >= o2.getStartupOrder() ? 1 : -1;

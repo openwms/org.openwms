@@ -92,20 +92,20 @@ public class Email extends AbstractEntity implements DomainObject<Long> {
     }
 
     /**
-     * Create a new <code>Email</code> with an <code>userName</code> and an
+     * Create a new <code>Email</code> with an <code>username</code> and an
      * <code>emailAddress</code>.
      * 
-     * @param userName
+     * @param username
      *            The name of the User
      * @param emailAddress
      *            The email address of the User
      * @throws IllegalArgumentException
      *             when userName or emailAddress is <code>null</code> or empty
      */
-    public Email(String userName, String emailAddress) {
-        AssertUtils.isNotEmpty(userName, "Username must not be null or empty");
+    public Email(String username, String emailAddress) {
+        AssertUtils.isNotEmpty(username, "Username must not be null or empty");
         AssertUtils.isNotEmpty(emailAddress, "EmailAddress must not be null or empty");
-        this.userName = userName;
+        this.userName = username;
         this.emailAddress = emailAddress;
     }
 

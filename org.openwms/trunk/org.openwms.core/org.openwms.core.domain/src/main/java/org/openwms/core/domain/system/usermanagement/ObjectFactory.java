@@ -57,6 +57,12 @@ public class ObjectFactory {
     /**
      * Create an instance of {@link UserPreference}.
      * 
+     * @param username
+     *            The name of the User
+     * @param key
+     *            The key of the preference
+     * @param description
+     *            The description text
      * @return an instance of {@link UserPreference}
      */
     public static final UserPreference createUserPreference(String username, String key, String description) {
