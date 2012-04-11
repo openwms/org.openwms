@@ -20,8 +20,6 @@
  */
 package org.openwms.core.service.exception;
 
-import java.io.Serializable;
-
 /**
  * A ServiceRuntimeException is an unchecked application exception thrown in
  * service layer classes.
@@ -30,9 +28,9 @@ import java.io.Serializable;
  * @version $Revision$
  * @since 0.1
  */
-public class ServiceRuntimeException extends RuntimeException implements Serializable {
+public class ServiceRuntimeException extends RuntimeException {
 
-    private static final long serialVersionUID = 3091182786979000919L;
+    private static final long serialVersionUID = -40522023561564642L;
 
     /**
      * Create a new ServiceRuntimeException with a message text.
