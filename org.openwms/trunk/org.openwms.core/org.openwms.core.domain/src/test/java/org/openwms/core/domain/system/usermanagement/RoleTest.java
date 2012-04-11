@@ -21,7 +21,6 @@
 package org.openwms.core.domain.system.usermanagement;
 
 import static junit.framework.Assert.assertEquals;
-import static junit.framework.Assert.assertFalse;
 import static junit.framework.Assert.fail;
 
 import javax.persistence.PersistenceException;
@@ -56,10 +55,6 @@ public class RoleTest extends AbstractJpaSpringContextTests {
         entityManager.persist(knownUser);
         entityManager.flush();
         entityManager.clear();
-    }
-
-    public final void mergeGlossaryTerms() throws Exception {
-
     }
 
     /**
@@ -174,19 +169,31 @@ public class RoleTest extends AbstractJpaSpringContextTests {
     }
 
     /**
-     * Testing some persist / merging transient entities and removal of roles.
+     * Test the JPA lifecycle. Transient Users may not be created whenever a
+     * Role is merged.
      */
     @Test
-    public final void testLifecycle() {
+    public final void testLifecycleWithTransientUsers() {
         knownRole.addUser(knownUser);
         knownRole = entityManager.merge(knownRole);
-        knownRole.addUser(new User("TRANSIENT_USER"));
-        knownRole = entityManager.merge(knownRole);
 
-        Role role2 = (Role) entityManager.createQuery("select r from Role r where r.name = :rolename")
-                .setParameter("rolename", KNOWN_ROLE).getSingleResult();
-        assertEquals("Users must be persisted with Role", 2, role2.getUsers().size());
-        assertFalse("Role must be persisted", knownRole.isNew());
+        knownRole.addUser(new User("TRANSIENT_USER"));
+        try {
+            entityManager.merge(knownRole);
+            fail("Must fail because merging of transient users is not permitted");
+        } catch (Exception e) {
+            logger.debug("OK: Exception when trying to merge a transient User with a Role");
+        }
+    }
+
+    /**
+     * Test of JPA cascade lifecycle. Do not remove already existing User when
+     * removing a Role.
+     */
+    @Test
+    public final void testLifecycleRemoveRoleNotUsers() {
+        knownRole.addUser(knownUser);
+        knownRole = entityManager.merge(knownRole);
 
         entityManager.remove(knownRole);
 
@@ -197,9 +204,5 @@ public class RoleTest extends AbstractJpaSpringContextTests {
         cnt = (Long) entityManager.createQuery("select count(u) from User u where u.username = :username")
                 .setParameter("username", KNOWN_USER).getSingleResult();
         assertEquals("User may not be removed", 1, cnt.intValue());
-
-        cnt = (Long) entityManager.createQuery("select count(u) from User u where u.username = :username")
-                .setParameter("username", "TRANSIENT_USER").getSingleResult();
-        assertEquals("Transient User may not be removed", 1, cnt.intValue());
     }
 }

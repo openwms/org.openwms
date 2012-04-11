@@ -25,16 +25,24 @@
     xsi:schemaLocation="http://java.sun.com/xml/ns/persistence http://java.sun.com/xml/ns/persistence/persistence_1_0.xsd">
     <persistence-unit name="OpenWMS-test" transaction-type="RESOURCE_LOCAL">
         <class>org.openwms.core.domain.Module</class>
+        
         <class>org.openwms.core.domain.preferences.ApplicationPreference</class>
         <class>org.openwms.core.domain.preferences.ModulePreference</class>
+
         <class>org.openwms.core.domain.system.AbstractPreference</class>
+        <class>org.openwms.core.domain.system.I18n</class>
+        <class>org.openwms.core.domain.system.Message</class>
+        
         <class>org.openwms.core.domain.system.usermanagement.Email</class>
+        <class>org.openwms.core.domain.system.usermanagement.Grant</class>
         <class>org.openwms.core.domain.system.usermanagement.Role</class>
+        <class>org.openwms.core.domain.system.usermanagement.RolePreference</class>
+        <class>org.openwms.core.domain.system.usermanagement.SecurityObject</class>
+        <class>org.openwms.core.domain.system.usermanagement.SystemUser</class>
         <class>org.openwms.core.domain.system.usermanagement.User</class>
         <class>org.openwms.core.domain.system.usermanagement.UserDetails</class>
-        <class>org.openwms.core.domain.system.usermanagement.RolePreference</class>
-        <class>org.openwms.core.domain.system.usermanagement.UserPreference</class>
         <class>org.openwms.core.domain.system.usermanagement.UserPassword</class>
+        <class>org.openwms.core.domain.system.usermanagement.UserPreference</class>
         <exclude-unlisted-classes>false</exclude-unlisted-classes>
     </persistence-unit>
 </persistence>
