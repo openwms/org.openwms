@@ -239,33 +239,33 @@ public class User extends AbstractEntity implements DomainObject<Long> {
     /**
      * Create a new <code>User</code> with an username.
      * 
-     * @param username
+     * @param userName
      *            The unique name of the user
      * @throws IllegalArgumentException
      *             when username is <code>null</code> or empty
      */
-    public User(String username) {
+    public User(String userName) {
         super();
-        AssertUtils.isNotEmpty(username, "Not allowed to create an User with an empty username");
-        this.username = username;
+        AssertUtils.isNotEmpty(userName, "Not allowed to create an User with an empty username");
+        this.username = userName;
         onLoad();
     }
 
     /**
      * Create a new <code>User</code> with an username.
      * 
-     * @param username
+     * @param userName
      *            The unique name of the user
      * @param password
      *            The password of the user
      * @throws IllegalArgumentException
      *             when username or password is <code>null</code> or empty
      */
-    protected User(String username, String password) {
+    protected User(String userName, String password) {
         super();
-        AssertUtils.isNotEmpty(username, "Not allowed to create an User with an empty username");
+        AssertUtils.isNotEmpty(userName, "Not allowed to create an User with an empty username");
         AssertUtils.isNotEmpty(password, "Not allowed to create an User with an empty password");
-        this.username = username;
+        this.username = userName;
         this.password = password;
     }
 
@@ -486,17 +486,17 @@ public class User extends AbstractEntity implements DomainObject<Long> {
      * @return The expiration date
      */
     public Date getExpirationDate() {
-        return expirationDate;
+        return new Date(expirationDate.getTime());
     }
 
     /**
      * Change the date when the account expires.
      * 
-     * @param expirationDate
+     * @param expDate
      *            The new expiration date to set
      */
-    public void setExpirationDate(Date expirationDate) {
-        this.expirationDate = expirationDate;
+    public void setExpirationDate(Date expDate) {
+        this.expirationDate = new Date(expDate.getTime());
     }
 
     /**
