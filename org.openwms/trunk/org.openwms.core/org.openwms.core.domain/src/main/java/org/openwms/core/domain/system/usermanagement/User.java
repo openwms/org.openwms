@@ -32,7 +32,6 @@ import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
@@ -74,10 +73,10 @@ import org.slf4j.LoggerFactory;
 @Entity
 @Table(name = "COR_USER")
 @NamedQueries({
-        @NamedQuery(name = User.NQ_FIND_ALL, query = "select u from User u"),
-        @NamedQuery(name = User.NQ_FIND_ALL_ORDERED, query = "select u from User u order by u.username"),
-        @NamedQuery(name = User.NQ_FIND_BY_USERNAME, query = "select u from User u where u.username = ?1"),
-        @NamedQuery(name = User.NQ_FIND_BY_USERNAME_PASSWORD, query = "select u from User u where u.username = :username and u.savedPassword = :password") })
+        @NamedQuery(name = User.NQ_FIND_ALL, query = "select u from User u left join fetch u.roles left join fetch u.preferences"),
+        @NamedQuery(name = User.NQ_FIND_ALL_ORDERED, query = "select u from User u left join fetch u.roles left join fetch u.preferences order by u.username"),
+        @NamedQuery(name = User.NQ_FIND_BY_USERNAME, query = "select u from User u left join fetch u.roles left join fetch u.preferences where u.username = ?1"),
+        @NamedQuery(name = User.NQ_FIND_BY_USERNAME_PASSWORD, query = "select u from User u left join fetch u.roles left join fetch u.preferences where u.username = :username and u.savedPassword = :password") })
 public class User extends AbstractEntity implements DomainObject<Long> {
 
     private static final long serialVersionUID = -1116645053773805413L;
@@ -208,7 +207,7 @@ public class User extends AbstractEntity implements DomainObject<Long> {
      * 
      * @see javax.persistence.FetchType#EAGER
      */
-    @ManyToMany(mappedBy = "users", fetch = FetchType.EAGER, cascade = { CascadeType.MERGE, CascadeType.REFRESH })
+    @ManyToMany(mappedBy = "users", cascade = { CascadeType.MERGE, CascadeType.REFRESH })
     private List<Role> roles = new ArrayList<Role>();
 
     /**
@@ -224,7 +223,7 @@ public class User extends AbstractEntity implements DomainObject<Long> {
      * 
      * @see javax.persistence.FetchType
      */
-    @OneToMany(fetch = FetchType.EAGER, cascade = { CascadeType.MERGE, CascadeType.REMOVE, CascadeType.REFRESH })
+    @OneToMany(cascade = { CascadeType.MERGE, CascadeType.REMOVE, CascadeType.REFRESH })
     @JoinColumn(name = "C_OWNER", referencedColumnName = "USERNAME")
     private Set<UserPreference> preferences = new HashSet<UserPreference>();
 
