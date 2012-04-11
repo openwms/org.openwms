@@ -20,6 +20,8 @@
  */
 package org.openwms.core.domain;
 
+import java.util.Comparator;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -66,6 +68,20 @@ public class Module extends AbstractEntity implements DomainObject<Long> {
      * Name is {@value} .
      */
     public static final String NQ_FIND_BY_UNIQUE_QUERY = "Module.findByModuleName";
+
+    /**
+     * A ModuleComparator.
+     * 
+     * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
+     * @version $Revision$
+     * @since 0.2
+     */
+    public static class ModuleComparator implements Comparator<Module> {
+        @Override
+        public int compare(Module o1, Module o2) {
+            return o1.getStartupOrder() >= o2.getStartupOrder() ? 1 : -1;
+        }
+    };
 
     /**
      * Unique technical key.

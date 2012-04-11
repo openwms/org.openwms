@@ -29,7 +29,6 @@ import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
@@ -54,7 +53,7 @@ import org.openwms.core.util.validation.AssertUtils;
 @Entity
 @DiscriminatorValue("ROLE")
 @NamedQueries({
-        @NamedQuery(name = Role.NQ_FIND_ALL, query = "select distinct(r) from Role r left join fetch r.users left join fetch r.grants order by r.name"),
+        @NamedQuery(name = Role.NQ_FIND_ALL, query = "select distinct(r) from Role r left join fetch r.users left join fetch r.grants left join fetch r.preferences order by r.name"),
         @NamedQuery(name = Role.NQ_FIND_BY_UNIQUE_QUERY, query = "select r from Role r where r.name = ?1") })
 public class Role extends SecurityObject {
 
@@ -92,21 +91,21 @@ public class Role extends SecurityObject {
     /**
      * All {@link User}s assigned to this <code>Role</code>.
      */
-    @ManyToMany(cascade = { CascadeType.REFRESH, CascadeType.MERGE })
+    @ManyToMany(cascade = { CascadeType.REFRESH })
     @JoinTable(name = "COR_ROLE_USER_JOIN", joinColumns = @JoinColumn(name = "ROLE_ID"), inverseJoinColumns = @JoinColumn(name = "USER_ID"))
     private Set<User> users = new HashSet<User>();
 
     /**
      * All {@link RolePreference}s linked to the <code>Role</code>.
      */
-    @ManyToMany(cascade = { CascadeType.REMOVE, CascadeType.REFRESH, CascadeType.MERGE })
+    @ManyToMany(cascade = { CascadeType.REFRESH })
     @JoinTable(name = "COR_ROLE_PREFERENCE_JOIN", joinColumns = @JoinColumn(name = "ROLE_ID"), inverseJoinColumns = @JoinColumn(name = "PREFERENCE_ID"))
     private Set<RolePreference> preferences = new HashSet<RolePreference>();
 
     /**
      * All {@link SecurityObject}s assigned to the <code>Role</code>.
      */
-    @ManyToMany(cascade = { CascadeType.REFRESH, CascadeType.MERGE }, fetch = FetchType.EAGER)
+    @ManyToMany(cascade = { CascadeType.REFRESH })
     @JoinTable(name = "COR_ROLE_ROLE_JOIN", joinColumns = @JoinColumn(name = "ROLE_ID"), inverseJoinColumns = @JoinColumn(name = "GRANT_ID"))
     private Set<SecurityObject> grants = new HashSet<SecurityObject>();
 
