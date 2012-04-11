@@ -243,7 +243,7 @@ public class UserDetails implements ImageProvider, Serializable {
      */
     @Override
     public byte[] getImage() {
-        return this.image;
+        return Arrays.copyOf(this.image, this.image.length);
     }
 
     /**
