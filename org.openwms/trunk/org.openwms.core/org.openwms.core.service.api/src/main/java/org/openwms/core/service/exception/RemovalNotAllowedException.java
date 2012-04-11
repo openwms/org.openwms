@@ -20,7 +20,6 @@
  */
 package org.openwms.core.service.exception;
 
-import java.io.Serializable;
 
 /**
  * A RemovalNotAllowedException is thrown when the caller is not allowed to
@@ -30,7 +29,7 @@ import java.io.Serializable;
  * @version $Revision$
  * @since 0.1
  */
-public class RemovalNotAllowedException extends ServiceException implements Serializable {
+public class RemovalNotAllowedException extends ServiceException {
 
     private static final long serialVersionUID = -5592508830188199188L;
 
