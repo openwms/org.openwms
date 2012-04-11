@@ -21,6 +21,7 @@
 package org.openwms.core.domain.system.usermanagement;
 
 import java.io.Serializable;
+import java.util.Arrays;
 
 import javax.persistence.Basic;
 import javax.persistence.Column;
@@ -249,8 +250,8 @@ public class UserDetails implements ImageProvider, Serializable {
      * {@inheritDoc}
      */
     @Override
-    public void setImage(byte[] image) {
-        this.image = image;
+    public void setImage(byte[] img) {
+        this.image = Arrays.copyOf(img, img.length);
     }
 
     /**

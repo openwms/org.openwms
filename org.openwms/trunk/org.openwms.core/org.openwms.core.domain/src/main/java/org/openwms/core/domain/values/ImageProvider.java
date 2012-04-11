@@ -39,8 +39,8 @@ public interface ImageProvider {
     /**
      * Change the image of the <code>User</code>.
      * 
-     * @param image
+     * @param img
      *            The new image to set
      */
-    void setImage(byte[] image);
+    void setImage(byte[] img);
 }
