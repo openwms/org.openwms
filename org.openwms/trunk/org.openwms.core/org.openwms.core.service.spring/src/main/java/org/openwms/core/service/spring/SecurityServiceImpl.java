@@ -54,7 +54,7 @@ public class SecurityServiceImpl implements SecurityService {
     @Autowired
     @Qualifier("securityObjectDao")
     private SecurityObjectDao dao;
-    @Autowired
+    @Autowired(required = true)
     @Qualifier("roleDao")
     private RoleDao roleDao;
     /**
@@ -115,7 +115,7 @@ public class SecurityServiceImpl implements SecurityService {
         }
         result.removeAll(persisted);
         if (!persisted.isEmpty()) {
-            roleDao.removeFromRoles((List) persisted);
+            roleDao.removeFromRoles(persisted);
             dao.delete(persisted);
         }
         return result;
