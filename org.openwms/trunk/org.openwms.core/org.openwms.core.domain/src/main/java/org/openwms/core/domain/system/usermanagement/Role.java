@@ -342,7 +342,7 @@ public class Role extends SecurityObject {
      * @throws IllegalArgumentException
      *             if <code>grants</code> is <code>null</code>
      */
-    public boolean removeGrants(List<SecurityObject> grants) {
+    public boolean removeGrants(List<? extends SecurityObject> grants) {
         AssertUtils.notNull(grants, "Grants to remove must not be null");
         return this.grants.removeAll(grants);
     }
