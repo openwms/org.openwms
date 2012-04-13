@@ -75,7 +75,7 @@ public class UserChangedEventAspect {
      * @throws Throwable
      *             Any exception is re-thrown
      */
-    public void fireUserEvent(Object publisher, FireAfterTransaction events) throws Throwable {
+    public void fireUserEvent(Object publisher, FireAfterTransaction events) throws Exception {
         for (int i = 0; i < events.events().length; i++) {
             Class<? extends EventObject> event = events.events()[i];
             if (ApplicationEvent.class.isAssignableFrom(event)) {

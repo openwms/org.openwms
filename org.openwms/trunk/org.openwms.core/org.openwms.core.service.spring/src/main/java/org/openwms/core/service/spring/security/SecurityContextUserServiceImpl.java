@@ -61,33 +61,27 @@ import org.springframework.transaction.annotation.Transactional;
 @Service(SecurityContextUserServiceImpl.COMPONENT_NAME)
 public class SecurityContextUserServiceImpl implements UserDetailsService, ApplicationListener<UserChangedEvent> {
 
-    private static final Logger logger = LoggerFactory.getLogger(SecurityContextUserServiceImpl.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(SecurityContextUserServiceImpl.class);
+
     @Value("#{ globals['system.user'] }")
     private String systemUser = SystemUser.SYSTEM_USERNAME;
-
     @Autowired
     @Qualifier("userDao")
     private GenericDao<User, Long> dao;
-
     @Autowired
     private UserService userService;
-
     @Autowired(required = false)
     @Qualifier("userCache")
     private UserCache userCache;
-
     @Autowired(required = false)
     @Qualifier("ehCache")
     private Ehcache cache;
-
     @Autowired
     private PasswordEncoder enc;
     @Autowired
     private SaltSource saltSource;
 
-    /**
-     * Springs service name.
-     */
+    /** Springs service name. */
     public static final String COMPONENT_NAME = "userDetailsService";
 
     /**
@@ -98,8 +92,8 @@ public class SecurityContextUserServiceImpl implements UserDetailsService, Appli
     @Override
     public void onApplicationEvent(UserChangedEvent event) {
         if (cache != null) {
-            if (logger.isDebugEnabled()) {
-                logger.debug("UserChangedEvent -> clear cache");
+            if (LOGGER.isDebugEnabled()) {
+                LOGGER.debug("UserChangedEvent -> clear cache");
             }
             cache.removeAll();
         }
