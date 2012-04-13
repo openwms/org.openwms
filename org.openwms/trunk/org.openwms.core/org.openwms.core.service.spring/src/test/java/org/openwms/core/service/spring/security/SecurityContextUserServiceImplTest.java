@@ -55,6 +55,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
  */
 public class SecurityContextUserServiceImplTest extends AbstractMockitoTests {
 
+    private static final String TEST_USER = "TEST_USER";
     @Mock
     private UserCache userCache;
     @Mock
@@ -90,14 +91,14 @@ public class SecurityContextUserServiceImplTest extends AbstractMockitoTests {
      */
     @Test
     public final void testLoadUserByUsernameFromCache() {
-        when(userCache.getUserFromCache("TEST_USER")).thenReturn(new UserWrapper(new User("TEST_USER")));
-        UserDetails cachedUser = srv.loadUserByUsername("TEST_USER");
+        when(userCache.getUserFromCache(TEST_USER)).thenReturn(new UserWrapper(new User(TEST_USER)));
+        UserDetails cachedUser = srv.loadUserByUsername(TEST_USER);
 
         assertTrue(cachedUser instanceof UserWrapper);
-        assertEquals(((UserWrapper) cachedUser).getUser(), new User("TEST_USER"));
-        verify(userCache, never()).putUserInCache(new UserWrapper(new User("TEST_USER")));
+        assertEquals(((UserWrapper) cachedUser).getUser(), new User(TEST_USER));
+        verify(userCache, never()).putUserInCache(new UserWrapper(new User(TEST_USER)));
         verify(userService, never()).createSystemUser();
-        verify(dao, never()).findByUniqueId("TEST_USER");
+        verify(dao, never()).findByUniqueId(TEST_USER);
     }
 
     /**
