@@ -51,6 +51,9 @@ import org.springframework.test.context.ContextConfiguration;
 @ContextConfiguration("classpath:/org/openwms/core/service/spring/Test-context.xml")
 public class UserServiceTest extends AbstractJpaSpringContextTests {
 
+    private static final String TEST_USER = "TEST";
+    private static final String UNKNOWN_USER = "UNKNOWN";
+    private static final String KNOWN_USER = "KNOWN";
     @Autowired
     private UserService srv;
 
@@ -59,7 +62,7 @@ public class UserServiceTest extends AbstractJpaSpringContextTests {
      */
     @Before
     public void onBefore() {
-        entityManager.persist(new User("KNOWN"));
+        entityManager.persist(new User(KNOWN_USER));
         entityManager.flush();
         entityManager.clear();
     }
@@ -70,7 +73,7 @@ public class UserServiceTest extends AbstractJpaSpringContextTests {
     @Test
     public final void testUploadImage() {
         try {
-            srv.uploadImageFile("UNKNOWN", new byte[222]);
+            srv.uploadImageFile(UNKNOWN_USER, new byte[222]);
             fail("Should throw an exception when calling with unknown user");
         } catch (ServiceRuntimeException sre) {
             if (!(sre instanceof UserNotFoundException)) {
@@ -78,8 +81,8 @@ public class UserServiceTest extends AbstractJpaSpringContextTests {
             }
             logger.debug("OK: User unknown" + sre.getMessage());
         }
-        srv.uploadImageFile("KNOWN", new byte[222]);
-        User user = findUser("KNOWN");
+        srv.uploadImageFile(KNOWN_USER, new byte[222]);
+        User user = findUser(KNOWN_USER);
         assertTrue(user.getUserDetails().getImage().length == 222);
     }
 
@@ -101,7 +104,7 @@ public class UserServiceTest extends AbstractJpaSpringContextTests {
      */
     @Test
     public final void testSaveTransient() {
-        User user = srv.save(new User("UNKNOWN"));
+        User user = srv.save(new User(UNKNOWN_USER));
         assertFalse("User must be persisted and has a primary key", user.isNew());
     }
 
@@ -110,14 +113,14 @@ public class UserServiceTest extends AbstractJpaSpringContextTests {
      */
     @Test
     public final void testSaveDetached() {
-        User user = findUser("KNOWN");
+        User user = findUser(KNOWN_USER);
         assertFalse("User must be persisted before", user.isNew());
         entityManager.clear();
         user.setFullname("Mr. Hudson");
         user = srv.save(user);
         entityManager.flush();
         entityManager.clear();
-        user = findUser("KNOWN");
+        user = findUser(KNOWN_USER);
         assertEquals("Changes must be saved", "Mr. Hudson", user.getFullname());
     }
 
@@ -140,14 +143,14 @@ public class UserServiceTest extends AbstractJpaSpringContextTests {
      */
     @Test
     public final void testRemove() {
-        User user = findUser("KNOWN");
+        User user = findUser(KNOWN_USER);
         assertFalse("User must be persisted before", user.isNew());
         entityManager.clear();
         srv.remove(user);
         entityManager.flush();
         entityManager.clear();
         try {
-            findUser("KNOWN");
+            findUser(KNOWN_USER);
             fail("Must be removed before and throw an exception");
         } catch (NoResultException nre) {
             logger.debug("OK: Exception when searching for a removed entity");
@@ -181,7 +184,7 @@ public class UserServiceTest extends AbstractJpaSpringContextTests {
     @Test
     public final void testChangePasswordUnknown() {
         try {
-            srv.changeUserPassword(new UserPassword(new User("UNKNOWN"), "password"));
+            srv.changeUserPassword(new UserPassword(new User(UNKNOWN_USER), "password"));
             fail("Should throw an exception when calling with an unknown user");
         } catch (ServiceRuntimeException sre) {
             if (!(sre instanceof UserNotFoundException)) {
@@ -200,7 +203,7 @@ public class UserServiceTest extends AbstractJpaSpringContextTests {
      */
     @Test
     public final void testChangePassword() {
-        srv.changeUserPassword(new UserPassword(new User("KNOWN"), "password"));
+        srv.changeUserPassword(new UserPassword(new User(KNOWN_USER), "password"));
     }
 
     /**
@@ -212,10 +215,10 @@ public class UserServiceTest extends AbstractJpaSpringContextTests {
      */
     @Test
     public final void testChangePasswordInvalidPassword() {
-        srv.changeUserPassword(new UserPassword(new User("KNOWN"), "password"));
-        srv.changeUserPassword(new UserPassword(new User("KNOWN"), "password1"));
+        srv.changeUserPassword(new UserPassword(new User(KNOWN_USER), "password"));
+        srv.changeUserPassword(new UserPassword(new User(KNOWN_USER), "password1"));
         try {
-            srv.changeUserPassword(new UserPassword(new User("KNOWN"), "password"));
+            srv.changeUserPassword(new UserPassword(new User(KNOWN_USER), "password"));
             fail("Should throw an exception when calling with an invalid password");
         } catch (ServiceRuntimeException sre) {
             if (!(sre.getCause() instanceof InvalidPasswordException)) {
@@ -267,7 +270,7 @@ public class UserServiceTest extends AbstractJpaSpringContextTests {
     @Test
     public final void testSaveUserProfileUserNull() {
         try {
-            srv.saveUserProfile(null, new UserPassword(new User("TEST"), "TEST"));
+            srv.saveUserProfile(null, new UserPassword(new User(TEST_USER), TEST_USER));
             fail("Must throw an exception when invoking with null argument");
         } catch (ServiceRuntimeException sre) {
             if (!(sre.getCause() instanceof IllegalArgumentException)) {
@@ -283,8 +286,8 @@ public class UserServiceTest extends AbstractJpaSpringContextTests {
      */
     @Test
     public final void testSaveUserProfileUserPreferencePasswordNull() {
-        User user = srv.saveUserProfile(new User("TEST"), null);
-        assertEquals("Must return the saved user", user, new User("TEST"));
+        User user = srv.saveUserProfile(new User(TEST_USER), null);
+        assertEquals("Must return the saved user", user, new User(TEST_USER));
     }
 
     /**
@@ -294,7 +297,7 @@ public class UserServiceTest extends AbstractJpaSpringContextTests {
      */
     @Test
     public final void testSaveUserProfileUserWithPassword() {
-        User user = new User("TEST");
+        User user = new User(TEST_USER);
         User u = srv.saveUserProfile(user, new UserPassword(user, "password"));
         assertEquals("Must return the saved user", u, user);
     }
@@ -306,7 +309,7 @@ public class UserServiceTest extends AbstractJpaSpringContextTests {
      */
     @Test
     public final void testSaveUserProfileUserWithInvalidPassword() {
-        User user = new User("TEST");
+        User user = new User(TEST_USER);
         User u = srv.saveUserProfile(user, new UserPassword(user, "password"));
         u = srv.saveUserProfile(u, new UserPassword(u, "password1"));
         try {
@@ -327,9 +330,9 @@ public class UserServiceTest extends AbstractJpaSpringContextTests {
      */
     @Test
     public final void testSaveUserProfileWithPreference() {
-        User user = new User("TEST");
+        User user = new User(TEST_USER);
         User u = srv.saveUserProfile(user, new UserPassword(user, "password"), new UserPreference(user.getUsername(),
-                "TEST"));
+                TEST_USER));
         entityManager.flush();
         entityManager.clear();
         assertEquals("Must return the saved user", u, user);

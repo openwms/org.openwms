@@ -54,6 +54,8 @@ import org.openwms.core.util.event.MergePropertiesEvent;
  */
 public class ConfigurationServiceTest extends AbstractMockitoTests {
 
+    private static final String PERSISTED_APP_PREF1 = "persPref1";
+    private static final String PERSISTED_APP_PREF2 = "persPref2";
     private List<AbstractPreference> filePrefs = new ArrayList<AbstractPreference>();
     private List<AbstractPreference> persistedPrefs = new ArrayList<AbstractPreference>();
 
@@ -73,8 +75,8 @@ public class ConfigurationServiceTest extends AbstractMockitoTests {
         filePrefs.add(new ApplicationPreference("filePref1"));
         filePrefs.add(new ApplicationPreference("filePref2"));
         // And a few from the database
-        persistedPrefs.add(new ApplicationPreference("persPref1"));
-        persistedPrefs.add(new ApplicationPreference("persPref2"));
+        persistedPrefs.add(new ApplicationPreference(PERSISTED_APP_PREF1));
+        persistedPrefs.add(new ApplicationPreference(PERSISTED_APP_PREF2));
     }
 
     /**
@@ -100,7 +102,7 @@ public class ConfigurationServiceTest extends AbstractMockitoTests {
     @Test
     public final void testOnApplicationEvent() {
         // That one must not be persisted
-        filePrefs.add(new ApplicationPreference("persPref2"));
+        filePrefs.add(new ApplicationPreference(PERSISTED_APP_PREF2));
         when(reader.findAll()).thenReturn(filePrefs);
         when(writer.findAll()).thenReturn(persistedPrefs);
 
@@ -109,7 +111,7 @@ public class ConfigurationServiceTest extends AbstractMockitoTests {
         verify(writer).save(new ApplicationPreference("filePref1"));
         verify(writer).save(new ApplicationPreference("filePref2"));
         // save must not be called for an already existing preference.
-        verify(writer, never()).save(new ApplicationPreference("persPref2"));
+        verify(writer, never()).save(new ApplicationPreference(PERSISTED_APP_PREF2));
     }
 
     /**
@@ -134,9 +136,9 @@ public class ConfigurationServiceTest extends AbstractMockitoTests {
      */
     @Test
     public final void testFindByType() {
-        filePrefs.add(new ModulePreference("CORE", "persPref2"));
+        filePrefs.add(new ModulePreference("CORE", PERSISTED_APP_PREF2));
         when(writer.findByType(ModulePreference.class, "CORE")).thenReturn(
-                Arrays.asList(new ModulePreference[] { new ModulePreference("CORE", "persPref2") }));
+                Arrays.asList(new ModulePreference[] { new ModulePreference("CORE", PERSISTED_APP_PREF2) }));
 
         Collection<ModulePreference> prefs = srv.findByType(ModulePreference.class, "CORE");
         verify(writer).findByType(ModulePreference.class, "CORE");
