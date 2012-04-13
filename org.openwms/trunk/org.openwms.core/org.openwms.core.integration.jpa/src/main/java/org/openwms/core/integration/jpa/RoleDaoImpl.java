@@ -55,16 +55,15 @@ public class RoleDaoImpl extends AbstractGenericJpaDao<Role, Long> implements Ro
     /**
      * {@inheritDoc}
      * 
-     * @see org.openwms.core.integration.RoleDao#removeFromRole(org.openwms.core.domain.system.usermanagement.SecurityObject,
-     *      org.openwms.core.domain.system.usermanagement.Role)
+     * @see org.openwms.core.integration.RoleDao#removeFromRoles(List)
      */
     @Override
-    public void removeFromRoles(List<SecurityObject> grants) {
+    public void removeFromRoles(List<? extends SecurityObject> securityObjects) {
         List<Role> roles = findAll();
         // FIXME [scherrer] : check this code!
         getEm().flush();
         for (Role role : roles) {
-            role.removeGrants(grants);
+            role.removeGrants(securityObjects);
             getEm().flush();
         }
     }
