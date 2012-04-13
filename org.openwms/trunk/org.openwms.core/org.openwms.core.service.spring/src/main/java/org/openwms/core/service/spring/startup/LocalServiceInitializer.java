@@ -40,7 +40,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class LocalServiceInitializer implements ApplicationListener<ContextRefreshedEvent> {
 
-    private static final Logger logger = LoggerFactory.getLogger(LocalServiceInitializer.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(LocalServiceInitializer.class);
     @Autowired
     private ApplicationContext ctx;
 
@@ -51,7 +51,7 @@ public class LocalServiceInitializer implements ApplicationListener<ContextRefre
      */
     @Override
     public void onApplicationEvent(ContextRefreshedEvent event) {
-        logger.info("CORE Service bundle started");
+        LOGGER.info("CORE Service bundle started");
         ctx.publishEvent(new MergePropertiesEvent(this));
     }
 }
