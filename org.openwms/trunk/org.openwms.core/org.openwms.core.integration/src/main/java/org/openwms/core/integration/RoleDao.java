@@ -40,9 +40,9 @@ public interface RoleDao extends GenericDao<Role, Long> {
      * from all Roles. This method is useful to unassign Grants before they're
      * going to be removed.
      * 
-     * @param grants
+     * @param securityObjects
      *            The collection of {@link SecurityObject}s to be unassigned
      * @since 0.2
      */
-    void removeFromRoles(List<SecurityObject> grants);
+    void removeFromRoles(List<? extends SecurityObject> securityObjects);
 }
