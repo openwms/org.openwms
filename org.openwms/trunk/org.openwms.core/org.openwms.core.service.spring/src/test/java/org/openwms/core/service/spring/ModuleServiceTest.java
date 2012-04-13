@@ -49,6 +49,12 @@ import org.springframework.test.context.ContextConfiguration;
 @ContextConfiguration("classpath:/org/openwms/core/service/spring/Test-context.xml")
 public class ModuleServiceTest extends AbstractJpaSpringContextTests {
 
+    /**
+     * The TRANSIENT_MODULE
+     */
+    private static final String TRANSIENT_MODULE = "TRANSIENT";
+    private static final String TMS_MODULE = "TMS";
+    private static final String WMS_MODULE = "WMS";
     @Autowired
     private ModuleService srv;
 
@@ -57,8 +63,8 @@ public class ModuleServiceTest extends AbstractJpaSpringContextTests {
      */
     @Before
     public void onBefore() {
-        entityManager.persist(new Module("WMS", "org.openwms.wms.swf"));
-        entityManager.persist(new Module("TMS", "org.openwms.tms.swf"));
+        entityManager.persist(new Module(WMS_MODULE, "org.openwms.wms.swf"));
+        entityManager.persist(new Module(TMS_MODULE, "org.openwms.tms.swf"));
         entityManager.flush();
         entityManager.clear();
     }
@@ -99,9 +105,9 @@ public class ModuleServiceTest extends AbstractJpaSpringContextTests {
             logger.debug("Module " + modules.get(i).getModuleName() + " has startup order "
                     + modules.get(i).getStartupOrder());
             if (i == 0) {
-                assertTrue("Expected to be TMS", "TMS".equals(modules.get(i).getModuleName()));
+                assertTrue("Expected to be TMS", TMS_MODULE.equals(modules.get(i).getModuleName()));
             } else {
-                assertTrue("Expected to be WMS", "WMS".equals(modules.get(i).getModuleName()));
+                assertTrue("Expected to be WMS", WMS_MODULE.equals(modules.get(i).getModuleName()));
             }
         }
         modules = setOrder(modules, false);
@@ -111,9 +117,9 @@ public class ModuleServiceTest extends AbstractJpaSpringContextTests {
             logger.debug("Module " + modules.get(i).getModuleName() + " has startup order "
                     + modules.get(i).getStartupOrder());
             if (i == 0) {
-                assertTrue("After sort expected to be WMS", "WMS".equals(modules.get(i).getModuleName()));
+                assertTrue("After sort expected to be WMS", WMS_MODULE.equals(modules.get(i).getModuleName()));
             } else {
-                assertTrue("After sort expected to be TMS", "TMS".equals(modules.get(i).getModuleName()));
+                assertTrue("After sort expected to be TMS", TMS_MODULE.equals(modules.get(i).getModuleName()));
             }
         }
     }
@@ -131,25 +137,25 @@ public class ModuleServiceTest extends AbstractJpaSpringContextTests {
             logger.debug("OK: Exception thrown when calling remove with null");
         }
         try {
-            srv.remove(new Module("TRANSIENT", "TRANSIENT"));
+            srv.remove(new Module(TRANSIENT_MODULE, TRANSIENT_MODULE));
             logger.debug("Must handle to remove transient entities");
         } catch (Exception e) {
             fail("Should not throw an exception when calling with transient entities");
         }
         try {
-            srv.remove(new Module("WMS", "org.openwms.wms.swf"));
+            srv.remove(new Module(WMS_MODULE, "org.openwms.wms.swf"));
             logger.debug("Must handle to remove detached entities");
-            findByName("WMS");
+            findByName(WMS_MODULE);
             fail("Should throw an exception we expect that the entity was removed");
         } catch (NoResultException nre) {
             logger.debug("OK: No result, detached module was removed");
         } catch (Exception e) {
             fail("Should not throw an exception when calling with detached entities");
         }
-        Module persisted = findByName("TMS");
+        Module persisted = findByName(TMS_MODULE);
         srv.remove(persisted);
         try {
-            findByName("TMS");
+            findByName(TMS_MODULE);
             fail("Should throw an exception, we expect that the persisted entity TMS was removed");
         } catch (NoResultException nre) {
             logger.debug("OK: No result, persisted module TMS was removed");
@@ -175,7 +181,7 @@ public class ModuleServiceTest extends AbstractJpaSpringContextTests {
     @Test
     public final void testSaveAnExisting() {
         try {
-            srv.save(new Module("WMS", "org.openwms.wms.swf"));
+            srv.save(new Module(WMS_MODULE, "org.openwms.wms.swf"));
             fail("Should throw an exception when trying to store an existing one");
         } catch (ServiceRuntimeException sre) {
             if (!(sre.getCause() instanceof DataAccessException)) {
@@ -190,7 +196,7 @@ public class ModuleServiceTest extends AbstractJpaSpringContextTests {
      */
     @Test
     public final void testSavePersisted() {
-        Module persisted = findByName("WMS");
+        Module persisted = findByName(WMS_MODULE);
         persisted.setDescription("TEST");
         Module merged = srv.save(persisted);
         assertEquals("Expected that a persisted module can be merged back, managed or not", "TEST",
@@ -202,7 +208,7 @@ public class ModuleServiceTest extends AbstractJpaSpringContextTests {
      */
     @Test
     public final void testSaveTransient() {
-        Module trans = new Module("TRANSIENT", "TRANSIENT");
+        Module trans = new Module(TRANSIENT_MODULE, TRANSIENT_MODULE);
         Module merged = srv.save(trans);
         assertFalse("Expected that a transient is not new", merged.isNew());
         // in the test case both persisted modules have an startupOrder of 0
@@ -222,7 +228,7 @@ public class ModuleServiceTest extends AbstractJpaSpringContextTests {
     private List<Module> setOrder(List<Module> modules, boolean asc) {
         for (Module module : modules) {
             logger.debug("Module " + module.getModuleName() + " has startup order " + module.getStartupOrder());
-            if (module.getModuleName().equals("TMS")) {
+            if (module.getModuleName().equals(TMS_MODULE)) {
                 module.setStartupOrder(asc ? 1 : 2);
             } else {
                 module.setStartupOrder(asc ? 2 : 1);

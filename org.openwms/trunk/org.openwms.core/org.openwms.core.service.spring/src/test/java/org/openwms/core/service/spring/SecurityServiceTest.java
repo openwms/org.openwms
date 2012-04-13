@@ -35,7 +35,6 @@ import org.junit.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.openwms.core.domain.system.usermanagement.Grant;
-import org.openwms.core.integration.RoleDao;
 import org.openwms.core.integration.SecurityObjectDao;
 import org.openwms.core.test.AbstractMockitoTests;
 
@@ -50,8 +49,6 @@ public class SecurityServiceTest extends AbstractMockitoTests {
 
     @Mock
     private SecurityObjectDao dao;
-    @Mock
-    private RoleDao roleDao;
     @InjectMocks
     private SecurityServiceImpl srv;
 

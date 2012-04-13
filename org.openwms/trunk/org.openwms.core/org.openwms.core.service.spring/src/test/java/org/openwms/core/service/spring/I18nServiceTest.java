@@ -33,6 +33,8 @@ import org.mockito.Mock;
 import org.openwms.core.domain.system.I18n;
 import org.openwms.core.integration.I18nRepository;
 import org.openwms.core.test.AbstractMockitoTests;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * A I18nServiceTest.
@@ -43,6 +45,7 @@ import org.openwms.core.test.AbstractMockitoTests;
  */
 public class I18nServiceTest extends AbstractMockitoTests {
 
+    private static final Logger LOGGER = LoggerFactory.getLogger(I18nServiceTest.class);
     @Mock
     private I18nRepository dao;
     @InjectMocks
@@ -55,10 +58,10 @@ public class I18nServiceTest extends AbstractMockitoTests {
      */
     @Test
     public final void testFindAllTranslations() {
-        System.out.println("5%10:" + 5 % 10);
-        System.out.println("5/10:" + 5 / 10);
-        System.out.println("11%10:" + 13 % 10);
-        System.out.println("11/10:" + 13 / 10);
+        LOGGER.debug("5%10:" + 5 % 10);
+        LOGGER.debug("5/10:" + 5 / 10);
+        LOGGER.debug("11%10:" + 13 % 10);
+        LOGGER.debug("11/10:" + 13 / 10);
 
         // preparing mocks
         when(dao.findAll()).thenReturn(Arrays.asList(new I18n[] { new I18n() }));
