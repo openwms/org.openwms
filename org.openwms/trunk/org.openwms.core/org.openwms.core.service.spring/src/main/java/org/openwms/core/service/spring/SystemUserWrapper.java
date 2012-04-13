@@ -48,6 +48,9 @@ public class SystemUserWrapper extends UserWrapper {
     }
 
     /**
+     * Get the password.
+     * 
+     * @return this password or the password, set in the superclass
      * @see org.openwms.core.service.spring.UserWrapper#getPassword()
      */
     @Override
