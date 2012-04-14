@@ -121,14 +121,19 @@ public class SystemUserWrapperTest {
         Assert.assertFalse(suw.equals(TEST_USER));
         Assert.assertFalse(suw.equals(susrw));
         Assert.assertFalse(susrw.equals(suw));
-        // Same password, but false
-        suw.setPassword("PASS");
+        // This password is null, the other is set
+        suw2.setPassword("PASS");
+        Assert.assertFalse(suw.equals(suw2));
+        // Same password, but different user is wrapped
         susrw.setPassword("PASS");
-        Assert.assertFalse(suw.equals(susrw));
-        // Same user but different password
         suw.setPassword("PASS");
-        suw2.setPassword("PASS2");
         Assert.assertFalse(suw.equals(susrw));
+        // Same user and same password
+        suw.setPassword("PASS");
+        Assert.assertTrue(suw.equals(suw2));
+        // Same user but different password
+        suw2.setPassword("PASS2");
+        Assert.assertFalse(suw.equals(suw2));
     }
 
     /**

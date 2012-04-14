@@ -111,9 +111,6 @@ public class SystemUserWrapper extends UserWrapper {
         if (!super.equals(obj)) {
             return false;
         }
-        if (getClass() != obj.getClass()) {
-            return false;
-        }
         SystemUserWrapper other = (SystemUserWrapper) obj;
         if (password == null) {
             if (other.password != null) {
