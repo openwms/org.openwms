@@ -20,71 +20,45 @@
  */
 package org.openwms.core.service.spring;
 
-import java.util.Collection;
-
-import org.openwms.core.domain.system.usermanagement.SystemUser;
-import org.openwms.core.domain.system.usermanagement.User;
+import org.openwms.core.domain.system.usermanagement.SecurityObject;
 import org.springframework.security.core.GrantedAuthority;
 
 /**
- * A SystemUserWrapper.
+ * A SecurityObjectAuthority.
  * 
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  * @version $Revision: $
- * @since 0.1
+ * @since 0.2
  */
-public class SystemUserWrapper extends UserWrapper {
+class SecurityObjectAuthority implements GrantedAuthority {
 
-    private static final long serialVersionUID = 8133894040625998710L;
-    private String password;
-
-    /**
-     * Create a new SystemUserWrapper.
-     * 
-     * @param user
-     */
-    public SystemUserWrapper(User user) {
-        super(user);
-    }
+    private static final long serialVersionUID = -7308040835860060411L;
+    private SecurityObject sObj;
 
     /**
-     * Get the password.
+     * Create a new SecurityObjectAuthority.
      * 
-     * @return this password or the password, set in the superclass
-     * @see org.openwms.core.service.spring.UserWrapper#getPassword()
+     * @param securityObject
+     *            A {@link SecurityObject} to use as authority carrier.
      */
-    @Override
-    public String getPassword() {
-        return this.password == null ? super.getPassword() : this.password;
-    }
-
-    /**
-     * Set the password.
-     * 
-     * @param password
-     *            The password to set.
-     */
-    public void setPassword(String password) {
-        this.password = password;
+    public SecurityObjectAuthority(SecurityObject securityObject) {
+        this.sObj = securityObject;
     }
 
     /**
      * {@inheritDoc}
      * 
-     * For the SystemUser account always add the
-     * {@link SystemUser#SYSTEM_ROLE_NAME} to the collection of authorities.
+     * Return the name of the wrapped {@link SecurityObject}.
      * 
-     * @see org.openwms.core.service.spring.UserWrapper#addDefaultGrants(java.util.Collection)
+     * @see org.springframework.security.core.GrantedAuthority#getAuthority()
      */
     @Override
-    protected void addDefaultGrants(Collection<GrantedAuthority> authorities) {
-        authorities.add(new SystemUserAuthority());
+    public String getAuthority() {
+        return this.sObj.getName();
     }
 
     /**
      * {@inheritDoc}
-     * 
-     * Use password field in addition to inherited fields.
      * 
      * @see java.lang.Object#hashCode()
      */
@@ -92,14 +66,12 @@ public class SystemUserWrapper extends UserWrapper {
     public int hashCode() {
         final int prime = 31;
         int result = super.hashCode();
-        result = prime * result + ((password == null) ? 0 : password.hashCode());
+        result = prime * result + ((sObj == null) ? 0 : sObj.hashCode());
         return result;
     }
 
     /**
      * {@inheritDoc}
-     * 
-     * Use password field for comparison.
      * 
      * @see java.lang.Object#equals(java.lang.Object)
      */
@@ -108,15 +80,18 @@ public class SystemUserWrapper extends UserWrapper {
         if (this == obj) {
             return true;
         }
-        if (!super.equals(obj)) {
+        if (obj == null) {
             return false;
         }
-        SystemUserWrapper other = (SystemUserWrapper) obj;
-        if (password == null) {
-            if (other.password != null) {
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        SecurityObjectAuthority other = (SecurityObjectAuthority) obj;
+        if (sObj == null) {
+            if (other.sObj != null) {
                 return false;
             }
-        } else if (!password.equals(other.password)) {
+        } else if (!sObj.equals(other.sObj)) {
             return false;
         }
         return true;
