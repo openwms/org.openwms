@@ -64,10 +64,10 @@
             </activation>
             <modules>
                 <module>org.openwms.wms.domain</module>
-                <module>org.openwms.wms.integration</module>
+                <!-- module>org.openwms.wms.integration</module>
                 <module>org.openwms.wms.integration.jpa</module>
                 <module>org.openwms.wms.service.api</module>
-                <module>org.openwms.wms.service.spring</module>
+                <module>org.openwms.wms.service.spring</module-->
             </modules>
         </profile>
         <profile>
