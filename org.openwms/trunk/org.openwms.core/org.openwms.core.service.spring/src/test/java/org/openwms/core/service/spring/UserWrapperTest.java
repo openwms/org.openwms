@@ -21,6 +21,8 @@
 package org.openwms.core.service.spring;
 
 import java.util.Collection;
+import java.util.HashSet;
+import java.util.Set;
 
 import org.junit.Assert;
 import org.junit.Test;
@@ -169,10 +171,44 @@ public class UserWrapperTest {
         UserWrapper uw = new UserWrapper(u);
         UserWrapper uw2 = new UserWrapper(u);
         UserWrapper usrw = new UserWrapper(usr);
+
+        // Test to itself
         Assert.assertTrue(uw.equals(uw));
+        // Test for null
+        Assert.assertFalse(uw.equals(null));
+        // Test for symmetric
+        Assert.assertTrue(uw.equals(uw2));
+        Assert.assertTrue(uw2.equals(uw));
+        // Test incompatible types
         Assert.assertFalse(uw.equals(TEST_USER));
         Assert.assertFalse(uw.equals(usrw));
         Assert.assertFalse(usrw.equals(uw));
+    }
+
+    /**
+     * Test method for
+     * {@link org.openwms.core.service.spring.UserWrapper#hashCode()} .
+     */
+    @Test
+    public final void testHashCode() {
+        User u = new User(TEST_USER);
+        User u2 = new User("TEST_USER2");
+        User u3 = new User(TEST_USER);
+        UserWrapper uw = new UserWrapper(u);
+        UserWrapper uw2 = new UserWrapper(u2);
+        UserWrapper uw3 = new UserWrapper(u3);
+
+        Set<UserWrapper> wrappers = new HashSet<UserWrapper>();
+        wrappers.add(uw);
+        wrappers.add(uw2);
+
+        // Test for same return value
+        Assert.assertTrue(uw.hashCode() == uw.hashCode());
+        // Test for same value for two refs
+        Assert.assertTrue(uw.hashCode() == uw3.hashCode());
+
+        Assert.assertTrue(wrappers.contains(uw));
+        Assert.assertTrue(wrappers.contains(uw2));
     }
 
     /**
