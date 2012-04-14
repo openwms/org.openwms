@@ -24,7 +24,6 @@ import java.util.Collection;
 import java.util.HashSet;
 
 import org.openwms.core.domain.system.usermanagement.SecurityObject;
-import org.openwms.core.domain.system.usermanagement.SystemUser;
 import org.openwms.core.domain.system.usermanagement.User;
 import org.openwms.core.service.UserHolder;
 import org.openwms.core.util.validation.AssertUtils;
@@ -226,73 +225,5 @@ public class UserWrapper implements UserDetails, UserHolder {
     @Override
     public String toString() {
         return this.getUsername();
-    }
-
-    /**
-     * A SecurityObjectAuthority.
-     * 
-     * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
-     * @version $Revision$
-     * @since 0.2
-     */
-    class SecurityObjectAuthority implements GrantedAuthority {
-
-        private static final long serialVersionUID = 2651377254996501820L;
-        private SecurityObject sObj;
-
-        /**
-         * Create a new UserWrapper.SecurityObjectAuthority.
-         */
-        public SecurityObjectAuthority(SecurityObject securityObject) {
-            this.sObj = securityObject;
-        }
-
-        /**
-         * @see org.springframework.security.core.GrantedAuthority#getAuthority()
-         */
-        @Override
-        public String getAuthority() {
-            return this.sObj.getName();
-        }
-
-        /**
-         * {@inheritDoc}
-         * 
-         * @see java.lang.Object#hashCode()
-         */
-        @Override
-        public int hashCode() {
-            final int prime = 31;
-            int result = super.hashCode();
-            result = prime * result + ((sObj == null) ? 0 : sObj.hashCode());
-            return result;
-        }
-
-        /**
-         * {@inheritDoc}
-         * 
-         * @see java.lang.Object#equals(java.lang.Object)
-         */
-        @Override
-        public boolean equals(Object obj) {
-            if (this == obj) {
-                return true;
-            }
-            if (obj == null) {
-                return false;
-            }
-            if (getClass() != obj.getClass()) {
-                return false;
-            }
-            SecurityObjectAuthority other = (SecurityObjectAuthority) obj;
-            if (sObj == null) {
-                if (other.sObj != null) {
-                    return false;
-                }
-            } else if (!sObj.equals(other.sObj)) {
-                return false;
-            }
-            return true;
-        }
     }
 }
