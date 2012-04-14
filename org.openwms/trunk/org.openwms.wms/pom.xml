@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+/*
+ * openwms.org, the Open Warehouse Management System.
+ *
+ * This file is part of openwms.org.
+ *
+ * openwms.org is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as 
+ * published by the Free Software Foundation, either version 3 of the
+ * License, or (at your option) any later version.
+ *
+ * openwms.org is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with this software. If not, write to the Free
+ * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
+ * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
+ */  
+-->
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>org.openwms</groupId>
+        <artifactId>org.openwms</artifactId>
+        <version>0.1.1-SNAPSHOT</version>
+    </parent>
+    <groupId>org.openwms</groupId>
+    <artifactId>org.openwms.wms</artifactId>
+    <version>0.0.1-SNAPSHOT</version>
+    <packaging>pom</packaging>
+    <name>OpenWMS.org WMS</name>
+    <properties>
+        <moduleDir>../..</moduleDir>
+        <core.version>0.1.1-SNAPSHOT</core.version>
+        <common.version>0.1.1-SNAPSHOT</common.version>
+        <tms.version>0.1.1-SNAPSHOT</tms.version>
+        <bundle.version>0.0.1.SNAPSHOT</bundle.version>
+    </properties>
+
+    <distributionManagement>
+        <site>
+            <id>${distribution.serverId}</id>
+            <name>OpenWMS.org WebSite</name>
+            <url>${distribution.serverProtocol}://${distribution.serverUrl.sourcePath}/org.openwms.wms</url>
+        </site>
+    </distributionManagement>
+
+    <scm>
+        <connection>scm:svn:http://openwms2005.svn.sourceforge.net/svnroot/openwms2005/org.openwms/trunk/org.openwms.wms</connection>
+        <developerConnection>scm:svn:https://openwms2005.svn.sourceforge.net/svnroot/openwms2005/org.openwms/trunk/org.openwms.wms</developerConnection>
+        <url>http://openwms2005.svn.sourceforge.net/viewvc/openwms2005/org.openwms/trunk/org.openwms.wms</url>
+    </scm>
+
+    <profiles>
+        <profile>
+            <id>all</id>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+            <modules>
+                <module>org.openwms.wms.domain</module>
+                <module>org.openwms.wms.integration</module>
+                <module>org.openwms.wms.integration.jpa</module>
+                <module>org.openwms.wms.service.api</module>
+                <module>org.openwms.wms.service.spring</module>
+            </modules>
+        </profile>
+        <profile>
+            <id>wms</id>
+            <modules>
+                <module>org.openwms.wms.domain</module>
+                <module>org.openwms.wms.integration</module>
+                <module>org.openwms.wms.integration.jpa</module>
+                <module>org.openwms.wms.service.api</module>
+                <module>org.openwms.wms.service.spring</module>
+            </modules>
+        </profile>
+    </profiles>
+
+    <dependencyManagement>
+        <dependencies>
+            <!-- Project dependencies -->
+            <dependency>
+                <groupId>${project.groupId}</groupId>
+                <artifactId>org.openwms.wms.domain</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>${project.groupId}</groupId>
+                <artifactId>org.openwms.wms.integration</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>${project.groupId}</groupId>
+                <artifactId>org.openwms.wms.integration.jpa</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>${project.groupId}</groupId>
+                <artifactId>org.openwms.wms.service.api</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>${project.groupId}</groupId>
+                <artifactId>org.openwms.wms.service.spring</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+
+</project>
