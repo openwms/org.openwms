@@ -21,25 +21,24 @@
 package org.openwms.core.util.event;
 
 /**
- * A PropertiesChangedEvent.
+ * A ConfigurationChangedEvent.
  * 
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  * @version $Revision: $
  * @since 0.2
- * @deprecated use ReloadFilePreferencesEvent instead
  */
-@Deprecated
-public class PropertiesChangedEvent extends RootApplicationEvent {
+public class ConfigurationChangedEvent extends RootApplicationEvent {
 
-    private static final long serialVersionUID = 5452569541095569102L;
+    private static final long serialVersionUID = -6522246409558700811L;
 
     /**
-     * Create a new PropertiesChangedEvent.
+     * Create a new ConfigurationChangedEvent.
      * 
-     * @param source
-     *            The event source
+     * @param The
+     *            <code>Preferences</code> object that has changed or a
+     *            Collection of those or <code>null</code>
      */
-    public PropertiesChangedEvent(Object source) {
+    public ConfigurationChangedEvent(Object source) {
         super(source);
     }
 }
