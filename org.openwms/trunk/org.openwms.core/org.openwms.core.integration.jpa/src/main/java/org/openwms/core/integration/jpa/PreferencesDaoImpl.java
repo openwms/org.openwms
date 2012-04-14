@@ -54,10 +54,7 @@ public class PreferencesDaoImpl implements PreferenceWriter<Long> {
 
     @PersistenceContext
     private EntityManager em;
-
-    /**
-     * Springs component name.
-     */
+    /** Springs component name. */
     public static final String COMPONENT_NAME = "preferencesJpaDao";
 
     /**
@@ -99,8 +96,8 @@ public class PreferencesDaoImpl implements PreferenceWriter<Long> {
      * 
      * @see org.openwms.core.integration.PreferenceDao#findAll()
      */
-    @SuppressWarnings("unchecked")
     @Override
+    @SuppressWarnings("unchecked")
     public List<AbstractPreference> findAll() {
         List<AbstractPreference> prefs = em.createNamedQuery(AbstractPreference.NQ_FIND_ALL).getResultList();
         if (null == prefs) {
