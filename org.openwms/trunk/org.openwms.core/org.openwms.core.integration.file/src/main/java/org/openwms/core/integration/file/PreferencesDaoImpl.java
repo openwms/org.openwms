@@ -37,7 +37,7 @@ import org.openwms.core.integration.PreferenceDao;
 import org.openwms.core.integration.exception.DataException;
 import org.openwms.core.integration.exception.NoUniqueResultException;
 import org.openwms.core.integration.exception.ResourceNotFoundException;
-import org.openwms.core.util.event.PropertiesChangedEvent;
+import org.openwms.core.util.event.ReloadFilePreferencesEvent;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
@@ -56,17 +56,19 @@ import org.springframework.transaction.annotation.Transactional;
  * {@value #INITIAL_PREFERENCES_FILE} but this can be overridden with a property
  * <i>application.initial.properties</i> in the configuration properties file.
  * <p>
- * On a {@link PropertiesChangedEvent} the internal Map is cleared and reloaded.
+ * On a {@link ReloadFilePreferencesEvent} the internal Map is cleared and
+ * reloaded.
  * </p>
  * 
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  * @version $Revision: $
  * @since 0.1
- * @see org.openwms.core.util.event.PropertiesChangedEvent
+ * @see org.openwms.core.util.event.ReloadFilePreferencesEvent
  */
 @Transactional(propagation = Propagation.MANDATORY)
 @Repository(PreferencesDaoImpl.COMPONENT_NAME)
-public class PreferencesDaoImpl implements PreferenceDao<PreferenceKey>, ApplicationListener<PropertiesChangedEvent> {
+public class PreferencesDaoImpl implements PreferenceDao<PreferenceKey>,
+        ApplicationListener<ReloadFilePreferencesEvent> {
 
     /** The URL to the initial preferences XML file. Default {@value} */
     public static final String INITIAL_PREFERENCES_FILE = "classpath:org/openwms/core/integration/file/initial-preferences.xml";
@@ -136,7 +138,7 @@ public class PreferencesDaoImpl implements PreferenceDao<PreferenceKey>, Applica
      * @see org.springframework.context.ApplicationListener#onApplicationEvent(org.springframework.context.ApplicationEvent)
      */
     @Override
-    public void onApplicationEvent(PropertiesChangedEvent event) {
+    public void onApplicationEvent(ReloadFilePreferencesEvent event) {
         reloadResources();
     }
 
