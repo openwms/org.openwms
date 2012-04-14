@@ -69,17 +69,16 @@ public class SystemUserWrapper extends UserWrapper {
     }
 
     /**
+     * {@inheritDoc}
+     * 
+     * For the SystemUser account always add the
+     * {@link SystemUser#SYSTEM_ROLE_NAME} to the collection of authorities.
+     * 
      * @see org.openwms.core.service.spring.UserWrapper#addDefaultGrants(java.util.Collection)
      */
-    @SuppressWarnings("serial")
     @Override
     protected void addDefaultGrants(Collection<GrantedAuthority> authorities) {
-        authorities.add(new GrantedAuthority() {
-            @Override
-            public String getAuthority() {
-                return SystemUser.SYSTEM_ROLE_NAME;
-            }
-        });
+        authorities.add(new SystemUserAuthority());
     }
 
     /**
@@ -124,5 +123,58 @@ public class SystemUserWrapper extends UserWrapper {
             return false;
         }
         return true;
+    }
+
+    /**
+     * A SystemUserAuthority.
+     * 
+     * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
+     * @version $Revision: $
+     * @since 0.2
+     */
+    class SystemUserAuthority implements GrantedAuthority {
+
+        private static final long serialVersionUID = -5019648722137973204L;
+
+        /**
+         * {@inheritDoc}
+         * 
+         * @see java.lang.Object#hashCode()
+         */
+        @Override
+        public int hashCode() {
+            final int prime = 31;
+            int result = super.hashCode();
+            result = prime * result + SystemUser.SYSTEM_ROLE_NAME.hashCode();
+            return result;
+        }
+
+        /**
+         * {@inheritDoc}
+         * 
+         * @see java.lang.Object#equals(java.lang.Object)
+         */
+        @Override
+        public boolean equals(Object obj) {
+            if (this == obj) {
+                return true;
+            }
+            if (getClass() != obj.getClass()) {
+                return false;
+            }
+            return true;
+        }
+
+        /**
+         * {@inheritDoc}
+         * 
+         * Return the System User's rolename.
+         * 
+         * @see org.springframework.security.core.GrantedAuthority#getAuthority()
+         */
+        @Override
+        public String getAuthority() {
+            return SystemUser.SYSTEM_ROLE_NAME;
+        }
     }
 }

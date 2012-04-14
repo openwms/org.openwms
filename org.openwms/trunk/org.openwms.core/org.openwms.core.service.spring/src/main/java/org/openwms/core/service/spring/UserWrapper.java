@@ -20,10 +20,11 @@
  */
 package org.openwms.core.service.spring;
 
-import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashSet;
 
 import org.openwms.core.domain.system.usermanagement.SecurityObject;
+import org.openwms.core.domain.system.usermanagement.SystemUser;
 import org.openwms.core.domain.system.usermanagement.User;
 import org.openwms.core.service.UserHolder;
 import org.openwms.core.util.validation.AssertUtils;
@@ -60,6 +61,14 @@ public class UserWrapper implements UserDetails, UserHolder {
         this.user.getRoles().size();
     }
 
+    /**
+     * Subclasses can set a collection of grants that are always available for
+     * an User. This is useful for administrative accounts.
+     * 
+     * @param authorities
+     *            A collection of grants (authorities) where the default grants
+     *            are added to
+     */
     protected void addDefaultGrants(Collection<GrantedAuthority> authorities) {}
 
     /**
@@ -78,18 +87,12 @@ public class UserWrapper implements UserDetails, UserHolder {
      * @see org.springframework.security.core.userdetails.UserDetails#getAuthorities()
      * @return the authorities, sorted by natural key (never <code>null</code>)
      */
-    @SuppressWarnings("serial")
     @Override
     public Collection<GrantedAuthority> getAuthorities() {
         if (null == authorities) {
-            authorities = new ArrayList<GrantedAuthority>();
+            authorities = new HashSet<GrantedAuthority>();
             for (final SecurityObject grant : user.getGrants()) {
-                authorities.add(new GrantedAuthority() {
-                    @Override
-                    public String getAuthority() {
-                        return grant.getName();
-                    }
-                });
+                authorities.add(new SecurityObjectAuthority(grant));
             }
             addDefaultGrants(authorities);
         }
@@ -223,5 +226,73 @@ public class UserWrapper implements UserDetails, UserHolder {
     @Override
     public String toString() {
         return this.getUsername();
+    }
+
+    /**
+     * A SecurityObjectAuthority.
+     * 
+     * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
+     * @version $Revision$
+     * @since 0.2
+     */
+    class SecurityObjectAuthority implements GrantedAuthority {
+
+        private static final long serialVersionUID = 2651377254996501820L;
+        private SecurityObject sObj;
+
+        /**
+         * Create a new UserWrapper.SecurityObjectAuthority.
+         */
+        public SecurityObjectAuthority(SecurityObject securityObject) {
+            this.sObj = securityObject;
+        }
+
+        /**
+         * @see org.springframework.security.core.GrantedAuthority#getAuthority()
+         */
+        @Override
+        public String getAuthority() {
+            return this.sObj.getName();
+        }
+
+        /**
+         * {@inheritDoc}
+         * 
+         * @see java.lang.Object#hashCode()
+         */
+        @Override
+        public int hashCode() {
+            final int prime = 31;
+            int result = super.hashCode();
+            result = prime * result + ((sObj == null) ? 0 : sObj.hashCode());
+            return result;
+        }
+
+        /**
+         * {@inheritDoc}
+         * 
+         * @see java.lang.Object#equals(java.lang.Object)
+         */
+        @Override
+        public boolean equals(Object obj) {
+            if (this == obj) {
+                return true;
+            }
+            if (obj == null) {
+                return false;
+            }
+            if (getClass() != obj.getClass()) {
+                return false;
+            }
+            SecurityObjectAuthority other = (SecurityObjectAuthority) obj;
+            if (sObj == null) {
+                if (other.sObj != null) {
+                    return false;
+                }
+            } else if (!sObj.equals(other.sObj)) {
+                return false;
+            }
+            return true;
+        }
     }
 }
