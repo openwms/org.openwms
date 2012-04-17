@@ -78,7 +78,7 @@
             <scope>test</scope>
         </dependency>
 
-        <!-- Weaver -->
+        <!-- Weaver >
         <dependency>
             <groupId>org.aspectj</groupId>
             <artifactId>com.springsource.org.aspectj.weaver</artifactId>
@@ -88,7 +88,7 @@
             <groupId>org.aspectj</groupId>
             <artifactId>com.springsource.org.aspectj.runtime</artifactId>
             <scope>test</scope>
-        </dependency>
+        </dependency-->
 
         <!-- Test dependencies -->
         <dependency>
