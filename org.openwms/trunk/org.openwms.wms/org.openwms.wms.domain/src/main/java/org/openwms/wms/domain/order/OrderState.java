@@ -30,7 +30,7 @@ package org.openwms.wms.domain.order;
 public class OrderState {
 
     /** Hide constructor */
-    private OrderState() {}
+    protected OrderState() {}
 
     public static final int UNDEFINED = 0;
     public static final int CREATED = 10;
