@@ -99,4 +99,30 @@ public class Product extends AbstractEntity implements DomainObject<Long> {
         return id;
     }
 
+    /**
+     * Get the productId.
+     * 
+     * @return the productId.
+     */
+    public String getProductId() {
+        return productId;
+    }
+
+    /**
+     * Get the description.
+     * 
+     * @return the description.
+     */
+    public String getDescription() {
+        return description;
+    }
+
+    /**
+     * Get the stockZone.
+     * 
+     * @return the stockZone.
+     */
+    public StockZone getStockZone() {
+        return stockZone;
+    }
 }
