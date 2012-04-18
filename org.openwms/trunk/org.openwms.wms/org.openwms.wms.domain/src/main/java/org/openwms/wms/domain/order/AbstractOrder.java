@@ -264,7 +264,7 @@ public abstract class AbstractOrder extends AbstractEntity implements DomainObje
      * @return the latestDueDate.
      */
     public Date getLatestDueDate() {
-        return latestDueDate;
+        return new Date(latestDueDate.getTime());
     }
 
     /**
@@ -273,7 +273,7 @@ public abstract class AbstractOrder extends AbstractEntity implements DomainObje
      * @return the startDate.
      */
     public Date getStartDate() {
-        return startDate;
+        return new Date(startDate.getTime());
     }
 
     /**
@@ -282,7 +282,7 @@ public abstract class AbstractOrder extends AbstractEntity implements DomainObje
      * @return the nextAllocationDate.
      */
     public Date getNextAllocationDate() {
-        return nextAllocationDate;
+        return new Date(nextAllocationDate.getTime());
     }
 
     /**

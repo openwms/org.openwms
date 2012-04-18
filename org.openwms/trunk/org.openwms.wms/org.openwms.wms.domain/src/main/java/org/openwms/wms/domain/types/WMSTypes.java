@@ -29,7 +29,27 @@ package org.openwms.wms.domain.types;
  */
 public final class WMSTypes {
 
+    /**
+     * Hide constructor.
+     */
+    private WMSTypes() {}
+
+    /**
+     * Length of the orderId field.
+     * 
+     * @see org.openwms.wms.domain.order.AbstractOrder
+     */
     public static final int ORDER_ID_LENGTH = 20;
+    /**
+     * Length of the positionNo field.
+     * 
+     * @see org.openwms.wms.domain.order.OrderPositionKey
+     */
     public static final int POSITION_NO_LENGTH = 8;
+    /**
+     * Length of the productId field.
+     * 
+     * @see org.openwms.wms.domain.inventory.Product
+     */
     public static final int PRODUCT_ID_LENGTH = 20;
 }

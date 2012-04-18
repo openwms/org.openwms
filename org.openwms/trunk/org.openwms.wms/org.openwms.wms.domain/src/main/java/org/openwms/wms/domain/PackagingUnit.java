@@ -185,6 +185,6 @@ public class PackagingUnit extends AbstractEntity implements DomainObject<Long> 
      * @return the fifoDate.
      */
     public Date getFifoDate() {
-        return fifoDate;
+        return new Date(fifoDate.getTime());
     }
 }
