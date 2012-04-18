@@ -29,6 +29,9 @@ package org.openwms.wms.domain.order;
  */
 public class OrderState {
 
+    /** Hide constructor */
+    private OrderState() {}
+
     public static final int UNDEFINED = 0;
     public static final int CREATED = 10;
     public static final int AVAILABLE = 20;
