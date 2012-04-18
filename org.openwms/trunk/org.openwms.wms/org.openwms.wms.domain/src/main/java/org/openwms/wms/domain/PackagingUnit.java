@@ -52,6 +52,8 @@ import org.openwms.wms.domain.inventory.Product;
 @Table(name = "WMS_PACKAGING_UNIT")
 public class PackagingUnit extends AbstractEntity implements DomainObject<Long> {
 
+    private static final long serialVersionUID = 8969188598565357329L;
+
     /** Unique technical key. */
     @Id
     @Column(name = "C_ID")
@@ -121,5 +123,68 @@ public class PackagingUnit extends AbstractEntity implements DomainObject<Long> 
     @Override
     public Long getId() {
         return id;
+    }
+
+    /**
+     * Get the transportUnit.
+     * 
+     * @return the transportUnit.
+     */
+    public TransportUnit getTransportUnit() {
+        return transportUnit;
+    }
+
+    /**
+     * Get the loadUnit.
+     * 
+     * @return the loadUnit.
+     */
+    public LoadUnit getLoadUnit() {
+        return loadUnit;
+    }
+
+    /**
+     * Get the no.
+     * 
+     * @return the no.
+     */
+    public int getNo() {
+        return no;
+    }
+
+    /**
+     * Get the product.
+     * 
+     * @return the product.
+     */
+    public Product getProduct() {
+        return product;
+    }
+
+    /**
+     * Get the availabilityState.
+     * 
+     * @return the availabilityState.
+     */
+    public AvailabilityState getAvailabilityState() {
+        return availabilityState;
+    }
+
+    /**
+     * Get the qty.
+     * 
+     * @return the qty.
+     */
+    public BigDecimal getQty() {
+        return qty;
+    }
+
+    /**
+     * Get the fifoDate.
+     * 
+     * @return the fifoDate.
+     */
+    public Date getFifoDate() {
+        return fifoDate;
     }
 }

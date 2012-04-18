@@ -53,6 +53,8 @@ import org.openwms.wms.domain.inventory.Product;
 @Table(name = "WMS_LOAD_UNIT")
 public class LoadUnit extends AbstractEntity implements DomainObject<Long> {
 
+    private static final long serialVersionUID = -5524006837325285793L;
+
     /** Unique technical key. */
     @Id
     @Column(name = "C_ID")
@@ -110,5 +112,59 @@ public class LoadUnit extends AbstractEntity implements DomainObject<Long> {
     @Override
     public Long getId() {
         return id;
+    }
+
+    /**
+     * Get the transportUnit.
+     * 
+     * @return the transportUnit.
+     */
+    public TransportUnit getTransportUnit() {
+        return transportUnit;
+    }
+
+    /**
+     * Get the physicalPosition.
+     * 
+     * @return the physicalPosition.
+     */
+    public String getPhysicalPosition() {
+        return physicalPosition;
+    }
+
+    /**
+     * Get the locked.
+     * 
+     * @return the locked.
+     */
+    public boolean isLocked() {
+        return locked;
+    }
+
+    /**
+     * Get the product.
+     * 
+     * @return the product.
+     */
+    public Product getProduct() {
+        return product;
+    }
+
+    /**
+     * Get the qty.
+     * 
+     * @return the qty.
+     */
+    public BigDecimal getQty() {
+        return qty;
+    }
+
+    /**
+     * Get the packagingUnits.
+     * 
+     * @return the packagingUnits.
+     */
+    public Set<PackagingUnit> getPackagingUnits() {
+        return packagingUnits;
     }
 }
