@@ -30,6 +30,7 @@ import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
+import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
@@ -69,7 +70,7 @@ import org.openwms.core.domain.system.usermanagement.User;
  * @since 0.1
  */
 @Entity
-@Table(name = "COM_TRANSPORT_UNIT", uniqueConstraints = @UniqueConstraint(columnNames = { "BARCODE" }))
+@Table(name = "COM_TRANSPORT_UNIT", uniqueConstraints = @UniqueConstraint(columnNames = { "C_BARCODE" }))
 @NamedQueries({
         @NamedQuery(name = TransportUnit.NQ_FIND_ALL, query = "select tu from TransportUnit tu"),
         @NamedQuery(name = TransportUnit.NQ_FIND_BY_UNIQUE_QUERY, query = "select tu from TransportUnit tu where tu.barcode = ?1") })
@@ -97,14 +98,14 @@ public class TransportUnit extends AbstractEntity implements DomainObject<Long> 
      * Unique technical key.
      */
     @Id
-    @Column(name = "ID")
+    @Column(name = "C_ID")
     @GeneratedValue
     private Long id;
 
     /**
      * Unique natural key.
      */
-    @Column(name = "BARCODE")
+    @Embedded
     @OrderBy
     private Barcode barcode;
 
@@ -112,14 +113,14 @@ public class TransportUnit extends AbstractEntity implements DomainObject<Long> 
      * Indicates whether the <code>TransportUnit</code> is empty or not
      * (nullable).
      */
-    @Column(name = "EMPTY")
+    @Column(name = "C_EMPTY")
     private Boolean empty;
 
     /**
      * Date when the <code>TransportUnit</code> has been created.
      */
     @Temporal(TemporalType.TIMESTAMP)
-    @Column(name = "CREATION_DATE")
+    @Column(name = "C_CREATION_DATE")
     private Date creationDate = new Date();
 
     /**
@@ -127,26 +128,26 @@ public class TransportUnit extends AbstractEntity implements DomainObject<Long> 
      * {@link Location}.
      */
     @Temporal(TemporalType.TIMESTAMP)
-    @Column(name = "ACTUAL_LOCATION_DATE")
+    @Column(name = "C_ACTUAL_LOCATION_DATE")
     private Date actualLocationDate;
 
     /**
      * Date of last inventory check.
      */
     @Temporal(TemporalType.TIMESTAMP)
-    @Column(name = "INVENTORY_DATE")
+    @Column(name = "C_INVENTORY_DATE")
     private Date inventoryDate;
 
     /**
      * Weight of the <code>TransportUnit</code>.
      */
-    @Column(name = "WEIGHT")
+    @Column(name = "C_WEIGHT")
     private BigDecimal weight = BigDecimal.ZERO;
 
     /**
      * State of the <code>TransportUnit</code>.
      */
-    @Column(name = "STATE")
+    @Column(name = "C_STATE")
     @Enumerated(EnumType.STRING)
     private TransportUnitState state = TransportUnitState.AVAILABLE;
 
@@ -162,7 +163,7 @@ public class TransportUnit extends AbstractEntity implements DomainObject<Long> 
      * The current {@link Location} of the <code>TransportUnit</code>.
      */
     @ManyToOne
-    @JoinColumn(name = "ACTUAL_LOCATION", nullable = false)
+    @JoinColumn(name = "C_ACTUAL_LOCATION", nullable = false)
     private Location actualLocation;
 
     /**
@@ -170,21 +171,21 @@ public class TransportUnit extends AbstractEntity implements DomainObject<Long> 
      * This property will be set when a <code>TransportOrder</code> is started.
      */
     @ManyToOne
-    @JoinColumn(name = "TARGET_LOCATION")
+    @JoinColumn(name = "C_TARGET_LOCATION")
     private Location targetLocation;
 
     /**
      * The {@link TransportUnitType} of the <code>TransportUnit</code>.
      */
     @ManyToOne
-    @JoinColumn(name = "TRANSPORT_UNIT_TYPE", nullable = false)
+    @JoinColumn(name = "C_TRANSPORT_UNIT_TYPE", nullable = false)
     private TransportUnitType transportUnitType;
 
     /**
      * Owning <code>TransportUnit</code>.
      */
     @ManyToOne
-    @JoinColumn(name = "PARENT")
+    @JoinColumn(name = "C_PARENT")
     private TransportUnit parent;
 
     /**
@@ -192,7 +193,7 @@ public class TransportUnit extends AbstractEntity implements DomainObject<Long> 
      * <code>TransportUnit</code>.
      */
     @ManyToOne
-    @JoinColumn(name = "INVENTORY_USER")
+    @JoinColumn(name = "C_INVENTORY_USER")
     private User inventoryUser;
 
     /**
@@ -206,7 +207,7 @@ public class TransportUnit extends AbstractEntity implements DomainObject<Long> 
      * A Map of errors occurred on the <code>TransportUnit</code>.
      */
     @OneToMany(cascade = CascadeType.ALL)
-    @JoinTable(name = "COM_TRANSPORT_UNIT_ERROR", joinColumns = @JoinColumn(name = "TRANSPORT_UNIT_ID"), inverseJoinColumns = @JoinColumn(name = "ERROR_ID"))
+    @JoinTable(name = "COM_TRANSPORT_UNIT_ERROR", joinColumns = @JoinColumn(name = "C_TRANSPORT_UNIT_ID"), inverseJoinColumns = @JoinColumn(name = "C_ERROR_ID"))
     private Map<Date, UnitError> errors = new HashMap<Date, UnitError>();
 
     /* ----------------------------- methods ------------------- */
