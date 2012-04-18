@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+/*
+ * openwms.org, the Open Warehouse Management System.
+ *
+ * This file is part of openwms.org.
+ *
+ * openwms.org is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as 
+ * published by the Free Software Foundation, either version 3 of the
+ * License, or (at your option) any later version.
+ *
+ * openwms.org is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with this software. If not, write to the Free
+ * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
+ * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
+ */  
+-->
+<persistence version="1.0" xmlns="http://java.sun.com/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://java.sun.com/xml/ns/persistence http://java.sun.com/xml/ns/persistence/persistence_1_0.xsd">
+    <persistence-unit name="OpenWMS-test-durable" transaction-type="RESOURCE_LOCAL">
+        <class>org.openwms.wms.domain.LoadUnit</class>
+        <class>org.openwms.wms.domain.PackagingUnit</class>
+
+        <class>org.openwms.wms.domain.inventory.Product</class>
+
+        <class>org.openwms.wms.domain.order.OrderPosition</class>
+        <class>org.openwms.wms.domain.order.OrderPositionSplit</class>
+
+        <class>org.openwms.wms.domain.shipping.ShippingOrder</class>
+        <class>org.openwms.wms.domain.shipping.ShippingOrderPositionSplit</class>
+
+        <exclude-unlisted-classes>false</exclude-unlisted-classes>
+        <properties>
+            <property name="hibernate.show_sql" value="true"/>
+            <property name="hibernate.format_sql" value="true"/>
+            <property name="hibernate.cache.use_query_cache" value="false"/>
+        </properties>
+    </persistence-unit>
+</persistence>
