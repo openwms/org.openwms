@@ -60,6 +60,9 @@ public class Problem implements Serializable {
     @Column(name = "MESSAGE")
     private String message;
 
+    // FIXME [scherrer] : add new column with root exception
+    // private Throwable rootCause;
+
     /* ----------------------------- methods ------------------- */
     /**
      * Creates a new <code>Problem</code> instance.

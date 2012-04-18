@@ -97,7 +97,7 @@ public class Barcode implements Serializable {
      * <i>Note:</i>It is not guaranteed that this field must be unique.
      * </p>
      */
-    @Column(name = "BARCODE")
+    @Column(name = "C_BARCODE")
     private String value;
 
     /* ----------------------------- methods ------------------- */
