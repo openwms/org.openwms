@@ -20,38 +20,62 @@
  */
 package org.openwms.core.domain.values;
 
+import java.util.Arrays;
 import java.util.List;
 
 /**
- * An UnitType is the type definition of an <code>Unit</code>. Each UnitType
- * defines a base <code>Unit</code> of it's character. For example a UnitType of
- * weights can define grams, kilograms or tons.
+ * A PieceUnit.
  * 
- * @GlossaryTerm
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
- * @version $Revision$
- * @since 0.1
+ * @version $Revision: $
+ * @since 0.2
  */
-public interface UnitType<T extends UnitType<T>> {
+public enum PieceUnit implements UnitType<PieceUnit> {
 
     /**
-     * Return the value of the base unit.
-     * 
-     * @return The value of the base unit
+     * A Piece.
      */
-    long getBaseUnitValue();
+    PC(1),
 
     /**
-     * Return all sub types of the <code>UnitType</code>.
-     * 
-     * @return a list of sub types
+     * A Dozen.
      */
-    List<T> getAll();
+    DOZ(12);
+
+    private Long baseUnit;
+    private static PieceUnit[] all = { PieceUnit.PC, PieceUnit.DOZ };
 
     /**
-     * Return the base unit type of the <code>UnitType</code>.
+     * Create a new <code>PieceUnit</code>.
      * 
-     * @return The base unit type
+     * @param baseUnit
+     *            The base unit of the weight
      */
-    T getBaseUnit();
+    PieceUnit(long baseUnit) {
+        this.baseUnit = baseUnit;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public long getBaseUnitValue() {
+        return this.baseUnit;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public List<PieceUnit> getAll() {
+        return Arrays.asList(all);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public PieceUnit getBaseUnit() {
+        return PC;
+    }
 }
