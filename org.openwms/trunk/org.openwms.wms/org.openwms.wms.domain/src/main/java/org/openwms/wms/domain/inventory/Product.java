@@ -20,13 +20,19 @@
  */
 package org.openwms.wms.domain.inventory;
 
+import java.util.Date;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.PrePersist;
+import javax.persistence.PreUpdate;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import javax.persistence.Version;
 
 import org.openwms.core.domain.AbstractEntity;
@@ -65,6 +71,14 @@ public class Product extends AbstractEntity implements DomainObject<Long> {
     @Enumerated(EnumType.STRING)
     private StockZone stockZone;
 
+    @Temporal(TemporalType.TIMESTAMP)
+    @Column(name = "C_CREATED_DT")
+    private Date createdDate;
+
+    @Temporal(TemporalType.TIMESTAMP)
+    @Column(name = "C_CHANGED_DT")
+    private Date changedDate;
+
     /**
      * Base UOM of product.
      * 
@@ -76,7 +90,40 @@ public class Product extends AbstractEntity implements DomainObject<Long> {
     private long version;
 
     /**
-     * @see org.openwms.core.domain.DomainObject#isNew()
+     * Accessed by persistence provider.
+     */
+    Product() {
+        super();
+    }
+
+    /**
+     * Create a new Product with an unique Id.
+     * 
+     * @param prodId
+     *            The productId of this Product
+     */
+    public Product(String prodId) {
+        this.productId = prodId;
+    }
+
+    /**
+     * Set the creation date.
+     */
+    @PrePersist
+    void prePersist() {
+        this.createdDate = new Date();
+    }
+
+    /**
+     * Set the changed date.
+     */
+    @PreUpdate
+    void preUpdate() {
+        this.changedDate = new Date();
+    }
+
+    /**
+     * {@inheritDoc}
      */
     @Override
     public boolean isNew() {
@@ -84,7 +131,7 @@ public class Product extends AbstractEntity implements DomainObject<Long> {
     }
 
     /**
-     * @see org.openwms.core.domain.DomainObject#getVersion()
+     * {@inheritDoc}
      */
     @Override
     public long getVersion() {
@@ -92,7 +139,7 @@ public class Product extends AbstractEntity implements DomainObject<Long> {
     }
 
     /**
-     * @see org.openwms.core.domain.DomainObject#getId()
+     * {@inheritDoc}
      */
     @Override
     public Long getId() {
@@ -118,11 +165,59 @@ public class Product extends AbstractEntity implements DomainObject<Long> {
     }
 
     /**
+     * Set the description.
+     * 
+     * @param description
+     *            The description to set.
+     */
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    /**
      * Get the stockZone.
      * 
      * @return the stockZone.
      */
     public StockZone getStockZone() {
         return stockZone;
+    }
+
+    /**
+     * Set the stockZone.
+     * 
+     * @param stockZone
+     *            The stockZone to set.
+     */
+    public void setStockZone(StockZone stockZone) {
+        this.stockZone = stockZone;
+    }
+
+    /**
+     * Get the createdDate.
+     * 
+     * @return the createdDate.
+     */
+    public Date getCreatedDate() {
+        return createdDate;
+    }
+
+    /**
+     * Get the changedDate.
+     * 
+     * @return the changedDate.
+     */
+    public Date getChangedDate() {
+        return changedDate;
+    }
+
+    /**
+     * {@inheritDoc}
+     * 
+     * Return the productId;
+     */
+    @Override
+    public String toString() {
+        return productId;
     }
 }

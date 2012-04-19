@@ -20,23 +20,33 @@
  */
 package org.openwms.wms.domain;
 
-import java.math.BigDecimal;
+import java.util.Arrays;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
+import javax.persistence.AttributeOverride;
 import javax.persistence.Column;
+import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.PrePersist;
+import javax.persistence.PreUpdate;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import javax.persistence.Version;
 
 import org.openwms.common.domain.TransportUnit;
 import org.openwms.core.domain.AbstractEntity;
 import org.openwms.core.domain.DomainObject;
+import org.openwms.core.domain.values.CoreTypeDefinitions;
+import org.openwms.core.domain.values.Piece;
+import org.openwms.core.exception.DomainModelRuntimeException;
 import org.openwms.wms.domain.inventory.Product;
 
 /**
@@ -63,11 +73,11 @@ public class LoadUnit extends AbstractEntity implements DomainObject<Long> {
 
     /** The {@link TransportUnit} where this {@link LoadUnit} belongs to. */
     @ManyToOne
-    @JoinColumn(name = "C_TRANSPORT_UNIT")
+    @JoinColumn(name = "C_TRANSPORT_UNIT", updatable = false)
     private TransportUnit transportUnit;
 
     /** Where this {@link LoadUnit} is located on the {@link TransportUnit}. */
-    @Column(name = "C_PHYSICAL_POS")
+    @Column(name = "C_PHYSICAL_POS", updatable = false)
     private String physicalPosition;
 
     /** Locked for allocation. */
@@ -79,8 +89,17 @@ public class LoadUnit extends AbstractEntity implements DomainObject<Long> {
     private Product product;
 
     /** Sum of quantities of all PackagingUnits. */
-    @Column(name = "C_QTY")
-    private BigDecimal qty;
+    @Embedded
+    @AttributeOverride(name = "quantity", column = @Column(name = "C_QUANTITY", length = CoreTypeDefinitions.QUANTITY_LENGTH))
+    private Piece qty = Piece.ZERO;
+
+    @Temporal(TemporalType.TIMESTAMP)
+    @Column(name = "C_CREATED_DT")
+    private Date createdDate;
+
+    @Temporal(TemporalType.TIMESTAMP)
+    @Column(name = "C_CHANGED_DT")
+    private Date changedDate;
 
     /** Version field. */
     @Version
@@ -91,7 +110,68 @@ public class LoadUnit extends AbstractEntity implements DomainObject<Long> {
     private Set<PackagingUnit> packagingUnits = new HashSet<PackagingUnit>();
 
     /**
-     * @see org.openwms.core.domain.DomainObject#isNew()
+     * Accessed by persistence provider.
+     */
+    protected LoadUnit() {}
+
+    /**
+     * Create a new LoadUnit.
+     * 
+     * @param tu
+     *            The {@link TransportUnit} where this LoadUnit stands on.
+     * @param physicalPosition
+     *            The physical position within the {@link TransportUnit} where
+     *            this LoadUnit stands on
+     */
+    public LoadUnit(TransportUnit tu, String physicalPosition) {
+        this.transportUnit = tu;
+        this.physicalPosition = physicalPosition;
+    }
+
+    /**
+     * Create a new LoadUnit.
+     * 
+     * @param tu
+     *            The {@link TransportUnit} where this LoadUnit stands on.
+     * @param physicalPosition
+     *            The physical position within the {@link TransportUnit} where
+     *            this LoadUnit stands on
+     * @param quantity
+     *            The quantity of this LoadUnit
+     */
+    public LoadUnit(TransportUnit tu, String physicalPosition, Piece quantity) {
+        this.transportUnit = tu;
+        this.physicalPosition = physicalPosition;
+        this.qty = quantity;
+    }
+
+    /**
+     * Set the creation date. Check the quantity for values different than 0 and
+     * throw a RuntimeException. Notice, that we throw a RuntimeException
+     * instead of a checked exception because these check shall be done in the
+     * outer service layer already.
+     */
+    @PrePersist
+    void prePersist() {
+        if (Piece.ZERO.compareTo(this.qty) == 0) {
+            throw new DomainModelRuntimeException("Not allowed to create a new LoadUnit with a quantity of 0");
+        }
+        if (null == this.transportUnit) {
+            throw new DomainModelRuntimeException("Not allowed to create a new LoadUnit without a TransportUnit");
+        }
+        this.createdDate = new Date();
+    }
+
+    /**
+     * Set the changed date.
+     */
+    @PreUpdate
+    void preUpdate() {
+        this.changedDate = new Date();
+    }
+
+    /**
+     * {@inheritDoc}
      */
     @Override
     public boolean isNew() {
@@ -99,7 +179,7 @@ public class LoadUnit extends AbstractEntity implements DomainObject<Long> {
     }
 
     /**
-     * @see org.openwms.core.domain.DomainObject#getVersion()
+     * {@inheritDoc}
      */
     @Override
     public long getVersion() {
@@ -107,7 +187,7 @@ public class LoadUnit extends AbstractEntity implements DomainObject<Long> {
     }
 
     /**
-     * @see org.openwms.core.domain.DomainObject#getId()
+     * {@inheritDoc}
      */
     @Override
     public Long getId() {
@@ -142,6 +222,16 @@ public class LoadUnit extends AbstractEntity implements DomainObject<Long> {
     }
 
     /**
+     * Set the locked.
+     * 
+     * @param locked
+     *            The locked to set.
+     */
+    public void setLocked(boolean locked) {
+        this.locked = locked;
+    }
+
+    /**
      * Get the product.
      * 
      * @return the product.
@@ -151,12 +241,62 @@ public class LoadUnit extends AbstractEntity implements DomainObject<Long> {
     }
 
     /**
+     * Set the product.
+     * 
+     * @param product
+     *            The product to set.
+     */
+    public void setProduct(Product product) {
+        if (this.product != null) {
+            throw new DomainModelRuntimeException("Not allowed to change the Product of an LoadUnit");
+        }
+        this.product = product;
+    }
+
+    /**
+     * Unassign the product from this LoadUnit - set it to <code>null</code>.
+     */
+    public void unassignProduct() {
+        this.packagingUnits = null;
+        this.qty = Piece.ZERO;
+        this.product = null;
+    }
+
+    /**
      * Get the qty.
      * 
      * @return the qty.
      */
-    public BigDecimal getQty() {
+    public Piece getQty() {
         return qty;
+    }
+
+    /**
+     * Set the qty.
+     * 
+     * @param qty
+     *            The qty to set.
+     */
+    void setQty(Piece qty) {
+        this.qty = qty;
+    }
+
+    /**
+     * Get the createdDate.
+     * 
+     * @return the createdDate.
+     */
+    public Date getCreatedDate() {
+        return createdDate;
+    }
+
+    /**
+     * Get the changedDate.
+     * 
+     * @return the changedDate.
+     */
+    public Date getChangedDate() {
+        return changedDate;
     }
 
     /**
@@ -166,5 +306,26 @@ public class LoadUnit extends AbstractEntity implements DomainObject<Long> {
      */
     public Set<PackagingUnit> getPackagingUnits() {
         return packagingUnits;
+    }
+
+    /**
+     * Add one or more {@link PackagingUnit}s to this LoadUnit.
+     * 
+     * @param pUnits
+     *            {@link PackagingUnit}s to add
+     * @return <code>true</code> if this set changed as a result of the call
+     */
+    public boolean addPackagingUnits(PackagingUnit... pUnits) {
+        return this.packagingUnits.addAll(packagingUnits);
+    }
+
+    /**
+     * Remove one or more {@link PackagingUnit}s from this LoadUnit.
+     * 
+     * @param pUnits
+     *            {@link PackagingUnit}s to remove
+     */
+    public void removePackagingUnits(PackagingUnit... pUnits) {
+        this.packagingUnits.removeAll(Arrays.asList(pUnits));
     }
 }
