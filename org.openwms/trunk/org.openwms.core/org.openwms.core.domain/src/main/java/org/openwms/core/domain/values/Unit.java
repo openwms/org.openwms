@@ -20,6 +20,9 @@
  */
 package org.openwms.core.domain.values;
 
+import javax.persistence.Column;
+import javax.persistence.MappedSuperclass;
+
 /**
  * A definition of any kind of unit used in the application. In general, Units
  * are defined by a particular type of <code>UnitType</code> and a value. For
@@ -32,7 +35,11 @@ package org.openwms.core.domain.values;
  * @version $Revision$
  * @since 0.1
  */
-public interface Unit<T extends UnitType> {
+@MappedSuperclass
+public abstract class Unit<T extends UnitType<T>> {
+
+    @Column(name = "C_QUANTITY", length = CoreTypeDefinitions.QUANTITY_LENGTH)
+    private String quantity;
 
     /**
      * Convert this unit into another <code>Unit</code>.
@@ -40,5 +47,24 @@ public interface Unit<T extends UnitType> {
      * @param unit
      *            The unit to convert to
      */
-    void convertTo(T unit);
+    public abstract void convertTo(T unit);
+
+    /**
+     * Get the quantity.
+     * 
+     * @return the quantity.
+     */
+    protected String getQuantity() {
+        return quantity;
+    }
+
+    /**
+     * Set the quantity.
+     * 
+     * @param quantity
+     *            The quantity to set.
+     */
+    protected void setQuantity(String quantity) {
+        this.quantity = quantity;
+    }
 }
