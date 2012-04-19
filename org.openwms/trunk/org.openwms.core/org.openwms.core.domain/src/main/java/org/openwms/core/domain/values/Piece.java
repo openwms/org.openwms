@@ -32,7 +32,7 @@ import javax.persistence.Transient;
  * 
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  * @version $Revision: $
- * 
+ * @since 0.2
  */
 public class Piece extends Unit<PieceUnit> implements Comparable<Piece>, Serializable {
     private static final long serialVersionUID = 5268725227649308401L;
@@ -43,6 +43,8 @@ public class Piece extends Unit<PieceUnit> implements Comparable<Piece>, Seriali
     /** The amount of the <code>Piece</code>. */
     @Transient
     private int value;
+
+    public static final Piece ZERO = new Piece(0);
 
     /* ----------------------------- methods ------------------- */
     /**
