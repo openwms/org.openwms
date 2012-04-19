@@ -44,6 +44,9 @@ public class WeightTest {
         Weight w1 = new Weight(new BigDecimal(1), WeightUnit.KG);
         Weight w2 = new Weight(new BigDecimal(1), WeightUnit.T);
         w2.convertTo(WeightUnit.KG);
+        assertEquals(BigDecimal.ONE, w1.getValue());
+        assertEquals(new BigDecimal(0), new BigDecimal("1000").subtract(w2.getValue()));
+        assertEquals(w2.getUnit(), WeightUnit.KG);
         w1.compareTo(w2);
     }
 
@@ -54,12 +57,12 @@ public class WeightTest {
     public final void testWeightComparison() {
         Weight w1 = new Weight(new BigDecimal(1), WeightUnit.G);
         Weight w2 = new Weight(new BigDecimal(1), WeightUnit.T);
-        assertEquals("1G is less than 1T", 1, w1.compareTo(w2));
-        assertEquals("1T is greater than 1G", -1, w2.compareTo(w1));
+        assertEquals("1G is less than 1T", -1, w1.compareTo(w2));
+        assertEquals("1T is greater than 1G", 1, w2.compareTo(w1));
 
         Weight w3 = new Weight(new BigDecimal(2), WeightUnit.G);
-        assertEquals("1G is less than 2G", 1, w1.compareTo(w3));
-        assertEquals("2G is greater than 1G", -1, w3.compareTo(w1));
+        assertEquals("1G is less than 2G", -1, w1.compareTo(w3));
+        assertEquals("2G is greater than 1G", 1, w3.compareTo(w1));
 
         Weight w4 = new Weight(new BigDecimal("0.000002"), WeightUnit.T);
         w3.convertTo(WeightUnit.T);

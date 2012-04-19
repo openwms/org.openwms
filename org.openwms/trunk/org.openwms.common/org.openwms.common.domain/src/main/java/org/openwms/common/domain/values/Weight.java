@@ -24,6 +24,10 @@ import java.io.Serializable;
 import java.math.BigDecimal;
 
 import javax.persistence.Embeddable;
+import javax.persistence.PostLoad;
+import javax.persistence.PrePersist;
+import javax.persistence.PreUpdate;
+import javax.persistence.Transient;
 
 import org.openwms.core.domain.values.Unit;
 
@@ -36,19 +40,18 @@ import org.openwms.core.domain.values.Unit;
  * @since 0.1
  */
 @Embeddable
-public class Weight implements Comparable<Weight>, Unit<WeightUnit>, Serializable {
+public class Weight extends Unit<WeightUnit> implements Comparable<Weight>, Serializable {
 
     private static final long serialVersionUID = -8849107834046064278L;
 
-    /**
-     * The unit of the <code>Weight</code>.
-     */
+    /** The unit of the <code>Weight</code>. */
+    @Transient
     private WeightUnit unit;
-
-    /**
-     * The amount of the <code>Weight</code>.
-     */
+    /** The amount of the <code>Weight</code>. */
+    @Transient
     private BigDecimal value;
+
+    public static final Weight ZERO = new Weight("0");
 
     /* ----------------------------- methods ------------------- */
     /**
@@ -57,6 +60,19 @@ public class Weight implements Comparable<Weight>, Unit<WeightUnit>, Serializabl
     @SuppressWarnings("unused")
     private Weight() {
         super();
+    }
+
+    @PreUpdate
+    @PrePersist
+    void preUpdate() {
+        setQuantity(this.value.toString() + " " + this.unit.toString());
+    }
+
+    @PostLoad
+    void postLoad() {
+        String val = getQuantity();
+        this.value = new BigDecimal(val.substring(0, val.indexOf(" ")));
+        this.unit = WeightUnit.valueOf(val.substring(val.indexOf(" "), val.length()));
     }
 
     /**
@@ -76,13 +92,24 @@ public class Weight implements Comparable<Weight>, Unit<WeightUnit>, Serializabl
      * Create a new <code>Weight</code>.
      * 
      * @param value
-     *            The value of the <code>Weight</code> as int
+     *            The value of the <code>Weight</code> as String
      * @param unit
      *            The unit of measure
      */
-    public Weight(int value, WeightUnit unit) {
+    public Weight(String value, WeightUnit unit) {
         this.value = new BigDecimal(value);
         this.unit = unit;
+    }
+
+    /**
+     * Create a new <code>Weight</code>.
+     * 
+     * @param value
+     *            The value of the <code>Weight</code> as String
+     */
+    public Weight(String value) {
+        this.value = new BigDecimal(value);
+        this.unit = WeightUnit.T.getBaseUnit();
     }
 
     /**
@@ -131,11 +158,19 @@ public class Weight implements Comparable<Weight>, Unit<WeightUnit>, Serializabl
     @Override
     public int compareTo(Weight o) {
         if (o.getUnit().ordinal() > this.getUnit().ordinal()) {
-            return 1;
-        } else if (o.getUnit().ordinal() < this.getUnit().ordinal()) {
             return -1;
+        } else if (o.getUnit().ordinal() < this.getUnit().ordinal()) {
+            return 1;
         } else {
-            return o.getValue().compareTo(this.getValue());
+            return this.getValue().compareTo(o.getValue());
         }
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public String toString() {
+        return value + " " + unit;
     }
 }
