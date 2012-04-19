@@ -35,7 +35,7 @@ import org.openwms.core.domain.values.UnitType;
  * @version $Revision$
  * @since 0.1
  */
-public enum WeightUnit implements UnitType {
+public enum WeightUnit implements UnitType<WeightUnit> {
 
     /**
      * Milligram.
@@ -55,7 +55,7 @@ public enum WeightUnit implements UnitType {
     T(1);
 
     private Long baseUnit;
-    private static UnitType[] all = { WeightUnit.MG, WeightUnit.G, WeightUnit.KG, WeightUnit.T };
+    private static WeightUnit[] all = { WeightUnit.MG, WeightUnit.G, WeightUnit.KG, WeightUnit.T };
 
     /**
      * Create a new <code>WeightUnit</code>.
@@ -79,7 +79,7 @@ public enum WeightUnit implements UnitType {
      * {@inheritDoc}
      */
     @Override
-    public List<UnitType> getAll() {
+    public List<WeightUnit> getAll() {
         return Arrays.asList(all);
     }
 
@@ -87,7 +87,7 @@ public enum WeightUnit implements UnitType {
      * {@inheritDoc}
      */
     @Override
-    public UnitType getBaseUnit() {
-        return KG;
+    public WeightUnit getBaseUnit() {
+        return G;
     }
 }

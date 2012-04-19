@@ -20,7 +20,6 @@
  */
 package org.openwms.common.domain;
 
-import java.math.BigDecimal;
 import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
@@ -28,6 +27,7 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
+import javax.persistence.AttributeOverride;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Embedded;
@@ -43,6 +43,7 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.OrderBy;
+import javax.persistence.PrePersist;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -52,9 +53,11 @@ import javax.persistence.Version;
 import org.openwms.common.domain.system.UnitError;
 import org.openwms.common.domain.values.Barcode;
 import org.openwms.common.domain.values.TransportUnitState;
+import org.openwms.common.domain.values.Weight;
 import org.openwms.core.domain.AbstractEntity;
 import org.openwms.core.domain.DomainObject;
 import org.openwms.core.domain.system.usermanagement.User;
+import org.openwms.core.domain.values.CoreTypeDefinitions;
 
 /**
  * A TransportUnit is an item like a box, a toad, a bin or a palette that is
@@ -121,7 +124,7 @@ public class TransportUnit extends AbstractEntity implements DomainObject<Long> 
      */
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "C_CREATION_DATE")
-    private Date creationDate = new Date();
+    private Date creationDate;
 
     /**
      * Date when the <code>TransportUnit</code> has been moved to the current
@@ -141,8 +144,9 @@ public class TransportUnit extends AbstractEntity implements DomainObject<Long> 
     /**
      * Weight of the <code>TransportUnit</code>.
      */
-    @Column(name = "C_WEIGHT")
-    private BigDecimal weight = BigDecimal.ZERO;
+    @Embedded
+    @AttributeOverride(name = "quantity", column = @Column(name = "C_WEIGHT", length = CoreTypeDefinitions.QUANTITY_LENGTH))
+    private Weight weight = new Weight("0");
 
     /**
      * State of the <code>TransportUnit</code>.
@@ -239,6 +243,14 @@ public class TransportUnit extends AbstractEntity implements DomainObject<Long> 
      */
     public TransportUnit(Barcode barcode) {
         this.barcode = new Barcode(barcode.adjustBarcode(barcode.getValue()));
+    }
+
+    /**
+     * Set the creation date before the entity is persisted.
+     */
+    @PrePersist
+    void prePersist() {
+        this.creationDate = new Date();
     }
 
     /**
@@ -361,7 +373,7 @@ public class TransportUnit extends AbstractEntity implements DomainObject<Long> 
      * @return The creation date
      */
     public Date getCreationDate() {
-        return this.creationDate;
+        return new Date(this.creationDate.getTime());
     }
 
     /**
@@ -372,7 +384,7 @@ public class TransportUnit extends AbstractEntity implements DomainObject<Long> 
      *         time
      */
     public Date getActualLocationDate() {
-        return this.actualLocationDate;
+        return new Date(this.actualLocationDate.getTime());
     }
 
     /**
@@ -383,7 +395,7 @@ public class TransportUnit extends AbstractEntity implements DomainObject<Long> 
      *         <code>TransportUnit</code>.
      */
     public Date getInventoryDate() {
-        return this.inventoryDate;
+        return new Date(this.inventoryDate.getTime());
     }
 
     /**
@@ -394,7 +406,7 @@ public class TransportUnit extends AbstractEntity implements DomainObject<Long> 
      *            The timestamp of the last inventory check
      */
     public void setInventoryDate(Date inventoryDate) {
-        this.inventoryDate = inventoryDate;
+        this.inventoryDate = new Date(inventoryDate.getTime());
     }
 
     /**
@@ -402,7 +414,7 @@ public class TransportUnit extends AbstractEntity implements DomainObject<Long> 
      * 
      * @return The current weight of the <code>TransportUnit</code>
      */
-    public BigDecimal getWeight() {
+    public Weight getWeight() {
         return this.weight;
     }
 
@@ -412,7 +424,7 @@ public class TransportUnit extends AbstractEntity implements DomainObject<Long> 
      * @param weight
      *            The current weight of the <code>TransportUnit</code>
      */
-    public void setWeight(BigDecimal weight) {
+    public void setWeight(Weight weight) {
         this.weight = weight;
     }
 
@@ -589,7 +601,7 @@ public class TransportUnit extends AbstractEntity implements DomainObject<Long> 
      *            The actualLocationDate to set.
      */
     public void setActualLocationDate(Date actualLocationDate) {
-        this.actualLocationDate = actualLocationDate;
+        this.actualLocationDate = new Date(actualLocationDate.getTime());
     }
 
     /**
