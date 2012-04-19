@@ -44,6 +44,7 @@ public class Piece extends Unit<PieceUnit> implements Comparable<Piece>, Seriali
     @Transient
     private int value;
 
+    @Transient
     public static final Piece ZERO = new Piece(0);
 
     /* ----------------------------- methods ------------------- */
