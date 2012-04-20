@@ -20,6 +20,8 @@
  */
 package org.openwms.wms.domain.shipping;
 
+import javax.persistence.Entity;
+
 import org.openwms.wms.domain.order.OrderPositionSplit;
 
 /**
@@ -29,8 +31,10 @@ import org.openwms.wms.domain.order.OrderPositionSplit;
  * @version $Revision: $
  * @since 0.1
  */
-// @Entity
+@Entity
 public class ShippingOrderPositionSplit extends OrderPositionSplit {
+
+    private static final long serialVersionUID = -4322060792445742980L;
 
     /**
      * Target picking position.
@@ -38,5 +42,4 @@ public class ShippingOrderPositionSplit extends OrderPositionSplit {
      * @ManyToOne
      * @JoinColumn(name = "PICK_POSITION") private Target pickPosition;
      */
-
 }

@@ -35,8 +35,12 @@
         <priority value="DEBUG" />
     </category>
 
-    <category name="org.hibernate">
-        <priority value="WARN" />
+    <category name="org.hibernate.hql">
+        <priority value="ERROR" />
+    </category>
+
+    <category name="org.hibernate.SQL">
+        <priority value="DEBUG" />
     </category>
 
     <root>

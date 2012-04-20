@@ -199,7 +199,7 @@ public class Product extends AbstractEntity implements DomainObject<Long> {
      * @return the createdDate.
      */
     public Date getCreatedDate() {
-        return createdDate;
+        return new Date(createdDate.getTime());
     }
 
     /**
@@ -208,7 +208,7 @@ public class Product extends AbstractEntity implements DomainObject<Long> {
      * @return the changedDate.
      */
     public Date getChangedDate() {
-        return changedDate;
+        return new Date(changedDate.getTime());
     }
 
     /**

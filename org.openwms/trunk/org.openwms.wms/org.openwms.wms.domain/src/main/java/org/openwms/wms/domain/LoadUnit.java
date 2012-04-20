@@ -39,6 +39,7 @@ import javax.persistence.PreUpdate;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.persistence.UniqueConstraint;
 import javax.persistence.Version;
 
 import org.openwms.common.domain.TransportUnit;
@@ -60,7 +61,8 @@ import org.openwms.wms.domain.inventory.Product;
  * @see org.openwms.common.domain.TransportUnit
  */
 @Entity
-@Table(name = "WMS_LOAD_UNIT")
+@Table(name = "WMS_LOAD_UNIT", uniqueConstraints = @UniqueConstraint(columnNames = { "C_TRANSPORT_UNIT",
+        "C_PHYSICAL_POS" }))
 public class LoadUnit extends AbstractEntity implements DomainObject<Long> {
 
     private static final long serialVersionUID = -5524006837325285793L;
@@ -73,7 +75,7 @@ public class LoadUnit extends AbstractEntity implements DomainObject<Long> {
 
     /** The {@link TransportUnit} where this {@link LoadUnit} belongs to. */
     @ManyToOne
-    @JoinColumn(name = "C_TRANSPORT_UNIT", updatable = false)
+    @JoinColumn(name = "C_TRANSPORT_UNIT", insertable = false, updatable = false)
     private TransportUnit transportUnit;
 
     /** Where this {@link LoadUnit} is located on the {@link TransportUnit}. */
@@ -93,10 +95,12 @@ public class LoadUnit extends AbstractEntity implements DomainObject<Long> {
     @AttributeOverride(name = "quantity", column = @Column(name = "C_QUANTITY", length = CoreTypeDefinitions.QUANTITY_LENGTH))
     private Piece qty = Piece.ZERO;
 
+    /** The date this LoadUnit was created. */
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "C_CREATED_DT")
     private Date createdDate;
 
+    /** The date this LoadUnit has changed the last time. */
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "C_CHANGED_DT")
     private Date changedDate;
@@ -106,6 +110,7 @@ public class LoadUnit extends AbstractEntity implements DomainObject<Long> {
     @Column(name = "C_VERSION")
     private long version;
 
+    /** All {@link PackagingUnit}s that belong to this LoadUnit. */
     @OneToMany(mappedBy = "loadUnit")
     private Set<PackagingUnit> packagingUnits = new HashSet<PackagingUnit>();
 
@@ -287,7 +292,7 @@ public class LoadUnit extends AbstractEntity implements DomainObject<Long> {
      * @return the createdDate.
      */
     public Date getCreatedDate() {
-        return createdDate;
+        return new Date(createdDate.getTime());
     }
 
     /**
@@ -296,7 +301,7 @@ public class LoadUnit extends AbstractEntity implements DomainObject<Long> {
      * @return the changedDate.
      */
     public Date getChangedDate() {
-        return changedDate;
+        return new Date(changedDate.getTime());
     }
 
     /**
@@ -327,5 +332,15 @@ public class LoadUnit extends AbstractEntity implements DomainObject<Long> {
      */
     public void removePackagingUnits(PackagingUnit... pUnits) {
         this.packagingUnits.removeAll(Arrays.asList(pUnits));
+    }
+
+    /**
+     * {@inheritDoc}
+     * 
+     * Return a combination of the barcode and the physicalPosition.
+     */
+    @Override
+    public String toString() {
+        return this.transportUnit.getBarcode() + "/" + this.physicalPosition;
     }
 }

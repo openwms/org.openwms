@@ -137,5 +137,13 @@
             <version>${common.version}</version>
             <scope>provided</scope>
         </dependency>
+
+        <!-- TMS Project dependencies -->
+        <dependency>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>org.openwms.tms.domain</artifactId>
+            <version>${tms.version}</version>
+            <scope>provided</scope>
+        </dependency>
     </dependencies>
 </project>
