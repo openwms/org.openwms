@@ -24,8 +24,6 @@ import java.io.Serializable;
 
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
-import javax.persistence.PostPersist;
-import javax.persistence.PostUpdate;
 
 import org.apache.commons.lang.StringUtils;
 
@@ -83,7 +81,7 @@ public class Barcode implements Serializable {
     /**
      * Defines the maximum length of characters.
      */
-    private static int length = 20;
+    private static int length = CommonTypeDefinitions.BARCODE_LENGTH;
 
     /**
      * The alignment of the <code>Barcode</code>. Could be something of
@@ -121,13 +119,6 @@ public class Barcode implements Serializable {
         adjustBarcode(value);
     }
 
-    @SuppressWarnings("unused")
-    @PostPersist
-    @PostUpdate
-    private void init() {
-        adjustBarcode(value);
-    }
-
     /**
      * Force the Barcode to be aligned to the determined rules regarding
      * padding, alignment.
@@ -136,7 +127,7 @@ public class Barcode implements Serializable {
      *            The old Barcode as String
      * @return The new aligned Barcode
      */
-    public String adjustBarcode(String val) {
+    public final String adjustBarcode(String val) {
         if (val == null) {
             throw new IllegalArgumentException("Cannot create a barcode without value");
         }

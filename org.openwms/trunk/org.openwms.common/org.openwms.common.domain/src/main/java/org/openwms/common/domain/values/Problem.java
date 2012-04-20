@@ -103,7 +103,7 @@ public class Problem implements Serializable {
      * @return Date when occurred.
      */
     public Date getOccurred() {
-        return occurred;
+        return new Date(occurred.getTime());
     }
 
     /**
@@ -113,7 +113,7 @@ public class Problem implements Serializable {
      *            The Date to set.
      */
     public void setOccurred(Date occurred) {
-        this.occurred = occurred;
+        this.occurred = new Date(occurred.getTime());
     }
 
     /**

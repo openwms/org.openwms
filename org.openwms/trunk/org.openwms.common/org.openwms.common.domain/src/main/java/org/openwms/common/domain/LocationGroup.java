@@ -42,8 +42,6 @@ import javax.persistence.Version;
 
 import org.openwms.common.domain.types.Target;
 import org.openwms.common.domain.values.LocationGroupState;
-import org.openwms.core.domain.AbstractEntity;
-import org.openwms.core.domain.DomainObject;
 
 /**
  * A LocationGroup is a logical group of
@@ -60,7 +58,7 @@ import org.openwms.core.domain.DomainObject;
 @Table(name = "COM_LOCATION_GROUP")
 @NamedQueries({ @NamedQuery(name = "LocationGroup.findAll", query = "select lg from LocationGroup lg"),
         @NamedQuery(name = "LocationGroup.findByName", query = "select lg from LocationGroup lg where lg.name = ?1") })
-public class LocationGroup extends AbstractEntity implements DomainObject<Long>, Target {
+public class LocationGroup extends Target {
 
     private static final long serialVersionUID = -885742169116552293L;
 
@@ -411,7 +409,7 @@ public class LocationGroup extends AbstractEntity implements DomainObject<Long>,
      * @return lastUpdated.
      */
     public Date getLastUpdated() {
-        return this.lastUpdated;
+        return new Date(this.lastUpdated.getTime());
     }
 
     /**
@@ -421,7 +419,7 @@ public class LocationGroup extends AbstractEntity implements DomainObject<Long>,
      *            The date to set
      */
     public void setLastUpdated(Date lastUpdated) {
-        this.lastUpdated = lastUpdated;
+        this.lastUpdated = new Date(lastUpdated.getTime());
     }
 
     /**
@@ -650,5 +648,4 @@ public class LocationGroup extends AbstractEntity implements DomainObject<Long>,
     public String toString() {
         return getName();
     }
-
 }
