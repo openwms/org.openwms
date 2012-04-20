@@ -24,9 +24,6 @@ import java.io.Serializable;
 import java.math.BigDecimal;
 
 import javax.persistence.Embeddable;
-import javax.persistence.PostLoad;
-import javax.persistence.PrePersist;
-import javax.persistence.PreUpdate;
 import javax.persistence.Transient;
 
 import org.openwms.core.domain.values.Unit;
@@ -41,7 +38,6 @@ import org.openwms.core.domain.values.Unit;
  */
 @Embeddable
 public class Weight extends Unit<WeightUnit> implements Comparable<Weight>, Serializable {
-
     private static final long serialVersionUID = -8849107834046064278L;
 
     /** The unit of the <code>Weight</code>. */
@@ -50,29 +46,16 @@ public class Weight extends Unit<WeightUnit> implements Comparable<Weight>, Seri
     /** The amount of the <code>Weight</code>. */
     @Transient
     private BigDecimal amount;
-
+    /** Constant for a zero value. */
+    @Transient
     public static final Weight ZERO = new Weight("0");
 
     /* ----------------------------- methods ------------------- */
     /**
      * Accessed by persistence provider.
      */
-    @SuppressWarnings("unused")
-    private Weight() {
+    protected Weight() {
         super();
-    }
-
-    @PreUpdate
-    @PrePersist
-    void preUpdate() {
-        setQuantity(this.amount.toString() + " " + this.unit.toString());
-    }
-
-    @PostLoad
-    void postLoad() {
-        String val = getQuantity();
-        this.amount = new BigDecimal(val.substring(0, val.indexOf(' ')));
-        this.unit = WeightUnit.valueOf(val.substring(val.indexOf(' '), val.length()));
     }
 
     /**
@@ -86,6 +69,7 @@ public class Weight extends Unit<WeightUnit> implements Comparable<Weight>, Seri
     public Weight(BigDecimal amount, WeightUnit unit) {
         this.amount = amount;
         this.unit = unit;
+        prePersist();
     }
 
     /**
@@ -99,6 +83,7 @@ public class Weight extends Unit<WeightUnit> implements Comparable<Weight>, Seri
     public Weight(String amount, WeightUnit unit) {
         this.amount = new BigDecimal(amount);
         this.unit = unit;
+        prePersist();
     }
 
     /**
@@ -110,6 +95,7 @@ public class Weight extends Unit<WeightUnit> implements Comparable<Weight>, Seri
     public Weight(String amount) {
         this.amount = new BigDecimal(amount);
         this.unit = WeightUnit.T.getBaseUnit();
+        prePersist();
     }
 
     /**
@@ -123,6 +109,7 @@ public class Weight extends Unit<WeightUnit> implements Comparable<Weight>, Seri
     public Weight(double amount, WeightUnit unit) {
         this.amount = new BigDecimal(amount);
         this.unit = unit;
+        prePersist();
     }
 
     /**
@@ -132,6 +119,9 @@ public class Weight extends Unit<WeightUnit> implements Comparable<Weight>, Seri
      */
     @Override
     public WeightUnit getUnit() {
+        if (this.unit == null) {
+            postLoad();
+        }
         return unit;
     }
 
@@ -141,6 +131,9 @@ public class Weight extends Unit<WeightUnit> implements Comparable<Weight>, Seri
      * @return The amount
      */
     public BigDecimal getAmount() {
+        if (this.unit == null) {
+            postLoad();
+        }
         return amount;
     }
 
@@ -149,7 +142,7 @@ public class Weight extends Unit<WeightUnit> implements Comparable<Weight>, Seri
      */
     @Override
     public Weight convertTo(WeightUnit unt) {
-        return new Weight(amount.scaleByPowerOfTen((this.getUnit().ordinal() - unt.ordinal()) * 3), unt);
+        return new Weight(getAmount().scaleByPowerOfTen((this.getUnit().ordinal() - unt.ordinal()) * 3), unt);
     }
 
     /**
@@ -167,19 +160,23 @@ public class Weight extends Unit<WeightUnit> implements Comparable<Weight>, Seri
     }
 
     /**
-     * @see java.lang.Object#hashCode()
+     * Use amount and unit for calculation.
+     * 
+     * @return The hashCode
      */
     @Override
     public int hashCode() {
         final int prime = 31;
         int result = 1;
-        result = prime * result + ((amount == null) ? 0 : amount.hashCode());
-        result = prime * result + ((unit == null) ? 0 : unit.hashCode());
+        result = prime * result + ((getAmount() == null) ? 0 : getAmount().hashCode());
+        result = prime * result + ((getUnit() == null) ? 0 : getUnit().hashCode());
         return result;
     }
 
     /**
-     * @see java.lang.Object#equals(java.lang.Object)
+     * {@inheritDoc}
+     * 
+     * Use amount and unit for comparison.
      */
     @Override
     public boolean equals(Object obj) {
@@ -193,14 +190,14 @@ public class Weight extends Unit<WeightUnit> implements Comparable<Weight>, Seri
             return false;
         }
         Weight other = (Weight) obj;
-        if (amount == null) {
-            if (other.amount != null) {
+        if (getAmount() == null) {
+            if (other.getAmount() != null) {
                 return false;
             }
-        } else if (!amount.equals(other.amount)) {
+        } else if (!getAmount().equals(other.getAmount())) {
             return false;
         }
-        if (unit != other.unit) {
+        if (getUnit() != other.getUnit()) {
             return false;
         }
         return true;
@@ -211,6 +208,18 @@ public class Weight extends Unit<WeightUnit> implements Comparable<Weight>, Seri
      */
     @Override
     public String toString() {
-        return amount + " " + unit;
+        return getAmount() + " " + getUnit();
+    }
+
+    // INFO [scherrer] : JPA Lifecycle methods do not work in JPA1.0
+    private void prePersist() {
+        setQuantity(this.getAmount().toString() + " " + this.getUnit().toString());
+    }
+
+    // INFO [scherrer] : JPA Lifecycle methods do not work in JPA1.0
+    private void postLoad() {
+        String val = getQuantity();
+        this.amount = new BigDecimal(val.substring(0, val.indexOf(' ')));
+        this.unit = WeightUnit.valueOf(val.substring(val.indexOf(' ') + 1, val.length()));
     }
 }
