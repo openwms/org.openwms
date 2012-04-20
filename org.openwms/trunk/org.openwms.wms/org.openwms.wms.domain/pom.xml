@@ -117,6 +117,12 @@
             <type>test-jar</type>
             <scope>test</scope>
         </dependency>
+        <dependency>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>org.openwms.core.util</artifactId>
+            <version>${core.version}</version>
+            <scope>provided</scope>
+        </dependency>
 
         <!-- COMMON Project dependencies -->
         <dependency>
