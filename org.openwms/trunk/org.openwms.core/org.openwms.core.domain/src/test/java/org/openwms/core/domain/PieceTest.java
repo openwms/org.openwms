@@ -56,7 +56,12 @@ public class PieceTest {
     public final void testConvertToPieceUnit() {
         Piece p30 = new Piece(30);
         Piece p50 = new Piece(50, PieceUnit.PC);
-        p50.convertTo(PieceUnit.DOZ);
+
+        Piece p502 = p50.convertTo(PieceUnit.DOZ);
+        Assert.assertFalse(p502.equals(p50));
+        Assert.assertTrue(p502.getUnit() == PieceUnit.DOZ);
+        Assert.assertTrue(p50.getUnit() == PieceUnit.PC);
+
         Assert.assertEquals(1, p50.compareTo(p30));
         Assert.assertEquals(-1, p30.compareTo(p50));
 
