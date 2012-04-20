@@ -22,9 +22,7 @@ package org.openwms.core.domain.values;
 
 import java.io.Serializable;
 
-import javax.persistence.PostLoad;
-import javax.persistence.PrePersist;
-import javax.persistence.PreUpdate;
+import javax.persistence.Embeddable;
 import javax.persistence.Transient;
 
 /**
@@ -34,6 +32,7 @@ import javax.persistence.Transient;
  * @version $Revision: $
  * @since 0.2
  */
+@Embeddable
 public class Piece extends Unit<PieceUnit> implements Comparable<Piece>, Serializable {
     private static final long serialVersionUID = 5268725227649308401L;
 
@@ -42,8 +41,8 @@ public class Piece extends Unit<PieceUnit> implements Comparable<Piece>, Seriali
     private PieceUnit unit;
     /** The amount of the <code>Piece</code>. */
     @Transient
-    private int value;
-
+    private int amount;
+    /** Constant for a zero value. */
     @Transient
     public static final Piece ZERO = new Piece(0);
 
@@ -51,22 +50,8 @@ public class Piece extends Unit<PieceUnit> implements Comparable<Piece>, Seriali
     /**
      * Accessed by persistence provider.
      */
-    @SuppressWarnings("unused")
-    private Piece() {
+    protected Piece() {
         super();
-    }
-
-    @PreUpdate
-    @PrePersist
-    void preUpdate() {
-        setQuantity(String.valueOf(this.value) + " " + this.unit.toString());
-    }
-
-    @PostLoad
-    void postLoad() {
-        String val = getQuantity();
-        this.value = new Integer(val.substring(0, val.indexOf(" ")));
-        this.unit = PieceUnit.valueOf(val.substring(val.indexOf(" "), val.length()));
     }
 
     /**
@@ -78,8 +63,9 @@ public class Piece extends Unit<PieceUnit> implements Comparable<Piece>, Seriali
      *            The unit of measure
      */
     public Piece(int amount, PieceUnit unit) {
-        this.value = amount;
+        this.amount = amount;
         this.unit = unit;
+        prePersist();
     }
 
     /**
@@ -89,8 +75,9 @@ public class Piece extends Unit<PieceUnit> implements Comparable<Piece>, Seriali
      *            The amount of the <code>Piece</code> as int
      */
     public Piece(int amount) {
-        this.value = amount;
+        this.amount = amount;
         this.unit = PieceUnit.PC.getBaseUnit();
+        prePersist();
     }
 
     /**
@@ -98,7 +85,11 @@ public class Piece extends Unit<PieceUnit> implements Comparable<Piece>, Seriali
      * 
      * @return The unit
      */
+    @Override
     public PieceUnit getUnit() {
+        if (this.unit == null) {
+            postLoad();
+        }
         return unit;
     }
 
@@ -108,28 +99,23 @@ public class Piece extends Unit<PieceUnit> implements Comparable<Piece>, Seriali
      * @return The amount
      */
     public int getAmount() {
-        return value;
+        if (this.unit == null) {
+            postLoad();
+        }
+        return amount;
     }
 
     /**
      * {@inheritDoc}
      */
     @Override
-    public void convertTo(PieceUnit unt) {
+    public Piece convertTo(PieceUnit unt) {
         if (PieceUnit.PC == unt && this.getUnit() == PieceUnit.DOZ) {
-            this.value = this.value * 12;
-            this.unit = PieceUnit.PC;
+            return new Piece(this.getAmount() * 12, PieceUnit.PC);
         } else if (PieceUnit.DOZ == unt && this.getUnit() == PieceUnit.PC) {
-            this.value = this.value / 12;
-            this.unit = PieceUnit.DOZ;
+            return new Piece(this.getAmount() / 12, PieceUnit.DOZ);
         }
-    }
-
-    private int compare(int val1, int val2) {
-        if (val1 == val2) {
-            return 0;
-        };
-        return val1 < val2 ? -1 : 1;
+        return this;
     }
 
     /**
@@ -151,9 +137,30 @@ public class Piece extends Unit<PieceUnit> implements Comparable<Piece>, Seriali
 
     /**
      * {@inheritDoc}
+     * 
+     * Return a combination of amount and unit, e.g. 24 PC
      */
     @Override
     public String toString() {
-        return value + " " + unit;
+        return getAmount() + " " + getUnit();
+    }
+
+    // INFO [scherrer] : JPA Lifecycle methods do not work in JPA1.0
+    private void prePersist() {
+        setQuantity(String.valueOf(this.amount) + " " + this.unit.toString());
+    }
+
+    // INFO [scherrer] : JPA Lifecycle methods do not work in JPA1.0
+    private void postLoad() {
+        String val = getQuantity();
+        this.amount = new Integer(val.substring(0, val.indexOf(" ")));
+        this.unit = PieceUnit.valueOf(val.substring(val.indexOf(" ") + 1, val.length()));
+    }
+
+    private int compare(int val1, int val2) {
+        if (val1 == val2) {
+            return 0;
+        };
+        return val1 < val2 ? -1 : 1;
     }
 }

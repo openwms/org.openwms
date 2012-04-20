@@ -27,7 +27,7 @@ import javax.persistence.Embeddable;
 
 /**
  * An I18nSet encapsulates different languages. Used as an embedded value type
- * in {@link org.openwms.core.domain.system.I18n}
+ * in {@link org.openwms.core.domain.system.I18n}.
  * 
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  * @version $Revision$
