@@ -20,6 +20,11 @@
  */
 package org.openwms.common.domain.types;
 
+import javax.persistence.MappedSuperclass;
+
+import org.openwms.core.domain.AbstractEntity;
+import org.openwms.core.domain.DomainObject;
+
 /**
  * A Target is either a physical or a logical endpoint of any kind of order in a
  * warehouse. A <code>TransportOrder</code> has a Target set, to where a
@@ -30,6 +35,8 @@ package org.openwms.common.domain.types;
  * @version $Revision$
  * @since 0.1
  */
-public interface Target {
+@MappedSuperclass
+public abstract class Target extends AbstractEntity implements DomainObject<Long> {
 
+    private static final long serialVersionUID = 10514780154009845L;
 }

@@ -52,6 +52,7 @@ import javax.persistence.Version;
 
 import org.openwms.common.domain.system.UnitError;
 import org.openwms.common.domain.values.Barcode;
+import org.openwms.common.domain.values.CommonTypeDefinitions;
 import org.openwms.common.domain.values.TransportUnitState;
 import org.openwms.common.domain.values.Weight;
 import org.openwms.core.domain.AbstractEntity;
@@ -109,6 +110,7 @@ public class TransportUnit extends AbstractEntity implements DomainObject<Long> 
      * Unique natural key.
      */
     @Embedded
+    @AttributeOverride(name = "value", column = @Column(name = "C_BARCODE", length = CommonTypeDefinitions.BARCODE_LENGTH))
     @OrderBy
     private Barcode barcode;
 
@@ -250,6 +252,7 @@ public class TransportUnit extends AbstractEntity implements DomainObject<Long> 
      */
     @PrePersist
     void prePersist() {
+        // FIXME [scherrer] : call prepersist on the barcode
         this.creationDate = new Date();
     }
 

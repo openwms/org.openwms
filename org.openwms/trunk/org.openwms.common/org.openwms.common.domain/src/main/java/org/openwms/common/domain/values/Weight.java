@@ -49,7 +49,7 @@ public class Weight extends Unit<WeightUnit> implements Comparable<Weight>, Seri
     private WeightUnit unit;
     /** The amount of the <code>Weight</code>. */
     @Transient
-    private BigDecimal value;
+    private BigDecimal amount;
 
     public static final Weight ZERO = new Weight("0");
 
@@ -65,91 +65,91 @@ public class Weight extends Unit<WeightUnit> implements Comparable<Weight>, Seri
     @PreUpdate
     @PrePersist
     void preUpdate() {
-        setQuantity(this.value.toString() + " " + this.unit.toString());
+        setQuantity(this.amount.toString() + " " + this.unit.toString());
     }
 
     @PostLoad
     void postLoad() {
         String val = getQuantity();
-        this.value = new BigDecimal(val.substring(0, val.indexOf(" ")));
-        this.unit = WeightUnit.valueOf(val.substring(val.indexOf(" "), val.length()));
+        this.amount = new BigDecimal(val.substring(0, val.indexOf(' ')));
+        this.unit = WeightUnit.valueOf(val.substring(val.indexOf(' '), val.length()));
     }
 
     /**
      * Create a new <code>Weight</code>.
      * 
-     * @param value
-     *            The value of the <code>Weight</code>
+     * @param amount
+     *            The amount of the <code>Weight</code>
      * @param unit
      *            The unit of measure
      */
-    public Weight(BigDecimal value, WeightUnit unit) {
-        this.value = value;
+    public Weight(BigDecimal amount, WeightUnit unit) {
+        this.amount = amount;
         this.unit = unit;
     }
 
     /**
      * Create a new <code>Weight</code>.
      * 
-     * @param value
-     *            The value of the <code>Weight</code> as String
+     * @param amount
+     *            The amount of the <code>Weight</code> as String
      * @param unit
      *            The unit of measure
      */
-    public Weight(String value, WeightUnit unit) {
-        this.value = new BigDecimal(value);
+    public Weight(String amount, WeightUnit unit) {
+        this.amount = new BigDecimal(amount);
         this.unit = unit;
     }
 
     /**
      * Create a new <code>Weight</code>.
      * 
-     * @param value
-     *            The value of the <code>Weight</code> as String
+     * @param amount
+     *            The amount of the <code>Weight</code> as String
      */
-    public Weight(String value) {
-        this.value = new BigDecimal(value);
+    public Weight(String amount) {
+        this.amount = new BigDecimal(amount);
         this.unit = WeightUnit.T.getBaseUnit();
     }
 
     /**
      * Create a new <code>Weight</code>.
      * 
-     * @param value
-     *            The value of the <code>Weight</code> as double
+     * @param amount
+     *            The amount of the <code>Weight</code> as double
      * @param unit
      *            The unit of measure
      */
-    public Weight(double value, WeightUnit unit) {
-        this.value = new BigDecimal(value);
+    public Weight(double amount, WeightUnit unit) {
+        this.amount = new BigDecimal(amount);
         this.unit = unit;
     }
 
     /**
      * Returns the unit of the <code>Weight</code>.
      * 
-     * @return The unit.
+     * @return The unit
      */
+    @Override
     public WeightUnit getUnit() {
         return unit;
     }
 
     /**
-     * Returns the value of the <code>Weight</code>.
+     * Returns the amount of the <code>Weight</code>.
      * 
-     * @return The value.
+     * @return The amount
      */
-    public BigDecimal getValue() {
-        return value;
+    public BigDecimal getAmount() {
+        return amount;
     }
 
     /**
      * {@inheritDoc}
      */
     @Override
-    public void convertTo(WeightUnit unt) {
-        value = value.scaleByPowerOfTen((this.getUnit().ordinal() - unt.ordinal()) * 3);
-        this.unit = unt;
+    public Weight convertTo(WeightUnit unt) {
+        return new Weight(amount.scaleByPowerOfTen((this.getUnit().ordinal() - unt.ordinal()) * 3), unt);
     }
 
     /**
@@ -162,8 +162,48 @@ public class Weight extends Unit<WeightUnit> implements Comparable<Weight>, Seri
         } else if (o.getUnit().ordinal() < this.getUnit().ordinal()) {
             return 1;
         } else {
-            return this.getValue().compareTo(o.getValue());
+            return this.getAmount().compareTo(o.getAmount());
         }
+    }
+
+    /**
+     * @see java.lang.Object#hashCode()
+     */
+    @Override
+    public int hashCode() {
+        final int prime = 31;
+        int result = 1;
+        result = prime * result + ((amount == null) ? 0 : amount.hashCode());
+        result = prime * result + ((unit == null) ? 0 : unit.hashCode());
+        return result;
+    }
+
+    /**
+     * @see java.lang.Object#equals(java.lang.Object)
+     */
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        Weight other = (Weight) obj;
+        if (amount == null) {
+            if (other.amount != null) {
+                return false;
+            }
+        } else if (!amount.equals(other.amount)) {
+            return false;
+        }
+        if (unit != other.unit) {
+            return false;
+        }
+        return true;
     }
 
     /**
@@ -171,6 +211,6 @@ public class Weight extends Unit<WeightUnit> implements Comparable<Weight>, Seri
      */
     @Override
     public String toString() {
-        return value + " " + unit;
+        return amount + " " + unit;
     }
 }

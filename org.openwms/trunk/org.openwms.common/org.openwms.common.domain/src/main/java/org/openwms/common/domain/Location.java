@@ -48,8 +48,6 @@ import javax.persistence.UniqueConstraint;
 import javax.persistence.Version;
 
 import org.openwms.common.domain.types.Target;
-import org.openwms.core.domain.AbstractEntity;
-import org.openwms.core.domain.DomainObject;
 import org.openwms.core.domain.system.Message;
 
 /**
@@ -73,7 +71,7 @@ import org.openwms.core.domain.system.Message;
         @NamedQuery(name = Location.NQ_FIND_ALL, query = "select l from Location l"),
         @NamedQuery(name = Location.NQ_FIND_BY_UNIQUE_QUERY, query = "select l from Location l where l.locationId = ?1"),
         @NamedQuery(name = Location.NQ_FIND_ALL_EAGER, query = "select distinct l from Location l left join fetch l.messages left join fetch l.locationType") })
-public class Location extends AbstractEntity implements DomainObject<Long>, Target {
+public class Location extends Target {
 
     private static final long serialVersionUID = 6958794248591576907L;
 
@@ -360,7 +358,7 @@ public class Location extends AbstractEntity implements DomainObject<Long>, Targ
      * @return Timestamp of the last update
      */
     public Date getLastAccess() {
-        return this.lastAccess;
+        return new Date(this.lastAccess.getTime());
     }
 
     /**
@@ -563,7 +561,7 @@ public class Location extends AbstractEntity implements DomainObject<Long>, Targ
      *            The date of change.
      */
     public void setLastAccess(Date lastAccess) {
-        this.lastAccess = lastAccess;
+        this.lastAccess = new Date(lastAccess.getTime());
     }
 
     /**

@@ -25,8 +25,12 @@ package org.openwms.common.domain.values;
  * 
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  * @version $Revision: $
- * 
+ * @since 0.2
  */
 public final class CommonTypeDefinitions {
 
+    private CommonTypeDefinitions() {}
+
+    /** Length of a Barcode field. */
+    public static final int BARCODE_LENGTH = 20;
 }
