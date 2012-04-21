@@ -23,11 +23,10 @@ package org.openwms.core.domain.values {
     import org.granite.util.Enum;
 
     [Bindable]
-    [RemoteClass(alias = "org.openwms.core.domain.values.PieceUnit")]
+    [RemoteClass(alias="org.openwms.core.domain.values.PieceUnit")]
     public class PieceUnit extends Enum {
 
         public static const PC : PieceUnit = new PieceUnit("PC", _);
-
         public static const DOZ : PieceUnit = new PieceUnit("DOZ", _);
 
         function PieceUnit(value : String=null, restrictor : *=null) {
