@@ -23,15 +23,12 @@ package org.openwms.core.domain.system {
     import org.granite.util.Enum;
 
     [Bindable]
-    [RemoteClass(alias = "org.openwms.core.domain.system.PreferenceType")]
+    [RemoteClass(alias="org.openwms.core.domain.system.PreferenceType")]
     public class PreferenceType extends Enum {
 
         public static const FLOAT : PreferenceType = new PreferenceType("FLOAT", _);
-
         public static const STRING : PreferenceType = new PreferenceType("STRING", _);
-
         public static const INT : PreferenceType = new PreferenceType("INT", _);
-
         public static const OBJECT : PreferenceType = new PreferenceType("OBJECT", _);
 
         function PreferenceType(value : String=null, restrictor : *=null) {
