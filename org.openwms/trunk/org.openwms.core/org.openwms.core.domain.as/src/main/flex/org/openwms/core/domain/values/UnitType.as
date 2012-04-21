@@ -4,7 +4,7 @@
  * This file is part of openwms.org.
  *
  * openwms.org is free software: you can redistribute it and/or modify
- * it under the terms of the GNU Lesser General Public License as 
+ * it under the terms of the GNU Lesser General Public License as
  * published by the Free Software Foundation, either version 3 of the
  * License, or (at your option) any later version.
  *
@@ -22,33 +22,33 @@ package org.openwms.core.domain.values {
 
     import mx.collections.ListCollectionView;
 
-	/**
-	 * An UnitType is a concrete unit definition.
-	 * 
-	 * @version $Revision$
-	 * @since 0.1
-	 */
+    /**
+     * An UnitType is a concrete unit definition.
+     *
+     * @version $Revision$
+     * @since 0.1
+     */
     public interface UnitType {
 
-	    /**
-	     * Return all sub types of the <code>UnitType</code>.
-	     * 
-	     * @return a list of sub types.
-	     */
-        function get all():ListCollectionView;
+        /**
+         * Return all sub types of the <code>UnitType</code>.
+         *
+         * @return a list of sub types.
+         */
+        function get all() : ListCollectionView;
 
-	    /**
-	     * Return the base unit type of the <code>UnitType</code>.
-	     * 
-	     * @return The base unit type
-	     */
-        function get baseUnit():UnitType;
+        /**
+         * Return the base unit type of the <code>UnitType</code>.
+         *
+         * @return The base unit type
+         */
+        function get baseUnit() : UnitType;
 
-	    /**
-	     * Return the value of the base unit.
-	     * 
-	     * @return The value of the base unit of the weight
-	     */
-        function get baseUnitValue():Number;
+        /**
+         * Return the value of the base unit.
+         *
+         * @return The value of the base unit of the weight
+         */
+        function get baseUnitValue() : Number;
     }
 }
