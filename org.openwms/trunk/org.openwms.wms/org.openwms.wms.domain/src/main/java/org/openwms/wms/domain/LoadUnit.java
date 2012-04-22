@@ -25,10 +25,10 @@ import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
-import javax.persistence.AttributeOverride;
 import javax.persistence.Column;
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
@@ -45,7 +45,6 @@ import javax.persistence.Version;
 import org.openwms.common.domain.TransportUnit;
 import org.openwms.core.domain.AbstractEntity;
 import org.openwms.core.domain.DomainObject;
-import org.openwms.core.domain.values.CoreTypeDefinitions;
 import org.openwms.core.domain.values.Piece;
 import org.openwms.core.exception.DomainModelRuntimeException;
 import org.openwms.wms.domain.inventory.Product;
@@ -74,26 +73,26 @@ public class LoadUnit extends AbstractEntity implements DomainObject<Long> {
     private Long id;
 
     /** The {@link TransportUnit} where this {@link LoadUnit} belongs to. */
-    @ManyToOne
-    @JoinColumn(name = "C_TRANSPORT_UNIT", insertable = false, updatable = false)
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "C_TRANSPORT_UNIT")
     private TransportUnit transportUnit;
 
     /** Where this {@link LoadUnit} is located on the {@link TransportUnit}. */
-    @Column(name = "C_PHYSICAL_POS", updatable = false)
+    @Column(name = "C_PHYSICAL_POS")
     private String physicalPosition;
 
     /** Locked for allocation. */
     @Column(name = "C_LOCKED")
     private boolean locked = false;
 
-    @ManyToOne
-    @JoinColumn(name = "C_PRODUCT_ID", referencedColumnName = "C_PRODUCT_ID", insertable = false, updatable = false)
+    /** The Product that is carried in this LoadUnit. */
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "C_PRODUCT_ID")
     private Product product;
 
     /** Sum of quantities of all PackagingUnits. */
     @Embedded
-    @AttributeOverride(name = "quantity", column = @Column(name = "C_QUANTITY", length = CoreTypeDefinitions.QUANTITY_LENGTH))
-    private Piece qty = Piece.ZERO;
+    private Piece qty;
 
     /** The date this LoadUnit was created. */
     @Temporal(TemporalType.TIMESTAMP)
@@ -143,11 +142,13 @@ public class LoadUnit extends AbstractEntity implements DomainObject<Long> {
      *            this LoadUnit stands on
      * @param quantity
      *            The quantity of this LoadUnit
+     * @param product
+     *            The {@link Product} to set on this LoadUnit
      */
-    public LoadUnit(TransportUnit tu, String physicalPosition, Piece quantity) {
-        this.transportUnit = tu;
-        this.physicalPosition = physicalPosition;
+    public LoadUnit(TransportUnit tu, String physicalPosition, Piece quantity, Product product) {
+        this(tu, physicalPosition);
         this.qty = quantity;
+        this.product = product;
     }
 
     /**
@@ -157,7 +158,7 @@ public class LoadUnit extends AbstractEntity implements DomainObject<Long> {
      * outer service layer already.
      */
     @PrePersist
-    void prePersist() {
+    protected void prePersist() {
         if (Piece.ZERO.compareTo(this.qty) == 0) {
             throw new DomainModelRuntimeException("Not allowed to create a new LoadUnit with a quantity of 0");
         }
@@ -171,7 +172,7 @@ public class LoadUnit extends AbstractEntity implements DomainObject<Long> {
      * Set the changed date.
      */
     @PreUpdate
-    void preUpdate() {
+    protected void preUpdate() {
         this.changedDate = new Date();
     }
 

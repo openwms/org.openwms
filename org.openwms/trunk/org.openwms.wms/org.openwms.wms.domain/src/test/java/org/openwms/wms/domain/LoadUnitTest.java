@@ -20,6 +20,8 @@
  */
 package org.openwms.wms.domain;
 
+import javax.persistence.PersistenceException;
+
 import org.junit.Before;
 import org.junit.Test;
 import org.openwms.common.domain.Location;
@@ -29,6 +31,9 @@ import org.openwms.common.domain.TransportUnitType;
 import org.openwms.core.domain.values.Piece;
 import org.openwms.core.exception.DomainModelRuntimeException;
 import org.openwms.core.test.AbstractJpaSpringContextTests;
+import org.openwms.wms.domain.inventory.Product;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * A LoadUnitTest.
@@ -39,10 +44,12 @@ import org.openwms.core.test.AbstractJpaSpringContextTests;
  */
 public class LoadUnitTest extends AbstractJpaSpringContextTests {
 
+    private static final Logger LOGGER = LoggerFactory.getLogger(LoadUnitTest.class);
     private TransportUnitType tut;
     private TransportUnit tu;
     private Location loc1;
     private Location loc2;
+    private Product product;
 
     /**
      * Setup some test data.
@@ -52,6 +59,9 @@ public class LoadUnitTest extends AbstractJpaSpringContextTests {
         tut = new TransportUnitType("TUT");
         loc1 = new Location(new LocationPK("AREA", "AISLE", "X", "Y", "Z"));
         loc2 = new Location(new LocationPK("AREA2", "AISLE2", "X2", "Y2", "Z2"));
+        product = new Product("tttt");
+        entityManager.persist(product);
+
         entityManager.persist(tut);
         entityManager.persist(loc1);
         entityManager.persist(loc2);
@@ -64,24 +74,45 @@ public class LoadUnitTest extends AbstractJpaSpringContextTests {
     }
 
     /**
-     * Test method for
-     * {@link org.openwms.wms.domain.LoadUnit#LoadUnit(java.lang.String, org.openwms.common.domain.values.Weight)}
-     * .
-     */
-    @Test(expected = DomainModelRuntimeException.class)
-    public final void testLoadUnit() {
-        LoadUnit loadUnit = new LoadUnit(new TransportUnit("TEST"), "LEFT", new Piece(0));
-        entityManager.persist(loadUnit);
-    }
-
-    /**
-     * Test method for
-     * {@link org.openwms.wms.domain.LoadUnit#LoadUnit(java.lang.String, org.openwms.common.domain.values.Weight)}
-     * .
+     * Positive test to create a LoadUnit with an existing TU, existing Product
+     * and a quantity > 0 on a physical Position.
      */
     @Test
     public final void testLoadUnitOk() {
-        LoadUnit loadUnit = new LoadUnit(new TransportUnit("TEST"), "LEFT", new Piece(100));
+        LoadUnit loadUnit = new LoadUnit(tu, "LEFT", new Piece(100), product);
+        entityManager.persist(loadUnit);
+        entityManager.flush();
+        entityManager.clear();
+        LoadUnit lu = entityManager.find(LoadUnit.class, loadUnit.getId());
+        LOGGER.debug("Quantity: " + lu.getQty());
+    }
+
+    /**
+     * Test that it is not possible to create a LoadUnit with a quantity of 0.
+     */
+    @Test(expected = DomainModelRuntimeException.class)
+    public final void testLoadUnitQtyZero() {
+        LoadUnit loadUnit = new LoadUnit(tu, "LEFT", new Piece(0), product);
+        entityManager.persist(loadUnit);
+    }
+
+    /**
+     * Test that it is not possible to create a LoadUnit with a transient
+     * TransportUnit.
+     */
+    @Test(expected = PersistenceException.class)
+    public final void testLoadUnitTransientTU() {
+        LoadUnit loadUnit = new LoadUnit(new TransportUnit("TEST"), "LEFT", new Piece(100), product);
+        entityManager.persist(loadUnit);
+    }
+
+    /**
+     * Test that it is not possible to create a LoadUnit with a transient
+     * Product.
+     */
+    @Test(expected = PersistenceException.class)
+    public final void testLoadUnitTransientProduct() {
+        LoadUnit loadUnit = new LoadUnit(tu, "LEFT", new Piece(100), new Product("TRANSIENT"));
         entityManager.persist(loadUnit);
     }
 
@@ -90,13 +121,12 @@ public class LoadUnitTest extends AbstractJpaSpringContextTests {
      * {@link org.openwms.wms.domain.LoadUnit#LoadUnit(java.lang.String, org.openwms.common.domain.values.Weight)}
      * .
      */
-    @Test
+    @Test(expected = Exception.class)
     public final void testDuplicatedLoadUnit() {
-
-        LoadUnit loadUnit = new LoadUnit(tu, "LEFT", new Piece(100));
+        LoadUnit loadUnit = new LoadUnit(tu, "LEFT", new Piece(100), product);
         entityManager.persist(loadUnit);
         entityManager.flush();
-        LoadUnit loadUnit2 = new LoadUnit(tu, "LEFT", new Piece(20));
+        LoadUnit loadUnit2 = new LoadUnit(tu, "LEFT", new Piece(20), product);
         entityManager.persist(loadUnit2);
     }
 }
