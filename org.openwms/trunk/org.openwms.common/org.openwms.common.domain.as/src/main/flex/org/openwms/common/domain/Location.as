@@ -44,7 +44,7 @@ package org.openwms.common.domain {
          *
          * @param pk The locationPk to set
          */
-        public function Location(pk:LocationPK = null) {
+        public function Location(pk : LocationPK=null) {
             super();
             if (pk != null) {
                 _locationId = pk;
@@ -56,7 +56,7 @@ package org.openwms.common.domain {
          *
          * @param value The locationPk to set
          */
-        public function set locationId(value:LocationPK):void {
+        public function set locationId(value : LocationPK) : void {
             // Not allowed
         }
 
@@ -66,8 +66,8 @@ package org.openwms.common.domain {
          *
          * @return area/aisle/x/y/z
          */
-        public function toString():String {
-            return _locationId.area+"/"+_locationId.aisle+"/"+_locationId.x+"/"+_locationId.y+"/"+_locationId.z;
+        public function toString() : String {
+            return _locationId.area + "/" + _locationId.aisle + "/" + _locationId.x + "/" + _locationId.y + "/" + _locationId.z;
         }
 
         /**
@@ -75,10 +75,8 @@ package org.openwms.common.domain {
          *
          * @param value The list of messages
          */
-        public function set messages(value:ListCollectionView) : void {
+        public function set messages(value : ListCollectionView) : void {
             _messages = value;
         }
-
     }
 }
-
