@@ -63,6 +63,7 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
+// Generated with entityBase template
 package ${jClass.as3Type.packageName} {
 <%
 
@@ -82,6 +83,8 @@ package ${jClass.as3Type.packageName} {
     public class ${jClass.as3Type.name}Base<%
 
         boolean implementsWritten = false;
+        // If DomainObject is implemented directly, those methods aren't marked with overriden
+        boolean implementsDomainObject = false;
         if (jClass.hasSuperclass()) {
             %> extends ${jClass.superclass.as3Type.name}<%
         } else {
@@ -100,6 +103,9 @@ package ${jClass.as3Type.packageName} {
                 implementsWritten = true;
             } else {
                 %>, ${jInterface.as3Type.name}<%
+            }
+            if (jInterface.as3Type.name == 'DomainObject') {
+                implementsDomainObject = true;
             }
         }
 
@@ -163,6 +169,10 @@ package ${jClass.as3Type.packageName} {
         public function isNew():${jProperty.as3Type.name} {
             return true;
         }<%
+                } else if (jProperty.readable && jProperty.name == 'version' && !implementsDomainObject) {%>
+        override public function get version():${jProperty.as3Type.name} {
+            return ${jProperty.as3Type.nullValue};
+        }<%
                 } else if (jProperty.readable) {
                     if (jProperty.as3Type.name == "Serializable") {%>
         public function get ${jProperty.name}():Object {<%} else {%>
@@ -198,7 +208,11 @@ package ${jClass.as3Type.packageName} {
         public function isNew():${jProperty.as3Type.name} {
             return true;
         }<%
-                } else if (jProperty.readable) {%>
+                } else if (jProperty.readable && jProperty.name == 'version') {%>
+        public function get version():${jProperty.as3Type.name} {
+            return ${jProperty.as3Type.nullValue};
+        }<%
+                } else if (jProperty.readable && jProperty.as3Type.name != "Serializable") {%>
         public function get ${jProperty.name}():${jProperty.as3Type.name} {
             return ${jProperty.as3Type.nullValue};
         }<%

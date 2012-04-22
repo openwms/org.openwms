@@ -40,14 +40,13 @@ package org.openwms.core.domain {
          * @return <code>true</code> if transient (not persisted before), otherwise
          *         <code>false</code>.
          */
-        function isNew():Boolean;
+        function isNew() : Boolean;
 
         /**
          * Each persistent domain class must have an optimistic locking field.
          *
          * @return the version number
          */
-        function get version():Number;
+        function get version() : Number;
     }
 }
-

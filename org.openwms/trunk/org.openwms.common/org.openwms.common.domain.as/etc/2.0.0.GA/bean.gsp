@@ -38,6 +38,7 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
+// Generated with bean template
 package ${jClass.as3Type.packageName} {<%
 
     ///////////////////////////////////////////////////////////////////////////
@@ -47,7 +48,7 @@ package ${jClass.as3Type.packageName} {<%
         Set as3Imports = new TreeSet();
 
         for (jProperty in jClass.interfacesProperties) {
-            if (jProperty.as3Type.hasPackage() && jProperty.as3Type.packageName != jClass.as3Type.packageName)
+            if (jProperty.as3Type.hasPackage() && jProperty.as3Type.packageName != jClass.as3Type.packageName && jProperty.as3Type.packageName != "java.io.Serializable")
                 as3Imports.add(jProperty.as3Type.qualifiedName);
         }
 
