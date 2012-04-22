@@ -69,12 +69,15 @@ public class Product extends AbstractEntity implements DomainObject<Long> {
 
     /** Where this product has to be put in stock. */
     @Enumerated(EnumType.STRING)
+    @Column(name = "C_STOCK_ZONE")
     private StockZone stockZone;
 
+    /** The date this LoadUnit was created. */
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "C_CREATED_DT")
     private Date createdDate;
 
+    /** The date this LoadUnit has changed the last time. */
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "C_CHANGED_DT")
     private Date changedDate;
