@@ -213,7 +213,7 @@ public class Weight extends Unit<WeightUnit> implements Comparable<Weight>, Seri
 
     // INFO [scherrer] : JPA Lifecycle methods do not work in JPA1.0
     private void prePersist() {
-        setQuantity(this.getAmount().toString() + " " + this.getUnit().toString());
+        setQuantity(this.amount.toString() + " " + this.unit.toString());
     }
 
     // INFO [scherrer] : JPA Lifecycle methods do not work in JPA1.0
