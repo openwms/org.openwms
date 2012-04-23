@@ -35,7 +35,7 @@ import org.openwms.core.domain.values.UnitType;
  * @version $Revision$
  * @since 0.1
  */
-public enum WeightUnit implements UnitType<WeightUnit> {
+public enum WeightUnit implements UnitType<WeightUnit, Long> {
 
     /**
      * Milligram.
@@ -71,7 +71,7 @@ public enum WeightUnit implements UnitType<WeightUnit> {
      * {@inheritDoc}
      */
     @Override
-    public long getBaseUnitValue() {
+    public Long getBaseUnitValue() {
         return this.baseUnit;
     }
 

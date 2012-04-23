@@ -37,7 +37,7 @@ import org.openwms.core.domain.values.Unit;
  * @since 0.1
  */
 @Embeddable
-public class Weight extends Unit<WeightUnit> implements Comparable<Weight>, Serializable {
+public class Weight extends Unit<Weight, WeightUnit> implements Comparable<Weight>, Serializable {
     private static final long serialVersionUID = -8849107834046064278L;
 
     /** The unit of the <code>Weight</code>. */
@@ -118,7 +118,7 @@ public class Weight extends Unit<WeightUnit> implements Comparable<Weight>, Seri
      * @return The unit
      */
     @Override
-    public WeightUnit getUnit() {
+    public WeightUnit getUnitType() {
         if (this.unit == null) {
             postLoad();
         }
@@ -142,7 +142,7 @@ public class Weight extends Unit<WeightUnit> implements Comparable<Weight>, Seri
      */
     @Override
     public Weight convertTo(WeightUnit unt) {
-        return new Weight(getAmount().scaleByPowerOfTen((this.getUnit().ordinal() - unt.ordinal()) * 3), unt);
+        return new Weight(getAmount().scaleByPowerOfTen((this.getUnitType().ordinal() - unt.ordinal()) * 3), unt);
     }
 
     /**
@@ -150,9 +150,9 @@ public class Weight extends Unit<WeightUnit> implements Comparable<Weight>, Seri
      */
     @Override
     public int compareTo(Weight o) {
-        if (o.getUnit().ordinal() > this.getUnit().ordinal()) {
+        if (o.getUnitType().ordinal() > this.getUnitType().ordinal()) {
             return -1;
-        } else if (o.getUnit().ordinal() < this.getUnit().ordinal()) {
+        } else if (o.getUnitType().ordinal() < this.getUnitType().ordinal()) {
             return 1;
         } else {
             return this.getAmount().compareTo(o.getAmount());
@@ -169,7 +169,7 @@ public class Weight extends Unit<WeightUnit> implements Comparable<Weight>, Seri
         final int prime = 31;
         int result = 1;
         result = prime * result + ((getAmount() == null) ? 0 : getAmount().hashCode());
-        result = prime * result + ((getUnit() == null) ? 0 : getUnit().hashCode());
+        result = prime * result + ((getUnitType() == null) ? 0 : getUnitType().hashCode());
         return result;
     }
 
@@ -197,7 +197,7 @@ public class Weight extends Unit<WeightUnit> implements Comparable<Weight>, Seri
         } else if (!getAmount().equals(other.getAmount())) {
             return false;
         }
-        if (getUnit() != other.getUnit()) {
+        if (getUnitType() != other.getUnitType()) {
             return false;
         }
         return true;
@@ -208,7 +208,7 @@ public class Weight extends Unit<WeightUnit> implements Comparable<Weight>, Seri
      */
     @Override
     public String toString() {
-        return getAmount() + " " + getUnit();
+        return getAmount() + " " + getUnitType();
     }
 
     // INFO [scherrer] : JPA Lifecycle methods do not work in JPA1.0

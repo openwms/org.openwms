@@ -30,7 +30,4 @@ package org.openwms.common.domain.values;
 public final class CommonTypeDefinitions {
 
     private CommonTypeDefinitions() {}
-
-    /** Length of a Barcode field. */
-    public static final int BARCODE_LENGTH = 20;
 }
