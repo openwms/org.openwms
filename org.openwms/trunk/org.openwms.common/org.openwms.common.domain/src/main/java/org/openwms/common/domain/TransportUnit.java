@@ -52,7 +52,6 @@ import javax.persistence.Version;
 
 import org.openwms.common.domain.system.UnitError;
 import org.openwms.common.domain.values.Barcode;
-import org.openwms.common.domain.values.CommonTypeDefinitions;
 import org.openwms.common.domain.values.TransportUnitState;
 import org.openwms.common.domain.values.Weight;
 import org.openwms.core.domain.AbstractEntity;
@@ -110,7 +109,7 @@ public class TransportUnit extends AbstractEntity implements DomainObject<Long> 
      * Unique natural key.
      */
     @Embedded
-    @AttributeOverride(name = "value", column = @Column(name = "C_BARCODE", length = CommonTypeDefinitions.BARCODE_LENGTH))
+    @AttributeOverride(name = "value", column = @Column(name = "C_BARCODE", length = Barcode.BARCODE_LENGTH))
     @OrderBy
     private Barcode barcode;
 
@@ -220,8 +219,7 @@ public class TransportUnit extends AbstractEntity implements DomainObject<Long> 
     /**
      * Accessed by persistence provider.
      */
-    @SuppressWarnings("unused")
-    private TransportUnit() {
+    protected TransportUnit() {
         super();
     }
 
