@@ -59,8 +59,8 @@ public class PieceTest {
 
         Piece p502 = p50.convertTo(PieceUnit.DOZ);
         Assert.assertFalse(p502.equals(p50));
-        Assert.assertTrue(p502.getUnit() == PieceUnit.DOZ);
-        Assert.assertTrue(p50.getUnit() == PieceUnit.PC);
+        Assert.assertTrue(p502.getUnitType() == PieceUnit.DOZ);
+        Assert.assertTrue(p50.getUnitType() == PieceUnit.PC);
 
         Assert.assertEquals(1, p50.compareTo(p30));
         Assert.assertEquals(-1, p30.compareTo(p50));

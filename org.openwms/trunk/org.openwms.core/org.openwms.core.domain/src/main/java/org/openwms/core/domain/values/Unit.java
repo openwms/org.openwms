@@ -36,7 +36,7 @@ import javax.persistence.MappedSuperclass;
  * @since 0.1
  */
 @MappedSuperclass
-public abstract class Unit<T extends UnitType<T>> {
+public abstract class Unit<U extends Unit<U, T>, T extends UnitType<T, ?>> {
 
     @Column(name = "C_QUANTITY", length = CoreTypeDefinitions.QUANTITY_LENGTH, nullable = false)
     private String quantity;
@@ -47,14 +47,14 @@ public abstract class Unit<T extends UnitType<T>> {
      * @param unit
      *            The unit to convert to
      */
-    public abstract Unit<T> convertTo(T unit);
+    public abstract U convertTo(T unit);
 
     /**
      * Returns the unit of the <code>Piece</code>.
      * 
      * @return The unit
      */
-    public abstract UnitType<T> getUnit();
+    public abstract T getUnitType();
 
     /**
      * Get the quantity.
