@@ -32,14 +32,14 @@ import java.util.List;
  * @version $Revision$
  * @since 0.1
  */
-public interface UnitType<T extends UnitType<T>> {
+public interface UnitType<T extends UnitType<T, V>, V> {
 
     /**
-     * Return the value of the base unit.
+     * Return the <i>amount</i> of the base unit.
      * 
-     * @return The value of the base unit
+     * @return The <i>amount</i> of the base unit
      */
-    long getBaseUnitValue();
+    V getBaseUnitValue();
 
     /**
      * Return all sub types of the <code>UnitType</code>.

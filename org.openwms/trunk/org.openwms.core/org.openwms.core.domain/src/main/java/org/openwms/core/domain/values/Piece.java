@@ -33,7 +33,7 @@ import javax.persistence.Transient;
  * @since 0.2
  */
 @Embeddable
-public class Piece extends Unit<PieceUnit> implements Comparable<Piece>, Serializable {
+public class Piece extends Unit<Piece, PieceUnit> implements Comparable<Piece>, Serializable {
     private static final long serialVersionUID = 5268725227649308401L;
 
     /** The unit of the <code>Piece</code>. */
@@ -83,10 +83,12 @@ public class Piece extends Unit<PieceUnit> implements Comparable<Piece>, Seriali
     /**
      * Returns the unit of the <code>Piece</code>.
      * 
+     * @param <T>
+     * 
      * @return The unit
      */
     @Override
-    public PieceUnit getUnit() {
+    public PieceUnit getUnitType() {
         if (this.unit == null) {
             postLoad();
         }
@@ -110,9 +112,9 @@ public class Piece extends Unit<PieceUnit> implements Comparable<Piece>, Seriali
      */
     @Override
     public Piece convertTo(PieceUnit unt) {
-        if (PieceUnit.PC == unt && this.getUnit() == PieceUnit.DOZ) {
+        if (PieceUnit.PC == unt && this.getUnitType() == PieceUnit.DOZ) {
             return new Piece(this.getAmount() * 12, PieceUnit.PC);
-        } else if (PieceUnit.DOZ == unt && this.getUnit() == PieceUnit.PC) {
+        } else if (PieceUnit.DOZ == unt && this.getUnitType() == PieceUnit.PC) {
             return new Piece(this.getAmount() / 12, PieceUnit.DOZ);
         }
         return this;
@@ -123,9 +125,9 @@ public class Piece extends Unit<PieceUnit> implements Comparable<Piece>, Seriali
      */
     @Override
     public int compareTo(Piece o) {
-        if (o.getUnit().ordinal() > this.getUnit().ordinal()) {
+        if (o.getUnitType().ordinal() > this.getUnitType().ordinal()) {
             return compare(this.getAmount(), o.getAmount() * 12);
-        } else if (o.getUnit().ordinal() < this.getUnit().ordinal()) {
+        } else if (o.getUnitType().ordinal() < this.getUnitType().ordinal()) {
             return compare(this.getAmount() * 12, o.getAmount());
         } else if (this.getAmount() == o.getAmount()) {
             return 0;
@@ -142,7 +144,7 @@ public class Piece extends Unit<PieceUnit> implements Comparable<Piece>, Seriali
      */
     @Override
     public String toString() {
-        return getAmount() + " " + getUnit();
+        return getAmount() + " " + getUnitType();
     }
 
     // INFO [scherrer] : JPA Lifecycle methods do not work in JPA1.0

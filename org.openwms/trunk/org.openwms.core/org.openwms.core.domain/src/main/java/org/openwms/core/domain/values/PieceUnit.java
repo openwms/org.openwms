@@ -30,7 +30,7 @@ import java.util.List;
  * @version $Revision: $
  * @since 0.2
  */
-public enum PieceUnit implements UnitType<PieceUnit> {
+public enum PieceUnit implements UnitType<PieceUnit, Long> {
 
     /**
      * A Piece.
@@ -59,7 +59,7 @@ public enum PieceUnit implements UnitType<PieceUnit> {
      * {@inheritDoc}
      */
     @Override
-    public long getBaseUnitValue() {
+    public Long getBaseUnitValue() {
         return this.baseUnit;
     }
 
