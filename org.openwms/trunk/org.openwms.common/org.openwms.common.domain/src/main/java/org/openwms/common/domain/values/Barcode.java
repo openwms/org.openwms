@@ -43,6 +43,9 @@ public class Barcode implements Serializable {
 
     private static final long serialVersionUID = 7743388968799876214L;
 
+    /** Length of a Barcode field. */
+    public static final int BARCODE_LENGTH = 20;
+
     /**
      * A BARCODE_ALIGN defines whether the <code>Barcode</code> is applied
      * <code>LEFT</code> or <code>RIGHT</code>.
@@ -81,7 +84,7 @@ public class Barcode implements Serializable {
     /**
      * Defines the maximum length of characters.
      */
-    private static int length = CommonTypeDefinitions.BARCODE_LENGTH;
+    private static int length = Barcode.BARCODE_LENGTH;
 
     /**
      * The alignment of the <code>Barcode</code>. Could be something of

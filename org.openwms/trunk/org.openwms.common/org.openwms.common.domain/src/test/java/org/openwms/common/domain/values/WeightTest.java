@@ -46,7 +46,7 @@ public class WeightTest {
         w2 = w2.convertTo(WeightUnit.KG);
         assertEquals(BigDecimal.ONE, w1.getAmount());
         assertEquals(new BigDecimal(0), new BigDecimal("1000").subtract(w2.getAmount()));
-        assertEquals(w2.getUnit(), WeightUnit.KG);
+        assertEquals(w2.getUnitType(), WeightUnit.KG);
         w1.compareTo(w2);
     }
 
