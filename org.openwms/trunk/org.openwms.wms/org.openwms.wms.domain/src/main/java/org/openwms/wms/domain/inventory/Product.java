@@ -82,11 +82,6 @@ public class Product extends AbstractEntity implements DomainObject<Long> {
     @Column(name = "C_CHANGED_DT")
     private Date changedDate;
 
-    /**
-     * Base UOM of product.
-     * 
-     * @Column(name = "C_BASE_UOM") private Unit<UnitType> baseUOM;
-     */
     /** Version field. */
     @Version
     @Column(name = "C_VERSION")
