@@ -24,9 +24,6 @@ import static junit.framework.Assert.assertTrue;
 
 import java.util.List;
 
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
-
 import org.junit.Before;
 import org.junit.Test;
 import org.openwms.core.domain.preferences.ApplicationPreference;
@@ -47,8 +44,6 @@ import org.springframework.test.context.ContextConfiguration;
 @ContextConfiguration("classpath:/org/openwms/core/integration/jpa/Test-context.xml")
 public class PreferencesDaoTest extends AbstractJpaSpringContextTests {
 
-    @PersistenceContext
-    private EntityManager em;
     @Autowired
     @Qualifier("preferencesJpaDao")
     private PreferenceWriter<Long> dao;
@@ -58,9 +53,9 @@ public class PreferencesDaoTest extends AbstractJpaSpringContextTests {
      */
     @Before
     public final void onSetup() {
-        em.persist(new ApplicationPreference("APP1"));
-        em.flush();
-        em.clear();
+        entityManager.persist(new ApplicationPreference("APP1"));
+        entityManager.flush();
+        entityManager.clear();
     }
 
     /**
