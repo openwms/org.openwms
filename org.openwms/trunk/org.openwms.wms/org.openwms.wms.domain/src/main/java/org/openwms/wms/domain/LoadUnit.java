@@ -33,6 +33,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.PrePersist;
 import javax.persistence.PreUpdate;
@@ -46,6 +48,7 @@ import org.openwms.common.domain.TransportUnit;
 import org.openwms.core.domain.AbstractEntity;
 import org.openwms.core.domain.DomainObject;
 import org.openwms.core.domain.values.Piece;
+import org.openwms.core.domain.values.Unit;
 import org.openwms.core.exception.DomainModelRuntimeException;
 import org.openwms.wms.domain.inventory.Product;
 
@@ -62,6 +65,10 @@ import org.openwms.wms.domain.inventory.Product;
 @Entity
 @Table(name = "WMS_LOAD_UNIT", uniqueConstraints = @UniqueConstraint(columnNames = { "C_TRANSPORT_UNIT",
         "C_PHYSICAL_POS" }))
+@NamedQueries({
+        @NamedQuery(name = LoadUnit.NQ_FIND_ALL, query = "select lu from LoadUnit lu"),
+        @NamedQuery(name = LoadUnit.NQ_FIND_WITH_BARCODE, query = "select lu from LoadUnit lu where lu.transportUnit.barcode = :"
+                + LoadUnit.QP_FIND_WITH_BARCODE_BARCODE + " order by lu.physicalPosition") })
 public class LoadUnit extends AbstractEntity implements DomainObject<Long> {
 
     private static final long serialVersionUID = -5524006837325285793L;
@@ -92,7 +99,7 @@ public class LoadUnit extends AbstractEntity implements DomainObject<Long> {
 
     /** Sum of quantities of all PackagingUnits. */
     @Embedded
-    private Piece qty;
+    private Unit<?, ?> qty;
 
     /** The date this LoadUnit was created. */
     @Temporal(TemporalType.TIMESTAMP)
@@ -112,6 +119,23 @@ public class LoadUnit extends AbstractEntity implements DomainObject<Long> {
     /** All {@link PackagingUnit}s that belong to this LoadUnit. */
     @OneToMany(mappedBy = "loadUnit")
     private Set<PackagingUnit> packagingUnits = new HashSet<PackagingUnit>();
+
+    /**
+     * Query to find all <code>LoadUnit</code>s.<br />
+     * Query name is {@value} .
+     */
+    public static final String NQ_FIND_ALL = "LoadUnit.findAll";
+
+    /**
+     * Query to find all <code>LoadUnit</code>s that belong to a
+     * <code>TransportUnit</code>. <li>
+     * Query parameter name <strong>{@value #QP_FIND_WITH_BARCODE_BARCODE}
+     * </strong> : The barcode of the <code>TransportUnit</code> to search for.</li>
+     * <br />
+     * Query name is {@value} .
+     */
+    public static final String NQ_FIND_WITH_BARCODE = "LoadUnit.findWithBarcode";
+    public static final String QP_FIND_WITH_BARCODE_BARCODE = "barcode";
 
     /**
      * Accessed by persistence provider.
@@ -145,7 +169,7 @@ public class LoadUnit extends AbstractEntity implements DomainObject<Long> {
      * @param product
      *            The {@link Product} to set on this LoadUnit
      */
-    public LoadUnit(TransportUnit tu, String physicalPosition, Piece quantity, Product product) {
+    public LoadUnit(TransportUnit tu, String physicalPosition, Unit<?, ?> quantity, Product product) {
         this(tu, physicalPosition);
         this.qty = quantity;
         this.product = product;
@@ -159,8 +183,8 @@ public class LoadUnit extends AbstractEntity implements DomainObject<Long> {
      */
     @PrePersist
     protected void prePersist() {
-        if (Piece.ZERO.compareTo(this.qty) == 0) {
-            throw new DomainModelRuntimeException("Not allowed to create a new LoadUnit with a quantity of 0");
+        if (null == this.qty || this.qty.isZero()) {
+            throw new DomainModelRuntimeException("Not allowed to create a new LoadUnit with a quantity of 0 or NULL");
         }
         if (null == this.transportUnit) {
             throw new DomainModelRuntimeException("Not allowed to create a new LoadUnit without a TransportUnit");
@@ -273,7 +297,7 @@ public class LoadUnit extends AbstractEntity implements DomainObject<Long> {
      * 
      * @return the qty.
      */
-    public Piece getQty() {
+    public Unit<?, ?> getQty() {
         return qty;
     }
 
@@ -283,7 +307,7 @@ public class LoadUnit extends AbstractEntity implements DomainObject<Long> {
      * @param qty
      *            The qty to set.
      */
-    void setQty(Piece qty) {
+    public void setQty(Unit<?, ?> qty) {
         this.qty = qty;
     }
 
@@ -322,7 +346,7 @@ public class LoadUnit extends AbstractEntity implements DomainObject<Long> {
      * @return <code>true</code> if this set changed as a result of the call
      */
     public boolean addPackagingUnits(PackagingUnit... pUnits) {
-        return this.packagingUnits.addAll(packagingUnits);
+        return this.packagingUnits.addAll(Arrays.asList(pUnits));
     }
 
     /**

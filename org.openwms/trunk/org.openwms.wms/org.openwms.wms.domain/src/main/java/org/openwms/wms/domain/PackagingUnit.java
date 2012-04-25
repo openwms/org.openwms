@@ -45,7 +45,7 @@ import org.openwms.common.domain.TransportUnit;
 import org.openwms.core.domain.AbstractEntity;
 import org.openwms.core.domain.DomainObject;
 import org.openwms.core.domain.values.CoreTypeDefinitions;
-import org.openwms.core.domain.values.Piece;
+import org.openwms.core.domain.values.Unit;
 import org.openwms.core.exception.DomainModelRuntimeException;
 import org.openwms.core.util.validation.AssertUtils;
 import org.openwms.wms.domain.inventory.Product;
@@ -80,8 +80,10 @@ public class PackagingUnit extends AbstractEntity implements DomainObject<Long> 
     @JoinColumn(name = "C_LOAD_UNIT")
     private LoadUnit loadUnit;
 
-    /** Unique identifier within the {@link LoadUnit}. */
-    @Column(name = "C_LABEL", unique = true)
+    /**
+     * Unique identifier within the {@link LoadUnit}. Can be <code>null</code>
+     */
+    @Column(name = "C_LABEL", unique = true, nullable = true)
     private String label;
 
     /** The packaged {@link Product}. */
@@ -96,7 +98,7 @@ public class PackagingUnit extends AbstractEntity implements DomainObject<Long> 
     /** Current quantity. */
     @Embedded
     @AttributeOverride(name = "quantity", column = @Column(name = "C_QUANTITY", length = CoreTypeDefinitions.QUANTITY_LENGTH))
-    private Piece qty;
+    private Unit<?, ?> quantity;
 
     /** Used to control the putaway strategy. */
     @Column(name = "C_FIFO_DATE")
@@ -128,13 +130,10 @@ public class PackagingUnit extends AbstractEntity implements DomainObject<Long> 
      * 
      * @param lu
      *            The {@link LoadUnit} where this PackingUnit is carried in
-     * @param label
-     *            The unique label of this PackagingUnit
      */
-    public PackagingUnit(LoadUnit lu, String label) {
+    public PackagingUnit(LoadUnit lu) {
         AssertUtils.notNull(lu);
-        AssertUtils.isNotEmpty(label);
-        assignInitialValues(lu, label);
+        assignInitialValues(lu);
         this.product = lu.getProduct();
     }
 
@@ -143,16 +142,13 @@ public class PackagingUnit extends AbstractEntity implements DomainObject<Long> 
      * 
      * @param lu
      *            The {@link LoadUnit} where this PackingUnit is carried in
-     * @param label
-     *            The unique label of this PackagingUnit
      * @param product
      *            A Product to assign
      */
-    public PackagingUnit(LoadUnit lu, String label, Product product) {
+    public PackagingUnit(LoadUnit lu, Product product) {
         AssertUtils.notNull(lu);
-        AssertUtils.isNotEmpty(label);
         AssertUtils.notNull(product);
-        assignInitialValues(lu, label);
+        assignInitialValues(lu);
         if (lu.getProduct() == null) {
             this.product = product;
             this.loadUnit.setProduct(product);
@@ -162,9 +158,8 @@ public class PackagingUnit extends AbstractEntity implements DomainObject<Long> 
         }
     }
 
-    private void assignInitialValues(LoadUnit lu, String label) {
+    private void assignInitialValues(LoadUnit lu) {
         this.loadUnit = lu;
-        this.label = label;
         this.loadUnit.addPackagingUnits(this);
         this.transportUnit = lu.getTransportUnit();
     }
@@ -264,6 +259,16 @@ public class PackagingUnit extends AbstractEntity implements DomainObject<Long> 
     }
 
     /**
+     * Set the label.
+     * 
+     * @param label
+     *            The label to set.
+     */
+    public void setLabel(String label) {
+        this.label = label;
+    }
+
+    /**
      * Get the product.
      * 
      * @return the product.
@@ -302,25 +307,25 @@ public class PackagingUnit extends AbstractEntity implements DomainObject<Long> 
     }
 
     /**
-     * Get the qty.
+     * Get the quantity.
      * 
-     * @return the qty.
+     * @return the quantity.
      */
-    public Piece getQty() {
-        return qty;
+    public Unit<?, ?> getQuantity() {
+        return quantity;
     }
 
     /**
-     * Set the qty.
+     * Set the quantity.
      * 
-     * @param qty
-     *            The qty to set.
+     * @param quantity
+     *            The quantity to set.
      */
-    protected void setQty(Piece qty) {
-        if (qty.compareTo(Piece.ZERO) < 0) {
+    protected void setQuantity(Unit<?, ?> qty) {
+        if (qty == null || qty.isNegative()) {
             throw new IllegalArgumentException("Not allowed to set the quantity of a PackagingUnit less than 0");
         }
-        this.qty = qty;
+        this.quantity = qty;
     }
 
     /**

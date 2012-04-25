@@ -16,7 +16,7 @@ import org.openwms.wms.domain.types.WMSTypes;
  * @since 0.1
  */
 @Embeddable
-public class OrderPositionKey implements Serializable {
+public class OrderPositionKey implements Serializable, Comparable<OrderPositionKey> {
 
     private static final long serialVersionUID = -2834093066793437930L;
 
@@ -88,6 +88,20 @@ public class OrderPositionKey implements Serializable {
     }
 
     /**
+     * @see java.lang.Comparable#compareTo(java.lang.Object)
+     */
+    @Override
+    public int compareTo(OrderPositionKey o) {
+        if (this.getOrderId().equals(o.getOrderId()) && this.getPositionNo().equals(o.getPositionNo())) {
+            return 0;
+        }
+        if (this.getOrderId().compareTo(o.getOrderId()) == 0) {
+            return this.getPositionNo().compareTo(o.getPositionNo());
+        }
+        return this.getOrderId().compareTo(o.getOrderId());
+    }
+
+    /**
      * {@inheritDoc}
      * 
      * Use <code>orderId</code> and <code>positionNo</code> for calculation.
@@ -137,5 +151,13 @@ public class OrderPositionKey implements Serializable {
             return false;
         }
         return true;
+    }
+
+    /**
+     * @see java.lang.Object#toString()
+     */
+    @Override
+    public String toString() {
+        return this.orderId + " / " + this.positionNo;
     }
 }
