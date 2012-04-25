@@ -20,6 +20,8 @@
  */
 package org.openwms.wms.domain.order;
 
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
@@ -28,10 +30,14 @@ import javax.persistence.Column;
 import javax.persistence.DiscriminatorColumn;
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
@@ -41,6 +47,7 @@ import javax.persistence.Version;
 import org.openwms.common.domain.values.Problem;
 import org.openwms.core.domain.AbstractEntity;
 import org.openwms.core.domain.DomainObject;
+import org.openwms.core.util.validation.AssertUtils;
 import org.openwms.wms.domain.types.WMSTypes;
 
 /**
@@ -54,6 +61,10 @@ import org.openwms.wms.domain.types.WMSTypes;
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @DiscriminatorColumn(name = "C_TYPE")
 @Table(name = "WMS_ORDER")
+@NamedQueries({
+        @NamedQuery(name = AbstractOrder.NQ_FIND_ALL, query = "select ao from AbstractOrder ao order by ao.orderId"),
+        @NamedQuery(name = AbstractOrder.NQ_FIND_WITH_ORDERID, query = "select ao from AbstractOrder ao where ao.orderId = :"
+                + AbstractOrder.QP_FIND_WITH_ORDERID_ORDERID) })
 public abstract class AbstractOrder extends AbstractEntity implements DomainObject<Long> {
 
     private static final long serialVersionUID = 1618706966339343638L;
@@ -70,31 +81,32 @@ public abstract class AbstractOrder extends AbstractEntity implements DomainObje
 
     /** Number positions this order has. */
     @Column(name = "C_NO_POS")
-    private int noPositions = -1;
+    private int noPositions = 0;
 
     /** Number of reserved positions. */
     @Column(name = "C_NO_RESRV_POS")
-    private int noReservedPositions = -1;
+    private int noReservedPositions = 0;
 
     /** Number of already allocated Positions. */
     @Column(name = "C_NO_ALLOC_POS")
-    private int noAllocatedPositions = -1;
+    private int noAllocatedPositions = 0;
 
     /** Number of started positions; */
     @Column(name = "C_NO_STARTED_POS")
-    private int noStartedPositions = -1;
+    private int noStartedPositions = 0;
 
     /** Number of executed positions. */
     @Column(name = "C_NO_EXEC_POS")
-    private int noExecutedPositions = -1;
+    private int noExecutedPositions = 0;
 
     /** Number of completed positions. */
     @Column(name = "C_NO_COMPL_POS")
-    private int noCompletedPositions = -1;
+    private int noCompletedPositions = 0;
 
     /** Current order state. */
+    @Enumerated(EnumType.STRING)
     @Column(name = "C_ORDER_STATE")
-    private int orderState = OrderState.UNDEFINED;
+    private OrderState orderState = OrderState.UNDEFINED;
 
     /**
      * Property to lock/unlock an order.
@@ -137,6 +149,39 @@ public abstract class AbstractOrder extends AbstractEntity implements DomainObje
 
     @OneToMany(mappedBy = "order")
     private Set<OrderPosition> positions = new HashSet<OrderPosition>();
+
+    /**
+     * Query to find all <code>AbstractOrder</code>s.<br />
+     * Query name is {@value} .
+     */
+    public static final String NQ_FIND_ALL = "AbstractOrder.findAll";
+
+    /**
+     * Query to find an <code>AbstractOrder</code>s by it's <code>orderId</code>
+     * . <li>
+     * Query parameter name <strong>{@value #QP_FIND_WITH_ORDERID_ORDERID}
+     * </strong> : The orderId of the <code>AbstractOrder</code> to search for.</li>
+     * <br />
+     * Query name is {@value} .
+     */
+    public static final String NQ_FIND_WITH_ORDERID = "AbstractOrder.findWithOrderId";
+    public static final String QP_FIND_WITH_ORDERID_ORDERID = "orderId";
+
+    /**
+     * Only for the JPA provider and subclasses.
+     */
+    protected AbstractOrder() {
+        super();
+    }
+
+    /**
+     * Define a constructor with the orderId as argument.
+     */
+    public AbstractOrder(String ordId) {
+        AssertUtils.isNotEmpty(ordId, "Not allowed to create an order with an empty order id");
+        this.orderId = ordId;
+        this.startDate = new Date();
+    }
 
     /**
      * {@inheritDoc}
@@ -183,7 +228,7 @@ public abstract class AbstractOrder extends AbstractEntity implements DomainObje
      * @return the noPositions.
      */
     public int getNoPositions() {
-        return noPositions;
+        return this.noPositions;
     }
 
     /**
@@ -236,7 +281,7 @@ public abstract class AbstractOrder extends AbstractEntity implements DomainObje
      * 
      * @return the orderState.
      */
-    public int getOrderState() {
+    public OrderState getOrderState() {
         return orderState;
     }
 
@@ -264,7 +309,7 @@ public abstract class AbstractOrder extends AbstractEntity implements DomainObje
      * @return the latestDueDate.
      */
     public Date getLatestDueDate() {
-        return new Date(latestDueDate.getTime());
+        return latestDueDate;
     }
 
     /**
@@ -273,7 +318,7 @@ public abstract class AbstractOrder extends AbstractEntity implements DomainObje
      * @return the startDate.
      */
     public Date getStartDate() {
-        return new Date(startDate.getTime());
+        return startDate;
     }
 
     /**
@@ -282,7 +327,7 @@ public abstract class AbstractOrder extends AbstractEntity implements DomainObje
      * @return the nextAllocationDate.
      */
     public Date getNextAllocationDate() {
-        return new Date(nextAllocationDate.getTime());
+        return nextAllocationDate;
     }
 
     /**
@@ -300,7 +345,21 @@ public abstract class AbstractOrder extends AbstractEntity implements DomainObje
      * @return the positions.
      */
     public Set<OrderPosition> getPositions() {
-        return positions;
+        return Collections.unmodifiableSet(positions);
     }
 
+    /**
+     * Add one or more {@link OrderPosition}s to this AbstractOrder.
+     * 
+     * @param postions
+     *            {@link OrderPosition}s to add
+     * @return <code>true</code> if this set changed as a result of the call
+     */
+    public boolean addPostions(OrderPosition... postions) {
+        boolean res = this.positions.addAll(Arrays.asList(postions));
+        if (res) {
+            this.noPositions++;
+        }
+        return res;
+    }
 }

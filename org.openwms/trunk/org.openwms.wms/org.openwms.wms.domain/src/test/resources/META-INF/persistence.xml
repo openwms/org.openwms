@@ -64,6 +64,8 @@
         <class>org.openwms.wms.domain.order.AbstractOrder</class>
         <class>org.openwms.wms.domain.order.OrderPosition</class>
         <class>org.openwms.wms.domain.order.OrderPositionSplit</class>
+        <class>org.openwms.wms.domain.receiving.ReceivingOrder</class>
+        <class>org.openwms.wms.domain.receiving.ReceivingOrderPosition</class>
         <class>org.openwms.wms.domain.shipping.ShippingOrder</class>
         <class>org.openwms.wms.domain.shipping.ShippingOrderPositionSplit</class>
 

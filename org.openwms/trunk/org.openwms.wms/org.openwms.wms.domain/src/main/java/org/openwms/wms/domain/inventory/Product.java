@@ -28,6 +28,8 @@ import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.PrePersist;
 import javax.persistence.PreUpdate;
 import javax.persistence.Table;
@@ -49,6 +51,10 @@ import org.openwms.wms.domain.types.WMSTypes;
  */
 @Entity
 @Table(name = "WMS_PRODUCT")
+@NamedQueries({
+        @NamedQuery(name = Product.NQ_FIND_ALL, query = "select p from Product p"),
+        @NamedQuery(name = Product.NQ_FIND_PRODUCT_ID, query = "select p from Product p where p.productId = :"
+                + Product.QP_FIND_PRODUCT_ID_PRODUCTID + " order by p.productId") })
 public class Product extends AbstractEntity implements DomainObject<Long> {
 
     private static final long serialVersionUID = -7714815919817459002L;
@@ -86,6 +92,22 @@ public class Product extends AbstractEntity implements DomainObject<Long> {
     @Version
     @Column(name = "C_VERSION")
     private long version;
+
+    /**
+     * Query to find all <code>Product</code>s.<br />
+     * Query name is {@value} .
+     */
+    public static final String NQ_FIND_ALL = "Product.findAll";
+
+    /**
+     * Query to find <strong>one</strong> <code>Product</code> by its productId.
+     * <li>
+     * Query parameter name <strong>{@value #QP_FIND_PRODUCT_ID_PRODUCTID}
+     * </strong> : The unique id of the <code>Product</code> to search for.</li><br />
+     * Query name is {@value} .
+     */
+    public static final String NQ_FIND_PRODUCT_ID = "Product.findByProductId";
+    public static final String QP_FIND_PRODUCT_ID_PRODUCTID = "productId";
 
     /**
      * Accessed by persistence provider.

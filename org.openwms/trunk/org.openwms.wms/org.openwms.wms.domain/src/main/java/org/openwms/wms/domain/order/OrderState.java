@@ -27,20 +27,8 @@ package org.openwms.wms.domain.order;
  * @version $Revision: $
  * @since 0.1
  */
-public class OrderState {
+public enum OrderState {
 
-    /** Hide constructor */
-    protected OrderState() {}
-
-    public static final int UNDEFINED = 0;
-    public static final int CREATED = 10;
-    public static final int AVAILABLE = 20;
-    public static final int PROCESSING = 30;
-    public static final int PROCESSED = 40;
-    public static final int COMMISSIONING = 50;
-    public static final int ON_TRUCK = 60;
-    public static final int FAILURE_WMS = 70;
-    public static final int FAILURE_TMS = 80;
-    public static final int COMPLETED = 90;
+    UNDEFINED, CREATED, AVAILABLE, PROCESSING, PROCESSED, COMMISSIONING, ON_TRUCK, FAILURE_WMS, FAILURE_TMS, COMPLETED;
 
 }

@@ -44,10 +44,10 @@ public class PackagingUnitTest {
      */
     @Test
     public final void testPackagingUnit() {
-        PackagingUnit pu = new PackagingUnit(new LoadUnit(new TransportUnit("BARCODE"), "TOP_RIGHT"), "123456789");
+        PackagingUnit pu = new PackagingUnit(new LoadUnit(new TransportUnit("BARCODE"), "123456789"));
 
         LoadUnit lu1 = new LoadUnit(new TransportUnit("BARCODE"), "TOP_RIGHT");
-        PackagingUnit pu1 = new PackagingUnit(lu1, "123456789", new Product("SKU9999999"));
+        PackagingUnit pu1 = new PackagingUnit(lu1, new Product("SKU9999999"));
         LOGGER.debug("Product set on the PackagingUnit: " + pu1.getProduct());
         LOGGER.debug("Product set on the LoadUnit: " + lu1.getProduct());
         Assert.assertEquals(lu1.getProduct(), pu1.getProduct());

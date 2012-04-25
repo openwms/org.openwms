@@ -26,7 +26,10 @@ import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.PostLoad;
@@ -46,6 +49,7 @@ import org.openwms.wms.domain.values.TransportOrderStartMode;
  * @since 0.1
  */
 @Entity
+@Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
 @Table(name = "WMS_ORDER_POSITION", uniqueConstraints = @UniqueConstraint(columnNames = { "C_ORDER_ID_K",
         "C_POSITION_NO_K" }))
 public class OrderPosition extends AbstractEntity implements DomainObject<Long> {
@@ -55,11 +59,11 @@ public class OrderPosition extends AbstractEntity implements DomainObject<Long> 
     /** Unique technical key. */
     @Id
     @Column(name = "C_ID")
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.TABLE)
     private Long id;
 
-    @ManyToOne
-    @JoinColumn(name = "C_ORDER_ID", insertable = false, updatable = false)
+    @ManyToOne(optional = false)
+    @JoinColumn(name = "C_ORDER_ID", insertable = false, updatable = false, nullable = false)
     private AbstractOrder order;
 
     /** Business key. */
@@ -67,8 +71,9 @@ public class OrderPosition extends AbstractEntity implements DomainObject<Long> 
     private OrderPositionKey positionId;
 
     /** Current order state. Inherited from the order. Default is {@value} */
+    @Enumerated(EnumType.STRING)
     @Column(name = "C_ORDER_STATE")
-    private int orderState = OrderState.UNDEFINED;
+    private OrderState orderState = OrderState.UNDEFINED;
 
     /** Defines how a TransportOrder is started. Default is {@value} */
     @Enumerated(EnumType.STRING)
@@ -98,6 +103,7 @@ public class OrderPosition extends AbstractEntity implements DomainObject<Long> 
     public OrderPosition(AbstractOrder ord, String posNo) {
         super();
         this.order = ord;
+        this.order.addPostions(this);
         this.orderState = this.order.getOrderState();
         this.positionId = new OrderPositionKey(ord, posNo);
     }
@@ -146,7 +152,7 @@ public class OrderPosition extends AbstractEntity implements DomainObject<Long> 
      * 
      * @return the orderState.
      */
-    public int getOrderState() {
+    public OrderState getOrderState() {
         return orderState;
     }
 
