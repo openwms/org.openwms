@@ -29,8 +29,8 @@ package org.openwms.core.domain.values;
  */
 public final class CoreTypeDefinitions {
 
-    /** Length of a Description field. */
+    /** Length of a Description field: {@value} */
     public static final int DESCRIPTION_LENGTH = 1024;
-    /** Length of a Quantity field. */
+    /** Length of a Quantity field: {@value} */
     public static final int QUANTITY_LENGTH = 16;
 }
