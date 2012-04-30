@@ -24,8 +24,8 @@ import java.math.BigDecimal;
 
 import org.junit.Assert;
 import org.junit.Test;
-import org.openwms.core.domain.values.Piece;
-import org.openwms.core.domain.values.PieceUnit;
+import org.openwms.common.domain.units.Piece;
+import org.openwms.common.domain.units.PieceUnit;
 
 /**
  * A PieceTest.
@@ -38,7 +38,7 @@ public class PieceTest {
 
     /**
      * Test method for
-     * {@link org.openwms.core.domain.values.Piece#compareTo(org.openwms.core.domain.values.Piece)}
+     * {@link org.openwms.common.domain.units.Piece#compareTo(org.openwms.common.domain.units.Piece)}
      * .
      */
     @Test
@@ -51,7 +51,7 @@ public class PieceTest {
 
     /**
      * Test method for
-     * {@link org.openwms.core.domain.values.Piece#convertTo(org.openwms.core.domain.values.PieceUnit)}
+     * {@link org.openwms.common.domain.units.Piece#convertTo(org.openwms.common.domain.units.PieceUnit)}
      * .
      */
     @Test
