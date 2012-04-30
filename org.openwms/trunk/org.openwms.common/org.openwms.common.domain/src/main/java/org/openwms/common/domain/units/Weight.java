@@ -62,7 +62,6 @@ public class Weight extends Unit<Weight, WeightUnit> implements Comparable<Weigh
     public Weight(BigDecimal amount, WeightUnit unit) {
         this.amount = amount;
         this.unit = unit;
-        // prePersist();
     }
 
     /**
@@ -76,7 +75,6 @@ public class Weight extends Unit<Weight, WeightUnit> implements Comparable<Weigh
     public Weight(String amount, WeightUnit unit) {
         this.amount = new BigDecimal(amount);
         this.unit = unit;
-        // prePersist();
     }
 
     /**
@@ -88,7 +86,6 @@ public class Weight extends Unit<Weight, WeightUnit> implements Comparable<Weigh
     public Weight(BigDecimal amount) {
         this.amount = amount;
         this.unit = WeightUnit.T.getBaseUnit();
-        // prePersist();
     }
 
     /**
@@ -100,7 +97,6 @@ public class Weight extends Unit<Weight, WeightUnit> implements Comparable<Weigh
     public Weight(String amount) {
         this.amount = new BigDecimal(amount);
         this.unit = WeightUnit.T.getBaseUnit();
-        // prePersist();
     }
 
     /**
@@ -109,9 +105,6 @@ public class Weight extends Unit<Weight, WeightUnit> implements Comparable<Weigh
      * @return The amount
      */
     public BigDecimal getAmount() {
-        if (this.unit == null) {
-            // postLoad();
-        }
         return amount;
     }
 
@@ -122,9 +115,6 @@ public class Weight extends Unit<Weight, WeightUnit> implements Comparable<Weigh
      */
     @Override
     public WeightUnit getUnitType() {
-        if (this.unit == null) {
-            // postLoad();
-        }
         return unit;
     }
 
@@ -217,15 +207,4 @@ public class Weight extends Unit<Weight, WeightUnit> implements Comparable<Weigh
     public String toString() {
         return getAmount() + " " + getUnitType();
     }
-
-    /*
-     * // INFO [scherrer] : JPA Lifecycle methods do not work in JPA1.0 private
-     * void prePersist() { setQuantity(this.amount.toString() + " " +
-     * this.unit.toString()); }
-     * 
-     * // INFO [scherrer] : JPA Lifecycle methods do not work in JPA1.0 private
-     * void postLoad() { String val = getQuantity(); this.amount = new
-     * BigDecimal(val.substring(0, val.indexOf(' '))); this.unit =
-     * WeightUnit.valueOf(val.substring(val.indexOf(' ') + 1, val.length())); }
-     */
 }
