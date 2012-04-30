@@ -20,58 +20,51 @@
  */
 package org.openwms.core.domain.values;
 
-import javax.persistence.Column;
-import javax.persistence.MappedSuperclass;
-
 /**
  * A definition of any kind of unit used in the application. In general, Units
- * are defined by a particular type of <code>UnitType</code> and a value. For
- * example 42 grams is a weight, whereas weight is the Unit.
+ * are defined by a particular type of <code>UnitType</code> and an amount. For
+ * example <code>42 grams</code> is a <code>Weight</code>, whereas
+ * <code>Weight</code> is the <code>Unit</code>, 42 is the amount and grams is
+ * the <code>UnitType</code>.
  * 
  * @GlossaryTerm
+ * @param <U>
+ *            Concrete unit
  * @param <T>
- *            Type of Unit
+ *            Type of Unit, an extension of <code>UnitType</code>
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  * @version $Revision$
  * @since 0.1
  */
-@MappedSuperclass
 public abstract class Unit<U extends Unit<U, T>, T extends UnitType<T, ?>> {
 
-    @Column(name = "C_QUANTITY", length = CoreTypeDefinitions.QUANTITY_LENGTH, nullable = false)
-    private String quantity;
-
     /**
-     * Convert this unit into another <code>Unit</code>.
+     * Convert this <code>Unit</code> into another <code>Unit</code>.
      * 
      * @param unit
-     *            The unit to convert to
+     *            The <code>Unit</code> to convert to
      */
     public abstract U convertTo(T unit);
 
     /**
-     * Returns the unit of the <code>Piece</code>.
+     * Returns the type of <code>Unit</code>.
      * 
-     * @return The unit
+     * @return The <code>Unit</code>'s type
      */
     public abstract T getUnitType();
 
     /**
-     * Get the quantity.
+     * Check whether the amount is set to 0.
      * 
-     * @return the quantity.
+     * @return <code>true</code> is amount is 0, otherwise <code>false</code>
      */
-    protected String getQuantity() {
-        return quantity;
-    }
+    public abstract boolean isZero();
 
     /**
-     * Set the quantity.
+     * Check whether the amount is of negative value.
      * 
-     * @param quantity
-     *            The quantity to set.
+     * @return <code>true</code> if the amount is of negative value, otherwise
+     *         <code>false</code>
      */
-    protected void setQuantity(String quantity) {
-        this.quantity = quantity;
-    }
+    public abstract boolean isNegative();
 }

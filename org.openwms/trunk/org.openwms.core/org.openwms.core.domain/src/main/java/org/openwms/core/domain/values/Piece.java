@@ -21,9 +21,8 @@
 package org.openwms.core.domain.values;
 
 import java.io.Serializable;
-
-import javax.persistence.Embeddable;
-import javax.persistence.Transient;
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 
 /**
  * A Piece.
@@ -32,18 +31,16 @@ import javax.persistence.Transient;
  * @version $Revision: $
  * @since 0.2
  */
-@Embeddable
 public class Piece extends Unit<Piece, PieceUnit> implements Comparable<Piece>, Serializable {
+
     private static final long serialVersionUID = 5268725227649308401L;
+    private static final BigDecimal SHIFTER = new BigDecimal(12);
 
     /** The unit of the <code>Piece</code>. */
-    @Transient
-    private PieceUnit unit;
+    private PieceUnit unitType;
     /** The amount of the <code>Piece</code>. */
-    @Transient
-    private int amount;
+    private BigDecimal amount;
     /** Constant for a zero value. */
-    @Transient
     public static final Piece ZERO = new Piece(0);
 
     /* ----------------------------- methods ------------------- */
@@ -59,13 +56,13 @@ public class Piece extends Unit<Piece, PieceUnit> implements Comparable<Piece>, 
      * 
      * @param amount
      *            The amount of the <code>Piece</code>
-     * @param unit
+     * @param unitType
      *            The unit of measure
      */
-    public Piece(int amount, PieceUnit unit) {
-        this.amount = amount;
-        this.unit = unit;
-        prePersist();
+    public Piece(int amount, PieceUnit unitType) {
+        this.amount = new BigDecimal(amount);
+        this.unitType = unitType;
+        // prePersist();
     }
 
     /**
@@ -75,9 +72,47 @@ public class Piece extends Unit<Piece, PieceUnit> implements Comparable<Piece>, 
      *            The amount of the <code>Piece</code> as int
      */
     public Piece(int amount) {
+        this.amount = new BigDecimal(amount);
+        this.unitType = PieceUnit.PC.getBaseUnit();
+        // prePersist();
+    }
+
+    /**
+     * Create a new <code>Piece</code>.
+     * 
+     * @param amount
+     *            The amount of the <code>Piece</code>
+     * @param unitType
+     *            The unit of measure
+     */
+    public Piece(BigDecimal amount, PieceUnit unitType) {
         this.amount = amount;
-        this.unit = PieceUnit.PC.getBaseUnit();
-        prePersist();
+        this.unitType = unitType;
+        // prePersist();
+    }
+
+    /**
+     * Create a new <code>Piece</code>.
+     * 
+     * @param amount
+     *            The amount of the <code>Piece</code> as BigDecimal
+     */
+    public Piece(BigDecimal amount) {
+        this.amount = amount;
+        this.unitType = PieceUnit.PC.getBaseUnit();
+        // prePersist();
+    }
+
+    /**
+     * Returns the amount of the <code>Piece</code>.
+     * 
+     * @return The amount
+     */
+    public BigDecimal getAmount() {
+        if (this.unitType == null) {
+            // postLoad();
+        }
+        return amount;
     }
 
     /**
@@ -89,22 +124,26 @@ public class Piece extends Unit<Piece, PieceUnit> implements Comparable<Piece>, 
      */
     @Override
     public PieceUnit getUnitType() {
-        if (this.unit == null) {
-            postLoad();
+        if (this.unitType == null) {
+            // postLoad();
         }
-        return unit;
+        return unitType;
     }
 
     /**
-     * Returns the amount of the <code>Piece</code>.
-     * 
-     * @return The amount
+     * @see org.openwms.core.domain.values.Unit#isZero()
      */
-    public int getAmount() {
-        if (this.unit == null) {
-            postLoad();
-        }
-        return amount;
+    @Override
+    public boolean isZero() {
+        return Piece.ZERO.equals(new Piece(this.getAmount(), PieceUnit.DOZ));
+    }
+
+    /**
+     * @see org.openwms.core.domain.values.Unit#isNegative()
+     */
+    @Override
+    public boolean isNegative() {
+        return this.getAmount().signum() == -1;
     }
 
     /**
@@ -113,9 +152,9 @@ public class Piece extends Unit<Piece, PieceUnit> implements Comparable<Piece>, 
     @Override
     public Piece convertTo(PieceUnit unt) {
         if (PieceUnit.PC == unt && this.getUnitType() == PieceUnit.DOZ) {
-            return new Piece(this.getAmount() * 12, PieceUnit.PC);
+            return new Piece(this.getAmount().multiply(SHIFTER), PieceUnit.PC);
         } else if (PieceUnit.DOZ == unt && this.getUnitType() == PieceUnit.PC) {
-            return new Piece(this.getAmount() / 12, PieceUnit.DOZ);
+            return new Piece(this.getAmount().divide(SHIFTER, 0, RoundingMode.DOWN), PieceUnit.DOZ);
         }
         return this;
     }
@@ -126,15 +165,11 @@ public class Piece extends Unit<Piece, PieceUnit> implements Comparable<Piece>, 
     @Override
     public int compareTo(Piece o) {
         if (o.getUnitType().ordinal() > this.getUnitType().ordinal()) {
-            return compare(this.getAmount(), o.getAmount() * 12);
+            return compare(this.getAmount(), o.getAmount().multiply(SHIFTER));
         } else if (o.getUnitType().ordinal() < this.getUnitType().ordinal()) {
-            return compare(this.getAmount() * 12, o.getAmount());
-        } else if (this.getAmount() == o.getAmount()) {
-            return 0;
-        } else if (this.getAmount() < o.getAmount()) {
-            return -1;
+            return compare(this.getAmount().multiply(SHIFTER), o.getAmount());
         }
-        return 1;
+        return this.getAmount().compareTo(o.getAmount());
     }
 
     /**
@@ -148,21 +183,55 @@ public class Piece extends Unit<Piece, PieceUnit> implements Comparable<Piece>, 
     }
 
     // INFO [scherrer] : JPA Lifecycle methods do not work in JPA1.0
-    private void prePersist() {
-        setQuantity(String.valueOf(this.amount) + " " + this.unit.toString());
+    /*
+     * private void prePersist() { setQuantity(String.valueOf(this.amount) + " "
+     * + this.unitType.toString()); }
+     * 
+     * private void postLoad() { String val = getQuantity(); this.amount = new
+     * BigDecimal(val.substring(0, val.indexOf(" "))); this.unitType =
+     * PieceUnit.valueOf(val.substring(val.indexOf(" ") + 1, val.length())); }
+     */
+
+    /**
+     * @see java.lang.Object#hashCode()
+     */
+    @Override
+    public int hashCode() {
+        final int prime = 31;
+        int result = 1;
+        result = prime * result + ((amount == null) ? 0 : amount.hashCode());
+        result = prime * result + ((unitType == null) ? 0 : unitType.hashCode());
+        return result;
     }
 
-    // INFO [scherrer] : JPA Lifecycle methods do not work in JPA1.0
-    private void postLoad() {
-        String val = getQuantity();
-        this.amount = new Integer(val.substring(0, val.indexOf(" ")));
-        this.unit = PieceUnit.valueOf(val.substring(val.indexOf(" ") + 1, val.length()));
+    /**
+     * @see java.lang.Object#equals(java.lang.Object)
+     */
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        Piece other = (Piece) obj;
+        if (amount == null) {
+            if (other.amount != null) {
+                return false;
+            }
+        }
+        return this.compareTo(other) == 0 ? true : false;
+
     }
 
-    private int compare(int val1, int val2) {
+    private int compare(BigDecimal val1, BigDecimal val2) {
         if (val1 == val2) {
             return 0;
         };
-        return val1 < val2 ? -1 : 1;
+        return val1.compareTo(val2);
     }
 }

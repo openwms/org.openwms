@@ -20,6 +20,8 @@
  */
 package org.openwms.core.domain;
 
+import java.math.BigDecimal;
+
 import org.junit.Assert;
 import org.junit.Test;
 import org.openwms.core.domain.values.Piece;
@@ -59,7 +61,13 @@ public class PieceTest {
 
         Piece p502 = p50.convertTo(PieceUnit.DOZ);
         Assert.assertFalse(p502.equals(p50));
+
+        Assert.assertTrue(p502.getAmount().equals(new BigDecimal(4)));
         Assert.assertTrue(p502.getUnitType() == PieceUnit.DOZ);
+
+        Assert.assertTrue(p502.equals(new Piece(4, PieceUnit.DOZ)));
+        Assert.assertFalse(p502.equals(new Piece(50, PieceUnit.PC)));
+        Assert.assertTrue(p502.equals(new Piece(48, PieceUnit.PC)));
         Assert.assertTrue(p50.getUnitType() == PieceUnit.PC);
 
         Assert.assertEquals(1, p50.compareTo(p30));
