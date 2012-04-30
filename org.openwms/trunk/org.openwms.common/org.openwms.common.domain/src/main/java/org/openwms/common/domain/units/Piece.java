@@ -76,7 +76,6 @@ public class Piece extends Unit<Piece, PieceUnit> implements Comparable<Piece>, 
     public Piece(int amount) {
         this.amount = new BigDecimal(amount);
         this.unitType = PieceUnit.PC.getBaseUnit();
-        // prePersist();
     }
 
     /**
@@ -90,7 +89,6 @@ public class Piece extends Unit<Piece, PieceUnit> implements Comparable<Piece>, 
     public Piece(BigDecimal amount, PieceUnit unitType) {
         this.amount = amount;
         this.unitType = unitType;
-        // prePersist();
     }
 
     /**
@@ -102,7 +100,6 @@ public class Piece extends Unit<Piece, PieceUnit> implements Comparable<Piece>, 
     public Piece(BigDecimal amount) {
         this.amount = amount;
         this.unitType = PieceUnit.PC.getBaseUnit();
-        // prePersist();
     }
 
     /**
@@ -111,9 +108,6 @@ public class Piece extends Unit<Piece, PieceUnit> implements Comparable<Piece>, 
      * @return The amount
      */
     public BigDecimal getAmount() {
-        if (this.unitType == null) {
-            // postLoad();
-        }
         return amount;
     }
 
@@ -126,9 +120,6 @@ public class Piece extends Unit<Piece, PieceUnit> implements Comparable<Piece>, 
      */
     @Override
     public PieceUnit getUnitType() {
-        if (this.unitType == null) {
-            // postLoad();
-        }
         return unitType;
     }
 
@@ -183,16 +174,6 @@ public class Piece extends Unit<Piece, PieceUnit> implements Comparable<Piece>, 
     public String toString() {
         return getAmount() + " " + getUnitType();
     }
-
-    // INFO [scherrer] : JPA Lifecycle methods do not work in JPA1.0
-    /*
-     * private void prePersist() { setQuantity(String.valueOf(this.amount) + " "
-     * + this.unitType.toString()); }
-     * 
-     * private void postLoad() { String val = getQuantity(); this.amount = new
-     * BigDecimal(val.substring(0, val.indexOf(" "))); this.unitType =
-     * PieceUnit.valueOf(val.substring(val.indexOf(" ") + 1, val.length())); }
-     */
 
     /**
      * @see java.lang.Object#hashCode()
