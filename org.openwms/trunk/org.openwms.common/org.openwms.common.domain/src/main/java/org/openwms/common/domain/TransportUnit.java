@@ -91,7 +91,7 @@ public class TransportUnit extends AbstractEntity implements DomainObject<Long> 
      * Query to find <strong>one</strong> <code>TransportUnit</code> by its
      * natural key.
      * <ul>
-     * <li>Query parameter index <strong>1</strong> : The name of the
+     * <li>Query parameter index <strong>1</strong> : The Barcode of the
      * <code>TransportUnit</code> to search for.</li>
      * </ul>
      */
