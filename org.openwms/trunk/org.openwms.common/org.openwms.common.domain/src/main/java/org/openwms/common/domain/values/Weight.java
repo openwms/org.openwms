@@ -23,9 +23,6 @@ package org.openwms.common.domain.values;
 import java.io.Serializable;
 import java.math.BigDecimal;
 
-import javax.persistence.Embeddable;
-import javax.persistence.Transient;
-
 import org.openwms.core.domain.values.Unit;
 
 /**
@@ -36,18 +33,14 @@ import org.openwms.core.domain.values.Unit;
  * @version $Revision$
  * @since 0.1
  */
-@Embeddable
 public class Weight extends Unit<Weight, WeightUnit> implements Comparable<Weight>, Serializable {
     private static final long serialVersionUID = -8849107834046064278L;
 
     /** The unit of the <code>Weight</code>. */
-    @Transient
     private WeightUnit unit;
     /** The amount of the <code>Weight</code>. */
-    @Transient
     private BigDecimal amount;
     /** Constant for a zero value. */
-    @Transient
     public static final Weight ZERO = new Weight("0");
 
     /* ----------------------------- methods ------------------- */
@@ -69,7 +62,7 @@ public class Weight extends Unit<Weight, WeightUnit> implements Comparable<Weigh
     public Weight(BigDecimal amount, WeightUnit unit) {
         this.amount = amount;
         this.unit = unit;
-        prePersist();
+        // prePersist();
     }
 
     /**
@@ -83,7 +76,19 @@ public class Weight extends Unit<Weight, WeightUnit> implements Comparable<Weigh
     public Weight(String amount, WeightUnit unit) {
         this.amount = new BigDecimal(amount);
         this.unit = unit;
-        prePersist();
+        // prePersist();
+    }
+
+    /**
+     * Create a new <code>Weight</code>.
+     * 
+     * @param amount
+     *            The amount of the <code>Weight</code>
+     */
+    public Weight(BigDecimal amount) {
+        this.amount = amount;
+        this.unit = WeightUnit.T.getBaseUnit();
+        // prePersist();
     }
 
     /**
@@ -95,21 +100,19 @@ public class Weight extends Unit<Weight, WeightUnit> implements Comparable<Weigh
     public Weight(String amount) {
         this.amount = new BigDecimal(amount);
         this.unit = WeightUnit.T.getBaseUnit();
-        prePersist();
+        // prePersist();
     }
 
     /**
-     * Create a new <code>Weight</code>.
+     * Returns the amount of the <code>Weight</code>.
      * 
-     * @param amount
-     *            The amount of the <code>Weight</code> as double
-     * @param unit
-     *            The unit of measure
+     * @return The amount
      */
-    public Weight(double amount, WeightUnit unit) {
-        this.amount = new BigDecimal(amount);
-        this.unit = unit;
-        prePersist();
+    public BigDecimal getAmount() {
+        if (this.unit == null) {
+            // postLoad();
+        }
+        return amount;
     }
 
     /**
@@ -120,21 +123,25 @@ public class Weight extends Unit<Weight, WeightUnit> implements Comparable<Weigh
     @Override
     public WeightUnit getUnitType() {
         if (this.unit == null) {
-            postLoad();
+            // postLoad();
         }
         return unit;
     }
 
     /**
-     * Returns the amount of the <code>Weight</code>.
-     * 
-     * @return The amount
+     * @see org.openwms.core.domain.values.Unit#isZero()
      */
-    public BigDecimal getAmount() {
-        if (this.unit == null) {
-            postLoad();
-        }
-        return amount;
+    @Override
+    public boolean isZero() {
+        return Weight.ZERO.equals(this.getAmount());
+    }
+
+    /**
+     * @see org.openwms.core.domain.values.Unit#isNegative()
+     */
+    @Override
+    public boolean isNegative() {
+        return this.getAmount().signum() == -1;
     }
 
     /**
@@ -211,15 +218,14 @@ public class Weight extends Unit<Weight, WeightUnit> implements Comparable<Weigh
         return getAmount() + " " + getUnitType();
     }
 
-    // INFO [scherrer] : JPA Lifecycle methods do not work in JPA1.0
-    private void prePersist() {
-        setQuantity(this.amount.toString() + " " + this.unit.toString());
-    }
-
-    // INFO [scherrer] : JPA Lifecycle methods do not work in JPA1.0
-    private void postLoad() {
-        String val = getQuantity();
-        this.amount = new BigDecimal(val.substring(0, val.indexOf(' ')));
-        this.unit = WeightUnit.valueOf(val.substring(val.indexOf(' ') + 1, val.length()));
-    }
+    /*
+     * // INFO [scherrer] : JPA Lifecycle methods do not work in JPA1.0 private
+     * void prePersist() { setQuantity(this.amount.toString() + " " +
+     * this.unit.toString()); }
+     * 
+     * // INFO [scherrer] : JPA Lifecycle methods do not work in JPA1.0 private
+     * void postLoad() { String val = getQuantity(); this.amount = new
+     * BigDecimal(val.substring(0, val.indexOf(' '))); this.unit =
+     * WeightUnit.valueOf(val.substring(val.indexOf(' ') + 1, val.length())); }
+     */
 }
