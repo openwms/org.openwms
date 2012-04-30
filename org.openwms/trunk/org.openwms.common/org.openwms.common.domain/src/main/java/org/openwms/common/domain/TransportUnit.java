@@ -51,9 +51,9 @@ import javax.persistence.UniqueConstraint;
 import javax.persistence.Version;
 
 import org.openwms.common.domain.system.UnitError;
+import org.openwms.common.domain.units.Weight;
 import org.openwms.common.domain.values.Barcode;
 import org.openwms.common.domain.values.TransportUnitState;
-import org.openwms.common.domain.values.Weight;
 import org.openwms.core.domain.AbstractEntity;
 import org.openwms.core.domain.DomainObject;
 import org.openwms.core.domain.system.usermanagement.User;

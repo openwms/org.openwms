@@ -18,13 +18,15 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
-package org.openwms.common.domain.values;
+package org.openwms.common.domain.units;
 
 import static org.junit.Assert.assertEquals;
 
 import java.math.BigDecimal;
 
 import org.junit.Test;
+import org.openwms.common.domain.units.Weight;
+import org.openwms.common.domain.units.WeightUnit;
 
 /**
  * A WeightTest.
@@ -32,7 +34,7 @@ import org.junit.Test;
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  * @version $Revision$
  * @since 0.1
- * @see org.openwms.common.domain.values.Weight
+ * @see org.openwms.common.domain.units.Weight
  */
 public class WeightTest {
 
