@@ -30,7 +30,9 @@ package org.openwms.core.integration.exception;
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  * @version $Revision$
  * @since 0.1
+ * @deprecated Use IntegrationRuntimeException instead
  */
+@Deprecated
 public class DataException extends RuntimeException {
 
     private static final long serialVersionUID = -4896951691234279331L;

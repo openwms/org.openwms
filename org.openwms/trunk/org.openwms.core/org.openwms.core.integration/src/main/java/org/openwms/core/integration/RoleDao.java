@@ -26,8 +26,8 @@ import org.openwms.core.domain.system.usermanagement.Role;
 import org.openwms.core.domain.system.usermanagement.SecurityObject;
 
 /**
- * A RoleDao adds particular functionality to find and modifiy {@link Role}
- * entity classes.
+ * A RoleDao offers functionality to find and modify {@link Role} entity
+ * classes.
  * 
  * @author <a href="mailto:russelltina@users.sourceforge.net">Tina Russell</a>
  * @version $Revision$

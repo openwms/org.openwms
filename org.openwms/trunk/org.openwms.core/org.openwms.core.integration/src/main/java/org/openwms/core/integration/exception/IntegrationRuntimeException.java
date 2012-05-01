@@ -21,47 +21,48 @@
 package org.openwms.core.integration.exception;
 
 /**
- * A ResourceNotFoundException is thrown when a given resource couldn't be
- * resolved.
+ * An IntegrationRuntimeException is the top-level exception for all other
+ * RuntimeExceptions thrown in the integration layer.
  * 
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
- * @version $Revision$
- * @since 0.1
+ * @version $Revision: $
+ * @since 0.2
  */
-public class ResourceNotFoundException extends RuntimeException {
+public class IntegrationRuntimeException extends RuntimeException {
 
-    private static final long serialVersionUID = 4887748182243376799L;
+    private static final long serialVersionUID = 2218071589944959008L;
 
     /**
-     * Create a new <code>ResourceNotFoundException</code>.
+     * Create a new <code>IntegrationRuntimeException</code>.
      */
-    public ResourceNotFoundException() {
-
+    public IntegrationRuntimeException() {
+        super();
     }
 
     /**
-     * Create a new <code>ResourceNotFoundException</code> with a message text.
+     * Create a new <code>IntegrationRuntimeException</code> with a message
+     * text.
      * 
      * @param message
      *            Message text as String
      */
-    public ResourceNotFoundException(String message) {
+    public IntegrationRuntimeException(String message) {
         super(message);
     }
 
     /**
-     * Create a new <code>ResourceNotFoundException</code> with the root
+     * Create a new <code>IntegrationRuntimeException</code> with the root
      * exception.
      * 
      * @param cause
      *            The root exception
      */
-    public ResourceNotFoundException(Throwable cause) {
+    public IntegrationRuntimeException(Throwable cause) {
         super(cause);
     }
 
     /**
-     * Create a new <code>ResourceNotFoundException</code> with a message text
+     * Create a new <code>IntegrationRuntimeException</code> with a message text
      * and the root exception.
      * 
      * @param message
@@ -69,7 +70,7 @@ public class ResourceNotFoundException extends RuntimeException {
      * @param cause
      *            The root exception
      */
-    public ResourceNotFoundException(String message, Throwable cause) {
+    public IntegrationRuntimeException(String message, Throwable cause) {
         super(message, cause);
     }
 }
