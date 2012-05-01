@@ -64,6 +64,14 @@
             <scope>provided</scope>
         </dependency>
 
+        <!-- JPA Provider -->
+        <dependency>
+            <groupId>org.hibernate</groupId>
+            <artifactId>org.hibernate.ejb-library</artifactId>
+            <type>libd</type>
+            <scope>test</scope>
+        </dependency>
+
         <!-- CORE Project dependencies -->
         <dependency>
             <groupId>${project.groupId}</groupId>
