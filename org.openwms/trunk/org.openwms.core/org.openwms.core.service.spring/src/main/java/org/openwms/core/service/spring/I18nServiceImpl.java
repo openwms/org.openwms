@@ -32,7 +32,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 /**
- * An I18nServiceImpl.
+ * An I18nServiceImpl is responsible to load and save i18n translations.
  * 
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  * @version $Revision$
@@ -48,8 +48,6 @@ public class I18nServiceImpl implements I18nService {
 
     /**
      * {@inheritDoc}
-     * 
-     * @see org.openwms.core.service.I18nService#findAllTranslations()
      */
     @Override
     public List<I18n> findAllTranslations() {
@@ -61,8 +59,6 @@ public class I18nServiceImpl implements I18nService {
      * 
      * When <code>translations</code> is <code>null</code> or is empty, method
      * returns without any further action.
-     * 
-     * @see org.openwms.core.service.I18nService#saveTranslations(org.openwms.core.domain.system.I18n[])
      */
     @Override
     public void saveTranslations(I18n... translations) {

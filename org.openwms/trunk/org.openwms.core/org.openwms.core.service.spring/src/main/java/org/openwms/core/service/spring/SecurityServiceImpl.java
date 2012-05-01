@@ -57,15 +57,11 @@ public class SecurityServiceImpl implements SecurityService {
     @Autowired(required = true)
     @Qualifier("roleDao")
     private RoleDao roleDao;
-    /**
-     * Springs component name.
-     */
+    /** Springs component name. */
     public static final String COMPONENT_NAME = "securityService";
 
     /**
      * {@inheritDoc}
-     * 
-     * @see org.openwms.core.service.SecurityService#findAll()
      */
     @Override
     public List<SecurityObject> findAll() {
@@ -88,9 +84,6 @@ public class SecurityServiceImpl implements SecurityService {
 
     /**
      * {@inheritDoc}
-     * 
-     * @see org.openwms.core.service.SecurityService#mergeGrants(java.lang.String,
-     *      java.util.List)
      */
     @Override
     @FireAfterTransaction(events = { UserChangedEvent.class })
@@ -120,5 +113,4 @@ public class SecurityServiceImpl implements SecurityService {
         }
         return result;
     }
-
 }

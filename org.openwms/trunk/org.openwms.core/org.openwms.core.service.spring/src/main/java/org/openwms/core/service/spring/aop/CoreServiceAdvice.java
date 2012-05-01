@@ -47,9 +47,7 @@ import org.springframework.stereotype.Component;
 public class CoreServiceAdvice {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(CoreServiceAdvice.class);
-    /**
-     * Springs component name.
-     */
+    /** Springs component name. */
     public static final String COMPONENT_NAME = "coreServiceAdvice";
 
     /**

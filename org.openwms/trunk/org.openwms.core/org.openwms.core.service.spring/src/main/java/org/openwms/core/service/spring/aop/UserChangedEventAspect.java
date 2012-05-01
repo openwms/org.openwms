@@ -72,7 +72,7 @@ public class UserChangedEventAspect {
      *            The instance that is publishing the event
      * @param events
      *            A list of event classes to fire
-     * @throws Throwable
+     * @throws Exception
      *             Any exception is re-thrown
      */
     public void fireUserEvent(Object publisher, FireAfterTransaction events) throws Exception {

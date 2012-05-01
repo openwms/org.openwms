@@ -64,16 +64,14 @@ public class UserWrapper implements UserDetails, UserHolder {
      * Subclasses can set a collection of grants that are always available for
      * an User. This is useful for administrative accounts.
      * 
-     * @param authorities
+     * @param authz
      *            A collection of grants (authorities) where the default grants
      *            are added to
      */
-    protected void addDefaultGrants(Collection<GrantedAuthority> authorities) {}
+    protected void addDefaultGrants(Collection<GrantedAuthority> authz) {}
 
     /**
      * {@inheritDoc}
-     * 
-     * @see org.openwms.core.service.UserHolder#getUser()
      */
     @Override
     public User getUser() {
@@ -83,7 +81,6 @@ public class UserWrapper implements UserDetails, UserHolder {
     /**
      * {@inheritDoc}
      * 
-     * @see org.springframework.security.core.userdetails.UserDetails#getAuthorities()
      * @return the authorities, sorted by natural key (never <code>null</code>)
      */
     @Override
@@ -101,7 +98,6 @@ public class UserWrapper implements UserDetails, UserHolder {
     /**
      * {@inheritDoc}
      * 
-     * @see org.springframework.security.core.userdetails.UserDetails#getPassword()
      * @return the password (never <code>null</code>)
      */
     @Override
@@ -112,7 +108,6 @@ public class UserWrapper implements UserDetails, UserHolder {
     /**
      * {@inheritDoc}
      * 
-     * @see org.springframework.security.core.userdetails.UserDetails#getUsername()
      * @return the username (never <code>null</code>)
      */
     @Override
@@ -123,7 +118,6 @@ public class UserWrapper implements UserDetails, UserHolder {
     /**
      * {@inheritDoc}
      * 
-     * @see org.springframework.security.core.userdetails.UserDetails#isAccountNonExpired()
      * @return <code>true</code> if the user's account is valid (ie
      *         non-expired), <code>false</code> if no longer valid (ie expired)
      */
@@ -135,7 +129,6 @@ public class UserWrapper implements UserDetails, UserHolder {
     /**
      * {@inheritDoc}
      * 
-     * @see org.springframework.security.core.userdetails.UserDetails#isAccountNonLocked()
      * @return <code>true</code> if the user is not locked, <code>false</code>
      *         otherwise
      */
@@ -159,7 +152,6 @@ public class UserWrapper implements UserDetails, UserHolder {
     /**
      * {@inheritDoc}
      * 
-     * @see org.springframework.security.core.userdetails.UserDetails#isEnabled()
      * @return <code>true</code> if the user is enabled, <code>false</code>
      *         otherwise
      */
@@ -171,7 +163,7 @@ public class UserWrapper implements UserDetails, UserHolder {
     /**
      * {@inheritDoc}
      * 
-     * @see java.lang.Object#hashCode()
+     * Uses authorities and user for calculation.
      */
     @Override
     public int hashCode() {
@@ -185,7 +177,7 @@ public class UserWrapper implements UserDetails, UserHolder {
     /**
      * {@inheritDoc}
      * 
-     * @see java.lang.Object#equals(java.lang.Object)
+     * Uses authorities and user for comparison.
      */
     @Override
     public boolean equals(Object obj) {

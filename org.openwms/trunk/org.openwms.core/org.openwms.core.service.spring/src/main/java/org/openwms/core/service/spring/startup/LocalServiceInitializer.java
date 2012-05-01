@@ -46,8 +46,6 @@ public class LocalServiceInitializer implements ApplicationListener<ContextRefre
 
     /**
      * {@inheritDoc}
-     * 
-     * @see org.springframework.context.ApplicationListener#onApplicationEvent(org.springframework.context.ApplicationEvent)
      */
     @Override
     public void onApplicationEvent(ContextRefreshedEvent event) {

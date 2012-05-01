@@ -29,6 +29,7 @@ import org.springframework.security.core.GrantedAuthority;
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  * @version $Revision: $
  * @since 0.2
+ * @see org.springframework.security.core.GrantedAuthority
  */
 class SecurityObjectAuthority implements GrantedAuthority {
 
@@ -49,8 +50,6 @@ class SecurityObjectAuthority implements GrantedAuthority {
      * {@inheritDoc}
      * 
      * Return the name of the wrapped {@link SecurityObject}.
-     * 
-     * @see org.springframework.security.core.GrantedAuthority#getAuthority()
      */
     @Override
     public String getAuthority() {
@@ -60,7 +59,7 @@ class SecurityObjectAuthority implements GrantedAuthority {
     /**
      * {@inheritDoc}
      * 
-     * @see java.lang.Object#hashCode()
+     * Uses sObj for calculation.
      */
     @Override
     public int hashCode() {
@@ -73,7 +72,7 @@ class SecurityObjectAuthority implements GrantedAuthority {
     /**
      * {@inheritDoc}
      * 
-     * @see java.lang.Object#equals(java.lang.Object)
+     * Uses sObj for comparison.
      */
     @Override
     public boolean equals(Object obj) {

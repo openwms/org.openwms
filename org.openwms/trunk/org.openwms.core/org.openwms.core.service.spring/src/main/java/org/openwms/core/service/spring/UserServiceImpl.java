@@ -88,9 +88,7 @@ public class UserServiceImpl implements UserService {
     private String systemUsername;
     @Value("#{ globals['system.password'] }")
     private String systemPassword;
-    /**
-     * Springs service name.
-     */
+    /** Springs service name. */
     public static final String COMPONENT_NAME = "userService";
 
     /**
