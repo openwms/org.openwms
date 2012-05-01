@@ -32,7 +32,10 @@ import org.openwms.core.integration.jpa.AbstractGenericJpaDao;
 import org.openwms.tms.domain.order.TransportOrder;
 import org.openwms.tms.domain.values.TransportOrderState;
 import org.openwms.tms.integration.TransportOrderDao;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 /**
@@ -44,15 +47,17 @@ import org.springframework.transaction.annotation.Transactional;
  * @see org.openwms.core.integration.jpa.AbstractGenericJpaDao
  * @see org.openwms.tms.integration.TransportOrderDao
  */
-@Transactional
-@Repository
+@Transactional(propagation = Propagation.MANDATORY)
+@Repository(value = TransportOrderDaoImpl.COMPONENT_NAME)
 public class TransportOrderDaoImpl extends AbstractGenericJpaDao<TransportOrder, Long> implements TransportOrderDao {
+
+    private static final Logger LOGGER = LoggerFactory.getLogger(TransportOrderDaoImpl.class);
+
+    /** Springs component name. */
+    public static final String COMPONENT_NAME = "transportOrderDao";
 
     /**
      * {@inheritDoc}
-     * 
-     * @return Name of the query
-     * @see org.openwms.core.integration.jpa.AbstractGenericJpaDao#getFindAllQuery()
      */
     @Override
     protected String getFindAllQuery() {
@@ -61,9 +66,6 @@ public class TransportOrderDaoImpl extends AbstractGenericJpaDao<TransportOrder,
 
     /**
      * {@inheritDoc}
-     * 
-     * @return Name of the query
-     * @see org.openwms.core.integration.jpa.AbstractGenericJpaDao#getFindByUniqueIdQuery()
      */
     @Override
     protected String getFindByUniqueIdQuery() {
@@ -72,8 +74,6 @@ public class TransportOrderDaoImpl extends AbstractGenericJpaDao<TransportOrder,
 
     /**
      * {@inheritDoc}
-     * 
-     * @see org.openwms.tms.integration.TransportOrderDao#getNumberOfTransportOrders(org.openwms.common.domain.LocationGroup)
      */
     @Override
     public int getNumberOfTransportOrders(final LocationGroup locationGroup) {
@@ -85,8 +85,6 @@ public class TransportOrderDaoImpl extends AbstractGenericJpaDao<TransportOrder,
 
     /**
      * {@inheritDoc}
-     * 
-     * @see org.openwms.tms.integration.TransportOrderDao#findByIds(java.util.List)
      */
     @SuppressWarnings("unchecked")
     @Override
@@ -97,9 +95,6 @@ public class TransportOrderDaoImpl extends AbstractGenericJpaDao<TransportOrder,
 
     /**
      * {@inheritDoc}
-     * 
-     * @see org.openwms.tms.integration.TransportOrderDao#findForTUinState(org.openwms.common.domain.TransportUnit,
-     *      org.openwms.tms.domain.values.TransportOrderState[])
      */
     @Override
     public List<TransportOrder> findForTUinState(TransportUnit transportUnit, TransportOrderState... states) {
@@ -108,17 +103,24 @@ public class TransportOrderDaoImpl extends AbstractGenericJpaDao<TransportOrder,
         params.put("states", Arrays.asList(states));
         List<TransportOrder> others = super.findByNamedParameters(TransportOrder.NQ_FIND_FOR_TU_IN_STATE, params);
         if (others == null || others.isEmpty()) {
-            if (logger.isDebugEnabled()) {
-                logger.debug("No TransportOrders for TransportUnit [" + transportUnit + "] in on of the states "
+            if (LOGGER.isDebugEnabled()) {
+                LOGGER.debug("No TransportOrders for TransportUnit [" + transportUnit + "] in on of the states "
                         + Arrays.toString(states) + " found");
             }
             return Collections.emptyList();
         }
-        if (logger.isDebugEnabled()) {
-            logger.debug("TransportOrders for TransportUnit [" + transportUnit + "] in state "
+        if (LOGGER.isDebugEnabled()) {
+            LOGGER.debug("TransportOrders for TransportUnit [" + transportUnit + "] in state "
                     + Arrays.toString(states) + " found");
         }
         return others;
     }
 
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    protected Class<TransportOrder> getPersistentClass() {
+        return TransportOrder.class;
+    }
 }
