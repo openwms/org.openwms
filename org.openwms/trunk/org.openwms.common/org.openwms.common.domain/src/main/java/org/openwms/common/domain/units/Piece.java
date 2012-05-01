@@ -64,7 +64,6 @@ public class Piece extends Unit<Piece, PieceUnit> implements Comparable<Piece>, 
     public Piece(int amount, PieceUnit unitType) {
         this.amount = new BigDecimal(amount);
         this.unitType = unitType;
-        // prePersist();
     }
 
     /**
