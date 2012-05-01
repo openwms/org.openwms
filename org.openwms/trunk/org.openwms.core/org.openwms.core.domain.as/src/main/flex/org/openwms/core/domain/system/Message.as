@@ -35,9 +35,8 @@ package org.openwms.core.domain.system {
          *
          * @return the messageNo:messageText
          */
-        public function toString():String {
+        public function toString() : String {
             return this._messageNo + ":" + this._messageText;
         }
     }
 }
-

@@ -28,6 +28,6 @@ package org.openwms.core.domain.values {
      * @version $Revision$
      * @since 0.1
      */
-    public class I18nSet extends I18nSetBase { }
+    public class I18nSet extends I18nSetBase {
+    }
 }
-

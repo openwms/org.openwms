@@ -22,8 +22,17 @@ package org.openwms.core.domain.system {
 
     [Bindable]
     [RemoteClass(alias="org.openwms.core.domain.system.AbstractPreference")]
+    /**
+     * An AbstractPreference is used as superclass for all preferences.
+     *
+     * @version $Revision$
+     * @since 0.1
+     */
     public class AbstractPreference extends AbstractPreferenceBase {
 
+        /**
+         * Unused.
+         */
         public function createCKey() : PreferenceKey {
             return null;
         }

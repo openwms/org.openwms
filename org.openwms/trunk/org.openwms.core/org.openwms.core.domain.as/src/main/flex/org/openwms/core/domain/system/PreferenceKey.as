@@ -25,7 +25,7 @@ package org.openwms.core.domain.system {
      * A PreferenceKey encapsulates fields of a particular preference that
      * are used as unique key in the scope of the type of preference.
      *
-     * @version $Revision: 1425 $
+     * @version $Revision$
      * @since 0.1
      */
     public class PreferenceKey {

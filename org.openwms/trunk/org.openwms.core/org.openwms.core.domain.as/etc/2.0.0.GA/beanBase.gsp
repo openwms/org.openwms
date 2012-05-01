@@ -31,7 +31,8 @@
         as3Imports.add("org.granite.util.Enum");
 
     for (jImport in jClass.imports) {
-        if (jImport.as3Type.hasPackage() && jImport.as3Type.packageName != jClass.as3Type.packageName)
+        if (jImport.as3Type.hasPackage() && jImport.as3Type.packageName != jClass.as3Type.packageName
+            && jImport.as3Type.qualifiedName != "java.io.Serializable")
             as3Imports.add(jImport.as3Type.qualifiedName);
     }
 
@@ -55,6 +56,7 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
+// Generated with beanBase template
 package ${jClass.as3Type.packageName} {
 <%
 ///////////////////////////////////////////////////////////////////////////////
@@ -71,6 +73,8 @@ package ${jClass.as3Type.packageName} {
     public class ${jClass.as3Type.name}Base<%
 
         boolean implementsWritten = false;
+        // If DomainObject is implemented directly, those methods aren't marked with overriden
+        boolean implementsDomainObject = false;
         if (jClass.hasSuperclass()) {
             %> extends ${jClass.superclass.as3Type.name}<%
         } else {
@@ -86,6 +90,9 @@ package ${jClass.as3Type.packageName} {
                 implementsWritten = true;
             } else {
                 %>, ${jInterface.as3Type.name}<%
+            }
+            if (jInterface.as3Type.name == 'DomainObject') {
+                implementsDomainObject = true;
             }
         }
 
@@ -114,8 +121,15 @@ package ${jClass.as3Type.packageName} {
         public function isNew():${jProperty.as3Type.name} {
             return true;
         }<%
-            } else
-            if (jProperty.readable) {%>
+            } else if (jProperty.readable && jProperty.name == 'version' && !implementsDomainObject) {%>
+        override public function get version():${jProperty.as3Type.name} {
+            return ${jProperty.as3Type.nullValue};
+        }<%
+            } else if (jProperty.readable && jProperty.name == 'version' && implementsDomainObject) {%>
+        public function get version():${jProperty.as3Type.name} {
+            return ${jProperty.as3Type.nullValue};
+        }<%
+            } else if (jProperty.readable && jProperty.as3Type.name != "Serializable") {%>
         public function get ${jProperty.name}():${jProperty.as3Type.name} {
             return _${jProperty.name};
         }<%
@@ -134,7 +148,7 @@ package ${jClass.as3Type.packageName} {
         public function set ${jProperty.name}(value:${jProperty.as3Type.name}):void {
         }<%
                 }
-                if (jProperty.readable) {%>
+                if (jProperty.readable && jProperty.as3Type.name != "Serializable") {%>
         public function get ${jProperty.name}():${jProperty.as3Type.name} {
             return ${jProperty.as3Type.nullValue};
         }<%

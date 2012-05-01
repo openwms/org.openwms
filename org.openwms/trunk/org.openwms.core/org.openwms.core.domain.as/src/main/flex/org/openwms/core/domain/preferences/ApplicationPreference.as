@@ -28,7 +28,7 @@ package org.openwms.core.domain.preferences {
     /**
      * An ApplicationPreference is a preference assigned to the whole application.
      *
-     * @version $Revision: 1425 $
+     * @version $Revision$
      * @since 0.1
      */
     public class ApplicationPreference extends ApplicationPreferenceBase {

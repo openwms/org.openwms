@@ -32,12 +32,11 @@ package org.openwms.core.domain.system {
 
         /**
          * Return the concatenated key.
-         * 
+         *
          * @return the concatenated key
          */
-        public function get cKey():String {
+        public function get cKey() : String {
             return _cKey;
         }
     }
 }
-

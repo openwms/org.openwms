@@ -4,7 +4,7 @@
  * This file is part of openwms.org.
  *
  * openwms.org is free software: you can redistribute it and/or modify
- * it under the terms of the GNU Lesser General Public License as 
+ * it under the terms of the GNU Lesser General Public License as
  * published by the Free Software Foundation, either version 3 of the
  * License, or (at your option) any later version.
  *
@@ -22,6 +22,15 @@ package org.openwms.core.domain.search {
 
     [Bindable]
     [RemoteClass(alias="org.openwms.core.domain.search.Action")]
+    /**
+     * An Action represents a possible UI action an User can take. Each Action has a
+     * resulting URL to a webpage and a descriptive text that is displayed in the
+     * UI. Additionally a field <code>weight</code> is used to count how many times
+     * the User has chosen this Action.
+     *
+     * @version $Revision$
+     * @since 0.1
+     */
     public class Action extends ActionBase {
     }
 }
