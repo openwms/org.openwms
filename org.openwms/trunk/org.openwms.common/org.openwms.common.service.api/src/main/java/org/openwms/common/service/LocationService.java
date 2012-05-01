@@ -25,11 +25,10 @@ import java.util.List;
 import org.openwms.common.domain.Location;
 import org.openwms.common.domain.LocationType;
 import org.openwms.core.domain.system.Message;
-import org.openwms.core.service.EntityService;
 
 /**
- * A LocationService - Extends the {@link EntityService} interface about some
- * useful methods regarding the general handling with {@link Location}s.
+ * A LocationService offers some useful methods regarding the general handling
+ * of {@link Location}s.
  * <p>
  * This interface is declared generic typed that implementation classes can use
  * any extension of {@link Location}s.
@@ -40,9 +39,8 @@ import org.openwms.core.service.EntityService;
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  * @version $Revision$
  * @since 0.1
- * @see org.openwms.core.service.EntityService
  */
-public interface LocationService<T extends Location> extends EntityService<Location> {
+public interface LocationService<T extends Location> {
 
     /**
      * Return a list of all {@link Location}s not sorted and not filtered in
@@ -95,5 +93,4 @@ public interface LocationService<T extends Location> extends EntityService<Locat
      * @return The saved type
      */
     LocationType saveLocationType(LocationType locationType);
-
 }
