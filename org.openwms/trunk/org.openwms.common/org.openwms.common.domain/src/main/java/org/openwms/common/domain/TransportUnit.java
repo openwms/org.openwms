@@ -623,4 +623,40 @@ public class TransportUnit extends AbstractEntity implements DomainObject<Long> 
     public String toString() {
         return this.barcode.toString();
     }
+
+    /**
+     * @see java.lang.Object#hashCode()
+     */
+    @Override
+    public int hashCode() {
+        final int prime = 31;
+        int result = super.hashCode();
+        result = prime * result + ((barcode == null) ? 0 : barcode.hashCode());
+        return result;
+    }
+
+    /**
+     * @see java.lang.Object#equals(java.lang.Object)
+     */
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (!(obj instanceof TransportUnit)) {
+            return false;
+        }
+        TransportUnit other = (TransportUnit) obj;
+        if (barcode == null) {
+            if (other.barcode != null) {
+                return false;
+            }
+        } else if (!barcode.equals(other.barcode)) {
+            return false;
+        }
+        return true;
+    }
 }
