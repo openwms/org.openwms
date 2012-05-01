@@ -33,4 +33,6 @@ import org.openwms.core.integration.GenericDao;
  * @see org.openwms.core.integration.GenericDao
  * @see org.openwms.common.domain.TransportUnit
  */
-public interface TransportUnitDao extends GenericDao<TransportUnit, Long> {}
+public interface TransportUnitDao extends GenericDao<TransportUnit, Long> {
+
+}
