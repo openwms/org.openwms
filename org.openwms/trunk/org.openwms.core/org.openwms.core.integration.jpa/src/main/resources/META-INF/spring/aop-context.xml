@@ -28,7 +28,7 @@
 		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd">
 
     <aop:config>
-        <aop:pointcut id="publicIntegrationMethodsPC" expression="execution(public * org.openwms.core.integration.*.*(..))" />
+        <aop:pointcut id="publicIntegrationMethodsPC" expression="execution(public * org.openwms.core.integration..*.*(..))" />
         
         <aop:aspect ref="coreIntegrationAdvice" order="3">
             <aop:around method="around"
