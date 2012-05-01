@@ -24,11 +24,13 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
+import org.openwms.core.annotation.FireAfterTransaction;
 import org.openwms.core.domain.system.AbstractPreference;
 import org.openwms.core.domain.system.PreferenceKey;
 import org.openwms.core.integration.PreferenceDao;
 import org.openwms.core.integration.PreferenceWriter;
 import org.openwms.core.service.ConfigurationService;
+import org.openwms.core.util.event.ConfigurationChangedEvent;
 import org.openwms.core.util.event.MergePropertiesEvent;
 import org.openwms.core.util.validation.AssertUtils;
 import org.slf4j.Logger;
@@ -60,10 +62,7 @@ public class ConfigurationServiceImpl implements ConfigurationService, Applicati
     @Qualifier("preferencesJpaDao")
     private PreferenceWriter<Long> dao;
 
-    /**
-     * Springs service name.
-     */
-    // FIXME [scherrer] : Move all these names into the interfaces
+    /** Springs service name. */
     public static final String COMPONENT_NAME = "configurationService";
 
     /**
@@ -117,6 +116,7 @@ public class ConfigurationServiceImpl implements ConfigurationService, Applicati
      * @see org.openwms.core.service.spring.EntityServiceImpl#save(org.openwms.core.domain.AbstractEntity)
      */
     @Override
+    @FireAfterTransaction(events = { ConfigurationChangedEvent.class })
     public <T extends AbstractPreference> T save(T preference) {
         AssertUtils.notNull(preference, "Not allowed to call save with a NULL argument");
         List<? extends AbstractPreference> preferences = dao.findByType(preference.getClass());
@@ -124,7 +124,7 @@ public class ConfigurationServiceImpl implements ConfigurationService, Applicati
             if (preference.isNew()) {
                 if (LOGGER.isDebugEnabled()) {
                     LOGGER.debug("Fake. Do not save or persist an entity that is transient and duplicated");
-                    // FIXME [scherrer] : Do not nothing. clone and merge!
+                    // FIXME [scherrer] : Don't do nothing. clone and merge!
                 }
                 return preference;
             }
@@ -145,6 +145,7 @@ public class ConfigurationServiceImpl implements ConfigurationService, Applicati
      * @see org.openwms.core.service.ConfigurationService#merge(org.openwms.core.domain.system.AbstractPreference)
      */
     @Override
+    @FireAfterTransaction(events = { ConfigurationChangedEvent.class })
     public AbstractPreference merge(AbstractPreference preference) {
         AssertUtils.notNull(preference, "Not allowed to call merge with a NULL argument");
         List<? extends AbstractPreference> preferences = dao.findByType(preference.getClass());
@@ -162,6 +163,7 @@ public class ConfigurationServiceImpl implements ConfigurationService, Applicati
      * @see org.openwms.core.service.ConfigurationService#remove(org.openwms.core.domain.system.AbstractPreference)
      */
     @Override
+    @FireAfterTransaction(events = { ConfigurationChangedEvent.class })
     public void remove(AbstractPreference preference) {
         AssertUtils.notNull(preference, "Not allowed to call remove with a NULL argument");
         dao.remove(preference);

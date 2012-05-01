@@ -57,9 +57,7 @@ public class RoleServiceImpl implements RoleService {
     private static final Logger LOGGER = LoggerFactory.getLogger(RoleServiceImpl.class);
     @Autowired
     private RoleDao dao;
-    /**
-     * Springs service name.
-     */
+    /** Springs service name. */
     public static final String COMPONENT_NAME = "roleService";
 
     /**
@@ -108,5 +106,4 @@ public class RoleServiceImpl implements RoleService {
     public List<Role> findAll() {
         return dao.findAll();
     }
-
 }
