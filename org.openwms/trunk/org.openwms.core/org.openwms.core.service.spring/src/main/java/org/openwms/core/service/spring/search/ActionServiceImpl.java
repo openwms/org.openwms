@@ -64,11 +64,9 @@ public class ActionServiceImpl implements ActionService {
     }
 
     /**
-     * Returns a HashSet with all Actions.
-     * 
      * {@inheritDoc}
      * 
-     * @see org.openwms.web.core.ActionService#findAllActions()
+     * Returns a HashSet with all Actions.
      */
     @Override
     public Collection<Action> findAllActions() {
@@ -76,7 +74,7 @@ public class ActionServiceImpl implements ActionService {
     }
 
     /**
-     * @see org.openwms.web.core.ActionService#findAllActions(org.openwms.core.domain.system.usermanagement.User)
+     * {@inheritDoc}
      */
     @Override
     @SuppressWarnings("unchecked")
@@ -92,7 +90,7 @@ public class ActionServiceImpl implements ActionService {
     }
 
     /**
-     * @see org.openwms.web.core.ActionService#findAllTags(org.openwms.core.domain.system.usermanagement.User)
+     * {@inheritDoc}
      */
     @Override
     public Collection<Tag> findAllTags(User user) {
@@ -100,8 +98,7 @@ public class ActionServiceImpl implements ActionService {
     }
 
     /**
-     * @see org.openwms.core.service.search.ActionService#save(org.openwms.core.domain.system.usermanagement.User,
-     *      java.util.Collection)
+     * {@inheritDoc}
      */
     @SuppressWarnings("unchecked")
     @Override

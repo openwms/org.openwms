@@ -86,8 +86,6 @@ public class SecurityContextUserServiceImpl implements UserDetailsService, Appli
 
     /**
      * {@inheritDoc}
-     * 
-     * @see org.springframework.context.ApplicationListener#onApplicationEvent(org.springframework.context.ApplicationEvent)
      */
     @Override
     public void onApplicationEvent(UserChangedEvent event) {
@@ -100,7 +98,7 @@ public class SecurityContextUserServiceImpl implements UserDetailsService, Appli
     }
 
     /**
-     * @see org.springframework.security.core.userdetails.UserDetailsService#loadUserByUsername(java.lang.String)
+     * {@inheritDoc}
      * 
      * @param username
      *            User's username to search for

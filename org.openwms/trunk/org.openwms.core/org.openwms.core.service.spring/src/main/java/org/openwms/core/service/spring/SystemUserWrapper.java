@@ -22,7 +22,6 @@ package org.openwms.core.service.spring;
 
 import java.util.Collection;
 
-import org.openwms.core.domain.system.usermanagement.SystemUser;
 import org.openwms.core.domain.system.usermanagement.User;
 import org.springframework.security.core.GrantedAuthority;
 
@@ -51,7 +50,6 @@ public class SystemUserWrapper extends UserWrapper {
      * Get the password.
      * 
      * @return this password or the password, set in the superclass
-     * @see org.openwms.core.service.spring.UserWrapper#getPassword()
      */
     @Override
     public String getPassword() {
@@ -72,9 +70,8 @@ public class SystemUserWrapper extends UserWrapper {
      * {@inheritDoc}
      * 
      * For the SystemUser account always add the
-     * {@link SystemUser#SYSTEM_ROLE_NAME} to the collection of authorities.
-     * 
-     * @see org.openwms.core.service.spring.UserWrapper#addDefaultGrants(java.util.Collection)
+     * {@link org.openwms.core.domain.system.usermanagement.SystemUser#SYSTEM_ROLE_NAME}
+     * to the collection of authorities.
      */
     @Override
     protected void addDefaultGrants(Collection<GrantedAuthority> authorities) {
@@ -85,8 +82,6 @@ public class SystemUserWrapper extends UserWrapper {
      * {@inheritDoc}
      * 
      * Use password field in addition to inherited fields.
-     * 
-     * @see java.lang.Object#hashCode()
      */
     @Override
     public int hashCode() {
@@ -100,8 +95,6 @@ public class SystemUserWrapper extends UserWrapper {
      * {@inheritDoc}
      * 
      * Use password field for comparison.
-     * 
-     * @see java.lang.Object#equals(java.lang.Object)
      */
     @Override
     public boolean equals(Object obj) {

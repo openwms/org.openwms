@@ -70,8 +70,6 @@ public class ConfigurationServiceImpl implements ConfigurationService, Applicati
      * 
      * When an event arrives all <i>new</i> preferences received from the file
      * provider are persisted. Already persisted preferences are ignored.
-     * 
-     * @see org.springframework.context.ApplicationListener#onApplicationEvent(org.springframework.context.ApplicationEvent)
      */
     @Override
     public void onApplicationEvent(MergePropertiesEvent event) {
@@ -82,8 +80,6 @@ public class ConfigurationServiceImpl implements ConfigurationService, Applicati
      * {@inheritDoc}
      * 
      * No match returns an empty List ({@link Collections#emptyList()}).
-     * 
-     * @see org.openwms.core.service.spring.EntityServiceImpl#findAll()
      */
     @Override
     public Collection<AbstractPreference> findAll() {
@@ -113,7 +109,6 @@ public class ConfigurationServiceImpl implements ConfigurationService, Applicati
      * 
      * @throws IllegalArgumentException
      *             when <code>preference</code> is <code>null</code>
-     * @see org.openwms.core.service.spring.EntityServiceImpl#save(org.openwms.core.domain.AbstractEntity)
      */
     @Override
     @FireAfterTransaction(events = { ConfigurationChangedEvent.class })
@@ -142,7 +137,6 @@ public class ConfigurationServiceImpl implements ConfigurationService, Applicati
      * 
      * @throws IllegalArgumentException
      *             when <code>preference</code> is <code>null</code>
-     * @see org.openwms.core.service.ConfigurationService#merge(org.openwms.core.domain.system.AbstractPreference)
      */
     @Override
     @FireAfterTransaction(events = { ConfigurationChangedEvent.class })
@@ -160,7 +154,6 @@ public class ConfigurationServiceImpl implements ConfigurationService, Applicati
      * 
      * @throws IllegalArgumentException
      *             when <code>preference</code> is <code>null</code>
-     * @see org.openwms.core.service.ConfigurationService#remove(org.openwms.core.domain.system.AbstractPreference)
      */
     @Override
     @FireAfterTransaction(events = { ConfigurationChangedEvent.class })

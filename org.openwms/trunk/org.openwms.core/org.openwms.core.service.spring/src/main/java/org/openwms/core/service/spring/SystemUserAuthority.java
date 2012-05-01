@@ -36,8 +36,6 @@ final class SystemUserAuthority implements GrantedAuthority {
 
     /**
      * {@inheritDoc}
-     * 
-     * @see java.lang.Object#hashCode()
      */
     @Override
     public int hashCode() {
@@ -49,8 +47,6 @@ final class SystemUserAuthority implements GrantedAuthority {
 
     /**
      * {@inheritDoc}
-     * 
-     * @see java.lang.Object#equals(java.lang.Object)
      */
     @Override
     public boolean equals(Object obj) {
@@ -70,8 +66,6 @@ final class SystemUserAuthority implements GrantedAuthority {
      * {@inheritDoc}
      * 
      * Return the System User's rolename.
-     * 
-     * @see org.springframework.security.core.GrantedAuthority#getAuthority()
      */
     @Override
     public String getAuthority() {
