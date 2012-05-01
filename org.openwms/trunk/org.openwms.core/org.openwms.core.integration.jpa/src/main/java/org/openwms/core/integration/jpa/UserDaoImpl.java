@@ -29,6 +29,8 @@ import org.openwms.core.domain.system.usermanagement.SystemUser;
 import org.openwms.core.domain.system.usermanagement.User;
 import org.openwms.core.domain.system.usermanagement.UserPassword;
 import org.openwms.core.integration.UserDao;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
@@ -53,16 +55,20 @@ import org.springframework.transaction.annotation.Transactional;
 @Repository(UserDaoImpl.COMPONENT_NAME)
 public class UserDaoImpl extends AbstractGenericJpaDao<User, Long> implements UserDao {
 
-    /**
-     * Springs component name.
-     */
+    private static final Logger LOGGER = LoggerFactory.getLogger(UserDaoImpl.class);
+    /** Springs component name. */
     public static final String COMPONENT_NAME = "userDao";
 
     /**
      * {@inheritDoc}
-     * 
-     * @return Name of the query
-     * @see org.openwms.core.integration.jpa.AbstractGenericJpaDao#getFindAllQuery()
+     */
+    @Override
+    protected Class<User> getPersistentClass() {
+        return User.class;
+    }
+
+    /**
+     * {@inheritDoc}
      */
     @Override
     protected String getFindAllQuery() {
@@ -71,9 +77,6 @@ public class UserDaoImpl extends AbstractGenericJpaDao<User, Long> implements Us
 
     /**
      * {@inheritDoc}
-     * 
-     * @return Name of the query
-     * @see org.openwms.core.integration.jpa.AbstractGenericJpaDao#getFindByUniqueIdQuery()
      */
     @Override
     protected String getFindByUniqueIdQuery() {
@@ -84,9 +87,6 @@ public class UserDaoImpl extends AbstractGenericJpaDao<User, Long> implements Us
      * {@inheritDoc}
      * 
      * If no Users were found, <code>null</code> is returned.
-     * 
-     * @return List of all {@link User}s
-     * @see org.openwms.core.integration.jpa.AbstractGenericJpaDao#findAll()
      */
     @Override
     public List<User> findAll() {
@@ -130,7 +130,7 @@ public class UserDaoImpl extends AbstractGenericJpaDao<User, Long> implements Us
     @Override
     public void remove(User user) {
         if (isSuperUser(user)) {
-            logger.info("Not allowed to remove system user, return quietly");
+            LOGGER.info("Not allowed to remove system user, return quietly");
             return;
         }
         for (Role role : user.getRoles()) {

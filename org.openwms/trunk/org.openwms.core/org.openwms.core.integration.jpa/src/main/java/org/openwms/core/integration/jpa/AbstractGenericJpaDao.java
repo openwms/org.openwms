@@ -21,7 +21,6 @@
 package org.openwms.core.integration.jpa;
 
 import java.io.Serializable;
-import java.lang.reflect.ParameterizedType;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
@@ -33,8 +32,6 @@ import javax.persistence.Query;
 import org.openwms.core.domain.AbstractEntity;
 import org.openwms.core.integration.GenericDao;
 import org.openwms.core.integration.exception.NoUniqueResultException;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -66,22 +63,12 @@ public abstract class AbstractGenericJpaDao<T extends AbstractEntity, ID extends
 
     @PersistenceContext
     private EntityManager em;
-    private Class<T> persistentClass;
-
-    /**
-     * Logger instance can be used by subclasses.
-     */
-    protected final Logger logger = LoggerFactory.getLogger(this.getClass());
 
     /**
      * Create a new AbstractGenericJpaDao.
      */
-    @SuppressWarnings("unchecked")
     protected AbstractGenericJpaDao() {
-        if (getClass().getGenericSuperclass() != null) {
-            this.persistentClass = (Class<T>) ((ParameterizedType) getClass().getGenericSuperclass())
-                    .getActualTypeArguments()[0];
-        }
+
     }
 
     /**
@@ -90,17 +77,7 @@ public abstract class AbstractGenericJpaDao<T extends AbstractEntity, ID extends
      * 
      * @return Entity class type.
      */
-    protected Class<T> getPersistentClass() {
-        return persistentClass;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public void setPersistentClass(Class<T> persistentClass) {
-        this.persistentClass = persistentClass;
-    }
+    protected abstract Class<T> getPersistentClass();
 
     /**
      * {@inheritDoc}

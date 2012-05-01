@@ -47,7 +47,6 @@ public class CustomPersistenceUnitManager extends DefaultPersistenceUnitManager 
      * 
      * @param pui
      *            {@link javax.persistence.spi.PersistenceUnitInfo}
-     * @see org.springframework.orm.jpa.persistenceunit.DefaultPersistenceUnitManager#postProcessPersistenceUnitInfo(org.springframework.orm.jpa.persistenceunit.MutablePersistenceUnitInfo)
      */
     @Override
     protected void postProcessPersistenceUnitInfo(MutablePersistenceUnitInfo pui) {

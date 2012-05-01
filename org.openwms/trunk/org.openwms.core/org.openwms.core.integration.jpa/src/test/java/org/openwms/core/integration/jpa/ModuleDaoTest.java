@@ -38,7 +38,7 @@ import org.springframework.test.context.ContextConfiguration;
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  * @version $Revision$
  */
-@ContextConfiguration("classpath:/org/openwms/core/integration/jpa/Test-context.xml")
+@ContextConfiguration("classpath:Test-context.xml")
 public class ModuleDaoTest extends AbstractJpaSpringContextTests {
 
     @Autowired

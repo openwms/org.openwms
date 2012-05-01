@@ -54,8 +54,6 @@ public class RoleDaoImpl extends AbstractGenericJpaDao<Role, Long> implements Ro
 
     /**
      * {@inheritDoc}
-     * 
-     * @see org.openwms.core.integration.RoleDao#removeFromRoles(List)
      */
     @Override
     public void removeFromRoles(List<? extends SecurityObject> securityObjects) {
@@ -82,5 +80,13 @@ public class RoleDaoImpl extends AbstractGenericJpaDao<Role, Long> implements Ro
     @Override
     protected String getFindByUniqueIdQuery() {
         return Role.NQ_FIND_BY_UNIQUE_QUERY;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    protected Class<Role> getPersistentClass() {
+        return Role.class;
     }
 }

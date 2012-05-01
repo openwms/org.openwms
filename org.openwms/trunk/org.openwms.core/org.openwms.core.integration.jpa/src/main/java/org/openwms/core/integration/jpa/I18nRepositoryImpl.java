@@ -27,7 +27,7 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 /**
- * An I18nRepositoryImpl is responsible to find and retrieve i18n translation
+ * An I18nRepositoryImpl is responsible to find and retrieve i18n translations
  * from the persistent storage. It can be injected by name
  * {@value #COMPONENT_NAME}.
  * <p>
@@ -42,15 +42,11 @@ import org.springframework.transaction.annotation.Transactional;
 @Repository(I18nRepositoryImpl.COMPONENT_NAME)
 public class I18nRepositoryImpl extends AbstractGenericJpaDao<I18n, Long> implements I18nRepository {
 
-    /**
-     * Springs component name.
-     */
+    /** Springs component name. */
     public static final String COMPONENT_NAME = "i18nRepo";
 
     /**
      * {@inheritDoc}
-     * 
-     * @see org.openwms.core.integration.jpa.AbstractGenericJpaDao#getFindAllQuery()
      */
     @Override
     protected String getFindAllQuery() {
@@ -59,12 +55,17 @@ public class I18nRepositoryImpl extends AbstractGenericJpaDao<I18n, Long> implem
 
     /**
      * {@inheritDoc}
-     * 
-     * @see org.openwms.core.integration.jpa.AbstractGenericJpaDao#getFindByUniqueIdQuery()
      */
     @Override
     protected String getFindByUniqueIdQuery() {
         return I18n.NQ_FIND_BY_UNIQUE_QUERY;
     }
 
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    protected Class<I18n> getPersistentClass() {
+        return I18n.class;
+    }
 }

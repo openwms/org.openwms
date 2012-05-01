@@ -59,8 +59,6 @@ public class PreferencesDaoImpl implements PreferenceWriter<Long> {
 
     /**
      * {@inheritDoc}
-     * 
-     * @see org.openwms.core.integration.PreferenceDao#findByKey(java.io.Serializable)
      */
     @Override
     public AbstractPreference findByKey(Long id) {
@@ -69,8 +67,6 @@ public class PreferencesDaoImpl implements PreferenceWriter<Long> {
 
     /**
      * {@inheritDoc}
-     * 
-     * @see org.openwms.core.integration.PreferenceDao#findByType(java.lang.Class)
      */
     @Override
     @SuppressWarnings("unchecked")
@@ -80,9 +76,6 @@ public class PreferencesDaoImpl implements PreferenceWriter<Long> {
 
     /**
      * {@inheritDoc}
-     * 
-     * @see org.openwms.core.integration.PreferenceDao#findByType(java.lang.Class,
-     *      java.lang.String)
      */
     @Override
     @SuppressWarnings("unchecked")
@@ -93,8 +86,6 @@ public class PreferencesDaoImpl implements PreferenceWriter<Long> {
 
     /**
      * {@inheritDoc}
-     * 
-     * @see org.openwms.core.integration.PreferenceDao#findAll()
      */
     @Override
     @SuppressWarnings("unchecked")
@@ -111,8 +102,6 @@ public class PreferencesDaoImpl implements PreferenceWriter<Long> {
      * 
      * Call {@link EntityManager#persist(Object)} for transient instances and
      * {@link EntityManager#merge(Object)} for detached and managed ones.
-     * 
-     * @see org.openwms.core.integration.PreferenceWriter#save(org.openwms.core.domain.system.AbstractPreference)
      */
     @Override
     public <T extends AbstractPreference> T save(T entity) {
@@ -124,8 +113,6 @@ public class PreferencesDaoImpl implements PreferenceWriter<Long> {
 
     /**
      * {@inheritDoc}
-     * 
-     * @see org.openwms.core.integration.PreferenceWriter#persist(org.openwms.core.domain.system.AbstractPreference)
      */
     @Override
     public <T extends AbstractPreference> void persist(T entity) {
@@ -138,8 +125,6 @@ public class PreferencesDaoImpl implements PreferenceWriter<Long> {
      * If <code>entity</code> is not already managed, call
      * {@link EntityManager#merge(Object)} before to attach it to the
      * persistence context.
-     * 
-     * @see org.openwms.core.integration.PreferenceWriter#remove(org.openwms.core.domain.system.AbstractPreference)
      */
     @Override
     public void remove(AbstractPreference entity) {
