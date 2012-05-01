@@ -26,6 +26,8 @@ import org.openwms.common.domain.LocationGroup;
 import org.openwms.common.integration.LocationGroupDao;
 import org.openwms.core.integration.jpa.AbstractGenericJpaDao;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  * A LocationGroupDaoImpl.
@@ -36,11 +38,16 @@ import org.springframework.stereotype.Repository;
  * @see org.openwms.core.integration.jpa.AbstractGenericJpaDao
  * @see org.openwms.common.integration.LocationGroupDao
  */
-@Repository("locationGroupDao")
+@Transactional(propagation = Propagation.MANDATORY)
+@Repository(LocationGroupDaoImpl.COMPONENT_NAME)
 public class LocationGroupDaoImpl extends AbstractGenericJpaDao<LocationGroup, Long> implements LocationGroupDao {
 
+    /** Springs component name. */
+    public static final String COMPONENT_NAME = "locationGroupDao";
+
     /**
-     * @return Name of the query
+     * {@inheritDoc}
+     * 
      * @see org.openwms.core.integration.jpa.AbstractGenericJpaDao#getFindAllQuery()
      */
     @Override
@@ -49,7 +56,8 @@ public class LocationGroupDaoImpl extends AbstractGenericJpaDao<LocationGroup, L
     }
 
     /**
-     * @return Name of the query
+     * {@inheritDoc}
+     * 
      * @see org.openwms.core.integration.jpa.AbstractGenericJpaDao#getFindByUniqueIdQuery()
      */
     @Override
@@ -58,14 +66,20 @@ public class LocationGroupDaoImpl extends AbstractGenericJpaDao<LocationGroup, L
     }
 
     /**
-     * Update the date of last change before update.
-     * 
-     * @param entity
-     *            LocationGroup to be updated
+     * {@inheritDoc}
      */
     @Override
     protected void beforeUpdate(LocationGroup entity) {
         entity.setLastUpdated(new Date());
     }
 
+    /**
+     * {@inheritDoc}
+     * 
+     * @see org.openwms.core.integration.jpa.AbstractGenericJpaDao#getPersistentClass()
+     */
+    @Override
+    protected Class<LocationGroup> getPersistentClass() {
+        return LocationGroup.class;
+    }
 }
