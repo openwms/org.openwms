@@ -40,11 +40,9 @@ package org.openwms.common.domain {
          *
          * @param type The type to set
          */
-        public function set type(value:String):void {
+        public function set type(value : String) : void {
             _type = value;
         }
 
     }
 }
-
-

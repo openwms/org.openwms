@@ -60,7 +60,6 @@ package org.openwms.common.domain {
             // Not allowed
         }
 
-
         /**
          * Returns the locationId in the format area/aisle/x/y/z.
          *
