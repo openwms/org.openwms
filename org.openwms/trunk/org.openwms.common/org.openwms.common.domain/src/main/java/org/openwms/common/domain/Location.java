@@ -358,7 +358,7 @@ public class Location extends Target {
      * @return Timestamp of the last update
      */
     public Date getLastAccess() {
-        return new Date(this.lastAccess.getTime());
+        return this.lastAccess;
     }
 
     /**
@@ -561,7 +561,7 @@ public class Location extends Target {
      *            The date of change.
      */
     public void setLastAccess(Date lastAccess) {
-        this.lastAccess = new Date(lastAccess.getTime());
+        this.lastAccess = lastAccess;
     }
 
     /**

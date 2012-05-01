@@ -76,6 +76,9 @@ public class UnitUserType implements CompositeUserType {
 
     /**
      * {@inheritDoc}
+     * 
+     * @throws HibernateException
+     *             in case of errors
      */
     @Override
     public Object getPropertyValue(Object component, int property) throws HibernateException {
@@ -93,6 +96,9 @@ public class UnitUserType implements CompositeUserType {
      * {@inheritDoc}
      * 
      * We have immutable types, throw an UnsupportedOperationException here.
+     * 
+     * @throws HibernateException
+     *             in case of errors
      */
     @Override
     public void setPropertyValue(Object component, int property, Object value) throws HibernateException {
@@ -113,7 +119,10 @@ public class UnitUserType implements CompositeUserType {
     /**
      * {@inheritDoc}
      * 
-     * Delegate to Unit implementation
+     * Delegate to Unit implementation.
+     * 
+     * @throws HibernateException
+     *             in case of errors
      */
     @Override
     public boolean equals(Object x, Object y) throws HibernateException {
@@ -129,7 +138,10 @@ public class UnitUserType implements CompositeUserType {
     /**
      * {@inheritDoc}
      * 
-     * Delegate to Unit implementation
+     * Delegate to Unit implementation.
+     * 
+     * @throws HibernateException
+     *             in case of errors
      */
     @Override
     public int hashCode(Object x) throws HibernateException {
@@ -145,6 +157,11 @@ public class UnitUserType implements CompositeUserType {
      * <li>Piece</li>
      * <li>Weight</li>
      * </ul>
+     * 
+     * @throws HibernateException
+     *             in case of errors
+     * @throws SQLException
+     *             in case of database errors
      */
     @Override
     public Object nullSafeGet(ResultSet rs, String[] names, SessionImplementor session, Object owner)
@@ -170,6 +187,11 @@ public class UnitUserType implements CompositeUserType {
      * {@inheritDoc}
      * 
      * We've to store the concrete classname as well.
+     * 
+     * @throws HibernateException
+     *             in case of errors
+     * @throws SQLException
+     *             in case of database errors
      */
     @Override
     public void nullSafeSet(PreparedStatement st, Object value, int index, SessionImplementor session)
@@ -206,6 +228,9 @@ public class UnitUserType implements CompositeUserType {
      * {@inheritDoc}
      * 
      * No deep copy -> Immutable types.
+     * 
+     * @throws HibernateException
+     *             in case of errors
      */
     @Override
     public Object deepCopy(Object value) throws HibernateException {
@@ -215,7 +240,7 @@ public class UnitUserType implements CompositeUserType {
     /**
      * {@inheritDoc}
      * 
-     * All Unit types aren't mutable
+     * All Unit types aren't mutable.
      */
     @Override
     public boolean isMutable() {
@@ -225,7 +250,10 @@ public class UnitUserType implements CompositeUserType {
     /**
      * {@inheritDoc}
      * 
-     * Just cast
+     * Just cast.
+     * 
+     * @throws HibernateException
+     *             in case of errors
      */
     @Override
     public Serializable disassemble(Object value, SessionImplementor session) throws HibernateException {
@@ -234,6 +262,9 @@ public class UnitUserType implements CompositeUserType {
 
     /**
      * {@inheritDoc}
+     * 
+     * @throws HibernateException
+     *             in case of errors
      */
     @Override
     public Object assemble(Serializable cached, SessionImplementor session, Object owner) throws HibernateException {
@@ -242,6 +273,9 @@ public class UnitUserType implements CompositeUserType {
 
     /**
      * {@inheritDoc}
+     * 
+     * @throws HibernateException
+     *             in case of errors
      */
     @Override
     public Object replace(Object original, Object target, SessionImplementor session, Object owner)

@@ -44,9 +44,8 @@ import org.openwms.common.domain.types.Target;
 import org.openwms.common.domain.values.LocationGroupState;
 
 /**
- * A LocationGroup is a logical group of
- * <code>Location<code>s, grouping together <code>Location</code>s with same
- * characteristics.
+ * A LocationGroup is a logical group of <code>Location</code>s, grouping
+ * together <code>Location</code>s with same characteristics.
  * 
  * @GlossaryTerm
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
@@ -281,27 +280,27 @@ public class LocationGroup extends Target {
     /**
      * Change the infeed state of the <code>LocationGroup</code>.
      * 
-     * @param groupStateIn
+     * @param gStateIn
      *            The state to set
-     * @param locker
+     * @param lockLg
      *            The <code>LocationGroup</code> that wants to lock/unlock this
      *            <code>LocationGroup</code>.
      */
-    public void setGroupStateIn(LocationGroupState groupStateIn, LocationGroup locker) {
-        if (this.groupStateIn == LocationGroupState.NOT_AVAILABLE && groupStateIn == LocationGroupState.AVAILABLE
-                && (this.stateInLocker == null || this.stateInLocker.equals(locker))) {
-            this.groupStateIn = groupStateIn;
+    public void setGroupStateIn(LocationGroupState gStateIn, LocationGroup lockLg) {
+        if (this.groupStateIn == LocationGroupState.NOT_AVAILABLE && gStateIn == LocationGroupState.AVAILABLE
+                && (this.stateInLocker == null || this.stateInLocker.equals(lockLg))) {
+            this.groupStateIn = gStateIn;
             this.stateInLocker = null;
             for (LocationGroup child : locationGroups) {
-                child.setGroupStateIn(groupStateIn, locker);
+                child.setGroupStateIn(gStateIn, lockLg);
             }
         }
-        if (this.groupStateIn == LocationGroupState.AVAILABLE && groupStateIn == LocationGroupState.NOT_AVAILABLE
-                && (this.stateInLocker == null || this.stateInLocker.equals(locker))) {
-            this.groupStateIn = groupStateIn;
-            this.stateInLocker = locker;
+        if (this.groupStateIn == LocationGroupState.AVAILABLE && gStateIn == LocationGroupState.NOT_AVAILABLE
+                && (this.stateInLocker == null || this.stateInLocker.equals(lockLg))) {
+            this.groupStateIn = gStateIn;
+            this.stateInLocker = lockLg;
             for (LocationGroup child : locationGroups) {
-                child.setGroupStateIn(groupStateIn, locker);
+                child.setGroupStateIn(gStateIn, lockLg);
             }
         }
     }
@@ -318,27 +317,27 @@ public class LocationGroup extends Target {
     /**
      * Set the outfeed state of the <code>LocationGroup</code>.
      * 
-     * @param groupStateOut
+     * @param gStateOut
      *            The state to set
-     * @param locker
+     * @param lockLg
      *            The <code>LocationGroup</code> that wants to lock/unlock this
      *            <code>LocationGroup</code>.
      */
-    public void setGroupStateOut(LocationGroupState groupStateOut, LocationGroup locker) {
-        if (this.groupStateOut == LocationGroupState.NOT_AVAILABLE && groupStateOut == LocationGroupState.AVAILABLE
-                && (this.stateOutLocker == null || this.stateOutLocker.equals(locker))) {
-            this.groupStateOut = groupStateOut;
+    public void setGroupStateOut(LocationGroupState gStateOut, LocationGroup lockLg) {
+        if (this.groupStateOut == LocationGroupState.NOT_AVAILABLE && gStateOut == LocationGroupState.AVAILABLE
+                && (this.stateOutLocker == null || this.stateOutLocker.equals(lockLg))) {
+            this.groupStateOut = gStateOut;
             this.stateOutLocker = null;
             for (LocationGroup child : locationGroups) {
-                child.setGroupStateOut(groupStateOut, locker);
+                child.setGroupStateOut(gStateOut, lockLg);
             }
         }
-        if (this.groupStateOut == LocationGroupState.AVAILABLE && groupStateOut == LocationGroupState.NOT_AVAILABLE
-                && (this.stateOutLocker == null || this.stateOutLocker.equals(locker))) {
-            this.groupStateOut = groupStateOut;
-            this.stateOutLocker = locker;
+        if (this.groupStateOut == LocationGroupState.AVAILABLE && gStateOut == LocationGroupState.NOT_AVAILABLE
+                && (this.stateOutLocker == null || this.stateOutLocker.equals(lockLg))) {
+            this.groupStateOut = gStateOut;
+            this.stateOutLocker = lockLg;
             for (LocationGroup child : locationGroups) {
-                child.setGroupStateOut(groupStateOut, locker);
+                child.setGroupStateOut(gStateOut, lockLg);
             }
         }
     }
@@ -409,7 +408,7 @@ public class LocationGroup extends Target {
      * @return lastUpdated.
      */
     public Date getLastUpdated() {
-        return new Date(this.lastUpdated.getTime());
+        return this.lastUpdated;
     }
 
     /**
@@ -419,7 +418,7 @@ public class LocationGroup extends Target {
      *            The date to set
      */
     public void setLastUpdated(Date lastUpdated) {
-        this.lastUpdated = new Date(lastUpdated.getTime());
+        this.lastUpdated = lastUpdated;
     }
 
     /**
