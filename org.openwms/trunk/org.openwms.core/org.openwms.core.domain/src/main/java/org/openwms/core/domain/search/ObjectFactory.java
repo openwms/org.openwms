@@ -36,7 +36,7 @@ import javax.xml.namespace.QName;
  * methods for each of these are provided in this class.
  * 
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
- * @version $Revision: $
+ * @version $Revision$
  * @since 0.2
  */
 @XmlRegistry

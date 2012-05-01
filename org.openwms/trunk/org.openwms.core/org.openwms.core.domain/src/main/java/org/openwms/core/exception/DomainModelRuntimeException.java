@@ -25,7 +25,7 @@ package org.openwms.core.exception;
  * unhandled runtime exceptions of the domain model layer.
  * 
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
- * @version $Revision: $
+ * @version $Revision$
  * @since 0.2
  */
 public class DomainModelRuntimeException extends RuntimeException {
