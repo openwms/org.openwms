@@ -23,8 +23,8 @@ package org.openwms.tms.service.delegate;
 import org.openwms.common.domain.TransportUnit;
 
 /**
- * A TransportOrderStateDelegate. Is called after state changes on a
- * TransportOrder have been performed.
+ * A TransportOrderStateDelegate is called after state changes on a
+ * TransportOrder happen.
  * 
  * @author <a href="mailto:russelltina@users.sourceforge.net">Tina Russell</a>
  * @version $Revision$

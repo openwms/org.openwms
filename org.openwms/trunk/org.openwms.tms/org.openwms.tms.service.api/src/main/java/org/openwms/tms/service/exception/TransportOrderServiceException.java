@@ -64,5 +64,4 @@ public class TransportOrderServiceException extends ServiceRuntimeException {
     public TransportOrderServiceException(String message, Throwable cause) {
         super(message, cause);
     }
-
 }
