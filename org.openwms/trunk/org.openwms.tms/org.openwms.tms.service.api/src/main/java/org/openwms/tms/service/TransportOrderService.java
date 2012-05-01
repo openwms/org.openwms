@@ -25,27 +25,21 @@ import java.util.List;
 import org.openwms.common.domain.Location;
 import org.openwms.common.domain.LocationGroup;
 import org.openwms.common.domain.values.Barcode;
-import org.openwms.core.service.EntityService;
 import org.openwms.tms.domain.order.TransportOrder;
 import org.openwms.tms.domain.values.PriorityLevel;
 import org.openwms.tms.domain.values.TransportOrderState;
 
 /**
- * A TransportService - Extends the {@link EntityService} interface about some
- * useful methods regarding the general handling with {@link TransportOrder}s.
- * <p>
- * Extends the {@link EntityService} interface about some useful methods
- * regarding the general handling with {@link TransportOrder}s.
- * </p>
+ * A TransportService offers some useful methods regarding the general handling
+ * of {@link TransportOrder}s.
  * 
  * @param <T>
  *            Any kind of {@link TransportOrder}
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  * @version $Revision$
  * @since 0.1
- * @see org.openwms.core.service.EntityService
  */
-public interface TransportOrderService<T extends TransportOrder> extends EntityService<T> {
+public interface TransportOrderService<T extends TransportOrder> {
 
     /**
      * Returns the actual number of active transports that have the
@@ -129,5 +123,4 @@ public interface TransportOrderService<T extends TransportOrder> extends EntityS
      */
     List<Integer> redirectTransportOrders(List<Integer> transportOrders, LocationGroup targetLocationGroup,
             Location targetLocation);
-
 }
