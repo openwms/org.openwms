@@ -43,19 +43,26 @@ import org.springframework.test.context.ContextConfiguration;
  * @version $Revision$
  * @since 0.1
  */
-@ContextConfiguration("classpath:/org/openwms/common/integration/jpa/Test-context.xml")
+@ContextConfiguration("classpath:common-jpa-test-context.xml")
 public class LocationTest extends AbstractJpaSpringContextTests {
 
     @Autowired
-    protected LocationDao locationDao;
+    private LocationDao locationDao;
     @Autowired
-    protected LocationGroupDao locationGroupDao;
+    private LocationGroupDao locationGroupDao;
 
-    LocationGroup locationGroup = new LocationGroup("TEST_LOCATION_GROUP1");
-    LocationGroup locationGroup2 = new LocationGroup("TEST_LOCATION_GROUP2");
-    Location actualLocation = new Location(new LocationPK("KNOWN", "KNOWN", "KNOWN", "KNOWN", "KNOWN"));
-    Location virtualLocation = new Location(new LocationPK("VIRTUAL", "VIRTUAL", "VIRTUAL", "VIRTUAL", "VIRTUAL"));
+    private LocationGroup locationGroup = new LocationGroup("TEST_LOCATION_GROUP1");
+    private LocationGroup locationGroup2 = new LocationGroup("TEST_LOCATION_GROUP2");
+    private Location actualLocation = new Location(new LocationPK("KNOWN", "KNOWN", "KNOWN", "KNOWN", "KNOWN"));
+    private Location virtualLocation = new Location(new LocationPK("VIRTUAL", "VIRTUAL", "VIRTUAL", "VIRTUAL",
+            "VIRTUAL"));
 
+    /**
+     * Setup some test data.
+     * 
+     * @throws Exception
+     *             in case of errors
+     */
     @Before
     public void onSetUpInTransaction() throws Exception {
         locationGroupDao.persist(locationGroup);
@@ -65,6 +72,10 @@ public class LocationTest extends AbstractJpaSpringContextTests {
         entityManager.clear();
     }
 
+    /**
+     * Test to assign the LocationGroup to a Location.
+     * 
+     */
     @Test
     public final void testSettingGroupOnLocation() {
         try {
