@@ -46,6 +46,7 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
+// Generated with interfaceBase template
 package ${jClass.as3Type.packageName} {<%
 
     ///////////////////////////////////////////////////////////////////////////
@@ -91,7 +92,7 @@ package ${jClass.as3Type.packageName} {<%
             }
             if (jProperty.readable && jProperty.name == 'new') {%>
         function isNew():${jProperty.as3Type.name};<%
-            } else if (jProperty.readable && (jProperty.name == 'version' || jProperty.name == 'id')) {%>
+            } else if (jProperty.readable && (jProperty.name == 'id')) {%>
 <%
             } else if (jProperty.readable)
             {%>

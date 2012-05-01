@@ -25,7 +25,7 @@ package org.openwms.core.domain.preferences {
     /**
      * A Preferences object is a collection of any type of AbstractPreferences.
      *
-     * @version $Revision: 1425 $
+     * @version $Revision$
      * @since 0.1
      */
     public class Preferences extends PreferencesBase {

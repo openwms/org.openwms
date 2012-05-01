@@ -18,6 +18,7 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
+// Generated with interface template
 package org.openwms.core.domain.values {
 
     import mx.collections.ListCollectionView;
@@ -49,6 +50,6 @@ package org.openwms.core.domain.values {
          *
          * @return The value of the base unit of the weight
          */
-        function get baseUnitValue() : Number;
+        function get baseUnitValue() : Object;
     }
 }

@@ -28,7 +28,7 @@ package org.openwms.core.domain.preferences {
     /**
      * A ModulePreference is a preference assigned to a particular Module only.
      *
-     * @version $Revision: 1425 $
+     * @version $Revision$
      * @since 0.1
      */
     public class ModulePreference extends ModulePreferenceBase {

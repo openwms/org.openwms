@@ -28,7 +28,7 @@ package org.openwms.core.domain.system.usermanagement {
     /**
      * A RolePreference is a preference assigned to a particular Role only.
      *
-     * @version $Revision: 1425 $
+     * @version $Revision$
      * @since 0.1
      */
     public class RolePreference extends RolePreferenceBase {

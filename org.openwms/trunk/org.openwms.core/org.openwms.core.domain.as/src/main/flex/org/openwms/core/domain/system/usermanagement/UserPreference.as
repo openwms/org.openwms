@@ -28,7 +28,7 @@ package org.openwms.core.domain.system.usermanagement {
     /**
      * An UserPreference is a preference assigned to a particular User only.
      *
-     * @version $Revision: 1425 $
+     * @version $Revision$
      * @since 0.1
      */
     public class UserPreference extends UserPreferenceBase {
