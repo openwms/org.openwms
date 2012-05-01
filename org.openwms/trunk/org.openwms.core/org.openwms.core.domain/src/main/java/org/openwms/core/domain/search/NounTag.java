@@ -25,7 +25,7 @@ package org.openwms.core.domain.search;
  * 
  * @GlossaryTerm
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
- * @version $Revision: $
+ * @version $Revision$
  * @since 0.2
  */
 public class NounTag extends Tag {

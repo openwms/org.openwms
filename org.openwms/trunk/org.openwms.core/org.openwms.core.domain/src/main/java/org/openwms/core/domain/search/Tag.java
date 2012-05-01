@@ -35,7 +35,7 @@ import javax.xml.bind.annotation.XmlType;
  * 
  * @GlossaryTerm
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
- * @version $Revision: $
+ * @version $Revision$
  * @since 0.2
  */
 @XmlAccessorType(XmlAccessType.FIELD)

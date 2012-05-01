@@ -49,7 +49,7 @@ import org.openwms.core.util.validation.AssertUtils;
  * 
  * @GlossaryTerm
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
- * @version $Revision: $
+ * @version $Revision$
  * @since 0.1
  */
 @XmlType(name = "modulePreference", namespace = "http://www.openwms.org/schema/preferences")

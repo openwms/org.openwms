@@ -25,7 +25,7 @@ package org.openwms.core.domain.search;
  * 
  * @GlossaryTerm
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
- * @version $Revision: $
+ * @version $Revision$
  * @since 0.2
  */
 public class VerbTag extends Tag {
@@ -55,7 +55,7 @@ public class VerbTag extends Tag {
      * A Builder class for <code>VerbTags</code>.
      * 
      * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
-     * @version $Revision: $
+     * @version $Revision$
      * @since 0.2
      */
     public static class Builder {

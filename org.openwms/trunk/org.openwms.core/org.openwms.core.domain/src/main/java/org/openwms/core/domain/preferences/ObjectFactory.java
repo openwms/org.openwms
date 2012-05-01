@@ -30,7 +30,7 @@ import javax.xml.bind.annotation.XmlRegistry;
  * methods for each of these are provided in this class.
  * 
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
- * @version $Revision: 1475 $
+ * @version $Revision$
  * @since 0.1
  */
 @XmlRegistry

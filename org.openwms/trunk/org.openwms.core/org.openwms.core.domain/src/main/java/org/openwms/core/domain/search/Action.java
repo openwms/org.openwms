@@ -48,7 +48,7 @@ import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
  * 
  * @GlossaryTerm
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
- * @version $Revision: $
+ * @version $Revision$
  * @since 0.2
  */
 @XmlAccessorType(XmlAccessType.FIELD)
@@ -269,7 +269,7 @@ public class Action implements Serializable {
      * A Builder class for <code>Action</code>s.
      * 
      * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
-     * @version $Revision: $
+     * @version $Revision$
      * @since 0.2
      */
     public static class Builder {

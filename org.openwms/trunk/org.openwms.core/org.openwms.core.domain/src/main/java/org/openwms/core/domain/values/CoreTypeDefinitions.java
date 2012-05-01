@@ -24,7 +24,7 @@ package org.openwms.core.domain.values;
  * A CoreTypeDefinitions.
  * 
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
- * @version $Revision: $
+ * @version $Revision$
  * @since 0.2
  */
 public final class CoreTypeDefinitions {
