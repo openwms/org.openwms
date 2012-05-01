@@ -43,7 +43,7 @@ import org.springframework.test.context.ContextConfiguration;
  * @version $Revision$
  * @since 0.1
  */
-@ContextConfiguration("classpath:/org/openwms/common/integration/jpa/Test-context.xml")
+@ContextConfiguration("classpath:common-jpa-test-context.xml")
 public class TransportUnitTest extends AbstractJpaSpringContextTests {
 
     /**
