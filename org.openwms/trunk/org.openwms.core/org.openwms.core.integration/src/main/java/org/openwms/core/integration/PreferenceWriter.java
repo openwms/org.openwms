@@ -31,7 +31,7 @@ import org.openwms.core.domain.system.AbstractPreference;
  * @param <ID>
  *            The type of the entity class' unique id
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
- * @version $Revision: $
+ * @version $Revision$
  * @since 0.1
  * @see org.openwms.core.integration.PreferenceDao
  */

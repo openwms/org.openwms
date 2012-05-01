@@ -26,8 +26,7 @@ import org.openwms.core.domain.system.usermanagement.Grant;
 import org.openwms.core.domain.system.usermanagement.SecurityObject;
 
 /**
- * A SecurityDao is used to find, modify and delete {@link SecurityObject}s, in
- * particular {@link Grant}s.
+ * A SecurityDao is used to find, modify and delete {@link SecurityObject}s.
  * 
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  * @version $Revision$

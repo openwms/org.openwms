@@ -129,13 +129,4 @@ public interface GenericDao<T extends AbstractEntity, ID extends Serializable> {
      *            Entity instance to be persisted
      */
     void persist(T entity);
-
-    /**
-     * Set the type of entity to deal with.
-     * 
-     * @param persistentClass
-     *            Class type of the entity instance
-     */
-    void setPersistentClass(Class<T> persistentClass);
-
 }
