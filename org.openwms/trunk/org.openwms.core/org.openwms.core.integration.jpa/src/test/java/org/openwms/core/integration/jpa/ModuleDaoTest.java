@@ -38,7 +38,7 @@ import org.springframework.test.context.ContextConfiguration;
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  * @version $Revision$
  */
-@ContextConfiguration("classpath:Test-context.xml")
+@ContextConfiguration("classpath:core-jpa-test-context.xml")
 public class ModuleDaoTest extends AbstractJpaSpringContextTests {
 
     @Autowired
@@ -66,5 +66,4 @@ public class ModuleDaoTest extends AbstractJpaSpringContextTests {
         assertTrue("Find module by query",
                 dao.findByPositionalParameters(Module.NQ_FIND_BY_UNIQUE_QUERY, "TMS").size() == 1);
     }
-
 }
