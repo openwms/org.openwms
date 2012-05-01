@@ -23,13 +23,11 @@ package org.openwms.common.service;
 import java.util.List;
 
 import org.openwms.common.domain.LocationGroup;
-import org.openwms.core.service.EntityService;
 import org.openwms.core.util.TreeNode;
 
 /**
- * A LocationGroupService - Extends the {@link EntityService} interface about
- * some useful methods regarding the general handling with {@link LocationGroup}
- * s.
+ * A LocationGroupService offers some useful methods regarding the general
+ * handling of {@link LocationGroup}s.
  * <p>
  * This interface is declared generic typed that implementation classes can use
  * any extension of {@link LocationGroup}s.
@@ -40,9 +38,8 @@ import org.openwms.core.util.TreeNode;
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  * @version $Revision$
  * @since 0.1
- * @see org.openwms.core.service.EntityService
  */
-public interface LocationGroupService<T extends LocationGroup> extends EntityService<T> {
+public interface LocationGroupService<T extends LocationGroup> {
 
     /**
      * Changes the GroupStates of a {@link LocationGroup}.<br>
@@ -80,6 +77,5 @@ public interface LocationGroupService<T extends LocationGroup> extends EntitySer
      *            The {@link LocationGroup} to save
      * @return The saved {@link LocationGroup}
      */
-    @Override
     T save(T locationGroup);
 }

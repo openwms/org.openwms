@@ -23,26 +23,22 @@ package org.openwms.common.service;
 import java.util.List;
 
 import org.openwms.common.domain.LocationPK;
-import org.openwms.common.domain.LocationType;
-import org.openwms.common.domain.Rule;
 import org.openwms.common.domain.TransportUnit;
 import org.openwms.common.domain.TransportUnitType;
 import org.openwms.common.domain.values.Barcode;
-import org.openwms.core.service.EntityService;
 
 /**
- * A TransportService is an extension of the {@link EntityService} interface
- * about some useful methods regarding the general handling with
- * {@link TransportUnit}s.
+ * A TransportService offers functionality to create, read, update and delete
+ * {@link TransportUnit}s. Additionally it defines useful methods regarding the
+ * general handling with {@link TransportUnit}s.
  * 
  * @param <T>
  *            Any kind of {@link TransportUnit}
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  * @version $Revision$
  * @since 0.1
- * @see org.openwms.core.service.EntityService
  */
-public interface TransportUnitService<T extends TransportUnit> extends EntityService<TransportUnit> {
+public interface TransportUnitService<T extends TransportUnit> {
 
     /**
      * Create a new {@link TransportUnit} with the type
@@ -58,7 +54,7 @@ public interface TransportUnitService<T extends TransportUnit> extends EntitySer
      *            placed on
      * @return The new created {@link TransportUnit} instance
      */
-    T createTransportUnit(Barcode barcode, TransportUnitType transportUnitType, LocationPK actualLocation);
+    T create(Barcode barcode, TransportUnitType transportUnitType, LocationPK actualLocation);
 
     /**
      * Move a {@link TransportUnit} identified by its {@link Barcode} to the
@@ -69,6 +65,7 @@ public interface TransportUnitService<T extends TransportUnit> extends EntitySer
      * @param targetLocationPK
      *            Unique identifier of the target <code>Location</code>
      */
+    // FIXME [scherrer] : Use Target instead
     void moveTransportUnit(Barcode barcode, LocationPK targetLocationPK);
 
     /**
@@ -83,71 +80,20 @@ public interface TransportUnitService<T extends TransportUnit> extends EntitySer
     void deleteTransportUnits(List<T> transportUnits);
 
     /**
-     * Returns an unsorted List of all {@link TransportUnit}s.
+     * Returns a List of all {@link TransportUnit}s.
      * 
      * @return A List of all {@link TransportUnit}s
      */
-    List<T> getAllTransportUnits();
+    List<T> findAll();
 
     /**
-     * Returns an unsorted List of all {@link TransportUnitType}s.
+     * Find and return a {@link TransportUnit} with a particular {@link Barcode}
+     * .
      * 
-     * @return A list of all {@link TransportUnitType}s
+     * @param barcode
+     *            {@link Barcode} of the {@link TransportUnit} to search for
+     * @return The {@link TransportUnit} or <code>null</code> when no
+     *         {@link TransportUnit} with this <code>barcode</code> exists
      */
-    List<TransportUnitType> getAllTransportUnitTypes();
-
-    /**
-     * Create a new {@link TransportUnitType}.
-     * 
-     * @param transportUnitType
-     *            The type to be created
-     * @return The new created {@link TransportUnitType} instance.
-     */
-    TransportUnitType createTransportUnitType(TransportUnitType transportUnitType);
-
-    /**
-     * Delete already persisted {@link TransportUnitType} instances.
-     * 
-     * @param transportUnitType
-     *            A list of all instances to be deleted.
-     */
-    void deleteTransportUnitTypes(List<TransportUnitType> transportUnitType);
-
-    /**
-     * Save an already persisted instance of {@link TransportUnitType}.
-     * 
-     * @param transportUnitType
-     *            The instance to be updated
-     * @return The updated instance
-     */
-    TransportUnitType saveTransportUnitType(TransportUnitType transportUnitType);
-
-    /**
-     * Update the List of {@link org.openwms.common.domain.TypePlacingRule}s for
-     * the given {@link TransportUnitType} type.
-     * 
-     * @param type
-     *            The {@link TransportUnitType} to update.
-     * @param newAssigned
-     *            A new List of {@link LocationType}s that are allowed for the
-     *            {@link TransportUnitType}.
-     * @param newNotAssigned
-     *            A List of {@link LocationType}s. All
-     *            {@link org.openwms.common.domain.TypePlacingRule}s will be
-     *            removed which have one of this {@link LocationType}s and the
-     *            requested {@link TransportUnitType} type.
-     * @return The updated {@link TransportUnitType}.
-     */
-    TransportUnitType updateRules(String type, List<LocationType> newAssigned, List<LocationType> newNotAssigned);
-
-    /**
-     * Return a List of all {@link org.openwms.common.domain.Rule}s that belong
-     * to this {@link TransportUnitType} type.
-     * 
-     * @param transportUnitType
-     *            The {@link TransportUnitType} to search for.
-     * @return The requested List or <code>null</code> if no {@link Rule} was
-     *         found.
-     */
-    List<Rule> loadRules(String transportUnitType);
+    T findByBarcode(Barcode barcode);
 }
