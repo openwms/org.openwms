@@ -74,7 +74,7 @@ public class CoreServiceAdvice {
         } finally {
             if (LOGGER.isDebugEnabled() && sw != null) {
                 sw.stop();
-                LOGGER.debug("<<-- took about [ms]:" + sw.getTime());
+                LOGGER.debug("<<-- " + pjp.toShortString() + " took about [ms]:" + sw.getTime());
             }
         }
     }

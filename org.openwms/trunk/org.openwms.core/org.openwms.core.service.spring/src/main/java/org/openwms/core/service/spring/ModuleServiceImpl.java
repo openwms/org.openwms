@@ -51,9 +51,7 @@ public class ModuleServiceImpl implements ModuleService {
     private static final Logger LOGGER = LoggerFactory.getLogger(ModuleServiceImpl.class);
     @Autowired
     private ModuleDao dao;
-    /**
-     * Springs component name.
-     */
+    /** Springs component name. */
     public static final String COMPONENT_NAME = "moduleService";
 
     /**
