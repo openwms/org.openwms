@@ -35,7 +35,9 @@
         <class>org.openwms.core.domain.system.usermanagement.RolePreference</class>
         <class>org.openwms.core.domain.system.usermanagement.UserPreference</class>
         <class>org.openwms.core.domain.system.usermanagement.UserPassword</class>
+        <class>org.openwms.core.domain.values.Piece</class>
         <class>org.openwms.core.domain.values.Unit</class>
+        
         <class>org.openwms.common.domain.Location</class>
         <class>org.openwms.common.domain.LocationPK</class>
         <class>org.openwms.common.domain.LocationGroup</class>

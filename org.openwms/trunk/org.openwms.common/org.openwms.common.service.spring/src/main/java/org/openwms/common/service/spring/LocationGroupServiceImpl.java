@@ -27,7 +27,6 @@ import org.openwms.common.domain.values.LocationGroupState;
 import org.openwms.common.integration.LocationGroupDao;
 import org.openwms.common.service.LocationGroupService;
 import org.openwms.core.service.exception.ServiceRuntimeException;
-import org.openwms.core.service.spring.EntityServiceImpl;
 import org.openwms.core.util.TreeNode;
 import org.openwms.core.util.TreeNodeImpl;
 import org.slf4j.Logger;
@@ -47,8 +46,7 @@ import org.springframework.transaction.annotation.Transactional;
  */
 @Service
 @Transactional
-public class LocationGroupServiceImpl extends EntityServiceImpl<LocationGroup, Long> implements
-        LocationGroupService<LocationGroup> {
+public class LocationGroupServiceImpl implements LocationGroupService<LocationGroup> {
 
     private Logger logger = LoggerFactory.getLogger(this.getClass());
 
@@ -91,7 +89,7 @@ public class LocationGroupServiceImpl extends EntityServiceImpl<LocationGroup, L
      * @param persisted
      *            The instance read from the persisted storage
      * @param locationGroup
-     * 
+     *            The new LocationGroup to merge
      * @return The merged persisted object
      */
     protected LocationGroup mergeLocationGroup(LocationGroup persisted, LocationGroup locationGroup) {
@@ -144,8 +142,7 @@ public class LocationGroupServiceImpl extends EntityServiceImpl<LocationGroup, L
     @Transactional(readOnly = true)
     @Override
     public TreeNode<LocationGroup> getLocationGroupsAsTree() {
-        TreeNode<LocationGroup> tree = createTree(new TreeNodeImpl<LocationGroup>(), getLocationGroupsAsList());
-        return tree;
+        return createTree(new TreeNodeImpl<LocationGroup>(), getLocationGroupsAsList());
     }
 
     /**
@@ -154,8 +151,7 @@ public class LocationGroupServiceImpl extends EntityServiceImpl<LocationGroup, L
     @Transactional(readOnly = true)
     @Override
     public List<LocationGroup> getLocationGroupsAsList() {
-        List<LocationGroup> locationGroups = dao.findAll();
-        return locationGroups;
+        return dao.findAll();
     }
 
     private TreeNode<LocationGroup> createTree(TreeNode<LocationGroup> root, List<LocationGroup> locationGroups) {
@@ -189,5 +185,4 @@ public class LocationGroupServiceImpl extends EntityServiceImpl<LocationGroup, L
             return child;
         }
     }
-
 }

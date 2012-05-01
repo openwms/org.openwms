@@ -20,18 +20,14 @@
  */
 package org.openwms.common.service.spring;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
 import org.openwms.common.domain.Location;
 import org.openwms.common.domain.LocationPK;
-import org.openwms.common.domain.LocationType;
-import org.openwms.common.domain.Rule;
 import org.openwms.common.domain.TransportUnit;
 import org.openwms.common.domain.TransportUnitType;
-import org.openwms.common.domain.TypePlacingRule;
 import org.openwms.common.domain.values.Barcode;
 import org.openwms.common.integration.TransportUnitDao;
 import org.openwms.common.service.TransportUnitService;
@@ -39,7 +35,6 @@ import org.openwms.core.integration.GenericDao;
 import org.openwms.core.service.exception.RemovalNotAllowedException;
 import org.openwms.core.service.exception.ServiceRuntimeException;
 import org.openwms.core.service.listener.OnRemovalListener;
-import org.openwms.core.service.spring.EntityServiceImpl;
 import org.openwms.core.service.spring.util.ServiceHelper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -58,10 +53,9 @@ import org.springframework.transaction.annotation.Transactional;
  */
 @Service
 @Transactional
-public class TransportUnitServiceImpl extends EntityServiceImpl<TransportUnit, Long> implements
-        TransportUnitService<TransportUnit> {
+public class TransportUnitServiceImpl implements TransportUnitService<TransportUnit> {
 
-    private Logger logger = LoggerFactory.getLogger(this.getClass());
+    private static final Logger LOGGER = LoggerFactory.getLogger(TransportUnitServiceImpl.class);
 
     @Autowired
     @Qualifier("transportUnitDao")
@@ -87,10 +81,9 @@ public class TransportUnitServiceImpl extends EntityServiceImpl<TransportUnit, L
      * {@inheritDoc}
      */
     @Override
-    public TransportUnit createTransportUnit(Barcode barcode, TransportUnitType transportUnitType,
-            LocationPK actualLocation) {
-        if (logger.isDebugEnabled()) {
-            logger.debug("Creating a TransportUnit with Barcode " + barcode + " of Type " + transportUnitType.getType()
+    public TransportUnit create(Barcode barcode, TransportUnitType transportUnitType, LocationPK actualLocation) {
+        if (LOGGER.isDebugEnabled()) {
+            LOGGER.debug("Creating a TransportUnit with Barcode " + barcode + " of Type " + transportUnitType.getType()
                     + " on Location " + actualLocation);
         }
         TransportUnit transportUnit = dao.findByUniqueId(barcode);
@@ -117,66 +110,8 @@ public class TransportUnitServiceImpl extends EntityServiceImpl<TransportUnit, L
      */
     @Override
     @Transactional(readOnly = true)
-    public List<TransportUnit> getAllTransportUnits() {
+    public List<TransportUnit> findAll() {
         return dao.findAll();
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    @Transactional(readOnly = true)
-    public List<TransportUnitType> getAllTransportUnitTypes() {
-        return transportUnitTypeDao.findAll();
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public List<Rule> loadRules(String transportUnitType) {
-        TransportUnitType type = transportUnitTypeDao.findByUniqueId(transportUnitType);
-        List<Rule> rules = new ArrayList<Rule>();
-        if (type != null) {
-            logger.debug("Found type " + type);
-            rules.addAll(type.getTypePlacingRules());
-            rules.addAll(type.getTypeStackingRules());
-        }
-        logger.debug("returning a list with items" + rules.size());
-        return rules;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public TransportUnitType createTransportUnitType(TransportUnitType transportUnitType) {
-        transportUnitTypeDao.persist(transportUnitType);
-        return transportUnitTypeDao.save(transportUnitType);
-    }
-
-    /**
-     * {@inheritDoc}
-     * 
-     * The implementation uses the id to find the {@link TransportUnitType} to
-     * be removed and will removed the type when found.
-     */
-    @Override
-    public void deleteTransportUnitTypes(List<TransportUnitType> transportUnitTypes) {
-        for (TransportUnitType transportUnitType : transportUnitTypes) {
-            TransportUnitType tut = transportUnitTypeDao.findByUniqueId(transportUnitType.getType());
-            transportUnitTypeDao.remove(tut);
-        }
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public TransportUnitType saveTransportUnitType(TransportUnitType transportUnitType) {
-        TransportUnitType tut = transportUnitTypeDao.save(transportUnitType);
-        logger.debug("Save a TransportUnitType, list of typePlacingRules:" + tut.getTypePlacingRules().size());
-        return tut;
     }
 
     /**
@@ -230,53 +165,16 @@ public class TransportUnitServiceImpl extends EntityServiceImpl<TransportUnit, L
                 }
                 try {
                     delete(tu);
-                    if (logger.isDebugEnabled()) {
-                        logger.debug("Successfully marked TransportUnit for removal : " + tu.getId());
+                    if (LOGGER.isDebugEnabled()) {
+                        LOGGER.debug("Successfully marked TransportUnit for removal : " + tu.getId());
                     }
                 } catch (RemovalNotAllowedException rnae) {
-                    logger.error("Not allowed to remove TransportUnit with id : " + tu.getId() + " with reason: "
+                    LOGGER.error("Not allowed to remove TransportUnit with id : " + tu.getId() + " with reason: "
                             + rnae.getLocalizedMessage());
                     throw new ServiceRuntimeException(rnae.getLocalizedMessage());
                 }
             }
         }
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public TransportUnitType updateRules(String type, List<LocationType> newAssigned, List<LocationType> newNotAssigned) {
-
-        TransportUnitType tut = transportUnitTypeDao.findByUniqueId(type);
-        boolean found = false;
-        if (newAssigned != null && newAssigned.size() > 0) {
-            for (LocationType locationType : newAssigned) {
-                for (TypePlacingRule rule : tut.getTypePlacingRules()) {
-                    if (rule.getAllowedLocationType() == locationType) {
-                        found = true;
-                        break;
-                    }
-                }
-                if (!found) {
-                    TypePlacingRule newRule = new TypePlacingRule(tut, locationType);
-                    tut.addTypePlacingRule(newRule);
-                }
-            }
-        }
-
-        if (newAssigned != null && newAssigned.size() > 0) {
-            for (LocationType locationType : newNotAssigned) {
-                for (TypePlacingRule rule : tut.getTypePlacingRules()) {
-                    if (rule.getAllowedLocationType() == locationType) {
-                        tut.removeTypePlacingRule(rule);
-                        break;
-                    }
-                }
-            }
-        }
-
-        return transportUnitTypeDao.save(tut);
     }
 
     /**
@@ -291,11 +189,19 @@ public class TransportUnitServiceImpl extends EntityServiceImpl<TransportUnit, L
      *             TransportOrders).
      */
     private void delete(TransportUnit transportUnit) throws RemovalNotAllowedException {
-        if (logger.isDebugEnabled() && onRemovalListener == null) {
-            logger.debug("No listener onRemove defined, just try to delete it");
+        if (LOGGER.isDebugEnabled() && onRemovalListener == null) {
+            LOGGER.debug("No listener onRemove defined, just try to delete it");
         }
         if (null == onRemovalListener || onRemovalListener.preRemove(transportUnit)) {
-            remove(transportUnit);
+            dao.remove(transportUnit);
         }
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public TransportUnit findByBarcode(Barcode barcode) {
+        return (TransportUnit) dao.findByUniqueId(barcode);
     }
 }

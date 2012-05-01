@@ -49,15 +49,18 @@ public class TransportServiceTest extends AbstractJpaSpringContextTests {
 
     @Autowired
     @Qualifier("transportUnitService")
-    protected TransportUnitService transportService;
+    private TransportUnitService<TransportUnit> transportService;
 
-    LocationPK locationPk = new LocationPK("AREA", "AISLE", "X", "Y", "Z");
-    Location actualLocation = new Location(locationPk);
-    LocationPK targetLocationPk = new LocationPK("TARGET", "TARGET", "TARGET", "TARGET", "TARGET");
-    Location targetLocation = new Location(targetLocationPk);
-    TransportUnitType transportUnitType = new TransportUnitType("TestType");
-    TransportUnit transportUnit = new TransportUnit("KNOWN");
+    private LocationPK locationPk = new LocationPK("AREA", "AISLE", "X", "Y", "Z");
+    private Location actualLocation = new Location(locationPk);
+    private LocationPK targetLocationPk = new LocationPK("TARGET", "TARGET", "TARGET", "TARGET", "TARGET");
+    private Location targetLocation = new Location(targetLocationPk);
+    private TransportUnitType transportUnitType = new TransportUnitType("TestType");
+    private TransportUnit transportUnit = new TransportUnit("KNOWN");
 
+    /**
+     * Setup some test data.
+     */
     @Before
     public void onBefore() {
         entityManager.persist(actualLocation);
@@ -68,35 +71,47 @@ public class TransportServiceTest extends AbstractJpaSpringContextTests {
         entityManager.persist(transportUnit);
     }
 
+    /**
+     * Negative test to create a new TransportUnit that already exists.
+     */
     @Test
     public final void testCreateExistingTransportUnit() {
         try {
-            transportService.createTransportUnit(new Barcode("KNOWN"), transportUnitType, locationPk);
+            transportService.create(new Barcode("KNOWN"), transportUnitType, locationPk);
             fail("Must throw a ServiceException while trying to create an already known TransportUnit");
         } catch (ServiceRuntimeException se) {
             logger.debug("OK:ServiceException expected while trying to create an already known TransportUnit");
         }
     }
 
+    /**
+     * Negative test to create a new TransportUnit on a Location that does not
+     * exist.
+     */
     @Test
     public final void testCreateTransportUnitOnUnknownLocation() {
 
         try {
-            transportService.createTransportUnit(new Barcode("4711"), transportUnitType, new LocationPK("UNKNOWN",
-                    "UNKNOWN", "UNKNOWN", "UNKNOWN", "UNKNOWN"));
+            transportService.create(new Barcode("4711"), transportUnitType, new LocationPK("UNKNOWN", "UNKNOWN",
+                    "UNKNOWN", "UNKNOWN", "UNKNOWN"));
             fail("Must throw a ServiceException while trying to create a TransportUnit with an unknown actual Location");
         } catch (ServiceRuntimeException se) {
             logger.debug("OK:ServiceException expected while trying to create a TransportUnit with an unknown actual Location");
         }
     }
 
+    /**
+     * Positive test to create a new TransportUnit.
+     */
     @Test
     public final void testCreateTransportUnit() {
-        TransportUnit transportUnit = transportService.createTransportUnit(new Barcode("4711"), transportUnitType,
-                locationPk);
+        TransportUnit transportUnit = transportService.create(new Barcode("4711"), transportUnitType, locationPk);
         assertNotNull("TransportService must create a new TransportUnit", transportUnit);
     }
 
+    /**
+     * Test to create a new TransportUnit that already exists.
+     */
     @Test
     public final void testMoveUnknownTransportUnit() {
         try {
@@ -107,10 +122,12 @@ public class TransportServiceTest extends AbstractJpaSpringContextTests {
         }
     }
 
+    /**
+     * Positive test to move a TransportUnit.
+     */
     @Test
     public final void testMoveTransportUnit() {
-        TransportUnit transportUnit = transportService.createTransportUnit(new Barcode("4711"), transportUnitType,
-                locationPk);
+        TransportUnit transportUnit = transportService.create(new Barcode("4711"), transportUnitType, locationPk);
         assertNotNull("TransportService must create a new TransportUnit", transportUnit);
         assertEquals("The actual Location of the TransportUnit must be preset", locationPk, transportUnit
                 .getActualLocation().getLocationId());

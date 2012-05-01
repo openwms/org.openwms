@@ -30,7 +30,6 @@ import org.openwms.common.service.LocationService;
 import org.openwms.core.domain.system.Message;
 import org.openwms.core.integration.GenericDao;
 import org.openwms.core.service.exception.ServiceRuntimeException;
-import org.openwms.core.service.spring.EntityServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
@@ -46,7 +45,7 @@ import org.springframework.transaction.annotation.Transactional;
  */
 @Transactional
 @Service
-public class LocationServiceImpl extends EntityServiceImpl<Location, Long> implements LocationService<Location> {
+public class LocationServiceImpl implements LocationService<Location> {
 
     @Autowired
     @Qualifier("locationDao")
@@ -71,8 +70,7 @@ public class LocationServiceImpl extends EntityServiceImpl<Location, Long> imple
     }
 
     /**
-     * @see org.openwms.common.service.LocationService#removeMessages(java.lang.Long,
-     *      java.util.List)
+     * {@inheritDoc}
      */
     @Override
     public Location removeMessages(Long id, List<Message> messages) {
