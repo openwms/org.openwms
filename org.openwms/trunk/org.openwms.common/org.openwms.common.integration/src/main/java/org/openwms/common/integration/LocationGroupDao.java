@@ -46,5 +46,4 @@ public interface LocationGroupDao extends GenericDao<LocationGroup, Long> {
      * {@link LocationGroup#getName()}.
      */
     String NQ_FIND_BY_NAME = "LocationGroup.findByName";
-
 }

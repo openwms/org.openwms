@@ -33,4 +33,6 @@ import org.openwms.core.integration.GenericDao;
  * @see org.openwms.core.integration.GenericDao
  * @see org.openwms.common.domain.LocationType
  */
-public interface LocationTypeDao extends GenericDao<LocationType, Long> {}
+public interface LocationTypeDao extends GenericDao<LocationType, Long> {
+
+}
