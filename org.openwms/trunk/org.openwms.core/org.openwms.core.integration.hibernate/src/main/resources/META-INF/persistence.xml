@@ -38,8 +38,9 @@
         <class>org.openwms.core.domain.system.usermanagement.RolePreference</class>
         <class>org.openwms.core.domain.system.usermanagement.UserPreference</class>
         <class>org.openwms.core.domain.system.usermanagement.UserPassword</class>
+        <class>org.openwms.core.domain.values.Piece</class>
         <class>org.openwms.core.domain.values.Unit</class>
-<!---->
+        
         <class>org.openwms.common.domain.Location</class>
         <class>org.openwms.common.domain.LocationPK</class>
         <class>org.openwms.common.domain.LocationGroup</class>
@@ -55,6 +56,16 @@
         <class>org.openwms.common.domain.values.WeightUnit</class>
         
         <class>org.openwms.tms.domain.order.TransportOrder</class>
+
+        <class>org.openwms.wms.domain.LoadUnit</class>
+        <class>org.openwms.wms.domain.PackagingUnit</class>
+        <class>org.openwms.wms.domain.inventory.Product</class>
+        <class>org.openwms.wms.domain.order.AbstractOrder</class>
+        <class>org.openwms.wms.domain.order.OrderPosition</class>
+        <class>org.openwms.wms.domain.order.OrderPositionSplit</class>
+        <class>org.openwms.wms.domain.receiving.ReceivingOrder</class>
+        <class>org.openwms.wms.domain.receiving.ReceivingOrderPosition</class>
+        <class>org.openwms.wms.domain.shipping.ShippingOrder</class>
 
         <exclude-unlisted-classes />
         <properties>
