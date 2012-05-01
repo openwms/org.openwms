@@ -110,6 +110,12 @@
             <type>libd</type>
         </dependency>
 
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>com.springsource.org.apache.commons.lang</artifactId>
+            <scope>provided</scope>
+        </dependency>
+
         <!-- Project dependencies -->
         <dependency>
             <groupId>${project.groupId}</groupId>
