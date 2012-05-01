@@ -24,6 +24,8 @@ import org.openwms.common.domain.LocationType;
 import org.openwms.common.integration.LocationTypeDao;
 import org.openwms.core.integration.jpa.AbstractGenericJpaDao;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  * A LocationTypeDaoImpl.
@@ -34,11 +36,16 @@ import org.springframework.stereotype.Repository;
  * @see org.openwms.core.integration.jpa.AbstractGenericJpaDao
  * @see org.openwms.common.integration.LocationTypeDao
  */
-@Repository("locationTypeDao")
+@Transactional(propagation = Propagation.MANDATORY)
+@Repository(LocationTypeDaoImpl.COMPONENT_NAME)
 public class LocationTypeDaoImpl extends AbstractGenericJpaDao<LocationType, Long> implements LocationTypeDao {
 
+    /** Springs component name. */
+    public static final String COMPONENT_NAME = "locationTypeDao";
+
     /**
-     * @return Name of the query
+     * {@inheritDoc}
+     * 
      * @see org.openwms.core.integration.jpa.AbstractGenericJpaDao#getFindAllQuery()
      */
     @Override
@@ -47,7 +54,8 @@ public class LocationTypeDaoImpl extends AbstractGenericJpaDao<LocationType, Lon
     }
 
     /**
-     * @return Name of the query
+     * {@inheritDoc}
+     * 
      * @see org.openwms.core.integration.jpa.AbstractGenericJpaDao#getFindByUniqueIdQuery()
      */
     @Override
@@ -55,4 +63,13 @@ public class LocationTypeDaoImpl extends AbstractGenericJpaDao<LocationType, Lon
         return LocationType.NQ_FIND_BY_UNIQUE_QUERY;
     }
 
+    /**
+     * {@inheritDoc}
+     * 
+     * @see org.openwms.core.integration.jpa.AbstractGenericJpaDao#getPersistentClass()
+     */
+    @Override
+    protected Class<LocationType> getPersistentClass() {
+        return LocationType.class;
+    }
 }

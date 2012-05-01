@@ -26,6 +26,7 @@ import org.openwms.common.domain.Location;
 import org.openwms.common.integration.LocationDao;
 import org.openwms.core.integration.jpa.AbstractGenericJpaDao;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 /**
@@ -37,11 +38,16 @@ import org.springframework.transaction.annotation.Transactional;
  * @see org.openwms.core.integration.jpa.AbstractGenericJpaDao
  * @see org.openwms.common.integration.LocationDao
  */
-@Repository("locationDao")
+@Transactional(propagation = Propagation.MANDATORY)
+@Repository(LocationDaoImpl.COMPONENT_NAME)
 public class LocationDaoImpl extends AbstractGenericJpaDao<Location, Long> implements LocationDao {
 
+    /** Springs component name. */
+    public static final String COMPONENT_NAME = "locationDao";
+
     /**
-     * @return Name of the query
+     * {@inheritDoc}
+     * 
      * @see org.openwms.core.integration.jpa.AbstractGenericJpaDao#getFindAllQuery()
      */
     @Override
@@ -50,7 +56,8 @@ public class LocationDaoImpl extends AbstractGenericJpaDao<Location, Long> imple
     }
 
     /**
-     * @return Name of the query
+     * {@inheritDoc}
+     * 
      * @see org.openwms.core.integration.jpa.AbstractGenericJpaDao#getFindByUniqueIdQuery()
      */
     @Override
@@ -59,7 +66,8 @@ public class LocationDaoImpl extends AbstractGenericJpaDao<Location, Long> imple
     }
 
     /**
-     * @return A List of all {@link Location}s
+     * {@inheritDoc}
+     * 
      * @see org.openwms.common.integration.LocationDao#getAllLocations()
      */
     @Override
@@ -68,4 +76,13 @@ public class LocationDaoImpl extends AbstractGenericJpaDao<Location, Long> imple
         return super.findByPositionalParameters(Location.NQ_FIND_ALL_EAGER);
     }
 
+    /**
+     * {@inheritDoc}
+     * 
+     * @see org.openwms.core.integration.jpa.AbstractGenericJpaDao#getPersistentClass()
+     */
+    @Override
+    protected Class<Location> getPersistentClass() {
+        return Location.class;
+    }
 }

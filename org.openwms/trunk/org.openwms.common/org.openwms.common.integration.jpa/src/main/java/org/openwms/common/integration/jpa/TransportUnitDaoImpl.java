@@ -24,6 +24,8 @@ import org.openwms.common.domain.TransportUnit;
 import org.openwms.common.integration.TransportUnitDao;
 import org.openwms.core.integration.jpa.AbstractGenericJpaDao;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  * A TransportUnitDaoImpl.
@@ -34,11 +36,16 @@ import org.springframework.stereotype.Repository;
  * @see org.openwms.core.integration.jpa.AbstractGenericJpaDao
  * @see org.openwms.common.integration.TransportUnitDao
  */
-@Repository("transportUnitDao")
+@Transactional(propagation = Propagation.MANDATORY)
+@Repository(TransportUnitDaoImpl.COMPONENT_NAME)
 public class TransportUnitDaoImpl extends AbstractGenericJpaDao<TransportUnit, Long> implements TransportUnitDao {
 
+    /** Springs component name. */
+    public static final String COMPONENT_NAME = "transportUnitDao";
+
     /**
-     * @return Name of the query
+     * {@inheritDoc}
+     * 
      * @see org.openwms.core.integration.jpa.AbstractGenericJpaDao#getFindAllQuery()
      */
     @Override
@@ -47,7 +54,8 @@ public class TransportUnitDaoImpl extends AbstractGenericJpaDao<TransportUnit, L
     }
 
     /**
-     * @return Name of the query
+     * {@inheritDoc}
+     * 
      * @see org.openwms.core.integration.jpa.AbstractGenericJpaDao#getFindByUniqueIdQuery()
      */
     @Override
@@ -55,4 +63,13 @@ public class TransportUnitDaoImpl extends AbstractGenericJpaDao<TransportUnit, L
         return TransportUnit.NQ_FIND_BY_UNIQUE_QUERY;
     }
 
+    /**
+     * {@inheritDoc}
+     * 
+     * @see org.openwms.core.integration.jpa.AbstractGenericJpaDao#getPersistentClass()
+     */
+    @Override
+    protected Class<TransportUnit> getPersistentClass() {
+        return TransportUnit.class;
+    }
 }
