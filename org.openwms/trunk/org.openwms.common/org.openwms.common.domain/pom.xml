@@ -69,7 +69,7 @@
             <groupId>org.hibernate</groupId>
             <artifactId>org.hibernate.ejb-library</artifactId>
             <type>libd</type>
-            <scope>test</scope>
+            <scope>provided</scope>
         </dependency>
 
         <!-- CORE Project dependencies -->
