@@ -44,7 +44,7 @@ import org.springframework.test.context.ContextConfiguration;
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  * @version $Revision$
  */
-@ContextConfiguration
+@ContextConfiguration("classpath:/org/openwms/common/service/transport/TransportServiceTest-context.xml")
 public class TransportServiceTest extends AbstractJpaSpringContextTests {
 
     @Autowired
