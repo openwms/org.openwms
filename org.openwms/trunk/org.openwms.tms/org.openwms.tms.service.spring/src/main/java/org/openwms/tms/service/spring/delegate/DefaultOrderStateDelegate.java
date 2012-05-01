@@ -50,12 +50,12 @@ import org.springframework.transaction.annotation.Transactional;
  * @version $Revision$
  * @since 0.1
  */
+@Transactional(propagation = Propagation.MANDATORY)
 @Lazy
 @Component
-@Transactional(propagation = Propagation.MANDATORY)
 public class DefaultOrderStateDelegate implements TransportOrderStateDelegate {
 
-    private final Logger logger = LoggerFactory.getLogger(getClass());
+    private static final Logger LOGGER = LoggerFactory.getLogger(DefaultOrderStateDelegate.class);
     private TransportOrderDao dao;
     private TransportOrderStarter starter;
 
@@ -74,11 +74,11 @@ public class DefaultOrderStateDelegate implements TransportOrderStateDelegate {
     }
 
     /**
-     * {@inheritDoc} Search for already {@link TransportOrderState#CREATED}
+     * {@inheritDoc}
+     * 
+     * Search for already {@link TransportOrderState#CREATED}
      * {@link TransportOrder}s for this transportUnit and try to initialize
      * them. When initialization is done try to start them.
-     * 
-     * @see org.openwms.tms.service.delegate.TransportOrderStateDelegate#afterCreation(TransportUnit)
      */
     @Override
     public void afterCreation(TransportUnit transportUnit) {
@@ -91,17 +91,17 @@ public class DefaultOrderStateDelegate implements TransportOrderStateDelegate {
                 } catch (StateChangeException sce) {
                     // Not starting a transport here is not a problem, so be
                     // quiet
-                    logger.warn(sce.getMessage());
+                    LOGGER.warn(sce.getMessage());
                 }
             }
         }
     }
 
     /**
-     * {@inheritDoc} Just search the next TransportOrder for the TransportUnit
-     * and try to start it.
+     * {@inheritDoc}
      * 
-     * @see org.openwms.tms.service.delegate.TransportOrderStateDelegate#afterFinish(java.lang.Long)
+     * Just search the next TransportOrder for the TransportUnit and try to
+     * start it.
      */
     @Override
     public void afterFinish(Long id) {
@@ -113,8 +113,6 @@ public class DefaultOrderStateDelegate implements TransportOrderStateDelegate {
      * 
      * Just search the next TransportOrder for the TransportUnit and try to
      * start it.
-     * 
-     * @see org.openwms.tms.service.delegate.TransportOrderStateDelegate#onCancel(java.lang.Long)
      */
     @Override
     public void onCancel(Long id) {
@@ -126,8 +124,6 @@ public class DefaultOrderStateDelegate implements TransportOrderStateDelegate {
      * 
      * Just search the next TransportOrder for the TransportUnit and try to
      * start it.
-     * 
-     * @see org.openwms.tms.service.delegate.TransportOrderStateDelegate#onFailure(java.lang.Long)
      */
     @Override
     public void onFailure(Long id) {
@@ -137,15 +133,15 @@ public class DefaultOrderStateDelegate implements TransportOrderStateDelegate {
     private void startNextForTu(Long id) {
         TransportOrder transportOrder = dao.findById(id);
         if (null == transportOrder) {
-            logger.warn("TransportOrder with id:" + id + " could not be loaded");
+            LOGGER.warn("TransportOrder with id:" + id + " could not be loaded");
             return;
         }
         List<TransportOrder> transportOrders = findInState(transportOrder.getTransportUnit(),
                 TransportOrderState.INITIALIZED);
         Collections.sort(transportOrders, new TransportStartComparator());
         if (transportOrders == null) {
-            if (logger.isDebugEnabled()) {
-                logger.debug("No waiting TransportOrders for TransportUnit [" + transportOrder.getTransportUnit()
+            if (LOGGER.isDebugEnabled()) {
+                LOGGER.debug("No waiting TransportOrders for TransportUnit [" + transportOrder.getTransportUnit()
                         + "] found");
             }
             return;
@@ -155,10 +151,10 @@ public class DefaultOrderStateDelegate implements TransportOrderStateDelegate {
                 starter.start(to);
                 break;
             } catch (StateChangeException sce) {
-                if (logger.isDebugEnabled()) {
+                if (LOGGER.isDebugEnabled()) {
                     // Not starting a transport here is not a problem, so be
                     // quiet
-                    logger.debug(sce.getMessage());
+                    LOGGER.debug(sce.getMessage());
                 }
             }
         }
@@ -169,8 +165,6 @@ public class DefaultOrderStateDelegate implements TransportOrderStateDelegate {
      * 
      * Just search the next TransportOrder for the TransportUnit and try to
      * start it.
-     * 
-     * @see org.openwms.tms.service.delegate.TransportOrderStateDelegate#onInterrupt(java.lang.Long)
      */
     @Override
     public void onInterrupt(Long id) {
@@ -181,13 +175,13 @@ public class DefaultOrderStateDelegate implements TransportOrderStateDelegate {
         try {
             transportOrder.setState(TransportOrderState.INITIALIZED);
         } catch (StateChangeException sce) {
-            logger.info("Could not initialize TransportOrder [" + transportOrder.getId() + "]. Message:"
+            LOGGER.info("Could not initialize TransportOrder [" + transportOrder.getId() + "]. Message:"
                     + sce.getMessage());
             return false;
         }
         transportOrder.setSourceLocation(transportOrder.getTransportUnit().getActualLocation());
-        if (logger.isDebugEnabled()) {
-            logger.debug("TransportOrder " + transportOrder.getId() + " INITIALIZED");
+        if (LOGGER.isDebugEnabled()) {
+            LOGGER.debug("TransportOrder " + transportOrder.getId() + " INITIALIZED");
         }
         return true;
     }
