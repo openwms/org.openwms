@@ -30,6 +30,7 @@
 		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-3.0.xsd
 		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.0.xsd">
 
-    <context:component-scan base-package="org.openwms.core.integration.jpa" />
+    <import resource="META-INF/spring/aop-context.xml"/>
+    <context:component-scan base-package="org.openwms.core.integration.jpa,org.openwms.core.integration.aop" />
 
 </beans>

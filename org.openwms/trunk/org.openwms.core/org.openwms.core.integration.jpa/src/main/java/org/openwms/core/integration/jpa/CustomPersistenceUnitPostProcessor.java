@@ -76,12 +76,12 @@ public class CustomPersistenceUnitPostProcessor implements PersistenceUnitPostPr
      * Default is "classpath*:META-INF/persistence.xml".
      * </p>
      * 
-     * @param persistenceJarFiles
+     * @param pJarFiles
      *            An array of Spring resources identifying the location of the
      *            <code>persistence.xml</code> files to read
      */
-    public void setPersistenceJarFiles(String[] persistenceJarFiles) {
-        this.persistenceJarFiles = persistenceJarFiles;
+    public void setPersistenceJarFiles(String[] pJarFiles) {
+        this.persistenceJarFiles = pJarFiles;
     }
 
     /**

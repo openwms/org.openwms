@@ -41,7 +41,7 @@ import org.springframework.test.context.ContextConfiguration;
  * @version $Revision: $
  * @since 0.1
  */
-@ContextConfiguration("classpath:/org/openwms/core/integration/jpa/Test-context.xml")
+@ContextConfiguration("classpath:Test-context.xml")
 public class PreferencesDaoTest extends AbstractJpaSpringContextTests {
 
     @Autowired

@@ -29,8 +29,8 @@ import org.springframework.transaction.annotation.Transactional;
 /**
  * A ModuleDao is an extension of a {@link AbstractGenericJpaDao} about
  * functionality regarding {@link Module}s. The stereotype annotation
- * {@link Repository} marks this class as a DAO in the architecture and enables
- * exception translation and component scanning. It can be injected by name
+ * {@link Repository} marks this class as a DAO and enables exception
+ * translation and component scanning. It can be injected by name
  * {@value #COMPONENT_NAME}.
  * <p>
  * All methods have to be invoked within an active transaction context.
@@ -46,9 +46,7 @@ import org.springframework.transaction.annotation.Transactional;
 @Repository(ModuleDaoImpl.COMPONENT_NAME)
 public class ModuleDaoImpl extends AbstractGenericJpaDao<Module, Long> implements ModuleDao {
 
-    /**
-     * Springs component name.
-     */
+    /** Springs component name. */
     public static final String COMPONENT_NAME = "moduleDao";
 
     /**
@@ -67,4 +65,11 @@ public class ModuleDaoImpl extends AbstractGenericJpaDao<Module, Long> implement
         return Module.NQ_FIND_BY_UNIQUE_QUERY;
     }
 
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    protected Class<Module> getPersistentClass() {
+        return Module.class;
+    }
 }
