@@ -36,9 +36,11 @@
     <name>OpenWMS.org WMS</name>
     <properties>
         <moduleDir>../..</moduleDir>
+        <app.version>0.1.1-SNAPSHOT</app.version>
         <core.version>0.1.1-SNAPSHOT</core.version>
         <common.version>0.1.1-SNAPSHOT</common.version>
         <tms.version>0.1.1-SNAPSHOT</tms.version>
+        <wms.version>0.0.1-SNAPSHOT</wms.version>
         <bundle.version>0.0.1.SNAPSHOT</bundle.version>
     </properties>
 
@@ -63,8 +65,8 @@
                 <activeByDefault>true</activeByDefault>
             </activation>
             <modules>
-                <module>org.openwms.wms.domain</module>
-                <!-- module>org.openwms.wms.integration</module>
+                <!-- module>org.openwms.wms.domain</module>
+                <module>org.openwms.wms.integration</module>
                 <module>org.openwms.wms.integration.jpa</module>
                 <module>org.openwms.wms.service.api</module>
                 <module>org.openwms.wms.service.spring</module-->
