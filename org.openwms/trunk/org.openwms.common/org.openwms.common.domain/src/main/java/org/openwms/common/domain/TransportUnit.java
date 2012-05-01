@@ -625,7 +625,9 @@ public class TransportUnit extends AbstractEntity implements DomainObject<Long> 
     }
 
     /**
-     * @see java.lang.Object#hashCode()
+     * {@inheritDoc}
+     * 
+     * Uses barcode for calculation.
      */
     @Override
     public int hashCode() {
@@ -636,7 +638,9 @@ public class TransportUnit extends AbstractEntity implements DomainObject<Long> 
     }
 
     /**
-     * @see java.lang.Object#equals(java.lang.Object)
+     * {@inheritDoc}
+     * 
+     * Uses barcode for comparison.
      */
     @Override
     public boolean equals(Object obj) {

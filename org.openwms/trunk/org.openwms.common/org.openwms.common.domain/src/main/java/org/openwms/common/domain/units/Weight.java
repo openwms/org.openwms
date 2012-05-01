@@ -119,7 +119,7 @@ public class Weight extends Unit<Weight, WeightUnit> implements Comparable<Weigh
     }
 
     /**
-     * @see org.openwms.core.domain.values.Unit#isZero()
+     * {@inheritDoc}
      */
     @Override
     public boolean isZero() {
@@ -127,7 +127,7 @@ public class Weight extends Unit<Weight, WeightUnit> implements Comparable<Weigh
     }
 
     /**
-     * @see org.openwms.core.domain.values.Unit#isNegative()
+     * {@inheritDoc}
      */
     @Override
     public boolean isNegative() {

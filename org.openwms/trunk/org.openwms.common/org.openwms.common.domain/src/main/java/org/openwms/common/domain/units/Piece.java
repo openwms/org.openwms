@@ -113,8 +113,6 @@ public class Piece extends Unit<Piece, PieceUnit> implements Comparable<Piece>, 
     /**
      * Returns the unit of the <code>Piece</code>.
      * 
-     * @param <T>
-     * 
      * @return The unit
      */
     @Override
@@ -123,7 +121,7 @@ public class Piece extends Unit<Piece, PieceUnit> implements Comparable<Piece>, 
     }
 
     /**
-     * @see org.openwms.core.domain.values.Unit#isZero()
+     * {@inheritDoc}
      */
     @Override
     public boolean isZero() {
@@ -131,7 +129,7 @@ public class Piece extends Unit<Piece, PieceUnit> implements Comparable<Piece>, 
     }
 
     /**
-     * @see org.openwms.core.domain.values.Unit#isNegative()
+     * {@inheritDoc}
      */
     @Override
     public boolean isNegative() {
@@ -175,7 +173,9 @@ public class Piece extends Unit<Piece, PieceUnit> implements Comparable<Piece>, 
     }
 
     /**
-     * @see java.lang.Object#hashCode()
+     * {@inheritDoc}
+     * 
+     * Uses amount and unitType for calculation.
      */
     @Override
     public int hashCode() {
@@ -187,7 +187,9 @@ public class Piece extends Unit<Piece, PieceUnit> implements Comparable<Piece>, 
     }
 
     /**
-     * @see java.lang.Object#equals(java.lang.Object)
+     * {@inheritDoc}
+     * 
+     * Uses amount and unitType for comparison.
      */
     @Override
     public boolean equals(Object obj) {
@@ -213,7 +215,7 @@ public class Piece extends Unit<Piece, PieceUnit> implements Comparable<Piece>, 
     private int compare(BigDecimal val1, BigDecimal val2) {
         if (val1 == val2) {
             return 0;
-        };
+        }
         return val1.compareTo(val2);
     }
 }

@@ -180,5 +180,4 @@ public class LocationPK implements Serializable {
     public String toString() {
         return "{" + this.area + "/" + this.aisle + "/" + this.x + "/" + this.y + "/" + this.z + "}";
     }
-
 }
