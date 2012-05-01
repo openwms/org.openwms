@@ -45,11 +45,11 @@ import org.springframework.util.Assert;
  * @version $Revision$
  * @since 0.1
  */
-@Component
 @Transactional
+@Component
 public class TransportUnitRemovalListener implements OnRemovalListener<TransportUnit> {
 
-    private final Logger logger = LoggerFactory.getLogger(getClass());
+    private static final Logger LOGGER = LoggerFactory.getLogger(TransportUnitRemovalListener.class);
     @Autowired
     private TransportOrderDao dao;
 
@@ -67,7 +67,6 @@ public class TransportUnitRemovalListener implements OnRemovalListener<Transport
      * accepted.</li>
      * </ul>
      * 
-     * @see org.openwms.core.service.listener.OnRemovalListener#preRemove(org.openwms.core.domain.AbstractEntity)
      * @throws RemovalNotAllowedException
      *             when active {@link TransportOrder}s exist for the
      *             {@link TransportUnit} entity.
@@ -75,12 +74,12 @@ public class TransportUnitRemovalListener implements OnRemovalListener<Transport
     @Override
     public boolean preRemove(TransportUnit entity) throws RemovalNotAllowedException {
         Assert.notNull(entity, "Not allowed to call with null argument");
-        if (logger.isDebugEnabled()) {
-            logger.debug("Someone is trying to remove the TransportUnit [" + entity
+        if (LOGGER.isDebugEnabled()) {
+            LOGGER.debug("Someone is trying to remove the TransportUnit [" + entity
                     + " ], check for existing TransportOrders");
         }
         if (!dao.findForTUinState(entity, TransportOrderState.STARTED, TransportOrderState.INTERRUPTED).isEmpty()) {
-            logger.warn("Active TransportOrder for the TransportUnit with the id " + entity.getId() + " exist");
+            LOGGER.warn("Active TransportOrder for the TransportUnit with the id " + entity.getId() + " exist");
             throw new RemovalNotAllowedException("Active TransportOrder for the TransportUnit with the id " + entity
                     + " exist");
         }
@@ -90,15 +89,15 @@ public class TransportUnitRemovalListener implements OnRemovalListener<Transport
             unlinkCanceledOrders(entity);
             return true;
         } catch (IllegalStateException ise) {
-            logger.warn("For one or more created TransportOrders it is not allowed to cancel them");
+            LOGGER.warn("For one or more created TransportOrders it is not allowed to cancel them");
             throw new RemovalNotAllowedException(
-                    "For one or more created TransportOrders it is not allowed to cancel them");
+                    "For one or more created TransportOrders it is not allowed to cancel them", ise);
         }
     }
 
     private void unlinkFinishedOrders(TransportUnit transportUnit) {
-        if (logger.isDebugEnabled()) {
-            logger.debug("Trying to unlink finished and failed TransportOrders for TransportUnit: " + transportUnit);
+        if (LOGGER.isDebugEnabled()) {
+            LOGGER.debug("Trying to unlink finished and failed TransportOrders for TransportUnit: " + transportUnit);
         }
         List<TransportOrder> transportOrders = dao.findForTUinState(transportUnit, TransportOrderState.FINISHED,
                 TransportOrderState.ONFAILURE);
@@ -108,8 +107,8 @@ public class TransportUnitRemovalListener implements OnRemovalListener<Transport
                         + " was removed, order was unlinked"));
                 transportOrder.setTransportUnit(null);
                 dao.save(transportOrder);
-                if (logger.isDebugEnabled()) {
-                    logger.debug("Successfully unlinked TransportOrder: " + transportOrder.getId());
+                if (LOGGER.isDebugEnabled()) {
+                    LOGGER.debug("Successfully unlinked TransportOrder: " + transportOrder.getId());
                 }
             }
         }
@@ -123,18 +122,18 @@ public class TransportUnitRemovalListener implements OnRemovalListener<Transport
                         + " was removed, order was unlinked"));
                 transportOrder.setTransportUnit(null);
                 dao.save(transportOrder);
-                if (logger.isDebugEnabled()) {
-                    logger.debug("Successfully unlinked canceled TransportOrder: " + transportOrder.getId());
+                if (LOGGER.isDebugEnabled()) {
+                    LOGGER.debug("Successfully unlinked canceled TransportOrder: " + transportOrder.getId());
                 }
             }
         }
     }
 
-    // TODO [scherrer] : Also add a listener (hook) to be overriden by other
+    // TODO [scherrer] : Also add a listener (hook) to be overridden by other
     // modules.
     private void cancelInitializedOrders(TransportUnit transportUnit) {
-        if (logger.isDebugEnabled()) {
-            logger.debug("Trying to cancel and remove already created but not started TransportOrders");
+        if (LOGGER.isDebugEnabled()) {
+            LOGGER.debug("Trying to cancel and remove already created but not started TransportOrders");
         }
         List<TransportOrder> transportOrders = dao.findForTUinState(transportUnit, TransportOrderState.CREATED,
                 TransportOrderState.INITIALIZED);
@@ -145,8 +144,8 @@ public class TransportUnitRemovalListener implements OnRemovalListener<Transport
                     transportOrder.setProblem(new Problem("TransportUnit " + transportUnit
                             + " was removed, order was canceled"));
                     transportOrder.setTransportUnit(null);
-                    if (logger.isDebugEnabled()) {
-                        logger.debug("Successfully unlinked and canceled TransportOrder: " + transportOrder.getId());
+                    if (LOGGER.isDebugEnabled()) {
+                        LOGGER.debug("Successfully unlinked and canceled TransportOrder: " + transportOrder.getId());
                     }
                 } catch (StateChangeException sce) {
                     transportOrder.setProblem(new Problem(sce.getMessage()));

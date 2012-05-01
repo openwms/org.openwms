@@ -43,18 +43,16 @@ import org.springframework.transaction.annotation.Transactional;
  * @version $Revision$
  * @since 0.1
  */
-@Component
 @Transactional(propagation = Propagation.MANDATORY, noRollbackFor = { StateChangeException.class })
+@Component
 public class TransportOrderStarterImpl implements TransportOrderStarter {
 
-    private final Logger logger = LoggerFactory.getLogger(getClass());
+    private static final Logger LOGGER = LoggerFactory.getLogger(TransportOrderStarterImpl.class);
     @Autowired
     private TransportOrderDao dao;
 
     /**
      * {@inheritDoc}
-     * 
-     * @see org.openwms.tms.service.delegate.TransportOrderStarter#start(org.openwms.tms.domain.order.TransportOrder)
      */
     @Override
     public void start(TransportOrder transportOrder) throws StateChangeException {
@@ -82,9 +80,8 @@ public class TransportOrderStarterImpl implements TransportOrderStarter {
                     "Cannot start the TransportOrder because one or more active TransportOrders exist");
         }
         transportOrder.setState(TransportOrderState.STARTED);
-        if (logger.isDebugEnabled()) {
-            logger.debug("TransportOrder " + transportOrder.getId() + " started at " + transportOrder.getStartDate());
+        if (LOGGER.isDebugEnabled()) {
+            LOGGER.debug("TransportOrder " + transportOrder.getId() + " started at " + transportOrder.getStartDate());
         }
     }
-
 }

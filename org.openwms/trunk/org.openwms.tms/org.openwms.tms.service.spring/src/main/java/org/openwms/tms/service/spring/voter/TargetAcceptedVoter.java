@@ -36,13 +36,16 @@ import org.springframework.stereotype.Component;
  * @see org.openwms.core.service.voter.DecisionVoter
  */
 @Lazy
-@Component("targetAcceptedVoter")
+@Component(TargetAcceptedVoter.COMPONENT_NAME)
 public class TargetAcceptedVoter implements DecisionVoter<RedirectVote> {
 
+    /** Springs component name. */
+    public static final String COMPONENT_NAME = "targetAcceptedVoter";
+
     /**
-     * {@inheritDoc} Simple check for blocked infeed.
+     * {@inheritDoc}
      * 
-     * @see org.openwms.core.service.voter.DecisionVoter#voteFor(org.openwms.core.service.voter.Vote)
+     * Simple check for blocked infeed.
      */
     @Override
     public void voteFor(RedirectVote vote) throws DeniedException {

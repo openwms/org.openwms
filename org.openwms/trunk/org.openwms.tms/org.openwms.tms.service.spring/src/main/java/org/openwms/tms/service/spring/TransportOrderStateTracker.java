@@ -29,7 +29,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
 /**
- * A TransportOrderStateTracker. A listener adapter that delegates to an
+ * A TransportOrderStateTracker is a listening adapter that delegates to an
  * instance of {@link TransportOrderStateDelegate}.
  * 
  * @author <a href="mailto:russelltina@users.sourceforge.net">Tina Russell</a>
@@ -37,8 +37,8 @@ import org.springframework.transaction.annotation.Transactional;
  * @since 0.1
  * @see org.openwms.tms.service.delegate.TransportOrderStateDelegate
  */
-@Component
 @Transactional
+@Component
 public class TransportOrderStateTracker implements ApplicationListener<TransportServiceEvent> {
 
     @Autowired
@@ -59,7 +59,6 @@ public class TransportOrderStateTracker implements ApplicationListener<Transport
      * 
      * @param event
      *            A {@link TransportServiceEvent}.
-     * @see org.springframework.context.ApplicationListener#onApplicationEvent(org.springframework.context.ApplicationEvent)
      */
     @Override
     public void onApplicationEvent(TransportServiceEvent event) {
@@ -83,5 +82,4 @@ public class TransportOrderStateTracker implements ApplicationListener<Transport
             break;
         }
     }
-
 }
