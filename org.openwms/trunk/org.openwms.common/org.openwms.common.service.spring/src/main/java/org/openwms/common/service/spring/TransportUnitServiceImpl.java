@@ -51,11 +51,13 @@ import org.springframework.transaction.annotation.Transactional;
  * @since 0.1
  * @see org.openwms.core.service.spring.EntityServiceImpl
  */
-@Service
 @Transactional
+@Service(TransportUnitServiceImpl.COMPONENT_NAME)
 public class TransportUnitServiceImpl implements TransportUnitService<TransportUnit> {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(TransportUnitServiceImpl.class);
+    /** Springs component name. */
+    public static final String COMPONENT_NAME = "transportUnitService";
 
     @Autowired
     @Qualifier("transportUnitDao")
@@ -73,7 +75,13 @@ public class TransportUnitServiceImpl implements TransportUnitService<TransportU
     @Qualifier("onRemovalListener")
     private OnRemovalListener<TransportUnit> onRemovalListener;
 
-    public void setOnRemovalListener(OnRemovalListener<TransportUnit> onRemovalListener) {
+    /**
+     * Attach an OnRemovalListener.
+     * 
+     * @param onRemovalListener
+     *            The listener to attach
+     */
+    void setOnRemovalListener(OnRemovalListener<TransportUnit> onRemovalListener) {
         this.onRemovalListener = onRemovalListener;
     }
 
@@ -201,6 +209,7 @@ public class TransportUnitServiceImpl implements TransportUnitService<TransportU
      * {@inheritDoc}
      */
     @Override
+    @Transactional(readOnly = true)
     public TransportUnit findByBarcode(Barcode barcode) {
         return (TransportUnit) dao.findByUniqueId(barcode);
     }

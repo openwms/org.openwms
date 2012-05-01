@@ -35,8 +35,6 @@
         <class>org.openwms.core.domain.system.usermanagement.RolePreference</class>
         <class>org.openwms.core.domain.system.usermanagement.UserPreference</class>
         <class>org.openwms.core.domain.system.usermanagement.UserPassword</class>
-        <class>org.openwms.core.domain.values.Piece</class>
-        <class>org.openwms.core.domain.values.Unit</class>
         
         <class>org.openwms.common.domain.Location</class>
         <class>org.openwms.common.domain.LocationPK</class>
@@ -49,8 +47,6 @@
         <class>org.openwms.common.domain.system.UnitError</class>
         <class>org.openwms.common.domain.values.Barcode</class>
         <class>org.openwms.common.domain.values.Problem</class>
-        <class>org.openwms.common.domain.values.Weight</class>
-        <class>org.openwms.common.domain.values.WeightUnit</class>
         <exclude-unlisted-classes>false</exclude-unlisted-classes>
     </persistence-unit>
 </persistence>
