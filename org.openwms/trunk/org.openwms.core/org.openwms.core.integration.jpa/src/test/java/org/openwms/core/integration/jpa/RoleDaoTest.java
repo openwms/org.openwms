@@ -43,7 +43,7 @@ import org.springframework.test.context.ContextConfiguration;
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  * @version $Revision$
  */
-@ContextConfiguration("classpath:Test-context.xml")
+@ContextConfiguration("classpath:core-jpa-test-context.xml")
 public class RoleDaoTest extends AbstractJpaSpringContextTests {
 
     @Autowired

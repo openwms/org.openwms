@@ -49,7 +49,7 @@ import org.springframework.test.context.ContextConfiguration;
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  * @version $Revision$
  */
-@ContextConfiguration("classpath:Test-context.xml")
+@ContextConfiguration("classpath:core-jpa-test-context.xml")
 public class UserDaoTest extends AbstractJpaSpringContextTests {
 
     @Autowired
@@ -175,5 +175,4 @@ public class UserDaoTest extends AbstractJpaSpringContextTests {
         return (User) entityManager.createNamedQuery(User.NQ_FIND_BY_USERNAME).setParameter(1, userName)
                 .getSingleResult();
     }
-
 }
