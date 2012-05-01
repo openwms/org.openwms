@@ -64,4 +64,3 @@ package org.openwms.common.domain {
         }
     }
 }
-

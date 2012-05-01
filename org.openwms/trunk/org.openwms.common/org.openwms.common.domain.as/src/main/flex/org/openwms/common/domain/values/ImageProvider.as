@@ -4,7 +4,7 @@
  * This file is part of openwms.org.
  *
  * openwms.org is free software: you can redistribute it and/or modify
- * it under the terms of the GNU Lesser General Public License as 
+ * it under the terms of the GNU Lesser General Public License as
  * published by the Free Software Foundation, either version 3 of the
  * License, or (at your option) any later version.
  *
@@ -22,9 +22,26 @@ package org.openwms.common.domain.values {
 
     import flash.utils.ByteArray;
 
+    /**
+     * An ImageProvider stores an image file.
+     *
+     * @version $Revision$
+     * @since 0.1
+     */
     public interface ImageProvider {
 
-        function set image(value:ByteArray):void;
-        function get image():ByteArray;
+        /**
+         * Set a image.
+         *
+         * @param value The image as ByteArray
+         */
+        function set image(value : ByteArray) : void;
+
+        /**
+         * Get a image.
+         *
+         * @return The image as ByteArray
+         */
+        function get image() : ByteArray;
     }
 }
