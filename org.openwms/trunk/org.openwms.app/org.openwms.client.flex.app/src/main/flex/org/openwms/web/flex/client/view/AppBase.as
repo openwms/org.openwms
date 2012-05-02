@@ -46,7 +46,7 @@ package org.openwms.web.flex.client.view {
     import org.granite.tide.spring.Context;
     import org.granite.tide.spring.Identity;
     import org.granite.tide.spring.Spring;
-    import org.openwms.common.domain.values.Weight;
+    import org.openwms.common.domain.units.Weight;
     import org.openwms.core.domain.Module;
     import org.openwms.core.domain.system.usermanagement.Grant;
     import org.openwms.tms.domain.order.TransportOrder;
@@ -153,7 +153,7 @@ package org.openwms.web.flex.client.view {
 
         private static var log : ILogger = Log.getLogger("org.openwms.web.flex.client.view.App");
 
-        private static var _link : Array = [org.openwms.tms.domain.order.TransportOrder, org.openwms.common.domain.values.Weight];
+        private static var _link : Array = [org.openwms.tms.domain.order.TransportOrder, org.openwms.common.domain.units.Weight];
 
         [Bindable]
         private var rman : IResourceManager = ResourceManager.getInstance();
