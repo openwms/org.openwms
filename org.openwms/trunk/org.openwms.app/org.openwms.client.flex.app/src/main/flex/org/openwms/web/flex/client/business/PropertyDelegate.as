@@ -27,9 +27,7 @@ package org.openwms.web.flex.client.business {
     import org.granite.tide.events.TideFaultEvent;
     import org.granite.tide.events.TideResultEvent;
     import org.granite.tide.spring.Context;
-    import org.openwms.common.domain.values.Weight;
     import org.openwms.core.domain.system.AbstractPreference;
-    import org.openwms.core.domain.values.Unit;
     import org.openwms.web.flex.client.event.PropertyEvent;
     import org.openwms.web.flex.client.model.ModelLocator;
     import org.openwms.web.flex.client.model.PreferencesModel;
@@ -141,15 +139,6 @@ package org.openwms.web.flex.client.business {
         private function onPreferenceRemoved(event : TideResultEvent) : void {
             prefsModel.selected = null;
             findProperties();
-        }
-
-        private function onUnitsLoaded(event : TideResultEvent) : void {
-            for each (var prop : Unit in event.result) {
-                if (prop is Weight) {
-                    var type : Type = Type.forInstance((prop as Weight).unit);
-                    modelLocator.allApplicationProperties.addItem((prop as Weight).unit);
-                }
-            }
         }
 
         private function onFault(event : TideFaultEvent) : void {
