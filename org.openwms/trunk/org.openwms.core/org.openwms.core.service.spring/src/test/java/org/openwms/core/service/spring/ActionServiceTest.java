@@ -20,10 +20,23 @@
  */
 package org.openwms.core.service.spring;
 
-import static org.junit.Assert.fail;
+import static org.mockito.Mockito.when;
 
+import java.util.ArrayList;
+import java.util.Collection;
+
+import org.junit.Assert;
+import org.junit.Ignore;
 import org.junit.Test;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.openwms.core.domain.search.Action;
+import org.openwms.core.domain.search.Tag;
+import org.openwms.core.domain.system.usermanagement.SystemUser;
+import org.openwms.core.domain.system.usermanagement.UserPreference;
+import org.openwms.core.service.ConfigurationService;
 import org.openwms.core.service.spring.search.ActionServiceImpl;
+import org.openwms.core.test.AbstractMockitoTests;
 
 /**
  * A ActionServiceTest.
@@ -32,7 +45,12 @@ import org.openwms.core.service.spring.search.ActionServiceImpl;
  * @version $Revision: $
  * @since 0.2
  */
-public class ActionServiceTest {
+public class ActionServiceTest extends AbstractMockitoTests {
+
+    @Mock(name = ConfigurationServiceImpl.COMPONENT_NAME)
+    private ConfigurationService confSrv;
+    @InjectMocks
+    private ActionServiceImpl srv = new ActionServiceImpl();
 
     /**
      * Test method for
@@ -51,7 +69,8 @@ public class ActionServiceTest {
      */
     @Test
     public final void testFindAllActions() {
-        fail("Not yet implemented");
+        Collection<Action> result = srv.findAllActions();
+        Assert.assertNotNull(result);
     }
 
     /**
@@ -61,7 +80,9 @@ public class ActionServiceTest {
      */
     @Test
     public final void testFindAllActionsUser() {
-        fail("Not yet implemented");
+        Collection<Action> result = srv.findAllActions(new SystemUser(SystemUser.SYSTEM_USERNAME,
+                SystemUser.SYSTEM_USERNAME));
+        Assert.assertNotNull(result);
     }
 
     /**
@@ -71,7 +92,9 @@ public class ActionServiceTest {
      */
     @Test
     public final void testFindAllTags() {
-        fail("Not yet implemented");
+        Collection<Tag> result = srv
+                .findAllTags(new SystemUser(SystemUser.SYSTEM_USERNAME, SystemUser.SYSTEM_USERNAME));
+        Assert.assertNotNull(result);
     }
 
     /**
@@ -79,9 +102,13 @@ public class ActionServiceTest {
      * {@link org.openwms.core.service.spring.search.ActionServiceImpl#save(org.openwms.core.domain.system.usermanagement.User, java.util.Collection)}
      * .
      */
-    @Test
+    @Ignore
     public final void testSave() {
-        fail("Not yet implemented");
+        Collection<Action> actions = new ArrayList<Action>();
+        actions.add(new Action());
+        when(confSrv.save(null)).thenReturn(new UserPreference(SystemUser.SYSTEM_USERNAME, "lastSearchActions"));
+        Collection<Action> result = srv.save(new SystemUser(SystemUser.SYSTEM_USERNAME, SystemUser.SYSTEM_USERNAME),
+                actions);
+        Assert.assertNotNull(result);
     }
-
 }
