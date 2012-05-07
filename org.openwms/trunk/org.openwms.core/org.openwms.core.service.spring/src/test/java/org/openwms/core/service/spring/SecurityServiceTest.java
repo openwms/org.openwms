@@ -24,6 +24,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 import static org.mockito.Mockito.never;
+import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
@@ -31,10 +32,13 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import junit.framework.Assert;
+
 import org.junit.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.openwms.core.domain.system.usermanagement.Grant;
+import org.openwms.core.domain.system.usermanagement.SecurityObject;
 import org.openwms.core.integration.RoleDao;
 import org.openwms.core.integration.SecurityObjectDao;
 import org.openwms.core.test.AbstractMockitoTests;
@@ -50,10 +54,36 @@ public class SecurityServiceTest extends AbstractMockitoTests {
 
     @Mock
     private SecurityObjectDao dao;
+    @SuppressWarnings("unused")
     @Mock
     private RoleDao roleDao;
     @InjectMocks
     private SecurityServiceImpl srv;
+
+    /**
+     * Positive test findAll method.
+     */
+    @Test
+    public final void testFindAll() {
+        List<SecurityObject> result = new ArrayList<SecurityObject>();
+        result.add(new Grant("GRANT1"));
+        result.add(new Grant("GRANT2"));
+        when(dao.findAll()).thenReturn(result);
+
+        Assert.assertTrue(srv.findAll().size() == 2);
+        verify(dao, times(1)).findAll();
+    }
+
+    /**
+     * Positive test findAll method with empty result
+     */
+    @Test
+    public final void testFindAllEmpty() {
+        when(dao.findAll()).thenReturn(null);
+
+        Assert.assertTrue(srv.findAll().isEmpty());
+        verify(dao, times(1)).findAll();
+    }
 
     /**
      * Test method for
