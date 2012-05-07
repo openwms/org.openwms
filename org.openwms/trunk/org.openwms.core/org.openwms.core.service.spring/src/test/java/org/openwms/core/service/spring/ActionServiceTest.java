@@ -26,13 +26,13 @@ import java.util.ArrayList;
 import java.util.Collection;
 
 import org.junit.Assert;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.openwms.core.domain.search.Action;
 import org.openwms.core.domain.search.Tag;
 import org.openwms.core.domain.system.usermanagement.SystemUser;
+import org.openwms.core.domain.system.usermanagement.User;
 import org.openwms.core.domain.system.usermanagement.UserPreference;
 import org.openwms.core.service.ConfigurationService;
 import org.openwms.core.service.spring.search.ActionServiceImpl;
@@ -102,13 +102,20 @@ public class ActionServiceTest extends AbstractMockitoTests {
      * {@link org.openwms.core.service.spring.search.ActionServiceImpl#save(org.openwms.core.domain.system.usermanagement.User, java.util.Collection)}
      * .
      */
-    @Ignore
+    @Test
     public final void testSave() {
         Collection<Action> actions = new ArrayList<Action>();
         actions.add(new Action());
-        when(confSrv.save(null)).thenReturn(new UserPreference(SystemUser.SYSTEM_USERNAME, "lastSearchActions"));
-        Collection<Action> result = srv.save(new SystemUser(SystemUser.SYSTEM_USERNAME, SystemUser.SYSTEM_USERNAME),
-                actions);
+
+        UserPreference uPref = new UserPreference(SystemUser.SYSTEM_USERNAME, "lastSearchActions");
+        Collection<UserPreference> userPrefs = new ArrayList<UserPreference>();
+
+        User user = new SystemUser(SystemUser.SYSTEM_USERNAME, SystemUser.SYSTEM_USERNAME);
+        userPrefs.add(uPref);
+        when(confSrv.findByType(UserPreference.class, user.getUsername())).thenReturn(userPrefs);
+        when(confSrv.save(uPref)).thenReturn(uPref);
+
+        Collection<Action> result = srv.save(user, actions);
         Assert.assertNotNull(result);
     }
 }
