@@ -123,7 +123,7 @@ public class Weight extends Unit<Weight, WeightUnit> implements Comparable<Weigh
      */
     @Override
     public boolean isZero() {
-        return Weight.ZERO.equals(this.getAmount());
+        return this.getAmount().equals(BigDecimal.ZERO);
     }
 
     /**
