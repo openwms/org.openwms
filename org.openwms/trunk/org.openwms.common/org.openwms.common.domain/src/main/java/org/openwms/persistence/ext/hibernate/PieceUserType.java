@@ -26,7 +26,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import org.hibernate.Hibernate;
-import org.hibernate.HibernateException;
 import org.hibernate.engine.SessionImplementor;
 import org.hibernate.type.Type;
 import org.hibernate.usertype.CompositeUserType;
@@ -62,24 +61,18 @@ public class PieceUserType implements CompositeUserType {
 
     /**
      * {@inheritDoc}
-     * 
-     * @throws HibernateException
-     *             in case of errors
      */
     @Override
-    public Object getPropertyValue(Object component, int property) throws HibernateException {
+    public Object getPropertyValue(Object component, int property) {
         Piece piece = (Piece) component;
         return property == 0 ? piece.getUnitType() : piece.getAmount();
     }
 
     /**
      * {@inheritDoc}
-     * 
-     * @throws HibernateException
-     *             in case of errors
      */
     @Override
-    public void setPropertyValue(Object component, int property, Object value) throws HibernateException {
+    public void setPropertyValue(Object component, int property, Object value) {
         throw new UnsupportedOperationException("Unit types are immutable");
     }
 
@@ -93,12 +86,9 @@ public class PieceUserType implements CompositeUserType {
 
     /**
      * {@inheritDoc}
-     * 
-     * @throws HibernateException
-     *             in case of errors
      */
     @Override
-    public boolean equals(Object x, Object y) throws HibernateException {
+    public boolean equals(Object x, Object y) {
         if (x == y) {
             return true;
         }
@@ -110,26 +100,21 @@ public class PieceUserType implements CompositeUserType {
 
     /**
      * {@inheritDoc}
-     * 
-     * @throws HibernateException
-     *             in case of errors
      */
     @Override
-    public int hashCode(Object x) throws HibernateException {
+    public int hashCode(Object x) {
         return x.hashCode();
     }
 
     /**
      * {@inheritDoc}
      * 
-     * @throws HibernateException
-     *             in case of errors
      * @throws SQLException
      *             in case of database errors
      */
     @Override
     public Object nullSafeGet(ResultSet rs, String[] names, SessionImplementor session, Object owner)
-            throws HibernateException, SQLException {
+            throws SQLException {
         String unitType = rs.getString(names[0]);
         if (rs.wasNull()) {
             return null;
@@ -141,14 +126,12 @@ public class PieceUserType implements CompositeUserType {
     /**
      * {@inheritDoc}
      * 
-     * @throws HibernateException
-     *             in case of errors
      * @throws SQLException
      *             in case of database errors
      */
     @Override
     public void nullSafeSet(PreparedStatement st, Object value, int index, SessionImplementor session)
-            throws HibernateException, SQLException {
+            throws SQLException {
         if (value == null) {
             st.setNull(index, Hibernate.STRING.sqlType());
             st.setNull(index + 1, Hibernate.BIG_DECIMAL.sqlType());
@@ -162,12 +145,9 @@ public class PieceUserType implements CompositeUserType {
 
     /**
      * {@inheritDoc}
-     * 
-     * @throws HibernateException
-     *             in case of errors
      */
     @Override
-    public Object deepCopy(Object value) throws HibernateException {
+    public Object deepCopy(Object value) {
         return value;
     }
 
@@ -181,35 +161,25 @@ public class PieceUserType implements CompositeUserType {
 
     /**
      * {@inheritDoc}
-     * 
-     * @throws HibernateException
-     *             in case of errors
      */
     @Override
-    public Serializable disassemble(Object value, SessionImplementor session) throws HibernateException {
+    public Serializable disassemble(Object value, SessionImplementor session) {
         return (Serializable) value;
     }
 
     /**
      * {@inheritDoc}
-     * 
-     * @throws HibernateException
-     *             in case of errors
      */
     @Override
-    public Object assemble(Serializable cached, SessionImplementor session, Object owner) throws HibernateException {
+    public Object assemble(Serializable cached, SessionImplementor session, Object owner) {
         return cached;
     }
 
     /**
      * {@inheritDoc}
-     * 
-     * @throws HibernateException
-     *             in case of errors
      */
     @Override
-    public Object replace(Object original, Object target, SessionImplementor session, Object owner)
-            throws HibernateException {
+    public Object replace(Object original, Object target, SessionImplementor session, Object owner) {
         return original;
     }
 }
