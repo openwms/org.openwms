@@ -28,17 +28,17 @@ import java.lang.annotation.Target;
 import java.util.EventObject;
 
 /**
- * A FireAfterTransaction. is used to send a list of events synchronously after
- * the current transaction has finished successfully.
+ * A FireAfterTransactionAsynchronous is used to send a list of events
+ * asynchronously after the current transaction has finished.
  * 
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
- * @version $Revision$
- * @since 0.1
+ * @version $Revision: 1502 $
+ * @since 0.2
  */
 @Target(ElementType.METHOD)
 @Retention(RetentionPolicy.RUNTIME)
 @Documented
-public @interface FireAfterTransaction {
+public @interface FireAfterTransactionAsynchronous {
 
     /**
      * An array of events that shall be fired after the methods completes.
