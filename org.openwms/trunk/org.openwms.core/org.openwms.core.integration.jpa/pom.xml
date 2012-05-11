@@ -63,12 +63,12 @@
             <groupId>org.springframework</groupId>
             <artifactId>org.springframework.spring-library</artifactId>
             <type>libd</type>
-            <scope>provided</scope>
+            <scope>${dependency.scope}</scope>
         </dependency>
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>org.springframework.instrument</artifactId>
-            <scope>provided</scope>
+            <scope>${dependency.scope}</scope>
         </dependency>
         <dependency>
             <groupId>org.springframework</groupId>
@@ -80,12 +80,12 @@
         <dependency>
             <groupId>org.hibernate.javax.persistence</groupId>
             <artifactId>hibernate-jpa-2.0-api</artifactId>
-            <scope>provided</scope>
+            <scope>${dependency.scope}</scope>
         </dependency>
         <dependency>
             <groupId>javax.transaction</groupId>
             <artifactId>com.springsource.javax.transaction</artifactId>
-            <scope>provided</scope>
+            <scope>${dependency.scope}</scope>
         </dependency>
 
         <!-- Test database driver -->
@@ -95,15 +95,6 @@
             <scope>test</scope>
         </dependency>
 
-        <!-- JPA Provider -->
-        <!-- Removed with the replacement of JPA1.0 with JPA2.0 
-        <dependency>
-            <groupId>org.hibernate</groupId>
-            <artifactId>org.hibernate.ejb-library</artifactId>
-            <scope>test</scope>
-            <type>libd</type>
-        </dependency>
-        -->
         <!-- JPA Provider -->
         <dependency>
             <groupId>org.hibernate</groupId>
@@ -119,41 +110,36 @@
         <dependency>
             <groupId>org.apache.commons</groupId>
             <artifactId>com.springsource.org.apache.commons.lang</artifactId>
-            <scope>provided</scope>
+            <scope>${dependency.scope}</scope>
         </dependency>
 
         <!-- Weaver -->
         <dependency>
             <groupId>org.aspectj</groupId>
             <artifactId>com.springsource.org.aspectj.weaver</artifactId>
-             <scope>provided</scope>
+            <scope>${dependency.scope}</scope>
        </dependency>
         <dependency>
             <groupId>org.aspectj</groupId>
             <artifactId>com.springsource.org.aspectj.runtime</artifactId>
-            <scope>provided</scope>
+            <scope>${dependency.scope}</scope>
         </dependency>
 
         <!-- Project dependencies -->
         <dependency>
             <groupId>${project.groupId}</groupId>
-            <artifactId>org.openwms.core.infrastructure.hsql</artifactId>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>${project.groupId}</groupId>
             <artifactId>org.openwms.core.integration</artifactId>
-            <scope>provided</scope>
+            <scope>${dependency.scope}</scope>
         </dependency>
         <dependency>
             <groupId>${project.groupId}</groupId>
             <artifactId>org.openwms.core.domain</artifactId>
-            <scope>provided</scope>
+            <scope>${dependency.scope}</scope>
         </dependency>
         <dependency>
             <groupId>${project.groupId}</groupId>
             <artifactId>org.openwms.core.util</artifactId>
-            <scope>provided</scope>
+            <scope>${dependency.scope}</scope>
         </dependency>
         <dependency>
             <groupId>${project.groupId}</groupId>
@@ -165,6 +151,11 @@
             <groupId>${project.groupId}</groupId>
             <artifactId>org.openwms.core.test</artifactId>
             <type>test-jar</type>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>org.openwms.core.infrastructure.hsql</artifactId>
             <scope>test</scope>
         </dependency>
     </dependencies>
