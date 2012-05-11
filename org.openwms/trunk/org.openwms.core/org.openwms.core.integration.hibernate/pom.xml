@@ -30,7 +30,6 @@
         <version>0.1.1-SNAPSHOT</version>
     </parent>
     <artifactId>org.openwms.core.integration.hibernate</artifactId>
-    <packaging>jar</packaging>
     <name>${project.artifactId}</name>
     <properties>
         <moduleDir>../../..</moduleDir>
@@ -66,18 +65,10 @@
             <scope>provided</scope>
         </dependency>
 
-        <!-- JPA Provider -->
-        <dependency>
-            <groupId>org.hibernate</groupId>
-            <artifactId>org.hibernate.ejb-library</artifactId>
-            <type>libd</type>
-            <scope>provided</scope>
-        </dependency>
-
         <!-- JEE API -->
         <dependency>
-            <groupId>javax.persistence</groupId>
-            <artifactId>com.springsource.javax.persistence</artifactId>
+            <groupId>org.hibernate.javax.persistence</groupId>
+            <artifactId>hibernate-jpa-2.0-api</artifactId>
             <scope>provided</scope>
         </dependency>
         <dependency>
@@ -86,12 +77,28 @@
             <scope>provided</scope>
         </dependency>
 
+        <!-- JPA Provider -->
+        <dependency>
+            <groupId>org.hibernate</groupId>
+            <artifactId>hibernate-entitymanager</artifactId>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>net.sourceforge.ehcache</groupId>
+            <artifactId>com.springsource.net.sf.ehcache</artifactId>
+            <scope>provided</scope>
+        </dependency>
+
         <!-- TODO [scherrer] : Is this needed here? Test without -->
         <!-- Weaver -->
         <dependency>
             <groupId>org.aspectj</groupId>
-            <artifactId>org.aspectj-library</artifactId>
-            <type>libd</type>
+            <artifactId>com.springsource.org.aspectj.weaver</artifactId>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.aspectj</groupId>
+            <artifactId>com.springsource.org.aspectj.runtime</artifactId>
             <scope>provided</scope>
         </dependency>
 
