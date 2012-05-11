@@ -19,6 +19,14 @@ Import-Bundle:
 Import-Template: 
  javax.annotation;version="0"
 Import-Package: 
+ org.aspectj.internal.lang.annotation,
+ org.aspectj.internal.lang.reflect,
+ org.aspectj.lang,
+ org.aspectj.lang.annotation,
+ org.aspectj.lang.internal.lang,
+ org.aspectj.lang.reflect,
+ org.aspectj.runtime.internal,
+ org.aspectj.runtime.reflect,
  org.springframework.context.weaving;version="${osgi.spring}",
  org.springframework.transaction.aspectj;version="${osgi.spring}"
 Excluded-Imports: 
