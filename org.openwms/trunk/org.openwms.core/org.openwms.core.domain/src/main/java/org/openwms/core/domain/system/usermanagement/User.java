@@ -213,7 +213,7 @@ public class User extends AbstractEntity implements DomainObject<Long> {
     /**
      * Password history of the <code>User</code>.
      */
-    @OneToMany(mappedBy = "user", cascade = { CascadeType.MERGE, CascadeType.REMOVE, CascadeType.REFRESH })
+    @OneToMany(cascade = { CascadeType.MERGE, CascadeType.REMOVE, CascadeType.REFRESH })
     @JoinTable(name = "COR_USER_PASSWORD_JOIN", joinColumns = @JoinColumn(name = "USER_ID"), inverseJoinColumns = @JoinColumn(name = "PASSWORD_ID"))
     private List<UserPassword> passwords = new ArrayList<UserPassword>();
 

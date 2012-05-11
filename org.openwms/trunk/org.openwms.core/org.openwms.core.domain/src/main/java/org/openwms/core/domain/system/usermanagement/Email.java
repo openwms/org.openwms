@@ -24,7 +24,6 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 import javax.persistence.Version;
@@ -53,8 +52,6 @@ public class Email extends AbstractEntity implements DomainObject<Long> {
      */
     @Id
     @GeneratedValue
-    // CHECK [scherrer] : what is this??
-    @ManyToOne
     private Long id;
 
     /**
