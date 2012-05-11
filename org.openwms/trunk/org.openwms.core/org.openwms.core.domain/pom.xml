@@ -56,6 +56,7 @@
             <artifactId>hibernate-jpa-2.0-api</artifactId>
             <scope>${dependency.scope}</scope>
         </dependency>
+        
         <dependency>
             <groupId>org.apache.commons</groupId>
             <artifactId>com.springsource.org.apache.commons.lang</artifactId>
