@@ -63,28 +63,28 @@
             <groupId>org.springframework</groupId>
             <artifactId>org.springframework.spring-library</artifactId>
             <type>libd</type>
-            <scope>provided</scope>
+            <scope>${dependency.scope}</scope>
         </dependency>
 
         <!-- JEE API -->
         <dependency>
             <groupId>org.hibernate.javax.persistence</groupId>
             <artifactId>hibernate-jpa-2.0-api</artifactId>
-            <scope>provided</scope>
+            <scope>${dependency.scope}</scope>
         </dependency>
 
         <!-- Apache libraries -->
         <dependency>
             <groupId>org.apache.commons</groupId>
             <artifactId>com.springsource.org.apache.commons.dbcp</artifactId>
-            <scope>provided</scope>
+            <scope>${dependency.scope}</scope>
         </dependency>
 
         <!-- Database libraries -->
         <dependency>
             <groupId>org.postgresql</groupId>
             <artifactId>com.springsource.org.postgresql.jdbc4</artifactId>
-            <scope>provided</scope>
+            <scope>${dependency.scope}</scope>
         </dependency>
 
         <!-- Project dependencies -->
