@@ -41,7 +41,7 @@ import org.springframework.stereotype.Component;
  * 
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  * @version $Revision: $
- * @since 0.1
+ * @since 0.2
  * @see org.openwms.core.integration.exception.IntegrationRuntimeException
  */
 @Component(CoreIntegrationAdvice.COMPONENT_NAME)
@@ -66,14 +66,14 @@ public class CoreIntegrationAdvice {
         if (LOGGER.isDebugEnabled()) {
             sw = new StopWatch();
             sw.start();
-            LOGGER.debug("---->> calling: " + pjp.toShortString());
+            LOGGER.debug("[I]>>> Method call: " + pjp.toShortString());
         }
         try {
             return pjp.proceed();
         } finally {
             if (LOGGER.isDebugEnabled() && sw != null) {
                 sw.stop();
-                LOGGER.debug("<<---- took [ms]: " + sw.getTime());
+                LOGGER.debug("[I]<<< " + pjp.toShortString() + " took [ms]: " + sw.getTime());
             }
         }
     }
@@ -90,11 +90,11 @@ public class CoreIntegrationAdvice {
      *            The root exception that is thrown
      */
     public void afterThrowing(Throwable ex) {
-        if (LOGGER.isWarnEnabled()) {
-            LOGGER.warn("Integration layer exception: " + ex);
+        if (LOGGER.isErrorEnabled()) {
+            LOGGER.error("[I] Integration Layer Exception: " + ex);
         }
         if (ex instanceof IntegrationRuntimeException) {
-            return;
+            throw (IntegrationRuntimeException) ex;
         }
         throw new IntegrationRuntimeException(ex);
     }
