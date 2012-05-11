@@ -81,9 +81,17 @@
         </dependency>
 
         <!-- JEE API -->
+        <!-- JPA API -->
+        <!-- Removed with the replacement of JPA1.0 with JPA2.0 
         <dependency>
             <groupId>javax.persistence</groupId>
             <artifactId>com.springsource.javax.persistence</artifactId>
+            <scope>compile</scope>
+        </dependency>
+        -->
+        <dependency>
+            <groupId>org.hibernate.javax.persistence</groupId>
+            <artifactId>hibernate-jpa-2.0-api</artifactId>
             <scope>compile</scope>
         </dependency>
         <dependency>
@@ -95,14 +103,35 @@
         <!-- JPA Provider -->
         <dependency>
             <groupId>org.hibernate</groupId>
-            <artifactId>org.hibernate.ejb-library</artifactId>
-            <type>libd</type>
+            <artifactId>hibernate-entitymanager</artifactId>
+            <scope>compile</scope>
+        </dependency>
+        <dependency>
+            <groupId>net.sourceforge.ehcache</groupId>
+            <artifactId>com.springsource.net.sf.ehcache</artifactId>
+            <scope>compile</scope>
+        </dependency>
+
+        <!-- Bean Validation API and RI -->
+        <dependency>
+            <groupId>javax.validation</groupId>
+            <artifactId>validation-api</artifactId>
+            <scope>compile</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.hibernate</groupId>
+            <artifactId>hibernate-validator</artifactId>
+            <scope>compile</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.aspectj</groupId>
+            <artifactId>com.springsource.org.aspectj.weaver</artifactId>
             <scope>compile</scope>
         </dependency>
         <dependency>
             <groupId>org.aspectj</groupId>
-            <artifactId>org.aspectj-library</artifactId>
-            <type>libd</type>
+            <artifactId>com.springsource.org.aspectj.runtime</artifactId>
             <scope>compile</scope>
         </dependency>
 
@@ -115,6 +144,17 @@
         <dependency>
             <groupId>${project.groupId}</groupId>
             <artifactId>org.openwms.core.infrastructure.hsql</artifactId>
+            <scope>compile</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.postgresql</groupId>
+            <artifactId>com.springsource.org.postgresql.jdbc4</artifactId>
+            <scope>compile</scope>
+        </dependency>
+        <dependency>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>org.openwms.core.infrastructure.postgres</artifactId>
             <scope>compile</scope>
         </dependency>
     </dependencies>
