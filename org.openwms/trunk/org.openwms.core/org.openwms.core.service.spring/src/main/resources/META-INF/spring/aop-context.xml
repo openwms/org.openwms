@@ -29,6 +29,7 @@
 
     <aop:config>
         <aop:pointcut id="checkEventAnnotationPC" expression="execution(@org.openwms.core.annotation.FireAfterTransaction * *.*(..)) and target(publisher) and @annotation(events)"/>
+        <aop:pointcut id="checkAsyncEventAnnotationPC" expression="execution(@org.openwms.core.annotation.FireAfterTransactionAsynchronous * *.*(..)) and target(publisher) and @annotation(events)"/>
         <aop:pointcut id="publicServiceMethodsPC" expression="execution(public * org.openwms.core.service.spring..*.*(..))" />
         
         <aop:aspect ref="coreServiceAdvice" order="3">
@@ -40,6 +41,10 @@
                 pointcut-ref="publicServiceMethodsPC" throwing="ex" />
         </aop:aspect>
         <aop:aspect ref="userChangedEventAspect" order="5">
+            <aop:after-returning method="fireUserEventAsync"
+                pointcut-ref="checkAsyncEventAnnotationPC" />
+        </aop:aspect>
+        <aop:aspect ref="userChangedEventAspect" order="6">
             <aop:after-returning method="fireUserEvent"
                 pointcut-ref="checkEventAnnotationPC" />
         </aop:aspect>

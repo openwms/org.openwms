@@ -65,14 +65,14 @@ public class CoreServiceAdvice {
         if (LOGGER.isDebugEnabled()) {
             sw = new StopWatch();
             sw.start();
-            LOGGER.debug("-->> Calling:" + pjp.toShortString());
+            LOGGER.debug("[S]>> Method call: " + pjp.toShortString());
         }
         try {
             return pjp.proceed();
         } finally {
             if (LOGGER.isDebugEnabled() && sw != null) {
                 sw.stop();
-                LOGGER.debug("<<-- " + pjp.toShortString() + " took about [ms]:" + sw.getTime());
+                LOGGER.debug("[S]<< " + pjp.toShortString() + " took about [ms]: " + sw.getTime());
             }
         }
     }
@@ -89,11 +89,11 @@ public class CoreServiceAdvice {
      *            The root exception that is thrown
      */
     public void afterThrowing(Throwable ex) {
-        if (LOGGER.isWarnEnabled()) {
-            LOGGER.warn("Service Layer Exception: " + ex);
+        if (LOGGER.isErrorEnabled()) {
+            LOGGER.error("[S] Service Layer Exception: " + ex);
         }
         if (ex instanceof ServiceRuntimeException) {
-            return;
+            throw (ServiceRuntimeException) ex;
         }
         throw new ServiceRuntimeException(ex);
     }
