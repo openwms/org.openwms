@@ -21,15 +21,14 @@
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */  
 -->
-<beans profile="OSGI" xmlns="http://www.springframework.org/schema/beans"
-    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xmlns:osgi="http://www.springframework.org/schema/osgi"
-    xmlns:osgix="http://www.springframework.org/schema/osgi-compendium"
-    xsi:schemaLocation="http://www.springframework.org/schema/osgi http://www.springframework.org/schema/osgi/spring-osgi-1.2.xsd
-		http://www.springframework.org/schema/osgi-compendium http://www.springframework.org/schema/osgi-compendium/spring-osgi-compendium-1.2.xsd
-        http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+<beans profile="noOSGI" xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+    xmlns:util="http://www.springframework.org/schema/util"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
+        http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd">
 
-    <osgix:cm-properties id="global.properties" persistent-id="org.openwms.core.infrastructure.configuration-${openwms.configuration.version}" />
-    <osgi:service ref="wmsDataSource" interface="javax.sql.DataSource" />
+    <util:properties id="global.properties" location="classpath:org.openwms.core.infrastructure.configuration.properties" />
 
 </beans>
