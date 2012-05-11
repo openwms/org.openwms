@@ -51,17 +51,16 @@
         </plugins>
     </build>
     <dependencies>
-        <!-- JEE API -->
         <dependency>
-            <groupId>javax.persistence</groupId>
-            <artifactId>com.springsource.javax.persistence</artifactId>
-            <scope>provided</scope>
+            <groupId>org.hibernate.javax.persistence</groupId>
+            <artifactId>hibernate-jpa-2.0-api</artifactId>
+            <scope>${dependency.scope}</scope>
         </dependency>
 
         <dependency>
             <groupId>org.apache.commons</groupId>
             <artifactId>com.springsource.org.apache.commons.lang</artifactId>
-            <scope>provided</scope>
+            <scope>${dependency.scope}</scope>
         </dependency>
 
         <!-- Test database driver -->
@@ -74,16 +73,19 @@
         <!-- JPA Provider -->
         <dependency>
             <groupId>org.hibernate</groupId>
-            <artifactId>org.hibernate.ejb-library</artifactId>
-            <type>libd</type>
+            <artifactId>hibernate-entitymanager</artifactId>
             <scope>test</scope>
         </dependency>
 
         <!-- Weaver -->
         <dependency>
             <groupId>org.aspectj</groupId>
-            <artifactId>org.aspectj-library</artifactId>
-            <type>libd</type>
+            <artifactId>com.springsource.org.aspectj.weaver</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.aspectj</groupId>
+            <artifactId>com.springsource.org.aspectj.runtime</artifactId>
             <scope>test</scope>
         </dependency>
 
@@ -105,7 +107,7 @@
             <groupId>${project.groupId}</groupId>
             <artifactId>org.openwms.core.domain</artifactId>
             <version>${core.version}</version>
-            <scope>provided</scope>
+            <scope>${dependency.scope}</scope>
         </dependency>
         <dependency>
             <groupId>${project.groupId}</groupId>
@@ -120,13 +122,13 @@
             <groupId>${project.groupId}</groupId>
             <artifactId>org.openwms.common.domain</artifactId>
             <version>${common.version}</version>
-            <scope>provided</scope>
+            <scope>${dependency.scope}</scope>
         </dependency>
         <dependency>
             <groupId>${project.groupId}</groupId>
             <artifactId>org.openwms.common.util</artifactId>
             <version>${common.version}</version>
-            <scope>provided</scope>
+            <scope>${dependency.scope}</scope>
         </dependency>
     </dependencies>
 </project>
