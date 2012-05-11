@@ -51,11 +51,6 @@
         </plugins>
     </build>
     <dependencies>
-        <dependency>
-            <groupId>javax.persistence</groupId>
-            <artifactId>com.springsource.javax.persistence</artifactId>
-            <scope>provided</scope>
-        </dependency>
         <!-- Project dependencies -->
         <dependency>
             <groupId>${project.groupId}</groupId>
