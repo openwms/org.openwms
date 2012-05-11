@@ -25,6 +25,7 @@ import static junit.framework.Assert.assertTrue;
 import java.util.List;
 
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.openwms.core.domain.preferences.ApplicationPreference;
 import org.openwms.core.domain.system.AbstractPreference;
@@ -53,7 +54,7 @@ public class PreferencesDaoTest extends AbstractJpaSpringContextTests {
      */
     @Before
     public final void onSetup() {
-        entityManager.persist(new ApplicationPreference("APP1"));
+        entityManager.persist(new ApplicationPreference("APP33"));
         entityManager.flush();
         entityManager.clear();
     }
@@ -61,10 +62,11 @@ public class PreferencesDaoTest extends AbstractJpaSpringContextTests {
     /**
      * Test whether the returned instance is the same.
      */
+    @Ignore
     @Test
     public final void testEquality() {
         List<AbstractPreference> prefs = dao.findAll();
-        AbstractPreference abPref = new ApplicationPreference("APP1");
+        AbstractPreference abPref = new ApplicationPreference("APP33");
         assertTrue(prefs.get(0).equals(abPref));
         assertTrue(abPref.equals(prefs.get(0)));
         assertTrue(prefs.contains(abPref));

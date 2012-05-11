@@ -78,8 +78,8 @@
 
         <!-- JEE API -->
         <dependency>
-            <groupId>javax.persistence</groupId>
-            <artifactId>com.springsource.javax.persistence</artifactId>
+            <groupId>org.hibernate.javax.persistence</groupId>
+            <artifactId>hibernate-jpa-2.0-api</artifactId>
             <scope>provided</scope>
         </dependency>
         <dependency>
@@ -96,23 +96,41 @@
         </dependency>
 
         <!-- JPA Provider -->
+        <!-- Removed with the replacement of JPA1.0 with JPA2.0 
         <dependency>
             <groupId>org.hibernate</groupId>
             <artifactId>org.hibernate.ejb-library</artifactId>
+            <scope>test</scope>
             <type>libd</type>
+        </dependency>
+        -->
+        <!-- JPA Provider -->
+        <dependency>
+            <groupId>org.hibernate</groupId>
+            <artifactId>hibernate-entitymanager</artifactId>
             <scope>test</scope>
         </dependency>
-
-        <!-- Weaver -->
         <dependency>
-            <groupId>org.aspectj</groupId>
-            <artifactId>org.aspectj-library</artifactId>
-            <type>libd</type>
+            <groupId>net.sourceforge.ehcache</groupId>
+            <artifactId>com.springsource.net.sf.ehcache</artifactId>
+            <scope>test</scope>
         </dependency>
 
         <dependency>
             <groupId>org.apache.commons</groupId>
             <artifactId>com.springsource.org.apache.commons.lang</artifactId>
+            <scope>provided</scope>
+        </dependency>
+
+        <!-- Weaver -->
+        <dependency>
+            <groupId>org.aspectj</groupId>
+            <artifactId>com.springsource.org.aspectj.weaver</artifactId>
+             <scope>provided</scope>
+       </dependency>
+        <dependency>
+            <groupId>org.aspectj</groupId>
+            <artifactId>com.springsource.org.aspectj.runtime</artifactId>
             <scope>provided</scope>
         </dependency>
 
@@ -136,6 +154,12 @@
             <groupId>${project.groupId}</groupId>
             <artifactId>org.openwms.core.util</artifactId>
             <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>org.openwms.core.infrastructure.configuration</artifactId>
+            <type>properties</type>
+            <scope>runtime</scope>
         </dependency>
         <dependency>
             <groupId>${project.groupId}</groupId>
