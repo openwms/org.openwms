@@ -26,9 +26,9 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-import org.hibernate.Hibernate;
 import org.hibernate.TypeMismatchException;
-import org.hibernate.engine.SessionImplementor;
+import org.hibernate.engine.spi.SessionImplementor;
+import org.hibernate.type.StandardBasicTypes;
 import org.hibernate.type.Type;
 import org.hibernate.usertype.CompositeUserType;
 import org.openwms.common.domain.units.Piece;
@@ -70,7 +70,7 @@ public class UnitUserType implements CompositeUserType {
      */
     @Override
     public Type[] getPropertyTypes() {
-        return new Type[] { Hibernate.STRING, Hibernate.STRING };
+        return new Type[] { StandardBasicTypes.STRING, StandardBasicTypes.STRING };
     }
 
     /**
@@ -180,8 +180,8 @@ public class UnitUserType implements CompositeUserType {
     public void nullSafeSet(PreparedStatement st, Object value, int index, SessionImplementor session)
             throws SQLException {
         if (value == null) {
-            st.setNull(index, Hibernate.STRING.sqlType());
-            st.setNull(index + 1, Hibernate.STRING.sqlType());
+            st.setNull(index, StandardBasicTypes.STRING.sqlType());
+            st.setNull(index + 1, StandardBasicTypes.STRING.sqlType());
         } else {
             if (value instanceof Piece) {
                 Piece piece = (Piece) value;

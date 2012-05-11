@@ -45,19 +45,19 @@ public class Problem implements Serializable {
      * Timestamp when the <code>Problem</code> occurred.
      */
     @Temporal(TemporalType.TIMESTAMP)
-    @Column(name = "OCCURRED")
+    @Column(name = "C_PROBLEM_OCCURRED")
     private Date occurred;
 
     /**
      * Message number of the <code>Problem</code>.
      */
-    @Column(name = "MESSAGE_NO")
+    @Column(name = "C_PROBLEM_MESSAGE_NO")
     private int messageNo;
 
     /**
      * Message text about the <code>Problem</code>.
      */
-    @Column(name = "MESSAGE")
+    @Column(name = "C_PROBLEM_MESSAGE")
     private String message;
 
     // FIXME [scherrer] : add new column with root exception

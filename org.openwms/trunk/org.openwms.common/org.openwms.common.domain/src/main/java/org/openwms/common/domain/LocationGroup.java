@@ -28,8 +28,6 @@ import java.util.Set;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
@@ -38,7 +36,6 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-import javax.persistence.Version;
 
 import org.openwms.common.domain.types.Target;
 import org.openwms.common.domain.values.LocationGroupState;
@@ -60,14 +57,6 @@ import org.openwms.common.domain.values.LocationGroupState;
 public class LocationGroup extends Target {
 
     private static final long serialVersionUID = -885742169116552293L;
-
-    /**
-     * Unique technical key.
-     */
-    @Id
-    @Column(name = "ID")
-    @GeneratedValue
-    private Long id;
 
     /**
      * Unique identifier of a <code>LocationGroup</code>.
@@ -151,13 +140,6 @@ public class LocationGroup extends Target {
     @Column(name = "SYSTEM_CODE")
     private String systemCode;
 
-    /**
-     * Version field.
-     */
-    @Version
-    @Column(name = "C_VERSION")
-    private long version;
-
     /* ------------------- collection mapping ------------------- */
     /**
      * Parent <code>LocationGroup</code>.
@@ -195,22 +177,6 @@ public class LocationGroup extends Target {
      */
     public LocationGroup(String name) {
         this.name = name;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public Long getId() {
-        return this.id;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public boolean isNew() {
-        return this.id == null;
     }
 
     /**
@@ -627,14 +593,6 @@ public class LocationGroup extends Target {
             return false;
         }
         return true;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public long getVersion() {
-        return this.version;
     }
 
     /**
