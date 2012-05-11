@@ -40,6 +40,7 @@
         <core.version>0.1.1-SNAPSHOT</core.version>
         <common.version>0.1.1-SNAPSHOT</common.version>
         <tms.version>0.1.1-SNAPSHOT</tms.version>
+        <wms.version>0.0.1-SNAPSHOT</wms.version>
     </properties>
 
     <distributionManagement>
@@ -59,9 +60,6 @@
     <profiles>
         <profile>
             <id>all</id>
-            <activation>
-                <activeByDefault>true</activeByDefault>
-            </activation>
             <modules>
                 <module>org.openwms.app.par</module>
                 <module>org.openwms.app.plan</module>
