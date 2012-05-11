@@ -82,26 +82,12 @@
         <dependency>
             <groupId>org.hibernate.javax.persistence</groupId>
             <artifactId>hibernate-jpa-2.0-api</artifactId>
-            <scope>provided</scope>
+            <scope>${dependency.scope}</scope>
         </dependency>
         <dependency>
             <groupId>javax.transaction</groupId>
             <artifactId>com.springsource.javax.transaction</artifactId>
             <scope>${dependency.scope}</scope>
-        </dependency>
-
-        <!-- Test database driver -->
-        <dependency>
-            <groupId>org.hsqldb</groupId>
-            <artifactId>com.springsource.org.hsqldb</artifactId>
-            <scope>test</scope>
-        </dependency>
-
-        <!-- JPA Provider -->
-        <dependency>
-            <groupId>org.hibernate</groupId>
-            <artifactId>hibernate-entitymanager</artifactId>
-            <scope>test</scope>
         </dependency>
 
         <!-- Weaver -->
