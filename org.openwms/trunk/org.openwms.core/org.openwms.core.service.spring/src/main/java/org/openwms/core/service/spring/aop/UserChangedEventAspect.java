@@ -23,9 +23,11 @@ package org.openwms.core.service.spring.aop;
 import java.util.EventObject;
 
 import org.openwms.core.annotation.FireAfterTransaction;
+import org.openwms.core.annotation.FireAfterTransactionAsynchronous;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationEvent;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;
 
 /**
@@ -76,6 +78,27 @@ public class UserChangedEventAspect {
      *             Any exception is re-thrown
      */
     public void fireUserEvent(Object publisher, FireAfterTransaction events) throws Exception {
+        for (int i = 0; i < events.events().length; i++) {
+            Class<? extends EventObject> event = events.events()[i];
+            if (ApplicationEvent.class.isAssignableFrom(event)) {
+                ctx.publishEvent((ApplicationEvent) event.getConstructor(Object.class).newInstance(publisher));
+            }
+        }
+    }
+
+    /**
+     * Only {@link ApplicationEvent}s are created and published over Springs
+     * {@link ApplicationContext}.
+     * 
+     * @param publisher
+     *            The instance that is publishing the event
+     * @param events
+     *            Stores a list of event classes to fire
+     * @throws Exception
+     *             Any exception is re-thrown
+     */
+    @Async
+    public void fireUserEventAsync(Object publisher, FireAfterTransactionAsynchronous events) throws Exception {
         for (int i = 0; i < events.events().length; i++) {
             Class<? extends EventObject> event = events.events()[i];
             if (ApplicationEvent.class.isAssignableFrom(event)) {
