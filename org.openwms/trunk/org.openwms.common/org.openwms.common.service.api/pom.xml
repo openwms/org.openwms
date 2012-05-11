@@ -56,19 +56,20 @@
             <groupId>${project.groupId}</groupId>
             <artifactId>org.openwms.core.domain</artifactId>
             <version>${core.version}</version>
-            <scope>provided</scope>
+            <scope>${dependency.scope}</scope>
         </dependency>
 	    <dependency>
 	        <groupId>${project.groupId}</groupId>
 	        <artifactId>org.openwms.core.service.api</artifactId>
 	        <version>${core.version}</version>
-	        <scope>provided</scope>
+            <scope>${dependency.scope}</scope>
 	    </dependency>
+        
         <!-- Project dependencies -->
         <dependency>
             <groupId>${project.groupId}</groupId>
             <artifactId>org.openwms.common.domain</artifactId>
-            <scope>provided</scope>
+            <scope>${dependency.scope}</scope>
         </dependency>
     </dependencies>
 </project>
