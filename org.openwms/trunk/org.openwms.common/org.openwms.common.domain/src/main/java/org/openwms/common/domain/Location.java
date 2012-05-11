@@ -31,8 +31,6 @@ import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToOne;
@@ -45,7 +43,6 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.persistence.UniqueConstraint;
-import javax.persistence.Version;
 
 import org.openwms.common.domain.types.Target;
 import org.openwms.core.domain.system.Message;
@@ -94,14 +91,6 @@ public class Location extends Target {
     public static final String NQ_FIND_BY_UNIQUE_QUERY = "Location.findByLocationPK";
 
     /**
-     * Unique technical key.
-     */
-    @Id
-    @Column(name = "ID")
-    @GeneratedValue
-    private Long id;
-
-    /**
      * Unique natural key.
      */
     @Embedded
@@ -110,7 +99,7 @@ public class Location extends Target {
     /**
      * Description of the <code>Location</code>.
      */
-    @Column(name = "DESCRIPTION")
+    @Column(name = "C_DESCRIPTION")
     private String description;
 
     /**
@@ -217,13 +206,6 @@ public class Location extends Target {
     @Column(name = "CONSIDERED_IN_ALLOCATION")
     private boolean consideredInAllocation = true;
 
-    /**
-     * Version field.
-     */
-    @Version
-    @Column(name = "C_VERSION")
-    private long version;
-
     /* ------------------- collection mapping ------------------- */
     /**
      * The {@link LocationType} where the <code>Location</code> belongs to.
@@ -318,16 +300,6 @@ public class Location extends Target {
      */
     public String getDescription() {
         return this.description;
-    }
-
-    /**
-     * Return the technical key.
-     * 
-     * @return The technical, unique key
-     */
-    @Override
-    public Long getId() {
-        return this.id;
     }
 
     /**
@@ -462,22 +434,6 @@ public class Location extends Target {
      */
     public short getPlcState() {
         return this.plcState;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public long getVersion() {
-        return this.version;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public boolean isNew() {
-        return this.id == null;
     }
 
     /**

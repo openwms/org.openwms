@@ -162,7 +162,7 @@ public class TransportUnitType extends AbstractEntity implements DomainObject<Lo
     /**
      * A collection of all {@link TransportUnit}s belonging to this type.
      */
-    @OneToMany(mappedBy = "transportUnitType")
+    @OneToMany
     @JoinTable(name = "COM_TU_UNIT_TYPE", joinColumns = @JoinColumn(name = "TRANSPORT_UNIT_TYPE_ID"), inverseJoinColumns = @JoinColumn(name = "TRANSPORT_UNIT_ID"))
     private Set<TransportUnit> transportUnits = new HashSet<TransportUnit>();
 

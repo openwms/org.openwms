@@ -25,8 +25,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-import org.hibernate.Hibernate;
-import org.hibernate.engine.SessionImplementor;
+import org.hibernate.engine.spi.SessionImplementor;
+import org.hibernate.type.StandardBasicTypes;
 import org.hibernate.type.Type;
 import org.hibernate.usertype.CompositeUserType;
 import org.openwms.common.domain.units.Piece;
@@ -56,7 +56,7 @@ public class PieceUserType implements CompositeUserType {
      */
     @Override
     public Type[] getPropertyTypes() {
-        return new Type[] { Hibernate.STRING, Hibernate.BIG_DECIMAL };
+        return new Type[] { StandardBasicTypes.STRING, StandardBasicTypes.BIG_DECIMAL };
     }
 
     /**
@@ -133,8 +133,8 @@ public class PieceUserType implements CompositeUserType {
     public void nullSafeSet(PreparedStatement st, Object value, int index, SessionImplementor session)
             throws SQLException {
         if (value == null) {
-            st.setNull(index, Hibernate.STRING.sqlType());
-            st.setNull(index + 1, Hibernate.BIG_DECIMAL.sqlType());
+            st.setNull(index, StandardBasicTypes.STRING.sqlType());
+            st.setNull(index + 1, StandardBasicTypes.BIG_DECIMAL.sqlType());
         } else {
             Piece piece = (Piece) value;
             String unitType = piece.getUnitType().toString();

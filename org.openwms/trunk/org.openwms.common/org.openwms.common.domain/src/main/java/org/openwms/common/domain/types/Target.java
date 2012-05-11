@@ -20,7 +20,14 @@
  */
 package org.openwms.common.domain.types;
 
-import javax.persistence.MappedSuperclass;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
+import javax.persistence.Version;
 
 import org.openwms.core.domain.AbstractEntity;
 import org.openwms.core.domain.DomainObject;
@@ -35,8 +42,46 @@ import org.openwms.core.domain.DomainObject;
  * @version $Revision$
  * @since 0.1
  */
-@MappedSuperclass
+@Entity
+@Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
 public abstract class Target extends AbstractEntity implements DomainObject<Long> {
 
     private static final long serialVersionUID = 10514780154009845L;
+
+    /** Unique technical key. */
+    @Id
+    @Column(name = "C_ID")
+    @GeneratedValue(strategy = GenerationType.TABLE)
+    private Long id;
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public Long getId() {
+        return this.id;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public boolean isNew() {
+        return this.id == null;
+    }
+
+    /**
+     * Version field.
+     */
+    @Version
+    @Column(name = "C_VERSION")
+    private long version;
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public long getVersion() {
+        return this.version;
+    }
 }
