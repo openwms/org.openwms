@@ -155,6 +155,16 @@
                 <role>Moderator</role>
             </roles>
         </developer>
+        <developer>
+            <id>jarhell</id>
+            <name>Michael Rudiger</name>
+            <email>rudiger@openwms.org</email>
+            <url>https://sourceforge.net/users/jarhell</url>
+            <timezone>+2</timezone>
+            <roles>
+                <role>Developer</role>
+            </roles>
+        </developer>
     </developers>
 
     <mailingLists>
@@ -180,6 +190,30 @@
     </ciManagement>
 
     <profiles>
+        <profile>
+            <id>noOSGI</id>
+            <activation>
+                <property>
+                    <name>spring.profiles.active</name>
+                    <value>!OSGI</value>
+                </property>
+            </activation>
+            <properties>
+                <dependency.scope>compile</dependency.scope>
+            </properties>
+        </profile>
+        <profile>
+            <id>OSGI</id>
+            <activation>
+                <property>
+                    <name>spring.profiles.active</name>
+                    <value>OSGI</value>
+                </property>
+            </activation>
+            <properties>
+                <dependency.scope>provided</dependency.scope>
+            </properties>
+        </profile>
         <profile>
             <id>public</id>
             <activation>
@@ -453,9 +487,11 @@
         <!-- Dependency versions -->
         <apache.commons.dbcp.version>1.2.2.osgi</apache.commons.dbcp.version>
         <apache.commons.lang.version>2.5.0</apache.commons.lang.version>
+        <aspectj.version>1.6.8.RELEASE</aspectj.version>
         <flex.version>3.2.0.3958</flex.version>
         <granite.version>2.2.1.GA</granite.version>
-        <hibernate.version>3.4.0.GA-A</hibernate.version>
+        <hibernate.version>4.1.3.Final</hibernate.version>
+        <!-- hibernate.version>3.4.0.GA-A</hibernate.version-->
         <javax.persistence.version>1.0.0</javax.persistence.version>
         <junit.version>4.7.0</junit.version>
         <net.sf.ehcache.version>1.6.2</net.sf.ehcache.version>
@@ -464,11 +500,15 @@
         <slf4j.version>1.5.10</slf4j.version>
         <spring.osgi.version>1.2.1</spring.osgi.version>
         <spring.security.version>3.0.4.RELEASE</spring.security.version>
-        <spring.version>3.0.6.RELEASE</spring.version>
+        <spring.version>3.1.1.RELEASE</spring.version>
+        <jsf.impl.version>2.1.4</jsf.impl.version>
+        <jsf.api.version>2.1.4</jsf.api.version>
+        <primefaces.version>3.0</primefaces.version>
 
         <!-- OSGi header versions -->
         <osgi.apache.commons.lang.version>${apache.commons.lang.version}</osgi.apache.commons.lang.version>
         <osgi.apache.commons.dbcp.version>${apache.commons.dbcp.version}</osgi.apache.commons.dbcp.version>
+        <osgi.aspectj.version>${aspectj.version}</osgi.aspectj.version>
         <osgi.hibernate>3.3.2.GA</osgi.hibernate>
         <osgi.hibernate.annotations>${hibernate.version}</osgi.hibernate.annotations>
         <osgi.hibernate.annotations.common>3.3.0.ga</osgi.hibernate.annotations.common>
@@ -1076,12 +1116,19 @@
                 <version>${spring.version}</version>
                 <type>libd</type>
             </dependency>
+            
             <dependency>
                 <groupId>org.springframework</groupId>
                 <artifactId>org.springframework.test</artifactId>
                 <version>${spring.version}</version>
                 <type>jar</type>
             </dependency>
+            <dependency>
+                <groupId>net.sourceforge.cglib</groupId>
+                <artifactId>com.springsource.net.sf.cglib</artifactId>
+                <version>2.2.0</version>
+            </dependency>
+            
             <dependency>
                 <groupId>org.springframework</groupId>
                 <artifactId>org.springframework.context</artifactId>
@@ -1112,6 +1159,11 @@
                 <artifactId>org.springframework.security.config</artifactId>
                 <version>${spring.security.version}</version>
             </dependency>
+            <dependency>
+                <groupId>org.springframework</groupId>
+                <artifactId>org.springframework.web</artifactId>
+                <version>${spring.version}</version>
+            </dependency>
             <!-- Spring DM Libraries 
             <dependency>
                 <groupId>org.springframework.osgi</groupId>
@@ -1141,11 +1193,6 @@
             </dependency>
             
             <!-- JEE API -->
-            <dependency>
-                <groupId>javax.persistence</groupId>
-                <artifactId>com.springsource.javax.persistence</artifactId>
-                <version>${javax.persistence.version}</version>
-            </dependency>
             <dependency>
                 <groupId>javax.transaction</groupId>
                 <artifactId>com.springsource.javax.transaction</artifactId>
@@ -1197,6 +1244,20 @@
                 <optional>true</optional>
             </dependency>
 
+            <!-- JPA API -->
+            <!-- Removed with the replacement of JPA1.0 with JPA2.0 
+            <dependency>
+                <groupId>javax.persistence</groupId>
+                <artifactId>com.springsource.javax.persistence</artifactId>
+                <version>${javax.persistence.version}</version>
+            </dependency>
+            -->
+            <!-- NON OSGI ARTIFACT -->
+            <dependency>
+                <groupId>org.hibernate.javax.persistence</groupId>
+                <artifactId>hibernate-jpa-2.0-api</artifactId>
+                <version>1.0.1.Final</version>
+            </dependency>
             <!-- JPA Provider Libraries -->
             <dependency>
                 <groupId>org.eclipse.persistence</groupId>
@@ -1204,26 +1265,53 @@
                 <version>1.0.0</version>
                 <type>libd</type>
             </dependency>
+            <!-- Removed with the replacement of JPA1.0 with JPA2.0 
             <dependency>
                 <groupId>org.hibernate</groupId>
                 <artifactId>org.hibernate.ejb-library</artifactId>
                 <version>${hibernate.version}</version>
                 <type>libd</type>
             </dependency>
+            -->
+            <!-- NON OSGI ARTIFACT -->
+            <dependency>
+                <groupId>org.hibernate</groupId>
+                <artifactId>hibernate-entitymanager</artifactId>
+                <version>4.1.3.Final</version>
+            </dependency>
+
+            <!-- Bean Validation API and RI -->
+            <!-- NON OSGI ARTIFACT -->
+            <dependency>
+                <groupId>javax.validation</groupId>
+                <artifactId>validation-api</artifactId>
+                <version>1.0.0.GA</version>
+            </dependency>
+            <!-- NON OSGI ARTIFACT -->
+            <dependency>
+                <groupId>org.hibernate</groupId>
+                <artifactId>hibernate-validator</artifactId>
+                <version>4.3.0.Final</version>
+            </dependency>
+
             <dependency>
                 <groupId>net.sourceforge.ehcache</groupId>
                 <artifactId>com.springsource.net.sf.ehcache</artifactId>
                 <version>1.6.2</version>
             </dependency>
 
-            <!-- Weaver, used only for EclipseLink provider -->
+            <!-- Weaver -->
             <dependency>
                 <groupId>org.aspectj</groupId>
-                <artifactId>org.aspectj-library</artifactId>
-                <version>1.6.5.RELEASE</version>
-                <type>libd</type>
+                <artifactId>com.springsource.org.aspectj.weaver</artifactId>
+                <version>${aspectj.version}</version>
             </dependency>
-
+            <dependency>
+                <groupId>org.aspectj</groupId>
+                <artifactId>com.springsource.org.aspectj.runtime</artifactId>
+                <version>${aspectj.version}</version>
+            </dependency>
+            
             <!-- Others -->
             <dependency>
                 <groupId>org.freemarker</groupId>
@@ -1368,6 +1456,10 @@
             <groupId>org.mockito</groupId>
             <artifactId>mockito-all</artifactId>  
             <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>net.sourceforge.cglib</groupId>
+            <artifactId>com.springsource.net.sf.cglib</artifactId>
         </dependency>
     </dependencies>
 
