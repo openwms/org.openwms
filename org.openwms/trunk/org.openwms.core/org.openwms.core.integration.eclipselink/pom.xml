@@ -72,26 +72,15 @@
             <scope>provided</scope>
         </dependency>
 
-        <!--
-            JEE API <dependency> <groupId>javax.persistence</groupId>
-            <artifactId>com.springsource.javax.persistence</artifactId> </dependency>
-        -->
-        <!--
-            Weaver <dependency> <groupId>org.aspectj</groupId> <artifactId>org.aspectj-library</artifactId>
-            <type>libd</type> </dependency>
-        -->
-
         <!-- Weaver -->
         <dependency>
             <groupId>org.aspectj</groupId>
             <artifactId>com.springsource.org.aspectj.weaver</artifactId>
-            <version>1.6.6.RELEASE</version>
-            <scope>provided</scope>            
+            <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>org.aspectj</groupId>
             <artifactId>com.springsource.org.aspectj.runtime</artifactId>
-            <version>1.6.6.RELEASE</version>
             <scope>provided</scope>
         </dependency>
 
