@@ -101,6 +101,7 @@ public class ModuleTest extends AbstractJpaSpringContextTests {
         Module m1 = new Module("Module1", null);
         try {
             entityManager.persist(m1);
+            entityManager.flush();
             fail("Businesskey not complete");
         } catch (PersistenceException pe) {
             logger.debug("OK: Must fail, we wait for an url");
