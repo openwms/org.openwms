@@ -36,5 +36,11 @@
         <class>org.openwms.core.domain.system.usermanagement.UserPreference</class>
         <class>org.openwms.core.domain.system.usermanagement.UserPassword</class>
         <exclude-unlisted-classes>false</exclude-unlisted-classes>
+        <properties>
+            <property name="hibernate.show_sql" value="true"/>
+            <property name="hibernate.format_sql" value="true"/>
+            <property name="hibernate.cache.use_query_cache" value="false"/>
+            <property name="hibernate.hbm2ddl.auto" value="create-drop"/>
+        </properties>
     </persistence-unit>
 </persistence>
