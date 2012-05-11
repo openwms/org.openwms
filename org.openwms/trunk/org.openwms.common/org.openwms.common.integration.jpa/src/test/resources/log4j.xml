@@ -35,10 +35,6 @@
         <priority value="WARN" />
     </category>
 
-    <category name="org.hibernate">
-        <priority value="WARN" />
-    </category>
-
     <root>
         <priority value="ERROR" />
         <appender-ref ref="STDOUT" />

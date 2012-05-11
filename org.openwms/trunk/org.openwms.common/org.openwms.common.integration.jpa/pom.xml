@@ -78,11 +78,6 @@
 
         <!-- JEE API -->
         <dependency>
-            <groupId>javax.persistence</groupId>
-            <artifactId>com.springsource.javax.persistence</artifactId>
-            <scope>provided</scope>
-        </dependency>
-        <dependency>
             <groupId>javax.transaction</groupId>
             <artifactId>com.springsource.javax.transaction</artifactId>
             <scope>provided</scope>
@@ -104,16 +99,19 @@
         <!-- JPA Provider -->
         <dependency>
             <groupId>org.hibernate</groupId>
-            <artifactId>org.hibernate.ejb-library</artifactId>
-            <type>libd</type>
-            <scope>test</scope>
+            <artifactId>hibernate-entitymanager</artifactId>
         </dependency>
 
         <!-- Weaver -->
         <dependency>
             <groupId>org.aspectj</groupId>
-            <artifactId>org.aspectj-library</artifactId>
-            <type>libd</type>
+            <artifactId>com.springsource.org.aspectj.weaver</artifactId>
+            <scope>${dependency.scope}</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.aspectj</groupId>
+            <artifactId>com.springsource.org.aspectj.runtime</artifactId>
+            <scope>${dependency.scope}</scope>
         </dependency>
 
         <!-- CORE Project dependencies -->
