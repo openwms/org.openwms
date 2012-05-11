@@ -41,12 +41,14 @@ import org.springframework.stereotype.Service;
  * @version $Revision: 1409 $
  * @since 0.1
  */
-@Service("securityContextHelper")
+@Service(SecurityContextHelper.COMPONENT_NAME)
 public class SecurityContextHelper {
 
     @Autowired
     @Qualifier("authenticationManager")
     private AuthenticationManager authManager;
+    /** Springs service name. */
+    public static final String COMPONENT_NAME = "securityContextHelper";
 
     /**
      * Helper method for rich clients to extract the current User from the
@@ -70,6 +72,17 @@ public class SecurityContextHelper {
         return null;
     }
 
+    /**
+     * Delegate to Spring AuthemticationManager to authenticate the user with
+     * username and password. Spring security exceptions are translated into
+     * GraniteDS exceptions.
+     * 
+     * @param username
+     *            Username of the user
+     * @param password
+     *            Password of the user
+     * @return <code>true</code> if authenticated, otherwise <code>false</code>
+     */
     public final boolean checkCredentials(String username, String password) {
         try {
             authManager.authenticate(new UsernamePasswordAuthenticationToken(username, password));
