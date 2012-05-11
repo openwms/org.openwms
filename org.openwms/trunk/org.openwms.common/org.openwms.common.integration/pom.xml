@@ -53,8 +53,8 @@
     <dependencies>
         <!-- JEE API -->
         <dependency>
-            <groupId>javax.persistence</groupId>
-            <artifactId>com.springsource.javax.persistence</artifactId>
+            <groupId>org.hibernate.javax.persistence</groupId>
+            <artifactId>hibernate-jpa-2.0-api</artifactId>
             <scope>provided</scope>
         </dependency>
 
@@ -63,20 +63,17 @@
             <groupId>${project.groupId}</groupId>
             <artifactId>org.openwms.core.domain</artifactId>
             <version>${core.version}</version>
-            <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>${project.groupId}</groupId>
             <artifactId>org.openwms.core.integration</artifactId>
             <version>${core.version}</version>
-            <scope>provided</scope>
         </dependency>
 
         <!-- Project dependencies -->
         <dependency>
             <groupId>${project.groupId}</groupId>
             <artifactId>org.openwms.common.domain</artifactId>
-            <scope>provided</scope>
         </dependency>
     </dependencies>
 </project>
