@@ -81,14 +81,6 @@
         </dependency>
 
         <!-- JEE API -->
-        <!-- JPA API -->
-        <!-- Removed with the replacement of JPA1.0 with JPA2.0 
-        <dependency>
-            <groupId>javax.persistence</groupId>
-            <artifactId>com.springsource.javax.persistence</artifactId>
-            <scope>compile</scope>
-        </dependency>
-        -->
         <dependency>
             <groupId>org.hibernate.javax.persistence</groupId>
             <artifactId>hibernate-jpa-2.0-api</artifactId>
