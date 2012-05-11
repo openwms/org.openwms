@@ -140,8 +140,7 @@
         </dependency>
         <dependency>
             <groupId>org.hibernate</groupId>
-            <artifactId>org.hibernate.ejb-library</artifactId>
-            <type>libd</type>
+            <artifactId>hibernate-entitymanager</artifactId>
             <scope>provided</scope>
         </dependency>
     </dependencies>
