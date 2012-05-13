@@ -21,8 +21,8 @@
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */  
 -->
-<persistence version="1.0" xmlns="http://java.sun.com/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xsi:schemaLocation="http://java.sun.com/xml/ns/persistence http://java.sun.com/xml/ns/persistence/persistence_1_0.xsd">
+<persistence version="2.0" xmlns="http://java.sun.com/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://java.sun.com/xml/ns/persistence http://java.sun.com/xml/ns/persistence/persistence_2_0.xsd">
     <persistence-unit name="OpenWMS-test" transaction-type="RESOURCE_LOCAL">
         <class>org.openwms.core.domain.preferences.ApplicationPreference</class>
         <class>org.openwms.core.domain.preferences.ModulePreference</class>
@@ -47,6 +47,7 @@
         <class>org.openwms.common.domain.system.UnitError</class>
         <class>org.openwms.common.domain.values.Barcode</class>
         <class>org.openwms.common.domain.values.Problem</class>
+        <class>org.openwms.common.domain.types.Target</class>
         <exclude-unlisted-classes>false</exclude-unlisted-classes>
     </persistence-unit>
 </persistence>
