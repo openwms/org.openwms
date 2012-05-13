@@ -70,11 +70,6 @@
             <artifactId>org.springframework.instrument</artifactId>
             <scope>${dependency.scope}</scope>
         </dependency>
-        <dependency>
-            <groupId>org.springframework</groupId>
-            <artifactId>org.springframework.test</artifactId>
-            <scope>test</scope>
-        </dependency>
 
         <!-- JEE API -->
         <dependency>
@@ -86,18 +81,6 @@
             <groupId>javax.transaction</groupId>
             <artifactId>com.springsource.javax.transaction</artifactId>
             <scope>${dependency.scope}</scope>
-        </dependency>
-
-        <!-- JPA Provider -->
-        <dependency>
-            <groupId>org.hibernate</groupId>
-            <artifactId>hibernate-entitymanager</artifactId>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>net.sourceforge.ehcache</groupId>
-            <artifactId>com.springsource.net.sf.ehcache</artifactId>
-            <scope>test</scope>
         </dependency>
 
         <dependency>
@@ -144,11 +127,6 @@
             <groupId>${project.groupId}</groupId>
             <artifactId>org.openwms.core.test</artifactId>
             <type>test-jar</type>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>${project.groupId}</groupId>
-            <artifactId>org.openwms.core.infrastructure.hsql</artifactId>
             <scope>test</scope>
         </dependency>
     </dependencies>
