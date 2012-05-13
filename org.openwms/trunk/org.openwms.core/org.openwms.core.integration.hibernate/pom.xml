@@ -86,11 +86,32 @@
         <dependency>
             <groupId>net.sourceforge.ehcache</groupId>
             <artifactId>com.springsource.net.sf.ehcache</artifactId>
-            <scope>provided</scope>
+            <scope>${dependency.scope}</scope>
+        </dependency>
+        <dependency>
+            <groupId>javax.validation</groupId>
+            <artifactId>validation-api</artifactId>
+            <scope>${dependency.scope}</scope>
+        </dependency>
+        <!-- NON OSGI ARTIFACT -->
+        <dependency>
+            <groupId>org.hibernate</groupId>
+            <artifactId>hibernate-validator</artifactId>
+            <scope>${dependency.scope}</scope>
         </dependency>
 
         <!-- TODO [scherrer] : Is this needed here? Test without -->
         <!-- Weaver -->
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>org.springframework.instrument</artifactId>
+            <scope>${dependency.scope}</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>org.springframework.aspects</artifactId>
+            <scope>${dependency.scope}</scope>
+        </dependency>
         <dependency>
             <groupId>org.aspectj</groupId>
             <artifactId>com.springsource.org.aspectj.weaver</artifactId>
