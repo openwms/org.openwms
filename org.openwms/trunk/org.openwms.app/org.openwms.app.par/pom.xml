@@ -126,17 +126,17 @@
         <dependency>
             <groupId>org.freemarker</groupId>
             <artifactId>com.springsource.freemarker</artifactId>
-            <scope>${dependency.scope}</scope>
+            <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>org.postgresql</groupId>
             <artifactId>com.springsource.org.postgresql.jdbc4</artifactId>
-            <scope>${dependency.scope}</scope>
+            <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>org.hibernate</groupId>
             <artifactId>hibernate-entitymanager</artifactId>
-            <scope>${dependency.scope}</scope>
+            <scope>provided</scope>
         </dependency>
     </dependencies>
 </project>
