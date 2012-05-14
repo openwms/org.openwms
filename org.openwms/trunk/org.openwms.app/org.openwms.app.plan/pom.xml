@@ -329,11 +329,6 @@
             <scope>provided</scope>
         </dependency>
         <dependency>
-            <groupId>org.hsqldb</groupId>
-            <artifactId>com.springsource.org.hsqldb</artifactId>
-            <scope>provided</scope>
-        </dependency>
-        <dependency>
             <groupId>org.apache.commons</groupId>
             <artifactId>com.springsource.org.apache.commons.dbcp</artifactId>
             <scope>provided</scope>
