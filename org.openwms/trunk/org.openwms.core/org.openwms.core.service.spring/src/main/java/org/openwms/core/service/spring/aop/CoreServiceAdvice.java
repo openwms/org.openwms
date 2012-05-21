@@ -46,7 +46,8 @@ import org.springframework.stereotype.Component;
 @Component(CoreServiceAdvice.COMPONENT_NAME)
 public class CoreServiceAdvice {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(CoreServiceAdvice.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger("CORE_METHOD_LOGS");
+    private static final Logger LOGGER2 = LoggerFactory.getLogger("CORE_SERVICE_EXC_LOGS");
     /** Springs component name. */
     public static final String COMPONENT_NAME = "coreServiceAdvice";
 
@@ -89,8 +90,8 @@ public class CoreServiceAdvice {
      *            The root exception that is thrown
      */
     public void afterThrowing(Throwable ex) {
-        if (LOGGER.isErrorEnabled()) {
-            LOGGER.error("[S] Service Layer Exception: " + ex);
+        if (LOGGER2.isErrorEnabled()) {
+            LOGGER2.error("[S] Service Layer Exception: " + ex);
         }
         if (ex instanceof ServiceRuntimeException) {
             throw (ServiceRuntimeException) ex;

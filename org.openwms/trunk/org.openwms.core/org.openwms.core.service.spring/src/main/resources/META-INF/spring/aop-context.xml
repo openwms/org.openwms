@@ -40,12 +40,13 @@
             <aop:after-throwing method="afterThrowing"
                 pointcut-ref="publicServiceMethodsPC" throwing="ex" />
         </aop:aspect>
-        <aop:aspect ref="userChangedEventAspect" order="5">
-            <aop:after-returning method="fireUserEventAsync"
+        <!-- TX Advice is at 10 -->
+        <aop:aspect ref="fireAfterTransactionAspect" order="11">
+            <aop:after-returning method="fireEventAsync"
                 pointcut-ref="checkAsyncEventAnnotationPC" />
         </aop:aspect>
-        <aop:aspect ref="userChangedEventAspect" order="6">
-            <aop:after-returning method="fireUserEvent"
+        <aop:aspect ref="fireAfterTransactionAspect" order="6">
+            <aop:after-returning method="fireEvent"
                 pointcut-ref="checkEventAnnotationPC" />
         </aop:aspect>
     </aop:config>
