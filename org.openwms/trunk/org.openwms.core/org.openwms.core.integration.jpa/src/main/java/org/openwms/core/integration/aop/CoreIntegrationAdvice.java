@@ -47,7 +47,8 @@ import org.springframework.stereotype.Component;
 @Component(CoreIntegrationAdvice.COMPONENT_NAME)
 public class CoreIntegrationAdvice {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(CoreIntegrationAdvice.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger("CORE_METHOD_LOGS");
+    private static final Logger LOGGER2 = LoggerFactory.getLogger("CORE_INTEGRATION_EXC_LOGS");
     /** Springs component name. */
     public static final String COMPONENT_NAME = "coreIntegrationAdvice";
 
@@ -90,8 +91,8 @@ public class CoreIntegrationAdvice {
      *            The root exception that is thrown
      */
     public void afterThrowing(Throwable ex) {
-        if (LOGGER.isErrorEnabled()) {
-            LOGGER.error("[I] Integration Layer Exception: " + ex);
+        if (LOGGER2.isWarnEnabled()) {
+            LOGGER2.warn("[I] Integration Layer Exception: " + ex);
         }
         if (ex instanceof IntegrationRuntimeException) {
             throw (IntegrationRuntimeException) ex;

@@ -57,7 +57,6 @@ public class SimpleEventDispatcher implements EventDispatcher {
      */
     @Override
     public void subscribe(Class<? extends RootApplicationEvent> event, EventListener listener) {
-        LOGGER.debug("subscribe");
         Set<EventListener> listeners;
         synchronized (subscriptions) {
             if (subscriptions.containsKey(event)) {
@@ -96,7 +95,6 @@ public class SimpleEventDispatcher implements EventDispatcher {
      */
     @Override
     public void unsubscribe(Class<? extends RootApplicationEvent> event, EventListener listener) {
-        LOGGER.debug("unsubscribe");
         if (subscriptions.containsKey(event)) {
             synchronized (subscriptions.get(event)) {
                 subscriptions.get(event).remove(listener);
@@ -124,15 +122,12 @@ public class SimpleEventDispatcher implements EventDispatcher {
      */
     @Override
     public <T extends RootApplicationEvent> void dispatch(T event) {
-        LOGGER.debug("In dispatch()");
         if (null == event || !subscriptions.containsKey(event.getClass())) {
             return;
         }
-        LOGGER.debug("In dispatch()2");
         synchronized (subscriptions.get(event.getClass())) {
             Set<EventListener> listeners = subscriptions.get(event.getClass());
             for (EventListener eventListener : listeners) {
-                LOGGER.debug("DRINN");
                 eventListener.onEvent(event);
             }
         }

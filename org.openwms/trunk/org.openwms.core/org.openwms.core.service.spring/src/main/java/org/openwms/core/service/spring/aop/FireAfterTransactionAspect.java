@@ -56,15 +56,13 @@ import org.springframework.stereotype.Component;
  * @since 0.1
  * @see org.openwms.core.annotation.FireAfterTransaction
  */
-@Component(UserChangedEventAspect.COMPONENT_NAME)
-public class UserChangedEventAspect {
+@Component(FireAfterTransactionAspect.COMPONENT_NAME)
+public class FireAfterTransactionAspect {
 
     @Autowired
     private ApplicationContext ctx;
-    /**
-     * Springs component name.
-     */
-    public static final String COMPONENT_NAME = "userChangedEventAspect";
+    /** Springs component name. */
+    public static final String COMPONENT_NAME = "fireAfterTransactionAspect";
 
     /**
      * Only {@link ApplicationEvent}s are created and published over Springs
@@ -77,7 +75,7 @@ public class UserChangedEventAspect {
      * @throws Exception
      *             Any exception is re-thrown
      */
-    public void fireUserEvent(Object publisher, FireAfterTransaction events) throws Exception {
+    public void fireEvent(Object publisher, FireAfterTransaction events) throws Exception {
         for (int i = 0; i < events.events().length; i++) {
             Class<? extends EventObject> event = events.events()[i];
             if (ApplicationEvent.class.isAssignableFrom(event)) {
@@ -98,7 +96,7 @@ public class UserChangedEventAspect {
      *             Any exception is re-thrown
      */
     @Async
-    public void fireUserEventAsync(Object publisher, FireAfterTransactionAsynchronous events) throws Exception {
+    public void fireEventAsync(Object publisher, FireAfterTransactionAsynchronous events) throws Exception {
         for (int i = 0; i < events.events().length; i++) {
             Class<? extends EventObject> event = events.events()[i];
             if (ApplicationEvent.class.isAssignableFrom(event)) {
