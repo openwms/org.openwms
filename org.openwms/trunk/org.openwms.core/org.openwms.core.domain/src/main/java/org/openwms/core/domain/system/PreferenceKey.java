@@ -86,5 +86,4 @@ public class PreferenceKey implements Serializable {
         }
         return true;
     }
-
 }

@@ -58,18 +58,6 @@ public class UserPreference extends AbstractPreference {
 
     private static final long serialVersionUID = -6569559231034802554L;
     /**
-     * Query to find all <code>UserPreference</code>s.
-     */
-    public static final String NQ_FIND_ALL = "UserPreference" + FIND_ALL;
-    /**
-     * Query to find <strong>all</strong> <code>UserPreference</code>s of an
-     * <code>User</code>. <li>Query parameter name <strong>owner</strong> : The
-     * userName of the <code>User</code> to search for.</li><br />
-     * Name is {@value} .
-     */
-    public static final String NQ_FIND_BY_OWNER = "UserPreference" + FIND_BY_OWNER;
-
-    /**
      * Type of this preference.
      */
     @XmlTransient
@@ -90,6 +78,17 @@ public class UserPreference extends AbstractPreference {
     @XmlAttribute(name = "key", required = true)
     @Column(name = "C_KEY")
     private String key;
+    /**
+     * Query to find all <code>UserPreference</code>s.
+     */
+    public static final String NQ_FIND_ALL = "UserPreference" + FIND_ALL;
+    /**
+     * Query to find <strong>all</strong> <code>UserPreference</code>s of an
+     * <code>User</code>. <li>Query parameter name <strong>owner</strong> : The
+     * userName of the <code>User</code> to search for.</li><br />
+     * Name is {@value} .
+     */
+    public static final String NQ_FIND_BY_OWNER = "UserPreference" + FIND_BY_OWNER;
 
     /**
      * Create a new UserPreference. Defined for the JAXB implementation.
@@ -109,7 +108,7 @@ public class UserPreference extends AbstractPreference {
      *             when owner or key is <code>null</code> or empty
      */
     public UserPreference(String owner, String key) {
-        // Called from the client.
+        // Called from the client-side only.
         super();
         AssertUtils.isNotEmpty(owner, "Not allowed to create an UserPreference with an empty owner");
         AssertUtils.isNotEmpty(key, "Not allowed to create an UserPreference with an empty key");
@@ -221,5 +220,4 @@ public class UserPreference extends AbstractPreference {
         }
         return true;
     }
-
 }

@@ -23,6 +23,7 @@ package org.openwms.core.domain.system.usermanagement;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.NamedQueries;
@@ -33,6 +34,7 @@ import javax.persistence.Version;
 
 import org.openwms.core.domain.AbstractEntity;
 import org.openwms.core.domain.DomainObject;
+import org.openwms.core.domain.values.CoreTypeDefinitions;
 import org.openwms.core.util.validation.AssertUtils;
 
 /**
@@ -55,12 +57,34 @@ import org.openwms.core.util.validation.AssertUtils;
 public class SecurityObject extends AbstractEntity implements DomainObject<Long> {
 
     private static final long serialVersionUID = 7585736035228078754L;
-
+    /**
+     * Unique technical key.
+     */
+    @Id
+    @Column(name = "C_ID")
+    @GeneratedValue(strategy = GenerationType.TABLE)
+    private Long id;
+    /**
+     * Unique name of the <code>SecurityObject</code>.
+     */
+    @Column(name = "C_NAME", unique = true)
+    @OrderBy
+    private String name;
+    /**
+     * Description of the <code>SecurityObject</code>.
+     */
+    @Column(name = "C_DESCRIPTION", length = CoreTypeDefinitions.DESCRIPTION_LENGTH)
+    private String description;
+    /**
+     * Version field.
+     */
+    @Version
+    @Column(name = "C_VERSION")
+    private long version;
     /**
      * Query to find all {@link SecurityObject}s. Name is {@value} .
      */
     public static final String NQ_FIND_ALL = "SecurityObject.findAll";
-
     /**
      * Query to find <strong>one</strong> {@link SecurityObject} by its natural
      * key. <li>Query parameter index <strong>1</strong> : The name of the
@@ -68,34 +92,6 @@ public class SecurityObject extends AbstractEntity implements DomainObject<Long>
      * Name is {@value} .
      */
     public static final String NQ_FIND_BY_UNIQUE_QUERY = "SecurityObject.findByName";
-
-    /**
-     * Unique technical key.
-     */
-    @Id
-    @Column(name = "ID")
-    @GeneratedValue
-    private Long id;
-
-    /**
-     * Unique name of the <code>SecurityObject</code>.
-     */
-    @Column(name = "C_NAME", unique = true)
-    @OrderBy
-    private String name;
-
-    /**
-     * Description of the <code>SecurityObject</code>.
-     */
-    @Column(name = "DESCRIPTION")
-    private String description;
-
-    /**
-     * Version field.
-     */
-    @Version
-    @Column(name = "C_VERSION")
-    private long version;
 
     /* ----------------------------- methods ------------------- */
     /**

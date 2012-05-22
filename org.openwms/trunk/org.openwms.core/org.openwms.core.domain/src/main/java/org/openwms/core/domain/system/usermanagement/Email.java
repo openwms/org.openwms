@@ -46,32 +46,28 @@ import org.openwms.core.util.validation.AssertUtils;
 public class Email extends AbstractEntity implements DomainObject<Long> {
 
     private static final long serialVersionUID = 3182027866592095069L;
-
     /**
      * Unique technical key.
      */
     @Id
+    @Column(name = "C_ID")
     @GeneratedValue
     private Long id;
-
     /**
      * Unique identifier of the <code>Email</code> (not nullable).
      */
     @Column(name = "C_USERNAME", nullable = false)
     private String username;
-
     /**
      * The email address as String (not nullable).
      */
     @Column(name = "C_ADDRESS", nullable = false)
     private String emailAddress;
-
     /**
      * The fullname of the <code>User</code>.
      */
     @Column(name = "C_FULL_NAME")
     private String fullName;
-
     /**
      * Version field.
      */

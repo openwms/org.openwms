@@ -34,6 +34,7 @@ import javax.persistence.Table;
 import javax.persistence.Transient;
 import javax.persistence.Version;
 
+import org.openwms.core.domain.values.CoreTypeDefinitions;
 import org.openwms.core.util.validation.AssertUtils;
 
 /**
@@ -55,12 +56,57 @@ import org.openwms.core.util.validation.AssertUtils;
 public class Module extends AbstractEntity implements DomainObject<Long> {
 
     private static final long serialVersionUID = 7358306395032979355L;
-
+    /**
+     * Unique technical key.
+     */
+    @Id
+    @Column(name = "C_ID")
+    @GeneratedValue
+    private Long id;
+    /**
+     * Unique name of the <code>Module</code> (natural key, unique, not-null).
+     */
+    @Column(name = "C_MODULE_NAME", unique = true, nullable = false)
+    private String moduleName;
+    /**
+     * URL from where to load this <code>Module</code> (unique, not-null).
+     */
+    @Column(name = "C_URL", unique = true, nullable = false)
+    private String url;
+    /**
+     * Flag used on the client side to store whether the <code>Module</code> is
+     * actually loaded or not. It's a dynamic value and not persisted.
+     */
+    @Transient
+    private boolean loaded = false;
+    /**
+     * <code>true</code> when the <code>Module</code> should be loaded on
+     * application startup.
+     */
+    @Column(name = "C_LOAD_ON_STARTUP")
+    private boolean loadOnStartup = true;
+    /**
+     * Defines the startup order compared with other Modules. Modules with a
+     * lower <code>startupOrder</code> are loaded before this one.
+     */
+    @Column(name = "C_STARTUP_ORDER")
+    @OrderBy
+    private int startupOrder;
+    /**
+     * A description text of this <code>Module</code>.
+     */
+    @Column(name = "C_DESCRIPTION", length = CoreTypeDefinitions.DESCRIPTION_LENGTH)
+    private String description = "--";
+    /**
+     * Version field.
+     */
+    @Version
+    @Column(name = "C_VERSION")
+    private long version;
     /**
      * Query to find all <code>Module</code>s. Name is {@value} .
      */
     public static final String NQ_FIND_ALL = "Module.findAll";
-
     /**
      * Query to find <strong>one</strong> <code>Module</code> by its natural
      * key. <li>
@@ -94,61 +140,6 @@ public class Module extends AbstractEntity implements DomainObject<Long> {
             return o1.getStartupOrder() >= o2.getStartupOrder() ? 1 : -1;
         }
     };
-
-    /**
-     * Unique technical key.
-     */
-    @Id
-    @Column(name = "ID")
-    @GeneratedValue
-    private Long id;
-
-    /**
-     * Unique name of the <code>Module</code> (natural key, unique, not-null).
-     */
-    @Column(name = "MODULE_NAME", unique = true, nullable = false)
-    private String moduleName;
-
-    /**
-     * URL from where to load this <code>Module</code> (unique, not-null).
-     */
-    @Column(name = "URL", unique = true, nullable = false)
-    private String url;
-
-    /**
-     * Flag used on the client side to store whether the <code>Module</code> is
-     * actually loaded or not. It's a dynamic value and not persisted.
-     */
-    @Transient
-    private boolean loaded = false;
-
-    /**
-     * <code>true</code> when the <code>Module</code> should be loaded on
-     * application startup.
-     */
-    @Column(name = "LOAD_ON_STARTUP")
-    private boolean loadOnStartup = true;
-
-    /**
-     * Defines the startup order compared with other Modules. Modules with a
-     * lower <code>startupOrder</code> are loaded before this one.
-     */
-    @Column(name = "STARTUP_ORDER")
-    @OrderBy
-    private int startupOrder;
-
-    /**
-     * A description text of this <code>Module</code>.
-     */
-    @Column(name = "DESCRIPTION")
-    private String description = "--";
-
-    /**
-     * Version field.
-     */
-    @Version
-    @Column(name = "C_VERSION")
-    private long version;
 
     /**
      * Create a new Module.

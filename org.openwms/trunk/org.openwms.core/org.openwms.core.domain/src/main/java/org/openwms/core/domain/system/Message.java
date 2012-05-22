@@ -51,27 +51,27 @@ public class Message extends AbstractEntity implements DomainObject<Long> {
      * Unique technical key.
      */
     @Id
-    @Column(name = "ID")
+    @Column(name = "C_ID")
     @GeneratedValue
     private Long id;
 
     /**
      * Message number.
      */
-    @Column(name = "MESSAGE_NO")
+    @Column(name = "C_MESSAGE_NO")
     private int messageNo;
 
     /**
      * Message description text.
      */
-    @Column(name = "MESSAGE_TEXT")
+    @Column(name = "C_MESSAGE_TEXT")
     private String messageText;
 
     /**
      * Timestamp when the <code>Message</code> was created.
      */
     @Temporal(TemporalType.TIMESTAMP)
-    @Column(name = "CREATED")
+    @Column(name = "C_CREATE_DT")
     private Date created;
 
     /**

@@ -54,34 +54,29 @@ import org.openwms.core.util.validation.AssertUtils;
 public class UserPassword extends AbstractEntity implements DomainObject<Long> {
 
     private static final long serialVersionUID = 1678609250279381615L;
-
     /**
      * Unique technical key.
      */
     @Id
     @GeneratedValue
-    @Column(name = "ID")
+    @Column(name = "C_ID")
     private Long id;
-
     /**
      * {@link User} assigned to this password.
      */
     @ManyToOne
     private User user;
-
     /**
      * Password.
      */
     @Column(name = "C_PASSWORD")
     private String password;
-
     /**
      * Date of the last password change.
      */
-    @Column(name = "PASSWORD_CHANGED")
+    @Column(name = "C_PASSWORD_CHANGED")
     @OrderBy
     private Date passwordChanged = new Date();
-
     /**
      * Version field.
      */
@@ -164,8 +159,6 @@ public class UserPassword extends AbstractEntity implements DomainObject<Long> {
      * {@inheritDoc}
      * 
      * Does not call the superclass. Uses the password and user for calculation.
-     * 
-     * @see java.lang.Object#hashCode()
      */
     @Override
     public int hashCode() {
@@ -183,8 +176,6 @@ public class UserPassword extends AbstractEntity implements DomainObject<Long> {
      * Comparison is done with the business-key (user and password).
      * {@link AbstractEntity#equals(Object)} is not called to avoid comparison
      * with the UUID.
-     * 
-     * @see AbstractEntity#equals(java.lang.Object)
      */
     @Override
     public boolean equals(Object obj) {
@@ -210,17 +201,6 @@ public class UserPassword extends AbstractEntity implements DomainObject<Long> {
             return false;
         }
         return true;
-    }
-
-    /**
-     * Return the password as String.
-     * 
-     * @see java.lang.Object#toString()
-     * @return The password
-     */
-    @Override
-    public String toString() {
-        return this.getPassword();
     }
 
     /**
