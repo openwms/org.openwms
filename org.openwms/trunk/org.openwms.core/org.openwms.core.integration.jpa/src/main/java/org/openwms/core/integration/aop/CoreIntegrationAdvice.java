@@ -23,6 +23,7 @@ package org.openwms.core.integration.aop;
 import org.apache.commons.lang.time.StopWatch;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.openwms.core.integration.exception.IntegrationRuntimeException;
+import org.openwms.core.util.logging.LoggingCategories;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
@@ -47,8 +48,8 @@ import org.springframework.stereotype.Component;
 @Component(CoreIntegrationAdvice.COMPONENT_NAME)
 public class CoreIntegrationAdvice {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger("CORE_METHOD_LOGS");
-    private static final Logger LOGGER2 = LoggerFactory.getLogger("CORE_INTEGRATION_EXC_LOGS");
+    private static final Logger LOGGER = LoggerFactory.getLogger(LoggingCategories.CALL_STACK_LOGGING);
+    private static final Logger EXC_LOGGER = LoggerFactory.getLogger(LoggingCategories.INTEGRATION_EXCEPTION);
     /** Springs component name. */
     public static final String COMPONENT_NAME = "coreIntegrationAdvice";
 
@@ -91,8 +92,8 @@ public class CoreIntegrationAdvice {
      *            The root exception that is thrown
      */
     public void afterThrowing(Throwable ex) {
-        if (LOGGER2.isWarnEnabled()) {
-            LOGGER2.warn("[I] Integration Layer Exception: " + ex);
+        if (EXC_LOGGER.isErrorEnabled()) {
+            EXC_LOGGER.error("[I] Integration Layer Exception: " + ex);
         }
         if (ex instanceof IntegrationRuntimeException) {
             throw (IntegrationRuntimeException) ex;
