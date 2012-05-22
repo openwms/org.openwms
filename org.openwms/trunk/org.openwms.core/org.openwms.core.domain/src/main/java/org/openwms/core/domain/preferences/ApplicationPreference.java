@@ -101,7 +101,7 @@ public class ApplicationPreference extends AbstractPreference {
      *             when key is <code>null</code> or empty
      */
     public ApplicationPreference(String key) {
-        // Called from the client.
+        // Called from the client-side only.
         super();
         AssertUtils.isNotEmpty(key, "Not allowed to create an ApplicationPreference with an empty key");
         this.key = key;
@@ -118,8 +118,6 @@ public class ApplicationPreference extends AbstractPreference {
 
     /**
      * {@inheritDoc}
-     * 
-     * @see org.openwms.core.domain.system.AbstractPreference#getType()
      */
     @Override
     public PropertyScope getType() {
@@ -128,8 +126,6 @@ public class ApplicationPreference extends AbstractPreference {
 
     /**
      * {@inheritDoc}
-     * 
-     * @see org.openwms.core.domain.system.AbstractPreference#getFields()
      */
     @Override
     protected Object[] getFields() {
@@ -152,8 +148,6 @@ public class ApplicationPreference extends AbstractPreference {
      * {@inheritDoc}
      * 
      * Uses the type and the key for the hashCode calculation.
-     * 
-     * @see java.lang.Object#hashCode()
      */
     @Override
     public int hashCode() {
@@ -169,8 +163,6 @@ public class ApplicationPreference extends AbstractPreference {
      * 
      * Comparison done with the type and the key fields. Not delegated to super
      * class.
-     * 
-     * @see java.lang.Object#equals(java.lang.Object)
      */
     @Override
     public boolean equals(Object obj) {
@@ -196,5 +188,4 @@ public class ApplicationPreference extends AbstractPreference {
         }
         return true;
     }
-
 }

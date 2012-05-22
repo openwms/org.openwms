@@ -324,8 +324,6 @@ public abstract class AbstractPreference extends AbstractEntity implements Domai
      * Use all fields to calculate the hashCode and don't use the hashCode of
      * the super class.
      * </p>
-     * 
-     * @see java.lang.Object#hashCode()
      */
     @Override
     public int hashCode() {
@@ -347,8 +345,6 @@ public abstract class AbstractPreference extends AbstractEntity implements Domai
      * <p>
      * Use all fields for comparison but don't call the super class.
      * </p>
-     * 
-     * @see java.lang.Object#equals(java.lang.Object)
      */
     @Override
     public boolean equals(Object obj) {

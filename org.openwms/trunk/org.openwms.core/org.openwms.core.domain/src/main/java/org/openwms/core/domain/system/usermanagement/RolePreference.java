@@ -60,6 +60,25 @@ public class RolePreference extends AbstractPreference {
 
     private static final long serialVersionUID = 8267024349554036680L;
     /**
+     * Type of this preference.
+     */
+    @XmlTransient
+    @Enumerated(EnumType.STRING)
+    @Column(name = "C_TYPE")
+    private PropertyScope type = PropertyScope.ROLE;
+    /**
+     * Owner of the <code>RolePreference</code>.
+     */
+    @XmlAttribute(name = "owner", required = true)
+    @Column(name = "C_OWNER")
+    private String owner;
+    /**
+     * Key value of the <code>RolePreference</code>.
+     */
+    @XmlAttribute(name = "key", required = true)
+    @Column(name = "C_KEY")
+    private String key;
+    /**
      * Query to find all <code>RolePreference</code>s. Name is {@value} .
      */
     public static final String NQ_FIND_ALL = "RolePreference" + FIND_ALL;
@@ -70,28 +89,6 @@ public class RolePreference extends AbstractPreference {
      * Name is {@value} .
      */
     public static final String NQ_FIND_BY_OWNER = "RolePreference" + FIND_BY_OWNER;
-
-    /**
-     * Type of this preference.
-     */
-    @XmlTransient
-    @Enumerated(EnumType.STRING)
-    @Column(name = "C_TYPE")
-    private PropertyScope type = PropertyScope.ROLE;
-
-    /**
-     * Owner of the <code>RolePreference</code>.
-     */
-    @XmlAttribute(name = "owner", required = true)
-    @Column(name = "C_OWNER")
-    private String owner;
-
-    /**
-     * Key value of the <code>RolePreference</code>.
-     */
-    @XmlAttribute(name = "key", required = true)
-    @Column(name = "C_KEY")
-    private String key;
 
     /**
      * Create a new RolePreference. Defined for the JAXB implementation.

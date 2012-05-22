@@ -58,6 +58,32 @@ import org.openwms.core.util.validation.AssertUtils;
 public class Role extends SecurityObject {
 
     private static final long serialVersionUID = -4133301834284932221L;
+    /**
+     * Whether or not this <code>Role</code> is immutable. Immutable
+     * <code>Role</code>s can't be modified.
+     */
+    @Column(name = "C_IMMUTABLE")
+    private Boolean immutable = false;
+
+    /* ------------------- collection mapping ------------------- */
+    /**
+     * All {@link User}s assigned to this <code>Role</code>.
+     */
+    @ManyToMany(cascade = { CascadeType.REFRESH })
+    @JoinTable(name = "COR_ROLE_USER_JOIN", joinColumns = @JoinColumn(name = "ROLE_ID"), inverseJoinColumns = @JoinColumn(name = "USER_ID"))
+    private Set<User> users = new HashSet<User>();
+    /**
+     * All {@link RolePreference}s linked to the <code>Role</code>.
+     */
+    @ManyToMany(cascade = { CascadeType.REFRESH })
+    @JoinTable(name = "COR_ROLE_PREFERENCE_JOIN", joinColumns = @JoinColumn(name = "ROLE_ID"), inverseJoinColumns = @JoinColumn(name = "PREFERENCE_ID"))
+    private Set<RolePreference> preferences = new HashSet<RolePreference>();
+    /**
+     * All {@link SecurityObject}s assigned to the <code>Role</code>.
+     */
+    @ManyToMany(cascade = { CascadeType.REFRESH })
+    @JoinTable(name = "COR_ROLE_ROLE_JOIN", joinColumns = @JoinColumn(name = "ROLE_ID"), inverseJoinColumns = @JoinColumn(name = "GRANT_ID"))
+    private Set<SecurityObject> grants = new HashSet<SecurityObject>();
 
     /**
      * The default prefix String for each created <code>Role</code>. Name is * *
@@ -79,35 +105,6 @@ public class Role extends SecurityObject {
      * </p>
      */
     public static final String NQ_FIND_BY_UNIQUE_QUERY = "Role.findByRolename";
-
-    /**
-     * Whether or not this <code>Role</code> is immutable. Immutable
-     * <code>Role</code>s can't be modified.
-     */
-    @Column(name = "IMMUTABLE")
-    private Boolean immutable = false;
-
-    /* ------------------- collection mapping ------------------- */
-    /**
-     * All {@link User}s assigned to this <code>Role</code>.
-     */
-    @ManyToMany(cascade = { CascadeType.REFRESH })
-    @JoinTable(name = "COR_ROLE_USER_JOIN", joinColumns = @JoinColumn(name = "ROLE_ID"), inverseJoinColumns = @JoinColumn(name = "USER_ID"))
-    private Set<User> users = new HashSet<User>();
-
-    /**
-     * All {@link RolePreference}s linked to the <code>Role</code>.
-     */
-    @ManyToMany(cascade = { CascadeType.REFRESH })
-    @JoinTable(name = "COR_ROLE_PREFERENCE_JOIN", joinColumns = @JoinColumn(name = "ROLE_ID"), inverseJoinColumns = @JoinColumn(name = "PREFERENCE_ID"))
-    private Set<RolePreference> preferences = new HashSet<RolePreference>();
-
-    /**
-     * All {@link SecurityObject}s assigned to the <code>Role</code>.
-     */
-    @ManyToMany(cascade = { CascadeType.REFRESH })
-    @JoinTable(name = "COR_ROLE_ROLE_JOIN", joinColumns = @JoinColumn(name = "ROLE_ID"), inverseJoinColumns = @JoinColumn(name = "GRANT_ID"))
-    private Set<SecurityObject> grants = new HashSet<SecurityObject>();
 
     /**
      * A builder class to construct <code>Role</code> instances.

@@ -115,7 +115,7 @@ public class ModulePreference extends AbstractPreference {
      *             when key or owner is <code>null</code> or empty
      */
     public ModulePreference(String owner, String key) {
-        // Called from the client.
+        // Called from the client-side only.
         super();
         AssertUtils.isNotEmpty(owner, "Not allowed to create an ModulePreference with an empty owner");
         AssertUtils.isNotEmpty(key, "Not allowed to create an ModulePreference with an empty key");
@@ -143,8 +143,6 @@ public class ModulePreference extends AbstractPreference {
 
     /**
      * {@inheritDoc}
-     * 
-     * @see org.openwms.core.domain.system.AbstractPreference#getType()
      */
     @Override
     public PropertyScope getType() {
@@ -153,8 +151,6 @@ public class ModulePreference extends AbstractPreference {
 
     /**
      * {@inheritDoc}
-     * 
-     * @see org.openwms.core.domain.system.AbstractPreference#getFields()
      */
     @Override
     protected Object[] getFields() {
@@ -166,8 +162,6 @@ public class ModulePreference extends AbstractPreference {
      * 
      * Uses the type, owner and the key to create a {@link PreferenceKey}
      * instance.
-     * 
-     * @see org.openwms.core.domain.system.AbstractPreference#getPrefKey()
      */
     @Override
     public PreferenceKey getPrefKey() {
@@ -178,8 +172,6 @@ public class ModulePreference extends AbstractPreference {
      * {@inheritDoc}
      * 
      * Uses the type, owner and the key for the hashCode calculation.
-     * 
-     * @see java.lang.Object#hashCode()
      */
     @Override
     public int hashCode() {
@@ -196,8 +188,6 @@ public class ModulePreference extends AbstractPreference {
      * 
      * Comparison done with the type, owner and the key fields. Not delegated to
      * super class.
-     * 
-     * @see java.lang.Object#equals(java.lang.Object)
      */
     @Override
     public boolean equals(Object obj) {

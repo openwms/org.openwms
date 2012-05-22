@@ -31,6 +31,7 @@ import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.Lob;
 
+import org.openwms.core.domain.values.CoreTypeDefinitions;
 import org.openwms.core.domain.values.ImageProvider;
 
 /**
@@ -45,6 +46,49 @@ import org.openwms.core.domain.values.ImageProvider;
 public class UserDetails implements ImageProvider, Serializable {
 
     private static final long serialVersionUID = 664778075559767489L;
+    /**
+     * Some descriptive text of the <code>User</code>.
+     */
+    @Column(name = "C_DESCRIPTION", length = CoreTypeDefinitions.DESCRIPTION_LENGTH)
+    private String description;
+    /**
+     * Some comment text of the <code>User</code>.
+     */
+    @Column(name = "C_COMMENT")
+    private String comment;
+    /**
+     * Phone number assigned to the <code>User</code>.
+     */
+    @Column(name = "C_PHONE_NO")
+    private String phoneNo;
+    /**
+     * IM account assigned to the <code>User</code>.
+     */
+    @Column(name = "C_IM")
+    private String skypeName;
+    /**
+     * Office description assigned to the <code>User</code>.
+     */
+    @Column(name = "C_OFFICE")
+    private String office;
+    /**
+     * Department description assigned to the <code>User</code>.
+     */
+    @Column(name = "C_DEPARTMENT")
+    private String department;
+    /**
+     * An image of the <code>User</code>. Lazy fetched.
+     */
+    @Lob
+    @Basic(fetch = FetchType.EAGER)
+    @Column(name = "C_IMAGE")
+    private byte[] image;
+    /**
+     * Sex of the <code>User</code>.
+     */
+    @Enumerated(EnumType.STRING)
+    @Column(name = "C_SEX")
+    private SEX sex;
 
     /**
      * The <code>User</code>s sex.
@@ -64,57 +108,6 @@ public class UserDetails implements ImageProvider, Serializable {
          */
         FEMALE
     }
-
-    /**
-     * Some descriptive text of the <code>User</code>.
-     */
-    @Column(name = "DESCRIPTION")
-    private String description;
-
-    /**
-     * Some comment text of the <code>User</code>.
-     */
-    @Column(name = "C_COMMENT")
-    private String comment;
-
-    /**
-     * Phone number assigned to the <code>User</code>.
-     */
-    @Column(name = "PHONE_NO")
-    private String phoneNo;
-
-    /**
-     * IM account assigned to the <code>User</code>.
-     */
-    @Column(name = "SKYPE_NAME")
-    private String skypeName;
-
-    /**
-     * Office description assigned to the <code>User</code>.
-     */
-    @Column(name = "OFFICE")
-    private String office;
-
-    /**
-     * Department description assigned to the <code>User</code>.
-     */
-    @Column(name = "DEPARTMENT")
-    private String department;
-
-    /**
-     * An image of the <code>User</code>. Lazy fetched.
-     */
-    @Lob
-    @Basic(fetch = FetchType.EAGER)
-    @Column(name = "IMAGE")
-    private byte[] image;
-
-    /**
-     * Sex of the <code>User</code>.
-     */
-    @Enumerated(EnumType.STRING)
-    @Column(name = "SEX")
-    private SEX sex;
 
     /* ----------------------------- methods ------------------- */
     /**

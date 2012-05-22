@@ -56,7 +56,7 @@ public class I18n extends AbstractEntity implements DomainObject<Long> {
     /**
      * The unique technical key.
      */
-    @Column(name = "ID")
+    @Column(name = "C_ID")
     @Id
     @GeneratedValue
     private Long id;

@@ -76,7 +76,7 @@ public abstract class AbstractEntity implements Serializable {
      */
     /* "UUID" and "UID" are Oracle reserved keywords -> "ENTITY_UID" */
     @XmlTransient
-    @Column(name = "ENTITY_UID", unique = true, nullable = false, updatable = false, length = UID_LENGTH)
+    @Column(name = "C_ENTITY_UID", unique = true, nullable = false, updatable = false, length = UID_LENGTH)
     private String uid;
 
     /**

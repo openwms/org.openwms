@@ -81,112 +81,65 @@ public class User extends AbstractEntity implements DomainObject<Long> {
 
     private static final long serialVersionUID = -1116645053773805413L;
     private static final Logger LOGGER = LoggerFactory.getLogger(User.class);
-
-    /**
-     * Query to find all <code>User</code>s. Name is {@value} .
-     */
-    public static final String NQ_FIND_ALL = "User.findAll";
-
-    /**
-     * Query to find all <code>User</code>s sorted by userName. Name is {@value}
-     * .
-     */
-    public static final String NQ_FIND_ALL_ORDERED = "User.findAllOrdered";
-
-    /**
-     * Query to find <strong>one</strong> <code>User</code> by his userName. <li>
-     * Query parameter index <strong>1</strong> : The userName of the
-     * <code>User</code> to search for.</li><br />
-     * Name is {@value} .
-     */
-    public static final String NQ_FIND_BY_USERNAME = "User.findByUsername";
-
-    /**
-     * Query to find <strong>one</strong> <code>User</code> by his userName and
-     * password. <li>Query parameter name <strong>username</strong> : The
-     * userName of the <code>User</code> to search for.</li> <li>Query parameter
-     * name <strong>password</strong> : The current password of the
-     * <code>User</code> to search for.</li><br />
-     * Name is {@value} .
-     */
-    public static final String NQ_FIND_BY_USERNAME_PASSWORD = "User.findByUsernameAndPassword";
-
-    /**
-     * The number of passwords to be stored in the password history. When an
-     * <code>User</code> changes the password, the old password is stored in a
-     * Collection. Default: {@value} .
-     */
-    public static final short NUMBER_STORED_PASSWORDS = 3;
-
     /**
      * Unique technical key.
      */
     @Id
-    @Column(name = "ID")
+    @Column(name = "C_ID")
     @GeneratedValue
     private Long id;
-
     /**
      * Unique identifier of this <code>User</code> (not nullable).
      */
-    @Column(name = "USERNAME", unique = true, nullable = false)
+    @Column(name = "C_USERNAME", unique = true, nullable = false)
     private String username;
-
     /**
      * <code>true</code> if the <code>User</code> is authenticated by an
      * external system, otherwise <code>false</code>.
      */
-    @Column(name = "EXTERN")
+    @Column(name = "C_EXTERN")
     private boolean extern = false;
-
     /**
      * Date of the last password change.
      */
     @Temporal(TemporalType.TIMESTAMP)
-    @Column(name = "LAST_PASSWORD_CHANGE")
+    @Column(name = "C_LAST_PASSWORD_CHANGE")
     private Date lastPasswordChange;
-
     /**
      * <code>true</code> if this <code>User</code> is locked and has not the
      * permission to login anymore. This field is set by the backend
      * application, e.g. when the expirationDate of the account expires.
      */
-    @Column(name = "LOCKED")
+    @Column(name = "C_LOCKED")
     private boolean locked = false;
-
     /**
      * The <code>User</code>'s password.
      */
     @Transient
     private String password;
-
     /**
      * The <code>User</code>'s password.
      */
     @Column(name = "C_PASSWORD")
     private String savedPassword;
-
     /**
      * <code>true</code> if the <code>User</code> is enabled. This field can be
      * managed by the UI application to lock an User manually.
      */
     @Column(name = "C_ENABLED")
     private boolean enabled = true;
-
     /**
      * Date when the account expires. After account expiration, the
      * <code>User</code> cannot login anymore.
      */
     @Temporal(TemporalType.TIMESTAMP)
-    @Column(name = "EXPIRATION_DATE")
+    @Column(name = "C_EXPIRATION_DATE")
     private Date expirationDate;
-
     /**
      * The <code>User</code>s fullname. Doesn't have to be unique.
      */
-    @Column(name = "FULLNAME")
+    @Column(name = "C_FULLNAME")
     private String fullname;
-
     /**
      * Version field.
      */
@@ -224,8 +177,44 @@ public class User extends AbstractEntity implements DomainObject<Long> {
      * @see javax.persistence.FetchType
      */
     @OneToMany(cascade = { CascadeType.MERGE, CascadeType.REMOVE, CascadeType.REFRESH })
-    @JoinColumn(name = "C_OWNER", referencedColumnName = "USERNAME")
+    @JoinColumn(name = "C_OWNER", referencedColumnName = "C_USERNAME")
     private Set<UserPreference> preferences = new HashSet<UserPreference>();
+
+    /**
+     * Query to find all <code>User</code>s. Name is {@value} .
+     */
+    public static final String NQ_FIND_ALL = "User.findAll";
+
+    /**
+     * Query to find all <code>User</code>s sorted by userName. Name is {@value}
+     * .
+     */
+    public static final String NQ_FIND_ALL_ORDERED = "User.findAllOrdered";
+
+    /**
+     * Query to find <strong>one</strong> <code>User</code> by his userName. <li>
+     * Query parameter index <strong>1</strong> : The userName of the
+     * <code>User</code> to search for.</li><br />
+     * Name is {@value} .
+     */
+    public static final String NQ_FIND_BY_USERNAME = "User.findByUsername";
+
+    /**
+     * Query to find <strong>one</strong> <code>User</code> by his userName and
+     * password. <li>Query parameter name <strong>username</strong> : The
+     * userName of the <code>User</code> to search for.</li> <li>Query parameter
+     * name <strong>password</strong> : The current password of the
+     * <code>User</code> to search for.</li><br />
+     * Name is {@value} .
+     */
+    public static final String NQ_FIND_BY_USERNAME_PASSWORD = "User.findByUsernameAndPassword";
+
+    /**
+     * The number of passwords to be stored in the password history. When an
+     * <code>User</code> changes the password, the old password is stored in a
+     * Collection. Default: {@value} .
+     */
+    public static final short NUMBER_STORED_PASSWORDS = 3;
 
     /* ----------------------------- constructors ------------------- */
     /**

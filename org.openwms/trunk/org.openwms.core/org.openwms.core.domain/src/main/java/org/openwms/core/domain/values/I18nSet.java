@@ -45,17 +45,17 @@ public class I18nSet implements Serializable {
     /**
      * American English language.
      */
-    @Column(name = "EN_US", length = LENGTH)
+    @Column(name = "C_EN_US", length = LENGTH)
     private String enUs;
     /**
      * German language.
      */
-    @Column(name = "DE_DE", length = LENGTH)
+    @Column(name = "C_DE_DE", length = LENGTH)
     private String deDe;
     /**
      * French language.
      */
-    @Column(name = "FR_FR", length = LENGTH)
+    @Column(name = "C_FR_FR", length = LENGTH)
     private String frFr;
 
     /**

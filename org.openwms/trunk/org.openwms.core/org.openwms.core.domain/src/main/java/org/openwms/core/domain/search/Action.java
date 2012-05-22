@@ -257,8 +257,6 @@ public class Action implements Serializable {
 
     /**
      * {@inheritDoc}
-     * 
-     * @see java.lang.Object#toString()
      */
     @Override
     public String toString() {
