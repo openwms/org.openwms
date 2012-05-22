@@ -93,6 +93,9 @@
     <category name="org.hibernate.SQL">
         <priority value="ERROR" />
     </category>
+    <category name="org.hibernate">
+        <priority value="INFO" />
+    </category>
 
     <root>
         <priority value="ERROR" />
