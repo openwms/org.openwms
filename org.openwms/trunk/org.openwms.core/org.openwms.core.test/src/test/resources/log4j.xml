@@ -93,8 +93,11 @@
     <category name="org.hibernate.SQL">
         <priority value="ERROR" />
     </category>
+    <category name="org.hibernate.tool">
+        <priority value="FATAL" />
+    </category>
     <category name="org.hibernate">
-        <priority value="INFO" />
+        <priority value="WARN" />
     </category>
 
     <root>
