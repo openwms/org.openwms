@@ -38,6 +38,9 @@ import org.openwms.core.integration.exception.DataException;
 import org.openwms.core.integration.exception.NoUniqueResultException;
 import org.openwms.core.integration.exception.ResourceNotFoundException;
 import org.openwms.core.util.event.ReloadFilePreferencesEvent;
+import org.openwms.core.util.logging.LoggingCategories;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
@@ -70,25 +73,23 @@ import org.springframework.transaction.annotation.Transactional;
 public class PreferencesDaoImpl implements PreferenceDao<PreferenceKey>,
         ApplicationListener<ReloadFilePreferencesEvent> {
 
+    private static final Logger EXC_LOGGER = LoggerFactory.getLogger(LoggingCategories.INTEGRATION_EXCEPTION);
+    @Autowired
+    private ApplicationContext ctx;
+    @Autowired
+    @Qualifier("preferencesUnmarshaller")
+    private Unmarshaller unmarshaller;
+    @Autowired
+    @Value(Constants.APPLICATION_INITIAL_PROPERTIES)
+    private String fileName;
+    private volatile Resource fileResource;
+    private volatile Preferences preferences;
+    private Map<PreferenceKey, AbstractPreference> prefs = new ConcurrentHashMap<PreferenceKey, AbstractPreference>();
+
     /** The URL to the initial preferences XML file. Default {@value} */
     public static final String INITIAL_PREFERENCES_FILE = "classpath:org/openwms/core/integration/file/initial-preferences.xml";
     /** Springs component name. */
     public static final String COMPONENT_NAME = "preferencesFileDao";
-
-    @Autowired
-    private ApplicationContext ctx;
-
-    @Autowired
-    @Qualifier("preferencesUnmarshaller")
-    private Unmarshaller unmarshaller;
-
-    @Autowired
-    @Value(Constants.APPLICATION_INITIAL_PROPERTIES)
-    private String fileName;
-
-    private volatile Resource fileResource;
-    private volatile Preferences preferences;
-    private Map<PreferenceKey, AbstractPreference> prefs = new ConcurrentHashMap<PreferenceKey, AbstractPreference>();
 
     /**
      * {@inheritDoc}
@@ -159,8 +160,10 @@ public class PreferencesDaoImpl implements PreferenceDao<PreferenceKey>,
                     prefs.put(pref.getPrefKey(), pref);
                 }
             } catch (XmlMappingException xme) {
+                EXC_LOGGER.error("Exception while unmarshalling from " + fileName, xme);
                 throw new DataException("Exception while unmarshalling from " + fileName, xme);
             } catch (IOException ioe) {
+                EXC_LOGGER.error("Exception while accessing the resource with name " + fileName, ioe);
                 throw new ResourceNotFoundException("Exception while accessing the resource with name " + fileName, ioe);
             }
         }
@@ -179,6 +182,8 @@ public class PreferencesDaoImpl implements PreferenceDao<PreferenceKey>,
         if (fileResource == null || !fileResource.exists()) {
             fileResource = ctx.getResource(INITIAL_PREFERENCES_FILE);
             if (!fileResource.exists()) {
+                EXC_LOGGER.error("Resources with name " + fileName + ":" + INITIAL_PREFERENCES_FILE
+                        + " could not be resolved");
                 throw new ResourceNotFoundException("Resources with name " + fileName + ":" + INITIAL_PREFERENCES_FILE
                         + " could not be resolved");
             }
