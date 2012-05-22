@@ -33,6 +33,7 @@ import org.openwms.core.domain.system.PropertyScope;
 import org.openwms.core.domain.system.usermanagement.UserPreference;
 import org.openwms.core.integration.PreferenceDao;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
@@ -48,6 +49,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 public class PreferencesDaoTest {
 
     @Autowired
+    @Qualifier(PreferencesDaoImpl.COMPONENT_NAME)
     private PreferenceDao<PreferenceKey> dao;
 
     /**
