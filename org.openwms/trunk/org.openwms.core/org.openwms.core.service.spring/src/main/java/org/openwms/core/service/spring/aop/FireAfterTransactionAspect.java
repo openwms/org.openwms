@@ -24,6 +24,9 @@ import java.util.EventObject;
 
 import org.openwms.core.annotation.FireAfterTransaction;
 import org.openwms.core.annotation.FireAfterTransactionAsynchronous;
+import org.openwms.core.util.event.RootApplicationEvent;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationEvent;
@@ -59,6 +62,7 @@ import org.springframework.stereotype.Component;
 @Component(FireAfterTransactionAspect.COMPONENT_NAME)
 public class FireAfterTransactionAspect {
 
+    private static final Logger LOGGER = LoggerFactory.getLogger(FireAfterTransactionAspect.class);
     @Autowired
     private ApplicationContext ctx;
     /** Springs component name. */
@@ -99,8 +103,9 @@ public class FireAfterTransactionAspect {
     public void fireEventAsync(Object publisher, FireAfterTransactionAsynchronous events) throws Exception {
         for (int i = 0; i < events.events().length; i++) {
             Class<? extends EventObject> event = events.events()[i];
-            if (ApplicationEvent.class.isAssignableFrom(event)) {
-                ctx.publishEvent((ApplicationEvent) event.getConstructor(Object.class).newInstance(publisher));
+            if (RootApplicationEvent.class.isAssignableFrom(event)) {
+                LOGGER.debug("Sending event:" + event);
+                ctx.publishEvent((RootApplicationEvent) event.getConstructor(Object.class).newInstance(publisher));
             }
         }
     }

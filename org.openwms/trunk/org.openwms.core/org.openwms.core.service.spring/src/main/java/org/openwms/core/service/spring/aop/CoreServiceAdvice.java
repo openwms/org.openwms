@@ -23,6 +23,7 @@ package org.openwms.core.service.spring.aop;
 import org.apache.commons.lang.time.StopWatch;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.openwms.core.service.exception.ServiceRuntimeException;
+import org.openwms.core.util.logging.LoggingCategories;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
@@ -45,9 +46,9 @@ import org.springframework.stereotype.Component;
  */
 @Component(CoreServiceAdvice.COMPONENT_NAME)
 public class CoreServiceAdvice {
-
-    private static final Logger LOGGER = LoggerFactory.getLogger("CORE_METHOD_LOGS");
-    private static final Logger LOGGER2 = LoggerFactory.getLogger("CORE_SERVICE_EXC_LOGS");
+    // FIXME [scherrer] : rename class to ...Aspect
+    private static final Logger LOGGER = LoggerFactory.getLogger(LoggingCategories.CALL_STACK_LOGGING);
+    private static final Logger EXC_LOGGER = LoggerFactory.getLogger(LoggingCategories.SERVICE_EXCEPTION);
     /** Springs component name. */
     public static final String COMPONENT_NAME = "coreServiceAdvice";
 
@@ -90,8 +91,8 @@ public class CoreServiceAdvice {
      *            The root exception that is thrown
      */
     public void afterThrowing(Throwable ex) {
-        if (LOGGER2.isErrorEnabled()) {
-            LOGGER2.error("[S] Service Layer Exception: " + ex);
+        if (EXC_LOGGER.isErrorEnabled()) {
+            EXC_LOGGER.error("[S] Service Layer Exception: " + ex);
         }
         if (ex instanceof ServiceRuntimeException) {
             throw (ServiceRuntimeException) ex;

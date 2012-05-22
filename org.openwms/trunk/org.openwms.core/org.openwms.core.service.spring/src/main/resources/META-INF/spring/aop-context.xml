@@ -41,7 +41,7 @@
                 pointcut-ref="publicServiceMethodsPC" throwing="ex" />
         </aop:aspect>
         <!-- TX Advice is at 10 -->
-        <aop:aspect ref="fireAfterTransactionAspect" order="11">
+        <aop:aspect ref="fireAfterTransactionAspect" order="5">
             <aop:after-returning method="fireEventAsync"
                 pointcut-ref="checkAsyncEventAnnotationPC" />
         </aop:aspect>
