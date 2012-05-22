@@ -487,6 +487,7 @@
         <!-- Dependency versions -->
         <apache.commons.dbcp.version>1.2.2.osgi</apache.commons.dbcp.version>
         <apache.commons.lang.version>2.5.0</apache.commons.lang.version>
+        <apache.derby.version>10.8.2.2</apache.derby.version>
         <aspectj.version>1.6.8.RELEASE</aspectj.version>
         <el.version>2.2</el.version>
         <flex.version>3.2.0.3958</flex.version>
@@ -1234,6 +1235,12 @@
                 <artifactId>hsqldb</artifactId>
                 <version>${org.hsqldb.version}</version>
             </dependency>
+            <!-- NON OSGI ARTIFACT -->
+            <dependency>
+                <groupId>org.apache.derby</groupId>
+                <artifactId>derby</artifactId>
+                <version>${apache.derby.version}</version>
+            </dependency>
             <dependency>
                 <groupId>org.postgresql</groupId>
                 <artifactId>com.springsource.org.postgresql.jdbc4</artifactId>
@@ -1284,7 +1291,7 @@
             <dependency>
                 <groupId>org.hibernate</groupId>
                 <artifactId>hibernate-entitymanager</artifactId>
-                <version>4.1.3.Final</version>
+                <version>${hibernate.version}</version>
             </dependency>
 
             <!-- Bean Validation API and RI -->
