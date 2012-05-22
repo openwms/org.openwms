@@ -138,20 +138,31 @@
             <scope>compile</scope>
         </dependency>
         <dependency>
-            <groupId>${project.groupId}</groupId>
-            <artifactId>org.openwms.core.infrastructure.hsql</artifactId>
+            <groupId>org.apache.derby</groupId>
+            <artifactId>derby</artifactId>
+            <scope>compile</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.postgresql</groupId>
+            <artifactId>com.springsource.org.postgresql.jdbc4</artifactId>
             <scope>compile</scope>
         </dependency>
 
         <dependency>
-            <groupId>org.postgresql</groupId>
-            <artifactId>com.springsource.org.postgresql.jdbc4</artifactId>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>com.springsource.org.apache.commons.dbcp</artifactId>
+            <scope>compile</scope>
+        </dependency>
+
+        <!-- dependency>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>org.openwms.core.infrastructure.hsql</artifactId>
             <scope>compile</scope>
         </dependency>
         <dependency>
             <groupId>${project.groupId}</groupId>
             <artifactId>org.openwms.core.infrastructure.postgres</artifactId>
             <scope>compile</scope>
-        </dependency>
+        </dependency-->
     </dependencies>
 </project>

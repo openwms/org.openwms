@@ -24,42 +24,60 @@
 <beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xmlns:context="http://www.springframework.org/schema/context" xmlns:tx="http://www.springframework.org/schema/tx"
     xmlns:aop="http://www.springframework.org/schema/aop"
-    xsi:schemaLocation="http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-3.0.xsd
-		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
-		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-3.0.xsd
-		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.0.xsd">
+    xsi:schemaLocation="http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
 
     <context:property-placeholder location="classpath:jdbc.test.properties" />
     <context:annotation-config />
-    <tx:annotation-driven />
+    <tx:annotation-driven  />
     <!-- TODO [scherrer]: Is this necessary? Test! -->
     <aop:aspectj-autoproxy />
 
     <!-- Test Datasource -->
-    <bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+    <bean id="dataSource2" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
         <property name="driverClassName" value="${jdbc.test.driverClassName}" />
         <property name="url" value="${jdbc.test.url}" />
         <property name="username" value="${jdbc.test.username}" />
         <property name="password" value="${jdbc.test.password}" />
     </bean>
 
+    <bean id="testDataSource" class="org.apache.commons.dbcp.BasicDataSource" init-method="createDataSource"
+        destroy-method="close">
+        <property name="driverClassName" value="${jdbc.test.driverClassName}" />
+        <property name="url" value="${jdbc.test.url}" />
+        <property name="username" value="${jdbc.test.username}" />
+        <property name="password" value="${jdbc.test.password}" />
+        <!-- Due to an incompatibility with PostgreSQL 8 and Hibernate turn of autocommit of the pool -->
+        <property name="defaultAutoCommit" value="false" />
+    </bean>
+
     <!-- Test Entity Manager -->
     <bean id="entityManagerFactory" class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
         <property name="persistenceUnitName" value="${jdbc.test.persistenceUnit}" />
-        <property name="dataSource" ref="dataSource" />
+        <property name="dataSource" ref="testDataSource" />
         <property name="jpaVendorAdapter">
             <bean class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter">
+                <property name="database" value="${jdbc.test.database}" />
                 <property name="databasePlatform" value="${jdbc.test.dialect}" />
-                <property name="showSql" value="false" />
-                <property name="generateDdl" value="true" />
+                <property name="showSql" value="${jdbc.test.showSql}" />
             </bean>
+        </property>
+        <property name="jpaProperties">
+            <props>
+                <prop key="hibernate.format_sql">false</prop>
+                <prop key="hibernate.cache.use_query_cache">false</prop>
+                <prop key="hibernate.hbm2ddl.auto">create-drop</prop>
+                <!-- prop key="hibernate.default_schema">PUBLIC</prop-->
+            </props>
         </property>
     </bean>
 
     <!-- Test Transaction Manager -->
     <bean id="transactionManager" class="org.springframework.orm.jpa.JpaTransactionManager">
         <property name="entityManagerFactory" ref="entityManagerFactory" />
-        <property name="dataSource" ref="dataSource" />
+        <property name="dataSource" ref="testDataSource" />
     </bean>
 
     <bean class="org.springframework.dao.annotation.PersistenceExceptionTranslationPostProcessor" />
