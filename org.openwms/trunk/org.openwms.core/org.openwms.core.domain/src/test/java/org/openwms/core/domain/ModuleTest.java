@@ -20,14 +20,11 @@
  */
 package org.openwms.core.domain;
 
-import static junit.framework.Assert.assertEquals;
-import static junit.framework.Assert.assertFalse;
-import static junit.framework.Assert.assertNotSame;
-import static junit.framework.Assert.assertTrue;
-import static junit.framework.Assert.fail;
+import java.util.Comparator;
 
 import javax.persistence.PersistenceException;
 
+import org.junit.Assert;
 import org.junit.Test;
 import org.openwms.core.test.AbstractJpaSpringContextTests;
 
@@ -45,10 +42,29 @@ public class ModuleTest extends AbstractJpaSpringContextTests {
     @Test
     public final void testCreation() {
         Module m2 = new Module("Module2", "Url");
-        assertEquals("Module2.moduleName", "Module2", m2.getModuleName());
-        assertEquals("Module2.url", "Url", m2.getUrl());
-        assertTrue(m2.isNew());
-        assertNotSame("Same name and url", m2.equals(new Module("Module2", "Url")));
+        Assert.assertEquals("Module2.moduleName", "Module2", m2.getModuleName());
+        Assert.assertEquals("Module2.url", "Url", m2.getUrl());
+        Assert.assertTrue(m2.isNew());
+        Assert.assertNull(m2.getId());
+        Assert.assertNotSame("Same name and url", m2.equals(new Module("Module2", "Url")));
+    }
+
+    /**
+     * Ensure that it is not allowed to create a Module without a moduleName.
+     */
+    @Test
+    public final void testNegativeCreation() {
+        new Module("test", "test");
+        new Module("test", "");
+        new Module("test", null);
+        try {
+            new Module("", "test");
+            Assert.fail("IAE expected when creating Module with empty moduleName");
+        } catch (IllegalArgumentException iae) {}
+        try {
+            new Module(null, "test");
+            Assert.fail("IAE expected when creating Module with moduleName equals to null");
+        } catch (IllegalArgumentException iae) {}
     }
 
     /**
@@ -59,13 +75,13 @@ public class ModuleTest extends AbstractJpaSpringContextTests {
         Module m = new Module("Module", "url");
         try {
             m.setModuleName(null);
-            fail("Not allowed to set the moduleName to null");
+            Assert.fail("Not allowed to set the moduleName to null");
         } catch (IllegalArgumentException iae) {
             logger.debug("OK: Exception setting moduleName to null is not allowed");
         }
         try {
             m.setModuleName("");
-            fail("Not allowed to set the moduleName to an empty String");
+            Assert.fail("Not allowed to set the moduleName to an empty String");
         } catch (IllegalArgumentException iae) {
             logger.debug("OK: Exception setting moduleName to an empty String is not allowed");
         }
@@ -80,13 +96,13 @@ public class ModuleTest extends AbstractJpaSpringContextTests {
         Module m = new Module("Module", "url");
         try {
             m.setUrl(null);
-            fail("Not allowed to set the url to null");
+            Assert.fail("Not allowed to set the url to null");
         } catch (IllegalArgumentException iae) {
             logger.debug("OK: Exception setting url to null is not allowed");
         }
         try {
             m.setUrl("");
-            fail("Not allowed to set the url to an empty String");
+            Assert.fail("Not allowed to set the url to an empty String");
         } catch (IllegalArgumentException iae) {
             logger.debug("OK: Exception setting url to an empty String is not allowed");
         }
@@ -102,7 +118,7 @@ public class ModuleTest extends AbstractJpaSpringContextTests {
         try {
             entityManager.persist(m1);
             entityManager.flush();
-            fail("Businesskey not complete");
+            Assert.fail("Businesskey not complete");
         } catch (PersistenceException pe) {
             logger.debug("OK: Must fail, we wait for an url");
         }
@@ -118,11 +134,11 @@ public class ModuleTest extends AbstractJpaSpringContextTests {
             entityManager.persist(m1);
             logger.debug("OK: BusinessKey is complete");
         } catch (PersistenceException pe) {
-            fail("Businesskey not complete");
+            Assert.fail("Businesskey not complete");
         }
         try {
             m1.setUrl(null);
-            fail("Url cannot be set to null");
+            Assert.fail("Url cannot be set to null");
         } catch (IllegalArgumentException iae) {
             logger.debug("OK: Setting url to null is not allowed");
         }
@@ -136,7 +152,23 @@ public class ModuleTest extends AbstractJpaSpringContextTests {
         entityManager.persist(new Module("TEST", "url"));
         Module m = (Module) entityManager.createNamedQuery(Module.NQ_FIND_BY_UNIQUE_QUERY).setParameter(1, "TEST")
                 .getSingleResult();
-        assertFalse("Must be persisted before", m.isNew());
-        assertFalse("Loaded must be transient", m.isLoaded());
+        Assert.assertFalse("Must be persisted before", m.isNew());
+        Assert.assertFalse("Loaded must be transient", m.isLoaded());
+    }
+
+    @Test
+    public final void testStartupOrdering() {
+        Module m1 = new Module("module1", "Module 1");
+        m1.setStartupOrder(1);
+        Module m2 = new Module("module2", "Module 2");
+        m2.setStartupOrder(2);
+        Comparator<Module> comp = new Module.ModuleComparator();
+        Assert.assertTrue(-1 == comp.compare(m1, m2));
+
+        m1.setStartupOrder(3);
+        Assert.assertTrue(1 == comp.compare(m1, m2));
+
+        m2.setStartupOrder(3);
+        Assert.assertTrue(1 == comp.compare(m1, m2));
     }
 }
