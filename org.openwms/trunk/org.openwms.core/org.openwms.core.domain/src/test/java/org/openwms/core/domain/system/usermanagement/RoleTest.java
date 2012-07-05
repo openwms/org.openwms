@@ -65,7 +65,7 @@ public class RoleTest extends AbstractJpaSpringContextTests {
      * Simple POJOS test to test setters only.
      */
     @Test
-    public final void testRoleCreation() {
+    public final void testCreation() {
         Role role = new Role(TEST_ROLE, TEST_DESCR);
         Assert.assertEquals(TEST_ROLE, role.getName());
         Assert.assertEquals(TEST_DESCR, role.getDescription());
@@ -77,7 +77,7 @@ public class RoleTest extends AbstractJpaSpringContextTests {
      * Ensure that it is not allowed to create a Role without a name.
      */
     @Test
-    public final void testRoleCreationNegative() {
+    public final void testCreationNegative() {
         try {
             new Role("");
             Assert.fail("IAE expected when creating Role(String) with empty name");
