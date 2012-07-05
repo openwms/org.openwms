@@ -496,6 +496,7 @@
         <!-- hibernate.version>3.4.0.GA-A</hibernate.version-->
         <javax.persistence.version>1.0.0</javax.persistence.version>
         <junit.version>4.7.0</junit.version>
+        <mockito.version>1.9.0</mockito.version>
         <net.sf.ehcache.version>1.6.2</net.sf.ehcache.version>
         <org.hsqldb.version>2.2.8</org.hsqldb.version>
         <org.postgresql.jdbc4.version>8.3.604</org.postgresql.jdbc4.version>
@@ -951,7 +952,7 @@
                                 <link>http://static.springsource.org/spring-security/site/docs/3.0.x/apidocs</link>
                                 <link>http://commons.apache.org/lang/api-2.5</link>
                                 <link>http://docs.oracle.com/javaee/5/api</link>
-                                <link>http://docs.mockito.googlecode.com/hg/latest</link>
+                                <link>http://docs.mockito.googlecode.com/hg/${mockito.version}</link>
                             </links>
                             <excludePackageNames>org.openwms.web.flex.servlet</excludePackageNames>
                             <keywords>true</keywords>
@@ -1400,7 +1401,7 @@
             <dependency>
                 <groupId>org.mockito</groupId>
                 <artifactId>mockito-all</artifactId>  
-                <version>1.9.0-rc1</version> 
+                <version>${mockito.version}</version> 
             </dependency>
 
             <!-- SLF4J API -->
