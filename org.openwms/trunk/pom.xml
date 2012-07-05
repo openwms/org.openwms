@@ -487,7 +487,7 @@
         <!-- Dependency versions -->
         <apache.commons.dbcp.version>1.2.2.osgi</apache.commons.dbcp.version>
         <apache.commons.lang.version>2.5.0</apache.commons.lang.version>
-        <apache.derby.version>10.8.2.2</apache.derby.version>
+        <apache.derby.version>10.7.1.1</apache.derby.version>
         <aspectj.version>1.6.8.RELEASE</aspectj.version>
         <el.version>2.2</el.version>
         <flex.version>3.2.0.3958</flex.version>
@@ -802,6 +802,65 @@
                     <version>2.1</version>
                 </plugin>		
 
+                <plugin>
+                  <groupId>org.eclipse.m2e</groupId>
+                  <artifactId>lifecycle-mapping</artifactId>
+                  <version>1.0.0</version>
+                  <configuration>
+                    <lifecycleMappingMetadata>
+                      <pluginExecutions>
+                        <pluginExecution>
+                          <pluginExecutionFilter>
+                            <groupId>com.springsource.bundlor</groupId>
+                            <artifactId>com.springsource.bundlor.maven</artifactId>
+                            <versionRange>[1.0.0.RELEASE,)</versionRange>
+                            <goals>
+                              <goal>bundlor</goal>
+                            </goals>
+                          </pluginExecutionFilter>
+                          <action>
+                            <execute>
+                              <runOnIncremental>true</runOnIncremental>
+                            </execute>
+                          </action>
+                        </pluginExecution>
+                        <pluginExecution>
+                          <pluginExecutionFilter>
+                            <groupId>org.sonatype.flexmojos</groupId>
+                            <artifactId>flexmojos-maven-plugin</artifactId>
+                            <versionRange>[3.2.0,)</versionRange>
+                            <goals>
+                              <goal>test-compile</goal>
+                              <goal>compile-swc</goal>
+                              <goal>compile-swf</goal>
+                              <goal>generate</goal>
+                              <goal>generate-sources</goal>
+                              <goal>wrapper</goal>
+                              <goal>copy-flex-resources</goal>
+                            </goals>
+                          </pluginExecutionFilter>
+                          <action>
+                            <ignore />
+                          </action>
+                        </pluginExecution>
+                        <pluginExecution>
+                          <pluginExecutionFilter>
+                            <groupId>org.apache.maven.plugins</groupId>
+                            <artifactId>maven-dependency-plugin</artifactId>
+                            <versionRange>[2.1,)</versionRange>
+                            <goals>
+                              <goal>copy-dependencies</goal>
+                            </goals>
+                          </pluginExecutionFilter>
+                          <action>
+                            <ignore />
+                          </action>
+                        </pluginExecution>
+                      </pluginExecutions>
+                    </lifecycleMappingMetadata>
+                  </configuration>
+                </plugin>
+
             </plugins>
         </pluginManagement>
 
@@ -892,6 +951,7 @@
                                 <link>http://static.springsource.org/spring-security/site/docs/3.0.x/apidocs</link>
                                 <link>http://commons.apache.org/lang/api-2.5</link>
                                 <link>http://docs.oracle.com/javaee/5/api</link>
+                                <link>http://docs.mockito.googlecode.com/hg/latest</link>
                             </links>
                             <excludePackageNames>org.openwms.web.flex.servlet</excludePackageNames>
                             <keywords>true</keywords>
