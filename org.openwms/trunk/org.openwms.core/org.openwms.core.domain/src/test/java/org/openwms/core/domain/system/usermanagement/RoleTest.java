@@ -327,6 +327,17 @@ public class RoleTest extends AbstractJpaSpringContextTests {
     }
 
     /**
+     * Test the internal Role builder.
+     */
+    @Test
+    public final void testRoleBuilder() {
+        Role role1 = new Role.Builder(TEST_ROLE).withDescription(TEST_DESCR).asImmutable(false).build();
+        Assert.assertEquals(TEST_ROLE, role1.getName());
+        Assert.assertEquals(TEST_DESCR, role1.getDescription());
+        Assert.assertFalse(role1.getImmutable());
+    }
+
+    /**
      * Test of JPA cascade lifecycle. Do not remove already existing User when
      * removing a Role.
      */
