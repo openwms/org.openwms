@@ -20,8 +20,7 @@
  */
 package org.openwms.core.domain.system.usermanagement;
 
-import static junit.framework.Assert.fail;
-
+import org.junit.Assert;
 import org.junit.Test;
 import org.openwms.core.test.AbstractJpaSpringContextTests;
 
@@ -38,24 +37,18 @@ public class EmailTest extends AbstractJpaSpringContextTests {
      * Test construction of Email entities.
      */
     @Test
-    public final void testConstruction() {
+    public final void testCreationNegative() {
         try {
             new Email(null, null);
-            fail("Not allowed to create an email without user and address");
-        } catch (IllegalArgumentException iae) {
-            logger.debug("Not allowed to create an email without user and address");
-        }
+            Assert.fail("Not allowed to create an Email without user and address");
+        } catch (IllegalArgumentException iae) {}
         try {
             new Email("Test", null);
-            fail("Not allowed to create an email without address");
-        } catch (IllegalArgumentException iae) {
-            logger.debug("Not allowed to create an email without address");
-        }
+            Assert.fail("Not allowed to create an Email without address");
+        } catch (IllegalArgumentException iae) {}
         try {
             new Email(null, "force something, still no mail check");
-            fail("Not allowed to create an email without user");
-        } catch (IllegalArgumentException iae) {
-            logger.debug("Not allowed to create an email without user");
-        }
+            Assert.fail("Not allowed to create an Email without user");
+        } catch (IllegalArgumentException iae) {}
     }
 }

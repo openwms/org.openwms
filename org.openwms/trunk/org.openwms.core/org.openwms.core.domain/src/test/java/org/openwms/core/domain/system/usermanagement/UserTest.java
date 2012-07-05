@@ -20,9 +20,7 @@
  */
 package org.openwms.core.domain.system.usermanagement;
 
-import static junit.framework.Assert.assertTrue;
-import static junit.framework.Assert.fail;
-
+import org.junit.Assert;
 import org.junit.Test;
 import org.openwms.core.exception.InvalidPasswordException;
 import org.openwms.core.test.AbstractJpaSpringContextTests;
@@ -35,6 +33,49 @@ import org.openwms.core.test.AbstractJpaSpringContextTests;
  * @since 0.1
  */
 public class UserTest extends AbstractJpaSpringContextTests {
+
+    private static final String TEST_USER1 = "Test username1";
+    private static final String TEST_USER2 = "Test username2";
+    private static final String TEST_PASSWORD = "Test password";
+
+    /**
+     * Test positive creation of User instances.
+     */
+    @Test
+    public final void testCreation() {
+        User user1 = new User(TEST_USER1);
+        Assert.assertEquals(TEST_USER1, user1.getUsername());
+        Assert.assertNull(user1.getId());
+        Assert.assertTrue(user1.isNew());
+        user1 = new User(TEST_USER2, TEST_PASSWORD);
+        Assert.assertEquals(TEST_USER2, user1.getUsername());
+        Assert.assertEquals(TEST_PASSWORD, user1.getPassword());
+        Assert.assertNull(user1.getId());
+        Assert.assertTrue(user1.isNew());
+    }
+
+    /**
+     * Test that it is not possible to create invalid User instances.
+     */
+    @Test
+    public final void testCreationNegative() {
+        try {
+            new User("");
+            Assert.fail("IAE expected when creating User(String) with empty username");
+        } catch (IllegalArgumentException iae) {}
+        try {
+            new User("", TEST_PASSWORD);
+            Assert.fail("IAE expected when creating User(String,String) with empty username");
+        } catch (IllegalArgumentException iae) {}
+        try {
+            new User(null);
+            Assert.fail("IAE expected when creating User(String) with username equals to null");
+        } catch (IllegalArgumentException iae) {}
+        try {
+            new User(null, TEST_PASSWORD);
+            Assert.fail("IAE expected when creating User(String,String) with username equals to null");
+        } catch (IllegalArgumentException iae) {}
+    }
 
     /**
      * Test that only valid passwords can be stored and the removal of the
@@ -53,7 +94,7 @@ public class UserTest extends AbstractJpaSpringContextTests {
                 }
             } catch (InvalidPasswordException e) {
                 if (i <= User.NUMBER_STORED_PASSWORDS) {
-                    fail("Number of acceptable passwords not exceeded");
+                    Assert.fail("Number of acceptable passwords not exceeded");
                 } else {
                     logger.debug("OK: Exception because password is already in the list, set password to:" + i);
                     setPasswordSafety(u1, String.valueOf(i));
@@ -74,7 +115,8 @@ public class UserTest extends AbstractJpaSpringContextTests {
                 oldPassword = pw.getPassword();
                 continue;
             }
-            assertTrue("Must be sorted ascending", Integer.valueOf(oldPassword) > Integer.valueOf(pw.getPassword()));
+            Assert.assertTrue("Must be sorted ascending",
+                    Integer.valueOf(oldPassword) > Integer.valueOf(pw.getPassword()));
         }
     }
 
