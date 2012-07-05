@@ -150,7 +150,7 @@ public class Role extends SecurityObject {
          *            <code>false</code>
          * @return the builder instance
          */
-        public Builder setImmutable(Boolean immutable) {
+        public Builder asImmutable(Boolean immutable) {
             this.role.immutable = immutable;
             return this;
         }
