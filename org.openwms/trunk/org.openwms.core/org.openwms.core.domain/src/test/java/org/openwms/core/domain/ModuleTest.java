@@ -77,13 +77,13 @@ public class ModuleTest extends AbstractJpaSpringContextTests {
             m.setModuleName(null);
             Assert.fail("Not allowed to set the moduleName to null");
         } catch (IllegalArgumentException iae) {
-            logger.debug("OK: Exception setting moduleName to null is not allowed");
+            LOGGER.debug("OK: Exception setting moduleName to null is not allowed");
         }
         try {
             m.setModuleName("");
             Assert.fail("Not allowed to set the moduleName to an empty String");
         } catch (IllegalArgumentException iae) {
-            logger.debug("OK: Exception setting moduleName to an empty String is not allowed");
+            LOGGER.debug("OK: Exception setting moduleName to an empty String is not allowed");
         }
         m.setModuleName("OK");
     }
@@ -98,13 +98,13 @@ public class ModuleTest extends AbstractJpaSpringContextTests {
             m.setUrl(null);
             Assert.fail("Not allowed to set the url to null");
         } catch (IllegalArgumentException iae) {
-            logger.debug("OK: Exception setting url to null is not allowed");
+            LOGGER.debug("OK: Exception setting url to null is not allowed");
         }
         try {
             m.setUrl("");
             Assert.fail("Not allowed to set the url to an empty String");
         } catch (IllegalArgumentException iae) {
-            logger.debug("OK: Exception setting url to an empty String is not allowed");
+            LOGGER.debug("OK: Exception setting url to an empty String is not allowed");
         }
         m.setUrl("uri");
     }
@@ -120,7 +120,7 @@ public class ModuleTest extends AbstractJpaSpringContextTests {
             entityManager.flush();
             Assert.fail("Businesskey not complete");
         } catch (PersistenceException pe) {
-            logger.debug("OK: Must fail, we wait for an url");
+            LOGGER.debug("OK: Must fail, we wait for an url");
         }
     }
 
@@ -132,7 +132,7 @@ public class ModuleTest extends AbstractJpaSpringContextTests {
         Module m1 = new Module("Module1", "url");
         try {
             entityManager.persist(m1);
-            logger.debug("OK: BusinessKey is complete");
+            LOGGER.debug("OK: BusinessKey is complete");
         } catch (PersistenceException pe) {
             Assert.fail("Businesskey not complete");
         }
@@ -140,7 +140,7 @@ public class ModuleTest extends AbstractJpaSpringContextTests {
             m1.setUrl(null);
             Assert.fail("Url cannot be set to null");
         } catch (IllegalArgumentException iae) {
-            logger.debug("OK: Setting url to null is not allowed");
+            LOGGER.debug("OK: Setting url to null is not allowed");
         }
     }
 

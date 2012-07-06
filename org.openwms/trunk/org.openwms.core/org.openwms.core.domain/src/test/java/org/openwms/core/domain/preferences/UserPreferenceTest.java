@@ -20,20 +20,15 @@
  */
 package org.openwms.core.domain.preferences;
 
-import static junit.framework.Assert.assertNotNull;
-import static junit.framework.Assert.assertTrue;
-import static junit.framework.Assert.fail;
-
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.openwms.core.domain.system.usermanagement.User;
 import org.openwms.core.domain.system.usermanagement.UserPreference;
 import org.openwms.core.test.AbstractJpaSpringContextTests;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * An UserPreferenceTest.
@@ -44,13 +39,12 @@ import org.slf4j.LoggerFactory;
  */
 public class UserPreferenceTest extends AbstractJpaSpringContextTests {
 
-    private static final Logger logger = LoggerFactory.getLogger(UserPreferenceTest.class);
     private static final String KNOWN_USER = "KNOWN_USER";
     @PersistenceContext
     private EntityManager em;
 
     /**
-     * Persist an User and an UserPreference for the tests.
+     * Setup data.
      */
     @Before
     public void onSetup() {
@@ -61,47 +55,30 @@ public class UserPreferenceTest extends AbstractJpaSpringContextTests {
     }
 
     /**
-     * Test construction of an UserPreference with NULL values.
+     * Negative test construction of an UserPreference.
      */
     @Test
-    public final void testConstructionWithNull() {
+    public final void testCreationNegative() {
         try {
             new UserPreference(null, null);
-            fail("Must fail when trying to create an UserPreference with owner and key set to NULL");
-        } catch (IllegalArgumentException iae) {
-            logger.debug("OK: Exception when trying to create an UserPreference with owner and key set to NULL");
-        }
+            Assert.fail("Must fail when trying to create an UserPreference with owner and key set to NULL");
+        } catch (IllegalArgumentException iae) {}
         try {
             new UserPreference("test", null);
-            fail("Must fail when trying to create an UserPreference with key is NULL");
-        } catch (IllegalArgumentException iae) {
-            logger.debug("OK: Exception when trying to create an UserPreference with key is NULL");
-        }
+            Assert.fail("Must fail when trying to create an UserPreference with key is NULL");
+        } catch (IllegalArgumentException iae) {}
         try {
             new UserPreference(null, "test");
-            fail("Must fail when trying to create an UserPreference with owner is NULL");
-        } catch (IllegalArgumentException iae) {
-            logger.debug("OK: Exception when trying to create an UserPreference with owner is NULL");
-        }
-    }
-
-    /**
-     * Test construction of an UserPreference with empty values.
-     */
-    @Test
-    public final void testConstructionWithEmptyString() {
+            Assert.fail("Must fail when trying to create an UserPreference with owner is NULL");
+        } catch (IllegalArgumentException iae) {}
         try {
             new UserPreference("test", "");
-            fail("Must fail when trying to create an UserPreference with an empty key");
-        } catch (IllegalArgumentException iae) {
-            logger.debug("OK: Exception when trying to create an UserPreference with an empty key");
-        }
+            Assert.fail("Must fail when trying to create an UserPreference with an empty key");
+        } catch (IllegalArgumentException iae) {}
         try {
             new UserPreference("", "test");
-            fail("Must fail when trying to create an UserPreference with owner is NULL");
-        } catch (IllegalArgumentException iae) {
-            logger.debug("OK: Exception when trying to create an UserPreference with owner is NULL");
-        }
+            Assert.fail("Must fail when trying to create an UserPreference with owner is NULL");
+        } catch (IllegalArgumentException iae) {}
     }
 
     /**
@@ -111,9 +88,9 @@ public class UserPreferenceTest extends AbstractJpaSpringContextTests {
     @Test
     public final void testUserRelationship() {
         User user = (User) em.createNamedQuery(User.NQ_FIND_BY_USERNAME).setParameter(1, KNOWN_USER).getSingleResult();
-        assertNotNull("Expected that the UserPreferences of the fetched User is not null", user.getPreferences());
-        assertTrue("Expected that the UserPreferences was fetched with the User object",
-                user.getPreferences().size() == 1);
-        assertTrue(user.getPreferences().contains(new UserPreference(KNOWN_USER, "testKey")));
+        Assert.assertNotNull("Expected that the UserPreferences of the fetched User is not null", user.getPreferences());
+        Assert.assertTrue("Expected that the UserPreferences was fetched with the User object", user.getPreferences()
+                .size() == 1);
+        Assert.assertTrue(user.getPreferences().contains(new UserPreference(KNOWN_USER, "testKey")));
     }
 }
