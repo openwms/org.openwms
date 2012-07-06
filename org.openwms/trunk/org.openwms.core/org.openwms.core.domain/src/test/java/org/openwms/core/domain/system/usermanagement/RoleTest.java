@@ -283,7 +283,7 @@ public class RoleTest extends AbstractJpaSpringContextTests {
             entityManager.flush();
             Assert.fail("No unique constraint on rolename");
         } catch (PersistenceException pe) {
-            logger.debug("OK:Tested unique constraint on rolename.");
+            LOGGER.debug("OK:Tested unique constraint on rolename.");
         }
     }
 
@@ -302,10 +302,13 @@ public class RoleTest extends AbstractJpaSpringContextTests {
             entityManager.flush();
             Assert.fail("Must fail because merging of transient users is not permitted");
         } catch (Exception e) {
-            logger.debug("OK: Exception when trying to merge a transient User with a Role");
+            LOGGER.debug("OK: Exception when trying to merge a transient User with a Role");
         }
     }
 
+    /**
+     * Test hashCode() and equals(obj).
+     */
     @Test
     public final void testHashCodeEquals() {
         Role role1 = new Role(TEST_ROLE);

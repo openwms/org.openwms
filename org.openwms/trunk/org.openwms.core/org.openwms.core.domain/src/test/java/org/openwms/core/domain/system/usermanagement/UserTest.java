@@ -20,6 +20,9 @@
  */
 package org.openwms.core.domain.system.usermanagement;
 
+import java.util.HashSet;
+import java.util.Set;
+
 import org.junit.Assert;
 import org.junit.Test;
 import org.openwms.core.exception.InvalidPasswordException;
@@ -83,20 +86,20 @@ public class UserTest extends AbstractJpaSpringContextTests {
      */
     @Test
     public final void testPasswordHistory() {
-        User u1 = new User("TEST");
+        User u1 = new User(TEST_USER1);
         for (int i = 0; i <= User.NUMBER_STORED_PASSWORDS + 5; i++) {
             try {
                 if (i <= User.NUMBER_STORED_PASSWORDS) {
                     u1.changePassword(String.valueOf(i));
                 } else {
-                    logger.debug("Number of password history exceeded, resetting to:0");
+                    LOGGER.debug("Number of password history exceeded, resetting to:0");
                     u1.changePassword("0");
                 }
             } catch (InvalidPasswordException e) {
                 if (i <= User.NUMBER_STORED_PASSWORDS) {
                     Assert.fail("Number of acceptable passwords not exceeded");
                 } else {
-                    logger.debug("OK: Exception because password is already in the list, set password to:" + i);
+                    LOGGER.debug("OK: Exception because password is already in the list, set password to:" + i);
                     setPasswordSafety(u1, String.valueOf(i));
                 }
             }
@@ -105,7 +108,7 @@ public class UserTest extends AbstractJpaSpringContextTests {
                 // changes aren't done within the same millisecond
                 Thread.sleep(100);
             } catch (InterruptedException e) {
-                logger.debug("Error" + e.getMessage());
+                LOGGER.debug("Error" + e.getMessage());
             }
         }
         // Verify that the password list was sorted in the correct order.
@@ -120,11 +123,34 @@ public class UserTest extends AbstractJpaSpringContextTests {
         }
     }
 
+    /**
+     * Test hashCode() and equals(obj).
+     */
+    @Test
+    public final void testHashCodeEquals() {
+        User user1 = new User(TEST_USER1);
+        User user2 = new User(TEST_USER1);
+        User user3 = new User(TEST_USER2);
+
+        // Just the name is considered
+        Assert.assertTrue(user1.equals(user2));
+        Assert.assertTrue(user1.equals(user2));
+        Assert.assertFalse(user1.equals(user3));
+
+        // Test behavior in hashed collections
+        Set<User> users = new HashSet<User>();
+        users.add(user1);
+        users.add(user2);
+        Assert.assertTrue(users.size() == 1);
+        users.add(user3);
+        Assert.assertTrue(users.size() == 2);
+    }
+
     private void setPasswordSafety(User u, String password) {
         try {
             u.changePassword(password);
         } catch (InvalidPasswordException e) {
-            logger.debug("Error" + e.getMessage());
+            LOGGER.debug("Error" + e.getMessage());
         }
     }
 }
