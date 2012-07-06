@@ -55,7 +55,7 @@ public abstract class AbstractJpaSpringContextTests {
     /**
      * Logger instance can be used by subclasses.
      */
-    protected Logger logger = LoggerFactory.getLogger(this.getClass());
+    protected Logger LOGGER = LoggerFactory.getLogger(this.getClass());
 
     /**
      * EntityManager instance to be accessed by subclasses.
