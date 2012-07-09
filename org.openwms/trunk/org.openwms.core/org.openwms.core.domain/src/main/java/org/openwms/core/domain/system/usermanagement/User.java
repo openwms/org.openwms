@@ -275,7 +275,7 @@ public class User extends AbstractEntity implements DomainObject<Long> {
         return id == null;
     }
 
-    private void loadLazy() {
+    private final void loadLazy() {
         password = savedPassword;
     }
 
@@ -529,7 +529,7 @@ public class User extends AbstractEntity implements DomainObject<Long> {
      *            The new list of {@link Role}s
      */
     public void setRoles(List<Role> roles) {
-        roles = roles;
+        this.roles = roles;
     }
 
     /**
@@ -655,7 +655,7 @@ public class User extends AbstractEntity implements DomainObject<Long> {
      * @version $Revision$
      * @since 0.2
      */
-    class PasswordComparator implements Comparator<UserPassword> {
+    static class PasswordComparator implements Comparator<UserPassword> {
 
         /**
          * {@inheritDoc}

@@ -67,7 +67,7 @@ public class Email extends AbstractEntity implements DomainObject<Long> {
      * The fullname of the <code>User</code>.
      */
     @Column(name = "C_FULL_NAME")
-    private String fullName;
+    private String fullname;
     /**
      * Version field.
      */
@@ -158,22 +158,22 @@ public class Email extends AbstractEntity implements DomainObject<Long> {
     }
 
     /**
-     * Return the fullName.
+     * Return the fullname.
      * 
-     * @return The fullName.
+     * @return The fullname.
      */
-    public String getFullName() {
-        return fullName;
+    public String getFullname() {
+        return fullname;
     }
 
     /**
-     * Set the fullName.
+     * Set the fullname.
      * 
-     * @param fullName
-     *            The fullName to set.
+     * @param fullname
+     *            The fullname to set.
      */
-    public void setFullName(String fullName) {
-        this.fullName = fullName;
+    public void setFullname(String fullname) {
+        this.fullname = fullname;
     }
 
     /**
