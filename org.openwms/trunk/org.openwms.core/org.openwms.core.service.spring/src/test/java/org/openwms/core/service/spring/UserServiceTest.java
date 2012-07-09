@@ -79,7 +79,7 @@ public class UserServiceTest extends AbstractJpaSpringContextTests {
             if (!(sre instanceof UserNotFoundException)) {
                 fail("Should throw a nested UserNotFoundException when calling with unknown user");
             }
-            logger.debug("OK: User unknown" + sre.getMessage());
+            LOGGER.debug("OK: User unknown" + sre.getMessage());
         }
         srv.uploadImageFile(KNOWN_USER, new byte[222]);
         User user = findUser(KNOWN_USER);
@@ -95,7 +95,7 @@ public class UserServiceTest extends AbstractJpaSpringContextTests {
             srv.save(null);
             fail("Should throw an exception when calling with null");
         } catch (ServiceRuntimeException sre) {
-            logger.debug("OK: null user:" + sre.getMessage());
+            LOGGER.debug("OK: null user:" + sre.getMessage());
         }
     }
 
@@ -133,7 +133,7 @@ public class UserServiceTest extends AbstractJpaSpringContextTests {
             srv.remove(null);
             fail("Should throw an exception when calling with null");
         } catch (ServiceRuntimeException sre) {
-            logger.debug("OK: null user:" + sre.getMessage());
+            LOGGER.debug("OK: null user:" + sre.getMessage());
         }
     }
 
@@ -153,7 +153,7 @@ public class UserServiceTest extends AbstractJpaSpringContextTests {
             findUser(KNOWN_USER);
             fail("Must be removed before and throw an exception");
         } catch (NoResultException nre) {
-            logger.debug("OK: Exception when searching for a removed entity");
+            LOGGER.debug("OK: Exception when searching for a removed entity");
         }
     }
 
@@ -170,7 +170,7 @@ public class UserServiceTest extends AbstractJpaSpringContextTests {
             srv.changeUserPassword(null);
             fail("Should throw an exception when calling with null");
         } catch (ServiceRuntimeException sre) {
-            logger.debug("OK: null:" + sre.getMessage());
+            LOGGER.debug("OK: null:" + sre.getMessage());
         }
     }
 
@@ -190,7 +190,7 @@ public class UserServiceTest extends AbstractJpaSpringContextTests {
             if (!(sre instanceof UserNotFoundException)) {
                 fail("Should throw an UserNotFoundException when calling with an unknown user");
             }
-            logger.debug("OK: UserNotFoundException:" + sre.getMessage());
+            LOGGER.debug("OK: UserNotFoundException:" + sre.getMessage());
         }
     }
 
@@ -224,7 +224,7 @@ public class UserServiceTest extends AbstractJpaSpringContextTests {
             if (!(sre.getCause() instanceof InvalidPasswordException)) {
                 fail("Should throw a nested InvalidPasswordException when calling with an invalid password");
             }
-            logger.debug("OK: InvalidPasswordException:" + sre.getMessage());
+            LOGGER.debug("OK: InvalidPasswordException:" + sre.getMessage());
         }
     }
 

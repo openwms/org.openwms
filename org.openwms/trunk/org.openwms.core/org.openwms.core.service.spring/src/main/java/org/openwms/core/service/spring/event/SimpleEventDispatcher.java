@@ -28,8 +28,6 @@ import java.util.Set;
 import org.openwms.core.service.event.EventListener;
 import org.openwms.core.service.exception.ServiceRuntimeException;
 import org.openwms.core.util.event.RootApplicationEvent;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Component;
@@ -44,7 +42,6 @@ import org.springframework.stereotype.Component;
 @Component(value = SimpleEventDispatcher.COMPONENT_NAME)
 public class SimpleEventDispatcher implements EventDispatcher {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(SimpleEventDispatcher.class);
     private Map<Class<? extends RootApplicationEvent>, Set<EventListener>> subscriptions = new HashMap<Class<? extends RootApplicationEvent>, Set<EventListener>>();
     /** Springs service name. */
     public static final String COMPONENT_NAME = "simpleEventDispatcher";

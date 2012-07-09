@@ -80,7 +80,7 @@ public class RoleServiceTest extends AbstractJpaSpringContextTests {
             srv.remove(null);
             fail("Expected to catch an IllegalArgumentException when calling remove() with null");
         } catch (ServiceRuntimeException sre) {
-            logger.debug("OK: ServiceRuntimeException when calling remove with null argument");
+            LOGGER.debug("OK: ServiceRuntimeException when calling remove with null argument");
             if (!(sre.getCause() instanceof IllegalArgumentException)) {
                 fail("IllegalArgumentException expected as root exception");
             }
@@ -109,7 +109,7 @@ public class RoleServiceTest extends AbstractJpaSpringContextTests {
             srv.save(null);
             fail("Should throw an exception when calling with null");
         } catch (ServiceRuntimeException sre) {
-            logger.debug("OK: Exception when try to call save with null argument:" + sre.getMessage());
+            LOGGER.debug("OK: Exception when try to call save with null argument:" + sre.getMessage());
         }
     }
 

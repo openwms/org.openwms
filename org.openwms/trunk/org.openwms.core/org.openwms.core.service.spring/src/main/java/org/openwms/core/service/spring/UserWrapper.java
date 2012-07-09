@@ -75,7 +75,7 @@ public class UserWrapper implements UserDetails, UserHolder {
      */
     @Override
     public User getUser() {
-        return this.user;
+        return user;
     }
 
     /**
@@ -216,6 +216,6 @@ public class UserWrapper implements UserDetails, UserHolder {
      */
     @Override
     public String toString() {
-        return this.getUsername();
+        return getUsername();
     }
 }

@@ -22,8 +22,6 @@ package org.openwms.core.service.spring.event;
 
 import org.openwms.core.service.event.EventPublisher;
 import org.openwms.core.util.event.RootApplicationEvent;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;
@@ -37,8 +35,6 @@ import org.springframework.stereotype.Component;
  */
 @Component(value = NonBlockingEventPublisherImpl.COMPONENT_NAME)
 public class NonBlockingEventPublisherImpl<T extends RootApplicationEvent> implements EventPublisher<T> {
-
-    private static final Logger LOGGER = LoggerFactory.getLogger(NonBlockingEventPublisherImpl.class);
 
     /** Springs service name. */
     public static final String COMPONENT_NAME = "nonBlockingEventPublisherImpl";

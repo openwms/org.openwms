@@ -146,7 +146,7 @@ public class ConfigurationServiceImpl implements ConfigurationService, Applicati
         if (preferences.contains(preference)) {
             return preference;
         }
-        return this.save(preference);
+        return save(preference);
     }
 
     /**
