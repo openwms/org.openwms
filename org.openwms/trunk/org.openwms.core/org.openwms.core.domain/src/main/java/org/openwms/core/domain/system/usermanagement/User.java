@@ -20,6 +20,7 @@
  */
 package org.openwms.core.domain.system.usermanagement;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -275,7 +276,7 @@ public class User extends AbstractEntity implements DomainObject<Long> {
         return id == null;
     }
 
-    private final void loadLazy() {
+    private void loadLazy() {
         password = savedPassword;
     }
 
@@ -655,7 +656,9 @@ public class User extends AbstractEntity implements DomainObject<Long> {
      * @version $Revision$
      * @since 0.2
      */
-    static class PasswordComparator implements Comparator<UserPassword> {
+    static class PasswordComparator implements Comparator<UserPassword>, Serializable {
+
+        private static final long serialVersionUID = 1L;
 
         /**
          * {@inheritDoc}
