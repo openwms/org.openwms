@@ -394,7 +394,7 @@ public class User extends AbstractEntity implements DomainObject<Long> {
             return;
         }
         if (isPasswordValid(password)) {
-            storeOldPassword(password);
+            storeOldPassword(this.password);
             savedPassword = password;
             this.password = password;
             lastPasswordChange = new Date();
