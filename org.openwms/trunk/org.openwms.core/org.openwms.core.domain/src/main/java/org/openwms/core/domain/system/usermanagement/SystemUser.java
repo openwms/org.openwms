@@ -69,7 +69,7 @@ public class SystemUser extends User {
      */
     public SystemUser(String username, String password) {
         super(username, password);
-        this.setFullname(SYSTEM_USERNAME);
+        setFullname(SYSTEM_USERNAME);
     }
 
     /**

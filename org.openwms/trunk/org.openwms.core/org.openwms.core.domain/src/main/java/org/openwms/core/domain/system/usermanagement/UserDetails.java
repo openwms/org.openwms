@@ -123,7 +123,7 @@ public class UserDetails implements ImageProvider, Serializable {
      * @return The phone number
      */
     public String getPhoneNo() {
-        return this.phoneNo;
+        return phoneNo;
     }
 
     /**
@@ -142,7 +142,7 @@ public class UserDetails implements ImageProvider, Serializable {
      * @return The description
      */
     public String getDescription() {
-        return this.description;
+        return description;
     }
 
     /**
@@ -161,7 +161,7 @@ public class UserDetails implements ImageProvider, Serializable {
      * @return The comment text
      */
     public String getComment() {
-        return this.comment;
+        return comment;
     }
 
     /**
@@ -180,7 +180,7 @@ public class UserDetails implements ImageProvider, Serializable {
      * @return The current office.
      */
     public String getOffice() {
-        return this.office;
+        return office;
     }
 
     /**
@@ -199,7 +199,7 @@ public class UserDetails implements ImageProvider, Serializable {
      * @return The current IM account name
      */
     public String getSkypeName() {
-        return this.skypeName;
+        return skypeName;
     }
 
     /**
@@ -218,7 +218,7 @@ public class UserDetails implements ImageProvider, Serializable {
      * @return The current department
      */
     public String getDepartment() {
-        return this.department;
+        return department;
     }
 
     /**
@@ -236,7 +236,7 @@ public class UserDetails implements ImageProvider, Serializable {
      */
     @Override
     public byte[] getImage() {
-        return Arrays.copyOf(this.image, this.image.length);
+        return Arrays.copyOf(image, image.length);
     }
 
     /**
@@ -244,7 +244,7 @@ public class UserDetails implements ImageProvider, Serializable {
      */
     @Override
     public void setImage(byte[] img) {
-        this.image = Arrays.copyOf(img, img.length);
+        image = Arrays.copyOf(img, img.length);
     }
 
     /**

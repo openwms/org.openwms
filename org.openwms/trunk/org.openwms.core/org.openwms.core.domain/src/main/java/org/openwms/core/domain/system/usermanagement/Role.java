@@ -127,7 +127,8 @@ public class Role extends SecurityObject {
          */
         public Builder(String name) {
             AssertUtils.isNotEmpty(name, "Not allowed to create a Role with an empty name");
-            this.role = new Role(name);
+            role = new Role(name);
+            role.immutable = false;
         }
 
         /**
@@ -138,20 +139,17 @@ public class Role extends SecurityObject {
          * @return the builder instance
          */
         public Builder withDescription(String description) {
-            this.role.setDescription(description);
+            role.setDescription(description);
             return this;
         }
 
         /**
          * Set the <code>Role</code> to be immutable.
          * 
-         * @param immutable
-         *            <code>true</code> if immutable, otherwise
-         *            <code>false</code>
          * @return the builder instance
          */
-        public Builder asImmutable(Boolean immutable) {
-            this.role.immutable = immutable;
+        public Builder asImmutable() {
+            role.immutable = true;
             return this;
         }
 
@@ -161,7 +159,7 @@ public class Role extends SecurityObject {
          * @return the constructed <code>Role</code>
          */
         public Role build() {
-            return this.role;
+            return role;
         }
     }
 
@@ -233,7 +231,7 @@ public class Role extends SecurityObject {
      */
     public boolean addUser(User user) {
         AssertUtils.notNull(user, "User to add must not be null");
-        return this.users.add(user);
+        return users.add(user);
     }
 
     /**
@@ -246,7 +244,7 @@ public class Role extends SecurityObject {
      */
     public void removeUser(User user) {
         AssertUtils.notNull(user, "User to remove must not be null");
-        this.users.remove(user);
+        users.remove(user);
     }
 
     /**
@@ -259,7 +257,7 @@ public class Role extends SecurityObject {
      */
     public void setUsers(Set<User> users) {
         AssertUtils.notNull(users, "Set of Users must not be null");
-        this.users = users;
+        users = users;
     }
 
     /**
@@ -307,7 +305,7 @@ public class Role extends SecurityObject {
      */
     public boolean addGrant(SecurityObject grant) {
         AssertUtils.notNull(grant, "Grant to add must not be null");
-        return this.grants.add(grant);
+        return grants.add(grant);
     }
 
     /**
@@ -324,7 +322,7 @@ public class Role extends SecurityObject {
      */
     public boolean removeGrant(SecurityObject grant) {
         AssertUtils.notNull(grant, "Grant to remove must not be null");
-        return this.grants.remove(grant);
+        return grants.remove(grant);
     }
 
     /**
@@ -341,7 +339,7 @@ public class Role extends SecurityObject {
      */
     public boolean removeGrants(List<? extends SecurityObject> grants) {
         AssertUtils.notNull(grants, "Grants to remove must not be null");
-        return this.grants.removeAll(grants);
+        return grants.removeAll(grants);
     }
 
     /**

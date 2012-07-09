@@ -152,7 +152,7 @@ public abstract class AbstractPreference extends AbstractEntity implements Domai
      */
     @Override
     public Long getId() {
-        return this.id;
+        return id;
     }
 
     /**
@@ -160,7 +160,7 @@ public abstract class AbstractPreference extends AbstractEntity implements Domai
      */
     @Override
     public boolean isNew() {
-        return this.id == null;
+        return id == null;
     }
 
     /**
@@ -178,7 +178,7 @@ public abstract class AbstractPreference extends AbstractEntity implements Domai
      * @return The value of the <code>AbstractPreference</code>
      */
     public String getValue() {
-        return this.value;
+        return value;
     }
 
     /**
@@ -216,7 +216,7 @@ public abstract class AbstractPreference extends AbstractEntity implements Domai
      * @return The floatValue of the preference
      */
     public Float getFloatValue() {
-        return this.floatValue;
+        return floatValue;
     }
 
     /**
@@ -236,7 +236,7 @@ public abstract class AbstractPreference extends AbstractEntity implements Domai
      * @return The description as String
      */
     public String getDescription() {
-        return this.description;
+        return description;
     }
 
     /**
@@ -255,7 +255,7 @@ public abstract class AbstractPreference extends AbstractEntity implements Domai
      * @return The possible minimum value
      */
     public int getMinimum() {
-        return this.minimum;
+        return minimum;
     }
 
     /**
@@ -274,7 +274,7 @@ public abstract class AbstractPreference extends AbstractEntity implements Domai
      * @return The possible maximum value
      */
     public int getMaximum() {
-        return this.maximum;
+        return maximum;
     }
 
     /**

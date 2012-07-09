@@ -223,7 +223,7 @@ public class Action implements Serializable {
      *            weight increased by 1
      */
     public int increaseWeight() {
-        return this.weight++;
+        return weight++;
     }
 
     /**
@@ -233,7 +233,7 @@ public class Action implements Serializable {
      *            weight decreased by 1
      */
     public int decreaseWeight() {
-        return --this.weight;
+        return --weight;
     }
 
     /**
@@ -260,7 +260,7 @@ public class Action implements Serializable {
      */
     @Override
     public String toString() {
-        return new StringBuilder().append(this.getName()).append(this.getText()).append(this.getUrl()).toString();
+        return new StringBuilder().append(getName()).append(getText()).append(getUrl()).toString();
     }
 
     /**
@@ -281,8 +281,8 @@ public class Action implements Serializable {
          *            An initial name
          */
         public Builder(String name) {
-            this.action = new Action();
-            this.action.setName(name);
+            action = new Action();
+            action.setName(name);
         }
 
         /**
@@ -293,7 +293,7 @@ public class Action implements Serializable {
          * @return The Builder
          */
         public Builder withText(String text) {
-            this.action.setText(text);
+            action.setText(text);
             return this;
         }
 
@@ -305,7 +305,7 @@ public class Action implements Serializable {
          * @return The Builder
          */
         public Builder withTag(Tag tag) {
-            this.action.getTags().add(tag);
+            action.getTags().add(tag);
             return this;
         }
 
@@ -315,7 +315,7 @@ public class Action implements Serializable {
          * @return The Action
          */
         public Action build() {
-            return this.action;
+            return action;
         }
     }
 }

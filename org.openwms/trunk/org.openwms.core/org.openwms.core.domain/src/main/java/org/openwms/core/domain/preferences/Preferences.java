@@ -82,7 +82,7 @@ public class Preferences implements Serializable {
         if (applicationOrRoleOrUserOrModule == null) {
             applicationOrRoleOrUserOrModule = new ArrayList<AbstractPreference>();
         }
-        return this.applicationOrRoleOrUserOrModule;
+        return applicationOrRoleOrUserOrModule;
     }
 
     /**
@@ -93,7 +93,7 @@ public class Preferences implements Serializable {
      * @return a list of all preferences
      */
     public List<AbstractPreference> getAll() {
-        return this.getApplicationOrRoleOrUserOrModule();
+        return getApplicationOrRoleOrUserOrModule();
     }
 
     /**

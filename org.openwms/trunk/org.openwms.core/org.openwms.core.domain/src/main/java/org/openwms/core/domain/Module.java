@@ -170,7 +170,7 @@ public class Module extends AbstractEntity implements DomainObject<Long> {
      */
     @Override
     public boolean isNew() {
-        return this.id == null;
+        return id == null;
     }
 
     /**
@@ -309,7 +309,7 @@ public class Module extends AbstractEntity implements DomainObject<Long> {
      */
     @Override
     public long getVersion() {
-        return this.version;
+        return version;
     }
 
     /**
@@ -320,6 +320,6 @@ public class Module extends AbstractEntity implements DomainObject<Long> {
      */
     @Override
     public String toString() {
-        return this.moduleName;
+        return moduleName;
     }
 }

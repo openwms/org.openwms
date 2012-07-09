@@ -115,7 +115,7 @@ public class UserPassword extends AbstractEntity implements DomainObject<Long> {
      */
     @Override
     public Long getId() {
-        return this.id;
+        return id;
     }
 
     /**
@@ -124,7 +124,7 @@ public class UserPassword extends AbstractEntity implements DomainObject<Long> {
      * @return The {@link User} of this password
      */
     public User getUser() {
-        return this.user;
+        return user;
     }
 
     /**
@@ -143,7 +143,7 @@ public class UserPassword extends AbstractEntity implements DomainObject<Long> {
      * @return The current password
      */
     public String getPassword() {
-        return this.password;
+        return password;
     }
 
     /**
@@ -153,6 +153,22 @@ public class UserPassword extends AbstractEntity implements DomainObject<Long> {
      */
     public Date getPasswordChanged() {
         return new Date(passwordChanged.getTime());
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public long getVersion() {
+        return version;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public boolean isNew() {
+        return id == null;
     }
 
     /**
@@ -201,21 +217,5 @@ public class UserPassword extends AbstractEntity implements DomainObject<Long> {
             return false;
         }
         return true;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public long getVersion() {
-        return this.version;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public boolean isNew() {
-        return this.id == null;
     }
 }

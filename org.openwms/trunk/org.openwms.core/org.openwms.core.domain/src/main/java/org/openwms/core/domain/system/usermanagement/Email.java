@@ -115,7 +115,7 @@ public class Email extends AbstractEntity implements DomainObject<Long> {
      */
     @Override
     public boolean isNew() {
-        return this.id == null;
+        return id == null;
     }
 
     /**
@@ -125,7 +125,7 @@ public class Email extends AbstractEntity implements DomainObject<Long> {
      * @return The username as String
      */
     public String getUsername() {
-        return this.username;
+        return username;
     }
 
     /**

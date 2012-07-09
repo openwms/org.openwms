@@ -113,7 +113,7 @@ public class ApplicationPreference extends AbstractPreference {
      * @return the key
      */
     public String getKey() {
-        return this.key;
+        return key;
     }
 
     /**
@@ -121,7 +121,7 @@ public class ApplicationPreference extends AbstractPreference {
      */
     @Override
     public PropertyScope getType() {
-        return this.type;
+        return type;
     }
 
     /**
@@ -129,7 +129,7 @@ public class ApplicationPreference extends AbstractPreference {
      */
     @Override
     protected Object[] getFields() {
-        return new Object[] { this.getType(), this.getKey() };
+        return new Object[] { getType(), getKey() };
     }
 
     /**
@@ -141,7 +141,7 @@ public class ApplicationPreference extends AbstractPreference {
      */
     @Override
     public PreferenceKey getPrefKey() {
-        return new PreferenceKey(this.getType(), this.getKey());
+        return new PreferenceKey(getType(), getKey());
     }
 
     /**
