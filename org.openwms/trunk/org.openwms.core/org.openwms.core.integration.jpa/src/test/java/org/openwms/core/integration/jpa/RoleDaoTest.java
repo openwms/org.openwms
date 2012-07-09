@@ -72,7 +72,7 @@ public class RoleDaoTest extends AbstractJpaSpringContextTests {
             role = findRole("ROLE_USERS");
             fail("Didn't persist the role");
         } catch (NoResultException nre) {
-            logger.debug("OK: Searching unknown roles must force an exception");
+            LOGGER.debug("OK: Searching unknown roles must force an exception");
         }
         role = findRole("ROLE_GUEST");
         assertNotNull("Role must have been persisted before", role);
@@ -90,7 +90,7 @@ public class RoleDaoTest extends AbstractJpaSpringContextTests {
             findRole(ROLE_ADMIN);
             fail("Role has to be removed and an exception is expected");
         } catch (NoResultException nre) {
-            logger.debug("OK: Role was removed before");
+            LOGGER.debug("OK: Role was removed before");
         }
     }
 

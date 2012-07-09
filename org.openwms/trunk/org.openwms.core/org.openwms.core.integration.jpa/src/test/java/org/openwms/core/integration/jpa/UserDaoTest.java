@@ -88,7 +88,7 @@ public class UserDaoTest extends AbstractJpaSpringContextTests {
             u = findUser("Unknown");
             fail("Didn't persist the user");
         } catch (NoResultException nre) {
-            logger.debug("OK: Searching unknown users must force an exception");
+            LOGGER.debug("OK: Searching unknown users must force an exception");
         }
         u = findUser("Guest");
         assertNotNull("User must have been persisted before", u);
@@ -128,7 +128,7 @@ public class UserDaoTest extends AbstractJpaSpringContextTests {
             findUser(SYS_USER);
             fail("User has to be removed and an exception is expected");
         } catch (NoResultException nre) {
-            logger.debug("OK: User was removed before");
+            LOGGER.debug("OK: User was removed before");
         }
         roles = entityManager.createNamedQuery(Role.NQ_FIND_ALL).getResultList();
         assertTrue("Roles may not been deleted", roles.size() == 2);
