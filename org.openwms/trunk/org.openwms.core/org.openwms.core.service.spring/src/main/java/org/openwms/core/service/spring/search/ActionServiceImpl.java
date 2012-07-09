@@ -59,9 +59,7 @@ public class ActionServiceImpl implements ActionService {
     /**
      * Create a new ActionServiceImpl.
      */
-    public ActionServiceImpl() {
-
-    }
+    public ActionServiceImpl() {}
 
     /**
      * {@inheritDoc}

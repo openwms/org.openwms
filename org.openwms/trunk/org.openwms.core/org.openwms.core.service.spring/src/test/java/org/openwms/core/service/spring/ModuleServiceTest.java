@@ -87,7 +87,7 @@ public class ModuleServiceTest extends AbstractJpaSpringContextTests {
             srv.saveStartupOrder(null);
             fail("Should throw an exception when calling with null");
         } catch (ServiceRuntimeException sre) {
-            logger.debug("OK: Exception thrown when calling with null");
+            LOGGER.debug("OK: Exception thrown when calling with null");
         }
     }
 
@@ -103,7 +103,7 @@ public class ModuleServiceTest extends AbstractJpaSpringContextTests {
         srv.saveStartupOrder(modules);
         modules = findAll();
         for (int i = 0; i < modules.size(); i++) {
-            logger.debug("Module " + modules.get(i).getModuleName() + " has startup order "
+            LOGGER.debug("Module " + modules.get(i).getModuleName() + " has startup order "
                     + modules.get(i).getStartupOrder());
             if (i == 0) {
                 assertTrue("Expected to be TMS", TMS_MODULE.equals(modules.get(i).getModuleName()));
@@ -115,7 +115,7 @@ public class ModuleServiceTest extends AbstractJpaSpringContextTests {
         srv.saveStartupOrder(modules);
         modules = findAll();
         for (int i = 0; i < modules.size(); i++) {
-            logger.debug("Module " + modules.get(i).getModuleName() + " has startup order "
+            LOGGER.debug("Module " + modules.get(i).getModuleName() + " has startup order "
                     + modules.get(i).getStartupOrder());
             if (i == 0) {
                 assertTrue("After sort expected to be WMS", WMS_MODULE.equals(modules.get(i).getModuleName()));
@@ -135,21 +135,21 @@ public class ModuleServiceTest extends AbstractJpaSpringContextTests {
             srv.remove(null);
             fail("Should throw an exception when calling with null");
         } catch (ServiceRuntimeException sre) {
-            logger.debug("OK: Exception thrown when calling remove with null");
+            LOGGER.debug("OK: Exception thrown when calling remove with null");
         }
         try {
             srv.remove(new Module(TRANSIENT_MODULE, TRANSIENT_MODULE));
-            logger.debug("Must handle to remove transient entities");
+            LOGGER.debug("Must handle to remove transient entities");
         } catch (Exception e) {
             fail("Should not throw an exception when calling with transient entities");
         }
         try {
             srv.remove(new Module(WMS_MODULE, "org.openwms.wms.swf"));
-            logger.debug("Must handle to remove detached entities");
+            LOGGER.debug("Must handle to remove detached entities");
             findByName(WMS_MODULE);
             fail("Should throw an exception we expect that the entity was removed");
         } catch (NoResultException nre) {
-            logger.debug("OK: No result, detached module was removed");
+            LOGGER.debug("OK: No result, detached module was removed");
         } catch (Exception e) {
             fail("Should not throw an exception when calling with detached entities");
         }
@@ -159,7 +159,7 @@ public class ModuleServiceTest extends AbstractJpaSpringContextTests {
             findByName(TMS_MODULE);
             fail("Should throw an exception, we expect that the persisted entity TMS was removed");
         } catch (NoResultException nre) {
-            logger.debug("OK: No result, persisted module TMS was removed");
+            LOGGER.debug("OK: No result, persisted module TMS was removed");
         }
     }
 
@@ -172,7 +172,7 @@ public class ModuleServiceTest extends AbstractJpaSpringContextTests {
             srv.save(null);
             fail("Should throw an exception when calling with null");
         } catch (ServiceRuntimeException sre) {
-            logger.debug("OK: Exception thrown when calling save with null");
+            LOGGER.debug("OK: Exception thrown when calling save with null");
         }
     }
 
@@ -191,7 +191,7 @@ public class ModuleServiceTest extends AbstractJpaSpringContextTests {
             if (!(sre.getCause() instanceof DataAccessException)) {
                 fail("Should throw a nested DataAccessException when trying to store an existing one");
             }
-            logger.debug("OK: Exception thrown when calling save with null" + sre.getCause().getMessage());
+            LOGGER.debug("OK: Exception thrown when calling save with null" + sre.getCause().getMessage());
         }
     }
 
@@ -231,7 +231,7 @@ public class ModuleServiceTest extends AbstractJpaSpringContextTests {
 
     private List<Module> setOrder(List<Module> modules, boolean asc) {
         for (Module module : modules) {
-            logger.debug("Module " + module.getModuleName() + " has startup order " + module.getStartupOrder());
+            LOGGER.debug("Module " + module.getModuleName() + " has startup order " + module.getStartupOrder());
             if (module.getModuleName().equals(TMS_MODULE)) {
                 module.setStartupOrder(asc ? 1 : 2);
             } else {

@@ -43,7 +43,7 @@ class SecurityObjectAuthority implements GrantedAuthority {
      *            A {@link SecurityObject} to use as authority carrier.
      */
     public SecurityObjectAuthority(SecurityObject securityObject) {
-        this.sObj = securityObject;
+        sObj = securityObject;
     }
 
     /**
@@ -53,7 +53,7 @@ class SecurityObjectAuthority implements GrantedAuthority {
      */
     @Override
     public String getAuthority() {
-        return this.sObj.getName();
+        return sObj.getName();
     }
 
     /**

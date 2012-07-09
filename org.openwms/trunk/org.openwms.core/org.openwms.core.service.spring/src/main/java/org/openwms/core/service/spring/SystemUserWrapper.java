@@ -53,7 +53,7 @@ public class SystemUserWrapper extends UserWrapper {
      */
     @Override
     public String getPassword() {
-        return this.password == null ? super.getPassword() : this.password;
+        return password == null ? super.getPassword() : password;
     }
 
     /**

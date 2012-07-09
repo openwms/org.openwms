@@ -90,9 +90,7 @@ public class SecurityContextUserServiceImpl implements UserDetailsService, Appli
     @Override
     public void onApplicationEvent(UserChangedEvent event) {
         if (cache != null) {
-            if (LOGGER.isDebugEnabled()) {
-                LOGGER.debug("UserChangedEvent -> clear cache");
-            }
+            LOGGER.debug("UserChangedEvent -> clear cache");
             cache.removeAll();
         }
     }

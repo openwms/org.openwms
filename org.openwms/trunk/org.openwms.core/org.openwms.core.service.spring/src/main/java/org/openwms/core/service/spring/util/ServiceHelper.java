@@ -43,9 +43,7 @@ public final class ServiceHelper {
     /**
      * Hide Constructor.
      */
-    private ServiceHelper() {
-
-    }
+    private ServiceHelper() {}
 
     /**
      * Returns a list of managed entities from a collection of detached
