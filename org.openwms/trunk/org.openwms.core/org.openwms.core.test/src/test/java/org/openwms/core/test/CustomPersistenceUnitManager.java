@@ -53,7 +53,6 @@ public class CustomPersistenceUnitManager extends DefaultPersistenceUnitManager 
     protected void postProcessPersistenceUnitInfo(MutablePersistenceUnitInfo pui) {
         super.postProcessPersistenceUnitInfo(pui);
         pui.addJarFileUrl(pui.getPersistenceUnitRootUrl());
-
         MutablePersistenceUnitInfo oldPui = getPersistenceUnitInfo(pui.getPersistenceUnitName());
         if (oldPui != null) {
             List<URL> urls = oldPui.getJarFileUrls();
@@ -61,6 +60,5 @@ public class CustomPersistenceUnitManager extends DefaultPersistenceUnitManager 
                 pui.addJarFileUrl(url);
             }
         }
-
     }
 }
