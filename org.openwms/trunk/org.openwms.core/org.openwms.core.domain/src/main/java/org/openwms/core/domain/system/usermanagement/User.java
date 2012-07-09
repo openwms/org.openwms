@@ -438,12 +438,7 @@ public class User extends AbstractEntity implements DomainObject<Long> {
         }
         passwords.add(new UserPassword(this, oldPassword));
         if (passwords.size() > NUMBER_STORED_PASSWORDS) {
-            Collections.sort(passwords, new Comparator<UserPassword>() {
-                @Override
-                public int compare(UserPassword o1, UserPassword o2) {
-                    return o2.getPasswordChanged().compareTo(o1.getPasswordChanged());
-                }
-            });
+            Collections.sort(passwords, new PasswordComparator());
             if (LOGGER.isDebugEnabled()) {
                 LOGGER.debug("Remove the old password from the history: " + passwords.get(passwords.size() - 1));
             }
@@ -651,5 +646,25 @@ public class User extends AbstractEntity implements DomainObject<Long> {
             return false;
         }
         return true;
+    }
+
+    /**
+     * A PasswordComparator sorts UserPassword by date ascending.
+     * 
+     * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
+     * @version $Revision$
+     * @since 0.2
+     */
+    class PasswordComparator implements Comparator<UserPassword> {
+
+        /**
+         * {@inheritDoc}
+         * 
+         * @see java.util.Comparator#compare(java.lang.Object, java.lang.Object)
+         */
+        @Override
+        public int compare(UserPassword o1, UserPassword o2) {
+            return o2.getPasswordChanged().compareTo(o1.getPasswordChanged());
+        }
     }
 }
