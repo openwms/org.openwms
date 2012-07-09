@@ -34,9 +34,7 @@ import java.util.Map;
  */
 public final class CollectionUtil {
 
-    private CollectionUtil() {
-
-    }
+    private CollectionUtil() {}
 
     /**
      * Return the first element of list. If list is <code>null</code> of empty,

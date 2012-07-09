@@ -71,5 +71,4 @@ public class WrongClassTypeException extends RuntimeException {
     public WrongClassTypeException(String message, Throwable cause) {
         super(message, cause);
     }
-
 }

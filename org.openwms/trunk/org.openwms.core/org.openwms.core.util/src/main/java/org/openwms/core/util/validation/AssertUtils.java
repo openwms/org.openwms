@@ -29,9 +29,7 @@ package org.openwms.core.util.validation;
  */
 public final class AssertUtils {
 
-    private AssertUtils() {
-
-    }
+    private AssertUtils() {}
 
     /**
      * Asserts that <code>obj</code> is not <code>null</code> .
@@ -92,5 +90,4 @@ public final class AssertUtils {
     public static void isNotEmpty(String str) {
         isNotEmpty(str, "The String must not be empty nor be null");
     }
-
 }

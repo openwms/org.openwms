@@ -18,26 +18,7 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
-package org.openwms.core.util.event;
-
 /**
- * A ReloadFilePreferencesEvent.
- * 
- * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
- * @version $Revision: $
- * @since 0.2
+ * This package provides common utility classes regarding notifications.
  */
-public class ReloadFilePreferencesEvent extends RootApplicationEvent {
-
-    private static final long serialVersionUID = -1072247641329702201L;
-
-    /**
-     * Create a new ReloadFilePreferencesEvent.
-     * 
-     * @param source
-     *            The event source
-     */
-    public ReloadFilePreferencesEvent(Object source) {
-        super(source);
-    }
-}
+package org.openwms.core.util.notification;
