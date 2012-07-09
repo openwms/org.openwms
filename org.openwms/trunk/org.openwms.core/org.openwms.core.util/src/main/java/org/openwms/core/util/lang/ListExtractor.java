@@ -54,5 +54,4 @@ public interface ListExtractor<K, V> {
      * @return the extracted value
      */
     <T> V extractValue(T listNode);
-
 }
