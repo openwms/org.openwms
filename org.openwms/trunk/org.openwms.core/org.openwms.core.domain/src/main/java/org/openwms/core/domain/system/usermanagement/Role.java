@@ -257,7 +257,7 @@ public class Role extends SecurityObject {
      */
     public void setUsers(Set<User> users) {
         AssertUtils.notNull(users, "Set of Users must not be null");
-        users = users;
+        this.users = users;
     }
 
     /**
@@ -339,7 +339,7 @@ public class Role extends SecurityObject {
      */
     public boolean removeGrants(List<? extends SecurityObject> grants) {
         AssertUtils.notNull(grants, "Grants to remove must not be null");
-        return grants.removeAll(grants);
+        return this.grants.removeAll(grants);
     }
 
     /**
