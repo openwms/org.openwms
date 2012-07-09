@@ -334,10 +334,10 @@ public class RoleTest extends AbstractJpaSpringContextTests {
      */
     @Test
     public final void testRoleBuilder() {
-        Role role1 = new Role.Builder(TEST_ROLE).withDescription(TEST_DESCR).asImmutable(false).build();
+        Role role1 = new Role.Builder(TEST_ROLE).withDescription(TEST_DESCR).asImmutable().build();
         Assert.assertEquals(TEST_ROLE, role1.getName());
         Assert.assertEquals(TEST_DESCR, role1.getDescription());
-        Assert.assertFalse(role1.getImmutable());
+        Assert.assertTrue(role1.getImmutable());
     }
 
     /**

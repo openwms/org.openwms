@@ -69,7 +69,7 @@ public class VerbTag extends Tag {
          *            Tags name
          */
         public Builder(String name) {
-            this.tag = new VerbTag(name);
+            tag = new VerbTag(name);
         }
 
         /**
@@ -80,7 +80,7 @@ public class VerbTag extends Tag {
          * @return The builder
          */
         public Builder withAlias(String alias) {
-            this.tag.getAliases().add(alias);
+            tag.getAliases().add(alias);
             return this;
         }
 
@@ -90,7 +90,7 @@ public class VerbTag extends Tag {
          * @return The <code>VerbTags</code>
          */
         public VerbTag build() {
-            return this.tag;
+            return tag;
         }
     }
 }

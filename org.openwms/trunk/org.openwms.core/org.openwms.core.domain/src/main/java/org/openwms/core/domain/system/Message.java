@@ -101,7 +101,7 @@ public class Message extends AbstractEntity implements DomainObject<Long> {
     public Message(int messageNo, String messageText) {
         this.messageNo = messageNo;
         this.messageText = messageText;
-        this.created = new Date();
+        created = new Date();
     }
 
     /**
@@ -117,7 +117,7 @@ public class Message extends AbstractEntity implements DomainObject<Long> {
      */
     @Override
     public boolean isNew() {
-        return this.id == null;
+        return id == null;
     }
 
     /**
@@ -172,6 +172,6 @@ public class Message extends AbstractEntity implements DomainObject<Long> {
      */
     @Override
     public long getVersion() {
-        return this.version;
+        return version;
     }
 }

@@ -122,6 +122,6 @@ public class Tag implements Serializable {
      *         some positive value
      */
     public int matches(String word) {
-        return this.name.toLowerCase().indexOf(word.toLowerCase()) + 1;
+        return name.toLowerCase().indexOf(word.toLowerCase()) + 1;
     }
 }

@@ -159,7 +159,7 @@ public class I18n extends AbstractEntity implements DomainObject<Long> {
      */
     @PostLoad
     protected void onLoad() {
-        this.cKey = this.moduleName + this.key;
+        cKey = moduleName + key;
     }
 
     /**
@@ -178,7 +178,7 @@ public class I18n extends AbstractEntity implements DomainObject<Long> {
      */
     @Override
     public boolean isNew() {
-        return this.id == null;
+        return id == null;
     }
 
     /**
@@ -188,7 +188,7 @@ public class I18n extends AbstractEntity implements DomainObject<Long> {
      */
     @Override
     public long getVersion() {
-        return this.version;
+        return version;
     }
 
     /**
@@ -198,7 +198,7 @@ public class I18n extends AbstractEntity implements DomainObject<Long> {
      */
     @Override
     public Long getId() {
-        return this.id;
+        return id;
     }
 
     /**

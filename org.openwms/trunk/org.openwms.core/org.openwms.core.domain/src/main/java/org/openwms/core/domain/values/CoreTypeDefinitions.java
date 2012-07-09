@@ -33,4 +33,6 @@ public final class CoreTypeDefinitions {
     public static final int DESCRIPTION_LENGTH = 1024;
     /** Length of a Quantity field: {@value} */
     public static final int QUANTITY_LENGTH = 16;
+
+    private CoreTypeDefinitions() {}
 }

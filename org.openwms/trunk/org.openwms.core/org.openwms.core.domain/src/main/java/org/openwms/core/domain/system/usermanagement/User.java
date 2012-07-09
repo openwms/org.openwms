@@ -222,39 +222,39 @@ public class User extends AbstractEntity implements DomainObject<Long> {
      */
     protected User() {
         super();
-        onLoad();
+        loadLazy();
     }
 
     /**
      * Create a new <code>User</code> with an username.
      * 
-     * @param userName
+     * @param username
      *            The unique name of the user
      * @throws IllegalArgumentException
      *             when username is <code>null</code> or empty
      */
-    public User(String userName) {
+    public User(String username) {
         super();
-        AssertUtils.isNotEmpty(userName, "Not allowed to create an User with an empty username");
-        this.username = userName;
-        onLoad();
+        AssertUtils.isNotEmpty(username, "Not allowed to create an User with an empty username");
+        this.username = username;
+        loadLazy();
     }
 
     /**
      * Create a new <code>User</code> with an username.
      * 
-     * @param userName
+     * @param username
      *            The unique name of the user
      * @param password
      *            The password of the user
      * @throws IllegalArgumentException
      *             when username or password is <code>null</code> or empty
      */
-    protected User(String userName, String password) {
+    protected User(String username, String password) {
         super();
-        AssertUtils.isNotEmpty(userName, "Not allowed to create an User with an empty username");
+        AssertUtils.isNotEmpty(username, "Not allowed to create an User with an empty username");
         AssertUtils.isNotEmpty(password, "Not allowed to create an User with an empty password");
-        this.username = userName;
+        this.username = username;
         this.password = password;
     }
 
@@ -272,7 +272,11 @@ public class User extends AbstractEntity implements DomainObject<Long> {
      */
     @Override
     public boolean isNew() {
-        return this.id == null;
+        return id == null;
+    }
+
+    private void loadLazy() {
+        password = savedPassword;
     }
 
     /**
@@ -281,8 +285,8 @@ public class User extends AbstractEntity implements DomainObject<Long> {
      * change.
      */
     @PostLoad
-    public void onLoad() {
-        this.password = this.savedPassword;
+    public void postLoad() {
+        loadLazy();
     }
 
     /**
@@ -291,7 +295,7 @@ public class User extends AbstractEntity implements DomainObject<Long> {
      * @return The current username
      */
     public String getUsername() {
-        return this.username;
+        return username;
     }
 
     /**
@@ -310,7 +314,7 @@ public class User extends AbstractEntity implements DomainObject<Long> {
      * @return <code>true</code> if so, otherwise <code>false</code>
      */
     public boolean isExternalUser() {
-        return this.extern;
+        return extern;
     }
 
     /**
@@ -321,7 +325,7 @@ public class User extends AbstractEntity implements DomainObject<Long> {
      *            by an external system, otherwise <code>false</code>.
      */
     public void setExternalUser(boolean externalUser) {
-        this.extern = externalUser;
+        extern = externalUser;
     }
 
     /**
@@ -339,7 +343,7 @@ public class User extends AbstractEntity implements DomainObject<Long> {
      * @return <code>true</code> if locked, otherwise <code>false</code>
      */
     public boolean isLocked() {
-        return this.locked;
+        return locked;
     }
 
     /**
@@ -359,7 +363,7 @@ public class User extends AbstractEntity implements DomainObject<Long> {
      * @return The current password as String
      */
     public String getPassword() {
-        return this.password;
+        return password;
     }
 
     /**
@@ -385,15 +389,15 @@ public class User extends AbstractEntity implements DomainObject<Long> {
      */
     public void changePassword(String password) throws InvalidPasswordException {
         // FIXME [scherrer] : Setting the same password should fail
-        if (this.savedPassword != null && this.savedPassword.equals(password)) {
+        if (savedPassword != null && savedPassword.equals(password)) {
             LOGGER.debug("Trying to set the new password equals to the current password");
             return;
         }
         if (isPasswordValid(password)) {
-            storeOldPassword(this.password);
-            this.savedPassword = password;
+            storeOldPassword(password);
+            savedPassword = password;
             this.password = password;
-            this.lastPasswordChange = new Date();
+            lastPasswordChange = new Date();
         } else {
             throw new InvalidPasswordException("Password is not confirm with the defined rules");
         }
@@ -407,7 +411,7 @@ public class User extends AbstractEntity implements DomainObject<Long> {
      *         the saved one, otherwise <code>false</code>
      */
     public boolean hasPasswordChanged() {
-        return (this.savedPassword.equals(this.password));
+        return (savedPassword.equals(password));
     }
 
     /**
@@ -456,7 +460,7 @@ public class User extends AbstractEntity implements DomainObject<Long> {
      *         <code>false</code>
      */
     public boolean isEnabled() {
-        return this.enabled;
+        return enabled;
     }
 
     /**
@@ -485,7 +489,7 @@ public class User extends AbstractEntity implements DomainObject<Long> {
      *            The new expiration date to set
      */
     public void setExpirationDate(Date expDate) {
-        this.expirationDate = new Date(expDate.getTime());
+        expirationDate = new Date(expDate.getTime());
     }
 
     /**
@@ -494,7 +498,7 @@ public class User extends AbstractEntity implements DomainObject<Long> {
      * @return The list of granted {@link Role}s
      */
     public List<Role> getRoles() {
-        return this.roles;
+        return roles;
     }
 
     /**
@@ -519,7 +523,7 @@ public class User extends AbstractEntity implements DomainObject<Long> {
      * @return see {@link java.util.Collection#add(Object)}
      */
     public boolean addRole(Role role) {
-        return this.roles.add(role);
+        return roles.add(role);
     }
 
     /**
@@ -530,7 +534,7 @@ public class User extends AbstractEntity implements DomainObject<Long> {
      *            The new list of {@link Role}s
      */
     public void setRoles(List<Role> roles) {
-        this.roles = roles;
+        roles = roles;
     }
 
     /**
@@ -539,7 +543,7 @@ public class User extends AbstractEntity implements DomainObject<Long> {
      * @return The current fullname
      */
     public String getFullname() {
-        return this.fullname;
+        return fullname;
     }
 
     /**
@@ -558,7 +562,7 @@ public class User extends AbstractEntity implements DomainObject<Long> {
      * @return A list of recently used passwords
      */
     public List<UserPassword> getPasswords() {
-        return this.passwords;
+        return passwords;
     }
 
     /**
@@ -605,7 +609,7 @@ public class User extends AbstractEntity implements DomainObject<Long> {
      */
     @Override
     public long getVersion() {
-        return this.version;
+        return version;
     }
 
     /**

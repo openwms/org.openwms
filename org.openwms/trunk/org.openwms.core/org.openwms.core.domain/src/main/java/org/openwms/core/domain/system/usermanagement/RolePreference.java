@@ -112,7 +112,7 @@ public class RolePreference extends AbstractPreference {
         super();
         AssertUtils.isNotEmpty(owner, "Not allowed to create a RolePreference with an empty rolename");
         AssertUtils.isNotEmpty(key, "Not allowed to create a RolePreference with an empty key");
-        this.owner = rolename;
+        owner = rolename;
         this.key = key;
     }
 
@@ -151,7 +151,7 @@ public class RolePreference extends AbstractPreference {
      */
     @Override
     protected Object[] getFields() {
-        return new Object[] { this.getType(), this.getOwner(), this.getKey() };
+        return new Object[] { getType(), getOwner(), getKey() };
     }
 
     /**
@@ -164,7 +164,7 @@ public class RolePreference extends AbstractPreference {
      */
     @Override
     public PreferenceKey getPrefKey() {
-        return new PreferenceKey(this.getType(), this.getOwner(), this.getKey());
+        return new PreferenceKey(getType(), getOwner(), getKey());
     }
 
     /**

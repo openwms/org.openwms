@@ -80,11 +80,11 @@ public class Actions {
         if (action == null) {
             action = new ArrayList<Action>();
         }
-        return this.action;
+        return action;
     }
 
     /**
-     * Gets the value of the owner property.
+     * Gets the owner of this property.
      * 
      * @return possible object is {@link String }
      */
@@ -93,12 +93,12 @@ public class Actions {
     }
 
     /**
-     * Sets the value of the owner property.
+     * Sets the owner of this property.
      * 
-     * @param value
+     * @param owner
      *            allowed object is {@link String }
      */
-    public void setOwner(String value) {
-        this.owner = value;
+    public void setOwner(String owner) {
+        this.owner = owner;
     }
 }

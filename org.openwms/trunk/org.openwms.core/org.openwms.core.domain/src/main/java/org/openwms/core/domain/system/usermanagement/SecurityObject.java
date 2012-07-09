@@ -130,7 +130,7 @@ public class SecurityObject extends AbstractEntity implements DomainObject<Long>
      */
     @Override
     public Long getId() {
-        return this.id;
+        return id;
     }
 
     /**
@@ -138,7 +138,7 @@ public class SecurityObject extends AbstractEntity implements DomainObject<Long>
      */
     @Override
     public boolean isNew() {
-        return this.id == null;
+        return id == null;
     }
 
     /**
@@ -224,7 +224,6 @@ public class SecurityObject extends AbstractEntity implements DomainObject<Long>
      */
     @Override
     public String toString() {
-        return this.name;
+        return name;
     }
-
 }

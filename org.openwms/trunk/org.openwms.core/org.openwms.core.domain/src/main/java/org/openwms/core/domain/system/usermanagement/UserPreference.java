@@ -131,7 +131,7 @@ public class UserPreference extends AbstractPreference {
      * @return the key.
      */
     public String getKey() {
-        return this.key;
+        return key;
     }
 
     /**
@@ -151,7 +151,7 @@ public class UserPreference extends AbstractPreference {
      */
     @Override
     protected Object[] getFields() {
-        return new Object[] { this.getType(), this.getOwner(), this.getKey() };
+        return new Object[] { getType(), getOwner(), getKey() };
     }
 
     /**
@@ -161,7 +161,7 @@ public class UserPreference extends AbstractPreference {
      */
     @Override
     public PreferenceKey getPrefKey() {
-        return new PreferenceKey(this.getType(), this.getOwner(), this.getKey());
+        return new PreferenceKey(getType(), getOwner(), getKey());
     }
 
     /**

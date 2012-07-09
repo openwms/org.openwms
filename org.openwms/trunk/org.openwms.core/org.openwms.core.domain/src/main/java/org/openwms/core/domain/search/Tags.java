@@ -74,6 +74,6 @@ public class Tags {
         if (tag == null) {
             tag = new ArrayList<Tag>();
         }
-        return this.tag;
+        return tag;
     }
 }
