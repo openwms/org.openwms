@@ -18,17 +18,44 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
-// Generated with bean template
+// Generated with interface template
 package org.openwms.core.domain.values {
 
-    [Bindable]
-    [RemoteClass(alias="org.openwms.core.domain.values.Unit")]
     /**
-     * Just a simple Unit definition.
+     * A Measurable.
      *
-     * @version $Revision$
+     * @version $Revision: 1719 $
      * @since 0.1
      */
-    public class Unit extends UnitBase {
+    public interface Measurable {
+
+        /**
+         * Get the magnitude of this <code>Measureable</code>.
+         *
+         * @return the magnitude
+         */
+        function get magnitude() : Number;
+
+        /**
+         * Check whether the magnitude is of negative value.
+         *
+         * @return <code>true</code> if the magnitude is of negative value,
+         *         otherwise <code>false</code>
+         */
+        function get negative() : Boolean;
+
+        /**
+         * Returns the type of <code>Measureable</code>.
+         *
+         * @return The <code>Measureable</code>'s type
+         */
+        function get unitType() : BaseUnit;
+
+        /**
+         * Check whether the magnitude is 0.
+         *
+         * @return <code>true</code> is magnitude is 0, otherwise <code>false</code>
+         */
+        function get zero() : Boolean;
     }
 }

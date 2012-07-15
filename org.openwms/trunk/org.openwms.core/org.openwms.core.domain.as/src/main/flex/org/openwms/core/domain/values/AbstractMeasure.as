@@ -18,38 +18,33 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
-// Generated with interface template
+// Generated with bean template
 package org.openwms.core.domain.values {
 
-    import mx.collections.ListCollectionView;
-
+    [Bindable]
+    [RemoteClass(alias = "org.openwms.core.domain.values.AbstractMeasure")]
     /**
-     * An UnitType is a concrete unit definition.
+     * An AbstractMeasure.
      *
-     * @version $Revision$
+     * @version $Revision: 1719 $
      * @since 0.1
      */
-    public interface UnitType {
+    public class AbstractMeasure extends AbstractMeasureBase {
 
-        /**
-         * Return all sub types of the <code>UnitType</code>.
-         *
-         * @return a list of sub types.
-         */
-        function get all() : ListCollectionView;
+        override public function get magnitude() : Number {
+            return Number.NaN;
+        }
 
-        /**
-         * Return the base unit type of the <code>UnitType</code>.
-         *
-         * @return The base unit type
-         */
-        function get baseUnit() : UnitType;
+        override public function get negative() : Boolean {
+            return false;
+        }
 
-        /**
-         * Return the value of the base unit.
-         *
-         * @return The value of the base unit of the weight
-         */
-        function get baseUnitValue() : Object;
+        override public function get unitType() : BaseUnit {
+            return null;
+        }
+
+        override public function get zero() : Boolean {
+            return false;
+        }
     }
 }
