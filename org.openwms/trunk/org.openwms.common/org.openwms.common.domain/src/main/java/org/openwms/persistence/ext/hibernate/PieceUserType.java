@@ -65,7 +65,7 @@ public class PieceUserType implements CompositeUserType {
     @Override
     public Object getPropertyValue(Object component, int property) {
         Piece piece = (Piece) component;
-        return property == 0 ? piece.getUnitType() : piece.getAmount();
+        return property == 0 ? piece.getUnitType() : piece.getMagnitude();
     }
 
     /**
@@ -139,7 +139,7 @@ public class PieceUserType implements CompositeUserType {
             Piece piece = (Piece) value;
             String unitType = piece.getUnitType().toString();
             st.setString(index, unitType);
-            st.setBigDecimal(index + 1, piece.getAmount());
+            st.setBigDecimal(index + 1, piece.getMagnitude());
         }
     }
 

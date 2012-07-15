@@ -23,7 +23,8 @@ package org.openwms.common.domain.units;
 import java.io.Serializable;
 import java.math.BigDecimal;
 
-import org.openwms.core.domain.values.Unit;
+import org.openwms.core.domain.values.Measurable;
+import org.openwms.core.domain.values.UnitType;
 
 /**
  * A Weight represents a real world weight, that comes with an <code>Unit</code>
@@ -33,13 +34,13 @@ import org.openwms.core.domain.values.Unit;
  * @version $Revision$
  * @since 0.1
  */
-public class Weight extends Unit<Weight, WeightUnit> implements Comparable<Weight>, Serializable {
+public class Weight implements Measurable<BigDecimal, Weight, WeightUnit>, UnitType, Serializable {
     private static final long serialVersionUID = -8849107834046064278L;
 
     /** The unit of the <code>Weight</code>. */
     private WeightUnit unit;
-    /** The amount of the <code>Weight</code>. */
-    private BigDecimal amount;
+    /** The magnitude of the <code>Weight</code>. */
+    private BigDecimal magnitude;
     /** Constant for a zero value. */
     public static final Weight ZERO = new Weight("0");
 
@@ -54,58 +55,67 @@ public class Weight extends Unit<Weight, WeightUnit> implements Comparable<Weigh
     /**
      * Create a new <code>Weight</code>.
      * 
-     * @param amount
-     *            The amount of the <code>Weight</code>
+     * @param magnitude
+     *            The magnitude of the <code>Weight</code>
      * @param unit
      *            The unit of measure
      */
-    public Weight(BigDecimal amount, WeightUnit unit) {
-        this.amount = amount;
+    public Weight(BigDecimal magnitude, WeightUnit unit) {
+        this.magnitude = magnitude;
         this.unit = unit;
     }
 
     /**
      * Create a new <code>Weight</code>.
      * 
-     * @param amount
-     *            The amount of the <code>Weight</code> as String
+     * @param magnitude
+     *            The magnitude of the <code>Weight</code> as String
      * @param unit
      *            The unit of measure
      */
-    public Weight(String amount, WeightUnit unit) {
-        this.amount = new BigDecimal(amount);
+    public Weight(String magnitude, WeightUnit unit) {
+        this.magnitude = new BigDecimal(magnitude);
         this.unit = unit;
     }
 
     /**
      * Create a new <code>Weight</code>.
      * 
-     * @param amount
-     *            The amount of the <code>Weight</code>
+     * @param magnitude
+     *            The magnitude of the <code>Weight</code>
      */
-    public Weight(BigDecimal amount) {
-        this.amount = amount;
+    public Weight(BigDecimal magnitude) {
+        this.magnitude = magnitude;
         this.unit = WeightUnit.T.getBaseUnit();
     }
 
     /**
      * Create a new <code>Weight</code>.
      * 
-     * @param amount
-     *            The amount of the <code>Weight</code> as String
+     * @param magnitude
+     *            The magnitude of the <code>Weight</code> as String
      */
-    public Weight(String amount) {
-        this.amount = new BigDecimal(amount);
+    public Weight(String magnitude) {
+        this.magnitude = new BigDecimal(magnitude);
         this.unit = WeightUnit.T.getBaseUnit();
     }
 
     /**
-     * Returns the amount of the <code>Weight</code>.
-     * 
-     * @return The amount
+     * @see org.openwms.core.domain.values.UnitType#getMeasurable()
      */
-    public BigDecimal getAmount() {
-        return amount;
+    @Override
+    public Weight getMeasurable() {
+        return this;
+    }
+
+    /**
+     * Returns the magnitude of the <code>Weight</code>.
+     * 
+     * @return The magnitude
+     */
+    @Override
+    public BigDecimal getMagnitude() {
+        return magnitude;
     }
 
     /**
@@ -123,7 +133,7 @@ public class Weight extends Unit<Weight, WeightUnit> implements Comparable<Weigh
      */
     @Override
     public boolean isZero() {
-        return this.getAmount().equals(BigDecimal.ZERO);
+        return this.getMagnitude().equals(BigDecimal.ZERO);
     }
 
     /**
@@ -131,7 +141,7 @@ public class Weight extends Unit<Weight, WeightUnit> implements Comparable<Weigh
      */
     @Override
     public boolean isNegative() {
-        return this.getAmount().signum() == -1;
+        return this.getMagnitude().signum() == -1;
     }
 
     /**
@@ -139,7 +149,7 @@ public class Weight extends Unit<Weight, WeightUnit> implements Comparable<Weigh
      */
     @Override
     public Weight convertTo(WeightUnit unt) {
-        return new Weight(getAmount().scaleByPowerOfTen((this.getUnitType().ordinal() - unt.ordinal()) * 3), unt);
+        return new Weight(getMagnitude().scaleByPowerOfTen((this.getUnitType().ordinal() - unt.ordinal()) * 3), unt);
     }
 
     /**
@@ -152,7 +162,7 @@ public class Weight extends Unit<Weight, WeightUnit> implements Comparable<Weigh
         } else if (o.getUnitType().ordinal() < this.getUnitType().ordinal()) {
             return 1;
         } else {
-            return this.getAmount().compareTo(o.getAmount());
+            return this.getMagnitude().compareTo(o.getMagnitude());
         }
     }
 
@@ -165,7 +175,7 @@ public class Weight extends Unit<Weight, WeightUnit> implements Comparable<Weigh
     public int hashCode() {
         final int prime = 31;
         int result = 1;
-        result = prime * result + ((getAmount() == null) ? 0 : getAmount().hashCode());
+        result = prime * result + ((getMagnitude() == null) ? 0 : getMagnitude().hashCode());
         result = prime * result + ((getUnitType() == null) ? 0 : getUnitType().hashCode());
         return result;
     }
@@ -187,11 +197,11 @@ public class Weight extends Unit<Weight, WeightUnit> implements Comparable<Weigh
             return false;
         }
         Weight other = (Weight) obj;
-        if (getAmount() == null) {
-            if (other.getAmount() != null) {
+        if (getMagnitude() == null) {
+            if (other.getMagnitude() != null) {
                 return false;
             }
-        } else if (!getAmount().equals(other.getAmount())) {
+        } else if (!getMagnitude().equals(other.getMagnitude())) {
             return false;
         }
         if (getUnitType() != other.getUnitType()) {
@@ -205,6 +215,6 @@ public class Weight extends Unit<Weight, WeightUnit> implements Comparable<Weigh
      */
     @Override
     public String toString() {
-        return getAmount() + " " + getUnitType();
+        return getMagnitude() + " " + getUnitType();
     }
 }

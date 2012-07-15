@@ -24,8 +24,6 @@ import java.math.BigDecimal;
 
 import org.junit.Assert;
 import org.junit.Test;
-import org.openwms.common.domain.units.Piece;
-import org.openwms.common.domain.units.PieceUnit;
 
 /**
  * A PieceTest.
@@ -62,7 +60,7 @@ public class PieceTest {
         Piece p502 = p50.convertTo(PieceUnit.DOZ);
         Assert.assertFalse(p502.equals(p50));
 
-        Assert.assertTrue(p502.getAmount().equals(new BigDecimal(4)));
+        Assert.assertTrue(p502.getMagnitude().equals(new BigDecimal(4)));
         Assert.assertTrue(p502.getUnitType() == PieceUnit.DOZ);
 
         Assert.assertTrue(p502.equals(new Piece(4, PieceUnit.DOZ)));
