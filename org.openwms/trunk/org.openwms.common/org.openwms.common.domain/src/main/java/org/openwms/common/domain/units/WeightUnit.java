@@ -23,7 +23,7 @@ package org.openwms.common.domain.units;
 import java.util.Arrays;
 import java.util.List;
 
-import org.openwms.core.domain.values.UnitType;
+import org.openwms.core.domain.values.BaseUnit;
 
 /**
  * A WeightUnit is a concrete set of all possible weights.
@@ -35,7 +35,7 @@ import org.openwms.core.domain.values.UnitType;
  * @version $Revision$
  * @since 0.1
  */
-public enum WeightUnit implements UnitType<WeightUnit, Long> {
+public enum WeightUnit implements BaseUnit<WeightUnit> {
 
     /**
      * Milligram.
@@ -54,25 +54,26 @@ public enum WeightUnit implements UnitType<WeightUnit, Long> {
      */
     T(1);
 
-    private Long baseUnit;
+    private Long magnitude;
     private static WeightUnit[] all = { WeightUnit.MG, WeightUnit.G, WeightUnit.KG, WeightUnit.T };
 
     /**
      * Create a new <code>WeightUnit</code>.
      * 
-     * @param baseUnit
+     * @param magnitude
      *            The base unit of the weight
      */
-    WeightUnit(long baseUnit) {
-        this.baseUnit = baseUnit;
+    WeightUnit(long magnitude) {
+        this.magnitude = magnitude;
     }
 
     /**
-     * {@inheritDoc}
+     * Get the magnitude of this <code>PieceUnit</code>.
+     * 
+     * @return the magnitude
      */
-    @Override
-    public Long getBaseUnitValue() {
-        return this.baseUnit;
+    public Long getMagnitude() {
+        return this.magnitude;
     }
 
     /**

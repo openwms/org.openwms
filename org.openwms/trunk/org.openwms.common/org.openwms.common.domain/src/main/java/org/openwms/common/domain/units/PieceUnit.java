@@ -20,10 +20,11 @@
  */
 package org.openwms.common.domain.units;
 
+import java.math.BigDecimal;
 import java.util.Arrays;
 import java.util.List;
 
-import org.openwms.core.domain.values.UnitType;
+import org.openwms.core.domain.values.BaseUnit;
 
 /**
  * A PieceUnit.
@@ -32,37 +33,38 @@ import org.openwms.core.domain.values.UnitType;
  * @version $Revision: $
  * @since 0.2
  */
-public enum PieceUnit implements UnitType<PieceUnit, Long> {
+public enum PieceUnit implements BaseUnit<PieceUnit> {
 
     /**
      * A Piece.
      */
-    PC(1),
+    PC(new BigDecimal(1)),
 
     /**
      * A Dozen.
      */
-    DOZ(12);
+    DOZ(new BigDecimal(12));
 
-    private Long baseUnit;
+    private BigDecimal magnitude;
     private static PieceUnit[] all = { PieceUnit.PC, PieceUnit.DOZ };
+
+    /**
+     * Get the magnitude of this <code>PieceUnit</code>.
+     * 
+     * @return the magnitude
+     */
+    public BigDecimal getMagnitude() {
+        return this.magnitude;
+    }
 
     /**
      * Create a new <code>PieceUnit</code>.
      * 
-     * @param baseUnit
+     * @param magnitude
      *            The base unit of the weight
      */
-    PieceUnit(long baseUnit) {
-        this.baseUnit = baseUnit;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public Long getBaseUnitValue() {
-        return this.baseUnit;
+    PieceUnit(BigDecimal magnitude) {
+        this.magnitude = magnitude;
     }
 
     /**

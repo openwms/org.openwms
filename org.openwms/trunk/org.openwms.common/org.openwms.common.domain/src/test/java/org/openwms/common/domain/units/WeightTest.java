@@ -25,8 +25,6 @@ import static org.junit.Assert.assertEquals;
 import java.math.BigDecimal;
 
 import org.junit.Test;
-import org.openwms.common.domain.units.Weight;
-import org.openwms.common.domain.units.WeightUnit;
 
 /**
  * A WeightTest.
@@ -46,8 +44,8 @@ public class WeightTest {
         Weight w1 = new Weight(new BigDecimal(1), WeightUnit.KG);
         Weight w2 = new Weight(new BigDecimal(1), WeightUnit.T);
         w2 = w2.convertTo(WeightUnit.KG);
-        assertEquals(BigDecimal.ONE, w1.getAmount());
-        assertEquals(new BigDecimal(0), new BigDecimal("1000").subtract(w2.getAmount()));
+        assertEquals(BigDecimal.ONE, w1.getMagnitude());
+        assertEquals(new BigDecimal(0), new BigDecimal("1000").subtract(w2.getMagnitude()));
         assertEquals(w2.getUnitType(), WeightUnit.KG);
         w1.compareTo(w2);
     }

@@ -24,7 +24,8 @@ import java.io.Serializable;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 
-import org.openwms.core.domain.values.Unit;
+import org.openwms.core.domain.values.Measurable;
+import org.openwms.core.domain.values.UnitType;
 
 /**
  * A Piece.
@@ -33,15 +34,15 @@ import org.openwms.core.domain.values.Unit;
  * @version $Revision: $
  * @since 0.2
  */
-public class Piece extends Unit<Piece, PieceUnit> implements Comparable<Piece>, Serializable {
+public class Piece implements Measurable<BigDecimal, Piece, PieceUnit>, UnitType, Serializable {
 
     private static final long serialVersionUID = 5268725227649308401L;
     private static final BigDecimal SHIFTER = new BigDecimal(12);
 
     /** The unit of the <code>Piece</code>. */
     private PieceUnit unitType;
-    /** The amount of the <code>Piece</code>. */
-    private BigDecimal amount;
+    /** The magnitude of the <code>Piece</code>. */
+    private BigDecimal magnitude;
     /** Constant for a zero value. */
     public static final Piece ZERO = new Piece(0);
 
@@ -54,60 +55,69 @@ public class Piece extends Unit<Piece, PieceUnit> implements Comparable<Piece>, 
     }
 
     /**
+     * @see org.openwms.core.domain.values.UnitType#getMeasurable()
+     */
+    @Override
+    public Piece getMeasurable() {
+        return this;
+    }
+
+    /**
      * Create a new <code>Piece</code>.
      * 
-     * @param amount
-     *            The amount of the <code>Piece</code>
+     * @param magnitude
+     *            The magnitude of the <code>Piece</code>
      * @param unitType
      *            The unit of measure
      */
-    public Piece(int amount, PieceUnit unitType) {
-        this.amount = new BigDecimal(amount);
+    public Piece(int magnitude, PieceUnit unitType) {
+        this.magnitude = new BigDecimal(magnitude);
         this.unitType = unitType;
     }
 
     /**
      * Create a new <code>Piece</code>.
      * 
-     * @param amount
-     *            The amount of the <code>Piece</code> as int
+     * @param magnitude
+     *            The magnitude of the <code>Piece</code> as int
      */
-    public Piece(int amount) {
-        this.amount = new BigDecimal(amount);
+    public Piece(int magnitude) {
+        this.magnitude = new BigDecimal(magnitude);
         this.unitType = PieceUnit.PC.getBaseUnit();
     }
 
     /**
      * Create a new <code>Piece</code>.
      * 
-     * @param amount
-     *            The amount of the <code>Piece</code>
+     * @param magnitude
+     *            The magnitude of the <code>Piece</code>
      * @param unitType
      *            The unit of measure
      */
-    public Piece(BigDecimal amount, PieceUnit unitType) {
-        this.amount = amount;
+    public Piece(BigDecimal magnitude, PieceUnit unitType) {
+        this.magnitude = magnitude;
         this.unitType = unitType;
     }
 
     /**
      * Create a new <code>Piece</code>.
      * 
-     * @param amount
-     *            The amount of the <code>Piece</code> as BigDecimal
+     * @param magnitude
+     *            The magnitude of the <code>Piece</code> as BigDecimal
      */
-    public Piece(BigDecimal amount) {
-        this.amount = amount;
+    public Piece(BigDecimal magnitude) {
+        this.magnitude = magnitude;
         this.unitType = PieceUnit.PC.getBaseUnit();
     }
 
     /**
-     * Returns the amount of the <code>Piece</code>.
+     * Returns the magnitude of the <code>Piece</code>.
      * 
-     * @return The amount
+     * @return The magnitude
      */
-    public BigDecimal getAmount() {
-        return amount;
+    @Override
+    public BigDecimal getMagnitude() {
+        return magnitude;
     }
 
     /**
@@ -125,7 +135,7 @@ public class Piece extends Unit<Piece, PieceUnit> implements Comparable<Piece>, 
      */
     @Override
     public boolean isZero() {
-        return Piece.ZERO.equals(new Piece(this.getAmount(), PieceUnit.DOZ));
+        return Piece.ZERO.equals(new Piece(this.getMagnitude(), PieceUnit.DOZ));
     }
 
     /**
@@ -133,7 +143,7 @@ public class Piece extends Unit<Piece, PieceUnit> implements Comparable<Piece>, 
      */
     @Override
     public boolean isNegative() {
-        return this.getAmount().signum() == -1;
+        return this.getMagnitude().signum() == -1;
     }
 
     /**
@@ -142,9 +152,9 @@ public class Piece extends Unit<Piece, PieceUnit> implements Comparable<Piece>, 
     @Override
     public Piece convertTo(PieceUnit unt) {
         if (PieceUnit.PC == unt && this.getUnitType() == PieceUnit.DOZ) {
-            return new Piece(this.getAmount().multiply(SHIFTER), PieceUnit.PC);
+            return new Piece(this.getMagnitude().multiply(SHIFTER), PieceUnit.PC);
         } else if (PieceUnit.DOZ == unt && this.getUnitType() == PieceUnit.PC) {
-            return new Piece(this.getAmount().divide(SHIFTER, 0, RoundingMode.DOWN), PieceUnit.DOZ);
+            return new Piece(this.getMagnitude().divide(SHIFTER, 0, RoundingMode.DOWN), PieceUnit.DOZ);
         }
         return this;
     }
@@ -154,12 +164,15 @@ public class Piece extends Unit<Piece, PieceUnit> implements Comparable<Piece>, 
      */
     @Override
     public int compareTo(Piece o) {
-        if (o.getUnitType().ordinal() > this.getUnitType().ordinal()) {
-            return compare(this.getAmount(), o.getAmount().multiply(SHIFTER));
-        } else if (o.getUnitType().ordinal() < this.getUnitType().ordinal()) {
-            return compare(this.getAmount().multiply(SHIFTER), o.getAmount());
+        if (null == o) {
+            return -1;
         }
-        return this.getAmount().compareTo(o.getAmount());
+        if (o.getUnitType().ordinal() > this.getUnitType().ordinal()) {
+            return compare(this.getMagnitude(), o.getMagnitude().multiply(SHIFTER));
+        } else if (o.getUnitType().ordinal() < this.getUnitType().ordinal()) {
+            return compare(this.getMagnitude().multiply(SHIFTER), o.getMagnitude());
+        }
+        return this.getMagnitude().compareTo(o.getMagnitude());
     }
 
     /**
@@ -169,19 +182,19 @@ public class Piece extends Unit<Piece, PieceUnit> implements Comparable<Piece>, 
      */
     @Override
     public String toString() {
-        return getAmount() + " " + getUnitType();
+        return getMagnitude() + " " + getUnitType();
     }
 
     /**
      * {@inheritDoc}
      * 
-     * Uses amount and unitType for calculation.
+     * Uses magnitude and unitType for calculation.
      */
     @Override
     public int hashCode() {
         final int prime = 31;
         int result = 1;
-        result = prime * result + ((amount == null) ? 0 : amount.hashCode());
+        result = prime * result + ((magnitude == null) ? 0 : magnitude.hashCode());
         result = prime * result + ((unitType == null) ? 0 : unitType.hashCode());
         return result;
     }
@@ -189,7 +202,7 @@ public class Piece extends Unit<Piece, PieceUnit> implements Comparable<Piece>, 
     /**
      * {@inheritDoc}
      * 
-     * Uses amount and unitType for comparison.
+     * Uses magnitude and unitType for comparison.
      */
     @Override
     public boolean equals(Object obj) {
@@ -203,8 +216,8 @@ public class Piece extends Unit<Piece, PieceUnit> implements Comparable<Piece>, 
             return false;
         }
         Piece other = (Piece) obj;
-        if (amount == null) {
-            if (other.amount != null) {
+        if (magnitude == null) {
+            if (other.magnitude != null) {
                 return false;
             }
         }

@@ -35,14 +35,15 @@ import org.openwms.common.domain.units.Piece;
 import org.openwms.common.domain.units.PieceUnit;
 import org.openwms.common.domain.units.Weight;
 import org.openwms.common.domain.units.WeightUnit;
-import org.openwms.core.domain.values.Unit;
+import org.openwms.core.domain.values.AbstractMeasure;
+import org.openwms.core.domain.values.Measurable;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
  * An UnitUserType is used by Hibernate as converter for custom
- * <code>Unit</code> types. Only subclasses of {@link Unit} are supported by
- * this type converter.
+ * <code>Unit</code> types. Only subclasses of {@link AbstractMeasure} are
+ * supported by this type converter.
  * 
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  * @version $Revision: $
@@ -80,10 +81,10 @@ public class UnitUserType implements CompositeUserType {
     public Object getPropertyValue(Object component, int property) {
         if (component instanceof Piece) {
             Piece piece = (Piece) component;
-            return property == 0 ? piece.getUnitType() : piece.getAmount();
+            return property == 0 ? piece.getUnitType() : piece.getMagnitude();
         } else if (component instanceof Weight) {
             Weight weight = (Weight) component;
-            return property == 0 ? weight.getUnitType() : weight.getAmount();
+            return property == 0 ? weight.getUnitType() : weight.getMagnitude();
         }
         throw new TypeMismatchException("Incompatible type:" + component.getClass());
     }
@@ -106,7 +107,7 @@ public class UnitUserType implements CompositeUserType {
      */
     @Override
     public Class returnedClass() {
-        return Unit.class;
+        return Measurable.class;
     }
 
     /**
@@ -186,20 +187,20 @@ public class UnitUserType implements CompositeUserType {
             if (value instanceof Piece) {
                 Piece piece = (Piece) value;
                 st.setString(index, piece.getUnitType().toString() + "@" + Piece.class.getCanonicalName());
-                st.setString(index + 1, piece.getAmount().toPlainString());
+                st.setString(index + 1, piece.getMagnitude().toPlainString());
                 if (LOGGER.isTraceEnabled()) {
                     LOGGER.trace("Binding '" + piece.getUnitType().toString() + "@" + Piece.class.getCanonicalName()
                             + "' to parameter: " + index);
-                    LOGGER.trace("Binding '" + piece.getAmount().toPlainString() + "' to parameter: " + (index + 1));
+                    LOGGER.trace("Binding '" + piece.getMagnitude().toPlainString() + "' to parameter: " + (index + 1));
                 }
             } else if (value instanceof Weight) {
                 Weight weight = (Weight) value;
                 st.setString(index, weight.getUnitType().toString() + "@" + Weight.class.getCanonicalName());
-                st.setString(index + 1, weight.getAmount().toPlainString());
+                st.setString(index + 1, weight.getMagnitude().toPlainString());
                 if (LOGGER.isTraceEnabled()) {
                     LOGGER.trace("Binding '" + weight.getUnitType().toString() + "@" + Weight.class.getCanonicalName()
                             + "' to parameter: " + index);
-                    LOGGER.trace("Binding '" + weight.getAmount().toPlainString() + "' to parameter: " + index + 1);
+                    LOGGER.trace("Binding '" + weight.getMagnitude().toPlainString() + "' to parameter: " + index + 1);
                 }
             } else {
                 throw new TypeMismatchException("Incompatible type: " + value.getClass().getCanonicalName());
