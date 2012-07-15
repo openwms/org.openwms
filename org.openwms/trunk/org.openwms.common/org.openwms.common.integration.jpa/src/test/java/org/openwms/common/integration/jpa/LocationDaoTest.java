@@ -81,7 +81,7 @@ public class LocationDaoTest extends AbstractJpaSpringContextTests {
     public final void testFindById() {
         locations = locationDao.findAll();
         assertNotNull("Cannot find Location by Id", locationDao.findById(locations.get(0).getId()));
-        logger.debug("OK:Location found by id query");
+        LOGGER.debug("OK:Location found by id query");
     }
 
     /**
@@ -92,11 +92,11 @@ public class LocationDaoTest extends AbstractJpaSpringContextTests {
     public final void testFindByUniqueId() {
         Location known = locationDao.findByUniqueId(new LocationPK("area", "aisle", "x", "y", "z"));
         assertNotNull("Location not found by id", known);
-        logger.debug("OK:Location found by unique id query");
+        LOGGER.debug("OK:Location found by unique id query");
 
         Location unknown = locationDao.findByUniqueId(new LocationPK("AREA", "AISLE", "X", "Y", "Z"));
         assertNull("Unknown Location found by key", unknown);
-        logger.debug("OK:Unknown Location not found by unique id query");
+        LOGGER.debug("OK:Unknown Location not found by unique id query");
     }
 
     /**
