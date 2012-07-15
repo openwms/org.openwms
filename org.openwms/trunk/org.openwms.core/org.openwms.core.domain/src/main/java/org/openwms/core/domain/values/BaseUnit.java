@@ -20,20 +20,38 @@
  */
 package org.openwms.core.domain.values;
 
+import java.util.List;
+
 /**
- * An UnitType is a super type of all concrete units.
+ * A BaseUnit is the type definition of an <code>Measurable</code>. Each
+ * BaseUnit defines a base <code>Measurable</code>. For example the BaseUnit of
+ * weights can define grams (G), kilograms (KG) or tons (T) and 1G is the base
+ * unit.
  * 
+ * @param <T>
+ *            Concrete type of BaseUnit
+ * @GlossaryTerm
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  * @version $Revision$
- * @since 0.1
+ * @since 0.2
  */
-public interface UnitType {
+public interface BaseUnit<T extends BaseUnit<T>> {
 
     /**
-     * Return the concrete type of <code>Measurable</code>.
+     * Return all sub types of the <code>UnitType</code>.
      * 
-     * @return The measurable
+     * @param <T>
+     *            Type definition of all concrete Units
+     * @return a list of sub types
      */
-    @SuppressWarnings("rawtypes")
-    <T extends Measurable> T getMeasurable();
+    List<T> getAll();
+
+    /**
+     * Return the base unit type of the <code>UnitType</code>.
+     * 
+     * @param <T>
+     *            Type definition of all concrete Units
+     * @return The base unit type
+     */
+    T getBaseUnit();
 }
