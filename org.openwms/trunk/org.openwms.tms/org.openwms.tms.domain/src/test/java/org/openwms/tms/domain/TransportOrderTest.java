@@ -62,7 +62,7 @@ public class TransportOrderTest extends AbstractJpaSpringContextTests {
             transportOrder.setState(TransportOrderState.INITIALIZED);
             fail("Exception expected while switching to next state without transportUnit");
         } catch (StateChangeException sce) {
-            logger.debug("OK:Exception while switching to next state without transportUnit");
+            LOGGER.debug("OK:Exception while switching to next state without transportUnit");
         }
 
         assertEquals("TransportOrder must remain in state CREATED:", TransportOrderState.CREATED,
@@ -73,14 +73,14 @@ public class TransportOrderTest extends AbstractJpaSpringContextTests {
             transportOrder.setState(TransportOrderState.INITIALIZED);
             fail("TransportOrder must not be switched in next mode without setting a target");
         } catch (StateChangeException sce) {
-            logger.debug("OK:Exception while switching to next state without target");
+            LOGGER.debug("OK:Exception while switching to next state without target");
         }
 
         Location targetLocation = new Location(new LocationPK("KNOWN", "KNOWN", "KNOWN", "KNOWN", "KNOWN"));
         transportOrder.setTargetLocation(targetLocation);
         try {
             transportOrder.setState(TransportOrderState.INITIALIZED);
-            logger.debug("transportUnit set and target set");
+            LOGGER.debug("transportUnit set and target set");
         } catch (Exception e) {
             fail("TransportOrder could be switched in next mode");
         }
@@ -91,7 +91,7 @@ public class TransportOrderTest extends AbstractJpaSpringContextTests {
         transportOrder2.setTargetLocationGroup(targetLocationGroup);
         try {
             transportOrder.setState(TransportOrderState.INITIALIZED);
-            logger.debug("transportUnit set and targetLocationGroup set");
+            LOGGER.debug("transportUnit set and targetLocationGroup set");
         } catch (Exception e) {
             fail("TransportOrder could be switched in next mode");
         }
