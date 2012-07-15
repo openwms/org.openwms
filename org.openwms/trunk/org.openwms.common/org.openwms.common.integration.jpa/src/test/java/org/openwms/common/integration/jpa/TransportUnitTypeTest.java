@@ -69,7 +69,7 @@ public class TransportUnitTypeTest extends AbstractJpaSpringContextTests {
             entityManager.flush();
             fail("Expecting exception when persisting existing entity with same identifier!");
         } catch (PersistenceException pe) {
-            logger.debug("OK:Exceptiuon must been thrown when persisting TUT with same identifier.");
+            LOGGER.debug("OK:Exceptiuon must been thrown when persisting TUT with same identifier.");
         }
     }
 
@@ -87,7 +87,7 @@ public class TransportUnitTypeTest extends AbstractJpaSpringContextTests {
                     .setParameter(1, "TUT1").getSingleResult();
             assertNull("TransportUnitType should be REMOVED before", transportUnitType);
         } catch (NoResultException nre) {
-            logger.debug("OK:No Entity found, it was removed.");
+            LOGGER.debug("OK:No Entity found, it was removed.");
         }
     }
 
@@ -113,7 +113,7 @@ public class TransportUnitTypeTest extends AbstractJpaSpringContextTests {
                     .setParameter(1, "TUT1").getSingleResult();
             assertNull("TransportUnitType is not allowed to be REMOVED before", transportUnitType);
         } catch (PersistenceException pe) {
-            logger.debug("OK:No Entity found, it was removed.");
+            LOGGER.debug("OK:No Entity found, it was removed.");
         }
     }
 }
