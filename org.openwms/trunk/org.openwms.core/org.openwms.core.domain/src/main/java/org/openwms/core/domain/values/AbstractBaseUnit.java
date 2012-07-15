@@ -21,19 +21,12 @@
 package org.openwms.core.domain.values;
 
 /**
- * An UnitType is a super type of all concrete units.
+ * A AbstractBaseUnit.
  * 
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
- * @version $Revision$
- * @since 0.1
+ * @version $Revision: $
+ * @since 0.2
  */
-public interface UnitType {
+public interface AbstractBaseUnit<T extends AbstractBaseUnit<T>> extends BaseUnit<T> {
 
-    /**
-     * Return the concrete type of <code>Measurable</code>.
-     * 
-     * @return The measurable
-     */
-    @SuppressWarnings("rawtypes")
-    <T extends Measurable> T getMeasurable();
 }
