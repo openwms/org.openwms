@@ -80,7 +80,7 @@ public class TransportServiceTest extends AbstractJpaSpringContextTests {
             transportService.create(new Barcode("KNOWN"), transportUnitType, locationPk);
             fail("Must throw a ServiceException while trying to create an already known TransportUnit");
         } catch (ServiceRuntimeException se) {
-            logger.debug("OK:ServiceException expected while trying to create an already known TransportUnit");
+            LOGGER.debug("OK:ServiceException expected while trying to create an already known TransportUnit");
         }
     }
 
@@ -96,7 +96,7 @@ public class TransportServiceTest extends AbstractJpaSpringContextTests {
                     "UNKNOWN", "UNKNOWN", "UNKNOWN"));
             fail("Must throw a ServiceException while trying to create a TransportUnit with an unknown actual Location");
         } catch (ServiceRuntimeException se) {
-            logger.debug("OK:ServiceException expected while trying to create a TransportUnit with an unknown actual Location");
+            LOGGER.debug("OK:ServiceException expected while trying to create a TransportUnit with an unknown actual Location");
         }
     }
 
@@ -118,7 +118,7 @@ public class TransportServiceTest extends AbstractJpaSpringContextTests {
             transportService.moveTransportUnit(new Barcode("TEST"), targetLocationPk);
             fail("Must throw a ServiceException while trying to create a TransportUnit with unknown Barcode");
         } catch (ServiceRuntimeException se) {
-            logger.debug("OK:ServiceException expected while trying to create a TransportUnit with unknown Barcode");
+            LOGGER.debug("OK:ServiceException expected while trying to create a TransportUnit with unknown Barcode");
         }
     }
 
