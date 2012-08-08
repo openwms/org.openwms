@@ -106,9 +106,11 @@ public class SecurityObject extends AbstractEntity implements DomainObject<Long>
      * 
      * @param name
      *            The name of the <code>SecurityObject</code>
+     * @throws IllegalArgumentException
+     *             when name is <code>null</code> or an empty String
      */
     public SecurityObject(String name) {
-        AssertUtils.notNull(name, "SecurityObject name must not be null");
+        AssertUtils.isNotEmpty(name, "A name of a SecurityObject must not be null");
         this.name = name;
     }
 
@@ -119,8 +121,11 @@ public class SecurityObject extends AbstractEntity implements DomainObject<Long>
      *            The name of the <code>SecurityObject</code>
      * @param description
      *            The description text of the <code>SecurityObject</code>
+     * @throws IllegalArgumentException
+     *             when name is <code>null</code> or an empty String
      */
     public SecurityObject(String name, String description) {
+        AssertUtils.isNotEmpty(name, "A name of a SecurityObject must not be null");
         this.name = name;
         this.description = description;
     }
