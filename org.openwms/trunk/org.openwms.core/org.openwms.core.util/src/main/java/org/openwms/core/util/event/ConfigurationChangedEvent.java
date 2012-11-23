@@ -34,8 +34,8 @@ public class ConfigurationChangedEvent extends RootApplicationEvent {
     /**
      * Create a new ConfigurationChangedEvent.
      * 
-     * @param The
-     *            <code>Preferences</code> object that has changed or a
+     * @param source
+     *            The <code>Preferences</code> object that has changed or a
      *            Collection of those or <code>null</code>
      */
     public ConfigurationChangedEvent(Object source) {
