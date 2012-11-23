@@ -53,7 +53,7 @@
         <class>org.openwms.common.domain.types.Target</class>
         
         <class>org.openwms.tms.domain.order.TransportOrder</class>
-
+<!--
         <class>org.openwms.wms.domain.LoadUnit</class>
         <class>org.openwms.wms.domain.PackagingUnit</class>
         <class>org.openwms.wms.domain.inventory.Product</class>
@@ -65,7 +65,7 @@
         <class>org.openwms.wms.domain.shipping.ShippingOrder</class>
         <class>org.openwms.wms.domain.shipping.ShippingOrderPosition</class>
         <class>org.openwms.wms.domain.shipping.ShippingOrderPositionSplit</class>
-        
+-->        
         <properties>
             <property name="hibernate.show_sql" value="true"/>
             <property name="hibernate.format_sql" value="true"/>
