@@ -29,7 +29,7 @@
 		http://www.springframework.org/schema/osgi-compendium http://www.springframework.org/schema/osgi-compendium/spring-osgi-compendium-1.2.xsd
         http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
 
-    <osgix:cm-properties id="global.properties" persistent-id="org.openwms.core.infrastructure.configuration-${openwms.configuration.version}" />
+    <osgix:cm-properties id="globals" persistent-id="org.openwms.core.infrastructure.configuration-${openwms.configuration.version}" />
 
     <!-- imports -->
     <osgi:reference id="wmsDataSource" interface="javax.sql.DataSource" />
