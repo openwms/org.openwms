@@ -21,7 +21,7 @@
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */  
 -->
-<plan name="org.openwms.app.plan" version="2.0.0" scoped="false" atomic="true"
+<plan name="org.openwms.app.plan" version="0.1.1.SNAPSHOT" scoped="false" atomic="true"
         xmlns="http://www.springsource.org/schema/dm-server/plan"
         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:schemaLocation="http://www.springsource.org/schema/dm-server/plan 
