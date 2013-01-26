@@ -157,6 +157,11 @@
             <type>properties</type>
             <scope>${dependency.scope}</scope>
         </dependency>
+        <dependency>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>org.openwms.core.infrastructure.configuration.provider</artifactId>
+            <scope>${dependency.scope}</scope>
+        </dependency>
 
         <!-- Test dependencies -->
         <dependency>
