@@ -29,7 +29,6 @@
         <artifactId>org.openwms</artifactId>
         <version>0.1.1-SNAPSHOT</version>
     </parent>
-    <groupId>org.openwms</groupId>
     <artifactId>org.openwms.core</artifactId>
     <version>0.1.1-SNAPSHOT</version>
     <packaging>pom</packaging>
@@ -65,6 +64,7 @@
                 <module>org.openwms.core.domain.as</module>
                 <module>org.openwms.core.test</module>
                 <module>org.openwms.core.infrastructure.configuration</module>
+                <module>org.openwms.core.infrastructure.configuration.provider</module>
                 <module>org.openwms.core.infrastructure.hsql</module>
                 <module>org.openwms.core.infrastructure.oracle</module>
                 <module>org.openwms.core.infrastructure.postgres</module>
@@ -86,6 +86,7 @@
                 <module>org.openwms.core.domain.as</module>
                 <module>org.openwms.core.test</module>
                 <module>org.openwms.core.infrastructure.configuration</module>
+                <module>org.openwms.core.infrastructure.configuration.provider</module>
                 <module>org.openwms.core.infrastructure.hsql</module>
                 <module>org.openwms.core.infrastructure.oracle</module>
                 <module>org.openwms.core.infrastructure.postgres</module>
@@ -129,6 +130,11 @@
 	            <version>${project.version}</version>
 	            <type>properties</type>
 	        </dependency>
+            <dependency>
+                <groupId>${project.groupId}</groupId>
+                <artifactId>org.openwms.core.infrastructure.configuration.provider</artifactId>
+                <version>${project.version}</version>
+            </dependency>
 	        <dependency>
 	            <groupId>${project.groupId}</groupId>
 	            <artifactId>org.openwms.core.infrastructure.hsql</artifactId>
