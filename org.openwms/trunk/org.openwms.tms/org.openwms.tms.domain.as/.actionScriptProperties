@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<actionScriptProperties analytics="false" mainApplicationPath="org/openwms/core/domain/AbstractEntity.as" projectUUID="f1bb0b60-76cd-4781-a68b-0d2ca03e9a3c" version="10">
+<actionScriptProperties analytics="false" mainApplicationPath="org/openwms/tms/domain/order/TransportOrder.as" projectUUID="f1bb0b60-76cd-4781-a68b-0d2c603e9a3c" version="10">
   <compiler additionalCompilerArguments="" autoRSLOrdering="true" copyDependentFiles="false" flex3CompatMode="true" fteInMXComponents="false" generateAccessible="false" htmlExpressInstall="true" htmlGenerate="false" htmlHistoryManagement="false" htmlPlayerVersionCheck="true" includeNetmonSwc="false" outputFolderPath="target/classes" removeUnusedRSL="true" sourceFolderPath="src/main/flex" strict="true" targetPlayerVersion="0.0.0" useApolloConfig="false" useDebugRSLSwfs="true" verifyDigests="true" warn="true">
     <compilerSourcePath>
       <compilerSourcePathEntry kind="1" linkType="1" path="target/generated-sources/flexmojos"/>
@@ -8,12 +8,14 @@
     </compilerSourcePath>
     <libraryPath defaultLinkType="1">
       <libraryPathEntry kind="4" path=""/>
-      <libraryPathEntry kind="1" linkType="1" path="libs"/>
+      <libraryPathEntry kind="3" linkType="2" path="/org.openwms.client.flex.lib/target/classes/org.openwms.client.flex.lib.swc" useDefaultLinkType="false"/>
+      <libraryPathEntry kind="3" linkType="2" path="/org.openwms.common.domain.as/target/classes/org.openwms.common.domain.as.swc" useDefaultLinkType="false"/>
+      <libraryPathEntry kind="3" linkType="2" path="/org.openwms.core.domain.as/target/classes/org.openwms.core.domain.as.swc" useDefaultLinkType="false"/>
     </libraryPath>
     <sourceAttachmentPath/>
   </compiler>
   <applications>
-    <application path="org/openwms/web/core/domain/AbstractEntity.as"/>
+    <application path="org/openwms/tms/domain/order/TransportOrder.as"/>
   </applications>
   <modules/>
   <buildCSSFiles/>

@@ -1,13 +1,16 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<actionScriptProperties mainApplicationPath="org/openwms/web/flex/client/view/App.mxml" version="3">
-  <compiler additionalCompilerArguments="-locale en_US" copyDependentFiles="true" enableModuleDebug="true" generateAccessible="false" htmlExpressInstall="true" htmlGenerate="true" htmlHistoryManagement="true" htmlPlayerVersion="9.0.124" htmlPlayerVersionCheck="true" outputFolderPath="target/classes" sourceFolderPath="src/main/flex" strict="true" useApolloConfig="false" verifyDigests="true" warn="true">
+<actionScriptProperties analytics="false" mainApplicationPath="org/openwms/web/flex/client/view/App.mxml" projectUUID="edfc92d0-24dd-46c5-b871-769c9d89e5ec" version="10">
+  <compiler additionalCompilerArguments="-locale en_US de_DE -source-path ./src/main/resources/assets/locale/{locale} -allow-source-path-overlap=true -include-libraries libs/granite-essentials-swc-2.3.2.GA.swc -keep-as3-metadata Bindable Managed ChangeEvent NonCommittingChangeEvent Transient Id Version Name In Inject Out Observer ManagedEvent PostConstruct Destroy Protected -services src/main/resources/flex/services-config.xml" autoRSLOrdering="false" copyDependentFiles="true" flex3CompatMode="true" fteInMXComponents="false" generateAccessible="false" htmlExpressInstall="true" htmlGenerate="true" htmlHistoryManagement="true" htmlPlayerVersionCheck="true" includeNetmonSwc="false" outputFolderPath="target/classes" removeUnusedRSL="true" sourceFolderPath="src/main/flex" strict="true" targetPlayerVersion="0.0.0" useApolloConfig="false" useDebugRSLSwfs="true" verifyDigests="true" warn="true">
     <compilerSourcePath>
-      <compilerSourcePathEntry kind="1" linkType="1" path="src/main/flex"/>
       <compilerSourcePathEntry kind="1" linkType="1" path="src/main/resources"/>
     </compilerSourcePath>
-    <libraryPath defaultLinkType="3">
+    <libraryPath defaultLinkType="0">
       <libraryPathEntry kind="4" path=""/>
       <libraryPathEntry kind="3" linkType="1" path="/org.openwms.client.flex.lib/target/classes/org.openwms.client.flex.lib.swc" useDefaultLinkType="false"/>
+      <libraryPathEntry kind="3" linkType="1" path="/org.openwms.common.domain.as/target/classes/org.openwms.common.domain.as.swc" useDefaultLinkType="false"/>
+      <libraryPathEntry kind="3" linkType="1" path="/org.openwms.common.flex.lib/target/classes/org.openwms.common.flex.lib.swc" useDefaultLinkType="false"/>
+      <libraryPathEntry kind="3" linkType="1" path="/org.openwms.core.domain.as/target/classes/org.openwms.core.domain.as.swc" useDefaultLinkType="false"/>
+      <libraryPathEntry kind="3" linkType="1" path="/org.openwms.tms.domain.as/target/classes/org.openwms.tms.domain.as.swc" useDefaultLinkType="false"/>
       <libraryPathEntry kind="1" linkType="1" path="libs"/>
     </libraryPath>
     <sourceAttachmentPath/>
@@ -17,4 +20,5 @@
   </applications>
   <modules/>
   <buildCSSFiles/>
+  <flashCatalyst validateFlashCatalystCompatibility="false"/>
 </actionScriptProperties>

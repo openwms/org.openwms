@@ -1,32 +1,13 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<flexLibProperties version="1">
-  <includeClasses>
-    <classEntry path="org.openwms.web.flex.client.HashMap"/>
-    <classEntry path="org.openwms.web.flex.client.IApplicationModule"/>
-    <classEntry path="org.openwms.web.flex.client.IObserver"/>
-    <classEntry path="org.openwms.web.flex.client.ISecured"/>
-    <classEntry path="org.openwms.web.flex.client.MenuItemMap"/>
-    <classEntry path="org.openwms.web.flex.client.command.AbstractCommand"/>
-    <classEntry path="org.openwms.web.flex.client.component.ListDialog"/>
-    <classEntry path="org.openwms.web.flex.client.component.SuggestComboBox"/>
-    <classEntry path="org.openwms.web.flex.client.component.SuperPanel"/>
-    <classEntry path="org.openwms.web.flex.client.component.XPanel"/>
-    <classEntry path="org.openwms.web.flex.client.event.ApplicationEvent"/>
-    <classEntry path="org.openwms.web.flex.client.event.EventBroker"/>
-    <classEntry path="org.openwms.web.flex.client.event.PropertyEvent"/>
-    <classEntry path="org.openwms.web.flex.client.event.RoleEvent"/>
-    <classEntry path="org.openwms.web.flex.client.event.SwitchScreenEvent"/>
-    <classEntry path="org.openwms.web.flex.client.event.UserEvent"/>
-    <classEntry path="org.openwms.web.flex.client.model.Constants"/>
-    <classEntry path="org.openwms.web.flex.client.model.ModelLocator"/>
-    <classEntry path="org.openwms.web.flex.client.module.CommonModule"/>
-    <classEntry path="org.openwms.web.flex.client.module.IPropertyProvider"/>
-    <classEntry path="org.openwms.web.flex.client.module.ModuleLocator"/>
-    <classEntry path="org.openwms.web.flex.client.property.PropertyHolder"/>
-    <classEntry path="org.openwms.web.flex.client.util.BindingProperty"/>
-    <classEntry path="org.openwms.web.flex.client.util.DisplayUtility"/>
-    <classEntry path="org.openwms.web.flex.client.util.ValidationUtil"/>
-  </includeClasses>
-  <includeResources/>
+<flexLibProperties includeAllClasses="true" useMultiPlatformConfig="false" version="1">
+  <includeClasses/>
+  <includeResources>
+    <resourceEntry destPath="assets/locale/de_DE/commonError.properties" sourcePath="assets/locale/de_DE/commonError.properties"/>
+    <resourceEntry destPath="assets/locale/en_US/commonError.properties" sourcePath="assets/locale/en_US/commonError.properties"/>
+    <resourceEntry destPath="assets/locale/de_DE/commonEntity.properties" sourcePath="assets/locale/de_DE/commonEntity.properties"/>
+    <resourceEntry destPath="assets/locale/de_DE/commonMain.properties" sourcePath="assets/locale/de_DE/commonMain.properties"/>
+    <resourceEntry destPath="assets/locale/en_US/commonEntity.properties" sourcePath="assets/locale/en_US/commonEntity.properties"/>
+    <resourceEntry destPath="assets/locale/en_US/commonMain.properties" sourcePath="assets/locale/en_US/commonMain.properties"/>
+  </includeResources>
   <namespaceManifests/>
 </flexLibProperties>
