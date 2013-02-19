@@ -70,7 +70,7 @@ package org.openwms.web.flex.client.model {
         /**
          * Upload URL for file uploads.
          */
-        public const UPLOAD_URL : String = "/openwms/upload";
+        public const UPLOAD_URL : String = "/upload";
         /**
          * Directory name on the server, where to store the uploaded files.
          */
