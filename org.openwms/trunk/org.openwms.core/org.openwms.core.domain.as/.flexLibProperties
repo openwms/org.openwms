@@ -11,7 +11,6 @@
     <classEntry path="org.openwms.core.domain.search.Actions"/>
     <classEntry path="org.openwms.core.domain.search.Menuitem"/>
     <classEntry path="org.openwms.core.domain.search.NounTag"/>
-    <classEntry path="org.openwms.core.domain.search.Separator"/>
     <classEntry path="org.openwms.core.domain.search.Tag"/>
     <classEntry path="org.openwms.core.domain.search.Tags"/>
     <classEntry path="org.openwms.core.domain.search.VerbTag"/>

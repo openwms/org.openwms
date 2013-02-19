@@ -19,6 +19,7 @@
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
 package org.openwms.core.domain.system.usermanagement {
+    import mx.utils.UIDUtil;
 
     [Bindable]
     [RemoteClass(alias="org.openwms.core.domain.system.usermanagement.Grant")]
@@ -37,6 +38,7 @@ package org.openwms.core.domain.system.usermanagement {
          * @param description Description of the Grant
          */
         public function Grant(name : String=null, description : String=null) {
+            super.uid = UIDUtil.createUID();
             if (name != null) {
                 this._name = name;
             }
