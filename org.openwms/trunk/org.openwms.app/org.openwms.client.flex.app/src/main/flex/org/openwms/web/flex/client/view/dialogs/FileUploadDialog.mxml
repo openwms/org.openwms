@@ -32,16 +32,19 @@
 
 	<mx:Script>
     	<![CDATA[
-    		import flash.events.Event;
+            import flash.events.Event;
             import flash.events.KeyboardEvent;
             import flash.events.ProgressEvent;
-    	    import flash.net.FileReference;
-    	    import flash.net.URLRequest;
+            import flash.net.FileReference;
+            import flash.net.URLRequest;
+            
             import mx.controls.Alert;
-    	    import mx.managers.PopUpManager;
-
-            import org.openwms.web.flex.client.model.ModelLocator;
+            import mx.core.Application;
+            import mx.managers.PopUpManager;
+            import mx.utils.URLUtil;
+            
             import org.openwms.web.flex.client.IObservable;
+            import org.openwms.web.flex.client.model.ModelLocator;
             import org.openwms.web.flex.client.util.I18nUtil;
     		
             [Inject]
@@ -141,7 +144,8 @@
     		}
     		
     		private function uploadFile(endpoint : String) : void {
-    			var request : URLRequest = new URLRequest(modelLocator.UPLOAD_URL);
+                var url : String = appContextUrl();
+    			var request : URLRequest = new URLRequest(url);
     			var params : URLVariables = new URLVariables();
     			request.contentType = "multipart/form-data";
        	 		params.directoryName = modelLocator.DIRECTORY_NAME;
@@ -151,6 +155,26 @@
     			progressBar.label = I18nUtil.trans(I18nUtil.APP_MAIN, "lbl_file_upload_progresssing");
     		}
     		
+            public static const DYNAMIC_MARKER:String = '[[DYNAMIC]]';
+            
+            public function appContextUrl(includeFolder:Boolean = true):String {
+                var url:String = Application.application.url;
+                var protocol:String = URLUtil.getProtocol(url);
+                var domain:String = URLUtil.getServerNameWithPort(url); 
+                if (protocol == 'file')
+                    return 'http://localhost:8280/org.openwms.client.flex.wrapper'+modelLocator.UPLOAD_URL;
+                var folder:String = url.replace(protocol + '://' + domain, '');   
+                folder = folder.slice(0, folder.lastIndexOf('/'));
+                // Cut DYNAMIC_MARKER if App built using RSL's 
+                if (folder.indexOf(DYNAMIC_MARKER) >= 0) {
+                    folder = folder.slice(0, folder.lastIndexOf(DYNAMIC_MARKER) - 1);
+                    // cut swf module name
+                    folder = folder.slice(0, folder.lastIndexOf('/'));
+                }
+                if (!includeFolder)
+                    folder = '';
+                return protocol + '://' + domain + folder + '/';   
+            }
     	]]>
 	</mx:Script>
 	<mx:Canvas>
