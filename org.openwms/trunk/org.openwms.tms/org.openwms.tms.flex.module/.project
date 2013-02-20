@@ -4,15 +4,22 @@
 	<comment></comment>
 	<projects>
 	</projects>
-    <buildSpec>
-        <buildCommand>
-            <name>com.adobe.flexbuilder.project.flexbuilder</name>
-            <arguments>
-            </arguments>
-        </buildCommand>
-    </buildSpec>
-    <natures>
-        <nature>com.adobe.flexbuilder.project.flexlibnature</nature>
-        <nature>com.adobe.flexbuilder.project.actionscriptnature</nature>
-    </natures>
+	<buildSpec>
+		<buildCommand>
+			<name>com.adobe.flexbuilder.project.flexbuilder</name>
+			<arguments>
+			</arguments>
+		</buildCommand>
+	</buildSpec>
+	<natures>
+		<nature>com.adobe.flexbuilder.project.flexnature</nature>
+		<nature>com.adobe.flexbuilder.project.actionscriptnature</nature>
+	</natures>
+	<linkedResources>
+		<link>
+			<name>bin-debug</name>
+			<type>2</type>
+			<location>/data/tomcat/apache-tomcat-7.0.22/webapps/org.openwms.client.flex.wrapper</location>
+		</link>
+	</linkedResources>
 </projectDescription>
