@@ -1,2 +1,2 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<flexProperties enableServiceManager="false" flexServerFeatures="0" flexServerType="0" toolCompile="true" useServerFlexSDK="false" version="1"/>
+<flexProperties enableServiceManager="false" flexServerFeatures="4" flexServerType="2" serverContextRoot="/org.openwms.client.flex.wrapper" serverRoot="/data/tomcat/apache-tomcat-7.0.22/webapps/org.openwms.client.flex.wrapper" serverRootURL="http://localhost:8280/org.openwms.client.flex.wrapper" toolCompile="true" useServerFlexSDK="false" version="1"/>
