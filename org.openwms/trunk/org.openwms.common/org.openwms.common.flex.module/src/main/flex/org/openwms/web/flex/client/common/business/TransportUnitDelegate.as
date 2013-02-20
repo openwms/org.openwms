@@ -62,7 +62,7 @@ package org.openwms.web.flex.client.common.business {
 
         [Observer("LOAD_TRANSPORT_UNITS")]
         public function getTransportUnits(event : TransportUnitEvent) : void {
-            tideContext.transportUnitService.getAllTransportUnits(onTransportUnitsLoaded, onFault);
+            tideContext.transportUnitService.findAll(onTransportUnitsLoaded, onFault);
         }
         private function onTransportUnitsLoaded(event:TideResultEvent):void {
             commonModelLocator.allTransportUnits = event.result as ArrayCollection;
@@ -71,7 +71,7 @@ package org.openwms.web.flex.client.common.business {
         [Observer("CREATE_TRANSPORT_UNIT")]
         public function createTransportUnit(event : TransportUnitEvent) : void {
             var transportUnit:TransportUnit = event.data as TransportUnit;
-            tideContext.transportUnitService.createTransportUnit(transportUnit.barcode, transportUnit.transportUnitType, transportUnit.actualLocation.locationId, onTransportUnitCreated, onFault);
+            tideContext.transportUnitService.create(transportUnit.barcode, transportUnit.transportUnitType, transportUnit.actualLocation.locationId, onTransportUnitCreated, onFault);
         }
         private function onTransportUnitCreated(event : TideResultEvent) : void {
             dispatchEvent(new TransportUnitEvent(TransportUnitEvent.LOAD_TRANSPORT_UNITS));
