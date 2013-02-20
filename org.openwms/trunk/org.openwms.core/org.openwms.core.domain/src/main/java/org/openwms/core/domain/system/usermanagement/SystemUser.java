@@ -45,7 +45,7 @@ public class SystemUser extends User {
     /**
      * The defined fullname of the system user. Default {@value} .
      */
-    public static final String SYSTEM_USERNAME = "OPENWMS";
+    public static final String SYSTEM_USERNAME = "openwms";
     /**
      * The virtual <code>Role</code> of the SystemUser.
      */
