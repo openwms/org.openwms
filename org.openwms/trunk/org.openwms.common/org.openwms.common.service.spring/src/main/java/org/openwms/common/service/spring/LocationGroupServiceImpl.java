@@ -44,11 +44,14 @@ import org.springframework.transaction.annotation.Transactional;
  * @since 0.1
  * @see org.openwms.core.service.spring.EntityServiceImpl
  */
-@Service
 @Transactional
+@Service(LocationGroupServiceImpl.COMPONENT_NAME)
 public class LocationGroupServiceImpl implements LocationGroupService<LocationGroup> {
 
     private Logger logger = LoggerFactory.getLogger(this.getClass());
+
+    /** Springs component name. */
+    public static final String COMPONENT_NAME = "locationGroupService";
 
     @Autowired
     @Qualifier("locationGroupDao")

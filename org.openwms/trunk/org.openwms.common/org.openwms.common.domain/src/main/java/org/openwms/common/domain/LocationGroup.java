@@ -28,6 +28,8 @@ import java.util.Set;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
@@ -99,26 +101,30 @@ public class LocationGroup extends Target {
      * State of infeed.
      */
     @Column(name = "GROUP_STATE_IN")
+    @Enumerated(EnumType.STRING)
     private LocationGroupState groupStateIn = LocationGroupState.AVAILABLE;
 
     /**
      * References the <code>LocationGroup</code> that locked this
      * <code>LocationGroup</code> for infeed.
      */
-    @Column(name = "IN_LOCKER")
+    @ManyToOne
+    @JoinColumn(name = "IN_LOCKER")
     private LocationGroup stateInLocker;
 
     /**
      * State of outfeed.
      */
     @Column(name = "GROUP_STATE_OUT")
+    @Enumerated(EnumType.STRING)
     private LocationGroupState groupStateOut = LocationGroupState.AVAILABLE;
 
     /**
      * References the <code>LocationGroup</code> that locked this
      * <code>LocationGroup</code> for outfeed.
      */
-    @Column(name = "OUT_LOCKER")
+    @ManyToOne
+    @JoinColumn(name = "OUT_LOCKER")
     private LocationGroup stateOutLocker;
 
     /**

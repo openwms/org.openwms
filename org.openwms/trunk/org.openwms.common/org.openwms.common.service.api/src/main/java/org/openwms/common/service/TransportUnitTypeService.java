@@ -58,7 +58,7 @@ public interface TransportUnitTypeService {
      * @param transportUnitTypes
      *            A collection of instances to be deleted.
      */
-    void delete(TransportUnitType... transportUnitTypes);
+    void deleteType(TransportUnitType... transportUnitTypes);
 
     /**
      * Save an already existing instance of {@link TransportUnitType}.
