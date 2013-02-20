@@ -68,6 +68,7 @@
         <dependency>
             <groupId>org.eclipse.persistence</groupId>
             <artifactId>org.eclipse.persistence-library</artifactId>
+            <version>1.0.0</version>
             <type>libd</type>
             <scope>${dependency.scope}</scope>
         </dependency>
