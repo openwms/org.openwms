@@ -23,16 +23,24 @@
 -->
 <web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://java.sun.com/xml/ns/javaee"
 	xmlns:web="http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
-	id="WebApp_ID" version="2.5">
+	id="OpenWMSORG" version="2.5">
 	<display-name>OpenWMS.org</display-name>
-	<context-param>
+	<!--context-param>
 		<param-name>contextClass</param-name>
 		<param-value>com.springsource.server.web.dm.ServerOsgiBundleXmlWebApplicationContext</param-value>
-	</context-param>
+	</context-param-->
+    <context-param>
+        <param-name>contextClass</param-name>
+        <param-value>org.springframework.web.context.support.XmlWebApplicationContext</param-value>
+    </context-param>
 	<context-param>
 		<param-name>contextConfigLocation</param-name>
 		<param-value>/WEB-INF/spring/*-context.xml</param-value>
 	</context-param>
+    <context-param>
+      <param-name>spring.profiles.active</param-name>
+      <param-value>noOSGI</param-value>
+    </context-param>
     
     <!-- Granite config context listener -->
 	<listener>
