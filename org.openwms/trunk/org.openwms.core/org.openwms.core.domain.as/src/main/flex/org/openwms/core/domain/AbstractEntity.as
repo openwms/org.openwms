@@ -19,6 +19,7 @@
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
 package org.openwms.core.domain {
+    import org.granite.tide.IEntity;
 
     [Bindable]
     [RemoteClass(alias="org.openwms.core.domain.AbstractEntity")]
@@ -28,5 +29,6 @@ package org.openwms.core.domain {
 	 * @version $Revision$
 	 * @since 0.1
 	 */
-    public class AbstractEntity extends AbstractEntityBase { }
+    public class AbstractEntity extends AbstractEntityBase implements IEntity {
+    }
 }

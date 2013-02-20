@@ -21,6 +21,7 @@
 package org.openwms.core.domain.system.usermanagement {
 
     import mx.collections.ArrayCollection;
+    import mx.utils.UIDUtil;
 
     [Bindable]
     [RemoteClass(alias="org.openwms.core.domain.system.usermanagement.User")]
@@ -39,6 +40,7 @@ package org.openwms.core.domain.system.usermanagement {
          * @param username Optional username to set
          */
         public function User(username : String=null) {
+            super.uid = UIDUtil.createUID();
             if (null != username) {
                 this._username = username;
             }
