@@ -31,9 +31,8 @@
 			http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd
             http://www.springframework.org/schema/task http://www.springframework.org/schema/task/spring-task.xsd">
 
-    <context:property-placeholder properties-ref="globals" />
-    <context:annotation-config />
-    <context:component-scan base-package="org.openwms.core.service.spring" />
+    <!--context:annotation-config /-->
+    <!--context:component-scan base-package="org.openwms.core.service.spring" /-->
     <!-- context:load-time-weaver aspectj-weaving="on" /-->
 
     <tx:annotation-driven order="10" />
