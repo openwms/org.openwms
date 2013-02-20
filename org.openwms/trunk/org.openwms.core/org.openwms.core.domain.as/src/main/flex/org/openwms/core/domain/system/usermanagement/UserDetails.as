@@ -19,6 +19,7 @@
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
 package org.openwms.core.domain.system.usermanagement {
+    import mx.utils.UIDUtil;
 
     [Bindable]
     [RemoteClass(alias="org.openwms.core.domain.system.usermanagement.UserDetails")]
@@ -29,5 +30,13 @@ package org.openwms.core.domain.system.usermanagement {
 	 * @since 0.1
 	 * @see org.openwms.core.domain.system.usermanagement.User
 	 */
-    public class UserDetails extends UserDetailsBase { }
+    public class UserDetails extends UserDetailsBase { 
+    
+        /**
+         * Constructor.
+         * Preset fields.
+         */
+        public function UserDetails() {
+        }
+    }
 }

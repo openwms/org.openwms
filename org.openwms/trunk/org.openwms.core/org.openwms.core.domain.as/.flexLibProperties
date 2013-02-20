@@ -9,7 +9,6 @@
     <classEntry path="org.openwms.core.domain.preferences.Preferences"/>
     <classEntry path="org.openwms.core.domain.search.Action"/>
     <classEntry path="org.openwms.core.domain.search.Actions"/>
-    <classEntry path="org.openwms.core.domain.search.Menuitem"/>
     <classEntry path="org.openwms.core.domain.search.NounTag"/>
     <classEntry path="org.openwms.core.domain.search.Tag"/>
     <classEntry path="org.openwms.core.domain.search.Tags"/>
@@ -47,9 +46,7 @@
     <classEntry path="org.openwms.core.domain.preferences.PreferencesBase"/>
     <classEntry path="org.openwms.core.domain.search.ActionBase"/>
     <classEntry path="org.openwms.core.domain.search.ActionsBase"/>
-    <classEntry path="org.openwms.core.domain.search.MenuitemBase"/>
     <classEntry path="org.openwms.core.domain.search.NounTagBase"/>
-    <classEntry path="org.openwms.core.domain.search.SeparatorBase"/>
     <classEntry path="org.openwms.core.domain.search.TagBase"/>
     <classEntry path="org.openwms.core.domain.search.TagsBase"/>
     <classEntry path="org.openwms.core.domain.search.VerbTagBase"/>
