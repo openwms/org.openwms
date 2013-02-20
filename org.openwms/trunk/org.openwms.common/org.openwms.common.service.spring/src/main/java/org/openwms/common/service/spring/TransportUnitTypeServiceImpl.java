@@ -44,10 +44,14 @@ import org.springframework.transaction.annotation.Transactional;
  * @since 0.2
  */
 @Transactional
-@Service
+@Service(TransportUnitTypeServiceImpl.COMPONENT_NAME)
 public class TransportUnitTypeServiceImpl implements TransportUnitTypeService {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(TransportUnitTypeServiceImpl.class);
+
+    /** Springs component name. */
+    public static final String COMPONENT_NAME = "transportUnitTypeService";
+
     @Autowired
     @Qualifier("transportUnitTypeDao")
     private GenericDao<TransportUnitType, Long> transportUnitTypeDao;
@@ -74,7 +78,7 @@ public class TransportUnitTypeServiceImpl implements TransportUnitTypeService {
      * {@inheritDoc}
      */
     @Override
-    public void delete(TransportUnitType... transportUnitTypes) {
+    public void deleteType(TransportUnitType... transportUnitTypes) {
         for (TransportUnitType transportUnitType : transportUnitTypes) {
             TransportUnitType tut = transportUnitTypeDao.findByUniqueId(transportUnitType.getType());
             transportUnitTypeDao.remove(tut);

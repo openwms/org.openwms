@@ -44,8 +44,11 @@ import org.springframework.transaction.annotation.Transactional;
  * @see org.openwms.core.service.spring.EntityServiceImpl
  */
 @Transactional
-@Service
+@Service(LocationServiceImpl.COMPONENT_NAME)
 public class LocationServiceImpl implements LocationService<Location> {
+
+    /** Springs component name. */
+    public static final String COMPONENT_NAME = "locationService";
 
     @Autowired
     @Qualifier("locationDao")
