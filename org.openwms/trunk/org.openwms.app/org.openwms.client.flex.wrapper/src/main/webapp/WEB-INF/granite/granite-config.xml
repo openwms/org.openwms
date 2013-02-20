@@ -23,18 +23,19 @@
 -->
 <!DOCTYPE granite-config PUBLIC
     "-//Granite Data Services//DTD granite-config internal//EN"
-    "http://www.graniteds.org/public/dtd/2.2.0/granite-config.dtd">
+    "http://www.graniteds.org/public/dtd/2.3.0/granite-config.dtd">
 
 <granite-config scan="false">
-<!--  
-    <class-getter type="org.granite.eclipselink.EclipseLinkClassGetter"/>
--->
-<!--  
--->
-	<class-getter type="org.granite.hibernate.HibernateClassGetter" />
+
+    <!--class-getter type="org.granite.eclipselink.EclipseLinkClassGetter"/-->
+	<class-getter type="org.granite.hibernate4.HibernateClassGetter" />
+    <!--class-getter type="org.granite.hibernate.HibernateClassGetter" /-->
 
 	<externalizers>
-		<externalizer type="org.granite.hibernate.HibernateExternalizer">
+     <!--configuration>
+       <hibernate-collection-metadata>yes</hibernate-collection-metadata>
+     </configuration-->
+		<externalizer type="org.granite.hibernate4.HibernateExternalizer">
 			<include annotated-with="javax.persistence.Entity" />
 			<include annotated-with="javax.persistence.MappedSuperclass" />
 			<include annotated-with="javax.persistence.Embeddable" />
@@ -44,6 +45,15 @@
             <include type="org.openwms.tms.domain.values.PriorityLevel"/>
             <include type="java.lang.Enum"/>
         </externalizer>
+        <!--externalizer type="org.granite.messaging.amf.io.util.externalizer.LongExternalizer">
+            <include instance-of="java.lang.Long"/>
+        </externalizer>
+        <externalizer type="org.granite.messaging.amf.io.util.externalizer.BigIntegerExternalizer">
+            <include instance-of="java.math.BigInteger"/>
+        </externalizer>
+        <externalizer type="org.granite.messaging.amf.io.util.externalizer.BigDecimalExternalizer">
+            <include instance-of="java.math.BigDecimal"/>
+        </externalizer-->
    	</externalizers>
 
     <exception-converters>

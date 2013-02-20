@@ -126,17 +126,19 @@ public class CustomSecurityService extends AbstractSecurityService {
     /**
      * {@inheritDoc}
      * 
-     * @see org.granite.messaging.service.security.SecurityService#login(java.lang.Object)
+     * @see org.granite.messaging.service.security.SecurityService#login(java.lang.Object,
+     *      java.lang.String)
      */
     @Override
-    public void login(Object credentials) {
-        List<String> decodedCredentials = Arrays.asList(decodeBase64Credentials(credentials));
+    public void login(Object credentials, String charset) {
+        List<String> decodedCredentials = Arrays.asList(decodeBase64Credentials(credentials, charset));
 
         HttpGraniteContext graniteContext = (HttpGraniteContext) GraniteContext.getCurrentInstance();
         HttpServletRequest httpRequest = graniteContext.getRequest();
 
         String user = decodedCredentials.get(0);
         String password = decodedCredentials.get(1);
+
         Authentication auth = new UsernamePasswordAuthenticationToken(user, password);
 
         ApplicationContext ctx = WebApplicationContextUtils.getWebApplicationContext(httpRequest.getSession()
@@ -159,6 +161,7 @@ public class CustomSecurityService extends AbstractSecurityService {
                 } catch (Exception e) {
                     logger.error("Could not save context after authentication", e);
                 }
+                endLogin(credentials, charset);
             } catch (DisabledException de) {
                 logger.error("DisabledException");
                 throw SecurityServiceException.newAccessDeniedException(de.getMessage());
