@@ -404,7 +404,7 @@
                             <linksource>true</linksource>
                             <overview>${basedir}/overview.html</overview>
                             <source>${project.build.sourceCompilerLevel}</source>
-                            <stylesheetfile>${basedir}/src/site/css/openwms-jdoc.css</stylesheetfile>
+                            <stylesheetfile>${moduleDir}/src/site/css/openwms-jdoc.css</stylesheetfile>
                             <verbose>true</verbose>
                         </configuration>
                     </plugin>
@@ -644,7 +644,7 @@
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-compiler-plugin</artifactId>
                     <configuration>
-                        <debug>false</debug>
+                        <debug>true</debug>
                         <optimize>true</optimize>
                         <fork>true</fork>
                         <source>${maven.compile.sourceLevel}</source>
