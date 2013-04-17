@@ -299,8 +299,9 @@
         <profile>
             <id>rclient</id>
             <modules>
-                <module>org.openwms.core/org.openwms.client.flex.lib</module>
-                <module>org.openwms.app/org.openwms.client.flex.app</module>
+                <module>org.openwms.core/org.openwms.core.infrastructure.postgres</module>
+                <module>org.openwms.core/org.openwms.core.infrastructure.configuration.provider</module>
+                <module>org.openwms.core/org.openwms.core.integration.hibernate</module>
                 <module>org.openwms.app/org.openwms.client.flex.wrapper</module>
             </modules>
         </profile>

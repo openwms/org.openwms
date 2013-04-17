@@ -44,6 +44,8 @@
 
     <channels>
         <channel-definition id="my-graniteamf" class="mx.messaging.channels.AMFChannel">
+            <!--endpoint uri="http://openwms.openwms.cloudbees.net/graniteamf/amf" class="flex.messaging.endpoints.AMFEndpoint" /-->
+            <!--endpoint uri="http://{server.name}:{server.port}/{context.root}/graniteamf/amf" class="flex.messaging.endpoints.AMFEndpoint" /-->
             <endpoint uri="http://{server.name}:{server.port}/{context.root}/graniteamf/amf" class="flex.messaging.endpoints.AMFEndpoint" />
         </channel-definition>
     </channels>
