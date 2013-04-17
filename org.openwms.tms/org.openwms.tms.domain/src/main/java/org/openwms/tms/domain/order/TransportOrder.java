@@ -144,7 +144,7 @@ public class TransportOrder extends AbstractEntity implements DomainObject<Long>
      */
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "CREATION_DATE")
-    private Date creationDate = new Date();
+    private final Date creationDate = new Date();
 
     /**
      * Date when the <code>TransportOrder</code> ended.
@@ -466,5 +466,62 @@ public class TransportOrder extends AbstractEntity implements DomainObject<Long>
     @Override
     public long getVersion() {
         return this.version;
+    }
+
+    public static enum State {
+        /**
+         * Status of new created <code>TransportOrder</code>s.
+         */
+        CREATED(10),
+
+        /**
+         * Status of a full initialized <code>TransportOrder</code>, ready to be
+         * started.
+         */
+        INITIALIZED(20),
+
+        /**
+         * A started and active<code>TransportOrder</code>, ready to be
+         * executed.
+         */
+        STARTED(30),
+
+        /**
+         * Status to indicate that the <code>TransportOrder</code> is paused.
+         * Not active anymore.
+         */
+        INTERRUPTED(40),
+
+        /**
+         * Status to indicate a failure on the <code>TransportOrder</code>. Not
+         * active anymore.
+         */
+        ONFAILURE(50),
+
+        /**
+         * Status of a aborted <code>TransportOrder</code>. Not active anymore.
+         */
+        CANCELED(60),
+
+        /**
+         * Status to indicate that the <code>TransportOrder</code> completed
+         * successfully.
+         */
+        FINISHED(70);
+
+        private final int order;
+
+        private State(int sortOrder) {
+            this.order = sortOrder;
+        }
+
+        /**
+         * Get the order.
+         * 
+         * @return the order.
+         */
+        public int getOrder() {
+            return order;
+        }
     }
 }

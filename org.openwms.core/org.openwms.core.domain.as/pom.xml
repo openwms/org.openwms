@@ -60,6 +60,7 @@
 				<!-- version>4.2-beta</version-->
 				<executions>
 					<execution>
+                        <phase>generate-sources</phase>
 						<goals>
 							<goal>generate</goal>
 						</goals>
