@@ -41,7 +41,15 @@
         <property name="persistenceUnitName" value="${jdbc.persistenceUnit}" />
         <property name="dataSource" ref="wmsDataSource" />
         <property name="jpaVendorAdapter" ref="jpaVendorAdapter" />
-        <property name="jpaProperties" value="${jdbc.properties}" />
+        <property name="jpaProperties">
+            <props>
+                <prop key="hibernate.connection.compatible">7.1</prop>
+                <prop key="hibernate.hbm2ddl.auto">update</prop>
+                <prop key="hibernate.cache.use_query_cache">false</prop>
+                <prop key="hibernate.format_sql">true</prop>
+                <prop key="hibernate.show_sql">true</prop>
+            </props>            
+        </property>
     </bean>
 
     <!-- Transaction Manager -->
@@ -53,7 +61,6 @@
         <property name="databasePlatform" value="${jdbc.dialect}" />
         <property name="database" value="${jdbc.database}" />
         <property name="showSql" value="true" />
-        <property name="generateDdl" value="true" />
     </bean>
 
 </beans>

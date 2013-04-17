@@ -38,7 +38,7 @@
     </properties>
     <build>
         <sourceDirectory>${project.basedir}/src/main/java</sourceDirectory>
-        <finalName>${project.artifactId}</finalName>
+        <finalName>openwms</finalName>
         <plugins>
             <plugin>
                 <groupId>com.springsource.bundlor</groupId>
@@ -175,10 +175,34 @@
                 </dependency>
                 <dependency>
                     <groupId>${project.groupId}</groupId>
+                    <artifactId>org.openwms.common.service.api</artifactId>
+                    <version>${common.version}</version>
+                    <scope>${dependency.scope}</scope>
+                </dependency>
+                <dependency>
+                    <groupId>${project.groupId}</groupId>
                     <artifactId>org.openwms.common.service.spring</artifactId>
                     <version>${common.version}</version>
                 </dependency>
-                <!-- Project TMS dependencies -->
+                <dependency>
+                    <groupId>${project.groupId}</groupId>
+                    <artifactId>org.openwms.common.flex.module</artifactId>
+                    <version>${common.version}</version>
+                    <type>swf</type>
+                </dependency>
+                <!-- TMS Project dependencies -->
+                <dependency>
+                    <groupId>${project.groupId}</groupId>
+                    <artifactId>org.openwms.tms.flex.module</artifactId>
+                    <version>${tms.version}</version>
+                    <type>swf</type>
+                </dependency>
+                <dependency>
+                    <groupId>${project.groupId}</groupId>
+                    <artifactId>org.openwms.tms.domain</artifactId>
+                    <version>${tms.version}</version>
+                    <scope>${dependency.scope}</scope>
+                </dependency>
                 <dependency>
                     <groupId>${project.groupId}</groupId>
                     <artifactId>org.openwms.tms.util</artifactId>
@@ -193,6 +217,12 @@
                     <groupId>${project.groupId}</groupId>
                     <artifactId>org.openwms.tms.integration.jpa</artifactId>
                     <version>${tms.version}</version>
+                </dependency>
+                <dependency>
+                    <groupId>${project.groupId}</groupId>
+                    <artifactId>org.openwms.tms.service.api</artifactId>
+                    <version>${tms.version}</version>
+                    <scope>${dependency.scope}</scope>
                 </dependency>
                 <dependency>
                     <groupId>${project.groupId}</groupId>
@@ -216,38 +246,23 @@
                     <groupId>net.sourceforge.ehcache</groupId>
                     <artifactId>com.springsource.net.sf.ehcache</artifactId>
                 </dependency>
-                <!-- COMMON Project dependencies -->
                 <dependency>
-                    <groupId>${project.groupId}</groupId>
-                    <artifactId>org.openwms.common.flex.module</artifactId>
-                    <version>${common.version}</version>
-                    <type>swf</type>
+                    <groupId>org.springframework.osgi</groupId>
+                    <artifactId>org.springframework.osgi.core</artifactId>
+                </dependency>
+                <!-- OSGi libraries needed to validate against schema file -->
+                <dependency>
+                    <groupId>org.springframework.osgi</groupId>
+                    <artifactId>org.springframework.osgi.extender</artifactId>
                 </dependency>
                 <dependency>
-                    <groupId>${project.groupId}</groupId>
-                    <artifactId>org.openwms.common.service.api</artifactId>
-                    <version>${common.version}</version>
-                    <scope>${dependency.scope}</scope>
+                    <groupId>org.springframework.osgi</groupId>
+                    <artifactId>org.springframework.osgi.io</artifactId>
                 </dependency>
-                <!-- TMS Project dependencies -->
-                <dependency>
-                    <groupId>${project.groupId}</groupId>
-                    <artifactId>org.openwms.tms.flex.module</artifactId>
-                    <version>${tms.version}</version>
-                    <type>swf</type>
-                </dependency>
-                <dependency>
-                    <groupId>${project.groupId}</groupId>
-                    <artifactId>org.openwms.tms.domain</artifactId>
-                    <version>${tms.version}</version>
-                    <scope>${dependency.scope}</scope>
-                </dependency>
-                <dependency>
-                    <groupId>${project.groupId}</groupId>
-                    <artifactId>org.openwms.tms.service.api</artifactId>
-                    <version>${tms.version}</version>
-                    <scope>${dependency.scope}</scope>
-                </dependency>
+                <!--dependency>
+                    <groupId>org.springframework.osgi</groupId>
+                    <artifactId>org.springframework.osgi.web</artifactId>
+                </dependency-->
             </dependencies>
         </profile>
         <profile>

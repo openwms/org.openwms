@@ -65,11 +65,12 @@
         <class>org.openwms.wms.domain.shipping.ShippingOrder</class>
         <class>org.openwms.wms.domain.shipping.ShippingOrderPosition</class>
         <class>org.openwms.wms.domain.shipping.ShippingOrderPositionSplit</class>
--->        
         <properties>
             <property name="hibernate.show_sql" value="true"/>
             <property name="hibernate.format_sql" value="true"/>
             <property name="hibernate.cache.use_query_cache" value="false"/>
+            <property name="hibernate.hbm2ddl.auto" value="update"/>
         </properties>
+-->        
     </persistence-unit>
 </persistence>
