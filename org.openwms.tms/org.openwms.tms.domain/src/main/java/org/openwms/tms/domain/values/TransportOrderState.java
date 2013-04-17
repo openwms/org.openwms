@@ -28,7 +28,9 @@ package org.openwms.tms.domain.values;
  * @version $Revision$
  * @since 0.1
  * @see org.openwms.tms.domain.order.TransportOrder
+ * @deprecated Use TransportOrder.State
  */
+@Deprecated
 public enum TransportOrderState {
 
     /**

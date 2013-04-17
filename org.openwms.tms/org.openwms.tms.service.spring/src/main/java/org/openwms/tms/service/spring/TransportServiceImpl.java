@@ -88,6 +88,14 @@ public class TransportServiceImpl implements TransportOrderService<TransportOrde
 
     /**
      * {@inheritDoc}
+     */
+    @Override
+    public List<TransportOrder> findAll() {
+        return dao.findAll();
+    }
+
+    /**
+     * {@inheritDoc}
      * 
      * Just delegates to the dao.
      */

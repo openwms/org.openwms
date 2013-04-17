@@ -29,7 +29,6 @@
         <artifactId>org.openwms</artifactId>
         <version>0.1.1-SNAPSHOT</version>
     </parent>
-    <groupId>org.openwms</groupId>
     <artifactId>org.openwms.common</artifactId>
     <version>0.1.1-SNAPSHOT</version>
     <packaging>pom</packaging>

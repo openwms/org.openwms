@@ -42,6 +42,13 @@ import org.openwms.tms.domain.values.TransportOrderState;
 public interface TransportOrderService<T extends TransportOrder> {
 
     /**
+     * Return a List with all {@link TransportOrder}s.
+     * 
+     * @return a List with all {@link TransportOrder}s
+     */
+    List<T> findAll();
+
+    /**
      * Returns the actual number of active transports that have the
      * <tt>locationGroup</tt> as target {@link LocationGroup}.
      * 

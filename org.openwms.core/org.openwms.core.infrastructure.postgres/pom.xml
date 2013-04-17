@@ -86,6 +86,11 @@
             <artifactId>com.springsource.org.postgresql.jdbc4</artifactId>
             <scope>${dependency.scope}</scope>
         </dependency>
+        <dependency>
+            <groupId>com.mysql.jdbc</groupId>
+            <artifactId>com.springsource.com.mysql.jdbc</artifactId>
+            <scope>${dependency.scope}</scope>
+        </dependency>
 
         <!-- Project dependencies -->
         <dependency>

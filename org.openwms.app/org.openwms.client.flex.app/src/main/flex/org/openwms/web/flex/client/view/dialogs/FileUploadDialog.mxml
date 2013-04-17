@@ -63,6 +63,7 @@
     	    private var fileRef : FileReference;
     	
             private function onShow() : void {
+                trace("appContextUrl:"+appContextUrl());
                 fileRef = new FileReference();
                 fileRef.addEventListener(Event.COMPLETE, completeEvent);
                 fileRef.addEventListener(Event.SELECT, selectEvent);
@@ -162,6 +163,7 @@
                 var protocol:String = URLUtil.getProtocol(url);
                 var domain:String = URLUtil.getServerNameWithPort(url); 
                 if (protocol == 'file')
+                    trace("Using hard upload URL:"+'http://localhost:8280/org.openwms.client.flex.wrapper'+modelLocator.UPLOAD_URL);
                     return 'http://localhost:8280/org.openwms.client.flex.wrapper'+modelLocator.UPLOAD_URL;
                 var folder:String = url.replace(protocol + '://' + domain, '');   
                 folder = folder.slice(0, folder.lastIndexOf('/'));
@@ -173,6 +175,7 @@
                 }
                 if (!includeFolder)
                     folder = '';
+                trace("Calculated upload URL:"+protocol + '://' + domain + folder + '/');
                 return protocol + '://' + domain + folder + '/';   
             }
     	]]>
