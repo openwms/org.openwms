@@ -31,6 +31,7 @@
     </parent>
     <artifactId>org.openwms.core.domain</artifactId>
     <name>${project.artifactId}</name>
+    <description>CORE domain model, enhanced with JPA annotations.</description>
     <properties>
         <moduleDir>../../..</moduleDir>
     </properties>
