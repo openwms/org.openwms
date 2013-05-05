@@ -32,6 +32,7 @@
     <artifactId>org.openwms.core.service.spring</artifactId>
     <packaging>jar</packaging>
     <name>${project.artifactId}</name>
+    <description>A Spring implementation or the CORE service definitions.</description>
     <properties>
         <moduleDir>../../..</moduleDir>
         <openwms.configuration.version>0.1.1-SNAPSHOT</openwms.configuration.version>

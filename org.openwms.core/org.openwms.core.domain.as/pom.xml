@@ -32,6 +32,7 @@
 	<artifactId>org.openwms.core.domain.as</artifactId>
 	<packaging>swc</packaging>
 	<name>${project.artifactId}</name>
+    <description>CORE domain model implemented in ActionScript.</description>
 	<properties>
 		<moduleDir>../../..</moduleDir>
 	</properties>
