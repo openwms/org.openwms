@@ -38,10 +38,10 @@
     </properties>
     <build>
         <resources>
-          <resource>
-            <directory>src/main/resources</directory>
-            <filtering>true</filtering>
-          </resource>
+            <resource>
+                <directory>src/main/resources</directory>
+                <filtering>true</filtering>
+            </resource>
         </resources>
         <plugins>
             <plugin>
@@ -87,10 +87,16 @@
             <scope>${dependency.scope}</scope>
         </dependency>
         <dependency>
+            <groupId>org.hsqldb</groupId>
+            <artifactId>hsqldb</artifactId>
+            <scope>${dependency.scope}</scope>
+        </dependency>
+        
+        <!--dependency>
             <groupId>com.mysql.jdbc</groupId>
             <artifactId>com.springsource.com.mysql.jdbc</artifactId>
             <scope>${dependency.scope}</scope>
-        </dependency>
+        </dependency-->
 
         <!-- Project dependencies -->
         <dependency>

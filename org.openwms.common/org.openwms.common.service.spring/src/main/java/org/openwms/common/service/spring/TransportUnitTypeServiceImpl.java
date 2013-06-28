@@ -103,7 +103,7 @@ public class TransportUnitTypeServiceImpl implements TransportUnitTypeService {
 
         TransportUnitType tut = transportUnitTypeDao.findByUniqueId(type);
         boolean found = false;
-        if (newAssigned != null && newAssigned.size() > 0) {
+        if (newAssigned != null && !newAssigned.isEmpty()) {
             for (LocationType locationType : newAssigned) {
                 for (TypePlacingRule rule : tut.getTypePlacingRules()) {
                     if (rule.getAllowedLocationType() == locationType) {
@@ -118,7 +118,7 @@ public class TransportUnitTypeServiceImpl implements TransportUnitTypeService {
             }
         }
 
-        if (newAssigned != null && newAssigned.size() > 0) {
+        if (newAssigned != null && !newAssigned.isEmpty()) {
             for (LocationType locationType : newNotAssigned) {
                 for (TypePlacingRule rule : tut.getTypePlacingRules()) {
                     if (rule.getAllowedLocationType() == locationType) {

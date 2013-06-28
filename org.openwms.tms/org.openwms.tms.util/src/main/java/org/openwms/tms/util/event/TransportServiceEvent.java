@@ -20,8 +20,6 @@
  */
 package org.openwms.tms.util.event;
 
-import java.io.Serializable;
-
 import org.openwms.core.util.event.RootApplicationEvent;
 
 /**
@@ -31,7 +29,7 @@ import org.openwms.core.util.event.RootApplicationEvent;
  * @version $Revision$
  * @since 0.1
  */
-public class TransportServiceEvent extends RootApplicationEvent implements Serializable {
+public class TransportServiceEvent extends RootApplicationEvent {
 
     private TYPE type;
 
