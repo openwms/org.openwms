@@ -32,7 +32,7 @@ import java.io.Serializable;
 public class RootNotification implements Serializable {
 
     private static final long serialVersionUID = -4057475097538283865L;
-    protected Serializable data;
+    private final Serializable data;
 
     /**
      * Constructs a RootNotification.

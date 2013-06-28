@@ -16,17 +16,17 @@
     <resourceEntry destPath="assets/locale/de_DE/corLibMain.properties" sourcePath="assets/locale/de_DE/corLibMain.properties"/>
     <resourceEntry destPath="assets/images/icons/picture--edit.png" sourcePath="assets/images/icons/picture--edit.png"/>
     <resourceEntry destPath="assets/locale/de_DE/corLibError.properties" sourcePath="assets/locale/de_DE/corLibError.properties"/>
-    <resourceEntry destPath="assets/images/icons/grant--add.png" sourcePath="assets/images/icons/grant--add.png"/>
     <resourceEntry destPath="assets/images/icons/logout.png" sourcePath="assets/images/icons/logout.png"/>
+    <resourceEntry destPath="assets/images/icons/grant--add.png" sourcePath="assets/images/icons/grant--add.png"/>
     <resourceEntry destPath="assets/images/icons/refresh.png" sourcePath="assets/images/icons/refresh.png"/>
-    <resourceEntry destPath="assets/images/icons/arrow_up.png" sourcePath="assets/images/icons/arrow_up.png"/>
     <resourceEntry destPath="assets/images/icons/history.png" sourcePath="assets/images/icons/history.png"/>
+    <resourceEntry destPath="assets/images/icons/arrow_up.png" sourcePath="assets/images/icons/arrow_up.png"/>
     <resourceEntry destPath="assets/images/icons/key--edit.png" sourcePath="assets/images/icons/key--edit.png"/>
     <resourceEntry destPath="assets/images/clearskin/button_skin.png" sourcePath="assets/images/clearskin/button_skin.png"/>
     <resourceEntry destPath="assets/images/clearskin/panel_skin.png" sourcePath="assets/images/clearskin/panel_skin.png"/>
     <resourceEntry destPath="assets/images/openwms_banner.jpg" sourcePath="assets/images/openwms_banner.jpg"/>
-    <resourceEntry destPath="assets/images/clearskin/button_over_skin.png" sourcePath="assets/images/clearskin/button_over_skin.png"/>
     <resourceEntry destPath="assets/images/icons/sidebar-collapse.png" sourcePath="assets/images/icons/sidebar-collapse.png"/>
+    <resourceEntry destPath="assets/images/clearskin/button_over_skin.png" sourcePath="assets/images/clearskin/button_over_skin.png"/>
     <resourceEntry destPath="assets/images/icons/arrow_down.png" sourcePath="assets/images/icons/arrow_down.png"/>
     <resourceEntry destPath="assets/locale/en_US/corLibError.properties" sourcePath="assets/locale/en_US/corLibError.properties"/>
     <resourceEntry destPath="assets/images/breadcrumbs.jpg" sourcePath="assets/images/breadcrumbs.jpg"/>
