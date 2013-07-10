@@ -38,35 +38,37 @@ import javax.persistence.Embeddable;
 public class LocationPK implements Serializable {
 
     private static final long serialVersionUID = 7370071817754524569L;
+    private static final short KEY_LENGTH = 4;
+    public static final short NUMBER_OF_KEYS = 5;
 
     /**
      * Expresses the area where the <code>Location</code> belongs to.
      */
-    @Column(name = "AREA", nullable = false)
+    @Column(name = "AREA", nullable = false, length = KEY_LENGTH)
     private String area;
 
     /**
      * Expresses the aisle where the <code>Location</code> belongs to.
      */
-    @Column(name = "AISLE", nullable = false)
+    @Column(name = "AISLE", nullable = false, length = KEY_LENGTH)
     private String aisle;
 
     /**
      * Expresses the dimension x where this <code>Location</code> belongs to.
      */
-    @Column(name = "X", nullable = false)
+    @Column(name = "X", nullable = false, length = KEY_LENGTH)
     private String x;
 
     /**
      * Expresses the dimension y where this <code>Location</code> belongs to.
      */
-    @Column(name = "Y", nullable = false)
+    @Column(name = "Y", nullable = false, length = KEY_LENGTH)
     private String y;
 
     /**
      * Expresses the dimension z where this <code>Location</code> belongs to.
      */
-    @Column(name = "Z", nullable = false)
+    @Column(name = "Z", nullable = false, length = KEY_LENGTH)
     private String z;
 
     /* ----------------------------- methods ------------------- */
@@ -95,6 +97,27 @@ public class LocationPK implements Serializable {
         this.x = x;
         this.y = y;
         this.z = z;
+    }
+
+    /**
+     * Return how many keys are used to determine the uniqueness of a Location.
+     * 
+     * @return {@value LocationPK#NUMBER_OF_KEYS}
+     */
+    public static short getNumberOfKeys() {
+        return NUMBER_OF_KEYS;
+    }
+
+    /**
+     * Returns the complete length of all keys. Currently all keys have the same
+     * length, therefore it is the 5 times the length of a single key
+     * (KEY_LENGTH). But since this can change the actual length is encapsulated
+     * within this method.
+     * 
+     * @return {@value LocationPK#NUMBER_OF_KEYS * LocationPK#KEY_LENGTH}
+     */
+    public static short getKeyLength() {
+        return NUMBER_OF_KEYS * KEY_LENGTH;
     }
 
     /**
