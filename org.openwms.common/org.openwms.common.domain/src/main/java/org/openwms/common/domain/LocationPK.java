@@ -25,6 +25,8 @@ import java.io.Serializable;
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
 
+import org.openwms.core.exception.DomainModelRuntimeException;
+
 /**
  * A LocationPK, is a value type and is used as an unique natural key of
  * {@link org.openwms.common.domain.Location} entities.
@@ -97,6 +99,27 @@ public class LocationPK implements Serializable {
         this.x = x;
         this.y = y;
         this.z = z;
+    }
+
+    /**
+     * Create a new LocationPK with a couple of keys.
+     * 
+     * @param keys
+     *            The array of keys, currently expected to be 5
+     * @throws DomainModelRuntimeException
+     *             if the number of keys is not
+     *             {@value LocationPK#NUMBER_OF_KEYS}
+     */
+    public LocationPK(String... keys) {
+        if (keys == null || keys.length != NUMBER_OF_KEYS) {
+            throw new DomainModelRuntimeException(
+                    "Number of keys for a LocationPK does not match the defined number of keys:" + keys.length);
+        }
+        this.area = keys[0];
+        this.aisle = keys[1];
+        this.x = keys[2];
+        this.y = keys[3];
+        this.z = keys[4];
     }
 
     /**
