@@ -1,9 +1,10 @@
 Manifest-Version: 1.0
 Export-Package: org.openwms.web.flex.security;version="0.1.1.SNAPSHOT"
  ;uses:="org.granite.messaging.service.security,org.granite.spring.sec
- urity,org.springframework.beans.factory.annotation,org.springframewor
- k.security.authentication,org.springframework.security.core,org.sprin
- gframework.security.web.context,org.springframework.stereotype"
+ urity,org.openwms.core.domain.system.usermanagement,org.springframewo
+ rk.beans.factory.annotation,org.springframework.security.authenticati
+ on,org.springframework.security.core,org.springframework.security.web
+ .context,org.springframework.stereotype"
 Bundle-ClassPath: .,WEB-INF/lib/granite-core.jar,WEB-INF/lib/granite-e
  clipselink.jar,WEB-INF/lib/granite-hibernate.jar,WEB-INF/lib/granite-
  spring.jar,WEB-INF/lib/granite-toplink.jar,WEB-INF/lib/pell-multipart
@@ -37,16 +38,17 @@ Import-Package: com.springsource.server.web.dm;version="[2.0.0, 3.0.0)
  ervlet.resources;version="[2.4.0,2.5.0]",javax.transaction,javax.xml.
  namespace,javax.xml.parsers,javax.xml.transform,javax.xml.transform.d
  om,javax.xml.transform.stream,javax.xml.xpath,org.apache.log4j,org.hi
- bernate.proxy;version="0.0.0",org.slf4j;version="1.5.10",org.springfr
- amework.beans,org.springframework.beans.factory,org.springframework.b
- eans.factory.annotation,org.springframework.context,org.springframewo
- rk.context.weaving;version="3.1.0.RELEASE",org.springframework.securi
- ty.access,org.springframework.security.authentication,org.springframe
- work.security.core,org.springframework.security.core.context,org.spri
- ngframework.security.web.context,org.springframework.stereotype,org.s
- pringframework.transaction.aspectj;version="3.1.0.RELEASE",org.spring
- framework.web.context;version="3.1.0.RELEASE",org.springframework.web
- .context.request;version="3.1.0.RELEASE",org.springframework.web.cont
- ext.support,org.w3c.dom,org.w3c.dom.traversal,org.xml.sax,org.xml.sax
- .ext,org.xml.sax.helpers
+ bernate.proxy;version="0.0.0",org.openwms.core.domain.system.usermana
+ gement,org.slf4j;version="1.5.10",org.springframework.beans,org.sprin
+ gframework.beans.factory,org.springframework.beans.factory.annotation
+ ,org.springframework.context,org.springframework.context.weaving;vers
+ ion="3.1.0.RELEASE",org.springframework.security.access,org.springfra
+ mework.security.authentication,org.springframework.security.core,org.
+ springframework.security.core.context,org.springframework.security.we
+ b.context,org.springframework.stereotype,org.springframework.transact
+ ion.aspectj;version="3.1.0.RELEASE",org.springframework.web.context;v
+ ersion="3.1.0.RELEASE",org.springframework.web.context.request;versio
+ n="3.1.0.RELEASE",org.springframework.web.context.support,org.w3c.dom
+ ,org.w3c.dom.traversal,org.xml.sax,org.xml.sax.ext,org.xml.sax.helper
+ s
 
