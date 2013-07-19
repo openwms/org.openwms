@@ -60,6 +60,7 @@
                 <activeByDefault>true</activeByDefault>
             </activation>
             <modules>
+                <module>org.openwms.common.comm</module>
                 <module>org.openwms.common.domain</module>
                 <module>org.openwms.common.domain.as</module>
                 <module>org.openwms.common.flex.lib</module>
@@ -74,6 +75,7 @@
         <profile>
             <id>common</id>
             <modules>
+                <module>org.openwms.common.comm</module>
                 <module>org.openwms.common.domain</module>
                 <module>org.openwms.common.domain.as</module>
                 <module>org.openwms.common.flex.lib</module>
