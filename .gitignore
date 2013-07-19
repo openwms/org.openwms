@@ -16,6 +16,8 @@ libs/
 *.db
 rebel.xml
 
+*.versionsBackup
+
 ######################
 # Windows
 ######################

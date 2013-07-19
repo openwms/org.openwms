@@ -27,19 +27,19 @@
     <parent>
         <groupId>org.openwms</groupId>
         <artifactId>org.openwms</artifactId>
-        <version>0.1.1-SNAPSHOT</version>
+        <version>0.2-SNAPSHOT</version>
     </parent>
     <groupId>org.openwms</groupId>
     <artifactId>org.openwms.app</artifactId>
-    <version>0.1.1-SNAPSHOT</version>
+    <version>0.2-SNAPSHOT</version>
     <packaging>pom</packaging>
     <name>OpenWMS.org Application</name>
     <properties>
         <moduleDir>../..</moduleDir>
-        <bundle.version>0.1.1.SNAPSHOT</bundle.version>
-        <core.version>0.1.1-SNAPSHOT</core.version>
-        <common.version>0.1.1-SNAPSHOT</common.version>
-        <tms.version>0.1.1-SNAPSHOT</tms.version>
+        <bundle.version>0.2.SNAPSHOT</bundle.version>
+        <core.version>0.2-SNAPSHOT</core.version>
+        <common.version>0.2-SNAPSHOT</common.version>
+        <tms.version>0.2-SNAPSHOT</tms.version>
         <wms.version>0.0.1-SNAPSHOT</wms.version>
     </properties>
 

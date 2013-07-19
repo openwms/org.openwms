@@ -27,7 +27,7 @@
 	<parent>
 		<groupId>org.openwms</groupId>
 		<artifactId>org.openwms.core</artifactId>
-		<version>0.1.1-SNAPSHOT</version>
+		<version>0.2-SNAPSHOT</version>
 	</parent>
 	<artifactId>org.openwms.core.domain.as</artifactId>
 	<packaging>swc</packaging>

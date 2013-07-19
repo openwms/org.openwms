@@ -27,7 +27,7 @@
 	<parent>
 		<groupId>org.openwms</groupId>
 		<artifactId>org.openwms.tms</artifactId>
-		<version>0.1.1-SNAPSHOT</version>
+		<version>0.2-SNAPSHOT</version>
 	</parent>
 	<artifactId>org.openwms.tms.domain.as</artifactId>
 	<packaging>swc</packaging>
@@ -123,40 +123,6 @@
 			</plugin>
 		</plugins>
 	</build>
-
-	<reporting>
-		<plugins>
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-compiler-plugin</artifactId>
-				<configuration>
-					<source>1.6</source>
-					<target>1.6</target>
-				</configuration>
-			</plugin>
-			<plugin>
-				<groupId>org.sonatype.flexmojos</groupId>
-				<artifactId>flexmojos-maven-plugin</artifactId>
-				<reportSets>
-					<reportSet>
-						<id>flex-reports</id>
-						<reports>
-							<report>asdoc-report</report>
-						</reports>
-						<configuration>
-							<windowTitle>AsDoc</windowTitle>
-							<footer>openwms.org</footer>
-							<sourcePaths>
-								<sourcePath>${project.basedir}/src/main/flex/</sourcePath>
-								<sourcePath>${project.build.directory}/generated-sources/flexmojos/</sourcePath>
-							</sourcePaths>
-						</configuration>
-					</reportSet>
-				</reportSets>
-			</plugin>
-
-		</plugins>
-	</reporting>
 
 	<repositories>
 		<repository>

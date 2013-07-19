@@ -27,16 +27,16 @@
     <parent>
         <groupId>org.openwms</groupId>
         <artifactId>org.openwms</artifactId>
-        <version>0.1.1-SNAPSHOT</version>
+        <version>0.2-SNAPSHOT</version>
     </parent>
     <artifactId>org.openwms.core</artifactId>
-    <version>0.1.1-SNAPSHOT</version>
+    <version>0.2-SNAPSHOT</version>
     <packaging>pom</packaging>
     <name>OpenWMS.org CORE</name>
     <properties>
         <moduleDir>../..</moduleDir>
         <property.org.graniteds-core.version>1.2.0_SP1</property.org.graniteds-core.version>
-        <bundle.version>0.1.1.SNAPSHOT</bundle.version>
+        <bundle.version>0.2.SNAPSHOT</bundle.version>
     </properties>
 
     <distributionManagement>

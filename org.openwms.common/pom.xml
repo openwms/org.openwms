@@ -27,16 +27,16 @@
     <parent>
         <groupId>org.openwms</groupId>
         <artifactId>org.openwms</artifactId>
-        <version>0.1.1-SNAPSHOT</version>
+        <version>0.2-SNAPSHOT</version>
     </parent>
     <artifactId>org.openwms.common</artifactId>
-    <version>0.1.1-SNAPSHOT</version>
+    <version>0.2-SNAPSHOT</version>
     <packaging>pom</packaging>
     <name>OpenWMS.org COMMON</name>
     <properties>
         <moduleDir>../..</moduleDir>
-        <core.version>0.1.1-SNAPSHOT</core.version>
-        <bundle.version>0.1.1.SNAPSHOT</bundle.version>
+        <core.version>0.2-SNAPSHOT</core.version>
+        <bundle.version>0.2.SNAPSHOT</bundle.version>
     </properties>
 
     <distributionManagement>
