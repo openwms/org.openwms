@@ -562,7 +562,7 @@
         <plugin.bundlor.version>1.0.0.RELEASE</plugin.bundlor.version>
         <plugin.par.version>1.0.0.RELEASE</plugin.par.version>
         <plugin.lifecycle-mapping.version>1.0.0</plugin.lifecycle-mapping.version>
-        <plugin.assembly.version>2.4</plugin.assemblyl.version>
+        <plugin.assembly.version>2.4</plugin.assembly.version>
         <plugin.install.version>2.4</plugin.install.version>
         <plugin.jar.version>2.4</plugin.jar.version>
         <plugin.surefire.version>2.15</plugin.surefire.version>
