@@ -43,7 +43,7 @@
                 <artifactId>maven-par-plugin</artifactId>
                 <configuration>
                     <outputFile>target/${project.artifactId}.par</outputFile>
-                    <applicationVersion>1.0.0</applicationVersion>
+                    <applicationVersion>${project.version}</applicationVersion>
                     <applicationSymbolicName>OpenWMS.org</applicationSymbolicName>
                     <applicationDescription>OpenWMS.org OSGi PAR Bundle</applicationDescription>
                     <applicationName>${project.artifactId}</applicationName>

@@ -1,10 +1,10 @@
 Manifest-Version: 1.0
-Export-Package: org.openwms.web.flex.security;version="0.1.1.SNAPSHOT"
- ;uses:="org.granite.messaging.service.security,org.granite.spring.sec
- urity,org.openwms.core.domain.system.usermanagement,org.springframewo
- rk.beans.factory.annotation,org.springframework.security.authenticati
- on,org.springframework.security.core,org.springframework.security.web
- .context,org.springframework.stereotype"
+Export-Package: org.openwms.web.flex.security;version="0.2.SNAPSHOT";u
+ ses:="org.granite.messaging.service.security,org.granite.spring.secur
+ ity,org.openwms.core.domain.system.usermanagement,org.springframework
+ .beans.factory.annotation,org.springframework.security.authentication
+ ,org.springframework.security.core,org.springframework.security.web.c
+ ontext,org.springframework.stereotype"
 Bundle-ClassPath: .,WEB-INF/lib/granite-core.jar,WEB-INF/lib/granite-e
  clipselink.jar,WEB-INF/lib/granite-hibernate.jar,WEB-INF/lib/granite-
  spring.jar,WEB-INF/lib/granite-toplink.jar,WEB-INF/lib/pell-multipart
@@ -29,8 +29,9 @@ Import-Bundle: org.springframework.security.core;version="3.1.3.RELEAS
   0.2]",org.openwms.tms.service.api;version="[0.1, 0.2]",com.springsou
  rce.org.postgresql.jdbc4;version="8.3.604"
 Bundle-Vendor: org.openwms
-Bundle-Version: 0.1.1.SNAPSHOT
+Bundle-Version: 0.2.SNAPSHOT
 Bundle-ManifestVersion: 2
+Bundle-SymbolicName: org.openwms.client.flex.wrapper
 Import-Package: com.springsource.server.web.dm;version="[2.0.0, 3.0.0)
  ",javax.management,javax.naming,javax.persistence,javax.servlet;versi
  on="[2.4.0,2.5.0]",javax.servlet.http;version="[2.4.0,2.5.0]",javax.s
@@ -50,5 +51,4 @@ Import-Package: com.springsource.server.web.dm;version="[2.0.0, 3.0.0)
  n="3.1.0.RELEASE",org.springframework.web.context.support,org.w3c.dom
  ,org.w3c.dom.traversal,org.xml.sax,org.xml.sax.ext,org.xml.sax.helper
  s
-Bundle-SymbolicName: org.openwms.client.flex.wrapper
 
