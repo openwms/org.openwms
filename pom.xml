@@ -34,7 +34,7 @@
     <version>0.2-SNAPSHOT</version>
     <packaging>pom</packaging>
     <name>OpenWMS.org Project</name>
-    <description>This is an Open Source Software (OSS) project</description>
+    <description>OpenWMS.org is an open source warehouse management software</description>
     <url>http://www.openwms.org</url>
     <inceptionYear>2005</inceptionYear>
 
@@ -205,6 +205,7 @@
             </notifier>
         </notifiers>
     </ciManagement>
+    
     <profiles>
         <profile>
             <id>noOSGI</id>
@@ -267,23 +268,7 @@
             </properties>
         </profile>
         <profile>
-            <id>private</id>
-            <properties>
-                <!-- Web Site deployment -->
-                <distribution.serverId>router</distribution.serverId>
-                <distribution.serverProtocol>file:/</distribution.serverProtocol>
-                <distribution.serverUrl.rootPath>var/www/openwms</distribution.serverUrl.rootPath>
-                <distribution.serverUrl.sourcePath>${distribution.serverUrl.rootPath}/development/reference/${project.version}</distribution.serverUrl.sourcePath>
-                <distribution.serverUrl.docsPath>${distribution.serverUrl.rootPath}/docs</distribution.serverUrl.docsPath>
-                <!-- Maven Repo Artifact deployment -->
-                <distribution.repo.serverId>nexus</distribution.repo.serverId>
-                <distribution.repo.serverProtocol>http</distribution.repo.serverProtocol>
-                <distribution.repo.serverUrl.rootPath>rudi:8081/nexus/content/repositories/releases</distribution.repo.serverUrl.rootPath>
-                <distribution.repo.snapshot.serverUrl.rootPath>rudi:8081/nexus/content/repositories/snapshots</distribution.repo.snapshot.serverUrl.rootPath>
-            </properties>
-        </profile>
-        <profile>
-            <id>client</id>
+            <id>flex-client</id>
             <modules>
                 <module>org.openwms.core/org.openwms.client.flex.lib</module>
                 <module>org.openwms.core/org.openwms.core.domain.as</module>
@@ -292,25 +277,6 @@
                 <module>org.openwms.common/org.openwms.common.flex.module</module>
                 <module>org.openwms.tms/org.openwms.tms.domain.as</module>
                 <module>org.openwms.tms/org.openwms.tms.flex.module</module>
-                <module>org.openwms.app/org.openwms.client.flex.app</module>
-                <module>org.openwms.app/org.openwms.client.flex.wrapper</module>
-            </modules>
-        </profile>
-        <profile>
-            <id>rclient</id>
-            <modules>
-                <module>org.openwms.core/org.openwms.core.infrastructure.postgres</module>
-                <module>org.openwms.core/org.openwms.core.infrastructure.configuration.provider</module>
-                <module>org.openwms.core/org.openwms.core.integration.hibernate</module>
-                <module>org.openwms.app/org.openwms.client.flex.wrapper</module>
-            </modules>
-        </profile>
-        <profile>
-            <id>cclient</id>
-            <modules>
-                <module>org.openwms.common/org.openwms.common.flex.lib</module>
-                <module>org.openwms.common/org.openwms.common.flex.module</module>
-                <module>org.openwms.core/org.openwms.client.flex.lib</module>
                 <module>org.openwms.app/org.openwms.client.flex.app</module>
                 <module>org.openwms.app/org.openwms.client.flex.wrapper</module>
             </modules>
@@ -350,43 +316,6 @@
             <modules>
                 <module>org.openwms.tms</module>
             </modules>
-        </profile>
-        <profile>
-            <id>test</id>
-            <build>
-                <plugins>
-                    <plugin>
-                        <groupId>org.codehaus.mojo</groupId>
-                        <artifactId>cobertura-maven-plugin</artifactId>
-                        <configuration>
-                            <check>
-                                <branchRate>70</branchRate>
-                                <lineRate>75</lineRate>
-                                <haltOnFailure>false</haltOnFailure>
-                                <totalBranchRate>75</totalBranchRate>
-                                <totalLineRate>80</totalLineRate>
-                                <packageLineRate>80</packageLineRate>
-                                <packageBranchRate>65</packageBranchRate>
-                                <regexes>
-                                    <regex>
-                                        <pattern>org.openwms.*</pattern>
-                                        <branchRate>50</branchRate>
-                                        <lineRate>50</lineRate>
-                                    </regex>
-                                </regexes>
-                            </check>
-                        </configuration>
-                        <executions>
-                            <execution>
-                                <goals>
-                                    <goal>clean</goal>
-                                    <goal>check</goal>
-                                </goals>
-                            </execution>
-                        </executions>
-                    </plugin>
-                </plugins>
-            </build>
         </profile>
         <profile>
             <id>release</id>
@@ -818,7 +747,7 @@
                 <artifactId>maven-surefire-plugin</artifactId>
                 <configuration>
                     <useSystemClassLoader>true</useSystemClassLoader>
-                    <skipTests>true</skipTests>
+                    <skipTests>false</skipTests>
                     <trimStackTrace>false</trimStackTrace>
                     <systemPropertyVariables>
                         <log4j.configuration>log4j.xml</log4j.configuration>
@@ -837,7 +766,7 @@
             <plugin>
                 <artifactId>maven-compiler-plugin</artifactId>
                 <configuration>
-                    <debug>true</debug>
+                    <debug>false</debug>
                     <optimize>true</optimize>
                     <source>${maven.compile.sourceLevel}</source>
                     <target>${maven.compile.targetLevel}</target>
