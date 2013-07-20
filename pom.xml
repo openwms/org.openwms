@@ -684,7 +684,6 @@
                     <groupId>com.springsource.bundlor</groupId>
                     <artifactId>com.springsource.bundlor.maven</artifactId>
                     <version>${plugin.bundlor.version}</version>
-                    <version></version>
                     <configuration>
                         <inputPath>${basedir}/target/classes</inputPath>
                     </configuration>
