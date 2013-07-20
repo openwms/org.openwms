@@ -555,7 +555,21 @@
         <jsf.impl.version>2.1.4</jsf.impl.version>
         <jsf.api.version>2.1.4</jsf.api.version>
         <primefaces.version>3.2</primefaces.version>
-
+        
+        <!-- Plugin versions -->
+        <plugin.compiler.version>3.1</plugin.compiler.version>
+        <plugin.wagon-ssh.version>2.1</plugin.wagon-ssh.version>
+        <plugin.bundlor.version>1.0.0.RELEASE</plugin.bundlor.version>
+        <plugin.par.version>1.0.0.RELEASE</plugin.par.version>
+        <plugin.lifecycle-mapping.version>1.0.0</plugin.lifecycle-mapping.version>
+        <plugin.assembly.version>2.4</plugin.assemblyl.version>
+        <plugin.install.version>2.4</plugin.install.version>
+        <plugin.jar.version>2.4</plugin.jar.version>
+        <plugin.surefire.version>2.15</plugin.surefire.version>
+        <plugin.javadoc.version>2.9.1</plugin.javadoc.version>
+        <plugin.jxr.version>2.3</plugin.jxr.version>
+        <plugin.taglist.version>2.4</plugin.taglist.version>
+        
         <!-- OSGi header versions -->
         <osgi.apache.commons.lang.version>${apache.commons.lang.version}</osgi.apache.commons.lang.version>
         <osgi.apache.commons.dbcp.version>${apache.commons.dbcp.version}</osgi.apache.commons.dbcp.version>
@@ -641,7 +655,7 @@
             <extension>
                 <groupId>org.apache.maven.wagon</groupId>
                 <artifactId>wagon-ssh</artifactId>
-                <version>2.1</version>
+                <version>${plugin.wagon-ssh.version}</version>
             </extension>
         </extensions>
         <pluginManagement>
@@ -649,6 +663,7 @@
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-compiler-plugin</artifactId>
+                    <version>${plugin.compiler.version}</version>
                     <configuration>
                         <debug>true</debug>
                         <optimize>true</optimize>
@@ -668,7 +683,8 @@
                 <plugin>
                     <groupId>com.springsource.bundlor</groupId>
                     <artifactId>com.springsource.bundlor.maven</artifactId>
-                    <version>1.0.0.RELEASE</version>
+                    <version>${plugin.bundlor.version}</version>
+                    <version></version>
                     <configuration>
                         <inputPath>${basedir}/target/classes</inputPath>
                     </configuration>
@@ -684,13 +700,37 @@
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-par-plugin</artifactId>
-                    <version>1.0.0.RELEASE</version>
+                    <version>${plugin.par.version}</version>
+                </plugin>
+
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-assembly-plugin</artifactId>
+                    <version>${plugin.assembly.version}</version>
+                </plugin>
+
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-install-plugin</artifactId>
+                    <version>${plugin.install.version}</version>
+                </plugin>
+
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-jar-plugin</artifactId>
+                    <version>${plugin.jar.version}</version>
+                </plugin>
+
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-surefire-plugin</artifactId>
+                    <version>${plugin.surefire.version}</version>
                 </plugin>
 
                 <plugin>
                     <groupId>org.eclipse.m2e</groupId>
                     <artifactId>lifecycle-mapping</artifactId>
-                    <version>1.0.0</version>
+                    <version>${plugin.lifecycle-mapping.version}</version>
                     <configuration>
                         <lifecycleMappingMetadata>
                             <pluginExecutions>
@@ -822,6 +862,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-javadoc-plugin</artifactId>
+                <version>${plugin.javadoc.version}</version>
                 <inherited>true</inherited>
                 <reportSets>
                     <reportSet>
@@ -875,7 +916,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-jxr-plugin</artifactId>
-                <version>2.1</version>
+                <version>${plugin.jxr.version}</version>
                 <configuration>
                     <aggregate>true</aggregate>
                     <linkJavadoc>true</linkJavadoc>
@@ -892,7 +933,7 @@
             <plugin>
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>taglist-maven-plugin</artifactId>
-                <version>2.4</version>
+                <version>${plugin.taglist.version}</version>
                 <configuration>
                     <aggregate>true</aggregate>
                     <encoding>${project.build.sourceEncoding}</encoding>
