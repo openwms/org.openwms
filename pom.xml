@@ -39,7 +39,7 @@
     <inceptionYear>2005</inceptionYear>
 
     <prerequisites>
-        <maven>2.2.1</maven>
+        <maven>3.0.4</maven>
     </prerequisites>
 
     <issueManagement>
@@ -563,6 +563,7 @@
         <plugin.par.version>1.0.0.RELEASE</plugin.par.version>
         <plugin.lifecycle-mapping.version>1.0.0</plugin.lifecycle-mapping.version>
         <plugin.assembly.version>2.4</plugin.assembly.version>
+        <plugin.clean.version>2.5</plugin.clean.version>
         <plugin.install.version>2.4</plugin.install.version>
         <plugin.jar.version>2.4</plugin.jar.version>
         <plugin.surefire.version>2.15</plugin.surefire.version>
@@ -706,6 +707,12 @@
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-assembly-plugin</artifactId>
                     <version>${plugin.assembly.version}</version>
+                </plugin>
+
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-clean-plugin</artifactId>
+                    <version>${plugin.clean.version}</version>
                 </plugin>
 
                 <plugin>
