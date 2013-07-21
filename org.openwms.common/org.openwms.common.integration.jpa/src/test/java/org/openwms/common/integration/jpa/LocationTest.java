@@ -51,11 +51,10 @@ public class LocationTest extends AbstractJpaSpringContextTests {
     @Autowired
     private LocationGroupDao locationGroupDao;
 
-    private LocationGroup locationGroup = new LocationGroup("TEST_LOCATION_GROUP1");
-    private LocationGroup locationGroup2 = new LocationGroup("TEST_LOCATION_GROUP2");
-    private Location actualLocation = new Location(new LocationPK("KNOWN", "KNOWN", "KNOWN", "KNOWN", "KNOWN"));
-    private Location virtualLocation = new Location(new LocationPK("VIRTUAL", "VIRTUAL", "VIRTUAL", "VIRTUAL",
-            "VIRTUAL"));
+    private final LocationGroup locationGroup = new LocationGroup("TEST_LOCATION_GROUP1");
+    private final LocationGroup locationGroup2 = new LocationGroup("TEST_LOCATION_GROUP2");
+    private final Location actualLocation = new Location(new LocationPK("NOWN", "NOWN", "NOWN", "NOWN", "NOWN"));
+    private final Location virtualLocation = new Location(new LocationPK("VIRT", "VIRT", "VIRT", "VIRT", "VIRT"));
 
     /**
      * Setup some test data.
