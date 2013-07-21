@@ -23,7 +23,6 @@ package org.openwms.tms.domain;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.fail;
 
-import org.junit.Before;
 import org.junit.Test;
 import org.openwms.common.domain.Location;
 import org.openwms.common.domain.LocationGroup;
@@ -43,12 +42,6 @@ import org.openwms.tms.domain.values.TransportOrderState;
  * @since 0.1
  */
 public class TransportOrderTest extends AbstractJpaSpringContextTests {
-
-    /**
-     * Setup data.
-     */
-    @Before
-    public void onBefore() {}
 
     /**
      * Test method for
@@ -76,7 +69,7 @@ public class TransportOrderTest extends AbstractJpaSpringContextTests {
             LOGGER.debug("OK:Exception while switching to next state without target");
         }
 
-        Location targetLocation = new Location(new LocationPK("KNOWN", "KNOWN", "KNOWN", "KNOWN", "KNOWN"));
+        Location targetLocation = new Location(new LocationPK("KNO", "KNO", "KNO", "KNO", "KNO"));
         transportOrder.setTargetLocation(targetLocation);
         try {
             transportOrder.setState(TransportOrderState.INITIALIZED);
