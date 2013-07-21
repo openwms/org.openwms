@@ -454,6 +454,7 @@
         <plugin.gpg.version>1.4</plugin.gpg.version>
         <plugin.lifecycle-mapping.version>1.0.0</plugin.lifecycle-mapping.version>
         <plugin.par.version>1.0.0.RELEASE</plugin.par.version>
+        <plugin.resources.version>2.6</plugin.resources.version>
         <plugin.source.version>2.2.1</plugin.source.version>
         <plugin.surefire.version>2.15</plugin.surefire.version>
         <plugin.taglist.version>2.4</plugin.taglist.version>
@@ -670,6 +671,12 @@
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-par-plugin</artifactId>
                     <version>${plugin.par.version}</version>
+                </plugin>
+
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-resources-plugin</artifactId>
+                    <version>${plugin.resources.version}</version>
                 </plugin>
 
                 <plugin>
