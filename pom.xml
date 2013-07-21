@@ -75,9 +75,9 @@
     </distributionManagement>
 
     <scm>
-        <connection>scm:svn:http://openwms2005.svn.sourceforge.net/svnroot/openwms2005/org.openwms/trunk</connection>
-        <developerConnection>scm:svn:https://openwms2005.svn.sourceforge.net/svnroot/openwms2005/org.openwms/trunk</developerConnection>
-        <url>http://openwms2005.svn.sourceforge.net/viewvc/openwms2005/org.openwms/trunk</url>
+        <connection>scm:git:ssh://git@bitbucket.org/openwms-sources/org.openwms.git</connection>
+        <developerConnection>scm:git:ssh://git@bitbucket.org/openwms-sources/org.openwms.git</developerConnection>
+        <url>https://bitbucket.org/openwms-sources/org.openwms.git</url>
     </scm>
 
     <organization>
