@@ -214,26 +214,6 @@
 		<repository>
 			<id>sonatype-public</id>
 			<url>http://repository.sonatype.org/content/groups/forge</url>
-			<releases>
-				<enabled>true</enabled>
-			</releases>
-			<snapshots>
-				<enabled>true</enabled>
-			</snapshots>
-		</repository>
-		<repository>
-		    <id>yoolab.org-releases</id>
-		    <url>http://projects.yoolab.org/maven/content/repositories/releases</url>
-		    <releases>
-		        <enabled>true</enabled>
-		    </releases>
-		</repository>
-		<repository>
-		    <id>yoolab.org-snapshots</id>
-		    <url>http://projects.yoolab.org/maven/content/repositories/snapshots</url>
-		    <snapshots>
-		        <enabled>true</enabled>
-		    </snapshots>
 		</repository>
 	</repositories>
 
@@ -318,7 +298,23 @@
             <exclusions>
                 <exclusion>
                     <groupId>com.adobe.flex.framework</groupId>
-                    <artifactId>flex-framework</artifactId>
+                    <artifactId>framework</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>com.adobe.flex.framework</groupId>
+                    <artifactId>playerglobal</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>com.adobe.flex.framework</groupId>
+                    <artifactId>flex</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>com.adobe.flex.framework</groupId>
+                    <artifactId>rpc</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>com.adobe.flex.framework</groupId>
+                    <artifactId>utilities</artifactId>
                 </exclusion>
             </exclusions>
             <scope>compile</scope>
@@ -331,11 +327,27 @@
             <exclusions>
                 <exclusion>
                     <groupId>com.adobe.flex.framework</groupId>
-                    <artifactId>flex-framework</artifactId>
+                    <artifactId>framework</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>com.adobe.flex.framework</groupId>
+                    <artifactId>playerglobal</artifactId>
                 </exclusion>
                 <exclusion>
                     <groupId>org.as3commons</groupId>
                     <artifactId>as3commons-logging</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>com.adobe.flex.framework</groupId>
+                    <artifactId>flex</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>com.adobe.flex.framework</groupId>
+                    <artifactId>rpc</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>com.adobe.flex.framework</groupId>
+                    <artifactId>utilities</artifactId>
                 </exclusion>
             </exclusions>
             <scope>compile</scope>
@@ -348,7 +360,23 @@
             <exclusions>
                 <exclusion>
                     <groupId>com.adobe.flex.framework</groupId>
-                    <artifactId>flex-framework</artifactId>
+                    <artifactId>framework</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>com.adobe.flex.framework</groupId>
+                    <artifactId>playerglobal</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>com.adobe.flex.framework</groupId>
+                    <artifactId>flex</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>com.adobe.flex.framework</groupId>
+                    <artifactId>rpc</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>com.adobe.flex.framework</groupId>
+                    <artifactId>utilities</artifactId>
                 </exclusion>
             </exclusions>
             <scope>compile</scope>
