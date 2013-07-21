@@ -30,7 +30,6 @@
         <version>0.2-SNAPSHOT</version>
     </parent>
     <artifactId>org.openwms.core.test</artifactId>
-    <packaging>jar</packaging>
     <name>${project.artifactId}</name>
     <properties>
         <moduleDir>../../..</moduleDir>

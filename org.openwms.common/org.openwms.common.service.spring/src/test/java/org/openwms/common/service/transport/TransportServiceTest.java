@@ -51,12 +51,12 @@ public class TransportServiceTest extends AbstractJpaSpringContextTests {
     @Qualifier("transportUnitService")
     private TransportUnitService<TransportUnit> transportService;
 
-    private LocationPK locationPk = new LocationPK("AREA", "AISLE", "X", "Y", "Z");
-    private Location actualLocation = new Location(locationPk);
-    private LocationPK targetLocationPk = new LocationPK("TARGET", "TARGET", "TARGET", "TARGET", "TARGET");
-    private Location targetLocation = new Location(targetLocationPk);
-    private TransportUnitType transportUnitType = new TransportUnitType("TestType");
-    private TransportUnit transportUnit = new TransportUnit("KNOWN");
+    private final LocationPK locationPk = new LocationPK("AREA", "AISL", "X", "Y", "Z");
+    private final Location actualLocation = new Location(locationPk);
+    private final LocationPK targetLocationPk = new LocationPK("TRGT", "TRGT", "TRGT", "TRGT", "TRGT");
+    private final Location targetLocation = new Location(targetLocationPk);
+    private final TransportUnitType transportUnitType = new TransportUnitType("TestType");
+    private final TransportUnit transportUnit = new TransportUnit("KNOWN");
 
     /**
      * Setup some test data.
@@ -92,8 +92,8 @@ public class TransportServiceTest extends AbstractJpaSpringContextTests {
     public final void testCreateTransportUnitOnUnknownLocation() {
 
         try {
-            transportService.create(new Barcode("4711"), transportUnitType, new LocationPK("UNKNOWN", "UNKNOWN",
-                    "UNKNOWN", "UNKNOWN", "UNKNOWN"));
+            transportService.create(new Barcode("4711"), transportUnitType, new LocationPK("UNKN", "UNKN", "UNKN",
+                    "UNKN", "UNKN"));
             fail("Must throw a ServiceException while trying to create a TransportUnit with an unknown actual Location");
         } catch (ServiceRuntimeException se) {
             LOGGER.debug("OK:ServiceException expected while trying to create a TransportUnit with an unknown actual Location");

@@ -61,7 +61,7 @@ public class LocationDaoTest extends AbstractJpaSpringContextTests {
      */
     @Before
     public void onBefore() {
-        entityManager.persist(new Location(new LocationPK("area", "aisle", "x", "y", "z")));
+        entityManager.persist(new Location(new LocationPK("area", "aisl", "x", "y", "z")));
         entityManager.flush();
         entityManager.clear();
     }
@@ -90,11 +90,11 @@ public class LocationDaoTest extends AbstractJpaSpringContextTests {
      */
     @Test
     public final void testFindByUniqueId() {
-        Location known = locationDao.findByUniqueId(new LocationPK("area", "aisle", "x", "y", "z"));
+        Location known = locationDao.findByUniqueId(new LocationPK("area", "aisl", "x", "y", "z"));
         assertNotNull("Location not found by id", known);
         LOGGER.debug("OK:Location found by unique id query");
 
-        Location unknown = locationDao.findByUniqueId(new LocationPK("AREA", "AISLE", "X", "Y", "Z"));
+        Location unknown = locationDao.findByUniqueId(new LocationPK("AREA", "AISL", "X", "Y", "Z"));
         assertNull("Unknown Location found by key", unknown);
         LOGGER.debug("OK:Unknown Location not found by unique id query");
     }
@@ -133,7 +133,7 @@ public class LocationDaoTest extends AbstractJpaSpringContextTests {
      */
     @Test
     public final void testAddingErrorMessages() {
-        LocationPK pk = new LocationPK("UNKNOWN", "UNKNOWN", "UNKNOWN", "UNKNOWN", "UNKNOWN");
+        LocationPK pk = new LocationPK("OWN", "OWN", "OWN", "OWN", "OWN");
         Location location = new Location(pk);
         locationDao.persist(location);
 

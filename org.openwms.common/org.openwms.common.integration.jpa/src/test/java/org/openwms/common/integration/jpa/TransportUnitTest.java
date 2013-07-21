@@ -87,7 +87,7 @@ public class TransportUnitTest extends AbstractJpaSpringContextTests {
     public final void testTUwithUnknownLocations() {
         TransportUnit transportUnit = new TransportUnit("NEVER_PERSISTED");
         TransportUnitType transportUnitType = new TransportUnitType("WELL_KNOWN_TUT");
-        Location actualLocation = new Location(new LocationPK("UNKNOWN", "UNKNOWN", "UNKNOWN", "UNKNOWN", "UNKNOWN"));
+        Location actualLocation = new Location(new LocationPK("UNKN", "UNKN", "UNKN", "UNKN", "UNKN"));
 
         entityManager.persist(transportUnitType);
 
@@ -110,7 +110,7 @@ public class TransportUnitTest extends AbstractJpaSpringContextTests {
     public final void testTUwithKnownLocation() {
         TransportUnit transportUnit = new TransportUnit("TEST_TU");
         TransportUnitType transportUnitType = new TransportUnitType("WELL_KNOWN_TUT_2");
-        Location location = new Location(new LocationPK("KNOWN4", "KNOWN4", "KNOWN4", "KNOWN4", "KNOWN4"));
+        Location location = new Location(new LocationPK("KNO4", "KNO4", "KNO4", "KNO4", "KNO4"));
 
         entityManager.persist(transportUnitType);
         entityManager.persist(location);
@@ -175,8 +175,8 @@ public class TransportUnitTest extends AbstractJpaSpringContextTests {
     public final void testTUwithKnownLocations() {
         TransportUnit transportUnit = new TransportUnit("TEST_TU2");
         TransportUnitType transportUnitType = new TransportUnitType("WELL_KNOWN_TUT_3");
-        Location actualLocation = new Location(new LocationPK("KNOWN2", "KNOWN2", "KNOWN2", "KNOWN2", "KNOWN2"));
-        Location targetLocation = new Location(new LocationPK("UNKNOWN", "UNKNOWN", "UNKNOWN", "UNKNOWN", "UNKNOWN"));
+        Location actualLocation = new Location(new LocationPK("KNO2", "KNO2", "KNO2", "KNO2", "KNO2"));
+        Location targetLocation = new Location(new LocationPK("UNKN", "UNKN", "UNKN", "UNKN", "UNKN"));
 
         entityManager.persist(transportUnitType);
         entityManager.persist(actualLocation);
