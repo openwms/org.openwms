@@ -24,6 +24,7 @@ import java.io.Serializable;
 
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
+import javax.validation.constraints.Max;
 
 import org.openwms.core.exception.DomainModelRuntimeException;
 
@@ -47,30 +48,35 @@ public class LocationPK implements Serializable {
      * Expresses the area where the <code>Location</code> belongs to.
      */
     @Column(name = "AREA", nullable = false, length = KEY_LENGTH)
+    @Max(value = KEY_LENGTH)
     private String area;
 
     /**
      * Expresses the aisle where the <code>Location</code> belongs to.
      */
     @Column(name = "AISLE", nullable = false, length = KEY_LENGTH)
+    @Max(value = KEY_LENGTH)
     private String aisle;
 
     /**
      * Expresses the dimension x where this <code>Location</code> belongs to.
      */
     @Column(name = "X", nullable = false, length = KEY_LENGTH)
+    @Max(value = KEY_LENGTH)
     private String x;
 
     /**
      * Expresses the dimension y where this <code>Location</code> belongs to.
      */
     @Column(name = "Y", nullable = false, length = KEY_LENGTH)
+    @Max(value = KEY_LENGTH)
     private String y;
 
     /**
      * Expresses the dimension z where this <code>Location</code> belongs to.
      */
     @Column(name = "Z", nullable = false, length = KEY_LENGTH)
+    @Max(value = KEY_LENGTH)
     private String z;
 
     /* ----------------------------- methods ------------------- */
