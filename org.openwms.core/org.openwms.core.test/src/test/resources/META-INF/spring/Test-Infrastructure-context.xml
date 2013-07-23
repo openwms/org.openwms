@@ -35,14 +35,6 @@
     <!-- TODO [scherrer]: Is this necessary? Test! -->
     <aop:aspectj-autoproxy />
 
-    <!-- Test Datasource -->
-    <bean id="dataSource2" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
-        <property name="driverClassName" value="${jdbc.test.driverClassName}" />
-        <property name="url" value="${jdbc.test.url}" />
-        <property name="username" value="${jdbc.test.username}" />
-        <property name="password" value="${jdbc.test.password}" />
-    </bean>
-
     <bean id="testDataSource" class="org.apache.commons.dbcp.BasicDataSource" init-method="createDataSource"
         destroy-method="close">
         <property name="driverClassName" value="${jdbc.test.driverClassName}" />
@@ -53,17 +45,10 @@
         <property name="defaultAutoCommit" value="false" />
     </bean>
 
-    <!-- Test Entity Manager -->
-    <bean id="entityManagerFactory" class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
+    <bean id="testEntityManagerFactory" class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
         <property name="persistenceUnitName" value="${jdbc.test.persistenceUnit}" />
         <property name="dataSource" ref="testDataSource" />
-        <property name="jpaVendorAdapter">
-            <bean class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter">
-                <property name="database" value="${jdbc.test.database}" />
-                <property name="databasePlatform" value="${jdbc.test.dialect}" />
-                <property name="showSql" value="${jdbc.test.showSql}" />
-            </bean>
-        </property>
+        <property name="jpaVendorAdapter" ref="testJpaVendorAdapter" />
         <property name="jpaProperties">
             <props>
                 <prop key="hibernate.format_sql">true</prop>
@@ -76,8 +61,14 @@
 
     <!-- Test Transaction Manager -->
     <bean id="transactionManager" class="org.springframework.orm.jpa.JpaTransactionManager">
-        <property name="entityManagerFactory" ref="entityManagerFactory" />
+        <property name="entityManagerFactory" ref="testEntityManagerFactory" />
         <property name="dataSource" ref="testDataSource" />
+    </bean>
+
+    <bean id="testJpaVendorAdapter" class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter">
+        <property name="databasePlatform" value="${jdbc.test.dialect}" />
+        <property name="database" value="${jdbc.test.database}" />
+        <property name="showSql" value="${jdbc.test.showSql}" />
     </bean>
 
     <bean class="org.springframework.dao.annotation.PersistenceExceptionTranslationPostProcessor" />
