@@ -47,7 +47,6 @@
                 <prop key="hibernate.hbm2ddl.auto">update</prop>
                 <prop key="hibernate.cache.use_query_cache">false</prop>
                 <prop key="hibernate.format_sql">true</prop>
-                <prop key="hibernate.show_sql">true</prop>
             </props>            
         </property>
     </bean>
@@ -60,7 +59,7 @@
     <bean id="jpaVendorAdapter" class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter">
         <property name="databasePlatform" value="${jdbc.dialect}" />
         <property name="database" value="${jdbc.database}" />
-        <property name="showSql" value="true" />
+        <property name="showSql" value="${jdbc.showSql}" />
     </bean>
 
 </beans>
