@@ -67,9 +67,14 @@
         <!-- JPA Provider -->
         <dependency>
             <groupId>org.eclipse.persistence</groupId>
-            <artifactId>org.eclipse.persistence-library</artifactId>
-            <version>1.0.0</version>
-            <type>libd</type>
+            <artifactId>org.eclipse.persistence.jpa</artifactId>
+            <version>2.4.2</version>
+            <scope>${dependency.scope}</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.eclipse.persistence</groupId>
+            <artifactId>org.eclipse.persistence.weaving</artifactId>
+            <version>2.4.2</version>
             <scope>${dependency.scope}</scope>
         </dependency>
 

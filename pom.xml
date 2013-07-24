@@ -1271,6 +1271,11 @@
                 <artifactId>com.springsource.org.aspectj.runtime</artifactId>
                 <version>${aspectj.version}</version>
             </dependency>
+            <dependency>
+                <groupId>org.aspectj</groupId>
+                <artifactId>com.springsource.org.aspectj.tools</artifactId>
+                <version>${aspectj.version}</version>
+            </dependency>
             
             <!-- Others -->
             <dependency>
