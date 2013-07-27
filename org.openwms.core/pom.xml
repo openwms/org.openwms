@@ -36,7 +36,7 @@
     <properties>
         <moduleDir>../..</moduleDir>
         <property.org.graniteds-core.version>1.2.0_SP1</property.org.graniteds-core.version>
-        <core.version>0.2-SNAPSHOT</core.version>
+        <module.version>0.2-SNAPSHOT</module.version>
         <bundle.version>0.2.SNAPSHOT</bundle.version>
     </properties>
 
@@ -110,86 +110,86 @@
 	        <dependency>
 	            <groupId>${project.groupId}</groupId>
 	            <artifactId>org.openwms.core.domain</artifactId>
-	            <version>${core.version}</version>
+	            <version>${module.version}</version>
 	        </dependency>
 	        <dependency>
 	            <groupId>${project.groupId}</groupId>
 	            <artifactId>org.openwms.core.domain.as</artifactId>
-	            <version>${core.version}</version>
+	            <version>${module.version}</version>
 	            <type>swc</type>
 	        </dependency>
 	        <dependency>
 	            <groupId>${project.groupId}</groupId>
 	            <artifactId>org.openwms.core.test</artifactId>
-	            <version>${core.version}</version>
+	            <version>${module.version}</version>
 	            <type>test-jar</type>
 	            <scope>test</scope>
 	        </dependency>
 	        <dependency>
 	            <groupId>${project.groupId}</groupId>
 	            <artifactId>org.openwms.core.infrastructure.configuration</artifactId>
-	            <version>${core.version}</version>
+	            <version>${module.version}</version>
 	            <type>properties</type>
 	        </dependency>
             <dependency>
                 <groupId>${project.groupId}</groupId>
                 <artifactId>org.openwms.core.infrastructure.configuration.provider</artifactId>
-                <version>${core.version}</version>
+                <version>${module.version}</version>
             </dependency>
 	        <dependency>
 	            <groupId>${project.groupId}</groupId>
 	            <artifactId>org.openwms.core.infrastructure.hsql</artifactId>
-	            <version>${core.version}</version>
+	            <version>${module.version}</version>
 	        </dependency>
 	        <dependency>
 	            <groupId>${project.groupId}</groupId>
 	            <artifactId>org.openwms.core.infrastructure.oracle</artifactId>
-	            <version>${core.version}</version>
+	            <version>${module.version}</version>
 	        </dependency>
 	        <dependency>
 	            <groupId>${project.groupId}</groupId>
 	            <artifactId>org.openwms.core.infrastructure.postgres</artifactId>
-	            <version>${core.version}</version>
+	            <version>${module.version}</version>
 	        </dependency>
 	        <dependency>
 	            <groupId>${project.groupId}</groupId>
 	            <artifactId>org.openwms.core.integration</artifactId>
-	            <version>${core.version}</version>
+	            <version>${module.version}</version>
 	        </dependency>
 	        <dependency>
 	            <groupId>${project.groupId}</groupId>
 	            <artifactId>org.openwms.core.integration.eclipselink</artifactId>
-	            <version>${core.version}</version>
+	            <version>${module.version}</version>
 	        </dependency>
 	        <dependency>
 	            <groupId>${project.groupId}</groupId>
 	            <artifactId>org.openwms.core.integration.hibernate</artifactId>
-	            <version>${core.version}</version>
+	            <version>${module.version}</version>
 	        </dependency>
 	        <dependency>
 	            <groupId>${project.groupId}</groupId>
 	            <artifactId>org.openwms.core.integration.file</artifactId>
-	            <version>${core.version}</version>
+	            <version>${module.version}</version>
 	        </dependency>
             <dependency>
                 <groupId>${project.groupId}</groupId>
                 <artifactId>org.openwms.core.integration.jpa</artifactId>
-                <version>${core.version}</version>
+                <version>${module.version}</version>
             </dependency>
 	        <dependency>
 	            <groupId>${project.groupId}</groupId>
 	            <artifactId>org.openwms.core.service.api</artifactId>
-	            <version>${core.version}</version>
+	            <version>${module.version}</version>
 	        </dependency>
 	        <dependency>
 	            <groupId>${project.groupId}</groupId>
 	            <artifactId>org.openwms.core.service.spring</artifactId>
-	            <version>${core.version}</version>
+	            <version>${module.version}</version>
 	        </dependency>
 	        <dependency>
 	            <groupId>${project.groupId}</groupId>
 	            <artifactId>org.openwms.core.util</artifactId>
-	            <version>${core.version}</version>
+	            <version>${module.version}</version>
 	        </dependency>
 	    </dependencies>
 	</dependencyManagement>

@@ -36,6 +36,7 @@
     <properties>
         <moduleDir>../..</moduleDir>
         <core.version>0.2-SNAPSHOT</core.version>
+        <module.version>0.2-SNAPSHOT</module.version>
         <bundle.version>0.2.SNAPSHOT</bundle.version>
     </properties>
 
@@ -95,50 +96,50 @@
             <dependency>
                 <groupId>${project.groupId}</groupId>
                 <artifactId>org.openwms.common.domain</artifactId>
-                <version>${project.version}</version>
+                <version>${module.version}</version>
             </dependency>
             <dependency>
                 <groupId>${project.groupId}</groupId>
                 <artifactId>org.openwms.common.domain.as</artifactId>
-                <version>${project.version}</version>
+                <version>${module.version}</version>
                 <type>swc</type>
             </dependency>
             <dependency>
                 <groupId>${project.groupId}</groupId>
                 <artifactId>org.openwms.common.flex.lib</artifactId>
-                <version>${project.version}</version>
+                <version>${module.version}</version>
                 <type>swc</type>
             </dependency>
             <dependency>
                 <groupId>${project.groupId}</groupId>
                 <artifactId>org.openwms.common.flex.module</artifactId>
-                <version>${project.version}</version>
+                <version>${module.version}</version>
                 <type>swf</type>
             </dependency>
             <dependency>
                 <groupId>${project.groupId}</groupId>
                 <artifactId>org.openwms.common.integration</artifactId>
-                <version>${project.version}</version>
+                <version>${module.version}</version>
             </dependency>
             <dependency>
                 <groupId>${project.groupId}</groupId>
                 <artifactId>org.openwms.common.integration.jpa</artifactId>
-                <version>${project.version}</version>
+                <version>${module.version}</version>
             </dependency>
             <dependency>
                 <groupId>${project.groupId}</groupId>
                 <artifactId>org.openwms.common.service.api</artifactId>
-                <version>${project.version}</version>
+                <version>${module.version}</version>
             </dependency>
             <dependency>
                 <groupId>${project.groupId}</groupId>
                 <artifactId>org.openwms.common.service.spring</artifactId>
-                <version>${project.version}</version>
+                <version>${module.version}</version>
             </dependency>
             <dependency>
                 <groupId>${project.groupId}</groupId>
                 <artifactId>org.openwms.common.util</artifactId>
-                <version>${project.version}</version>
+                <version>${module.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>
