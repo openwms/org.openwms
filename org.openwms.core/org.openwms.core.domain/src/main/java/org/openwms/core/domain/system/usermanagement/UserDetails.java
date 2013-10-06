@@ -236,6 +236,9 @@ public class UserDetails implements ImageProvider, Serializable {
      */
     @Override
     public byte[] getImage() {
+        if (image == null) {
+            return new byte[0];
+        }
         return Arrays.copyOf(image, image.length);
     }
 
@@ -244,7 +247,7 @@ public class UserDetails implements ImageProvider, Serializable {
      */
     @Override
     public void setImage(byte[] img) {
-        image = Arrays.copyOf(img, img.length);
+        image = img == null ? new byte[0] : Arrays.copyOf(img, img.length);
     }
 
     /**

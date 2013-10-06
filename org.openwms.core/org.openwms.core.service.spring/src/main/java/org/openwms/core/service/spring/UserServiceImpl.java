@@ -94,7 +94,7 @@ public class UserServiceImpl implements UserService {
     /**
      * {@inheritDoc}
      * 
-     * Implementation is null-safe.
+     * Implementation returns an empty list in case of no result.
      */
     @Override
     public List<User> findAll() {
