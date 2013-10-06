@@ -18,61 +18,67 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
-package org.openwms.core.service.spring;
+package org.openwms.core.rest.user;
 
-import org.openwms.core.domain.system.usermanagement.SecurityObject;
-import org.springframework.security.core.GrantedAuthority;
+import java.io.Serializable;
+import java.util.Arrays;
 
 /**
- * A SecurityObjectAuthority.
+ * A UserPassword.
  * 
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  * @version $Revision: $
- * @since 0.2
- * @see org.springframework.security.core.GrantedAuthority
+ * @since 0.1
  */
-class SecurityObjectAuthority implements GrantedAuthority {
+public class UserPassword implements Serializable {
 
-    private static final long serialVersionUID = -7308040835860060411L;
-    private final SecurityObject sObj;
+    private final String username;
+    private final char[] password;
 
     /**
-     * Create a new SecurityObjectAuthority.
+     * Create a new UserPassword.
      * 
-     * @param securityObject
-     *            A {@link SecurityObject} to use as authority carrier.
+     * @param username
+     * @param password
      */
-    public SecurityObjectAuthority(SecurityObject securityObject) {
-        sObj = securityObject;
+    public UserPassword(String username, char[] password) {
+        super();
+        this.username = username;
+        this.password = password;
     }
 
     /**
-     * {@inheritDoc}
+     * Get the username.
      * 
-     * Return the name of the wrapped {@link SecurityObject}.
+     * @return the username.
      */
-    @Override
-    public String getAuthority() {
-        return sObj.getName();
+    public String getUsername() {
+        return username;
     }
 
     /**
-     * {@inheritDoc}
+     * Get the password.
      * 
-     * Uses sObj for calculation.
+     * @return the password.
+     */
+    public char[] getPassword() {
+        return password;
+    }
+
+    /**
+     * @see java.lang.Object#hashCode()
      */
     @Override
     public int hashCode() {
         final int prime = 31;
-        int result = super.hashCode();
-        result = prime * result + ((sObj == null) ? 0 : sObj.hashCode());
+        int result = 1;
+        result = prime * result + Arrays.hashCode(password);
+        result = prime * result + ((username == null) ? 0 : username.hashCode());
         return result;
     }
 
     /**
-     * {@inheritDoc}
-     * 
-     * Uses sObj for comparison.
+     * @see java.lang.Object#equals(java.lang.Object)
      */
     @Override
     public boolean equals(Object obj) {
@@ -85,25 +91,17 @@ class SecurityObjectAuthority implements GrantedAuthority {
         if (getClass() != obj.getClass()) {
             return false;
         }
-        SecurityObjectAuthority other = (SecurityObjectAuthority) obj;
-        if (sObj == null) {
-            if (other.sObj != null) {
+        UserPassword other = (UserPassword) obj;
+        if (!Arrays.equals(password, other.password)) {
+            return false;
+        }
+        if (username == null) {
+            if (other.username != null) {
                 return false;
             }
-        } else if (!sObj.equals(other.sObj)) {
+        } else if (!username.equals(other.username)) {
             return false;
         }
         return true;
     }
-
-    /**
-     * Delegate to the wrapped SecurityObject.
-     * 
-     * @see java.lang.Object#toString()
-     */
-    @Override
-    public String toString() {
-        return sObj.toString();
-    }
-
 }

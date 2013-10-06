@@ -114,6 +114,7 @@ public class AuthenticationController {
             roles.add(authority.toString());
         }
         authResource.setGrants(roles);
+        authResource.resetPassword();
         authResource.setToken(TokenUtils.createToken(userDetails));
         return authResource;
     }
