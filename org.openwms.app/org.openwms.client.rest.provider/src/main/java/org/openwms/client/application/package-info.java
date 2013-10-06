@@ -21,4 +21,4 @@
 /**
  * Contains base types that are responsible for application startup.
  */
-package org.openwms.client.angularjs;
+package org.openwms.client.application;

@@ -80,7 +80,7 @@ public class TokenUtils {
         } catch (NoSuchAlgorithmException e) {
             throw new IllegalStateException("No MD5 algorithm found on platform!");
         }
-        return new String(Sha512DigestUtils.sha(digest.digest(signatureBuilder.toString().getBytes())));
+        return new String(Sha512DigestUtils.shaHex(digest.digest(signatureBuilder.toString().getBytes())));
     }
 
     /**
