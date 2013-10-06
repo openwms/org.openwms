@@ -3,7 +3,7 @@
 /bin/
 target/
 libs/
- 
+
 # OS Files #
 .DS_Store
  
@@ -46,6 +46,7 @@ Desktop.ini
 # IDEA
 ######################
 *.iml
+*.idea
  
 ######################
 # Eclipse
