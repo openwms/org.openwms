@@ -23,6 +23,7 @@ package org.openwms.client.security;
 import java.io.Serializable;
 import java.util.List;
 
+import org.codehaus.jackson.annotate.JsonIgnore;
 import org.codehaus.jackson.annotate.JsonIgnoreProperties;
 
 /**
@@ -85,6 +86,14 @@ public final class AuthResource implements Serializable {
      */
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    /**
+     * Reset password to an empty String.
+     */
+    @JsonIgnore
+    public void resetPassword() {
+        this.password = "";
     }
 
     /**

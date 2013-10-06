@@ -408,6 +408,11 @@
         <maven.compile.targetLevel>${jdkVersion}</maven.compile.targetLevel>
         <maven.compile.sourceLevel>${jdkVersion}</maven.compile.sourceLevel>
         <maven.min.version>3.0.4</maven.min.version>
+        
+        <!-- =================== -->
+        <!-- Submodule versions  -->
+        <!-- =================== -->
+        <rest.version>0.1-SNAPSHOT</rest.version>
 
         <!-- =================== -->
         <!-- Dependency versions -->

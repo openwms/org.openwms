@@ -26,19 +26,16 @@
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <groupId>org.openwms</groupId>
-        <artifactId>org.openwms</artifactId>
+        <artifactId>org.openwms.app</artifactId>
         <version>0.2-SNAPSHOT</version>
     </parent>
     <artifactId>org.openwms.client.rest.provider</artifactId>
-    <version>0.1-SNAPSHOT</version>
+    <version>${rest.version}</version>
     <packaging>war</packaging>
     <name>${project.artifactId}</name>
 
     <properties>
         <moduleDir>../../..</moduleDir>
-        <core.version>0.2-SNAPSHOT</core.version>
-        <common.version>0.2-SNAPSHOT</common.version>
-        <tms.version>0.2-SNAPSHOT</tms.version>
     </properties>
 
     <build>
@@ -59,7 +56,6 @@
         </plugins>
         <pluginManagement>
             <plugins>
-                <!--This plugin's configuration is used to store Eclipse m2e settings only. It has no influence on the Maven build itself.-->
                 <plugin>
                     <groupId>org.eclipse.m2e</groupId>
                     <artifactId>lifecycle-mapping</artifactId>
@@ -99,10 +95,20 @@
             </activation>
             <properties>
                 <dependency.scope>compile</dependency.scope>
-                <openwms.configuration.version>0.2-SNAPSHOT</openwms.configuration.version>
+                <openwms.configuration.version>${core.version}</openwms.configuration.version>
             </properties>
             <dependencies>
                 <!-- Project CORE dependencies -->
+                <dependency>
+                    <groupId>org.openwms</groupId>
+                    <artifactId>org.openwms.core.client.rest</artifactId>
+                    <version>${rest.version}</version>
+                </dependency>
+                <dependency>
+                    <groupId>${project.groupId}</groupId>
+                    <artifactId>org.openwms.core.domain</artifactId>
+                    <version>${core.version}</version>
+                </dependency>
                 <dependency>
                     <groupId>${project.groupId}</groupId>
                     <artifactId>org.openwms.core.util</artifactId>
@@ -136,6 +142,11 @@
                 <dependency>
                     <groupId>${project.groupId}</groupId>
                     <artifactId>org.openwms.core.integration.jpa</artifactId>
+                    <version>${core.version}</version>
+                </dependency>
+                <dependency>
+                    <groupId>org.openwms</groupId>
+                    <artifactId>org.openwms.core.service.api</artifactId>
                     <version>${core.version}</version>
                 </dependency>
                 <dependency>
@@ -228,6 +239,12 @@
                 <dependency>
                     <groupId>org.springframework.osgi</groupId>
                     <artifactId>org.springframework.osgi.core</artifactId>
+                    <exclusions>
+                        <exclusion>
+                            <groupId>org.springframework</groupId>
+                            <artifactId>org.springframework.aop</artifactId>
+                        </exclusion>
+                    </exclusions>
                 </dependency>
                 <!-- OSGi libraries needed to validate against schema file -->
                 <dependency>
@@ -257,21 +274,6 @@
 
     <dependencies>
         <!-- Project dependencies -->
-        <dependency>
-            <groupId>org.openwms</groupId>
-            <artifactId>org.openwms.core.domain</artifactId>
-            <version>${core.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.openwms</groupId>
-            <artifactId>org.openwms.core.service.rest</artifactId>
-            <version>0.1-SNAPSHOT</version>
-        </dependency>
-        <dependency>
-            <groupId>org.openwms</groupId>
-            <artifactId>org.openwms.core.service.api</artifactId>
-            <version>${core.version}</version>
-        </dependency>
         
         <!-- Spring Framework -->
         <dependency>
