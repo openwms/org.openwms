@@ -42,21 +42,12 @@ public final class AuthResource implements Serializable {
     private String username;
     private String password;
     private String token;
-    private List<String> roles;
+    private List<String> grants;
 
     /**
      * Create a new AuthResource.
-     * 
-     * @param username
-     * @param password
-     * @param token
      */
-    public AuthResource(String username, String password, String token) {
-        super();
-        this.username = username;
-        this.password = password;
-        this.token = token;
-    }
+    public AuthResource() {}
 
     /**
      * Get the username.
@@ -116,22 +107,22 @@ public final class AuthResource implements Serializable {
     }
 
     /**
-     * Get the roles.
+     * Get the grants.
      * 
-     * @return the roles.
+     * @return the grants.
      */
-    public List<String> getRoles() {
-        return roles;
+    public List<String> getGrants() {
+        return grants;
     }
 
     /**
-     * Set the roles.
+     * Set the grants.
      * 
-     * @param roles
-     *            The roles to set.
+     * @param grants
+     *            The grants to set.
      */
-    public void setRoles(List<String> roles) {
-        this.roles = roles;
+    public void setGrants(List<String> grants) {
+        this.grants = grants;
     }
 
     /**
@@ -142,7 +133,7 @@ public final class AuthResource implements Serializable {
         final int prime = 31;
         int result = 1;
         result = prime * result + ((password == null) ? 0 : password.hashCode());
-        result = prime * result + ((roles == null) ? 0 : roles.hashCode());
+        result = prime * result + ((grants == null) ? 0 : grants.hashCode());
         result = prime * result + ((token == null) ? 0 : token.hashCode());
         result = prime * result + ((username == null) ? 0 : username.hashCode());
         return result;
@@ -170,11 +161,11 @@ public final class AuthResource implements Serializable {
         } else if (!password.equals(other.password)) {
             return false;
         }
-        if (roles == null) {
-            if (other.roles != null) {
+        if (grants == null) {
+            if (other.grants != null) {
                 return false;
             }
-        } else if (!roles.equals(other.roles)) {
+        } else if (!grants.equals(other.grants)) {
             return false;
         }
         if (token == null) {
