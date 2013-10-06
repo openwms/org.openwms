@@ -21,4 +21,11 @@
 		<nature>com.adobe.flexbuilder.project.flexnature</nature>
 		<nature>com.adobe.flexbuilder.project.actionscriptnature</nature>
 	</natures>
+	<linkedResources>
+		<link>
+			<name>bin-debug</name>
+			<type>2</type>
+			<location>/data/servers/apache-tomcat-7.0.22/server1/webapps/org.openwms.client.flex.wrapper</location>
+		</link>
+	</linkedResources>
 </projectDescription>
