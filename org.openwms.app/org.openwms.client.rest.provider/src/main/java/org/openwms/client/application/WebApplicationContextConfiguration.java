@@ -20,7 +20,7 @@
  */
 package org.openwms.client.application;
 
-import org.openwms.core.infrastructure.configuration.ConfigurationApplicationContextCreator;
+import org.openwms.core.infrastructure.configuration.ConfigurationApplicationContextConfiguration;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
@@ -44,7 +44,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter
 @Configuration
 @ComponentScan(basePackages = { "org.openwms" })
 @EnableWebMvc
-@Import({ ConfigurationApplicationContextCreator.class })
+@Import({ ConfigurationApplicationContextConfiguration.class })
 @ImportResource({ "classpath:META-INF/spring/applicationContext-security.xml",
         "classpath*:META-INF/spring/module-context.xml", "classpath*:META-INF/spring/noosgi-context.xml" })
 public class WebApplicationContextConfiguration extends WebMvcConfigurerAdapter {
