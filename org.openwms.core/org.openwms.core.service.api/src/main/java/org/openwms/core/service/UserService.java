@@ -54,6 +54,17 @@ public interface UserService {
     List<User> findAll();
 
     /**
+     * Find and return an {@link User} by it's unique <tt>id</tt>.
+     * Implementation classes may throw an exception when no User with that
+     * <tt>id</tt> was found.
+     * 
+     * @param id
+     *            The unique id
+     * @return The User instance
+     */
+    User findById(Long id);
+
+    /**
      * Call this method to store an image for an {@link User}.
      * 
      * @param username

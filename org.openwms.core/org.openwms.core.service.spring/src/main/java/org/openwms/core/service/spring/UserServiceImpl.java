@@ -108,6 +108,23 @@ public class UserServiceImpl implements UserService {
     /**
      * {@inheritDoc}
      * 
+     * If no User with the <tt>id</tt> exist, an {@link UserNotFoundException}
+     * is thrown.
+     * 
+     * @see org.openwms.core.service.UserService#findById(java.lang.Long)
+     */
+    @Override
+    public User findById(Long id) {
+        User user = dao.findById(id);
+        if (user == null) {
+            throw new UserNotFoundException("User with id [" + id + "] not found");
+        }
+        return user;
+    }
+
+    /**
+     * {@inheritDoc}
+     * 
      * @throws UserNotFoundException
      *             when no User was found with this username.
      */
