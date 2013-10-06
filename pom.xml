@@ -421,6 +421,7 @@
         <granite.version>2.3.2.GA</granite.version>
         <hibernate.version>4.2.3.Final</hibernate.version>
         <!--hibernate.version>3.4.0.GA-A</hibernate.version-->
+        <jackson.version>1.9.7</jackson.version>
         <javax.persistence.version>1.0.0</javax.persistence.version>
         <jsf.api.version>2.1.4</jsf.api.version>
         <jsf.impl.version>2.1.4</jsf.impl.version>
@@ -711,6 +712,9 @@
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-war-plugin</artifactId>
                     <version>${plugin.war.version}</version>
+                    <configuration>
+                        <failOnMissingWebXml>false</failOnMissingWebXml>
+                    </configuration>
                 </plugin>
 
                 <plugin>
@@ -1259,6 +1263,20 @@
                 <artifactId>com.springsource.net.sf.ehcache</artifactId>
                 <version>1.6.2</version>
             </dependency>
+
+            <!-- REST dependencies -->
+            <!-- NON OSGI ARTIFACT -->
+            <dependency>
+                <groupId>org.codehaus.jackson</groupId>
+                <artifactId>jackson-mapper-asl</artifactId>
+                <version>${jackson.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.codehaus.jackson</groupId>
+                <artifactId>jackson-core-asl</artifactId>
+                <version>${jackson.version}</version>
+            </dependency>
+            <!-- NON OSGI ARTIFACT -->
 
             <!-- Weaver -->
             <dependency>
