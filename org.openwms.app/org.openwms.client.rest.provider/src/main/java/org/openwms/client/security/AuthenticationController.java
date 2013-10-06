@@ -113,7 +113,7 @@ public class AuthenticationController {
         for (GrantedAuthority authority : userDetails.getAuthorities()) {
             roles.add(authority.toString());
         }
-        authResource.setRoles(roles);
+        authResource.setGrants(roles);
         authResource.setToken(TokenUtils.createToken(userDetails));
         return authResource;
     }
