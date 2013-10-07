@@ -20,13 +20,16 @@
  */
 package org.openwms.core.service.spring;
 
-import static junit.framework.Assert.assertEquals;
-import static junit.framework.Assert.assertFalse;
-import static junit.framework.Assert.assertTrue;
-import static junit.framework.Assert.fail;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
+
+import java.util.List;
 
 import javax.persistence.NoResultException;
 
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.openwms.core.domain.system.usermanagement.SystemUser;
@@ -235,6 +238,30 @@ public class UserServiceTest extends AbstractJpaSpringContextTests {
     @Test
     public final void testFindAll() {
         assertEquals("1 User is expected", 1, srv.findAll().size());
+    }
+
+    /**
+     * Test to verify that the previously User can be found by it's assigned
+     * technical key.
+     */
+    @Test
+    public final void testFindById() {
+        List<User> users = srv.findAll();
+        assertEquals("1 User is expected", 1, users.size());
+        User user = srv.findById(users.get(0).getId());
+        Assert.assertNotNull("We expect to get back an instance", user);
+    }
+
+    /**
+     * This test tries to find an User with a non existing technical id. This
+     * must end up in any kind of RuntimeException.
+     */
+    @Test(expected = RuntimeException.class)
+    public final void testFindByIdNegative() {
+        List<User> users = srv.findAll();
+        assertEquals("1 User is expected", 1, users.size());
+        srv.findById(users.get(0).getId() + 1);
+        Assert.fail("We expect to run into some kind of RuntimeException when search for an User with a technical key greater than that previously assigned one, because that User should not exist");
     }
 
     /**
