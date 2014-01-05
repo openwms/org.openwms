@@ -156,8 +156,6 @@
             <name>Mischa Farbstein</name>
             <email>mischazurich@users.sourceforge.net</email>
             <url>https://sourceforge.net/users/mischazurich</url>
-            <organization>Trivadis AG</organization>
-            <organizationUrl>http://www.trivadis.com</organizationUrl>
             <timezone>+2</timezone>
             <roles>
                 <role>Developer</role>
@@ -233,26 +231,7 @@
             </properties>
         </profile>
         <profile>
-            <id>central</id>
-            <properties>
-                <!-- Web Site deployment -->
-                <distribution.serverId>shell.sourceforge.net</distribution.serverId>
-                <distribution.serverProtocol>scp</distribution.serverProtocol>
-                <distribution.serverUrl.rootPath>shell.sourceforge.net/home/project-web/openwms2005/htdocs</distribution.serverUrl.rootPath>
-                <distribution.serverUrl.sourcePath>${distribution.serverUrl.rootPath}/development/reference/${project.version}</distribution.serverUrl.sourcePath>
-                <distribution.serverUrl.docsPath>${distribution.serverUrl.rootPath}/docs</distribution.serverUrl.docsPath>
-                <!-- Maven Repo Artifact deployment -->
-                <distribution.repo.serverId>sonatype-nexus-staging</distribution.repo.serverId>
-                <distribution.repo.serverProtocol>https</distribution.repo.serverProtocol>
-                <distribution.repo.serverUrl.rootPath>oss.sonatype.org/service/local/staging/deploy/maven2</distribution.repo.serverUrl.rootPath>
-                <distribution.repo.snapshot.serverUrl.rootPath>oss.sonatype.org/content/repositories/snapshots</distribution.repo.snapshot.serverUrl.rootPath>
-            </properties>
-        </profile>
-        <profile>
             <id>public</id>
-            <activation>
-                <activeByDefault>true</activeByDefault>
-            </activation>
             <properties>
                 <!-- Web Site deployment -->
                 <distribution.serverId>shell.sourceforge.net</distribution.serverId>
@@ -284,8 +263,30 @@
         <profile>
             <id>all</id>
             <activation>
-                <activeByDefault>true</activeByDefault>
+                <property>
+                    <name>${env.all}</name>
+                    <value>true</value>
+                </property>
             </activation>
+            <properties>
+                <!-- =================== -->
+                <!-- Client technology   -->
+                <!-- =================== -->
+                <angularjs>true</angularjs>
+                <!--flex>true</flex-->
+
+                <!-- Web Site deployment -->
+                <distribution.serverId>shell.sourceforge.net</distribution.serverId>
+                <distribution.serverProtocol>scp</distribution.serverProtocol>
+                <distribution.serverUrl.rootPath>shell.sourceforge.net/home/project-web/openwms2005/htdocs</distribution.serverUrl.rootPath>
+                <distribution.serverUrl.sourcePath>${distribution.serverUrl.rootPath}/development/reference/${project.version}</distribution.serverUrl.sourcePath>
+                <distribution.serverUrl.docsPath>${distribution.serverUrl.rootPath}/docs</distribution.serverUrl.docsPath>
+                <!-- Maven Repo Artifact deployment -->
+                <distribution.repo.serverId>sonatype-nexus-staging</distribution.repo.serverId>
+                <distribution.repo.serverProtocol>https</distribution.repo.serverProtocol>
+                <distribution.repo.serverUrl.rootPath>oss.sonatype.org/service/local/staging/deploy/maven2</distribution.repo.serverUrl.rootPath>
+                <distribution.repo.snapshot.serverUrl.rootPath>oss.sonatype.org/content/repositories/snapshots</distribution.repo.snapshot.serverUrl.rootPath>
+            </properties>
             <modules>
                 <module>org.openwms.core</module>
                 <module>org.openwms.common</module>
@@ -405,6 +406,9 @@
         <moduleDir>.</moduleDir>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <jdkVersion>1.7</jdkVersion>
+        
+        <env.all>true</env.all>
+
         <maven.compile.targetLevel>${jdkVersion}</maven.compile.targetLevel>
         <maven.compile.sourceLevel>${jdkVersion}</maven.compile.sourceLevel>
         <maven.min.version>3.0.4</maven.min.version>
@@ -413,6 +417,8 @@
         <!-- Submodule versions  -->
         <!-- =================== -->
         <rest.version>0.1-SNAPSHOT</rest.version>
+        <angularjs.client.version>0.1-SNAPSHOT</angularjs.client.version>
+        <flex.client.version>0.2-SNAPSHOT</flex.client.version>
 
         <!-- =================== -->
         <!-- Dependency versions -->

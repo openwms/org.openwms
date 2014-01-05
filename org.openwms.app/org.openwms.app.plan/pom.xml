@@ -83,7 +83,7 @@
                             <stripVersion>false</stripVersion>
                             <outputDirectory>${project.build.directory}/repository/usr</outputDirectory>
                             <overWriteIfNewer>true</overWriteIfNewer>
-                            <excludeArtifactIds>org.openwms.client.flex.wrapper</excludeArtifactIds>
+                            <excludeArtifactIds>org.openwms.client.flex.wrapper,org.openwms.client.angular.wrapper</excludeArtifactIds>
                             <excludeGroupIds>javax.transaction,javax.persistence,org.junit,org.slf4j,com.springsource.dmserver,org.apache.log4j</excludeGroupIds>
                         </configuration>
                     </execution>
@@ -98,7 +98,7 @@
                             <stripVersion>false</stripVersion>
                             <outputDirectory>${project.build.directory}/pickup</outputDirectory>
                             <overWriteIfNewer>true</overWriteIfNewer>
-                            <includeArtifactIds>org.openwms.client.flex.wrapper</includeArtifactIds>
+                            <includeArtifactIds>org.openwms.client.flex.wrapper,org.openwms.client.angularjs.wrapper</includeArtifactIds>
                             <excludeGroupIds>javax.transaction,javax.persistence,org.junit,org.slf4j,com.springsource.dmserver,org.apache.log4j</excludeGroupIds>
                         </configuration>
                     </execution>
@@ -165,6 +165,47 @@
 
         </plugins>
     </build>
+
+    <profiles>
+        <profile>
+            <id>flex</id>
+            <activation>
+                <property>
+                    <name>flex</name>
+                </property>
+            </activation>
+            <dependencies>
+                <dependency>
+                    <groupId>${project.groupId}</groupId>
+                    <artifactId>org.openwms.client.flex.wrapper</artifactId>
+                    <version>${flex.client.version}</version>
+                    <type>war</type>
+                </dependency>
+                <dependency>
+                    <groupId>org.graniteds</groupId>
+                    <artifactId>granite-core</artifactId>
+                    <scope>provided</scope>
+                </dependency>
+            </dependencies>
+        </profile>
+        <profile>
+            <id>angularjs</id>
+            <activation>
+                <property>
+                    <name>angularjs</name>
+                </property>
+            </activation>
+            <dependencies>
+                <dependency>
+                    <groupId>${project.groupId}</groupId>
+                    <artifactId>org.openwms.client.angularjs.wrapper</artifactId>
+                    <version>${angularjs.client.version}</version>
+                    <type>war</type>
+                </dependency>
+            </dependencies>
+        </profile>
+    </profiles>
+
     <dependencies>
         <!-- Spring Framework -->
         <dependency>
@@ -309,13 +350,6 @@
             <artifactId>org.openwms.tms.service.spring</artifactId>
             <version>${tms.version}</version>
         </dependency>
-        <!-- Project client dependencies -->
-        <dependency>
-            <groupId>${project.groupId}</groupId>
-            <artifactId>org.openwms.client.flex.wrapper</artifactId>
-            <version>${project.version}</version>
-            <type>war</type>
-        </dependency>
 
         <!-- Resources -->
         <dependency>
@@ -347,11 +381,6 @@
         <dependency>
             <groupId>net.sourceforge.ehcache</groupId>
             <artifactId>com.springsource.net.sf.ehcache</artifactId>
-            <scope>provided</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.graniteds</groupId>
-            <artifactId>granite-core</artifactId>
             <scope>provided</scope>
         </dependency>
     </dependencies>

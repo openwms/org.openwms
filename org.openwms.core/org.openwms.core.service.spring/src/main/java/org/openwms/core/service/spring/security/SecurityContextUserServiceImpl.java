@@ -64,7 +64,7 @@ public class SecurityContextUserServiceImpl implements UserDetailsService, Appli
     private static final Logger LOGGER = LoggerFactory.getLogger(SecurityContextUserServiceImpl.class);
 
     @Value("#{ globals['system.user'] }")
-    private String systemUser = SystemUser.SYSTEM_USERNAME;
+    private final String systemUser = SystemUser.SYSTEM_USERNAME;
     @Autowired
     @Qualifier("userDao")
     private GenericDao<User, Long> dao;

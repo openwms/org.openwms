@@ -29,6 +29,8 @@ import org.openwms.core.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -43,14 +45,16 @@ import org.springframework.web.bind.annotation.ResponseBody;
  * @version $Revision: $
  * @since 0.1
  */
+@Transactional
+@Service
 @Controller
-@RequestMapping("/api/user")
+@RequestMapping("/user")
 public class UsersController {
 
     @Autowired
     private UserService service;
     @Autowired
-    private BeanMapper mapper;
+    private BeanMapper<User, UserVO> mapper;
 
     /**
      * Takes a newly created User instance and persists it. It does not matter
@@ -79,13 +83,30 @@ public class UsersController {
     @RequestMapping(method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
     public Collection<UserVO> findAllUsers() {
-        return mapper.map(service.findAll());
+        return mapper.map(service.findAll(), UserVO.class);
     }
 
+    /**
+     * FIXME [scherrer] Comment this
+     * 
+     * @param user
+     * @return
+     */
     @RequestMapping(method = RequestMethod.PUT, produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
-    public User save(@RequestBody User user) {
-        return service.save(user);
+    public UserVO save(@RequestBody UserVO user) {
+        Long id = user.getId();
+        User toSave = mapper.mapBackwards(user, User.class);
+        if (id != null) {
+            User persistedUser = service.findById(user.getId());
+            if (persistedUser.getVersion() != user.getVersion()) {
+                throw new IllegalStateException(
+                        "User to save has changed in the meantime, please refresh or force to overwrite changes.");
+            }
+            persistedUser = mapper.mapFromTo(toSave, persistedUser);
+            return mapper.map(service.save(persistedUser), UserVO.class);
+        }
+        return mapper.map(service.save(toSave), UserVO.class);
     }
 
     @RequestMapping(method = RequestMethod.DELETE, consumes = MediaType.APPLICATION_JSON_VALUE/*

@@ -25,16 +25,18 @@ import java.io.Serializable;
 import org.codehaus.jackson.annotate.JsonAutoDetect;
 
 /**
- * A UserDetailsDTO.
+ * A UserDetailsVO.
  * 
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  * @version $Revision: $
- * 
+ * @since 0.1
  */
 @JsonAutoDetect
 public class UserDetailsVO implements Serializable {
 
-    private byte[] image;
+    private static final long serialVersionUID = 1L;
+
+    // private byte[] image;
     private String description;
     private String comment;
     private String phoneNo;
@@ -44,24 +46,25 @@ public class UserDetailsVO implements Serializable {
     private String sex;
 
     /**
+     * Create a new UserDetailsVO.
+     */
+    public UserDetailsVO() {}
+
+    /**
      * Get the image.
      * 
      * @return the image.
+     * 
+     *         public byte[] getImage() { return image; }
      */
-    public byte[] getImage() {
-        return image;
-    }
-
     /**
      * Set the image.
      * 
      * @param image
      *            The image to set.
+     * 
+     *            public void setImage(byte[] image) { this.image = image; }
      */
-    public void setImage(byte[] image) {
-        this.image = image;
-    }
-
     /**
      * Get the description.
      * 

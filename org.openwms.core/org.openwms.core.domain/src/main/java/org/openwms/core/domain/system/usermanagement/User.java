@@ -475,7 +475,7 @@ public class User extends AbstractEntity implements DomainObject<Long> {
      * @return The expiration date
      */
     public Date getExpirationDate() {
-        return new Date(expirationDate.getTime());
+        return expirationDate;
     }
 
     /**
@@ -485,7 +485,7 @@ public class User extends AbstractEntity implements DomainObject<Long> {
      *            The new expiration date to set
      */
     public void setExpirationDate(Date expDate) {
-        expirationDate = new Date(expDate.getTime());
+        expirationDate = expDate;
     }
 
     /**

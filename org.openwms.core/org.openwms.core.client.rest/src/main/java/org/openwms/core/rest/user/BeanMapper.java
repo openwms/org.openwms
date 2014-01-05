@@ -22,11 +22,11 @@ package org.openwms.core.rest.user;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 
 import org.dozer.DozerBeanMapper;
 import org.dozer.Mapper;
-import org.openwms.core.domain.system.usermanagement.User;
 import org.springframework.stereotype.Component;
 
 /**
@@ -36,19 +36,42 @@ import org.springframework.stereotype.Component;
  * @version $Revision: $
  * @since 0.1
  */
-@Component("userMapper")
-public class BeanMapper {
+@Component("beanMapper")
+public class BeanMapper<S, T> {
 
-    public UserVO map(User user) {
-        Mapper mapper = new DozerBeanMapper();
-        return mapper.map(user, UserVO.class);
+    private final Mapper mapper = new DozerBeanMapper();
+
+    public T map(S user, Class<T> clazz) {
+        return mapper.map(user, clazz);
     }
 
-    public Collection<UserVO> map(Collection<User> users) {
-        Mapper mapper = new DozerBeanMapper();
-        List<UserVO> result = new ArrayList<>(users.size());
-        for (User user : users) {
-            result.add(mapper.map(user, UserVO.class));
+    public S mapBackwards(T user, Class<S> clazz) {
+        return mapper.map(user, clazz);
+    }
+
+    public S mapFromTo(S source, S target) {
+        mapper.map(source, target);
+        return target;
+    }
+
+    public Collection<T> map(Collection<S> users, Class<T> clazz) {
+        if (users == null || users.isEmpty()) {
+            return Collections.<T> emptyList();
+        }
+        List<T> result = new ArrayList<>(users.size());
+        for (S user : users) {
+            result.add(mapper.map(user, clazz));
+        }
+        return result;
+    }
+
+    public Collection<S> mapBackwards(Collection<T> users, Class<S> clazz) {
+        if (users == null || users.isEmpty()) {
+            return Collections.<S> emptyList();
+        }
+        List<S> result = new ArrayList<>(users.size());
+        for (T user : users) {
+            result.add(mapper.map(user, clazz));
         }
         return result;
     }

@@ -37,7 +37,20 @@ import org.codehaus.jackson.annotate.JsonProperty;
 public class UserVO implements Serializable {
 
     private static final long serialVersionUID = 1698422005139820938L;
+
+    private Long id;
+    @JsonProperty("externalUser")
+    private boolean extern;
+    private String username;
+    private Date lastPasswordChange;
+    private boolean locked;
+    private String password;
+    private boolean enabled;
+    private Date expirationDate;
+    private String fullname;
+    private UserDetailsVO userDetails;
     private String token;
+    private long version;
 
     /**
      * Get the token.
@@ -266,20 +279,4 @@ public class UserVO implements Serializable {
     public void setVersion(long version) {
         this.version = version;
     }
-
-    Long id;
-    @JsonProperty("externalUser")
-    boolean extern;
-    String username;
-    Date lastPasswordChange;
-    boolean locked;
-    String password;
-    boolean enabled;
-    Date expirationDate;
-    String fullname;
-    UserDetailsVO userDetails;
-    long version;
-    // List<RoleDTO> roles;
-    // List<UserPasswordDTO> passwords;
-    // Set<UserPreferenceDTO> preferences;
 }

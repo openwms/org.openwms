@@ -21,56 +21,24 @@
 package org.openwms.core.rest.user;
 
 import java.io.Serializable;
-import java.util.Set;
 
 /**
- * A RoleDTO.
+ * A SecurityObjectVO.
  * 
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  * @version $Revision: $
  * @since 0.1
  */
-public class RoleDTO implements Serializable {
+public class SecurityObjectVO implements Serializable {
 
     private static final long serialVersionUID = 1L;
+    private String name;
+    private String description;
 
     /**
-     * Get the immutable.
-     * 
-     * @return the immutable.
+     * Create a new SecurityObjectVO.
      */
-    public Boolean getImmutable() {
-        return immutable;
-    }
-
-    /**
-     * Set the immutable.
-     * 
-     * @param immutable
-     *            The immutable to set.
-     */
-    public void setImmutable(Boolean immutable) {
-        this.immutable = immutable;
-    }
-
-    /**
-     * Get the users.
-     * 
-     * @return the users.
-     */
-    public Set<UserVO> getUsers() {
-        return users;
-    }
-
-    /**
-     * Set the users.
-     * 
-     * @param users
-     *            The users to set.
-     */
-    public void setUsers(Set<UserVO> users) {
-        this.users = users;
-    }
+    public SecurityObjectVO() {}
 
     /**
      * Get the name.
@@ -109,29 +77,4 @@ public class RoleDTO implements Serializable {
     public void setDescription(String description) {
         this.description = description;
     }
-
-    /**
-     * Get the grants.
-     * 
-     * @return the grants.
-     */
-    public Set<SecurityObjectVO> getGrants() {
-        return grants;
-    }
-
-    /**
-     * Set the grants.
-     * 
-     * @param grants
-     *            The grants to set.
-     */
-    public void setGrants(Set<SecurityObjectVO> grants) {
-        this.grants = grants;
-    }
-
-    private Boolean immutable;
-    private String name;
-    private String description;
-    private Set<UserVO> users;
-    private Set<SecurityObjectVO> grants;
 }
