@@ -54,12 +54,57 @@
         <developerConnection>scm:git:ssh://git@bitbucket.org/openwms-sources/org.openwms.git</developerConnection>
         <url>https://bitbucket.org/openwms-sources/org.openwms.git</url>
     </scm>
-    
+
     <profiles>
         <profile>
             <id>all</id>
+            <modules>
+                <module>org.openwms.core.domain</module>
+                <module>org.openwms.core.client.rest</module>
+                <module>org.openwms.core.test</module>
+                <module>org.openwms.core.infrastructure.configuration</module>
+                <module>org.openwms.core.infrastructure.configuration.provider</module>
+                <module>org.openwms.core.infrastructure.hsql</module>
+                <module>org.openwms.core.infrastructure.oracle</module>
+                <module>org.openwms.core.infrastructure.postgres</module>
+                <module>org.openwms.core.integration</module>
+                <module>org.openwms.core.integration.eclipselink</module>
+                <module>org.openwms.core.integration.hibernate</module>
+                <module>org.openwms.core.integration.file</module>
+                <module>org.openwms.core.integration.jpa</module>
+                <module>org.openwms.core.service.api</module>
+                <module>org.openwms.core.service.spring</module>
+                <module>org.openwms.core.util</module>
+            </modules>
+        </profile>
+        <profile>
+            <id>core</id>
+            <modules>
+                <module>org.openwms.core.domain</module>
+                <module>org.openwms.core.client.rest</module>
+                <module>org.openwms.core.test</module>
+                <module>org.openwms.core.infrastructure.configuration</module>
+                <module>org.openwms.core.infrastructure.configuration.provider</module>
+                <module>org.openwms.core.infrastructure.hsql</module>
+                <module>org.openwms.core.infrastructure.oracle</module>
+                <module>org.openwms.core.infrastructure.postgres</module>
+                <module>org.openwms.core.integration</module>
+                <module>org.openwms.core.integration.eclipselink</module>
+                <module>org.openwms.core.integration.hibernate</module>
+                <module>org.openwms.core.integration.file</module>
+                <module>org.openwms.core.integration.jpa</module>
+                <module>org.openwms.core.service.api</module>
+                <module>org.openwms.core.service.spring</module>
+                <module>org.openwms.core.util</module>
+            </modules>
+        </profile>
+        <profile>
+            <id>flex</id>
             <activation>
-                <activeByDefault>true</activeByDefault>
+                <property>
+                    <name>flex</name>
+                    <value>true</value>
+                </property>
             </activation>
             <modules>
                 <module>org.openwms.core.domain</module>
@@ -83,10 +128,15 @@
             </modules>
         </profile>
         <profile>
-            <id>core</id>
+            <id>angularjs</id>
+            <activation>
+                <property>
+                    <name>angularjs</name>
+                    <value>true</value>
+                </property>
+            </activation>
             <modules>
                 <module>org.openwms.core.domain</module>
-                <module>org.openwms.core.domain.as</module>
                 <module>org.openwms.core.client.rest</module>
                 <module>org.openwms.core.test</module>
                 <module>org.openwms.core.infrastructure.configuration</module>
@@ -102,104 +152,97 @@
                 <module>org.openwms.core.service.api</module>
                 <module>org.openwms.core.service.spring</module>
                 <module>org.openwms.core.util</module>
-                <module>org.openwms.client.flex.lib</module>
             </modules>
         </profile>
     </profiles>
 
-	<dependencyManagement>
-	    <dependencies>
+    <dependencyManagement>
+        <dependencies>
 	        <!-- Project dependencies -->
-	        <dependency>
-	            <groupId>${project.groupId}</groupId>
-	            <artifactId>org.openwms.core.domain</artifactId>
-	            <version>${module.version}</version>
-	        </dependency>
-	        <dependency>
-	            <groupId>${project.groupId}</groupId>
-	            <artifactId>org.openwms.core.domain.as</artifactId>
-	            <version>${module.version}</version>
-	            <type>swc</type>
-	        </dependency>
+            <dependency>
+                <groupId>${project.groupId}</groupId>
+                <artifactId>org.openwms.core.domain</artifactId>
+                <version>${module.version}</version>
+            </dependency>
             <dependency>
                 <groupId>${project.groupId}</groupId>
                 <artifactId>org.openwms.core.client.rest</artifactId>
                 <version>${rest.version}</version>
             </dependency>
-	        <dependency>
-	            <groupId>${project.groupId}</groupId>
-	            <artifactId>org.openwms.core.test</artifactId>
-	            <version>${module.version}</version>
-	            <type>test-jar</type>
-	            <scope>test</scope>
-	        </dependency>
-	        <dependency>
-	            <groupId>${project.groupId}</groupId>
-	            <artifactId>org.openwms.core.infrastructure.configuration</artifactId>
-	            <version>${module.version}</version>
-	            <type>properties</type>
-	        </dependency>
+            <dependency>
+                <groupId>${project.groupId}</groupId>
+                <artifactId>org.openwms.core.test</artifactId>
+                <version>${module.version}</version>
+                <type>test-jar</type>
+                <scope>test</scope>
+            </dependency>
+            <dependency>
+                <groupId>${project.groupId}</groupId>
+                <artifactId>org.openwms.core.infrastructure.configuration</artifactId>
+                <version>${module.version}</version>
+                <type>properties</type>
+            </dependency>
             <dependency>
                 <groupId>${project.groupId}</groupId>
                 <artifactId>org.openwms.core.infrastructure.configuration.provider</artifactId>
                 <version>${module.version}</version>
             </dependency>
-	        <dependency>
-	            <groupId>${project.groupId}</groupId>
-	            <artifactId>org.openwms.core.infrastructure.hsql</artifactId>
-	            <version>${module.version}</version>
-	        </dependency>
-	        <dependency>
-	            <groupId>${project.groupId}</groupId>
-	            <artifactId>org.openwms.core.infrastructure.oracle</artifactId>
-	            <version>${module.version}</version>
-	        </dependency>
-	        <dependency>
-	            <groupId>${project.groupId}</groupId>
-	            <artifactId>org.openwms.core.infrastructure.postgres</artifactId>
-	            <version>${module.version}</version>
-	        </dependency>
-	        <dependency>
-	            <groupId>${project.groupId}</groupId>
-	            <artifactId>org.openwms.core.integration</artifactId>
-	            <version>${module.version}</version>
-	        </dependency>
-	        <dependency>
-	            <groupId>${project.groupId}</groupId>
-	            <artifactId>org.openwms.core.integration.eclipselink</artifactId>
-	            <version>${module.version}</version>
-	        </dependency>
-	        <dependency>
-	            <groupId>${project.groupId}</groupId>
-	            <artifactId>org.openwms.core.integration.hibernate</artifactId>
-	            <version>${module.version}</version>
-	        </dependency>
-	        <dependency>
-	            <groupId>${project.groupId}</groupId>
-	            <artifactId>org.openwms.core.integration.file</artifactId>
-	            <version>${module.version}</version>
-	        </dependency>
+            <dependency>
+                <groupId>${project.groupId}</groupId>
+                <artifactId>org.openwms.core.infrastructure.hsql</artifactId>
+                <version>${module.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>${project.groupId}</groupId>
+                <artifactId>org.openwms.core.infrastructure.oracle</artifactId>
+                <version>${module.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>${project.groupId}</groupId>
+                <artifactId>org.openwms.core.infrastructure.postgres</artifactId>
+                <version>${module.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>${project.groupId}</groupId>
+                <artifactId>org.openwms.core.integration</artifactId>
+                <version>${module.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>${project.groupId}</groupId>
+                <artifactId>org.openwms.core.integration.eclipselink</artifactId>
+                <version>${module.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>${project.groupId}</groupId>
+                <artifactId>org.openwms.core.integration.hibernate</artifactId>
+                <version>${module.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>${project.groupId}</groupId>
+                <artifactId>org.openwms.core.integration.file</artifactId>
+                <version>${module.version}</version>
+            </dependency>
             <dependency>
                 <groupId>${project.groupId}</groupId>
                 <artifactId>org.openwms.core.integration.jpa</artifactId>
                 <version>${module.version}</version>
             </dependency>
-	        <dependency>
-	            <groupId>${project.groupId}</groupId>
-	            <artifactId>org.openwms.core.service.api</artifactId>
-	            <version>${module.version}</version>
-	        </dependency>
-	        <dependency>
-	            <groupId>${project.groupId}</groupId>
-	            <artifactId>org.openwms.core.service.spring</artifactId>
-	            <version>${module.version}</version>
-	        </dependency>
-	        <dependency>
-	            <groupId>${project.groupId}</groupId>
-	            <artifactId>org.openwms.core.util</artifactId>
-	            <version>${module.version}</version>
-	        </dependency>
-	    </dependencies>
-	</dependencyManagement>
-	
+            <dependency>
+                <groupId>${project.groupId}</groupId>
+                <artifactId>org.openwms.core.service.api</artifactId>
+                <version>${module.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>${project.groupId}</groupId>
+                <artifactId>org.openwms.core.service.spring</artifactId>
+                <version>${module.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>${project.groupId}</groupId>
+                <artifactId>org.openwms.core.util</artifactId>
+                <version>${module.version}</version>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+
 </project>

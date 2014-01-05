@@ -57,8 +57,35 @@
     <profiles>
         <profile>
             <id>all</id>
+            <modules>
+                <module>org.openwms.common.comm</module>
+                <module>org.openwms.common.domain</module>
+                <module>org.openwms.common.integration</module>
+                <module>org.openwms.common.integration.jpa</module>
+                <module>org.openwms.common.service.api</module>
+                <module>org.openwms.common.service.spring</module>
+                <module>org.openwms.common.util</module>
+            </modules>
+        </profile>
+        <profile>
+            <id>common</id>
+            <modules>
+                <module>org.openwms.common.comm</module>
+                <module>org.openwms.common.domain</module>
+                <module>org.openwms.common.integration</module>
+                <module>org.openwms.common.integration.jpa</module>
+                <module>org.openwms.common.service.api</module>
+                <module>org.openwms.common.service.spring</module>
+                <module>org.openwms.common.util</module>
+            </modules>
+        </profile>
+        <profile>
+            <id>flex</id>
             <activation>
-                <activeByDefault>true</activeByDefault>
+                <property>
+                    <name>flex</name>
+                    <value>true</value>
+                </property>
             </activation>
             <modules>
                 <module>org.openwms.common.comm</module>
@@ -74,13 +101,16 @@
             </modules>
         </profile>
         <profile>
-            <id>common</id>
+            <id>angularjs</id>
+            <activation>
+                <property>
+                    <name>angularjs</name>
+                    <value>true</value>
+                </property>
+            </activation>
             <modules>
                 <module>org.openwms.common.comm</module>
                 <module>org.openwms.common.domain</module>
-                <module>org.openwms.common.domain.as</module>
-                <module>org.openwms.common.flex.lib</module>
-                <module>org.openwms.common.flex.module</module>
                 <module>org.openwms.common.integration</module>
                 <module>org.openwms.common.integration.jpa</module>
                 <module>org.openwms.common.service.api</module>
@@ -91,30 +121,12 @@
     </profiles>
 
     <dependencyManagement>
-    	<dependencies>
+        <dependencies>
             <!-- Project dependencies -->
             <dependency>
                 <groupId>${project.groupId}</groupId>
                 <artifactId>org.openwms.common.domain</artifactId>
                 <version>${module.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>${project.groupId}</groupId>
-                <artifactId>org.openwms.common.domain.as</artifactId>
-                <version>${module.version}</version>
-                <type>swc</type>
-            </dependency>
-            <dependency>
-                <groupId>${project.groupId}</groupId>
-                <artifactId>org.openwms.common.flex.lib</artifactId>
-                <version>${module.version}</version>
-                <type>swc</type>
-            </dependency>
-            <dependency>
-                <groupId>${project.groupId}</groupId>
-                <artifactId>org.openwms.common.flex.module</artifactId>
-                <version>${module.version}</version>
-                <type>swf</type>
             </dependency>
             <dependency>
                 <groupId>${project.groupId}</groupId>
