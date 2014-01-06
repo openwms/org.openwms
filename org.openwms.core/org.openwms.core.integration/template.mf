@@ -4,6 +4,13 @@ Bundle-Version: ${bundle.version}
 Bundle-Name: ${project.artifactId}
 Bundle-ManifestVersion: 2
 Bundle-SymbolicName: ${project.artifactId}
+Name: org/openwms/core/infrastructure
+Specification-Title: ${project.description}
+Specification-Version: 1.0.0
+Specification-Vendor: OpenWMS.org
+Implementation-Title: ${project.artifactId}
+Implementation-Version: ${bundle.version}
+Implementation-Vendor: OpenWMS.org
 Import-Bundle: 
  org.openwms.core.domain;version="[0.1, 0.2]",
  com.springsource.javax.persistence;version="${osgi.javax.persistence.version}"
