@@ -4,6 +4,13 @@ Bundle-Version: ${bundle.version}
 Bundle-Name: ${project.artifactId}
 Bundle-ManifestVersion: 2
 Bundle-SymbolicName: ${project.artifactId}
+Name: org/openwms/core/domain
+Specification-Title: The OpenWMS.org domain classes of the CORE module
+Specification-Version: 1.0.0
+Specification-Vendor: OpenWMS.org
+Implementation-Title: org.openwms.core.domain
+Implementation-Version: ${bundle.version}
+Implementation-Vendor: OpenWMS.org
 Import-Bundle: 
  com.springsource.javax.persistence;version="${osgi.javax.persistence.version}",
  com.springsource.org.apache.commons.lang;version="${osgi.apache.commons.lang.version}"
