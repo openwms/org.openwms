@@ -4,6 +4,13 @@ Bundle-Version: ${bundle.version}
 Bundle-Name: ${project.artifactId}
 Bundle-ManifestVersion: 2
 Bundle-SymbolicName: ${project.artifactId}
+Name: org/openwms/core/infrastructure/oracle
+Specification-Title: ${project.description}
+Specification-Version: 1.0.0
+Specification-Vendor: OpenWMS.org
+Implementation-Title: ${project.artifactId}
+Implementation-Version: ${bundle.version}
+Implementation-Vendor: OpenWMS.org
 Import-Library: 
  org.springframework.spring;version="${osgi.spring}"
 Import-Bundle: 
