@@ -33,6 +33,7 @@
     <version>${flex.client.version}</version>
     <packaging>swc</packaging>
     <name>${project.artifactId}</name>
+    <description>A base library for the Flex client. This project contains classes and types that can be used or extended by all other Flex modules. ModuleManagement is implemented in here. No screens are included.</description>
     <properties>
         <moduleDir>../../..</moduleDir>
     </properties>

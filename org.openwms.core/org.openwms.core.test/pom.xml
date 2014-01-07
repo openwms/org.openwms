@@ -31,6 +31,7 @@
     </parent>
     <artifactId>org.openwms.core.test</artifactId>
     <name>${project.artifactId}</name>
+    <description>A project that contains classes to support proper testing. Additionally some Spring configuration is provided that starts a Spring managed test environment.</description>
     <properties>
         <moduleDir>../../..</moduleDir>
     </properties>

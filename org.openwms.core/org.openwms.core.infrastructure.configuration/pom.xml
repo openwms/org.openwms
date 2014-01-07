@@ -32,6 +32,7 @@
     <artifactId>org.openwms.core.infrastructure.configuration</artifactId>
     <packaging>properties</packaging>
     <name>${project.artifactId}</name>
+    <description>The CORE configuration project does only include a Java properties file. This file is directly deployed in a OSGi server. The server exposes this bundle as OSGi ConfigurationService to other bundles.</description>
     <properties>
         <moduleDir>../../..</moduleDir>
     </properties>

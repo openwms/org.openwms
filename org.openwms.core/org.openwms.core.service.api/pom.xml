@@ -32,7 +32,7 @@
     <artifactId>org.openwms.core.service.api</artifactId>
     <packaging>jar</packaging>
     <name>${project.artifactId}</name>
-    <description>CORE service interface definitions.</description>
+    <description>Interface definitions that are used by all clients, like the UI or subsystem drivers. Services implementations contain the business logic of the application.</description>
     <properties>
         <moduleDir>../../..</moduleDir>
     </properties>

@@ -413,6 +413,9 @@
         <maven.compile.sourceLevel>${jdkVersion}</maven.compile.sourceLevel>
         <maven.min.version>3.0.4</maven.min.version>
         
+        <!-- Used to make the Maven description property available from Bundlor -->
+        <project.description>${project.description}</project.description>
+        
         <!-- =================== -->
         <!-- Submodule versions  -->
         <!-- =================== -->

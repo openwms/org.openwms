@@ -32,6 +32,7 @@
     <artifactId>org.openwms.core.integration.jpa</artifactId>
     <packaging>jar</packaging>
     <name>${project.artifactId}</name>
+    <description>A JPA implementation of the integration layer.</description>
     <properties>
         <moduleDir>../../..</moduleDir>
         <openwms.configuration.version>0.2-SNAPSHOT</openwms.configuration.version>

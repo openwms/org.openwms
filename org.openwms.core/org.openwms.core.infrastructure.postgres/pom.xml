@@ -32,6 +32,7 @@
     <artifactId>org.openwms.core.infrastructure.postgres</artifactId>
     <packaging>jar</packaging>
     <name>${project.artifactId}</name>
+    <description>Contains a Spring configuration to create a DataSource for PostgreSQL databases. This bundle is packaged with the main application.</description>
     <properties>
         <moduleDir>../../..</moduleDir>
         <openwms.configuration.version>0.2-SNAPSHOT</openwms.configuration.version>
