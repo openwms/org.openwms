@@ -658,7 +658,7 @@ public class TransportUnit extends AbstractEntity implements DomainObject<Long> 
             if (other.barcode != null) {
                 return false;
             }
-        } else if (!barcode.equals(other.barcode)) {
+        } else if (!barcode.equals(other.getBarcode())) {
             return false;
         }
         return true;
