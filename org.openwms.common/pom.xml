@@ -57,6 +57,11 @@
     <profiles>
         <profile>
             <id>all</id>
+            <activation>
+                <property>
+                    <name>!top</name>
+                </property>
+            </activation>
             <modules>
                 <module>org.openwms.common.comm</module>
                 <module>org.openwms.common.domain</module>

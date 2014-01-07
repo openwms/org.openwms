@@ -59,6 +59,11 @@
     <profiles>
         <profile>
             <id>all</id>
+            <activation>
+                <property>
+                    <name>!top</name>
+                </property>
+            </activation>
             <modules>
                 <module>org.openwms.app.par</module>
                 <module>org.openwms.app.plan</module>
