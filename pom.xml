@@ -426,6 +426,8 @@
         <!-- =================== -->
         <!-- Dependency versions -->
         <!-- =================== -->
+        <apache.commons.beanutils.version>1.8.0</apache.commons.beanutils.version>
+        <apache.commons.collections.version>3.2.1</apache.commons.collections.version>
         <apache.commons.dbcp.version>1.2.2.osgi</apache.commons.dbcp.version>
         <apache.commons.lang.version>2.5.0</apache.commons.lang.version>
         <apache.derby.version>10.7.1.1</apache.derby.version>
@@ -494,14 +496,6 @@
 
     <pluginRepositories>
         <pluginRepository>
-            <id>com.springsource.repository.bundles.release</id>
-            <name>SpringSource Enterprise Bundle Repository - Releases</name>
-            <url>http://repository.springsource.com/maven/bundles/release</url>
-            <snapshots>
-                <enabled>false</enabled>
-            </snapshots>
-        </pluginRepository>
-        <pluginRepository>
             <id>central</id>
             <url>http://central.maven.org/maven2</url>
         </pluginRepository>
@@ -528,6 +522,15 @@
             </releases>
             <snapshots>
                 <enabled>true</enabled>
+            </snapshots>
+        </pluginRepository>
+        <pluginRepository>
+            <!-- To resolve the bundlor plugin -->
+            <id>com.springsource.repository.bundles.release</id>
+            <name>SpringSource Enterprise Bundle Repository - SpringSource Bundle Releases</name>
+            <url>http://repository.springsource.com/maven/bundles/release</url>
+            <snapshots>
+                <enabled>false</enabled>
             </snapshots>
         </pluginRepository>
     </pluginRepositories>
@@ -590,7 +593,6 @@
         <pluginManagement>
             <plugins>
                 <plugin>
-                    <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-assembly-plugin</artifactId>
                     <version>${plugin.assembly.version}</version>
                     <configuration>
@@ -617,13 +619,11 @@
                 </plugin>
 
                 <plugin>
-                    <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-clean-plugin</artifactId>
                     <version>${plugin.clean.version}</version>
                 </plugin>
 
                 <plugin>
-                    <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-compiler-plugin</artifactId>
                     <version>${plugin.compiler.version}</version>
                     <configuration>
@@ -637,7 +637,6 @@
                 </plugin>
 
                 <plugin>
-                    <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-enforcer-plugin</artifactId>
                     <version>${plugin.enforcer.version}</version>
                 </plugin>
@@ -655,7 +654,6 @@
                 </plugin>
 
                 <plugin>
-                    <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-install-plugin</artifactId>
                     <version>${plugin.install.version}</version>
                     <executions>
@@ -671,7 +669,6 @@
                 </plugin>
 
                 <plugin>
-                    <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-jar-plugin</artifactId>
                     <version>${plugin.jar.version}</version>
                     <configuration>
@@ -689,19 +686,16 @@
                 </plugin>
 
                 <plugin>
-                    <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-resources-plugin</artifactId>
                     <version>${plugin.resources.version}</version>
                 </plugin>
 
                 <plugin>
-                    <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-source-plugin</artifactId>
                     <version>${plugin.source.version}</version>
                 </plugin>
 
                 <plugin>
-                    <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-surefire-plugin</artifactId>
                     <version>${plugin.surefire.version}</version>
                     <configuration>
@@ -723,7 +717,6 @@
                 </plugin>
 
                 <plugin>
-                    <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-war-plugin</artifactId>
                     <version>${plugin.war.version}</version>
                     <configuration>
@@ -817,7 +810,6 @@
 
         <plugins>
             <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-javadoc-plugin</artifactId>
                 <version>${plugin.javadoc.version}</version>
                 <inherited>true</inherited>
@@ -883,9 +875,6 @@
                     <windowTitle>OpenWMS.org Java Sources</windowTitle>
                 </configuration>
             </plugin>
-
-            <!-- plugin> <groupId>org.apache.maven.plugins</groupId> <artifactId>maven-changelog-plugin</artifactId> <version>2.1</version> 
-                </plugin -->
 
             <plugin>
                 <groupId>org.codehaus.mojo</groupId>
@@ -1188,12 +1177,12 @@
             <dependency>
                 <groupId>org.apache.commons</groupId>
                 <artifactId>com.springsource.org.apache.commons.collections</artifactId>
-                <version>3.2.1</version>
+                <version>${apache.commons.collections.version}</version>
             </dependency>
             <dependency>
                 <groupId>org.apache.commons</groupId>
                 <artifactId>com.springsource.org.apache.commons.beanutils</artifactId>
-                <version>1.8.0</version>
+                <version>${apache.commons.beanutils.version}</version>
             </dependency>
 
             <!-- Database libraries -->
@@ -1450,6 +1439,11 @@
             <scope>${dependency.scope}</scope>
         </dependency>
         <dependency>
+            <groupId>net.sourceforge.cglib</groupId>
+            <artifactId>com.springsource.net.sf.cglib</artifactId>
+            <scope>${dependency.scope}</scope>
+        </dependency>
+        <dependency>
             <groupId>org.junit</groupId>
             <artifactId>com.springsource.org.junit</artifactId>
             <scope>test</scope>
@@ -1458,10 +1452,6 @@
             <groupId>org.mockito</groupId>
             <artifactId>mockito-all</artifactId>
             <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>net.sourceforge.cglib</groupId>
-            <artifactId>com.springsource.net.sf.cglib</artifactId>
         </dependency>
     </dependencies>
 
