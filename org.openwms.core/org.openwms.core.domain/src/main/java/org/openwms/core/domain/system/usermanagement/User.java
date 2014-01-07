@@ -475,7 +475,7 @@ public class User extends AbstractEntity implements DomainObject<Long> {
      * @return The expiration date
      */
     public Date getExpirationDate() {
-        return expirationDate;
+        return expirationDate == null ? null : new Date(expirationDate.getTime());
     }
 
     /**
