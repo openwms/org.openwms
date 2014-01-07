@@ -59,6 +59,11 @@
     <profiles>
         <profile>
             <id>all</id>
+            <activation>
+                <property>
+                    <name>!top</name>
+                </property>
+            </activation>
             <modules>
                 <module>org.openwms.core.domain</module>
                 <module>org.openwms.core.client.rest</module>

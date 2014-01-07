@@ -264,8 +264,7 @@
             <id>all</id>
             <activation>
                 <property>
-                    <name>${env.all}</name>
-                    <value>true</value>
+                    <name>!top</name>
                 </property>
             </activation>
             <properties>
@@ -406,7 +405,7 @@
         <moduleDir>.</moduleDir>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <jdkVersion>1.7</jdkVersion>
-        
+
         <env.all>true</env.all>
 
         <maven.compile.targetLevel>${jdkVersion}</maven.compile.targetLevel>
