@@ -32,6 +32,7 @@
     <artifactId>org.openwms.core.integration</artifactId>
     <packaging>jar</packaging>
     <name>${project.artifactId}</name>
+    <description>This bundle project contains interface types for the DAO integration layer. Those interfaces are free from annotations and do not depend on other frameworks except plain Java.</description>
     <properties>
         <moduleDir>../../..</moduleDir>
     </properties>
@@ -40,6 +41,8 @@
             <plugin>
                 <groupId>com.springsource.bundlor</groupId>
                 <artifactId>com.springsource.bundlor.maven</artifactId>
+                <configuration>
+                </configuration>
                 <executions>
                     <execution>
                         <goals>

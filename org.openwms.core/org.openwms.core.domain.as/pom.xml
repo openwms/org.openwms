@@ -33,7 +33,7 @@
     <version>${flex.client.version}</version>
 	<packaging>swc</packaging>
 	<name>${project.artifactId}</name>
-    <description>CORE domain model implemented in ActionScript.</description>
+    <description>From the CORE domain entities generated ActionScript classes that are used by the Flex client.</description>
 	<properties>
 		<moduleDir>../../..</moduleDir>
 	</properties>

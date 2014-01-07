@@ -32,6 +32,7 @@
     <artifactId>org.openwms.core.integration.file</artifactId>
     <packaging>jar</packaging>
     <name>${project.artifactId}</name>
+    <description>Code that uses JAXB to read/write XML files.</description>
     <properties>
         <moduleDir>../../..</moduleDir>
         <openwms.configuration.version>0.2-SNAPSHOT</openwms.configuration.version>

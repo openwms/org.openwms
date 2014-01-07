@@ -31,6 +31,7 @@
     </parent>
     <artifactId>org.openwms.core.integration.hibernate</artifactId>
     <name>${project.artifactId}</name>
+    <description>Starts a JPA EntityManagerFactory with Hibernate.</description>
     <properties>
         <moduleDir>../../..</moduleDir>
         <openwms.configuration.version>0.2-SNAPSHOT</openwms.configuration.version>

@@ -33,6 +33,7 @@
     <version>0.2-SNAPSHOT</version>
     <packaging>pom</packaging>
     <name>OpenWMS.org CORE</name>
+    <description>The CORE project Maven POM file. Just a common definition of dependencies valid for all other CORE projects. Call mvn install -Pcore to build all CORE projects.</description>
     <properties>
         <moduleDir>../..</moduleDir>
         <property.org.graniteds-core.version>1.2.0_SP1</property.org.graniteds-core.version>

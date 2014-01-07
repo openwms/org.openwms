@@ -1,10 +1,10 @@
 Manifest-Version: 1.0
-Bundle-Vendor: ${project.groupId}
+Bundle-Vendor: OpenWMS.org
 Bundle-Version: ${bundle.version}
 Bundle-Name: ${project.artifactId}
 Bundle-ManifestVersion: 2
 Bundle-SymbolicName: ${project.artifactId}
-Name: org/openwms/core/integration/jpa
+Name: org/openwms/core/integration/jpa/
 Specification-Title: ${project.description}
 Specification-Version: 1.0.0
 Specification-Vendor: OpenWMS.org
