@@ -1,0 +1,213 @@
+/*
+ * openwms.org, the Open Warehouse Management System.
+ *
+ * This file is part of openwms.org.
+ *
+ * openwms.org is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as
+ * published by the Free Software Foundation, either version 3 of the
+ * License, or (at your option) any later version.
+ *
+ * openwms.org is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with this software. If not, write to the Free
+ * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
+ * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
+
+ * Main colors:
+ * blue		    : #2e7bb1
+ * yellow	    : #e1e76b
+ * light-blue   : #c9dcea
+ * lighter-blue : #edf4fa
+ */
+body {
+/*	font-family: Verdana, Helvetica, sans-serif; */
+/*    font-size: 11px; */
+}
+
+.header-area {
+    background-color: #c9dcea;
+    background-image: url("../images/openwms_header.png");
+    background-repeat: no-repeat;
+    width: auto;
+    height: 66px;
+    padding: 10px 0px 10px 0px;
+    margin: 10px 20px 15px 20px;
+}
+
+.content-area {
+    width: auto;
+    padding: 10px 0px 10px 0px;
+    margin: 10px 20px 15px 20px;
+}
+
+/*
+   Button Bar
+*/
+
+.button-bar {
+    padding-bottom: 10px;
+}
+
+/*
+   Navi Leiste
+ */
+.navbar-inner {
+    min-height: 0px;
+}
+
+.navbar .nav > li > a {
+    padding-bottom: 2px;
+    padding-top: 2px;
+}
+
+.nav-list > li > a {
+    vertical-align: middle;
+}
+
+.left-padded5 {
+    padding-left: 5px;
+}
+
+/*
+ Login Dialog
+ */
+.login-dialog {
+    width: 450px;
+}
+
+/*
+  Users Page
+ */
+.users-card {
+    padding-top: 10px;
+    padding-bottom: 5px;
+    padding-left: 10px;
+    margin-bottom: 5px;
+    -webkit-box-shadow: 1px 1px 5px 0px rgba(0, 0, 0, 0.75);
+    -moz-box-shadow: 1px 1px 5px 0px rgba(0, 0, 0, 0.75);
+    box-shadow: 1px 1px 5px 0px rgba(0, 0, 0, 0.75);
+}
+
+.users-inner-card {
+}
+
+/*
+ Selected cards are colored with a gradient.
+ */
+.users-card-active {
+    background-color: #adff2f;
+    background-image: -moz-linear-gradient(top, #f2f2f2, #e1e76b);
+    background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#f2f2f2), to(#e1e76b));
+    background-image: -webkit-linear-gradient(top, #f2f2f2, #e1e76b);
+    background-image: -o-linear-gradient(top, #f2f2f2, #e1e76b);
+    background-image: linear-gradient(to bottom, #f2f2f2, #e1e76b);
+}
+.users-card-key {
+    font-weight: bold;
+    padding-left: 35px;
+}
+.users-card-content {
+    padding-left: 35px;
+}
+
+.users-form-left-col {
+    padding-left: 15px;
+}
+
+.users-user-image {
+    -webkit-box-shadow: 1px 1px 2px 0px rgba(0, 0, 0, 0.75);
+    -moz-box-shadow: 1px 1px 2px 0px rgba(0, 0, 0, 0.75);
+    box-shadow: 1px 1px 2px 0px rgba(0, 0, 0, 0.75);
+    border-width: thin;
+    border-style: solid;
+    border-color: lightgrey;
+}
+
+/*
+ Roles
+ */
+
+
+/*
+ Common UI components
+ */
+.named-div {
+    margin-left:0px;
+    background-color: #c9dcea;
+    font-weight: bold;
+    padding-top: 4px;
+    padding-left: 5px;
+}
+
+
+
+
+
+
+.header-menu {
+    background-image: url("../images/breadcrumbs.jpg");
+    background-repeat: repeat;
+    width: auto;
+    height: 25px;
+    top: 56px;
+    position: relative;
+}
+
+.subheader-button-area {
+    border-bottom-width: thin;
+    border-bottom-style: solid;
+    border-bottom-color: #0088cc;
+    margin-bottom: 20px;
+}
+
+.userNameListFont {
+	font-size: 10pt;
+	font-weight: bold;
+	horizontalAlign: "left";
+}
+
+.userFullnameListFont {
+	font-size: 8pt;
+	horizontalAlign: "left";
+}
+
+.userListItem {
+	border-style: solid;
+	border-shickness: 2;
+	border-color: #f9f9f9;
+	fill-colors: #419af2, #0865c4;
+	fill-alphas: 1, 1;
+	drop-shadow-enabled: true;
+	topCornerRadius: 0;
+	bottomCornerRadius: 0;
+	corner-radius: 0;
+	header-height: 0;
+}
+
+.selectedUserListItem {
+	border-style: solid;
+	border-shickness: 2;
+	border-color: #f9f9f9;
+	fill-colors: #f1f07c, #f1f07c;
+	fill-alphas: 1, 1;
+	drop-shadow-enabled: true;
+	topCornerRadius: 0;
+	bottomCornerRadius: 0;
+	corner-radius: 0;
+	header-height: 0;
+	backgroundColor: #f1f07c;
+}
+
+.userListContainer {
+	paddingLeft: 0px;
+	paddingRight: 0px;
+	paddingTop: 0px;
+	paddingBottom: 0px;
+	horizontalAlign: "left";
+}
+

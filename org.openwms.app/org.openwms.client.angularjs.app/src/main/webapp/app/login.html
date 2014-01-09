@@ -1,0 +1,33 @@
+<div id="loginDialog" class="login-dialog modal show fade" data-keyboard="false" data-backdrop="static" role="dialog"
+     aria-labelledby="myModalLabel" aria-hidden="false">
+    <div class="modal-header">
+        <h3>Login</h3>
+    </div>
+    <div class="modal-body">
+        <form ng-submit="login()" class="form-horizontal">
+            <div ng-show="message">
+                <p class="text-error" ng-bind="message"></p>
+            </div>
+            <div class="control-group">
+                <label class="control-label" for="usernameTxt">Username</label>
+
+                <div class="controls">
+                    <input id="usernameTxt" type="text" placeholder="Username" ng-model="user.username"/>
+                </div>
+            </div>
+            <div class="control-group">
+                <label class="control-label" for="passwordTxt">Password</label>
+
+                <div class="controls">
+                    <input id="passwordTxt" type="text" placeholder="Password" ng-model="user.password"/>
+                </div>
+            </div>
+            <div class="control-group">
+                <div class="controls">
+                    <button type="submit" class="btn">Login</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+

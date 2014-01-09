@@ -1,0 +1,66 @@
+<ul class="nav">
+    <li>
+        <div class="dropdown"><button class="btn dropdown-toggle sr-only" type="button" id="dropdownMenu1" data-toggle="dropdown">
+            Application
+            <span class="caret"></span>
+        </button>
+            <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
+                <li ng-class="{active : linkActive == 'users'}" role="presentation">
+                    <a role="menuitem" tabindex="-1" ng-href="#/users" ng-click="clickCoreMenuItem()">
+                        <img src="images/navi/users.png" class="img-rounded">
+                            <span id="usersLbl" class="left-padded5">Users</span>
+                        </img>
+                    </a>
+                </li>
+                <li ng-class="{active : linkActive == 'roles'}" role="presentation">
+                    <a role="menuitem" tabindex="-1" ng-href="#/roles" ng-click="clickCoreMenuItem()">
+                        <img src="images/navi/roles.png" class="img-rounded">
+                            <span class="left-padded5">Roles</span>
+                        </img>
+                    </a>
+                </li>
+                <li tabindex="-1" ng-class="{active : linkActive == 'modules'}" role="presentation">
+                    <a role="menuitem" ng-href="#/modules" ng-click="clickCoreMenuItem()">
+                        <img src="images/navi/modules.png" class="img-rounded">
+                            <span class="left-padded5">Modules</span>
+                        </img>
+                    </a>
+                </li>
+                <li role="presentation">
+                    <a role="menuitem" style="padding: 0px 0px 0px 0px" tabindex="-1" class="divider" />
+                </li>
+                <li tabindex="-1" ng-class="{active : linkActive == 'preferences'}" role="presentation">
+                    <a role="menuitem" ng-href="#/preferences" ng-click="clickCoreMenuItem()">
+                        <img src="images/navi/preferences.png" class="img-rounded">
+                            <span class="left-padded5">Preferences</span>
+                        </img>
+                    </a>
+                </li>
+                <li role="presentation">
+                    <a role="menuitem" style="padding: 0px 0px 0px 0px"  tabindex="-1" class="divider"/>
+                </li>
+                <li tabindex="-1" ng-class="{active : linkActive == 'help'}" role="presentation">
+                    <a role="menuitem" ng-href="#/help" ng-click="clickCoreMenuItem()">
+                        <img src="images/navi/help.png" class="img-rounded">
+                            <span class="left-padded5">Help</span>
+                        </img>
+                    </a>
+                </li>
+                <li tabindex="-1" ng-class="{active : linkActive == 'profile'}" role="presentation">
+                    <a role="menuitem"  ng-href="#/profile" ng-click="clickCoreMenuItem()">
+                        <img src="images/navi/profiles.png" class="img-rounded">
+                            <span class="left-padded5">Profile</span>
+                        </img>
+                    </a>
+                </li>
+                <li tabindex="-1" ng-class="{active : linkActive == 'logout'}" role="presentation">
+                    <a role="menuitem"  ng-href="#/logout" ng-click="logout()">
+                        <img src="images/navi/logout.png" class="img-rounded">
+                            <span class="left-padded5">Logout</span>
+                        </img>
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </li>
+</ul>

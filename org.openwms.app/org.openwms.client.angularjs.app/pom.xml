@@ -22,32 +22,33 @@
  */  
 -->
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
-	<modelVersion>4.0.0</modelVersion>
-	<parent>
-		<groupId>org.openwms</groupId>
-		<artifactId>org.openwms.app</artifactId>
-		<version>0.2-SNAPSHOT</version>
-	</parent>
-	<artifactId>org.openwms.client.angularjs.app</artifactId>
-	<version>${angularjs.client.version}</version>
-	<packaging>jar</packaging>
-	<name>${project.artifactId}</name>
-	<properties>
-		<moduleDir>../../..</moduleDir>
-	</properties>
-	<build>
-		<finalName>${project.artifactId}-${project.version}</finalName>
-		<sourceDirectory>src/main/flex</sourceDirectory>
-		<testSourceDirectory>src/test/flex</testSourceDirectory>
-	</build>
-
-	<dependencies>
-        <!-- Spring Framework -->
-        <dependency>
-            <groupId>org.springframework</groupId>
-            <artifactId>org.springframework.spring-library</artifactId>
-            <type>libd</type>
-        </dependency>
-	</dependencies>
+    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>org.openwms</groupId>
+        <artifactId>org.openwms.app</artifactId>
+        <version>0.2-SNAPSHOT</version>
+    </parent>
+    <artifactId>org.openwms.client.angularjs.app</artifactId>
+    <version>${angularjs.client.version}</version>
+    <packaging>war</packaging>
+    <name>${project.artifactId}</name>
+    <properties>
+        <moduleDir>../../..</moduleDir>
+    </properties>
+    <build>
+        <finalName>${project.artifactId}-${project.version}</finalName>
+        <plugins>
+            <plugin>
+                <artifactId>maven-war-plugin</artifactId>
+                <configuration>
+                    <webResources>
+                        <resource>
+                            <directory>src/main/webapp/app</directory>
+                        </resource>
+                    </webResources>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
 </project>
