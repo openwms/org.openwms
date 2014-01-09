@@ -460,12 +460,14 @@
         <plugin.assembly.version>2.4</plugin.assembly.version>
         <plugin.bundlor.version>1.0.0.RELEASE</plugin.bundlor.version>
         <plugin.clean.version>2.5</plugin.clean.version>
+        <plugin.deploy.version>2.8.1</plugin.deploy.version>
         <plugin.compiler.version>3.1</plugin.compiler.version>
         <plugin.enforcer.version>1.3.1</plugin.enforcer.version>
         <plugin.flexmojos.version>3.3.0</plugin.flexmojos.version>
         <plugin.install.version>2.4</plugin.install.version>
         <plugin.jar.version>2.3.2</plugin.jar.version>
         <plugin.javadoc.version>2.9.1</plugin.javadoc.version>
+        <plugin.jrebel.version>1.1.5</plugin.jrebel.version>
         <plugin.jxr.version>2.3</plugin.jxr.version>
         <plugin.gpg.version>1.4</plugin.gpg.version>
         <plugin.lifecycle-mapping.version>1.0.0</plugin.lifecycle-mapping.version>
@@ -636,6 +638,11 @@
                 </plugin>
 
                 <plugin>
+                    <artifactId>maven-deploy-plugin</artifactId>
+                    <version>${plugin.deploy.version}</version>
+                </plugin>
+
+                <plugin>
                     <artifactId>maven-enforcer-plugin</artifactId>
                     <version>${plugin.enforcer.version}</version>
                 </plugin>
@@ -781,6 +788,12 @@
                         </lifecycleMappingMetadata>
                     </configuration>
                 </plugin>
+
+            <plugin>
+                <groupId>org.zeroturnaround</groupId>
+                <artifactId>jrebel-maven-plugin</artifactId>
+                <version>${plugin.jrebel.version}</version>
+            </plugin>
 
             </plugins>
         </pluginManagement>

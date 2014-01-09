@@ -1,0 +1,19 @@
+{
+  "name": "openwms_root",
+	"version": "1.0.0",
+	"dependencies": {
+		"angular": "PatternConsulting/bower-angular#1.1.5",
+		"json3": "~3.2.4",
+    "jquery": "~1.9.1",
+    "bootstrap-sass": "~2.3.1",
+    "es5-shim": "~2.0.8",
+		"angular-resource": "~1.0.8",
+		"angular-cookies": "~1.0.8",
+		"angular-sanitize": "~1.0.8",
+		"angular-ui-router": "~0.2.0"
+	},
+  "devDependencies": {
+	  "angular-mocks": "~1.0.8",
+	  "angular-scenario": "~1.0.8"
+  }
+}

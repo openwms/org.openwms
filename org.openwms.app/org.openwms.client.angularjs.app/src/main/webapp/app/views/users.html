@@ -1,0 +1,113 @@
+<div class="row subheader-button-area">
+    <div class="row-fluid">
+        <div class=""><h2>User Management</h2></div>
+        <div class="button-bar">
+                <a ng-click="addUser($scope, $http)" class="btn">
+                    <img src="images/dialogs/user/User--plus.png" class="pull-left"/>
+                </a>
+                <a ng-click="deleteUser($scope, $http)" class="btn">
+                    <img src="images/dialogs/user/User--minus.png" class="pull-left"/>
+                </a>
+                <a ng-click="saveUser($scope, $http)" class="btn">
+                    <img src="images/dialogs/user/User--save.png" class="pull-left"/>
+                </a>
+                <a ng-click="loadUsers($scope, $http)" class="btn">
+                    <img src="images/core/refresh.png" class="pull-left"/>
+                </a>
+                <a ng-click="changePassword($scope, $http)" class="btn">
+                    <img src="images/dialogs/user/key--edit.png" class="pull-left"/>
+                </a>
+                <a ng-click="changeImage($scope, $http)" class="btn">
+                    <img src="images/dialogs/user/picture--edit.png" class="pull-left"/>
+                </a>
+            </div>
+    </div>
+</div>
+<div class="row">
+    <div id="usersListPnl" class="span2" ng-if="userEntities">
+        <div class="{{userEntities[$index].id == selectedUser.id && 'users-card-active' || ''}} users-card container-fluid navbar-inner animated bounceInUp"
+             ng-repeat="user in userEntities"
+             ng-click="selectedCard($index)">
+            <div class="users-inner-card row-fluid animated bounceInUp">
+                <div class="span2" ng-if="user.userDetails != null && user.userDetails.image != ''">
+                <img ng-src="data:image;base64,{{user.userDetails.image}}" class="users-user-image">
+                </div>
+                <div class="span2" ng-if="user.userDetails != null && user.userDetails.image == '' && user.userDetails.sex == 'MALE'">
+                    <img src="../images/dialogs/user/userDefaultMan.jpg" class="users-user-image">
+                </div>
+                <div class="span2" ng-if="user.userDetails != null && user.userDetails.image == '' && user.userDetails.sex == 'FEMALE'">
+                    <img src="../images/dialogs/user/userDefaultWoman.jpg" class="users-user-image">
+                </div>
+                <div class="span2" ng-if="(user.userDetails == null || user.userDetails.image == '' || user.userDetails.image == null) && user.userDetails.sex == ''">
+                    <img src="../images/dialogs/user/userDefaultUniSex.jpg" class="users-user-image">
+                </div>
+                <div class="users-card-key">{{user.username}}</div>
+                <div class="users-card-content">{{user.fullname}}</div>
+            </div>
+            </div>
+        </div>
+
+    <div id="usersDetailsPnl" ng-class="{ 'span10': userEntities != null }" class="navbar-inner">
+        <form ng-controller="UsersCtrl">
+            <div class="row">
+                <div class="span2 users-form-left-col">ID</div>
+                <div class="span10">{{selectedUser.id}}</div>
+            </div>
+            <div class="row">
+                <div class="span2 users-form-left-col">Username</div>
+                <div class="span10"><input type="text" ng-model="selectedUser.username" value="ID"/></div>
+            </div>
+            <div class="row">
+                <div class="span2 users-form-left-col">Fullname</div>
+                <div class="span10"><input type="text" ng-model="selectedUser.fullname" value="FULLNAME"/></div>
+            </div>
+            <div class="row">
+                <div class="span2 users-form-left-col">Description</div>
+                <div class="span10"><textarea ng-model="selectedUser.userDetails.description" value="DESCRIPTION"/></div>
+            </div>
+            <div class="row">
+                <div class="span2 users-form-left-col">Phone No.</div>
+                <div class="span10"><input type="tel" ng-model="selectedUser.userDetails.phoneNo" value="PHONENO"/></div>
+            </div>
+            <div class="row">
+                <div class="span2 users-form-left-col">IM</div>
+                <div class="span10"><input type="text" ng-model="selectedUser.userDetails.skypeName" value="SKYPENAME"/></div>
+            </div>
+            <div class="row">
+                <div class="span2 users-form-left-col">Department</div>
+                <div class="span10"><input type="text" ng-model="selectedUser.userDetails.department" value="DEPARTMENT"/></div>
+            </div>
+            <div class="row">
+                <div class="span2 users-form-left-col">Office</div>
+                <div class="span10"><input type="text" ng-model="selectedUser.userDetails.office" value="OFFICE"/></div>
+            </div>
+            <div class="row">
+                <div class="span2 users-form-left-col">Sex</div>
+                <div class="span10"><label class="radio"><input type="radio" ng-model="selectedUser.userDetails.sex" value="MALE"/>
+                    male</label>
+                    <label class="radio"><input type="radio" ng-model="selectedUser.userDetails.sex" value="FEMALE"/> female</label>
+                </div>
+            </div>
+            <div class="row">
+                <div class="span2 users-form-left-col">Comment</div>
+                <div class="span10"><textarea ng-model="selectedUser.userDetails.comment" value="COMMENT"/></div>
+            </div>
+            <div class="row">
+                <div class="span2 users-form-left-col"></div>
+                <div class="span10"><label class="checkbox"><input type="checkbox" ng-model="selectedUser.enabled"/> Enabled</label></div>
+            </div>
+            <div class="row">
+                <div class="span2 users-form-left-col"></div>
+                <div class="span10"><label class="checkbox"><input type="checkbox" ng-model="selectedUser.locked"/> Locked</label></div>
+            </div>
+            <div class="row">
+                <div class="span2 users-form-left-col">Account expires at</div>
+                <div class="span10"><input type="date" ng-model="selectedUser.expirationDate"/></div>
+            </div>
+            <div class="row">
+                <div class="span2 users-form-left-col">Version</div>
+                <div class="span10"><input type="text" ng-model="selectedUser.version" value="VERSION"/></div>
+            </div>
+        </form>
+    </div>
+</div>
