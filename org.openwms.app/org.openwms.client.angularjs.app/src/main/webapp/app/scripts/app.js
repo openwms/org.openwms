@@ -159,7 +159,7 @@ openwms_root
 		 */
 	}).run(function ($rootScope, $state, $stateParams, $http, $location) {
 		$rootScope.DEVMODE = true;
-		$rootScope.rootUrl = 'http://localhost:8080/org.openwms.client.rest.provider';
+		$rootScope.rootUrl = 'http://backend.openwms.cloudbees.net';
 
 		/* Security */
 		$rootScope.message = '';
