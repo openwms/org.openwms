@@ -57,21 +57,21 @@
         <div class="row" style="margin-left:0px;margin-top: 5px">
             <table cellpadding="0" cellspacing="0" border="0" class="table table-striped table-bordered table-hover table-condensed">
                 <thead>
-                <tr>
-                    <th style="width: 20%" class="named-div"><span>Assigned Grants
-                        <a ng-click="addRole($scope, $http)">
-                        <img src="../images/dialogs/role/grant--add.png" class="btn pull-right"/>
-                    </a></span></th>
-                </tr>
+                    <tr>
+                        <th style="width: 20%" class="named-div"><span>Assigned Grants
+                            <a ng-click="addRole($scope, $http)">
+                            <img src="../images/dialogs/role/grant--add.png" class="btn pull-right"/>
+                        </a></span></th>
+                    </tr>
                 </thead>
                 <tbody>
-                <tr ng-repeat="grant in grants">
-                    <td>{{grant.description}}</td>
-                </tr>
+                    <tr ng-repeat="grant in grants">
+                        <td>{{grant.description}}</td>
+                    </tr>
                 </tbody>
                 <tfoot>
                    <tr>
-                       <td>
+                       <th>
                            <ul class="pager">
                                <li class="previous {{prevButton.hidden == true && 'disabled' || ''}}" ng-if="prevButton.enabled">
                                    <a ng-click="previousGrantsPage()" ng-if="!prevButton.hidden">Previous</a>
@@ -82,7 +82,7 @@
                                    <span ng-if="nextButton.hidden">Next</span>
                                </li>
                            </ul>
-                       </td>
+                       </th>
                    </tr>
                 </tfoot>
             </table>

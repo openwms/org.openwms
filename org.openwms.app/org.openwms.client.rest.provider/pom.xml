@@ -285,12 +285,15 @@
         <dependency>
             <groupId>org.aspectj</groupId>
             <artifactId>com.springsource.org.aspectj.tools</artifactId>
-            <version>${aspectj.version}</version>
         </dependency>
 
         <dependency>
             <groupId>net.sourceforge.cglib</groupId>
             <artifactId>com.springsource.net.sf.cglib</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.mysql.jdbc</groupId>
+            <artifactId>com.springsource.com.mysql.jdbc</artifactId>
         </dependency>
     </dependencies>
 
