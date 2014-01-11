@@ -30,7 +30,7 @@
         <version>0.2-SNAPSHOT</version>
     </parent>
     <artifactId>org.openwms.core.client.rest</artifactId>
-    <version>0.1-SNAPSHOT</version>
+    <version>${rest.version}</version>
     <name>${project.artifactId}</name>
     <description>CORE web controllers that provide RESTful access to the CORE resources and services.</description>
     <properties>
@@ -56,7 +56,6 @@
         <dependency>
             <groupId>net.sf.dozer</groupId>
             <artifactId>dozer</artifactId>
-            <version>5.4.0</version>
         </dependency>
         <!-- Spring Framework -->
         <dependency>
@@ -110,29 +109,9 @@
             <artifactId>jackson-core-asl</artifactId>
         </dependency>
         <dependency>
-            <groupId>commons-httpclient</groupId>
-            <artifactId>commons-httpclient</artifactId>
-            <version>3.1</version>
-            <exclusions>
-                <exclusion>
-                    <groupId>commons-logging</groupId>
-                    <artifactId>commons-logging</artifactId>
-                </exclusion>
-            </exclusions>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>com.springsource.org.apache.commons.httpclient</artifactId>
         </dependency>
     </dependencies>
-
-    <repositories>
-        <repository>
-            <id>oss.sonatype.snapshot</id>
-            <url>https://oss.sonatype.org/content/repositories/snapshots</url>
-            <releases>
-                <enabled>false</enabled>
-            </releases>
-            <snapshots>
-                <enabled>true</enabled>
-            </snapshots>
-        </repository>
-    </repositories>
 
 </project>
