@@ -428,9 +428,11 @@
         <apache.commons.beanutils.version>1.8.0</apache.commons.beanutils.version>
         <apache.commons.collections.version>3.2.1</apache.commons.collections.version>
         <apache.commons.dbcp.version>1.2.2.osgi</apache.commons.dbcp.version>
+        <apache.commons.httpclient.version>3.1.0</apache.commons.httpclient.version>
         <apache.commons.lang.version>2.5.0</apache.commons.lang.version>
         <apache.derby.version>10.7.1.1</apache.derby.version>
         <aspectj.version>1.6.8.RELEASE</aspectj.version>
+        <dozer.version>5.4.0</dozer.version>
         <el.version>2.2</el.version>
         <flex.version>3.2.0.3958</flex.version>
         <granite.version>2.3.2.GA</granite.version>
@@ -789,11 +791,11 @@
                     </configuration>
                 </plugin>
 
-            <plugin>
-                <groupId>org.zeroturnaround</groupId>
-                <artifactId>jrebel-maven-plugin</artifactId>
-                <version>${plugin.jrebel.version}</version>
-            </plugin>
+                <plugin>
+                    <groupId>org.zeroturnaround</groupId>
+                    <artifactId>jrebel-maven-plugin</artifactId>
+                    <version>${plugin.jrebel.version}</version>
+                </plugin>
 
             </plugins>
         </pluginManagement>
@@ -1178,6 +1180,17 @@
             <!-- Apache libraries -->
             <dependency>
                 <groupId>org.apache.commons</groupId>
+                <artifactId>com.springsource.org.apache.commons.httpclient</artifactId>
+                <version>${apache.commons.httpclient.version}</version>
+                <exclusions>
+                    <exclusion>
+                        <groupId>org.apache.commons</groupId>
+                        <artifactId>com.springsource.org.apache.commons.logging</artifactId>
+                    </exclusion>
+                </exclusions>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.commons</groupId>
                 <artifactId>com.springsource.org.apache.commons.lang</artifactId>
                 <version>${apache.commons.lang.version}</version>
             </dependency>
@@ -1290,6 +1303,11 @@
                 <groupId>org.codehaus.jackson</groupId>
                 <artifactId>jackson-core-asl</artifactId>
                 <version>${jackson.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>net.sf.dozer</groupId>
+                <artifactId>dozer</artifactId>
+                <version>${dozer.version}</version>
             </dependency>
             <!-- NON OSGI ARTIFACT -->
 
