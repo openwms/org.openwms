@@ -720,7 +720,6 @@
                             <log4j.configuration>log4j.xml</log4j.configuration>
                         </systemPropertyVariables>
                         <junitArtifactName>org.junit:com.springsource.org.junit</junitArtifactName>
-                        <forkMode>none</forkMode>
                         <includes>
                             <include>**/*Test.java</include>
                         </includes>
