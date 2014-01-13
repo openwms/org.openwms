@@ -38,8 +38,6 @@ public final class CommConstants {
     /** Used as suffix to create channels dynamically. */
     public static final String CHANNEL_SUFFIX = "MessageInputChannel";
 
-    private static final SimpleDateFormat DATE_FORMAT = new SimpleDateFormat(DATE_FORMAT_PATTERN);
-
     /**
      * Parses a String representation of a Date into a Date using the
      * pre-defined format.
@@ -51,7 +49,7 @@ public final class CommConstants {
      *             in case the dateString hasn't the expected format pattern
      */
     public static Date asDate(String dateString) throws ParseException {
-        return DATE_FORMAT.parse(dateString);
+        return new SimpleDateFormat(DATE_FORMAT_PATTERN).parse(dateString);
     }
 
     /**
@@ -62,7 +60,7 @@ public final class CommConstants {
      * @return The formatted String
      */
     public static String asString(Date date) {
-        return DATE_FORMAT.format(date);
+        return new SimpleDateFormat(DATE_FORMAT_PATTERN).format(date);
     }
 
     /**
