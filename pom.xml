@@ -459,6 +459,7 @@
         <!-- =================== -->
         <!--   Plugin versions   -->
         <!-- =================== -->
+        <plugin.archiver.version>2.3.2</plugin.archiver.version>
         <plugin.assembly.version>2.4</plugin.assembly.version>
         <plugin.bundlor.version>1.0.0.RELEASE</plugin.bundlor.version>
         <plugin.clean.version>2.5</plugin.clean.version>
@@ -596,6 +597,11 @@
         <pluginManagement>
             <plugins>
                 <plugin>
+                    <artifactId>maven-archiver-plugin</artifactId>
+                    <version>${plugin.archiver.version}</version>
+                </plugin>
+
+                <plugin>
                     <artifactId>maven-assembly-plugin</artifactId>
                     <version>${plugin.assembly.version}</version>
                     <configuration>
@@ -714,7 +720,7 @@
                             <log4j.configuration>log4j.xml</log4j.configuration>
                         </systemPropertyVariables>
                         <junitArtifactName>org.junit:com.springsource.org.junit</junitArtifactName>
-                        <forkMode>once</forkMode>
+                        <forkMode>none</forkMode>
                         <includes>
                             <include>**/*Test.java</include>
                         </includes>
