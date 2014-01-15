@@ -41,7 +41,6 @@
         <finalName>openwms</finalName>
         <plugins>
             <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-war-plugin</artifactId>
                 <configuration>
                     <finalName>${project.artifactId}</finalName>
@@ -55,6 +54,41 @@
     </build>
 
     <profiles>
+        <profile>
+            <id>cloudbees</id>
+            <properties>
+                <bees.appid>ajs</bees.appid>
+            </properties>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>com.cloudbees</groupId>
+                        <artifactId>bees-maven-plugin</artifactId>
+                        <version>${plugin.bees-maven-plugin}</version>
+                        <executions>
+                            <execution>
+                                <phase>install</phase>
+                                <goals>
+                                    <goal>deploy</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
+            <pluginRepositories>
+                <pluginRepository>
+                    <id>cloudbees-public-release</id>
+                    <url>http://repository-cloudbees.forge.cloudbees.com/public-release</url>
+                    <releases>
+                        <enabled>true</enabled>
+                    </releases>
+                    <snapshots>
+                        <enabled>false</enabled>
+                    </snapshots>
+                </pluginRepository>
+            </pluginRepositories>
+        </profile>
         <profile>
             <id>noOSGI</id>
             <activation>

@@ -461,6 +461,7 @@
         <!-- =================== -->
         <plugin.archiver.version>2.3.2</plugin.archiver.version>
         <plugin.assembly.version>2.4</plugin.assembly.version>
+        <plugin.bees-maven-plugin>1.3.2</plugin.bees-maven-plugin>
         <plugin.bundlor.version>1.0.0.RELEASE</plugin.bundlor.version>
         <plugin.clean.version>2.5</plugin.clean.version>
         <plugin.deploy.version>2.8.1</plugin.deploy.version>
