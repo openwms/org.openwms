@@ -65,6 +65,9 @@
                         <groupId>com.cloudbees</groupId>
                         <artifactId>bees-maven-plugin</artifactId>
                         <version>${plugin.bees-maven-plugin}</version>
+                        <configuration>
+                            <appid>${bees.appid}</appid>
+                        </configuration>
                         <executions>
                             <execution>
                                 <phase>install</phase>
