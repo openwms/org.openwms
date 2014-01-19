@@ -42,7 +42,7 @@
         <profile>
             <id>cloudbees</id>
             <properties>
-                <bees.appid>backend</bees.appid>
+                <bees.appid>openwms/backend</bees.appid>
             </properties>
             <build>
                 <plugins>
