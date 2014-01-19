@@ -57,7 +57,7 @@
         <profile>
             <id>cloudbees</id>
             <properties>
-                <bees.appid>ajs</bees.appid>
+                <bees.appid>openwms/ajs</bees.appid>
             </properties>
             <build>
                 <plugins>
