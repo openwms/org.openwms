@@ -51,6 +51,8 @@
                         <artifactId>bees-maven-plugin</artifactId>
                         <version>${plugin.bees-maven-plugin}</version>
                         <configuration>
+                            <secret>${bees.secret}</secret>
+                            <apikey>${bees.apikey}</apikey>
                             <appid>${bees.appid}</appid>
                         </configuration>
                         <executions>
