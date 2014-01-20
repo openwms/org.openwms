@@ -1,13 +1,26 @@
 'use strict';
 
-var services = angular.module('openwms.services', ['ngResource']);
+var servicesModule = angular.module('openwms_services', ['ngResource']);
 
-services.factory('UsersService', ['$resource',
-	function($resource) {
-		return $resource('/user/:query', {query: '@query'});
+servicesModule.factory('rolesService', ['$resource', '$http',
+	function($resource, $http) {
+		return {
+			getAllRoles : function($http) {
+				//$http.defaults.headers.common['Auth-Token'] = $scope.authToken;
+				$http.get($scope.rootUrl+'/role').success(function (data, status, headers, config) {
+					$scope.roleEntities = data;
+				});
+			}
+		}
 	}]);
 
-services.factory('GetUsers', ['UsersService', '$q',
+/*
+servicesModule.factory('UsersService', ['$resource',
+	function($resource) {
+		return $resource('/user/:query', {query: '@query'});
+}]);
+
+servicesModule.factory('GetUsers', ['UsersService', '$q',
 	function(UsersService, $q) {
 		return function() {
 			var delay = $q.defer();
@@ -18,11 +31,6 @@ services.factory('GetUsers', ['UsersService', '$q',
 			});
 			return delay.promise;
 		};
-	}]);
+}]);
 
-services.factory('RecipeLoader', ['Recipe', '$route', '$q',
-	function(Recipe, $route, $q) {
-		return function() {
-			var delay = $q.defer();
-			Recipe.get({id: $route.current.params.recipeId}, function(recipe) {
-				delay.resolve(recipe);
+*/
