@@ -18,13 +18,11 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
-package org.openwms.core.rest.role;
+package org.openwms.core.rest.user;
 
 import java.util.Collection;
 
 import org.openwms.core.domain.system.usermanagement.Role;
-import org.openwms.core.rest.user.BeanMapper;
-import org.openwms.core.rest.user.RoleDTO;
 import org.openwms.core.service.RoleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
@@ -45,17 +43,34 @@ import org.springframework.web.bind.annotation.ResponseBody;
 @Transactional
 @Service
 @Controller
-@RequestMapping("/role")
+@RequestMapping("/roles")
 public class RolesController {
 
     @Autowired
     private RoleService roleService;
     @Autowired
-    private BeanMapper<Role, RoleDTO> mapper;
+    private BeanMapper<Role, RoleVO> mapper;
 
+    /**
+     * Transactional access to <tt>Role</tt>s in a RESTful manner. This method
+     * returns all existing <tt>Role</tt>s.
+     * <p>
+     *   <table>
+     *     <tr><td>URI</td><td>/roles</td></tr>
+     *     <tr><td>Verb</td><td>GET</td></tr>
+     *     <tr><td>Auth</td><td>YES</td></tr>
+     *     <tr><td>Header</td><td></td></tr>
+     *   </table>
+     * </p>
+     * <p>
+     * The response is transfered in the body and is JSON encoded. It contains a collection of Role objects.
+     * </p>
+     * 
+     * @return JSON response
+     */
     @RequestMapping(method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
-    public Collection<RoleDTO> findAllRoles() {
-        return mapper.map(roleService.findAll(), RoleDTO.class);
+    public Collection<RoleVO> findAllRoles() {
+        return mapper.map(roleService.findAll(), RoleVO.class);
     }
 }

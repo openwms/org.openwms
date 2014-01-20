@@ -19,10 +19,6 @@
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
 /**
- * A package-info.
- *
- * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
- * @version $Revision: $
- *
+ * Contains controller classes and value types that are responsible to satisfy the RESTful handling with {@link org.openwms.core.domain.system.usermanagement.User}s, {@link org.openwms.core.domain.system.usermanagement.Role}s.
  */
 package org.openwms.core.rest.user;
