@@ -38,8 +38,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 /**
- * An UsersController determines the RESTful api of Users. HttpStatus codes and
- * exception handling is handled with an advice.
+ * An UsersController represents a RESTful access to <tt>User</tt>s. It is transactional by the means it is the outer
+ * application service facade that returns validated and completed <tt>User</tt> objects to its clients.
  * 
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  * @version $Revision: $
@@ -48,7 +48,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 @Transactional
 @Service
 @Controller
-@RequestMapping("/user")
+@RequestMapping("/users")
 public class UsersController {
 
     @Autowired
@@ -57,9 +57,73 @@ public class UsersController {
     private BeanMapper<User, UserVO> mapper;
 
     /**
-     * Takes a newly created User instance and persists it. It does not matter
-     * whether the instance exists before or not.
+     * This method returns all existing <tt>User</tt>s.
      * 
+     * <p>
+     *   <table>
+     *     <tr><td>URI</td><td>/users</td></tr>
+     *     <tr><td>Verb</td><td>GET</td></tr>
+     *     <tr><td>Auth</td><td>YES</td></tr>
+     *     <tr><td>Header</td><td></td></tr>
+     *   </table>
+     * </p>
+     * <p>
+     * The response stores <tt>User</tt> instances JSON encoded. It contains a collection of <tt>User</tt> objects.
+     * </p>
+     * 
+     * @return JSON response
+     */
+    @RequestMapping(method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    @ResponseBody
+    public Collection<UserVO> findAllUsers() {
+        return mapper.map(service.findAll(), UserVO.class);
+    }
+
+    /**
+     * Takes a newly created <tt>User</tt> instance and persists it.
+     * 
+     * <p>
+     *   <table>
+     *     <tr><td>URI</td><td>/users</td></tr>
+     *     <tr><td>Verb</td><td>POST</td></tr>
+     *     <tr><td>Auth</td><td>YES</td></tr>
+     *     <tr><td>Header</td><td></td></tr>
+     *   </table>
+     * </p>
+     * <p>
+     * Request Body
+     * <pre>
+     *   {
+     *     "username" : "testuser"
+     *   }
+     * </pre>
+     * Parameters:
+     * <ul>
+     *   <li>username (String):</li>
+     *   The unique username.
+     * </ul>
+     * </p>
+     * <p>
+     * Response Body
+     * <pre>
+     *   {
+     *     "id" : 4711,
+     *     "username" : "testuser",
+     *     "token" : "876sjh36ejwhd",
+     *     "version" : 1
+     *   }
+     * </pre>
+     * <ul>
+     *   <li>id (Integer (32bit)):</li>
+     *   The internal unique technical key for the stored instance.
+     *   <li>username (String):</li>
+     *   The unique username.
+     *   <li>token (String):</li>
+     *   A generated token that is used to authenticate each request.
+     *   <li>version (Integer (32bit)):</li>
+     *   A version number used internally for optimistic locking.
+     * </ul>
+     * </p>
      * @param user
      * @return
      */
@@ -78,12 +142,6 @@ public class UsersController {
             throw new IllegalArgumentException("User with username " + pUsername + " not found");
         }
         return user;
-    }
-
-    @RequestMapping(method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-    @ResponseBody
-    public Collection<UserVO> findAllUsers() {
-        return mapper.map(service.findAll(), UserVO.class);
     }
 
     /**
@@ -110,10 +168,7 @@ public class UsersController {
     }
 
     @RequestMapping(method = RequestMethod.DELETE, consumes = MediaType.APPLICATION_JSON_VALUE/*
-                                                                                               * ,
-                                                                                               * headers
-                                                                                               * =
-                                                                                               * "Content-Type=application/json"
+                                                                                               * , headers = "Content-Type=application/json"
                                                                                                */)
     @ResponseBody
     public void remove(@RequestBody User user) {

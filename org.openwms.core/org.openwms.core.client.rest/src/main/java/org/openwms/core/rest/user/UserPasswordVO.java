@@ -25,13 +25,13 @@ import java.io.Serializable;
 import org.codehaus.jackson.annotate.JsonAutoDetect;
 
 /**
- * A UserPreferenceDTO.
+ * A UserPasswordDTO.
  * 
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  * @version $Revision: $
  * 
  */
 @JsonAutoDetect
-public class UserPreferenceDTO implements Serializable {
+public class UserPasswordVO implements Serializable {
 
 }

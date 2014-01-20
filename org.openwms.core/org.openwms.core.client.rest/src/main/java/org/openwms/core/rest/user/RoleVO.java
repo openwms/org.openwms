@@ -30,7 +30,7 @@ import java.util.Set;
  * @version $Revision: $
  * @since 0.1
  */
-public class RoleDTO implements Serializable {
+public class RoleVO implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
