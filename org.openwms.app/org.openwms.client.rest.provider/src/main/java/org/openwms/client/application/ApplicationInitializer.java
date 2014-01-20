@@ -25,13 +25,14 @@ import javax.servlet.ServletException;
 import javax.servlet.ServletRegistration;
 
 import org.springframework.web.WebApplicationInitializer;
-import org.springframework.web.context.ContextLoaderListener;
 import org.springframework.web.context.support.AnnotationConfigWebApplicationContext;
 import org.springframework.web.servlet.DispatcherServlet;
 
 /**
  * A ApplicationInitializer is the application starter that initializes Springs
- * annotation bases ApplicationContext programmatically.
+ * annotation bases ApplicationContext programmatically. The mechanism of a
+ * starter servlet is used instead of using a ContextLoader to bootstrap the
+ * ApplicationContext.
  * 
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  * @version $Revision: $
@@ -51,7 +52,7 @@ public class ApplicationInitializer implements WebApplicationInitializer {
         rootContext.register(WebApplicationContextConfiguration.class);
 
         // Context loader listener
-        servletContext.addListener(new ContextLoaderListener(rootContext));
+        // servletContext.addListener(new ContextLoaderListener(rootContext));
 
         // Dispatcher servlet
         ServletRegistration.Dynamic dispatcher = servletContext.addServlet("dispatcher", new DispatcherServlet(

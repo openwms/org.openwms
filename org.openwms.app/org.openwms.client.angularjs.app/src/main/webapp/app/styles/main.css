@@ -1969,8 +1969,12 @@ table {
     margin-bottom: 20px;
 }
 
-.table th,
-.table td {
+.table-bordered th, .table-bordered td {
+    border-color: transparent;
+}
+
+
+.table th, .table td {
     padding: 8px;
     line-height: 20px;
     text-align: left;
