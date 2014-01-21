@@ -17,14 +17,14 @@ angular.module('openwms_app')
 		$scope.deleteUser = function () {
 			console.log("deleteUser() selected");
 			//$http.defaults.delete['Content-Type']='application/json';
-			$http.delete($scope.rootUrl+'/user', $scope.selectedUser).success(function (data, status, headers, config) {
+			$http.delete($scope.rootUrl+'/users', $scope.selectedUser).success(function (data, status, headers, config) {
 			});
 			$scope.selectedUser = undefined;
 		}
 
 		$scope.saveUser = function () {
 			$http.defaults.headers.put['Auth-Token'] = $scope.authToken;
-			$http.put($scope.rootUrl+'/user', $scope.selectedUser).success(function (data, status, headers, config) {
+			$http.put($scope.rootUrl+'/users', $scope.selectedUser).success(function (data, status, headers, config) {
 				$scope.selectedUser = data;
 				angular.forEach($scope.userEntities, function (user) {
 					if (user.username == $scope.selectedUser.username) {
@@ -37,13 +37,13 @@ angular.module('openwms_app')
 
 		$scope.loadUsers = function () {
 			$http.defaults.headers.common['Auth-Token'] = $scope.authToken;
-			$http.get($scope.rootUrl+'/user').success(function (data, status, headers, config) {
+			$http.get($scope.rootUrl+'/users').success(function (data, status, headers, config) {
 				$scope.userEntities = data;
 			});
 		}
 
 		$scope.changePassword = function () {
-			$http.get($scope.rootUrl+'/user').success(function (data, status, headers, config) {
+			$http.get($scope.rootUrl+'/users').success(function (data, status, headers, config) {
 				$scope.userEntities = data;
 			});
 		}
