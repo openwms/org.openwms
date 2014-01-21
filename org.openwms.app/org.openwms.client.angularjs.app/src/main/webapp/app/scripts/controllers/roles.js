@@ -7,7 +7,7 @@ angular.module('openwms_app')
 	})
 	.controller('RolesCtrl', function ($scope, $http, rolesService) {
 
-		$scope.roleEntities = rolesService.getAllRoles();
+//		$scope.roleEntities = rolesService.getAllRoles();
 
 		$scope.addRole = function () {
 			$http.defaults.headers.post['Auth-Token'] = $scope.authToken;
@@ -16,13 +16,13 @@ angular.module('openwms_app')
 		$scope.deleteRole = function () {
 			console.log("deleteRole() selected");
 			//$http.defaults.delete['Content-Type']='application/json';
-			$http.delete($scope.rootUrl+'/role', $scope.selectedRole).success(function (data, status, headers, config) {});
+			$http.delete($scope.rootUrl+'/roles', $scope.selectedRole).success(function (data, status, headers, config) {});
 			$scope.selectedRole = undefined;
 		}
 
 		$scope.saveRole = function () {
 			$http.defaults.headers.put['Auth-Token'] = $scope.authToken;
-			$http.put($scope.rootUrl+'/role', $scope.selectedRole).success(function (data, status, headers, config) {
+			$http.put($scope.rootUrl+'/roles', $scope.selectedRole).success(function (data, status, headers, config) {
 				$scope.selectedRole = data;
 				angular.forEach($scope.roleEntities, function (role) {
 					if (role.name == $scope.selectedRole.name) {
@@ -32,11 +32,14 @@ angular.module('openwms_app')
 			});
 		}
 
-		$scope.loadRoles = function (rolesService) {
+		$scope.loadRoles = function () {
+			$scope.roleEntities = rolesService.getAllRoles();
+			/*
 			$http.defaults.headers.common['Auth-Token'] = $scope.authToken;
-			$http.get($scope.rootUrl+'/role').success(function (data, status, headers, config) {
+			$http.get($scope.rootUrl+'/roles').success(function (data, status, headers, config) {
 				$scope.roleEntities = data;
 			});
+			*/
 		}
 
 		$scope.onRoleSelected = function (row) {
