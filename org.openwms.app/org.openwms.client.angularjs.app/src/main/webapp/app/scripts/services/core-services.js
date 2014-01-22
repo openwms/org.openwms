@@ -2,18 +2,17 @@
 
 var servicesModule = angular.module('openwms_services', ['ngResource']);
 
-servicesModule.factory('rolesService',
-	function($resource, $http) {
-		var result = {
+servicesModule.factory('rolesService',['$http', '$resource', '$q',
+	function($resource, $http, $q) {
+		return {
 			getAllRoles : function($http, $scope) {
 				$http.defaults.headers.common['Auth-Token'] = $scope.authToken;
-				$http.get($scope.rootUrl+'/role').success(function (data, status, headers, config) {
+				$http.get($scope.rootUrl+'/roles').success(function (data, status, headers, config) {
 					$scope.roleEntities = data;
 				});
 			}
 		}
-		return result;
-	});
+	}]);
 
 /*
 servicesModule.factory('UsersService', ['$resource',
