@@ -33,7 +33,7 @@ angular.module('openwms_app')
 		}
 
 		$scope.loadRoles = function () {
-			$scope.roleEntities = rolesService.getAllRoles();
+			$scope.roleEntities = rolesService.getAllRoles($http, $scope);
 			/*
 			$http.defaults.headers.common['Auth-Token'] = $scope.authToken;
 			$http.get($scope.rootUrl+'/roles').success(function (data, status, headers, config) {
