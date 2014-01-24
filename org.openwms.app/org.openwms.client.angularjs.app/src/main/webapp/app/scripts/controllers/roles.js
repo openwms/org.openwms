@@ -1,45 +1,128 @@
 'use strict';
 
-angular.module('openwms_app')
+/*
+ * openwms.org, the Open Warehouse Management System.
+ *
+ * This file is part of openwms.org.
+ *
+ * openwms.org is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as
+ * published by the Free Software Foundation, either version 3 of the
+ * License, or (at your option) any later version.
+ *
+ * openwms.org is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with this software. If not, write to the Free
+ * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
+ * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
+ */
+
+/**
+ * A RolesCtrl backes the 'Roles Management' screen.
+ *
+ * @module openwms_app
+ * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
+ * @version $Revision: $
+ * @since 0.1
+ */
+angular.module('openwms_app',['ui.bootstrap'])
 	.config(function ($httpProvider) {
 		delete $httpProvider.defaults.headers.common['X-Requested-With'];
 		$httpProvider.defaults.headers.common['Content-Type'] = 'application/json';
 	})
-	.controller('RolesCtrl', function ($scope, $http, rolesService) {
+	.controller('RolesCtrl', function ($scope, $http, $modal, $log, rolesService) {
 
-//		$scope.roleEntities = rolesService.getAllRoles();
+		var ModalInstanceCtrl = function ($scope, $modalInstance, data) {
+			$scope.role = data.role;
+			$scope.dialog = data.dialog;
+
+			$scope.ok = function () {
+				$modalInstance.close($scope.role);
+			};
+
+			$scope.cancel = function () {
+				$modalInstance.dismiss('cancel');
+			};
+		};
 
 		$scope.addRole = function () {
-			$http.defaults.headers.post['Auth-Token'] = $scope.authToken;
-		}
+			var modalInstance = $modal.open({
+				templateUrl: 'addRolesDlg.html',
+				controller: ModalInstanceCtrl,
+				resolve: {
+					data : function() {
+						return {
+							role : {
+								description : ""
+							}, dialog : {
+								title: "Create new Role"
+							}
+						};
+					}
+				}
+			});
+			modalInstance.result.then(
+				function (role) {
+					rolesService.add($scope, role).then(function(addedRole) {
+						$scope.roleEntities.push(addedRole);
+				})},
+				function () {
+					$log.info('Modal dismissed at: ' + new Date());
+				}
+			);
+		};
+
+		$scope.editRole = function (row) {
+			var modalInstance;
+			modalInstance = $modal.open({
+				templateUrl: 'addRolesDlg.html',
+				controller: ModalInstanceCtrl,
+				resolve: {
+					data: function () {
+						return {
+							role: $scope.roleEntities[row],
+							dialog: {
+								title: "Edit Role"
+							}
+						};
+					}
+				}
+			});
+			modalInstance.result.then(
+				function (role) {
+					rolesService.save($scope, role).then(function(savedRole) {
+						$scope.roleEntities.push(savedRole);
+					})},
+				function () {
+					$log.info('Modal dismissed at: ' + new Date());
+				}
+			);
+		};
 
 		$scope.deleteRole = function () {
-			console.log("deleteRole() selected");
-			//$http.defaults.delete['Content-Type']='application/json';
-			$http.delete($scope.rootUrl+'/roles', $scope.selectedRole).success(function (data, status, headers, config) {});
-			$scope.selectedRole = undefined;
+			rolesService.delete($scope)
+				.then(function(deletedRoleName) {
+					angular.forEach($scope.roleEntities, function (role, i) {
+						if (role.name == deletedRoleName) {
+							$scope.roleEntities.splice(i, 1);
+							$scope.selectedRole = undefined;
+						}
+					});
+				});
 		}
 
 		$scope.saveRole = function () {
-			$http.defaults.headers.put['Auth-Token'] = $scope.authToken;
-			$http.put($scope.rootUrl+'/roles', $scope.selectedRole).success(function (data, status, headers, config) {
-				$scope.selectedRole = data;
-				angular.forEach($scope.roleEntities, function (role) {
-					if (role.name == $scope.selectedRole.name) {
-						role = $scope.selectedRole;
-					}
-				});
-			});
+			rolesService.save($scope);
 		}
 
 		$scope.loadRoles = function () {
-			$scope.roleEntities = rolesService.getAllRoles($http, $scope);
-			/*
-			$http.defaults.headers.common['Auth-Token'] = $scope.authToken;
-			$http.get($scope.rootUrl+'/roles').success(function (data, status, headers, config) {
-				$scope.roleEntities = data;
+			rolesService.getAll($scope).then(function(roles) {
+				$scope.roleEntities = roles;
 			});
-			*/
 		}
 
 		$scope.onRoleSelected = function (row) {
@@ -83,3 +166,4 @@ angular.module('openwms_app')
 			$scope.prevButton = {"enabled" : true, "hidden" : false};
 		}
 	});
+

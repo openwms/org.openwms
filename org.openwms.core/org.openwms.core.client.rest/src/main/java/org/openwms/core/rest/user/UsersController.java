@@ -167,14 +167,6 @@ public class UsersController {
         return mapper.map(service.save(toSave), UserVO.class);
     }
 
-    @RequestMapping(method = RequestMethod.DELETE, consumes = MediaType.APPLICATION_JSON_VALUE/*
-                                                                                               * , headers = "Content-Type=application/json"
-                                                                                               */)
-    @ResponseBody
-    public void remove(@RequestBody User user) {
-        service.remove(user);
-    }
-
     @RequestMapping(value = "/{username}", method = RequestMethod.DELETE, produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE, headers = "Content-Type=application/json")
     @ResponseBody
     public void remove(@RequestParam("username") String pUsername) {

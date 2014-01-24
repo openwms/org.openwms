@@ -25,8 +25,8 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
-import org.dozer.DozerBeanMapper;
 import org.dozer.Mapper;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 /**
@@ -39,7 +39,8 @@ import org.springframework.stereotype.Component;
 @Component("beanMapper")
 public class BeanMapper<S, T> {
 
-    private final Mapper mapper = new DozerBeanMapper();
+    @Autowired
+    private Mapper mapper;
 
     public T map(S user, Class<T> clazz) {
         return mapper.map(user, clazz);

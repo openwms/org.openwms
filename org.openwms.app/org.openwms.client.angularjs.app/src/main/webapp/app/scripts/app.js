@@ -184,6 +184,12 @@ openwms_root
 			"hideMethod": "fadeOut"
 		}
 		 */
+		$rootScope.pop = function(title, message, toaster) {
+			toaster.pop('success', title, message);
+		}
+
+
+
 		// Logout function is available in any pages
 		$rootScope.logout = function () {
 			$rootScope.authToken = null;

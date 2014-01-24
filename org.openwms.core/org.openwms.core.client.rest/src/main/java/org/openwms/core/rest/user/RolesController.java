@@ -20,18 +20,24 @@
  */
 package org.openwms.core.rest.user;
 
+import java.util.Arrays;
 import java.util.Collection;
+import java.util.List;
 
 import org.openwms.core.domain.system.usermanagement.Role;
 import org.openwms.core.service.RoleService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.ResponseStatus;
 
 /**
  * A RolesController.
@@ -47,7 +53,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 public class RolesController {
 
     @Autowired
-    private RoleService roleService;
+    private RoleService service;
     @Autowired
     private BeanMapper<Role, RoleVO> mapper;
 
@@ -71,6 +77,46 @@ public class RolesController {
     @RequestMapping(method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
     public Collection<RoleVO> findAllRoles() {
-        return mapper.map(roleService.findAll(), RoleVO.class);
+        return mapper.map(service.findAll(), RoleVO.class);
     }
+
+    @RequestMapping(method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
+    @ResponseBody
+    public RoleVO create(@RequestBody RoleVO role) {
+        return mapper.map(service.save(mapper.mapBackwards(role, Role.class)), RoleVO.class);
+    }
+
+    @RequestMapping(value = "/{name}", method = RequestMethod.DELETE)
+    @ResponseStatus(HttpStatus.OK)
+    public void remove(@PathVariable("name") String pRolename) {
+        Role role = findByUsername(pRolename);
+        if (role == null) {
+            throw new IllegalArgumentException("Role with name " + pRolename + " not found");
+        }
+        service.remove(Arrays.asList(new Role[] { role }));
+    }
+
+    @RequestMapping(method = RequestMethod.PUT, produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
+    @ResponseBody
+    @ResponseStatus(HttpStatus.OK)
+    public RoleVO save(@RequestBody RoleVO role) {
+        Long id = role.getId();
+        Role toSave = mapper.mapBackwards(role, Role.class);
+        if (id == null) {
+            throw new IllegalStateException(
+                    "User to save has changed in the meantime, please refresh or force to overwrite changes.");
+        }
+        return mapper.map(service.save(toSave), RoleVO.class);
+    }
+
+    private Role findByUsername(String pUsername) {
+        List<Role> users = service.findAll();
+        for (Role user : users) {
+            if (user.getName().equals(pUsername)) {
+                return user;
+            }
+        }
+        return null;
+    }
+
 }
