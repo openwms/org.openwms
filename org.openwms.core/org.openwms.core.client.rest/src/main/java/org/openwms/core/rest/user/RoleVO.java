@@ -129,9 +129,29 @@ public class RoleVO implements Serializable {
         this.grants = grants;
     }
 
+    /**
+     * Get the id.
+     *
+     * @return the id.
+     */
+    public Long getId() {
+        return id;
+    }
+
+    /**
+     * Get the version.
+     *
+     * @return the version.
+     */
+    public long getVersion() {
+        return version;
+    }
+
+    private Long id;
     private Boolean immutable;
     private String name;
     private String description;
     private Set<UserVO> users;
     private Set<SecurityObjectVO> grants;
+    private long version;
 }

@@ -14,11 +14,36 @@
         } );
     } );
 </script-->
+<script type="text/ng-template" id="addRolesDlg.html">
+    <div class="modal-header">
+        <h3>{{dialog.title}}</h3>
+    </div>
+    <div class="modal-body">
+        <form class="form-horizontal" role="form">
+        <div class="form-group">
+            <label for="inputEmail3" class="col-sm-2 control-label">Name</label>
+            <div class="col-sm-10">
+                <input type="text" ng-model="role.name" class="form-control" id="inputEmail3" placeholder="">
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="inputPassword3" class="col-sm-2 control-label">Description</label>
+            <div class="col-sm-10">
+                <input type="text" ng-model="role.description" class="form-control" id="inputPassword3" placeholder="">
+            </div>
+        </div>
+        </form>
+    </div>
+    <div class="modal-footer">
+        <button class="btn btn-primary" ng-click="ok()">OK</button>
+        <button class="btn" ng-click="cancel()">Cancel</button>
+    </div>
+</script>
 <div class="row subheader-button-area">
     <div class="row-fluid">
         <div class=""><h2>Role Management</h2></div>
         <div class="button-bar">
-            <a ng-click="addRole($scope, $http)" class="btn">
+            <a ng-click="addRole()" class="btn">
                 <img src="../images/dialogs/role/Users--plus.png" class="pull-left"/>
             </a>
             <a ng-click="deleteRole($scope, $http)" class="btn">
@@ -39,14 +64,16 @@
                class="table table-striped table-bordered table-hover table-condensed">
             <thead>
             <tr>
+                <th style="width: 5%" class="named-div"></th>
                 <th style="width: 20%" class="named-div">Role name</th>
-                <th style="width: 80%" class="named-div">Description</th>
+                <th style="width: 75%" class="named-div">Description</th>
             </tr>
             </thead>
             <tbody>
-            <tr ng-repeat="role in roleEntities" ng-click="onRoleSelected($index)">
-                <td>{{role.name}}</td>
-                <td>{{role.description}}</td>
+            <tr ng-repeat="role in roleEntities">
+                <td><button type="button" class="btn btn-default btn-lg" ng-click="editRole($index)"><span class="glyphicon glyphicon-star"></span> Star</button></td>
+                <td ng-click="onRoleSelected($index)">{{role.name}}</td>
+                <td ng-click="onRoleSelected($index)">{{role.description}}</td>
             </tr>
             </tbody>
         </table>
