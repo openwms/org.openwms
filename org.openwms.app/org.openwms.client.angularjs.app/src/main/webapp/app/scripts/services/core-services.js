@@ -29,10 +29,10 @@
  * @version $Revision: $
  * @since 0.1
  */
-var servicesModule = angular.module('openwms_services', ['ngResource']);
+var servicesModule = angular.module('openwms_services', ['ngResource', 'toaster']);
 
-servicesModule.factory('rolesService',['$http', '$resource', '$q',
-	function($http, $resource, $q) {
+servicesModule.factory('rolesService',['$http', '$resource', '$q', 'toaster',
+	function($http, $resource, $q, toaster) {
 		return {
 			add : function($scope, role) {
 				console.log("Action: Add Role");
@@ -45,8 +45,8 @@ servicesModule.factory('rolesService',['$http', '$resource', '$q',
 					.error(function (status) {
 						var msg = "Error ["+status+"] while saving a Role: ["+role.name+"]/["+role.description+"]";
 						console.log(msg);
-						//toaster.pop('error', "title", '<ul><li>Render html</li></ul>', null, 'trustedHtml');
-						throw new Error(msg);
+						toaster.pop('error', "Server Error", status, null, 'trustedHtml');
+						//throw new Error(msg);
 					});
 				return delay.promise;
 			},
