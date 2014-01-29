@@ -29,12 +29,12 @@
  * @version $Revision: $
  * @since 0.1
  */
-angular.module('openwms_app',['ui.bootstrap', 'ngAnimate', 'toaster'])
+angular.module('openwms_app',['ui.bootstrap', 'ngAnimate'])
 	.config(function ($httpProvider) {
 		delete $httpProvider.defaults.headers.common['X-Requested-With'];
 		$httpProvider.defaults.headers.common['Content-Type'] = 'application/json';
 	})
-	.controller('RolesCtrl', function ($scope, $http, $modal, $log, rolesService, toaster) {
+	.controller('RolesCtrl', function ($scope, $http, $modal, $log, rolesService) {
 
 		var checkedRows = [];
 		var roleEntities = [];
