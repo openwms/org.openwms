@@ -1,5 +1,3 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!--
 /*
  * openwms.org, the Open Warehouse Management System.
  *
@@ -19,12 +17,18 @@
  * License along with this software. If not, write to the Free
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
- */  
--->
-<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xmlns:mvc="http://www.springframework.org/schema/mvc" xmlns:context="http://www.springframework.org/schema/context"
-    xsi:schemaLocation="http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd
-                        http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
-                        http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
+ */
+package org.openwms.core.service;
 
-</beans>
+/**
+ * A ExceptionCodes.
+ *
+ * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
+ * @version $Revision: $
+ * @since 0.2
+ */
+public class ExceptionCodes {
+
+    public static final String ROLE_ALREADY_EXISTS = "role.already.exists";
+
+}

@@ -1,12 +1,10 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!--
 /*
  * openwms.org, the Open Warehouse Management System.
  *
  * This file is part of openwms.org.
  *
  * openwms.org is free software: you can redistribute it and/or modify
- * it under the terms of the GNU Lesser General Public License as 
+ * it under the terms of the GNU Lesser General Public License as
  * published by the Free Software Foundation, either version 3 of the
  * License, or (at your option) any later version.
  *
@@ -19,12 +17,34 @@
  * License along with this software. If not, write to the Free
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
- */  
--->
-<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xmlns:mvc="http://www.springframework.org/schema/mvc" xmlns:context="http://www.springframework.org/schema/context"
-    xsi:schemaLocation="http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd
-                        http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
-                        http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
 
-</beans>
+ * Main colors:
+ * blue		    : #2e7bb1
+ * yellow	    : #e1e76b
+ * light-blue   : #c9dcea
+ * lighter-blue : #edf4fa
+ */
+
+/* Additional viewports */
+@media (min-width: 768px) {
+    .header-area { width: 750px; }
+}
+@media (min-width: 992px) {
+    .header-area { width: 970px; }
+}
+@media (min-width: 1200px) {
+    .header-area { width: 1170px; }
+}
+@media (min-width: 1600px) {
+    .container { width: 1600px; }
+    .header-area { width: 1568px; }
+}
+@media (min-width: 1920px) {
+    .container { width: 1903px; }
+    .header-area { width: 1903px; }
+}
+@media (min-width: 2560px) {
+    .container { width: 1631px; }
+    .header-area { width: 1631px; }
+}
+

@@ -29,12 +29,15 @@
  * @version $Revision: $
  * @since 0.1
  */
-angular.module('openwms_app',['ui.bootstrap'])
+angular.module('openwms_app',['ui.bootstrap', 'ngAnimate'])
 	.config(function ($httpProvider) {
 		delete $httpProvider.defaults.headers.common['X-Requested-With'];
 		$httpProvider.defaults.headers.common['Content-Type'] = 'application/json';
 	})
 	.controller('RolesCtrl', function ($scope, $http, $modal, $log, rolesService) {
+
+		var checkedRows = [];
+		var roleEntities = [];
 
 		var ModalInstanceCtrl = function ($scope, $modalInstance, data) {
 			$scope.role = data.role;
@@ -50,6 +53,9 @@ angular.module('openwms_app',['ui.bootstrap'])
 		};
 
 		$scope.addRole = function () {
+			if (roleEntities.length == 0) {
+				$scope.loadRoles();
+			}
 			var modalInstance = $modal.open({
 				templateUrl: 'addRolesDlg.html',
 				controller: ModalInstanceCtrl,
@@ -67,11 +73,11 @@ angular.module('openwms_app',['ui.bootstrap'])
 			});
 			modalInstance.result.then(
 				function (role) {
-					rolesService.add($scope, role).then(function(addedRole) {
-						$scope.roleEntities.push(addedRole);
-				})},
-				function () {
-					$log.info('Modal dismissed at: ' + new Date());
+					rolesService.add($scope, role).then(
+						function(addedRole) {
+							$scope.roleEntities.push(addedRole);
+						}
+					)
 				}
 			);
 		};
@@ -96,22 +102,16 @@ angular.module('openwms_app',['ui.bootstrap'])
 				function (role) {
 					rolesService.save($scope, role).then(function(savedRole) {
 						$scope.roleEntities.push(savedRole);
-					})},
-				function () {
-					$log.info('Modal dismissed at: ' + new Date());
+					})
 				}
 			);
 		};
 
 		$scope.deleteRole = function () {
-			rolesService.delete($scope)
-				.then(function(deletedRoleName) {
-					angular.forEach($scope.roleEntities, function (role, i) {
-						if (role.name == deletedRoleName) {
-							$scope.roleEntities.splice(i, 1);
-							$scope.selectedRole = undefined;
-						}
-					});
+			rolesService.delete($scope, $scope.checkedRoles())
+				.then(function(deletedRoles) {
+					checkedRows = [];
+					$scope.loadRoles();
 				});
 		}
 
@@ -137,6 +137,32 @@ angular.module('openwms_app',['ui.bootstrap'])
 				$scope.prevButton = {"enabled" : false};
 				$scope.grants = $scope.selectedRole.grants;
 			}
+		}
+
+		$scope.checkedRoles = function () {
+			var result = [];
+			angular.forEach(checkedRows, function (row) {
+				result.push($scope.roleEntities[row]);
+			});
+			return result;
+		}
+
+		$scope.onRoleChecked = function (row) {
+			var index = checkedRows.indexOf(row);
+			if (index == -1) {
+				// Not already selected
+				checkedRows.push(row);
+			} else {
+				// remove row from selection
+				checkedRows.splice(index, 1);
+			}
+		}
+
+		$scope.roleStyleClass = function (row) {
+			if (checkedRows.indexOf(row) == -1) {
+				return "glyphicon glyphicon-unchecked";
+			}
+			return "glyphicon glyphicon-check";
 		}
 
 		$scope.previousGrantsPage = function() {

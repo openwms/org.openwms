@@ -29,9 +29,9 @@ import org.openwms.core.service.RoleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -46,8 +46,6 @@ import org.springframework.web.bind.annotation.ResponseStatus;
  * @version $Revision: $
  * @since 0.1
  */
-@Transactional
-@Service
 @Controller
 @RequestMapping("/roles")
 public class RolesController {
@@ -88,12 +86,17 @@ public class RolesController {
 
     @RequestMapping(value = "/{name}", method = RequestMethod.DELETE)
     @ResponseStatus(HttpStatus.OK)
-    public void remove(@PathVariable("name") String pRolename) {
-        Role role = findByUsername(pRolename);
-        if (role == null) {
-            throw new IllegalArgumentException("Role with name " + pRolename + " not found");
+    public void remove(@PathVariable("name") String... rolenames) {
+        for (String rolename : rolenames) {
+            if (rolename == null || rolename.isEmpty()) {
+                continue;
+            }
+            Role role = findByUsername(rolename);
+            if (role == null) {
+                throw new IllegalArgumentException("Role with name " + rolename + " not found");
+            }
+            service.remove(Arrays.asList(new Role[] { role }));
         }
-        service.remove(Arrays.asList(new Role[] { role }));
     }
 
     @RequestMapping(method = RequestMethod.PUT, produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
@@ -104,9 +107,15 @@ public class RolesController {
         Role toSave = mapper.mapBackwards(role, Role.class);
         if (id == null) {
             throw new IllegalStateException(
-                    "User to save has changed in the meantime, please refresh or force to overwrite changes.");
+                    "Role to save has changed in the meantime, please refresh or force to overwrite changes.");
         }
         return mapper.map(service.save(toSave), RoleVO.class);
+    }
+
+    @ExceptionHandler(Exception.class)
+    public ResponseEntity<String> handleIOException(Exception ex) {
+        ResponseEntity<String> responseEntity = new ResponseEntity<>(ex.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+        return responseEntity;
     }
 
     private Role findByUsername(String pUsername) {

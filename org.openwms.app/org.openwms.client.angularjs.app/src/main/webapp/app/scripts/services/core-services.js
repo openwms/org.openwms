@@ -45,20 +45,25 @@ servicesModule.factory('rolesService',['$http', '$resource', '$q',
 					.error(function (status) {
 						var msg = "Error ["+status+"] while saving a Role: ["+role.name+"]/["+role.description+"]";
 						console.log(msg);
+						//toaster.pop('error', "title", '<ul><li>Render html</li></ul>', null, 'trustedHtml');
 						throw new Error(msg);
 					});
 				return delay.promise;
 			},
-			delete : function($scope) {
+			delete : function($scope, roles) {
 				console.log("Action: Delete Role");
+				var param = "";
+				angular.forEach(roles, function (role) {
+					param+=role.name+",";
+				});
 				var delay = $q.defer();
 				$http.defaults.headers.put['Auth-Token'] = $scope.authToken;
-				$http.delete($scope.rootUrl+'/roles/'+ $scope.selectedRole.name)
+				$http.delete($scope.rootUrl+'/roles/'+ param)
 					.success(function () {
-						delay.resolve($scope.selectedRole.name);
+						delay.resolve(roles);
 					})
 					.error(function (data, status) {
-						var msg = "Error ["+status+"] while trying to delete Role ["+$scope.selectedRole.name+"]/["+$scope.selectedRole.description+"]";
+						var msg = "Error ["+status+"] while trying to delete Roles ["+roles+"]";
 						console.log(msg);
 						throw new Error(msg);
 					});

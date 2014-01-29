@@ -67,6 +67,12 @@ body {
 .named-div {
     background-color: #c9dcea;
 }
+.checked {
+    background-color: #1e347b;
+}
+.unchecked {
+    background-color: transparent;
+}
 
 
 .header-menu {

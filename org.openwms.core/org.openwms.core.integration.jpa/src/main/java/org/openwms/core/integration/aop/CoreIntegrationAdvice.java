@@ -20,6 +20,9 @@
  */
 package org.openwms.core.integration.aop;
 
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+
 import org.apache.commons.lang.time.StopWatch;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.openwms.core.integration.exception.IntegrationRuntimeException;
@@ -52,6 +55,8 @@ public class CoreIntegrationAdvice {
     private static final Logger EXC_LOGGER = LoggerFactory.getLogger(LoggingCategories.INTEGRATION_EXCEPTION);
     /** Springs component name. */
     public static final String COMPONENT_NAME = "coreIntegrationAdvice";
+    @PersistenceContext
+    private EntityManager em;
 
     /**
      * Called around any method invocation to log time consumption of each
@@ -73,9 +78,15 @@ public class CoreIntegrationAdvice {
         try {
             return pjp.proceed();
         } finally {
-            if (LOGGER.isDebugEnabled() && sw != null) {
-                sw.stop();
-                LOGGER.debug("[I]<<< " + pjp.toShortString() + " took [ms]: " + sw.getTime());
+            try {
+                em.flush();
+            } catch (Exception ex) {
+                afterThrowing(ex);
+            } finally {
+                if (LOGGER.isDebugEnabled() && sw != null) {
+                    sw.stop();
+                    LOGGER.debug("[I]<<< " + pjp.toShortString() + " took [ms]: " + sw.getTime());
+                }
             }
         }
     }
@@ -85,7 +96,7 @@ public class CoreIntegrationAdvice {
      * exception is not of type {@link IntegrationRuntimeException} it is
      * wrapped by a new {@link IntegrationRuntimeException}.
      * <p>
-     * Set tracing to level WARN to log the root cause.
+     * Set tracing to level ERROR to log the root cause.
      * </p>
      * 
      * @param ex
@@ -98,6 +109,6 @@ public class CoreIntegrationAdvice {
         if (ex instanceof IntegrationRuntimeException) {
             throw (IntegrationRuntimeException) ex;
         }
-        throw new IntegrationRuntimeException(ex);
+        throw new IntegrationRuntimeException(ex.getMessage());
     }
 }

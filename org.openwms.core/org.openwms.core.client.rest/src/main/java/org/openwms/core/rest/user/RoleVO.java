@@ -21,6 +21,7 @@
 package org.openwms.core.rest.user;
 
 import java.io.Serializable;
+import java.util.HashSet;
 import java.util.Set;
 
 /**
@@ -151,7 +152,7 @@ public class RoleVO implements Serializable {
     private Boolean immutable;
     private String name;
     private String description;
-    private Set<UserVO> users;
-    private Set<SecurityObjectVO> grants;
+    private Set<UserVO> users = new HashSet<>();
+    private Set<SecurityObjectVO> grants = new HashSet<>();
     private long version;
 }

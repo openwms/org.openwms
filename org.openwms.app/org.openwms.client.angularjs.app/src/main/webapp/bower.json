@@ -11,19 +11,19 @@
   "dependencies": {
     "AngularJS-Toaster": "*",
     "angular": "~1.2.7",
-    "angular-bootstrap": "~0.6.0",
+    "angular-bootstrap": "~0.10.0",
     "angular-cookies": "~1.2.7",
     "angular-mocks": "~1.2.7",
     "angular-resource": "~1.2.7",
     "angular-sanitize": "~1.2.7",
     "angular-scenario": "~1.2.7",
-    "angular-ui-router": "~0.2.0",
     "animate.css": "~2.1.0",
     "bootstrap-sass": "~2.3.1",
     "es5-shim": "~2.0.8",
     "json3": "~3.2.4",
     "underscore.string": "~2.3.3",
     "underscore": "~1.5.2",
-    "ui-bootstrap": "~0.10.0"
+    "ui-bootstrap": "~0.10.0",
+    "angular-ui-router": "0.2.8-bowratic-tedium"
   }
 }

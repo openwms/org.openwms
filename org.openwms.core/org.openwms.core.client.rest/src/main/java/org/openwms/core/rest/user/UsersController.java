@@ -29,8 +29,6 @@ import org.openwms.core.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -45,8 +43,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
  * @version $Revision: $
  * @since 0.1
  */
-@Transactional
-@Service
 @Controller
 @RequestMapping("/users")
 public class UsersController {

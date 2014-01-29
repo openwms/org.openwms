@@ -27,6 +27,9 @@
 	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
 		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd">
 
+    <!-- Enable @AspectJ support -->
+    <aop:aspectj-autoproxy/>
+    
     <aop:config>
         <aop:pointcut id="publicIntegrationMethodsPC" expression="execution(public * org.openwms.core.integration..*.*(..))" />
         
