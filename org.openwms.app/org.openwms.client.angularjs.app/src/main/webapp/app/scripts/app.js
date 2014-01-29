@@ -1,7 +1,7 @@
 'use strict';
 
 //var openwms_app = angular.module('openwms_app');
-var openwms_root = angular.module('openwms_root', ['ui.bootstrap', 'ui.router', 'openwms_app', 'ngResource', 'openwms_services', 'toaster']);
+var openwms_root = angular.module('openwms_root', ['ui.bootstrap', 'ui.router', 'openwms_app', 'ngResource', 'openwms_services']);
 
 openwms_root
 	.factory('rootApply', [ '$rootScope', function ($rootScope) {
@@ -26,7 +26,7 @@ openwms_root
 			}
 		};
 	} ])
-	.config(function ($stateProvider, $urlRouterProvider, $locationProvider, $httpProvider, $compileProvider, toaster) {
+	.config(function ($stateProvider, $urlRouterProvider, $locationProvider, $httpProvider, $compileProvider) {
 
 		$compileProvider.imgSrcSanitizationWhitelist(/^\s*(https?|ftp|mailto|file|data):/);
 
@@ -55,6 +55,7 @@ openwms_root
 			});
 		}
 
+		/*
 		toaster.options = {
 			"closeButton": false,
 			"debug": false,
@@ -69,7 +70,7 @@ openwms_root
 			"showMethod": "fadeIn",
 			"hideMethod": "fadeOut"
 		}
-
+*/
 		//================================================
 		// Add an interceptor for AJAX errors
 		//================================================
@@ -142,7 +143,7 @@ openwms_root
 			})
 		;
 	})
-	.run(function ($rootScope, $state, $stateParams, $http, $location, toaster) {
+	.run(function ($rootScope, $state, $stateParams, $http, $location) {
 		$rootScope.DEVMODE = true;
 		$rootScope.rootUrl = 'http://backend.openwms.cloudbees.net';
 //		$rootScope.rootUrl = 'http://localhost:8080/org.openwms.client.rest.provider';
