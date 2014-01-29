@@ -23,14 +23,11 @@ package org.openwms.client.application;
 import org.openwms.core.infrastructure.configuration.ConfigurationApplicationContextConfiguration;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
-import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
 import org.springframework.context.annotation.ImportResource;
-import org.springframework.context.support.ResourceBundleMessageSource;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
-import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 
 /**
@@ -46,7 +43,8 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter
 @EnableWebMvc
 @Import({ ConfigurationApplicationContextConfiguration.class })
 @ImportResource({ "classpath:META-INF/spring/applicationContext-security.xml",
-        "classpath*:META-INF/spring/module-context.xml", "classpath*:META-INF/spring/noosgi-context.xml" })
+        "classpath*:META-INF/spring/module-context.xml", "classpath*:META-INF/spring/noosgi-context.xml",
+        "classpath*:META-INF/spring/aop-context.xml" })
 public class WebApplicationContextConfiguration extends WebMvcConfigurerAdapter {
 
     @Autowired
@@ -56,21 +54,20 @@ public class WebApplicationContextConfiguration extends WebMvcConfigurerAdapter 
      * Set resources directory.
      * 
      * @see org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter#addResourceHandlers(org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry)
-     */
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
         registry.addResourceHandler("/resources/**").addResourceLocations("/resources/");
     }
+    */
 
     /**
-     * Register default ResourceMessageSource with a basename <tt>messages</tt>.
+     * Register default ReloadableResourceBundleMessageSource with a basename <tt>messages</tt>.
      * 
      * @return the bean
-     */
-    @Bean
-    public ResourceBundleMessageSource messageSource() {
+    public ResourceBundleMessageSource messageSource2() {
         ResourceBundleMessageSource source = new ResourceBundleMessageSource();
-        source.setBasename("messages");
+        source.setBasename("core-service-exceptions");
         return source;
     }
+     */
 }

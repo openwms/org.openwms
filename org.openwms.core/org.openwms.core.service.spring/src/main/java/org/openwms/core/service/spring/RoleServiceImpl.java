@@ -22,15 +22,21 @@ package org.openwms.core.service.spring;
 
 import java.util.List;
 
+import javax.persistence.PersistenceException;
+
 import org.openwms.core.annotation.FireAfterTransaction;
 import org.openwms.core.domain.system.usermanagement.Role;
 import org.openwms.core.integration.RoleDao;
+import org.openwms.core.integration.exception.IntegrationRuntimeException;
+import org.openwms.core.service.ExceptionCodes;
 import org.openwms.core.service.RoleService;
+import org.openwms.core.service.exception.ServiceRuntimeException;
 import org.openwms.core.util.event.RoleChangedEvent;
 import org.openwms.core.util.validation.AssertUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.MessageSource;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -57,6 +63,8 @@ public class RoleServiceImpl implements RoleService {
     private static final Logger LOGGER = LoggerFactory.getLogger(RoleServiceImpl.class);
     @Autowired
     private RoleDao dao;
+    @Autowired
+    private MessageSource messageSource;
     /** Springs service name. */
     public static final String COMPONENT_NAME = "roleService";
 
@@ -93,6 +101,16 @@ public class RoleServiceImpl implements RoleService {
     @FireAfterTransaction(events = { RoleChangedEvent.class })
     public Role save(Role role) {
         AssertUtils.notNull(role, "Role to be removed must not be null");
+        if (role.isNew()) {
+            try {
+                dao.persist(role);
+            } catch (PersistenceException | IntegrationRuntimeException ex) {
+                String msg = messageSource.getMessage(ExceptionCodes.ROLE_ALREADY_EXISTS,
+                        new String[] { role.getName() }, null);
+                LOGGER.error(msg, ex);
+                throw new ServiceRuntimeException(msg);
+            }
+        }
         return dao.save(role);
     }
 

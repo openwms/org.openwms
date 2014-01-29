@@ -37,6 +37,14 @@
 
     <tx:annotation-driven order="10" />
     
+    <bean id="messageSource" class="org.springframework.context.support.ResourceBundleMessageSource">
+        <property name="basenames">
+            <list>
+                <value>core-service-exceptions</value>
+            </list>
+        </property>
+    </bean>
+    
     <task:annotation-driven />
 
     <bean id="userCache" class="org.springframework.security.core.userdetails.cache.EhCacheBasedUserCache">

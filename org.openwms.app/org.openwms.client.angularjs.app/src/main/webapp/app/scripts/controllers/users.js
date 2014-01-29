@@ -6,9 +6,7 @@ angular.module('openwms_app')
 		$httpProvider.defaults.headers.common['Content-Type'] = 'application/json';
 	})
 	.controller('UsersCtrl', function ($scope, $http, toaster) {
-		function UsersCtrl($scope, $http) {
-			loadUsers();
-		}
+
 
 		$scope.addUser = function () {
 			$http.defaults.headers.post['Auth-Token'] = $scope.authToken;

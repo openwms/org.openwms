@@ -97,6 +97,6 @@ public class CoreServiceAdvice {
         if (ex instanceof ServiceRuntimeException) {
             throw (ServiceRuntimeException) ex;
         }
-        throw new ServiceRuntimeException(ex);
+        throw new ServiceRuntimeException(ex.getMessage());
     }
 }

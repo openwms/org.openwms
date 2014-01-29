@@ -12,19 +12,29 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title></title>
     <meta name="description" content="">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
     <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
 
     <!-- build:css(.tmp) styles/main.css -->
     <link rel="stylesheet" href="bower_components/animate.css/animate.min.css">
+    <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.css">
+    <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap-theme.min.css">
+    <!--link rel="stylesheet" href="styles/main.css"-->
     <link rel="stylesheet" href="bower_components/AngularJS-Toaster/toaster.css">
-    <link rel="stylesheet" href="styles/main.css">
     <link rel="stylesheet" href="styles/styles.css">
     <link rel="stylesheet" href="styles/openwms.css">
+    <link rel="stylesheet" href="styles/openwms-viewports.css">
+    <!--link rel="stylesheet" href="styles/openwms-light.css"-->
     <!--
     <link rel="stylesheet" href="styles/openwms-dark.css">
     <link rel="stylesheet" href="styles/bootstrap-dark.css">
     -->
+
+    <!-- Glyphicons PRO -->
+    <!--link rel="stylesheet" href="styles/glyphicons.css"-->
+    <!--link rel="stylesheet" href="styles/halflings.css"-->
+    <!--script src="scripts/modernizr.js"></script-->
+
     <!-- Google Analytics: change UA-XXXXX-X to be your site's ID -->
     <script>
         (function (i, s, o, g, r, a, m) {
@@ -69,6 +79,7 @@
     <script src="bower_components/angular-animate/angular-animate.js"></script>
     <script src="bower_components/angular-ui-router/release/angular-ui-router.js"></script>
     <script src="bower_components/angular-bootstrap/ui-bootstrap.min.js"></script>
+    <script src="bower_components/angular-bootstrap/ui-bootstrap-tpls.min.js"></script>
     <!-- endbuild -->
 
     <script src="bower_components/underscore/underscore-min.js"></script>
@@ -77,8 +88,6 @@
 
     <!--script src="bower_components/DataTables/media/js/jquery.dataTables.js"></script-->
     <script src="bower_components/AngularJS-Toaster/toaster.js"></script>
-    <script src="bower_components/angular-bootstrap/ui-bootstrap.js"></script>
-    <script src="bower_components/angular-bootstrap/ui-bootstrap-tpls.js"></script>
 
     <!-- build:js({.tmp,app}) scripts/scripts.js -->
     <script src="scripts/app.js"></script>
@@ -117,7 +126,7 @@
 <![endif]-->
 
 <!-- Add your site or application content here -->
-<div ng-include src="'views/main.html'"></div>
+<div ng-include src="'views/main.html'" class=""></div>
 
 </body>
 </html>

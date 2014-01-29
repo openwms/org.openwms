@@ -1,32 +1,31 @@
 'use strict';
 
 //var openwms_app = angular.module('openwms_app');
-var openwms_root = angular.module('openwms_root', ['ui.bootstrap', 'ui.router', 'openwms_app', 'ngResource', 'toaster', 'openwms_services']);
-
-openwms_root.factory('rootApply', [ '$rootScope', function ($rootScope) {
-	return function (fn, scope) {
-		var args = [].slice.call(arguments, 1);
-
-		// push null as scope if necessary
-		args.length || args.push(null);
-
-		return function () {
-			// binds to the scope and any arguments
-			var callFn = fn.bind.apply(
-				fn
-				, args.slice().concat([].slice.call(arguments))
-			);
-
-			// prevent applying/digesting twice
-			$rootScope.$$phase
-				? callFn()
-				: $rootScope.$apply(callFn)
-			;
-		}
-	};
-} ]);
+var openwms_root = angular.module('openwms_root', ['ui.bootstrap', 'ui.router', 'openwms_app', 'ngResource', 'openwms_services']);
 
 openwms_root
+	.factory('rootApply', [ '$rootScope', function ($rootScope) {
+		return function (fn, scope) {
+			var args = [].slice.call(arguments, 1);
+
+			// push null as scope if necessary
+			args.length || args.push(null);
+
+			return function () {
+				// binds to the scope and any arguments
+				var callFn = fn.bind.apply(
+					fn
+					, args.slice().concat([].slice.call(arguments))
+				);
+
+				// prevent applying/digesting twice
+				$rootScope.$$phase
+					? callFn()
+					: $rootScope.$apply(callFn)
+				;
+			}
+		};
+	} ])
 	.config(function ($stateProvider, $urlRouterProvider, $locationProvider, $httpProvider, $compileProvider) {
 
 		$compileProvider.imgSrcSanitizationWhitelist(/^\s*(https?|ftp|mailto|file|data):/);
@@ -157,7 +156,8 @@ openwms_root
 				redirectTo: '/'
 			});
 		 */
-	}).run(function ($rootScope, $state, $stateParams, $http, $location) {
+	})
+	.run(function ($rootScope, $state, $stateParams, $http, $location) {
 		$rootScope.DEVMODE = true;
 //		$rootScope.rootUrl = 'http://backend.openwms.cloudbees.net';
 		$rootScope.rootUrl = 'http://localhost:8080/org.openwms.client.rest.provider';
@@ -183,11 +183,11 @@ openwms_root
 			"showMethod": "fadeIn",
 			"hideMethod": "fadeOut"
 		}
-		 */
 		$rootScope.pop = function(title, message, toaster) {
 			toaster.pop('success', title, message);
 		}
 
+		 */
 
 
 		// Logout function is available in any pages
