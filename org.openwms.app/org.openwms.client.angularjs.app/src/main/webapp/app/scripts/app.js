@@ -26,7 +26,7 @@ openwms_root
 			}
 		};
 	} ])
-	.config(function ($stateProvider, $urlRouterProvider, $locationProvider, $httpProvider, $compileProvider) {
+	.config(function ($stateProvider, $urlRouterProvider, $locationProvider, $httpProvider, $compileProvider, toaster) {
 
 		$compileProvider.imgSrcSanitizationWhitelist(/^\s*(https?|ftp|mailto|file|data):/);
 
@@ -53,6 +53,21 @@ openwms_root
 					$location.url('/login');
 				}
 			});
+		}
+
+		toaster.options = {
+			"closeButton": false,
+			"debug": false,
+			"positionClass": "toast-top-full-width",
+			"onclick": null,
+			"showDuration": "000",
+			"hideDuration": "5000",
+			"timeOut": "500",
+			"extendedTimeOut": "5000",
+			"showEasing": "swing",
+			"hideEasing": "linear",
+			"showMethod": "fadeIn",
+			"hideMethod": "fadeOut"
 		}
 
 		//================================================
@@ -126,41 +141,11 @@ openwms_root
 				}
 			})
 		;
-		/*
-		 $routeProvider
-			.when('/', {
-				templateUrl: 'views/main.html',
-				controller: 'openwms_app.MainCtrl'
-			})
-			/*
-			 .when('/users', {
-			 templateUrl: 'views/users.html',
-			 controller: 'UsersCtrl'
-			 //			resolve: {
-			 //				loggedin: checkLoggedin
-			 //			}
-			 })
-			 .when('/roles', {
-			 templateUrl: 'views/roles.html',
-			 controller: 'RolesCtrl'
-			 //			resolve: {
-			 //				loggedin: checkLoggedin
-			 //			}
-			 })
-			 .when('/login', {
-			 templateUrl: 'login.html',
-			 controller: 'LoginCtrl'
-			 })
-
-		 .otherwise({
-				redirectTo: '/'
-			});
-		 */
 	})
 	.run(function ($rootScope, $state, $stateParams, $http, $location, toaster) {
 		$rootScope.DEVMODE = true;
-//		$rootScope.rootUrl = 'http://backend.openwms.cloudbees.net';
-		$rootScope.rootUrl = 'http://localhost:8080/org.openwms.client.rest.provider';
+		$rootScope.rootUrl = 'http://backend.openwms.cloudbees.net';
+//		$rootScope.rootUrl = 'http://localhost:8080/org.openwms.client.rest.provider';
 
 		/* Security */
 		$rootScope.message = '';
@@ -169,20 +154,6 @@ openwms_root
 		$rootScope.global = {message: {short:""}};
 
 		/* Toaster
-		toaster.options = {
-			"closeButton": false,
-			"debug": false,
-			"positionClass": "toast-top-full-width",
-			"onclick": null,
-			"showDuration": "000",
-			"hideDuration": "5000",
-			"timeOut": "500",
-			"extendedTimeOut": "5000",
-			"showEasing": "swing",
-			"hideEasing": "linear",
-			"showMethod": "fadeIn",
-			"hideMethod": "fadeOut"
-		}
 		$rootScope.pop = function(title, message, toaster) {
 			toaster.pop('success', title, message);
 		}
