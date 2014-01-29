@@ -300,9 +300,10 @@ public class UserServiceTest extends AbstractJpaSpringContextTests {
             srv.saveUserProfile(null, new UserPassword(new User(TEST_USER), TEST_USER));
             fail("Must throw an exception when invoking with null argument");
         } catch (ServiceRuntimeException sre) {
-            if (!(sre.getCause() instanceof IllegalArgumentException)) {
-                fail("Expected to wrap an IllegalArgumentException when the user argument is null");
+            if (sre.getMessage().equals("Could not save the user profile because the argument user is null")) {
+                return;
             }
+            fail("Expected to wrap an IllegalArgumentException when the user argument is null");
         }
     }
 
