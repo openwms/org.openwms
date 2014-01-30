@@ -36,15 +36,13 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 /**
- * An AbstractGenericJpaDao - Extend this DAO implementation to inherit simple
- * JPA CRUD operations.
+ * An AbstractGenericJpaDao - Extend this DAO implementation to inherit simple JPA CRUD operations.
  * <p>
- * This {@link GenericDao} implementation acts as a transactional superclass to
- * have a benefit from Springs exception translation and transaction management.
+ * This {@link GenericDao} implementation acts as a transactional superclass to have a benefit from Springs exception translation and
+ * transaction management.
  * </p>
  * <p>
- * Furthermore an {@link AbstractGenericJpaDao} has transactional behavior
- * expressed with Springs {@link Transactional} annotation.
+ * Furthermore an {@link AbstractGenericJpaDao} has transactional behavior expressed with Springs {@link Transactional} annotation.
  * </p>
  * 
  * @param <T>
@@ -90,14 +88,11 @@ public abstract class AbstractGenericJpaDao<T extends AbstractEntity, ID extends
     /**
      * {@inheritDoc}
      */
-    @Override
     @SuppressWarnings("unchecked")
+    @Override
     public List<T> findAll() {
         List<T> all = em.createNamedQuery(getFindAllQuery()).getResultList();
-        if (all == null) {
-            all = Collections.emptyList();
-        }
-        return all;
+        return all == null ? Collections.<T> emptyList() : all;
     }
 
     /**
@@ -133,8 +128,7 @@ public abstract class AbstractGenericJpaDao<T extends AbstractEntity, ID extends
     /**
      * {@inheritDoc}
      * 
-     * A {@link NoUniqueResultException} is thrown when more than one entity was
-     * found. In case of no result, <code>null</code> is returned.
+     * A {@link NoUniqueResultException} is thrown when more than one entity was found. In case of no result, <code>null</code> is returned.
      * 
      * @throws NoUniqueResultException
      *             when more than one entity was found
@@ -176,24 +170,21 @@ public abstract class AbstractGenericJpaDao<T extends AbstractEntity, ID extends
     }
 
     /**
-     * Returns the name of the <code>NamedQuery</code> to find all Entity
-     * classes.
+     * Returns the name of the <code>NamedQuery</code> to find all Entity classes.
      * 
      * @return Name of the query
      */
     protected abstract String getFindAllQuery();
 
     /**
-     * Returns the name of the <code>NamedQuery</code> to find an Entity by the
-     * business key.
+     * Returns the name of the <code>NamedQuery</code> to find an Entity by the business key.
      * 
      * @return Name of the query
      */
     protected abstract String getFindByUniqueIdQuery();
 
     /**
-     * This method is considered as a hook to do something before an update is
-     * performed.
+     * This method is considered as a hook to do something before an update is performed.
      * 
      * @param entity
      *            The Entity that is updated
@@ -203,8 +194,7 @@ public abstract class AbstractGenericJpaDao<T extends AbstractEntity, ID extends
     }
 
     /**
-     * Subclasses can call this method to retrieve an shared
-     * {@link EntityManager} instance.
+     * Subclasses can call this method to retrieve an shared {@link EntityManager} instance.
      * 
      * @return The {@link EntityManager}
      */
