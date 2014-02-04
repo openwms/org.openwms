@@ -75,7 +75,7 @@ angular.module('openwms_app',['ui.bootstrap', 'ngAnimate', 'toaster'])
 				function (role) {
 					rolesService.add($scope, role).then(
 						function(addedRole) {
-							$scope.roleEntities.push(addedRole);
+							$scope.roleEntities.push(role);
 						},
 						function(data) {
 							toaster.pop('error', "Server Error","["+data.items[0].httpStatus+"] "+data.items[0].message);
@@ -114,7 +114,8 @@ angular.module('openwms_app',['ui.bootstrap', 'ngAnimate', 'toaster'])
 
 		$scope.deleteRole = function () {
 			rolesService.delete($scope, $scope.checkedRoles())
-				.then(function(deletedRoles) {
+				.then(
+				function(deletedRoles) {
 					$scope.loadRoles();
 				}, function(data) {
 					toaster.pop("error", "Server Error", "["+data.items[0].httpStatus+"] "+data.items[0].message);
@@ -128,15 +129,23 @@ angular.module('openwms_app',['ui.bootstrap', 'ngAnimate', 'toaster'])
 
 		$scope.loadRoles = function () {
 			checkedRows = [];
-			rolesService.getAll($scope).then(function(roles) {
-				$scope.roleEntities = roles;
-			});
+			rolesService.getAll($scope)
+				.then(
+				function(roles) {
+					$scope.roleEntities = roles;
+				}, function(data) {
+					toaster.pop("error", "Server Error", "["+data.items[0].httpStatus+"] "+data.items[0].message);
+				}
+			);
 		}
 
 		$scope.onRoleSelected = function (row) {
 			$scope.selectedRole = $scope.roleEntities[row];
 			$scope.page = 1;
-			if ($scope.selectedRole.grants.length > 5) {
+			if ($scope.selectedRole.grants == undefined) {
+				$scope.nextButton = {"enabled" : false};
+				$scope.prevButton = {"enabled" : false};
+			} else if ($scope.selectedRole.grants.length > 5) {
 				$scope.nextButton = {"enabled" : true, "hidden" : false};
 				$scope.prevButton = {"enabled" : true, "hidden" : true};
 				$scope.grants = $scope.selectedRole.grants.slice(0, 5);

@@ -34,6 +34,12 @@ var servicesModule = angular.module('openwms_services', ['ngResource', 'toaster'
 servicesModule.factory('rolesService',['$http', '$resource', '$q', 'toaster',
 	function($http, $resource, $q, toaster) {
 		return {
+			/**
+			 * Create a non-existing Role instance and send an POST request to the backend. If the Role with its unique identifier exists the service will reject the request to the caller.
+			 * @param $scope The current scope
+			 * @param role the Role to add
+			 * @returns {Promise.promise|*} A promise to evaluate
+			 */
 			add : function($scope, role) {
 				var delay = $q.defer();
 				$http.defaults.headers.put['Auth-Token'] = $scope.authToken;
@@ -70,7 +76,6 @@ servicesModule.factory('rolesService',['$http', '$resource', '$q', 'toaster',
 				return delay.promise;
 			},
 			save : function ($scope, role) {
-				console.log("Action: Save Role");
 				var delay = $q.defer();
 				$http.defaults.headers.put['Auth-Token'] = $scope.authToken;
 				$http.put($scope.rootUrl+'/roles', role)
@@ -89,17 +94,14 @@ servicesModule.factory('rolesService',['$http', '$resource', '$q', 'toaster',
 				return delay.promise;
 			},
 			getAll : function($scope) {
-				console.log("Action: Get all Roles");
 				var delay = $q.defer();
 				$http.defaults.headers.common['Auth-Token'] = $scope.authToken;
 				$http.get($scope.rootUrl+'/roles')
 					.success(function (data) {
 						delay.resolve(data);
 					})
-					.error(function (data, status) {
-						var msg = "Error ["+status+"] while trying to read Roles";
-						console.log(msg);
-						throw new Error(msg);
+					.error(function (data) {
+						delay.reject(data);
 					});
 				return delay.promise;
 			}
