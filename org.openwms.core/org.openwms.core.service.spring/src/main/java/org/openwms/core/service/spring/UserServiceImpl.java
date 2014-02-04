@@ -39,7 +39,7 @@ import org.openwms.core.integration.UserDao;
 import org.openwms.core.service.ConfigurationService;
 import org.openwms.core.service.UserService;
 import org.openwms.core.service.exception.ServiceRuntimeException;
-import org.openwms.core.service.exception.UserNotFoundException;
+import org.openwms.core.service.exception.EntityNotFoundException;
 import org.openwms.core.util.event.UserChangedEvent;
 import org.openwms.core.util.validation.AssertUtils;
 import org.slf4j.Logger;
@@ -108,7 +108,7 @@ public class UserServiceImpl implements UserService {
     /**
      * {@inheritDoc}
      * 
-     * If no User with the <tt>id</tt> exist, an {@link UserNotFoundException}
+     * If no User with the <tt>id</tt> exist, an {@link EntityNotFoundException}
      * is thrown.
      * 
      * @see org.openwms.core.service.UserService#findById(java.lang.Long)
@@ -117,7 +117,7 @@ public class UserServiceImpl implements UserService {
     public User findById(Long id) {
         User user = dao.findById(id);
         if (user == null) {
-            throw new UserNotFoundException("User with id [" + id + "] not found");
+            throw new EntityNotFoundException("User with id [" + id + "] not found");
         }
         return user;
     }
@@ -125,7 +125,7 @@ public class UserServiceImpl implements UserService {
     /**
      * {@inheritDoc}
      * 
-     * @throws UserNotFoundException
+     * @throws EntityNotFoundException
      *             when no User was found with this username.
      */
     @Override
@@ -133,7 +133,7 @@ public class UserServiceImpl implements UserService {
     public void uploadImageFile(String username, byte[] image) {
         User user = dao.findByUniqueId(username);
         if (user == null) {
-            throw new UserNotFoundException("User with username [" + username + "] not found");
+            throw new EntityNotFoundException("User with username [" + username + "] not found");
         }
         if (user.getUserDetails() == null) {
             user.setUserDetails(new UserDetails());
@@ -210,7 +210,7 @@ public class UserServiceImpl implements UserService {
      *             when <code>userPassword</code> is <code>null</code>
      * @throws ServiceRuntimeException
      *             when <code>userPassword</code> is not a valid password
-     * @throws UserNotFoundException
+     * @throws EntityNotFoundException
      *             when no {@link User} exist
      */
     @Override
@@ -219,7 +219,7 @@ public class UserServiceImpl implements UserService {
         AssertUtils.notNull(userPassword, "Error while changing the user password, new value is null");
         User entity = dao.findByUniqueId(userPassword.getUser().getUsername());
         if (entity == null) {
-            throw new UserNotFoundException("User not found, probably not persisted before or has been removed");
+            throw new EntityNotFoundException("User not found, probably not persisted before or has been removed");
         }
         try {
             entity.changePassword(enc.encodePassword(userPassword.getPassword(),

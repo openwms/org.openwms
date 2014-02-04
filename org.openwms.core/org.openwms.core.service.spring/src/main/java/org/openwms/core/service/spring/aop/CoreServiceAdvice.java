@@ -22,18 +22,20 @@ package org.openwms.core.service.spring.aop;
 
 import org.apache.commons.lang.time.StopWatch;
 import org.aspectj.lang.ProceedingJoinPoint;
+import org.openwms.core.service.ExceptionCodes;
 import org.openwms.core.service.exception.ServiceRuntimeException;
 import org.openwms.core.util.logging.LoggingCategories;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.MessageSource;
 import org.springframework.stereotype.Component;
 
 /**
  * A CoreServiceAdvice is in conjunction with an AOP aspect for Core services.
  * <p>
- * So far it is used to translate all exceptions into a
- * {@link ServiceRuntimeException} and tracing of methods time consumption.
- * Activation is done in XML instead of using Springs AOP annotations.
+ * So far it is used to translate all exceptions into a {@link ServiceRuntimeException} and tracing of methods time consumption. Activation
+ * is done in XML instead of using Springs AOP annotations.
  * </p>
  * <p>
  * The advice can be referenced by name {@value #COMPONENT_NAME}.
@@ -49,12 +51,14 @@ public class CoreServiceAdvice {
     // FIXME [scherrer] : rename class to ...Aspect
     private static final Logger LOGGER = LoggerFactory.getLogger(LoggingCategories.CALL_STACK_LOGGING);
     private static final Logger EXC_LOGGER = LoggerFactory.getLogger(LoggingCategories.SERVICE_EXCEPTION);
+    @Autowired
+    private MessageSource messageSource;
+
     /** Springs component name. */
     public static final String COMPONENT_NAME = "coreServiceAdvice";
 
     /**
-     * Called around any service method invocation to log time consumption of
-     * each method call.
+     * Called around any service method invocation to log time consumption of each method call.
      * 
      * @param pjp
      *            the ProceedingJoinPoint object
@@ -80,11 +84,12 @@ public class CoreServiceAdvice {
     }
 
     /**
-     * Called after an exception is thrown by classes of the Core service layer.
-     * If the exception is not of type {@link ServiceRuntimeException} it is
-     * wrapped by a new {@link ServiceRuntimeException}.
+     * Called after an exception is thrown by classes of the Core service layer. If the exception is not of type
+     * {@link ServiceRuntimeException} it is wrapped by a new {@link ServiceRuntimeException}. We explicitly don't re-throw unknown
+     * exceptions and throw {@link ServiceRuntimeException}s with a general message text instead, because of the internal lowlevel exception
+     * messages aren't very useful and interesting for components calling the service layer.
      * <p>
-     * Turn tracing to level WARN to log the root cause.
+     * Turn tracing to level ERROR to log the root cause.
      * </p>
      * 
      * @param ex
@@ -97,6 +102,6 @@ public class CoreServiceAdvice {
         if (ex instanceof ServiceRuntimeException) {
             throw (ServiceRuntimeException) ex;
         }
-        throw new ServiceRuntimeException(ex.getMessage());
+        throw new ServiceRuntimeException(messageSource.getMessage(ExceptionCodes.TECHNICAL_RT_ERROR, null, null));
     }
 }

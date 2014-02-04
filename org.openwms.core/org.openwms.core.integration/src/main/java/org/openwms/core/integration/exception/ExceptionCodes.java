@@ -18,7 +18,7 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
-package org.openwms.core.service;
+package org.openwms.core.integration.exception;
 
 /**
  * A ExceptionCodes.
@@ -29,12 +29,6 @@ package org.openwms.core.service;
  */
 public class ExceptionCodes {
 
-    public static final String TECHNICAL_RT_ERROR = "general.technical.error";
-    /** Thrown if an Role already exists and cannot be created. */
-    public static final String ROLE_ALREADY_EXISTS = "role.already.exists";
-    /** Thrown if a Role is looked up but hasn't been found. */
-    public static final String ROLE_NOT_EXIST = "role.not.exist";
-    /** Thrown if removing a Role was requested with <code>null</code> argument. */
-    public static final String ROLE_NOT_BE_NULL = "role.remove.null.argument";
-
+    /** Thrown if multiple entities were found but only one was expected. */
+    public static final String MULIPLE_ENTITIES_FOUND = "integration.multiple.entities.found";
 }

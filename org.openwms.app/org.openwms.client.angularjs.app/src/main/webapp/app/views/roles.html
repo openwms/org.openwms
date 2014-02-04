@@ -6,17 +6,15 @@
         <div class="modal-body">
             <form class="form-horizontal" role="form">
                 <div class="form-group">
-                    <label for="inputEmail3" class="col-sm-2 control-label">Name</label>
-
+                    <label for="nameTxt" class="col-sm-2 control-label">Name</label>
                     <div class="col-sm-10">
-                        <input type="text" ng-model="role.name" class="form-control" id="inputEmail3" placeholder="">
+                        <input type="text" ng-model="role.name" class="form-control" id="nameTxt" placeholder="">
                     </div>
                 </div>
                 <div class="form-group">
-                    <label for="inputPassword3" class="col-sm-2 control-label">Description</label>
-
+                    <label for="descriptionTxt" class="col-sm-2 control-label">Description</label>
                     <div class="col-sm-10">
-                        <input type="text" ng-model="role.description" class="form-control" id="inputPassword3" placeholder="">
+                        <input type="text" ng-model="role.description" class="form-control" id="descriptionTxt" placeholder="">
                     </div>
                 </div>
             </form>
@@ -31,16 +29,16 @@
         <div class=""><h2>Role Management</h2></div>
         <div class="button-bar">
             <a ng-click="addRole()" class="btn btn-default">
-                <img src="../images/dialogs/role/Users--plus.png" class="pull-left"/>
+                <i class="Users--plus pull-left"></i>
             </a>
             <a ng-click="deleteRole($scope, $http)" class="btn btn-default">
-                <img src="../images/dialogs/role/Users--minus.png" class="pull-left"/>
+                <i class="Users--minus pull-left"></i>
             </a>
             <a ng-click="saveRole($scope, $http)" class="btn btn-default">
-                <img src="../images/dialogs/role/Users--save.png" class="pull-left"/>
+                <i class="Users--save pull-left"></i>
             </a>
             <a ng-click="loadRoles($scope, $http)" class="btn btn-default">
-                <img src="../images/core/refresh.png" class="pull-left"/>
+                <i class="refresh pull-left"></i>
             </a>
         </div>
     </div>
@@ -76,7 +74,7 @@
                     <tr>
                         <th style="width: 20%" class="named-div"><span>Assigned Grants
                             <a ng-click="addRole($scope, $http)">
-                                <img src="../images/dialogs/role/grant--add.png" class="btn pull-right"/>
+                                <i class="grant--add pull-right"></i>
                             </a></span></th>
                     </tr>
                     </thead>
@@ -110,9 +108,9 @@
                     <thead>
                     <tr>
                         <th style="width: 20%" class="named-div">Assigned Users <a ng-click="addRole($scope, $http)">
-                            <img src="../images/dialogs/role/User--plus.png" class="btn pull-right"/>
+                            <i class="User--plus pull-right"></i>
                         </a> <a ng-click="addRole($scope, $http)">
-                            <img src="../images/dialogs/role/User--minus.png" class="btn pull-right"/>
+                            <i class="Users--plus pull-right"></i>
                         </a></th>
                     </tr>
                     </thead>

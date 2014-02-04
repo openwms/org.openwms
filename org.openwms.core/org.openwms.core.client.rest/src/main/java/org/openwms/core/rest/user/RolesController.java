@@ -20,12 +20,12 @@
  */
 package org.openwms.core.rest.user;
 
-import java.util.Arrays;
 import java.util.Collection;
-import java.util.List;
 
 import org.openwms.core.domain.system.usermanagement.Role;
 import org.openwms.core.service.RoleService;
+import org.openwms.core.service.exception.EntityNotFoundException;
+import org.openwms.core.service.exception.ServiceRuntimeException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -56,15 +56,26 @@ public class RolesController {
     private BeanMapper<Role, RoleVO> mapper;
 
     /**
-     * Transactional access to <tt>Role</tt>s in a RESTful manner. This method
-     * returns all existing <tt>Role</tt>s.
+     * Transactional access to <tt>Role</tt>s in a RESTful manner. This method returns all existing <tt>Role</tt>s.
      * <p>
-     *   <table>
-     *     <tr><td>URI</td><td>/roles</td></tr>
-     *     <tr><td>Verb</td><td>GET</td></tr>
-     *     <tr><td>Auth</td><td>YES</td></tr>
-     *     <tr><td>Header</td><td></td></tr>
-     *   </table>
+     * <table>
+     * <tr>
+     * <td>URI</td>
+     * <td>/roles</td>
+     * </tr>
+     * <tr>
+     * <td>Verb</td>
+     * <td>GET</td>
+     * </tr>
+     * <tr>
+     * <td>Auth</td>
+     * <td>YES</td>
+     * </tr>
+     * <tr>
+     * <td>Header</td>
+     * <td></td>
+     * </tr>
+     * </table>
      * </p>
      * <p>
      * The response is transfered in the body and is JSON encoded. It contains a collection of Role objects.
@@ -78,25 +89,61 @@ public class RolesController {
         return mapper.map(service.findAll(), RoleVO.class);
     }
 
+    /**
+     * Documented here: https://openwms.atlassian.net/wiki/x/BIAWAQ
+     * 
+     * @status draft [scherrer]
+     * @param role
+     *            The {@link Role} instance to be created
+     * @return An {@link ResponseVO} object to encapsulate the result of the creation operation
+     */
     @RequestMapping(method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
-    public RoleVO create(@RequestBody RoleVO role) {
-        return mapper.map(service.save(mapper.mapBackwards(role, Role.class)), RoleVO.class);
+    public ResponseEntity<ResponseVO> create(@RequestBody RoleVO role) {
+        ResponseVO result = new ResponseVO();
+        HttpStatus resultStatus = HttpStatus.CREATED;
+        try {
+            RoleVO res = mapper.map(service.save(mapper.mapBackwards(role, Role.class)), RoleVO.class);
+            result.add(new ResponseVO.ItemBuilder().wStatus(HttpStatus.CREATED).wParams(res.getName()).build());
+        } catch (ServiceRuntimeException sre) {
+            resultStatus = HttpStatus.NOT_ACCEPTABLE;
+            ResponseVO.ResponseItem item = new ResponseVO.ItemBuilder().wMessage(sre.getMessage())
+                    .wStatus(resultStatus).wParams(role.getName()).build();
+            result.add(item);
+        }
+        return new ResponseEntity<ResponseVO>(result, resultStatus);
     }
 
+    /**
+     * Documented here: https://openwms.atlassian.net/wiki/x/BoAWAQ
+     * 
+     * @status Reviewed [scherrer]
+     * @param rolenames
+     *            An array of role names to delete
+     * @return An {@link ResponseVO} object to encapsulate all single removal operations
+     */
     @RequestMapping(value = "/{name}", method = RequestMethod.DELETE)
-    @ResponseStatus(HttpStatus.OK)
-    public void remove(@PathVariable("name") String... rolenames) {
+    public ResponseEntity<ResponseVO> remove(@PathVariable("name") String... rolenames) {
+        ResponseVO result = new ResponseVO();
+        HttpStatus resultStatus = HttpStatus.OK;
         for (String rolename : rolenames) {
             if (rolename == null || rolename.isEmpty()) {
                 continue;
             }
-            Role role = findByUsername(rolename);
-            if (role == null) {
-                throw new IllegalArgumentException("Role with name " + rolename + " not found");
+            try {
+                service.removeByBK(rolename);
+                result.add(new ResponseVO.ItemBuilder().wStatus(HttpStatus.OK).wParams(rolename).build());
+            } catch (ServiceRuntimeException sre) {
+                resultStatus = HttpStatus.NOT_FOUND;
+                ResponseVO.ResponseItem item = new ResponseVO.ItemBuilder().wMessage(sre.getMessage())
+                        .wStatus(HttpStatus.INTERNAL_SERVER_ERROR).wParams(rolename).build();
+                if (EntityNotFoundException.class.equals(sre.getClass())) {
+                    item.httpStatus = HttpStatus.NOT_FOUND;
+                }
+                result.add(item);
             }
-            service.remove(Arrays.asList(new Role[] { role }));
         }
+        return new ResponseEntity<ResponseVO>(result, resultStatus);
     }
 
     @RequestMapping(method = RequestMethod.PUT, produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
@@ -112,20 +159,20 @@ public class RolesController {
         return mapper.map(service.save(toSave), RoleVO.class);
     }
 
+    /**
+     * All general exceptions thrown by all public methods of this controller class are caught here and translated into http conform
+     * responses with a status code {@value HttpStatus.INTERNAL_SERVER_ERROR}.
+     * 
+     * @param ex
+     *            The exception occurred
+     * @return A response object that wraps the server result
+     */
     @ExceptionHandler(Exception.class)
-    public ResponseEntity<String> handleIOException(Exception ex) {
-        ResponseEntity<String> responseEntity = new ResponseEntity<>(ex.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
-        return responseEntity;
-    }
-
-    private Role findByUsername(String pUsername) {
-        List<Role> users = service.findAll();
-        for (Role user : users) {
-            if (user.getName().equals(pUsername)) {
-                return user;
-            }
+    public ResponseEntity<ResponseVO> handleIOException(Exception ex) {
+        if (ex.getClass().equals(HttpBusinessException.class)) {
+            HttpBusinessException hbe = (HttpBusinessException) ex;
+            return new ResponseEntity<>(new ResponseVO(ex.getMessage()), hbe.getHttpStatus());
         }
-        return null;
+        return new ResponseEntity<>(new ResponseVO(ex.getMessage()), HttpStatus.INTERNAL_SERVER_ERROR);
     }
-
 }

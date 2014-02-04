@@ -21,45 +21,35 @@
 package org.openwms.core.service.exception;
 
 /**
- * An UserNotFoundException is thrown when the requested user was not found.
+ * An EntityNotFoundException is thrown when the requested user was not found.
  * 
  * @author <a href="mailto:russelltina@users.sourceforge.net">Tina Russell</a>
  * @version $Revision$
  * @since 0.1
  */
-public class UserNotFoundException extends ServiceRuntimeException {
+public class EntityNotFoundException extends ServiceRuntimeException {
 
     private static final long serialVersionUID = 8096508651075331764L;
 
     /**
-     * Create a new UserNotFoundException.
+     * Create a new EntityNotFoundException.
      * 
      * @param message
      *            Detail message
      */
-    public UserNotFoundException(String message) {
+    public EntityNotFoundException(String message) {
         super(message);
     }
 
     /**
-     * Create a new UserNotFoundException.
-     * 
-     * @param cause
-     *            Root cause
-     */
-    public UserNotFoundException(Throwable cause) {
-        super(cause);
-    }
-
-    /**
-     * Create a new UserNotFoundException.
+     * Create a new EntityNotFoundException.
      * 
      * @param message
      *            Detail message
      * @param cause
      *            Root cause
      */
-    public UserNotFoundException(String message, Throwable cause) {
+    public EntityNotFoundException(String message, Throwable cause) {
         super(message, cause);
     }
 

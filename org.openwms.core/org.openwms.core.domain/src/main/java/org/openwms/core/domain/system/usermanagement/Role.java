@@ -38,9 +38,8 @@ import javax.persistence.NamedQuery;
 import org.openwms.core.util.validation.AssertUtils;
 
 /**
- * A Role is a group of <code>User</code>s. Basically more than one
- * <code>User</code> belong to a Role. Security access policies are assigned to
- * <code>Role</code>s instead of <code>User</code>s.
+ * A Role is a group of <code>User</code>s. Basically more than one <code>User</code> belong to a Role. Security access policies are
+ * assigned to <code>Role</code>s instead of <code>User</code>s.
  * 
  * @GlossaryTerm
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
@@ -59,8 +58,7 @@ public class Role extends SecurityObject {
 
     private static final long serialVersionUID = -4133301834284932221L;
     /**
-     * Whether or not this <code>Role</code> is immutable. Immutable
-     * <code>Role</code>s can't be modified.
+     * Whether or not this <code>Role</code> is immutable. Immutable <code>Role</code>s can't be modified.
      */
     @Column(name = "C_IMMUTABLE")
     private Boolean immutable = false;
@@ -86,8 +84,7 @@ public class Role extends SecurityObject {
     private Set<SecurityObject> grants = new HashSet<SecurityObject>();
 
     /**
-     * The default prefix String for each created <code>Role</code>. Name is * *
-     * * {@value} .
+     * The default prefix String for each created <code>Role</code>. Name is * * * {@value} .
      */
     public static final String ROLE_PREFIX = "ROLE_";
 
@@ -98,8 +95,8 @@ public class Role extends SecurityObject {
 
     /**
      * Query to find <strong>one</strong> <code>Role</code> by its natural key.
-     * <li>Query parameter index <strong>1</strong> : The name of the
-     * <code>Role</code> to search for.</li>
+     * 
+     * <li>Query parameter index <strong>1</strong> : The name of the <code>Role</code> to search for.</li>
      * <p>
      * Name is {@value} .
      * </p>
@@ -209,9 +206,12 @@ public class Role extends SecurityObject {
         return immutable;
     }
 
+    public Class<?> getBKeyClass() {
+        return String.class;
+    }
+
     /**
-     * Return an unmodifiable Set of all {@link User}s assigned to the
-     * <code>Role</code>.
+     * Return an unmodifiable Set of all {@link User}s assigned to the <code>Role</code>.
      * 
      * @return A Set of all {@link User}s assigned to the <code>Role</code>
      */
@@ -224,8 +224,7 @@ public class Role extends SecurityObject {
      * 
      * @param user
      *            The {@link User} to be added
-     * @return <code>true</code> if the {@link User} was new in the collection
-     *         of {@link User}s, otherwise <code>false</code>
+     * @return <code>true</code> if the {@link User} was new in the collection of {@link User}s, otherwise <code>false</code>
      * @throws IllegalArgumentException
      *             if user is <code>null</code>
      */
@@ -263,8 +262,7 @@ public class Role extends SecurityObject {
     /**
      * Return all {@link RolePreference}s of the <code>Role</code>.
      * 
-     * @return A Set of all {@link RolePreference}s assigned to the
-     *         <code>Role</code>
+     * @return A Set of all {@link RolePreference}s assigned to the <code>Role</code>
      */
     public Set<RolePreference> getPreferences() {
         return preferences;
@@ -274,16 +272,14 @@ public class Role extends SecurityObject {
      * Set all {@link RolePreference}s belonging to the <code>Role</code>.
      * 
      * @param preferences
-     *            A Set of {@link RolePreference}s to be assigned to the
-     *            <code>Role</code>
+     *            A Set of {@link RolePreference}s to be assigned to the <code>Role</code>
      */
     public void setPreferences(Set<RolePreference> preferences) {
         this.preferences = preferences;
     }
 
     /**
-     * Return an unmodifiable Set of all {@link SecurityObject}s belonging to
-     * the <code>Role</code>.
+     * Return an unmodifiable Set of all {@link SecurityObject}s belonging to the <code>Role</code>.
      * 
      * @return A Set of all {@link SecurityObject}s belonging to this Role
      */
@@ -295,10 +291,8 @@ public class Role extends SecurityObject {
      * Add an existing {@link SecurityObject} to the <code>Role</code>.
      * 
      * @param grant
-     *            The {@link SecurityObject} to be added to the
-     *            <code>Role</code>.
-     * @return <code>true</code> if the {@link SecurityObject} was new to the
-     *         collection of {@link SecurityObject}s, otherwise
+     *            The {@link SecurityObject} to be added to the <code>Role</code>.
+     * @return <code>true</code> if the {@link SecurityObject} was new to the collection of {@link SecurityObject}s, otherwise
      *         <code>false</code>
      * @throws IllegalArgumentException
      *             if grant is <code>null</code>
@@ -312,10 +306,8 @@ public class Role extends SecurityObject {
      * Add an existing {@link SecurityObject} to the <code>Role</code>.
      * 
      * @param grant
-     *            The {@link SecurityObject} to be added to the
-     *            <code>Role</code>
-     * @return <code>true</code> if the {@link SecurityObject} was successfully
-     *         removed from the Set of {@link SecurityObject}s, otherwise
+     *            The {@link SecurityObject} to be added to the <code>Role</code>
+     * @return <code>true</code> if the {@link SecurityObject} was successfully removed from the Set of {@link SecurityObject}s, otherwise
      *         <code>false</code>
      * @throws IllegalArgumentException
      *             if grant is <code>null</code>
@@ -329,10 +321,8 @@ public class Role extends SecurityObject {
      * Add an existing {@link SecurityObject} to the <code>Role</code>.
      * 
      * @param grants
-     *            A list of {@link SecurityObject}s to be removed from the
-     *            <code>Role</code>
-     * @return <code>true</code> if the {@link SecurityObject} was successfully
-     *         removed from the Set of {@link SecurityObject}s, otherwise
+     *            A list of {@link SecurityObject}s to be removed from the <code>Role</code>
+     * @return <code>true</code> if the {@link SecurityObject} was successfully removed from the Set of {@link SecurityObject}s, otherwise
      *         <code>false</code>
      * @throws IllegalArgumentException
      *             if <code>grants</code> is <code>null</code>
@@ -343,12 +333,10 @@ public class Role extends SecurityObject {
     }
 
     /**
-     * Set all {@link SecurityObject}s assigned to the <code>Role</code>.
-     * Already existing {@link SecurityObject}s will be removed.
+     * Set all {@link SecurityObject}s assigned to the <code>Role</code>. Already existing {@link SecurityObject}s will be removed.
      * 
      * @param grants
-     *            A Set of {@link SecurityObject}s to be assigned to the
-     *            <code>Role</code>
+     *            A Set of {@link SecurityObject}s to be assigned to the <code>Role</code>
      * @throws IllegalArgumentException
      *             if grants is <code>null</code>
      */
@@ -360,8 +348,7 @@ public class Role extends SecurityObject {
     /**
      * {@inheritDoc}
      * 
-     * Delegates to the superclass and uses the hashCode of the String ROLE for
-     * calculation.
+     * Delegates to the superclass and uses the hashCode of the String ROLE for calculation.
      * 
      * @see java.lang.Object#hashCode()
      */
@@ -377,8 +364,7 @@ public class Role extends SecurityObject {
     /**
      * {@inheritDoc}
      * 
-     * Does not delegate to the {@link SecurityObject#equals(Object)} and uses
-     * the name for comparison.
+     * Does not delegate to the {@link SecurityObject#equals(Object)} and uses the name for comparison.
      * 
      * @see java.lang.Object#equals(java.lang.Object)
      */

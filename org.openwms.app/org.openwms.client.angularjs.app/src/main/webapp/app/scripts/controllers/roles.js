@@ -29,12 +29,12 @@
  * @version $Revision: $
  * @since 0.1
  */
-angular.module('openwms_app',['ui.bootstrap', 'ngAnimate'])
+angular.module('openwms_app',['ui.bootstrap', 'ngAnimate', 'toaster'])
 	.config(function ($httpProvider) {
 		delete $httpProvider.defaults.headers.common['X-Requested-With'];
 		$httpProvider.defaults.headers.common['Content-Type'] = 'application/json';
 	})
-	.controller('RolesCtrl', function ($scope, $http, $modal, $log, rolesService) {
+	.controller('RolesCtrl', function ($scope, $http, $modal, $log, rolesService, toaster) {
 
 		var checkedRows = [];
 		var roleEntities = [];
@@ -76,6 +76,9 @@ angular.module('openwms_app',['ui.bootstrap', 'ngAnimate'])
 					rolesService.add($scope, role).then(
 						function(addedRole) {
 							$scope.roleEntities.push(addedRole);
+						},
+						function(data) {
+							toaster.pop('error', "Server Error","["+data.items[0].httpStatus+"] "+data.items[0].message);
 						}
 					)
 				}
@@ -103,6 +106,8 @@ angular.module('openwms_app',['ui.bootstrap', 'ngAnimate'])
 					rolesService.save($scope, role).then(function(savedRole) {
 						$scope.roleEntities.push(savedRole);
 					})
+				}, function(role) {
+					toaster.pop('error', "Server Error", role);
 				}
 			);
 		};
@@ -110,9 +115,11 @@ angular.module('openwms_app',['ui.bootstrap', 'ngAnimate'])
 		$scope.deleteRole = function () {
 			rolesService.delete($scope, $scope.checkedRoles())
 				.then(function(deletedRoles) {
-					checkedRows = [];
 					$scope.loadRoles();
-				});
+				}, function(data) {
+					toaster.pop("error", "Server Error", "["+data.items[0].httpStatus+"] "+data.items[0].message);
+				}
+			);
 		}
 
 		$scope.saveRole = function () {
@@ -120,6 +127,7 @@ angular.module('openwms_app',['ui.bootstrap', 'ngAnimate'])
 		}
 
 		$scope.loadRoles = function () {
+			checkedRows = [];
 			rolesService.getAll($scope).then(function(roles) {
 				$scope.roleEntities = roles;
 			});

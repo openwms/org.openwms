@@ -39,7 +39,7 @@ import org.openwms.core.domain.system.usermanagement.UserPreference;
 import org.openwms.core.exception.InvalidPasswordException;
 import org.openwms.core.service.UserService;
 import org.openwms.core.service.exception.ServiceRuntimeException;
-import org.openwms.core.service.exception.UserNotFoundException;
+import org.openwms.core.service.exception.EntityNotFoundException;
 import org.openwms.core.test.AbstractJpaSpringContextTests;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
@@ -79,7 +79,7 @@ public class UserServiceTest extends AbstractJpaSpringContextTests {
             srv.uploadImageFile(UNKNOWN_USER, new byte[222]);
             fail("Should throw an exception when calling with unknown user");
         } catch (ServiceRuntimeException sre) {
-            if (!(sre instanceof UserNotFoundException)) {
+            if (!(sre instanceof EntityNotFoundException)) {
                 fail("Should throw a nested UserNotFoundException when calling with unknown user");
             }
             LOGGER.debug("OK: User unknown" + sre.getMessage());
@@ -190,7 +190,7 @@ public class UserServiceTest extends AbstractJpaSpringContextTests {
             srv.changeUserPassword(new UserPassword(new User(UNKNOWN_USER), "password"));
             fail("Should throw an exception when calling with an unknown user");
         } catch (ServiceRuntimeException sre) {
-            if (!(sre instanceof UserNotFoundException)) {
+            if (!(sre instanceof EntityNotFoundException)) {
                 fail("Should throw an UserNotFoundException when calling with an unknown user");
             }
             LOGGER.debug("OK: UserNotFoundException:" + sre.getMessage());

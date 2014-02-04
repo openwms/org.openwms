@@ -31,7 +31,10 @@ import javax.persistence.Query;
 
 import org.openwms.core.domain.AbstractEntity;
 import org.openwms.core.integration.GenericDao;
+import org.openwms.core.integration.exception.ExceptionCodes;
 import org.openwms.core.integration.exception.NoUniqueResultException;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.MessageSource;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -61,6 +64,8 @@ public abstract class AbstractGenericJpaDao<T extends AbstractEntity, ID extends
 
     @PersistenceContext
     private EntityManager em;
+    @Autowired
+    private MessageSource messageSource;
 
     /**
      * Create a new AbstractGenericJpaDao.
@@ -87,6 +92,8 @@ public abstract class AbstractGenericJpaDao<T extends AbstractEntity, ID extends
 
     /**
      * {@inheritDoc}
+     * 
+     * This implementation never return <code>null</code>. In case of no Entities were found an empty List is returned.
      */
     @SuppressWarnings("unchecked")
     @Override
@@ -128,17 +135,19 @@ public abstract class AbstractGenericJpaDao<T extends AbstractEntity, ID extends
     /**
      * {@inheritDoc}
      * 
-     * A {@link NoUniqueResultException} is thrown when more than one entity was found. In case of no result, <code>null</code> is returned.
+     * A {@link NoUniqueResultException} is thrown when more than one Entity were found. In case of no result, <code>null</code> is
+     * returned.
      * 
      * @throws NoUniqueResultException
-     *             when more than one entity was found
+     *             when more than one Entity were found
      */
     @Override
     @SuppressWarnings("unchecked")
     public T findByUniqueId(Serializable id) {
         List<T> result = em.createNamedQuery(getFindByUniqueIdQuery()).setParameter(1, id).getResultList();
         if (result.size() > 1) {
-            throw new NoUniqueResultException(id);
+            throw new NoUniqueResultException(messageSource.getMessage(ExceptionCodes.MULIPLE_ENTITIES_FOUND,
+                    new Serializable[] { id }, null));
         }
         return result.size() == 0 ? null : result.get(0);
     }
