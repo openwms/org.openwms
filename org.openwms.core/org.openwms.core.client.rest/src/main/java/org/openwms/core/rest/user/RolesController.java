@@ -92,7 +92,7 @@ public class RolesController {
     /**
      * Documented here: https://openwms.atlassian.net/wiki/x/BIAWAQ
      * 
-     * @status draft [scherrer]
+     * @status Reviewed [scherrer]
      * @param role
      *            The {@link Role} instance to be created
      * @return An {@link ResponseVO} object to encapsulate the result of the creation operation
