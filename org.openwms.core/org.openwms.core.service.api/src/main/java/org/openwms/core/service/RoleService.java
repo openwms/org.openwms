@@ -23,23 +23,35 @@ package org.openwms.core.service;
 import java.util.List;
 
 import org.openwms.core.domain.system.usermanagement.Role;
+import org.openwms.core.service.exception.EntityNotFoundException;
 
 /**
- * A RoleService provides business functionality regarding the handling with
- * {@link Role}s.
+ * A RoleService provides business functionality regarding the handling with {@link Role}s.
  * 
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  * @version $Revision$
  * @since 0.1
  * @see org.openwms.core.domain.system.usermanagement.Role
  */
+// TODO [scherrer] : Remove to direct references to business and technical key, because it shall be up to model to
+// define these keys.
 public interface RoleService {
+
+    /**
+     * Return a {@link Role} identified by the business key, the <tt>name</tt> of the Role.
+     * 
+     * @param name
+     *            The role's name
+     * @return The Role or <code>null</code>
+     * @throws EntityNotFoundException
+     *             when no Role with BK <tt>name</tt> found
+     */
+    Role findByBK(String name);
 
     /**
      * Return a list of all existing {@link Role}s.
      * 
-     * @return A list of {@link Role}s or an empty list when no {@link Role}s
-     *         exist
+     * @return A list of {@link Role}s or an empty list when no {@link Role}s were found
      */
     List<Role> findAll();
 
@@ -53,10 +65,18 @@ public interface RoleService {
     Role save(Role role);
 
     /**
-     * Remove a list of {@link Role}s.
+     * Remove a {@link Role}.
      * 
-     * @param roles
-     *            The list of {@link Role}s to remove.
+     * @param id
+     *            The technical unique identifier of the {@link Role} instance to be removed.
      */
-    void remove(List<Role> roles);
+    void remove(Long id);
+
+    /**
+     * Remove a {@link Role}.
+     * 
+     * @param name
+     *            The role's name
+     */
+    void removeByBK(String name);
 }

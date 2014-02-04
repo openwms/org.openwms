@@ -27,13 +27,10 @@ import java.util.Map;
 import org.openwms.core.domain.AbstractEntity;
 
 /**
- * A GenericDao is a generic interface declaration that defines simple CRUD
- * operations.
+ * A GenericDao is a generic interface declaration that defines simple CRUD operations.
  * <p>
- * This interface provides basic functionality to create/read/update and delete
- * entity classes. Entities can be simple POJO classes without any ORM
- * dependencies. Merely implementations of this interface knows about the way
- * the entity is been persisted.
+ * This interface provides basic functionality to create/read/update and delete entity classes. Entities can be simple POJO classes without
+ * any ORM dependencies. Merely implementations of this interface knows about the way the entity is been persisted.
  * </p>
  * 
  * @param <T>
@@ -60,8 +57,10 @@ public interface GenericDao<T extends AbstractEntity, ID extends Serializable> {
      * Find and return the entity identified by the technical key.
      * 
      * @param id
-     *            Unique technical key to find the entity
+     *            - Unique technical key of the entity
      * @return Entity class identified by id
+     * @throws IllegalArgumentException
+     *             if <tt>id</tt> is <code>null</code>
      */
     T findById(ID id);
 
@@ -73,13 +72,12 @@ public interface GenericDao<T extends AbstractEntity, ID extends Serializable> {
     List<T> findAll();
 
     /**
-     * Use a named query to find all entities. Pass in the name of the
-     * <code>NamedQuery</code> and a parameter map.
+     * Use a named query to find all entities. Pass in the name of the <code>NamedQuery</code> and a parameter map.
      * 
      * @param queryName
-     *            Defined name of the NamedQuery
+     *            - Defined name of the NamedQuery
      * @param params
-     *            Map of parameters to pass to the query
+     *            - Map of parameters to pass to the query
      * @return List of found entity classes
      */
     List<T> findByNamedParameters(String queryName, Map<String, ?> params);
@@ -88,19 +86,19 @@ public interface GenericDao<T extends AbstractEntity, ID extends Serializable> {
      * Use an own JPA query to fetch entities.
      * 
      * @param queryName
-     *            Defined name of the NamedQuery
+     *            - Defined name of the NamedQuery
      * @param values
-     *            A list of values to use as parameters
+     *            - A list of values to use as parameters
      * @return A list of all entities
      */
     List<T> findByPositionalParameters(String queryName, Object... values);
 
     /**
-     * Find and return the entity identified by the natural unique id.
+     * Find and return the Entity identified by it's natural unique id.
      * 
      * @param id
-     *            Natural key to find the entity (also known as business key)
-     * @return The entity or <code>null</code>
+     *            - Natural key to lookup the Entity (also known as business key)
+     * @return The Entity instance or <code>null</code>
      */
     T findByUniqueId(Serializable id);
 
@@ -108,9 +106,8 @@ public interface GenericDao<T extends AbstractEntity, ID extends Serializable> {
      * Synchronize an entity with the persistence layer and return it.
      * 
      * @param entity
-     *            Entity instance to be synchronized with the persistence layer
-     * @return The synchronized entity instance. If JPA is used as
-     *         implementation, the returned instance is managed.
+     *            - Entity instance to be synchronized with the persistence layer
+     * @return The synchronized entity instance. If JPA is used as implementation, the returned instance is managed.
      */
     T save(T entity);
 
@@ -118,7 +115,9 @@ public interface GenericDao<T extends AbstractEntity, ID extends Serializable> {
      * Removes an already persistent entity.
      * 
      * @param entity
-     *            Entity instance to be removed
+     *            - Entity instance to be removed
+     * @throws IllegalArgumentException
+     *             if the instance is not an entity or is a detached entity
      */
     void remove(T entity);
 
@@ -126,7 +125,7 @@ public interface GenericDao<T extends AbstractEntity, ID extends Serializable> {
      * Persist a transient entity.
      * 
      * @param entity
-     *            Entity instance to be persisted
+     *            - Entity instance to be persisted
      */
     void persist(T entity);
 }

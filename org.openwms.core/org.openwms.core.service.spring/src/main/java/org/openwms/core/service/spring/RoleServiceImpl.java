@@ -30,6 +30,7 @@ import org.openwms.core.integration.RoleDao;
 import org.openwms.core.integration.exception.IntegrationRuntimeException;
 import org.openwms.core.service.ExceptionCodes;
 import org.openwms.core.service.RoleService;
+import org.openwms.core.service.exception.EntityNotFoundException;
 import org.openwms.core.service.exception.ServiceRuntimeException;
 import org.openwms.core.util.event.RoleChangedEvent;
 import org.openwms.core.util.validation.AssertUtils;
@@ -41,12 +42,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 /**
- * A RoleServiceImpl is a Spring supported transactional implementation of a
- * general {@link RoleService}. Using Spring 2 annotation support autowires
- * collaborators, therefore XML configuration becomes obsolete. This class is
- * marked with Springs {@link Service} annotation to benefit from Springs
- * exception translation intercepter. Traditional CRUD operations are delegated
- * to a {@link RoleDao} instance.
+ * A RoleServiceImpl is a Spring supported transactional implementation of a general {@link RoleService}. Using Spring 2 annotation support
+ * autowires collaborators, therefore XML configuration becomes obsolete. This class is marked with Springs {@link Service} annotation to
+ * benefit from Springs exception translation intercepter. Traditional CRUD operations are delegated to a {@link RoleDao} instance.
  * <p>
  * This implementation can be autowired with the name {@value #COMPONENT_NAME}.
  * </p>
@@ -76,19 +74,30 @@ public class RoleServiceImpl implements RoleService {
      */
     @Override
     @FireAfterTransaction(events = { RoleChangedEvent.class })
-    public void remove(List<Role> roles) {
-        AssertUtils.notNull(roles, "Roles to be removed must not be null");
-        Role role;
-        for (Role r : roles) {
-            role = r.isNew() ? dao.findByUniqueId(r.getName()) : dao.findById(r.getId());
-            if (role != null) {
-                dao.remove(role);
-            } else {
-                if (LOGGER.isInfoEnabled()) {
-                    LOGGER.info("Role to remove could not be found. Role:" + r);
-                }
-            }
+    public void remove(Long pId) {
+        AssertUtils.notNull(pId, messageSource.getMessage(ExceptionCodes.ROLE_NOT_BE_NULL, new String[0], null));
+        Role role = dao.findById(pId);
+        dao.remove(role);
+    }
+
+    /**
+     * @see org.openwms.core.service.RoleService#removeByBK(java.lang.String)
+     * 
+     * @throws IllegalArgumentException
+     *             when <code>name</code> is <code>null</code>
+     * @throws EntityNotFoundException
+     *             if no Role with <tt>name</tt> was found
+     */
+    @Override
+    @FireAfterTransaction(events = { RoleChangedEvent.class })
+    public void removeByBK(String name) {
+        AssertUtils.notNull(name, messageSource.getMessage(ExceptionCodes.ROLE_NOT_BE_NULL, new String[0], null));
+        Role role = dao.findByUniqueId(name);
+        if (role == null) {
+            String msg = messageSource.getMessage(ExceptionCodes.ROLE_NOT_EXIST, new String[] { name }, null);
+            throw new EntityNotFoundException(msg);
         }
+        dao.remove(role);
     }
 
     /**
@@ -96,18 +105,20 @@ public class RoleServiceImpl implements RoleService {
      * 
      * @throws IllegalArgumentException
      *             when <code>role</code> is <code>null</code>
+     * @throws ServiceRuntimeException
+     *             if the <tt>role</tt> instance is transient but a {@link Role} with the same business key already exists in the
+     *             persistence layer
      */
     @Override
     @FireAfterTransaction(events = { RoleChangedEvent.class })
     public Role save(Role role) {
-        AssertUtils.notNull(role, "Role to be removed must not be null");
+        AssertUtils.notNull(role, messageSource.getMessage(ExceptionCodes.ROLE_NOT_BE_NULL, new String[0], null));
         if (role.isNew()) {
             try {
                 dao.persist(role);
             } catch (PersistenceException | IntegrationRuntimeException ex) {
                 String msg = messageSource.getMessage(ExceptionCodes.ROLE_ALREADY_EXISTS,
                         new String[] { role.getName() }, null);
-                LOGGER.error(msg, ex);
                 throw new ServiceRuntimeException(msg);
             }
         }
@@ -123,5 +134,18 @@ public class RoleServiceImpl implements RoleService {
     @Transactional(readOnly = true)
     public List<Role> findAll() {
         return dao.findAll();
+    }
+
+    /**
+     * @see org.openwms.core.service.RoleService#findByBK(java.lang.String)
+     */
+    @Override
+    public Role findByBK(String name) {
+        Role role = dao.findByUniqueId(name);
+        if (role == null) {
+            throw new EntityNotFoundException(messageSource.getMessage(ExceptionCodes.ROLE_NOT_EXIST,
+                    new String[] { name }, null));
+        }
+        return role;
     }
 }

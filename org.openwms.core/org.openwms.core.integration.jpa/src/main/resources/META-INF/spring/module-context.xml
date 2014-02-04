@@ -36,6 +36,12 @@
     <!-- See ch. 10.2 -->
     <tx:annotation-driven transaction-manager="transactionManager" />
 
-    <!-- Used for the exception translation <bean class="org.springframework.dao.annotation.PersistenceExceptionTranslationPostProcessor"/> -->
+    <bean id="messageSource" class="org.springframework.context.support.ResourceBundleMessageSource">
+        <property name="basenames">
+            <list>
+                <value>core-integration-exceptions</value>
+            </list>
+        </property>
+    </bean>
 
 </beans>

@@ -35,23 +35,25 @@ servicesModule.factory('rolesService',['$http', '$resource', '$q', 'toaster',
 	function($http, $resource, $q, toaster) {
 		return {
 			add : function($scope, role) {
-				console.log("Action: Add Role");
 				var delay = $q.defer();
 				$http.defaults.headers.put['Auth-Token'] = $scope.authToken;
 				$http.post($scope.rootUrl+'/roles', role)
 					.success(function (addedRole) {
 						delay.resolve(addedRole);
 					})
-					.error(function (status) {
-						var msg = "Error ["+status+"] while saving a Role: ["+role.name+"]/["+role.description+"]";
-						console.log(msg);
-						toaster.pop('error', "Server Error", status, null, 'trustedHtml');
-						//throw new Error(msg);
+					.error(function (addedRole) {
+						delay.reject(addedRole);
 					});
 				return delay.promise;
 			},
+			/**
+			 * Send a http DELETE request to remove selected Roles. The name of Roles to delete are appended as URL request parameter.
+			 *
+			 * @param $scope The current scope
+			 * @param roles The Roles to remove, at least the rolename has to be set
+			 * @returns {Promise.promise|*} A promise to evaluate
+			 */
 			delete : function($scope, roles) {
-				console.log("Action: Delete Role");
 				var param = "";
 				angular.forEach(roles, function (role) {
 					param+=role.name+",";
@@ -62,10 +64,8 @@ servicesModule.factory('rolesService',['$http', '$resource', '$q', 'toaster',
 					.success(function () {
 						delay.resolve(roles);
 					})
-					.error(function (data, status) {
-						var msg = "Error ["+status+"] while trying to delete Roles ["+roles+"]";
-						console.log(msg);
-						throw new Error(msg);
+					.error(function (data) {
+						delay.reject(data);
 					});
 				return delay.promise;
 			},

@@ -25,9 +25,6 @@ import static junit.framework.Assert.assertFalse;
 import static junit.framework.Assert.assertNotNull;
 import static junit.framework.Assert.fail;
 
-import java.util.ArrayList;
-import java.util.Collections;
-
 import org.junit.Before;
 import org.junit.Test;
 import org.openwms.core.domain.system.usermanagement.Role;
@@ -62,13 +59,17 @@ public class RoleServiceTest extends AbstractJpaSpringContextTests {
     }
 
     /**
-     * Test to remove roles and call with an empty list.
+     * Test to remove a Role that does not exist.
      */
     @Test
-    public final void testRemoveWithEmpty() {
-        srv.remove(Collections.<Role> emptyList());
-        assertEquals("Expect to have 2 roles", 2, entityManager.createNamedQuery(Role.NQ_FIND_ALL).getResultList()
-                .size());
+    public final void testRemoveWithNotKnownEntity() {
+        try {
+            srv.remove((long) 4711);
+            assertEquals("Expect to have 2 roles", 2, entityManager.createNamedQuery(Role.NQ_FIND_ALL).getResultList()
+                    .size());
+        } catch (Exception ex) {
+            fail("Unexpected exception occurred:" + ex.getMessage());
+        }
     }
 
     /**
@@ -92,12 +93,15 @@ public class RoleServiceTest extends AbstractJpaSpringContextTests {
      */
     @Test
     public final void testRemove() {
-        java.util.List<Role> roles = new ArrayList<Role>();
-        roles.add(new Role("ROLE_ADMIN"));
-        roles.add(new Role("ROLE_USER"));
-        srv.remove(roles);
-        assertEquals("Expect to have no roles", 0, entityManager.createNamedQuery(Role.NQ_FIND_ALL).getResultList()
-                .size());
+        try {
+            Role persistedRole = (Role) entityManager.createNamedQuery(Role.NQ_FIND_BY_UNIQUE_QUERY)
+                    .setParameter(1, "ROLE_ADMIN").getSingleResult();
+            srv.remove(persistedRole.getId());
+            assertEquals("Expect to have 1 Role left", 1, entityManager.createNamedQuery(Role.NQ_FIND_ALL)
+                    .getResultList().size());
+        } catch (Exception ex) {
+            fail("Unexpected exception occurred:" + ex.getMessage());
+        }
     }
 
     /**
