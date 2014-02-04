@@ -55,22 +55,6 @@ openwms_root
 			});
 		}
 
-		/*
-		toaster.options = {
-			"closeButton": false,
-			"debug": false,
-			"positionClass": "toast-top-full-width",
-			"onclick": null,
-			"showDuration": "000",
-			"hideDuration": "5000",
-			"timeOut": "500",
-			"extendedTimeOut": "5000",
-			"showEasing": "swing",
-			"hideEasing": "linear",
-			"showMethod": "fadeIn",
-			"hideMethod": "fadeOut"
-		}
-*/
 		//================================================
 		// Add an interceptor for AJAX errors
 		//================================================
