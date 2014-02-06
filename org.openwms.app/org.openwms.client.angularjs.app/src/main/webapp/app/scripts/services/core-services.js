@@ -80,16 +80,22 @@ servicesModule.factory('rolesService',['$http', '$resource', '$q', 'toaster',
 				$http.defaults.headers.put['Auth-Token'] = $scope.authToken;
 				$http.put($scope.rootUrl+'/roles', role)
 					.success(function (savedRole) {
+						delay.resolve(roles);
+						/*
 						angular.forEach($scope.roleEntities, function (role) {
 							if (role.name == savedRole.name) {
 								role = savedRole;
 							}
 						});
+						*/
 					})
 					.error(function (data, status) {
+						delay.reject(data);
+						/*
 						var msg = "Error ["+status+"] while saving a Role: ["+role.name+"]/["+role.description+"]";
 						console.log(msg);
 						throw new Error(msg);
+						*/
 					});
 				return delay.promise;
 			},

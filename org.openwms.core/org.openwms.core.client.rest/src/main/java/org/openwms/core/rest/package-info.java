@@ -18,20 +18,11 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
-package org.openwms.core.rest.user;
-
-import java.io.Serializable;
-
-import org.codehaus.jackson.annotate.JsonAutoDetect;
-
 /**
- * A UserPasswordDTO.
- * 
+ * A package-info.
+ *
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  * @version $Revision: $
- * 
+ *
  */
-@JsonAutoDetect
-public class UserPasswordVO implements Serializable {
-
-}
+package org.openwms.core.rest;

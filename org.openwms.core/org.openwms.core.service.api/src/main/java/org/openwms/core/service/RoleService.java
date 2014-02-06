@@ -23,6 +23,7 @@ package org.openwms.core.service;
 import java.util.List;
 
 import org.openwms.core.domain.system.usermanagement.Role;
+import org.openwms.core.service.exception.EntityAlreadyExistsException;
 import org.openwms.core.service.exception.EntityNotFoundException;
 
 /**
@@ -36,6 +37,17 @@ import org.openwms.core.service.exception.EntityNotFoundException;
 // TODO [scherrer] : Remove to direct references to business and technical key, because it shall be up to model to
 // define these keys.
 public interface RoleService {
+
+    /**
+     * Tries to create and persist an new <tt>Role</tt>.
+     * 
+     * @param role
+     *            The new <tt>Role</tt> to create
+     * @return The newly created and persisted <tt>Role</tt>
+     * @throws EntityAlreadyExistsException
+     *             if the <tt>Role</tt> to create already exist
+     */
+    Role create(Role role);
 
     /**
      * Return a {@link Role} identified by the business key, the <tt>name</tt> of the Role.
