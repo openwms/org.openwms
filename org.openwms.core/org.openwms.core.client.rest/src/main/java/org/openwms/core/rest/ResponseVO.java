@@ -18,7 +18,7 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
-package org.openwms.core.rest.user;
+package org.openwms.core.rest;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -53,9 +53,11 @@ public class ResponseVO implements Serializable {
      * 
      * @param pMessage
      *            The message text
+     * @param httpStatus
+     *            The status of the response
      */
-    public ResponseVO(String pMessage) {
-        items.add(new ItemBuilder().wMessage(pMessage).build());
+    public ResponseVO(String pMessage, HttpStatus httpStatus) {
+        items.add(new ItemBuilder().wMessage(pMessage).wStatus(httpStatus).build());
     }
 
     /**
@@ -125,9 +127,9 @@ public class ResponseVO implements Serializable {
      */
     public static class ResponseItem {
         /** A text message to transfer as server response. */
-        public String message;
+        public String message = "";
         /** A unique key to identify a particular message. Note that this key can relate to the wrapped <tt>message</tt>, but it might not. */
-        public String messageKey;
+        public String messageKey = "";
         /** An array ob objects that can be passed to the client to identify failure items. */
         public Serializable obj[];
         /** A http status code for this item. */

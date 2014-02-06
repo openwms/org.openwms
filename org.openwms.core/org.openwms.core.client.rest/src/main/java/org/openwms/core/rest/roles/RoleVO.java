@@ -18,7 +18,7 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
-package org.openwms.core.rest.user;
+package org.openwms.core.rest.roles;
 
 import java.io.Serializable;
 import java.util.HashSet;
@@ -34,6 +34,11 @@ import java.util.Set;
 public class RoleVO implements Serializable {
 
     private static final long serialVersionUID = 1L;
+
+    /**
+     * Create a new RoleVO.
+     */
+    public RoleVO() {}
 
     /**
      * Get the immutable.
@@ -52,25 +57,6 @@ public class RoleVO implements Serializable {
      */
     public void setImmutable(Boolean immutable) {
         this.immutable = immutable;
-    }
-
-    /**
-     * Get the users.
-     * 
-     * @return the users.
-     */
-    public Set<UserVO> getUsers() {
-        return users;
-    }
-
-    /**
-     * Set the users.
-     * 
-     * @param users
-     *            The users to set.
-     */
-    public void setUsers(Set<UserVO> users) {
-        this.users = users;
     }
 
     /**
@@ -132,7 +118,7 @@ public class RoleVO implements Serializable {
 
     /**
      * Get the id.
-     *
+     * 
      * @return the id.
      */
     public Long getId() {
@@ -140,19 +126,58 @@ public class RoleVO implements Serializable {
     }
 
     /**
+     * Set the id.
+     * 
+     * @param id
+     *            The id to set.
+     */
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    /**
+     * Set the version.
+     * 
+     * @param version
+     *            The version to set.
+     */
+    public void setVersion(long version) {
+        this.version = version;
+    }
+
+    /**
      * Get the version.
-     *
+     * 
      * @return the version.
      */
     public long getVersion() {
         return version;
     }
 
+    /**
+     * Get the users.
+     * 
+     * @return the users.
+     */
+    public Set<RoleUserVO> getUsers() {
+        return users;
+    }
+
+    /**
+     * Set the users.
+     * 
+     * @param users
+     *            The users to set.
+     */
+    public void setUsers(Set<RoleUserVO> users) {
+        this.users = users;
+    }
+
     private Long id;
     private Boolean immutable;
     private String name;
     private String description;
-    private Set<UserVO> users = new HashSet<>();
+    private Set<RoleUserVO> users = new HashSet<>();
     private Set<SecurityObjectVO> grants = new HashSet<>();
     private long version;
 }

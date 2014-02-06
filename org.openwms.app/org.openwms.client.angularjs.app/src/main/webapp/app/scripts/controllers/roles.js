@@ -103,9 +103,13 @@ angular.module('openwms_app',['ui.bootstrap', 'ngAnimate', 'toaster'])
 			});
 			modalInstance.result.then(
 				function (role) {
-					rolesService.save($scope, role).then(function(savedRole) {
-						$scope.roleEntities.push(savedRole);
-					})
+					rolesService.save($scope, role).then(
+						function(savedRole) {
+							$scope.roleEntities.push(savedRole);
+						}, function(data) {
+							toaster.pop("error", "Server Error", "["+data.items[0].httpStatus+"] "+data.items[0].message);
+						}
+					)
 				}, function(role) {
 					toaster.pop('error', "Server Error", role);
 				}
@@ -113,8 +117,7 @@ angular.module('openwms_app',['ui.bootstrap', 'ngAnimate', 'toaster'])
 		};
 
 		$scope.deleteRole = function () {
-			rolesService.delete($scope, $scope.checkedRoles())
-				.then(
+			rolesService.delete($scope, $scope.checkedRoles()).then(
 				function(deletedRoles) {
 					$scope.loadRoles();
 				}, function(data) {
@@ -124,13 +127,18 @@ angular.module('openwms_app',['ui.bootstrap', 'ngAnimate', 'toaster'])
 		}
 
 		$scope.saveRole = function () {
-			rolesService.save($scope);
+			rolesService.save($scope).then(
+				function(savedRole) {
+					$scope.roleEntities.push(savedRole);
+				}, function(data) {
+					toaster.pop("error", "Server Error", "["+data.items[0].httpStatus+"] "+data.items[0].message);
+				}
+			);
 		}
 
 		$scope.loadRoles = function () {
 			checkedRows = [];
-			rolesService.getAll($scope)
-				.then(
+			rolesService.getAll($scope).then(
 				function(roles) {
 					$scope.roleEntities = roles;
 				}, function(data) {

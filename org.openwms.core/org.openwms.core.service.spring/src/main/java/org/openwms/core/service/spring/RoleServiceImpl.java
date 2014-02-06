@@ -67,6 +67,21 @@ public class RoleServiceImpl implements RoleService {
     public static final String COMPONENT_NAME = "roleService";
 
     /**
+     * @see org.openwms.core.service.RoleService#create(org.openwms.core.domain.system.usermanagement.Role)
+     */
+    @Override
+    public Role create(Role role) {
+        AssertUtils.notNull(role, messageSource.getMessage(ExceptionCodes.ROLE_NOT_BE_NULL, new String[0], null));
+        if (!role.isNew()) {
+            String msg = messageSource.getMessage(ExceptionCodes.ROLE_ALREADY_EXISTS, new String[] { role.getName() },
+                    null);
+            throw new ServiceRuntimeException(msg);
+        }
+        dao.persist(role);
+        return dao.save(role);
+    }
+
+    /**
      * {@inheritDoc}
      * 
      * @throws IllegalArgumentException

@@ -11,10 +11,10 @@
   </configuration>
 
   <mapping>
-    <class-a>org.openwms.core.rest.user.RoleVO</class-a>
+    <class-a>org.openwms.core.rest.roles.RoleVO</class-a>
     <class-b>org.openwms.core.domain.system.usermanagement.Role</class-b>
       <field>
-        <a is-accessible="true">id</a>
+        <a>id</a>
         <b is-accessible="true">id</b>
       </field>
       <field>
@@ -30,9 +30,25 @@
         <b is-accessible="true">users</b>
       </field>
       <field>
-        <a is-accessible="true">version</a>
+        <a>version</a>
         <b is-accessible="true">version</b>
       </field>
   </mapping> 
                    
+  <mapping>
+    <class-a>org.openwms.core.rest.roles.RoleUserVO</class-a>
+    <class-b>org.openwms.core.domain.system.usermanagement.User</class-b>
+      <field>
+        <a>id</a>
+        <b is-accessible="true">id</b>
+      </field>
+      <field>
+        <a>username</a>
+        <b is-accessible="true">username</b>
+      </field>
+      <field>
+        <a>fullname</a>
+        <b is-accessible="true">fullname</b>
+      </field>
+  </mapping> 
 </mappings>  

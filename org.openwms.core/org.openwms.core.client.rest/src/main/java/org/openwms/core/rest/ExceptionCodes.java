@@ -18,7 +18,22 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
+package org.openwms.core.rest;
+
 /**
- * Contains controller classes and value types that are responsible to satisfy the RESTful handling with {@link org.openwms.core.domain.system.usermanagement.User}s, {@link org.openwms.core.domain.system.usermanagement.Role}s.
+ * A ExceptionCodes.
+ * 
+ * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
+ * @version $Revision: $
+ * @since 0.1
  */
-package org.openwms.core.rest.user;
+public final class ExceptionCodes {
+
+    public static final String ROLE_IS_TRANSIENT = "role.is.transient";
+
+    /**
+     * Create a new ExceptionCodes.
+     */
+    private ExceptionCodes() {}
+
+}
