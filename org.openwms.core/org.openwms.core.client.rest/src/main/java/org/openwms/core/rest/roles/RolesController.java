@@ -71,9 +71,11 @@ public class RolesController {
      */
     @RequestMapping(method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
-    public ResponseEntity<Collection<RoleVO>> findAllRoles() {
+    public ResponseEntity<ResponseVO> findAllRoles() {
         Collection<RoleVO> roles = mapper.map(service.findAll(), RoleVO.class);
-        return new ResponseEntity<Collection<RoleVO>>(roles, HttpStatus.OK);
+        ResponseVO response = new ResponseVO();
+        response.add(new ResponseVO.ItemBuilder().wStatus(HttpStatus.OK).wParams(roles.toArray()).build());
+        return new ResponseEntity<ResponseVO>(response, HttpStatus.OK);
     }
 
     /**
@@ -92,7 +94,7 @@ public class RolesController {
         HttpStatus resultStatus = HttpStatus.CREATED;
         try {
             RoleVO res = mapper.map(service.create(mapper.mapBackwards(role, Role.class)), RoleVO.class);
-            result.add(new ResponseVO.ItemBuilder().wStatus(HttpStatus.CREATED).wParams(res.getName()).build());
+            result.add(new ResponseVO.ItemBuilder().wStatus(HttpStatus.CREATED).wParams(res).build());
         } catch (ServiceRuntimeException sre) {
             resultStatus = HttpStatus.NOT_ACCEPTABLE;
             ResponseVO.ResponseItem item = new ResponseVO.ItemBuilder().wMessage(sre.getMessage())

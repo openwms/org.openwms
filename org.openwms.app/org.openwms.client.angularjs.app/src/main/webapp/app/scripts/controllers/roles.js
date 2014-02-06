@@ -42,16 +42,17 @@ angular.module('openwms_app',['ui.bootstrap', 'ngAnimate', 'toaster'])
 		var ModalInstanceCtrl = function ($scope, $modalInstance, data) {
 			$scope.role = data.role;
 			$scope.dialog = data.dialog;
-
 			$scope.ok = function () {
 				$modalInstance.close($scope.role);
 			};
-
 			$scope.cancel = function () {
 				$modalInstance.dismiss('cancel');
 			};
 		};
 
+		/**
+		 * Add Role with edit dialogue.
+		 */
 		$scope.addRole = function () {
 			if (roleEntities.length == 0) {
 				$scope.loadRoles();
@@ -75,7 +76,7 @@ angular.module('openwms_app',['ui.bootstrap', 'ngAnimate', 'toaster'])
 				function (role) {
 					rolesService.add($scope, role).then(
 						function(addedRole) {
-							$scope.roleEntities.push(role);
+							$scope.roleEntities.push(addedRole);
 						},
 						function(data) {
 							toaster.pop('error', "Server Error","["+data.items[0].httpStatus+"] "+data.items[0].message);
@@ -85,6 +86,11 @@ angular.module('openwms_app',['ui.bootstrap', 'ngAnimate', 'toaster'])
 			);
 		};
 
+		/**
+		 * Edit selected Role with edit dialogue.
+		 *
+		 * @param row The row index of the selected Role
+		 */
 		$scope.editRole = function (row) {
 			var modalInstance;
 			modalInstance = $modal.open({
@@ -104,21 +110,24 @@ angular.module('openwms_app',['ui.bootstrap', 'ngAnimate', 'toaster'])
 			modalInstance.result.then(
 				function (role) {
 					rolesService.save($scope, role).then(
-						function(savedRole) {
-							$scope.roleEntities.push(savedRole);
-						}, function(data) {
-							toaster.pop("error", "Server Error", "["+data.items[0].httpStatus+"] "+data.items[0].message);
+						rolesSaved, function(data) {
+							onError(data.items[0].httpStatus, data.items[0].message);
 						}
 					)
-				}, function(role) {
-					toaster.pop('error', "Server Error", role);
 				}
 			);
 		};
 
+		/**
+		 * Delete a collection of selected Roles.
+		 */
 		$scope.deleteRole = function () {
+			if ($scope.checkedRoles().length == 0) {
+				return;
+			}
 			rolesService.delete($scope, $scope.checkedRoles()).then(
-				function(deletedRoles) {
+				function() {
+					onSuccess("OK", "Deleted selected Roles.");
 					$scope.loadRoles();
 				}, function(data) {
 					toaster.pop("error", "Server Error", "["+data.items[0].httpStatus+"] "+data.items[0].message);
@@ -126,16 +135,23 @@ angular.module('openwms_app',['ui.bootstrap', 'ngAnimate', 'toaster'])
 			);
 		}
 
+		/**
+		 * To be implemented
+		 */
 		$scope.saveRole = function () {
+
+			/**
 			rolesService.save($scope).then(
-				function(savedRole) {
-					$scope.roleEntities.push(savedRole);
-				}, function(data) {
-					toaster.pop("error", "Server Error", "["+data.items[0].httpStatus+"] "+data.items[0].message);
+				rolesSaved, function(data) {
+					onError(data.items[0].httpStatus, data.items[0].message);
 				}
 			);
+			 */
 		}
 
+		/**
+		 * Load all Roles and store then in the model.
+		 */
 		$scope.loadRoles = function () {
 			checkedRows = [];
 			rolesService.getAll($scope).then(
@@ -147,6 +163,11 @@ angular.module('openwms_app',['ui.bootstrap', 'ngAnimate', 'toaster'])
 			);
 		}
 
+		/**
+		 * When a Role is selected, the table of Grants according to this Role is updated.
+		 *
+		 * @param row The row index of the selected Role
+		 */
 		$scope.onRoleSelected = function (row) {
 			$scope.selectedRole = $scope.roleEntities[row];
 			$scope.page = 1;
@@ -183,6 +204,11 @@ angular.module('openwms_app',['ui.bootstrap', 'ngAnimate', 'toaster'])
 			}
 		}
 
+		/**
+		 * Set the proper icon depending on the row is selected or not.
+		 * @param row The row to check
+		 * @returns {string} A CSS style class
+		 */
 		$scope.roleStyleClass = function (row) {
 			if (checkedRows.indexOf(row) == -1) {
 				return "glyphicon glyphicon-unchecked";
@@ -216,5 +242,24 @@ angular.module('openwms_app',['ui.bootstrap', 'ngAnimate', 'toaster'])
 			// Enable back button after a click on next...
 			$scope.prevButton = {"enabled" : true, "hidden" : false};
 		}
+
+		var rolesSaved = function(savedRole) {
+			$scope.loadRoles();
+			/*
+			angular.forEach($scope.roleEntities, function (role) {
+				if (role.name == savedRole.name) {
+					role = savedRole;
+				}
+			});
+			*/
+			onSuccess("OK", "Saved successfully.");
+		}
+		var onError = function(code, text) {
+			toaster.pop("error", "Server Error", "["+code+"] "+text);
+		}
+		var onSuccess = function(code, text) {
+			toaster.pop("success", "Success", "["+code+"] "+text, 2000);
+		}
+
 	});
 

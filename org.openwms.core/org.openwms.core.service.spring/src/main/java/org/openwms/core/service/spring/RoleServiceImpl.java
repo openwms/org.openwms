@@ -77,6 +77,12 @@ public class RoleServiceImpl implements RoleService {
                     null);
             throw new ServiceRuntimeException(msg);
         }
+        Role existingRole = dao.findByUniqueId(role.getName());
+        if (existingRole != null) {
+            String msg = messageSource.getMessage(ExceptionCodes.ROLE_ALREADY_EXISTS, new String[] { role.getName() },
+                    null);
+            throw new ServiceRuntimeException(msg);
+        }
         dao.persist(role);
         return dao.save(role);
     }
