@@ -16,6 +16,7 @@
     <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
 
     <!-- build:css(.tmp) styles/main.css -->
+    <link rel="stylesheet" href="bower_components/ng-grid/ng-grid.min.css">
     <link rel="stylesheet" href="bower_components/animate.css/animate.min.css">
     <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.css">
     <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap-theme.min.css">
@@ -25,7 +26,7 @@
     <link rel="stylesheet" href="styles/icons/core-icons.css">
     <link rel="stylesheet" href="styles/openwms.css">
     <link rel="stylesheet" href="styles/openwms-viewports.css">
-    <!--link rel="stylesheet" href="styles/openwms-light.css"-->
+    <link rel="stylesheet" href="styles/openwms-light.css">
     <!--
     <link rel="stylesheet" href="styles/openwms-dark.css">
     <link rel="stylesheet" href="styles/bootstrap-dark.css">
@@ -55,6 +56,7 @@
     </script>
 
     <script src="bower_components/jquery/jquery.js"></script>
+    <script src="bower_components/ng-file-upload/angular-file-upload-shim.min.js"></script>
     <script src="bower_components/angular/angular.js"></script>
 
     <!-- build:js scripts/plugins.js -->
@@ -81,11 +83,13 @@
     <script src="bower_components/angular-ui-router/release/angular-ui-router.js"></script>
     <script src="bower_components/angular-bootstrap/ui-bootstrap.min.js"></script>
     <script src="bower_components/angular-bootstrap/ui-bootstrap-tpls.min.js"></script>
+    <script src="bower_components/ng-grid/build/ng-grid.js"></script>
+    <script src="bower_components/ng-file-upload/angular-file-upload.min.js"></script>
     <!-- endbuild -->
 
     <script src="bower_components/underscore/underscore-min.js"></script>
     <script src="bower_components/underscore.string/lib/underscore.string.js"></script>
-
+    <script src="bower_components/angular-base64/angular-base64.js"></script>
 
     <!--script src="bower_components/DataTables/media/js/jquery.dataTables.js"></script-->
     <script src="bower_components/AngularJS-Toaster/toaster.js"></script>
@@ -103,8 +107,8 @@
     <script src="scripts/controllers/profile.js"></script>
     <script src="scripts/controllers/help.js"></script>
 
-    <script src="scripts/services/core-services.js"></script>
-
+    <script src="scripts/services/core-roles-service.js"></script>
+    <script type="text/javascript" src="scripts/webpjs-0.0.2.min.js"></script>
     <!-- endbuild -->
     <!-- endbuild -->
     <style>

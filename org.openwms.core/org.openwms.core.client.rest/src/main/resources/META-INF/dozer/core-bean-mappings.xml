@@ -51,4 +51,17 @@
         <b is-accessible="true">fullname</b>
       </field>
   </mapping> 
+
+  <mapping>
+    <class-a>org.openwms.core.rest.users.UserVO</class-a>
+    <class-b>org.openwms.core.domain.system.usermanagement.User</class-b>
+      <field>
+        <a>id</a>
+        <b is-accessible="true">id</b>
+      </field>
+      <field>
+        <a>username</a>
+        <b is-accessible="true">username</b>
+      </field>
+  </mapping> 
 </mappings>  

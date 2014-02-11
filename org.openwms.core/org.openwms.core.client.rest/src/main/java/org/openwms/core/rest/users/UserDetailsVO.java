@@ -23,6 +23,7 @@ package org.openwms.core.rest.users;
 import java.io.Serializable;
 
 import org.codehaus.jackson.annotate.JsonAutoDetect;
+import org.codehaus.jackson.annotate.JsonIgnore;
 
 /**
  * A UserDetailsVO.
@@ -36,13 +37,13 @@ public class UserDetailsVO implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    // private byte[] image;
-    private String description;
-    private String comment;
-    private String phoneNo;
-    private String skypeName;
-    private String office;
-    private String department;
+    private byte[] image;
+    private String description = "";
+    private String comment = "";
+    private String phoneNo = "";
+    private String skypeName = "";
+    private String office = "";
+    private String department = "";
     private String sex;
 
     /**
@@ -196,6 +197,29 @@ public class UserDetailsVO implements Serializable {
      */
     public void setSex(String sex) {
         this.sex = sex;
+    }
+
+    /**
+     * Get the image.
+     * 
+     * @return the image.
+     */
+    public byte[] getImage() {
+        if (image == null) {
+            return new byte[0];
+        }
+        return image;
+    }
+
+    /**
+     * Set the image.
+     * 
+     * @param image
+     *            The image to set.
+     */
+    @JsonIgnore
+    public void setImage(byte[] image) {
+        this.image = image;
     }
 
 }

@@ -31,6 +31,12 @@ public class ExceptionCodes {
 
     public static final String TECHNICAL_RT_ERROR = "general.technical.error";
     /** Thrown if an Role already exists and cannot be created. */
+
+    /** Thrown if a User is looked up but hasn't been found. */
+    public static final String USER_NOT_EXIST = "user.not.exist";
+    /** Thrown if removing a User was requested with <code>null</code> argument. */
+    public static final String USER_NOT_BE_NULL = "user.remove.null.argument";
+
     public static final String ROLE_ALREADY_EXISTS = "role.already.exists";
     /** Thrown if a Role is looked up but hasn't been found. */
     public static final String ROLE_NOT_EXIST = "role.not.exist";

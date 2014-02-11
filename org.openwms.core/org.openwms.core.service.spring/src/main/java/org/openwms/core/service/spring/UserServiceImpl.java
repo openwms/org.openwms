@@ -37,9 +37,10 @@ import org.openwms.core.exception.InvalidPasswordException;
 import org.openwms.core.integration.SecurityObjectDao;
 import org.openwms.core.integration.UserDao;
 import org.openwms.core.service.ConfigurationService;
+import org.openwms.core.service.ExceptionCodes;
 import org.openwms.core.service.UserService;
-import org.openwms.core.service.exception.ServiceRuntimeException;
 import org.openwms.core.service.exception.EntityNotFoundException;
+import org.openwms.core.service.exception.ServiceRuntimeException;
 import org.openwms.core.util.event.UserChangedEvent;
 import org.openwms.core.util.validation.AssertUtils;
 import org.slf4j.Logger;
@@ -47,18 +48,16 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.MessageSource;
 import org.springframework.security.authentication.dao.SaltSource;
 import org.springframework.security.authentication.encoding.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 /**
- * An UserServiceImpl is a Spring supported transactional implementation of a
- * general {@link UserService}. Using Spring 2 annotation support autowires
- * collaborators, therefore XML configuration becomes obsolete. This class is
- * marked with Springs {@link Service} annotation to benefit from Springs
- * exception translation intercepter. Traditional CRUD operations are delegated
- * to an {@link UserDao}.
+ * An UserServiceImpl is a Spring supported transactional implementation of a general {@link UserService}. Using Spring 2 annotation support
+ * autowires collaborators, therefore XML configuration becomes obsolete. This class is marked with Springs {@link Service} annotation to
+ * benefit from Springs exception translation intercepter. Traditional CRUD operations are delegated to an {@link UserDao}.
  * <p>
  * This implementation can be autowired with the name {@value #COMPONENT_NAME}.
  * </p>
@@ -80,6 +79,8 @@ public class UserServiceImpl implements UserService {
     private SecurityObjectDao securityObjectDao;
     @Autowired
     private ConfigurationService confSrv;
+    @Autowired
+    private MessageSource messageSource;
     @Autowired
     private PasswordEncoder enc;
     @Autowired
@@ -108,8 +109,7 @@ public class UserServiceImpl implements UserService {
     /**
      * {@inheritDoc}
      * 
-     * If no User with the <tt>id</tt> exist, an {@link EntityNotFoundException}
-     * is thrown.
+     * If no User with the <tt>id</tt> exist, an {@link EntityNotFoundException} is thrown.
      * 
      * @see org.openwms.core.service.UserService#findById(java.lang.Long)
      */
@@ -176,6 +176,26 @@ public class UserServiceImpl implements UserService {
     }
 
     /**
+     * @see org.openwms.core.service.UserService#removeByBK(java.lang.String)
+     * 
+     * @throws IllegalArgumentException
+     *             when <code>name</code> is <code>null</code>
+     * @throws EntityNotFoundException
+     *             if no User with <tt>name</tt> was found
+     */
+    @Override
+    @FireAfterTransaction(events = { UserChangedEvent.class })
+    public void removeByBK(String name) {
+        AssertUtils.notNull(name, messageSource.getMessage(ExceptionCodes.USER_NOT_BE_NULL, new String[0], null));
+        User user = dao.findByUniqueId(name);
+        if (user == null) {
+            String msg = messageSource.getMessage(ExceptionCodes.USER_NOT_EXIST, new String[] { name }, null);
+            throw new EntityNotFoundException(msg);
+        }
+        dao.remove(user);
+    }
+
+    /**
      * {@inheritDoc}
      * 
      * Marked as <code>readOnly</code> transactional method.
@@ -238,8 +258,7 @@ public class UserServiceImpl implements UserService {
      *             when <code>user</code> is <code>null</code>
      * 
      * @see org.openwms.core.service.UserService#saveUserProfile(org.openwms.core.domain.system.usermanagement.User,
-     *      org.openwms.core.domain.system.usermanagement.UserPassword,
-     *      org.openwms.core.domain.system.usermanagement.UserPreference[])
+     *      org.openwms.core.domain.system.usermanagement.UserPassword, org.openwms.core.domain.system.usermanagement.UserPreference[])
      */
     @Override
     @FireAfterTransaction(events = { UserChangedEvent.class })

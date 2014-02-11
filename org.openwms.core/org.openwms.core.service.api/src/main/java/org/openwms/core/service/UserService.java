@@ -28,8 +28,7 @@ import org.openwms.core.domain.system.usermanagement.UserPassword;
 import org.openwms.core.domain.system.usermanagement.UserPreference;
 
 /**
- * An UserService offers functionality according to the handling with
- * {@link User}s.
+ * An UserService offers functionality according to the handling with {@link User}s.
  * 
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  * @version $Revision$
@@ -54,8 +53,7 @@ public interface UserService {
     List<User> findAll();
 
     /**
-     * Find and return an {@link User} by it's unique <tt>id</tt>.
-     * Implementation classes may throw an exception when no User with that
+     * Find and return an {@link User} by it's unique <tt>id</tt>. Implementation classes may throw an exception when no User with that
      * <tt>id</tt> was found.
      * 
      * @param id
@@ -93,8 +91,7 @@ public interface UserService {
     User save(User user);
 
     /**
-     * Save changes on an {@link User} and additionally save the User's password
-     * and preferences.
+     * Save changes on an {@link User} and additionally save the User's password and preferences.
      * 
      * @param user
      *            The {@link User} to change
@@ -113,6 +110,14 @@ public interface UserService {
      *            {@link User} to be removed
      */
     void remove(User user);
+
+    /**
+     * Remove a {@link User}.
+     * 
+     * @param name
+     *            The user's name
+     */
+    void removeByBK(String name);
 
     /**
      * Create and return the {@link SystemUser}.

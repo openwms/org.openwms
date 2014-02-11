@@ -74,7 +74,7 @@ angular.module('openwms_app',['ui.bootstrap', 'ngAnimate', 'toaster'])
 			});
 			modalInstance.result.then(
 				function (role) {
-					rolesService.add($scope, role).then(
+					rolesService.add("/roles", $scope, role).then(
 						function(addedRole) {
 							$scope.roleEntities.push(addedRole);
 						},
@@ -92,8 +92,7 @@ angular.module('openwms_app',['ui.bootstrap', 'ngAnimate', 'toaster'])
 		 * @param row The row index of the selected Role
 		 */
 		$scope.editRole = function (row) {
-			var modalInstance;
-			modalInstance = $modal.open({
+			var modalInstance = $modal.open({
 				templateUrl: 'addRolesDlg.html',
 				controller: ModalInstanceCtrl,
 				resolve: {
@@ -109,7 +108,7 @@ angular.module('openwms_app',['ui.bootstrap', 'ngAnimate', 'toaster'])
 			});
 			modalInstance.result.then(
 				function (role) {
-					rolesService.save($scope, role).then(
+					rolesService.save("/roles", $scope, role).then(
 						rolesSaved, function(data) {
 							onError(data.items[0].httpStatus, data.items[0].message);
 						}
@@ -125,9 +124,13 @@ angular.module('openwms_app',['ui.bootstrap', 'ngAnimate', 'toaster'])
 			if ($scope.checkedRoles().length == 0) {
 				return;
 			}
-			rolesService.delete($scope, $scope.checkedRoles()).then(
+			var param = "";
+			angular.forEach($scope.checkedRoles(), function (role) {
+				param+=role.name+",";
+			});
+			rolesService.delete('/roles/'+ param, $scope).then(
 				function() {
-					onSuccess("OK", "Deleted selected Roles.");
+					onSuccess("OK", "Successfully deleted selected Roles.");
 					$scope.loadRoles();
 				}, function(data) {
 					toaster.pop("error", "Server Error", "["+data.items[0].httpStatus+"] "+data.items[0].message);
@@ -245,13 +248,6 @@ angular.module('openwms_app',['ui.bootstrap', 'ngAnimate', 'toaster'])
 
 		var rolesSaved = function(savedRole) {
 			$scope.loadRoles();
-			/*
-			angular.forEach($scope.roleEntities, function (role) {
-				if (role.name == savedRole.name) {
-					role = savedRole;
-				}
-			});
-			*/
 			onSuccess("OK", "Saved successfully.");
 		}
 		var onError = function(code, text) {

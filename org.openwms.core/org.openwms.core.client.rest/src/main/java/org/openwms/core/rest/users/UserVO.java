@@ -44,10 +44,10 @@ public class UserVO implements Serializable {
     private String username;
     private Date lastPasswordChange;
     private boolean locked;
-    private String password;
+    private String password = "";
     private boolean enabled;
     private Date expirationDate;
-    private String fullname;
+    private String fullname = "";
     private UserDetailsVO userDetails;
     private String token;
     private long version;

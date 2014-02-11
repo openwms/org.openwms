@@ -29,6 +29,9 @@ package org.openwms.core.rest;
  */
 public final class ExceptionCodes {
 
+    public static final String USER_IS_TRANSIENT = "user.is.transient";
+    public static final String USER_HAS_CHANGED = "user.has.changed";
+
     public static final String ROLE_IS_TRANSIENT = "role.is.transient";
 
     /**
