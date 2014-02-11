@@ -35,6 +35,8 @@ body {
 
 .button-bar {
     padding-bottom: 10px;
+    float: left;
+    margin-right: 30px;
 }
 
 /*
@@ -64,17 +66,41 @@ body {
     width: 450px;
 }
 
-/*
-  Users Page
- */
+/**********************************************
+ * Users Page
+ **********************************************/
+.left-inner-addon {
+    position: relative;
+}
+.left-inner-addon input {
+    padding-left: 30px;
+    width: 200px;
+}
+.left-inner-addon span {
+    position: absolute;
+    padding: 10px 20px;
+    pointer-events: none;
+    color: #cecece;
+}
+.right-inner-addon {
+    position: relative;
+}
+.right-inner-addon input {
+    padding-right: 30px;
+    width: 200px;
+}
+.right-inner-addon span {
+    position: absolute;
+    right: 0px;
+    padding: 10px 20px;
+    pointer-events: none;
+    color: #cecece;
+}
 .users-card {
-    padding-top: 10px;
-    padding-bottom: 5px;
-    padding-left: 10px;
-    margin-bottom: 5px;
-    -webkit-box-shadow: 1px 1px 5px 0px rgba(0, 0, 0, 0.75);
-    -moz-box-shadow: 1px 1px 5px 0px rgba(0, 0, 0, 0.75);
-    box-shadow: 1px 1px 5px 0px rgba(0, 0, 0, 0.75);
+    display: block;
+    float: left;
+    padding: 10px;
+    margin-bottom: 10px;
 }
 
 .users-inner-card {
@@ -93,23 +119,15 @@ body {
 }
 .users-card-key {
     font-weight: bold;
-    padding-left: 35px;
+    padding-left: 10px;
 }
 .users-card-content {
-    padding-left: 35px;
+    padding-left: 10px;
+    white-space: nowrap;
 }
 
 .users-form-left-col {
     padding-left: 15px;
-}
-
-.users-user-image {
-    -webkit-box-shadow: 1px 1px 2px 0px rgba(0, 0, 0, 0.75);
-    -moz-box-shadow: 1px 1px 2px 0px rgba(0, 0, 0, 0.75);
-    box-shadow: 1px 1px 2px 0px rgba(0, 0, 0, 0.75);
-    border-width: thin;
-    border-style: solid;
-    border-color: lightgrey;
 }
 
 /*
@@ -128,16 +146,14 @@ body {
     padding-left: 5px;
 }
 
+/**********************************************
+ * Header / Footer / Menu
+ **********************************************/
 .header-area {
-    background-color: #c9dcea;
-    background-image: url("../images/openwms_header.png");
-    background-repeat: no-repeat;
     height: 66px;
     margin: 10px auto 0px auto;
     border: 1px solid transparent;
 }
-
-
 
 .header-menu {
     height: 25px;
@@ -201,6 +217,13 @@ body {
     width: auto;
     padding: 10px 0px 10px 0px;
     margin: 10px 20px 15px 20px;
+}
+
+.left-padded0 {
+    padding-left: 0px;
+}
+.right-padded0 {
+    padding-right: 0px;
 }
 
 

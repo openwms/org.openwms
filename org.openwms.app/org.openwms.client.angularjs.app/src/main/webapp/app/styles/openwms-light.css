@@ -35,6 +35,14 @@ body {
 }
 
 
+/**********************************************
+ * Users Page
+ **********************************************/
+.users-card {
+    -webkit-box-shadow: 1px 1px 5px 0px rgba(0, 0, 0, 0.75);
+    -moz-box-shadow: 1px 1px 5px 0px rgba(0, 0, 0, 0.75);
+    box-shadow: 1px 1px 5px 0px rgba(0, 0, 0, 0.75);
+}
 /*
  Selected cards are colored with a gradient.
  */
@@ -55,6 +63,12 @@ body {
     border-style: solid;
     border-color: lightgrey;
 }
+.users-card-key {
+    background-color: transparent;
+}
+.users-card-content {
+    background-color: transparent;
+}
 
 /*
  Roles
@@ -74,11 +88,6 @@ body {
     background-color: transparent;
 }
 
-
-.header-menu {
-    background-image: url("../images/breadcrumbs.jpg");
-    background-repeat: repeat;
-}
 
 .subheader-button-area {
     border-bottom-color: #0088cc;

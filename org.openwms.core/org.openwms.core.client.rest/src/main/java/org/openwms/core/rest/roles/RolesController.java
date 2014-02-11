@@ -23,6 +23,7 @@ package org.openwms.core.rest.roles;
 import java.util.Collection;
 
 import org.openwms.core.domain.system.usermanagement.Role;
+import org.openwms.core.rest.AbstractWebController;
 import org.openwms.core.rest.BeanMapper;
 import org.openwms.core.rest.ExceptionCodes;
 import org.openwms.core.rest.HttpBusinessException;
@@ -31,12 +32,10 @@ import org.openwms.core.service.RoleService;
 import org.openwms.core.service.exception.EntityNotFoundException;
 import org.openwms.core.service.exception.ServiceRuntimeException;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.MessageSource;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -53,14 +52,12 @@ import org.springframework.web.bind.annotation.ResponseStatus;
  */
 @Controller
 @RequestMapping("/roles")
-public class RolesController {
+public class RolesController extends AbstractWebController {
 
     @Autowired
     private RoleService service;
     @Autowired
     private BeanMapper<Role, RoleVO> mapper;
-    @Autowired
-    private MessageSource messageSource;
 
     /**
      * Documented here: https://openwms.atlassian.net/wiki/x/EYAWAQ
@@ -148,29 +145,10 @@ public class RolesController {
     @ResponseStatus(HttpStatus.OK)
     public RoleVO save(@RequestBody RoleVO role) {
         if (role.getId() == null) {
-            String msg = messageSource.getMessage(ExceptionCodes.ROLE_IS_TRANSIENT, new String[] { role.getName() },
-                    null);
+            String msg = translate(ExceptionCodes.ROLE_IS_TRANSIENT, role.getName());
             throw new HttpBusinessException(msg, HttpStatus.NOT_ACCEPTABLE);
         }
         Role toSave = mapper.mapBackwards(role, Role.class);
         return mapper.map(service.save(toSave), RoleVO.class);
-    }
-
-    /**
-     * All general exceptions thrown by services are caught here and translated into http conform responses with a status code {@value
-     * HttpStatus.INTERNAL_SERVER_ERROR}.
-     * 
-     * @param ex
-     *            The exception occurred
-     * @return A response object that wraps the server result
-     */
-    @ExceptionHandler(Exception.class)
-    public ResponseEntity<ResponseVO> handleIOException(Exception ex) {
-        if (ex.getClass().equals(HttpBusinessException.class)) {
-            HttpBusinessException hbe = (HttpBusinessException) ex;
-            return new ResponseEntity<>(new ResponseVO(ex.getMessage(), hbe.getHttpStatus()), hbe.getHttpStatus());
-        }
-        return new ResponseEntity<>(new ResponseVO(ex.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR),
-                HttpStatus.INTERNAL_SERVER_ERROR);
     }
 }

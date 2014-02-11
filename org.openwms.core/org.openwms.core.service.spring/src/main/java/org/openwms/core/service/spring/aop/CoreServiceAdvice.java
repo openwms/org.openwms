@@ -98,6 +98,7 @@ public class CoreServiceAdvice {
     public void afterThrowing(Throwable ex) {
         if (EXC_LOGGER.isErrorEnabled()) {
             EXC_LOGGER.error("[S] Service Layer Exception: " + ex);
+            ex.printStackTrace();
         }
         if (ex instanceof ServiceRuntimeException) {
             throw (ServiceRuntimeException) ex;

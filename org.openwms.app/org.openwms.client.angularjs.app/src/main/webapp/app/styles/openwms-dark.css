@@ -36,6 +36,7 @@ body {
 
 .header-area {
     background-color: transparent;
+/**/
     background-image: url("../images/openwms_header.png");
     background-repeat: no-repeat;
 }
@@ -45,4 +46,13 @@ body {
  */
 .named-div {
     background-color: #30404f;
+}
+
+/**********************************************
+ * Users Page
+ **********************************************/
+.users-card {
+    -webkit-box-shadow: 1px 1px 5px 2px #00b3ee;
+    -moz-box-shadow: 1px 1px 5px 2px #00b3ee;
+    box-shadow: 1px 1px 5px 2px #00b3ee;
 }

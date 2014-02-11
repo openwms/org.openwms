@@ -24,6 +24,9 @@
     "underscore.string": "~2.3.3",
     "underscore": "~1.5.2",
     "ui-bootstrap": "~0.10.0",
-    "angular-ui-router": "0.2.8-bowratic-tedium"
+    "angular-ui-router": "0.2.8-bowratic-tedium",
+    "ng-grid": "~2.0.7",
+    "ng-file-upload": "~1.2.7",
+    "angular-base64": "~2.0.1"
   }
 }

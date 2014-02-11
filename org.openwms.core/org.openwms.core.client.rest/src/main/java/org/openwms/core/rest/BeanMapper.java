@@ -26,6 +26,7 @@ import java.util.Collections;
 import java.util.List;
 
 import org.dozer.Mapper;
+import org.dozer.MappingException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -50,6 +51,14 @@ public class BeanMapper<S, T> {
         return mapper.map(user, clazz);
     }
 
+    /**
+     * Performs mapping between source and destination objects
+     * 
+     * @param source
+     * @param target
+     * @return target
+     * @throws MappingException
+     */
     public S mapFromTo(S source, S target) {
         mapper.map(source, target);
         return target;

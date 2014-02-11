@@ -25,11 +25,21 @@ import java.util.List;
 
 import org.openwms.core.domain.system.usermanagement.User;
 import org.openwms.core.domain.system.usermanagement.UserPassword;
+import org.openwms.core.rest.AbstractWebController;
 import org.openwms.core.rest.BeanMapper;
+import org.openwms.core.rest.ExceptionCodes;
+import org.openwms.core.rest.HttpBusinessException;
+import org.openwms.core.rest.ResponseVO;
 import org.openwms.core.service.UserService;
+import org.openwms.core.service.exception.EntityNotFoundException;
+import org.openwms.core.service.exception.ServiceRuntimeException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -37,8 +47,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 /**
- * An UsersController represents a RESTful access to <tt>User</tt>s. It is transactional by the means it is the outer
- * application service facade that returns validated and completed <tt>User</tt> objects to its clients.
+ * An UsersController represents a RESTful access to <tt>User</tt>s. It is transactional by the means it is the outer application service
+ * facade that returns validated and completed <tt>User</tt> objects to its clients.
  * 
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  * @version $Revision: $
@@ -46,7 +56,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
  */
 @Controller
 @RequestMapping("/users")
-public class UsersController {
+public class UsersController extends AbstractWebController {
 
     @Autowired
     private UserService service;
@@ -57,12 +67,24 @@ public class UsersController {
      * This method returns all existing <tt>User</tt>s.
      * 
      * <p>
-     *   <table>
-     *     <tr><td>URI</td><td>/users</td></tr>
-     *     <tr><td>Verb</td><td>GET</td></tr>
-     *     <tr><td>Auth</td><td>YES</td></tr>
-     *     <tr><td>Header</td><td></td></tr>
-     *   </table>
+     * <table>
+     * <tr>
+     * <td>URI</td>
+     * <td>/users</td>
+     * </tr>
+     * <tr>
+     * <td>Verb</td>
+     * <td>GET</td>
+     * </tr>
+     * <tr>
+     * <td>Auth</td>
+     * <td>YES</td>
+     * </tr>
+     * <tr>
+     * <td>Header</td>
+     * <td></td>
+     * </tr>
+     * </table>
      * </p>
      * <p>
      * The response stores <tt>User</tt> instances JSON encoded. It contains a collection of <tt>User</tt> objects.
@@ -80,28 +102,43 @@ public class UsersController {
      * Takes a newly created <tt>User</tt> instance and persists it.
      * 
      * <p>
-     *   <table>
-     *     <tr><td>URI</td><td>/users</td></tr>
-     *     <tr><td>Verb</td><td>POST</td></tr>
-     *     <tr><td>Auth</td><td>YES</td></tr>
-     *     <tr><td>Header</td><td></td></tr>
-     *   </table>
+     * <table>
+     * <tr>
+     * <td>URI</td>
+     * <td>/users</td>
+     * </tr>
+     * <tr>
+     * <td>Verb</td>
+     * <td>POST</td>
+     * </tr>
+     * <tr>
+     * <td>Auth</td>
+     * <td>YES</td>
+     * </tr>
+     * <tr>
+     * <td>Header</td>
+     * <td></td>
+     * </tr>
+     * </table>
      * </p>
      * <p>
      * Request Body
+     * 
      * <pre>
      *   {
      *     "username" : "testuser"
      *   }
      * </pre>
+     * 
      * Parameters:
      * <ul>
-     *   <li>username (String):</li>
-     *   The unique username.
+     * <li>username (String):</li>
+     * The unique username.
      * </ul>
      * </p>
      * <p>
      * Response Body
+     * 
      * <pre>
      *   {
      *     "id" : 4711,
@@ -110,24 +147,26 @@ public class UsersController {
      *     "version" : 1
      *   }
      * </pre>
+     * 
      * <ul>
-     *   <li>id (Integer (32bit)):</li>
-     *   The internal unique technical key for the stored instance.
-     *   <li>username (String):</li>
-     *   The unique username.
-     *   <li>token (String):</li>
-     *   A generated token that is used to authenticate each request.
-     *   <li>version (Integer (32bit)):</li>
-     *   A version number used internally for optimistic locking.
+     * <li>id (Integer (32bit)):</li>
+     * The internal unique technical key for the stored instance.
+     * <li>username (String):</li>
+     * The unique username.
+     * <li>token (String):</li>
+     * A generated token that is used to authenticate each request.
+     * <li>version (Integer (32bit)):</li>
+     * A version number used internally for optimistic locking.
      * </ul>
      * </p>
+     * 
      * @param user
      * @return
      */
     @RequestMapping(method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE, headers = "Content-Type=application/json")
     @ResponseBody
-    public User create(@RequestBody User user) {
-        return service.save(user);
+    public UserVO create(@RequestBody UserVO user) {
+        return mapper.map(service.save(mapper.mapBackwards(user, User.class)), UserVO.class);
     }
 
     @RequestMapping(value = "/{username}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE, headers = "Content-Type=application/json")
@@ -149,29 +188,67 @@ public class UsersController {
      */
     @RequestMapping(method = RequestMethod.PUT, produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
-    public UserVO save(@RequestBody UserVO user) {
-        Long id = user.getId();
-        User toSave = mapper.mapBackwards(user, User.class);
-        if (id != null) {
-            User persistedUser = service.findById(user.getId());
-            if (persistedUser.getVersion() != user.getVersion()) {
-                throw new IllegalStateException(
-                        "User to save has changed in the meantime, please refresh or force to overwrite changes.");
-            }
-            persistedUser = mapper.mapFromTo(toSave, persistedUser);
-            return mapper.map(service.save(persistedUser), UserVO.class);
+    @Transactional
+    public ResponseEntity<ResponseVO> save(@RequestBody UserVO user) {
+        if (user.getId() == null) {
+            String msg = translate(ExceptionCodes.USER_IS_TRANSIENT, user.getUsername());
+            throw new HttpBusinessException(msg, HttpStatus.NOT_ACCEPTABLE);
         }
-        return mapper.map(service.save(toSave), UserVO.class);
+
+        User persistedUser = service.findById(user.getId());
+        if (persistedUser.getVersion() != user.getVersion()) {
+            throw new HttpBusinessException(translate(ExceptionCodes.USER_HAS_CHANGED), HttpStatus.NOT_ACCEPTABLE);
+        }
+
+        User toSave = mapper.mapBackwards(user, User.class);
+        persistedUser = mapper.mapFromTo(toSave, persistedUser);
+        UserVO saved = mapper.map(service.save(persistedUser), UserVO.class);
+        ResponseVO result = new ResponseVO(new ResponseVO.ItemBuilder().wParams(saved).wStatus(HttpStatus.OK).build());
+        return new ResponseEntity<ResponseVO>(result, HttpStatus.CREATED);
     }
 
-    @RequestMapping(value = "/{username}", method = RequestMethod.DELETE, produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE, headers = "Content-Type=application/json")
+    /**
+     * FIXME [scherrer] Comment this
+     * 
+     * @param user
+     * @return
+     */
+    @RequestMapping(value = "/{id}", method = RequestMethod.PUT, produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     @ResponseBody
-    public void remove(@RequestParam("username") String pUsername) {
-        User user = findByUsername(pUsername);
-        if (user == null) {
-            throw new IllegalArgumentException("User with username " + pUsername + " not found");
+    public ResponseEntity<ResponseVO> saveImage(@RequestBody byte[] image, @PathVariable("id") Long id) {
+        if (id == null) {
+            String msg = translate(ExceptionCodes.USER_IS_TRANSIENT);
+            throw new HttpBusinessException(msg, HttpStatus.NOT_FOUND);
         }
-        service.remove(user);
+        User persistedUser = service.findById(id);
+        service.uploadImageFile(persistedUser.getUsername(), image);
+        UserVO saved = mapper.map(service.findById(id), UserVO.class);
+        ResponseVO result = new ResponseVO(new ResponseVO.ItemBuilder().wParams(saved).wStatus(HttpStatus.OK).build());
+        return new ResponseEntity<ResponseVO>(result, HttpStatus.CREATED);
+    }
+
+    @RequestMapping(value = "/{name}", method = RequestMethod.DELETE)
+    public ResponseEntity<ResponseVO> remove(@PathVariable("name") String... names) {
+        ResponseVO result = new ResponseVO();
+        HttpStatus resultStatus = HttpStatus.OK;
+        for (String name : names) {
+            if (name == null || name.isEmpty()) {
+                continue;
+            }
+            try {
+                service.removeByBK(name);
+                result.add(new ResponseVO.ItemBuilder().wStatus(HttpStatus.OK).wParams(name).build());
+            } catch (ServiceRuntimeException sre) {
+                resultStatus = HttpStatus.NOT_FOUND;
+                ResponseVO.ResponseItem item = new ResponseVO.ItemBuilder().wMessage(sre.getMessage())
+                        .wStatus(HttpStatus.INTERNAL_SERVER_ERROR).wParams(name).build();
+                if (EntityNotFoundException.class.equals(sre.getClass())) {
+                    item.httpStatus = HttpStatus.NOT_FOUND;
+                }
+                result.add(item);
+            }
+        }
+        return new ResponseEntity<ResponseVO>(result, resultStatus);
     }
 
     private User findByUsername(String pUsername) {

@@ -1,7 +1,7 @@
 'use strict';
 
 //var openwms_app = angular.module('openwms_app');
-var openwms_root = angular.module('openwms_root', ['ui.bootstrap', 'ui.router', 'openwms_app', 'ngResource', 'openwms_services']);
+var openwms_root = angular.module('openwms_root', ['ui.bootstrap', 'ui.router', 'openwms_app', 'openwms_users', 'ngResource', 'openwms_services']);
 
 openwms_root
 	.factory('rootApply', [ '$rootScope', function ($rootScope) {
@@ -129,8 +129,8 @@ openwms_root
 	})
 	.run(function ($rootScope, $state, $stateParams, $http, $location) {
 		$rootScope.DEVMODE = true;
-		$rootScope.rootUrl = 'http://backend.openwms.cloudbees.net';
-//		$rootScope.rootUrl = 'http://localhost:8080/org.openwms.client.rest.provider';
+//		$rootScope.rootUrl = 'http://backend.openwms.cloudbees.net';
+		$rootScope.rootUrl = 'http://localhost:8080/org.openwms.client.rest.provider';
 
 		/* Security */
 		$rootScope.message = '';

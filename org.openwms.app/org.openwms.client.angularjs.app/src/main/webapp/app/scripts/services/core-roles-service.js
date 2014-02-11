@@ -37,14 +37,15 @@ servicesModule.factory('rolesService',['$http', '$resource', '$q', 'toaster',
 			/**
 			 * Create a non-existing Role instance and send an POST request to the backend. If the Role with its unique identifier exists the service will reject the request.
 			 *
+			 * @param url The part of the URL that defines the type of entities to work with
 			 * @param $scope The current scope
-			 * @param role the Role to add
+			 * @param role the entity to add
 			 * @returns {Promise.promise|*} A promise to evaluate: In case of success the Role is returned, otherwise the ResponseItem
 			 */
-			add : function($scope, role) {
+			add : function(url, $scope, role) {
 				var delay = $q.defer();
 				$http.defaults.headers.put['Auth-Token'] = $scope.authToken;
-				$http.post($scope.rootUrl+'/roles', role)
+				$http.post($scope.rootUrl+url, role)
 					.success(function (data) {
 						delay.resolve(data.items[0].obj[0]);
 					})
@@ -56,18 +57,14 @@ servicesModule.factory('rolesService',['$http', '$resource', '$q', 'toaster',
 			/**
 			 * Send a http DELETE request to remove selected Roles. The name of Roles to delete are appended as URL request parameter.
 			 *
+			 * @param url The part of the URL that defines the type of entities to work with
 			 * @param $scope The current scope
-			 * @param roles The Roles to remove, at least the rolename has to be set
 			 * @returns {Promise.promise|*} A promise to evaluate: In case of success nothing is returned, otherwise the ResponseItem
 			 */
-			delete : function($scope, roles) {
-				var param = "";
-				angular.forEach(roles, function (role) {
-					param+=role.name+",";
-				});
+			delete : function(url, $scope) {
 				var delay = $q.defer();
 				$http.defaults.headers.put['Auth-Token'] = $scope.authToken;
-				$http.delete($scope.rootUrl+'/roles/'+ param)
+				$http.delete($scope.rootUrl+url)
 					.success(function () {
 						delay.resolve();
 					})
@@ -79,16 +76,18 @@ servicesModule.factory('rolesService',['$http', '$resource', '$q', 'toaster',
 			/**
 			 * Send a http PUT request to save a Role. The Role to save must already exist.
 			 *
+			 * @param url The part of the URL that defines the type of entities to work with
 			 * @param $scope The current scope
-			 * @param role The existing Role to update
+			 * @param entity The existing Entity to update
 			 * @returns {Promise.promise|*} A promise to evaluate: In case of success the updated Role is returned, otherwise the ResponseItem
 			 */
-			save : function ($scope, role) {
+			save : function (url, $scope, entity) {
 				var delay = $q.defer();
 				$http.defaults.headers.put['Auth-Token'] = $scope.authToken;
-				$http.put($scope.rootUrl+'/roles', role)
-					.success(function (savedRole) {
-						delay.resolve(savedRole);
+				$http.defaults.headers.common['Content-Type'] = 'application/json';
+				$http.put($scope.rootUrl+url, entity)
+					.success(function (savedEntity) {
+						delay.resolve(savedEntity);
 					})
 					.error(function (data) {
 						delay.reject(data);
