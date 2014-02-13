@@ -32,15 +32,28 @@ public class ExceptionCodes {
     public static final String TECHNICAL_RT_ERROR = "general.technical.error";
     /** Thrown if an Role already exists and cannot be created. */
 
+    /** Thrown if a User to persist already exists. */
+    public static final String USER_ALREADY_EXISTS = "user.already.exists";
     /** Thrown if a User is looked up but hasn't been found. */
     public static final String USER_NOT_EXIST = "user.not.exist";
     /** Thrown if removing a User was requested with <code>null</code> argument. */
-    public static final String USER_NOT_BE_NULL = "user.remove.null.argument";
+    public static final String USER_REMOVE_NOT_BE_NULL = "user.remove.null.argument";
+    /** Thrown if creating a User was requested with <code>null</code> argument. */
+    public static final String USER_CREATE_NOT_BE_NULL = "user.create.null.argument";
+    /** Thrown if saving a User was requested with <code>null</code> argument. */
+    public static final String USER_SAVE_NOT_BE_NULL = "user.save.null.argument";
+    /** Thrown if saving a User's profile was requested with <code>null</code> argument. */
+    public static final String USER_PROFILE_SAVE_NOT_BE_NULL = "user.profile.save.null.argument";
 
+    /** Thrown if a Role to persist already exists. */
     public static final String ROLE_ALREADY_EXISTS = "role.already.exists";
     /** Thrown if a Role is looked up but hasn't been found. */
     public static final String ROLE_NOT_EXIST = "role.not.exist";
     /** Thrown if removing a Role was requested with <code>null</code> argument. */
-    public static final String ROLE_NOT_BE_NULL = "role.remove.null.argument";
+    public static final String ROLE_REMOVE_NOT_BE_NULL = "role.remove.null.argument";
+    /** Thrown if creating a Role was requested with <code>null</code> argument. */
+    public static final String ROLE_CREATE_NOT_BE_NULL = "role.create.null.argument";
+    /** Thrown if saving a Role was requested with <code>null</code> argument. */
+    public static final String ROLE_SAVE_NOT_BE_NULL = "role.save.null.argument";
 
 }

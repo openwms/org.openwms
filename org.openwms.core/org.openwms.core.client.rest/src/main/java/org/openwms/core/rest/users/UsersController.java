@@ -23,6 +23,10 @@ package org.openwms.core.rest.users;
 import java.util.Collection;
 import java.util.List;
 
+import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
+
 import org.openwms.core.domain.system.usermanagement.User;
 import org.openwms.core.domain.system.usermanagement.UserPassword;
 import org.openwms.core.rest.AbstractWebController;
@@ -165,13 +169,25 @@ public class UsersController extends AbstractWebController {
      */
     @RequestMapping(method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE, headers = "Content-Type=application/json")
     @ResponseBody
-    public UserVO create(@RequestBody UserVO user) {
-        return mapper.map(service.save(mapper.mapBackwards(user, User.class)), UserVO.class);
+    public ResponseEntity<ResponseVO> create(@RequestBody @Valid @NotNull UserVO user) {
+
+        ResponseVO result = new ResponseVO();
+        HttpStatus resultStatus = HttpStatus.CREATED;
+        try {
+            UserVO res = mapper.map(service.create(mapper.mapBackwards(user, User.class)), UserVO.class);
+            result.add(new ResponseVO.ItemBuilder().wStatus(HttpStatus.CREATED).wParams(res).build());
+        } catch (ServiceRuntimeException sre) {
+            resultStatus = HttpStatus.NOT_ACCEPTABLE;
+            ResponseVO.ResponseItem item = new ResponseVO.ItemBuilder().wMessage(sre.getMessage())
+                    .wStatus(resultStatus).wParams(user.getUsername()).build();
+            result.add(item);
+        }
+        return new ResponseEntity<ResponseVO>(result, resultStatus);
     }
 
     @RequestMapping(value = "/{username}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE, headers = "Content-Type=application/json")
     @ResponseBody
-    public User getUserById(@RequestParam("username") String pUsername) {
+    public User getUserById(@RequestParam("username") @NotNull @Size(min = 1) String pUsername) {
         // TODO [scherrer] : clarify if this is necessary
         User user = findByUsername(pUsername);
         if (user == null) {
@@ -189,7 +205,7 @@ public class UsersController extends AbstractWebController {
     @RequestMapping(method = RequestMethod.PUT, produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
     @Transactional
-    public ResponseEntity<ResponseVO> save(@RequestBody UserVO user) {
+    public ResponseEntity<ResponseVO> save(@RequestBody @Valid UserVO user) {
         if (user.getId() == null) {
             String msg = translate(ExceptionCodes.USER_IS_TRANSIENT, user.getUsername());
             throw new HttpBusinessException(msg, HttpStatus.NOT_ACCEPTABLE);
@@ -215,7 +231,7 @@ public class UsersController extends AbstractWebController {
      */
     @RequestMapping(value = "/{id}", method = RequestMethod.PUT, produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     @ResponseBody
-    public ResponseEntity<ResponseVO> saveImage(@RequestBody byte[] image, @PathVariable("id") Long id) {
+    public ResponseEntity<ResponseVO> saveImage(@RequestBody @NotNull byte[] image, @PathVariable("id") @NotNull Long id) {
         if (id == null) {
             String msg = translate(ExceptionCodes.USER_IS_TRANSIENT);
             throw new HttpBusinessException(msg, HttpStatus.NOT_FOUND);
@@ -228,7 +244,7 @@ public class UsersController extends AbstractWebController {
     }
 
     @RequestMapping(value = "/{name}", method = RequestMethod.DELETE)
-    public ResponseEntity<ResponseVO> remove(@PathVariable("name") String... names) {
+    public ResponseEntity<ResponseVO> remove(@PathVariable("name") @NotNull String... names) {
         ResponseVO result = new ResponseVO();
         HttpStatus resultStatus = HttpStatus.OK;
         for (String name : names) {

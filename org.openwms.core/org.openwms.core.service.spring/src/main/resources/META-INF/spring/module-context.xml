@@ -36,6 +36,8 @@
     <!-- context:load-time-weaver aspectj-weaving="on" /-->
 
     <tx:annotation-driven order="10" />
+
+    <bean id="coreSpringValidator" class="org.springframework.validation.beanvalidation.LocalValidatorFactoryBean" />
     
     <bean id="messageSource" class="org.springframework.context.support.ResourceBundleMessageSource">
         <property name="basenames">

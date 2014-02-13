@@ -20,18 +20,20 @@
  */
 package org.openwms.core.service.spring;
 
-import static junit.framework.Assert.assertEquals;
-import static junit.framework.Assert.assertFalse;
-import static junit.framework.Assert.assertNotNull;
-import static junit.framework.Assert.fail;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.fail;
 
 import org.junit.Before;
 import org.junit.Test;
 import org.openwms.core.domain.system.usermanagement.Role;
+import org.openwms.core.service.ExceptionCodes;
 import org.openwms.core.service.RoleService;
 import org.openwms.core.service.exception.ServiceRuntimeException;
 import org.openwms.core.test.AbstractJpaSpringContextTests;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.MessageSource;
 import org.springframework.test.context.ContextConfiguration;
 
 /**
@@ -46,6 +48,8 @@ public class RoleServiceTest extends AbstractJpaSpringContextTests {
 
     @Autowired
     private RoleService srv;
+    @Autowired
+    private MessageSource messageSource;
 
     /**
      * Setting up some test data.
@@ -82,7 +86,8 @@ public class RoleServiceTest extends AbstractJpaSpringContextTests {
             fail("Expected to catch an IllegalArgumentException when calling remove() with null");
         } catch (ServiceRuntimeException sre) {
             LOGGER.debug("OK: ServiceRuntimeException when calling remove with null argument");
-            if (!sre.getMessage().equals("Roles to be removed must not be null")) {
+            if (!sre.getMessage().equals(
+                    messageSource.getMessage(ExceptionCodes.ROLE_REMOVE_NOT_BE_NULL, new String[0], null))) {
                 fail("IllegalArgumentException expected as root exception");
             }
         }

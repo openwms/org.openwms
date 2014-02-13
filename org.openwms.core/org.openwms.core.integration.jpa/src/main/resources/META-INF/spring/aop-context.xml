@@ -33,11 +33,11 @@
     <aop:config>
         <aop:pointcut id="publicIntegrationMethodsPC" expression="execution(public * org.openwms.core.integration..*.*(..))" />
         
-        <aop:aspect ref="coreIntegrationAdvice" order="3">
+        <aop:aspect ref="coreIntegrationAspect" order="3">
             <aop:around method="around"
                 pointcut-ref="publicIntegrationMethodsPC" />
         </aop:aspect>
-        <aop:aspect ref="coreIntegrationAdvice" order="4">
+        <aop:aspect ref="coreIntegrationAspect" order="4">
             <aop:after-throwing method="afterThrowing"
                 pointcut-ref="publicIntegrationMethodsPC" throwing="ex" />
         </aop:aspect>

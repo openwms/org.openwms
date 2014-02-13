@@ -32,12 +32,13 @@
         http://www.springframework.org/schema/mvc
         http://www.springframework.org/schema/mvc/spring-mvc.xsd">
 
-    <!--mvc:annotation-driven /-->
     <context:component-scan base-package="org.openwms.core.rest" />
+
+    <bean id="coreRestValidator" class="org.springframework.validation.beanvalidation.LocalValidatorFactoryBean" />
 
     <bean id="jacksonMessageConverter" class="org.springframework.http.converter.json.MappingJacksonHttpMessageConverter" />
 
-    <bean id="messageSource" class="org.springframework.context.support.ResourceBundleMessageSource">
+    <bean id="messageSourceRest" class="org.springframework.context.support.ResourceBundleMessageSource">
         <property name="basenames">
             <list>
                 <value>core-rest-exceptions</value>

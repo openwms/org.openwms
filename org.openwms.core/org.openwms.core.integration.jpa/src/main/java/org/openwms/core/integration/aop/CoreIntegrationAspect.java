@@ -32,15 +32,13 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
 /**
- * A CoreIntegrationAdvice is used in conjunction with an AOP aspect to around
- * repositories and services within the integration layer.
+ * A CoreIntegrationAspect is used in conjunction with an AOP aspect to around repositories and services within the integration layer.
  * <p>
- * So far it is used to translate exceptions into a
- * {@link IntegrationRuntimeException}s and to log time consumption of public
- * methods. Activation is done in XML instead of using Springs AOP annotations.
+ * So far it is used to translate exceptions into a {@link IntegrationRuntimeException}s and to log time consumption of public methods.
+ * Activation is done in XML instead of using Springs AOP annotations.
  * </p>
  * <p>
- * The advice can be referenced by name {@value #COMPONENT_NAME}.
+ * The aspect can be referenced by name {@value #COMPONENT_NAME}.
  * </p>
  * 
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
@@ -48,19 +46,18 @@ import org.springframework.stereotype.Component;
  * @since 0.2
  * @see org.openwms.core.integration.exception.IntegrationRuntimeException
  */
-@Component(CoreIntegrationAdvice.COMPONENT_NAME)
-public class CoreIntegrationAdvice {
+@Component(CoreIntegrationAspect.COMPONENT_NAME)
+public class CoreIntegrationAspect {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(LoggingCategories.CALL_STACK_LOGGING);
     private static final Logger EXC_LOGGER = LoggerFactory.getLogger(LoggingCategories.INTEGRATION_EXCEPTION);
     /** Springs component name. */
-    public static final String COMPONENT_NAME = "coreIntegrationAdvice";
+    public static final String COMPONENT_NAME = "coreIntegrationAspect";
     @PersistenceContext
     private EntityManager em;
 
     /**
-     * Called around any method invocation to log time consumption of each
-     * method call.
+     * Called around any method invocation to log time consumption of each method call.
      * 
      * @param pjp
      *            the ProceedingJoinPoint object
@@ -92,9 +89,8 @@ public class CoreIntegrationAdvice {
     }
 
     /**
-     * Called after an exception is thrown within the integration layer. If the
-     * exception is not of type {@link IntegrationRuntimeException} it is
-     * wrapped by a new {@link IntegrationRuntimeException}.
+     * Called after an exception is thrown within the integration layer. If the exception is not of type {@link IntegrationRuntimeException}
+     * it is wrapped by a new {@link IntegrationRuntimeException}.
      * <p>
      * Set tracing to level ERROR to log the root cause.
      * </p>

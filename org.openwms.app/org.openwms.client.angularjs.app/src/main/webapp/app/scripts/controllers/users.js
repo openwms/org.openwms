@@ -35,8 +35,11 @@ angular.module('openwms_users', ['ui.bootstrap', 'ngAnimate', 'toaster', 'angula
 			link: function(scope, element, attrs, ngModel) {
 
 				element.on('blur keyup change', function() {
-					if (element.val().length > 2) {
+					if (element.val().length > 0) {
+						scope.$apply(scope.selectedUsers = []);
 						scope.$apply(read);
+					} else if (element.val().length == 0) {
+						scope.$apply(scope.selectedUsers = []);
 					}
 				});
 				read(scope); // initialize
@@ -44,12 +47,11 @@ angular.module('openwms_users', ['ui.bootstrap', 'ngAnimate', 'toaster', 'angula
 				// Write data to the model
 				function read(scope) {
 					angular.forEach(scope.userEntities, function (user) {
-						if (user.username.indexOf(element.val()) !== -1 ||
-							user.fullname.indexOf(element.val()) !== -1 ||
-							(user.userDetails != undefined && (user.userDetails.office.indexOf(element.val()) !== -1 ||
-							user.userDetails.department.indexOf(element.val()) !== -1))) {
-							console.log("Match:"+element.val());
-							selectedUsers.push(user.id);
+						if (user.username.toUpperCase().indexOf(element.val().toUpperCase()) !== -1 ||
+							user.fullname.toUpperCase().indexOf(element.val().toUpperCase()) !== -1 ||
+							(user.userDetails != undefined && (user.userDetails.office.toUpperCase().indexOf(element.val().toUpperCase()) !== -1 ||
+							user.userDetails.department.toUpperCase().indexOf(element.val().toUpperCase()) !== -1))) {
+							scope.selectedUsers.push(user);
 						}
 					});
 				}
@@ -331,7 +333,7 @@ angular.module('openwms_users', ['ui.bootstrap', 'ngAnimate', 'toaster', 'angula
 		 */
 		var onSaved = function() {
 			$scope.loadUsers();
-			onSuccess("OK", "Saved successfully.");
+			onSuccess("OK", "Success", "Saved successfully.");
 		}
 		/**
 		 * Toast an error.

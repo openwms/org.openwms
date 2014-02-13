@@ -20,6 +20,9 @@
  */
 package org.openwms.core.service.spring.aop;
 
+import javax.validation.ValidationException;
+import javax.validation.Validator;
+
 import org.apache.commons.lang.time.StopWatch;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.openwms.core.service.ExceptionCodes;
@@ -28,17 +31,18 @@ import org.openwms.core.util.logging.LoggingCategories;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.MessageSource;
 import org.springframework.stereotype.Component;
 
 /**
- * A CoreServiceAdvice is in conjunction with an AOP aspect for Core services.
+ * A CoreServiceAspect is in conjunction with an AOP aspect for Core services.
  * <p>
  * So far it is used to translate all exceptions into a {@link ServiceRuntimeException} and tracing of methods time consumption. Activation
  * is done in XML instead of using Springs AOP annotations.
  * </p>
  * <p>
- * The advice can be referenced by name {@value #COMPONENT_NAME}.
+ * The aspect can be referenced by name {@value #COMPONENT_NAME}.
  * </p>
  * 
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
@@ -46,16 +50,18 @@ import org.springframework.stereotype.Component;
  * @since 0.1
  * @see org.openwms.core.service.exception.ServiceRuntimeException
  */
-@Component(CoreServiceAdvice.COMPONENT_NAME)
-public class CoreServiceAdvice {
-    // FIXME [scherrer] : rename class to ...Aspect
+@Component(CoreServiceAspect.COMPONENT_NAME)
+public class CoreServiceAspect {
     private static final Logger LOGGER = LoggerFactory.getLogger(LoggingCategories.CALL_STACK_LOGGING);
     private static final Logger EXC_LOGGER = LoggerFactory.getLogger(LoggingCategories.SERVICE_EXCEPTION);
     @Autowired
     private MessageSource messageSource;
+    @Autowired
+    @Qualifier("coreSpringValidator")
+    private Validator validator;
 
     /** Springs component name. */
-    public static final String COMPONENT_NAME = "coreServiceAdvice";
+    public static final String COMPONENT_NAME = "coreServiceAspect";
 
     /**
      * Called around any service method invocation to log time consumption of each method call.
@@ -74,6 +80,14 @@ public class CoreServiceAdvice {
             LOGGER.debug("[S]>> Method call: " + pjp.toShortString());
         }
         try {
+            Object[] args = pjp.getArgs();
+            if (args != null && args.length > 0) {
+                for (int i = 0; i < args.length; i++) {
+                    if (args[i] != null) {
+                        validator.validate(args[i]);
+                    }
+                }
+            }
             return pjp.proceed();
         } finally {
             if (LOGGER.isDebugEnabled() && sw != null) {
@@ -101,8 +115,12 @@ public class CoreServiceAdvice {
             ex.printStackTrace();
         }
         if (ex instanceof ServiceRuntimeException) {
-            throw (ServiceRuntimeException) ex;
+            throw ((ServiceRuntimeException) ex);
         }
+        if (ex.getClass().equals(ValidationException.class)) {
+            throw new ServiceRuntimeException(ex.getMessage());
+        }
+
         throw new ServiceRuntimeException(messageSource.getMessage(ExceptionCodes.TECHNICAL_RT_ERROR, null, null));
     }
 }

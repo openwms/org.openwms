@@ -20,10 +20,10 @@
  */
 package org.openwms.core.service.spring;
 
-import static junit.framework.Assert.assertEquals;
-import static junit.framework.Assert.assertFalse;
-import static junit.framework.Assert.assertTrue;
-import static junit.framework.Assert.fail;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
 
 import java.util.List;
 
@@ -92,9 +92,8 @@ public class ModuleServiceTest extends AbstractJpaSpringContextTests {
     }
 
     /**
-     * Sort the list ascending and descending and call saveStartupOrder. After
-     * reloading the list, the right order must be set. This test expects that
-     * the named query to return all is ordered by startupOrder asc.
+     * Sort the list ascending and descending and call saveStartupOrder. After reloading the list, the right order must be set. This test
+     * expects that the named query to return all is ordered by startupOrder asc.
      */
     @Test
     public final void testSaveStartupOrder() {
@@ -126,8 +125,7 @@ public class ModuleServiceTest extends AbstractJpaSpringContextTests {
     }
 
     /**
-     * Try to remove transient, detached, persisted modules and null as
-     * argument.
+     * Try to remove transient, detached, persisted modules and null as argument.
      */
     @Test
     public final void testRemove() {

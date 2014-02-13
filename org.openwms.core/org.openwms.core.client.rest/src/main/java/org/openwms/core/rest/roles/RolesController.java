@@ -22,6 +22,9 @@ package org.openwms.core.rest.roles;
 
 import java.util.Collection;
 
+import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
+
 import org.openwms.core.domain.system.usermanagement.Role;
 import org.openwms.core.rest.AbstractWebController;
 import org.openwms.core.rest.BeanMapper;
@@ -86,7 +89,7 @@ public class RolesController extends AbstractWebController {
      */
     @RequestMapping(method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
-    public ResponseEntity<ResponseVO> create(@RequestBody RoleVO role) {
+    public ResponseEntity<ResponseVO> create(@RequestBody @Valid @NotNull RoleVO role) {
         ResponseVO result = new ResponseVO();
         HttpStatus resultStatus = HttpStatus.CREATED;
         try {
@@ -111,7 +114,7 @@ public class RolesController extends AbstractWebController {
      * @return An {@link ResponseVO} object to encapsulate all single removal operations
      */
     @RequestMapping(value = "/{name}", method = RequestMethod.DELETE)
-    public ResponseEntity<ResponseVO> remove(@PathVariable("name") String... rolenames) {
+    public ResponseEntity<ResponseVO> remove(@PathVariable("name") @NotNull String... rolenames) {
         ResponseVO result = new ResponseVO();
         HttpStatus resultStatus = HttpStatus.OK;
         for (String rolename : rolenames) {
@@ -143,7 +146,7 @@ public class RolesController extends AbstractWebController {
     @RequestMapping(method = RequestMethod.PUT, produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
     @ResponseStatus(HttpStatus.OK)
-    public RoleVO save(@RequestBody RoleVO role) {
+    public RoleVO save(@RequestBody @Valid RoleVO role) {
         if (role.getId() == null) {
             String msg = translate(ExceptionCodes.ROLE_IS_TRANSIENT, role.getName());
             throw new HttpBusinessException(msg, HttpStatus.NOT_ACCEPTABLE);
