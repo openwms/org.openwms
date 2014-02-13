@@ -58,7 +58,7 @@ angular.module('openwms_users', ['ui.bootstrap', 'ngAnimate', 'toaster', 'angula
 			}
     	}
 	}])
-	.controller('UsersCtrl', function ($scope, $http, $timeout, $modal, $upload, toaster, rolesService, $base64) {
+	.controller('UsersCtrl', function ($scope, $http, $timeout, $modal, $upload, toaster, coreService, $base64) {
 
 		$scope.selectedUsers = [];
 
@@ -156,7 +156,7 @@ angular.module('openwms_users', ['ui.bootstrap', 'ngAnimate', 'toaster', 'angula
 			});
 			modalInstance.result.then(
 				function (user) {
-					rolesService.add("/users", $scope, user).then(
+					coreService.add("/users", $scope, user).then(
 						function(addedEntity) {
 							$scope.userEntities.push(addedEntity);
 						}, function(e) {
@@ -184,7 +184,7 @@ angular.module('openwms_users', ['ui.bootstrap', 'ngAnimate', 'toaster', 'angula
 			});
 			modalInstance.result.then(
 				function (user) {
-					rolesService.save("/users", $scope, user).then(
+					coreService.save("/users", $scope, user).then(
 						onSaved, function(e) {
 							onError(e);
 						}
@@ -201,7 +201,7 @@ angular.module('openwms_users', ['ui.bootstrap', 'ngAnimate', 'toaster', 'angula
 			angular.forEach($scope.selectedUsers, function (user) {
 				param+=user.username+",";
 			});
-			rolesService.delete('/users/'+ param, $scope).then(
+			coreService.delete('/users/'+ param, $scope).then(
 				function() {
 					onSuccess("OK", "Success", "Successfully deleted selected Users.");
 					$scope.loadUsers();
@@ -209,6 +209,10 @@ angular.module('openwms_users', ['ui.bootstrap', 'ngAnimate', 'toaster', 'angula
 					onError(e);
 				}
 			);
+		}
+
+		$scope.selectedUser = function() {
+			return $scope.selectedUsers[$scope.selectedUsers.length-1];
 		}
 
 		$scope.saveUser = function () {
@@ -245,7 +249,7 @@ angular.module('openwms_users', ['ui.bootstrap', 'ngAnimate', 'toaster', 'angula
 				resolve: {
 					data : function() {
 						return {
-							selectedUser : $scope.selectedUser,
+							selectedUsers : $scope.selectedUsers,
 							dialog : {
 								title: "Upload an Image"
 							}
@@ -272,23 +276,9 @@ angular.module('openwms_users', ['ui.bootstrap', 'ngAnimate', 'toaster', 'angula
 				// remove row from selection array
 				var i = $scope.selectedUsers.indexOf($scope.userEntities[index]);
 				$scope.selectedUsers.splice(i, 1);
-				if ($scope.selectedUsers.length > 1) {
-					if (i == $scope.selectedUsers.length) {
-						// reached the end, so selected the user one before
-						$scope.selectedUser = $scope.selectedUsers[i-1];
-					} else {
-						// removed user in between, so take the next user
-						$scope.selectedUser = $scope.selectedUsers[i+1];
-					}
-				} else if ($scope.selectedUsers.length == 1) {
-					$scope.selectedUser = $scope.selectedUsers[0];
-				} else {
-					$scope.selectedUser = [];
-				}
 			} else {
 				// Not selected, so select this user
 				$scope.selectedUsers.push($scope.userEntities[index]);
-				$scope.selectedUser = $scope.userEntities[index];
 			}
 		}
 
