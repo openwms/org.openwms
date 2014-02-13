@@ -38,7 +38,7 @@
             </form>
         </div>
         <div class="modal-footer">
-            <button class="btn btn-primary" ng-click="ok()">OK</button>
+            <button type="submit" class="btn btn-primary" ng-click="ok()">OK</button>
             <button class="btn btn-default" ng-click="cancel()">Cancel</button>
         </div>
     </script>
@@ -55,10 +55,14 @@
                         <input type="file" ng-file-select="onFileSelect($files)" >
                     </div>
                 </div>
+                <label for="progressBar" class="col-sm-2 control-label">Progress</label>
+                <div class="progress">
+                    <div id="progressBar" class="progress-bar" role="progressbar" aria-valuenow="{{progress}}" aria-valuemin="0" aria-valuemax="100" style="width: {{progress}}%;"></div>
+                </div>
             </form>
         </div>
         <div class="modal-footer">
-            <button class="btn btn-primary" ng-click="ok()">OK</button>
+            <button class="btn btn-primary" ng-click="start()">OK</button>
             <button class="btn btn-default" ng-click="cancel()">Cancel</button>
         </div>
     </script>
