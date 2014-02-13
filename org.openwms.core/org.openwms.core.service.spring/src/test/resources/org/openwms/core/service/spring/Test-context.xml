@@ -41,6 +41,7 @@
     <context:component-scan base-package="org.openwms.core" />
     
     <import resource="classpath:META-INF/spring/aop-context.xml"/>
+    <import resource="classpath:META-INF/spring/module-context.xml"/>
     
     <util:properties id="appProps" location="classpath:/org/openwms/core/service/spring/preferences.properties" />
     <oxm:jaxb2-marshaller id="preferencesUnmarshaller" contextPath="org.openwms.core.domain.preferences:org.openwms.core.domain.system.usermanagement"/>

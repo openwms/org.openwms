@@ -35,9 +35,9 @@ public final class AssertUtils {
      * Asserts that <code>obj</code> is not <code>null</code> .
      * 
      * @param obj
-     *            the Object to be checked
+     *            the Object to be checked against <code>null</code>
      * @param msg
-     *            the message in case of failure
+     *            the message text of the thrown exception
      * @throws IllegalArgumentException
      *             if <code>obj</code> is <code>null</code>
      */
@@ -60,8 +60,7 @@ public final class AssertUtils {
     }
 
     /**
-     * Asserts that the String <code>str</code> is not <code>null</code> and not
-     * empty.
+     * Asserts that the String <code>str</code> is not <code>null</code> and not empty.
      * 
      * @param str
      *            the String to be checked
@@ -78,8 +77,7 @@ public final class AssertUtils {
     }
 
     /**
-     * Asserts that the String <code>str</code> is not <code>null</code> and not
-     * empty.
+     * Asserts that the String <code>str</code> is not <code>null</code> and not empty.
      * 
      * @param str
      *            the String to check
