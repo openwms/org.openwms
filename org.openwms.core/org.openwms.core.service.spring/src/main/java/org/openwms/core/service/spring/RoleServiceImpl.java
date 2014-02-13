@@ -33,7 +33,6 @@ import org.openwms.core.service.RoleService;
 import org.openwms.core.service.exception.EntityNotFoundException;
 import org.openwms.core.service.exception.ServiceRuntimeException;
 import org.openwms.core.util.event.RoleChangedEvent;
-import org.openwms.core.util.validation.AssertUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -71,7 +70,8 @@ public class RoleServiceImpl implements RoleService {
      */
     @Override
     public Role create(Role role) {
-        AssertUtils.notNull(role, messageSource.getMessage(ExceptionCodes.ROLE_NOT_BE_NULL, new String[0], null));
+        ServiceRuntimeException.throwIfNull(role,
+                messageSource.getMessage(ExceptionCodes.ROLE_CREATE_NOT_BE_NULL, new String[0], null));
         if (!role.isNew()) {
             String msg = messageSource.getMessage(ExceptionCodes.ROLE_ALREADY_EXISTS, new String[] { role.getName() },
                     null);
@@ -96,9 +96,12 @@ public class RoleServiceImpl implements RoleService {
     @Override
     @FireAfterTransaction(events = { RoleChangedEvent.class })
     public void remove(Long pId) {
-        AssertUtils.notNull(pId, messageSource.getMessage(ExceptionCodes.ROLE_NOT_BE_NULL, new String[0], null));
+        ServiceRuntimeException.throwIfNull(pId,
+                messageSource.getMessage(ExceptionCodes.ROLE_REMOVE_NOT_BE_NULL, new String[0], null));
         Role role = dao.findById(pId);
-        dao.remove(role);
+        if (role != null) {
+            dao.remove(role);
+        }
     }
 
     /**
@@ -112,7 +115,8 @@ public class RoleServiceImpl implements RoleService {
     @Override
     @FireAfterTransaction(events = { RoleChangedEvent.class })
     public void removeByBK(String name) {
-        AssertUtils.notNull(name, messageSource.getMessage(ExceptionCodes.ROLE_NOT_BE_NULL, new String[0], null));
+        ServiceRuntimeException.throwIfNull(name,
+                messageSource.getMessage(ExceptionCodes.ROLE_REMOVE_NOT_BE_NULL, new String[0], null));
         Role role = dao.findByUniqueId(name);
         if (role == null) {
             String msg = messageSource.getMessage(ExceptionCodes.ROLE_NOT_EXIST, new String[] { name }, null);
@@ -133,7 +137,8 @@ public class RoleServiceImpl implements RoleService {
     @Override
     @FireAfterTransaction(events = { RoleChangedEvent.class })
     public Role save(Role role) {
-        AssertUtils.notNull(role, messageSource.getMessage(ExceptionCodes.ROLE_NOT_BE_NULL, new String[0], null));
+        ServiceRuntimeException.throwIfNull(role,
+                messageSource.getMessage(ExceptionCodes.ROLE_SAVE_NOT_BE_NULL, new String[0], null));
         if (role.isNew()) {
             try {
                 dao.persist(role);

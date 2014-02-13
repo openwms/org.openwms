@@ -21,8 +21,7 @@
 package org.openwms.core.service.exception;
 
 /**
- * A ServiceRuntimeException is an unchecked application exception thrown in
- * service layer classes.
+ * A ServiceRuntimeException is an unchecked application exception thrown in service layer classes.
  * 
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  * @version $Revision$
@@ -53,8 +52,7 @@ public class ServiceRuntimeException extends RuntimeException {
     }
 
     /**
-     * Create a new ServiceRuntimeException with a message text and the cause
-     * exception.
+     * Create a new ServiceRuntimeException with a message text and the cause exception.
      * 
      * @param message
      *            Detail message
@@ -63,5 +61,21 @@ public class ServiceRuntimeException extends RuntimeException {
      */
     public ServiceRuntimeException(String message, Throwable cause) {
         super(message, cause);
+    }
+
+    /**
+     * Throw an {@link ServiceRuntimeException} if <code>obj</code> is <code>null</code> .
+     * 
+     * @param obj
+     *            the Object to be checked against <code>null</code>
+     * @param msg
+     *            the message text of the thrown exception
+     * @throws ServiceRuntimeException
+     *             if <code>obj</code> is <code>null</code>
+     */
+    public static void throwIfNull(Object obj, String msg) {
+        if (obj == null) {
+            throw new ServiceRuntimeException(msg);
+        }
     }
 }

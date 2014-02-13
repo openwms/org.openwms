@@ -29,6 +29,8 @@ package org.openwms.core.rest;
  */
 public final class ExceptionCodes {
 
+    public static final String VALIDATION_ERROR = "core.validation.error";
+
     public static final String USER_IS_TRANSIENT = "user.is.transient";
     public static final String USER_HAS_CHANGED = "user.has.changed";
 

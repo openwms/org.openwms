@@ -20,10 +20,15 @@
  */
 package org.openwms.core.rest;
 
+import javax.validation.ValidationException;
+import javax.validation.Validator;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.MessageSource;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
 /**
@@ -36,7 +41,11 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 public abstract class AbstractWebController {
 
     @Autowired
+    @Qualifier("messageSourceRest")
     private MessageSource messageSource;
+    @Autowired
+    @Qualifier("coreRestValidator")
+    private Validator validator;
 
     /**
      * All general exceptions thrown by services are caught here and translated into http conform responses with a status code {@value
@@ -47,13 +56,23 @@ public abstract class AbstractWebController {
      * @return A response object that wraps the server result
      */
     @ExceptionHandler(Exception.class)
-    public ResponseEntity<ResponseVO> handleIOException(Exception ex) {
+    public ResponseEntity<ResponseVO> handleException(Exception ex) {
         if (ex.getClass().equals(HttpBusinessException.class)) {
-            HttpBusinessException hbe = (HttpBusinessException) ex;
-            return new ResponseEntity<>(new ResponseVO(ex.getMessage(), hbe.getHttpStatus()), hbe.getHttpStatus());
+            HttpBusinessException e = (HttpBusinessException) ex;
+            return new ResponseEntity<>(new ResponseVO(ex.getMessage(), e.getHttpStatus()), e.getHttpStatus());
+        }
+        if (ex.getClass().equals(ValidationException.class)) {
+            return new ResponseEntity<>(new ResponseVO(ex.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR),
+                    HttpStatus.INTERNAL_SERVER_ERROR);
         }
         return new ResponseEntity<>(new ResponseVO(ex.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR),
                 HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+
+    @ExceptionHandler({ MethodArgumentNotValidException.class, ValidationException.class })
+    public ResponseEntity<ResponseVO> handleValidationException(Exception ex) {
+        return new ResponseEntity<>(new ResponseVO(translate(ExceptionCodes.VALIDATION_ERROR),
+                HttpStatus.INTERNAL_SERVER_ERROR), HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
     /**
@@ -63,5 +82,14 @@ public abstract class AbstractWebController {
      */
     protected String translate(String key, Object... objects) {
         return messageSource.getMessage(key, objects, null);
+    }
+
+    /**
+     * Get the validator.
+     * 
+     * @return the validator.
+     */
+    protected Validator getValidator() {
+        return validator;
     }
 }

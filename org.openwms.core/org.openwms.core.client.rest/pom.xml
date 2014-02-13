@@ -57,6 +57,10 @@
             <groupId>net.sf.dozer</groupId>
             <artifactId>dozer</artifactId>
         </dependency>
+        <dependency>
+            <groupId>javax.validation</groupId>
+            <artifactId>validation-api</artifactId>
+        </dependency>
         <!-- Spring Framework -->
         <dependency>
             <groupId>org.springframework</groupId>
@@ -99,7 +103,7 @@
             <version>${core.version}</version>
             <scope>provided</scope>
         </dependency>
-                <!-- REST dependencies -->
+        <!-- REST dependencies -->
         <dependency>
             <groupId>org.codehaus.jackson</groupId>
             <artifactId>jackson-mapper-asl</artifactId>

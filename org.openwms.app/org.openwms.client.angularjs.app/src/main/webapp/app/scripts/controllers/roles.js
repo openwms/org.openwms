@@ -245,6 +245,15 @@ angular.module('openwms_app',['ui.bootstrap', 'ngAnimate', 'toaster'])
 			$scope.prevButton = {"enabled" : true, "hidden" : false};
 		}
 
+		/**
+		 * On view load, all Roles are loaded, if not already loaded before.
+		 */
+		var preLoad = function() {
+			if ($scope.roleEntities === undefined) {
+				$scope.loadRoles();
+			}
+		}
+		var init = preLoad();
 		var rolesSaved = function(savedRole) {
 			$scope.loadRoles();
 			onSuccess("OK", "Saved successfully.");

@@ -26,6 +26,7 @@ import org.openwms.core.domain.system.usermanagement.SystemUser;
 import org.openwms.core.domain.system.usermanagement.User;
 import org.openwms.core.domain.system.usermanagement.UserPassword;
 import org.openwms.core.domain.system.usermanagement.UserPreference;
+import org.openwms.core.service.exception.EntityAlreadyExistsException;
 
 /**
  * An UserService offers functionality according to the handling with {@link User}s.
@@ -36,6 +37,17 @@ import org.openwms.core.domain.system.usermanagement.UserPreference;
  * @see org.openwms.core.domain.system.usermanagement.User
  */
 public interface UserService {
+
+    /**
+     * Tries to create and persist an new <tt>User</tt>.
+     * 
+     * @param user
+     *            The new <tt>User</tt> to create
+     * @return The newly created and persisted <tt>User</tt>
+     * @throws EntityAlreadyExistsException
+     *             if the <tt>User</tt> to create already exist
+     */
+    User create(User user);
 
     /**
      * Change the current {@link User}s password.

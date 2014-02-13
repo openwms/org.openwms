@@ -27,7 +27,6 @@ import org.openwms.core.domain.Module;
 import org.openwms.core.integration.ModuleDao;
 import org.openwms.core.service.ModuleService;
 import org.openwms.core.service.exception.ServiceRuntimeException;
-import org.openwms.core.util.validation.AssertUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,9 +34,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 /**
- * A ModuleServiceImpl is a Spring powered transactional service using a
- * repository to execute simple CRUD operations. This implementation can be
- * autowired with the name {@value #COMPONENT_NAME}.
+ * A ModuleServiceImpl is a Spring powered transactional service using a repository to execute simple CRUD operations. This implementation
+ * can be autowired with the name {@value #COMPONENT_NAME}.
  * 
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  * @version $Revision$
@@ -68,16 +66,15 @@ public class ModuleServiceImpl implements ModuleService {
     /**
      * {@inheritDoc}
      * 
-     * It is expected that the list of {@link Module}s is already ordered by
-     * their startup order. Each {@link Module}'s <code>startupOrder</code> is
-     * synchronized with the persistence storage.
+     * It is expected that the list of {@link Module}s is already ordered by their startup order. Each {@link Module}'s
+     * <code>startupOrder</code> is synchronized with the persistence storage.
      * 
      * @throws IllegalArgumentException
      *             when modules is <code>null</code>
      */
     @Override
     public void saveStartupOrder(List<Module> modules) {
-        AssertUtils.notNull(modules, "List of modules to save the startupOrder, is null");
+        ServiceRuntimeException.throwIfNull(modules, "List of modules to save the startupOrder, is null");
         for (Module module : modules) {
             Module toSave = dao.findById(module.getId());
             toSave.setStartupOrder(module.getStartupOrder());
@@ -88,8 +85,7 @@ public class ModuleServiceImpl implements ModuleService {
     /**
      * {@inheritDoc}
      * 
-     * If the {@link Module} entity is a transient instance the method returns
-     * with no further action.
+     * If the {@link Module} entity is a transient instance the method returns with no further action.
      * 
      * @throws IllegalArgumentException
      *             when <code>module</code> is <code>null</code>
@@ -98,7 +94,7 @@ public class ModuleServiceImpl implements ModuleService {
      */
     @Override
     public void remove(Module module) {
-        AssertUtils.notNull(module, "Module to be removed must not be null");
+        ServiceRuntimeException.throwIfNull(module, "Module to be removed must not be null");
         Module rem = null;
         if (module.isNew()) {
             rem = dao.findByUniqueId(module.getModuleName());
@@ -118,15 +114,14 @@ public class ModuleServiceImpl implements ModuleService {
     /**
      * {@inheritDoc}
      * 
-     * Additionally the <code>startupOrder</code> is re-calculated for a new
-     * {@link Module}.
+     * Additionally the <code>startupOrder</code> is re-calculated for a new {@link Module}.
      * 
      * @throws IllegalArgumentException
      *             when <code>module</code> is <code>null</code>
      */
     @Override
     public Module save(Module module) {
-        AssertUtils.notNull(module, "Module to be saved must not be null");
+        ServiceRuntimeException.throwIfNull(module, "Module to be saved must not be null");
         if (module.isNew()) {
             List<Module> all = dao.findAll();
             if (!all.isEmpty()) {

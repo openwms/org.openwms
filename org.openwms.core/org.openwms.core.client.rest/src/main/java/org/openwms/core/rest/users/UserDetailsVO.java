@@ -22,7 +22,6 @@ package org.openwms.core.rest.users;
 
 import java.io.Serializable;
 
-import org.codehaus.jackson.annotate.JsonAutoDetect;
 import org.codehaus.jackson.annotate.JsonIgnore;
 
 /**
@@ -32,12 +31,12 @@ import org.codehaus.jackson.annotate.JsonIgnore;
  * @version $Revision: $
  * @since 0.1
  */
-@JsonAutoDetect
+// @JsonAutoDetect
 public class UserDetailsVO implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    private byte[] image;
+    private byte[] image = new byte[0];
     private String description = "";
     private String comment = "";
     private String phoneNo = "";

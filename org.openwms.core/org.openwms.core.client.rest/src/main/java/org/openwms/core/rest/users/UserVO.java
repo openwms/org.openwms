@@ -23,6 +23,9 @@ package org.openwms.core.rest.users;
 import java.io.Serializable;
 import java.util.Date;
 
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
+
 import org.codehaus.jackson.annotate.JsonIgnoreProperties;
 import org.codehaus.jackson.annotate.JsonProperty;
 
@@ -41,6 +44,8 @@ public class UserVO implements Serializable {
     private Long id;
     @JsonProperty("externalUser")
     private boolean extern;
+    @NotNull
+    @Size(min = 1)
     private String username;
     private Date lastPasswordChange;
     private boolean locked;
@@ -48,7 +53,7 @@ public class UserVO implements Serializable {
     private boolean enabled;
     private Date expirationDate;
     private String fullname = "";
-    private UserDetailsVO userDetails;
+    private UserDetailsVO userDetails = new UserDetailsVO();
     private String token;
     private long version;
 

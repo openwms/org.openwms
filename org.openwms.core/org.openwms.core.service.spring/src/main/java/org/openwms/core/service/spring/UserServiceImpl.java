@@ -42,7 +42,6 @@ import org.openwms.core.service.UserService;
 import org.openwms.core.service.exception.EntityNotFoundException;
 import org.openwms.core.service.exception.ServiceRuntimeException;
 import org.openwms.core.util.event.UserChangedEvent;
-import org.openwms.core.util.validation.AssertUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -91,6 +90,28 @@ public class UserServiceImpl implements UserService {
     private String systemPassword;
     /** Springs service name. */
     public static final String COMPONENT_NAME = "userService";
+
+    /**
+     * @see org.openwms.core.service.UserService#create(org.openwms.core.domain.system.usermanagement.User)
+     */
+    @Override
+    public User create(User user) {
+        ServiceRuntimeException.throwIfNull(user,
+                messageSource.getMessage(ExceptionCodes.USER_CREATE_NOT_BE_NULL, new String[0], null));
+        if (!user.isNew()) {
+            String msg = messageSource.getMessage(ExceptionCodes.USER_ALREADY_EXISTS,
+                    new String[] { user.getUsername() }, null);
+            throw new ServiceRuntimeException(msg);
+        }
+        User existingUser = dao.findByUniqueId(user.getUsername());
+        if (existingUser != null) {
+            String msg = messageSource.getMessage(ExceptionCodes.USER_ALREADY_EXISTS,
+                    new String[] { user.getUsername() }, null);
+            throw new ServiceRuntimeException(msg);
+        }
+        dao.persist(user);
+        return dao.save(user);
+    }
 
     /**
      * {@inheritDoc}
@@ -151,7 +172,8 @@ public class UserServiceImpl implements UserService {
     @Override
     @FireAfterTransaction(events = { UserChangedEvent.class })
     public User save(User user) {
-        AssertUtils.notNull(user, "The instance of the User to be saved must not be null");
+        ServiceRuntimeException.throwIfNull(user,
+                messageSource.getMessage(ExceptionCodes.USER_SAVE_NOT_BE_NULL, new String[0], null));
         if (user.isNew()) {
             dao.persist(user);
         }
@@ -167,7 +189,8 @@ public class UserServiceImpl implements UserService {
     @Override
     @FireAfterTransaction(events = { UserChangedEvent.class })
     public void remove(User user) {
-        AssertUtils.notNull(user, "The instance of the User to be removed is null");
+        ServiceRuntimeException.throwIfNull(user,
+                messageSource.getMessage(ExceptionCodes.USER_REMOVE_NOT_BE_NULL, new String[0], null));
         if (user.isNew()) {
             LOGGER.info("The User instance to be removed is not persist yet, no need to remove it");
         } else {
@@ -186,7 +209,8 @@ public class UserServiceImpl implements UserService {
     @Override
     @FireAfterTransaction(events = { UserChangedEvent.class })
     public void removeByBK(String name) {
-        AssertUtils.notNull(name, messageSource.getMessage(ExceptionCodes.USER_NOT_BE_NULL, new String[0], null));
+        ServiceRuntimeException.throwIfNull(name,
+                messageSource.getMessage(ExceptionCodes.USER_REMOVE_NOT_BE_NULL, new String[0], null));
         User user = dao.findByUniqueId(name);
         if (user == null) {
             String msg = messageSource.getMessage(ExceptionCodes.USER_NOT_EXIST, new String[] { name }, null);
@@ -236,7 +260,7 @@ public class UserServiceImpl implements UserService {
     @Override
     @FireAfterTransaction(events = { UserChangedEvent.class })
     public void changeUserPassword(UserPassword userPassword) {
-        AssertUtils.notNull(userPassword, "Error while changing the user password, new value is null");
+        ServiceRuntimeException.throwIfNull(userPassword, "Error while changing the user password, new value is null");
         User entity = dao.findByUniqueId(userPassword.getUser().getUsername());
         if (entity == null) {
             throw new EntityNotFoundException("User not found, probably not persisted before or has been removed");
@@ -263,7 +287,8 @@ public class UserServiceImpl implements UserService {
     @Override
     @FireAfterTransaction(events = { UserChangedEvent.class })
     public User saveUserProfile(User user, UserPassword userPassword, UserPreference... prefs) {
-        AssertUtils.notNull(user, "Could not save the user profile because the argument user is null");
+        ServiceRuntimeException.throwIfNull(user,
+                messageSource.getMessage(ExceptionCodes.USER_PROFILE_SAVE_NOT_BE_NULL, new String[0], null));
         if (userPassword != null && StringUtils.isNotEmpty(userPassword.getPassword())) {
             try {
                 user.changePassword(enc.encodePassword(userPassword.getPassword(),
