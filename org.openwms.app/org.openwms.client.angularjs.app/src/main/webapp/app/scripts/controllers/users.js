@@ -49,6 +49,7 @@ angular.module('openwms_users', ['ui.bootstrap', 'ngAnimate', 'toaster', 'angula
 							(user.userDetails != undefined && (user.userDetails.office.indexOf(element.val()) !== -1 ||
 							user.userDetails.department.indexOf(element.val()) !== -1))) {
 							console.log("Match:"+element.val());
+							selectedUsers.push(user.id);
 						}
 					});
 				}
@@ -57,17 +58,17 @@ angular.module('openwms_users', ['ui.bootstrap', 'ngAnimate', 'toaster', 'angula
 	}])
 	.controller('UsersCtrl', function ($scope, $http, $timeout, $modal, $upload, toaster, rolesService, $base64) {
 
-		var selectedUsers = [];
+		$scope.selectedUsers = [];
 
 		var ModalInstanceCtrl = function ($scope, $modalInstance, data) {
 			$scope.selUser = data.selUser;
 			$scope.dialog = data.dialog;
-			$scope.ok = function () {
-				$modalInstance.close($scope.selUser);
-			};
 			$scope.cancel = function () {
 				$modalInstance.dismiss('cancel');
 			};
+			$scope.ok = function () {
+				$modalInstance.close($scope.selUser);
+			}
 		};
 
 		var UploadCtrl = function ($scope, $modalInstance, data) {
@@ -80,37 +81,6 @@ angular.module('openwms_users', ['ui.bootstrap', 'ngAnimate', 'toaster', 'angula
 			$scope.cancel = function () {
 				$modalInstance.dismiss('cancel');
 			};
-			$scope.onFileSelect2 = function($files) {
-				//$files: an array of files selected, each file has name, size, and type.
-				for (var i = 0; i < $files.length; i++) {
-					var file = $files[i];
-					$scope.upload = $upload.upload({
-						url: $scope.rootUrl+"/users/"+$scope.selectedUser.id,//'server/upload/url', //upload.php script, node.js route, or servlet url
-						method: 'PUT',
-						headers: {'Content-Type': 'multipart/form-data'},
-						// withCredential: true,
-						data: {myModelObj: $scope.myModelObj},
-						file: file
-						// file: $files, //upload multiple files, this feature only works in HTML5 FromData browsers
-						/* set file formData name for 'Content-Desposition' header. Default: 'file' */
-						//fileFormDataName: myFile, //OR for HTML5 multiple upload only a list: ['name1', 'name2', ...]
-						/* customize how data is added to formData. See #40#issuecomment-28612000 for example */
-						//formDataAppender: function(formData, key, val){} //#40#issuecomment-28612000
-					}).progress(function(evt) {
-							console.log('percent: ' + parseInt(100.0 * evt.loaded / evt.total));
-						}).success(function(data, status, headers, config) {
-							// file is uploaded successfully
-							console.log(data);
-						});
-					//.error(...)
-					//.then(success, error, progress);
-				}
-			};
-
-
-
-			$scope.fileReaderSupported = window.FileReader != null;
-			$scope.uploadRightAway = true;
 			$scope.hasUploader = function(index) {
 				return $scope.upload[index] != null;
 			};
@@ -120,7 +90,7 @@ angular.module('openwms_users', ['ui.bootstrap', 'ngAnimate', 'toaster', 'angula
 			};
 			$scope.onFileSelect = function($files) {
 				$scope.selectedFiles = [];
-				$scope.progress = [];
+				$scope.progress = 0;
 				if ($scope.upload && $scope.upload.length > 0) {
 					for (var i = 0; i < $scope.upload.length; i++) {
 						if ($scope.upload[i] != null) {
@@ -132,74 +102,32 @@ angular.module('openwms_users', ['ui.bootstrap', 'ngAnimate', 'toaster', 'angula
 				$scope.uploadResult = [];
 				$scope.selectedFiles = $files;
 				$scope.dataUrls = [];
-				for ( var i = 0; i < $files.length; i++) {
-					var $file = $files[i];
+				if ($files.length == 1) {
+					var $file = $files[0];
 					if (window.FileReader && $file.type.indexOf('image') > -1) {
 						var fileReader = new FileReader();
-						fileReader.readAsDataURL($files[i]);
-						/*function setPreview(fileReader, index) {
-							fileReader.onload = function(e) {
-								$timeout(function() {
-									$scope.dataUrls[i] = e.target.result;
-								});
-							}
-						}*/
-						//setPreview(fileReader, i);
+						fileReader.readAsDataURL($file);
 					}
-					$scope.progress[i] = -1;
-					if ($scope.uploadRightAway) {
-						$scope.start(i, $files[i]);
-					}
+					$scope.progress = -1;
 				}
 			}
 
-			$scope.start = function(index, file) {
-				$scope.progress[index] = 0;
-				if (11 == 1) {
-					$scope.upload[index] = $upload.upload({
-						url : $scope.rootUrl+"/users/"+$scope.selectedUser.id,
+			$scope.start = function() {
+				$scope.progress = 0;
+				var fileReader = new FileReader();
+				fileReader.readAsDataURL($scope.selectedFiles[0]);
+				fileReader.onload = function(e) {
+					$scope.upload[0] = $upload.http({
+						url: $scope.rootUrl+"/users/"+$scope.selectedUser.id,
 						method: 'PUT',
-						headers: {
-							'Content-Type': 'multipart/form-data'/*,
-							'X-File-Name': file.fileName,
-							'X-File-Size': file.fileSize,
-							'X-File-Type': file.type*/
-						},
-						data : {
-							myModelObj : file
-						},
-						/* formDataAppender: function(fd, key, val) {
-						 if (angular.isArray(val)) {
-						 angular.forEach(val, function(v) {
-						 fd.append(key, v);
-						 });
-						 } else {
-						 fd.append(key, val);
-						 }
-						 }, */
-						file: $scope.selectedFiles[index],
-						fileFormDataName: 'myFile'
+						headers: {'Content-Type': 'multipart/form-data'},
+						data: e.target.result
 					}).then(function(response) {
-							$scope.uploadResult.push(response.data);
+							$scope.uploadResult.push(response.data.result);
 						}, null, function(evt) {
-							$scope.progress[index] = parseInt(100.0 * evt.loaded / evt.total);
+							// Math.min is to fix IE which reports 200% sometimes
+							$scope.progress = Math.min(100, parseInt(100.0 * evt.loaded / evt.total));
 						});
-				} else {
-					var fileReader = new FileReader();
-					fileReader.readAsDataURL($scope.selectedFiles[index]);
-					fileReader.onload = function(e) {
-						$scope.upload[index] = $upload.http({
-							url: $scope.rootUrl+"/users/"+$scope.selectedUser.id,
-							method: 'PUT',
-							headers: {'Content-Type': 'multipart/form-data'},//$scope.selectedFiles[index].type},
-							data: e.target.result
-						}).then(function(response) {
-								$scope.uploadResult.push(response.data.result);
-							}, null, function(evt) {
-								// Math.min is to fix IE which reports 200% sometimes
-								$scope.progress[index] = Math.min(100, parseInt(100.0 * evt.loaded / evt.total));
-							});
-					}
 				}
 			};
 		};
@@ -216,7 +144,7 @@ angular.module('openwms_users', ['ui.bootstrap', 'ngAnimate', 'toaster', 'angula
 					data : function() {
 						return {
 							selUser : {
-								userDetails : ""
+								userDetails : undefined
 							}, dialog : {
 								title: "Add a new User"
 							}
@@ -229,9 +157,8 @@ angular.module('openwms_users', ['ui.bootstrap', 'ngAnimate', 'toaster', 'angula
 					rolesService.add("/users", $scope, user).then(
 						function(addedEntity) {
 							$scope.userEntities.push(addedEntity);
-						},
-						function(data) {
-							toaster.pop('error', "Server Error","["+data.items[0].httpStatus+"] "+data.items[0].message);
+						}, function(e) {
+							onError(e);
 						}
 					)
 				}
@@ -256,8 +183,8 @@ angular.module('openwms_users', ['ui.bootstrap', 'ngAnimate', 'toaster', 'angula
 			modalInstance.result.then(
 				function (user) {
 					rolesService.save("/users", $scope, user).then(
-						onSaved, function(data) {
-							onError(data.items[0].httpStatus, data.items[0].message);
+						onSaved, function(e) {
+							onError(e);
 						}
 					)
 				}
@@ -265,22 +192,21 @@ angular.module('openwms_users', ['ui.bootstrap', 'ngAnimate', 'toaster', 'angula
 		}
 
 		$scope.deleteUser = function () {
-			if (selectedUsers === undefined || selectedUsers.length == 0) {
+			if ($scope.selectedUsers === undefined || $scope.selectedUsers.length == 0) {
 				return;
 			}
 			var param = "";
-			angular.forEach(selectedUsers, function (row) {
-				param+=$scope.userEntities[row].username+",";
+			angular.forEach($scope.selectedUsers, function (user) {
+				param+=user.username+",";
 			});
 			rolesService.delete('/users/'+ param, $scope).then(
 				function() {
-					onSuccess("OK", "Successfully deleted selected Users.");
+					onSuccess("OK", "Success", "Successfully deleted selected Users.");
 					$scope.loadUsers();
-				}, function(data) {
-					toaster.pop("error", "Server Error", "["+data.items[0].httpStatus+"] "+data.items[0].message);
+				}, function(e) {
+					onError(e);
 				}
 			);
-			selectedUsers = [];
 		}
 
 		$scope.saveUser = function () {
@@ -300,6 +226,7 @@ angular.module('openwms_users', ['ui.bootstrap', 'ngAnimate', 'toaster', 'angula
 			$http.defaults.headers.common['Auth-Token'] = $scope.authToken;
 			$http.get($scope.rootUrl+'/users').success(function (data, status, headers, config) {
 				$scope.userEntities = data;
+				$scope.selectedUsers = [];
 			});
 		}
 
@@ -326,14 +253,9 @@ angular.module('openwms_users', ['ui.bootstrap', 'ngAnimate', 'toaster', 'angula
 			});
 			modalInstance.result.then(
 				function (file) {
-					rolesService.add("/users", $scope, file).then(
-						function(addedEntity) {
-							$scope.userEntities.push(addedEntity);
-						},
-						function(data) {
-							toaster.pop('error', "Server Error","["+data.items[0].httpStatus+"] "+data.items[0].message);
-						}
-					)
+
+				}, function() {
+					$scope.loadUsers();
 				}
 			);
 		}
@@ -341,61 +263,92 @@ angular.module('openwms_users', ['ui.bootstrap', 'ngAnimate', 'toaster', 'angula
 		/**
 		 * Mark the User with the <tt>row</tt> index as selected or deselected.
 		 *
-		 * @param row The current User's row index
+		 * @param index The current User's row index
 		 */
-		$scope.onClickUserCard = function (row) {
-			if ($scope.isSelected(row)) {
+		$scope.onClickUserCard = function (index) {
+			if ($scope.isSelected(index)) {
 				// remove row from selection array
-				var index = selectedUsers.indexOf(row);
-				selectedUsers.splice(index, 1);
-				$scope.selectedUser = undefined;
+				var i = $scope.selectedUsers.indexOf($scope.userEntities[index]);
+				$scope.selectedUsers.splice(i, 1);
+				if ($scope.selectedUsers.length > 1) {
+					if (i == $scope.selectedUsers.length) {
+						// reached the end, so selected the user one before
+						$scope.selectedUser = $scope.selectedUsers[i-1];
+					} else {
+						// removed user in between, so take the next user
+						$scope.selectedUser = $scope.selectedUsers[i+1];
+					}
+				} else if ($scope.selectedUsers.length == 1) {
+					$scope.selectedUser = $scope.selectedUsers[0];
+				} else {
+					$scope.selectedUser = [];
+				}
 			} else {
-				// Not already selected, so select this user
-				selectedUsers.push(row);
-				$scope.selectedUser = $scope.userEntities[row];
+				// Not selected, so select this user
+				$scope.selectedUsers.push($scope.userEntities[index]);
+				$scope.selectedUser = $scope.userEntities[index];
 			}
 		}
 
+
+
 		/**
 		 * Check whether the User with index is in the collection of selected users.
+		 *
 		 * @param index
 		 * @returns {boolean}
 		 */
 		$scope.isSelected = function (index) {
-			return selectedUsers.indexOf(index) >= 0 ? true : false;
+			return $scope.selectedUsers.indexOf($scope.userEntities[index]) > -1 ? true : false;
 		}
-
+		/**
+		 * Returns true if more than one User is selected, otherwise false.
+		 *
+		 * @returns {boolean}
+		 */
 		$scope.multipleSelected = function () {
-			if (selectedUsers !== undefined && selectedUsers.length > 1) {
-				return true;
-			}
-			return false;
+			return $scope.selectedUsers.length > 1 ? true : false;
 		}
+		/**
+		 * Returns true if only one User is selected, otherwise false.
+		 *
+		 * @returns {boolean}
+		 */
 		$scope.oneSelected = function () {
-			if (selectedUsers !== undefined && selectedUsers.length == 1) {
-				return true;
-			}
-			return false;
+			return $scope.selectedUsers.length == 1 ? true : false;
 		}
-
-
+		/**
+		 * On view load, all Users are loaded, if not already loaded before.
+		 */
 		var preLoad = function() {
 			if ($scope.userEntities === undefined) {
 				$scope.loadUsers();
 			}
 		}
 		var init = preLoad();
-
+		/**
+		 * Load users and toast success.
+		 */
 		var onSaved = function() {
 			$scope.loadUsers();
 			onSuccess("OK", "Saved successfully.");
 		}
-		var onError = function(code, text) {
-			toaster.pop("error", "Server Error", "["+code+"] "+text);
+		/**
+		 * Toast an error.
+		 *
+		 * @param e e.data.httpStatus expected to hold the http response status, e.data.message a message text
+		 */
+		var onError = function(e) {
+			toaster.pop("error", "Server Error", "["+ e.data.httpStatus+"] "+ e.data.message);
 		}
-		var onSuccess = function(code, text) {
-			toaster.pop("success", "Success", "["+code+"] "+text, 2000);
+		/**
+		 * Toast success.
+		 *
+		 * @param code a message code
+		 * @param header a header text
+		 * @param text a message text
+		 */
+		var onSuccess = function(code, header, text) {
+			toaster.pop("success", header, "["+code+"] "+text, 2000);
 		}
-
-
 	});

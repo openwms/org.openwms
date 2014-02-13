@@ -77,9 +77,8 @@ angular.module('openwms_app',['ui.bootstrap', 'ngAnimate', 'toaster'])
 					rolesService.add("/roles", $scope, role).then(
 						function(addedRole) {
 							$scope.roleEntities.push(addedRole);
-						},
-						function(data) {
-							toaster.pop('error', "Server Error","["+data.items[0].httpStatus+"] "+data.items[0].message);
+						}, function(e) {
+							onError(e);
 						}
 					)
 				}
@@ -109,8 +108,8 @@ angular.module('openwms_app',['ui.bootstrap', 'ngAnimate', 'toaster'])
 			modalInstance.result.then(
 				function (role) {
 					rolesService.save("/roles", $scope, role).then(
-						rolesSaved, function(data) {
-							onError(data.items[0].httpStatus, data.items[0].message);
+						rolesSaved, function(e) {
+							onError(e);
 						}
 					)
 				}
@@ -132,8 +131,8 @@ angular.module('openwms_app',['ui.bootstrap', 'ngAnimate', 'toaster'])
 				function() {
 					onSuccess("OK", "Successfully deleted selected Roles.");
 					$scope.loadRoles();
-				}, function(data) {
-					toaster.pop("error", "Server Error", "["+data.items[0].httpStatus+"] "+data.items[0].message);
+				}, function(e) {
+					onError(e);
 				}
 			);
 		}
@@ -160,8 +159,8 @@ angular.module('openwms_app',['ui.bootstrap', 'ngAnimate', 'toaster'])
 			rolesService.getAll($scope).then(
 				function(roles) {
 					$scope.roleEntities = roles;
-				}, function(data) {
-					toaster.pop("error", "Server Error", "["+data.items[0].httpStatus+"] "+data.items[0].message);
+				}, function(e) {
+					onError(e);
 				}
 			);
 		}
@@ -250,8 +249,8 @@ angular.module('openwms_app',['ui.bootstrap', 'ngAnimate', 'toaster'])
 			$scope.loadRoles();
 			onSuccess("OK", "Saved successfully.");
 		}
-		var onError = function(code, text) {
-			toaster.pop("error", "Server Error", "["+code+"] "+text);
+		var onError = function(e) {
+			toaster.pop("error", "Server Error", "["+ e.data.httpStatus+"] "+ e.data.message);
 		}
 		var onSuccess = function(code, text) {
 			toaster.pop("success", "Success", "["+code+"] "+text, 2000);

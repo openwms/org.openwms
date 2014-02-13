@@ -39,18 +39,23 @@ servicesModule.factory('rolesService',['$http', '$resource', '$q', 'toaster',
 			 *
 			 * @param url The part of the URL that defines the type of entities to work with
 			 * @param $scope The current scope
-			 * @param role the entity to add
+			 * @param entity the entity to add
 			 * @returns {Promise.promise|*} A promise to evaluate: In case of success the Role is returned, otherwise the ResponseItem
 			 */
-			add : function(url, $scope, role) {
+			add : function(url, $scope, entity) {
 				var delay = $q.defer();
 				$http.defaults.headers.put['Auth-Token'] = $scope.authToken;
-				$http.post($scope.rootUrl+url, role)
+				$http.post($scope.rootUrl+url, entity)
 					.success(function (data) {
 						delay.resolve(data.items[0].obj[0]);
 					})
-					.error(function (data) {
-						delay.reject(data);
+					.error(function (data, status, e, f) {
+						var err = new Error(status, data);
+						err.data = {
+							httpStatus: data.items[0].httpStatus,
+							message: data.items[0].message
+						};
+						delay.reject(err);
 					});
 				return delay.promise;
 			},
@@ -68,8 +73,8 @@ servicesModule.factory('rolesService',['$http', '$resource', '$q', 'toaster',
 					.success(function () {
 						delay.resolve();
 					})
-					.error(function (data) {
-						delay.reject(data);
+					.error(function (d, s, e, f) {
+						delay.reject(new Error(s, f));
 					});
 				return delay.promise;
 			},
@@ -89,8 +94,8 @@ servicesModule.factory('rolesService',['$http', '$resource', '$q', 'toaster',
 					.success(function (savedEntity) {
 						delay.resolve(savedEntity);
 					})
-					.error(function (data) {
-						delay.reject(data);
+					.error(function (d, s, e, f) {
+						delay.reject(new Error(s, f));
 					});
 				return delay.promise;
 			},
@@ -107,8 +112,8 @@ servicesModule.factory('rolesService',['$http', '$resource', '$q', 'toaster',
 					.success(function (data) {
 						delay.resolve(data.items[0].obj[0]);
 					})
-					.error(function (data) {
-						delay.reject(data);
+					.error(function (d, s, e, f) {
+						delay.reject(new Error(s, f));
 					});
 				return delay.promise;
 			}
