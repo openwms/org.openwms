@@ -478,7 +478,7 @@
         <plugin.par.version>1.0.0.RELEASE</plugin.par.version>
         <plugin.resources.version>2.6</plugin.resources.version>
         <plugin.source.version>2.2.1</plugin.source.version>
-        <plugin.surefire.version>2.15</plugin.surefire.version>
+        <plugin.surefire.version>2.16</plugin.surefire.version>
         <plugin.taglist.version>2.4</plugin.taglist.version>
         <plugin.wagon-ssh.version>2.1</plugin.wagon-ssh.version>
         <plugin.war.version>2.4</plugin.war.version>
@@ -716,6 +716,7 @@
                     <configuration>
                         <useSystemClassLoader>true</useSystemClassLoader>
                         <skipTests>false</skipTests>
+                        <forkMode>never</forkMode>
                         <trimStackTrace>false</trimStackTrace>
                         <systemPropertyVariables>
                             <log4j.configuration>log4j.xml</log4j.configuration>
@@ -728,6 +729,13 @@
                             <exclude>**/Abstract*.java</exclude>
                         </excludes>
                     </configuration>
+                    <dependencies>
+                        <dependency>
+                            <groupId>org.apache.maven.surefire</groupId>
+                            <artifactId>surefire-junit47</artifactId>
+                            <version>${plugin.surefire.version}</version>
+                        </dependency>
+                    </dependencies>
                 </plugin>
 
                 <plugin>

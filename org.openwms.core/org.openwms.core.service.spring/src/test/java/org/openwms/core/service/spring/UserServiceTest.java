@@ -37,11 +37,13 @@ import org.openwms.core.domain.system.usermanagement.User;
 import org.openwms.core.domain.system.usermanagement.UserPassword;
 import org.openwms.core.domain.system.usermanagement.UserPreference;
 import org.openwms.core.exception.InvalidPasswordException;
+import org.openwms.core.service.ExceptionCodes;
 import org.openwms.core.service.UserService;
-import org.openwms.core.service.exception.ServiceRuntimeException;
 import org.openwms.core.service.exception.EntityNotFoundException;
+import org.openwms.core.service.exception.ServiceRuntimeException;
 import org.openwms.core.test.AbstractJpaSpringContextTests;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.MessageSource;
 import org.springframework.test.context.ContextConfiguration;
 
 /**
@@ -59,6 +61,8 @@ public class UserServiceTest extends AbstractJpaSpringContextTests {
     private static final String KNOWN_USER = "KNOWN";
     @Autowired
     private UserService srv;
+    @Autowired
+    private MessageSource messageSource;
 
     /**
      * Setting up some test users.
@@ -141,8 +145,7 @@ public class UserServiceTest extends AbstractJpaSpringContextTests {
     }
 
     /**
-     * Test method for
-     * {@link org.openwms.core.service.spring.UserServiceImpl#remove(User)}.
+     * Test method for {@link org.openwms.core.service.spring.UserServiceImpl#remove(User)}.
      */
     @Test
     public final void testRemove() {
@@ -161,9 +164,7 @@ public class UserServiceTest extends AbstractJpaSpringContextTests {
     }
 
     /**
-     * Test method for
-     * {@link org.openwms.core.service.spring.UserServiceImpl#changeUserPassword(UserPassword)}
-     * .
+     * Test method for {@link org.openwms.core.service.spring.UserServiceImpl#changeUserPassword(UserPassword)} .
      * 
      * Test to call with null.
      */
@@ -178,9 +179,7 @@ public class UserServiceTest extends AbstractJpaSpringContextTests {
     }
 
     /**
-     * Test method for
-     * {@link org.openwms.core.service.spring.UserServiceImpl#changeUserPassword(UserPassword)}
-     * .
+     * Test method for {@link org.openwms.core.service.spring.UserServiceImpl#changeUserPassword(UserPassword)} .
      * 
      * Test to change it for an unknown user.
      */
@@ -198,9 +197,7 @@ public class UserServiceTest extends AbstractJpaSpringContextTests {
     }
 
     /**
-     * Test method for
-     * {@link org.openwms.core.service.spring.UserServiceImpl#changeUserPassword(UserPassword)}
-     * .
+     * Test method for {@link org.openwms.core.service.spring.UserServiceImpl#changeUserPassword(UserPassword)} .
      * 
      * Test to change the password of an User.
      */
@@ -210,9 +207,7 @@ public class UserServiceTest extends AbstractJpaSpringContextTests {
     }
 
     /**
-     * Test method for
-     * {@link org.openwms.core.service.spring.UserServiceImpl#changeUserPassword(UserPassword)}
-     * .
+     * Test method for {@link org.openwms.core.service.spring.UserServiceImpl#changeUserPassword(UserPassword)} .
      * 
      * Test to change password to an invalid one.
      */
@@ -232,8 +227,7 @@ public class UserServiceTest extends AbstractJpaSpringContextTests {
     }
 
     /**
-     * Test method for
-     * {@link org.openwms.core.service.spring.UserServiceImpl#findAll()}.
+     * Test method for {@link org.openwms.core.service.spring.UserServiceImpl#findAll()}.
      */
     @Test
     public final void testFindAll() {
@@ -241,8 +235,7 @@ public class UserServiceTest extends AbstractJpaSpringContextTests {
     }
 
     /**
-     * Test to verify that the previously User can be found by it's assigned
-     * technical key.
+     * Test to verify that the previously User can be found by it's assigned technical key.
      */
     @Test
     public final void testFindById() {
@@ -253,8 +246,7 @@ public class UserServiceTest extends AbstractJpaSpringContextTests {
     }
 
     /**
-     * This test tries to find an User with a non existing technical id. This
-     * must end up in any kind of RuntimeException.
+     * This test tries to find an User with a non existing technical id. This must end up in any kind of RuntimeException.
      */
     @Test(expected = RuntimeException.class)
     public final void testFindByIdNegative() {
@@ -265,9 +257,7 @@ public class UserServiceTest extends AbstractJpaSpringContextTests {
     }
 
     /**
-     * Test method for
-     * {@link org.openwms.core.service.spring.UserServiceImpl#getTemplate(String)}
-     * .
+     * Test method for {@link org.openwms.core.service.spring.UserServiceImpl#getTemplate(String)} .
      */
     @Test
     public final void testGetTemplate() {
@@ -277,9 +267,7 @@ public class UserServiceTest extends AbstractJpaSpringContextTests {
     }
 
     /**
-     * Test method for
-     * {@link org.openwms.core.service.spring.UserServiceImpl#createSystemUser()}
-     * .
+     * Test method for {@link org.openwms.core.service.spring.UserServiceImpl#createSystemUser()} .
      */
     @Test
     public final void testCreateSystemUser() {
@@ -300,10 +288,12 @@ public class UserServiceTest extends AbstractJpaSpringContextTests {
             srv.saveUserProfile(null, new UserPassword(new User(TEST_USER), TEST_USER));
             fail("Must throw an exception when invoking with null argument");
         } catch (ServiceRuntimeException sre) {
-            if (sre.getMessage().equals("Could not save the user profile because the argument user is null")) {
+            if (sre.getMessage().equals(
+                    messageSource.getMessage(ExceptionCodes.USER_PROFILE_SAVE_NOT_BE_NULL, new String[0], null))) {
                 return;
+            } else {
+                fail("Expected to wrap an IllegalArgumentException when the user argument is null");
             }
-            fail("Expected to wrap an IllegalArgumentException when the user argument is null");
         }
     }
 
