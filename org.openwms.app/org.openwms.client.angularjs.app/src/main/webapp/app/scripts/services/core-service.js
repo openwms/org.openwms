@@ -22,17 +22,17 @@
  */
 
 /**
- * A RolesService provide CRUD functions for <code>Role</code> domain classes.
+ * A coreService provide CRUD functions to domain classes of the CORE module.
  *
- * @module openwms_services
+ * @module core_service
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  * @version $Revision: $
  * @since 0.1
  */
-var servicesModule = angular.module('openwms_services', ['ngResource', 'toaster']);
+var servicesModule = angular.module('core_service', []);
 
-servicesModule.factory('rolesService',['$http', '$resource', '$q', 'toaster',
-	function($http, $resource, $q, toaster) {
+servicesModule.factory('coreService',['$http', '$q',
+	function($http, $q) {
 		return {
 			/**
 			 * Create a non-existing Role instance and send an POST request to the backend. If the Role with its unique identifier exists the service will reject the request.
@@ -49,7 +49,7 @@ servicesModule.factory('rolesService',['$http', '$resource', '$q', 'toaster',
 					.success(function (data) {
 						delay.resolve(data.items[0].obj[0]);
 					})
-					.error(function (data, status, e, f) {
+					.error(function (data, status, headers, config) {
 						var err = new Error(status, data);
 						err.data = {
 							httpStatus: data.items[0].httpStatus,
@@ -73,8 +73,8 @@ servicesModule.factory('rolesService',['$http', '$resource', '$q', 'toaster',
 					.success(function () {
 						delay.resolve();
 					})
-					.error(function (d, s, e, f) {
-						delay.reject(new Error(s, f));
+					.error(function (data, status, headers, config) {
+						delay.reject(new Error(status, config));
 					});
 				return delay.promise;
 			},
@@ -94,8 +94,8 @@ servicesModule.factory('rolesService',['$http', '$resource', '$q', 'toaster',
 					.success(function (savedEntity) {
 						delay.resolve(savedEntity);
 					})
-					.error(function (d, s, e, f) {
-						delay.reject(new Error(s, f));
+					.error(function (data, status, headers, config) {
+						delay.reject(new Error(status, config));
 					});
 				return delay.promise;
 			},
@@ -112,8 +112,8 @@ servicesModule.factory('rolesService',['$http', '$resource', '$q', 'toaster',
 					.success(function (data) {
 						delay.resolve(data.items[0].obj[0]);
 					})
-					.error(function (d, s, e, f) {
-						delay.reject(new Error(s, f));
+					.error(function (data, status, headers, config) {
+						delay.reject(new Error(status, config));
 					});
 				return delay.promise;
 			}

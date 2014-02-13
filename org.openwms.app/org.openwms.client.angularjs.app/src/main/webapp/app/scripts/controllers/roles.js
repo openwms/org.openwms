@@ -34,7 +34,7 @@ angular.module('openwms_app',['ui.bootstrap', 'ngAnimate', 'toaster'])
 		delete $httpProvider.defaults.headers.common['X-Requested-With'];
 		$httpProvider.defaults.headers.common['Content-Type'] = 'application/json';
 	})
-	.controller('RolesCtrl', function ($scope, $http, $modal, $log, rolesService, toaster) {
+	.controller('RolesCtrl', function ($scope, $http, $modal, $log, coreService, toaster) {
 
 		var checkedRows = [];
 		var roleEntities = [];
@@ -74,7 +74,7 @@ angular.module('openwms_app',['ui.bootstrap', 'ngAnimate', 'toaster'])
 			});
 			modalInstance.result.then(
 				function (role) {
-					rolesService.add("/roles", $scope, role).then(
+					coreService.add("/roles", $scope, role).then(
 						function(addedRole) {
 							$scope.roleEntities.push(addedRole);
 						}, function(e) {
@@ -107,7 +107,7 @@ angular.module('openwms_app',['ui.bootstrap', 'ngAnimate', 'toaster'])
 			});
 			modalInstance.result.then(
 				function (role) {
-					rolesService.save("/roles", $scope, role).then(
+					coreService.save("/roles", $scope, role).then(
 						rolesSaved, function(e) {
 							onError(e);
 						}
@@ -127,7 +127,7 @@ angular.module('openwms_app',['ui.bootstrap', 'ngAnimate', 'toaster'])
 			angular.forEach($scope.checkedRoles(), function (role) {
 				param+=role.name+",";
 			});
-			rolesService.delete('/roles/'+ param, $scope).then(
+			coreService.delete('/roles/'+ param, $scope).then(
 				function() {
 					onSuccess("OK", "Successfully deleted selected Roles.");
 					$scope.loadRoles();
@@ -143,7 +143,7 @@ angular.module('openwms_app',['ui.bootstrap', 'ngAnimate', 'toaster'])
 		$scope.saveRole = function () {
 
 			/**
-			rolesService.save($scope).then(
+			 coreService.save($scope).then(
 				rolesSaved, function(data) {
 					onError(data.items[0].httpStatus, data.items[0].message);
 				}
@@ -156,7 +156,7 @@ angular.module('openwms_app',['ui.bootstrap', 'ngAnimate', 'toaster'])
 		 */
 		$scope.loadRoles = function () {
 			checkedRows = [];
-			rolesService.getAll($scope).then(
+			coreService.getAll($scope).then(
 				function(roles) {
 					$scope.roleEntities = roles;
 				}, function(e) {

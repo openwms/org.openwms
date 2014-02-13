@@ -1,7 +1,7 @@
 'use strict';
 
 //var openwms_app = angular.module('openwms_app');
-var openwms_root = angular.module('openwms_root', ['ui.bootstrap', 'ui.router', 'openwms_app', 'openwms_users', 'ngResource', 'openwms_services']);
+var openwms_root = angular.module('openwms_root', ['ui.bootstrap', 'ui.router', 'openwms_app', 'openwms_users', 'ngResource', 'core_service']);
 
 openwms_root
 	.factory('rootApply', [ '$rootScope', function ($rootScope) {
