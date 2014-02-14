@@ -1,5 +1,6 @@
 /*
  * openwms.org, the Open Warehouse Management System.
+ * Copyright (C) 2014 Heiko Scherrer
  *
  * This file is part of openwms.org.
  *
@@ -11,11 +12,11 @@
  * openwms.org is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU Lesser General Public License for more details.
+ * GNU General Public License for more details.
  *
- * You should have received a copy of the GNU Lesser General Public
- * License along with this software. If not, write to the Free
- * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
+ * You should have received a copy of the GNU General Public License
+ * along with this software. If not, write to the Free Software
+ * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
 package org.openwms.tms.domain.comparator;
@@ -26,11 +27,9 @@ import java.util.Comparator;
 import org.openwms.tms.domain.order.TransportOrder;
 
 /**
- * A TransportStartComparator. I used to sort TransportOrders is a particular
- * order. Unfortunately some fields of the TransportOrder class are defined as
- * Enums for a better handling in business logic. Persisting these fields as
- * Strings makes it impossible to do a proper sorting in the database with JPA.
- * Hence we must do it with Comparators in the application layer.
+ * A TransportStartComparator. I used to sort TransportOrders is a particular order. Unfortunately some fields of the TransportOrder class
+ * are defined as Enums for a better handling in business logic. Persisting these fields as Strings makes it impossible to do a proper
+ * sorting in the database with JPA. Hence we must do it with Comparators in the application layer.
  * 
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  * @version $Revision$
@@ -42,15 +41,13 @@ public class TransportStartComparator implements Comparator<TransportOrder>, Ser
     private static final long serialVersionUID = -5977273516346830448L;
 
     /**
-     * First the priority or orders is compared, when both are equals the id is
-     * compared too.
+     * First the priority or orders is compared, when both are equals the id is compared too.
      * 
      * @param o1
      *            FirstOrder to compare
      * @param o2
      *            Second order to compare
-     * @return a negative integer, zero, or a positive integer as the first
-     *         argument is less than, equal to, or greater than the second.
+     * @return a negative integer, zero, or a positive integer as the first argument is less than, equal to, or greater than the second.
      * @see java.util.Comparator#compare(java.lang.Object, java.lang.Object)
      */
     @Override

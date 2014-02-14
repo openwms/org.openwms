@@ -1,5 +1,6 @@
 /*
  * openwms.org, the Open Warehouse Management System.
+ * Copyright (C) 2014 Heiko Scherrer
  *
  * This file is part of openwms.org.
  *
@@ -11,18 +12,17 @@
  * openwms.org is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU Lesser General Public License for more details.
+ * GNU General Public License for more details.
  *
- * You should have received a copy of the GNU Lesser General Public
- * License along with this software. If not, write to the Free
- * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
+ * You should have received a copy of the GNU General Public License
+ * along with this software. If not, write to the Free Software
+ * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
 package org.openwms.tms.domain.values;
 
 /**
- * A TransportOrderState defines alll possible states of
- * {@link org.openwms.tms.domain.order.TransportOrder}s.
+ * A TransportOrderState defines alll possible states of {@link org.openwms.tms.domain.order.TransportOrder}s.
  * 
  * @author <a href="mailto:russelltina@users.sourceforge.net">Tina Russell</a>
  * @version $Revision$
@@ -39,8 +39,7 @@ public enum TransportOrderState {
     CREATED(10),
 
     /**
-     * Status of a full initialized <code>TransportOrder</code>, ready to be
-     * started.
+     * Status of a full initialized <code>TransportOrder</code>, ready to be started.
      */
     INITIALIZED(20),
 
@@ -50,14 +49,12 @@ public enum TransportOrderState {
     STARTED(30),
 
     /**
-     * Status to indicate that the <code>TransportOrder</code> is paused. Not
-     * active anymore.
+     * Status to indicate that the <code>TransportOrder</code> is paused. Not active anymore.
      */
     INTERRUPTED(40),
 
     /**
-     * Status to indicate a failure on the <code>TransportOrder</code>. Not
-     * active anymore.
+     * Status to indicate a failure on the <code>TransportOrder</code>. Not active anymore.
      */
     ONFAILURE(50),
 
@@ -67,8 +64,7 @@ public enum TransportOrderState {
     CANCELED(60),
 
     /**
-     * Status to indicate that the <code>TransportOrder</code> completed
-     * successfully.
+     * Status to indicate that the <code>TransportOrder</code> completed successfully.
      */
     FINISHED(70);
 

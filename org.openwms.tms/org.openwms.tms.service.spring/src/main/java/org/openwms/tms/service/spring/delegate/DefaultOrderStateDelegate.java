@@ -1,5 +1,6 @@
 /*
  * openwms.org, the Open Warehouse Management System.
+ * Copyright (C) 2014 Heiko Scherrer
  *
  * This file is part of openwms.org.
  *
@@ -11,11 +12,11 @@
  * openwms.org is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU Lesser General Public License for more details.
+ * GNU General Public License for more details.
  *
- * You should have received a copy of the GNU Lesser General Public
- * License along with this software. If not, write to the Free
- * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
+ * You should have received a copy of the GNU General Public License
+ * along with this software. If not, write to the Free Software
+ * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
 package org.openwms.tms.service.spring.delegate;
@@ -43,8 +44,7 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 /**
- * A DefaultOrderStateDelegate. Lazy instantiated, only when needed. Thus it is
- * possible to override this bean and prevent instantiation.
+ * A DefaultOrderStateDelegate. Lazy instantiated, only when needed. Thus it is possible to override this bean and prevent instantiation.
  * 
  * @author <a href="mailto:russelltina@users.sourceforge.net">Tina Russell</a>
  * @version $Revision$
@@ -76,9 +76,8 @@ public class DefaultOrderStateDelegate implements TransportOrderStateDelegate {
     /**
      * {@inheritDoc}
      * 
-     * Search for already {@link TransportOrderState#CREATED}
-     * {@link TransportOrder}s for this transportUnit and try to initialize
-     * them. When initialization is done try to start them.
+     * Search for already {@link TransportOrderState#CREATED} {@link TransportOrder}s for this transportUnit and try to initialize them.
+     * When initialization is done try to start them.
      */
     @Override
     public void afterCreation(TransportUnit transportUnit) {
@@ -100,8 +99,7 @@ public class DefaultOrderStateDelegate implements TransportOrderStateDelegate {
     /**
      * {@inheritDoc}
      * 
-     * Just search the next TransportOrder for the TransportUnit and try to
-     * start it.
+     * Just search the next TransportOrder for the TransportUnit and try to start it.
      */
     @Override
     public void afterFinish(Long id) {
@@ -111,8 +109,7 @@ public class DefaultOrderStateDelegate implements TransportOrderStateDelegate {
     /**
      * {@inheritDoc}
      * 
-     * Just search the next TransportOrder for the TransportUnit and try to
-     * start it.
+     * Just search the next TransportOrder for the TransportUnit and try to start it.
      */
     @Override
     public void onCancel(Long id) {
@@ -122,8 +119,7 @@ public class DefaultOrderStateDelegate implements TransportOrderStateDelegate {
     /**
      * {@inheritDoc}
      * 
-     * Just search the next TransportOrder for the TransportUnit and try to
-     * start it.
+     * Just search the next TransportOrder for the TransportUnit and try to start it.
      */
     @Override
     public void onFailure(Long id) {
@@ -163,8 +159,7 @@ public class DefaultOrderStateDelegate implements TransportOrderStateDelegate {
     /**
      * {@inheritDoc}
      * 
-     * Just search the next TransportOrder for the TransportUnit and try to
-     * start it.
+     * Just search the next TransportOrder for the TransportUnit and try to start it.
      */
     @Override
     public void onInterrupt(Long id) {

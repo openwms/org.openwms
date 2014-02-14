@@ -1,5 +1,6 @@
 /*
  * openwms.org, the Open Warehouse Management System.
+ * Copyright (C) 2014 Heiko Scherrer
  *
  * This file is part of openwms.org.
  *
@@ -11,11 +12,11 @@
  * openwms.org is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU Lesser General Public License for more details.
+ * GNU General Public License for more details.
  *
- * You should have received a copy of the GNU Lesser General Public
- * License along with this software. If not, write to the Free
- * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
+ * You should have received a copy of the GNU General Public License
+ * along with this software. If not, write to the Free Software
+ * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
 package org.openwms.tms.service.delegate;
@@ -23,8 +24,7 @@ package org.openwms.tms.service.delegate;
 import org.openwms.common.domain.TransportUnit;
 
 /**
- * A TransportOrderStateDelegate is called after state changes on a
- * TransportOrder happen.
+ * A TransportOrderStateDelegate is called after state changes on a TransportOrder happen.
  * 
  * @author <a href="mailto:russelltina@users.sourceforge.net">Tina Russell</a>
  * @version $Revision$
@@ -33,8 +33,7 @@ import org.openwms.common.domain.TransportUnit;
 public interface TransportOrderStateDelegate {
 
     /**
-     * An action that should be triggered after a TransportOrder has been
-     * created.
+     * An action that should be triggered after a TransportOrder has been created.
      * 
      * @param transportUnit
      *            The {@link TransportUnit} of the corresponding TransportOrder
@@ -42,8 +41,7 @@ public interface TransportOrderStateDelegate {
     void afterCreation(TransportUnit transportUnit);
 
     /**
-     * An action that should be triggered after a TransportOrder has been
-     * canceled.
+     * An action that should be triggered after a TransportOrder has been canceled.
      * 
      * @param id
      *            The id of the TransportOrder
@@ -51,8 +49,7 @@ public interface TransportOrderStateDelegate {
     void onCancel(Long id);
 
     /**
-     * An action that should be triggered after a TransportOrder has been
-     * finished successfully.
+     * An action that should be triggered after a TransportOrder has been finished successfully.
      * 
      * @param id
      *            The id of the TransportOrder
@@ -60,8 +57,7 @@ public interface TransportOrderStateDelegate {
     void afterFinish(Long id);
 
     /**
-     * An action that should be triggered after a TransportOrder has been set on
-     * failure.
+     * An action that should be triggered after a TransportOrder has been set on failure.
      * 
      * @param id
      *            The id of the TransportOrder
@@ -69,8 +65,7 @@ public interface TransportOrderStateDelegate {
     void onFailure(Long id);
 
     /**
-     * An action that should be triggered after a TransportOrder has been
-     * interrupted.
+     * An action that should be triggered after a TransportOrder has been interrupted.
      * 
      * @param id
      *            The id of the TransportOrder

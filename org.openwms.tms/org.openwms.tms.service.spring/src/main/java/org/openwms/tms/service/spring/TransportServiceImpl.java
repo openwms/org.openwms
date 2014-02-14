@@ -1,5 +1,6 @@
 /*
  * openwms.org, the Open Warehouse Management System.
+ * Copyright (C) 2014 Heiko Scherrer
  *
  * This file is part of openwms.org.
  *
@@ -11,11 +12,11 @@
  * openwms.org is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU Lesser General Public License for more details.
+ * GNU General Public License for more details.
  *
- * You should have received a copy of the GNU Lesser General Public
- * License along with this software. If not, write to the Free
- * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
+ * You should have received a copy of the GNU General Public License
+ * along with this software. If not, write to the Free Software
+ * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
 package org.openwms.tms.service.spring;
@@ -77,8 +78,7 @@ public class TransportServiceImpl implements TransportOrderService<TransportOrde
     @Qualifier("locationGroupDao")
     private GenericDao<LocationGroup, Long> locationGroupDao;
     /**
-     * 0..* voters, can be overridden and extended with XML configuration. So
-     * far we define only one (default) voter directly.
+     * 0..* voters, can be overridden and extended with XML configuration. So far we define only one (default) voter directly.
      */
     @Autowired(required = false)
     @Qualifier("targetAcceptedVoter")
@@ -124,13 +124,11 @@ public class TransportServiceImpl implements TransportOrderService<TransportOrde
     /**
      * {@inheritDoc}
      * 
-     * Checks that all necessary data to create a TransportOrder is given, does
-     * not do any logical checks, whether a target is blocked or a
+     * Checks that all necessary data to create a TransportOrder is given, does not do any logical checks, whether a target is blocked or a
      * {@link TransportOrder} for the {@link TransportUnit} exist.
      * 
      * @throws TransportOrderServiceException
-     *             when the barcode is <code>null</code> or no transportUnit
-     *             with barcode can be found or no target can be found.
+     *             when the barcode is <code>null</code> or no transportUnit with barcode can be found or no target can be found.
      */
     @Override
     public TransportOrder createTransportOrder(Barcode barcode, LocationGroup targetLocationGroup,
