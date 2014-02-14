@@ -1,5 +1,6 @@
 /*
  * openwms.org, the Open Warehouse Management System.
+ * Copyright (C) 2014 Heiko Scherrer
  *
  * This file is part of openwms.org.
  *
@@ -11,11 +12,11 @@
  * openwms.org is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU Lesser General Public License for more details.
+ * GNU General Public License for more details.
  *
- * You should have received a copy of the GNU Lesser General Public
- * License along with this software. If not, write to the Free
- * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
+ * You should have received a copy of the GNU General Public License
+ * along with this software. If not, write to the Free Software
+ * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
 package org.openwms.tms.integration;
@@ -29,8 +30,7 @@ import org.openwms.tms.domain.order.TransportOrder;
 import org.openwms.tms.domain.values.TransportOrderState;
 
 /**
- * A TransportOrderDao - Adds specific functionality concerning
- * {@link TransportOrder} Entity classes.
+ * A TransportOrderDao - Adds specific functionality concerning {@link TransportOrder} Entity classes.
  * 
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  * @version $Revision$
@@ -41,8 +41,7 @@ import org.openwms.tms.domain.values.TransportOrderState;
 public interface TransportOrderDao extends GenericDao<TransportOrder, Long> {
 
     /**
-     * Get all active {@link TransportOrder}s that have the target destination
-     * to this locationGroup.
+     * Get all active {@link TransportOrder}s that have the target destination to this locationGroup.
      * 
      * @param locationGroup
      *            The group to search for
@@ -51,8 +50,7 @@ public interface TransportOrderDao extends GenericDao<TransportOrder, Long> {
     int getNumberOfTransportOrders(LocationGroup locationGroup);
 
     /**
-     * Find and retrieve a list of {@link TransportOrder}s, searched by a list
-     * of their ids.
+     * Find and retrieve a list of {@link TransportOrder}s, searched by a list of their ids.
      * 
      * @param ids
      *            A list of technical keys of the orders to search for
@@ -61,10 +59,8 @@ public interface TransportOrderDao extends GenericDao<TransportOrder, Long> {
     List<TransportOrder> findByIds(List<Long> ids);
 
     /**
-     * Find a list of {@link TransportOrder}s within defined states for a given
-     * {@link TransportUnit}. The implementation does never return
-     * <code>null</code>. In case no {@link TransportOrder}s are found an empty
-     * List is returned.
+     * Find a list of {@link TransportOrder}s within defined states for a given {@link TransportUnit}. The implementation does never return
+     * <code>null</code>. In case no {@link TransportOrder}s are found an empty List is returned.
      * 
      * @param transportUnit
      *            The {@link TransportUnit} to search for

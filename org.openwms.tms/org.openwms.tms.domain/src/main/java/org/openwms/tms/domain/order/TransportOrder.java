@@ -1,5 +1,6 @@
 /*
  * openwms.org, the Open Warehouse Management System.
+ * Copyright (C) 2014 Heiko Scherrer
  *
  * This file is part of openwms.org.
  *
@@ -11,11 +12,11 @@
  * openwms.org is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU Lesser General Public License for more details.
+ * GNU General Public License for more details.
  *
- * You should have received a copy of the GNU Lesser General Public
- * License along with this software. If not, write to the Free
- * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
+ * You should have received a copy of the GNU General Public License
+ * along with this software. If not, write to the Free Software
+ * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
 package org.openwms.tms.domain.order;
@@ -50,8 +51,7 @@ import org.openwms.tms.domain.values.PriorityLevel;
 import org.openwms.tms.domain.values.TransportOrderState;
 
 /**
- * A TransportOrder is used to move {@link TransportUnit}s from a current
- * {@link Location} to a target {@link Location}.
+ * A TransportOrder is used to move {@link TransportUnit}s from a current {@link Location} to a target {@link Location}.
  * 
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  * @version $Revision$
@@ -75,19 +75,15 @@ public class TransportOrder extends AbstractEntity implements DomainObject<Long>
     public static final String NQ_FIND_ALL = "TransportOrder.findAll";
 
     /**
-     * Query to find all <code>TransportOrder</code>s for a certain
-     * {@link TransportUnit}. <li>Query parameter name
-     * <strong>transportUnit</strong> : The {@link TransportUnit} to search for.
-     * </li>
+     * Query to find all <code>TransportOrder</code>s for a certain {@link TransportUnit}. <li>Query parameter name
+     * <strong>transportUnit</strong> : The {@link TransportUnit} to search for.</li>
      */
     public static final String NQ_FIND_BY_TU = "TransportOrder.findByTU";
 
     /**
-     * Query to find all <code>TransportOrder</code>s for a particular
-     * {@link TransportUnit} in certain states. <li>Query parameter name
-     * <strong>transportUnit</strong> : The {@link TransportUnit} to search for.
-     * </li> <li>Query parameter name <strong>states</strong> : A list of
-     * {@link TransportOrderState}s.</li>
+     * Query to find all <code>TransportOrder</code>s for a particular {@link TransportUnit} in certain states. <li>Query parameter name
+     * <strong>transportUnit</strong> : The {@link TransportUnit} to search for.</li> <li>Query parameter name <strong>states</strong> : A
+     * list of {@link TransportOrderState}s.</li>
      */
     public static final String NQ_FIND_FOR_TU_IN_STATE = "TransportOrder.findForTuInState";
 
@@ -100,9 +96,8 @@ public class TransportOrder extends AbstractEntity implements DomainObject<Long>
     private Long id;
 
     /**
-     * The {@link TransportUnit} to be moved by this <code>TransportOrder</code>
-     * . Allowed to be <code>null</code> to keep {@link TransportOrder}s without
-     * {@link TransportUnit}s.
+     * The {@link TransportUnit} to be moved by this <code>TransportOrder</code> . Allowed to be <code>null</code> to keep
+     * {@link TransportOrder}s without {@link TransportUnit}s.
      */
     @ManyToOne
     @JoinColumn(name = "TRANSPORT_UNIT", nullable = true)
@@ -116,11 +111,9 @@ public class TransportOrder extends AbstractEntity implements DomainObject<Long>
     private Date dateUpdated = new Date();
 
     /**
-     * A priority level of the <code>TransportOrder</code>. The lower the value
-     * the lower the priority.<br>
-     * The priority level affects the execution of the
-     * <code>TransportOrder</code>. An order with high priority will be
-     * processed faster than those with lower priority.
+     * A priority level of the <code>TransportOrder</code>. The lower the value the lower the priority.<br>
+     * The priority level affects the execution of the <code>TransportOrder</code>. An order with high priority will be processed faster
+     * than those with lower priority.
      */
     @Column(name = "PRIORITY")
     @Enumerated(EnumType.STRING)
@@ -177,8 +170,8 @@ public class TransportOrder extends AbstractEntity implements DomainObject<Long>
     private Location targetLocation;
 
     /**
-     * A {@link LocationGroup} can also be set as target. At least one target
-     * must be set when the <code>TransportOrder</code> is being started.
+     * A {@link LocationGroup} can also be set as target. At least one target must be set when the <code>TransportOrder</code> is being
+     * started.
      */
     @ManyToOne
     @JoinColumn(name = "TARGET_LOCATION_GROUP")
@@ -194,8 +187,7 @@ public class TransportOrder extends AbstractEntity implements DomainObject<Long>
     /* ------------------- lifecycle callback methods ---------- */
 
     /**
-     * JPA Lifecycle callback method to set the dateUpdated property when the
-     * <code>TransportOrder</code> is being modified.
+     * JPA Lifecycle callback method to set the dateUpdated property when the <code>TransportOrder</code> is being modified.
      */
     @PreUpdate
     protected void postUpdate() {
@@ -248,8 +240,7 @@ public class TransportOrder extends AbstractEntity implements DomainObject<Long>
     }
 
     /**
-     * Get the {@link TransportUnit} assigned to the <code>TransportOrder</code>
-     * .
+     * Get the {@link TransportUnit} assigned to the <code>TransportOrder</code> .
      * 
      * @return The assigned transportUnit
      */
@@ -258,9 +249,8 @@ public class TransportOrder extends AbstractEntity implements DomainObject<Long>
     }
 
     /**
-     * Assign a {@link TransportUnit} to the <code>TransportOrder</code>.
-     * Setting the {@link TransportUnit} to <code>null</code> is allowed here to
-     * unlink both.
+     * Assign a {@link TransportUnit} to the <code>TransportOrder</code>. Setting the {@link TransportUnit} to <code>null</code> is allowed
+     * here to unlink both.
      * 
      * @param transportUnit
      *            The transportUnit to be assigned
@@ -294,19 +284,15 @@ public class TransportOrder extends AbstractEntity implements DomainObject<Long>
     }
 
     /**
-     * Validate whether a state change is valid or not. States must be changed
-     * in a defined order. Mostly the order is defined by the ordering if the
-     * states in {@link TransportOrderState} enum class. But some other rules
-     * are checked here too and an exception is thrown in case the sequence of
-     * states is violated.
+     * Validate whether a state change is valid or not. States must be changed in a defined order. Mostly the order is defined by the
+     * ordering if the states in {@link TransportOrderState} enum class. But some other rules are checked here too and an exception is
+     * thrown in case the sequence of states is violated.
      * 
      * @param newState
      *            The new state of the order
      * @throws StateChangeException
-     *             when <li>newState is <code>null</code> or</li><li>the state
-     *             shall be turned back to a prior state or</li><li>when the
-     *             caller tries to leap the state
-     *             {@link TransportOrderState#INITIALIZED}</li>
+     *             when <li>newState is <code>null</code> or</li><li>the state shall be turned back to a prior state or</li><li>when the
+     *             caller tries to leap the state {@link TransportOrderState#INITIALIZED}</li>
      */
     protected void validateStateChange(TransportOrderState newState) throws StateChangeException {
         if (newState == null) {
@@ -339,13 +325,9 @@ public class TransportOrder extends AbstractEntity implements DomainObject<Long>
      *             <ul>
      *             <li>the newState is <code>null</code> or</li>
      *             <li>the newState is less than the old state or</li>
-     *             <li>the <code>TransportOrder</code> is in state
-     *             {@link TransportOrderState#CREATED} and shall be manually
-     *             turned into something else then
-     *             {@link TransportOrderState#INITIALIZED} or
-     *             {@link TransportOrderState#CANCELED}</li>
-     *             <li>the <code>TransportOrder</code> is
-     *             {@link TransportOrderState#CREATED} and shall be
+     *             <li>the <code>TransportOrder</code> is in state {@link TransportOrderState#CREATED} and shall be manually turned into
+     *             something else then {@link TransportOrderState#INITIALIZED} or {@link TransportOrderState#CANCELED}</li>
+     *             <li>the <code>TransportOrder</code> is {@link TransportOrderState#CREATED} and shall be
      *             {@link TransportOrderState#INITIALIZED} but it is incomplete</li>
      *             </ul>
      */
@@ -475,26 +457,22 @@ public class TransportOrder extends AbstractEntity implements DomainObject<Long>
         CREATED(10),
 
         /**
-         * Status of a full initialized <code>TransportOrder</code>, ready to be
-         * started.
+         * Status of a full initialized <code>TransportOrder</code>, ready to be started.
          */
         INITIALIZED(20),
 
         /**
-         * A started and active<code>TransportOrder</code>, ready to be
-         * executed.
+         * A started and active<code>TransportOrder</code>, ready to be executed.
          */
         STARTED(30),
 
         /**
-         * Status to indicate that the <code>TransportOrder</code> is paused.
-         * Not active anymore.
+         * Status to indicate that the <code>TransportOrder</code> is paused. Not active anymore.
          */
         INTERRUPTED(40),
 
         /**
-         * Status to indicate a failure on the <code>TransportOrder</code>. Not
-         * active anymore.
+         * Status to indicate a failure on the <code>TransportOrder</code>. Not active anymore.
          */
         ONFAILURE(50),
 
@@ -504,8 +482,7 @@ public class TransportOrder extends AbstractEntity implements DomainObject<Long>
         CANCELED(60),
 
         /**
-         * Status to indicate that the <code>TransportOrder</code> completed
-         * successfully.
+         * Status to indicate that the <code>TransportOrder</code> completed successfully.
          */
         FINISHED(70);
 

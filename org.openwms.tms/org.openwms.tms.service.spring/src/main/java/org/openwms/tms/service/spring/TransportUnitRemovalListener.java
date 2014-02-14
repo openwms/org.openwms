@@ -1,5 +1,6 @@
 /*
  * openwms.org, the Open Warehouse Management System.
+ * Copyright (C) 2014 Heiko Scherrer
  *
  * This file is part of openwms.org.
  *
@@ -11,11 +12,11 @@
  * openwms.org is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU Lesser General Public License for more details.
+ * GNU General Public License for more details.
  *
- * You should have received a copy of the GNU Lesser General Public
- * License along with this software. If not, write to the Free
- * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
+ * You should have received a copy of the GNU General Public License
+ * along with this software. If not, write to the Free Software
+ * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
 package org.openwms.tms.service.spring;
@@ -38,8 +39,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
 
 /**
- * A TransportUnitRemovalListener. Is implemented as a Voter to allow the
- * removal of {@link TransportUnit}s.
+ * A TransportUnitRemovalListener. Is implemented as a Voter to allow the removal of {@link TransportUnit}s.
  * 
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  * @version $Revision$
@@ -56,20 +56,16 @@ public class TransportUnitRemovalListener implements OnRemovalListener<Transport
     /**
      * {@inheritDoc}
      * 
-     * The implementation verifies that no active {@link TransportOrder}s exist,
-     * before a {@link TransportUnit} is going to be removed.
+     * The implementation verifies that no active {@link TransportOrder}s exist, before a {@link TransportUnit} is going to be removed.
      * <ul>
-     * <li>In case where already 'started' {@link TransportOrder}s exist it is
-     * not allowed to remove the {@link TransportUnit} therefore an exception is
-     * thrown.</li>
-     * <li>If {@link TransportOrder}s in a state less than 'started' exist they
-     * will be canceled and removed. The removal of the {@link TransportUnit} is
-     * accepted.</li>
+     * <li>In case where already 'started' {@link TransportOrder}s exist it is not allowed to remove the {@link TransportUnit} therefore an
+     * exception is thrown.</li>
+     * <li>If {@link TransportOrder}s in a state less than 'started' exist they will be canceled and removed. The removal of the
+     * {@link TransportUnit} is accepted.</li>
      * </ul>
      * 
      * @throws RemovalNotAllowedException
-     *             when active {@link TransportOrder}s exist for the
-     *             {@link TransportUnit} entity.
+     *             when active {@link TransportOrder}s exist for the {@link TransportUnit} entity.
      */
     @Override
     public boolean preRemove(TransportUnit entity) throws RemovalNotAllowedException {

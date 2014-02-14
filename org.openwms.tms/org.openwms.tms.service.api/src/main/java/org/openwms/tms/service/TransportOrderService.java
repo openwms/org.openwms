@@ -1,5 +1,6 @@
 /*
  * openwms.org, the Open Warehouse Management System.
+ * Copyright (C) 2014 Heiko Scherrer
  *
  * This file is part of openwms.org.
  *
@@ -11,11 +12,11 @@
  * openwms.org is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU Lesser General Public License for more details.
+ * GNU General Public License for more details.
  *
- * You should have received a copy of the GNU Lesser General Public
- * License along with this software. If not, write to the Free
- * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
+ * You should have received a copy of the GNU General Public License
+ * along with this software. If not, write to the Free Software
+ * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
 package org.openwms.tms.service;
@@ -30,8 +31,7 @@ import org.openwms.tms.domain.values.PriorityLevel;
 import org.openwms.tms.domain.values.TransportOrderState;
 
 /**
- * A TransportService offers some useful methods regarding the general handling
- * of {@link TransportOrder}s.
+ * A TransportService offers some useful methods regarding the general handling of {@link TransportOrder}s.
  * 
  * @param <T>
  *            Any kind of {@link TransportOrder}
@@ -49,13 +49,11 @@ public interface TransportOrderService<T extends TransportOrder> {
     List<T> findAll();
 
     /**
-     * Returns the actual number of active transports that have the
-     * <tt>locationGroup</tt> as target {@link LocationGroup}.
+     * Returns the actual number of active transports that have the <tt>locationGroup</tt> as target {@link LocationGroup}.
      * 
      * @param locationGroup
      *            {@link LocationGroup} to count all active transports for
-     * @return Number of all active transports that are on the way to this
-     *         {@link LocationGroup}
+     * @return Number of all active transports that are on the way to this {@link LocationGroup}
      */
     int getTransportsToLocationGroup(LocationGroup locationGroup);
 
@@ -108,25 +106,20 @@ public interface TransportOrderService<T extends TransportOrder> {
      *            The IDs of {@link TransportOrder}s
      * @param state
      *            The state to change all orders to
-     * @return A list of {@link TransportOrder} IDs that have not been canceled
-     *         successfully
+     * @return A list of {@link TransportOrder} IDs that have not been canceled successfully
      */
     List<Integer> cancelTransportOrders(List<Integer> transportOrders, TransportOrderState state);
 
     /**
-     * Try to redirect a list of {@link TransportOrder}s to a new target
-     * {@link LocationGroup}.
+     * Try to redirect a list of {@link TransportOrder}s to a new target {@link LocationGroup}.
      * 
      * @param transportOrders
      *            The IDs of {@link TransportOrder}s to be redirected
      * @param targetLocationGroup
-     *            The new target {@link LocationGroup} for the
-     *            {@link TransportOrder}s or <code>null</code>
+     *            The new target {@link LocationGroup} for the {@link TransportOrder}s or <code>null</code>
      * @param targetLocation
-     *            The new target {@link Location} for the {@link TransportOrder}
-     *            s, or <code>null</code>
-     * @return A list of {@link TransportOrder} IDs that couldn't be redirected
-     *         successfully
+     *            The new target {@link Location} for the {@link TransportOrder} s, or <code>null</code>
+     * @return A list of {@link TransportOrder} IDs that couldn't be redirected successfully
      */
     List<Integer> redirectTransportOrders(List<Integer> transportOrders, LocationGroup targetLocationGroup,
             Location targetLocation);
