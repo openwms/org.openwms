@@ -1,5 +1,6 @@
 /*
  * openwms.org, the Open Warehouse Management System.
+ * Copyright (C) 2014 Heiko Scherrer
  *
  * This file is part of openwms.org.
  *
@@ -11,11 +12,11 @@
  * openwms.org is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU Lesser General Public License for more details.
+ * GNU General Public License for more details.
  *
- * You should have received a copy of the GNU Lesser General Public
- * License along with this software. If not, write to the Free
- * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
+ * You should have received a copy of the GNU General Public License
+ * along with this software. If not, write to the Free Software
+ * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
 package org.openwms.common.service;
@@ -27,8 +28,7 @@ import org.openwms.common.domain.Rule;
 import org.openwms.common.domain.TransportUnitType;
 
 /**
- * A TransportUnitTypeService offers methods to deal with
- * {@link TransportUnitType}s.
+ * A TransportUnitTypeService offers methods to deal with {@link TransportUnitType}s.
  * 
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  * @version $Revision: $
@@ -70,31 +70,25 @@ public interface TransportUnitTypeService {
     TransportUnitType save(TransportUnitType transportUnitType);
 
     /**
-     * Update the List of {@link org.openwms.common.domain.TypePlacingRule}s for
-     * the given {@link TransportUnitType} type.
+     * Update the List of {@link org.openwms.common.domain.TypePlacingRule}s for the given {@link TransportUnitType} type.
      * 
      * @param type
      *            The {@link TransportUnitType} to update.
      * @param newAssigned
-     *            A new List of {@link LocationType}s that are allowed for the
-     *            {@link TransportUnitType}.
+     *            A new List of {@link LocationType}s that are allowed for the {@link TransportUnitType}.
      * @param newNotAssigned
-     *            A List of {@link LocationType}s. All
-     *            {@link org.openwms.common.domain.TypePlacingRule}s will be
-     *            removed which have one of this {@link LocationType}s and the
-     *            requested {@link TransportUnitType} type.
+     *            A List of {@link LocationType}s. All {@link org.openwms.common.domain.TypePlacingRule}s will be removed which have one of
+     *            this {@link LocationType}s and the requested {@link TransportUnitType} type.
      * @return The updated {@link TransportUnitType}.
      */
     TransportUnitType updateRules(String type, List<LocationType> newAssigned, List<LocationType> newNotAssigned);
 
     /**
-     * Return a List of all {@link org.openwms.common.domain.Rule}s that belong
-     * to this {@link TransportUnitType} type.
+     * Return a List of all {@link org.openwms.common.domain.Rule}s that belong to this {@link TransportUnitType} type.
      * 
      * @param transportUnitType
      *            The {@link TransportUnitType} to search for.
-     * @return The requested List or <code>null</code> if no {@link Rule} was
-     *         found.
+     * @return The requested List or <code>null</code> if no {@link Rule} was found.
      */
     List<Rule> loadRules(String transportUnitType);
 }

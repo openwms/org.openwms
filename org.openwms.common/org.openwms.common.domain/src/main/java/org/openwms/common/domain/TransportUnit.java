@@ -1,5 +1,6 @@
 /*
  * openwms.org, the Open Warehouse Management System.
+ * Copyright (C) 2014 Heiko Scherrer
  *
  * This file is part of openwms.org.
  *
@@ -11,11 +12,11 @@
  * openwms.org is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU Lesser General Public License for more details.
+ * GNU General Public License for more details.
  *
- * You should have received a copy of the GNU Lesser General Public
- * License along with this software. If not, write to the Free
- * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
+ * You should have received a copy of the GNU General Public License
+ * along with this software. If not, write to the Free Software
+ * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
 package org.openwms.common.domain;
@@ -60,11 +61,9 @@ import org.openwms.core.domain.system.usermanagement.User;
 import org.openwms.core.domain.values.CoreTypeDefinitions;
 
 /**
- * A TransportUnit is an item like a box, a toad, a bin or a palette that is
- * moved around within a warehouse and can carry goods.
+ * A TransportUnit is an item like a box, a toad, a bin or a palette that is moved around within a warehouse and can carry goods.
  * <p>
- * Used as container to transport items like <code>LoadUnit</code>s. It can be
- * moved between <code>Location</code>s.
+ * Used as container to transport items like <code>LoadUnit</code>s. It can be moved between <code>Location</code>s.
  * </p>
  * 
  * @GlossaryTerm
@@ -82,17 +81,14 @@ public class TransportUnit extends AbstractEntity implements DomainObject<Long> 
     private static final long serialVersionUID = 4799247366681079321L;
 
     /**
-     * Name of the <code>NamedQuery</code> to find all
-     * <code>TransportUnit</code> Entities.
+     * Name of the <code>NamedQuery</code> to find all <code>TransportUnit</code> Entities.
      */
     public static final String NQ_FIND_ALL = "TransportUnit.findAll";
 
     /**
-     * Query to find <strong>one</strong> <code>TransportUnit</code> by its
-     * natural key.
+     * Query to find <strong>one</strong> <code>TransportUnit</code> by its natural key.
      * <ul>
-     * <li>Query parameter index <strong>1</strong> : The Barcode of the
-     * <code>TransportUnit</code> to search for.</li>
+     * <li>Query parameter index <strong>1</strong> : The Barcode of the <code>TransportUnit</code> to search for.</li>
      * </ul>
      */
     public static final String NQ_FIND_BY_UNIQUE_QUERY = "TransportUnit.findByBarcode";
@@ -114,8 +110,7 @@ public class TransportUnit extends AbstractEntity implements DomainObject<Long> 
     private Barcode barcode;
 
     /**
-     * Indicates whether the <code>TransportUnit</code> is empty or not
-     * (nullable).
+     * Indicates whether the <code>TransportUnit</code> is empty or not (nullable).
      */
     @Column(name = "C_EMPTY")
     private Boolean empty;
@@ -128,8 +123,7 @@ public class TransportUnit extends AbstractEntity implements DomainObject<Long> 
     private Date creationDate;
 
     /**
-     * Date when the <code>TransportUnit</code> has been moved to the current
-     * {@link Location}.
+     * Date when the <code>TransportUnit</code> has been moved to the current {@link Location}.
      */
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "C_ACTUAL_LOCATION_DATE")
@@ -194,8 +188,7 @@ public class TransportUnit extends AbstractEntity implements DomainObject<Long> 
     private TransportUnit parent;
 
     /**
-     * The <code>User</code> who performed the last inventory action on the
-     * <code>TransportUnit</code>.
+     * The <code>User</code> who performed the last inventory action on the <code>TransportUnit</code>.
      */
     @ManyToOne
     @JoinColumn(name = "C_INVENTORY_USER")
@@ -224,8 +217,7 @@ public class TransportUnit extends AbstractEntity implements DomainObject<Long> 
     }
 
     /**
-     * Create a new <code>TransportUnit</code> with an unique id. The id is used
-     * to create a {@link Barcode}.
+     * Create a new <code>TransportUnit</code> with an unique id. The id is used to create a {@link Barcode}.
      * 
      * @param unitId
      *            The unique identifier of the <code>TransportUnit</code>
@@ -238,8 +230,7 @@ public class TransportUnit extends AbstractEntity implements DomainObject<Long> 
      * Create a new <code>TransportUnit</code> with an unique {@link Barcode}.
      * 
      * @param barcode
-     *            The unique identifier of this <code>TransportUnit</code> is
-     *            the {@link Barcode}
+     *            The unique identifier of this <code>TransportUnit</code> is the {@link Barcode}
      */
     public TransportUnit(Barcode barcode) {
         this.barcode = new Barcode(barcode.adjustBarcode(barcode.getValue()));
@@ -273,8 +264,7 @@ public class TransportUnit extends AbstractEntity implements DomainObject<Long> 
     /**
      * Get the actual {@link Location} of the <code>TransportUnit</code>.
      * 
-     * @return The {@link Location} where the <code>TransportUnit</code> is
-     *         placed on
+     * @return The {@link Location} where the <code>TransportUnit</code> is placed on
      */
     public Location getActualLocation() {
         return actualLocation;
@@ -292,8 +282,7 @@ public class TransportUnit extends AbstractEntity implements DomainObject<Long> 
     }
 
     /**
-     * Get the target {@link Location} of the <code>TransportUnit</code>. This
-     * property can not be <code>null</code> when an active
+     * Get the target {@link Location} of the <code>TransportUnit</code>. This property can not be <code>null</code> when an active
      * <code>TransportOrder</code> exists.
      * 
      * @return The target location
@@ -303,12 +292,11 @@ public class TransportUnit extends AbstractEntity implements DomainObject<Long> 
     }
 
     /**
-     * Set the target {@link Location} of the <code>TransportUnit</code>. Shall
-     * only be set in combination with an active <code>TransportOder</code>.
+     * Set the target {@link Location} of the <code>TransportUnit</code>. Shall only be set in combination with an active
+     * <code>TransportOder</code>.
      * 
      * @param targetLocation
-     *            The target {@link Location} where this
-     *            <code>TransportUnit</code> shall be transported to
+     *            The target {@link Location} where this <code>TransportUnit</code> shall be transported to
      */
     public void setTargetLocation(Location targetLocation) {
         this.targetLocation = targetLocation;
@@ -317,8 +305,7 @@ public class TransportUnit extends AbstractEntity implements DomainObject<Long> 
     /**
      * Indicates whether the <code>TransportUnit</code> is empty or not.
      * 
-     * @return <code>true</code> if empty, <code>false</code> if not empty,
-     *         <code>null</code> when not defined
+     * @return <code>true</code> if empty, <code>false</code> if not empty, <code>null</code> when not defined
      */
     public Boolean isEmpty() {
         return this.empty;
@@ -328,8 +315,7 @@ public class TransportUnit extends AbstractEntity implements DomainObject<Long> 
      * Marks the <code>TransportUnit</code> to be empty.
      * 
      * @param empty
-     *            <code>true</code> to mark the <code>TransportUnit</code> as
-     *            empty, <code>false</code> to mark it as not empty and
+     *            <code>true</code> to mark the <code>TransportUnit</code> as empty, <code>false</code> to mark it as not empty and
      *            <code>null</code> for no definition
      */
     public void setEmpty(Boolean empty) {
@@ -337,8 +323,7 @@ public class TransportUnit extends AbstractEntity implements DomainObject<Long> 
     }
 
     /**
-     * Returns the {@link User} who performed the last inventory action on the
-     * <code>TransportUnit</code>.
+     * Returns the {@link User} who performed the last inventory action on the <code>TransportUnit</code>.
      * 
      * @return The {@link User} who did the last inventory check
      */
@@ -347,8 +332,7 @@ public class TransportUnit extends AbstractEntity implements DomainObject<Long> 
     }
 
     /**
-     * Set the {@link User}> who performed the last inventory action on the
-     * <code>TransportUnit</code>.
+     * Set the {@link User}> who performed the last inventory action on the <code>TransportUnit</code>.
      * 
      * @param inventoryUser
      *            The {@link User} who did the last inventory check
@@ -358,11 +342,9 @@ public class TransportUnit extends AbstractEntity implements DomainObject<Long> 
     }
 
     /**
-     * Number of <code>TransportUnit</code>s belonging to the
-     * <code>TransportUnit</code>.
+     * Number of <code>TransportUnit</code>s belonging to the <code>TransportUnit</code>.
      * 
-     * @return The number of all <code>TransportUnit</code>s belonging to this
-     *         one
+     * @return The number of all <code>TransportUnit</code>s belonging to this one
      */
     public int getNoTransportUnits() {
         return this.children.size();
@@ -378,30 +360,25 @@ public class TransportUnit extends AbstractEntity implements DomainObject<Long> 
     }
 
     /**
-     * Returns the date when the <code>TransportUnit</code> moved to the
-     * actualLocation.
+     * Returns the date when the <code>TransportUnit</code> moved to the actualLocation.
      * 
-     * @return The timestamp when the <code>TransportUnit</code> moved the last
-     *         time
+     * @return The timestamp when the <code>TransportUnit</code> moved the last time
      */
     public Date getActualLocationDate() {
         return new Date(this.actualLocationDate.getTime());
     }
 
     /**
-     * Returns the timestamp of the last inventory check of the
-     * <code>TransportUnit</code>.
+     * Returns the timestamp of the last inventory check of the <code>TransportUnit</code>.
      * 
-     * @return The timestamp of the last inventory check of the
-     *         <code>TransportUnit</code>.
+     * @return The timestamp of the last inventory check of the <code>TransportUnit</code>.
      */
     public Date getInventoryDate() {
         return new Date(this.inventoryDate.getTime());
     }
 
     /**
-     * Set the timestamp of the last inventory action of the
-     * <code>TransportUnit</code>.
+     * Set the timestamp of the last inventory action of the <code>TransportUnit</code>.
      * 
      * @param inventoryDate
      *            The timestamp of the last inventory check
@@ -432,8 +409,7 @@ public class TransportUnit extends AbstractEntity implements DomainObject<Long> 
     /**
      * Get all errors that have occurred on the <code>TransportUnit</code>.
      * 
-     * @return A Map of all occurred {@link UnitError}s on the
-     *         <code>TransportUnit</code>
+     * @return A Map of all occurred {@link UnitError}s on the <code>TransportUnit</code>
      */
     public Map<Date, UnitError> getErrors() {
         return Collections.unmodifiableMap(errors);
@@ -477,8 +453,7 @@ public class TransportUnit extends AbstractEntity implements DomainObject<Long> 
     /**
      * Return the {@link TransportUnitType} of the <code>TransportUnit</code>.
      * 
-     * @return The {@link TransportUnitType} the <code>TransportUnit</code>
-     *         belongs to
+     * @return The {@link TransportUnitType} the <code>TransportUnit</code> belongs to
      */
     public TransportUnitType getTransportUnitType() {
         return this.transportUnitType;
@@ -507,8 +482,7 @@ public class TransportUnit extends AbstractEntity implements DomainObject<Long> 
      * Set the {@link Barcode} of the <code>TransportUnit</code>.
      * 
      * @param barcode
-     *            The {@link Barcode} to be set on the
-     *            <code>TransportUnit</code>
+     *            The {@link Barcode} to be set on the <code>TransportUnit</code>
      */
     public void setBarcode(Barcode barcode) {
         this.barcode = barcode;
@@ -546,8 +520,7 @@ public class TransportUnit extends AbstractEntity implements DomainObject<Long> 
      * Add a <code>TransportUnit</code> to the children.
      * 
      * @param transportUnit
-     *            The <code>TransportUnit</code> to be added to the list of
-     *            children
+     *            The <code>TransportUnit</code> to be added to the list of children
      * @throws IllegalArgumentException
      *             when transportUnit is <code>null</code>
      */
@@ -575,11 +548,9 @@ public class TransportUnit extends AbstractEntity implements DomainObject<Long> 
      * Remove a <code>TransportUnit</code> from the list of children.
      * 
      * @param transportUnit
-     *            The <code>TransportUnit</code> to be removed from the list of
-     *            children
+     *            The <code>TransportUnit</code> to be removed from the list of children
      * @throws IllegalArgumentException
-     *             when transportUnit is <code>null</code> or any other failure
-     *             occurs
+     *             when transportUnit is <code>null</code> or any other failure occurs
      */
     public void removeChild(TransportUnit transportUnit) {
         if (transportUnit == null) {

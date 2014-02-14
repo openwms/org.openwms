@@ -1,5 +1,6 @@
 /*
  * openwms.org, the Open Warehouse Management System.
+ * Copyright (C) 2014 Heiko Scherrer
  *
  * This file is part of openwms.org.
  *
@@ -11,11 +12,11 @@
  * openwms.org is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU Lesser General Public License for more details.
+ * GNU General Public License for more details.
  *
- * You should have received a copy of the GNU Lesser General Public
- * License along with this software. If not, write to the Free
- * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
+ * You should have received a copy of the GNU General Public License
+ * along with this software. If not, write to the Free Software
+ * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
 package org.openwms.common.domain;
@@ -34,8 +35,7 @@ import org.openwms.core.domain.AbstractEntity;
 import org.openwms.core.domain.DomainObject;
 
 /**
- * A LocationType is the type of <code>Location</code>s with same
- * characteristics.
+ * A LocationType is the type of <code>Location</code>s with same characteristics.
  * 
  * @GlossaryTerm
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
@@ -58,11 +58,9 @@ public class LocationType extends AbstractEntity implements DomainObject<Long> {
     public static final String NQ_FIND_ALL = "LocationType.findAll";
 
     /**
-     * Query to find <strong>one</strong> <code>LocationType</code> by its
-     * natural key.
+     * Query to find <strong>one</strong> <code>LocationType</code> by its natural key.
      * <ul>
-     * <li>Query parameter index <strong>1</strong> : The name of the
-     * <code>LocationType</code> to search for.</li>
+     * <li>Query parameter index <strong>1</strong> : The name of the <code>LocationType</code> to search for.</li>
      * </ul>
      */
     public static final String NQ_FIND_BY_UNIQUE_QUERY = "LocationType.findByUniqueId";

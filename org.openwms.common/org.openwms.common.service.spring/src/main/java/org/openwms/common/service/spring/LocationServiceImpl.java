@@ -1,5 +1,6 @@
 /*
  * openwms.org, the Open Warehouse Management System.
+ * Copyright (C) 2014 Heiko Scherrer
  *
  * This file is part of openwms.org.
  *
@@ -11,11 +12,11 @@
  * openwms.org is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU Lesser General Public License for more details.
+ * GNU General Public License for more details.
  *
- * You should have received a copy of the GNU Lesser General Public
- * License along with this software. If not, write to the Free
- * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
+ * You should have received a copy of the GNU General Public License
+ * along with this software. If not, write to the Free Software
+ * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
 package org.openwms.common.service.spring;
@@ -97,8 +98,7 @@ public class LocationServiceImpl implements LocationService<Location> {
     /**
      * {@inheritDoc}
      * 
-     * If the <code>locationType</code> is a transient one, it will be persisted
-     * otherwise saved.
+     * If the <code>locationType</code> is a transient one, it will be persisted otherwise saved.
      */
     @Override
     public void createLocationType(LocationType locationType) {
@@ -112,8 +112,7 @@ public class LocationServiceImpl implements LocationService<Location> {
     /**
      * {@inheritDoc}
      * 
-     * The implementation uses the id to find the {@link LocationType} to be
-     * removed and will removed the type when found.
+     * The implementation uses the id to find the {@link LocationType} to be removed and will removed the type when found.
      */
     @Override
     public void deleteLocationTypes(List<LocationType> locationTypes) {

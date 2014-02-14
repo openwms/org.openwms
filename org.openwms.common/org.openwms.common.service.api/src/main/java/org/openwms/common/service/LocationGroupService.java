@@ -1,5 +1,6 @@
 /*
  * openwms.org, the Open Warehouse Management System.
+ * Copyright (C) 2014 Heiko Scherrer
  *
  * This file is part of openwms.org.
  *
@@ -11,11 +12,11 @@
  * openwms.org is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU Lesser General Public License for more details.
+ * GNU General Public License for more details.
  *
- * You should have received a copy of the GNU Lesser General Public
- * License along with this software. If not, write to the Free
- * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
+ * You should have received a copy of the GNU General Public License
+ * along with this software. If not, write to the Free Software
+ * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
 package org.openwms.common.service;
@@ -26,11 +27,9 @@ import org.openwms.common.domain.LocationGroup;
 import org.openwms.core.util.TreeNode;
 
 /**
- * A LocationGroupService offers some useful methods regarding the general
- * handling of {@link LocationGroup}s.
+ * A LocationGroupService offers some useful methods regarding the general handling of {@link LocationGroup}s.
  * <p>
- * This interface is declared generic typed that implementation classes can use
- * any extension of {@link LocationGroup}s.
+ * This interface is declared generic typed that implementation classes can use any extension of {@link LocationGroup}s.
  * </p>
  * 
  * @param <T>
@@ -43,10 +42,8 @@ public interface LocationGroupService<T extends LocationGroup> {
 
     /**
      * Changes the GroupStates of a {@link LocationGroup}.<br>
-     * Both, the GroupStateIn and the GroupStateOut of all child
-     * {@link LocationGroup}s are changed according to the parent
-     * <tt>locationGroup</tt>. This call is executed recursively to
-     * <strong>all</strong> child {@link LocationGroup}s of the
+     * Both, the GroupStateIn and the GroupStateOut of all child {@link LocationGroup}s are changed according to the parent
+     * <tt>locationGroup</tt>. This call is executed recursively to <strong>all</strong> child {@link LocationGroup}s of the
      * <tt>locationGroup</tt> Entity.
      * 
      * @param locationGroup
@@ -55,8 +52,8 @@ public interface LocationGroupService<T extends LocationGroup> {
     void changeGroupState(T locationGroup);
 
     /**
-     * Returns a hierarchical Tree of all {@link LocationGroup}s. Used by the
-     * user interface to show all {@link LocationGroup}s in a tree form.
+     * Returns a hierarchical Tree of all {@link LocationGroup}s. Used by the user interface to show all {@link LocationGroup}s in a tree
+     * form.
      * 
      * @return All {@link LocationGroup}s as hierarchical tree
      */
@@ -70,8 +67,7 @@ public interface LocationGroupService<T extends LocationGroup> {
     List<T> getLocationGroupsAsList();
 
     /**
-     * Save an already persisted {@link LocationGroup} and return the saved
-     * instance.
+     * Save an already persisted {@link LocationGroup} and return the saved instance.
      * 
      * @param locationGroup
      *            The {@link LocationGroup} to save

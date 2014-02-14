@@ -1,5 +1,6 @@
 /*
  * openwms.org, the Open Warehouse Management System.
+ * Copyright (C) 2014 Heiko Scherrer
  *
  * This file is part of openwms.org.
  *
@@ -11,11 +12,11 @@
  * openwms.org is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU Lesser General Public License for more details.
+ * GNU General Public License for more details.
  *
- * You should have received a copy of the GNU Lesser General Public
- * License along with this software. If not, write to the Free
- * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
+ * You should have received a copy of the GNU General Public License
+ * along with this software. If not, write to the Free Software
+ * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
 package org.openwms.common.service;
@@ -27,11 +28,9 @@ import org.openwms.common.domain.LocationType;
 import org.openwms.core.domain.system.Message;
 
 /**
- * A LocationService offers some useful methods regarding the general handling
- * of {@link Location}s.
+ * A LocationService offers some useful methods regarding the general handling of {@link Location}s.
  * <p>
- * This interface is declared generic typed that implementation classes can use
- * any extension of {@link Location}s.
+ * This interface is declared generic typed that implementation classes can use any extension of {@link Location}s.
  * </p>
  * 
  * @param <T>
@@ -43,8 +42,7 @@ import org.openwms.core.domain.system.Message;
 public interface LocationService<T extends Location> {
 
     /**
-     * Return a list of all {@link Location}s not sorted and not filtered in
-     * natural order.
+     * Return a list of all {@link Location}s not sorted and not filtered in natural order.
      * 
      * @return All {@link Location}s as a list
      */
@@ -62,8 +60,7 @@ public interface LocationService<T extends Location> {
     Location removeMessages(Long id, List<Message> messages);
 
     /**
-     * Return a list of all {@link LocationType}s not sorted and not filtered in
-     * natural order.
+     * Return a list of all {@link LocationType}s not sorted and not filtered in natural order.
      * 
      * @return All {@link LocationType}s as a list
      */

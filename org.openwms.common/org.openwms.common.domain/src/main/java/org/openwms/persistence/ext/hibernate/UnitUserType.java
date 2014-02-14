@@ -1,5 +1,6 @@
 /*
  * openwms.org, the Open Warehouse Management System.
+ * Copyright (C) 2014 Heiko Scherrer
  *
  * This file is part of openwms.org.
  *
@@ -11,11 +12,11 @@
  * openwms.org is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU Lesser General Public License for more details.
+ * GNU General Public License for more details.
  *
- * You should have received a copy of the GNU Lesser General Public
- * License along with this software. If not, write to the Free
- * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
+ * You should have received a copy of the GNU General Public License
+ * along with this software. If not, write to the Free Software
+ * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
 package org.openwms.persistence.ext.hibernate;
@@ -41,8 +42,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * An UnitUserType is used by Hibernate as converter for custom
- * <code>Unit</code> types. Only subclasses of {@link AbstractMeasure} are
+ * An UnitUserType is used by Hibernate as converter for custom <code>Unit</code> types. Only subclasses of {@link AbstractMeasure} are
  * supported by this type converter.
  * 
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
@@ -56,8 +56,7 @@ public class UnitUserType implements CompositeUserType {
     /**
      * {@inheritDoc}
      * 
-     * We expect that every unit has two fields, named <code>unitType</code> and
-     * <code>amount</code>.
+     * We expect that every unit has two fields, named <code>unitType</code> and <code>amount</code>.
      */
     @Override
     public String[] getPropertyNames() {
@@ -102,8 +101,7 @@ public class UnitUserType implements CompositeUserType {
     /**
      * {@inheritDoc}
      * 
-     * We do not know the concrete implementation here and return an Unit class
-     * type.
+     * We do not know the concrete implementation here and return an Unit class type.
      */
     @Override
     public Class returnedClass() {
@@ -139,8 +137,7 @@ public class UnitUserType implements CompositeUserType {
     /**
      * {@inheritDoc}
      * 
-     * Try to re-assign the value read from the database to some type of Unit.
-     * Currently supported types:
+     * Try to re-assign the value read from the database to some type of Unit. Currently supported types:
      * <ul>
      * <li>Piece</li>
      * <li>Weight</li>

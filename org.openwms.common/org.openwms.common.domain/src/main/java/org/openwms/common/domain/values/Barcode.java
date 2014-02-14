@@ -1,5 +1,6 @@
 /*
  * openwms.org, the Open Warehouse Management System.
+ * Copyright (C) 2014 Heiko Scherrer
  *
  * This file is part of openwms.org.
  *
@@ -11,11 +12,11 @@
  * openwms.org is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU Lesser General Public License for more details.
+ * GNU General Public License for more details.
  *
- * You should have received a copy of the GNU Lesser General Public
- * License along with this software. If not, write to the Free
- * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
+ * You should have received a copy of the GNU General Public License
+ * along with this software. If not, write to the Free Software
+ * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
 package org.openwms.common.domain.values;
@@ -28,10 +29,9 @@ import javax.persistence.Embeddable;
 import org.apache.commons.lang.StringUtils;
 
 /**
- * A Barcode is a printable item with an unique identifier to label
- * <code>TransportUnit</code>s. The identifier has a defined number of
- * characters whereas these characters are aligned either left or right. Non
- * filled positions of a Barcode are padded with a so called padding character.
+ * A Barcode is a printable item with an unique identifier to label <code>TransportUnit</code>s. The identifier has a defined number of
+ * characters whereas these characters are aligned either left or right. Non filled positions of a Barcode are padded with a so called
+ * padding character.
  * 
  * @GlossaryTerm
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
@@ -47,8 +47,7 @@ public class Barcode implements Serializable {
     public static final int BARCODE_LENGTH = 20;
 
     /**
-     * A BARCODE_ALIGN defines whether the <code>Barcode</code> is applied
-     * <code>LEFT</code> or <code>RIGHT</code>.
+     * A BARCODE_ALIGN defines whether the <code>Barcode</code> is applied <code>LEFT</code> or <code>RIGHT</code>.
      * <p>
      * Only be used when padding is activated.
      * </p>
@@ -75,8 +74,7 @@ public class Barcode implements Serializable {
 
     /**
      * Defines a character used for padding.<br>
-     * If the actually length of the <code>Barcode</code> is less than the
-     * maximum defined <code>length</code> the rest will be filled with
+     * If the actually length of the <code>Barcode</code> is less than the maximum defined <code>length</code> the rest will be filled with
      * <code>padder</code> characters.
      */
     private static char padder = '0';
@@ -87,8 +85,7 @@ public class Barcode implements Serializable {
     private static int length = Barcode.BARCODE_LENGTH;
 
     /**
-     * The alignment of the <code>Barcode</code>. Could be something of
-     * {@link BARCODE_ALIGN}.
+     * The alignment of the <code>Barcode</code>. Could be something of {@link BARCODE_ALIGN}.
      */
     private static BARCODE_ALIGN alignment = BARCODE_ALIGN.RIGHT;
 
@@ -123,8 +120,7 @@ public class Barcode implements Serializable {
     }
 
     /**
-     * Force the Barcode to be aligned to the determined rules regarding
-     * padding, alignment.
+     * Force the Barcode to be aligned to the determined rules regarding padding, alignment.
      * 
      * @param val
      *            The old Barcode as String
@@ -165,8 +161,7 @@ public class Barcode implements Serializable {
     /**
      * Check if <code>Barcode</code> is padded.
      * 
-     * @return <code>true</code> if <code>Barcode</code> is padded, otherwise
-     *         <code>false</code>.
+     * @return <code>true</code> if <code>Barcode</code> is padded, otherwise <code>false</code>.
      */
     public static boolean isPadded() {
         return padded;
@@ -176,8 +171,7 @@ public class Barcode implements Serializable {
      * Set padded.
      * 
      * @param p
-     *            <code>true</code> if <code>Barcode</code> should be padded,
-     *            otherwise <code>false</code>.
+     *            <code>true</code> if <code>Barcode</code> should be padded, otherwise <code>false</code>.
      */
     static void setPadded(boolean p) {
         padded = p;

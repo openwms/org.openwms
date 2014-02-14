@@ -1,5 +1,6 @@
 /*
  * openwms.org, the Open Warehouse Management System.
+ * Copyright (C) 2014 Heiko Scherrer
  *
  * This file is part of openwms.org.
  *
@@ -11,11 +12,11 @@
  * openwms.org is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU Lesser General Public License for more details.
+ * GNU General Public License for more details.
  *
- * You should have received a copy of the GNU Lesser General Public
- * License along with this software. If not, write to the Free
- * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
+ * You should have received a copy of the GNU General Public License
+ * along with this software. If not, write to the Free Software
+ * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
 package org.openwms.common.domain;
@@ -29,8 +30,7 @@ import javax.validation.constraints.Max;
 import org.openwms.core.exception.DomainModelRuntimeException;
 
 /**
- * A LocationPK, is a value type and is used as an unique natural key of
- * {@link org.openwms.common.domain.Location} entities.
+ * A LocationPK, is a value type and is used as an unique natural key of {@link org.openwms.common.domain.Location} entities.
  * 
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  * @version $Revision$
@@ -113,8 +113,7 @@ public class LocationPK implements Serializable {
      * @param keys
      *            The array of keys, currently expected to be 5
      * @throws DomainModelRuntimeException
-     *             if the number of keys is not
-     *             {@value LocationPK#NUMBER_OF_KEYS}
+     *             if the number of keys is not {@value LocationPK#NUMBER_OF_KEYS}
      */
     public LocationPK(String... keys) {
         if (keys == null || keys.length != NUMBER_OF_KEYS) {
@@ -138,10 +137,8 @@ public class LocationPK implements Serializable {
     }
 
     /**
-     * Returns the complete length of all keys. Currently all keys have the same
-     * length, therefore it is the 5 times the length of a single key
-     * (KEY_LENGTH). But since this can change the actual length is encapsulated
-     * within this method.
+     * Returns the complete length of all keys. Currently all keys have the same length, therefore it is the 5 times the length of a single
+     * key (KEY_LENGTH). But since this can change the actual length is encapsulated within this method.
      * 
      * @return {@value LocationPK#NUMBER_OF_KEYS * LocationPK#KEY_LENGTH}
      */

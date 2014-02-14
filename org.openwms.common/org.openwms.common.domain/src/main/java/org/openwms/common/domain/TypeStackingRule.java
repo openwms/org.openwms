@@ -1,5 +1,6 @@
 /*
  * openwms.org, the Open Warehouse Management System.
+ * Copyright (C) 2014 Heiko Scherrer
  *
  * This file is part of openwms.org.
  *
@@ -11,11 +12,11 @@
  * openwms.org is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU Lesser General Public License for more details.
+ * GNU General Public License for more details.
  *
- * You should have received a copy of the GNU Lesser General Public
- * License along with this software. If not, write to the Free
- * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
+ * You should have received a copy of the GNU General Public License
+ * along with this software. If not, write to the Free Software
+ * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
 package org.openwms.common.domain;
@@ -34,8 +35,7 @@ import org.openwms.core.domain.AbstractEntity;
 import org.openwms.core.domain.DomainObject;
 
 /**
- * A TypeStackingRule is a <code>Rule</code> that defines which
- * <code>TransportUnitType</code> can be stacked on other types. Additionally a
+ * A TypeStackingRule is a <code>Rule</code> that defines which <code>TransportUnitType</code> can be stacked on other types. Additionally a
  * maximum number of <code>TransportUnit</code>s can be defined.
  * 
  * @GlossaryTerm
@@ -67,15 +67,13 @@ public class TypeStackingRule extends AbstractEntity implements DomainObject<Lon
     private TransportUnitType transportUnitType;
 
     /**
-     * Number of {@link TransportUnitType}s that may be placed on the owning
-     * {@link TransportUnitType} (not-null).
+     * Number of {@link TransportUnitType}s that may be placed on the owning {@link TransportUnitType} (not-null).
      */
     @Column(name = "NO_TRANSPORT_UNITS", nullable = false)
     private short noTransportUnits;
 
     /**
-     * The allowed {@link TransportUnitType} that may be placed on the owning
-     * {@link TransportUnitType} (not-null).
+     * The allowed {@link TransportUnitType} that may be placed on the owning {@link TransportUnitType} (not-null).
      */
     @ManyToOne
     @JoinColumn(name = "ALLOWED_TRANSPORT_UNIT_TYPE", nullable = false)
@@ -98,13 +96,11 @@ public class TypeStackingRule extends AbstractEntity implements DomainObject<Lon
     }
 
     /**
-     * Create a new <code>TypeStackingRule</code>. Define how many
-     * {@link org.openwms.common.domain.TransportUnit}s of the
+     * Create a new <code>TypeStackingRule</code>. Define how many {@link org.openwms.common.domain.TransportUnit}s of the
      * allowedTransportUnitType may stacked on this {@link TransportUnitType}.
      * 
      * @param noTransportUnits
-     *            The number of allowed
-     *            {@link org.openwms.common.domain.TransportUnit}s
+     *            The number of allowed {@link org.openwms.common.domain.TransportUnit}s
      * @param allowedTransportUnitType
      *            The allowed {@link TransportUnitType}
      */
@@ -139,8 +135,7 @@ public class TypeStackingRule extends AbstractEntity implements DomainObject<Lon
     }
 
     /**
-     * Returns the number of {@link TransportUnitType}s that may be placed on
-     * the owning {@link TransportUnitType}.
+     * Returns the number of {@link TransportUnitType}s that may be placed on the owning {@link TransportUnitType}.
      * 
      * @return The number of TransportUnits allowed
      */
@@ -149,8 +144,7 @@ public class TypeStackingRule extends AbstractEntity implements DomainObject<Lon
     }
 
     /**
-     * Returns the allowed {@link TransportUnitType} that may be placed on the
-     * owning {@link TransportUnitType}.
+     * Returns the allowed {@link TransportUnitType} that may be placed on the owning {@link TransportUnitType}.
      * 
      * @return The allowed TransportUnitType
      */
