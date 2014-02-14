@@ -100,15 +100,16 @@ servicesModule.factory('coreService',['$http', '$q',
 				return delay.promise;
 			},
 			/**
-			 * Send a http GET request to load and retrieve all existing Roles from the backend.
+			 * Send a http GET request to load and retrieve all existing entities from the backend.
 			 *
+			 * @param url The part of the URL that defines the type of entities to work with
 			 * @param $scope The current scope
-			 * @returns {Promise.promise|*} A promise to evaluate: In case of success all retrieved Roles are returned, otherwise the ResponseItem
+			 * @returns {Promise.promise|*} A promise to evaluate: In case of success all retrieved entities are returned, otherwise the ResponseItem
 			 */
-			getAll : function($scope) {
+			getAll : function(url, $scope) {
 				var delay = $q.defer();
 				$http.defaults.headers.common['Auth-Token'] = $scope.authToken;
-				$http.get($scope.rootUrl+'/roles')
+				$http.get($scope.rootUrl+url)
 					.success(function (data) {
 						delay.resolve(data.items[0].obj[0]);
 					})

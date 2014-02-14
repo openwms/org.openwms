@@ -25,10 +25,8 @@
  *
  */
 angular.module('openwms_users', ['ui.bootstrap', 'ngAnimate', 'toaster', 'angularFileUpload', 'base64'])
-	.config(function ($httpProvider) {
-		delete $httpProvider.defaults.headers.common['X-Requested-With'];
-		$httpProvider.defaults.headers.common['Content-Type'] = 'application/json';
-	})
+
+
     .directive('chkUsers', [function() {
 		return {
 			restrict: 'A',
@@ -58,6 +56,8 @@ angular.module('openwms_users', ['ui.bootstrap', 'ngAnimate', 'toaster', 'angula
 			}
     	}
 	}])
+
+
 	.controller('UsersCtrl', function ($scope, $http, $timeout, $modal, $upload, toaster, coreService, $base64) {
 
 		$scope.selectedUsers = [];
@@ -229,6 +229,14 @@ angular.module('openwms_users', ['ui.bootstrap', 'ngAnimate', 'toaster', 'angula
 		}
 
 		$scope.loadUsers = function () {
+			$scope.selectedUsers = [];
+			coreService.getAll("/users", $scope).then(
+				function(users) {
+					$scope.userEntities = users;
+				}, function(e) {
+					onError(e);
+				}
+			);
 			$http.defaults.headers.common['Auth-Token'] = $scope.authToken;
 			$http.get($scope.rootUrl+'/users').success(function (data, status, headers, config) {
 				$scope.userEntities = data;
