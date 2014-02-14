@@ -1,5 +1,6 @@
 /*
  * openwms.org, the Open Warehouse Management System.
+ * Copyright (C) 2014 Heiko Scherrer
  *
  * This file is part of openwms.org.
  *
@@ -11,11 +12,11 @@
  * openwms.org is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU Lesser General Public License for more details.
+ * GNU General Public License for more details.
  *
- * You should have received a copy of the GNU Lesser General Public
- * License along with this software. If not, write to the Free
- * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
+ * You should have received a copy of the GNU General Public License
+ * along with this software. If not, write to the Free Software
+ * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
 package org.openwms.core.service;
@@ -26,9 +27,8 @@ import java.util.List;
 /**
  * An EntityService is a generic interface definition of a simple CRUD service.
  * <p>
- * Basically this service is responsible to encapsulate CRUD functionality and
- * delegates to repository implementations. Furthermore the service spans the
- * transaction boundary and handles exception translation.
+ * Basically this service is responsible to encapsulate CRUD functionality and delegates to repository implementations. Furthermore the
+ * service spans the transaction boundary and handles exception translation.
  * </p>
  * 
  * @param <T>
@@ -51,8 +51,7 @@ public interface EntityService<T extends Serializable> {
     /**
      * Find all entities of type <code>T</code>.
      * 
-     * The result is specific to the implementation and can also be
-     * <code>null</code>.
+     * The result is specific to the implementation and can also be <code>null</code>.
      * 
      * @return A list of all entities
      */

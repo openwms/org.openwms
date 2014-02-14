@@ -1,5 +1,6 @@
 /*
  * openwms.org, the Open Warehouse Management System.
+ * Copyright (C) 2014 Heiko Scherrer
  *
  * This file is part of openwms.org.
  *
@@ -11,11 +12,11 @@
  * openwms.org is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU Lesser General Public License for more details.
+ * GNU General Public License for more details.
  *
- * You should have received a copy of the GNU Lesser General Public
- * License along with this software. If not, write to the Free
- * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
+ * You should have received a copy of the GNU General Public License
+ * along with this software. If not, write to the Free Software
+ * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
 package org.openwms.core.integration.file;
@@ -53,8 +54,7 @@ public class PreferencesDaoTest {
     private PreferenceDao<PreferenceKey> dao;
 
     /**
-     * Test method for
-     * {@link org.openwms.core.integration.file.PreferencesDaoImpl#findByKey(org.openwms.core.domain.system.PreferenceKey)}
+     * Test method for {@link org.openwms.core.integration.file.PreferencesDaoImpl#findByKey(org.openwms.core.domain.system.PreferenceKey)}
      * .
      */
     @Test
@@ -64,8 +64,7 @@ public class PreferencesDaoTest {
     }
 
     /**
-     * Test method for
-     * {@link org.openwms.core.integration.file.PreferencesDaoImpl#findByKey(org.openwms.core.domain.system.PreferenceKey)}
+     * Test method for {@link org.openwms.core.integration.file.PreferencesDaoImpl#findByKey(org.openwms.core.domain.system.PreferenceKey)}
      * .
      */
     @Test
@@ -76,8 +75,7 @@ public class PreferencesDaoTest {
     }
 
     /**
-     * Test method for
-     * {@link org.openwms.core.integration.file.PreferencesDaoImpl#findByKey(org.openwms.core.domain.system.PreferenceKey)}
+     * Test method for {@link org.openwms.core.integration.file.PreferencesDaoImpl#findByKey(org.openwms.core.domain.system.PreferenceKey)}
      * .
      */
     @Test
@@ -87,8 +85,7 @@ public class PreferencesDaoTest {
     }
 
     /**
-     * Test method for
-     * {@link org.openwms.core.integration.file.PreferencesDaoImpl#findByKey(org.openwms.core.domain.system.PreferenceKey)}
+     * Test method for {@link org.openwms.core.integration.file.PreferencesDaoImpl#findByKey(org.openwms.core.domain.system.PreferenceKey)}
      * .
      */
     @Test
@@ -98,8 +95,7 @@ public class PreferencesDaoTest {
     }
 
     /**
-     * Test method for
-     * {@link org.openwms.core.integration.file.PreferencesDaoImpl#findByKey(org.openwms.core.domain.system.PreferenceKey)}
+     * Test method for {@link org.openwms.core.integration.file.PreferencesDaoImpl#findByKey(org.openwms.core.domain.system.PreferenceKey)}
      * .
      */
     @Test
@@ -110,8 +106,7 @@ public class PreferencesDaoTest {
 
     /**
      * Test method for
-     * {@link org.openwms.core.integration.file.PreferencesDaoImpl#findByType(org.openwms.core.domain.system.AbstractPreference)}
-     * .
+     * {@link org.openwms.core.integration.file.PreferencesDaoImpl#findByType(org.openwms.core.domain.system.AbstractPreference)} .
      */
     @Test
     public final void testApplicationPreferencesFindByType() {
@@ -120,8 +115,7 @@ public class PreferencesDaoTest {
 
     /**
      * Test method for
-     * {@link org.openwms.core.integration.file.PreferencesDaoImpl#findByType(org.openwms.core.domain.system.AbstractPreference)}
-     * .
+     * {@link org.openwms.core.integration.file.PreferencesDaoImpl#findByType(org.openwms.core.domain.system.AbstractPreference)} .
      */
     @Test
     public final void testModulePreferencesFindByType() {
@@ -130,8 +124,7 @@ public class PreferencesDaoTest {
 
     /**
      * Test method for
-     * {@link org.openwms.core.integration.file.PreferencesDaoImpl#findByType(org.openwms.core.domain.system.AbstractPreference)}
-     * .
+     * {@link org.openwms.core.integration.file.PreferencesDaoImpl#findByType(org.openwms.core.domain.system.AbstractPreference)} .
      */
     @Test
     public final void testUserPreferencesFindByType() {
@@ -139,8 +132,7 @@ public class PreferencesDaoTest {
     }
 
     /**
-     * Test method for
-     * {@link org.openwms.core.integration.file.PreferencesDaoImpl#findAll()}.
+     * Test method for {@link org.openwms.core.integration.file.PreferencesDaoImpl#findAll()}.
      */
     @Test
     public final void testFindAll() {

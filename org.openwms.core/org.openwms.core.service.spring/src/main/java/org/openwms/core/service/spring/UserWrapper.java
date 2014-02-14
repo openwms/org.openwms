@@ -1,5 +1,6 @@
 /*
  * openwms.org, the Open Warehouse Management System.
+ * Copyright (C) 2014 Heiko Scherrer
  *
  * This file is part of openwms.org.
  *
@@ -11,11 +12,11 @@
  * openwms.org is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU Lesser General Public License for more details.
+ * GNU General Public License for more details.
  *
- * You should have received a copy of the GNU Lesser General Public
- * License along with this software. If not, write to the Free
- * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
+ * You should have received a copy of the GNU General Public License
+ * along with this software. If not, write to the Free Software
+ * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
 package org.openwms.core.service.spring;
@@ -31,8 +32,8 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 /**
- * An UserWrapper is used as an adapter between <code>Role</code>s or
- * <code>SecurityObject</code>s and Spring's {@link GrantedAuthority} objects.
+ * An UserWrapper is used as an adapter between <code>Role</code>s or <code>SecurityObject</code>s and Spring's {@link GrantedAuthority}
+ * objects.
  * 
  * @author <a href="mailto:russelltina@users.sourceforge.net">Tina Russell</a>
  * @version $Revision$
@@ -61,12 +62,10 @@ public class UserWrapper implements UserDetails, UserHolder {
     }
 
     /**
-     * Subclasses can set a collection of grants that are always available for
-     * an User. This is useful for administrative accounts.
+     * Subclasses can set a collection of grants that are always available for an User. This is useful for administrative accounts.
      * 
      * @param authz
-     *            A collection of grants (authorities) where the default grants
-     *            are added to
+     *            A collection of grants (authorities) where the default grants are added to
      */
     protected void addDefaultGrants(Collection<GrantedAuthority> authz) {}
 
@@ -118,8 +117,7 @@ public class UserWrapper implements UserDetails, UserHolder {
     /**
      * {@inheritDoc}
      * 
-     * @return <code>true</code> if the user's account is valid (ie
-     *         non-expired), <code>false</code> if no longer valid (ie expired)
+     * @return <code>true</code> if the user's account is valid (ie non-expired), <code>false</code> if no longer valid (ie expired)
      */
     @Override
     public boolean isAccountNonExpired() {
@@ -129,8 +127,7 @@ public class UserWrapper implements UserDetails, UserHolder {
     /**
      * {@inheritDoc}
      * 
-     * @return <code>true</code> if the user is not locked, <code>false</code>
-     *         otherwise
+     * @return <code>true</code> if the user is not locked, <code>false</code> otherwise
      */
     @Override
     public boolean isAccountNonLocked() {
@@ -141,8 +138,7 @@ public class UserWrapper implements UserDetails, UserHolder {
      * {@inheritDoc}
      * 
      * @see org.springframework.security.core.userdetails.UserDetails#isCredentialsNonExpired()
-     * @return <code>true</code> if the user's credentials are valid (ie
-     *         non-expired), <code>false</code> if no longer valid (ie expired)
+     * @return <code>true</code> if the user's credentials are valid (ie non-expired), <code>false</code> if no longer valid (ie expired)
      */
     @Override
     public boolean isCredentialsNonExpired() {
@@ -152,8 +148,7 @@ public class UserWrapper implements UserDetails, UserHolder {
     /**
      * {@inheritDoc}
      * 
-     * @return <code>true</code> if the user is enabled, <code>false</code>
-     *         otherwise
+     * @return <code>true</code> if the user is enabled, <code>false</code> otherwise
      */
     @Override
     public boolean isEnabled() {

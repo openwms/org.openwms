@@ -1,5 +1,6 @@
 /*
  * openwms.org, the Open Warehouse Management System.
+ * Copyright (C) 2014 Heiko Scherrer
  *
  * This file is part of openwms.org.
  *
@@ -11,11 +12,11 @@
  * openwms.org is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU Lesser General Public License for more details.
+ * GNU General Public License for more details.
  *
- * You should have received a copy of the GNU Lesser General Public
- * License along with this software. If not, write to the Free
- * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
+ * You should have received a copy of the GNU General Public License
+ * along with this software. If not, write to the Free Software
+ * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
 package org.openwms.core.service.spring;
@@ -42,9 +43,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 /**
- * A ConfigurationServiceImpl is a transactional Spring powered service
- * implementation to manage preferences. This implementation can be autowired
- * with the name {@value #COMPONENT_NAME}.
+ * A ConfigurationServiceImpl is a transactional Spring powered service implementation to manage preferences. This implementation can be
+ * autowired with the name {@value #COMPONENT_NAME}.
  * 
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  * @version $Revision$
@@ -68,8 +68,8 @@ public class ConfigurationServiceImpl implements ConfigurationService, Applicati
     /**
      * {@inheritDoc}
      * 
-     * When an event arrives all <i>new</i> preferences received from the file
-     * provider are persisted. Already persisted preferences are ignored.
+     * When an event arrives all <i>new</i> preferences received from the file provider are persisted. Already persisted preferences are
+     * ignored.
      */
     @Override
     public void onApplicationEvent(MergePropertiesEvent event) {
@@ -90,8 +90,7 @@ public class ConfigurationServiceImpl implements ConfigurationService, Applicati
     /**
      * {@inheritDoc}
      * 
-     * If owner is set to <code>null</code> or is empty, all preferences of this
-     * type are returned. No match returns an empty List (
+     * If owner is set to <code>null</code> or is empty, all preferences of this type are returned. No match returns an empty List (
      * {@link Collections#emptyList()}).
      */
     @Override
@@ -104,8 +103,7 @@ public class ConfigurationServiceImpl implements ConfigurationService, Applicati
     /**
      * {@inheritDoc}
      * 
-     * Not allowed to call this implementation with a <code>null</code>
-     * argument.
+     * Not allowed to call this implementation with a <code>null</code> argument.
      * 
      * @throws IllegalArgumentException
      *             when <code>preference</code> is <code>null</code>
@@ -132,8 +130,7 @@ public class ConfigurationServiceImpl implements ConfigurationService, Applicati
     /**
      * {@inheritDoc}
      * 
-     * Not allowed to call this implementation with a <code>null</code>
-     * argument.
+     * Not allowed to call this implementation with a <code>null</code> argument.
      * 
      * @throws IllegalArgumentException
      *             when <code>preference</code> is <code>null</code>
