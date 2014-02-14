@@ -1,5 +1,6 @@
 /*
  * openwms.org, the Open Warehouse Management System.
+ * Copyright (C) 2014 Heiko Scherrer
  *
  * This file is part of openwms.org.
  *
@@ -11,11 +12,11 @@
  * openwms.org is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU Lesser General Public License for more details.
+ * GNU General Public License for more details.
  *
- * You should have received a copy of the GNU Lesser General Public
- * License along with this software. If not, write to the Free
- * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
+ * You should have received a copy of the GNU General Public License
+ * along with this software. If not, write to the Free Software
+ * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
 package org.openwms.common.comm.api;
@@ -32,19 +33,16 @@ import org.springframework.integration.MessageChannel;
 public interface CustomServiceActivator {
 
     /**
-     * The input-channel instance that is used by the processor to process
-     * messages from.
+     * The input-channel instance that is used by the processor to process messages from.
      * 
      * @return The encapsulated MessageChannel instance.
      */
     MessageChannel getChannel();
 
     /**
-     * Returns the unique name of the MessageChannel that is used as
-     * input-channel for the processing messages.
+     * Returns the unique name of the MessageChannel that is used as input-channel for the processing messages.
      * 
-     * @return Expected to be the unique name of the message concatenated with a
-     *         suffix, defined in {@link CommConstants#CHANNEL_SUFFIX}
+     * @return Expected to be the unique name of the message concatenated with a suffix, defined in {@link CommConstants#CHANNEL_SUFFIX}
      */
     String getChannelName();
 

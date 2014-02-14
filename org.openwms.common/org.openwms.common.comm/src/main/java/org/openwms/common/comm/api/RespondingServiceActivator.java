@@ -1,5 +1,6 @@
 /*
  * openwms.org, the Open Warehouse Management System.
+ * Copyright (C) 2014 Heiko Scherrer
  *
  * This file is part of openwms.org.
  *
@@ -11,18 +12,17 @@
  * openwms.org is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU Lesser General Public License for more details.
+ * GNU General Public License for more details.
  *
- * You should have received a copy of the GNU Lesser General Public
- * License along with this software. If not, write to the Free
- * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
+ * You should have received a copy of the GNU General Public License
+ * along with this software. If not, write to the Free Software
+ * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
 package org.openwms.common.comm.api;
 
 /**
- * A RespondingServiceActivator delegates incoming messages to an Application
- * Service and response to the incoming message.
+ * A RespondingServiceActivator delegates incoming messages to an Application Service and response to the incoming message.
  * 
  * @param <T>
  *            Type of incoming message that is being processed
@@ -36,8 +36,7 @@ public interface RespondingServiceActivator<T extends CommonMessage, U extends C
         CustomServiceActivator {
 
     /**
-     * Wake up a service, processor or bean an that accepts incoming messages of
-     * type <tt>T</tt> and returns messages of type <tt>U</tt>.
+     * Wake up a service, processor or bean an that accepts incoming messages of type <tt>T</tt> and returns messages of type <tt>U</tt>.
      * 
      * @param message
      *            The message to forward
