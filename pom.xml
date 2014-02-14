@@ -28,7 +28,7 @@
         <groupId>org.sonatype.oss</groupId>
         <artifactId>oss-parent</artifactId>
         <version>7</version>
-    </parent>
+    </parent> 
     <groupId>org.openwms</groupId>
     <artifactId>org.openwms</artifactId>
     <version>0.2-SNAPSHOT</version>
