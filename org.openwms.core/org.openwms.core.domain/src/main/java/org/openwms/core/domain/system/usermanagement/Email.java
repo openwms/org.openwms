@@ -1,5 +1,6 @@
 /*
  * openwms.org, the Open Warehouse Management System.
+ * Copyright (C) 2014 Heiko Scherrer
  *
  * This file is part of openwms.org.
  *
@@ -11,11 +12,11 @@
  * openwms.org is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU Lesser General Public License for more details.
+ * GNU General Public License for more details.
  *
- * You should have received a copy of the GNU Lesser General Public
- * License along with this software. If not, write to the Free
- * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
+ * You should have received a copy of the GNU General Public License
+ * along with this software. If not, write to the Free Software
+ * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
 package org.openwms.core.domain.system.usermanagement;
@@ -85,8 +86,7 @@ public class Email extends AbstractEntity implements DomainObject<Long> {
     }
 
     /**
-     * Create a new <code>Email</code> with an <code>username</code> and an
-     * <code>emailAddress</code>.
+     * Create a new <code>Email</code> with an <code>username</code> and an <code>emailAddress</code>.
      * 
      * @param username
      *            The name of the User
@@ -119,8 +119,7 @@ public class Email extends AbstractEntity implements DomainObject<Long> {
     }
 
     /**
-     * Returns the name of the <code>User</code> who owns this
-     * <code>Email</code>.
+     * Returns the name of the <code>User</code> who owns this <code>Email</code>.
      * 
      * @return The username as String
      */

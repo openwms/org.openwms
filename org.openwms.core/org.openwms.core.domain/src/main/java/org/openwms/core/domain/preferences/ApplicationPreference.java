@@ -1,5 +1,6 @@
 /*
  * openwms.org, the Open Warehouse Management System.
+ * Copyright (C) 2014 Heiko Scherrer
  *
  * This file is part of openwms.org.
  *
@@ -11,11 +12,11 @@
  * openwms.org is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU Lesser General Public License for more details.
+ * GNU General Public License for more details.
  *
- * You should have received a copy of the GNU Lesser General Public
- * License along with this software. If not, write to the Free
- * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
+ * You should have received a copy of the GNU General Public License
+ * along with this software. If not, write to the Free Software
+ * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
 package org.openwms.core.domain.preferences;
@@ -38,11 +39,9 @@ import org.openwms.core.domain.system.PropertyScope;
 import org.openwms.core.util.validation.AssertUtils;
 
 /**
- * An ApplicationPreference is used to store a configuration setting in
- * application scope.
+ * An ApplicationPreference is used to store a configuration setting in application scope.
  * <p>
- * The table model of an ApplicationPreference spans an unique key over the
- * columns C_TYPE and C_KEY.
+ * The table model of an ApplicationPreference spans an unique key over the columns C_TYPE and C_KEY.
  * </p>
  * <p>
  * It's counterpart in the context of JAXB is the applicationPreference element.
@@ -85,8 +84,7 @@ public class ApplicationPreference extends AbstractPreference {
     private String key;
 
     /**
-     * Create a new <code>ApplicationPreference</code>. Only defined by the JAXB
-     * implementation.
+     * Create a new <code>ApplicationPreference</code>. Only defined by the JAXB implementation.
      */
     public ApplicationPreference() {
         super();
@@ -161,8 +159,7 @@ public class ApplicationPreference extends AbstractPreference {
     /**
      * {@inheritDoc}
      * 
-     * Comparison done with the type and the key fields. Not delegated to super
-     * class.
+     * Comparison done with the type and the key fields. Not delegated to super class.
      */
     @Override
     public boolean equals(Object obj) {

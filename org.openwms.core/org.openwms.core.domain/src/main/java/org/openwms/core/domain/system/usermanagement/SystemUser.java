@@ -1,5 +1,6 @@
 /*
  * openwms.org, the Open Warehouse Management System.
+ * Copyright (C) 2014 Heiko Scherrer
  *
  * This file is part of openwms.org.
  *
@@ -11,11 +12,11 @@
  * openwms.org is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU Lesser General Public License for more details.
+ * GNU General Public License for more details.
  *
- * You should have received a copy of the GNU Lesser General Public
- * License along with this software. If not, write to the Free
- * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
+ * You should have received a copy of the GNU General Public License
+ * along with this software. If not, write to the Free Software
+ * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
 package org.openwms.core.domain.system.usermanagement;
@@ -23,13 +24,10 @@ package org.openwms.core.domain.system.usermanagement;
 import javax.persistence.Entity;
 
 /**
- * A SystemUser is granted with all privileges and omits all defined security
- * constraints. Whenever a SystemUser logs in, she is assigned to a virtual
- * <code>Role</code> with the name ROLE_SYSTEM. Furthermore this kind of
- * <code>Role</code> is immutable and it is not allowed for the SystemUser to
- * change her <code>UserDetails</code> or <code>UserPassword</code>. Changing
- * the <code>UserPassword</code> has to be done in the application configuration
- * when the project is setup.
+ * A SystemUser is granted with all privileges and omits all defined security constraints. Whenever a SystemUser logs in, she is assigned to
+ * a virtual <code>Role</code> with the name ROLE_SYSTEM. Furthermore this kind of <code>Role</code> is immutable and it is not allowed for
+ * the SystemUser to change her <code>UserDetails</code> or <code>UserPassword</code>. Changing the <code>UserPassword</code> has to be done
+ * in the application configuration when the project is setup.
  * 
  * @GlossaryTerm
  * @author <a href="mailto:russelltina@users.sourceforge.net">Tina Russell</a>
@@ -77,8 +75,7 @@ public class SystemUser extends User {
      * 
      * @param user
      *            The user to check
-     * @return <code>true</code> if user is the system user, otherwise
-     *         <code>false</code>
+     * @return <code>true</code> if user is the system user, otherwise <code>false</code>
      */
     public static final boolean isSuperUser(User user) {
         return (user instanceof SystemUser);

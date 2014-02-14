@@ -1,5 +1,6 @@
 /*
  * openwms.org, the Open Warehouse Management System.
+ * Copyright (C) 2014 Heiko Scherrer
  *
  * This file is part of openwms.org.
  *
@@ -11,11 +12,11 @@
  * openwms.org is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU Lesser General Public License for more details.
+ * GNU General Public License for more details.
  *
- * You should have received a copy of the GNU Lesser General Public
- * License along with this software. If not, write to the Free
- * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
+ * You should have received a copy of the GNU General Public License
+ * along with this software. If not, write to the Free Software
+ * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
 package org.openwms.core.util;
@@ -52,30 +53,23 @@ public interface TreeNode<T> {
     /**
      * Return whether this node is leaf.
      * 
-     * @return <code>true</code> if this node is leaf, otherwise
-     *         <code>false</code>
+     * @return <code>true</code> if this node is leaf, otherwise <code>false</code>
      */
     boolean isLeaf();
 
     /**
-     * Get all child entries. Each child entry contains an identifier (key) and
-     * a child node (value).
+     * Get all child entries. Each child entry contains an identifier (key) and a child node (value).
      * 
-     * Identifiers are used to generate model keys representing paths to tree
-     * nodes. Model keys are used:
+     * Identifiers are used to generate model keys representing paths to tree nodes. Model keys are used:
      * <ol>
-     * <li>For persisting tree state. That means identifiers should be
-     * serializable when some JSF features are used, e.g. client-side state
+     * <li>For persisting tree state. That means identifiers should be serializable when some JSF features are used, e.g. client-side state
      * saving.</li>
-     * <li>For construction of client identifiers. Client identifier for tree
-     * nodes consists of String representations of identifiers separated by a
-     * separator char. A String representation of identifier should be a valid
-     * XML ID, e.g. conform to <a href="http://www.w3.org/TR/xml11/#NT-Name">
-     * XML Name Production</a> production.</li>
+     * <li>For construction of client identifiers. Client identifier for tree nodes consists of String representations of identifiers
+     * separated by a separator char. A String representation of identifier should be a valid XML ID, e.g. conform to <a
+     * href="http://www.w3.org/TR/xml11/#NT-Name"> XML Name Production</a> production.</li>
      * </ol>
      * 
-     * @return {@link Iterator} over Map.Entry instances containing
-     *         {@link TreeNode} as values and their identifiers as keys
+     * @return {@link Iterator} over Map.Entry instances containing {@link TreeNode} as values and their identifiers as keys
      * 
      */
     Iterator<Map.Entry<Object, TreeNode<T>>> getChildren();
@@ -83,8 +77,7 @@ public interface TreeNode<T> {
     /**
      * Find a child by id.
      * <p>
-     * See {@link #getChildren()} for more information about the identifier
-     * constraints.
+     * See {@link #getChildren()} for more information about the identifier constraints.
      * </p>
      * 
      * @param id
@@ -96,8 +89,7 @@ public interface TreeNode<T> {
     /**
      * Adds a child to the children.
      * <p>
-     * See {@link #getChildren()} for more information about identifier
-     * constraints.
+     * See {@link #getChildren()} for more information about identifier constraints.
      * </p>
      * 
      * @param identifier
@@ -110,8 +102,7 @@ public interface TreeNode<T> {
     /**
      * Removes a child from the children collection.
      * <p>
-     * See {@link #getChildren()} for more information about identifier
-     * constraints.
+     * See {@link #getChildren()} for more information about identifier constraints.
      * </p>
      * 
      * @param id
@@ -122,8 +113,7 @@ public interface TreeNode<T> {
     /**
      * Get the parent {@link TreeNode}.
      * 
-     * @return parent {@link TreeNode} instance or <code>null</code> if the node
-     *         is the root
+     * @return parent {@link TreeNode} instance or <code>null</code> if the node is the root
      */
     TreeNode<T> getParent();
 

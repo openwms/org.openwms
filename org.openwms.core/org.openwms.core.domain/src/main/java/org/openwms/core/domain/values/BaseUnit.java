@@ -1,5 +1,6 @@
 /*
  * openwms.org, the Open Warehouse Management System.
+ * Copyright (C) 2014 Heiko Scherrer
  *
  * This file is part of openwms.org.
  *
@@ -11,11 +12,11 @@
  * openwms.org is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU Lesser General Public License for more details.
+ * GNU General Public License for more details.
  *
- * You should have received a copy of the GNU Lesser General Public
- * License along with this software. If not, write to the Free
- * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
+ * You should have received a copy of the GNU General Public License
+ * along with this software. If not, write to the Free Software
+ * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
 package org.openwms.core.domain.values;
@@ -23,10 +24,8 @@ package org.openwms.core.domain.values;
 import java.util.List;
 
 /**
- * A BaseUnit is the type definition of an <code>Measurable</code>. Each
- * BaseUnit defines a base <code>Measurable</code>. For example the BaseUnit of
- * weights can define grams (G), kilograms (KG) or tons (T) and 1G is the base
- * unit.
+ * A BaseUnit is the type definition of an <code>Measurable</code>. Each BaseUnit defines a base <code>Measurable</code>. For example the
+ * BaseUnit of weights can define grams (G), kilograms (KG) or tons (T) and 1G is the base unit.
  * 
  * @param <T>
  *            Concrete type of BaseUnit

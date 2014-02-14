@@ -1,5 +1,6 @@
 /*
  * openwms.org, the Open Warehouse Management System.
+ * Copyright (C) 2014 Heiko Scherrer
  *
  * This file is part of openwms.org.
  *
@@ -11,11 +12,11 @@
  * openwms.org is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU Lesser General Public License for more details.
+ * GNU General Public License for more details.
  *
- * You should have received a copy of the GNU Lesser General Public
- * License along with this software. If not, write to the Free
- * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
+ * You should have received a copy of the GNU General Public License
+ * along with this software. If not, write to the Free Software
+ * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
 package org.openwms.core.domain.system.usermanagement;
@@ -38,9 +39,8 @@ import org.openwms.core.util.validation.AssertUtils;
 /**
  * Is a representation of an <code>User</code> together with her password.
  * <p>
- * When an <code>User</code> changes her password, the current password is added
- * to a history list of passwords. This is necessary to omit <code>User</code>s
- * from setting formerly used passwords.
+ * When an <code>User</code> changes her password, the current password is added to a history list of passwords. This is necessary to omit
+ * <code>User</code>s from setting formerly used passwords.
  * </p>
  * 
  * @GlossaryTerm
@@ -93,8 +93,7 @@ public class UserPassword extends AbstractEntity implements DomainObject<Long> {
      * @param password
      *            The <code>password</code> as String to assign
      * @throws IllegalArgumentException
-     *             when <code>user</code> or <code>password</code> is
-     *             <code>null</code> or empty
+     *             when <code>user</code> or <code>password</code> is <code>null</code> or empty
      */
     public UserPassword(User user, String password) {
         AssertUtils.notNull(user, "User must not be null");
@@ -189,8 +188,7 @@ public class UserPassword extends AbstractEntity implements DomainObject<Long> {
      * 
      * {@inheritDoc}
      * 
-     * Comparison is done with the business-key (user and password).
-     * {@link AbstractEntity#equals(Object)} is not called to avoid comparison
+     * Comparison is done with the business-key (user and password). {@link AbstractEntity#equals(Object)} is not called to avoid comparison
      * with the UUID.
      */
     @Override

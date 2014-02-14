@@ -1,5 +1,6 @@
 /*
  * openwms.org, the Open Warehouse Management System.
+ * Copyright (C) 2014 Heiko Scherrer
  *
  * This file is part of openwms.org.
  *
@@ -11,11 +12,11 @@
  * openwms.org is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU Lesser General Public License for more details.
+ * GNU General Public License for more details.
  *
- * You should have received a copy of the GNU Lesser General Public
- * License along with this software. If not, write to the Free
- * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
+ * You should have received a copy of the GNU General Public License
+ * along with this software. If not, write to the Free Software
+ * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
 package org.openwms.core.domain;
@@ -38,9 +39,8 @@ import org.openwms.core.domain.values.CoreTypeDefinitions;
 import org.openwms.core.util.validation.AssertUtils;
 
 /**
- * A Module represents an Adobe Flex Module and is used to store some basic
- * information about that module, i.e. a name, an URL where the module from, or
- * whether the Adobe Flex Module should be loaded on application startup.
+ * A Module represents an Adobe Flex Module and is used to store some basic information about that module, i.e. a name, an URL where the
+ * module from, or whether the Adobe Flex Module should be loaded on application startup.
  * 
  * @GlossaryTerm
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
@@ -74,20 +74,18 @@ public class Module extends AbstractEntity implements DomainObject<Long> {
     @Column(name = "C_URL", unique = true, nullable = false)
     private String url;
     /**
-     * Flag used on the client side to store whether the <code>Module</code> is
-     * actually loaded or not. It's a dynamic value and not persisted.
+     * Flag used on the client side to store whether the <code>Module</code> is actually loaded or not. It's a dynamic value and not
+     * persisted.
      */
     @Transient
     private boolean loaded = false;
     /**
-     * <code>true</code> when the <code>Module</code> should be loaded on
-     * application startup.
+     * <code>true</code> when the <code>Module</code> should be loaded on application startup.
      */
     @Column(name = "C_LOAD_ON_STARTUP")
     private boolean loadOnStartup = true;
     /**
-     * Defines the startup order compared with other Modules. Modules with a
-     * lower <code>startupOrder</code> are loaded before this one.
+     * Defines the startup order compared with other Modules. Modules with a lower <code>startupOrder</code> are loaded before this one.
      */
     @Column(name = "C_STARTUP_ORDER")
     @OrderBy
@@ -108,10 +106,8 @@ public class Module extends AbstractEntity implements DomainObject<Long> {
      */
     public static final String NQ_FIND_ALL = "Module.findAll";
     /**
-     * Query to find <strong>one</strong> <code>Module</code> by its natural
-     * key. <li>
-     * Query parameter index <strong>1</strong> : The <code>moduleName</code> of
-     * the <code>Module</code> to search for</li><br />
+     * Query to find <strong>one</strong> <code>Module</code> by its natural key. <li>
+     * Query parameter index <strong>1</strong> : The <code>moduleName</code> of the <code>Module</code> to search for</li><br />
      * Name is {@value} .
      */
     public static final String NQ_FIND_BY_UNIQUE_QUERY = "Module.findByModuleName";
@@ -130,8 +126,7 @@ public class Module extends AbstractEntity implements DomainObject<Long> {
         /**
          * {@inheritDoc}
          * 
-         * Return 1 when the startupOrder of o1 is greater or equals than the
-         * startupOrder of o2, -1 when it is less.
+         * Return 1 when the startupOrder of o1 is greater or equals than the startupOrder of o2, -1 when it is less.
          * 
          * @see java.util.Comparator#compare(java.lang.Object, java.lang.Object)
          */
@@ -268,8 +263,7 @@ public class Module extends AbstractEntity implements DomainObject<Long> {
     /**
      * Should the <code>Module</code> be loaded on application startup.
      * 
-     * @return <code>true</code> if the <code>Module</code> should be loaded on
-     *         application startup, otherwise <code>false</code>
+     * @return <code>true</code> if the <code>Module</code> should be loaded on application startup, otherwise <code>false</code>
      */
     public boolean isLoadOnStartup() {
         return loadOnStartup;

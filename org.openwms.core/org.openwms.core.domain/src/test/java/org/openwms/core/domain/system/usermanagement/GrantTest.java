@@ -1,5 +1,6 @@
 /*
  * openwms.org, the Open Warehouse Management System.
+ * Copyright (C) 2014 Heiko Scherrer
  *
  * This file is part of openwms.org.
  *
@@ -11,11 +12,11 @@
  * openwms.org is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU Lesser General Public License for more details.
+ * GNU General Public License for more details.
  *
- * You should have received a copy of the GNU Lesser General Public
- * License along with this software. If not, write to the Free
- * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
+ * You should have received a copy of the GNU General Public License
+ * along with this software. If not, write to the Free Software
+ * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
 package org.openwms.core.domain.system.usermanagement;
@@ -41,9 +42,7 @@ public class GrantTest {
     private static final String GRANT_DESC1 = "GRANT_DESC1";
 
     /**
-     * Test method for
-     * {@link org.openwms.core.domain.system.usermanagement.Grant#equals(java.lang.Object)}
-     * .
+     * Test method for {@link org.openwms.core.domain.system.usermanagement.Grant#equals(java.lang.Object)} .
      */
     @Test
     public final void testEqualsObject() {
@@ -67,8 +66,7 @@ public class GrantTest {
     }
 
     /**
-     * Test method for
-     * {@link org.openwms.core.domain.system.usermanagement.Grant#Grant()}.
+     * Test method for {@link org.openwms.core.domain.system.usermanagement.Grant#Grant()}.
      */
     @Test
     public final void testGrant() {
@@ -78,9 +76,7 @@ public class GrantTest {
     }
 
     /**
-     * Test method for
-     * {@link org.openwms.core.domain.system.usermanagement.Grant#Grant(java.lang.String, java.lang.String)}
-     * .
+     * Test method for {@link org.openwms.core.domain.system.usermanagement.Grant#Grant(java.lang.String, java.lang.String)} .
      */
     @Test
     public final void testGrantStringString() {
@@ -90,9 +86,7 @@ public class GrantTest {
     }
 
     /**
-     * Test method for
-     * {@link org.openwms.core.domain.system.usermanagement.Grant#Grant(java.lang.String, java.lang.String)}
-     * .
+     * Test method for {@link org.openwms.core.domain.system.usermanagement.Grant#Grant(java.lang.String, java.lang.String)} .
      */
     @Test
     public final void testGrantStringStringEmpty() {
@@ -107,9 +101,7 @@ public class GrantTest {
     }
 
     /**
-     * Test method for
-     * {@link org.openwms.core.domain.system.usermanagement.Grant#Grant(java.lang.String)}
-     * .
+     * Test method for {@link org.openwms.core.domain.system.usermanagement.Grant#Grant(java.lang.String)} .
      */
     @Test
     public final void testGrantString() {
@@ -119,9 +111,7 @@ public class GrantTest {
     }
 
     /**
-     * Test method for
-     * {@link org.openwms.core.domain.system.usermanagement.Grant#Grant(java.lang.String)}
-     * .
+     * Test method for {@link org.openwms.core.domain.system.usermanagement.Grant#Grant(java.lang.String)} .
      */
     @Test
     public final void testGrantStringEmpty() {

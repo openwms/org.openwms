@@ -1,5 +1,6 @@
 /*
  * openwms.org, the Open Warehouse Management System.
+ * Copyright (C) 2014 Heiko Scherrer
  *
  * This file is part of openwms.org.
  *
@@ -11,11 +12,11 @@
  * openwms.org is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU Lesser General Public License for more details.
+ * GNU General Public License for more details.
  *
- * You should have received a copy of the GNU Lesser General Public
- * License along with this software. If not, write to the Free
- * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
+ * You should have received a copy of the GNU General Public License
+ * along with this software. If not, write to the Free Software
+ * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
 package org.openwms.core.domain.system.usermanagement;
@@ -38,12 +39,9 @@ import org.openwms.core.domain.system.PropertyScope;
 import org.openwms.core.util.validation.AssertUtils;
 
 /**
- * A RolePreference is used to provide settings specific to an <code>Role</code>
- * . These kind of <code>Preferences</code> is valid for the assigned Role only.
- * <code>User</code>s assigned to a <code>Role</code> inherit these
- * RolePreferences but a RolePreference can be overruled by an
- * <code>UserPreference</code>. RolePreferences can be defined within a
- * preferences file but also be created with the UI.
+ * A RolePreference is used to provide settings specific to an <code>Role</code> . These kind of <code>Preferences</code> is valid for the
+ * assigned Role only. <code>User</code>s assigned to a <code>Role</code> inherit these RolePreferences but a RolePreference can be
+ * overruled by an <code>UserPreference</code>. RolePreferences can be defined within a preferences file but also be created with the UI.
  * 
  * @GlossaryTerm
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
@@ -83,9 +81,8 @@ public class RolePreference extends AbstractPreference {
      */
     public static final String NQ_FIND_ALL = "RolePreference" + FIND_ALL;
     /**
-     * Query to find <strong>all</strong> <code>RolePreference</code>s of a
-     * <code>Role</code>. <li>Query parameter name <strong>owner</strong> : The
-     * rolename of the <code>Role</code> to search for.</li><br />
+     * Query to find <strong>all</strong> <code>RolePreference</code>s of a <code>Role</code>. <li>Query parameter name
+     * <strong>owner</strong> : The rolename of the <code>Role</code> to search for.</li><br />
      * Name is {@value} .
      */
     public static final String NQ_FIND_BY_OWNER = "RolePreference" + FIND_BY_OWNER;
@@ -157,8 +154,7 @@ public class RolePreference extends AbstractPreference {
     /**
      * {@inheritDoc}
      * 
-     * Uses the type, owner and the key to create a {@link PreferenceKey}
-     * instance.
+     * Uses the type, owner and the key to create a {@link PreferenceKey} instance.
      * 
      * @see org.openwms.core.domain.system.AbstractPreference#getPrefKey()
      */
@@ -187,8 +183,7 @@ public class RolePreference extends AbstractPreference {
     /**
      * {@inheritDoc}
      * 
-     * Comparison done with key, owner and type fields. Not delegated to super
-     * class.
+     * Comparison done with key, owner and type fields. Not delegated to super class.
      * 
      * @see java.lang.Object#equals(java.lang.Object)
      */

@@ -1,5 +1,6 @@
 /*
  * openwms.org, the Open Warehouse Management System.
+ * Copyright (C) 2014 Heiko Scherrer
  *
  * This file is part of openwms.org.
  *
@@ -11,11 +12,11 @@
  * openwms.org is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU Lesser General Public License for more details.
+ * GNU General Public License for more details.
  *
- * You should have received a copy of the GNU Lesser General Public
- * License along with this software. If not, write to the Free
- * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
+ * You should have received a copy of the GNU General Public License
+ * along with this software. If not, write to the Free Software
+ * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
 package org.openwms.core.domain.search;
@@ -26,14 +27,12 @@ import javax.xml.bind.annotation.XmlRegistry;
 import javax.xml.namespace.QName;
 
 /**
- * This object contains factory methods for each Java content interface and Java
- * element interface generated in the org.openwms.core.domain.search package.
+ * This object contains factory methods for each Java content interface and Java element interface generated in the
+ * org.openwms.core.domain.search package.
  * <p>
- * An ObjectFactory allows you to programatically construct new instances of the
- * Java representation for XML content. The Java representation of XML content
- * can consist of schema derived interfaces and classes representing the binding
- * of schema type definitions, element declarations and model groups. Factory
- * methods for each of these are provided in this class.
+ * An ObjectFactory allows you to programatically construct new instances of the Java representation for XML content. The Java
+ * representation of XML content can consist of schema derived interfaces and classes representing the binding of schema type definitions,
+ * element declarations and model groups. Factory methods for each of these are provided in this class.
  * 
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  * @version $Revision$
@@ -81,8 +80,7 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link JAXBElement }{@code <}{@link Actions }{@code >}
-     * .
+     * Create an instance of {@link JAXBElement }{@code <}{@link Actions }{@code >} .
      * 
      * @param value
      *            An Actions object

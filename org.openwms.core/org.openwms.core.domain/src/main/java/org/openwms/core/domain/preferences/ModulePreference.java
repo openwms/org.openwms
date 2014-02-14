@@ -1,5 +1,6 @@
 /*
  * openwms.org, the Open Warehouse Management System.
+ * Copyright (C) 2014 Heiko Scherrer
  *
  * This file is part of openwms.org.
  *
@@ -11,11 +12,11 @@
  * openwms.org is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU Lesser General Public License for more details.
+ * GNU General Public License for more details.
  *
- * You should have received a copy of the GNU Lesser General Public
- * License along with this software. If not, write to the Free
- * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
+ * You should have received a copy of the GNU General Public License
+ * along with this software. If not, write to the Free Software
+ * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
 package org.openwms.core.domain.preferences;
@@ -40,8 +41,7 @@ import org.openwms.core.util.validation.AssertUtils;
 /**
  * A ModulePreference is used to store configuration settings in Module scope.
  * <p>
- * The table model of an ModulePreference spans an unique key over the columns
- * C_TYPE, C_OWNER and C_KEY.
+ * The table model of an ModulePreference spans an unique key over the columns C_TYPE, C_OWNER and C_KEY.
  * </p>
  * <p>
  * It's counterpart in the context of JAXB is the modulePreference element.
@@ -67,9 +67,8 @@ public class ModulePreference extends AbstractPreference {
      */
     public static final String NQ_FIND_ALL = "ModulePreference" + FIND_ALL;
     /**
-     * Query to find <strong>all</strong> <code>ModulePreference</code>s of a
-     * <code>Module</code>. <li>Query parameter name <strong>owner</strong> :
-     * The modulename of the <code>Module</code> to search for.</li><br />
+     * Query to find <strong>all</strong> <code>ModulePreference</code>s of a <code>Module</code>. <li>Query parameter name
+     * <strong>owner</strong> : The modulename of the <code>Module</code> to search for.</li><br />
      * Name is {@value} .
      */
     public static final String NQ_FIND_BY_OWNER = "ModulePreference" + FIND_BY_OWNER;
@@ -97,8 +96,7 @@ public class ModulePreference extends AbstractPreference {
     private String key;
 
     /**
-     * Create a new <code>ModulePreference</code>. Only defined by the JAXB
-     * implementation.
+     * Create a new <code>ModulePreference</code>. Only defined by the JAXB implementation.
      */
     public ModulePreference() {
         super();
@@ -160,8 +158,7 @@ public class ModulePreference extends AbstractPreference {
     /**
      * {@inheritDoc}
      * 
-     * Uses the type, owner and the key to create a {@link PreferenceKey}
-     * instance.
+     * Uses the type, owner and the key to create a {@link PreferenceKey} instance.
      */
     @Override
     public PreferenceKey getPrefKey() {
@@ -186,8 +183,7 @@ public class ModulePreference extends AbstractPreference {
     /**
      * {@inheritDoc}
      * 
-     * Comparison done with the type, owner and the key fields. Not delegated to
-     * super class.
+     * Comparison done with the type, owner and the key fields. Not delegated to super class.
      */
     @Override
     public boolean equals(Object obj) {

@@ -1,5 +1,6 @@
 /*
  * openwms.org, the Open Warehouse Management System.
+ * Copyright (C) 2014 Heiko Scherrer
  *
  * This file is part of openwms.org.
  *
@@ -11,11 +12,11 @@
  * openwms.org is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU Lesser General Public License for more details.
+ * GNU General Public License for more details.
  *
- * You should have received a copy of the GNU Lesser General Public
- * License along with this software. If not, write to the Free
- * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
+ * You should have received a copy of the GNU General Public License
+ * along with this software. If not, write to the Free Software
+ * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
 package org.openwms.core.domain;
@@ -32,24 +33,19 @@ import javax.xml.bind.annotation.XmlTransient;
 /**
  * An AbstractEntity, used as a base class for all domain classes.
  * <p>
- * Adds an unique identified to a subclassed domain class that is created when
- * the class is instantiated on the client tier. At least this uid is created
- * before the instance is persisted the first time. The uid may not be mistaken
- * with the id property that is usually used for database identity (primary key)
- * or with a business key column.
+ * Adds an unique identified to a subclassed domain class that is created when the class is instantiated on the client tier. At least this
+ * uid is created before the instance is persisted the first time. The uid may not be mistaken with the id property that is usually used for
+ * database identity (primary key) or with a business key column.
  * </p>
  * <p>
- * This class has an inner static declared class that is registered as a JPA
- * EntityListener and forces the creation of an uid if not already created
- * before. This assures that each persisted entity has an uid.
+ * This class has an inner static declared class that is registered as a JPA EntityListener and forces the creation of an uid if not already
+ * created before. This assures that each persisted entity has an uid.
  * </p>
  * <p>
- * The uid property is used by the ActionScript client application to
- * synchronize client-side entity instances with server-side ones.
+ * The uid property is used by the ActionScript client application to synchronize client-side entity instances with server-side ones.
  * </p>
  * <strong>NOTE:</strong><br />
- * This class uses the uid for comparison with {@link #equals(Object)} and
- * calculation of {@link #hashCode()}.
+ * This class uses the uid for comparison with {@link #equals(Object)} and calculation of {@link #hashCode()}.
  * 
  * @author <a href="mailto:russelltina@users.sourceforge.net">Tina Russell</a>
  * @version $Revision$
@@ -104,11 +100,9 @@ public abstract class AbstractEntity implements Serializable {
     }
 
     /**
-     * An AbstractEntityListener forces the creation of an uid before the entity
-     * is persisted.
+     * An AbstractEntityListener forces the creation of an uid before the entity is persisted.
      * 
-     * @author <a href="mailto:russelltina@users.sourceforge.net">Tina
-     *         Russell</a>
+     * @author <a href="mailto:russelltina@users.sourceforge.net">Tina Russell</a>
      * @version $Revision$
      * @since 0.1
      */
