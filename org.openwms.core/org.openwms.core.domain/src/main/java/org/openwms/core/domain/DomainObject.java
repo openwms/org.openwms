@@ -1,5 +1,6 @@
 /*
  * openwms.org, the Open Warehouse Management System.
+ * Copyright (C) 2014 Heiko Scherrer
  *
  * This file is part of openwms.org.
  *
@@ -11,11 +12,11 @@
  * openwms.org is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU Lesser General Public License for more details.
+ * GNU General Public License for more details.
  *
- * You should have received a copy of the GNU Lesser General Public
- * License along with this software. If not, write to the Free
- * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
+ * You should have received a copy of the GNU General Public License
+ * along with this software. If not, write to the Free Software
+ * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
 package org.openwms.core.domain;
@@ -23,8 +24,7 @@ package org.openwms.core.domain;
 import java.io.Serializable;
 
 /**
- * A DomainObject, implementation classes offer basic functionality
- * characteristic to all persisted domain objects.
+ * A DomainObject, implementation classes offer basic functionality characteristic to all persisted domain objects.
  * <p>
  * Each domain object:
  * <ul>
@@ -45,8 +45,7 @@ public interface DomainObject<ID extends Serializable> {
     /**
      * Check whether the instance is a transient or persisted one.
      * 
-     * @return <code>true</code> if transient (not persisted before), otherwise
-     *         <code>false</code>
+     * @return <code>true</code> if transient (not persisted before), otherwise <code>false</code>
      */
     boolean isNew();
 

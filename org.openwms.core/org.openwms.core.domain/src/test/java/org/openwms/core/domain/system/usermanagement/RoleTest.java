@@ -1,5 +1,6 @@
 /*
  * openwms.org, the Open Warehouse Management System.
+ * Copyright (C) 2014 Heiko Scherrer
  *
  * This file is part of openwms.org.
  *
@@ -11,11 +12,11 @@
  * openwms.org is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU Lesser General Public License for more details.
+ * GNU General Public License for more details.
  *
- * You should have received a copy of the GNU Lesser General Public
- * License along with this software. If not, write to the Free
- * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
+ * You should have received a copy of the GNU General Public License
+ * along with this software. If not, write to the Free Software
+ * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
 package org.openwms.core.domain.system.usermanagement;
@@ -146,8 +147,7 @@ public class RoleTest extends AbstractJpaSpringContextTests {
     }
 
     /**
-     * Positive test to test whether it is allowed to set a valid Set of Users
-     * to this Role.
+     * Positive test to test whether it is allowed to set a valid Set of Users to this Role.
      */
     @Test
     public final void testSetUsers() {
@@ -245,8 +245,7 @@ public class RoleTest extends AbstractJpaSpringContextTests {
     }
 
     /**
-     * Positive test to test whether it is allowed to set a valid Set of Grants
-     * to this Role.
+     * Positive test to test whether it is allowed to set a valid Set of Grants to this Role.
      */
     @Test
     public final void testSetGrants() {
@@ -288,8 +287,7 @@ public class RoleTest extends AbstractJpaSpringContextTests {
     }
 
     /**
-     * Test the JPA lifecycle. Transient Users may not be created whenever a
-     * Role is merged.
+     * Test the JPA lifecycle. Transient Users may not be created whenever a Role is merged.
      */
     @Test
     public final void testLifecycleWithTransientUsers() {
@@ -341,8 +339,7 @@ public class RoleTest extends AbstractJpaSpringContextTests {
     }
 
     /**
-     * Test of JPA cascade lifecycle. Do not remove already existing User when
-     * removing a Role.
+     * Test of JPA cascade lifecycle. Do not remove already existing User when removing a Role.
      */
     @Test
     public final void testLifecycleRemoveRoleNotUsers() {

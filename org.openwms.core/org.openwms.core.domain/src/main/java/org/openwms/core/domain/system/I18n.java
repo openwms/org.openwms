@@ -1,5 +1,6 @@
 /*
  * openwms.org, the Open Warehouse Management System.
+ * Copyright (C) 2014 Heiko Scherrer
  *
  * This file is part of openwms.org.
  *
@@ -11,11 +12,11 @@
  * openwms.org is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU Lesser General Public License for more details.
+ * GNU General Public License for more details.
  *
- * You should have received a copy of the GNU Lesser General Public
- * License along with this software. If not, write to the Free
- * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
+ * You should have received a copy of the GNU General Public License
+ * along with this software. If not, write to the Free Software
+ * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
 package org.openwms.core.domain.system;
@@ -66,8 +67,7 @@ public class I18n extends AbstractEntity implements DomainObject<Long> {
     @Column(name = "C_KEY", nullable = false)
     private String key;
     /**
-     * The name of the owning <code>Module</code> to which this translation set
-     * belongs to.
+     * The name of the owning <code>Module</code> to which this translation set belongs to.
      */
     @Column(name = "C_MODULE_NAME")
     private String moduleName = "CORE";
@@ -82,10 +82,9 @@ public class I18n extends AbstractEntity implements DomainObject<Long> {
     @Embedded
     private I18nSet lang;
     /**
-     * The cKey is a transient field that is constructed after the entity is
-     * loaded from the persistent storage. Usually this field is accessed from
-     * the client application to have an unique identifier - a combination of
-     * the owning <code>moduleName</code> and the <code>key</code>.
+     * The cKey is a transient field that is constructed after the entity is loaded from the persistent storage. Usually this field is
+     * accessed from the client application to have an unique identifier - a combination of the owning <code>moduleName</code> and the
+     * <code>key</code>.
      */
     @Transient
     private String cKey;
@@ -96,11 +95,9 @@ public class I18n extends AbstractEntity implements DomainObject<Long> {
     public static final String NQ_FIND_ALL = "I18n.findAll";
 
     /**
-     * Query to find <strong>one</strong> <code>I18n</code> by
-     * <code>moduleName</code> and <code>key</code>.<li>Query parameter name
-     * <strong>moduleName</strong> : The name of the <code>Module</code> where
-     * the <code>I18n</code> entity belongs to</li><li>Query parameter name
-     * <strong>key</strong> : The key of the <code>I18n</code> to search for</li>
+     * Query to find <strong>one</strong> <code>I18n</code> by <code>moduleName</code> and <code>key</code>.<li>Query parameter name
+     * <strong>moduleName</strong> : The name of the <code>Module</code> where the <code>I18n</code> entity belongs to</li><li>Query
+     * parameter name <strong>key</strong> : The key of the <code>I18n</code> to search for</li>
      * 
      */
     public static final String NQ_FIND_BY_UNIQUE_QUERY = "I18n.findByKeyModule";
@@ -116,15 +113,13 @@ public class I18n extends AbstractEntity implements DomainObject<Long> {
      * Create a new I18n.
      * 
      * @param moduleName
-     *            The name of the <code>Module</code> where this entity belongs
-     *            to
+     *            The name of the <code>Module</code> where this entity belongs to
      * @param key
      *            The key to access this translation
      * @param lang
      *            A set of languages
      * @throws IllegalArgumentException
-     *             when the <code>moduleName</code> or the <code>key</code> is
-     *             <code>null</code> or empty
+     *             when the <code>moduleName</code> or the <code>key</code> is <code>null</code> or empty
      */
     public I18n(String moduleName, String key, I18nSet lang) {
         super();
@@ -153,9 +148,8 @@ public class I18n extends AbstractEntity implements DomainObject<Long> {
     }
 
     /**
-     * After loading the entity, combine the <code>moduleName</code> field and
-     * the <code>key</code> field. Store the concatenated String in a transient
-     * field <code>cKey</code>.
+     * After loading the entity, combine the <code>moduleName</code> field and the <code>key</code> field. Store the concatenated String in
+     * a transient field <code>cKey</code>.
      */
     @PostLoad
     protected void onLoad() {

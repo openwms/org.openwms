@@ -1,5 +1,6 @@
 /*
  * openwms.org, the Open Warehouse Management System.
+ * Copyright (C) 2014 Heiko Scherrer
  *
  * This file is part of openwms.org.
  *
@@ -11,11 +12,11 @@
  * openwms.org is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU Lesser General Public License for more details.
+ * GNU General Public License for more details.
  *
- * You should have received a copy of the GNU Lesser General Public
- * License along with this software. If not, write to the Free
- * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
+ * You should have received a copy of the GNU General Public License
+ * along with this software. If not, write to the Free Software
+ * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
 package org.openwms.core.domain.search;
@@ -28,11 +29,9 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlType;
 
 /**
- * Encapsulates a collection of {@link Tag}s and is mapped to the XML type
- * "tags" in the ui-actions-schema.xsd.
+ * Encapsulates a collection of {@link Tag}s and is mapped to the XML type "tags" in the ui-actions-schema.xsd.
  * <p>
- * <a href="http://www.openwms.org/schema/ui-actions-schema.xsd">http://www.
- * openwms.org/schema/ui-actions-schema.xsd</a>
+ * <a href="http://www.openwms.org/schema/ui-actions-schema.xsd">http://www. openwms.org/schema/ui-actions-schema.xsd</a>
  * </p>
  * 
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
@@ -52,10 +51,8 @@ public class Tags {
      * Gets the value of the tag property.
      * 
      * <p>
-     * This accessor method returns a reference to the live list, not a
-     * snapshot. Therefore any modification you make to the returned list will
-     * be present inside the JAXB object. This is why there is not a
-     * <CODE>set</CODE> method for the tag property.
+     * This accessor method returns a reference to the live list, not a snapshot. Therefore any modification you make to the returned list
+     * will be present inside the JAXB object. This is why there is not a <CODE>set</CODE> method for the tag property.
      * 
      * <p>
      * For example, to add a new item, do as follows:

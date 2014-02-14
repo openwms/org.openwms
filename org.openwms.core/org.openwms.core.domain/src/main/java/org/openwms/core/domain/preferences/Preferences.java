@@ -1,5 +1,6 @@
 /*
  * openwms.org, the Open Warehouse Management System.
+ * Copyright (C) 2014 Heiko Scherrer
  *
  * This file is part of openwms.org.
  *
@@ -11,11 +12,11 @@
  * openwms.org is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU Lesser General Public License for more details.
+ * GNU General Public License for more details.
  *
- * You should have received a copy of the GNU Lesser General Public
- * License along with this software. If not, write to the Free
- * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
+ * You should have received a copy of the GNU General Public License
+ * along with this software. If not, write to the Free Software
+ * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
 package org.openwms.core.domain.preferences;
@@ -38,8 +39,7 @@ import org.openwms.core.domain.system.usermanagement.RolePreference;
 import org.openwms.core.domain.system.usermanagement.UserPreference;
 
 /**
- * An instance of a <code>Preferences</code> represents the root of a
- * preferences XML file and aggregates all other types of preference.
+ * An instance of a <code>Preferences</code> represents the root of a preferences XML file and aggregates all other types of preference.
  * 
  * @GlossaryTerm
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
@@ -73,8 +73,7 @@ public class Preferences implements Serializable {
             UserPreference.class };
 
     /**
-     * Gets the value of the applicationOrRoleOrUserOrModule property. This
-     * method is called by the JAXB unmarshaller only.
+     * Gets the value of the applicationOrRoleOrUserOrModule property. This method is called by the JAXB unmarshaller only.
      * 
      * @return a list of all preferences
      */
@@ -86,9 +85,7 @@ public class Preferences implements Serializable {
     }
 
     /**
-     * Return a list of all preferences. Simple call to
-     * {@link #getApplicationOrRoleOrUserOrModule()}. Is only added due to
-     * naming purpose.
+     * Return a list of all preferences. Simple call to {@link #getApplicationOrRoleOrUserOrModule()}. Is only added due to naming purpose.
      * 
      * @return a list of all preferences
      */
@@ -97,8 +94,7 @@ public class Preferences implements Serializable {
     }
 
     /**
-     * Return a list of all {@link ApplicationPreference}s or an empty ArrayList
-     * when no {@link ApplicationPreference}s exist.
+     * Return a list of all {@link ApplicationPreference}s or an empty ArrayList when no {@link ApplicationPreference}s exist.
      * 
      * @return a list of all {@link ApplicationPreference}s
      */
@@ -115,8 +111,7 @@ public class Preferences implements Serializable {
     }
 
     /**
-     * Return a list of all {@link ModulePreference}s or an empty ArrayList when
-     * no {@link ModulePreference}s exist.
+     * Return a list of all {@link ModulePreference}s or an empty ArrayList when no {@link ModulePreference}s exist.
      * 
      * @return a list of all {@link ModulePreference}s
      */
@@ -133,8 +128,7 @@ public class Preferences implements Serializable {
     }
 
     /**
-     * Return a list of all {@link UserPreference}s or an empty ArrayList when
-     * no {@link UserPreference}s exist.
+     * Return a list of all {@link UserPreference}s or an empty ArrayList when no {@link UserPreference}s exist.
      * 
      * @return a list of all {@link UserPreference}s
      */
@@ -151,8 +145,7 @@ public class Preferences implements Serializable {
     }
 
     /**
-     * Return a list of all {@link RolePreference}s or an empty ArrayList when
-     * no {@link RolePreference}s exist.
+     * Return a list of all {@link RolePreference}s or an empty ArrayList when no {@link RolePreference}s exist.
      * 
      * @return a list of all {@link RolePreference}s
      */
@@ -169,12 +162,10 @@ public class Preferences implements Serializable {
     }
 
     /**
-     * Return a list of preferences filtered by a specific type, defined by the
-     * parameter clazz.
+     * Return a list of preferences filtered by a specific type, defined by the parameter clazz.
      * 
      * @param <T>
-     *            Expected types are <code>ApplicationPreference</code>,
-     *            <code>ModulePreference</code>, <code>RolePreference</code>
+     *            Expected types are <code>ApplicationPreference</code>, <code>ModulePreference</code>, <code>RolePreference</code>
      *            <code>UserPreference</code>
      * @param clazz
      *            The class type of the preference to filter for

@@ -1,5 +1,6 @@
 /*
  * openwms.org, the Open Warehouse Management System.
+ * Copyright (C) 2014 Heiko Scherrer
  *
  * This file is part of openwms.org.
  *
@@ -11,11 +12,11 @@
  * openwms.org is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU Lesser General Public License for more details.
+ * GNU General Public License for more details.
  *
- * You should have received a copy of the GNU Lesser General Public
- * License along with this software. If not, write to the Free
- * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
+ * You should have received a copy of the GNU General Public License
+ * along with this software. If not, write to the Free Software
+ * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
 package org.openwms.core.domain.system.usermanagement;
@@ -38,10 +39,9 @@ import org.openwms.core.domain.system.PropertyScope;
 import org.openwms.core.util.validation.AssertUtils;
 
 /**
- * An UserPreference is used to store settings specific to an <code>User</code>.
- * It is always assigned to a particular <code>User</code> and not accessible
- * from, nor valid for, other <code>User</code>s. UserPreferences cannot be
- * overruled by any other type of <code>Preferences</code>.
+ * An UserPreference is used to store settings specific to an <code>User</code>. It is always assigned to a particular <code>User</code> and
+ * not accessible from, nor valid for, other <code>User</code>s. UserPreferences cannot be overruled by any other type of
+ * <code>Preferences</code>.
  * 
  * @GlossaryTerm
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
@@ -83,9 +83,8 @@ public class UserPreference extends AbstractPreference {
      */
     public static final String NQ_FIND_ALL = "UserPreference" + FIND_ALL;
     /**
-     * Query to find <strong>all</strong> <code>UserPreference</code>s of an
-     * <code>User</code>. <li>Query parameter name <strong>owner</strong> : The
-     * userName of the <code>User</code> to search for.</li><br />
+     * Query to find <strong>all</strong> <code>UserPreference</code>s of an <code>User</code>. <li>Query parameter name
+     * <strong>owner</strong> : The userName of the <code>User</code> to search for.</li><br />
      * Name is {@value} .
      */
     public static final String NQ_FIND_BY_OWNER = "UserPreference" + FIND_BY_OWNER;
@@ -184,8 +183,7 @@ public class UserPreference extends AbstractPreference {
     /**
      * {@inheritDoc}
      * 
-     * Comparison done with key, owner and type fields. Not delegated to super
-     * class.
+     * Comparison done with key, owner and type fields. Not delegated to super class.
      * 
      * @see java.lang.Object#equals(java.lang.Object)
      */

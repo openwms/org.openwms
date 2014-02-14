@@ -1,5 +1,6 @@
 /*
  * openwms.org, the Open Warehouse Management System.
+ * Copyright (C) 2014 Heiko Scherrer
  *
  * This file is part of openwms.org.
  *
@@ -10,16 +11,12 @@
  *
  * openwms.org is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See t
-import javax.xml.bind.annotation.XmlTransient;
-
-import javax.xml.bind.annotation.XmlTransient;
-he
- * GNU Lesser General Public License for more details.
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
  *
- * You should have received a copy of the GNU Lesser General Public
- * License along with this software. If not, write to the Free
- * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
+ * You should have received a copy of the GNU General Public License
+ * along with this software. If not, write to the Free Software
+ * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
 package org.openwms.core.domain.search;
@@ -41,10 +38,8 @@ import javax.xml.bind.annotation.adapters.CollapsedStringAdapter;
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 
 /**
- * An Action represents a possible UI action an User can take. Each Action has a
- * resulting URL to a webpage and a descriptive text that is displayed in the
- * UI. Additionally a field <code>weight</code> is used to count how many times
- * the User has chosen this Action.
+ * An Action represents a possible UI action an User can take. Each Action has a resulting URL to a webpage and a descriptive text that is
+ * displayed in the UI. Additionally a field <code>weight</code> is used to count how many times the User has chosen this Action.
  * 
  * @GlossaryTerm
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
@@ -99,14 +94,12 @@ public class Action implements Serializable {
 
     /* ----------------------------- methods ------------------- */
     /**
-     * Calculate and return a rating for a list of words. Every match between a
-     * word and one of the tags, increases the rating. In case none of the tags
-     * matches, 0 is returned.
+     * Calculate and return a rating for a list of words. Every match between a word and one of the tags, increases the rating. In case none
+     * of the tags matches, 0 is returned.
      * 
      * @param words
      *            The Array of words to calculate the rating
-     * @return 0 when none of the words matches, or any other positive value in
-     *         case of matches
+     * @return 0 when none of the words matches, or any other positive value in case of matches
      */
     public int rate(String... words) {
         int result = 0;

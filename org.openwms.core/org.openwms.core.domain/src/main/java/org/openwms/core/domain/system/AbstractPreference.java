@@ -1,5 +1,6 @@
 /*
  * openwms.org, the Open Warehouse Management System.
+ * Copyright (C) 2014 Heiko Scherrer
  *
  * This file is part of openwms.org.
  *
@@ -11,11 +12,11 @@
  * openwms.org is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU Lesser General Public License for more details.
+ * GNU General Public License for more details.
  *
- * You should have received a copy of the GNU Lesser General Public
- * License along with this software. If not, write to the Free
- * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
+ * You should have received a copy of the GNU General Public License
+ * along with this software. If not, write to the Free Software
+ * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
 package org.openwms.core.domain.system;
@@ -44,8 +45,7 @@ import org.openwms.core.domain.AbstractEntity;
 import org.openwms.core.domain.DomainObject;
 
 /**
- * An AbstractPreference is a superclass for all other preference classes within
- * the application.
+ * An AbstractPreference is a superclass for all other preference classes within the application.
  * <p>
  * It encapsulates some common behavior of preference types.
  * </p>
@@ -230,8 +230,7 @@ public abstract class AbstractPreference extends AbstractEntity implements Domai
     }
 
     /**
-     * Return the <code>description</code> of the
-     * <code>AbstractPreference</code>.
+     * Return the <code>description</code> of the <code>AbstractPreference</code>.
      * 
      * @return The description as String
      */
@@ -290,8 +289,7 @@ public abstract class AbstractPreference extends AbstractEntity implements Domai
     /**
      * Check whether the preference was originally imported from a file.
      * 
-     * @return <code>true</code> if imported from a file, otherwise
-     *         <code>false</code>
+     * @return <code>true</code> if imported from a file, otherwise <code>false</code>
      */
     public boolean isFromFile() {
         return fromFile;
@@ -321,8 +319,7 @@ public abstract class AbstractPreference extends AbstractEntity implements Domai
     /**
      * {@inheritDoc}
      * <p>
-     * Use all fields to calculate the hashCode and don't use the hashCode of
-     * the super class.
+     * Use all fields to calculate the hashCode and don't use the hashCode of the super class.
      * </p>
      */
     @Override

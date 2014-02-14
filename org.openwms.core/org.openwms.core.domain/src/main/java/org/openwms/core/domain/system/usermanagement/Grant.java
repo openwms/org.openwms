@@ -1,5 +1,6 @@
 /*
  * openwms.org, the Open Warehouse Management System.
+ * Copyright (C) 2014 Heiko Scherrer
  *
  * This file is part of openwms.org.
  *
@@ -11,11 +12,11 @@
  * openwms.org is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU Lesser General Public License for more details.
+ * GNU General Public License for more details.
  *
- * You should have received a copy of the GNU Lesser General Public
- * License along with this software. If not, write to the Free
- * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
+ * You should have received a copy of the GNU General Public License
+ * along with this software. If not, write to the Free Software
+ * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
 package org.openwms.core.domain.system.usermanagement;
@@ -24,12 +25,10 @@ import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 
 /**
- * A Grant gives permission to access some kind of application object. Grants to
- * security aware application objects can be permitted or denied for a certain
- * <code>Role</code>, depending on the security configuration. Usually
- * <code>Grant</code>s are assigned to a <code>Role</code> and on or more
- * <code>User</code> s are assigned to each <code>Role</code>s. A Grant is
- * security aware, that means it is an concrete <code>SecurityObject</code>.
+ * A Grant gives permission to access some kind of application object. Grants to security aware application objects can be permitted or
+ * denied for a certain <code>Role</code>, depending on the security configuration. Usually <code>Grant</code>s are assigned to a
+ * <code>Role</code> and on or more <code>User</code> s are assigned to each <code>Role</code>s. A Grant is security aware, that means it is
+ * an concrete <code>SecurityObject</code>.
  * <p>
  * Permissions to UI actions are managed with <code>Grant</code>s.
  * </p>
@@ -80,8 +79,7 @@ public class Grant extends SecurityObject {
     /**
      * {@inheritDoc}
      * 
-     * Use the hashCode of the superclass with the hashCode of 'GRANT' to
-     * distinguish between <code>Grant</code>s and other
+     * Use the hashCode of the superclass with the hashCode of 'GRANT' to distinguish between <code>Grant</code>s and other
      * <code>SecurityObject</code>s like <code>Role</code>s.
      * 
      * @see org.openwms.core.domain.system.usermanagement.SecurityObject#hashCode()
