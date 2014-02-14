@@ -1,5 +1,6 @@
 /*
  * openwms.org, the Open Warehouse Management System.
+ * Copyright (C) 2014 Heiko Scherrer
  *
  * This file is part of openwms.org.
  *
@@ -11,11 +12,11 @@
  * openwms.org is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU Lesser General Public License for more details.
+ * GNU General Public License for more details.
  *
- * You should have received a copy of the GNU Lesser General Public
- * License along with this software. If not, write to the Free
- * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
+ * You should have received a copy of the GNU General Public License
+ * along with this software. If not, write to the Free Software
+ * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
 package org.openwms.core.integration;
@@ -25,8 +26,7 @@ import java.io.Serializable;
 import org.openwms.core.domain.system.AbstractPreference;
 
 /**
- * A PreferenceWriter extends the {@link PreferenceDao} about functionality to
- * save and remove {@link AbstractPreference}s.
+ * A PreferenceWriter extends the {@link PreferenceDao} about functionality to save and remove {@link AbstractPreference}s.
  * 
  * @param <ID>
  *            The type of the entity class' unique id
@@ -44,8 +44,7 @@ public interface PreferenceWriter<ID extends Serializable> extends PreferenceDao
      *            Any subtype of {@link AbstractPreference}
      * @param entity
      *            Entity instance to be synchronized with the persistence layer
-     * @return The synchronized entity instance. If JPA is used as
-     *         implementation, the returned instance is managed
+     * @return The synchronized entity instance. If JPA is used as implementation, the returned instance is managed
      */
     <T extends AbstractPreference> T save(T entity);
 

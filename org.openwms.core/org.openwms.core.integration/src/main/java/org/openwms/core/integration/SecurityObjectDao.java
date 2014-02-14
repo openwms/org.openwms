@@ -1,5 +1,6 @@
 /*
  * openwms.org, the Open Warehouse Management System.
+ * Copyright (C) 2014 Heiko Scherrer
  *
  * This file is part of openwms.org.
  *
@@ -11,11 +12,11 @@
  * openwms.org is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU Lesser General Public License for more details.
+ * GNU General Public License for more details.
  *
- * You should have received a copy of the GNU Lesser General Public
- * License along with this software. If not, write to the Free
- * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
+ * You should have received a copy of the GNU General Public License
+ * along with this software. If not, write to the Free Software
+ * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
 package org.openwms.core.integration;
@@ -37,19 +38,16 @@ public interface SecurityObjectDao {
     /**
      * Find and retrieve all {@link SecurityObject}s.
      * 
-     * @return a list of {@link SecurityObject}s. <code>null</code> might be
-     *         possible as well, see the particular implementation
+     * @return a list of {@link SecurityObject}s. <code>null</code> might be possible as well, see the particular implementation
      */
     List<SecurityObject> findAll();
 
     /**
-     * Find and retrieve all {@link SecurityObject}s that belong to a given
-     * <code>Module</code>.
+     * Find and retrieve all {@link SecurityObject}s that belong to a given <code>Module</code>.
      * 
      * @param moduleName
      *            The name of the <code>Module</code>
-     * @return a list of {@link SecurityObject}s. <code>null</code> might be
-     *         possible as well, see the particular implementation
+     * @return a list of {@link SecurityObject}s. <code>null</code> might be possible as well, see the particular implementation
      */
     List<Grant> findAllOfModule(String moduleName);
 
