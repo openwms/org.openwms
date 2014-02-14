@@ -1,5 +1,6 @@
 /*
  * openwms.org, the Open Warehouse Management System.
+ * Copyright (C) 2014 Heiko Scherrer
  *
  * This file is part of openwms.org.
  *
@@ -11,11 +12,11 @@
  * openwms.org is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU Lesser General Public License for more details.
+ * GNU General Public License for more details.
  *
- * You should have received a copy of the GNU Lesser General Public
- * License along with this software. If not, write to the Free
- * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
+ * You should have received a copy of the GNU General Public License
+ * along with this software. If not, write to the Free Software
+ * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
 package org.openwms.core.service.spring.aop;
@@ -34,13 +35,11 @@ import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;
 
 /**
- * An UserChangedEventAspect fires events after a method invocation completes.
- * It's main purpose is to fire events after a transaction succeeds, thereby the
- * advice must be enabled around Spring's Transaction advice.
+ * An UserChangedEventAspect fires events after a method invocation completes. It's main purpose is to fire events after a transaction
+ * succeeds, thereby the advice must be enabled around Spring's Transaction advice.
  * <p>
- * Use the {@link FireAfterTransaction} event and declare some type of events
- * inside the <code>value</code> attribute. Instances of these events will then
- * be fired after the transaction completes.
+ * Use the {@link FireAfterTransaction} event and declare some type of events inside the <code>value</code> attribute. Instances of these
+ * events will then be fired after the transaction completes.
  * </p>
  * Example: <blockquote>
  * 
@@ -69,8 +68,7 @@ public class FireAfterTransactionAspect {
     public static final String COMPONENT_NAME = "fireAfterTransactionAspect";
 
     /**
-     * Only {@link ApplicationEvent}s are created and published over Springs
-     * {@link ApplicationContext}.
+     * Only {@link ApplicationEvent}s are created and published over Springs {@link ApplicationContext}.
      * 
      * @param publisher
      *            The instance that is publishing the event
@@ -89,8 +87,7 @@ public class FireAfterTransactionAspect {
     }
 
     /**
-     * Only {@link ApplicationEvent}s are created and published over Springs
-     * {@link ApplicationContext}.
+     * Only {@link ApplicationEvent}s are created and published over Springs {@link ApplicationContext}.
      * 
      * @param publisher
      *            The instance that is publishing the event

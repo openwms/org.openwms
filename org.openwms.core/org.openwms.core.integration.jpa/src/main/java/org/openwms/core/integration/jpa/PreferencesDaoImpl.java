@@ -1,5 +1,6 @@
 /*
  * openwms.org, the Open Warehouse Management System.
+ * Copyright (C) 2014 Heiko Scherrer
  *
  * This file is part of openwms.org.
  *
@@ -11,11 +12,11 @@
  * openwms.org is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU Lesser General Public License for more details.
+ * GNU General Public License for more details.
  *
- * You should have received a copy of the GNU Lesser General Public
- * License along with this software. If not, write to the Free
- * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
+ * You should have received a copy of the GNU General Public License
+ * along with this software. If not, write to the Free Software
+ * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
 package org.openwms.core.integration.jpa;
@@ -36,10 +37,8 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 /**
- * A PreferencesDaoImpl is a JPA implementation of {@link PreferenceWriter} and
- * implicitly of <code>PreferenceDao</code> to find, remove and save preference
- * objects to the persistent storage. It can be injected by name
- * {@value #COMPONENT_NAME}.
+ * A PreferencesDaoImpl is a JPA implementation of {@link PreferenceWriter} and implicitly of <code>PreferenceDao</code> to find, remove and
+ * save preference objects to the persistent storage. It can be injected by name {@value #COMPONENT_NAME}.
  * <p>
  * All methods have to be invoked within an active transaction context.
  * </p>
@@ -100,8 +99,8 @@ public class PreferencesDaoImpl implements PreferenceWriter<Long> {
     /**
      * {@inheritDoc}
      * 
-     * Call {@link EntityManager#persist(Object)} for transient instances and
-     * {@link EntityManager#merge(Object)} for detached and managed ones.
+     * Call {@link EntityManager#persist(Object)} for transient instances and {@link EntityManager#merge(Object)} for detached and managed
+     * ones.
      */
     @Override
     public <T extends AbstractPreference> T save(T entity) {
@@ -122,9 +121,8 @@ public class PreferencesDaoImpl implements PreferenceWriter<Long> {
     /**
      * {@inheritDoc}
      * 
-     * If <code>entity</code> is not already managed, call
-     * {@link EntityManager#merge(Object)} before to attach it to the
-     * persistence context.
+     * If <code>entity</code> is not already managed, call {@link EntityManager#merge(Object)} before to attach it to the persistence
+     * context.
      */
     @Override
     public void remove(AbstractPreference entity) {

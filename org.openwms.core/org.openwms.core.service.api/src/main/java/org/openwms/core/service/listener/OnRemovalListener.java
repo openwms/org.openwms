@@ -1,5 +1,6 @@
 /*
  * openwms.org, the Open Warehouse Management System.
+ * Copyright (C) 2014 Heiko Scherrer
  *
  * This file is part of openwms.org.
  *
@@ -11,11 +12,11 @@
  * openwms.org is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU Lesser General Public License for more details.
+ * GNU General Public License for more details.
  *
- * You should have received a copy of the GNU Lesser General Public
- * License along with this software. If not, write to the Free
- * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
+ * You should have received a copy of the GNU General Public License
+ * along with this software. If not, write to the Free Software
+ * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
 package org.openwms.core.service.listener;
@@ -24,9 +25,8 @@ import org.openwms.core.domain.AbstractEntity;
 import org.openwms.core.service.exception.RemovalNotAllowedException;
 
 /**
- * An OnRemovalListener is able to hook in the lifecycle of an entity class. A
- * class implementing this interface is called before an entity of type
- * <code>T</code> is removed.
+ * An OnRemovalListener is able to hook in the lifecycle of an entity class. A class implementing this interface is called before an entity
+ * of type <code>T</code> is removed.
  * 
  * @param <T>
  *            Any kind of {@link AbstractEntity}
@@ -41,11 +41,9 @@ public interface OnRemovalListener<T extends AbstractEntity> {
      * 
      * @param entity
      *            The instance to be removed.
-     * @return <code>true</code> if removal is allowed, otherwise
-     *         <code>false</code>
+     * @return <code>true</code> if removal is allowed, otherwise <code>false</code>
      * @throws RemovalNotAllowedException
-     *             When it is not allowed to remove the entity, because
-     *             depending items exist
+     *             When it is not allowed to remove the entity, because depending items exist
      */
     boolean preRemove(T entity) throws RemovalNotAllowedException;
 }

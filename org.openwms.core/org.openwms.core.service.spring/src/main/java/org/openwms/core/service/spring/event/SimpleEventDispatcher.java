@@ -1,5 +1,6 @@
 /*
  * openwms.org, the Open Warehouse Management System.
+ * Copyright (C) 2014 Heiko Scherrer
  *
  * This file is part of openwms.org.
  *
@@ -11,11 +12,11 @@
  * openwms.org is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU Lesser General Public License for more details.
+ * GNU General Public License for more details.
  *
- * You should have received a copy of the GNU Lesser General Public
- * License along with this software. If not, write to the Free
- * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
+ * You should have received a copy of the GNU General Public License
+ * along with this software. If not, write to the Free Software
+ * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
 package org.openwms.core.service.spring.event;
@@ -49,8 +50,7 @@ public class SimpleEventDispatcher implements EventDispatcher {
     private ApplicationContext ctx;
 
     /**
-     * @see org.openwms.core.service.event.EventBroker#subscribe(java.lang.Class,
-     *      org.openwms.core.service.event.EventListener)
+     * @see org.openwms.core.service.event.EventBroker#subscribe(java.lang.Class, org.openwms.core.service.event.EventListener)
      */
     @Override
     public void subscribe(Class<? extends RootApplicationEvent> event, EventListener listener) {
@@ -72,8 +72,7 @@ public class SimpleEventDispatcher implements EventDispatcher {
     }
 
     /**
-     * @see org.openwms.core.service.event.EventBroker#subscribe(java.lang.Class,
-     *      java.lang.String)
+     * @see org.openwms.core.service.event.EventBroker#subscribe(java.lang.Class, java.lang.String)
      */
     @Override
     public void subscribe(Class<? extends RootApplicationEvent> event, String listenerBeanName) {
@@ -87,8 +86,7 @@ public class SimpleEventDispatcher implements EventDispatcher {
     }
 
     /**
-     * @see org.openwms.core.service.event.EventBroker#unsubscribe(java.lang.Class,
-     *      org.openwms.core.service.event.EventListener)
+     * @see org.openwms.core.service.event.EventBroker#unsubscribe(java.lang.Class, org.openwms.core.service.event.EventListener)
      */
     @Override
     public void unsubscribe(Class<? extends RootApplicationEvent> event, EventListener listener) {
@@ -100,8 +98,7 @@ public class SimpleEventDispatcher implements EventDispatcher {
     }
 
     /**
-     * @see org.openwms.core.service.event.EventBroker#unsubscribe(java.lang.Class,
-     *      java.lang.String)
+     * @see org.openwms.core.service.event.EventBroker#unsubscribe(java.lang.Class, java.lang.String)
      */
     @Override
     public void unsubscribe(Class<? extends RootApplicationEvent> event, String listenerBeanName) {

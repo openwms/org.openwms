@@ -1,5 +1,6 @@
 /*
  * openwms.org, the Open Warehouse Management System.
+ * Copyright (C) 2014 Heiko Scherrer
  *
  * This file is part of openwms.org.
  *
@@ -11,11 +12,11 @@
  * openwms.org is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU Lesser General Public License for more details.
+ * GNU General Public License for more details.
  *
- * You should have received a copy of the GNU Lesser General Public
- * License along with this software. If not, write to the Free
- * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
+ * You should have received a copy of the GNU General Public License
+ * along with this software. If not, write to the Free Software
+ * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
 package org.openwms.core.util.lang;
@@ -37,8 +38,7 @@ public final class CollectionUtil {
     private CollectionUtil() {}
 
     /**
-     * Return the first element of list. If list is <code>null</code> of empty,
-     * <code>null</code> is returned.
+     * Return the first element of list. If list is <code>null</code> of empty, <code>null</code> is returned.
      * 
      * @param <T>
      *            Any type
@@ -54,8 +54,7 @@ public final class CollectionUtil {
     }
 
     /**
-     * Convert a list into a {@link LinkedHashMap} using a {@link ListExtractor}
-     * to determine the keys and values for the new Map.
+     * Convert a list into a {@link LinkedHashMap} using a {@link ListExtractor} to determine the keys and values for the new Map.
      * 
      * @param <K>
      *            Type of list key
@@ -65,8 +64,7 @@ public final class CollectionUtil {
      *            The list to convert
      * @param extractor
      *            To determine key and value for each list entry
-     * @return A created {@link LinkedHashMap} or an empty map when one of the
-     *         arguments is <code>null</code>
+     * @return A created {@link LinkedHashMap} or an empty map when one of the arguments is <code>null</code>
      */
     public static <K, V> Map<K, V> asHashMap(List<V> list, ListExtractor<K, V> extractor) {
         if (list == null || extractor == null || list.isEmpty()) {

@@ -1,5 +1,6 @@
 /*
  * openwms.org, the Open Warehouse Management System.
+ * Copyright (C) 2014 Heiko Scherrer
  *
  * This file is part of openwms.org.
  *
@@ -11,11 +12,11 @@
  * openwms.org is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU Lesser General Public License for more details.
+ * GNU General Public License for more details.
  *
- * You should have received a copy of the GNU Lesser General Public
- * License along with this software. If not, write to the Free
- * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
+ * You should have received a copy of the GNU General Public License
+ * along with this software. If not, write to the Free Software
+ * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
 package org.openwms.core.integration.file;
@@ -54,13 +55,11 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 /**
- * A PreferencesDaoImpl reads a XML file of preferences and keeps them
- * internally in a Map. An initial preferences file is expected to be at
- * {@value #INITIAL_PREFERENCES_FILE} but this can be overridden with a property
- * <i>application.initial.properties</i> in the configuration properties file.
+ * A PreferencesDaoImpl reads a XML file of preferences and keeps them internally in a Map. An initial preferences file is expected to be at
+ * {@value #INITIAL_PREFERENCES_FILE} but this can be overridden with a property <i>application.initial.properties</i> in the configuration
+ * properties file.
  * <p>
- * On a {@link ReloadFilePreferencesEvent} the internal Map is cleared and
- * reloaded.
+ * On a {@link ReloadFilePreferencesEvent} the internal Map is cleared and reloaded.
  * </p>
  * 
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
@@ -114,8 +113,7 @@ public class PreferencesDaoImpl implements PreferenceDao<PreferenceKey>,
     /**
      * {@inheritDoc}
      * 
-     * @see org.openwms.core.integration.PreferenceDao#findByType(java.lang.Class,
-     *      java.lang.String)
+     * @see org.openwms.core.integration.PreferenceDao#findByType(java.lang.Class, java.lang.String)
      */
     @Override
     public <T extends AbstractPreference> List<T> findByType(Class<T> clazz, String owner) {

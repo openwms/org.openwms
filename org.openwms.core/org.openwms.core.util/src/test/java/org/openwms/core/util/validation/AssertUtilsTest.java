@@ -1,5 +1,6 @@
 /*
  * openwms.org, the Open Warehouse Management System.
+ * Copyright (C) 2014 Heiko Scherrer
  *
  * This file is part of openwms.org.
  *
@@ -11,11 +12,11 @@
  * openwms.org is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU Lesser General Public License for more details.
+ * GNU General Public License for more details.
  *
- * You should have received a copy of the GNU Lesser General Public
- * License along with this software. If not, write to the Free
- * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
+ * You should have received a copy of the GNU General Public License
+ * along with this software. If not, write to the Free Software
+ * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
 package org.openwms.core.util.validation;
@@ -39,9 +40,7 @@ public class AssertUtilsTest {
     private Logger logger = LoggerFactory.getLogger(this.getClass());
 
     /**
-     * Test method for
-     * {@link org.openwms.core.util.validation.AssertUtils#notNull(java.lang.Object, java.lang.String)}
-     * .
+     * Test method for {@link org.openwms.core.util.validation.AssertUtils#notNull(java.lang.Object, java.lang.String)} .
      */
     @Test
     public final void testNotNullObjectStringWithNull() {
@@ -55,9 +54,7 @@ public class AssertUtilsTest {
     }
 
     /**
-     * Test method for
-     * {@link org.openwms.core.util.validation.AssertUtils#notNull(java.lang.Object, java.lang.String)}
-     * .
+     * Test method for {@link org.openwms.core.util.validation.AssertUtils#notNull(java.lang.Object, java.lang.String)} .
      */
     @Test
     public final void testNotNullObjectString() {
@@ -65,9 +62,7 @@ public class AssertUtilsTest {
     }
 
     /**
-     * Test method for
-     * {@link org.openwms.core.util.validation.AssertUtils#notNull(java.lang.Object)}
-     * .
+     * Test method for {@link org.openwms.core.util.validation.AssertUtils#notNull(java.lang.Object)} .
      */
     @Test
     public final void testNotNullObjectWithNull() {
@@ -81,9 +76,7 @@ public class AssertUtilsTest {
     }
 
     /**
-     * Test method for
-     * {@link org.openwms.core.util.validation.AssertUtils#notNull(java.lang.Object)}
-     * .
+     * Test method for {@link org.openwms.core.util.validation.AssertUtils#notNull(java.lang.Object)} .
      */
     @Test
     public final void testNotNullObject() {
@@ -91,9 +84,7 @@ public class AssertUtilsTest {
     }
 
     /**
-     * Test method for
-     * {@link org.openwms.core.util.validation.AssertUtils#isNotEmpty(java.lang.String, java.lang.String)}
-     * .
+     * Test method for {@link org.openwms.core.util.validation.AssertUtils#isNotEmpty(java.lang.String, java.lang.String)} .
      */
     @Test
     public final void testIsNotEmptyStringStringEmpty() {
@@ -107,9 +98,7 @@ public class AssertUtilsTest {
     }
 
     /**
-     * Test method for
-     * {@link org.openwms.core.util.validation.AssertUtils#isNotEmpty(java.lang.String, java.lang.String)}
-     * .
+     * Test method for {@link org.openwms.core.util.validation.AssertUtils#isNotEmpty(java.lang.String, java.lang.String)} .
      */
     @Test
     public final void testIsNotEmptyStringStringNull() {
@@ -123,9 +112,7 @@ public class AssertUtilsTest {
     }
 
     /**
-     * Test method for
-     * {@link org.openwms.core.util.validation.AssertUtils#isNotEmpty(java.lang.String, java.lang.String)}
-     * .
+     * Test method for {@link org.openwms.core.util.validation.AssertUtils#isNotEmpty(java.lang.String, java.lang.String)} .
      */
     @Test
     public final void testIsNotEmptyStringString() {
@@ -133,9 +120,7 @@ public class AssertUtilsTest {
     }
 
     /**
-     * Test method for
-     * {@link org.openwms.core.util.validation.AssertUtils#isNotEmpty(java.lang.String)}
-     * .
+     * Test method for {@link org.openwms.core.util.validation.AssertUtils#isNotEmpty(java.lang.String)} .
      */
     @Test
     public final void testIsNotEmptyStringEmpty() {
@@ -149,9 +134,7 @@ public class AssertUtilsTest {
     }
 
     /**
-     * Test method for
-     * {@link org.openwms.core.util.validation.AssertUtils#isNotEmpty(java.lang.String)}
-     * .
+     * Test method for {@link org.openwms.core.util.validation.AssertUtils#isNotEmpty(java.lang.String)} .
      */
     @Test
     public final void testIsNotEmptyStringNull() {
@@ -165,9 +148,7 @@ public class AssertUtilsTest {
     }
 
     /**
-     * Test method for
-     * {@link org.openwms.core.util.validation.AssertUtils#isNotEmpty(java.lang.String)}
-     * .
+     * Test method for {@link org.openwms.core.util.validation.AssertUtils#isNotEmpty(java.lang.String)} .
      */
     @Test
     public final void testIsNotEmptyString() {

@@ -1,5 +1,6 @@
 /*
  * openwms.org, the Open Warehouse Management System.
+ * Copyright (C) 2014 Heiko Scherrer
  *
  * This file is part of openwms.org.
  *
@@ -11,11 +12,11 @@
  * openwms.org is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU Lesser General Public License for more details.
+ * GNU General Public License for more details.
  *
- * You should have received a copy of the GNU Lesser General Public
- * License along with this software. If not, write to the Free
- * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
+ * You should have received a copy of the GNU General Public License
+ * along with this software. If not, write to the Free Software
+ * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
 package org.openwms.core.service.spring;
@@ -52,9 +53,7 @@ public class I18nServiceTest extends AbstractMockitoTests {
     private I18nServiceImpl srv;
 
     /**
-     * Test method for
-     * {@link org.openwms.core.service.spring.I18nServiceImpl#findAllTranslations()}
-     * .
+     * Test method for {@link org.openwms.core.service.spring.I18nServiceImpl#findAllTranslations()} .
      */
     @Test
     public final void testFindAllTranslations() {
@@ -71,9 +70,7 @@ public class I18nServiceTest extends AbstractMockitoTests {
     }
 
     /**
-     * Test method for
-     * {@link org.openwms.core.service.spring.I18nServiceImpl#saveTranslations(org.openwms.core.domain.system.I18n[])}
-     * .
+     * Test method for {@link org.openwms.core.service.spring.I18nServiceImpl#saveTranslations(org.openwms.core.domain.system.I18n[])} .
      * 
      * Test with an empty array argument.
      */
@@ -84,9 +81,7 @@ public class I18nServiceTest extends AbstractMockitoTests {
     }
 
     /**
-     * Test method for
-     * {@link org.openwms.core.service.spring.I18nServiceImpl#saveTranslations(org.openwms.core.domain.system.I18n[])}
-     * .
+     * Test method for {@link org.openwms.core.service.spring.I18nServiceImpl#saveTranslations(org.openwms.core.domain.system.I18n[])} .
      * 
      * Test with <code>null</code> argument.
      */
@@ -97,9 +92,7 @@ public class I18nServiceTest extends AbstractMockitoTests {
     }
 
     /**
-     * Test method for
-     * {@link org.openwms.core.service.spring.I18nServiceImpl#saveTranslations(org.openwms.core.domain.system.I18n[])}
-     * .
+     * Test method for {@link org.openwms.core.service.spring.I18nServiceImpl#saveTranslations(org.openwms.core.domain.system.I18n[])} .
      * 
      * Test to save an I18n instance.
      */

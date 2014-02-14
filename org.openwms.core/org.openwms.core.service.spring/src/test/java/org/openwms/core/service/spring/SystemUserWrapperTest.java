@@ -1,5 +1,6 @@
 /*
  * openwms.org, the Open Warehouse Management System.
+ * Copyright (C) 2014 Heiko Scherrer
  *
  * This file is part of openwms.org.
  *
@@ -11,11 +12,11 @@
  * openwms.org is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU Lesser General Public License for more details.
+ * GNU General Public License for more details.
  *
- * You should have received a copy of the GNU Lesser General Public
- * License along with this software. If not, write to the Free
- * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
+ * You should have received a copy of the GNU General Public License
+ * along with this software. If not, write to the Free Software
+ * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
 package org.openwms.core.service.spring;
@@ -40,8 +41,7 @@ public class SystemUserWrapperTest {
     private static final String TEST_USER = "TEST_USER";
 
     /**
-     * Test method for
-     * {@link org.openwms.core.service.spring.SystemUserWrapper#hashCode()}.
+     * Test method for {@link org.openwms.core.service.spring.SystemUserWrapper#hashCode()}.
      */
     @Test
     public final void testHashCode() {
@@ -66,9 +66,7 @@ public class SystemUserWrapperTest {
     }
 
     /**
-     * Test method for
-     * {@link org.openwms.core.service.spring.SystemUserWrapper#addDefaultGrants(java.util.Collection)}
-     * .
+     * Test method for {@link org.openwms.core.service.spring.SystemUserWrapper#addDefaultGrants(java.util.Collection)} .
      */
     @Test
     public final void testAddDefaultGrants() {
@@ -85,8 +83,7 @@ public class SystemUserWrapperTest {
      * <li>
      * {@link org.openwms.core.service.spring.SystemUserWrapper#getPassword()}.</li>
      * <li>
-     * {@link org.openwms.core.service.spring.SystemUserWrapper#setPassword(java.lang.String)}
-     * </li>
+     * {@link org.openwms.core.service.spring.SystemUserWrapper#setPassword(java.lang.String)}</li>
      * </ul>
      */
     @Test
@@ -98,9 +95,7 @@ public class SystemUserWrapperTest {
     }
 
     /**
-     * Test method for
-     * {@link org.openwms.core.service.spring.SystemUserWrapper#equals(java.lang.Object)}
-     * .
+     * Test method for {@link org.openwms.core.service.spring.SystemUserWrapper#equals(java.lang.Object)} .
      */
     @Test
     public final void testEqualsObject() {
@@ -138,8 +133,7 @@ public class SystemUserWrapperTest {
 
     /**
      * Test method for
-     * {@link org.openwms.core.service.spring.SystemUserWrapper#SystemUserWrapper(org.openwms.core.domain.system.usermanagement.User)}
-     * .
+     * {@link org.openwms.core.service.spring.SystemUserWrapper#SystemUserWrapper(org.openwms.core.domain.system.usermanagement.User)} .
      */
     @Test(expected = IllegalArgumentException.class)
     public final void testSystemUserWrapper() {
