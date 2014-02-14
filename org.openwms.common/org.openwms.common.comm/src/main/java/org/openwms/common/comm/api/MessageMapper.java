@@ -1,5 +1,6 @@
 /*
  * openwms.org, the Open Warehouse Management System.
+ * Copyright (C) 2014 Heiko Scherrer
  *
  * This file is part of openwms.org.
  *
@@ -11,18 +12,17 @@
  * openwms.org is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU Lesser General Public License for more details.
+ * GNU General Public License for more details.
  *
- * You should have received a copy of the GNU Lesser General Public
- * License along with this software. If not, write to the Free
- * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
+ * You should have received a copy of the GNU General Public License
+ * along with this software. If not, write to the Free Software
+ * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
 package org.openwms.common.comm.api;
 
 /**
- * A MessageMapper is able to map from a String telegram to a
- * {@link CommonMessage}.
+ * A MessageMapper is able to map from a String telegram to a {@link CommonMessage}.
  * 
  * @param <T>
  *            A type of incoming CommonMessage
@@ -33,10 +33,8 @@ package org.openwms.common.comm.api;
 public interface MessageMapper<T extends CommonMessage> {
 
     /**
-     * Investigate the telegram String <tt>telegram</tt> and retrieve from the
-     * telegram type a subtype of {@link CommonMessage}. Implementations
-     * probably throw some kind of RuntimeExceptions if no telegram type was
-     * found.
+     * Investigate the telegram String <tt>telegram</tt> and retrieve from the telegram type a subtype of {@link CommonMessage}.
+     * Implementations probably throw some kind of RuntimeExceptions if no telegram type was found.
      * 
      * @param telegram
      *            The telegram String to investigate

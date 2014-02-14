@@ -1,5 +1,6 @@
 /*
  * openwms.org, the Open Warehouse Management System.
+ * Copyright (C) 2014 Heiko Scherrer
  *
  * This file is part of openwms.org.
  *
@@ -11,11 +12,11 @@
  * openwms.org is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU Lesser General Public License for more details.
+ * GNU General Public License for more details.
  *
- * You should have received a copy of the GNU Lesser General Public
- * License along with this software. If not, write to the Free
- * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
+ * You should have received a copy of the GNU General Public License
+ * along with this software. If not, write to the Free Software
+ * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
 package org.openwms.common.comm.tcp;
@@ -33,9 +34,8 @@ import org.springframework.core.serializer.Serializer;
 import org.springframework.integration.ip.tcp.serializer.SoftEndOfStreamException;
 
 /**
- * An OSIPTelegramSerializer is able to read OSIP telegram structures from an
- * InputStream (deserialization) and can also serialize Object structures into
- * OSIP telegrams.
+ * An OSIPTelegramSerializer is able to read OSIP telegram structures from an InputStream (deserialization) and can also serialize Object
+ * structures into OSIP telegrams.
  * 
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  * @version $Revision: $
@@ -61,8 +61,7 @@ public class OSIPTelegramSerializer implements Serializer<CommonMessage> {
     }
 
     /**
-     * Writes the source object to an output stream using Java Serialization.
-     * The source object must implement {@link Serializable}.
+     * Writes the source object to an output stream using Java Serialization. The source object must implement {@link Serializable}.
      */
     @Override
     public void serialize(CommonMessage object, OutputStream outputStream) throws IOException {
