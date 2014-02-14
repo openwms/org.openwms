@@ -1,5 +1,6 @@
 /*
  * openwms.org, the Open Warehouse Management System.
+ * Copyright (C) 2014 Heiko Scherrer
  *
  * This file is part of openwms.org.
  *
@@ -11,11 +12,11 @@
  * openwms.org is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU Lesser General Public License for more details.
+ * GNU General Public License for more details.
  *
- * You should have received a copy of the GNU Lesser General Public
- * License along with this software. If not, write to the Free
- * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
+ * You should have received a copy of the GNU General Public License
+ * along with this software. If not, write to the Free Software
+ * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
 package org.openwms.core.integration;
@@ -26,8 +27,7 @@ import org.openwms.core.domain.system.usermanagement.Role;
 import org.openwms.core.domain.system.usermanagement.SecurityObject;
 
 /**
- * A RoleDao offers functionality to find and modify {@link Role} entity
- * classes.
+ * A RoleDao offers functionality to find and modify {@link Role} entity classes.
  * 
  * @author <a href="mailto:russelltina@users.sourceforge.net">Tina Russell</a>
  * @version $Revision$
@@ -36,9 +36,8 @@ import org.openwms.core.domain.system.usermanagement.SecurityObject;
 public interface RoleDao extends GenericDao<Role, Long> {
 
     /**
-     * Remove a collection of {@link SecurityObject}s or <code>Grant</code>s
-     * from all Roles. This method is useful to unassign Grants before they're
-     * going to be removed.
+     * Remove a collection of {@link SecurityObject}s or <code>Grant</code>s from all Roles. This method is useful to unassign Grants before
+     * they're going to be removed.
      * 
      * @param securityObjects
      *            The collection of {@link SecurityObject}s to be unassigned
