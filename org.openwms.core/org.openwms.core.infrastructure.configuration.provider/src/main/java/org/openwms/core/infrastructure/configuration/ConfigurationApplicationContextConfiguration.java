@@ -1,5 +1,6 @@
 /*
  * openwms.org, the Open Warehouse Management System.
+ * Copyright (C) 2014 Heiko Scherrer
  *
  * This file is part of openwms.org.
  *
@@ -11,13 +12,14 @@
  * openwms.org is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU Lesser General Public License for more details.
+ * GNU General Public License for more details.
  *
- * You should have received a copy of the GNU Lesser General Public
- * License along with this software. If not, write to the Free
- * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
+ * You should have received a copy of the GNU General Public License
+ * along with this software. If not, write to the Free Software
+ * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
+
 package org.openwms.core.infrastructure.configuration;
 
 import java.io.IOException;
@@ -34,10 +36,9 @@ import org.springframework.core.io.Resource;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 
 /**
- * A ConfigurationApplicationContextConfiguration is the Spring Java
- * Configuration that initializes the application properties as
- * {@link PropertySourcesPlaceholderConfigurer}. Import this configuration to
- * take advantage of the JavaConfig mechanism instead of XML configuration.
+ * A ConfigurationApplicationContextConfiguration is the Spring Java Configuration that initializes the application properties as
+ * {@link PropertySourcesPlaceholderConfigurer}. Import this configuration to take advantage of the JavaConfig mechanism instead of XML
+ * configuration.
  * 
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  * @version $Revision: $
@@ -51,8 +52,7 @@ public class ConfigurationApplicationContextConfiguration extends WebMvcConfigur
     private ApplicationContext ctx;
 
     /**
-     * Export the wrapped
-     * <tt>org.openwms.core.infrastructure.configuration.properties</tt> file as
+     * Export the wrapped <tt>org.openwms.core.infrastructure.configuration.properties</tt> file as
      * {@link PropertySourcesPlaceholderConfigurer}.
      * 
      * @return the instance
@@ -68,9 +68,7 @@ public class ConfigurationApplicationContextConfiguration extends WebMvcConfigur
     }
 
     /**
-     * Export the
-     * <tt>org.openwms.core.infrastructure.configuration.properties</tt> file as
-     * {@link Properties} instance.
+     * Export the <tt>org.openwms.core.infrastructure.configuration.properties</tt> file as {@link Properties} instance.
      * 
      * @return the instance
      */
