@@ -1,5 +1,6 @@
 /*
  * openwms.org, the Open Warehouse Management System.
+ * Copyright (C) 2014 Heiko Scherrer
  *
  * This file is part of openwms.org.
  *
@@ -11,11 +12,11 @@
  * openwms.org is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU Lesser General Public License for more details.
+ * GNU General Public License for more details.
  *
- * You should have received a copy of the GNU Lesser General Public
- * License along with this software. If not, write to the Free
- * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
+ * You should have received a copy of the GNU General Public License
+ * along with this software. If not, write to the Free Software
+ * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
 package org.openwms.common.domain;
@@ -44,9 +45,8 @@ import org.openwms.core.domain.DomainObject;
 /**
  * A TransportUnitType is a type of a certain <code>TransportUnit</code>s.
  * <p>
- * Typically to store some static attributes of <code>TransportUnit</code>s,
- * such as the length, the height, or the weight of <code>TransportUnit</code>s.
- * It is possible to group and characterize <code>TransportUnit</code>s.
+ * Typically to store some static attributes of <code>TransportUnit</code>s, such as the length, the height, or the weight of
+ * <code>TransportUnit</code>s. It is possible to group and characterize <code>TransportUnit</code>s.
  * </p>
  * 
  * @GlossaryTerm
@@ -70,18 +70,15 @@ public class TransportUnitType extends AbstractEntity implements DomainObject<Lo
     public static final String NQ_FIND_ALL = "TransportUnitType.findAll";
 
     /**
-     * Query to find <strong>one</strong> <code>TransportUnitType</code> by its
-     * natural key.
+     * Query to find <strong>one</strong> <code>TransportUnitType</code> by its natural key.
      * <ul>
-     * <li>Query parameter index <strong>1</strong> : The name of the
-     * <code>TransportUnitType</code> to search for.</li>
+     * <li>Query parameter index <strong>1</strong> : The name of the <code>TransportUnitType</code> to search for.</li>
      * </ul>
      */
     public static final String NQ_FIND_BY_NAME = "TransportUnitType.findByID";
 
     /**
-     * Default description of the <code>TransportUnitType</code>. Default
-     * value}.
+     * Default description of the <code>TransportUnitType</code>. Default value}.
      */
     public static final String DEF_TYPE_DESCRIPTION = "--";
 
@@ -145,8 +142,7 @@ public class TransportUnitType extends AbstractEntity implements DomainObject<Lo
     /**
      * Characteristic used to hold specific compatibility attributes.<br>
      * Example:<br>
-     * 'isn't compatible with...' or 'is compatible with ...' or 'type owns
-     * another type ...'
+     * 'isn't compatible with...' or 'is compatible with ...' or 'type owns another type ...'
      */
     @Column(name = "COMPATIBILITY")
     private String compatibility;
@@ -167,15 +163,13 @@ public class TransportUnitType extends AbstractEntity implements DomainObject<Lo
     private Set<TransportUnit> transportUnits = new HashSet<TransportUnit>();
 
     /**
-     * Describes other <code>TransportUnitType</code>s and how many of these may
-     * be stacked on the <code>TransportUnitType</code>.
+     * Describes other <code>TransportUnitType</code>s and how many of these may be stacked on the <code>TransportUnitType</code>.
      */
     @OneToMany(mappedBy = "transportUnitType", cascade = { CascadeType.ALL })
     private Set<TypeStackingRule> typeStackingRules = new HashSet<TypeStackingRule>();
 
     /**
-     * A Set of {@link TypePlacingRule}s store all possible {@link LocationType}
-     * s of the <code>TransportUnitType</code>.
+     * A Set of {@link TypePlacingRule}s store all possible {@link LocationType} s of the <code>TransportUnitType</code>.
      */
     @OneToMany(mappedBy = "transportUnitType", cascade = { CascadeType.PERSIST, CascadeType.MERGE })
     private Set<TypePlacingRule> typePlacingRules = new HashSet<TypePlacingRule>();
@@ -349,20 +343,17 @@ public class TransportUnitType extends AbstractEntity implements DomainObject<Lo
     }
 
     /**
-     * Returns a Set of all {@link TransportUnit}s belonging to the
-     * <code>TransportUnitType</code>.
+     * Returns a Set of all {@link TransportUnit}s belonging to the <code>TransportUnitType</code>.
      * 
-     * @return A Set of all {@link TransportUnit}s belonging to the
-     *         <code>TransportUnitType</code>
+     * @return A Set of all {@link TransportUnit}s belonging to the <code>TransportUnitType</code>
      */
     public Set<TransportUnit> getTransportUnits() {
         return this.transportUnits;
     }
 
     /**
-     * Assign a Set of {@link TransportUnit}s to the
-     * <code>TransportUnitType</code>. Already existing {@link TransportUnit}s
-     * will be removed.
+     * Assign a Set of {@link TransportUnit}s to the <code>TransportUnitType</code>. Already existing {@link TransportUnit}s will be
+     * removed.
      * 
      * @param transportUnits
      *            A Set of {@link TransportUnit}s.
@@ -372,14 +363,12 @@ public class TransportUnitType extends AbstractEntity implements DomainObject<Lo
     }
 
     /**
-     * Add a rule to the <code>TransportUnitType</code>. A
-     * {@link TypePlacingRule} determines what <code>TransportUnitType</code>s
-     * can be placed on which locations.
+     * Add a rule to the <code>TransportUnitType</code>. A {@link TypePlacingRule} determines what <code>TransportUnitType</code>s can be
+     * placed on which locations.
      * 
      * @param typePlacingRule
      *            The rule to set
-     * @return <code>true</code> when the rule was added gracefully, otherwise
-     *         <code>false</code>
+     * @return <code>true</code> when the rule was added gracefully, otherwise <code>false</code>
      */
     public boolean addTypePlacingRule(TypePlacingRule typePlacingRule) {
         if (typePlacingRule == null) {
@@ -393,8 +382,7 @@ public class TransportUnitType extends AbstractEntity implements DomainObject<Lo
      * 
      * @param typePlacingRule
      *            The rule to be removed
-     * @return <code>true</code> when the rule was removed gracefully, otherwise
-     *         <code>false</code>
+     * @return <code>true</code> when the rule was removed gracefully, otherwise <code>false</code>
      */
     public boolean removeTypePlacingRule(TypePlacingRule typePlacingRule) {
         if (typePlacingRule == null) {
@@ -404,8 +392,7 @@ public class TransportUnitType extends AbstractEntity implements DomainObject<Lo
     }
 
     /**
-     * Returns all {@link TypePlacingRule}s belonging to the
-     * <code>TransportUnitType</code>.
+     * Returns all {@link TypePlacingRule}s belonging to the <code>TransportUnitType</code>.
      * 
      * @return A Set of all placing rules
      */
@@ -414,9 +401,8 @@ public class TransportUnitType extends AbstractEntity implements DomainObject<Lo
     }
 
     /**
-     * Assign a Set of {@link TypePlacingRule}s to the
-     * <code>TransportUnitType</code>. Already existing {@link TypePlacingRule}s
-     * will be removed.
+     * Assign a Set of {@link TypePlacingRule}s to the <code>TransportUnitType</code>. Already existing {@link TypePlacingRule}s will be
+     * removed.
      * 
      * @param typePlacingRules
      *            The rules to set
@@ -426,10 +412,8 @@ public class TransportUnitType extends AbstractEntity implements DomainObject<Lo
     }
 
     /**
-     * Returns a Set of all {@link TypeStackingRule}s. A
-     * {@link TypeStackingRule} determines which other
-     * <code>TransportUnitType</code>s can be placed on the
-     * <code>TransportUnitType</code>.
+     * Returns a Set of all {@link TypeStackingRule}s. A {@link TypeStackingRule} determines which other <code>TransportUnitType</code>s can
+     * be placed on the <code>TransportUnitType</code>.
      * 
      * @return A Set of all stacking rules
      */
@@ -438,10 +422,8 @@ public class TransportUnitType extends AbstractEntity implements DomainObject<Lo
     }
 
     /**
-     * Assign a Set of {@link TypeStackingRule}s. A {@link TypeStackingRule}
-     * determines which <code>TransportUnitType</code>s can be placed on the
-     * <code>TransportUnitType</code>. Already existing {@link TypeStackingRule}
-     * s will be removed.
+     * Assign a Set of {@link TypeStackingRule}s. A {@link TypeStackingRule} determines which <code>TransportUnitType</code>s can be placed
+     * on the <code>TransportUnitType</code>. Already existing {@link TypeStackingRule} s will be removed.
      * 
      * @param typeStackingRules
      *            The rules to set

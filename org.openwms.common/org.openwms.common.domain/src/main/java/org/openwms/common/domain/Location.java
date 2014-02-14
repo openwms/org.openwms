@@ -1,5 +1,6 @@
 /*
  * openwms.org, the Open Warehouse Management System.
+ * Copyright (C) 2014 Heiko Scherrer
  *
  * This file is part of openwms.org.
  *
@@ -11,11 +12,11 @@
  * openwms.org is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU Lesser General Public License for more details.
+ * GNU General Public License for more details.
  *
- * You should have received a copy of the GNU Lesser General Public
- * License along with this software. If not, write to the Free
- * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
+ * You should have received a copy of the GNU General Public License
+ * along with this software. If not, write to the Free Software
+ * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
 package org.openwms.common.domain;
@@ -50,9 +51,8 @@ import org.openwms.core.domain.system.Message;
 /**
  * A Location, represents some physical as well as virtual place in a warehouse.
  * <p>
- * Could be something like a storage location in the stock or a location on a
- * conveyer. Also virtual or error locations can be modeled with a Location
- * entity.
+ * Could be something like a storage location in the stock or a location on a conveyer. Also virtual or error locations can be modeled with
+ * a Location entity.
  * </p>
  * Multiple Locations are grouped to a LocationGroup.
  * 
@@ -78,15 +78,13 @@ public class Location extends Target {
     public static final String NQ_FIND_ALL = "Location.findAll";
 
     /**
-     * Query to find all <code>Location</code>s with all {@link Message}s and
-     * {@link LocationType}s (eager loaded).
+     * Query to find all <code>Location</code>s with all {@link Message}s and {@link LocationType}s (eager loaded).
      */
     public static final String NQ_FIND_ALL_EAGER = "Location.findAllEager";
 
     /**
-     * Query to find <strong>one</strong> <code>Location</code> by its natural
-     * key. <li>Query parameter index <strong>1</strong> : The locationId of the
-     * <code>Location</code> to search for</li>
+     * Query to find <strong>one</strong> <code>Location</code> by its natural key. <li>Query parameter index <strong>1</strong> : The
+     * locationId of the <code>Location</code> to search for</li>
      */
     public static final String NQ_FIND_BY_UNIQUE_QUERY = "Location.findByLocationPK";
 
@@ -103,8 +101,7 @@ public class Location extends Target {
     private String description;
 
     /**
-     * Maximum number of {@link org.openwms.common.domain.TransportUnit}s placed
-     * on this <code>Location</code>.
+     * Maximum number of {@link org.openwms.common.domain.TransportUnit}s placed on this <code>Location</code>.
      */
     @Column(name = "NO_MAX_TRANSPORT_UNITS")
     private short noMaxTransportUnits = 1;
@@ -116,19 +113,16 @@ public class Location extends Target {
     private BigDecimal maximumWeight;
 
     /**
-     * Date of last change. When a
-     * {@link org.openwms.common.domain.TransportUnit} is moving to or away from
-     * this <code>Location</code>, lastAccess will be updated. This is necessary
-     * to find old {@link org.openwms.common.domain.TransportUnit}s as well as
-     * for inventory calculation.
+     * Date of last change. When a {@link org.openwms.common.domain.TransportUnit} is moving to or away from this <code>Location</code>,
+     * lastAccess will be updated. This is necessary to find old {@link org.openwms.common.domain.TransportUnit}s as well as for inventory
+     * calculation.
      */
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "LAST_ACCESS")
     private Date lastAccess;
 
     /**
-     * Flag to indicate whether {@link org.openwms.common.domain.TransportUnit}s
-     * should be counted on this <code>Location</code> or not.
+     * Flag to indicate whether {@link org.openwms.common.domain.TransportUnit}s should be counted on this <code>Location</code> or not.
      */
     @Column(name = "COUNTING_ACTIVE")
     private boolean countingActive = false;
@@ -140,42 +134,33 @@ public class Location extends Target {
     private String checkState = "--";
 
     /**
-     * Shall this <code>Location</code> be integrated in the calculation of
-     * {@link org.openwms.common.domain.TransportUnit}s of the parent
+     * Shall this <code>Location</code> be integrated in the calculation of {@link org.openwms.common.domain.TransportUnit}s of the parent
      * {@link org.openwms.common.domain.LocationGroup}.
      * <p>
-     * <code>true</code> : <code>Location</code> is included in calculation of
-     * {@link org.openwms.common.domain.TransportUnit}s.<br>
-     * <code>false</code>: <code>Location</code> is not included in calculation
-     * of {@link org.openwms.common.domain.TransportUnit}s.
+     * <code>true</code> : <code>Location</code> is included in calculation of {@link org.openwms.common.domain.TransportUnit}s.<br>
+     * <code>false</code>: <code>Location</code> is not included in calculation of {@link org.openwms.common.domain.TransportUnit}s.
      * </p>
      */
     @Column(name = "LG_COUNTING_ACTIVE")
     private boolean locationGroupCountingActive = false;
 
     /**
-     * Signals the incoming state of this <code>Location</code>.
-     * <code>Location</code>s which are blocked for incoming cannot pick up
+     * Signals the incoming state of this <code>Location</code>. <code>Location</code>s which are blocked for incoming cannot pick up
      * {@link org.openwms.common.domain.TransportUnit}s.
      * <p>
-     * <code>true</code> : <code>Location</code> is ready to pick up
-     * {@link org.openwms.common.domain.TransportUnit}s.<br>
-     * <code>false</code>: <code>Location</code> is locked, and cannot pick up
-     * {@link org.openwms.common.domain.TransportUnit}s.
+     * <code>true</code> : <code>Location</code> is ready to pick up {@link org.openwms.common.domain.TransportUnit}s.<br>
+     * <code>false</code>: <code>Location</code> is locked, and cannot pick up {@link org.openwms.common.domain.TransportUnit}s.
      * </p>
      */
     @Column(name = "INCOMING_ACTIVE")
     private boolean incomingActive = true;
 
     /**
-     * Signals the outgoing state of this <code>Location</code>.
-     * <code>Location</code>s which are blocked for outgoing cannot release
+     * Signals the outgoing state of this <code>Location</code>. <code>Location</code>s which are blocked for outgoing cannot release
      * {@link org.openwms.common.domain.TransportUnit}s.
      * <p>
-     * <code>true</code> : <code>Location</code> is enabled for outgoing
-     * <code>Transport</code>s<br>
-     * <code>false</code>: <code>Location</code> is locked,
-     * {@link org.openwms.common.domain.TransportUnit}s can't leave this
+     * <code>true</code> : <code>Location</code> is enabled for outgoing <code>Transport</code>s<br>
+     * <code>false</code>: <code>Location</code> is locked, {@link org.openwms.common.domain.TransportUnit}s can't leave this
      * <code>Location</code>.
      * </p>
      */
@@ -183,8 +168,7 @@ public class Location extends Target {
     private boolean outgoingActive = true;
 
     /**
-     * The PLC is able to change the state of a <code>Location</code>. This
-     * property stores the last state, received from the PLC.
+     * The PLC is able to change the state of a <code>Location</code>. This property stores the last state, received from the PLC.
      * <p>
      * -1: Not defined.<br>
      * 0 : No PLC error, everything okay.
@@ -194,13 +178,10 @@ public class Location extends Target {
     private short plcState = 0;
 
     /**
-     * Determines whether the <code>Location</code> is considered in the
-     * allocation procedure.
+     * Determines whether the <code>Location</code> is considered in the allocation procedure.
      * <p>
-     * <code>true</code> : This <code>Location</code> will be considered in
-     * storage calculation by an allocation procedure.<br>
-     * <code>false</code> : This <code>Location</code> will not be considered in
-     * the allocation process.
+     * <code>true</code> : This <code>Location</code> will be considered in storage calculation by an allocation procedure.<br>
+     * <code>false</code> : This <code>Location</code> will not be considered in the allocation process.
      * </p>
      */
     @Column(name = "CONSIDERED_IN_ALLOCATION")
@@ -252,8 +233,7 @@ public class Location extends Target {
      * 
      * @param message
      *            The {@link Message} to be added
-     * @return <code>true</code> if the {@link Message} is new in the collection
-     *         of messages, otherwise <code>false</code>
+     * @return <code>true</code> if the {@link Message} is new in the collection of messages, otherwise <code>false</code>
      */
     public boolean addMessage(Message message) {
         if (message == null) {
@@ -272,22 +252,18 @@ public class Location extends Target {
     }
 
     /**
-     * Determine whether the <code>Location</code> is considered during
-     * allocation.
+     * Determine whether the <code>Location</code> is considered during allocation.
      * 
-     * @return <code>true</code> when considered in allocation, otherwise
-     *         <code>false</code>
+     * @return <code>true</code> when considered in allocation, otherwise <code>false</code>
      */
     public boolean isConsideredInAllocation() {
         return this.consideredInAllocation;
     }
 
     /**
-     * Determine whether {@link org.openwms.common.domain.TransportUnit}s should
-     * be counted on this <code>Location</code> or not.
+     * Determine whether {@link org.openwms.common.domain.TransportUnit}s should be counted on this <code>Location</code> or not.
      * 
-     * @return <code>true</code> when counting is active, otherwise
-     *         <code>false</code>
+     * @return <code>true</code> when counting is active, otherwise <code>false</code>
      */
     public boolean isCountingActive() {
         return this.countingActive;
@@ -303,20 +279,17 @@ public class Location extends Target {
     }
 
     /**
-     * Determine whether incoming mode is activated and
-     * {@link org.openwms.common.domain.TransportUnit}s can be put on this
+     * Determine whether incoming mode is activated and {@link org.openwms.common.domain.TransportUnit}s can be put on this
      * <code>Location</code>.
      * 
-     * @return <code>true</code> when incoming mode is activated, otherwise
-     *         <code>false</code>
+     * @return <code>true</code> when incoming mode is activated, otherwise <code>false</code>
      */
     public boolean isIncomingActive() {
         return this.incomingActive;
     }
 
     /**
-     * Check whether infeed is blocked and moving {@link TransportUnit}s to here
-     * is forbidden.
+     * Check whether infeed is blocked and moving {@link TransportUnit}s to here is forbidden.
      * 
      * @return <code>true</code> is blocked, otherwise <code>false</code>
      */
@@ -334,23 +307,19 @@ public class Location extends Target {
     }
 
     /**
-     * Return the {@link org.openwms.common.domain.LocationGroup} where the
-     * <code>Location</code> belongs to.
+     * Return the {@link org.openwms.common.domain.LocationGroup} where the <code>Location</code> belongs to.
      * 
-     * @return The {@link org.openwms.common.domain.LocationGroup} of the
-     *         <code>Location</code>
+     * @return The {@link org.openwms.common.domain.LocationGroup} of the <code>Location</code>
      */
     public LocationGroup getLocationGroup() {
         return this.locationGroup;
     }
 
     /**
-     * Determine whether the <code>Location</code> is part of the parent
-     * {@link org.openwms.common.domain.LocationGroup}s calculation procedure of
-     * {@link org.openwms.common.domain.TransportUnit}s.
+     * Determine whether the <code>Location</code> is part of the parent {@link org.openwms.common.domain.LocationGroup}s calculation
+     * procedure of {@link org.openwms.common.domain.TransportUnit}s.
      * 
-     * @return <code>true</code> if calculation is activated, otherwise
-     *         <code>false</code>
+     * @return <code>true</code> if calculation is activated, otherwise <code>false</code>
      */
     public boolean isLocationGroupCountingActive() {
         return this.locationGroupCountingActive;
@@ -384,8 +353,7 @@ public class Location extends Target {
     }
 
     /**
-     * Returns an unmodifiable Set of {@link Message}s stored for the
-     * <code>Location</code>.
+     * Returns an unmodifiable Set of {@link Message}s stored for the <code>Location</code>.
      * 
      * @return An unmodifiable Set
      */
@@ -394,32 +362,26 @@ public class Location extends Target {
     }
 
     /**
-     * Returns the maximum number of
-     * {@link org.openwms.common.domain.TransportUnit}s allowed on the
-     * <code>Location</code>.
+     * Returns the maximum number of {@link org.openwms.common.domain.TransportUnit}s allowed on the <code>Location</code>.
      * 
-     * @return The maximum number of
-     *         {@link org.openwms.common.domain.TransportUnit}s
+     * @return The maximum number of {@link org.openwms.common.domain.TransportUnit}s
      */
     public short getNoMaxTransportUnits() {
         return this.noMaxTransportUnits;
     }
 
     /**
-     * Determine whether outgoing mode is activated and
-     * {@link org.openwms.common.domain.TransportUnit}s can leave this
+     * Determine whether outgoing mode is activated and {@link org.openwms.common.domain.TransportUnit}s can leave this
      * <code>Location</code>.
      * 
-     * @return <code>true</code> when outgoing mode is activated, otherwise
-     *         <code>false</code>
+     * @return <code>true</code> when outgoing mode is activated, otherwise <code>false</code>
      */
     public boolean isOutgoingActive() {
         return this.outgoingActive;
     }
 
     /**
-     * Check whether outfeed is blocked and moving {@link TransportUnit}s from
-     * here is forbidden.
+     * Check whether outfeed is blocked and moving {@link TransportUnit}s from here is forbidden.
      * 
      * @return <code>true</code> is blocked, otherwise <code>false</code>
      */
@@ -441,8 +403,7 @@ public class Location extends Target {
      * 
      * @param msgs
      *            An array of {@link Message}s to be removed
-     * @return <code>true</code> if the {@link Message}s were found and removed,
-     *         otherwise <code>false</code>
+     * @return <code>true</code> if the {@link Message}s were found and removed, otherwise <code>false</code>
      * @throws IllegalArgumentException
      *             when messages is <code>null</code>
      */
@@ -464,25 +425,21 @@ public class Location extends Target {
     }
 
     /**
-     * Change the behavior whether the <code>Location</code> shall be considered
-     * in the allocation procedure or not.
+     * Change the behavior whether the <code>Location</code> shall be considered in the allocation procedure or not.
      * 
      * @param consideredInAllocation
-     *            <code>true</code> allocation active, otherwise
-     *            <code>false</code>
+     *            <code>true</code> allocation active, otherwise <code>false</code>
      */
     public void setConsideredInAllocation(boolean consideredInAllocation) {
         this.consideredInAllocation = consideredInAllocation;
     }
 
     /**
-     * Change the behavior whether the <code>Location</code> shall be considered
-     * in the calculation of {@link org.openwms.common.domain.TransportUnit}s or
-     * not.
+     * Change the behavior whether the <code>Location</code> shall be considered in the calculation of
+     * {@link org.openwms.common.domain.TransportUnit}s or not.
      * 
      * @param countingActive
-     *            <code>true</code> counting active, otherwise
-     *            <code>false</code>
+     *            <code>true</code> counting active, otherwise <code>false</code>
      */
     public void setCountingActive(boolean countingActive) {
         this.countingActive = countingActive;
@@ -502,8 +459,7 @@ public class Location extends Target {
      * Change the incoming state of the <code>Location</code>.
      * 
      * @param incomingActive
-     *            <code>true</code> The <code>Location</code> can pick up
-     *            {@link org.openwms.common.domain.TransportUnit}s, otherwise
+     *            <code>true</code> The <code>Location</code> can pick up {@link org.openwms.common.domain.TransportUnit}s, otherwise
      *            <code>false</code>
      */
     public void setIncomingActive(boolean incomingActive) {
@@ -521,9 +477,8 @@ public class Location extends Target {
     }
 
     /**
-     * Add this <code>Location</code> to the <code>locationGroup</code>. When
-     * the argument is <code>null</code> an existing {@link LocationGroup} is
-     * removed from the <code>Location</code>.
+     * Add this <code>Location</code> to the <code>locationGroup</code>. When the argument is <code>null</code> an existing
+     * {@link LocationGroup} is removed from the <code>Location</code>.
      * 
      * @param locationGroup
      *            The {@link LocationGroup} to be assigned
@@ -536,9 +491,8 @@ public class Location extends Target {
     }
 
     /**
-     * Define whether or not the <code>Location</code> shall be considered in
-     * counting {@link org.openwms.common.domain.TransportUnit}s of the parent
-     * {@link LocationGroup}.
+     * Define whether or not the <code>Location</code> shall be considered in counting {@link org.openwms.common.domain.TransportUnit}s of
+     * the parent {@link LocationGroup}.
      * 
      * @param locationGroupCountingActive
      *            <code>true</code> if considered, otherwise <code>false</code>
@@ -568,13 +522,10 @@ public class Location extends Target {
     }
 
     /**
-     * Change the maximum number of
-     * {@link org.openwms.common.domain.TransportUnit}s allowed on the
-     * <code>Location</code>.
+     * Change the maximum number of {@link org.openwms.common.domain.TransportUnit}s allowed on the <code>Location</code>.
      * 
      * @param noMaxTransportUnits
-     *            The number of {@link org.openwms.common.domain.TransportUnit}s
-     *            to set
+     *            The number of {@link org.openwms.common.domain.TransportUnit}s to set
      */
     public void setNoMaxTransportUnits(short noMaxTransportUnits) {
         this.noMaxTransportUnits = noMaxTransportUnits;
@@ -584,10 +535,8 @@ public class Location extends Target {
      * Change the outgoing state of the <code>Location</code>.
      * 
      * @param outgoingActive
-     *            <code>true</code>
-     *            {@link org.openwms.common.domain.TransportUnit}s can be moved
-     *            away from the <code>Location</code>, otherwise
-     *            <code>false</code>
+     *            <code>true</code> {@link org.openwms.common.domain.TransportUnit}s can be moved away from the <code>Location</code>,
+     *            otherwise <code>false</code>
      */
     public void setOutgoingActive(boolean outgoingActive) {
         this.outgoingActive = outgoingActive;
@@ -615,8 +564,7 @@ public class Location extends Target {
     }
 
     /**
-     * On update or insert the lastAccess is updated to the current date. (JPA
-     * lifecycle callback method).
+     * On update or insert the lastAccess is updated to the current date. (JPA lifecycle callback method).
      */
     @PrePersist
     @PreUpdate

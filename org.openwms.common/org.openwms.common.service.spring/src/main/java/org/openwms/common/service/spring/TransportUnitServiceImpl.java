@@ -1,5 +1,6 @@
 /*
  * openwms.org, the Open Warehouse Management System.
+ * Copyright (C) 2014 Heiko Scherrer
  *
  * This file is part of openwms.org.
  *
@@ -11,11 +12,11 @@
  * openwms.org is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU Lesser General Public License for more details.
+ * GNU General Public License for more details.
  *
- * You should have received a copy of the GNU Lesser General Public
- * License along with this software. If not, write to the Free
- * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
+ * You should have received a copy of the GNU General Public License
+ * along with this software. If not, write to the Free Software
+ * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
 package org.openwms.common.service.spring;
@@ -150,10 +151,8 @@ public class TransportUnitServiceImpl implements TransportUnitService<TransportU
     /**
      * {@inheritDoc}
      * 
-     * A ServiceRuntimeException is thrown when other {@link TransportUnit}s are
-     * placed on a {@link TransportUnit} that shall be removed. Also
-     * {@link TransportUnit} with active TransportOrders won't be removed, if a
-     * proper delegate exists.
+     * A ServiceRuntimeException is thrown when other {@link TransportUnit}s are placed on a {@link TransportUnit} that shall be removed.
+     * Also {@link TransportUnit} with active TransportOrders won't be removed, if a proper delegate exists.
      */
     @Override
     public void deleteTransportUnits(List<TransportUnit> transportUnits) {
@@ -186,15 +185,12 @@ public class TransportUnitServiceImpl implements TransportUnitService<TransportU
     }
 
     /**
-     * Try to remove when there is no listener defined or a defined listener
-     * votes for removal.
+     * Try to remove when there is no listener defined or a defined listener votes for removal.
      * 
      * @param transportUnit
      *            The TransportUnit to be removed
      * @throws RemovalNotAllowedException
-     *             In case it is not allowed to remove the TransportUnit,
-     *             probably because depending items exist (like
-     *             TransportOrders).
+     *             In case it is not allowed to remove the TransportUnit, probably because depending items exist (like TransportOrders).
      */
     private void delete(TransportUnit transportUnit) throws RemovalNotAllowedException {
         if (LOGGER.isDebugEnabled() && onRemovalListener == null) {

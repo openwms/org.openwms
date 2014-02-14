@@ -1,5 +1,6 @@
 /*
  * openwms.org, the Open Warehouse Management System.
+ * Copyright (C) 2014 Heiko Scherrer
  *
  * This file is part of openwms.org.
  *
@@ -11,11 +12,11 @@
  * openwms.org is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU Lesser General Public License for more details.
+ * GNU General Public License for more details.
  *
- * You should have received a copy of the GNU Lesser General Public
- * License along with this software. If not, write to the Free
- * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
+ * You should have received a copy of the GNU General Public License
+ * along with this software. If not, write to the Free Software
+ * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
 package org.openwms.common.domain;
@@ -34,12 +35,10 @@ import org.openwms.core.domain.AbstractEntity;
 import org.openwms.core.domain.DomainObject;
 
 /**
- * A TypePlacingRule is a <code>Rule</code> that defines which types of
- * <code>TransportUnit</code>s (<code>TransportUnitType</code>s) can be put on
- * which type of <code>Location</code> (<code>LocationType</code>).
+ * A TypePlacingRule is a <code>Rule</code> that defines which types of <code>TransportUnit</code>s (<code>TransportUnitType</code>s) can be
+ * put on which type of <code>Location</code> (<code>LocationType</code>).
  * <p>
- * A privilegeLevel is defined to order a list of allowed
- * <code>LocationType</code>s.
+ * A privilegeLevel is defined to order a list of allowed <code>LocationType</code>s.
  * </p>
  * 
  * @GlossaryTerm
@@ -71,16 +70,13 @@ public class TypePlacingRule extends AbstractEntity implements DomainObject<Long
     private TransportUnitType transportUnitType;
 
     /**
-     * The privilegeLevel defines a priority to describe which
-     * {@link TransportUnitType} can be placed on which {@link LocationType}.
+     * The privilegeLevel defines a priority to describe which {@link TransportUnitType} can be placed on which {@link LocationType}.
      * <p>
-     * A value of 0 means the lowest priority. Increasing the privilegeLevel
-     * implies a higher priority and means the {@link TransportUnitType} can be
-     * placed to the {@link LocationType} with the highest privilegeLevel.
+     * A value of 0 means the lowest priority. Increasing the privilegeLevel implies a higher priority and means the
+     * {@link TransportUnitType} can be placed to the {@link LocationType} with the highest privilegeLevel.
      * </p>
      * <p>
-     * To forbid a {@link TransportUnitType} on a certain {@link LocationType}
-     * the privilegeLevel must be set to -1.
+     * To forbid a {@link TransportUnitType} on a certain {@link LocationType} the privilegeLevel must be set to -1.
      * </p>
      * (not-null)
      */
@@ -88,8 +84,7 @@ public class TypePlacingRule extends AbstractEntity implements DomainObject<Long
     private int privilegeLevel = 0;
 
     /**
-     * An allowed {@link LocationType} on which the owning
-     * {@link TransportUnitType} may be placed (not-null).
+     * An allowed {@link LocationType} on which the owning {@link TransportUnitType} may be placed (not-null).
      */
     @ManyToOne
     @JoinColumn(name = "ALLOWED_LOCATION_TYPE", nullable = false)
@@ -112,8 +107,7 @@ public class TypePlacingRule extends AbstractEntity implements DomainObject<Long
     }
 
     /**
-     * Create a new <code>TypePlacingRule</code> with privilegeLevel and
-     * allowedLocationType.
+     * Create a new <code>TypePlacingRule</code> with privilegeLevel and allowedLocationType.
      * 
      * @param transportUnitType
      *            The {@link TransportUnitType} for this rule

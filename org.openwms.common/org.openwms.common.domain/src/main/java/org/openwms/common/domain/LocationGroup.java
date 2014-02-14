@@ -1,5 +1,6 @@
 /*
  * openwms.org, the Open Warehouse Management System.
+ * Copyright (C) 2014 Heiko Scherrer
  *
  * This file is part of openwms.org.
  *
@@ -11,11 +12,11 @@
  * openwms.org is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU Lesser General Public License for more details.
+ * GNU General Public License for more details.
  *
- * You should have received a copy of the GNU Lesser General Public
- * License along with this software. If not, write to the Free
- * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
+ * You should have received a copy of the GNU General Public License
+ * along with this software. If not, write to the Free Software
+ * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
 package org.openwms.common.domain;
@@ -43,8 +44,7 @@ import org.openwms.common.domain.types.Target;
 import org.openwms.common.domain.values.LocationGroupState;
 
 /**
- * A LocationGroup is a logical group of <code>Location</code>s, grouping
- * together <code>Location</code>s with same characteristics.
+ * A LocationGroup is a logical group of <code>Location</code>s, grouping together <code>Location</code>s with same characteristics.
  * 
  * @GlossaryTerm
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
@@ -79,13 +79,10 @@ public class LocationGroup extends Target {
     private String groupType;
 
     /**
-     * Is the <code>LocationGroup</code> included in the calculation of
-     * {@link org.openwms.common.domain.TransportUnit}s?
+     * Is the <code>LocationGroup</code> included in the calculation of {@link org.openwms.common.domain.TransportUnit}s?
      * <p>
-     * <code>true</code> : Location is included in the calculation of
-     * {@link org.openwms.common.domain.TransportUnit}s.<br>
-     * <code>false</code>: Location is not included in the calculation of
-     * {@link org.openwms.common.domain.TransportUnit}s.
+     * <code>true</code> : Location is included in the calculation of {@link org.openwms.common.domain.TransportUnit}s.<br>
+     * <code>false</code>: Location is not included in the calculation of {@link org.openwms.common.domain.TransportUnit}s.
      * </p>
      */
     @Column(name = "LOCATION_GROUP_COUNTING_ACTIVE")
@@ -105,8 +102,7 @@ public class LocationGroup extends Target {
     private LocationGroupState groupStateIn = LocationGroupState.AVAILABLE;
 
     /**
-     * References the <code>LocationGroup</code> that locked this
-     * <code>LocationGroup</code> for infeed.
+     * References the <code>LocationGroup</code> that locked this <code>LocationGroup</code> for infeed.
      */
     @ManyToOne
     @JoinColumn(name = "IN_LOCKER")
@@ -120,8 +116,7 @@ public class LocationGroup extends Target {
     private LocationGroupState groupStateOut = LocationGroupState.AVAILABLE;
 
     /**
-     * References the <code>LocationGroup</code> that locked this
-     * <code>LocationGroup</code> for outfeed.
+     * References the <code>LocationGroup</code> that locked this <code>LocationGroup</code> for outfeed.
      */
     @ManyToOne
     @JoinColumn(name = "OUT_LOCKER")
@@ -255,8 +250,7 @@ public class LocationGroup extends Target {
      * @param gStateIn
      *            The state to set
      * @param lockLg
-     *            The <code>LocationGroup</code> that wants to lock/unlock this
-     *            <code>LocationGroup</code>.
+     *            The <code>LocationGroup</code> that wants to lock/unlock this <code>LocationGroup</code>.
      */
     public void setGroupStateIn(LocationGroupState gStateIn, LocationGroup lockLg) {
         if (this.groupStateIn == LocationGroupState.NOT_AVAILABLE && gStateIn == LocationGroupState.AVAILABLE
@@ -292,8 +286,7 @@ public class LocationGroup extends Target {
      * @param gStateOut
      *            The state to set
      * @param lockLg
-     *            The <code>LocationGroup</code> that wants to lock/unlock this
-     *            <code>LocationGroup</code>.
+     *            The <code>LocationGroup</code> that wants to lock/unlock this <code>LocationGroup</code>.
      */
     public void setGroupStateOut(LocationGroupState gStateOut, LocationGroup lockLg) {
         if (this.groupStateOut == LocationGroupState.NOT_AVAILABLE && gStateOut == LocationGroupState.AVAILABLE
@@ -317,8 +310,7 @@ public class LocationGroup extends Target {
     /**
      * Returns the count of all sub {@link Location}s.
      * 
-     * @return The count of {@link Location}s belonging to this
-     *         <code>LocationGroup</code>
+     * @return The count of {@link Location}s belonging to this <code>LocationGroup</code>
      */
     public int getNoLocations() {
         return this.noLocations;
@@ -326,12 +318,10 @@ public class LocationGroup extends Target {
 
     /**
      * Returns the maximum fill level of the <code>LocationGroup</code>.<br>
-     * The maximum fill level defines how many {@link Location}s of the
-     * <code>LocationGroup</code> can be occupied by
+     * The maximum fill level defines how many {@link Location}s of the <code>LocationGroup</code> can be occupied by
      * {@link org.openwms.common.domain.TransportUnit}s.
      * <p>
-     * The maximum fill level is a value between 0 and 1 and represents a
-     * percentage value.
+     * The maximum fill level is a value between 0 and 1 and represents a percentage value.
      * </p>
      * 
      * @return The maximum fill level
@@ -344,8 +334,7 @@ public class LocationGroup extends Target {
      * Set the maximum fill level for the <code>LocationGroup</code>.
      * <p>
      * Pass a value between 0 and 1.<br>
-     * For example maxFillLevel = 0.85 means: 85% of all {@link Location}s can
-     * be occupied.
+     * For example maxFillLevel = 0.85 means: 85% of all {@link Location}s can be occupied.
      * </p>
      * 
      * @param maxFillLevel
@@ -445,8 +434,7 @@ public class LocationGroup extends Target {
      * 
      * @param locationGroup
      *            The <code>LocationGroup</code> to be added as a child
-     * @return <code>true</code> if the <code>LocationGroup</code> was new in
-     *         the collection of <code>LocationGroup</code>s, otherwise
+     * @return <code>true</code> if the <code>LocationGroup</code> was new in the collection of <code>LocationGroup</code>s, otherwise
      *         <code>false</code>
      */
     public boolean addLocationGroup(LocationGroup locationGroup) {
@@ -464,10 +452,8 @@ public class LocationGroup extends Target {
      * Remove a <code>LocationGroup</code> from the list of children.
      * 
      * @param locationGroup
-     *            The <code>LocationGroup</code> to be removed from the list of
-     *            children
-     * @return <code>true</code> if the <code>LocationGroup</code> was found and
-     *         could be removed, otherwise <code>false</code>
+     *            The <code>LocationGroup</code> to be removed from the list of children
+     * @return <code>true</code> if the <code>LocationGroup</code> was found and could be removed, otherwise <code>false</code>
      */
     public boolean removeLocationGroup(LocationGroup locationGroup) {
         if (locationGroup == null) {
@@ -480,8 +466,7 @@ public class LocationGroup extends Target {
     /**
      * Return all {@link Location}s in an unmodifiable Collection.
      * 
-     * @return A unmodifiable set of all {@link Location}s that belong to this
-     *         <code>LocationGroup</code>
+     * @return A unmodifiable set of all {@link Location}s that belong to this <code>LocationGroup</code>
      */
     public Set<Location> getLocations() {
         return Collections.unmodifiableSet(locations);
@@ -492,8 +477,7 @@ public class LocationGroup extends Target {
      * 
      * @param location
      *            The {@link Location} to be added as child
-     * @return <code>true</code> if the {@link Location} was new in the
-     *         collection of {@link Location}s, otherwise <code>false</code>
+     * @return <code>true</code> if the {@link Location} was new in the collection of {@link Location}s, otherwise <code>false</code>
      */
     public boolean addLocation(Location location) {
 
@@ -512,8 +496,7 @@ public class LocationGroup extends Target {
      * 
      * @param location
      *            The {@link Location} to be removed from the list of children
-     * @return <code>true</code> if the {@link Location} was found and could be
-     *         removed, otherwise <code>false</code>
+     * @return <code>true</code> if the {@link Location} was found and could be removed, otherwise <code>false</code>
      */
     public boolean removeLocation(Location location) {
         if (location == null) {
