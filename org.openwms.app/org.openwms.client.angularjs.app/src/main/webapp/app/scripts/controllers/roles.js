@@ -30,10 +30,7 @@
  * @since 0.1
  */
 angular.module('openwms_app',['ui.bootstrap', 'ngAnimate', 'toaster'])
-	.config(function ($httpProvider) {
-		delete $httpProvider.defaults.headers.common['X-Requested-With'];
-		$httpProvider.defaults.headers.common['Content-Type'] = 'application/json';
-	})
+
 	.controller('RolesCtrl', function ($scope, $http, $modal, $log, coreService, toaster) {
 
 		var checkedRows = [];
@@ -156,7 +153,7 @@ angular.module('openwms_app',['ui.bootstrap', 'ngAnimate', 'toaster'])
 		 */
 		$scope.loadRoles = function () {
 			checkedRows = [];
-			coreService.getAll($scope).then(
+			coreService.getAll("/roles", $scope).then(
 				function(roles) {
 					$scope.roleEntities = roles;
 				}, function(e) {
