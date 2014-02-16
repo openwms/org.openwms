@@ -872,7 +872,8 @@
                             <overview>${basedir}/overview.html</overview>
                             <source>${project.build.sourceCompilerLevel}</source>
                             <stylesheetfile>${basedir}/src/site/css/openwms-jdoc.css</stylesheetfile>
-                            <verbose>true</verbose>
+                            <verbose>false</verbose>
+                            <quiet>true</quiet>
                             <aggregate>true</aggregate>
                             <doclet>gr.spinellis.umlgraph.doclet.UmlGraphDoc</doclet>
                             <docletArtifact>
