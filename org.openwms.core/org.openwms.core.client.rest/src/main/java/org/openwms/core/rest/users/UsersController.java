@@ -99,8 +99,11 @@ public class UsersController extends AbstractWebController {
      */
     @RequestMapping(method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
-    public Collection<UserVO> findAllUsers() {
-        return mapper.map(service.findAll(), UserVO.class);
+    public ResponseEntity<ResponseVO> findAllUsers() {
+        Collection<UserVO> users = mapper.map(service.findAll(), UserVO.class);
+        ResponseVO response = new ResponseVO();
+        response.add(new ResponseVO.ItemBuilder().wStatus(HttpStatus.OK).wParams(users.toArray()).build());
+        return new ResponseEntity<ResponseVO>(response, HttpStatus.OK);
     }
 
     /**
