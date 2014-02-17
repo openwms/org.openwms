@@ -79,3 +79,12 @@
 .table-hover tbody tr.info:hover > td {
     background-color: #c4e3f3;
 }
+
+
+.btn-default {
+    background-color: #002a80;
+    border-color: #00b3ee;
+    background-image: -webkit-linear-gradient(top,#00 0,#cecece 100%);
+    background-image: linear-gradient(to bottom,#000 0,#cecece 100%);
+    background-repeat: repeat-x;
+}
