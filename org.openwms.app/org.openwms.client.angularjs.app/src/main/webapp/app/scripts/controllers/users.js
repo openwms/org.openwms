@@ -69,6 +69,14 @@ angular.module('openwms_users', ['ui.bootstrap', 'ngAnimate', 'toaster', 'angula
 
 		$scope.selectedUsers = [];
 
+		/**
+		 * 'Modify User' dialogue.
+		 *
+		 * @param $scope
+		 * @param $modalInstance
+		 * @param data
+		 * @constructor
+		 */
 		var ModalInstanceCtrl = function ($scope, $modalInstance, data) {
 			$scope.selUser = data.selUser;
 			$scope.dialog = data.dialog;
@@ -80,12 +88,19 @@ angular.module('openwms_users', ['ui.bootstrap', 'ngAnimate', 'toaster', 'angula
 			}
 		};
 
+		/**
+		 * 'Upload Image' dialogue.
+		 *
+		 * @param $scope
+		 * @param $modalInstance
+		 * @param data
+		 * @constructor
+		 */
 		var UploadCtrl = function ($scope, $modalInstance, data) {
-//			$scope.myModelObj = data.myModelObj;
-			$scope.selectedUser = data.selectedUser;
+			$scope.selectedUsers = data.selectedUsers;
 			$scope.uploadDialog = data.dialog;
 			$scope.ok = function () {
-				$modalInstance.close($scope.selectedUser);
+				$modalInstance.close($scope.selectedUsers);
 			};
 			$scope.cancel = function () {
 				$modalInstance.dismiss('cancel');
@@ -127,7 +142,7 @@ angular.module('openwms_users', ['ui.bootstrap', 'ngAnimate', 'toaster', 'angula
 				fileReader.readAsDataURL($scope.selectedFiles[0]);
 				fileReader.onload = function(e) {
 					$scope.upload[0] = $upload.http({
-						url: $scope.rootUrl+"/users/"+$scope.selectedUser.id,
+						url: $scope.rootUrl+"/users/"+$scope.selectedUsers[0].id,
 						method: 'PUT',
 						headers: {'Content-Type': 'multipart/form-data'},
 						data: e.target.result
@@ -174,6 +189,9 @@ angular.module('openwms_users', ['ui.bootstrap', 'ngAnimate', 'toaster', 'angula
 			);
 		}
 
+		/**
+		 * Edit User function.
+		 */
 		$scope.editUser = function () {
 			var modalInstance = $modal.open({
 				templateUrl: 'addUserDlg.html',
@@ -181,7 +199,7 @@ angular.module('openwms_users', ['ui.bootstrap', 'ngAnimate', 'toaster', 'angula
 				resolve: {
 					data : function() {
 						return {
-							selUser : $scope.selectedUser,
+							selUser : $scope.selectedUser(),
 							dialog : {
 								title: "Edit User"
 							}
@@ -200,8 +218,11 @@ angular.module('openwms_users', ['ui.bootstrap', 'ngAnimate', 'toaster', 'angula
 			);
 		}
 
+		/**
+		 * Delete existing user function.
+		 */
 		$scope.deleteUser = function () {
-			if ($scope.selectedUsers === undefined || $scope.selectedUsers.length == 0) {
+			if ($scope.selectedUsers === null || $scope.selectedUsers.length == 0) {
 				return;
 			}
 			var param = "";
@@ -218,10 +239,6 @@ angular.module('openwms_users', ['ui.bootstrap', 'ngAnimate', 'toaster', 'angula
 			);
 		}
 
-		$scope.selectedUser = function() {
-			return $scope.selectedUsers[$scope.selectedUsers.length-1];
-		}
-
 		$scope.saveUser = function () {
 			$http.defaults.headers.put['Auth-Token'] = $scope.authToken;
 			$http.put($scope.rootUrl+'/users', $scope.selectedUser).success(function (data, status, headers, config) {
@@ -235,6 +252,9 @@ angular.module('openwms_users', ['ui.bootstrap', 'ngAnimate', 'toaster', 'angula
 			});
 		}
 
+		/**
+		 * Load all existing Users function. Result is written to userEntities.
+		 */
 		$scope.loadUsers = function () {
 			$scope.selectedUsers = [];
 			coreService.getAll("/users", $scope).then(
@@ -244,11 +264,6 @@ angular.module('openwms_users', ['ui.bootstrap', 'ngAnimate', 'toaster', 'angula
 					onError(e);
 				}
 			);
-			$http.defaults.headers.common['Auth-Token'] = $scope.authToken;
-			$http.get($scope.rootUrl+'/users').success(function (data, status, headers, config) {
-				$scope.userEntities = data;
-				$scope.selectedUsers = [];
-			});
 		}
 
 		$scope.changePassword = function () {
@@ -297,7 +312,14 @@ angular.module('openwms_users', ['ui.bootstrap', 'ngAnimate', 'toaster', 'angula
 			}
 		}
 
-
+		/**
+		 * Returns the latest selected User.
+		 *
+		 * @returns {User}
+		 */
+		$scope.selectedUser = function() {
+			return $scope.selectedUsers[$scope.selectedUsers.length-1];
+		}
 
 		/**
 		 * Check whether the User with index is in the collection of selected users.
