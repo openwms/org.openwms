@@ -33,7 +33,6 @@ import javax.persistence.TemporalType;
 import javax.persistence.Version;
 
 import org.openwms.core.domain.AbstractEntity;
-import org.openwms.core.domain.DomainObject;
 
 /**
  * A Message can be used to store useful information on other domain objects.
@@ -44,7 +43,7 @@ import org.openwms.core.domain.DomainObject;
  */
 @Entity
 @Table(name = "COR_MESSAGE")
-public class Message extends AbstractEntity implements DomainObject<Long> {
+public class Message extends AbstractEntity<Long> {
 
     private static final long serialVersionUID = 7836132529431969528L;
 

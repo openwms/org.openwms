@@ -33,7 +33,6 @@ import javax.persistence.Table;
 import javax.persistence.Version;
 
 import org.openwms.core.domain.AbstractEntity;
-import org.openwms.core.domain.DomainObject;
 import org.openwms.core.util.validation.AssertUtils;
 
 /**
@@ -51,7 +50,7 @@ import org.openwms.core.util.validation.AssertUtils;
  */
 @Entity
 @Table(name = "COR_USER_PASSWORD")
-public class UserPassword extends AbstractEntity implements DomainObject<Long> {
+public class UserPassword extends AbstractEntity<Long> {
 
     private static final long serialVersionUID = 1678609250279381615L;
     /**

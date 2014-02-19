@@ -42,7 +42,7 @@ import org.openwms.core.domain.AbstractEntity;
  * @version $Revision$
  * @since 0.1
  */
-public interface GenericDao<T extends AbstractEntity, ID extends Serializable> {
+public interface GenericDao<T extends AbstractEntity<ID>, ID extends Serializable> {
 
     /**
      * Suffix for the FIND_ALL named query.

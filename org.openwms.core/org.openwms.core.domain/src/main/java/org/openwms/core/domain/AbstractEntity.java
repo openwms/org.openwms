@@ -54,9 +54,8 @@ import javax.xml.bind.annotation.XmlTransient;
 @XmlTransient
 @MappedSuperclass
 @EntityListeners({ AbstractEntity.AbstractEntityListener.class })
-public abstract class AbstractEntity implements Serializable {
+public abstract class AbstractEntity<ID extends Serializable> implements DomainObject<ID> {
 
-    private static final long serialVersionUID = 827478159133738540L;
     private static final int UID_LENGTH = 36;
     /**
      * Suffix for the FIND_ALL named query. Default {@value}

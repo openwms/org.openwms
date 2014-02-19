@@ -30,7 +30,6 @@ import javax.persistence.UniqueConstraint;
 import javax.persistence.Version;
 
 import org.openwms.core.domain.AbstractEntity;
-import org.openwms.core.domain.DomainObject;
 import org.openwms.core.util.validation.AssertUtils;
 
 /**
@@ -44,7 +43,7 @@ import org.openwms.core.util.validation.AssertUtils;
  */
 @Entity
 @Table(name = "COR_EMAIL", uniqueConstraints = @UniqueConstraint(columnNames = { "C_USERNAME", "C_ADDRESS" }))
-public class Email extends AbstractEntity implements DomainObject<Long> {
+public class Email extends AbstractEntity<Long> {
 
     private static final long serialVersionUID = 3182027866592095069L;
     /**

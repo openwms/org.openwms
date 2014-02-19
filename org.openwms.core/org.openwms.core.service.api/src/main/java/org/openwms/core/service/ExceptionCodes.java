@@ -33,9 +33,14 @@ public class ExceptionCodes {
     public static final String TECHNICAL_RT_ERROR = "general.technical.error";
     /** Thrown if an Role already exists and cannot be created. */
 
-    /** Thrown if a User to persist already exists. */
+    /** Thrown if an entity to persist already exists. */
+    public static final String ENTITY_ALREADY_EXISTS = "entity.already.exists";
+    /** Thrown if an entity has been looked up but hasn't been found. */
+    public static final String ENTITY_NOT_EXIST = "entity.not.exist";
+
+    /** Thrown if an User to persist already exists. */
     public static final String USER_ALREADY_EXISTS = "user.already.exists";
-    /** Thrown if a User is looked up but hasn't been found. */
+    /** Thrown if an User has been looked up but hasn't been found. */
     public static final String USER_NOT_EXIST = "user.not.exist";
     /** Thrown if removing a User was requested with <code>null</code> argument. */
     public static final String USER_REMOVE_NOT_BE_NULL = "user.remove.null.argument";

@@ -21,9 +21,7 @@
  */
 package org.openwms.core.service.spring;
 
-import java.util.Collections;
 import java.util.HashSet;
-import java.util.List;
 
 import org.apache.commons.lang.StringUtils;
 import org.openwms.core.annotation.FireAfterTransaction;
@@ -35,6 +33,7 @@ import org.openwms.core.domain.system.usermanagement.UserDetails;
 import org.openwms.core.domain.system.usermanagement.UserPassword;
 import org.openwms.core.domain.system.usermanagement.UserPreference;
 import org.openwms.core.exception.InvalidPasswordException;
+import org.openwms.core.integration.GenericDao;
 import org.openwms.core.integration.SecurityObjectDao;
 import org.openwms.core.integration.UserDao;
 import org.openwms.core.service.ConfigurationService;
@@ -69,7 +68,7 @@ import org.springframework.transaction.annotation.Transactional;
  */
 @Transactional
 @Service(UserServiceImpl.COMPONENT_NAME)
-public class UserServiceImpl implements UserService {
+public class UserServiceImpl extends AbstractGenericEntityService<User, Long, String> implements UserService {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(UserServiceImpl.class);
     @Autowired
@@ -93,6 +92,14 @@ public class UserServiceImpl implements UserService {
     public static final String COMPONENT_NAME = "userService";
 
     /**
+     * @see org.openwms.core.service.spring.AbstractGenericEntityService#getRepository()
+     */
+    @Override
+    protected GenericDao<User, Long> getRepository() {
+        return dao;
+    }
+
+    /**
      * @see org.openwms.core.service.UserService#create(org.openwms.core.domain.system.usermanagement.User)
      */
     @Override
@@ -112,36 +119,6 @@ public class UserServiceImpl implements UserService {
         }
         dao.persist(user);
         return dao.save(user);
-    }
-
-    /**
-     * {@inheritDoc}
-     * 
-     * Implementation returns an empty list in case of no result.
-     */
-    @Override
-    public List<User> findAll() {
-        List<User> users = dao.findAll();
-        if (users == null) {
-            users = Collections.emptyList();
-        }
-        return users;
-    }
-
-    /**
-     * {@inheritDoc}
-     * 
-     * If no User with the <tt>id</tt> exist, an {@link EntityNotFoundException} is thrown.
-     * 
-     * @see org.openwms.core.service.UserService#findById(java.lang.Long)
-     */
-    @Override
-    public User findById(Long id) {
-        User user = dao.findById(id);
-        if (user == null) {
-            throw new EntityNotFoundException("User with id [" + id + "] not found");
-        }
-        return user;
     }
 
     /**
@@ -184,40 +161,45 @@ public class UserServiceImpl implements UserService {
     /**
      * {@inheritDoc}
      * 
-     * @throws IllegalArgumentException
-     *             when <code>user</code> is <code>null</code>
+     * Triggers <tt>UserChangedEvent</tt> after completion.
+     * 
+     * @throws ServiceRuntimeException
+     *             when <code>entity</code> is <code>null</code>
      */
     @Override
     @FireAfterTransaction(events = { UserChangedEvent.class })
-    public void remove(User user) {
-        ServiceRuntimeException.throwIfNull(user,
-                messageSource.getMessage(ExceptionCodes.USER_REMOVE_NOT_BE_NULL, new String[0], null));
-        if (user.isNew()) {
-            LOGGER.info("The User instance to be removed is not persist yet, no need to remove it");
-        } else {
-            dao.remove(dao.findById(user.getId()));
-        }
+    public void remove(User entity) {
+        checkForNull(entity, ExceptionCodes.USER_REMOVE_NOT_BE_NULL);
+        super.remove(entity);
     }
 
     /**
-     * @see org.openwms.core.service.UserService#removeByBK(java.lang.String)
+     * {@inheritDoc}
      * 
-     * @throws IllegalArgumentException
-     *             when <code>name</code> is <code>null</code>
-     * @throws EntityNotFoundException
-     *             if no User with <tt>name</tt> was found
+     * Triggers <tt>UserChangedEvent</tt> after completion.
+     * 
+     * @throws ServiceRuntimeException
+     *             when <code>keys</code> is <code>null</code>
      */
     @Override
     @FireAfterTransaction(events = { UserChangedEvent.class })
-    public void removeByBK(String name) {
-        ServiceRuntimeException.throwIfNull(name,
-                messageSource.getMessage(ExceptionCodes.USER_REMOVE_NOT_BE_NULL, new String[0], null));
-        User user = dao.findByUniqueId(name);
-        if (user == null) {
-            String msg = messageSource.getMessage(ExceptionCodes.USER_NOT_EXIST, new String[] { name }, null);
-            throw new EntityNotFoundException(msg);
-        }
-        dao.remove(user);
+    public void removeByBK(String[] keys) {
+        checkForNull(keys, ExceptionCodes.USER_REMOVE_NOT_BE_NULL);
+        super.removeByBK(keys);
+    }
+
+    /**
+     * {@inheritDoc}
+     * 
+     * Triggers <tt>UserChangedEvent</tt> after completion.
+     * 
+     * @throws ServiceRuntimeException
+     *             when <code>keys</code> is <code>null</code>
+     */
+    @Override
+    public void removeByID(Long[] keys) {
+        checkForNull(keys, ExceptionCodes.USER_REMOVE_NOT_BE_NULL);
+        super.removeByID(keys);
     }
 
     /**

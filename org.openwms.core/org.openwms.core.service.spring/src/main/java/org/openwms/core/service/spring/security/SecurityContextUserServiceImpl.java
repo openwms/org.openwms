@@ -64,7 +64,7 @@ public class SecurityContextUserServiceImpl implements UserDetailsService, Appli
     private static final Logger LOGGER = LoggerFactory.getLogger(SecurityContextUserServiceImpl.class);
 
     @Value("#{ globals['system.user'] }")
-    private final String systemUser = SystemUser.SYSTEM_USERNAME;
+    private String systemUsername = SystemUser.SYSTEM_USERNAME;
     @Autowired
     @Qualifier("userDao")
     private GenericDao<User, Long> dao;
@@ -108,22 +108,21 @@ public class SecurityContextUserServiceImpl implements UserDetailsService, Appli
     @Override
     public UserDetails loadUserByUsername(String username) {
         UserDetails ud = userCache.getUserFromCache(username);
-        if (null != ud) {
-            return ud;
-        }
-        User user = null;
-        if (systemUser.equals(username)) {
-            user = userService.createSystemUser();
-            ud = new SystemUserWrapper(user);
-            ((SystemUserWrapper) ud).setPassword(enc.encodePassword(user.getPassword(), saltSource.getSalt(ud)));
-        } else {
-            user = dao.findByUniqueId(username);
-            if (null == user) {
-                throw new UsernameNotFoundException("User " + username + " not found");
+        if (null == ud) {
+            User user = null;
+            if (systemUsername.equals(username)) {
+                user = userService.createSystemUser();
+                ud = new SystemUserWrapper(user);
+                ((SystemUserWrapper) ud).setPassword(enc.encodePassword(user.getPassword(), saltSource.getSalt(ud)));
+            } else {
+                user = userService.findByUniqueId(username);
+                if (null == user) {
+                    throw new UsernameNotFoundException("User " + username + " not found");
+                }
+                ud = new UserWrapper(user);
             }
-            ud = new UserWrapper(user);
+            userCache.putUserInCache(ud);
         }
-        userCache.putUserInCache(ud);
         return ud;
     }
 }

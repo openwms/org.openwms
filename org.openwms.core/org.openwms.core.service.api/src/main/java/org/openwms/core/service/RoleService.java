@@ -21,11 +21,7 @@
  */
 package org.openwms.core.service;
 
-import java.util.List;
-
 import org.openwms.core.domain.system.usermanagement.Role;
-import org.openwms.core.service.exception.EntityAlreadyExistsException;
-import org.openwms.core.service.exception.EntityNotFoundException;
 
 /**
  * A RoleService provides business functionality regarding the handling with {@link Role}s.
@@ -35,61 +31,6 @@ import org.openwms.core.service.exception.EntityNotFoundException;
  * @since 0.1
  * @see org.openwms.core.domain.system.usermanagement.Role
  */
-// TODO [scherrer] : Remove to direct references to business and technical key, because it shall be up to model to
-// define these keys.
-public interface RoleService {
+public interface RoleService extends GenericEntityService<Role, Long, String> {
 
-    /**
-     * Tries to create and persist an new <tt>Role</tt>.
-     * 
-     * @param role
-     *            The new <tt>Role</tt> to create
-     * @return The newly created and persisted <tt>Role</tt>
-     * @throws EntityAlreadyExistsException
-     *             if the <tt>Role</tt> to create already exist
-     */
-    Role create(Role role);
-
-    /**
-     * Return a {@link Role} identified by the business key, the <tt>name</tt> of the Role.
-     * 
-     * @param name
-     *            The role's name
-     * @return The Role or <code>null</code>
-     * @throws EntityNotFoundException
-     *             when no Role with BK <tt>name</tt> found
-     */
-    Role findByBK(String name);
-
-    /**
-     * Return a list of all existing {@link Role}s.
-     * 
-     * @return A list of {@link Role}s or an empty list when no {@link Role}s were found
-     */
-    List<Role> findAll();
-
-    /**
-     * Save an already existed {@link Role} and return the saved instance.
-     * 
-     * @param role
-     *            The {@link Role} to be saved
-     * @return The saved {@link Role}
-     */
-    Role save(Role role);
-
-    /**
-     * Remove a {@link Role}.
-     * 
-     * @param id
-     *            The technical unique identifier of the {@link Role} instance to be removed.
-     */
-    void remove(Long id);
-
-    /**
-     * Remove a {@link Role}.
-     * 
-     * @param name
-     *            The role's name
-     */
-    void removeByBK(String name);
 }
