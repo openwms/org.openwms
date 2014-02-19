@@ -37,6 +37,8 @@ public class ExceptionCodes {
     public static final String ENTITY_ALREADY_EXISTS = "entity.already.exists";
     /** Thrown if an entity has been looked up but hasn't been found. */
     public static final String ENTITY_NOT_EXIST = "entity.not.exist";
+    /** Thrown if an operation was called with <code>null</code> argument. */
+    public static final String ENTITY_NOT_BE_NULL = "entity.null.argument";
 
     /** Thrown if an User to persist already exists. */
     public static final String USER_ALREADY_EXISTS = "user.already.exists";
@@ -50,6 +52,10 @@ public class ExceptionCodes {
     public static final String USER_SAVE_NOT_BE_NULL = "user.save.null.argument";
     /** Thrown if saving a User's profile was requested with <code>null</code> argument. */
     public static final String USER_PROFILE_SAVE_NOT_BE_NULL = "user.profile.save.null.argument";
+    /** Thrown if changing a User's password was requested with <code>null</code> argument. */
+    public static final String USER_PASSWORD_SAVE_NOT_BE_NULL = "user.password.save.null.argument";
+    /** Thrown if changing a User's password was requested, but the new password does not match the defined password rules. */
+    public static final String USER_PASSWORD_INVALID = "user.passwort.invalid";
 
     /** Thrown if a Role to persist already exists. */
     public static final String ROLE_ALREADY_EXISTS = "role.already.exists";

@@ -45,7 +45,7 @@ public interface UserService extends GenericEntityService<User, Long, String> {
     void changeUserPassword(UserPassword userPassword);
 
     /**
-     * Call this method to store an image for an {@link User}.
+     * Attach and save an <tt>image</tt> to an {@link User} with <tt>username</tt>.
      * 
      * @param username
      *            Username of the {@link User}
@@ -77,7 +77,7 @@ public interface UserService extends GenericEntityService<User, Long, String> {
     User saveUserProfile(User user, UserPassword userPassword, UserPreference... prefs);
 
     /**
-     * Create and return the {@link SystemUser}.
+     * Create and return the {@link SystemUser} without persisting this user.
      * 
      * @return the {@link SystemUser} instance
      */
