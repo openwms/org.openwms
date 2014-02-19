@@ -21,6 +21,8 @@
  */
 package org.openwms.core.domain.system;
 
+import java.io.Serializable;
+
 import javax.persistence.Column;
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
@@ -49,7 +51,7 @@ import org.openwms.core.util.validation.AssertUtils;
 @NamedQueries({
         @NamedQuery(name = I18n.NQ_FIND_ALL, query = "select i from I18n i order by i.moduleName, i.key"),
         @NamedQuery(name = I18n.NQ_FIND_BY_UNIQUE_QUERY, query = "select i from I18n i where i.key = :key and i.moduleName = :moduleName") })
-public class I18n extends AbstractEntity<Long> {
+public class I18n extends AbstractEntity<Long> implements Serializable {
 
     private static final long serialVersionUID = -9176131734403683401L;
 

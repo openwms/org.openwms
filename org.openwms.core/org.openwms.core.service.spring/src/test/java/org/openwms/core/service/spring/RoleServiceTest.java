@@ -31,6 +31,7 @@ import org.junit.Test;
 import org.openwms.core.domain.system.usermanagement.Role;
 import org.openwms.core.service.ExceptionCodes;
 import org.openwms.core.service.RoleService;
+import org.openwms.core.service.exception.EntityNotFoundException;
 import org.openwms.core.service.exception.ServiceRuntimeException;
 import org.openwms.core.test.AbstractJpaSpringContextTests;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -66,15 +67,10 @@ public class RoleServiceTest extends AbstractJpaSpringContextTests {
     /**
      * Test to remove a Role that does not exist.
      */
-    @Test
+    @Test(expected = EntityNotFoundException.class)
     public final void testRemoveWithNotKnownEntity() {
-        try {
-            srv.removeByBK(new Long[] { (long) 4711 });
-            assertEquals("Expect to have 2 roles", 2, entityManager.createNamedQuery(Role.NQ_FIND_ALL).getResultList()
-                    .size());
-        } catch (Exception ex) {
-            fail("Unexpected exception occurred:" + ex.getMessage());
-        }
+        srv.removeByID(new Long[] { Long.valueOf(4711) });
+        fail("Removing transient role by id should fail");
     }
 
     /**
@@ -102,7 +98,7 @@ public class RoleServiceTest extends AbstractJpaSpringContextTests {
         try {
             Role persistedRole = (Role) entityManager.createNamedQuery(Role.NQ_FIND_BY_UNIQUE_QUERY)
                     .setParameter(1, "ROLE_ADMIN").getSingleResult();
-            srv.remove(persistedRole.getId());
+            srv.removeByID(new Long[] { persistedRole.getId() });
             assertEquals("Expect to have 1 Role left", 1, entityManager.createNamedQuery(Role.NQ_FIND_ALL)
                     .getResultList().size());
         } catch (Exception ex) {

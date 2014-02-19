@@ -115,7 +115,7 @@ public class SecurityContextUserServiceImpl implements UserDetailsService, Appli
                 ud = new SystemUserWrapper(user);
                 ((SystemUserWrapper) ud).setPassword(enc.encodePassword(user.getPassword(), saltSource.getSalt(ud)));
             } else {
-                user = userService.findByUniqueId(username);
+                user = userService.findByBK(username);
                 if (null == user) {
                     throw new UsernameNotFoundException("User " + username + " not found");
                 }

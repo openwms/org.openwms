@@ -21,6 +21,8 @@
  */
 package org.openwms.core.domain.preferences;
 
+import java.io.Serializable;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -59,7 +61,7 @@ import org.openwms.core.util.validation.AssertUtils;
 @NamedQueries({
         @NamedQuery(name = ModulePreference.NQ_FIND_ALL, query = "select mp from ModulePreference mp"),
         @NamedQuery(name = ModulePreference.NQ_FIND_BY_OWNER, query = "select mp from ModulePreference mp where mp.owner = :owner") })
-public class ModulePreference extends AbstractPreference {
+public class ModulePreference extends AbstractPreference implements Serializable {
 
     private static final long serialVersionUID = 7318848112643933488L;
     /**

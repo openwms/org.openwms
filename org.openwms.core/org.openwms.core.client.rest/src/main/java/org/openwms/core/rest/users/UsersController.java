@@ -256,7 +256,7 @@ public class UsersController extends AbstractWebController {
                 continue;
             }
             try {
-                service.removeByBK(name);
+                service.removeByBK(new String[] { name });
                 result.add(new ResponseVO.ItemBuilder().wStatus(HttpStatus.OK).wParams(name).build());
             } catch (ServiceRuntimeException sre) {
                 resultStatus = HttpStatus.NOT_FOUND;

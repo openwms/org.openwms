@@ -87,9 +87,9 @@ public class SystemUserWrapperTest {
      * </ul>
      */
     @Test
-    public final void testGetPassword() {
+    public final void testGetPassword() throws Exception {
         User user = new User(TEST_USER);
-        user.setPassword("PASS");
+        user.changePassword("PASS");
         SystemUserWrapper suw = new SystemUserWrapper(user);
         Assert.assertEquals("PASS", suw.getPassword());
     }

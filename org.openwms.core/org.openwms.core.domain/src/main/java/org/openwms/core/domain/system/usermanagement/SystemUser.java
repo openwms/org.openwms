@@ -21,6 +21,8 @@
  */
 package org.openwms.core.domain.system.usermanagement;
 
+import java.io.Serializable;
+
 import javax.persistence.Entity;
 
 /**
@@ -36,7 +38,7 @@ import javax.persistence.Entity;
  * @see org.openwms.core.domain.system.usermanagement.User
  */
 @Entity
-public class SystemUser extends User {
+public class SystemUser extends User implements Serializable {
 
     private static final long serialVersionUID = -7575215406745881912L;
 

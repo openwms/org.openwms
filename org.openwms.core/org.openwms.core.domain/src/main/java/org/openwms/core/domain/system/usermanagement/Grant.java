@@ -21,6 +21,8 @@
  */
 package org.openwms.core.domain.system.usermanagement;
 
+import java.io.Serializable;
+
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 
@@ -43,7 +45,7 @@ import javax.persistence.Entity;
  */
 @Entity
 @DiscriminatorValue("GRANT")
-public class Grant extends SecurityObject {
+public class Grant extends SecurityObject implements Serializable {
 
     private static final long serialVersionUID = 2061059874657176727L;
 

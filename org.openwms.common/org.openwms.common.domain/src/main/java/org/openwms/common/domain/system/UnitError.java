@@ -40,7 +40,7 @@ import org.openwms.core.domain.DomainObject;
  */
 @Entity
 @Table(name = "COM_UNIT_ERROR")
-public class UnitError extends AbstractEntity implements DomainObject<Long> {
+public class UnitError extends AbstractEntity<Long> implements DomainObject<Long> {
 
     private static final long serialVersionUID = -716902051194734598L;
 

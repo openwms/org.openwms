@@ -87,11 +87,13 @@ public class UserWrapperTest {
 
     /**
      * Test method for {@link org.openwms.core.service.spring.UserWrapper#getPassword()}.
+     * 
+     * @throws Exception
      */
     @Test
-    public final void testGetPassword() {
+    public final void testGetPassword() throws Exception {
         User u = new User(TEST_USER);
-        u.setPassword("PASS");
+        u.changePassword("PASS");
         UserWrapper uw = new UserWrapper(u);
         Assert.assertEquals("PASS", uw.getPassword());
     }

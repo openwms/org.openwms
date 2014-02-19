@@ -21,6 +21,8 @@
  */
 package org.openwms.core.domain.system.usermanagement;
 
+import java.io.Serializable;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -54,7 +56,7 @@ import org.openwms.core.util.validation.AssertUtils;
 @NamedQueries({
         @NamedQuery(name = RolePreference.NQ_FIND_ALL, query = "select rp from RolePreference rp"),
         @NamedQuery(name = RolePreference.NQ_FIND_BY_OWNER, query = "select rp from RolePreference rp where rp.owner = :owner") })
-public class RolePreference extends AbstractPreference {
+public class RolePreference extends AbstractPreference implements Serializable {
 
     private static final long serialVersionUID = 8267024349554036680L;
     /**
