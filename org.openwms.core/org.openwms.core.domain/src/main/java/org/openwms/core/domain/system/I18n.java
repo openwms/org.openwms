@@ -34,7 +34,6 @@ import javax.persistence.Transient;
 import javax.persistence.UniqueConstraint;
 
 import org.openwms.core.domain.AbstractEntity;
-import org.openwms.core.domain.DomainObject;
 import org.openwms.core.domain.values.I18nSet;
 import org.openwms.core.util.validation.AssertUtils;
 
@@ -50,7 +49,7 @@ import org.openwms.core.util.validation.AssertUtils;
 @NamedQueries({
         @NamedQuery(name = I18n.NQ_FIND_ALL, query = "select i from I18n i order by i.moduleName, i.key"),
         @NamedQuery(name = I18n.NQ_FIND_BY_UNIQUE_QUERY, query = "select i from I18n i where i.key = :key and i.moduleName = :moduleName") })
-public class I18n extends AbstractEntity implements DomainObject<Long> {
+public class I18n extends AbstractEntity<Long> {
 
     private static final long serialVersionUID = -9176131734403683401L;
 

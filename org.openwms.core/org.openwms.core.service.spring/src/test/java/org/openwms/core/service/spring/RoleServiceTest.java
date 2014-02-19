@@ -69,7 +69,7 @@ public class RoleServiceTest extends AbstractJpaSpringContextTests {
     @Test
     public final void testRemoveWithNotKnownEntity() {
         try {
-            srv.remove((long) 4711);
+            srv.removeByBK(new Long[] { (long) 4711 });
             assertEquals("Expect to have 2 roles", 2, entityManager.createNamedQuery(Role.NQ_FIND_ALL).getResultList()
                     .size());
         } catch (Exception ex) {

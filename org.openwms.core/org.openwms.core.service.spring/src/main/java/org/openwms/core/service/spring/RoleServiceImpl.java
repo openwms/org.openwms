@@ -21,23 +21,17 @@
  */
 package org.openwms.core.service.spring;
 
-import java.util.List;
-
-import javax.persistence.PersistenceException;
-
 import org.openwms.core.annotation.FireAfterTransaction;
 import org.openwms.core.domain.system.usermanagement.Role;
+import org.openwms.core.integration.GenericDao;
 import org.openwms.core.integration.RoleDao;
-import org.openwms.core.integration.exception.IntegrationRuntimeException;
 import org.openwms.core.service.ExceptionCodes;
 import org.openwms.core.service.RoleService;
-import org.openwms.core.service.exception.EntityNotFoundException;
 import org.openwms.core.service.exception.ServiceRuntimeException;
 import org.openwms.core.util.event.RoleChangedEvent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.MessageSource;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -56,15 +50,21 @@ import org.springframework.transaction.annotation.Transactional;
  */
 @Transactional
 @Service(RoleServiceImpl.COMPONENT_NAME)
-public class RoleServiceImpl implements RoleService {
+public class RoleServiceImpl extends AbstractGenericEntityService<Role, Long, String> implements RoleService {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(RoleServiceImpl.class);
     @Autowired
     private RoleDao dao;
-    @Autowired
-    private MessageSource messageSource;
     /** Springs service name. */
     public static final String COMPONENT_NAME = "roleService";
+
+    /**
+     * @see org.openwms.core.service.spring.AbstractGenericEntityService#getRepository()
+     */
+    @Override
+    protected GenericDao<Role, Long> getRepository() {
+        return dao;
+    }
 
     /**
      * @see org.openwms.core.service.RoleService#create(org.openwms.core.domain.system.usermanagement.Role)
@@ -72,16 +72,16 @@ public class RoleServiceImpl implements RoleService {
     @Override
     public Role create(Role role) {
         ServiceRuntimeException.throwIfNull(role,
-                messageSource.getMessage(ExceptionCodes.ROLE_CREATE_NOT_BE_NULL, new String[0], null));
+                getMessageSource().getMessage(ExceptionCodes.ROLE_CREATE_NOT_BE_NULL, new String[0], null));
         if (!role.isNew()) {
-            String msg = messageSource.getMessage(ExceptionCodes.ROLE_ALREADY_EXISTS, new String[] { role.getName() },
-                    null);
+            String msg = getMessageSource().getMessage(ExceptionCodes.ROLE_ALREADY_EXISTS,
+                    new String[] { role.getName() }, null);
             throw new ServiceRuntimeException(msg);
         }
         Role existingRole = dao.findByUniqueId(role.getName());
         if (existingRole != null) {
-            String msg = messageSource.getMessage(ExceptionCodes.ROLE_ALREADY_EXISTS, new String[] { role.getName() },
-                    null);
+            String msg = getMessageSource().getMessage(ExceptionCodes.ROLE_ALREADY_EXISTS,
+                    new String[] { role.getName() }, null);
             throw new ServiceRuntimeException(msg);
         }
         dao.persist(role);
@@ -91,88 +91,60 @@ public class RoleServiceImpl implements RoleService {
     /**
      * {@inheritDoc}
      * 
-     * @throws IllegalArgumentException
-     *             when <code>roles</code> is <code>null</code>
-     */
-    @Override
-    @FireAfterTransaction(events = { RoleChangedEvent.class })
-    public void remove(Long pId) {
-        ServiceRuntimeException.throwIfNull(pId,
-                messageSource.getMessage(ExceptionCodes.ROLE_REMOVE_NOT_BE_NULL, new String[0], null));
-        Role role = dao.findById(pId);
-        if (role != null) {
-            dao.remove(role);
-        }
-    }
-
-    /**
-     * @see org.openwms.core.service.RoleService#removeByBK(java.lang.String)
+     * Triggers <tt>RoleChangedEvent</tt> after completion.
      * 
-     * @throws IllegalArgumentException
-     *             when <code>name</code> is <code>null</code>
-     * @throws EntityNotFoundException
-     *             if no Role with <tt>name</tt> was found
+     * @throws ServiceRuntimeException
+     *             when <code>entity</code> is <code>null</code>
      */
     @Override
     @FireAfterTransaction(events = { RoleChangedEvent.class })
-    public void removeByBK(String name) {
-        ServiceRuntimeException.throwIfNull(name,
-                messageSource.getMessage(ExceptionCodes.ROLE_REMOVE_NOT_BE_NULL, new String[0], null));
-        Role role = dao.findByUniqueId(name);
-        if (role == null) {
-            String msg = messageSource.getMessage(ExceptionCodes.ROLE_NOT_EXIST, new String[] { name }, null);
-            throw new EntityNotFoundException(msg);
-        }
-        dao.remove(role);
+    public void remove(Role entity) {
+        checkForNull(entity, ExceptionCodes.ROLE_REMOVE_NOT_BE_NULL);
+        super.remove(entity);
     }
 
     /**
      * {@inheritDoc}
      * 
-     * @throws IllegalArgumentException
-     *             when <code>role</code> is <code>null</code>
+     * Triggers <tt>RoleChangedEvent</tt> after completion.
+     * 
+     * @throws ServiceRuntimeException
+     *             when <code>keys</code> is <code>null</code>
+     */
+    @Override
+    @FireAfterTransaction(events = { RoleChangedEvent.class })
+    public void removeByBK(String[] keys) {
+        checkForNull(keys, ExceptionCodes.ROLE_REMOVE_NOT_BE_NULL);
+        super.removeByBK(keys);
+    }
+
+    /**
+     * {@inheritDoc}
+     * 
+     * Triggers <tt>RoleChangedEvent</tt> after completion.
+     * 
+     * @throws ServiceRuntimeException
+     *             when <code>keys</code> is <code>null</code>
+     */
+    @Override
+    @FireAfterTransaction(events = { RoleChangedEvent.class })
+    public void removeByID(Long[] keys) {
+        checkForNull(keys, ExceptionCodes.ROLE_REMOVE_NOT_BE_NULL);
+        super.removeByID(keys);
+    }
+
+    /**
+     * {@inheritDoc}
+     * 
      * @throws ServiceRuntimeException
      *             if the <tt>role</tt> instance is transient but a {@link Role} with the same business key already exists in the
      *             persistence layer
      */
     @Override
     @FireAfterTransaction(events = { RoleChangedEvent.class })
-    public Role save(Role role) {
+    public Role save(Role entity) {
         ServiceRuntimeException.throwIfNull(role,
-                messageSource.getMessage(ExceptionCodes.ROLE_SAVE_NOT_BE_NULL, new String[0], null));
-        if (role.isNew()) {
-            try {
-                dao.persist(role);
-            } catch (PersistenceException | IntegrationRuntimeException ex) {
-                String msg = messageSource.getMessage(ExceptionCodes.ROLE_ALREADY_EXISTS,
-                        new String[] { role.getName() }, null);
-                throw new ServiceRuntimeException(msg);
-            }
-        }
-        return dao.save(role);
-    }
-
-    /**
-     * {@inheritDoc}
-     * 
-     * Marked as <code>readOnly</code> transactional method.
-     */
-    @Override
-    @Transactional(readOnly = true)
-    public List<Role> findAll() {
-        return dao.findAll();
-    }
-
-    /**
-     * @see org.openwms.core.service.RoleService#findByBK(java.lang.String)
-     */
-    @Override
-    public Role findByBK(String name) {
-        Role role = dao.findByUniqueId(name);
-        if (role == null) {
-            throw new EntityNotFoundException(messageSource.getMessage(ExceptionCodes.ROLE_NOT_EXIST,
-                    new String[] { name }, null));
-        }
-        return role;
+                getMessageSource().getMessage(ExceptionCodes.ROLE_SAVE_NOT_BE_NULL, new String[0], null));
+        return super.save(entity);
     }
 }

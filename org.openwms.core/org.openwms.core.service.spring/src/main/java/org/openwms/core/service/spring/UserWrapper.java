@@ -32,7 +32,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 /**
- * An UserWrapper is used as an adapter between <code>Role</code>s or <code>SecurityObject</code>s and Spring's {@link GrantedAuthority}
+ * An UserWrapper is used as an adapter between <code>Role</code>s, <code>SecurityObject</code>s and Spring's {@link GrantedAuthority}
  * objects.
  * 
  * @author <a href="mailto:russelltina@users.sourceforge.net">Tina Russell</a>

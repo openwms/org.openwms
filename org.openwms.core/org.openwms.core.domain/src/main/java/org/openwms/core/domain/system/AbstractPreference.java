@@ -42,7 +42,6 @@ import javax.xml.bind.annotation.XmlValue;
 import org.apache.commons.lang.builder.ToStringBuilder;
 import org.apache.commons.lang.builder.ToStringStyle;
 import org.openwms.core.domain.AbstractEntity;
-import org.openwms.core.domain.DomainObject;
 
 /**
  * An AbstractPreference is a superclass for all other preference classes within the application.
@@ -59,7 +58,7 @@ import org.openwms.core.domain.DomainObject;
 @Inheritance(strategy = InheritanceType.JOINED)
 @Table(name = "COR_PREFERENCE")
 @NamedQueries({ @NamedQuery(name = AbstractPreference.NQ_FIND_ALL, query = "select p from AbstractPreference p") })
-public abstract class AbstractPreference extends AbstractEntity implements DomainObject<Long> {
+public abstract class AbstractPreference extends AbstractEntity<Long> {
 
     private static final long serialVersionUID = 4396571221433949201L;
     /**

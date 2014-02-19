@@ -52,7 +52,6 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 import org.openwms.core.domain.AbstractEntity;
-import org.openwms.core.domain.DomainObject;
 import org.openwms.core.exception.InvalidPasswordException;
 import org.openwms.core.util.validation.AssertUtils;
 import org.slf4j.Logger;
@@ -79,7 +78,7 @@ import org.slf4j.LoggerFactory;
         @NamedQuery(name = User.NQ_FIND_ALL_ORDERED, query = "select u from User u left join fetch u.roles left join fetch u.preferences order by u.username"),
         @NamedQuery(name = User.NQ_FIND_BY_USERNAME, query = "select u from User u left join fetch u.roles left join fetch u.preferences where u.username = ?1"),
         @NamedQuery(name = User.NQ_FIND_BY_USERNAME_PASSWORD, query = "select u from User u left join fetch u.roles left join fetch u.preferences where u.username = :username and u.savedPassword = :password") })
-public class User extends AbstractEntity implements DomainObject<Long> {
+public class User extends AbstractEntity<Long> {
 
     private static final long serialVersionUID = -1116645053773805413L;
     private static final Logger LOGGER = LoggerFactory.getLogger(User.class);
@@ -123,7 +122,7 @@ public class User extends AbstractEntity implements DomainObject<Long> {
      * The <code>User</code>'s password.
      */
     @Column(name = "C_PASSWORD")
-    private String savedPassword;
+    private String persistedPassword;
     /**
      * <code>true</code> if the <code>User</code> is enabled. This field can be managed by the UI application to lock an User manually.
      */
@@ -268,10 +267,6 @@ public class User extends AbstractEntity implements DomainObject<Long> {
         return id == null;
     }
 
-    private void loadLazy() {
-        password = savedPassword;
-    }
-
     /**
      * After load, the saved password is copied to the transient one. The transient one can be overridden by the application to force a
      * password change.
@@ -279,6 +274,10 @@ public class User extends AbstractEntity implements DomainObject<Long> {
     @PostLoad
     public void postLoad() {
         loadLazy();
+    }
+
+    private void loadLazy() {
+        password = persistedPassword;
     }
 
     /**
@@ -357,16 +356,6 @@ public class User extends AbstractEntity implements DomainObject<Long> {
     }
 
     /**
-     * Set the password that shall be stored as new password. Note, that this password is not directly saved.
-     * 
-     * @param password
-     *            The password to change to
-     */
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    /**
      * Checks if the new password is a valid and change the password of this <code>User</code>.
      * 
      * @param password
@@ -376,27 +365,27 @@ public class User extends AbstractEntity implements DomainObject<Long> {
      */
     public void changePassword(String password) throws InvalidPasswordException {
         // FIXME [scherrer] : Setting the same password should fail
-        if (savedPassword != null && savedPassword.equals(password)) {
+        if (persistedPassword != null && persistedPassword.equals(password)) {
             LOGGER.debug("Trying to set the new password equals to the current password");
             return;
         }
         if (isPasswordValid(password)) {
             storeOldPassword(this.password);
-            savedPassword = password;
+            persistedPassword = password;
             this.password = password;
             lastPasswordChange = new Date();
         } else {
-            throw new InvalidPasswordException("Password is not confirm with the defined rules");
+            throw new InvalidPasswordException("Password is not confirm with defined rules");
         }
     }
 
     /**
-     * Checks whether the password is going to be changed from the application side.
+     * Checks whether the password is going to change.
      * 
-     * @return <code>true</code> when the <code>password</code> is different to the saved one, otherwise <code>false</code>
+     * @return <code>true</code> when <code>password</code> is different to the originally persisted one, otherwise <code>false</code>
      */
     public boolean hasPasswordChanged() {
-        return (savedPassword.equals(password));
+        return (persistedPassword.equals(password));
     }
 
     /**

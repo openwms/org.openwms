@@ -28,7 +28,6 @@ import java.util.Collections;
 import java.util.List;
 
 import org.openwms.core.domain.AbstractEntity;
-import org.openwms.core.domain.DomainObject;
 import org.openwms.core.integration.GenericDao;
 
 /**
@@ -59,7 +58,7 @@ public final class ServiceHelper {
      *            An instance of a DAO, used for reloading
      * @return The list of managed entities or an empty list
      */
-    public static <T extends AbstractEntity & DomainObject<ID>, ID extends Serializable> List<T> managedEntities(
+    public static <T extends AbstractEntity<ID>, ID extends Serializable> List<T> managedEntities(
             Collection<T> detachedEntities, GenericDao<T, ID> dao) {
         if (detachedEntities == null || detachedEntities.isEmpty()) {
             return Collections.emptyList();
