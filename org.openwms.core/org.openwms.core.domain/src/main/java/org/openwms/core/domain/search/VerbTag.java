@@ -21,6 +21,8 @@
  */
 package org.openwms.core.domain.search;
 
+import java.io.Serializable;
+
 /**
  * A VerbalTag represents a verb.
  * 
@@ -29,7 +31,7 @@ package org.openwms.core.domain.search;
  * @version $Revision$
  * @since 0.2
  */
-public class VerbTag extends Tag {
+public class VerbTag extends Tag implements Serializable {
 
     private static final long serialVersionUID = -3010950207559198785L;
 

@@ -76,7 +76,7 @@ import org.openwms.core.domain.values.CoreTypeDefinitions;
 @NamedQueries({
         @NamedQuery(name = TransportUnit.NQ_FIND_ALL, query = "select tu from TransportUnit tu"),
         @NamedQuery(name = TransportUnit.NQ_FIND_BY_UNIQUE_QUERY, query = "select tu from TransportUnit tu where tu.barcode = ?1") })
-public class TransportUnit extends AbstractEntity implements DomainObject<Long> {
+public class TransportUnit extends AbstractEntity<Long> implements DomainObject<Long> {
 
     private static final long serialVersionUID = 4799247366681079321L;
 

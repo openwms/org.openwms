@@ -21,6 +21,7 @@
  */
 package org.openwms.core.domain.search;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -41,8 +42,9 @@ import javax.xml.bind.annotation.XmlType;
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "actions", propOrder = { "action" })
-public class Actions {
+public class Actions implements Serializable {
 
+    private static final long serialVersionUID = -8134374894573948880L;
     /**
      * A List of all {@link Action}s.
      */

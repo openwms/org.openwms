@@ -50,7 +50,7 @@ import org.openwms.core.domain.DomainObject;
 @Entity
 @Table(name = "COM_TYPE_PLACING_RULE", uniqueConstraints = @UniqueConstraint(columnNames = { "TRANSPORT_UNIT_TYPE",
         "PRIVILEGE_LEVEL", "ALLOWED_LOCATION_TYPE" }))
-public class TypePlacingRule extends AbstractEntity implements DomainObject<Long>, Rule {
+public class TypePlacingRule extends AbstractEntity<Long> implements DomainObject<Long>, Rule {
 
     private static final long serialVersionUID = 9095722886493210159L;
 

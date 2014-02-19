@@ -21,6 +21,8 @@
  */
 package org.openwms.core.domain.search;
 
+import java.io.Serializable;
+
 /**
  * A NounTag represents a noun.
  * 
@@ -29,7 +31,7 @@ package org.openwms.core.domain.search;
  * @version $Revision$
  * @since 0.2
  */
-public class NounTag extends Tag {
+public class NounTag extends Tag implements Serializable {
 
     private static final long serialVersionUID = -3760619386394202171L;
 

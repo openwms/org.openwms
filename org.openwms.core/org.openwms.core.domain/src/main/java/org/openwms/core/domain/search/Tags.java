@@ -21,6 +21,7 @@
  */
 package org.openwms.core.domain.search;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -40,8 +41,9 @@ import javax.xml.bind.annotation.XmlType;
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "tags", propOrder = { "tag" })
-public class Tags {
+public class Tags implements Serializable {
 
+    private static final long serialVersionUID = -8499374699980525192L;
     /**
      * A List of <code>Tag</code>s.
      */

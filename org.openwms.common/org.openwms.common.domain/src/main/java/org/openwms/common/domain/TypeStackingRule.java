@@ -47,7 +47,7 @@ import org.openwms.core.domain.DomainObject;
 @Entity
 @Table(name = "COM_TYPE_STACKING_RULE", uniqueConstraints = @UniqueConstraint(columnNames = { "TRANSPORT_UNIT_TYPE",
         "NO_TRANSPORT_UNITS", "ALLOWED_TRANSPORT_UNIT_TYPE" }))
-public class TypeStackingRule extends AbstractEntity implements DomainObject<Long>, Rule {
+public class TypeStackingRule extends AbstractEntity<Long> implements DomainObject<Long>, Rule {
 
     private static final long serialVersionUID = 8695359002320051884L;
 

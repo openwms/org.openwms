@@ -48,7 +48,7 @@ import org.openwms.core.domain.DomainObject;
 @NamedQueries({
         @NamedQuery(name = LocationType.NQ_FIND_ALL, query = "select l from LocationType l"),
         @NamedQuery(name = LocationType.NQ_FIND_BY_UNIQUE_QUERY, query = "select l from LocationType l where l.type = ?1") })
-public class LocationType extends AbstractEntity implements DomainObject<Long> {
+public class LocationType extends AbstractEntity<Long> implements DomainObject<Long> {
 
     private static final long serialVersionUID = 7694581168374440182L;
 

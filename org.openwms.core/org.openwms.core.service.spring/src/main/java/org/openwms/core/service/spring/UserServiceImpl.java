@@ -54,7 +54,7 @@ import org.springframework.transaction.annotation.Transactional;
 /**
  * An UserServiceImpl is a Spring supported transactional implementation of a general {@link UserService}. Using Spring 2 annotation support
  * autowires collaborators, therefore XML configuration becomes obsolete. This class is marked with Springs {@link Service} annotation to
- * benefit from Springs exception translation intercepter. Traditional CRUD operations are delegated to an {@link UserDao}.
+ * benefit from Springs exception translation interceptor. Traditional CRUD operations are delegated to an {@link UserDao}.
  * <p>
  * This implementation can be autowired with the name {@value #COMPONENT_NAME}.
  * </p>

@@ -39,7 +39,7 @@ import org.springframework.transaction.annotation.Transactional;
  */
 @Transactional(propagation = Propagation.MANDATORY)
 @Repository(TransportUnitTypeDaoImpl.COMPONENT_NAME)
-public class TransportUnitTypeDaoImpl extends AbstractGenericJpaDao<TransportUnitType, String> implements
+public class TransportUnitTypeDaoImpl extends AbstractGenericJpaDao<TransportUnitType, Long> implements
         TransportUnitTypeDao {
 
     /** Springs component name. */

@@ -60,7 +60,7 @@ import org.springframework.transaction.annotation.Transactional;
  * @see org.springframework.transaction.annotation.Transactional
  */
 @Transactional(propagation = Propagation.MANDATORY)
-public abstract class AbstractGenericJpaDao<T extends AbstractEntity, ID extends Serializable> implements
+public abstract class AbstractGenericJpaDao<T extends AbstractEntity<ID>, ID extends Serializable> implements
         GenericDao<T, ID> {
 
     @PersistenceContext

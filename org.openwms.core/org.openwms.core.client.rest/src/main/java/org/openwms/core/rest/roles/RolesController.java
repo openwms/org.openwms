@@ -123,7 +123,7 @@ public class RolesController extends AbstractWebController {
                 continue;
             }
             try {
-                service.removeByBK(rolename);
+                service.removeByBK(new String[] { rolename });
                 result.add(new ResponseVO.ItemBuilder().wStatus(HttpStatus.OK).wParams(rolename).build());
             } catch (ServiceRuntimeException sre) {
                 resultStatus = HttpStatus.NOT_FOUND;

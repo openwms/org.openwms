@@ -44,7 +44,7 @@ import org.openwms.core.domain.DomainObject;
  */
 @Entity
 @Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
-public abstract class Target extends AbstractEntity implements DomainObject<Long> {
+public abstract class Target extends AbstractEntity<Long> implements DomainObject<Long> {
 
     private static final long serialVersionUID = 10514780154009845L;
 

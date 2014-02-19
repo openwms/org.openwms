@@ -83,8 +83,7 @@ public class SecurityContextUserServiceImplTest extends AbstractMockitoTests {
     }
 
     /**
-     * Test method for
-     * {@link org.openwms.core.service.spring.security.SecurityContextUserServiceImpl#loadUserByUsername(java.lang.String)}
+     * Test method for {@link org.openwms.core.service.spring.security.SecurityContextUserServiceImpl#loadUserByUsername(java.lang.String)}
      * .
      * 
      * Test that the cache works and no service nor dao is called.
@@ -102,13 +101,11 @@ public class SecurityContextUserServiceImplTest extends AbstractMockitoTests {
     }
 
     /**
-     * Test method for
-     * {@link org.openwms.core.service.spring.security.SecurityContextUserServiceImpl#loadUserByUsername(java.lang.String)}
+     * Test method for {@link org.openwms.core.service.spring.security.SecurityContextUserServiceImpl#loadUserByUsername(java.lang.String)}
      * .
      * 
-     * Test for the SystemUser credentials, that user can be cached but not
-     * fetched from the dao. In this test the cache is not tested. We expect
-     * that the cache is empty.
+     * Test for the SystemUser credentials, that user can be cached but not fetched from the dao. In this test the cache is not tested. We
+     * expect that the cache is empty.
      */
     @Test
     public final void testLoadUserByUsernameSystemUser() {
@@ -130,22 +127,21 @@ public class SecurityContextUserServiceImplTest extends AbstractMockitoTests {
     }
 
     /**
-     * Test method for
-     * {@link org.openwms.core.service.spring.security.SecurityContextUserServiceImpl#loadUserByUsername(java.lang.String)}
+     * Test method for {@link org.openwms.core.service.spring.security.SecurityContextUserServiceImpl#loadUserByUsername(java.lang.String)}
      * .
      * 
-     * Test for a usual User not a SystemUser, that User is can be resolved from
-     * the dao and is put in cache afterwards.
+     * Test for a usual User not a SystemUser, that User is can be resolved from the dao and is put in cache afterwards.
      */
     @Test
     public final void testLoadUserByUsernameNotCached() {
         when(userCache.getUserFromCache("NOT_CACHED_USER")).thenReturn(null);
-        when(dao.findByUniqueId("NOT_CACHED_USER")).thenReturn(new User("NOT_CACHED_USER"));
+        when(userService.findByBK("NOT_CACHED_USER")).thenReturn(new User("NOT_CACHED_USER"));
 
-        UserDetails cachedUser = srv.loadUserByUsername("NOT_CACHED_USER");
+        UserDetails cachedUser;
+        cachedUser = srv.loadUserByUsername("NOT_CACHED_USER");
 
         verify(userService, never()).createSystemUser();
-        verify(dao).findByUniqueId("NOT_CACHED_USER");
+        verify(userService).findByBK("NOT_CACHED_USER");
 
         assertTrue(cachedUser instanceof UserWrapper);
         verify(userCache).putUserInCache(((UserWrapper) cachedUser));
@@ -153,17 +149,15 @@ public class SecurityContextUserServiceImplTest extends AbstractMockitoTests {
     }
 
     /**
-     * Test method for
-     * {@link org.openwms.core.service.spring.security.SecurityContextUserServiceImpl#loadUserByUsername(java.lang.String)}
+     * Test method for {@link org.openwms.core.service.spring.security.SecurityContextUserServiceImpl#loadUserByUsername(java.lang.String)}
      * .
      * 
-     * Test that calling the service to load an unknown User fails with an
-     * exception and nothing is put into cache.
+     * Test that calling the service to load an unknown User fails with an exception and nothing is put into cache.
      */
     @Test
     public final void testLoadUserByUsernameNotFound() {
         when(userCache.getUserFromCache("UNKNOWN_USER")).thenReturn(null);
-        when(dao.findByUniqueId("UNKNOWN_USER")).thenReturn(null);
+        when(userService.findByBK("UNKNOWN_USER")).thenReturn(null);
 
         UserDetails cachedUser = null;
         try {
@@ -174,7 +168,7 @@ public class SecurityContextUserServiceImplTest extends AbstractMockitoTests {
         }
 
         verify(userService, never()).createSystemUser();
-        verify(dao).findByUniqueId("UNKNOWN_USER");
+        verify(userService).findByBK("UNKNOWN_USER");
         verify(userCache, never()).putUserInCache(((UserWrapper) cachedUser));
     }
 }

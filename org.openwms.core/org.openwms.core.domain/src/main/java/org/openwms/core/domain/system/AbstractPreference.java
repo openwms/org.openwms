@@ -58,7 +58,7 @@ import org.openwms.core.domain.AbstractEntity;
 @Inheritance(strategy = InheritanceType.JOINED)
 @Table(name = "COR_PREFERENCE")
 @NamedQueries({ @NamedQuery(name = AbstractPreference.NQ_FIND_ALL, query = "select p from AbstractPreference p") })
-public abstract class AbstractPreference extends AbstractEntity<Long> {
+public abstract class AbstractPreference extends AbstractEntity<Long> implements Serializable {
 
     private static final long serialVersionUID = 4396571221433949201L;
     /**

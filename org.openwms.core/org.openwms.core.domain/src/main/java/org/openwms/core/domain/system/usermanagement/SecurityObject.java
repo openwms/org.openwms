@@ -21,6 +21,8 @@
  */
 package org.openwms.core.domain.system.usermanagement;
 
+import java.io.Serializable;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -53,7 +55,7 @@ import org.openwms.core.util.validation.AssertUtils;
 @NamedQueries({
         @NamedQuery(name = SecurityObject.NQ_FIND_ALL, query = "select g from SecurityObject g"),
         @NamedQuery(name = SecurityObject.NQ_FIND_BY_UNIQUE_QUERY, query = "select g from SecurityObject g where g.name = ?1") })
-public class SecurityObject extends AbstractEntity<Long> {
+public class SecurityObject extends AbstractEntity<Long> implements Serializable {
 
     private static final long serialVersionUID = 7585736035228078754L;
     /**

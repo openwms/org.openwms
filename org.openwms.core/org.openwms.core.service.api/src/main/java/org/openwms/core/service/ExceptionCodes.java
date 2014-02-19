@@ -50,11 +50,20 @@ public class ExceptionCodes {
     public static final String USER_CREATE_NOT_BE_NULL = "user.create.null.argument";
     /** Thrown if saving a User was requested with <code>null</code> argument. */
     public static final String USER_SAVE_NOT_BE_NULL = "user.save.null.argument";
-    /** Thrown if saving a User's profile was requested with <code>null</code> argument. */
+    /**
+     * Thrown if saving a User's profile was requested with <code>null</code>
+     * argument.
+     */
     public static final String USER_PROFILE_SAVE_NOT_BE_NULL = "user.profile.save.null.argument";
-    /** Thrown if changing a User's password was requested with <code>null</code> argument. */
+    /**
+     * Thrown if changing a User's password was requested with <code>null</code>
+     * argument.
+     */
     public static final String USER_PASSWORD_SAVE_NOT_BE_NULL = "user.password.save.null.argument";
-    /** Thrown if changing a User's password was requested, but the new password does not match the defined password rules. */
+    /**
+     * Thrown if changing a User's password was requested, but the new password
+     * does not match the defined password rules.
+     */
     public static final String USER_PASSWORD_INVALID = "user.passwort.invalid";
 
     /** Thrown if a Role to persist already exists. */
@@ -68,4 +77,8 @@ public class ExceptionCodes {
     /** Thrown if saving a Role was requested with <code>null</code> argument. */
     public static final String ROLE_SAVE_NOT_BE_NULL = "role.save.null.argument";
 
+    /** Thrown if saving the starup order of Modules was requested with <code>null</code> argument. */
+    public static final String MODULE_SAVE_STARTUP_ORDER_NOT_BE_NULL = "module.save.startup.order.null.argument";
+    /** Thrown if saving a Module was requested with <code>null</code> argument. */
+    public static final String MODULE_SAVE_NOT_BE_NULL = "module.save.null.argument";
 }

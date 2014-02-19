@@ -60,7 +60,7 @@ import org.openwms.core.domain.DomainObject;
 @NamedQueries({
         @NamedQuery(name = TransportUnitType.NQ_FIND_ALL, query = "select tut from TransportUnitType tut order by tut.type"),
         @NamedQuery(name = TransportUnitType.NQ_FIND_BY_NAME, query = "select tut from TransportUnitType tut where tut.type = ?1") })
-public class TransportUnitType extends AbstractEntity implements DomainObject<Long> {
+public class TransportUnitType extends AbstractEntity<Long> implements DomainObject<Long> {
 
     private static final long serialVersionUID = -8223409025971215884L;
 

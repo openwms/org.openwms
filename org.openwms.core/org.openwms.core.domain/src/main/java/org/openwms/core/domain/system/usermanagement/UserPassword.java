@@ -21,6 +21,7 @@
  */
 package org.openwms.core.domain.system.usermanagement;
 
+import java.io.Serializable;
 import java.util.Date;
 
 import javax.persistence.Column;
@@ -50,7 +51,7 @@ import org.openwms.core.util.validation.AssertUtils;
  */
 @Entity
 @Table(name = "COR_USER_PASSWORD")
-public class UserPassword extends AbstractEntity<Long> {
+public class UserPassword extends AbstractEntity<Long> implements Serializable {
 
     private static final long serialVersionUID = 1678609250279381615L;
     /**

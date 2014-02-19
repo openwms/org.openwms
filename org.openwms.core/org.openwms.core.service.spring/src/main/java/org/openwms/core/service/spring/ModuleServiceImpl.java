@@ -25,7 +25,9 @@ import java.util.Collections;
 import java.util.List;
 
 import org.openwms.core.domain.Module;
+import org.openwms.core.integration.GenericDao;
 import org.openwms.core.integration.ModuleDao;
+import org.openwms.core.service.ExceptionCodes;
 import org.openwms.core.service.ModuleService;
 import org.openwms.core.service.exception.ServiceRuntimeException;
 import org.slf4j.Logger;
@@ -35,8 +37,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 /**
- * A ModuleServiceImpl is a Spring powered transactional service using a repository to execute simple CRUD operations. This implementation
- * can be autowired with the name {@value #COMPONENT_NAME}.
+ * A ModuleServiceImpl is a Spring powered transactional service using a
+ * repository to execute simple CRUD operations. This implementation can be
+ * autowired with the name {@value #COMPONENT_NAME}.
  * 
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  * @version $Revision$
@@ -45,91 +48,68 @@ import org.springframework.transaction.annotation.Transactional;
  */
 @Transactional
 @Service(ModuleServiceImpl.COMPONENT_NAME)
-public class ModuleServiceImpl implements ModuleService {
+public class ModuleServiceImpl extends AbstractGenericEntityService<Module, Long, String> implements ModuleService {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(ModuleServiceImpl.class);
     @Autowired
-    private ModuleDao dao;
+    private ModuleDao moduleDao;
     /** Springs component name. */
     public static final String COMPONENT_NAME = "moduleService";
 
     /**
      * {@inheritDoc}
-     * 
-     * Marked as <code>readOnly</code> transactional method.
      */
     @Override
-    @Transactional(readOnly = true)
-    public List<Module> findAll() {
-        return dao.findAll();
+    protected GenericDao<Module, Long> getRepository() {
+        return moduleDao;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    protected Module resolveByBK(Module entity) {
+        return moduleDao.findByUniqueId(entity.getModuleName());
     }
 
     /**
      * {@inheritDoc}
      * 
-     * It is expected that the list of {@link Module}s is already ordered by their startup order. Each {@link Module}'s
-     * <code>startupOrder</code> is synchronized with the persistence storage.
+     * It is expected that the list of {@link Module}s is already ordered by
+     * their startup order. Each {@link Module}'s <code>startupOrder</code> is
+     * synchronized with the persistence storage.
      * 
-     * @throws IllegalArgumentException
-     *             when modules is <code>null</code>
+     * @throws ServiceRuntimeException
+     *             when <code>modules</code> is <code>null</code>
      */
     @Override
     public void saveStartupOrder(List<Module> modules) {
-        ServiceRuntimeException.throwIfNull(modules, "List of modules to save the startupOrder, is null");
+        checkForNull(modules, ExceptionCodes.MODULE_SAVE_STARTUP_ORDER_NOT_BE_NULL);
         for (Module module : modules) {
-            Module toSave = dao.findById(module.getId());
+            Module toSave = findById(module.getId());
             toSave.setStartupOrder(module.getStartupOrder());
-            dao.save(toSave);
+            save(toSave);
         }
     }
 
     /**
      * {@inheritDoc}
      * 
-     * If the {@link Module} entity is a transient instance the method returns with no further action.
+     * Additionally the <code>startupOrder</code> is re-calculated for the new
+     * {@link Module}.
      * 
-     * @throws IllegalArgumentException
-     *             when <code>module</code> is <code>null</code>
      * @throws ServiceRuntimeException
-     *             when the {@link Module} to remove was not found
-     */
-    @Override
-    public void remove(Module module) {
-        ServiceRuntimeException.throwIfNull(module, "Module to be removed must not be null");
-        Module rem = null;
-        if (module.isNew()) {
-            rem = dao.findByUniqueId(module.getModuleName());
-            if (rem == null) {
-                LOGGER.info("Do not remove a transient Module");
-                return;
-            }
-        } else {
-            rem = dao.findById(module.getId());
-            if (rem == null) {
-                throw new ServiceRuntimeException("Module to be removed was not found, probably it was removed before");
-            }
-        }
-        dao.remove(rem);
-    }
-
-    /**
-     * {@inheritDoc}
-     * 
-     * Additionally the <code>startupOrder</code> is re-calculated for a new {@link Module}.
-     * 
-     * @throws IllegalArgumentException
      *             when <code>module</code> is <code>null</code>
      */
     @Override
     public Module save(Module module) {
-        ServiceRuntimeException.throwIfNull(module, "Module to be saved must not be null");
+        checkForNull(module, ExceptionCodes.MODULE_SAVE_NOT_BE_NULL);
         if (module.isNew()) {
-            List<Module> all = dao.findAll();
+            List<Module> all = findAll();
             if (!all.isEmpty()) {
                 Collections.sort(all, new Module.ModuleComparator());
                 module.setStartupOrder(all.get(all.size() - 1).getStartupOrder() + 1);
             }
         }
-        return dao.save(module);
+        return save(module);
     }
 }

@@ -53,7 +53,7 @@ import org.openwms.core.util.validation.AssertUtils;
 @Table(name = "COR_MODULE")
 @NamedQueries({ @NamedQuery(name = Module.NQ_FIND_ALL, query = "select m from Module m order by m.startupOrder"),
         @NamedQuery(name = Module.NQ_FIND_BY_UNIQUE_QUERY, query = "select m from Module m where m.moduleName = ?1") })
-public class Module extends AbstractEntity<Long> {
+public class Module extends AbstractEntity<Long> implements Serializable {
 
     private static final long serialVersionUID = 7358306395032979355L;
     /**

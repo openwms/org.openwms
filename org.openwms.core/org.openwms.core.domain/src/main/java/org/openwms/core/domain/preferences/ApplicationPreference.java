@@ -21,6 +21,8 @@
  */
 package org.openwms.core.domain.preferences;
 
+import java.io.Serializable;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -56,7 +58,7 @@ import org.openwms.core.util.validation.AssertUtils;
 @Entity
 @Table(name = "COR_APP_PREFERENCE", uniqueConstraints = @UniqueConstraint(columnNames = { "C_TYPE", "C_KEY" }))
 @NamedQueries({ @NamedQuery(name = ApplicationPreference.NQ_FIND_ALL, query = "select ap from ApplicationPreference ap") })
-public class ApplicationPreference extends AbstractPreference {
+public class ApplicationPreference extends AbstractPreference implements Serializable {
 
     private static final long serialVersionUID = -2942285512161603092L;
     /**

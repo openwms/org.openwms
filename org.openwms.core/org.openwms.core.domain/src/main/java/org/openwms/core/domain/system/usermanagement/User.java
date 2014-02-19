@@ -77,8 +77,8 @@ import org.slf4j.LoggerFactory;
         @NamedQuery(name = User.NQ_FIND_ALL, query = "select u from User u left join fetch u.roles left join fetch u.preferences"),
         @NamedQuery(name = User.NQ_FIND_ALL_ORDERED, query = "select u from User u left join fetch u.roles left join fetch u.preferences order by u.username"),
         @NamedQuery(name = User.NQ_FIND_BY_USERNAME, query = "select u from User u left join fetch u.roles left join fetch u.preferences where u.username = ?1"),
-        @NamedQuery(name = User.NQ_FIND_BY_USERNAME_PASSWORD, query = "select u from User u left join fetch u.roles left join fetch u.preferences where u.username = :username and u.savedPassword = :password") })
-public class User extends AbstractEntity<Long> {
+        @NamedQuery(name = User.NQ_FIND_BY_USERNAME_PASSWORD, query = "select u from User u left join fetch u.roles left join fetch u.preferences where u.username = :username and u.persistedPassword = :password") })
+public class User extends AbstractEntity<Long> implements Serializable {
 
     private static final long serialVersionUID = -1116645053773805413L;
     private static final Logger LOGGER = LoggerFactory.getLogger(User.class);
