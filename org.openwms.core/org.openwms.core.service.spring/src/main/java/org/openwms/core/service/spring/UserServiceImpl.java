@@ -26,7 +26,6 @@ import java.util.HashSet;
 import org.apache.commons.lang.StringUtils;
 import org.openwms.core.annotation.FireAfterTransaction;
 import org.openwms.core.domain.system.usermanagement.Role;
-import org.openwms.core.domain.system.usermanagement.SecurityObject;
 import org.openwms.core.domain.system.usermanagement.SystemUser;
 import org.openwms.core.domain.system.usermanagement.User;
 import org.openwms.core.domain.system.usermanagement.UserDetails;
@@ -47,7 +46,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.context.MessageSource;
 import org.springframework.security.authentication.dao.SaltSource;
 import org.springframework.security.authentication.encoding.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -79,8 +77,6 @@ public class UserServiceImpl extends AbstractGenericEntityService<User, Long, St
     @Autowired
     private ConfigurationService confSrv;
     @Autowired
-    private MessageSource messageSource;
-    @Autowired
     private PasswordEncoder enc;
     @Autowired
     private SaltSource saltSource;
@@ -92,7 +88,7 @@ public class UserServiceImpl extends AbstractGenericEntityService<User, Long, St
     public static final String COMPONENT_NAME = "userService";
 
     /**
-     * @see org.openwms.core.service.spring.AbstractGenericEntityService#getRepository()
+     * {@inheritDoc}
      */
     @Override
     protected GenericDao<User, Long> getRepository() {
@@ -100,39 +96,25 @@ public class UserServiceImpl extends AbstractGenericEntityService<User, Long, St
     }
 
     /**
-     * @see org.openwms.core.service.UserService#create(org.openwms.core.domain.system.usermanagement.User)
+     * {@inheritDoc}
      */
     @Override
-    public User create(User user) {
-        ServiceRuntimeException.throwIfNull(user,
-                messageSource.getMessage(ExceptionCodes.USER_CREATE_NOT_BE_NULL, new String[0], null));
-        if (!user.isNew()) {
-            String msg = messageSource.getMessage(ExceptionCodes.USER_ALREADY_EXISTS,
-                    new String[] { user.getUsername() }, null);
-            throw new ServiceRuntimeException(msg);
-        }
-        User existingUser = dao.findByUniqueId(user.getUsername());
-        if (existingUser != null) {
-            String msg = messageSource.getMessage(ExceptionCodes.USER_ALREADY_EXISTS,
-                    new String[] { user.getUsername() }, null);
-            throw new ServiceRuntimeException(msg);
-        }
-        dao.persist(user);
-        return dao.save(user);
+    protected User resolveByBK(User entity) {
+        return findByBK(entity.getUsername());
     }
 
     /**
      * {@inheritDoc}
      * 
      * @throws EntityNotFoundException
-     *             when no User was found with this username.
+     *             when no User with <tt>username</tt> found
      */
     @Override
     @FireAfterTransaction(events = { UserChangedEvent.class })
     public void uploadImageFile(String username, byte[] image) {
         User user = dao.findByUniqueId(username);
         if (user == null) {
-            throw new EntityNotFoundException("User with username [" + username + "] not found");
+            throw new EntityNotFoundException(translate(ExceptionCodes.ENTITY_NOT_EXIST, username));
         }
         if (user.getUserDetails() == null) {
             user.setUserDetails(new UserDetails());
@@ -144,18 +126,16 @@ public class UserServiceImpl extends AbstractGenericEntityService<User, Long, St
     /**
      * {@inheritDoc}
      * 
-     * @throws IllegalArgumentException
-     *             when <code>user</code> is <code>null</code>
+     * Triggers <tt>UserChangedEvent</tt> after completion.
+     * 
+     * @throws ServiceRuntimeException
+     *             if the <tt>entity</tt> argument is <code>null</code>
      */
     @Override
     @FireAfterTransaction(events = { UserChangedEvent.class })
-    public User save(User user) {
-        ServiceRuntimeException.throwIfNull(user,
-                messageSource.getMessage(ExceptionCodes.USER_SAVE_NOT_BE_NULL, new String[0], null));
-        if (user.isNew()) {
-            dao.persist(user);
-        }
-        return dao.save(user);
+    public User save(User entity) {
+        checkForNull(entity, ExceptionCodes.USER_SAVE_NOT_BE_NULL);
+        return super.save(entity);
     }
 
     /**
@@ -197,6 +177,7 @@ public class UserServiceImpl extends AbstractGenericEntityService<User, Long, St
      *             when <code>keys</code> is <code>null</code>
      */
     @Override
+    @FireAfterTransaction(events = { UserChangedEvent.class })
     public void removeByID(Long[] keys) {
         checkForNull(keys, ExceptionCodes.USER_REMOVE_NOT_BE_NULL);
         super.removeByID(keys);
@@ -221,11 +202,10 @@ public class UserServiceImpl extends AbstractGenericEntityService<User, Long, St
     @Override
     @Transactional(readOnly = true)
     public SystemUser createSystemUser() {
-        // CHECK [scherrer] : check this
         SystemUser sys = new SystemUser(systemUsername, systemPassword);
         Role role = new Role.Builder(SystemUser.SYSTEM_ROLE_NAME).withDescription("SuperUsers Role").asImmutable()
                 .build();
-        role.setGrants(new HashSet<SecurityObject>(securityObjectDao.findAll()));
+        role.setGrants(new HashSet<>(securityObjectDao.findAll()));
         sys.addRole(role);
         return sys;
     }
@@ -233,52 +213,58 @@ public class UserServiceImpl extends AbstractGenericEntityService<User, Long, St
     /**
      * {@inheritDoc}
      * 
-     * @throws IllegalArgumentException
-     *             when <code>userPassword</code> is <code>null</code>
      * @throws ServiceRuntimeException
-     *             when <code>userPassword</code> is not a valid password
+     *             if
+     *             <ul>
+     *             <li><code>userPassword</code> is <code>null</code></li>
+     *             <li>the new password is invalid and does not match the password rules</li>
+     *             </ul>
      * @throws EntityNotFoundException
-     *             when no {@link User} exist
+     *             if {@link User} not found
      */
     @Override
     @FireAfterTransaction(events = { UserChangedEvent.class })
     public void changeUserPassword(UserPassword userPassword) {
-        ServiceRuntimeException.throwIfNull(userPassword, "Error while changing the user password, new value is null");
+        ServiceRuntimeException.throwIfNull(userPassword, translate(ExceptionCodes.USER_PASSWORD_SAVE_NOT_BE_NULL));
         User entity = dao.findByUniqueId(userPassword.getUser().getUsername());
         if (entity == null) {
-            throw new EntityNotFoundException("User not found, probably not persisted before or has been removed");
+            throw new EntityNotFoundException(translate(ExceptionCodes.USER_NOT_EXIST, userPassword.getUser()
+                    .getUsername()));
         }
         try {
             entity.changePassword(enc.encodePassword(userPassword.getPassword(),
                     saltSource.getSalt(new UserWrapper(entity))));
             dao.save(entity);
         } catch (InvalidPasswordException ipe) {
-            LOGGER.info(ipe.getMessage());
-            throw new ServiceRuntimeException("Password does not match the defined pattern", ipe);
+            LOGGER.error(ipe.getMessage());
+            throw new ServiceRuntimeException(translate(ExceptionCodes.USER_PASSWORD_INVALID, userPassword.getUser()
+                    .getUsername()), ipe);
         }
     }
 
     /**
      * {@inheritDoc}
      * 
-     * @throws IllegalArgumentException
-     *             when <code>user</code> is <code>null</code>
-     * 
-     * @see org.openwms.core.service.UserService#saveUserProfile(org.openwms.core.domain.system.usermanagement.User,
-     *      org.openwms.core.domain.system.usermanagement.UserPassword, org.openwms.core.domain.system.usermanagement.UserPreference[])
+     * @throws ServiceRuntimeException
+     *             if
+     *             <ul>
+     *             <li><code>user</code> is <code>null</code></li>
+     *             <li>the new password is invalid and does not match the password rules</li>
+     *             </ul>
      */
     @Override
     @FireAfterTransaction(events = { UserChangedEvent.class })
     public User saveUserProfile(User user, UserPassword userPassword, UserPreference... prefs) {
-        ServiceRuntimeException.throwIfNull(user,
-                messageSource.getMessage(ExceptionCodes.USER_PROFILE_SAVE_NOT_BE_NULL, new String[0], null));
+        ServiceRuntimeException.throwIfNull(user, translate(ExceptionCodes.USER_PROFILE_SAVE_NOT_BE_NULL));
+
         if (userPassword != null && StringUtils.isNotEmpty(userPassword.getPassword())) {
             try {
                 user.changePassword(enc.encodePassword(userPassword.getPassword(),
                         saltSource.getSalt(new UserWrapper(user))));
             } catch (InvalidPasswordException ipe) {
-                LOGGER.info(ipe.getMessage());
-                throw new ServiceRuntimeException("Password does not match the defined pattern", ipe);
+                LOGGER.error(ipe.getMessage());
+                throw new ServiceRuntimeException(translate(ExceptionCodes.USER_PASSWORD_INVALID,
+                        userPassword.getPassword()), ipe);
             }
         }
         for (UserPreference preference : prefs) {
