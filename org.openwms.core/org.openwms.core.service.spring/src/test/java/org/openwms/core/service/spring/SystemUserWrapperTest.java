@@ -41,7 +41,8 @@ public class SystemUserWrapperTest {
     private static final String TEST_USER = "TEST_USER";
 
     /**
-     * Test method for {@link org.openwms.core.service.spring.SystemUserWrapper#hashCode()}.
+     * Test method for
+     * {@link org.openwms.core.service.spring.SystemUserWrapper#hashCode()}.
      */
     @Test
     public final void testHashCode() {
@@ -66,7 +67,9 @@ public class SystemUserWrapperTest {
     }
 
     /**
-     * Test method for {@link org.openwms.core.service.spring.SystemUserWrapper#addDefaultGrants(java.util.Collection)} .
+     * Test method for
+     * {@link org.openwms.core.service.spring.SystemUserWrapper#addDefaultGrants(java.util.Collection)}
+     * .
      */
     @Test
     public final void testAddDefaultGrants() {
@@ -83,7 +86,8 @@ public class SystemUserWrapperTest {
      * <li>
      * {@link org.openwms.core.service.spring.SystemUserWrapper#getPassword()}.</li>
      * <li>
-     * {@link org.openwms.core.service.spring.SystemUserWrapper#setPassword(java.lang.String)}</li>
+     * {@link org.openwms.core.service.spring.SystemUserWrapper#setPassword(java.lang.String)}
+     * </li>
      * </ul>
      */
     @Test
@@ -95,7 +99,9 @@ public class SystemUserWrapperTest {
     }
 
     /**
-     * Test method for {@link org.openwms.core.service.spring.SystemUserWrapper#equals(java.lang.Object)} .
+     * Test method for
+     * {@link org.openwms.core.service.spring.SystemUserWrapper#equals(java.lang.Object)}
+     * .
      */
     @Test
     public final void testEqualsObject() {
@@ -133,7 +139,8 @@ public class SystemUserWrapperTest {
 
     /**
      * Test method for
-     * {@link org.openwms.core.service.spring.SystemUserWrapper#SystemUserWrapper(org.openwms.core.domain.system.usermanagement.User)} .
+     * {@link org.openwms.core.service.spring.SystemUserWrapper#SystemUserWrapper(org.openwms.core.domain.system.usermanagement.User)}
+     * .
      */
     @Test(expected = IllegalArgumentException.class)
     public final void testSystemUserWrapper() {

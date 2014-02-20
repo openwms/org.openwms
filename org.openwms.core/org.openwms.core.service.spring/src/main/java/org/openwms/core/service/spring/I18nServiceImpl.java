@@ -21,13 +21,15 @@
  */
 package org.openwms.core.service.spring;
 
-import java.util.List;
+import java.util.ArrayList;
+import java.util.Collection;
 
 import org.openwms.core.domain.system.I18n;
+import org.openwms.core.integration.GenericDao;
 import org.openwms.core.integration.I18nRepository;
+import org.openwms.core.service.ExceptionCodes;
 import org.openwms.core.service.I18nService;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.openwms.core.service.exception.ServiceRuntimeException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -40,38 +42,46 @@ import org.springframework.transaction.annotation.Transactional;
  * @since 0.1
  */
 @Transactional
-@Service("i18nService")
-public class I18nServiceImpl implements I18nService {
+@Service(I18nServiceImpl.COMPONENT_NAME)
+public class I18nServiceImpl extends AbstractGenericEntityService<I18n, Long, String> implements I18nService {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(I18nServiceImpl.class);
     @Autowired
-    private I18nRepository repo;
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public List<I18n> findAllTranslations() {
-        return repo.findAll();
-    }
+    private I18nRepository i18nRepository;
+    /** Springs service name. */
+    public static final String COMPONENT_NAME = "i18nService";
 
     /**
      * {@inheritDoc}
      * 
-     * When <code>translations</code> is <code>null</code> or is empty, method returns without any further action.
+     * @throws ServiceRuntimeException
+     *             if the <tt>translations</tt> argument is <code>null</code>
      */
     @Override
-    public void saveTranslations(I18n... translations) {
-        if (null == translations || translations.length == 0) {
-            LOGGER.warn("I18nService called to save translations but these are NULL");
-            return;
+    public Collection<I18n> saveAll(Collection<I18n> translations) {
+        checkForNull(translations, ExceptionCodes.I18N_SAVE_NOT_BE_NULL);
+        Collection<I18n> result = new ArrayList<>(translations.size());
+        for (I18n entity : translations) {
+            if (entity.isNew()) {
+                create(entity);
+            }
+            result.add(save(entity));
         }
-        // TODO [scherrer] : extend repository to be compliant with lists,
-        // instead of looping through all elements
-        for (I18n i18n : translations) {
-            // TODO [scherrer] : Is this implementation safe for persisted
-            // entities?
-            repo.save(i18n);
-        }
+        return result;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    protected GenericDao<I18n, Long> getRepository() {
+        return i18nRepository;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    protected I18n resolveByBK(I18n entity) {
+        return i18nRepository.findByUniqueId(entity.getKey());
     }
 }

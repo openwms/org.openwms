@@ -34,8 +34,10 @@ import org.openwms.core.util.event.RootApplicationEvent;
 public interface EventDispatcher extends EventBroker {
 
     /**
-     * Take an event of type <code>T</code> and dispatch it to all subscribed listeners.<br />
-     * Note: It is not defined whether the event is delivered synchronously or asynchronously.
+     * Take an event of type <code>T</code> and dispatch it to all subscribed
+     * listeners.<br />
+     * Note: It is not defined whether the event is delivered synchronously or
+     * asynchronously.
      * 
      * @param event
      *            The event to deliver

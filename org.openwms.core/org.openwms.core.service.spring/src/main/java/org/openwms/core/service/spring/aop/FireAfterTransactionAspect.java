@@ -35,11 +35,13 @@ import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;
 
 /**
- * An UserChangedEventAspect fires events after a method invocation completes. It's main purpose is to fire events after a transaction
- * succeeds, thereby the advice must be enabled around Spring's Transaction advice.
+ * An UserChangedEventAspect fires events after a method invocation completes.
+ * It's main purpose is to fire events after a transaction succeeds, thereby the
+ * advice must be enabled around Spring's Transaction advice.
  * <p>
- * Use the {@link FireAfterTransaction} event and declare some type of events inside the <code>value</code> attribute. Instances of these
- * events will then be fired after the transaction completes.
+ * Use the {@link FireAfterTransaction} event and declare some type of events
+ * inside the <code>value</code> attribute. Instances of these events will then
+ * be fired after the transaction completes.
  * </p>
  * Example: <blockquote>
  * 
@@ -68,7 +70,8 @@ public class FireAfterTransactionAspect {
     public static final String COMPONENT_NAME = "fireAfterTransactionAspect";
 
     /**
-     * Only {@link ApplicationEvent}s are created and published over Springs {@link ApplicationContext}.
+     * Only {@link ApplicationEvent}s are created and published over Springs
+     * {@link ApplicationContext}.
      * 
      * @param publisher
      *            The instance that is publishing the event
@@ -87,7 +90,8 @@ public class FireAfterTransactionAspect {
     }
 
     /**
-     * Only {@link ApplicationEvent}s are created and published over Springs {@link ApplicationContext}.
+     * Only {@link ApplicationEvent}s are created and published over Springs
+     * {@link ApplicationContext}.
      * 
      * @param publisher
      *            The instance that is publishing the event

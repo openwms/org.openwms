@@ -97,7 +97,8 @@ public class ConfigurationServiceTest extends AbstractMockitoTests {
      * {@link org.openwms.core.service.spring.ConfigurationServiceImpl#onApplicationEvent(org.openwms.core.util.event.MergePropertiesEvent)}
      * .
      * 
-     * Test whether new file preferences are saved to the database after an MergePropertiesEvent is thrown.
+     * Test whether new file preferences are saved to the database after an
+     * MergePropertiesEvent is thrown.
      */
     @Test
     public final void testOnApplicationEvent() {
@@ -115,9 +116,12 @@ public class ConfigurationServiceTest extends AbstractMockitoTests {
     }
 
     /**
-     * Test method for {@link org.openwms.core.service.spring.ConfigurationServiceImpl#findAll()} .
+     * Test method for
+     * {@link org.openwms.core.service.spring.ConfigurationServiceImpl#findAll()}
+     * .
      * 
-     * Test that the service to the right repository and the returned list is the right one.
+     * Test that the service to the right repository and the returned list is
+     * the right one.
      */
     @Test
     public final void testFindAll() {
@@ -127,7 +131,9 @@ public class ConfigurationServiceTest extends AbstractMockitoTests {
     }
 
     /**
-     * Test method for {@link org.openwms.core.service.spring.ConfigurationServiceImpl#findByType(java.lang.Class)} .
+     * Test method for
+     * {@link org.openwms.core.service.spring.ConfigurationServiceImpl#findByType(java.lang.Class)}
+     * .
      */
     @Test
     public final void testFindByType() {
@@ -142,7 +148,8 @@ public class ConfigurationServiceTest extends AbstractMockitoTests {
 
     /**
      * Test method for
-     * {@link org.openwms.core.service.spring.ConfigurationServiceImpl#save(org.openwms.core.domain.system.AbstractPreference)} .
+     * {@link org.openwms.core.service.spring.ConfigurationServiceImpl#save(org.openwms.core.domain.system.AbstractPreference)}
+     * .
      * 
      * Save with <code>null</code> must throw an exception IAE.
      */
@@ -154,7 +161,8 @@ public class ConfigurationServiceTest extends AbstractMockitoTests {
 
     /**
      * Test method for
-     * {@link org.openwms.core.service.spring.ConfigurationServiceImpl#save(org.openwms.core.domain.system.AbstractPreference)} .
+     * {@link org.openwms.core.service.spring.ConfigurationServiceImpl#save(org.openwms.core.domain.system.AbstractPreference)}
+     * .
      */
     @Test
     public final void testSaveNewEntity() {
@@ -168,7 +176,8 @@ public class ConfigurationServiceTest extends AbstractMockitoTests {
 
     /**
      * Test method for
-     * {@link org.openwms.core.service.spring.ConfigurationServiceImpl#save(org.openwms.core.domain.system.AbstractPreference)} .
+     * {@link org.openwms.core.service.spring.ConfigurationServiceImpl#save(org.openwms.core.domain.system.AbstractPreference)}
+     * .
      */
     @Test
     public final void testSaveDuplicatedEntity() {
@@ -183,7 +192,8 @@ public class ConfigurationServiceTest extends AbstractMockitoTests {
 
     /**
      * Test method for
-     * {@link org.openwms.core.service.spring.ConfigurationServiceImpl#save(org.openwms.core.domain.system.AbstractPreference)} .
+     * {@link org.openwms.core.service.spring.ConfigurationServiceImpl#save(org.openwms.core.domain.system.AbstractPreference)}
+     * .
      */
     @Test
     public final void testSaveExistingEntity() {
@@ -199,7 +209,8 @@ public class ConfigurationServiceTest extends AbstractMockitoTests {
 
     /**
      * Test method for
-     * {@link org.openwms.core.service.spring.ConfigurationServiceImpl#remove(org.openwms.core.domain.system.AbstractPreference)} .
+     * {@link org.openwms.core.service.spring.ConfigurationServiceImpl#remove(org.openwms.core.domain.system.AbstractPreference)}
+     * .
      * 
      * Remove with <code>null</code> must throw an exception IAE.
      */
@@ -211,7 +222,8 @@ public class ConfigurationServiceTest extends AbstractMockitoTests {
 
     /**
      * Test method for
-     * {@link org.openwms.core.service.spring.ConfigurationServiceImpl#remove(org.openwms.core.domain.system.AbstractPreference)} .
+     * {@link org.openwms.core.service.spring.ConfigurationServiceImpl#remove(org.openwms.core.domain.system.AbstractPreference)}
+     * .
      * 
      * Simply delegate to the writer.
      */

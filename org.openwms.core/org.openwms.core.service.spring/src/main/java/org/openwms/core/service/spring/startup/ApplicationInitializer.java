@@ -40,7 +40,8 @@ public class ApplicationInitializer implements ApplicationContextInitializer<Con
     /**
      * {@inheritDoc}
      * 
-     * Depending on the underlying platform, different Spring profiles are included.
+     * Depending on the underlying platform, different Spring profiles are
+     * included.
      */
     @Override
     public void initialize(ConfigurableApplicationContext applicationContext) {

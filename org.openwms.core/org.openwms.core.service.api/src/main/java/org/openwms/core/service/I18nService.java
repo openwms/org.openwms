@@ -21,7 +21,7 @@
  */
 package org.openwms.core.service;
 
-import java.util.List;
+import java.util.Collection;
 
 import org.openwms.core.domain.system.I18n;
 
@@ -32,20 +32,15 @@ import org.openwms.core.domain.system.I18n;
  * @version $Revision$
  * @since 0.1
  */
-public interface I18nService {
+public interface I18nService extends GenericEntityService<I18n, Long, String> {
 
     /**
-     * Find and return a list of all translations.
-     * 
-     * @return all translations
-     */
-    List<I18n> findAllTranslations();
-
-    /**
-     * Save an arbitrary collection of translations. No matter, whether entities in the collection already exist or not.
+     * Save an collection of translation instances, no matter whether transient,
+     * detached or managed entities.
      * 
      * @param translations
-     *            An vararg of translations to save
+     *            An collection of translations to save
+     * @return The updated collection
      */
-    void saveTranslations(I18n... translations);
+    Collection<I18n> saveAll(Collection<I18n> translations);
 }

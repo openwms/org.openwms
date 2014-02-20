@@ -55,20 +55,19 @@ public class WebApplicationContextConfiguration extends WebMvcConfigurerAdapter 
      * Set resources directory.
      * 
      * @see org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter#addResourceHandlers(org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry)
-    @Override
-    public void addResourceHandlers(ResourceHandlerRegistry registry) {
-        registry.addResourceHandler("/resources/**").addResourceLocations("/resources/");
-    }
-    */
+     * @Override public void addResourceHandlers(ResourceHandlerRegistry
+     *           registry) {
+     *           registry.addResourceHandler("/resources/**").addResourceLocations
+     *           ("/resources/"); }
+     */
 
     /**
-     * Register default ReloadableResourceBundleMessageSource with a basename <tt>messages</tt>.
+     * Register default ReloadableResourceBundleMessageSource with a basename
+     * <tt>messages</tt>.
      * 
-     * @return the bean
-    public ResourceBundleMessageSource messageSource2() {
-        ResourceBundleMessageSource source = new ResourceBundleMessageSource();
-        source.setBasename("core-service-exceptions");
-        return source;
-    }
+     * @return the bean public ResourceBundleMessageSource messageSource2() {
+     *         ResourceBundleMessageSource source = new
+     *         ResourceBundleMessageSource();
+     *         source.setBasename("core-service-exceptions"); return source; }
      */
 }

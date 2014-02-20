@@ -34,8 +34,6 @@ import org.openwms.core.service.ExceptionCodes;
 import org.openwms.core.service.GenericEntityService;
 import org.openwms.core.service.exception.EntityNotFoundException;
 import org.openwms.core.service.exception.ServiceRuntimeException;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.stereotype.Service;
@@ -43,20 +41,22 @@ import org.springframework.transaction.annotation.Transactional;
 
 /**
  * A AbstractGenericEntityService.
- *
- * @param <BK> The type of business key
- * @param <ID> The type of technical key
- * @param <T>  The type of Entity
+ * 
+ * @param <BK>
+ *            The type of business key
+ * @param <ID>
+ *            The type of technical key
+ * @param <T>
+ *            The type of Entity
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  * @version $Revision: $
  * @since 0.2
  */
 @Service
 public abstract class AbstractGenericEntityService<T extends AbstractEntity<ID>, ID extends Serializable, BK extends Serializable>
-  implements GenericEntityService<T, ID, BK> {
+        implements GenericEntityService<T, ID, BK> {
     @Autowired
     private MessageSource messageSource;
-    private static final Logger LOGGER = LoggerFactory.getLogger(AbstractGenericEntityService.class);
 
     /**
      * {@inheritDoc}
@@ -65,7 +65,7 @@ public abstract class AbstractGenericEntityService<T extends AbstractEntity<ID>,
 
     /**
      * Get the messageSource.
-     *
+     * 
      * @return the messageSource.
      */
     protected MessageSource getMessageSource() {
@@ -74,25 +74,26 @@ public abstract class AbstractGenericEntityService<T extends AbstractEntity<ID>,
 
     /**
      * {@inheritDoc}
-     *
-     * @throws ServiceRuntimeException if
-     *                                 <ul>
-     *                                 <li><tt>entity</tt> is <code>null</code></li>
-     *                                 <li><tt>entity</tt> does not exist</li>
-     *                                 </ul>
+     * 
+     * @throws ServiceRuntimeException
+     *             if
+     *             <ul>
+     *             <li><tt>entity</tt> is <code>null</code></li>
+     *             <li><tt>entity</tt> does not exist</li>
+     *             </ul>
      */
     @Override
     public T create(T entity) {
         checkForNull(entity, ExceptionCodes.ENTITY_NOT_BE_NULL);
         if (!entity.isNew()) {
             String msg = getMessageSource().getMessage(ExceptionCodes.ENTITY_ALREADY_EXISTS, new Object[] { entity },
-              null);
+                    null);
             throw new ServiceRuntimeException(msg);
         }
         T persistedEntity = resolveByBK(entity);
         if (persistedEntity != null) {
             String msg = getMessageSource().getMessage(ExceptionCodes.ENTITY_ALREADY_EXISTS, new Object[] { entity },
-              null);
+                    null);
             throw new ServiceRuntimeException(msg);
         }
         getRepository().persist(entity);
@@ -106,52 +107,55 @@ public abstract class AbstractGenericEntityService<T extends AbstractEntity<ID>,
 
     /**
      * {@inheritDoc}
-     *
-     * @throws EntityNotFoundException if entity with <tt>id</tt> does not exist
+     * 
+     * @throws EntityNotFoundException
+     *             if entity with <tt>id</tt> does not exist
      */
     @Override
     public T findById(ID id) {
         T entity = getRepository().findById(id);
         if (entity == null) {
             throw new EntityNotFoundException(getMessageSource().getMessage(ExceptionCodes.ENTITY_NOT_EXIST,
-              new Object[] { id }, null));
+                    new Object[] { id }, null));
         }
         return entity;
     }
 
     /**
      * {@inheritDoc}
-     * <p/>
+     * 
      * Implementation returns an empty list in case of no result.
-     * <p/>
+     * 
      * Marked as <code>readOnly</code> transactional method.
      */
     @Override
     @Transactional(readOnly = true)
     public List<T> findAll() {
         List<T> result = getRepository().findAll();
-        return result == null ? Collections.<T>emptyList() : result;
+        return result == null ? Collections.<T> emptyList() : result;
     }
 
     /**
      * {@inheritDoc}
-     *
-     * @throws EntityNotFoundException if entity with <tt>key</tt> does not exist
+     * 
+     * @throws EntityNotFoundException
+     *             if entity with <tt>key</tt> does not exist
      */
     @Override
     public T findByBK(BK key) {
         T role = getRepository().findByUniqueId(key);
         if (role == null) {
             throw new EntityNotFoundException(getMessageSource().getMessage(ExceptionCodes.ENTITY_NOT_EXIST,
-              new Object[] { key }, null));
+                    new Object[] { key }, null));
         }
         return role;
     }
 
     /**
      * {@inheritDoc}
-     * <p/>
-     * Handles detached and managed entities. Transient instances will be ignored.
+     * 
+     * Handles detached and managed entities. Transient instances will be
+     * ignored.
      */
     @Override
     public void remove(T entity) {
@@ -165,8 +169,9 @@ public abstract class AbstractGenericEntityService<T extends AbstractEntity<ID>,
 
     /**
      * {@inheritDoc}
-     *
-     * @throws EntityNotFoundException if one of the entities does not exist
+     * 
+     * @throws EntityNotFoundException
+     *             if one of the entities does not exist
      */
     @Override
     public void removeByBK(BK[] keys) {
@@ -175,7 +180,7 @@ public abstract class AbstractGenericEntityService<T extends AbstractEntity<ID>,
                 T entity = getRepository().findByUniqueId(keys[i]);
                 if (entity == null) {
                     String msg = getMessageSource().getMessage(ExceptionCodes.ENTITY_NOT_EXIST,
-                      new Object[] { keys[i] }, null);
+                            new Object[] { keys[i] }, null);
                     throw new EntityNotFoundException(msg);
                 }
                 getRepository().remove(entity);
@@ -185,8 +190,9 @@ public abstract class AbstractGenericEntityService<T extends AbstractEntity<ID>,
 
     /**
      * {@inheritDoc}
-     *
-     * @throws EntityNotFoundException if one of the entities does not exist
+     * 
+     * @throws EntityNotFoundException
+     *             if one of the entities does not exist
      */
     @Override
     public void removeByID(ID[] keys) {
@@ -195,7 +201,7 @@ public abstract class AbstractGenericEntityService<T extends AbstractEntity<ID>,
                 T entity = getRepository().findById(keys[i]);
                 if (entity == null) {
                     String msg = getMessageSource().getMessage(ExceptionCodes.ENTITY_NOT_EXIST,
-                      new Object[] { keys[i] }, null);
+                            new Object[] { keys[i] }, null);
                     throw new EntityNotFoundException(msg);
                 }
                 getRepository().remove(entity);
@@ -213,7 +219,7 @@ public abstract class AbstractGenericEntityService<T extends AbstractEntity<ID>,
                 getRepository().persist(entity);
             } catch (PersistenceException | IntegrationRuntimeException ex) {
                 String msg = getMessageSource().getMessage(ExceptionCodes.ENTITY_ALREADY_EXISTS,
-                  new Object[] { entity }, null);
+                        new Object[] { entity }, null);
                 throw new ServiceRuntimeException(msg);
             }
         }
@@ -221,23 +227,29 @@ public abstract class AbstractGenericEntityService<T extends AbstractEntity<ID>,
     }
 
     /**
-     * Throws an ServiceRuntimeException with <tt>msg</tt> as message text when <tt>args</tt> is null.
-     *
-     * @param args The argument to check
-     * @param msg  The exception message text
+     * Throws an ServiceRuntimeException with <tt>msg</tt> as message text when
+     * <tt>args</tt> is null.
+     * 
+     * @param args
+     *            The argument to check
+     * @param msg
+     *            The exception message text
      */
     protected void checkForNull(Object args, String msg) {
         ServiceRuntimeException.throwIfNull(args, translate(msg));
     }
 
     /**
-     * Translate a given message <tt>code</tt> into a message text with arguments <tt>args</tt>.
-     *
-     * @param code The message code
-     * @param args Interpolated arguments
+     * Translate a given message <tt>code</tt> into a message text with
+     * arguments <tt>args</tt>.
+     * 
+     * @param code
+     *            The message code
+     * @param args
+     *            Interpolated arguments
      * @return The message text
      */
     protected String translate(String code, Object... args) {
-        return messageSource.getMessage(code, args, null);
+        return messageSource.getMessage(code, args == null ? new Object[0] : args, null);
     }
 }

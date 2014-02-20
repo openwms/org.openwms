@@ -50,7 +50,8 @@ public class SimpleEventDispatcher implements EventDispatcher {
     private ApplicationContext ctx;
 
     /**
-     * @see org.openwms.core.service.event.EventBroker#subscribe(java.lang.Class, org.openwms.core.service.event.EventListener)
+     * @see org.openwms.core.service.event.EventBroker#subscribe(java.lang.Class,
+     *      org.openwms.core.service.event.EventListener)
      */
     @Override
     public void subscribe(Class<? extends RootApplicationEvent> event, EventListener listener) {
@@ -72,7 +73,8 @@ public class SimpleEventDispatcher implements EventDispatcher {
     }
 
     /**
-     * @see org.openwms.core.service.event.EventBroker#subscribe(java.lang.Class, java.lang.String)
+     * @see org.openwms.core.service.event.EventBroker#subscribe(java.lang.Class,
+     *      java.lang.String)
      */
     @Override
     public void subscribe(Class<? extends RootApplicationEvent> event, String listenerBeanName) {
@@ -86,7 +88,8 @@ public class SimpleEventDispatcher implements EventDispatcher {
     }
 
     /**
-     * @see org.openwms.core.service.event.EventBroker#unsubscribe(java.lang.Class, org.openwms.core.service.event.EventListener)
+     * @see org.openwms.core.service.event.EventBroker#unsubscribe(java.lang.Class,
+     *      org.openwms.core.service.event.EventListener)
      */
     @Override
     public void unsubscribe(Class<? extends RootApplicationEvent> event, EventListener listener) {
@@ -98,7 +101,8 @@ public class SimpleEventDispatcher implements EventDispatcher {
     }
 
     /**
-     * @see org.openwms.core.service.event.EventBroker#unsubscribe(java.lang.Class, java.lang.String)
+     * @see org.openwms.core.service.event.EventBroker#unsubscribe(java.lang.Class,
+     *      java.lang.String)
      */
     @Override
     public void unsubscribe(Class<? extends RootApplicationEvent> event, String listenerBeanName) {

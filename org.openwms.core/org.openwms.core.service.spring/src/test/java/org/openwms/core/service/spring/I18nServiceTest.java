@@ -22,41 +22,57 @@
 package org.openwms.core.service.spring;
 
 import static org.junit.Assert.assertEquals;
-import static org.mockito.Mockito.never;
+import static org.mockito.Matchers.any;
+import static org.mockito.Matchers.anyObject;
+import static org.mockito.Matchers.anyString;
+import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import java.util.Arrays;
+import java.util.Locale;
 
+import org.junit.Before;
 import org.junit.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.openwms.core.domain.system.I18n;
 import org.openwms.core.integration.I18nRepository;
+import org.openwms.core.service.exception.ServiceRuntimeException;
 import org.openwms.core.test.AbstractMockitoTests;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.context.MessageSource;
 
 /**
  * A I18nServiceTest.
  * 
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  * @version $Revision: $
- * 
+ * @since 0.2
  */
 public class I18nServiceTest extends AbstractMockitoTests {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(I18nServiceTest.class);
     @Mock
     private I18nRepository dao;
+    @Mock
+    private MessageSource messageSource;
     @InjectMocks
     private I18nServiceImpl srv;
 
+    @Before
+    public void onBefore() {
+        when(messageSource.getMessage(anyString(), new Object[] { anyObject() }, any(Locale.class))).thenReturn("");
+    }
+
     /**
-     * Test method for {@link org.openwms.core.service.spring.I18nServiceImpl#findAllTranslations()} .
+     * Test method for
+     * {@link org.openwms.core.service.spring.I18nServiceImpl#findAllTranslations()}
+     * .
      */
     @Test
-    public final void testFindAllTranslations() {
+    public final void testFindAll() {
         LOGGER.debug("5%10:" + 5 % 10);
         LOGGER.debug("5/10:" + 5 / 10);
         LOGGER.debug("11%10:" + 13 % 10);
@@ -65,40 +81,24 @@ public class I18nServiceTest extends AbstractMockitoTests {
         // preparing mocks
         when(dao.findAll()).thenReturn(Arrays.asList(new I18n[] { new I18n() }));
 
-        assertEquals(new I18n(), srv.findAllTranslations().get(0));
+        assertEquals(new I18n(), srv.findAll().get(0));
         verify(dao).findAll();
     }
 
     /**
-     * Test method for {@link org.openwms.core.service.spring.I18nServiceImpl#saveTranslations(org.openwms.core.domain.system.I18n[])} .
-     * 
-     * Test with an empty array argument.
+     * Negative test to call saveAll with <code>null</code> argument.
      */
-    @Test
-    public final void testSaveTranslationsNoArgs() {
-        srv.saveTranslations();
-        verify(dao, never()).save(new I18n());
+    @Test(expected = ServiceRuntimeException.class)
+    public final void testSaveAllWithNull() {
+        srv.saveAll(null);
     }
 
     /**
-     * Test method for {@link org.openwms.core.service.spring.I18nServiceImpl#saveTranslations(org.openwms.core.domain.system.I18n[])} .
-     * 
-     * Test with <code>null</code> argument.
+     * Positive test to save one I18n instance.
      */
     @Test
-    public final void testSaveTranslationsWithNull() {
-        srv.saveTranslations(null);
-        verify(dao, never()).save(new I18n());
-    }
-
-    /**
-     * Test method for {@link org.openwms.core.service.spring.I18nServiceImpl#saveTranslations(org.openwms.core.domain.system.I18n[])} .
-     * 
-     * Test to save an I18n instance.
-     */
-    @Test
-    public final void testSaveTranslations() {
-        srv.saveTranslations(new I18n[] { new I18n() });
-        verify(dao).save(new I18n());
+    public final void testSaveAll() {
+        srv.saveAll(Arrays.asList(new I18n[] { new I18n() }));
+        verify(dao, times(2)).save(new I18n());
     }
 }
