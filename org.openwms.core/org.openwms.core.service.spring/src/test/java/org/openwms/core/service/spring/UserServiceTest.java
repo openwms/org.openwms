@@ -146,7 +146,8 @@ public class UserServiceTest extends AbstractJpaSpringContextTests {
     }
 
     /**
-     * Test method for {@link org.openwms.core.service.spring.UserServiceImpl#remove(User)}.
+     * Test method for
+     * {@link org.openwms.core.service.spring.UserServiceImpl#remove(User)}.
      */
     @Test
     public final void testRemove() {
@@ -165,7 +166,9 @@ public class UserServiceTest extends AbstractJpaSpringContextTests {
     }
 
     /**
-     * Test method for {@link org.openwms.core.service.spring.UserServiceImpl#changeUserPassword(UserPassword)} .
+     * Test method for
+     * {@link org.openwms.core.service.spring.UserServiceImpl#changeUserPassword(UserPassword)}
+     * .
      * 
      * Test to call with null.
      */
@@ -180,7 +183,9 @@ public class UserServiceTest extends AbstractJpaSpringContextTests {
     }
 
     /**
-     * Test method for {@link org.openwms.core.service.spring.UserServiceImpl#changeUserPassword(UserPassword)} .
+     * Test method for
+     * {@link org.openwms.core.service.spring.UserServiceImpl#changeUserPassword(UserPassword)}
+     * .
      * 
      * Test to change it for an unknown user.
      */
@@ -198,7 +203,9 @@ public class UserServiceTest extends AbstractJpaSpringContextTests {
     }
 
     /**
-     * Test method for {@link org.openwms.core.service.spring.UserServiceImpl#changeUserPassword(UserPassword)} .
+     * Test method for
+     * {@link org.openwms.core.service.spring.UserServiceImpl#changeUserPassword(UserPassword)}
+     * .
      * 
      * Test to change the password of an User.
      */
@@ -208,7 +215,9 @@ public class UserServiceTest extends AbstractJpaSpringContextTests {
     }
 
     /**
-     * Test method for {@link org.openwms.core.service.spring.UserServiceImpl#changeUserPassword(UserPassword)} .
+     * Test method for
+     * {@link org.openwms.core.service.spring.UserServiceImpl#changeUserPassword(UserPassword)}
+     * .
      * 
      * Test to change password to an invalid one.
      */
@@ -228,7 +237,8 @@ public class UserServiceTest extends AbstractJpaSpringContextTests {
     }
 
     /**
-     * Test method for {@link org.openwms.core.service.spring.UserServiceImpl#findAll()}.
+     * Test method for
+     * {@link org.openwms.core.service.spring.UserServiceImpl#findAll()}.
      */
     @Test
     public final void testFindAll() {
@@ -236,7 +246,8 @@ public class UserServiceTest extends AbstractJpaSpringContextTests {
     }
 
     /**
-     * Test to verify that the previously User can be found by it's assigned technical key.
+     * Test to verify that the previously User can be found by it's assigned
+     * technical key.
      */
     @Test
     public final void testFindById() {
@@ -247,7 +258,8 @@ public class UserServiceTest extends AbstractJpaSpringContextTests {
     }
 
     /**
-     * This test tries to find an User with a non existing technical id. This must end up in any kind of RuntimeException.
+     * This test tries to find an User with a non existing technical id. This
+     * must end up in any kind of RuntimeException.
      */
     @Test(expected = RuntimeException.class)
     public final void testFindByIdNegative() {
@@ -258,7 +270,9 @@ public class UserServiceTest extends AbstractJpaSpringContextTests {
     }
 
     /**
-     * Test method for {@link org.openwms.core.service.spring.UserServiceImpl#getTemplate(String)} .
+     * Test method for
+     * {@link org.openwms.core.service.spring.UserServiceImpl#getTemplate(String)}
+     * .
      */
     @Test
     public final void testGetTemplate() {
@@ -268,7 +282,9 @@ public class UserServiceTest extends AbstractJpaSpringContextTests {
     }
 
     /**
-     * Test method for {@link org.openwms.core.service.spring.UserServiceImpl#createSystemUser()} .
+     * Test method for
+     * {@link org.openwms.core.service.spring.UserServiceImpl#createSystemUser()}
+     * .
      */
     @Test
     public final void testCreateSystemUser() {

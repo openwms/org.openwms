@@ -85,7 +85,8 @@ public class SecurityServiceTest extends AbstractMockitoTests {
     }
 
     /**
-     * Test method for {@link org.openwms.core.service.spring.SecurityServiceImpl#login()}.
+     * Test method for
+     * {@link org.openwms.core.service.spring.SecurityServiceImpl#login()}.
      */
     @Test
     public final void testLogin() {
@@ -93,7 +94,9 @@ public class SecurityServiceTest extends AbstractMockitoTests {
     }
 
     /**
-     * Test method for {@link org.openwms.core.service.spring.SecurityServiceImpl#mergeGrants(java.lang.String, java.util.List)} .
+     * Test method for
+     * {@link org.openwms.core.service.spring.SecurityServiceImpl#mergeGrants(java.lang.String, java.util.List)}
+     * .
      */
     @Test
     public final void testMergeGrantsWithNull() {
@@ -106,7 +109,9 @@ public class SecurityServiceTest extends AbstractMockitoTests {
     }
 
     /**
-     * Test method for {@link org.openwms.core.service.spring.SecurityServiceImpl#mergeGrants(java.lang.String, java.util.List)} .
+     * Test method for
+     * {@link org.openwms.core.service.spring.SecurityServiceImpl#mergeGrants(java.lang.String, java.util.List)}
+     * .
      * 
      * Add a new Grant.
      */
@@ -142,7 +147,9 @@ public class SecurityServiceTest extends AbstractMockitoTests {
     }
 
     /**
-     * Test method for {@link org.openwms.core.service.spring.SecurityServiceImpl#mergeGrants(java.lang.String, java.util.List)} .
+     * Test method for
+     * {@link org.openwms.core.service.spring.SecurityServiceImpl#mergeGrants(java.lang.String, java.util.List)}
+     * .
      * 
      * Merge existing Grants.
      */

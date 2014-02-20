@@ -77,10 +77,23 @@ public class ExceptionCodes {
     /** Thrown if saving a Role was requested with <code>null</code> argument. */
     public static final String ROLE_SAVE_NOT_BE_NULL = "role.save.null.argument";
 
-    /** Thrown if saving the starup order of Modules was requested with <code>null</code> argument. */
+    /**
+     * Thrown if saving the starup order of Modules was requested with
+     * <code>null</code> argument.
+     */
     public static final String MODULE_SAVE_STARTUP_ORDER_NOT_BE_NULL = "module.save.startup.order.null.argument";
     /** Thrown if saving a Module was requested with <code>null</code> argument. */
     public static final String MODULE_SAVE_NOT_BE_NULL = "module.save.null.argument";
-    /** Thrown if a service method was called with expected modulename but that was <code>null</code>. */
+    /**
+     * Thrown if a service method was called with expected modulename but that
+     * was <code>null</code>.
+     */
     public static final String MODULENAME_NOT_NULL = "module.modulename.null.argument";
+
+    /**
+     * Thrown if a saving a I18n entity was requested with <code>null</code>
+     * argument.
+     */
+    public static final String I18N_SAVE_NOT_BE_NULL = "i18n.save.null.argument";
+
 }

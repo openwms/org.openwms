@@ -29,7 +29,7 @@ import org.springframework.security.core.GrantedAuthority;
 
 /**
  * A SystemUserWrapper.
- *
+ * 
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  * @version $Revision: $
  * @since 0.1
@@ -41,8 +41,9 @@ public class SystemUserWrapper extends UserWrapper implements Serializable {
 
     /**
      * Create a new SystemUserWrapper.
-     *
-     * @param user The wrapped user
+     * 
+     * @param user
+     *            The wrapped user
      */
     public SystemUserWrapper(User user) {
         super(user);
@@ -50,7 +51,7 @@ public class SystemUserWrapper extends UserWrapper implements Serializable {
 
     /**
      * Get the password.
-     *
+     * 
      * @return this password or the password, set in the superclass
      */
     @Override
@@ -60,8 +61,9 @@ public class SystemUserWrapper extends UserWrapper implements Serializable {
 
     /**
      * Set the password.
-     *
-     * @param password The password to set.
+     * 
+     * @param password
+     *            The password to set.
      */
     public void setPassword(String password) {
         this.password = password;

@@ -39,8 +39,9 @@ import org.springframework.stereotype.Component;
 /**
  * A CoreServiceAspect is in conjunction with an AOP aspect for Core services.
  * <p>
- * So far it is used to translate all exceptions into a {@link ServiceRuntimeException} and tracing of methods time consumption. Activation
- * is done in XML instead of using Springs AOP annotations.
+ * So far it is used to translate all exceptions into a
+ * {@link ServiceRuntimeException} and tracing of methods time consumption.
+ * Activation is done in XML instead of using Springs AOP annotations.
  * </p>
  * <p>
  * The aspect can be referenced by name {@value #COMPONENT_NAME}.
@@ -65,7 +66,8 @@ public class CoreServiceAspect {
     public static final String COMPONENT_NAME = "coreServiceAspect";
 
     /**
-     * Called around any service method invocation to log time consumption of each method call.
+     * Called around any service method invocation to log time consumption of
+     * each method call.
      * 
      * @param pjp
      *            the ProceedingJoinPoint object
@@ -99,10 +101,13 @@ public class CoreServiceAspect {
     }
 
     /**
-     * Called after an exception is thrown by classes of the Core service layer. If the exception is not of type
-     * {@link ServiceRuntimeException} it is wrapped by a new {@link ServiceRuntimeException}. We explicitly don't re-throw unknown
-     * exceptions and throw {@link ServiceRuntimeException}s with a general message text instead, because of the internal lowlevel exception
-     * messages aren't very useful and interesting for components calling the service layer.
+     * Called after an exception is thrown by classes of the Core service layer.
+     * If the exception is not of type {@link ServiceRuntimeException} it is
+     * wrapped by a new {@link ServiceRuntimeException}. We explicitly don't
+     * re-throw unknown exceptions and throw {@link ServiceRuntimeException}s
+     * with a general message text instead, because of the internal lowlevel
+     * exception messages aren't very useful and interesting for components
+     * calling the service layer.
      * <p>
      * Turn tracing to level ERROR to log the root cause.
      * </p>

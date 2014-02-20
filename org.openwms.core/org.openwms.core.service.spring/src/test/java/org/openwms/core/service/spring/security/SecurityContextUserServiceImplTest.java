@@ -83,7 +83,8 @@ public class SecurityContextUserServiceImplTest extends AbstractMockitoTests {
     }
 
     /**
-     * Test method for {@link org.openwms.core.service.spring.security.SecurityContextUserServiceImpl#loadUserByUsername(java.lang.String)}
+     * Test method for
+     * {@link org.openwms.core.service.spring.security.SecurityContextUserServiceImpl#loadUserByUsername(java.lang.String)}
      * .
      * 
      * Test that the cache works and no service nor dao is called.
@@ -101,11 +102,13 @@ public class SecurityContextUserServiceImplTest extends AbstractMockitoTests {
     }
 
     /**
-     * Test method for {@link org.openwms.core.service.spring.security.SecurityContextUserServiceImpl#loadUserByUsername(java.lang.String)}
+     * Test method for
+     * {@link org.openwms.core.service.spring.security.SecurityContextUserServiceImpl#loadUserByUsername(java.lang.String)}
      * .
      * 
-     * Test for the SystemUser credentials, that user can be cached but not fetched from the dao. In this test the cache is not tested. We
-     * expect that the cache is empty.
+     * Test for the SystemUser credentials, that user can be cached but not
+     * fetched from the dao. In this test the cache is not tested. We expect
+     * that the cache is empty.
      */
     @Test
     public final void testLoadUserByUsernameSystemUser() {
@@ -127,10 +130,12 @@ public class SecurityContextUserServiceImplTest extends AbstractMockitoTests {
     }
 
     /**
-     * Test method for {@link org.openwms.core.service.spring.security.SecurityContextUserServiceImpl#loadUserByUsername(java.lang.String)}
+     * Test method for
+     * {@link org.openwms.core.service.spring.security.SecurityContextUserServiceImpl#loadUserByUsername(java.lang.String)}
      * .
      * 
-     * Test for a usual User not a SystemUser, that User is can be resolved from the dao and is put in cache afterwards.
+     * Test for a usual User not a SystemUser, that User is can be resolved from
+     * the dao and is put in cache afterwards.
      */
     @Test
     public final void testLoadUserByUsernameNotCached() {
@@ -149,10 +154,12 @@ public class SecurityContextUserServiceImplTest extends AbstractMockitoTests {
     }
 
     /**
-     * Test method for {@link org.openwms.core.service.spring.security.SecurityContextUserServiceImpl#loadUserByUsername(java.lang.String)}
+     * Test method for
+     * {@link org.openwms.core.service.spring.security.SecurityContextUserServiceImpl#loadUserByUsername(java.lang.String)}
      * .
      * 
-     * Test that calling the service to load an unknown User fails with an exception and nothing is put into cache.
+     * Test that calling the service to load an unknown User fails with an
+     * exception and nothing is put into cache.
      */
     @Test
     public final void testLoadUserByUsernameNotFound() {

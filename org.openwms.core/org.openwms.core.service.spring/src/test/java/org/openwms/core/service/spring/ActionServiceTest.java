@@ -54,7 +54,9 @@ public class ActionServiceTest extends AbstractMockitoTests {
     private ActionServiceImpl srv = new ActionServiceImpl();
 
     /**
-     * Test method for {@link org.openwms.core.service.spring.search.ActionServiceImpl#ActionServiceImpl()} .
+     * Test method for
+     * {@link org.openwms.core.service.spring.search.ActionServiceImpl#ActionServiceImpl()}
+     * .
      */
     @Test
     public final void testActionServiceImpl() {
@@ -62,7 +64,9 @@ public class ActionServiceTest extends AbstractMockitoTests {
     }
 
     /**
-     * Test method for {@link org.openwms.core.service.spring.search.ActionServiceImpl#findAllActions()} .
+     * Test method for
+     * {@link org.openwms.core.service.spring.search.ActionServiceImpl#findAllActions()}
+     * .
      */
     @Test
     public final void testFindAllActions() {
@@ -72,7 +76,8 @@ public class ActionServiceTest extends AbstractMockitoTests {
 
     /**
      * Test method for
-     * {@link org.openwms.core.service.spring.search.ActionServiceImpl#findAllActions(org.openwms.core.domain.system.usermanagement.User)} .
+     * {@link org.openwms.core.service.spring.search.ActionServiceImpl#findAllActions(org.openwms.core.domain.system.usermanagement.User)}
+     * .
      */
     @Test
     public final void testFindAllActionsUser() {
@@ -83,7 +88,8 @@ public class ActionServiceTest extends AbstractMockitoTests {
 
     /**
      * Test method for
-     * {@link org.openwms.core.service.spring.search.ActionServiceImpl#findAllTags(org.openwms.core.domain.system.usermanagement.User)} .
+     * {@link org.openwms.core.service.spring.search.ActionServiceImpl#findAllTags(org.openwms.core.domain.system.usermanagement.User)}
+     * .
      */
     @Test
     public final void testFindAllTags() {

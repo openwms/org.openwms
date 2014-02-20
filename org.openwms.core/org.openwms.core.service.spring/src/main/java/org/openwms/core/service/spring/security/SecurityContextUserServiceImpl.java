@@ -46,8 +46,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 /**
- * A SecurityContextUserServiceImpl extends Spring {@link UserDetailsService} to read <code>User</code>s and <code>Role</code>s from the
- * persistent storage and wraps them into security objects.
+ * A SecurityContextUserServiceImpl extends Spring {@link UserDetailsService} to
+ * read <code>User</code>s and <code>Role</code>s from the persistent storage
+ * and wraps them into security objects.
  * <p>
  * The advice can be referenced by name {@value #COMPONENT_NAME}.
  * </p>

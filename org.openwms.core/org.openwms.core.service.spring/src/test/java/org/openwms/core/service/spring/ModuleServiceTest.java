@@ -23,6 +23,7 @@ package org.openwms.core.service.spring;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
@@ -93,8 +94,9 @@ public class ModuleServiceTest extends AbstractJpaSpringContextTests {
     }
 
     /**
-     * Sort the list ascending and descending and call saveStartupOrder. After reloading the list, the right order must be set. This test
-     * expects that the named query to return all is ordered by startupOrder asc.
+     * Sort the list ascending and descending and call saveStartupOrder. After
+     * reloading the list, the right order must be set. This test expects that
+     * the named query to return all is ordered by startupOrder asc.
      */
     @Test
     public final void testSaveStartupOrder() {
@@ -125,33 +127,45 @@ public class ModuleServiceTest extends AbstractJpaSpringContextTests {
         }
     }
 
-    /**
-     * Try to remove transient, detached, persisted modules and null as argument.
-     */
     @Test
-    public final void testRemove() {
+    public final void testRemoveWithNull() {
         try {
             srv.remove(null);
             fail("Should throw an exception when calling with null");
         } catch (ServiceRuntimeException sre) {
             LOGGER.debug("OK: Exception thrown when calling remove with null");
         }
+    }
+
+    @Test
+    public final void testRemoveWithTransient() {
         try {
             srv.remove(new Module(TRANSIENT_MODULE, TRANSIENT_MODULE));
             LOGGER.debug("Must handle to remove transient entities");
         } catch (Exception e) {
             fail("Should not throw an exception when calling with transient entities");
         }
+    }
+
+    @Test
+    public final void testRemoveWithDetached() {
         try {
             srv.remove(new Module(WMS_MODULE, "org.openwms.wms.swf"));
             LOGGER.debug("Must handle to remove detached entities");
-            findByName(WMS_MODULE);
-            fail("Should throw an exception we expect that the entity was removed");
-        } catch (NoResultException nre) {
-            LOGGER.debug("OK: No result, detached module was removed");
+            Module notExist = findByName(WMS_MODULE);
+            assertNotNull(notExist);
+            LOGGER.debug("OK: No exception, detached modules can be removed");
         } catch (Exception e) {
-            fail("Should not throw an exception when calling with detached entities");
+            fail("Must be possible to call remove with detached entites");
         }
+    }
+
+    /**
+     * Try to remove transient, detached, persisted modules and null as
+     * argument.
+     */
+    @Test
+    public final void testRemove() {
         Module persisted = findByName(TMS_MODULE);
         srv.remove(persisted);
         try {

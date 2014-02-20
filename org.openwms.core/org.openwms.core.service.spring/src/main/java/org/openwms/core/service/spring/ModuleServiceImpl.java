@@ -30,8 +30,6 @@ import org.openwms.core.integration.ModuleDao;
 import org.openwms.core.service.ExceptionCodes;
 import org.openwms.core.service.ModuleService;
 import org.openwms.core.service.exception.ServiceRuntimeException;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -110,6 +108,6 @@ public class ModuleServiceImpl extends AbstractGenericEntityService<Module, Long
                 module.setStartupOrder(all.get(all.size() - 1).getStartupOrder() + 1);
             }
         }
-        return save(module);
+        return super.save(module);
     }
 }

@@ -44,7 +44,6 @@ import org.openwms.core.util.event.UserChangedEvent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.dao.SaltSource;
 import org.springframework.security.authentication.encoding.PasswordEncoder;
@@ -52,9 +51,12 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 /**
- * An UserServiceImpl is a Spring supported transactional implementation of a general {@link UserService}. Using Spring 2 annotation support
- * autowires collaborators, therefore XML configuration becomes obsolete. This class is marked with Springs {@link Service} annotation to
- * benefit from Springs exception translation interceptor. Traditional CRUD operations are delegated to an {@link UserDao}.
+ * An UserServiceImpl is a Spring supported transactional implementation of a
+ * general {@link UserService}. Using Spring 2 annotation support autowires
+ * collaborators, therefore XML configuration becomes obsolete. This class is
+ * marked with Springs {@link Service} annotation to benefit from Springs
+ * exception translation interceptor. Traditional CRUD operations are delegated
+ * to an {@link UserDao}.
  * <p>
  * This implementation can be autowired with the name {@value #COMPONENT_NAME}.
  * </p>
@@ -72,7 +74,6 @@ public class UserServiceImpl extends AbstractGenericEntityService<User, Long, St
     @Autowired
     private UserDao dao;
     @Autowired
-    @Qualifier("securityObjectDao")
     private SecurityObjectDao securityObjectDao;
     @Autowired
     private ConfigurationService confSrv;
@@ -217,7 +218,8 @@ public class UserServiceImpl extends AbstractGenericEntityService<User, Long, St
      *             if
      *             <ul>
      *             <li><code>userPassword</code> is <code>null</code></li>
-     *             <li>the new password is invalid and does not match the password rules</li>
+     *             <li>the new password is invalid and does not match the
+     *             password rules</li>
      *             </ul>
      * @throws EntityNotFoundException
      *             if {@link User} not found
@@ -249,7 +251,8 @@ public class UserServiceImpl extends AbstractGenericEntityService<User, Long, St
      *             if
      *             <ul>
      *             <li><code>user</code> is <code>null</code></li>
-     *             <li>the new password is invalid and does not match the password rules</li>
+     *             <li>the new password is invalid and does not match the
+     *             password rules</li>
      *             </ul>
      */
     @Override

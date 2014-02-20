@@ -33,11 +33,9 @@ import org.openwms.core.integration.SecurityObjectDao;
 import org.openwms.core.service.ExceptionCodes;
 import org.openwms.core.service.SecurityService;
 import org.openwms.core.util.event.UserChangedEvent;
-import org.openwms.core.util.validation.AssertUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -50,7 +48,8 @@ import org.springframework.transaction.annotation.Transactional;
  */
 @Transactional
 @Service(SecurityServiceImpl.COMPONENT_NAME)
-public class SecurityServiceImpl extends AbstractGenericEntityService<SecurityObject, Long, String> implements SecurityService {
+public class SecurityServiceImpl extends AbstractGenericEntityService<SecurityObject, Long, String> implements
+        SecurityService {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(SecurityServiceImpl.class);
     @Autowired
@@ -64,8 +63,9 @@ public class SecurityServiceImpl extends AbstractGenericEntityService<SecurityOb
     /**
      * {@inheritDoc}
      * 
-     * Marked as <code>readOnly</code> transactional method. Only a trace message is written. This method is solely responsible to activate
-     * the security filter chain.
+     * Marked as <code>readOnly</code> transactional method. Only a trace
+     * message is written. This method is solely responsible to activate the
+     * security filter chain.
      */
     @Override
     @Transactional(readOnly = true)
@@ -75,7 +75,7 @@ public class SecurityServiceImpl extends AbstractGenericEntityService<SecurityOb
 
     /**
      * {@inheritDoc}
-     *
+     * 
      * Triggers <tt>UserChangedEvent</tt> after completion.
      */
     @Override

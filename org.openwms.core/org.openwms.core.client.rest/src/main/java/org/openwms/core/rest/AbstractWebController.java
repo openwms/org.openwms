@@ -49,11 +49,13 @@ public abstract class AbstractWebController {
     private Validator validator;
 
     /**
-     * All general exceptions thrown by services are caught here and translated into http conform responses with a status code {@value
-     * HttpStatus.INTERNAL_SERVER_ERROR}.
-     *
-     * @param ex The exception occurred
-     * @return A response object that wraps the server result
+     * All general exceptions thrown by services are caught here and translated
+     * into http conform responses with a status code
+     * {@code 500 Internal Server Error}.
+     * 
+     * @param ex
+     *            The exception occurred
+     * @return A response object wraps the server result
      */
     @ExceptionHandler(Exception.class)
     public ResponseEntity<ResponseVO> handleException(Exception ex) {
@@ -66,27 +68,30 @@ public abstract class AbstractWebController {
               HttpStatus.INTERNAL_SERVER_ERROR);
         }
         return new ResponseEntity<>(new ResponseVO(ex.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR),
-          HttpStatus.INTERNAL_SERVER_ERROR);
+                HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
     /**
-     * Transforming {@link MethodArgumentNotValidException} {@link ValidationException} into server error {@value
-     * HttpStatus.INTERNAL_SERVER_ERROR} responses with according validation error message text.
-     *
-     * @param ex
-     * @return
+     * Transforming {@link MethodArgumentNotValidException}
+     * {@link ValidationException} into server error
+     * {@code 500 Internal Server Error} responses with according validation
+     * error message text.
+     * 
+     * @return A response object wraps the server result
      */
     @ExceptionHandler({ MethodArgumentNotValidException.class, ValidationException.class })
-    public ResponseEntity<ResponseVO> handleValidationException(Exception ex) {
+    public ResponseEntity<ResponseVO> handleValidationException() {
         return new ResponseEntity<>(new ResponseVO(translate(ExceptionCodes.VALIDATION_ERROR),
-          HttpStatus.INTERNAL_SERVER_ERROR), HttpStatus.INTERNAL_SERVER_ERROR);
+                HttpStatus.INTERNAL_SERVER_ERROR), HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
     /**
      * Get the messageSource.
-     *
-     * @param key The error code to search message text for
-     * @param objects Any arguments that are passed into the message text
+     * 
+     * @param key
+     *            The error code to search message text for
+     * @param objects
+     *            Any arguments that are passed into the message text
      * @return the messageSource.
      */
     protected String translate(String key, Object... objects) {

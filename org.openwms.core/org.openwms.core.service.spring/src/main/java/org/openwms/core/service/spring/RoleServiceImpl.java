@@ -34,9 +34,12 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 /**
- * A RoleServiceImpl is a Spring supported transactional implementation of a general {@link RoleService}. Using Spring 2 annotation support
- * autowires collaborators, therefore XML configuration becomes obsolete. This class is marked with Springs {@link Service} annotation to
- * benefit from Springs exception translation intercepter. Traditional CRUD operations are delegated to a {@link RoleDao} instance.
+ * A RoleServiceImpl is a Spring supported transactional implementation of a
+ * general {@link RoleService}. Using Spring 2 annotation support autowires
+ * collaborators, therefore XML configuration becomes obsolete. This class is
+ * marked with Springs {@link Service} annotation to benefit from Springs
+ * exception translation intercepter. Traditional CRUD operations are delegated
+ * to a {@link RoleDao} instance.
  * <p>
  * This implementation can be autowired with the name {@value #COMPONENT_NAME}.
  * </p>

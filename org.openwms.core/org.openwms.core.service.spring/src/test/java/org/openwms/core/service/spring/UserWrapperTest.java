@@ -44,7 +44,9 @@ public class UserWrapperTest {
     private static final String TEST_USER = "TEST_USER";
 
     /**
-     * Test method for {@link org.openwms.core.service.spring.UserWrapper#UserWrapper(org.openwms.core.domain.system.usermanagement.User)} .
+     * Test method for
+     * {@link org.openwms.core.service.spring.UserWrapper#UserWrapper(org.openwms.core.domain.system.usermanagement.User)}
+     * .
      */
     @Test(expected = IllegalArgumentException.class)
     public final void testUserWrapperForNull() {
@@ -52,7 +54,9 @@ public class UserWrapperTest {
     }
 
     /**
-     * Test method for {@link org.openwms.core.service.spring.UserWrapper#UserWrapper(org.openwms.core.domain.system.usermanagement.User)} .
+     * Test method for
+     * {@link org.openwms.core.service.spring.UserWrapper#UserWrapper(org.openwms.core.domain.system.usermanagement.User)}
+     * .
      */
     @Test
     public final void testUserWrapper() {
@@ -61,7 +65,8 @@ public class UserWrapperTest {
     }
 
     /**
-     * Test method for {@link org.openwms.core.service.spring.UserWrapper#getAuthorities()}.
+     * Test method for
+     * {@link org.openwms.core.service.spring.UserWrapper#getAuthorities()}.
      */
     @Test
     public final void testGetAuthoritiesWithNull() {
@@ -70,7 +75,8 @@ public class UserWrapperTest {
     }
 
     /**
-     * Test method for {@link org.openwms.core.service.spring.UserWrapper#getAuthorities()}.
+     * Test method for
+     * {@link org.openwms.core.service.spring.UserWrapper#getAuthorities()}.
      */
     @Test
     public final void testGetAuthorities() {
@@ -86,7 +92,8 @@ public class UserWrapperTest {
     }
 
     /**
-     * Test method for {@link org.openwms.core.service.spring.UserWrapper#getPassword()}.
+     * Test method for
+     * {@link org.openwms.core.service.spring.UserWrapper#getPassword()}.
      * 
      * @throws Exception
      */
@@ -99,7 +106,8 @@ public class UserWrapperTest {
     }
 
     /**
-     * Test method for {@link org.openwms.core.service.spring.UserWrapper#getUsername()}.
+     * Test method for
+     * {@link org.openwms.core.service.spring.UserWrapper#getUsername()}.
      */
     @Test
     public final void testGetUsername() {
@@ -109,7 +117,9 @@ public class UserWrapperTest {
     }
 
     /**
-     * Test method for {@link org.openwms.core.service.spring.UserWrapper#isAccountNonExpired()} .
+     * Test method for
+     * {@link org.openwms.core.service.spring.UserWrapper#isAccountNonExpired()}
+     * .
      */
     @Test
     public final void testIsAccountNonExpired() {
@@ -119,7 +129,8 @@ public class UserWrapperTest {
     }
 
     /**
-     * Test method for {@link org.openwms.core.service.spring.UserWrapper#isAccountNonLocked()}.
+     * Test method for
+     * {@link org.openwms.core.service.spring.UserWrapper#isAccountNonLocked()}.
      */
     @Test
     public final void testIsAccountNonLocked() {
@@ -129,7 +140,9 @@ public class UserWrapperTest {
     }
 
     /**
-     * Test method for {@link org.openwms.core.service.spring.UserWrapper#isCredentialsNonExpired()} .
+     * Test method for
+     * {@link org.openwms.core.service.spring.UserWrapper#isCredentialsNonExpired()}
+     * .
      */
     @Test
     public final void testIsCredentialsNonExpired() {
@@ -139,7 +152,8 @@ public class UserWrapperTest {
     }
 
     /**
-     * Test method for {@link org.openwms.core.service.spring.UserWrapper#isEnabled()}.
+     * Test method for
+     * {@link org.openwms.core.service.spring.UserWrapper#isEnabled()}.
      */
     @Test
     public final void testIsEnabled() {
@@ -149,7 +163,9 @@ public class UserWrapperTest {
     }
 
     /**
-     * Test method for {@link org.openwms.core.service.spring.UserWrapper#equals(java.lang.Object)} .
+     * Test method for
+     * {@link org.openwms.core.service.spring.UserWrapper#equals(java.lang.Object)}
+     * .
      */
     @Test
     public final void testEqualsObject() {
@@ -173,7 +189,8 @@ public class UserWrapperTest {
     }
 
     /**
-     * Test method for {@link org.openwms.core.service.spring.UserWrapper#hashCode()} .
+     * Test method for
+     * {@link org.openwms.core.service.spring.UserWrapper#hashCode()} .
      */
     @Test
     public final void testHashCode() {
@@ -198,7 +215,8 @@ public class UserWrapperTest {
     }
 
     /**
-     * Test method for {@link org.openwms.core.service.spring.UserWrapper#toString()}.
+     * Test method for
+     * {@link org.openwms.core.service.spring.UserWrapper#toString()}.
      */
     @Test
     public final void testToString() {
