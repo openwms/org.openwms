@@ -22,14 +22,15 @@
 package org.openwms.core.service.spring;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 import org.openwms.core.annotation.FireAfterTransaction;
 import org.openwms.core.domain.system.usermanagement.Grant;
 import org.openwms.core.domain.system.usermanagement.SecurityObject;
+import org.openwms.core.integration.GenericDao;
 import org.openwms.core.integration.RoleDao;
 import org.openwms.core.integration.SecurityObjectDao;
+import org.openwms.core.service.ExceptionCodes;
 import org.openwms.core.service.SecurityService;
 import org.openwms.core.util.event.UserChangedEvent;
 import org.openwms.core.util.validation.AssertUtils;
@@ -41,7 +42,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 /**
- * A SecurityServiceImpl.
+ * A SecurityServiceImpl is a transactional Spring Service implementation.
  * 
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  * @version $Revision$
@@ -49,26 +50,16 @@ import org.springframework.transaction.annotation.Transactional;
  */
 @Transactional
 @Service(SecurityServiceImpl.COMPONENT_NAME)
-public class SecurityServiceImpl implements SecurityService {
+public class SecurityServiceImpl extends AbstractGenericEntityService<SecurityObject, Long, String> implements SecurityService {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(SecurityServiceImpl.class);
     @Autowired
-    @Qualifier("securityObjectDao")
-    private SecurityObjectDao dao;
-    @Autowired(required = true)
-    @Qualifier("roleDao")
+    private SecurityObjectDao securityObjectDao;
+    @Autowired
     private RoleDao roleDao;
+
     /** Springs component name. */
     public static final String COMPONENT_NAME = "securityService";
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public List<SecurityObject> findAll() {
-        List<SecurityObject> result = dao.findAll();
-        return result == null ? Collections.<SecurityObject> emptyList() : result;
-    }
 
     /**
      * {@inheritDoc}
@@ -84,24 +75,23 @@ public class SecurityServiceImpl implements SecurityService {
 
     /**
      * {@inheritDoc}
+     *
+     * Triggers <tt>UserChangedEvent</tt> after completion.
      */
     @Override
     @FireAfterTransaction(events = { UserChangedEvent.class })
     public List<Grant> mergeGrants(String moduleName, List<Grant> grants) {
-        AssertUtils.notNull(moduleName, "Modulename must not be null");
+        checkForNull(moduleName, translate(ExceptionCodes.MODULENAME_NOT_NULL));
         if (LOGGER.isDebugEnabled()) {
             LOGGER.debug("Merging grants of module:" + moduleName);
         }
-        List<Grant> persisted = dao.findAllOfModule(moduleName + "%");
-        List<Grant> result = new ArrayList<Grant>(persisted);
-        Grant merged = null;
+        List<Grant> persisted = securityObjectDao.findAllOfModule(moduleName + "%");
+        List<Grant> result = new ArrayList<>(persisted);
+        Grant merged;
         for (Grant grant : grants) {
             if (!persisted.contains(grant)) {
-                merged = (Grant) dao.merge(grant);
+                merged = (Grant) securityObjectDao.merge(grant);
                 result.add(merged);
-                // if (persisted.contains(merged)) {
-                // persisted.remove(merged);
-                // }
             } else {
                 persisted.remove(grant);
             }
@@ -109,8 +99,24 @@ public class SecurityServiceImpl implements SecurityService {
         result.removeAll(persisted);
         if (!persisted.isEmpty()) {
             roleDao.removeFromRoles(persisted);
-            dao.delete(persisted);
+            securityObjectDao.delete(persisted);
         }
         return result;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    protected GenericDao<SecurityObject, Long> getRepository() {
+        return securityObjectDao;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    protected SecurityObject resolveByBK(SecurityObject entity) {
+        return null;
     }
 }
