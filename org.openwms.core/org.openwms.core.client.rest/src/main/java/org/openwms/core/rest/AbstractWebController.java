@@ -34,7 +34,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 
 /**
  * A AbstractWebController.
- * 
+ *
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  * @version $Revision: $
  * @since 0.1
@@ -51,9 +51,8 @@ public abstract class AbstractWebController {
     /**
      * All general exceptions thrown by services are caught here and translated into http conform responses with a status code {@value
      * HttpStatus.INTERNAL_SERVER_ERROR}.
-     * 
-     * @param ex
-     *            The exception occurred
+     *
+     * @param ex The exception occurred
      * @return A response object that wraps the server result
      */
     @ExceptionHandler(Exception.class)
@@ -64,33 +63,33 @@ public abstract class AbstractWebController {
         }
         if (ex.getClass().equals(ValidationException.class)) {
             return new ResponseEntity<>(new ResponseVO(ex.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR),
-                    HttpStatus.INTERNAL_SERVER_ERROR);
+              HttpStatus.INTERNAL_SERVER_ERROR);
         }
         return new ResponseEntity<>(new ResponseVO(ex.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR),
-                HttpStatus.INTERNAL_SERVER_ERROR);
+          HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
+    /**
+     * Transforming {@link MethodArgumentNotValidException} {@link ValidationException} into server error {@value
+     * HttpStatus.INTERNAL_SERVER_ERROR} responses with according validation error message text.
+     *
+     * @param ex
+     * @return
+     */
     @ExceptionHandler({ MethodArgumentNotValidException.class, ValidationException.class })
     public ResponseEntity<ResponseVO> handleValidationException(Exception ex) {
         return new ResponseEntity<>(new ResponseVO(translate(ExceptionCodes.VALIDATION_ERROR),
-                HttpStatus.INTERNAL_SERVER_ERROR), HttpStatus.INTERNAL_SERVER_ERROR);
+          HttpStatus.INTERNAL_SERVER_ERROR), HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
     /**
      * Get the messageSource.
-     * 
+     *
+     * @param key The error code to search message text for
+     * @param objects Any arguments that are passed into the message text
      * @return the messageSource.
      */
     protected String translate(String key, Object... objects) {
         return messageSource.getMessage(key, objects, null);
-    }
-
-    /**
-     * Get the validator.
-     * 
-     * @return the validator.
-     */
-    protected Validator getValidator() {
-        return validator;
     }
 }
