@@ -81,4 +81,6 @@ public class ExceptionCodes {
     public static final String MODULE_SAVE_STARTUP_ORDER_NOT_BE_NULL = "module.save.startup.order.null.argument";
     /** Thrown if saving a Module was requested with <code>null</code> argument. */
     public static final String MODULE_SAVE_NOT_BE_NULL = "module.save.null.argument";
+    /** Thrown if a service method was called with expected modulename but that was <code>null</code>. */
+    public static final String MODULENAME_NOT_NULL = "module.modulename.null.argument";
 }

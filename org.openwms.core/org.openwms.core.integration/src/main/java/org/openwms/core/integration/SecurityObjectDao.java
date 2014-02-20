@@ -33,14 +33,7 @@ import org.openwms.core.domain.system.usermanagement.SecurityObject;
  * @version $Revision$
  * @since 0.1
  */
-public interface SecurityObjectDao {
-
-    /**
-     * Find and retrieve all {@link SecurityObject}s.
-     * 
-     * @return a list of {@link SecurityObject}s. <code>null</code> might be possible as well, see the particular implementation
-     */
-    List<SecurityObject> findAll();
+public interface SecurityObjectDao extends GenericDao< SecurityObject, Long>{
 
     /**
      * Find and retrieve all {@link SecurityObject}s that belong to a given <code>Module</code>.

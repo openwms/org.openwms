@@ -24,23 +24,17 @@ package org.openwms.core.service;
 import java.util.List;
 
 import org.openwms.core.domain.system.usermanagement.Grant;
+import org.openwms.core.domain.system.usermanagement.Role;
 import org.openwms.core.domain.system.usermanagement.SecurityObject;
 
 /**
- * A SecurityService defines functionality to handle <code>SecurityObject</code> s, especially <code>Grant</code>s.
+ * A SecurityService defines functionality to handle <code>SecurityObject</code>s, especially <code>Grant</code>s.
  * 
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  * @version $Revision$
  * @since 0.1
  */
-public interface SecurityService {
-
-    /**
-     * Find and return all {@link SecurityObject}s or an empty List.
-     * 
-     * @return A List of {@link SecurityObject}s or an empty List
-     */
-    List<SecurityObject> findAll();
+public interface SecurityService extends GenericEntityService<SecurityObject, Long, String> {
 
     /**
      * Merge a list of persisted, detached or transient {@link Grant}s of a particular <code>Module</code>.

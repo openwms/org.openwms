@@ -46,7 +46,7 @@ import org.springframework.transaction.annotation.Transactional;
  */
 @Transactional(propagation = Propagation.MANDATORY)
 @Repository(SecurityObjectDaoImpl.COMPONENT_NAME)
-public class SecurityObjectDaoImpl implements SecurityObjectDao {
+public class SecurityObjectDaoImpl extends AbstractGenericJpaDao<SecurityObject, Long> implements SecurityObjectDao {
 
     @PersistenceContext
     private EntityManager em;
@@ -71,18 +71,9 @@ public class SecurityObjectDaoImpl implements SecurityObjectDao {
      */
     @SuppressWarnings("unchecked")
     @Override
-    public List<SecurityObject> findAll() {
-        return em.createQuery("select g from Grant g").getResultList();
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @SuppressWarnings("unchecked")
-    @Override
     public List<Grant> findAllOfModule(String moduleName) {
         return em.createQuery("select g from Grant g where g.name like :moduleName")
-                .setParameter("moduleName", moduleName).getResultList();
+          .setParameter("moduleName", moduleName).getResultList();
     }
 
     /**
@@ -92,4 +83,38 @@ public class SecurityObjectDaoImpl implements SecurityObjectDao {
     public SecurityObject merge(SecurityObject entity) {
         return em.merge(entity);
     }
+
+    /**
+     * {@inheritDoc}
+     */
+    @SuppressWarnings("unchecked")
+    @Override
+    public List<SecurityObject> findAll() {
+        return em.createQuery("select g from Grant g").getResultList();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    protected Class<SecurityObject> getPersistentClass() {
+        return SecurityObject.class;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    protected String getFindAllQuery() {
+        return SecurityObject.NQ_FIND_ALL;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    protected String getFindByUniqueIdQuery() {
+        return SecurityObject.NQ_FIND_BY_UNIQUE_QUERY;
+    }
+
 }
