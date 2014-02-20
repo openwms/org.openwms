@@ -46,7 +46,8 @@ import javax.xml.bind.annotation.XmlTransient;
  * </p>
  * <strong>NOTE:</strong><br />
  * This class uses the uid for comparison with {@link #equals(Object)} and calculation of {@link #hashCode()}.
- * 
+ *
+ * @param <ID> The type of technical key
  * @author <a href="mailto:russelltina@users.sourceforge.net">Tina Russell</a>
  * @version $Revision$
  * @since 0.1

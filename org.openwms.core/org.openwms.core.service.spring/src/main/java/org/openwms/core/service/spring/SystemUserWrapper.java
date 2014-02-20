@@ -21,6 +21,7 @@
  */
 package org.openwms.core.service.spring;
 
+import java.io.Serializable;
 import java.util.Collection;
 
 import org.openwms.core.domain.system.usermanagement.User;
@@ -28,20 +29,20 @@ import org.springframework.security.core.GrantedAuthority;
 
 /**
  * A SystemUserWrapper.
- * 
+ *
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  * @version $Revision: $
  * @since 0.1
  */
-public class SystemUserWrapper extends UserWrapper {
+public class SystemUserWrapper extends UserWrapper implements Serializable {
 
     private static final long serialVersionUID = 8133894040625998710L;
     private String password;
 
     /**
      * Create a new SystemUserWrapper.
-     * 
-     * @param user
+     *
+     * @param user The wrapped user
      */
     public SystemUserWrapper(User user) {
         super(user);
@@ -49,7 +50,7 @@ public class SystemUserWrapper extends UserWrapper {
 
     /**
      * Get the password.
-     * 
+     *
      * @return this password or the password, set in the superclass
      */
     @Override
@@ -59,9 +60,8 @@ public class SystemUserWrapper extends UserWrapper {
 
     /**
      * Set the password.
-     * 
-     * @param password
-     *            The password to set.
+     *
+     * @param password The password to set.
      */
     public void setPassword(String password) {
         this.password = password;
@@ -69,9 +69,10 @@ public class SystemUserWrapper extends UserWrapper {
 
     /**
      * {@inheritDoc}
-     * 
-     * For the SystemUser account always add the {@link org.openwms.core.domain.system.usermanagement.SystemUser#SYSTEM_ROLE_NAME} to the
-     * collection of authorities.
+     * <p/>
+     * For the SystemUser account always add the
+     * {@link org.openwms.core.domain.system.usermanagement.SystemUser#SYSTEM_ROLE_NAME}
+     * to the collection of authorities.
      */
     @Override
     protected void addDefaultGrants(Collection<GrantedAuthority> authorities) {
@@ -80,7 +81,7 @@ public class SystemUserWrapper extends UserWrapper {
 
     /**
      * {@inheritDoc}
-     * 
+     * <p/>
      * Use password field in addition to inherited fields.
      */
     @Override
@@ -93,7 +94,7 @@ public class SystemUserWrapper extends UserWrapper {
 
     /**
      * {@inheritDoc}
-     * 
+     * <p/>
      * Use password field for comparison.
      */
     @Override
