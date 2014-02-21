@@ -484,6 +484,7 @@
         <plugin.pmd.version>2.4</plugin.pmd.version>
         <plugin.project-info.version>2.4</plugin.project-info.version>
         <plugin.resources.version>2.6</plugin.resources.version>
+        <plugin.site.version>3.3</plugin.site.version>
         <plugin.source.version>2.2.1</plugin.source.version>
         <plugin.surefire.version>2.16</plugin.surefire.version>
         <plugin.surefire-report.version>2.5</plugin.surefire-report.version>
@@ -1075,6 +1076,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-site-plugin</artifactId>
+                <version>${plugin.site.version}</version>
             </plugin>
 
         </plugins>
