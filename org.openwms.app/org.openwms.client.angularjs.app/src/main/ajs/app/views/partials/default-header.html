@@ -1,0 +1,105 @@
+<!--
+/*
+ * openwms.org, the Open Warehouse Management System.
+ * Copyright (C) 2014 Heiko Scherrer
+ *
+ * This file is part of openwms.org.
+ *
+ * openwms.org is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as 
+ * published by the Free Software Foundation; either version 2 of the
+ * License, or (at your option) any later version.
+ *
+ * openwms.org is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this software. If not, write to the Free Software
+ * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
+ * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
+ */
+-->
+<nav class="navbar navbar-default" role="navigation">
+    <!-- Brand and toggle get grouped for better mobile display -->
+
+    <!-- Collect the nav links, forms, and other content for toggling -->
+    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+        <!--ul class="nav navbar-nav navbar-right">
+            <li><a href="#">Link</a></li>
+            <li class="dropdown">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Dropdown <b class="caret"></b></a>
+                <ul class="dropdown-menu">
+                    <li><a href="#">Action</a></li>
+                    <li><a href="#">Another action</a></li>
+                    <li><a href="#">Something else here</a></li>
+                    <li class="divider"></li>
+                    <li><a href="#">Separated link</a></li>
+                </ul>
+            </li>
+        </ul-->
+        <ul class="nav navbar-nav">
+            <li class="dropdown">
+                <button class="btn btn-default navbar-btn dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown">
+                    Application
+                    <span class="caret"></span>
+                </button>
+                <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
+                    <li ng-class="{active : linkActive == 'users'}" role="presentation">
+                        <a role="menuitem" tabindex="-1" ng-href="#/users" ng-click="clickCoreMenuItem()">
+                            <i class="users pull-left"></i>
+                            <span id="usersLbl" class="left-padded5">Users</span>
+                        </a>
+                    </li>
+                    <li ng-class="{active : linkActive == 'roles'}" role="presentation">
+                        <a role="menuitem" tabindex="-1" ng-href="#/roles" ng-click="clickCoreMenuItem()">
+                            <i class="roles pull-left"></i>
+                            <span class="left-padded5">Roles</span>
+                        </a>
+                    </li>
+                    <li tabindex="-1" ng-class="{active : linkActive == 'modules'}" role="presentation">
+                        <a role="menuitem" ng-href="#/modules" ng-click="clickCoreMenuItem()">
+                            <i class="modules pull-left"></i>
+                            <span class="left-padded5">Modules</span>
+                        </a>
+                    </li>
+                    <li role="presentation">
+                        <a role="menuitem" style="padding: 0px 0px 0px 0px" tabindex="-1" class="divider"/>
+                    </li>
+                    <li tabindex="-1" ng-class="{active : linkActive == 'preferences'}" role="presentation">
+                        <a role="menuitem" ng-href="#/preferences" ng-click="clickCoreMenuItem()">
+                            <i class="preferences pull-left"></i>
+                            <span class="left-padded5">Preferences</span>
+                        </a>
+                    </li>
+                    <li role="presentation">
+                        <a role="menuitem" style="padding: 0px 0px 0px 0px" tabindex="-1" class="divider"/>
+                    </li>
+                    <li tabindex="-1" ng-class="{active : linkActive == 'help'}" role="presentation">
+                        <a role="menuitem" ng-href="#/help" ng-click="clickCoreMenuItem()">
+                            <i class="help pull-left"></i>
+                            <span class="left-padded5">Help</span>
+                        </a>
+                    </li>
+                    <li tabindex="-1" ng-class="{active : linkActive == 'profile'}" role="presentation">
+                        <a role="menuitem" ng-href="#/profile" ng-click="clickCoreMenuItem()">
+                            <i class="profiles pull-left"></i>
+                            <span class="left-padded5">Profile</span>
+                        </a>
+                    </li>
+                    <li tabindex="-1" ng-class="{active : linkActive == 'logout'}" role="presentation">
+                        <a role="menuitem" ng-href="#/logout" ng-click="logout()">
+                            <i class="logout pull-left"></i>
+                            <span class="left-padded5">Logout</span>
+                        </a>
+                    </li>
+                </ul>
+            </li>
+        </ul>
+        <div id="buildno"><span>Build {{env.buildDate}}-{{env.buildNumber}}</span></div>
+    </div>
+    <!-- /.navbar-collapse -->
+</nav>
+
+

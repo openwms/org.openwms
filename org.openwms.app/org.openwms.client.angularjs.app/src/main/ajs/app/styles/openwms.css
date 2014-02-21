@@ -56,9 +56,19 @@ body {
     vertical-align: middle;
 }
 
+#buildno {
+    float: right;
+    font-size: smaller;
+    font-style: italic;
+    color: lightsteelblue;
+}
+
+
 .left-padded5 {
     padding-left: 5px;
 }
+
+
 
 /*
  Login Dialog
