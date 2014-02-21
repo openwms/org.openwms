@@ -58,8 +58,7 @@
                     <arguments>
                         <argument>install</argument>
                     </arguments>
-                    <workingDirectory>${basedir}/src/main/ajs
-                    </workingDirectory>
+                    <workingDirectory>${basedir}/src/main/ajs</workingDirectory>
                 </configuration>
             </plugin>
             <plugin>
