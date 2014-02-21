@@ -52,6 +52,7 @@ import org.springframework.transaction.annotation.Transactional;
  * @version $Revision: $
  * @since 0.2
  */
+@Transactional
 @Service
 public abstract class AbstractGenericEntityService<T extends AbstractEntity<ID>, ID extends Serializable, BK extends Serializable>
         implements GenericEntityService<T, ID, BK> {
@@ -59,7 +60,10 @@ public abstract class AbstractGenericEntityService<T extends AbstractEntity<ID>,
     private MessageSource messageSource;
 
     /**
-     * {@inheritDoc}
+     * Return a type-safe DAO implementation instantiated by the sub-classing
+     * service.
+     * 
+     * @return the DAO
      */
     protected abstract GenericDao<T, ID> getRepository();
 
@@ -71,6 +75,13 @@ public abstract class AbstractGenericEntityService<T extends AbstractEntity<ID>,
     protected MessageSource getMessageSource() {
         return messageSource;
     }
+
+    /**
+     * Tries to resolve a given <tt>entity</tt> by it's business key and returns
+     * it to the caller. In case the <tt>entity</tt> could not be resolved,
+     * <code>null</code> may be returned.
+     */
+    protected abstract T resolveByBK(T entity);
 
     /**
      * {@inheritDoc}
@@ -99,11 +110,6 @@ public abstract class AbstractGenericEntityService<T extends AbstractEntity<ID>,
         getRepository().persist(entity);
         return getRepository().save(entity);
     }
-
-    /**
-     * {@inheritDoc}
-     */
-    protected abstract T resolveByBK(T entity);
 
     /**
      * {@inheritDoc}
@@ -139,7 +145,7 @@ public abstract class AbstractGenericEntityService<T extends AbstractEntity<ID>,
      * {@inheritDoc}
      * 
      * @throws EntityNotFoundException
-     *             if entity with <tt>key</tt> does not exist
+     *             if entity with <code>key</code> does not exist
      */
     @Override
     public T findByBK(BK key) {

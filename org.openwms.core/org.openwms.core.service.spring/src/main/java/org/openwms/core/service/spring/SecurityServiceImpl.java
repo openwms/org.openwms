@@ -32,6 +32,7 @@ import org.openwms.core.integration.RoleDao;
 import org.openwms.core.integration.SecurityObjectDao;
 import org.openwms.core.service.ExceptionCodes;
 import org.openwms.core.service.SecurityService;
+import org.openwms.core.service.exception.EntityNotFoundException;
 import org.openwms.core.util.event.UserChangedEvent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -117,6 +118,12 @@ public class SecurityServiceImpl extends AbstractGenericEntityService<SecurityOb
      */
     @Override
     protected SecurityObject resolveByBK(SecurityObject entity) {
-        return null;
+        SecurityObject result = null;
+        try {
+            result = findByBK(entity.getName());
+        } catch (EntityNotFoundException enfe) {
+            ;
+        }
+        return result;
     }
 }

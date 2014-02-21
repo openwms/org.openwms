@@ -29,6 +29,7 @@ import org.openwms.core.integration.GenericDao;
 import org.openwms.core.integration.I18nRepository;
 import org.openwms.core.service.ExceptionCodes;
 import org.openwms.core.service.I18nService;
+import org.openwms.core.service.exception.EntityNotFoundException;
 import org.openwms.core.service.exception.ServiceRuntimeException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -82,6 +83,12 @@ public class I18nServiceImpl extends AbstractGenericEntityService<I18n, Long, St
      */
     @Override
     protected I18n resolveByBK(I18n entity) {
-        return i18nRepository.findByUniqueId(entity.getKey());
+        I18n result = null;
+        try {
+            result = i18nRepository.findByUniqueId(entity.getKey());
+        } catch (EntityNotFoundException enfe) {
+            ;
+        }
+        return result;
     }
 }

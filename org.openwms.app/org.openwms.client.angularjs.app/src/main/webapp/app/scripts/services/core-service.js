@@ -57,6 +57,7 @@ servicesModule.factory('coreService',['$http', '$q',
 						delay.resolve(data.items[0].obj[0]);
 					})
 					.error(function (data, status, headers, config) {
+						console.log("HHHH");
 						var err = new Error(status, data);
 						err.data = {
 							httpStatus: data.items[0].httpStatus,

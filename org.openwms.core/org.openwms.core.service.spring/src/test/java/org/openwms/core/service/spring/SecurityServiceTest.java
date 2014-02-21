@@ -24,6 +24,9 @@ package org.openwms.core.service.spring;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
+import static org.mockito.Matchers.any;
+import static org.mockito.Matchers.anyObject;
+import static org.mockito.Matchers.anyString;
 import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
@@ -32,8 +35,10 @@ import static org.mockito.Mockito.when;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Locale;
 
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
@@ -41,7 +46,9 @@ import org.openwms.core.domain.system.usermanagement.Grant;
 import org.openwms.core.domain.system.usermanagement.SecurityObject;
 import org.openwms.core.integration.RoleDao;
 import org.openwms.core.integration.SecurityObjectDao;
+import org.openwms.core.service.exception.ServiceRuntimeException;
 import org.openwms.core.test.AbstractMockitoTests;
+import org.springframework.context.MessageSource;
 
 /**
  * A SecurityServiceTest.
@@ -56,20 +63,28 @@ public class SecurityServiceTest extends AbstractMockitoTests {
     private SecurityObjectDao dao;
     @Mock
     private RoleDao roleDao;
+    @Mock
+    private MessageSource messageSource;
     @InjectMocks
     private SecurityServiceImpl srv;
+
+    /**
+     * Setting up some test data.
+     */
+    @Before
+    public void onBefore() {
+        when(messageSource.getMessage(anyString(), new Object[] { anyObject() }, any(Locale.class))).thenReturn("");
+    }
 
     /**
      * Positive test findAll method.
      */
     @Test
     public final void testFindAll() {
-        List<SecurityObject> result = new ArrayList<SecurityObject>();
-        result.add(new Grant("GRANT1"));
-        result.add(new Grant("GRANT2"));
-        when(dao.findAll()).thenReturn(result);
+        when(dao.findAll()).thenReturn(createSecurityObjects("GRANT1", "GRANT2"));
 
         Assert.assertTrue(srv.findAll().size() == 2);
+
         verify(dao, times(1)).findAll();
     }
 
@@ -81,6 +96,7 @@ public class SecurityServiceTest extends AbstractMockitoTests {
         when(dao.findAll()).thenReturn(null);
 
         Assert.assertTrue(srv.findAll().isEmpty());
+
         verify(dao, times(1)).findAll();
     }
 
@@ -98,14 +114,10 @@ public class SecurityServiceTest extends AbstractMockitoTests {
      * {@link org.openwms.core.service.spring.SecurityServiceImpl#mergeGrants(java.lang.String, java.util.List)}
      * .
      */
-    @Test
+    @Test(expected = ServiceRuntimeException.class)
     public final void testMergeGrantsWithNull() {
-        try {
-            srv.mergeGrants(null, null);
-            fail("Must throw an illegalArgumentException");
-        } catch (IllegalArgumentException iae) {
-            logger.debug("OK: IllegalArgumentException thrown when calling merge with null");
-        }
+        srv.mergeGrants(null, null);
+        fail("Expected to throw an ServiceRuntimeException when calling merge with null argument");
     }
 
     /**
@@ -118,27 +130,22 @@ public class SecurityServiceTest extends AbstractMockitoTests {
     @Test
     public final void testMergeGrantsNew() {
         // prepare data
-        List<Grant> persistedGrants = new ArrayList<Grant>();
         Grant testGrant = new Grant("TMS_NEW");
-        persistedGrants.add(new Grant("TMS_KEY1"));
-        List<Grant> newGrants = new ArrayList<Grant>();
-        newGrants.add(testGrant);
 
         // preparing mocks
-        when(dao.findAllOfModule("TMS%")).thenReturn(persistedGrants);
+        when(dao.findAllOfModule("TMS%")).thenReturn(createGrants("TMS_KEY1"));
         when(dao.merge(testGrant)).thenReturn(testGrant);
-        // when(roleDao.removeFromRoles(persistedGrants));
 
-        // do test call
-        List<Grant> result = srv.mergeGrants("TMS", newGrants);
+        // do test
+        List<Grant> result = srv.mergeGrants("TMS", createGrants("TMS_NEW"));
 
         // verify mock invocations
-        // New Grant shall be added...
+        // New Grant should be added...
         verify(dao).merge(testGrant);
-        // Verify the the new Grant will not be in the list of removed Grants...
+        // verify the the new Grant is not in the list of removed Grants...
         verify(dao, never()).delete(Arrays.asList(new Grant[] { testGrant }));
-        // But the existing Grant has to be removed, because it is not in the
-        // list of merging Grants...
+        // But the existing Grant has been removed, because it is not in the
+        // list of Grants to merge...
         verify(dao).delete(Arrays.asList(new Grant[] { new Grant("TMS_KEY1") }));
 
         // check the results
@@ -155,30 +162,40 @@ public class SecurityServiceTest extends AbstractMockitoTests {
      */
     @Test
     public final void testMergeGrantsExisting() {
-        // FIXME [scherrer] : Verify test!
         // prepare data
-        List<Grant> persistedGrants = new ArrayList<Grant>();
-        persistedGrants.add(new Grant("TMS_NEW"));
-
-        List<Grant> newGrants = new ArrayList<Grant>();
         Grant testGrant = new Grant("TMS_NEW");
-        newGrants.add(testGrant);
 
         // preparing mocks
-        when(dao.findAllOfModule("TMS%")).thenReturn(persistedGrants);
+        when(dao.findAllOfModule("TMS%")).thenReturn(createGrants("TMS_NEW"));
         when(dao.merge(testGrant)).thenReturn(testGrant);
 
-        // do test call
-        List<Grant> result = srv.mergeGrants("TMS", newGrants);
+        // do test
+        List<Grant> result = srv.mergeGrants("TMS", createGrants("TMS_NEW"));
 
         // verify mock invocations
-        // New Grant shall be added...
+        // new Grant should be added...
         verify(dao, never()).merge(testGrant);
-        // Verify the the new Grant will not be in the list of removed Grants...
+        // verify the new Grant is not in the list of removed Grants...
         verify(dao, never()).delete(Arrays.asList(new Grant[] { testGrant }));
 
         // check the results
         assertEquals(1, result.size());
         assertTrue(result.contains(testGrant));
+    }
+
+    private List<Grant> createGrants(String... names) {
+        List<Grant> result = new ArrayList<>(names.length);
+        for (String name : names) {
+            result.add(new Grant(name));
+        }
+        return result;
+    }
+
+    private List<SecurityObject> createSecurityObjects(String... names) {
+        List<SecurityObject> result = new ArrayList<>(names.length);
+        for (String name : names) {
+            result.add(new Grant(name));
+        }
+        return result;
     }
 }
