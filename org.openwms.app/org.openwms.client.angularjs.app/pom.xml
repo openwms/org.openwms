@@ -36,6 +36,8 @@
     <name>${project.artifactId}</name>
     <properties>
         <moduleDir>../../..</moduleDir>
+        <build.number>MANUAL</build.number>
+        <build.date></build.date>
     </properties>
     <build>
         <finalName>${project.artifactId}-${project.version}</finalName>
@@ -56,7 +58,7 @@
                     <arguments>
                         <argument>install</argument>
                     </arguments>
-                    <workingDirectory>${basedir}/src/main/webapp
+                    <workingDirectory>${basedir}/src/main/ajs
                     </workingDirectory>
                 </configuration>
             </plugin>
@@ -65,9 +67,14 @@
                 <configuration>
                     <webResources>
                         <resource>
-                            <directory>src/main/webapp/app</directory>
+                            <directory>src/main/ajs/app</directory>
+                            <filtering>true</filtering>
+                            <includes>
+                                <include>**/env.model.js</include>
+                            </includes>
                         </resource>
                     </webResources>
+                    <warSourceDirectory>src/main/ajs/app</warSourceDirectory>
                 </configuration>
             </plugin>
         </plugins>
