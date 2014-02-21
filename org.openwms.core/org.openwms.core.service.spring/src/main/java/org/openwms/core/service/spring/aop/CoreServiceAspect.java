@@ -117,8 +117,7 @@ public class CoreServiceAspect {
      */
     public void afterThrowing(Throwable ex) {
         if (EXC_LOGGER.isErrorEnabled()) {
-            EXC_LOGGER.error("[S] Service Layer Exception: " + ex);
-            ex.printStackTrace();
+            EXC_LOGGER.error("[S] Service Layer Exception: " + ex.getLocalizedMessage(), ex);
         }
         if (ex instanceof ServiceRuntimeException) {
             throw ((ServiceRuntimeException) ex);

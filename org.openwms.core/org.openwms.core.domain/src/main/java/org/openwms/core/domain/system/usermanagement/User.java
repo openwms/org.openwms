@@ -618,6 +618,16 @@ public class User extends AbstractEntity<Long> implements Serializable {
     }
 
     /**
+     * Returns the business key.
+     * 
+     * @return Username
+     */
+    @Override
+    public String toString() {
+        return getUsername();
+    }
+
+    /**
      * A PasswordComparator sorts UserPassword by date ascending.
      * 
      * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>

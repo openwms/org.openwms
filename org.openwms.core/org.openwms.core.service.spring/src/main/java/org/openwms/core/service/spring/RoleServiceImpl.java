@@ -27,6 +27,7 @@ import org.openwms.core.integration.GenericDao;
 import org.openwms.core.integration.RoleDao;
 import org.openwms.core.service.ExceptionCodes;
 import org.openwms.core.service.RoleService;
+import org.openwms.core.service.exception.EntityNotFoundException;
 import org.openwms.core.service.exception.ServiceRuntimeException;
 import org.openwms.core.util.event.RoleChangedEvent;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -71,7 +72,13 @@ public class RoleServiceImpl extends AbstractGenericEntityService<Role, Long, St
      */
     @Override
     protected Role resolveByBK(Role entity) {
-        return findByBK(entity.getName());
+        Role result = null;
+        try {
+            result = findByBK(entity.getName());
+        } catch (EntityNotFoundException enfe) {
+            ;
+        }
+        return result;
     }
 
     /**

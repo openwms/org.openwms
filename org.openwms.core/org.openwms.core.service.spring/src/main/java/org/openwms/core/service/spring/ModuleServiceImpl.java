@@ -29,6 +29,7 @@ import org.openwms.core.integration.GenericDao;
 import org.openwms.core.integration.ModuleDao;
 import org.openwms.core.service.ExceptionCodes;
 import org.openwms.core.service.ModuleService;
+import org.openwms.core.service.exception.EntityNotFoundException;
 import org.openwms.core.service.exception.ServiceRuntimeException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -66,7 +67,13 @@ public class ModuleServiceImpl extends AbstractGenericEntityService<Module, Long
      */
     @Override
     protected Module resolveByBK(Module entity) {
-        return moduleDao.findByUniqueId(entity.getModuleName());
+        Module result = null;
+        try {
+            result = moduleDao.findByUniqueId(entity.getModuleName());
+        } catch (EntityNotFoundException enfe) {
+            ;
+        }
+        return result;
     }
 
     /**

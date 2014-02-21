@@ -101,7 +101,13 @@ public class UserServiceImpl extends AbstractGenericEntityService<User, Long, St
      */
     @Override
     protected User resolveByBK(User entity) {
-        return findByBK(entity.getUsername());
+        User result = null;
+        try {
+            result = super.findByBK(entity.getUsername());
+        } catch (EntityNotFoundException enfe) {
+            ;
+        }
+        return result;
     }
 
     /**
