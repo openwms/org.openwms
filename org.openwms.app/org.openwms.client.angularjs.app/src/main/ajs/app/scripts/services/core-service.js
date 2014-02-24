@@ -117,12 +117,28 @@ servicesModule.factory('coreService',['$http', '$q',
 			getAll : function(url, $scope) {
 				var delay = $q.defer();
 				$http.defaults.headers.common['Auth-Token'] = $scope.authToken;
-				$http.get($scope.rootUrl+url)
+				$http.get($scope.rootUrl + url)
 					.success(function (data) {
 						delay.resolve(data.items[0].obj[0]);
 					})
 					.error(function (data, status, headers, config) {
 						delay.reject(new Error(status, config));
+					});
+				return delay.promise;
+			},
+
+			login : function ($scope) {
+				var delay = $q.defer();
+				$http.defaults.headers.post['Auth-Token'] = $scope.authToken;
+				$http.post($scope.rootUrl + '/sec/login', {
+						username: $scope.user.username,
+						password: $scope.user.password
+					})
+					.success(function (data, status, headers, config) {
+						delay.resolve({user:data,status:status});
+					})
+					.error(function (data, status, headers, config) {
+						delay.reject(data);
 					});
 				return delay.promise;
 			}

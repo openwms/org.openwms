@@ -43,6 +43,9 @@ angular.module('openwms.core.env.model', [])
     .service('envModel', function() {
 
         var env = {
+			"DEVMODE" : false,
+			"backendUrl" : "http://localhost:8080/org.openwms.client.rest.provider",
+//			"backendUrl" : "http://backend.openwms.cloudbees.net",
             "buildNumber" : "${build.number}",
             "buildDate" : "${build.date}"
         };
