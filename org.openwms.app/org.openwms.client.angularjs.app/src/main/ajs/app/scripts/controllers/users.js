@@ -231,8 +231,8 @@ angular.module('openwms_users', ['ui.bootstrap', 'ngAnimate', 'toaster', 'angula
 			});
 			coreService.delete('/users/'+ param, $scope).then(
 				function() {
-					onSuccess("OK", "Success", "Successfully deleted selected Users.");
 					$scope.loadUsers();
+					onSuccess("OK", "Success", "Successfully deleted selected Users.");
 				}, function(e) {
 					onError(e);
 				}

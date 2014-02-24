@@ -40,6 +40,16 @@ var servicesModule = angular.module('core_service', []);
 
 servicesModule.factory('coreService',['$http', '$q',
 	function($http, $q) {
+
+		var throwError = function throwError(data, status, q) {
+			var err = new Error(status, data);
+			err.data = {
+				httpStatus: data.items[0].httpStatus,
+				message: data.items[0].message
+			};
+			q.reject(err);
+		}
+
 		return {
 			/**
 			 * Create a non-existing Role instance and send an POST request to the backend. If the Role with its unique identifier exists the service will reject the request.
@@ -53,17 +63,14 @@ servicesModule.factory('coreService',['$http', '$q',
 				var delay = $q.defer();
 				$http.defaults.headers.put['Auth-Token'] = $scope.authToken;
 				$http.post($scope.rootUrl+url, entity)
-					.success(function (data) {
+					.success(function (data, status) {
+						if (status < 200 || status >= 300) {
+							throwError(data, status, delay);
+						}
 						delay.resolve(data.items[0].obj[0]);
 					})
-					.error(function (data, status, headers, config) {
-						console.log("HHHH");
-						var err = new Error(status, data);
-						err.data = {
-							httpStatus: data.items[0].httpStatus,
-							message: data.items[0].message
-						};
-						delay.reject(err);
+					.error(function (data, status) {
+						throwError(data, status, delay);
 					});
 				return delay.promise;
 			},
