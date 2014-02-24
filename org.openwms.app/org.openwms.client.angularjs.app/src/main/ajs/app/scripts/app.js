@@ -172,9 +172,8 @@ openwms_root
 	.run(function ($rootScope, $state, $stateParams, $http, $location, envModel) {
 
 		$rootScope.env = envModel.env;
-		$rootScope.DEVMODE = true;
-		$rootScope.rootUrl = 'http://backend.openwms.cloudbees.net';
-//		$rootScope.rootUrl = 'http://localhost:8080/org.openwms.client.rest.provider';
+		$rootScope.DEVMODE = envModel.env.DEVMODE;
+		$rootScope.rootUrl = envModel.env.backendUrl;
 
 		/* Security */
 		$rootScope.message = '';
@@ -225,14 +224,54 @@ openwms_root
 /**********************************************************************
  * Login controller
  **********************************************************************/
-openwms_root.controller('LoginCtrl', function ($scope, $rootScope, $http, $location) {
+openwms_root.controller('LoginCtrl', function ($scope, $rootScope, $http, $location, toaster, coreService) {
 	// This object will be filled by the form
 	$scope.user = {};
 
+	/**
+	 * Toast an error.
+	 *
+	 * @param e e.data.httpStatus expected to hold the http response status, e.data.message a message text
+	 */
+	var onError = function(e) {
+		toaster.pop("error", "Server Error", "["+ e.data.httpStatus+"] "+ e.data.message);
+	}
+	/**
+	 * Toast success.
+	 *
+	 * @param code a message code
+	 * @param header a header text
+	 * @param text a message text
+	 */
+	var onSuccess = function(code, header, text) {
+		toaster.pop("success", header, "["+code+"] "+text, 2000);
+	}
+
 	// Register the login() function
 	$scope.login = function () {
-		$('#loginDialog').modal('hide');
+
 		$scope.modal.opened = false;
+
+		coreService.login($scope).then(
+			function(data, status, headers, config) {
+				if (data.status == 200) {
+					$('#loginDialog').modal('hide');
+					$rootScope.user = data.user;
+					$rootScope.message = undefined;
+					$rootScope.authToken = data.user.token;
+					$location.url('/');
+				} else {
+					$rootScope.message = 'Authentication failed.';
+					$rootScope.authToken = null;
+					$scope.modal.opened = true;
+				}
+			}, function(e) {
+				$rootScope.message = 'Authentication failed.';
+				$rootScope.authToken = null;
+				$scope.modal.opened = true;
+			}
+		);
+		return;
 		$http.defaults.headers.post['Auth-Token'] = $rootScope.authToken;
 		$http.post($rootScope.rootUrl + '/sec/login', {
 			username: $scope.user.username,
@@ -243,6 +282,7 @@ openwms_root.controller('LoginCtrl', function ($scope, $rootScope, $http, $locat
 				$rootScope.message = undefined;
 				$rootScope.authToken = user.token;
 				$location.url('/');
+				$('#loginDialog').modal('hide');
 				//$('#loginDialog').modal('hide');
 				//$scope.modal.opened = false;
 			})
@@ -250,7 +290,7 @@ openwms_root.controller('LoginCtrl', function ($scope, $rootScope, $http, $locat
 				$rootScope.message = 'Authentication failed.';
 				$rootScope.authToken = null;
 				$scope.modal.opened = true;
-				$('#loginDialog').modal('show');
+//				$('#loginDialog').modal('show');
 				//$location.url('/login').replace();
 			});
 	};

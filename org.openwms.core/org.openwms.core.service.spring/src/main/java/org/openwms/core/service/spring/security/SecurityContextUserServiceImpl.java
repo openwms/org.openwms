@@ -27,6 +27,7 @@ import org.openwms.core.domain.system.usermanagement.SystemUser;
 import org.openwms.core.domain.system.usermanagement.User;
 import org.openwms.core.integration.GenericDao;
 import org.openwms.core.service.UserService;
+import org.openwms.core.service.exception.EntityNotFoundException;
 import org.openwms.core.service.spring.SystemUserWrapper;
 import org.openwms.core.service.spring.UserWrapper;
 import org.openwms.core.util.event.UserChangedEvent;
@@ -67,9 +68,6 @@ public class SecurityContextUserServiceImpl implements UserDetailsService, Appli
     @Value("#{ globals['system.user'] }")
     private String systemUsername = SystemUser.SYSTEM_USERNAME;
     @Autowired
-    @Qualifier("userDao")
-    private GenericDao<User, Long> dao;
-    @Autowired
     private UserService userService;
     @Autowired(required = false)
     @Qualifier("userCache")
@@ -78,8 +76,10 @@ public class SecurityContextUserServiceImpl implements UserDetailsService, Appli
     @Qualifier("ehCache")
     private Ehcache cache;
     @Autowired
+    @Qualifier("passwordEncoder")
     private PasswordEncoder enc;
     @Autowired
+    @Qualifier("saltSource")
     private SaltSource saltSource;
 
     /** Springs service name. */
@@ -110,17 +110,16 @@ public class SecurityContextUserServiceImpl implements UserDetailsService, Appli
     public UserDetails loadUserByUsername(String username) {
         UserDetails ud = userCache.getUserFromCache(username);
         if (null == ud) {
-            User user = null;
             if (systemUsername.equals(username)) {
-                user = userService.createSystemUser();
+                User user = userService.createSystemUser();
                 ud = new SystemUserWrapper(user);
                 ((SystemUserWrapper) ud).setPassword(enc.encodePassword(user.getPassword(), saltSource.getSalt(ud)));
             } else {
-                user = userService.findByBK(username);
-                if (null == user) {
-                    throw new UsernameNotFoundException("User " + username + " not found");
+                try {
+                    ud = new UserWrapper(userService.findByBK(username));
+                } catch(EntityNotFoundException ex) {
+                    throw new UsernameNotFoundException(ex.getLocalizedMessage());
                 }
-                ud = new UserWrapper(user);
             }
             userCache.putUserInCache(ud);
         }
