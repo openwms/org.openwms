@@ -117,7 +117,7 @@ public class SecurityContextUserServiceImpl implements UserDetailsService, Appli
             } else {
                 try {
                     ud = new UserWrapper(userService.findByBK(username));
-                } catch(EntityNotFoundException ex) {
+                } catch(Exception ex) {
                     throw new UsernameNotFoundException(ex.getLocalizedMessage());
                 }
             }
