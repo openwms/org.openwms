@@ -511,7 +511,12 @@
     <pluginRepositories>
         <pluginRepository>
             <id>central</id>
-            <url>http://central.maven.org/maven2</url>
+            <name>Maven Plugin Repository</name>
+            <url>http://repo1.maven.org/maven2</url>
+            <layout>default</layout>
+            <releases>
+                <updatePolicy>never</updatePolicy>
+            </releases>
         </pluginRepository>
         <pluginRepository>
             <id>sonatype-public</id>
@@ -551,7 +556,12 @@
     <repositories>
         <repository>
             <id>central</id>
-            <url>http://central.maven.org/maven2</url>
+            <name>Maven Plugin Repository</name>
+            <url>http://repo1.maven.org/maven2</url>
+            <layout>default</layout>
+            <releases>
+                <updatePolicy>never</updatePolicy>
+            </releases>
         </repository>
         <repository>
             <id>com.springsource.repository.bundles.release</id>
