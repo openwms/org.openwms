@@ -23,13 +23,13 @@
 -->
 <!doctype html>
 <!--[if lt IE 7]>
-<html class="no-js lt-ie9 lt-ie8 lt-ie7" ng-app="openwms_root" ng-app-root="/openwms"> <![endif]-->
+<html class="no-js lt-ie9 lt-ie8 lt-ie7" ng-app-root="/openwms"> <![endif]-->
 <!--[if IE 7]>
-<html class="no-js lt-ie9 lt-ie8" ng-app="openwms_root" ng-app-root="/openwms"> <![endif]-->
+<html class="no-js lt-ie9 lt-ie8" ng-app-root="/openwms"> <![endif]-->
 <!--[if IE 8]>
-<html class="no-js lt-ie9" ng-app="openwms_root" ng-app-root="/openwms"> <![endif]-->
+<html class="no-js lt-ie9" ng-app-root="/openwms"> <![endif]-->
 <!--[if gt IE 8]><!-->
-<html class="no-js" ng-app="openwms_root" ng-app-root="/openwms"> <!--<![endif]-->
+<html class="no-js" ng-app-root="/openwms"> <!--<![endif]-->
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -54,11 +54,14 @@
     <link rel="stylesheet" href="styles/bootstrap-dark.css">
     -->
 
-    <script src="bower_components/jquery/dist/jquery.js"></script>
-    <script src="bower_components/ng-file-upload/angular-file-upload-shim.min.js"></script>
-    <script src="bower_components/angular/angular.js"></script>
+    <!--
+-    <script src="bower_components/jquery/dist/jquery.js"></script>
+-    <script src="bower_components/ng-file-upload/angular-file-upload-shim.min.js"></script>
+-    <script src="bower_components/angular/angular.js"></script>
+    -->
 
     <!-- build:js scripts/plugins.js -->
+    <!--
     <script src="bower_components/bootstrap-sass/js/bootstrap-affix.js"></script>
     <script src="bower_components/bootstrap-sass/js/bootstrap-alert.js"></script>
     <script src="bower_components/bootstrap-sass/js/bootstrap-dropdown.js"></script>
@@ -72,33 +75,45 @@
     <script src="bower_components/bootstrap-sass/js/bootstrap-scrollspy.js"></script>
     <script src="bower_components/bootstrap-sass/js/bootstrap-collapse.js"></script>
     <script src="bower_components/bootstrap-sass/js/bootstrap-tab.js"></script>
+    -->
     <!-- endbuild -->
 
     <!-- build:js scripts/modules.js -->
-    <script src="bower_components/angular-resource/angular-resource.js"></script>
-    <script src="bower_components/angular-cookies/angular-cookies.js"></script>
-    <script src="bower_components/angular-sanitize/angular-sanitize.js"></script>
-    <script src="bower_components/angular-animate/angular-animate.js"></script>
-    <script src="bower_components/angular-ui-router/release/angular-ui-router.js"></script>
-    <script src="bower_components/angular-bootstrap/ui-bootstrap.min.js"></script>
-    <script src="bower_components/angular-bootstrap/ui-bootstrap-tpls.min.js"></script>
+    <!--
+-    <script src="bower_components/angular-resource/angular-resource.js"></script>
+-    <script src="bower_components/angular-cookies/angular-cookies.js"></script>
+-    <script src="bower_components/angular-sanitize/angular-sanitize.js"></script>
+-    <script src="bower_components/angular-animate/angular-animate.js"></script>
+-    <script src="bower_components/angular-ui-router/release/angular-ui-router.js"></script>
+-    <script src="bower_components/angular-bootstrap/ui-bootstrap.min.js"></script>
+-    <script src="bower_components/angular-bootstrap/ui-bootstrap-tpls.min.js"></script>
     <script src="bower_components/ng-grid/build/ng-grid.js"></script>
-    <script src="bower_components/ng-file-upload/angular-file-upload.min.js"></script>
+-    <script src="bower_components/ng-file-upload/angular-file-upload.min.js"></script>
+    -->
     <!-- endbuild -->
 
-    <script src="bower_components/underscore/underscore-min.js"></script>
-    <script src="bower_components/underscore.string/lib/underscore.string.js"></script>
-    <script src="bower_components/angular-base64/angular-base64.js"></script>
+    <!--
+-    <script src="bower_components/underscore/underscore-min.js"></script>
+-    <script src="bower_components/underscore.string/lib/underscore.string.js"></script>
+-    <script src="bower_components/angular-base64/angular-base64.js"></script>
+    -->
 
     <!--script src="bower_components/DataTables/media/js/jquery.dataTables.js"></script-->
-    <script src="bower_components/AngularJS-Toaster/toaster.js"></script>
+    <!--
+-    <script src="bower_components/AngularJS-Toaster/toaster.js"></script>
+    -->
 
     <!-- build:js({.tmp,app}) scripts/scripts.js -->
+    <!--
     <script src="scripts/models/env.model.js"></script>
     <script src="scripts/app.js"></script>
 
+-    <script src="scripts/modules/openwms.module.core.js"></script>
+-    <script src="scripts/services/openwms.service.core.js"></script>
+-    <script src="scripts/controllers/openwms.controller.core.js"></script>
     <script src="scripts/models/openwms.core.users.model.js"></script>
 
+    <script src="scripts/controllers/login.js"></script>
     <script src="scripts/controllers/main.js"></script>
     <script src="scripts/controllers/users.js"></script>
     <script src="scripts/controllers/roles.js"></script>
@@ -108,6 +123,7 @@
     <script src="scripts/controllers/help.js"></script>
 
     <script src="scripts/services/core-service.js"></script>
+    -->
     <!-- endbuild -->
     <!-- endbuild -->
     <style>
@@ -132,5 +148,6 @@
 <!-- Add your site or application content here -->
 <div ng-include src="'views/main.html'" class=""></div>
 
+<script data-main="scripts/main" src="bower_components/requirejs/require.js"></script>
 </body>
 </html>

@@ -31,14 +31,13 @@
 /**
  * A RolesCtrl backes the 'Roles Management' screen.
  *
- * @module openwms_app
+ * @module openwms.module.core
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  * @version $Revision: $
  * @since 0.1
  */
-angular.module('openwms_app',['ui.bootstrap', 'ngAnimate', 'toaster'])
-
-	.controller('RolesCtrl', function ($scope, $http, $modal, $log, coreService, toaster) {
+angular.module('openwms.controller.core').
+	controller('RolesCtrl', function ($scope, $http, $modal, $log, coreService, toaster) {
 
 		var checkedRows = [];
 		var roleEntities = [];

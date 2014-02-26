@@ -28,8 +28,8 @@
  * lighter-blue : edf4fa
  */
 
-angular.module('openwms_app')
-  .controller('HelpCtrl', function ($scope) {
+angular.module('openwms.controller.core').
+  controller('HelpCtrl', function ($scope) {
     $scope.awesomeThings = [
       'HTML5 Boilerplate',
       'AngularJS',

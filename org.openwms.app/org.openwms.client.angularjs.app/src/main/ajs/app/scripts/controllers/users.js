@@ -29,12 +29,15 @@
  */
 
 /**
+ * A UsersCtrl backes the 'User Management' screen.
  *
+ * @module openwms.module.core
+ * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
+ * @version $Revision: $
+ * @since 0.1
  */
-angular.module('openwms_users', ['ui.bootstrap', 'ngAnimate', 'toaster', 'angularFileUpload', 'base64'])
-
-
-    .directive('chkUsers', [function() {
+angular.module('openwms.controller.core').
+	directive('chkUsers', [function() {
 		return {
 			restrict: 'A',
 			link: function(scope, element, attrs, ngModel) {
@@ -62,10 +65,8 @@ angular.module('openwms_users', ['ui.bootstrap', 'ngAnimate', 'toaster', 'angula
 				}
 			}
     	}
-	}])
-
-
-	.controller('UsersCtrl', function ($scope, $http, $timeout, $modal, $upload, toaster, coreService, $base64) {
+	}]).
+	controller('UsersCtrl', function ($scope, $http, $timeout, $modal, $upload, toaster, coreService, $base64) {
 
 		$scope.selectedUsers = [];
 
