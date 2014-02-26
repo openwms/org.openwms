@@ -28,11 +28,14 @@
  * lighter-blue : edf4fa
  */
 
-angular.module('openwms.controller.core').
-	controller('ModulesCtrl', function ($scope) {
-    $scope.awesomeThings = [
-      'HTML5 Boilerplate',
-      'AngularJS',
-      'Karma'
-    ];
-  });
+/**
+ *
+ */
+define([
+	'angular',
+	'services/openwms.service.core',
+	'controllers/openwms.controller.core'
+], function(angular) {
+	'use strict';
+	return angular.module('openwms.module.core', ['openwms.service.core', 'openwms.controller.core']);
+});

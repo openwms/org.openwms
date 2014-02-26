@@ -39,19 +39,22 @@
  */
 
 /*global $, openwms */
-angular.module('openwms.core.env.model', [])
-    .service('envModel', function() {
+define(['angular'], function(angular) {
+	'use strict';
+	return angular.module('openwms.core.env.model', [])
+		.service('envModel', function() {
 
-        var env = {
-			"DEVMODE" : true,
-			"backendUrl" : "http://localhost:8080/org.openwms.client.rest.provider",
+			var env = {
+				"DEVMODE" : false,
+				"backendUrl" : "http://localhost:8080/org.openwms.client.rest.provider",
 //			"backendUrl" : "http://backend.openwms.cloudbees.net",
-            "buildNumber" : "${build.number}",
-            "buildDate" : "${build.date}"
-        };
+				"buildNumber" : "${build.number}",
+				"buildDate" : "${build.date}"
+			};
 
-        return {
-            env : env
-        };
-    }
-);
+			return {
+				env : env
+			};
+		}
+	);
+});

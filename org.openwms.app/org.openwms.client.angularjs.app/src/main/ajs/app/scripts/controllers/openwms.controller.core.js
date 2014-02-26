@@ -7,7 +7,7 @@
  * This file is part of openwms.org.
  *
  * openwms.org is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as 
+ * it under the terms of the GNU General Public License as
  * published by the Free Software Foundation; either version 2 of the
  * License, or (at your option) any later version.
  *
@@ -23,16 +23,22 @@
  *
  * Main colors:
  * blue		: 2e7bb1
- * yellow	: e1e76b 
+ * yellow	: e1e76b
  * light-blue   : c9dcea
  * lighter-blue : edf4fa
  */
 
-angular.module('openwms.controller.core').
-	controller('ModulesCtrl', function ($scope) {
-    $scope.awesomeThings = [
-      'HTML5 Boilerplate',
-      'AngularJS',
-      'Karma'
-    ];
-  });
+/**
+ *
+ */
+define([
+	'angular',
+	'ui_bootstrap',
+	'angular_animate',
+	'toaster',
+	'angular_file_upload',
+	'angular_base64'
+], function(angular) {
+	'use strict';
+	return angular.module('openwms.controller.core', ['ui.bootstrap', 'ngAnimate', 'toaster', 'angularFileUpload', 'base64']);
+});

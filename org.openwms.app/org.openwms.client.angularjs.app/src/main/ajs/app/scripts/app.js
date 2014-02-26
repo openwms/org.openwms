@@ -28,11 +28,19 @@
  * lighter-blue : edf4fa
  */
 
-//var openwms_app = angular.module('openwms_app');
-var openwms_root = angular.module('openwms_root', ['ui.bootstrap', 'ui.router', 'openwms.core.env.model', 'openwms_app', 'openwms_users', 'ngResource', 'core_service']);
-
-openwms_root
-	.factory('rootApply', [ '$rootScope', function ($rootScope) {
+define([
+	'angular',
+	'jquery',
+	'underscore',
+	'ui_bootstrap',
+	'angular_ui_router',
+	'model_env',
+	'module_core',
+	'angular_resource',
+	'underscore'
+], function (angular, $, _) {
+	return angular.module('openwms.root', ['ui.bootstrap', 'ui.router', 'openwms.core.env.model', 'openwms.module.core', 'ngResource']).
+	factory('rootApply', [ '$rootScope', function ($rootScope) {
 		return function (fn, scope) {
 			var args = [].slice.call(arguments, 1);
 
@@ -53,9 +61,11 @@ openwms_root
 				;
 			}
 		};
-	} ])
-	.config(function ($stateProvider, $urlRouterProvider, $locationProvider, $httpProvider, $compileProvider) {
+	} ]).
+	config(function ($stateProvider, $urlRouterProvider, $locationProvider, $httpProvider, $compileProvider) {
 
+			var $           = require('jquery');
+				_           = require('underscore');
 		$compileProvider.imgSrcSanitizationWhitelist(/^\s*(https?|ftp|mailto|file|data):/);
 
 		delete $httpProvider.defaults.headers.common['X-Requested-With'];
@@ -168,8 +178,8 @@ openwms_root
 				}
 			})
 		;
-	})
-	.run(function ($rootScope, $state, $stateParams, $http, $location, envModel) {
+	}).
+	run(function ($rootScope, $state, $stateParams, $http, $location, envModel) {
 
 		$rootScope.env = envModel.env;
 		$rootScope.DEVMODE = envModel.env.DEVMODE;
@@ -208,108 +218,33 @@ openwms_root
 			// if route requires auth and user is not logged in
 			if (!routeClean($location.url()) && !$rootScope.isLoggedIn()) {
 				// redirect back to login
-				$location.url('/login').replace();
+				$location.url('/login').replace("", "");
 			}
 		});
 		$rootScope.$on('$routeChangeStart', function (event, next, current) {
 			// if route requires auth and user is not logged in
 			if (!routeClean($location.url()) && !$rootScope.isLoggedIn()) {
 				// redirect back to login
-				$location.url('/login').replace();
+				$location.url('/login').replace("", "");
 			}
 		});
-	});
-
-
-/**********************************************************************
- * Login controller
- **********************************************************************/
-openwms_root.controller('LoginCtrl', function ($scope, $rootScope, $http, $location, toaster, coreService) {
-	// This object will be filled by the form
-	$scope.user = {};
-
-	/**
-	 * Toast an error.
-	 *
-	 * @param e e.data.httpStatus expected to hold the http response status, e.data.message a message text
-	 */
-	var onError = function(e) {
-		toaster.pop("error", "Server Error", "["+ e.data.httpStatus+"] "+ e.data.message);
-	}
-	/**
-	 * Toast success.
-	 *
-	 * @param code a message code
-	 * @param header a header text
-	 * @param text a message text
-	 */
-	var onSuccess = function(code, header, text) {
-		toaster.pop("success", header, "["+code+"] "+text, 2000);
-	}
-
-	// Register the login() function
-	$scope.login = function () {
-
-		$scope.modal.opened = false;
-
-		coreService.login($scope).then(
-			function(data, status, headers, config) {
-				if (data.status == 200) {
-					$('#loginDialog').modal('hide');
-					$rootScope.user = data.user;
-					$rootScope.message = undefined;
-					$rootScope.authToken = data.user.token;
-					$location.url('/');
-				} else {
-					$rootScope.message = 'Authentication failed.';
-					$rootScope.authToken = null;
-					$scope.modal.opened = true;
-				}
-			}, function(e) {
-				$rootScope.message = 'Authentication failed.';
-				$rootScope.authToken = null;
-				$scope.modal.opened = true;
+		$rootScope.$on('$viewContentLoaded', function () {
+			if ($rootScope.DEVMODE) {
+				console.log("-------------------------------------------");
+				console.log("--       DEVELOPMENT MODE ENABLED        --");
+				console.log("--       RUNNING AS   SYSTEM USER        --");
+				console.log("-------------------------------------------");
+				$rootScope.user.username = 'openwms';
+				$rootScope.user.password = 'openwms';
+				$rootScope.login();
+				return;
 			}
-		);
-		return;
-		$http.defaults.headers.post['Auth-Token'] = $rootScope.authToken;
-		$http.post($rootScope.rootUrl + '/sec/login', {
-			username: $scope.user.username,
-			password: $scope.user.password
-		})
-			.success(function (user) {
-				$rootScope.user = user;
-				$rootScope.message = undefined;
-				$rootScope.authToken = user.token;
-				$location.url('/');
-				$('#loginDialog').modal('hide');
-				//$('#loginDialog').modal('hide');
-				//$scope.modal.opened = false;
-			})
-			.error(function (data, status, headers, config) {
-				$rootScope.message = 'Authentication failed.';
-				$rootScope.authToken = null;
-				$scope.modal.opened = true;
-//				$('#loginDialog').modal('show');
-				//$location.url('/login').replace();
-			});
-	};
+			if ($rootScope.modal.opened == false) {
+				$rootScope.modal.opened = true
+				$('#loginDialog').modal('show');
+			}
+		});
 
-	$scope.$on('$viewContentLoaded', function () {
-		if ($scope.DEVMODE) {
-			console.log("-------------------------------------------");
-			console.log("--       DEVELOPMENT MODE ENABLED        --");
-			console.log("--       RUNNING WITH SYSTEM USER        --");
-			console.log("-------------------------------------------");
-			$scope.user.username = 'openwms';
-			$scope.user.password = 'openwms';
-			$scope.login();
-			return;
-		}
-		if ($scope.modal.opened == false) {
-			$scope.modal.opened = true
-			$('#loginDialog').modal('show');
-		}
-		//$(".assign-list").dataTable();
 	});
 });
+
