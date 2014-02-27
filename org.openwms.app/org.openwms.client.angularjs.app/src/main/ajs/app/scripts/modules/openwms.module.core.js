@@ -34,8 +34,9 @@
 define([
 	'angular',
 	'services/openwms.service.core',
-	'controllers/openwms.controller.core'
+	'controllers/openwms.controller.core',
+	'models/openwms.model.core'
 ], function(angular) {
 	'use strict';
-	return angular.module('openwms.module.core', ['openwms.service.core', 'openwms.controller.core']);
+	return angular.module('openwms.module.core', ['openwms.service.core', 'openwms.controller.core', 'openwms.model.core']);
 });

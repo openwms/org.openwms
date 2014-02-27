@@ -43,9 +43,11 @@ require.config({
 		underscore_string: '../bower_components/underscore.string/dist/underscore.string',
 		angular_base64: '../bower_components/angular-base64/angular-base64',
 		toaster: '../bower_components/AngularJS-Toaster/toaster',
-		module_core: 'modules/openwms.module.core',
+		domReady: '../bower_components/requirejs-domready/domReady',
+
 		model_env: 'models/env.model',
-		domReady: '../bower_components/requirejs-domready/domReady'
+
+		module_core: 'modules/openwms.module.core'
 	},
 	shim: {
 		angular: {
@@ -77,18 +79,18 @@ require.config({
 });
 
 require([
-	'jquery',
 	'angular',
 	'app',
 	'domReady',
+	'jquery',
 	'ui_bootstrap',
 	'angular_ui_router',
-	'module_core',
-	'model_env',
 	'angular_resource',
-	'underscore'
+	'underscore',
+	'module_core',
+	'model_env'
 ],
-	function ($, angular, app, domReady) {
+	function (angular, app, domReady) {
 		'use strict';/*
 		app.config(['$routeProvider',
 			function($routeProvider) {

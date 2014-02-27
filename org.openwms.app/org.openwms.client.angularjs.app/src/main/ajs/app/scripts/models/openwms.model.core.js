@@ -27,7 +27,7 @@
  */
 
 /*
- * openwms.core.users.model.js
+ * openwms.model.core
  * Model module
  */
 
@@ -39,37 +39,47 @@
  */
 
 /*global $, openwms */
-angular.module('openwms.core.users.model', function () {
+define([
+	'angular'
+], function(angular) {
 	'use strict';
+	return angular.module('openwms.model.core', function () {
+		'use strict';
 
-	var
-		configMap = { anon_id : 'a0' },
-		stateMap  = {
-			anon_user      : null,
-			people_cid_map : {},
-			people_db      : TAFFY()
-		},
-		isFakeData = true,
-		personProto, makePerson, people, initModule;
+		var
+			configMap = { anon_id : 'a0' },
+			stateMap  = {
+				anon_user      : null,
+				people_cid_map : {},
+				people_db      : TAFFY()
+			},
+			isFakeData = true,
+			personProto, makePerson, people, initModule;
 
-	var userProto = {
-		isPersistent : function() {
-			return this.id != null;
-		}
-	};
+		var userProto = {
+			isPersistent : function() {
+				return this.id != null;
+			}
+		};
 
-	var set_users_list = function ( users ) {
-		var user_map = users[ 0 ];
-		delete stateMap.people_cid_map[ user_map.cid ];
-		stateMap.user.cid     = user_map._id;
-		stateMap.user.id      = user_map._id;
-		stateMap.user.css_map = user_map.css_map;
-		stateMap.people_cid_map[ user_map._id ] = stateMap.user;
+		var events = {
+			APP_LOGIN : "CORE_APP_LOGIN"
+		};
 
-		// When we add chat, we should join here
-		$.gevent.publish( 'spa-login', [ stateMap.user ] );
-	};
-	return {
-		set_users_list : set_users_list
-	};
+		var set_users_list = function ( users ) {
+			var user_map = users[ 0 ];
+			delete stateMap.people_cid_map[ user_map.cid ];
+			stateMap.user.cid     = user_map._id;
+			stateMap.user.id      = user_map._id;
+			stateMap.user.css_map = user_map.css_map;
+			stateMap.people_cid_map[ user_map._id ] = stateMap.user;
+
+			// When we add chat, we should join here
+			$.gevent.publish( 'spa-login', [ stateMap.user ] );
+		};
+		return {
+			set_users_list : set_users_list,
+			events : events
+		};
+	});
 });

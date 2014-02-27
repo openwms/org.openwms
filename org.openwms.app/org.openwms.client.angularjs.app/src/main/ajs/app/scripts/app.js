@@ -30,15 +30,15 @@
 
 define([
 	'angular',
+	'require',
 	'jquery',
-	'underscore',
 	'ui_bootstrap',
 	'angular_ui_router',
 	'model_env',
 	'module_core',
 	'angular_resource',
 	'underscore'
-], function (angular, $, _) {
+], function (angular, require, jquery) {
 	return angular.module('openwms.root', ['ui.bootstrap', 'ui.router', 'openwms.core.env.model', 'openwms.module.core', 'ngResource']).
 	factory('rootApply', [ '$rootScope', function ($rootScope) {
 		return function (fn, scope) {
@@ -206,17 +206,18 @@ define([
 		$rootScope.$state = $state;
 		$rootScope.$stateParams = $stateParams;
 		// enumerate routes that don't need authentication
-		var routesThatDontRequireAuth = ['/login'];
+//		var routesThatDontRequireAuth = ['/login'];
 		// check if current location matches route
-		var routeClean = function (route) {
-			return _.find(routesThatDontRequireAuth,
-				function (noAuthRoute) {
-					return _.str.startsWith(route, noAuthRoute);
-				});
-		};
+
+//		var routeClean = function (route) {
+//			return _.find(routesThatDontRequireAuth,
+//				function (noAuthRoute) {
+//					return _.str.startsWith(route, noAuthRoute);
+//				});
+//		};
 		$rootScope.$on('$stateChangeStart', function (event, next, current) {
 			// if route requires auth and user is not logged in
-			if (!routeClean($location.url()) && !$rootScope.isLoggedIn()) {
+			if (!($location.url() !== '/login') && !$rootScope.isLoggedIn()) {
 				// redirect back to login
 				$location.url('/login').replace("", "");
 			}
@@ -236,13 +237,14 @@ define([
 				console.log("-------------------------------------------");
 				$rootScope.user.username = 'openwms';
 				$rootScope.user.password = 'openwms';
-				$rootScope.login();
+				$rootScope.$broadcast(events.APP_LOGIN);
+//				$rootScope.login();
 				return;
 			}
-			if ($rootScope.modal.opened == false) {
-				$rootScope.modal.opened = true
-				$('#loginDialog').modal('show');
-			}
+//			if ($rootScope.modal.opened == false) {
+//				$rootScope.modal.opened = true
+//				$('#loginDialog').modal('show');
+//			}
 		});
 
 	});
