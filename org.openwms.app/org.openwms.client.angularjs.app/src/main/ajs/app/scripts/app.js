@@ -188,7 +188,7 @@ define([
 							"@": { templateUrl: "views/no-tree.html" },
 							"header-view@": { templateUrl: "views/partials/default-header.html" },
 							"menu-view@parent.roles": { templateUrl: "views/partials/default-menu.html", controller: 'NavigationCtrl' },
-							"content-view@parent.roles": { templateUrl: "views/roles.html", controller: 'RolesCtrl' }
+							"content-view@parent.roles": route.resolve('Roles')
 						}
 					})/*
 				 .state('parent.login', {
