@@ -35,8 +35,13 @@
  *
  */
 define([
-	'angular'
-], function(angular) {
+	'angular',
+	'app',
+	'require'
+], function(angular, app, require) {
 	'use strict';
+
+//	var register = require("./CoreService");
+
 	return angular.module('openwms.service.core', []);
 });

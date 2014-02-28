@@ -33,12 +33,17 @@
  */
 define([
 	'angular',
+	'app',
 	'ui_bootstrap',
 	'angular_animate',
 	'toaster',
 	'angular_file_upload',
 	'angular_base64'
-], function(angular) {
+], function(angular, app, require) {
 	'use strict';
-	return angular.module('openwms.controller.core', ['ui.bootstrap', 'ngAnimate', 'toaster', 'angularFileUpload', 'base64']);
+
+	var module = angular.module('openwms.controller.core', ['ui.bootstrap', 'ngAnimate', 'toaster', 'angularFileUpload', 'base64']);
+
+
+	return module;
 });

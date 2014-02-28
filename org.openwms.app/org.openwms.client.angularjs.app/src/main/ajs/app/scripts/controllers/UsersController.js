@@ -29,44 +29,28 @@
  */
 
 /**
- * A UsersCtrl backes the 'User Management' screen.
+ * A UsersController backes the 'User Management' screen.
  *
  * @module openwms.module.core
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  * @version $Revision: $
  * @since 0.1
  */
-angular.module('openwms.controller.core').
-	directive('chkUsers', [function() {
-		return {
-			restrict: 'A',
-			link: function(scope, element, attrs, ngModel) {
+define([
+	'angular',
+	'app',
+	'ui_bootstrap',
+	'angular_animate',
+	'toaster',
+	'angular_file_upload',
+	'angular_base64',
+	'services/CoreService'
+], function(angular, app) {
 
-				element.on('blur keyup change', function() {
-					if (element.val().length > 0) {
-						scope.$apply(scope.selectedUsers = []);
-						scope.$apply(read);
-					} else if (element.val().length == 0) {
-						scope.$apply(scope.selectedUsers = []);
-					}
-				});
-				read(scope); // initialize
+	'use strict';
 
-				// Write data to the model
-				function read(scope) {
-					angular.forEach(scope.userEntities, function (user) {
-						if (user.username.toUpperCase().indexOf(element.val().toUpperCase()) !== -1 ||
-							user.fullname.toUpperCase().indexOf(element.val().toUpperCase()) !== -1 ||
-							(user.userDetails != undefined && (user.userDetails.office.toUpperCase().indexOf(element.val().toUpperCase()) !== -1 ||
-							user.userDetails.department.toUpperCase().indexOf(element.val().toUpperCase()) !== -1))) {
-							scope.selectedUsers.push(user);
-						}
-					});
-				}
-			}
-    	}
-	}]).
-	controller('UsersCtrl', function ($scope, $http, $timeout, $modal, $upload, toaster, coreService, $base64) {
+
+	app.register.controller('UsersController', function ($scope, $http, $timeout, $modal, $upload, toaster, CoreService, $base64) {
 
 		$scope.selectedUsers = [];
 
@@ -179,7 +163,7 @@ angular.module('openwms.controller.core').
 			});
 			modalInstance.result.then(
 				function (user) {
-					coreService.add("/users", $scope, user).then(
+					CoreService.add("/users", $scope, user).then(
 						function(addedEntity) {
 							$scope.userEntities.push(addedEntity);
 						}, function(e) {
@@ -210,7 +194,7 @@ angular.module('openwms.controller.core').
 			});
 			modalInstance.result.then(
 				function (user) {
-					coreService.save("/users", $scope, user).then(
+					CoreService.save("/users", $scope, user).then(
 						onSaved, function(e) {
 							onError(e);
 						}
@@ -230,7 +214,7 @@ angular.module('openwms.controller.core').
 			angular.forEach($scope.selectedUsers, function (user) {
 				param+=user.username+",";
 			});
-			coreService.delete('/users/'+ param, $scope).then(
+			CoreService.delete('/users/'+ param, $scope).then(
 				function() {
 					$scope.loadUsers();
 					onSuccess("OK", "Success", "Successfully deleted selected Users.");
@@ -258,7 +242,7 @@ angular.module('openwms.controller.core').
 		 */
 		$scope.loadUsers = function () {
 			$scope.selectedUsers = [];
-			coreService.getAll("/users", $scope).then(
+			CoreService.getAll("/users", $scope).then(
 				function(users) {
 					$scope.userEntities = users;
 				}, function(e) {
@@ -382,3 +366,38 @@ angular.module('openwms.controller.core').
 			toaster.pop("success", header, "["+code+"] "+text, 2000);
 		}
 	});
+
+	app.register.directive('chkUsers', [function() {
+		return {
+			restrict: 'A',
+			link: function(scope, element, attrs, ngModel) {
+
+				element.on('blur keyup change', function() {
+					if (element.val().length > 0) {
+						scope.$apply(scope.selectedUsers = []);
+						scope.$apply(read);
+					} else if (element.val().length == 0) {
+						scope.$apply(scope.selectedUsers = []);
+					}
+				});
+				read(scope); // initialize
+
+				// Write data to the model
+				function read(scope) {
+					angular.forEach(scope.userEntities, function (user) {
+						if (user.username.toUpperCase().indexOf(element.val().toUpperCase()) !== -1 ||
+							user.fullname.toUpperCase().indexOf(element.val().toUpperCase()) !== -1 ||
+							(user.userDetails != undefined && (user.userDetails.office.toUpperCase().indexOf(element.val().toUpperCase()) !== -1 ||
+								user.userDetails.department.toUpperCase().indexOf(element.val().toUpperCase()) !== -1))) {
+							scope.selectedUsers.push(user);
+						}
+					});
+				}
+			}
+		}
+	}]);
+});
+
+
+
+
