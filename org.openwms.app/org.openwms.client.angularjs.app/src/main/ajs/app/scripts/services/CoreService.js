@@ -36,8 +36,14 @@
  * @version $Revision: $
  * @since 0.1
  */
-angular.module('openwms.service.core').
-	factory('coreService', ['$http', '$q',
+define([
+	'angular',
+	'app'
+], function(angular, app, exports) {
+
+	'use strict';
+
+	app.register.service('CoreService', ['$http', '$q',
 		function ($http, $q) {
 
 			var throwError = function throwError(data, status, q) {
@@ -151,3 +157,4 @@ angular.module('openwms.service.core').
 			}
 		}
 	]);
+});

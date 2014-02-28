@@ -82,6 +82,7 @@ require([
 	'angular',
 	'app',
 	'domReady',
+	'routeResolver',
 	'jquery',
 	'ui_bootstrap',
 	'angular_ui_router',

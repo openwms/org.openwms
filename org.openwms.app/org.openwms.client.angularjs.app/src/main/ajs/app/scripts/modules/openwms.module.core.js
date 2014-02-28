@@ -33,10 +33,18 @@
  */
 define([
 	'angular',
+	'app',
+	'require',
 	'services/openwms.service.core',
-	'controllers/openwms.controller.core',
-	'models/openwms.model.core'
-], function(angular) {
+	'controllers/openwms.controller.core'
+], function(angular, app, require) {
+
 	'use strict';
-	return angular.module('openwms.module.core', ['openwms.service.core', 'openwms.controller.core', 'openwms.model.core']);
+
+	var services = require("services/openwms.service.core");
+	var controllers = require("controllers/openwms.controller.core");
+
+	var module = angular.module('openwms.module.core', ['openwms.service.core', 'openwms.controller.core']);
+
+	return module;
 });
