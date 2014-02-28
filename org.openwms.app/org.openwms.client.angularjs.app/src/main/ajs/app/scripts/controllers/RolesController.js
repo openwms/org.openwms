@@ -36,8 +36,21 @@
  * @version $Revision: $
  * @since 0.1
  */
-angular.module('openwms.controller.core').
-	controller('RolesCtrl', function ($scope, $http, $modal, $log, coreService, toaster) {
+define([
+	'angular',
+	'app',
+	'ui_bootstrap',
+	'angular_animate',
+	'toaster',
+	'angular_file_upload',
+	'angular_base64',
+	'services/CoreService'
+], function(angular, app) {
+
+	'use strict';
+
+
+	app.register.controller("RolesController", function ($scope, $http, $modal, $log, CoreService, toaster) {
 
 		var checkedRows = [];
 		var roleEntities = [];
@@ -77,7 +90,7 @@ angular.module('openwms.controller.core').
 			});
 			modalInstance.result.then(
 				function (role) {
-					coreService.add("/roles", $scope, role).then(
+					CoreService.add("/roles", $scope, role).then(
 						function(addedRole) {
 							$scope.roleEntities.push(addedRole);
 						}, function(e) {
@@ -110,7 +123,7 @@ angular.module('openwms.controller.core').
 			});
 			modalInstance.result.then(
 				function (role) {
-					coreService.save("/roles", $scope, role).then(
+					CoreService.save("/roles", $scope, role).then(
 						rolesSaved, function(e) {
 							onError(e);
 						}
@@ -130,7 +143,7 @@ angular.module('openwms.controller.core').
 			angular.forEach($scope.checkedRoles(), function (role) {
 				param+=role.name+",";
 			});
-			coreService.delete('/roles/'+ param, $scope).then(
+			CoreService.delete('/roles/'+ param, $scope).then(
 				function() {
 					onSuccess("OK", "Successfully deleted selected Roles.");
 					$scope.loadRoles();
@@ -146,7 +159,7 @@ angular.module('openwms.controller.core').
 		$scope.saveRole = function () {
 
 			/**
-			 coreService.save($scope).then(
+			 CoreService.save($scope).then(
 				rolesSaved, function(data) {
 					onError(data.items[0].httpStatus, data.items[0].message);
 				}
@@ -159,7 +172,7 @@ angular.module('openwms.controller.core').
 		 */
 		$scope.loadRoles = function () {
 			checkedRows = [];
-			coreService.getAll("/roles", $scope).then(
+			CoreService.getAll("/roles", $scope).then(
 				function(roles) {
 					$scope.roleEntities = roles;
 				}, function(e) {
@@ -269,4 +282,5 @@ angular.module('openwms.controller.core').
 		}
 
 	});
+});
 

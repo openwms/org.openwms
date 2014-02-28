@@ -57,6 +57,9 @@ require.config({
 		'ui_bootstrap': {
 			deps: ['angular']
 		},
+		'ui_bootstrap_tpls': {
+			deps: ['angular', 'ui_bootstrap']
+		},
 		'angular_resource': {
 			deps: ['angular']
 		},
@@ -85,6 +88,7 @@ require([
 	'routeResolver',
 	'jquery',
 	'ui_bootstrap',
+	'ui_bootstrap_tpls',
 	'angular_ui_router',
 	'angular_resource',
 	'underscore',
