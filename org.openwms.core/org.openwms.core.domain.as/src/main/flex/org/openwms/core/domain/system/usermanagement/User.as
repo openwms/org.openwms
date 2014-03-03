@@ -65,7 +65,7 @@ package org.openwms.core.domain.system.usermanagement {
          *
          * @param value The password
          */
-        override public function set password(value : String) : void {
+        public function set password(value : String) : void {
             ;
         }
 
