@@ -248,7 +248,7 @@ public class UsersController extends AbstractWebController {
     }
 
     @RequestMapping(value = "/{name}", method = RequestMethod.DELETE)
-    public ResponseEntity<ResponseVO> remove(@PathVariable("name") @NotNull String... names) {
+    public ResponseEntity<ResponseVO> remove(@PathVariable("name") @NotNull String... names) throws Exception {
         ResponseVO result = new ResponseVO();
         HttpStatus resultStatus = HttpStatus.OK;
         for (String name : names) {
@@ -256,7 +256,7 @@ public class UsersController extends AbstractWebController {
                 continue;
             }
             try {
-                service.removeByBK(new String[] { name });
+                service.removeByBK(new String[] { (name) });
                 result.add(new ResponseVO.ItemBuilder().wStatus(HttpStatus.OK).wParams(name).build());
             } catch (ServiceRuntimeException sre) {
                 resultStatus = HttpStatus.NOT_FOUND;
