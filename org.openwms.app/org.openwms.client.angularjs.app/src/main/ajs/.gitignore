@@ -3,6 +3,9 @@ dist
 .tmp
 .sass-cache
 app/bower_components
+app/.bower-cache
+app/.bower-registry
+app/.bower-tmp
 
 # Directories #
 /build/
