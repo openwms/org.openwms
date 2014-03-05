@@ -255,7 +255,7 @@ public class UsersController extends AbstractWebController {
      * @throws Exception
      */
     @RequestMapping(value = "/{name}", method = RequestMethod.DELETE)
-    public ResponseEntity<ResponseVO> remove(@PathVariable("name") @NotNull String... names) throws Exception {
+    public ResponseEntity<ResponseVO> remove(@PathVariable("name") @NotNull String... names) {
         ResponseVO result = new ResponseVO();
         HttpStatus resultStatus = HttpStatus.OK;
         for (String name : names) {
