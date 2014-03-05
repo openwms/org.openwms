@@ -30,6 +30,6 @@ package org.openwms.common.domain.types {
      * @since 0.1
      */
     public class Target extends TargetBase {
-
+        
     }
 }

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<flexLibProperties includeAllClasses="true" useMultiPlatformConfig="false" version="1">
+<flexLibProperties includeAllClasses="false" useMultiPlatformConfig="false" version="1">
   <includeClasses>
     <classEntry path="org.openwms.core.domain.AbstractEntity"/>
     <classEntry path="org.openwms.core.domain.DomainObject"/>
@@ -9,7 +9,6 @@
     <classEntry path="org.openwms.tms.domain.values.PriorityLevel"/>
     <classEntry path="org.openwms.tms.domain.values.TransportOrderState"/>
     <classEntry path="org.openwms.core.domain.AbstractEntityBase"/>
-    <classEntry path="org.openwms.core.domain.DomainObjectBase"/>
     <classEntry path="org.openwms.tms.domain.comparator.TransportStartComparatorBase"/>
     <classEntry path="org.openwms.tms.domain.order.TransportOrderBase"/>
   </includeClasses>

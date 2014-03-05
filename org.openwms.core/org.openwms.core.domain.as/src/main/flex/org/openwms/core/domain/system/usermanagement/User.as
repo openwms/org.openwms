@@ -65,9 +65,7 @@ package org.openwms.core.domain.system.usermanagement {
          *
          * @param value The password
          */
-        public function set password(value : String) : void {
-            ;
-        }
+        
 
         /**
          * Check whether the User has UserDetails.

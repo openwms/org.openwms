@@ -44,6 +44,5 @@ package org.openwms.common.domain {
         public function set type(value : String) : void {
             _type = value;
         }
-
     }
 }

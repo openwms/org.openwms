@@ -195,7 +195,7 @@ public class UsersController extends AbstractWebController {
         // TODO [scherrer] : clarify if this is necessary
         User user = findByUsername(pUsername);
         if (user == null) {
-            throw new IllegalArgumentException("User with username " + pUsername + " not found");
+            throw new IllegalArgumentException("User with usernayme " + pUsername + " not found");
         }
         return user;
     }
@@ -247,6 +247,13 @@ public class UsersController extends AbstractWebController {
         return new ResponseEntity<ResponseVO>(result, HttpStatus.CREATED);
     }
 
+    /**
+     * FIXME [scherrer] Comment this
+     *
+     * @param names
+     * @return
+     * @throws Exception
+     */
     @RequestMapping(value = "/{name}", method = RequestMethod.DELETE)
     public ResponseEntity<ResponseVO> remove(@PathVariable("name") @NotNull String... names) throws Exception {
         ResponseVO result = new ResponseVO();
