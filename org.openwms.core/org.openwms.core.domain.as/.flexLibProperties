@@ -38,40 +38,6 @@
     <classEntry path="org.openwms.core.domain.values.ImageProvider"/>
     <classEntry path="org.openwms.core.domain.values.Measurable"/>
     <classEntry path="org.openwms.core.domain.values.UnitType"/>
-    <classEntry path="org.openwms.core.domain.AbstractEntityBase"/>
-    <classEntry path="org.openwms.core.domain.DomainObjectBase"/>
-    <classEntry path="org.openwms.core.domain.ModuleBase"/>
-    <classEntry path="org.openwms.core.domain.preferences.ApplicationPreferenceBase"/>
-    <classEntry path="org.openwms.core.domain.preferences.ModulePreferenceBase"/>
-    <classEntry path="org.openwms.core.domain.preferences.PreferencesBase"/>
-    <classEntry path="org.openwms.core.domain.search.ActionBase"/>
-    <classEntry path="org.openwms.core.domain.search.ActionsBase"/>
-    <classEntry path="org.openwms.core.domain.search.NounTagBase"/>
-    <classEntry path="org.openwms.core.domain.search.TagBase"/>
-    <classEntry path="org.openwms.core.domain.search.TagsBase"/>
-    <classEntry path="org.openwms.core.domain.search.VerbTagBase"/>
-    <classEntry path="org.openwms.core.domain.system.AbstractPreferenceBase"/>
-    <classEntry path="org.openwms.core.domain.system.I18nBase"/>
-    <classEntry path="org.openwms.core.domain.system.MessageBase"/>
-    <classEntry path="org.openwms.core.domain.system.PreferenceKeyBase"/>
-    <classEntry path="org.openwms.core.domain.system.usermanagement.EmailBase"/>
-    <classEntry path="org.openwms.core.domain.system.usermanagement.GrantBase"/>
-    <classEntry path="org.openwms.core.domain.system.usermanagement.RoleBase"/>
-    <classEntry path="org.openwms.core.domain.system.usermanagement.RolePreferenceBase"/>
-    <classEntry path="org.openwms.core.domain.system.usermanagement.SecurityObjectBase"/>
-    <classEntry path="org.openwms.core.domain.system.usermanagement.SystemUserBase"/>
-    <classEntry path="org.openwms.core.domain.system.usermanagement.UserBase"/>
-    <classEntry path="org.openwms.core.domain.system.usermanagement.UserDetailsBase"/>
-    <classEntry path="org.openwms.core.domain.system.usermanagement.UserPasswordBase"/>
-    <classEntry path="org.openwms.core.domain.system.usermanagement.UserPreferenceBase"/>
-    <classEntry path="org.openwms.core.domain.values.AbstractBaseUnitBase"/>
-    <classEntry path="org.openwms.core.domain.values.AbstractMeasureBase"/>
-    <classEntry path="org.openwms.core.domain.values.BaseUnitBase"/>
-    <classEntry path="org.openwms.core.domain.values.CoreTypeDefinitionsBase"/>
-    <classEntry path="org.openwms.core.domain.values.I18nSetBase"/>
-    <classEntry path="org.openwms.core.domain.values.ImageProviderBase"/>
-    <classEntry path="org.openwms.core.domain.values.MeasurableBase"/>
-    <classEntry path="org.openwms.core.domain.values.UnitTypeBase"/>
   </includeClasses>
   <includeResources/>
   <namespaceManifests/>

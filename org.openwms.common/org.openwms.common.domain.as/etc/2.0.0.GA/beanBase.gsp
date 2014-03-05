@@ -57,6 +57,7 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
+ // Bean Base
 package ${jClass.as3Type.packageName} {
 <%
 ///////////////////////////////////////////////////////////////////////////////
@@ -126,7 +127,7 @@ package ${jClass.as3Type.packageName} {
             return ${jProperty.as3Type.nullValue};
         }<%
             } else if (jProperty.readable && jProperty.name == 'version' && implementsDomainObject) {%>
-        public function get version():${jProperty.as3Type.name} {
+        override public function get version():${jProperty.as3Type.name} {
             return ${jProperty.as3Type.nullValue};
         }<%
             } else if (jProperty.readable && jProperty.as3Type.name != "Serializable") {%>

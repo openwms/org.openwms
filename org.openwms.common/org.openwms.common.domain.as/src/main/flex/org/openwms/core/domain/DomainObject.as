@@ -21,33 +21,33 @@
  */
 package org.openwms.core.domain {
 
-    /**
-     * A DomainObject, implementations of this interface offer some
-     * functionality common to all domain objects.<br>
-     * Each domain object:
-     * <ul>
-     * <li>shall have an optimistic locking field</li>
-     * <li>shall know if it is a transient or persisted instance</li>
-     * </ul>
-     *
-     * @version $Revision$
-     * @since 0.1
-     */
+	/**
+	 * A DomainObject, implementations of this interface offer some
+	 * functionality common to all domain objects.<br>
+	 * Each domain object:
+	 * <ul>
+	 * <li>shall have an optimistic locking field</li>
+	 * <li>shall know if it is a transient or persisted instance</li>
+	 * </ul>
+	 * 
+	 * @version $Revision$
+	 * @since 0.1
+	 */
     public interface DomainObject {
 
-        /**
-         * Check whether the persistent domain object is transient or not.
-         *
-         * @return <code>true</code> if transient (not persisted before), otherwise
-         *         <code>false</code>.
-         */
-        function isNew() : Boolean;
+	    /**
+	     * Check whether the persistent domain object is transient or not.
+	     * 
+	     * @return <code>true</code> if transient (not persisted before), otherwise
+	     *         <code>false</code>.
+	     */
+        function isNew():Boolean;
 
-        /**
-         * Each persistent domain class must have an optimistic locking field.
-         *
-         * @return the version number
-         */
-        function get version() : Number;
+	    /**
+	     * Each persistent domain class must have an optimistic locking field.
+	     * 
+	     * @return the version number
+	     */
+        function get version():Number;
     }
 }

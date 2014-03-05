@@ -25,24 +25,6 @@
     <classEntry path="org.openwms.common.domain.values.TransportUnitState"/>
     <classEntry path="org.openwms.core.domain.AbstractEntity"/>
     <classEntry path="org.openwms.core.domain.DomainObject"/>
-    <classEntry path="org.openwms.common.domain.LocationBase"/>
-    <classEntry path="org.openwms.common.domain.LocationGroupBase"/>
-    <classEntry path="org.openwms.common.domain.LocationPKBase"/>
-    <classEntry path="org.openwms.common.domain.LocationTypeBase"/>
-    <classEntry path="org.openwms.common.domain.RuleBase"/>
-    <classEntry path="org.openwms.common.domain.TransportUnitBase"/>
-    <classEntry path="org.openwms.common.domain.TransportUnitTypeBase"/>
-    <classEntry path="org.openwms.common.domain.TypePlacingRuleBase"/>
-    <classEntry path="org.openwms.common.domain.TypeStackingRuleBase"/>
-    <classEntry path="org.openwms.common.domain.system.UnitErrorBase"/>
-    <classEntry path="org.openwms.common.domain.types.TargetBase"/>
-    <classEntry path="org.openwms.common.domain.units.PieceBase"/>
-    <classEntry path="org.openwms.common.domain.units.WeightBase"/>
-    <classEntry path="org.openwms.common.domain.values.BarcodeBase"/>
-    <classEntry path="org.openwms.common.domain.values.CommonTypeDefinitionsBase"/>
-    <classEntry path="org.openwms.common.domain.values.ProblemBase"/>
-    <classEntry path="org.openwms.core.domain.AbstractEntityBase"/>
-    <classEntry path="org.openwms.core.domain.DomainObjectBase"/>
   </includeClasses>
   <includeResources/>
   <namespaceManifests/>

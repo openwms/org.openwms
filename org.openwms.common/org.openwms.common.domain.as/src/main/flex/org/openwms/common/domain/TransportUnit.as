@@ -22,6 +22,7 @@
 package org.openwms.common.domain {
 
     import mx.controls.dataGridClasses.DataGridColumn;
+    
     import org.openwms.common.domain.values.Barcode;
 
     [Bindable]

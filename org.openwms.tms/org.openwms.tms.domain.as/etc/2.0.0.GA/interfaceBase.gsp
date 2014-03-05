@@ -47,6 +47,7 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
+// Interface Base
 package ${jClass.as3Type.packageName} {<%
 
     ///////////////////////////////////////////////////////////////////////////
@@ -67,23 +68,22 @@ package ${jClass.as3Type.packageName} {<%
     public interface ${jClass.as3Type.name}Base<%
 
     if (jClass.hasSuperInterfaces()) {
-        %> extends <%
-        boolean first = true;
-        for (jInterface in jClass.superInterfaces) {
-            if (first) {
-                first = false;
-            } else {
-                %>, <%
-            }
-            %>${jInterface.as3Type.name}<%
-        }
+    	%> extends <%
+    	boolean first = true;
+    	for (jInterface in jClass.superInterfaces) {
+    		if (first) {
+    			first = false;
+    		} else {
+    			%>, <%
+    		}
+    		%>${jInterface.as3Type.name}<%
+    	}
     }
 
     %> {<%
 
     ///////////////////////////////////////////////////////////////////////////
     // Write Public Getter/Setter.
-
     for (jProperty in jClass.properties) {
 
         if (jProperty.readable || jProperty.writable) {%>
@@ -93,11 +93,11 @@ package ${jClass.as3Type.packageName} {<%
             }
             if (jProperty.readable && jProperty.name == 'new') {%>
         function isNew():${jProperty.as3Type.name};<%
-            } else if (jProperty.readable && (jProperty.name == 'version' || jProperty.name == 'id')) {%>
+            } else if (jProperty.readable && (jProperty.name == 'id')) {%>
 <%
             } else if (jProperty.readable)
             {%>
-        function ${jProperty.name}():${jProperty.as3Type.name};<%
+        function get ${jProperty.name}():${jProperty.as3Type.name};<%
             }
         }
     }%>

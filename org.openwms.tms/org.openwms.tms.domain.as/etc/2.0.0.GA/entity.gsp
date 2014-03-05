@@ -48,7 +48,7 @@ package ${jClass.as3Type.packageName} {<%
         Set as3Imports = new TreeSet();
 
         for (jProperty in jClass.interfacesProperties) {
-            if (jProperty.as3Type.hasPackage() && jProperty.as3Type.packageName != jClass.as3Type.packageName)
+            if (jProperty.as3Type.hasPackage() && jProperty.as3Type.packageName != jClass.as3Type.packageName && jProperty.as3Type.packageName != "java.io.Serializable")
                 as3Imports.add(jProperty.as3Type.qualifiedName);
         }
 
@@ -76,7 +76,7 @@ package ${jClass.as3Type.packageName} {<%
             // TODO: Gas3 empty generated setter.
         }<%
                 }
-                if (jProperty.readable) {%>
+                if (jProperty.readable && jProperty.name != 'new') {%>
         override public function get ${jProperty.name}():${jProperty.as3Type.name} {
             // TODO: Gas3 default generated getter.
             return ${jProperty.as3Type.nullValue};
