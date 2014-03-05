@@ -167,10 +167,18 @@ package ${jClass.as3Type.packageName} {
                 }
                 if (jProperty.readable && jProperty.name == 'new') {%>
         public function isNew():${jProperty.as3Type.name} {
-            return true;
+            return isNaN(_id);
+        }<%
+                } else if (jProperty.readable && jProperty.name == 'new' && implementsDomainObject) {%>
+        override public function isNew():${jProperty.as3Type.name} {
+            return isNaN(_id);
+        }<%
+                } else if (jProperty.readable && jProperty.name == 'version' && implementsDomainObject) {%>
+        override public function get version():${jProperty.as3Type.name} {
+            return ${jProperty.as3Type.nullValue};
         }<%
                 } else if (jProperty.readable && jProperty.name == 'version' && !implementsDomainObject) {%>
-        override public function get version():${jProperty.as3Type.name} {
+        public function get version():${jProperty.as3Type.name} {
             return ${jProperty.as3Type.nullValue};
         }<%
                 } else if (jProperty.readable) {
