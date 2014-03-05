@@ -126,7 +126,9 @@ public class ResponseVO implements Serializable {
      * @version $Revision: $
      * @since 0.1
      */
-    public static class ResponseItem {
+    public static class ResponseItem implements Serializable {
+
+        private static final long serialVersionUID = -73613607195853087L;
         /** A text message to transfer as server response. */
         public String message = "";
         /** A unique key to identify a particular message. Note that this key can relate to the wrapped <tt>message</tt>, but it might not. */
