@@ -1,5 +1,3 @@
-'use strict';
-
 /*
  * openwms.org, the Open Warehouse Management System.
  * Copyright (C) 2014 Heiko Scherrer
@@ -29,7 +27,7 @@
  */
 
 /**
- * A coreService provide CRUD functions to domain classes of the CORE module.
+ * A CoreService provide CRUD functions to domain classes of the CORE module.
  *
  * @module openwms.service.core
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
@@ -38,13 +36,13 @@
  */
 define([
 	'angular',
-	'app'
-], function(angular, app, exports) {
+	'app',
+	'services/openwms.core.services',
+	'exports'
+], function(angular, app, main, exports) {
 
 	'use strict';
-
-	app.register.service('CoreService', ['$http', '$q',
-		function ($http, $q) {
+		exports.sub = function ($http, $q) {
 
 			var throwError = function throwError(data, status, q) {
 				var err = new Error(status, data);
@@ -155,6 +153,12 @@ define([
 					return delay.promise;
 				}
 			}
-		}
-	]);
+		};
+
+
+//	exports.CoreServiceModule = f;
+//	var module = require(['services/openwms.core.services']);
+
+//	module.app.register.service('CoreService', ['$http', '$q', f]);
+
 });
