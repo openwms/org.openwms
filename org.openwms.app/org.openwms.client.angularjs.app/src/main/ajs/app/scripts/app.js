@@ -28,20 +28,20 @@
  * lighter-blue : edf4fa
  */
 
-define([
+define('app',[
 	'angular',
 	'require',
 	'jquery',
 	'ui_bootstrap',
 	'angular_ui_router',
 	'model_env',
-	'module_core',
+	'core_module',
 	'angular_resource',
 	'underscore',
 	'routeResolver'
 ], function () {
 
-	var app = angular.module('openwms.root', ['ui.bootstrap', 'ui.router', 'openwms.core.env.model', 'openwms.module.core', 'ngResource', 'routeResolverServices']);
+	var app = angular.module('app', ['ui.bootstrap', 'ui.router', 'openwms.core.env.model', 'ngResource', 'routeResolverServices']);
 
 
 	app.
@@ -148,16 +148,22 @@ define([
 
 				$urlRouterProvider.otherwise("/");
 
-				var modules = [
-					{
-						moduleName: "LoginModule",
+				var modules = [{
+						moduleName: "CORE",
 						moduleVersion: "1.0.0",
-						model: "",
-						view: "login.html",
-						controller: "LoginCtrl"
-					}
+						views: [{
+							name: "Users",
+							url: "/users"
+						}]
+					}/*, {
+						moduleName: "COMMON",
+						moduleVersion: "1.0.0",
+						views: [{
+							name: "Roles",
+							url: "/roles"
+						}]
+					}*/
 				];
-
 
 				$stateProvider
 					.state('parent', {
@@ -169,16 +175,17 @@ define([
 						views: {
 							"@": { templateUrl: "views/no-tree.html" },
 							"header-view@": { templateUrl: "views/partials/default-header.html" },
-							"menu-view@parent.root": { templateUrl: "views/partials/default-menu.html", controller: 'NavigationCtrl' },
+							"menu-view@parent.root": { templateUrl: "views/partials/default-menu.html", controller: 'DefaultNavigationController' },
 							"content-view@parent.root": { templateUrl: "views/startpage.html" }
 						}
 					})
+					/*
 					.state('parent.users', {
 						url: "/users",
 						views: {
 							"@": { templateUrl: "views/no-tree.html" },
 							"header-view@": { templateUrl: "views/partials/default-header.html" },
-							"menu-view@parent.users": { templateUrl: "views/partials/default-menu.html", controller: 'NavigationCtrl' },
+							"menu-view@parent.users": { templateUrl: "views/partials/default-menu.html", controller: 'DefaultNavigationController' },
 							"content-view@parent.users": route.resolve('Users')
 						}
 					})
@@ -187,10 +194,12 @@ define([
 						views: {
 							"@": { templateUrl: "views/no-tree.html" },
 							"header-view@": { templateUrl: "views/partials/default-header.html" },
-							"menu-view@parent.roles": { templateUrl: "views/partials/default-menu.html", controller: 'NavigationCtrl' },
+							"menu-view@parent.roles": { templateUrl: "views/partials/default-menu.html", controller: 'DefaultNavigationController' },
 							"content-view@parent.roles": route.resolve('Roles')
 						}
-					})/*
+					})
+					*/
+					/*
 				 .state('parent.login', {
 				 url: "/login",
 				 views: {
@@ -208,6 +217,28 @@ define([
 				 }
 				 })*/
 				;
+
+
+				var preLoad = function() {
+					angular.forEach(modules, function(module) {
+
+						angular.forEach(module.views, function(view) {
+							$stateProvider.state('parent.users', {
+								url: view.url,
+								views: {
+									"@": { templateUrl: "views/no-tree.html" },
+									"header-view@": { templateUrl: "views/partials/default-header.html" },
+									"menu-view@parent.users": { templateUrl: "views/partials/default-menu.html", controller: 'DefaultNavigationController' },
+									"content-view@parent.users": route.resolve(view.name)
+								}
+							});
+						})
+					})
+				};
+
+				var init = preLoad();
+
+
 			}]).
 		run(function ($rootScope, $state, $stateParams, $http, $location, envModel) {
 

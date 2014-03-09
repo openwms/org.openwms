@@ -39,18 +39,20 @@
 define([
 	'angular',
 	'app',
+	'services/CoreService',
+	'controllers/openwms.core.controllers',
+	'exports',
 	'ui_bootstrap',
 	'angular_animate',
 	'toaster',
 	'angular_file_upload',
-	'angular_base64',
-	'services/CoreService'
-], function(angular, app) {
+	'angular_base64'
+], function(angular, app, CoreService, Controllers, exports) {
 
 	'use strict';
 
 
-	app.register.controller('UsersController', function ($scope, $http, $timeout, $modal, $upload, toaster, CoreService, $base64) {
+	exports.UsersController = function ($scope, $http, $timeout, $modal, $upload, toaster, CoreService, $base64) {
 
 		$scope.selectedUsers = [];
 
@@ -365,9 +367,9 @@ define([
 		var onSuccess = function(code, header, text) {
 			toaster.pop("success", header, "["+code+"] "+text, 2000);
 		}
-	});
+	};
 
-	app.register.directive('chkUsers', [function() {
+	exports.chkUsers = function() {
 		return {
 			restrict: 'A',
 			link: function(scope, element, attrs, ngModel) {
@@ -395,7 +397,7 @@ define([
 				}
 			}
 		}
-	}]);
+	};
 });
 
 

@@ -1,5 +1,3 @@
-'use strict';
-
 /*
  * openwms.org, the Open Warehouse Management System.
  * Copyright (C) 2014 Heiko Scherrer
@@ -7,7 +5,7 @@
  * This file is part of openwms.org.
  *
  * openwms.org is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as 
+ * it under the terms of the GNU General Public License as
  * published by the Free Software Foundation; either version 2 of the
  * License, or (at your option) any later version.
  *
@@ -23,7 +21,7 @@
  *
  * Main colors:
  * blue		: 2e7bb1
- * yellow	: e1e76b 
+ * yellow	: e1e76b
  * light-blue   : c9dcea
  * lighter-blue : edf4fa
  */
@@ -35,16 +33,19 @@ define([
 	'angular',
 	'app',
 	'require',
-	'services/openwms.service.core',
-	'controllers/openwms.controller.core'
-], function(angular, app, require) {
-
+	'services/CoreService',
+	'exports'
+], function(angular, app, require, sub, exports) {
 	'use strict';
 
-	var services = require("services/openwms.service.core");
-	var controllers = require("controllers/openwms.controller.core");
+	var _openwmsCoreServices = angular.module('openwms.core.services', []);
+	exports.app = app;
+	exports.OpenwmsCoreServices = _openwmsCoreServices;
+	exports.CoreService = sub.sub;
 
-	var module = angular.module('openwms.module.core', ['openwms.service.core', 'openwms.controller.core']);
+	app.service('CoreService', ['$http', '$q', sub.sub]);
 
-	return module;
+//	var coreService = require("services/CoreService");
+
+	return _openwmsCoreServices;
 });

@@ -1,5 +1,3 @@
-'use strict';
-
 /*
  * openwms.org, the Open Warehouse Management System.
  * Copyright (C) 2014 Heiko Scherrer
@@ -7,7 +5,7 @@
  * This file is part of openwms.org.
  *
  * openwms.org is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as 
+ * it under the terms of the GNU General Public License as
  * published by the Free Software Foundation; either version 2 of the
  * License, or (at your option) any later version.
  *
@@ -23,32 +21,35 @@
  *
  * Main colors:
  * blue		: 2e7bb1
- * yellow	: e1e76b 
+ * yellow	: e1e76b
  * light-blue   : c9dcea
  * lighter-blue : edf4fa
  */
 
-angular.module('openwms_app', [])
-	.controller('MainCtrl', ['$scope',
-	function ($scope) {
-		$scope.awesomeThings = [
-			'HTML5 Boilerplate',
-			'AngularJS',
-			'MAIN'
-		];
-	}]).controller('NavigationCtrl', ['$scope',
-	function ($scope) {
-		$scope.users = {text:"Users"};
-		$scope.linkActive;
+/**
+ *
+ */
+define([
+	'angular',
+	'app',
+	'require',
+	'services/openwms.core.services',
+	'controllers/UsersController',
+	'controllers/DefaultNavigationController',
+	'exports',
+	'ui_bootstrap',
+	'angular_animate',
+	'toaster',
+	'angular_file_upload',
+	'angular_base64'
+], function(angular, app, require, services, sub, sub2, exports) {
+	'use strict';
 
-		$scope.i18n = [
-			{users:{ en:"Users", de:"Benutzer" }},
-			{roles:{ en:"Roles", de:"Rollen" }}
-		];
+	var module = angular.module('openwms.core.controllers', ['ui.bootstrap', 'ngAnimate', 'toaster', 'angularFileUpload', 'base64']);
+	app.controller('UsersController', ['$http', '$q', 'CoreService', sub.UsersController]);
+	app.controller('DefaultNavigationController', ['$scope', sub2.DefaultNavigationController]);
+	app.directive('chkUsers', sub.chkUsers);
 
-		$scope.clickCoreMenuItem = function () {
-			$scope.users.text = "Benutzer";
-			$scope.linkActive = 'users';
-		}
 
-	}]);
+	return module;
+});

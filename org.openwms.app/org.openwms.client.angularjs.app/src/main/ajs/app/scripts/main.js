@@ -47,7 +47,7 @@ require.config({
 
 		model_env: 'models/env.model',
 
-		module_core: 'modules/openwms.module.core'
+		core_module: 'modules/openwms.core.module'
 	},
 	shim: {
 		angular: {
@@ -83,7 +83,6 @@ require.config({
 
 require([
 	'angular',
-	'app',
 	'domReady',
 	'routeResolver',
 	'jquery',
@@ -92,10 +91,10 @@ require([
 	'angular_ui_router',
 	'angular_resource',
 	'underscore',
-	'module_core',
+	'core_module',
 	'model_env'
 ],
-	function (angular, app, domReady) {
+	function (angular, domReady) {
 		'use strict';/*
 		app.config(['$routeProvider',
 			function($routeProvider) {
@@ -106,7 +105,7 @@ require([
 			}
 		]);*/
 		domReady(function() {
-			angular.bootstrap(document, ['openwms.root']);
+			angular.bootstrap(document, ['app']);
 		});
 	}
 );
