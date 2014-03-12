@@ -40,7 +40,6 @@ import org.springframework.integration.ip.tcp.serializer.SoftEndOfStreamExceptio
  */
 public class OSIPTelegramSerializer implements Serializer<CommonMessage> {
 
-    private final int maxMessageSize = TCPCommConstants.MAX_TELEGRAM_LENGTH;
     private static final Logger LOGGER = LoggerFactory.getLogger(OSIPTelegramSerializer.class);
     private static final byte[] CRLF = "\r\n".getBytes();
 
@@ -67,38 +66,8 @@ public class OSIPTelegramSerializer implements Serializer<CommonMessage> {
                     + "but received an object of type [" + object.getClass().getName() + "]");
         }
         BufferedOutputStream os = new BufferedOutputStream(outputStream);
-        os.write(object.toString().getBytes("UTF-8"));
+        os.write(object.toString().getBytes(Charset.defaultCharset()));
         os.write(CRLF);
         os.flush();
     }
-
-    /**
-     * @see org.springframework.core.serializer.Deserializer#deserialize(java.io.InputStream)
-     */
-    public byte[] deserialize(InputStream inputStream) throws IOException {
-        byte[] buffer = new byte[this.maxMessageSize];
-        int n = 0;
-        int bite;
-        if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("Available to read:" + inputStream.available());
-        }
-        while (true) {
-            bite = inputStream.read();
-            if (bite < 0 && n == 0) {
-                throw new SoftEndOfStreamException("Stream closed between payloads");
-            }
-            checkClosure(bite);
-            if (n > 0 && bite == '#' && buffer[n - 1] == '#' && bite == '#' && buffer[n - 2] == '#') {
-                break;
-            }
-            buffer[n++] = (byte) bite;
-            if (n >= this.maxMessageSize) {
-                throw new IOException("CRLF not found before max message length: " + this.maxMessageSize);
-            }
-        }
-        byte[] assembledData = new byte[n - 2];
-        System.arraycopy(buffer, 0, assembledData, 0, n - 2);
-        return assembledData;
-    }
-
 }
