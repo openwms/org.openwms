@@ -21,6 +21,8 @@
  */
 package org.openwms.common.comm.api;
 
+import org.apache.commons.lang.StringUtils;
+
 import java.io.Serializable;
 
 /**
@@ -66,6 +68,15 @@ public class CommonHeader implements Serializable {
         this.sender = sender;
         this.receiver = receiver;
         this.sequenceNo = sequenceNo;
+    }
+
+    /**
+     * Create a new CommonHeader.
+     *
+     * @param commonHeader The header to get the values from.
+     */
+    public CommonHeader(CommonHeader commonHeader) {
+        this(commonHeader.getSync(), commonHeader.getMessageLength(), commonHeader.getSender(), commonHeader.getReceiver(), commonHeader.getSequenceNo());
     }
 
     /**
@@ -310,7 +321,7 @@ public class CommonHeader implements Serializable {
      */
     @Override
     public String toString() {
-        return new StringBuilder().append(this.sync).append(this.messageLength).append(this.sender)
-                .append(this.receiver).append(this.sequenceNo).toString();
+        return new StringBuilder().append(this.sync).append(StringUtils.leftPad("" + this.messageLength, LENGTH_MESSAGE_LENGTH_FIELD, "0")).append(this.sender)
+                .append(this.receiver).append(StringUtils.leftPad("" + this.sequenceNo, LENGTH_SEQUENCE_NO_FIELD, "0")).toString();
     }
 }

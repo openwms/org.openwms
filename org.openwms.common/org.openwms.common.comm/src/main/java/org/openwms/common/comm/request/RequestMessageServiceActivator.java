@@ -22,6 +22,7 @@
 package org.openwms.common.comm.request;
 
 import org.openwms.common.comm.api.CommConstants;
+import org.openwms.common.comm.api.CommonHeader;
 import org.openwms.common.comm.api.RespondingServiceActivator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
@@ -53,7 +54,11 @@ public class RequestMessageServiceActivator implements RespondingServiceActivato
     @Override
     @ServiceActivator(inputChannel = INPUT_CHANNEL_NAME, outputChannel = "outboundChannel")
     public ResponseMessage wakeUp(RequestMessage message) {
-        return new ResponseMessage(message.getHeader());
+        CommonHeader header = new CommonHeader(message.getHeader());
+        header.setSender(message.getHeader().getReceiver());
+        header.setReceiver(message.getHeader().getSender());
+        ResponseMessage response = new ResponseMessage(header);
+        return response;
     }
 
     /**
