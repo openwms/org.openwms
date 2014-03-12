@@ -21,11 +21,8 @@
  */
 package org.openwms.common.comm.tcp;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.ObjectOutputStream;
-import java.io.OutputStream;
-import java.io.Serializable;
+import java.io.*;
+import java.nio.charset.Charset;
 
 import org.openwms.common.comm.api.CommonMessage;
 import org.slf4j.Logger;
@@ -69,10 +66,10 @@ public class OSIPTelegramSerializer implements Serializer<CommonMessage> {
             throw new IllegalArgumentException(getClass().getSimpleName() + " requires a Serializable payload "
                     + "but received an object of type [" + object.getClass().getName() + "]");
         }
-        ObjectOutputStream objectOutputStream = new ObjectOutputStream(outputStream);
-        objectOutputStream.writeUTF(object.toString());
-        objectOutputStream.write(CRLF);
-        objectOutputStream.flush();
+        BufferedOutputStream os = new BufferedOutputStream(outputStream);
+        os.write(object.toString().getBytes("UTF-8"));
+        os.write(CRLF);
+        os.flush();
     }
 
     /**
