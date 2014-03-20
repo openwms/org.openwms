@@ -40,6 +40,10 @@
         <priority value="WARN" />
     </category>
 
+    <category name="CORE_INTEGRATION_MESSAGING">
+        <priority value="DEBUG" />
+    </category>
+
     <root>
         <priority value="ERROR" />
         <appender-ref ref="STDOUT" />
