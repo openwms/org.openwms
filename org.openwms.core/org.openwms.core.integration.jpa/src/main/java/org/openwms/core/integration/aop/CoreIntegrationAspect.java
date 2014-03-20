@@ -106,6 +106,6 @@ public class CoreIntegrationAspect {
         if (ex instanceof IntegrationRuntimeException) {
             throw (IntegrationRuntimeException) ex;
         }
-        throw new IntegrationRuntimeException(ex.getMessage());
+        throw new IntegrationRuntimeException(ex.getMessage(), ex);
     }
 }
