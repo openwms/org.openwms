@@ -44,12 +44,12 @@ public class BeanMapper<S, T> {
     @Autowired
     private Mapper mapper;
 
-    public T map(S user, Class<T> clazz) {
-        return mapper.map(user, clazz);
+    public T map(S domainEntity, Class<T> clazz) {
+        return mapper.map(domainEntity, clazz);
     }
 
-    public S mapBackwards(T user, Class<S> clazz) {
-        return mapper.map(user, clazz);
+    public S mapBackwards(T domainEntity, Class<S> clazz) {
+        return mapper.map(domainEntity, clazz);
     }
 
     /**
@@ -65,24 +65,24 @@ public class BeanMapper<S, T> {
         return target;
     }
 
-    public Collection<T> map(Collection<S> users, Class<T> clazz) {
-        if (users == null || users.isEmpty()) {
+    public Collection<T> map(Collection<S> domainEntities, Class<T> clazz) {
+        if (domainEntities == null || domainEntities.isEmpty()) {
             return Collections.<T> emptyList();
         }
-        List<T> result = new ArrayList<>(users.size());
-        for (S user : users) {
-            result.add(mapper.map(user, clazz));
+        List<T> result = new ArrayList<>(domainEntities.size());
+        for (S domainEntity : domainEntities) {
+            result.add(mapper.map(domainEntity, clazz));
         }
         return result;
     }
 
-    public Collection<S> mapBackwards(Collection<T> users, Class<S> clazz) {
-        if (users == null || users.isEmpty()) {
+    public Collection<S> mapBackwards(Collection<T> domainEntities, Class<S> clazz) {
+        if (domainEntities == null || domainEntities.isEmpty()) {
             return Collections.<S> emptyList();
         }
-        List<S> result = new ArrayList<>(users.size());
-        for (T user : users) {
-            result.add(mapper.map(user, clazz));
+        List<S> result = new ArrayList<>(domainEntities.size());
+        for (T domainEntity : domainEntities) {
+            result.add(mapper.map(domainEntity, clazz));
         }
         return result;
     }
