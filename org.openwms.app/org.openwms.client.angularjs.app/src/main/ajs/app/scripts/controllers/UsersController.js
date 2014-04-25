@@ -40,19 +40,14 @@ define([
 	'angular',
 	'app',
 	'services/CoreService',
-	'controllers/openwms.core.controllers',
 	'exports',
-	'ui_bootstrap',
-	'angular_animate',
-	'toaster',
-	'angular_file_upload',
-	'angular_base64'
-], function(angular, app, CoreService, Controllers, exports) {
+	'radio'
+], function(angular, app, CoreService, exports, radio) {
 
 	'use strict';
 
 
-	exports.UsersController = function ($scope, $http, $timeout, $modal, $upload, toaster, CoreService, $base64) {
+	var functionStub = function ($scope, $http, $timeout, $modal, $upload, toaster, CoreService, $base64) {
 
 		$scope.selectedUsers = [];
 
@@ -398,6 +393,15 @@ define([
 			}
 		}
 	};
+
+
+	radio('core_mod').subscribe(function(evt, coreSrvModule) {
+		if (evt === 'LOAD_ALL_CONTROLLERS') {
+			angular.module('app', ['openwms.core.module']).controller('UsersController', ['$http', '$q', CoreService, functionStub]);
+
+			radio('core_mod').broadcast('ALL_CONTROLLERS_LOADED', coreSrvModule);
+		}
+	});
 });
 
 

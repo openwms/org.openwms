@@ -1,5 +1,4 @@
 'use strict';
-
 /*
  * openwms.org, the Open Warehouse Management System.
  * Copyright (C) 2014 Heiko Scherrer
@@ -34,17 +33,35 @@
 define([
 	'angular',
 	'app',
-	'require',
+	'radio'/*,
 	'services/openwms.core.services',
-	'controllers/openwms.core.controllers'
-], function(angular, app, require) {
+	'controllers/openwms.core.controllers',
+	'directives/openwms.core.directives'*/
+], function(angular, app, radio) {
 
 	'use strict';
 
-	var services = require("services/openwms.core.services");
-	var controllers = require("controllers/openwms.core.controllers");
+	var module = angular.module('openwms.core.module', []);
 
-	var module = angular.module('openwms.core.module', ['openwms.core.services', 'openwms.core.controllers']);
+	radio('appl').subscribe(function(evt, data) {
+		if (evt === 'LOAD_MODULE') {
+			if (data.module.name === 'CORE_MODULE') {
+				radio('core_mod').broadcast('LOAD_SERVICES', {module: angular.module('openwms.core.module', [])});
+			}
+		}
+	});
+
+	radio('core_mod').subscribe(function(evt) {
+		if (evt === 'SERVICES_LOADED') {
+			radio('core_mod').broadcast('LOAD_CONTROLLERS', { module: angular.module('openwms.core.module', []) });
+		}
+		if (evt === 'CONTROLLERS_LOADED') {
+			radio('core_mod').broadcast('LOAD_DIRECTIVES', angular.module('openwms.core.module', []));
+		}
+		if (evt === 'DIRECTIVES_LOADED') {
+			radio('core_mod').broadcast('MODULE_LOADED', angular.module('openwms.core.module', []));
+		}
+	});
 
 	return module;
 });

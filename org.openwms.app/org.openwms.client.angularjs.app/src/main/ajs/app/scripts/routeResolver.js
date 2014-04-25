@@ -28,75 +28,77 @@
  * lighter-blue : edf4fa
  */
 
-define(['angular'], function () {
+define([
+		'angular',
+		'angular_ui_router',
+		'ui_bootstrap',
+		'ui_bootstrap_tpls'
+	], function () {
 
-	var routeResolver = function () {
 
-		this.$get = function () {
-			return this;
-		};
+		angular.module('routeResolverServices', [])
+			.provider('routeResolver', [function () {
 
-		this.routeConfig = function () {
-			var viewsDirectory = '/views/',
-				controllersDirectory = '/scripts/controllers/',
-
-				setBaseDirectories = function (viewsDir, controllersDir) {
-					viewsDirectory = viewsDir;
-					controllersDirectory = controllersDir;
-				},
-
-				getViewsDirectory = function () {
-					return viewsDirectory;
-				},
-
-				getControllersDirectory = function () {
-					return controllersDirectory;
+				this.$get = function () {
+					return this;
 				};
 
-			return {
-				setBaseDirectories: setBaseDirectories,
-				getControllersDirectory: getControllersDirectory,
-				getViewsDirectory: getViewsDirectory
-			};
-		}();
+				this.routeConfig = function () {
+					var viewsDirectory = '/views/',
+						controllersDirectory = '/scripts/controllers/',
 
-		this.route = function (routeConfig) {
+						setBaseDirectories = function (viewsDir, controllersDir) {
+							viewsDirectory = viewsDir;
+							controllersDirectory = controllersDir;
+						},
 
-			var resolve = function (baseName, path) {
-					if (!path) path = '';
+						getViewsDirectory = function () {
+							return viewsDirectory;
+						},
 
-					var routeDef = {};
-					routeDef.templateUrl = routeConfig.getViewsDirectory() + path + baseName + '.html';
-					routeDef.controller = baseName + 'Controller';
-					routeDef.resolve = {
-						load: ['$q', '$rootScope', function ($q, $rootScope) {
-							var dependencies = [routeConfig.getControllersDirectory() + path + baseName + 'Controller.js'];
-							return resolveDependencies($q, $rootScope, dependencies);
-						}]
+						getControllersDirectory = function () {
+							return controllersDirectory;
+						};
+
+					return {
+						setBaseDirectories: setBaseDirectories,
+						getControllersDirectory: getControllersDirectory,
+						getViewsDirectory: getViewsDirectory
 					};
+				}();
 
-					return routeDef;
-				},
+				this.route = function (routeConfig) {
 
-				resolveDependencies = function ($q, $rootScope, dependencies) {
-					var defer = $q.defer();
-					require(dependencies, function () {
-						defer.resolve();
-						$rootScope.$apply()
-					});
+					var resolve = function (baseName, url, path) {
+							if (!path) path = '';
+							var routeDef = {};
 
-					return defer.promise;
-				};
+							routeDef.templateUrl = routeConfig.getViewsDirectory() + path + baseName + '.html';
+							routeDef.controller = 'UsersController';//$controller("baseName + 'Controller");
+							routeDef.resolve = {
+								load: ['$q', '$rootScope', function ($q, $rootScope) {
+									var dependencies = [routeConfig.getControllersDirectory() + path + baseName + 'Controller.js'];
+									return resolveDependencies($q, $rootScope, dependencies);
+								}]
+							};
 
-			return {
-				resolve: resolve
-			}
-		}(this.routeConfig);
+							return routeDef;
+						},
 
-	};
+						resolveDependencies = function ($q, $rootScope, dependencies) {
+							var defer = $q.defer();
+							require(dependencies, function () {
+								defer.resolve();
+								$rootScope.$apply()
+							});
 
-	var servicesApp = angular.module('routeResolverServices', []);
+							return defer.promise;
+						};
 
-	//Must be a provider since it will be injected into module.config()
-	servicesApp.provider('routeResolver', routeResolver);
-});
+					return {
+						resolve: resolve
+					}
+				}(this.routeConfig);
+
+			}]);
+	});

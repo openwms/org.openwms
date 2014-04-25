@@ -19,6 +19,7 @@ module.exports = function (grunt) {
   // configurable paths
   var yeomanConfig = {
     app: 'app',
+	allyapp: '/data/projects/bitbucket/stamplets/web/org.stamplets.commander.app/src/main/ajs/app',
     dist: 'dist'
   };
 
@@ -30,7 +31,10 @@ module.exports = function (grunt) {
     yeoman: yeomanConfig,
     watch: {
       coffee: {
-        files: ['<%= yeoman.app %>/scripts/{,*/}*.coffee'],
+        files: [
+			'<%= yeoman.app %>/scripts/{,*/}*.coffee',
+			'<%= yeoman.allyapp %>/scripts/{,*/}*.coffee'
+		],
         tasks: ['coffee:dist']
       },
       coffeeTest: {
@@ -42,7 +46,10 @@ module.exports = function (grunt) {
         tasks: ['compass:server', 'autoprefixer']
       },
       styles: {
-        files: ['<%= yeoman.app %>/styles/{,*/}*.css'],
+        files: [
+			'<%= yeoman.app %>/styles/{,*/}*.css',
+			'<%= yeoman.allyapp %>/styles/{,*/}*.css'
+		],
         tasks: ['copy:styles', 'autoprefixer']
       },
       livereload: {
@@ -50,10 +57,15 @@ module.exports = function (grunt) {
           livereload: LIVERELOAD_PORT
         },
         files: [
-          '<%= yeoman.app %>/{,*/}*.html',
+          '<%= yeoman.allyapp %>/{,*/}*.html',
           '.tmp/styles/{,*/}*.css',
-          '{.tmp,<%= yeoman.app %>}/scripts/{,*/}*.js',
-          '<%= yeoman.app %>/images/{,*/}*.{png,jpg,jpeg,gif,webp,svg}'
+          '{.tmp,<%= yeoman.allyapp %>}/scripts/{,*/}*.js',
+          '<%= yeoman.allyapp %>/images/{,*/}*.{png,jpg,jpeg,gif,webp,svg}',
+
+			'<%= yeoman.allyapp %>/{,*/}*.html',
+			'.tmp/styles/{,*/}*.css',
+			'{.tmp,<%= yeoman.allyapp %>}/scripts/{,*/}*.js',
+			'<%= yeoman.allyapp %>/images/{,*/}*.{png,jpg,jpeg,gif,webp,svg}'
         ]
       }
     },
@@ -81,6 +93,7 @@ module.exports = function (grunt) {
             return [
               lrSnippet,
               mountFolder(connect, '.tmp'),
+		      mountFolder(connect, yeomanConfig.allyapp),
               mountFolder(connect, yeomanConfig.app)
             ];
           }

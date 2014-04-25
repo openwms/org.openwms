@@ -43,6 +43,7 @@ require.config({
 		underscore_string: '../bower_components/underscore.string/dist/underscore.string',
 		angular_base64: '../bower_components/angular-base64/angular-base64',
 		toaster: '../bower_components/AngularJS-Toaster/toaster',
+		radio: '../bower_components/radio/radio',
 		domReady: '../bower_components/requirejs-domready/domReady',
 
 		model_env: 'models/env.model',
@@ -83,6 +84,7 @@ require.config({
 
 require([
 	'angular',
+	'app',
 	'domReady',
 	'routeResolver',
 	'jquery',
@@ -91,10 +93,11 @@ require([
 	'angular_ui_router',
 	'angular_resource',
 	'underscore',
+	'radio',
 	'core_module',
 	'model_env'
 ],
-	function (angular, domReady) {
+	function (angular, app, domReady) {
 		'use strict';/*
 		app.config(['$routeProvider',
 			function($routeProvider) {

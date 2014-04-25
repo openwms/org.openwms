@@ -32,20 +32,22 @@
 define([
 	'angular',
 	'app',
-	'require',
-	'services/CoreService',
-	'exports'
-], function(angular, app, require, sub, exports) {
+	'radio',
+	'services/CoreService'
+], function(angular, app, radio, CoreServiceStub) {
+
 	'use strict';
 
-	var _openwmsCoreServices = angular.module('openwms.core.services', []);
-	exports.app = app;
-	exports.OpenwmsCoreServices = _openwmsCoreServices;
-	exports.CoreService = sub.sub;
+	radio('core_mod').subscribe(function(evt, data) {
+		if (evt === 'LOAD_SERVICES') {
 
-	app.service('CoreService', ['$http', '$q', sub.sub]);
+			// Force loading all services
+			radio('core_mod').broadcast('LOAD_ALL_SERVICES', data.module, app);
+		}
+		if (evt === 'ALL_SERVICES_LOADED') {
 
-//	var coreService = require("services/CoreService");
-
-	return _openwmsCoreServices;
+			// The last service publishes this event and forces a SERVICES_LOADED.
+			radio('core_mod').broadcast('SERVICES_LOADED');
+		}
+	});
 });

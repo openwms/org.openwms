@@ -28,7 +28,7 @@ import java.io.Serializable;
  * 
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  * @version $Revision: $
- * 
+ * @since 0.1
  */
 public class RoleUserVO implements Serializable {
     private static final long serialVersionUID = -8913697312904235847L;

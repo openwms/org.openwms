@@ -30,21 +30,35 @@
 
 define('app',[
 	'angular',
+	'exports',
+	'radio',
 	'require',
 	'jquery',
 	'ui_bootstrap',
+	'ui_bootstrap_tpls',
 	'angular_ui_router',
 	'model_env',
-	'core_module',
 	'angular_resource',
 	'underscore',
 	'routeResolver'
-], function () {
+], function (angular, exports, radio) {
 
 	var app = angular.module('app', ['ui.bootstrap', 'ui.router', 'openwms.core.env.model', 'ngResource', 'routeResolverServices']);
 
+	/*
+	radio('appl').subscribe(function(evt) {
+		if (evt === 'MODULE_LOADED') {
 
-	app.
+			//
+		}
+	});
+*/
+	// start the whole latch
+	//radio('core_mod').broadcast('LOAD_SERVICES', {module: module});
+
+
+
+	var init = app.
 		factory('rootApply', [ '$rootScope', function ($rootScope) {
 			return function (fn, scope) {
 				var args = [].slice.call(arguments, 1);
@@ -151,6 +165,7 @@ define('app',[
 				var modules = [{
 						moduleName: "CORE",
 						moduleVersion: "1.0.0",
+						url: "core_module",
 						views: [{
 							name: "Users",
 							url: "/users"
@@ -222,6 +237,8 @@ define('app',[
 				var preLoad = function() {
 					angular.forEach(modules, function(module) {
 
+						require(module.url);
+
 						angular.forEach(module.views, function(view) {
 							$stateProvider.state('parent.users', {
 								url: view.url,
@@ -229,10 +246,11 @@ define('app',[
 									"@": { templateUrl: "views/no-tree.html" },
 									"header-view@": { templateUrl: "views/partials/default-header.html" },
 									"menu-view@parent.users": { templateUrl: "views/partials/default-menu.html", controller: 'DefaultNavigationController' },
-									"content-view@parent.users": route.resolve(view.name)
+									"content-view@parent.users": route.resolve(view.name, module.url)
 								}
 							});
 						})
+
 					})
 				};
 
@@ -309,6 +327,8 @@ define('app',[
 			});
 
 		});
+
+
 
 	return app;
 });
