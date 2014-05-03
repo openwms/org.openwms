@@ -31,37 +31,38 @@
  *
  */
 define([
-	'angular',
+	'angular'/*,
 	'app',
-	'radio'/*,
-	'services/openwms.core.services',
-	'controllers/openwms.core.controllers',
-	'directives/openwms.core.directives'*/
-], function(angular, app, radio) {
+	'radio',
+	'services/openwmsCoreServices',
+	'controllers/openwmsCoreControllers',
+	'directives/openwmsCoreDirectives'*/
+], function(angular/*, app, radio*/) {
 
 	'use strict';
 
-	var module = angular.module('openwms.core.module', []);
+	var module = angular.module('openwmsCoreModule', []);
 
+	/*
 	radio('appl').subscribe(function(evt, data) {
 		if (evt === 'LOAD_MODULE') {
 			if (data.module.name === 'CORE_MODULE') {
-				radio('core_mod').broadcast('LOAD_SERVICES', {module: angular.module('openwms.core.module', [])});
+				radio('core_mod').broadcast('LOAD_SERVICES', {module: angular.module('openwmsCoreModule', [])});
 			}
 		}
 	});
 
 	radio('core_mod').subscribe(function(evt) {
 		if (evt === 'SERVICES_LOADED') {
-			radio('core_mod').broadcast('LOAD_CONTROLLERS', { module: angular.module('openwms.core.module', []) });
+			radio('core_mod').broadcast('LOAD_CONTROLLERS', { module: angular.module('openwmsCoreModule', []) });
 		}
 		if (evt === 'CONTROLLERS_LOADED') {
-			radio('core_mod').broadcast('LOAD_DIRECTIVES', angular.module('openwms.core.module', []));
+			radio('core_mod').broadcast('LOAD_DIRECTIVES', angular.module('openwmsCoreModule', []));
 		}
 		if (evt === 'DIRECTIVES_LOADED') {
-			radio('core_mod').broadcast('MODULE_LOADED', angular.module('openwms.core.module', []));
+			radio('core_mod').broadcast('MODULE_LOADED', angular.module('openwmsCoreModule', []));
 		}
 	});
-
+*/
 	return module;
 });

@@ -33,7 +33,7 @@ define([
 	'angular',
 	'app',
 	'radio',
-	'services/openwms.core.services',
+	'services/openwmsCoreServices',
 	'controllers/DefaultNavigationController',
 	'controllers/UsersController'
 ], function(angular, app, radio) {
@@ -54,7 +54,7 @@ define([
 	});
 
 
-	//var module = angular.module('openwms.core.module', ['ui.bootstrap', 'ngAnimate', 'toaster', 'angularFileUpload', 'base64']);
+	//var app = angular.module('openwms.core.module', ['ui.bootstrap', 'ngAnimate', 'toaster', 'angularFileUpload', 'base64']);
 	//app.controller('UsersController', ['$http', '$q', 'CoreService', sub.UsersController]);
 	//app.controller('DefaultNavigationController', ['$scope', sub2.DefaultNavigationController]);
 	//app.directive('chkUsers', sub.chkUsers);

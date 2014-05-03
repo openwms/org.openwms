@@ -29,76 +29,183 @@
  */
 
 define([
-		'angular',
-		'angular_ui_router',
-		'ui_bootstrap',
-		'ui_bootstrap_tpls'
-	], function () {
+ 'angular'/*,
+ 'angular_ui_router',
+ 'ui_bootstrap',
+ 'ui_bootstrap_tpls'*/
+], function () {
+
+	/*
+	 var routeResolver = function () {
+
+	 this.$get = function () {
+	 return this;
+	 };
+
+	 this.routeConfig = function () {
+	 var viewsDirectory = '/views/',
+	 controllersDirectory = '/scripts/controllers/',
+
+	 setBaseDirectories = function (viewsDir, controllersDir) {
+	 viewsDirectory = viewsDir;
+	 controllersDirectory = controllersDir;
+	 },
+
+	 getViewsDirectory = function () {
+	 return viewsDirectory;
+	 },
+
+	 getControllersDirectory = function () {
+	 return controllersDirectory;
+	 };
+
+	 return {
+	 setBaseDirectories: setBaseDirectories,
+	 getControllersDirectory: getControllersDirectory,
+	 getViewsDirectory: getViewsDirectory
+	 };
+	 }();
+
+	 this.route = function (routeConfig) {
+
+	 var resolve = function (baseName, url, path) {
+	 if (!path) path = '';
+	 var routeDef = {};
+	 var injector = angular.injector(["ng"]);
+
+	 //routeDef.templateUrl = routeConfig.getViewsDirectory() + path + baseName + '.html';
+
+	 var $q = injector.get("$q");
+	 var deferred = $q.defer();
+
+	 require(['controllers/'+baseName + 'Controller'], function (controllerRef) {
+	 var app = angular.module('app');
+	 app.register.controller('UsersController', ['CoreService', controllerRef]);
+	 myFunction(controllerRef, routeDef);
+	 //$rootScope.$apply(function () {
+	 //	deferred.resolve();
+	 //});
+	 });
+
+	 //var controllerProvider = injector.get("$controller")('TestCtrl', { $scope: {} });;
+	 //controllerProvider.register(baseName + 'Controller', deferred.promise);
+	 function myFunction(controller, routeDef) {
+	 routeDef.controller = controller;//deferred.promise;//$injector.get(baseName + 'Controller');
+	 routeDef.resolve = {
+	 load: ['$q', '$rootScope', function ($q, $rootScope) {
+	 var dependencies = [routeConfig.getControllersDirectory() + path + baseName + 'Controller.js'];
+	 return resolveDependencies($q, $rootScope, dependencies);
+	 }]
+	 };
+	 }
+	 return routeDef;
+	 },
+
+	 resolveDependencies = function ($q, $rootScope, dependencies) {
+	 var defer = $q.defer();
+	 require(dependencies, function () {
+	 defer.resolve();
+	 $rootScope.$apply()
+	 });
+
+	 return defer.promise;
+	 };
+
+	 return {
+	 templateUrl: "views/partials/default-menu.html",
+	 controller: 'DefaultNavigationController'
+	 };
+	 }//(this.routeConfig);
+
+	 this.route = function (routeConfig) {
+	 function resolve(baseName, path, callback) {
+	 require(['services/CoreService', 'controllers/' + baseName + 'Controller'], function (controllerRef) {
+	 var app = angular.module('app');
+	 app.register.controller(baseName + 'Controller', ['CoreService', controllerRef]);
+
+	 callback({
+	 templateUrl: routeConfig.getViewsDirectory() + baseName + '.html',
+	 controller: baseName + 'Controller'
+	 });
+	 });
+	 }
+
+	 return {
+	 resolve: resolve
+	 }
+	 }(this.routeConfig);
+	 };
+
+	 */
 
 
-		angular.module('routeResolverServices', [])
-			.provider('routeResolver', [function () {
+	var routeResolver = function () {
 
-				this.$get = function () {
-					return this;
+		this.$get = function () {
+			return this;
+		};
+
+		this.routeConfig = function () {
+			var viewsDirectory = '/views/',
+				controllersDirectory = '/scripts/controllers/',
+
+				setBaseDirectories = function (viewsDir, controllersDir) {
+					viewsDirectory = viewsDir;
+					controllersDirectory = controllersDir;
+				},
+
+				getViewsDirectory = function () {
+					return viewsDirectory;
+				},
+
+				getControllersDirectory = function () {
+					return controllersDirectory;
 				};
 
-				this.routeConfig = function () {
-					var viewsDirectory = '/views/',
-						controllersDirectory = '/scripts/controllers/',
+			return {
+				setBaseDirectories: setBaseDirectories,
+				getControllersDirectory: getControllersDirectory,
+				getViewsDirectory: getViewsDirectory
+			};
+		}();
 
-						setBaseDirectories = function (viewsDir, controllersDir) {
-							viewsDirectory = viewsDir;
-							controllersDirectory = controllersDir;
-						},
+		this.route = function (routeConfig) {
 
-						getViewsDirectory = function () {
-							return viewsDirectory;
-						},
+			var resolve = function (baseName, path) {
+					if (!path) path = '';
 
-						getControllersDirectory = function () {
-							return controllersDirectory;
-						};
-
-					return {
-						setBaseDirectories: setBaseDirectories,
-						getControllersDirectory: getControllersDirectory,
-						getViewsDirectory: getViewsDirectory
+					var routeDef = {};
+					routeDef.templateUrl = routeConfig.getViewsDirectory() + path + baseName + '.html';
+					routeDef.controller = baseName + 'Controller';
+					routeDef.resolve = {
+						load: ['$q', '$rootScope', function ($q, $rootScope) {
+							var dependencies = [routeConfig.getControllersDirectory() + path + baseName + 'Controller.js'];
+							return resolveDependencies($q, $rootScope, dependencies);
+						}]
 					};
-				}();
 
-				this.route = function (routeConfig) {
+					return routeDef;
+				},
 
-					var resolve = function (baseName, url, path) {
-							if (!path) path = '';
-							var routeDef = {};
+				resolveDependencies = function ($q, $rootScope, dependencies) {
+					var defer = $q.defer();
+					require(dependencies, function () {
+						defer.resolve();
+						$rootScope.$apply()
+					});
 
-							routeDef.templateUrl = routeConfig.getViewsDirectory() + path + baseName + '.html';
-							routeDef.controller = 'UsersController';//$controller("baseName + 'Controller");
-							routeDef.resolve = {
-								load: ['$q', '$rootScope', function ($q, $rootScope) {
-									var dependencies = [routeConfig.getControllersDirectory() + path + baseName + 'Controller.js'];
-									return resolveDependencies($q, $rootScope, dependencies);
-								}]
-							};
+					return defer.promise;
+				};
 
-							return routeDef;
-						},
+			return {
+				resolve: resolve
+			}
+		}(this.routeConfig);
 
-						resolveDependencies = function ($q, $rootScope, dependencies) {
-							var defer = $q.defer();
-							require(dependencies, function () {
-								defer.resolve();
-								$rootScope.$apply()
-							});
+	};
 
-							return defer.promise;
-						};
+	var servicesApp = angular.module('routeResolverServices', []);
 
-					return {
-						resolve: resolve
-					}
-				}(this.routeConfig);
-
-			}]);
-	});
+	//Must be a provider since it will be injected into module.config()
+	servicesApp.provider('routeResolver', routeResolver);
+});

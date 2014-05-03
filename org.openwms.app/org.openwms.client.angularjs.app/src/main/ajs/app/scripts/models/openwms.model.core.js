@@ -41,7 +41,7 @@
 /*global $, openwms */
 define([
 	'angular'
-], function(angular) {
+], function() {
 	'use strict';
 	return angular.module('openwms.model.core', function () {
 		'use strict';

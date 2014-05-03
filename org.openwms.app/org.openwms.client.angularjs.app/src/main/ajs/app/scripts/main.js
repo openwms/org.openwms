@@ -40,21 +40,20 @@ require.config({
 		ui_bootstrap_tpls: '../bower_components/angular-bootstrap/ui-bootstrap-tpls',
 		angular_file_upload: '../bower_components/ng-file-upload/angular-file-upload',
 		underscore: '../bower_components/underscore/underscore',
-		underscore_string: '../bower_components/underscore.string/dist/underscore.string',
+		underscore_string: '../bower_components/underscore.string/lib/underscore.string',
 		angular_base64: '../bower_components/angular-base64/angular-base64',
 		toaster: '../bower_components/AngularJS-Toaster/toaster',
 		radio: '../bower_components/radio/radio',
 		domReady: '../bower_components/requirejs-domready/domReady',
 
-		model_env: 'models/env.model',
-
-		core_module: 'modules/openwms.core.module'
+		routeResolver: 'routeResolver',
+		core_model: 'models/openwms.model.core'
 	},
-	shim: {
+	shim: {/*
 		angular: {
 			deps: [ 'jquery'],
 			exports: 'angular'
-		},
+		},*/
 		'ui_bootstrap': {
 			deps: ['angular']
 		},
@@ -68,7 +67,7 @@ require.config({
 			deps: ['angular']
 		},
 		'toaster': {
-			deps: ['angular']
+			deps: ['angular', 'angular_animate']
 		},
 		'angular_file_upload': {
 			deps: ['angular']
@@ -83,32 +82,27 @@ require.config({
 });
 
 require([
-	'angular',
-	'app',
-	'domReady',
-	'routeResolver',
-	'jquery',
-	'ui_bootstrap',
-	'ui_bootstrap_tpls',
-	'angular_ui_router',
-	'angular_resource',
-	'underscore',
-	'radio',
-	'core_module',
-	'model_env'
-],
-	function (angular, app, domReady) {
-		'use strict';/*
-		app.config(['$routeProvider',
-			function($routeProvider) {
-				$routeProvider.when('/', {
-					templateUrl: 'index.html',
-					controller: 'UserCtrl'
-				});
-			}
-		]);*/
-		domReady(function() {
+		'angular',
+		'app',
+		/*'routeResolver',*/
+		'jquery',
+		'ui_bootstrap',
+		'ui_bootstrap_tpls',
+		'angular_ui_router',
+		'angular_resource',
+		'angular_file_upload',
+		'toaster',
+		'underscore',
+		'radio',
+		'angular_base64',
+		'services/CoreService',
+		'core_model'/*,
+		'controllers/UsersController'*/
+	],
+	function () {
+		angular.bootstrap(document, ['app']);
+		/*domReady(function () {
 			angular.bootstrap(document, ['app']);
-		});
+		});*/
 	}
 );
