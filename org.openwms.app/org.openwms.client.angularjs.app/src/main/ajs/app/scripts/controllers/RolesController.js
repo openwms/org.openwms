@@ -20,37 +20,14 @@
  * along with this software. If not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
- *
- * Main colors:
- * blue		: 2e7bb1
- * yellow	: e1e76b 
- * light-blue   : c9dcea
- * lighter-blue : edf4fa
  */
 
-/**
- * A RolesCtrl backes the 'Roles Management' screen.
- *
- * @module openwms.module.core
- * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
- * @version $Revision: $
- * @since 0.1
- */
 define([
-	'angular',
 	'app',
-	'ui_bootstrap',
-	'angular_animate',
-	'toaster',
-	'angular_file_upload',
-	'angular_base64',
 	'services/CoreService'
-], function(angular, app) {
+], function(app) {
 
-	'use strict';
-
-
-	app.register.controller("RolesController", function ($scope, $http, $modal, $log, CoreService, toaster) {
+	var rolesController = function ($scope, $http, $modal, toaster, CoreService) {
 
 		var checkedRows = [];
 		var roleEntities = [];
@@ -66,9 +43,6 @@ define([
 			};
 		};
 
-		/**
-		 * Add Role with edit dialogue.
-		 */
 		$scope.addRole = function () {
 			if (roleEntities.length == 0) {
 				$scope.loadRoles();
@@ -101,11 +75,6 @@ define([
 			);
 		};
 
-		/**
-		 * Edit selected Role with edit dialogue.
-		 *
-		 * @param row The row index of the selected Role
-		 */
 		$scope.editRole = function (row) {
 			var modalInstance = $modal.open({
 				templateUrl: 'addRolesDlg.html',
@@ -132,9 +101,6 @@ define([
 			);
 		};
 
-		/**
-		 * Delete a collection of selected Roles.
-		 */
 		$scope.deleteRole = function () {
 			if ($scope.checkedRoles().length == 0) {
 				return;
@@ -153,9 +119,6 @@ define([
 			);
 		}
 
-		/**
-		 * To be implemented
-		 */
 		$scope.saveRole = function () {
 
 			/**
@@ -167,9 +130,6 @@ define([
 			 */
 		}
 
-		/**
-		 * Load all Roles and store then in the model.
-		 */
 		$scope.loadRoles = function () {
 			checkedRows = [];
 			CoreService.getAll("/roles", $scope).then(
@@ -181,11 +141,6 @@ define([
 			);
 		}
 
-		/**
-		 * When a Role is selected, the table of Grants according to this Role is updated.
-		 *
-		 * @param row The row index of the selected Role
-		 */
 		$scope.onRoleSelected = function (row) {
 			$scope.selectedRole = $scope.roleEntities[row];
 			$scope.page = 1;
@@ -222,11 +177,6 @@ define([
 			}
 		}
 
-		/**
-		 * Set the proper icon depending on the row is selected or not.
-		 * @param row The row to check
-		 * @returns {string} A CSS style class
-		 */
 		$scope.roleStyleClass = function (row) {
 			if (checkedRows.indexOf(row) == -1) {
 				return "glyphicon glyphicon-unchecked";
@@ -261,15 +211,12 @@ define([
 			$scope.prevButton = {"enabled" : true, "hidden" : false};
 		}
 
-		/**
-		 * On view load, all Roles are loaded, if not already loaded before.
-		 */
 		var preLoad = function() {
 			if ($scope.roleEntities === undefined) {
 				$scope.loadRoles();
 			}
-		}
-		var init = preLoad();
+		}();
+
 		var rolesSaved = function(savedRole) {
 			$scope.loadRoles();
 			onSuccess("OK", "Saved successfully.");
@@ -281,6 +228,8 @@ define([
 			toaster.pop("success", "Success", "["+code+"] "+text, 2000);
 		}
 
-	});
+	};
+
+	app.register.controller('RolesController', ['$scope', '$http', '$modal', 'toaster', 'CoreService', rolesController]);
 });
 
