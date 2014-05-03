@@ -23,17 +23,7 @@ package org.openwms.core.domain.system.usermanagement;
 
 import java.io.Serializable;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Inheritance;
-import javax.persistence.NamedQueries;
-import javax.persistence.NamedQuery;
-import javax.persistence.OrderBy;
-import javax.persistence.Table;
-import javax.persistence.Version;
+import javax.persistence.*;
 
 import org.openwms.core.domain.AbstractEntity;
 import org.openwms.core.domain.values.CoreTypeDefinitions;
@@ -52,6 +42,7 @@ import org.openwms.core.util.validation.AssertUtils;
 @Entity
 @Table(name = "COR_ROLE")
 @Inheritance
+@DiscriminatorColumn(name="TYPE", discriminatorType=DiscriminatorType.STRING,length=20)
 @NamedQueries({
         @NamedQuery(name = SecurityObject.NQ_FIND_ALL, query = "select g from SecurityObject g"),
         @NamedQuery(name = SecurityObject.NQ_FIND_BY_UNIQUE_QUERY, query = "select g from SecurityObject g where g.name = ?1") })

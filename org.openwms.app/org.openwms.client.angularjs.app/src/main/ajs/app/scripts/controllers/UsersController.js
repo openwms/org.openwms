@@ -33,7 +33,7 @@ define([
 	'services/CoreService'
 ], function (app) {
 
-	var usersController = function ($scope, $http, $modal, $upload, toaster, CoreService, $base64) {
+	var usersController = function ($scope, $http, $modal, $upload, $base64, toaster, CoreService) {
 
 		$scope.selectedUsers = [];
 
@@ -270,8 +270,7 @@ define([
 			if ($scope.userEntities === undefined) {
 				$scope.loadUsers();
 			}
-		}
-		var init = preLoad();
+		}();
 
 		var onSaved = function () {
 			$scope.loadUsers();
@@ -287,49 +286,7 @@ define([
 		}
 	};
 
-	/*
-	 exports.chkUsers = function() {
-	 return {
-	 restrict: 'A',
-	 link: function(scope, element, attrs, ngModel) {
-
-	 element.on('blur keyup change', function() {
-	 if (element.val().length > 0) {
-	 scope.$apply(scope.selectedUsers = []);
-	 scope.$apply(read);
-	 } else if (element.val().length == 0) {
-	 scope.$apply(scope.selectedUsers = []);
-	 }
-	 });
-	 read(scope); // initialize
-
-	 // Write data to the model
-	 function read(scope) {
-	 angular.forEach(scope.userEntities, function (user) {
-	 if (user.username.toUpperCase().indexOf(element.val().toUpperCase()) !== -1 ||
-	 user.fullname.toUpperCase().indexOf(element.val().toUpperCase()) !== -1 ||
-	 (user.userDetails != undefined && (user.userDetails.office.toUpperCase().indexOf(element.val().toUpperCase()) !== -1 ||
-	 user.userDetails.department.toUpperCase().indexOf(element.val().toUpperCase()) !== -1))) {
-	 scope.selectedUsers.push(user);
-	 }
-	 });
-	 }
-	 }
-	 }
-	 };
-	 */
-/*
-	radio('core_mod').subscribe(function (evt, coreSrvModule) {
-		if (evt === 'LOAD_ALL_CONTROLLERS') {
-//			angular.module('app', ['openwmsCoreModule']).controller('UsersController', ['$http', '$q', CoreService, functionStub]);
-			angular.module('app', ['openwmsCoreModule']).register('UsersController', ['$http', '$q', CoreService, functionStub]);
-
-			radio('core_mod').broadcast('ALL_CONTROLLERS_LOADED', coreSrvModule);
-		}
-	});
-*/
-	app.register.controller('UsersController', ['$scope', '$http', '$modal', '$upload', 'toaster', 'CoreService', '$base64', usersController]);
-	//return functionStub;
+	app.register.controller('UsersController', ['$scope', '$http', '$modal', '$upload', '$base64', 'toaster', 'CoreService', usersController]);
 });
 
 

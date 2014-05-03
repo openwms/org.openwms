@@ -29,10 +29,7 @@
  */
 
 define([
- 'angular'/*,
- 'angular_ui_router',
- 'ui_bootstrap',
- 'ui_bootstrap_tpls'*/
+ 'angular'
 ], function () {
 
 	/*

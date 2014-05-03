@@ -35,7 +35,8 @@ define([
 	'radio',
 	'services/openwmsCoreServices',
 	'controllers/DefaultNavigationController',
-	'controllers/UsersController'
+	'controllers/UsersController',
+	'controllers/RolesController'
 ], function(angular, app, radio) {
 
 	'use strict';

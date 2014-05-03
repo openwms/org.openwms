@@ -82,6 +82,7 @@ require.config({
 });
 
 require([
+		'domReady',
 		'angular',
 		'app',
 		/*'routeResolver',*/
@@ -96,13 +97,15 @@ require([
 		'radio',
 		'angular_base64',
 		'services/CoreService',
-		'core_model'/*,
-		'controllers/UsersController'*/
+		'core_model'
 	],
-	function () {
-		angular.bootstrap(document, ['app']);
-		/*domReady(function () {
+	function (domReady) {
+		//angular.bootstrap(document, ['app']);
+		/*
+
+		 */
+		domReady(function () {
 			angular.bootstrap(document, ['app']);
-		});*/
+		});
 	}
 );
