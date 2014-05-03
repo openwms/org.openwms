@@ -28,7 +28,7 @@
  * lighter-blue : edf4fa
  */
 
-define('app',[
+define(/*'app',*/[
 	'angular',
 	'exports',
 	'radio',
@@ -37,52 +37,16 @@ define('app',[
 	'ui_bootstrap',
 	'ui_bootstrap_tpls',
 	'angular_ui_router',
-	'model_env',
 	'angular_resource',
 	'underscore',
+	'core_model',
 	'routeResolver'
-], function (angular, exports, radio) {
+], function () {
 
-	var app = angular.module('app', ['ui.bootstrap', 'ui.router', 'openwms.core.env.model', 'ngResource', 'routeResolverServices']);
+	var app = angular.module('app', ['ui.router', 'openwms.model.core', 'routeResolverServices', 'ngResource', 'ui.bootstrap', 'angularFileUpload', 'toaster', 'base64']);
 
-	/*
-	radio('appl').subscribe(function(evt) {
-		if (evt === 'MODULE_LOADED') {
-
-			//
-		}
-	});
-*/
-	// start the whole latch
-	//radio('core_mod').broadcast('LOAD_SERVICES', {module: module});
-
-
-
-	var init = app.
-		factory('rootApply', [ '$rootScope', function ($rootScope) {
-			return function (fn, scope) {
-				var args = [].slice.call(arguments, 1);
-
-				// push null as scope if necessary
-				args.length || args.push(null);
-
-				return function () {
-					// binds to the scope and any arguments
-					var callFn = fn.bind.apply(
-						fn
-						, args.slice().concat([].slice.call(arguments))
-					);
-
-					// prevent applying/digesting twice
-					$rootScope.$$phase
-						? callFn()
-						: $rootScope.$apply(callFn)
-					;
-				}
-			};
-		} ]).
-		config([/*'$routeProvider',*/ 'routeResolverProvider', '$controllerProvider', '$compileProvider', '$filterProvider', '$provide', '$stateProvider', '$urlRouterProvider', '$locationProvider', '$httpProvider',
-			function (/*$routeProvider, */routeResolverProvider, $controllerProvider, $compileProvider, $filterProvider, $provide, $stateProvider, $urlRouterProvider, $locationProvider, $httpProvider) {
+	app.config(['routeResolverProvider', '$controllerProvider', '$compileProvider', '$filterProvider', '$provide', '$stateProvider', '$urlRouterProvider', '$locationProvider', '$httpProvider',
+			function (routeResolverProvider, $controllerProvider, $compileProvider, $filterProvider, $provide, $stateProvider, $urlRouterProvider, $locationProvider, $httpProvider) {
 
 				app.register =
 				{
@@ -170,14 +134,7 @@ define('app',[
 							name: "Users",
 							url: "/users"
 						}]
-					}/*, {
-						moduleName: "COMMON",
-						moduleVersion: "1.0.0",
-						views: [{
-							name: "Roles",
-							url: "/roles"
-						}]
-					}*/
+					}
 				];
 
 				$stateProvider
@@ -233,36 +190,61 @@ define('app',[
 				 })*/
 				;
 
-
+/*
 				var preLoad = function() {
 					angular.forEach(modules, function(module) {
 
 						require(module.url);
 
-						angular.forEach(module.views, function(view) {
-							$stateProvider.state('parent.users', {
-								url: view.url,
-								views: {
-									"@": { templateUrl: "views/no-tree.html" },
-									"header-view@": { templateUrl: "views/partials/default-header.html" },
-									"menu-view@parent.users": { templateUrl: "views/partials/default-menu.html", controller: 'DefaultNavigationController' },
-									"content-view@parent.users": route.resolve(view.name, module.url)
-								}
-							});
-						})
+						angular.forEach(module.views, function(view)
+						{
+							route.resolve(view.name, module.url, function(result){
 
-					})
+								$stateProvider.state('parent.users', {
+									url: view.url,
+									views: {
+										"@": { templateUrl: "views/no-tree.html" },
+										"header-view@": { templateUrl: "views/partials/default-header.html" },
+										"menu-view@parent.users": { templateUrl: "views/partials/default-menu.html", controller: 'DefaultNavigationController' },
+										"content-view@parent.users": result
+									}
+								});
+							});
+						});
+					});
+				};
+*/
+				var preLoad2 = function() {
+					angular.forEach(modules, function(module) {
+
+						// todo require(module.url);
+
+						angular.forEach(module.views, function(view)
+						{
+								$stateProvider.state('parent.users', {
+									url: view.url,
+									views: {
+										"@": { templateUrl: "views/no-tree.html" },
+										"header-view@": { templateUrl: "views/partials/default-header.html" },
+										"menu-view@parent.users": { templateUrl: "views/partials/default-menu.html", controller: 'DefaultNavigationController' },
+										"content-view@parent.users": route.resolve(view.name)
+									}
+								});
+						});
+					});
 				};
 
-				var init = preLoad();
+				var init = preLoad2();
 
 
-			}]).
-		run(function ($rootScope, $state, $stateParams, $http, $location, envModel) {
+			}]);
 
-			$rootScope.env = envModel.env;
-			$rootScope.DEVMODE = envModel.env.DEVMODE;
-			$rootScope.rootUrl = envModel.env.backendUrl;
+	app.run(function ($rootScope, $state, $stateParams, $http, $location) {
+
+			//$rootScope.env = envModel.env;
+			$rootScope.DEVMODE = true;
+			//$rootScope.rootUrl = "http://backend.openwms.cloudbees.net";
+			$rootScope.rootUrl = "http://localhost:8080/org.openwms.client.rest.provider";
 
 			/* Security */
 			$rootScope.message = '';
@@ -314,9 +296,10 @@ define('app',[
 					console.log("--       DEVELOPMENT MODE ENABLED        --");
 					console.log("--       RUNNING AS   SYSTEM USER        --");
 					console.log("-------------------------------------------");
+					$rootScope.user = {};
 					$rootScope.user.username = 'openwms';
 					$rootScope.user.password = 'openwms';
-					$rootScope.$broadcast(events.APP_LOGIN);
+					//$rootScope.$broadcast(events.APP_LOGIN);
 //				$rootScope.login();
 					return;
 				}
@@ -328,7 +311,28 @@ define('app',[
 
 		});
 
+	app.factory('rootApply', [ '$rootScope', function ($rootScope) {
+			return function (fn, scope) {
+				var args = [].slice.call(arguments, 1);
 
+				// push null as scope if necessary
+				args.length || args.push(null);
+
+				return function () {
+					// binds to the scope and any arguments
+					var callFn = fn.bind.apply(
+						fn
+						, args.slice().concat([].slice.call(arguments))
+					);
+
+					// prevent applying/digesting twice
+					$rootScope.$$phase
+						? callFn()
+						: $rootScope.$apply(callFn)
+					;
+				}
+			};
+		}])
 
 	return app;
 });

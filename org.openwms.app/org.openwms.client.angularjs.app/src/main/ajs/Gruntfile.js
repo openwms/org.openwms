@@ -57,10 +57,10 @@ module.exports = function (grunt) {
           livereload: LIVERELOAD_PORT
         },
         files: [
-          '<%= yeoman.allyapp %>/{,*/}*.html',
+          '<%= yeoman.app %>/{,*/}*.html',
           '.tmp/styles/{,*/}*.css',
-          '{.tmp,<%= yeoman.allyapp %>}/scripts/{,*/}*.js',
-          '<%= yeoman.allyapp %>/images/{,*/}*.{png,jpg,jpeg,gif,webp,svg}',
+          '{.tmp,<%= yeoman.app %>}/scripts/{,*/}*.js',
+          '<%= yeoman.app %>/images/{,*/}*.{png,jpg,jpeg,gif,webp,svg}',
 
 			'<%= yeoman.allyapp %>/{,*/}*.html',
 			'.tmp/styles/{,*/}*.css',

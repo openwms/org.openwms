@@ -28,37 +28,15 @@
  * lighter-blue : edf4fa
  */
 
-/**
- * A UsersController backes the 'User Management' screen.
- *
- * @module openwms.module.core
- * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
- * @version $Revision: $
- * @since 0.1
- */
 define([
-	'angular',
 	'app',
-	'services/CoreService',
-	'exports',
-	'radio'
-], function(angular, app, CoreService, exports, radio) {
+	'services/CoreService'
+], function (app) {
 
-	'use strict';
-
-
-	var functionStub = function ($scope, $http, $timeout, $modal, $upload, toaster, CoreService, $base64) {
+	var usersController = function ($scope, $http, $modal, $upload, toaster, CoreService, $base64) {
 
 		$scope.selectedUsers = [];
 
-		/**
-		 * 'Modify User' dialogue.
-		 *
-		 * @param $scope
-		 * @param $modalInstance
-		 * @param data
-		 * @constructor
-		 */
 		var ModalInstanceCtrl = function ($scope, $modalInstance, data) {
 			$scope.selUser = data.selUser;
 			$scope.dialog = data.dialog;
@@ -70,14 +48,6 @@ define([
 			}
 		};
 
-		/**
-		 * 'Upload Image' dialogue.
-		 *
-		 * @param $scope
-		 * @param $modalInstance
-		 * @param data
-		 * @constructor
-		 */
 		var UploadCtrl = function ($scope, $modalInstance, data) {
 			$scope.selectedUsers = data.selectedUsers;
 			$scope.uploadDialog = data.dialog;
@@ -87,14 +57,14 @@ define([
 			$scope.cancel = function () {
 				$modalInstance.dismiss('cancel');
 			};
-			$scope.hasUploader = function(index) {
+			$scope.hasUploader = function (index) {
 				return $scope.upload[index] != null;
 			};
-			$scope.abort = function(index) {
+			$scope.abort = function (index) {
 				$scope.upload[index].abort();
 				$scope.upload[index] = null;
 			};
-			$scope.onFileSelect = function($files) {
+			$scope.onFileSelect = function ($files) {
 				$scope.selectedFiles = [];
 				$scope.progress = 0;
 				if ($scope.upload && $scope.upload.length > 0) {
@@ -118,27 +88,27 @@ define([
 				}
 			}
 
-			$scope.start = function() {
+			$scope.start = function () {
 				$scope.progress = 0;
 				var fileReader = new FileReader();
 				fileReader.readAsDataURL($scope.selectedFiles[0]);
-				fileReader.onload = function(e) {
+				fileReader.onload = function (e) {
 					$scope.upload[0] = $upload.http({
-						url: $scope.rootUrl+"/users/"+$scope.selectedUsers[0].id,
+						url: $scope.rootUrl + "/users/" + $scope.selectedUsers[0].id,
 						method: 'PUT',
 						headers: {'Content-Type': 'multipart/form-data'},
 						data: e.target.result
-					}).then(function(response) {
-							$scope.uploadResult.push(response.data.result);
-						}, null, function(evt) {
-							// Math.min is to fix IE which reports 200% sometimes
-							$scope.progress = Math.min(100, parseInt(100.0 * evt.loaded / evt.total));
-						});
+					}).then(function (response) {
+						$scope.uploadResult.push(response.data.result);
+					}, null, function (evt) {
+						// Math.min is to fix IE which reports 200% sometimes
+						$scope.progress = Math.min(100, parseInt(100.0 * evt.loaded / evt.total));
+					});
 				}
 			};
 		};
 
-		$scope.decode = function(img) {
+		$scope.decode = function (img) {
 			return $base64.decode(img);
 		}
 
@@ -147,11 +117,11 @@ define([
 				templateUrl: 'addUserDlg.html',
 				controller: ModalInstanceCtrl,
 				resolve: {
-					data : function() {
+					data: function () {
 						return {
-							selUser : {
-								userDetails : undefined
-							}, dialog : {
+							selUser: {
+								userDetails: undefined
+							}, dialog: {
 								title: "Add a new User"
 							}
 						};
@@ -161,9 +131,9 @@ define([
 			modalInstance.result.then(
 				function (user) {
 					CoreService.add("/users", $scope, user).then(
-						function(addedEntity) {
+						function (addedEntity) {
 							$scope.userEntities.push(addedEntity);
-						}, function(e) {
+						}, function (e) {
 							onError(e);
 						}
 					)
@@ -171,18 +141,15 @@ define([
 			);
 		}
 
-		/**
-		 * Edit User function.
-		 */
 		$scope.editUser = function () {
 			var modalInstance = $modal.open({
 				templateUrl: 'addUserDlg.html',
 				controller: ModalInstanceCtrl,
 				resolve: {
-					data : function() {
+					data: function () {
 						return {
-							selUser : $scope.selectedUser(),
-							dialog : {
+							selUser: $scope.selectedUser(),
+							dialog: {
 								title: "Edit User"
 							}
 						};
@@ -192,7 +159,7 @@ define([
 			modalInstance.result.then(
 				function (user) {
 					CoreService.save("/users", $scope, user).then(
-						onSaved, function(e) {
+						onSaved, function (e) {
 							onError(e);
 						}
 					)
@@ -200,22 +167,19 @@ define([
 			);
 		}
 
-		/**
-		 * Delete existing user function.
-		 */
 		$scope.deleteUser = function () {
 			if ($scope.selectedUsers === null || $scope.selectedUsers.length == 0) {
 				return;
 			}
 			var param = "";
 			angular.forEach($scope.selectedUsers, function (user) {
-				param+=user.username+",";
+				param += user.username + ",";
 			});
-			CoreService.delete('/users/'+ param, $scope).then(
-				function() {
+			CoreService.delete('/users/' + param, $scope).then(
+				function () {
 					$scope.loadUsers();
 					onSuccess("OK", "Success", "Successfully deleted selected Users.");
-				}, function(e) {
+				}, function (e) {
 					onError(e);
 				}
 			);
@@ -223,7 +187,7 @@ define([
 
 		$scope.saveUser = function () {
 			$http.defaults.headers.put['Auth-Token'] = $scope.authToken;
-			$http.put($scope.rootUrl+'/users', $scope.selectedUser).success(function (data, status, headers, config) {
+			$http.put($scope.rootUrl + '/users', $scope.selectedUser).success(function (data, status, headers, config) {
 				$scope.selectedUser = data;
 				angular.forEach($scope.userEntities, function (user) {
 					if (user.username == $scope.selectedUser.username) {
@@ -234,22 +198,19 @@ define([
 			});
 		}
 
-		/**
-		 * Load all existing Users function. Result is written to userEntities.
-		 */
 		$scope.loadUsers = function () {
 			$scope.selectedUsers = [];
 			CoreService.getAll("/users", $scope).then(
-				function(users) {
+				function (users) {
 					$scope.userEntities = users;
-				}, function(e) {
+				}, function (e) {
 					onError(e);
 				}
 			);
 		}
 
 		$scope.changePassword = function () {
-			$http.get($scope.rootUrl+'/users').success(function (data, status, headers, config) {
+			$http.get($scope.rootUrl + '/users').success(function (data, status, headers, config) {
 				$scope.userEntities = data;
 			});
 		}
@@ -259,10 +220,10 @@ define([
 				templateUrl: 'uploadDlg.html',
 				controller: UploadCtrl,
 				resolve: {
-					data : function() {
+					data: function () {
 						return {
-							selectedUsers : $scope.selectedUsers,
-							dialog : {
+							selectedUsers: $scope.selectedUsers,
+							dialog: {
 								title: "Upload an Image"
 							}
 						};
@@ -272,17 +233,12 @@ define([
 			modalInstance.result.then(
 				function (file) {
 
-				}, function() {
+				}, function () {
 					$scope.loadUsers();
 				}
 			);
 		}
 
-		/**
-		 * Mark the User with the <tt>row</tt> index as selected or deselected.
-		 *
-		 * @param index The current User's row index
-		 */
 		$scope.onClickUserCard = function (index) {
 			if ($scope.isSelected(index)) {
 				// remove row from selection array
@@ -294,114 +250,86 @@ define([
 			}
 		}
 
-		/**
-		 * Returns the latest selected User.
-		 *
-		 * @returns {User}
-		 */
-		$scope.selectedUser = function() {
-			return $scope.selectedUsers[$scope.selectedUsers.length-1];
+		$scope.selectedUser = function () {
+			return $scope.selectedUsers[$scope.selectedUsers.length - 1];
 		}
 
-		/**
-		 * Check whether the User with index is in the collection of selected users.
-		 *
-		 * @param index
-		 * @returns {boolean}
-		 */
 		$scope.isSelected = function (index) {
 			return $scope.selectedUsers.indexOf($scope.userEntities[index]) > -1 ? true : false;
 		}
-		/**
-		 * Returns true if more than one User is selected, otherwise false.
-		 *
-		 * @returns {boolean}
-		 */
+
 		$scope.multipleSelected = function () {
 			return $scope.selectedUsers.length > 1 ? true : false;
 		}
-		/**
-		 * Returns true if only one User is selected, otherwise false.
-		 *
-		 * @returns {boolean}
-		 */
+
 		$scope.oneSelected = function () {
 			return $scope.selectedUsers.length == 1 ? true : false;
 		}
-		/**
-		 * On view load, all Users are loaded, if not already loaded before.
-		 */
-		var preLoad = function() {
+
+		var preLoad = function () {
 			if ($scope.userEntities === undefined) {
 				$scope.loadUsers();
 			}
 		}
 		var init = preLoad();
-		/**
-		 * Load users and toast success.
-		 */
-		var onSaved = function() {
+
+		var onSaved = function () {
 			$scope.loadUsers();
 			onSuccess("OK", "Success", "Saved successfully.");
 		}
-		/**
-		 * Toast an error.
-		 *
-		 * @param e e.data.httpStatus expected to hold the http response status, e.data.message a message text
-		 */
-		var onError = function(e) {
-			toaster.pop("error", "Server Error", "["+ e.data.httpStatus+"] "+ e.data.message);
+
+		var onError = function (e) {
+			toaster.pop("error", "Server Error", "[" + e.data.httpStatus + "] " + e.data.message);
 		}
-		/**
-		 * Toast success.
-		 *
-		 * @param code a message code
-		 * @param header a header text
-		 * @param text a message text
-		 */
-		var onSuccess = function(code, header, text) {
-			toaster.pop("success", header, "["+code+"] "+text, 2000);
+
+		var onSuccess = function (code, header, text) {
+			toaster.pop("success", header, "[" + code + "] " + text, 2000);
 		}
 	};
 
-	exports.chkUsers = function() {
-		return {
-			restrict: 'A',
-			link: function(scope, element, attrs, ngModel) {
+	/*
+	 exports.chkUsers = function() {
+	 return {
+	 restrict: 'A',
+	 link: function(scope, element, attrs, ngModel) {
 
-				element.on('blur keyup change', function() {
-					if (element.val().length > 0) {
-						scope.$apply(scope.selectedUsers = []);
-						scope.$apply(read);
-					} else if (element.val().length == 0) {
-						scope.$apply(scope.selectedUsers = []);
-					}
-				});
-				read(scope); // initialize
+	 element.on('blur keyup change', function() {
+	 if (element.val().length > 0) {
+	 scope.$apply(scope.selectedUsers = []);
+	 scope.$apply(read);
+	 } else if (element.val().length == 0) {
+	 scope.$apply(scope.selectedUsers = []);
+	 }
+	 });
+	 read(scope); // initialize
 
-				// Write data to the model
-				function read(scope) {
-					angular.forEach(scope.userEntities, function (user) {
-						if (user.username.toUpperCase().indexOf(element.val().toUpperCase()) !== -1 ||
-							user.fullname.toUpperCase().indexOf(element.val().toUpperCase()) !== -1 ||
-							(user.userDetails != undefined && (user.userDetails.office.toUpperCase().indexOf(element.val().toUpperCase()) !== -1 ||
-								user.userDetails.department.toUpperCase().indexOf(element.val().toUpperCase()) !== -1))) {
-							scope.selectedUsers.push(user);
-						}
-					});
-				}
-			}
-		}
-	};
-
-
-	radio('core_mod').subscribe(function(evt, coreSrvModule) {
+	 // Write data to the model
+	 function read(scope) {
+	 angular.forEach(scope.userEntities, function (user) {
+	 if (user.username.toUpperCase().indexOf(element.val().toUpperCase()) !== -1 ||
+	 user.fullname.toUpperCase().indexOf(element.val().toUpperCase()) !== -1 ||
+	 (user.userDetails != undefined && (user.userDetails.office.toUpperCase().indexOf(element.val().toUpperCase()) !== -1 ||
+	 user.userDetails.department.toUpperCase().indexOf(element.val().toUpperCase()) !== -1))) {
+	 scope.selectedUsers.push(user);
+	 }
+	 });
+	 }
+	 }
+	 }
+	 };
+	 */
+/*
+	radio('core_mod').subscribe(function (evt, coreSrvModule) {
 		if (evt === 'LOAD_ALL_CONTROLLERS') {
-			angular.module('app', ['openwms.core.module']).controller('UsersController', ['$http', '$q', CoreService, functionStub]);
+//			angular.module('app', ['openwmsCoreModule']).controller('UsersController', ['$http', '$q', CoreService, functionStub]);
+			angular.module('app', ['openwmsCoreModule']).register('UsersController', ['$http', '$q', CoreService, functionStub]);
 
 			radio('core_mod').broadcast('ALL_CONTROLLERS_LOADED', coreSrvModule);
 		}
 	});
+*/
+	app.register.controller('UsersController', ['$scope', '$http', '$modal', '$upload', 'toaster', 'CoreService', '$base64', usersController]);
+	//return functionStub;
 });
 
 
