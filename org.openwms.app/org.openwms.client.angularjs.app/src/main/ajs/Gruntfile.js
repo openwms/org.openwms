@@ -47,10 +47,10 @@ module.exports = function (grunt) {
       },
       styles: {
         files: [
-			'<%= yeoman.app %>/styles/{,*/}*.css',
-			'<%= yeoman.allyapp %>/styles/{,*/}*.css'
+			'<%= yeoman.allyapp %>/styles/{,*/}*.css',
+			'<%= yeoman.app %>/styles/{,*/}*.css'
 		],
-        tasks: ['copy:styles', 'autoprefixer']
+        tasks: ['copy:styles', 'copy:allystyles', 'autoprefixer']
       },
       livereload: {
         options: {
@@ -59,13 +59,13 @@ module.exports = function (grunt) {
         files: [
           '<%= yeoman.app %>/{,*/}*.html',
           '.tmp/styles/{,*/}*.css',
-          '{.tmp,<%= yeoman.app %>}/scripts/{,*/}*.js',
-          '<%= yeoman.app %>/images/{,*/}*.{png,jpg,jpeg,gif,webp,svg}',
+          '{.tmp,<%= yeoman.app %>}/scripts/**/*.js',
+          '<%= yeoman.app %>/images/{,*/}*.{png,jpg,jpeg,gif,webp,svg}'
+          ,'<%= yeoman.allyapp %>/{,*/}*.html',
+          '.tmp/styles/{,*/}*.css',
+          '{.tmp,<%= yeoman.allyapp %>}/scripts/**/*.js',
+          '<%= yeoman.allyapp %>/images/{,*/}*.{png,jpg,jpeg,gif,webp,svg}'
 
-			'<%= yeoman.allyapp %>/{,*/}*.html',
-			'.tmp/styles/{,*/}*.css',
-			'{.tmp,<%= yeoman.allyapp %>}/scripts/{,*/}*.js',
-			'<%= yeoman.allyapp %>/images/{,*/}*.{png,jpg,jpeg,gif,webp,svg}'
         ]
       }
     },
@@ -304,13 +304,20 @@ module.exports = function (grunt) {
         cwd: '<%= yeoman.app %>/styles',
         dest: '.tmp/styles/',
         src: '{,*/}*.css'
-      }
+	  },
+		allystyles: {
+			expand: true,
+			cwd: '<%= yeoman.allyapp %>/styles',
+			dest: '.tmp/styles/',
+			src: '{,*/}*.css'
+		}
     },
     concurrent: {
       server: [
         'coffee:dist',
         'compass:server',
-        'copy:styles'
+        'copy:styles',
+		'copy:allystyles'
       ],
       test: [
         'coffee',

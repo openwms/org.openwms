@@ -30,16 +30,8 @@
 /**
  *
  */
-define([
-	'angular'/*,
-	'app',
-	'radio',
-	'services/openwmsCoreServices',
-	'controllers/openwmsCoreControllers',
-	'directives/openwmsCoreDirectives'*/
-], function(angular/*, app, radio*/) {
+define(['angular', 'controllers/openwmsCoreControllers'], function() {
 
-	'use strict';
 
 	var module = angular.module('openwmsCoreModule', []);
 

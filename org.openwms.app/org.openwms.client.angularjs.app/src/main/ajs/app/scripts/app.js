@@ -39,14 +39,16 @@ define(/*'app',*/[
 	'angular_ui_router',
 	'angular_resource',
 	'underscore',
-	'core_model',
+	'core_rtModel',
+	'core_secModel',
+	'core_envModel',
 	'routeResolver'
 ], function () {
 
-	var app = angular.module('app', ['ui.router', 'openwms.model.core', 'routeResolverServices', 'ngResource', 'ui.bootstrap', 'angularFileUpload', 'toaster', 'base64']);
+	var app = angular.module('app', ['ui.router', 'rtModelModule', 'secModelModule', 'coreEnvModel', 'routeResolverServices', 'ngResource', 'ui.bootstrap', 'angularFileUpload', 'toaster', 'base64']);
 
-	app.config(['routeResolverProvider', '$controllerProvider', '$compileProvider', '$filterProvider', '$provide', '$stateProvider', '$urlRouterProvider', '$locationProvider', '$httpProvider',
-		function (routeResolverProvider, $controllerProvider, $compileProvider, $filterProvider, $provide, $stateProvider, $urlRouterProvider, $locationProvider, $httpProvider) {
+	app.config(['routeResolverProvider', 'RTConfig', 'SecurityConfig', '$controllerProvider', '$compileProvider', '$filterProvider', '$provide', '$stateProvider', '$urlRouterProvider', '$locationProvider', '$httpProvider',
+		function (routeResolverProvider, RTConfig, SecurityConfig, $controllerProvider, $compileProvider, $filterProvider, $provide, $stateProvider, $urlRouterProvider, $locationProvider, $httpProvider) {
 
 			app.register =
 			{
@@ -56,9 +58,7 @@ define(/*'app',*/[
 				factory: $provide.factory,
 				service: $provide.service
 			};
-
 			var route = routeResolverProvider.route;
-
 
 			$compileProvider.imgSrcSanitizationWhitelist(/^\s*(https?|ftp|mailto|file|data):/);
 
@@ -126,35 +126,6 @@ define(/*'app',*/[
 
 			$urlRouterProvider.otherwise("/");
 
-			var modules = [
-				{
-					moduleName: "CORE",
-					moduleVersion: "1.0.0",
-					url: "core_module",
-					views: [
-						{
-							name: "Roles",
-							url: "/roles",
-							state: {
-								name: "parent.roles",
-								header: {name: "header-view@parent.roles"},
-								menu: {name: "menu-view@parent.roles"},
-								content: {name: "content-view@parent.roles"}
-							}
-						},
-						{
-							name: "Users",
-							url: "/users",
-							state: {
-								name: "parent.users",
-								header: {name: "header-view@parent.users"},
-								menu: {name: "menu-view@parent.users"},
-								content: {name: "content-view@parent.users"}
-							}
-						}
-					]
-				}
-			];
 
 			$stateProvider
 				.state('parent', {
@@ -170,75 +141,10 @@ define(/*'app',*/[
 						"content-view@parent.root": { templateUrl: "views/startpage.html" }
 					}
 				})
-				/*
-				 .state('parent.users', {
-				 url: "/users",
-				 views: {
-				 "@": { templateUrl: "views/no-tree.html" },
-				 "header-view@": { templateUrl: "views/partials/default-header.html" },
-				 "menu-view@parent.users": { templateUrl: "views/partials/default-menu.html", controller: 'DefaultNavigationController' },
-				 "content-view@parent.users": route.resolve('Users')
-				 }
-				 })
-				 .state('parent.roles', {
-				 url: "/roles",
-				 views: {
-				 "@": { templateUrl: "views/no-tree.html" },
-				 "header-view@": { templateUrl: "views/partials/default-header.html" },
-				 "menu-view@parent.roles": { templateUrl: "views/partials/default-menu.html", controller: 'DefaultNavigationController' },
-				 "content-view@parent.roles": route.resolve('Roles')
-				 }
-				 })
-				 */
-				/*
-				 .state('parent.login', {
-				 url: "/login",
-				 views: {
-				 "@": { templateUrl: "views/no-tree.html" },
-				 "header-view@": { templateUrl: "views/partials/default-header.html" },
-				 "content-view@parent.login": { templateUrl: "login.html", controller: 'LoginCtrl' }
-				 }
-				 })
-				 .state('parent.logout', {
-				 url: "/logout",
-				 views: {
-				 "@": { templateUrl: "views/no-tree.html" },
-				 "header-view@": { templateUrl: "views/partials/default-header.html" },
-				 "content-view@parent.logout": { templateUrl: "login.html", controller: 'LoginCtrl' }
-				 }
-				 })*/
 			;
 
-			/*
-			 var preLoad = function() {
-			 angular.forEach(modules, function(module) {
-
-			 require(module.url);
-
-			 angular.forEach(module.views, function(view)
-			 {
-			 route.resolve(view.name, module.url, function(result){
-
-			 $stateProvider.state('parent.users', {
-			 url: view.url,
-			 views: {
-			 "@": { templateUrl: "views/no-tree.html" },
-			 "header-view@": { templateUrl: "views/partials/default-header.html" },
-			 "menu-view@parent.users": { templateUrl: "views/partials/default-menu.html", controller: 'DefaultNavigationController' },
-			 "content-view@parent.users": result
-			 }
-			 });
-			 });
-			 });
-			 });
-			 };
-			 */
-			var preLoad2 = function () {
-				angular.forEach(modules, function (module) {
-
-					// todo require(module.url);
-
-					angular.forEach(module.views, function (view) {
+			var init = function () {
+					angular.forEach(RTConfig.views, function (view) {
 						var viewDef = {};
 						viewDef['@'] = { templateUrl: "views/no-tree.html" };
 						viewDef[view.state.header.name] = { templateUrl: "views/partials/default-header.html" };
@@ -249,18 +155,52 @@ define(/*'app',*/[
 							url: view.url,
 							views: viewDef
 						});
-
 					});
-				});
 			}();
+
+			// Do this after routes where loaded dynamically so that security urls cannot be overridden
+			var loadSecurity = function () {
+					angular.forEach(SecurityConfig.views, function (view) {
+						var viewDef = {};
+						viewDef['@'] = { templateUrl: "views/no-tree.html" };
+						viewDef[view.state.header.name] = { templateUrl: "views/partials/default-header.html" };
+						//viewDef[view.state.menu.name] = { templateUrl: "views/partials/default-menu.html", controller: 'DefaultNavigationController' };
+						viewDef[view.state.content.name] = route.resolve(view.name);
+
+						$stateProvider.state(view.state.name, {
+							url: view.url,
+							views: viewDef
+						});
+					});
+			}();
+			/*
+			$stateProvider
+				.state('parent.login', {
+					url: "/login",
+					views: {
+						"@": { templateUrl: "views/no-tree.html" },
+						"header-view@": { templateUrl: "views/partials/default-header.html" },
+						"content-view@parent.login": { templateUrl: "login.html", controller: LoginCtrl }
+					}
+				})
+				.state('parent.logout', {
+					url: "/logout",
+					views: {
+						"@": { templateUrl: "views/no-tree.html" },
+						"header-view@": { templateUrl: "views/partials/default-header.html" },
+						"content-view@parent.logout": { templateUrl: "login.html", controller: LoginCtrl }
+					}
+				})
+			;
+			 */
 		}]);
 
-	app.run(function ($rootScope, $state, $stateParams, $http, $location) {
+	app.run(function ($rootScope, $state, $stateParams, $http, $location, CoreConfig) {
 
 		//$rootScope.env = envModel.env;
-		$rootScope.DEVMODE = true;
+		$rootScope.DEVMODE = CoreConfig.env.DEVMODE;
 		//$rootScope.rootUrl = "http://backend.openwms.cloudbees.net";
-		$rootScope.rootUrl = "http://localhost:8080/org.openwms.client.rest.provider";
+		$rootScope.rootUrl = CoreConfig.env.backendUrl; //"http://localhost:8080/org.openwms.client.rest.provider";
 
 		/* Security */
 		$rootScope.message = '';
@@ -292,18 +232,35 @@ define(/*'app',*/[
 //					return _.str.startsWith(route, noAuthRoute);
 //				});
 //		};
+		$rootScope.$on(CoreConfig.events.RETRIEVED_TOKEN, function (event, next, current) {
+			// when we are coming from the login page and succeeded to login we go forward to the home screen
+			if ($rootScope.targetUrl === '/account' && next !== undefined) {
+				$rootScope.authToken = next;
+				$location.url('/home').replace("", "");
+				return;
+			}
+
+			$rootScope.authToken = next;
+			if ($rootScope.targetUrl === undefined) {
+				$location.url('/home').replace("", "");
+			} else {
+				$location.url($rootScope.targetUrl).replace("", "");
+			}
+		});
 		$rootScope.$on('$stateChangeStart', function (event, next, current) {
 			// if route requires auth and user is not logged in
-			if (!($location.url() !== '/login') && !$rootScope.isLoggedIn()) {
+			if (!($location.url() !== '/account') && !$rootScope.isLoggedIn()) {
 				// redirect back to login
-				$location.url('/login').replace("", "");
+				$rootScope.targetUrl = $location.url();
+				$location.url('/account').replace("", "");
 			}
 		});
 		$rootScope.$on('$routeChangeStart', function (event, next, current) {
 			// if route requires auth and user is not logged in
 			if (!routeClean($location.url()) && !$rootScope.isLoggedIn()) {
+				$rootScope.targetUrl = $location.url();
 				// redirect back to login
-				$location.url('/login').replace("", "");
+				$location.url('/account').replace("", "");
 			}
 		});
 		$rootScope.$on('$viewContentLoaded', function () {
@@ -315,14 +272,17 @@ define(/*'app',*/[
 				$rootScope.user = {};
 				$rootScope.user.username = 'openwms';
 				$rootScope.user.password = 'openwms';
-				//$rootScope.$broadcast(events.APP_LOGIN);
-//				$rootScope.login();
+				$rootScope.$broadcast(CoreConfig.events.APP_LOGIN);
+				//$rootScope.login();
+				//$location.url('/account').replace("", "");
 				return;
 			}
-//			if ($rootScope.modal.opened == false) {
-//				$rootScope.modal.opened = true
-//				$('#loginDialog').modal('show');
-//			}
+/*
+			 if ($rootScope.modal.opened == false) {
+			 $rootScope.modal.opened = true
+			 $('#loginDialog').modal('show');
+			 }
+*/
 		});
 
 	});

@@ -28,29 +28,53 @@
  * lighter-blue : edf4fa
  */
 
-define([
-	'angular',
-	'controllers/LoginController'
-], function() {
-
-
 /*
-	radio('core_mod').subscribe(function(evt, data) {
-		if (evt === 'LOAD_CONTROLLERS') {
+ * sec.model.js
+ * Environment model module
+ */
 
-			// Force loading all controllers
-			radio('core_mod').broadcast('LOAD_ALL_CONTROLLERS', data.module);
+/*jslint         browser : true, continue : true,
+ devel  : true, indent  : 2,    maxerr   : 50,
+ newcap : true, nomen   : true, plusplus : true,
+ regexp : true, sloppy  : true, vars     : false,
+ white  : true
+ */
+
+/*global $, openwms */
+define(['angular'], function () {
+
+	var secModel =
+		{
+			moduleName: "CORE-SEC",
+			moduleVersion: "1.0.0",
+			url: "core_security_module",
+			views: [
+				{
+					name: "Login",
+					url: "/login",
+					state: {
+						name: "parent.login",
+						header: {name: "header-view@"},
+						menu: {name: ""},
+						content: {name: "content-view@parent.login"}
+					}
+				},
+				{
+					name: "Logout",
+					url: "/logout",
+					state: {
+						name: "parent.logout",
+						header: {name: "header-view@"},
+						menu: {name: ""},
+						content: {name: "content-view@parent.logout"}
+					}
+				}
+			]
 		}
-		if (evt === 'ALL_CONTROLLERS_LOADED') {
+		;
 
-			// The last controller publishes this event and forces a CONTROLLERS_LOADED.
-			radio('core_mod').broadcast('CONTROLLERS_LOADED');
-		}
-	});
-*/
+	var coreRtModel = angular.module('secModelModule', []);
+	coreRtModel.constant('SecurityConfig', secModel);
 
-	//var app = angular.module('openwms.core.module', ['ui.bootstrap', 'ngAnimate', 'toaster', 'angularFileUpload', 'base64']);
-	//app.controller('UsersController', ['$http', '$q', 'CoreService', sub.UsersController]);
-	//app.controller('DefaultNavigationController', ['$scope', sub2.DefaultNavigationController]);
-	//app.directive('chkUsers', sub.chkUsers);
-});
+})
+
