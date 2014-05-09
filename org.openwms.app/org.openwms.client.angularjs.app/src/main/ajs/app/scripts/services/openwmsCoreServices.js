@@ -1,3 +1,5 @@
+'use strict';
+
 /*
  * openwms.org, the Open Warehouse Management System.
  * Copyright (C) 2014 Heiko Scherrer
@@ -26,28 +28,9 @@
  * lighter-blue : edf4fa
  */
 
-/**
- *
- */
 define([
-	'angular',
 	'app',
-	'radio',
 	'services/CoreService'
-], function(angular, app, radio, CoreServiceStub) {
+], function() {
 
-	'use strict';
-
-	radio('core_mod').subscribe(function(evt, data) {
-		if (evt === 'LOAD_SERVICES') {
-
-			// Force loading all services
-			radio('core_mod').broadcast('LOAD_ALL_SERVICES', data.module, app);
-		}
-		if (evt === 'ALL_SERVICES_LOADED') {
-
-			// The last service publishes this event and forces a SERVICES_LOADED.
-			radio('core_mod').broadcast('SERVICES_LOADED');
-		}
-	});
 });

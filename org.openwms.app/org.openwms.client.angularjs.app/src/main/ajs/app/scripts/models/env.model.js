@@ -1,3 +1,5 @@
+'use strict';
+
 /*
  * openwms.org, the Open Warehouse Management System.
  * Copyright (C) 2014 Heiko Scherrer
@@ -39,22 +41,24 @@
  */
 
 /*global $, openwms */
-define(['angular'], function(angular) {
-	'use strict';
-	return angular.module('openwms.core.env.model', [])
-		.service('envModel', function() {
+define(['angular'], function () {
 
-			var env = {
-				"DEVMODE" : false,
-//				"backendUrl" : "http://localhost:8080/org.openwms.client.rest.provider",
-			"backendUrl" : "http://backend.openwms.cloudbees.net",
-				"buildNumber" : "${build.number}",
-				"buildDate" : "${build.date}"
-			};
+	var coreEnvModel = angular.module('coreEnvModel', []);
 
-			return {
-				env : env
-			};
-		}
-	);
+	var config = { env: {
+		"DEVMODE": false,
+		"backendUrl": "http://localhost:8080/org.openwms.client.rest.provider",
+//			"backendUrl" : "http://backend.openwms.cloudbees.net",
+		"buildNumber": "${build.number}",
+		"buildDate": "${build.date}"
+	},
+
+
+		events: {
+			APP_LOGIN: "CORE_APP_LOGIN",
+			RETRIEVED_TOKEN : "CORE_RETRIEVED_TOKEN"
+		}};
+
+
+	coreEnvModel.constant('CoreConfig', config);
 });

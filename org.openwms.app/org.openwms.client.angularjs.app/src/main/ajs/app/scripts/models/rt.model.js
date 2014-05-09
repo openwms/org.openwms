@@ -28,29 +28,51 @@
  * lighter-blue : edf4fa
  */
 
-define([
-	'angular',
-	'controllers/LoginController'
-], function() {
-
-
 /*
-	radio('core_mod').subscribe(function(evt, data) {
-		if (evt === 'LOAD_CONTROLLERS') {
+ * env.model.js
+ * Environment model module
+ */
 
-			// Force loading all controllers
-			radio('core_mod').broadcast('LOAD_ALL_CONTROLLERS', data.module);
-		}
-		if (evt === 'ALL_CONTROLLERS_LOADED') {
+/*jslint         browser : true, continue : true,
+ devel  : true, indent  : 2,    maxerr   : 50,
+ newcap : true, nomen   : true, plusplus : true,
+ regexp : true, sloppy  : true, vars     : false,
+ white  : true
+ */
 
-			// The last controller publishes this event and forces a CONTROLLERS_LOADED.
-			radio('core_mod').broadcast('CONTROLLERS_LOADED');
-		}
-	});
-*/
+/*global $, openwms */
+define(['angular'], function () {
 
-	//var app = angular.module('openwms.core.module', ['ui.bootstrap', 'ngAnimate', 'toaster', 'angularFileUpload', 'base64']);
-	//app.controller('UsersController', ['$http', '$q', 'CoreService', sub.UsersController]);
-	//app.controller('DefaultNavigationController', ['$scope', sub2.DefaultNavigationController]);
-	//app.directive('chkUsers', sub.chkUsers);
-});
+	var module =
+	{
+		moduleName: "CORE",
+		moduleVersion: "1.0.0",
+		url: "core_module",
+		views: [
+			{
+				name: "Roles",
+				url: "/roles",
+				state: {
+					name: "parent.roles",
+					header: {name: "header-view@parent.roles"},
+					menu: {name: "menu-view@parent.roles"},
+					content: {name: "content-view@parent.roles"}
+				}
+			},
+			{
+				name: "Users",
+				url: "/users",
+				state: {
+					name: "parent.users",
+					header: {name: "header-view@parent.users"},
+					menu: {name: "menu-view@parent.users"},
+					content: {name: "content-view@parent.users"}
+				}
+			}
+		]
+	};
+
+	var coreRtModel = angular.module('rtModelModule', []);
+	coreRtModel.constant('RTConfig', module);
+})
+

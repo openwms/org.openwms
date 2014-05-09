@@ -47,7 +47,9 @@ require.config({
 		domReady: '../bower_components/requirejs-domready/domReady',
 
 		routeResolver: 'routeResolver',
-		core_model: 'models/openwms.model.core'
+		core_rtModel: 'models/rt.model',
+		core_secModel: 'models/sec.model',
+		core_envModel : 'models/env.model'
 	},
 	shim: {/*
 		angular: {
@@ -94,16 +96,12 @@ require([
 		'angular_file_upload',
 		'toaster',
 		'underscore',
-		'radio',
+		/*		'radio',*/
 		'angular_base64',
-		'services/CoreService',
-		'core_model'
+		'services/openwmsCoreServices',
+		'services/projectServices'
 	],
 	function (domReady) {
-		//angular.bootstrap(document, ['app']);
-		/*
-
-		 */
 		domReady(function () {
 			angular.bootstrap(document, ['app']);
 		});
