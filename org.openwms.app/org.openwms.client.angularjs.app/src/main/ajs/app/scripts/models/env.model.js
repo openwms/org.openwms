@@ -45,18 +45,26 @@ define(['angular'], function () {
 
 	var coreEnvModel = angular.module('coreEnvModel', []);
 
-	var config = { env: {
-		"DEVMODE": false,
-		"backendUrl": "http://localhost:8080/org.openwms.client.rest.provider",
-//			"backendUrl" : "http://backend.openwms.cloudbees.net",
-		"buildNumber": "${build.number}",
-		"buildDate": "${build.date}"
-	},
+	var config = {
 
+		env: {
+			"DEVMODE": false,
+			"backendUrl": "http://localhost:8080/org.openwms.client.rest.provider",
+//			"backendUrl" : "http://backend.openwms.cloudbees.net",
+			"buildNumber": "${build.number}",
+			"buildDate": "${build.date}"
+		},
+
+		const: {
+			AUTH_TOKEN: "Auth-Token",
+			TENANT_ID: "TenantId"
+		},
 
 		events: {
 			APP_LOGIN: "CORE_APP_LOGIN",
-			RETRIEVED_TOKEN : "CORE_RETRIEVED_TOKEN"
+			APP_LOGOUT: "CORE_APP_LOGOUT",
+			RETRIEVED_TOKEN: "CORE_RETRIEVED_TOKEN",
+			INVALID_CREDENTIALS: "CORE_INVALID_CREDENTIALS"
 		}};
 
 

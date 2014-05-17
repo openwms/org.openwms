@@ -27,7 +27,7 @@ define([
 	'services/CoreService'
 ], function (app) {
 
-	var loginController = function ($scope, $rootScope, $http, $location, CoreService) {
+	var loginController = function ($scope, $rootScope, $http, $location, $window, CoreService) {
 		// This object will be filled by the form
 		$scope.user = {};
 
@@ -43,15 +43,18 @@ define([
 						$rootScope.user = data.user;
 						$rootScope.message = undefined;
 						$rootScope.authToken = data.user.token;
+						$window.sessionStorage.setItem('aToken', data.user.token);
 						$location.url('/');
 					} else {
 						$rootScope.message = 'Authentication failed.';
-						$rootScope.authToken = null;
+						$window.sessionStorage.removeItem('aToken');
+						delete $rootScope.authToken;
 						$scope.modal.opened = true;
 					}
 				}, function (e) {
 					$rootScope.message = 'Authentication failed.';
-					$rootScope.authToken = null;
+					$window.sessionStorage.removeItem('aToken');
+					delete $rootScope.authToken;
 					$scope.modal.opened = true;
 				}
 			);
@@ -84,6 +87,6 @@ define([
 		};
 	};
 
-	app.register.controller('LoginController', ['$scope', '$http', 'CoreService', loginController]);
+	app.register.controller('LoginController', ['$scope', '$http', '$window', 'CoreService', loginController]);
 
 });

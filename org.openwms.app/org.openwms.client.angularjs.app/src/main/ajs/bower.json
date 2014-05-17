@@ -30,6 +30,7 @@
     "angular-base64": "~2.0.1",
     "requirejs": "~2.1.11",
     "requirejs-domready": "~2.0.1",
-    "radio": "~0.2.0"
+    "radio": "~0.2.0",
+    "angular-local-storage": "~0.0.4"
   }
 }

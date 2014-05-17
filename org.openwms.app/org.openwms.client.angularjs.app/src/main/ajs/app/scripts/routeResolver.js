@@ -62,15 +62,25 @@ define(['angular'], function () {
 
 		this.route = function (routeConfig) {
 
-			var resolve = function (baseName, path) {
-					if (!path) path = '';
+			var resolve = function (baseName, tmp, ctrl) {
+					var path = '';
 
 					var routeDef = {};
-					routeDef.templateUrl = routeConfig.getViewsDirectory() + path + baseName + '.html';
-					routeDef.controller = baseName + 'Controller';
+					if (tmp === undefined) {
+						routeDef.templateUrl = routeConfig.getViewsDirectory() + path + baseName + '.html';
+					} else {
+						routeDef.templateUrl = path + tmp.templateUrl;
+					}
+					if (ctrl === undefined){
+						routeDef.controller = baseName + 'Controller';
+					} else if (ctrl === "") {
+						// dont set controller
+					} else {
+						routeDef.controller = ctrl.templateUrl;
+					}
 					routeDef.resolve = {
 						load: ['$q', '$rootScope', function ($q, $rootScope) {
-							var dependencies = [routeConfig.getControllersDirectory() + path + baseName + 'Controller.js'];
+							var dependencies = [routeConfig.getControllersDirectory() + path + routeDef.controller + '.js'];
 							return resolveDependencies($q, $rootScope, dependencies);
 						}]
 					};

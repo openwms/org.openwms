@@ -55,7 +55,6 @@ define(['angular'], function () {
 					state: {
 						name: "parent.login",
 						header: {name: "header-view@"},
-						menu: {name: ""},
 						content: {name: "content-view@parent.login"}
 					}
 				},
@@ -65,8 +64,7 @@ define(['angular'], function () {
 					state: {
 						name: "parent.logout",
 						header: {name: "header-view@"},
-						menu: {name: ""},
-						content: {name: "content-view@parent.logout"}
+						content: {name: "content-view@parent.logout", html: "views/Logout.html"}
 					}
 				}
 			]

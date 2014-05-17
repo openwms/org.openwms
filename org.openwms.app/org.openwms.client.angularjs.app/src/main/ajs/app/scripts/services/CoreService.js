@@ -31,7 +31,7 @@ define(['app'], function (app) {
 
 		coreServiceFactory.add = function (url, $scope, entity) {
 			var delay = $q.defer();
-			$http.defaults.headers.put['Auth-Token'] = $scope.authToken;
+			$http.defaults.headers.put['Auth-Token'] = $scope.getToken();
 			$http.post($scope.rootUrl + url, entity)
 				.success(function (data, status) {
 					if (status < 200 || status >= 300) {
@@ -60,11 +60,16 @@ define(['app'], function (app) {
 
 		coreServiceFactory.save = function (url, $scope, entity) {
 			var delay = $q.defer();
-			$http.defaults.headers.put['Auth-Token'] = $scope.authToken;
+			$http.defaults.headers.put['Auth-Token'] = $scope.getToken();
 			$http.defaults.headers.common['Content-Type'] = 'application/json';
 			$http.put($scope.rootUrl + url, entity)
-				.success(function (savedEntity) {
-					delay.resolve(savedEntity);
+				.success(function (data) {
+					if (data.items === undefined || data.items[0].httpStatus !== 200) {
+						console.log("Error in service all for url ["+url+"] with entity ["+entity+"]. Response is:"+data);
+						delay.reject(/*new Error("Not expected response")*/);
+					} else {
+						delay.resolve(data.items[0].obj[0]);
+					}
 				})
 				.error(function (data, status, headers, config) {
 					delay.reject(new Error(status, config));
@@ -72,12 +77,16 @@ define(['app'], function (app) {
 			return delay.promise;
 		};
 
-		coreServiceFactory.getAll = function (url, $scope) {
+		coreServiceFactory.getAll = function (url, $scope, h) {
 			var delay = $q.defer();
-			$http.defaults.headers.common['Auth-Token'] = $scope.authToken;
-			$http.get($scope.rootUrl + url)
+			//$http.defaults.headers.get['Auth-Token'] = $scope.authToken;
+			$http({method: 'GET', url: $scope.rootUrl + url, headers: h})
 				.success(function (data) {
-					delay.resolve(data.items[0].obj[0]);
+					if (data.items === undefined) {
+						delay.reject(new Error("Not expected response"));
+					} else {
+						delay.resolve(data.items[0].obj[0]);
+					}
 				})
 				.error(function (data, status, headers, config) {
 					delay.reject(new Error(status, config));
@@ -87,7 +96,7 @@ define(['app'], function (app) {
 
 		coreServiceFactory.login = function ($scope) {
 			var delay = $q.defer();
-			$http.defaults.headers.post['Auth-Token'] = $scope.authToken;
+			$http.defaults.headers.post['Auth-Token'] = $scope.getToken();
 			$http.post($scope.rootUrl + '/sec/login', {
 				username: $scope.user.username,
 				password: $scope.user.password
@@ -108,7 +117,7 @@ define(['app'], function (app) {
 				message: data.items[0].message
 			};
 			q.reject(err);
-		}
+		};
 
 		return coreServiceFactory;
 

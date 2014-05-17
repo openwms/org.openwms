@@ -31,6 +31,7 @@ require.config({
 		angular: '../bower_components/angular/angular',
 		jquery: '../bower_components/jquery/dist/jquery',
 		angular_file_upload_shim: '../bower_components/ng-file-upload/angular-file-upload-shim',
+		angular_local_storage: '../bower_components/angular-local-storage/angular-local-storage',
 		angular_resource: '../bower_components/angular-resource/angular-resource',
 		angular_cookies: '../bower_components/angular-cookies/angular-cookies',
 		angular_sanitize: '../bower_components/angular-sanitize/angular-sanitize',
@@ -65,6 +66,9 @@ require.config({
 		'angular_resource': {
 			deps: ['angular']
 		},
+		'angular_local_storage': {
+			deps: ['angular']
+		},
 		'angular_ui_router': {
 			deps: ['angular']
 		},
@@ -92,6 +96,7 @@ require([
 		'ui_bootstrap',
 		'ui_bootstrap_tpls',
 		'angular_ui_router',
+		'angular_local_storage',
 		'angular_resource',
 		'angular_file_upload',
 		'toaster',
