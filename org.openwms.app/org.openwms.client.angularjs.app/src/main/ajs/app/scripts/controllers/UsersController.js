@@ -86,7 +86,7 @@ define([
 					}
 					$scope.progress = -1;
 				}
-			}
+			};
 
 			$scope.start = function () {
 				$scope.progress = 0;
@@ -110,7 +110,7 @@ define([
 
 		$scope.decode = function (img) {
 			return $base64.decode(img);
-		}
+		};
 
 		$scope.addUser = function () {
 			var modalInstance = $modal.open({
@@ -139,7 +139,7 @@ define([
 					)
 				}
 			);
-		}
+		};
 
 		$scope.editUser = function () {
 			var modalInstance = $modal.open({
@@ -165,7 +165,7 @@ define([
 					)
 				}
 			);
-		}
+		};
 
 		$scope.deleteUser = function () {
 			if ($scope.selectedUsers === null || $scope.selectedUsers.length == 0) {
@@ -183,7 +183,7 @@ define([
 					onError(e);
 				}
 			);
-		}
+		};
 
 		$scope.saveUser = function () {
 			$http.defaults.headers.put['Auth-Token'] = $scope.authToken;
@@ -196,7 +196,7 @@ define([
 					}
 				});
 			});
-		}
+		};
 
 		$scope.loadUsers = function () {
 			$scope.selectedUsers = [];
@@ -207,13 +207,13 @@ define([
 					onError(e);
 				}
 			);
-		}
+		};
 
 		$scope.changePassword = function () {
 			$http.get($scope.rootUrl + '/users').success(function (data, status, headers, config) {
 				$scope.userEntities = data;
 			});
-		}
+		};
 
 		$scope.changeImage = function () {
 			var modalInstance = $modal.open({
@@ -237,7 +237,7 @@ define([
 					$scope.loadUsers();
 				}
 			);
-		}
+		};
 
 		$scope.onClickUserCard = function (index) {
 			if ($scope.isSelected(index)) {
@@ -248,23 +248,23 @@ define([
 				// Not selected, so select this user
 				$scope.selectedUsers.push($scope.userEntities[index]);
 			}
-		}
+		};
 
 		$scope.selectedUser = function () {
 			return $scope.selectedUsers[$scope.selectedUsers.length - 1];
-		}
+		};
 
 		$scope.isSelected = function (index) {
 			return $scope.selectedUsers.indexOf($scope.userEntities[index]) > -1 ? true : false;
-		}
+		};
 
 		$scope.multipleSelected = function () {
 			return $scope.selectedUsers.length > 1 ? true : false;
-		}
+		};
 
 		$scope.oneSelected = function () {
 			return $scope.selectedUsers.length == 1 ? true : false;
-		}
+		};
 
 		var preLoad = function () {
 			if ($scope.userEntities === undefined) {
@@ -275,15 +275,15 @@ define([
 		var onSaved = function () {
 			$scope.loadUsers();
 			onSuccess("OK", "Success", "Saved successfully.");
-		}
+		};
 
 		var onError = function (e) {
 			toaster.pop("error", "Server Error", "[" + e.data.httpStatus + "] " + e.data.message);
-		}
+		};
 
 		var onSuccess = function (code, header, text) {
 			toaster.pop("success", header, "[" + code + "] " + text, 2000);
-		}
+		};
 	};
 
 	app.register.controller('UsersController', ['$scope', '$http', '$modal', '$upload', '$base64', 'toaster', 'CoreService', usersController]);

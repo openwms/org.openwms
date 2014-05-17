@@ -1,4 +1,5 @@
-<!--
+'use strict';
+
 /*
  * openwms.org, the Open Warehouse Management System.
  * Copyright (C) 2014 Heiko Scherrer
@@ -20,5 +21,18 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
--->
-Hier gehts los
+
+define([
+	'app'
+], function (app) {
+
+	var logoutController = function ($scope, CoreConfig) {
+		// Register the login() function
+		$scope.logout = function () {
+			$scope.$emit(CoreConfig.events.APP_LOGOUT);
+			return;
+		}();
+	};
+
+	app.register.controller('LogoutController', ['$scope', 'CoreConfig', logoutController]);
+});

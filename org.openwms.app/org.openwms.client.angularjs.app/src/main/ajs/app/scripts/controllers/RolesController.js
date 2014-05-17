@@ -175,14 +175,14 @@ define([
 				// remove row from selection
 				checkedRows.splice(index, 1);
 			}
-		}
+		};
 
 		$scope.roleStyleClass = function (row) {
 			if (checkedRows.indexOf(row) == -1) {
 				return "glyphicon glyphicon-unchecked";
 			}
 			return "glyphicon glyphicon-check";
-		}
+		};
 
 		$scope.previousGrantsPage = function() {
 			$scope.page--;
