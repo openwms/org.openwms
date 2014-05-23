@@ -31,6 +31,7 @@
     "requirejs": "~2.1.11",
     "requirejs-domready": "~2.0.1",
     "radio": "~0.2.0",
-    "angular-local-storage": "~0.0.4"
+    "angular-local-storage": "~0.0.4",
+	"velocity": "~0.0.13"
   }
 }
