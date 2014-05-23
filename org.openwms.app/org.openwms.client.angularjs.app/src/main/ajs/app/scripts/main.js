@@ -46,6 +46,7 @@ require.config({
 		toaster: '../bower_components/AngularJS-Toaster/toaster',
 		radio: '../bower_components/radio/radio',
 		domReady: '../bower_components/requirejs-domready/domReady',
+		velocity: '../bower_components/velocity/jquery.velocity.min',
 
 		routeResolver: 'routeResolver',
 		core_rtModel: 'models/rt.model',
@@ -83,6 +84,9 @@ require.config({
 		},
 		'angular_animate': {
 			deps: ['angular']
+		},
+		'velocity': {
+			deps: ['jquery']
 		}
 	}
 });
@@ -101,6 +105,9 @@ require([
 		'angular_file_upload',
 		'toaster',
 		'underscore',
+		'velocity',
+		'directives/openwmsCoreDirectives',
+
 		/*		'radio',*/
 		'angular_base64',
 		'services/openwmsCoreServices',
