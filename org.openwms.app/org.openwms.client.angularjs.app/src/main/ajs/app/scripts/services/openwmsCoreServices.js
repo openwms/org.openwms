@@ -30,6 +30,7 @@
 
 define([
 	'app',
+	'services/DialogService',
 	'services/CoreService'
 ], function() {
 

@@ -61,6 +61,7 @@ define(['app'], function (app) {
 		coreServiceFactory.save = function (url, $scope, entity) {
 			var delay = $q.defer();
 			$http.defaults.headers.put['Auth-Token'] = $scope.getToken();
+			$http.defaults.headers.put['Tenant'] = $scope.getTenantId();
 			$http.defaults.headers.common['Content-Type'] = 'application/json';
 			$http.put($scope.rootUrl + url, entity)
 				.success(function (data) {

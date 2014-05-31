@@ -241,7 +241,7 @@ define(/*'app',*/[
 			 */
 		}]);
 
-	app.run(function ($rootScope, $state, $stateParams, $http, $location, $window, localStorageService, CoreConfig) {
+	app.run(function ($rootScope, $state, $stateParams, $http, $location, $window, localStorageService, CoreConfig, DialogService) {
 
 		//$rootScope.env = envModel.env;
 		$rootScope.DEVMODE = CoreConfig.env.DEVMODE;
@@ -316,8 +316,12 @@ define(/*'app',*/[
 				$location.url($rootScope.targetUrl).replace("", "");
 			}
 		});
-		$rootScope.$on('$stateChangeStart', function (event, next, current) {
+		$rootScope.$on('$stateChangeStart', function (event, toState, toParams, fromState, fromParams) {
 			// if route requires auth and user is not logged in
+			// First check if a modal dialog is change and reject route change
+			if (DialogService.modalOpened) {
+				event.preventDefault();
+			}
 			if (!($location.url() !== '/account') && !$rootScope.isLoggedIn()) {
 				// redirect back to login
 				$rootScope.targetUrl = $location.url();
