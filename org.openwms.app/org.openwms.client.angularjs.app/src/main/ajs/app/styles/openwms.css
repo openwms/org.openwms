@@ -240,7 +240,7 @@ body {
 
 /* Addon for UI-Bootstrap */
 .nav, .pagination, .carousel, .panel-title a { cursor: pointer; }
-
+/*
 .modal {
     display: block;
     height: 0;
@@ -256,3 +256,4 @@ body {
     display: table;
     content: " ";
 }
+*/

@@ -1,0 +1,10 @@
+<div class="modal-header">
+    <h4>{{modalOptions.headerText}}</h4>
+</div>
+<div class="modal-body">
+    <ng-include src="modalOptions.template"></ng-include>
+</div>
+<div class="modal-footer">
+    <button class="btn btn-primary" ng-click="modalOptions.callback(modalOptions.action)">{{modalOptions.actionButtonText}}</button>
+    <button class="btn btn-default" ng-if="modalOptions.showCloseButton" ng-click="modalOptions.close()">{{modalOptions.closeButtonText}}</button>
+</div>
