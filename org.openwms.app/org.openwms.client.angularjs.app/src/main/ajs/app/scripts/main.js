@@ -35,6 +35,8 @@ require.config({
 		angular_resource: '../bower_components/angular-resource/angular-resource',
 		angular_cookies: '../bower_components/angular-cookies/angular-cookies',
 		angular_sanitize: '../bower_components/angular-sanitize/angular-sanitize',
+		angular_translate: '../bower_components/angular-translate/angular-translate',
+		angular_translate_lp: '../bower_components/angular-translate-loader-partial/angular-translate-loader-partial',
 		angular_animate: '../bower_components/angular-animate/angular-animate',
 		angular_ui_router: '../bower_components/angular-ui-router/release/angular-ui-router',
 		ui_bootstrap: '../bower_components/angular-bootstrap/ui-bootstrap',
@@ -82,6 +84,12 @@ require.config({
 		'angular_base64': {
 			deps: ['angular']
 		},
+		'angular_translate': {
+			deps: ['angular']
+		},
+		'angular_translate_lp': {
+			deps: ['angular', 'angular_translate']
+		},
 		'angular_animate': {
 			deps: ['angular']
 		},
@@ -102,6 +110,8 @@ require([
 		'angular_ui_router',
 		'angular_local_storage',
 		'angular_resource',
+		'angular_translate',
+		'angular_translate_lp',
 		'angular_file_upload',
 		'toaster',
 		'underscore',
