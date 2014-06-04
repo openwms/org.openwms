@@ -32,6 +32,8 @@
     "requirejs-domready": "~2.0.1",
     "radio": "~0.2.0",
     "angular-local-storage": "~0.0.4",
-	"velocity": "~0.0.13"
+    "velocity": "~0.0.13",
+    "angular-translate": "~2.1.0",
+    "angular-translate-loader-partial": "~2.0.0"
   }
 }

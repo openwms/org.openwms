@@ -39,6 +39,8 @@ define(/*'app',*/[
 	'angular_ui_router',
 	'angular_local_storage',
 	'angular_resource',
+	'angular_translate',
+	'angular_translate_lp',
 	'underscore',
 	'core_rtModel',
 	'core_secModel',
@@ -46,10 +48,18 @@ define(/*'app',*/[
 	'routeResolver'
 ], function () {
 
-	var app = angular.module('app', ['ui.router', 'rtModelModule', 'secModelModule', 'coreEnvModel', 'LocalStorageModule', 'routeResolverServices', 'ngResource', 'ui.bootstrap', 'angularFileUpload', 'toaster', 'base64']);
+	var app = angular.module('app', ['ui.router', 'pascalprecht.translate', 'rtModelModule', 'secModelModule', 'coreEnvModel', 'LocalStorageModule', 'routeResolverServices', 'ngResource', 'ui.bootstrap', 'angularFileUpload', 'toaster', 'base64']);
 
-	app.config(['routeResolverProvider', 'RTConfig', 'SecurityConfig', '$controllerProvider', '$compileProvider', '$filterProvider', '$provide', '$stateProvider', '$urlRouterProvider', '$locationProvider', '$httpProvider',
-		function (routeResolverProvider, RTConfig, SecurityConfig, $controllerProvider, $compileProvider, $filterProvider, $provide, $stateProvider, $urlRouterProvider, $locationProvider, $httpProvider) {
+	app.config(['routeResolverProvider', '$translateProvider', '$translatePartialLoaderProvider', 'RTConfig', 'SecurityConfig', '$controllerProvider', '$compileProvider', '$filterProvider', '$provide', '$stateProvider', '$urlRouterProvider', '$locationProvider', '$httpProvider',
+		function (routeResolverProvider,$translateProvider, $translatePartialLoaderProvider, RTConfig, SecurityConfig, $controllerProvider, $compileProvider, $filterProvider, $provide, $stateProvider, $urlRouterProvider, $locationProvider, $httpProvider) {
+
+			$translatePartialLoaderProvider.addPart('base');
+			$translateProvider.useLoader('$translatePartialLoader', {
+				urlTemplate: '/i18n/{part}/{lang}.json'
+			});
+			$translateProvider.preferredLanguage('en_US');
+			$translateProvider.preferredLanguage('de_DE');
+			$translateProvider.determinePreferredLanguage();
 
 			app.register =
 			{
@@ -241,7 +251,7 @@ define(/*'app',*/[
 			 */
 		}]);
 
-	app.run(function ($rootScope, $state, $stateParams, $http, $location, $window, localStorageService, CoreConfig, DialogService) {
+	app.run(function ($rootScope, $state, $stateParams, $http, $location, $window, $translate, localStorageService, CoreConfig, DialogService) {
 
 		//$rootScope.env = envModel.env;
 		$rootScope.DEVMODE = CoreConfig.env.DEVMODE;
@@ -357,6 +367,9 @@ define(/*'app',*/[
 			 }
 */
 		});
+		$rootScope.$on('$translatePartialLoaderStructureChanged', function () {
+			$translate.refresh();
+		});
 
 	});
 
@@ -381,7 +394,7 @@ define(/*'app',*/[
 				;
 			}
 		};
-	}])
+	}]);
 
 	return app;
 });
