@@ -39,6 +39,7 @@ require.config({
 		angular_translate_lp: '../bower_components/angular-translate-loader-partial/angular-translate-loader-partial',
 		angular_animate: '../bower_components/angular-animate/angular-animate',
 		angular_ui_router: '../bower_components/angular-ui-router/release/angular-ui-router',
+		angular_xeditable:'../bower_components/angular-xeditable/dist/js/xeditable',
 		ui_bootstrap: '../bower_components/angular-bootstrap/ui-bootstrap',
 		ui_bootstrap_tpls: '../bower_components/angular-bootstrap/ui-bootstrap-tpls',
 		angular_file_upload: '../bower_components/ng-file-upload/angular-file-upload',
@@ -65,6 +66,9 @@ require.config({
 		},
 		'ui_bootstrap_tpls': {
 			deps: ['angular', 'ui_bootstrap']
+		},
+		'angular_xeditable': {
+			deps: ['angular']
 		},
 		'angular_resource': {
 			deps: ['angular']
@@ -113,6 +117,7 @@ require([
 		'angular_translate',
 		'angular_translate_lp',
 		'angular_file_upload',
+		'angular_xeditable',
 		'toaster',
 		'underscore',
 		'velocity',

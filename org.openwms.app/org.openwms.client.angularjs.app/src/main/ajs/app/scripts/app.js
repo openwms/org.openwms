@@ -48,7 +48,7 @@ define(/*'app',*/[
 	'routeResolver'
 ], function () {
 
-	var app = angular.module('app', ['ui.router', 'pascalprecht.translate', 'rtModelModule', 'secModelModule', 'coreEnvModel', 'LocalStorageModule', 'routeResolverServices', 'ngResource', 'ui.bootstrap', 'angularFileUpload', 'toaster', 'base64']);
+	var app = angular.module('app', ['ui.router', 'pascalprecht.translate', 'xeditable', 'rtModelModule', 'secModelModule', 'coreEnvModel', 'LocalStorageModule', 'routeResolverServices', 'ngResource', 'ui.bootstrap', 'angularFileUpload', 'toaster', 'base64']);
 
 	app.config(['routeResolverProvider', '$translateProvider', '$translatePartialLoaderProvider', 'RTConfig', 'SecurityConfig', '$controllerProvider', '$compileProvider', '$filterProvider', '$provide', '$stateProvider', '$urlRouterProvider', '$locationProvider', '$httpProvider',
 		function (routeResolverProvider,$translateProvider, $translatePartialLoaderProvider, RTConfig, SecurityConfig, $controllerProvider, $compileProvider, $filterProvider, $provide, $stateProvider, $urlRouterProvider, $locationProvider, $httpProvider) {
@@ -96,7 +96,7 @@ define(/*'app',*/[
 						$location.url('/login');
 					}
 				});
-			}
+			};
 
 
 			//================================================
@@ -251,7 +251,10 @@ define(/*'app',*/[
 			 */
 		}]);
 
-	app.run(function ($rootScope, $state, $stateParams, $http, $location, $window, $translate, localStorageService, CoreConfig, DialogService) {
+	app.run(function ($rootScope, $state, $stateParams, $http, $location, $window, $translate, editableOptions, localStorageService, CoreConfig, DialogService) {
+
+		// xeditable
+		editableOptions.theme = 'bs3';
 
 		//$rootScope.env = envModel.env;
 		$rootScope.DEVMODE = CoreConfig.env.DEVMODE;
