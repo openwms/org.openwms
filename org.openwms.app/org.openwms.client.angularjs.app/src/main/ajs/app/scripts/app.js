@@ -314,16 +314,10 @@ define(/*'app',*/[
 
 		$rootScope.$on(CoreConfig.events.RETRIEVED_TOKEN, function (event, next, current) {
 			// when we are coming from the login page and succeeded to login we go forward to the home screen
-			if ($rootScope.targetUrl === '/account' && next !== undefined) {
-				localStorageService.set(CoreConfig.const.AUTH_TOKEN, next.token);
-				localStorageService.set(CoreConfig.const.TENANT_ID, next.tenantId);
-				$location.url('/home').replace("", "");
-				return;
-			}
-
 			localStorageService.set(CoreConfig.const.AUTH_TOKEN, next.token);
 			localStorageService.set(CoreConfig.const.TENANT_ID, next.tenantId);
-			if ($rootScope.targetUrl === undefined) {
+			$rootScope.$emit(CoreConfig.events.SUCCESSFULLY_LOGGED_IN, next);
+			if ($rootScope.targetUrl === undefined || ($rootScope.targetUrl === '/account' && next !== undefined)) {
 				$location.url('/home').replace("", "");
 			} else {
 				$location.url($rootScope.targetUrl).replace("", "");

@@ -27,10 +27,8 @@ define([
 ], function (app) {
 
 	var logoutController = function ($scope, CoreConfig) {
-		// Register the login() function
 		$scope.logout = function () {
 			$scope.$emit(CoreConfig.events.APP_LOGOUT);
-			return;
 		}();
 	};
 
