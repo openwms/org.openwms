@@ -42,10 +42,11 @@ define(['app'], function (app) {
 			actionButtonText: '<<OK>>',
 			headerText: '<<Proceed?>>',
 			bodyText: '<<Perform this action?>>',
-			close: true,
+			closeAfterAction: true,
 			showCloseButton: true,
 			action: {},
-			data: {}
+			data: {
+			}
 		};
 
 		/* Indicated that a modal dialog is currently opened. */
@@ -74,7 +75,7 @@ define(['app'], function (app) {
 					$scope.modalOptions.callback = function (result) {
 						//this.modalOpened = false;
 						tempModalOptions.data.action = 'action';
-						if(tempModalOptions.close) {
+						if(tempModalOptions.closeAfterAction) {
 							$modalInstance.close(tempModalOptions.data);
 							DialogService.modalOpened = false;
 						}
@@ -82,10 +83,8 @@ define(['app'], function (app) {
 					$scope.modalOptions.close = function (result) {
 						//this.modalOpened = false;
 						tempModalOptions.data.action = 'cancel';
-						if(tempModalOptions.close) {
-							$modalInstance.close(tempModalOptions.data);
-							DialogService.modalOpened = false;
-						}
+						$modalInstance.close(tempModalOptions.data);
+						DialogService.modalOpened = false;
 					};
 				}];
 			} else {
