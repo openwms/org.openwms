@@ -38,12 +38,19 @@ define(['app'], function (app) {
 
 		var modalOptions = {
 			nextButtonText: '<<Next>>',
+
 			closeButtonText: '<<Close>>',
+			showCloseButton: true,
+
+			backButtonText: '<<Back>>',
+			showBackButton: false,
+
 			actionButtonText: '<<OK>>',
+			actionDisabled: false,
+
 			headerText: '<<Proceed?>>',
 			bodyText: '<<Perform this action?>>',
 			closeAfterAction: true,
-			showCloseButton: true,
 			action: {},
 			data: {
 			}
