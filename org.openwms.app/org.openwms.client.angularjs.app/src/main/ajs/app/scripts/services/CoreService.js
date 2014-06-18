@@ -67,7 +67,7 @@ define(['app'], function (app) {
 				.success(function (data) {
 					if (data.items === undefined || data.items[0].httpStatus !== 200) {
 						console.log("Error in service all for url ["+url+"] with entity ["+entity+"]. Response is:"+data);
-						delay.reject(/*new Error("Not expected response")*/);
+						delay.reject(new Error(data.items[0].message, data.items[0].httpStatus));
 					} else {
 						delay.resolve(data.items[0].obj[0]);
 					}
