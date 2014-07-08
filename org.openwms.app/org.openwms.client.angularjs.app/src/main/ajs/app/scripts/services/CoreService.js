@@ -29,10 +29,11 @@ define(['app'], function (app) {
 
 		var coreServiceFactory = {};
 
-		coreServiceFactory.add = function (url, $scope, entity) {
+		coreServiceFactory.add = function (url, $scope, entity, h) {
 			var delay = $q.defer();
+			var cfg = (h === undefined) ? {method: 'POST'} : {method: 'POST', headers: h};
 			$http.defaults.headers.put['Auth-Token'] = $scope.getToken();
-			$http.post($scope.rootUrl + url, entity)
+			$http.post($scope.rootUrl + url, entity, cfg)
 				.success(function (data, status) {
 					if (status < 200 || status >= 300) {
 						throwError(data, status, delay);

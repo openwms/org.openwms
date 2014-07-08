@@ -68,22 +68,22 @@ define([
 				username: $scope.user.username,
 				password: $scope.user.password
 			})
-				.success(function (user) {
-					$rootScope.user = user;
-					$rootScope.message = undefined;
-					$rootScope.authToken = user.token;
-					$location.url('/');
-					$('#loginDialog').modal('hide');
-					//$('#loginDialog').modal('hide');
-					//$scope.modal.opened = false;
-				})
-				.error(function (data, status, headers, config) {
-					$rootScope.message = 'Authentication failed.';
-					$rootScope.authToken = null;
-					$scope.modal.opened = true;
+			.success(function (user) {
+				$rootScope.user = user;
+				$rootScope.message = undefined;
+				$rootScope.authToken = user.token;
+				$location.url('/');
+				$('#loginDialog').modal('hide');
+				//$('#loginDialog').modal('hide');
+				//$scope.modal.opened = false;
+			})
+			.error(function (data, status, headers, config) {
+				$rootScope.message = 'Authentication failed.';
+				$rootScope.authToken = null;
+				$scope.modal.opened = true;
 //				$('#loginDialog').modal('show');
-					//$location.url('/login').replace();
-				});
+				//$location.url('/login').replace();
+			});
 		};
 	};
 
