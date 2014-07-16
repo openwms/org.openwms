@@ -50,6 +50,7 @@ require.config({
 		radio: '../bower_components/radio/radio',
 		domReady: '../bower_components/requirejs-domready/domReady',
 		velocity: '../bower_components/velocity/jquery.velocity.min',
+		angular_money: '../bower_components/angular-money-directive/angular-money-directive',
 
 		routeResolver: 'routeResolver',
 		core_rtModel: 'models/rt.model',
@@ -122,7 +123,6 @@ require([
 		'underscore',
 		'velocity',
 		'directives/openwmsCoreDirectives',
-
 		/*		'radio',*/
 		'angular_base64',
 		'services/openwmsCoreServices',

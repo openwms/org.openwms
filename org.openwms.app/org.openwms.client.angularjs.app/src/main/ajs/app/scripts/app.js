@@ -267,6 +267,7 @@ define(/*'app',*/[
 //		var routesThatDontRequireAuth = ['/login'];
 		// check if current location matches route
 
+
 //		var routeClean = function (route) {
 //			return _.find(routesThatDontRequireAuth,
 //				function (noAuthRoute) {
