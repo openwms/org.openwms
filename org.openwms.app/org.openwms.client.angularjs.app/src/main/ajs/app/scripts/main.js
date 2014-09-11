@@ -58,11 +58,10 @@ require.config({
 		core_secModel: 'models/sec.model',
 		core_envModel : 'models/env.model'
 	},
-	shim: {/*
-		angular: {
-			deps: [ 'jquery'],
-			exports: 'angular'
-		},*/
+	shim: {
+        bootstrap: {
+			deps: [ 'jquery']
+		},
 		'ui_bootstrap': {
 			deps: ['angular']
 		},
