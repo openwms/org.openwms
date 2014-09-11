@@ -109,6 +109,7 @@ require([
 		'domReady',
 		'angular',
 		'app',
+        'bootstrap',
 		/*'routeResolver',*/
 		'jquery',
 		'ui_bootstrap',
