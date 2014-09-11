@@ -40,6 +40,7 @@ require.config({
 		angular_animate: '../bower_components/angular-animate/angular-animate',
 		angular_ui_router: '../bower_components/angular-ui-router/release/angular-ui-router',
 		angular_xeditable:'../bower_components/angular-xeditable/dist/js/xeditable',
+        bootstrap: '../bower_components/bootstrap/dist/js/bootstrap',
 		ui_bootstrap: '../bower_components/angular-bootstrap/ui-bootstrap',
 		ui_bootstrap_tpls: '../bower_components/angular-bootstrap/ui-bootstrap-tpls',
 		angular_file_upload: '../bower_components/ng-file-upload/angular-file-upload',
