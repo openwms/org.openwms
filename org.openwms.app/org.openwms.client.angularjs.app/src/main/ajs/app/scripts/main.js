@@ -59,9 +59,6 @@ require.config({
 		core_envModel : 'models/env.model'
 	},
 	shim: {
-        bootstrap: {
-			deps: [ 'jquery']
-		},
 		'ui_bootstrap': {
 			deps: ['angular']
 		},
@@ -98,6 +95,9 @@ require.config({
 		'angular_animate': {
 			deps: ['angular']
 		},
+        bootstrap: {
+            deps: [ 'jquery']
+        },
 		'velocity': {
 			deps: ['jquery']
 		}
@@ -108,9 +108,9 @@ require([
 		'domReady',
 		'angular',
 		'app',
-        'bootstrap',
 		/*'routeResolver',*/
 		'jquery',
+        'bootstrap',
 		'ui_bootstrap',
 		'ui_bootstrap_tpls',
 		'angular_ui_router',
