@@ -247,6 +247,22 @@
             </properties>
         </profile>
         <profile>
+            <id>internal</id>
+            <properties>
+                <!-- Web Site deployment -->
+                <distribution.serverId>shell.sourceforge.net</distribution.serverId>
+                <distribution.serverProtocol>scp</distribution.serverProtocol>
+                <distribution.serverUrl.rootPath>shell.sourceforge.net/home/project-web/openwms2005/htdocs</distribution.serverUrl.rootPath>
+                <distribution.serverUrl.sourcePath>${distribution.serverUrl.rootPath}/development/reference/${project.version}</distribution.serverUrl.sourcePath>
+                <distribution.serverUrl.docsPath>${distribution.serverUrl.rootPath}/docs</distribution.serverUrl.docsPath>
+                <!-- Maven Repo Artifact deployment -->
+                <distribution.repo.serverId>openwms.mooo.com</distribution.repo.serverId>
+                <distribution.repo.serverProtocol>scp</distribution.repo.serverProtocol>
+                <distribution.repo.serverUrl.rootPath>openwms.mooo.com:83/nexus/content/repositories/openwms-snapshots</distribution.repo.serverUrl.rootPath>
+                <distribution.repo.snapshot.serverUrl.rootPath>openwms.mooo.com:83/nexus/content/repositories/openwms-snapshots</distribution.repo.snapshot.serverUrl.rootPath>
+            </properties>
+        </profile>
+        <profile>
             <id>flex-client</id>
             <modules>
                 <module>org.openwms.core/org.openwms.client.flex.lib</module>
