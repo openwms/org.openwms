@@ -257,9 +257,9 @@
                 <distribution.serverUrl.docsPath>${distribution.serverUrl.rootPath}/docs</distribution.serverUrl.docsPath>
                 <!-- Maven Repo Artifact deployment -->
                 <distribution.repo.serverId>openwms.mooo.com</distribution.repo.serverId>
-                <distribution.repo.serverProtocol>scp</distribution.repo.serverProtocol>
-                <distribution.repo.serverUrl.rootPath>openwms.mooo.com:83/nexus/content/repositories/openwms-snapshots</distribution.repo.serverUrl.rootPath>
-                <distribution.repo.snapshot.serverUrl.rootPath>openwms.mooo.com:83/nexus/content/repositories/openwms-snapshots</distribution.repo.snapshot.serverUrl.rootPath>
+                <distribution.repo.serverProtocol>http</distribution.repo.serverProtocol>
+                <distribution.repo.serverUrl.rootPath>localhost:8081/nexus/content/repositories/openwms-snapshots</distribution.repo.serverUrl.rootPath>
+                <distribution.repo.snapshot.serverUrl.rootPath>localhost:8081/nexus/content/repositories/openwms-snapshots</distribution.repo.snapshot.serverUrl.rootPath>
             </properties>
         </profile>
         <profile>
