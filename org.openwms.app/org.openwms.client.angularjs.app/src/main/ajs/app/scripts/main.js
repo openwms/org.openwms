@@ -31,6 +31,7 @@ require.config({
 		angular: '../bower_components/angular/angular',
 		jquery: '../bower_components/jquery/dist/jquery',
 		angular_file_upload_shim: '../bower_components/ng-file-upload/angular-file-upload-shim',
+    angular_file_upload: '../bower_components/ng-file-upload/angular-file-upload',
 		angular_local_storage: '../bower_components/angular-local-storage/angular-local-storage',
 		angular_resource: '../bower_components/angular-resource/angular-resource',
 		angular_cookies: '../bower_components/angular-cookies/angular-cookies',
@@ -40,10 +41,9 @@ require.config({
 		angular_animate: '../bower_components/angular-animate/angular-animate',
 		angular_ui_router: '../bower_components/angular-ui-router/release/angular-ui-router',
 		angular_xeditable:'../bower_components/angular-xeditable/dist/js/xeditable',
-        bootstrap: '../bower_components/bootstrap/dist/js/bootstrap',
+    bootstrap: '../bower_components/bootstrap/dist/js/bootstrap',
 		ui_bootstrap: '../bower_components/angular-bootstrap/ui-bootstrap',
 		ui_bootstrap_tpls: '../bower_components/angular-bootstrap/ui-bootstrap-tpls',
-		angular_file_upload: '../bower_components/ng-file-upload/angular-file-upload',
 		underscore: '../bower_components/underscore/underscore',
 		underscore_string: '../bower_components/underscore.string/lib/underscore.string',
 		angular_base64: '../bower_components/angular-base64/angular-base64',
@@ -52,6 +52,10 @@ require.config({
 		domReady: '../bower_components/requirejs-domready/domReady',
 		velocity: '../bower_components/velocity/jquery.velocity.min',
 		angular_money: '../bower_components/angular-money-directive/angular-money-directive',
+    blueimp: '../bower_components/blueimp-load-image/js/load-image',
+    base64: '../bower_components/angular-base64/angular-base64.min',
+
+    projectModels: 'models/projectModels',
 
 		routeResolver: 'routeResolver',
 		core_rtModel: 'models/rt.model',
@@ -59,9 +63,15 @@ require.config({
 		core_envModel : 'models/env.model'
 	},
 	shim: {
+    'angular': {
+      deps: ['angular_file_upload_shim']
+    },
 		'ui_bootstrap': {
 			deps: ['angular']
 		},
+    'angular_file_upload': {
+      deps: ['angular']
+    },
 		'ui_bootstrap_tpls': {
 			deps: ['angular', 'ui_bootstrap']
 		},
@@ -95,12 +105,15 @@ require.config({
 		'angular_animate': {
 			deps: ['angular']
 		},
-        bootstrap: {
-            deps: [ 'jquery']
-        },
+    'bootstrap': {
+      deps: [ 'jquery']
+    },
 		'velocity': {
 			deps: ['jquery']
-		}
+		},
+    'base64': {
+      deps: ['angular']
+    }
 	}
 });
 
@@ -108,9 +121,9 @@ require([
 		'domReady',
 		'angular',
 		'app',
-		/*'routeResolver',*/
+		'routeResolver',
 		'jquery',
-        'bootstrap',
+    'bootstrap',
 		'ui_bootstrap',
 		'ui_bootstrap_tpls',
 		'angular_ui_router',
@@ -118,16 +131,19 @@ require([
 		'angular_resource',
 		'angular_translate',
 		'angular_translate_lp',
+    'angular_file_upload_shim',
 		'angular_file_upload',
 		'angular_xeditable',
 		'toaster',
 		'underscore',
 		'velocity',
 		'directives/openwmsCoreDirectives',
-		/*		'radio',*/
 		'angular_base64',
 		'services/openwmsCoreServices',
-		'services/projectServices'
+		'services/projectServices',
+    'models/projectModels',
+    'blueimp',
+    'base64'
 	],
 	function (domReady) {
 		domReady(function () {

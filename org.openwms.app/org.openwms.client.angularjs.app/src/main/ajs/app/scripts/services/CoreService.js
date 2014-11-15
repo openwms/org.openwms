@@ -7,7 +7,7 @@
  * This file is part of openwms.org.
  *
  * openwms.org is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as 
+ * it under the terms of the GNU General Public License as
  * published by the Free Software Foundation; either version 2 of the
  * License, or (at your option) any later version.
  *
@@ -27,7 +27,8 @@ define(['app'], function (app) {
 
 	var srv = function ($http, $q) {
 
-		var coreServiceFactory = {};
+		var coreServiceFactory = {
+    };
 
 		coreServiceFactory.add = function (url, $scope, entity, h) {
 			var delay = $q.defer();
@@ -84,7 +85,7 @@ define(['app'], function (app) {
 			//$http.defaults.headers.get['Auth-Token'] = $scope.authToken;
 			$http({method: 'GET', url: $scope.rootUrl + url, headers: h})
 				.success(function (data) {
-					if (data.items === undefined) {
+					if (data === undefined || data.items === undefined) {
 						delay.reject(new Error("Not expected response"));
 					} else {
 						delay.resolve(data.items[0].obj[0]);

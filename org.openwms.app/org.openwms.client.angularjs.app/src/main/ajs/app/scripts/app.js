@@ -1,6 +1,6 @@
 'use strict';
 
-define(/*'app',*/[
+define([
 	'angular',
 	'exports',
 	'radio',
@@ -17,7 +17,8 @@ define(/*'app',*/[
 	'core_rtModel',
 	'core_secModel',
 	'core_envModel',
-	'routeResolver'
+	'routeResolver',
+  'blueimp'
 ], function () {
 
 	var app = angular.module('app', ['ui.router', 'pascalprecht.translate', 'xeditable', 'rtModelModule', 'secModelModule', 'coreEnvModel', 'LocalStorageModule', 'routeResolverServices', 'ngResource', 'ui.bootstrap', 'angularFileUpload', 'toaster', 'base64']);
@@ -257,23 +258,13 @@ define(/*'app',*/[
 		};
 
 		$rootScope.getHeader = function() {
-			return {'Auth-Token': $rootScope.getToken(),'Tenant': $rootScope.getTenantId()};
+			return {'Auth-Token': $rootScope.getToken(),'Tenant': $rootScope.getTenantId(),'Accept-Language':$translate.use().replace('_', '-')};
 		};
 
 		/* State changing */
 		$rootScope.$state = $state;
 		$rootScope.$stateParams = $stateParams;
-		// enumerate routes that don't need authentication
-//		var routesThatDontRequireAuth = ['/login'];
-		// check if current location matches route
 
-
-//		var routeClean = function (route) {
-//			return _.find(routesThatDontRequireAuth,
-//				function (noAuthRoute) {
-//					return _.str.startsWith(route, noAuthRoute);
-//				});
-//		};
 
 		$rootScope.$on(CoreConfig.events.INVALID_CREDENTIALS, function (event, next, current) {
 			localStorageService.remove(CoreConfig.const.AUTH_TOKEN);

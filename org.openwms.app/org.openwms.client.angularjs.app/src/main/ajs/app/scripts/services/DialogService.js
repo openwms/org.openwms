@@ -96,8 +96,7 @@ define(['app'], function (app) {
 				}];
 			} else {
 
-
-			}
+      }
 			result.modalOpened = true;
 			return $modal.open(tempModalDefaults).result;
 		};

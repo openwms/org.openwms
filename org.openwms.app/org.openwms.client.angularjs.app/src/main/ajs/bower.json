@@ -36,6 +36,7 @@
     "angular-translate": "~2.1.0",
     "angular-translate-loader-partial": "~2.0.0",
     "angular-xeditable": "~0.1.8",
-    "angular-money-directive": "~1.0.1"
+    "angular-money-directive": "~1.0.1",
+    "blueimp-load-image": "~1.13.0"
   }
 }
