@@ -49,8 +49,8 @@ define(['angular'], function () {
 
 		env: {
 			"DEVMODE": false,
-			"backendUrl": 'http://localhost:8080/org.openwms.client.rest.provider',
-//			"backendUrl" : 'http://backend.openwms.cloudbees.net',
+//			"backendUrl": 'http://localhost:8080/org.openwms.client.rest.provider',
+			"backendUrl" : 'http://stampback.herokuapp.com',
 			"buildNumber": '${build.number}',
 			"buildDate": '${build.date}'
 		},
