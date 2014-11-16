@@ -29,7 +29,7 @@
 require.config({
 	paths: {
 		angular: '../bower_components/angular/angular',
-		jquery: '../bower_components/jquery/dist/jquery',
+		jquery: '../bower_components/jquery/jquery',
 		angular_file_upload_shim: '../bower_components/ng-file-upload/angular-file-upload-shim',
     angular_file_upload: '../bower_components/ng-file-upload/angular-file-upload',
 		angular_local_storage: '../bower_components/angular-local-storage/angular-local-storage',
@@ -54,6 +54,8 @@ require.config({
 		angular_money: '../bower_components/angular-money-directive/angular-money-directive',
     blueimp: '../bower_components/blueimp-load-image/js/load-image',
     base64: '../bower_components/angular-base64/angular-base64.min',
+    pcolor: '../bower_components/pick-a-color/build/1.2.3/js/pick-a-color-1.2.3.min',
+    tcolor: '../bower_components/tinycolor/dist/tinycolor-min',
 
     projectModels: 'models/projectModels',
 
@@ -113,6 +115,12 @@ require.config({
 		},
     'base64': {
       deps: ['angular']
+    },
+    'tcolor': {
+      deps: ['angular', 'jquery']
+    },
+    'pcolor': {
+      deps: ['angular', 'tcolor']
     }
 	}
 });
@@ -148,6 +156,7 @@ require([
 	function (domReady) {
 		domReady(function () {
 			angular.bootstrap(document, ['app']);
+
 		});
 	}
 );
