@@ -56,7 +56,7 @@
                 <configuration>
                     <executable>bower</executable>
                     <arguments>
-                        <argument>install</argument>
+                        <argument>install --force-latest</argument>
                     </arguments>
                     <workingDirectory>${basedir}/src/main/ajs</workingDirectory>
                 </configuration>
