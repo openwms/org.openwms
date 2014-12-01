@@ -18,10 +18,24 @@ define([
 	'core_secModel',
 	'core_envModel',
 	'routeResolver',
-  'blueimp'
+  'blueimp',
 ], function () {
 
-	var app = angular.module('app', ['ui.router', 'pascalprecht.translate', 'xeditable', 'rtModelModule', 'secModelModule', 'coreEnvModel', 'LocalStorageModule', 'routeResolverServices', 'ngResource', 'ui.bootstrap', 'angularFileUpload', 'toaster', 'base64']);
+	var app = angular.module('app', [
+    'ui.router',
+    'pascalprecht.translate',
+    'xeditable',
+    'rtModelModule',
+    'secModelModule',
+    'coreEnvModel',
+    'LocalStorageModule',
+    'routeResolverServices',
+    'ngResource',
+    'ui.bootstrap',
+    'angularFileUpload',
+    'toaster',
+    'base64'
+  ]);
 
 	app.config(['routeResolverProvider', '$translateProvider', '$translatePartialLoaderProvider', 'RTConfig', 'SecurityConfig', '$controllerProvider', '$compileProvider', '$filterProvider', '$provide', '$stateProvider', '$urlRouterProvider', '$locationProvider', '$httpProvider',
 		function (routeResolverProvider,$translateProvider, $translatePartialLoaderProvider, RTConfig, SecurityConfig, $controllerProvider, $compileProvider, $filterProvider, $provide, $stateProvider, $urlRouterProvider, $locationProvider, $httpProvider) {
@@ -258,7 +272,12 @@ define([
 		};
 
 		$rootScope.getHeader = function() {
-			return {'Auth-Token': $rootScope.getToken(),'Tenant': $rootScope.getTenantId(),'Accept-Language':$translate.use().replace('_', '-')};
+			var h = {
+        'Auth-Token': $rootScope.getToken(),
+        'Tenant': $rootScope.getTenantId(),
+        'Accept-Language':$translate.use().replace('_', '-')
+      };
+      return h;
 		};
 
 		/* State changing */
