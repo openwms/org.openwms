@@ -38,6 +38,6 @@
     "angular-xeditable": "~0.1.8",
     "angular-money-directive": "~1.0.1",
     "blueimp-load-image": "~1.13.0",
-    "pick-a-color": "~1.2.3"
+    "angular-minicolors": "~0.0.5"
   }
 }
