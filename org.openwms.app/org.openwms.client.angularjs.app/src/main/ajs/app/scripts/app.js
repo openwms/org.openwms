@@ -19,6 +19,7 @@ define([
 	'core_envModel',
 	'routeResolver',
   'blueimp',
+  'angular_minicolors'
 ], function () {
 
 	var app = angular.module('app', [
@@ -34,7 +35,8 @@ define([
     'ui.bootstrap',
     'angularFileUpload',
     'toaster',
-    'base64'
+    'base64',
+    'minicolors'
   ]);
 
 	app.config(['routeResolverProvider', '$translateProvider', '$translatePartialLoaderProvider', 'RTConfig', 'SecurityConfig', '$controllerProvider', '$compileProvider', '$filterProvider', '$provide', '$stateProvider', '$urlRouterProvider', '$locationProvider', '$httpProvider',
@@ -94,6 +96,12 @@ define([
 				return {
 					// optional method
 					'request': function(config) {
+            var token = $("meta[name='_csrf']").attr("content");
+            var header = $("meta[name='_csrf_header']").attr("content");
+
+            config.headers['CSRF-TOKEN'] = token;
+            config.headers['X-CSRF-TOKEN'] = header;
+
 						return config || $q.when(config);
 					},
 					'response': function(response) {
@@ -295,6 +303,7 @@ define([
 			$location.url('/logout').replace("", "");
 		});
 
+    /** When the user loggedin correctly */
 		$rootScope.$on(CoreConfig.events.RETRIEVED_TOKEN, function (event, next, current) {
 			// when we are coming from the login page and succeeded to login we go forward to the home screen
 			localStorageService.set(CoreConfig.const.AUTH_TOKEN, next.token);
@@ -306,6 +315,7 @@ define([
 				$location.url($rootScope.targetUrl).replace("", "");
 			}
 		});
+
 		$rootScope.$on('$stateChangeStart', function (event, toState, toParams, fromState, fromParams) {
 			// if route requires auth and user is not logged in
 			// First check if a modal dialog is change and reject route change

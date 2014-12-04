@@ -33,6 +33,7 @@ require.config({
 		angular_file_upload_shim: '../bower_components/ng-file-upload/angular-file-upload-shim',
     angular_file_upload: '../bower_components/ng-file-upload/angular-file-upload',
 		angular_local_storage: '../bower_components/angular-local-storage/angular-local-storage',
+    angular_minicolors: '../bower_components/angular-minicolors/angular-minicolors',
 		angular_resource: '../bower_components/angular-resource/angular-resource',
 		angular_cookies: '../bower_components/angular-cookies/angular-cookies',
 		angular_sanitize: '../bower_components/angular-sanitize/angular-sanitize',
@@ -54,8 +55,7 @@ require.config({
 		angular_money: '../bower_components/angular-money-directive/angular-money-directive',
     blueimp: '../bower_components/blueimp-load-image/js/load-image',
     base64: '../bower_components/angular-base64/angular-base64.min',
-    pcolor: '../bower_components/pick-a-color/build/1.2.3/js/pick-a-color-1.2.3.min',
-    tcolor: '../bower_components/tinycolor/dist/tinycolor-min',
+    cpicker: '../bower_components/jquery-minicolors/jquery.minicolors.min',
 
     projectModels: 'models/projectModels',
 
@@ -116,11 +116,11 @@ require.config({
     'base64': {
       deps: ['angular']
     },
-    'tcolor': {
-      deps: ['angular', 'jquery']
+    'cpicker': {
+      deps: ['angular']
     },
-    'pcolor': {
-      deps: ['angular', 'tcolor']
+    'angular_minicolors': {
+      deps: ['angular', 'cpicker']
     }
 	}
 });
@@ -152,7 +152,7 @@ require([
     'models/projectModels',
     'blueimp',
     'base64'
-	],
+  ],
 	function (domReady) {
 		domReady(function () {
 			angular.bootstrap(document, ['app']);
