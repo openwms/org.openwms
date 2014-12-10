@@ -150,7 +150,7 @@
                             <goal>deploy-file</goal>
                         </goals>
                         <configuration>
-                            <repositoryId>repo.sourceforge.net</repositoryId>
+                            <repositoryId>${distribution.repo.serverId}</repositoryId>
                             <url>
                                 ${distribution.repo.serverProtocol}://${distribution.repo.snapshot.serverUrl.rootPath}
                             </url>
