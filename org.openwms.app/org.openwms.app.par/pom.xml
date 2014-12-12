@@ -35,7 +35,7 @@
     <name>${project.artifactId}</name>
     <properties>
         <moduleDir>../../..</moduleDir>
-        <sonar.skippedModules>true</sonar.skippedModules>
+        <sonar.skippedModules>org.openwms.app.par</sonar.skippedModules>
     </properties>
     <build>
         <plugins>
