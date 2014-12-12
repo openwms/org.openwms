@@ -36,6 +36,7 @@
     <properties>
         <moduleDir>../../..</moduleDir>
         <openwms.configuration.version>0.2-SNAPSHOT</openwms.configuration.version>
+        <sonar.skippedModules>true</sonar.skippedModules>
     </properties>
     <build>
         <resources>
