@@ -35,6 +35,7 @@
     <name>${project.artifactId}</name>
     <properties>
         <moduleDir>../../..</moduleDir>
+        <sonar.skippedModules>true</sonar.skippedModules>
     </properties>
     <build>
         <plugins>
