@@ -7,7 +7,7 @@
  * This file is part of openwms.org.
  *
  * openwms.org is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as 
+ * it under the terms of the GNU General Public License as
  * published by the Free Software Foundation; either version 2 of the
  * License, or (at your option) any later version.
  *
@@ -38,7 +38,7 @@ define([
 
 			CoreService.login($scope).then(
 				function (data, status, headers, config) {
-					if (data.status == 200) {
+					if (data.status === 200) {
 						$('#loginDialog').modal('hide');
 						$rootScope.user = data.user;
 						$rootScope.message = undefined;
