@@ -7,7 +7,7 @@
  * This file is part of openwms.org.
  *
  * openwms.org is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as 
+ * it under the terms of the GNU General Public License as
  * published by the Free Software Foundation; either version 2 of the
  * License, or (at your option) any later version.
  *
@@ -44,7 +44,7 @@ define([
 		};
 
 		$scope.addRole = function () {
-			if (roleEntities.length == 0) {
+			if (roleEntities.length === 0) {
 				$scope.loadRoles();
 			}
 			var modalInstance = $modal.open({
@@ -70,7 +70,7 @@ define([
 						}, function(e) {
 							onError(e);
 						}
-					)
+					);
 				}
 			);
 		};
@@ -96,13 +96,13 @@ define([
 						rolesSaved, function(e) {
 							onError(e);
 						}
-					)
+					);
 				}
 			);
 		};
 
 		$scope.deleteRole = function () {
-			if ($scope.checkedRoles().length == 0) {
+			if ($scope.checkedRoles().length === 0) {
 				return;
 			}
 			var param = "";
@@ -117,7 +117,7 @@ define([
 					onError(e);
 				}
 			);
-		}
+		};
 
 		$scope.saveRole = function () {
 
@@ -128,7 +128,7 @@ define([
 				}
 			);
 			 */
-		}
+		};
 
 		$scope.loadRoles = function () {
 			checkedRows = [];
@@ -139,12 +139,12 @@ define([
 					onError(e);
 				}
 			);
-		}
+		};
 
 		$scope.onRoleSelected = function (row) {
 			$scope.selectedRole = $scope.roleEntities[row];
 			$scope.page = 1;
-			if ($scope.selectedRole.grants == undefined) {
+			if ($scope.selectedRole.grants === undefined) {
 				$scope.nextButton = {"enabled" : false};
 				$scope.prevButton = {"enabled" : false};
 			} else if ($scope.selectedRole.grants.length > 5) {
@@ -156,7 +156,7 @@ define([
 				$scope.prevButton = {"enabled" : false};
 				$scope.grants = $scope.selectedRole.grants;
 			}
-		}
+		};
 
 		$scope.checkedRoles = function () {
 			var result = [];
@@ -164,11 +164,11 @@ define([
 				result.push($scope.roleEntities[row]);
 			});
 			return result;
-		}
+		};
 
 		$scope.onRoleChecked = function (row) {
 			var index = checkedRows.indexOf(row);
-			if (index == -1) {
+			if (index === -1) {
 				// Not already selected
 				checkedRows.push(row);
 			} else {
@@ -178,7 +178,7 @@ define([
 		};
 
 		$scope.roleStyleClass = function (row) {
-			if (checkedRows.indexOf(row) == -1) {
+			if (checkedRows.indexOf(row) === -1) {
 				return "glyphicon glyphicon-unchecked";
 			}
 			return "glyphicon glyphicon-check";
@@ -187,7 +187,7 @@ define([
 		$scope.previousGrantsPage = function() {
 			$scope.page--;
 			$scope.grants = $scope.selectedRole.grants.slice($scope.page*5, $scope.page*5+5);
-			if ($scope.page == 1){
+			if ($scope.page === 1){
 				$scope.grants = $scope.selectedRole.grants.slice($scope.page, $scope.page+5);
 				$scope.prevButton = {"enabled" : true, "hidden" : true};
 			}
@@ -195,7 +195,7 @@ define([
 				$scope.grants = $scope.selectedRole.grants.slice($scope.page, $scope.page+5);
 				$scope.nextButton = {"enabled" : true, "hidden" : false};
 			}
-		}
+		};
 
 		$scope.nextGrantsPage = function() {
 			console.log("role.grants for slice:"+$scope.selectedRole.grants.length);
@@ -209,7 +209,7 @@ define([
 			$scope.page++;
 			// Enable back button after a click on next...
 			$scope.prevButton = {"enabled" : true, "hidden" : false};
-		}
+		};
 
 		var preLoad = function() {
 			if ($scope.roleEntities === undefined) {
@@ -217,13 +217,13 @@ define([
 			}
 		}();
 
-		var rolesSaved = function(savedRole) {
+		var rolesSaved = function() {
 			$scope.loadRoles();
 			onSuccess("OK", "Saved successfully.");
-		}
+		};
 		var onError = function(e) {
 			toaster.pop("error", "Server Error", "["+ e.data.httpStatus+"] "+ e.data.message);
-		}
+		};
 		var onSuccess = function(code, text) {
 			toaster.pop("success", "Success", "["+code+"] "+text, 2000);
 		}
