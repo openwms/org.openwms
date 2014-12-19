@@ -47,10 +47,9 @@ define(['app'], function (app) {
 			return delay.promise;
 		};
 
-		coreServiceFactory.delete = function (url, $scope) {
+		coreServiceFactory.delete = function (url, $scope, h) {
 			var delay = $q.defer();
-			$http.defaults.headers.put['Auth-Token'] = $scope.authToken;
-			$http.delete($scope.rootUrl + url)
+      $http({method: 'DELETE', url: $scope.rootUrl + url, headers: h})
 				.success(function () {
 					delay.resolve();
 				})
@@ -88,7 +87,10 @@ define(['app'], function (app) {
 					if (data === undefined || data.items === undefined) {
 						delay.reject(new Error("Not expected response"));
 					} else {
-						delay.resolve(data.items[0].obj[0]);
+            if (data.items[0].obj) {
+              delay.resolve(data.items[0].obj[0]);
+            }
+            delay.resolve();
 					}
 				})
 				.error(function (data, status, headers, config) {

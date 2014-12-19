@@ -168,7 +168,7 @@ define([
 		};
 
 		$scope.deleteUser = function () {
-			if ($scope.selectedUsers === null || $scope.selectedUsers.length == 0) {
+			if ($scope.selectedUsers === null || $scope.selectedUsers.length === 0) {
 				return;
 			}
 			var param = "";
@@ -263,7 +263,7 @@ define([
 		};
 
 		$scope.oneSelected = function () {
-			return $scope.selectedUsers.length == 1 ? true : false;
+			return $scope.selectedUsers.length === 1 ? true : false;
 		};
 
 		var preLoad = function () {
