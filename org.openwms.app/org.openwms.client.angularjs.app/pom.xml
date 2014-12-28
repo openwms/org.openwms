@@ -23,7 +23,7 @@
  */
 -->
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <groupId>org.openwms</groupId>
@@ -37,7 +37,7 @@
     <properties>
         <moduleDir>../../..</moduleDir>
         <build.number>MANUAL</build.number>
-        <build.date></build.date>
+        <version.bump.maven.plugin.version>0.0.1-SNAPSHOT</version.bump.maven.plugin.version>
     </properties>
     <build>
         <finalName>${project.artifactId}-${project.version}</finalName>
@@ -56,7 +56,8 @@
                 <configuration>
                     <executable>bower</executable>
                     <arguments>
-                        <argument>install -f</argument>
+                        <argument>install</argument>
+                        <argument>-f</argument>
                     </arguments>
                     <workingDirectory>${basedir}/src/main/ajs</workingDirectory>
                 </configuration>
@@ -76,6 +77,36 @@
                     <warSourceDirectory>src/main/ajs/app</warSourceDirectory>
                 </configuration>
             </plugin>
+            <plugin>
+                <groupId>ch.filecloud</groupId>
+                <artifactId>version-bump-maven-plugin</artifactId>
+                <version>${version.bump.maven.plugin.version}</version>
+                <configuration>
+                    <files>
+                        <file>src/main/ajs/package.json</file>
+                        <file>src/main/ajs/bower.json</file>
+                    </files>
+                </configuration>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>bump</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
         </plugins>
     </build>
+
+    <pluginRepositories>
+        <pluginRepository>
+            <id>filecloud-releases</id>
+            <url>http://artifacts.filecloud.ch/content/repositories/releases/</url>
+        </pluginRepository>
+        <pluginRepository>
+            <id>filecloud-snapshots</id>
+            <url>http://artifacts.filecloud.ch/content/repositories/snapshots</url>
+        </pluginRepository>
+    </pluginRepositories>
+
 </project>
