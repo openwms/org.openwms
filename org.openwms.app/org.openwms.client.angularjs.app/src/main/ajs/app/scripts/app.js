@@ -40,7 +40,7 @@ define([
   ]);
 
 	app.config(['routeResolverProvider', '$translateProvider', '$translatePartialLoaderProvider', 'RTConfig', 'SecurityConfig', '$controllerProvider', '$compileProvider', '$filterProvider', '$provide', '$stateProvider', '$urlRouterProvider', '$locationProvider', '$httpProvider',
-		function (routeResolverProvider,$translateProvider, $translatePartialLoaderProvider, RTConfig, SecurityConfig, $controllerProvider, $compileProvider, $filterProvider, $provide, $stateProvider, $urlRouterProvider, $locationProvider, $httpProvider) {
+		function (routeResolverProvider, $translateProvider, $translatePartialLoaderProvider, RTConfig, SecurityConfig, $controllerProvider, $compileProvider, $filterProvider, $provide, $stateProvider, $urlRouterProvider, $locationProvider, $httpProvider) {
 
 			$translatePartialLoaderProvider.addPart('base');
 			$translateProvider.useLoader('$translatePartialLoader', {
@@ -278,12 +278,15 @@ define([
 		$rootScope.getTenantId = function () {
 			return localStorageService.get(CoreConfig.const.TENANT_ID);
 		};
+    $rootScope.getUserLang = function () {
+      return localStorageService.get(CoreConfig.const.USER_LANG) === undefined ? $translate.use() : localStorageService.get(CoreConfig.const.USER_LANG);
+    };
 
 		$rootScope.getHeader = function() {
 			var h = {
         'Auth-Token': $rootScope.getToken(),
         'Tenant': $rootScope.getTenantId(),
-        'Accept-Language':$translate.use().replace('_', '-')
+        'Accept-Language': $rootScope.getUserLang().replace('_', '-')
       };
       return h;
 		};
@@ -296,19 +299,25 @@ define([
 		$rootScope.$on(CoreConfig.events.INVALID_CREDENTIALS, function (event, next, current) {
 			localStorageService.remove(CoreConfig.const.AUTH_TOKEN);
 			localStorageService.remove(CoreConfig.const.TENANT_ID);
+      localStorageService.remove(CoreConfig.const.USER_LANG);
 		});
+
+    /** Logout. */
 		$rootScope.$on(CoreConfig.events.APP_LOGOUT, function (event, next, current) {
 			localStorageService.remove(CoreConfig.const.AUTH_TOKEN);
 			localStorageService.remove(CoreConfig.const.TENANT_ID);
+      localStorageService.remove(CoreConfig.const.USER_LANG);
 			$location.url('/logout').replace("", "");
 		});
 
-    /** When the user loggedin correctly */
+    /** When an user logged in correctly */
 		$rootScope.$on(CoreConfig.events.RETRIEVED_TOKEN, function (event, next, current) {
 			// when we are coming from the login page and succeeded to login we go forward to the home screen
 			localStorageService.set(CoreConfig.const.AUTH_TOKEN, next.token);
 			localStorageService.set(CoreConfig.const.TENANT_ID, next.tenantId);
-			$rootScope.$emit(CoreConfig.events.SUCCESSFULLY_LOGGED_IN, next);
+      // It is in the responsibility of the application on top to resolve the language from the userProfile correctly
+      localStorageService.set(CoreConfig.const.USER_LANG, next.userProfile.langCode);
+      $rootScope.$emit(CoreConfig.events.SUCCESSFULLY_LOGGED_IN, next);
 			if ($rootScope.targetUrl === undefined || ($rootScope.targetUrl === '/account' && next !== undefined)) {
 				$location.url('/home').replace("", "");
 			} else {

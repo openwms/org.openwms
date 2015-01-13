@@ -50,14 +50,16 @@ define(['angular'], function () {
 		env: {
 			"DEVMODE": false,
 //			"backendUrl": 'http://localhost:8080/org.openwms.client.rest.provider',
-			"backendUrl" : 'http://stampback.herokuapp.com',
+			"backendUrl" : 'http://stampback.cfapps.io',
 			"buildNumber": '${build.number}',
 			"buildDate": '${build.date}'
 		},
 
 		const: {
 			AUTH_TOKEN: 'Auth-Token',
-			TENANT_ID: 'TenantId'
+			TENANT_ID: 'TenantId',
+      USER_PROFILE: 'UserProfile',
+      USER_LANG: 'Language'
 		},
 
 		events: {
