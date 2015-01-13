@@ -29,7 +29,7 @@
 require.config({
 	paths: {
 		angular: '../bower_components/angular/angular',
-		jquery: '../bower_components/jquery/jquery',
+		jquery: '../bower_components/jquery/dist/jquery',
 		angular_file_upload_shim: '../bower_components/ng-file-upload/angular-file-upload-shim',
     angular_file_upload: '../bower_components/ng-file-upload/angular-file-upload',
 		angular_local_storage: '../bower_components/angular-local-storage/angular-local-storage',
