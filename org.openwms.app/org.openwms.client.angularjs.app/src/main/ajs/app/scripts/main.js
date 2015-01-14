@@ -52,7 +52,6 @@ require.config({
     underscore_string: '../bower_components/underscore.string/dist/underscore.string.min',
     velocity: '../bower_components/velocity/velocity.min',
 
-		angular_animate: '../bower_components/angular-animate/angular-animate',
     cpicker: '../bower_components/jquery-minicolors/jquery.minicolors.min',
 
     projectModels: 'models/projectModels',
@@ -85,9 +84,6 @@ require.config({
 		},
 		'toaster': {
 			deps: ['angular', 'angular_animate']
-		},
-		'angular_file_upload': {
-			deps: ['angular']
 		},
 		'angular_translate': {
 			deps: ['angular']

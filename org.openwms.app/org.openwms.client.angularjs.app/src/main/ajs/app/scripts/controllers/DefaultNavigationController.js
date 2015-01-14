@@ -7,7 +7,7 @@
  * This file is part of openwms.org.
  *
  * openwms.org is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as 
+ * it under the terms of the GNU General Public License as
  * published by the Free Software Foundation; either version 2 of the
  * License, or (at your option) any later version.
  *
@@ -23,37 +23,37 @@
  *
  * Main colors:
  * blue		: 2e7bb1
- * yellow	: e1e76b 
+ * yellow	: e1e76b
  * light-blue   : c9dcea
  * lighter-blue : edf4fa
  */
 define([
-	'angular',
-	'app',
-	'radio'
-], function(angular, app, radio) {
+  'angular',
+  'app',
+  'radio'
+], function (angular, app, radio) {
 
-	'use strict';
+  'use strict';
 
 
-	var functionStub = function ($scope) {
-		$scope.users = {text:"Users"};
-		$scope.linkActive;
+  var functionStub = function ($scope) {
+    $scope.users = {text: "Users"};
+    $scope.linkActive;
 
-		$scope.i18n = [
-			{users:{ en:"Users", de:"Benutzer" }},
-			{roles:{ en:"Roles", de:"Rollen" }}
-		];
+    $scope.i18n = [
+      {users: {en: "Users", de: "Benutzer"}},
+      {roles: {en: "Roles", de: "Rollen"}}
+    ];
 
-		$scope.clickCoreMenuItem = function () {
-			$scope.users.text = "Benutzer";
-			$scope.linkActive = 'users';
-		}
-	};
+    $scope.clickCoreMenuItem = function () {
+      $scope.users.text = "Benutzer";
+      $scope.linkActive = 'users';
+    };
+  };
 
-	radio('core_mod').subscribe(function(evt) {
-		if (evt === 'LOAD_ALL_CONTROLLERS') {
-			angular.module('app', ['openwms.core.module']).controller('DefaultNavigationController', ['$http', '$q', functionStub]);
-		}
-	});
+  radio('core_mod').subscribe(function (evt) {
+    if (evt === 'LOAD_ALL_CONTROLLERS') {
+      angular.module('app', ['openwms.core.module']).controller('DefaultNavigationController', ['$http', '$q', functionStub]);
+    }
+  });
 });

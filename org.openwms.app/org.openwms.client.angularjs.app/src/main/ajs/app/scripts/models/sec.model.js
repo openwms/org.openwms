@@ -43,36 +43,34 @@
 /*global $, openwms */
 define(['angular'], function () {
 
-	var secModel =
-		{
-			moduleName: "CORE-SEC",
-			moduleVersion: "1.0.0",
-			url: "core_security_module",
-			views: [
-				{
-					name: "Login",
-					url: "/login",
-					state: {
-						name: "parent.login",
-						header: {name: "header-view@"},
-						content: {name: "content-view@parent.login"}
-					}
-				},
-				{
-					name: "Logout",
-					url: "/logout",
-					state: {
-						name: "parent.logout",
-						header: {name: "header-view@"},
-						content: {name: "content-view@parent.logout", html: "views/Logout.html"}
-					}
-				}
-			]
-		}
-		;
+  var secModel =
+  {
+    moduleName: "CORE-SEC",
+    moduleVersion: "1.0.0",
+    url: "core_security_module",
+    views: [
+      {
+        name: "Login",
+        url: "/login",
+        state: {
+          name: "parent.login",
+          header: {name: "header-view@"},
+          content: {name: "content-view@parent.login"}
+        }
+      },
+      {
+        name: "Logout",
+        url: "/logout",
+        state: {
+          name: "parent.logout",
+          header: {name: "header-view@"},
+          content: {name: "content-view@parent.logout", html: "views/Logout.html"}
+        }
+      }
+    ]
+  };
 
-	var coreRtModel = angular.module('secModelModule', []);
-	coreRtModel.constant('SecurityConfig', secModel);
-
-})
+  var coreRtModel = angular.module('secModelModule', []);
+  coreRtModel.constant('SecurityConfig', secModel);
+});
 

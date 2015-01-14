@@ -43,38 +43,38 @@
 /*global $, openwms */
 define(['angular'], function () {
 
-	var module =
-	{
-		moduleName: "CORE",
-		moduleVersion: "1.0.0",
-		url: "core_module",
-		views: [
-			{
-				name: "Roles",
-				url: "/roles",
-				state: {
-					name: "parent.roles",
-					template: "views/no-tree.html",
-					header: {name: "header-view@parent.roles", html: "views/partials/default-header.html", controller: ""},
-					menu: {name: "menu-view@parent.roles", html: "views/partials/default-menu.html", controller: "DefaultNavigationController"},
-					content: {name: "content-view@parent.roles"}
-				}
-			},
-			{
-				name: "Users",
-				url: "/users",
-				state: {
-					name: "parent.users",
-					template: "views/no-tree.html",
-					header: {name: "header-view@parent.users", html: "views/partials/default-header.html", controller: ""},
-					menu: {name: "menu-view@parent.users", html: "views/partials/default-menu.html", controller: "DefaultNavigationController"},
-					content: {name: "content-view@parent.users"}
-				}
-			}
-		]
-	};
+  var module =
+  {
+    moduleName: "CORE",
+    moduleVersion: "1.0.0",
+    url: "core_module",
+    views: [
+      {
+        name: "Roles",
+        url: "/roles",
+        state: {
+          name: "parent.roles",
+          template: "views/no-tree.html",
+          header: {name: "header-view@parent.roles", html: "views/partials/default-header.html", controller: ""},
+          menu: {name: "menu-view@parent.roles", html: "views/partials/default-menu.html", controller: "DefaultNavigationController"},
+          content: {name: "content-view@parent.roles"}
+        }
+      },
+      {
+        name: "Users",
+        url: "/users",
+        state: {
+          name: "parent.users",
+          template: "views/no-tree.html",
+          header: {name: "header-view@parent.users", html: "views/partials/default-header.html", controller: ""},
+          menu: {name: "menu-view@parent.users", html: "views/partials/default-menu.html", controller: "DefaultNavigationController"},
+          content: {name: "content-view@parent.users"}
+        }
+      }
+    ]
+  };
 
-	var coreRtModel = angular.module('rtModelModule', []);
-	coreRtModel.constant('RTConfig', module);
-})
+  var coreRtModel = angular.module('rtModelModule', []);
+  coreRtModel.constant('RTConfig', module);
+});
 

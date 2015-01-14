@@ -25,8 +25,8 @@
 
 define(['angular'], function () {
 
-	// We just define a module by name that is meant to be overridden by extensions.
+  // We just define a module by name that is meant to be overridden by extensions.
 
-	angular.module('ext', []);
+  angular.module('ext', []);
 
-})
+});
