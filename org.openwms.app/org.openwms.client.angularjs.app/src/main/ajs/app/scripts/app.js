@@ -10,7 +10,6 @@ define([
 	'ui_bootstrap_tpls',
 	'angular_ui_router',
 	'angular_local_storage',
-	'angular_resource',
 	'angular_translate',
 	'angular_translate_lp',
 	'underscore',
@@ -31,7 +30,6 @@ define([
     'coreEnvModel',
     'LocalStorageModule',
     'routeResolverServices',
-    'ngResource',
     'ui.bootstrap',
     'angularFileUpload',
     'toaster',
@@ -39,8 +37,33 @@ define([
     'minicolors'
   ]);
 
-	app.config(['routeResolverProvider', '$translateProvider', '$translatePartialLoaderProvider', 'RTConfig', 'SecurityConfig', '$controllerProvider', '$compileProvider', '$filterProvider', '$provide', '$stateProvider', '$urlRouterProvider', '$locationProvider', '$httpProvider',
-		function (routeResolverProvider, $translateProvider, $translatePartialLoaderProvider, RTConfig, SecurityConfig, $controllerProvider, $compileProvider, $filterProvider, $provide, $stateProvider, $urlRouterProvider, $locationProvider, $httpProvider) {
+	app.config([
+    'routeResolverProvider',
+    '$translateProvider',
+    '$translatePartialLoaderProvider',
+    'RTConfig',
+    'SecurityConfig',
+    '$controllerProvider',
+    '$compileProvider',
+    '$filterProvider',
+    '$provide',
+    '$stateProvider',
+    '$urlRouterProvider',
+    '$locationProvider',
+    '$httpProvider',
+		function (routeResolverProvider,
+              $translateProvider,
+              $translatePartialLoaderProvider,
+              RTConfig,
+              SecurityConfig,
+              $controllerProvider,
+              $compileProvider,
+              $filterProvider,
+              $provide,
+              $stateProvider,
+              $urlRouterProvider,
+              $locationProvider,
+              $httpProvider) {
 
 			$translatePartialLoaderProvider.addPart('base');
 			$translateProvider.useLoader('$translatePartialLoader', {
@@ -279,7 +302,8 @@ define([
 			return localStorageService.get(CoreConfig.const.TENANT_ID);
 		};
     $rootScope.getUserLang = function () {
-      return localStorageService.get(CoreConfig.const.USER_LANG) === undefined ? $translate.use() : localStorageService.get(CoreConfig.const.USER_LANG);
+      var lang = localStorageService.get(CoreConfig.const.USER_LANG);
+      return lang === undefined || lang === null ? $translate.use() : lang;
     };
 
 		$rootScope.getHeader = function() {

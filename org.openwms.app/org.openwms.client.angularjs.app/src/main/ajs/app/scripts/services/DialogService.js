@@ -23,7 +23,11 @@
  *
  */
 
-define(['app'], function (app) {
+define([
+  'app',
+  'ui_bootstrap',
+  'ui_bootstrap_tpls'
+], function (app) {
 
 	var srv = function ($q, $modal) {
 
