@@ -65,6 +65,15 @@ define([
               $locationProvider,
               $httpProvider) {
 
+      $provide.decorator('$exceptionHandler', ['$log', '$delegate',
+        function ($log, $delegate) {
+          return function (exception, cause) {
+            $log.debug('EXH:' + exception.stack);
+            $delegate(exception, cause);
+          };
+        }
+      ]);
+
       $translatePartialLoaderProvider.addPart('base');
       $translateProvider.useLoader('$translatePartialLoader', {
         urlTemplate: '/i18n/{part}/{lang}.json'
@@ -73,8 +82,7 @@ define([
       $translateProvider.preferredLanguage('de_DE');
       $translateProvider.determinePreferredLanguage();
 
-      app.register =
-      {
+      app.register = {
         controller: $controllerProvider.register,
         directive: $compileProvider.directive,
         filter: $filterProvider.register,
@@ -114,7 +122,7 @@ define([
       //================================================
       // Add an security interceptor
       //================================================
-      $httpProvider.interceptors.push(function ($q, $location) {
+      $httpProvider.interceptors.push(function ($q, $location, toaster) {
 
         return {
           // optional method
@@ -128,8 +136,12 @@ define([
             return config || $q.when(config);
           },
           'response': function (response) {
-            if (response.status === 401 || response.status === 404)
+            if (response.status === 401 || response.status === 404) {
               $location.url('/login').replace();
+            } else if (response.status !== 200) {
+              toaster.pop('error', 'Server Error');
+              return $q.reject(response);
+            }
             return (response);
           }
         };
@@ -237,7 +249,8 @@ define([
           var viewDef = {};
           viewDef['@'] = {templateUrl: "views/no-tree.html"};
           viewDef[view.state.header.name] = {templateUrl: "views/partials/default-header.html"};
-          //viewDef[view.state.menu.name] = { templateUrl: "views/partials/default-menu.html", controller: 'DefaultNavigationController' };
+          //viewDef[view.state.menu.name] = { templateUrl: "views/partials/default-menu.html", controller:
+          // 'DefaultNavigationController' };
           viewDef[view.state.content.name] = route.resolve(view.name);
 
           $stateProvider.state(view.state.name, {
