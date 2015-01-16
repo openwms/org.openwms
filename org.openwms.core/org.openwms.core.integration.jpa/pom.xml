@@ -35,7 +35,7 @@
     <name>${project.artifactId}</name>
     <description>A JPA implementation of the integration layer.</description>
     <properties>
-        <moduleDir>../../../..</moduleDir>
+        <moduleDir>../..</moduleDir>
         <openwms.configuration.version>0.2-SNAPSHOT</openwms.configuration.version>
     </properties>
     <build>

@@ -167,9 +167,9 @@ public class UsersController extends AbstractWebController {
      * A version number used internally for optimistic locking.
      * </ul>
      * </p>
-     * 
-     * @param user
-     * @return
+     *
+     * @param user The user to create
+     * @return a responseVO
      */
     @RequestMapping(method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE, headers = "Content-Type=application/json")
     @ResponseBody
@@ -204,7 +204,7 @@ public class UsersController extends AbstractWebController {
      * FIXME [scherrer] Comment this
      * 
      * @param user
-     * @return
+     * @return a responseVO
      */
     @RequestMapping(method = RequestMethod.PUT, produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
@@ -229,9 +229,11 @@ public class UsersController extends AbstractWebController {
 
     /**
      * FIXME [scherrer] Comment this
-     * 
-     * @param user
-     * @return
+     *
+     * @param image The image to save
+     * @param id The users persisted id
+     *
+     * @return An responseVO
      */
     @RequestMapping(value = "/{id}", method = RequestMethod.PUT, produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     @ResponseBody
@@ -251,7 +253,7 @@ public class UsersController extends AbstractWebController {
      * FIXME [scherrer] Comment this
      *
      * @param names
-     * @return
+     * @return a responseVO
      * @throws Exception
      */
     @RequestMapping(value = "/{name}", method = RequestMethod.DELETE)

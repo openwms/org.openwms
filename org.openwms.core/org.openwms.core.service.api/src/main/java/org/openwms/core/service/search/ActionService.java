@@ -67,7 +67,7 @@ public interface ActionService {
      * 
      * @param user
      *            The {@link User} of the {@link Action}
-     * @param action
+     * @param actions
      *            The Collection of {@link Action}s to save
      * @return The saved Collection
      */

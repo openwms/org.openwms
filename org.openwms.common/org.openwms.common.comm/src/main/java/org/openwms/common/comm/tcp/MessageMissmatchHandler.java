@@ -27,7 +27,7 @@ import org.springframework.integration.annotation.ServiceActivator;
 import org.springframework.stereotype.Component;
 
 /**
- * A MessageMissmatchHandler cares about incoming error telegrams on a defined error channel with name {@value ERROR_CHANNEL_ID}.
+ * A MessageMissmatchHandler cares about incoming error telegrams on a defined error channel with name {@value MessageMissmatchHandler#ERROR_CHANNEL_ID}.
  * 
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  * @version $Revision: $

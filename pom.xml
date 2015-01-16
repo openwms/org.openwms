@@ -439,6 +439,8 @@
 
     <properties>
         <moduleDir>.</moduleDir>
+        <!-- used by surefire plugin in combination with jacoco -->
+        <argLine>-Xmx1024m</argLine>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <jdkVersion>1.7</jdkVersion>
 
@@ -527,8 +529,7 @@
         <plugin.taglist.version>2.4</plugin.taglist.version>
         <plugin.wagon-ssh.version>2.1</plugin.wagon-ssh.version>
         <plugin.war.version>2.4</plugin.war.version>
-        <jacocoArgLine></jacocoArgLine>
-        
+
         <!-- OSGi header versions -->
         <osgi.apache.commons.lang.version>${apache.commons.lang.version}</osgi.apache.commons.lang.version>
         <osgi.apache.commons.dbcp.version>${apache.commons.dbcp.version}</osgi.apache.commons.dbcp.version>
@@ -772,9 +773,7 @@
                     <configuration>
                         <useSystemClassLoader>true</useSystemClassLoader>
                         <skipTests>false</skipTests>
-                        <forkMode>never</forkMode>
-                        <trimStackTrace>false</trimStackTrace>
-                        <argLine>-Xmx1024m ${jacocoArgLine}</argLine>
+                        <trimStackTrace>true</trimStackTrace>
                         <systemPropertyVariables>
                             <log4j.configuration>log4j.xml</log4j.configuration>
                         </systemPropertyVariables>
