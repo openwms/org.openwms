@@ -36,7 +36,7 @@
 	<name>${project.artifactId}</name>
     <description>From the CORE domain entities generated ActionScript classes that are used by the Flex client.</description>
 	<properties>
-		<moduleDir>../../..</moduleDir>
+		<moduleDir>../..</moduleDir>
 	</properties>
 	<build>
 		<finalName>${project.artifactId}-${project.version}</finalName>

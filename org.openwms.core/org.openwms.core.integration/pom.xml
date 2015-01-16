@@ -35,7 +35,7 @@
     <name>${project.artifactId}</name>
     <description>This bundle project contains interface types for the DAO integration layer. Those interfaces are free from annotations and do not depend on other frameworks except plain Java.</description>
     <properties>
-        <moduleDir>../../..</moduleDir>
+        <moduleDir>../..</moduleDir>
     </properties>
     <build>
         <plugins>

@@ -35,7 +35,7 @@
     <name>${project.artifactId}</name>
     <description>This component wraps the org.openwms.core.infrastructure.configuration component into a JAR file that is deployed in Non-OSGI environments and can be accessed by Spring from classpath.</description>
     <properties>
-        <moduleDir>../../..</moduleDir>
+        <moduleDir>../..</moduleDir>
     </properties>
     <build>
         <resources>

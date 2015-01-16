@@ -35,7 +35,7 @@
     <name>${project.artifactId}</name>
     <description>The CORE configuration project does only include a Java properties file. This file is directly deployed in a OSGi server. The server exposes this bundle as OSGi ConfigurationService to other bundles.</description>
     <properties>
-        <moduleDir>../../..</moduleDir>
+        <moduleDir>../..</moduleDir>
     </properties>
     <build>
         <resources>

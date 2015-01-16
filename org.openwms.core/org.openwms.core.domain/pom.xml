@@ -33,7 +33,7 @@
     <artifactId>org.openwms.core.domain</artifactId>
     <name>${project.artifactId}</name>
     <properties>
-        <moduleDir>../../..</moduleDir>
+        <moduleDir>../..</moduleDir>
     </properties>
     <description>CORE domain JPA entity classes.</description>
     <build>

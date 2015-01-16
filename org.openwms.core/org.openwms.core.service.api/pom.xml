@@ -35,7 +35,7 @@
     <name>${project.artifactId}</name>
     <description>Interface definitions that are used by all clients, like the UI or subsystem drivers. Services implementations contain the business logic of the application.</description>
     <properties>
-        <moduleDir>../../..</moduleDir>
+        <moduleDir>../..</moduleDir>
     </properties>
     <build>
         <plugins>

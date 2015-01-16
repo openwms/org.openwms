@@ -35,7 +35,7 @@
     <name>${project.artifactId}</name>
     <description>Contains Spring configuration to create a DataSource for Oracle databases. The Oracle JDBC driver is repackaged and due to license reasons available in the private Nexus repository only.</description>
     <properties>
-        <moduleDir>../../..</moduleDir>
+        <moduleDir>../..</moduleDir>
         <openwms.configuration.version>0.2-SNAPSHOT</openwms.configuration.version>
     </properties>
     <build>

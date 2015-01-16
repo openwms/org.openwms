@@ -35,7 +35,7 @@
     <name>${project.artifactId}</name>
     <description>Packages Spring configuration that starts a JPA EntityManagerFactory with Eclipselink.</description>
     <properties>
-        <moduleDir>../../..</moduleDir>
+        <moduleDir>../..</moduleDir>
     </properties>
     <build>
         <plugins>

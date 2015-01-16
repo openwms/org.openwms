@@ -35,7 +35,7 @@
     <name>${project.artifactId}</name>
     <description>CORE web controllers that provide RESTful access to the CORE resources and services.</description>
     <properties>
-        <moduleDir>../../..</moduleDir>
+        <moduleDir>../..</moduleDir>
         <core.version>0.2-SNAPSHOT</core.version>
     </properties>
     <build>

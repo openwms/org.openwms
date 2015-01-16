@@ -34,7 +34,7 @@
     <name>${project.artifactId}</name>
     <description>Starts a JPA EntityManagerFactory with Hibernate.</description>
     <properties>
-        <moduleDir>../../..</moduleDir>
+        <moduleDir>../..</moduleDir>
         <openwms.configuration.version>0.2-SNAPSHOT</openwms.configuration.version>
     </properties>
     <build>

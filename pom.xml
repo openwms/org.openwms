@@ -527,6 +527,7 @@
         <plugin.taglist.version>2.4</plugin.taglist.version>
         <plugin.wagon-ssh.version>2.1</plugin.wagon-ssh.version>
         <plugin.war.version>2.4</plugin.war.version>
+        <jacocoArgLine></jacocoArgLine>
         
         <!-- OSGi header versions -->
         <osgi.apache.commons.lang.version>${apache.commons.lang.version}</osgi.apache.commons.lang.version>
@@ -773,6 +774,7 @@
                         <skipTests>false</skipTests>
                         <forkMode>never</forkMode>
                         <trimStackTrace>false</trimStackTrace>
+                        <argLine>-Xmx1024m ${jacocoArgLine}</argLine>
                         <systemPropertyVariables>
                             <log4j.configuration>log4j.xml</log4j.configuration>
                         </systemPropertyVariables>
@@ -910,6 +912,8 @@
                                 <link>http://commons.apache.org/lang/api-2.5</link>
                                 <link>http://docs.oracle.com/javaee/5/api</link>
                                 <link>http://docs.mockito.googlecode.com/hg/latest</link>
+                                <link>http://dozer.sourceforge.net/apidocs</link>
+                                <link>http://jackson.codehaus.org/${jackson.version}/javadoc</link>
                             </links>
                             <excludePackageNames>org.openwms.web.flex.servlet</excludePackageNames>
                             <keywords>true</keywords>
