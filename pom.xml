@@ -442,7 +442,7 @@
     <properties>
         <moduleDir>.</moduleDir>
         <!-- used by surefire plugin in combination with jacoco -->
-        <argLine>-Xmx1024m</argLine>
+        <argLine>-Xmx1024m ${jacocoArgLine}</argLine>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <jdkVersion>1.7</jdkVersion>
 
