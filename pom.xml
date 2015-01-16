@@ -343,6 +343,7 @@
                 <plugins>
                     <plugin>
                         <artifactId>maven-javadoc-plugin</artifactId>
+                        <version>${plugin.javadoc.version}</version>
                         <executions>
                             <execution>
                                 <id>attach-javadocs</id>
@@ -412,6 +413,7 @@
                 <plugins>
                     <plugin>
                         <artifactId>maven-javadoc-plugin</artifactId>
+                        <version>${plugin.javadoc.version}</version>
                         <configuration>
                             <source>${project.build.sourceCompilerLevel}</source>
                             <doclet>org.openwms.doclet.GlossaryGeneratorDoclet</doclet>
