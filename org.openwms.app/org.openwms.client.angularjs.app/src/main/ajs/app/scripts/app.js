@@ -286,10 +286,8 @@ define([
     // xeditable
     editableOptions.theme = 'bs3';
 
-    //$rootScope.env = envModel.env;
     $rootScope.DEVMODE = CoreConfig.env.DEVMODE;
-    //$rootScope.rootUrl = "http://backend.openwms.cloudbees.net";
-    $rootScope.rootUrl = CoreConfig.env.backendUrl; //"http://localhost:8080/org.openwms.client.rest.provider";
+    $rootScope.rootUrl = CoreConfig.env.backendUrl;
 
     /* Security */
     $rootScope.message = '';
@@ -297,11 +295,12 @@ define([
 
     $rootScope.global = {message: {short: ""}};
 
-    // Logout function is available in any pages
+    // Logout function is available for all controllers
     $rootScope.logout = function () {
       localStorageService.remove(CoreConfig.const.AUTH_TOKEN);
-      $location.url('/logout').replace();
-//			$http.post($rootScope.rootUrl+'/logout');
+      localStorageService.remove(CoreConfig.const.TENANT_ID);
+      localStorageService.remove(CoreConfig.const.USER_LANG);
+      $location.url('/logout').replace("", "");
     };
 
     $rootScope.isLoggedIn = function () {
@@ -339,11 +338,8 @@ define([
     });
 
     /** Logout. */
-    $rootScope.$on(CoreConfig.events.APP_LOGOUT, function (event, next, current) {
-      localStorageService.remove(CoreConfig.const.AUTH_TOKEN);
-      localStorageService.remove(CoreConfig.const.TENANT_ID);
-      localStorageService.remove(CoreConfig.const.USER_LANG);
-      $location.url('/logout').replace("", "");
+    $rootScope.$on(CoreConfig.events.APP_LOGOUT, function () {
+      logout();
     });
 
     /** When an user logged in correctly */
