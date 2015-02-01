@@ -339,7 +339,7 @@ define([
 
     /** Logout. */
     $rootScope.$on(CoreConfig.events.APP_LOGOUT, function () {
-      logout();
+      $rootScope.logout();
     });
 
     /** When an user logged in correctly */

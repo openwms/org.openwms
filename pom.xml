@@ -356,7 +356,6 @@
                             <links>
                                 <link>http://static.springsource.org/spring/docs/${spring.version}/javadoc-api</link>
                                 <link>http://static.springsource.org/spring-security/site/docs/3.1.x/apidocs</link>
-                                <link>http://commons.apache.org/lang/api-2.5</link>
                                 <link>http://docs.oracle.com/javaee/5/api</link>
                                 <link>http://docs.mockito.googlecode.com/hg/latest</link>
                                 <link>http://dozer.sourceforge.net/apidocs</link>
@@ -367,8 +366,7 @@
                             <keywords>true</keywords>
                             <linksource>true</linksource>
                             <overview>${basedir}/overview.html</overview>
-                            <source>${project.build.sourceCompilerLevel}</source>
-                            <stylesheetfile>${moduleDir}/src/site/css/openwms-jdoc.css</stylesheetfile>
+                            <source>${project.build.sourceEncoding}</source>
                             <verbose>true</verbose>
                         </configuration>
                     </plugin>
@@ -415,7 +413,7 @@
                         <artifactId>maven-javadoc-plugin</artifactId>
                         <version>${plugin.javadoc.version}</version>
                         <configuration>
-                            <source>${project.build.sourceCompilerLevel}</source>
+                            <source>${project.build.sourceEncoding}</source>
                             <doclet>org.openwms.doclet.GlossaryGeneratorDoclet</doclet>
                             <docletArtifact>
                                 <groupId>org.openwms</groupId>
@@ -423,7 +421,6 @@
                                 <version>0.0.1-SNAPSHOT</version>
                             </docletArtifact>
                             <aggregate>true</aggregate>
-                            <inherited>true</inherited>
                             <charset>${project.build.sourceEncoding}</charset>
                             <encoding>${project.build.sourceEncoding}</encoding>
                             <docencoding>${project.build.sourceEncoding}</docencoding>
@@ -442,7 +439,7 @@
     <properties>
         <moduleDir>.</moduleDir>
         <!-- used by surefire plugin in combination with jacoco -->
-        <argLine>-Xmx1024m ${jacocoArgLine}</argLine>
+        <argLine>-Xmx1024m</argLine>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <jdkVersion>1.7</jdkVersion>
 
@@ -924,7 +921,7 @@
                             <maxmemory>2g</maxmemory>
                             <linksource>true</linksource>
                             <overview>${basedir}/overview.html</overview>
-                            <source>${project.build.sourceCompilerLevel}</source>
+                            <source>${project.build.sourceEncoding}</source>
                             <stylesheetfile>${basedir}/src/site/css/openwms-jdoc.css</stylesheetfile>
                             <verbose>false</verbose>
                             <quiet>true</quiet>
