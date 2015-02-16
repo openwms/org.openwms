@@ -57,7 +57,7 @@ define(['angular'], function () {
 
 		const: {
 			AUTH_TOKEN: 'Auth-Token',
-			TENANT_ID: 'TenantId',
+			TENANT_ID: 'Tenant',
       USER_PROFILE: 'UserProfile',
       USER_LANG: 'Language'
 		},
@@ -67,7 +67,8 @@ define(['angular'], function () {
 			APP_LOGOUT: 'CORE_APP_LOGOUT',
 			RETRIEVED_TOKEN: 'CORE_RETRIEVED_TOKEN',
 			SUCCESSFULLY_LOGGED_IN: 'SUCCESSFULLY_LOGGED_IN',
-			INVALID_CREDENTIALS: 'CORE_INVALID_CREDENTIALS'
+			INVALID_CREDENTIALS: 'CORE_INVALID_CREDENTIALS',
+      CLEAR_LOCAL_CACHE: 'CLEAR_LOCAL_CACHE'
 		}};
 
 

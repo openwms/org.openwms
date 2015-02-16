@@ -286,6 +286,12 @@ define([
     // xeditable
     editableOptions.theme = 'bs3';
 
+    var clearCache = function() {
+      localStorageService.remove(CoreConfig.const.AUTH_TOKEN);
+      localStorageService.remove(CoreConfig.const.TENANT_ID);
+      localStorageService.remove(CoreConfig.const.USER_LANG);
+    };
+
     $rootScope.DEVMODE = CoreConfig.env.DEVMODE;
     $rootScope.rootUrl = CoreConfig.env.backendUrl;
 
@@ -297,9 +303,7 @@ define([
 
     // Logout function is available for all controllers
     $rootScope.logout = function () {
-      localStorageService.remove(CoreConfig.const.AUTH_TOKEN);
-      localStorageService.remove(CoreConfig.const.TENANT_ID);
-      localStorageService.remove(CoreConfig.const.USER_LANG);
+      clearCache();
       $location.url('/logout').replace("", "");
     };
 
@@ -309,7 +313,7 @@ define([
     $rootScope.getToken = function () {
       return localStorageService.get(CoreConfig.const.AUTH_TOKEN);
     };
-    $rootScope.getTenantId = function () {
+    $rootScope.getTenant = function () {
       return localStorageService.get(CoreConfig.const.TENANT_ID);
     };
     $rootScope.getUserLang = function () {
@@ -320,7 +324,7 @@ define([
     $rootScope.getHeader = function () {
       var h = {
         'Auth-Token': $rootScope.getToken(),
-        'Tenant': $rootScope.getTenantId(),
+        'Tenant': $rootScope.getTenant(),
         'Accept-Language': $rootScope.getUserLang().replace('_', '-')
       };
       return h;
@@ -330,11 +334,12 @@ define([
     $rootScope.$state = $state;
     $rootScope.$stateParams = $stateParams;
 
-
     $rootScope.$on(CoreConfig.events.INVALID_CREDENTIALS, function (event, next, current) {
-      localStorageService.remove(CoreConfig.const.AUTH_TOKEN);
-      localStorageService.remove(CoreConfig.const.TENANT_ID);
-      localStorageService.remove(CoreConfig.const.USER_LANG);
+      clearCache();
+    });
+
+    $rootScope.$on(CoreConfig.events.CLEAR_LOCAL_CACHE, function (event, next, current) {
+      clearCache();
     });
 
     /** Logout. */
@@ -346,7 +351,7 @@ define([
     $rootScope.$on(CoreConfig.events.RETRIEVED_TOKEN, function (event, next, current) {
       // when we are coming from the login page and succeeded to login we go forward to the home screen
       localStorageService.set(CoreConfig.const.AUTH_TOKEN, next.token);
-      localStorageService.set(CoreConfig.const.TENANT_ID, next.tenantId);
+      localStorageService.set(CoreConfig.const.TENANT_ID, next.tenant);
       // It is in the responsibility of the application on top to resolve the language from the userProfile correctly
       localStorageService.set(CoreConfig.const.USER_LANG, next.userProfile.langCode);
       $rootScope.$emit(CoreConfig.events.SUCCESSFULLY_LOGGED_IN, next);
@@ -387,16 +392,8 @@ define([
         $rootScope.user.username = 'openwms';
         $rootScope.user.password = 'openwms';
         $rootScope.$broadcast(CoreConfig.events.APP_LOGIN);
-        //$rootScope.login();
-        //$location.url('/account').replace("", "");
         return;
       }
-      /*
-       if ($rootScope.modal.opened == false) {
-       $rootScope.modal.opened = true
-       $('#loginDialog').modal('show');
-       }
-       */
     });
     $rootScope.$on('$translatePartialLoaderStructureChanged', function () {
       $translate.refresh();

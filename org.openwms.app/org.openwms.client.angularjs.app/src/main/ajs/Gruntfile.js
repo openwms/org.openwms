@@ -19,7 +19,7 @@ module.exports = function (grunt) {
   // configurable paths
   var yeomanConfig = {
     app: 'app',
-	allyapp: '/data/projects/bitbucket/stamplets/web/org.stamplets.commander.app/src/main/ajs/app',
+	allyapp: '/data/projects/bitbucket/stamplets/commander/org.stamplets.commander.app/src/main/ajs/app',
     dist: 'dist'
   };
 
