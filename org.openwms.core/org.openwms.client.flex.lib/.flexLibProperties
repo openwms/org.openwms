@@ -4,42 +4,6 @@
     <classEntry path="org.openwms.web.flex.client.model.PreferencesModel"/>
   </includeClasses>
   <includeResources>
-    <resourceEntry destPath="assets/images/superPanel/resizeCursor.png" sourcePath="assets/images/superPanel/resizeCursor.png"/>
-    <resourceEntry destPath="assets/images/icons/arrow_left.png" sourcePath="assets/images/icons/arrow_left.png"/>
-    <resourceEntry destPath="assets/images/superPanel/increaseButton.png" sourcePath="assets/images/superPanel/increaseButton.png"/>
-    <resourceEntry destPath="assets/images/openwms_header.png" sourcePath="assets/images/openwms_header.png"/>
-    <resourceEntry destPath="assets/images/frame_container_skin.png" sourcePath="assets/images/frame_container_skin.png"/>
-    <resourceEntry destPath="assets/css/main.css" sourcePath="assets/css/main.css"/>
-    <resourceEntry destPath="assets/locale/en_US/corLibMain.properties" sourcePath="assets/locale/en_US/corLibMain.properties"/>
-    <resourceEntry destPath="assets/images/icons/grant--delete.png" sourcePath="assets/images/icons/grant--delete.png"/>
-    <resourceEntry destPath="assets/images/icons/minus.png" sourcePath="assets/images/icons/minus.png"/>
-    <resourceEntry destPath="assets/locale/de_DE/corLibMain.properties" sourcePath="assets/locale/de_DE/corLibMain.properties"/>
-    <resourceEntry destPath="assets/images/icons/picture--edit.png" sourcePath="assets/images/icons/picture--edit.png"/>
-    <resourceEntry destPath="assets/locale/de_DE/corLibError.properties" sourcePath="assets/locale/de_DE/corLibError.properties"/>
-    <resourceEntry destPath="assets/images/icons/logout.png" sourcePath="assets/images/icons/logout.png"/>
-    <resourceEntry destPath="assets/images/icons/grant--add.png" sourcePath="assets/images/icons/grant--add.png"/>
-    <resourceEntry destPath="assets/images/icons/refresh.png" sourcePath="assets/images/icons/refresh.png"/>
-    <resourceEntry destPath="assets/images/icons/history.png" sourcePath="assets/images/icons/history.png"/>
-    <resourceEntry destPath="assets/images/icons/arrow_up.png" sourcePath="assets/images/icons/arrow_up.png"/>
-    <resourceEntry destPath="assets/images/icons/key--edit.png" sourcePath="assets/images/icons/key--edit.png"/>
-    <resourceEntry destPath="assets/images/clearskin/button_skin.png" sourcePath="assets/images/clearskin/button_skin.png"/>
-    <resourceEntry destPath="assets/images/clearskin/panel_skin.png" sourcePath="assets/images/clearskin/panel_skin.png"/>
-    <resourceEntry destPath="assets/images/openwms_banner.jpg" sourcePath="assets/images/openwms_banner.jpg"/>
-    <resourceEntry destPath="assets/images/icons/sidebar-collapse.png" sourcePath="assets/images/icons/sidebar-collapse.png"/>
-    <resourceEntry destPath="assets/images/clearskin/button_over_skin.png" sourcePath="assets/images/clearskin/button_over_skin.png"/>
-    <resourceEntry destPath="assets/images/icons/arrow_down.png" sourcePath="assets/images/icons/arrow_down.png"/>
-    <resourceEntry destPath="assets/locale/en_US/corLibError.properties" sourcePath="assets/locale/en_US/corLibError.properties"/>
-    <resourceEntry destPath="assets/images/breadcrumbs.jpg" sourcePath="assets/images/breadcrumbs.jpg"/>
-    <resourceEntry destPath="assets/images/icons/user--anonymous.png" sourcePath="assets/images/icons/user--anonymous.png"/>
-    <resourceEntry destPath="assets/css/styles.css" sourcePath="assets/css/styles.css"/>
-    <resourceEntry destPath="assets/images/superPanel/resizeHandler.png" sourcePath="assets/images/superPanel/resizeHandler.png"/>
-    <resourceEntry destPath="assets/images/superPanel/decreaseButton.png" sourcePath="assets/images/superPanel/decreaseButton.png"/>
-    <resourceEntry destPath="assets/images/icons/arrow_right.png" sourcePath="assets/images/icons/arrow_right.png"/>
-    <resourceEntry destPath="assets/images/icons/switchView--small.png" sourcePath="assets/images/icons/switchView--small.png"/>
-    <resourceEntry destPath="assets/images/icons/plus.png" sourcePath="assets/images/icons/plus.png"/>
-    <resourceEntry destPath="assets/images/frame_container_skin_blue.png" sourcePath="assets/images/frame_container_skin_blue.png"/>
-    <resourceEntry destPath="assets/images/superPanel/closeButton.png" sourcePath="assets/images/superPanel/closeButton.png"/>
-    <resourceEntry destPath="assets/images/icons/sidebar-expand.png" sourcePath="assets/images/icons/sidebar-expand.png"/>
   </includeResources>
   <namespaceManifests/>
 </flexLibProperties>

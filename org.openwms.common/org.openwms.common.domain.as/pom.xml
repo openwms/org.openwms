@@ -41,7 +41,6 @@
 	<build>
 		<finalName>${project.artifactId}-${project.version}</finalName>
 		<sourceDirectory>${project.basedir}/src/main/flex</sourceDirectory>
-        <testSourceDirectory>${project.basedir}/src/test/flex</testSourceDirectory>
 		<plugins>
             <plugin>
                 <artifactId>maven-clean-plugin</artifactId>

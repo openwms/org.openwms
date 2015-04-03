@@ -28,7 +28,7 @@
 
 require.config({
 	paths: {
-		angular: '../bower_components/angular/angular.min',
+    angular: '../bower_components/angular/angular',
     angular_animate: '../bower_components/angular-animate/angular-animate.min',
     base64: '../bower_components/angular-base64/angular-base64.min',
     ui_bootstrap: '../bower_components/angular-bootstrap/ui-bootstrap.min',
