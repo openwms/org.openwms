@@ -28,15 +28,14 @@
     <parent>
         <groupId>org.openwms</groupId>
         <artifactId>org.openwms.core</artifactId>
-        <version>0.2-SNAPSHOT</version>
+        <version>0.2</version>
     </parent>
     <artifactId>org.openwms.core.infrastructure.hsql</artifactId>
-    <packaging>jar</packaging>
     <name>${project.artifactId}</name>
     <description>Contains Spring configuration to start an in-memory HSQL database and creates a suitable DataSource for test purposes.</description>
     <properties>
         <moduleDir>../..</moduleDir>
-        <openwms.configuration.version>0.2-SNAPSHOT</openwms.configuration.version>
+        <openwms.configuration.version>0.2</openwms.configuration.version>
     </properties>
     <build>
         <resources>
@@ -45,61 +44,36 @@
             <filtering>true</filtering>
           </resource>
         </resources>
-        <plugins>
-            <plugin>
-                <groupId>com.springsource.bundlor</groupId>
-                <artifactId>com.springsource.bundlor.maven</artifactId>
-                <executions>
-                    <execution>
-                        <goals>
-                            <goal>bundlor</goal>
-                        </goals>
-                    </execution>
-                </executions>
-            </plugin>
-        </plugins>
     </build>
     <dependencies>
         <!-- Spring Framework -->
         <dependency>
             <groupId>org.springframework</groupId>
-            <artifactId>org.springframework.spring-library</artifactId>
-            <type>libd</type>
-            <scope>${dependency.scope}</scope>
+            <artifactId>spring-context</artifactId>
         </dependency>
 
-        <!-- JEE API -->
+        <!-- JavaEE API -->
         <dependency>
             <groupId>org.hibernate.javax.persistence</groupId>
             <artifactId>hibernate-jpa-2.0-api</artifactId>
-            <scope>${dependency.scope}</scope>
         </dependency>
 
         <!-- Apache libraries -->
         <dependency>
             <groupId>org.apache.commons</groupId>
             <artifactId>com.springsource.org.apache.commons.dbcp</artifactId>
-            <scope>${dependency.scope}</scope>
         </dependency>
 
         <!-- Database libraries -->
         <dependency>
             <groupId>org.hsqldb</groupId>
             <artifactId>hsqldb</artifactId>
-            <scope>${dependency.scope}</scope>
         </dependency>
 
         <!-- Project dependencies -->
         <dependency>
             <groupId>${project.groupId}</groupId>
-            <artifactId>org.openwms.core.infrastructure.configuration</artifactId>
-            <type>properties</type>
-            <scope>runtime</scope>
-        </dependency>
-        <dependency>
-            <groupId>${project.groupId}</groupId>
             <artifactId>org.openwms.core.infrastructure.configuration.provider</artifactId>
-            <scope>${dependency.scope}</scope>
         </dependency>
     </dependencies>
 </project>

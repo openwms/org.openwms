@@ -28,7 +28,7 @@
     <parent>
         <groupId>org.openwms</groupId>
         <artifactId>org.openwms.core</artifactId>
-        <version>0.2-SNAPSHOT</version>
+        <version>0.2</version>
     </parent>
     <artifactId>org.openwms.core.client.rest</artifactId>
     <version>${rest.version}</version>
@@ -36,59 +36,41 @@
     <description>CORE web controllers that provide RESTful access to the CORE resources and services.</description>
     <properties>
         <moduleDir>../..</moduleDir>
-        <core.version>0.2-SNAPSHOT</core.version>
+        <core.version>0.2</core.version>
     </properties>
-    <build>
-        <plugins>
-            <plugin>
-                <groupId>com.springsource.bundlor</groupId>
-                <artifactId>com.springsource.bundlor.maven</artifactId>
-                <executions>
-                    <execution>
-                        <goals>
-                            <goal>bundlor</goal>
-                        </goals>
-                    </execution>
-                </executions>
-            </plugin>
-        </plugins>
-    </build>
     <dependencies>
-        <dependency>
-            <groupId>net.sf.dozer</groupId>
-            <artifactId>dozer</artifactId>
-        </dependency>
+        <!-- JavaEE dependencies -->
         <dependency>
             <groupId>javax.validation</groupId>
             <artifactId>validation-api</artifactId>
         </dependency>
+
         <!-- Spring Framework -->
         <dependency>
             <groupId>org.springframework</groupId>
-            <artifactId>org.springframework.spring-library</artifactId>
-            <type>libd</type>
-            <scope>${dependency.scope}</scope>
+            <artifactId>spring-context</artifactId>
         </dependency>
         <dependency>
             <groupId>org.springframework</groupId>
-            <artifactId>org.springframework.web</artifactId>
+            <artifactId>spring-tx</artifactId>
         </dependency>
         <dependency>
             <groupId>org.springframework</groupId>
-            <artifactId>org.springframework.web.servlet</artifactId>
+            <artifactId>spring-web</artifactId>
         </dependency>
+
         <!-- Spring Security -->
         <dependency>
             <groupId>org.springframework.security</groupId>
-            <artifactId>org.springframework.security.core</artifactId>
+            <artifactId>spring-security-core</artifactId>
         </dependency>
         <dependency>
             <groupId>org.springframework.security</groupId>
-            <artifactId>org.springframework.security.web</artifactId>
+            <artifactId>spring-security-web</artifactId>
         </dependency>
         <dependency>
             <groupId>org.springframework.security</groupId>
-            <artifactId>org.springframework.security.config</artifactId>
+            <artifactId>spring-security-config</artifactId>
         </dependency>
 
         <!-- Project dependencies -->
@@ -96,14 +78,13 @@
             <groupId>${project.groupId}</groupId>
             <artifactId>org.openwms.core.domain</artifactId>
             <version>${core.version}</version>
-            <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>${project.groupId}</groupId>
             <artifactId>org.openwms.core.service.api</artifactId>
             <version>${core.version}</version>
-            <scope>provided</scope>
         </dependency>
+
         <!-- REST dependencies -->
         <dependency>
             <groupId>org.codehaus.jackson</groupId>
@@ -112,6 +93,12 @@
         <dependency>
             <groupId>org.codehaus.jackson</groupId>
             <artifactId>jackson-core-asl</artifactId>
+        </dependency>
+
+        <!-- 3rd party -->
+        <dependency>
+            <groupId>net.sf.dozer</groupId>
+            <artifactId>dozer</artifactId>
         </dependency>
         <dependency>
             <groupId>org.apache.commons</groupId>

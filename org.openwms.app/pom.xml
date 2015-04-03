@@ -28,18 +28,17 @@
     <parent>
         <groupId>org.openwms</groupId>
         <artifactId>org.openwms</artifactId>
-        <version>0.2-SNAPSHOT</version>
+        <version>0.2</version>
     </parent>
     <artifactId>org.openwms.app</artifactId>
-    <version>0.2-SNAPSHOT</version>
+    <version>0.2</version>
     <packaging>pom</packaging>
     <name>OpenWMS.org Application</name>
     <properties>
         <moduleDir>../..</moduleDir>
-        <bundle.version>0.2.SNAPSHOT</bundle.version>
-        <core.version>0.2-SNAPSHOT</core.version>
-        <common.version>0.2-SNAPSHOT</common.version>
-        <tms.version>0.2-SNAPSHOT</tms.version>
+        <core.version>0.2</core.version>
+        <common.version>0.2</common.version>
+        <tms.version>0.2</tms.version>
         <wms.version>0.0.1-SNAPSHOT</wms.version>
     </properties>
 
@@ -52,22 +51,18 @@
     </distributionManagement>
 
     <scm>
-        <connection>scm:git:ssh://git@bitbucket.org/openwms-sources/org.openwms.git</connection>
-        <developerConnection>scm:git:ssh://git@bitbucket.org/openwms-sources/org.openwms.git</developerConnection>
-        <url>https://bitbucket.org/openwms-sources/org.openwms.git</url>
+        <url>https://github.com/openwms/org.openwms</url>
+        <connection>scm:git:git://github.com/openwms/org.openwms.git</connection>
+        <developerConnection>scm:git:git@github.com:openwms/org.openwms.git</developerConnection>
     </scm>
 
     <profiles>
         <profile>
             <id>all</id>
             <activation>
-                <property>
-                    <name>!top</name>
-                </property>
+                <activeByDefault>true</activeByDefault>
             </activation>
             <modules>
-                <module>org.openwms.app.par</module>
-                <module>org.openwms.app.plan</module>
                 <module>org.openwms.client.rest.provider</module>
             </modules>
         </profile>
@@ -76,12 +71,9 @@
             <activation>
                 <property>
                     <name>flex</name>
-                    <value>true</value>
                 </property>
             </activation>
             <modules>
-                <module>org.openwms.app.par</module>
-                <module>org.openwms.app.plan</module>
                 <module>org.openwms.client.flex.app</module>
                 <module>org.openwms.client.flex.wrapper</module>
                 <module>org.openwms.client.rest.provider</module>
@@ -108,7 +100,6 @@
             <activation>
                 <property>
                     <name>angularjs</name>
-                    <value>true</value>
                 </property>
             </activation>
             <modules>
@@ -137,18 +128,6 @@
     <dependencyManagement>
         <dependencies>
 	        <!-- Project dependencies -->
-            <dependency>
-                <groupId>${project.groupId}</groupId>
-                <artifactId>org.openwms.app.par</artifactId>
-                <version>${project.version}</version>
-                <type>par</type>
-            </dependency>
-            <dependency>
-                <groupId>${project.groupId}</groupId>
-                <artifactId>org.openwms.app.plan</artifactId>
-                <version>${project.version}</version>
-                <type>pom</type>
-            </dependency>
             <dependency>
                 <groupId>${project.groupId}</groupId>
                 <artifactId>org.openwms.client.rest.provider</artifactId>

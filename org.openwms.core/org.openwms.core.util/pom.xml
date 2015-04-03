@@ -28,51 +28,27 @@
     <parent>
         <groupId>org.openwms</groupId>
         <artifactId>org.openwms.core</artifactId>
-        <version>0.2-SNAPSHOT</version>
+        <version>0.2</version>
     </parent>
     <artifactId>org.openwms.core.util</artifactId>
-    <packaging>jar</packaging>
     <name>${project.artifactId}</name>
     <description>A project that contains utility classes, exception types, common event types that are used by all other projects.</description>
     <properties>
         <moduleDir>../..</moduleDir>
     </properties>
-    <build>
-        <plugins>
-            <plugin>
-                <groupId>com.springsource.bundlor</groupId>
-                <artifactId>com.springsource.bundlor.maven</artifactId>
-                <executions>
-                    <execution>
-                        <goals>
-                            <goal>bundlor</goal>
-                        </goals>
-                    </execution>
-                </executions>
-            </plugin>
-        </plugins>
-    </build>
     <dependencies>
         <!-- Spring Framework -->
         <dependency>
             <groupId>org.springframework</groupId>
-            <artifactId>org.springframework.spring-library</artifactId>
-            <type>libd</type>
-        </dependency>
-        <dependency>
-            <groupId>org.apache.commons</groupId>
-            <artifactId>com.springsource.org.apache.commons.lang</artifactId>
-            <scope>provided</scope>
+            <artifactId>spring-context</artifactId>
         </dependency>
         <dependency>
             <groupId>org.apache.commons</groupId>
             <artifactId>com.springsource.org.apache.commons.collections</artifactId>
-            <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>org.apache.commons</groupId>
             <artifactId>com.springsource.org.apache.commons.beanutils</artifactId>
-            <scope>provided</scope>
         </dependency>
     </dependencies>
 </project>

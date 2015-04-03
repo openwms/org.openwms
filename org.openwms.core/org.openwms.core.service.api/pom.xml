@@ -28,37 +28,19 @@
     <parent>
         <groupId>org.openwms</groupId>
         <artifactId>org.openwms.core</artifactId>
-        <version>0.2-SNAPSHOT</version>
+        <version>0.2</version>
     </parent>
     <artifactId>org.openwms.core.service.api</artifactId>
-    <packaging>jar</packaging>
     <name>${project.artifactId}</name>
     <description>Interface definitions that are used by all clients, like the UI or subsystem drivers. Services implementations contain the business logic of the application.</description>
     <properties>
         <moduleDir>../..</moduleDir>
     </properties>
-    <build>
-        <plugins>
-            <plugin>
-                <groupId>com.springsource.bundlor</groupId>
-                <artifactId>com.springsource.bundlor.maven</artifactId>
-                <executions>
-                    <execution>
-                        <goals>
-                            <goal>bundlor</goal>
-                        </goals>
-                    </execution>
-                </executions>
-            </plugin>
-        </plugins>
-    </build>
     <dependencies>
         <!-- Project dependencies -->
         <dependency>
             <groupId>${project.groupId}</groupId>
             <artifactId>org.openwms.core.domain</artifactId>
-            <version>${project.version}</version>
-            <scope>provided</scope>
         </dependency>
     </dependencies>
 </project>

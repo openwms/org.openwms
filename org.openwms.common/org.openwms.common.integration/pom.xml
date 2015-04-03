@@ -28,35 +28,18 @@
     <parent>
         <groupId>org.openwms</groupId>
         <artifactId>org.openwms.common</artifactId>
-        <version>0.2-SNAPSHOT</version>
+        <version>0.2</version>
     </parent>
     <artifactId>org.openwms.common.integration</artifactId>
-    <packaging>jar</packaging>
     <name>${project.artifactId}</name>
     <properties>
         <moduleDir>../../..</moduleDir>
     </properties>
-    <build>
-        <plugins>
-            <plugin>
-                <groupId>com.springsource.bundlor</groupId>
-                <artifactId>com.springsource.bundlor.maven</artifactId>
-                <executions>
-                    <execution>
-                        <goals>
-                            <goal>bundlor</goal>
-                        </goals>
-                    </execution>
-                </executions>
-            </plugin>
-        </plugins>
-    </build>
     <dependencies>
-        <!-- JEE API -->
+        <!-- JavaEE API -->
         <dependency>
             <groupId>org.hibernate.javax.persistence</groupId>
             <artifactId>hibernate-jpa-2.0-api</artifactId>
-            <scope>${dependency.scope}</scope>
         </dependency>
 
         <!-- CORE Project dependencies -->
@@ -64,20 +47,17 @@
             <groupId>${project.groupId}</groupId>
             <artifactId>org.openwms.core.domain</artifactId>
             <version>${core.version}</version>
-            <scope>${dependency.scope}</scope>
         </dependency>
         <dependency>
             <groupId>${project.groupId}</groupId>
             <artifactId>org.openwms.core.integration</artifactId>
             <version>${core.version}</version>
-            <scope>${dependency.scope}</scope>
         </dependency>
 
         <!-- Project dependencies -->
         <dependency>
             <groupId>${project.groupId}</groupId>
             <artifactId>org.openwms.common.domain</artifactId>
-            <scope>${dependency.scope}</scope>
         </dependency>
     </dependencies>
 </project>

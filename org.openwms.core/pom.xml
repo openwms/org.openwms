@@ -28,19 +28,18 @@
     <parent>
         <groupId>org.openwms</groupId>
         <artifactId>org.openwms</artifactId>
-        <version>0.2-SNAPSHOT</version>
+        <version>0.2</version>
     </parent>
     <artifactId>org.openwms.core</artifactId>
-    <version>0.2-SNAPSHOT</version>
+    <version>0.2</version>
     <packaging>pom</packaging>
     <name>OpenWMS.org CORE</name>
     <description>The CORE project Maven POM file. Just a common definition of dependencies valid for all other CORE projects. Call mvn install -Pcore to build all CORE projects.</description>
     <properties>
         <moduleDir>../..</moduleDir>
         <property.org.graniteds-core.version>1.2.0_SP1</property.org.graniteds-core.version>
-        <module.version>0.2-SNAPSHOT</module.version>
-        <bundle.version>0.2.SNAPSHOT</bundle.version>
-        <rest.version>0.1-SNAPSHOT</rest.version>
+        <module.version>0.2</module.version>
+        <rest.version>0.1</rest.version>
     </properties>
 
     <distributionManagement>
@@ -52,18 +51,16 @@
     </distributionManagement>
 
     <scm>
-        <connection>scm:git:ssh://git@bitbucket.org/openwms-sources/org.openwms.git</connection>
-        <developerConnection>scm:git:ssh://git@bitbucket.org/openwms-sources/org.openwms.git</developerConnection>
-        <url>https://bitbucket.org/openwms-sources/org.openwms.git</url>
+        <url>https://github.com/openwms/org.openwms</url>
+        <connection>scm:git:git://github.com/openwms/org.openwms.git</connection>
+        <developerConnection>scm:git:git@github.com:openwms/org.openwms.git</developerConnection>
     </scm>
 
     <profiles>
         <profile>
             <id>all</id>
             <activation>
-                <property>
-                    <name>!top</name>
-                </property>
+                <activeByDefault>true</activeByDefault>
             </activation>
             <modules>
                 <module>org.openwms.core.domain</module>
@@ -110,7 +107,6 @@
             <activation>
                 <property>
                     <name>flex</name>
-                    <value>true</value>
                 </property>
             </activation>
             <modules>
@@ -139,7 +135,6 @@
             <activation>
                 <property>
                     <name>angularjs</name>
-                    <value>true</value>
                 </property>
             </activation>
             <modules>
@@ -182,12 +177,6 @@
                 <version>${module.version}</version>
                 <type>test-jar</type>
                 <scope>test</scope>
-            </dependency>
-            <dependency>
-                <groupId>${project.groupId}</groupId>
-                <artifactId>org.openwms.core.infrastructure.configuration</artifactId>
-                <version>${module.version}</version>
-                <type>properties</type>
             </dependency>
             <dependency>
                 <groupId>${project.groupId}</groupId>

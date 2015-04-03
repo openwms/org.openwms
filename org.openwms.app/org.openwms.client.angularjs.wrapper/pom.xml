@@ -28,7 +28,7 @@
     <parent>
         <groupId>org.openwms</groupId>
         <artifactId>org.openwms.app</artifactId>
-        <version>0.2-SNAPSHOT</version>
+        <version>0.2</version>
     </parent>
     <artifactId>org.openwms.client.angularjs.wrapper</artifactId>
     <version>${angularjs.client.version}</version>
@@ -38,13 +38,11 @@
         <moduleDir>../../..</moduleDir>
     </properties>
     <build>
-        <sourceDirectory>${project.basedir}/src/main/java</sourceDirectory>
         <finalName>openwms</finalName>
         <plugins>
             <plugin>
                 <artifactId>maven-war-plugin</artifactId>
                 <configuration>
-                    <finalName>${project.artifactId}</finalName>
                     <archive>
                         <manifestFile>${project.basedir}/src/main/webapp/META-INF/MANIFEST.MF</manifestFile>
                     </archive>
@@ -56,46 +54,6 @@
 
     <profiles>
         <profile>
-            <id>cloudbees</id>
-            <properties>
-                <bees.appid>openwms/ajs</bees.appid>
-            </properties>
-            <build>
-                <plugins>
-                    <plugin>
-                        <groupId>com.cloudbees</groupId>
-                        <artifactId>bees-maven-plugin</artifactId>
-                        <version>${plugin.bees-maven-plugin}</version>
-                        <configuration>
-                            <secret>${bees.secret}</secret>
-                            <apikey>${bees.apikey}</apikey>
-                            <appid>${bees.appid}</appid>
-                        </configuration>
-                        <executions>
-                            <execution>
-                                <phase>install</phase>
-                                <goals>
-                                    <goal>deploy</goal>
-                                </goals>
-                            </execution>
-                        </executions>
-                    </plugin>
-                </plugins>
-            </build>
-            <pluginRepositories>
-                <pluginRepository>
-                    <id>cloudbees-public-release</id>
-                    <url>http://repository-cloudbees.forge.cloudbees.com/public-release</url>
-                    <releases>
-                        <enabled>true</enabled>
-                    </releases>
-                    <snapshots>
-                        <enabled>false</enabled>
-                    </snapshots>
-                </pluginRepository>
-            </pluginRepositories>
-        </profile>
-        <profile>
             <id>noOSGI</id>
             <activation>
                 <property>
@@ -105,7 +63,7 @@
             </activation>
             <properties>
                 <dependency.scope>compile</dependency.scope>
-                <openwms.configuration.version>0.2-SNAPSHOT</openwms.configuration.version>
+                <openwms.configuration.version>0.2</openwms.configuration.version>
             </properties>
             <dependencies>
                 <!-- Project CORE dependencies -->
