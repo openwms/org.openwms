@@ -23,7 +23,8 @@ package org.openwms.core.rest.users;
 
 import java.io.Serializable;
 
-import org.codehaus.jackson.annotate.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 
 /**
  * A UserDetailsVO.

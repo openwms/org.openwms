@@ -23,7 +23,7 @@ package org.openwms.core.rest.users;
 
 import java.io.Serializable;
 
-import org.codehaus.jackson.annotate.JsonAutoDetect;
+import com.fasterxml.jackson.annotation.JsonAutoDetect;
 
 /**
  * A UserPasswordDTO.

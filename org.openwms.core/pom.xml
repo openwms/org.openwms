@@ -66,7 +66,6 @@
                 <module>org.openwms.core.domain</module>
                 <module>org.openwms.core.client.rest</module>
                 <module>org.openwms.core.test</module>
-                <module>org.openwms.core.infrastructure.configuration</module>
                 <module>org.openwms.core.infrastructure.configuration.provider</module>
                 <module>org.openwms.core.infrastructure.hsql</module>
                 <module>org.openwms.core.infrastructure.oracle</module>
@@ -87,7 +86,6 @@
                 <module>org.openwms.core.domain</module>
                 <module>org.openwms.core.client.rest</module>
                 <module>org.openwms.core.test</module>
-                <module>org.openwms.core.infrastructure.configuration</module>
                 <module>org.openwms.core.infrastructure.configuration.provider</module>
                 <module>org.openwms.core.infrastructure.hsql</module>
                 <module>org.openwms.core.infrastructure.oracle</module>
@@ -114,7 +112,6 @@
                 <module>org.openwms.core.domain.as</module>
                 <module>org.openwms.core.client.rest</module>
                 <module>org.openwms.core.test</module>
-                <module>org.openwms.core.infrastructure.configuration</module>
                 <module>org.openwms.core.infrastructure.configuration.provider</module>
                 <module>org.openwms.core.infrastructure.hsql</module>
                 <module>org.openwms.core.infrastructure.oracle</module>
@@ -141,7 +138,6 @@
                 <module>org.openwms.core.domain</module>
                 <module>org.openwms.core.client.rest</module>
                 <module>org.openwms.core.test</module>
-                <module>org.openwms.core.infrastructure.configuration</module>
                 <module>org.openwms.core.infrastructure.configuration.provider</module>
                 <module>org.openwms.core.infrastructure.hsql</module>
                 <module>org.openwms.core.infrastructure.oracle</module>

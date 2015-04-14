@@ -449,8 +449,7 @@
         <flex.version>3.2.0.3958</flex.version>
         <granite.version>2.3.2.GA</granite.version>
         <hibernate.version>4.2.3.Final</hibernate.version>
-        <!--hibernate.version>3.4.0.GA-A</hibernate.version-->
-        <jackson.version>1.9.7</jackson.version>
+        <jackson.version>2.4.0</jackson.version>
         <javax.persistence.version>1.0.0</javax.persistence.version>
         <javax.servlet-api.version>3.0.1</javax.servlet-api.version>
         <jsf.api.version>2.1.4</jsf.api.version>
@@ -1294,13 +1293,18 @@
             <!-- REST dependencies -->
             <!-- NON OSGI ARTIFACT -->
             <dependency>
-                <groupId>org.codehaus.jackson</groupId>
-                <artifactId>jackson-mapper-asl</artifactId>
+                <groupId>com.fasterxml.jackson.core</groupId>
+                <artifactId>jackson-core</artifactId>
                 <version>${jackson.version}</version>
             </dependency>
             <dependency>
-                <groupId>org.codehaus.jackson</groupId>
-                <artifactId>jackson-core-asl</artifactId>
+                <groupId>com.fasterxml.jackson.core</groupId>
+                <artifactId>jackson-annotations</artifactId>
+                <version>${jackson.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.fasterxml.jackson.core</groupId>
+                <artifactId>jackson-databind</artifactId>
                 <version>${jackson.version}</version>
             </dependency>
             <dependency>

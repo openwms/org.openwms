@@ -37,7 +37,8 @@
 
     <bean id="coreRestValidator" class="org.springframework.validation.beanvalidation.LocalValidatorFactoryBean" />
 
-    <bean id="jacksonMessageConverter" class="org.springframework.http.converter.json.MappingJacksonHttpMessageConverter" />
+    <bean id="jacksonMessageConverter"
+          class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter"/>
 
     <bean id="messageSourceRest" class="org.springframework.context.support.ResourceBundleMessageSource">
         <property name="basenames">
