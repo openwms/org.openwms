@@ -940,7 +940,7 @@
                 <configuration>
                     <targetJdk>${maven.compile.targetLevel}</targetJdk>
                     <format>xml</format>
-                    <linkXref>true</linkXref>
+                    <linkXRef>true</linkXRef>
                     <aggregate>true</aggregate>
                     <sourceEncoding>${project.build.sourceEncoding}</sourceEncoding>
                 </configuration>
@@ -987,8 +987,6 @@
                     <failOnError>false</failOnError>
                     <findbugsXmlOutput>true</findbugsXmlOutput>
                     <findbugsXmlOutputDirectory>target/site</findbugsXmlOutputDirectory>
-                    <srcHtml>xref/</srcHtml>
-                    <srcHtmlType>JXR</srcHtmlType>
                 </configuration>
             </plugin>
 
