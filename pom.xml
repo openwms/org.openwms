@@ -265,7 +265,6 @@
                 <!-- Client technology   -->
                 <!-- =================== -->
                 <angularjs>true</angularjs>
-                <!--flex>true</flex-->
             </properties>
             <modules>
                 <module>org.openwms.core</module>
@@ -428,7 +427,6 @@
         <cglib.version>2.2.0</cglib.version>
         <dozer.version>5.4.0</dozer.version>
         <el.version>2.2</el.version>
-        <flex.version>3.2.0.3958</flex.version>
         <freemarker.version>2.3.15</freemarker.version>
         <granite.version>2.3.2.GA</granite.version>
         <hibernate.version>4.2.3.Final</hibernate.version>
@@ -442,7 +440,7 @@
         <jdbc.hsqldb.version>2.2.8</jdbc.hsqldb.version>
         <jdbc.mysql.version>5.1.6</jdbc.mysql.version>
         <jdbc.oracle.version>6.0.0</jdbc.oracle.version>
-        <jdbc.postgresql.version>8.3.604</jdbc.postgresql.version>
+        <jdbc.postgresql.version>9.3-1102-jdbc41</jdbc.postgresql.version>
         <jpa-api.version>1.0.1.Final</jpa-api.version>
         <jsf.api.version>2.1.4</jsf.api.version>
         <jsf.impl.version>2.1.4</jsf.impl.version>
@@ -1064,7 +1062,7 @@
             </dependency>
             <dependency>
                 <groupId>org.postgresql</groupId>
-                <artifactId>com.springsource.org.postgresql.jdbc4</artifactId>
+                <artifactId>postgresql</artifactId>
                 <version>${jdbc.postgresql.version}</version>
             </dependency>
             <dependency>

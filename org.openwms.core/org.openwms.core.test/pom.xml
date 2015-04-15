@@ -160,7 +160,7 @@
         </dependency>
         <dependency>
             <groupId>org.postgresql</groupId>
-            <artifactId>com.springsource.org.postgresql.jdbc4</artifactId>
+            <artifactId>postgresql</artifactId>
             <scope>compile</scope>
         </dependency>
 
