@@ -28,13 +28,13 @@
     <parent>
         <groupId>org.openwms</groupId>
         <artifactId>org.openwms.common</artifactId>
-        <version>0.2</version>
+        <version>1.0</version>
     </parent>
     <artifactId>org.openwms.common.integration.jpa</artifactId>
     <name>${project.artifactId}</name>
     <properties>
         <moduleDir>../../..</moduleDir>
-        <openwms.configuration.version>0.2</openwms.configuration.version>
+        <openwms.configuration.version>1.0</openwms.configuration.version>
     </properties>
     <build>
         <resources>

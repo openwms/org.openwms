@@ -28,7 +28,7 @@
     <parent>
         <groupId>org.openwms</groupId>
         <artifactId>org.openwms.app</artifactId>
-        <version>0.2</version>
+        <version>1.0</version>
     </parent>
     <artifactId>org.openwms.client.angularjs.wrapper</artifactId>
     <version>${angularjs.client.version}</version>
@@ -36,7 +36,7 @@
     <name>${project.artifactId}</name>
     <properties>
         <moduleDir>../../..</moduleDir>
-        <openwms.configuration.version>0.2</openwms.configuration.version>
+        <openwms.configuration.version>1.0</openwms.configuration.version>
     </properties>
     <build>
         <finalName>openwms</finalName>
@@ -98,11 +98,11 @@
         </dependency>
         <dependency>
             <groupId>org.apache.commons</groupId>
-            <artifactId>com.springsource.org.apache.commons.dbcp</artifactId>
+            <artifactId>commons-dbcp2</artifactId>
         </dependency>
         <dependency>
             <groupId>org.apache.commons</groupId>
-            <artifactId>com.springsource.org.apache.commons.lang</artifactId>
+            <artifactId>commons-lang3</artifactId>
         </dependency>
         <dependency>
             <groupId>net.sf.ehcache</groupId>

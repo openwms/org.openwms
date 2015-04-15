@@ -28,16 +28,16 @@
     <parent>
         <groupId>org.openwms</groupId>
         <artifactId>org.openwms</artifactId>
-        <version>0.2</version>
+        <version>1.0</version>
     </parent>
     <artifactId>org.openwms.common</artifactId>
-    <version>0.2</version>
+    <version>1.0</version>
     <packaging>pom</packaging>
     <name>OpenWMS.org COMMON</name>
     <properties>
         <moduleDir>../..</moduleDir>
-        <core.version>0.2</core.version>
-        <module.version>0.2</module.version>
+        <core.version>1.0</core.version>
+        <module.version>1.0</module.version>
     </properties>
 
     <distributionManagement>
@@ -75,26 +75,6 @@
             <modules>
                 <module>org.openwms.common.comm</module>
                 <module>org.openwms.common.domain</module>
-                <module>org.openwms.common.integration</module>
-                <module>org.openwms.common.integration.jpa</module>
-                <module>org.openwms.common.service.api</module>
-                <module>org.openwms.common.service.spring</module>
-                <module>org.openwms.common.util</module>
-            </modules>
-        </profile>
-        <profile>
-            <id>flex</id>
-            <activation>
-                <property>
-                    <name>flex</name>
-                </property>
-            </activation>
-            <modules>
-                <module>org.openwms.common.comm</module>
-                <module>org.openwms.common.domain</module>
-                <module>org.openwms.common.domain.as</module>
-                <module>org.openwms.common.flex.lib</module>
-                <module>org.openwms.common.flex.module</module>
                 <module>org.openwms.common.integration</module>
                 <module>org.openwms.common.integration.jpa</module>
                 <module>org.openwms.common.service.api</module>

@@ -29,7 +29,7 @@
 
     <context:property-placeholder properties-ref="globals"/>
 
-    <bean id="wmsDataSource" class="org.apache.commons.dbcp.BasicDataSource" init-method="createDataSource"
+    <bean id="wmsDataSource" class="org.apache.commons.dbcp2.BasicDataSource" init-method="createDataSource"
         destroy-method="close">
         <property name="driverClassName" value="${jdbc.driverClassName}" />
         <property name="url" value="${jdbc.url}" />

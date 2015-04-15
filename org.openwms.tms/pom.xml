@@ -28,17 +28,17 @@
     <parent>
         <groupId>org.openwms</groupId>
         <artifactId>org.openwms</artifactId>
-        <version>0.2</version>
+        <version>1.0</version>
     </parent>
     <artifactId>org.openwms.tms</artifactId>
-    <version>0.2</version>
+    <version>1.0</version>
     <packaging>pom</packaging>
     <name>OpenWMS.org TMS</name>
     <properties>
         <moduleDir>../..</moduleDir>
-        <core.version>0.2</core.version>
-        <common.version>0.2</common.version>
-        <module.version>0.2</module.version>
+        <core.version>1.0</core.version>
+        <common.version>1.0</common.version>
+        <module.version>1.0</module.version>
     </properties>
 
     <distributionManagement>
@@ -74,25 +74,6 @@
             <id>tms</id>
             <modules>
                 <module>org.openwms.tms.domain</module>
-                <module>org.openwms.tms.integration</module>
-                <module>org.openwms.tms.integration.jpa</module>
-                <module>org.openwms.tms.service.api</module>
-                <module>org.openwms.tms.service.spring</module>
-                <module>org.openwms.tms.util</module>
-            </modules>
-        </profile>
-        <profile>
-            <id>flex</id>
-            <activation>
-                <property>
-                    <name>flex</name>
-                    <value>true</value>
-                </property>
-            </activation>
-            <modules>
-                <module>org.openwms.tms.domain</module>
-                <module>org.openwms.tms.domain.as</module>
-                <module>org.openwms.tms.flex.module</module>
                 <module>org.openwms.tms.integration</module>
                 <module>org.openwms.tms.integration.jpa</module>
                 <module>org.openwms.tms.service.api</module>

@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+?xml version="1.0" encoding="UTF-8"?>
 <!--
 /*
  * openwms.org, the Open Warehouse Management System.
@@ -28,7 +28,7 @@
     <parent>
         <groupId>org.openwms</groupId>
         <artifactId>org.openwms.app</artifactId>
-        <version>0.2</version>
+        <version>1.0</version>
     </parent>
     <artifactId>org.openwms.client.angularjs.app</artifactId>
     <version>${angularjs.client.version}</version>

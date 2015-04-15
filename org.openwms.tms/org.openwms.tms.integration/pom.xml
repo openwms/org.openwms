@@ -28,7 +28,7 @@
 	<parent>
 		<groupId>org.openwms</groupId>
 		<artifactId>org.openwms.tms</artifactId>
-		<version>0.2</version>
+		<version>1.0</version>
 	</parent>
 	<artifactId>org.openwms.tms.integration</artifactId>
 	<name>${project.artifactId}</name>

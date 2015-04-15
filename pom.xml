@@ -31,7 +31,7 @@
     </parent>
     <groupId>org.openwms</groupId>
     <artifactId>org.openwms</artifactId>
-    <version>0.2</version>
+    <version>1.0</version>
     <packaging>pom</packaging>
     <name>OpenWMS.org Project</name>
     <description>OpenWMS.org is an open source warehouse management software</description>
@@ -413,8 +413,8 @@
         <!-- =================== -->
         <!-- Submodule versions  -->
         <!-- =================== -->
-        <rest.version>0.1</rest.version>
-        <angularjs.client.version>0.1</angularjs.client.version>
+        <rest.version>1.0</rest.version>
+        <angularjs.client.version>1.0</angularjs.client.version>
 
         <!-- =================== -->
         <!-- Dependency versions -->
@@ -454,6 +454,7 @@
         <slf4j.version>1.7.7</slf4j.version>
         <!-- Spring Integration 2.2.4 uses Spring Core 3.1.3 -->
         <spring.integration.version>4.1.3.RELEASE</spring.integration.version>
+        <spring-retry.version>1.1.2.RELEASE</spring-retry.version>
         <spring.security.version>4.0.0.RELEASE</spring.security.version>
         <spring.version>4.1.6.RELEASE</spring.version>
         <validation-api.version>1.0.0.GA</validation-api.version>
@@ -489,7 +490,6 @@
         <plugin.taglist.version>2.4</plugin.taglist.version>
         <plugin.wagon-ssh.version>2.1</plugin.wagon-ssh.version>
         <plugin.war.version>2.4</plugin.war.version>
-        <spring-retry.version>1.1.2.RELEASE</spring-retry.version>
     </properties>
 
     <pluginRepositories>

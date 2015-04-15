@@ -28,7 +28,7 @@
     <parent>
         <groupId>org.openwms</groupId>
         <artifactId>org.openwms.core</artifactId>
-        <version>0.2</version>
+        <version>1.0</version>
     </parent>
     <artifactId>org.openwms.core.integration.eclipselink</artifactId>
     <packaging>jar</packaging>
@@ -47,6 +47,10 @@
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-instrument</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-orm</artifactId>
         </dependency>
 
         <!-- JPA Provider -->

@@ -28,18 +28,18 @@
     <parent>
         <groupId>org.openwms</groupId>
         <artifactId>org.openwms</artifactId>
-        <version>0.2</version>
+        <version>1.0</version>
     </parent>
     <artifactId>org.openwms.app</artifactId>
-    <version>0.2</version>
+    <version>1.0</version>
     <packaging>pom</packaging>
     <name>OpenWMS.org Application</name>
     <properties>
         <moduleDir>../..</moduleDir>
-        <core.version>0.2</core.version>
-        <common.version>0.2</common.version>
-        <tms.version>0.2</tms.version>
-        <wms.version>0.0.1-SNAPSHOT</wms.version>
+        <core.version>1.0</core.version>
+        <common.version>1.0</common.version>
+        <tms.version>1.0</tms.version>
+        <wms.version>1.0</wms.version>
     </properties>
 
     <distributionManagement>
@@ -65,35 +65,6 @@
             <modules>
                 <module>org.openwms.client.rest.provider</module>
             </modules>
-        </profile>
-        <profile>
-            <id>flex</id>
-            <activation>
-                <property>
-                    <name>flex</name>
-                </property>
-            </activation>
-            <modules>
-                <module>org.openwms.client.flex.app</module>
-                <module>org.openwms.client.flex.wrapper</module>
-                <module>org.openwms.client.rest.provider</module>
-            </modules>
-            <dependencyManagement>
-                <dependencies>
-                    <dependency>
-                        <groupId>${project.groupId}</groupId>
-                        <artifactId>org.openwms.client.flex.app</artifactId>
-                        <version>${flex.client.version}</version>
-                        <type>swf</type>
-                    </dependency>
-                    <dependency>
-                        <groupId>${project.groupId}</groupId>
-                        <artifactId>org.openwms.client.flex.wrapper</artifactId>
-                        <version>${flex.client.version}</version>
-                        <type>war</type>
-                    </dependency>
-                </dependencies>
-            </dependencyManagement>
         </profile>
         <profile>
             <id>angularjs</id>

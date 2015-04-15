@@ -28,18 +28,17 @@
     <parent>
         <groupId>org.openwms</groupId>
         <artifactId>org.openwms</artifactId>
-        <version>0.2</version>
+        <version>1.0</version>
     </parent>
     <artifactId>org.openwms.core</artifactId>
-    <version>0.2</version>
+    <version>1.0</version>
     <packaging>pom</packaging>
     <name>OpenWMS.org CORE</name>
     <description>The CORE project Maven POM file. Just a common definition of dependencies valid for all other CORE projects. Call mvn install -Pcore to build all CORE projects.</description>
     <properties>
         <moduleDir>../..</moduleDir>
-        <property.org.graniteds-core.version>1.2.0_SP1</property.org.graniteds-core.version>
-        <module.version>0.2</module.version>
-        <rest.version>0.1</rest.version>
+        <module.version>1.0</module.version>
+        <rest.version>1.0</rest.version>
     </properties>
 
     <distributionManagement>
@@ -98,33 +97,6 @@
                 <module>org.openwms.core.service.api</module>
                 <module>org.openwms.core.service.spring</module>
                 <module>org.openwms.core.util</module>
-            </modules>
-        </profile>
-        <profile>
-            <id>flex</id>
-            <activation>
-                <property>
-                    <name>flex</name>
-                </property>
-            </activation>
-            <modules>
-                <module>org.openwms.core.domain</module>
-                <module>org.openwms.core.domain.as</module>
-                <module>org.openwms.core.client.rest</module>
-                <module>org.openwms.core.test</module>
-                <module>org.openwms.core.infrastructure.configuration.provider</module>
-                <module>org.openwms.core.infrastructure.hsql</module>
-                <module>org.openwms.core.infrastructure.oracle</module>
-                <module>org.openwms.core.infrastructure.postgres</module>
-                <module>org.openwms.core.integration</module>
-                <module>org.openwms.core.integration.eclipselink</module>
-                <module>org.openwms.core.integration.hibernate</module>
-                <module>org.openwms.core.integration.file</module>
-                <module>org.openwms.core.integration.jpa</module>
-                <module>org.openwms.core.service.api</module>
-                <module>org.openwms.core.service.spring</module>
-                <module>org.openwms.core.util</module>
-                <module>org.openwms.client.flex.lib</module>
             </modules>
         </profile>
         <profile>
