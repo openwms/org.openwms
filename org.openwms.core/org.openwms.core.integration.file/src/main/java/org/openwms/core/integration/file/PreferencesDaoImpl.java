@@ -21,15 +21,14 @@
  */
 package org.openwms.core.integration.file;
 
+import javax.annotation.PostConstruct;
+import javax.xml.transform.stream.StreamSource;
 import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
-import javax.annotation.PostConstruct;
-import javax.xml.transform.stream.StreamSource;
-
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.openwms.core.Constants;
 import org.openwms.core.domain.preferences.Preferences;
 import org.openwms.core.domain.system.AbstractPreference;

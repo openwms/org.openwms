@@ -23,14 +23,9 @@ package org.openwms.core.service.spring;
 
 import java.util.HashSet;
 
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.openwms.core.annotation.FireAfterTransaction;
-import org.openwms.core.domain.system.usermanagement.Role;
-import org.openwms.core.domain.system.usermanagement.SystemUser;
-import org.openwms.core.domain.system.usermanagement.User;
-import org.openwms.core.domain.system.usermanagement.UserDetails;
-import org.openwms.core.domain.system.usermanagement.UserPassword;
-import org.openwms.core.domain.system.usermanagement.UserPreference;
+import org.openwms.core.domain.system.usermanagement.*;
 import org.openwms.core.exception.InvalidPasswordException;
 import org.openwms.core.integration.GenericDao;
 import org.openwms.core.integration.SecurityObjectDao;

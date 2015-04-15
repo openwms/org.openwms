@@ -24,13 +24,13 @@ package org.openwms.core.integration.aop;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
-import org.apache.commons.lang.time.StopWatch;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.openwms.core.integration.exception.IntegrationRuntimeException;
 import org.openwms.core.util.logging.LoggingCategories;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
+import org.springframework.util.StopWatch;
 
 /**
  * A CoreIntegrationAspect is used in conjunction with an AOP aspect to around repositories and services within the integration layer.
@@ -83,7 +83,7 @@ public class CoreIntegrationAspect {
             } finally {
                 if (LOGGER.isDebugEnabled() && sw != null) {
                     sw.stop();
-                    LOGGER.debug("[I]<<< " + pjp.toShortString() + " took [ms]: " + sw.getTime());
+                    LOGGER.debug("[I]<<< " + pjp.toShortString() + " took [ms]: " + sw.getTotalTimeMillis());
                 }
             }
         }
