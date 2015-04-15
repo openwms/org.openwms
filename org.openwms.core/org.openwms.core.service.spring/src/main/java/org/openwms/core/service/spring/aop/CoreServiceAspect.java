@@ -24,7 +24,6 @@ package org.openwms.core.service.spring.aop;
 import javax.validation.ValidationException;
 import javax.validation.Validator;
 
-import org.apache.commons.lang.time.StopWatch;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.openwms.core.service.ExceptionCodes;
 import org.openwms.core.service.exception.ServiceRuntimeException;
@@ -35,6 +34,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.MessageSource;
 import org.springframework.stereotype.Component;
+import org.springframework.util.StopWatch;
 
 /**
  * A CoreServiceAspect is in conjunction with an AOP aspect for Core services.
@@ -95,7 +95,7 @@ public class CoreServiceAspect {
         } finally {
             if (LOGGER.isDebugEnabled() && sw != null) {
                 sw.stop();
-                LOGGER.debug("[S]<< " + pjp.toShortString() + " took about [ms]: " + sw.getTime());
+                LOGGER.debug("[S]<< " + pjp.toShortString() + " took about [ms]: " + sw.getTotalTimeMillis());
             }
         }
     }

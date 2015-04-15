@@ -28,7 +28,7 @@
 	<parent>
 		<groupId>org.openwms</groupId>
 		<artifactId>org.openwms.common</artifactId>
-		<version>0.2-SNAPSHOT</version>
+		<version>0.2</version>
 	</parent>
 	<artifactId>org.openwms.common.domain.as</artifactId>
     <version>${flex.client.version}</version>
@@ -41,7 +41,6 @@
 	<build>
 		<finalName>${project.artifactId}-${project.version}</finalName>
 		<sourceDirectory>${project.basedir}/src/main/flex</sourceDirectory>
-        <testSourceDirectory>${project.basedir}/src/test/flex</testSourceDirectory>
 		<plugins>
             <plugin>
                 <artifactId>maven-clean-plugin</artifactId>

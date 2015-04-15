@@ -23,8 +23,8 @@ package org.openwms.common.comm.request;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.integration.MessageChannel;
 import org.springframework.integration.channel.DirectChannel;
+import org.springframework.messaging.MessageChannel;
 
 /**
  * A RequestMessageConfiguration creates beans dynamically without the use of XML.

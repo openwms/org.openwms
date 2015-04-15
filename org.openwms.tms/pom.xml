@@ -28,18 +28,17 @@
     <parent>
         <groupId>org.openwms</groupId>
         <artifactId>org.openwms</artifactId>
-        <version>0.2-SNAPSHOT</version>
+        <version>0.2</version>
     </parent>
     <artifactId>org.openwms.tms</artifactId>
-    <version>0.2-SNAPSHOT</version>
+    <version>0.2</version>
     <packaging>pom</packaging>
     <name>OpenWMS.org TMS</name>
     <properties>
         <moduleDir>../..</moduleDir>
-        <core.version>0.2-SNAPSHOT</core.version>
-        <common.version>0.2-SNAPSHOT</common.version>
-        <module.version>0.2-SNAPSHOT</module.version>
-        <bundle.version>0.2.SNAPSHOT</bundle.version>
+        <core.version>0.2</core.version>
+        <common.version>0.2</common.version>
+        <module.version>0.2</module.version>
     </properties>
 
     <distributionManagement>
@@ -51,18 +50,16 @@
     </distributionManagement>
 
     <scm>
-        <connection>scm:git:ssh://git@bitbucket.org/openwms-sources/org.openwms.git</connection>
-        <developerConnection>scm:git:ssh://git@bitbucket.org/openwms-sources/org.openwms.git</developerConnection>
-        <url>https://bitbucket.org/openwms-sources/org.openwms.git</url>
+        <url>https://github.com/openwms/org.openwms</url>
+        <connection>scm:git:git://github.com/openwms/org.openwms.git</connection>
+        <developerConnection>scm:git:git@github.com:openwms/org.openwms.git</developerConnection>
     </scm>
 
     <profiles>
         <profile>
             <id>all</id>
             <activation>
-                <property>
-                    <name>!top</name>
-                </property>
+                <activeByDefault>true</activeByDefault>
             </activation>
             <modules>
                 <module>org.openwms.tms.domain</module>

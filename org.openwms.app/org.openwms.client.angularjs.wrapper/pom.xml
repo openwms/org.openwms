@@ -28,7 +28,7 @@
     <parent>
         <groupId>org.openwms</groupId>
         <artifactId>org.openwms.app</artifactId>
-        <version>0.2-SNAPSHOT</version>
+        <version>0.2</version>
     </parent>
     <artifactId>org.openwms.client.angularjs.wrapper</artifactId>
     <version>${angularjs.client.version}</version>
@@ -36,15 +36,14 @@
     <name>${project.artifactId}</name>
     <properties>
         <moduleDir>../../..</moduleDir>
+        <openwms.configuration.version>0.2</openwms.configuration.version>
     </properties>
     <build>
-        <sourceDirectory>${project.basedir}/src/main/java</sourceDirectory>
         <finalName>openwms</finalName>
         <plugins>
             <plugin>
                 <artifactId>maven-war-plugin</artifactId>
                 <configuration>
-                    <finalName>${project.artifactId}</finalName>
                     <archive>
                         <manifestFile>${project.basedir}/src/main/webapp/META-INF/MANIFEST.MF</manifestFile>
                     </archive>
@@ -54,265 +53,60 @@
         </plugins>
     </build>
 
-    <profiles>
-        <profile>
-            <id>cloudbees</id>
-            <properties>
-                <bees.appid>openwms/ajs</bees.appid>
-            </properties>
-            <build>
-                <plugins>
-                    <plugin>
-                        <groupId>com.cloudbees</groupId>
-                        <artifactId>bees-maven-plugin</artifactId>
-                        <version>${plugin.bees-maven-plugin}</version>
-                        <configuration>
-                            <secret>${bees.secret}</secret>
-                            <apikey>${bees.apikey}</apikey>
-                            <appid>${bees.appid}</appid>
-                        </configuration>
-                        <executions>
-                            <execution>
-                                <phase>install</phase>
-                                <goals>
-                                    <goal>deploy</goal>
-                                </goals>
-                            </execution>
-                        </executions>
-                    </plugin>
-                </plugins>
-            </build>
-            <pluginRepositories>
-                <pluginRepository>
-                    <id>cloudbees-public-release</id>
-                    <url>http://repository-cloudbees.forge.cloudbees.com/public-release</url>
-                    <releases>
-                        <enabled>true</enabled>
-                    </releases>
-                    <snapshots>
-                        <enabled>false</enabled>
-                    </snapshots>
-                </pluginRepository>
-            </pluginRepositories>
-        </profile>
-        <profile>
-            <id>noOSGI</id>
-            <activation>
-                <property>
-                    <name>spring.profiles.active</name>
-                    <value>!OSGI</value>
-                </property>
-            </activation>
-            <properties>
-                <dependency.scope>compile</dependency.scope>
-                <openwms.configuration.version>0.2-SNAPSHOT</openwms.configuration.version>
-            </properties>
-            <dependencies>
-                <!-- Project CORE dependencies -->
-                <dependency>
-                    <groupId>${project.groupId}</groupId>
-                    <artifactId>org.openwms.core.domain</artifactId>
-                    <version>${core.version}</version>
-                </dependency>
-                <dependency>
-                    <groupId>${project.groupId}</groupId>
-                    <artifactId>org.openwms.core.util</artifactId>
-                    <version>${core.version}</version>
-                </dependency>
-                <dependency>
-                    <groupId>${project.groupId}</groupId>
-                    <artifactId>org.openwms.core.infrastructure.configuration.provider</artifactId>
-                    <version>${core.version}</version>
-                </dependency>
-                <dependency>
-                    <groupId>${project.groupId}</groupId>
-                    <artifactId>org.openwms.core.infrastructure.postgres</artifactId>
-                    <version>${core.version}</version>
-                </dependency>
-                <dependency>
-                    <groupId>${project.groupId}</groupId>
-                    <artifactId>org.openwms.core.integration</artifactId>
-                    <version>${core.version}</version>
-                </dependency>
-                <dependency>
-                    <groupId>${project.groupId}</groupId>
-                    <artifactId>org.openwms.core.integration.hibernate</artifactId>
-                    <version>${core.version}</version>
-                </dependency>
-                <dependency>
-                    <groupId>${project.groupId}</groupId>
-                    <artifactId>org.openwms.core.integration.file</artifactId>
-                    <version>${core.version}</version>
-                </dependency>
-                <dependency>
-                    <groupId>${project.groupId}</groupId>
-                    <artifactId>org.openwms.core.integration.jpa</artifactId>
-                    <version>${core.version}</version>
-                </dependency>
-                <dependency>
-                    <groupId>${project.groupId}</groupId>
-                    <artifactId>org.openwms.core.service.api</artifactId>
-                    <version>${core.version}</version>
-                </dependency>
-                <dependency>
-                    <groupId>${project.groupId}</groupId>
-                    <artifactId>org.openwms.core.service.spring</artifactId>
-                    <version>${core.version}</version>
-                </dependency>
-                <!-- Project COMMON dependencies -->
-                <dependency>
-                    <groupId>${project.groupId}</groupId>
-                    <artifactId>org.openwms.common.util</artifactId>
-                    <version>${common.version}</version>
-                </dependency>
-                <dependency>
-                    <groupId>${project.groupId}</groupId>
-                    <artifactId>org.openwms.common.domain</artifactId>
-                    <version>${common.version}</version>
-                </dependency>
-                <dependency>
-                    <groupId>${project.groupId}</groupId>
-                    <artifactId>org.openwms.common.integration</artifactId>
-                    <version>${common.version}</version>
-                </dependency>
-                <dependency>
-                    <groupId>${project.groupId}</groupId>
-                    <artifactId>org.openwms.common.integration.jpa</artifactId>
-                    <version>${common.version}</version>
-                </dependency>
-                <dependency>
-                    <groupId>${project.groupId}</groupId>
-                    <artifactId>org.openwms.common.service.api</artifactId>
-                    <version>${common.version}</version>
-                    <scope>${dependency.scope}</scope>
-                </dependency>
-                <dependency>
-                    <groupId>${project.groupId}</groupId>
-                    <artifactId>org.openwms.common.service.spring</artifactId>
-                    <version>${common.version}</version>
-                </dependency>
-                <!-- TMS Project dependencies -->
-                <dependency>
-                    <groupId>${project.groupId}</groupId>
-                    <artifactId>org.openwms.tms.domain</artifactId>
-                    <version>${tms.version}</version>
-                    <scope>${dependency.scope}</scope>
-                </dependency>
-                <dependency>
-                    <groupId>${project.groupId}</groupId>
-                    <artifactId>org.openwms.tms.util</artifactId>
-                    <version>${tms.version}</version>
-                </dependency>
-                <dependency>
-                    <groupId>${project.groupId}</groupId>
-                    <artifactId>org.openwms.tms.integration</artifactId>
-                    <version>${tms.version}</version>
-                </dependency>
-                <dependency>
-                    <groupId>${project.groupId}</groupId>
-                    <artifactId>org.openwms.tms.integration.jpa</artifactId>
-                    <version>${tms.version}</version>
-                </dependency>
-                <dependency>
-                    <groupId>${project.groupId}</groupId>
-                    <artifactId>org.openwms.tms.service.api</artifactId>
-                    <version>${tms.version}</version>
-                    <scope>${dependency.scope}</scope>
-                </dependency>
-                <dependency>
-                    <groupId>${project.groupId}</groupId>
-                    <artifactId>org.openwms.tms.service.spring</artifactId>
-                    <version>${tms.version}</version>
-                </dependency>
-                <!-- Resources -->
-                <dependency>
-                    <groupId>org.postgresql</groupId>
-                    <artifactId>com.springsource.org.postgresql.jdbc4</artifactId>
-                </dependency>
-                <dependency>
-                    <groupId>org.apache.commons</groupId>
-                    <artifactId>com.springsource.org.apache.commons.dbcp</artifactId>
-                </dependency>
-                <dependency>
-                    <groupId>org.apache.commons</groupId>
-                    <artifactId>com.springsource.org.apache.commons.lang</artifactId>
-                </dependency>
-                <dependency>
-                    <groupId>net.sourceforge.ehcache</groupId>
-                    <artifactId>com.springsource.net.sf.ehcache</artifactId>
-                </dependency>
-                <dependency>
-                    <groupId>org.springframework.osgi</groupId>
-                    <artifactId>org.springframework.osgi.core</artifactId>
-                    <scope>runtime</scope>
-                    <exclusions>
-                        <exclusion>
-                            <groupId>org.springframework</groupId>
-                            <artifactId>org.springframework.aop</artifactId>
-                        </exclusion>
-                    </exclusions>
-                </dependency>
-                <!-- OSGi libraries needed to validate against schema file -->
-                <dependency>
-                    <groupId>org.springframework.osgi</groupId>
-                    <artifactId>org.springframework.osgi.extender</artifactId>
-                    <scope>runtime</scope>
-                </dependency>
-                <dependency>
-                    <groupId>org.springframework.osgi</groupId>
-                    <artifactId>org.springframework.osgi.io</artifactId>
-                    <scope>runtime</scope>
-                </dependency>
-                <!--dependency>
-                    <groupId>org.springframework.osgi</groupId>
-                    <artifactId>org.springframework.osgi.web</artifactId>
-                </dependency-->
-
-                <dependency>
-                    <groupId>org.hibernate.javax.persistence</groupId>
-                    <artifactId>hibernate-jpa-2.0-api</artifactId>
-                </dependency>
-                <!-- JPA Provider -->
-                <dependency>
-                    <groupId>org.hibernate</groupId>
-                    <artifactId>hibernate-entitymanager</artifactId>
-                </dependency>
-            </dependencies>
-        </profile>
-        <profile>
-            <id>OSGI</id>
-            <activation>
-                <property>
-                    <name>spring.profiles.active</name>
-                    <value>OSGI</value>
-                </property>
-            </activation>
-        </profile>
-    </profiles>
-
     <dependencies>
+        <!-- JavaEE dependencies -->
+        <dependency>
+            <groupId>javax.servlet</groupId>
+            <artifactId>javax.servlet-api</artifactId>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.hibernate.javax.persistence</groupId>
+            <artifactId>hibernate-jpa-2.0-api</artifactId>
+        </dependency>
+
+        <!-- JPA Provider -->
+        <dependency>
+            <groupId>org.hibernate</groupId>
+            <artifactId>hibernate-entitymanager</artifactId>
+        </dependency>
+
         <!-- Spring Framework -->
         <dependency>
             <groupId>org.springframework</groupId>
-            <artifactId>org.springframework.spring-library</artifactId>
-            <type>libd</type>
-            <scope>${dependency.scope}</scope>
+            <artifactId>spring-context</artifactId>
         </dependency>
+
         <!-- Spring Security -->
         <dependency>
             <groupId>org.springframework.security</groupId>
-            <artifactId>org.springframework.security.core</artifactId>
-            <scope>${dependency.scope}</scope>
+            <artifactId>spring-security-core</artifactId>
         </dependency>
         <dependency>
             <groupId>org.springframework.security</groupId>
-            <artifactId>org.springframework.security.web</artifactId>
-            <scope>${dependency.scope}</scope>
+            <artifactId>spring-security-web</artifactId>
         </dependency>
         <dependency>
             <groupId>org.springframework.security</groupId>
-            <artifactId>org.springframework.security.config</artifactId>
-            <scope>${dependency.scope}</scope>
+            <artifactId>spring-security-config</artifactId>
+        </dependency>
+
+        <!-- 3rd party libraries -->
+        <dependency>
+            <groupId>org.postgresql</groupId>
+            <artifactId>com.springsource.org.postgresql.jdbc4</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>com.springsource.org.apache.commons.dbcp</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>com.springsource.org.apache.commons.lang</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>net.sf.ehcache</groupId>
+            <artifactId>ehcache</artifactId>
         </dependency>
 
         <!-- Project dependencies -->
@@ -324,20 +118,129 @@
             <scope>runtime</scope>
         </dependency>
 
-        <!-- CORE Project dependencies -->
+        <!-- Project CORE dependencies -->
+        <dependency>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>org.openwms.core.domain</artifactId>
+            <version>${core.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>org.openwms.core.util</artifactId>
+            <version>${core.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>org.openwms.core.infrastructure.configuration.provider</artifactId>
+            <version>${core.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>org.openwms.core.infrastructure.postgres</artifactId>
+            <version>${core.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>org.openwms.core.integration</artifactId>
+            <version>${core.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>org.openwms.core.integration.hibernate</artifactId>
+            <version>${core.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>org.openwms.core.integration.file</artifactId>
+            <version>${core.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>org.openwms.core.integration.jpa</artifactId>
+            <version>${core.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>org.openwms.core.service.api</artifactId>
+            <version>${core.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>org.openwms.core.service.spring</artifactId>
+            <version>${core.version}</version>
+        </dependency>
+
+        <!-- Project COMMON dependencies -->
+        <dependency>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>org.openwms.common.util</artifactId>
+            <version>${common.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>org.openwms.common.domain</artifactId>
+            <version>${common.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>org.openwms.common.integration</artifactId>
+            <version>${common.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>org.openwms.common.integration.jpa</artifactId>
+            <version>${common.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>org.openwms.common.service.api</artifactId>
+            <version>${common.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>org.openwms.common.service.spring</artifactId>
+            <version>${common.version}</version>
+        </dependency>
+
+        <!-- TMS Project dependencies -->
+        <dependency>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>org.openwms.tms.domain</artifactId>
+            <version>${tms.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>org.openwms.tms.util</artifactId>
+            <version>${tms.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>org.openwms.tms.integration</artifactId>
+            <version>${tms.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>org.openwms.tms.integration.jpa</artifactId>
+            <version>${tms.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>org.openwms.tms.service.api</artifactId>
+            <version>${tms.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>org.openwms.tms.service.spring</artifactId>
+            <version>${tms.version}</version>
+        </dependency>
+
+        <!-- Test dependencies -->
         <dependency>
             <groupId>${project.groupId}</groupId>
             <artifactId>org.openwms.core.test</artifactId>
             <version>${core.version}</version>
             <type>test-jar</type>
             <scope>test</scope>
-        </dependency>
-
-        <!-- Other libraries -->
-        <dependency>
-            <groupId>javax.servlet</groupId>
-            <artifactId>com.springsource.javax.servlet</artifactId>
-            <scope>provided</scope>
         </dependency>
     </dependencies>
 </project>

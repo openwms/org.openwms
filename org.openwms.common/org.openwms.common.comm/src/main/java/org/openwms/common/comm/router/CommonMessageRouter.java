@@ -21,18 +21,17 @@
  */
 package org.openwms.common.comm.router;
 
+import javax.annotation.PostConstruct;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
-import javax.annotation.PostConstruct;
 
 import org.openwms.common.comm.api.CommConstants;
 import org.openwms.common.comm.api.CommonMessage;
 import org.openwms.common.comm.api.CustomServiceActivator;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.integration.MessageChannel;
 import org.springframework.integration.annotation.Router;
+import org.springframework.messaging.MessageChannel;
 import org.springframework.stereotype.Component;
 
 /**

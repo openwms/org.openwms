@@ -32,5 +32,8 @@
     "underscore": "1.7.0",
     "underscore.string": "2.4.0",
     "velocity": "1.2.1"
+  },
+  "resolutions": {
+    "angular": "1.2.28"
   }
 }

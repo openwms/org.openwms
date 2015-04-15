@@ -28,38 +28,19 @@
     <parent>
         <groupId>org.openwms</groupId>
         <artifactId>org.openwms.core</artifactId>
-        <version>0.2-SNAPSHOT</version>
+        <version>0.2</version>
     </parent>
     <artifactId>org.openwms.core.integration</artifactId>
-    <packaging>jar</packaging>
     <name>${project.artifactId}</name>
     <description>This bundle project contains interface types for the DAO integration layer. Those interfaces are free from annotations and do not depend on other frameworks except plain Java.</description>
     <properties>
         <moduleDir>../..</moduleDir>
     </properties>
-    <build>
-        <plugins>
-            <plugin>
-                <groupId>com.springsource.bundlor</groupId>
-                <artifactId>com.springsource.bundlor.maven</artifactId>
-                <configuration>
-                </configuration>
-                <executions>
-                    <execution>
-                        <goals>
-                            <goal>bundlor</goal>
-                        </goals>
-                    </execution>
-                </executions>
-            </plugin>
-        </plugins>
-    </build>
     <dependencies>
         <!-- Project dependencies -->
         <dependency>
             <groupId>${project.groupId}</groupId>
             <artifactId>org.openwms.core.domain</artifactId>
-            <scope>${dependency.scope}</scope>
         </dependency>
     </dependencies>
 </project>

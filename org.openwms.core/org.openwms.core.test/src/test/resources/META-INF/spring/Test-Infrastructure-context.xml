@@ -36,7 +36,7 @@
     <!-- TODO [scherrer]: Is this necessary? Test! -->
     <aop:aspectj-autoproxy />
 
-    <bean id="testDataSource" class="org.apache.commons.dbcp.BasicDataSource" init-method="createDataSource"
+    <bean id="testDataSource" class="org.apache.commons.dbcp2.BasicDataSource" init-method="createDataSource"
         destroy-method="close">
         <property name="driverClassName" value="${jdbc.test.driverClassName}" />
         <property name="url" value="${jdbc.test.url}" />

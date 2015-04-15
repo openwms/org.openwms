@@ -21,12 +21,12 @@
  */
 package org.openwms.common.domain.values;
 
-import java.io.Serializable;
-
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
+import java.io.Serializable;
 
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.StringUtils;
+
 
 /**
  * A Barcode is a printable item with an unique identifier to label <code>TransportUnit</code>s. The identifier has a defined number of

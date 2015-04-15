@@ -21,12 +21,6 @@
  */
 package org.openwms.core.domain.preferences;
 
-import java.io.File;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Set;
-
 import javax.xml.XMLConstants;
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.Unmarshaller;
@@ -34,6 +28,10 @@ import javax.xml.bind.ValidationEvent;
 import javax.xml.bind.ValidationEventHandler;
 import javax.xml.validation.Schema;
 import javax.xml.validation.SchemaFactory;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Map;
+import java.util.Set;
 
 import org.junit.Assert;
 import org.junit.Test;
@@ -41,6 +39,7 @@ import org.openwms.core.domain.system.AbstractPreference;
 import org.openwms.core.domain.system.PreferenceKey;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.util.ResourceUtils;
 
 /**
  * A ApplicationPreferenceTest. Test unmarshalling a valid XML document of preferences.
@@ -119,7 +118,7 @@ public class ApplicationPreferenceTest {
     @Test
     public void testReadPreferences() throws Throwable {
         SchemaFactory schemaFactory = SchemaFactory.newInstance(XMLConstants.W3C_XML_SCHEMA_NS_URI);
-        Schema schema = schemaFactory.newSchema(new File("src/test/resources/preferences.xsd"));
+        Schema schema = schemaFactory.newSchema(ResourceUtils.getFile("classpath:preferences.xsd"));
         // Schema schema = schemaFactory.newSchema(new
         // URL("http://www.openwms.org/schema/preferences.xsd"));
         JAXBContext ctx = JAXBContext.newInstance("org.openwms.core.domain.preferences");
@@ -134,8 +133,8 @@ public class ApplicationPreferenceTest {
             }
         });
 
-        Preferences prefs = Preferences.class.cast(unmarshaller.unmarshal(new File(
-                "src/test/resources/org/openwms/core/domain/system/preferences.xml")));
+        Preferences prefs = Preferences.class.cast(unmarshaller.unmarshal(ResourceUtils.getFile(
+                "classpath:org/openwms/core/domain/system/preferences.xml")));
         for (AbstractPreference pref : prefs.getApplications()) {
             LOGGER.info(pref.toString());
         }
