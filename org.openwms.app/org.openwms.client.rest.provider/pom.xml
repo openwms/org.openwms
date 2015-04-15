@@ -39,7 +39,17 @@
         <moduleDir>../../..</moduleDir>
         <openwms.configuration.version>${core.version}</openwms.configuration.version>
     </properties>
-
+    <build>
+        <finalName>openwms-srv</finalName>
+        <plugins>
+            <plugin>
+                <artifactId>maven-war-plugin</artifactId>
+                <configuration>
+                    <outputFileNameMapping>@{artifactId}@.@{extension}@</outputFileNameMapping>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
     <dependencies>
         <!-- JavaEE dependencies -->
         <dependency>

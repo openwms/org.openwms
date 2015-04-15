@@ -39,7 +39,7 @@
         <openwms.configuration.version>1.0</openwms.configuration.version>
     </properties>
     <build>
-        <finalName>openwms</finalName>
+        <finalName>openwms-ui</finalName>
         <plugins>
             <plugin>
                 <artifactId>maven-war-plugin</artifactId>
