@@ -62,7 +62,7 @@
         <!-- Apache libraries -->
         <dependency>
             <groupId>org.apache.commons</groupId>
-            <artifactId>com.springsource.org.apache.commons.dbcp</artifactId>
+            <artifactId>commons-dbcp2</artifactId>
         </dependency>
 
         <!-- Database libraries -->

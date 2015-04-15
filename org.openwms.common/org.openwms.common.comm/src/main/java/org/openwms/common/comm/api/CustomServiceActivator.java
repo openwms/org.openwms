@@ -21,7 +21,7 @@
  */
 package org.openwms.common.comm.api;
 
-import org.springframework.integration.MessageChannel;
+import org.springframework.messaging.MessageChannel;
 
 /**
  * A CustomServiceActivator.

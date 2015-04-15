@@ -254,20 +254,6 @@
             </properties>
         </profile>
         <profile>
-            <id>flex-client</id>
-            <modules>
-                <module>org.openwms.core/org.openwms.client.flex.lib</module>
-                <module>org.openwms.core/org.openwms.core.domain.as</module>
-                <module>org.openwms.common/org.openwms.common.flex.lib</module>
-                <module>org.openwms.common/org.openwms.common.domain.as</module>
-                <module>org.openwms.common/org.openwms.common.flex.module</module>
-                <module>org.openwms.tms/org.openwms.tms.domain.as</module>
-                <module>org.openwms.tms/org.openwms.tms.flex.module</module>
-                <module>org.openwms.app/org.openwms.client.flex.app</module>
-                <module>org.openwms.app/org.openwms.client.flex.wrapper</module>
-            </modules>
-        </profile>
-        <profile>
             <id>all</id>
             <activation>
                 <property>
@@ -318,7 +304,6 @@
                 <plugins>
                     <plugin>
                         <artifactId>maven-javadoc-plugin</artifactId>
-                        <version>${plugin.javadoc.version}</version>
                         <executions>
                             <execution>
                                 <id>attach-javadocs</id>
@@ -329,15 +314,14 @@
                         </executions>
                         <configuration>
                             <links>
-                                <link>http://static.springsource.org/spring/docs/${spring.version}/javadoc-api</link>
-                                <link>http://static.springsource.org/spring-security/site/docs/3.1.x/apidocs</link>
+                                <link>http://docs.spring.io/spring/docs/4.1.x/javadoc-api/</link>
+                                <link>http://docs.spring.io/spring-security/site/docs/4.0.x/apidocs/</link>
                                 <link>http://docs.oracle.com/javaee/5/api</link>
                                 <link>http://docs.mockito.googlecode.com/hg/latest</link>
                                 <link>http://dozer.sourceforge.net/apidocs</link>
                                 <link>http://jackson.codehaus.org/${jackson.version}/javadoc</link>
                             </links>
                             <detectLinks>true</detectLinks>
-                            <excludePackageNames>org.openwms.web.flex.servlet</excludePackageNames>
                             <keywords>true</keywords>
                             <linksource>true</linksource>
                             <overview>${basedir}/overview.html</overview>
@@ -363,7 +347,6 @@
             <build>
                 <plugins>
                     <plugin>
-                        <groupId>org.apache.maven.plugins</groupId>
                         <artifactId>maven-gpg-plugin</artifactId>
                         <executions>
                             <execution>
@@ -432,67 +415,69 @@
         <!-- =================== -->
         <rest.version>0.1</rest.version>
         <angularjs.client.version>0.1</angularjs.client.version>
-        <flex.client.version>0.2</flex.client.version>
 
         <!-- =================== -->
         <!-- Dependency versions -->
         <!-- =================== -->
         <apache.commons.beanutils.version>1.8.0</apache.commons.beanutils.version>
         <apache.commons.collections.version>3.2.1</apache.commons.collections.version>
-        <apache.commons.dbcp.version>1.2.2.osgi</apache.commons.dbcp.version>
+        <apache.commons.dbcp.version>2.1</apache.commons.dbcp.version>
         <apache.commons.httpclient.version>4.4</apache.commons.httpclient.version>
         <apache.commons.lang.version>3.1</apache.commons.lang.version>
-        <apache.derby.version>10.7.1.1</apache.derby.version>
         <aspectj.version>1.7.4</aspectj.version>
+        <cglib.version>2.2.0</cglib.version>
         <dozer.version>5.4.0</dozer.version>
         <el.version>2.2</el.version>
         <flex.version>3.2.0.3958</flex.version>
+        <freemarker.version>2.3.15</freemarker.version>
         <granite.version>2.3.2.GA</granite.version>
         <hibernate.version>4.2.3.Final</hibernate.version>
+        <hibernate-validator.version>4.3.0.Final</hibernate-validator.version>
         <jackson.version>2.4.0</jackson.version>
         <javax.persistence.version>1.0.0</javax.persistence.version>
         <javax.servlet-api.version>3.0.1</javax.servlet-api.version>
+        <jboss-logging.version>3.1.0.GA</jboss-logging.version>
+        <jdbc.derby.version>10.7.1.1</jdbc.derby.version>
+        <jdbc.h2.version>1.3.166</jdbc.h2.version>
+        <jdbc.hsqldb.version>2.2.8</jdbc.hsqldb.version>
+        <jdbc.mysql.version>5.1.6</jdbc.mysql.version>
+        <jdbc.oracle.version>6.0.0</jdbc.oracle.version>
+        <jdbc.postgresql.version>8.3.604</jdbc.postgresql.version>
+        <jpa-api.version>1.0.1.Final</jpa-api.version>
         <jsf.api.version>2.1.4</jsf.api.version>
         <jsf.impl.version>2.1.4</jsf.impl.version>
         <jta.version>1.1</jta.version>
         <junit.version>4.12</junit.version>
         <mockito.version>1.9.0</mockito.version>
         <net.sf.ehcache.version>2.10.0</net.sf.ehcache.version>
-        <org.hsqldb.version>2.2.8</org.hsqldb.version>
-        <org.postgresql.jdbc4.version>8.3.604</org.postgresql.jdbc4.version>
         <primefaces.version>3.2</primefaces.version>
         <slf4j.version>1.7.7</slf4j.version>
-        
         <!-- Spring Integration 2.2.4 uses Spring Core 3.1.3 -->
-        <spring.integration.version>2.2.4.RELEASE</spring.integration.version>
-        <spring.osgi.version>1.2.1</spring.osgi.version>
+        <spring.integration.version>4.1.3.RELEASE</spring.integration.version>
         <spring.security.version>4.0.0.RELEASE</spring.security.version>
         <spring.version>4.1.6.RELEASE</spring.version>
+        <validation-api.version>1.0.0.GA</validation-api.version>
 
         <!-- =================== -->
         <!--   Plugin versions   -->
         <!-- =================== -->
         <plugin.archiver.version>2.3.2</plugin.archiver.version>
         <plugin.assembly.version>2.4</plugin.assembly.version>
-        <plugin.bees-maven-plugin>1.3.2</plugin.bees-maven-plugin>
-        <plugin.bundlor.version>1.0.0.RELEASE</plugin.bundlor.version>
         <plugin.checkstyle.version>2.11</plugin.checkstyle.version>
         <plugin.clean.version>2.5</plugin.clean.version>
         <plugin.cobertura.version>2.3</plugin.cobertura.version>
+        <plugin.compiler.version>3.1</plugin.compiler.version>
         <plugin.dashboard.version>1.0.0-beta-1</plugin.dashboard.version>
         <plugin.deploy.version>2.8.1</plugin.deploy.version>
-        <plugin.compiler.version>3.1</plugin.compiler.version>
         <plugin.enforcer.version>1.3.1</plugin.enforcer.version>
         <plugin.findbugs.version>2.3.1</plugin.findbugs.version>
-        <plugin.flexmojos.version>3.3.0</plugin.flexmojos.version>
+        <plugin.gpg.version>1.4</plugin.gpg.version>
         <plugin.install.version>2.4</plugin.install.version>
         <plugin.jar.version>2.3.2</plugin.jar.version>
         <plugin.javadoc.version>2.9.1</plugin.javadoc.version>
         <plugin.jdepend.version>2.0-beta-2</plugin.jdepend.version>
         <plugin.jrebel.version>1.1.5</plugin.jrebel.version>
         <plugin.jxr.version>2.3</plugin.jxr.version>
-        <plugin.gpg.version>1.4</plugin.gpg.version>
-        <plugin.lifecycle-mapping.version>1.0.0</plugin.lifecycle-mapping.version>
         <plugin.par.version>1.0.0.RELEASE</plugin.par.version>
         <plugin.pmd.version>2.4</plugin.pmd.version>
         <plugin.project-info.version>2.4</plugin.project-info.version>
@@ -504,35 +489,14 @@
         <plugin.taglist.version>2.4</plugin.taglist.version>
         <plugin.wagon-ssh.version>2.1</plugin.wagon-ssh.version>
         <plugin.war.version>2.4</plugin.war.version>
-
-        <!-- OSGi header versions -->
-        <osgi.apache.commons.lang.version>${apache.commons.lang.version}</osgi.apache.commons.lang.version>
-        <osgi.apache.commons.dbcp.version>${apache.commons.dbcp.version}</osgi.apache.commons.dbcp.version>
-        <osgi.aspectj.version>${aspectj.version}</osgi.aspectj.version>
-        <osgi.hibernate>3.3.2.GA</osgi.hibernate>
-        <osgi.hibernate.annotations>${hibernate.version}</osgi.hibernate.annotations>
-        <osgi.hibernate.annotations.common>3.3.0.ga</osgi.hibernate.annotations.common>
-        <osgi.hibernate.ejb>${hibernate.version}</osgi.hibernate.ejb>
-        <osgi.javax.persistence.version>${javax.persistence.version}</osgi.javax.persistence.version>
-        <osgi.org.hsqldb.version>${org.hsqldb.version}</osgi.org.hsqldb.version>
-        <osgi.org.postgresql.jdbc4.version>${org.postgresql.jdbc4.version}</osgi.org.postgresql.jdbc4.version>
-        <osgi.spring>${spring.version}</osgi.spring>
-        <osgi.spring.security.version>${spring.security.version}</osgi.spring.security.version>
+        <spring-retry.version>1.1.2.RELEASE</spring-retry.version>
     </properties>
 
     <pluginRepositories>
         <pluginRepository>
             <id>central</id>
             <name>Maven Plugin Repository</name>
-            <url>http://repo1.maven.org/maven2</url>
-            <layout>default</layout>
-            <releases>
-                <updatePolicy>never</updatePolicy>
-            </releases>
-        </pluginRepository>
-        <pluginRepository>
-            <id>sonatype-public</id>
-            <url>http://repository.sonatype.org/content/groups/flexgroup</url>
+            <url>http://repo.maven.apache.org/maven2</url>
         </pluginRepository>
     </pluginRepositories>
     <repositories>
@@ -589,22 +553,6 @@
                 </plugin>
 
                 <plugin>
-                    <groupId>com.springsource.bundlor</groupId>
-                    <artifactId>com.springsource.bundlor.maven</artifactId>
-                    <version>${plugin.bundlor.version}</version>
-                    <configuration>
-                        <inputPath>${basedir}/target/classes</inputPath>
-                    </configuration>
-                    <executions>
-                        <execution>
-                            <goals>
-                                <goal>bundlor</goal>
-                            </goals>
-                        </execution>
-                    </executions>
-                </plugin>
-
-                <plugin>
                     <artifactId>maven-clean-plugin</artifactId>
                     <version>${plugin.clean.version}</version>
                 </plugin>
@@ -633,13 +581,6 @@
                 </plugin>
 
                 <plugin>
-                    <groupId>org.sonatype.flexmojos</groupId>
-                    <artifactId>flexmojos-maven-plugin</artifactId>
-                    <version>${plugin.flexmojos.version}</version>
-                </plugin>
-
-                <plugin>
-                    <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-gpg-plugin</artifactId>
                     <version>${plugin.gpg.version}</version>
                 </plugin>
@@ -665,12 +606,6 @@
                     <configuration>
                         <finalName>${project.artifactId}</finalName>
                     </configuration>
-                </plugin>
-
-                <plugin>
-                    <groupId>org.apache.maven.plugins</groupId>
-                    <artifactId>maven-par-plugin</artifactId>
-                    <version>${plugin.par.version}</version>
                 </plugin>
 
                 <plugin>
@@ -764,15 +699,14 @@
                         <configuration>
                             <detectLinks>true</detectLinks>
                             <links>
-                                <link>http://static.springsource.org/spring/docs/${spring.version}/javadoc-api</link>
-                                <link>http://static.springsource.org/spring-security/site/docs/3.1.x/apidocs</link>
-                                <link>http://commons.apache.org/lang/api-2.5</link>
+                                <link>http://docs.spring.io/spring/docs/4.1.x/javadoc-api/</link>
+                                <link>http://docs.spring.io/spring-security/site/docs/4.0.x/apidocs/</link>
+                                <link>http://commons.apache.org/proper/commons-lang/javadocs/api-3.1/index.html</link>
                                 <link>http://docs.oracle.com/javaee/5/api</link>
                                 <link>http://docs.mockito.googlecode.com/hg/latest</link>
                                 <link>http://dozer.sourceforge.net/apidocs</link>
                                 <link>http://jackson.codehaus.org/${jackson.version}/javadoc</link>
                             </links>
-                            <excludePackageNames>org.openwms.web.flex.servlet</excludePackageNames>
                             <keywords>true</keywords>
                             <minmemory>1g</minmemory>
                             <maxmemory>2g</maxmemory>
@@ -795,7 +729,7 @@
                                 -postfixpackage -nodefontname Tahoma -nodefontsize 9 -nodefontpackagesize 7
                                 -outputencoding UTF-8
                                 -link
-                                http://static.springsource.org/spring/docs/${spring.version}/javadoc-api
+                                http://docs.spring.io/spring/docs/4.1.x/javadoc-api
                             </additionalparam>
                         </configuration>
                     </reportSet>
@@ -803,7 +737,6 @@
             </plugin>
 
             <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-jxr-plugin</artifactId>
                 <version>${plugin.jxr.version}</version>
                 <configuration>
@@ -865,20 +798,7 @@
                 </configuration>
             </plugin>
 
-            <!--plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-checkstyle-plugin</artifactId>
-                <version>${plugin.checkstyle.version}</version>
-                <configuration>
-                    <xrefLocation>${project.reporting.outputDirectory}/../../xref</xrefLocation>
-                    <enableRulesSummary>true</enableRulesSummary>
-                    <configLocation>http://openwms2005.sourceforge.net/rules/checkstyle/checkstyle.xml</configLocation>
-                    <headerLocation>http://openwms2005.sourceforge.net/rules/checkstyle/checkstyle-license.txt</headerLocation>
-                </configuration>
-            </plugin-->
-
             <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-pmd-plugin</artifactId>
                 <version>${plugin.pmd.version}</version>
                 <configuration>
@@ -891,7 +811,6 @@
             </plugin>
 
             <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-report-plugin</artifactId>
                 <version>${plugin.surefire-report.version}</version>
                 <configuration>
@@ -935,7 +854,6 @@
             </plugin>
 
             <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-project-info-reports-plugin</artifactId>
                 <version>${plugin.project-info.version}</version>
                 <reportSets>
@@ -972,7 +890,6 @@
             </plugin>
 
             <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-site-plugin</artifactId>
                 <version>${plugin.site.version}</version>
             </plugin>
@@ -982,24 +899,17 @@
 
     <dependencyManagement>
         <dependencies>
-            <!-- Spring Framework -->
+            <!-- JEE API -->
             <dependency>
-                <groupId>org.springframework</groupId>
-                <artifactId>org.springframework.spring-library</artifactId>
-                <version>${spring.version}</version>
-                <type>libd</type>
-            </dependency>
-
-            <dependency>
-                <groupId>org.springframework</groupId>
-                <artifactId>org.springframework.test</artifactId>
-                <version>${spring.version}</version>
-                <type>jar</type>
+                <groupId>javax.transaction</groupId>
+                <artifactId>jta</artifactId>
+                <version>${jta.version}</version>
             </dependency>
             <dependency>
-                <groupId>net.sourceforge.cglib</groupId>
-                <artifactId>com.springsource.net.sf.cglib</artifactId>
-                <version>2.2.0</version>
+                <groupId>javax.servlet</groupId>
+                <artifactId>javax.servlet-api</artifactId>
+                <version>${javax.servlet-api.version}</version>
+                <scope>provided</scope>
             </dependency>
 
             <!-- Spring Framework Libraries -->
@@ -1030,7 +940,32 @@
             </dependency>
             <dependency>
                 <groupId>org.springframework</groupId>
+                <artifactId>spring-expression</artifactId>
+                <version>${spring.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework</groupId>
                 <artifactId>spring-instrument</artifactId>
+                <version>${spring.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework.integration</groupId>
+                <artifactId>spring-integration-ip</artifactId>
+                <version>${spring.integration.version}</version>
+                <exclusions>
+                    <exclusion>
+                        <groupId>org.springframework.retry</groupId>
+                        <artifactId>spring-retry</artifactId>
+                    </exclusion>
+                    <exclusion>
+                        <groupId>org.springframework.retry</groupId>
+                        <artifactId>spring-messaging</artifactId>
+                    </exclusion>
+                </exclusions>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework</groupId>
+                <artifactId>spring-messaging</artifactId>
                 <version>${spring.version}</version>
             </dependency>
             <dependency>
@@ -1042,6 +977,18 @@
                 <groupId>org.springframework</groupId>
                 <artifactId>spring-oxm</artifactId>
                 <version>${spring.version}</version>
+            </dependency>
+            <!-- Unfortunately Spring integration depends on spring-retry that comes with an old Spring version 3.0.x -->
+            <dependency>
+                <groupId>org.springframework.retry</groupId>
+                <artifactId>spring-retry</artifactId>
+                <version>${spring-retry.version}</version>
+                <exclusions>
+                    <exclusion>
+                        <groupId>org.springframework</groupId>
+                        <artifactId>spring-context</artifactId>
+                    </exclusion>
+                </exclusions>
             </dependency>
             <dependency>
                 <groupId>org.springframework</groupId>
@@ -1063,36 +1010,11 @@
                 <artifactId>spring-webmvc</artifactId>
                 <version>${spring.version}</version>
             </dependency>
-
             <dependency>
                 <groupId>org.springframework</groupId>
-                <artifactId>org.springframework.beans</artifactId>
+                <artifactId>spring-test</artifactId>
                 <version>${spring.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.springframework</groupId>
-                <artifactId>org.springframework.core</artifactId>
-                <version>${spring.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.springframework</groupId>
-                <artifactId>org.springframework.expression</artifactId>
-                <version>${spring.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.springframework</groupId>
-                <artifactId>org.springframework.context</artifactId>
-                <version>${spring.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.springframework</groupId>
-                <artifactId>org.springframework.instrument</artifactId>
-                <version>${spring.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.springframework</groupId>
-                <artifactId>org.springframework.aspects</artifactId>
-                <version>${spring.version}</version>
+                <type>jar</type>
             </dependency>
 
             <!-- Spring Security Libraries -->
@@ -1103,26 +1025,13 @@
             </dependency>
             <dependency>
                 <groupId>org.springframework.security</groupId>
-                <version>${spring.security.version}</version>
                 <artifactId>spring-security-config</artifactId>
+                <version>${spring.security.version}</version>
             </dependency>
             <dependency>
                 <groupId>org.springframework.security</groupId>
-                <version>${spring.security.version}</version>
                 <artifactId>spring-security-web</artifactId>
-            </dependency>
-
-            <!-- JEE API -->
-            <dependency>
-                <groupId>javax.transaction</groupId>
-                <artifactId>jta</artifactId>
-                <version>${jta.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>javax.servlet</groupId>
-                <artifactId>javax.servlet-api</artifactId>
-                <version>${javax.servlet-api.version}</version>
-                <scope>provided</scope>
+                <version>${spring.security.version}</version>
             </dependency>
 
             <!-- Apache libraries -->
@@ -1138,64 +1047,49 @@
             </dependency>
             <dependency>
                 <groupId>org.apache.commons</groupId>
-                <artifactId>com.springsource.org.apache.commons.dbcp</artifactId>
+                <artifactId>commons-dbcp2</artifactId>
                 <version>${apache.commons.dbcp.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.apache.commons</groupId>
-                <artifactId>com.springsource.org.apache.commons.collections</artifactId>
-                <version>${apache.commons.collections.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.apache.commons</groupId>
-                <artifactId>com.springsource.org.apache.commons.beanutils</artifactId>
-                <version>${apache.commons.beanutils.version}</version>
             </dependency>
 
             <!-- Database libraries -->
-            <!-- NON OSGI ARTIFACT -->
             <dependency>
                 <groupId>org.hsqldb</groupId>
                 <artifactId>hsqldb</artifactId>
-                <version>${org.hsqldb.version}</version>
+                <version>${jdbc.hsqldb.version}</version>
             </dependency>
-            <!-- NON OSGI ARTIFACT -->
             <dependency>
                 <groupId>org.apache.derby</groupId>
                 <artifactId>derby</artifactId>
-                <version>${apache.derby.version}</version>
+                <version>${jdbc.derby.version}</version>
             </dependency>
-
             <dependency>
                 <groupId>org.postgresql</groupId>
                 <artifactId>com.springsource.org.postgresql.jdbc4</artifactId>
-                <version>${org.postgresql.jdbc4.version}</version>
+                <version>${jdbc.postgresql.version}</version>
             </dependency>
             <dependency>
                 <groupId>com.h2database</groupId>
                 <artifactId>h2</artifactId>
-                <version>1.3.166</version>
+                <version>${jdbc.h2.version}</version>
             </dependency>
             <dependency>
                 <groupId>com.mysql.jdbc</groupId>
                 <artifactId>com.springsource.com.mysql.jdbc</artifactId>
-                <version>5.1.6</version>
+                <version>${jdbc.mysql.version}</version>
             </dependency>
             <dependency>
                 <groupId>org.openwms</groupId>
                 <artifactId>oracle.jdbc.driver</artifactId>
-                <version>6.0.0</version>
+                <version>${jdbc.oracle.version}</version>
                 <optional>true</optional>
             </dependency>
 
             <!-- JPA Provider Libraries -->
-            <!-- NON OSGI ARTIFACT -->
             <dependency>
                 <groupId>org.hibernate.javax.persistence</groupId>
                 <artifactId>hibernate-jpa-2.0-api</artifactId>
-                <version>1.0.1.Final</version>
+                <version>${jpa-api.version}</version>
             </dependency>
-            <!-- NON OSGI ARTIFACT -->
             <dependency>
                 <groupId>org.hibernate</groupId>
                 <artifactId>hibernate-entitymanager</artifactId>
@@ -1207,25 +1101,22 @@
                     </exclusion>
                 </exclusions>
             </dependency>
-            <!-- NON OSGI ARTIFACT -->
             <dependency>
                 <groupId>org.jboss.logging</groupId>
                 <artifactId>jboss-logging</artifactId>
-                <version>3.1.0.GA</version>
+                <version>${jboss-logging.version}</version>
             </dependency>
 
             <!-- Bean Validation API and RI -->
-            <!-- NON OSGI ARTIFACT -->
             <dependency>
                 <groupId>javax.validation</groupId>
                 <artifactId>validation-api</artifactId>
-                <version>1.0.0.GA</version>
+                <version>${validation-api.version}</version>
             </dependency>
-            <!-- NON OSGI ARTIFACT -->
             <dependency>
                 <groupId>org.hibernate</groupId>
                 <artifactId>hibernate-validator</artifactId>
-                <version>4.3.0.Final</version>
+                <version>${hibernate-validator.version}</version>
             </dependency>
 
             <dependency>
@@ -1235,7 +1126,6 @@
             </dependency>
 
             <!-- REST dependencies -->
-            <!-- NON OSGI ARTIFACT -->
             <dependency>
                 <groupId>com.fasterxml.jackson.core</groupId>
                 <artifactId>jackson-core</artifactId>
@@ -1270,7 +1160,6 @@
                     </exclusion>
                 </exclusions>
             </dependency>
-            <!-- NON OSGI ARTIFACT -->
 
             <!-- Weaver -->
             <dependency>
@@ -1291,9 +1180,14 @@
             
             <!-- Others -->
             <dependency>
+                <groupId>net.sourceforge.cglib</groupId>
+                <artifactId>com.springsource.net.sf.cglib</artifactId>
+                <version>${cglib.version}</version>
+            </dependency>
+            <dependency>
                 <groupId>org.freemarker</groupId>
                 <artifactId>com.springsource.freemarker</artifactId>
-                <version>2.3.15</version>
+                <version>${freemarker.version}</version>
             </dependency>
             <dependency>
                 <groupId>junit</groupId>
@@ -1329,68 +1223,6 @@
                 <groupId>org.slf4j</groupId>
                 <artifactId>slf4j-jdk14</artifactId>
                 <version>${slf4j.version}</version>
-            </dependency>
-
-            <!-- Flex Framework and stuff -->
-            <dependency>
-                <groupId>com.adobe.flex.framework</groupId>
-                <artifactId>flex-framework</artifactId>
-                <version>${flex.version}</version>
-                <type>pom</type>
-            </dependency>
-            <dependency>
-                <groupId>com.adobe.flex</groupId>
-                <artifactId>compiler</artifactId>
-                <version>${flex.version}</version>
-                <type>pom</type>
-            </dependency>
-            <dependency>
-                <groupId>org.graniteds</groupId>
-                <artifactId>granite-swc</artifactId>
-                <version>${granite.version}</version>
-                <type>swc</type>
-            </dependency>
-            <dependency>
-                <groupId>org.graniteds</groupId>
-                <artifactId>granite-essentials-swc</artifactId>
-                <version>${granite.version}</version>
-                <type>swc</type>
-            </dependency>
-            <dependency>
-                <groupId>org.graniteds</groupId>
-                <artifactId>granite-core</artifactId>
-                <version>${granite.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.graniteds</groupId>
-                <artifactId>granite-spring</artifactId>
-                <version>${granite.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.graniteds</groupId>
-                <artifactId>granite-eclipselink</artifactId>
-                <version>${granite.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.graniteds</groupId>
-                <artifactId>granite-toplink</artifactId>
-                <version>${granite.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.graniteds</groupId>
-                <artifactId>granite-hibernate</artifactId>
-                <version>${granite.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.graniteds</groupId>
-                <artifactId>granite-hibernate4</artifactId>
-                <version>${granite.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>com.asunit</groupId>
-                <artifactId>asunit</artifactId>
-                <version>20071011</version>
-                <type>swc</type>
             </dependency>
 
         </dependencies>

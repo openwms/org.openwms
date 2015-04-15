@@ -46,22 +46,22 @@
         </resources>
     </build>
     <dependencies>
-        <!-- Spring Framework -->
-        <dependency>
-            <groupId>org.springframework</groupId>
-            <artifactId>spring-context</artifactId>
-        </dependency>
-
         <!-- JavaEE API -->
         <dependency>
             <groupId>org.hibernate.javax.persistence</groupId>
             <artifactId>hibernate-jpa-2.0-api</artifactId>
         </dependency>
 
+        <!-- Spring Framework -->
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-context</artifactId>
+        </dependency>
+
         <!-- Apache libraries -->
         <dependency>
             <groupId>org.apache.commons</groupId>
-            <artifactId>com.springsource.org.apache.commons.dbcp</artifactId>
+            <artifactId>commons-dbcp2</artifactId>
         </dependency>
 
         <!-- Database libraries 
