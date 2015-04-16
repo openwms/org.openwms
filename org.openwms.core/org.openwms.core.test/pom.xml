@@ -28,7 +28,7 @@
     <parent>
         <groupId>org.openwms</groupId>
         <artifactId>org.openwms.core</artifactId>
-        <version>1.0</version>
+        <version>1.1.0-SNAPSHOT</version>
     </parent>
     <artifactId>org.openwms.core.test</artifactId>
     <name>${project.artifactId}</name>
@@ -142,12 +142,6 @@
             <artifactId>hsqldb</artifactId>
             <scope>compile</scope>
         </dependency>
-        <!-- dependency>
-            <groupId>org.hsqldb</groupId>
-            <artifactId>com.springsource.org.hsqldb</artifactId>
-            <version>1.8.0.10</version>
-            <scope>compile</scope>
-        </dependency-->
         <dependency>
             <groupId>com.h2database</groupId>
             <artifactId>h2</artifactId>
@@ -169,16 +163,5 @@
             <artifactId>commons-dbcp2</artifactId>
             <scope>compile</scope>
         </dependency>
-
-        <!-- dependency>
-            <groupId>${project.groupId}</groupId>
-            <artifactId>org.openwms.core.infrastructure.hsql</artifactId>
-            <scope>compile</scope>
-        </dependency>
-        <dependency>
-            <groupId>${project.groupId}</groupId>
-            <artifactId>org.openwms.core.infrastructure.postgres</artifactId>
-            <scope>compile</scope>
-        </dependency-->
     </dependencies>
 </project>

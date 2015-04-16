@@ -31,7 +31,7 @@
     </parent>
     <groupId>org.openwms</groupId>
     <artifactId>org.openwms</artifactId>
-    <version>1.0</version>
+    <version>1.1.0-SNAPSHOT</version>
     <packaging>pom</packaging>
     <name>OpenWMS.org Project</name>
     <description>OpenWMS.org is an open source warehouse management software</description>
@@ -411,8 +411,8 @@
         <!-- =================== -->
         <!-- Submodule versions  -->
         <!-- =================== -->
-        <rest.version>1.0</rest.version>
-        <angularjs.client.version>1.0</angularjs.client.version>
+        <rest.version>${project.version}</rest.version>
+        <angularjs.client.version>${project.version}</angularjs.client.version>
 
         <!-- =================== -->
         <!-- Dependency versions -->

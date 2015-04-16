@@ -28,17 +28,17 @@
     <parent>
         <groupId>org.openwms</groupId>
         <artifactId>org.openwms</artifactId>
-        <version>1.0</version>
+        <version>1.1.0-SNAPSHOT</version>
     </parent>
     <artifactId>org.openwms.core</artifactId>
-    <version>1.0</version>
+    <version>1.1.0-SNAPSHOT</version>
     <packaging>pom</packaging>
     <name>OpenWMS.org CORE</name>
     <description>The CORE project Maven POM file. Just a common definition of dependencies valid for all other CORE projects. Call mvn install -Pcore to build all CORE projects.</description>
     <properties>
         <moduleDir>../..</moduleDir>
-        <module.version>1.0</module.version>
-        <rest.version>1.0</rest.version>
+        <module.version>${project.version}</module.version>
+        <rest.version>${project.version}</rest.version>
     </properties>
 
     <distributionManagement>
@@ -81,31 +81,6 @@
         </profile>
         <profile>
             <id>core</id>
-            <modules>
-                <module>org.openwms.core.domain</module>
-                <module>org.openwms.core.client.rest</module>
-                <module>org.openwms.core.test</module>
-                <module>org.openwms.core.infrastructure.configuration.provider</module>
-                <module>org.openwms.core.infrastructure.hsql</module>
-                <module>org.openwms.core.infrastructure.oracle</module>
-                <module>org.openwms.core.infrastructure.postgres</module>
-                <module>org.openwms.core.integration</module>
-                <module>org.openwms.core.integration.eclipselink</module>
-                <module>org.openwms.core.integration.hibernate</module>
-                <module>org.openwms.core.integration.file</module>
-                <module>org.openwms.core.integration.jpa</module>
-                <module>org.openwms.core.service.api</module>
-                <module>org.openwms.core.service.spring</module>
-                <module>org.openwms.core.util</module>
-            </modules>
-        </profile>
-        <profile>
-            <id>angularjs</id>
-            <activation>
-                <property>
-                    <name>angularjs</name>
-                </property>
-            </activation>
             <modules>
                 <module>org.openwms.core.domain</module>
                 <module>org.openwms.core.client.rest</module>

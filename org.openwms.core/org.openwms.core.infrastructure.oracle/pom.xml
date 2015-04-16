@@ -28,23 +28,14 @@
     <parent>
         <groupId>org.openwms</groupId>
         <artifactId>org.openwms.core</artifactId>
-        <version>1.0</version>
+        <version>1.1.0-SNAPSHOT</version>
     </parent>
     <artifactId>org.openwms.core.infrastructure.oracle</artifactId>
     <name>${project.artifactId}</name>
     <description>Contains Spring configuration to create a DataSource for Oracle databases. The Oracle JDBC driver is repackaged and due to license reasons available in the private Nexus repository only.</description>
     <properties>
         <moduleDir>../..</moduleDir>
-        <openwms.configuration.version>0.2</openwms.configuration.version>
     </properties>
-    <build>
-        <resources>
-          <resource>
-            <directory>src/main/resources</directory>
-            <filtering>true</filtering>
-          </resource>
-        </resources>
-    </build>
     <dependencies>
         <!-- JavaEE API -->
         <dependency>
