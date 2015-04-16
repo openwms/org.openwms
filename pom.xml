@@ -315,7 +315,7 @@
                                 <link>http://jackson.codehaus.org/${jackson.version}/javadoc</link>
                             </links>
                             <failOnError>false</failOnError>
-                            <detectLinks>true</detectLinks>
+                            <detectLinks>false</detectLinks>
                             <keywords>true</keywords>
                             <linksource>true</linksource>
                             <overview>${basedir}/overview.html</overview>
