@@ -38,7 +38,6 @@
     <properties>
         <moduleDir>../..</moduleDir>
         <module.version>${project.version}</module.version>
-        <rest.version>${project.version}</rest.version>
     </properties>
 
     <distributionManagement>
@@ -112,7 +111,7 @@
             <dependency>
                 <groupId>${project.groupId}</groupId>
                 <artifactId>org.openwms.core.client.rest</artifactId>
-                <version>${rest.version}</version>
+                <version>${project.version}</version>
             </dependency>
             <dependency>
                 <groupId>${project.groupId}</groupId>

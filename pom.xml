@@ -411,8 +411,7 @@
         <!-- =================== -->
         <!-- Submodule versions  -->
         <!-- =================== -->
-        <rest.version>${project.version}</rest.version>
-        <angularjs.client.version>${project.version}</angularjs.client.version>
+        <angularjs.client.version>1.1.0-SNAPSHOT</angularjs.client.version>
 
         <!-- =================== -->
         <!-- Dependency versions -->

@@ -88,7 +88,7 @@
             <dependency>
                 <groupId>${project.groupId}</groupId>
                 <artifactId>org.openwms.client.rest.provider</artifactId>
-                <version>${rest.version}</version>
+                <version>${project.version}</version>
                 <type>war</type>
             </dependency>
         </dependencies>
