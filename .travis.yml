@@ -2,8 +2,7 @@ language: java
 jdk:
   - oraclejdk8
 node_js:
-  - '0.8'
-  - '0.10'
+  - 0.10
 before_script:
-  - 'npm install -g bower grunt-cli'
-  - 'bower install'
+  - npm install -g bower
+  - bower install
