@@ -78,24 +78,29 @@
                 <module>org.openwms.client.angularjs.app</module>
                 <module>org.openwms.client.angularjs.wrapper</module>
             </modules>
+            <dependencyManagement>
+                <dependencies>
+                    <!-- Project dependencies -->
+                    <dependency>
+                        <groupId>${project.groupId}</groupId>
+                        <artifactId>org.openwms.client.angularjs.app</artifactId>
+                        <version>${angularjs.client.version}</version>
+                        <type>war</type>
+                    </dependency>
+                    <dependency>
+                        <groupId>${project.groupId}</groupId>
+                        <artifactId>org.openwms.client.angularjs.wrapper</artifactId>
+                        <version>${angularjs.client.version}</version>
+                        <type>war</type>
+                    </dependency>
+                </dependencies>
+            </dependencyManagement>
         </profile>
     </profiles>
 
     <dependencyManagement>
         <dependencies>
 	        <!-- Project dependencies -->
-            <dependency>
-                <groupId>${project.groupId}</groupId>
-                <artifactId>org.openwms.client.angularjs.app</artifactId>
-                <version>${angularjs.client.version}</version>
-                <type>war</type>
-            </dependency>
-            <dependency>
-                <groupId>${project.groupId}</groupId>
-                <artifactId>org.openwms.client.angularjs.wrapper</artifactId>
-                <version>${angularjs.client.version}</version>
-                <type>war</type>
-            </dependency>
             <dependency>
                 <groupId>${project.groupId}</groupId>
                 <artifactId>org.openwms.client.rest.provider</artifactId>
