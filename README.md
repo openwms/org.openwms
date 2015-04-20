@@ -12,3 +12,7 @@ Open Warehouse Management System
 [license-url]: LICENSE
 [codacy-image]: https://img.shields.io/codacy/1081cebbe27b40a8be16b6524f246b6b.svg?style=flat-square
 [codacy-url]: https://www.codacy.com/public/openwms/org.openwms
+
+# Resources #
+
+Issue tracker is JIRA on [Atlaasian][https://openwms.atlassian.net/browse]
