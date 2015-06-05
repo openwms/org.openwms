@@ -1,5 +1,7 @@
 org.openwms
 =====================
+
+[![Join the chat at https://gitter.im/openwms/org.openwms](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/openwms/org.openwms?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 Open Warehouse Management System
 
 [![Build status][travis-image]][travis-url]
