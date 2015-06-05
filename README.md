@@ -13,7 +13,7 @@ Open Warehouse Management System
 [license-image]: http://img.shields.io/:license-GPLv3-blue.svg?style=flat-square
 [license-url]: LICENSE
 [codacy-image]: https://img.shields.io/codacy/1081cebbe27b40a8be16b6524f246b6b.svg?style=flat-square
-[codacy-url]: https://www.codacy.com/public/openwms/org.openwms
+[codacy-url]: https://www.codacy.com/app/openwms/org.openwms
 
 # Resources #
 
