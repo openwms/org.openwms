@@ -1,12 +1,12 @@
 org.openwms
 =====================
 
-[![Join the chat at https://gitter.im/openwms/org.openwms](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/openwms/org.openwms?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 Open Warehouse Management System
 
 [![Build status][travis-image]][travis-url]
 [![License][license-image]][license-url]
 [![Quality][codacy-image]][codacy-url]
+[![Join the chat at https://gitter.im/openwms/org.openwms](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/openwms/org.openwms?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
 [travis-image]: https://img.shields.io/travis/openwms/org.openwms.svg?style=flat-square
 [travis-url]: https://travis-ci.org/openwms/org.openwms
