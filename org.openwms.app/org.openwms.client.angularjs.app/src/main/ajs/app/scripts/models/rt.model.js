@@ -55,7 +55,7 @@ define(['angular'], function () {
         state: {
           name: "parent.roles",
           template: "views/no-tree.html",
-          header: {name: "header-view@parent.roles", html: "views/partials/default-header.html", controller: ""},
+          header: {name: "header-view@parent.roles", html: "views/partials/default-header.html"},
           menu: {name: "menu-view@parent.roles", html: "views/partials/default-menu.html", controller: "DefaultNavigationController"},
           content: {name: "content-view@parent.roles"}
         }
@@ -66,7 +66,7 @@ define(['angular'], function () {
         state: {
           name: "parent.users",
           template: "views/no-tree.html",
-          header: {name: "header-view@parent.users", html: "views/partials/default-header.html", controller: ""},
+          header: {name: "header-view@parent.users", html: "views/partials/default-header.html"},
           menu: {name: "menu-view@parent.users", html: "views/partials/default-menu.html", controller: "DefaultNavigationController"},
           content: {name: "content-view@parent.users"}
         }

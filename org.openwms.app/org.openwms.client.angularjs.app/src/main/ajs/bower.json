@@ -31,7 +31,8 @@
     "requirejs-domready": "2.0.1",
     "underscore": "1.7.0",
     "underscore.string": "2.4.0",
-    "velocity": "1.2.1"
+    "velocity": "1.2.1",
+    "polymer": "Polymer/polymer#^1.0.0"
   },
   "resolutions": {
     "angular": "1.2.28"

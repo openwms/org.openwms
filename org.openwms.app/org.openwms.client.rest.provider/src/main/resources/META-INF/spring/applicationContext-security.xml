@@ -42,6 +42,7 @@
 
     <http use-expressions="true" realm="OPENWMS" create-session="stateless" entry-point-ref="unauthorizedEntryPoint"
         authentication-manager-ref="authenticationManager">
+        <csrf disabled="true"/>
         <custom-filter ref="authenticationTokenProcessingFilter" position="FORM_LOGIN_FILTER" />
         <intercept-url pattern="/sec/**" access="permitAll" />
         <intercept-url pattern="/secure/extreme/**" access="hasRole('supervisor')" />
