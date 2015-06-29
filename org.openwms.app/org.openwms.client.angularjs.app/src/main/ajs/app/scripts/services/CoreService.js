@@ -70,24 +70,6 @@ define([
             return delay.promise;
         };
 
-        coreServiceFactory.login = function ($scope) {
-            var delay = $q.defer();
-            $http.defaults.headers.post['Auth-Token'] = $scope.getToken();
-            $http.defaults.headers.common['Content-Type'] = 'application/json';
-            $http.defaults.headers.common['Authorization'] = 'Basic ' + $base64.encode('sva01:P!lot2014SV@');
-            $http.post($scope.rootUrl + CoreConfig.url.security.login, {
-                username: $scope.user.username,
-                password: $scope.user.password
-            })
-                .success(function (data, status, headers, config) {
-                    delay.resolve({user: data, status: status});
-                })
-                .error(function (data, status, headers, config) {
-                    delay.reject(data);
-                });
-            return delay.promise;
-        };
-
         var throwError = function throwError(data, status, q) {
             var err = new Error(status, data);
             err.data = {

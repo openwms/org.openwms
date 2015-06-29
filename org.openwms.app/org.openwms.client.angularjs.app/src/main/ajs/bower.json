@@ -6,7 +6,7 @@
   ],
   "description": "OpenWMS.org UI implemented with AngularJS",
   "main": "index.html",
-  "license": "LGLP3",
+  "license": "GLP2",
   "homepage": "www.openwms.org",
   "dependencies": {
     "angular": "1.2.28",
@@ -32,7 +32,10 @@
     "underscore": "1.7.0",
     "underscore.string": "2.4.0",
     "velocity": "1.2.1",
-    "polymer": "Polymer/polymer#^1.0.0"
+    "bootstrap-material-design": "0.3.0",
+    "bootstrap-treeview": "1.2.0",
+    "arrive": "2.2.0",
+    "angular-cookies": "1.2.28"
   },
   "resolutions": {
     "angular": "1.2.28"

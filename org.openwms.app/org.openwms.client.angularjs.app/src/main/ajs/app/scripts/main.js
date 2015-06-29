@@ -29,7 +29,9 @@
 require.config({
     paths: {
         angular: '../bower_components/angular/angular',
+        angular_cookies: '../bower_components/angular-cookies/angular-cookies.min',
         angular_animate: '../bower_components/angular-animate/angular-animate.min',
+        arrive: '../bower_components/arrive/minified/arrive.min',
         base64: '../bower_components/angular-base64/angular-base64.min',
         ui_bootstrap: '../bower_components/angular-bootstrap/ui-bootstrap.min',
         ui_bootstrap_tpls: '../bower_components/angular-bootstrap/ui-bootstrap-tpls.min',
@@ -43,6 +45,7 @@ require.config({
         toaster: '../bower_components/AngularJS-Toaster/toaster',
         blueimp: '../bower_components/blueimp-load-image/js/load-image',
         bootstrap: '../bower_components/bootstrap/dist/js/bootstrap.min',
+        bootstrap_treeview: '../bower_components/bootstrap-treeview/dist/bootstrap-treeview.min',
         jquery: '../bower_components/jquery/dist/jquery.min',
         angular_file_upload: '../bower_components/ng-file-upload/angular-file-upload.min',
         angular_file_upload_shim: '../bower_components/ng-file-upload/angular-file-upload-shim',
@@ -51,6 +54,9 @@ require.config({
         underscore: '../bower_components/underscore/underscore-min',
         underscore_string: '../bower_components/underscore.string/dist/underscore.string.min',
         velocity: '../bower_components/velocity/velocity.min',
+
+        material: '../bower_components/bootstrap-material-design/dist/js/material.min',
+        ripples: '../bower_components/bootstrap-material-design/dist/js/ripples.min',
 
         cpicker: '../bower_components/jquery-minicolors/jquery.minicolors.min',
 
@@ -82,6 +88,9 @@ require.config({
         'angular_ui_router': {
             deps: ['angular']
         },
+        'angular_cookies': {
+            deps: ['angular']
+        },
         'toaster': {
             deps: ['angular', 'angular_animate']
         },
@@ -108,6 +117,12 @@ require.config({
         },
         'angular_minicolors': {
             deps: ['angular', 'cpicker']
+        },
+        'material': {
+            deps: ['arrive']
+        },
+        'ripples': {
+            deps: ['arrive']
         }
     }
 });

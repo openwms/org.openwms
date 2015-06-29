@@ -18,7 +18,8 @@ define([
   'core_envModel',
   'routeResolver',
   'blueimp',
-  'angular_minicolors'
+  'angular_minicolors',
+  'angular_cookies'
 ], function () {
 
   var app = angular.module('app', [
@@ -34,7 +35,8 @@ define([
     'angularFileUpload',
     'toaster',
     'base64',
-    'minicolors'
+    'minicolors',
+    'ngCookies'
   ]);
 
   app.config([
@@ -283,7 +285,7 @@ define([
        */
     }]);
 
-  app.run(function ($rootScope, $state, $stateParams, $http, $location, $window, $translate, editableOptions, localStorageService, CoreConfig, DialogService) {
+  app.run(function ($rootScope, $state, $stateParams, $http, $location, $window, $translate, $cookies, editableOptions, localStorageService, CoreConfig, DialogService) {
 
     // xeditable
     editableOptions.theme = 'bs3';
@@ -306,6 +308,14 @@ define([
     // Logout function is available for all controllers
     $rootScope.logout = function () {
       clearCache();
+
+      //todo
+      $rootScope.globals = {
+        security : {}
+      };
+      $cookies.globalSecurity = undefined;
+      $http.defaults.headers.common.Authorization = 'Basic ';
+
       $location.url('/logout').replace("", "");
     };
 

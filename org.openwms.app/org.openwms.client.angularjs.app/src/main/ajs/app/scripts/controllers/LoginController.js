@@ -1,69 +1,43 @@
 'use strict';
 
 define([
-	'app',
-	'services/CoreService'
+    'app',
+    'services/CoreService',
+    'services/AuthenticationService'
 ], function (app) {
 
-	var loginController = function ($scope, $rootScope, $http, $location, $window, CoreService, CoreConfig) {
-		// This object will be filled by the form
-		$scope.user = {};
+    var loginController = function ($scope, $rootScope, $http, $location, $window, CoreService, CoreConfig, AuthenticationService) {
+        // This object will be filled by the form
+        $scope.user = {};
+        AuthenticationService.clearCredentials($rootScope);
 
-		// Register the login() function
-		$scope.login = function () {
+        // Register the login() function
+        $scope.login = function () {
 
-			$scope.modal.opened = false;
+            $scope.modal.opened = false;
 
-			CoreService.login($scope).then(
-				function (data, status, headers, config) {
-					if (data.status === 200) {
-						$('#loginDialog').modal('hide');
-						$rootScope.user = data.user;
-						$rootScope.message = undefined;
-						$rootScope.authToken = data.user.token;
-						$window.sessionStorage.setItem('aToken', data.user.token);
-						$location.url('/');
-					} else {
-						$rootScope.message = 'Authentication failed.';
-						$window.sessionStorage.removeItem('aToken');
-						delete $rootScope.authToken;
-						$scope.modal.opened = true;
-					}
-				}, function (e) {
-					$rootScope.message = 'Authentication failed.';
-					$window.sessionStorage.removeItem('aToken');
-					delete $rootScope.authToken;
-					$scope.modal.opened = true;
-				}
-			);
+            $scope.dataLoading = true;
+            AuthenticationService.login($rootScope, $scope)
+                .then(function (response) {
+                    if (response.httpStatus === '200') {
+                        AuthenticationService.setCredentials($rootScope, $scope, response.data);
+                        $('#loginDialog').modal('hide');
+                        $rootScope.user = $scope.user.username;
+                        $rootScope.message = undefined;
+                        $location.url('/dossier');
+//					$location.path('/');
+                    } else {
+                        $rootScope.message = 'Authentication failed.';
+                        $scope.modal.opened = true;
+                    }
+                },function (e) {
+                    $scope.error = response.message;
+                    $scope.dataLoading = false;
+                    $rootScope.message = 'Authentication failed.';
+                    $scope.modal.opened = true;
+                });
+        };
+    };
 
-
-			return;
-
-
-			$http.defaults.headers.post['Auth-Token'] = $rootScope.authToken;
-			$http.post($rootScope.rootUrl + CoreConfig.url.security.login, {
-				username: $scope.user.username,
-				password: $scope.user.password
-			})
-			.success(function (user) {
-				$rootScope.user = user;
-				$rootScope.message = undefined;
-				$rootScope.authToken = user.token;
-				$location.url('/');
-				$('#loginDialog').modal('hide');
-				//$('#loginDialog').modal('hide');
-				//$scope.modal.opened = false;
-			})
-			.error(function (data, status, headers, config) {
-				$rootScope.message = 'Authentication failed.';
-				$rootScope.authToken = null;
-				$scope.modal.opened = true;
-//				$('#loginDialog').modal('show');
-				//$location.url('/login').replace();
-			});
-		};
-	};
-
-	app.register.controller('LoginController', ['$scope', '$rootScope', '$http', '$location', '$window', 'CoreService', 'CoreConfig', loginController]);
+    app.register.controller('LoginController', ['$scope', '$rootScope', '$http', '$location', '$window', 'CoreService', 'CoreConfig', 'AuthenticationService', loginController]);
 });
