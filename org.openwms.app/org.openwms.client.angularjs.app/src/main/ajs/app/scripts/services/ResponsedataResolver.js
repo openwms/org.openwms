@@ -20,6 +20,13 @@ define(['app'], function (app) {
             delay.resolve(data.items[0].obj[0]);
         };
 
+        result.resolveIsCreated = function (data, delay) {
+            if (data && data.httpStatus == '201') {
+                delay.resolve();
+            }
+            delay.reject();
+        };
+
         return result;
     };
 

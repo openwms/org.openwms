@@ -17,7 +17,7 @@ define([
                     if (status < 200 || status >= 300) {
                         throwError(data, status, delay);
                     }
-                    delay.resolve(data.items[0].obj[0]);
+                    ResponsedataResolver.resolveIsCreated(data, delay);
                 })
                 .error(function (data, status) {
                     throwError(data, status, delay);
@@ -73,8 +73,8 @@ define([
         var throwError = function throwError(data, status, q) {
             var err = new Error(status, data);
             err.data = {
-                httpStatus: data.items[0].httpStatus,
-                message: data.items[0].message
+                httpStatus: data.items === undefined ? data.httpStatus : data.items[0].httpStatus,
+                message: data.items === undefined ? "" : data.items[0].message
             };
             q.reject(err);
         };
