@@ -5,7 +5,7 @@ define([
 	'services/CoreService'
 ], function (app) {
 
-	var loginController = function ($scope, $rootScope, $http, $location, $window, CoreService) {
+	var loginController = function ($scope, $rootScope, $http, $location, $window, CoreService, CoreConfig) {
 		// This object will be filled by the form
 		$scope.user = {};
 
@@ -42,7 +42,7 @@ define([
 
 
 			$http.defaults.headers.post['Auth-Token'] = $rootScope.authToken;
-			$http.post($rootScope.rootUrl + '/sec/login', {
+			$http.post($rootScope.rootUrl + CoreConfig.url.security.login, {
 				username: $scope.user.username,
 				password: $scope.user.password
 			})
@@ -65,5 +65,5 @@ define([
 		};
 	};
 
-	app.register.controller('LoginController', ['$scope', '$rootScope', '$http', '$location', '$window', 'CoreService', loginController]);
+	app.register.controller('LoginController', ['$scope', '$rootScope', '$http', '$location', '$window', 'CoreService', 'CoreConfig', loginController]);
 });

@@ -27,121 +27,121 @@
  */
 
 require.config({
-	paths: {
-    angular: '../bower_components/angular/angular',
-    angular_animate: '../bower_components/angular-animate/angular-animate.min',
-    base64: '../bower_components/angular-base64/angular-base64.min',
-    ui_bootstrap: '../bower_components/angular-bootstrap/ui-bootstrap.min',
-    ui_bootstrap_tpls: '../bower_components/angular-bootstrap/ui-bootstrap-tpls.min',
-    angular_local_storage: '../bower_components/angular-local-storage/dist/angular-local-storage.min',
-    angular_minicolors: '../bower_components/angular-minicolors/angular-minicolors',
-    angular_money: '../bower_components/angular-money-directive/angular-money-directive',
-    angular_translate: '../bower_components/angular-translate/angular-translate.min',
-    angular_translate_lp: '../bower_components/angular-translate-loader-partial/angular-translate-loader-partial.min',
-    angular_ui_router: '../bower_components/angular-ui-router/release/angular-ui-router.min',
-    angular_xeditable:'../bower_components/angular-xeditable/dist/js/xeditable.min',
-    toaster: '../bower_components/AngularJS-Toaster/toaster',
-    blueimp: '../bower_components/blueimp-load-image/js/load-image',
-    bootstrap: '../bower_components/bootstrap/dist/js/bootstrap.min',
-		jquery: '../bower_components/jquery/dist/jquery.min',
-    angular_file_upload: '../bower_components/ng-file-upload/angular-file-upload.min',
-		angular_file_upload_shim: '../bower_components/ng-file-upload/angular-file-upload-shim',
-    radio: '../bower_components/radio/radio',
-    domReady: '../bower_components/requirejs-domready/domReady',
-    underscore: '../bower_components/underscore/underscore-min',
-    underscore_string: '../bower_components/underscore.string/dist/underscore.string.min',
-    velocity: '../bower_components/velocity/velocity.min',
+    paths: {
+        angular: '../bower_components/angular/angular',
+        angular_animate: '../bower_components/angular-animate/angular-animate.min',
+        base64: '../bower_components/angular-base64/angular-base64.min',
+        ui_bootstrap: '../bower_components/angular-bootstrap/ui-bootstrap.min',
+        ui_bootstrap_tpls: '../bower_components/angular-bootstrap/ui-bootstrap-tpls.min',
+        angular_local_storage: '../bower_components/angular-local-storage/dist/angular-local-storage.min',
+        angular_minicolors: '../bower_components/angular-minicolors/angular-minicolors',
+        angular_money: '../bower_components/angular-money-directive/angular-money-directive',
+        angular_translate: '../bower_components/angular-translate/angular-translate.min',
+        angular_translate_lp: '../bower_components/angular-translate-loader-partial/angular-translate-loader-partial.min',
+        angular_ui_router: '../bower_components/angular-ui-router/release/angular-ui-router.min',
+        angular_xeditable: '../bower_components/angular-xeditable/dist/js/xeditable.min',
+        toaster: '../bower_components/AngularJS-Toaster/toaster',
+        blueimp: '../bower_components/blueimp-load-image/js/load-image',
+        bootstrap: '../bower_components/bootstrap/dist/js/bootstrap.min',
+        jquery: '../bower_components/jquery/dist/jquery.min',
+        angular_file_upload: '../bower_components/ng-file-upload/angular-file-upload.min',
+        angular_file_upload_shim: '../bower_components/ng-file-upload/angular-file-upload-shim',
+        radio: '../bower_components/radio/radio',
+        domReady: '../bower_components/requirejs-domready/domReady',
+        underscore: '../bower_components/underscore/underscore-min',
+        underscore_string: '../bower_components/underscore.string/dist/underscore.string.min',
+        velocity: '../bower_components/velocity/velocity.min',
 
-    cpicker: '../bower_components/jquery-minicolors/jquery.minicolors.min',
+        cpicker: '../bower_components/jquery-minicolors/jquery.minicolors.min',
 
-    projectModels: 'models/projectModels',
-		routeResolver: 'routeResolver',
-		core_rtModel: 'models/rt.model',
-		core_secModel: 'models/sec.model',
-		core_envModel : 'models/env.model'
-	},
-	shim: {
-    'angular': {
-      deps: ['angular_file_upload_shim']
+        projectModels: 'models/projectModels',
+        routeResolver: 'routeResolver',
+        core_rtModel: 'models/rt.model',
+        core_secModel: 'models/sec.model',
+        core_envModel: 'models/env.model'
     },
-		'ui_bootstrap': {
-			deps: ['angular', 'angular_animate']
-		},
-    'angular_file_upload': {
-      deps: ['angular']
-    },
-		'ui_bootstrap_tpls': {
-			deps: ['angular', 'ui_bootstrap']
-		},
-		'angular_xeditable': {
-			deps: ['angular']
-		},
-		'angular_local_storage': {
-			deps: ['angular']
-		},
-		'angular_ui_router': {
-			deps: ['angular']
-		},
-		'toaster': {
-			deps: ['angular', 'angular_animate']
-		},
-		'angular_translate': {
-			deps: ['angular']
-		},
-		'angular_translate_lp': {
-			deps: ['angular', 'angular_translate']
-		},
-		'angular_animate': {
-			deps: ['angular']
-		},
-    'bootstrap': {
-      deps: [ 'jquery']
-    },
-		'velocity': {
-			deps: ['jquery']
-		},
-    'base64': {
-      deps: ['angular']
-    },
-    'cpicker': {
-      deps: ['angular']
-    },
-    'angular_minicolors': {
-      deps: ['angular', 'cpicker']
+    shim: {
+        'angular': {
+            deps: ['angular_file_upload_shim']
+        },
+        'ui_bootstrap': {
+            deps: ['angular', 'angular_animate']
+        },
+        'angular_file_upload': {
+            deps: ['angular']
+        },
+        'ui_bootstrap_tpls': {
+            deps: ['angular', 'ui_bootstrap']
+        },
+        'angular_xeditable': {
+            deps: ['angular']
+        },
+        'angular_local_storage': {
+            deps: ['angular']
+        },
+        'angular_ui_router': {
+            deps: ['angular']
+        },
+        'toaster': {
+            deps: ['angular', 'angular_animate']
+        },
+        'angular_translate': {
+            deps: ['angular']
+        },
+        'angular_translate_lp': {
+            deps: ['angular', 'angular_translate']
+        },
+        'angular_animate': {
+            deps: ['angular']
+        },
+        'bootstrap': {
+            deps: ['jquery']
+        },
+        'velocity': {
+            deps: ['jquery']
+        },
+        'base64': {
+            deps: ['angular']
+        },
+        'cpicker': {
+            deps: ['angular']
+        },
+        'angular_minicolors': {
+            deps: ['angular', 'cpicker']
+        }
     }
-	}
 });
 
 require([
-		'domReady',
-		'angular',
-		'app',
-		'routeResolver',
-		'jquery',
-    'bootstrap',
-		'ui_bootstrap',
-		'ui_bootstrap_tpls',
-		'angular_ui_router',
-		'angular_local_storage',
-		'angular_translate',
-		'angular_translate_lp',
-    'angular_file_upload_shim',
-		'angular_file_upload',
-		'angular_xeditable',
-		'toaster',
-		'underscore',
-		'velocity',
-		'directives/openwmsCoreDirectives',
-		'services/openwmsCoreServices',
-		'services/projectServices',
-    'models/projectModels',
-    'blueimp',
-    'base64'
-  ],
-	function (domReady) {
-		domReady(function () {
-			angular.bootstrap(document, ['app']);
+        'domReady',
+        'angular',
+        'app',
+        'routeResolver',
+        'jquery',
+        'bootstrap',
+        'ui_bootstrap',
+        'ui_bootstrap_tpls',
+        'angular_ui_router',
+        'angular_local_storage',
+        'angular_translate',
+        'angular_translate_lp',
+        'angular_file_upload_shim',
+        'angular_file_upload',
+        'angular_xeditable',
+        'toaster',
+        'underscore',
+        'velocity',
+        'directives/openwmsCoreDirectives',
+        'services/openwmsCoreServices',
+        'services/projectServices',
+        'models/projectModels',
+        'blueimp',
+        'base64'
+    ],
+    function (domReady) {
+        domReady(function () {
+            angular.bootstrap(document, ['app']);
 
-		});
-	}
+        });
+    }
 );

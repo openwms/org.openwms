@@ -51,6 +51,7 @@ define([
     '$urlRouterProvider',
     '$locationProvider',
     '$httpProvider',
+    'CoreConfig',
     function (routeResolverProvider,
               $translateProvider,
               $translatePartialLoaderProvider,
@@ -63,7 +64,8 @@ define([
               $stateProvider,
               $urlRouterProvider,
               $locationProvider,
-              $httpProvider) {
+              $httpProvider,
+              CoreConfig) {
 
       $provide.decorator('$exceptionHandler', ['$log', '$delegate',
         function ($log, $delegate) {
@@ -102,7 +104,7 @@ define([
         delete $http.defaults.headers.common['X-Requested-With'];
         //$http.defaults.headers.common['Content-Type'] = 'application/json';
         // Make an AJAX call to check if the user is logged in
-        $http.get($rootScope.rootUrl + '/sec/loggedin').success(function (user) {
+        $http.get($rootScope.rootUrl + CoreConfig.url.security.loggedin).success(function (user) {
           // Authenticated
           if (user === true)
             $timeout(deferred.resolve, 0);
@@ -136,11 +138,11 @@ define([
             return config || $q.when(config);
           },
           'response': function (response) {
-            if (response.status === 401 || response.status === 404) {
+            if (response.status === 401) {
               $location.url('/login').replace();
-            } else if (response.status !== 200) {
+/*            } else if (response.status !== 200) {
               toaster.pop('error', 'Server Error');
-              return $q.reject(response);
+              return $q.reject(response);*/
             }
             return (response);
           }

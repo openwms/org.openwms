@@ -74,7 +74,7 @@
                 </property>
             </activation>
             <modules>
-                <module>org.openwms.client.rest.provider</module>
+                <!--module>org.openwms.client.rest.provider</module-->
                 <module>org.openwms.client.angularjs.app</module>
                 <module>org.openwms.client.angularjs.wrapper</module>
             </modules>

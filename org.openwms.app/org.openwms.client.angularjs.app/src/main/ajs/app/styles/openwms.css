@@ -74,7 +74,6 @@ body {
  Login Dialog
  */
 .login-dialog {
-    width: 450px;
 }
 
 /**********************************************
@@ -227,7 +226,6 @@ body {
 .content-area {
     width: auto;
     padding: 10px 0px 10px 0px;
-    margin: 10px 20px 15px 20px;
 }
 
 .left-padded0 {
