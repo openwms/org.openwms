@@ -3,7 +3,7 @@
 /bin/
 target/
 libs/
-
+**/overlays/**/*
 # OS Files #
 .DS_Store
  
