@@ -45,7 +45,7 @@ require.config({
         toaster: '../bower_components/AngularJS-Toaster/toaster',
         blueimp: '../bower_components/blueimp-load-image/js/load-image',
         bootstrap: '../bower_components/bootstrap/dist/js/bootstrap.min',
-        bootstrap_treeview: '../bower_components/bootstrap-treeview/dist/bootstrap-treeview.min',
+        bootstrap_treeview: '../bower_components/angular-bootstrap-nav-tree/dist/abn_tree_directive',
         jquery: '../bower_components/jquery/dist/jquery.min',
         angular_file_upload: '../bower_components/ng-file-upload/angular-file-upload.min',
         angular_file_upload_shim: '../bower_components/ng-file-upload/angular-file-upload-shim',
