@@ -59,7 +59,6 @@ define([
 
         coreServiceFactory.getAll = function (url, $scope, h) {
             var delay = $q.defer();
-            //$http.defaults.headers.get['Auth-Token'] = $scope.authToken;
             $http({method: 'GET', url: $scope.rootUrl + url, headers: h})
                 .success(function (data) {
                     ResponsedataResolver.resolveMultiple(data, delay);

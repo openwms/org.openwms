@@ -33,9 +33,9 @@
     "underscore.string": "2.4.0",
     "velocity": "1.2.1",
     "bootstrap-material-design": "0.3.0",
-    "bootstrap-treeview": "1.2.0",
     "arrive": "2.2.0",
-    "angular-cookies": "1.2.28"
+    "angular-cookies": "1.2.28",
+    "angular-bootstrap-nav-tree": "*"
   },
   "resolutions": {
     "angular": "1.2.28"
