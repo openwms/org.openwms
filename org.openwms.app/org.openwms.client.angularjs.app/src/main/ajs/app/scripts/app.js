@@ -19,7 +19,10 @@ define([
   'routeResolver',
   'blueimp',
   'angular_minicolors',
-  'angular_cookies'
+  'angular_cookies',
+    'bootstrap_treeview',
+    'angular_pdf_viewer',
+    'pdfjs'
 ], function () {
 
   var app = angular.module('app', [
@@ -36,7 +39,9 @@ define([
     'toaster',
     'base64',
     'minicolors',
-    'ngCookies'
+    'ngCookies',
+    'angularBootstrapNavTree',
+    'pdf'
   ]);
 
   app.config([

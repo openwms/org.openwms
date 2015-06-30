@@ -31,6 +31,7 @@ require.config({
         angular: '../bower_components/angular/angular',
         angular_cookies: '../bower_components/angular-cookies/angular-cookies.min',
         angular_animate: '../bower_components/angular-animate/angular-animate.min',
+        angular_pdf_viewer: '../bower_components/angular-pdf-viewer/dist/angular-pdf-viewer.min',
         arrive: '../bower_components/arrive/minified/arrive.min',
         base64: '../bower_components/angular-base64/angular-base64.min',
         ui_bootstrap: '../bower_components/angular-bootstrap/ui-bootstrap.min',
@@ -49,6 +50,7 @@ require.config({
         jquery: '../bower_components/jquery/dist/jquery.min',
         angular_file_upload: '../bower_components/ng-file-upload/angular-file-upload.min',
         angular_file_upload_shim: '../bower_components/ng-file-upload/angular-file-upload-shim',
+        pdfjs: '../bower_components/pdfjs-dist/build/pdf',
         radio: '../bower_components/radio/radio',
         domReady: '../bower_components/requirejs-domready/domReady',
         underscore: '../bower_components/underscore/underscore-min',
@@ -69,6 +71,9 @@ require.config({
     shim: {
         'angular': {
             deps: ['angular_file_upload_shim']
+        },
+        'angular_pdf_viewer': {
+            deps: ['angular']
         },
         'ui_bootstrap': {
             deps: ['angular', 'angular_animate']
@@ -105,6 +110,9 @@ require.config({
         },
         'bootstrap': {
             deps: ['jquery']
+        },
+        'bootstrap_treeview': {
+            deps: ['angular']
         },
         'velocity': {
             deps: ['jquery']

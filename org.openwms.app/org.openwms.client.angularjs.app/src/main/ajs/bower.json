@@ -35,7 +35,8 @@
     "bootstrap-material-design": "0.3.0",
     "arrive": "2.2.0",
     "angular-cookies": "1.2.28",
-    "angular-bootstrap-nav-tree": "*"
+    "angular-bootstrap-nav-tree": "*",
+    "angular-pdf-viewer": "~0.2.6"
   },
   "resolutions": {
     "angular": "1.2.28"
