@@ -50,7 +50,7 @@ require.config({
         jquery: '../bower_components/jquery/dist/jquery.min',
         angular_file_upload: '../bower_components/ng-file-upload/angular-file-upload.min',
         angular_file_upload_shim: '../bower_components/ng-file-upload/angular-file-upload-shim',
-        pdfjs: '../bower_components/pdfjs-dist/build/pdf',
+        pdfjs: '../bower_components/pdfjs-dist/build/pdf.combined',
         radio: '../bower_components/radio/radio',
         domReady: '../bower_components/requirejs-domready/domReady',
         underscore: '../bower_components/underscore/underscore-min',
