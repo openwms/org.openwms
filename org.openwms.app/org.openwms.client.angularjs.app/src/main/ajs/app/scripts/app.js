@@ -20,9 +20,10 @@ define([
   'blueimp',
   'angular_minicolors',
   'angular_cookies',
-    'bootstrap_treeview',
-    'angular_pdf_viewer',
-    'pdfjs'
+  'bootstrap_treeview',
+  'angular_pdf_viewer',
+  'pdfjs',
+  'pdfjsworker'
 ], function () {
 
   var app = angular.module('app', [
