@@ -342,9 +342,20 @@
                 <debug.info>false</debug.info>
             </properties>
             <build>
+                <pluginManagement>
+                    <plugins>
+                        <plugin>
+                            <groupId>org.apache.maven.plugins</groupId>
+                            <artifactId>maven-gpg-plugin</artifactId>
+                            <version>${plugin.gpg.version}</version>
+                        </plugin>
+                    </plugins>
+                </pluginManagement>
                 <plugins>
                     <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
                         <artifactId>maven-gpg-plugin</artifactId>
+                        <version>${plugin.gpg.version}</version>
                         <executions>
                             <execution>
                                 <id>sign-artifacts</id>
@@ -394,14 +405,14 @@
     <properties>
         <moduleDir>.</moduleDir>
         <!-- used by surefire plugin in combination with jacoco -->
-        <argLine>-Xmx1024m</argLine>
+        <argLine></argLine>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <jdkVersion>1.7</jdkVersion>
+        <java.version>1.8</java.version>
 
         <env.all>true</env.all>
 
-        <maven.compile.targetLevel>${jdkVersion}</maven.compile.targetLevel>
-        <maven.compile.sourceLevel>${jdkVersion}</maven.compile.sourceLevel>
+        <maven.compile.targetLevel>${java.version}</maven.compile.targetLevel>
+        <maven.compile.sourceLevel>${java.version}</maven.compile.sourceLevel>
         <maven.min.version>3.0.4</maven.min.version>
         <debug.info>true</debug.info>
 
@@ -468,7 +479,7 @@
         <plugin.deploy.version>2.8.1</plugin.deploy.version>
         <plugin.enforcer.version>1.3.1</plugin.enforcer.version>
         <plugin.findbugs.version>2.3.1</plugin.findbugs.version>
-        <plugin.gpg.version>1.4</plugin.gpg.version>
+        <plugin.gpg.version>1.6</plugin.gpg.version>
         <plugin.install.version>2.4</plugin.install.version>
         <plugin.jar.version>2.3.2</plugin.jar.version>
         <plugin.javadoc.version>2.9.1</plugin.javadoc.version>
@@ -577,11 +588,6 @@
                 </plugin>
 
                 <plugin>
-                    <artifactId>maven-gpg-plugin</artifactId>
-                    <version>${plugin.gpg.version}</version>
-                </plugin>
-
-                <plugin>
                     <artifactId>maven-install-plugin</artifactId>
                     <version>${plugin.install.version}</version>
                     <executions>
@@ -669,8 +675,8 @@
                             <version>${maven.min.version}</version>
                         </requireMavenVersion>
                         <requireJavaVersion>
-                            <message>At least a JDK in version ${jdkVersion} is required.</message>
-                            <version>${jdkVersion}</version>
+                            <message>At least a JDK in version ${java.version} is required.</message>
+                            <version>${java.version}</version>
                         </requireJavaVersion>
                         <DependencyConvergence />
                     </rules>
