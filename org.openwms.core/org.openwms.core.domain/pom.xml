@@ -40,7 +40,7 @@
         <!-- JavaEE API -->
         <dependency>
             <groupId>org.hibernate.javax.persistence</groupId>
-            <artifactId>hibernate-jpa-2.0-api</artifactId>
+            <artifactId>hibernate-jpa-2.1-api</artifactId>
         </dependency>
         <dependency>
             <groupId>javax.validation</groupId>
@@ -70,5 +70,6 @@
             <type>test-jar</type>
             <scope>test</scope>
         </dependency>
+
     </dependencies>
 </project>

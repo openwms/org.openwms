@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+ 	<appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+		<layout>
+			<Pattern>%d %-5p [%c] - %m%n</Pattern>
+		</layout>
+	</appender>
+    <appender name="TENANT-FILE-THREAD" class="ch.qos.logback.classic.sift.SiftingAppender">
+        <discriminator>
+            <key>Tenant</key>
+            <defaultValue>BOOT</defaultValue>
+        </discriminator>
+        <sift>
+            <appender name="FILE-${Tenant}" class="ch.qos.logback.core.rolling.RollingFileAppender">
+                <file>${catalina.base}/logs/${Tenant}.log</file>
+    			<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">      
+    				<fileNamePattern>${Tenant}.%d{HH:mm:ss.SSS}.log</fileNamePattern>    
+    				<maxHistory>5</maxHistory>    
+    			</rollingPolicy>
+				<encoder> 
+			        <pattern>${Tenant}-%d{HH:mm:ss.SSS} %-5level %class \(%thread\) [%logger{36}] -- %msg%n</pattern>
+			    </encoder>
+            </appender>
+        </sift>
+    </appender>
+    <appender name="TSL" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${catalina.base}/logs/${Tenant}.log</file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>${Tenant}.%d{HH:mm:ss.SSS}.log</fileNamePattern>
+            <maxHistory>5</maxHistory>
+        </rollingPolicy>
+        <encoder>
+            <pattern>%-5X{Tenant}-%d{HH:mm:ss.SSS} %-5level %class \(%thread\) [%logger{36}] -- %msg%n</pattern>
+        </encoder>
+    </appender>
+	
+	<!-- Third party loggers -->
+
+	<logger name="BOOT"
+		level="INFO">
+		<appender-ref ref="TENANT-FILE-THREAD" />
+	</logger>
+	<logger name="org.dozer" 
+		level="WARN">
+		<appender-ref ref="TENANT-FILE-THREAD" />
+	</logger>
+	<logger name="org.springframework" 
+		level="WARN">
+		<appender-ref ref="TENANT-FILE-THREAD" />
+	</logger>
+	<logger name="org.hibernate" 
+		level="WARN">
+		<appender-ref ref="TENANT-FILE-THREAD" />
+	</logger>
+
+	<!-- Specialized loggers -->
+	
+	<logger name="MEASURED" 
+		level="INFO">
+		<appender-ref ref="TENANT-FILE-THREAD" />
+	</logger>
+	<logger name="SERVICE_LAYER_ACCESS" 
+		level="INFO">
+		<appender-ref ref="TENANT-FILE-THREAD" />
+	</logger>
+	<logger name="SERVICE_LAYER_EXCEPTIONS" 
+		level="ERROR">
+		<appender-ref ref="TENANT-FILE-THREAD" />
+	</logger>
+	<logger name="MEASURED" 
+		level="INFO">
+		<appender-ref ref="TENANT-FILE-THREAD" />
+	</logger>
+	
+    <root level="WARN">
+        <appender-ref ref="TENANT-FILE-THREAD" />
+    </root>
+</configuration>
