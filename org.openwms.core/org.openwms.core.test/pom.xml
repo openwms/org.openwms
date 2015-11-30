@@ -125,6 +125,12 @@
             <scope>compile</scope>
         </dependency>
 
+        <dependency>
+            <groupId>javax.el</groupId>
+            <artifactId>javax.el-api</artifactId>
+            <scope>test</scope>
+        </dependency>
+
         <!-- Test database driver -->
         <dependency>
             <groupId>junit</groupId>

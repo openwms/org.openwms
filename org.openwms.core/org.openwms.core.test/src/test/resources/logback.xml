@@ -5,74 +5,77 @@
 			<Pattern>%d %-5p [%c] - %m%n</Pattern>
 		</layout>
 	</appender>
-    <appender name="TENANT-FILE-THREAD" class="ch.qos.logback.classic.sift.SiftingAppender">
-        <discriminator>
-            <key>Tenant</key>
-            <defaultValue>BOOT</defaultValue>
-        </discriminator>
-        <sift>
-            <appender name="FILE-${Tenant}" class="ch.qos.logback.core.rolling.RollingFileAppender">
-                <file>${catalina.base}/logs/${Tenant}.log</file>
-    			<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">      
-    				<fileNamePattern>${Tenant}.%d{HH:mm:ss.SSS}.log</fileNamePattern>    
-    				<maxHistory>5</maxHistory>    
-    			</rollingPolicy>
-				<encoder> 
-			        <pattern>${Tenant}-%d{HH:mm:ss.SSS} %-5level %class \(%thread\) [%logger{36}] -- %msg%n</pattern>
-			    </encoder>
-            </appender>
-        </sift>
-    </appender>
-    <appender name="TSL" class="ch.qos.logback.core.rolling.RollingFileAppender">
-        <file>${catalina.base}/logs/${Tenant}.log</file>
-        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-            <fileNamePattern>${Tenant}.%d{HH:mm:ss.SSS}.log</fileNamePattern>
-            <maxHistory>5</maxHistory>
-        </rollingPolicy>
-        <encoder>
-            <pattern>%-5X{Tenant}-%d{HH:mm:ss.SSS} %-5level %class \(%thread\) [%logger{36}] -- %msg%n</pattern>
-        </encoder>
-    </appender>
-	
-	<!-- Third party loggers -->
 
-	<logger name="BOOT"
-		level="INFO">
-		<appender-ref ref="TENANT-FILE-THREAD" />
-	</logger>
-	<logger name="org.dozer" 
-		level="WARN">
-		<appender-ref ref="TENANT-FILE-THREAD" />
-	</logger>
-	<logger name="org.springframework" 
-		level="WARN">
-		<appender-ref ref="TENANT-FILE-THREAD" />
-	</logger>
-	<logger name="org.hibernate" 
-		level="WARN">
-		<appender-ref ref="TENANT-FILE-THREAD" />
-	</logger>
+	<!-- CORE system logs -->
+	<category name="CORE_METHOD_LOGS">
+		<priority value="INFO" />
+	</category>
+	<category name="CORE_INTEGRATION_EXC_LOGS">
+		<priority value="ERROR" />
+	</category>
+	<category name="CORE_SERVICE_EXC_LOGS">
+		<priority value="ERROR" />
+	</category>
 
-	<!-- Specialized loggers -->
-	
-	<logger name="MEASURED" 
-		level="INFO">
-		<appender-ref ref="TENANT-FILE-THREAD" />
-	</logger>
-	<logger name="SERVICE_LAYER_ACCESS" 
-		level="INFO">
-		<appender-ref ref="TENANT-FILE-THREAD" />
-	</logger>
-	<logger name="SERVICE_LAYER_EXCEPTIONS" 
-		level="ERROR">
-		<appender-ref ref="TENANT-FILE-THREAD" />
-	</logger>
-	<logger name="MEASURED" 
-		level="INFO">
-		<appender-ref ref="TENANT-FILE-THREAD" />
-	</logger>
-	
+	<!-- COMMON system logs -->
+	<category name="COMMON_METHOD_LOGS">
+		<priority value="INFO" />
+	</category>
+	<category name="COMMON_INTEGRATION_EXC_LOGS">
+		<priority value="ERROR" />
+	</category>
+	<category name="COMMON_SERVICE_EXC_LOGS">
+		<priority value="ERROR" />
+	</category>
+
+	<!-- TMS system logs -->
+	<category name="TMS_METHOD_LOGS">
+		<priority value="INFO" />
+	</category>
+	<category name="TMS_INTEGRATION_EXC_LOGS">
+		<priority value="ERROR" />
+	</category>
+	<category name="TMS_SERVICE_EXC_LOGS">
+		<priority value="ERROR" />
+	</category>
+
+	<!-- WMS system logs -->
+	<category name="WMS_METHOD_LOGS">
+		<priority value="INFO" />
+	</category>
+	<category name="WMS_INTEGRATION_EXC_LOGS">
+		<priority value="ERROR" />
+	</category>
+	<category name="WMS_SERVICE_EXC_LOGS">
+		<priority value="ERROR" />
+	</category>
+
+	<category name="org.openwms">
+		<priority value="DEBUG" />
+	</category>
+
+	<!--
+        <category name="org.hibernate.type">
+            <priority value="TRACE" />
+        </category>
+        <category name="org.hibernate.SQL">
+            <priority value="DEBUG" />
+        </category>
+     -->
+	<category name="org.hibernate.type">
+		<priority value="ERROR" />
+	</category>
+	<category name="org.hibernate.SQL">
+		<priority value="ERROR" />
+	</category>
+	<category name="org.hibernate.tool">
+		<priority value="FATAL" />
+	</category>
+	<category name="org.hibernate">
+		<priority value="WARN" />
+	</category>
+
     <root level="WARN">
-        <appender-ref ref="TENANT-FILE-THREAD" />
+        <appender-ref ref="STDOUT" />
     </root>
 </configuration>

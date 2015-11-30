@@ -28,8 +28,8 @@ import org.junit.runner.RunWith;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit4.AbstractTransactionalJUnit4SpringContextTests;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-import org.springframework.test.context.transaction.TransactionConfiguration;
 import org.springframework.transaction.annotation.Transactional;
 
 /**
@@ -38,18 +38,14 @@ import org.springframework.transaction.annotation.Transactional;
  * Run with Spring's {@link SpringJUnit4ClassRunner}. A datasource instance and an {@link javax.persistence.EntityManagerFactory} is
  * initialized within the application context.
  * </p>
- * 
+ *
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
- * @since 0.1
- * @see org.springframework.test.context.junit4.SpringJUnit4ClassRunner
- * @see org.springframework.test.context.transaction.TransactionConfiguration
  * @version $Revision$
+ * @see org.springframework.test.context.junit4.SpringJUnit4ClassRunner
+ * @since 0.1
  */
-@RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration("classpath*:/META-INF/spring/Test-Infrastructure-context.xml")
-@TransactionConfiguration
-@Transactional
-public abstract class AbstractJpaSpringContextTests {
+public abstract class AbstractJpaSpringContextTests extends AbstractTransactionalJUnit4SpringContextTests {
 
     /**
      * Logger instance can be used by subclasses.

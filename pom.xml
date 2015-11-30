@@ -427,33 +427,21 @@
         <!-- =================== -->
         <!-- Dependency versions -->
         <!-- =================== -->
-        <dozer.version>5.4.0</dozer.version>
-        <el.version>2.2</el.version>
+        <dozer.version>5.5.1</dozer.version>
+
+        <javax-el.version>2.2.5</javax-el.version> <!-- Keep in sync with platform -->
+        <el-impl.version>2.2</el-impl.version>
+
+        <logback-classic.version>1.1.3</logback-classic.version>
         <freemarker.version>2.3.15</freemarker.version>
         <hibernate.version>5.0.4.Final</hibernate.version>
-        <javax.servlet-api.version>3.0.1</javax.servlet-api.version>
-        <jboss-logging.version>3.1.0.GA</jboss-logging.version>
-        <jdbc.derby.version>10.7.1.1</jdbc.derby.version>
-        <jdbc.h2.version>1.3.166</jdbc.h2.version>
-        <jdbc.hsqldb.version>2.2.8</jdbc.hsqldb.version>
-        <jdbc.mysql.version>5.1.6</jdbc.mysql.version>
         <jdbc.oracle.version>6.0.0</jdbc.oracle.version>
-        <jdbc.postgresql.version>9.3-1102-jdbc41</jdbc.postgresql.version>
         <jpa-api.version>1.0.0.Final</jpa-api.version>
-        <jsf.api.version>2.1.4</jsf.api.version>
-        <jsf.impl.version>2.1.4</jsf.impl.version>
-        <jta.version>1.1</jta.version>
-        <junit.version>4.12</junit.version>
-        <mockito.version>1.9.0</mockito.version>
-        <net.sf.ehcache.version>2.10.0</net.sf.ehcache.version>
-        <primefaces.version>3.2</primefaces.version>
-        <slf4j.version>1.7.7</slf4j.version>
         <!-- Spring Integration 2.2.4 uses Spring Core 3.1.3 -->
         <spring.integration.version>4.1.3.RELEASE</spring.integration.version>
         <spring.io.version>2.0.0.RELEASE</spring.io.version>
         <spring-retry.version>1.1.2.RELEASE</spring-retry.version>
-        <spring.security.version>4.0.0.RELEASE</spring.security.version>
-        <spring.version>4.2.3.RELEASE</spring.version>
+        <spring.version>4.2.3.RELEASE</spring.version> <!-- Keep in sync with platform -->
 
         <!-- =================== -->
         <!--   Plugin versions   -->
@@ -486,7 +474,6 @@
         <plugin.taglist.version>2.4</plugin.taglist.version>
         <plugin.wagon-ssh.version>2.1</plugin.wagon-ssh.version>
         <plugin.war.version>2.4</plugin.war.version>
-        <logback-classic.version>1.1.3</logback-classic.version>
     </properties>
 
     <pluginRepositories>
@@ -610,6 +597,12 @@
                 <version>${jpa-api.version}</version>
             </dependency>
 
+            <dependency>
+                <groupId>org.glassfish.web</groupId>
+                <artifactId>el-impl</artifactId>
+                <version>${el-impl.version}</version>
+            </dependency>
+
             <!-- Spring Framework Libraries -->
             <dependency>
                 <groupId>io.spring.platform</groupId>
@@ -619,16 +612,6 @@
                 <scope>import</scope>
             </dependency>
 
-            <dependency>
-                <groupId>org.springframework</groupId>
-                <artifactId>spring-aspects</artifactId>
-                <version>${spring.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.springframework</groupId>
-                <artifactId>spring-aop</artifactId>
-                <version>${spring.version}</version>
-            </dependency>
             <dependency>
                 <groupId>org.springframework.integration</groupId>
                 <artifactId>spring-integration-ip</artifactId>
@@ -649,16 +632,6 @@
                 <artifactId>spring-messaging</artifactId>
                 <version>${spring.version}</version>
             </dependency>
-            <dependency>
-                <groupId>org.springframework</groupId>
-                <artifactId>spring-orm</artifactId>
-                <version>${spring.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.springframework</groupId>
-                <artifactId>spring-oxm</artifactId>
-                <version>${spring.version}</version>
-            </dependency>
             <!-- Unfortunately Spring integration depends on spring-retry that comes with an old Spring version 3.0.x -->
             <dependency>
                 <groupId>org.springframework.retry</groupId>
@@ -670,44 +643,6 @@
                         <artifactId>spring-context</artifactId>
                     </exclusion>
                 </exclusions>
-            </dependency>
-            <dependency>
-                <groupId>org.springframework</groupId>
-                <artifactId>spring-tx</artifactId>
-                <version>${spring.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.springframework</groupId>
-                <artifactId>spring-web</artifactId>
-                <version>${spring.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.springframework</groupId>
-                <artifactId>spring-webmvc</artifactId>
-                <version>${spring.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.springframework</groupId>
-                <artifactId>spring-test</artifactId>
-                <version>${spring.version}</version>
-                <type>jar</type>
-            </dependency>
-
-            <!-- Spring Security Libraries -->
-            <dependency>
-                <groupId>org.springframework.security</groupId>
-                <artifactId>spring-security-core</artifactId>
-                <version>${spring.security.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.springframework.security</groupId>
-                <artifactId>spring-security-config</artifactId>
-                <version>${spring.security.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.springframework.security</groupId>
-                <artifactId>spring-security-web</artifactId>
-                <version>${spring.security.version}</version>
             </dependency>
 
             <!-- Database libraries -->
@@ -753,10 +688,6 @@
             <artifactId>slf4j-api</artifactId>
         </dependency>
         <dependency>
-            <groupId>ch.qos.logback</groupId>
-            <artifactId>logback-classic</artifactId>
-        </dependency>
-        <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
             <scope>test</scope>
@@ -764,6 +695,11 @@
         <dependency>
             <groupId>org.mockito</groupId>
             <artifactId>mockito-core</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.glassfish.web</groupId>
+            <artifactId>el-impl</artifactId>
             <scope>test</scope>
         </dependency>
     </dependencies>
