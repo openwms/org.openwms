@@ -57,13 +57,12 @@
         <dependency>
             <groupId>org.eclipse.persistence</groupId>
             <artifactId>org.eclipse.persistence.jpa</artifactId>
-            <version>${org.eclipse.persistence.version}</version>
         </dependency>
-        <dependency>
+        <!--dependency>
             <groupId>org.eclipse.persistence</groupId>
             <artifactId>org.eclipse.persistence.weaving</artifactId>
             <version>${org.eclipse.persistence.version}</version>
-        </dependency>
+        </dependency-->
 
         <!-- Weaver -->
         <dependency>
