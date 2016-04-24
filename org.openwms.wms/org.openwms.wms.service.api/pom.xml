@@ -34,27 +34,13 @@
 	<properties>
 		<moduleDir>../../..</moduleDir>
 	</properties>
-	<build>
-		<plugins>
-			<plugin>
-				<groupId>com.springsource.bundlor</groupId>
-				<artifactId>com.springsource.bundlor.maven</artifactId>
-				<executions>
-					<execution>
-						<goals>
-							<goal>bundlor</goal>
-						</goals>
-					</execution>
-				</executions>
-			</plugin>
-		</plugins>
-	</build>
+
 	<dependencies>
         <!-- JavaEE API -->
         <dependency>
-            <groupId>org.hibernate.javax.persistence</groupId>
-            <artifactId>hibernate-jpa-2.0-api</artifactId>
-            <scope>${dependency.scope}</scope>
+			<groupId>org.hibernate.javax.persistence</groupId>
+			<artifactId>hibernate-jpa-2.1-api</artifactId>
+            <scope>provided</scope>
         </dependency>
 
         <!-- CORE Project dependencies -->
@@ -62,13 +48,11 @@
 			<groupId>${project.groupId}</groupId>
 			<artifactId>org.openwms.core.domain</artifactId>
 		    <version>${core.version}</version>
-            <scope>${dependency.scope}</scope>
 		</dependency>
         <dependency>
             <groupId>${project.groupId}</groupId>
             <artifactId>org.openwms.core.service.api</artifactId>
             <version>${core.version}</version>
-            <scope>${dependency.scope}</scope>
         </dependency>
 
         <!-- COMMON Project dependencies -->
@@ -76,7 +60,6 @@
             <groupId>${project.groupId}</groupId>
             <artifactId>org.openwms.common.domain</artifactId>
             <version>${common.version}</version>
-            <scope>${dependency.scope}</scope>
         </dependency>
 
         <!-- TMS Project dependencies -->
@@ -84,14 +67,12 @@
 			<groupId>${project.groupId}</groupId>
 			<artifactId>org.openwms.tms.domain</artifactId>
             <version>${tms.version}</version>
-            <scope>${dependency.scope}</scope>
 		</dependency>
 
         <!-- WMS Project dependencies -->
         <dependency>
             <groupId>${project.groupId}</groupId>
             <artifactId>org.openwms.wms.domain</artifactId>
-            <scope>${dependency.scope}</scope>
         </dependency>
 	</dependencies>
 </project>

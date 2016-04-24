@@ -34,21 +34,6 @@
 	<properties>
 		<moduleDir>../../..</moduleDir>
 	</properties>
-	<build>
-		<plugins>
-			<plugin>
-				<groupId>com.springsource.bundlor</groupId>
-				<artifactId>com.springsource.bundlor.maven</artifactId>
-				<executions>
-					<execution>
-						<goals>
-							<goal>bundlor</goal>
-						</goals>
-					</execution>
-				</executions>
-			</plugin>
-		</plugins>
-	</build>
 	<dependencies>
 		<!-- Project dependencies -->
         <dependency>

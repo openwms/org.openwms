@@ -31,19 +31,16 @@
     </parent>
     <artifactId>org.openwms.wms.domain</artifactId>
     <name>${project.artifactId}</name>
+
     <properties>
         <moduleDir>../../..</moduleDir>
     </properties>
-    <dependencies>
-        <dependency>
-            <groupId>commons-lang</groupId>
-            <artifactId>commons-lang</artifactId>
-        </dependency>
 
+    <dependencies>
         <!-- JPA Provider -->
         <dependency>
-            <groupId>org.hibernate</groupId>
-            <artifactId>hibernate-entitymanager</artifactId>
+            <groupId>org.hibernate.javax.persistence</groupId>
+            <artifactId>hibernate-jpa-2.1-api</artifactId>
             <scope>provided</scope>
         </dependency>
 

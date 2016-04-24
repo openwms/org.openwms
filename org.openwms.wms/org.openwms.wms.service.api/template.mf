@@ -1,8 +1,0 @@
-Manifest-Version: 1.0
-Bundle-Vendor: ${project.groupId}
-Bundle-Version: ${bundle.version}
-Bundle-Name: ${project.artifactId}
-Bundle-ManifestVersion: 2
-Bundle-SymbolicName: ${project.artifactId}
-Import-Bundle: 
- org.openwms.wms.domain;version="[0.1, 0.2]"
