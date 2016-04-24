@@ -40,42 +40,38 @@
             <groupId>${project.groupId}</groupId>
             <artifactId>org.openwms.core.domain</artifactId>
             <version>${core.version}</version>
-            <scope>${dependency.scope}</scope>
         </dependency>
         <dependency>
             <groupId>${project.groupId}</groupId>
             <artifactId>org.openwms.core.integration</artifactId>
             <version>${core.version}</version>
-            <scope>${dependency.scope}</scope>
         </dependency>
+
 		<dependency>
 			<groupId>${project.groupId}</groupId>
 			<artifactId>org.openwms.common.domain</artifactId>
             <version>${common.version}</version>
-            <scope>${dependency.scope}</scope>
 		</dependency>
         <dependency>
             <groupId>${project.groupId}</groupId>
             <artifactId>org.openwms.common.integration</artifactId>
             <version>${common.version}</version>
-            <scope>${dependency.scope}</scope>
         </dependency>
+
 		<dependency>
 			<groupId>${project.groupId}</groupId>
 			<artifactId>org.openwms.tms.domain</artifactId>
             <version>${tms.version}</version>
-            <scope>${dependency.scope}</scope>
 		</dependency>
         <dependency>
             <groupId>${project.groupId}</groupId>
             <artifactId>org.openwms.tms.integration</artifactId>
             <version>${tms.version}</version>
-            <scope>${dependency.scope}</scope>
         </dependency>
+
         <dependency>
             <groupId>${project.groupId}</groupId>
             <artifactId>org.openwms.wms.domain</artifactId>
-            <scope>${dependency.scope}</scope>
         </dependency>
 	</dependencies>
 </project>

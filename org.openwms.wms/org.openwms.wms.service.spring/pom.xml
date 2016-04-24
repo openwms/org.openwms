@@ -85,9 +85,8 @@
         </dependency>
 
         <dependency>
-            <groupId>ehcache</groupId>
+            <groupId>net.sf.ehcache</groupId>
             <artifactId>ehcache</artifactId>
-            <version>1.2</version>
             <scope>runtime</scope>
         </dependency>
 
@@ -144,6 +143,11 @@
         </dependency>
 
         <!-- TEST dependencies -->
+        <dependency>
+            <groupId>org.hibernate</groupId>
+            <artifactId>hibernate-validator</artifactId>
+            <scope>test</scope>
+        </dependency>
         <dependency>
             <groupId>${project.groupId}</groupId>
             <artifactId>org.openwms.core.test</artifactId>
