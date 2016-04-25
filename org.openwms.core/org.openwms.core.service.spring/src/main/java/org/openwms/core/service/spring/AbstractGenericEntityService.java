@@ -21,11 +21,10 @@
  */
 package org.openwms.core.service.spring;
 
+import javax.persistence.PersistenceException;
 import java.io.Serializable;
 import java.util.Collections;
 import java.util.List;
-
-import javax.persistence.PersistenceException;
 
 import org.openwms.core.domain.AbstractEntity;
 import org.openwms.core.integration.GenericDao;
@@ -151,7 +150,7 @@ public abstract class AbstractGenericEntityService<T extends AbstractEntity<ID>,
     public T findByBK(BK key) {
         T role = getRepository().findByUniqueId(key);
         if (role == null) {
-            throw new EntityNotFoundException(getMessageSource().getMessage(ExceptionCodes.ENTITY_NOT_EXIST,
+            throw new NotFoundE(getMessageSource().getMessage(ExceptionCodes.ENTITY_NOT_EXIST,
                     new Object[] { key }, null));
         }
         return role;

@@ -21,7 +21,7 @@
  */
 package org.openwms.core.service.spring.event;
 
-import org.openwms.core.service.event.EventBroker;
+import org.openwms.core.event.EventBroker;
 import org.openwms.core.util.event.RootApplicationEvent;
 
 /**

@@ -21,14 +21,13 @@
  */
 package org.openwms.wms.service.spring.shipping;
 
+import javax.annotation.PostConstruct;
 import java.util.Date;
 import java.util.List;
 import java.util.Set;
 
-import javax.annotation.PostConstruct;
-
-import org.openwms.core.service.event.EventBroker;
-import org.openwms.core.service.event.EventListener;
+import org.openwms.core.event.EventBroker;
+import org.openwms.core.event.EventListener;
 import org.openwms.core.service.exception.ServiceRuntimeException;
 import org.openwms.core.util.event.RootApplicationEvent;
 import org.openwms.wms.domain.PackagingUnit;

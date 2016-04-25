@@ -22,7 +22,7 @@
 package org.openwms.wms.service.spring.shipping;
 
 import org.openwms.core.annotation.FireAfterTransactionAsynchronous;
-import org.openwms.core.service.event.EventPublisher;
+import org.openwms.core.event.EventPublisher;
 import org.openwms.core.service.exception.ServiceRuntimeException;
 import org.openwms.wms.domain.shipping.ShippingOrder;
 import org.openwms.wms.domain.shipping.ShippingOrderCreatedNotification;

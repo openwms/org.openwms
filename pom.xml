@@ -483,6 +483,14 @@
         <plugin.war.version>2.4</plugin.war.version>
     </properties>
 
+    <repositories>
+        <repository>
+            <id>ameba-bintray</id>
+            <name>Ameba Bintray Repository</name>
+            <url>https://dl.bintray.com/abraxas/labs</url>
+        </repository>
+    </repositories>
+
     <pluginRepositories>
         <pluginRepository>
             <id>central</id>
@@ -599,6 +607,11 @@
     <dependencyManagement>
         <dependencies>
             <dependency>
+                <groupId>org.ameba</groupId>
+                <artifactId>ameba-lib</artifactId>
+                <version>1.5</version>
+            </dependency>
+            <dependency>
                 <groupId>org.hibernate.javax.persistence</groupId>
                 <artifactId>hibernate-jpa-2.1-api</artifactId>
                 <version>${jpa-api.version}</version>
@@ -695,6 +708,12 @@
             <artifactId>slf4j-api</artifactId>
         </dependency>
         <dependency>
+            <groupId>org.ameba</groupId>
+            <artifactId>ameba-lib</artifactId>
+        </dependency>
+
+        <!-- Test dependencies -->
+        <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
             <scope>test</scope>
@@ -702,6 +721,11 @@
         <dependency>
             <groupId>org.mockito</groupId>
             <artifactId>mockito-core</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.ameba</groupId>
+            <artifactId>ameba-lib</artifactId>
             <scope>test</scope>
         </dependency>
         <dependency>

@@ -19,24 +19,7 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
-package org.openwms.core.service.event;
-
-import org.openwms.core.util.event.RootApplicationEvent;
-
 /**
- * A EventDispatcher.
- * 
- * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
- * @version $Revision: $
- * @since 0.2
+ * Services around event handling.
  */
-public interface EventBroker {
-
-    void subscribe(Class<? extends RootApplicationEvent> event, String listenerBeanName);
-
-    void subscribe(Class<? extends RootApplicationEvent> event, EventListener listener);
-
-    void unsubscribe(Class<? extends RootApplicationEvent> event, String listenerBeanName);
-
-    void unsubscribe(Class<? extends RootApplicationEvent> event, EventListener listener);
-}
+package org.openwms.core.event;

@@ -21,7 +21,7 @@
  */
 package org.openwms.core.service.spring.event;
 
-import org.openwms.core.service.event.EventPublisher;
+import org.openwms.core.event.EventPublisher;
 import org.openwms.core.util.event.RootApplicationEvent;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Async;

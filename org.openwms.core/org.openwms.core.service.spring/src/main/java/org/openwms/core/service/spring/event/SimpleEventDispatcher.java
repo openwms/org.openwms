@@ -26,7 +26,7 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
-import org.openwms.core.service.event.EventListener;
+import org.openwms.core.event.EventListener;
 import org.openwms.core.service.exception.ServiceRuntimeException;
 import org.openwms.core.util.event.RootApplicationEvent;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -50,8 +50,8 @@ public class SimpleEventDispatcher implements EventDispatcher {
     private ApplicationContext ctx;
 
     /**
-     * @see org.openwms.core.service.event.EventBroker#subscribe(java.lang.Class,
-     *      org.openwms.core.service.event.EventListener)
+     * @see org.openwms.core.event.EventBroker#subscribe(java.lang.Class,
+     *      org.openwms.core.event.EventListener)
      */
     @Override
     public void subscribe(Class<? extends RootApplicationEvent> event, EventListener listener) {
@@ -73,7 +73,7 @@ public class SimpleEventDispatcher implements EventDispatcher {
     }
 
     /**
-     * @see org.openwms.core.service.event.EventBroker#subscribe(java.lang.Class,
+     * @see org.openwms.core.event.EventBroker#subscribe(java.lang.Class,
      *      java.lang.String)
      */
     @Override
@@ -88,8 +88,8 @@ public class SimpleEventDispatcher implements EventDispatcher {
     }
 
     /**
-     * @see org.openwms.core.service.event.EventBroker#unsubscribe(java.lang.Class,
-     *      org.openwms.core.service.event.EventListener)
+     * @see org.openwms.core.event.EventBroker#unsubscribe(java.lang.Class,
+     *      org.openwms.core.event.EventListener)
      */
     @Override
     public void unsubscribe(Class<? extends RootApplicationEvent> event, EventListener listener) {
@@ -101,7 +101,7 @@ public class SimpleEventDispatcher implements EventDispatcher {
     }
 
     /**
-     * @see org.openwms.core.service.event.EventBroker#unsubscribe(java.lang.Class,
+     * @see org.openwms.core.event.EventBroker#unsubscribe(java.lang.Class,
      *      java.lang.String)
      */
     @Override

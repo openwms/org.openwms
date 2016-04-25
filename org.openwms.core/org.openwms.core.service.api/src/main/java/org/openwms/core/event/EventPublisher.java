@@ -19,7 +19,24 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
+package org.openwms.core.event;
+
+import org.openwms.core.util.event.RootApplicationEvent;
+
 /**
- * Services around event handling.
+ * A EventPublisher.
+ * 
+ * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
+ * @version $Revision: $
+ * @since 0.2
  */
-package org.openwms.core.service.event;
+public interface EventPublisher<T extends RootApplicationEvent> {
+
+    /**
+     * Publish an event of type T to event listeners.
+     * 
+     * @param event
+     *            The event to publish
+     */
+    void publish(T event);
+}

@@ -25,7 +25,6 @@ import java.io.Serializable;
 import java.util.List;
 
 import org.openwms.core.domain.AbstractEntity;
-import org.openwms.core.service.exception.EntityAlreadyExistsException;
 
 /**
  * A GenericEntityService provides some common used CRUD operations available
@@ -43,8 +42,6 @@ public interface GenericEntityService<T extends AbstractEntity, ID extends Seria
      * @param entity
      *            The new entity to create
      * @return The newly created and persisted <tt>entity</tt>
-     * @throws EntityAlreadyExistsException
-     *             if the <tt>entity</tt> to create already exist
      */
     T create(T entity);
 
