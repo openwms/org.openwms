@@ -21,10 +21,9 @@
  */
 package org.openwms.core.rest.roles;
 
-import java.util.Collection;
-
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
+import java.util.Collection;
 
 import org.openwms.core.domain.system.usermanagement.Role;
 import org.openwms.core.rest.AbstractWebController;
