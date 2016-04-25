@@ -19,20 +19,7 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
-package org.openwms.core.rest.users;
-
-import java.io.Serializable;
-
-import com.fasterxml.jackson.annotation.JsonAutoDetect;
-
 /**
- * A UserPreferenceDTO.
- * 
- * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
- * @version $Revision: $
- * 
+ * Contains controller classes and value types that are responsible to satisfy the RESTful handling with {@link org.openwms.core.domain.system.usermanagement.Role}s.
  */
-@JsonAutoDetect
-public class UserPreferenceVO implements Serializable {
-
-}
+package org.openwms.core.roles;

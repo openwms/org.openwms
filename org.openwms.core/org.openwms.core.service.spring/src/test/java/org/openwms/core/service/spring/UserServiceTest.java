@@ -21,14 +21,10 @@
  */
 package org.openwms.core.service.spring;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
-
-import java.util.List;
+import static org.junit.Assert.*;
 
 import javax.persistence.NoResultException;
+import java.util.List;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -38,8 +34,9 @@ import org.openwms.core.domain.system.usermanagement.User;
 import org.openwms.core.domain.system.usermanagement.UserPassword;
 import org.openwms.core.domain.system.usermanagement.UserPreference;
 import org.openwms.core.exception.InvalidPasswordException;
+import org.openwms.core.idendity.UserService;
+import org.openwms.core.idendity.UserServiceImpl;
 import org.openwms.core.service.ExceptionCodes;
-import org.openwms.core.service.UserService;
 import org.openwms.core.service.exception.EntityNotFoundException;
 import org.openwms.core.service.exception.ServiceRuntimeException;
 import org.openwms.core.test.AbstractJpaSpringContextTests;
@@ -147,7 +144,7 @@ public class UserServiceTest extends AbstractJpaSpringContextTests {
 
     /**
      * Test method for
-     * {@link org.openwms.core.service.spring.UserServiceImpl#remove(User)}.
+     * {@link UserServiceImpl#remove(User)}.
      */
     @Test
     public final void testRemove() {
@@ -167,7 +164,7 @@ public class UserServiceTest extends AbstractJpaSpringContextTests {
 
     /**
      * Test method for
-     * {@link org.openwms.core.service.spring.UserServiceImpl#changeUserPassword(UserPassword)}
+     * {@link UserServiceImpl#changeUserPassword(UserPassword)}
      * .
      * 
      * Test to call with null.
@@ -184,7 +181,7 @@ public class UserServiceTest extends AbstractJpaSpringContextTests {
 
     /**
      * Test method for
-     * {@link org.openwms.core.service.spring.UserServiceImpl#changeUserPassword(UserPassword)}
+     * {@link UserServiceImpl#changeUserPassword(UserPassword)}
      * .
      * 
      * Test to change it for an unknown user.
@@ -204,7 +201,7 @@ public class UserServiceTest extends AbstractJpaSpringContextTests {
 
     /**
      * Test method for
-     * {@link org.openwms.core.service.spring.UserServiceImpl#changeUserPassword(UserPassword)}
+     * {@link UserServiceImpl#changeUserPassword(UserPassword)}
      * .
      * 
      * Test to change the password of an User.
@@ -216,7 +213,7 @@ public class UserServiceTest extends AbstractJpaSpringContextTests {
 
     /**
      * Test method for
-     * {@link org.openwms.core.service.spring.UserServiceImpl#changeUserPassword(UserPassword)}
+     * {@link UserServiceImpl#changeUserPassword(UserPassword)}
      * .
      * 
      * Test to change password to an invalid one.
@@ -238,7 +235,7 @@ public class UserServiceTest extends AbstractJpaSpringContextTests {
 
     /**
      * Test method for
-     * {@link org.openwms.core.service.spring.UserServiceImpl#findAll()}.
+     * {@link UserServiceImpl#findAll()}.
      */
     @Test
     public final void testFindAll() {
@@ -271,7 +268,7 @@ public class UserServiceTest extends AbstractJpaSpringContextTests {
 
     /**
      * Test method for
-     * {@link org.openwms.core.service.spring.UserServiceImpl#getTemplate(String)}
+     * {@link UserServiceImpl#getTemplate(String)}
      * .
      */
     @Test
@@ -283,7 +280,7 @@ public class UserServiceTest extends AbstractJpaSpringContextTests {
 
     /**
      * Test method for
-     * {@link org.openwms.core.service.spring.UserServiceImpl#createSystemUser()}
+     * {@link UserServiceImpl#createSystemUser()}
      * .
      */
     @Test
@@ -296,7 +293,7 @@ public class UserServiceTest extends AbstractJpaSpringContextTests {
 
     /**
      * Test method for
-     * {@link org.openwms.core.service.spring.UserServiceImpl#saveUserProfile(User, UserPassword, org.openwms.core.domain.system.usermanagement.UserPreference...)}
+     * {@link UserServiceImpl#saveUserProfile(User, UserPassword, org.openwms.core.domain.system.usermanagement.UserPreference...)}
      * .
      */
     @Test
@@ -316,7 +313,7 @@ public class UserServiceTest extends AbstractJpaSpringContextTests {
 
     /**
      * Test method for
-     * {@link org.openwms.core.service.spring.UserServiceImpl#saveUserProfile(User, UserPassword, org.openwms.core.domain.system.usermanagement.UserPreference...)}
+     * {@link UserServiceImpl#saveUserProfile(User, UserPassword, org.openwms.core.domain.system.usermanagement.UserPreference...)}
      * .
      */
     @Test
@@ -327,7 +324,7 @@ public class UserServiceTest extends AbstractJpaSpringContextTests {
 
     /**
      * Test method for
-     * {@link org.openwms.core.service.spring.UserServiceImpl#saveUserProfile(User, UserPassword, org.openwms.core.domain.system.usermanagement.UserPreference...)}
+     * {@link UserServiceImpl#saveUserProfile(User, UserPassword, org.openwms.core.domain.system.usermanagement.UserPreference...)}
      * .
      */
     @Test
@@ -339,7 +336,7 @@ public class UserServiceTest extends AbstractJpaSpringContextTests {
 
     /**
      * Test method for
-     * {@link org.openwms.core.service.spring.UserServiceImpl#saveUserProfile(User, UserPassword, org.openwms.core.domain.system.usermanagement.UserPreference...)}
+     * {@link UserServiceImpl#saveUserProfile(User, UserPassword, org.openwms.core.domain.system.usermanagement.UserPreference...)}
      * .
      */
     @Test
@@ -360,7 +357,7 @@ public class UserServiceTest extends AbstractJpaSpringContextTests {
 
     /**
      * Test method for
-     * {@link org.openwms.core.service.spring.UserServiceImpl#saveUserProfile(User, UserPassword, org.openwms.core.domain.system.usermanagement.UserPreference...)}
+     * {@link UserServiceImpl#saveUserProfile(User, UserPassword, org.openwms.core.domain.system.usermanagement.UserPreference...)}
      * .
      */
     @Test

@@ -19,16 +19,16 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
-package org.openwms.core.service.spring;
+package org.openwms.core.idendity;
 
 import org.openwms.core.annotation.FireAfterTransaction;
 import org.openwms.core.domain.system.usermanagement.Role;
 import org.openwms.core.integration.GenericDao;
 import org.openwms.core.integration.RoleDao;
 import org.openwms.core.service.ExceptionCodes;
-import org.openwms.core.service.RoleService;
 import org.openwms.core.service.exception.EntityNotFoundException;
 import org.openwms.core.service.exception.ServiceRuntimeException;
+import org.openwms.core.service.spring.AbstractGenericEntityService;
 import org.openwms.core.util.event.RoleChangedEvent;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

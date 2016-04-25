@@ -19,22 +19,28 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
-package org.openwms.core.service.spring;
+package org.openwms.core.idendity;
 
 import java.util.HashSet;
 
 import org.apache.commons.lang3.StringUtils;
 import org.openwms.core.annotation.FireAfterTransaction;
-import org.openwms.core.domain.system.usermanagement.*;
+import org.openwms.core.domain.system.usermanagement.Role;
+import org.openwms.core.domain.system.usermanagement.SystemUser;
+import org.openwms.core.domain.system.usermanagement.User;
+import org.openwms.core.domain.system.usermanagement.UserDetails;
+import org.openwms.core.domain.system.usermanagement.UserPassword;
+import org.openwms.core.domain.system.usermanagement.UserPreference;
 import org.openwms.core.exception.InvalidPasswordException;
 import org.openwms.core.integration.GenericDao;
 import org.openwms.core.integration.SecurityObjectDao;
 import org.openwms.core.integration.UserDao;
 import org.openwms.core.service.ConfigurationService;
 import org.openwms.core.service.ExceptionCodes;
-import org.openwms.core.service.UserService;
 import org.openwms.core.service.exception.EntityNotFoundException;
 import org.openwms.core.service.exception.ServiceRuntimeException;
+import org.openwms.core.service.spring.AbstractGenericEntityService;
+import org.openwms.core.service.spring.UserWrapper;
 import org.openwms.core.util.event.UserChangedEvent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

@@ -19,7 +19,20 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
+package org.openwms.core.idendity;
+
+import java.io.Serializable;
+
+import com.fasterxml.jackson.annotation.JsonAutoDetect;
+
 /**
- * This package contains common used types of the CORE RESTful API component. 
+ * A UserPreferenceDTO.
+ * 
+ * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
+ * @version $Revision: $
+ * 
  */
-package org.openwms.core.rest;
+@JsonAutoDetect
+public class UserPreferenceVO implements Serializable {
+
+}

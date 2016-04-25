@@ -22,4 +22,4 @@
 /**
  * Contains controller classes and value types that are responsible to satisfy the RESTful handling with {@link org.openwms.core.domain.system.usermanagement.User}s.
  */
-package org.openwms.core.rest.users;
+package org.openwms.core.idendity;

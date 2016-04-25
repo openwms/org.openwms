@@ -21,16 +21,13 @@
  */
 package org.openwms.core.service.spring;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.fail;
+import static org.junit.Assert.*;
 
 import org.junit.Before;
 import org.junit.Test;
 import org.openwms.core.domain.system.usermanagement.Role;
+import org.openwms.core.idendity.RoleService;
 import org.openwms.core.service.ExceptionCodes;
-import org.openwms.core.service.RoleService;
 import org.openwms.core.service.exception.EntityNotFoundException;
 import org.openwms.core.service.exception.ServiceRuntimeException;
 import org.openwms.core.test.AbstractJpaSpringContextTests;

@@ -19,7 +19,19 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
+package org.openwms.core.idendity;
+
+import org.openwms.core.domain.system.usermanagement.Role;
+import org.openwms.core.service.GenericEntityService;
+
 /**
- * Contains controller classes and value types that are responsible to satisfy the RESTful handling with {@link org.openwms.core.domain.system.usermanagement.Role}s.
+ * A RoleService provides business functionality regarding the handling with {@link Role}s.
+ * 
+ * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
+ * @version $Revision$
+ * @since 0.1
+ * @see org.openwms.core.domain.system.usermanagement.Role
  */
-package org.openwms.core.rest.roles;
+public interface RoleService extends GenericEntityService<Role, Long, String> {
+
+}

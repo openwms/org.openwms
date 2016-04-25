@@ -19,7 +19,7 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
-package org.openwms.core.rest.users;
+package org.openwms.core.idendity;
 
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
@@ -27,14 +27,13 @@ import javax.validation.constraints.Size;
 import java.util.Collection;
 import java.util.List;
 
+import org.openwms.core.AbstractWebController;
+import org.openwms.core.BeanMapper;
+import org.openwms.core.ExceptionCodes;
+import org.openwms.core.HttpBusinessException;
+import org.openwms.core.ResponseVO;
 import org.openwms.core.domain.system.usermanagement.User;
 import org.openwms.core.domain.system.usermanagement.UserPassword;
-import org.openwms.core.rest.AbstractWebController;
-import org.openwms.core.rest.BeanMapper;
-import org.openwms.core.rest.ExceptionCodes;
-import org.openwms.core.rest.HttpBusinessException;
-import org.openwms.core.rest.ResponseVO;
-import org.openwms.core.service.UserService;
 import org.openwms.core.service.exception.EntityNotFoundException;
 import org.openwms.core.service.exception.ServiceRuntimeException;
 import org.springframework.beans.factory.annotation.Autowired;

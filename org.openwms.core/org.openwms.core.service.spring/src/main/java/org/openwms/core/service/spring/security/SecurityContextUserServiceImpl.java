@@ -22,12 +22,9 @@
 package org.openwms.core.service.spring.security;
 
 import net.sf.ehcache.Ehcache;
-
 import org.openwms.core.domain.system.usermanagement.SystemUser;
 import org.openwms.core.domain.system.usermanagement.User;
-import org.openwms.core.integration.GenericDao;
-import org.openwms.core.service.UserService;
-import org.openwms.core.service.exception.EntityNotFoundException;
+import org.openwms.core.idendity.UserService;
 import org.openwms.core.service.spring.SystemUserWrapper;
 import org.openwms.core.service.spring.UserWrapper;
 import org.openwms.core.util.event.UserChangedEvent;

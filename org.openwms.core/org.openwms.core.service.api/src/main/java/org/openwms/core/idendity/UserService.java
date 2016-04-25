@@ -19,12 +19,13 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
-package org.openwms.core.service;
+package org.openwms.core.idendity;
 
 import org.openwms.core.domain.system.usermanagement.SystemUser;
 import org.openwms.core.domain.system.usermanagement.User;
 import org.openwms.core.domain.system.usermanagement.UserPassword;
 import org.openwms.core.domain.system.usermanagement.UserPreference;
+import org.openwms.core.service.GenericEntityService;
 
 /**
  * An UserService offers functionality according to the handling with {@link User}s.
