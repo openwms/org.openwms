@@ -25,12 +25,12 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import org.ameba.exception.ServiceLayerException;
 import org.openwms.common.domain.TransportUnit;
 import org.openwms.common.domain.values.Barcode;
 import org.openwms.common.service.TransportUnitService;
 import org.openwms.core.annotation.FireAfterTransactionAsynchronous;
 import org.openwms.core.domain.values.UnitType;
-import org.openwms.core.service.exception.ServiceRuntimeException;
 import org.openwms.core.util.validation.AssertUtils;
 import org.openwms.wms.domain.LoadUnit;
 import org.openwms.wms.domain.PackagingUnit;
@@ -137,7 +137,7 @@ public class ReceivingManagerImpl implements Receiving {
         AssertUtils.notNull(ordId, "The orderId to create an Order with is null");
         ReceivingOrder order = rcvOrderDao.findByOrderId(ordId);
         if (null != order) {
-            throw new ServiceRuntimeException("An order with the id " + ordId + " already exists");
+            throw new ServiceLayerException("An order with the id " + ordId + " already exists");
         }
         order = new ReceivingOrder(ordId);
         return wmsOrderDao.createOrder(order);
@@ -150,12 +150,12 @@ public class ReceivingManagerImpl implements Receiving {
     @FireAfterTransactionAsynchronous(events = { ReceivingOrderCreatedEvent.class })
     public ReceivingOrder createOrder(ReceivingOrder ord) {
         if (ord == null || !ord.isNew()) {
-            throw new ServiceRuntimeException(
+            throw new ServiceLayerException(
                     "Argument is null or the order identified by the argument already exists: " + ord);
         }
         ReceivingOrder order = rcvOrderDao.findByOrderId(ord.getOrderId());
         if (null != order) {
-            throw new ServiceRuntimeException("The order " + ord + " already exists");
+            throw new ServiceLayerException("The order " + ord + " already exists");
         }
         try {
             return wmsOrderDao.createOrder(ord);

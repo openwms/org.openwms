@@ -26,12 +26,12 @@ import static org.junit.Assert.*;
 import javax.persistence.NoResultException;
 import java.util.List;
 
+import org.ameba.exception.ServiceLayerException;
 import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.openwms.core.ModuleService;
 import org.openwms.core.domain.Module;
-import org.openwms.core.service.exception.ServiceRuntimeException;
 import org.openwms.core.test.AbstractJpaSpringContextTests;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
@@ -83,7 +83,7 @@ public class ModuleServiceTest extends AbstractJpaSpringContextTests {
         try {
             srv.saveStartupOrder(null);
             fail("Should throw an exception when calling with null");
-        } catch (ServiceRuntimeException sre) {
+        } catch (ServiceLayerException sre) {
             LOGGER.debug("OK: Exception thrown when calling with null");
         }
     }
@@ -127,7 +127,7 @@ public class ModuleServiceTest extends AbstractJpaSpringContextTests {
         try {
             srv.remove(null);
             fail("Should throw an exception when calling with null");
-        } catch (ServiceRuntimeException sre) {
+        } catch (ServiceLayerException sre) {
             LOGGER.debug("OK: Exception thrown when calling remove with null");
         }
     }
@@ -179,7 +179,7 @@ public class ModuleServiceTest extends AbstractJpaSpringContextTests {
         try {
             srv.save(null);
             fail("Should throw an exception when calling with null");
-        } catch (ServiceRuntimeException sre) {
+        } catch (ServiceLayerException sre) {
             LOGGER.debug("OK: Exception thrown when calling save with null");
         }
     }
@@ -195,7 +195,7 @@ public class ModuleServiceTest extends AbstractJpaSpringContextTests {
             srv.save(new Module(WMS_MODULE, "org.openwms.wms.swf"));
             entityManager.flush();
             fail("Should throw an exception when trying to store an existing one");
-        } catch (ServiceRuntimeException sre) {
+        } catch (ServiceLayerException sre) {
             if (!(sre.getCause() instanceof DataAccessException)) {
                 fail("Should throw a nested DataAccessException when trying to store an existing one");
             }

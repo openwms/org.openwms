@@ -27,6 +27,7 @@ import javax.validation.constraints.Size;
 import java.util.Collection;
 import java.util.List;
 
+import org.ameba.exception.NotFoundException;
 import org.openwms.core.AbstractWebController;
 import org.openwms.core.BeanMapper;
 import org.openwms.core.ExceptionCodes;
@@ -34,8 +35,6 @@ import org.openwms.core.HttpBusinessException;
 import org.openwms.core.ResponseVO;
 import org.openwms.core.domain.system.usermanagement.User;
 import org.openwms.core.domain.system.usermanagement.UserPassword;
-import org.openwms.core.service.exception.EntityNotFoundException;
-import org.openwms.core.service.exception.ServiceRuntimeException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -178,7 +177,7 @@ public class UsersController extends AbstractWebController {
         try {
             UserVO res = mapper.map(service.create(mapper.mapBackwards(user, User.class)), UserVO.class);
             result.add(new ResponseVO.ItemBuilder().wStatus(HttpStatus.CREATED).wParams(res).build());
-        } catch (ServiceRuntimeException sre) {
+        } catch (Exception sre) {
             resultStatus = HttpStatus.NOT_ACCEPTABLE;
             ResponseVO.ResponseItem item = new ResponseVO.ItemBuilder().wMessage(sre.getMessage())
                     .wStatus(resultStatus).wParams(user.getUsername()).build();
@@ -265,11 +264,11 @@ public class UsersController extends AbstractWebController {
             try {
                 service.removeByBK(new String[] { (name) });
                 result.add(new ResponseVO.ItemBuilder().wStatus(HttpStatus.OK).wParams(name).build());
-            } catch (ServiceRuntimeException sre) {
+            } catch (Exception sre) {
                 resultStatus = HttpStatus.NOT_FOUND;
                 ResponseVO.ResponseItem item = new ResponseVO.ItemBuilder().wMessage(sre.getMessage())
                         .wStatus(HttpStatus.INTERNAL_SERVER_ERROR).wParams(name).build();
-                if (EntityNotFoundException.class.equals(sre.getClass())) {
+                if (NotFoundException.class.equals(sre.getClass())) {
                     item.httpStatus = HttpStatus.NOT_FOUND;
                 }
                 result.add(item);

@@ -21,8 +21,8 @@
  */
 package org.openwms.core.idendity;
 
+import org.openwms.core.GenericEntityService;
 import org.openwms.core.domain.system.usermanagement.Role;
-import org.openwms.core.service.GenericEntityService;
 
 /**
  * A RoleService provides business functionality regarding the handling with {@link Role}s.

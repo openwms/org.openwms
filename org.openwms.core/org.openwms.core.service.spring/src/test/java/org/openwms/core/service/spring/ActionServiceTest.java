@@ -31,12 +31,13 @@ import org.junit.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.openwms.core.ConfigurationService;
+import org.openwms.core.ConfigurationServiceImpl;
 import org.openwms.core.domain.search.Action;
 import org.openwms.core.domain.search.Tag;
 import org.openwms.core.domain.system.usermanagement.SystemUser;
 import org.openwms.core.domain.system.usermanagement.User;
 import org.openwms.core.domain.system.usermanagement.UserPreference;
-import org.openwms.core.service.spring.search.ActionServiceImpl;
+import org.openwms.core.search.ActionServiceImpl;
 import org.openwms.core.test.AbstractMockitoTests;
 
 /**

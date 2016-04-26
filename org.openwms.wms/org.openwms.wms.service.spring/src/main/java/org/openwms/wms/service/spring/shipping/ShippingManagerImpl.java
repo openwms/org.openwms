@@ -21,9 +21,9 @@
  */
 package org.openwms.wms.service.spring.shipping;
 
+import org.ameba.exception.ServiceLayerException;
 import org.openwms.core.annotation.FireAfterTransactionAsynchronous;
 import org.openwms.core.event.EventPublisher;
-import org.openwms.core.service.exception.ServiceRuntimeException;
 import org.openwms.wms.domain.shipping.ShippingOrder;
 import org.openwms.wms.domain.shipping.ShippingOrderCreatedNotification;
 import org.openwms.wms.domain.shipping.ShippingOrderPosition;
@@ -61,7 +61,7 @@ public class ShippingManagerImpl implements Shipping {
     @FireAfterTransactionAsynchronous(events = { ShippingOrderCreatedNotification.class })
     public ShippingOrder createOrder(ShippingOrder order) {
         if (!order.isNew()) {
-            throw new ServiceRuntimeException("ShippingOrder is already persisted");
+            throw new ServiceLayerException("ShippingOrder is already persisted");
         }
         ShippingOrder newOrder = dao.createOrder(order);
         // publisher.publish(new ShippingOrderCreatedEvent(newOrder));

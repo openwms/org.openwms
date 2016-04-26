@@ -21,7 +21,7 @@
  */
 package org.openwms.wms.service.inventory;
 
-import org.openwms.core.service.exception.ServiceException;
+import org.ameba.exception.ServiceLayerException;
 
 /**
  * A AllocationException.
@@ -30,7 +30,7 @@ import org.openwms.core.service.exception.ServiceException;
  * @version $Revision: $
  *
  */
-public class AllocationException extends ServiceException {
+public class AllocationException extends ServiceLayerException {
 
     /**
      * Create a new AllocationException.
@@ -42,15 +42,6 @@ public class AllocationException extends ServiceException {
         // TODO [scherrer] Auto-generated constructor stub
     }
 
-    /**
-     * Create a new AllocationException.
-     * 
-     * @param cause
-     */
-    public AllocationException(Throwable cause) {
-        super(cause);
-        // TODO [scherrer] Auto-generated constructor stub
-    }
 
     /**
      * Create a new AllocationException.

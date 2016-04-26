@@ -33,6 +33,7 @@ import org.openwms.core.idendity.SystemUserWrapper;
 import org.openwms.core.idendity.UserService;
 import org.openwms.core.idendity.UserWrapper;
 import org.openwms.core.integration.GenericDao;
+import org.openwms.core.security.SecurityContextUserServiceImpl;
 import org.openwms.core.test.AbstractMockitoTests;
 import org.openwms.core.util.event.UserChangedEvent;
 import org.springframework.security.authentication.dao.SaltSource;

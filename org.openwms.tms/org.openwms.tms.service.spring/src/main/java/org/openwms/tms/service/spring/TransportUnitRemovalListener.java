@@ -87,7 +87,7 @@ public class TransportUnitRemovalListener implements OnRemovalListener<Transport
         } catch (IllegalStateException ise) {
             LOGGER.warn("For one or more created TransportOrders it is not allowed to cancel them");
             throw new RemovalNotAllowedException(
-                    "For one or more created TransportOrders it is not allowed to cancel them", ise);
+                    "For one or more created TransportOrders it is not allowed to cancel them");
         }
     }
 

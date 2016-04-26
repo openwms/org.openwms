@@ -26,6 +26,8 @@ import static org.junit.Assert.*;
 import javax.persistence.NoResultException;
 import java.util.List;
 
+import org.ameba.exception.NotFoundException;
+import org.ameba.exception.ServiceLayerException;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -37,8 +39,6 @@ import org.openwms.core.domain.system.usermanagement.UserPreference;
 import org.openwms.core.exception.InvalidPasswordException;
 import org.openwms.core.idendity.UserService;
 import org.openwms.core.idendity.api.UserServiceImpl;
-import org.openwms.core.service.exception.EntityNotFoundException;
-import org.openwms.core.service.exception.ServiceRuntimeException;
 import org.openwms.core.test.AbstractJpaSpringContextTests;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
@@ -80,8 +80,8 @@ public class UserServiceTest extends AbstractJpaSpringContextTests {
         try {
             srv.uploadImageFile(UNKNOWN_USER, new byte[222]);
             fail("Should throw an exception when calling with unknown user");
-        } catch (ServiceRuntimeException sre) {
-            if (!(sre instanceof EntityNotFoundException)) {
+        } catch (Exception sre) {
+            if (!(sre instanceof NotFoundException)) {
                 fail("Should throw a nested UserNotFoundException when calling with unknown user");
             }
             LOGGER.debug("OK: User unknown" + sre.getMessage());
@@ -99,7 +99,7 @@ public class UserServiceTest extends AbstractJpaSpringContextTests {
         try {
             srv.save(null);
             fail("Should throw an exception when calling with null");
-        } catch (ServiceRuntimeException sre) {
+        } catch (ServiceLayerException sre) {
             LOGGER.debug("OK: null user:" + sre.getMessage());
         }
     }
@@ -137,7 +137,7 @@ public class UserServiceTest extends AbstractJpaSpringContextTests {
         try {
             srv.remove(null);
             fail("Should throw an exception when calling with null");
-        } catch (ServiceRuntimeException sre) {
+        } catch (ServiceLayerException sre) {
             LOGGER.debug("OK: null user:" + sre.getMessage());
         }
     }
@@ -174,7 +174,7 @@ public class UserServiceTest extends AbstractJpaSpringContextTests {
         try {
             srv.changeUserPassword(null);
             fail("Should throw an exception when calling with null");
-        } catch (ServiceRuntimeException sre) {
+        } catch (ServiceLayerException sre) {
             LOGGER.debug("OK: null:" + sre.getMessage());
         }
     }
@@ -191,8 +191,8 @@ public class UserServiceTest extends AbstractJpaSpringContextTests {
         try {
             srv.changeUserPassword(new UserPassword(new User(UNKNOWN_USER), "password"));
             fail("Should throw an exception when calling with an unknown user");
-        } catch (ServiceRuntimeException sre) {
-            if (!(sre instanceof EntityNotFoundException)) {
+        } catch (Exception sre) {
+            if (!(sre instanceof NotFoundException)) {
                 fail("Should throw an UserNotFoundException when calling with an unknown user");
             }
             LOGGER.debug("OK: UserNotFoundException:" + sre.getMessage());
@@ -225,7 +225,7 @@ public class UserServiceTest extends AbstractJpaSpringContextTests {
         try {
             srv.changeUserPassword(new UserPassword(new User(KNOWN_USER), "password"));
             fail("Should throw an exception when calling with an invalid password");
-        } catch (ServiceRuntimeException sre) {
+        } catch (ServiceLayerException sre) {
             if (!(sre.getCause() instanceof InvalidPasswordException)) {
                 fail("Should throw a nested InvalidPasswordException when calling with an invalid password");
             }
@@ -301,10 +301,9 @@ public class UserServiceTest extends AbstractJpaSpringContextTests {
         try {
             srv.saveUserProfile(null, new UserPassword(new User(TEST_USER), TEST_USER));
             fail("Must throw an exception when invoking with null argument");
-        } catch (ServiceRuntimeException sre) {
+        } catch (ServiceLayerException sre) {
             if (sre.getMessage().equals(
                     messageSource.getMessage(ExceptionCodes.USER_PROFILE_SAVE_NOT_BE_NULL, new String[0], null))) {
-                return;
             } else {
                 fail("Expected to wrap an IllegalArgumentException when the user argument is null");
             }
@@ -346,8 +345,8 @@ public class UserServiceTest extends AbstractJpaSpringContextTests {
         u = srv.saveUserProfile(u, new UserPassword(u, "password1"));
         try {
             u = srv.saveUserProfile(u, new UserPassword(user, "password"));
-            fail("Expected to catch an ServiceRuntimeException when the password is invalid");
-        } catch (ServiceRuntimeException sre) {
+            fail("Expected to catch an ServiceLayerException when the password is invalid");
+        } catch (ServiceLayerException sre) {
             if (!(sre.getCause() instanceof InvalidPasswordException)) {
                 fail("Expected to catch an InvalidPasswordException when the password is invalid");
             }

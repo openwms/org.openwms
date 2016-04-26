@@ -21,9 +21,13 @@
  */
 package org.openwms.core.idendity.api;
 
+import javax.persistence.EntityNotFoundException;
 import java.util.HashSet;
 
+import org.ameba.exception.NotFoundException;
+import org.ameba.exception.ServiceLayerException;
 import org.apache.commons.lang3.StringUtils;
+import org.openwms.core.AbstractGenericEntityService;
 import org.openwms.core.ConfigurationService;
 import org.openwms.core.ExceptionCodes;
 import org.openwms.core.annotation.FireAfterTransaction;
@@ -39,9 +43,6 @@ import org.openwms.core.idendity.UserWrapper;
 import org.openwms.core.integration.GenericDao;
 import org.openwms.core.integration.SecurityObjectDao;
 import org.openwms.core.integration.UserDao;
-import org.openwms.core.service.exception.EntityNotFoundException;
-import org.openwms.core.service.exception.ServiceRuntimeException;
-import org.openwms.core.service.spring.AbstractGenericEntityService;
 import org.openwms.core.util.event.UserChangedEvent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -53,20 +54,15 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 /**
- * An UserServiceImpl is a Spring supported transactional implementation of a
- * general {@link UserService}. Using Spring 2 annotation support autowires
- * collaborators, therefore XML configuration becomes obsolete. This class is
- * marked with Springs {@link Service} annotation to benefit from Springs
- * exception translation interceptor. Traditional CRUD operations are delegated
- * to an {@link UserDao}.
- * <p>
- * This implementation can be autowired with the name {@value #COMPONENT_NAME}.
- * </p>
- * 
+ * An UserServiceImpl is a Spring supported transactional implementation of a general {@link UserService}. Using Spring 2 annotation support
+ * autowires collaborators, therefore XML configuration becomes obsolete. This class is marked with Springs {@link Service} annotation to
+ * benefit from Springs exception translation interceptor. Traditional CRUD operations are delegated to an {@link UserDao}. <p> This
+ * implementation can be autowired with the name {@value #COMPONENT_NAME}. </p>
+ *
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  * @version $Revision$
- * @since 0.1
  * @see org.openwms.core.integration.UserDao
+ * @since 0.1
  */
 @Transactional
 @Service(UserServiceImpl.COMPONENT_NAME)
@@ -106,7 +102,7 @@ public class UserServiceImpl extends AbstractGenericEntityService<User, Long, St
         User result = null;
         try {
             result = super.findByBK(entity.getUsername());
-        } catch (EntityNotFoundException enfe) {
+        } catch (NotFoundException enfe) {
             ;
         }
         return result;
@@ -114,16 +110,15 @@ public class UserServiceImpl extends AbstractGenericEntityService<User, Long, St
 
     /**
      * {@inheritDoc}
-     * 
-     * @throws EntityNotFoundException
-     *             when no User with <tt>username</tt> found
+     *
+     * @throws EntityNotFoundException when no User with <tt>username</tt> found
      */
     @Override
-    @FireAfterTransaction(events = { UserChangedEvent.class })
+    @FireAfterTransaction(events = {UserChangedEvent.class})
     public void uploadImageFile(String username, byte[] image) {
         User user = dao.findByUniqueId(username);
         if (user == null) {
-            throw new EntityNotFoundException(translate(ExceptionCodes.ENTITY_NOT_EXIST, username));
+            throw new NotFoundException(translate(ExceptionCodes.ENTITY_NOT_EXIST, username), ExceptionCodes.ENTITY_NOT_EXIST);
         }
         if (user.getUserDetails() == null) {
             user.setUserDetails(new UserDetails());
@@ -134,14 +129,13 @@ public class UserServiceImpl extends AbstractGenericEntityService<User, Long, St
 
     /**
      * {@inheritDoc}
-     * 
+     * <p>
      * Triggers <tt>UserChangedEvent</tt> after completion.
-     * 
-     * @throws ServiceRuntimeException
-     *             if the <tt>entity</tt> argument is <code>null</code>
+     *
+     * @throws ServiceLayerException if the <tt>entity</tt> argument is <code>null</code>
      */
     @Override
-    @FireAfterTransaction(events = { UserChangedEvent.class })
+    @FireAfterTransaction(events = {UserChangedEvent.class})
     public User save(User entity) {
         checkForNull(entity, ExceptionCodes.USER_SAVE_NOT_BE_NULL);
         return super.save(entity);
@@ -149,14 +143,13 @@ public class UserServiceImpl extends AbstractGenericEntityService<User, Long, St
 
     /**
      * {@inheritDoc}
-     * 
+     * <p>
      * Triggers <tt>UserChangedEvent</tt> after completion.
-     * 
-     * @throws ServiceRuntimeException
-     *             when <code>entity</code> is <code>null</code>
+     *
+     * @throws ServiceLayerException when <code>entity</code> is <code>null</code>
      */
     @Override
-    @FireAfterTransaction(events = { UserChangedEvent.class })
+    @FireAfterTransaction(events = {UserChangedEvent.class})
     public void remove(User entity) {
         checkForNull(entity, ExceptionCodes.USER_REMOVE_NOT_BE_NULL);
         super.remove(entity);
@@ -164,14 +157,13 @@ public class UserServiceImpl extends AbstractGenericEntityService<User, Long, St
 
     /**
      * {@inheritDoc}
-     * 
+     * <p>
      * Triggers <tt>UserChangedEvent</tt> after completion.
-     * 
-     * @throws ServiceRuntimeException
-     *             when <code>keys</code> is <code>null</code>
+     *
+     * @throws ServiceLayerException when <code>keys</code> is <code>null</code>
      */
     @Override
-    @FireAfterTransaction(events = { UserChangedEvent.class })
+    @FireAfterTransaction(events = {UserChangedEvent.class})
     public void removeByBK(String[] keys) {
         checkForNull(keys, ExceptionCodes.USER_REMOVE_NOT_BE_NULL);
         super.removeByBK(keys);
@@ -179,14 +171,13 @@ public class UserServiceImpl extends AbstractGenericEntityService<User, Long, St
 
     /**
      * {@inheritDoc}
-     * 
+     * <p>
      * Triggers <tt>UserChangedEvent</tt> after completion.
-     * 
-     * @throws ServiceRuntimeException
-     *             when <code>keys</code> is <code>null</code>
+     *
+     * @throws ServiceLayerException when <code>keys</code> is <code>null</code>
      */
     @Override
-    @FireAfterTransaction(events = { UserChangedEvent.class })
+    @FireAfterTransaction(events = {UserChangedEvent.class})
     public void removeByID(Long[] keys) {
         checkForNull(keys, ExceptionCodes.USER_REMOVE_NOT_BE_NULL);
         super.removeByID(keys);
@@ -194,7 +185,7 @@ public class UserServiceImpl extends AbstractGenericEntityService<User, Long, St
 
     /**
      * {@inheritDoc}
-     * 
+     * <p>
      * Marked as <code>readOnly</code> transactional method.
      */
     @Override
@@ -205,7 +196,7 @@ public class UserServiceImpl extends AbstractGenericEntityService<User, Long, St
 
     /**
      * {@inheritDoc}
-     * 
+     * <p>
      * Marked as <code>readOnly</code> transactional method.
      */
     @Override
@@ -221,21 +212,17 @@ public class UserServiceImpl extends AbstractGenericEntityService<User, Long, St
 
     /**
      * {@inheritDoc}
-     * 
-     * @throws ServiceRuntimeException
-     *             if
-     *             <ul>
-     *             <li><code>userPassword</code> is <code>null</code></li>
-     *             <li>the new password is invalid and does not match the
-     *             password rules</li>
-     *             </ul>
-     * @throws EntityNotFoundException
-     *             if {@link User} not found
+     *
+     * @throws ServiceLayerException if <ul> <li><code>userPassword</code> is <code>null</code></li> <li>the new password is invalid and
+     * does not match the password rules</li> </ul>
+     * @throws EntityNotFoundException if {@link User} not found
      */
     @Override
-    @FireAfterTransaction(events = { UserChangedEvent.class })
+    @FireAfterTransaction(events = {UserChangedEvent.class})
     public void changeUserPassword(UserPassword userPassword) {
-        ServiceRuntimeException.throwIfNull(userPassword, translate(ExceptionCodes.USER_PASSWORD_SAVE_NOT_BE_NULL));
+        if (null == userPassword) {
+            throw new ServiceLayerException(translate(ExceptionCodes.USER_PASSWORD_SAVE_NOT_BE_NULL), ExceptionCodes.USER_PASSWORD_SAVE_NOT_BE_NULL);
+        }
         User entity = dao.findByUniqueId(userPassword.getUser().getUsername());
         if (entity == null) {
             throw new EntityNotFoundException(translate(ExceptionCodes.USER_NOT_EXIST, userPassword.getUser()
@@ -247,26 +234,23 @@ public class UserServiceImpl extends AbstractGenericEntityService<User, Long, St
             dao.save(entity);
         } catch (InvalidPasswordException ipe) {
             LOGGER.error(ipe.getMessage());
-            throw new ServiceRuntimeException(translate(ExceptionCodes.USER_PASSWORD_INVALID, userPassword.getUser()
-                    .getUsername()), ipe);
+            throw new ServiceLayerException(translate(ExceptionCodes.USER_PASSWORD_INVALID, userPassword.getUser()
+                    .getUsername()), ExceptionCodes.USER_PASSWORD_INVALID);
         }
     }
 
     /**
      * {@inheritDoc}
-     * 
-     * @throws ServiceRuntimeException
-     *             if
-     *             <ul>
-     *             <li><code>user</code> is <code>null</code></li>
-     *             <li>the new password is invalid and does not match the
-     *             password rules</li>
-     *             </ul>
+     *
+     * @throws ServiceLayerException if <ul> <li><code>user</code> is <code>null</code></li> <li>the new password is invalid and does not
+     * match the password rules</li> </ul>
      */
     @Override
-    @FireAfterTransaction(events = { UserChangedEvent.class })
+    @FireAfterTransaction(events = {UserChangedEvent.class})
     public User saveUserProfile(User user, UserPassword userPassword, UserPreference... prefs) {
-        ServiceRuntimeException.throwIfNull(user, translate(ExceptionCodes.USER_PROFILE_SAVE_NOT_BE_NULL));
+        if (null == user) {
+            throw new ServiceLayerException(translate(ExceptionCodes.USER_PROFILE_SAVE_NOT_BE_NULL), ExceptionCodes.USER_PROFILE_SAVE_NOT_BE_NULL);
+        }
 
         if (userPassword != null && StringUtils.isNotEmpty(userPassword.getPassword())) {
             try {
@@ -274,8 +258,8 @@ public class UserServiceImpl extends AbstractGenericEntityService<User, Long, St
                         saltSource.getSalt(new UserWrapper(user))));
             } catch (InvalidPasswordException ipe) {
                 LOGGER.error(ipe.getMessage());
-                throw new ServiceRuntimeException(translate(ExceptionCodes.USER_PASSWORD_INVALID,
-                        userPassword.getPassword()), ipe);
+                throw new ServiceLayerException(translate(ExceptionCodes.USER_PASSWORD_INVALID,
+                        userPassword.getPassword()), ExceptionCodes.USER_PASSWORD_INVALID);
             }
         }
         for (UserPreference preference : prefs) {

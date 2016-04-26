@@ -24,13 +24,13 @@ package org.openwms.common.service.spring;
 import java.util.Date;
 import java.util.List;
 
+import org.ameba.exception.ServiceLayerException;
 import org.openwms.common.domain.Location;
 import org.openwms.common.domain.LocationType;
 import org.openwms.common.integration.LocationDao;
 import org.openwms.common.service.LocationService;
 import org.openwms.core.domain.system.Message;
 import org.openwms.core.integration.GenericDao;
-import org.openwms.core.service.exception.ServiceRuntimeException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
@@ -80,7 +80,7 @@ public class LocationServiceImpl implements LocationService<Location> {
     public Location removeMessages(Long id, List<Message> messages) {
         Location location = dao.findById(id);
         if (null == location) {
-            throw new ServiceRuntimeException("Location with pk " + id + " not found, probably it was removed before");
+            throw new ServiceLayerException("Location with pk " + id + " not found, probably it was removed before");
         }
         location.removeMessages(messages.toArray(new Message[messages.size()]));
         return location;

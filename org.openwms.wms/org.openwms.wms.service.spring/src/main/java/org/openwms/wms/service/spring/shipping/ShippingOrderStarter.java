@@ -26,9 +26,9 @@ import java.util.Date;
 import java.util.List;
 import java.util.Set;
 
+import org.ameba.exception.ServiceLayerException;
 import org.openwms.core.event.EventBroker;
 import org.openwms.core.event.EventListener;
-import org.openwms.core.service.exception.ServiceRuntimeException;
 import org.openwms.core.util.event.RootApplicationEvent;
 import org.openwms.wms.domain.PackagingUnit;
 import org.openwms.wms.domain.order.OrderState;
@@ -96,7 +96,7 @@ public class ShippingOrderStarter implements EventListener, ApplicationListener<
         if (ShippingOrderCreatedNotification.class.equals(event.getClass())) {
             ShippingOrder order = dao.findByOrderId(((ShippingOrder) event.getSource()).getOrderId());
             if (null == order || order.getOrderState() != OrderState.CREATED) {
-                throw new ServiceRuntimeException("Order not found or not in expected state CREATED");
+                throw new ServiceLayerException("Order not found or not in expected state CREATED");
             }
             if (LOGGER.isDebugEnabled()) {
                 LOGGER.debug("Got Event to allocate a ShippingOrder: " + order.getOrderId());

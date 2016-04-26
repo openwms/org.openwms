@@ -22,14 +22,13 @@
 package org.openwms.core.idendity.api;
 
 import org.ameba.exception.NotFoundException;
+import org.openwms.core.AbstractGenericEntityService;
 import org.openwms.core.ExceptionCodes;
 import org.openwms.core.annotation.FireAfterTransaction;
 import org.openwms.core.domain.system.usermanagement.Role;
 import org.openwms.core.idendity.RoleService;
 import org.openwms.core.integration.GenericDao;
 import org.openwms.core.integration.RoleDao;
-import org.openwms.core.service.exception.ServiceRuntimeException;
-import org.openwms.core.service.spring.AbstractGenericEntityService;
 import org.openwms.core.util.event.RoleChangedEvent;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -87,7 +86,7 @@ public class RoleServiceImpl extends AbstractGenericEntityService<Role, Long, St
      * 
      * Triggers <tt>RoleChangedEvent</tt> after completion.
      * 
-     * @throws ServiceRuntimeException
+     * @throws ServiceLayerException
      *             when <code>entity</code> is <code>null</code>
      */
     @Override
@@ -102,7 +101,7 @@ public class RoleServiceImpl extends AbstractGenericEntityService<Role, Long, St
      * 
      * Triggers <tt>RoleChangedEvent</tt> after completion.
      * 
-     * @throws ServiceRuntimeException
+     * @throws ServiceLayerException
      *             when <code>keys</code> is <code>null</code>
      */
     @Override
@@ -117,7 +116,7 @@ public class RoleServiceImpl extends AbstractGenericEntityService<Role, Long, St
      * 
      * Triggers <tt>RoleChangedEvent</tt> after completion.
      * 
-     * @throws ServiceRuntimeException
+     * @throws ServiceLayerException
      *             when <code>keys</code> is <code>null</code>
      */
     @Override
@@ -132,7 +131,7 @@ public class RoleServiceImpl extends AbstractGenericEntityService<Role, Long, St
      * 
      * Triggers <tt>RoleChangedEvent</tt> after completion.
      * 
-     * @throws ServiceRuntimeException
+     * @throws ServiceLayerException
      *             if the <tt>entity</tt> argument is <code>null</code>
      */
     @Override
