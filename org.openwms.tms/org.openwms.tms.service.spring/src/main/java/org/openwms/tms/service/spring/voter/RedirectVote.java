@@ -23,7 +23,7 @@ package org.openwms.tms.service.spring.voter;
 
 import org.openwms.common.domain.Location;
 import org.openwms.common.domain.LocationGroup;
-import org.openwms.core.service.voter.Vote;
+import org.openwms.core.voter.Vote;
 
 /**
  * A RedirectVote. Encapsulates a targetLocationGroup and a targetLocation to vote for as targets.
