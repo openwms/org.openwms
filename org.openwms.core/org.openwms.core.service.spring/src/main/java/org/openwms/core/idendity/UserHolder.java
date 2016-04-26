@@ -19,28 +19,24 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
-package org.openwms.core.service;
+package org.openwms.core.idendity;
 
-import java.util.Collection;
-
-import org.openwms.core.domain.system.I18n;
+import org.openwms.core.domain.system.usermanagement.User;
 
 /**
- * An I18nService is responsible to find and save i18n translations.
+ * An UserHolder exposes an {@link User} instance to it's clients. The main purpose of this interface is the strict disjunction between the
+ * API and the implementation class, that is kept separately in the <i>implementation</i> bundle.
  * 
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
- * @version $Revision$
+ * @version $Revision: 1484 $
  * @since 0.1
  */
-public interface I18nService extends GenericEntityService<I18n, Long, String> {
+public interface UserHolder {
 
     /**
-     * Save an collection of translation instances, no matter whether transient,
-     * detached or managed entities.
+     * Return the wrapped {@link User} instance.
      * 
-     * @param translations
-     *            An collection of translations to save
-     * @return The updated collection
+     * @return The wrapped {@link User}
      */
-    Collection<I18n> saveAll(Collection<I18n> translations);
+    User getUser();
 }

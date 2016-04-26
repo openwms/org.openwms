@@ -21,11 +21,11 @@
  */
 package org.openwms.core.idendity;
 
+import org.openwms.core.GenericEntityService;
 import org.openwms.core.domain.system.usermanagement.SystemUser;
 import org.openwms.core.domain.system.usermanagement.User;
 import org.openwms.core.domain.system.usermanagement.UserPassword;
 import org.openwms.core.domain.system.usermanagement.UserPreference;
-import org.openwms.core.service.GenericEntityService;
 
 /**
  * An UserService offers functionality according to the handling with {@link User}s.

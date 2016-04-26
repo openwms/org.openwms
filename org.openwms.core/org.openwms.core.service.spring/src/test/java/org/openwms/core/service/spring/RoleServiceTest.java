@@ -25,9 +25,9 @@ import static org.junit.Assert.*;
 
 import org.junit.Before;
 import org.junit.Test;
+import org.openwms.core.ExceptionCodes;
 import org.openwms.core.domain.system.usermanagement.Role;
 import org.openwms.core.idendity.RoleService;
-import org.openwms.core.service.ExceptionCodes;
 import org.openwms.core.service.exception.EntityNotFoundException;
 import org.openwms.core.service.exception.ServiceRuntimeException;
 import org.openwms.core.test.AbstractJpaSpringContextTests;

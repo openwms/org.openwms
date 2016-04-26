@@ -25,12 +25,12 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
+import org.openwms.core.ConfigurationService;
 import org.openwms.core.annotation.FireAfterTransaction;
 import org.openwms.core.domain.system.AbstractPreference;
 import org.openwms.core.domain.system.PreferenceKey;
 import org.openwms.core.integration.PreferenceDao;
 import org.openwms.core.integration.PreferenceWriter;
-import org.openwms.core.service.ConfigurationService;
 import org.openwms.core.util.event.ConfigurationChangedEvent;
 import org.openwms.core.util.event.MergePropertiesEvent;
 import org.openwms.core.util.validation.AssertUtils;

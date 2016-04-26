@@ -28,6 +28,7 @@ import org.junit.Assert;
 import org.junit.Test;
 import org.openwms.core.domain.system.usermanagement.SystemUser;
 import org.openwms.core.domain.system.usermanagement.User;
+import org.openwms.core.idendity.SystemUserWrapper;
 
 /**
  * A SystemUserWrapperTest.
@@ -42,7 +43,7 @@ public class SystemUserWrapperTest {
 
     /**
      * Test method for
-     * {@link org.openwms.core.service.spring.SystemUserWrapper#hashCode()}.
+     * {@link SystemUserWrapper#hashCode()}.
      */
     @Test
     public final void testHashCode() {
@@ -68,7 +69,7 @@ public class SystemUserWrapperTest {
 
     /**
      * Test method for
-     * {@link org.openwms.core.service.spring.SystemUserWrapper#addDefaultGrants(java.util.Collection)}
+     * {@link SystemUserWrapper#addDefaultGrants(java.util.Collection)}
      * .
      */
     @Test
@@ -84,9 +85,9 @@ public class SystemUserWrapperTest {
      * Test method for
      * <ul>
      * <li>
-     * {@link org.openwms.core.service.spring.SystemUserWrapper#getPassword()}.</li>
+     * {@link SystemUserWrapper#getPassword()}.</li>
      * <li>
-     * {@link org.openwms.core.service.spring.SystemUserWrapper#setPassword(java.lang.String)}
+     * {@link SystemUserWrapper#setPassword(java.lang.String)}
      * </li>
      * </ul>
      */
@@ -100,7 +101,7 @@ public class SystemUserWrapperTest {
 
     /**
      * Test method for
-     * {@link org.openwms.core.service.spring.SystemUserWrapper#equals(java.lang.Object)}
+     * {@link SystemUserWrapper#equals(java.lang.Object)}
      * .
      */
     @Test
@@ -139,7 +140,7 @@ public class SystemUserWrapperTest {
 
     /**
      * Test method for
-     * {@link org.openwms.core.service.spring.SystemUserWrapper#SystemUserWrapper(org.openwms.core.domain.system.usermanagement.User)}
+     * {@link SystemUserWrapper#SystemUserWrapper(org.openwms.core.domain.system.usermanagement.User)}
      * .
      */
     @Test(expected = IllegalArgumentException.class)

@@ -19,39 +19,35 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
-package org.openwms.core.service.exception;
+package org.openwms.core;
+
+import java.util.List;
+
+import org.openwms.core.domain.system.usermanagement.Grant;
+import org.openwms.core.domain.system.usermanagement.SecurityObject;
 
 /**
- * An EntityNotFoundException is thrown when the requested user was not found.
+ * A SecurityService defines functionality to handle <code>SecurityObject</code>s, especially <code>Grant</code>s.
  * 
- * @author <a href="mailto:russelltina@users.sourceforge.net">Tina Russell</a>
+ * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  * @version $Revision$
  * @since 0.1
  */
-public class EntityNotFoundException extends ServiceRuntimeException {
-
-    private static final long serialVersionUID = 8096508651075331764L;
+public interface SecurityService extends GenericEntityService<SecurityObject, Long, String> {
 
     /**
-     * Create a new EntityNotFoundException.
+     * Merge a list of persisted, detached or transient {@link Grant}s of a particular <code>Module</code>.
      * 
-     * @param message
-     *            Detail message
+     * @param moduleName
+     *            The moduleName
+     * @param grants
+     *            The list of {@link Grant}s to merge
+     * @return All existing {@link Grant}s
      */
-    public EntityNotFoundException(String message) {
-        super(message);
-    }
+    List<Grant> mergeGrants(String moduleName, List<Grant> grants);
 
     /**
-     * Create a new EntityNotFoundException.
-     * 
-     * @param message
-     *            Detail message
-     * @param cause
-     *            Root cause
+     * Force a login. Call this method to access the security filter chain. The implementation does not need to execute anything.
      */
-    public EntityNotFoundException(String message, Throwable cause) {
-        super(message, cause);
-    }
-
+    void login();
 }

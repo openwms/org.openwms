@@ -19,92 +19,57 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
-package org.openwms.core.service.spring;
+package org.openwms.core.idendity;
 
-import org.openwms.core.domain.system.usermanagement.SecurityObject;
+import org.openwms.core.domain.system.usermanagement.SystemUser;
 import org.springframework.security.core.GrantedAuthority;
 
 /**
- * A SecurityObjectAuthority.
+ * A SystemUserAuthority.
  * 
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  * @version $Revision: $
  * @since 0.2
- * @see org.springframework.security.core.GrantedAuthority
  */
-class SecurityObjectAuthority implements GrantedAuthority {
+final class SystemUserAuthority implements GrantedAuthority {
 
-    private static final long serialVersionUID = -7308040835860060411L;
-    private final SecurityObject sObj;
-
-    /**
-     * Create a new SecurityObjectAuthority.
-     * 
-     * @param securityObject
-     *            A {@link SecurityObject} to use as authority carrier.
-     */
-    public SecurityObjectAuthority(SecurityObject securityObject) {
-        sObj = securityObject;
-    }
+    private static final long serialVersionUID = 5465230406957411096L;
 
     /**
      * {@inheritDoc}
-     * 
-     * Return the name of the wrapped {@link SecurityObject}.
-     */
-    @Override
-    public String getAuthority() {
-        return sObj.getName();
-    }
-
-    /**
-     * {@inheritDoc}
-     * 
-     * Uses sObj for calculation.
      */
     @Override
     public int hashCode() {
         final int prime = 31;
         int result = super.hashCode();
-        result = prime * result + ((sObj == null) ? 0 : sObj.hashCode());
+        result = prime * result + SystemUser.SYSTEM_ROLE_NAME.hashCode();
         return result;
     }
 
     /**
      * {@inheritDoc}
-     * 
-     * Uses sObj for comparison.
      */
     @Override
     public boolean equals(Object obj) {
-        if (this == obj) {
-            return true;
-        }
         if (obj == null) {
             return false;
         }
-        if (getClass() != obj.getClass()) {
-            return false;
+        if (this == obj) {
+            return true;
         }
-        SecurityObjectAuthority other = (SecurityObjectAuthority) obj;
-        if (sObj == null) {
-            if (other.sObj != null) {
-                return false;
-            }
-        } else if (!sObj.equals(other.sObj)) {
+        if (getClass() != obj.getClass()) {
             return false;
         }
         return true;
     }
 
     /**
-     * Delegate to the wrapped SecurityObject.
+     * {@inheritDoc}
      * 
-     * @see java.lang.Object#toString()
+     * Return the System User's rolename.
      */
     @Override
-    public String toString() {
-        return sObj.toString();
+    public String getAuthority() {
+        return SystemUser.SYSTEM_ROLE_NAME;
     }
-
 }

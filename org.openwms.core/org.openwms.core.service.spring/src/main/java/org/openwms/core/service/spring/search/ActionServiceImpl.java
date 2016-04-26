@@ -26,13 +26,13 @@ import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
 
+import org.openwms.core.ConfigurationService;
 import org.openwms.core.domain.search.Action;
 import org.openwms.core.domain.search.Tag;
 import org.openwms.core.domain.system.PreferenceKey;
 import org.openwms.core.domain.system.PropertyScope;
 import org.openwms.core.domain.system.usermanagement.User;
 import org.openwms.core.domain.system.usermanagement.UserPreference;
-import org.openwms.core.service.ConfigurationService;
 import org.openwms.core.service.search.ActionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

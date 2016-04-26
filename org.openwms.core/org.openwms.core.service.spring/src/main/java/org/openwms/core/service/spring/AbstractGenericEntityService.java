@@ -27,11 +27,11 @@ import java.util.Collections;
 import java.util.List;
 
 import org.ameba.exception.NotFoundException;
+import org.openwms.core.ExceptionCodes;
+import org.openwms.core.GenericEntityService;
 import org.openwms.core.domain.AbstractEntity;
 import org.openwms.core.integration.GenericDao;
 import org.openwms.core.integration.exception.IntegrationRuntimeException;
-import org.openwms.core.service.ExceptionCodes;
-import org.openwms.core.service.GenericEntityService;
 import org.openwms.core.service.exception.EntityNotFoundException;
 import org.openwms.core.service.exception.ServiceRuntimeException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -187,7 +187,7 @@ public abstract class AbstractGenericEntityService<T extends AbstractEntity<ID>,
                 if (entity == null) {
                     String msg = getMessageSource().getMessage(ExceptionCodes.ENTITY_NOT_EXIST,
                             new Object[] { keys[i] }, null);
-                    throw new NotFoundException(msg);
+                    throw new NotFoundException(msg, ExceptionCodes.ENTITY_NOT_EXIST);
                 }
                 getRepository().remove(entity);
             }
@@ -208,7 +208,7 @@ public abstract class AbstractGenericEntityService<T extends AbstractEntity<ID>,
                 if (entity == null) {
                     String msg = getMessageSource().getMessage(ExceptionCodes.ENTITY_NOT_EXIST,
                             new Object[] { keys[i] }, null);
-                    throw new NotFoundException(msg);
+                    throw new NotFoundException(msg, ExceptionCodes.ENTITY_NOT_EXIST);
                 }
                 getRepository().remove(entity);
             }

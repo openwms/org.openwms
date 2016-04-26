@@ -25,7 +25,7 @@ import javax.validation.ValidationException;
 import javax.validation.Validator;
 
 import org.aspectj.lang.ProceedingJoinPoint;
-import org.openwms.core.service.ExceptionCodes;
+import org.openwms.core.ExceptionCodes;
 import org.openwms.core.service.exception.ServiceRuntimeException;
 import org.openwms.core.util.logging.LoggingCategories;
 import org.slf4j.Logger;

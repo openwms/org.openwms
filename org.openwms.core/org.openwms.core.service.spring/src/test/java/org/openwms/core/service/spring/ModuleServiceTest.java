@@ -21,21 +21,16 @@
  */
 package org.openwms.core.service.spring;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
-
-import java.util.List;
+import static org.junit.Assert.*;
 
 import javax.persistence.NoResultException;
+import java.util.List;
 
 import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
+import org.openwms.core.ModuleService;
 import org.openwms.core.domain.Module;
-import org.openwms.core.service.ModuleService;
 import org.openwms.core.service.exception.ServiceRuntimeException;
 import org.openwms.core.test.AbstractJpaSpringContextTests;
 import org.springframework.beans.factory.annotation.Autowired;

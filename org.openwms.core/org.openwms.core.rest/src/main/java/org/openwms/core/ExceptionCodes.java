@@ -19,7 +19,7 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
-package org.openwms.core.service;
+package org.openwms.core;
 
 /**
  * A ExceptionCodes.
@@ -95,5 +95,12 @@ public class ExceptionCodes {
      * argument.
      */
     public static final String I18N_SAVE_NOT_BE_NULL = "i18n.save.null.argument";
+
+    public static final String VALIDATION_ERROR = "core.validation.error";
+
+    public static final String USER_IS_TRANSIENT = "user.is.transient";
+    public static final String USER_HAS_CHANGED = "user.has.changed";
+
+    public static final String ROLE_IS_TRANSIENT = "role.is.transient";
 
 }

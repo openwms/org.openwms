@@ -21,7 +21,7 @@
  */
 package org.openwms.core.service.spring;
 
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -30,12 +30,12 @@ import org.junit.Assert;
 import org.junit.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.openwms.core.ConfigurationService;
 import org.openwms.core.domain.search.Action;
 import org.openwms.core.domain.search.Tag;
 import org.openwms.core.domain.system.usermanagement.SystemUser;
 import org.openwms.core.domain.system.usermanagement.User;
 import org.openwms.core.domain.system.usermanagement.UserPreference;
-import org.openwms.core.service.ConfigurationService;
 import org.openwms.core.service.spring.search.ActionServiceImpl;
 import org.openwms.core.test.AbstractMockitoTests;
 

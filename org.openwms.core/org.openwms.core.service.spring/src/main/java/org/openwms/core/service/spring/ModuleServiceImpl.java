@@ -24,11 +24,11 @@ package org.openwms.core.service.spring;
 import java.util.Collections;
 import java.util.List;
 
+import org.openwms.core.ExceptionCodes;
+import org.openwms.core.ModuleService;
 import org.openwms.core.domain.Module;
 import org.openwms.core.integration.GenericDao;
 import org.openwms.core.integration.ModuleDao;
-import org.openwms.core.service.ExceptionCodes;
-import org.openwms.core.service.ModuleService;
 import org.openwms.core.service.exception.EntityNotFoundException;
 import org.openwms.core.service.exception.ServiceRuntimeException;
 import org.springframework.beans.factory.annotation.Autowired;
