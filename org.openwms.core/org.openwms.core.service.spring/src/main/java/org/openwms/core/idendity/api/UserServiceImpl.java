@@ -19,7 +19,7 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
-package org.openwms.core.idendity;
+package org.openwms.core.idendity.api;
 
 import java.util.HashSet;
 
@@ -32,6 +32,7 @@ import org.openwms.core.domain.system.usermanagement.UserDetails;
 import org.openwms.core.domain.system.usermanagement.UserPassword;
 import org.openwms.core.domain.system.usermanagement.UserPreference;
 import org.openwms.core.exception.InvalidPasswordException;
+import org.openwms.core.idendity.UserService;
 import org.openwms.core.integration.GenericDao;
 import org.openwms.core.integration.SecurityObjectDao;
 import org.openwms.core.integration.UserDao;

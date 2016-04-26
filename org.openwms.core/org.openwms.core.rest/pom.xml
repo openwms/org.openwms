@@ -78,11 +78,6 @@
             <artifactId>org.openwms.core.domain</artifactId>
             <version>${core.version}</version>
         </dependency>
-        <dependency>
-            <groupId>${project.groupId}</groupId>
-            <artifactId>org.openwms.core.service.api</artifactId>
-            <version>${core.version}</version>
-        </dependency>
 
         <!-- REST dependencies -->
         <dependency>

@@ -34,7 +34,7 @@
   </configuration>
 
   <mapping>
-    <class-a>org.openwms.core.roles.RoleVO</class-a>
+    <class-a>org.openwms.core.idendity.RoleVO</class-a>
     <class-b>org.openwms.core.domain.system.usermanagement.Role</class-b>
       <field>
         <a>id</a>
@@ -59,7 +59,7 @@
   </mapping> 
                    
   <mapping>
-    <class-a>org.openwms.core.roles.RoleUserVO</class-a>
+    <class-a>org.openwms.core.idendity.RoleUserVO</class-a>
     <class-b>org.openwms.core.domain.system.usermanagement.User</class-b>
       <field>
         <a>id</a>

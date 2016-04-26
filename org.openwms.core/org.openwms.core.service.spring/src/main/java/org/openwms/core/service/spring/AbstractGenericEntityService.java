@@ -26,6 +26,7 @@ import java.io.Serializable;
 import java.util.Collections;
 import java.util.List;
 
+import org.ameba.exception.NotFoundException;
 import org.openwms.core.domain.AbstractEntity;
 import org.openwms.core.integration.GenericDao;
 import org.openwms.core.integration.exception.IntegrationRuntimeException;
@@ -150,8 +151,8 @@ public abstract class AbstractGenericEntityService<T extends AbstractEntity<ID>,
     public T findByBK(BK key) {
         T role = getRepository().findByUniqueId(key);
         if (role == null) {
-            throw new NotFoundE(getMessageSource().getMessage(ExceptionCodes.ENTITY_NOT_EXIST,
-                    new Object[] { key }, null));
+            throw new NotFoundException(getMessageSource().getMessage(ExceptionCodes.ENTITY_NOT_EXIST,
+                    new Object[] { key }, null), ExceptionCodes.ENTITY_NOT_EXIST);
         }
         return role;
     }
@@ -186,7 +187,7 @@ public abstract class AbstractGenericEntityService<T extends AbstractEntity<ID>,
                 if (entity == null) {
                     String msg = getMessageSource().getMessage(ExceptionCodes.ENTITY_NOT_EXIST,
                             new Object[] { keys[i] }, null);
-                    throw new EntityNotFoundException(msg);
+                    throw new NotFoundException(msg);
                 }
                 getRepository().remove(entity);
             }
@@ -207,7 +208,7 @@ public abstract class AbstractGenericEntityService<T extends AbstractEntity<ID>,
                 if (entity == null) {
                     String msg = getMessageSource().getMessage(ExceptionCodes.ENTITY_NOT_EXIST,
                             new Object[] { keys[i] }, null);
-                    throw new EntityNotFoundException(msg);
+                    throw new NotFoundException(msg);
                 }
                 getRepository().remove(entity);
             }

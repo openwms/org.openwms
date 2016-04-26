@@ -35,7 +35,7 @@ import org.openwms.core.domain.system.usermanagement.UserPassword;
 import org.openwms.core.domain.system.usermanagement.UserPreference;
 import org.openwms.core.exception.InvalidPasswordException;
 import org.openwms.core.idendity.UserService;
-import org.openwms.core.idendity.UserServiceImpl;
+import org.openwms.core.idendity.api.UserServiceImpl;
 import org.openwms.core.service.ExceptionCodes;
 import org.openwms.core.service.exception.EntityNotFoundException;
 import org.openwms.core.service.exception.ServiceRuntimeException;

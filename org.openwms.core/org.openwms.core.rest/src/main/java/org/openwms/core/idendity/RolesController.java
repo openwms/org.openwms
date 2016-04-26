@@ -19,7 +19,7 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
-package org.openwms.core.roles;
+package org.openwms.core.idendity;
 
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
@@ -31,7 +31,6 @@ import org.openwms.core.ExceptionCodes;
 import org.openwms.core.HttpBusinessException;
 import org.openwms.core.ResponseVO;
 import org.openwms.core.domain.system.usermanagement.Role;
-import org.openwms.core.idendity.RoleService;
 import org.openwms.core.service.exception.EntityNotFoundException;
 import org.openwms.core.service.exception.ServiceRuntimeException;
 import org.springframework.beans.factory.annotation.Autowired;

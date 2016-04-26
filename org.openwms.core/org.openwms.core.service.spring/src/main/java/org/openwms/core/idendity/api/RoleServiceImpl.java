@@ -19,10 +19,12 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
-package org.openwms.core.idendity;
+package org.openwms.core.idendity.api;
 
+import org.ameba.exception.NotFoundException;
 import org.openwms.core.annotation.FireAfterTransaction;
 import org.openwms.core.domain.system.usermanagement.Role;
+import org.openwms.core.idendity.RoleService;
 import org.openwms.core.integration.GenericDao;
 import org.openwms.core.integration.RoleDao;
 import org.openwms.core.service.ExceptionCodes;

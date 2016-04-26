@@ -104,6 +104,10 @@
         <!-- Project dependencies -->
         <dependency>
             <groupId>${project.groupId}</groupId>
+            <artifactId>org.openwms.core.rest</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>${project.groupId}</groupId>
             <artifactId>org.openwms.core.util</artifactId>
         </dependency>
         <dependency>
