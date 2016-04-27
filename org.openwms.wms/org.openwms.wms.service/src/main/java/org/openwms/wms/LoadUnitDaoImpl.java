@@ -27,7 +27,7 @@ import javax.persistence.Query;
 import java.util.Collections;
 import java.util.List;
 
-import org.openwms.common.domain.values.Barcode;
+import org.openwms.common.values.Barcode;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;

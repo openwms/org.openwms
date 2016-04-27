@@ -45,7 +45,7 @@ import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
-import org.openwms.common.domain.TransportUnit;
+import org.openwms.common.TransportUnit;
 import org.openwms.core.domain.AbstractEntity;
 import org.openwms.core.exception.DomainModelRuntimeException;
 import org.openwms.wms.inventory.Product;

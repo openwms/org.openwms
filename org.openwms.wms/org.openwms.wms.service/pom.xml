@@ -106,7 +106,7 @@
         </dependency>
         <dependency>
             <groupId>${project.groupId}</groupId>
-            <artifactId>org.openwms.common.service.api</artifactId>
+            <artifactId>org.openwms.common.rest</artifactId>
             <version>${common.version}</version>
         </dependency>
         <dependency>
@@ -177,12 +177,6 @@
         <dependency>
             <groupId>${project.groupId}</groupId>
             <artifactId>org.openwms.common.integration.jpa</artifactId>
-            <version>${common.version}</version>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>${project.groupId}</groupId>
-            <artifactId>org.openwms.common.service.spring</artifactId>
             <version>${common.version}</version>
             <scope>test</scope>
         </dependency>

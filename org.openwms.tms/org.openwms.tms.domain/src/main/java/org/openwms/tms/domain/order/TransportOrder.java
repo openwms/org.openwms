@@ -21,9 +21,6 @@
  */
 package org.openwms.tms.domain.order;
 
-import java.io.Serializable;
-import java.util.Date;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -39,11 +36,13 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.persistence.Version;
+import java.io.Serializable;
+import java.util.Date;
 
-import org.openwms.common.domain.Location;
-import org.openwms.common.domain.LocationGroup;
-import org.openwms.common.domain.TransportUnit;
-import org.openwms.common.domain.values.Problem;
+import org.openwms.common.Location;
+import org.openwms.common.LocationGroup;
+import org.openwms.common.TransportUnit;
+import org.openwms.common.values.Problem;
 import org.openwms.core.domain.AbstractEntity;
 import org.openwms.core.domain.DomainObject;
 import org.openwms.core.exception.StateChangeException;

@@ -40,7 +40,7 @@ import javax.persistence.Version;
 import java.io.Serializable;
 import java.util.Date;
 
-import org.openwms.common.domain.TransportUnit;
+import org.openwms.common.TransportUnit;
 import org.openwms.core.domain.AbstractEntity;
 import org.openwms.core.domain.values.CoreTypeDefinitions;
 import org.openwms.core.domain.values.UnitType;

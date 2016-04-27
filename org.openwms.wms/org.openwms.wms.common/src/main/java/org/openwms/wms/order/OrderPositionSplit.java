@@ -37,7 +37,7 @@ import javax.persistence.UniqueConstraint;
 import javax.persistence.Version;
 import java.io.Serializable;
 
-import org.openwms.common.domain.values.Problem;
+import org.openwms.common.values.Problem;
 import org.openwms.core.domain.AbstractEntity;
 import org.openwms.core.domain.values.CoreTypeDefinitions;
 import org.openwms.core.domain.values.UnitType;

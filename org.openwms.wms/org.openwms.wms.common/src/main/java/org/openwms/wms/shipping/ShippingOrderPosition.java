@@ -41,7 +41,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import org.openwms.common.domain.types.Target;
+import org.openwms.common.types.Target;
 import org.openwms.core.domain.values.CoreTypeDefinitions;
 import org.openwms.core.domain.values.UnitType;
 import org.openwms.core.util.validation.AssertUtils;

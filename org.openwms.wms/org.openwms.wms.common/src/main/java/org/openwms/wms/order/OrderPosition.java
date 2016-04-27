@@ -42,7 +42,7 @@ import javax.persistence.UniqueConstraint;
 import javax.persistence.Version;
 import java.util.Date;
 
-import org.openwms.common.domain.values.Problem;
+import org.openwms.common.values.Problem;
 import org.openwms.core.domain.AbstractEntity;
 import org.openwms.core.util.validation.AssertUtils;
 

@@ -27,9 +27,9 @@ import java.util.List;
 
 import org.ameba.annotation.TxService;
 import org.ameba.exception.ServiceLayerException;
-import org.openwms.common.domain.TransportUnit;
-import org.openwms.common.domain.values.Barcode;
-import org.openwms.common.service.TransportUnitService;
+import org.openwms.common.TransportUnit;
+import org.openwms.common.TransportUnitService;
+import org.openwms.common.values.Barcode;
 import org.openwms.core.annotation.FireAfterTransactionAsynchronous;
 import org.openwms.core.domain.values.UnitType;
 import org.openwms.core.util.validation.AssertUtils;

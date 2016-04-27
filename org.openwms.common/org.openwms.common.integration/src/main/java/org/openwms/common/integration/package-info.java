@@ -20,6 +20,6 @@
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
 /**
- * Repository interface definitions of the COMMON module. Repositories are also well known as DAOs.
+ * This package contains classes belonging to the integration layer using JPA. Implementation classes following the DAO (or Repository) pattern.
  */
 package org.openwms.common.integration;

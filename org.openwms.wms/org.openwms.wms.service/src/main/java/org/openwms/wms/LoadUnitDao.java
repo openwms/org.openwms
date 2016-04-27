@@ -23,7 +23,7 @@ package org.openwms.wms;
 
 import java.util.List;
 
-import org.openwms.common.domain.values.Barcode;
+import org.openwms.common.values.Barcode;
 
 /**
  * A LoadUnitDao.
