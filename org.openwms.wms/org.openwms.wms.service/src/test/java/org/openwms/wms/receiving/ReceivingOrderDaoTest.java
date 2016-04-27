@@ -19,25 +19,23 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
-package org.openwms.wms.domain.receiving;
+package org.openwms.wms.receiving;
 
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.openwms.common.domain.units.Piece;
 import org.openwms.core.test.AbstractJpaSpringContextTests;
-import org.openwms.wms.domain.inventory.Product;
-import org.openwms.wms.domain.order.OrderPosition;
-import org.openwms.wms.domain.order.OrderPositionKey;
-import org.openwms.wms.integration.receiving.ReceivingOrderDao;
-import org.openwms.wms.integration.receiving.ReceivingOrderDaoImpl;
+import org.openwms.wms.inventory.Product;
+import org.openwms.wms.order.OrderPosition;
+import org.openwms.wms.order.OrderPositionKey;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.test.context.ContextConfiguration;
 
 /**
  * A ReceivingOrderDaoTest.
- * 
+ *
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  * @version $Revision: $
  * @since 0.1
@@ -54,7 +52,7 @@ public class ReceivingOrderDaoTest extends AbstractJpaSpringContextTests {
 
     /**
      * Setup some test data.
-     * 
+     *
      * @throws java.lang.Exception
      */
     @Before
@@ -72,8 +70,7 @@ public class ReceivingOrderDaoTest extends AbstractJpaSpringContextTests {
     }
 
     /**
-     * Test method for
-     * {@link org.openwms.wms.integration.receiving.ReceivingOrderDaoImpl#findByKey(org.openwms.wms.domain.order.OrderPositionKey)}
+     * Test method for {@link org.openwms.wms.receiving.ReceivingOrderDaoImpl#findByKey(org.openwms.wms.order.OrderPositionKey)}
      * .
      */
     @Test
