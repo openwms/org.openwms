@@ -25,6 +25,7 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
+import org.ameba.exception.ServiceLayerException;
 import org.openwms.common.domain.Location;
 import org.openwms.common.domain.LocationPK;
 import org.openwms.common.domain.TransportUnit;
@@ -32,11 +33,10 @@ import org.openwms.common.domain.TransportUnitType;
 import org.openwms.common.domain.values.Barcode;
 import org.openwms.common.integration.TransportUnitDao;
 import org.openwms.common.service.TransportUnitService;
+import org.openwms.core.exception.RemovalNotAllowedException;
 import org.openwms.core.integration.GenericDao;
-import org.openwms.core.service.exception.RemovalNotAllowedException;
-import org.openwms.core.service.exception.ServiceRuntimeException;
-import org.openwms.core.service.listener.OnRemovalListener;
-import org.openwms.core.service.spring.util.ServiceHelper;
+import org.openwms.core.listener.OnRemovalListener;
+import org.openwms.core.util.ServiceHelper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -97,15 +97,15 @@ public class TransportUnitServiceImpl implements TransportUnitService<TransportU
         }
         TransportUnit transportUnit = dao.findByUniqueId(barcode);
         if (transportUnit != null) {
-            throw new ServiceRuntimeException("TransportUnit with id " + barcode + " not found");
+            throw new ServiceLayerException("TransportUnit with id " + barcode + " not found");
         }
         Location location = locationDao.findByUniqueId(actualLocation);
         if (location == null) {
-            throw new ServiceRuntimeException("Location " + actualLocation + " not found");
+            throw new ServiceLayerException("Location " + actualLocation + " not found");
         }
         TransportUnitType type = transportUnitTypeDao.findByUniqueId(transportUnitType.getType());
         if (null == type) {
-            throw new ServiceRuntimeException("TransportUnitType " + transportUnitType + " not found");
+            throw new ServiceLayerException("TransportUnitType " + transportUnitType + " not found");
         }
         transportUnit = new TransportUnit(barcode);
         transportUnit.setTransportUnitType(type);
@@ -130,7 +130,7 @@ public class TransportUnitServiceImpl implements TransportUnitService<TransportU
     public void moveTransportUnit(Barcode barcode, LocationPK targetLocationPK) {
         TransportUnit transportUnit = dao.findByUniqueId(barcode);
         if (transportUnit == null) {
-            throw new ServiceRuntimeException("TransportUnit with id " + barcode + " not found");
+            throw new ServiceLayerException("TransportUnit with id " + barcode + " not found");
         }
         Location actualLocation = locationDao.findByUniqueId(targetLocationPK);
         // if (actualLocation == null) {
@@ -168,7 +168,7 @@ public class TransportUnitServiceImpl implements TransportUnitService<TransportU
             });
             for (TransportUnit tu : tus) {
                 if (!tu.getChildren().isEmpty()) {
-                    throw new ServiceRuntimeException("Other TransportUnits are placed on this TransportUnit");
+                    throw new ServiceLayerException("Other TransportUnits are placed on this TransportUnit");
                 }
                 try {
                     delete(tu);
@@ -178,7 +178,7 @@ public class TransportUnitServiceImpl implements TransportUnitService<TransportU
                 } catch (RemovalNotAllowedException rnae) {
                     LOGGER.error("Not allowed to remove TransportUnit with id : " + tu.getId() + " with reason: "
                             + rnae.getLocalizedMessage());
-                    throw new ServiceRuntimeException(rnae.getLocalizedMessage());
+                    throw new ServiceLayerException(rnae.getLocalizedMessage());
                 }
             }
         }

@@ -352,7 +352,6 @@
                 <pluginManagement>
                     <plugins>
                         <plugin>
-                            <groupId>org.apache.maven.plugins</groupId>
                             <artifactId>maven-gpg-plugin</artifactId>
                             <version>${plugin.gpg.version}</version>
                         </plugin>
@@ -360,9 +359,7 @@
                 </pluginManagement>
                 <plugins>
                     <plugin>
-                        <groupId>org.apache.maven.plugins</groupId>
                         <artifactId>maven-gpg-plugin</artifactId>
-                        <version>${plugin.gpg.version}</version>
                         <executions>
                             <execution>
                                 <id>sign-artifacts</id>
@@ -434,21 +431,17 @@
         <!-- =================== -->
         <!-- Dependency versions -->
         <!-- =================== -->
+        <ameba-lib.version>1.4.1</ameba-lib.version>
         <dozer.version>5.5.1</dozer.version>
-
-        <javax-el.version>2.2.5</javax-el.version> <!-- Keep in sync with platform -->
         <el-impl.version>2.2</el-impl.version>
 
-        <logback-classic.version>1.1.3</logback-classic.version>
-        <freemarker.version>2.3.15</freemarker.version>
         <hibernate.version>5.0.4.Final</hibernate.version>
+        <jackson.version>2.6.5</jackson.version> <!-- Keep in sync with platform -->
         <jdbc.oracle.version>6.0.0</jdbc.oracle.version>
         <jpa-api.version>1.0.0.Final</jpa-api.version>
         <!-- Spring Integration 2.2.4 uses Spring Core 3.1.3 -->
-        <spring.integration.version>4.1.3.RELEASE</spring.integration.version>
-        <spring.io.version>2.0.0.RELEASE</spring.io.version>
-        <spring-retry.version>1.1.2.RELEASE</spring-retry.version>
-        <spring.version>4.2.3.RELEASE</spring.version> <!-- Keep in sync with platform -->
+        <spring.io.version>2.0.3.RELEASE</spring.io.version>
+        <spring.version>4.2.5.RELEASE</spring.version> <!-- Keep in sync with platform -->
 
         <!-- =================== -->
         <!--   Plugin versions   -->
@@ -482,6 +475,14 @@
         <plugin.wagon-ssh.version>2.1</plugin.wagon-ssh.version>
         <plugin.war.version>2.4</plugin.war.version>
     </properties>
+
+    <repositories>
+        <repository>
+            <id>ameba-bintray</id>
+            <name>Ameba Bintray Repository</name>
+            <url>https://dl.bintray.com/abraxas/labs</url>
+        </repository>
+    </repositories>
 
     <pluginRepositories>
         <pluginRepository>
@@ -599,6 +600,17 @@
     <dependencyManagement>
         <dependencies>
             <dependency>
+                <groupId>org.ameba</groupId>
+                <artifactId>ameba-lib</artifactId>
+                <version>${ameba-lib.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.ameba</groupId>
+                <artifactId>ameba-lib</artifactId>
+                <version>${ameba-lib.version}</version>
+                <type>test-jar</type>
+            </dependency>
+            <dependency>
                 <groupId>org.hibernate.javax.persistence</groupId>
                 <artifactId>hibernate-jpa-2.1-api</artifactId>
                 <version>${jpa-api.version}</version>
@@ -619,6 +631,7 @@
                 <scope>import</scope>
             </dependency>
 
+            <!--
             <dependency>
                 <groupId>org.springframework.integration</groupId>
                 <artifactId>spring-integration-ip</artifactId>
@@ -634,6 +647,7 @@
                     </exclusion>
                 </exclusions>
             </dependency>
+            -->
             <dependency>
                 <groupId>org.springframework</groupId>
                 <artifactId>spring-messaging</artifactId>
@@ -680,12 +694,6 @@
                     </exclusion>
                 </exclusions>
             </dependency>
-
-            <dependency>
-                <groupId>ch.qos.logback</groupId>
-                <artifactId>logback-classic</artifactId>
-                <version>${logback-classic.version}</version>
-            </dependency>
         </dependencies>
     </dependencyManagement>
 
@@ -695,6 +703,12 @@
             <artifactId>slf4j-api</artifactId>
         </dependency>
         <dependency>
+            <groupId>org.ameba</groupId>
+            <artifactId>ameba-lib</artifactId>
+        </dependency>
+
+        <!-- Test dependencies -->
+        <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
             <scope>test</scope>
@@ -702,6 +716,12 @@
         <dependency>
             <groupId>org.mockito</groupId>
             <artifactId>mockito-core</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.ameba</groupId>
+            <artifactId>ameba-lib</artifactId>
+            <type>test-jar</type>
             <scope>test</scope>
         </dependency>
         <dependency>

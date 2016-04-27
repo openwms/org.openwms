@@ -21,24 +21,23 @@
  */
 package org.openwms.core.service.spring;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.*;
 import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.anyObject;
 import static org.mockito.Matchers.anyString;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 import java.util.Arrays;
 import java.util.Locale;
 
+import org.ameba.exception.ServiceLayerException;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.openwms.core.I18nServiceImpl;
 import org.openwms.core.domain.system.I18n;
 import org.openwms.core.integration.I18nRepository;
-import org.openwms.core.service.exception.ServiceRuntimeException;
 import org.openwms.core.test.AbstractMockitoTests;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -88,7 +87,7 @@ public class I18nServiceTest extends AbstractMockitoTests {
     /**
      * Negative test to call saveAll with <code>null</code> argument.
      */
-    @Test(expected = ServiceRuntimeException.class)
+    @Test(expected = ServiceLayerException.class)
     public final void testSaveAllWithNull() {
         srv.saveAll(null);
     }

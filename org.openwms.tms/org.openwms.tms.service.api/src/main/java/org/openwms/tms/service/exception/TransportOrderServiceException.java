@@ -21,7 +21,7 @@
  */
 package org.openwms.tms.service.exception;
 
-import org.openwms.core.service.exception.ServiceRuntimeException;
+import org.ameba.exception.ServiceLayerException;
 
 /**
  * A TransportOrderServiceException.
@@ -30,7 +30,7 @@ import org.openwms.core.service.exception.ServiceRuntimeException;
  * @version $Revision$
  * @since 0.1
  */
-public class TransportOrderServiceException extends ServiceRuntimeException {
+public class TransportOrderServiceException extends ServiceLayerException {
 
     private static final long serialVersionUID = 7532336077611264311L;
 
@@ -44,15 +44,6 @@ public class TransportOrderServiceException extends ServiceRuntimeException {
         super(message);
     }
 
-    /**
-     * Create a new TransportOrderServiceException.
-     * 
-     * @param cause
-     *            Root cause
-     */
-    public TransportOrderServiceException(Throwable cause) {
-        super(cause);
-    }
 
     /**
      * Create a new TransportOrderServiceException.

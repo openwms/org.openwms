@@ -21,8 +21,8 @@
  */
 package org.openwms.tms.service.spring.voter;
 
-import org.openwms.core.service.voter.DecisionVoter;
-import org.openwms.core.service.voter.DeniedException;
+import org.openwms.core.voter.DecisionVoter;
+import org.openwms.core.voter.DeniedException;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Component;
 
@@ -33,7 +33,7 @@ import org.springframework.stereotype.Component;
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  * @version $Revision$
  * @since 0.1
- * @see org.openwms.core.service.voter.DecisionVoter
+ * @see org.openwms.core.voter.DecisionVoter
  */
 @Lazy
 @Component(TargetAcceptedVoter.COMPONENT_NAME)

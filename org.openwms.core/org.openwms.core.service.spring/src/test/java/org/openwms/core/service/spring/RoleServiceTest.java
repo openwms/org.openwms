@@ -21,18 +21,15 @@
  */
 package org.openwms.core.service.spring;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.fail;
+import static org.junit.Assert.*;
 
+import org.ameba.exception.NotFoundException;
+import org.ameba.exception.ServiceLayerException;
 import org.junit.Before;
 import org.junit.Test;
+import org.openwms.core.ExceptionCodes;
 import org.openwms.core.domain.system.usermanagement.Role;
-import org.openwms.core.service.ExceptionCodes;
-import org.openwms.core.service.RoleService;
-import org.openwms.core.service.exception.EntityNotFoundException;
-import org.openwms.core.service.exception.ServiceRuntimeException;
+import org.openwms.core.idendity.RoleService;
 import org.openwms.core.test.AbstractJpaSpringContextTests;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
@@ -67,7 +64,7 @@ public class RoleServiceTest extends AbstractJpaSpringContextTests {
     /**
      * Test to remove a Role that does not exist.
      */
-    @Test(expected = EntityNotFoundException.class)
+    @Test(expected = NotFoundException.class)
     public final void testRemoveWithNotKnownEntity() {
         srv.removeByID(new Long[] { Long.valueOf(4711) });
         fail("Removing transient role by id should fail");
@@ -81,7 +78,7 @@ public class RoleServiceTest extends AbstractJpaSpringContextTests {
         try {
             srv.remove(null);
             fail("Expected to catch an IllegalArgumentException when calling remove() with null");
-        } catch (ServiceRuntimeException sre) {
+        } catch (ServiceLayerException sre) {
             LOGGER.debug("OK: ServiceRuntimeException when calling remove with null argument");
             if (!sre.getMessage().equals(
                     messageSource.getMessage(ExceptionCodes.ROLE_REMOVE_NOT_BE_NULL, new String[0], null))) {
@@ -114,7 +111,7 @@ public class RoleServiceTest extends AbstractJpaSpringContextTests {
         try {
             srv.save(null);
             fail("Should throw an exception when calling with null");
-        } catch (ServiceRuntimeException sre) {
+        } catch (ServiceLayerException sre) {
             LOGGER.debug("OK: Exception when try to call save with null argument:" + sre.getMessage());
         }
     }

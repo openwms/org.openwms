@@ -21,32 +21,28 @@
  */
 package org.openwms.core.service.spring;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
+import static org.junit.Assert.*;
 import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.anyObject;
 import static org.mockito.Matchers.anyString;
-import static org.mockito.Mockito.never;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
 
+import org.ameba.exception.ServiceLayerException;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.openwms.core.SecurityServiceImpl;
 import org.openwms.core.domain.system.usermanagement.Grant;
 import org.openwms.core.domain.system.usermanagement.SecurityObject;
 import org.openwms.core.integration.RoleDao;
 import org.openwms.core.integration.SecurityObjectDao;
-import org.openwms.core.service.exception.ServiceRuntimeException;
 import org.openwms.core.test.AbstractMockitoTests;
 import org.springframework.context.MessageSource;
 
@@ -114,7 +110,7 @@ public class SecurityServiceTest extends AbstractMockitoTests {
      * {@link org.openwms.core.service.spring.SecurityServiceImpl#mergeGrants(java.lang.String, java.util.List)}
      * .
      */
-    @Test(expected = ServiceRuntimeException.class)
+    @Test(expected = ServiceLayerException.class)
     public final void testMergeGrantsWithNull() {
         srv.mergeGrants(null, null);
         fail("Expected to throw an ServiceRuntimeException when calling merge with null argument");

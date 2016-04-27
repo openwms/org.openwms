@@ -23,11 +23,11 @@ package org.openwms.common.service.spring;
 
 import java.util.List;
 
+import org.ameba.exception.ServiceLayerException;
 import org.openwms.common.domain.LocationGroup;
 import org.openwms.common.domain.values.LocationGroupState;
 import org.openwms.common.integration.LocationGroupDao;
 import org.openwms.common.service.LocationGroupService;
-import org.openwms.core.service.exception.ServiceRuntimeException;
 import org.openwms.core.util.TreeNode;
 import org.openwms.core.util.TreeNodeImpl;
 import org.slf4j.Logger;
@@ -65,7 +65,7 @@ public class LocationGroupServiceImpl implements LocationGroupService<LocationGr
     public void changeGroupState(LocationGroup locationGroup) {
         logger.debug("CGS LocationGroup on service called");
         if (locationGroup.isNew()) {
-            throw new ServiceRuntimeException("LocationGroup " + locationGroup.getName()
+            throw new ServiceLayerException("LocationGroup " + locationGroup.getName()
                     + " is new and must be persisted before save");
         }
         LocationGroup persisted = dao.findById(locationGroup.getId());
@@ -78,7 +78,7 @@ public class LocationGroupServiceImpl implements LocationGroupService<LocationGr
     @Override
     public LocationGroup save(LocationGroup locationGroup) {
         if (locationGroup.isNew()) {
-            throw new ServiceRuntimeException("LocationGroup " + locationGroup.getName()
+            throw new ServiceLayerException("LocationGroup " + locationGroup.getName()
                     + " is new and must be persisted before save");
         }
         LocationGroup persisted = dao.findById(locationGroup.getId());
@@ -111,7 +111,7 @@ public class LocationGroupServiceImpl implements LocationGroupService<LocationGr
      *            The instance read from the persisted storage
      * @param locationGroup
      *            The instance holding the new values to save
-     * @throws ServiceRuntimeException
+     * @throws ServiceLayerException
      *             when a state change is not allowed
      */
     protected void changeGroupState(LocationGroup persisted, LocationGroup locationGroup) {
@@ -120,7 +120,7 @@ public class LocationGroupServiceImpl implements LocationGroupService<LocationGr
             if (locationGroup.getParent() != null
                     && locationGroup.getParent().getGroupStateIn() == LocationGroupState.NOT_AVAILABLE
                     && locationGroup.getGroupStateIn() == LocationGroupState.AVAILABLE) {
-                throw new ServiceRuntimeException(
+                throw new ServiceLayerException(
                         "Not allowed to change GroupStateIn, parent locationGroup is not available");
             }
             persisted.setGroupStateIn(locationGroup.getGroupStateIn(), persisted);
@@ -130,7 +130,7 @@ public class LocationGroupServiceImpl implements LocationGroupService<LocationGr
             if (locationGroup.getParent() != null
                     && locationGroup.getParent().getGroupStateOut() == LocationGroupState.NOT_AVAILABLE
                     && locationGroup.getGroupStateOut() == LocationGroupState.AVAILABLE) {
-                throw new ServiceRuntimeException(
+                throw new ServiceLayerException(
                         "Not allowed to change GroupStateOut, parent locationGroup is not available");
             }
             persisted.setGroupStateOut(locationGroup.getGroupStateOut(), persisted);

@@ -20,24 +20,20 @@
  */
 package org.openwms.core.service.spring.security;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
-import static org.mockito.Mockito.never;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
-import net.sf.ehcache.Ehcache;
+import static org.junit.Assert.*;
+import static org.mockito.Mockito.*;
 
+import net.sf.ehcache.Ehcache;
 import org.junit.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.openwms.core.domain.system.usermanagement.SystemUser;
 import org.openwms.core.domain.system.usermanagement.User;
+import org.openwms.core.idendity.SystemUserWrapper;
+import org.openwms.core.idendity.UserService;
+import org.openwms.core.idendity.UserWrapper;
 import org.openwms.core.integration.GenericDao;
-import org.openwms.core.service.UserService;
-import org.openwms.core.service.spring.SystemUserWrapper;
-import org.openwms.core.service.spring.UserWrapper;
+import org.openwms.core.security.SecurityContextUserServiceImpl;
 import org.openwms.core.test.AbstractMockitoTests;
 import org.openwms.core.util.event.UserChangedEvent;
 import org.springframework.security.authentication.dao.SaltSource;

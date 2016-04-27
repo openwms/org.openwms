@@ -21,10 +21,9 @@
  */
 package org.openwms.common.service.transport;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.fail;
+import static org.junit.Assert.*;
 
+import org.ameba.exception.ServiceLayerException;
 import org.junit.Before;
 import org.junit.Test;
 import org.openwms.common.domain.Location;
@@ -33,7 +32,6 @@ import org.openwms.common.domain.TransportUnit;
 import org.openwms.common.domain.TransportUnitType;
 import org.openwms.common.domain.values.Barcode;
 import org.openwms.common.service.TransportUnitService;
-import org.openwms.core.service.exception.ServiceRuntimeException;
 import org.openwms.core.test.AbstractJpaSpringContextTests;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -80,7 +78,7 @@ public class TransportServiceTest extends AbstractJpaSpringContextTests {
         try {
             transportService.create(new Barcode("KNOWN"), transportUnitType, locationPk);
             fail("Must throw a ServiceException while trying to create an already known TransportUnit");
-        } catch (ServiceRuntimeException se) {
+        } catch (ServiceLayerException se) {
             LOGGER.debug("OK:ServiceException expected while trying to create an already known TransportUnit");
         }
     }
@@ -95,7 +93,7 @@ public class TransportServiceTest extends AbstractJpaSpringContextTests {
             transportService.create(new Barcode("4711"), transportUnitType, new LocationPK("UNKN", "UNKN", "UNKN",
                     "UNKN", "UNKN"));
             fail("Must throw a ServiceException while trying to create a TransportUnit with an unknown actual Location");
-        } catch (ServiceRuntimeException se) {
+        } catch (ServiceLayerException se) {
             LOGGER.debug("OK:ServiceException expected while trying to create a TransportUnit with an unknown actual Location");
         }
     }
@@ -117,7 +115,7 @@ public class TransportServiceTest extends AbstractJpaSpringContextTests {
         try {
             transportService.moveTransportUnit(new Barcode("TEST"), targetLocationPk);
             fail("Must throw a ServiceException while trying to create a TransportUnit with unknown Barcode");
-        } catch (ServiceRuntimeException se) {
+        } catch (ServiceLayerException se) {
             LOGGER.debug("OK:ServiceException expected while trying to create a TransportUnit with unknown Barcode");
         }
     }
