@@ -21,7 +21,6 @@
  */
 package org.openwms.common;
 
-import org.openwms.common.domain.LocationType;
 import org.openwms.core.integration.GenericDao;
 
 /**
@@ -31,7 +30,7 @@ import org.openwms.core.integration.GenericDao;
  * @version $Revision$
  * @since 0.1
  * @see org.openwms.core.integration.GenericDao
- * @see org.openwms.common.domain.LocationType
+ * @see org.openwms.common.LocationType
  */
 public interface LocationTypeDao extends GenericDao<LocationType, Long> {
 

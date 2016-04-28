@@ -19,29 +19,30 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
-package org.openwms.core.exception;
+package org.openwms.core.domain.listener;
 
-import org.ameba.exception.ServiceLayerException;
+import org.openwms.core.domain.AbstractEntity;
 
 /**
- * A RemovalNotAllowedException is thrown when the caller is not allowed to remove an entity.
+ * An OnRemovalListener is able to hook in the lifecycle of an entity class. A class implementing this interface is called before an entity
+ * of type <code>T</code> is removed.
  * 
+ * @param <T>
+ *            Any kind of {@link AbstractEntity}
  * @author <a href="mailto:russelltina@users.sourceforge.net">Tina Russell</a>
  * @version $Revision$
  * @since 0.1
  */
-public class RemovalNotAllowedException extends ServiceLayerException {
-
-    private static final long serialVersionUID = -5592508830188199188L;
+public interface OnRemovalListener<T extends AbstractEntity> {
 
     /**
-     * Create a new RemovalNotAllowedException.
+     * Do something prior the <code>entity</code> instance is been removed.
      * 
-     * @param message
-     *            Detail message
+     * @param entity
+     *            The instance to be removed.
+     * @return <code>true</code> if removal is allowed, otherwise <code>false</code>
+     * @throws RemovalNotAllowedException
+     *             When it is not allowed to remove the entity, because depending items exist
      */
-    public RemovalNotAllowedException(String message) {
-        super(message);
-    }
-
+    boolean preRemove(T entity) throws RemovalNotAllowedException;
 }

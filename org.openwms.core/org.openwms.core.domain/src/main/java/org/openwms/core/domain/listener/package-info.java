@@ -22,4 +22,4 @@
 /**
  * Listener interfaces can be implemented by services to listen to domain specific events.
  */
-package org.openwms.core.listener;
+package org.openwms.core.domain.listener;

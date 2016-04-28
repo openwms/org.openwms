@@ -25,9 +25,9 @@ import java.util.List;
 
 import org.openwms.common.TransportUnit;
 import org.openwms.common.values.Problem;
-import org.openwms.core.exception.RemovalNotAllowedException;
+import org.openwms.core.domain.listener.OnRemovalListener;
+import org.openwms.core.domain.listener.RemovalNotAllowedException;
 import org.openwms.core.exception.StateChangeException;
-import org.openwms.core.listener.OnRemovalListener;
 import org.openwms.tms.domain.order.TransportOrder;
 import org.openwms.tms.domain.values.TransportOrderState;
 import org.slf4j.Logger;

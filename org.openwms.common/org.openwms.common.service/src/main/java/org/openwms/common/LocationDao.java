@@ -23,7 +23,6 @@ package org.openwms.common;
 
 import java.util.List;
 
-import org.openwms.common.domain.Location;
 import org.openwms.core.integration.GenericDao;
 
 /**
@@ -33,7 +32,7 @@ import org.openwms.core.integration.GenericDao;
  * @version $Revision$
  * @since 0.1
  * @see org.openwms.core.integration.GenericDao
- * @see org.openwms.common.domain.Location
+ * @see org.openwms.common.Location
  */
 public interface LocationDao extends GenericDao<Location, Long> {
 

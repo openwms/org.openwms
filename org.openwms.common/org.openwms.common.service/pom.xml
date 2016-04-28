@@ -78,7 +78,7 @@
         </dependency>
         <dependency>
             <groupId>${project.groupId}</groupId>
-            <artifactId>org.openwms.core.service.spring</artifactId>
+            <artifactId>org.openwms.core.service</artifactId>
             <version>${core.version}</version>
         </dependency>
 

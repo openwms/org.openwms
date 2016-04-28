@@ -21,7 +21,6 @@
  */
 package org.openwms.common;
 
-import org.openwms.common.domain.TransportUnitType;
 import org.openwms.core.integration.GenericDao;
 
 /**

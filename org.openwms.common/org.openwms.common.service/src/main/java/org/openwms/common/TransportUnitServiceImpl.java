@@ -21,16 +21,16 @@
  */
 package org.openwms.common;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
 import org.ameba.exception.ServiceLayerException;
-import org.openwms.common.domain.values.Barcode;
-import org.openwms.core.exception.RemovalNotAllowedException;
+import org.openwms.common.values.Barcode;
+import org.openwms.core.domain.listener.OnRemovalListener;
+import org.openwms.core.domain.listener.RemovalNotAllowedException;
 import org.openwms.core.integration.GenericDao;
-import org.openwms.core.listener.OnRemovalListener;
-import org.openwms.core.util.ServiceHelper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -44,7 +44,7 @@ import org.springframework.transaction.annotation.Transactional;
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  * @version $Revision$
  * @since 0.1
- * @see org.openwms.core.service.spring.EntityServiceImpl
+ * @see org.openwms.core.service.EntityServiceImpl
  */
 @Transactional
 @Service(TransportUnitServiceImpl.COMPONENT_NAME)
@@ -151,7 +151,12 @@ public class TransportUnitServiceImpl implements TransportUnitService<TransportU
     @Override
     public void deleteTransportUnits(List<TransportUnit> transportUnits) {
         if (transportUnits != null && transportUnits.size() > 0) {
-            List<TransportUnit> tus = ServiceHelper.managedEntities(transportUnits, dao);
+            // FIXME [openwms]: 29/04/16 !!!!
+//            List<TransportUnit> tus = ServiceHelper.managedEntities(transportUnits, dao);
+            List<TransportUnit> tus = new ArrayList<>();
+            // FIXME [openwms]: 29/04/16
+
+
             // first try to delete depending ones, afterwards the parent
             // units...
             Collections.sort(tus, new Comparator<TransportUnit>() {
