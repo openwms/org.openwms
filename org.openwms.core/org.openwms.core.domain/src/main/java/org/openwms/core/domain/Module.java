@@ -21,9 +21,6 @@
  */
 package org.openwms.core.domain;
 
-import java.io.Serializable;
-import java.util.Comparator;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -34,9 +31,11 @@ import javax.persistence.OrderBy;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 import javax.persistence.Version;
+import java.io.Serializable;
+import java.util.Comparator;
 
 import org.openwms.core.domain.values.CoreTypeDefinitions;
-import org.openwms.core.util.validation.AssertUtils;
+import org.openwms.core.validation.AssertUtils;
 
 /**
  * A Module represents an Adobe Flex Module and is used to store some basic information about that module, i.e. a name, an URL where the

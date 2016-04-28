@@ -21,9 +21,6 @@
  */
 package org.openwms.core.domain.system.usermanagement;
 
-import java.io.Serializable;
-import java.util.Date;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -32,9 +29,11 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OrderBy;
 import javax.persistence.Table;
 import javax.persistence.Version;
+import java.io.Serializable;
+import java.util.Date;
 
 import org.openwms.core.domain.AbstractEntity;
-import org.openwms.core.util.validation.AssertUtils;
+import org.openwms.core.validation.AssertUtils;
 
 /**
  * Is a representation of an <code>User</code> together with her password.

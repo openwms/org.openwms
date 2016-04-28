@@ -27,7 +27,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.openwms.common.domain.TransportUnit;
+import org.openwms.common.TransportUnit;
 import org.openwms.core.exception.StateChangeException;
 import org.openwms.tms.TransportOrderDao;
 import org.openwms.tms.domain.comparator.TransportStartComparator;

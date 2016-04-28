@@ -24,11 +24,11 @@ package org.openwms.tms;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.openwms.common.domain.Location;
-import org.openwms.common.domain.LocationGroup;
-import org.openwms.common.domain.TransportUnit;
-import org.openwms.common.domain.values.Barcode;
-import org.openwms.common.domain.values.Problem;
+import org.openwms.common.Location;
+import org.openwms.common.LocationGroup;
+import org.openwms.common.TransportUnit;
+import org.openwms.common.values.Barcode;
+import org.openwms.common.values.Problem;
 import org.openwms.core.exception.StateChangeException;
 import org.openwms.core.integration.GenericDao;
 import org.openwms.core.voter.DecisionVoter;

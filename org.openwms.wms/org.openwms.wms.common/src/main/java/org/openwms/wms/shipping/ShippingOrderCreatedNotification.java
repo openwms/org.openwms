@@ -21,7 +21,7 @@
  */
 package org.openwms.wms.shipping;
 
-import org.openwms.core.util.event.RootApplicationEvent;
+import org.openwms.core.event.RootApplicationEvent;
 
 /**
  * A ShippingOrderCreatedNotification.

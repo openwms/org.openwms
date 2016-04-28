@@ -45,7 +45,7 @@ import org.openwms.core.domain.AbstractEntity;
 import org.openwms.core.domain.values.CoreTypeDefinitions;
 import org.openwms.core.domain.values.UnitType;
 import org.openwms.core.exception.DomainModelRuntimeException;
-import org.openwms.core.util.validation.AssertUtils;
+import org.openwms.core.validation.AssertUtils;
 import org.openwms.wms.inventory.Product;
 
 /**

@@ -654,7 +654,7 @@
                 <version>${spring.version}</version>
             </dependency>
             <!-- Unfortunately Spring integration depends on spring-retry that comes with an old Spring version 3.0.x -->
-            <dependency>
+            <!--dependency>
                 <groupId>org.springframework.retry</groupId>
                 <artifactId>spring-retry</artifactId>
                 <version>${spring-retry.version}</version>
@@ -664,7 +664,7 @@
                         <artifactId>spring-context</artifactId>
                     </exclusion>
                 </exclusions>
-            </dependency>
+            </dependency-->
 
             <!-- Database libraries -->
             <dependency>

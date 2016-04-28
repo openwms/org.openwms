@@ -21,8 +21,6 @@
  */
 package org.openwms.core.domain.system.usermanagement;
 
-import java.io.Serializable;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -30,9 +28,10 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 import javax.persistence.Version;
+import java.io.Serializable;
 
 import org.openwms.core.domain.AbstractEntity;
-import org.openwms.core.util.validation.AssertUtils;
+import org.openwms.core.validation.AssertUtils;
 
 /**
  * An Email represents the email address of an <code>User</code>.

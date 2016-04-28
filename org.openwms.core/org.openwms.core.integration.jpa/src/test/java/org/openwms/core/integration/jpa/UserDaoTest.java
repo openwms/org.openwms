@@ -21,24 +21,19 @@
  */
 package org.openwms.core.integration.jpa;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
-
-import java.util.List;
+import static org.junit.Assert.*;
 
 import javax.persistence.NoResultException;
+import java.util.List;
 
 import org.junit.Before;
 import org.junit.Test;
+import org.openwms.core.UserDao;
 import org.openwms.core.domain.system.usermanagement.Role;
 import org.openwms.core.domain.system.usermanagement.SystemUser;
 import org.openwms.core.domain.system.usermanagement.User;
 import org.openwms.core.domain.system.usermanagement.UserPassword;
 import org.openwms.core.exception.InvalidPasswordException;
-import org.openwms.core.integration.UserDao;
 import org.openwms.core.test.AbstractJpaSpringContextTests;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;

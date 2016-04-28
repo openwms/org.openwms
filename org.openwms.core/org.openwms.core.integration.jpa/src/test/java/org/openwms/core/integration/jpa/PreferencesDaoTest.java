@@ -21,16 +21,16 @@
  */
 package org.openwms.core.integration.jpa;
 
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 
 import java.util.List;
 
 import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
+import org.openwms.core.PreferenceWriter;
 import org.openwms.core.domain.preferences.ApplicationPreference;
 import org.openwms.core.domain.system.AbstractPreference;
-import org.openwms.core.integration.PreferenceWriter;
 import org.openwms.core.test.AbstractJpaSpringContextTests;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;

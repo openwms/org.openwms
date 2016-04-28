@@ -23,8 +23,8 @@ package org.openwms.tms;
 
 import java.util.List;
 
-import org.openwms.common.domain.LocationGroup;
-import org.openwms.common.domain.TransportUnit;
+import org.openwms.common.LocationGroup;
+import org.openwms.common.TransportUnit;
 import org.openwms.core.integration.GenericDao;
 import org.openwms.tms.domain.order.TransportOrder;
 import org.openwms.tms.domain.values.TransportOrderState;

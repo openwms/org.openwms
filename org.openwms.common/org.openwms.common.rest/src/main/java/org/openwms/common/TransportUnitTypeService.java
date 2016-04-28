@@ -23,8 +23,6 @@ package org.openwms.common;
 
 import java.util.List;
 
-import org.openwms.common.domain.Rule;
-
 /**
  * A TransportUnitTypeService offers methods to deal with {@link TransportUnitType}s.
  * 

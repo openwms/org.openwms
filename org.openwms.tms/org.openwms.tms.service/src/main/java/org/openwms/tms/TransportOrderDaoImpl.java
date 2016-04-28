@@ -27,8 +27,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.openwms.common.domain.LocationGroup;
-import org.openwms.common.domain.TransportUnit;
+import org.openwms.common.LocationGroup;
+import org.openwms.common.TransportUnit;
 import org.openwms.core.integration.jpa.AbstractGenericJpaDao;
 import org.openwms.tms.domain.order.TransportOrder;
 import org.openwms.tms.domain.values.TransportOrderState;
@@ -44,8 +44,8 @@ import org.springframework.transaction.annotation.Transactional;
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  * @version $Revision$
  * @since 0.1
- * @see org.openwms.core.integration.jpa.AbstractGenericJpaDao
- * @see org.openwms.tms.integration.TransportOrderDao
+ * @see AbstractGenericJpaDao
+ * @see org.openwms.tms.TransportOrderDao
  */
 @Transactional(propagation = Propagation.MANDATORY)
 @Repository(value = TransportOrderDaoImpl.COMPONENT_NAME)

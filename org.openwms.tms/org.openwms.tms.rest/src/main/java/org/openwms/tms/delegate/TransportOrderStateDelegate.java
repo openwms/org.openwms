@@ -21,7 +21,7 @@
  */
 package org.openwms.tms.delegate;
 
-import org.openwms.common.domain.TransportUnit;
+import org.openwms.common.TransportUnit;
 
 /**
  * A TransportOrderStateDelegate is called after state changes on a TransportOrder happen.

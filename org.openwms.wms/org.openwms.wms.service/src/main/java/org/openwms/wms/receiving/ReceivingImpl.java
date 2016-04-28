@@ -32,7 +32,7 @@ import org.openwms.common.TransportUnitService;
 import org.openwms.common.values.Barcode;
 import org.openwms.core.annotation.FireAfterTransactionAsynchronous;
 import org.openwms.core.domain.values.UnitType;
-import org.openwms.core.util.validation.AssertUtils;
+import org.openwms.core.validation.AssertUtils;
 import org.openwms.wms.LoadUnit;
 import org.openwms.wms.LoadUnitDao;
 import org.openwms.wms.PackagingUnit;

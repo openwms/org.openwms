@@ -26,11 +26,11 @@ import java.util.Date;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-import org.openwms.common.domain.Location;
-import org.openwms.common.domain.LocationPK;
-import org.openwms.common.domain.TransportUnit;
-import org.openwms.common.domain.TransportUnitType;
-import org.openwms.common.domain.units.Piece;
+import org.openwms.common.Location;
+import org.openwms.common.LocationPK;
+import org.openwms.common.TransportUnit;
+import org.openwms.common.TransportUnitType;
+import org.openwms.common.units.Piece;
 import org.openwms.core.test.AbstractJpaSpringContextTests;
 import org.openwms.wms.inventory.Product;
 import org.openwms.wms.order.OrderPositionKey;
@@ -87,7 +87,7 @@ public class ReceivingManagerImplTest extends AbstractJpaSpringContextTests {
     }
 
     /**
-     * Test method for {@link ReceivingImpl#create(org.openwms.wms.domain.order.OrderPositionKey, java.lang.String,
+     * Test method for {@link ReceivingImpl#create(org.openwms.wms.order.OrderPositionKey, java.lang.String,
      * org.openwms.core.domain.values.Unit, java.lang.String)} .
      */
     @Test
@@ -155,7 +155,7 @@ public class ReceivingManagerImplTest extends AbstractJpaSpringContextTests {
         // persisted as well
         ReceivingOrderPosition pos1 = new ReceivingOrderPosition(ord2, 1, new Piece(20), product);
         ReceivingOrderPosition pos2 = new ReceivingOrderPosition(ord2, 2, new Piece(20), product);
-        ord2.addPostions(new ReceivingOrderPosition[]{pos1, pos2});
+        ord2.addPostions(pos1, pos2);
 
         ReceivingOrder rOrder2 = srv.createOrder(ord2);
         assertBasics(rOrder2);

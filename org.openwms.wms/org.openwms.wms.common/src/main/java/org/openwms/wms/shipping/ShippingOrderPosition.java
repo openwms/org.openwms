@@ -44,7 +44,7 @@ import java.util.Set;
 import org.openwms.common.types.Target;
 import org.openwms.core.domain.values.CoreTypeDefinitions;
 import org.openwms.core.domain.values.UnitType;
-import org.openwms.core.util.validation.AssertUtils;
+import org.openwms.core.validation.AssertUtils;
 import org.openwms.wms.inventory.Product;
 import org.openwms.wms.order.OrderPosition;
 import org.openwms.wms.order.OrderPositionSplit;

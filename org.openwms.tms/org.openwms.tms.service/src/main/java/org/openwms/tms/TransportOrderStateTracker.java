@@ -21,8 +21,8 @@
  */
 package org.openwms.tms;
 
-import org.openwms.common.domain.TransportUnit;
-import org.openwms.tms.service.delegate.TransportOrderStateDelegate;
+import org.openwms.common.TransportUnit;
+import org.openwms.tms.delegate.TransportOrderStateDelegate;
 import org.openwms.tms.util.event.TransportServiceEvent;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationListener;
@@ -35,7 +35,7 @@ import org.springframework.transaction.annotation.Transactional;
  * @author <a href="mailto:russelltina@users.sourceforge.net">Tina Russell</a>
  * @version $Revision$
  * @since 0.1
- * @see org.openwms.tms.service.delegate.TransportOrderStateDelegate
+ * @see org.openwms.tms.delegate.TransportOrderStateDelegate
  */
 @Transactional
 @Component

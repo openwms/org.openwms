@@ -23,8 +23,8 @@ package org.openwms.tms;
 
 import java.util.List;
 
-import org.openwms.common.domain.TransportUnit;
-import org.openwms.common.domain.values.Problem;
+import org.openwms.common.TransportUnit;
+import org.openwms.common.values.Problem;
 import org.openwms.core.exception.RemovalNotAllowedException;
 import org.openwms.core.exception.StateChangeException;
 import org.openwms.core.listener.OnRemovalListener;

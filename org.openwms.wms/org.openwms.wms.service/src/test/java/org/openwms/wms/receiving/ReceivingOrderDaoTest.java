@@ -24,7 +24,7 @@ package org.openwms.wms.receiving;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-import org.openwms.common.domain.units.Piece;
+import org.openwms.common.units.Piece;
 import org.openwms.core.test.AbstractJpaSpringContextTests;
 import org.openwms.wms.inventory.Product;
 import org.openwms.wms.order.OrderPosition;

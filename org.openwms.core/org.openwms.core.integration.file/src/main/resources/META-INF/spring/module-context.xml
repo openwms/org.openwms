@@ -32,7 +32,7 @@
 
     <!-- Used for Springs annotation processing -->
     <context:annotation-config />
-    <context:component-scan base-package="org.openwms.core.integration.file" />
+    <context:component-scan base-package="org.openwms.core.file" />
 
     <alias name="globals" alias="appProps"/>
     

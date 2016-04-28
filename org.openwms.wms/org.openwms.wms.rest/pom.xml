@@ -41,5 +41,10 @@
             <groupId>${project.groupId}</groupId>
             <artifactId>org.openwms.wms.common</artifactId>
         </dependency>
+		<dependency>
+			<groupId>${project.groupId}</groupId>
+			<artifactId>org.openwms.tms.rest</artifactId>
+			<version>${tms.version}</version>
+		</dependency>
 	</dependencies>
 </project>
