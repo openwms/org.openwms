@@ -21,16 +21,22 @@
  */
 package org.openwms.wms.inventory;
 
-import org.openwms.wms.PackagingUnit;
-
 /**
- * A Allocation.
- * 
+ * A StockZone defines areas in stock used to control where products have to be stored. It is up to the project to assign a particular
+ * {@code StockZone} to the physical location or to extend the collection of zones.
+ *
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
- * @version $Revision: $
- * 
+ * @version 0.1
+ * @since 0.1
  */
-public interface Allocation {
+public enum StockZone {
 
-    PackagingUnit allocate(AllocationRule allocationRule) throws AllocationException;
+    /** Type A */
+    A,
+
+    /** Type B */
+    B,
+
+    /** Type C */
+    C,
 }

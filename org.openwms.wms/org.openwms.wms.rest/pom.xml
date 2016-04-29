@@ -39,7 +39,7 @@
         <!-- WMS Project dependencies -->
         <dependency>
             <groupId>${project.groupId}</groupId>
-            <artifactId>org.openwms.wms.common</artifactId>
+            <artifactId>org.openwms.wms.service</artifactId>
         </dependency>
 		<dependency>
 			<groupId>${project.groupId}</groupId>

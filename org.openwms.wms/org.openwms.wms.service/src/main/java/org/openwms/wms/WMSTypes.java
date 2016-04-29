@@ -19,20 +19,40 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
-package org.openwms.wms.values;
+package org.openwms.wms;
+
+import java.io.Serializable;
 
 /**
- * A TransportOrderStartMode.
+ * A WMSTypes.
  * 
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  * @version $Revision: $
  * @since 0.1
  */
-public enum TransportOrderStartMode {
+public final class WMSTypes implements Serializable {
 
-    /** TransportOrder is started automatically. */
-    AUTOMATIC,
+    /**
+     * Hide constructor.
+     */
+    private WMSTypes() {}
 
-    /** TransportOrder has to be started manually, e.g. via user interface. */
-    MANUAL;
+    /**
+     * Length of the orderId field.
+     * 
+     * @see org.openwms.wms.domain.order.AbstractOrder
+     */
+    public static final int ORDER_ID_LENGTH = 20;
+    /**
+     * Length of the positionNo field.
+     * 
+     * @see org.openwms.wms.domain.order.OrderPositionKey
+     */
+    public static final int POSITION_NO_LENGTH = 8;
+    /**
+     * Length of the SKU field.
+     * 
+     * @see org.openwms.wms.domain.inventory.Product
+     */
+    public static final int SKU_LENGTH = 20;
 }

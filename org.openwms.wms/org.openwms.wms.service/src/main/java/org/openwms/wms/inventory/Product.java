@@ -40,7 +40,7 @@ import java.util.Date;
 
 import org.openwms.core.domain.AbstractEntity;
 import org.openwms.core.domain.values.CoreTypeDefinitions;
-import org.openwms.wms.types.WMSTypes;
+import org.openwms.wms.WMSTypes;
 
 /**
  * A Product.

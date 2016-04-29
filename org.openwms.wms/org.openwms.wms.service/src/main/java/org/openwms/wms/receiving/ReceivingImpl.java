@@ -97,7 +97,7 @@ class ReceivingImpl implements Receiving {
         ReceivingOrder order = rcvOrderDao.findByOrderId(orderPositionKey.getOrderId());
 
         // Search Product
-        Product product = productDao.findByProductId(productId);
+        Product product = productDao.findBySku(productId);
 
         List<LoadUnit> loadUnits = loadUnitDao.findAllOnTransportUnit(new Barcode(barcode));
         String physicalPosition = "";

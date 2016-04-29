@@ -25,10 +25,10 @@ import org.ameba.annotation.TxService;
 import org.openwms.wms.PackagingUnit;
 
 /**
- * A StockAllocationManagerImpl.
+ * A StockAllocationImpl.
  * 
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
- * @version $Revision: $
+ * @version 0.1
  * @since 0.1
  */
 @TxService
@@ -39,6 +39,8 @@ class StockAllocationImpl implements Allocation {
      */
     @Override
     public PackagingUnit allocate(AllocationRule allocationRule) throws AllocationException {
+
+        // TODO [openwms]: 29/04/16
         // em.createQuery(
         // "select pu from PackagingUnit pu where pu.availabilityState == org.openwms.wms.domain.AvailablityState.AVAILABLE and pu.product = :c.product and !pu.loadUnit.locked and pu.loadUnit.transportUnit.state = org.openwms.common.domain.values.TransportUnitState.AVAILABLE and pu.loadUnit.transportUnit.actualLocation.outgoingActive and pu.loadUnit.transportUnit.actualLocation.plcState == 0 and pu.loadUnit.transportUnit.actualLocation.outgoingActive")
         // .getResultList();

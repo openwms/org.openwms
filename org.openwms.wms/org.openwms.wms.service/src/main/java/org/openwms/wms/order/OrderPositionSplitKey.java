@@ -25,7 +25,7 @@ import javax.persistence.Column;
 import javax.persistence.Embeddable;
 import java.io.Serializable;
 
-import org.openwms.wms.types.WMSTypes;
+import org.openwms.wms.WMSTypes;
 
 /**
  * An OrderPositionSplitKey.

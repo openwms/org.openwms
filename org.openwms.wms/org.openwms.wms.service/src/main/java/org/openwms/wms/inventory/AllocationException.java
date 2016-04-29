@@ -1,5 +1,3 @@
-<?xml version="1.0"?>
-<!--
 /*
  * openwms.org, the Open Warehouse Management System.
  * Copyright (C) 2014 Heiko Scherrer
@@ -21,21 +19,39 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
--->
-<aspectj>
+package org.openwms.wms.inventory;
 
-<!--
-    AspectJ load-time weaving config file to install common Spring aspects.
-    Only used in conjunction with aop:aspectj-autoproxy feature and annotation based
-    configuration.
--->
+import org.ameba.exception.ServiceLayerException;
 
-<!--
-    <weaver options="-showWeaveInfo"/>
-    
+/**
+ * A AllocationException.
+ *
+ * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
+ * @version 0.1
+ * @since 0.1
+ */
+public class AllocationException extends ServiceLayerException {
 
-    <aspects>
-        <aspect name="org.openwms.wms.domain.WMSIntegrationAdvice"/>
-    </aspects>
--->
-</aspectj>
+    /**
+     * Create a new AllocationException.
+     * 
+     * @param message
+     */
+    public AllocationException(String message) {
+        super(message);
+        // TODO [scherrer] Auto-generated constructor stub
+    }
+
+
+    /**
+     * Create a new AllocationException.
+     * 
+     * @param message
+     * @param cause
+     */
+    public AllocationException(String message, Throwable cause) {
+        super(message, cause);
+        // TODO [scherrer] Auto-generated constructor stub
+    }
+
+}

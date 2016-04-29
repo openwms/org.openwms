@@ -21,37 +21,22 @@
  */
 package org.openwms.wms.inventory;
 
-import org.ameba.exception.ServiceLayerException;
+import org.springframework.data.jpa.repository.JpaRepository;
 
 /**
- * A AllocationException.
- *
+ * A ProductRepository.
+ * 
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
- * @version $Revision: $
- *
+ * @version 0.2
+ * @since 0.1
  */
-public class AllocationException extends ServiceLayerException {
+ interface ProductRepository extends JpaRepository<Product, Long>{
 
     /**
-     * Create a new AllocationException.
+     * Find a {@link Product} by its unique SKU.
      * 
-     * @param message
+     * @param sku
+     *            The SKU to search for
      */
-    public AllocationException(String message) {
-        super(message);
-        // TODO [scherrer] Auto-generated constructor stub
-    }
-
-
-    /**
-     * Create a new AllocationException.
-     * 
-     * @param message
-     * @param cause
-     */
-    public AllocationException(String message, Throwable cause) {
-        super(message, cause);
-        // TODO [scherrer] Auto-generated constructor stub
-    }
-
+    <T extends Product> T findBySku(String sku);
 }

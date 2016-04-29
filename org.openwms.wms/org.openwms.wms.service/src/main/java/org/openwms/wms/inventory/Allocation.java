@@ -21,46 +21,22 @@
  */
 package org.openwms.wms.inventory;
 
+import org.openwms.wms.PackagingUnit;
+
 /**
- * A ProductDao.
+ * A Allocation.
  * 
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
- * @version $Revision: $
- * 
+ * @version 0.1
+ * @since 0.1
  */
-public interface ProductDao {
+public interface Allocation {
 
     /**
-     * Save changes on a {@link Product} instance and return the updated entity.
-     * 
-     * @param entity
-     *            The entity to save
-     * @return The saved entity instance. If JPA is used as implementation, the
-     *         returned instance is managed.
+     *
+     * @param allocationRule
+     * @return
+     * @throws AllocationException
      */
-    <T extends Product> T save(T entity);
-
-    /**
-     * Removes an already persistent {@link Product}.
-     * 
-     * @param entity
-     *            The entity instance to be removed
-     */
-    <T extends Product> void remove(T entity);
-
-    /**
-     * Persist a new/transient {@link Product}.
-     * 
-     * @param entity
-     *            The entity instance to be persisted
-     */
-    <T extends Product> void persist(T entity);
-
-    /**
-     * Find a {@link Product} by its unique id.
-     * 
-     * @param productId
-     *            The productId to search for
-     */
-    <T extends Product> T findByProductId(String productId);
+    PackagingUnit allocate(AllocationRule allocationRule) throws AllocationException;
 }

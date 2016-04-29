@@ -21,23 +21,55 @@
  */
 package org.openwms.wms.inventory;
 
+import java.io.Serializable;
+
+import org.openwms.core.domain.values.UnitType;
+
 /**
- * A StockZone defines areas in stock used to control where products have to be
- * stored. It is up to the project to assign a particular <code>StockZone</code>
- * to the physical location or to extend the collection of zones.
+ * A AllocationRule.
  * 
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
- * @version $Revision: $
+ * @version 0.1
  * @since 0.1
  */
-public enum StockZone {
+public class AllocationRule implements Serializable {
 
-    /** Type A */
-    A,
+    private static final long serialVersionUID = -8323664831006970415L;
+    private UnitType quantity;
+    private Product product;
 
-    /** Type B */
-    B,
+    /**
+     * Create a new AllocationRule.
+     */
+    protected AllocationRule() {}
 
-    /** Type C */
-    C,
+    /**
+     * Create a new AllocationRule.
+     * 
+     * @param quantity
+     * @param product
+     */
+    public AllocationRule(UnitType quantity, Product product) {
+        super();
+        this.quantity = quantity;
+        this.product = product;
+    }
+
+    /**
+     * Get the quantity.
+     * 
+     * @return the quantity.
+     */
+    public UnitType getQuantity() {
+        return quantity;
+    }
+
+    /**
+     * Get the product.
+     * 
+     * @return the product.
+     */
+    public Product getProduct() {
+        return product;
+    }
 }
