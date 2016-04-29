@@ -25,7 +25,7 @@ package org.openwms.wms;
  * A TransportOrderStartMode.
  * 
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
- * @version $Revision: $
+ * @version 0.1
  * @since 0.1
  */
 public enum TransportOrderStartMode {

@@ -24,6 +24,8 @@ package org.openwms.wms;
 import java.util.List;
 
 import org.openwms.common.values.Barcode;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
 
 /**
  * A LoadUnitDao.
@@ -32,8 +34,8 @@ import org.openwms.common.values.Barcode;
  * @version $Revision: $
  * @since 0.1
  */
-public interface LoadUnitDao {
+interface LoadUnitDao extends JpaRepository<LoadUnit, Long> {
 
-    List<LoadUnit> findAllOnTransportUnit(Barcode barcode);
-
+    @Query(value = "select lu from LoadUnit lu where lu.transportUnit.barcode = :barcode order by lu.physicalPosition")
+    List<LoadUnit> findByTransportUnit(Barcode barcode);
 }

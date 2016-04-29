@@ -27,7 +27,7 @@ import java.io.Serializable;
  * A WMSTypes.
  * 
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
- * @version $Revision: $
+ * @version 0.1
  * @since 0.1
  */
 public final class WMSTypes implements Serializable {
@@ -40,19 +40,19 @@ public final class WMSTypes implements Serializable {
     /**
      * Length of the orderId field.
      * 
-     * @see org.openwms.wms.domain.order.AbstractOrder
+     * @see org.openwms.wms.order.AbstractOrder
      */
     public static final int ORDER_ID_LENGTH = 20;
     /**
      * Length of the positionNo field.
      * 
-     * @see org.openwms.wms.domain.order.OrderPositionKey
+     * @see org.openwms.wms.order.OrderPositionKey
      */
     public static final int POSITION_NO_LENGTH = 8;
     /**
      * Length of the SKU field.
      * 
-     * @see org.openwms.wms.domain.inventory.Product
+     * @see org.openwms.wms.inventory.Product
      */
     public static final int SKU_LENGTH = 20;
 }

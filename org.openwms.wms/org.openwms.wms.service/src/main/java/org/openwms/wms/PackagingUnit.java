@@ -52,7 +52,7 @@ import org.openwms.wms.inventory.Product;
  * A PackagingUnit is the actual assignment of a {@link Product} and a quantity.
  * 
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
- * @version $Revision: $
+ * @version 0.1
  * @since 0.1
  */
 @Entity

@@ -56,9 +56,9 @@ import org.openwms.wms.inventory.Product;
  * {@link TransportUnit}.
  * 
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
- * @version $Revision: $
+ * @version 0.1
  * @since 0.1
- * @see org.openwms.common.domain.TransportUnit
+ * @see org.openwms.common.TransportUnit
  */
 @Entity
 @Table(name = "WMS_LOAD_UNIT", uniqueConstraints = @UniqueConstraint(columnNames = { "C_TRANSPORT_UNIT",
