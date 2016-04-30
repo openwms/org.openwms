@@ -28,27 +28,23 @@ import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
-import javax.persistence.PostPersist;
 import javax.persistence.PrePersist;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-import javax.persistence.Version;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
+import org.ameba.integration.jpa.BaseEntity;
 import org.openwms.common.values.Problem;
-import org.openwms.core.domain.AbstractEntity;
 import org.openwms.core.validation.AssertUtils;
 import org.openwms.wms.WMSTypes;
 
@@ -70,13 +66,7 @@ import org.openwms.wms.WMSTypes;
         @NamedQuery(name = AbstractOrder.NQ_FIND_WITH_ORDERID, query = "select ao from AbstractOrder ao where ao.orderId = :"
                 + AbstractOrder.QP_FIND_WITH_ORDERID_ORDERID) })
 public abstract class AbstractOrder<T extends AbstractOrder<T, U>, U extends OrderPosition<T, U>> extends
-        AbstractEntity<Long> {
-
-    /** Unique technical key. */
-    @Id
-    @Column(name = "C_ID")
-    @GeneratedValue
-    private Long id;
+        BaseEntity {
 
     /** Unique order id, business key. */
     @Column(name = "C_ORDER_ID", length = WMSTypes.ORDER_ID_LENGTH, unique = true, nullable = false)
@@ -145,16 +135,6 @@ public abstract class AbstractOrder<T extends AbstractOrder<T, U>, U extends Ord
     @Embedded
     private Problem problem;
 
-    /** Date when the Order was created. */
-    @Temporal(TemporalType.TIMESTAMP)
-    @Column(name = "C_CREATION_DATE")
-    private Date creationDate;
-
-    /** Version field. */
-    @Version
-    @Column(name = "C_VERSION")
-    private long version;
-
     /** All ShippingOrderPositions of this Order. */
     @OneToMany(mappedBy = "order", targetEntity = OrderPosition.class, cascade = CascadeType.PERSIST)
     private Set<U> positions = new HashSet<U>();
@@ -186,11 +166,8 @@ public abstract class AbstractOrder<T extends AbstractOrder<T, U>, U extends Ord
     public static final String NQ_FIND_WITH_STATE = "AbstractOrder.findWithState";
     public static final String QP_FIND_WITH_STATE_STATE = "states";
 
-    /**
-     * Only for the JPA provider and subclasses.
-     */
+    /** Only for the JPA provider and subclasses. */
     protected AbstractOrder() {
-        super();
     }
 
     /**
@@ -210,47 +187,6 @@ public abstract class AbstractOrder<T extends AbstractOrder<T, U>, U extends Ord
     @PrePersist
     protected void prePersist() {
         this.orderState = OrderState.CREATED;
-    }
-
-    /**
-     * After the entity is persisted:
-     * <ul>
-     * <li>set the creationDate</li>
-     * </ul>
-     */
-    @PostPersist
-    protected void postPersist() {
-        this.creationDate = new Date();
-    }
-
-    /**
-     * {@inheritDoc}
-     * 
-     * @see org.openwms.core.domain.DomainObject#isNew()
-     */
-    @Override
-    public boolean isNew() {
-        return this.id == null;
-    }
-
-    /**
-     * {@inheritDoc}
-     * 
-     * @see org.openwms.core.domain.DomainObject#getVersion()
-     */
-    @Override
-    public long getVersion() {
-        return this.version;
-    }
-
-    /**
-     * {@inheritDoc}
-     * 
-     * @see org.openwms.core.domain.DomainObject#getId()
-     */
-    @Override
-    public Long getId() {
-        return this.id;
     }
 
     /**
@@ -482,7 +418,8 @@ public abstract class AbstractOrder<T extends AbstractOrder<T, U>, U extends Ord
      *            {@link OrderPosition}s to add
      * @return <code>true</code> if this set changed as a result of the call
      */
-    public boolean addPostions(U... pos) {
+    @SafeVarargs
+    public final boolean addPostions(U... pos) {
         boolean res = this.positions.addAll(Arrays.asList(pos));
         if (res) {
             // FIXME [scherrer] : write a test
@@ -497,22 +434,14 @@ public abstract class AbstractOrder<T extends AbstractOrder<T, U>, U extends Ord
      * @param pos
      *            The {@link OrderPosition}s to remove.
      */
-    public boolean removePositions(U... pos) {
+    @SafeVarargs
+    public final boolean removePositions(U... pos) {
         boolean res = this.positions.removeAll(Arrays.asList(pos));
         if (res) {
             // FIXME [scherrer] : write a test
             this.noPositions -= pos.length;
         }
         return res;
-    }
-
-    /**
-     * Get the creationDate.
-     * 
-     * @return the creationDate.
-     */
-    public Date getCreationDate() {
-        return creationDate;
     }
 
     /**

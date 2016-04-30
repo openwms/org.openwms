@@ -25,23 +25,18 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.PostLoad;
-import javax.persistence.PrePersist;
-import javax.persistence.PreUpdate;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.persistence.Transient;
-import javax.persistence.Version;
 import java.io.Serializable;
 import java.util.Date;
 
+import org.ameba.integration.jpa.BaseEntity;
 import org.openwms.common.TransportUnit;
-import org.openwms.core.domain.AbstractEntity;
 import org.openwms.core.domain.values.CoreTypeDefinitions;
 import org.openwms.core.domain.values.UnitType;
 import org.openwms.core.exception.DomainModelRuntimeException;
@@ -50,22 +45,14 @@ import org.openwms.wms.inventory.Product;
 
 /**
  * A PackagingUnit is the actual assignment of a {@link Product} and a quantity.
- * 
+ *
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  * @version 0.1
  * @since 0.1
  */
 @Entity
 @Table(name = "WMS_PACKAGING_UNIT")
-public class PackagingUnit extends AbstractEntity<Long> implements Serializable {
-
-    private static final long serialVersionUID = 8969188598565357329L;
-
-    /** Unique technical key. */
-    @Id
-    @Column(name = "C_ID")
-    @GeneratedValue
-    private Long id;
+public class PackagingUnit extends BaseEntity implements Serializable {
 
     /** Carrying {@link TransportUnit}. */
     // @ManyToOne
@@ -78,9 +65,7 @@ public class PackagingUnit extends AbstractEntity<Long> implements Serializable 
     @JoinColumn(name = "C_LOAD_UNIT")
     private LoadUnit loadUnit;
 
-    /**
-     * Unique identifier within the {@link LoadUnit}. Can be <code>null</code>
-     */
+    /** Unique identifier within the {@link LoadUnit}. May be {@literal null} */
     @Column(name = "C_LABEL", unique = true, nullable = true)
     private String label;
 
@@ -96,8 +81,8 @@ public class PackagingUnit extends AbstractEntity<Long> implements Serializable 
 
     /** Current quantity. */
     @org.hibernate.annotations.Type(type = "org.openwms.persistence.ext.hibernate.UnitUserType")
-    @org.hibernate.annotations.Columns(columns = { @Column(name = "C_QUANTITY_TYPE"),
-            @Column(name = "C_QUANTITY", length = CoreTypeDefinitions.QUANTITY_LENGTH) })
+    @org.hibernate.annotations.Columns(columns = {@Column(name = "C_QUANTITY_TYPE"),
+            @Column(name = "C_QUANTITY", length = CoreTypeDefinitions.QUANTITY_LENGTH)})
     private UnitType quantity;
 
     /** Used to control the putaway strategy. */
@@ -105,31 +90,15 @@ public class PackagingUnit extends AbstractEntity<Long> implements Serializable 
     @Temporal(TemporalType.TIMESTAMP)
     private Date fifoDate;
 
-    @Temporal(TemporalType.TIMESTAMP)
-    @Column(name = "C_CREATED_DT")
-    private Date createdDate;
-
-    @Temporal(TemporalType.TIMESTAMP)
-    @Column(name = "C_CHANGED_DT")
-    private Date changedDate;
-
-    /** Version field. */
-    @Version
-    @Column(name = "C_VERSION")
-    private long version;
-
-    /**
-     * Accessed by persistence provider.
-     */
+    /** Dear JPA... */
     protected PackagingUnit() {
-        super();
     }
 
     /**
      * Create a new PackagingUnit.
-     * 
-     * @param lu
-     *            The {@link LoadUnit} where this PackingUnit is carried in
+     *
+     * @param lu The {@link LoadUnit} where this PackingUnit is carried in
+     * @param qty The quantity
      */
     public PackagingUnit(LoadUnit lu, UnitType qty) {
         AssertUtils.notNull(lu);
@@ -141,11 +110,10 @@ public class PackagingUnit extends AbstractEntity<Long> implements Serializable 
 
     /**
      * Create a new PackagingUnit.
-     * 
-     * @param lu
-     *            The {@link LoadUnit} where this PackingUnit is carried in
-     * @param product
-     *            A Product to assign
+     *
+     * @param lu The {@link LoadUnit} where this PackingUnit is carried in
+     * @param qty The quantity
+     * @param product A Product to assign
      */
     public PackagingUnit(LoadUnit lu, UnitType qty, Product product) {
         AssertUtils.notNull(lu);
@@ -168,34 +136,6 @@ public class PackagingUnit extends AbstractEntity<Long> implements Serializable 
         this.transportUnit = lu.getTransportUnit();
     }
 
-    /**
-     * Set the creation date.
-     * 
-     * Verify:
-     * <ul>
-     * <li>Same Product</li>
-     * </ul>
-     */
-    @PrePersist
-    void prePersist() {
-        verify();
-        this.createdDate = new Date();
-    }
-
-    /**
-     * Set the changed date.
-     * 
-     * Verify:
-     * <ul>
-     * <li>Same Product</li>
-     * </ul>
-     */
-    @PreUpdate
-    void preUpdate() {
-        verify();
-        this.changedDate = new Date();
-    }
-
     private void verify() {
         if (!this.product.equals(this.loadUnit.getProduct())) {
             throw new DomainModelRuntimeException("It is not allowed to have different Products on the LoadUnit ["
@@ -213,32 +153,8 @@ public class PackagingUnit extends AbstractEntity<Long> implements Serializable 
     }
 
     /**
-     * @see org.openwms.core.domain.DomainObject#isNew()
-     */
-    @Override
-    public boolean isNew() {
-        return this.id == null;
-    }
-
-    /**
-     * @see org.openwms.core.domain.DomainObject#getVersion()
-     */
-    @Override
-    public long getVersion() {
-        return this.version;
-    }
-
-    /**
-     * @see org.openwms.core.domain.DomainObject#getId()
-     */
-    @Override
-    public Long getId() {
-        return id;
-    }
-
-    /**
      * Get the transportUnit.
-     * 
+     *
      * @return the transportUnit.
      */
     public TransportUnit getTransportUnit() {
@@ -247,7 +163,7 @@ public class PackagingUnit extends AbstractEntity<Long> implements Serializable 
 
     /**
      * Get the loadUnit.
-     * 
+     *
      * @return the loadUnit.
      */
     public LoadUnit getLoadUnit() {
@@ -256,7 +172,7 @@ public class PackagingUnit extends AbstractEntity<Long> implements Serializable 
 
     /**
      * Get the label.
-     * 
+     *
      * @return the label.
      */
     public String getLabel() {
@@ -265,9 +181,8 @@ public class PackagingUnit extends AbstractEntity<Long> implements Serializable 
 
     /**
      * Set the label.
-     * 
-     * @param label
-     *            The label to set.
+     *
+     * @param label The label to set.
      */
     public void setLabel(String label) {
         this.label = label;
@@ -275,7 +190,7 @@ public class PackagingUnit extends AbstractEntity<Long> implements Serializable 
 
     /**
      * Get the product.
-     * 
+     *
      * @return the product.
      */
     public Product getProduct() {
@@ -284,9 +199,8 @@ public class PackagingUnit extends AbstractEntity<Long> implements Serializable 
 
     /**
      * Set the product.
-     * 
-     * @param product
-     *            The product to set.
+     *
+     * @param product The product to set.
      */
     protected void setProduct(Product product) {
         this.product = product;
@@ -294,7 +208,7 @@ public class PackagingUnit extends AbstractEntity<Long> implements Serializable 
 
     /**
      * Get the availabilityState.
-     * 
+     *
      * @return the availabilityState.
      */
     public AvailabilityState getAvailabilityState() {
@@ -303,9 +217,8 @@ public class PackagingUnit extends AbstractEntity<Long> implements Serializable 
 
     /**
      * Set the availabilityState.
-     * 
-     * @param availabilityState
-     *            The availabilityState to set.
+     *
+     * @param availabilityState The availabilityState to set.
      */
     protected void setAvailabilityState(AvailabilityState availabilityState) {
         this.availabilityState = availabilityState;
@@ -313,7 +226,7 @@ public class PackagingUnit extends AbstractEntity<Long> implements Serializable 
 
     /**
      * Get the quantity.
-     * 
+     *
      * @return the quantity.
      */
     public UnitType getQuantity() {
@@ -322,9 +235,8 @@ public class PackagingUnit extends AbstractEntity<Long> implements Serializable 
 
     /**
      * Set the quantity.
-     * 
-     * @param quantity
-     *            The quantity to set.
+     *
+     * @param qty The quantity to set.
      */
     protected void setQuantity(UnitType qty) {
         verifyQuantity(qty);
@@ -332,19 +244,17 @@ public class PackagingUnit extends AbstractEntity<Long> implements Serializable 
     }
 
     /**
-     * Throw an exception when the quantity <code>qty</code> is
-     * <code>null</code> or of negative value.
+     * Throw an exception when the quantity {@code qty} is {@literal null} or of negative value.
      */
     private void verifyQuantity(UnitType qty) {
         if (qty == null || qty.getMeasurable().isNegative()) {
             throw new IllegalArgumentException("Not allowed to set the quantity of a PackagingUnit less than 0");
         }
-
     }
 
     /**
      * Get the fifoDate.
-     * 
+     *
      * @return the fifoDate.
      */
     public Date getFifoDate() {
@@ -352,26 +262,8 @@ public class PackagingUnit extends AbstractEntity<Long> implements Serializable 
     }
 
     /**
-     * Get the createdDate.
-     * 
-     * @return the createdDate.
-     */
-    public Date getCreatedDate() {
-        return new Date(createdDate.getTime());
-    }
-
-    /**
-     * Get the changedDate.
-     * 
-     * @return the changedDate.
-     */
-    public Date getChangedDate() {
-        return new Date(changedDate.getTime());
-    }
-
-    /**
      * Return a combination of TransportUnit, LoadUnit and Label.
-     * 
+     * <p>
      * For example: 0000000000000BARCODE/TOP_RIGHT/123456789
      */
     @Override

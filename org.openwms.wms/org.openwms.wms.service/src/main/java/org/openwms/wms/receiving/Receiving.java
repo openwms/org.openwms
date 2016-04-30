@@ -28,7 +28,7 @@ import org.openwms.wms.order.OrderPositionKey;
 
 /**
  * A Receiving.
- * 
+ *
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  * @version $Revision: $
  * @since 0.1
@@ -37,26 +37,22 @@ public interface Receiving {
 
     /**
      * Find and retrieve a List with all <code>ReceivingOrder</code>s.
-     * 
-     * @return A List with <code>ReceivingOrder</code>s or an empty List with
-     *         when no orders exist
+     *
+     * @return A List with <code>ReceivingOrder</code>s or an empty List with when no orders exist
      */
     List<ReceivingOrder> findAllOrders();
 
     /**
-     * Find and retrieve all <code>ReceivingOrderPosition</code>s of an
-     * <code>ReceivingOrder</code> with the <code>orderId</code>.
-     * 
-     * @param orderId
-     *            The orderId to search for
-     * @return A List with <code>ReceivingOrderPosition</code>s or an empty List
-     *         with when no positions exist
+     * Find and retrieve all <code>ReceivingOrderPosition</code>s of an <code>ReceivingOrder</code> with the <code>orderId</code>.
+     *
+     * @param orderId The orderId to search for
+     * @return A List with <code>ReceivingOrderPosition</code>s or an empty List with when no positions exist
      */
     List<ReceivingOrderPosition> findAllPositions(String orderId);
 
     /**
      * FIXME [scherrer] Comment this
-     * 
+     *
      * @param ordId
      * @return
      */
@@ -64,7 +60,7 @@ public interface Receiving {
 
     /**
      * FIXME [scherrer] Comment this
-     * 
+     *
      * @param order
      * @return
      */
@@ -72,13 +68,12 @@ public interface Receiving {
 
     /**
      * FIXME [scherrer] Comment this
-     * 
+     *
      * @param orderPositionKey
      * @param productId
      * @param quantity
      * @param barcode
      * @return
      */
-    ReceivingOrderPosition createOrderPosition(OrderPositionKey orderPositionKey, String productId, UnitType quantity,
-            String barcode);
+    ReceivingOrderPosition createOrderPosition(OrderPositionKey orderPositionKey, String productId, UnitType quantity, String barcode);
 }

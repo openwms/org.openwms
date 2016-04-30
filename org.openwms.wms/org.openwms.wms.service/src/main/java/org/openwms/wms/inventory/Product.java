@@ -25,145 +25,35 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.NamedQueries;
-import javax.persistence.NamedQuery;
-import javax.persistence.PrePersist;
-import javax.persistence.PreUpdate;
 import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
-import javax.persistence.Version;
 import java.io.Serializable;
-import java.util.Date;
 
-import org.openwms.core.domain.AbstractEntity;
+import org.ameba.integration.jpa.BaseEntity;
 import org.openwms.core.domain.values.CoreTypeDefinitions;
-import org.openwms.wms.WMSTypes;
 
 /**
  * A Product.
  * 
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
- * @version $Revision: $
+ * @version 0.1
  * @since 0.1
  */
 @Entity
 @Table(name = "WMS_PRODUCT")
-@NamedQueries({
-        @NamedQuery(name = Product.NQ_FIND_ALL, query = "select p from Product p"),
-        @NamedQuery(name = Product.NQ_FIND_SKU, query = "select p from Product p where p.sku = :"
-                + Product.QP_FIND_PRODUCT_SKU + " order by p.sku") })
-public class Product extends AbstractEntity<Long> implements Comparable<Product>, Serializable {
+public class Product extends BaseEntity implements Comparable<Product>, Serializable {
 
-    private static final long serialVersionUID = -7714815919817459002L;
-
-    /** Unique technical key. */
-    @Id
-    @Column(name = "C_ID")
-    @GeneratedValue
-    private Long id;
-
-    /** The product id is an unique business key. Limited to 40 characters */
-    @Column(name = "C_SKU", unique = true, length = WMSTypes.SKU_LENGTH, nullable = false)
+    /** The product id is the unique business key. */
+    @Column(name = "C_SKU", unique = true, length = 20, nullable = false)
     private String sku;
 
-    /** Textual descriptive text. Limited to 1024 characters */
+    /** Textual descriptive text. */
     @Column(name = "C_DESCRIPTION", length = CoreTypeDefinitions.DESCRIPTION_LENGTH)
     private String description;
 
-    /** Where this product has to be put in stock. */
+    /** Where this product has to be placed in stock. */
     @Enumerated(EnumType.STRING)
     @Column(name = "C_STOCK_ZONE")
     private StockZone stockZone;
-
-    /** The date this LoadUnit was created. */
-    @Temporal(TemporalType.TIMESTAMP)
-    @Column(name = "C_CREATED_DT")
-    private Date createdDate;
-
-    /** The date this LoadUnit has changed the last time. */
-    @Temporal(TemporalType.TIMESTAMP)
-    @Column(name = "C_CHANGED_DT")
-    private Date changedDate;
-
-    /** Version field. */
-    @Version
-    @Column(name = "C_VERSION")
-    private long version;
-
-    /**
-     * Query to find all <code>Product</code>s.<br />
-     * Query name is {@value} .
-     */
-    public static final String NQ_FIND_ALL = "Product.findAll";
-
-    /**
-     * Query to find <strong>one</strong> <code>Product</code> by its SKU. <li>
-     * Query parameter name <strong>{@value #QP_FIND_PRODUCT_SKU} </strong> :
-     * The unique id of the <code>Product</code> to search for.</li><br />
-     * Query name is {@value} .
-     */
-    public static final String NQ_FIND_SKU = "Product.findBySKU";
-    public static final String QP_FIND_PRODUCT_SKU = "sku";
-
-    /**
-     * Accessed by persistence provider.
-     */
-    Product() {
-        super();
-    }
-
-    /**
-     * Create a new Product with an unique Id.
-     * 
-     * @param prodId
-     *            The SKU of this Product
-     */
-    public Product(String prodId) {
-        this.sku = prodId;
-    }
-
-    /**
-     * Set the creation date.
-     */
-    @PrePersist
-    void prePersist() {
-        this.createdDate = new Date();
-    }
-
-    /**
-     * Set the changed date.
-     */
-    @PreUpdate
-    void preUpdate() {
-        this.changedDate = new Date();
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public boolean isNew() {
-        return this.id == null;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public long getVersion() {
-        return this.version;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public Long getId() {
-        return id;
-    }
 
     /**
      * Get the SKU.
@@ -213,25 +103,9 @@ public class Product extends AbstractEntity<Long> implements Comparable<Product>
     }
 
     /**
-     * Get the createdDate.
-     * 
-     * @return the createdDate.
-     */
-    public Date getCreatedDate() {
-        return new Date(createdDate.getTime());
-    }
-
-    /**
-     * Get the changedDate.
-     * 
-     * @return the changedDate.
-     */
-    public Date getChangedDate() {
-        return new Date(changedDate.getTime());
-    }
-
-    /**
-     * @see java.lang.Comparable#compareTo(java.lang.Object)
+     * {@inheritDoc}
+     *
+     * Uses the sku for comparison
      */
     @Override
     public int compareTo(Product o) {

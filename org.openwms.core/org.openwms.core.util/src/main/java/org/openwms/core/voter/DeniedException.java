@@ -33,8 +33,6 @@ import org.ameba.exception.ServiceLayerException;
  */
 public class DeniedException extends ServiceLayerException {
 
-    private static final long serialVersionUID = -7312236498183224626L;
-
     /**
      * Create a new DeniedException.
      * 

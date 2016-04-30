@@ -30,7 +30,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
  * @version 0.2
  * @since 0.1
  */
- interface ProductRepository extends JpaRepository<Product, Long>{
+public interface ProductRepository extends JpaRepository<Product, Long>{
 
     /**
      * Find a {@link Product} by its unique SKU.

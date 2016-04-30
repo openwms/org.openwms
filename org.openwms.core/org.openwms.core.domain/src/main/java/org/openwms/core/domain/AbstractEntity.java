@@ -21,14 +21,17 @@
  */
 package org.openwms.core.domain;
 
-import java.io.Serializable;
-import java.util.UUID;
-
 import javax.persistence.Column;
 import javax.persistence.EntityListeners;
 import javax.persistence.MappedSuperclass;
 import javax.persistence.PrePersist;
+import javax.persistence.PreUpdate;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import javax.xml.bind.annotation.XmlTransient;
+import java.io.Serializable;
+import java.util.Date;
+import java.util.UUID;
 
 /**
  * An AbstractEntity, used as a base class for all domain classes.
@@ -62,10 +65,6 @@ public abstract class AbstractEntity<ID extends Serializable> implements DomainO
      * Suffix for the FIND_ALL named query. Default {@value}
      */
     public static final String FIND_ALL = ".findAll";
-    /**
-     * Suffix for the FIND_BY_ID named query. Default {@value}
-     */
-    public static final String FIND_BY_ID = ".findById";
 
     /**
      * Unique identifier column, used for ActionScript clients.
@@ -74,6 +73,18 @@ public abstract class AbstractEntity<ID extends Serializable> implements DomainO
     @XmlTransient
     @Column(name = "C_ENTITY_UID", unique = true, nullable = false, updatable = false, length = UID_LENGTH)
     private String uid;
+
+    /** The date this product has been created. */
+    @Temporal(TemporalType.TIMESTAMP)
+    @Column(name = "C_CREATED_DT")
+    private Date createdDate;
+
+    /** The date this LoadUnit has changed the last time. */
+    @Temporal(TemporalType.TIMESTAMP)
+    @Column(name = "C_CHANGED_DT")
+    private Date changedDate;
+
+
 
     /**
      * {@inheritDoc}
@@ -119,6 +130,22 @@ public abstract class AbstractEntity<ID extends Serializable> implements DomainO
         public void onPreInsert(AbstractEntity abstractEntity) {
             abstractEntity.uid();
         }
+    }
+
+    /**
+     * Set the creation date.
+     */
+    @PrePersist
+    void prePersist() {
+        this.createdDate = new Date();
+    }
+
+    /**
+     * Set the changed date.
+     */
+    @PreUpdate
+    void preUpdate() {
+        this.changedDate = new Date();
     }
 
     private String uid() {

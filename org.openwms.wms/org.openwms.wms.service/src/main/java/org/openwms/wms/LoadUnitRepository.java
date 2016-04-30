@@ -28,13 +28,13 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
 /**
- * A LoadUnitDao.
+ * A LoadUnitRepository.
  * 
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
- * @version $Revision: $
+ * @version 0.1
  * @since 0.1
  */
-interface LoadUnitDao extends JpaRepository<LoadUnit, Long> {
+public interface LoadUnitRepository extends JpaRepository<LoadUnit, Long> {
 
     @Query(value = "select lu from LoadUnit lu where lu.transportUnit.barcode = :barcode order by lu.physicalPosition")
     List<LoadUnit> findByTransportUnit(Barcode barcode);

@@ -49,10 +49,4 @@ public final class WMSTypes implements Serializable {
      * @see org.openwms.wms.order.OrderPositionKey
      */
     public static final int POSITION_NO_LENGTH = 8;
-    /**
-     * Length of the SKU field.
-     * 
-     * @see org.openwms.wms.inventory.Product
-     */
-    public static final int SKU_LENGTH = 20;
 }

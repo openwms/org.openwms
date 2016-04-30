@@ -34,10 +34,10 @@ import org.openwms.core.annotation.FireAfterTransactionAsynchronous;
 import org.openwms.core.domain.values.UnitType;
 import org.openwms.core.validation.AssertUtils;
 import org.openwms.wms.LoadUnit;
-import org.openwms.wms.LoadUnitDao;
+import org.openwms.wms.LoadUnitRepository;
 import org.openwms.wms.PackagingUnit;
 import org.openwms.wms.inventory.Product;
-import org.openwms.wms.inventory.ProductDao;
+import org.openwms.wms.inventory.ProductRepository;
 import org.openwms.wms.order.OrderPositionKey;
 import org.openwms.wms.order.WMSOrderDao;
 import org.slf4j.Logger;
@@ -60,9 +60,9 @@ class ReceivingImpl implements Receiving {
     @Autowired
     private WMSOrderDao<ReceivingOrder, ReceivingOrderPosition> wmsOrderDao;
     @Autowired
-    private ProductDao productDao;
+    private ProductRepository productDao;
     @Autowired
-    private LoadUnitDao loadUnitDao;
+    private LoadUnitRepository loadUnitDao;
     @Autowired
     private TransportUnitService<TransportUnit> transportUnitSrv;
 
@@ -99,12 +99,12 @@ class ReceivingImpl implements Receiving {
         // Search Product
         Product product = productDao.findBySku(productId);
 
-        List<LoadUnit> loadUnits = loadUnitDao.findAllOnTransportUnit(new Barcode(barcode));
+        List<LoadUnit> loadUnits = loadUnitDao.findByTransportUnit(new Barcode(barcode));
         String physicalPosition = "";
         if (!loadUnits.isEmpty()) {
             String currentMaxPosition = loadUnits.get(loadUnits.size() - 1).getPhysicalPosition();
             try {
-                int val = Integer.valueOf(currentMaxPosition).intValue();
+                int val = Integer.valueOf(currentMaxPosition);
                 val++;
                 physicalPosition = String.valueOf(val);
             } catch (NumberFormatException e) {}
