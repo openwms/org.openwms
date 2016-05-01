@@ -61,24 +61,28 @@
                 <activeByDefault>true</activeByDefault>
             </activation>
             <modules>
+                <module>org.openwms.core.configuration</module>
                 <module>org.openwms.core.domain</module>
                 <module>org.openwms.core.rest</module>
                 <module>org.openwms.core.test</module>
                 <module>org.openwms.core.infrastructure.configuration.provider</module>
                 <module>org.openwms.core.service.api</module>
                 <module>org.openwms.core.service</module>
+                <module>org.openwms.core.uaa</module>
                 <module>org.openwms.core.util</module>
             </modules>
         </profile>
         <profile>
             <id>core</id>
             <modules>
+                <module>org.openwms.core.configuration</module>
                 <module>org.openwms.core.domain</module>
                 <module>org.openwms.core.rest</module>
                 <module>org.openwms.core.test</module>
                 <module>org.openwms.core.infrastructure.configuration.provider</module>
                 <module>org.openwms.core.service.api</module>
                 <module>org.openwms.core.service</module>
+                <module>org.openwms.core.uaa</module>
                 <module>org.openwms.core.util</module>
             </modules>
         </profile>

@@ -26,7 +26,7 @@ import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
 
-import org.openwms.core.ConfigurationService;
+import org.openwms.core.domain.preferences.ConfigurationService;
 import org.openwms.core.domain.search.Action;
 import org.openwms.core.domain.search.Tag;
 import org.openwms.core.domain.system.PreferenceKey;

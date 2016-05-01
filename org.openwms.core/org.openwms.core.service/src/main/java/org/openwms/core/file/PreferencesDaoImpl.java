@@ -30,7 +30,7 @@ import java.util.concurrent.ConcurrentHashMap;
 
 import org.apache.commons.lang3.StringUtils;
 import org.openwms.core.Constants;
-import org.openwms.core.PreferenceDao;
+import org.openwms.core.domain.preferences.PreferenceDao;
 import org.openwms.core.domain.preferences.Preferences;
 import org.openwms.core.domain.system.AbstractPreference;
 import org.openwms.core.domain.system.PreferenceKey;
