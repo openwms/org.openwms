@@ -21,8 +21,6 @@
  */
 package org.openwms.core.domain.system;
 
-import java.io.Serializable;
-
 import javax.persistence.Column;
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
@@ -34,10 +32,11 @@ import javax.persistence.PostLoad;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 import javax.persistence.UniqueConstraint;
+import java.io.Serializable;
 
 import org.openwms.core.domain.AbstractEntity;
 import org.openwms.core.domain.values.I18nSet;
-import org.openwms.core.util.validation.AssertUtils;
+import org.openwms.core.validation.AssertUtils;
 
 /**
  * An I18n entity stores multiple translations assigned to an unique key.

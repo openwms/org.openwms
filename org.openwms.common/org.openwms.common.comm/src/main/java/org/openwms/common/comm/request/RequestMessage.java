@@ -23,11 +23,11 @@ package org.openwms.common.comm.request;
 
 import java.util.Date;
 
+import org.openwms.common.LocationPK;
 import org.openwms.common.comm.api.CommConstants;
 import org.openwms.common.comm.api.CommonHeader;
 import org.openwms.common.comm.api.CommonMessage;
-import org.openwms.common.domain.LocationPK;
-import org.openwms.common.domain.values.Barcode;
+import org.openwms.common.values.Barcode;
 
 /**
  * A RequestMessage requests an order for a TransportUnit with id <tt>Barcode</tt> on a particular location <tt>actualLocation</tt>.

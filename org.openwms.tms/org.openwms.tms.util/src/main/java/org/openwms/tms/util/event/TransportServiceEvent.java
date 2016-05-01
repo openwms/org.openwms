@@ -21,7 +21,7 @@
  */
 package org.openwms.tms.util.event;
 
-import org.openwms.core.util.event.RootApplicationEvent;
+import org.openwms.core.event.RootApplicationEvent;
 
 /**
  * A TransportServiceEvent.

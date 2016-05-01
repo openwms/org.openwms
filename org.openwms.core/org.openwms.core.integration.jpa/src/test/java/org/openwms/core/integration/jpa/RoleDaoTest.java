@@ -21,18 +21,14 @@
  */
 package org.openwms.core.integration.jpa;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
+import static org.junit.Assert.*;
 
 import javax.persistence.NoResultException;
 
 import org.junit.Before;
 import org.junit.Test;
+import org.openwms.core.RoleDao;
 import org.openwms.core.domain.system.usermanagement.Role;
-import org.openwms.core.integration.RoleDao;
 import org.openwms.core.test.AbstractJpaSpringContextTests;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;

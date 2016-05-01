@@ -30,7 +30,7 @@
         <class>org.openwms.core.domain.preferences.ApplicationPreference</class>
         <class>org.openwms.core.domain.preferences.ModulePreference</class>
 
-        <class>org.openwms.core.domain.system.AbstractPreference</class>
+        <class>org.openwms.core.configuration.AbstractPreference</class>
         <class>org.openwms.core.domain.system.I18n</class>
         <class>org.openwms.core.domain.system.Message</class>
         

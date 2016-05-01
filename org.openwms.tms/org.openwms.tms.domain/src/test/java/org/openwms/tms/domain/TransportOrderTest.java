@@ -21,15 +21,14 @@
  */
 package org.openwms.tms.domain;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.fail;
+import static org.junit.Assert.*;
 
 import org.junit.Test;
-import org.openwms.common.domain.Location;
-import org.openwms.common.domain.LocationGroup;
-import org.openwms.common.domain.LocationPK;
-import org.openwms.common.domain.TransportUnit;
-import org.openwms.common.domain.TransportUnitType;
+import org.openwms.common.Location;
+import org.openwms.common.LocationGroup;
+import org.openwms.common.LocationPK;
+import org.openwms.common.TransportUnit;
+import org.openwms.common.TransportUnitType;
 import org.openwms.core.exception.StateChangeException;
 import org.openwms.core.test.AbstractJpaSpringContextTests;
 import org.openwms.tms.domain.order.TransportOrder;

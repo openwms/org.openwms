@@ -21,13 +21,24 @@
  */
 package org.openwms.core.domain.system.usermanagement;
 
+import javax.persistence.Column;
+import javax.persistence.DiscriminatorColumn;
+import javax.persistence.DiscriminatorType;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Inheritance;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
+import javax.persistence.OrderBy;
+import javax.persistence.Table;
+import javax.persistence.Version;
 import java.io.Serializable;
-
-import javax.persistence.*;
 
 import org.openwms.core.domain.AbstractEntity;
 import org.openwms.core.domain.values.CoreTypeDefinitions;
-import org.openwms.core.util.validation.AssertUtils;
+import org.openwms.core.validation.AssertUtils;
 
 /**
  * A SecurityObject is the generalization of <code>Role</code>s and <code>Grant</code>s and combines common used properties of both.

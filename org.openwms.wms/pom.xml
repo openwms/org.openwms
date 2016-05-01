@@ -53,7 +53,7 @@
                 </property>
             </activation>
             <modules>
-                <module>org.openwms.wms.common</module>
+                <module>org.openwms.wms.bom</module>
                 <module>org.openwms.wms.rest</module>
                 <module>org.openwms.wms.service</module>
             </modules>
@@ -61,7 +61,7 @@
         <profile>
             <id>wms</id>
             <modules>
-                <module>org.openwms.wms.common</module>
+                <module>org.openwms.wms.bom</module>
                 <module>org.openwms.wms.rest</module>
                 <module>org.openwms.wms.service</module>
             </modules>
@@ -71,11 +71,6 @@
     <dependencyManagement>
         <dependencies>
             <!-- Project dependencies -->
-            <dependency>
-                <groupId>${project.groupId}</groupId>
-                <artifactId>org.openwms.wms.common</artifactId>
-                <version>${wms.version}</version>
-            </dependency>
             <dependency>
                 <groupId>${project.groupId}</groupId>
                 <artifactId>org.openwms.wms.rest</artifactId>

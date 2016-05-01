@@ -30,7 +30,7 @@ import org.ameba.annotation.TxService;
 import org.ameba.exception.ServiceLayerException;
 import org.openwms.core.event.EventBroker;
 import org.openwms.core.event.EventListener;
-import org.openwms.core.util.event.RootApplicationEvent;
+import org.openwms.core.event.RootApplicationEvent;
 import org.openwms.wms.PackagingUnit;
 import org.openwms.wms.inventory.Allocation;
 import org.openwms.wms.inventory.AllocationException;

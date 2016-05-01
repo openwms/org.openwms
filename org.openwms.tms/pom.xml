@@ -63,10 +63,8 @@
             </activation>
             <modules>
                 <module>org.openwms.tms.domain</module>
-                <module>org.openwms.tms.integration</module>
-                <module>org.openwms.tms.integration.jpa</module>
-                <module>org.openwms.tms.service.api</module>
-                <module>org.openwms.tms.service.spring</module>
+                <module>org.openwms.tms.rest</module>
+                <module>org.openwms.tms.service</module>
                 <module>org.openwms.tms.util</module>
             </modules>
         </profile>
@@ -74,10 +72,8 @@
             <id>tms</id>
             <modules>
                 <module>org.openwms.tms.domain</module>
-                <module>org.openwms.tms.integration</module>
-                <module>org.openwms.tms.integration.jpa</module>
-                <module>org.openwms.tms.service.api</module>
-                <module>org.openwms.tms.service.spring</module>
+                <module>org.openwms.tms.rest</module>
+                <module>org.openwms.tms.service</module>
                 <module>org.openwms.tms.util</module>
             </modules>
         </profile>
@@ -98,22 +94,12 @@
             </dependency>
             <dependency>
                 <groupId>${project.groupId}</groupId>
-                <artifactId>org.openwms.tms.integration</artifactId>
+                <artifactId>org.openwms.tms.rest</artifactId>
                 <version>${module.version}</version>
             </dependency>
             <dependency>
                 <groupId>${project.groupId}</groupId>
-                <artifactId>org.openwms.tms.integration.jpa</artifactId>
-                <version>${module.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>${project.groupId}</groupId>
-                <artifactId>org.openwms.tms.service.api</artifactId>
-                <version>${module.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>${project.groupId}</groupId>
-                <artifactId>org.openwms.tms.service.spring</artifactId>
+                <artifactId>org.openwms.tms.service</artifactId>
                 <version>${module.version}</version>
             </dependency>
         </dependencies>

@@ -23,6 +23,7 @@ package org.openwms.common.comm.request.tcp;
 
 import java.text.ParseException;
 
+import org.openwms.common.LocationPK;
 import org.openwms.common.comm.api.CommConstants;
 import org.openwms.common.comm.api.CommonHeader;
 import org.openwms.common.comm.api.CommonMessage;
@@ -30,8 +31,7 @@ import org.openwms.common.comm.api.MessageMapper;
 import org.openwms.common.comm.exception.MessageMissmatchException;
 import org.openwms.common.comm.request.RequestMessage;
 import org.openwms.common.comm.util.CommonMessageFactory;
-import org.openwms.common.domain.LocationPK;
-import org.openwms.common.domain.values.Barcode;
+import org.openwms.common.values.Barcode;
 import org.springframework.stereotype.Component;
 
 /**

@@ -23,7 +23,7 @@ package org.openwms.wms.shipping;
 
 import org.junit.Before;
 import org.junit.Test;
-import org.openwms.common.domain.units.Piece;
+import org.openwms.common.units.Piece;
 import org.openwms.core.test.AbstractJpaSpringContextTests;
 import org.openwms.wms.inventory.Product;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -46,7 +46,6 @@ public class ShippingManagerImplTest extends AbstractJpaSpringContextTests {
     /**
      * FIXME [scherrer] Comment this
      * 
-     * @throws java.lang.Exception
      */
     @Before
     public void setUp() {

@@ -195,11 +195,6 @@
             <artifactId>org.openwms.common.service.api</artifactId>
             <version>${common.version}</version>
         </dependency>
-        <dependency>
-            <groupId>${project.groupId}</groupId>
-            <artifactId>org.openwms.common.service.spring</artifactId>
-            <version>${common.version}</version>
-        </dependency>
 
         <!-- TMS Project dependencies -->
         <dependency>

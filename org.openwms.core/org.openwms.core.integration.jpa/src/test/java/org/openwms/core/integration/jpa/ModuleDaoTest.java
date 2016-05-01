@@ -21,13 +21,12 @@
  */
 package org.openwms.core.integration.jpa;
 
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 
 import org.junit.Before;
 import org.junit.Test;
+import org.openwms.core.ModuleDao;
 import org.openwms.core.domain.Module;
-import org.openwms.core.integration.ModuleDao;
 import org.openwms.core.test.AbstractJpaSpringContextTests;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;

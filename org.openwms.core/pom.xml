@@ -61,30 +61,28 @@
                 <activeByDefault>true</activeByDefault>
             </activation>
             <modules>
+                <module>org.openwms.core.configuration</module>
                 <module>org.openwms.core.domain</module>
                 <module>org.openwms.core.rest</module>
                 <module>org.openwms.core.test</module>
                 <module>org.openwms.core.infrastructure.configuration.provider</module>
-                <module>org.openwms.core.integration</module>
-                <module>org.openwms.core.integration.file</module>
-                <module>org.openwms.core.integration.jpa</module>
                 <module>org.openwms.core.service.api</module>
-                <module>org.openwms.core.service.spring</module>
+                <module>org.openwms.core.service</module>
+                <module>org.openwms.core.uaa</module>
                 <module>org.openwms.core.util</module>
             </modules>
         </profile>
         <profile>
             <id>core</id>
             <modules>
+                <module>org.openwms.core.configuration</module>
                 <module>org.openwms.core.domain</module>
                 <module>org.openwms.core.rest</module>
                 <module>org.openwms.core.test</module>
                 <module>org.openwms.core.infrastructure.configuration.provider</module>
-                <module>org.openwms.core.integration</module>
-                <module>org.openwms.core.integration.file</module>
-                <module>org.openwms.core.integration.jpa</module>
                 <module>org.openwms.core.service.api</module>
-                <module>org.openwms.core.service.spring</module>
+                <module>org.openwms.core.service</module>
+                <module>org.openwms.core.uaa</module>
                 <module>org.openwms.core.util</module>
             </modules>
         </profile>
@@ -117,27 +115,12 @@
             </dependency>
             <dependency>
                 <groupId>${project.groupId}</groupId>
-                <artifactId>org.openwms.core.integration</artifactId>
-                <version>${module.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>${project.groupId}</groupId>
-                <artifactId>org.openwms.core.integration.file</artifactId>
-                <version>${module.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>${project.groupId}</groupId>
-                <artifactId>org.openwms.core.integration.jpa</artifactId>
-                <version>${module.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>${project.groupId}</groupId>
                 <artifactId>org.openwms.core.service.api</artifactId>
                 <version>${module.version}</version>
             </dependency>
             <dependency>
                 <groupId>${project.groupId}</groupId>
-                <artifactId>org.openwms.core.service.spring</artifactId>
+                <artifactId>org.openwms.core.service</artifactId>
                 <version>${module.version}</version>
             </dependency>
             <dependency>
