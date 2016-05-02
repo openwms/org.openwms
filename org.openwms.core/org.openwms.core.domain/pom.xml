@@ -47,6 +47,13 @@
             <artifactId>validation-api</artifactId>
         </dependency>
 
+
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-web</artifactId>
+        </dependency>
+
+
         <!-- Project dependencies -->
         <dependency>
             <groupId>${project.groupId}</groupId>
