@@ -24,6 +24,7 @@ package org.openwms.core.http;
 import javax.validation.ValidationException;
 import javax.validation.Validator;
 
+import org.openwms.core.ExceptionCodes;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.MessageSource;
