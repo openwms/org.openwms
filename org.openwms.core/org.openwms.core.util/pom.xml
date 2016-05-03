@@ -42,5 +42,9 @@
             <groupId>org.springframework</groupId>
             <artifactId>spring-context</artifactId>
         </dependency>
+        <dependency>
+            <groupId>org.ameba</groupId>
+            <artifactId>ameba-lib</artifactId>
+        </dependency>
     </dependencies>
 </project>

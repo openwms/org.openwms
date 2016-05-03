@@ -33,8 +33,8 @@
         <class>org.openwms.core.domain.system.usermanagement.Role</class>
         <class>org.openwms.core.domain.system.usermanagement.User</class>
         <class>org.openwms.core.domain.system.usermanagement.UserDetails</class>
-        <class>org.openwms.core.domain.system.usermanagement.RolePreference</class>
-        <class>org.openwms.core.domain.system.usermanagement.UserPreference</class>
+        <class>org.openwms.core.configuration.RolePreference</class>
+        <class>org.openwms.core.configuration.UserPreference</class>
         <class>org.openwms.core.domain.system.usermanagement.UserPassword</class>
         
         <class>org.openwms.common.domain.Location</class>

@@ -33,9 +33,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import org.openwms.core.domain.system.usermanagement.RolePreference;
-import org.openwms.core.domain.system.usermanagement.UserPreference;
-
 /**
  * An instance of a <code>Preferences</code> represents the root of a preferences XML file and aggregates all other types of preference.
  * 

@@ -19,7 +19,7 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
-package org.openwms.core.domain.system.usermanagement;
+package org.openwms.core.configuration;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -35,8 +35,6 @@ import javax.xml.bind.annotation.XmlType;
 import java.io.Serializable;
 
 import org.openwms.core.domain.system.AbstractPreference;
-import org.openwms.core.domain.system.PreferenceKey;
-import org.openwms.core.domain.system.PropertyScope;
 import org.openwms.core.validation.AssertUtils;
 
 /**

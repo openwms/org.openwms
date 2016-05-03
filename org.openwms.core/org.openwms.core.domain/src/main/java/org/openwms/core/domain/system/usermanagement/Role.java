@@ -41,20 +41,20 @@ import org.openwms.core.validation.AssertUtils;
 /**
  * A Role is a group of <code>User</code>s. Basically more than one <code>User</code> belong to a Role. Security access policies are
  * assigned to <code>Role</code>s instead of <code>User</code>s.
- * 
- * @GlossaryTerm
+ *
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  * @version $Revision$
- * @since 0.1
+ * @GlossaryTerm
  * @see org.openwms.core.domain.system.usermanagement.SecurityObject
  * @see org.openwms.core.domain.system.usermanagement.User
  * @see org.openwms.core.domain.system.usermanagement.Role
+ * @since 0.1
  */
 @Entity
 @DiscriminatorValue("ROLE")
 @NamedQueries({
         @NamedQuery(name = Role.NQ_FIND_ALL, query = "select distinct(r) from Role r left join fetch r.users left join fetch r.grants left join fetch r.preferences order by r.name"),
-        @NamedQuery(name = Role.NQ_FIND_BY_UNIQUE_QUERY, query = "select r from Role r where r.name = ?1") })
+        @NamedQuery(name = Role.NQ_FIND_BY_UNIQUE_QUERY, query = "select r from Role r where r.name = ?1")})
 public class Role extends SecurityObject implements Serializable {
 
     private static final long serialVersionUID = -4133301834284932221L;
@@ -68,19 +68,14 @@ public class Role extends SecurityObject implements Serializable {
     /**
      * All {@link User}s assigned to this <code>Role</code>.
      */
-    @ManyToMany(cascade = { CascadeType.REFRESH })
+    @ManyToMany(cascade = {CascadeType.REFRESH})
     @JoinTable(name = "COR_ROLE_USER_JOIN", joinColumns = @JoinColumn(name = "ROLE_ID"), inverseJoinColumns = @JoinColumn(name = "USER_ID"))
     private Set<User> users = new HashSet<User>();
-    /**
-     * All {@link RolePreference}s linked to the <code>Role</code>.
-     */
-    @ManyToMany(cascade = { CascadeType.REFRESH })
-    @JoinTable(name = "COR_ROLE_PREFERENCE_JOIN", joinColumns = @JoinColumn(name = "ROLE_ID"), inverseJoinColumns = @JoinColumn(name = "PREFERENCE_ID"))
-    private Set<RolePreference> preferences = new HashSet<RolePreference>();
+
     /**
      * All {@link SecurityObject}s assigned to the <code>Role</code>.
      */
-    @ManyToMany(cascade = { CascadeType.REFRESH })
+    @ManyToMany(cascade = {CascadeType.REFRESH})
     @JoinTable(name = "COR_ROLE_ROLE_JOIN", joinColumns = @JoinColumn(name = "ROLE_ID"), inverseJoinColumns = @JoinColumn(name = "GRANT_ID"))
     private Set<SecurityObject> grants = new HashSet<SecurityObject>();
 
@@ -96,17 +91,14 @@ public class Role extends SecurityObject implements Serializable {
 
     /**
      * Query to find <strong>one</strong> <code>Role</code> by its natural key.
-     * 
-     * <li>Query parameter index <strong>1</strong> : The name of the <code>Role</code> to search for.</li>
      * <p>
-     * Name is {@value} .
-     * </p>
+     * <li>Query parameter index <strong>1</strong> : The name of the <code>Role</code> to search for.</li> <p> Name is {@value} . </p>
      */
     public static final String NQ_FIND_BY_UNIQUE_QUERY = "Role.findByRolename";
 
     /**
      * A builder class to construct <code>Role</code> instances.
-     * 
+     *
      * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
      * @version $Revision$
      * @since 0.1
@@ -117,11 +109,9 @@ public class Role extends SecurityObject implements Serializable {
 
         /**
          * Create a new Builder.
-         * 
-         * @param name
-         *            The name of the <code>Role</code>
-         * @throws IllegalArgumentException
-         *             when name is <code>null</code> or empty
+         *
+         * @param name The name of the <code>Role</code>
+         * @throws IllegalArgumentException when name is <code>null</code> or empty
          */
         public Builder(String name) {
             AssertUtils.isNotEmpty(name, "Not allowed to create a Role with an empty name");
@@ -131,9 +121,8 @@ public class Role extends SecurityObject implements Serializable {
 
         /**
          * Add a description text to the <code>Role</code>.
-         * 
-         * @param description
-         *            as String
+         *
+         * @param description as String
          * @return the builder instance
          */
         public Builder withDescription(String description) {
@@ -143,7 +132,7 @@ public class Role extends SecurityObject implements Serializable {
 
         /**
          * Set the <code>Role</code> to be immutable.
-         * 
+         *
          * @return the builder instance
          */
         public Builder asImmutable() {
@@ -153,7 +142,7 @@ public class Role extends SecurityObject implements Serializable {
 
         /**
          * Finally build and return the <code>Role</code> instance.
-         * 
+         *
          * @return the constructed <code>Role</code>
          */
         public Role build() {
@@ -162,6 +151,7 @@ public class Role extends SecurityObject implements Serializable {
     }
 
     /* ----------------------------- methods ------------------- */
+
     /**
      * Accessed by the persistence provider.
      */
@@ -172,11 +162,9 @@ public class Role extends SecurityObject implements Serializable {
 
     /**
      * Create a new <code>Role</code> with a name.
-     * 
-     * @param name
-     *            The name of the <code>Role</code>
-     * @throws IllegalArgumentException
-     *             when name is <code>null</code> or empty
+     *
+     * @param name The name of the <code>Role</code>
+     * @throws IllegalArgumentException when name is <code>null</code> or empty
      */
     public Role(String name) {
         super(name);
@@ -185,13 +173,10 @@ public class Role extends SecurityObject implements Serializable {
 
     /**
      * Create a new <code>Role</code> with a name and a description.
-     * 
-     * @param name
-     *            The name of the <code>Role</code>
-     * @param description
-     *            The description text of the <code>Role</code>
-     * @throws IllegalArgumentException
-     *             when name is <code>null</code> or empty
+     *
+     * @param name The name of the <code>Role</code>
+     * @param description The description text of the <code>Role</code>
+     * @throws IllegalArgumentException when name is <code>null</code> or empty
      */
     public Role(String name, String description) {
         super(name, description);
@@ -200,7 +185,7 @@ public class Role extends SecurityObject implements Serializable {
 
     /**
      * Get the immutable.
-     * 
+     *
      * @return the immutable.
      */
     public Boolean getImmutable() {
@@ -213,7 +198,7 @@ public class Role extends SecurityObject implements Serializable {
 
     /**
      * Return an unmodifiable Set of all {@link User}s assigned to the <code>Role</code>.
-     * 
+     *
      * @return A Set of all {@link User}s assigned to the <code>Role</code>
      */
     public Set<User> getUsers() {
@@ -222,12 +207,10 @@ public class Role extends SecurityObject implements Serializable {
 
     /**
      * Add an existing {@link User} to the <code>Role</code>.
-     * 
-     * @param user
-     *            The {@link User} to be added
+     *
+     * @param user The {@link User} to be added
      * @return <code>true</code> if the {@link User} was new in the collection of {@link User}s, otherwise <code>false</code>
-     * @throws IllegalArgumentException
-     *             if user is <code>null</code>
+     * @throws IllegalArgumentException if user is <code>null</code>
      */
     public boolean addUser(User user) {
         AssertUtils.notNull(user, "User to add must not be null");
@@ -236,11 +219,9 @@ public class Role extends SecurityObject implements Serializable {
 
     /**
      * Remove a {@link User} from the <code>Role</code>.
-     * 
-     * @param user
-     *            The {@link User} to be removed
-     * @throws IllegalArgumentException
-     *             if user is <code>null</code>
+     *
+     * @param user The {@link User} to be removed
+     * @throws IllegalArgumentException if user is <code>null</code>
      */
     public void removeUser(User user) {
         AssertUtils.notNull(user, "User to remove must not be null");
@@ -249,11 +230,9 @@ public class Role extends SecurityObject implements Serializable {
 
     /**
      * Set all {@link User}s belonging to this <code>Role</code>.
-     * 
-     * @param users
-     *            A Set of {@link User}s to be assigned to the <code>Role</code>
-     * @throws IllegalArgumentException
-     *             if users is <code>null</code>
+     *
+     * @param users A Set of {@link User}s to be assigned to the <code>Role</code>
+     * @throws IllegalArgumentException if users is <code>null</code>
      */
     public void setUsers(Set<User> users) {
         AssertUtils.notNull(users, "Set of Users must not be null");
@@ -261,27 +240,8 @@ public class Role extends SecurityObject implements Serializable {
     }
 
     /**
-     * Return all {@link RolePreference}s of the <code>Role</code>.
-     * 
-     * @return A Set of all {@link RolePreference}s assigned to the <code>Role</code>
-     */
-    public Set<RolePreference> getPreferences() {
-        return preferences;
-    }
-
-    /**
-     * Set all {@link RolePreference}s belonging to the <code>Role</code>.
-     * 
-     * @param preferences
-     *            A Set of {@link RolePreference}s to be assigned to the <code>Role</code>
-     */
-    public void setPreferences(Set<RolePreference> preferences) {
-        this.preferences = preferences;
-    }
-
-    /**
      * Return an unmodifiable Set of all {@link SecurityObject}s belonging to the <code>Role</code>.
-     * 
+     *
      * @return A Set of all {@link SecurityObject}s belonging to this Role
      */
     public Set<SecurityObject> getGrants() {
@@ -290,13 +250,11 @@ public class Role extends SecurityObject implements Serializable {
 
     /**
      * Add an existing {@link SecurityObject} to the <code>Role</code>.
-     * 
-     * @param grant
-     *            The {@link SecurityObject} to be added to the <code>Role</code>.
+     *
+     * @param grant The {@link SecurityObject} to be added to the <code>Role</code>.
      * @return <code>true</code> if the {@link SecurityObject} was new to the collection of {@link SecurityObject}s, otherwise
-     *         <code>false</code>
-     * @throws IllegalArgumentException
-     *             if grant is <code>null</code>
+     * <code>false</code>
+     * @throws IllegalArgumentException if grant is <code>null</code>
      */
     public boolean addGrant(SecurityObject grant) {
         AssertUtils.notNull(grant, "Grant to add must not be null");
@@ -305,13 +263,11 @@ public class Role extends SecurityObject implements Serializable {
 
     /**
      * Add an existing {@link SecurityObject} to the <code>Role</code>.
-     * 
-     * @param grant
-     *            The {@link SecurityObject} to be added to the <code>Role</code>
+     *
+     * @param grant The {@link SecurityObject} to be added to the <code>Role</code>
      * @return <code>true</code> if the {@link SecurityObject} was successfully removed from the Set of {@link SecurityObject}s, otherwise
-     *         <code>false</code>
-     * @throws IllegalArgumentException
-     *             if grant is <code>null</code>
+     * <code>false</code>
+     * @throws IllegalArgumentException if grant is <code>null</code>
      */
     public boolean removeGrant(SecurityObject grant) {
         AssertUtils.notNull(grant, "Grant to remove must not be null");
@@ -320,13 +276,11 @@ public class Role extends SecurityObject implements Serializable {
 
     /**
      * Add an existing {@link SecurityObject} to the <code>Role</code>.
-     * 
-     * @param grants
-     *            A list of {@link SecurityObject}s to be removed from the <code>Role</code>
+     *
+     * @param grants A list of {@link SecurityObject}s to be removed from the <code>Role</code>
      * @return <code>true</code> if the {@link SecurityObject} was successfully removed from the Set of {@link SecurityObject}s, otherwise
-     *         <code>false</code>
-     * @throws IllegalArgumentException
-     *             if <code>grants</code> is <code>null</code>
+     * <code>false</code>
+     * @throws IllegalArgumentException if <code>grants</code> is <code>null</code>
      */
     public boolean removeGrants(List<? extends SecurityObject> grants) {
         AssertUtils.notNull(grants, "Grants to remove must not be null");
@@ -335,11 +289,9 @@ public class Role extends SecurityObject implements Serializable {
 
     /**
      * Set all {@link SecurityObject}s assigned to the <code>Role</code>. Already existing {@link SecurityObject}s will be removed.
-     * 
-     * @param grants
-     *            A Set of {@link SecurityObject}s to be assigned to the <code>Role</code>
-     * @throws IllegalArgumentException
-     *             if grants is <code>null</code>
+     *
+     * @param grants A Set of {@link SecurityObject}s to be assigned to the <code>Role</code>
+     * @throws IllegalArgumentException if grants is <code>null</code>
      */
     public void setGrants(Set<SecurityObject> grants) {
         AssertUtils.notNull(grants, "Set of Grants must not be null");
@@ -348,9 +300,9 @@ public class Role extends SecurityObject implements Serializable {
 
     /**
      * {@inheritDoc}
-     * 
+     * <p>
      * Delegates to the superclass and uses the hashCode of the String ROLE for calculation.
-     * 
+     *
      * @see java.lang.Object#hashCode()
      */
     @Override
@@ -364,9 +316,9 @@ public class Role extends SecurityObject implements Serializable {
 
     /**
      * {@inheritDoc}
-     * 
+     * <p>
      * Does not delegate to the {@link SecurityObject#equals(Object)} and uses the name for comparison.
-     * 
+     *
      * @see java.lang.Object#equals(java.lang.Object)
      */
     @Override
