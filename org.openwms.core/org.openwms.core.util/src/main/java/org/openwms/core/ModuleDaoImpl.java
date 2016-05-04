@@ -19,16 +19,15 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
-package org.openwms.core.jpa;
+package org.openwms.core;
 
-import org.openwms.core.I18nRepository;
-import org.openwms.core.system.I18n;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 /**
- * An I18nRepositoryImpl is responsible to find and retrieve i18n translations from the persistent storage. It can be injected by name
+ * A ModuleDao is an extension of a {@link AbstractGenericJpaDao} about functionality regarding {@link Module}s. The stereotype annotation
+ * {@link Repository} marks this class as a DAO and enables exception translation and component scanning. It can be injected by name
  * {@value #COMPONENT_NAME}.
  * <p>
  * All methods have to be invoked within an active transaction context.
@@ -37,20 +36,22 @@ import org.springframework.transaction.annotation.Transactional;
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  * @version $Revision$
  * @since 0.1
+ * @see AbstractGenericJpaDao
+ * @see org.openwms.core.ModuleDao
  */
 @Transactional(propagation = Propagation.MANDATORY)
-@Repository(I18nRepositoryImpl.COMPONENT_NAME)
-public class I18nRepositoryImpl extends AbstractGenericJpaDao<I18n, Long> implements I18nRepository {
+@Repository(ModuleDaoImpl.COMPONENT_NAME)
+public class ModuleDaoImpl extends AbstractGenericJpaDao<Module, Long> implements ModuleDao {
 
     /** Springs component name. */
-    public static final String COMPONENT_NAME = "i18nRepo";
+    public static final String COMPONENT_NAME = "moduleDao";
 
     /**
      * {@inheritDoc}
      */
     @Override
     protected String getFindAllQuery() {
-        return I18n.NQ_FIND_ALL;
+        return Module.NQ_FIND_ALL;
     }
 
     /**
@@ -58,14 +59,14 @@ public class I18nRepositoryImpl extends AbstractGenericJpaDao<I18n, Long> implem
      */
     @Override
     protected String getFindByUniqueIdQuery() {
-        return I18n.NQ_FIND_BY_UNIQUE_QUERY;
+        return Module.NQ_FIND_BY_UNIQUE_QUERY;
     }
 
     /**
      * {@inheritDoc}
      */
     @Override
-    protected Class<I18n> getPersistentClass() {
-        return I18n.class;
+    protected Class<Module> getPersistentClass() {
+        return Module.class;
     }
 }

@@ -31,8 +31,6 @@ import org.hibernate.engine.config.spi.ConfigurationService;
 import org.openwms.core.AbstractGenericEntityService;
 import org.openwms.core.ExceptionCodes;
 import org.openwms.core.GenericDao;
-import org.openwms.core.SecurityObjectDao;
-import org.openwms.core.UserDao;
 import org.openwms.core.annotation.FireAfterTransaction;
 import org.openwms.core.event.UserChangedEvent;
 import org.openwms.core.exception.InvalidPasswordException;
@@ -58,7 +56,7 @@ import org.springframework.transaction.annotation.Transactional;
  *
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  * @version $Revision$
- * @see org.openwms.core.UserDao
+ * @see UserDao
  * @since 0.1
  */
 @Transactional

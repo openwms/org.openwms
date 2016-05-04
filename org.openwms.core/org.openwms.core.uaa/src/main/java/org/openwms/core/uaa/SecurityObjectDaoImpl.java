@@ -19,13 +19,13 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
-package org.openwms.core.jpa;
+package org.openwms.core.uaa;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import java.util.List;
 
-import org.openwms.core.SecurityObjectDao;
+import org.openwms.core.AbstractGenericJpaDao;
 import org.openwms.core.system.usermanagement.Grant;
 import org.openwms.core.system.usermanagement.SecurityObject;
 import org.springframework.stereotype.Repository;

@@ -19,10 +19,11 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
-package org.openwms.core;
+package org.openwms.core.uaa;
 
 import java.util.List;
 
+import org.openwms.core.GenericDao;
 import org.openwms.core.system.usermanagement.Grant;
 import org.openwms.core.system.usermanagement.SecurityObject;
 
@@ -33,7 +34,7 @@ import org.openwms.core.system.usermanagement.SecurityObject;
  * @version $Revision$
  * @since 0.1
  */
-public interface SecurityObjectDao extends GenericDao< SecurityObject, Long>{
+public interface SecurityObjectDao extends GenericDao< SecurityObject, Long> {
 
     /**
      * Find and retrieve all {@link SecurityObject}s that belong to a given <code>Module</code>.

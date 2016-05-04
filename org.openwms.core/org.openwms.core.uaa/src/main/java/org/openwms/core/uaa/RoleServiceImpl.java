@@ -25,7 +25,6 @@ import org.ameba.exception.NotFoundException;
 import org.openwms.core.AbstractGenericEntityService;
 import org.openwms.core.ExceptionCodes;
 import org.openwms.core.GenericDao;
-import org.openwms.core.RoleDao;
 import org.openwms.core.annotation.FireAfterTransaction;
 import org.openwms.core.event.RoleChangedEvent;
 import org.openwms.core.system.usermanagement.Role;
@@ -47,7 +46,7 @@ import org.springframework.transaction.annotation.Transactional;
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  * @version $Revision$
  * @since 0.1
- * @see org.openwms.core.RoleDao
+ * @see RoleDao
  */
 @Transactional
 @Service(RoleServiceImpl.COMPONENT_NAME)

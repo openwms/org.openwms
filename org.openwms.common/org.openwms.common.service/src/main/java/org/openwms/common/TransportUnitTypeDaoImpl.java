@@ -21,7 +21,7 @@
  */
 package org.openwms.common;
 
-import org.openwms.core.jpa.AbstractGenericJpaDao;
+import org.openwms.core.AbstractGenericJpaDao;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;

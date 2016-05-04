@@ -19,10 +19,11 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
-package org.openwms.core;
+package org.openwms.core.uaa;
 
 import java.util.List;
 
+import org.openwms.core.GenericEntityService;
 import org.openwms.core.system.usermanagement.Grant;
 import org.openwms.core.system.usermanagement.SecurityObject;
 

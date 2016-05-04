@@ -23,7 +23,6 @@ package org.openwms.core.search;
 
 import java.util.Collection;
 
-import org.openwms.core.domain.search.Action;
 import org.openwms.core.system.usermanagement.User;
 
 /**
@@ -32,7 +31,7 @@ import org.openwms.core.system.usermanagement.User;
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  * @version $Revision: $
  * @since 0.1.1
- * @see org.openwms.core.domain.search.Action
+ * @see org.openwms.core.search.Action
  */
 public interface ActionService {
 
