@@ -66,7 +66,6 @@
                 <module>org.openwms.core.rest</module>
                 <module>org.openwms.core.test</module>
                 <module>org.openwms.core.infrastructure.configuration.provider</module>
-                <module>org.openwms.core.service.api</module>
                 <module>org.openwms.core.service</module>
                 <module>org.openwms.core.uaa</module>
                 <module>org.openwms.core.util</module>
@@ -80,7 +79,6 @@
                 <module>org.openwms.core.rest</module>
                 <module>org.openwms.core.test</module>
                 <module>org.openwms.core.infrastructure.configuration.provider</module>
-                <module>org.openwms.core.service.api</module>
                 <module>org.openwms.core.service</module>
                 <module>org.openwms.core.uaa</module>
                 <module>org.openwms.core.util</module>
@@ -111,11 +109,6 @@
             <dependency>
                 <groupId>${project.groupId}</groupId>
                 <artifactId>org.openwms.core.infrastructure.configuration.provider</artifactId>
-                <version>${module.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>${project.groupId}</groupId>
-                <artifactId>org.openwms.core.service.api</artifactId>
                 <version>${module.version}</version>
             </dependency>
             <dependency>

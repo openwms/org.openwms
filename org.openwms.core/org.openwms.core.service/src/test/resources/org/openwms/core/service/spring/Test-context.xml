@@ -42,7 +42,7 @@
     <import resource="classpath:META-INF/spring/module-context.xml"/>
     
     <util:properties id="appProps" location="classpath:/org/openwms/core/service/spring/preferences.properties" />
-    <oxm:jaxb2-marshaller id="preferencesUnmarshaller" contextPath="org.openwms.core.domain.preferences:org.openwms.core.domain.system.usermanagement"/>
+    <oxm:jaxb2-marshaller id="preferencesUnmarshaller" contextPath="org.openwms.core.domain.preferences:org.openwms.core.system.usermanagement"/>
     
     <util:properties id="globals">
         <prop key="system.user">OPENWMS</prop>

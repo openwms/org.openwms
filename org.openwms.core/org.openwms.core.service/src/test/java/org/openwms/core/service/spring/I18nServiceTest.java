@@ -21,7 +21,6 @@
  */
 package org.openwms.core.service.spring;
 
-import static org.junit.Assert.*;
 import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.anyObject;
 import static org.mockito.Matchers.anyString;
@@ -37,7 +36,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.openwms.core.I18nRepository;
 import org.openwms.core.I18nServiceImpl;
-import org.openwms.core.domain.system.I18n;
+import org.openwms.core.system.I18n;
 import org.openwms.core.test.AbstractMockitoTests;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

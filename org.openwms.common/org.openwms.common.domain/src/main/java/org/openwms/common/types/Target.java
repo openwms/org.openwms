@@ -30,8 +30,8 @@ import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
 import javax.persistence.Version;
 
-import org.openwms.core.domain.AbstractEntity;
-import org.openwms.core.domain.DomainObject;
+import org.openwms.core.AbstractEntity;
+import org.openwms.core.DomainObject;
 
 /**
  * A Target is either a physical or a logical endpoint of any kind of order in a warehouse. A <code>TransportOrder</code> has a Target set,

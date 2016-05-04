@@ -25,8 +25,8 @@ import java.io.Serializable;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 
-import org.openwms.core.domain.values.Measurable;
-import org.openwms.core.domain.values.UnitType;
+import org.openwms.core.values.Measurable;
+import org.openwms.core.values.UnitType;
 
 /**
  * A Piece.
@@ -56,7 +56,7 @@ public class Piece implements Measurable<BigDecimal, Piece, PieceUnit>, UnitType
     }
 
     /**
-     * @see org.openwms.core.domain.values.UnitType#getMeasurable()
+     * @see org.openwms.core.values.UnitType#getMeasurable()
      */
     @Override
     public Piece getMeasurable() {

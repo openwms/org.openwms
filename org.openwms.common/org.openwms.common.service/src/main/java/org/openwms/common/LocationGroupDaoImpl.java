@@ -23,7 +23,7 @@ package org.openwms.common;
 
 import java.util.Date;
 
-import org.openwms.core.jpa.AbstractGenericJpaDao;
+import org.openwms.core.AbstractGenericJpaDao;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
@@ -34,7 +34,7 @@ import org.springframework.transaction.annotation.Transactional;
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  * @version $Revision$
  * @since 0.1
- * @see org.openwms.core.jpa.AbstractGenericJpaDao
+ * @see AbstractGenericJpaDao
  * @see LocationGroupDao
  */
 @Transactional(propagation = Propagation.MANDATORY)
@@ -47,7 +47,7 @@ public class LocationGroupDaoImpl extends AbstractGenericJpaDao<LocationGroup, L
     /**
      * {@inheritDoc}
      * 
-     * @see org.openwms.core.jpa.AbstractGenericJpaDao#getFindAllQuery()
+     * @see AbstractGenericJpaDao#getFindAllQuery()
      */
     @Override
     protected String getFindAllQuery() {
@@ -57,7 +57,7 @@ public class LocationGroupDaoImpl extends AbstractGenericJpaDao<LocationGroup, L
     /**
      * {@inheritDoc}
      * 
-     * @see org.openwms.core.jpa.AbstractGenericJpaDao#getFindByUniqueIdQuery()
+     * @see AbstractGenericJpaDao#getFindByUniqueIdQuery()
      */
     @Override
     protected String getFindByUniqueIdQuery() {
@@ -75,7 +75,7 @@ public class LocationGroupDaoImpl extends AbstractGenericJpaDao<LocationGroup, L
     /**
      * {@inheritDoc}
      * 
-     * @see org.openwms.core.jpa.AbstractGenericJpaDao#getPersistentClass()
+     * @see AbstractGenericJpaDao#getPersistentClass()
      */
     @Override
     protected Class<LocationGroup> getPersistentClass() {

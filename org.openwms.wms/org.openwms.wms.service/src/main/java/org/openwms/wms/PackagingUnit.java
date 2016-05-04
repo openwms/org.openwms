@@ -37,10 +37,10 @@ import java.util.Date;
 
 import org.ameba.integration.jpa.BaseEntity;
 import org.openwms.common.TransportUnit;
-import org.openwms.core.domain.values.CoreTypeDefinitions;
-import org.openwms.core.domain.values.UnitType;
 import org.openwms.core.exception.DomainModelRuntimeException;
 import org.openwms.core.validation.AssertUtils;
+import org.openwms.core.values.CoreTypeDefinitions;
+import org.openwms.core.values.UnitType;
 import org.openwms.wms.inventory.Product;
 
 /**

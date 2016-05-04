@@ -24,8 +24,8 @@ package org.openwms.core.uaa;
 import java.util.Collection;
 import java.util.HashSet;
 
-import org.openwms.core.domain.system.usermanagement.SecurityObject;
-import org.openwms.core.domain.system.usermanagement.User;
+import org.openwms.core.system.usermanagement.SecurityObject;
+import org.openwms.core.system.usermanagement.User;
 import org.openwms.core.validation.AssertUtils;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -37,8 +37,8 @@ import org.springframework.security.core.userdetails.UserDetails;
  * @author <a href="mailto:russelltina@users.sourceforge.net">Tina Russell</a>
  * @version $Revision$
  * @since 0.1
- * @see org.openwms.core.domain.system.usermanagement.SecurityObject
- * @see org.openwms.core.domain.system.usermanagement.Role
+ * @see org.openwms.core.system.usermanagement.SecurityObject
+ * @see org.openwms.core.system.usermanagement.Role
  * @see org.springframework.security.core.GrantedAuthority
  * @see org.springframework.security.core.userdetails.UserDetails
  */

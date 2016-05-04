@@ -28,9 +28,9 @@ import java.util.List;
 
 import org.ameba.exception.ServiceLayerException;
 import org.openwms.common.values.Barcode;
-import org.openwms.core.domain.listener.OnRemovalListener;
-import org.openwms.core.domain.listener.RemovalNotAllowedException;
 import org.openwms.core.integration.GenericDao;
+import org.openwms.core.listener.OnRemovalListener;
+import org.openwms.core.listener.RemovalNotAllowedException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;

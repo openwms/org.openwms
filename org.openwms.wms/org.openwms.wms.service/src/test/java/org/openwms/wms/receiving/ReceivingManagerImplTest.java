@@ -88,7 +88,7 @@ public class ReceivingManagerImplTest extends AbstractJpaSpringContextTests {
 
     /**
      * Test method for {@link ReceivingImpl#create(org.openwms.wms.order.OrderPositionKey, java.lang.String,
-     * org.openwms.core.domain.values.Unit, java.lang.String)} .
+     * org.openwms.core.values.Unit, java.lang.String)} .
      */
     @Test
     public final void testCreate() {

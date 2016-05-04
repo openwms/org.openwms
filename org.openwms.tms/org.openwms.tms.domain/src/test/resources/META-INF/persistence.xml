@@ -25,19 +25,19 @@
 <persistence version="1.0" xmlns="http://java.sun.com/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:schemaLocation="http://java.sun.com/xml/ns/persistence http://java.sun.com/xml/ns/persistence/persistence_1_0.xsd">
     <persistence-unit name="OpenWMS-test" transaction-type="RESOURCE_LOCAL">
-        <class>org.openwms.core.domain.Module</class>
+        <class>org.openwms.core.Module</class>
         <class>org.openwms.core.domain.preferences.ApplicationPreference</class>
         <class>org.openwms.core.domain.preferences.ModulePreference</class>
         <class>org.openwms.core.configuration.AbstractPreference</class>
-        <class>org.openwms.core.domain.system.I18n</class>
-        <class>org.openwms.core.domain.system.Message</class>
-        <class>org.openwms.core.domain.system.usermanagement.Email</class>
-        <class>org.openwms.core.domain.system.usermanagement.Role</class>
-        <class>org.openwms.core.domain.system.usermanagement.User</class>
-        <class>org.openwms.core.domain.system.usermanagement.UserDetails</class>
-        <class>org.openwms.core.domain.system.usermanagement.RolePreference</class>
-        <class>org.openwms.core.domain.system.usermanagement.UserPreference</class>
-        <class>org.openwms.core.domain.system.usermanagement.UserPassword</class>
+        <class>org.openwms.core.system.I18n</class>
+        <class>org.openwms.core.system.Message</class>
+        <class>org.openwms.core.system.usermanagement.Email</class>
+        <class>org.openwms.core.system.usermanagement.Role</class>
+        <class>org.openwms.core.system.usermanagement.User</class>
+        <class>org.openwms.core.system.usermanagement.UserDetails</class>
+        <class>org.openwms.core.configuration.RolePreference</class>
+        <class>org.openwms.core.configuration.UserPreference</class>
+        <class>org.openwms.core.system.usermanagement.UserPassword</class>
         
         <class>org.openwms.common.domain.Location</class>
         <class>org.openwms.common.domain.LocationPK</class>

@@ -69,4 +69,39 @@ public class ObjectFactory {
     public ApplicationPreference createApplicationPreference() {
         return new ApplicationPreference();
     }
+
+    /**
+     * Create an instance of {@link UserPreference}.
+     *
+     * @return an instance of {@link UserPreference}
+     */
+    public UserPreference createUserPreference() {
+        return new UserPreference();
+    }
+
+    /**
+     * Create an instance of {@link UserPreference}.
+     *
+     * @param username
+     *            The name of the User
+     * @param key
+     *            The key of the preference
+     * @param description
+     *            The description text
+     * @return an instance of {@link UserPreference}
+     */
+    public static final UserPreference createUserPreference(String username, String key, String description) {
+        UserPreference result = new UserPreference(username, key);
+        result.setDescription(description);
+        return result;
+    }
+
+    /**
+     * Create an instance of {@link RolePreference}.
+     *
+     * @return an instance of {@link RolePreference}
+     */
+    public RolePreference createRolePreference() {
+        return new RolePreference();
+    }
 }

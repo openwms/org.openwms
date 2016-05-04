@@ -43,7 +43,8 @@ import javax.persistence.Version;
 import java.util.Date;
 
 import org.openwms.common.values.Problem;
-import org.openwms.core.domain.AbstractEntity;
+import org.openwms.core.AbstractEntity;
+import org.openwms.core.DomainObject;
 import org.openwms.core.validation.AssertUtils;
 
 /**
@@ -168,7 +169,7 @@ public abstract class OrderPosition<T extends AbstractOrder<T, U>, U extends Ord
     }
 
     /**
-     * @see org.openwms.core.domain.DomainObject#isNew()
+     * @see DomainObject#isNew()
      */
     @Override
     public boolean isNew() {
@@ -176,7 +177,7 @@ public abstract class OrderPosition<T extends AbstractOrder<T, U>, U extends Ord
     }
 
     /**
-     * @see org.openwms.core.domain.DomainObject#getVersion()
+     * @see DomainObject#getVersion()
      */
     @Override
     public long getVersion() {
@@ -184,7 +185,7 @@ public abstract class OrderPosition<T extends AbstractOrder<T, U>, U extends Ord
     }
 
     /**
-     * @see org.openwms.core.domain.DomainObject#getId()
+     * @see DomainObject#getId()
      */
     @Override
     public Long getId() {

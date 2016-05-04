@@ -32,13 +32,13 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.openwms.core.ExceptionCodes;
-import org.openwms.core.domain.system.usermanagement.SystemUser;
-import org.openwms.core.domain.system.usermanagement.User;
-import org.openwms.core.domain.system.usermanagement.UserPassword;
-import org.openwms.core.domain.system.usermanagement.UserPreference;
 import org.openwms.core.exception.InvalidPasswordException;
 import org.openwms.core.idendity.UserService;
 import org.openwms.core.idendity.api.UserServiceImpl;
+import org.openwms.core.system.usermanagement.SystemUser;
+import org.openwms.core.system.usermanagement.User;
+import org.openwms.core.system.usermanagement.UserPassword;
+import org.openwms.core.system.usermanagement.UserPreference;
 import org.openwms.core.test.AbstractJpaSpringContextTests;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
@@ -293,7 +293,7 @@ public class UserServiceTest extends AbstractJpaSpringContextTests {
 
     /**
      * Test method for
-     * {@link UserServiceImpl#saveUserProfile(User, UserPassword, org.openwms.core.domain.system.usermanagement.UserPreference...)}
+     * {@link UserServiceImpl#saveUserProfile(User, UserPassword, org.openwms.core.system.usermanagement.UserPreference...)}
      * .
      */
     @Test
@@ -312,7 +312,7 @@ public class UserServiceTest extends AbstractJpaSpringContextTests {
 
     /**
      * Test method for
-     * {@link UserServiceImpl#saveUserProfile(User, UserPassword, org.openwms.core.domain.system.usermanagement.UserPreference...)}
+     * {@link UserServiceImpl#saveUserProfile(User, UserPassword, org.openwms.core.system.usermanagement.UserPreference...)}
      * .
      */
     @Test
@@ -323,7 +323,7 @@ public class UserServiceTest extends AbstractJpaSpringContextTests {
 
     /**
      * Test method for
-     * {@link UserServiceImpl#saveUserProfile(User, UserPassword, org.openwms.core.domain.system.usermanagement.UserPreference...)}
+     * {@link UserServiceImpl#saveUserProfile(User, UserPassword, org.openwms.core.system.usermanagement.UserPreference...)}
      * .
      */
     @Test
@@ -335,7 +335,7 @@ public class UserServiceTest extends AbstractJpaSpringContextTests {
 
     /**
      * Test method for
-     * {@link UserServiceImpl#saveUserProfile(User, UserPassword, org.openwms.core.domain.system.usermanagement.UserPreference...)}
+     * {@link UserServiceImpl#saveUserProfile(User, UserPassword, org.openwms.core.system.usermanagement.UserPreference...)}
      * .
      */
     @Test
@@ -356,7 +356,7 @@ public class UserServiceTest extends AbstractJpaSpringContextTests {
 
     /**
      * Test method for
-     * {@link UserServiceImpl#saveUserProfile(User, UserPassword, org.openwms.core.domain.system.usermanagement.UserPreference...)}
+     * {@link UserServiceImpl#saveUserProfile(User, UserPassword, org.openwms.core.system.usermanagement.UserPreference...)}
      * .
      */
     @Test

@@ -30,9 +30,9 @@ import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import java.io.Serializable;
 
-import org.openwms.core.domain.values.CoreTypeDefinitions;
-import org.openwms.core.domain.values.UnitType;
 import org.openwms.core.validation.AssertUtils;
+import org.openwms.core.values.CoreTypeDefinitions;
+import org.openwms.core.values.UnitType;
 import org.openwms.wms.inventory.Product;
 import org.openwms.wms.order.OrderPosition;
 

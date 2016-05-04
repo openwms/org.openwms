@@ -23,7 +23,7 @@ package org.openwms.wms.receiving;
 
 import java.util.List;
 
-import org.openwms.core.domain.values.UnitType;
+import org.openwms.core.values.UnitType;
 import org.openwms.wms.order.OrderPositionKey;
 
 /**

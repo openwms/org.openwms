@@ -21,12 +21,12 @@
  */
 package org.openwms.core.domain;
 
-import java.util.Comparator;
-
 import javax.persistence.PersistenceException;
+import java.util.Comparator;
 
 import org.junit.Assert;
 import org.junit.Test;
+import org.openwms.core.Module;
 import org.openwms.core.test.AbstractJpaSpringContextTests;
 
 /**

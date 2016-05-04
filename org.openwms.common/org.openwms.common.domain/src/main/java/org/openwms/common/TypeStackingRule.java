@@ -31,8 +31,8 @@ import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 import javax.persistence.Version;
 
-import org.openwms.core.domain.AbstractEntity;
-import org.openwms.core.domain.DomainObject;
+import org.openwms.core.AbstractEntity;
+import org.openwms.core.DomainObject;
 
 /**
  * A TypeStackingRule is a <code>Rule</code> that defines which <code>TransportUnitType</code> can be stacked on other types. Additionally a

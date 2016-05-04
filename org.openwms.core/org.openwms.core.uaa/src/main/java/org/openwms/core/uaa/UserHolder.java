@@ -21,7 +21,7 @@
  */
 package org.openwms.core.uaa;
 
-import org.openwms.core.domain.system.usermanagement.User;
+import org.openwms.core.system.usermanagement.User;
 
 /**
  * An UserHolder exposes an {@link User} instance to it's clients. The main purpose of this interface is the strict disjunction between the

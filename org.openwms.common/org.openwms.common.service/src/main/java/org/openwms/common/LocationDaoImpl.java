@@ -23,7 +23,7 @@ package org.openwms.common;
 
 import java.util.List;
 
-import org.openwms.core.jpa.AbstractGenericJpaDao;
+import org.openwms.core.AbstractGenericJpaDao;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
@@ -34,7 +34,7 @@ import org.springframework.transaction.annotation.Transactional;
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  * @version $Revision$
  * @since 0.1
- * @see org.openwms.core.jpa.AbstractGenericJpaDao
+ * @see AbstractGenericJpaDao
  * @see LocationDao
  */
 @Transactional(propagation = Propagation.MANDATORY)

@@ -36,8 +36,8 @@ import org.openwms.common.units.Piece;
 import org.openwms.common.units.PieceUnit;
 import org.openwms.common.units.Weight;
 import org.openwms.common.units.WeightUnit;
-import org.openwms.core.domain.values.AbstractMeasure;
-import org.openwms.core.domain.values.Measurable;
+import org.openwms.core.values.AbstractMeasure;
+import org.openwms.core.values.Measurable;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

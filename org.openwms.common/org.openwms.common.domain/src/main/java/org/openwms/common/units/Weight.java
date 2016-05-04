@@ -24,8 +24,8 @@ package org.openwms.common.units;
 import java.io.Serializable;
 import java.math.BigDecimal;
 
-import org.openwms.core.domain.values.Measurable;
-import org.openwms.core.domain.values.UnitType;
+import org.openwms.core.values.Measurable;
+import org.openwms.core.values.UnitType;
 
 /**
  * A Weight represents a real world weight, that comes with an <code>Unit</code> and a value.
@@ -101,7 +101,7 @@ public class Weight implements Measurable<BigDecimal, Weight, WeightUnit>, UnitT
     }
 
     /**
-     * @see org.openwms.core.domain.values.UnitType#getMeasurable()
+     * @see org.openwms.core.values.UnitType#getMeasurable()
      */
     @Override
     public Weight getMeasurable() {

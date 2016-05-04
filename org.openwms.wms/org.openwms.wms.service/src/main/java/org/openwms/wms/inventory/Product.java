@@ -29,7 +29,7 @@ import javax.persistence.Table;
 import java.io.Serializable;
 
 import org.ameba.integration.jpa.BaseEntity;
-import org.openwms.core.domain.values.CoreTypeDefinitions;
+import org.openwms.core.values.CoreTypeDefinitions;
 
 /**
  * A Product.

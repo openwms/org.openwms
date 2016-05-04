@@ -42,9 +42,9 @@ import java.util.List;
 import java.util.Set;
 
 import org.openwms.common.types.Target;
-import org.openwms.core.domain.values.CoreTypeDefinitions;
-import org.openwms.core.domain.values.UnitType;
 import org.openwms.core.validation.AssertUtils;
+import org.openwms.core.values.CoreTypeDefinitions;
+import org.openwms.core.values.UnitType;
 import org.openwms.wms.inventory.Product;
 import org.openwms.wms.order.OrderPosition;
 import org.openwms.wms.order.OrderPositionSplit;

@@ -26,7 +26,7 @@ import javax.persistence.PersistenceContext;
 import java.util.Collections;
 import java.util.List;
 
-import org.openwms.core.domain.AbstractEntity;
+import org.openwms.core.AbstractEntity;
 import org.openwms.core.exception.WrongClassTypeException;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Propagation;
