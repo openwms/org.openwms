@@ -21,7 +21,7 @@
  */
 package org.openwms.core;
 
-import org.openwms.core.domain.system.I18n;
+import org.openwms.core.system.I18n;
 
 /**
  * An I18nRepository is used to find and retrieve i18n translations.

@@ -32,12 +32,12 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.openwms.core.domain.preferences.ConfigurationService;
 import org.openwms.core.domain.preferences.ConfigurationServiceImpl;
-import org.openwms.core.domain.search.Action;
-import org.openwms.core.domain.search.Tag;
-import org.openwms.core.domain.system.usermanagement.SystemUser;
-import org.openwms.core.domain.system.usermanagement.User;
-import org.openwms.core.domain.system.usermanagement.UserPreference;
+import org.openwms.core.search.Action;
 import org.openwms.core.search.ActionServiceImpl;
+import org.openwms.core.search.Tag;
+import org.openwms.core.system.usermanagement.SystemUser;
+import org.openwms.core.system.usermanagement.User;
+import org.openwms.core.system.usermanagement.UserPreference;
 import org.openwms.core.test.AbstractMockitoTests;
 
 /**
@@ -77,7 +77,7 @@ public class ActionServiceTest extends AbstractMockitoTests {
 
     /**
      * Test method for
-     * {@link org.openwms.core.service.spring.search.ActionServiceImpl#findAllActions(org.openwms.core.domain.system.usermanagement.User)}
+     * {@link org.openwms.core.service.spring.search.ActionServiceImpl#findAllActions(org.openwms.core.system.usermanagement.User)}
      * .
      */
     @Test
@@ -89,7 +89,7 @@ public class ActionServiceTest extends AbstractMockitoTests {
 
     /**
      * Test method for
-     * {@link org.openwms.core.service.spring.search.ActionServiceImpl#findAllTags(org.openwms.core.domain.system.usermanagement.User)}
+     * {@link org.openwms.core.service.spring.search.ActionServiceImpl#findAllTags(org.openwms.core.system.usermanagement.User)}
      * .
      */
     @Test
@@ -101,7 +101,7 @@ public class ActionServiceTest extends AbstractMockitoTests {
 
     /**
      * Test method for
-     * {@link org.openwms.core.service.spring.search.ActionServiceImpl#save(org.openwms.core.domain.system.usermanagement.User, java.util.Collection)}
+     * {@link org.openwms.core.service.spring.search.ActionServiceImpl#save(org.openwms.core.system.usermanagement.User, java.util.Collection)}
      * .
      */
     @Test

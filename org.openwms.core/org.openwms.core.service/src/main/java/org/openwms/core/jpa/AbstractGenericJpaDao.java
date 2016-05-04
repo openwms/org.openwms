@@ -29,8 +29,8 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
+import org.openwms.core.AbstractEntity;
 import org.openwms.core.GenericDao;
-import org.openwms.core.domain.AbstractEntity;
 import org.openwms.core.exception.ExceptionCodes;
 import org.openwms.core.exception.NoUniqueResultException;
 import org.springframework.beans.factory.annotation.Autowired;

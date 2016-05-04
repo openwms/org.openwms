@@ -25,8 +25,6 @@ import java.io.Serializable;
 import java.util.List;
 import java.util.Map;
 
-import org.openwms.core.domain.AbstractEntity;
-
 /**
  * A GenericDao is a generic interface declaration that defines simple CRUD operations.
  * <p>

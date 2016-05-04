@@ -35,8 +35,8 @@ import java.util.Set;
 
 import org.junit.Assert;
 import org.junit.Test;
-import org.openwms.core.domain.system.AbstractPreference;
-import org.openwms.core.domain.system.PreferenceKey;
+import org.openwms.core.system.AbstractPreference;
+import org.openwms.core.system.PreferenceKey;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.util.ResourceUtils;

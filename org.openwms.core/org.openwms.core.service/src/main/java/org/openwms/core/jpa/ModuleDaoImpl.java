@@ -21,8 +21,8 @@
  */
 package org.openwms.core.jpa;
 
+import org.openwms.core.Module;
 import org.openwms.core.ModuleDao;
-import org.openwms.core.domain.Module;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;

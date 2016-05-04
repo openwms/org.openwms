@@ -26,9 +26,9 @@ import java.util.List;
 
 import org.ameba.exception.NotFoundException;
 import org.openwms.core.annotation.FireAfterTransaction;
-import org.openwms.core.domain.system.usermanagement.Grant;
-import org.openwms.core.domain.system.usermanagement.SecurityObject;
 import org.openwms.core.event.UserChangedEvent;
+import org.openwms.core.system.usermanagement.Grant;
+import org.openwms.core.system.usermanagement.SecurityObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;

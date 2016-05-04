@@ -26,10 +26,10 @@ import javax.validation.constraints.NotNull;
 import java.util.Collection;
 
 import org.ameba.exception.NotFoundException;
-import org.openwms.core.domain.system.usermanagement.Role;
 import org.openwms.core.http.AbstractWebController;
 import org.openwms.core.http.HttpBusinessException;
 import org.openwms.core.http.ResponseVO;
+import org.openwms.core.system.usermanagement.Role;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;

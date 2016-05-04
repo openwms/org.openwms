@@ -26,7 +26,7 @@ import java.util.List;
 
 import org.junit.Before;
 import org.junit.Test;
-import org.openwms.core.domain.system.Message;
+import org.openwms.core.system.Message;
 import org.openwms.core.test.AbstractJpaSpringContextTests;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;

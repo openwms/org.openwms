@@ -38,10 +38,11 @@ import javax.persistence.Version;
 import java.io.Serializable;
 
 import org.openwms.common.values.Problem;
-import org.openwms.core.domain.AbstractEntity;
-import org.openwms.core.domain.values.CoreTypeDefinitions;
-import org.openwms.core.domain.values.UnitType;
+import org.openwms.core.AbstractEntity;
+import org.openwms.core.DomainObject;
 import org.openwms.core.validation.AssertUtils;
+import org.openwms.core.values.CoreTypeDefinitions;
+import org.openwms.core.values.UnitType;
 import org.openwms.wms.inventory.Product;
 
 /**
@@ -141,7 +142,7 @@ public class OrderPositionSplit<T extends AbstractOrder<T, U>, U extends OrderPo
     }
 
     /**
-     * @see org.openwms.core.domain.DomainObject#isNew()
+     * @see DomainObject#isNew()
      */
     @Override
     public boolean isNew() {
@@ -149,7 +150,7 @@ public class OrderPositionSplit<T extends AbstractOrder<T, U>, U extends OrderPo
     }
 
     /**
-     * @see org.openwms.core.domain.DomainObject#getVersion()
+     * @see DomainObject#getVersion()
      */
     @Override
     public long getVersion() {
@@ -157,7 +158,7 @@ public class OrderPositionSplit<T extends AbstractOrder<T, U>, U extends OrderPo
     }
 
     /**
-     * @see org.openwms.core.domain.DomainObject#getId()
+     * @see DomainObject#getId()
      */
     @Override
     public Long getId() {

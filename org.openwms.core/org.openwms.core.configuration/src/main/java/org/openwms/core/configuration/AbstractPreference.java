@@ -40,7 +40,7 @@ import java.io.Serializable;
 
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
-import org.openwms.core.domain.AbstractEntity;
+import org.openwms.core.AbstractEntity;
 
 /**
  * An AbstractPreference is a superclass for all other preference classes within the application.

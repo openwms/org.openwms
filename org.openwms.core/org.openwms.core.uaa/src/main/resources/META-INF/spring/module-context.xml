@@ -36,6 +36,6 @@
 
     <alias name="globals" alias="appProps"/>
     
-    <oxm:jaxb2-marshaller id="preferencesUnmarshaller" contextPath="org.openwms.core.domain.preferences:org.openwms.core.domain.system.usermanagement"/>
+    <oxm:jaxb2-marshaller id="preferencesUnmarshaller" contextPath="org.openwms.core.domain.preferences:org.openwms.core.system.usermanagement"/>
 
 </beans>

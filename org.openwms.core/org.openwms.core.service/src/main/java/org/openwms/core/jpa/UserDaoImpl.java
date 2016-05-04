@@ -26,10 +26,10 @@ import java.util.List;
 import java.util.Map;
 
 import org.openwms.core.UserDao;
-import org.openwms.core.domain.system.usermanagement.Role;
-import org.openwms.core.domain.system.usermanagement.SystemUser;
-import org.openwms.core.domain.system.usermanagement.User;
-import org.openwms.core.domain.system.usermanagement.UserPassword;
+import org.openwms.core.system.usermanagement.Role;
+import org.openwms.core.system.usermanagement.SystemUser;
+import org.openwms.core.system.usermanagement.User;
+import org.openwms.core.system.usermanagement.UserPassword;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Repository;

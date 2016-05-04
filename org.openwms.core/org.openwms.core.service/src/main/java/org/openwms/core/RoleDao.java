@@ -23,8 +23,8 @@ package org.openwms.core;
 
 import java.util.List;
 
-import org.openwms.core.domain.system.usermanagement.Role;
-import org.openwms.core.domain.system.usermanagement.SecurityObject;
+import org.openwms.core.system.usermanagement.Role;
+import org.openwms.core.system.usermanagement.SecurityObject;
 
 /**
  * A RoleDao offers functionality to find and modify {@link Role} entity classes.

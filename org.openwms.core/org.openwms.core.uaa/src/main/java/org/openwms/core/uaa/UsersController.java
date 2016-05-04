@@ -28,13 +28,12 @@ import java.util.Collection;
 import java.util.List;
 
 import org.ameba.exception.NotFoundException;
-import org.openwms.core.AbstractWebController;
-import org.openwms.core.BeanMapper;
 import org.openwms.core.ExceptionCodes;
-import org.openwms.core.HttpBusinessException;
-import org.openwms.core.ResponseVO;
-import org.openwms.core.domain.system.usermanagement.User;
-import org.openwms.core.domain.system.usermanagement.UserPassword;
+import org.openwms.core.http.AbstractWebController;
+import org.openwms.core.http.HttpBusinessException;
+import org.openwms.core.http.ResponseVO;
+import org.openwms.core.system.usermanagement.User;
+import org.openwms.core.system.usermanagement.UserPassword;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -51,7 +50,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 /**
  * An UsersController represents a RESTful access to <tt>User</tt>s. It is transactional by the means it is the outer application service
  * facade that returns validated and completed <tt>User</tt> objects to its clients.
- * 
+ *
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  * @version $Revision: $
  * @since 0.1
@@ -67,31 +66,11 @@ public class UsersController extends AbstractWebController {
 
     /**
      * This method returns all existing <tt>User</tt>s.
-     * 
      * <p>
-     * <table>
-     * <tr>
-     * <td>URI</td>
-     * <td>/users</td>
-     * </tr>
-     * <tr>
-     * <td>Verb</td>
-     * <td>GET</td>
-     * </tr>
-     * <tr>
-     * <td>Auth</td>
-     * <td>YES</td>
-     * </tr>
-     * <tr>
-     * <td>Header</td>
-     * <td></td>
-     * </tr>
-     * </table>
-     * </p>
-     * <p>
-     * The response stores <tt>User</tt> instances JSON encoded. It contains a collection of <tt>User</tt> objects.
-     * </p>
-     * 
+     * <p> <table> <tr> <td>URI</td> <td>/users</td> </tr> <tr> <td>Verb</td> <td>GET</td> </tr> <tr> <td>Auth</td> <td>YES</td> </tr> <tr>
+     * <td>Header</td> <td></td> </tr> </table> </p> <p> The response stores <tt>User</tt> instances JSON encoded. It contains a collection
+     * of <tt>User</tt> objects. </p>
+     *
      * @return JSON response
      */
     @RequestMapping(method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
@@ -105,45 +84,18 @@ public class UsersController extends AbstractWebController {
 
     /**
      * Takes a newly created <tt>User</tt> instance and persists it.
-     * 
      * <p>
-     * <table>
-     * <tr>
-     * <td>URI</td>
-     * <td>/users</td>
-     * </tr>
-     * <tr>
-     * <td>Verb</td>
-     * <td>POST</td>
-     * </tr>
-     * <tr>
-     * <td>Auth</td>
-     * <td>YES</td>
-     * </tr>
-     * <tr>
-     * <td>Header</td>
-     * <td></td>
-     * </tr>
-     * </table>
-     * </p>
+     * <p> <table> <tr> <td>URI</td> <td>/users</td> </tr> <tr> <td>Verb</td> <td>POST</td> </tr> <tr> <td>Auth</td> <td>YES</td> </tr> <tr>
+     * <td>Header</td> <td></td> </tr> </table> </p> <p> Request Body
      * <p>
-     * Request Body
-     * 
      * <pre>
      *   {
      *     "username" : "testuser"
      *   }
      * </pre>
-     * 
-     * Parameters:
-     * <ul>
-     * <li>username (String):</li>
-     * The unique username.
-     * </ul>
-     * </p>
      * <p>
-     * Response Body
-     * 
+     * Parameters: <ul> <li>username (String):</li> The unique username. </ul> </p> <p> Response Body
+     * <p>
      * <pre>
      *   {
      *     "id" : 4711,
@@ -152,18 +104,10 @@ public class UsersController extends AbstractWebController {
      *     "version" : 1
      *   }
      * </pre>
-     * 
-     * <ul>
-     * <li>id (Integer (32bit)):</li>
-     * The internal unique technical key for the stored instance.
-     * <li>username (String):</li>
-     * The unique username.
-     * <li>token (String):</li>
-     * A generated token that is used to authenticate each request.
-     * <li>version (Integer (32bit)):</li>
-     * A version number used internally for optimistic locking.
-     * </ul>
-     * </p>
+     * <p>
+     * <ul> <li>id (Integer (32bit)):</li> The internal unique technical key for the stored instance. <li>username (String):</li> The unique
+     * username. <li>token (String):</li> A generated token that is used to authenticate each request. <li>version (Integer (32bit)):</li> A
+     * version number used internally for optimistic locking. </ul> </p>
      *
      * @param user The user to create
      * @return a responseVO
@@ -199,7 +143,7 @@ public class UsersController extends AbstractWebController {
 
     /**
      * FIXME [scherrer] Comment this
-     * 
+     *
      * @param user
      * @return a responseVO
      */
@@ -229,7 +173,6 @@ public class UsersController extends AbstractWebController {
      *
      * @param image The image to save
      * @param id The users persisted id
-     *
      * @return An responseVO
      */
     @RequestMapping(value = "/{id}", method = RequestMethod.PUT, produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
@@ -262,7 +205,7 @@ public class UsersController extends AbstractWebController {
                 continue;
             }
             try {
-                service.removeByBK(new String[] { (name) });
+                service.removeByBK(new String[]{(name)});
                 result.add(new ResponseVO.ItemBuilder().wStatus(HttpStatus.OK).wParams(name).build());
             } catch (Exception sre) {
                 resultStatus = HttpStatus.NOT_FOUND;
@@ -295,5 +238,4 @@ public class UsersController extends AbstractWebController {
     public void changeUserPassword(@RequestBody UserPassword userPassword) {
         service.changeUserPassword(userPassword);
     }
-
 }

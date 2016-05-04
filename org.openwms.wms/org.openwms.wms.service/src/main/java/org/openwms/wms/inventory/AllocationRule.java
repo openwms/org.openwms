@@ -23,7 +23,7 @@ package org.openwms.wms.inventory;
 
 import java.io.Serializable;
 
-import org.openwms.core.domain.values.UnitType;
+import org.openwms.core.values.UnitType;
 
 /**
  * A AllocationRule.

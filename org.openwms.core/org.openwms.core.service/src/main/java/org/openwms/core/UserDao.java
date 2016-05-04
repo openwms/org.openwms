@@ -21,8 +21,8 @@
  */
 package org.openwms.core;
 
-import org.openwms.core.domain.system.usermanagement.User;
-import org.openwms.core.domain.system.usermanagement.UserPassword;
+import org.openwms.core.system.usermanagement.User;
+import org.openwms.core.system.usermanagement.UserPassword;
 
 /**
  * An UserDao offers functionality regarding {@link User} entity classes.
@@ -31,7 +31,7 @@ import org.openwms.core.domain.system.usermanagement.UserPassword;
  * @version $Revision$
  * @since 0.1
  * @see org.openwms.core.integration.GenericDao
- * @see org.openwms.core.domain.system.usermanagement.User
+ * @see org.openwms.core.system.usermanagement.User
  */
 public interface UserDao extends GenericDao<User, Long> {
 

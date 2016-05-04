@@ -31,8 +31,8 @@ import javax.persistence.OrderBy;
 import javax.persistence.Table;
 import javax.persistence.Version;
 
-import org.openwms.core.domain.AbstractEntity;
-import org.openwms.core.domain.DomainObject;
+import org.openwms.core.AbstractEntity;
+import org.openwms.core.DomainObject;
 
 /**
  * A LocationType is the type of <code>Location</code>s with same characteristics.

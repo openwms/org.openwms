@@ -47,7 +47,7 @@ public class MockApplicationPreference extends ApplicationPreference {
     /**
      * {@inheritDoc}
      * 
-     * @see org.openwms.core.domain.system.AbstractPreference#isNew()
+     * @see org.openwms.core.system.AbstractPreference#isNew()
      */
     @Override
     public boolean isNew() {

@@ -54,10 +54,10 @@ import org.openwms.common.system.UnitError;
 import org.openwms.common.units.Weight;
 import org.openwms.common.values.Barcode;
 import org.openwms.common.values.TransportUnitState;
-import org.openwms.core.domain.AbstractEntity;
-import org.openwms.core.domain.DomainObject;
-import org.openwms.core.domain.system.usermanagement.User;
-import org.openwms.core.domain.values.CoreTypeDefinitions;
+import org.openwms.core.AbstractEntity;
+import org.openwms.core.DomainObject;
+import org.openwms.core.system.usermanagement.User;
+import org.openwms.core.values.CoreTypeDefinitions;
 
 /**
  * A TransportUnit is an item like a box, a toad, a bin or a palette that is moved around within a warehouse and can carry goods.

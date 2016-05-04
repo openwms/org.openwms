@@ -28,8 +28,8 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.persistence.Version;
 
-import org.openwms.core.domain.AbstractEntity;
-import org.openwms.core.domain.DomainObject;
+import org.openwms.core.AbstractEntity;
+import org.openwms.core.DomainObject;
 
 /**
  * An UnitError represents an error occurring on <code>TransportUnit</code>s, on <code>LoadUnit</code>s or others.

@@ -38,8 +38,8 @@ import java.math.BigDecimal;
 import java.util.HashSet;
 import java.util.Set;
 
-import org.openwms.core.domain.AbstractEntity;
-import org.openwms.core.domain.DomainObject;
+import org.openwms.core.AbstractEntity;
+import org.openwms.core.DomainObject;
 
 /**
  * A TransportUnitType is a type of a certain <code>TransportUnit</code>s.

@@ -24,7 +24,7 @@ package org.openwms.core.http;
 import javax.validation.ValidationException;
 import javax.validation.Validator;
 
-import org.openwms.core.ExceptionCodes;
+import org.openwms.core.exception.ExceptionCodes;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.MessageSource;
@@ -50,12 +50,10 @@ public abstract class AbstractWebController {
     private Validator validator;
 
     /**
-     * All general exceptions thrown by services are caught here and translated
-     * into http conform responses with a status code
-     * {@code 500 Internal Server Error}.
-     * 
-     * @param ex
-     *            The exception occurred
+     * All general exceptions thrown by services are caught here and translated into http conform responses with a status code {@code 500
+     * Internal Server Error}.
+     *
+     * @param ex The exception occurred
      * @return A response object wraps the server result
      */
     @ExceptionHandler(Exception.class)
@@ -66,21 +64,19 @@ public abstract class AbstractWebController {
         }
         if (ex.getClass().equals(ValidationException.class)) {
             return new ResponseEntity<>(new ResponseVO(ex.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR),
-              HttpStatus.INTERNAL_SERVER_ERROR);
+                    HttpStatus.INTERNAL_SERVER_ERROR);
         }
         return new ResponseEntity<>(new ResponseVO(ex.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR),
                 HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
     /**
-     * Transforming {@link MethodArgumentNotValidException}
-     * {@link ValidationException} into server error
-     * {@code 500 Internal Server Error} responses with according validation
-     * error message text.
-     * 
+     * Transforming {@link MethodArgumentNotValidException} {@link ValidationException} into server error {@code 500 Internal Server Error}
+     * responses with according validation error message text.
+     *
      * @return A response object wraps the server result
      */
-    @ExceptionHandler({ MethodArgumentNotValidException.class, ValidationException.class })
+    @ExceptionHandler({MethodArgumentNotValidException.class, ValidationException.class})
     public ResponseEntity<ResponseVO> handleValidationException() {
         return new ResponseEntity<>(new ResponseVO(translate(ExceptionCodes.VALIDATION_ERROR),
                 HttpStatus.INTERNAL_SERVER_ERROR), HttpStatus.INTERNAL_SERVER_ERROR);
@@ -88,11 +84,9 @@ public abstract class AbstractWebController {
 
     /**
      * Get the messageSource.
-     * 
-     * @param key
-     *            The error code to search message text for
-     * @param objects
-     *            Any arguments that are passed into the message text
+     *
+     * @param key The error code to search message text for
+     * @param objects Any arguments that are passed into the message text
      * @return the messageSource.
      */
     protected String translate(String key, Object... objects) {

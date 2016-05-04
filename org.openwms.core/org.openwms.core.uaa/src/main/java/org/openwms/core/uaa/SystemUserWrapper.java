@@ -24,7 +24,7 @@ package org.openwms.core.uaa;
 import java.io.Serializable;
 import java.util.Collection;
 
-import org.openwms.core.domain.system.usermanagement.User;
+import org.openwms.core.system.usermanagement.User;
 import org.springframework.security.core.GrantedAuthority;
 
 /**
@@ -73,7 +73,7 @@ public class SystemUserWrapper extends UserWrapper implements Serializable {
      * {@inheritDoc}
      * <p/>
      * For the SystemUser account always add the
-     * {@link org.openwms.core.domain.system.usermanagement.SystemUser#SYSTEM_ROLE_NAME}
+     * {@link org.openwms.core.system.usermanagement.SystemUser#SYSTEM_ROLE_NAME}
      * to the collection of authorities.
      */
     @Override

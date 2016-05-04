@@ -41,8 +41,8 @@ import org.mockito.Mock;
 import org.openwms.core.RoleDao;
 import org.openwms.core.SecurityObjectDao;
 import org.openwms.core.SecurityServiceImpl;
-import org.openwms.core.domain.system.usermanagement.Grant;
-import org.openwms.core.domain.system.usermanagement.SecurityObject;
+import org.openwms.core.system.usermanagement.Grant;
+import org.openwms.core.system.usermanagement.SecurityObject;
 import org.openwms.core.test.AbstractMockitoTests;
 import org.springframework.context.MessageSource;
 

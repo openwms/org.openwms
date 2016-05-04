@@ -23,8 +23,8 @@ package org.openwms.core;
 
 import java.util.List;
 
-import org.openwms.core.domain.system.usermanagement.Grant;
-import org.openwms.core.domain.system.usermanagement.SecurityObject;
+import org.openwms.core.system.usermanagement.Grant;
+import org.openwms.core.system.usermanagement.SecurityObject;
 
 /**
  * A SecurityDao is used to find, modify and delete {@link SecurityObject}s.

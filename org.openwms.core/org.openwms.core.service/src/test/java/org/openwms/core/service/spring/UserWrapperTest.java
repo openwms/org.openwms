@@ -27,10 +27,10 @@ import java.util.Set;
 
 import org.junit.Assert;
 import org.junit.Test;
-import org.openwms.core.domain.system.usermanagement.Grant;
-import org.openwms.core.domain.system.usermanagement.Role;
-import org.openwms.core.domain.system.usermanagement.User;
 import org.openwms.core.idendity.UserWrapper;
+import org.openwms.core.system.usermanagement.Grant;
+import org.openwms.core.system.usermanagement.Role;
+import org.openwms.core.system.usermanagement.User;
 import org.springframework.security.core.GrantedAuthority;
 
 /**
@@ -46,7 +46,7 @@ public class UserWrapperTest {
 
     /**
      * Test method for
-     * {@link UserWrapper#UserWrapper(org.openwms.core.domain.system.usermanagement.User)}
+     * {@link UserWrapper#UserWrapper(org.openwms.core.system.usermanagement.User)}
      * .
      */
     @Test(expected = IllegalArgumentException.class)
@@ -56,7 +56,7 @@ public class UserWrapperTest {
 
     /**
      * Test method for
-     * {@link UserWrapper#UserWrapper(org.openwms.core.domain.system.usermanagement.User)}
+     * {@link UserWrapper#UserWrapper(org.openwms.core.system.usermanagement.User)}
      * .
      */
     @Test

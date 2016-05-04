@@ -35,7 +35,7 @@
 
   <mapping>
     <class-a>org.openwms.core.idendity.RoleVO</class-a>
-    <class-b>org.openwms.core.domain.system.usermanagement.Role</class-b>
+    <class-b>org.openwms.core.system.usermanagement.Role</class-b>
       <field>
         <a>id</a>
         <b is-accessible="true">id</b>
@@ -60,7 +60,7 @@
                    
   <mapping>
     <class-a>org.openwms.core.idendity.RoleUserVO</class-a>
-    <class-b>org.openwms.core.domain.system.usermanagement.User</class-b>
+    <class-b>org.openwms.core.system.usermanagement.User</class-b>
       <field>
         <a>id</a>
         <b is-accessible="true">id</b>
@@ -77,7 +77,7 @@
 
   <mapping>
     <class-a>org.openwms.core.idendity.UserVO</class-a>
-    <class-b>org.openwms.core.domain.system.usermanagement.User</class-b>
+    <class-b>org.openwms.core.system.usermanagement.User</class-b>
       <field>
         <a>id</a>
         <b is-accessible="true">id</b>

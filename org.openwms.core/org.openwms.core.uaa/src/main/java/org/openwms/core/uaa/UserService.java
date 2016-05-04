@@ -22,10 +22,10 @@
 package org.openwms.core.uaa;
 
 import org.openwms.core.GenericEntityService;
-import org.openwms.core.domain.system.usermanagement.SystemUser;
-import org.openwms.core.domain.system.usermanagement.User;
-import org.openwms.core.domain.system.usermanagement.UserPassword;
-import org.openwms.core.domain.system.usermanagement.UserPreference;
+import org.openwms.core.system.usermanagement.SystemUser;
+import org.openwms.core.system.usermanagement.User;
+import org.openwms.core.system.usermanagement.UserPassword;
+import org.openwms.core.system.usermanagement.UserPreference;
 
 /**
  * An UserService offers functionality according to the handling with {@link User}s.
@@ -33,7 +33,7 @@ import org.openwms.core.domain.system.usermanagement.UserPreference;
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  * @version $Revision$
  * @since 0.1
- * @see org.openwms.core.domain.system.usermanagement.User
+ * @see org.openwms.core.system.usermanagement.User
  */
 public interface UserService extends GenericEntityService<User, Long, String> {
 

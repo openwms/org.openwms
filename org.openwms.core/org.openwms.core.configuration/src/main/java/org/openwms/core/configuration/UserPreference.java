@@ -34,7 +34,7 @@ import javax.xml.bind.annotation.XmlTransient;
 import javax.xml.bind.annotation.XmlType;
 import java.io.Serializable;
 
-import org.openwms.core.domain.system.AbstractPreference;
+import org.openwms.core.system.AbstractPreference;
 import org.openwms.core.validation.AssertUtils;
 
 /**
@@ -135,7 +135,7 @@ public class UserPreference extends AbstractPreference implements Serializable {
     /**
      * {@inheritDoc}
      * 
-     * @see org.openwms.core.domain.system.AbstractPreference#getType()
+     * @see org.openwms.core.system.AbstractPreference#getType()
      */
     @Override
     public PropertyScope getType() {
@@ -145,7 +145,7 @@ public class UserPreference extends AbstractPreference implements Serializable {
     /**
      * {@inheritDoc}
      * 
-     * @see org.openwms.core.domain.system.AbstractPreference#getFields()
+     * @see org.openwms.core.system.AbstractPreference#getFields()
      */
     @Override
     protected Object[] getFields() {
@@ -155,7 +155,7 @@ public class UserPreference extends AbstractPreference implements Serializable {
     /**
      * {@inheritDoc}
      * 
-     * @see org.openwms.core.domain.system.AbstractPreference#getPrefKey()
+     * @see org.openwms.core.system.AbstractPreference#getPrefKey()
      */
     @Override
     public PreferenceKey getPrefKey() {

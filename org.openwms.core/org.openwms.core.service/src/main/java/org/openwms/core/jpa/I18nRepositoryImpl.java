@@ -22,7 +22,7 @@
 package org.openwms.core.jpa;
 
 import org.openwms.core.I18nRepository;
-import org.openwms.core.domain.system.I18n;
+import org.openwms.core.system.I18n;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;

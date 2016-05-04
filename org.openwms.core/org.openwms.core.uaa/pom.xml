@@ -53,12 +53,12 @@
 
         <!-- Project dependencies -->
         <dependency>
-            <groupId>org.ameba</groupId>
-            <artifactId>ameba-lib</artifactId>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>org.openwms.core.domain</artifactId>
         </dependency>
         <dependency>
             <groupId>${project.groupId}</groupId>
-            <artifactId>org.openwms.core.domain</artifactId>
+            <artifactId>org.openwms.core.service</artifactId>
         </dependency>
         <dependency>
             <groupId>${project.groupId}</groupId>

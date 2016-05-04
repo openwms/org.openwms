@@ -26,8 +26,8 @@ import javax.persistence.PersistenceContext;
 import java.util.List;
 
 import org.openwms.core.SecurityObjectDao;
-import org.openwms.core.domain.system.usermanagement.Grant;
-import org.openwms.core.domain.system.usermanagement.SecurityObject;
+import org.openwms.core.system.usermanagement.Grant;
+import org.openwms.core.system.usermanagement.SecurityObject;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;

@@ -24,8 +24,8 @@ package org.openwms.core.jpa;
 import java.util.List;
 
 import org.openwms.core.RoleDao;
-import org.openwms.core.domain.system.usermanagement.Role;
-import org.openwms.core.domain.system.usermanagement.SecurityObject;
+import org.openwms.core.system.usermanagement.Role;
+import org.openwms.core.system.usermanagement.SecurityObject;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;

@@ -21,7 +21,7 @@
  */
 package org.openwms.core.uaa;
 
-import org.openwms.core.domain.system.usermanagement.SystemUser;
+import org.openwms.core.system.usermanagement.SystemUser;
 import org.springframework.security.core.GrantedAuthority;
 
 /**

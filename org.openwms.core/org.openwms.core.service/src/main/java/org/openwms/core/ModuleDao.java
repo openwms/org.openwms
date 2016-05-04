@@ -21,8 +21,6 @@
  */
 package org.openwms.core;
 
-import org.openwms.core.domain.Module;
-
 /**
  * A ModuleDao adds particular functionality regarding {@link Module} entity classes.
  * 

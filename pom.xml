@@ -685,6 +685,10 @@
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-api</artifactId>
         </dependency>
+        <dependency>
+            <groupId>org.ameba</groupId>
+            <artifactId>ameba-lib</artifactId>
+        </dependency>
 
         <!-- Test dependencies -->
         <dependency>
