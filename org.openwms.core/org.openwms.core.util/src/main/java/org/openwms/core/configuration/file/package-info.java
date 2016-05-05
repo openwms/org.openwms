@@ -20,8 +20,6 @@
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
 /**
- * Contains domain classes regarding the user and role management. JAXB classes are assign to the schema http://www.openwms.org/schema/usermanagement
+ * This package contains classes to deal with files. Implementation classes follow the DAO (Repository) pattern.
  */
-@javax.xml.bind.annotation.XmlAccessorType(javax.xml.bind.annotation.XmlAccessType.FIELD)
-@javax.xml.bind.annotation.XmlSchema(namespace = "http://www.openwms.org/schema/usermanagement")
-package org.openwms.core.system.usermanagement;
+package org.openwms.core.configuration.file;

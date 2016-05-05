@@ -32,7 +32,7 @@
         http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
         http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd">
 
-    <context:component-scan base-package="org.openwms.core.file" />
+    <context:component-scan base-package="org.openwms.core.configuration.file" />
     <util:properties id="appProps" location="classpath:/org/openwms/core/integration/file/preferences.properties" />
     <oxm:jaxb2-marshaller id="preferencesUnmarshaller" contextPath="org.openwms.core.domain.preferences:org.openwms.core.system.usermanagement"/>
 

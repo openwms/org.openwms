@@ -19,7 +19,7 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
-package org.openwms.core.system.usermanagement;
+package org.openwms.core.uaa;
 
 import javax.persistence.Entity;
 import java.io.Serializable;
@@ -34,7 +34,7 @@ import java.io.Serializable;
  * @author <a href="mailto:russelltina@users.sourceforge.net">Tina Russell</a>
  * @version $Revision$
  * @since 0.1
- * @see org.openwms.core.system.usermanagement.User
+ * @see User
  */
 @Entity
 public class SystemUser extends User implements Serializable {
