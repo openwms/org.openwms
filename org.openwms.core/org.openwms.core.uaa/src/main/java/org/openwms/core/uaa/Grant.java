@@ -19,7 +19,7 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
-package org.openwms.core.system.usermanagement;
+package org.openwms.core.uaa;
 
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
@@ -38,9 +38,9 @@ import java.io.Serializable;
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  * @version $Revision$
  * @since 0.1
- * @see org.openwms.core.system.usermanagement.User
- * @see org.openwms.core.system.usermanagement.Role
- * @see org.openwms.core.system.usermanagement.SecurityObject
+ * @see User
+ * @see Role
+ * @see SecurityObject
  */
 @Entity
 @DiscriminatorValue("GRANT")
@@ -83,7 +83,7 @@ public class Grant extends SecurityObject implements Serializable {
      * Use the hashCode of the superclass with the hashCode of 'GRANT' to distinguish between <code>Grant</code>s and other
      * <code>SecurityObject</code>s like <code>Role</code>s.
      * 
-     * @see org.openwms.core.system.usermanagement.SecurityObject#hashCode()
+     * @see SecurityObject#hashCode()
      */
     @Override
     public int hashCode() {
@@ -97,7 +97,7 @@ public class Grant extends SecurityObject implements Serializable {
     /**
      * {@inheritDoc}
      * 
-     * @see org.openwms.core.system.usermanagement.SecurityObject#equals(java.lang.Object)
+     * @see SecurityObject#equals(java.lang.Object)
      */
     @Override
     public boolean equals(Object obj) {

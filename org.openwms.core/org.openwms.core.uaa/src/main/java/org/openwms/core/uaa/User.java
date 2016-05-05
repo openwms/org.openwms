@@ -19,7 +19,7 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
-package org.openwms.core.system.usermanagement;
+package org.openwms.core.uaa;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -62,8 +62,8 @@ import org.slf4j.LoggerFactory;
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  * @version $Revision$
  * @GlossaryTerm
- * @see org.openwms.core.system.usermanagement.UserDetails
- * @see org.openwms.core.system.usermanagement.UserPassword
+ * @see UserDetails
+ * @see UserPassword
  * @see org.openwms.core.system.usermanagement.Role
  * @since 0.1
  */
