@@ -36,7 +36,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import org.openwms.core.validation.AssertUtils;
+import org.springframework.util.Assert;
 
 /**
  * A Role is a group of <code>User</code>s. Basically more than one <code>User</code> belong to a Role. Security access policies are
@@ -56,7 +56,6 @@ import org.openwms.core.validation.AssertUtils;
         @NamedQuery(name = Role.NQ_FIND_BY_UNIQUE_QUERY, query = "select r from Role r where r.name = ?1")})
 public class Role extends SecurityObject implements Serializable {
 
-    private static final long serialVersionUID = -4133301834284932221L;
     /**
      * Whether or not this <code>Role</code> is immutable. Immutable <code>Role</code>s can't be modified.
      */
@@ -113,7 +112,7 @@ public class Role extends SecurityObject implements Serializable {
          * @throws IllegalArgumentException when name is <code>null</code> or empty
          */
         public Builder(String name) {
-            AssertUtils.isNotEmpty(name, "Not allowed to create a Role with an empty name");
+            Assert.hasText(name, "Not allowed to create a Role with an empty name");
             role = new Role(name);
             role.immutable = false;
         }
@@ -167,7 +166,7 @@ public class Role extends SecurityObject implements Serializable {
      */
     public Role(String name) {
         super(name);
-        AssertUtils.isNotEmpty(name, "Not allowed to create a Role with an empty name");
+        Assert.hasText(name, "Not allowed to create a Role with an empty name");
     }
 
     /**
@@ -179,7 +178,7 @@ public class Role extends SecurityObject implements Serializable {
      */
     public Role(String name, String description) {
         super(name, description);
-        AssertUtils.isNotEmpty(name, "Not allowed to create a Role with an empty name");
+        Assert.hasText(name, "Not allowed to create a Role with an empty name");
     }
 
     /**
@@ -212,7 +211,7 @@ public class Role extends SecurityObject implements Serializable {
      * @throws IllegalArgumentException if user is <code>null</code>
      */
     public boolean addUser(User user) {
-        AssertUtils.notNull(user, "User to add must not be null");
+        Assert.notNull(user, "User to add must not be null");
         return users.add(user);
     }
 
@@ -223,7 +222,7 @@ public class Role extends SecurityObject implements Serializable {
      * @throws IllegalArgumentException if user is <code>null</code>
      */
     public void removeUser(User user) {
-        AssertUtils.notNull(user, "User to remove must not be null");
+        Assert.notNull(user, "User to remove must not be null");
         users.remove(user);
     }
 
@@ -234,7 +233,7 @@ public class Role extends SecurityObject implements Serializable {
      * @throws IllegalArgumentException if users is <code>null</code>
      */
     public void setUsers(Set<User> users) {
-        AssertUtils.notNull(users, "Set of Users must not be null");
+        Assert.notNull(users, "Set of Users must not be null");
         this.users = users;
     }
 
@@ -256,7 +255,7 @@ public class Role extends SecurityObject implements Serializable {
      * @throws IllegalArgumentException if grant is <code>null</code>
      */
     public boolean addGrant(SecurityObject grant) {
-        AssertUtils.notNull(grant, "Grant to add must not be null");
+        Assert.notNull(grant, "Grant to add must not be null");
         return grants.add(grant);
     }
 
@@ -269,7 +268,7 @@ public class Role extends SecurityObject implements Serializable {
      * @throws IllegalArgumentException if grant is <code>null</code>
      */
     public boolean removeGrant(SecurityObject grant) {
-        AssertUtils.notNull(grant, "Grant to remove must not be null");
+        Assert.notNull(grant, "Grant to remove must not be null");
         return grants.remove(grant);
     }
 
@@ -282,7 +281,7 @@ public class Role extends SecurityObject implements Serializable {
      * @throws IllegalArgumentException if <code>grants</code> is <code>null</code>
      */
     public boolean removeGrants(List<? extends SecurityObject> grants) {
-        AssertUtils.notNull(grants, "Grants to remove must not be null");
+        Assert.notNull(grants, "Grants to remove must not be null");
         return this.grants.removeAll(grants);
     }
 
@@ -293,7 +292,7 @@ public class Role extends SecurityObject implements Serializable {
      * @throws IllegalArgumentException if grants is <code>null</code>
      */
     public void setGrants(Set<SecurityObject> grants) {
-        AssertUtils.notNull(grants, "Set of Grants must not be null");
+        Assert.notNull(grants, "Set of Grants must not be null");
         this.grants = grants;
     }
 

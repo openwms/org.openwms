@@ -35,24 +35,22 @@ import javax.persistence.UniqueConstraint;
 import java.io.Serializable;
 
 import org.openwms.core.AbstractEntity;
-import org.openwms.core.validation.AssertUtils;
+import org.springframework.util.Assert;
 
 
 /**
  * An I18n entity stores multiple translations assigned to an unique key.
- * 
+ *
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  * @version $Revision$
  * @since 0.1
  */
 @Entity
-@Table(name = "COR_I18N", uniqueConstraints = @UniqueConstraint(columnNames = { "C_KEY", "C_MODULE_NAME" }))
+@Table(name = "COR_I18N", uniqueConstraints = @UniqueConstraint(columnNames = {"C_KEY", "C_MODULE_NAME"}))
 @NamedQueries({
         @NamedQuery(name = I18n.NQ_FIND_ALL, query = "select i from I18n i order by i.moduleName, i.key"),
-        @NamedQuery(name = I18n.NQ_FIND_BY_UNIQUE_QUERY, query = "select i from I18n i where i.key = :key and i.moduleName = :moduleName") })
+        @NamedQuery(name = I18n.NQ_FIND_BY_UNIQUE_QUERY, query = "select i from I18n i where i.key = :key and i.moduleName = :moduleName")})
 public class I18n extends AbstractEntity<Long> implements Serializable {
-
-    private static final long serialVersionUID = -9176131734403683401L;
 
     /**
      * The unique technical key.
@@ -98,7 +96,6 @@ public class I18n extends AbstractEntity<Long> implements Serializable {
      * Query to find <strong>one</strong> <code>I18n</code> by <code>moduleName</code> and <code>key</code>.<li>Query parameter name
      * <strong>moduleName</strong> : The name of the <code>Module</code> where the <code>I18n</code> entity belongs to</li><li>Query
      * parameter name <strong>key</strong> : The key of the <code>I18n</code> to search for</li>
-     * 
      */
     public static final String NQ_FIND_BY_UNIQUE_QUERY = "I18n.findByKeyModule";
 
@@ -111,20 +108,16 @@ public class I18n extends AbstractEntity<Long> implements Serializable {
 
     /**
      * Create a new I18n.
-     * 
-     * @param moduleName
-     *            The name of the <code>Module</code> where this entity belongs to
-     * @param key
-     *            The key to access this translation
-     * @param lang
-     *            A set of languages
-     * @throws IllegalArgumentException
-     *             when the <code>moduleName</code> or the <code>key</code> is <code>null</code> or empty
+     *
+     * @param moduleName The name of the <code>Module</code> where this entity belongs to
+     * @param key The key to access this translation
+     * @param lang A set of languages
+     * @throws IllegalArgumentException when the <code>moduleName</code> or the <code>key</code> is <code>null</code> or empty
      */
     public I18n(String moduleName, String key, I18nSet lang) {
         super();
-        AssertUtils.isNotEmpty(moduleName, "Not allowed to create an I18n instance with an empty moduleName");
-        AssertUtils.isNotEmpty(key, "Not allowed to create an I18n instance with an empty key");
+        Assert.hasText(moduleName, "Not allowed to create an I18n instance with an empty moduleName");
+        Assert.hasText(key, "Not allowed to create an I18n instance with an empty key");
         this.moduleName = moduleName;
         this.key = key;
         this.lang = lang;
@@ -132,17 +125,14 @@ public class I18n extends AbstractEntity<Long> implements Serializable {
 
     /**
      * Create a new I18n.
-     * 
-     * @param key
-     *            The key to access this translation
-     * @param lang
-     *            A set of languages
-     * @throws IllegalArgumentException
-     *             when the <code>key</code> is <code>null</code> or empty
+     *
+     * @param key The key to access this translation
+     * @param lang A set of languages
+     * @throws IllegalArgumentException when the <code>key</code> is <code>null</code> or empty
      */
     public I18n(String key, I18nSet lang) {
         super();
-        AssertUtils.isNotEmpty(key, "Not allowed to create an I18n instance with an empty key");
+        Assert.hasText(key, "Not allowed to create an I18n instance with an empty key");
         this.key = key;
         this.lang = lang;
     }
@@ -158,7 +148,7 @@ public class I18n extends AbstractEntity<Long> implements Serializable {
 
     /**
      * Get the cKey.
-     * 
+     *
      * @return the cKey.
      */
     public String getCKey() {
@@ -167,7 +157,7 @@ public class I18n extends AbstractEntity<Long> implements Serializable {
 
     /**
      * {@inheritDoc}
-     * 
+     *
      * @see org.openwms.core.DomainObject#isNew()
      */
     @Override
@@ -177,7 +167,7 @@ public class I18n extends AbstractEntity<Long> implements Serializable {
 
     /**
      * {@inheritDoc}
-     * 
+     *
      * @see org.openwms.core.DomainObject#getVersion()
      */
     @Override
@@ -187,7 +177,7 @@ public class I18n extends AbstractEntity<Long> implements Serializable {
 
     /**
      * {@inheritDoc}
-     * 
+     *
      * @see org.openwms.core.DomainObject#getId()
      */
     @Override
@@ -197,7 +187,7 @@ public class I18n extends AbstractEntity<Long> implements Serializable {
 
     /**
      * Get the key.
-     * 
+     *
      * @return the key.
      */
     public String getKey() {
@@ -206,7 +196,7 @@ public class I18n extends AbstractEntity<Long> implements Serializable {
 
     /**
      * Get the moduleName.
-     * 
+     *
      * @return the moduleName.
      */
     public String getModuleName() {
@@ -215,7 +205,7 @@ public class I18n extends AbstractEntity<Long> implements Serializable {
 
     /**
      * Get the language set.
-     * 
+     *
      * @return the language set.
      */
     public I18nSet getLang() {
@@ -224,9 +214,9 @@ public class I18n extends AbstractEntity<Long> implements Serializable {
 
     /**
      * {@inheritDoc}
-     * 
+     * <p>
      * Use <code>key</code> and <code>moduleName</code> for calculation.
-     * 
+     *
      * @see java.lang.Object#hashCode()
      */
     @Override
@@ -240,9 +230,9 @@ public class I18n extends AbstractEntity<Long> implements Serializable {
 
     /**
      * {@inheritDoc}
-     * 
+     * <p>
      * Use <code>key</code> and <code>moduleName</code> for comparison.
-     * 
+     *
      * @see java.lang.Object#equals(java.lang.Object)
      */
     @Override

@@ -21,19 +21,19 @@
  */
 package org.openwms.core.configuration.file;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.fail;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.openwms.core.PreferenceDao;
-import org.openwms.core.domain.preferences.ApplicationPreference;
-import org.openwms.core.domain.preferences.ModulePreference;
-import org.openwms.core.system.AbstractPreference;
-import org.openwms.core.system.PreferenceKey;
-import org.openwms.core.system.PropertyScope;
-import org.openwms.core.system.usermanagement.UserPreference;
+import org.openwms.core.configuration.AbstractPreference;
+import org.openwms.core.configuration.ApplicationPreference;
+import org.openwms.core.configuration.ModulePreference;
+import org.openwms.core.configuration.PreferenceDao;
+import org.openwms.core.configuration.PreferenceKey;
+import org.openwms.core.configuration.PropertyScope;
+import org.openwms.core.configuration.UserPreference;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
@@ -49,7 +49,6 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 public class PreferencesDaoTest {
 
     @Autowired
-    @Qualifier(PreferencesDaoImpl.COMPONENT_NAME)
     private PreferenceDao<PreferenceKey> dao;
 
     /**

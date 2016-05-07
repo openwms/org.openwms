@@ -31,19 +31,19 @@ import javax.persistence.Version;
 import java.io.Serializable;
 
 import org.openwms.core.AbstractEntity;
-import org.openwms.core.validation.AssertUtils;
+import org.springframework.util.Assert;
 
 /**
  * An Email represents the email address of an <code>User</code>.
- * 
- * @GlossaryTerm
+ *
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  * @version $Revision$
- * @since 0.1
+ * @GlossaryTerm
  * @see User
+ * @since 0.1
  */
 @Entity
-@Table(name = "COR_EMAIL", uniqueConstraints = @UniqueConstraint(columnNames = { "C_USERNAME", "C_ADDRESS" }))
+@Table(name = "COR_EMAIL", uniqueConstraints = @UniqueConstraint(columnNames = {"C_USERNAME", "C_ADDRESS"}))
 public class Email extends AbstractEntity<Long> implements Serializable {
 
     private static final long serialVersionUID = 3182027866592095069L;
@@ -77,6 +77,7 @@ public class Email extends AbstractEntity<Long> implements Serializable {
     private long version;
 
     /* ----------------------------- methods ------------------- */
+
     /**
      * Accessed by persistence provider.
      */
@@ -87,17 +88,14 @@ public class Email extends AbstractEntity<Long> implements Serializable {
 
     /**
      * Create a new <code>Email</code> with an <code>username</code> and an <code>emailAddress</code>.
-     * 
-     * @param username
-     *            The name of the User
-     * @param emailAddress
-     *            The email address of the User
-     * @throws IllegalArgumentException
-     *             when userName or emailAddress is <code>null</code> or empty
+     *
+     * @param username The name of the User
+     * @param emailAddress The email address of the User
+     * @throws IllegalArgumentException when userName or emailAddress is <code>null</code> or empty
      */
     public Email(String username, String emailAddress) {
-        AssertUtils.isNotEmpty(username, "Username must not be null or empty");
-        AssertUtils.isNotEmpty(emailAddress, "EmailAddress must not be null or empty");
+        Assert.hasText(username, "Username must not be null or empty");
+        Assert.hasText(emailAddress, "EmailAddress must not be null or empty");
         this.username = username;
         this.emailAddress = emailAddress;
     }
@@ -120,7 +118,7 @@ public class Email extends AbstractEntity<Long> implements Serializable {
 
     /**
      * Returns the name of the <code>User</code> who owns this <code>Email</code>.
-     * 
+     *
      * @return The username as String
      */
     public String getUsername() {
@@ -129,9 +127,8 @@ public class Email extends AbstractEntity<Long> implements Serializable {
 
     /**
      * Assign the <code>Email</code> to an <code>User</code>.
-     * 
-     * @param userName
-     *            Name of the <code>User</code>.
+     *
+     * @param userName Name of the <code>User</code>.
      */
     public void setUsername(String userName) {
         this.username = userName;
@@ -139,7 +136,7 @@ public class Email extends AbstractEntity<Long> implements Serializable {
 
     /**
      * Return the emailAddress.
-     * 
+     *
      * @return The emailAddress.
      */
     public String getEmailAddress() {
@@ -148,9 +145,8 @@ public class Email extends AbstractEntity<Long> implements Serializable {
 
     /**
      * Set the emailAddress.
-     * 
-     * @param emailAddress
-     *            The emailAddress to set.
+     *
+     * @param emailAddress The emailAddress to set.
      */
     public void setEmailAddress(String emailAddress) {
         this.emailAddress = emailAddress;
@@ -158,7 +154,7 @@ public class Email extends AbstractEntity<Long> implements Serializable {
 
     /**
      * Return the fullname.
-     * 
+     *
      * @return The fullname.
      */
     public String getFullname() {
@@ -167,9 +163,8 @@ public class Email extends AbstractEntity<Long> implements Serializable {
 
     /**
      * Set the fullname.
-     * 
-     * @param fullname
-     *            The fullname to set.
+     *
+     * @param fullname The fullname to set.
      */
     public void setFullname(String fullname) {
         this.fullname = fullname;
@@ -185,9 +180,9 @@ public class Email extends AbstractEntity<Long> implements Serializable {
 
     /**
      * Return the emailAddress as String.
-     * 
-     * @see java.lang.Object#toString()
+     *
      * @return the emailAddress
+     * @see java.lang.Object#toString()
      */
     @Override
     public String toString() {

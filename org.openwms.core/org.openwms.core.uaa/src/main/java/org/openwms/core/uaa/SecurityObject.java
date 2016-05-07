@@ -37,8 +37,8 @@ import javax.persistence.Version;
 import java.io.Serializable;
 
 import org.openwms.core.AbstractEntity;
-import org.openwms.core.validation.AssertUtils;
 import org.openwms.core.values.CoreTypeDefinitions;
+import org.springframework.util.Assert;
 
 /**
  * A SecurityObject is the generalization of <code>Role</code>s and <code>Grant</code>s and combines common used properties of both.
@@ -112,7 +112,7 @@ public class SecurityObject extends AbstractEntity<Long> implements Serializable
      *             when name is <code>null</code> or an empty String
      */
     public SecurityObject(String name) {
-        AssertUtils.isNotEmpty(name, "A name of a SecurityObject must not be null");
+        Assert.hasText(name, "A name of a SecurityObject must not be null");
         this.name = name;
     }
 
@@ -127,7 +127,7 @@ public class SecurityObject extends AbstractEntity<Long> implements Serializable
      *             when name is <code>null</code> or an empty String
      */
     public SecurityObject(String name, String description) {
-        AssertUtils.isNotEmpty(name, "A name of a SecurityObject must not be null");
+        Assert.hasText(name, "A name of a SecurityObject must not be null");
         this.name = name;
         this.description = description;
     }

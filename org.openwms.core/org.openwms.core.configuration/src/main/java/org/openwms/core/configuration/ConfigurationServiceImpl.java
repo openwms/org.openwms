@@ -28,7 +28,6 @@ import java.util.List;
 import org.openwms.core.annotation.FireAfterTransaction;
 import org.openwms.core.event.ConfigurationChangedEvent;
 import org.openwms.core.event.MergePropertiesEvent;
-import org.openwms.core.validation.AssertUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,6 +35,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.ApplicationListener;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.Assert;
 
 /**
  * A ConfigurationServiceImpl is a transactional Spring powered service
@@ -109,7 +109,7 @@ public class ConfigurationServiceImpl implements ConfigurationService, Applicati
     @Override
     @FireAfterTransaction(events = { ConfigurationChangedEvent.class })
     public <T extends AbstractPreference> T save(T preference) {
-        AssertUtils.notNull(preference, "Not allowed to call save with a NULL argument");
+        Assert.notNull(preference, "Not allowed to call save with a NULL argument");
         List<? extends AbstractPreference> preferences = dao.findByType(preference.getClass());
         if (preferences.contains(preference)) {
             if (preference.isNew()) {
@@ -137,7 +137,7 @@ public class ConfigurationServiceImpl implements ConfigurationService, Applicati
     @Override
     @FireAfterTransaction(events = { ConfigurationChangedEvent.class })
     public AbstractPreference merge(AbstractPreference preference) {
-        AssertUtils.notNull(preference, "Not allowed to call merge with a NULL argument");
+        Assert.notNull(preference, "Not allowed to call merge with a NULL argument");
         List<? extends AbstractPreference> preferences = dao.findByType(preference.getClass());
         if (preferences.contains(preference)) {
             return preference;
@@ -154,7 +154,7 @@ public class ConfigurationServiceImpl implements ConfigurationService, Applicati
     @Override
     @FireAfterTransaction(events = { ConfigurationChangedEvent.class })
     public void remove(AbstractPreference preference) {
-        AssertUtils.notNull(preference, "Not allowed to call remove with a NULL argument");
+        Assert.notNull(preference, "Not allowed to call remove with a NULL argument");
         dao.remove(preference);
     }
 

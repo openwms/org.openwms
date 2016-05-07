@@ -50,9 +50,9 @@ import java.util.List;
 
 import org.openwms.core.AbstractEntity;
 import org.openwms.core.exception.InvalidPasswordException;
-import org.openwms.core.validation.AssertUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.util.Assert;
 
 /**
  * An User represents a human user of the system. Typically an User is assigned to one or more <code>Role</code>s to define security
@@ -211,7 +211,7 @@ public class User extends AbstractEntity<Long> implements Serializable {
      */
     public User(String username) {
         super();
-        AssertUtils.isNotEmpty(username, "Not allowed to create an User with an empty username");
+        Assert.hasText(username, "Not allowed to create an User with an empty username");
         this.username = username;
         loadLazy();
     }
@@ -225,8 +225,8 @@ public class User extends AbstractEntity<Long> implements Serializable {
      */
     protected User(String username, String password) {
         super();
-        AssertUtils.isNotEmpty(username, "Not allowed to create an User with an empty username");
-        AssertUtils.isNotEmpty(password, "Not allowed to create an User with an empty password");
+        Assert.hasText(username, "Not allowed to create an User with an empty username");
+        Assert.hasText(password, "Not allowed to create an User with an empty password");
         this.username = username;
         this.password = password;
     }

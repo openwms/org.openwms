@@ -24,9 +24,9 @@ package org.openwms.core.uaa;
 import java.util.Collection;
 import java.util.HashSet;
 
-import org.openwms.core.validation.AssertUtils;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.util.Assert;
 
 /**
  * An UserWrapper is used as an adapter between <code>Role</code>s, <code>SecurityObject</code>s and Spring's {@link GrantedAuthority}
@@ -42,7 +42,6 @@ import org.springframework.security.core.userdetails.UserDetails;
  */
 public class UserWrapper implements UserDetails, UserHolder {
 
-    private static final long serialVersionUID = -3974637197176782047L;
     private User user;
     private Collection<GrantedAuthority> authorities = null;
 
@@ -52,7 +51,7 @@ public class UserWrapper implements UserDetails, UserHolder {
      * @param user The User to wrap
      */
     public UserWrapper(User user) {
-        AssertUtils.notNull(user, "Not allowed to create an UserWrapper with null argument");
+        Assert.notNull(user, "Not allowed to create an UserWrapper with null argument");
         this.user = user;
         this.user.getRoles().size();
     }

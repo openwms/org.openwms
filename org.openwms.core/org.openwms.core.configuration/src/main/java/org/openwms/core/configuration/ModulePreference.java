@@ -34,7 +34,7 @@ import javax.xml.bind.annotation.XmlTransient;
 import javax.xml.bind.annotation.XmlType;
 import java.io.Serializable;
 
-import org.openwms.core.validation.AssertUtils;
+import org.springframework.util.Assert;
 
 /**
  * A ModulePreference is used to store configuration settings in Module scope.
@@ -113,8 +113,8 @@ public class ModulePreference extends AbstractPreference implements Serializable
     public ModulePreference(String owner, String key) {
         // Called from the client-side only.
         super();
-        AssertUtils.isNotEmpty(owner, "Not allowed to create an ModulePreference with an empty owner");
-        AssertUtils.isNotEmpty(key, "Not allowed to create an ModulePreference with an empty key");
+        Assert.hasText(owner, "Not allowed to create an ModulePreference with an empty owner");
+        Assert.hasText(key, "Not allowed to create an ModulePreference with an empty key");
         this.owner = owner;
         this.key = key;
     }

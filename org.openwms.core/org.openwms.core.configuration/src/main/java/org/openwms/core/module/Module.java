@@ -36,8 +36,8 @@ import java.util.Comparator;
 
 import org.openwms.core.AbstractEntity;
 import org.openwms.core.DomainObject;
-import org.openwms.core.validation.AssertUtils;
 import org.openwms.core.values.CoreTypeDefinitions;
+import org.springframework.util.Assert;
 
 /**
  * A Module represents an Adobe Flex Module and is used to store some basic information about that module, i.e. a name, an URL where the
@@ -156,7 +156,7 @@ public class Module extends AbstractEntity<Long> implements Serializable {
      */
     public Module(String moduleName, String url) {
         super();
-        AssertUtils.isNotEmpty(moduleName, "Not allowed to set the moduleName to null or an empty String");
+        Assert.hasText(moduleName, "Not allowed to set the moduleName to null or an empty String");
         this.moduleName = moduleName;
         this.url = url;
     }
@@ -187,7 +187,7 @@ public class Module extends AbstractEntity<Long> implements Serializable {
      *             in case the new moduleName is <code>null</code> or empty
      */
     public void setModuleName(String moduleName) {
-        AssertUtils.isNotEmpty(moduleName, "Not allowed to set the moduleName to null or an empty String");
+        Assert.hasText(moduleName, "Not allowed to set the moduleName to null or an empty String");
         this.moduleName = moduleName;
     }
 
@@ -209,7 +209,7 @@ public class Module extends AbstractEntity<Long> implements Serializable {
      *             in case the new url is <code>null</code> or empty
      */
     public void setUrl(String url) {
-        AssertUtils.isNotEmpty(url, "Not allowed to set the url to null or an empty String");
+        Assert.hasText(url, "Not allowed to set the url to null or an empty String");
         this.url = url;
     }
 

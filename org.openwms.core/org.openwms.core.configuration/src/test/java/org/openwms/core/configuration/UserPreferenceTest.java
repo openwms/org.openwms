@@ -27,7 +27,6 @@ import javax.persistence.PersistenceContext;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-import org.openwms.core.system.usermanagement.User;
 import org.openwms.core.test.AbstractJpaSpringContextTests;
 
 /**
@@ -48,7 +47,7 @@ public class UserPreferenceTest extends AbstractJpaSpringContextTests {
      */
     @Before
     public void onSetup() {
-        em.persist(new User(KNOWN_USER));
+        //em.persist(new User(KNOWN_USER));
         em.persist(new UserPreference(KNOWN_USER, "testKey"));
         em.flush();
         em.clear();

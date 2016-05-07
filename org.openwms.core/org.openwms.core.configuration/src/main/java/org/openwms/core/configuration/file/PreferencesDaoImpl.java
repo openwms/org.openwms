@@ -30,15 +30,15 @@ import java.util.concurrent.ConcurrentHashMap;
 
 import org.apache.commons.lang3.StringUtils;
 import org.openwms.core.Constants;
-import org.openwms.core.domain.preferences.PreferenceDao;
-import org.openwms.core.domain.preferences.Preferences;
+import org.openwms.core.configuration.AbstractPreference;
+import org.openwms.core.configuration.PreferenceDao;
+import org.openwms.core.configuration.PreferenceKey;
+import org.openwms.core.configuration.Preferences;
 import org.openwms.core.event.ReloadFilePreferencesEvent;
 import org.openwms.core.exception.DataException;
 import org.openwms.core.exception.NoUniqueResultException;
 import org.openwms.core.exception.ResourceNotFoundException;
 import org.openwms.core.logging.LoggingCategories;
-import org.openwms.core.system.AbstractPreference;
-import org.openwms.core.system.PreferenceKey;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -56,15 +56,12 @@ import org.springframework.transaction.annotation.Transactional;
 /**
  * A PreferencesDaoImpl reads a XML file of preferences and keeps them internally in a Map. An initial preferences file is expected to be at
  * {@value #INITIAL_PREFERENCES_FILE} but this can be overridden with a property <i>application.initial.properties</i> in the configuration
- * properties file.
- * <p>
- * On a {@link ReloadFilePreferencesEvent} the internal Map is cleared and reloaded.
- * </p>
- * 
+ * properties file. <p> On a {@link ReloadFilePreferencesEvent} the internal Map is cleared and reloaded. </p>
+ *
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  * @version $Revision: $
- * @since 0.1
  * @see org.openwms.core.event.ReloadFilePreferencesEvent
+ * @since 0.1
  */
 @Transactional(propagation = Propagation.MANDATORY)
 @Repository(PreferencesDaoImpl.COMPONENT_NAME)
@@ -91,8 +88,8 @@ public class PreferencesDaoImpl implements PreferenceDao<PreferenceKey>,
 
     /**
      * {@inheritDoc}
-     * 
-     * @see org.openwms.core.integration.PreferenceDao#findByKey(java.io.Serializable)
+     *
+     * @see org.openwms.core.configuration.PreferenceDao#findByKey(java.io.Serializable)
      */
     @Override
     public AbstractPreference findByKey(PreferenceKey id) {
@@ -101,8 +98,8 @@ public class PreferencesDaoImpl implements PreferenceDao<PreferenceKey>,
 
     /**
      * {@inheritDoc}
-     * 
-     * @see org.openwms.core.integration.PreferenceDao#findByType(Class)
+     *
+     * @see org.openwms.core.configuration.PreferenceDao#findByType(Class)
      */
     @Override
     public <T extends AbstractPreference> List<T> findByType(Class<T> clazz) {
@@ -111,8 +108,8 @@ public class PreferencesDaoImpl implements PreferenceDao<PreferenceKey>,
 
     /**
      * {@inheritDoc}
-     * 
-     * @see org.openwms.core.integration.PreferenceDao#findByType(java.lang.Class, java.lang.String)
+     *
+     * @see org.openwms.core.configuration.PreferenceDao#findByType(java.lang.Class, java.lang.String)
      */
     @Override
     public <T extends AbstractPreference> List<T> findByType(Class<T> clazz, String owner) {
@@ -122,8 +119,8 @@ public class PreferencesDaoImpl implements PreferenceDao<PreferenceKey>,
 
     /**
      * {@inheritDoc}
-     * 
-     * @see org.openwms.core.integration.PreferenceDao#findAll()
+     *
+     * @see org.openwms.core.configuration.PreferenceDao#findAll()
      */
     @Override
     public List<AbstractPreference> findAll() {
@@ -132,7 +129,7 @@ public class PreferencesDaoImpl implements PreferenceDao<PreferenceKey>,
 
     /**
      * {@inheritDoc}
-     * 
+     *
      * @see org.springframework.context.ApplicationListener#onApplicationEvent(org.springframework.context.ApplicationEvent)
      */
     @Override

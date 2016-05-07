@@ -33,7 +33,7 @@ import java.io.Serializable;
 import java.util.Date;
 
 import org.openwms.core.AbstractEntity;
-import org.openwms.core.validation.AssertUtils;
+import org.springframework.util.Assert;
 
 /**
  * Is a representation of an <code>User</code> together with her password. <p> When an <code>User</code> changes her password, the current
@@ -91,8 +91,8 @@ public class UserPassword extends AbstractEntity<Long> implements Serializable {
      * @throws IllegalArgumentException when <code>user</code> or <code>password</code> is <code>null</code> or empty
      */
     public UserPassword(User user, String password) {
-        AssertUtils.notNull(user, "User must not be null");
-        AssertUtils.isNotEmpty(password, "Password must not be null");
+        Assert.notNull(user, "User must not be null");
+        Assert.hasText(password, "Password must not be null");
         this.user = user;
         this.password = password;
     }
