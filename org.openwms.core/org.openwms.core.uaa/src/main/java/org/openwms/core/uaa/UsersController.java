@@ -28,12 +28,11 @@ import java.util.Collection;
 import java.util.List;
 
 import org.ameba.exception.NotFoundException;
-import org.openwms.core.ExceptionCodes;
+import org.ameba.mapping.BeanMapper;
+import org.openwms.core.exception.ExceptionCodes;
 import org.openwms.core.http.AbstractWebController;
 import org.openwms.core.http.HttpBusinessException;
 import org.openwms.core.http.ResponseVO;
-import org.openwms.core.system.usermanagement.User;
-import org.openwms.core.system.usermanagement.UserPassword;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -62,14 +61,12 @@ public class UsersController extends AbstractWebController {
     @Autowired
     private UserService service;
     @Autowired
-    private BeanMapper<User, UserVO> mapper;
+    private BeanMapper mapper;
 
     /**
-     * This method returns all existing <tt>User</tt>s.
-     * <p>
-     * <p> <table> <tr> <td>URI</td> <td>/users</td> </tr> <tr> <td>Verb</td> <td>GET</td> </tr> <tr> <td>Auth</td> <td>YES</td> </tr> <tr>
-     * <td>Header</td> <td></td> </tr> </table> </p> <p> The response stores <tt>User</tt> instances JSON encoded. It contains a collection
-     * of <tt>User</tt> objects. </p>
+     * This method returns all existing <tt>User</tt>s. <p> <p> <table> <tr> <td>URI</td> <td>/users</td> </tr> <tr> <td>Verb</td>
+     * <td>GET</td> </tr> <tr> <td>Auth</td> <td>YES</td> </tr> <tr> <td>Header</td> <td></td> </tr> </table> </p> <p> The response stores
+     * <tt>User</tt> instances JSON encoded. It contains a collection of <tt>User</tt> objects. </p>
      *
      * @return JSON response
      */
@@ -83,19 +80,15 @@ public class UsersController extends AbstractWebController {
     }
 
     /**
-     * Takes a newly created <tt>User</tt> instance and persists it.
-     * <p>
-     * <p> <table> <tr> <td>URI</td> <td>/users</td> </tr> <tr> <td>Verb</td> <td>POST</td> </tr> <tr> <td>Auth</td> <td>YES</td> </tr> <tr>
-     * <td>Header</td> <td></td> </tr> </table> </p> <p> Request Body
-     * <p>
+     * Takes a newly created <tt>User</tt> instance and persists it. <p> <p> <table> <tr> <td>URI</td> <td>/users</td> </tr> <tr>
+     * <td>Verb</td> <td>POST</td> </tr> <tr> <td>Auth</td> <td>YES</td> </tr> <tr> <td>Header</td> <td></td> </tr> </table> </p> <p>
+     * Request Body <p>
      * <pre>
      *   {
      *     "username" : "testuser"
      *   }
      * </pre>
-     * <p>
-     * Parameters: <ul> <li>username (String):</li> The unique username. </ul> </p> <p> Response Body
-     * <p>
+     * <p> Parameters: <ul> <li>username (String):</li> The unique username. </ul> </p> <p> Response Body <p>
      * <pre>
      *   {
      *     "id" : 4711,
@@ -104,10 +97,9 @@ public class UsersController extends AbstractWebController {
      *     "version" : 1
      *   }
      * </pre>
-     * <p>
-     * <ul> <li>id (Integer (32bit)):</li> The internal unique technical key for the stored instance. <li>username (String):</li> The unique
-     * username. <li>token (String):</li> A generated token that is used to authenticate each request. <li>version (Integer (32bit)):</li> A
-     * version number used internally for optimistic locking. </ul> </p>
+     * <p> <ul> <li>id (Integer (32bit)):</li> The internal unique technical key for the stored instance. <li>username (String):</li> The
+     * unique username. <li>token (String):</li> A generated token that is used to authenticate each request. <li>version (Integer
+     * (32bit)):</li> A version number used internally for optimistic locking. </ul> </p>
      *
      * @param user The user to create
      * @return a responseVO
@@ -119,7 +111,7 @@ public class UsersController extends AbstractWebController {
         ResponseVO result = new ResponseVO();
         HttpStatus resultStatus = HttpStatus.CREATED;
         try {
-            UserVO res = mapper.map(service.create(mapper.mapBackwards(user, User.class)), UserVO.class);
+            UserVO res = mapper.map(service.create(mapper.map(user, User.class)), UserVO.class);
             result.add(new ResponseVO.ItemBuilder().wStatus(HttpStatus.CREATED).wParams(res).build());
         } catch (Exception sre) {
             resultStatus = HttpStatus.NOT_ACCEPTABLE;
@@ -161,7 +153,7 @@ public class UsersController extends AbstractWebController {
             throw new HttpBusinessException(translate(ExceptionCodes.USER_HAS_CHANGED), HttpStatus.NOT_ACCEPTABLE);
         }
 
-        User toSave = mapper.mapBackwards(user, User.class);
+        User toSave = mapper.map(user, User.class);
         persistedUser = mapper.mapFromTo(toSave, persistedUser);
         UserVO saved = mapper.map(service.save(persistedUser), UserVO.class);
         ResponseVO result = new ResponseVO(new ResponseVO.ItemBuilder().wParams(saved).wStatus(HttpStatus.OK).build());

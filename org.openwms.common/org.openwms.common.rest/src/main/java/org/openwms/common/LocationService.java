@@ -23,7 +23,7 @@ package org.openwms.common;
 
 import java.util.List;
 
-import org.openwms.core.system.Message;
+import org.openwms.core.values.Message;
 
 /**
  * A LocationService offers some useful methods regarding the general handling of {@link Location}s.

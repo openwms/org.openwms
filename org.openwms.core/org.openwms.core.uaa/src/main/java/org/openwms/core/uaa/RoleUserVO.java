@@ -25,13 +25,13 @@ import java.io.Serializable;
 
 /**
  * A UserVO.
- * 
+ *
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  * @version $Revision: $
  * @since 0.1
  */
 public class RoleUserVO implements Serializable {
-    private static final long serialVersionUID = -8913697312904235847L;
+
     private Long id;
     private String username;
     private String fullname;
@@ -39,11 +39,12 @@ public class RoleUserVO implements Serializable {
     /**
      * Create a new RoleVO.User.
      */
-    public RoleUserVO() {}
+    public RoleUserVO() {
+    }
 
     /**
      * Get the id.
-     * 
+     *
      * @return the id.
      */
     public Long getId() {
@@ -52,9 +53,8 @@ public class RoleUserVO implements Serializable {
 
     /**
      * Set the id.
-     * 
-     * @param id
-     *            The id to set.
+     *
+     * @param id The id to set.
      */
     public void setId(Long id) {
         this.id = id;
@@ -62,7 +62,7 @@ public class RoleUserVO implements Serializable {
 
     /**
      * Get the username.
-     * 
+     *
      * @return the username.
      */
     public String getUsername() {
@@ -71,9 +71,8 @@ public class RoleUserVO implements Serializable {
 
     /**
      * Set the username.
-     * 
-     * @param username
-     *            The username to set.
+     *
+     * @param username The username to set.
      */
     public void setUsername(String username) {
         this.username = username;
@@ -81,7 +80,7 @@ public class RoleUserVO implements Serializable {
 
     /**
      * Get the fullname.
-     * 
+     *
      * @return the fullname.
      */
     public String getFullname() {
@@ -90,9 +89,8 @@ public class RoleUserVO implements Serializable {
 
     /**
      * Set the fullname.
-     * 
-     * @param fullname
-     *            The fullname to set.
+     *
+     * @param fullname The fullname to set.
      */
     public void setFullname(String fullname) {
         this.fullname = fullname;

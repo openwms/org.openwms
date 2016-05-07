@@ -22,7 +22,6 @@
 package org.openwms.core.uaa;
 
 import org.openwms.core.GenericEntityService;
-import org.openwms.core.system.usermanagement.Role;
 
 /**
  * A RoleService provides business functionality regarding the handling with {@link Role}s.
@@ -30,7 +29,7 @@ import org.openwms.core.system.usermanagement.Role;
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  * @version $Revision$
  * @since 0.1
- * @see org.openwms.core.system.usermanagement.Role
+ * @see org.openwms.core.uaa.Role
  */
 public interface RoleService extends GenericEntityService<Role, Long, String> {
 

@@ -34,8 +34,7 @@ import javax.xml.bind.annotation.XmlTransient;
 import javax.xml.bind.annotation.XmlType;
 import java.io.Serializable;
 
-import org.openwms.core.system.AbstractPreference;
-import org.openwms.core.validation.AssertUtils;
+import org.springframework.util.Assert;
 
 /**
  * A RolePreference is used to provide settings specific to an <code>Role</code> . These kind of <code>Preferences</code> is valid for the
@@ -55,7 +54,6 @@ import org.openwms.core.validation.AssertUtils;
         @NamedQuery(name = RolePreference.NQ_FIND_BY_OWNER, query = "select rp from RolePreference rp where rp.owner = :owner") })
 public class RolePreference extends AbstractPreference implements Serializable {
 
-    private static final long serialVersionUID = 8267024349554036680L;
     /**
      * Type of this preference.
      */
@@ -106,8 +104,8 @@ public class RolePreference extends AbstractPreference implements Serializable {
     public RolePreference(String rolename, String key) {
         // Called from the client.
         super();
-        AssertUtils.isNotEmpty(owner, "Not allowed to create a RolePreference with an empty rolename");
-        AssertUtils.isNotEmpty(key, "Not allowed to create a RolePreference with an empty key");
+        Assert.hasText(owner, "Not allowed to create a RolePreference with an empty rolename");
+        Assert.hasText(key, "Not allowed to create a RolePreference with an empty key");
         owner = rolename;
         this.key = key;
     }
@@ -133,7 +131,7 @@ public class RolePreference extends AbstractPreference implements Serializable {
     /**
      * {@inheritDoc}
      * 
-     * @see org.openwms.core.system.AbstractPreference#getType()
+     * @see org.openwms.core.configuration.AbstractPreference#getType()
      */
     @Override
     public PropertyScope getType() {
@@ -143,7 +141,7 @@ public class RolePreference extends AbstractPreference implements Serializable {
     /**
      * {@inheritDoc}
      * 
-     * @see org.openwms.core.system.AbstractPreference#getFields()
+     * @see org.openwms.core.configuration.AbstractPreference#getFields()
      */
     @Override
     protected Object[] getFields() {
@@ -155,7 +153,7 @@ public class RolePreference extends AbstractPreference implements Serializable {
      * 
      * Uses the type, owner and the key to create a {@link PreferenceKey} instance.
      * 
-     * @see org.openwms.core.system.AbstractPreference#getPrefKey()
+     * @see org.openwms.core.configuration.AbstractPreference#getPrefKey()
      */
     @Override
     public PreferenceKey getPrefKey() {

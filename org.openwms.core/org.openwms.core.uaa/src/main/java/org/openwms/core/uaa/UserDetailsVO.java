@@ -28,7 +28,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 
 /**
  * A UserDetailsVO.
- * 
+ *
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  * @version $Revision: $
  * @since 0.1
@@ -50,26 +50,27 @@ public class UserDetailsVO implements Serializable {
     /**
      * Create a new UserDetailsVO.
      */
-    public UserDetailsVO() {}
+    public UserDetailsVO() {
+    }
 
     /**
      * Get the image.
-     * 
+     *
      * @return the image.
-     * 
+     *
      *         public byte[] getImage() { return image; }
      */
     /**
      * Set the image.
-     * 
+     *
      * @param image
      *            The image to set.
-     * 
+     *
      *            public void setImage(byte[] image) { this.image = image; }
      */
     /**
      * Get the description.
-     * 
+     *
      * @return the description.
      */
     public String getDescription() {
@@ -78,9 +79,8 @@ public class UserDetailsVO implements Serializable {
 
     /**
      * Set the description.
-     * 
-     * @param description
-     *            The description to set.
+     *
+     * @param description The description to set.
      */
     public void setDescription(String description) {
         this.description = description;
@@ -88,7 +88,7 @@ public class UserDetailsVO implements Serializable {
 
     /**
      * Get the comment.
-     * 
+     *
      * @return the comment.
      */
     public String getComment() {
@@ -97,9 +97,8 @@ public class UserDetailsVO implements Serializable {
 
     /**
      * Set the comment.
-     * 
-     * @param comment
-     *            The comment to set.
+     *
+     * @param comment The comment to set.
      */
     public void setComment(String comment) {
         this.comment = comment;
@@ -107,7 +106,7 @@ public class UserDetailsVO implements Serializable {
 
     /**
      * Get the phoneNo.
-     * 
+     *
      * @return the phoneNo.
      */
     public String getPhoneNo() {
@@ -116,9 +115,8 @@ public class UserDetailsVO implements Serializable {
 
     /**
      * Set the phoneNo.
-     * 
-     * @param phoneNo
-     *            The phoneNo to set.
+     *
+     * @param phoneNo The phoneNo to set.
      */
     public void setPhoneNo(String phoneNo) {
         this.phoneNo = phoneNo;
@@ -126,7 +124,7 @@ public class UserDetailsVO implements Serializable {
 
     /**
      * Get the skypeName.
-     * 
+     *
      * @return the skypeName.
      */
     public String getSkypeName() {
@@ -135,9 +133,8 @@ public class UserDetailsVO implements Serializable {
 
     /**
      * Set the skypeName.
-     * 
-     * @param skypeName
-     *            The skypeName to set.
+     *
+     * @param skypeName The skypeName to set.
      */
     public void setSkypeName(String skypeName) {
         this.skypeName = skypeName;
@@ -145,7 +142,7 @@ public class UserDetailsVO implements Serializable {
 
     /**
      * Get the office.
-     * 
+     *
      * @return the office.
      */
     public String getOffice() {
@@ -154,9 +151,8 @@ public class UserDetailsVO implements Serializable {
 
     /**
      * Set the office.
-     * 
-     * @param office
-     *            The office to set.
+     *
+     * @param office The office to set.
      */
     public void setOffice(String office) {
         this.office = office;
@@ -164,7 +160,7 @@ public class UserDetailsVO implements Serializable {
 
     /**
      * Get the department.
-     * 
+     *
      * @return the department.
      */
     public String getDepartment() {
@@ -173,9 +169,8 @@ public class UserDetailsVO implements Serializable {
 
     /**
      * Set the department.
-     * 
-     * @param department
-     *            The department to set.
+     *
+     * @param department The department to set.
      */
     public void setDepartment(String department) {
         this.department = department;
@@ -183,7 +178,7 @@ public class UserDetailsVO implements Serializable {
 
     /**
      * Get the sex.
-     * 
+     *
      * @return the sex.
      */
     public String getSex() {
@@ -192,9 +187,8 @@ public class UserDetailsVO implements Serializable {
 
     /**
      * Set the sex.
-     * 
-     * @param sex
-     *            The sex to set.
+     *
+     * @param sex The sex to set.
      */
     public void setSex(String sex) {
         this.sex = sex;
@@ -202,7 +196,7 @@ public class UserDetailsVO implements Serializable {
 
     /**
      * Get the image.
-     * 
+     *
      * @return the image.
      */
     public byte[] getImage() {
@@ -214,13 +208,11 @@ public class UserDetailsVO implements Serializable {
 
     /**
      * Set the image.
-     * 
-     * @param image
-     *            The image to set.
+     *
+     * @param image The image to set.
      */
     @JsonIgnore
     public void setImage(byte[] image) {
         this.image = image;
     }
-
 }

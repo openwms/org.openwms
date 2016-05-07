@@ -24,9 +24,6 @@ package org.openwms.core.uaa;
 import java.util.List;
 
 import org.openwms.core.AbstractGenericJpaDao;
-import org.openwms.core.RoleDao;
-import org.openwms.core.system.usermanagement.Role;
-import org.openwms.core.system.usermanagement.SecurityObject;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
@@ -43,7 +40,7 @@ import org.springframework.transaction.annotation.Transactional;
  * @version $Revision$
  * @since 0.1
  * @see AbstractGenericJpaDao
- * @see org.openwms.core.RoleDao
+ * @see org.openwms.core.uaa.RoleDao
  */
 @Transactional(propagation = Propagation.MANDATORY)
 @Repository(RoleDaoImpl.COMPONENT_NAME)

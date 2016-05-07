@@ -32,15 +32,13 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 /**
  * A UserDTO.
- * 
+ *
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  * @version $Revision: $
  * @since 0.1
  */
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class UserVO implements Serializable {
-
-    private static final long serialVersionUID = 1698422005139820938L;
 
     private Long id;
     @JsonProperty("externalUser")
@@ -60,7 +58,7 @@ public class UserVO implements Serializable {
 
     /**
      * Get the token.
-     * 
+     *
      * @return the token.
      */
     public String getToken() {
@@ -69,9 +67,8 @@ public class UserVO implements Serializable {
 
     /**
      * Set the token.
-     * 
-     * @param token
-     *            The token to set.
+     *
+     * @param token The token to set.
      */
     public void setToken(String token) {
         this.token = token;
@@ -79,7 +76,7 @@ public class UserVO implements Serializable {
 
     /**
      * Get the username.
-     * 
+     *
      * @return the username.
      */
     public String getUsername() {
@@ -88,9 +85,8 @@ public class UserVO implements Serializable {
 
     /**
      * Set the username.
-     * 
-     * @param username
-     *            The username to set.
+     *
+     * @param username The username to set.
      */
     public void setUsername(String username) {
         this.username = username;
@@ -98,7 +94,7 @@ public class UserVO implements Serializable {
 
     /**
      * Get the extern.
-     * 
+     *
      * @return the extern.
      */
     public boolean isExtern() {
@@ -107,9 +103,8 @@ public class UserVO implements Serializable {
 
     /**
      * Set the extern.
-     * 
-     * @param extern
-     *            The extern to set.
+     *
+     * @param extern The extern to set.
      */
     public void setExtern(boolean extern) {
         this.extern = extern;
@@ -117,7 +112,7 @@ public class UserVO implements Serializable {
 
     /**
      * Get the lastPasswordChange.
-     * 
+     *
      * @return the lastPasswordChange.
      */
     public Date getLastPasswordChange() {
@@ -126,9 +121,8 @@ public class UserVO implements Serializable {
 
     /**
      * Set the lastPasswordChange.
-     * 
-     * @param lastPasswordChange
-     *            The lastPasswordChange to set.
+     *
+     * @param lastPasswordChange The lastPasswordChange to set.
      */
     public void setLastPasswordChange(Date lastPasswordChange) {
         this.lastPasswordChange = lastPasswordChange;
@@ -136,7 +130,7 @@ public class UserVO implements Serializable {
 
     /**
      * Get the locked.
-     * 
+     *
      * @return the locked.
      */
     public boolean isLocked() {
@@ -145,9 +139,8 @@ public class UserVO implements Serializable {
 
     /**
      * Set the locked.
-     * 
-     * @param locked
-     *            The locked to set.
+     *
+     * @param locked The locked to set.
      */
     public void setLocked(boolean locked) {
         this.locked = locked;
@@ -155,7 +148,7 @@ public class UserVO implements Serializable {
 
     /**
      * Get the password.
-     * 
+     *
      * @return the password.
      */
     public String getPassword() {
@@ -164,9 +157,8 @@ public class UserVO implements Serializable {
 
     /**
      * Set the password.
-     * 
-     * @param password
-     *            The password to set.
+     *
+     * @param password The password to set.
      */
     public void setPassword(String password) {
         this.password = password;
@@ -174,7 +166,7 @@ public class UserVO implements Serializable {
 
     /**
      * Get the enabled.
-     * 
+     *
      * @return the enabled.
      */
     public boolean isEnabled() {
@@ -183,9 +175,8 @@ public class UserVO implements Serializable {
 
     /**
      * Set the enabled.
-     * 
-     * @param enabled
-     *            The enabled to set.
+     *
+     * @param enabled The enabled to set.
      */
     public void setEnabled(boolean enabled) {
         this.enabled = enabled;
@@ -193,7 +184,7 @@ public class UserVO implements Serializable {
 
     /**
      * Get the expirationDate.
-     * 
+     *
      * @return the expirationDate.
      */
     public Date getExpirationDate() {
@@ -202,9 +193,8 @@ public class UserVO implements Serializable {
 
     /**
      * Set the expirationDate.
-     * 
-     * @param expirationDate
-     *            The expirationDate to set.
+     *
+     * @param expirationDate The expirationDate to set.
      */
     public void setExpirationDate(Date expirationDate) {
         this.expirationDate = expirationDate;
@@ -212,7 +202,7 @@ public class UserVO implements Serializable {
 
     /**
      * Get the fullname.
-     * 
+     *
      * @return the fullname.
      */
     public String getFullname() {
@@ -221,9 +211,8 @@ public class UserVO implements Serializable {
 
     /**
      * Set the fullname.
-     * 
-     * @param fullname
-     *            The fullname to set.
+     *
+     * @param fullname The fullname to set.
      */
     public void setFullname(String fullname) {
         this.fullname = fullname;
@@ -231,7 +220,7 @@ public class UserVO implements Serializable {
 
     /**
      * Get the userDetails.
-     * 
+     *
      * @return the userDetails.
      */
     public UserDetailsVO getUserDetails() {
@@ -240,9 +229,8 @@ public class UserVO implements Serializable {
 
     /**
      * Set the userDetails.
-     * 
-     * @param userDetails
-     *            The userDetails to set.
+     *
+     * @param userDetails The userDetails to set.
      */
     public void setUserDetails(UserDetailsVO userDetails) {
         this.userDetails = userDetails;
@@ -250,7 +238,7 @@ public class UserVO implements Serializable {
 
     /**
      * Get the id.
-     * 
+     *
      * @return the id.
      */
     public Long getId() {
@@ -259,9 +247,8 @@ public class UserVO implements Serializable {
 
     /**
      * Set the id.
-     * 
-     * @param id
-     *            The id to set.
+     *
+     * @param id The id to set.
      */
     public void setId(Long id) {
         this.id = id;
@@ -269,7 +256,7 @@ public class UserVO implements Serializable {
 
     /**
      * Get the version.
-     * 
+     *
      * @return the version.
      */
     public long getVersion() {
@@ -278,9 +265,8 @@ public class UserVO implements Serializable {
 
     /**
      * Set the version.
-     * 
-     * @param version
-     *            The version to set.
+     *
+     * @param version The version to set.
      */
     public void setVersion(long version) {
         this.version = version;

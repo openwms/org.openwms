@@ -21,7 +21,7 @@
  */
 package org.openwms.client.application;
 
-import org.openwms.core.infrastructure.configuration.ConfigurationApplicationContextConfiguration;
+import org.openwms.core.lang.configuration.ConfigurationApplicationContextConfiguration;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;

@@ -23,11 +23,10 @@ package org.openwms.core.uaa;
 
 import org.ameba.exception.NotFoundException;
 import org.openwms.core.AbstractGenericEntityService;
-import org.openwms.core.ExceptionCodes;
 import org.openwms.core.GenericDao;
 import org.openwms.core.annotation.FireAfterTransaction;
 import org.openwms.core.event.RoleChangedEvent;
-import org.openwms.core.system.usermanagement.Role;
+import org.openwms.core.exception.ExceptionCodes;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

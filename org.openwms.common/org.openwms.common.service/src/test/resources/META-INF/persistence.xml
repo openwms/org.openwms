@@ -27,7 +27,7 @@
     <persistence-unit name="OpenWMS-test" transaction-type="RESOURCE_LOCAL">
         <class>org.openwms.core.domain.preferences.ApplicationPreference</class>
         <class>org.openwms.core.domain.preferences.ModulePreference</class>
-        <class>org.openwms.core.system.Message</class>
+        <class>org.openwms.core.values.Message</class>
         <class>org.openwms.core.configuration.AbstractPreference</class>
         <class>org.openwms.core.system.usermanagement.Email</class>
         <class>org.openwms.core.system.usermanagement.Role</class>

@@ -34,7 +34,7 @@ import javax.xml.bind.annotation.XmlTransient;
 import javax.xml.bind.annotation.XmlType;
 import java.io.Serializable;
 
-import org.openwms.core.validation.AssertUtils;
+import org.springframework.util.Assert;
 
 /**
  * An ApplicationPreference is used to store a configuration setting in application scope.
@@ -99,7 +99,7 @@ public class ApplicationPreference extends AbstractPreference implements Seriali
     public ApplicationPreference(String key) {
         // Called from the client-side only.
         super();
-        AssertUtils.isNotEmpty(key, "Not allowed to create an ApplicationPreference with an empty key");
+        Assert.hasText(key, "Not allowed to create an ApplicationPreference with an empty key");
         this.key = key;
     }
 

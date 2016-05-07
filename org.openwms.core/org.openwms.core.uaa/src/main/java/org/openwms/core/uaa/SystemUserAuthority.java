@@ -21,19 +21,16 @@
  */
 package org.openwms.core.uaa;
 
-import org.openwms.core.system.usermanagement.SystemUser;
 import org.springframework.security.core.GrantedAuthority;
 
 /**
  * A SystemUserAuthority.
- * 
+ *
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  * @version $Revision: $
  * @since 0.2
  */
 final class SystemUserAuthority implements GrantedAuthority {
-
-    private static final long serialVersionUID = 5465230406957411096L;
 
     /**
      * {@inheritDoc}
@@ -65,7 +62,7 @@ final class SystemUserAuthority implements GrantedAuthority {
 
     /**
      * {@inheritDoc}
-     * 
+     * <p>
      * Return the System User's rolename.
      */
     @Override

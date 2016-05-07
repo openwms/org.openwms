@@ -26,19 +26,14 @@ import javax.persistence.PersistenceContext;
 import java.util.List;
 
 import org.openwms.core.AbstractGenericJpaDao;
-import org.openwms.core.system.usermanagement.Grant;
-import org.openwms.core.system.usermanagement.SecurityObject;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 /**
  * A SecurityDaoImpl is a JPA implementation that is used as a repository to find, delete and save {@link SecurityObject}s. It can be
- * injected by name {@value #COMPONENT_NAME}.
- * <p>
- * All methods have to be invoked within an active transaction context.
- * </p>
- * 
+ * injected by name {@value #COMPONENT_NAME}. <p> All methods have to be invoked within an active transaction context. </p>
+ *
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  * @version $Revision$
  * @since 0.1
@@ -72,7 +67,7 @@ public class SecurityObjectDaoImpl extends AbstractGenericJpaDao<SecurityObject,
     @Override
     public List<Grant> findAllOfModule(String moduleName) {
         return em.createQuery("select g from Grant g where g.name like :moduleName")
-          .setParameter("moduleName", moduleName).getResultList();
+                .setParameter("moduleName", moduleName).getResultList();
     }
 
     /**
@@ -115,5 +110,4 @@ public class SecurityObjectDaoImpl extends AbstractGenericJpaDao<SecurityObject,
     protected String getFindByUniqueIdQuery() {
         return SecurityObject.NQ_FIND_BY_UNIQUE_QUERY;
     }
-
 }
