@@ -134,7 +134,7 @@ public class UserDaoImpl extends AbstractGenericJpaDao<User, Long> implements Us
      */
     @Override
     public User findByNameAndPassword(UserPassword userPassword) {
-        Map<String, String> params = new HashMap<String, String>();
+        Map<String, String> params = new HashMap<>();
         params.put("username", userPassword.getUser().getUsername());
         params.put("password", userPassword.getPassword());
         List<User> users = super.findByNamedParameters(User.NQ_FIND_BY_USERNAME_PASSWORD, params);

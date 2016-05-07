@@ -21,18 +21,17 @@
  */
 package org.openwms.core.uaa;
 
-import org.openwms.core.GenericEntityService;
 import org.openwms.core.configuration.UserPreference;
 
 /**
  * An UserService offers functionality according to the handling with {@link User}s.
  *
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
- * @version $Revision$
+ * @version 0.2
  * @see org.openwms.core.uaa.User
  * @since 0.1
  */
-public interface UserService extends GenericEntityService<User, Long, String> {
+public interface UserService {
 
     /**
      * Change the current {@link User}s password.
@@ -42,7 +41,7 @@ public interface UserService extends GenericEntityService<User, Long, String> {
     void changeUserPassword(UserPassword userPassword);
 
     /**
-     * Attach and save an <tt>image</tt> to an {@link User} with <tt>username</tt>.
+     * Attach and save an {@code image} to an {@link User} with {@code username}.
      *
      * @param username Username of the {@link User}
      * @param image Image to be stored

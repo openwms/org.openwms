@@ -25,8 +25,6 @@ import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
@@ -38,7 +36,6 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.persistence.Transient;
-import javax.persistence.Version;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.io.Serializable;
@@ -48,19 +45,19 @@ import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 
-import org.openwms.core.AbstractEntity;
+import org.ameba.integration.jpa.BaseEntity;
 import org.openwms.core.exception.InvalidPasswordException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.util.Assert;
 
 /**
- * An User represents a human user of the system. Typically an User is assigned to one or more <code>Role</code>s to define security
- * constraints. Users can have their own configuration settings in form of <code>UserPreference</code>s and certain user details,
- * encapsulated in an <code>UserDetails</code> object that tend to be extended by projects.
+ * An User represents a human user of the system. Typically an User is assigned to one or more {@code Roles} to define security
+ * constraints. Users can have their own configuration settings in form of {@code UserPreferences} and certain user details,
+ * encapsulated in an {@code UserDetails} object that tend to be extended by projects.
  *
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
- * @version $Revision$
+ * @version 0.2
  * @GlossaryTerm
  * @see UserDetails
  * @see UserPassword
@@ -70,131 +67,72 @@ import org.springframework.util.Assert;
 @Entity
 @Table(name = "COR_USER")
 @NamedQueries({
-        @NamedQuery(name = User.NQ_FIND_ALL, query = "select u from User u left join fetch u.roles left join fetch u.preferences"),
         @NamedQuery(name = User.NQ_FIND_ALL_ORDERED, query = "select u from User u left join fetch u.roles left join fetch u.preferences order by u.username"),
         @NamedQuery(name = User.NQ_FIND_BY_USERNAME, query = "select u from User u left join fetch u.roles left join fetch u.preferences where u.username = ?1"),
         @NamedQuery(name = User.NQ_FIND_BY_USERNAME_PASSWORD, query = "select u from User u left join fetch u.roles left join fetch u.preferences where u.username = :username and u.persistedPassword = :password")})
-public class User extends AbstractEntity<Long> implements Serializable {
+public class User extends BaseEntity implements Serializable {
 
-    private static final long serialVersionUID = -1116645053773805413L;
     private static final Logger LOGGER = LoggerFactory.getLogger(User.class);
-    /**
-     * Unique technical key.
-     */
-    @Id
-    @Column(name = "C_ID")
-    @GeneratedValue
-    private Long id;
-    /**
-     * Unique identifier of this <code>User</code> (not nullable).
-     */
+    /** Unique identifier of this User (not nullable). */
     @Column(name = "C_USERNAME", unique = true, nullable = false)
     @NotNull
     @Size(min = 1)
     private String username;
-    /**
-     * <code>true</code> if the <code>User</code> is authenticated by an external system, otherwise <code>false</code>.
-     */
+    /** {@code true} if the User is authenticated by an external system, otherwise {@code false}. */
     @Column(name = "C_EXTERN")
     private boolean extern = false;
-    /**
-     * Date of the last password change.
-     */
+    /** Date of the last password change. */
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "C_LAST_PASSWORD_CHANGE")
     private Date lastPasswordChange;
     /**
-     * <code>true</code> if this <code>User</code> is locked and has not the permission to login anymore. This field is set by the backend
-     * application, e.g. when the expirationDate of the account expires.
+     * {@code true} if this User is locked and has not the permission to login anymore. This field is set by the backend application, e.g.
+     * when the expirationDate of the account has expired.
      */
     @Column(name = "C_LOCKED")
     private boolean locked = false;
-    /**
-     * The <code>User</code>'s password.
-     */
+    /** The User's current password (only kept transient). */
     @Transient
     private String password;
-    /**
-     * The <code>User</code>'s password.
-     */
+    /** The User's current password. */
     @Column(name = "C_PASSWORD")
     private String persistedPassword;
-    /**
-     * <code>true</code> if the <code>User</code> is enabled. This field can be managed by the UI application to lock an User manually.
-     */
+    /** {@code true} if the User is enabled. This field can be managed by the UI application to lock an User manually. */
     @Column(name = "C_ENABLED")
     private boolean enabled = true;
-    /**
-     * Date when the account expires. After account expiration, the <code>User</code> cannot login anymore.
-     */
+    /** Date when the account expires. After account expiration, the User cannot login anymore. */
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "C_EXPIRATION_DATE")
     private Date expirationDate;
-    /**
-     * The <code>User</code>s fullname. Doesn't have to be unique.
-     */
+    /** The User's fullname. Doesn't have to be unique. */
     @Column(name = "C_FULLNAME")
     private String fullname;
-    /**
-     * Version field.
-     */
-    @Version
-    @Column(name = "C_VERSION")
-    private long version;
 
     /* ------------------- collection mapping ------------------- */
-    /**
-     * More detail information of the <code>User</code>.
-     */
+    /** More detail information of the User. */
     @Embedded
     private UserDetails userDetails = new UserDetails();
 
     /**
-     * List of {@link Role}s assigned to the <code>User</code>. In a JPA context eager loaded.
+     * List of {@link Role}s assigned to the User. In a JPA context eager loaded.
      *
      * @see javax.persistence.FetchType#EAGER
      */
     @ManyToMany(mappedBy = "users", cascade = {CascadeType.MERGE, CascadeType.REFRESH})
-    private List<Role> roles = new ArrayList<Role>();
+    private List<Role> roles = new ArrayList<>();
 
-    /**
-     * Password history of the <code>User</code>.
-     */
+    /** Password history of the User. */
     @OneToMany(cascade = {CascadeType.MERGE, CascadeType.REMOVE, CascadeType.REFRESH})
     @JoinTable(name = "COR_USER_PASSWORD_JOIN", joinColumns = @JoinColumn(name = "USER_ID"), inverseJoinColumns = @JoinColumn(name = "PASSWORD_ID"))
-    private List<UserPassword> passwords = new ArrayList<UserPassword>();
+    private List<UserPassword> passwords = new ArrayList<>();
 
     /**
-     * Query to find all <code>User</code>s. Name is {@value} .
-     */
-    public static final String NQ_FIND_ALL = "User.findAll";
-
-    /**
-     * Query to find all <code>User</code>s sorted by userName. Name is {@value} .
-     */
-    public static final String NQ_FIND_ALL_ORDERED = "User.findAllOrdered";
-
-    /**
-     * Query to find <strong>one</strong> <code>User</code> by his userName. <li> Query parameter index <strong>1</strong> : The userName of
-     * the <code>User</code> to search for.</li><br /> Name is {@value} .
-     */
-    public static final String NQ_FIND_BY_USERNAME = "User.findByUsername";
-
-    /**
-     * Query to find <strong>one</strong> <code>User</code> by his userName and password. <li>Query parameter name <strong>username</strong>
-     * : The userName of the <code>User</code> to search for.</li> <li>Query parameter name <strong>password</strong> : The current password
-     * of the <code>User</code> to search for.</li><br /> Name is {@value} .
-     */
-    public static final String NQ_FIND_BY_USERNAME_PASSWORD = "User.findByUsernameAndPassword";
-
-    /**
-     * The number of passwords to be stored in the password history. When an <code>User</code> changes the password, the old password is
-     * stored in a Collection. Default: {@value} .
+     * The number of passwords to be stored in the password history. When an User changes the password, the old password is stored in a
+     * Collection. Default: {@value}.
      */
     public static final short NUMBER_STORED_PASSWORDS = 3;
 
     /* ----------------------------- constructors ------------------- */
-
     /**
      * Accessed by persistence provider.
      */
@@ -204,10 +142,10 @@ public class User extends AbstractEntity<Long> implements Serializable {
     }
 
     /**
-     * Create a new <code>User</code> with an username.
+     * Create a new User with an username.
      *
      * @param username The unique name of the user
-     * @throws IllegalArgumentException when username is <code>null</code> or empty
+     * @throws IllegalArgumentException when username is {@literal null} or empty
      */
     public User(String username) {
         super();
@@ -217,11 +155,11 @@ public class User extends AbstractEntity<Long> implements Serializable {
     }
 
     /**
-     * Create a new <code>User</code> with an username.
+     * Create a new User with an username.
      *
      * @param username The unique name of the user
      * @param password The password of the user
-     * @throws IllegalArgumentException when username or password is <code>null</code> or empty
+     * @throws IllegalArgumentException when username or password is {@literal null} or empty
      */
     protected User(String username, String password) {
         super();
@@ -232,23 +170,6 @@ public class User extends AbstractEntity<Long> implements Serializable {
     }
 
     /* ----------------------------- methods ------------------- */
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public Long getId() {
-        return id;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public boolean isNew() {
-        return id == null;
-    }
-
     /**
      * After load, the saved password is copied to the transient one. The transient one can be overridden by the application to force a
      * password change.
@@ -258,12 +179,12 @@ public class User extends AbstractEntity<Long> implements Serializable {
         loadLazy();
     }
 
-    private void loadLazy() {
+    protected void loadLazy() {
         password = persistedPassword;
     }
 
     /**
-     * Return the unique username of the <code>User</code>.
+     * Return the unique username of the User.
      *
      * @return The current username
      */
@@ -272,7 +193,7 @@ public class User extends AbstractEntity<Long> implements Serializable {
     }
 
     /**
-     * Change the username of the <code>User</code>.
+     * Change the username of the User.
      *
      * @param username The new username to set
      */
@@ -281,19 +202,19 @@ public class User extends AbstractEntity<Long> implements Serializable {
     }
 
     /**
-     * Is the <code>User</code> authenticated by an external system?
+     * Is the User authenticated by an external system?
      *
-     * @return <code>true</code> if so, otherwise <code>false</code>
+     * @return {@literal true} if so, otherwise {@literal false}
      */
     public boolean isExternalUser() {
         return extern;
     }
 
     /**
-     * Change the authentication method of the <code>User</code>.
+     * Change the authentication method of the User.
      *
-     * @param externalUser <code>true</code> if the <code>User</code> was authenticated by an external system, otherwise
-     * <code>false</code>.
+     * @param externalUser {@literal true} if the User was authenticated by an external system, otherwise
+     * {@literal false}.
      */
     public void setExternalUser(boolean externalUser) {
         extern = externalUser;
@@ -309,25 +230,25 @@ public class User extends AbstractEntity<Long> implements Serializable {
     }
 
     /**
-     * Check if the <code>User</code> is locked.
+     * Check if the User is locked.
      *
-     * @return <code>true</code> if locked, otherwise <code>false</code>
+     * @return {@literal true} if locked, otherwise {@literal false}
      */
     public boolean isLocked() {
         return locked;
     }
 
     /**
-     * Lock the <code>User</code>.
+     * Lock the User.
      *
-     * @param locked <code>true</code> to lock the <code>User</code>, <code>false</code> to unlock
+     * @param locked {@literal true} to lock the User, {@literal false} to unlock
      */
     public void setLocked(boolean locked) {
         this.locked = locked;
     }
 
     /**
-     * Returns the current password of the <code>User</code>.
+     * Returns the current password of the User.
      *
      * @return The current password as String
      */
@@ -336,9 +257,9 @@ public class User extends AbstractEntity<Long> implements Serializable {
     }
 
     /**
-     * Checks if the new password is a valid and change the password of this <code>User</code>.
+     * Checks if the new password is a valid and change the password of this User.
      *
-     * @param password The new password of this <code>User</code>
+     * @param password The new password of this User
      * @throws InvalidPasswordException in case changing the password is not allowed or the new password is not valid
      */
     public void changePassword(String password) throws InvalidPasswordException {
@@ -360,7 +281,7 @@ public class User extends AbstractEntity<Long> implements Serializable {
     /**
      * Checks whether the password is going to change.
      *
-     * @return <code>true</code> when <code>password</code> is different to the originally persisted one, otherwise <code>false</code>
+     * @return {@literal true} when {@code password} is different to the originally persisted one, otherwise {@literal false}
      */
     public boolean hasPasswordChanged() {
         return (persistedPassword.equals(password));
@@ -370,13 +291,10 @@ public class User extends AbstractEntity<Long> implements Serializable {
      * Check whether the new password is in the history of former passwords.
      *
      * @param pwd The password to verify
-     * @return <code>true</code> if the password is valid, otherwise <code>false</code>
+     * @return {@literal true} if the password is valid, otherwise {@literal false}
      */
     protected boolean isPasswordValid(String pwd) {
-        if (passwords.contains(new UserPassword(this, pwd))) {
-            return false;
-        }
-        return true;
+        return !passwords.contains(new UserPassword(this, pwd));
     }
 
     private void storeOldPassword(String oldPassword) {
@@ -399,18 +317,18 @@ public class User extends AbstractEntity<Long> implements Serializable {
     }
 
     /**
-     * Determines whether the <code>User</code> is enabled or not.
+     * Determines whether the User is enabled or not.
      *
-     * @return <code>true</code> if the <code>User</code> is enabled, otherwise <code>false</code>
+     * @return {@literal true} if the User is enabled, otherwise {@literal false}
      */
     public boolean isEnabled() {
         return enabled;
     }
 
     /**
-     * Enable or disable the <code>User</code>.
+     * Enable or disable the User.
      *
-     * @param enabled <code>true</code> when enabled, otherwise <code>false</code>
+     * @param enabled {@literal true} when enabled, otherwise {@literal false}
      */
     public void setEnabled(boolean enabled) {
         this.enabled = enabled;
@@ -444,12 +362,12 @@ public class User extends AbstractEntity<Long> implements Serializable {
     }
 
     /**
-     * Flatten {@link Role}s and {@link Grant}s and return an unmodifiable list of all {@link Grant}s assigned to this <code>User</code>.
+     * Flatten {@link Role}s and {@link Grant}s and return an unmodifiable list of all {@link Grant}s assigned to this User.
      *
      * @return A list of all {@link Grant}s
      */
     public List<SecurityObject> getGrants() {
-        List<SecurityObject> grants = new ArrayList<SecurityObject>();
+        List<SecurityObject> grants = new ArrayList<>();
         for (Role role : getRoles()) {
             grants.addAll(role.getGrants());
         }
@@ -467,7 +385,7 @@ public class User extends AbstractEntity<Long> implements Serializable {
     }
 
     /**
-     * Set the {@link Role}s of this <code>User</code>. Existing {@link Role}s will be overridden.
+     * Set the {@link Role}s of this User. Existing {@link Role}s will be overridden.
      *
      * @param roles The new list of {@link Role}s
      */
@@ -476,7 +394,7 @@ public class User extends AbstractEntity<Long> implements Serializable {
     }
 
     /**
-     * Return the fullname of the <code>User</code>.
+     * Return the fullname of the User.
      *
      * @return The current fullname
      */
@@ -485,7 +403,7 @@ public class User extends AbstractEntity<Long> implements Serializable {
     }
 
     /**
-     * Change the fullname of the <code>User</code>.
+     * Change the fullname of the User.
      *
      * @param fullname The new fullname to set
      */
@@ -503,7 +421,7 @@ public class User extends AbstractEntity<Long> implements Serializable {
     }
 
     /**
-     * Return the details of the <code>User</code>.
+     * Return the details of the User.
      *
      * @return The userDetails
      */
@@ -512,20 +430,12 @@ public class User extends AbstractEntity<Long> implements Serializable {
     }
 
     /**
-     * Assign some details to the <code>User</code>.
+     * Assign some details to the User.
      *
      * @param userDetails The userDetails to set
      */
     public void setUserDetails(UserDetails userDetails) {
         this.userDetails = userDetails;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public long getVersion() {
-        return version;
     }
 
     /**
@@ -587,8 +497,6 @@ public class User extends AbstractEntity<Long> implements Serializable {
      * @since 0.2
      */
     static class PasswordComparator implements Comparator<UserPassword>, Serializable {
-
-        private static final long serialVersionUID = 1L;
 
         /**
          * {@inheritDoc}

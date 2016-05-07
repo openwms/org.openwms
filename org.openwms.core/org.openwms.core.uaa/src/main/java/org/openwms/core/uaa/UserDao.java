@@ -21,24 +21,29 @@
  */
 package org.openwms.core.uaa;
 
-import org.openwms.core.GenericDao;
+import java.util.Optional;
+
+import org.springframework.data.jpa.repository.JpaRepository;
 
 /**
  * An UserDao offers functionality regarding {@link User} entity classes.
  *
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
- * @version $Revision$
+ * @version 0.2
  * @see org.openwms.core.GenericDao
  * @see org.openwms.core.uaa.User
  * @since 0.1
  */
-public interface UserDao extends GenericDao<User, Long> {
+interface UserDao extends JpaRepository<User, Long> {
+
+    User findByUsername(String username);
 
     /**
-     * Find an {@link User} by his userName and password.
+     * Find an {@link User} by his username and password.
      *
-     * @param userPassword Stores the userName and password.
-     * @return The {@link User} if found, otherwise might be <code>null</code>
+     * @param username The username
+     * @param persistedPassword The password
+     * @return The {@link User}
      */
-    User findByNameAndPassword(UserPassword userPassword);
+    Optional<User> findByUsernameAndPersistedPassword(String username, String persistedPassword);
 }
