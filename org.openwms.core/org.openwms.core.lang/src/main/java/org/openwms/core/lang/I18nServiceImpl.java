@@ -21,71 +21,19 @@
  */
 package org.openwms.core.lang;
 
-import java.util.ArrayList;
-import java.util.Collection;
-
-import org.ameba.exception.NotFoundException;
-import org.openwms.core.AbstractGenericEntityService;
-import org.openwms.core.GenericDao;
-import org.openwms.core.exception.ExceptionCodes;
+import org.ameba.annotation.TxService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 /**
- * An I18nServiceImpl is responsible to load and save i18n translations.
- * 
+ * An I18nServiceImpl is a transactional Spring managed bean that is responsible to load and save i18n translations.
+ *
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
- * @version $Revision$
+ * @version 0.2
  * @since 0.1
  */
-@Transactional
-@Service(I18nServiceImpl.COMPONENT_NAME)
-public class I18nServiceImpl extends AbstractGenericEntityService<I18n, Long, String> implements I18nService {
+@TxService
+class I18nServiceImpl implements I18nService {
 
     @Autowired
     private I18nRepository i18nRepository;
-    /** Springs service name. */
-    public static final String COMPONENT_NAME = "i18nService";
-
-    /**
-     * {@inheritDoc}
-     * 
-     * @throws org.ameba.exception.ServiceLayerException
-     *             if the <tt>translations</tt> argument is <code>null</code>
-     */
-    @Override
-    public Collection<I18n> saveAll(Collection<I18n> translations) {
-        checkForNull(translations, ExceptionCodes.I18N_SAVE_NOT_BE_NULL);
-        Collection<I18n> result = new ArrayList<>(translations.size());
-        for (I18n entity : translations) {
-            if (entity.isNew()) {
-                create(entity);
-            }
-            result.add(save(entity));
-        }
-        return result;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    protected GenericDao<I18n, Long> getRepository() {
-        return i18nRepository;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    protected I18n resolveByBK(I18n entity) {
-        I18n result = null;
-        try {
-            result = i18nRepository.findByUniqueId(entity.getKey());
-        } catch (NotFoundException enfe) {
-            ;
-        }
-        return result;
-    }
 }

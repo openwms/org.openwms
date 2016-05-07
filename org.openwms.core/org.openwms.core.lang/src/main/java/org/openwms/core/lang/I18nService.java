@@ -21,26 +21,12 @@
  */
 package org.openwms.core.lang;
 
-import java.util.Collection;
-
-import org.openwms.core.GenericEntityService;
-
 /**
  * An I18nService is responsible to find and save i18n translations.
  * 
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
- * @version $Revision$
+ * @version 0.2
  * @since 0.1
  */
-public interface I18nService extends GenericEntityService<I18n, Long, String> {
-
-    /**
-     * Save an collection of translation instances, no matter whether transient,
-     * detached or managed entities.
-     * 
-     * @param translations
-     *            An collection of translations to save
-     * @return The updated collection
-     */
-    Collection<I18n> saveAll(Collection<I18n> translations);
+interface I18nService {
 }

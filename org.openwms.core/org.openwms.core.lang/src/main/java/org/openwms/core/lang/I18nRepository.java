@@ -21,15 +21,15 @@
  */
 package org.openwms.core.lang;
 
-import org.openwms.core.GenericDao;
+import org.springframework.data.jpa.repository.JpaRepository;
 
 /**
  * An I18nRepository is used to find and retrieve i18n translations.
  *
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
- * @version $Revision$
+ * @version 0.2
  * @since 0.1
  */
-public interface I18nRepository extends GenericDao<I18n, Long> {
+interface I18nRepository extends JpaRepository<I18n, Long> {
 
 }

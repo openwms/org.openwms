@@ -29,36 +29,27 @@ import java.io.Serializable;
  * An I18nSet encapsulates different languages. Used as an embedded value type in {@link org.openwms.core.lang.I18n}.
  *
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
- * @version $Revision$
+ * @version 0.2
  * @see org.openwms.core.lang.I18n
  * @since 0.1
  */
 @Embeddable
 public class I18nSet implements Serializable {
 
-    private static final long serialVersionUID = 2259073810167027049L;
-    /**
-     * Length of each column.
-     */
+    /** Length of each column. */
     public static final int LENGTH = 1024;
-    /**
-     * American English language.
-     */
+    /** American English language. */
     @Column(name = "C_EN_US", length = LENGTH)
     private String enUs;
-    /**
-     * German language.
-     */
+    /** German language. */
     @Column(name = "C_DE_DE", length = LENGTH)
     private String deDe;
-    /**
-     * French language.
-     */
+    /** French language. */
     @Column(name = "C_FR_FR", length = LENGTH)
     private String frFr;
 
     /**
-     * Create a new I18nSet.
+     * Dear JPA...
      */
     protected I18nSet() {
         super();

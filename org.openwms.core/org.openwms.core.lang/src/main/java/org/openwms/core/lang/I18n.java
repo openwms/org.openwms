@@ -24,17 +24,13 @@ package org.openwms.core.lang;
 import javax.persistence.Column;
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.NamedQueries;
-import javax.persistence.NamedQuery;
 import javax.persistence.PostLoad;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 import javax.persistence.UniqueConstraint;
 import java.io.Serializable;
 
-import org.openwms.core.AbstractEntity;
+import org.ameba.integration.jpa.BaseEntity;
 import org.springframework.util.Assert;
 
 
@@ -42,41 +38,20 @@ import org.springframework.util.Assert;
  * An I18n entity stores multiple translations assigned to an unique key.
  *
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
- * @version $Revision$
+ * @version 0.2
  * @since 0.1
  */
 @Entity
 @Table(name = "COR_I18N", uniqueConstraints = @UniqueConstraint(columnNames = {"C_KEY", "C_MODULE_NAME"}))
-@NamedQueries({
-        @NamedQuery(name = I18n.NQ_FIND_ALL, query = "select i from I18n i order by i.moduleName, i.key"),
-        @NamedQuery(name = I18n.NQ_FIND_BY_UNIQUE_QUERY, query = "select i from I18n i where i.key = :key and i.moduleName = :moduleName")})
-public class I18n extends AbstractEntity<Long> implements Serializable {
+public class I18n extends BaseEntity implements Serializable {
 
-    /**
-     * The unique technical key.
-     */
-    @Column(name = "C_ID")
-    @Id
-    @GeneratedValue
-    private Long id;
-    /**
-     * The natural key is used as references in the application (not nullable).
-     */
+    /** The natural key is used as references in the application (not nullable). */
     @Column(name = "C_KEY", nullable = false)
     private String key;
-    /**
-     * The name of the owning <code>Module</code> to which this translation set belongs to.
-     */
+    /** The name of the owning <code>Module</code> to which this translation set belongs to. */
     @Column(name = "C_MODULE_NAME")
     private String moduleName = "CORE";
-    /**
-     * Version field.
-     */
-    @Column(name = "C_VERSION")
-    private Long version;
-    /**
-     * The translation set of this entity.
-     */
+    /** The translation set of this entity. */
     @Embedded
     private I18nSet lang;
     /**
@@ -88,19 +63,7 @@ public class I18n extends AbstractEntity<Long> implements Serializable {
     private String cKey;
 
     /**
-     * Query to find all <code>I18n</code> entities.
-     */
-    public static final String NQ_FIND_ALL = "I18n.findAll";
-
-    /**
-     * Query to find <strong>one</strong> <code>I18n</code> by <code>moduleName</code> and <code>key</code>.<li>Query parameter name
-     * <strong>moduleName</strong> : The name of the <code>Module</code> where the <code>I18n</code> entity belongs to</li><li>Query
-     * parameter name <strong>key</strong> : The key of the <code>I18n</code> to search for</li>
-     */
-    public static final String NQ_FIND_BY_UNIQUE_QUERY = "I18n.findByKeyModule";
-
-    /**
-     * Create a new I18n.
+     * Dear JPA...
      */
     public I18n() {
         super();
@@ -153,36 +116,6 @@ public class I18n extends AbstractEntity<Long> implements Serializable {
      */
     public String getCKey() {
         return cKey;
-    }
-
-    /**
-     * {@inheritDoc}
-     *
-     * @see org.openwms.core.DomainObject#isNew()
-     */
-    @Override
-    public boolean isNew() {
-        return id == null;
-    }
-
-    /**
-     * {@inheritDoc}
-     *
-     * @see org.openwms.core.DomainObject#getVersion()
-     */
-    @Override
-    public long getVersion() {
-        return version;
-    }
-
-    /**
-     * {@inheritDoc}
-     *
-     * @see org.openwms.core.DomainObject#getId()
-     */
-    @Override
-    public Long getId() {
-        return id;
     }
 
     /**
