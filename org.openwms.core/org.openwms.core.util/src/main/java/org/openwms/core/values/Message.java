@@ -19,7 +19,7 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
-package org.openwms.core.system;
+package org.openwms.core.values;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -32,7 +32,7 @@ import javax.persistence.Version;
 import java.io.Serializable;
 import java.util.Date;
 
-import org.openwms.core.domain.AbstractEntity;
+import org.openwms.core.AbstractEntity;
 
 /**
  * A Message can be used to store useful information on other domain objects.

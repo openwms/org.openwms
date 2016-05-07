@@ -19,7 +19,7 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
-package org.openwms.core.service.spring;
+package org.openwms.core.uaa;
 
 import java.util.Collection;
 import java.util.HashSet;
@@ -27,9 +27,6 @@ import java.util.Set;
 
 import org.junit.Assert;
 import org.junit.Test;
-import org.openwms.core.idendity.UserWrapper;
-import org.openwms.core.system.usermanagement.Grant;
-import org.openwms.core.system.usermanagement.Role;
 import org.openwms.core.system.usermanagement.User;
 import org.springframework.security.core.GrantedAuthority;
 

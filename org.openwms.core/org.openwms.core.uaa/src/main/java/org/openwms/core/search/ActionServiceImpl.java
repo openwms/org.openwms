@@ -19,7 +19,7 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
-package org.openwms.core.uaa.search;
+package org.openwms.core.search;
 
 import java.io.Serializable;
 import java.util.Collection;
@@ -29,8 +29,8 @@ import java.util.Set;
 import org.openwms.core.domain.preferences.ConfigurationService;
 import org.openwms.core.system.PreferenceKey;
 import org.openwms.core.system.PropertyScope;
-import org.openwms.core.system.usermanagement.User;
 import org.openwms.core.system.usermanagement.UserPreference;
+import org.openwms.core.uaa.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

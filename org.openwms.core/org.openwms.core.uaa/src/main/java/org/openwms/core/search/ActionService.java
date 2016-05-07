@@ -19,9 +19,11 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
-package org.openwms.core.uaa.search;
+package org.openwms.core.search;
 
 import java.util.Collection;
+
+import org.openwms.core.uaa.User;
 
 /**
  * An ActionService is used to query Actions of a particular User or the whole application.

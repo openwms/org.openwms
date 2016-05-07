@@ -27,8 +27,8 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
+import org.openwms.core.AbstractEntity;
 import org.openwms.core.GenericDao;
-import org.openwms.core.domain.AbstractEntity;
 
 /**
  * A ServiceHelper centralizes common used utility methods to convert and deal

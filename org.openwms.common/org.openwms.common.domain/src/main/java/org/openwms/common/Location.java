@@ -45,7 +45,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 import org.openwms.common.types.Target;
-import org.openwms.core.system.Message;
+import org.openwms.core.values.Message;
 
 /**
  * A Location, represents some physical as well as virtual place in a warehouse.

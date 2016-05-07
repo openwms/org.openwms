@@ -28,6 +28,7 @@ import java.util.List;
 
 import org.ameba.exception.NotFoundException;
 import org.ameba.exception.ServiceLayerException;
+import org.openwms.core.exception.ExceptionCodes;
 import org.openwms.core.exception.IntegrationRuntimeException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;

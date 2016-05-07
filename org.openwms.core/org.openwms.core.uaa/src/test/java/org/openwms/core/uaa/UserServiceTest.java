@@ -19,9 +19,12 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
-package org.openwms.core.service.spring;
+package org.openwms.core.uaa;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
 
 import javax.persistence.NoResultException;
 import java.util.List;
@@ -33,11 +36,6 @@ import org.junit.Before;
 import org.junit.Test;
 import org.openwms.core.ExceptionCodes;
 import org.openwms.core.exception.InvalidPasswordException;
-import org.openwms.core.idendity.UserService;
-import org.openwms.core.idendity.api.UserServiceImpl;
-import org.openwms.core.system.usermanagement.SystemUser;
-import org.openwms.core.system.usermanagement.User;
-import org.openwms.core.system.usermanagement.UserPassword;
 import org.openwms.core.system.usermanagement.UserPreference;
 import org.openwms.core.test.AbstractJpaSpringContextTests;
 import org.springframework.beans.factory.annotation.Autowired;

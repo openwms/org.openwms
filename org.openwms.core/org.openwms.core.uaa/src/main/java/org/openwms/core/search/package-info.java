@@ -22,4 +22,4 @@
 /**
  * Spring service implementations of the action search feature.
  */
-package org.openwms.core.uaa.search;
+package org.openwms.core.search;

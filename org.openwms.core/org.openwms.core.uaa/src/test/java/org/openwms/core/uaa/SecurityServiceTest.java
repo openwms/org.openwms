@@ -19,13 +19,18 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
-package org.openwms.core.service.spring;
+package org.openwms.core.uaa;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
 import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.anyObject;
 import static org.mockito.Matchers.anyString;
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.never;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -38,11 +43,6 @@ import org.junit.Before;
 import org.junit.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.openwms.core.RoleDao;
-import org.openwms.core.SecurityObjectDao;
-import org.openwms.core.SecurityServiceImpl;
-import org.openwms.core.system.usermanagement.Grant;
-import org.openwms.core.system.usermanagement.SecurityObject;
 import org.openwms.core.test.AbstractMockitoTests;
 import org.springframework.context.MessageSource;
 
@@ -98,7 +98,7 @@ public class SecurityServiceTest extends AbstractMockitoTests {
 
     /**
      * Test method for
-     * {@link org.openwms.core.SecurityServiceImpl#login()}.
+     * {@link org.openwms.core.uaa.SecurityServiceImpl#login()}.
      */
     @Test
     public final void testLogin() {
@@ -107,7 +107,7 @@ public class SecurityServiceTest extends AbstractMockitoTests {
 
     /**
      * Test method for
-     * {@link org.openwms.core.SecurityServiceImpl#mergeGrants(java.lang.String, java.util.List)}
+     * {@link org.openwms.core.uaa.SecurityServiceImpl#mergeGrants(java.lang.String, java.util.List)}
      * .
      */
     @Test(expected = ServiceLayerException.class)
@@ -118,7 +118,7 @@ public class SecurityServiceTest extends AbstractMockitoTests {
 
     /**
      * Test method for
-     * {@link org.openwms.core.SecurityServiceImpl#mergeGrants(java.lang.String, java.util.List)}
+     * {@link org.openwms.core.uaa.SecurityServiceImpl#mergeGrants(java.lang.String, java.util.List)}
      * .
      * 
      * Add a new Grant.
@@ -151,7 +151,7 @@ public class SecurityServiceTest extends AbstractMockitoTests {
 
     /**
      * Test method for
-     * {@link org.openwms.core.SecurityServiceImpl#mergeGrants(java.lang.String, java.util.List)}
+     * {@link org.openwms.core.uaa.SecurityServiceImpl#mergeGrants(java.lang.String, java.util.List)}
      * .
      * 
      * Merge existing Grants.

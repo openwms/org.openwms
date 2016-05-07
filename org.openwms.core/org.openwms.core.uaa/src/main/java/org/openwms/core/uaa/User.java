@@ -48,7 +48,7 @@ import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 
-import org.openwms.core.domain.AbstractEntity;
+import org.openwms.core.AbstractEntity;
 import org.openwms.core.exception.InvalidPasswordException;
 import org.openwms.core.validation.AssertUtils;
 import org.slf4j.Logger;
@@ -64,7 +64,7 @@ import org.slf4j.LoggerFactory;
  * @GlossaryTerm
  * @see UserDetails
  * @see UserPassword
- * @see org.openwms.core.system.usermanagement.Role
+ * @see org.openwms.core.uaa.Role
  * @since 0.1
  */
 @Entity

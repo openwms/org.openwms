@@ -19,9 +19,9 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
-package org.openwms.core.service.spring;
+package org.openwms.core.search;
 
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.when;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -32,9 +32,6 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.openwms.core.domain.preferences.ConfigurationService;
 import org.openwms.core.domain.preferences.ConfigurationServiceImpl;
-import org.openwms.core.search.Action;
-import org.openwms.core.search.ActionServiceImpl;
-import org.openwms.core.search.Tag;
 import org.openwms.core.system.usermanagement.SystemUser;
 import org.openwms.core.system.usermanagement.User;
 import org.openwms.core.system.usermanagement.UserPreference;

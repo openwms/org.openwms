@@ -19,15 +19,10 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
-package org.openwms.core.security;
+package org.openwms.core.uaa;
 
 import net.sf.ehcache.Ehcache;
 import org.openwms.core.event.UserChangedEvent;
-import org.openwms.core.idendity.SystemUserWrapper;
-import org.openwms.core.idendity.UserService;
-import org.openwms.core.idendity.UserWrapper;
-import org.openwms.core.system.usermanagement.SystemUser;
-import org.openwms.core.system.usermanagement.User;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;

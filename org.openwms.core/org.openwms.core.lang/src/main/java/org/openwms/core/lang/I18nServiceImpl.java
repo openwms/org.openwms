@@ -25,8 +25,9 @@ import java.util.ArrayList;
 import java.util.Collection;
 
 import org.ameba.exception.NotFoundException;
+import org.openwms.core.AbstractGenericEntityService;
+import org.openwms.core.GenericDao;
 import org.openwms.core.exception.ExceptionCodes;
-import org.openwms.core.system.I18n;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

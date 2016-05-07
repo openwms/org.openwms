@@ -32,7 +32,7 @@
 
         <class>org.openwms.core.configuration.AbstractPreference</class>
         <class>org.openwms.core.lang.I18n</class>
-        <class>org.openwms.core.system.Message</class>
+        <class>org.openwms.core.values.Message</class>
         
         <class>org.openwms.core.system.usermanagement.Email</class>
         <class>org.openwms.core.system.usermanagement.Grant</class>

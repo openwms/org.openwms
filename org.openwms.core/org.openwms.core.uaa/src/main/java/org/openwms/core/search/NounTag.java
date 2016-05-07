@@ -19,10 +19,40 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
-/**
- * Contains essential domain classes that belong to the CORE Module. JAXB classes are assign to the schema http://www.openwms.org/schema/preferences
- */
-@javax.xml.bind.annotation.XmlAccessorType(javax.xml.bind.annotation.XmlAccessType.FIELD)
-@javax.xml.bind.annotation.XmlSchema(namespace = "http//www.openwms.org/schema/preferences")
-package org.openwms.core.system;
+package org.openwms.core.search;
 
+import java.io.Serializable;
+
+/**
+ * A NounTag represents a noun.
+ * 
+ * @GlossaryTerm
+ * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
+ * @version $Revision$
+ * @since 0.2
+ */
+public class NounTag extends Tag implements Serializable {
+
+    private static final long serialVersionUID = -3760619386394202171L;
+
+    /* ----------------------------- constructors ------------------- */
+    /**
+     * Create a new NounTag.
+     * 
+     */
+    public NounTag() {
+        super();
+    }
+
+    /**
+     * Create a new NounTag.
+     * 
+     * @param name
+     *            The name of this Tag
+     */
+    public NounTag(String name) {
+        super(name);
+    }
+
+    /* ----------------------------- methods ------------------- */
+}
