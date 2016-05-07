@@ -27,7 +27,6 @@ import java.util.Set;
 
 import org.junit.Assert;
 import org.junit.Test;
-import org.openwms.core.system.usermanagement.User;
 import org.springframework.security.core.GrantedAuthority;
 
 /**

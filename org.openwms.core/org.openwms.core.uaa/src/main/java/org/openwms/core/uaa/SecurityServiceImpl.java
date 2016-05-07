@@ -29,8 +29,7 @@ import org.openwms.core.AbstractGenericEntityService;
 import org.openwms.core.GenericDao;
 import org.openwms.core.annotation.FireAfterTransaction;
 import org.openwms.core.event.UserChangedEvent;
-import org.openwms.core.system.usermanagement.Grant;
-import org.openwms.core.system.usermanagement.SecurityObject;
+import org.openwms.core.exception.ExceptionCodes;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,7 +38,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 /**
  * A SecurityServiceImpl is a transactional Spring Service implementation.
- * 
+ *
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  * @version $Revision$
  * @since 0.1
@@ -60,10 +59,9 @@ public class SecurityServiceImpl extends AbstractGenericEntityService<SecurityOb
 
     /**
      * {@inheritDoc}
-     * 
-     * Marked as <code>readOnly</code> transactional method. Only a trace
-     * message is written. This method is solely responsible to activate the
-     * security filter chain.
+     * <p>
+     * Marked as <code>readOnly</code> transactional method. Only a trace message is written. This method is solely responsible to activate
+     * the security filter chain.
      */
     @Override
     @Transactional(readOnly = true)
@@ -73,11 +71,11 @@ public class SecurityServiceImpl extends AbstractGenericEntityService<SecurityOb
 
     /**
      * {@inheritDoc}
-     * 
+     * <p>
      * Triggers <tt>UserChangedEvent</tt> after completion.
      */
     @Override
-    @FireAfterTransaction(events = { UserChangedEvent.class })
+    @FireAfterTransaction(events = {UserChangedEvent.class})
     public List<Grant> mergeGrants(String moduleName, List<Grant> grants) {
         checkForNull(moduleName, translate(ExceptionCodes.MODULENAME_NOT_NULL));
         if (LOGGER.isDebugEnabled()) {

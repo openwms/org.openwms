@@ -22,25 +22,22 @@
 package org.openwms.core.uaa;
 
 import org.openwms.core.GenericDao;
-import org.openwms.core.system.usermanagement.User;
-import org.openwms.core.system.usermanagement.UserPassword;
 
 /**
  * An UserDao offers functionality regarding {@link User} entity classes.
- * 
+ *
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  * @version $Revision$
+ * @see org.openwms.core.GenericDao
+ * @see org.openwms.core.uaa.User
  * @since 0.1
- * @see org.openwms.core.integration.GenericDao
- * @see org.openwms.core.system.usermanagement.User
  */
 public interface UserDao extends GenericDao<User, Long> {
 
     /**
      * Find an {@link User} by his userName and password.
-     * 
-     * @param userPassword
-     *            Stores the userName and password.
+     *
+     * @param userPassword Stores the userName and password.
      * @return The {@link User} if found, otherwise might be <code>null</code>
      */
     User findByNameAndPassword(UserPassword userPassword);

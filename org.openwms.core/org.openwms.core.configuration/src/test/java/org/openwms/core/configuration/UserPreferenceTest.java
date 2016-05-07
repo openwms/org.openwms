@@ -19,7 +19,7 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
-package org.openwms.core.domain.preferences;
+package org.openwms.core.configuration;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -27,13 +27,12 @@ import javax.persistence.PersistenceContext;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-import org.openwms.core.configuration.UserPreference;
 import org.openwms.core.system.usermanagement.User;
 import org.openwms.core.test.AbstractJpaSpringContextTests;
 
 /**
  * An UserPreferenceTest.
- * 
+ *
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  * @version $Revision$
  * @since 0.1
@@ -63,34 +62,38 @@ public class UserPreferenceTest extends AbstractJpaSpringContextTests {
         try {
             new UserPreference(null, null);
             Assert.fail("Must fail when trying to create an UserPreference with owner and key set to NULL");
-        } catch (IllegalArgumentException iae) {}
+        } catch (IllegalArgumentException iae) {
+        }
         try {
             new UserPreference("test", null);
             Assert.fail("Must fail when trying to create an UserPreference with key is NULL");
-        } catch (IllegalArgumentException iae) {}
+        } catch (IllegalArgumentException iae) {
+        }
         try {
             new UserPreference(null, "test");
             Assert.fail("Must fail when trying to create an UserPreference with owner is NULL");
-        } catch (IllegalArgumentException iae) {}
+        } catch (IllegalArgumentException iae) {
+        }
         try {
             new UserPreference("test", "");
             Assert.fail("Must fail when trying to create an UserPreference with an empty key");
-        } catch (IllegalArgumentException iae) {}
+        } catch (IllegalArgumentException iae) {
+        }
         try {
             new UserPreference("", "test");
             Assert.fail("Must fail when trying to create an UserPreference with owner is NULL");
-        } catch (IllegalArgumentException iae) {}
+        } catch (IllegalArgumentException iae) {
+        }
     }
 
     /**
      * Resolve the persisted User and test whether the UserPreference can be resolved from the User instance.
-    @Test
-    public final void testUserRelationship() {
-        User user = (User) em.createNamedQuery(User.NQ_FIND_BY_USERNAME).setParameter(1, KNOWN_USER).getSingleResult();
-        Assert.assertNotNull("Expected that the UserPreferences of the fetched User is not null", user.getPreferences());
-        Assert.assertTrue("Expected that the UserPreferences was fetched with the User object", user.getPreferences()
-                .size() == 1);
-        Assert.assertTrue(user.getPreferences().contains(new UserPreference(KNOWN_USER, "testKey")));
-    }
+     @Test public final void testUserRelationship() {
+     User user = (User) em.createNamedQuery(User.NQ_FIND_BY_USERNAME).setParameter(1, KNOWN_USER).getSingleResult();
+     Assert.assertNotNull("Expected that the UserPreferences of the fetched User is not null", user.getPreferences());
+     Assert.assertTrue("Expected that the UserPreferences was fetched with the User object", user.getPreferences()
+     .size() == 1);
+     Assert.assertTrue(user.getPreferences().contains(new UserPreference(KNOWN_USER, "testKey")));
+     }
      */
 }

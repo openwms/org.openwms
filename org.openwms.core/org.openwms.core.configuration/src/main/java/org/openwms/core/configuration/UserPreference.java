@@ -34,28 +34,26 @@ import javax.xml.bind.annotation.XmlTransient;
 import javax.xml.bind.annotation.XmlType;
 import java.io.Serializable;
 
-import org.openwms.core.system.AbstractPreference;
 import org.openwms.core.validation.AssertUtils;
 
 /**
  * An UserPreference is used to store settings specific to an <code>User</code>. It is always assigned to a particular <code>User</code> and
  * not accessible from, nor valid for, other <code>User</code>s. UserPreferences cannot be overruled by any other type of
  * <code>Preferences</code>.
- * 
- * @GlossaryTerm
+ *
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  * @version $Revision$
+ * @GlossaryTerm
  * @since 0.1
  */
 @XmlType(name = "userPreference", namespace = "http://www.openwms.org/schema/usermanagement")
 @Entity
-@Table(name = "COR_USER_PREFERENCE", uniqueConstraints = @UniqueConstraint(columnNames = { "C_TYPE", "C_OWNER", "C_KEY" }))
+@Table(name = "COR_USER_PREFERENCE", uniqueConstraints = @UniqueConstraint(columnNames = {"C_TYPE", "C_OWNER", "C_KEY"}))
 @NamedQueries({
         @NamedQuery(name = UserPreference.NQ_FIND_ALL, query = "select up from UserPreference up"),
-        @NamedQuery(name = UserPreference.NQ_FIND_BY_OWNER, query = "select up from UserPreference up where up.owner = :owner") })
+        @NamedQuery(name = UserPreference.NQ_FIND_BY_OWNER, query = "select up from UserPreference up where up.owner = :owner")})
 public class UserPreference extends AbstractPreference implements Serializable {
 
-    private static final long serialVersionUID = -6569559231034802554L;
     /**
      * Type of this preference.
      */
@@ -83,8 +81,7 @@ public class UserPreference extends AbstractPreference implements Serializable {
     public static final String NQ_FIND_ALL = "UserPreference" + FIND_ALL;
     /**
      * Query to find <strong>all</strong> <code>UserPreference</code>s of an <code>User</code>. <li>Query parameter name
-     * <strong>owner</strong> : The userName of the <code>User</code> to search for.</li><br />
-     * Name is {@value} .
+     * <strong>owner</strong> : The userName of the <code>User</code> to search for.</li><br /> Name is {@value} .
      */
     public static final String NQ_FIND_BY_OWNER = "UserPreference" + FIND_BY_OWNER;
 
@@ -97,13 +94,10 @@ public class UserPreference extends AbstractPreference implements Serializable {
 
     /**
      * Create a new UserPreference.
-     * 
-     * @param owner
-     *            The User's username is set as owner of this preference
-     * @param key
-     *            The key of this preference
-     * @throws IllegalArgumentException
-     *             when owner or key is <code>null</code> or empty
+     *
+     * @param owner The User's username is set as owner of this preference
+     * @param key The key of this preference
+     * @throws IllegalArgumentException when owner or key is <code>null</code> or empty
      */
     public UserPreference(String owner, String key) {
         // Called from the client-side only.
@@ -116,7 +110,7 @@ public class UserPreference extends AbstractPreference implements Serializable {
 
     /**
      * Get the owner.
-     * 
+     *
      * @return the owner.
      */
     public String getOwner() {
@@ -125,7 +119,7 @@ public class UserPreference extends AbstractPreference implements Serializable {
 
     /**
      * Get the key.
-     * 
+     *
      * @return the key.
      */
     public String getKey() {
@@ -134,8 +128,8 @@ public class UserPreference extends AbstractPreference implements Serializable {
 
     /**
      * {@inheritDoc}
-     * 
-     * @see org.openwms.core.system.AbstractPreference#getType()
+     *
+     * @see org.openwms.core.configuration.AbstractPreference#getType()
      */
     @Override
     public PropertyScope getType() {
@@ -144,18 +138,18 @@ public class UserPreference extends AbstractPreference implements Serializable {
 
     /**
      * {@inheritDoc}
-     * 
-     * @see org.openwms.core.system.AbstractPreference#getFields()
+     *
+     * @see org.openwms.core.configuration.AbstractPreference#getFields()
      */
     @Override
     protected Object[] getFields() {
-        return new Object[] { getType(), getOwner(), getKey() };
+        return new Object[]{getType(), getOwner(), getKey()};
     }
 
     /**
      * {@inheritDoc}
-     * 
-     * @see org.openwms.core.system.AbstractPreference#getPrefKey()
+     *
+     * @see org.openwms.core.configuration.AbstractPreference#getPrefKey()
      */
     @Override
     public PreferenceKey getPrefKey() {
@@ -164,9 +158,9 @@ public class UserPreference extends AbstractPreference implements Serializable {
 
     /**
      * {@inheritDoc}
-     * 
+     * <p>
      * Uses key, owner and type for hashCode calculation.
-     * 
+     *
      * @see java.lang.Object#hashCode()
      */
     @Override
@@ -181,9 +175,9 @@ public class UserPreference extends AbstractPreference implements Serializable {
 
     /**
      * {@inheritDoc}
-     * 
+     * <p>
      * Comparison done with key, owner and type fields. Not delegated to super class.
-     * 
+     *
      * @see java.lang.Object#equals(java.lang.Object)
      */
     @Override

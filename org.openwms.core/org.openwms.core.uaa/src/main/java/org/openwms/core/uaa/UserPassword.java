@@ -32,21 +32,19 @@ import javax.persistence.Version;
 import java.io.Serializable;
 import java.util.Date;
 
-import org.openwms.core.domain.AbstractEntity;
+import org.openwms.core.AbstractEntity;
 import org.openwms.core.validation.AssertUtils;
 
 /**
- * Is a representation of an <code>User</code> together with her password.
- * <p>
- * When an <code>User</code> changes her password, the current password is added to a history list of passwords. This is necessary to omit
- * <code>User</code>s from setting formerly used passwords.
+ * Is a representation of an <code>User</code> together with her password. <p> When an <code>User</code> changes her password, the current
+ * password is added to a history list of passwords. This is necessary to omit <code>User</code>s from setting formerly used passwords.
  * </p>
- * 
- * @GlossaryTerm
+ *
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  * @version $Revision$
+ * @GlossaryTerm
+ * @see org.openwms.core.uaa.User
  * @since 0.1
- * @see org.openwms.core.system.usermanagement.User
  */
 @Entity
 @Table(name = "COR_USER_PASSWORD")
@@ -84,15 +82,13 @@ public class UserPassword extends AbstractEntity<Long> implements Serializable {
     private long version;
 
     /* ----------------------------- methods ------------------- */
+
     /**
      * Create a new <code>UserPassword</code>.
-     * 
-     * @param user
-     *            The {@link User} to assign
-     * @param password
-     *            The <code>password</code> as String to assign
-     * @throws IllegalArgumentException
-     *             when <code>user</code> or <code>password</code> is <code>null</code> or empty
+     *
+     * @param user The {@link User} to assign
+     * @param password The <code>password</code> as String to assign
+     * @throws IllegalArgumentException when <code>user</code> or <code>password</code> is <code>null</code> or empty
      */
     public UserPassword(User user, String password) {
         AssertUtils.notNull(user, "User must not be null");
@@ -118,7 +114,7 @@ public class UserPassword extends AbstractEntity<Long> implements Serializable {
 
     /**
      * Return the {@link User} of this password.
-     * 
+     *
      * @return The {@link User} of this password
      */
     public User getUser() {
@@ -127,9 +123,8 @@ public class UserPassword extends AbstractEntity<Long> implements Serializable {
 
     /**
      * Change the {@link User}.
-     * 
-     * @param user
-     *            The new {@link User}
+     *
+     * @param user The new {@link User}
      */
     public void setUser(User user) {
         this.user = user;
@@ -137,7 +132,7 @@ public class UserPassword extends AbstractEntity<Long> implements Serializable {
 
     /**
      * Return the current password.
-     * 
+     *
      * @return The current password
      */
     public String getPassword() {
@@ -146,7 +141,7 @@ public class UserPassword extends AbstractEntity<Long> implements Serializable {
 
     /**
      * Return the date of the last password change.
-     * 
+     *
      * @return The date when the password has changed
      */
     public Date getPasswordChanged() {
@@ -171,7 +166,7 @@ public class UserPassword extends AbstractEntity<Long> implements Serializable {
 
     /**
      * {@inheritDoc}
-     * 
+     * <p>
      * Does not call the superclass. Uses the password and user for calculation.
      */
     @Override
@@ -184,9 +179,8 @@ public class UserPassword extends AbstractEntity<Long> implements Serializable {
     }
 
     /**
-     * 
      * {@inheritDoc}
-     * 
+     * <p>
      * Comparison is done with the business-key (user and password). {@link AbstractEntity#equals(Object)} is not called to avoid comparison
      * with the UUID.
      */

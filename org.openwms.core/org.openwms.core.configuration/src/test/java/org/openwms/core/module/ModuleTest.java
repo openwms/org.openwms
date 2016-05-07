@@ -19,14 +19,13 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
-package org.openwms.core.domain;
+package org.openwms.core.module;
 
 import javax.persistence.PersistenceException;
 import java.util.Comparator;
 
 import org.junit.Assert;
 import org.junit.Test;
-import org.openwms.core.Module;
 import org.openwms.core.test.AbstractJpaSpringContextTests;
 
 /**

@@ -30,7 +30,7 @@ import javax.persistence.UniqueConstraint;
 import javax.persistence.Version;
 import java.io.Serializable;
 
-import org.openwms.core.domain.AbstractEntity;
+import org.openwms.core.AbstractEntity;
 import org.openwms.core.validation.AssertUtils;
 
 /**

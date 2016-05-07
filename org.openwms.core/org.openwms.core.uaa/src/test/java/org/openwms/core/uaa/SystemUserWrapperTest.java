@@ -26,7 +26,6 @@ import java.util.Set;
 
 import org.junit.Assert;
 import org.junit.Test;
-import org.openwms.core.system.usermanagement.User;
 
 /**
  * A SystemUserWrapperTest.
@@ -138,7 +137,7 @@ public class SystemUserWrapperTest {
 
     /**
      * Test method for
-     * {@link SystemUserWrapper#SystemUserWrapper(org.openwms.core.system.usermanagement.User)}
+     * {@link SystemUserWrapper#SystemUserWrapper(org.openwms.core.uaa.User)}
      * .
      */
     @Test(expected = IllegalArgumentException.class)

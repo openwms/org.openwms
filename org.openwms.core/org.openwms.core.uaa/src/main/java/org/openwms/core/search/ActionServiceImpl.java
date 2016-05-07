@@ -21,15 +21,10 @@
  */
 package org.openwms.core.search;
 
-import java.io.Serializable;
 import java.util.Collection;
 import java.util.HashSet;
-import java.util.Set;
 
-import org.openwms.core.domain.preferences.ConfigurationService;
-import org.openwms.core.system.PreferenceKey;
-import org.openwms.core.system.PropertyScope;
-import org.openwms.core.system.usermanagement.UserPreference;
+import org.openwms.core.configuration.ConfigurationService;
 import org.openwms.core.uaa.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -75,6 +70,7 @@ public class ActionServiceImpl implements ActionService {
     @Override
     @SuppressWarnings("unchecked")
     public Collection<Action> findAllActions(User user) {
+        /*
         Collection<UserPreference> userPrefs = confSrv.findByType(UserPreference.class, user.getUsername());
         PreferenceKey pKey = new PreferenceKey(PropertyScope.USER, user.getUsername(), "lastSearchActions");
         for (UserPreference pref : userPrefs) {
@@ -82,6 +78,7 @@ public class ActionServiceImpl implements ActionService {
                 return (Collection<Action>) pref.getBinValue();
             }
         }
+        */
         return new HashSet<Action>(0);
     }
 
@@ -99,6 +96,7 @@ public class ActionServiceImpl implements ActionService {
     @SuppressWarnings("unchecked")
     @Override
     public Collection<Action> save(User user, Collection<Action> actions) {
+        /*
         Collection<UserPreference> userPrefs = confSrv.findByType(UserPreference.class, user.getUsername());
         PreferenceKey pKey = new PreferenceKey(PropertyScope.USER, user.getUsername(), "lastSearchActions");
         UserPreference result = null;
@@ -119,5 +117,7 @@ public class ActionServiceImpl implements ActionService {
         }
         result = confSrv.save(result);
         return (Collection<Action>) result.getBinValue();
+        */
+        return null;
     }
 }

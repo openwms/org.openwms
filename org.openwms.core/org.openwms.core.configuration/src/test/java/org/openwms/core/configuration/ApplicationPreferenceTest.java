@@ -19,7 +19,7 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
-package org.openwms.core.domain.preferences;
+package org.openwms.core.configuration;
 
 import javax.xml.XMLConstants;
 import javax.xml.bind.JAXBContext;
@@ -35,15 +35,13 @@ import java.util.Set;
 
 import org.junit.Assert;
 import org.junit.Test;
-import org.openwms.core.system.AbstractPreference;
-import org.openwms.core.system.PreferenceKey;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.util.ResourceUtils;
 
 /**
  * A ApplicationPreferenceTest. Test unmarshalling a valid XML document of preferences.
- * 
+ *
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  * @version $Revision$
  * @since 0.1
@@ -72,11 +70,13 @@ public class ApplicationPreferenceTest {
         try {
             new ApplicationPreference(null);
             Assert.fail("IAE expected when creating ApplicationPreference(String) with key equals to null");
-        } catch (IllegalArgumentException iae) {}
+        } catch (IllegalArgumentException iae) {
+        }
         try {
             new ApplicationPreference("");
             Assert.fail("IAE expected when creating ApplicationPreference(String) with empty key");
-        } catch (IllegalArgumentException iae) {}
+        } catch (IllegalArgumentException iae) {
+        }
     }
 
     /**
@@ -111,9 +111,8 @@ public class ApplicationPreferenceTest {
     /**
      * Just test to validate the given XML file against the schema declaration. If the XML file is not compliant with the schema, the test
      * will fail.
-     * 
-     * @throws Throwable
-     *             any error
+     *
+     * @throws Throwable any error
      */
     @Test
     public void testReadPreferences() throws Throwable {

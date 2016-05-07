@@ -22,64 +22,54 @@
 package org.openwms.core.uaa;
 
 import org.openwms.core.GenericEntityService;
-import org.openwms.core.system.usermanagement.SystemUser;
-import org.openwms.core.system.usermanagement.User;
-import org.openwms.core.system.usermanagement.UserPassword;
-import org.openwms.core.system.usermanagement.UserPreference;
+import org.openwms.core.configuration.UserPreference;
 
 /**
  * An UserService offers functionality according to the handling with {@link User}s.
- * 
+ *
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  * @version $Revision$
+ * @see org.openwms.core.uaa.User
  * @since 0.1
- * @see org.openwms.core.system.usermanagement.User
  */
 public interface UserService extends GenericEntityService<User, Long, String> {
 
     /**
      * Change the current {@link User}s password.
-     * 
-     * @param userPassword
-     *            The {@link UserPassword} to change
+     *
+     * @param userPassword The {@link UserPassword} to change
      */
     void changeUserPassword(UserPassword userPassword);
 
     /**
      * Attach and save an <tt>image</tt> to an {@link User} with <tt>username</tt>.
-     * 
-     * @param username
-     *            Username of the {@link User}
-     * @param image
-     *            Image to be stored
+     *
+     * @param username Username of the {@link User}
+     * @param image Image to be stored
      */
     void uploadImageFile(String username, byte[] image);
 
     /**
      * Return a transient {@link User} entity object, serving as a template.
-     * 
-     * @param username
-     *            Username of the {@link User}
+     *
+     * @param username Username of the {@link User}
      * @return An empty {@link User} template
      */
     User getTemplate(String username);
 
     /**
      * Save changes on an {@link User} and additionally save the User's password and preferences.
-     * 
-     * @param user
-     *            The {@link User} to change
-     * @param userPassword
-     *            The {@link User}s password
-     * @param prefs
-     *            An array of {@link UserPreference} objects
+     *
+     * @param user The {@link User} to change
+     * @param userPassword The {@link User}s password
+     * @param prefs An array of {@link UserPreference} objects
      * @return The saved {@link User} instance
      */
     User saveUserProfile(User user, UserPassword userPassword, UserPreference... prefs);
 
     /**
      * Create and return the {@link SystemUser} without persisting this user.
-     * 
+     *
      * @return the {@link SystemUser} instance
      */
     SystemUser createSystemUser();

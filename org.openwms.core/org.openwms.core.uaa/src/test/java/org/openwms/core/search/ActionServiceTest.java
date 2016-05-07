@@ -30,12 +30,11 @@ import org.junit.Assert;
 import org.junit.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.openwms.core.domain.preferences.ConfigurationService;
-import org.openwms.core.domain.preferences.ConfigurationServiceImpl;
-import org.openwms.core.system.usermanagement.SystemUser;
-import org.openwms.core.system.usermanagement.User;
-import org.openwms.core.system.usermanagement.UserPreference;
+import org.openwms.core.configuration.ConfigurationService;
+import org.openwms.core.configuration.UserPreference;
 import org.openwms.core.test.AbstractMockitoTests;
+import org.openwms.core.uaa.SystemUser;
+import org.openwms.core.uaa.User;
 
 /**
  * A ActionServiceTest.
@@ -46,7 +45,7 @@ import org.openwms.core.test.AbstractMockitoTests;
  */
 public class ActionServiceTest extends AbstractMockitoTests {
 
-    @Mock(name = ConfigurationServiceImpl.COMPONENT_NAME)
+    @Mock
     private ConfigurationService confSrv;
     @InjectMocks
     private ActionServiceImpl srv = new ActionServiceImpl();
@@ -111,7 +110,7 @@ public class ActionServiceTest extends AbstractMockitoTests {
 
         User user = new SystemUser(SystemUser.SYSTEM_USERNAME, SystemUser.SYSTEM_USERNAME);
         userPrefs.add(uPref);
-        when(confSrv.findByType(UserPreference.class, user.getUsername())).thenReturn(userPrefs);
+        //when(confSrv.findByType(UserPreference.class, user.getUsername())).thenReturn(userPrefs);
         when(confSrv.save(uPref)).thenReturn(uPref);
 
         Collection<Action> result = srv.save(user, actions);

@@ -26,10 +26,11 @@ import javax.validation.constraints.NotNull;
 import java.util.Collection;
 
 import org.ameba.exception.NotFoundException;
+import org.ameba.mapping.BeanMapper;
+import org.openwms.core.exception.ExceptionCodes;
 import org.openwms.core.http.AbstractWebController;
 import org.openwms.core.http.HttpBusinessException;
 import org.openwms.core.http.ResponseVO;
-import org.openwms.core.system.usermanagement.Role;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -56,7 +57,7 @@ public class RolesController extends AbstractWebController {
     @Autowired
     private RoleService service;
     @Autowired
-    private BeanMapper<Role, RoleVO> mapper;
+    private BeanMapper mapper;
 
     /**
      * Documented here: https://openwms.atlassian.net/wiki/x/EYAWAQ
@@ -89,7 +90,7 @@ public class RolesController extends AbstractWebController {
         ResponseVO result = new ResponseVO();
         HttpStatus resultStatus = HttpStatus.CREATED;
         try {
-            RoleVO res = mapper.map(service.create(mapper.mapBackwards(role, Role.class)), RoleVO.class);
+            RoleVO res = mapper.map(service.create(mapper.map(role, Role.class)), RoleVO.class);
             result.add(new ResponseVO.ItemBuilder().wStatus(HttpStatus.CREATED).wParams(res).build());
         } catch (Exception sre) {
             resultStatus = HttpStatus.NOT_ACCEPTABLE;
@@ -147,7 +148,7 @@ public class RolesController extends AbstractWebController {
             String msg = translate(ExceptionCodes.ROLE_IS_TRANSIENT, role.getName());
             throw new HttpBusinessException(msg, HttpStatus.NOT_ACCEPTABLE);
         }
-        Role toSave = mapper.mapBackwards(role, Role.class);
+        Role toSave = mapper.map(role, Role.class);
         return mapper.map(service.save(toSave), RoleVO.class);
     }
 }

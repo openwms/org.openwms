@@ -19,51 +19,54 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
-package org.openwms.core.integration.jpa;
+package org.openwms.core.configuration;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertTrue;
+
+import java.util.List;
 
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
-import org.openwms.core.ModuleDao;
-import org.openwms.core.domain.Module;
 import org.openwms.core.test.AbstractJpaSpringContextTests;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.test.context.ContextConfiguration;
 
 /**
- * A ModuleDaoTest.
+ * A PreferencesDaoTest.
  * 
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
- * @version $Revision$
+ * @version $Revision: $
+ * @since 0.1
  */
 @ContextConfiguration("classpath:core-jpa-test-context.xml")
-public class ModuleDaoTest extends AbstractJpaSpringContextTests {
+public class PreferencesDaoTest extends AbstractJpaSpringContextTests {
 
     @Autowired
-    @Qualifier("moduleDao")
-    private ModuleDao dao;
+    @Qualifier("preferencesJpaDao")
+    private PreferenceWriter<Long> dao;
 
     /**
      * Setup some test data.
      */
     @Before
-    public void onBefore() {
-        entityManager.persist(new Module("WMS", "org.openwms.wms.swf"));
-        entityManager.persist(new Module("TMS", "org.openwms.tms.swf"));
+    public final void onSetup() {
+        entityManager.persist(new ApplicationPreference("APP33"));
         entityManager.flush();
         entityManager.clear();
     }
 
     /**
-     * Testing some of the finders.
+     * Test whether the returned instance is the same.
      */
+    @Ignore
     @Test
-    public final void testFindAll() {
-        assertTrue("2 persisted modules have to be found", dao.findAll().size() == 2);
-        assertNotNull("Expect to find a persisted module by moduleName", dao.findByUniqueId("WMS"));
-        assertTrue("Find module by query",
-                dao.findByPositionalParameters(Module.NQ_FIND_BY_UNIQUE_QUERY, "TMS").size() == 1);
+    public final void testEquality() {
+        List<AbstractPreference> prefs = dao.findAll();
+        AbstractPreference abPref = new ApplicationPreference("APP33");
+        assertTrue(prefs.get(0).equals(abPref));
+        assertTrue(abPref.equals(prefs.get(0)));
+        assertTrue(prefs.contains(abPref));
     }
 }

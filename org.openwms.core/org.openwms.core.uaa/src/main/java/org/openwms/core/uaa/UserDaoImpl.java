@@ -26,11 +26,6 @@ import java.util.List;
 import java.util.Map;
 
 import org.openwms.core.AbstractGenericJpaDao;
-import org.openwms.core.UserDao;
-import org.openwms.core.system.usermanagement.Role;
-import org.openwms.core.system.usermanagement.SystemUser;
-import org.openwms.core.system.usermanagement.User;
-import org.openwms.core.system.usermanagement.UserPassword;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Repository;
@@ -40,16 +35,13 @@ import org.springframework.transaction.annotation.Transactional;
 /**
  * An UserDaoImpl is an extension of a {@link AbstractGenericJpaDao} about functionality regarding {@link User}s. The stereotype annotation
  * {@link Repository} marks this class as DAO in the architecture and enables exception translation and component scanning. It can be
- * injected by name {@value #COMPONENT_NAME}.
- * <p>
- * All methods have to be invoked within an active transaction context.
- * </p>
- * 
+ * injected by name {@value #COMPONENT_NAME}. <p> All methods have to be invoked within an active transaction context. </p>
+ *
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  * @version $Revision$
- * @since 0.1
  * @see AbstractGenericJpaDao
- * @see org.openwms.core.integration.UserDao
+ * @see org.openwms.core.uaa.UserDao
+ * @since 0.1
  */
 @Transactional(propagation = Propagation.MANDATORY)
 @Repository(UserDaoImpl.COMPONENT_NAME)
@@ -85,7 +77,7 @@ public class UserDaoImpl extends AbstractGenericJpaDao<User, Long> implements Us
 
     /**
      * {@inheritDoc}
-     * 
+     * <p>
      * If no Users were found, <code>null</code> is returned.
      */
     @Override
@@ -95,7 +87,7 @@ public class UserDaoImpl extends AbstractGenericJpaDao<User, Long> implements Us
 
     /**
      * {@inheritDoc}
-     * 
+     * <p>
      * Is the passed in User object is the SuperUser or <code>null</code> no action is performed.
      */
     @Override
@@ -108,7 +100,7 @@ public class UserDaoImpl extends AbstractGenericJpaDao<User, Long> implements Us
 
     /**
      * {@inheritDoc}
-     * 
+     * <p>
      * Is the passed in User object is the SuperUser or <code>null</code> no action is performed.
      */
     @Override
@@ -121,7 +113,7 @@ public class UserDaoImpl extends AbstractGenericJpaDao<User, Long> implements Us
 
     /**
      * {@inheritDoc}
-     * 
+     * <p>
      * Is the passed in User object is the SuperUser or <code>null</code> no action is performed.
      */
     @Override

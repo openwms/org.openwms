@@ -29,12 +29,12 @@ import java.io.Serializable;
  * a virtual <code>Role</code> with the name ROLE_SYSTEM. Furthermore this kind of <code>Role</code> is immutable and it is not allowed for
  * the SystemUser to change her <code>UserDetails</code> or <code>UserPassword</code>. Changing the <code>UserPassword</code> has to be done
  * in the application configuration when the project is setup.
- * 
- * @GlossaryTerm
+ *
  * @author <a href="mailto:russelltina@users.sourceforge.net">Tina Russell</a>
  * @version $Revision$
- * @since 0.1
+ * @GlossaryTerm
  * @see User
+ * @since 0.1
  */
 @Entity
 public class SystemUser extends User implements Serializable {
@@ -60,11 +60,9 @@ public class SystemUser extends User implements Serializable {
 
     /**
      * Create a new SystemUser.
-     * 
-     * @param username
-     *            SystemUser's username
-     * @param password
-     *            SystemUser's password
+     *
+     * @param username SystemUser's username
+     * @param password SystemUser's password
      */
     public SystemUser(String username, String password) {
         super(username, password);
@@ -73,9 +71,8 @@ public class SystemUser extends User implements Serializable {
 
     /**
      * Check whether <code>user</code> is the system user.
-     * 
-     * @param user
-     *            The user to check
+     *
+     * @param user The user to check
      * @return <code>true</code> if user is the system user, otherwise <code>false</code>
      */
     public static final boolean isSuperUser(User user) {

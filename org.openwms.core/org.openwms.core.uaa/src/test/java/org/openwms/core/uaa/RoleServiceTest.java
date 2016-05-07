@@ -30,7 +30,7 @@ import org.ameba.exception.NotFoundException;
 import org.ameba.exception.ServiceLayerException;
 import org.junit.Before;
 import org.junit.Test;
-import org.openwms.core.ExceptionCodes;
+import org.openwms.core.exception.ExceptionCodes;
 import org.openwms.core.test.AbstractJpaSpringContextTests;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
@@ -38,7 +38,7 @@ import org.springframework.test.context.ContextConfiguration;
 
 /**
  * A RoleServiceTest.
- * 
+ *
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  * @version $Revision$
  * @since 0.1
@@ -67,7 +67,7 @@ public class RoleServiceTest extends AbstractJpaSpringContextTests {
      */
     @Test(expected = NotFoundException.class)
     public final void testRemoveWithNotKnownEntity() {
-        srv.removeByID(new Long[] { Long.valueOf(4711) });
+        srv.removeByID(new Long[]{Long.valueOf(4711)});
         fail("Removing transient role by id should fail");
     }
 
@@ -96,7 +96,7 @@ public class RoleServiceTest extends AbstractJpaSpringContextTests {
         try {
             Role persistedRole = (Role) entityManager.createNamedQuery(Role.NQ_FIND_BY_UNIQUE_QUERY)
                     .setParameter(1, "ROLE_ADMIN").getSingleResult();
-            srv.removeByID(new Long[] { persistedRole.getId() });
+            srv.removeByID(new Long[]{persistedRole.getId()});
             assertEquals("Expect to have 1 Role left", 1, entityManager.createNamedQuery(Role.NQ_FIND_ALL)
                     .getResultList().size());
         } catch (Exception ex) {

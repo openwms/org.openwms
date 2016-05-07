@@ -24,23 +24,21 @@ package org.openwms.core.uaa;
 import java.util.Collection;
 import java.util.HashSet;
 
-import org.openwms.core.system.usermanagement.SecurityObject;
-import org.openwms.core.system.usermanagement.User;
 import org.openwms.core.validation.AssertUtils;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 /**
- * An UserWrapper is used as an adapter between <code>Role</code>s,
- * <code>SecurityObject</code>s and Spring's {@link GrantedAuthority} objects.
- * 
+ * An UserWrapper is used as an adapter between <code>Role</code>s, <code>SecurityObject</code>s and Spring's {@link GrantedAuthority}
+ * objects.
+ *
  * @author <a href="mailto:russelltina@users.sourceforge.net">Tina Russell</a>
  * @version $Revision$
- * @since 0.1
- * @see org.openwms.core.system.usermanagement.SecurityObject
- * @see org.openwms.core.system.usermanagement.Role
+ * @see org.openwms.core.uaa.SecurityObject
+ * @see org.openwms.core.uaa.Role
  * @see org.springframework.security.core.GrantedAuthority
  * @see org.springframework.security.core.userdetails.UserDetails
+ * @since 0.1
  */
 public class UserWrapper implements UserDetails, UserHolder {
 
@@ -50,9 +48,8 @@ public class UserWrapper implements UserDetails, UserHolder {
 
     /**
      * Create a new UserWrapper.
-     * 
-     * @param user
-     *            The User to wrap
+     *
+     * @param user The User to wrap
      */
     public UserWrapper(User user) {
         AssertUtils.notNull(user, "Not allowed to create an UserWrapper with null argument");
@@ -61,14 +58,12 @@ public class UserWrapper implements UserDetails, UserHolder {
     }
 
     /**
-     * Subclasses can set a collection of grants that are always available for
-     * an User. This is useful for administrative accounts.
-     * 
-     * @param authz
-     *            A collection of grants (authorities) where the default grants
-     *            are added to
+     * Subclasses can set a collection of grants that are always available for an User. This is useful for administrative accounts.
+     *
+     * @param authz A collection of grants (authorities) where the default grants are added to
      */
-    protected void addDefaultGrants(Collection<GrantedAuthority> authz) {}
+    protected void addDefaultGrants(Collection<GrantedAuthority> authz) {
+    }
 
     /**
      * {@inheritDoc}
@@ -80,7 +75,7 @@ public class UserWrapper implements UserDetails, UserHolder {
 
     /**
      * {@inheritDoc}
-     * 
+     *
      * @return the authorities, sorted by natural key (never <code>null</code>)
      */
     @Override
@@ -97,7 +92,7 @@ public class UserWrapper implements UserDetails, UserHolder {
 
     /**
      * {@inheritDoc}
-     * 
+     *
      * @return the password (never <code>null</code>)
      */
     @Override
@@ -107,7 +102,7 @@ public class UserWrapper implements UserDetails, UserHolder {
 
     /**
      * {@inheritDoc}
-     * 
+     *
      * @return the username (never <code>null</code>)
      */
     @Override
@@ -117,9 +112,8 @@ public class UserWrapper implements UserDetails, UserHolder {
 
     /**
      * {@inheritDoc}
-     * 
-     * @return <code>true</code> if the user's account is valid (ie
-     *         non-expired), <code>false</code> if no longer valid (ie expired)
+     *
+     * @return <code>true</code> if the user's account is valid (ie non-expired), <code>false</code> if no longer valid (ie expired)
      */
     @Override
     public boolean isAccountNonExpired() {
@@ -128,9 +122,8 @@ public class UserWrapper implements UserDetails, UserHolder {
 
     /**
      * {@inheritDoc}
-     * 
-     * @return <code>true</code> if the user is not locked, <code>false</code>
-     *         otherwise
+     *
+     * @return <code>true</code> if the user is not locked, <code>false</code> otherwise
      */
     @Override
     public boolean isAccountNonLocked() {
@@ -139,10 +132,9 @@ public class UserWrapper implements UserDetails, UserHolder {
 
     /**
      * {@inheritDoc}
-     * 
+     *
+     * @return <code>true</code> if the user's credentials are valid (ie non-expired), <code>false</code> if no longer valid (ie expired)
      * @see org.springframework.security.core.userdetails.UserDetails#isCredentialsNonExpired()
-     * @return <code>true</code> if the user's credentials are valid (ie
-     *         non-expired), <code>false</code> if no longer valid (ie expired)
      */
     @Override
     public boolean isCredentialsNonExpired() {
@@ -151,9 +143,8 @@ public class UserWrapper implements UserDetails, UserHolder {
 
     /**
      * {@inheritDoc}
-     * 
-     * @return <code>true</code> if the user is enabled, <code>false</code>
-     *         otherwise
+     *
+     * @return <code>true</code> if the user is enabled, <code>false</code> otherwise
      */
     @Override
     public boolean isEnabled() {
@@ -162,7 +153,7 @@ public class UserWrapper implements UserDetails, UserHolder {
 
     /**
      * {@inheritDoc}
-     * 
+     * <p>
      * Uses authorities and user for calculation.
      */
     @Override
@@ -176,7 +167,7 @@ public class UserWrapper implements UserDetails, UserHolder {
 
     /**
      * {@inheritDoc}
-     * 
+     * <p>
      * Uses authorities and user for comparison.
      */
     @Override
@@ -210,7 +201,7 @@ public class UserWrapper implements UserDetails, UserHolder {
 
     /**
      * Return the Users username.
-     * 
+     *
      * @return The username of the User
      * @see java.lang.Object#toString()
      */

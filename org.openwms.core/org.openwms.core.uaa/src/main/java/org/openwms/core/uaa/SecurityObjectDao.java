@@ -24,41 +24,36 @@ package org.openwms.core.uaa;
 import java.util.List;
 
 import org.openwms.core.GenericDao;
-import org.openwms.core.system.usermanagement.Grant;
-import org.openwms.core.system.usermanagement.SecurityObject;
 
 /**
  * A SecurityDao is used to find, modify and delete {@link SecurityObject}s.
- * 
+ *
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  * @version $Revision$
  * @since 0.1
  */
-public interface SecurityObjectDao extends GenericDao< SecurityObject, Long> {
+public interface SecurityObjectDao extends GenericDao<SecurityObject, Long> {
 
     /**
      * Find and retrieve all {@link SecurityObject}s that belong to a given <code>Module</code>.
-     * 
-     * @param moduleName
-     *            The name of the <code>Module</code>
+     *
+     * @param moduleName The name of the <code>Module</code>
      * @return a list of {@link SecurityObject}s. <code>null</code> might be possible as well, see the particular implementation
      */
     List<Grant> findAllOfModule(String moduleName);
 
     /**
      * Save a {@link SecurityObject} and return the updated instance.
-     * 
-     * @param entity
-     *            the {@link SecurityObject} to save
+     *
+     * @param entity the {@link SecurityObject} to save
      * @return the saved instance
      */
     SecurityObject merge(SecurityObject entity);
 
     /**
      * Delete a list of {@link Grant}s.
-     * 
-     * @param grants
-     *            the {@link Grant}s to delete
+     *
+     * @param grants the {@link Grant}s to delete
      */
     void delete(List<Grant> grants);
 }

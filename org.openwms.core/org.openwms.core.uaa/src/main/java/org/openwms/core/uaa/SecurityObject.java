@@ -36,7 +36,7 @@ import javax.persistence.Table;
 import javax.persistence.Version;
 import java.io.Serializable;
 
-import org.openwms.core.domain.AbstractEntity;
+import org.openwms.core.AbstractEntity;
 import org.openwms.core.validation.AssertUtils;
 import org.openwms.core.values.CoreTypeDefinitions;
 
@@ -47,8 +47,8 @@ import org.openwms.core.values.CoreTypeDefinitions;
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  * @version $Revision$
  * @since 0.1
- * @see org.openwms.core.system.usermanagement.Role
- * @see org.openwms.core.system.usermanagement.Grant
+ * @see org.openwms.core.uaa.Role
+ * @see org.openwms.core.uaa.Grant
  */
 @Entity
 @Table(name = "COR_ROLE")

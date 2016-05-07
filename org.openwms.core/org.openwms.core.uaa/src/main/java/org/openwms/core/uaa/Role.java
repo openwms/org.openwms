@@ -47,7 +47,6 @@ import org.openwms.core.validation.AssertUtils;
  * @GlossaryTerm
  * @see SecurityObject
  * @see User
- * @see org.openwms.core.system.usermanagement.Role
  * @since 0.1
  */
 @Entity

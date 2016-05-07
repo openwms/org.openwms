@@ -27,10 +27,9 @@ import com.fasterxml.jackson.annotation.JsonAutoDetect;
 
 /**
  * A UserPreferenceDTO.
- * 
+ *
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  * @version $Revision: $
- * 
  */
 @JsonAutoDetect
 public class UserPreferenceVO implements Serializable {

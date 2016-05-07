@@ -25,7 +25,7 @@ import java.io.Serializable;
 
 /**
  * A SecurityObjectVO.
- * 
+ *
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  * @version $Revision: $
  * @since 0.1
@@ -39,11 +39,12 @@ public class SecurityObjectVO implements Serializable {
     /**
      * Create a new SecurityObjectVO.
      */
-    public SecurityObjectVO() {}
+    public SecurityObjectVO() {
+    }
 
     /**
      * Get the name.
-     * 
+     *
      * @return the name.
      */
     public String getName() {
@@ -52,9 +53,8 @@ public class SecurityObjectVO implements Serializable {
 
     /**
      * Set the name.
-     * 
-     * @param name
-     *            The name to set.
+     *
+     * @param name The name to set.
      */
     public void setName(String name) {
         this.name = name;
@@ -62,7 +62,7 @@ public class SecurityObjectVO implements Serializable {
 
     /**
      * Get the description.
-     * 
+     *
      * @return the description.
      */
     public String getDescription() {
@@ -71,9 +71,8 @@ public class SecurityObjectVO implements Serializable {
 
     /**
      * Set the description.
-     * 
-     * @param description
-     *            The description to set.
+     *
+     * @param description The description to set.
      */
     public void setDescription(String description) {
         this.description = description;
