@@ -19,9 +19,13 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
-package org.openwms.core.service.spring;
+package org.openwms.core.module;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
 
 import javax.persistence.NoResultException;
 import java.util.List;
@@ -30,8 +34,6 @@ import org.ameba.exception.ServiceLayerException;
 import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
-import org.openwms.core.Module;
-import org.openwms.core.ModuleService;
 import org.openwms.core.test.AbstractJpaSpringContextTests;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
@@ -39,7 +41,7 @@ import org.springframework.test.context.ContextConfiguration;
 
 /**
  * A ModuleServiceTest.
- * 
+ *
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  * @version $Revision$
  * @since 0.1
@@ -89,9 +91,8 @@ public class ModuleServiceTest extends AbstractJpaSpringContextTests {
     }
 
     /**
-     * Sort the list ascending and descending and call saveStartupOrder. After
-     * reloading the list, the right order must be set. This test expects that
-     * the named query to return all is ordered by startupOrder asc.
+     * Sort the list ascending and descending and call saveStartupOrder. After reloading the list, the right order must be set. This test
+     * expects that the named query to return all is ordered by startupOrder asc.
      */
     @Test
     public final void testSaveStartupOrder() {
@@ -156,8 +157,7 @@ public class ModuleServiceTest extends AbstractJpaSpringContextTests {
     }
 
     /**
-     * Try to remove transient, detached, persisted modules and null as
-     * argument.
+     * Try to remove transient, detached, persisted modules and null as argument.
      */
     @Test
     public final void testRemove() {

@@ -19,10 +19,15 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
-package org.openwms.core.service.spring;
+package org.openwms.core.configuration;
 
-import static org.junit.Assert.*;
-import static org.mockito.Mockito.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.fail;
+import static org.mockito.Mockito.never;
+import static org.mockito.Mockito.reset;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -33,14 +38,9 @@ import org.junit.Assert;
 import org.junit.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.openwms.core.domain.preferences.ApplicationPreference;
 import org.openwms.core.domain.preferences.ConfigurationServiceImpl;
-import org.openwms.core.domain.preferences.ModulePreference;
-import org.openwms.core.domain.preferences.PreferenceDao;
-import org.openwms.core.domain.preferences.PreferenceWriter;
 import org.openwms.core.event.MergePropertiesEvent;
 import org.openwms.core.system.AbstractPreference;
-import org.openwms.core.system.PreferenceKey;
 import org.openwms.core.test.AbstractMockitoTests;
 
 /**
@@ -123,7 +123,7 @@ public class ConfigurationServiceTest extends AbstractMockitoTests {
     @Test
     public final void testFindAll() {
         when(writer.findAll()).thenReturn(persistedPrefs);
-        Assert.assertEquals(persistedPrefs, srv.findAll());
+        assertEquals(persistedPrefs, srv.findAll());
         verify(writer, times(1)).findAll();
     }
 
@@ -199,7 +199,7 @@ public class ConfigurationServiceTest extends AbstractMockitoTests {
                 Arrays.asList(new MockApplicationPreference[] { mock }));
         when(writer.save(mock)).thenReturn(mock);
 
-        Assert.assertEquals(mock, srv.save(mock));
+        assertEquals(mock, srv.save(mock));
         verify(writer, never()).persist(mock);
         verify(writer).save(mock);
     }

@@ -19,26 +19,21 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
-package org.openwms.core.service.spring;
-
-import org.openwms.core.domain.preferences.ApplicationPreference;
+package org.openwms.core.configuration;
 
 /**
  * A MockApplicationPreference.
- * 
+ *
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  * @version $Revision: $
  * @since 0.1
  */
 public class MockApplicationPreference extends ApplicationPreference {
 
-    private static final long serialVersionUID = 3668997799714761407L;
-
     /**
      * Create a new MockApplicationPreference.
-     * 
-     * @param key
-     *            The key
+     *
+     * @param key The key
      */
     public MockApplicationPreference(String key) {
         super(key);
@@ -46,8 +41,8 @@ public class MockApplicationPreference extends ApplicationPreference {
 
     /**
      * {@inheritDoc}
-     * 
-     * @see org.openwms.core.system.AbstractPreference#isNew()
+     *
+     * @see org.openwms.core.configuration.AbstractPreference#isNew()
      */
     @Override
     public boolean isNew() {
