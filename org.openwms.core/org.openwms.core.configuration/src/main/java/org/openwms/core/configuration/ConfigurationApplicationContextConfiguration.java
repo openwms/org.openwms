@@ -19,30 +19,23 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
-package org.openwms.client.application;
 
-import org.openwms.core.lang.configuration.ConfigurationApplicationContextConfiguration;
-import org.springframework.context.annotation.ComponentScan;
+package org.openwms.core.configuration;
+
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Import;
-import org.springframework.context.annotation.ImportResource;
-import org.springframework.web.servlet.config.annotation.EnableWebMvc;
+import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 
 /**
- * A WebApplicationContextConfiguration is a Spring JavaConfiguration object of
- * elementary bean definitions.
+ * A ConfigurationApplicationContextConfiguration is the Spring Java Configuration that initializes the application properties as
+ * {@link PropertySourcesPlaceholderConfigurer}. Import this configuration to take advantage of the JavaConfig mechanism instead of XML
+ * configuration.
  * 
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  * @version $Revision: $
- * @since 0.1
+ * @since 0.2
  */
 @Configuration
-@ComponentScan(basePackages = { "org.openwms" })
-@EnableWebMvc
-@Import({ ConfigurationApplicationContextConfiguration.class })
-@ImportResource({ "classpath:META-INF/spring/applicationContext-security.xml",
-        "classpath*:META-INF/spring/module-context.xml", "classpath*:META-INF/spring/noosgi-context.xml",
-        "classpath*:META-INF/spring/aop-context.xml" })
-public class WebApplicationContextConfiguration extends WebMvcConfigurerAdapter {
+public class ConfigurationApplicationContextConfiguration extends WebMvcConfigurerAdapter {
+
 }

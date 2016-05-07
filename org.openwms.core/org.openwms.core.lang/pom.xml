@@ -30,41 +30,40 @@
         <artifactId>org.openwms.core</artifactId>
         <version>1.1.0-SNAPSHOT</version>
     </parent>
-    <artifactId>org.openwms.core.integration.file</artifactId>
+    <artifactId>org.openwms.core.infrastructure.configuration.provider</artifactId>
+    <packaging>jar</packaging>
     <name>${project.artifactId}</name>
-    <description>Code that uses JAXB to read/write XML files.</description>
+    <description>This component wraps the org.openwms.core.lang.configuration component into a JAR file that is deployed in Non-OSGI
+        environments and can be accessed by Spring from classpath.</description>
     <properties>
         <moduleDir>../..</moduleDir>
     </properties>
+    <build>
+        <resources>
+          <resource>
+            <directory>src/main/resources</directory>
+            <filtering>true</filtering>
+          </resource>
+        </resources>
+    </build>
+
     <dependencies>
         <!-- Spring Framework -->
         <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-web</artifactId>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-context</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-webmvc</artifactId>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-data-jpa</artifactId>
         </dependency>
         <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-security</artifactId>
-        </dependency>
-
-        <!-- Project dependencies -->
-        <dependency>
-            <groupId>${project.groupId}</groupId>
-            <artifactId>org.openwms.core.domain</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>${project.groupId}</groupId>
+            <groupId>org.openwms</groupId>
             <artifactId>org.openwms.core.util</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>${project.groupId}</groupId>
-            <artifactId>org.openwms.core.test</artifactId>
-            <type>test-jar</type>
-            <scope>test</scope>
         </dependency>
     </dependencies>
 </project>
