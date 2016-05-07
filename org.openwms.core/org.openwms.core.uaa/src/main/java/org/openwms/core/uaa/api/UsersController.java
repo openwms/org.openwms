@@ -19,21 +19,31 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
-package org.openwms.core.uaa;
+package org.openwms.core.uaa.api;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
+import org.ameba.Messages;
 import org.ameba.exception.NotFoundException;
+import org.ameba.http.Response;
 import org.ameba.mapping.BeanMapper;
 import org.openwms.core.exception.ExceptionCodes;
 import org.openwms.core.http.AbstractWebController;
 import org.openwms.core.http.HttpBusinessException;
 import org.openwms.core.http.ResponseVO;
+import org.openwms.core.uaa.User;
+import org.openwms.core.uaa.UserPassword;
+import org.openwms.core.uaa.UserService;
+import org.openwms.core.uaa.UserVO;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -61,7 +71,7 @@ public class UsersController extends AbstractWebController {
     @Autowired
     private UserService service;
     @Autowired
-    private BeanMapper mapper;
+    private BeanMapper m;
 
     /**
      * This method returns all existing <tt>User</tt>s. <p> <p> <table> <tr> <td>URI</td> <td>/users</td> </tr> <tr> <td>Verb</td>
@@ -70,13 +80,11 @@ public class UsersController extends AbstractWebController {
      *
      * @return JSON response
      */
-    @RequestMapping(method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    @RequestMapping(method = RequestMethod.GET)
     @ResponseBody
-    public ResponseEntity<ResponseVO> findAllUsers() {
-        Collection<UserVO> users = mapper.map(service.findAll(), UserVO.class);
-        ResponseVO response = new ResponseVO();
-        response.add(new ResponseVO.ItemBuilder().wStatus(HttpStatus.OK).wParams(users.toArray()).build());
-        return new ResponseEntity<ResponseVO>(response, HttpStatus.OK);
+    public ResponseEntity<Response<UserVO>> findAllUsers() {
+        List<UserVO> users = m.map(new ArrayList<>(service.findAll()), UserVO.class);
+        return buildOKResponse(users.toArray(new UserVO[users.size()]));
     }
 
     /**
@@ -104,22 +112,12 @@ public class UsersController extends AbstractWebController {
      * @param user The user to create
      * @return a responseVO
      */
-    @RequestMapping(method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE, headers = "Content-Type=application/json")
+    @RequestMapping(method = RequestMethod.POST)
     @ResponseBody
-    public ResponseEntity<ResponseVO> create(@RequestBody @Valid @NotNull UserVO user) {
-
-        ResponseVO result = new ResponseVO();
-        HttpStatus resultStatus = HttpStatus.CREATED;
-        try {
-            UserVO res = mapper.map(service.create(mapper.map(user, User.class)), UserVO.class);
-            result.add(new ResponseVO.ItemBuilder().wStatus(HttpStatus.CREATED).wParams(res).build());
-        } catch (Exception sre) {
-            resultStatus = HttpStatus.NOT_ACCEPTABLE;
-            ResponseVO.ResponseItem item = new ResponseVO.ItemBuilder().wMessage(sre.getMessage())
-                    .wStatus(resultStatus).wParams(user.getUsername()).build();
-            result.add(item);
-        }
-        return new ResponseEntity<ResponseVO>(result, resultStatus);
+    public ResponseEntity<Response<UserVO>> create(@RequestBody @Valid @NotNull UserVO user, HttpServletRequest req, HttpServletResponse resp) {
+        User createdUser = service.create(m.map(user, User.class));
+        resp.addHeader(HttpHeaders.LOCATION, getLocationForCreatedResource(req, createdUser.getId().toString()));
+        return buildResponse(HttpStatus.CREATED, translate(Messages.CREATED), Messages.CREATED);
     }
 
     @RequestMapping(value = "/{username}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE, headers = "Content-Type=application/json")
@@ -153,9 +151,9 @@ public class UsersController extends AbstractWebController {
             throw new HttpBusinessException(translate(ExceptionCodes.USER_HAS_CHANGED), HttpStatus.NOT_ACCEPTABLE);
         }
 
-        User toSave = mapper.map(user, User.class);
-        persistedUser = mapper.mapFromTo(toSave, persistedUser);
-        UserVO saved = mapper.map(service.save(persistedUser), UserVO.class);
+        User toSave = m.map(user, User.class);
+        persistedUser = m.mapFromTo(toSave, persistedUser);
+        UserVO saved = m.map(service.save(persistedUser), UserVO.class);
         ResponseVO result = new ResponseVO(new ResponseVO.ItemBuilder().wParams(saved).wStatus(HttpStatus.OK).build());
         return new ResponseEntity<ResponseVO>(result, HttpStatus.CREATED);
     }
@@ -176,7 +174,7 @@ public class UsersController extends AbstractWebController {
         }
         User persistedUser = service.findById(id);
         service.uploadImageFile(persistedUser.getUsername(), image);
-        UserVO saved = mapper.map(service.findById(id), UserVO.class);
+        UserVO saved = m.map(service.findById(id), UserVO.class);
         ResponseVO result = new ResponseVO(new ResponseVO.ItemBuilder().wParams(saved).wStatus(HttpStatus.OK).build());
         return new ResponseEntity<ResponseVO>(result, HttpStatus.CREATED);
     }
@@ -213,7 +211,7 @@ public class UsersController extends AbstractWebController {
     }
 
     private User findByUsername(String pUsername) {
-        List<User> users = service.findAll();
+        Collection<User> users = service.findAll();
         for (User user : users) {
             if (user.getUsername().equals(pUsername)) {
                 return user;

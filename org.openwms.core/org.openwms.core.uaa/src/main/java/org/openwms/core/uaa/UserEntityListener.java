@@ -21,6 +21,7 @@
  */
 package org.openwms.core.uaa;
 
+import javax.persistence.PrePersist;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -29,8 +30,6 @@ import org.openwms.core.AbstractGenericJpaDao;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Repository;
-import org.springframework.transaction.annotation.Propagation;
-import org.springframework.transaction.annotation.Transactional;
 
 /**
  * An UserDaoImpl is an extension of a {@link AbstractGenericJpaDao} about functionality regarding {@link User}s. The stereotype annotation
@@ -40,62 +39,23 @@ import org.springframework.transaction.annotation.Transactional;
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  * @version $Revision$
  * @see AbstractGenericJpaDao
- * @see org.openwms.core.uaa.UserDao
+ * @see UserRepository
  * @since 0.1
  */
-@Transactional(propagation = Propagation.MANDATORY)
-@Repository(UserDaoImpl.COMPONENT_NAME)
-public class UserDaoImpl extends AbstractGenericJpaDao<User, Long> implements UserDao {
+public class UserEntityListener {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(UserDaoImpl.class);
-    /** Springs component name. */
-    public static final String COMPONENT_NAME = "userDao";
+    private static final Logger LOGGER = LoggerFactory.getLogger(UserEntityListener.class);
 
     /**
-     * {@inheritDoc}
+     * Is the passed in User object is the SuperUser or no action is performed.
+     *
+     * @param user The user to persist
      */
-    @Override
-    protected Class<User> getPersistentClass() {
-        return User.class;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    protected String getFindAllQuery() {
-        return User.NQ_FIND_ALL;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    protected String getFindByUniqueIdQuery() {
-        return User.NQ_FIND_BY_USERNAME;
-    }
-
-    /**
-     * {@inheritDoc}
-     * <p>
-     * If no Users were found, <code>null</code> is returned.
-     */
-    @Override
-    public List<User> findAll() {
-        return super.findByPositionalParameters(User.NQ_FIND_ALL_ORDERED);
-    }
-
-    /**
-     * {@inheritDoc}
-     * <p>
-     * Is the passed in User object is the SuperUser or <code>null</code> no action is performed.
-     */
-    @Override
-    public void persist(User user) {
+    @PrePersist
+    public void prePersist(User user) {
         if (isSuperUser(user)) {
             return;
         }
-        super.persist(user);
     }
 
     /**

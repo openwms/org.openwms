@@ -21,6 +21,7 @@
  */
 package org.openwms.core.uaa;
 
+import org.ameba.integration.FindOperations;
 import org.openwms.core.configuration.UserPreference;
 
 /**
@@ -31,7 +32,7 @@ import org.openwms.core.configuration.UserPreference;
  * @see org.openwms.core.uaa.User
  * @since 0.1
  */
-public interface UserService {
+public interface UserService extends FindOperations<User, Long> {
 
     /**
      * Change the current {@link User}s password.
@@ -72,4 +73,6 @@ public interface UserService {
      * @return the {@link SystemUser} instance
      */
     SystemUser createSystemUser();
+
+    User create(User user);
 }

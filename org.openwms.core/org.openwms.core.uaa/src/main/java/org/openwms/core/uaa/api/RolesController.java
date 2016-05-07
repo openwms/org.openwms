@@ -19,7 +19,7 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
-package org.openwms.core.uaa;
+package org.openwms.core.uaa.api;
 
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
@@ -31,6 +31,9 @@ import org.openwms.core.exception.ExceptionCodes;
 import org.openwms.core.http.AbstractWebController;
 import org.openwms.core.http.HttpBusinessException;
 import org.openwms.core.http.ResponseVO;
+import org.openwms.core.uaa.Role;
+import org.openwms.core.uaa.RoleService;
+import org.openwms.core.uaa.RoleVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;

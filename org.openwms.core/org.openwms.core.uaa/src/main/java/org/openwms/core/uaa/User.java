@@ -28,8 +28,6 @@ import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
-import javax.persistence.NamedQueries;
-import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.PostLoad;
 import javax.persistence.Table;
@@ -66,10 +64,6 @@ import org.springframework.util.Assert;
  */
 @Entity
 @Table(name = "COR_USER")
-@NamedQueries({
-        @NamedQuery(name = User.NQ_FIND_ALL_ORDERED, query = "select u from User u left join fetch u.roles left join fetch u.preferences order by u.username"),
-        @NamedQuery(name = User.NQ_FIND_BY_USERNAME, query = "select u from User u left join fetch u.roles left join fetch u.preferences where u.username = ?1"),
-        @NamedQuery(name = User.NQ_FIND_BY_USERNAME_PASSWORD, query = "select u from User u left join fetch u.roles left join fetch u.preferences where u.username = :username and u.persistedPassword = :password")})
 public class User extends BaseEntity implements Serializable {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(User.class);

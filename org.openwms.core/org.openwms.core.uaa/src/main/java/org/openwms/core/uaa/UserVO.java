@@ -28,6 +28,7 @@ import java.util.Date;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import org.ameba.http.AbstractBase;
 
 
 /**
@@ -38,7 +39,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
  * @since 0.1
  */
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class UserVO implements Serializable {
+public class UserVO extends AbstractBase implements Serializable {
 
     private Long id;
     @JsonProperty("externalUser")

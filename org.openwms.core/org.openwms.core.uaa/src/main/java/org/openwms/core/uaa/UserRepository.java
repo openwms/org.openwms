@@ -26,17 +26,16 @@ import java.util.Optional;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 /**
- * An UserDao offers functionality regarding {@link User} entity classes.
+ * An UserRepository offers functionality regarding {@link User} entity classes.
  *
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  * @version 0.2
- * @see org.openwms.core.GenericDao
  * @see org.openwms.core.uaa.User
  * @since 0.1
  */
-interface UserDao extends JpaRepository<User, Long> {
+interface UserRepository extends JpaRepository<User, Long> {
 
-    User findByUsername(String username);
+    Optional<User> findByUsername(String username);
 
     /**
      * Find an {@link User} by his username and password.
@@ -46,4 +45,5 @@ interface UserDao extends JpaRepository<User, Long> {
      * @return The {@link User}
      */
     Optional<User> findByUsernameAndPersistedPassword(String username, String persistedPassword);
+
 }
