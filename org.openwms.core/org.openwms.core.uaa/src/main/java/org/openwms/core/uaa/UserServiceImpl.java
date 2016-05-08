@@ -61,7 +61,7 @@ public class UserServiceImpl extends AbstractGenericEntityService<User, Long, St
 
     private static final Logger LOGGER = LoggerFactory.getLogger(UserServiceImpl.class);
     @Autowired
-    private UserRepository dao;
+    private UserRepository repository;
     @Autowired
     private SecurityObjectDao securityObjectDao;
     @Autowired
@@ -82,7 +82,7 @@ public class UserServiceImpl extends AbstractGenericEntityService<User, Long, St
      */
     @Override
     protected GenericDao<User, Long> getRepository() {
-        return dao;
+        return repository;
     }
 
     /**
@@ -102,12 +102,12 @@ public class UserServiceImpl extends AbstractGenericEntityService<User, Long, St
     /**
      * {@inheritDoc}
      *
-     * @throws EntityNotFoundException when no User with <tt>username</tt> found
+     * @throws EntityNotFoundException when no User with {@code id} found
      */
     @Override
     @FireAfterTransaction(events = {UserChangedEvent.class})
-    public void uploadImageFile(String username, byte[] image) {
-        User user = dao.findByUniqueId(username);
+    public void uploadImageFile(Long id, byte[] image) {
+        User user = repository.findOne(id);
         if (user == null) {
             throw new NotFoundException(translate(ExceptionCodes.ENTITY_NOT_EXIST, username), ExceptionCodes.ENTITY_NOT_EXIST);
         }
@@ -115,7 +115,7 @@ public class UserServiceImpl extends AbstractGenericEntityService<User, Long, St
             user.setUserDetails(new UserDetails());
         }
         user.getUserDetails().setImage(image);
-        dao.save(user);
+        repository.save(user);
     }
 
     /**
@@ -214,7 +214,7 @@ public class UserServiceImpl extends AbstractGenericEntityService<User, Long, St
         if (null == userPassword) {
             throw new ServiceLayerException(translate(ExceptionCodes.USER_PASSWORD_SAVE_NOT_BE_NULL), ExceptionCodes.USER_PASSWORD_SAVE_NOT_BE_NULL);
         }
-        User entity = dao.findByUniqueId(userPassword.getUser().getUsername());
+        User entity = repository.findByUniqueId(userPassword.getUser().getUsername());
         if (entity == null) {
             throw new EntityNotFoundException(translate(ExceptionCodes.USER_NOT_EXIST, userPassword.getUser()
                     .getUsername()));
@@ -222,7 +222,7 @@ public class UserServiceImpl extends AbstractGenericEntityService<User, Long, St
         try {
             entity.changePassword(enc.encodePassword(userPassword.getPassword(),
                     saltSource.getSalt(new UserWrapper(entity))));
-            dao.save(entity);
+            repository.save(entity);
         } catch (InvalidPasswordException ipe) {
             LOGGER.error(ipe.getMessage());
             throw new ServiceLayerException(translate(ExceptionCodes.USER_PASSWORD_INVALID, userPassword.getUser()

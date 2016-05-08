@@ -43,7 +43,7 @@ import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 
-import org.ameba.integration.jpa.BaseEntity;
+import org.ameba.integration.jpa.ApplicationEntity;
 import org.openwms.core.exception.InvalidPasswordException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -64,7 +64,7 @@ import org.springframework.util.Assert;
  */
 @Entity
 @Table(name = "COR_USER")
-public class User extends BaseEntity implements Serializable {
+public class User extends ApplicationEntity implements Serializable {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(User.class);
     /** Unique identifier of this User (not nullable). */

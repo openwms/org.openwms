@@ -143,7 +143,7 @@ public class UsersController extends AbstractWebController {
     @ResponseBody
     public ResponseEntity<Response<UserVO>> saveImage(@RequestBody @NotNull byte[] image, @PathVariable("id") @NotNull Long id) {
         User eo = service.uploadImageFile(id, image);
-        return new ResponseEntity<ResponseVO>(result, HttpStatus.CREATED);
+        return buildResponse(HttpStatus.OK, translate(Messages.SERVER_OK), Messages.SERVER_OK, m.map(eo, UserVO.class));
     }
 
     /**

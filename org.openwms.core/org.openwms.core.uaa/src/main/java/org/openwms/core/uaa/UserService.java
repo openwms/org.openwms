@@ -43,12 +43,12 @@ public interface UserService extends FindOperations<User, Long>, SaveOperations<
     void changeUserPassword(UserPassword userPassword);
 
     /**
-     * Attach and save an {@code image} to an {@link User} with {@code username}.
+     * Attach and save an {@code image} to an {@link User} with {@code id}.
      *
-     * @param username Username of the {@link User}
+     * @param id Id of the {@link User}
      * @param image Image to be stored
      */
-    void uploadImageFile(String username, byte[] image);
+    void uploadImageFile(Long id, byte[] image);
 
     /**
      * Return a transient {@link User} entity object, serving as a template.
