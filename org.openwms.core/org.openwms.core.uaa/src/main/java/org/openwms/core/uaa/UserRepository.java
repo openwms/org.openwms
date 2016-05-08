@@ -21,17 +21,29 @@
  */
 package org.openwms.core.uaa;
 
-import java.io.Serializable;
+import java.util.Optional;
 
-import com.fasterxml.jackson.annotation.JsonAutoDetect;
+import org.springframework.data.jpa.repository.JpaRepository;
 
 /**
- * A UserPreferenceDTO.
+ * An UserRepository offers functionality regarding {@link User} entity classes.
  *
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
- * @version $Revision: $
+ * @version 0.2
+ * @see org.openwms.core.uaa.User
+ * @since 0.1
  */
-@JsonAutoDetect
-public class UserPreferenceVO implements Serializable {
+interface UserRepository extends JpaRepository<User, Long> {
+
+    Optional<User> findByUsername(String username);
+
+    /**
+     * Find an {@link User} by his username and password.
+     *
+     * @param username The username
+     * @param persistedPassword The password
+     * @return The {@link User}
+     */
+    Optional<User> findByUsernameAndPersistedPassword(String username, String persistedPassword);
 
 }

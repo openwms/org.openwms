@@ -21,6 +21,8 @@
  */
 package org.openwms.core.uaa;
 
+import org.ameba.integration.FindOperations;
+import org.ameba.integration.SaveOperations;
 import org.openwms.core.configuration.UserPreference;
 
 /**
@@ -31,7 +33,7 @@ import org.openwms.core.configuration.UserPreference;
  * @see org.openwms.core.uaa.User
  * @since 0.1
  */
-public interface UserService {
+public interface UserService extends FindOperations<User, Long>, SaveOperations<User, Long> {
 
     /**
      * Change the current {@link User}s password.
@@ -41,12 +43,12 @@ public interface UserService {
     void changeUserPassword(UserPassword userPassword);
 
     /**
-     * Attach and save an {@code image} to an {@link User} with {@code username}.
+     * Attach and save an {@code image} to an {@link User} with {@code id}.
      *
-     * @param username Username of the {@link User}
+     * @param id Id of the {@link User}
      * @param image Image to be stored
      */
-    void uploadImageFile(String username, byte[] image);
+    void uploadImageFile(Long id, byte[] image);
 
     /**
      * Return a transient {@link User} entity object, serving as a template.
@@ -72,4 +74,6 @@ public interface UserService {
      * @return the {@link SystemUser} instance
      */
     SystemUser createSystemUser();
+
+    User create(User user);
 }

@@ -45,11 +45,11 @@ import org.springframework.test.context.ContextConfiguration;
  * @version $Revision$
  */
 @ContextConfiguration("classpath:core-jpa-test-context.xml")
-public class UserDaoTest extends AbstractJpaSpringContextTests {
+public class UserRepositoryTest extends AbstractJpaSpringContextTests {
 
     @Autowired
     @Qualifier("userDao")
-    private UserDao dao;
+    private UserRepository dao;
     private User user;
     private static final String SYS_USER = "Sys";
     private static final String OP_USER = "Operator";

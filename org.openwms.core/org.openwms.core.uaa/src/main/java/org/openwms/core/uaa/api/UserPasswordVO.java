@@ -19,31 +19,19 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
-package org.openwms.core.uaa;
+package org.openwms.core.uaa.api;
 
-import java.util.Optional;
+import java.io.Serializable;
 
-import org.springframework.data.jpa.repository.JpaRepository;
+import com.fasterxml.jackson.annotation.JsonAutoDetect;
 
 /**
- * An UserDao offers functionality regarding {@link User} entity classes.
+ * A UserPasswordDTO.
  *
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
- * @version 0.2
- * @see org.openwms.core.GenericDao
- * @see org.openwms.core.uaa.User
- * @since 0.1
+ * @version $Revision: $
  */
-interface UserDao extends JpaRepository<User, Long> {
+@JsonAutoDetect
+public class UserPasswordVO implements Serializable {
 
-    User findByUsername(String username);
-
-    /**
-     * Find an {@link User} by his username and password.
-     *
-     * @param username The username
-     * @param persistedPassword The password
-     * @return The {@link User}
-     */
-    Optional<User> findByUsernameAndPersistedPassword(String username, String persistedPassword);
 }

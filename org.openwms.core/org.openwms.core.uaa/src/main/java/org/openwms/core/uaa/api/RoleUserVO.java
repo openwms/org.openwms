@@ -19,62 +19,80 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
-package org.openwms.core.uaa;
+package org.openwms.core.uaa.api;
 
 import java.io.Serializable;
 
 /**
- * A SecurityObjectVO.
+ * A UserVO.
  *
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  * @version $Revision: $
  * @since 0.1
  */
-public class SecurityObjectVO implements Serializable {
+public class RoleUserVO implements Serializable {
 
-    private static final long serialVersionUID = 1L;
-    private String name;
-    private String description;
+    private Long id;
+    private String username;
+    private String fullname;
 
     /**
-     * Create a new SecurityObjectVO.
+     * Create a new RoleVO.User.
      */
-    public SecurityObjectVO() {
+    public RoleUserVO() {
     }
 
     /**
-     * Get the name.
+     * Get the id.
      *
-     * @return the name.
+     * @return the id.
      */
-    public String getName() {
-        return name;
+    public Long getId() {
+        return id;
     }
 
     /**
-     * Set the name.
+     * Set the id.
      *
-     * @param name The name to set.
+     * @param id The id to set.
      */
-    public void setName(String name) {
-        this.name = name;
+    public void setId(Long id) {
+        this.id = id;
     }
 
     /**
-     * Get the description.
+     * Get the username.
      *
-     * @return the description.
+     * @return the username.
      */
-    public String getDescription() {
-        return description;
+    public String getUsername() {
+        return username;
     }
 
     /**
-     * Set the description.
+     * Set the username.
      *
-     * @param description The description to set.
+     * @param username The username to set.
      */
-    public void setDescription(String description) {
-        this.description = description;
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    /**
+     * Get the fullname.
+     *
+     * @return the fullname.
+     */
+    public String getFullname() {
+        return fullname;
+    }
+
+    /**
+     * Set the fullname.
+     *
+     * @param fullname The fullname to set.
+     */
+    public void setFullname(String fullname) {
+        this.fullname = fullname;
     }
 }
