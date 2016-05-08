@@ -33,7 +33,6 @@ import org.openwms.core.http.HttpBusinessException;
 import org.openwms.core.http.ResponseVO;
 import org.openwms.core.uaa.Role;
 import org.openwms.core.uaa.RoleService;
-import org.openwms.core.uaa.RoleVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;

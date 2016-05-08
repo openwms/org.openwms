@@ -25,7 +25,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -34,26 +33,20 @@ import org.ameba.Messages;
 import org.ameba.exception.NotFoundException;
 import org.ameba.http.Response;
 import org.ameba.mapping.BeanMapper;
-import org.openwms.core.exception.ExceptionCodes;
 import org.openwms.core.http.AbstractWebController;
-import org.openwms.core.http.HttpBusinessException;
 import org.openwms.core.http.ResponseVO;
 import org.openwms.core.uaa.User;
 import org.openwms.core.uaa.UserPassword;
 import org.openwms.core.uaa.UserService;
-import org.openwms.core.uaa.UserVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 /**
@@ -120,42 +113,23 @@ public class UsersController extends AbstractWebController {
         return buildResponse(HttpStatus.CREATED, translate(Messages.CREATED), Messages.CREATED);
     }
 
-    @RequestMapping(value = "/{username}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE, headers = "Content-Type=application/json")
-    @ResponseBody
-    public User getUserById(@RequestParam("username") @NotNull @Size(min = 1) String pUsername) {
-        // TODO [scherrer] : clarify if this is necessary
-        User user = findByUsername(pUsername);
-        if (user == null) {
-            throw new IllegalArgumentException("User with usernayme " + pUsername + " not found");
-        }
-        return user;
-    }
-
     /**
      * FIXME [scherrer] Comment this
      *
      * @param user
      * @return a responseVO
      */
-    @RequestMapping(method = RequestMethod.PUT, produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
+    @RequestMapping(method = RequestMethod.PUT)
     @ResponseBody
-    @Transactional
-    public ResponseEntity<ResponseVO> save(@RequestBody @Valid UserVO user) {
+    public ResponseEntity<Response<UserVO>> save(@RequestBody @Valid UserVO user) {
+        User eo = m.map(user, User.class);
+        UserVO saved = m.map(service.save(eo), UserVO.class);
+
         if (user.getId() == null) {
-            String msg = translate(ExceptionCodes.USER_IS_TRANSIENT, user.getUsername());
-            throw new HttpBusinessException(msg, HttpStatus.NOT_ACCEPTABLE);
+            return buildResponse(HttpStatus.CREATED, translate(Messages.CREATED), Messages.CREATED, saved);
+        } else {
+            return buildResponse(HttpStatus.OK, translate(Messages.SERVER_OK), Messages.SERVER_OK, saved);
         }
-
-        User persistedUser = service.findById(user.getId());
-        if (persistedUser.getVersion() != user.getVersion()) {
-            throw new HttpBusinessException(translate(ExceptionCodes.USER_HAS_CHANGED), HttpStatus.NOT_ACCEPTABLE);
-        }
-
-        User toSave = m.map(user, User.class);
-        persistedUser = m.mapFromTo(toSave, persistedUser);
-        UserVO saved = m.map(service.save(persistedUser), UserVO.class);
-        ResponseVO result = new ResponseVO(new ResponseVO.ItemBuilder().wParams(saved).wStatus(HttpStatus.OK).build());
-        return new ResponseEntity<ResponseVO>(result, HttpStatus.CREATED);
     }
 
     /**
@@ -165,17 +139,10 @@ public class UsersController extends AbstractWebController {
      * @param id The users persisted id
      * @return An responseVO
      */
-    @RequestMapping(value = "/{id}", method = RequestMethod.PUT, produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    @RequestMapping(value = "/{id}", method = RequestMethod.PATCH)
     @ResponseBody
-    public ResponseEntity<ResponseVO> saveImage(@RequestBody @NotNull byte[] image, @PathVariable("id") @NotNull Long id) {
-        if (id == null) {
-            String msg = translate(ExceptionCodes.USER_IS_TRANSIENT);
-            throw new HttpBusinessException(msg, HttpStatus.NOT_FOUND);
-        }
-        User persistedUser = service.findById(id);
-        service.uploadImageFile(persistedUser.getUsername(), image);
-        UserVO saved = m.map(service.findById(id), UserVO.class);
-        ResponseVO result = new ResponseVO(new ResponseVO.ItemBuilder().wParams(saved).wStatus(HttpStatus.OK).build());
+    public ResponseEntity<Response<UserVO>> saveImage(@RequestBody @NotNull byte[] image, @PathVariable("id") @NotNull Long id) {
+        User eo = service.uploadImageFile(id, image);
         return new ResponseEntity<ResponseVO>(result, HttpStatus.CREATED);
     }
 

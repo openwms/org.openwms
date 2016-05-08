@@ -22,6 +22,7 @@
 package org.openwms.core.uaa;
 
 import org.ameba.integration.FindOperations;
+import org.ameba.integration.SaveOperations;
 import org.openwms.core.configuration.UserPreference;
 
 /**
@@ -32,7 +33,7 @@ import org.openwms.core.configuration.UserPreference;
  * @see org.openwms.core.uaa.User
  * @since 0.1
  */
-public interface UserService extends FindOperations<User, Long> {
+public interface UserService extends FindOperations<User, Long>, SaveOperations<User, Long> {
 
     /**
      * Change the current {@link User}s password.

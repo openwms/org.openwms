@@ -19,19 +19,19 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
-package org.openwms.core.uaa;
+package org.openwms.core.uaa.api;
 
 import java.io.Serializable;
 
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
 
 /**
- * A UserPasswordDTO.
+ * A UserPreferenceDTO.
  *
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  * @version $Revision: $
  */
 @JsonAutoDetect
-public class UserPasswordVO implements Serializable {
+public class UserPreferenceVO implements Serializable {
 
 }
