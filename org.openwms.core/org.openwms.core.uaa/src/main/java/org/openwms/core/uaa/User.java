@@ -420,7 +420,19 @@ public class User extends ApplicationEntity implements Serializable {
      * @return The userDetails
      */
     public UserDetails getUserDetails() {
+        if (userDetails == null) {
+            userDetails = new UserDetails();
+        }
         return userDetails;
+    }
+
+    /**
+     * Check whether this User has UserDetails set.
+     *
+     * @return {@literal true} if set, otherwise {@literal false}
+     */
+    public boolean hasUserDetails() {
+        return userDetails != null;
     }
 
     /**
