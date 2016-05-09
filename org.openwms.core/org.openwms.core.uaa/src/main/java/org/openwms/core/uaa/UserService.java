@@ -21,6 +21,8 @@
  */
 package org.openwms.core.uaa;
 
+import java.util.Optional;
+
 import org.ameba.integration.FindOperations;
 import org.ameba.integration.SaveOperations;
 import org.openwms.core.configuration.UserPreference;
@@ -76,4 +78,13 @@ public interface UserService extends FindOperations<User, Long>, SaveOperations<
     SystemUser createSystemUser();
 
     User create(User user);
+
+    /**
+     *
+     * @param username
+     * @return
+     */
+    Optional<User> findByUsername(String username);
+
+    void remove(String username);
 }

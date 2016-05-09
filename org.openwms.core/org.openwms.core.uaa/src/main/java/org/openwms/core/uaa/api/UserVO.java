@@ -242,7 +242,7 @@ public class UserVO extends AbstractBase implements Serializable {
      *
      * @return the id.
      */
-    public Long getId() {
+    public Long getIdentifer() {
         return id;
     }
 

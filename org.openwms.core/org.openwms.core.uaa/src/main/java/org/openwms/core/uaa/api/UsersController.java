@@ -142,8 +142,8 @@ public class UsersController extends AbstractWebController {
     @RequestMapping(value = "/{id}", method = RequestMethod.PATCH)
     @ResponseBody
     public ResponseEntity<Response<UserVO>> saveImage(@RequestBody @NotNull byte[] image, @PathVariable("id") @NotNull Long id) {
-        User eo = service.uploadImageFile(id, image);
-        return buildResponse(HttpStatus.OK, translate(Messages.SERVER_OK), Messages.SERVER_OK, m.map(eo, UserVO.class));
+        service.uploadImageFile(id, image);
+        return buildResponse(HttpStatus.OK, translate(Messages.SERVER_OK), Messages.SERVER_OK);
     }
 
     /**
@@ -162,7 +162,7 @@ public class UsersController extends AbstractWebController {
                 continue;
             }
             try {
-                service.removeByBK(new String[]{(name)});
+                service.remove(name);
                 result.add(new ResponseVO.ItemBuilder().wStatus(HttpStatus.OK).wParams(name).build());
             } catch (Exception sre) {
                 resultStatus = HttpStatus.NOT_FOUND;
