@@ -25,16 +25,16 @@ import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
 
+import org.ameba.http.AbstractBase;
+
 /**
- * A RoleDTO.
+ * A RoleVO.
  * 
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
- * @version $Revision: $
+ * @version 0.2
  * @since 0.1
  */
-public class RoleVO implements Serializable {
-
-    private static final long serialVersionUID = 1L;
+public class RoleVO extends AbstractBase implements Serializable {
 
     /**
      * Create a new RoleVO.

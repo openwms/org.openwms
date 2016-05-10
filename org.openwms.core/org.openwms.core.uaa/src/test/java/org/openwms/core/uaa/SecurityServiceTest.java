@@ -58,7 +58,7 @@ public class SecurityServiceTest extends AbstractMockitoTests {
     @Mock
     private SecurityObjectDao dao;
     @Mock
-    private RoleDao roleDao;
+    private RoleRepository roleDao;
     @Mock
     private MessageSource messageSource;
     @InjectMocks

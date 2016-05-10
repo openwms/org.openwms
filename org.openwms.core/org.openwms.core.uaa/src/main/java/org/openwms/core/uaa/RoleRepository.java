@@ -23,23 +23,22 @@ package org.openwms.core.uaa;
 
 import java.util.List;
 
-import org.openwms.core.GenericDao;
+import org.springframework.data.jpa.repository.JpaRepository;
 
 /**
- * A RoleDao offers functionality to find and modify {@link Role} entity classes.
- * 
+ * A RoleRepository offers functionality to find and modify {@link Role} entity classes.
+ *
  * @author <a href="mailto:russelltina@users.sourceforge.net">Tina Russell</a>
- * @version $Revision$
+ * @version 0.2
  * @since 0.1
  */
-public interface RoleDao extends GenericDao<Role, Long> {
+interface RoleRepository extends JpaRepository<Role, Long> {
 
     /**
-     * Remove a collection of {@link SecurityObject}s or <code>Grant</code>s from all Roles. This method is useful to unassign Grants before
-     * they're going to be removed.
-     * 
-     * @param securityObjects
-     *            The collection of {@link SecurityObject}s to be unassigned
+     * Remove a collection of {@link SecurityObject}s or {@link Grant}s from all Roles. This method is useful to unassign {@link Grant}s
+     * before they're going to be removed.
+     *
+     * @param securityObjects The collection of {@link SecurityObject}s to be unassigned
      * @since 0.2
      */
     void removeFromRoles(List<? extends SecurityObject> securityObjects);

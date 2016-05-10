@@ -21,15 +21,18 @@
  */
 package org.openwms.core.uaa;
 
+import java.util.Collection;
+import java.util.Collections;
+import java.util.List;
+
+import org.ameba.annotation.TxService;
 import org.ameba.exception.NotFoundException;
-import org.openwms.core.AbstractGenericEntityService;
 import org.openwms.core.GenericDao;
 import org.openwms.core.annotation.FireAfterTransaction;
 import org.openwms.core.event.RoleChangedEvent;
 import org.openwms.core.exception.ExceptionCodes;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 /**
  * A RoleServiceImpl is a Spring supported transactional implementation of a
@@ -37,22 +40,21 @@ import org.springframework.transaction.annotation.Transactional;
  * collaborators, therefore XML configuration becomes obsolete. This class is
  * marked with Springs {@link Service} annotation to benefit from Springs
  * exception translation intercepter. Traditional CRUD operations are delegated
- * to a {@link RoleDao} instance.
+ * to a {@link RoleRepository} instance.
  * <p>
  * This implementation can be autowired with the name {@value #COMPONENT_NAME}.
  * </p>
  * 
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
- * @version $Revision$
+ * @version 0.2
  * @since 0.1
- * @see RoleDao
+ * @see RoleRepository
  */
-@Transactional
-@Service(RoleServiceImpl.COMPONENT_NAME)
-public class RoleServiceImpl extends AbstractGenericEntityService<Role, Long, String> implements RoleService {
+@TxService
+class RoleServiceImpl implements RoleService {
 
     @Autowired
-    private RoleDao dao;
+    private RoleRepository repository;
     /** Springs service name. */
     public static final String COMPONENT_NAME = "roleService";
 
@@ -61,7 +63,7 @@ public class RoleServiceImpl extends AbstractGenericEntityService<Role, Long, St
      */
     @Override
     protected GenericDao<Role, Long> getRepository() {
-        return dao;
+        return repository;
     }
 
     /**
@@ -136,5 +138,14 @@ public class RoleServiceImpl extends AbstractGenericEntityService<Role, Long, St
     public Role save(Role entity) {
         checkForNull(entity, ExceptionCodes.ROLE_SAVE_NOT_BE_NULL);
         return super.save(entity);
+    }
+
+    /**
+     * @return
+     */
+    @Override
+    public Collection<Role> findAll() {
+        List<Role> roles = repository.findAll();
+        return roles == null ? Collections.emptyList() : roles;
     }
 }
