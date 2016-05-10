@@ -21,16 +21,21 @@
  */
 package org.openwms.core.uaa;
 
-import org.openwms.core.GenericEntityService;
+import java.util.Collection;
 
 /**
  * A RoleService provides business functionality regarding the handling with {@link Role}s.
  * 
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
- * @version $Revision$
+ * @version 0.2
  * @since 0.1
  * @see org.openwms.core.uaa.Role
  */
-public interface RoleService extends GenericEntityService<Role, Long, String> {
+public interface RoleService {
 
+    /**
+     *
+     * @return
+     */
+    Collection<Role> findAll();
 }

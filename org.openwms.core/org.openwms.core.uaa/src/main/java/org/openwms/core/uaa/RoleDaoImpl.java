@@ -25,8 +25,6 @@ import java.util.List;
 
 import org.openwms.core.AbstractGenericJpaDao;
 import org.springframework.stereotype.Repository;
-import org.springframework.transaction.annotation.Propagation;
-import org.springframework.transaction.annotation.Transactional;
 
 /**
  * A RoleDaoImpl is an extension of a {@link AbstractGenericJpaDao} about functionality regarding {@link Role}s. The stereotype annotation
@@ -37,14 +35,13 @@ import org.springframework.transaction.annotation.Transactional;
  * </p>
  * 
  * @author <a href="mailto:russelltina@users.sourceforge.net">Tina Russell</a>
- * @version $Revision$
+ * @version 0.2
  * @since 0.1
  * @see AbstractGenericJpaDao
- * @see org.openwms.core.uaa.RoleDao
+ * @see RoleRepository
  */
-@Transactional(propagation = Propagation.MANDATORY)
-@Repository(RoleDaoImpl.COMPONENT_NAME)
-public class RoleDaoImpl extends AbstractGenericJpaDao<Role, Long> implements RoleDao {
+@Repository
+class RoleDaoImpl implements RoleRepository {
 
     /** Springs component name. */
     public static final String COMPONENT_NAME = "roleDao";
@@ -61,29 +58,5 @@ public class RoleDaoImpl extends AbstractGenericJpaDao<Role, Long> implements Ro
             role.removeGrants(securityObjects);
             getEm().flush();
         }
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    protected String getFindAllQuery() {
-        return Role.NQ_FIND_ALL;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    protected String getFindByUniqueIdQuery() {
-        return Role.NQ_FIND_BY_UNIQUE_QUERY;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    protected Class<Role> getPersistentClass() {
-        return Role.class;
     }
 }

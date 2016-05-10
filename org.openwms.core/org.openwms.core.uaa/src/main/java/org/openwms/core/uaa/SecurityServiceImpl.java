@@ -52,7 +52,7 @@ public class SecurityServiceImpl extends AbstractGenericEntityService<SecurityOb
     @Autowired
     private SecurityObjectDao securityObjectDao;
     @Autowired
-    private RoleDao roleDao;
+    private RoleRepository roleDao;
 
     /** Springs component name. */
     public static final String COMPONENT_NAME = "securityService";

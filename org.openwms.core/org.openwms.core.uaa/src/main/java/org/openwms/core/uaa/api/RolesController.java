@@ -23,9 +23,11 @@ package org.openwms.core.uaa.api;
 
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
-import java.util.Collection;
+import java.util.List;
 
+import org.ameba.Messages;
 import org.ameba.exception.NotFoundException;
+import org.ameba.http.Response;
 import org.ameba.mapping.BeanMapper;
 import org.openwms.core.exception.ExceptionCodes;
 import org.openwms.core.http.AbstractWebController;
@@ -37,13 +39,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
+import org.springframework.web.bind.annotation.RestController;
 
 /**
  * A RolesController.
@@ -52,14 +54,14 @@ import org.springframework.web.bind.annotation.ResponseStatus;
  * @version $Revision: $
  * @since 0.1
  */
-@Controller
+@RestController
 @RequestMapping("/roles")
 public class RolesController extends AbstractWebController {
 
     @Autowired
     private RoleService service;
     @Autowired
-    private BeanMapper mapper;
+    private BeanMapper m;
 
     /**
      * Documented here: https://openwms.atlassian.net/wiki/x/EYAWAQ
@@ -68,13 +70,11 @@ public class RolesController extends AbstractWebController {
      * 
      * @return JSON response
      */
-    @RequestMapping(method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    @RequestMapping(method = RequestMethod.GET)
     @ResponseBody
-    public ResponseEntity<ResponseVO> findAllRoles() {
-        Collection<RoleVO> roles = mapper.map(service.findAll(), RoleVO.class);
-        ResponseVO response = new ResponseVO();
-        response.add(new ResponseVO.ItemBuilder().wStatus(HttpStatus.OK).wParams(roles.toArray()).build());
-        return new ResponseEntity<ResponseVO>(response, HttpStatus.OK);
+    public ResponseEntity<Response<RoleVO>> findAllRoles() {
+        List<RoleVO> roles = m.map(service.findAll(), RoleVO.class);
+        return buildResponse(HttpStatus.OK, translate(Messages.SERVER_OK), Messages.SERVER_OK, roles.toArray(new RoleVO[roles.size()]));
     }
 
     /**
@@ -92,7 +92,7 @@ public class RolesController extends AbstractWebController {
         ResponseVO result = new ResponseVO();
         HttpStatus resultStatus = HttpStatus.CREATED;
         try {
-            RoleVO res = mapper.map(service.create(mapper.map(role, Role.class)), RoleVO.class);
+            RoleVO res = m.map(service.create(m.map(role, Role.class)), RoleVO.class);
             result.add(new ResponseVO.ItemBuilder().wStatus(HttpStatus.CREATED).wParams(res).build());
         } catch (Exception sre) {
             resultStatus = HttpStatus.NOT_ACCEPTABLE;
@@ -150,7 +150,7 @@ public class RolesController extends AbstractWebController {
             String msg = translate(ExceptionCodes.ROLE_IS_TRANSIENT, role.getName());
             throw new HttpBusinessException(msg, HttpStatus.NOT_ACCEPTABLE);
         }
-        Role toSave = mapper.map(role, Role.class);
-        return mapper.map(service.save(toSave), RoleVO.class);
+        Role toSave = m.map(role, Role.class);
+        return m.map(service.save(toSave), RoleVO.class);
     }
 }
