@@ -23,6 +23,7 @@ package org.openwms.core.uaa.api;
 
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.ameba.Messages;
@@ -73,7 +74,7 @@ public class RolesController extends AbstractWebController {
     @RequestMapping(method = RequestMethod.GET)
     @ResponseBody
     public ResponseEntity<Response<RoleVO>> findAllRoles() {
-        List<RoleVO> roles = m.map(service.findAll(), RoleVO.class);
+        List<RoleVO> roles = m.map(new ArrayList<>(service.findAll()), RoleVO.class);
         return buildResponse(HttpStatus.OK, translate(Messages.SERVER_OK), Messages.SERVER_OK, roles.toArray(new RoleVO[roles.size()]));
     }
 
@@ -88,7 +89,7 @@ public class RolesController extends AbstractWebController {
      */
     @RequestMapping(method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
-    public ResponseEntity<ResponseVO> create(@RequestBody @Valid @NotNull RoleVO role) {
+    public ResponseEntity<Response<RoleVO>> create(@RequestBody @Valid @NotNull RoleVO role) {
         ResponseVO result = new ResponseVO();
         HttpStatus resultStatus = HttpStatus.CREATED;
         try {

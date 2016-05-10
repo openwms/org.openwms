@@ -24,18 +24,20 @@ package org.openwms.core.uaa;
 import java.util.Collection;
 
 /**
- * A RoleService provides business functionality regarding the handling with {@link Role}s.
- * 
+ * A RoleService provides business functionality regarding the handling with {@link Role}s. The service deals directly with business
+ * objects, even those are currently acting as entities as well. But this may change in future and should not influence the interface.
+ *
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  * @version 0.2
- * @since 0.1
  * @see org.openwms.core.uaa.Role
+ * @since 0.1
  */
 public interface RoleService {
 
     /**
-     *
      * @return
      */
     Collection<Role> findAll();
+
+    Role create(Role role);
 }
