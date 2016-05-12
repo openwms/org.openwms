@@ -25,91 +25,53 @@ import javax.persistence.Column;
 import javax.persistence.DiscriminatorColumn;
 import javax.persistence.DiscriminatorType;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
 import javax.persistence.Inheritance;
-import javax.persistence.NamedQueries;
-import javax.persistence.NamedQuery;
 import javax.persistence.OrderBy;
 import javax.persistence.Table;
-import javax.persistence.Version;
 import java.io.Serializable;
 
-import org.openwms.core.AbstractEntity;
+import org.ameba.integration.jpa.BaseEntity;
 import org.openwms.core.values.CoreTypeDefinitions;
 import org.springframework.util.Assert;
 
 /**
- * A SecurityObject is the generalization of <code>Role</code>s and <code>Grant</code>s and combines common used properties of both.
- * 
- * @GlossaryTerm
+ * A SecurityObject is the generalization of {@code Role}s and {@code Grant}s and combines common used properties of both.
+ *
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
- * @version $Revision$
- * @since 0.1
+ * @version 0.2
+ * @GlossaryTerm
  * @see org.openwms.core.uaa.Role
  * @see org.openwms.core.uaa.Grant
+ * @since 0.1
  */
 @Entity
 @Table(name = "COR_ROLE")
 @Inheritance
-@DiscriminatorColumn(name="TYPE", discriminatorType=DiscriminatorType.STRING,length=20)
-@NamedQueries({
-        @NamedQuery(name = SecurityObject.NQ_FIND_ALL, query = "select g from SecurityObject g"),
-        @NamedQuery(name = SecurityObject.NQ_FIND_BY_UNIQUE_QUERY, query = "select g from SecurityObject g where g.name = ?1") })
-public class SecurityObject extends AbstractEntity<Long> implements Serializable {
+@DiscriminatorColumn(name = "TYPE", discriminatorType = DiscriminatorType.STRING, length = 20)
+public class SecurityObject extends BaseEntity implements Serializable {
 
-    private static final long serialVersionUID = 7585736035228078754L;
-    /**
-     * Unique technical key.
-     */
-    @Id
-    @Column(name = "C_ID")
-    @GeneratedValue(strategy = GenerationType.TABLE)
-    private Long id;
-    /**
-     * Unique name of the <code>SecurityObject</code>.
-     */
+    /** Unique name of the {@code SecurityObject}. */
     @Column(name = "C_NAME", unique = true)
     @OrderBy
     private String name;
-    /**
-     * Description of the <code>SecurityObject</code>.
-     */
+
+    /** Description of the {@code SecurityObject}. */
     @Column(name = "C_DESCRIPTION", length = CoreTypeDefinitions.DESCRIPTION_LENGTH)
     private String description;
-    /**
-     * Version field.
-     */
-    @Version
-    @Column(name = "C_VERSION")
-    private long version;
-    /**
-     * Query to find all {@link SecurityObject}s. Name is {@value} .
-     */
-    public static final String NQ_FIND_ALL = "SecurityObject.findAll";
-    /**
-     * Query to find <strong>one</strong> {@link SecurityObject} by its natural key. <li>Query parameter index <strong>1</strong> : The name
-     * of the <code>SecurityObject</code> to search for.</li><br />
-     * Name is {@value} .
-     */
-    public static final String NQ_FIND_BY_UNIQUE_QUERY = "SecurityObject.findByName";
 
     /* ----------------------------- methods ------------------- */
+
     /**
-     * Accessed by persistence provider.
+     * Dear JPA...
      */
     protected SecurityObject() {
-        super();
     }
 
     /**
-     * Create a new <code>SecurityObject</code> with a name.
-     * 
-     * @param name
-     *            The name of the <code>SecurityObject</code>
-     * @throws IllegalArgumentException
-     *             when name is <code>null</code> or an empty String
+     * Create a new {@code SecurityObject} with a name.
+     *
+     * @param name The name of the {@code SecurityObject}
+     * @throws IllegalArgumentException when name is {@literal null} or an empty String
      */
     public SecurityObject(String name) {
         Assert.hasText(name, "A name of a SecurityObject must not be null");
@@ -117,14 +79,11 @@ public class SecurityObject extends AbstractEntity<Long> implements Serializable
     }
 
     /**
-     * Create a new <code>SecurityObject</code> with name and description.
-     * 
-     * @param name
-     *            The name of the <code>SecurityObject</code>
-     * @param description
-     *            The description text of the <code>SecurityObject</code>
-     * @throws IllegalArgumentException
-     *             when name is <code>null</code> or an empty String
+     * Create a new {@code SecurityObject} with name and description.
+     *
+     * @param name The name of the {@code SecurityObject}
+     * @param description The description text of the {@code SecurityObject}
+     * @throws IllegalArgumentException when name is {@literal null} or an empty String
      */
     public SecurityObject(String name, String description) {
         Assert.hasText(name, "A name of a SecurityObject must not be null");
@@ -133,25 +92,9 @@ public class SecurityObject extends AbstractEntity<Long> implements Serializable
     }
 
     /**
-     * {@inheritDoc}
-     */
-    @Override
-    public Long getId() {
-        return id;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public boolean isNew() {
-        return id == null;
-    }
-
-    /**
      * Returns the name.
-     * 
-     * @return The name of the <code>SecurityObject</code>
+     *
+     * @return The name of the {@code SecurityObject}
      */
     public String getName() {
         return name;
@@ -159,18 +102,17 @@ public class SecurityObject extends AbstractEntity<Long> implements Serializable
 
     /**
      * Returns the description text.
-     * 
-     * @return The description of the <code>SecurityObject</code> as text
+     *
+     * @return The description of the {@code SecurityObject} as text
      */
     public String getDescription() {
         return description;
     }
 
     /**
-     * Set the description for the <code>SecurityObject</code>.
-     * 
-     * @param description
-     *            The description of the <code>SecurityObject</code> as text
+     * Set the description for the {@code SecurityObject}.
+     *
+     * @param description The description of the {@code SecurityObject} as text
      */
     public void setDescription(String description) {
         this.description = description;
@@ -178,15 +120,7 @@ public class SecurityObject extends AbstractEntity<Long> implements Serializable
 
     /**
      * {@inheritDoc}
-     */
-    @Override
-    public long getVersion() {
-        return version;
-    }
-
-    /**
-     * {@inheritDoc}
-     * 
+     *
      * @see java.lang.Object#hashCode()
      */
     @Override
@@ -199,7 +133,7 @@ public class SecurityObject extends AbstractEntity<Long> implements Serializable
 
     /**
      * {@inheritDoc} Compare the name.
-     * 
+     *
      * @see java.lang.Object#equals(java.lang.Object)
      */
     @Override
@@ -226,7 +160,7 @@ public class SecurityObject extends AbstractEntity<Long> implements Serializable
 
     /**
      * Return the name.
-     * 
+     *
      * @return the name
      */
     @Override
