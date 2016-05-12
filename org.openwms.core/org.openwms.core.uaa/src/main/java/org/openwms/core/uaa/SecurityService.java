@@ -23,19 +23,17 @@ package org.openwms.core.uaa;
 
 import java.util.List;
 
-import org.openwms.core.GenericEntityService;
-
 /**
- * A SecurityService defines functionality to handle <code>SecurityObject</code>s, especially <code>Grant</code>s.
+ * A SecurityService defines functionality to handle {@code SecurityObject}s, especially {@code Grant}s.
  *
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
- * @version $Revision$
+ * @version 0.2
  * @since 0.1
  */
-public interface SecurityService extends GenericEntityService<SecurityObject, Long, String> {
+public interface SecurityService {
 
     /**
-     * Merge a list of persisted, detached or transient {@link Grant}s of a particular <code>Module</code>.
+     * Merge a list of persisted, detached or transient {@link Grant}s of a particular {@code Module}.
      *
      * @param moduleName The moduleName
      * @param grants The list of {@link Grant}s to merge
