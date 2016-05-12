@@ -21,16 +21,12 @@
  */
 package org.openwms.core.uaa;
 
+import javax.validation.constraints.NotNull;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
 import org.ameba.annotation.TxService;
-import org.ameba.exception.NotFoundException;
-import org.openwms.core.GenericDao;
-import org.openwms.core.annotation.FireAfterTransaction;
-import org.openwms.core.event.RoleChangedEvent;
-import org.openwms.core.exception.ExceptionCodes;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -41,10 +37,7 @@ import org.springframework.stereotype.Service;
  * marked with Springs {@link Service} annotation to benefit from Springs
  * exception translation intercepter. Traditional CRUD operations are delegated
  * to a {@link RoleRepository} instance.
- * <p>
- * This implementation can be autowired with the name {@value #COMPONENT_NAME}.
- * </p>
- * 
+ *
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  * @version 0.2
  * @since 0.1
@@ -55,90 +48,6 @@ class RoleServiceImpl implements RoleService {
 
     @Autowired
     private RoleRepository repository;
-    /** Springs service name. */
-    public static final String COMPONENT_NAME = "roleService";
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    protected GenericDao<Role, Long> getRepository() {
-        return repository;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    protected Role resolveByBK(Role entity) {
-        Role result = null;
-        try {
-            result = findByBK(entity.getName());
-        } catch (NotFoundException enfe) {
-            ;
-        }
-        return result;
-    }
-
-    /**
-     * {@inheritDoc}
-     * 
-     * Triggers <tt>RoleChangedEvent</tt> after completion.
-     * 
-     * @throws org.ameba.exception.ServiceLayerException
-     *             when <code>entity</code> is <code>null</code>
-     */
-    @Override
-    @FireAfterTransaction(events = { RoleChangedEvent.class })
-    public void remove(Role entity) {
-        checkForNull(entity, ExceptionCodes.ROLE_REMOVE_NOT_BE_NULL);
-        super.remove(entity);
-    }
-
-    /**
-     * {@inheritDoc}
-     * 
-     * Triggers <tt>RoleChangedEvent</tt> after completion.
-     * 
-     * @throws org.ameba.exception.ServiceLayerException
-     *             when <code>keys</code> is <code>null</code>
-     */
-    @Override
-    @FireAfterTransaction(events = { RoleChangedEvent.class })
-    public void removeByBK(String[] keys) {
-        checkForNull(keys, ExceptionCodes.ROLE_REMOVE_NOT_BE_NULL);
-        super.removeByBK(keys);
-    }
-
-    /**
-     * {@inheritDoc}
-     * 
-     * Triggers <tt>RoleChangedEvent</tt> after completion.
-     * 
-     * @throws org.ameba.exception.ServiceLayerException
-     *             when <code>keys</code> is <code>null</code>
-     */
-    @Override
-    @FireAfterTransaction(events = { RoleChangedEvent.class })
-    public void removeByID(Long[] keys) {
-        checkForNull(keys, ExceptionCodes.ROLE_REMOVE_NOT_BE_NULL);
-        super.removeByID(keys);
-    }
-
-    /**
-     * {@inheritDoc}
-     * 
-     * Triggers <tt>RoleChangedEvent</tt> after completion.
-     * 
-     * @throws org.ameba.exception.ServiceLayerException
-     *             if the <tt>entity</tt> argument is <code>null</code>
-     */
-    @Override
-    @FireAfterTransaction(events = { RoleChangedEvent.class })
-    public Role save(Role entity) {
-        checkForNull(entity, ExceptionCodes.ROLE_SAVE_NOT_BE_NULL);
-        return super.save(entity);
-    }
 
     /**
      * @return
@@ -147,5 +56,13 @@ class RoleServiceImpl implements RoleService {
     public Collection<Role> findAll() {
         List<Role> roles = repository.findAll();
         return roles == null ? Collections.emptyList() : roles;
+    }
+
+    /**
+     * @return
+     */
+    @Override
+    public Role create(@NotNull Role role) {
+        return repository.save(role);
     }
 }

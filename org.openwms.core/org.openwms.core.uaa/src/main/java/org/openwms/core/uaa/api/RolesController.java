@@ -21,6 +21,8 @@
  */
 package org.openwms.core.uaa.api;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
@@ -37,8 +39,8 @@ import org.openwms.core.http.ResponseVO;
 import org.openwms.core.uaa.Role;
 import org.openwms.core.uaa.RoleService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -50,7 +52,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 /**
  * A RolesController.
- * 
+ *
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  * @version $Revision: $
  * @since 0.1
@@ -66,10 +68,9 @@ public class RolesController extends AbstractWebController {
 
     /**
      * Documented here: https://openwms.atlassian.net/wiki/x/EYAWAQ
-     * 
-     * @status Reviewed [scherrer]
-     * 
+     *
      * @return JSON response
+     * @status Reviewed [scherrer]
      */
     @RequestMapping(method = RequestMethod.GET)
     @ResponseBody
@@ -80,38 +81,25 @@ public class RolesController extends AbstractWebController {
 
     /**
      * Documented here: https://openwms.atlassian.net/wiki/x/BIAWAQ
-     * 
-     * @status Reviewed [scherrer]
-     * 
-     * @param role
-     *            The {@link Role} instance to be created
+     *
+     * @param role The {@link Role} instance to be created
      * @return An {@link ResponseVO} object to encapsulate the result of the creation operation
+     * @status Reviewed [scherrer]
      */
-    @RequestMapping(method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
+    @RequestMapping(method = RequestMethod.POST)
     @ResponseBody
-    public ResponseEntity<Response<RoleVO>> create(@RequestBody @Valid @NotNull RoleVO role) {
-        ResponseVO result = new ResponseVO();
-        HttpStatus resultStatus = HttpStatus.CREATED;
-        try {
-            RoleVO res = m.map(service.create(m.map(role, Role.class)), RoleVO.class);
-            result.add(new ResponseVO.ItemBuilder().wStatus(HttpStatus.CREATED).wParams(res).build());
-        } catch (Exception sre) {
-            resultStatus = HttpStatus.NOT_ACCEPTABLE;
-            ResponseVO.ResponseItem item = new ResponseVO.ItemBuilder().wMessage(sre.getMessage())
-                    .wStatus(resultStatus).wParams(role.getName()).build();
-            result.add(item);
-        }
-        return new ResponseEntity<ResponseVO>(result, resultStatus);
+    public ResponseEntity<Response<RoleVO>> create(@RequestBody @Valid @NotNull RoleVO role, HttpServletRequest req, HttpServletResponse resp) {
+        RoleVO createdRole = m.map(service.create(m.map(role, Role.class)), RoleVO.class);
+        resp.addHeader(HttpHeaders.LOCATION, getLocationForCreatedResource(req, createdRole.getId().toString()));
+        return buildResponse(HttpStatus.CREATED, translate(Messages.CREATED), Messages.CREATED);
     }
 
     /**
      * Documented here: https://openwms.atlassian.net/wiki/x/BoAWAQ
-     * 
-     * @status Reviewed [scherrer]
-     * 
-     * @param rolenames
-     *            An array of role names to delete
+     *
+     * @param rolenames An array of role names to delete
      * @return An {@link ResponseVO} object to encapsulate all single removal operations
+     * @status Reviewed [scherrer]
      */
     @RequestMapping(value = "/{name}", method = RequestMethod.DELETE)
     public ResponseEntity<ResponseVO> remove(@PathVariable("name") @NotNull String... rolenames) {
@@ -122,7 +110,7 @@ public class RolesController extends AbstractWebController {
                 continue;
             }
             try {
-                service.removeByBK(new String[] { rolename });
+                service.removeByBK(new String[]{rolename});
                 result.add(new ResponseVO.ItemBuilder().wStatus(HttpStatus.OK).wParams(rolename).build());
             } catch (Exception sre) {
                 resultStatus = HttpStatus.NOT_FOUND;
@@ -139,11 +127,11 @@ public class RolesController extends AbstractWebController {
 
     /**
      * FIXME [scherrer] Comment this
-     * 
+     *
      * @param role
      * @return
      */
-    @RequestMapping(method = RequestMethod.PUT, produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
+    @RequestMapping(method = RequestMethod.PUT)
     @ResponseBody
     @ResponseStatus(HttpStatus.OK)
     public RoleVO save(@RequestBody @Valid RoleVO role) {

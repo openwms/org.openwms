@@ -30,7 +30,7 @@
         <artifactId>org.openwms.core</artifactId>
         <version>1.1.0-SNAPSHOT</version>
     </parent>
-    <artifactId>org.openwms.core.integration.file</artifactId>
+    <artifactId>org.openwms.core.uaa</artifactId>
     <name>${project.artifactId}</name>
     <description>Code that uses JAXB to read/write XML files.</description>
     <properties>
