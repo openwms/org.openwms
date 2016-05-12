@@ -21,13 +21,13 @@
  */
 package org.openwms.core.uaa;
 
+import javax.validation.constraints.NotNull;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
 import org.ameba.annotation.TxService;
 import org.ameba.exception.NotFoundException;
-import org.openwms.core.GenericDao;
 import org.openwms.core.annotation.FireAfterTransaction;
 import org.openwms.core.event.RoleChangedEvent;
 import org.openwms.core.exception.ExceptionCodes;
@@ -55,16 +55,6 @@ class RoleServiceImpl implements RoleService {
 
     @Autowired
     private RoleRepository repository;
-    /** Springs service name. */
-    public static final String COMPONENT_NAME = "roleService";
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    protected GenericDao<Role, Long> getRepository() {
-        return repository;
-    }
 
     /**
      * {@inheritDoc}
@@ -147,5 +137,10 @@ class RoleServiceImpl implements RoleService {
     public Collection<Role> findAll() {
         List<Role> roles = repository.findAll();
         return roles == null ? Collections.emptyList() : roles;
+    }
+
+    @Override
+    public Role create(@NotNull Role role) {
+        return repository.save(role);
     }
 }
