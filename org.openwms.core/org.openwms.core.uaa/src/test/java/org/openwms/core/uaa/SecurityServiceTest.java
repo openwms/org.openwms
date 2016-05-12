@@ -56,7 +56,7 @@ import org.springframework.context.MessageSource;
 public class SecurityServiceTest extends AbstractMockitoTests {
 
     @Mock
-    private SecurityObjectDao dao;
+    private SecurityObjectRepository dao;
     @Mock
     private RoleRepository roleDao;
     @Mock

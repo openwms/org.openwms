@@ -23,22 +23,22 @@ package org.openwms.core.uaa;
 
 import java.util.List;
 
-import org.openwms.core.GenericDao;
+import org.springframework.data.jpa.repository.JpaRepository;
 
 /**
- * A SecurityDao is used to find, modify and delete {@link SecurityObject}s.
+ * A SecurityObjectRepository is used to find, modify and delete {@link SecurityObject}s.
  *
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
- * @version $Revision$
+ * @version 0.2
  * @since 0.1
  */
-public interface SecurityObjectDao extends GenericDao<SecurityObject, Long> {
+interface SecurityObjectRepository extends JpaRepository<SecurityObject, Long> {
 
     /**
-     * Find and retrieve all {@link SecurityObject}s that belong to a given <code>Module</code>.
+     * Find and retrieve all {@link SecurityObject}s that belong to a given {@code Module}.
      *
-     * @param moduleName The name of the <code>Module</code>
-     * @return a list of {@link SecurityObject}s. <code>null</code> might be possible as well, see the particular implementation
+     * @param moduleName The name of the {@code Module}
+     * @return a list of {@link SecurityObject}s. {@literal null} might be possible as well, see the particular implementation
      */
     List<Grant> findAllOfModule(String moduleName);
 

@@ -50,7 +50,7 @@ public class SecurityServiceImpl extends AbstractGenericEntityService<SecurityOb
 
     private static final Logger LOGGER = LoggerFactory.getLogger(SecurityServiceImpl.class);
     @Autowired
-    private SecurityObjectDao securityObjectDao;
+    private SecurityObjectRepository securityObjectDao;
     @Autowired
     private RoleRepository roleDao;
 

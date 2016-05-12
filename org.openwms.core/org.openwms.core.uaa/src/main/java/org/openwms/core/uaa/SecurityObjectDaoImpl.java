@@ -40,7 +40,7 @@ import org.springframework.transaction.annotation.Transactional;
  */
 @Transactional(propagation = Propagation.MANDATORY)
 @Repository(SecurityObjectDaoImpl.COMPONENT_NAME)
-public class SecurityObjectDaoImpl extends AbstractGenericJpaDao<SecurityObject, Long> implements SecurityObjectDao {
+public class SecurityObjectDaoImpl extends AbstractGenericJpaDao<SecurityObject, Long> implements SecurityObjectRepository {
 
     @PersistenceContext
     private EntityManager em;
