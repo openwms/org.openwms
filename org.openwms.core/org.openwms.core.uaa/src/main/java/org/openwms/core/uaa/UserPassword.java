@@ -23,72 +23,49 @@ package org.openwms.core.uaa;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.OrderBy;
 import javax.persistence.Table;
-import javax.persistence.Version;
 import java.io.Serializable;
 import java.util.Date;
 
+import org.ameba.integration.jpa.BaseEntity;
 import org.openwms.core.AbstractEntity;
 import org.springframework.util.Assert;
 
 /**
- * Is a representation of an <code>User</code> together with her password. <p> When an <code>User</code> changes her password, the current
- * password is added to a history list of passwords. This is necessary to omit <code>User</code>s from setting formerly used passwords.
- * </p>
+ * Is a representation of an {@link User} together with her password. <p> When an {@link User} changes her password, the current password is
+ * added to a history list of passwords. This is necessary to omit {@link User}s from setting formerly used passwords. </p>
  *
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
- * @version $Revision$
+ * @version 0.2
  * @GlossaryTerm
  * @see org.openwms.core.uaa.User
  * @since 0.1
  */
 @Entity
 @Table(name = "COR_USER_PASSWORD")
-public class UserPassword extends AbstractEntity<Long> implements Serializable {
+public class UserPassword extends BaseEntity implements Serializable {
 
-    private static final long serialVersionUID = 1678609250279381615L;
-    /**
-     * Unique technical key.
-     */
-    @Id
-    @GeneratedValue
-    @Column(name = "C_ID")
-    private Long id;
-    /**
-     * {@link User} assigned to this password.
-     */
+    /** {@link User} assigned to this password. */
     @ManyToOne
     private User user;
-    /**
-     * Password.
-     */
+    /** Password. */
     @Column(name = "C_PASSWORD")
     private String password;
-    /**
-     * Date of the last password change.
-     */
+    /** Date of the last password change. */
     @Column(name = "C_PASSWORD_CHANGED")
     @OrderBy
     private Date passwordChanged = new Date();
-    /**
-     * Version field.
-     */
-    @Version
-    @Column(name = "C_VERSION")
-    private long version;
 
     /* ----------------------------- methods ------------------- */
 
     /**
-     * Create a new <code>UserPassword</code>.
+     * Create a new {@link UserPassword}.
      *
      * @param user The {@link User} to assign
-     * @param password The <code>password</code> as String to assign
-     * @throws IllegalArgumentException when <code>user</code> or <code>password</code> is <code>null</code> or empty
+     * @param password The {@code password} as String to assign
+     * @throws IllegalArgumentException when {@link User} or {@code password} is {@literal null} or empty
      */
     public UserPassword(User user, String password) {
         Assert.notNull(user, "User must not be null");
@@ -98,18 +75,10 @@ public class UserPassword extends AbstractEntity<Long> implements Serializable {
     }
 
     /**
-     * Constructor only for the persistence provider.
+     * Dear JPA...
      */
     protected UserPassword() {
         super();
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public Long getId() {
-        return id;
     }
 
     /**
@@ -146,22 +115,6 @@ public class UserPassword extends AbstractEntity<Long> implements Serializable {
      */
     public Date getPasswordChanged() {
         return new Date(passwordChanged.getTime());
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public long getVersion() {
-        return version;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public boolean isNew() {
-        return id == null;
     }
 
     /**

@@ -30,7 +30,7 @@ import org.springframework.security.core.GrantedAuthority;
  * A SystemUserWrapper.
  *
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
- * @version $Revision: $
+ * @version 0.2
  * @since 0.1
  */
 public class SystemUserWrapper extends UserWrapper implements Serializable {

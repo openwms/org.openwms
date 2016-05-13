@@ -53,7 +53,7 @@ import org.springframework.util.Assert;
  * implementation can be autowired with the name {@value #COMPONENT_NAME}. </p>
  *
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
- * @version $Revision$
+ * @version 0.2
  * @see UserRepository
  * @since 0.1
  */

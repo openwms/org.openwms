@@ -41,7 +41,7 @@ import org.springframework.util.Assert;
  * instead of {@link User}s.
  *
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
- * @version $Revision$
+ * @version 0.2
  * @GlossaryTerm
  * @see SecurityObject
  * @see User

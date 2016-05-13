@@ -23,17 +23,17 @@ package org.openwms.core.uaa;
 
 import java.util.Collection;
 import java.util.HashSet;
+import java.util.stream.Collectors;
 
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.util.Assert;
 
 /**
- * An UserWrapper is used as an adapter between <code>Role</code>s, <code>SecurityObject</code>s and Spring's {@link GrantedAuthority}
- * objects.
+ * An UserWrapper is used as an adapter between {@link Role}s, {@link SecurityObject}s and Spring's {@link GrantedAuthority} objects.
  *
  * @author <a href="mailto:russelltina@users.sourceforge.net">Tina Russell</a>
- * @version $Revision$
+ * @version 0.2
  * @see org.openwms.core.uaa.SecurityObject
  * @see org.openwms.core.uaa.Role
  * @see org.springframework.security.core.GrantedAuthority
@@ -75,15 +75,13 @@ public class UserWrapper implements UserDetails, UserHolder {
     /**
      * {@inheritDoc}
      *
-     * @return the authorities, sorted by natural key (never <code>null</code>)
+     * @return the authorities, sorted by natural key (never {@literal null})
      */
     @Override
     public Collection<GrantedAuthority> getAuthorities() {
         if (null == authorities) {
-            authorities = new HashSet<GrantedAuthority>();
-            for (final SecurityObject grant : user.getGrants()) {
-                authorities.add(new SecurityObjectAuthority(grant));
-            }
+            authorities = new HashSet<>();
+            authorities.addAll(user.getGrants().stream().map(SecurityObjectAuthority::new).collect(Collectors.toList()));
             addDefaultGrants(authorities);
         }
         return authorities;
@@ -92,7 +90,7 @@ public class UserWrapper implements UserDetails, UserHolder {
     /**
      * {@inheritDoc}
      *
-     * @return the password (never <code>null</code>)
+     * @return the password (never {@literal null})
      */
     @Override
     public String getPassword() {
@@ -102,7 +100,7 @@ public class UserWrapper implements UserDetails, UserHolder {
     /**
      * {@inheritDoc}
      *
-     * @return the username (never <code>null</code>)
+     * @return the username (never {@literal null})
      */
     @Override
     public String getUsername() {
@@ -112,7 +110,7 @@ public class UserWrapper implements UserDetails, UserHolder {
     /**
      * {@inheritDoc}
      *
-     * @return <code>true</code> if the user's account is valid (ie non-expired), <code>false</code> if no longer valid (ie expired)
+     * @return {@literal true} if the user's account is valid (ie non-expired), {@literal false} if no longer valid (ie expired)
      */
     @Override
     public boolean isAccountNonExpired() {
@@ -122,7 +120,7 @@ public class UserWrapper implements UserDetails, UserHolder {
     /**
      * {@inheritDoc}
      *
-     * @return <code>true</code> if the user is not locked, <code>false</code> otherwise
+     * @return {@literal true} if the user is not locked, {@literal false} otherwise
      */
     @Override
     public boolean isAccountNonLocked() {
@@ -132,7 +130,7 @@ public class UserWrapper implements UserDetails, UserHolder {
     /**
      * {@inheritDoc}
      *
-     * @return <code>true</code> if the user's credentials are valid (ie non-expired), <code>false</code> if no longer valid (ie expired)
+     * @return {@literal true} if the user's credentials are valid (ie non-expired), {@literal false} if no longer valid (ie expired)
      * @see org.springframework.security.core.userdetails.UserDetails#isCredentialsNonExpired()
      */
     @Override
@@ -143,7 +141,7 @@ public class UserWrapper implements UserDetails, UserHolder {
     /**
      * {@inheritDoc}
      *
-     * @return <code>true</code> if the user is enabled, <code>false</code> otherwise
+     * @return {@literal true} if the user is enabled, {@literal false} otherwise
      */
     @Override
     public boolean isEnabled() {

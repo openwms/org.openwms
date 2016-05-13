@@ -23,75 +23,50 @@ package org.openwms.core.uaa;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
-import javax.persistence.Version;
 import java.io.Serializable;
 
-import org.openwms.core.AbstractEntity;
+import org.ameba.integration.jpa.BaseEntity;
 import org.springframework.util.Assert;
 
 /**
- * An Email represents the email address of an <code>User</code>.
+ * An Email represents the email address of an {@code User}.
  *
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
- * @version $Revision$
+ * @version 0.2
  * @GlossaryTerm
  * @see User
  * @since 0.1
  */
 @Entity
 @Table(name = "COR_EMAIL", uniqueConstraints = @UniqueConstraint(columnNames = {"C_USERNAME", "C_ADDRESS"}))
-public class Email extends AbstractEntity<Long> implements Serializable {
+public class Email extends BaseEntity implements Serializable {
 
-    private static final long serialVersionUID = 3182027866592095069L;
-    /**
-     * Unique technical key.
-     */
-    @Id
-    @Column(name = "C_ID")
-    @GeneratedValue
-    private Long id;
-    /**
-     * Unique identifier of the <code>Email</code> (not nullable).
-     */
+    /** Unique identifier of the {@code Email} (not nullable). */
     @Column(name = "C_USERNAME", nullable = false)
     private String username;
-    /**
-     * The email address as String (not nullable).
-     */
+    /** The email address as String (not nullable). */
     @Column(name = "C_ADDRESS", nullable = false)
     private String emailAddress;
-    /**
-     * The fullname of the <code>User</code>.
-     */
+    /** The fullname of the {@code User}. */
     @Column(name = "C_FULL_NAME")
     private String fullname;
-    /**
-     * Version field.
-     */
-    @Version
-    @Column(name = "C_VERSION")
-    private long version;
 
     /* ----------------------------- methods ------------------- */
 
     /**
-     * Accessed by persistence provider.
+     * Dear JPA...
      */
-    @SuppressWarnings("unused")
-    private Email() {
-
+    protected Email() {
     }
 
     /**
-     * Create a new <code>Email</code> with an <code>username</code> and an <code>emailAddress</code>.
+     * Create a new {@code Email} with an {@code username} and an {@code emailAddress}.
      *
      * @param username The name of the User
      * @param emailAddress The email address of the User
-     * @throws IllegalArgumentException when userName or emailAddress is <code>null</code> or empty
+     * @throws IllegalArgumentException when userName or emailAddress is {@literal null} or empty
      */
     public Email(String username, String emailAddress) {
         Assert.hasText(username, "Username must not be null or empty");
@@ -101,23 +76,7 @@ public class Email extends AbstractEntity<Long> implements Serializable {
     }
 
     /**
-     * {@inheritDoc}
-     */
-    @Override
-    public Long getId() {
-        return id;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public boolean isNew() {
-        return id == null;
-    }
-
-    /**
-     * Returns the name of the <code>User</code> who owns this <code>Email</code>.
+     * Returns the name of the {@code User} who owns this {@code Email}.
      *
      * @return The username as String
      */
@@ -126,9 +85,9 @@ public class Email extends AbstractEntity<Long> implements Serializable {
     }
 
     /**
-     * Assign the <code>Email</code> to an <code>User</code>.
+     * Assign the {@code Email} to an {@code User}.
      *
-     * @param userName Name of the <code>User</code>.
+     * @param userName Name of the {@code User}.
      */
     public void setUsername(String userName) {
         this.username = userName;
@@ -168,14 +127,6 @@ public class Email extends AbstractEntity<Long> implements Serializable {
      */
     public void setFullname(String fullname) {
         this.fullname = fullname;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public long getVersion() {
-        return version;
     }
 
     /**
