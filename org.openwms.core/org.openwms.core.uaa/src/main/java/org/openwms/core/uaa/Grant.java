@@ -27,16 +27,16 @@ import java.io.Serializable;
 
 /**
  * A Grant gives permission to access some kind of application object. Grants to security aware application objects can be permitted or
- * denied for a certain <code>Role</code>, depending on the security configuration. Usually <code>Grant</code>s are assigned to a
- * <code>Role</code> and on or more <code>User</code> s are assigned to each <code>Role</code>s. A Grant is security aware, that means it is
- * an concrete <code>SecurityObject</code>.
+ * denied for a certain {@code Role}, depending on the security configuration. Usually {@code Grant}s are assigned to a
+ * {@code Role} and on or more {@code User} s are assigned to each {@code Role}s. A Grant is security aware, that means it is
+ * an concrete {@code SecurityObject}.
  * <p>
- * Permissions to UI actions are managed with <code>Grant</code>s.
+ * Permissions to UI actions are managed with {@code Grant}s.
  * </p>
  * 
  * @GlossaryTerm
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
- * @version $Revision$
+ * @version 0.2
  * @since 0.1
  * @see User
  * @see Role
@@ -46,22 +46,19 @@ import java.io.Serializable;
 @DiscriminatorValue("GRANT")
 public class Grant extends SecurityObject implements Serializable {
 
-    private static final long serialVersionUID = 2061059874657176727L;
-
     /**
-     * Create a new Grant.
+     * Dear JPA...
      */
-    public Grant() {
-        super();
+    protected Grant() {
     }
 
     /**
      * Create a new Grant.
      * 
      * @param name
-     *            The name of the <code>Grant</code>
+     *            The name of the {@code Grant}
      * @param description
-     *            The description text of the <code>Grant</code>
+     *            The description text of the {@code Grant}
      */
     public Grant(String name, String description) {
         super(name, description);
@@ -71,7 +68,7 @@ public class Grant extends SecurityObject implements Serializable {
      * Create a new Grant.
      * 
      * @param name
-     *            The name of the <code>Grant</code>
+     *            The name of the {@code Grant}
      */
     public Grant(String name) {
         super(name);
@@ -80,8 +77,8 @@ public class Grant extends SecurityObject implements Serializable {
     /**
      * {@inheritDoc}
      * 
-     * Use the hashCode of the superclass with the hashCode of 'GRANT' to distinguish between <code>Grant</code>s and other
-     * <code>SecurityObject</code>s like <code>Role</code>s.
+     * Use the hashCode of the superclass with the hashCode of 'GRANT' to distinguish between {@code Grant}s and other
+     * {@code SecurityObject}s like {@code Role}s.
      * 
      * @see SecurityObject#hashCode()
      */
