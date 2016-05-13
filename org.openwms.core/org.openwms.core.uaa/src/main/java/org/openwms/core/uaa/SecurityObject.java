@@ -71,7 +71,7 @@ public class SecurityObject extends BaseEntity implements Serializable {
      * Create a new {@code SecurityObject} with a name.
      *
      * @param name The name of the {@code SecurityObject}
-     * @throws IllegalArgumentException when name is {@literal null} or an empty String
+     * @throws IllegalArgumentException if name is {@literal null} or an empty String
      */
     public SecurityObject(String name) {
         Assert.hasText(name, "A name of a SecurityObject must not be null");
@@ -83,7 +83,7 @@ public class SecurityObject extends BaseEntity implements Serializable {
      *
      * @param name The name of the {@code SecurityObject}
      * @param description The description text of the {@code SecurityObject}
-     * @throws IllegalArgumentException when name is {@literal null} or an empty String
+     * @throws IllegalArgumentException if name is {@literal null} or an empty String
      */
     public SecurityObject(String name, String description) {
         Assert.hasText(name, "A name of a SecurityObject must not be null");

@@ -24,6 +24,7 @@ package org.openwms.core.uaa;
 import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
 
 /**
  * A SecurityObjectRepository is used to find, modify and delete {@link SecurityObject}s.
@@ -40,20 +41,9 @@ interface SecurityObjectRepository extends JpaRepository<SecurityObject, Long> {
      * @param moduleName The name of the {@code Module}
      * @return a list of {@link SecurityObject}s. {@literal null} might be possible as well, see the particular implementation
      */
+    @Query("select g from Grant g where g.name like :moduleName")
     List<Grant> findAllOfModule(String moduleName);
 
-    /**
-     * Save a {@link SecurityObject} and return the updated instance.
-     *
-     * @param entity the {@link SecurityObject} to save
-     * @return the saved instance
-     */
-    SecurityObject merge(SecurityObject entity);
-
-    /**
-     * Delete a list of {@link Grant}s.
-     *
-     * @param grants the {@link Grant}s to delete
-     */
-    void delete(List<Grant> grants);
+    @Query("select g from Grant g")
+    List<Grant> findAllGrants();
 }

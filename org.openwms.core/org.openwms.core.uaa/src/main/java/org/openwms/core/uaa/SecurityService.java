@@ -40,9 +40,4 @@ public interface SecurityService {
      * @return All existing {@link Grant}s
      */
     List<Grant> mergeGrants(String moduleName, List<Grant> grants);
-
-    /**
-     * Force a login. Call this method to access the security filter chain. The implementation does not need to execute anything.
-     */
-    void login();
 }

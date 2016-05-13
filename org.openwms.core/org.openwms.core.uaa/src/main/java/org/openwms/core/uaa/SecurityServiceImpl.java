@@ -32,7 +32,6 @@ import org.openwms.core.exception.ExceptionCodes;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
 
 /**
@@ -47,28 +46,16 @@ public class SecurityServiceImpl implements SecurityService {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(SecurityServiceImpl.class);
     @Autowired
-    private SecurityObjectRepository securityObjectDao;
+    private SecurityObjectRepository securityObjectRepository;
     @Autowired
-    private RoleRepository roleDao;
+    private RoleRepository roleRepository;
     @Autowired
     private Translator translator;
 
     /**
      * {@inheritDoc}
      * <p>
-     * Marked as <code>readOnly</code> transactional method. Only a trace message is written. This method is solely responsible to activate
-     * the security filter chain.
-     */
-    @Override
-    @Transactional(readOnly = true)
-    public void login() {
-        LOGGER.debug("Login successful!");
-    }
-
-    /**
-     * {@inheritDoc}
-     * <p>
-     * Triggers <tt>UserChangedEvent</tt> after completion.
+     * Triggers {@code UserChangedEvent} after completion.
      */
     @Override
     @FireAfterTransaction(events = {UserChangedEvent.class})
@@ -77,21 +64,16 @@ public class SecurityServiceImpl implements SecurityService {
         if (LOGGER.isDebugEnabled()) {
             LOGGER.debug("Merging grants of module:" + moduleName);
         }
-        List<Grant> persisted = securityObjectDao.findAllOfModule(moduleName + "%");
+        List<Grant> persisted = securityObjectRepository.findAllOfModule(moduleName + "%");
         List<Grant> result = new ArrayList<>(persisted);
-        Grant merged;
-        for (Grant grant : grants) {
-            if (!persisted.contains(grant)) {
-                merged = (Grant) securityObjectDao.merge(grant);
-                result.add(merged);
-            } else {
-                persisted.remove(grant);
-            }
-        }
+        grants.forEach(g -> {
+            if (persisted.contains(g)) persisted.remove(g);
+            else result.add(securityObjectRepository.save(g));
+        });
         result.removeAll(persisted);
         if (!persisted.isEmpty()) {
-            roleDao.removeFromRoles(persisted);
-            securityObjectDao.delete(persisted);
+            roleRepository.removeFromRoles(persisted);
+            securityObjectRepository.delete(persisted);
         }
         return result;
     }
