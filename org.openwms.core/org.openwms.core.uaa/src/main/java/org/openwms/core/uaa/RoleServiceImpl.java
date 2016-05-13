@@ -46,11 +46,17 @@ import org.springframework.stereotype.Service;
 @TxService
 class RoleServiceImpl implements RoleService {
 
-    @Autowired
     private RoleRepository repository;
 
+    @Autowired
+    RoleServiceImpl(RoleRepository repository) {
+        this.repository = repository;
+    }
+
     /**
-     * @return
+     * {@inheritDoc}
+     *
+     * Return type ArrayList
      */
     @Override
     public Collection<Role> findAll() {
@@ -59,7 +65,7 @@ class RoleServiceImpl implements RoleService {
     }
 
     /**
-     * @return
+     * {@inheritDoc}
      */
     @Override
     public Role create(@NotNull Role role) {

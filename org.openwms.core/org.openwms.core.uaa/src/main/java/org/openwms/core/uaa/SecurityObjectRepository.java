@@ -23,37 +23,27 @@ package org.openwms.core.uaa;
 
 import java.util.List;
 
-import org.openwms.core.GenericDao;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
 
 /**
- * A SecurityDao is used to find, modify and delete {@link SecurityObject}s.
+ * A SecurityObjectRepository is used to find, modify and delete {@link SecurityObject}s.
  *
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
- * @version $Revision$
+ * @version 0.2
  * @since 0.1
  */
-public interface SecurityObjectDao extends GenericDao<SecurityObject, Long> {
+interface SecurityObjectRepository extends JpaRepository<SecurityObject, Long> {
 
     /**
-     * Find and retrieve all {@link SecurityObject}s that belong to a given <code>Module</code>.
+     * Find and retrieve all {@link SecurityObject}s that belong to a given {@code Module}.
      *
-     * @param moduleName The name of the <code>Module</code>
-     * @return a list of {@link SecurityObject}s. <code>null</code> might be possible as well, see the particular implementation
+     * @param moduleName The name of the {@code Module}
+     * @return a list of {@link SecurityObject}s. {@literal null} might be possible as well, see the particular implementation
      */
+    @Query("select g from Grant g where g.name like :moduleName")
     List<Grant> findAllOfModule(String moduleName);
 
-    /**
-     * Save a {@link SecurityObject} and return the updated instance.
-     *
-     * @param entity the {@link SecurityObject} to save
-     * @return the saved instance
-     */
-    SecurityObject merge(SecurityObject entity);
-
-    /**
-     * Delete a list of {@link Grant}s.
-     *
-     * @param grants the {@link Grant}s to delete
-     */
-    void delete(List<Grant> grants);
+    @Query("select g from Grant g")
+    List<Grant> findAllGrants();
 }

@@ -35,9 +35,17 @@ import java.util.Collection;
 public interface RoleService {
 
     /**
-     * @return
+     * Find and return all existing Roles.
+     *
+     * @return All Roles or an empty collection type, never {@literal null}
      */
     Collection<Role> findAll();
 
+    /**
+     * Create a new Role passed as argument {@code role}.
+     *
+     * @param role The Role to create
+     * @return The created Role instance
+     */
     Role create(Role role);
 }

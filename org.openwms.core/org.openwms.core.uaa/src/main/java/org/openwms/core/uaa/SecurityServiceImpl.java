@@ -24,100 +24,56 @@ package org.openwms.core.uaa;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.ameba.exception.NotFoundException;
-import org.openwms.core.AbstractGenericEntityService;
-import org.openwms.core.GenericDao;
+import org.ameba.annotation.TxService;
+import org.ameba.i18n.Translator;
 import org.openwms.core.annotation.FireAfterTransaction;
 import org.openwms.core.event.UserChangedEvent;
 import org.openwms.core.exception.ExceptionCodes;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.Assert;
 
 /**
  * A SecurityServiceImpl is a transactional Spring Service implementation.
  *
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
- * @version $Revision$
+ * @version 0.2
  * @since 0.1
  */
-@Transactional
-@Service(SecurityServiceImpl.COMPONENT_NAME)
-public class SecurityServiceImpl extends AbstractGenericEntityService<SecurityObject, Long, String> implements
-        SecurityService {
+@TxService
+public class SecurityServiceImpl implements SecurityService {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(SecurityServiceImpl.class);
     @Autowired
-    private SecurityObjectDao securityObjectDao;
+    private SecurityObjectRepository securityObjectRepository;
     @Autowired
-    private RoleRepository roleDao;
-
-    /** Springs component name. */
-    public static final String COMPONENT_NAME = "securityService";
-
-    /**
-     * {@inheritDoc}
-     * <p>
-     * Marked as <code>readOnly</code> transactional method. Only a trace message is written. This method is solely responsible to activate
-     * the security filter chain.
-     */
-    @Override
-    @Transactional(readOnly = true)
-    public void login() {
-        LOGGER.debug("Login successful!");
-    }
+    private RoleRepository roleRepository;
+    @Autowired
+    private Translator translator;
 
     /**
      * {@inheritDoc}
      * <p>
-     * Triggers <tt>UserChangedEvent</tt> after completion.
+     * Triggers {@code UserChangedEvent} after completion.
      */
     @Override
     @FireAfterTransaction(events = {UserChangedEvent.class})
     public List<Grant> mergeGrants(String moduleName, List<Grant> grants) {
-        checkForNull(moduleName, translate(ExceptionCodes.MODULENAME_NOT_NULL));
+        Assert.notNull(moduleName, translator.translate(ExceptionCodes.MODULENAME_NOT_NULL));
         if (LOGGER.isDebugEnabled()) {
             LOGGER.debug("Merging grants of module:" + moduleName);
         }
-        List<Grant> persisted = securityObjectDao.findAllOfModule(moduleName + "%");
+        List<Grant> persisted = securityObjectRepository.findAllOfModule(moduleName + "%");
         List<Grant> result = new ArrayList<>(persisted);
-        Grant merged;
-        for (Grant grant : grants) {
-            if (!persisted.contains(grant)) {
-                merged = (Grant) securityObjectDao.merge(grant);
-                result.add(merged);
-            } else {
-                persisted.remove(grant);
-            }
-        }
+        grants.forEach(g -> {
+            if (persisted.contains(g)) persisted.remove(g);
+            else result.add(securityObjectRepository.save(g));
+        });
         result.removeAll(persisted);
         if (!persisted.isEmpty()) {
-            roleDao.removeFromRoles(persisted);
-            securityObjectDao.delete(persisted);
-        }
-        return result;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    protected GenericDao<SecurityObject, Long> getRepository() {
-        return securityObjectDao;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    protected SecurityObject resolveByBK(SecurityObject entity) {
-        SecurityObject result = null;
-        try {
-            result = findByBK(entity.getName());
-        } catch (NotFoundException enfe) {
-            ;
+            roleRepository.removeFromRoles(persisted);
+            securityObjectRepository.delete(persisted);
         }
         return result;
     }

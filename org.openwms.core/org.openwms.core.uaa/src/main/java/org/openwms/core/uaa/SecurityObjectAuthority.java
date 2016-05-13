@@ -21,19 +21,20 @@
  */
 package org.openwms.core.uaa;
 
+import java.io.Serializable;
+
 import org.springframework.security.core.GrantedAuthority;
 
 /**
  * A SecurityObjectAuthority.
  * 
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
- * @version $Revision: $
+ * @version 0.2
  * @since 0.2
  * @see org.springframework.security.core.GrantedAuthority
  */
-class SecurityObjectAuthority implements GrantedAuthority {
+class SecurityObjectAuthority implements GrantedAuthority, Serializable {
 
-    private static final long serialVersionUID = -7308040835860060411L;
     private final SecurityObject sObj;
 
     /**

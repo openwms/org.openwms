@@ -65,7 +65,7 @@ public class UserServiceImpl implements UserService {
     @Autowired
     private UserRepository repository;
     @Autowired
-    private SecurityObjectDao securityObjectDao;
+    private SecurityObjectRepository securityObjectDao;
     @Autowired
     private ConfigurationService confSrv;
     @Autowired
