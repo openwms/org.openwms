@@ -31,8 +31,6 @@ package org.openwms.core.event;
  */
 public class UserChangedEvent extends RootApplicationEvent {
 
-    private static final long serialVersionUID = 9137035549610051152L;
-
     /**
      * Create a new UserChangedEvent.
      * 

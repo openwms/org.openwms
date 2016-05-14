@@ -36,7 +36,7 @@ import org.springframework.data.jpa.repository.Query;
 interface SecurityObjectRepository extends JpaRepository<SecurityObject, Long> {
 
     /**
-     * Find and retrieve all {@link SecurityObject}s that belong to a given {@code Module}.
+     * Find and return all {@link SecurityObject}s that belong to a given {@code Module}.
      *
      * @param moduleName The name of the {@code Module}
      * @return a list of {@link SecurityObject}s. {@literal null} might be possible as well, see the particular implementation

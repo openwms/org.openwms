@@ -26,7 +26,7 @@ package org.openwms.core.uaa;
  * API and the implementation class, that is kept separately in the <i>implementation</i> bundle.
  * 
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
- * @version $Revision: 1484 $
+ * @version 0.2
  * @since 0.1
  */
 public interface UserHolder {

@@ -35,10 +35,10 @@ import org.openwms.core.values.CoreTypeDefinitions;
 import org.openwms.core.values.ImageProvider;
 
 /**
- * Detailed information about an <code>User</code>.
+ * Detailed information about an {@link User}.
  *
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
- * @version $Revision$
+ * @version 0.2
  * @see org.openwms.core.uaa.User
  * @since 0.1
  */
@@ -46,55 +46,55 @@ import org.openwms.core.values.ImageProvider;
 public class UserDetails implements ImageProvider, Serializable {
 
     /**
-     * Some descriptive text of the <code>User</code>.
+     * Some descriptive text of the {@link User}.
      */
     @Column(name = "C_DESCRIPTION", length = CoreTypeDefinitions.DESCRIPTION_LENGTH)
     private String description;
     /**
-     * Some comment text of the <code>User</code>.
+     * Some comment text of the {@link User}.
      */
     @Column(name = "C_COMMENT")
     private String comment;
     /**
-     * Phone number assigned to the <code>User</code>.
+     * Phone number assigned to the {@link User}.
      */
     @Column(name = "C_PHONE_NO")
     private String phoneNo;
     /**
-     * IM account assigned to the <code>User</code>.
+     * IM account assigned to the {@link User}.
      */
     @Column(name = "C_IM")
     private String skypeName;
     /**
-     * Office description assigned to the <code>User</code>.
+     * Office description assigned to the {@link User}.
      */
     @Column(name = "C_OFFICE")
     private String office;
     /**
-     * Department description assigned to the <code>User</code>.
+     * Department description assigned to the {@link User}.
      */
     @Column(name = "C_DEPARTMENT")
     private String department;
     /**
-     * An image of the <code>User</code>. Lazy fetched.
+     * An image of the {@link User}. Lazy fetched.
      */
     @Lob
     @Basic(fetch = FetchType.EAGER)
     @Column(name = "C_IMAGE")
     private byte[] image;
     /**
-     * Sex of the <code>User</code>.
+     * Sex of the {@link User}.
      */
     @Enumerated(EnumType.STRING)
     @Column(name = "C_SEX")
     private SEX sex;
 
     /**
-     * The <code>User</code>s sex.
+     * The {@link User}s sex.
      *
      * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
-     * @version $Revision$
-     * @see org.openwms.core.system.usermanagement.User
+     * @version 0.2
+     * @see org.openwms.core.uaa.User
      * @since 0.1
      */
     public static enum SEX {
@@ -111,14 +111,14 @@ public class UserDetails implements ImageProvider, Serializable {
     /* ----------------------------- methods ------------------- */
 
     /**
-     * Create a new <code>UserDetails</code> instance.
+     * Create a new {@link UserDetails} instance.
      */
     public UserDetails() {
         super();
     }
 
     /**
-     * Return the <code>User</code>s current phone number.
+     * Return the {@link User}s current phone number.
      *
      * @return The phone number
      */
@@ -127,7 +127,7 @@ public class UserDetails implements ImageProvider, Serializable {
     }
 
     /**
-     * Change the phone number of the <code>User</code>.
+     * Change the phone number of the {@link User}.
      *
      * @param phoneNo The new phone number
      */
@@ -136,7 +136,7 @@ public class UserDetails implements ImageProvider, Serializable {
     }
 
     /**
-     * Return the description text of the <code>User</code>.
+     * Return the description text of the {@link User}.
      *
      * @return The description
      */
@@ -145,7 +145,7 @@ public class UserDetails implements ImageProvider, Serializable {
     }
 
     /**
-     * Change the description text of the <code>User</code>.
+     * Change the description text of the {@link User}.
      *
      * @param description The new description
      */
@@ -154,7 +154,7 @@ public class UserDetails implements ImageProvider, Serializable {
     }
 
     /**
-     * Return a comment text of the <code>User</code>.
+     * Return a comment text of the {@link User}.
      *
      * @return The comment text
      */
@@ -163,7 +163,7 @@ public class UserDetails implements ImageProvider, Serializable {
     }
 
     /**
-     * Change the comment text of the <code>User</code>.
+     * Change the comment text of the {@link User}.
      *
      * @param comment The new comment text
      */
@@ -172,7 +172,7 @@ public class UserDetails implements ImageProvider, Serializable {
     }
 
     /**
-     * Return the current office of the <code>User</code>.
+     * Return the current office of the {@link User}.
      *
      * @return The current office.
      */
@@ -181,7 +181,7 @@ public class UserDetails implements ImageProvider, Serializable {
     }
 
     /**
-     * Change the current office of the <code>User</code>.
+     * Change the current office of the {@link User}.
      *
      * @param office The new office
      */
@@ -190,7 +190,7 @@ public class UserDetails implements ImageProvider, Serializable {
     }
 
     /**
-     * Return the IM account name of the <code>User</code>.
+     * Return the IM account name of the {@link User}.
      *
      * @return The current IM account name
      */
@@ -199,7 +199,7 @@ public class UserDetails implements ImageProvider, Serializable {
     }
 
     /**
-     * Change the current IM account name of the <code>User</code>.
+     * Change the current IM account name of the {@link User}.
      *
      * @param skypeName The new IM account name
      */
@@ -208,7 +208,7 @@ public class UserDetails implements ImageProvider, Serializable {
     }
 
     /**
-     * Return the current department of the <code>User</code>.
+     * Return the current department of the {@link User}.
      *
      * @return The current department
      */
@@ -217,7 +217,7 @@ public class UserDetails implements ImageProvider, Serializable {
     }
 
     /**
-     * Change the current department of the <code>User</code>.
+     * Change the current department of the {@link User}.
      *
      * @param department The new department
      */
@@ -245,16 +245,16 @@ public class UserDetails implements ImageProvider, Serializable {
     }
 
     /**
-     * Return the <code>User</code>'s sex.
+     * Return the {@link User}'s sex.
      *
-     * @return The <code>User</code>'s sex
+     * @return The {@link User}'s sex
      */
     public SEX getSex() {
         return sex;
     }
 
     /**
-     * Change the <code>User</code>'s sex (only for compliance).
+     * Change the {@link User}'s sex (only for compliance).
      *
      * @param sex The new sex
      */

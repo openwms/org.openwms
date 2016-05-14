@@ -27,7 +27,7 @@ import org.springframework.security.core.GrantedAuthority;
  * A SystemUserAuthority.
  *
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
- * @version $Revision: $
+ * @version 0.2
  * @since 0.2
  */
 final class SystemUserAuthority implements GrantedAuthority {
@@ -48,16 +48,7 @@ final class SystemUserAuthority implements GrantedAuthority {
      */
     @Override
     public boolean equals(Object obj) {
-        if (obj == null) {
-            return false;
-        }
-        if (this == obj) {
-            return true;
-        }
-        if (getClass() != obj.getClass()) {
-            return false;
-        }
-        return true;
+        return obj != null && (this == obj || getClass() == obj.getClass());
     }
 
     /**

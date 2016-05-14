@@ -26,12 +26,12 @@ import java.io.Serializable;
 
 /**
  * A SystemUser is granted with all privileges and omits all defined security constraints. Whenever a SystemUser logs in, she is assigned to
- * a virtual <code>Role</code> with the name ROLE_SYSTEM. Furthermore this kind of <code>Role</code> is immutable and it is not allowed for
- * the SystemUser to change her <code>UserDetails</code> or <code>UserPassword</code>. Changing the <code>UserPassword</code> has to be done
- * in the application configuration when the project is setup.
+ * a virtual {@link Role} with the name ROLE_SYSTEM. Furthermore this kind of {@link Role} is immutable and it is not allowed for the
+ * SystemUser to change her {@link UserDetails} or {@link UserPassword}. Changing the {@link UserPassword} has to be done in the application
+ * configuration when the project is setup.
  *
  * @author <a href="mailto:russelltina@users.sourceforge.net">Tina Russell</a>
- * @version $Revision$
+ * @version 0.2
  * @GlossaryTerm
  * @see User
  * @since 0.1
@@ -39,23 +39,19 @@ import java.io.Serializable;
 @Entity
 public class SystemUser extends User implements Serializable {
 
-    private static final long serialVersionUID = -7575215406745881912L;
-
     /**
      * The defined fullname of the system user. Default {@value} .
      */
     public static final String SYSTEM_USERNAME = "openwms";
     /**
-     * The virtual <code>Role</code> of the SystemUser.
+     * The virtual {@code Role} of the SystemUser.
      */
     public static final String SYSTEM_ROLE_NAME = "ROLE_SYSTEM";
 
     /**
-     * Create a new SystemUser.
+     * Dear JPA...
      */
-    @SuppressWarnings("unused")
-    private SystemUser() {
-        super();
+    protected SystemUser() {
     }
 
     /**
@@ -70,12 +66,12 @@ public class SystemUser extends User implements Serializable {
     }
 
     /**
-     * Check whether <code>user</code> is the system user.
+     * Check whether {@code user} is the system user.
      *
      * @param user The user to check
-     * @return <code>true</code> if user is the system user, otherwise <code>false</code>
+     * @return {@literal true} if user is the system user, otherwise {@literal false}
      */
-    public static final boolean isSuperUser(User user) {
+    public static boolean isSuperUser(User user) {
         return (user instanceof SystemUser);
     }
 }
