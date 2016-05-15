@@ -29,7 +29,6 @@ import java.util.Optional;
 import org.ameba.exception.NotFoundException;
 import org.ameba.exception.ServiceLayerException;
 import org.ameba.i18n.Translator;
-import org.apache.commons.lang3.StringUtils;
 import org.openwms.core.annotation.FireAfterTransaction;
 import org.openwms.core.configuration.ConfigurationService;
 import org.openwms.core.configuration.UserPreference;
@@ -45,6 +44,7 @@ import org.springframework.security.authentication.encoding.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
+import org.springframework.util.StringUtils;
 
 /**
  * An UserServiceImpl is a Spring supported transactional implementation of a general {@link UserService}. Using Spring 2 annotation support
@@ -196,7 +196,7 @@ public class UserServiceImpl implements UserService {
             throw new ServiceLayerException(translator.translate(ExceptionCodes.USER_PROFILE_SAVE_NOT_BE_NULL), ExceptionCodes.USER_PROFILE_SAVE_NOT_BE_NULL);
         }
 
-        if (userPassword != null && StringUtils.isNotEmpty(userPassword.getPassword())) {
+        if (userPassword != null && StringUtils.hasText(userPassword.getPassword())) {
             try {
                 user.changePassword(enc.encodePassword(userPassword.getPassword(),
                         saltSource.getSalt(new UserWrapper(user))));

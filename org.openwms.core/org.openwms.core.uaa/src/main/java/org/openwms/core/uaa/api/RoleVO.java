@@ -118,25 +118,6 @@ public class RoleVO extends AbstractBase implements Serializable {
     }
 
     /**
-     * Get the id.
-     * 
-     * @return the id.
-     */
-    public Long getId() {
-        return id;
-    }
-
-    /**
-     * Set the id.
-     * 
-     * @param id
-     *            The id to set.
-     */
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    /**
      * Set the version.
      * 
      * @param version
