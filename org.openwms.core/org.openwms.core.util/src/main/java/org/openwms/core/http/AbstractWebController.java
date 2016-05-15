@@ -62,16 +62,16 @@ public abstract class AbstractWebController {
      * @return A response object wraps the server result
      */
     @ExceptionHandler(Exception.class)
-    public ResponseEntity<ResponseVO> handleException(Exception ex) {
+    public ResponseEntity<Response> handleException(Exception ex) {
         if (ex.getClass().equals(HttpBusinessException.class)) {
             HttpBusinessException e = (HttpBusinessException) ex;
-            return new ResponseEntity<>(new ResponseVO(ex.getMessage(), e.getHttpStatus()), e.getHttpStatus());
+            return new ResponseEntity<>(new Response(ex.getMessage(), e.getHttpStatus().toString()), e.getHttpStatus());
         }
         if (ex.getClass().equals(ValidationException.class)) {
-            return new ResponseEntity<>(new ResponseVO(ex.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR),
+            return new ResponseEntity<>(new Response(ex.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR.toString()),
                     HttpStatus.INTERNAL_SERVER_ERROR);
         }
-        return new ResponseEntity<>(new ResponseVO(ex.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR),
+        return new ResponseEntity<>(new Response(ex.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR.toString()),
                 HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
@@ -82,9 +82,9 @@ public abstract class AbstractWebController {
      * @return A response object wraps the server result
      */
     @ExceptionHandler({MethodArgumentNotValidException.class, ValidationException.class})
-    public ResponseEntity<ResponseVO> handleValidationException() {
-        return new ResponseEntity<>(new ResponseVO(translate(ExceptionCodes.VALIDATION_ERROR),
-                HttpStatus.INTERNAL_SERVER_ERROR), HttpStatus.INTERNAL_SERVER_ERROR);
+    public ResponseEntity<Response> handleValidationException() {
+        return new ResponseEntity<>(new Response(translate(ExceptionCodes.VALIDATION_ERROR),
+                HttpStatus.INTERNAL_SERVER_ERROR.toString()), HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
     /**
