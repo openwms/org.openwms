@@ -41,7 +41,7 @@ import org.springframework.stereotype.Component;
 @Component(value = SimpleEventDispatcher.COMPONENT_NAME)
 public class SimpleEventDispatcher implements EventDispatcher {
 
-    private final Map<Class<? extends RootApplicationEvent>, Set<EventListener>> subscriptions = new HashMap<Class<? extends RootApplicationEvent>, Set<EventListener>>();
+    private final Map<Class<? extends RootApplicationEvent>, Set<EventListener>> subscriptions = new HashMap<>();
     /** Springs service name. */
     public static final String COMPONENT_NAME = "simpleEventDispatcher";
     @Autowired
@@ -57,7 +57,7 @@ public class SimpleEventDispatcher implements EventDispatcher {
             if (subscriptions.containsKey(event)) {
                 listeners = subscriptions.get(event);
                 if (null == listeners) {
-                    listeners = new HashSet<EventListener>(1);
+                    listeners = new HashSet<>(1);
                     subscriptions.put(event, listeners);
                 }
                 listeners.add(listener);

@@ -20,6 +20,6 @@
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
 /**
- * Contains controller classes and value types that are responsible to satisfy the RESTful handling with {@link org.openwms.core.system.usermanagement.Role}s.
+ * Service definitions and implementations around User Authentication and Authorization (UAA).
  */
 package org.openwms.core.uaa;

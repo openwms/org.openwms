@@ -5,7 +5,7 @@
  * This file is part of openwms.org.
  *
  * openwms.org is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as 
+ * it under the terms of the GNU General Public License as
  * published by the Free Software Foundation; either version 2 of the
  * License, or (at your option) any later version.
  *
@@ -19,35 +19,28 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
-package org.openwms.core.search;
+package org.openwms.core.configuration;
 
-import java.io.Serializable;
+import org.springframework.stereotype.Service;
 
 /**
- * A NounTag represents a noun.
+ * A ConfigurationServiceImpl.
  *
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
- * @version 0.2
- * @GlossaryTerm
- * @since 0.2
+ * @version 1.0
+ * @since 1.0
  */
-public class NounTag extends Tag implements Serializable {
-
-    /* ----------------------------- constructors ------------------- */
-
-    /**
-     * Create a new NounTag.
-     */
-    public NounTag() {
-        super();
-    }
+@Service
+class ConfigurationServiceImpl implements ConfigurationService {
 
     /**
-     * Create a new NounTag.
+     * Save preferences of an {@code User}.
      *
-     * @param name The name of this Tag
+     * @param preference The encapsulated preferences instance to save
+     * @return The stored instance
      */
-    public NounTag(String name) {
-        super(name);
+    @Override
+    public UserPreference save(UserPreference preference) {
+        return null;
     }
 }

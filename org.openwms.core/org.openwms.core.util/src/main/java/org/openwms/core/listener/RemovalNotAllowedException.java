@@ -32,8 +32,6 @@ import org.ameba.exception.ServiceLayerException;
  */
 public class RemovalNotAllowedException extends ServiceLayerException {
 
-    private static final long serialVersionUID = -5592508830188199188L;
-
     /**
      * Create a new RemovalNotAllowedException.
      * 

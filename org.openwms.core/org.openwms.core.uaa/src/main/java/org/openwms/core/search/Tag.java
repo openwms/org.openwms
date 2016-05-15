@@ -30,18 +30,16 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * A Tag represents a search keyword in the OpenWMS.org ActionSeach concept. Each {@link Action} consists of multiple Tags.
- * 
- * @GlossaryTerm
+ * A Tag represents a search keyword in the OpenWMS.org ActionSearch concept. Each {@link Action} consists of multiple Tags.
+ *
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
- * @version $Revision$
+ * @version 0.2
+ * @GlossaryTerm
  * @since 0.2
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "tag")
 public class Tag implements Serializable {
-
-    private static final long serialVersionUID = -2421351375115138087L;
 
     /**
      * The unique name of this Tag.
@@ -52,21 +50,21 @@ public class Tag implements Serializable {
     /**
      * Other possible names for this tag. Used for internationalization.
      */
-    private List<String> aliases = new ArrayList<String>();
+    private List<String> aliases = new ArrayList<>();
 
     /* ----------------------------- constructors ------------------- */
+
     /**
-     * Accessed by persistence provider.
+     * Accessed by JAXB.
      */
-    protected Tag() {
+    public Tag() {
         super();
     }
 
     /**
      * Create a new Tag.
-     * 
-     * @param name
-     *            The initial name
+     *
+     * @param name The initial name
      */
     protected Tag(String name) {
         super();
@@ -74,9 +72,10 @@ public class Tag implements Serializable {
     }
 
     /* ----------------------------- methods ------------------- */
+
     /**
      * Get the aliases.
-     * 
+     *
      * @return the aliases.
      */
     public List<String> getAliases() {
@@ -85,9 +84,8 @@ public class Tag implements Serializable {
 
     /**
      * Set the aliases.
-     * 
-     * @param aliases
-     *            The aliases to set.
+     *
+     * @param aliases The aliases to set.
      */
     public void setAliases(List<String> aliases) {
         this.aliases = aliases;
@@ -95,7 +93,7 @@ public class Tag implements Serializable {
 
     /**
      * Get the name.
-     * 
+     *
      * @return the name.
      */
     public String getName() {
@@ -104,9 +102,8 @@ public class Tag implements Serializable {
 
     /**
      * Set the name.
-     * 
-     * @param name
-     *            The name to set.
+     *
+     * @param name The name to set.
      */
     public void setName(String name) {
         this.name = name;
@@ -114,10 +111,9 @@ public class Tag implements Serializable {
 
     /**
      * Find the given String in the name of the Tag.
-     * 
-     * @param word
-     *            The String to search for
-     * @return 0 if <code>name</code> is not part of the tag name, otherwise some positive value
+     *
+     * @param word The String to search for
+     * @return 0 if {@code name} is not part of the tag name, otherwise some positive value
      */
     public int matches(String word) {
         return name.toLowerCase().indexOf(word.toLowerCase()) + 1;

@@ -19,35 +19,7 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
-package org.openwms.core.search;
-
-import java.io.Serializable;
-
 /**
- * A NounTag represents a noun.
- *
- * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
- * @version 0.2
- * @GlossaryTerm
- * @since 0.2
+ * Public RESTful API to User Authentication and Authorization (UAA).
  */
-public class NounTag extends Tag implements Serializable {
-
-    /* ----------------------------- constructors ------------------- */
-
-    /**
-     * Create a new NounTag.
-     */
-    public NounTag() {
-        super();
-    }
-
-    /**
-     * Create a new NounTag.
-     *
-     * @param name The name of this Tag
-     */
-    public NounTag(String name) {
-        super(name);
-    }
-}
+package org.openwms.core.uaa.api;
