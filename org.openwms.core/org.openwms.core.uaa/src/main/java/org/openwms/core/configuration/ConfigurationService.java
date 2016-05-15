@@ -16,7 +16,8 @@
 package org.openwms.core.configuration;
 
 /**
- * A ConfigurationService.
+ * A ConfigurationService is a port to an external service that provides the ability to load and store context based preferences and
+ * configuration parameters.
  *
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  * @version 1.0
@@ -24,5 +25,11 @@ package org.openwms.core.configuration;
  */
 public interface ConfigurationService {
 
+    /**
+     * Save preferences of an {@code User}.
+     *
+     * @param preference The encapsulated preferences instance to save
+     * @return The stored instance
+     */
     UserPreference save(UserPreference preference);
 }
