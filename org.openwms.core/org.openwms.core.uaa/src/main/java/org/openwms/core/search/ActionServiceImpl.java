@@ -24,30 +24,25 @@ package org.openwms.core.search;
 import java.util.Collection;
 import java.util.HashSet;
 
+import org.ameba.annotation.TxService;
 import org.openwms.core.configuration.ConfigurationService;
 import org.openwms.core.uaa.User;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 /**
  * An ActionServiceImpl is used by the GUI to find all defined search actions.
  * 
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
- * @version $Revision: $
+ * @version 0.2
  * @since 0.2
  */
-@Transactional
-@Service(ActionServiceImpl.COMPONENT_NAME)
+@TxService
 public class ActionServiceImpl implements ActionService {
-
-    /** Springs service name. */
-    public static final String COMPONENT_NAME = "actionService";
 
     @Autowired
     private ConfigurationService confSrv;
-    private Collection<Action> actions = new HashSet<Action>();
-    private Collection<Tag> tags = new HashSet<Tag>();
+    private Collection<Action> actions = new HashSet<>();
+    private Collection<Tag> tags = new HashSet<>();
 
     /**
      * Create a new ActionServiceImpl.
@@ -79,7 +74,7 @@ public class ActionServiceImpl implements ActionService {
             }
         }
         */
-        return new HashSet<Action>(0);
+        return new HashSet<>(0);
     }
 
     /**

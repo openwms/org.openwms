@@ -20,6 +20,6 @@
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
 /**
- * Spring service implementations of the action search feature.
+ * Definition and implementations of the action search feature.
  */
 package org.openwms.core.search;

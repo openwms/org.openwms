@@ -38,18 +38,16 @@ import java.util.List;
 
 /**
  * An Action represents a possible UI action an User can take. Each Action has a resulting URL to a webpage and a descriptive text that is
- * displayed in the UI. Additionally a field <code>weight</code> is used to count how many times the User has chosen this Action.
+ * displayed in the UI. Additionally a field {@code weight} is used to count how many times the User has chosen this Action.
  *
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
- * @version $Revision$
+ * @version 0.2
  * @GlossaryTerm
  * @since 0.2
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "action", propOrder = {"tags"})
 public class Action implements Serializable {
-
-    private static final long serialVersionUID = 760579768628332750L;
 
     /**
      * The unique name of this Action.
@@ -81,7 +79,7 @@ public class Action implements Serializable {
     @XmlElementWrapper(name = "tags")
     @XmlElement(name = "tag")
     // FIXME [scherrer] : This list is not resolved by JAXB
-    private List<Tag> tags = new ArrayList<Tag>();
+    private List<Tag> tags = new ArrayList<>();
 
     /* ----------------------------- constructors ------------------- */
 
@@ -103,9 +101,9 @@ public class Action implements Serializable {
      */
     public int rate(String... words) {
         int result = 0;
-        for (int i = 0; i < words.length; i++) {
+        for (String word : words) {
             for (Tag tag : tags) {
-                if (tag.matches(words[i]) > 0) {
+                if (tag.matches(word) > 0) {
                     result++;
                     break;
                 }
@@ -207,7 +205,7 @@ public class Action implements Serializable {
     /**
      * Increase weight by 1 and return the new weight.
      *
-     * @param The weight increased by 1
+     * @return The weight increased by 1
      */
     public int increaseWeight() {
         return weight++;
@@ -216,7 +214,7 @@ public class Action implements Serializable {
     /**
      * Decrease weight by 1 and return the new weight.
      *
-     * @param The weight decreased by 1
+     * @return The weight decreased by 1
      */
     public int decreaseWeight() {
         return --weight;
@@ -245,7 +243,7 @@ public class Action implements Serializable {
      */
     @Override
     public String toString() {
-        return new StringBuilder().append(getName()).append(getText()).append(getUrl()).toString();
+        return getName() + getText() + getUrl();
     }
 
     /**

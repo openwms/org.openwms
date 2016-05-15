@@ -33,7 +33,7 @@ import javax.xml.namespace.QName;
  * An ObjectFactory allows you to programatically construct new instances of the Java representation for XML content. The Java
  * representation of XML content can consist of schema derived interfaces and classes representing the binding of schema type definitions,
  * element declarations and model groups. Factory methods for each of these are provided in this class.
- * 
+ *
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  * @version $Revision$
  * @since 0.2
@@ -45,7 +45,7 @@ public class ObjectFactory {
 
     /**
      * Create an instance of {@link Tag }.
-     * 
+     *
      * @return A new Tag
      */
     public Tag createTag() {
@@ -54,7 +54,7 @@ public class ObjectFactory {
 
     /**
      * Create an instance of {@link Tags }.
-     * 
+     *
      * @return A new Tags
      */
     public Tags createTags() {
@@ -63,7 +63,7 @@ public class ObjectFactory {
 
     /**
      * Create an instance of {@link Actions }.
-     * 
+     *
      * @return A new Actions
      */
     public Actions createActions() {
@@ -72,7 +72,7 @@ public class ObjectFactory {
 
     /**
      * Create an instance of {@link Action }.
-     * 
+     *
      * @return A new Action
      */
     public Action createAction() {
@@ -81,9 +81,8 @@ public class ObjectFactory {
 
     /**
      * Create an instance of {@link JAXBElement }{@code <}{@link Actions }{@code >} .
-     * 
-     * @param value
-     *            An Actions object
+     *
+     * @param value An Actions object
      * @return A wrapped Actions as JAXBElement
      */
     @XmlElementDecl(namespace = "http://www.openwms.org/schema/ui-actions-schema", name = "actions")

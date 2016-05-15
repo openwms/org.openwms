@@ -25,17 +25,16 @@ import java.io.Serializable;
 
 /**
  * A VerbalTag represents a verb.
- * 
- * @GlossaryTerm
+ *
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
- * @version $Revision$
+ * @version 0.2
+ * @GlossaryTerm
  * @since 0.2
  */
 public class VerbTag extends Tag implements Serializable {
 
-    private static final long serialVersionUID = -3010950207559198785L;
-
     /* ----------------------------- constructors ------------------- */
+
     /**
      * Create a new VerbTag.
      */
@@ -45,18 +44,18 @@ public class VerbTag extends Tag implements Serializable {
 
     /**
      * Create a new VerbTag.
-     * 
-     * @param name
-     *            The initial name
+     *
+     * @param name The initial name
      */
     public VerbTag(String name) {
         super(name);
     }
 
     /* ----------------------------- methods ------------------- */
+
     /**
-     * A Builder class for <code>VerbTags</code>.
-     * 
+     * A Builder class for {@code VerbTag}s.
+     *
      * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
      * @version $Revision$
      * @since 0.2
@@ -67,19 +66,17 @@ public class VerbTag extends Tag implements Serializable {
 
         /**
          * Constructor.
-         * 
-         * @param name
-         *            Tags name
+         *
+         * @param name Tags name
          */
         public Builder(String name) {
             tag = new VerbTag(name);
         }
 
         /**
-         * Add an alias to the <code>VerbTags</code>.
-         * 
-         * @param alias
-         *            The alias to add
+         * Add an alias to the {@code VerbTag}.
+         *
+         * @param alias The alias to add
          * @return The builder
          */
         public Builder withAlias(String alias) {
@@ -88,9 +85,9 @@ public class VerbTag extends Tag implements Serializable {
         }
 
         /**
-         * Build and return the <code>VerbTags</code>.
-         * 
-         * @return The <code>VerbTags</code>
+         * Build and return the {@code VerbTag}.
+         *
+         * @return The {@code VerbTag}
          */
         public VerbTag build() {
             return tag;
