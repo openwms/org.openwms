@@ -31,17 +31,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 /**
- * A RoleServiceImpl is a Spring supported transactional implementation of a
- * general {@link RoleService}. Using Spring 2 annotation support autowires
- * collaborators, therefore XML configuration becomes obsolete. This class is
- * marked with Springs {@link Service} annotation to benefit from Springs
- * exception translation intercepter. Traditional CRUD operations are delegated
- * to a {@link RoleRepository} instance.
+ * A RoleServiceImpl is a Spring supported transactional implementation of a general {@link RoleService}. Using Spring 2 annotation support
+ * autowires collaborators, therefore XML configuration becomes obsolete. This class is marked with Springs {@link Service} annotation to
+ * benefit from Springs exception translation intercepter. Traditional CRUD operations are delegated to a {@link RoleRepository} instance.
  *
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  * @version 0.2
- * @since 0.1
  * @see RoleRepository
+ * @since 0.1
  */
 @TxService
 class RoleServiceImpl implements RoleService {
@@ -55,7 +52,7 @@ class RoleServiceImpl implements RoleService {
 
     /**
      * {@inheritDoc}
-     *
+     * <p>
      * Return type ArrayList
      */
     @Override
@@ -69,6 +66,14 @@ class RoleServiceImpl implements RoleService {
      */
     @Override
     public Role create(@NotNull Role role) {
+        return repository.save(role);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public Role save(Role role) {
         return repository.save(role);
     }
 }

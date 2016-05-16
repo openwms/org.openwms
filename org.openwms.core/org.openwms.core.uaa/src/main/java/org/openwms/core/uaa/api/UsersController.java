@@ -30,11 +30,9 @@ import java.util.Collection;
 import java.util.List;
 
 import org.ameba.Messages;
-import org.ameba.exception.NotFoundException;
 import org.ameba.http.Response;
 import org.ameba.mapping.BeanMapper;
 import org.openwms.core.http.AbstractWebController;
-import org.openwms.core.http.ResponseVO;
 import org.openwms.core.uaa.User;
 import org.openwms.core.uaa.UserPassword;
 import org.openwms.core.uaa.UserService;
@@ -154,8 +152,9 @@ public class UsersController extends AbstractWebController {
      * @throws Exception
      */
     @RequestMapping(value = "/{name}", method = RequestMethod.DELETE)
-    public ResponseEntity<ResponseVO> remove(@PathVariable("name") @NotNull String... names) {
-        ResponseVO result = new ResponseVO();
+    public ResponseEntity<Response> remove(@PathVariable("name") @NotNull String... names) {
+        /*
+        Response result = new Response();
         HttpStatus resultStatus = HttpStatus.OK;
         for (String name : names) {
             if (name == null || name.isEmpty()) {
@@ -163,10 +162,10 @@ public class UsersController extends AbstractWebController {
             }
             try {
                 service.remove(name);
-                result.add(new ResponseVO.ItemBuilder().wStatus(HttpStatus.OK).wParams(name).build());
+                result.add(new Response.ItemBuilder().wStatus(HttpStatus.OK).wParams(name).build());
             } catch (Exception sre) {
                 resultStatus = HttpStatus.NOT_FOUND;
-                ResponseVO.ResponseItem item = new ResponseVO.ItemBuilder().wMessage(sre.getMessage())
+                Response.ResponseItem item = new Response.ItemBuilder().wMessage(sre.getMessage())
                         .wStatus(HttpStatus.INTERNAL_SERVER_ERROR).wParams(name).build();
                 if (NotFoundException.class.equals(sre.getClass())) {
                     item.httpStatus = HttpStatus.NOT_FOUND;
@@ -174,7 +173,9 @@ public class UsersController extends AbstractWebController {
                 result.add(item);
             }
         }
-        return new ResponseEntity<ResponseVO>(result, resultStatus);
+        return new ResponseEntity<Response>(result, resultStatus);
+        */
+        return null;
     }
 
     private User findByUsername(String pUsername) {

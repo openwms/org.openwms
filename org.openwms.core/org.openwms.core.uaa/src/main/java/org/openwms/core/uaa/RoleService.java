@@ -48,4 +48,6 @@ public interface RoleService {
      * @return The created Role instance
      */
     Role create(Role role);
+
+    Role save(Role role);
 }

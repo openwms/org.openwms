@@ -4,6 +4,11 @@
 target/
 libs/
 **/overlays/**/*
+**/node/
+**/node_modules/
+**/typings/
+**/*.js.map
+
 # OS Files #
 .DS_Store
  

@@ -72,4 +72,50 @@
             <artifactId>ehcache</artifactId>
         </dependency>
     </dependencies>
+
+    <build>
+        <finalName>openwms-core-uaa</finalName>
+        <plugins>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+            </plugin>
+
+            <plugin>
+                <groupId>com.github.eirslett</groupId>
+                <artifactId>frontend-maven-plugin</artifactId>
+                <version>0.0.23</version>
+                <configuration>
+                    <workingDirectory>src/main/resources/static</workingDirectory>
+                </configuration>
+                <executions>
+                    <execution>
+                        <id>install-node-npm</id>
+                        <goals>
+                            <goal>install-node-and-npm</goal>
+                        </goals>
+                        <configuration>
+                            <nodeVersion>v0.10.32</nodeVersion>
+                            <npmVersion>2.1.8</npmVersion>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>npm-install-modules</id>
+                        <goals>
+                            <goal>npm</goal>
+                        </goals>
+                    </execution>
+                    <execution>
+                        <id>tsc</id>
+                        <goals>
+                            <goal>npm</goal>
+                        </goals>
+                        <configuration>
+                            <arguments>run tsc</arguments>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
 </project>

@@ -29,6 +29,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.PostLoad;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
@@ -42,6 +43,7 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
+import java.util.Set;
 
 import org.ameba.integration.jpa.ApplicationEntity;
 import org.openwms.core.exception.InvalidPasswordException;
@@ -101,6 +103,10 @@ public class User extends ApplicationEntity implements Serializable {
     /** The User's fullname. Doesn't have to be unique. */
     @Column(name = "C_FULLNAME")
     private String fullname;
+    @OneToOne(mappedBy = "username")
+    private Email primaryEmailAddress;
+    @OneToMany(mappedBy = "username")
+    private Set<Email> emailAddresses;
 
     /* ------------------- collection mapping ------------------- */
     /** More detail information of the User. */

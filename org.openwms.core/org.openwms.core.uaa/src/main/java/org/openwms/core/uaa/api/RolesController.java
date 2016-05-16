@@ -29,13 +29,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.ameba.Messages;
-import org.ameba.exception.NotFoundException;
 import org.ameba.http.Response;
 import org.ameba.mapping.BeanMapper;
 import org.openwms.core.exception.ExceptionCodes;
 import org.openwms.core.http.AbstractWebController;
 import org.openwms.core.http.HttpBusinessException;
-import org.openwms.core.http.ResponseVO;
 import org.openwms.core.uaa.Role;
 import org.openwms.core.uaa.RoleService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -83,7 +81,7 @@ public class RolesController extends AbstractWebController {
      * Documented here: https://openwms.atlassian.net/wiki/x/BIAWAQ
      *
      * @param role The {@link Role} instance to be created
-     * @return An {@link ResponseVO} object to encapsulate the result of the creation operation
+     * @return An {@link Response} object to encapsulate the result of the creation operation
      * @status Reviewed [scherrer]
      */
     @RequestMapping(method = RequestMethod.POST)
@@ -98,12 +96,13 @@ public class RolesController extends AbstractWebController {
      * Documented here: https://openwms.atlassian.net/wiki/x/BoAWAQ
      *
      * @param rolenames An array of role names to delete
-     * @return An {@link ResponseVO} object to encapsulate all single removal operations
+     * @return An {@link Response} object to encapsulate all single removal operations
      * @status Reviewed [scherrer]
      */
     @RequestMapping(value = "/{name}", method = RequestMethod.DELETE)
-    public ResponseEntity<ResponseVO> remove(@PathVariable("name") @NotNull String... rolenames) {
-        ResponseVO result = new ResponseVO();
+    public ResponseEntity<Response> remove(@PathVariable("name") @NotNull String... rolenames) {
+        /*
+        Response result = new Response();
         HttpStatus resultStatus = HttpStatus.OK;
         for (String rolename : rolenames) {
             if (rolename == null || rolename.isEmpty()) {
@@ -111,10 +110,10 @@ public class RolesController extends AbstractWebController {
             }
             try {
                 service.removeByBK(new String[]{rolename});
-                result.add(new ResponseVO.ItemBuilder().wStatus(HttpStatus.OK).wParams(rolename).build());
+                result.add(new Response.ItemBuilder().wStatus(HttpStatus.OK).wParams(rolename).build());
             } catch (Exception sre) {
                 resultStatus = HttpStatus.NOT_FOUND;
-                ResponseVO.ResponseItem item = new ResponseVO.ItemBuilder().wMessage(sre.getMessage())
+                Response.ResponseItem item = new Response.ItemBuilder().wMessage(sre.getMessage())
                         .wStatus(HttpStatus.INTERNAL_SERVER_ERROR).wParams(rolename).build();
                 if (NotFoundException.class.equals(sre.getClass())) {
                     item.httpStatus = HttpStatus.NOT_FOUND;
@@ -123,6 +122,8 @@ public class RolesController extends AbstractWebController {
             }
         }
         return new ResponseEntity<ResponseVO>(result, resultStatus);
+        */
+        return null;
     }
 
     /**
