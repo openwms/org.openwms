@@ -6,7 +6,7 @@
     <base href="/">
     <title>Exam Commander</title>
     <link href="node_modules/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link href="app/css/bootstrap-paper.min.css" rel="stylesheet">
+    <!--link href="app/css/bootstrap-paper.min.css" rel="stylesheet"-->
     <link rel="stylesheet" href="styles.css">
     <!-- 1. Load libraries -->
     <!-- IE required polyfills, in this exact order -->
@@ -19,8 +19,7 @@
     <script src="node_modules/angular2/bundles/angular2.dev.js"></script>
     <script src="node_modules/angular2/bundles/router.dev.js"></script>
     <script src="node_modules/angular2/bundles/http.dev.js"></script>
-    <script src="node_modules/angular2-cookie/bundles/angular2-cookie.min.js"></script>
-    
+
     <!-- 2. Configure SystemJS -->
     <script>
       System.config({
@@ -31,12 +30,12 @@
           }
         }
       });
-      System.import('app/main')
+      System.import('app/uaa/sample/main')
             .then(null, console.error.bind(console));
     </script>
   </head>
   <!-- 3. Display the application -->
   <body>
-    <my-app>Loading...</my-app>
+    <core-users-app>Loading...</core-users-app>
   </body>
 </html>
