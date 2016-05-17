@@ -26,7 +26,7 @@ import javax.persistence.Embeddable;
 import java.io.Serializable;
 
 /**
- * An I18nSet encapsulates different languages. Used as an embedded value type in {@link org.openwms.core.lang.I18n}.
+ * An I18nSet encapsulates different languages. Used as an embedded value type in {@link I18n}.
  *
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  * @version 0.2
@@ -48,9 +48,7 @@ public class I18nSet implements Serializable {
     @Column(name = "C_FR_FR", length = LENGTH)
     private String frFr;
 
-    /**
-     * Dear JPA...
-     */
+    /** Dear JPA... */
     protected I18nSet() {
         super();
     }
