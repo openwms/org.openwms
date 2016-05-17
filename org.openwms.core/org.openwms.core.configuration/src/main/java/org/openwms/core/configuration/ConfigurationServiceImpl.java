@@ -25,6 +25,7 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
+import org.ameba.annotation.TxService;
 import org.openwms.core.annotation.FireAfterTransaction;
 import org.openwms.core.event.ConfigurationChangedEvent;
 import org.openwms.core.event.MergePropertiesEvent;
@@ -33,20 +34,16 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.ApplicationListener;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
 
 /**
- * A ConfigurationServiceImpl is a transactional Spring powered service implementation to manage preferences. This implementation can be
- * autowired with the name {@value #COMPONENT_NAME}.
+ * A ConfigurationServiceImpl is a transactional Spring powered service implementation to manage preferences.
  *
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
- * @version $Revision$
+ * @version 0.2
  * @since 0.1
  */
-@Transactional
-@Service(ConfigurationServiceImpl.COMPONENT_NAME)
+@TxService
 public class ConfigurationServiceImpl implements ConfigurationService, ApplicationListener<MergePropertiesEvent> {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(ConfigurationServiceImpl.class);
@@ -54,11 +51,7 @@ public class ConfigurationServiceImpl implements ConfigurationService, Applicati
     @Qualifier("preferencesFileDao")
     private PreferenceDao<PreferenceKey> fileDao;
     @Autowired
-    @Qualifier("preferencesJpaDao")
-    private PreferenceWriter<Long> dao;
-
-    /** Springs service name. */
-    public static final String COMPONENT_NAME = "configurationService";
+    private PreferenceWriter preferencesRepository;
 
     /**
      * {@inheritDoc}
@@ -78,35 +71,35 @@ public class ConfigurationServiceImpl implements ConfigurationService, Applicati
      */
     @Override
     public Collection<AbstractPreference> findAll() {
-        Collection<AbstractPreference> result = dao.findAll();
-        return result == null ? Collections.<AbstractPreference>emptyList() : result;
+        Collection<AbstractPreference> result = preferencesRepository.findAll();
+        return result == null ? Collections.emptyList() : result;
     }
 
     /**
      * {@inheritDoc}
      * <p>
-     * If owner is set to <code>null</code> or is empty, all preferences of this type are returned. No match returns an empty List ( {@link
+     * If owner is set to {@literal null} or is empty, all preferences of this type are returned. No match returns an empty List ( {@link
      * Collections#emptyList()}).
      */
     @Override
     public <T extends AbstractPreference> Collection<T> findByType(Class<T> clazz, String owner) {
         Collection<T> result;
-        result = (owner == null || owner.isEmpty()) ? dao.findByType(clazz) : dao.findByType(clazz, owner);
+        result = (owner == null || owner.isEmpty()) ? preferencesRepository.findByType(clazz) : preferencesRepository.findByType(clazz, owner);
         return result == null ? Collections.<T>emptyList() : result;
     }
 
     /**
      * {@inheritDoc}
      * <p>
-     * Not allowed to call this implementation with a <code>null</code> argument.
+     * Not allowed to call this implementation with a {@literal null} argument.
      *
-     * @throws IllegalArgumentException when <code>preference</code> is <code>null</code>
+     * @throws IllegalArgumentException when <code>preference</code> is {@literal null}
      */
     @Override
     @FireAfterTransaction(events = {ConfigurationChangedEvent.class})
     public <T extends AbstractPreference> T save(T preference) {
         Assert.notNull(preference, "Not allowed to call save with a NULL argument");
-        List<? extends AbstractPreference> preferences = dao.findByType(preference.getClass());
+        List<? extends AbstractPreference> preferences = preferencesRepository.findByType(preference.getClass());
         if (preferences.contains(preference)) {
             if (preference.isNew()) {
                 if (LOGGER.isDebugEnabled()) {
@@ -115,24 +108,24 @@ public class ConfigurationServiceImpl implements ConfigurationService, Applicati
                 }
                 return preference;
             }
-            return dao.save(preference);
+            return preferencesRepository.save(preference);
         }
-        dao.persist(preference);
-        return dao.save(preference);
+        preferencesRepository.persist(preference);
+        return preferencesRepository.save(preference);
     }
 
     /**
      * {@inheritDoc}
      * <p>
-     * Not allowed to call this implementation with a <code>null</code> argument.
+     * Not allowed to call this implementation with a {@literal null} argument.
      *
-     * @throws IllegalArgumentException when <code>preference</code> is <code>null</code>
+     * @throws IllegalArgumentException when <code>preference</code> is {@literal null}
      */
     @Override
     @FireAfterTransaction(events = {ConfigurationChangedEvent.class})
     public AbstractPreference merge(AbstractPreference preference) {
         Assert.notNull(preference, "Not allowed to call merge with a NULL argument");
-        List<? extends AbstractPreference> preferences = dao.findByType(preference.getClass());
+        List<? extends AbstractPreference> preferences = preferencesRepository.findByType(preference.getClass());
         if (preferences.contains(preference)) {
             return preference;
         }
@@ -142,21 +135,21 @@ public class ConfigurationServiceImpl implements ConfigurationService, Applicati
     /**
      * {@inheritDoc}
      *
-     * @throws IllegalArgumentException when <code>preference</code> is <code>null</code>
+     * @throws IllegalArgumentException when <code>preference</code> is {@literal null}
      */
     @Override
     @FireAfterTransaction(events = {ConfigurationChangedEvent.class})
     public void remove(AbstractPreference preference) {
         Assert.notNull(preference, "Not allowed to call remove with a NULL argument");
-        dao.remove(preference);
+        preferencesRepository.remove(preference);
     }
 
     private void mergeApplicationProperties() {
         List<AbstractPreference> fromFile = fileDao.findAll();
-        List<AbstractPreference> persistedPrefs = dao.findAll();
+        List<AbstractPreference> persistedPrefs = preferencesRepository.findAll();
         for (AbstractPreference pref : fromFile) {
             if (!persistedPrefs.contains(pref)) {
-                dao.save(pref);
+                preferencesRepository.save(pref);
             }
         }
     }
