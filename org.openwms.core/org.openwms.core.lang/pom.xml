@@ -23,7 +23,7 @@
  */
 -->
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <groupId>org.openwms</groupId>
@@ -31,41 +31,54 @@
         <version>1.1.0-SNAPSHOT</version>
     </parent>
     <artifactId>org.openwms.core.lang</artifactId>
-    <packaging>jar</packaging>
     <name>${project.artifactId}</name>
-    <description>This component wraps the org.openwms.core.lang.configuration component into a JAR file that is deployed in Non-OSGI
-        environments and can be accessed by Spring from classpath.</description>
+    <description>OpenWMS.org :: CORE :: Internationalisation and Localisation services</description>
+    
     <properties>
         <moduleDir>../..</moduleDir>
+        <start-class>org.openwms.core.lang.Starter</start-class>
     </properties>
+
+    <profiles>
+        <profile>
+            <id>defaut</id>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+            <dependencies>
+                <dependency>
+                    <groupId>com.h2database</groupId>
+                    <artifactId>h2</artifactId>
+                </dependency>
+            </dependencies>
+        </profile>
+    </profiles>
+
     <build>
-        <resources>
-          <resource>
-            <directory>src/main/resources</directory>
-            <filtering>true</filtering>
-          </resource>
-        </resources>
+        <finalName>openwms-core-lang</finalName>
+        <plugins>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+            </plugin>
+        </plugins>
     </build>
 
     <dependencies>
         <!-- Spring Framework -->
         <dependency>
-            <groupId>org.springframework</groupId>
-            <artifactId>spring-context</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework</groupId>
-            <artifactId>spring-webmvc</artifactId>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-data-jpa</artifactId>
         </dependency>
+
         <dependency>
             <groupId>org.openwms</groupId>
             <artifactId>org.openwms.core.util</artifactId>
         </dependency>
-
         <dependency>
             <groupId>org.openwms</groupId>
             <artifactId>org.openwms.core.test</artifactId>

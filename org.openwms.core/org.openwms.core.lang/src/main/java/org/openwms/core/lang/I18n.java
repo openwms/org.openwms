@@ -48,34 +48,31 @@ public class I18n extends BaseEntity implements Serializable {
     /** The natural key is used as references in the application (not nullable). */
     @Column(name = "C_KEY", nullable = false)
     private String key;
-    /** The name of the owning <code>Module</code> to which this translation set belongs to. */
+    /** The name of the owning {@code Module} to which this translation set belongs to. */
     @Column(name = "C_MODULE_NAME")
     private String moduleName = "CORE";
     /** The translation set of this entity. */
     @Embedded
     private I18nSet lang;
     /**
-     * The cKey is a transient field that is constructed after the entity is loaded from the persistent storage. Usually this field is
-     * accessed from the client application to have an unique identifier - a combination of the owning <code>moduleName</code> and the
-     * <code>key</code>.
+     * The cKey is a transient field that is constructed after the entity is loaded from the persistent store. Usually this field is
+     * accessed from the client application to have an unique identifier - a combination of the owning {@code moduleName} and the {@code
+     * key}.
      */
     @Transient
     private String cKey;
 
-    /**
-     * Dear JPA...
-     */
+    /** Dear JPA... */
     public I18n() {
-        super();
     }
 
     /**
      * Create a new I18n.
      *
-     * @param moduleName The name of the <code>Module</code> where this entity belongs to
+     * @param moduleName The name of the {@code Module} where this entity belongs to
      * @param key The key to access this translation
      * @param lang A set of languages
-     * @throws IllegalArgumentException when the <code>moduleName</code> or the <code>key</code> is <code>null</code> or empty
+     * @throws IllegalArgumentException when the {@code moduleName} or the {@code key} is {@literal null} or empty
      */
     public I18n(String moduleName, String key, I18nSet lang) {
         super();
@@ -91,7 +88,7 @@ public class I18n extends BaseEntity implements Serializable {
      *
      * @param key The key to access this translation
      * @param lang A set of languages
-     * @throws IllegalArgumentException when the <code>key</code> is <code>null</code> or empty
+     * @throws IllegalArgumentException when the {@code key} is {@literal null} or empty
      */
     public I18n(String key, I18nSet lang) {
         super();
@@ -101,8 +98,8 @@ public class I18n extends BaseEntity implements Serializable {
     }
 
     /**
-     * After loading the entity, combine the <code>moduleName</code> field and the <code>key</code> field. Store the concatenated String in
-     * a transient field <code>cKey</code>.
+     * After loading the entity, combine the {@code moduleName} field and the {@code key} field. Store the concatenated String in a
+     * transient field {@code cKey}.
      */
     @PostLoad
     protected void onLoad() {
@@ -148,7 +145,7 @@ public class I18n extends BaseEntity implements Serializable {
     /**
      * {@inheritDoc}
      * <p>
-     * Use <code>key</code> and <code>moduleName</code> for calculation.
+     * Use {@code key} and {@code moduleName} for calculation.
      *
      * @see java.lang.Object#hashCode()
      */
@@ -164,7 +161,7 @@ public class I18n extends BaseEntity implements Serializable {
     /**
      * {@inheritDoc}
      * <p>
-     * Use <code>key</code> and <code>moduleName</code> for comparison.
+     * Use {@code key} and {@code moduleName} for comparison.
      *
      * @see java.lang.Object#equals(java.lang.Object)
      */
