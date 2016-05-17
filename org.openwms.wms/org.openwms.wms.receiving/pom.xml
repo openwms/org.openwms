@@ -29,7 +29,7 @@
 		<artifactId>org.openwms.wms</artifactId>
 		<version>0.1-SNAPSHOT</version>
 	</parent>
-	<artifactId>org.openwms.wms.rest</artifactId>
+	<artifactId>org.openwms.wms.receiving</artifactId>
 	<name>${project.artifactId}</name>
 	<properties>
 		<moduleDir>../../..</moduleDir>

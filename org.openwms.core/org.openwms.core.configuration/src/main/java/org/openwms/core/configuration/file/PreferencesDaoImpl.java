@@ -28,6 +28,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
+import org.ameba.LoggingCategories;
 import org.apache.commons.lang3.StringUtils;
 import org.openwms.core.Constants;
 import org.openwms.core.configuration.AbstractPreference;
@@ -38,7 +39,6 @@ import org.openwms.core.event.ReloadFilePreferencesEvent;
 import org.openwms.core.exception.DataException;
 import org.openwms.core.exception.NoUniqueResultException;
 import org.openwms.core.exception.ResourceNotFoundException;
-import org.openwms.core.logging.LoggingCategories;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -68,7 +68,7 @@ import org.springframework.transaction.annotation.Transactional;
 public class PreferencesDaoImpl implements PreferenceDao<PreferenceKey>,
         ApplicationListener<ReloadFilePreferencesEvent> {
 
-    private static final Logger EXC_LOGGER = LoggerFactory.getLogger(LoggingCategories.INTEGRATION_EXCEPTION);
+    private static final Logger EXC_LOGGER = LoggerFactory.getLogger(LoggingCategories.INTEGRATION_LAYER_EXCEPTION);
     @Autowired
     private ApplicationContext ctx;
     @Autowired

@@ -1,7 +1,8 @@
-import { Component } from 'angular2/core';
+import { Component, OnInit } from 'angular2/core';
 import { Router, RouteConfig, ROUTER_DIRECTIVES, ROUTER_PROVIDERS } from 'angular2/router';
 import { HTTP_PROVIDERS, Http, Response } from 'angular2/http';
 
+import { User } from '../user';
 import { UserService } from '../user-service';
 import { UsersTableComponent } from '../users-table.component';
 
@@ -23,10 +24,18 @@ import { UsersTableComponent } from '../users-table.component';
         useAsDefault: true
     }
 ])
-export class AppComponent {
+export class AppComponent implements OnInit {
+
+    users: User[];
 
     constructor(
-        private _router: Router
+        private _router: Router,
+        private _userService: UserService
     ) { }
-    
+
+    ngOnInit() {
+        this._userService.getUsers()
+            .subscribe(
+                users => this.users = <any>users);
+    }
 }

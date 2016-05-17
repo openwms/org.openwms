@@ -63,7 +63,6 @@
             <modules>
                 <module>org.openwms.core.configuration</module>
                 <module>org.openwms.core.domain</module>
-                <module>org.openwms.core.rest</module>
                 <module>org.openwms.core.test</module>
                 <module>org.openwms.core.lang</module>
                 <module>org.openwms.core.search</module>
@@ -76,7 +75,6 @@
             <modules>
                 <module>org.openwms.core.configuration</module>
                 <module>org.openwms.core.domain</module>
-                <module>org.openwms.core.rest</module>
                 <module>org.openwms.core.test</module>
                 <module>org.openwms.core.lang</module>
                 <module>org.openwms.core.search</module>

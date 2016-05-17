@@ -1,5 +1,4 @@
 import { Component, Input, OnInit } from 'angular2/core';
-import { Router } from 'angular2/router';
 import { User } from './user';
 import { UserService } from './user-service';
 
@@ -12,7 +11,6 @@ export class UsersTableComponent implements OnInit {
     @Input() users: User[];
 
     constructor(
-        private _router: Router,
         private _userService: UserService
     ) { }
 

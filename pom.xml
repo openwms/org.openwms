@@ -441,8 +441,9 @@
         <jpa-api.version>1.0.0.Final</jpa-api.version>
         <!-- Spring Integration 2.2.4 uses Spring Core 3.1.3 -->
         <spring.io.version>2.0.3.RELEASE</spring.io.version>
+        <spring-boot.version>1.3.3.RELEASE</spring-boot.version> <!-- Keep in sync with platform -->
         <spring.version>4.2.5.RELEASE</spring.version> <!-- Keep in sync with platform -->
-
+        <start-class></start-class> <!-- set by actual boot module -->
         <!-- =================== -->
         <!--   Plugin versions   -->
         <!-- =================== -->
@@ -490,6 +491,10 @@
             <name>Maven Plugin Repository</name>
             <url>http://repo.maven.apache.org/maven2</url>
         </pluginRepository>
+        <pluginRepository>
+            <id>typescript-maven-plugin</id>
+            <url>https://raw.github.com/ppedregal/typescript-maven-plugin/master/repo</url>
+        </pluginRepository>
     </pluginRepositories>
     <build>
         <extensions>
@@ -511,6 +516,22 @@
                         <source>${maven.compile.sourceLevel}</source>
                         <target>${maven.compile.targetLevel}</target>
                         <encoding>${project.build.sourceEncoding}</encoding>
+                    </configuration>
+                </plugin>
+
+                <plugin>
+                    <groupId>org.springframework.boot</groupId>
+                    <artifactId>spring-boot-maven-plugin</artifactId>
+                    <version>${spring-boot.version}</version>
+                    <executions>
+                        <execution>
+                            <goals>
+                                <goal>repackage</goal>
+                            </goals>
+                        </execution>
+                    </executions>
+                    <configuration>
+                        <mainClass>${start-class}</mainClass>
                     </configuration>
                 </plugin>
 
