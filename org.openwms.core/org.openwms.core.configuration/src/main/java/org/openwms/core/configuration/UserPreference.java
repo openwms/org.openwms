@@ -25,8 +25,6 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
-import javax.persistence.NamedQueries;
-import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 import javax.xml.bind.annotation.XmlAttribute;
@@ -49,9 +47,6 @@ import org.springframework.util.Assert;
 @XmlType(name = "userPreference", namespace = "http://www.openwms.org/schema/usermanagement")
 @Entity
 @Table(name = "COR_USER_PREFERENCE", uniqueConstraints = @UniqueConstraint(columnNames = {"C_TYPE", "C_OWNER", "C_KEY"}))
-@NamedQueries({
-        @NamedQuery(name = UserPreference.NQ_FIND_ALL, query = "select up from UserPreference up"),
-        @NamedQuery(name = UserPreference.NQ_FIND_BY_OWNER, query = "select up from UserPreference up where up.owner = :owner")})
 public class UserPreference extends AbstractPreference implements Serializable {
 
     /**
@@ -75,20 +70,11 @@ public class UserPreference extends AbstractPreference implements Serializable {
     @XmlAttribute(name = "key", required = true)
     @Column(name = "C_KEY")
     private String key;
-    /**
-     * Query to find all <code>UserPreference</code>s.
-     */
-    public static final String NQ_FIND_ALL = "UserPreference" + FIND_ALL;
-    /**
-     * Query to find <strong>all</strong> <code>UserPreference</code>s of an <code>User</code>. <li>Query parameter name
-     * <strong>owner</strong> : The userName of the <code>User</code> to search for.</li><br /> Name is {@value} .
-     */
-    public static final String NQ_FIND_BY_OWNER = "UserPreference" + FIND_BY_OWNER;
 
     /**
      * Create a new UserPreference. Defined for the JAXB implementation.
      */
-    UserPreference() {
+    public UserPreference() {
         super();
     }
 

@@ -38,10 +38,9 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
 
 /**
- * A ConfigurationServiceImpl is a transactional Spring powered service
- * implementation to manage preferences. This implementation can be autowired
- * with the name {@value #COMPONENT_NAME}.
- * 
+ * A ConfigurationServiceImpl is a transactional Spring powered service implementation to manage preferences. This implementation can be
+ * autowired with the name {@value #COMPONENT_NAME}.
+ *
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  * @version $Revision$
  * @since 0.1
@@ -63,9 +62,9 @@ public class ConfigurationServiceImpl implements ConfigurationService, Applicati
 
     /**
      * {@inheritDoc}
-     * 
-     * When an event arrives all <i>new</i> preferences received from the file
-     * provider are persisted. Already persisted preferences are ignored.
+     * <p>
+     * When an event arrives all <i>new</i> preferences received from the file provider are persisted. Already persisted preferences are
+     * ignored.
      */
     @Override
     public void onApplicationEvent(MergePropertiesEvent event) {
@@ -74,40 +73,37 @@ public class ConfigurationServiceImpl implements ConfigurationService, Applicati
 
     /**
      * {@inheritDoc}
-     * 
+     * <p>
      * No match returns an empty List ({@link Collections#emptyList()}).
      */
     @Override
     public Collection<AbstractPreference> findAll() {
         Collection<AbstractPreference> result = dao.findAll();
-        return result == null ? Collections.<AbstractPreference> emptyList() : result;
+        return result == null ? Collections.<AbstractPreference>emptyList() : result;
     }
 
     /**
      * {@inheritDoc}
-     * 
-     * If owner is set to <code>null</code> or is empty, all preferences of this
-     * type are returned. No match returns an empty List (
-     * {@link Collections#emptyList()}).
+     * <p>
+     * If owner is set to <code>null</code> or is empty, all preferences of this type are returned. No match returns an empty List ( {@link
+     * Collections#emptyList()}).
      */
     @Override
     public <T extends AbstractPreference> Collection<T> findByType(Class<T> clazz, String owner) {
         Collection<T> result;
         result = (owner == null || owner.isEmpty()) ? dao.findByType(clazz) : dao.findByType(clazz, owner);
-        return result == null ? Collections.<T> emptyList() : result;
+        return result == null ? Collections.<T>emptyList() : result;
     }
 
     /**
      * {@inheritDoc}
-     * 
-     * Not allowed to call this implementation with a <code>null</code>
-     * argument.
-     * 
-     * @throws IllegalArgumentException
-     *             when <code>preference</code> is <code>null</code>
+     * <p>
+     * Not allowed to call this implementation with a <code>null</code> argument.
+     *
+     * @throws IllegalArgumentException when <code>preference</code> is <code>null</code>
      */
     @Override
-    @FireAfterTransaction(events = { ConfigurationChangedEvent.class })
+    @FireAfterTransaction(events = {ConfigurationChangedEvent.class})
     public <T extends AbstractPreference> T save(T preference) {
         Assert.notNull(preference, "Not allowed to call save with a NULL argument");
         List<? extends AbstractPreference> preferences = dao.findByType(preference.getClass());
@@ -127,15 +123,13 @@ public class ConfigurationServiceImpl implements ConfigurationService, Applicati
 
     /**
      * {@inheritDoc}
-     * 
-     * Not allowed to call this implementation with a <code>null</code>
-     * argument.
-     * 
-     * @throws IllegalArgumentException
-     *             when <code>preference</code> is <code>null</code>
+     * <p>
+     * Not allowed to call this implementation with a <code>null</code> argument.
+     *
+     * @throws IllegalArgumentException when <code>preference</code> is <code>null</code>
      */
     @Override
-    @FireAfterTransaction(events = { ConfigurationChangedEvent.class })
+    @FireAfterTransaction(events = {ConfigurationChangedEvent.class})
     public AbstractPreference merge(AbstractPreference preference) {
         Assert.notNull(preference, "Not allowed to call merge with a NULL argument");
         List<? extends AbstractPreference> preferences = dao.findByType(preference.getClass());
@@ -147,12 +141,11 @@ public class ConfigurationServiceImpl implements ConfigurationService, Applicati
 
     /**
      * {@inheritDoc}
-     * 
-     * @throws IllegalArgumentException
-     *             when <code>preference</code> is <code>null</code>
+     *
+     * @throws IllegalArgumentException when <code>preference</code> is <code>null</code>
      */
     @Override
-    @FireAfterTransaction(events = { ConfigurationChangedEvent.class })
+    @FireAfterTransaction(events = {ConfigurationChangedEvent.class})
     public void remove(AbstractPreference preference) {
         Assert.notNull(preference, "Not allowed to call remove with a NULL argument");
         dao.remove(preference);

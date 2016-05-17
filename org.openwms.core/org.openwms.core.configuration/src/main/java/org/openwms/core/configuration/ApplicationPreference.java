@@ -25,8 +25,6 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
-import javax.persistence.NamedQueries;
-import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 import javax.xml.bind.annotation.XmlAttribute;
@@ -53,18 +51,7 @@ import org.springframework.util.Assert;
 @XmlType(name = "applicationPreference", namespace = "http://www.openwms.org/schema/preferences")
 @Entity
 @Table(name = "COR_APP_PREFERENCE", uniqueConstraints = @UniqueConstraint(columnNames = { "C_TYPE", "C_KEY" }))
-@NamedQueries({ @NamedQuery(name = ApplicationPreference.NQ_FIND_ALL, query = "select ap from ApplicationPreference ap") })
 public class ApplicationPreference extends AbstractPreference implements Serializable {
-
-    private static final long serialVersionUID = -2942285512161603092L;
-    /**
-     * Query to find all <code>ApplicationPreference</code>s. Name is {@value} .
-     */
-    public static final String NQ_FIND_ALL = "ApplicationPreference" + FIND_ALL;
-    /**
-     * Query to find all <code>ApplicationPreference</code>s. Name is {@value} .
-     */
-    public static final String NQ_FIND_BY_OWNER = "ApplicationPreference" + FIND_ALL;
 
     /**
      * Type of this preference.
