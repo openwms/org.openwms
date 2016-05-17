@@ -25,8 +25,6 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
-import javax.persistence.NamedQueries;
-import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 import javax.xml.bind.annotation.XmlAttribute;
@@ -49,9 +47,6 @@ import org.springframework.util.Assert;
 @XmlType(name = "rolePreference", namespace = "http://www.openwms.org/schema/usermanagement")
 @Entity
 @Table(name = "COR_ROLE_PREFERENCE", uniqueConstraints = @UniqueConstraint(columnNames = { "C_TYPE", "C_OWNER", "C_KEY" }))
-@NamedQueries({
-        @NamedQuery(name = RolePreference.NQ_FIND_ALL, query = "select rp from RolePreference rp"),
-        @NamedQuery(name = RolePreference.NQ_FIND_BY_OWNER, query = "select rp from RolePreference rp where rp.owner = :owner") })
 public class RolePreference extends AbstractPreference implements Serializable {
 
     /**
@@ -74,20 +69,9 @@ public class RolePreference extends AbstractPreference implements Serializable {
     @Column(name = "C_KEY")
     private String key;
     /**
-     * Query to find all <code>RolePreference</code>s. Name is {@value} .
-     */
-    public static final String NQ_FIND_ALL = "RolePreference" + FIND_ALL;
-    /**
-     * Query to find <strong>all</strong> <code>RolePreference</code>s of a <code>Role</code>. <li>Query parameter name
-     * <strong>owner</strong> : The rolename of the <code>Role</code> to search for.</li><br />
-     * Name is {@value} .
-     */
-    public static final String NQ_FIND_BY_OWNER = "RolePreference" + FIND_BY_OWNER;
-
-    /**
      * Create a new RolePreference. Defined for the JAXB implementation.
      */
-    RolePreference() {
+    public RolePreference() {
         super();
     }
 

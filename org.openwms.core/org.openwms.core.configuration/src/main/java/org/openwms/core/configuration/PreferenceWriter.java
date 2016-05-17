@@ -21,46 +21,17 @@
  */
 package org.openwms.core.configuration;
 
-import java.io.Serializable;
+import org.springframework.data.jpa.repository.JpaRepository;
 
 /**
  * A PreferenceWriter extends the {@link PreferenceDao} about functionality to save and remove {@link AbstractPreference}s.
  * 
- * @param <ID>
- *            The type of the entity class' unique id
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
- * @version $Revision$
+ * @version 0.2
  * @since 0.1
  * @see org.openwms.core.configuration.PreferenceDao
  */
-public interface PreferenceWriter<ID extends Serializable> extends PreferenceDao<ID> {
+interface PreferenceWriter extends JpaRepository<AbstractPreference, Long> {
 
-    /**
-     * Save an entity with the persistence layer and return it.
-     * 
-     * @param <T>
-     *            Any subtype of {@link AbstractPreference}
-     * @param entity
-     *            Entity instance to be synchronized with the persistence layer
-     * @return The synchronized entity instance. If JPA is used as implementation, the returned instance is managed
-     */
-    <T extends AbstractPreference> T save(T entity);
 
-    /**
-     * Force a persist of a new entity.
-     * 
-     * @param <T>
-     *            Some kind ofAbstractPreference
-     * @param entity
-     *            The entity to persist
-     */
-    <T extends AbstractPreference> void persist(T entity);
-
-    /**
-     * Removes an already persistent entity.
-     * 
-     * @param entity
-     *            Entity instance to be removed
-     */
-    void remove(AbstractPreference entity);
 }

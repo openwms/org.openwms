@@ -25,8 +25,6 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
-import javax.persistence.NamedQueries;
-import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 import javax.xml.bind.annotation.XmlAttribute;
@@ -54,22 +52,7 @@ import org.springframework.util.Assert;
 @Entity
 @Table(name = "COR_MODULE_PREFERENCE", uniqueConstraints = @UniqueConstraint(columnNames = { "C_TYPE", "C_OWNER",
         "C_KEY" }))
-@NamedQueries({
-        @NamedQuery(name = ModulePreference.NQ_FIND_ALL, query = "select mp from ModulePreference mp"),
-        @NamedQuery(name = ModulePreference.NQ_FIND_BY_OWNER, query = "select mp from ModulePreference mp where mp.owner = :owner") })
 public class ModulePreference extends AbstractPreference implements Serializable {
-
-    private static final long serialVersionUID = 7318848112643933488L;
-    /**
-     * Query to find all <code>ModulePreference</code>s. Name is {@value} .
-     */
-    public static final String NQ_FIND_ALL = "ModulePreference" + FIND_ALL;
-    /**
-     * Query to find <strong>all</strong> <code>ModulePreference</code>s of a <code>Module</code>. <li>Query parameter name
-     * <strong>owner</strong> : The modulename of the <code>Module</code> to search for.</li><br />
-     * Name is {@value} .
-     */
-    public static final String NQ_FIND_BY_OWNER = "ModulePreference" + FIND_BY_OWNER;
 
     /**
      * Type of this preference.

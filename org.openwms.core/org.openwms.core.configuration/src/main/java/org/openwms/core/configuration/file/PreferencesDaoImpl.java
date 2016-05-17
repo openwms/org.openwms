@@ -29,7 +29,6 @@ import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
 import org.ameba.LoggingCategories;
-import org.apache.commons.lang3.StringUtils;
 import org.openwms.core.Constants;
 import org.openwms.core.configuration.AbstractPreference;
 import org.openwms.core.configuration.PreferenceDao;
@@ -170,7 +169,7 @@ public class PreferencesDaoImpl implements PreferenceDao<PreferenceKey>,
     }
 
     private void initResource() {
-        if (StringUtils.isNotEmpty(fileName)) {
+        if (fileName == null || fileName.isEmpty()) {
             fileResource = ctx.getResource(fileName);
         }
         if (fileResource == null || !fileResource.exists()) {
