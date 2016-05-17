@@ -62,7 +62,7 @@ public class SimpleEventDispatcher implements EventDispatcher {
                 }
                 listeners.add(listener);
             } else {
-                listeners = new HashSet<EventListener>(1);
+                listeners = new HashSet<>(1);
                 listeners.add(listener);
                 subscriptions.put(event, listeners);
             }

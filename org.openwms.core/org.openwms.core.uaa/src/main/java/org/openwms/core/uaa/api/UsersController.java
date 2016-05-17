@@ -56,9 +56,11 @@ import org.springframework.web.bind.annotation.ResponseBody;
  * @since 0.1
  */
 @Controller
-@RequestMapping("/users")
+@RequestMapping(UsersController.USERS)
 public class UsersController extends AbstractWebController {
 
+    /** Root URL path for plural. */
+    public static final String USERS = "/api/users";
     @Autowired
     private UserService service;
     @Autowired

@@ -31,9 +31,15 @@ System.register(['angular2/core', 'angular2/router', 'angular2/http', '../user-s
             }],
         execute: function() {
             AppComponent = (function () {
-                function AppComponent(_router) {
+                function AppComponent(_router, _userService) {
                     this._router = _router;
+                    this._userService = _userService;
                 }
+                AppComponent.prototype.ngOnInit = function () {
+                    var _this = this;
+                    this._userService.getUsers()
+                        .subscribe(function (users) { return _this.users = users; });
+                };
                 AppComponent = __decorate([
                     core_1.Component({
                         selector: 'core-users-app',
@@ -53,7 +59,7 @@ System.register(['angular2/core', 'angular2/router', 'angular2/http', '../user-s
                             useAsDefault: true
                         }
                     ]), 
-                    __metadata('design:paramtypes', [router_1.Router])
+                    __metadata('design:paramtypes', [router_1.Router, user_service_1.UserService])
                 ], AppComponent);
                 return AppComponent;
             }());
