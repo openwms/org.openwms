@@ -51,7 +51,7 @@ public class ConfigurationServiceImpl implements ConfigurationService, Applicati
     @Qualifier("preferencesFileDao")
     private PreferenceDao<PreferenceKey> fileDao;
     @Autowired
-    private PreferenceWriter preferencesRepository;
+    private PreferenceRepository writer;
 
     /**
      * {@inheritDoc}
@@ -71,7 +71,7 @@ public class ConfigurationServiceImpl implements ConfigurationService, Applicati
      */
     @Override
     public Collection<AbstractPreference> findAll() {
-        Collection<AbstractPreference> result = preferencesRepository.findAll();
+        Collection<AbstractPreference> result = writer.findAll();
         return result == null ? Collections.emptyList() : result;
     }
 
@@ -84,7 +84,7 @@ public class ConfigurationServiceImpl implements ConfigurationService, Applicati
     @Override
     public <T extends AbstractPreference> Collection<T> findByType(Class<T> clazz, String owner) {
         Collection<T> result;
-        result = (owner == null || owner.isEmpty()) ? preferencesRepository.findByType(clazz) : preferencesRepository.findByType(clazz, owner);
+        result = (owner == null || owner.isEmpty()) ? writer.findByType(clazz) : writer.findByType(clazz, owner);
         return result == null ? Collections.<T>emptyList() : result;
     }
 
@@ -99,7 +99,7 @@ public class ConfigurationServiceImpl implements ConfigurationService, Applicati
     @FireAfterTransaction(events = {ConfigurationChangedEvent.class})
     public <T extends AbstractPreference> T save(T preference) {
         Assert.notNull(preference, "Not allowed to call save with a NULL argument");
-        List<? extends AbstractPreference> preferences = preferencesRepository.findByType(preference.getClass());
+        List<? extends AbstractPreference> preferences = writer.findByType(preference.getClass());
         if (preferences.contains(preference)) {
             if (preference.isNew()) {
                 if (LOGGER.isDebugEnabled()) {
@@ -108,10 +108,10 @@ public class ConfigurationServiceImpl implements ConfigurationService, Applicati
                 }
                 return preference;
             }
-            return preferencesRepository.save(preference);
+            return writer.save(preference);
         }
-        preferencesRepository.persist(preference);
-        return preferencesRepository.save(preference);
+        writer.save(preference);
+        return writer.save(preference);
     }
 
     /**
@@ -125,7 +125,7 @@ public class ConfigurationServiceImpl implements ConfigurationService, Applicati
     @FireAfterTransaction(events = {ConfigurationChangedEvent.class})
     public AbstractPreference merge(AbstractPreference preference) {
         Assert.notNull(preference, "Not allowed to call merge with a NULL argument");
-        List<? extends AbstractPreference> preferences = preferencesRepository.findByType(preference.getClass());
+        List<? extends AbstractPreference> preferences = writer.findByType(preference.getClass());
         if (preferences.contains(preference)) {
             return preference;
         }
@@ -141,15 +141,15 @@ public class ConfigurationServiceImpl implements ConfigurationService, Applicati
     @FireAfterTransaction(events = {ConfigurationChangedEvent.class})
     public void remove(AbstractPreference preference) {
         Assert.notNull(preference, "Not allowed to call remove with a NULL argument");
-        preferencesRepository.remove(preference);
+        writer.delete(preference);
     }
 
     private void mergeApplicationProperties() {
         List<AbstractPreference> fromFile = fileDao.findAll();
-        List<AbstractPreference> persistedPrefs = preferencesRepository.findAll();
+        List<AbstractPreference> persistedPrefs = writer.findAll();
         for (AbstractPreference pref : fromFile) {
             if (!persistedPrefs.contains(pref)) {
-                preferencesRepository.save(pref);
+                writer.save(pref);
             }
         }
     }

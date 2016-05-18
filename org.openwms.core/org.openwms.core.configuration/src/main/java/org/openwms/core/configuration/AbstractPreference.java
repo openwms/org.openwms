@@ -50,6 +50,11 @@ import org.ameba.integration.jpa.BaseEntity;
 @Table(name = "COR_PREFERENCE")
 public abstract class AbstractPreference extends BaseEntity implements Serializable {
 
+    /**
+     * Suffix for the FIND_BY_OWNER named query. Default {@value}
+     */
+    public static final String FIND_BY_OWNER = ".findByOwner";
+
     /** The String value of the {@code AbstractPreference}. */
     @XmlAttribute(name = "val")
     @Column(name = "C_VALUE")

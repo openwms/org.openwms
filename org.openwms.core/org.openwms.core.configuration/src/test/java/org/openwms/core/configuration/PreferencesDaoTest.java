@@ -45,7 +45,7 @@ public class PreferencesDaoTest extends AbstractJpaSpringContextTests {
 
     @Autowired
     @Qualifier("preferencesJpaDao")
-    private PreferenceWriter<Long> dao;
+    private PreferenceRepository<Long> dao;
 
     /**
      * Setup some test data.

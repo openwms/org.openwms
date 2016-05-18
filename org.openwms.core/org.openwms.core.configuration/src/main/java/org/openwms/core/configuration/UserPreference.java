@@ -25,6 +25,8 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 import javax.xml.bind.annotation.XmlAttribute;
@@ -35,9 +37,9 @@ import java.io.Serializable;
 import org.springframework.util.Assert;
 
 /**
- * An UserPreference is used to store settings specific to an <code>User</code>. It is always assigned to a particular <code>User</code> and
- * not accessible from, nor valid for, other <code>User</code>s. UserPreferences cannot be overruled by any other type of
- * <code>Preferences</code>.
+ * An UserPreference is used to store settings specific to an {@code User}. It is always assigned to a particular {@code User} and
+ * not accessible from, nor valid for, other {@code User}s. UserPreferences cannot be overruled by any other type of
+ * {@link Preferences}.
  *
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  * @version $Revision$
@@ -47,6 +49,8 @@ import org.springframework.util.Assert;
 @XmlType(name = "userPreference", namespace = "http://www.openwms.org/schema/usermanagement")
 @Entity
 @Table(name = "COR_USER_PREFERENCE", uniqueConstraints = @UniqueConstraint(columnNames = {"C_TYPE", "C_OWNER", "C_KEY"}))
+@NamedQueries({
+        @NamedQuery(name = UserPreference.NQ_FIND_BY_OWNER, query = "select up from UserPreference up where up.owner = :owner") })
 public class UserPreference extends AbstractPreference implements Serializable {
 
     /**
@@ -58,18 +62,25 @@ public class UserPreference extends AbstractPreference implements Serializable {
     private PropertyScope type = PropertyScope.USER;
 
     /**
-     * Owner of the <code>AbstractPreference</code>.
+     * Owner of the {@link AbstractPreference}.
      */
     @XmlAttribute(name = "owner", required = true)
     @Column(name = "C_OWNER")
     private String owner;
 
     /**
-     * Key value of the <code>AbstractPreference</code>.
+     * Key value of the {@link AbstractPreference}.
      */
     @XmlAttribute(name = "key", required = true)
     @Column(name = "C_KEY")
     private String key;
+
+    /**
+     * Query to find <strong>all</strong> {@link UserPreference}s of an {@code User}. <li>Query parameter name
+     * <strong>owner</strong> : The userName of the {@code User} to search for.</li><br />
+     * Name is {@value} .
+     */
+    public static final String NQ_FIND_BY_OWNER = "UserPreference" + FIND_BY_OWNER;
 
     /**
      * Create a new UserPreference. Defined for the JAXB implementation.
@@ -83,7 +94,7 @@ public class UserPreference extends AbstractPreference implements Serializable {
      *
      * @param owner The User's username is set as owner of this preference
      * @param key The key of this preference
-     * @throws IllegalArgumentException when owner or key is <code>null</code> or empty
+     * @throws IllegalArgumentException when owner or key is {@literal null} or empty
      */
     public UserPreference(String owner, String key) {
         // Called from the client-side only.

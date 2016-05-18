@@ -55,7 +55,7 @@ public class ConfigurationServiceTest extends AbstractMockitoTests {
     private List<AbstractPreference> persistedPrefs = new ArrayList<AbstractPreference>();
 
     @Mock(name = "preferencesJpaDao")
-    private PreferenceWriter<Long> writer;
+    private PreferenceRepository<Long> writer;
     @Mock(name = "preferencesFileDao")
     private PreferenceDao<PreferenceKey> reader;
     @InjectMocks
