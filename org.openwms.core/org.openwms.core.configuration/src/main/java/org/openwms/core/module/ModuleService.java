@@ -28,7 +28,7 @@ import java.util.List;
  * the CORE openwms.org subproject. {@link Module}s can be created, saved, loaded or unloaded.
  * 
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
- * @version $Revision$
+ * @version 0.2
  * @since 0.1
  * @see Module
  */
@@ -59,8 +59,8 @@ public interface ModuleService {
     void remove(Module module);
 
     /**
-     * Save the <code>startupOrder</code> for a list of {@link Module}s. The <code>startupOrder</code> of all {@link Module}s in the list
-     * <code>modules</code> has to be calculated before.
+     * Save the {@code startupOrder} for a list of {@link Module}s. The {@code startupOrder} of all {@link Module}s in the list
+     * {@code modules} has to be calculated before.
      * 
      * @param modules
      *            The list of {@link Module}s to be saved

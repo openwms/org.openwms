@@ -21,14 +21,12 @@
  */
 package org.openwms.core.module;
 
-import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
 import org.junit.Before;
 import org.junit.Test;
 import org.openwms.core.test.AbstractJpaSpringContextTests;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.test.context.ContextConfiguration;
 
 /**
@@ -41,7 +39,6 @@ import org.springframework.test.context.ContextConfiguration;
 public class ModuleDaoTest extends AbstractJpaSpringContextTests {
 
     @Autowired
-    @Qualifier("moduleDao")
     private ModuleDao dao;
 
     /**
@@ -61,8 +58,5 @@ public class ModuleDaoTest extends AbstractJpaSpringContextTests {
     @Test
     public final void testFindAll() {
         assertTrue("2 persisted modules have to be found", dao.findAll().size() == 2);
-        assertNotNull("Expect to find a persisted module by moduleName", dao.findByUniqueId("WMS"));
-        assertTrue("Find module by query",
-                dao.findByPositionalParameters(Module.NQ_FIND_BY_UNIQUE_QUERY, "TMS").size() == 1);
     }
 }

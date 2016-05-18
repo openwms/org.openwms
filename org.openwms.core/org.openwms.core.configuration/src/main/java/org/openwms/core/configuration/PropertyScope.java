@@ -23,9 +23,9 @@ package org.openwms.core.configuration;
 
 /**
  * A PropertyScope defines the different scopes for preferences.
- * 
+ *
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
- * @version $Revision$
+ * @version 0.2
  * @since 0.1
  */
 public enum PropertyScope {
@@ -36,17 +36,17 @@ public enum PropertyScope {
     APPLICATION,
 
     /**
-     * These kind of preferences are specific to a <code>Module</code>.
+     * These kind of preferences are specific to a {@code Module}.
      */
     MODULE,
 
     /**
-     * These kind of preferences belong to a particular <code>Role</code>.
+     * These kind of preferences belong to a particular {@code Role}.
      */
     ROLE,
 
     /**
-     * These kind of preferences belong to a certain <code>User</code>.
+     * These kind of preferences belong to a certain {@code User}.
      */
     USER;
 }

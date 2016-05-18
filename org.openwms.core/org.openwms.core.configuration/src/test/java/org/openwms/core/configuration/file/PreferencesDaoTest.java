@@ -27,12 +27,6 @@ import static org.junit.Assert.fail;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.openwms.core.configuration.AbstractPreference;
-import org.openwms.core.configuration.ApplicationPreference;
-import org.openwms.core.configuration.ModulePreference;
-import org.openwms.core.configuration.PreferenceDao;
-import org.openwms.core.configuration.PreferenceKey;
-import org.openwms.core.configuration.PropertyScope;
-import org.openwms.core.configuration.UserPreference;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
@@ -45,92 +39,14 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
  * @since 0.1
  */
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration("classpath:/org/openwms/core/integration/file/Test-context.xml")
+@ContextConfiguration("classpath:/org/openwms/core/configuration/file/Test-context.xml")
 public class PreferencesDaoTest {
 
     @Autowired
-    private PreferenceDao<PreferenceKey> dao;
+    private PreferenceDao dao;
 
     /**
-     * Test method for {@link org.openwms.core.configuration.file.PreferencesDaoImpl#findByKey(org.openwms.core.system.PreferenceKey)}
-     * .
-     */
-    @Test
-    public final void testFindAPP1ByKey() {
-        AbstractPreference pref = dao.findByKey(new PreferenceKey(PropertyScope.APPLICATION, "APP1"));
-        assertContent("{" + PropertyScope.APPLICATION + ",APP1},<null>,,<null>,0,0", pref);
-    }
-
-    /**
-     * Test method for {@link org.openwms.core.configuration.file.PreferencesDaoImpl#findByKey(org.openwms.core.system.PreferenceKey)}
-     * .
-     */
-    @Test
-    public final void testFindAPP2ByKey() {
-        AbstractPreference pref = dao.findByKey(new PreferenceKey(PropertyScope.APPLICATION, "APP2"));
-        assertContent("{" + PropertyScope.APPLICATION
-                + ",APP2},Some value,Description is used as element value,100.0,5,100", pref);
-    }
-
-    /**
-     * Test method for {@link org.openwms.core.configuration.file.PreferencesDaoImpl#findByKey(org.openwms.core.system.PreferenceKey)}
-     * .
-     */
-    @Test
-    public final void testFindModuleCOREByKey() {
-        AbstractPreference pref = dao.findByKey(new PreferenceKey(PropertyScope.MODULE, "CORE", "module.name"));
-        assertContent("{MODULE,CORE,module.name},CORE Module,This is also a description value,<null>,0,0", pref);
-    }
-
-    /**
-     * Test method for {@link org.openwms.core.configuration.file.PreferencesDaoImpl#findByKey(org.openwms.core.system.PreferenceKey)}
-     * .
-     */
-    @Test
-    public final void testFindModuleCOMMON1ByKey() {
-        AbstractPreference pref = dao.findByKey(new PreferenceKey(PropertyScope.MODULE, "COMMON", "host.ip-adress"));
-        assertContent("{MODULE,COMMON,host.ip-adress},127.0.0.1,,<null>,0,0", pref);
-    }
-
-    /**
-     * Test method for {@link org.openwms.core.configuration.file.PreferencesDaoImpl#findByKey(org.openwms.core.system.PreferenceKey)}
-     * .
-     */
-    @Test
-    public final void testFindUserTestByKey() {
-        AbstractPreference pref = dao.findByKey(new PreferenceKey(PropertyScope.USER, "testuser", "testKey"));
-        assertContent("{USER,testuser,testKey},<null>,,<null>,0,0", pref);
-    }
-
-    /**
-     * Test method for
-     * {@link org.openwms.core.configuration.file.PreferencesDaoImpl#findByType(org.openwms.core.system.AbstractPreference)} .
-     */
-    @Test
-    public final void testApplicationPreferencesFindByType() {
-        assertEquals(2, dao.findByType(ApplicationPreference.class).size());
-    }
-
-    /**
-     * Test method for
-     * {@link org.openwms.core.configuration.file.PreferencesDaoImpl#findByType(org.openwms.core.system.AbstractPreference)} .
-     */
-    @Test
-    public final void testModulePreferencesFindByType() {
-        assertEquals(3, dao.findByType(ModulePreference.class).size());
-    }
-
-    /**
-     * Test method for
-     * {@link org.openwms.core.configuration.file.PreferencesDaoImpl#findByType(org.openwms.core.system.AbstractPreference)} .
-     */
-    @Test
-    public final void testUserPreferencesFindByType() {
-        assertEquals(1, dao.findByType(UserPreference.class).size());
-    }
-
-    /**
-     * Test method for {@link org.openwms.core.configuration.file.PreferencesDaoImpl#findAll()}.
+     * Test method for {@link org.openwms.core.configuration.file.XMLPreferenceDaoImpl#findAll()}.
      */
     @Test
     public final void testFindAll() {

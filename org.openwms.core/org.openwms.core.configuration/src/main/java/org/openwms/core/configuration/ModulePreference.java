@@ -25,6 +25,8 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 import javax.xml.bind.annotation.XmlAttribute;
@@ -45,14 +47,23 @@ import org.springframework.util.Assert;
  * 
  * @GlossaryTerm
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
- * @version $Revision$
+ * @version 0.2
  * @since 0.1
  */
 @XmlType(name = "modulePreference", namespace = "http://www.openwms.org/schema/preferences")
 @Entity
 @Table(name = "COR_MODULE_PREFERENCE", uniqueConstraints = @UniqueConstraint(columnNames = { "C_TYPE", "C_OWNER",
         "C_KEY" }))
+@NamedQueries({
+        @NamedQuery(name = ModulePreference.NQ_FIND_BY_OWNER, query = "select mp from ModulePreference mp where mp.owner = :owner") })
 public class ModulePreference extends AbstractPreference implements Serializable {
+
+    /**
+     * Query to find <strong>all</strong> {@code ModulePreference}s of a {@code Module}. <li>Query parameter name
+     * <strong>owner</strong> : The modulename of the {@code Module} to search for.</li><br />
+     * Name is {@value} .
+     */
+    public static final String NQ_FIND_BY_OWNER = "ModulePreference" + FIND_BY_OWNER;
 
     /**
      * Type of this preference.
@@ -63,35 +74,35 @@ public class ModulePreference extends AbstractPreference implements Serializable
     private PropertyScope type = PropertyScope.MODULE;
 
     /**
-     * Owner of the <code>ModulePreference</code> (not nullable).
+     * Owner of the {@code ModulePreference} (not nullable).
      */
     @XmlAttribute(name = "owner", required = true)
     @Column(name = "C_OWNER", nullable = false)
     private String owner;
 
     /**
-     * Key of the <code>ModulePreference</code> (not nullable).
+     * Key of the {@code ModulePreference} (not nullable).
      */
     @XmlAttribute(name = "key", required = true)
     @Column(name = "C_KEY", nullable = false)
     private String key;
 
     /**
-     * Create a new <code>ModulePreference</code>. Only defined by the JAXB implementation.
+     * Create a new {@code ModulePreference}. Only defined by the JAXB implementation.
      */
     public ModulePreference() {
         super();
     }
 
     /**
-     * Create a new <code>ModulePreference</code>.
+     * Create a new {@code ModulePreference}.
      * 
      * @param owner
      *            The name of the owning module
      * @param key
      *            the key
      * @throws IllegalArgumentException
-     *             when key or owner is <code>null</code> or empty
+     *             when key or owner is {@literal null} or empty
      */
     public ModulePreference(String owner, String key) {
         // Called from the client-side only.

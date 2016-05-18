@@ -19,55 +19,20 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
-package org.openwms.core.configuration;
+package org.openwms.core.configuration.file;
 
-import java.io.Serializable;
 import java.util.List;
+
+import org.openwms.core.configuration.AbstractPreference;
 
 /**
  * A PreferenceDao offers basic functionality to find and retrieve {@link AbstractPreference}s.
  * 
- * @param <ID>
- *            The type of the entity class' unique id
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
- * @version $Revision$
+ * @version 0.2
  * @since 0.1
  */
-public interface PreferenceDao<ID extends Serializable> {
-
-    /**
-     * Find and return the entity identified by the natural unique key.
-     * 
-     * @param id
-     *            Natural key to find the entity (also known as business key)
-     * @return The found entity
-     */
-    AbstractPreference findByKey(ID id);
-
-    /**
-     * Find all preferences of a particular type.
-     * 
-     * @param <T>
-     *            Any subtype of {@link AbstractPreference}
-     * @param clazz
-     *            The type to search for
-     * @return A list of entities
-     */
-    <T extends AbstractPreference> List<T> findByType(Class<T> clazz);
-
-    /**
-     * Find all preferences of a particular type and of an owner.
-     * 
-     * @param <T>
-     *            Any subtype of {@link AbstractPreference}
-     * @param clazz
-     *            The type to search for
-     * @param owner
-     *            The owner of the preferences
-     * @return A list of entities
-     * @since 0.2
-     */
-    <T extends AbstractPreference> List<T> findByType(Class<T> clazz, String owner);
+public interface PreferenceDao {
 
     /**
      * Find all entities and return them as a {@link java.util.List}.

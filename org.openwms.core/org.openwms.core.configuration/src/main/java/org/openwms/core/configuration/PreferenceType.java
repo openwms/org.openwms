@@ -23,9 +23,9 @@ package org.openwms.core.configuration;
 
 /**
  * A PreferenceType.
- * 
+ *
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
- * @version $Revision$
+ * @version 0.2
  * @since 0.2
  */
 public enum PreferenceType {

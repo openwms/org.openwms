@@ -26,60 +26,46 @@ import java.util.Collection;
 /**
  * A ConfigurationService is responsible to deal with preferences. Whereby preferences have particular defined scopes, e.g. some preferences
  * are in a global scope which means they are visible and valid for the whole application. Others are only valid in a certain scope,
- * probably only visible for a particular <code>Module</code>, <code>Role</code> or <code>User</code>. Other subclasses of
- * {@link AbstractPreference} may be implemented as well.
- * 
+ * probably only visible for a particular {@code Module}, <code>Role</code> or{@code User}. Other subclasses of {@link AbstractPreference}
+ * may be implemented as well.
+ *
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
- * @version $Revision$
- * @since 0.1
+ * @version 0.2
  * @see AbstractPreference
  * @see PropertyScope
+ * @since 0.1
  */
 public interface ConfigurationService {
 
     /**
      * Find and return all preferences. The order of elements is not guaranteed and is specific to the implementation.
-     * 
+     *
      * @return A Collection of all preferences
      */
     Collection<AbstractPreference> findAll();
 
     /**
      * Find and return all preferences in the scope of a specific type of Preference and of an owner.
-     * 
-     * @param <T>
-     *            Any subtype of {@link AbstractPreference}
-     * @param clazz
-     *            The class of preference to search for
+     *
+     * @param <T> Any subtype of {@link AbstractPreference}
+     * @param clazz The class of preference to search for
      * @return A Collection of preferences of type T
      */
     <T extends AbstractPreference> Collection<T> findByType(Class<T> clazz, String owner);
 
     /**
      * Save the given {@link AbstractPreference} or persist it when it is a transient instance.
-     * 
-     * @param <T>
-     *            Any subtype of {@link AbstractPreference}
-     * @param preference
-     *            {@link AbstractPreference} entity to save
+     *
+     * @param <T> Any subtype of {@link AbstractPreference}
+     * @param preference {@link AbstractPreference} entity to save
      * @return Saved {@link AbstractPreference} entity instance
      */
     <T extends AbstractPreference> T save(T preference);
 
     /**
-     * Merge the given {@link AbstractPreference} or persist it when it is a transient instance.
-     * 
-     * @param preference
-     *            {@link AbstractPreference} entity to merge
-     * @return Merged {@link AbstractPreference} entity instance
+     * Delete an {@link AbstractPreference}.
+     *
+     * @param preference The {@link AbstractPreference} to delete
      */
-    AbstractPreference merge(AbstractPreference preference);
-
-    /**
-     * Remove a {@link AbstractPreference}.
-     * 
-     * @param preference
-     *            The {@link AbstractPreference} to remove
-     */
-    void remove(AbstractPreference preference);
+    void delete(AbstractPreference preference);
 }

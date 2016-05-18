@@ -31,7 +31,6 @@ import java.util.concurrent.ConcurrentHashMap;
 import org.ameba.LoggingCategories;
 import org.openwms.core.Constants;
 import org.openwms.core.configuration.AbstractPreference;
-import org.openwms.core.configuration.PreferenceDao;
 import org.openwms.core.configuration.PreferenceKey;
 import org.openwms.core.configuration.Preferences;
 import org.openwms.core.event.ReloadFilePreferencesEvent;
@@ -53,19 +52,18 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 /**
- * A PreferencesDaoImpl reads a XML file of preferences and keeps them internally in a Map. An initial preferences file is expected to be at
- * {@value #INITIAL_PREFERENCES_FILE} but this can be overridden with a property <i>application.initial.properties</i> in the configuration
- * properties file. <p> On a {@link ReloadFilePreferencesEvent} the internal Map is cleared and reloaded. </p>
+ * A XMLPreferenceDaoImpl reads a XML file of preferences and keeps them internally in a Map. An initial preferences file is expected to be
+ * at {@value #INITIAL_PREFERENCES_FILE} but this can be overridden with a property <i>application.initial.properties</i> in the
+ * configuration properties file. <p> On a {@link ReloadFilePreferencesEvent} the internal Map is cleared and reloaded. </p>
  *
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
- * @version $Revision: $
+ * @version 0.2
  * @see org.openwms.core.event.ReloadFilePreferencesEvent
  * @since 0.1
  */
 @Transactional(propagation = Propagation.MANDATORY)
-@Repository(PreferencesDaoImpl.COMPONENT_NAME)
-public class PreferencesDaoImpl implements PreferenceDao<PreferenceKey>,
-        ApplicationListener<ReloadFilePreferencesEvent> {
+@Repository
+class XMLPreferenceDaoImpl implements PreferenceDao, ApplicationListener<ReloadFilePreferencesEvent> {
 
     private static final Logger EXC_LOGGER = LoggerFactory.getLogger(LoggingCategories.INTEGRATION_LAYER_EXCEPTION);
     @Autowired
@@ -78,48 +76,15 @@ public class PreferencesDaoImpl implements PreferenceDao<PreferenceKey>,
     private String fileName;
     private volatile Resource fileResource;
     private volatile Preferences preferences;
-    private Map<PreferenceKey, AbstractPreference> prefs = new ConcurrentHashMap<PreferenceKey, AbstractPreference>();
+    private Map<PreferenceKey, AbstractPreference> prefs = new ConcurrentHashMap<>();
 
     /** The URL to the initial preferences XML file. Default {@value} */
-    public static final String INITIAL_PREFERENCES_FILE = "classpath:org/openwms/core/integration/file/initial-preferences.xml";
-    /** Springs component name. */
-    public static final String COMPONENT_NAME = "preferencesFileDao";
+    public static final String INITIAL_PREFERENCES_FILE = "classpath:org/openwms/core/configuration/file/initial-preferences.xml";
 
     /**
      * {@inheritDoc}
      *
-     * @see org.openwms.core.configuration.PreferenceDao#findByKey(java.io.Serializable)
-     */
-    @Override
-    public AbstractPreference findByKey(PreferenceKey id) {
-        return prefs.get(id);
-    }
-
-    /**
-     * {@inheritDoc}
-     *
-     * @see org.openwms.core.configuration.PreferenceDao#findByType(Class)
-     */
-    @Override
-    public <T extends AbstractPreference> List<T> findByType(Class<T> clazz) {
-        return preferences.getOfType(clazz);
-    }
-
-    /**
-     * {@inheritDoc}
-     *
-     * @see org.openwms.core.configuration.PreferenceDao#findByType(java.lang.Class, java.lang.String)
-     */
-    @Override
-    public <T extends AbstractPreference> List<T> findByType(Class<T> clazz, String owner) {
-        // FIXME [scherrer] : delegate to preferences
-        return null;
-    }
-
-    /**
-     * {@inheritDoc}
-     *
-     * @see org.openwms.core.configuration.PreferenceDao#findAll()
+     * @see PreferenceDao#findAll()
      */
     @Override
     public List<AbstractPreference> findAll() {

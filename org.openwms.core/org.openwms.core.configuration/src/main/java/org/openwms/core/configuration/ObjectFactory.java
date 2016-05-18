@@ -29,7 +29,7 @@ import javax.xml.bind.annotation.XmlRegistry;
  * element declarations and model groups. Factory methods for each of these are provided in this class.
  * 
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
- * @version $Revision$
+ * @version 0.2
  * @since 0.1
  */
 @XmlRegistry
@@ -90,7 +90,7 @@ public class ObjectFactory {
      *            The description text
      * @return an instance of {@link UserPreference}
      */
-    public static final UserPreference createUserPreference(String username, String key, String description) {
+    public static UserPreference createUserPreference(String username, String key, String description) {
         UserPreference result = new UserPreference(username, key);
         result.setDescription(description);
         return result;

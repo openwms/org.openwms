@@ -25,6 +25,8 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 import javax.xml.bind.annotation.XmlAttribute;
@@ -35,18 +37,20 @@ import java.io.Serializable;
 import org.springframework.util.Assert;
 
 /**
- * A RolePreference is used to provide settings specific to an <code>Role</code> . These kind of <code>Preferences</code> is valid for the
- * assigned Role only. <code>User</code>s assigned to a <code>Role</code> inherit these RolePreferences but a RolePreference can be
- * overruled by an <code>UserPreference</code>. RolePreferences can be defined within a preferences file but also be created with the UI.
- * 
- * @GlossaryTerm
+ * A RolePreference is used to provide settings specific to an {@code Role} . These kind of {@link Preferences} is valid for the assigned
+ * Role only. {@code User}s assigned to a {@code Role} inherit these RolePreferences but a RolePreference can be overruled by an {@link
+ * UserPreference}. RolePreferences can be defined within a preferences file but also be created with the UI.
+ *
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  * @version $Revision$
+ * @GlossaryTerm
  * @since 0.1
  */
 @XmlType(name = "rolePreference", namespace = "http://www.openwms.org/schema/usermanagement")
 @Entity
-@Table(name = "COR_ROLE_PREFERENCE", uniqueConstraints = @UniqueConstraint(columnNames = { "C_TYPE", "C_OWNER", "C_KEY" }))
+@Table(name = "COR_ROLE_PREFERENCE", uniqueConstraints = @UniqueConstraint(columnNames = {"C_TYPE", "C_OWNER", "C_KEY"}))
+@NamedQueries({
+        @NamedQuery(name = RolePreference.NQ_FIND_BY_OWNER, query = "select rp from RolePreference rp where rp.owner = :owner")})
 public class RolePreference extends AbstractPreference implements Serializable {
 
     /**
@@ -57,17 +61,24 @@ public class RolePreference extends AbstractPreference implements Serializable {
     @Column(name = "C_TYPE")
     private PropertyScope type = PropertyScope.ROLE;
     /**
-     * Owner of the <code>RolePreference</code>.
+     * Owner of the {@code RolePreference}.
      */
     @XmlAttribute(name = "owner", required = true)
     @Column(name = "C_OWNER")
     private String owner;
     /**
-     * Key value of the <code>RolePreference</code>.
+     * Key value of the {@link RolePreference}.
      */
     @XmlAttribute(name = "key", required = true)
     @Column(name = "C_KEY")
     private String key;
+
+    /**
+     * Query to find <strong>all</strong> {@code RolePreference}s of a {@code Role}. <li>Query parameter name <strong>owner</strong> : The
+     * rolename of the {@code Role} to search for.</li><br /> Name is {@value} .
+     */
+    public static final String NQ_FIND_BY_OWNER = "RolePreference" + FIND_BY_OWNER;
+
     /**
      * Create a new RolePreference. Defined for the JAXB implementation.
      */
@@ -77,13 +88,10 @@ public class RolePreference extends AbstractPreference implements Serializable {
 
     /**
      * Create a new RolePreference.
-     * 
-     * @param rolename
-     *            The name of the Role that owns this preference
-     * @param key
-     *            the key
-     * @throws IllegalArgumentException
-     *             when rolename or key is <code>null</code> or empty
+     *
+     * @param rolename The name of the Role that owns this preference
+     * @param key the key
+     * @throws IllegalArgumentException when rolename or key is {@literal null} or empty
      */
     public RolePreference(String rolename, String key) {
         // Called from the client.
@@ -96,7 +104,7 @@ public class RolePreference extends AbstractPreference implements Serializable {
 
     /**
      * Get the key.
-     * 
+     *
      * @return the key.
      */
     public String getKey() {
@@ -104,8 +112,8 @@ public class RolePreference extends AbstractPreference implements Serializable {
     }
 
     /**
-     * Get the name of the <code>Role</code> as String.
-     * 
+     * Get the name of the {@code Role} as String.
+     *
      * @return the rolename.
      */
     public String getOwner() {
@@ -114,7 +122,7 @@ public class RolePreference extends AbstractPreference implements Serializable {
 
     /**
      * {@inheritDoc}
-     * 
+     *
      * @see org.openwms.core.configuration.AbstractPreference#getType()
      */
     @Override
@@ -124,19 +132,19 @@ public class RolePreference extends AbstractPreference implements Serializable {
 
     /**
      * {@inheritDoc}
-     * 
+     *
      * @see org.openwms.core.configuration.AbstractPreference#getFields()
      */
     @Override
     protected Object[] getFields() {
-        return new Object[] { getType(), getOwner(), getKey() };
+        return new Object[]{getType(), getOwner(), getKey()};
     }
 
     /**
      * {@inheritDoc}
-     * 
+     * <p>
      * Uses the type, owner and the key to create a {@link PreferenceKey} instance.
-     * 
+     *
      * @see org.openwms.core.configuration.AbstractPreference#getPrefKey()
      */
     @Override
@@ -146,9 +154,9 @@ public class RolePreference extends AbstractPreference implements Serializable {
 
     /**
      * {@inheritDoc}
-     * 
+     * <p>
      * Uses key, owner and type for hashCode calculation.
-     * 
+     *
      * @see java.lang.Object#hashCode()
      */
     @Override
@@ -163,9 +171,9 @@ public class RolePreference extends AbstractPreference implements Serializable {
 
     /**
      * {@inheritDoc}
-     * 
+     * <p>
      * Comparison done with key, owner and type fields. Not delegated to super class.
-     * 
+     *
      * @see java.lang.Object#equals(java.lang.Object)
      */
     @Override
