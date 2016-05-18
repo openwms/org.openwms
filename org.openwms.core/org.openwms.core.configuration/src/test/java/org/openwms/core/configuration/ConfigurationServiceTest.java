@@ -24,13 +24,14 @@ package org.openwms.core.configuration;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.fail;
 import static org.mockito.Mockito.never;
+import static org.mockito.Mockito.reset;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 
 import org.junit.Assert;
@@ -56,9 +57,9 @@ public class ConfigurationServiceTest extends AbstractMockitoTests {
     private List<AbstractPreference> persistedPrefs = new ArrayList<AbstractPreference>();
 
     @Mock(name = "preferencesJpaDao")
-    private PreferenceRepository<Long> writer;
+    private PreferenceRepository writer;
     @Mock(name = "preferencesFileDao")
-    private PreferenceDao<PreferenceKey> reader;
+    private PreferenceDao reader;
     @InjectMocks
     private ConfigurationServiceImpl srv = new ConfigurationServiceImpl();
 
@@ -127,7 +128,7 @@ public class ConfigurationServiceTest extends AbstractMockitoTests {
     public final void testFindByType() {
         filePrefs.add(new ModulePreference("CORE", PERSISTED_APP_PREF2));
         when(writer.findByType(ModulePreference.class, "CORE")).thenReturn(
-                Arrays.asList(new ModulePreference[]{new ModulePreference("CORE", PERSISTED_APP_PREF2)}));
+                Collections.singletonList(new ModulePreference("CORE", PERSISTED_APP_PREF2)));
 
         Collection<ModulePreference> prefs = srv.findByType(ModulePreference.class, "CORE");
         verify(writer).findByType(ModulePreference.class, "CORE");
@@ -151,11 +152,11 @@ public class ConfigurationServiceTest extends AbstractMockitoTests {
     @Test
     public final void testSaveNewEntity() {
         when(writer.findByType(ApplicationPreference.class)).thenReturn(
-                Arrays.asList(new ApplicationPreference[]{new ApplicationPreference("PERSISTED")}));
+                Collections.singletonList(new ApplicationPreference("PERSISTED")));
 
         ApplicationPreference newEntity = new ApplicationPreference("TRANSIENT");
         srv.save(newEntity);
-        verify(writer).persist(newEntity);
+        verify(writer).save(newEntity);
     }
 
     /**
@@ -164,11 +165,11 @@ public class ConfigurationServiceTest extends AbstractMockitoTests {
     @Test
     public final void testSaveDuplicatedEntity() {
         when(writer.findByType(ApplicationPreference.class)).thenReturn(
-                Arrays.asList(new ApplicationPreference[]{new ApplicationPreference("TRANSIENT")}));
+                Collections.singletonList(new ApplicationPreference("TRANSIENT")));
 
         ApplicationPreference newEntity = new ApplicationPreference("TRANSIENT");
         srv.save(newEntity);
-        verify(writer, never()).persist(newEntity);
+        verify(writer, never()).save(newEntity);
         verify(writer, never()).save(newEntity);
     }
 
@@ -179,11 +180,11 @@ public class ConfigurationServiceTest extends AbstractMockitoTests {
     public final void testSaveExistingEntity() {
         MockApplicationPreference mock = new MockApplicationPreference("TRANSIENT");
         when(writer.findByType(MockApplicationPreference.class)).thenReturn(
-                Arrays.asList(new MockApplicationPreference[]{mock}));
+                Collections.singletonList(mock));
         when(writer.save(mock)).thenReturn(mock);
 
         assertEquals(mock, srv.save(mock));
-        verify(writer, never()).persist(mock);
+        verify(writer, never()).save(mock);
         verify(writer).save(mock);
     }
 
@@ -194,7 +195,7 @@ public class ConfigurationServiceTest extends AbstractMockitoTests {
      */
     @Test(expected = IllegalArgumentException.class)
     public final void testRemoveNull() {
-        srv.remove(null);
+        srv.delete(null);
         fail("Expected to catch an IllegalArgumentException when calling remove() with null");
     }
 
@@ -205,7 +206,7 @@ public class ConfigurationServiceTest extends AbstractMockitoTests {
      */
     @Test
     public final void testRemove() {
-        srv.remove(new ApplicationPreference("TRANSIENT"));
-        verify(writer).remove(new ApplicationPreference("TRANSIENT"));
+        srv.delete(new ApplicationPreference("TRANSIENT"));
+        verify(writer).delete(new ApplicationPreference("TRANSIENT"));
     }
 }

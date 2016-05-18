@@ -46,7 +46,7 @@ public class ModuleTest extends AbstractJpaSpringContextTests {
         Assert.assertEquals("Module2.moduleName", "Module2", m2.getModuleName());
         Assert.assertEquals("Module2.url", "Url", m2.getUrl());
         Assert.assertTrue(m2.isNew());
-        Assert.assertNull(m2.getId());
+        Assert.assertNull(m2.getPk());
         Assert.assertNotSame("Same name and url", m2.equals(new Module("Module2", "Url")));
     }
 

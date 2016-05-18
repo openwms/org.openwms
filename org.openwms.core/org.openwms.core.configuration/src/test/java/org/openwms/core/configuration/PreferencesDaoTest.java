@@ -30,7 +30,6 @@ import org.junit.Ignore;
 import org.junit.Test;
 import org.openwms.core.test.AbstractJpaSpringContextTests;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.test.context.ContextConfiguration;
 
 /**
@@ -44,8 +43,7 @@ import org.springframework.test.context.ContextConfiguration;
 public class PreferencesDaoTest extends AbstractJpaSpringContextTests {
 
     @Autowired
-    @Qualifier("preferencesJpaDao")
-    private PreferenceRepository<Long> dao;
+    private PreferenceRepository dao;
 
     /**
      * Setup some test data.

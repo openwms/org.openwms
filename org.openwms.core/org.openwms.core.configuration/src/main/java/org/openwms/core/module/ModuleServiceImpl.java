@@ -26,6 +26,7 @@ import java.util.Collections;
 import java.util.List;
 
 import org.ameba.annotation.TxService;
+import org.ameba.exception.NotFoundException;
 import org.openwms.core.exception.ExceptionCodes;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.Assert;
@@ -56,7 +57,10 @@ class ModuleServiceImpl implements ModuleService {
     public void saveStartupOrder(List<Module> modules) {
         Assert.notEmpty(modules, ExceptionCodes.MODULE_SAVE_STARTUP_ORDER_NOT_BE_NULL);
         for (Module module : modules) {
-            Module toSave = findById(module.getId());
+            Module toSave = moduleDao.findOne(module.getPk());
+            if (toSave == null) {
+                throw NotFoundException.createNotFound(String.format("Module with if [%s] not found", module.getPk()));
+            }
             toSave.setStartupOrder(module.getStartupOrder());
             save(toSave);
         }
@@ -96,6 +100,6 @@ class ModuleServiceImpl implements ModuleService {
      */
     @Override
     public void remove(@NotNull Module module) {
-        moduleDao.remove(module);
+        moduleDao.delete(module);
     }
 }
