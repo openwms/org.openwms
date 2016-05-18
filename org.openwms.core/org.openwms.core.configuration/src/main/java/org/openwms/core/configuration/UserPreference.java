@@ -42,7 +42,7 @@ import org.springframework.util.Assert;
  * {@link Preferences}.
  *
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
- * @version $Revision$
+ * @version 0.2
  * @GlossaryTerm
  * @since 0.1
  */

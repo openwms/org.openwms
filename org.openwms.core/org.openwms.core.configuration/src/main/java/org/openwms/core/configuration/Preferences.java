@@ -30,28 +30,25 @@ import javax.xml.bind.annotation.XmlTransient;
 import javax.xml.bind.annotation.XmlType;
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 /**
- * An instance of a <code>Preferences</code> represents the root of a preferences XML file and aggregates all other types of preference.
- * 
- * @GlossaryTerm
+ * An instance of a {@code Preferences} represents the root of a preferences XML file and aggregates all other types of preference.
+ *
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
- * @version $Revision$
+ * @version 0.2
+ * @GlossaryTerm
  * @since 0.1
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "", propOrder = { "applicationOrRoleOrUserOrModule" })
+@XmlType(name = "", propOrder = {"applicationOrRoleOrUserOrModule"})
 @XmlRootElement(name = "preferences", namespace = "http://www.openwms.org/schema/preferences")
 public class Preferences implements Serializable {
 
-    private static final long serialVersionUID = 4836136346473578215L;
-
-    @XmlElements({ @XmlElement(name = "module", type = ModulePreference.class),
+    @XmlElements({@XmlElement(name = "module", type = ModulePreference.class),
             @XmlElement(name = "application", type = ApplicationPreference.class),
             @XmlElement(name = "role", type = RolePreference.class),
-            @XmlElement(name = "user", type = UserPreference.class) })
+            @XmlElement(name = "user", type = UserPreference.class)})
     private List<AbstractPreference> applicationOrRoleOrUserOrModule;
     @XmlTransient
     private List<ApplicationPreference> applications;
@@ -61,27 +58,25 @@ public class Preferences implements Serializable {
     private List<UserPreference> users;
     @XmlTransient
     private List<RolePreference> roles;
-    /**
-     * All concrete types of AbstractPreference.
-     */
-    public static final Class<?>[] TYPES = { ApplicationPreference.class, ModulePreference.class, RolePreference.class,
-            UserPreference.class };
+    /** All concrete types of AbstractPreference. */
+    public static final Class<?>[] TYPES = {ApplicationPreference.class, ModulePreference.class, RolePreference.class,
+            UserPreference.class};
 
     /**
      * Gets the value of the applicationOrRoleOrUserOrModule property. This method is called by the JAXB unmarshaller only.
-     * 
+     *
      * @return a list of all preferences
      */
     public List<AbstractPreference> getApplicationOrRoleOrUserOrModule() {
         if (applicationOrRoleOrUserOrModule == null) {
-            applicationOrRoleOrUserOrModule = new ArrayList<AbstractPreference>();
+            applicationOrRoleOrUserOrModule = new ArrayList<>();
         }
         return applicationOrRoleOrUserOrModule;
     }
 
     /**
      * Return a list of all preferences. Simple call to {@link #getApplicationOrRoleOrUserOrModule()}. Is only added due to naming purpose.
-     * 
+     *
      * @return a list of all preferences
      */
     public List<AbstractPreference> getAll() {
@@ -90,12 +85,12 @@ public class Preferences implements Serializable {
 
     /**
      * Return a list of all {@link ApplicationPreference}s or an empty ArrayList when no {@link ApplicationPreference}s exist.
-     * 
+     *
      * @return a list of all {@link ApplicationPreference}s
      */
     public List<ApplicationPreference> getApplications() {
         if (applications == null) {
-            applications = new ArrayList<ApplicationPreference>();
+            applications = new ArrayList<>();
             for (AbstractPreference pref : applicationOrRoleOrUserOrModule) {
                 if (pref instanceof ApplicationPreference) {
                     applications.add((ApplicationPreference) pref);
@@ -107,12 +102,12 @@ public class Preferences implements Serializable {
 
     /**
      * Return a list of all {@link ModulePreference}s or an empty ArrayList when no {@link ModulePreference}s exist.
-     * 
+     *
      * @return a list of all {@link ModulePreference}s
      */
     public List<ModulePreference> getModules() {
         if (modules == null) {
-            modules = new ArrayList<ModulePreference>();
+            modules = new ArrayList<>();
             for (AbstractPreference pref : applicationOrRoleOrUserOrModule) {
                 if (pref instanceof ModulePreference) {
                     modules.add((ModulePreference) pref);
@@ -124,12 +119,12 @@ public class Preferences implements Serializable {
 
     /**
      * Return a list of all {@link UserPreference}s or an empty ArrayList when no {@link UserPreference}s exist.
-     * 
+     *
      * @return a list of all {@link UserPreference}s
      */
     public List<UserPreference> getUsers() {
         if (users == null) {
-            users = new ArrayList<UserPreference>();
+            users = new ArrayList<>();
             for (AbstractPreference pref : applicationOrRoleOrUserOrModule) {
                 if (pref instanceof UserPreference) {
                     users.add((UserPreference) pref);
@@ -141,12 +136,12 @@ public class Preferences implements Serializable {
 
     /**
      * Return a list of all {@link RolePreference}s or an empty ArrayList when no {@link RolePreference}s exist.
-     * 
+     *
      * @return a list of all {@link RolePreference}s
      */
     public List<RolePreference> getRoles() {
         if (roles == null) {
-            roles = new ArrayList<RolePreference>();
+            roles = new ArrayList<>();
             for (AbstractPreference pref : applicationOrRoleOrUserOrModule) {
                 if (pref instanceof RolePreference) {
                     roles.add((RolePreference) pref);
@@ -158,28 +153,26 @@ public class Preferences implements Serializable {
 
     /**
      * Return a list of preferences filtered by a specific type, defined by the parameter clazz.
-     * 
-     * @param <T>
-     *            Expected types are <code>ApplicationPreference</code>, <code>ModulePreference</code>, <code>RolePreference</code>
-     *            <code>UserPreference</code>
-     * @param clazz
-     *            The class type of the preference to filter for
+     *
+     * @param <T> Expected types are {@code ApplicationPreference}, {@code ModulePreference}, {@code RolePreference}
+     * {@code UserPreference}
+     * @param clazz The class type of the preference to filter for
      * @return a list of T.
+
+     @SuppressWarnings("unchecked") public <T extends AbstractPreference> List<T> getOfType(Class<T> clazz) {
+     if (ApplicationPreference.class.equals(clazz)) {
+     return (List<T>) getApplications();
+     }
+     if (ModulePreference.class.equals(clazz)) {
+     return (List<T>) getModules();
+     }
+     if (UserPreference.class.equals(clazz)) {
+     return (List<T>) getUsers();
+     }
+     if (RolePreference.class.equals(clazz)) {
+     return (List<T>) getRoles();
+     }
+     return Collections.<T>emptyList();
+     }
      */
-    @SuppressWarnings("unchecked")
-    public <T extends AbstractPreference> List<T> getOfType(Class<T> clazz) {
-        if (ApplicationPreference.class.equals(clazz)) {
-            return (List<T>) getApplications();
-        }
-        if (ModulePreference.class.equals(clazz)) {
-            return (List<T>) getModules();
-        }
-        if (UserPreference.class.equals(clazz)) {
-            return (List<T>) getUsers();
-        }
-        if (RolePreference.class.equals(clazz)) {
-            return (List<T>) getRoles();
-        }
-        return Collections.<T> emptyList();
-    }
 }

@@ -47,7 +47,7 @@ import org.springframework.util.Assert;
  * 
  * @GlossaryTerm
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
- * @version $Revision$
+ * @version 0.2
  * @since 0.1
  */
 @XmlType(name = "modulePreference", namespace = "http://www.openwms.org/schema/preferences")

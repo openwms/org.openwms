@@ -24,11 +24,10 @@ package org.openwms.core.configuration;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 /**
- * A PreferenceWriter extends the {@link PreferenceDao} about functionality to save and remove {@link AbstractPreference}s.
+ * A PreferenceRepository is a Spring Data JPA repository that deals with {@link AbstractPreference}s.
  *
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  * @version 0.2
- * @see org.openwms.core.configuration.PreferenceDao
  * @since 0.1
  */
 interface PreferenceRepository extends JpaRepository<AbstractPreference, Long>, PreferenceRepositoryCustom {

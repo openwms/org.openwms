@@ -32,7 +32,7 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 /**
- * A PreferenceRepositoryImpl is a JPA implementation of {@link PreferenceRepositoryCustom}.
+ * A PreferenceRepositoryImpl implements custom generic find methods of {@link PreferenceRepositoryCustom}.
  * <p>
  * All methods have to be invoked within an active transaction context.
  * </p>
@@ -43,7 +43,7 @@ import org.springframework.transaction.annotation.Transactional;
  */
 @Transactional(propagation = Propagation.MANDATORY)
 @Repository
-public class PreferenceRepositoryImpl implements PreferenceRepositoryCustom {
+class PreferenceRepositoryImpl implements PreferenceRepositoryCustom {
 
     @PersistenceContext
     private EntityManager em;

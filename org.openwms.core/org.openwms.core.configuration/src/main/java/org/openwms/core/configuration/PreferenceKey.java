@@ -29,16 +29,15 @@ import java.util.Arrays;
  * embeddable, because of JPA does not support inheritance of embeddables.
  * 
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
- * @version $Revision$
+ * @version 0.2
  * @since 0.1
  */
 public class PreferenceKey implements Serializable {
 
-    private static final long serialVersionUID = -3139108412851851406L;
     private Serializable[] fields;
 
     /**
-     * Create a new <code>PreferenceKey</code> with a variable array of fields.
+     * Create a new {@code PreferenceKey} with a variable array of fields.
      * 
      * @param fields
      *            The array of fields to store as keys

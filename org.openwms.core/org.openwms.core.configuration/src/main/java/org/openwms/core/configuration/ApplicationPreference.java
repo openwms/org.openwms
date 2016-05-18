@@ -37,59 +37,45 @@ import java.io.Serializable;
 import org.springframework.util.Assert;
 
 /**
- * An ApplicationPreference is used to store a configuration setting in application scope.
- * <p>
- * The table model of an ApplicationPreference spans an unique key over the columns C_TYPE and C_KEY.
- * </p>
- * <p>
- * It's counterpart in the context of JAXB is the applicationPreference element.
- * </p>
- * 
- * @GlossaryTerm
+ * An ApplicationPreference is used to store a configuration setting in application scope. <p> The table model of an ApplicationPreference
+ * spans an unique key over the columns C_TYPE and C_KEY. </p> <p> It's counterpart in the context of JAXB is the applicationPreference
+ * element. </p>
+ *
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
- * @version $Revision$
+ * @version 0.2
+ * @GlossaryTerm
  * @since 0.1
  */
 @XmlType(name = "applicationPreference", namespace = "http://www.openwms.org/schema/preferences")
 @Entity
-@Table(name = "COR_APP_PREFERENCE", uniqueConstraints = @UniqueConstraint(columnNames = { "C_TYPE", "C_KEY" }))
-@NamedQueries({ @NamedQuery(name = ApplicationPreference.NQ_FIND_BY_OWNER, query = "select ap from ApplicationPreference ap") })
+@Table(name = "COR_APP_PREFERENCE", uniqueConstraints = @UniqueConstraint(columnNames = {"C_TYPE", "C_KEY"}))
+@NamedQueries({@NamedQuery(name = ApplicationPreference.NQ_FIND_BY_OWNER, query = "select ap from ApplicationPreference ap")})
 public class ApplicationPreference extends AbstractPreference implements Serializable {
 
-    /**
-     * Query to find all {@code ApplicationPreference}s. Name is {@value} .
-     */
+    /** Query to find all {@code ApplicationPreference}s. Name is {@value}. */
     public static final String NQ_FIND_BY_OWNER = "ApplicationPreference" + FIND_BY_OWNER;
 
-    /**
-     * Type of this preference.
-     */
+    /** Type of this preference. */
     @XmlTransient
     @Enumerated(EnumType.STRING)
     @Column(name = "C_TYPE")
     private PropertyScope type = PropertyScope.APPLICATION;
 
-    /**
-     * Key of the preference (not nullable).
-     */
+    /** Key of the preference (not nullable). */
     @XmlAttribute(name = "key", required = true)
     @Column(name = "C_KEY", nullable = false)
     private String key;
 
-    /**
-     * Create a new <code>ApplicationPreference</code>. Only defined by the JAXB implementation.
-     */
+    /** Create a new {@code ApplicationPreference}. Only defined by the JAXB implementation. */
     public ApplicationPreference() {
         super();
     }
 
     /**
-     * Create a new <code>ApplicationPreference</code>.
-     * 
-     * @param key
-     *            the key
-     * @throws IllegalArgumentException
-     *             when key is <code>null</code> or empty
+     * Create a new {@code ApplicationPreference}.
+     *
+     * @param key the key
+     * @throws IllegalArgumentException when key is {@literal null} or empty
      */
     public ApplicationPreference(String key) {
         // Called from the client-side only.
@@ -100,7 +86,7 @@ public class ApplicationPreference extends AbstractPreference implements Seriali
 
     /**
      * Get the key.
-     * 
+     *
      * @return the key
      */
     public String getKey() {
@@ -120,14 +106,14 @@ public class ApplicationPreference extends AbstractPreference implements Seriali
      */
     @Override
     protected Object[] getFields() {
-        return new Object[] { getType(), getKey() };
+        return new Object[]{getType(), getKey()};
     }
 
     /**
      * {@inheritDoc}
-     * 
+     * <p>
      * Uses the type and key to create a {@link PreferenceKey} instance.
-     * 
+     *
      * @see AbstractPreference#getPrefKey()
      */
     @Override
@@ -137,7 +123,7 @@ public class ApplicationPreference extends AbstractPreference implements Seriali
 
     /**
      * {@inheritDoc}
-     * 
+     * <p>
      * Uses the type and the key for the hashCode calculation.
      */
     @Override
@@ -151,7 +137,7 @@ public class ApplicationPreference extends AbstractPreference implements Seriali
 
     /**
      * {@inheritDoc}
-     * 
+     * <p>
      * Comparison done with the type and the key fields. Not delegated to super class.
      */
     @Override

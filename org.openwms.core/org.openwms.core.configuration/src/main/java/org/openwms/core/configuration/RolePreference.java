@@ -50,7 +50,6 @@ import org.springframework.util.Assert;
 @Entity
 @Table(name = "COR_ROLE_PREFERENCE", uniqueConstraints = @UniqueConstraint(columnNames = {"C_TYPE", "C_OWNER", "C_KEY"}))
 @NamedQueries({
-        @NamedQuery(name = RolePreference.NQ_FIND_ALL, query = "select rp from RolePreference rp"),
         @NamedQuery(name = RolePreference.NQ_FIND_BY_OWNER, query = "select rp from RolePreference rp where rp.owner = :owner")})
 public class RolePreference extends AbstractPreference implements Serializable {
 

@@ -37,6 +37,7 @@ import org.junit.Assert;
 import org.junit.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.openwms.core.configuration.file.PreferenceDao;
 import org.openwms.core.event.MergePropertiesEvent;
 import org.openwms.core.test.AbstractMockitoTests;
 
