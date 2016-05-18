@@ -21,68 +21,40 @@
  */
 package org.openwms.core.module;
 
+import javax.validation.constraints.NotNull;
 import java.util.Collections;
 import java.util.List;
 
-import org.ameba.exception.NotFoundException;
-import org.openwms.core.AbstractGenericEntityService;
-import org.openwms.core.GenericDao;
+import org.ameba.annotation.TxService;
 import org.openwms.core.exception.ExceptionCodes;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.Assert;
 
 /**
- * A ModuleServiceImpl is a Spring powered transactional service using a repository to execute simple CRUD operations. This implementation
- * can be autowired with the name {@value #COMPONENT_NAME}.
+ * A ModuleServiceImpl is a Spring powered transactional service using a repository to execute simple CRUD operations.
  *
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
- * @version $Revision$
+ * @version 0.2
  * @see ModuleDao
  * @since 0.1
  */
-@Transactional
-@Service(ModuleServiceImpl.COMPONENT_NAME)
-public class ModuleServiceImpl extends AbstractGenericEntityService<Module, Long, String> implements ModuleService {
+@TxService
+class ModuleServiceImpl implements ModuleService {
 
     @Autowired
     private ModuleDao moduleDao;
-    /** Springs component name. */
-    public static final String COMPONENT_NAME = "moduleService";
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    protected GenericDao<Module, Long> getRepository() {
-        return moduleDao;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    protected Module resolveByBK(Module entity) {
-        Module result = null;
-        try {
-            result = moduleDao.findByUniqueId(entity.getModuleName());
-        } catch (NotFoundException enfe) {
-            ;
-        }
-        return result;
-    }
 
     /**
      * {@inheritDoc}
      * <p>
      * It is expected that the list of {@link Module}s is already ordered by their startup order. Each {@link Module}'s
-     * <code>startupOrder</code> is synchronized with the persistence storage.
+     * {@code startupOrder} is synchronized with the persistence storage.
      *
-     * @throws org.ameba.exception.ServiceLayerException when <code>modules</code> is <code>null</code>
+     * @throws org.ameba.exception.ServiceLayerException when {@code modules} is {@literal null}
      */
     @Override
     public void saveStartupOrder(List<Module> modules) {
-        checkForNull(modules, ExceptionCodes.MODULE_SAVE_STARTUP_ORDER_NOT_BE_NULL);
+        Assert.notEmpty(modules, ExceptionCodes.MODULE_SAVE_STARTUP_ORDER_NOT_BE_NULL);
         for (Module module : modules) {
             Module toSave = findById(module.getId());
             toSave.setStartupOrder(module.getStartupOrder());
@@ -92,14 +64,23 @@ public class ModuleServiceImpl extends AbstractGenericEntityService<Module, Long
 
     /**
      * {@inheritDoc}
+     */
+    @Override
+    public List<Module> findAll() {
+        List<Module> modules = moduleDao.findAll();
+        return modules == null || modules.isEmpty() ? Collections.emptyList() : modules;
+     }
+
+    /**
+     * {@inheritDoc}
      * <p>
-     * Additionally the <code>startupOrder</code> is re-calculated for the new {@link Module}.
+     * Additionally the {@code startupOrder} is re-calculated for the new {@link Module}.
      *
-     * @throws org.ameba.exception.ServiceLayerException when <code>module</code> is <code>null</code>
+     * @throws org.ameba.exception.ServiceLayerException when {@code module} is {@literal null}
      */
     @Override
     public Module save(Module module) {
-        checkForNull(module, ExceptionCodes.MODULE_SAVE_NOT_BE_NULL);
+        Assert.notNull(module, ExceptionCodes.MODULE_SAVE_NOT_BE_NULL);
         if (module.isNew()) {
             List<Module> all = findAll();
             if (!all.isEmpty()) {
@@ -107,6 +88,14 @@ public class ModuleServiceImpl extends AbstractGenericEntityService<Module, Long
                 module.setStartupOrder(all.get(all.size() - 1).getStartupOrder() + 1);
             }
         }
-        return super.save(module);
+        return moduleDao.save(module);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void remove(@NotNull Module module) {
+        moduleDao.remove(module);
     }
 }

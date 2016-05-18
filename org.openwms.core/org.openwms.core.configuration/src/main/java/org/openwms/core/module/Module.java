@@ -23,17 +23,15 @@ package org.openwms.core.module;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OrderBy;
 import javax.persistence.Table;
 import javax.persistence.Transient;
-import javax.persistence.Version;
 import java.io.Serializable;
 import java.util.Comparator;
 
+import org.ameba.integration.jpa.BaseEntity;
 import org.openwms.core.AbstractEntity;
 import org.openwms.core.DomainObject;
 import org.openwms.core.values.CoreTypeDefinitions;
@@ -54,16 +52,8 @@ import org.springframework.util.Assert;
 @Table(name = "COR_MODULE")
 @NamedQueries({ @NamedQuery(name = Module.NQ_FIND_ALL, query = "select m from Module m order by m.startupOrder"),
         @NamedQuery(name = Module.NQ_FIND_BY_UNIQUE_QUERY, query = "select m from Module m where m.moduleName = ?1") })
-public class Module extends AbstractEntity<Long> implements Serializable {
+public class Module extends BaseEntity implements Serializable {
 
-    private static final long serialVersionUID = 7358306395032979355L;
-    /**
-     * Unique technical key.
-     */
-    @Id
-    @Column(name = "C_ID")
-    @GeneratedValue
-    private Long id;
     /**
      * Unique name of the <code>Module</code> (natural key, unique, not-null).
      */
@@ -96,12 +86,6 @@ public class Module extends AbstractEntity<Long> implements Serializable {
      */
     @Column(name = "C_DESCRIPTION", length = CoreTypeDefinitions.DESCRIPTION_LENGTH)
     private String description = "--";
-    /**
-     * Version field.
-     */
-    @Version
-    @Column(name = "C_VERSION")
-    private long version;
     /**
      * Query to find all <code>Module</code>s. Name is {@value} .
      */
@@ -138,10 +122,9 @@ public class Module extends AbstractEntity<Long> implements Serializable {
     };
 
     /**
-     * Create a new Module.
+     * Dear JPA ...
      */
     protected Module() {
-        super();
     }
 
     /**
@@ -159,14 +142,6 @@ public class Module extends AbstractEntity<Long> implements Serializable {
         Assert.hasText(moduleName, "Not allowed to set the moduleName to null or an empty String");
         this.moduleName = moduleName;
         this.url = url;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public boolean isNew() {
-        return id == null;
     }
 
     /**
@@ -211,16 +186,6 @@ public class Module extends AbstractEntity<Long> implements Serializable {
     public void setUrl(String url) {
         Assert.hasText(url, "Not allowed to set the url to null or an empty String");
         this.url = url;
-    }
-
-    /**
-     * Get the <code>id</code>.
-     * 
-     * @return the id
-     */
-    @Override
-    public Long getId() {
-        return id;
     }
 
     /**
@@ -297,14 +262,6 @@ public class Module extends AbstractEntity<Long> implements Serializable {
      */
     public void setStartupOrder(int startupOrder) {
         this.startupOrder = startupOrder;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public long getVersion() {
-        return version;
     }
 
     /**
