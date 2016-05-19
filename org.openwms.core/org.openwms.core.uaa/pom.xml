@@ -36,7 +36,7 @@
 
     <properties>
         <moduleDir>../..</moduleDir>
-        <start-class>org.openwms.core.uaa.Starter</start-class>
+        <start-class>org.openwms.core.Starter</start-class>
     </properties>
 
     <profiles>
