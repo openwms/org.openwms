@@ -28,6 +28,7 @@ import java.util.List;
 
 import org.ameba.annotation.TxService;
 import org.openwms.core.annotation.FireAfterTransaction;
+import org.openwms.core.configuration.file.AbstractPreference;
 import org.openwms.core.configuration.file.PreferenceDao;
 import org.openwms.core.event.ConfigurationChangedEvent;
 import org.openwms.core.event.MergePropertiesEvent;

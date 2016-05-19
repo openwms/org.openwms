@@ -23,6 +23,8 @@ package org.openwms.core.configuration;
 
 import java.util.List;
 
+import org.openwms.core.configuration.file.AbstractPreference;
+
 /**
  * A PreferenceRepositoryCustom defines additional custom methods to search preferences by class type.
  *

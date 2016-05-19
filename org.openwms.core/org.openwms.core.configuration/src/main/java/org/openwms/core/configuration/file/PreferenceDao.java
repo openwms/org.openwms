@@ -23,8 +23,6 @@ package org.openwms.core.configuration.file;
 
 import java.util.List;
 
-import org.openwms.core.configuration.AbstractPreference;
-
 /**
  * A PreferenceDao offers basic functionality to find and retrieve {@link AbstractPreference}s.
  * 

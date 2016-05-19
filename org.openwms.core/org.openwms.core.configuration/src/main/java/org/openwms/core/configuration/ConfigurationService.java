@@ -23,6 +23,8 @@ package org.openwms.core.configuration;
 
 import java.util.Collection;
 
+import org.openwms.core.configuration.file.AbstractPreference;
+
 /**
  * A ConfigurationService is responsible to deal with preferences. Whereby preferences have particular defined scopes, e.g. some preferences
  * are in a global scope which means they are visible and valid for the whole application. Others are only valid in a certain scope,

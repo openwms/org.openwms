@@ -23,7 +23,7 @@
  */
 -->
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <groupId>org.openwms</groupId>
@@ -32,11 +32,13 @@
     </parent>
     <artifactId>org.openwms.core.configuration</artifactId>
     <name>${project.artifactId}</name>
-    <description>This bundle project contains interface types for the DAO integration layer. Those interfaces are free from annotations and do not depend on other frameworks except plain Java.</description>
+    <description>This bundle project contains interface types for the DAO integration layer. Those interfaces are free from annotations and
+        do not depend on other frameworks except plain Java.
+    </description>
 
     <properties>
         <moduleDir>../..</moduleDir>
-        <start-class>org.openwms.core.configuration.Starter</start-class>
+        <start-class>org.openwms.core.Starter</start-class>
     </properties>
 
     <profiles>
@@ -75,8 +77,18 @@
             <artifactId>spring-boot-starter-data-jpa</artifactId>
         </dependency>
         <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-configuration-processor</artifactId>
+            <optional>true</optional>
+        </dependency>
+        <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-oxm</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>io.projectreactor</groupId>
+            <artifactId>reactor-core</artifactId>
+            <version>2.5.0.M3</version>
         </dependency>
 
         <dependency>
@@ -90,4 +102,12 @@
             <scope>test</scope>
         </dependency>
     </dependencies>
+
+    <repositories>
+        <repository>
+            <id>spring-milestone-repository</id>
+            <url>http://repo.spring.io/milestone</url>
+        </repository>
+    </repositories>
+
 </project>

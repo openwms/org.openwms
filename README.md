@@ -18,4 +18,5 @@ Open Warehouse Management System
 # Resources #
 
 Issue tracker at [Atlassian JIRA](https://openwms.atlassian.net/browse) or on GitHub.
+
 Wiki at [Atlassian Confluence](https://openwms.atlassian.net/wiki/display/OPENWMS)

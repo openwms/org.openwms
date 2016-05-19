@@ -36,7 +36,7 @@
 
     <properties>
         <moduleDir>../..</moduleDir>
-        <start-class>org.openwms.core.uaa.Starter</start-class>
+        <start-class>org.openwms.core.Starter</start-class>
     </properties>
 
     <profiles>
@@ -117,6 +117,10 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-security</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>io.projectreactor</groupId>
+            <artifactId>reactor-core</artifactId>
         </dependency>
 
         <!-- Project dependencies -->

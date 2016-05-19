@@ -21,6 +21,7 @@
  */
 package org.openwms.core.configuration;
 
+import org.openwms.core.configuration.file.AbstractPreference;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 /**
