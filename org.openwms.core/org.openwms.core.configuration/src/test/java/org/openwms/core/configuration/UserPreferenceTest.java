@@ -27,6 +27,7 @@ import javax.persistence.PersistenceContext;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
+import org.openwms.core.configuration.file.UserPreference;
 import org.openwms.core.test.AbstractJpaSpringContextTests;
 
 /**

@@ -21,6 +21,8 @@
  */
 package org.openwms.core.configuration;
 
+import org.openwms.core.configuration.file.ApplicationPreference;
+
 /**
  * A MockApplicationPreference.
  *
@@ -37,15 +39,5 @@ public class MockApplicationPreference extends ApplicationPreference {
      */
     public MockApplicationPreference(String key) {
         super(key);
-    }
-
-    /**
-     * {@inheritDoc}
-     *
-     * @see org.openwms.core.configuration.AbstractPreference#isNew()
-     */
-    @Override
-    public boolean isNew() {
-        return Boolean.FALSE;
     }
 }

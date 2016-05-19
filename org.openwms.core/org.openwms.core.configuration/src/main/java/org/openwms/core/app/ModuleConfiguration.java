@@ -15,6 +15,7 @@
  */
 package org.openwms.core.app;
 
+import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.oxm.Unmarshaller;
@@ -28,12 +29,23 @@ import org.springframework.oxm.jaxb.Jaxb2Marshaller;
  * @since 1.0
  */
 @Configuration
+@ConfigurationProperties(prefix = "openwms.core.config")
 public class ModuleConfiguration {
+
+    private String initialProperties;
 
     public @Bean
     Unmarshaller unmarshaller() {
         Jaxb2Marshaller um = new Jaxb2Marshaller();
-        um.setContextPath("org.openwms.core.configuration");
+        um.setContextPath("org.openwms.core.configuration.file");
         return um;
+    }
+
+    public String getInitialProperties() {
+        return initialProperties;
+    }
+
+    public void setInitialProperties(String initialProperties) {
+        this.initialProperties = initialProperties;
     }
 }

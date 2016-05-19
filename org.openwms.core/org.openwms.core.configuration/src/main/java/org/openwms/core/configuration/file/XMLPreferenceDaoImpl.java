@@ -21,7 +21,6 @@
  */
 package org.openwms.core.configuration.file;
 
-import javax.annotation.PostConstruct;
 import javax.xml.transform.stream.StreamSource;
 import java.io.IOException;
 import java.util.List;
@@ -29,10 +28,7 @@ import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
 import org.ameba.LoggingCategories;
-import org.openwms.core.Constants;
-import org.openwms.core.configuration.AbstractPreference;
 import org.openwms.core.configuration.PreferenceKey;
-import org.openwms.core.configuration.Preferences;
 import org.openwms.core.event.ReloadFilePreferencesEvent;
 import org.openwms.core.exception.DataException;
 import org.openwms.core.exception.NoUniqueResultException;
@@ -40,7 +36,6 @@ import org.openwms.core.exception.ResourceNotFoundException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationListener;
 import org.springframework.core.io.Resource;
@@ -69,8 +64,8 @@ class XMLPreferenceDaoImpl implements PreferenceDao, ApplicationListener<ReloadF
     private ApplicationContext ctx;
     @Autowired
     private Unmarshaller unmarshaller;
-    @Autowired
-    @Value(Constants.APPLICATION_INITIAL_PROPERTIES)
+    //@Autowired
+    //@Value("#{openwms.core.config.initial.properties}")
     private String fileName;
     private volatile Resource fileResource;
     private volatile Preferences preferences;
@@ -102,7 +97,7 @@ class XMLPreferenceDaoImpl implements PreferenceDao, ApplicationListener<ReloadF
     /**
      * On bean initialization load all preferences into a Map.
      */
-    @PostConstruct
+    //@PostConstruct
     private void loadResources() {
         if (preferences == null) {
             initResource();

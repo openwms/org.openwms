@@ -19,10 +19,11 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
-package org.openwms.core.configuration;
+package org.openwms.core.configuration.file;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
 import javax.persistence.Lob;
@@ -30,11 +31,11 @@ import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlTransient;
 import javax.xml.bind.annotation.XmlType;
-import javax.xml.bind.annotation.XmlValue;
 import java.io.Serializable;
 import java.util.Objects;
 
-import org.ameba.integration.jpa.BaseEntity;
+import org.openwms.core.configuration.PreferenceKey;
+import org.openwms.core.configuration.PropertyScope;
 
 /**
  * An AbstractPreference is a superclass for all other preference classes within the application. <p> It encapsulates some common behavior
@@ -48,15 +49,16 @@ import org.ameba.integration.jpa.BaseEntity;
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
 @Table(name = "COR_PREFERENCE")
-public abstract class AbstractPreference extends BaseEntity implements Serializable {
+public abstract class AbstractPreference implements Serializable {
 
+    @Id
+    Long id;
     /**
      * Suffix for the FIND_BY_OWNER named query. Default {@value}
      */
     public static final String FIND_BY_OWNER = ".findByOwner";
 
     /** The String value of the {@code AbstractPreference}. */
-    @XmlAttribute(name = "val")
     @Column(name = "C_VALUE")
     private String value;
 
@@ -72,7 +74,7 @@ public abstract class AbstractPreference extends BaseEntity implements Serializa
     private Float floatValue;
 
     /** Description text of the {@link AbstractPreference}. */
-    @XmlValue
+    //@XmlValue
     @Column(name = "C_DESCRIPTION")
     private String description;
 
@@ -98,6 +100,7 @@ public abstract class AbstractPreference extends BaseEntity implements Serializa
      *
      * @return The value of the {@link AbstractPreference}
      */
+    @XmlAttribute(name = "val")
     public String getValue() {
         return value;
     }

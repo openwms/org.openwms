@@ -19,7 +19,7 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
-package org.openwms.core.configuration;
+package org.openwms.core.configuration.file;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -34,6 +34,8 @@ import javax.xml.bind.annotation.XmlTransient;
 import javax.xml.bind.annotation.XmlType;
 import java.io.Serializable;
 
+import org.openwms.core.configuration.PreferenceKey;
+import org.openwms.core.configuration.PropertyScope;
 import org.springframework.util.Assert;
 
 /**
@@ -123,7 +125,7 @@ public class RolePreference extends AbstractPreference implements Serializable {
     /**
      * {@inheritDoc}
      *
-     * @see org.openwms.core.configuration.AbstractPreference#getType()
+     * @see AbstractPreference#getType()
      */
     @Override
     public PropertyScope getType() {
@@ -133,7 +135,7 @@ public class RolePreference extends AbstractPreference implements Serializable {
     /**
      * {@inheritDoc}
      *
-     * @see org.openwms.core.configuration.AbstractPreference#getFields()
+     * @see AbstractPreference#getFields()
      */
     @Override
     protected Object[] getFields() {
@@ -145,7 +147,7 @@ public class RolePreference extends AbstractPreference implements Serializable {
      * <p>
      * Uses the type, owner and the key to create a {@link PreferenceKey} instance.
      *
-     * @see org.openwms.core.configuration.AbstractPreference#getPrefKey()
+     * @see AbstractPreference#getPrefKey()
      */
     @Override
     public PreferenceKey getPrefKey() {

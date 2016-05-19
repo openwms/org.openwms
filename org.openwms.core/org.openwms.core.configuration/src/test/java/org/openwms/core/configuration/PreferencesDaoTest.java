@@ -28,6 +28,8 @@ import java.util.List;
 import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
+import org.openwms.core.configuration.file.AbstractPreference;
+import org.openwms.core.configuration.file.ApplicationPreference;
 import org.openwms.core.test.AbstractJpaSpringContextTests;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
