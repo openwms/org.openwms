@@ -435,14 +435,14 @@
         <dozer.version>5.5.1</dozer.version>
         <el-impl.version>2.2</el-impl.version>
 
-        <hibernate.version>5.0.4.Final</hibernate.version>
-        <jackson.version>2.6.5</jackson.version> <!-- Keep in sync with platform -->
+        <hibernate.version>5.0.7.Final</hibernate.version> <!-- Keep in sync with Spring Data JPA -->
+        <jackson.version>2.6.6</jackson.version> <!-- Keep in sync with platform -->
         <jdbc.oracle.version>6.0.0</jdbc.oracle.version>
         <jpa-api.version>1.0.0.Final</jpa-api.version>
         <!-- Spring Integration 2.2.4 uses Spring Core 3.1.3 -->
-        <spring.io.version>2.0.3.RELEASE</spring.io.version>
-        <spring-boot.version>1.3.3.RELEASE</spring-boot.version> <!-- Keep in sync with platform -->
-        <spring.version>4.2.5.RELEASE</spring.version> <!-- Keep in sync with platform -->
+        <spring.io.version>2.0.5.RELEASE</spring.io.version>
+        <spring-boot.version>1.3.5.RELEASE</spring-boot.version> <!-- Keep in sync with platform -->
+        <spring.version>4.2.6.RELEASE</spring.version> <!-- Keep in sync with platform -->
         <start-class></start-class> <!-- set by actual boot module -->
         <!-- =================== -->
         <!--   Plugin versions   -->
