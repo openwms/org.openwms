@@ -38,6 +38,6 @@ class ConfigurationOperations {
 
     @RequestMapping(method = RequestMethod.GET)
     public Flux<AbstractPreference> findAll() {
-        return Flux.fromIterable(configurationService.findAll());
+        return Flux.fromIterable(configurationService.findAll()).log();
     }
 }
