@@ -19,7 +19,7 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
-package org.openwms.core.configuration;
+package org.openwms.core.configuration.file;
 
 import javax.xml.XMLConstants;
 import javax.xml.bind.JAXBContext;
@@ -35,9 +35,6 @@ import java.util.Set;
 
 import org.junit.Assert;
 import org.junit.Test;
-import org.openwms.core.configuration.file.AbstractPreference;
-import org.openwms.core.configuration.file.ApplicationPreference;
-import org.openwms.core.configuration.file.Preferences;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.util.ResourceUtils;
@@ -49,7 +46,7 @@ import org.springframework.util.ResourceUtils;
  * @version $Revision$
  * @since 0.1
  */
-public class ApplicationPreferenceTest {
+class ApplicationPreferenceTest {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(ApplicationPreferenceTest.class);
     private static final String APP_PREF1 = "APP_PREF1";

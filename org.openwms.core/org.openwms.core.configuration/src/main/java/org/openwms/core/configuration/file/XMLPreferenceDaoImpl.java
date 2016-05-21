@@ -30,7 +30,6 @@ import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
 import org.ameba.exception.IntegrationLayerException;
-import org.openwms.core.configuration.PreferenceKey;
 import org.openwms.core.event.ReloadFilePreferencesEvent;
 import org.openwms.core.exception.NoUniqueResultException;
 import org.openwms.core.exception.ResourceNotFoundException;

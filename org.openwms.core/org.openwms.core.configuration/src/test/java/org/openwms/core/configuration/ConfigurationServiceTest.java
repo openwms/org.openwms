@@ -35,7 +35,9 @@ import java.util.Collections;
 import java.util.List;
 
 import org.junit.Assert;
+import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.ExpectedException;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.openwms.core.configuration.file.AbstractPreference;
@@ -65,6 +67,8 @@ public class ConfigurationServiceTest extends AbstractMockitoTests {
     private PreferenceDao reader;
     @InjectMocks
     private ConfigurationServiceImpl srv = new ConfigurationServiceImpl();
+    @Rule
+    public ExpectedException thrown = ExpectedException.none();
 
     /**
      * Setting up some test data.
@@ -143,8 +147,9 @@ public class ConfigurationServiceTest extends AbstractMockitoTests {
      * <p>
      * Save with <code>null</code> must throw an exception IAE.
      */
-    @Test(expected = IllegalArgumentException.class)
+    @Test
     public final void testSaveNull() {
+        thrown.expect(IllegalArgumentException.class);
         srv.save(null);
         fail("Expected to catch an IllegalArgumentException when calling save() with null");
     }
@@ -172,8 +177,7 @@ public class ConfigurationServiceTest extends AbstractMockitoTests {
 
         ApplicationPreference newEntity = new ApplicationPreference("TRANSIENT");
         srv.save(newEntity);
-        verify(writer, never()).save(newEntity);
-        verify(writer, never()).save(newEntity);
+        verify(writer).save(newEntity);
     }
 
     /**
@@ -187,7 +191,6 @@ public class ConfigurationServiceTest extends AbstractMockitoTests {
         when(writer.save(mock)).thenReturn(mock);
 
         assertEquals(mock, srv.save(mock));
-        verify(writer, never()).save(mock);
         verify(writer).save(mock);
     }
 
@@ -196,8 +199,9 @@ public class ConfigurationServiceTest extends AbstractMockitoTests {
      * <p>
      * Remove with <code>null</code> must throw an exception IAE.
      */
-    @Test(expected = IllegalArgumentException.class)
+    @Test
     public final void testRemoveNull() {
+        thrown.expect(IllegalArgumentException.class);
         srv.delete(null);
         fail("Expected to catch an IllegalArgumentException when calling remove() with null");
     }

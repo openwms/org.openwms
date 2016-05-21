@@ -34,6 +34,7 @@ import org.openwms.core.event.ConfigurationChangedEvent;
 import org.openwms.core.event.MergePropertiesEvent;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationListener;
+import org.springframework.util.Assert;
 
 /**
  * A ConfigurationServiceImpl is a transactional Spring powered service implementation to manage preferences.
@@ -95,7 +96,7 @@ class ConfigurationServiceImpl implements ConfigurationService, ApplicationListe
     @Override
     @FireAfterTransaction(events = {ConfigurationChangedEvent.class})
     public <T extends AbstractPreference> T save(@NotNull T preference) {
-        //Assert.notNull(preference, "Not allowed to call save with a NULL argument");
+        Assert.notNull(preference, "Not allowed to call save with a NULL argument");
         return preferenceRepository.save(preference);
     }
 
@@ -107,7 +108,7 @@ class ConfigurationServiceImpl implements ConfigurationService, ApplicationListe
     @Override
     @FireAfterTransaction(events = {ConfigurationChangedEvent.class})
     public void delete(@NotNull AbstractPreference preference) {
-        //Assert.notNull(preference, "Not allowed to call remove with a NULL argument");
+        Assert.notNull(preference, "Not allowed to call remove with a NULL argument");
         preferenceRepository.delete(preference);
     }
 

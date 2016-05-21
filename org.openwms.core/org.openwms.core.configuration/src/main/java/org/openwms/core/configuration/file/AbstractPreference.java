@@ -37,7 +37,6 @@ import java.io.Serializable;
 import java.util.Objects;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import org.openwms.core.configuration.PreferenceKey;
 import org.openwms.core.configuration.PropertyScope;
 
 /**
