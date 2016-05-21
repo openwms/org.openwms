@@ -15,30 +15,25 @@
  */
 package org.openwms.core.app;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.oxm.Unmarshaller;
-import org.springframework.oxm.jaxb.Jaxb2Marshaller;
+import org.springframework.boot.context.properties.ConfigurationProperties;
 
 /**
- * A ModuleConfiguration.
+ * A ModuleProperties.
  *
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  * @version 1.0
  * @since 1.0
  */
-@Configuration
-class ModuleConfiguration {
+@ConfigurationProperties(prefix = "openwms.core.config")
+public class ModuleProperties {
 
-    @Autowired
-    private ModuleProperties props;
+    private String initialProperties;
 
-    public @Bean
-    Unmarshaller unmarshaller() {
-        Jaxb2Marshaller um = new Jaxb2Marshaller();
-        um.setContextPath("org.openwms.core.configuration.file");
-        return um;
+    public String getInitialProperties() {
+        return initialProperties;
     }
 
+    public void setInitialProperties(String initialProperties) {
+        this.initialProperties = initialProperties;
+    }
 }
