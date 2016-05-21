@@ -24,19 +24,19 @@ package org.openwms.core.configuration.file;
 import javax.annotation.PostConstruct;
 import javax.xml.transform.stream.StreamSource;
 import java.io.IOException;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
-import org.ameba.LoggingCategories;
-import org.openwms.core.configuration.PreferenceKey;
+import org.ameba.exception.IntegrationLayerException;
 import org.openwms.core.event.ReloadFilePreferencesEvent;
-import org.openwms.core.exception.DataException;
 import org.openwms.core.exception.NoUniqueResultException;
 import org.openwms.core.exception.ResourceNotFoundException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationListener;
 import org.springframework.core.io.Resource;
@@ -47,9 +47,9 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 /**
- * A XMLPreferenceDaoImpl reads a XML file of preferences and keeps them internally in a Map. An initial preferences file is expected to be
- * at {@value #INITIAL_PREFERENCES_FILE} but this can be overridden with a property <i>application.initial.properties</i> in the
- * configuration properties file. <p> On a {@link ReloadFilePreferencesEvent} the internal Map is cleared and reloaded. </p>
+ * A XMLPreferenceDaoImpl reads a XML file of preferences and keeps them internally in a Map. An initial preferences file can be configured
+ * with a property <i>openwms.core.config.initial-properties</i> in the application.properties file. <p> On a {@link
+ * ReloadFilePreferencesEvent} the internal Map is cleared and reloaded. </p>
  *
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  * @version 0.2
@@ -60,20 +60,16 @@ import org.springframework.transaction.annotation.Transactional;
 @Repository
 class XMLPreferenceDaoImpl implements PreferenceDao, ApplicationListener<ReloadFilePreferencesEvent> {
 
-    private static final Logger EXC_LOGGER = LoggerFactory.getLogger(LoggingCategories.INTEGRATION_LAYER_EXCEPTION);
+    private static final Logger LOGGER = LoggerFactory.getLogger(XMLPreferenceDaoImpl.class);
     @Autowired
     private ApplicationContext ctx;
     @Autowired
     private Unmarshaller unmarshaller;
-    //@Autowired
-    //@Value("#{openwms.core.config.initial.properties}")
-    private String fileName = "initial-preferences.xml";
+    @Value("${openwms.core.config.initial-properties}")
+    private String fileName;
     private volatile Resource fileResource;
     private volatile Preferences preferences;
     private Map<PreferenceKey, AbstractPreference> prefs = new ConcurrentHashMap<>();
-
-    /** The URL to the initial preferences XML file. Default {@value} */
-    public static final String INITIAL_PREFERENCES_FILE = "classpath:initial-preferences.xml";
 
     /**
      * {@inheritDoc}
@@ -82,7 +78,7 @@ class XMLPreferenceDaoImpl implements PreferenceDao, ApplicationListener<ReloadF
      */
     @Override
     public List<AbstractPreference> findAll() {
-        return preferences.getAll();
+        return preferences == null ? Collections.emptyList() : preferences.getAll();
     }
 
     /**
@@ -100,45 +96,38 @@ class XMLPreferenceDaoImpl implements PreferenceDao, ApplicationListener<ReloadF
      */
     @PostConstruct
     private void loadResources() {
-        if (preferences == null) {
-            initResource();
+        if (initialPropertiesExist()) {
             try {
                 preferences = (Preferences) unmarshaller.unmarshal(new StreamSource(fileResource.getInputStream()));
                 for (AbstractPreference pref : preferences.getAll()) {
                     if (prefs.containsKey(pref.getPrefKey())) {
-                        throw new NoUniqueResultException("Preference with key " + pref.getPrefKey()
-                                + " already loaded.");
+                        throw new NoUniqueResultException("Preference with key " + pref.getPrefKey() + " already loaded.");
                     }
                     prefs.put(pref.getPrefKey(), pref);
                 }
+                LOGGER.debug("Loaded {} properties into cache", preferences.getAll().size());
             } catch (XmlMappingException xme) {
-                EXC_LOGGER.error("Exception while unmarshalling from " + fileName, xme);
-                throw new DataException("Exception while unmarshalling from " + fileName, xme);
+                throw new IntegrationLayerException("Exception while unmarshalling from " + fileName, xme);
             } catch (IOException ioe) {
-                EXC_LOGGER.error("Exception while accessing the resource with name " + fileName, ioe);
                 throw new ResourceNotFoundException("Exception while accessing the resource with name " + fileName, ioe);
             }
         }
+    }
+
+    private boolean initialPropertiesExist() {
+        if (fileName != null && !fileName.isEmpty()) {
+            fileResource = ctx.getResource(fileName);
+        }
+        if (fileResource == null || !fileResource.exists()) {
+            LOGGER.debug("File to load initial preferences does not exist or is not preset. Filename [{}]", fileName);
+            return false;
+        }
+        return true;
     }
 
     private void reloadResources() {
         preferences = null;
         prefs.clear();
         loadResources();
-    }
-
-    private void initResource() {
-        if (fileName == null || fileName.isEmpty()) {
-            fileResource = ctx.getResource(fileName);
-        }
-        if (fileResource == null || !fileResource.exists()) {
-            fileResource = ctx.getResource(INITIAL_PREFERENCES_FILE);
-            if (!fileResource.exists()) {
-                EXC_LOGGER.error("Resources with name " + fileName + ":" + INITIAL_PREFERENCES_FILE
-                        + " could not be resolved");
-                throw new ResourceNotFoundException("Resources with name " + fileName + ":" + INITIAL_PREFERENCES_FILE
-                        + " could not be resolved");
-            }
-        }
     }
 }

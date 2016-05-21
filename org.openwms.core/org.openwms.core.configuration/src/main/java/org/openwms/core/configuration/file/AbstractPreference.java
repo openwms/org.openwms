@@ -32,10 +32,11 @@ import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlTransient;
 import javax.xml.bind.annotation.XmlType;
+import javax.xml.bind.annotation.XmlValue;
 import java.io.Serializable;
 import java.util.Objects;
 
-import org.openwms.core.configuration.PreferenceKey;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.openwms.core.configuration.PropertyScope;
 
 /**
@@ -76,7 +77,6 @@ public abstract class AbstractPreference implements Serializable {
     private Float floatValue;
 
     /** Description text of the {@link AbstractPreference}. */
-    //@XmlValue
     @Column(name = "C_DESCRIPTION")
     private String description;
 
@@ -121,6 +121,8 @@ public abstract class AbstractPreference implements Serializable {
      *
      * @return the binValue.
      */
+    @XmlTransient
+    @JsonIgnore
     public Serializable getBinValue() {
         return binValue;
     }
@@ -139,6 +141,7 @@ public abstract class AbstractPreference implements Serializable {
      *
      * @return The description as String
      */
+    @XmlValue
     public String getDescription() {
         return description;
     }
@@ -175,6 +178,7 @@ public abstract class AbstractPreference implements Serializable {
      *
      * @return fields as String
      */
+    @JsonIgnore
     public String getPropertiesAsString() {
         // TODO [openwms]: 17/05/16
         return null;

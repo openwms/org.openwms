@@ -34,7 +34,6 @@ import javax.xml.bind.annotation.XmlTransient;
 import javax.xml.bind.annotation.XmlType;
 import java.io.Serializable;
 
-import org.openwms.core.configuration.PreferenceKey;
 import org.openwms.core.configuration.PropertyScope;
 import org.springframework.util.Assert;
 

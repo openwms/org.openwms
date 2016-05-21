@@ -19,7 +19,7 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
-package org.openwms.core.configuration;
+package org.openwms.core.configuration.file;
 
 import java.io.Serializable;
 import java.util.Arrays;
@@ -32,7 +32,7 @@ import java.util.Arrays;
  * @version 0.2
  * @since 0.1
  */
-public class PreferenceKey implements Serializable {
+class PreferenceKey implements Serializable {
 
     private Serializable[] fields;
 

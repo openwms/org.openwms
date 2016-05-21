@@ -19,7 +19,7 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
-package org.openwms.core.configuration;
+package org.openwms.core.configuration.file;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -27,7 +27,6 @@ import javax.persistence.PersistenceContext;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-import org.openwms.core.configuration.file.UserPreference;
 import org.openwms.core.test.AbstractJpaSpringContextTests;
 
 /**
@@ -37,7 +36,7 @@ import org.openwms.core.test.AbstractJpaSpringContextTests;
  * @version $Revision$
  * @since 0.1
  */
-public class UserPreferenceTest extends AbstractJpaSpringContextTests {
+class UserPreferenceTest extends AbstractJpaSpringContextTests {
 
     private static final String KNOWN_USER = "KNOWN_USER";
     @PersistenceContext
