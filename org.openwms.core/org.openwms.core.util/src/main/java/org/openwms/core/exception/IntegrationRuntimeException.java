@@ -27,7 +27,9 @@ package org.openwms.core.exception;
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  * @version $Revision: $
  * @since 0.2
+ * @deprecated Use IntegrationLayerException instead
  */
+@Deprecated
 public class IntegrationRuntimeException extends RuntimeException {
 
     private static final long serialVersionUID = 2218071589944959008L;

@@ -8,7 +8,9 @@
     </encoder>
   </appender>
 
-  <logger name="org.projectreactor" level="debug"/>
+  <logger name="org.openwms.core.configuration" level="debug"/>
+  <logger name="org.springframework" level="warn"/>
+  <logger name="org.hibernate" level="warn"/>
 
   <root level="info">
     <appender-ref ref="stdout"/>

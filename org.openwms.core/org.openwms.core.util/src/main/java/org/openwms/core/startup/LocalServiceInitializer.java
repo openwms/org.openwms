@@ -31,11 +31,10 @@ import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.stereotype.Component;
 
 /**
- * A LocalServiceInitializer fires {@link MergePropertiesEvent}s whenever the
- * bundle is started or restarted.
- * 
+ * A LocalServiceInitializer fires {@link MergePropertiesEvent}s whenever the bundle is started or restarted.
+ *
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
- * @version $Revision: $
+ * @version 0.2
  * @since 0.1
  */
 @Component
@@ -50,7 +49,7 @@ public class LocalServiceInitializer implements ApplicationListener<ContextRefre
      */
     @Override
     public void onApplicationEvent(ContextRefreshedEvent event) {
-        LOGGER.info("CORE Service bundle started");
+        LOGGER.info("CORE Service bundle started. Publishing properties merge event ...");
         ctx.publishEvent(new MergePropertiesEvent(this));
     }
 }

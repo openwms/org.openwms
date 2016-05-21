@@ -18,16 +18,19 @@ package org.openwms.core.app;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 
 /**
- * A ModuleProperties.
+ * A ModuleProperties defines module specific Spring Boot properties.
  *
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  * @version 1.0
- * @since 1.0
+ * @since 2.0
  */
 @ConfigurationProperties(prefix = "openwms.core.config")
 public class ModuleProperties {
 
-    private String initialProperties;
+    /**
+     * Spring resource location to load the initial preferences from.
+     */
+    private String initialProperties = "classpath:initial-preferences.xml";
 
     public String getInitialProperties() {
         return initialProperties;
