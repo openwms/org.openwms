@@ -34,6 +34,7 @@ import javax.xml.bind.annotation.XmlTransient;
 import javax.xml.bind.annotation.XmlType;
 import java.io.Serializable;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.openwms.core.configuration.PreferenceKey;
 import org.openwms.core.configuration.PropertyScope;
 import org.springframework.util.Assert;
@@ -119,6 +120,7 @@ public class ApplicationPreference extends AbstractPreference implements Seriali
      * @see AbstractPreference#getPrefKey()
      */
     @Override
+    @JsonIgnore
     public PreferenceKey getPrefKey() {
         return new PreferenceKey(getType(), getKey());
     }
