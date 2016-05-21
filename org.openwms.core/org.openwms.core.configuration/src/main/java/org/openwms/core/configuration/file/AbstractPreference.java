@@ -23,6 +23,7 @@ package org.openwms.core.configuration.file;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
@@ -52,7 +53,8 @@ import org.openwms.core.configuration.PropertyScope;
 public abstract class AbstractPreference implements Serializable {
 
     @Id
-    Long id;
+    @GeneratedValue
+    private Long id;
     /**
      * Suffix for the FIND_BY_OWNER named query. Default {@value}
      */

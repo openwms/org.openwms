@@ -90,6 +90,10 @@
             <artifactId>reactor-core</artifactId>
             <version>2.5.0.M3</version>
         </dependency>
+        <dependency>
+            <groupId>ch.qos.logback</groupId>
+            <artifactId>logback-classic</artifactId>
+        </dependency>
 
         <dependency>
             <groupId>org.openwms</groupId>

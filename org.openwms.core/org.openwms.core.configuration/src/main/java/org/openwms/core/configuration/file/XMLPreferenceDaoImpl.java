@@ -21,6 +21,7 @@
  */
 package org.openwms.core.configuration.file;
 
+import javax.annotation.PostConstruct;
 import javax.xml.transform.stream.StreamSource;
 import java.io.IOException;
 import java.util.List;
@@ -66,13 +67,13 @@ class XMLPreferenceDaoImpl implements PreferenceDao, ApplicationListener<ReloadF
     private Unmarshaller unmarshaller;
     //@Autowired
     //@Value("#{openwms.core.config.initial.properties}")
-    private String fileName;
+    private String fileName = "initial-preferences.xml";
     private volatile Resource fileResource;
     private volatile Preferences preferences;
     private Map<PreferenceKey, AbstractPreference> prefs = new ConcurrentHashMap<>();
 
     /** The URL to the initial preferences XML file. Default {@value} */
-    public static final String INITIAL_PREFERENCES_FILE = "classpath:org/openwms/core/configuration/file/initial-preferences.xml";
+    public static final String INITIAL_PREFERENCES_FILE = "classpath:initial-preferences.xml";
 
     /**
      * {@inheritDoc}
@@ -97,7 +98,7 @@ class XMLPreferenceDaoImpl implements PreferenceDao, ApplicationListener<ReloadF
     /**
      * On bean initialization load all preferences into a Map.
      */
-    //@PostConstruct
+    @PostConstruct
     private void loadResources() {
         if (preferences == null) {
             initResource();
