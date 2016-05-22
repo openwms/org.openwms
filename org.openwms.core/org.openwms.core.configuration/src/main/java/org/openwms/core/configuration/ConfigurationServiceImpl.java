@@ -35,6 +35,7 @@ import org.openwms.core.event.MergePropertiesEvent;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationListener;
 import org.springframework.util.Assert;
+import org.springframework.validation.annotation.Validated;
 
 /**
  * A ConfigurationServiceImpl is a transactional Spring powered service implementation to manage preferences.
@@ -43,6 +44,7 @@ import org.springframework.util.Assert;
  * @version 0.2
  * @since 0.1
  */
+@Validated
 @TxService
 class ConfigurationServiceImpl implements ConfigurationService, ApplicationListener<MergePropertiesEvent> {
 

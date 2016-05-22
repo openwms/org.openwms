@@ -42,6 +42,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.openwms.core.configuration.file.AbstractPreference;
 import org.openwms.core.configuration.file.ApplicationPreference;
+import org.openwms.core.configuration.file.MockApplicationPreference;
 import org.openwms.core.configuration.file.ModulePreference;
 import org.openwms.core.configuration.file.PreferenceDao;
 import org.openwms.core.event.MergePropertiesEvent;
