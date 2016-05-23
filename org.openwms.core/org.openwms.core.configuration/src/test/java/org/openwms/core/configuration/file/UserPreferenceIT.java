@@ -22,12 +22,13 @@
 package org.openwms.core.configuration.file;
 
 import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
 
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-import org.openwms.core.test.AbstractJpaSpringContextTests;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+import org.springframework.boot.test.context.SpringBootTest;
 
 /**
  * An UserPreferenceTest.
@@ -36,10 +37,12 @@ import org.openwms.core.test.AbstractJpaSpringContextTests;
  * @version $Revision$
  * @since 0.1
  */
-class UserPreferenceTest extends AbstractJpaSpringContextTests {
+@SpringBootTest
+@DataJpaTest
+public class UserPreferenceIT {
 
     private static final String KNOWN_USER = "KNOWN_USER";
-    @PersistenceContext
+    @Autowired
     private EntityManager em;
 
     /**

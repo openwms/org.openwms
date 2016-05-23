@@ -65,7 +65,7 @@ class XMLPreferenceDaoImpl implements PreferenceDao, ApplicationListener<ReloadF
     private ApplicationContext ctx;
     @Autowired
     private Unmarshaller unmarshaller;
-    @Value("${openwms.core.config.initial-properties}")
+    @Value("${openwms.core.config.initial-properties:}")
     private String fileName;
     private volatile Resource fileResource;
     private volatile Preferences preferences;

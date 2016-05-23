@@ -56,39 +56,37 @@ public abstract class AbstractPreference implements Serializable {
     @Id
     @GeneratedValue
     private Long id;
-    /**
-     * Suffix for the FIND_BY_OWNER named query. Default {@value}
-     */
+    /** Suffix for the FIND_BY_OWNER named query. Default {@value} */
     public static final String FIND_BY_OWNER = ".findByOwner";
 
     /** The String value of the {@code AbstractPreference}. */
     @Column(name = "C_VALUE")
-    private String value;
+    protected String value;
 
     /** A binary value for this {@link AbstractPreference}. */
     @XmlTransient
     @Lob
     @Column(name = "C_BINVALUE")
-    private Serializable binValue;
+    protected Serializable binValue;
 
     /** A float value of the {@link AbstractPreference}. */
     @XmlAttribute(name = "floatValue")
     @Column(name = "C_FLOAT_VALUE")
-    private Float floatValue;
+    protected Float floatValue;
 
     /** Description text of the {@link AbstractPreference}. */
     @Column(name = "C_DESCRIPTION")
-    private String description;
+    protected String description;
 
     /** Minimum value. */
     @XmlAttribute(name = "minimum")
     @Column(name = "C_MINIMUM")
-    private int minimum = 0;
+    protected int minimum = 0;
 
     /** Maximum value. */
     @XmlAttribute(name = "maximum")
     @Column(name = "C_MAXIMUM")
-    private int maximum = 0;
+    protected int maximum = 0;
 
     /** Flag to remember if the preference was originally imported from a file. */
     @XmlTransient
@@ -184,6 +182,18 @@ public abstract class AbstractPreference implements Serializable {
         return null;
     }
 
+    @Override
+    public String toString() {
+        return "AbstractPreference{" +
+                "value='" + value + '\'' +
+                ", binValue=" + binValue +
+                ", floatValue=" + floatValue +
+                ", description='" + description + '\'' +
+                ", minimum=" + minimum +
+                ", maximum=" + maximum +
+                '}';
+    }
+
     /**
      * {@inheritDoc}
      */
@@ -194,7 +204,6 @@ public abstract class AbstractPreference implements Serializable {
         AbstractPreference that = (AbstractPreference) o;
         return minimum == that.minimum &&
                 maximum == that.maximum &&
-                fromFile == that.fromFile &&
                 Objects.equals(value, that.value) &&
                 Objects.equals(binValue, that.binValue) &&
                 Objects.equals(floatValue, that.floatValue) &&
@@ -206,7 +215,7 @@ public abstract class AbstractPreference implements Serializable {
      */
     @Override
     public int hashCode() {
-        return Objects.hash(value, binValue, floatValue, description, minimum, maximum, fromFile);
+        return Objects.hash(value, binValue, floatValue, description, minimum, maximum);
     }
 
     /**

@@ -80,9 +80,6 @@ class PreferenceKey implements Serializable {
             return false;
         }
         PreferenceKey other = (PreferenceKey) obj;
-        if (!Arrays.equals(fields, other.fields)) {
-            return false;
-        }
-        return true;
+        return Arrays.equals(fields, other.fields);
     }
 }

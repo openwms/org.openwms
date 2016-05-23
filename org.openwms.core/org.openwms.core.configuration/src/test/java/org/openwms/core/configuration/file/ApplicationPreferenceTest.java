@@ -21,6 +21,9 @@
  */
 package org.openwms.core.configuration.file;
 
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
+
 import javax.xml.XMLConstants;
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.Unmarshaller;
@@ -33,8 +36,9 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
-import org.junit.Assert;
+import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.ExpectedException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.util.ResourceUtils;
@@ -43,15 +47,18 @@ import org.springframework.util.ResourceUtils;
  * A ApplicationPreferenceTest. Test unmarshalling a valid XML document of preferences.
  *
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
- * @version $Revision$
+ * @version 0.2
  * @since 0.1
  */
-class ApplicationPreferenceTest {
+public class ApplicationPreferenceTest {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(ApplicationPreferenceTest.class);
     private static final String APP_PREF1 = "APP_PREF1";
     private static final String APP_PREF2 = "APP_PREF1";
     private static final String APP_PREF3 = "APP_PREF2";
+
+    @Rule
+    public ExpectedException thrown = ExpectedException.none();
 
     /**
      * Test creation.
@@ -59,7 +66,8 @@ class ApplicationPreferenceTest {
     @Test
     public final void testCreation() {
         ApplicationPreference applicationPreference = new ApplicationPreference(APP_PREF1);
-        Assert.assertEquals(APP_PREF1, applicationPreference.getKey());
+        assertThat(applicationPreference.getKey())
+                .isEqualTo(APP_PREF1);
     }
 
     /**
@@ -67,16 +75,16 @@ class ApplicationPreferenceTest {
      */
     @Test
     public final void testCreationNegative() {
-        try {
-            new ApplicationPreference(null);
-            Assert.fail("IAE expected when creating ApplicationPreference(String) with key equals to null");
-        } catch (IllegalArgumentException iae) {
-        }
-        try {
-            new ApplicationPreference("");
-            Assert.fail("IAE expected when creating ApplicationPreference(String) with empty key");
-        } catch (IllegalArgumentException iae) {
-        }
+
+        assertThatThrownBy(
+                () -> new ApplicationPreference(null))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("Not allowed to create an ApplicationPreference with an empty key");
+
+        assertThatThrownBy(
+                () -> new ApplicationPreference(""))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("Not allowed to create an ApplicationPreference with an empty key");
     }
 
     /**
@@ -84,11 +92,12 @@ class ApplicationPreferenceTest {
      */
     @Test
     public final void testKeyGeneration() {
-        ApplicationPreference applicationPreference1 = new ApplicationPreference(APP_PREF1);
-        ApplicationPreference applicationPreference2 = new ApplicationPreference(APP_PREF2);
-        ApplicationPreference applicationPreference3 = new ApplicationPreference(APP_PREF3);
-        Assert.assertTrue(applicationPreference1.getPrefKey().equals(applicationPreference2.getPrefKey()));
-        Assert.assertFalse(applicationPreference1.getPrefKey().equals(applicationPreference3.getPrefKey()));
+        ApplicationPreference ap1 = new ApplicationPreference(APP_PREF1);
+        ApplicationPreference ap2 = new ApplicationPreference(APP_PREF2);
+        ApplicationPreference ap3 = new ApplicationPreference(APP_PREF3);
+
+        assertThat(ap1.getPrefKey()).isEqualTo(ap2.getPrefKey());
+        assertThat(ap1.getPrefKey()).isNotEqualTo(ap3.getPrefKey());
     }
 
     /**
@@ -96,31 +105,32 @@ class ApplicationPreferenceTest {
      */
     @Test
     public final void testKeyUniqueness() {
-        ApplicationPreference applicationPreference1 = new ApplicationPreference(APP_PREF1);
-        ApplicationPreference applicationPreference2 = new ApplicationPreference(APP_PREF2);
-        ApplicationPreference applicationPreference3 = new ApplicationPreference(APP_PREF3);
+        ApplicationPreference ap1 = new ApplicationPreference(APP_PREF1);
+        ApplicationPreference ap2 = new ApplicationPreference(APP_PREF2);
+        ApplicationPreference ap3 = new ApplicationPreference(APP_PREF3);
+        Map<PreferenceKey, ApplicationPreference> map = new HashMap<>();
+        map.put(ap1.getPrefKey(), ap1);
+        map.put(ap2.getPrefKey(), ap2);
 
-        Map<PreferenceKey, ApplicationPreference> map = new HashMap<PreferenceKey, ApplicationPreference>();
-        map.put(applicationPreference1.getPrefKey(), applicationPreference1);
-        map.put(applicationPreference2.getPrefKey(), applicationPreference2);
-        Assert.assertEquals(1, map.size());
-        map.put(applicationPreference3.getPrefKey(), applicationPreference3);
-        Assert.assertEquals(2, map.size());
+        assertThat(map).hasSize(1);
+
+        map.put(ap3.getPrefKey(), ap3);
+        assertThat(map).hasSize(2);
     }
 
     /**
      * Just test to validate the given XML file against the schema declaration. If the XML file is not compliant with the schema, the test
      * will fail.
      *
-     * @throws Throwable any error
+     * @throws Exception any error
      */
     @Test
-    public void testReadPreferences() throws Throwable {
+    public void testReadPreferences() throws Exception {
         SchemaFactory schemaFactory = SchemaFactory.newInstance(XMLConstants.W3C_XML_SCHEMA_NS_URI);
         Schema schema = schemaFactory.newSchema(ResourceUtils.getFile("classpath:preferences.xsd"));
         // Schema schema = schemaFactory.newSchema(new
         // URL("http://www.openwms.org/schema/preferences.xsd"));
-        JAXBContext ctx = JAXBContext.newInstance("org.openwms.core.domain.preferences");
+        JAXBContext ctx = JAXBContext.newInstance("org.openwms.core.configuration.file");
         Unmarshaller unmarshaller = ctx.createUnmarshaller();
         unmarshaller.setSchema(schema);
         unmarshaller.setEventHandler(new ValidationEventHandler() {
@@ -133,7 +143,7 @@ class ApplicationPreferenceTest {
         });
 
         Preferences prefs = Preferences.class.cast(unmarshaller.unmarshal(ResourceUtils.getFile(
-                "classpath:org/openwms/core/domain/system/preferences.xml")));
+                "classpath:org/openwms/core/configuration/file/preferences.xml")));
         for (AbstractPreference pref : prefs.getApplications()) {
             LOGGER.info(pref.toString());
         }
@@ -150,23 +160,23 @@ class ApplicationPreferenceTest {
      */
     @Test
     public final void testHashCodeEquals() {
-        ApplicationPreference applicationPreference1 = new ApplicationPreference(APP_PREF1);
-        ApplicationPreference applicationPreference2 = new ApplicationPreference(APP_PREF2);
-        ApplicationPreference applicationPreference3 = new ApplicationPreference(APP_PREF3);
-        ApplicationPreference applicationPreference4 = new ApplicationPreference();
+        ApplicationPreference ap1 = new ApplicationPreference(APP_PREF1);
+        ApplicationPreference ap2 = new ApplicationPreference(APP_PREF2);
+        ApplicationPreference ap3 = new ApplicationPreference(APP_PREF3);
+        ApplicationPreference ap4 = new ApplicationPreference();
 
         // Just the key is considered
-        Assert.assertTrue(applicationPreference1.equals(applicationPreference1));
-        Assert.assertTrue(applicationPreference1.equals(applicationPreference2));
-        Assert.assertFalse(applicationPreference1.equals(applicationPreference3));
-        Assert.assertFalse(applicationPreference4.equals(applicationPreference3));
+        assertThat(ap1).isEqualTo(ap1);
+        assertThat(ap1).isEqualTo(ap2);
+        assertThat(ap1).isNotEqualTo(ap3);
+        assertThat(ap4).isNotEqualTo(ap3);
 
         // Test behavior in hashed collections
-        Set<ApplicationPreference> applicationPreferences = new HashSet<ApplicationPreference>();
-        applicationPreferences.add(applicationPreference1);
-        applicationPreferences.add(applicationPreference2);
-        Assert.assertTrue(applicationPreferences.size() == 1);
-        applicationPreferences.add(applicationPreference3);
-        Assert.assertTrue(applicationPreferences.size() == 2);
+        Set<ApplicationPreference> applicationPreferences = new HashSet<>();
+        applicationPreferences.add(ap1);
+        applicationPreferences.add(ap2);
+        assertThat(applicationPreferences).hasSize(1);
+        applicationPreferences.add(ap3);
+        assertThat(applicationPreferences).hasSize(2);
     }
 }

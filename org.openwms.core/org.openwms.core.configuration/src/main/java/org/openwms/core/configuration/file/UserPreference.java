@@ -54,24 +54,18 @@ import org.springframework.util.Assert;
         @NamedQuery(name = UserPreference.NQ_FIND_BY_OWNER, query = "select up from UserPreference up where up.owner = :owner") })
 public class UserPreference extends AbstractPreference implements Serializable {
 
-    /**
-     * Type of this preference.
-     */
+    /** Type of this preference. */
     @XmlTransient
     @Enumerated(EnumType.STRING)
     @Column(name = "C_TYPE")
     private PropertyScope type = PropertyScope.USER;
 
-    /**
-     * Owner of the {@link AbstractPreference}.
-     */
+    /** Owner of the {@link AbstractPreference}. */
     @XmlAttribute(name = "owner", required = true)
     @Column(name = "C_OWNER")
     private String owner;
 
-    /**
-     * Key value of the {@link AbstractPreference}.
-     */
+    /** Key value of the {@link AbstractPreference}. */
     @XmlAttribute(name = "key", required = true)
     @Column(name = "C_KEY")
     private String key;
@@ -83,9 +77,7 @@ public class UserPreference extends AbstractPreference implements Serializable {
      */
     public static final String NQ_FIND_BY_OWNER = "UserPreference" + FIND_BY_OWNER;
 
-    /**
-     * Create a new UserPreference. Defined for the JAXB implementation.
-     */
+    /** Create a new UserPreference. Defined for the JAXB implementation. */
     public UserPreference() {
         super();
     }
@@ -204,9 +196,20 @@ public class UserPreference extends AbstractPreference implements Serializable {
         } else if (!owner.equals(other.owner)) {
             return false;
         }
-        if (type != other.type) {
-            return false;
-        }
-        return true;
+        return type == other.type;
+    }
+
+    /**
+     * {@inheritDoc}
+     * <p>
+     * Use all fields.
+     */
+    @Override
+    public String toString() {
+        return "UserPreference{" +
+                "type=" + type +
+                ", owner='" + owner + '\'' +
+                ", key='" + key + '\'' +
+                "} " + super.toString();
     }
 }
