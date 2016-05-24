@@ -86,6 +86,18 @@ public class ApplicationPreference extends AbstractPreference implements Seriali
         this.key = key;
     }
 
+    private ApplicationPreference(Builder builder) {
+        setValue(builder.value);
+        binValue = builder.binValue;
+        floatValue = builder.floatValue;
+        setDescription(builder.description);
+        minimum = builder.minimum;
+        maximum = builder.maximum;
+        type = builder.type;
+        key = builder.key;
+        type = PropertyScope.APPLICATION;
+    }
+
     /**
      * Get the key.
      *
@@ -162,9 +174,118 @@ public class ApplicationPreference extends AbstractPreference implements Seriali
         } else if (!key.equals(other.key)) {
             return false;
         }
-        if (type != other.type) {
-            return false;
+        return type == other.type;
+    }
+
+    @Override
+    public String toString() {
+        return "ApplicationPreference{" +
+                "type=" + type +
+                ", key='" + key + '\'' +
+                "} " + super.toString();
+    }
+
+    /**
+     * {@code ApplicationPreference} builder static inner class.
+     */
+    public static final class Builder {
+
+        private PropertyScope type;
+        private String key;
+        private String value;
+        private Serializable binValue;
+        private Float floatValue;
+        private String description;
+        private int minimum;
+        private int maximum;
+
+        public Builder() {
         }
-        return true;
+
+        /**
+         * Sets the {@code key} and returns a reference to this Builder so that the methods can be chained together.
+         *
+         * @param val the {@code key} to set
+         * @return a reference to this Builder
+         */
+        public Builder withKey(String val) {
+            key = val;
+            return this;
+        }
+
+        /**
+         * Returns a {@code ApplicationPreference} built from the parameters previously set.
+         *
+         * @return a {@code ApplicationPreference} built with parameters of this {@code ApplicationPreference.Builder}
+         */
+        public ApplicationPreference build() {
+            return new ApplicationPreference(this);
+        }
+
+        /**
+         * Sets the {@code value} and returns a reference to this Builder so that the methods can be chained together.
+         *
+         * @param val the {@code value} to set
+         * @return a reference to this Builder
+         */
+        public Builder withValue(String val) {
+            value = val;
+            return this;
+        }
+
+        /**
+         * Sets the {@code binValue} and returns a reference to this Builder so that the methods can be chained together.
+         *
+         * @param val the {@code binValue} to set
+         * @return a reference to this Builder
+         */
+        public Builder withBinValue(Serializable val) {
+            binValue = val;
+            return this;
+        }
+
+        /**
+         * Sets the {@code floatValue} and returns a reference to this Builder so that the methods can be chained together.
+         *
+         * @param val the {@code floatValue} to set
+         * @return a reference to this Builder
+         */
+        public Builder withFloatValue(Float val) {
+            floatValue = val;
+            return this;
+        }
+
+        /**
+         * Sets the {@code description} and returns a reference to this Builder so that the methods can be chained together.
+         *
+         * @param val the {@code description} to set
+         * @return a reference to this Builder
+         */
+        public Builder withDescription(String val) {
+            description = val;
+            return this;
+        }
+
+        /**
+         * Sets the {@code minimum} and returns a reference to this Builder so that the methods can be chained together.
+         *
+         * @param val the {@code minimum} to set
+         * @return a reference to this Builder
+         */
+        public Builder withMinimum(int val) {
+            minimum = val;
+            return this;
+        }
+
+        /**
+         * Sets the {@code maximum} and returns a reference to this Builder so that the methods can be chained together.
+         *
+         * @param val the {@code maximum} to set
+         * @return a reference to this Builder
+         */
+        public Builder withMaximum(int val) {
+            maximum = val;
+            return this;
+        }
     }
 }

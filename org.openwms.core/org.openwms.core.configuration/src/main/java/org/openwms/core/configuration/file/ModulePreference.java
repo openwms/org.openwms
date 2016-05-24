@@ -38,31 +38,25 @@ import org.openwms.core.configuration.PropertyScope;
 import org.springframework.util.Assert;
 
 /**
- * A ModulePreference is used to store configuration settings in Module scope.
- * <p>
- * The table model of an ModulePreference spans an unique key over the columns C_TYPE, C_OWNER and C_KEY.
- * </p>
- * <p>
- * It's counterpart in the context of JAXB is the modulePreference element.
- * </p>
- * 
- * @GlossaryTerm
+ * A ModulePreference is used to store configuration settings in Module scope. <p> The table model of an ModulePreference spans an unique
+ * key over the columns C_TYPE, C_OWNER and C_KEY. </p> <p> It's counterpart in the context of JAXB is the modulePreference element. </p>
+ *
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  * @version 0.2
+ * @GlossaryTerm
  * @since 0.1
  */
 @XmlType(name = "modulePreference", namespace = "http://www.openwms.org/schema/preferences")
 @Entity
-@Table(name = "COR_MODULE_PREFERENCE", uniqueConstraints = @UniqueConstraint(columnNames = { "C_TYPE", "C_OWNER",
-        "C_KEY" }))
+@Table(name = "COR_MODULE_PREFERENCE", uniqueConstraints = @UniqueConstraint(columnNames = {"C_TYPE", "C_OWNER",
+        "C_KEY"}))
 @NamedQueries({
-        @NamedQuery(name = ModulePreference.NQ_FIND_BY_OWNER, query = "select mp from ModulePreference mp where mp.owner = :owner") })
+        @NamedQuery(name = ModulePreference.NQ_FIND_BY_OWNER, query = "select mp from ModulePreference mp where mp.owner = :owner")})
 public class ModulePreference extends AbstractPreference implements Serializable {
 
     /**
-     * Query to find <strong>all</strong> {@code ModulePreference}s of a {@code Module}. <li>Query parameter name
-     * <strong>owner</strong> : The modulename of the {@code Module} to search for.</li><br />
-     * Name is {@value} .
+     * Query to find <strong>all</strong> {@code ModulePreference}s of a {@code Module}. <li>Query parameter name <strong>owner</strong> :
+     * The modulename of the {@code Module} to search for.</li><br /> Name is {@value} .
      */
     public static final String NQ_FIND_BY_OWNER = "ModulePreference" + FIND_BY_OWNER;
 
@@ -97,13 +91,10 @@ public class ModulePreference extends AbstractPreference implements Serializable
 
     /**
      * Create a new {@code ModulePreference}.
-     * 
-     * @param owner
-     *            The name of the owning module
-     * @param key
-     *            the key
-     * @throws IllegalArgumentException
-     *             when key or owner is {@literal null} or empty
+     *
+     * @param owner The name of the owning module
+     * @param key the key
+     * @throws IllegalArgumentException when key or owner is {@literal null} or empty
      */
     public ModulePreference(String owner, String key) {
         // Called from the client-side only.
@@ -116,7 +107,7 @@ public class ModulePreference extends AbstractPreference implements Serializable
 
     /**
      * Get the key.
-     * 
+     *
      * @return the key
      */
     public String getKey() {
@@ -125,7 +116,7 @@ public class ModulePreference extends AbstractPreference implements Serializable
 
     /**
      * Get the owner.
-     * 
+     *
      * @return the owner
      */
     public String getOwner() {
@@ -145,12 +136,12 @@ public class ModulePreference extends AbstractPreference implements Serializable
      */
     @Override
     protected Object[] getFields() {
-        return new Object[] { getType(), getOwner(), getKey() };
+        return new Object[]{getType(), getOwner(), getKey()};
     }
 
     /**
      * {@inheritDoc}
-     * 
+     * <p>
      * Uses the type, owner and the key to create a {@link PreferenceKey} instance.
      */
     @Override
@@ -160,7 +151,7 @@ public class ModulePreference extends AbstractPreference implements Serializable
 
     /**
      * {@inheritDoc}
-     * 
+     * <p>
      * Uses the type, owner and the key for the hashCode calculation.
      */
     @Override
@@ -175,7 +166,7 @@ public class ModulePreference extends AbstractPreference implements Serializable
 
     /**
      * {@inheritDoc}
-     * 
+     * <p>
      * Comparison done with the type, owner and the key fields. Not delegated to super class.
      */
     @Override
@@ -204,9 +195,20 @@ public class ModulePreference extends AbstractPreference implements Serializable
         } else if (!owner.equals(other.owner)) {
             return false;
         }
-        if (type != other.type) {
-            return false;
-        }
-        return true;
+        return type == other.type;
+    }
+
+    /**
+     * {@inheritDoc}
+     * <p>
+     * Use all fields.
+     */
+    @Override
+    public String toString() {
+        return "ModulePreference{" +
+                "type=" + type +
+                ", owner='" + owner + '\'' +
+                ", key='" + key + '\'' +
+                "} " + super.toString();
     }
 }

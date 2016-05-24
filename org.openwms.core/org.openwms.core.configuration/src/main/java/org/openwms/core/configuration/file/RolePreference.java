@@ -203,9 +203,20 @@ public class RolePreference extends AbstractPreference implements Serializable {
         } else if (!owner.equals(other.owner)) {
             return false;
         }
-        if (type != other.type) {
-            return false;
-        }
-        return true;
+        return type == other.type;
+    }
+
+    /**
+     * {@inheritDoc}
+     * <p>
+     * Use all fields.
+     */
+    @Override
+    public String toString() {
+        return "RolePreference{" +
+                "type=" + type +
+                ", owner='" + owner + '\'' +
+                ", key='" + key + '\'' +
+                "} " + super.toString();
     }
 }

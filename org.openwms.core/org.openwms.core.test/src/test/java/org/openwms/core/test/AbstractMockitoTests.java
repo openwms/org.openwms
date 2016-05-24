@@ -28,10 +28,10 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * An AbstractMockitoTests can be subclasses to initial Mockito on each test run.
- * 
+ * An AbstractMockitoTests initializes mocks on startup.
+ *
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
- * @version $Revision: $
+ * @version 0.2
  * @since 0.1
  */
 public abstract class AbstractMockitoTests {
@@ -61,14 +61,12 @@ public abstract class AbstractMockitoTests {
     /**
      * Do something before the mock objects are initialized.
      */
-    public void doBefore() {
-
+    protected void doBefore() {
     }
 
     /**
      * Do something after each test run.
      */
-    public void doAfter() {
-
+    protected void doAfter() {
     }
 }

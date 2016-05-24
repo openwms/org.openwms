@@ -22,7 +22,6 @@
 package org.openwms.core.configuration;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.fail;
 import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.reset;
 import static org.mockito.Mockito.times;
@@ -52,19 +51,19 @@ import org.openwms.core.test.AbstractMockitoTests;
  * A ConfigurationServiceTest.
  *
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
- * @version $Revision: $
+ * @version 0.2
  * @since 0.1
  */
 public class ConfigurationServiceTest extends AbstractMockitoTests {
 
     private static final String PERSISTED_APP_PREF1 = "persPref1";
     private static final String PERSISTED_APP_PREF2 = "persPref2";
-    private List<AbstractPreference> filePrefs = new ArrayList<AbstractPreference>();
-    private List<AbstractPreference> persistedPrefs = new ArrayList<AbstractPreference>();
+    private List<AbstractPreference> filePrefs = new ArrayList<>();
+    private List<AbstractPreference> persistedPrefs = new ArrayList<>();
 
-    @Mock(name = "preferencesJpaDao")
+    @Mock
     private PreferenceRepository writer;
-    @Mock(name = "preferencesFileDao")
+    @Mock
     private PreferenceDao reader;
     @InjectMocks
     private ConfigurationServiceImpl srv = new ConfigurationServiceImpl();
@@ -75,7 +74,7 @@ public class ConfigurationServiceTest extends AbstractMockitoTests {
      * Setting up some test data.
      */
     @Override
-    public void doBefore() {
+    protected void doBefore() {
         // Prepare some preferences coming from a file
         filePrefs.add(new ApplicationPreference("filePref1"));
         filePrefs.add(new ApplicationPreference("filePref2"));
@@ -89,7 +88,7 @@ public class ConfigurationServiceTest extends AbstractMockitoTests {
      */
     @SuppressWarnings("unchecked")
     @Override
-    public void doAfter() {
+    protected void doAfter() {
         filePrefs.clear();
         persistedPrefs.clear();
         reset(writer);
@@ -97,8 +96,7 @@ public class ConfigurationServiceTest extends AbstractMockitoTests {
     }
 
     /**
-     * Test method for {@link org.openwms.core.configuration.ConfigurationServiceImpl#onApplicationEvent(org.openwms.core.event.MergePropertiesEvent)}
-     * .
+     * Test method for {@link org.openwms.core.configuration.ConfigurationServiceImpl#onApplicationEvent(org.openwms.core.event.MergePropertiesEvent)}.
      * <p>
      * Test whether new file preferences are saved to the database after an MergePropertiesEvent is thrown.
      */
@@ -118,7 +116,7 @@ public class ConfigurationServiceTest extends AbstractMockitoTests {
     }
 
     /**
-     * Test method for {@link org.openwms.core.configuration.ConfigurationServiceImpl#findAll()} .
+     * Test method for {@link org.openwms.core.configuration.ConfigurationServiceImpl#findAll()}.
      * <p>
      * Test that the service to the right repository and the returned list is the right one.
      */
@@ -130,7 +128,7 @@ public class ConfigurationServiceTest extends AbstractMockitoTests {
     }
 
     /**
-     * Test method for {@link org.openwms.core.configuration.ConfigurationServiceImpl#findByType(java.lang.Class)} .
+     * Test method for {@link org.openwms.core.configuration.ConfigurationServiceImpl#findByType(Class, String)}.
      */
     @Test
     public final void testFindByType() {
@@ -144,19 +142,18 @@ public class ConfigurationServiceTest extends AbstractMockitoTests {
     }
 
     /**
-     * Test method for {@link org.openwms.core.configuration.ConfigurationServiceImpl#save(org.openwms.core.system.AbstractPreference)} .
+     * Test method for {@link org.openwms.core.configuration.ConfigurationServiceImpl#save(AbstractPreference)}.
      * <p>
-     * Save with <code>null</code> must throw an exception IAE.
+     * Save with {@code null} must throw an exception IAE.
      */
     @Test
     public final void testSaveNull() {
         thrown.expect(IllegalArgumentException.class);
         srv.save(null);
-        fail("Expected to catch an IllegalArgumentException when calling save() with null");
     }
 
     /**
-     * Test method for {@link org.openwms.core.configuration.ConfigurationServiceImpl#save(org.openwms.core.system.AbstractPreference)} .
+     * Test method for {@link org.openwms.core.configuration.ConfigurationServiceImpl#save(AbstractPreference)}.
      */
     @Test
     public final void testSaveNewEntity() {
@@ -169,7 +166,7 @@ public class ConfigurationServiceTest extends AbstractMockitoTests {
     }
 
     /**
-     * Test method for {@link org.openwms.core.configuration.ConfigurationServiceImpl#save(org.openwms.core.system.AbstractPreference)} .
+     * Test method for {@link org.openwms.core.configuration.ConfigurationServiceImpl#save(AbstractPreference)}.
      */
     @Test
     public final void testSaveDuplicatedEntity() {
@@ -182,7 +179,7 @@ public class ConfigurationServiceTest extends AbstractMockitoTests {
     }
 
     /**
-     * Test method for {@link org.openwms.core.configuration.ConfigurationServiceImpl#save(org.openwms.core.system.AbstractPreference)} .
+     * Test method for {@link org.openwms.core.configuration.ConfigurationServiceImpl#save(AbstractPreference)}.
      */
     @Test
     public final void testSaveExistingEntity() {
@@ -196,19 +193,18 @@ public class ConfigurationServiceTest extends AbstractMockitoTests {
     }
 
     /**
-     * Test method for {@link org.openwms.core.configuration.ConfigurationServiceImpl#remove(org.openwms.core.system.AbstractPreference)} .
+     * Test method for {@link org.openwms.core.configuration.ConfigurationServiceImpl#delete(AbstractPreference)}.
      * <p>
-     * Remove with <code>null</code> must throw an exception IAE.
+     * Remove with {@code null} must throw an exception IAE.
      */
     @Test
     public final void testRemoveNull() {
         thrown.expect(IllegalArgumentException.class);
         srv.delete(null);
-        fail("Expected to catch an IllegalArgumentException when calling remove() with null");
     }
 
     /**
-     * Test method for {@link org.openwms.core.configuration.ConfigurationServiceImpl#remove(org.openwms.core.system.AbstractPreference)} .
+     * Test method for {@link org.openwms.core.configuration.ConfigurationServiceImpl#delete(AbstractPreference)}.
      * <p>
      * Simply delegate to the writer.
      */

@@ -5,7 +5,7 @@
  * This file is part of openwms.org.
  *
  * openwms.org is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as 
+ * it under the terms of the GNU General Public License as
  * published by the Free Software Foundation; either version 2 of the
  * License, or (at your option) any later version.
  *
@@ -19,43 +19,39 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
-package org.openwms.core.configuration.file;
+package org.openwms.core.configuration.api;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.fail;
+import static org.assertj.core.api.Assertions.assertThat;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.openwms.core.configuration.file.AbstractPreference;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.boot.test.autoconfigure.orm.jpa.AutoConfigureTestDatabase;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.junit4.SpringRunner;
 
 /**
- * A PreferencesDaoTest.
- * 
+ * A ConfigurationIT.
+ *
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
- * @version $Revision: $
- * @since 0.1
+ * @version 1.0
+ * @since 1.0
  */
-@RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration("classpath:/org/openwms/core/configuration/file/Test-context.xml")
-public class PreferencesDaoTest {
+@RunWith(SpringRunner.class)
+@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT, properties = "openwms.core.config.initial-properties=")
+@AutoConfigureTestDatabase
+public class ConfigurationIT {
 
     @Autowired
-    private PreferenceDao dao;
+    private ConfigurationOperations testee;
 
-    /**
-     * Test method for {@link org.openwms.core.configuration.file.XMLPreferenceDaoImpl#findAll()}.
-     */
+    public
     @Test
-    public final void testFindAll() {
-        assertEquals(6, dao.findAll().size());
-    }
-
-    private void assertContent(String expected, AbstractPreference pref) {
-        if (null == pref) {
-            fail("Preference not found");
-        }
-        assertEquals("Not a valid transformed ApplicationPreference", expected, pref.getPropertiesAsString());
+    void testSave() throws Exception {
+        Iterable<AbstractPreference> all = testee.findAll();
+        assertThat(all)
+                .isNotNull()
+                .hasSize(0);
     }
 }
