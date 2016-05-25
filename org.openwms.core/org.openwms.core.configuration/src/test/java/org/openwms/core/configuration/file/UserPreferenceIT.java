@@ -21,14 +21,16 @@
  */
 package org.openwms.core.configuration.file;
 
-import javax.persistence.EntityManager;
+import static org.assertj.core.api.Assertions.assertThat;
 
-import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.openwms.core.configuration.PropertyScope;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
-import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
+import org.springframework.test.context.junit4.SpringRunner;
 
 /**
  * An UserPreferenceTest.
@@ -37,65 +39,32 @@ import org.springframework.boot.test.context.SpringBootTest;
  * @version $Revision$
  * @since 0.1
  */
-@SpringBootTest
+@RunWith(SpringRunner.class)
 @DataJpaTest
 public class UserPreferenceIT {
 
     private static final String KNOWN_USER = "KNOWN_USER";
     @Autowired
-    private EntityManager em;
+    private TestEntityManager em;
 
     /**
      * Setup data.
      */
     @Before
     public void onSetup() {
-        //em.persist(new User(KNOWN_USER));
         em.persist(new UserPreference(KNOWN_USER, "testKey"));
-        em.flush();
-        em.clear();
     }
 
     /**
-     * Negative test construction of an UserPreference.
+     * Resolve the persisted UserPreference.
      */
     @Test
-    public final void testCreationNegative() {
-        try {
-            new UserPreference(null, null);
-            Assert.fail("Must fail when trying to create an UserPreference with owner and key set to NULL");
-        } catch (IllegalArgumentException iae) {
-        }
-        try {
-            new UserPreference("test", null);
-            Assert.fail("Must fail when trying to create an UserPreference with key is NULL");
-        } catch (IllegalArgumentException iae) {
-        }
-        try {
-            new UserPreference(null, "test");
-            Assert.fail("Must fail when trying to create an UserPreference with owner is NULL");
-        } catch (IllegalArgumentException iae) {
-        }
-        try {
-            new UserPreference("test", "");
-            Assert.fail("Must fail when trying to create an UserPreference with an empty key");
-        } catch (IllegalArgumentException iae) {
-        }
-        try {
-            new UserPreference("", "test");
-            Assert.fail("Must fail when trying to create an UserPreference with owner is NULL");
-        } catch (IllegalArgumentException iae) {
-        }
+    public final void testSimplePersistAndGet() {
+        UserPreference up = em.getEntityManager().createNamedQuery(UserPreference.NQ_FIND_BY_OWNER, UserPreference.class).setParameter("owner", KNOWN_USER).getSingleResult();
+        assertThat(up)
+                .isNotNull()
+                .extracting("owner", "key", "type")
+                .contains(KNOWN_USER, "testKey", PropertyScope.USER)
+        ;
     }
-
-    /**
-     * Resolve the persisted User and test whether the UserPreference can be resolved from the User instance.
-     @Test public final void testUserRelationship() {
-     User user = (User) em.createNamedQuery(User.NQ_FIND_BY_USERNAME).setParameter(1, KNOWN_USER).getSingleResult();
-     Assert.assertNotNull("Expected that the UserPreferences of the fetched User is not null", user.getPreferences());
-     Assert.assertTrue("Expected that the UserPreferences was fetched with the User object", user.getPreferences()
-     .size() == 1);
-     Assert.assertTrue(user.getPreferences().contains(new UserPreference(KNOWN_USER, "testKey")));
-     }
-     */
 }
