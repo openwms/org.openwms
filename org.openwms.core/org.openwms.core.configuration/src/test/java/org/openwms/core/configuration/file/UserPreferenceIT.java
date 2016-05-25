@@ -53,8 +53,6 @@ public class UserPreferenceIT {
     @Before
     public void onSetup() {
         em.persist(new UserPreference(KNOWN_USER, "testKey"));
-//        em.flush();
-  //      em.clear();
     }
 
     /**
