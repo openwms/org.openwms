@@ -431,7 +431,7 @@
         <!-- =================== -->
         <!-- Dependency versions -->
         <!-- =================== -->
-        <ameba-lib.version>1.6-SNAPSHOT</ameba-lib.version>
+        <ameba-lib.version>1.6.M1</ameba-lib.version>
         <dozer.version>5.5.1</dozer.version>
         <el-impl.version>2.2</el-impl.version>
 
@@ -443,7 +443,7 @@
         <spring.io.version>2.1.0.BUILD-SNAPSHOT</spring.io.version>
         <spring-boot.version>1.4.0.M3</spring-boot.version> <!-- Keep in sync with platform -->
         <spring.version>4.2.6.RELEASE</spring.version> <!-- Keep in sync with platform -->
-        <start-class></start-class> <!-- set by actual boot module -->
+        <start-class></start-class> <!-- keep it empty, set by actual boot module -->
         <!-- =================== -->
         <!--   Plugin versions   -->
         <!-- =================== -->
