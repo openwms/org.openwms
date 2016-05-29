@@ -32,8 +32,8 @@
     </parent>
     <artifactId>org.openwms.core.configuration</artifactId>
     <name>${project.artifactId}</name>
-    <description>This bundle project contains interface types for the DAO integration layer. Those interfaces are free from annotations and
-        do not depend on other frameworks except plain Java.
+    <description>This module implements a configuration service that is able to merge configuration, and provide inherited and scoped
+        preferences such as user- role- modue or global application preferences.
     </description>
 
     <properties>
@@ -85,19 +85,22 @@
             <groupId>org.springframework</groupId>
             <artifactId>spring-oxm</artifactId>
         </dependency>
+
+        <!-- Currently in test -->
         <dependency>
             <groupId>io.projectreactor</groupId>
             <artifactId>reactor-core</artifactId>
             <version>2.5.0.M3</version>
         </dependency>
-        <dependency>
-            <groupId>ch.qos.logback</groupId>
-            <artifactId>logback-classic</artifactId>
-        </dependency>
 
         <dependency>
             <groupId>org.openwms</groupId>
             <artifactId>org.openwms.core.util</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>ch.qos.logback</groupId>
+            <artifactId>logback-classic</artifactId>
+            <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>org.openwms</groupId>
