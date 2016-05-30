@@ -110,7 +110,7 @@ class ConfigurationServiceImpl implements ConfigurationService, ApplicationListe
     @Override
     @FireAfterTransaction(events = {ConfigurationChangedEvent.class})
     public void delete(@NotNull AbstractPreference preference) {
-        Assert.notNull(preference, "Not allowed to call remove with a NULL argument");
+        //Assert.notNull(preference, "Not allowed to call remove with a NULL argument");
         preferenceRepository.delete(preference);
     }
 
