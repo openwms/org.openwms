@@ -15,7 +15,6 @@
  */
 package org.openwms.core;
 
-import org.ameba.app.SolutionApp;
 import org.openwms.core.app.ModuleProperties;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -28,7 +27,7 @@ import org.springframework.boot.context.properties.EnableConfigurationProperties
  * @version 1.0
  * @since 1.0
  */
-@SpringBootApplication(scanBasePackageClasses = {Starter.class, SolutionApp.class})
+@SpringBootApplication(scanBasePackages = "org.openwms")
 @EnableConfigurationProperties(ModuleProperties.class)
 public class Starter {
 

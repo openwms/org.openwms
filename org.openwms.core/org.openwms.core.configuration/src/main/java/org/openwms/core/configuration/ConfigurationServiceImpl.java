@@ -108,7 +108,6 @@ class ConfigurationServiceImpl implements ConfigurationService, ApplicationListe
      * @throws IllegalArgumentException when {@code preference} is {@literal null}
      */
     @Override
-    @FireAfterTransaction(events = {ConfigurationChangedEvent.class})
     public void delete(@NotNull AbstractPreference preference) {
         //Assert.notNull(preference, "Not allowed to call remove with a NULL argument");
         preferenceRepository.delete(preference);

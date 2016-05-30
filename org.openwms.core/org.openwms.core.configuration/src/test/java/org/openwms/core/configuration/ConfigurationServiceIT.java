@@ -25,11 +25,8 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
 import org.junit.runner.RunWith;
-import org.openwms.core.Starter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.context.annotation.ComponentScan;
-import org.springframework.context.annotation.Configuration;
 import org.springframework.test.context.junit4.SpringRunner;
 
 /**
@@ -40,8 +37,7 @@ import org.springframework.test.context.junit4.SpringRunner;
  * @since 1.0
  */
 @RunWith(SpringRunner.class)
-@SpringBootTest(classes = Starter.class)
-//@ContextConfiguration(classes = ConfigurationServiceIT.TestConfig.class)
+@SpringBootTest
 public class ConfigurationServiceIT {
 
     @Autowired
@@ -53,10 +49,5 @@ public class ConfigurationServiceIT {
     public final void testRemoveNull() {
         thrown.expect(IllegalArgumentException.class);
         srv.delete(null);
-    }
-
-    @Configuration
-    @ComponentScan(basePackages = "org.openwms.core.configuration")
-    static class TestConfig {
     }
 }
