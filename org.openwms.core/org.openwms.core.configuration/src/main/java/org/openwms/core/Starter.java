@@ -27,7 +27,7 @@ import org.springframework.boot.context.properties.EnableConfigurationProperties
  * @version 1.0
  * @since 1.0
  */
-@SpringBootApplication
+@SpringBootApplication(scanBasePackages = "org.openwms")
 @EnableConfigurationProperties(ModuleProperties.class)
 public class Starter {
 

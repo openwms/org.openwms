@@ -441,7 +441,7 @@
         <jpa-api.version>1.0.0.Final</jpa-api.version>
         <!-- Spring Integration 2.2.4 uses Spring Core 3.1.3 -->
         <spring.io.version>2.1.0.BUILD-SNAPSHOT</spring.io.version>
-        <spring-boot.version>1.4.0.M3</spring-boot.version> <!-- Keep in sync with platform -->
+        <spring-boot.version>1.4.0.BUILD-SNAPSHOT</spring-boot.version> <!-- Keep in sync with platform -->
         <spring.version>4.2.6.RELEASE</spring.version> <!-- Keep in sync with platform -->
         <start-class></start-class> <!-- keep it empty, set by actual boot module -->
         <!-- =================== -->
@@ -487,7 +487,7 @@
         <repository>
             <id>spring-milestones</id>
             <name>Spring Milestones</name>
-            <url>https://repo.spring.io/libs-milestone</url>
+            <url>https://repo.spring.io/milestone</url>
             <snapshots>
                 <enabled>false</enabled>
             </snapshots>
@@ -495,7 +495,7 @@
         <repository>
             <id>spring-snapshots</id>
             <name>Spring Snapshots</name>
-            <url>https://repo.spring.io/libs-snapshot</url>
+            <url>https://repo.spring.io/snapshot</url>
             <snapshots>
                 <enabled>true</enabled>
             </snapshots>
@@ -674,7 +674,7 @@
             <dependency>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-dependencies</artifactId>
-                <version>1.4.0.M3</version>
+                <version>${spring-boot.version}</version>
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
