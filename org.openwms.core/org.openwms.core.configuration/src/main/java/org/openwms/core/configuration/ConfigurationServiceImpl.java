@@ -21,7 +21,6 @@
  */
 package org.openwms.core.configuration;
 
-import javax.validation.constraints.NotNull;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
@@ -97,7 +96,7 @@ class ConfigurationServiceImpl implements ConfigurationService, ApplicationListe
      */
     @Override
     @FireAfterTransaction(events = {ConfigurationChangedEvent.class})
-    public <T extends AbstractPreference> T save(@NotNull T preference) {
+    public <T extends AbstractPreference> T save(T preference) {
         Assert.notNull(preference, "Not allowed to call save with a NULL argument");
         return preferenceRepository.save(preference);
     }
@@ -107,10 +106,9 @@ class ConfigurationServiceImpl implements ConfigurationService, ApplicationListe
      *
      * @throws IllegalArgumentException when {@code preference} is {@literal null}
      */
-    @Validated
     @Override
-    public void delete(@NotNull AbstractPreference preference) {
-        //Assert.notNull(preference, "Not allowed to call remove with a NULL argument");
+    public void delete(AbstractPreference preference) {
+        Assert.notNull(preference, "Not allowed to call remove with a NULL argument");
         preferenceRepository.delete(preference);
     }
 

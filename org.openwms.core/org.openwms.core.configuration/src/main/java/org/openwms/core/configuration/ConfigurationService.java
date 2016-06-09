@@ -21,6 +21,7 @@
  */
 package org.openwms.core.configuration;
 
+import javax.validation.constraints.NotNull;
 import java.util.Collection;
 
 import org.openwms.core.configuration.file.AbstractPreference;
@@ -62,12 +63,12 @@ public interface ConfigurationService {
      * @param preference {@link AbstractPreference} entity to save
      * @return Saved {@link AbstractPreference} entity instance
      */
-    <T extends AbstractPreference> T save(T preference);
+    <T extends AbstractPreference> T save(@NotNull T preference);
 
     /**
      * Delete an {@link AbstractPreference}.
      *
      * @param preference The {@link AbstractPreference} to delete
      */
-    void delete(AbstractPreference preference);
+    void delete(@NotNull AbstractPreference preference);
 }

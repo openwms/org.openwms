@@ -15,11 +15,15 @@
  */
 package org.openwms.core.app;
 
+import org.ameba.app.BaseConfiguration;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Import;
 import org.springframework.oxm.Unmarshaller;
 import org.springframework.oxm.jaxb.Jaxb2Marshaller;
+import org.springframework.validation.beanvalidation.LocalValidatorFactoryBean;
+import org.springframework.validation.beanvalidation.MethodValidationPostProcessor;
 
 /**
  * A ModuleConfiguration.
@@ -29,10 +33,17 @@ import org.springframework.oxm.jaxb.Jaxb2Marshaller;
  * @since 1.0
  */
 @Configuration
+@Import(BaseConfiguration.class)
 class ModuleConfiguration {
 
     @Autowired
     private ModuleProperties props;
+
+    public @Bean MethodValidationPostProcessor methodValidationPostProcessor(LocalValidatorFactoryBean validatorFactoryBean) {
+        MethodValidationPostProcessor mvpp = new MethodValidationPostProcessor();
+        mvpp.setValidator(validatorFactoryBean);
+        return mvpp;
+    }
 
     public @Bean
     Unmarshaller unmarshaller() {

@@ -21,12 +21,15 @@
  */
 package org.openwms.core.configuration;
 
+import javax.validation.ConstraintViolationException;
+
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.context.annotation.EnableAspectJAutoProxy;
 import org.springframework.test.context.junit4.SpringRunner;
 
 /**
@@ -37,6 +40,7 @@ import org.springframework.test.context.junit4.SpringRunner;
  * @since 1.0
  */
 @RunWith(SpringRunner.class)
+@EnableAspectJAutoProxy
 @SpringBootTest
 public class ConfigurationServiceIT {
 
@@ -47,7 +51,7 @@ public class ConfigurationServiceIT {
 
     @Test
     public final void testRemoveNull() {
-        thrown.expect(IllegalArgumentException.class);
+        thrown.expect(ConstraintViolationException.class);
         srv.delete(null);
     }
 }
