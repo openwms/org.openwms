@@ -444,6 +444,7 @@
         <spring-boot.version>1.4.0.BUILD-SNAPSHOT</spring-boot.version> <!-- Keep in sync with platform -->
         <spring.version>4.2.6.RELEASE</spring.version> <!-- Keep in sync with platform -->
         <start-class></start-class> <!-- keep it empty, set by actual boot module -->
+        <validation-api.version>1.0.0.GA</validation-api.version>
         <!-- =================== -->
         <!--   Plugin versions   -->
         <!-- =================== -->
@@ -656,21 +657,25 @@
                 <artifactId>hibernate-jpa-2.1-api</artifactId>
                 <version>${jpa-api.version}</version>
             </dependency>
-
+            <dependency>
+                <groupId>javax.validation</groupId>
+                <artifactId>validation-api</artifactId>
+                <version>${validation-api.version}</version>
+            </dependency>
             <dependency>
                 <groupId>org.glassfish.web</groupId>
                 <artifactId>el-impl</artifactId>
                 <version>${el-impl.version}</version>
             </dependency>
 
-            <!-- Spring Framework Libraries >
+            <!-- Spring Framework Libraries -->
             <dependency>
                 <groupId>io.spring.platform</groupId>
                 <artifactId>platform-bom</artifactId>
                 <version>${spring.io.version}</version>
                 <type>pom</type>
                 <scope>import</scope>
-            </dependency-->
+            </dependency>
             <dependency>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-dependencies</artifactId>
