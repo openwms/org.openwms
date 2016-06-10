@@ -668,14 +668,14 @@
                 <version>${el-impl.version}</version>
             </dependency>
 
-            <!-- Spring Framework Libraries >
+            <!-- Spring Framework Libraries -->
             <dependency>
                 <groupId>io.spring.platform</groupId>
                 <artifactId>platform-bom</artifactId>
                 <version>${spring.io.version}</version>
                 <type>pom</type>
                 <scope>import</scope>
-            </dependency-->
+            </dependency>
             <dependency>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-dependencies</artifactId>
