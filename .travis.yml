@@ -7,4 +7,4 @@ node_js:
 before_script:
   - 'npm install -g bower'
 env:
-  - enforcerSkip=true
+  - enforcer.skip=true
