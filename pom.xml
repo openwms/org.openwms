@@ -431,7 +431,7 @@
         <!-- =================== -->
         <!-- Dependency versions -->
         <!-- =================== -->
-        <ameba-lib.version>1.6.M1</ameba-lib.version>
+        <ameba-lib.version>1.6</ameba-lib.version>
         <dozer.version>5.5.1</dozer.version>
         <el-impl.version>2.2</el-impl.version>
 
