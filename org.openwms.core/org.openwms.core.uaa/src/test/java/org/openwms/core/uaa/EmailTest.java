@@ -21,35 +21,46 @@
  */
 package org.openwms.core.uaa;
 
-import org.junit.Assert;
+import org.junit.Rule;
 import org.junit.Test;
-import org.openwms.core.test.AbstractJpaSpringContextTests;
+import org.junit.rules.ExpectedException;
 
 /**
  * An EmailTest.
- * 
+ *
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  * @version $Revision$
  * @since 0.1
  */
-public class EmailTest extends AbstractJpaSpringContextTests {
+public class EmailTest {
+
+    @Rule
+    public ExpectedException thrown = ExpectedException.none();
 
     /**
      * Test construction of Email entities.
      */
     @Test
     public final void testCreationNegative() {
-        try {
-            new Email(null, null);
-            Assert.fail("Not allowed to create an Email without user and address");
-        } catch (IllegalArgumentException iae) {}
-        try {
-            new Email("Test", null);
-            Assert.fail("Not allowed to create an Email without address");
-        } catch (IllegalArgumentException iae) {}
-        try {
-            new Email(null, "force something, still no mail check");
-            Assert.fail("Not allowed to create an Email without user");
-        } catch (IllegalArgumentException iae) {}
+        thrown.expect(IllegalArgumentException.class);
+        new Email(null, null);
+    }
+
+    /**
+     * Test construction of Email entities.
+     */
+    @Test
+    public final void testCreationNegative2() {
+        thrown.expect(IllegalArgumentException.class);
+        new Email("Test", null);
+    }
+
+    /**
+     * Test construction of Email entities.
+     */
+    @Test
+    public final void testCreationNegative3() {
+        thrown.expect(IllegalArgumentException.class);
+        new Email(null, "force something, still no mail check");
     }
 }

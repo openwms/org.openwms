@@ -109,7 +109,7 @@ public class UsersController extends AbstractWebController {
     @ResponseBody
     public ResponseEntity<Response<UserVO>> create(@RequestBody @Valid @NotNull UserVO user, HttpServletRequest req, HttpServletResponse resp) {
         User createdUser = service.create(m.map(user, User.class));
-        resp.addHeader(HttpHeaders.LOCATION, getLocationForCreatedResource(req, createdUser.getId().toString()));
+        resp.addHeader(HttpHeaders.LOCATION, getLocationForCreatedResource(req, createdUser.getPersistentKey()));
         return buildResponse(HttpStatus.CREATED, translate(Messages.CREATED), Messages.CREATED);
     }
 
