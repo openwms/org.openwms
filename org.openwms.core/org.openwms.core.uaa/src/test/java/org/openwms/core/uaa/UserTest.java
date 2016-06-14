@@ -49,12 +49,12 @@ public class UserTest extends AbstractJpaSpringContextTests {
     public final void testCreation() {
         User user1 = new User(TEST_USER1);
         Assert.assertEquals(TEST_USER1, user1.getUsername());
-        Assert.assertNull(user1.getId());
+        Assert.assertNull(user1.getPk());
         Assert.assertTrue(user1.isNew());
         user1 = new User(TEST_USER2, TEST_PASSWORD);
         Assert.assertEquals(TEST_USER2, user1.getUsername());
         Assert.assertEquals(TEST_PASSWORD, user1.getPassword());
-        Assert.assertNull(user1.getId());
+        Assert.assertNull(user1.getPk());
         Assert.assertTrue(user1.isNew());
     }
 

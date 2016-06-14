@@ -105,7 +105,7 @@ public class ActionServiceTest extends AbstractMockitoTests {
         Collection<Action> actions = new ArrayList<Action>();
         actions.add(new Action());
 
-        UserPreference uPref = new UserPreference(SystemUser.SYSTEM_USERNAME, "lastSearchActions");
+        UserPreference uPref = new UserPreference(SystemUser.SYSTEM_USERNAME, "lastSearchActions", "");
         Collection<UserPreference> userPrefs = new ArrayList<UserPreference>();
 
         User user = new SystemUser(SystemUser.SYSTEM_USERNAME, SystemUser.SYSTEM_USERNAME);
