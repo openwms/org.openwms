@@ -26,11 +26,9 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.fail;
 
-import org.ameba.exception.NotFoundException;
 import org.ameba.exception.ServiceLayerException;
 import org.junit.Before;
 import org.junit.Test;
-import org.openwms.core.exception.ExceptionCodes;
 import org.openwms.core.test.AbstractJpaSpringContextTests;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
@@ -62,47 +60,6 @@ public class RoleServiceTest extends AbstractJpaSpringContextTests {
         entityManager.clear();
     }
 
-    /**
-     * Test to remove a Role that does not exist.
-     */
-    @Test(expected = NotFoundException.class)
-    public final void testRemoveWithNotKnownEntity() {
-        srv.removeByID(new Long[]{Long.valueOf(4711)});
-        fail("Removing transient role by id should fail");
-    }
-
-    /**
-     * Test to remove roles and call with a null argument.
-     */
-    @Test
-    public final void testRemoveWithNull() {
-        try {
-            srv.remove(null);
-            fail("Expected to catch an IllegalArgumentException when calling remove() with null");
-        } catch (ServiceLayerException sre) {
-            LOGGER.debug("OK: ServiceRuntimeException when calling remove with null argument");
-            if (!sre.getMessage().equals(
-                    messageSource.getMessage(ExceptionCodes.ROLE_REMOVE_NOT_BE_NULL, new String[0], null))) {
-                fail("IllegalArgumentException expected as root exception");
-            }
-        }
-    }
-
-    /**
-     * Test to remove roles and call with a null argument.
-     */
-    @Test
-    public final void testRemove() {
-        try {
-            Role persistedRole = (Role) entityManager.createNamedQuery(Role.NQ_FIND_BY_UNIQUE_QUERY)
-                    .setParameter(1, "ROLE_ADMIN").getSingleResult();
-            srv.removeByID(new Long[]{persistedRole.getId()});
-            assertEquals("Expect to have 1 Role left", 1, entityManager.createNamedQuery(Role.NQ_FIND_ALL)
-                    .getResultList().size());
-        } catch (Exception ex) {
-            fail("Unexpected exception occurred:" + ex.getMessage());
-        }
-    }
 
     /**
      * Test to call save with null argument.
@@ -159,7 +116,7 @@ public class RoleServiceTest extends AbstractJpaSpringContextTests {
     }
 
     private Role findRole(String roleName) {
-        return (Role) entityManager.createNamedQuery(Role.NQ_FIND_BY_UNIQUE_QUERY).setParameter(1, roleName)
+        return (Role) entityManager.createQuery("select from Role r where r.name = :name").setParameter("name", roleName)
                 .getSingleResult();
     }
 }

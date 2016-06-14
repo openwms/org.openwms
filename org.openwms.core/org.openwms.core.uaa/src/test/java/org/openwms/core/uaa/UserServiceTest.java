@@ -27,7 +27,7 @@ import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
 import javax.persistence.NoResultException;
-import java.util.List;
+import java.util.Collection;
 
 import org.ameba.exception.NotFoundException;
 import org.ameba.exception.ServiceLayerException;
@@ -76,7 +76,7 @@ public class UserServiceTest extends AbstractJpaSpringContextTests {
     @Test
     public final void testUploadImage() {
         try {
-            srv.uploadImageFile(UNKNOWN_USER, new byte[222]);
+            srv.uploadImageFile(1L, new byte[222]);
             fail("Should throw an exception when calling with unknown user");
         } catch (Exception sre) {
             if (!(sre instanceof NotFoundException)) {
@@ -84,7 +84,7 @@ public class UserServiceTest extends AbstractJpaSpringContextTests {
             }
             LOGGER.debug("OK: User unknown" + sre.getMessage());
         }
-        srv.uploadImageFile(KNOWN_USER, new byte[222]);
+        srv.uploadImageFile(1L, new byte[222]);
         User user = findUser(KNOWN_USER);
         assertTrue(user.getUserDetails().getImage().length == 222);
     }
@@ -148,7 +148,7 @@ public class UserServiceTest extends AbstractJpaSpringContextTests {
         User user = findUser(KNOWN_USER);
         assertFalse("User must be persisted before", user.isNew());
         entityManager.clear();
-        srv.remove(user);
+        srv.remove(KNOWN_USER);
         entityManager.flush();
         entityManager.clear();
         try {
@@ -235,9 +235,9 @@ public class UserServiceTest extends AbstractJpaSpringContextTests {
      */
     @Test
     public final void testFindById() {
-        List<User> users = srv.findAll();
+        Collection<User> users = srv.findAll();
         assertEquals("1 User is expected", 1, users.size());
-        User user = srv.findById(users.get(0).getId());
+        User user = srv.findById(users.iterator().next().getPk());
         Assert.assertNotNull("We expect to get back an instance", user);
     }
 
@@ -246,9 +246,9 @@ public class UserServiceTest extends AbstractJpaSpringContextTests {
      */
     @Test(expected = RuntimeException.class)
     public final void testFindByIdNegative() {
-        List<User> users = srv.findAll();
+        Collection<User> users = srv.findAll();
         assertEquals("1 User is expected", 1, users.size());
-        srv.findById(users.get(0).getId() + 1);
+        srv.findById(users.iterator().next().getPk() + 1);
         Assert.fail("We expect to run into some kind of RuntimeException when search for an User with a technical key greater than that previously assigned one, because that User should not exist");
     }
 
@@ -350,7 +350,7 @@ public class UserServiceTest extends AbstractJpaSpringContextTests {
     }
 
     private User findUser(String userName) {
-        return (User) entityManager.createNamedQuery(User.NQ_FIND_BY_USERNAME).setParameter(1, userName)
+        return (User) entityManager.createQuery("select from User u where u.username = :1").setParameter(1, userName)
                 .getSingleResult();
     }
 }
