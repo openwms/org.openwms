@@ -65,7 +65,7 @@ public class RoleDaoTest extends AbstractJpaSpringContextTests {
      */
     @Test
     public final void testPersist() {
-        dao.persist(new Role("ROLE_GUEST"));
+        dao.save(new Role("ROLE_GUEST"));
         Role role;
         try {
             role = findRole("ROLE_USERS");
@@ -84,7 +84,7 @@ public class RoleDaoTest extends AbstractJpaSpringContextTests {
     public final void testRemove() {
         Role role = findRole(ROLE_ADMIN);
         assertNotNull("Role must have been persisted before", role);
-        dao.remove(role);
+        dao.delete(role);
         try {
             findRole(ROLE_ADMIN);
             fail("Role has to be removed and an exception is expected");
