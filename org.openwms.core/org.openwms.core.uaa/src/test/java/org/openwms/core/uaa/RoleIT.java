@@ -38,7 +38,7 @@ import org.openwms.core.test.AbstractJpaSpringContextTests;
  * @version $Revision$
  * @since 0.1
  */
-public class RoleTest extends AbstractJpaSpringContextTests {
+public class RoleIT extends AbstractJpaSpringContextTests {
 
     private static final String TEST_ROLE = "ROLE_TEST";
     private static final String TEST_ROLE2 = "ROLE_TEST2";
