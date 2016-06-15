@@ -22,23 +22,36 @@
 package org.openwms.core.uaa;
 
 import javax.persistence.PersistenceException;
-import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
 
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.Rule;
 import org.junit.Test;
-import org.openwms.core.test.AbstractJpaSpringContextTests;
+import org.junit.rules.ExpectedException;
+import org.junit.runner.RunWith;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
+import org.springframework.test.context.junit4.SpringRunner;
 
 /**
  * A RoleTest.
- * 
+ *
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
- * @version $Revision$
+ * @version 0.1
  * @since 0.1
  */
-public class RoleIT extends AbstractJpaSpringContextTests {
+@RunWith(SpringRunner.class)
+@DataJpaTest
+public class RoleIT {
+
+    @Rule
+    public ExpectedException thrown = ExpectedException.none();
+    private static final Logger LOGGER = LoggerFactory.getLogger(RoleIT.class);
 
     private static final String TEST_ROLE = "ROLE_TEST";
     private static final String TEST_ROLE2 = "ROLE_TEST2";
@@ -47,6 +60,9 @@ public class RoleIT extends AbstractJpaSpringContextTests {
     private static final String KNOWN_ROLE = "KNOWN_ROLE";
     private User knownUser;
     private Role knownRole;
+
+    @Autowired
+    private TestEntityManager entityManager;
 
     /**
      * Setup data.
@@ -61,211 +77,6 @@ public class RoleIT extends AbstractJpaSpringContextTests {
         entityManager.clear();
     }
 
-    /**
-     * Simple POJOS test to test setters only.
-     */
-    @Test
-    public final void testCreation() {
-        Role role = new Role(TEST_ROLE, TEST_DESCR);
-        Assert.assertEquals(TEST_ROLE, role.getName());
-        Assert.assertEquals(TEST_DESCR, role.getDescription());
-        Role role2 = new Role(TEST_ROLE2);
-        Assert.assertEquals(TEST_ROLE2, role2.getName());
-    }
-
-    /**
-     * Ensure that it is not allowed to create a Role without a name.
-     */
-    @Test
-    public final void testCreationNegative() {
-        try {
-            new Role("");
-            Assert.fail("IAE expected when creating Role(String) with empty name");
-        } catch (IllegalArgumentException iae) {}
-        try {
-            new Role("", "TEST");
-            Assert.fail("IAE expected when creating Role(String,String) with empty name");
-        } catch (IllegalArgumentException iae) {}
-        try {
-            new Role(null);
-            Assert.fail("IAE expected when creating Role(String) with name equals to null");
-        } catch (IllegalArgumentException iae) {}
-        try {
-            new Role(null, "TEST");
-            Assert.fail("IAE expected when creating Role(String,String) with name equals to null");
-        } catch (IllegalArgumentException iae) {}
-    }
-
-    /**
-     * Positive test to add an User to a Role.
-     */
-    @Test
-    public final void testAddUsers() {
-        Role role = new Role(TEST_ROLE);
-        User user = new User(TEST_ROLE);
-        role.addUser(user);
-        Assert.assertTrue(role.getUsers().size() == 1);
-        Assert.assertTrue(role.getUsers().contains(user));
-    }
-
-    /**
-     * Adding null to the list of users must fail.
-     */
-    @Test
-    public final void testAddUsersNegative() {
-        Role role = new Role(TEST_ROLE);
-        try {
-            role.addUser(null);
-            Assert.fail("Not allowed to call Role.addUser() with null argument");
-        } catch (IllegalArgumentException iae) {}
-    }
-
-    /**
-     * Positive test to remove an User from a Role.
-     */
-    @Test
-    public final void testRemoveUser() {
-        Role role = new Role(TEST_ROLE);
-        User user = new User(TEST_ROLE);
-        role.addUser(user);
-        Assert.assertTrue(role.getUsers().size() == 1);
-        role.removeUser(user);
-        Assert.assertTrue(role.getUsers().size() == 0);
-    }
-
-    /**
-     * Removing null from the list of users must fail.
-     */
-    @Test
-    public final void testRemoveUserNegative() {
-        Role role = new Role(TEST_ROLE);
-        try {
-            role.removeUser(null);
-            Assert.fail("Not allowed to call Role.removeUser() with null argument");
-        } catch (IllegalArgumentException iae) {}
-    }
-
-    /**
-     * Positive test to test whether it is allowed to set a valid Set of Users to this Role.
-     */
-    @Test
-    public final void testSetUsers() {
-        Role role = new Role(TEST_ROLE);
-        User user = new User(TEST_ROLE);
-        Assert.assertTrue(role.getUsers().size() == 0);
-        role.setUsers(new HashSet<User>(Arrays.asList(user)));
-        Assert.assertTrue(role.getUsers().size() == 1);
-    }
-
-    /**
-     * Setting the list of grants to null is not allowed.
-     */
-    @Test
-    public final void testSetUsersNegative() {
-        Role role = new Role(TEST_ROLE);
-        try {
-            role.setUsers(null);
-            Assert.fail("Not allowed to call Role.setUsers() with null argument");
-        } catch (IllegalArgumentException iae) {}
-    }
-
-    /**
-     * Adding null to the list of grants must fail.
-     */
-    @Test
-    public final void testAddGrant() {
-        Role role = new Role(TEST_ROLE);
-        SecurityObject grant = new Grant(TEST_DESCR);
-        Assert.assertTrue(role.getGrants().size() == 0);
-        role.addGrant(grant);
-        Assert.assertTrue(role.getGrants().size() == 1);
-    }
-
-    /**
-     * Adding null to the list of grants must fail.
-     */
-    @Test
-    public final void testAddGrantNegative() {
-        Role role = new Role(TEST_ROLE);
-        try {
-            role.addGrant(null);
-            Assert.fail("Not allowed to call Role.addGrant() with null argument");
-        } catch (IllegalArgumentException iae) {}
-    }
-
-    /**
-     * Positive test to remove a Grant from a Role.
-     */
-    @Test
-    public final void testRemoveGrant() {
-        Role role = new Role(TEST_ROLE);
-        SecurityObject grant = new Grant(TEST_ROLE);
-        role.addGrant(grant);
-        Assert.assertTrue(role.getGrants().size() == 1);
-        role.removeGrant(grant);
-        Assert.assertTrue(role.getGrants().size() == 0);
-    }
-
-    /**
-     * Removing null from the list of grants must fail.
-     */
-    @Test
-    public final void testRemoveGrantNegative() {
-        Role role = new Role(TEST_ROLE);
-        try {
-            role.removeGrant(null);
-            Assert.fail("Not allowed to call Role.removeGrant() with null argument");
-        } catch (IllegalArgumentException iae) {}
-    }
-
-    /**
-     * Positive test to remove Grants from a Role.
-     */
-    @Test
-    public final void testRemoveGrants() {
-        Role role = new Role(TEST_ROLE);
-        SecurityObject grant = new Grant(TEST_ROLE);
-        role.addGrant(grant);
-        Assert.assertTrue(role.getGrants().size() == 1);
-        role.removeGrants(Arrays.asList(grant));
-        Assert.assertTrue(role.getGrants().size() == 0);
-    }
-
-    /**
-     * Removing null from the list of Grants must fail.
-     */
-    @Test
-    public final void testRemoveGrantsNegative() {
-        Role role = new Role(TEST_ROLE);
-        try {
-            role.removeGrants(null);
-            Assert.fail("Not allowed to call Role.removeGrants() with null argument");
-        } catch (IllegalArgumentException iae) {}
-    }
-
-    /**
-     * Positive test to test whether it is allowed to set a valid Set of Grants to this Role.
-     */
-    @Test
-    public final void testSetGrants() {
-        Role role = new Role(TEST_ROLE);
-        SecurityObject grant = new Grant(TEST_ROLE);
-        Assert.assertTrue(role.getGrants().size() == 0);
-        role.setGrants(new HashSet<SecurityObject>(Arrays.asList(grant)));
-        Assert.assertTrue(role.getGrants().size() == 1);
-    }
-
-    /**
-     * Setting the list of grants to null is not allowed.
-     */
-    @Test
-    public final void testSetGrantsNegative() {
-        Role role = new Role(TEST_ROLE);
-        try {
-            role.setGrants(null);
-            Assert.fail("Not allowed to call Role.setGrants() with null argument");
-        } catch (IllegalArgumentException iae) {}
-    }
 
     /**
      * Creating two roles with same id must fail.
@@ -314,11 +125,10 @@ public class RoleIT extends AbstractJpaSpringContextTests {
 
         // Just the name is considered
         Assert.assertTrue(role1.equals(role2));
-        Assert.assertTrue(role1.equals(role1));
         Assert.assertFalse(role1.equals(role3));
 
         // Test behavior in hashed collections
-        Set<Role> roles = new HashSet<Role>();
+        Set<Role> roles = new HashSet<>();
         roles.add(role1);
         roles.add(role2);
         Assert.assertTrue(roles.size() == 1);
@@ -347,12 +157,13 @@ public class RoleIT extends AbstractJpaSpringContextTests {
 
         entityManager.remove(knownRole);
 
-        Long cnt = (Long) entityManager.createQuery("select count(r) from Role r where r.name = :rolename")
+        Long cnt = (Long) entityManager.getEntityManager().createQuery("select count(r) from Role r where r.name = :rolename")
                 .setParameter("rolename", KNOWN_ROLE).getSingleResult();
         Assert.assertEquals("Role must be removed", 0, cnt.intValue());
 
-        cnt = (Long) entityManager.createQuery("select count(u) from User u where u.username = :username")
+        cnt = (Long) entityManager.getEntityManager().createQuery("select count(u) from User u where u.username = :username")
                 .setParameter("username", KNOWN_USER).getSingleResult();
         Assert.assertEquals("User may not be removed", 1, cnt.intValue());
+
     }
 }

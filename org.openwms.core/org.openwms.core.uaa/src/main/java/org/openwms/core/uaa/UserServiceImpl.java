@@ -26,6 +26,7 @@ import java.util.Collection;
 import java.util.HashSet;
 import java.util.Optional;
 
+import org.ameba.annotation.TxService;
 import org.ameba.exception.NotFoundException;
 import org.ameba.exception.ServiceLayerException;
 import org.ameba.i18n.Translator;
@@ -57,8 +58,7 @@ import org.springframework.util.StringUtils;
  * @see UserRepository
  * @since 0.1
  */
-@Transactional
-@Service(UserServiceImpl.COMPONENT_NAME)
+@TxService
 public class UserServiceImpl implements UserService {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(UserServiceImpl.class);
@@ -78,8 +78,6 @@ public class UserServiceImpl implements UserService {
     private String systemUsername;
     @Value("#{ globals['system.password'] }")
     private String systemPassword;
-    /** Springs service name. */
-    public static final String COMPONENT_NAME = "userService";
 
     /**
      * {@inheritDoc}

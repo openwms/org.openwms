@@ -17,6 +17,9 @@ package org.openwms.core;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.annotation.Bean;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 /**
  * A Starter.
@@ -28,7 +31,12 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 @SpringBootApplication
 public class Starter {
 
+    public @Bean PasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder(15);
+    }
+
     /**
+     /**
      * Boot up!
      *
      * @param args Some args

@@ -103,7 +103,7 @@ public class User extends ApplicationEntity implements Serializable {
     /** The User's fullname. Doesn't have to be unique. */
     @Column(name = "C_FULLNAME")
     private String fullname;
-    @OneToOne(mappedBy = "username")
+    @OneToOne//(mappedBy = "username")
     private Email primaryEmailAddress;
     @OneToMany(mappedBy = "username")
     private Set<Email> emailAddresses;

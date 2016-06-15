@@ -22,11 +22,11 @@
 package org.openwms.core.uaa;
 
 import net.sf.ehcache.Ehcache;
+import org.ameba.annotation.TxService;
 import org.openwms.core.event.UserChangedEvent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.ApplicationListener;
 import org.springframework.security.authentication.dao.SaltSource;
@@ -35,47 +35,35 @@ import org.springframework.security.core.userdetails.UserCache;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 /**
  * A SecurityContextUserServiceImpl extends Spring {@link UserDetailsService} to
  * read <code>User</code>s and <code>Role</code>s from the persistent storage
  * and wraps them into security objects.
- * <p>
- * The advice can be referenced by name {@value #COMPONENT_NAME}.
- * </p>
- * 
+ *
  * @author <a href="mailto:russelltina@users.sourceforge.net">Tina Russell</a>
- * @version $Revision$
+ * @version 0.1
  * @since 0.1
  * @see org.springframework.security.core.userdetails.UserDetailsService
  */
-@Transactional
-@Service(SecurityContextUserServiceImpl.COMPONENT_NAME)
-public class SecurityContextUserServiceImpl implements UserDetailsService, ApplicationListener<UserChangedEvent> {
+@TxService
+class SecurityContextUserServiceImpl implements UserDetailsService, ApplicationListener<UserChangedEvent> {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(SecurityContextUserServiceImpl.class);
 
-    @Value("#{ globals['system.user'] }")
+    @Value("${system.user}")
     private String systemUsername = SystemUser.SYSTEM_USERNAME;
     @Autowired
     private UserService userService;
     @Autowired(required = false)
-    @Qualifier("userCache")
     private UserCache userCache;
     @Autowired(required = false)
-    @Qualifier("ehCache")
     private Ehcache cache;
     @Autowired
-    @Qualifier("passwordEncoder")
     private PasswordEncoder enc;
     @Autowired
-    @Qualifier("saltSource")
     private SaltSource saltSource;
-
-    /** Springs service name. */
-    public static final String COMPONENT_NAME = "userDetailsService";
 
     /**
      * {@inheritDoc}

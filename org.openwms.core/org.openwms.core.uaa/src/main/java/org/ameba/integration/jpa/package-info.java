@@ -19,16 +19,10 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
-package org.openwms.core.uaa;
-
-import org.springframework.data.jpa.repository.JpaRepository;
-
 /**
- * A RoleRepository offers functionality to find and modify {@link Role} entity classes.
- *
- * @author <a href="mailto:russelltina@users.sourceforge.net">Tina Russell</a>
- * @version 0.2
- * @since 0.1
+ * This package contains ...
  */
-public interface RoleRepository extends JpaRepository<Role, Long> {
-}
+@QueryEntities(BaseEntity.class)
+package org.ameba.integration.jpa;
+
+import com.querydsl.core.annotations.QueryEntities;
