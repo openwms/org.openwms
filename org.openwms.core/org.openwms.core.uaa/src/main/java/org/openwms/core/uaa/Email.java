@@ -26,6 +26,7 @@ import javax.persistence.Entity;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 import java.io.Serializable;
+import java.util.Objects;
 
 import org.ameba.integration.jpa.BaseEntity;
 import org.springframework.util.Assert;
@@ -127,6 +128,31 @@ public class Email extends BaseEntity implements Serializable {
      */
     public void setFullname(String fullname) {
         this.fullname = fullname;
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * All fields.
+     */
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Email email = (Email) o;
+        return Objects.equals(username, email.username) &&
+                Objects.equals(emailAddress, email.emailAddress) &&
+                Objects.equals(fullname, email.fullname);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * All fields.
+     */
+    @Override
+    public int hashCode() {
+        return Objects.hash(username, emailAddress, fullname);
     }
 
     /**

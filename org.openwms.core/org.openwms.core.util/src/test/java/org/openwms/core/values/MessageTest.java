@@ -21,32 +21,28 @@
  */
 package org.openwms.core.values;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNotSame;
+import static org.assertj.core.api.Assertions.assertThat;
 
 import org.junit.Test;
-import org.openwms.core.test.AbstractJpaSpringContextTests;
 
 /**
  * A MessageTest.
  * 
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
- * @version $Revision$
+ * @version 0.1
  * @since 0.1
  */
-public class MessageTest extends AbstractJpaSpringContextTests {
+public class MessageTest {
 
     /**
      * Test construction and initialization of a Message object.
      */
-    @Test
-    public final void testConstruction() {
+    public @Test final void testConstruction() {
         Message m = new Message(4711, "Test message");
-        assertNotNull("Creation date must be set", m.getCreated());
-        assertEquals("Expected the message", "Test message", m.getMessageText());
-        assertEquals("Expected a message number", 4711, m.getMessageNo());
-        assertNotSame("Same name and url", m.equals(new Message(4711, "Test message")));
+        assertThat(m.getCreated()).isNotNull();
+        assertThat(m.getMessageText()).isEqualTo("Test message");
+        assertThat(m.getMessageNo()).isEqualTo(4711);
+        assertThat(m).isNotEqualTo((new Message(4711, "Test message")));
     }
 
 }

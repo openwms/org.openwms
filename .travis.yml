@@ -6,5 +6,5 @@ node_js:
   - '0.10'
 before_script:
   - 'npm install -g bower'
-env:
-  - enforcer.skip=true
+script:
+  - mvn install -Denforcer.skip=true

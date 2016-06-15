@@ -431,7 +431,7 @@
         <!-- =================== -->
         <!-- Dependency versions -->
         <!-- =================== -->
-        <ameba-lib.version>1.6</ameba-lib.version>
+        <ameba-lib.version>1.6.M1</ameba-lib.version>
         <dozer.version>5.5.1</dozer.version>
         <el-impl.version>2.2</el-impl.version>
 
@@ -444,7 +444,7 @@
         <spring-boot.version>1.4.0.BUILD-SNAPSHOT</spring-boot.version> <!-- Keep in sync with platform -->
         <spring.version>4.2.6.RELEASE</spring.version> <!-- Keep in sync with platform -->
         <start-class></start-class> <!-- keep it empty, set by actual boot module -->
-        <validation-api.version>1.0.0.GA</validation-api.version>
+        <validation-api.version>1.1.0.Final</validation-api.version>
         <!-- =================== -->
         <!--   Plugin versions   -->
         <!-- =================== -->
@@ -512,6 +512,14 @@
         <pluginRepository>
             <id>typescript-maven-plugin</id>
             <url>https://raw.github.com/ppedregal/typescript-maven-plugin/master/repo</url>
+        </pluginRepository>
+        <pluginRepository>
+            <id>spring-snapshots</id>
+            <name>Spring Snapshots</name>
+            <url>https://repo.spring.io/snapshot</url>
+            <snapshots>
+                <enabled>true</enabled>
+            </snapshots>
         </pluginRepository>
     </pluginRepositories>
     <build>

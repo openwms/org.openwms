@@ -72,7 +72,6 @@ public class SecurityServiceImpl implements SecurityService {
         });
         result.removeAll(persisted);
         if (!persisted.isEmpty()) {
-            roleRepository.removeFromRoles(persisted);
             securityObjectRepository.delete(persisted);
         }
         return result;

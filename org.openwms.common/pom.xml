@@ -38,6 +38,7 @@
         <moduleDir>../..</moduleDir>
         <core.version>${project.version}</core.version>
         <module.version>${project.version}</module.version>
+        <maven.test.skip>true</maven.test.skip>
     </properties>
 
     <distributionManagement>

@@ -19,16 +19,16 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
-package org.openwms.core.uaa;
-
-import org.springframework.data.jpa.repository.JpaRepository;
+package org.openwms.core;
 
 /**
- * A RoleRepository offers functionality to find and modify {@link Role} entity classes.
+ * A CorePackage.
  *
- * @author <a href="mailto:russelltina@users.sourceforge.net">Tina Russell</a>
- * @version 0.2
- * @since 0.1
+ * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
+ * @version 1.0
+ * @since 1.0
  */
-public interface RoleRepository extends JpaRepository<Role, Long> {
+public final class CorePackage {
+
+    private CorePackage() {}
 }

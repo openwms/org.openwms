@@ -29,25 +29,33 @@ import static org.junit.Assert.fail;
 import org.ameba.exception.ServiceLayerException;
 import org.junit.Before;
 import org.junit.Test;
-import org.openwms.core.test.AbstractJpaSpringContextTests;
+import org.junit.runner.RunWith;
+import org.openwms.core.CorePackage;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.MessageSource;
-import org.springframework.test.context.ContextConfiguration;
+import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.context.annotation.ComponentScan;
+import org.springframework.test.context.junit4.SpringRunner;
 
 /**
  * A RoleServiceTest.
  *
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
- * @version $Revision$
+ * @version 0.1
  * @since 0.1
  */
-@ContextConfiguration("classpath:/org/openwms/core/service/spring/Test-context.xml")
-public class RoleServiceTest extends AbstractJpaSpringContextTests {
+@RunWith(SpringRunner.class)
+@SpringBootTest
+@ComponentScan(basePackageClasses = CorePackage.class)
+public class RoleServiceTest {
 
+    private static final Logger LOGGER = LoggerFactory.getLogger(RoleServiceTest.class);
     @Autowired
     private RoleService srv;
     @Autowired
-    private MessageSource messageSource;
+    private TestEntityManager entityManager;
 
     /**
      * Setting up some test data.
@@ -59,7 +67,6 @@ public class RoleServiceTest extends AbstractJpaSpringContextTests {
         entityManager.flush();
         entityManager.clear();
     }
-
 
     /**
      * Test to call save with null argument.
@@ -116,7 +123,7 @@ public class RoleServiceTest extends AbstractJpaSpringContextTests {
     }
 
     private Role findRole(String roleName) {
-        return (Role) entityManager.createQuery("select from Role r where r.name = :name").setParameter("name", roleName)
+        return (Role) entityManager.getEntityManager().createQuery("select from Role r where r.name = :name").setParameter("name", roleName)
                 .getSingleResult();
     }
 }
