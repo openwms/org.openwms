@@ -30,13 +30,11 @@ import org.ameba.exception.ServiceLayerException;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.openwms.core.CorePackage;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.context.annotation.ComponentScan;
 import org.springframework.test.context.junit4.SpringRunner;
 
 /**
@@ -48,7 +46,6 @@ import org.springframework.test.context.junit4.SpringRunner;
  */
 @RunWith(SpringRunner.class)
 @SpringBootTest
-@ComponentScan(basePackageClasses = CorePackage.class)
 public class RoleServiceTest {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(RoleServiceTest.class);

@@ -46,6 +46,7 @@ import org.springframework.test.context.junit4.SpringRunner;
  * @since 0.1
  */
 @RunWith(SpringRunner.class)
+//@SpringBootTest(classes = Starter.class)
 @DataJpaTest
 public class RoleIT {
 

@@ -15,8 +15,15 @@
  */
 package org.openwms.core;
 
+import org.ameba.app.SolutionApp;
+import org.ameba.i18n.AbstractTranslator;
+import org.ameba.i18n.Translator;
+import org.ameba.mapping.BeanMapper;
+import org.ameba.mapping.DozerMapperImpl;
+import org.ameba.system.NestedReloadableResourceBundleMessageSource;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -28,16 +35,42 @@ import org.springframework.security.crypto.password.PasswordEncoder;
  * @version 1.0
  * @since 1.0
  */
-@SpringBootApplication
+@SpringBootApplication(scanBasePackageClasses = {Starter.class, SolutionApp.class})
 public class Starter {
 
-    public @Bean PasswordEncoder passwordEncoder() {
+    public
+    @Bean
+    PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder(15);
     }
 
+    public
+    @Bean
+    Translator translator() {
+        return new AbstractTranslator() {
+            @Override
+            protected MessageSource getMessageSource() {
+                return messageSource();
+            }
+        };
+    }
+
+    public
+    @Bean
+    MessageSource messageSource() {
+        NestedReloadableResourceBundleMessageSource nrrbm = new NestedReloadableResourceBundleMessageSource();
+        nrrbm.setBasename("i18n");
+        return nrrbm;
+    }
+
+    public
+    @Bean
+    BeanMapper beanMapper() {
+        return new DozerMapperImpl("META-INF/dozer/catalog-bean-mappings.xml");
+    }
+
     /**
-     /**
-     * Boot up!
+     * /** Boot up!
      *
      * @param args Some args
      */
