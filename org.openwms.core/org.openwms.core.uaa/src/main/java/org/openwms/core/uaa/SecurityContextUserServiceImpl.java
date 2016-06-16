@@ -29,12 +29,11 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.ApplicationListener;
-import org.springframework.security.authentication.dao.SaltSource;
-import org.springframework.security.authentication.encoding.PasswordEncoder;
 import org.springframework.security.core.userdetails.UserCache;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.transaction.annotation.Transactional;
 
 /**
@@ -62,8 +61,6 @@ class SecurityContextUserServiceImpl implements UserDetailsService, ApplicationL
     private Ehcache cache;
     @Autowired
     private PasswordEncoder enc;
-    @Autowired
-    private SaltSource saltSource;
 
     /**
      * {@inheritDoc}
@@ -93,7 +90,7 @@ class SecurityContextUserServiceImpl implements UserDetailsService, ApplicationL
             if (systemUsername.equals(username)) {
                 User user = userService.createSystemUser();
                 ud = new SystemUserWrapper(user);
-                ((SystemUserWrapper) ud).setPassword(enc.encodePassword(user.getPassword(), saltSource.getSalt(ud)));
+                ((SystemUserWrapper) ud).setPassword(enc.encode(user.getPassword()));
             } else {
                 try {
                     ud = new UserWrapper(userService.findByUsername(username).get());

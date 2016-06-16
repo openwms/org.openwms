@@ -40,8 +40,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.security.authentication.dao.SaltSource;
-import org.springframework.security.authentication.encoding.PasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
@@ -50,8 +49,7 @@ import org.springframework.util.StringUtils;
 /**
  * An UserServiceImpl is a Spring supported transactional implementation of a general {@link UserService}. Using Spring 2 annotation support
  * autowires collaborators, therefore XML configuration becomes obsolete. This class is marked with Springs {@link Service} annotation to
- * benefit from Springs exception translation interceptor. Traditional CRUD operations are delegated to an {@link UserRepository}. <p> This
- * implementation can be autowired with the name {@value #COMPONENT_NAME}. </p>
+ * benefit from Springs exception translation interceptor. Traditional CRUD operations are delegated to an {@link UserRepository}.
  *
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  * @version 0.2
@@ -72,11 +70,9 @@ public class UserServiceImpl implements UserService {
     private PasswordEncoder enc;
     @Autowired
     private Translator translator;
-    @Autowired
-    private SaltSource saltSource;
-    @Value("#{ globals['system.user'] }")
+    @Value("${system.user}")
     private String systemUsername;
-    @Value("#{ globals['system.password'] }")
+    @Value("${system.password}")
     private String systemPassword;
 
     /**
@@ -171,8 +167,7 @@ public class UserServiceImpl implements UserService {
         User entity = repository.findByUsername(userPassword.getUser().getUsername()).orElseThrow(() -> new EntityNotFoundException(translator.translate(ExceptionCodes.USER_NOT_EXIST, userPassword.getUser()
                 .getUsername())));
         try {
-            entity.changePassword(enc.encodePassword(userPassword.getPassword(),
-                    saltSource.getSalt(new UserWrapper(entity))));
+            entity.changePassword(enc.encode(userPassword.getPassword()));
             repository.save(entity);
         } catch (InvalidPasswordException ipe) {
             LOGGER.error(ipe.getMessage());
@@ -196,8 +191,7 @@ public class UserServiceImpl implements UserService {
 
         if (userPassword != null && StringUtils.hasText(userPassword.getPassword())) {
             try {
-                user.changePassword(enc.encodePassword(userPassword.getPassword(),
-                        saltSource.getSalt(new UserWrapper(user))));
+                user.changePassword(enc.encode(userPassword.getPassword()));
             } catch (InvalidPasswordException ipe) {
                 LOGGER.error(ipe.getMessage());
                 throw new ServiceLayerException(translator.translate(ExceptionCodes.USER_PASSWORD_INVALID,

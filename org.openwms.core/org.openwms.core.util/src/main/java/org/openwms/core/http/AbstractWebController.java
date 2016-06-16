@@ -29,7 +29,6 @@ import org.ameba.http.AbstractBase;
 import org.ameba.http.Response;
 import org.openwms.core.exception.ExceptionCodes;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.MessageSource;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -48,10 +47,8 @@ import org.springframework.web.util.UriTemplate;
 public abstract class AbstractWebController {
 
     @Autowired
-    @Qualifier("messageSourceRest")
     private MessageSource messageSource;
     @Autowired
-    @Qualifier("coreRestValidator")
     private Validator validator;
 
     /**
