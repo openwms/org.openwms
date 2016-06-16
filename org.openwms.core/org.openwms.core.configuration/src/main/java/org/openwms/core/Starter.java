@@ -31,6 +31,7 @@ import org.springframework.boot.context.properties.EnableConfigurationProperties
 @EnableConfigurationProperties(ModuleProperties.class)
 public class Starter {
 
+    /**
      * Boot up!
      *
      * @param args Some args
