@@ -21,7 +21,6 @@
  */
 package org.openwms.core.uaa;
 
-import javax.validation.constraints.NotNull;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
@@ -29,6 +28,7 @@ import java.util.List;
 import org.ameba.annotation.TxService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.validation.annotation.Validated;
 
 /**
  * A RoleServiceImpl is a Spring supported transactional implementation of a general {@link RoleService}. Using Spring 2 annotation support
@@ -40,6 +40,7 @@ import org.springframework.stereotype.Service;
  * @see RoleRepository
  * @since 0.1
  */
+@Validated
 @TxService
 class RoleServiceImpl implements RoleService {
 
@@ -59,14 +60,6 @@ class RoleServiceImpl implements RoleService {
     public Collection<Role> findAll() {
         List<Role> roles = repository.findAll();
         return roles == null ? Collections.emptyList() : roles;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public Role create(@NotNull Role role) {
-        return repository.save(role);
     }
 
     /**

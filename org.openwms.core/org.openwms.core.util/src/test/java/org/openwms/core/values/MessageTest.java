@@ -44,5 +44,4 @@ public class MessageTest {
         assertThat(m.getMessageNo()).isEqualTo(4711);
         assertThat(m).isNotEqualTo((new Message(4711, "Test message")));
     }
-
 }

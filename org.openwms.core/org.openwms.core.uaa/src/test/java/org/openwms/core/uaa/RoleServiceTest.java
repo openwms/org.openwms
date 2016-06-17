@@ -26,16 +26,22 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.fail;
 
-import org.ameba.exception.ServiceLayerException;
+import org.hibernate.exception.ConstraintViolationException;
 import org.junit.Before;
+import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.ExpectedException;
 import org.junit.runner.RunWith;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.orm.jpa.AutoConfigureDataJpa;
+import org.springframework.boot.test.autoconfigure.orm.jpa.AutoConfigureTestDatabase;
+import org.springframework.boot.test.autoconfigure.orm.jpa.AutoConfigureTestEntityManager;
 import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  * A RoleServiceTest.
@@ -45,6 +51,10 @@ import org.springframework.test.context.junit4.SpringRunner;
  * @since 0.1
  */
 @RunWith(SpringRunner.class)
+@Transactional
+@AutoConfigureTestDatabase
+@AutoConfigureTestEntityManager
+@AutoConfigureDataJpa
 @SpringBootTest
 public class RoleServiceTest {
 
@@ -53,6 +63,9 @@ public class RoleServiceTest {
     private RoleService srv;
     @Autowired
     private TestEntityManager entityManager;
+
+    @Rule
+    public ExpectedException thrown = ExpectedException.none();
 
     /**
      * Setting up some test data.
@@ -70,12 +83,8 @@ public class RoleServiceTest {
      */
     @Test
     public final void testSaveWithNull() {
-        try {
-            srv.save(null);
-            fail("Should throw an exception when calling with null");
-        } catch (ServiceLayerException sre) {
-            LOGGER.debug("OK: Exception when try to call save with null argument:" + sre.getMessage());
-        }
+        thrown.expect(ConstraintViolationException.class);
+        srv.save(null);
     }
 
     /**
@@ -103,6 +112,7 @@ public class RoleServiceTest {
         role.setDescription("Test description");
         try {
             roleSaved = srv.save(role);
+            entityManager.flush();
         } catch (Exception e) {
             fail("Exception thrown during saving a role");
         }
@@ -120,7 +130,7 @@ public class RoleServiceTest {
     }
 
     private Role findRole(String roleName) {
-        return (Role) entityManager.getEntityManager().createQuery("select from Role r where r.name = :name").setParameter("name", roleName)
+        return (Role) entityManager.getEntityManager().createQuery("select r from Role r where r.name = :name").setParameter("name", roleName)
                 .getSingleResult();
     }
 }

@@ -35,6 +35,7 @@
     <description>A project that contains classes to support proper testing. Additionally some Spring configuration is provided that starts a Spring managed test environment.</description>
     <properties>
         <moduleDir>../..</moduleDir>
+        <assertj-core.version>3.4.1</assertj-core.version>
     </properties>
     <build>
         <plugins>
@@ -56,10 +57,11 @@
             <dependency>
                 <groupId>org.assertj</groupId>
                 <artifactId>assertj-core</artifactId>
-                <version>3.4.1</version>
+                <version>${assertj-core.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>
+
     <dependencies>
         <!-- JavaEE dependencies -->
         <dependency>
@@ -67,11 +69,6 @@
             <artifactId>hibernate-jpa-2.1-api</artifactId>
             <scope>compile</scope>
         </dependency>
-        <!--dependency>
-            <groupId>javax.transaction</groupId>
-            <artifactId>javax.transaction-api</artifactId>
-            <scope>compile</scope>
-        </dependency-->
 
         <!-- Spring Framework -->
         <dependency>
