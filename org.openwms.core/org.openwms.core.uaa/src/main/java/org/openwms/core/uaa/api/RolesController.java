@@ -87,7 +87,7 @@ public class RolesController extends AbstractWebController {
     @RequestMapping(method = RequestMethod.POST)
     @ResponseBody
     public ResponseEntity<Response<RoleVO>> create(@RequestBody @Valid @NotNull RoleVO role, HttpServletRequest req, HttpServletResponse resp) {
-        RoleVO createdRole = m.map(service.create(m.map(role, Role.class)), RoleVO.class);
+        RoleVO createdRole = m.map(service.save(m.map(role, Role.class)), RoleVO.class);
         resp.addHeader(HttpHeaders.LOCATION, getLocationForCreatedResource(req, createdRole.getId().toString()));
         return buildResponse(HttpStatus.CREATED, translate(Messages.CREATED), Messages.CREATED);
     }

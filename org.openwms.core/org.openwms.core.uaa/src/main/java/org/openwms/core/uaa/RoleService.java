@@ -21,6 +21,7 @@
  */
 package org.openwms.core.uaa;
 
+import javax.validation.constraints.NotNull;
 import java.util.Collection;
 
 /**
@@ -42,12 +43,11 @@ public interface RoleService {
     Collection<Role> findAll();
 
     /**
-     * Create a new Role passed as argument {@code role}.
+     * Save a Role passed as argument {@literal role}. Is the {@literal role} instance already exists it's being updated. If it does not
+     * exist it will be created.
      *
-     * @param role The Role to create
-     * @return The created Role instance
+     * @param role The Role to update or create
+     * @return The updated Role instance
      */
-    Role create(Role role);
-
-    Role save(Role role);
+    Role save(@NotNull Role role);
 }

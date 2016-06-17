@@ -73,6 +73,7 @@
             <groupId>org.openwms</groupId>
             <artifactId>org.openwms.core.test</artifactId>
             <type>test-jar</type>
+            <scope>test</scope>
         </dependency>
     </dependencies>
 

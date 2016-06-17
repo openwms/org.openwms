@@ -21,71 +21,106 @@
  */
 package org.openwms.core.uaa;
 
+import static org.assertj.core.api.Assertions.assertThat;
+
 import java.util.HashSet;
 import java.util.Set;
 
 import org.junit.Assert;
+import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.ExpectedException;
 import org.openwms.core.exception.InvalidPasswordException;
-import org.openwms.core.test.AbstractJpaSpringContextTests;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * An UserTest.
- * 
+ *
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
- * @version $Revision$
+ * @version 0.1
  * @since 0.1
  */
-public class UserTest extends AbstractJpaSpringContextTests {
+public class UserTest {
 
+    private static final Logger LOGGER = LoggerFactory.getLogger(UserTest.class);
     private static final String TEST_USER1 = "Test username1";
     private static final String TEST_USER2 = "Test username2";
     private static final String TEST_PASSWORD = "Test password";
 
+    public @Rule ExpectedException thrown = ExpectedException.none();
+
     /**
      * Test positive creation of User instances.
      */
+    public
     @Test
-    public final void testCreation() {
+    final void testCreation() {
         User user1 = new User(TEST_USER1);
-        Assert.assertEquals(TEST_USER1, user1.getUsername());
-        Assert.assertNull(user1.getPk());
-        Assert.assertTrue(user1.isNew());
-        user1 = new User(TEST_USER2, TEST_PASSWORD);
-        Assert.assertEquals(TEST_USER2, user1.getUsername());
-        Assert.assertEquals(TEST_PASSWORD, user1.getPassword());
-        Assert.assertNull(user1.getPk());
-        Assert.assertTrue(user1.isNew());
+        assertThat(TEST_USER1).isEqualTo(user1.getUsername());
+        assertThat(user1.getPk()).isNull();
+        assertThat(user1.isNew()).isTrue();
+    }
+
+    /**
+     * Test positive creation of User instances.
+     */
+    public
+    @Test
+    final void testCreation2() {
+        User user1 = new User(TEST_USER2, TEST_PASSWORD);
+        assertThat(TEST_USER2).isEqualTo(user1.getUsername());
+        assertThat(TEST_PASSWORD).isEqualTo(user1.getPassword());
+        assertThat(user1.getPk()).isNull();
+        assertThat(user1.isNew()).isTrue();
     }
 
     /**
      * Test that it is not possible to create invalid User instances.
      */
+    public
     @Test
-    public final void testCreationNegative() {
-        try {
-            new User("");
-            Assert.fail("IAE expected when creating User(String) with empty username");
-        } catch (IllegalArgumentException iae) {}
-        try {
-            new User("", TEST_PASSWORD);
-            Assert.fail("IAE expected when creating User(String,String) with empty username");
-        } catch (IllegalArgumentException iae) {}
-        try {
-            new User(null);
-            Assert.fail("IAE expected when creating User(String) with username equals to null");
-        } catch (IllegalArgumentException iae) {}
-        try {
-            new User(null, TEST_PASSWORD);
-            Assert.fail("IAE expected when creating User(String,String) with username equals to null");
-        } catch (IllegalArgumentException iae) {}
+    final void testCreationNegative() {
+        thrown.expect(IllegalArgumentException.class);
+        new User("");
+    }
+
+    /**
+     * Test that it is not possible to create invalid User instances.
+     */
+    public
+    @Test
+    final void testCreationNegative2() {
+        thrown.expect(IllegalArgumentException.class);
+        new User("", TEST_PASSWORD);
+    }
+
+    /**
+     * Test that it is not possible to create invalid User instances.
+     */
+    public
+    @Test
+    final void testCreationNegativ3() {
+        thrown.expect(IllegalArgumentException.class);
+        new User(null);
+    }
+
+    /**
+     * Test that it is not possible to create invalid User instances.
+     */
+    public
+    @Test
+    final void testCreationNegative4() {
+        thrown.expect(IllegalArgumentException.class);
+        new User(null, TEST_PASSWORD);
     }
 
     /**
      * Test that only valid passwords can be stored and the removal of the oldest password in the history list works.
      */
+    public
     @Test
-    public final void testPasswordHistory() {
+    final void testPasswordHistory() {
         User u1 = new User(TEST_USER1);
         for (int i = 0; i <= User.NUMBER_STORED_PASSWORDS + 5; i++) {
             try {
@@ -100,7 +135,11 @@ public class UserTest extends AbstractJpaSpringContextTests {
                     Assert.fail("Number of acceptable passwords not exceeded");
                 } else {
                     LOGGER.debug("OK: Exception because password is already in the list, set password to:" + i);
-                    setPasswordSafety(u1, String.valueOf(i));
+                    try {
+                        u1.changePassword(String.valueOf(i));
+                    } catch (InvalidPasswordException ex) {
+                        LOGGER.debug("Error" + ex.getMessage());
+                    }
                 }
             }
             try {
@@ -118,39 +157,31 @@ public class UserTest extends AbstractJpaSpringContextTests {
                 oldPassword = pw.getPassword();
                 continue;
             }
-            Assert.assertTrue("Must be sorted ascending",
-                    Integer.valueOf(oldPassword) > Integer.valueOf(pw.getPassword()));
+            assertThat(Integer.valueOf(oldPassword)).isGreaterThan(Integer.valueOf(pw.getPassword()));
         }
     }
 
     /**
      * Test hashCode() and equals(obj).
      */
+    public
     @Test
-    public final void testHashCodeEquals() {
+    final void testHashCodeEquals() {
         User user1 = new User(TEST_USER1);
         User user2 = new User(TEST_USER1);
         User user3 = new User(TEST_USER2);
 
         // Just the name is considered
-        Assert.assertTrue(user1.equals(user2));
-        Assert.assertTrue(user1.equals(user2));
-        Assert.assertFalse(user1.equals(user3));
+        assertThat(user1).isEqualTo(user2);
+        assertThat(user1).isEqualTo(user2);
+        assertThat(user1).isNotEqualTo(user3);
 
         // Test behavior in hashed collections
-        Set<User> users = new HashSet<User>();
+        Set<User> users = new HashSet<>();
         users.add(user1);
         users.add(user2);
-        Assert.assertTrue(users.size() == 1);
+        assertThat(users).hasSize(1);
         users.add(user3);
-        Assert.assertTrue(users.size() == 2);
-    }
-
-    private void setPasswordSafety(User u, String password) {
-        try {
-            u.changePassword(password);
-        } catch (InvalidPasswordException e) {
-            LOGGER.debug("Error" + e.getMessage());
-        }
+        assertThat(users).hasSize(2);
     }
 }

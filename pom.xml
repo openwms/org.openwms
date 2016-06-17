@@ -431,11 +431,11 @@
         <!-- =================== -->
         <!-- Dependency versions -->
         <!-- =================== -->
-        <ameba-lib.version>1.6.M1</ameba-lib.version>
+        <ameba-lib.version>1.6.M2</ameba-lib.version>
         <dozer.version>5.5.1</dozer.version>
         <el-impl.version>2.2</el-impl.version>
 
-        <hibernate.version>5.0.7.Final</hibernate.version> <!-- Keep in sync with Spring Data JPA -->
+        <hibernate.version>5.1.0.Final</hibernate.version> <!-- Keep in sync with Spring Data JPA -->
         <jackson.version>2.6.6</jackson.version> <!-- Keep in sync with platform -->
         <jdbc.oracle.version>6.0.0</jdbc.oracle.version>
         <jpa-api.version>1.0.0.Final</jpa-api.version>
@@ -709,6 +709,12 @@
                     </exclusion>
                 </exclusions>
             </dependency-->
+
+            <dependency>
+                <groupId>org.hibernate</groupId>
+                <artifactId>hibernate-entitymanager</artifactId>
+                <version>${hibernate.version}</version>
+            </dependency>
 
             <!-- Database libraries -->
             <dependency>
