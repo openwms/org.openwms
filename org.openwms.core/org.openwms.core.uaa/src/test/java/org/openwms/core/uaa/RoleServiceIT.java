@@ -44,7 +44,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.transaction.annotation.Transactional;
 
 /**
- * A RoleServiceTest.
+ * A RoleServiceIT.
  *
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  * @version 0.1
@@ -52,13 +52,13 @@ import org.springframework.transaction.annotation.Transactional;
  */
 @RunWith(SpringRunner.class)
 @Transactional
+@SpringBootTest
 @AutoConfigureTestDatabase
 @AutoConfigureTestEntityManager
 @AutoConfigureDataJpa
-@SpringBootTest
-public class RoleServiceTest {
+public class RoleServiceIT {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(RoleServiceTest.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(RoleServiceIT.class);
     @Autowired
     private RoleService srv;
     @Autowired

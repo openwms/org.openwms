@@ -21,6 +21,7 @@
  */
 package org.openwms.core.uaa;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
@@ -34,24 +35,38 @@ import org.ameba.exception.ServiceLayerException;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
 import org.openwms.core.configuration.UserPreference;
 import org.openwms.core.exception.ExceptionCodes;
 import org.openwms.core.exception.InvalidPasswordException;
-import org.openwms.core.test.AbstractJpaSpringContextTests;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.orm.jpa.AutoConfigureDataJpa;
+import org.springframework.boot.test.autoconfigure.orm.jpa.AutoConfigureTestDatabase;
+import org.springframework.boot.test.autoconfigure.orm.jpa.AutoConfigureTestEntityManager;
+import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.MessageSource;
-import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
- * A UserServiceTest.
+ * A UserServiceIT.
  *
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  * @version $Revision$
  * @since 0.1
  */
-@ContextConfiguration("classpath:/org/openwms/core/service/spring/Test-context.xml")
-public class UserServiceTest extends AbstractJpaSpringContextTests {
+@RunWith(SpringRunner.class)
+@Transactional
+@SpringBootTest
+@AutoConfigureTestDatabase
+@AutoConfigureTestEntityManager
+@AutoConfigureDataJpa
+public class UserServiceIT {
 
+    private static final Logger LOGGER = LoggerFactory.getLogger(UserServiceIT.class);
     private static final String TEST_USER = "TEST";
     private static final String UNKNOWN_USER = "UNKNOWN";
     private static final String KNOWN_USER = "KNOWN";
@@ -59,6 +74,8 @@ public class UserServiceTest extends AbstractJpaSpringContextTests {
     private UserService srv;
     @Autowired
     private MessageSource messageSource;
+    @Autowired
+    private TestEntityManager entityManager;
 
     /**
      * Setting up some test users.
@@ -141,7 +158,7 @@ public class UserServiceTest extends AbstractJpaSpringContextTests {
     }
 
     /**
-     * Test method for {@link UserServiceImpl#remove(User)}.
+     *
      */
     @Test
     public final void testRemove() {
@@ -225,9 +242,10 @@ public class UserServiceTest extends AbstractJpaSpringContextTests {
     /**
      * Test method for {@link UserServiceImpl#findAll()}.
      */
+    public
     @Test
-    public final void testFindAll() {
-        assertEquals("1 User is expected", 1, srv.findAll().size());
+    final void testFindAll() {
+        assertThat(srv.findAll()).hasSize(1);
     }
 
     /**
@@ -274,8 +292,7 @@ public class UserServiceTest extends AbstractJpaSpringContextTests {
     }
 
     /**
-     * Test method for {@link UserServiceImpl#saveUserProfile(User, UserPassword, org.openwms.core.system.usermanagement.UserPreference...)}
-     * .
+     *
      */
     @Test
     public final void testSaveUserProfileUserNull() {
@@ -292,8 +309,7 @@ public class UserServiceTest extends AbstractJpaSpringContextTests {
     }
 
     /**
-     * Test method for {@link UserServiceImpl#saveUserProfile(User, UserPassword, org.openwms.core.system.usermanagement.UserPreference...)}
-     * .
+     *
      */
     @Test
     public final void testSaveUserProfileUserPreferencePasswordNull() {
@@ -302,8 +318,7 @@ public class UserServiceTest extends AbstractJpaSpringContextTests {
     }
 
     /**
-     * Test method for {@link UserServiceImpl#saveUserProfile(User, UserPassword, org.openwms.core.system.usermanagement.UserPreference...)}
-     * .
+     *
      */
     @Test
     public final void testSaveUserProfileUserWithPassword() {
@@ -313,8 +328,7 @@ public class UserServiceTest extends AbstractJpaSpringContextTests {
     }
 
     /**
-     * Test method for {@link UserServiceImpl#saveUserProfile(User, UserPassword, org.openwms.core.system.usermanagement.UserPreference...)}
-     * .
+     *
      */
     @Test
     public final void testSaveUserProfileUserWithInvalidPassword() {
@@ -333,8 +347,7 @@ public class UserServiceTest extends AbstractJpaSpringContextTests {
     }
 
     /**
-     * Test method for {@link UserServiceImpl#saveUserProfile(User, UserPassword, org.openwms.core.system.usermanagement.UserPreference...)}
-     * .
+     *
      */
     @Test
     public final void testSaveUserProfileWithPreference() {
@@ -350,7 +363,7 @@ public class UserServiceTest extends AbstractJpaSpringContextTests {
     }
 
     private User findUser(String userName) {
-        return (User) entityManager.createQuery("select from User u where u.username = :1").setParameter(1, userName)
+        return (User) entityManager.getEntityManager().createQuery("select from User u where u.username = :1").setParameter(1, userName)
                 .getSingleResult();
     }
 }

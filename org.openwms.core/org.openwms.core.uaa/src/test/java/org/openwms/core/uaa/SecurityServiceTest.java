@@ -23,7 +23,6 @@ package org.openwms.core.uaa;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
 import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.anyObject;
 import static org.mockito.Matchers.anyString;
@@ -36,9 +35,11 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
 
-import org.ameba.exception.ServiceLayerException;
+import org.ameba.i18n.Translator;
 import org.junit.Before;
+import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.ExpectedException;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.openwms.core.test.AbstractMockitoTests;
@@ -46,7 +47,7 @@ import org.springframework.context.MessageSource;
 
 /**
  * A SecurityServiceTest.
- * 
+ *
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  * @version $Revision: $
  * @since 0.1
@@ -59,33 +60,34 @@ public class SecurityServiceTest extends AbstractMockitoTests {
     private RoleRepository roleDao;
     @Mock
     private MessageSource messageSource;
+    @Mock
+    private Translator translator;
     @InjectMocks
     private SecurityServiceImpl srv;
+
+    public @Rule ExpectedException thrown = ExpectedException.none();
 
     /**
      * Setting up some test data.
      */
     @Before
     public void onBefore() {
-        when(messageSource.getMessage(anyString(), new Object[] { anyObject() }, any(Locale.class))).thenReturn("");
+        when(messageSource.getMessage(anyString(), new Object[]{anyObject()}, any(Locale.class))).thenReturn("");
     }
 
     /**
-     * Test method for
-     * {@link org.openwms.core.uaa.SecurityServiceImpl#mergeGrants(java.lang.String, java.util.List)}
-     * .
+     * Test to call service with null.
      */
-    @Test(expected = ServiceLayerException.class)
-    public final void testMergeGrantsWithNull() {
+    public
+    @Test
+    final void testMergeGrantsWithNull() {
+        thrown.expect(IllegalArgumentException.class);
         srv.mergeGrants(null, null);
-        fail("Expected to throw an ServiceRuntimeException when calling merge with null argument");
     }
 
     /**
-     * Test method for
-     * {@link org.openwms.core.uaa.SecurityServiceImpl#mergeGrants(java.lang.String, java.util.List)}
-     * .
-     * 
+     * Test method for {@link org.openwms.core.uaa.SecurityServiceImpl#mergeGrants(java.lang.String, java.util.List)} .
+     * <p>
      * Add a new Grant.
      */
     @Test
@@ -115,10 +117,8 @@ public class SecurityServiceTest extends AbstractMockitoTests {
     }
 
     /**
-     * Test method for
-     * {@link org.openwms.core.uaa.SecurityServiceImpl#mergeGrants(java.lang.String, java.util.List)}
-     * .
-     * 
+     * Test method for {@link org.openwms.core.uaa.SecurityServiceImpl#mergeGrants(java.lang.String, java.util.List)} .
+     * <p>
      * Merge existing Grants.
      */
     @Test
@@ -128,14 +128,15 @@ public class SecurityServiceTest extends AbstractMockitoTests {
 
         // preparing mocks
         when(dao.findAllOfModule("TMS%")).thenReturn(createGrants("TMS_NEW"));
-      //  when(dao.merge(testGrant)).thenReturn(testGrant);
+        //  when(dao.merge(testGrant)).thenReturn(testGrant);
+        when(translator.translate(any())).thenReturn("");
 
         // do test
         List<Grant> result = srv.mergeGrants("TMS", createGrants("TMS_NEW"));
 
         // verify mock invocations
         // new Grant should be added...
-    //    verify(dao, never()).merge(testGrant);
+        //    verify(dao, never()).merge(testGrant);
         // verify the new Grant is not in the list of removed Grants...
         verify(dao, never()).delete(Collections.singletonList(testGrant));
 
