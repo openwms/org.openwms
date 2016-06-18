@@ -28,13 +28,16 @@ import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
 import javax.persistence.NoResultException;
+import javax.validation.ConstraintViolationException;
 import java.util.Collection;
 
 import org.ameba.exception.NotFoundException;
 import org.ameba.exception.ServiceLayerException;
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.ExpectedException;
 import org.junit.runner.RunWith;
 import org.openwms.core.configuration.UserPreference;
 import org.openwms.core.exception.ExceptionCodes;
@@ -68,6 +71,8 @@ public class UserServiceIT {
     private MessageSource messageSource;
     @Autowired
     private TestEntityManager entityManager;
+
+    public @Rule ExpectedException thrown = ExpectedException.none();
 
     /**
      * Setting up some test users.
@@ -175,12 +180,8 @@ public class UserServiceIT {
      */
     @Test
     public final void testChangePasswordWithNull() {
-        try {
-            srv.changeUserPassword(null);
-            fail("Should throw an exception when calling with null");
-        } catch (ServiceLayerException sre) {
-            LOGGER.debug("OK: null:" + sre.getMessage());
-        }
+        thrown.expect(ConstraintViolationException.class);
+        srv.changeUserPassword(null);
     }
 
     /**
@@ -224,7 +225,7 @@ public class UserServiceIT {
             srv.changeUserPassword(new UserPassword(new User(KNOWN_USER), "password"));
             fail("Should throw an exception when calling with an invalid password");
         } catch (ServiceLayerException sre) {
-            if (!(sre.getCause() instanceof InvalidPasswordException)) {
+            if (!(sre.getMessageKey().equals(ExceptionCodes.USER_PASSWORD_INVALID))) {
                 fail("Should throw a nested InvalidPasswordException when calling with an invalid password");
             }
             LOGGER.debug("OK: InvalidPasswordException:" + sre.getMessage());

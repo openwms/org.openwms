@@ -26,6 +26,7 @@ import java.util.Set;
 
 import org.junit.Assert;
 import org.junit.Test;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 /**
  * A SystemUserWrapperTest.
@@ -91,7 +92,8 @@ public class SystemUserWrapperTest {
     @Test
     public final void testGetPassword() throws Exception {
         User user = new User(TEST_USER);
-        user.changePassword("PASS");
+        BCryptPasswordEncoder enc = new BCryptPasswordEncoder(15);
+        user.changePassword(enc.encode("PASS"), "PASS", enc);
         SystemUserWrapper suw = new SystemUserWrapper(user);
         Assert.assertEquals("PASS", suw.getPassword());
     }

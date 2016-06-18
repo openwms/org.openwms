@@ -22,6 +22,7 @@
 package org.openwms.core.uaa;
 
 import javax.persistence.EntityNotFoundException;
+import javax.validation.constraints.NotNull;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashSet;
@@ -164,14 +165,12 @@ class UserServiceImpl implements UserService {
      */
     @Override
     @FireAfterTransaction(events = {UserChangedEvent.class})
-    public void changeUserPassword(UserPassword userPassword) {
-        if (null == userPassword) {
-            throw new ServiceLayerException(translator.translate(ExceptionCodes.USER_PASSWORD_SAVE_NOT_BE_NULL), ExceptionCodes.USER_PASSWORD_SAVE_NOT_BE_NULL);
-        }
+    public void changeUserPassword(@NotNull UserPassword userPassword) {
+
         User entity = repository.findByUsername(userPassword.getUser().getUsername()).orElseThrow(() -> new EntityNotFoundException(translator.translate(ExceptionCodes.USER_NOT_EXIST, userPassword.getUser()
                 .getUsername())));
         try {
-            entity.changePassword(enc.encode(userPassword.getPassword()));
+            entity.changePassword(enc.encode(userPassword.getPassword()), userPassword.getPassword(), enc);
             repository.save(entity);
         } catch (InvalidPasswordException ipe) {
             LOGGER.error(ipe.getMessage());
@@ -195,7 +194,7 @@ class UserServiceImpl implements UserService {
 
         if (userPassword != null && StringUtils.hasText(userPassword.getPassword())) {
             try {
-                user.changePassword(enc.encode(userPassword.getPassword()));
+                user.changePassword(enc.encode(userPassword.getPassword()), userPassword.getPassword(), enc);
             } catch (InvalidPasswordException ipe) {
                 LOGGER.error(ipe.getMessage());
                 throw new ServiceLayerException(translator.translate(ExceptionCodes.USER_PASSWORD_INVALID,

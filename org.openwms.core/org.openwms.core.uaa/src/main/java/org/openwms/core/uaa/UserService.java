@@ -21,6 +21,7 @@
  */
 package org.openwms.core.uaa;
 
+import javax.validation.constraints.NotNull;
 import java.util.Optional;
 
 import org.ameba.integration.FindOperations;
@@ -42,7 +43,7 @@ public interface UserService extends FindOperations<User, Long>, SaveOperations<
      *
      * @param userPassword The {@link UserPassword} to change
      */
-    void changeUserPassword(UserPassword userPassword);
+    void changeUserPassword(@NotNull UserPassword userPassword);
 
     /**
      * Attach and save an {@code image} to an {@link User} with {@code id}.

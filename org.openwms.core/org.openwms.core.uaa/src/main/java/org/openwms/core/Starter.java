@@ -15,16 +15,17 @@
  */
 package org.openwms.core;
 
+import org.ameba.annotation.EnableAspects;
 import org.ameba.app.SolutionApp;
 import org.ameba.i18n.AbstractTranslator;
 import org.ameba.i18n.Translator;
 import org.ameba.mapping.BeanMapper;
 import org.ameba.mapping.DozerMapperImpl;
-import org.ameba.system.NestedReloadableResourceBundleMessageSource;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.support.ResourceBundleMessageSource;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.validation.beanvalidation.LocalValidatorFactoryBean;
@@ -38,6 +39,7 @@ import org.springframework.validation.beanvalidation.MethodValidationPostProcess
  * @since 1.0
  */
 @SpringBootApplication(scanBasePackageClasses = {Starter.class, SolutionApp.class})
+@EnableAspects
 public class Starter {
 
     public
@@ -60,7 +62,7 @@ public class Starter {
     public
     @Bean
     MessageSource messageSource() {
-        NestedReloadableResourceBundleMessageSource nrrbm = new NestedReloadableResourceBundleMessageSource();
+        ResourceBundleMessageSource nrrbm = new ResourceBundleMessageSource();
         nrrbm.setBasename("i18n");
         return nrrbm;
     }

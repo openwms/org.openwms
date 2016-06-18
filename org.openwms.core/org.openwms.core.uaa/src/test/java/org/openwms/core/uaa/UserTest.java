@@ -33,6 +33,7 @@ import org.junit.rules.ExpectedException;
 import org.openwms.core.exception.InvalidPasswordException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 /**
  * An UserTest.
@@ -122,13 +123,15 @@ public class UserTest {
     @Test
     final void testPasswordHistory() {
         User u1 = new User(TEST_USER1);
+        BCryptPasswordEncoder enc = new BCryptPasswordEncoder(15);
+
         for (int i = 0; i <= User.NUMBER_STORED_PASSWORDS + 5; i++) {
             try {
                 if (i <= User.NUMBER_STORED_PASSWORDS) {
-                    u1.changePassword(String.valueOf(i));
+                    u1.changePassword(enc.encode(String.valueOf(i)), String.valueOf(i), enc);
                 } else {
                     LOGGER.debug("Number of password history exceeded, resetting to:0");
-                    u1.changePassword("0");
+                    u1.changePassword(enc.encode("0"), "0", enc);
                 }
             } catch (InvalidPasswordException e) {
                 if (i <= User.NUMBER_STORED_PASSWORDS) {
@@ -136,7 +139,7 @@ public class UserTest {
                 } else {
                     LOGGER.debug("OK: Exception because password is already in the list, set password to:" + i);
                     try {
-                        u1.changePassword(String.valueOf(i));
+                        u1.changePassword(enc.encode(String.valueOf(i)), String.valueOf(i), enc);
                     } catch (InvalidPasswordException ex) {
                         LOGGER.debug("Error" + ex.getMessage());
                     }
