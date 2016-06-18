@@ -23,7 +23,9 @@ package org.openwms.core.uaa;
 
 import javax.persistence.EntityNotFoundException;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Optional;
 
 import org.ameba.annotation.TxService;
@@ -213,18 +215,23 @@ class UserServiceImpl implements UserService {
      */
     @Override
     public Collection<User> findAll() {
-        return null;
+        List<User> users = repository.findAll();
+        return users == null ? Collections.emptyList() : users;
     }
 
     /**
      * Find an entity instance by the given technical key {@code id},
      *
-     * @param aLong The technical key
+     * @param pk The technical key
      * @return The instance
      * @throws NotFoundException may be thrown if no entity found
      */
     @Override
-    public User findById(Long aLong) {
-        return null;
+    public User findById(Long pk) {
+        User user = repository.findOne(pk);
+        if (null == user) {
+            throw NotFoundException.createNotFound(String.format("No User with pk %s found", pk));
+        }
+        return user;
     }
 }

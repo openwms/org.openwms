@@ -39,17 +39,13 @@ import org.junit.runner.RunWith;
 import org.openwms.core.configuration.UserPreference;
 import org.openwms.core.exception.ExceptionCodes;
 import org.openwms.core.exception.InvalidPasswordException;
+import org.openwms.core.test.IntegrationTest;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.orm.jpa.AutoConfigureDataJpa;
-import org.springframework.boot.test.autoconfigure.orm.jpa.AutoConfigureTestDatabase;
-import org.springframework.boot.test.autoconfigure.orm.jpa.AutoConfigureTestEntityManager;
 import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
-import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.MessageSource;
 import org.springframework.test.context.junit4.SpringRunner;
-import org.springframework.transaction.annotation.Transactional;
 
 /**
  * A UserServiceIT.
@@ -59,11 +55,7 @@ import org.springframework.transaction.annotation.Transactional;
  * @since 0.1
  */
 @RunWith(SpringRunner.class)
-@Transactional
-@SpringBootTest
-@AutoConfigureTestDatabase
-@AutoConfigureTestEntityManager
-@AutoConfigureDataJpa
+@IntegrationTest
 public class UserServiceIT {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(UserServiceIT.class);

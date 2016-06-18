@@ -37,10 +37,10 @@ import org.mockito.Mock;
 import org.openwms.core.event.UserChangedEvent;
 import org.openwms.core.test.AbstractMockitoTests;
 import org.springframework.security.authentication.dao.SaltSource;
-import org.springframework.security.authentication.encoding.PasswordEncoder;
 import org.springframework.security.core.userdetails.UserCache;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 /**
  * A SecurityContextUserServiceImplTest.
@@ -105,7 +105,7 @@ public class SecurityContextUserServiceImplTest extends AbstractMockitoTests {
         when(userCache.getUserFromCache(SystemUser.SYSTEM_USERNAME)).thenReturn(null);
         when(userService.createSystemUser()).thenReturn(su);
         when(saltSource.getSalt(suw)).thenReturn(SystemUser.SYSTEM_USERNAME);
-        when(encoder.encodePassword(SystemUser.SYSTEM_USERNAME, saltSource)).thenReturn(SystemUser.SYSTEM_USERNAME);
+        when(encoder.encode(SystemUser.SYSTEM_USERNAME)).thenReturn(SystemUser.SYSTEM_USERNAME);
         UserDetails cachedUser = srv.loadUserByUsername(SystemUser.SYSTEM_USERNAME);
 
         verify(userService).createSystemUser();

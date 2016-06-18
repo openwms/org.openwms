@@ -33,17 +33,12 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
 import org.junit.runner.RunWith;
+import org.openwms.core.test.IntegrationTest;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.orm.jpa.AutoConfigureDataJpa;
-import org.springframework.boot.test.autoconfigure.orm.jpa.AutoConfigureTestDatabase;
-import org.springframework.boot.test.autoconfigure.orm.jpa.AutoConfigureTestEntityManager;
 import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.context.annotation.EnableAspectJAutoProxy;
 import org.springframework.test.context.junit4.SpringRunner;
-import org.springframework.transaction.annotation.Transactional;
 
 /**
  * A RoleServiceIT.
@@ -53,12 +48,7 @@ import org.springframework.transaction.annotation.Transactional;
  * @since 0.1
  */
 @RunWith(SpringRunner.class)
-@Transactional
-@SpringBootTest
-@EnableAspectJAutoProxy
-@AutoConfigureTestDatabase
-@AutoConfigureTestEntityManager
-@AutoConfigureDataJpa
+@IntegrationTest
 public class RoleServiceIT {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(RoleServiceIT.class);
