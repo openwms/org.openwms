@@ -27,6 +27,8 @@ import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.validation.beanvalidation.LocalValidatorFactoryBean;
+import org.springframework.validation.beanvalidation.MethodValidationPostProcessor;
 
 /**
  * A Starter.
@@ -67,6 +69,14 @@ public class Starter {
     @Bean
     BeanMapper beanMapper() {
         return new DozerMapperImpl("META-INF/dozer/catalog-bean-mappings.xml");
+    }
+
+    public
+    @Bean
+    MethodValidationPostProcessor methodValidationPostProcessor(LocalValidatorFactoryBean validatorFactoryBean) {
+        MethodValidationPostProcessor mvpp = new MethodValidationPostProcessor();
+        mvpp.setValidator(validatorFactoryBean);
+        return mvpp;
     }
 
     /**
