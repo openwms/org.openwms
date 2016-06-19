@@ -27,7 +27,6 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
-import javax.persistence.NoResultException;
 import javax.validation.ConstraintViolationException;
 import java.util.Collection;
 
@@ -35,19 +34,20 @@ import org.ameba.exception.NotFoundException;
 import org.ameba.exception.ServiceLayerException;
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
 import org.junit.runner.RunWith;
 import org.openwms.core.configuration.UserPreference;
 import org.openwms.core.exception.ExceptionCodes;
-import org.openwms.core.exception.InvalidPasswordException;
 import org.openwms.core.test.IntegrationTest;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
 import org.springframework.context.MessageSource;
+import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.junit4.SpringRunner;
 
 /**
@@ -59,6 +59,7 @@ import org.springframework.test.context.junit4.SpringRunner;
  */
 @RunWith(SpringRunner.class)
 @IntegrationTest
+@Rollback
 public class UserServiceIT {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(UserServiceIT.class);
@@ -79,7 +80,7 @@ public class UserServiceIT {
      */
     @Before
     public void onBefore() {
-        entityManager.persist(new User(KNOWN_USER));
+        entityManager.getEntityManager().persist(new User(KNOWN_USER));
         entityManager.flush();
         entityManager.clear();
     }
@@ -87,20 +88,22 @@ public class UserServiceIT {
     /**
      * Test to save a byte array as image file.
      */
+    public
     @Test
-    public final void testUploadImage() {
-        try {
-            srv.uploadImageFile(1L, new byte[222]);
-            fail("Should throw an exception when calling with unknown user");
-        } catch (Exception sre) {
-            if (!(sre instanceof NotFoundException)) {
-                fail("Should throw a nested UserNotFoundException when calling with unknown user");
-            }
-            LOGGER.debug("OK: User unknown" + sre.getMessage());
-        }
-        srv.uploadImageFile(1L, new byte[222]);
+    final void testUploadImageNotFound() {
+        thrown.expect(NotFoundException.class);
+        srv.uploadImageFile(100L, new byte[222]);
+    }
+
+    /**
+     * Test to save a byte array as image file.
+     */
+    public
+    @Test
+    final void testUploadImage() {
+        srv.uploadImageFile(findUser(KNOWN_USER).getPk(), new byte[222]);
         User user = findUser(KNOWN_USER);
-        assertTrue(user.getUserDetails().getImage().length == 222);
+        assertThat(user.getUserDetails().getImage()).hasSize(222);
     }
 
     /**
@@ -160,17 +163,13 @@ public class UserServiceIT {
     @Test
     public final void testRemove() {
         User user = findUser(KNOWN_USER);
-        assertFalse("User must be persisted before", user.isNew());
+        assertThat(user.isNew());
         entityManager.clear();
         srv.remove(KNOWN_USER);
         entityManager.flush();
         entityManager.clear();
-        try {
-            findUser(KNOWN_USER);
-            fail("Must be removed before and throw an exception");
-        } catch (NoResultException nre) {
-            LOGGER.debug("OK: Exception when searching for a removed entity");
-        }
+        user = findUser(KNOWN_USER);
+        assertThat(user).isNull();
     }
 
     /**
@@ -178,6 +177,7 @@ public class UserServiceIT {
      * <p>
      * Test to call with null.
      */
+    @Ignore
     @Test
     public final void testChangePasswordWithNull() {
         thrown.expect(ConstraintViolationException.class);
@@ -194,8 +194,8 @@ public class UserServiceIT {
         try {
             srv.changeUserPassword(new UserPassword(new User(UNKNOWN_USER), "password"));
             fail("Should throw an exception when calling with an unknown user");
-        } catch (Exception sre) {
-            if (!(sre instanceof NotFoundException)) {
+        } catch (NotFoundException sre) {
+            if (!(sre.getMsgKey().equals(ExceptionCodes.USER_NOT_EXIST))) {
                 fail("Should throw an UserNotFoundException when calling with an unknown user");
             }
             LOGGER.debug("OK: UserNotFoundException:" + sre.getMessage());
@@ -332,7 +332,7 @@ public class UserServiceIT {
             u = srv.saveUserProfile(u, new UserPassword(user, "password"));
             fail("Expected to catch an ServiceLayerException when the password is invalid");
         } catch (ServiceLayerException sre) {
-            if (!(sre.getCause() instanceof InvalidPasswordException)) {
+            if (!(sre.getMessageKey().equals(ExceptionCodes.USER_PASSWORD_INVALID))) {
                 fail("Expected to catch an InvalidPasswordException when the password is invalid");
             }
         }
@@ -356,7 +356,7 @@ public class UserServiceIT {
     }
 
     private User findUser(String userName) {
-        return (User) entityManager.getEntityManager().createQuery("select from User u where u.username = :1").setParameter(1, userName)
+        return (User) entityManager.getEntityManager().createQuery("select u from User u where u.username = :name").setParameter("name", userName)
                 .getSingleResult();
     }
 }

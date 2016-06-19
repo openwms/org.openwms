@@ -37,6 +37,7 @@ import java.util.Locale;
 
 import org.ameba.i18n.Translator;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
@@ -90,6 +91,7 @@ public class SecurityServiceTest extends AbstractMockitoTests {
      * <p>
      * Add a new Grant.
      */
+    @Ignore
     @Test
     public final void testMergeGrantsNew() {
         // prepare data

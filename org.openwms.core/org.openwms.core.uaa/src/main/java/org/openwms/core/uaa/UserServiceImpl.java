@@ -167,8 +167,8 @@ class UserServiceImpl implements UserService {
     @FireAfterTransaction(events = {UserChangedEvent.class})
     public void changeUserPassword(@NotNull UserPassword userPassword) {
 
-        User entity = repository.findByUsername(userPassword.getUser().getUsername()).orElseThrow(() -> new EntityNotFoundException(translator.translate(ExceptionCodes.USER_NOT_EXIST, userPassword.getUser()
-                .getUsername())));
+        User entity = repository.findByUsername(userPassword.getUser().getUsername()).orElseThrow(() -> new NotFoundException(translator.translate(ExceptionCodes.USER_NOT_EXIST, userPassword.getUser()
+                .getUsername()), ExceptionCodes.USER_NOT_EXIST));
         try {
             entity.changePassword(enc.encode(userPassword.getPassword()), userPassword.getPassword(), enc);
             repository.save(entity);

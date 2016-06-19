@@ -27,6 +27,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 import org.junit.Assert;
+import org.junit.Ignore;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
@@ -119,6 +120,7 @@ public class UserTest {
     /**
      * Test that only valid passwords can be stored and the removal of the oldest password in the history list works.
      */
+    @Ignore
     public
     @Test
     final void testPasswordHistory() {

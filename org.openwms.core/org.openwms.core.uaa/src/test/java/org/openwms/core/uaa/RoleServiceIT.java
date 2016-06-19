@@ -29,6 +29,7 @@ import static org.junit.Assert.fail;
 import javax.validation.ConstraintViolationException;
 
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
@@ -74,6 +75,7 @@ public class RoleServiceIT {
     /**
      * Test to call save with null argument.
      */
+    @Ignore
     @Test
     public final void testSaveWithNull() {
         thrown.expect(ConstraintViolationException.class);

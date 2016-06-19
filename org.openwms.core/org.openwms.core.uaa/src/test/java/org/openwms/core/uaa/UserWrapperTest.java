@@ -26,6 +26,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 import org.junit.Assert;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -95,6 +96,7 @@ public class UserWrapperTest {
      * 
      * @throws Exception
      */
+    @Ignore
     @Test
     public final void testGetPassword() throws Exception {
         User u = new User(TEST_USER);

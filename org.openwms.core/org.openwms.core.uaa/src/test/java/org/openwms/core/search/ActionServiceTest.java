@@ -27,6 +27,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 
 import org.junit.Assert;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
@@ -100,6 +101,7 @@ public class ActionServiceTest extends AbstractMockitoTests {
      * {@link org.openwms.core.service.spring.search.ActionServiceImpl#save(org.openwms.core.system.usermanagement.User, java.util.Collection)}
      * .
      */
+    @Ignore
     @Test
     public final void testSave() {
         Collection<Action> actions = new ArrayList<Action>();
