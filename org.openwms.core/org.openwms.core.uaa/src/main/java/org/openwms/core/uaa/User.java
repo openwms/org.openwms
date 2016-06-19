@@ -49,12 +49,13 @@ import org.ameba.integration.jpa.ApplicationEntity;
 import org.openwms.core.exception.InvalidPasswordException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.util.Assert;
 
 /**
- * An User represents a human user of the system. Typically an User is assigned to one or more {@code Roles} to define security
- * constraints. Users can have their own configuration settings in form of {@code UserPreferences} and certain user details,
- * encapsulated in an {@code UserDetails} object that tend to be extended by projects.
+ * An User represents a human user of the system. Typically an User is assigned to one or more {@code Roles} to define security constraints.
+ * Users can have their own configuration settings in form of {@code UserPreferences} and certain user details, encapsulated in an {@code
+ * UserDetails} object that tend to be extended by projects.
  *
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  * @version 0.2
@@ -133,6 +134,7 @@ public class User extends ApplicationEntity implements Serializable {
     public static final short NUMBER_STORED_PASSWORDS = 3;
 
     /* ----------------------------- constructors ------------------- */
+
     /**
      * Accessed by persistence provider.
      */
@@ -170,6 +172,7 @@ public class User extends ApplicationEntity implements Serializable {
     }
 
     /* ----------------------------- methods ------------------- */
+
     /**
      * After load, the saved password is copied to the transient one. The transient one can be overridden by the application to force a
      * password change.
@@ -213,8 +216,7 @@ public class User extends ApplicationEntity implements Serializable {
     /**
      * Change the authentication method of the User.
      *
-     * @param externalUser {@literal true} if the User was authenticated by an external system, otherwise
-     * {@literal false}.
+     * @param externalUser {@literal true} if the User was authenticated by an external system, otherwise {@literal false}.
      */
     public void setExternalUser(boolean externalUser) {
         extern = externalUser;
@@ -259,23 +261,19 @@ public class User extends ApplicationEntity implements Serializable {
     /**
      * Checks if the new password is a valid and change the password of this User.
      *
-     * @param password The new password of this User
+     * @param encodedPassword The new encoded password of this User
      * @throws InvalidPasswordException in case changing the password is not allowed or the new password is not valid
      */
-    public void changePassword(String password) throws InvalidPasswordException {
-        // FIXME [scherrer] : Setting the same password should fail
-        if (persistedPassword != null && persistedPassword.equals(password)) {
+    public void changePassword(String encodedPassword, String rawPassword, PasswordEncoder encoder) throws InvalidPasswordException {
+        if (persistedPassword != null && encoder.matches(rawPassword ,persistedPassword)) {
             LOGGER.debug("Trying to set the new password equals to the current password");
             return;
         }
-        if (isPasswordValid(password)) {
-            storeOldPassword(this.password);
-            persistedPassword = password;
-            this.password = password;
-            lastPasswordChange = new Date();
-        } else {
-            throw new InvalidPasswordException("Password is not confirm with defined rules");
-        }
+        validateAgainstPasswordHistory(rawPassword, encoder);
+        storeOldPassword(this.password);
+        persistedPassword = encodedPassword;
+        this.password = encodedPassword;
+        lastPasswordChange = new Date();
     }
 
     /**
@@ -290,11 +288,15 @@ public class User extends ApplicationEntity implements Serializable {
     /**
      * Check whether the new password is in the history of former passwords.
      *
-     * @param pwd The password to verify
+     * @param rawPassword The password to verify
      * @return {@literal true} if the password is valid, otherwise {@literal false}
      */
-    protected boolean isPasswordValid(String pwd) {
-        return !passwords.contains(new UserPassword(this, pwd));
+    protected void validateAgainstPasswordHistory(String rawPassword, PasswordEncoder encoder) throws InvalidPasswordException {
+        for(UserPassword up : passwords) {
+            if (encoder.matches(rawPassword, up.getPassword())) {
+                throw new InvalidPasswordException("Password is not confirm with defined rules");
+            }
+        }
     }
 
     private void storeOldPassword(String oldPassword) {

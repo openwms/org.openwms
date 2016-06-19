@@ -39,17 +39,19 @@ class ModuleConfiguration {
     @Autowired
     private ModuleProperties props;
 
-    public @Bean MethodValidationPostProcessor methodValidationPostProcessor(LocalValidatorFactoryBean validatorFactoryBean) {
+    public
+    @Bean
+    MethodValidationPostProcessor methodValidationPostProcessor(LocalValidatorFactoryBean validatorFactoryBean) {
         MethodValidationPostProcessor mvpp = new MethodValidationPostProcessor();
         mvpp.setValidator(validatorFactoryBean);
         return mvpp;
     }
 
-    public @Bean
+    public
+    @Bean
     Unmarshaller unmarshaller() {
         Jaxb2Marshaller um = new Jaxb2Marshaller();
         um.setContextPath("org.openwms.core.configuration.file");
         return um;
     }
-
 }

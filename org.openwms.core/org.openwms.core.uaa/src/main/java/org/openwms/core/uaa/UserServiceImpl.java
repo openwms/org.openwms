@@ -22,8 +22,11 @@
 package org.openwms.core.uaa;
 
 import javax.persistence.EntityNotFoundException;
+import javax.validation.constraints.NotNull;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Optional;
 
 import org.ameba.annotation.TxService;
@@ -45,6 +48,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
 import org.springframework.util.StringUtils;
+import org.springframework.validation.annotation.Validated;
 
 /**
  * An UserServiceImpl is a Spring supported transactional implementation of a general {@link UserService}. Using Spring 2 annotation support
@@ -56,8 +60,9 @@ import org.springframework.util.StringUtils;
  * @see UserRepository
  * @since 0.1
  */
+@Validated
 @TxService
-public class UserServiceImpl implements UserService {
+class UserServiceImpl implements UserService {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(UserServiceImpl.class);
     @Autowired
@@ -160,14 +165,12 @@ public class UserServiceImpl implements UserService {
      */
     @Override
     @FireAfterTransaction(events = {UserChangedEvent.class})
-    public void changeUserPassword(UserPassword userPassword) {
-        if (null == userPassword) {
-            throw new ServiceLayerException(translator.translate(ExceptionCodes.USER_PASSWORD_SAVE_NOT_BE_NULL), ExceptionCodes.USER_PASSWORD_SAVE_NOT_BE_NULL);
-        }
-        User entity = repository.findByUsername(userPassword.getUser().getUsername()).orElseThrow(() -> new EntityNotFoundException(translator.translate(ExceptionCodes.USER_NOT_EXIST, userPassword.getUser()
-                .getUsername())));
+    public void changeUserPassword(@NotNull UserPassword userPassword) {
+
+        User entity = repository.findByUsername(userPassword.getUser().getUsername()).orElseThrow(() -> new NotFoundException(translator.translate(ExceptionCodes.USER_NOT_EXIST, userPassword.getUser()
+                .getUsername()), ExceptionCodes.USER_NOT_EXIST));
         try {
-            entity.changePassword(enc.encode(userPassword.getPassword()));
+            entity.changePassword(enc.encode(userPassword.getPassword()), userPassword.getPassword(), enc);
             repository.save(entity);
         } catch (InvalidPasswordException ipe) {
             LOGGER.error(ipe.getMessage());
@@ -191,7 +194,7 @@ public class UserServiceImpl implements UserService {
 
         if (userPassword != null && StringUtils.hasText(userPassword.getPassword())) {
             try {
-                user.changePassword(enc.encode(userPassword.getPassword()));
+                user.changePassword(enc.encode(userPassword.getPassword()), userPassword.getPassword(), enc);
             } catch (InvalidPasswordException ipe) {
                 LOGGER.error(ipe.getMessage());
                 throw new ServiceLayerException(translator.translate(ExceptionCodes.USER_PASSWORD_INVALID,
@@ -211,18 +214,23 @@ public class UserServiceImpl implements UserService {
      */
     @Override
     public Collection<User> findAll() {
-        return null;
+        List<User> users = repository.findAll();
+        return users == null ? Collections.emptyList() : users;
     }
 
     /**
      * Find an entity instance by the given technical key {@code id},
      *
-     * @param aLong The technical key
+     * @param pk The technical key
      * @return The instance
      * @throws NotFoundException may be thrown if no entity found
      */
     @Override
-    public User findById(Long aLong) {
-        return null;
+    public User findById(Long pk) {
+        User user = repository.findOne(pk);
+        if (null == user) {
+            throw NotFoundException.createNotFound(String.format("No User with pk %s found", pk));
+        }
+        return user;
     }
 }

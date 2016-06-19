@@ -21,37 +21,48 @@
  */
 package org.openwms.core.uaa;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
-import javax.persistence.NoResultException;
+import javax.validation.ConstraintViolationException;
 import java.util.Collection;
 
 import org.ameba.exception.NotFoundException;
 import org.ameba.exception.ServiceLayerException;
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.Ignore;
+import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.ExpectedException;
+import org.junit.runner.RunWith;
 import org.openwms.core.configuration.UserPreference;
 import org.openwms.core.exception.ExceptionCodes;
-import org.openwms.core.exception.InvalidPasswordException;
-import org.openwms.core.test.AbstractJpaSpringContextTests;
+import org.openwms.core.test.IntegrationTest;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
 import org.springframework.context.MessageSource;
-import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.annotation.Rollback;
+import org.springframework.test.context.junit4.SpringRunner;
 
 /**
- * A UserServiceTest.
+ * A UserServiceIT.
  *
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  * @version $Revision$
  * @since 0.1
  */
-@ContextConfiguration("classpath:/org/openwms/core/service/spring/Test-context.xml")
-public class UserServiceTest extends AbstractJpaSpringContextTests {
+@RunWith(SpringRunner.class)
+@IntegrationTest
+@Rollback
+public class UserServiceIT {
 
+    private static final Logger LOGGER = LoggerFactory.getLogger(UserServiceIT.class);
     private static final String TEST_USER = "TEST";
     private static final String UNKNOWN_USER = "UNKNOWN";
     private static final String KNOWN_USER = "KNOWN";
@@ -59,13 +70,17 @@ public class UserServiceTest extends AbstractJpaSpringContextTests {
     private UserService srv;
     @Autowired
     private MessageSource messageSource;
+    @Autowired
+    private TestEntityManager entityManager;
+
+    public @Rule ExpectedException thrown = ExpectedException.none();
 
     /**
      * Setting up some test users.
      */
     @Before
     public void onBefore() {
-        entityManager.persist(new User(KNOWN_USER));
+        entityManager.getEntityManager().persist(new User(KNOWN_USER));
         entityManager.flush();
         entityManager.clear();
     }
@@ -73,20 +88,22 @@ public class UserServiceTest extends AbstractJpaSpringContextTests {
     /**
      * Test to save a byte array as image file.
      */
+    public
     @Test
-    public final void testUploadImage() {
-        try {
-            srv.uploadImageFile(1L, new byte[222]);
-            fail("Should throw an exception when calling with unknown user");
-        } catch (Exception sre) {
-            if (!(sre instanceof NotFoundException)) {
-                fail("Should throw a nested UserNotFoundException when calling with unknown user");
-            }
-            LOGGER.debug("OK: User unknown" + sre.getMessage());
-        }
-        srv.uploadImageFile(1L, new byte[222]);
+    final void testUploadImageNotFound() {
+        thrown.expect(NotFoundException.class);
+        srv.uploadImageFile(100L, new byte[222]);
+    }
+
+    /**
+     * Test to save a byte array as image file.
+     */
+    public
+    @Test
+    final void testUploadImage() {
+        srv.uploadImageFile(findUser(KNOWN_USER).getPk(), new byte[222]);
         User user = findUser(KNOWN_USER);
-        assertTrue(user.getUserDetails().getImage().length == 222);
+        assertThat(user.getUserDetails().getImage()).hasSize(222);
     }
 
     /**
@@ -141,22 +158,18 @@ public class UserServiceTest extends AbstractJpaSpringContextTests {
     }
 
     /**
-     * Test method for {@link UserServiceImpl#remove(User)}.
+     *
      */
     @Test
     public final void testRemove() {
         User user = findUser(KNOWN_USER);
-        assertFalse("User must be persisted before", user.isNew());
+        assertThat(user.isNew());
         entityManager.clear();
         srv.remove(KNOWN_USER);
         entityManager.flush();
         entityManager.clear();
-        try {
-            findUser(KNOWN_USER);
-            fail("Must be removed before and throw an exception");
-        } catch (NoResultException nre) {
-            LOGGER.debug("OK: Exception when searching for a removed entity");
-        }
+        user = findUser(KNOWN_USER);
+        assertThat(user).isNull();
     }
 
     /**
@@ -164,14 +177,11 @@ public class UserServiceTest extends AbstractJpaSpringContextTests {
      * <p>
      * Test to call with null.
      */
+    @Ignore
     @Test
     public final void testChangePasswordWithNull() {
-        try {
-            srv.changeUserPassword(null);
-            fail("Should throw an exception when calling with null");
-        } catch (ServiceLayerException sre) {
-            LOGGER.debug("OK: null:" + sre.getMessage());
-        }
+        thrown.expect(ConstraintViolationException.class);
+        srv.changeUserPassword(null);
     }
 
     /**
@@ -184,8 +194,8 @@ public class UserServiceTest extends AbstractJpaSpringContextTests {
         try {
             srv.changeUserPassword(new UserPassword(new User(UNKNOWN_USER), "password"));
             fail("Should throw an exception when calling with an unknown user");
-        } catch (Exception sre) {
-            if (!(sre instanceof NotFoundException)) {
+        } catch (NotFoundException sre) {
+            if (!(sre.getMsgKey().equals(ExceptionCodes.USER_NOT_EXIST))) {
                 fail("Should throw an UserNotFoundException when calling with an unknown user");
             }
             LOGGER.debug("OK: UserNotFoundException:" + sre.getMessage());
@@ -215,7 +225,7 @@ public class UserServiceTest extends AbstractJpaSpringContextTests {
             srv.changeUserPassword(new UserPassword(new User(KNOWN_USER), "password"));
             fail("Should throw an exception when calling with an invalid password");
         } catch (ServiceLayerException sre) {
-            if (!(sre.getCause() instanceof InvalidPasswordException)) {
+            if (!(sre.getMessageKey().equals(ExceptionCodes.USER_PASSWORD_INVALID))) {
                 fail("Should throw a nested InvalidPasswordException when calling with an invalid password");
             }
             LOGGER.debug("OK: InvalidPasswordException:" + sre.getMessage());
@@ -225,9 +235,10 @@ public class UserServiceTest extends AbstractJpaSpringContextTests {
     /**
      * Test method for {@link UserServiceImpl#findAll()}.
      */
+    public
     @Test
-    public final void testFindAll() {
-        assertEquals("1 User is expected", 1, srv.findAll().size());
+    final void testFindAll() {
+        assertThat(srv.findAll()).hasSize(1);
     }
 
     /**
@@ -274,8 +285,7 @@ public class UserServiceTest extends AbstractJpaSpringContextTests {
     }
 
     /**
-     * Test method for {@link UserServiceImpl#saveUserProfile(User, UserPassword, org.openwms.core.system.usermanagement.UserPreference...)}
-     * .
+     *
      */
     @Test
     public final void testSaveUserProfileUserNull() {
@@ -292,8 +302,7 @@ public class UserServiceTest extends AbstractJpaSpringContextTests {
     }
 
     /**
-     * Test method for {@link UserServiceImpl#saveUserProfile(User, UserPassword, org.openwms.core.system.usermanagement.UserPreference...)}
-     * .
+     *
      */
     @Test
     public final void testSaveUserProfileUserPreferencePasswordNull() {
@@ -302,8 +311,7 @@ public class UserServiceTest extends AbstractJpaSpringContextTests {
     }
 
     /**
-     * Test method for {@link UserServiceImpl#saveUserProfile(User, UserPassword, org.openwms.core.system.usermanagement.UserPreference...)}
-     * .
+     *
      */
     @Test
     public final void testSaveUserProfileUserWithPassword() {
@@ -313,8 +321,7 @@ public class UserServiceTest extends AbstractJpaSpringContextTests {
     }
 
     /**
-     * Test method for {@link UserServiceImpl#saveUserProfile(User, UserPassword, org.openwms.core.system.usermanagement.UserPreference...)}
-     * .
+     *
      */
     @Test
     public final void testSaveUserProfileUserWithInvalidPassword() {
@@ -325,7 +332,7 @@ public class UserServiceTest extends AbstractJpaSpringContextTests {
             u = srv.saveUserProfile(u, new UserPassword(user, "password"));
             fail("Expected to catch an ServiceLayerException when the password is invalid");
         } catch (ServiceLayerException sre) {
-            if (!(sre.getCause() instanceof InvalidPasswordException)) {
+            if (!(sre.getMessageKey().equals(ExceptionCodes.USER_PASSWORD_INVALID))) {
                 fail("Expected to catch an InvalidPasswordException when the password is invalid");
             }
         }
@@ -333,8 +340,7 @@ public class UserServiceTest extends AbstractJpaSpringContextTests {
     }
 
     /**
-     * Test method for {@link UserServiceImpl#saveUserProfile(User, UserPassword, org.openwms.core.system.usermanagement.UserPreference...)}
-     * .
+     *
      */
     @Test
     public final void testSaveUserProfileWithPreference() {
@@ -350,7 +356,7 @@ public class UserServiceTest extends AbstractJpaSpringContextTests {
     }
 
     private User findUser(String userName) {
-        return (User) entityManager.createQuery("select from User u where u.username = :1").setParameter(1, userName)
+        return (User) entityManager.getEntityManager().createQuery("select u from User u where u.username = :name").setParameter("name", userName)
                 .getSingleResult();
     }
 }

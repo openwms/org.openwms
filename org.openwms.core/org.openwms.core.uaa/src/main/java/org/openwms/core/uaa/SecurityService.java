@@ -21,6 +21,7 @@
  */
 package org.openwms.core.uaa;
 
+import javax.validation.constraints.NotNull;
 import java.util.List;
 
 /**
@@ -39,5 +40,5 @@ public interface SecurityService {
      * @param grants The list of {@link Grant}s to merge
      * @return All existing {@link Grant}s
      */
-    List<Grant> mergeGrants(String moduleName, List<Grant> grants);
+    List<Grant> mergeGrants(@NotNull String moduleName, List<Grant> grants);
 }
