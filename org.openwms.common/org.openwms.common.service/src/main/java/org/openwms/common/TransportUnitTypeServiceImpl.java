@@ -24,33 +24,26 @@ package org.openwms.common;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.openwms.core.integration.GenericDao;
+import org.ameba.annotation.TxService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 /**
  * A TransportUnitTypeServiceImpl.
- * 
+ *
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  * @version $Revision: $
  * @since 0.2
  */
-@Transactional
-@Service(TransportUnitTypeServiceImpl.COMPONENT_NAME)
-public class TransportUnitTypeServiceImpl implements TransportUnitTypeService {
+@TxService
+class TransportUnitTypeServiceImpl implements TransportUnitTypeService {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(TransportUnitTypeServiceImpl.class);
 
-    /** Springs component name. */
-    public static final String COMPONENT_NAME = "transportUnitTypeService";
-
     @Autowired
-    @Qualifier("transportUnitTypeDao")
-    private GenericDao<TransportUnitType, Long> transportUnitTypeDao;
+    private TransportUnitTypeDao transportUnitTypeDao;
 
     /**
      * {@inheritDoc}
@@ -66,7 +59,7 @@ public class TransportUnitTypeServiceImpl implements TransportUnitTypeService {
      */
     @Override
     public TransportUnitType create(TransportUnitType transportUnitType) {
-        transportUnitTypeDao.persist(transportUnitType);
+        transportUnitTypeDao.save(transportUnitType);
         return transportUnitTypeDao.save(transportUnitType);
     }
 
@@ -76,8 +69,10 @@ public class TransportUnitTypeServiceImpl implements TransportUnitTypeService {
     @Override
     public void deleteType(TransportUnitType... transportUnitTypes) {
         for (TransportUnitType transportUnitType : transportUnitTypes) {
-            TransportUnitType tut = transportUnitTypeDao.findByUniqueId(transportUnitType.getType());
-            transportUnitTypeDao.remove(tut);
+            TransportUnitType tut = transportUnitTypeDao.findByType(transportUnitType.getType()).get();
+            if (tut != null) {
+                transportUnitTypeDao.delete(tut);
+            }
         }
     }
 
@@ -97,7 +92,7 @@ public class TransportUnitTypeServiceImpl implements TransportUnitTypeService {
     @Override
     public TransportUnitType updateRules(String type, List<LocationType> newAssigned, List<LocationType> newNotAssigned) {
 
-        TransportUnitType tut = transportUnitTypeDao.findByUniqueId(type);
+        TransportUnitType tut = transportUnitTypeDao.findByType(type).get();
         boolean found = false;
         if (newAssigned != null && !newAssigned.isEmpty()) {
             for (LocationType locationType : newAssigned) {
@@ -133,7 +128,7 @@ public class TransportUnitTypeServiceImpl implements TransportUnitTypeService {
      */
     @Override
     public List<Rule> loadRules(String transportUnitType) {
-        TransportUnitType type = transportUnitTypeDao.findByUniqueId(transportUnitType);
+        TransportUnitType type = transportUnitTypeDao.findByType(transportUnitType).get();
         List<Rule> rules = new ArrayList<Rule>();
         if (type != null) {
             LOGGER.debug("Found type " + type);

@@ -28,7 +28,6 @@ import java.util.List;
 
 import org.ameba.exception.ServiceLayerException;
 import org.openwms.common.values.Barcode;
-import org.openwms.core.integration.GenericDao;
 import org.openwms.core.listener.OnRemovalListener;
 import org.openwms.core.listener.RemovalNotAllowedException;
 import org.slf4j.Logger;
@@ -44,7 +43,6 @@ import org.springframework.transaction.annotation.Transactional;
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  * @version $Revision$
  * @since 0.1
- * @see org.openwms.core.service.EntityServiceImpl
  */
 @Transactional
 @Service(TransportUnitServiceImpl.COMPONENT_NAME)
@@ -60,11 +58,11 @@ public class TransportUnitServiceImpl implements TransportUnitService<TransportU
 
     @Autowired
     @Qualifier("locationDao")
-    private GenericDao<Location, Long> locationDao;
+    private LocationDao locationDao;
 
     @Autowired
     @Qualifier("transportUnitTypeDao")
-    private GenericDao<TransportUnitType, Long> transportUnitTypeDao;
+    private TransportUnitTypeDao transportUnitTypeDao;
 
     @Autowired(required = false)
     @Qualifier("onRemovalListener")
@@ -89,22 +87,22 @@ public class TransportUnitServiceImpl implements TransportUnitService<TransportU
             LOGGER.debug("Creating a TransportUnit with Barcode " + barcode + " of Type " + transportUnitType.getType()
                     + " on Location " + actualLocation);
         }
-        TransportUnit transportUnit = dao.findByUniqueId(barcode);
+        TransportUnit transportUnit = dao.findByBarcode(barcode).get();
         if (transportUnit != null) {
             throw new ServiceLayerException("TransportUnit with id " + barcode + " not found");
         }
-        Location location = locationDao.findByUniqueId(actualLocation);
+        Location location = locationDao.findByLocationId(actualLocation).get();
         if (location == null) {
             throw new ServiceLayerException("Location " + actualLocation + " not found");
         }
-        TransportUnitType type = transportUnitTypeDao.findByUniqueId(transportUnitType.getType());
+        TransportUnitType type = transportUnitTypeDao.findByType(transportUnitType.getType()).get();
         if (null == type) {
             throw new ServiceLayerException("TransportUnitType " + transportUnitType + " not found");
         }
         transportUnit = new TransportUnit(barcode);
         transportUnit.setTransportUnitType(type);
         transportUnit.setActualLocation(location);
-        dao.persist(transportUnit);
+        dao.save(transportUnit);
         return transportUnit;
     }
 
@@ -122,11 +120,11 @@ public class TransportUnitServiceImpl implements TransportUnitService<TransportU
      */
     @Override
     public void moveTransportUnit(Barcode barcode, LocationPK targetLocationPK) {
-        TransportUnit transportUnit = dao.findByUniqueId(barcode);
+        TransportUnit transportUnit = dao.findByBarcode(barcode).get();
         if (transportUnit == null) {
             throw new ServiceLayerException("TransportUnit with id " + barcode + " not found");
         }
-        Location actualLocation = locationDao.findByUniqueId(targetLocationPK);
+        Location actualLocation = locationDao.findByLocationId(targetLocationPK).get();
         // if (actualLocation == null) {
         // throw new ServiceException("Location with id " + newLocationPk +
         // " not found");
@@ -196,7 +194,7 @@ public class TransportUnitServiceImpl implements TransportUnitService<TransportU
             LOGGER.debug("No listener onRemove defined, just try to delete it");
         }
         if (null == onRemovalListener || onRemovalListener.preRemove(transportUnit)) {
-            dao.remove(transportUnit);
+            dao.delete(transportUnit);
         }
     }
 
@@ -206,6 +204,6 @@ public class TransportUnitServiceImpl implements TransportUnitService<TransportU
     @Override
     @Transactional(readOnly = true)
     public TransportUnit findByBarcode(Barcode barcode) {
-        return (TransportUnit) dao.findByUniqueId(barcode);
+        return dao.findByBarcode(barcode).get();
     }
 }

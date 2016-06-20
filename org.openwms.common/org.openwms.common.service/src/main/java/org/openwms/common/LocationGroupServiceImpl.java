@@ -23,6 +23,7 @@ package org.openwms.common;
 
 import java.util.List;
 
+import org.ameba.annotation.TxService;
 import org.ameba.exception.ServiceLayerException;
 import org.openwms.common.values.LocationGroupState;
 import org.openwms.core.util.TreeNode;
@@ -31,25 +32,19 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 /**
  * A LocationGroupServiceImpl.
  * 
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
- * @version $Revision$
+ * @version 0.2
  * @since 0.1
- * @see org.openwms.core.service.spring.EntityServiceImpl
  */
-@Transactional
-@Service(LocationGroupServiceImpl.COMPONENT_NAME)
+@TxService
 public class LocationGroupServiceImpl implements LocationGroupService<LocationGroup> {
 
     private Logger logger = LoggerFactory.getLogger(this.getClass());
-
-    /** Springs component name. */
-    public static final String COMPONENT_NAME = "locationGroupService";
 
     @Autowired
     @Qualifier("locationGroupDao")
@@ -65,7 +60,7 @@ public class LocationGroupServiceImpl implements LocationGroupService<LocationGr
             throw new ServiceLayerException("LocationGroup " + locationGroup.getName()
                     + " is new and must be persisted before save");
         }
-        LocationGroup persisted = dao.findById(locationGroup.getId());
+        LocationGroup persisted = dao.findOne(locationGroup.getId());
         changeGroupState(persisted, locationGroup);
     }
 
@@ -78,7 +73,7 @@ public class LocationGroupServiceImpl implements LocationGroupService<LocationGr
             throw new ServiceLayerException("LocationGroup " + locationGroup.getName()
                     + " is new and must be persisted before save");
         }
-        LocationGroup persisted = dao.findById(locationGroup.getId());
+        LocationGroup persisted = dao.findOne(locationGroup.getId());
         changeGroupState(persisted, locationGroup);
         return mergeLocationGroup(persisted, locationGroup);
     }
