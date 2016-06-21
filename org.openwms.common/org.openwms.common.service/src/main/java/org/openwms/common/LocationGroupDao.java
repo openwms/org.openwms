@@ -21,26 +21,16 @@
  */
 package org.openwms.common;
 
-import org.openwms.core.integration.GenericDao;
+import org.springframework.data.jpa.repository.JpaRepository;
 
 /**
  * A LocationGroupDao adds particular functionality regarding {@link LocationGroup} entity classes.
  * 
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
- * @version $Revision$
+ * @version 0.2
  * @since 0.1
  * @see org.openwms.core.integration.GenericDao
  * @see org.openwms.common.LocationGroup
  */
-public interface LocationGroupDao extends GenericDao<LocationGroup, Long> {
-
-    /**
-     * Name of the <code>NamedQuery</code> to find all {@link LocationGroup} entities.
-     */
-    String NQ_FIND_ALL = "LocationGroup.findAll";
-
-    /**
-     * Name of the <code>NamedQuery</code> to find a {@link LocationGroup} by {@link LocationGroup#getName()}.
-     */
-    String NQ_FIND_BY_NAME = "LocationGroup.findByName";
+interface LocationGroupDao extends JpaRepository<LocationGroup, Long> {
 }

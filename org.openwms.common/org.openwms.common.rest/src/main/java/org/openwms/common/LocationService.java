@@ -26,13 +26,10 @@ import java.util.List;
 import org.openwms.core.values.Message;
 
 /**
- * A LocationService offers some useful methods regarding the general handling of {@link Location}s.
- * <p>
- * This interface is declared generic typed that implementation classes can use any extension of {@link Location}s.
- * </p>
- * 
- * @param <T>
- *            Any kind of {@link Location}
+ * A LocationService offers some useful methods regarding the general handling of {@link Location}s. <p> This interface is declared generic
+ * typed that implementation classes can use any extension of {@link Location}s. </p>
+ *
+ * @param <T> Any kind of {@link Location}
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  * @version $Revision$
  * @since 0.1
@@ -41,50 +38,45 @@ public interface LocationService<T extends Location> {
 
     /**
      * Return a list of all {@link Location}s not sorted and not filtered in natural order.
-     * 
+     *
      * @return All {@link Location}s as a list
      */
     List<T> getAllLocations();
 
     /**
      * Removes a list of {@link Message}s from a Location.
-     * 
-     * @param id
-     *            The technical key of the Location
-     * @param messages
-     *            The messages to be removed
+     *
+     * @param id The technical key of the Location
+     * @param messages The messages to be removed
      * @return The updated Location
      */
     Location removeMessages(Long id, List<Message> messages);
 
     /**
      * Return a list of all {@link LocationType}s not sorted and not filtered in natural order.
-     * 
+     *
      * @return All {@link LocationType}s as a list
      */
     List<LocationType> getAllLocationTypes();
 
     /**
      * Create a new {@link LocationType}.
-     * 
-     * @param locationType
-     *            The type to be created
+     *
+     * @param locationType The type to be created
      */
     void createLocationType(LocationType locationType);
 
     /**
      * Delete already persisted {@link LocationType} instances.
-     * 
-     * @param locationTypes
-     *            A list of all instances to be deleted.
+     *
+     * @param locationTypes A list of all instances to be deleted.
      */
     void deleteLocationTypes(List<LocationType> locationTypes);
 
     /**
      * Saves a {@link LocationType}.
-     * 
-     * @param locationType
-     *            The type to save
+     *
+     * @param locationType The type to save
      * @return The saved type
      */
     LocationType saveLocationType(LocationType locationType);

@@ -56,6 +56,7 @@ import org.openwms.common.values.Barcode;
 import org.openwms.common.values.TransportUnitState;
 import org.openwms.core.AbstractEntity;
 import org.openwms.core.DomainObject;
+import org.openwms.core.uaa.User;
 import org.openwms.core.values.CoreTypeDefinitions;
 
 /**

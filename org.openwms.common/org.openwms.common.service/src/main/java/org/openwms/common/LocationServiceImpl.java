@@ -24,36 +24,27 @@ package org.openwms.common;
 import java.util.Date;
 import java.util.List;
 
+import org.ameba.annotation.TxService;
 import org.ameba.exception.ServiceLayerException;
-import org.openwms.core.integration.GenericDao;
 import org.openwms.core.values.Message;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 /**
  * A LocationServiceImpl.
- * 
+ *
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
- * @version $Revision$
+ * @version 0.2
  * @since 0.1
- * @see org.openwms.core.service.spring.EntityServiceImpl
  */
-@Transactional
-@Service(LocationServiceImpl.COMPONENT_NAME)
-public class LocationServiceImpl implements LocationService<Location> {
-
-    /** Springs component name. */
-    public static final String COMPONENT_NAME = "locationService";
+@TxService
+class LocationServiceImpl implements LocationService<Location> {
 
     @Autowired
-    @Qualifier("locationDao")
     private LocationDao dao;
 
     @Autowired
-    @Qualifier("locationTypeDao")
-    private GenericDao<LocationType, Long> locationTypeDao;
+    private LocationTypeDao locationTypeDao;
 
     /**
      * {@inheritDoc}
@@ -61,7 +52,7 @@ public class LocationServiceImpl implements LocationService<Location> {
     @Override
     @Transactional(readOnly = false)
     public List<Location> getAllLocations() {
-        List<Location> list = dao.getAllLocations();
+        List<Location> list = dao.findAll();
         for (Location location : list) {
             location.setLastAccess(new Date());
             dao.save(location);
@@ -74,7 +65,7 @@ public class LocationServiceImpl implements LocationService<Location> {
      */
     @Override
     public Location removeMessages(Long id, List<Message> messages) {
-        Location location = dao.findById(id);
+        Location location = dao.findOne(id);
         if (null == location) {
             throw new ServiceLayerException("Location with pk " + id + " not found, probably it was removed before");
         }
@@ -93,13 +84,13 @@ public class LocationServiceImpl implements LocationService<Location> {
 
     /**
      * {@inheritDoc}
-     * 
+     * <p>
      * If the <code>locationType</code> is a transient one, it will be persisted otherwise saved.
      */
     @Override
     public void createLocationType(LocationType locationType) {
         if (locationType.isNew()) {
-            locationTypeDao.persist(locationType);
+            locationTypeDao.save(locationType);
         } else {
             locationTypeDao.save(locationType);
         }
@@ -107,14 +98,14 @@ public class LocationServiceImpl implements LocationService<Location> {
 
     /**
      * {@inheritDoc}
-     * 
+     * <p>
      * The implementation uses the id to find the {@link LocationType} to be removed and will removed the type when found.
      */
     @Override
     public void deleteLocationTypes(List<LocationType> locationTypes) {
         for (LocationType locationType : locationTypes) {
-            LocationType lt = locationTypeDao.findById(locationType.getId());
-            locationTypeDao.remove(lt);
+            LocationType lt = locationTypeDao.findOne(locationType.getId());
+            locationTypeDao.delete(lt);
         }
     }
 

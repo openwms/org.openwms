@@ -21,17 +21,17 @@
  */
 package org.openwms.common;
 
-import org.openwms.core.integration.GenericDao;
+import org.springframework.data.jpa.repository.JpaRepository;
 
 /**
  * A LocationTypeDao adds particular functionality regarding {@link LocationType} entity classes.
  * 
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
- * @version $Revision$
+ * @version 0.2
  * @since 0.1
  * @see org.openwms.core.integration.GenericDao
  * @see org.openwms.common.LocationType
  */
-public interface LocationTypeDao extends GenericDao<LocationType, Long> {
+interface LocationTypeDao extends JpaRepository<LocationType, Long> {
 
 }

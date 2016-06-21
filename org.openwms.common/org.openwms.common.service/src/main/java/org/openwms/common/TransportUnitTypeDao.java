@@ -21,17 +21,24 @@
  */
 package org.openwms.common;
 
-import org.openwms.core.integration.GenericDao;
+import java.util.Optional;
+
+import org.springframework.data.jpa.repository.JpaRepository;
 
 /**
  * A TransportUnitTypeDao adds particular functionality regarding {@link TransportUnitType} entity classes.
- * 
+ *
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
- * @version $Revision$
+ * @version 0.2
  * @since 0.1
- * @see org.openwms.core.integration.GenericDao
- * @see org.openwms.common.domain.TransportUnitType
  */
-public interface TransportUnitTypeDao extends GenericDao<TransportUnitType, Long> {
+interface TransportUnitTypeDao extends JpaRepository<TransportUnitType, Long> {
 
+    /**
+     * Find and return a TransportUnitType by the given {@literal type}.
+     *
+     * @param type The type to identify the TransportUnitType
+     * @return The TransportUnitType instance
+     */
+    Optional<TransportUnitType> findByType(String type);
 }

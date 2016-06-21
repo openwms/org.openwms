@@ -27,8 +27,9 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+import org.hibernate.HibernateException;
 import org.hibernate.TypeMismatchException;
-import org.hibernate.engine.spi.SessionImplementor;
+import org.hibernate.engine.spi.SharedSessionContractImplementor;
 import org.hibernate.type.StandardBasicTypes;
 import org.hibernate.type.Type;
 import org.hibernate.usertype.CompositeUserType;
@@ -44,7 +45,7 @@ import org.slf4j.LoggerFactory;
 /**
  * An UnitUserType is used by Hibernate as converter for custom <code>Unit</code> types. Only subclasses of {@link AbstractMeasure} are
  * supported by this type converter.
- * 
+ *
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  * @version $Revision: $
  * @since 0.2
@@ -55,22 +56,22 @@ public class UnitUserType implements CompositeUserType {
 
     /**
      * {@inheritDoc}
-     * 
+     * <p>
      * We expect that every unit has two fields, named <code>unitType</code> and <code>amount</code>.
      */
     @Override
     public String[] getPropertyNames() {
-        return new String[] { "unitType", "amount" };
+        return new String[]{"unitType", "amount"};
     }
 
     /**
      * {@inheritDoc}
-     * 
+     * <p>
      * We're going to persist both fields as Strings.
      */
     @Override
     public Type[] getPropertyTypes() {
-        return new Type[] { StandardBasicTypes.STRING, StandardBasicTypes.STRING };
+        return new Type[]{StandardBasicTypes.STRING, StandardBasicTypes.STRING};
     }
 
     /**
@@ -90,7 +91,7 @@ public class UnitUserType implements CompositeUserType {
 
     /**
      * {@inheritDoc}
-     * 
+     * <p>
      * We have immutable types, throw an UnsupportedOperationException here.
      */
     @Override
@@ -100,7 +101,7 @@ public class UnitUserType implements CompositeUserType {
 
     /**
      * {@inheritDoc}
-     * 
+     * <p>
      * We do not know the concrete implementation here and return an Unit class type.
      */
     @Override
@@ -110,7 +111,7 @@ public class UnitUserType implements CompositeUserType {
 
     /**
      * {@inheritDoc}
-     * 
+     * <p>
      * Delegate to Unit implementation.
      */
     @Override
@@ -126,7 +127,7 @@ public class UnitUserType implements CompositeUserType {
 
     /**
      * {@inheritDoc}
-     * 
+     * <p>
      * Delegate to Unit implementation.
      */
     @Override
@@ -136,19 +137,14 @@ public class UnitUserType implements CompositeUserType {
 
     /**
      * {@inheritDoc}
-     * 
-     * Try to re-assign the value read from the database to some type of Unit. Currently supported types:
-     * <ul>
-     * <li>Piece</li>
-     * <li>Weight</li>
-     * </ul>
-     * 
-     * @throws SQLException
-     *             in case of database errors
+     * <p>
+     * Try to re-assign the value read from the database to some type of Unit. Currently supported types: <ul> <li>Piece</li>
+     * <li>Weight</li> </ul>
+     *
+     * @throws SQLException in case of database errors
      */
     @Override
-    public Object nullSafeGet(ResultSet rs, String[] names, SessionImplementor session, Object owner)
-            throws SQLException {
+    public Object nullSafeGet(ResultSet rs, String[] names, SharedSessionContractImplementor session, Object owner) throws HibernateException, SQLException {
         String rs0 = rs.getString(names[0]);
         if (rs.wasNull()) {
             return null;
@@ -168,15 +164,13 @@ public class UnitUserType implements CompositeUserType {
 
     /**
      * {@inheritDoc}
-     * 
+     * <p>
      * We've to store the concrete classname as well.
-     * 
-     * @throws SQLException
-     *             in case of database errors
+     *
+     * @throws SQLException in case of database errors
      */
     @Override
-    public void nullSafeSet(PreparedStatement st, Object value, int index, SessionImplementor session)
-            throws SQLException {
+    public void nullSafeSet(PreparedStatement st, Object value, int index, SharedSessionContractImplementor session) throws HibernateException, SQLException {
         if (value == null) {
             st.setNull(index, StandardBasicTypes.STRING.sqlType());
             st.setNull(index + 1, StandardBasicTypes.STRING.sqlType());
@@ -207,7 +201,7 @@ public class UnitUserType implements CompositeUserType {
 
     /**
      * {@inheritDoc}
-     * 
+     * <p>
      * No deep copy -> Immutable types.
      */
     @Override
@@ -217,7 +211,7 @@ public class UnitUserType implements CompositeUserType {
 
     /**
      * {@inheritDoc}
-     * 
+     * <p>
      * All Unit types aren't mutable.
      */
     @Override
@@ -227,11 +221,9 @@ public class UnitUserType implements CompositeUserType {
 
     /**
      * {@inheritDoc}
-     * 
-     * Just cast.
      */
     @Override
-    public Serializable disassemble(Object value, SessionImplementor session) {
+    public Serializable disassemble(Object value, SharedSessionContractImplementor session) throws HibernateException {
         return (Serializable) value;
     }
 
@@ -239,7 +231,7 @@ public class UnitUserType implements CompositeUserType {
      * {@inheritDoc}
      */
     @Override
-    public Object assemble(Serializable cached, SessionImplementor session, Object owner) {
+    public Object assemble(Serializable cached, SharedSessionContractImplementor session, Object owner) throws HibernateException {
         return cached;
     }
 
@@ -247,7 +239,7 @@ public class UnitUserType implements CompositeUserType {
      * {@inheritDoc}
      */
     @Override
-    public Object replace(Object original, Object target, SessionImplementor session, Object owner) {
+    public Object replace(Object original, Object target, SharedSessionContractImplementor session, Object owner) throws HibernateException {
         return original;
     }
 }

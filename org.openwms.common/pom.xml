@@ -83,6 +83,16 @@
 
     <dependencyManagement>
         <dependencies>
+
+            <!-- Core dependencies -->
+            <dependency>
+                <groupId>org.openwms</groupId>
+                <artifactId>org.openwms.core</artifactId>
+                <version>${core.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+
             <!-- Project dependencies -->
             <dependency>
                 <groupId>${project.groupId}</groupId>

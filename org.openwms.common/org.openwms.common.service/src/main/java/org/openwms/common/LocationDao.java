@@ -21,25 +21,20 @@
  */
 package org.openwms.common;
 
-import java.util.List;
+import java.util.Optional;
 
-import org.openwms.core.integration.GenericDao;
+import org.springframework.data.jpa.repository.JpaRepository;
 
 /**
  * A LocationDao adds particular functionality regarding {@link Location} entity classes.
  * 
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
- * @version $Revision$
+ * @version 0.2
  * @since 0.1
  * @see org.openwms.core.integration.GenericDao
  * @see org.openwms.common.Location
  */
-public interface LocationDao extends GenericDao<Location, Long> {
+interface LocationDao extends JpaRepository<Location, Long> {
 
-    /**
-     * Retrieve all {@link Location}s in natural order.
-     * 
-     * @return A List of all {@link Location}s
-     */
-    List<Location> getAllLocations();
+    Optional<Location> findByLocationId(LocationPK locationPK);
 }
