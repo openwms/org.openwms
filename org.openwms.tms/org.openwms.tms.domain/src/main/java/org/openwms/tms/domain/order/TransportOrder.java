@@ -55,8 +55,8 @@ import org.openwms.tms.domain.values.TransportOrderState;
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  * @version $Revision$
  * @since 0.1
- * @see org.openwms.common.domain.TransportUnit
- * @see org.openwms.common.domain.Location
+ * @see org.openwms.common.TransportUnit
+ * @see org.openwms.common.Location
  */
 @Entity
 @Table(name = "TMS_TRANSPORT_ORDER")
