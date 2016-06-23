@@ -640,11 +640,11 @@
             </plugins>
         </pluginManagement>
 
-        <plugins>
+        <!--plugins>
             <plugin>
                 <artifactId>maven-enforcer-plugin</artifactId>
             </plugin>
-        </plugins>
+        </plugins-->
     </build>
 
     <dependencyManagement>
