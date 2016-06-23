@@ -263,9 +263,9 @@
             <modules>
                 <module>org.openwms.core</module>
                 <module>org.openwms.common</module>
-                <module>org.openwms.tms</module>
+                <!--module>org.openwms.tms</module>
                 <module>org.openwms.wms</module>
-                <module>org.openwms.app</module>
+                <module>org.openwms.app</module-->
             </modules>
         </profile>
         <profile>

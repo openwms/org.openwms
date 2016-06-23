@@ -63,22 +63,7 @@
         <!-- CORE Project dependencies -->
         <dependency>
             <groupId>${project.groupId}</groupId>
-            <artifactId>org.openwms.core.domain</artifactId>
-            <version>${core.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>${project.groupId}</groupId>
-            <artifactId>org.openwms.core.integration</artifactId>
-            <version>${core.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>${project.groupId}</groupId>
-            <artifactId>org.openwms.core.service.api</artifactId>
-            <version>${core.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>${project.groupId}</groupId>
-            <artifactId>org.openwms.core.service</artifactId>
+            <artifactId>org.openwms.core.uaa</artifactId>
             <version>${core.version}</version>
         </dependency>
 

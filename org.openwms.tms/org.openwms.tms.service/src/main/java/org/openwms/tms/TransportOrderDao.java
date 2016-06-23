@@ -25,9 +25,9 @@ import java.util.List;
 
 import org.openwms.common.LocationGroup;
 import org.openwms.common.TransportUnit;
-import org.openwms.core.integration.GenericDao;
 import org.openwms.tms.domain.order.TransportOrder;
 import org.openwms.tms.domain.values.TransportOrderState;
+import org.springframework.data.jpa.repository.JpaRepository;
 
 /**
  * A TransportOrderDao - Adds specific functionality concerning {@link TransportOrder} Entity classes.
@@ -38,7 +38,7 @@ import org.openwms.tms.domain.values.TransportOrderState;
  * @see org.openwms.core.integration.GenericDao
  * @see org.openwms.tms.domain.order.TransportOrder
  */
-public interface TransportOrderDao extends GenericDao<TransportOrder, Long> {
+public interface TransportOrderDao extends JpaRepository<TransportOrder, Long> {
 
     /**
      * Get all active {@link TransportOrder}s that have the target destination to this locationGroup.

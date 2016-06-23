@@ -81,22 +81,7 @@
         </dependency>
         <dependency>
             <groupId>${project.groupId}</groupId>
-            <artifactId>org.openwms.core.domain</artifactId>
-            <version>${core.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>${project.groupId}</groupId>
-            <artifactId>org.openwms.core.integration.jpa</artifactId>
-            <version>${core.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>${project.groupId}</groupId>
-            <artifactId>org.openwms.core.service.api</artifactId>
-            <version>${core.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>${project.groupId}</groupId>
-            <artifactId>org.openwms.core.service.spring</artifactId>
+            <artifactId>org.openwms.core.uaa</artifactId>
             <version>${core.version}</version>
         </dependency>
         <dependency>
