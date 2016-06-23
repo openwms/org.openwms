@@ -29,7 +29,7 @@ import java.sql.SQLException;
 
 import org.hibernate.HibernateException;
 import org.hibernate.TypeMismatchException;
-import org.hibernate.engine.spi.SharedSessionContractImplementor;
+import org.hibernate.engine.spi.SessionImplementor;
 import org.hibernate.type.StandardBasicTypes;
 import org.hibernate.type.Type;
 import org.hibernate.usertype.CompositeUserType;
@@ -144,8 +144,8 @@ public class UnitUserType implements CompositeUserType {
      * @throws SQLException in case of database errors
      */
     @Override
-    public Object nullSafeGet(ResultSet rs, String[] names, SharedSessionContractImplementor session, Object owner) throws HibernateException, SQLException {
-        String rs0 = rs.getString(names[0]);
+    public Object nullSafeGet(ResultSet rs, String[] strings, SessionImplementor sessionImplementor, Object o) throws HibernateException, SQLException {
+        String rs0 = rs.getString(strings[0]);
         if (rs.wasNull()) {
             return null;
         }
@@ -153,10 +153,10 @@ public class UnitUserType implements CompositeUserType {
         String unitType = val[0];
         String unitTypeClass = val[1];
         if (Piece.class.getCanonicalName().equals(unitTypeClass)) {
-            int amount = rs.getInt(names[1]);
+            int amount = rs.getInt(strings[1]);
             return new Piece(amount, PieceUnit.valueOf(unitType));
         } else if (Weight.class.getCanonicalName().equals(unitTypeClass)) {
-            BigDecimal amount = rs.getBigDecimal(names[1]);
+            BigDecimal amount = rs.getBigDecimal(strings[1]);
             return new Weight(amount, WeightUnit.valueOf(unitType));
         }
         throw new TypeMismatchException("Incompatible type: " + unitTypeClass);
@@ -170,7 +170,7 @@ public class UnitUserType implements CompositeUserType {
      * @throws SQLException in case of database errors
      */
     @Override
-    public void nullSafeSet(PreparedStatement st, Object value, int index, SharedSessionContractImplementor session) throws HibernateException, SQLException {
+    public void nullSafeSet(PreparedStatement st, Object value, int index, SessionImplementor sessionImplementor) throws HibernateException, SQLException {
         if (value == null) {
             st.setNull(index, StandardBasicTypes.STRING.sqlType());
             st.setNull(index + 1, StandardBasicTypes.STRING.sqlType());
@@ -223,7 +223,7 @@ public class UnitUserType implements CompositeUserType {
      * {@inheritDoc}
      */
     @Override
-    public Serializable disassemble(Object value, SharedSessionContractImplementor session) throws HibernateException {
+    public Serializable disassemble(Object value, SessionImplementor sessionImplementor) throws HibernateException {
         return (Serializable) value;
     }
 
@@ -231,7 +231,7 @@ public class UnitUserType implements CompositeUserType {
      * {@inheritDoc}
      */
     @Override
-    public Object assemble(Serializable cached, SharedSessionContractImplementor session, Object owner) throws HibernateException {
+    public Object assemble(Serializable cached, SessionImplementor sessionImplementor, Object o) throws HibernateException {
         return cached;
     }
 
@@ -239,7 +239,7 @@ public class UnitUserType implements CompositeUserType {
      * {@inheritDoc}
      */
     @Override
-    public Object replace(Object original, Object target, SharedSessionContractImplementor session, Object owner) throws HibernateException {
+    public Object replace(Object original, Object o1, SessionImplementor sessionImplementor, Object o2) throws HibernateException {
         return original;
     }
 }

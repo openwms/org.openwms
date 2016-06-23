@@ -38,10 +38,10 @@ import java.util.Date;
 import org.ameba.integration.jpa.BaseEntity;
 import org.openwms.common.TransportUnit;
 import org.openwms.core.exception.DomainModelRuntimeException;
-import org.openwms.core.validation.AssertUtils;
 import org.openwms.core.values.CoreTypeDefinitions;
 import org.openwms.core.values.UnitType;
 import org.openwms.wms.inventory.Product;
+import org.springframework.util.Assert;
 
 /**
  * A PackagingUnit is the actual assignment of a {@link Product} and a quantity.
@@ -101,8 +101,8 @@ public class PackagingUnit extends BaseEntity implements Serializable {
      * @param qty The quantity
      */
     public PackagingUnit(LoadUnit lu, UnitType qty) {
-        AssertUtils.notNull(lu);
-        AssertUtils.notNull(qty);
+        Assert.notNull(lu);
+        Assert.notNull(qty);
         assignInitialValues(lu);
         this.quantity = qty;
         this.product = lu.getProduct();
@@ -116,9 +116,9 @@ public class PackagingUnit extends BaseEntity implements Serializable {
      * @param product A Product to assign
      */
     public PackagingUnit(LoadUnit lu, UnitType qty, Product product) {
-        AssertUtils.notNull(lu);
-        AssertUtils.notNull(qty);
-        AssertUtils.notNull(product);
+        Assert.notNull(lu);
+        Assert.notNull(qty);
+        Assert.notNull(product);
         assignInitialValues(lu);
         this.quantity = qty;
         if (lu.getProduct() == null) {

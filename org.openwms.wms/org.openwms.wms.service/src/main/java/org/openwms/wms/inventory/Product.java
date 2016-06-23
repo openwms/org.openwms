@@ -56,6 +56,22 @@ public class Product extends BaseEntity implements Comparable<Product>, Serializ
     private StockZone stockZone;
 
     /**
+     * Dear JPA ...
+     */
+    protected Product() {
+
+    }
+
+    /**
+     * Create a Product with a sku.
+     *
+     * @param sku The sku
+     */
+    public Product(String sku) {
+        this.sku = sku;
+    }
+
+    /**
      * Get the SKU.
      * 
      * @return the SKU.

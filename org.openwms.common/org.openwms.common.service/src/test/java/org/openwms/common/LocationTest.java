@@ -21,6 +21,9 @@
  */
 package org.openwms.common;
 
+import static org.junit.Assert.fail;
+
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.openwms.core.test.AbstractJpaSpringContextTests;
@@ -55,9 +58,9 @@ public class LocationTest extends AbstractJpaSpringContextTests {
      */
     @Before
     public void onSetUpInTransaction() throws Exception {
-        locationGroupDao.persist(locationGroup);
-        locationDao.persist(actualLocation);
-        locationDao.persist(virtualLocation);
+        locationGroupDao.save(locationGroup);
+        locationDao.save(actualLocation);
+        locationDao.save(virtualLocation);
         entityManager.flush();
         entityManager.clear();
     }
@@ -70,7 +73,7 @@ public class LocationTest extends AbstractJpaSpringContextTests {
     public final void testSettingGroupOnLocation() {
         try {
             locationGroup.addLocation(null);
-            Assert.fail("Not allowed to add null as location to a group");
+            fail("Not allowed to add null as location to a group");
         } catch (IllegalArgumentException iae) {
             LOGGER.debug("OK: Exception when trying to add null");
         }

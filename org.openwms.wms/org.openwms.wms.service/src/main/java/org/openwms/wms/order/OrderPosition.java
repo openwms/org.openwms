@@ -45,7 +45,7 @@ import java.util.Date;
 import org.openwms.common.values.Problem;
 import org.openwms.core.AbstractEntity;
 import org.openwms.core.DomainObject;
-import org.openwms.core.validation.AssertUtils;
+import org.springframework.util.Assert;
 
 /**
  * An OrderPosition.
@@ -138,8 +138,8 @@ public abstract class OrderPosition<T extends AbstractOrder<T, U>, U extends Ord
     @SuppressWarnings("unchecked")
     public OrderPosition(T ord, Integer posNo) {
         super();
-        AssertUtils.notNull(ord);
-        AssertUtils.notNull(posNo);
+        Assert.notNull(ord);
+        Assert.notNull(posNo);
         this.order = ord;
         this.order.addPostions((U) this);
         this.positionId = new OrderPositionKey(ord, posNo);

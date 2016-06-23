@@ -24,12 +24,12 @@ package org.openwms.common;
 import javax.persistence.Query;
 import java.util.List;
 
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.openwms.core.test.AbstractJpaSpringContextTests;
 import org.openwms.core.values.Message;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.test.context.ContextConfiguration;
 
 /**
@@ -43,7 +43,6 @@ import org.springframework.test.context.ContextConfiguration;
 public class LocationDaoTest extends AbstractJpaSpringContextTests {
 
     @Autowired
-    @Qualifier("locationDao")
     private LocationDao locationDao;
     private List<Location> locations;
 
@@ -71,7 +70,7 @@ public class LocationDaoTest extends AbstractJpaSpringContextTests {
     @Test
     public final void testFindById() {
         locations = locationDao.findAll();
-        Assert.assertNotNull("Cannot find Location by Id", locationDao.findById(locations.get(0).getId()));
+        Assert.assertNotNull("Cannot find Location by Id", locationDao.findOne(locations.get(0).getId()));
         LOGGER.debug("OK:Location found by id query");
     }
 
@@ -80,11 +79,11 @@ public class LocationDaoTest extends AbstractJpaSpringContextTests {
      */
     @Test
     public final void testFindByUniqueId() {
-        Location known = locationDao.findByUniqueId(new LocationPK("area", "aisl", "x", "y", "z"));
+        Location known = locationDao.findByLocationId(new LocationPK("area", "aisl", "x", "y", "z")).get();
         Assert.assertNotNull("Location not found by id", known);
         LOGGER.debug("OK:Location found by unique id query");
 
-        Location unknown = locationDao.findByUniqueId(new LocationPK("AREA", "AISL", "X", "Y", "Z"));
+        Location unknown = locationDao.findByLocationId(new LocationPK("AREA", "AISL", "X", "Y", "Z")).get();
         Assert.assertNull("Unknown Location found by key", unknown);
         LOGGER.debug("OK:Unknown Location not found by unique id query");
     }
@@ -97,7 +96,7 @@ public class LocationDaoTest extends AbstractJpaSpringContextTests {
         Location l = new Location(new LocationPK("NEW", "NEW", "NEW", "NEW", "NEW"));
         Assert.assertNull("PK should be NULL", l.getId());
         Assert.assertTrue("isNew should return true for a transient entity", l.isNew());
-        locationDao.persist(l);
+        locationDao.save(l);
         Assert.assertNotNull("PK should be set", l.getId());
         Assert.assertFalse("isNew should return false for a persistend entity", l.isNew());
     }
@@ -109,12 +108,12 @@ public class LocationDaoTest extends AbstractJpaSpringContextTests {
     public final void testPersistAndRemove() {
         Location l = new Location(new LocationPK("NEW", "NEW", "NEW", "NEW", "NEW"));
         Assert.assertNull("PK should be NULL", l.getId());
-        locationDao.persist(l);
+        locationDao.save(l);
         Assert.assertNotNull("PK should be set", l.getId());
-        Location l2 = locationDao.findById(l.getId());
+        Location l2 = locationDao.findOne(l.getId());
         Assert.assertNotNull("PK should be set", l2.getId());
-        locationDao.remove(l);
-        l2 = locationDao.findById(l2.getId());
+        locationDao.delete(l);
+        l2 = locationDao.findOne(l2.getId());
         Assert.assertNull("PK should be NULL", l2);
     }
 
@@ -125,7 +124,7 @@ public class LocationDaoTest extends AbstractJpaSpringContextTests {
     public final void testAddingErrorMessages() {
         LocationPK pk = new LocationPK("OWN", "OWN", "OWN", "OWN", "OWN");
         Location location = new Location(pk);
-        locationDao.persist(location);
+        locationDao.save(location);
 
         location.addMessage(new Message(1, "Errormessage 1"));
         location.addMessage(new Message(2, "Errormessage 2"));

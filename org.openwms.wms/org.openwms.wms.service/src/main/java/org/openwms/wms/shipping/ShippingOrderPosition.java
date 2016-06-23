@@ -42,13 +42,13 @@ import java.util.List;
 import java.util.Set;
 
 import org.openwms.common.types.Target;
-import org.openwms.core.validation.AssertUtils;
 import org.openwms.core.values.CoreTypeDefinitions;
 import org.openwms.core.values.UnitType;
 import org.openwms.wms.inventory.Product;
 import org.openwms.wms.order.OrderPosition;
 import org.openwms.wms.order.OrderPositionSplit;
 import org.openwms.wms.order.OrderStartMode;
+import org.springframework.util.Assert;
 
 /**
  * A ShippingOrderPosition.
@@ -138,8 +138,8 @@ public class ShippingOrderPosition extends OrderPosition<ShippingOrder, Shipping
      */
     public ShippingOrderPosition(ShippingOrder ord, Integer posNo, UnitType qtyOrd, Product prod) {
         super(ord, posNo);
-        AssertUtils.notNull(qtyOrd);
-        AssertUtils.notNull(prod);
+        Assert.notNull(qtyOrd);
+        Assert.notNull(prod);
         this.qtyOrdered = qtyOrd;
         this.product = prod;
         this.startMode = ord.getStartMode();

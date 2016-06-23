@@ -31,7 +31,6 @@ import org.openwms.common.TransportUnit;
 import org.openwms.common.TransportUnitService;
 import org.openwms.common.values.Barcode;
 import org.openwms.core.annotation.FireAfterTransactionAsynchronous;
-import org.openwms.core.validation.AssertUtils;
 import org.openwms.core.values.UnitType;
 import org.openwms.wms.LoadUnit;
 import org.openwms.wms.LoadUnitRepository;
@@ -43,6 +42,7 @@ import org.openwms.wms.order.WMSOrderDao;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.util.Assert;
 
 /**
  * A ReceivingManagerImpl.
@@ -125,7 +125,7 @@ class ReceivingImpl implements Receiving {
      */
     @Override
     public ReceivingOrder createOrder(String ordId) {
-        AssertUtils.notNull(ordId, "The orderId to create an Order with is null");
+        Assert.notNull(ordId, "The orderId to create an Order with is null");
         ReceivingOrder order = rcvOrderDao.findByOrderId(ordId);
         if (null != order) {
             throw new ServiceLayerException("An order with the id " + ordId + " already exists");

@@ -21,10 +21,10 @@
  */
 package org.openwms.common;
 
+import org.junit.Assert;
 import org.junit.Test;
 import org.openwms.core.test.AbstractJpaSpringContextTests;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.test.context.ContextConfiguration;
 
 /**
@@ -38,7 +38,6 @@ import org.springframework.test.context.ContextConfiguration;
 public class LocationGroupDaoTest extends AbstractJpaSpringContextTests {
 
     @Autowired
-    @Qualifier("locationGroupDao")
     private LocationGroupDao dao;
 
     /**
@@ -48,10 +47,10 @@ public class LocationGroupDaoTest extends AbstractJpaSpringContextTests {
     public final void testDuplicateLocationGroups() {
         LocationGroup locationGroup = new LocationGroup("FIRST_LG");
         LocationGroup locationGroup2 = new LocationGroup("FIRST_LG");
-        dao.persist(locationGroup);
+        dao.save(locationGroup);
         entityManager.flush();
         try {
-            dao.persist(locationGroup2);
+            dao.save(locationGroup2);
             entityManager.flush();
             Assert.fail("Persisting two LocationGroups with same id must be permitted");
         } catch (Exception e) {
@@ -66,7 +65,7 @@ public class LocationGroupDaoTest extends AbstractJpaSpringContextTests {
     public final void testAddLocationGroup() {
         LocationGroup parent = new LocationGroup("TEST_GROUP_1");
         LocationGroup child = new LocationGroup("TEST_GROUP_2");
-        dao.persist(parent);
+        dao.save(parent);
 
         try {
             parent.addLocationGroup(null);
@@ -92,7 +91,7 @@ public class LocationGroupDaoTest extends AbstractJpaSpringContextTests {
         LocationGroup parent = new LocationGroup("TEST_GROUP_1");
         LocationGroup child = new LocationGroup("TEST_GROUP_2");
         parent.addLocationGroup(child);
-        dao.persist(parent);
+        dao.save(parent);
         entityManager.flush();
         try {
             parent.removeLocationGroup(null);

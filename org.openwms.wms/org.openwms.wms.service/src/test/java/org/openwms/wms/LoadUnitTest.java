@@ -84,13 +84,13 @@ public class LoadUnitTest extends AbstractJpaSpringContextTests {
         entityManager.persist(loadUnit);
         entityManager.flush();
         entityManager.clear();
-        LoadUnit lu = entityManager.find(LoadUnit.class, loadUnit.getId());
+        LoadUnit lu = entityManager.find(LoadUnit.class, loadUnit.getPk());
         Assert.assertEquals(tu, lu.getTransportUnit());
         Assert.assertEquals("LEFT", lu.getPhysicalPosition());
         Assert.assertEquals(product, lu.getProduct());
         Assert.assertFalse(lu.isNew());
-        Assert.assertNotNull(lu.getChangedDate());
-        Assert.assertNotNull(lu.getCreatedDate());
+        Assert.assertNotNull(lu.getLastModifiedDt());
+        Assert.assertNotNull(lu.getCreateDt());
     }
 
     /**
@@ -144,7 +144,7 @@ public class LoadUnitTest extends AbstractJpaSpringContextTests {
 
     /**
      * Test method for
-     * {@link org.openwms.wms.domain.LoadUnit#LoadUnit(java.lang.String, org.openwms.common.domain.values.Weight)}
+     * {@link org.openwms.wms.LoadUnit#LoadUnit(java.lang.String, org.openwms.common.values.Weight)}
      * .
      */
     @Test(expected = Exception.class)

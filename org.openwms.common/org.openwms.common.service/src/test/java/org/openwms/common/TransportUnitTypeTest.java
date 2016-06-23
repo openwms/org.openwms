@@ -21,9 +21,12 @@
  */
 package org.openwms.common;
 
+import static org.junit.Assert.fail;
+
 import javax.persistence.NoResultException;
 import javax.persistence.PersistenceException;
 
+import junit.framework.Assert;
 import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
@@ -61,7 +64,7 @@ public class TransportUnitTypeTest extends AbstractJpaSpringContextTests {
         try {
             entityManager.persist(new TransportUnitType("TUT1"));
             entityManager.flush();
-            Assert.fail("Expecting exception when persisting existing entity with same identifier!");
+            fail("Expecting exception when persisting existing entity with same identifier!");
         } catch (PersistenceException pe) {
             LOGGER.debug("OK:Exceptiuon must been thrown when persisting TUT with same identifier.");
         }

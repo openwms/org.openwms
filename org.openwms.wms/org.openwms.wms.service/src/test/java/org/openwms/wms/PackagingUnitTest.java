@@ -80,7 +80,7 @@ public class PackagingUnitTest extends AbstractJpaSpringContextTests {
 
     /**
      * Test method for
-     * {@link org.openwms.wms.domain.PackagingUnit#PackagingUnit()}.
+     * {@link org.openwms.wms.PackagingUnit#PackagingUnit()}.
      */
     @Test
     public final void testPackagingUnit() {
@@ -96,7 +96,7 @@ public class PackagingUnitTest extends AbstractJpaSpringContextTests {
 
     /**
      * Test method for
-     * {@link org.openwms.wms.domain.PackagingUnit#PackagingUnit()}.
+     * {@link org.openwms.wms.PackagingUnit#PackagingUnit()}.
      */
     @Test
     public final void testPersistPackagingUnit() {
@@ -105,7 +105,7 @@ public class PackagingUnitTest extends AbstractJpaSpringContextTests {
         entityManager.persist(pu);
         entityManager.flush();
         entityManager.clear();
-        PackagingUnit pu2 = entityManager.find(PackagingUnit.class, pu.getId());
+        PackagingUnit pu2 = entityManager.find(PackagingUnit.class, pu.getPk());
         Assert.assertTrue(pu2.getQuantity().equals(pu.getQuantity()));
         Assert.assertTrue(pu2.getQuantity().equals(new Piece(4, PieceUnit.DOZ)));
     }

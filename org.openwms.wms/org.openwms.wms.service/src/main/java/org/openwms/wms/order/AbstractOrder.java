@@ -45,8 +45,8 @@ import java.util.Set;
 
 import org.ameba.integration.jpa.BaseEntity;
 import org.openwms.common.values.Problem;
-import org.openwms.core.validation.AssertUtils;
 import org.openwms.wms.WMSTypes;
+import org.springframework.util.Assert;
 
 /**
  * A AbstractOrder.
@@ -174,7 +174,7 @@ public abstract class AbstractOrder<T extends AbstractOrder<T, U>, U extends Ord
      * Define a constructor with the orderId as argument.
      */
     public AbstractOrder(String ordId) {
-        AssertUtils.isNotEmpty(ordId, "Not allowed to create an order with an empty order id");
+        Assert.hasText(ordId, "Not allowed to create an order with an empty order id");
         this.orderId = ordId;
     }
 

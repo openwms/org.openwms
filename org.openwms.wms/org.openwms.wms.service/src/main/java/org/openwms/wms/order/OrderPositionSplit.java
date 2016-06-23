@@ -40,10 +40,10 @@ import java.io.Serializable;
 import org.openwms.common.values.Problem;
 import org.openwms.core.AbstractEntity;
 import org.openwms.core.DomainObject;
-import org.openwms.core.validation.AssertUtils;
 import org.openwms.core.values.CoreTypeDefinitions;
 import org.openwms.core.values.UnitType;
 import org.openwms.wms.inventory.Product;
+import org.springframework.util.Assert;
 
 /**
  * An OrderPositionSplit.
@@ -115,8 +115,8 @@ public class OrderPositionSplit<T extends AbstractOrder<T, U>, U extends OrderPo
      *            The unique id of this Split
      */
     public OrderPositionSplit(U position, Integer sId) {
-        AssertUtils.notNull(position);
-        AssertUtils.notNull(sId);
+        Assert.notNull(position);
+        Assert.notNull(sId);
         this.splitId = new OrderPositionSplitKey(position, sId);
         this.priority = position.getPriority();
     }
@@ -128,7 +128,7 @@ public class OrderPositionSplit<T extends AbstractOrder<T, U>, U extends OrderPo
      *            The unique id of this Split
      */
     public OrderPositionSplit(OrderPositionSplitKey sId) {
-        AssertUtils.notNull(sId);
+        Assert.notNull(sId);
         this.splitId = sId;
         this.priority = position.getPriority();
     }

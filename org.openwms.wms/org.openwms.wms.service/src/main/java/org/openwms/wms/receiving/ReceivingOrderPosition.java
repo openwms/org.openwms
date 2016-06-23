@@ -30,11 +30,11 @@ import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import java.io.Serializable;
 
-import org.openwms.core.validation.AssertUtils;
 import org.openwms.core.values.CoreTypeDefinitions;
 import org.openwms.core.values.UnitType;
 import org.openwms.wms.inventory.Product;
 import org.openwms.wms.order.OrderPosition;
+import org.springframework.util.Assert;
 
 /**
  * A ReceivingOrderPosition.
@@ -97,8 +97,8 @@ public class ReceivingOrderPosition extends OrderPosition<ReceivingOrder, Receiv
      */
     public ReceivingOrderPosition(ReceivingOrder ord, Integer posNo, UnitType qtyExp, Product prod) {
         super(ord, posNo);
-        AssertUtils.notNull(qtyExp);
-        AssertUtils.notNull(prod);
+        Assert.notNull(qtyExp);
+        Assert.notNull(prod);
         this.qtyExpected = qtyExp;
         this.product = prod;
     }

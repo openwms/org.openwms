@@ -21,13 +21,16 @@
  */
 package org.openwms.common;
 
+import static org.junit.Assert.fail;
+
 import javax.persistence.PersistenceException;
 import javax.persistence.Query;
 
+import org.junit.Assert;
 import org.junit.Ignore;
 import org.junit.Test;
-import org.openwms.common.domain.system.UnitError;
-import org.openwms.common.domain.values.Barcode;
+import org.openwms.common.system.UnitError;
+import org.openwms.common.values.Barcode;
 import org.openwms.core.test.AbstractJpaSpringContextTests;
 import org.springframework.test.context.ContextConfiguration;
 
@@ -50,7 +53,7 @@ public class TransportUnitTest extends AbstractJpaSpringContextTests {
         try {
             entityManager.persist(transportUnit);
             entityManager.flush();
-            Assert.fail("Persisting without TransportUnitType not allowed!");
+            fail("Persisting without TransportUnitType not allowed!");
         } catch (PersistenceException pe) {
             // okay
             LOGGER.debug("OK:Execption while persisting TransportUnit without TransportUnitType.");
@@ -67,7 +70,7 @@ public class TransportUnitTest extends AbstractJpaSpringContextTests {
         transportUnit.setTransportUnitType(transportUnitType);
         try {
             entityManager.persist(transportUnit);
-            Assert.fail("Persisting with unknown TransportUnitType not allowed!");
+            fail("Persisting with unknown TransportUnitType not allowed!");
         } catch (Exception pe) {
             // okay
             LOGGER.debug("OK:Exception while persisting TransportUnit with unknown TransportUnitType.");
@@ -89,7 +92,7 @@ public class TransportUnitTest extends AbstractJpaSpringContextTests {
         transportUnit.setActualLocation(actualLocation);
         try {
             entityManager.persist(transportUnit);
-            Assert.fail("Persisting with unknown actualLocation && targetLocation not allowed!");
+            fail("Persisting with unknown actualLocation && targetLocation not allowed!");
         } catch (Exception pe) {
             // okay
             LOGGER.debug("OK:Execption while persisting TransportUnit with unknown actualLocation and targetLocation.");
@@ -116,7 +119,7 @@ public class TransportUnitTest extends AbstractJpaSpringContextTests {
             LOGGER.debug("Also without targetLocation must be okay.");
         } catch (PersistenceException pe) {
             LOGGER.debug("NOT OK:Execption while persisting TransportUnit with known actualLocation and transportUnitType!");
-            Assert.fail("Persisting transportUnit with known actualLocation and transportUnitType not committed!");
+            fail("Persisting transportUnit with known actualLocation and transportUnitType not committed!");
         }
     }
 
@@ -147,7 +150,7 @@ public class TransportUnitTest extends AbstractJpaSpringContextTests {
         try {
             entityManager.persist(transportUnit);
         } catch (Exception pe) {
-            Assert.fail("Persisting with well known Location and TransportUnitType fails!");
+            fail("Persisting with well known Location and TransportUnitType fails!");
         }
 
         Query query = entityManager.createQuery("select count(ue) from UnitError ue");

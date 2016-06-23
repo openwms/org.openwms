@@ -27,7 +27,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import org.hibernate.HibernateException;
-import org.hibernate.engine.spi.SharedSessionContractImplementor;
+import org.hibernate.engine.spi.SessionImplementor;
 import org.hibernate.type.StandardBasicTypes;
 import org.hibernate.type.Type;
 import org.hibernate.usertype.CompositeUserType;
@@ -115,12 +115,12 @@ public class PieceUserType implements CompositeUserType {
      *             in case of database errors
      */
     @Override
-    public Object nullSafeGet(ResultSet rs, String[] names, SharedSessionContractImplementor session, Object owner) throws HibernateException, SQLException {
-        String unitType = rs.getString(names[0]);
-        if (rs.wasNull()) {
+    public Object nullSafeGet(ResultSet resultSet, String[] strings, SessionImplementor sessionImplementor, Object o) throws HibernateException, SQLException {
+        String unitType = resultSet.getString(strings[0]);
+        if (resultSet.wasNull()) {
             return null;
         }
-        int amount = rs.getInt(names[1]);
+        int amount = resultSet.getInt(strings[1]);
         return new Piece(amount, PieceUnit.valueOf(unitType));
     }
 
@@ -131,15 +131,15 @@ public class PieceUserType implements CompositeUserType {
      *             in case of database errors
      */
     @Override
-    public void nullSafeSet(PreparedStatement st, Object value, int index, SharedSessionContractImplementor session) throws HibernateException, SQLException {
-        if (value == null) {
-            st.setNull(index, StandardBasicTypes.STRING.sqlType());
-            st.setNull(index + 1, StandardBasicTypes.BIG_DECIMAL.sqlType());
+    public void nullSafeSet(PreparedStatement preparedStatement, Object o, int i, SessionImplementor sessionImplementor) throws HibernateException, SQLException {
+        if (o == null) {
+            preparedStatement.setNull(i, StandardBasicTypes.STRING.sqlType());
+            preparedStatement.setNull(i + 1, StandardBasicTypes.BIG_DECIMAL.sqlType());
         } else {
-            Piece piece = (Piece) value;
+            Piece piece = (Piece) o;
             String unitType = piece.getUnitType().toString();
-            st.setString(index, unitType);
-            st.setBigDecimal(index + 1, piece.getMagnitude());
+            preparedStatement.setString(i, unitType);
+            preparedStatement.setBigDecimal(i + 1, piece.getMagnitude());
         }
     }
 
@@ -163,23 +163,23 @@ public class PieceUserType implements CompositeUserType {
      * {@inheritDoc}
      */
     @Override
-    public Serializable disassemble(Object value, SharedSessionContractImplementor session) throws HibernateException {
-        return (Serializable) value;
+    public Serializable disassemble(Object o, SessionImplementor sessionImplementor) throws HibernateException {
+        return (Serializable) o;
     }
 
     /**
      * {@inheritDoc}
      */
     @Override
-    public Object assemble(Serializable cached, SharedSessionContractImplementor session, Object owner) throws HibernateException {
-        return cached;
+    public Object assemble(Serializable serializable, SessionImplementor sessionImplementor, Object o) throws HibernateException {
+        return o;
     }
 
     /**
      * {@inheritDoc}
      */
     @Override
-    public Object replace(Object original, Object target, SharedSessionContractImplementor session, Object owner) throws HibernateException {
-        return original;
+    public Object replace(Object o, Object o1, SessionImplementor sessionImplementor, Object o2) throws HibernateException {
+        return o;
     }
 }
