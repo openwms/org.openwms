@@ -27,6 +27,7 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
+import javax.persistence.NoResultException;
 import javax.validation.ConstraintViolationException;
 import java.util.Collection;
 
@@ -168,8 +169,8 @@ public class UserServiceIT {
         srv.remove(KNOWN_USER);
         entityManager.flush();
         entityManager.clear();
+        thrown.expect(NoResultException.class);
         user = findUser(KNOWN_USER);
-        assertThat(user).isNull();
     }
 
     /**
