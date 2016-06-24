@@ -561,7 +561,7 @@
                     </configuration>
                 </plugin>
 
-                <plugin>
+                <!--plugin>
                     <artifactId>maven-enforcer-plugin</artifactId>
                     <version>${plugin.enforcer.version}</version>
                     <configuration>
@@ -577,7 +577,7 @@
                             <DependencyConvergence />
                         </rules>
                     </configuration>
-                </plugin>
+                </plugin-->
 
                 <plugin>
                     <artifactId>maven-install-plugin</artifactId>
