@@ -111,10 +111,6 @@
             <groupId>${project.groupId}</groupId>
             <artifactId>org.openwms.core.util</artifactId>
         </dependency>
-        <dependency>
-            <groupId>${project.groupId}</groupId>
-            <artifactId>org.openwms.core.domain</artifactId>
-        </dependency>
 
         <!-- Test dependencies -->
         <dependency>

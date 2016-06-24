@@ -120,11 +120,6 @@
         <!-- Project CORE dependencies -->
         <dependency>
             <groupId>${project.groupId}</groupId>
-            <artifactId>org.openwms.core.domain</artifactId>
-            <version>${core.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>${project.groupId}</groupId>
             <artifactId>org.openwms.core.util</artifactId>
             <version>${core.version}</version>
         </dependency>

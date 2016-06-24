@@ -37,11 +37,6 @@
     </properties>
     <dependencies>
         <!-- CORE Project dependencies -->
-        <dependency>
-            <groupId>${project.groupId}</groupId>
-            <artifactId>org.openwms.core.domain</artifactId>
-            <version>${core.version}</version>
-        </dependency>
 	    <dependency>
 	        <groupId>${project.groupId}</groupId>
 	        <artifactId>org.openwms.core.service.api</artifactId>

@@ -62,11 +62,6 @@
             </dependency>
             <dependency>
                 <groupId>${project.groupId}</groupId>
-                <artifactId>org.openwms.core.domain</artifactId>
-                <version>${module.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>${project.groupId}</groupId>
                 <artifactId>org.openwms.core.lang</artifactId>
                 <version>${module.version}</version>
             </dependency>

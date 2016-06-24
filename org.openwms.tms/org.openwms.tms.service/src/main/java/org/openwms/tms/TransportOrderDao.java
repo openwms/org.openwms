@@ -28,6 +28,7 @@ import org.openwms.common.TransportUnit;
 import org.openwms.tms.domain.order.TransportOrder;
 import org.openwms.tms.domain.values.TransportOrderState;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
 
 /**
  * A TransportOrderDao - Adds specific functionality concerning {@link TransportOrder} Entity classes.
@@ -68,6 +69,7 @@ public interface TransportOrderDao extends JpaRepository<TransportOrder, Long> {
      *            An arbitrary array of states
      * @return A list of {@link TransportOrder}s or an empty list.
      */
+    @Query("select to from TransportOrder to where to.transportUnit = :transportUnit and to.state in (:states)")
     List<TransportOrder> findForTUinState(TransportUnit transportUnit, TransportOrderState... states);
 
 }

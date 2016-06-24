@@ -21,11 +21,8 @@
  */
 package org.openwms.tms.delegate;
 
-import java.util.Arrays;
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import org.openwms.common.TransportUnit;
 import org.openwms.core.exception.StateChangeException;
@@ -125,7 +122,7 @@ public class DefaultOrderStateDelegate implements TransportOrderStateDelegate {
     }
 
     private void startNextForTu(Long id) {
-        TransportOrder transportOrder = dao.findById(id);
+        TransportOrder transportOrder = dao.findOne(id);
         if (null == transportOrder) {
             LOGGER.warn("TransportOrder with id:" + id + " could not be loaded");
             return;
@@ -133,13 +130,6 @@ public class DefaultOrderStateDelegate implements TransportOrderStateDelegate {
         List<TransportOrder> transportOrders = findInState(transportOrder.getTransportUnit(),
                 TransportOrderState.INITIALIZED);
         Collections.sort(transportOrders, new TransportStartComparator());
-        if (transportOrders == null) {
-            if (LOGGER.isDebugEnabled()) {
-                LOGGER.debug("No waiting TransportOrders for TransportUnit [" + transportOrder.getTransportUnit()
-                        + "] found");
-            }
-            return;
-        }
         for (TransportOrder to : transportOrders) {
             try {
                 starter.start(to);
@@ -180,11 +170,6 @@ public class DefaultOrderStateDelegate implements TransportOrderStateDelegate {
     }
 
     private List<TransportOrder> findInState(TransportUnit transportUnit, TransportOrderState... orderStates) {
-        Map<String, Object> params = new HashMap<String, Object>();
-        params.put("transportUnit", transportUnit);
-        params.put("states", Arrays.asList(orderStates));
-        List<TransportOrder> transportOrders = dao
-                .findByNamedParameters(TransportOrder.NQ_FIND_FOR_TU_IN_STATE, params);
-        return transportOrders;
+        return dao.findForTUinState(transportUnit, orderStates);
     }
 }

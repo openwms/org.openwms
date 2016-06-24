@@ -68,10 +68,10 @@ public class TransportServiceImpl implements TransportOrderService<TransportOrde
     private TransportOrderDao dao;
     @Autowired
     @Qualifier("transportUnitDao")
-    private GenericDao<TransportUnit, Long> transportUnitDao;
+    private TransportUnitDao<TransportUnit, Long> transportUnitDao;
     @Autowired
     @Qualifier("locationDao")
-    private GenericDao<Location, Long> locationDao;
+    private LocationDao<Location, Long> locationDao;
     @Autowired
     @Qualifier("locationGroupDao")
     private GenericDao<LocationGroup, Long> locationGroupDao;
