@@ -63,7 +63,6 @@
             <modules>
                 <module>org.openwms.core.bom</module>
                 <module>org.openwms.core.configuration</module>
-                <module>org.openwms.core.domain</module>
                 <module>org.openwms.core.lang</module>
                 <module>org.openwms.core.search</module>
                 <module>org.openwms.core.test</module>
@@ -76,7 +75,6 @@
             <modules>
                 <module>org.openwms.core.bom</module>
                 <module>org.openwms.core.configuration</module>
-                <module>org.openwms.core.domain</module>
                 <module>org.openwms.core.lang</module>
                 <module>org.openwms.core.search</module>
                 <module>org.openwms.core.test</module>
@@ -101,11 +99,6 @@
                 <groupId>${project.groupId}</groupId>
                 <artifactId>org.openwms.core.configuration</artifactId>
                 <version>${project.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>${project.groupId}</groupId>
-                <artifactId>org.openwms.core.domain</artifactId>
-                <version>${module.version}</version>
             </dependency>
             <dependency>
                 <groupId>${project.groupId}</groupId>
