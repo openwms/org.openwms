@@ -21,7 +21,7 @@
  */
 package org.openwms.common.units;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 import java.math.BigDecimal;
 

@@ -21,7 +21,8 @@
  */
 package org.openwms.common.values;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
 
 import org.junit.Test;
 import org.openwms.common.values.Barcode.BARCODE_ALIGN;

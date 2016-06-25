@@ -19,7 +19,15 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
+package org.openwms.common;
+
 /**
- * This package provides common utility classes regarding event handling.
+ * A TransportUnitEvent.
+ * 
+ * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
+ * @version $Revision: $
+ * @since 0.1
  */
-package org.openwms.common.util.event;
+public class TransportUnitEvent {
+
+}
