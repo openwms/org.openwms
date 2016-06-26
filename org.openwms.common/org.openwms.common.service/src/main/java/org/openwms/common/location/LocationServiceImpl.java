@@ -25,6 +25,7 @@ import java.util.Date;
 import java.util.List;
 
 import org.ameba.annotation.TxService;
+import org.ameba.exception.NotFoundException;
 import org.ameba.exception.ServiceLayerException;
 import org.openwms.core.values.Message;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -115,5 +116,13 @@ class LocationServiceImpl implements LocationService<Location> {
     @Override
     public LocationType saveLocationType(LocationType locationType) {
         return locationTypeRepository.save(locationType);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public Location findByLocationId(LocationPK locationPK) {
+        return locationRepository.findByLocationId(locationPK).orElseThrow(() -> new NotFoundException(String.format("No Location with locationPk %s found", locationPK), null));
     }
 }
