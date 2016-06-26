@@ -31,7 +31,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  * @version 0.2
  * @since 0.1
- * @see org.openwms.core.integration.GenericDao
  * @see org.openwms.common.Location
  */
 interface LocationDao extends JpaRepository<Location, Long> {
