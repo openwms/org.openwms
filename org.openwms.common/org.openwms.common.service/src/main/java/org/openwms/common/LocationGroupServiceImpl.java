@@ -42,13 +42,13 @@ import org.springframework.transaction.annotation.Transactional;
  * @since 0.1
  */
 @TxService
-public class LocationGroupServiceImpl implements LocationGroupService<LocationGroup> {
+class LocationGroupServiceImpl implements LocationGroupService<LocationGroup> {
 
     private Logger logger = LoggerFactory.getLogger(this.getClass());
 
     @Autowired
     @Qualifier("locationGroupDao")
-    private LocationGroupDao dao;
+    private LocationGroupRepository dao;
 
     /**
      * {@inheritDoc}

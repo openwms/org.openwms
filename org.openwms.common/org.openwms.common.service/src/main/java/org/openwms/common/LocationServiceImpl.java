@@ -41,10 +41,10 @@ import org.springframework.transaction.annotation.Transactional;
 class LocationServiceImpl implements LocationService<Location> {
 
     @Autowired
-    private LocationDao dao;
+    private LocationRepository locationRepository;
 
     @Autowired
-    private LocationTypeDao locationTypeDao;
+    private LocationTypeRepository locationTypeRepository;
 
     /**
      * {@inheritDoc}
@@ -52,10 +52,10 @@ class LocationServiceImpl implements LocationService<Location> {
     @Override
     @Transactional(readOnly = false)
     public List<Location> getAllLocations() {
-        List<Location> list = dao.findAll();
+        List<Location> list = locationRepository.findAll();
         for (Location location : list) {
             location.setLastAccess(new Date());
-            dao.save(location);
+            locationRepository.save(location);
         }
         return list;
     }
@@ -65,7 +65,7 @@ class LocationServiceImpl implements LocationService<Location> {
      */
     @Override
     public Location removeMessages(Long id, List<Message> messages) {
-        Location location = dao.findOne(id);
+        Location location = locationRepository.findOne(id);
         if (null == location) {
             throw new ServiceLayerException("Location with pk " + id + " not found, probably it was removed before");
         }
@@ -79,7 +79,7 @@ class LocationServiceImpl implements LocationService<Location> {
     @Override
     @Transactional(readOnly = true)
     public List<LocationType> getAllLocationTypes() {
-        return locationTypeDao.findAll();
+        return locationTypeRepository.findAll();
     }
 
     /**
@@ -90,9 +90,9 @@ class LocationServiceImpl implements LocationService<Location> {
     @Override
     public void createLocationType(LocationType locationType) {
         if (locationType.isNew()) {
-            locationTypeDao.save(locationType);
+            locationTypeRepository.save(locationType);
         } else {
-            locationTypeDao.save(locationType);
+            locationTypeRepository.save(locationType);
         }
     }
 
@@ -104,8 +104,8 @@ class LocationServiceImpl implements LocationService<Location> {
     @Override
     public void deleteLocationTypes(List<LocationType> locationTypes) {
         for (LocationType locationType : locationTypes) {
-            LocationType lt = locationTypeDao.findOne(locationType.getId());
-            locationTypeDao.delete(lt);
+            LocationType lt = locationTypeRepository.findOne(locationType.getId());
+            locationTypeRepository.delete(lt);
         }
     }
 
@@ -114,6 +114,6 @@ class LocationServiceImpl implements LocationService<Location> {
      */
     @Override
     public LocationType saveLocationType(LocationType locationType) {
-        return locationTypeDao.save(locationType);
+        return locationTypeRepository.save(locationType);
     }
 }

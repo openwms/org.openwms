@@ -26,6 +26,7 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
+import org.ameba.annotation.TxService;
 import org.ameba.exception.ServiceLayerException;
 import org.openwms.common.values.Barcode;
 import org.openwms.core.listener.OnRemovalListener;
@@ -34,35 +35,27 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 /**
  * A TransportUnitServiceImpl.
  * 
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
- * @version $Revision$
  * @since 0.1
  */
-@Transactional
-@Service(TransportUnitServiceImpl.COMPONENT_NAME)
-public class TransportUnitServiceImpl implements TransportUnitService<TransportUnit> {
+@TxService
+class TransportUnitServiceImpl implements TransportUnitService<TransportUnit> {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(TransportUnitServiceImpl.class);
-    /** Springs component name. */
-    public static final String COMPONENT_NAME = "transportUnitService";
 
     @Autowired
-    @Qualifier("transportUnitDao")
-    private TransportUnitDao dao;
+    private TransportUnitRepository dao;
 
     @Autowired
-    @Qualifier("locationDao")
-    private LocationDao locationDao;
+    private LocationRepository locationRepository;
 
     @Autowired
-    @Qualifier("transportUnitTypeDao")
-    private TransportUnitTypeDao transportUnitTypeDao;
+    private TransportUnitTypeRepository transportUnitTypeRepository;
 
     @Autowired(required = false)
     @Qualifier("onRemovalListener")
@@ -91,11 +84,11 @@ public class TransportUnitServiceImpl implements TransportUnitService<TransportU
         if (transportUnit != null) {
             throw new ServiceLayerException("TransportUnit with id " + barcode + " not found");
         }
-        Location location = locationDao.findByLocationId(actualLocation).get();
+        Location location = locationRepository.findByLocationId(actualLocation).get();
         if (location == null) {
             throw new ServiceLayerException("Location " + actualLocation + " not found");
         }
-        TransportUnitType type = transportUnitTypeDao.findByType(transportUnitType.getType()).get();
+        TransportUnitType type = transportUnitTypeRepository.findByType(transportUnitType.getType()).get();
         if (null == type) {
             throw new ServiceLayerException("TransportUnitType " + transportUnitType + " not found");
         }
@@ -124,7 +117,7 @@ public class TransportUnitServiceImpl implements TransportUnitService<TransportU
         if (transportUnit == null) {
             throw new ServiceLayerException("TransportUnit with id " + barcode + " not found");
         }
-        Location actualLocation = locationDao.findByLocationId(targetLocationPK).get();
+        Location actualLocation = locationRepository.findByLocationId(targetLocationPK).get();
         // if (actualLocation == null) {
         // throw new ServiceException("Location with id " + newLocationPk +
         // " not found");

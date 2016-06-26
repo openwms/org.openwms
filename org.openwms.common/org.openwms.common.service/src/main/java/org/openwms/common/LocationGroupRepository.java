@@ -24,13 +24,12 @@ package org.openwms.common;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 /**
- * A LocationGroupDao adds particular functionality regarding {@link LocationGroup} entity classes.
+ * A LocationGroupRepository adds particular functionality regarding {@link LocationGroup} entity classes.
  * 
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  * @version 0.2
  * @since 0.1
- * @see org.openwms.core.integration.GenericDao
  * @see org.openwms.common.LocationGroup
  */
-interface LocationGroupDao extends JpaRepository<LocationGroup, Long> {
+interface LocationGroupRepository extends JpaRepository<LocationGroup, Long> {
 }

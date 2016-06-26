@@ -34,7 +34,6 @@ import org.springframework.transaction.annotation.Transactional;
  * A TransportUnitTypeServiceImpl.
  *
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
- * @version $Revision: $
  * @since 0.2
  */
 @TxService
@@ -43,7 +42,7 @@ class TransportUnitTypeServiceImpl implements TransportUnitTypeService {
     private static final Logger LOGGER = LoggerFactory.getLogger(TransportUnitTypeServiceImpl.class);
 
     @Autowired
-    private TransportUnitTypeDao transportUnitTypeDao;
+    private TransportUnitTypeRepository transportUnitTypeRepository;
 
     /**
      * {@inheritDoc}
@@ -51,7 +50,7 @@ class TransportUnitTypeServiceImpl implements TransportUnitTypeService {
     @Override
     @Transactional(readOnly = true)
     public List<TransportUnitType> findAll() {
-        return transportUnitTypeDao.findAll();
+        return transportUnitTypeRepository.findAll();
     }
 
     /**
@@ -59,8 +58,8 @@ class TransportUnitTypeServiceImpl implements TransportUnitTypeService {
      */
     @Override
     public TransportUnitType create(TransportUnitType transportUnitType) {
-        transportUnitTypeDao.save(transportUnitType);
-        return transportUnitTypeDao.save(transportUnitType);
+        transportUnitTypeRepository.save(transportUnitType);
+        return transportUnitTypeRepository.save(transportUnitType);
     }
 
     /**
@@ -69,9 +68,9 @@ class TransportUnitTypeServiceImpl implements TransportUnitTypeService {
     @Override
     public void deleteType(TransportUnitType... transportUnitTypes) {
         for (TransportUnitType transportUnitType : transportUnitTypes) {
-            TransportUnitType tut = transportUnitTypeDao.findByType(transportUnitType.getType()).get();
+            TransportUnitType tut = transportUnitTypeRepository.findByType(transportUnitType.getType()).get();
             if (tut != null) {
-                transportUnitTypeDao.delete(tut);
+                transportUnitTypeRepository.delete(tut);
             }
         }
     }
@@ -81,7 +80,7 @@ class TransportUnitTypeServiceImpl implements TransportUnitTypeService {
      */
     @Override
     public TransportUnitType save(TransportUnitType transportUnitType) {
-        TransportUnitType tut = transportUnitTypeDao.save(transportUnitType);
+        TransportUnitType tut = transportUnitTypeRepository.save(transportUnitType);
         LOGGER.debug("Save a TransportUnitType, list of typePlacingRules:" + tut.getTypePlacingRules().size());
         return tut;
     }
@@ -92,7 +91,7 @@ class TransportUnitTypeServiceImpl implements TransportUnitTypeService {
     @Override
     public TransportUnitType updateRules(String type, List<LocationType> newAssigned, List<LocationType> newNotAssigned) {
 
-        TransportUnitType tut = transportUnitTypeDao.findByType(type).get();
+        TransportUnitType tut = transportUnitTypeRepository.findByType(type).get();
         boolean found = false;
         if (newAssigned != null && !newAssigned.isEmpty()) {
             for (LocationType locationType : newAssigned) {
@@ -120,7 +119,7 @@ class TransportUnitTypeServiceImpl implements TransportUnitTypeService {
             }
         }
 
-        return transportUnitTypeDao.save(tut);
+        return transportUnitTypeRepository.save(tut);
     }
 
     /**
@@ -128,8 +127,8 @@ class TransportUnitTypeServiceImpl implements TransportUnitTypeService {
      */
     @Override
     public List<Rule> loadRules(String transportUnitType) {
-        TransportUnitType type = transportUnitTypeDao.findByType(transportUnitType).get();
-        List<Rule> rules = new ArrayList<Rule>();
+        TransportUnitType type = transportUnitTypeRepository.findByType(transportUnitType).get();
+        List<Rule> rules = new ArrayList<>();
         if (type != null) {
             LOGGER.debug("Found type " + type);
             rules.addAll(type.getTypePlacingRules());

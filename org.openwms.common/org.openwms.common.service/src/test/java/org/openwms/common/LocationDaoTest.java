@@ -43,7 +43,7 @@ import org.springframework.test.context.ContextConfiguration;
 public class LocationDaoTest extends AbstractJpaSpringContextTests {
 
     @Autowired
-    private LocationDao locationDao;
+    private LocationRepository locationDao;
     private List<Location> locations;
 
     /**

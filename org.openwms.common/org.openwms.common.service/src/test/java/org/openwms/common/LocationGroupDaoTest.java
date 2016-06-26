@@ -38,7 +38,7 @@ import org.springframework.test.context.ContextConfiguration;
 public class LocationGroupDaoTest extends AbstractJpaSpringContextTests {
 
     @Autowired
-    private LocationGroupDao dao;
+    private LocationGroupRepository dao;
 
     /**
      * Try to persist two locationGroups with the same business key.

@@ -26,19 +26,14 @@ import java.util.Optional;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 /**
- * A TransportUnitTypeDao adds particular functionality regarding {@link TransportUnitType} entity classes.
- *
+ * A LocationRepository adds particular functionality regarding {@link Location} entity classes.
+ * 
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  * @version 0.2
  * @since 0.1
+ * @see org.openwms.common.Location
  */
-interface TransportUnitTypeDao extends JpaRepository<TransportUnitType, Long> {
+interface LocationRepository extends JpaRepository<Location, Long> {
 
-    /**
-     * Find and return a TransportUnitType by the given {@literal type}.
-     *
-     * @param type The type to identify the TransportUnitType
-     * @return The TransportUnitType instance
-     */
-    Optional<TransportUnitType> findByType(String type);
+    Optional<Location> findByLocationId(LocationPK locationPK);
 }

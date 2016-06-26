@@ -52,7 +52,7 @@ import org.openwms.core.DomainObject;
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  * @version $Revision$
  * @since 0.1
- * @see org.openwms.common.domain.TransportUnit
+ * @see org.openwms.common.TransportUnit
  */
 @Entity
 @Table(name = "COM_TRANSPORT_UNIT_TYPE")

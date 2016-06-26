@@ -41,9 +41,9 @@ import org.springframework.test.context.ContextConfiguration;
 public class LocationTest extends AbstractJpaSpringContextTests {
 
     @Autowired
-    private LocationDao locationDao;
+    private LocationRepository locationDao;
     @Autowired
-    private LocationGroupDao locationGroupDao;
+    private LocationGroupRepository locationGroupDao;
 
     private final LocationGroup locationGroup = new LocationGroup("TEST_LOCATION_GROUP1");
     private final LocationGroup locationGroup2 = new LocationGroup("TEST_LOCATION_GROUP2");

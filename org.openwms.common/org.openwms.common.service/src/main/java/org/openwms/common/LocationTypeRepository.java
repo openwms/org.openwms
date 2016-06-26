@@ -21,21 +21,16 @@
  */
 package org.openwms.common;
 
-import java.util.Optional;
-
-import org.openwms.common.values.Barcode;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 /**
- * A TransportUnitDao adds particular functionality regarding {@link TransportUnit} entity classes.
+ * A LocationTypeRepository adds particular functionality regarding {@link LocationType} entity classes.
  * 
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  * @version 0.2
  * @since 0.1
- * @see org.openwms.core.integration.GenericDao
- * @see org.openwms.common.TransportUnit
+ * @see org.openwms.common.LocationType
  */
-interface TransportUnitDao extends JpaRepository<TransportUnit, Long> {
+interface LocationTypeRepository extends JpaRepository<LocationType, Long> {
 
-    Optional<TransportUnit> findByBarcode(Barcode barcode);
 }
