@@ -24,7 +24,7 @@ package org.openwms.tms.delegate;
 import java.util.Collections;
 import java.util.List;
 
-import org.openwms.common.TransportUnit;
+import org.openwms.common.transport.TransportUnit;
 import org.openwms.core.exception.StateChangeException;
 import org.openwms.tms.TransportOrderDao;
 import org.openwms.tms.domain.comparator.TransportStartComparator;

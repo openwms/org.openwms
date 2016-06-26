@@ -23,8 +23,8 @@ package org.openwms.tms.delegate;
 
 import java.util.List;
 
-import org.openwms.common.Location;
-import org.openwms.common.LocationGroup;
+import org.openwms.common.location.Location;
+import org.openwms.common.location.LocationGroup;
 import org.openwms.core.exception.StateChangeException;
 import org.openwms.tms.TransportOrderDao;
 import org.openwms.tms.domain.order.TransportOrder;

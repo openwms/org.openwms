@@ -59,7 +59,7 @@
         <!-- Project dependencies -->
         <dependency>
             <groupId>${project.groupId}</groupId>
-            <artifactId>org.openwms.common.domain</artifactId>
+            <artifactId>org.openwms.common.service</artifactId>
         </dependency>
     </dependencies>
 </project>

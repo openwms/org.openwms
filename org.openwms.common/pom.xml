@@ -63,27 +63,20 @@
             </activation>
             <modules>
                 <module>org.openwms.common.comm</module>
-                <module>org.openwms.common.domain</module>
-                <module>org.openwms.common.rest</module>
                 <module>org.openwms.common.service</module>
-                <module>org.openwms.common.util</module>
             </modules>
         </profile>
         <profile>
             <id>common</id>
             <modules>
                 <module>org.openwms.common.comm</module>
-                <module>org.openwms.common.domain</module>
-                <module>org.openwms.common.rest</module>
                 <module>org.openwms.common.service</module>
-                <module>org.openwms.common.util</module>
             </modules>
         </profile>
     </profiles>
 
     <dependencyManagement>
         <dependencies>
-
             <!-- Core dependencies -->
             <dependency>
                 <groupId>org.openwms</groupId>
@@ -96,22 +89,7 @@
             <!-- Project dependencies -->
             <dependency>
                 <groupId>${project.groupId}</groupId>
-                <artifactId>org.openwms.common.domain</artifactId>
-                <version>${module.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>${project.groupId}</groupId>
-                <artifactId>org.openwms.common.rest</artifactId>
-                <version>${module.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>${project.groupId}</groupId>
                 <artifactId>org.openwms.common.service</artifactId>
-                <version>${module.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>${project.groupId}</groupId>
-                <artifactId>org.openwms.common.util</artifactId>
                 <version>${module.version}</version>
             </dependency>
         </dependencies>
