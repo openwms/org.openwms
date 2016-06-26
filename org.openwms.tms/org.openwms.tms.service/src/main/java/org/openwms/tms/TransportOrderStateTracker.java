@@ -21,7 +21,7 @@
  */
 package org.openwms.tms;
 
-import org.openwms.common.TransportUnit;
+import org.openwms.common.transport.TransportUnit;
 import org.openwms.tms.delegate.TransportOrderStateDelegate;
 import org.openwms.tms.util.event.TransportServiceEvent;
 import org.springframework.beans.factory.annotation.Autowired;

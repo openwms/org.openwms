@@ -19,16 +19,15 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
-package org.openwms.common;
+package org.openwms.common.transport;
 
 /**
- * A Rule used as marker interface.
+ * A TransportUnitEvent.
  * 
- * @GlossaryTerm
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
- * @version $Revision$
+ * @version $Revision: $
  * @since 0.1
  */
-public interface Rule {
+public class TransportUnitEvent {
 
 }

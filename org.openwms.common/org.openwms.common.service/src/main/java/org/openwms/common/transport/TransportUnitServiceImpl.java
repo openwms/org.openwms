@@ -19,7 +19,7 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
-package org.openwms.common;
+package org.openwms.common.transport;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -28,6 +28,9 @@ import java.util.List;
 
 import org.ameba.annotation.TxService;
 import org.ameba.exception.ServiceLayerException;
+import org.openwms.common.location.Location;
+import org.openwms.common.location.LocationPK;
+import org.openwms.common.location.LocationService;
 import org.openwms.common.values.Barcode;
 import org.openwms.core.listener.OnRemovalListener;
 import org.openwms.core.listener.RemovalNotAllowedException;
@@ -52,7 +55,7 @@ class TransportUnitServiceImpl implements TransportUnitService<TransportUnit> {
     private TransportUnitRepository dao;
 
     @Autowired
-    private LocationRepository locationRepository;
+    private LocationService<Location> locationService;
 
     @Autowired
     private TransportUnitTypeRepository transportUnitTypeRepository;
@@ -84,7 +87,7 @@ class TransportUnitServiceImpl implements TransportUnitService<TransportUnit> {
         if (transportUnit != null) {
             throw new ServiceLayerException("TransportUnit with id " + barcode + " not found");
         }
-        Location location = locationRepository.findByLocationId(actualLocation).get();
+        Location location = locationService.findByLocationId(actualLocation);
         if (location == null) {
             throw new ServiceLayerException("Location " + actualLocation + " not found");
         }
@@ -117,7 +120,7 @@ class TransportUnitServiceImpl implements TransportUnitService<TransportUnit> {
         if (transportUnit == null) {
             throw new ServiceLayerException("TransportUnit with id " + barcode + " not found");
         }
-        Location actualLocation = locationRepository.findByLocationId(targetLocationPK).get();
+        Location actualLocation = locationService.findByLocationId(targetLocationPK);
         // if (actualLocation == null) {
         // throw new ServiceException("Location with id " + newLocationPk +
         // " not found");

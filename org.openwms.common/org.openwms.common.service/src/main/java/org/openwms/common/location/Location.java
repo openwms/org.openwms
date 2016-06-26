@@ -19,7 +19,7 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
-package org.openwms.common;
+package org.openwms.common.location;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -44,6 +44,7 @@ import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
+import org.openwms.common.transport.TransportUnit;
 import org.openwms.common.types.Target;
 import org.openwms.core.values.Message;
 

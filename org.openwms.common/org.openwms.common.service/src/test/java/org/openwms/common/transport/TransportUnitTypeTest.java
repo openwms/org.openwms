@@ -19,7 +19,7 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
-package org.openwms.common;
+package org.openwms.common.transport;
 
 import static org.junit.Assert.fail;
 
@@ -30,6 +30,7 @@ import junit.framework.Assert;
 import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
+import org.openwms.common.location.LocationType;
 import org.openwms.core.test.AbstractJpaSpringContextTests;
 import org.springframework.test.context.ContextConfiguration;
 

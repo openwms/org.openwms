@@ -21,7 +21,7 @@
  */
 package org.openwms.common.values;
 
-import org.openwms.common.TransportUnit;
+import org.openwms.common.transport.TransportUnit;
 
 /**
  * A TransportUnitState defines a set of states for <code>TransportUnit</code>s.

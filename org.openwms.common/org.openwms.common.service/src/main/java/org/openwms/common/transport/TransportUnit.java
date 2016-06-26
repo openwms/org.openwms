@@ -19,7 +19,7 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
-package org.openwms.common;
+package org.openwms.common.transport;
 
 import javax.persistence.AttributeOverride;
 import javax.persistence.CascadeType;
@@ -50,6 +50,7 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
+import org.openwms.common.location.Location;
 import org.openwms.common.system.UnitError;
 import org.openwms.common.units.Weight;
 import org.openwms.common.values.Barcode;

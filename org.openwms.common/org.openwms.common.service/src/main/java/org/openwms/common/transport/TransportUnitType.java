@@ -19,7 +19,7 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
-package org.openwms.common;
+package org.openwms.common.transport;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -38,6 +38,7 @@ import java.math.BigDecimal;
 import java.util.HashSet;
 import java.util.Set;
 
+import org.openwms.common.location.LocationType;
 import org.openwms.core.AbstractEntity;
 import org.openwms.core.DomainObject;
 
@@ -52,7 +53,7 @@ import org.openwms.core.DomainObject;
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  * @version $Revision$
  * @since 0.1
- * @see org.openwms.common.TransportUnit
+ * @see TransportUnit
  */
 @Entity
 @Table(name = "COM_TRANSPORT_UNIT_TYPE")

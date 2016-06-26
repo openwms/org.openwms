@@ -21,7 +21,7 @@
  */
 package org.openwms.common.values;
 
-import org.openwms.common.LocationGroup;
+import org.openwms.common.location.LocationGroup;
 
 /**
  * A LocationGroupState defines possible states used for <code>LocationGroup</code>s.

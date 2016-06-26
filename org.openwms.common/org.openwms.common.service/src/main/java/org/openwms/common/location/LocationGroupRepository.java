@@ -19,7 +19,7 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
-package org.openwms.common;
+package org.openwms.common.location;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
@@ -29,7 +29,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  * @version 0.2
  * @since 0.1
- * @see org.openwms.common.LocationGroup
+ * @see LocationGroup
  */
 interface LocationGroupRepository extends JpaRepository<LocationGroup, Long> {
 }

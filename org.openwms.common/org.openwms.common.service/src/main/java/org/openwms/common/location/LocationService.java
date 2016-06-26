@@ -19,7 +19,7 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
-package org.openwms.common;
+package org.openwms.common.location;
 
 import java.util.List;
 
@@ -80,4 +80,13 @@ public interface LocationService<T extends Location> {
      * @return The saved type
      */
     LocationType saveLocationType(LocationType locationType);
+
+    /**
+     * Find and return a Location identified by the given {@code locationPk}.
+     *
+     * @param locationPK The business key of the Location to search for
+     * @return The Location
+     * @throws org.ameba.exception.NotFoundException if entity not found
+     */
+    Location findByLocationId(LocationPK locationPK);
 }

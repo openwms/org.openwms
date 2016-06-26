@@ -27,8 +27,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.openwms.common.LocationGroup;
-import org.openwms.common.TransportUnit;
+import org.openwms.common.location.LocationGroup;
+import org.openwms.common.transport.TransportUnit;
 import org.openwms.core.integration.jpa.AbstractGenericJpaDao;
 import org.openwms.tms.domain.order.TransportOrder;
 import org.openwms.tms.domain.values.TransportOrderState;

@@ -19,26 +19,18 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
-package org.openwms.common;
-
-import java.util.Optional;
+package org.openwms.common.location;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
 /**
- * A TransportUnitTypeRepository adds particular functionality regarding {@link TransportUnitType} entity classes.
- *
+ * A LocationTypeRepository adds particular functionality regarding {@link LocationType} entity classes.
+ * 
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  * @version 0.2
  * @since 0.1
+ * @see LocationType
  */
-interface TransportUnitTypeRepository extends JpaRepository<TransportUnitType, Long> {
+interface LocationTypeRepository extends JpaRepository<LocationType, Long> {
 
-    /**
-     * Find and return a TransportUnitType by the given {@literal type}.
-     *
-     * @param type The type to identify the TransportUnitType
-     * @return The TransportUnitType instance
-     */
-    Optional<TransportUnitType> findByType(String type);
 }

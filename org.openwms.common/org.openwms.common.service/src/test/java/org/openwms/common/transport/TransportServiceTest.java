@@ -19,13 +19,17 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
-package org.openwms.common;
+package org.openwms.common.transport;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.fail;
 
 import org.ameba.exception.ServiceLayerException;
 import org.junit.Before;
 import org.junit.Test;
+import org.openwms.common.location.Location;
+import org.openwms.common.location.LocationPK;
 import org.openwms.common.values.Barcode;
 import org.openwms.core.test.AbstractJpaSpringContextTests;
 import org.springframework.beans.factory.annotation.Autowired;

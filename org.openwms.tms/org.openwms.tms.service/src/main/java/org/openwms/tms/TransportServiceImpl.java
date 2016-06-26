@@ -24,9 +24,9 @@ package org.openwms.tms;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.openwms.common.Location;
-import org.openwms.common.LocationGroup;
-import org.openwms.common.TransportUnit;
+import org.openwms.common.location.Location;
+import org.openwms.common.location.LocationGroup;
+import org.openwms.common.transport.TransportUnit;
 import org.openwms.common.values.Barcode;
 import org.openwms.common.values.Problem;
 import org.openwms.core.exception.StateChangeException;

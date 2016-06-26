@@ -19,21 +19,21 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
-package org.openwms.common;
+package org.openwms.common.location;
 
 import java.util.Optional;
 
-import org.openwms.common.values.Barcode;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 /**
- * A TransportUnitRepository adds particular functionality regarding {@link TransportUnit} entity classes.
+ * A LocationRepository adds particular functionality regarding {@link Location} entity classes.
  * 
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
+ * @version 0.2
  * @since 0.1
- * @see org.openwms.common.TransportUnit
+ * @see Location
  */
-interface TransportUnitRepository extends JpaRepository<TransportUnit, Long> {
+interface LocationRepository extends JpaRepository<Location, Long> {
 
-    Optional<TransportUnit> findByBarcode(Barcode barcode);
+    Optional<Location> findByLocationId(LocationPK locationPK);
 }

@@ -21,8 +21,8 @@
  */
 package org.openwms.tms.voter;
 
-import org.openwms.common.Location;
-import org.openwms.common.LocationGroup;
+import org.openwms.common.location.Location;
+import org.openwms.common.location.LocationGroup;
 import org.openwms.core.voter.Vote;
 
 /**
