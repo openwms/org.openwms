@@ -21,6 +21,7 @@
  */
 package org.openwms.common.location;
 
+import javax.persistence.AttributeOverride;
 import javax.persistence.AttributeOverrides;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -65,7 +66,13 @@ public class Location extends BaseEntity implements Serializable {
      * Unique natural key.
      */
     @Embedded
-    @AttributeOverrides({})
+    @AttributeOverrides({
+            @AttributeOverride(name = "area", column = @Column(name = "C_AREA")),
+            @AttributeOverride(name = "aisle", column = @Column(name = "C_AISLE")),
+            @AttributeOverride(name = "x", column = @Column(name = "C_X")),
+            @AttributeOverride(name = "y", column = @Column(name = "C_Y")),
+            @AttributeOverride(name = "z", column = @Column(name = "C_Z"))
+    })
     private LocationPK locationId;
 
     /**
