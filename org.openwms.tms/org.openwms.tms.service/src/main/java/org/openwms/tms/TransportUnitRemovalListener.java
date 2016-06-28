@@ -24,7 +24,6 @@ package org.openwms.tms;
 import java.util.List;
 
 import org.openwms.common.transport.TransportUnit;
-import org.openwms.common.values.Problem;
 import org.openwms.core.exception.StateChangeException;
 import org.openwms.core.listener.OnRemovalListener;
 import org.openwms.core.listener.RemovalNotAllowedException;

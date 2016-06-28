@@ -31,7 +31,7 @@ import org.openwms.common.comm.exception.MessageMissmatchException;
 import org.openwms.common.comm.request.RequestMessage;
 import org.openwms.common.comm.util.CommonMessageFactory;
 import org.openwms.common.location.LocationPK;
-import org.openwms.common.values.Barcode;
+import org.openwms.common.transport.Barcode;
 import org.springframework.stereotype.Component;
 
 /**

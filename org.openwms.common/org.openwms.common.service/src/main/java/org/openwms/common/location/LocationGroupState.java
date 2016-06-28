@@ -1,5 +1,3 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!--
 /*
  * openwms.org, the Open Warehouse Management System.
  * Copyright (C) 2014 Heiko Scherrer
@@ -21,16 +19,26 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
--->
-<beans xmlns="http://www.springframework.org/schema/beans"
-	   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	   xmlns:tx="http://www.springframework.org/schema/tx"
-	   xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+package org.openwms.common.location;
 
-			http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd">
+/**
+ * A LocationGroupState defines possible states used for <code>LocationGroup</code>s.
+ * 
+ * @GlossaryTerm
+ * @author <a href="mailto:russelltina@users.sourceforge.net">Tina Russell</a>
+ * @version $Revision$
+ * @since 0.1
+ * @see LocationGroup
+ */
+public enum LocationGroupState {
 
-	<!--context:annotation-config /-->
-    <!--context:component-scan base-package="org.openwms.common.service.spring" /-->
-    <tx:annotation-driven />
+    /**
+     * Available.
+     */
+    AVAILABLE,
 
-</beans>
+    /**
+     * Not available.
+     */
+    NOT_AVAILABLE;
+}

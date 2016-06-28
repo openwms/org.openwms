@@ -31,8 +31,6 @@ import org.junit.Ignore;
 import org.junit.Test;
 import org.openwms.common.location.Location;
 import org.openwms.common.location.LocationPK;
-import org.openwms.common.system.UnitError;
-import org.openwms.common.values.Barcode;
 import org.openwms.core.test.AbstractJpaSpringContextTests;
 import org.springframework.test.context.ContextConfiguration;
 

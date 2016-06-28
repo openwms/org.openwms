@@ -25,7 +25,6 @@ import java.util.List;
 
 import org.ameba.annotation.TxService;
 import org.ameba.exception.ServiceLayerException;
-import org.openwms.common.values.LocationGroupState;
 import org.openwms.core.util.TreeNode;
 import org.openwms.core.util.TreeNodeImpl;
 import org.slf4j.Logger;

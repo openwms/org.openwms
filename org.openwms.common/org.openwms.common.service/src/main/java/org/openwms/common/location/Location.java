@@ -45,7 +45,6 @@ import java.util.HashSet;
 import java.util.Set;
 
 import org.openwms.common.transport.TransportUnit;
-import org.openwms.common.types.Target;
 import org.openwms.core.values.Message;
 
 /**

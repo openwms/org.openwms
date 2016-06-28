@@ -51,10 +51,7 @@ import java.util.Map;
 import java.util.Set;
 
 import org.openwms.common.location.Location;
-import org.openwms.common.system.UnitError;
 import org.openwms.common.units.Weight;
-import org.openwms.common.values.Barcode;
-import org.openwms.common.values.TransportUnitState;
 import org.openwms.core.AbstractEntity;
 import org.openwms.core.DomainObject;
 import org.openwms.core.uaa.User;

@@ -40,8 +40,6 @@ import java.util.HashSet;
 import java.util.Set;
 
 import org.openwms.common.transport.TransportUnit;
-import org.openwms.common.types.Target;
-import org.openwms.common.values.LocationGroupState;
 
 /**
  * A LocationGroup is a logical group of <code>Location</code>s, grouping together <code>Location</code>s with same characteristics.

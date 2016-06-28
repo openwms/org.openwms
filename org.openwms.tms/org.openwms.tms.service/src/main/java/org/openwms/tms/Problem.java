@@ -1,4 +1,4 @@
-package org.openwms.common.values;
+package org.openwms.tms;
 
 import javax.persistence.Column;
 import javax.persistence.Embeddable;

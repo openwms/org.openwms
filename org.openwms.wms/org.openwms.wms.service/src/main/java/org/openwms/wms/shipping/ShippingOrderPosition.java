@@ -41,7 +41,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import org.openwms.common.types.Target;
+import org.openwms.common.values.Target;
 import org.openwms.core.values.CoreTypeDefinitions;
 import org.openwms.core.values.UnitType;
 import org.openwms.wms.inventory.Product;

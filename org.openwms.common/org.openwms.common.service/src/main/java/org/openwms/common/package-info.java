@@ -20,6 +20,6 @@
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
 /**
- * This package provides common used business logic.
+ * This package contains microservices to handle essential logistics processes.
  */
 package org.openwms.common;

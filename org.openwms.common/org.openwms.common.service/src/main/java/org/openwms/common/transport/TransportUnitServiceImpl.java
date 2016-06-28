@@ -31,7 +31,6 @@ import org.ameba.exception.ServiceLayerException;
 import org.openwms.common.location.Location;
 import org.openwms.common.location.LocationPK;
 import org.openwms.common.location.LocationService;
-import org.openwms.common.values.Barcode;
 import org.openwms.core.listener.OnRemovalListener;
 import org.openwms.core.listener.RemovalNotAllowedException;
 import org.slf4j.Logger;

@@ -24,7 +24,6 @@ package org.openwms.common.transport;
 import java.util.List;
 
 import org.openwms.common.location.LocationPK;
-import org.openwms.common.values.Barcode;
 
 /**
  * A TransportService offers functionality to create, read, update and delete {@link TransportUnit}s. Additionally it defines useful methods

@@ -19,13 +19,13 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
-package org.openwms.common.values;
+package org.openwms.common.transport;
 
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
 import org.junit.Test;
-import org.openwms.common.values.Barcode.BARCODE_ALIGN;
+import org.openwms.common.transport.Barcode.BARCODE_ALIGN;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
