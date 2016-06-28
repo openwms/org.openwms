@@ -41,6 +41,7 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.Date;
 import java.util.HashSet;
+import java.util.Objects;
 import java.util.Set;
 
 import org.ameba.integration.jpa.BaseEntity;
@@ -370,6 +371,29 @@ public class Location extends BaseEntity implements Serializable {
             this.setLocationGroupCountingActive(locationGroup.isLocationGroupCountingActive());
         }
         this.locationGroup = locationGroup;
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * Only use the unique natural key for comparison.
+     */
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Location location = (Location) o;
+        return Objects.equals(locationId, location.locationId);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * Only use the unique natural key for hashCode calculation.
+     */
+    @Override
+    public int hashCode() {
+        return Objects.hash(locationId);
     }
 
     /**
