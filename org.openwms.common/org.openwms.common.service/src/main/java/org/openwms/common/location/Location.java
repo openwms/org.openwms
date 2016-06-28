@@ -31,8 +31,6 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
-import javax.persistence.PrePersist;
-import javax.persistence.PreUpdate;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -62,9 +60,7 @@ import org.openwms.core.values.Message;
 @Table(name = "COM_LOCATION", uniqueConstraints = @UniqueConstraint(columnNames = {"AREA", "AISLE", "X", "Y", "Z"}))
 public class Location extends BaseEntity implements Serializable {
 
-    /**
-     * Unique natural key.
-     */
+    /** Unique natural key. */
     @Embedded
     @AttributeOverrides({
             @AttributeOverride(name = "area", column = @Column(name = "C_AREA")),
@@ -75,129 +71,110 @@ public class Location extends BaseEntity implements Serializable {
     })
     private LocationPK locationId;
 
-    /**
-     * Description of the Location.
-     */
+    /** Description of the Location. */
     @Column(name = "C_DESCRIPTION")
     private String description;
 
-    /**
-     * Maximum number of {@code TransportUnit}s placed on this <code>Location</code>.
-     */
+    /** Maximum number of {@code TransportUnit}s placed on this Location. */
     @Column(name = "C_NO_MAX_TRANSPORT_UNITS")
     private short noMaxTransportUnits = 1;
 
-    /**
-     * Maximum allowed weight on this <code>Location</code>.
-     */
-    @Column(name = "C_MAXIMUM_WEIGHT", scale = 3)
+    /** Maximum allowed weight on this Location. */
+    @Column(name = "C_MAXIMUM_WEIGHT")
     private BigDecimal maximumWeight;
 
     /**
-     * Date of last change. When a {@code TransportUnit} is moving to or away from this <code>Location</code>, lastAccess will be updated.
-     * This is necessary to find old {@code TransportUnit}s as well as for inventory calculation.
+     * Date of last change. When a {@code TransportUnit} is moving to or away from this Location, {@code lastAccess} will be updated. This
+     * is useful to get the history of {@code TransportUnit}s as well as for inventory calculation.
      */
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "C_LAST_ACCESS")
     private Date lastAccess;
 
-    /**
-     * Flag to indicate whether {@code TransportUnit}s should be counted on this <code>Location</code> or not.
-     */
+    /** Flag to indicate whether {@code TransportUnit}s should be counted on this Location or not. */
     @Column(name = "C_COUNTING_ACTIVE")
     private boolean countingActive = false;
 
-    /**
-     * Reserved for stock check procedure and inventory calculation.
-     */
+    /** Reserved for stock check procedure and inventory calculation. */
     @Column(name = "C_CHECK_STATE")
-    private String checkState = "--";
+    private String checkState = DEF_CHECK_STATE;
+    /** Default value of {@code Location#checkstate}. */
+    public static final String DEF_CHECK_STATE = "--";
 
     /**
-     * Shall this <code>Location</code> be integrated in the calculation of {@code TransportUnit}s of the parent {@link LocationGroup}. <p>
-     * <code>true</code> : <code>Location</code> is included in calculation of {@code TransportUnit}s.<br> <code>false</code>:
-     * <code>Location</code> is not included in calculation of {@code TransportUnit}s. </p>
+     * Shall this Location be integrated in the calculation of {@code TransportUnit}s of the parent {@link LocationGroup}.<ul><li>{@literal
+     * true} : Location is included in calculation of {@code TransportUnit}s.</li><li>{@literal false}: Location is not included in
+     * calculation of {@code TransportUnit}s.</li></ul>
      */
     @Column(name = "C_LG_COUNTING_ACTIVE")
     private boolean locationGroupCountingActive = false;
 
     /**
-     * Signals the incoming state of this <code>Location</code>. <code>Location</code>s which are blocked for incoming cannot pick up {@code
-     * TransportUnit}s. <p> <code>true</code> : <code>Location</code> is ready to pick up {@code TransportUnit}s.<br> <code>false</code>:
-     * <code>Location</code> is locked, and cannot pick up {@code TransportUnit}s. </p>
+     * Signals the incoming state of this Location. Locations which are blocked for incoming cannot pick up {@code TransportUnit}s.<ul>
+     * <li>{@literal true} : Location is ready to pick up {@code TransportUnit}s.</li> <li>{@literal false}: Location is locked, and cannot
+     * pick up {@code TransportUnit}s.</li></ul>
      */
     @Column(name = "C_INCOMING_ACTIVE")
     private boolean incomingActive = true;
 
     /**
-     * Signals the outgoing state of this <code>Location</code>. <code>Location</code>s which are blocked for outgoing cannot release {@code
-     * TransportUnit}s. <p> <code>true</code> : <code>Location</code> is enabled for outgoing <code>Transport</code>s<br>
-     * <code>false</code>: <code>Location</code> is locked, {@code TransportUnit}s can't leave this <code>Location</code>. </p>
+     * Signals the outgoing state of this Location. Locations which are blocked for outgoing cannot release {@code
+     * TransportUnit}s.<ul><li>{@literal true} : Location is enabled for outgoing {@code TransportUnit}s.</li><li>{@literal false}: Location
+     * is locked, {@code TransportUnit}s can't leave this Location.</li></ul>
      */
     @Column(name = "C_OUTGOING_ACTIVE")
     private boolean outgoingActive = true;
 
     /**
-     * The PLC is able to change the state of a <code>Location</code>. This property stores the last state, received from the PLC. <p> -1:
-     * Not defined.<br> 0 : No PLC error, everything okay. </p>
+     * The PLC is able to change the state of a Location. This property stores the last state, received from the PLC.<ul><li>-1: Not
+     * defined.</li><li>0 : No PLC error, everything okay.</li></ul>
      */
     @Column(name = "C_PLC_STATE")
     private short plcState = 0;
 
     /**
-     * Determines whether the <code>Location</code> is considered in the allocation procedure. <p> <code>true</code> : This
-     * <code>Location</code> will be considered in storage calculation by an allocation procedure.<br> <code>false</code> : This
-     * <code>Location</code> will not be considered in the allocation process. </p>
+     * Determines whether the Location is considered in the allocation procedure.<ul><li>{@literal true} : This Location will be considered
+     * in storage calculation by an allocation procedure.</li><li>{@literal false} : This Location will not be considered in the allocation
+     * process.</li></ul>
      */
     @Column(name = "C_CONSIDERED_IN_ALLOCATION")
     private boolean consideredInAllocation = true;
 
-    /* ------------------- collection mapping ------------------- */
-    /**
-     * The {@link LocationType} where the <code>Location</code> belongs to.
-     */
+    /** The {@link LocationType} this Location belongs to. */
     @ManyToOne
     @JoinColumn(name = "C_LOCATION_TYPE")
     private LocationType locationType;
 
-    /**
-     * The {@link LocationGroup} where the <code>Location</code> belongs to.
-     */
+    /** The {@link LocationGroup} this Location belongs to. */
     @ManyToOne
     @JoinColumn(name = "C_LOCATION_GROUP")
     private LocationGroup locationGroup;
 
-    /**
-     * Stored {@link Message}s for this <code>Location</code>.
-     */
+    /** Stored {@link Message}s on this Location. */
     @OneToMany(cascade = {CascadeType.ALL})
     @JoinTable(name = "COM_LOCATION_MESSAGE", joinColumns = @JoinColumn(name = "C_LOCATION_ID"), inverseJoinColumns = @JoinColumn(name = "C_MESSAGE_ID"))
     private Set<Message> messages = new HashSet<>();
 
+    /*~ ----------------------------- constructors ------------------- */
     /**
-     * Create a new <code>Location</code> with the business key.
+     * Create a new Location with the business key.
      *
-     * @param locationId The unique natural key of the <code>Location</code>
+     * @param locationId The unique natural key of the Location
      */
     public Location(LocationPK locationId) {
         this.locationId = locationId;
     }
-
-    /* ----------------------------- methods ------------------- */
-
-    /**
-     * Accessed by persistence provider.
-     */
-    @SuppressWarnings("unused")
-    private Location() {
-        super();
+    
+    /** Dear JPA... */
+    protected Location() {
     }
 
+    /*~ ----------------------------- methods ------------------- */
     /**
-     * Add a new {@link Message} to this <code>Location</code>.
+     * Add a new {@link Message} to this Location.
      *
      * @param message The {@link Message} to be added
-     * @return <code>true</code> if the {@link Message} is new in the collection of messages, otherwise <code>false</code>
+     * @return {@literal true} if the {@link Message} is new in the collection of messages, otherwise {@literal false}
      */
     public boolean addMessage(Message message) {
         if (message == null) {
@@ -216,25 +193,25 @@ public class Location extends BaseEntity implements Serializable {
     }
 
     /**
-     * Determine whether the <code>Location</code> is considered during allocation.
+     * Determine whether the Location is considered during allocation.
      *
-     * @return <code>true</code> when considered in allocation, otherwise <code>false</code>
+     * @return {@literal true} when considered in allocation, otherwise {@literal false}
      */
     public boolean isConsideredInAllocation() {
         return this.consideredInAllocation;
     }
 
     /**
-     * Determine whether {@code TransportUnit}s should be counted on this <code>Location</code> or not.
+     * Determine whether {@code TransportUnit}s should be counted on this Location or not.
      *
-     * @return <code>true</code> when counting is active, otherwise <code>false</code>
+     * @return {@literal true} when counting is active, otherwise {@literal false}
      */
     public boolean isCountingActive() {
         return this.countingActive;
     }
 
     /**
-     * Returns the description of the <code>Location</code>.
+     * Returns the description of the Location.
      *
      * @return The description text
      */
@@ -243,9 +220,9 @@ public class Location extends BaseEntity implements Serializable {
     }
 
     /**
-     * Determine whether incoming mode is activated and {@code TransportUnit}s can be put on this <code>Location</code>.
+     * Determine whether incoming mode is activated and {@code TransportUnit}s can be put on this Location.
      *
-     * @return <code>true</code> when incoming mode is activated, otherwise <code>false</code>
+     * @return {@literal true} when incoming mode is activated, otherwise {@literal false}
      */
     public boolean isIncomingActive() {
         return this.incomingActive;
@@ -254,14 +231,14 @@ public class Location extends BaseEntity implements Serializable {
     /**
      * Check whether infeed is blocked and moving {@code TransportUnit}s to here is forbidden.
      *
-     * @return <code>true</code> is blocked, otherwise <code>false</code>
+     * @return {@literal true} is blocked, otherwise {@literal false}
      */
     public boolean isInfeedBlocked() {
         return !this.incomingActive;
     }
 
     /**
-     * Return the date when the <code>Location</code> was updated the last time.
+     * Return the date when the Location was updated the last time.
      *
      * @return Timestamp of the last update
      */
@@ -270,26 +247,34 @@ public class Location extends BaseEntity implements Serializable {
     }
 
     /**
-     * Return the {@link LocationGroup} where the <code>Location</code> belongs to.
+     * Change the date when a TransportUnit was put or left the Location the last time.
      *
-     * @return The {@link LocationGroup} of the <code>Location</code>
+     * @param lastAccess The date of change.
+     */
+    public void setLastAccess(Date lastAccess) {
+        this.lastAccess = lastAccess;
+    }
+
+    /**
+     * Return the {@link LocationGroup} where the Location belongs to.
+     *
+     * @return The {@link LocationGroup} of the Location
      */
     public LocationGroup getLocationGroup() {
         return this.locationGroup;
     }
 
     /**
-     * Determine whether the <code>Location</code> is part of the parent {@link LocationGroup}s calculation procedure of {@code
-     * TransportUnit}s.
+     * Determine whether the Location is part of the parent {@link LocationGroup}s calculation procedure of {@code TransportUnit}s.
      *
-     * @return <code>true</code> if calculation is activated, otherwise <code>false</code>
+     * @return {@literal true} if calculation is activated, otherwise {@literal false}
      */
     public boolean isLocationGroupCountingActive() {
         return this.locationGroupCountingActive;
     }
 
     /**
-     * Returns the locationId (natural key) of the <code>Location</code>.
+     * Returns the locationId (natural key) of the Location.
      *
      * @return The locationId
      */
@@ -298,7 +283,7 @@ public class Location extends BaseEntity implements Serializable {
     }
 
     /**
-     * Returns the type of <code>Location</code>.
+     * Returns the type of Location.
      *
      * @return The type
      */
@@ -307,7 +292,7 @@ public class Location extends BaseEntity implements Serializable {
     }
 
     /**
-     * Return the maximum allowed weight on the <code>Location</code>.
+     * Return the maximum allowed weight on the Location.
      *
      * @return The maximum allowed weight
      */
@@ -316,7 +301,7 @@ public class Location extends BaseEntity implements Serializable {
     }
 
     /**
-     * Returns an unmodifiable Set of {@link Message}s stored for the <code>Location</code>.
+     * Returns an unmodifiable Set of {@link Message}s stored for the Location.
      *
      * @return An unmodifiable Set
      */
@@ -325,7 +310,7 @@ public class Location extends BaseEntity implements Serializable {
     }
 
     /**
-     * Returns the maximum number of {@code TransportUnit}s allowed on the <code>Location</code>.
+     * Returns the maximum number of {@code TransportUnit}s allowed on the Location.
      *
      * @return The maximum number of {@code TransportUnit}s
      */
@@ -334,9 +319,9 @@ public class Location extends BaseEntity implements Serializable {
     }
 
     /**
-     * Determine whether outgoing mode is activated and {@code TransportUnit}s can leave this <code>Location</code>.
+     * Determine whether outgoing mode is activated and {@code TransportUnit}s can leave this Location.
      *
-     * @return <code>true</code> when outgoing mode is activated, otherwise <code>false</code>
+     * @return {@literal true} when outgoing mode is activated, otherwise {@literal false}
      */
     public boolean isOutgoingActive() {
         return this.outgoingActive;
@@ -345,7 +330,7 @@ public class Location extends BaseEntity implements Serializable {
     /**
      * Check whether outfeed is blocked and moving {@code TransportUnit}s from here is forbidden.
      *
-     * @return <code>true</code> is blocked, otherwise <code>false</code>
+     * @return {@literal true} is blocked, otherwise {@literal false}
      */
     public boolean isOutfeedBlocked() {
         return !this.outgoingActive;
@@ -361,76 +346,22 @@ public class Location extends BaseEntity implements Serializable {
     }
 
     /**
-     * Remove one or more {@link Message}s from this <code>Location</code>.
+     * Remove one or more {@link Message}s from this Location.
      *
      * @param msgs An array of {@link Message}s to be removed
-     * @return <code>true</code> if the {@link Message}s were found and removed, otherwise <code>false</code>
-     * @throws IllegalArgumentException when messages is <code>null</code>
+     * @return {@literal true} if the {@link Message}s were found and removed, otherwise {@literal false}
+     * @throws IllegalArgumentException when messages is {@literal null}
      */
     public boolean removeMessages(Message... msgs) {
         if (msgs == null) {
-            throw new IllegalArgumentException("Message may not be null!");
+            throw new IllegalArgumentException("Parameter msgs may not be null!");
         }
         return this.messages.removeAll(Arrays.asList(msgs));
     }
 
     /**
-     * Change the checkState of the <code>Location</code>.
-     *
-     * @param checkState The new state to set
-     */
-    public void setCheckState(String checkState) {
-        this.checkState = checkState;
-    }
-
-    /**
-     * Change the behavior whether the <code>Location</code> shall be considered in the allocation procedure or not.
-     *
-     * @param consideredInAllocation <code>true</code> allocation active, otherwise <code>false</code>
-     */
-    public void setConsideredInAllocation(boolean consideredInAllocation) {
-        this.consideredInAllocation = consideredInAllocation;
-    }
-
-    /**
-     * Change the behavior whether the <code>Location</code> shall be considered in the calculation of {@code TransportUnit}s or not.
-     *
-     * @param countingActive <code>true</code> counting active, otherwise <code>false</code>
-     */
-    public void setCountingActive(boolean countingActive) {
-        this.countingActive = countingActive;
-    }
-
-    /**
-     * Change the description of the <code>Location</code>.
-     *
-     * @param description The new description text
-     */
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    /**
-     * Change the incoming state of the <code>Location</code>.
-     *
-     * @param incomingActive <code>true</code> The <code>Location</code> can pick up {@code TransportUnit}s, otherwise <code>false</code>
-     */
-    public void setIncomingActive(boolean incomingActive) {
-        this.incomingActive = incomingActive;
-    }
-
-    /**
-     * Change the date when the <code>Location</code> was updated the last time.
-     *
-     * @param lastAccess The date of change.
-     */
-    public void setLastAccess(Date lastAccess) {
-        this.lastAccess = lastAccess;
-    }
-
-    /**
-     * Add this <code>Location</code> to the <code>locationGroup</code>. When the argument is <code>null</code> an existing {@link
-     * LocationGroup} is removed from the <code>Location</code>.
+     * Add this Location to the <code>locationGroup</code>. When the argument is <code>null</code> an existing {@link LocationGroup} is
+     * removed from the Location.
      *
      * @param locationGroup The {@link LocationGroup} to be assigned
      */
@@ -442,59 +373,12 @@ public class Location extends BaseEntity implements Serializable {
     }
 
     /**
-     * Define whether or not the <code>Location</code> shall be considered in counting {@code TransportUnit}s of the parent {@link
-     * LocationGroup}.
+     * Define whether or not the Location shall be considered in counting {@code TransportUnit}s of the parent {@link LocationGroup}.
      *
-     * @param locationGroupCountingActive <code>true</code> if considered, otherwise <code>false</code>
+     * @param locationGroupCountingActive {@literal true} if considered, otherwise {@literal false}
      */
     public void setLocationGroupCountingActive(boolean locationGroupCountingActive) {
         this.locationGroupCountingActive = locationGroupCountingActive;
-    }
-
-    /**
-     * Change the type of the <code>Location</code>.
-     *
-     * @param locationType The new type to set
-     */
-    public void setLocationType(LocationType locationType) {
-        this.locationType = locationType;
-    }
-
-    /**
-     * Change the maximum allowed weight of the <code>Location</code>.
-     *
-     * @param maximumWeight The new weight to set
-     */
-    public void setMaximumWeight(BigDecimal maximumWeight) {
-        this.maximumWeight = maximumWeight;
-    }
-
-    /**
-     * Change the maximum number of {@code TransportUnit}s allowed on the <code>Location</code>.
-     *
-     * @param noMaxTransportUnits The number of {@code TransportUnit}s to set
-     */
-    public void setNoMaxTransportUnits(short noMaxTransportUnits) {
-        this.noMaxTransportUnits = noMaxTransportUnits;
-    }
-
-    /**
-     * Change the outgoing state of the <code>Location</code>.
-     *
-     * @param outgoingActive <code>true</code> {@code TransportUnit}s can be moved away from the <code>Location</code>, otherwise
-     * <code>false</code>
-     */
-    public void setOutgoingActive(boolean outgoingActive) {
-        this.outgoingActive = outgoingActive;
-    }
-
-    /**
-     * Change the current plc state.
-     *
-     * @param plcState The new state to set
-     */
-    public void setPlcState(short plcState) {
-        this.plcState = plcState;
     }
 
     /**
@@ -506,14 +390,5 @@ public class Location extends BaseEntity implements Serializable {
     @Override
     public String toString() {
         return this.locationId.toString();
-    }
-
-    /**
-     * On update or insert the lastAccess is updated to the current date. (JPA lifecycle callback method).
-     */
-    @PrePersist
-    @PreUpdate
-    protected void preUpdate() {
-        lastAccess = new Date();
     }
 }
