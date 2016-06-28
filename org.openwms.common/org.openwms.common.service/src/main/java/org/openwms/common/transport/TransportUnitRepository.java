@@ -23,7 +23,6 @@ package org.openwms.common.transport;
 
 import java.util.Optional;
 
-import org.openwms.common.values.Barcode;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 /**

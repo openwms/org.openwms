@@ -20,6 +20,6 @@
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
 /**
- * Contains Hibernate extenstions.
+ * This package contains all types to describe locations.
  */
-package org.openwms.common.ext.hibernate;
+package org.openwms.common.location;

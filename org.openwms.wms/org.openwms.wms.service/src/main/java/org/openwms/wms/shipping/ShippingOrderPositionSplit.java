@@ -30,7 +30,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import java.io.Serializable;
 
-import org.openwms.common.types.Target;
+import org.openwms.common.values.Target;
 import org.openwms.wms.order.OrderPositionSplit;
 import org.openwms.wms.order.OrderStartMode;
 

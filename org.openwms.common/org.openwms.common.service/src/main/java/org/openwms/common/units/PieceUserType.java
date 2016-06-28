@@ -19,7 +19,7 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
-package org.openwms.common.ext.hibernate;
+package org.openwms.common.units;
 
 import java.io.Serializable;
 import java.sql.PreparedStatement;
@@ -31,8 +31,6 @@ import org.hibernate.engine.spi.SessionImplementor;
 import org.hibernate.type.StandardBasicTypes;
 import org.hibernate.type.Type;
 import org.hibernate.usertype.CompositeUserType;
-import org.openwms.common.units.Piece;
-import org.openwms.common.units.PieceUnit;
 
 /**
  * A PieceUserType.

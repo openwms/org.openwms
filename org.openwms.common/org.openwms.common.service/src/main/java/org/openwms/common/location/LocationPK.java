@@ -26,77 +26,60 @@ import javax.persistence.Embeddable;
 import javax.validation.constraints.Max;
 import java.io.Serializable;
 
-import org.openwms.core.exception.DomainModelRuntimeException;
-
 /**
- * A LocationPK, is a value type and is used as an unique natural key of {@link org.openwms.common.domain.Location} entities.
- * 
+ * A LocationPK, is a value type and is used as an unique natural key for {@link Location} entities.
+ *
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
- * @version $Revision$
+ * @version 1.0
+ * @see org.openwms.common.location.Location
  * @since 0.1
- * @see org.openwms.common.domain.Location
  */
 @Embeddable
 public class LocationPK implements Serializable {
 
-    private static final long serialVersionUID = 7370071817754524569L;
     private static final short KEY_LENGTH = 4;
     public static final short NUMBER_OF_KEYS = 5;
 
-    /**
-     * Expresses the area where the <code>Location</code> belongs to.
-     */
+    /** Expresses the area the {@link Location} belongs to. */
     @Column(name = "AREA", nullable = false, length = KEY_LENGTH)
     @Max(value = KEY_LENGTH)
     private String area;
 
-    /**
-     * Expresses the aisle where the <code>Location</code> belongs to.
-     */
+    /** Expresses the aisle the {@link Location} belongs to. */
     @Column(name = "AISLE", nullable = false, length = KEY_LENGTH)
     @Max(value = KEY_LENGTH)
     private String aisle;
 
-    /**
-     * Expresses the dimension x where this <code>Location</code> belongs to.
-     */
+    /** Expresses the x-dimension the {@link Location} belongs to. */
     @Column(name = "X", nullable = false, length = KEY_LENGTH)
     @Max(value = KEY_LENGTH)
     private String x;
 
-    /**
-     * Expresses the dimension y where this <code>Location</code> belongs to.
-     */
+    /** Expresses the y-dimension the {@link Location} belongs to. */
     @Column(name = "Y", nullable = false, length = KEY_LENGTH)
     @Max(value = KEY_LENGTH)
     private String y;
 
-    /**
-     * Expresses the dimension z where this <code>Location</code> belongs to.
-     */
+    /** Expresses the z-dimension the {@link Location} belongs to. */
     @Column(name = "Z", nullable = false, length = KEY_LENGTH)
     @Max(value = KEY_LENGTH)
     private String z;
 
-    /* ----------------------------- methods ------------------- */
-    @SuppressWarnings("unused")
-    private LocationPK() {
+    /*~ ----------------------------- constructors ------------------- */
+
+    /** Dear JPA ... */
+    protected LocationPK() {
         super();
     }
 
     /**
-     * Create a new LocationPK.
-     * 
-     * @param area
-     *            Area where the <code>Location</code> belongs to
-     * @param aisle
-     *            Aisle where the <code>Location</code> belongs to
-     * @param x
-     *            Dimension x where the <code>Location</code> belongs to
-     * @param y
-     *            Dimension y where the <code>Location</code> belongs to
-     * @param z
-     *            Dimension z where the <code>Location</code> belongs to
+     * Create a new LocationPK with all required fields.
+     *
+     * @param area Area where the {@link Location} belongs to
+     * @param aisle Aisle where the {@link Location} belongs to
+     * @param x Dimension x where the {@link Location} belongs to
+     * @param y Dimension y where the {@link Location} belongs to
+     * @param z Dimension z where the {@link Location} belongs to
      */
     public LocationPK(String area, String aisle, String x, String y, String z) {
         this.area = area;
@@ -107,17 +90,15 @@ public class LocationPK implements Serializable {
     }
 
     /**
-     * Create a new LocationPK with a couple of keys.
-     * 
-     * @param keys
-     *            The array of keys, currently expected to be 5
-     * @throws DomainModelRuntimeException
-     *             if the number of keys is not {@value LocationPK#NUMBER_OF_KEYS}
+     * Weak constructor to create a new LocationPK with a couple of keys only.
+     *
+     * @param keys The array of keys, currently expected to be 5
+     * @throws IllegalArgumentException if the number of keys does not match {@value LocationPK#NUMBER_OF_KEYS}
      */
     public LocationPK(String... keys) {
         if (keys == null || keys.length != NUMBER_OF_KEYS) {
-            throw new DomainModelRuntimeException(
-                    "Number of keys for a LocationPK does not match the defined number of keys:" + keys.length);
+            throw new IllegalArgumentException(
+                    "Number of key fields to create a LocationPK does not match the defined number of keys. Expected: " + NUMBER_OF_KEYS);
         }
         this.area = keys[0];
         this.aisle = keys[1];
@@ -126,19 +107,12 @@ public class LocationPK implements Serializable {
         this.z = keys[4];
     }
 
-    /**
-     * Return how many keys are used to determine the uniqueness of a Location.
-     * 
-     * @return {@value LocationPK#NUMBER_OF_KEYS}
-     */
-    public static short getNumberOfKeys() {
-        return NUMBER_OF_KEYS;
-    }
+    /*~ ----------------------------- methods ------------------- */
 
     /**
      * Returns the complete length of all keys. Currently all keys have the same length, therefore it is the 5 times the length of a single
      * key (KEY_LENGTH). But since this can change the actual length is encapsulated within this method.
-     * 
+     *
      * @return {@value LocationPK#NUMBER_OF_KEYS * LocationPK#KEY_LENGTH}
      */
     public static short getKeyLength() {
@@ -147,7 +121,7 @@ public class LocationPK implements Serializable {
 
     /**
      * Get the area region.
-     * 
+     *
      * @return The area
      */
     public String getArea() {
@@ -156,7 +130,7 @@ public class LocationPK implements Serializable {
 
     /**
      * Get the aisle region.
-     * 
+     *
      * @return The aisle
      */
     public String getAisle() {
@@ -164,27 +138,27 @@ public class LocationPK implements Serializable {
     }
 
     /**
-     * Get the x dimension.
-     * 
-     * @return The x dimension
+     * Get the x-dimension.
+     *
+     * @return The x-dimension
      */
     public String getX() {
         return this.x;
     }
 
     /**
-     * Get the y dimension.
-     * 
-     * @return The y dimension
+     * Get the y-dimension.
+     *
+     * @return The y-dimension
      */
     public String getY() {
         return this.y;
     }
 
     /**
-     * Get the z dimension.
-     * 
-     * @return The z dimension
+     * Get the z-dimension.
+     *
+     * @return The z-dimension
      */
     public String getZ() {
         return this.z;
@@ -192,7 +166,7 @@ public class LocationPK implements Serializable {
 
     /**
      * {@inheritDoc}
-     * 
+     *
      * @see java.lang.Object#equals(Object)
      */
     @Override
@@ -210,7 +184,7 @@ public class LocationPK implements Serializable {
 
     /**
      * {@inheritDoc}
-     * 
+     *
      * @see java.lang.Object#hashCode()
      */
     @Override
@@ -220,9 +194,9 @@ public class LocationPK implements Serializable {
 
     /**
      * Return a String like {AREA/AISLE/X/Y/Z}.
-     * 
-     * @see java.lang.Object#toString()
+     *
      * @return String
+     * @see java.lang.Object#toString()
      */
     @Override
     public String toString() {

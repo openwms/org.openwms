@@ -26,9 +26,8 @@ import java.util.List;
 
 import org.openwms.common.location.Location;
 import org.openwms.common.location.LocationGroup;
+import org.openwms.common.transport.Barcode;
 import org.openwms.common.transport.TransportUnit;
-import org.openwms.common.values.Barcode;
-import org.openwms.common.values.Problem;
 import org.openwms.core.exception.StateChangeException;
 import org.openwms.core.integration.GenericDao;
 import org.openwms.core.voter.DecisionVoter;
