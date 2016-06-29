@@ -361,7 +361,7 @@ public class Location extends BaseEntity implements Serializable {
     }
 
     /**
-     * Add this Location to the <code>locationGroup</code>. When the argument is <code>null</code> an existing {@link LocationGroup} is
+     * Add this Location to the {@literal locationGroup}. When the argument is {@literal null} an existing {@link LocationGroup} is
      * removed from the Location.
      *
      * @param locationGroup The {@link LocationGroup} to be assigned
