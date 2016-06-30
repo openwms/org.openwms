@@ -34,6 +34,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import java.io.Serializable;
 import java.util.Collections;
 import java.util.Date;
 import java.util.HashSet;
@@ -48,15 +49,13 @@ import org.openwms.common.transport.TransportUnit;
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  * @version $Revision$
  * @since 0.1
- * @see org.openwms.common.domain.Location
+ * @see org.openwms.common.location.Location
  */
 @Entity
 @Table(name = "COM_LOCATION_GROUP")
 @NamedQueries({ @NamedQuery(name = "LocationGroup.findAll", query = "select lg from LocationGroup lg"),
         @NamedQuery(name = "LocationGroup.findByName", query = "select lg from LocationGroup lg where lg.name = ?1") })
-public class LocationGroup extends Target {
-
-    private static final long serialVersionUID = -885742169116552293L;
+public class LocationGroup extends Target implements Serializable {
 
     /**
      * Unique identifier of a <code>LocationGroup</code>.
