@@ -59,7 +59,7 @@ class LocationGroupServiceImpl implements LocationGroupService<LocationGroup> {
             throw new ServiceLayerException("LocationGroup " + locationGroup.getName()
                     + " is new and must be persisted before save");
         }
-        LocationGroup persisted = dao.findOne(locationGroup.getId());
+        LocationGroup persisted = dao.findOne(locationGroup.getPk());
         changeGroupState(persisted, locationGroup);
     }
 
@@ -72,7 +72,7 @@ class LocationGroupServiceImpl implements LocationGroupService<LocationGroup> {
             throw new ServiceLayerException("LocationGroup " + locationGroup.getName()
                     + " is new and must be persisted before save");
         }
-        LocationGroup persisted = dao.findOne(locationGroup.getId());
+        LocationGroup persisted = dao.findOne(locationGroup.getPk());
         changeGroupState(persisted, locationGroup);
         return mergeLocationGroup(persisted, locationGroup);
     }
@@ -158,7 +158,7 @@ class LocationGroupServiceImpl implements LocationGroupService<LocationGroup> {
         if (lg.getParent() == null) {
             node = root.getChild(lg);
             if (node == null) {
-                TreeNode<LocationGroup> n1 = new TreeNodeImpl<LocationGroup>();
+                TreeNode<LocationGroup> n1 = new TreeNodeImpl<>();
                 n1.setData(lg);
                 n1.setParent(root);
                 root.addChild(n1.getData(), n1);
@@ -169,7 +169,7 @@ class LocationGroupServiceImpl implements LocationGroupService<LocationGroup> {
             node = searchForNode(lg.getParent(), root);
             TreeNode<LocationGroup> child = node.getChild(lg);
             if (child == null) {
-                child = new TreeNodeImpl<LocationGroup>();
+                child = new TreeNodeImpl<>();
                 child.setData(lg);
                 child.setParent(node);
                 node.addChild(lg, child);

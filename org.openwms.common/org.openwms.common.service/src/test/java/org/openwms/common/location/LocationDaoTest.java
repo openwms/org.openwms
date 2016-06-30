@@ -43,7 +43,7 @@ import org.springframework.test.context.ContextConfiguration;
 public class LocationDaoTest extends AbstractJpaSpringContextTests {
 
     @Autowired
-    private LocationRepository locationDao;
+    private LocationRepository locationRepository;
     private List<Location> locations;
 
     /**
@@ -61,7 +61,7 @@ public class LocationDaoTest extends AbstractJpaSpringContextTests {
      */
     @Test
     public final void testFindAll() {
-        Assert.assertTrue("Cannot query a list of all Locations", locationDao.findAll().size() > 0);
+        Assert.assertTrue("Cannot query a list of all Locations", locationRepository.findAll().size() > 0);
     }
 
     /**
@@ -69,8 +69,8 @@ public class LocationDaoTest extends AbstractJpaSpringContextTests {
      */
     @Test
     public final void testFindById() {
-        locations = locationDao.findAll();
-        Assert.assertNotNull("Cannot find Location by Id", locationDao.findOne(locations.get(0).getId()));
+        locations = locationRepository.findAll();
+        Assert.assertNotNull("Cannot find Location by Id", locationRepository.findOne(locations.get(0).getPk()));
         LOGGER.debug("OK:Location found by id query");
     }
 
@@ -79,11 +79,11 @@ public class LocationDaoTest extends AbstractJpaSpringContextTests {
      */
     @Test
     public final void testFindByUniqueId() {
-        Location known = locationDao.findByLocationId(new LocationPK("area", "aisl", "x", "y", "z")).get();
+        Location known = locationRepository.findByLocationId(new LocationPK("area", "aisl", "x", "y", "z")).get();
         Assert.assertNotNull("Location not found by id", known);
         LOGGER.debug("OK:Location found by unique id query");
 
-        Location unknown = locationDao.findByLocationId(new LocationPK("AREA", "AISL", "X", "Y", "Z")).get();
+        Location unknown = locationRepository.findByLocationId(new LocationPK("AREA", "AISL", "X", "Y", "Z")).get();
         Assert.assertNull("Unknown Location found by key", unknown);
         LOGGER.debug("OK:Unknown Location not found by unique id query");
     }
@@ -94,11 +94,11 @@ public class LocationDaoTest extends AbstractJpaSpringContextTests {
     @Test
     public final void testPersist() {
         Location l = new Location(new LocationPK("NEW", "NEW", "NEW", "NEW", "NEW"));
-        Assert.assertNull("PK should be NULL", l.getId());
+        Assert.assertNull("PK should be NULL", l.getPk());
         Assert.assertTrue("isNew should return true for a transient entity", l.isNew());
-        locationDao.save(l);
-        Assert.assertNotNull("PK should be set", l.getId());
-        Assert.assertFalse("isNew should return false for a persistend entity", l.isNew());
+        locationRepository.save(l);
+        Assert.assertNotNull("PK should be set", l.getPk());
+        Assert.assertFalse("isNew should return false for a persisted entity", l.isNew());
     }
 
     /**
@@ -107,13 +107,13 @@ public class LocationDaoTest extends AbstractJpaSpringContextTests {
     @Test
     public final void testPersistAndRemove() {
         Location l = new Location(new LocationPK("NEW", "NEW", "NEW", "NEW", "NEW"));
-        Assert.assertNull("PK should be NULL", l.getId());
-        locationDao.save(l);
-        Assert.assertNotNull("PK should be set", l.getId());
-        Location l2 = locationDao.findOne(l.getId());
-        Assert.assertNotNull("PK should be set", l2.getId());
-        locationDao.delete(l);
-        l2 = locationDao.findOne(l2.getId());
+        Assert.assertNull("PK should be NULL", l.getPk());
+        locationRepository.save(l);
+        Assert.assertNotNull("PK should be set", l.getPk());
+        Location l2 = locationRepository.findOne(l.getPk());
+        Assert.assertNotNull("PK should be set", l2.getPk());
+        locationRepository.delete(l);
+        l2 = locationRepository.findOne(l2.getPk());
         Assert.assertNull("PK should be NULL", l2);
     }
 
@@ -124,12 +124,12 @@ public class LocationDaoTest extends AbstractJpaSpringContextTests {
     public final void testAddingErrorMessages() {
         LocationPK pk = new LocationPK("OWN", "OWN", "OWN", "OWN", "OWN");
         Location location = new Location(pk);
-        locationDao.save(location);
+        locationRepository.save(location);
 
         location.addMessage(new Message(1, "Errormessage 1"));
         location.addMessage(new Message(2, "Errormessage 2"));
 
-        locationDao.save(location);
+        locationRepository.save(location);
 
         Assert.assertEquals("Expected 2 persisted Messages added to the location", 2, location.getMessages().size());
         Query query = entityManager.createQuery("select count(m) from Message m");
