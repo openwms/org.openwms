@@ -21,10 +21,6 @@
  */
 package org.openwms.common.location;
 
-import java.util.List;
-
-import org.openwms.core.util.TreeNode;
-
 /**
  * A LocationGroupService offers some useful methods regarding the general handling of {@link LocationGroup}s. <p> This interface is
  * declared generic typed that implementation classes can use any extension of {@link LocationGroup}s. </p>
@@ -37,13 +33,9 @@ import org.openwms.core.util.TreeNode;
 public interface LocationGroupService<T extends LocationGroup> {
 
     /**
-     * Changes the GroupStates of a {@link LocationGroup}.<br> Both, the GroupStateIn and the GroupStateOut of all child {@link
-     * LocationGroup}s are changed according to the parent <tt>locationGroup</tt>. This call is executed recursively to <strong>all</strong>
-     * child {@link LocationGroup}s of the <tt>locationGroup</tt> Entity.
-     *
-     * @param locationGroup The {@link LocationGroup} to change
+     * Tries to change the infeed and outfeed state of a {@code Location Group}.
      */
-    void changeGroupState(T locationGroup);
+    void changeGroupState(String id, LocationGroupState stateIn, LocationGroupState stateOut);
 
     /**
      * Returns a hierarchical Tree of all {@link LocationGroup}s. Used by the user interface to show all {@link LocationGroup}s in a tree
@@ -51,14 +43,14 @@ public interface LocationGroupService<T extends LocationGroup> {
      *
      * @return All {@link LocationGroup}s as hierarchical tree
      */
-    TreeNode<T> getLocationGroupsAsTree();
+    //TreeNode<T> getLocationGroupsAsTree();
 
     /**
      * Returns a List of all {@link LocationGroup}s.
      *
      * @return All {@link LocationGroup}s as a list
      */
-    List<T> getLocationGroupsAsList();
+    //List<T> getLocationGroupsAsList();
 
     /**
      * Save an already persisted {@link LocationGroup} and return the saved instance.
@@ -66,5 +58,5 @@ public interface LocationGroupService<T extends LocationGroup> {
      * @param locationGroup The {@link LocationGroup} to save
      * @return The saved {@link LocationGroup}
      */
-    T save(T locationGroup);
+    //T save(T locationGroup);
 }

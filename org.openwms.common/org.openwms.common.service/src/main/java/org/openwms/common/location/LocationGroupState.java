@@ -22,15 +22,15 @@
 package org.openwms.common.location;
 
 /**
- * A LocationGroupState defines possible states used for <code>LocationGroup</code>s.
+ * A LocationGroupState defines possible states used for {@code LocationGroup}s.
  * 
  * @GlossaryTerm
  * @author <a href="mailto:russelltina@users.sourceforge.net">Tina Russell</a>
- * @version $Revision$
+ * @version 1.0
  * @since 0.1
  * @see LocationGroup
  */
-public enum LocationGroupState {
+enum LocationGroupState {
 
     /**
      * Available.
