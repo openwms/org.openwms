@@ -25,18 +25,16 @@ import java.util.List;
 
 import org.ameba.annotation.TxService;
 import org.ameba.exception.NotFoundException;
-import org.ameba.exception.ServiceLayerException;
 import org.openwms.core.util.TreeNode;
 import org.openwms.core.util.TreeNodeImpl;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.transaction.annotation.Transactional;
 
 /**
  * A LocationGroupServiceImpl.
- * 
+ *
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  * @version 0.2
  * @since 0.1
@@ -44,10 +42,9 @@ import org.springframework.transaction.annotation.Transactional;
 @TxService
 class LocationGroupServiceImpl implements LocationGroupService<LocationGroup> {
 
-    private static final Logger logger = LoggerFactory.getLogger(this.getClass());
+    private static final Logger LOGGER = LoggerFactory.getLogger(LocationGroupServiceImpl.class);
 
     @Autowired
-    @Qualifier("locationGroupDao")
     private LocationGroupRepository locationGroupRepository;
 
     /**
@@ -58,36 +55,6 @@ class LocationGroupServiceImpl implements LocationGroupService<LocationGroup> {
         LocationGroup locationGroup = locationGroupRepository.findOne(Long.valueOf(id));
         NotFoundException.throwIfNull(locationGroup, String.format("No LocationGroup with id %s found", id));
         locationGroup.changeState(stateIn, stateOut);
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    //@Override
-    public LocationGroup save(LocationGroup locationGroup) {
-        if (locationGroup.isNew()) {
-            throw new ServiceLayerException("LocationGroup " + locationGroup.getName()
-                    + " is new and must be persisted before save");
-        }
-        LocationGroup persisted = locationGroupRepository.findOne(locationGroup.getPk());
-        changeGroupState(persisted, locationGroup);
-        return mergeLocationGroup(persisted, locationGroup);
-    }
-
-    /**
-     * Save changed fields by setting them directly. Merging the instance automatically will not work.
-     * 
-     * @param persisted
-     *            The instance read from the persisted storage
-     * @param locationGroup
-     *            The new LocationGroup to merge
-     * @return The merged persisted object
-     */
-    protected LocationGroup mergeLocationGroup(LocationGroup persisted, LocationGroup locationGroup) {
-        persisted.setDescription(locationGroup.getDescription());
-        persisted.setMaxFillLevel(locationGroup.getMaxFillLevel());
-        persisted.setLocationGroupCountingActive(locationGroup.isLocationGroupCountingActive());
-        return persisted;
     }
 
     /**

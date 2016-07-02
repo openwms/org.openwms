@@ -52,13 +52,6 @@ class LocationGroupController {
         res.addHeader(HttpHeaders.LOCATION, getLocationForCreatedResource(req, id));
     }
 
-    /**
-     * Append the ID of the object that was created to the original request URL and return it.
-     *
-     * @param req The HttpServletRequest object
-     * @param objId The ID to append
-     * @return The complete appended URL
-     */
     private String getLocationForCreatedResource(javax.servlet.http.HttpServletRequest req, String objId) {
         StringBuffer url = req.getRequestURL();
         UriTemplate template = new UriTemplate(url.append("/{objId}/").toString());
