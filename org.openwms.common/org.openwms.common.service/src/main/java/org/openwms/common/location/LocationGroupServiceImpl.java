@@ -63,7 +63,7 @@ class LocationGroupServiceImpl implements LocationGroupService<LocationGroup> {
     @Transactional(readOnly = true)
     //@Override
     public TreeNode<LocationGroup> getLocationGroupsAsTree() {
-        return createTree(new TreeNodeImpl<LocationGroup>(), getLocationGroupsAsList());
+        return createTree(new TreeNodeImpl<>(), getLocationGroupsAsList());
     }
 
     /**

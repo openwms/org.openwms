@@ -32,7 +32,6 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-import javax.persistence.Transient;
 import java.io.Serializable;
 import java.util.Collections;
 import java.util.Date;
@@ -41,8 +40,6 @@ import java.util.Set;
 
 import org.ameba.exception.ServiceLayerException;
 import org.openwms.common.transport.TransportUnit;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Configurable;
 
 /**
  * A LocationGroup is a logical group of {@code Location}s, grouping together {@code Location}s with same characteristics.
@@ -53,14 +50,9 @@ import org.springframework.beans.factory.annotation.Configurable;
  * @since 0.1
  * @see org.openwms.common.location.Location
  */
-@Configurable
 @Entity
 @Table(name = "COM_LOCATION_GROUP")
 public class LocationGroup extends Target implements Serializable {
-
-    @Autowired
-    @Transient
-    private LocationGroupRepository repository;
 
     /** Unique identifier of a {@code LocationGroup}. */
     @Column(name = "NAME", unique = true)
@@ -77,8 +69,8 @@ public class LocationGroup extends Target implements Serializable {
     /**
      * Is the {@code LocationGroup} included in the calculation of {@link TransportUnit}s?
      * <p>
-     * <code>true</code> : Location is included in the calculation of {@link TransportUnit}s.<br>
-     * <code>false</code>: Location is not included in the calculation of {@link TransportUnit}s.
+     * {@code true} : Location is included in the calculation of {@link TransportUnit}s.<br>
+     * {@code false}: Location is not included in the calculation of {@link TransportUnit}s.
      * </p>
      */
     @Column(name = "LOCATION_GROUP_COUNTING_ACTIVE")
@@ -207,7 +199,7 @@ public class LocationGroup extends Target implements Serializable {
     /**
      * Check whether infeed is allowed for the {@code LocationGroup}.
      * 
-     * @return <code>true</code> if allowed, otherwise <code>false</code>.
+     * @return {@code true} if allowed, otherwise {@code false}.
      */
     public boolean isInfeedAllowed() {
         return (getGroupStateIn() == LocationGroupState.AVAILABLE);
@@ -216,7 +208,7 @@ public class LocationGroup extends Target implements Serializable {
     /**
      * Check whether infeed of the {@code LocationGroup} is blocked.
      * 
-     * @return <code>true</code> if blocked, otherwise <code>false</code>.
+     * @return {@code true} if blocked, otherwise {@code false}.
      */
     public boolean isInfeedBlocked() {
         return !isInfeedAllowed();
@@ -225,7 +217,7 @@ public class LocationGroup extends Target implements Serializable {
     /**
      * Check whether outfeed is allowed for the {@code LocationGroup}.
      * 
-     * @return <code>true</code> if allowed, otherwise <code>false</code>.
+     * @return {@code true} if allowed, otherwise {@code false}.
      */
     public boolean isOutfeedAllowed() {
         return (getGroupStateIn() == LocationGroupState.AVAILABLE);
@@ -234,7 +226,7 @@ public class LocationGroup extends Target implements Serializable {
     /**
      * Check whether outfeed of the {@code LocationGroup} is blocked.
      * 
-     * @return <code>true</code> if blocked, otherwise <code>false</code>.
+     * @return {@code true} if blocked, otherwise {@code false}.
      */
     public boolean isOutfeedBlocked() {
         return !isInfeedAllowed();
@@ -430,8 +422,8 @@ public class LocationGroup extends Target implements Serializable {
      * 
      * @param locationGroup
      *            The {@code LocationGroup} to be added as a child
-     * @return <code>true</code> if the {@code LocationGroup} was new in the collection of {@code LocationGroup}s, otherwise
-     *         <code>false</code>
+     * @return {@code true} if the {@code LocationGroup} was new in the collection of {@code LocationGroup}s, otherwise
+     *         {@code false}
      */
     public boolean addLocationGroup(LocationGroup locationGroup) {
         if (locationGroup == null) {
@@ -449,7 +441,7 @@ public class LocationGroup extends Target implements Serializable {
      * 
      * @param locationGroup
      *            The {@code LocationGroup} to be removed from the list of children
-     * @return <code>true</code> if the {@code LocationGroup} was found and could be removed, otherwise <code>false</code>
+     * @return {@code true} if the {@code LocationGroup} was found and could be removed, otherwise {@code false}
      */
     public boolean removeLocationGroup(LocationGroup locationGroup) {
         if (locationGroup == null) {
@@ -473,7 +465,7 @@ public class LocationGroup extends Target implements Serializable {
      * 
      * @param location
      *            The {@link Location} to be added as child
-     * @return <code>true</code> if the {@link Location} was new in the collection of {@link Location}s, otherwise <code>false</code>
+     * @return {@code true} if the {@link Location} was new in the collection of {@link Location}s, otherwise {@code false}
      */
     public boolean addLocation(Location location) {
 
@@ -492,7 +484,7 @@ public class LocationGroup extends Target implements Serializable {
      * 
      * @param location
      *            The {@link Location} to be removed from the list of children
-     * @return <code>true</code> if the {@link Location} was found and could be removed, otherwise <code>false</code>
+     * @return {@code true} if the {@link Location} was found and could be removed, otherwise {@code false}
      */
     public boolean removeLocation(Location location) {
         if (location == null) {

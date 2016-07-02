@@ -28,8 +28,6 @@ import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToOne;
@@ -37,12 +35,10 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.OrderBy;
-import javax.persistence.PrePersist;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.persistence.UniqueConstraint;
-import javax.persistence.Version;
 import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
@@ -50,10 +46,9 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
+import org.ameba.integration.jpa.BaseEntity;
 import org.openwms.common.location.Location;
 import org.openwms.common.units.Weight;
-import org.openwms.core.AbstractEntity;
-import org.openwms.core.DomainObject;
 import org.openwms.core.uaa.User;
 import org.openwms.core.values.CoreTypeDefinitions;
 
@@ -73,30 +68,20 @@ import org.openwms.core.values.CoreTypeDefinitions;
 @NamedQueries({
         @NamedQuery(name = TransportUnit.NQ_FIND_ALL, query = "select tu from TransportUnit tu"),
         @NamedQuery(name = TransportUnit.NQ_FIND_BY_UNIQUE_QUERY, query = "select tu from TransportUnit tu where tu.barcode = ?1") })
-public class TransportUnit extends AbstractEntity<Long> implements DomainObject<Long> {
-
-    private static final long serialVersionUID = 4799247366681079321L;
+public class TransportUnit extends BaseEntity {
 
     /**
-     * Name of the <code>NamedQuery</code> to find all <code>TransportUnit</code> Entities.
+     * Name of the <code>NamedQuery</code> to find all {@code TransportUnit} Entities.
      */
     public static final String NQ_FIND_ALL = "TransportUnit.findAll";
 
     /**
-     * Query to find <strong>one</strong> <code>TransportUnit</code> by its natural key.
+     * Query to find <strong>one</strong> {@code TransportUnit} by its natural key.
      * <ul>
-     * <li>Query parameter index <strong>1</strong> : The Barcode of the <code>TransportUnit</code> to search for.</li>
+     * <li>Query parameter index <strong>1</strong> : The Barcode of the {@code TransportUnit} to search for.</li>
      * </ul>
      */
     public static final String NQ_FIND_BY_UNIQUE_QUERY = "TransportUnit.findByBarcode";
-
-    /**
-     * Unique technical key.
-     */
-    @Id
-    @Column(name = "C_ID")
-    @GeneratedValue
-    private Long id;
 
     /**
      * Unique natural key.
@@ -107,20 +92,13 @@ public class TransportUnit extends AbstractEntity<Long> implements DomainObject<
     private Barcode barcode;
 
     /**
-     * Indicates whether the <code>TransportUnit</code> is empty or not (nullable).
+     * Indicates whether the {@code TransportUnit} is empty or not (nullable).
      */
     @Column(name = "C_EMPTY")
     private Boolean empty;
 
     /**
-     * Date when the <code>TransportUnit</code> has been created.
-     */
-    @Temporal(TemporalType.TIMESTAMP)
-    @Column(name = "C_CREATION_DATE")
-    private Date creationDate;
-
-    /**
-     * Date when the <code>TransportUnit</code> has been moved to the current {@link Location}.
+     * Date when the {@code TransportUnit} has been moved to the current {@link Location}.
      */
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "C_ACTUAL_LOCATION_DATE")
@@ -134,72 +112,64 @@ public class TransportUnit extends AbstractEntity<Long> implements DomainObject<
     private Date inventoryDate;
 
     /**
-     * Weight of the <code>TransportUnit</code>.
+     * Weight of the {@code TransportUnit}.
      */
     @Embedded
     @AttributeOverride(name = "quantity", column = @Column(name = "C_WEIGHT", length = CoreTypeDefinitions.QUANTITY_LENGTH))
     private Weight weight = new Weight("0");
 
     /**
-     * State of the <code>TransportUnit</code>.
+     * State of the {@code TransportUnit}.
      */
     @Column(name = "C_STATE")
     @Enumerated(EnumType.STRING)
     private TransportUnitState state = TransportUnitState.AVAILABLE;
 
     /**
-     * Version field.
-     */
-    @Version
-    @Column(name = "C_VERSION")
-    private long version;
-
-    /* ------------------- collection mapping ------------------- */
-    /**
-     * The current {@link Location} of the <code>TransportUnit</code>.
+     * The current {@link Location} of the {@code TransportUnit}.
      */
     @ManyToOne
     @JoinColumn(name = "C_ACTUAL_LOCATION", nullable = false)
     private Location actualLocation;
 
     /**
-     * The target {@link Location} of the <code>TransportUnit</code>.<br>
-     * This property will be set when a <code>TransportOrder</code> is started.
+     * The target {@link Location} of the {@code TransportUnit}.<br>
+     * This property will be set when a {@code TransportOrder} is started.
      */
     @ManyToOne
     @JoinColumn(name = "C_TARGET_LOCATION")
     private Location targetLocation;
 
     /**
-     * The {@link TransportUnitType} of the <code>TransportUnit</code>.
+     * The {@link TransportUnitType} of the {@code TransportUnit}.
      */
     @ManyToOne
     @JoinColumn(name = "C_TRANSPORT_UNIT_TYPE", nullable = false)
     private TransportUnitType transportUnitType;
 
     /**
-     * Owning <code>TransportUnit</code>.
+     * Owning {@code TransportUnit}.
      */
     @ManyToOne
     @JoinColumn(name = "C_PARENT")
     private TransportUnit parent;
 
     /**
-     * The <code>User</code> who performed the last inventory action on the <code>TransportUnit</code>.
+     * The {@code User} who performed the last inventory action on the {@code TransportUnit}.
      */
     @ManyToOne
     @JoinColumn(name = "C_INVENTORY_USER")
     private User inventoryUser;
 
     /**
-     * A set of all child <code>TransportUnit</code>s, ordered by id.
+     * A set of all child {@code TransportUnit}s, ordered by id.
      */
     @OneToMany(mappedBy = "parent", cascade = { CascadeType.MERGE, CascadeType.PERSIST })
     @OrderBy("id DESC")
     private Set<TransportUnit> children = new HashSet<TransportUnit>();
 
     /**
-     * A Map of errors occurred on the <code>TransportUnit</code>.
+     * A Map of errors occurred on the {@code TransportUnit}.
      */
     @OneToMany(cascade = CascadeType.ALL)
     @JoinTable(name = "COM_TRANSPORT_UNIT_ERROR", joinColumns = @JoinColumn(name = "C_TRANSPORT_UNIT_ID"), inverseJoinColumns = @JoinColumn(name = "C_ERROR_ID"))
@@ -214,64 +184,39 @@ public class TransportUnit extends AbstractEntity<Long> implements DomainObject<
     }
 
     /**
-     * Create a new <code>TransportUnit</code> with an unique id. The id is used to create a {@link Barcode}.
+     * Create a new {@code TransportUnit} with an unique id. The id is used to create a {@link Barcode}.
      * 
      * @param unitId
-     *            The unique identifier of the <code>TransportUnit</code>
+     *            The unique identifier of the {@code TransportUnit}
      */
     public TransportUnit(String unitId) {
         this.barcode = new Barcode(unitId);
     }
 
     /**
-     * Create a new <code>TransportUnit</code> with an unique {@link Barcode}.
+     * Create a new {@code TransportUnit} with an unique {@link Barcode}.
      * 
      * @param barcode
-     *            The unique identifier of this <code>TransportUnit</code> is the {@link Barcode}
+     *            The unique identifier of this {@code TransportUnit} is the {@link Barcode}
      */
     public TransportUnit(Barcode barcode) {
         this.barcode = new Barcode(barcode.adjustBarcode(barcode.getValue()));
     }
 
     /**
-     * Set the creation date before the entity is persisted.
-     */
-    @PrePersist
-    void prePersist() {
-        // FIXME [scherrer] : call prepersist on the barcode
-        this.creationDate = new Date();
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public Long getId() {
-        return id;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public boolean isNew() {
-        return (this.id == null);
-    }
-
-    /**
-     * Get the actual {@link Location} of the <code>TransportUnit</code>.
+     * Get the actual {@link Location} of the {@code TransportUnit}.
      * 
-     * @return The {@link Location} where the <code>TransportUnit</code> is placed on
+     * @return The {@link Location} where the {@code TransportUnit} is placed on
      */
     public Location getActualLocation() {
         return actualLocation;
     }
 
     /**
-     * Put the <code>TransportUnit</code> on a {@link Location}.
+     * Put the {@code TransportUnit} on a {@link Location}.
      * 
      * @param actualLocation
-     *            The new {@link Location} of the <code>TransportUnit</code>
+     *            The new {@link Location} of the {@code TransportUnit}
      */
     public void setActualLocation(Location actualLocation) {
         this.actualLocation = actualLocation;
@@ -279,8 +224,8 @@ public class TransportUnit extends AbstractEntity<Long> implements DomainObject<
     }
 
     /**
-     * Get the target {@link Location} of the <code>TransportUnit</code>. This property can not be <code>null</code> when an active
-     * <code>TransportOrder</code> exists.
+     * Get the target {@link Location} of the {@code TransportUnit}. This property can not be {@literal null} when an active
+     * {@code TransportOrder} exists.
      * 
      * @return The target location
      */
@@ -289,38 +234,38 @@ public class TransportUnit extends AbstractEntity<Long> implements DomainObject<
     }
 
     /**
-     * Set the target {@link Location} of the <code>TransportUnit</code>. Shall only be set in combination with an active
+     * Set the target {@link Location} of the {@code TransportUnit}. Shall only be set in combination with an active
      * <code>TransportOder</code>.
      * 
      * @param targetLocation
-     *            The target {@link Location} where this <code>TransportUnit</code> shall be transported to
+     *            The target {@link Location} where this {@code TransportUnit} shall be transported to
      */
     public void setTargetLocation(Location targetLocation) {
         this.targetLocation = targetLocation;
     }
 
     /**
-     * Indicates whether the <code>TransportUnit</code> is empty or not.
+     * Indicates whether the {@code TransportUnit} is empty or not.
      * 
-     * @return <code>true</code> if empty, <code>false</code> if not empty, <code>null</code> when not defined
+     * @return {@code true} if empty, {@code false} if not empty, {@literal null} when not defined
      */
     public Boolean isEmpty() {
         return this.empty;
     }
 
     /**
-     * Marks the <code>TransportUnit</code> to be empty.
+     * Marks the {@code TransportUnit} to be empty.
      * 
      * @param empty
-     *            <code>true</code> to mark the <code>TransportUnit</code> as empty, <code>false</code> to mark it as not empty and
-     *            <code>null</code> for no definition
+     *            {@code true} to mark the {@code TransportUnit} as empty, {@code false} to mark it as not empty and
+     *            {@literal null} for no definition
      */
     public void setEmpty(Boolean empty) {
         this.empty = empty;
     }
 
     /**
-     * Returns the {@link User} who performed the last inventory action on the <code>TransportUnit</code>.
+     * Returns the {@link User} who performed the last inventory action on the {@code TransportUnit}.
      * 
      * @return The {@link User} who did the last inventory check
      */
@@ -329,7 +274,7 @@ public class TransportUnit extends AbstractEntity<Long> implements DomainObject<
     }
 
     /**
-     * Set the {@link User}> who performed the last inventory action on the <code>TransportUnit</code>.
+     * Set the {@link User}> who performed the last inventory action on the {@code TransportUnit}.
      * 
      * @param inventoryUser
      *            The {@link User} who did the last inventory check
@@ -339,43 +284,34 @@ public class TransportUnit extends AbstractEntity<Long> implements DomainObject<
     }
 
     /**
-     * Number of <code>TransportUnit</code>s belonging to the <code>TransportUnit</code>.
+     * Number of {@code TransportUnit}s belonging to the {@code TransportUnit}.
      * 
-     * @return The number of all <code>TransportUnit</code>s belonging to this one
+     * @return The number of all {@code TransportUnit}s belonging to this one
      */
     public int getNoTransportUnits() {
         return this.children.size();
     }
 
     /**
-     * Returns the creation date of the <code>TransportUnit</code>.
+     * Returns the date when the {@code TransportUnit} moved to the actualLocation.
      * 
-     * @return The creation date
-     */
-    public Date getCreationDate() {
-        return new Date(this.creationDate.getTime());
-    }
-
-    /**
-     * Returns the date when the <code>TransportUnit</code> moved to the actualLocation.
-     * 
-     * @return The timestamp when the <code>TransportUnit</code> moved the last time
+     * @return The timestamp when the {@code TransportUnit} moved the last time
      */
     public Date getActualLocationDate() {
         return new Date(this.actualLocationDate.getTime());
     }
 
     /**
-     * Returns the timestamp of the last inventory check of the <code>TransportUnit</code>.
+     * Returns the timestamp of the last inventory check of the {@code TransportUnit}.
      * 
-     * @return The timestamp of the last inventory check of the <code>TransportUnit</code>.
+     * @return The timestamp of the last inventory check of the {@code TransportUnit}.
      */
     public Date getInventoryDate() {
         return new Date(this.inventoryDate.getTime());
     }
 
     /**
-     * Set the timestamp of the last inventory action of the <code>TransportUnit</code>.
+     * Set the timestamp of the last inventory action of the {@code TransportUnit}.
      * 
      * @param inventoryDate
      *            The timestamp of the last inventory check
@@ -385,35 +321,35 @@ public class TransportUnit extends AbstractEntity<Long> implements DomainObject<
     }
 
     /**
-     * Returns the current weight of the <code>TransportUnit</code>.
+     * Returns the current weight of the {@code TransportUnit}.
      * 
-     * @return The current weight of the <code>TransportUnit</code>
+     * @return The current weight of the {@code TransportUnit}
      */
     public Weight getWeight() {
         return this.weight;
     }
 
     /**
-     * Sets the current weight of the <code>TransportUnit</code>.
+     * Sets the current weight of the {@code TransportUnit}.
      * 
      * @param weight
-     *            The current weight of the <code>TransportUnit</code>
+     *            The current weight of the {@code TransportUnit}
      */
     public void setWeight(Weight weight) {
         this.weight = weight;
     }
 
     /**
-     * Get all errors that have occurred on the <code>TransportUnit</code>.
+     * Get all errors that have occurred on the {@code TransportUnit}.
      * 
-     * @return A Map of all occurred {@link UnitError}s on the <code>TransportUnit</code>
+     * @return A Map of all occurred {@link UnitError}s on the {@code TransportUnit}
      */
     public Map<Date, UnitError> getErrors() {
         return Collections.unmodifiableMap(errors);
     }
 
     /**
-     * Add an error to the <code>TransportUnit</code>.
+     * Add an error to the {@code TransportUnit}.
      * 
      * @param error
      *            An {@link UnitError} to be added
@@ -429,45 +365,45 @@ public class TransportUnit extends AbstractEntity<Long> implements DomainObject<
     }
 
     /**
-     * Return the state of the <code>TransportUnit</code>.
+     * Return the state of the {@code TransportUnit}.
      * 
-     * @return The current state of the <code>TransportUnit</code>
+     * @return The current state of the {@code TransportUnit}
      */
     public TransportUnitState getState() {
         return this.state;
     }
 
     /**
-     * Set the state of the <code>TransportUnit</code>.
+     * Set the state of the {@code TransportUnit}.
      * 
      * @param state
-     *            The state to set on the <code>TransportUnit</code>
+     *            The state to set on the {@code TransportUnit}
      */
     public void setState(TransportUnitState state) {
         this.state = state;
     }
 
     /**
-     * Return the {@link TransportUnitType} of the <code>TransportUnit</code>.
+     * Return the {@link TransportUnitType} of the {@code TransportUnit}.
      * 
-     * @return The {@link TransportUnitType} the <code>TransportUnit</code> belongs to
+     * @return The {@link TransportUnitType} the {@code TransportUnit} belongs to
      */
     public TransportUnitType getTransportUnitType() {
         return this.transportUnitType;
     }
 
     /**
-     * Set the {@link TransportUnitType} of the <code>TransportUnit</code>.
+     * Set the {@link TransportUnitType} of the {@code TransportUnit}.
      * 
      * @param transportUnitType
-     *            The type of the <code>TransportUnit</code>
+     *            The type of the {@code TransportUnit}
      */
     public void setTransportUnitType(TransportUnitType transportUnitType) {
         this.transportUnitType = transportUnitType;
     }
 
     /**
-     * Return the {@link Barcode} of the <code>TransportUnit</code>.
+     * Return the {@link Barcode} of the {@code TransportUnit}.
      * 
      * @return The current {@link Barcode}
      */
@@ -476,17 +412,17 @@ public class TransportUnit extends AbstractEntity<Long> implements DomainObject<
     }
 
     /**
-     * Set the {@link Barcode} of the <code>TransportUnit</code>.
+     * Set the {@link Barcode} of the {@code TransportUnit}.
      * 
      * @param barcode
-     *            The {@link Barcode} to be set on the <code>TransportUnit</code>
+     *            The {@link Barcode} to be set on the {@code TransportUnit}
      */
     public void setBarcode(Barcode barcode) {
         this.barcode = barcode;
     }
 
     /**
-     * Returns the parent <code>TransportUnit</code>.
+     * Returns the parent {@code TransportUnit}.
      * 
      * @return the parent.
      */
@@ -495,7 +431,7 @@ public class TransportUnit extends AbstractEntity<Long> implements DomainObject<
     }
 
     /**
-     * Set a parent <code>TransportUnit</code>.
+     * Set a parent {@code TransportUnit}.
      * 
      * @param parent
      *            The parent to set.
@@ -505,7 +441,7 @@ public class TransportUnit extends AbstractEntity<Long> implements DomainObject<
     }
 
     /**
-     * Get all child <code>TransportUnit</code>s.
+     * Get all child {@code TransportUnit}s.
      * 
      * @return the transportUnits.
      */
@@ -514,12 +450,12 @@ public class TransportUnit extends AbstractEntity<Long> implements DomainObject<
     }
 
     /**
-     * Add a <code>TransportUnit</code> to the children.
+     * Add a {@code TransportUnit} to the children.
      * 
      * @param transportUnit
-     *            The <code>TransportUnit</code> to be added to the list of children
+     *            The {@code TransportUnit} to be added to the list of children
      * @throws IllegalArgumentException
-     *             when transportUnit is <code>null</code>
+     *             when transportUnit is {@literal null}
      */
     public void addChild(TransportUnit transportUnit) {
         if (transportUnit == null) {
@@ -542,12 +478,12 @@ public class TransportUnit extends AbstractEntity<Long> implements DomainObject<
     }
 
     /**
-     * Remove a <code>TransportUnit</code> from the list of children.
+     * Remove a {@code TransportUnit} from the list of children.
      * 
      * @param transportUnit
-     *            The <code>TransportUnit</code> to be removed from the list of children
+     *            The {@code TransportUnit} to be removed from the list of children
      * @throws IllegalArgumentException
-     *             when transportUnit is <code>null</code> or any other failure occurs
+     *             when transportUnit is {@literal null} or any other failure occurs
      */
     public void removeChild(TransportUnit transportUnit) {
         if (transportUnit == null) {
@@ -571,14 +507,6 @@ public class TransportUnit extends AbstractEntity<Long> implements DomainObject<
      */
     public void setActualLocationDate(Date actualLocationDate) {
         this.actualLocationDate = new Date(actualLocationDate.getTime());
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public long getVersion() {
-        return this.version;
     }
 
     /**
