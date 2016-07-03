@@ -21,28 +21,26 @@
  */
 package org.openwms.core.listener;
 
+import org.ameba.integration.jpa.BaseEntity;
 import org.openwms.core.AbstractEntity;
 
 /**
  * An OnRemovalListener is able to hook in the lifecycle of an entity class. A class implementing this interface is called before an entity
  * of type <code>T</code> is removed.
- * 
- * @param <T>
- *            Any kind of {@link AbstractEntity}
+ *
+ * @param <T> Any kind of {@link AbstractEntity}
  * @author <a href="mailto:russelltina@users.sourceforge.net">Tina Russell</a>
  * @version $Revision$
  * @since 0.1
  */
-public interface OnRemovalListener<T extends AbstractEntity> {
+public interface OnRemovalListener<T extends BaseEntity> {
 
     /**
      * Do something prior the <code>entity</code> instance is been removed.
-     * 
-     * @param entity
-     *            The instance to be removed.
+     *
+     * @param entity The instance to be removed.
      * @return <code>true</code> if removal is allowed, otherwise <code>false</code>
-     * @throws RemovalNotAllowedException
-     *             When it is not allowed to remove the entity, because depending items exist
+     * @throws RemovalNotAllowedException When it is not allowed to remove the entity, because depending items exist
      */
     boolean preRemove(T entity) throws RemovalNotAllowedException;
 }

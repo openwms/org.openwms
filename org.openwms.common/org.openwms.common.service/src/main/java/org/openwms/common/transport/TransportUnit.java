@@ -175,12 +175,11 @@ public class TransportUnit extends BaseEntity {
     @JoinTable(name = "COM_TRANSPORT_UNIT_ERROR", joinColumns = @JoinColumn(name = "C_TRANSPORT_UNIT_ID"), inverseJoinColumns = @JoinColumn(name = "C_ERROR_ID"))
     private Map<Date, UnitError> errors = new HashMap<Date, UnitError>();
 
-    /* ----------------------------- methods ------------------- */
+    /*~ ----------------------------- constructors ------------------- */
     /**
-     * Accessed by persistence provider.
+     * Dear JPA...
      */
     protected TransportUnit() {
-        super();
     }
 
     /**
@@ -203,6 +202,7 @@ public class TransportUnit extends BaseEntity {
         this.barcode = new Barcode(barcode.adjustBarcode(barcode.getValue()));
     }
 
+    /*~ ----------------------------- methods ------------------- */
     /**
      * Get the actual {@link Location} of the {@code TransportUnit}.
      * 
