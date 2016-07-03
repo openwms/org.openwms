@@ -28,8 +28,6 @@ import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.NamedQueries;
-import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
@@ -40,10 +38,11 @@ import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
+import org.ameba.exception.ServiceLayerException;
 import org.openwms.common.transport.TransportUnit;
 
 /**
- * A LocationGroup is a logical group of <code>Location</code>s, grouping together <code>Location</code>s with same characteristics.
+ * A LocationGroup is a logical group of {@code Location}s, grouping together {@code Location}s with same characteristics.
  * 
  * @GlossaryTerm
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
@@ -53,40 +52,32 @@ import org.openwms.common.transport.TransportUnit;
  */
 @Entity
 @Table(name = "COM_LOCATION_GROUP")
-@NamedQueries({ @NamedQuery(name = "LocationGroup.findAll", query = "select lg from LocationGroup lg"),
-        @NamedQuery(name = "LocationGroup.findByName", query = "select lg from LocationGroup lg where lg.name = ?1") })
 public class LocationGroup extends Target implements Serializable {
 
-    /**
-     * Unique identifier of a <code>LocationGroup</code>.
-     */
+    /** Unique identifier of a {@code LocationGroup}. */
     @Column(name = "NAME", unique = true)
     private String name;
 
-    /**
-     * Description for the <code>LocationGroup</code>.
-     */
+    /** Description for the {@code LocationGroup}. */
     @Column(name = "DESCRIPTION")
     private String description;
 
-    /**
-     * A type can be assigned to a <code>LocationGroup</code>.
-     */
+    /** A type can be assigned to a {@code LocationGroup}. */
     @Column(name = "GROUP_TYPE")
     private String groupType;
 
     /**
-     * Is the <code>LocationGroup</code> included in the calculation of {@link TransportUnit}s?
+     * Is the {@code LocationGroup} included in the calculation of {@link TransportUnit}s?
      * <p>
-     * <code>true</code> : Location is included in the calculation of {@link TransportUnit}s.<br>
-     * <code>false</code>: Location is not included in the calculation of {@link TransportUnit}s.
+     * {@code true} : Location is included in the calculation of {@link TransportUnit}s.<br>
+     * {@code false}: Location is not included in the calculation of {@link TransportUnit}s.
      * </p>
      */
     @Column(name = "LOCATION_GROUP_COUNTING_ACTIVE")
     private boolean locationGroupCountingActive = true;
 
     /**
-     * Number of {@link Location}s belonging to the <code>LocationGroup</code>.
+     * Number of {@link Location}s belonging to the {@code LocationGroup}.
      */
     @Column(name = "NO_LOCATIONS")
     private int noLocations = 0;
@@ -99,7 +90,7 @@ public class LocationGroup extends Target implements Serializable {
     private LocationGroupState groupStateIn = LocationGroupState.AVAILABLE;
 
     /**
-     * References the <code>LocationGroup</code> that locked this <code>LocationGroup</code> for infeed.
+     * References the {@code LocationGroup} that locked this {@code LocationGroup} for infeed.
      */
     @ManyToOne
     @JoinColumn(name = "IN_LOCKER")
@@ -113,14 +104,14 @@ public class LocationGroup extends Target implements Serializable {
     private LocationGroupState groupStateOut = LocationGroupState.AVAILABLE;
 
     /**
-     * References the <code>LocationGroup</code> that locked this <code>LocationGroup</code> for outfeed.
+     * References the {@code LocationGroup} that locked this {@code LocationGroup} for outfeed.
      */
     @ManyToOne
     @JoinColumn(name = "OUT_LOCKER")
     private LocationGroup stateOutLocker;
 
     /**
-     * Maximum fill level of the <code>LocationGroup</code>.
+     * Maximum fill level of the {@code LocationGroup}.
      */
     @Column(name = "MAX_FILL_LEVEL")
     private float maxFillLevel = 0;
@@ -133,30 +124,30 @@ public class LocationGroup extends Target implements Serializable {
     private Date lastUpdated;
 
     /**
-     * Name of the PLC system, tied to this <code>LocationGroup</code>.
+     * Name of the PLC system, tied to this {@code LocationGroup}.
      */
     @Column(name = "SYSTEM_CODE")
     private String systemCode;
 
     /* ------------------- collection mapping ------------------- */
     /**
-     * Parent <code>LocationGroup</code>.
+     * Parent {@code LocationGroup}.
      */
     @ManyToOne
     @JoinColumn(name = "PARENT")
     private LocationGroup parent;
 
     /**
-     * Child <code>LocationGroup</code>s.
+     * Child {@code LocationGroup}s.
      */
     @OneToMany(mappedBy = "parent", cascade = { CascadeType.ALL })
-    private Set<LocationGroup> locationGroups = new HashSet<LocationGroup>();
+    private Set<LocationGroup> locationGroups = new HashSet<>();
 
     /**
      * Child {@link Location}s.
      */
     @OneToMany(mappedBy = "locationGroup")
-    private Set<Location> locations = new HashSet<Location>();
+    private Set<Location> locations = new HashSet<>();
 
     /* ----------------------------- methods ------------------- */
     /**
@@ -168,26 +159,26 @@ public class LocationGroup extends Target implements Serializable {
     }
 
     /**
-     * Create a new <code>LocationGroup</code> with an unique name.
+     * Create a new {@code LocationGroup} with an unique name.
      * 
      * @param name
-     *            The name of the <code>LocationGroup</code>
+     *            The name of the {@code LocationGroup}
      */
     public LocationGroup(String name) {
         this.name = name;
     }
 
     /**
-     * Returns the name of the <code>LocationGroup</code>.
+     * Returns the name of the {@code LocationGroup}.
      * 
-     * @return The name of the <code>LocationGroup</code>
+     * @return The name of the {@code LocationGroup}
      */
     public String getName() {
         return name;
     }
 
     /**
-     * Set the name of the <code>LocationGroup</code>.
+     * Set the name of the {@code LocationGroup}.
      * 
      * @param name
      *            The name to set.
@@ -197,7 +188,7 @@ public class LocationGroup extends Target implements Serializable {
     }
 
     /**
-     * Returns the infeed state of the <code>LocationGroup</code>.
+     * Returns the infeed state of the {@code LocationGroup}.
      * 
      * @return The state of infeed
      */
@@ -206,48 +197,48 @@ public class LocationGroup extends Target implements Serializable {
     }
 
     /**
-     * Check whether infeed is allowed for the <code>LocationGroup</code>.
+     * Check whether infeed is allowed for the {@code LocationGroup}.
      * 
-     * @return <code>true</code> if allowed, otherwise <code>false</code>.
+     * @return {@code true} if allowed, otherwise {@code false}.
      */
     public boolean isInfeedAllowed() {
         return (getGroupStateIn() == LocationGroupState.AVAILABLE);
     }
 
     /**
-     * Check whether infeed of the <code>LocationGroup</code> is blocked.
+     * Check whether infeed of the {@code LocationGroup} is blocked.
      * 
-     * @return <code>true</code> if blocked, otherwise <code>false</code>.
+     * @return {@code true} if blocked, otherwise {@code false}.
      */
     public boolean isInfeedBlocked() {
         return !isInfeedAllowed();
     }
 
     /**
-     * Check whether outfeed is allowed for the <code>LocationGroup</code>.
+     * Check whether outfeed is allowed for the {@code LocationGroup}.
      * 
-     * @return <code>true</code> if allowed, otherwise <code>false</code>.
+     * @return {@code true} if allowed, otherwise {@code false}.
      */
     public boolean isOutfeedAllowed() {
         return (getGroupStateIn() == LocationGroupState.AVAILABLE);
     }
 
     /**
-     * Check whether outfeed of the <code>LocationGroup</code> is blocked.
+     * Check whether outfeed of the {@code LocationGroup} is blocked.
      * 
-     * @return <code>true</code> if blocked, otherwise <code>false</code>.
+     * @return {@code true} if blocked, otherwise {@code false}.
      */
     public boolean isOutfeedBlocked() {
         return !isInfeedAllowed();
     }
 
     /**
-     * Change the infeed state of the <code>LocationGroup</code>.
+     * Change the infeed state of the {@code LocationGroup}.
      * 
      * @param gStateIn
      *            The state to set
      * @param lockLg
-     *            The <code>LocationGroup</code> that wants to lock/unlock this <code>LocationGroup</code>.
+     *            The {@code LocationGroup} that wants to lock/unlock this {@code LocationGroup}.
      */
     public void setGroupStateIn(LocationGroupState gStateIn, LocationGroup lockLg) {
         if (this.groupStateIn == LocationGroupState.NOT_AVAILABLE && gStateIn == LocationGroupState.AVAILABLE
@@ -269,7 +260,7 @@ public class LocationGroup extends Target implements Serializable {
     }
 
     /**
-     * Return the outfeed state of the <code>LocationGroup</code>.
+     * Return the outfeed state of the {@code LocationGroup}.
      * 
      * @return The state of outfeed
      */
@@ -278,12 +269,12 @@ public class LocationGroup extends Target implements Serializable {
     }
 
     /**
-     * Set the outfeed state of the <code>LocationGroup</code>.
+     * Set the outfeed state of the {@code LocationGroup}.
      * 
      * @param gStateOut
      *            The state to set
      * @param lockLg
-     *            The <code>LocationGroup</code> that wants to lock/unlock this <code>LocationGroup</code>.
+     *            The {@code LocationGroup} that wants to lock/unlock this {@code LocationGroup}.
      */
     public void setGroupStateOut(LocationGroupState gStateOut, LocationGroup lockLg) {
         if (this.groupStateOut == LocationGroupState.NOT_AVAILABLE && gStateOut == LocationGroupState.AVAILABLE
@@ -307,15 +298,15 @@ public class LocationGroup extends Target implements Serializable {
     /**
      * Returns the count of all sub {@link Location}s.
      * 
-     * @return The count of {@link Location}s belonging to this <code>LocationGroup</code>
+     * @return The count of {@link Location}s belonging to this {@code LocationGroup}
      */
     public int getNoLocations() {
         return this.noLocations;
     }
 
     /**
-     * Returns the maximum fill level of the <code>LocationGroup</code>.<br>
-     * The maximum fill level defines how many {@link Location}s of the <code>LocationGroup</code> can be occupied by
+     * Returns the maximum fill level of the {@code LocationGroup}.<br>
+     * The maximum fill level defines how many {@link Location}s of the {@code LocationGroup} can be occupied by
      * {@link TransportUnit}s.
      * <p>
      * The maximum fill level is a value between 0 and 1 and represents a percentage value.
@@ -328,7 +319,7 @@ public class LocationGroup extends Target implements Serializable {
     }
 
     /**
-     * Set the maximum fill level for the <code>LocationGroup</code>.
+     * Set the maximum fill level for the {@code LocationGroup}.
      * <p>
      * Pass a value between 0 and 1.<br>
      * For example maxFillLevel = 0.85 means: 85% of all {@link Location}s can be occupied.
@@ -342,19 +333,19 @@ public class LocationGroup extends Target implements Serializable {
     }
 
     /**
-     * Returns the type of the <code>LocationGroup</code>.
+     * Returns the type of the {@code LocationGroup}.
      * 
-     * @return The type of the <code>LocationGroup</code>
+     * @return The type of the {@code LocationGroup}
      */
     public String getGroupType() {
         return this.groupType;
     }
 
     /**
-     * Set the type for the <code>LocationGroup</code>.
+     * Set the type for the {@code LocationGroup}.
      * 
      * @param groupType
-     *            The type of the <code>LocationGroup</code>
+     *            The type of the {@code LocationGroup}
      */
     public void setGroupType(String groupType) {
         this.groupType = groupType;
@@ -399,40 +390,40 @@ public class LocationGroup extends Target implements Serializable {
     }
 
     /**
-     * Returns the parent <code>LocationGroup</code>.
+     * Returns the parent {@code LocationGroup}.
      * 
-     * @return The parent <code>LocationGroup</code>
+     * @return The parent {@code LocationGroup}
      */
     public LocationGroup getParent() {
         return this.parent;
     }
 
     /**
-     * Set the parent <code>LocationGroup</code>.
+     * Set the parent {@code LocationGroup}.
      * 
      * @param parent
-     *            The <code>LocationGroup</code> to set as parent
+     *            The {@code LocationGroup} to set as parent
      */
     public void setParent(LocationGroup parent) {
         this.parent = parent;
     }
 
     /**
-     * Return all child <code>LocationGroup</code>.
+     * Return all child {@code LocationGroup}.
      * 
-     * @return A set of all <code>LocationGroup</code> having this one as parent
+     * @return A set of all {@code LocationGroup} having this one as parent
      */
     public Set<LocationGroup> getLocationGroups() {
         return locationGroups;
     }
 
     /**
-     * Add a <code>LocationGroup</code> to the list of children.
+     * Add a {@code LocationGroup} to the list of children.
      * 
      * @param locationGroup
-     *            The <code>LocationGroup</code> to be added as a child
-     * @return <code>true</code> if the <code>LocationGroup</code> was new in the collection of <code>LocationGroup</code>s, otherwise
-     *         <code>false</code>
+     *            The {@code LocationGroup} to be added as a child
+     * @return {@code true} if the {@code LocationGroup} was new in the collection of {@code LocationGroup}s, otherwise
+     *         {@code false}
      */
     public boolean addLocationGroup(LocationGroup locationGroup) {
         if (locationGroup == null) {
@@ -446,11 +437,11 @@ public class LocationGroup extends Target implements Serializable {
     }
 
     /**
-     * Remove a <code>LocationGroup</code> from the list of children.
+     * Remove a {@code LocationGroup} from the list of children.
      * 
      * @param locationGroup
-     *            The <code>LocationGroup</code> to be removed from the list of children
-     * @return <code>true</code> if the <code>LocationGroup</code> was found and could be removed, otherwise <code>false</code>
+     *            The {@code LocationGroup} to be removed from the list of children
+     * @return {@code true} if the {@code LocationGroup} was found and could be removed, otherwise {@code false}
      */
     public boolean removeLocationGroup(LocationGroup locationGroup) {
         if (locationGroup == null) {
@@ -463,7 +454,7 @@ public class LocationGroup extends Target implements Serializable {
     /**
      * Return all {@link Location}s in an unmodifiable Collection.
      * 
-     * @return A unmodifiable set of all {@link Location}s that belong to this <code>LocationGroup</code>
+     * @return A unmodifiable set of all {@link Location}s that belong to this {@code LocationGroup}
      */
     public Set<Location> getLocations() {
         return Collections.unmodifiableSet(locations);
@@ -474,7 +465,7 @@ public class LocationGroup extends Target implements Serializable {
      * 
      * @param location
      *            The {@link Location} to be added as child
-     * @return <code>true</code> if the {@link Location} was new in the collection of {@link Location}s, otherwise <code>false</code>
+     * @return {@code true} if the {@link Location} was new in the collection of {@link Location}s, otherwise {@code false}
      */
     public boolean addLocation(Location location) {
 
@@ -493,7 +484,7 @@ public class LocationGroup extends Target implements Serializable {
      * 
      * @param location
      *            The {@link Location} to be removed from the list of children
-     * @return <code>true</code> if the {@link Location} was found and could be removed, otherwise <code>false</code>
+     * @return {@code true} if the {@link Location} was found and could be removed, otherwise {@code false}
      */
     public boolean removeLocation(Location location) {
         if (location == null) {
@@ -582,7 +573,7 @@ public class LocationGroup extends Target implements Serializable {
     }
 
     /**
-     * Return the name of the <code>LocationGroup</code> as String.
+     * Return the name of the {@code LocationGroup} as String.
      * 
      * @see java.lang.Object#toString()
      * @return String
@@ -590,5 +581,29 @@ public class LocationGroup extends Target implements Serializable {
     @Override
     public String toString() {
         return getName();
+    }
+
+    void changeState(LocationGroupState stateIn, LocationGroupState stateOut) {
+        if (groupStateIn != stateIn && stateIn != null) {
+            // GroupStateIn changed
+            if (parent != null
+                    && parent.getGroupStateIn() == LocationGroupState.NOT_AVAILABLE
+                    && groupStateIn == LocationGroupState.AVAILABLE) {
+                throw new ServiceLayerException(
+                        "Not allowed to change GroupStateIn, parent locationGroup is not available");
+            }
+            setGroupStateIn(stateIn, this);
+        }
+        if (groupStateOut != stateOut && stateOut != null) {
+            // GroupStateOut changed
+            if (parent != null
+                    && parent.getGroupStateOut() == LocationGroupState.NOT_AVAILABLE
+                    && groupStateOut == LocationGroupState.AVAILABLE) {
+                throw new ServiceLayerException(
+                        "Not allowed to change GroupStateOut, parent locationGroup is not available");
+            }
+            setGroupStateOut(stateOut, this);
+        }
+
     }
 }

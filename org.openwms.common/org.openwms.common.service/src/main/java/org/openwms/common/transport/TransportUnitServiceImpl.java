@@ -165,10 +165,10 @@ class TransportUnitServiceImpl implements TransportUnitService<TransportUnit> {
                 try {
                     delete(tu);
                     if (LOGGER.isDebugEnabled()) {
-                        LOGGER.debug("Successfully marked TransportUnit for removal : " + tu.getId());
+                        LOGGER.debug("Successfully marked TransportUnit for removal : " + tu.getPk());
                     }
                 } catch (RemovalNotAllowedException rnae) {
-                    LOGGER.error("Not allowed to remove TransportUnit with id : " + tu.getId() + " with reason: "
+                    LOGGER.error("Not allowed to remove TransportUnit with id : " + tu.getPk() + " with reason: "
                             + rnae.getLocalizedMessage());
                     throw new ServiceLayerException(rnae.getLocalizedMessage());
                 }

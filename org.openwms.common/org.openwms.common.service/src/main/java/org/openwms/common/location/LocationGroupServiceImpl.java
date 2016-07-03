@@ -24,18 +24,17 @@ package org.openwms.common.location;
 import java.util.List;
 
 import org.ameba.annotation.TxService;
-import org.ameba.exception.ServiceLayerException;
+import org.ameba.exception.NotFoundException;
 import org.openwms.core.util.TreeNode;
 import org.openwms.core.util.TreeNodeImpl;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.transaction.annotation.Transactional;
 
 /**
  * A LocationGroupServiceImpl.
- * 
+ *
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  * @version 0.2
  * @since 0.1
@@ -43,107 +42,37 @@ import org.springframework.transaction.annotation.Transactional;
 @TxService
 class LocationGroupServiceImpl implements LocationGroupService<LocationGroup> {
 
-    private Logger logger = LoggerFactory.getLogger(this.getClass());
+    private static final Logger LOGGER = LoggerFactory.getLogger(LocationGroupServiceImpl.class);
 
     @Autowired
-    @Qualifier("locationGroupDao")
-    private LocationGroupRepository dao;
+    private LocationGroupRepository locationGroupRepository;
 
     /**
      * {@inheritDoc}
      */
     @Override
-    public void changeGroupState(LocationGroup locationGroup) {
-        logger.debug("CGS LocationGroup on service called");
-        if (locationGroup.isNew()) {
-            throw new ServiceLayerException("LocationGroup " + locationGroup.getName()
-                    + " is new and must be persisted before save");
-        }
-        LocationGroup persisted = dao.findOne(locationGroup.getId());
-        changeGroupState(persisted, locationGroup);
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public LocationGroup save(LocationGroup locationGroup) {
-        if (locationGroup.isNew()) {
-            throw new ServiceLayerException("LocationGroup " + locationGroup.getName()
-                    + " is new and must be persisted before save");
-        }
-        LocationGroup persisted = dao.findOne(locationGroup.getId());
-        changeGroupState(persisted, locationGroup);
-        return mergeLocationGroup(persisted, locationGroup);
-    }
-
-    /**
-     * Save changed fields by setting them directly. Merging the instance automatically will not work.
-     * 
-     * @param persisted
-     *            The instance read from the persisted storage
-     * @param locationGroup
-     *            The new LocationGroup to merge
-     * @return The merged persisted object
-     */
-    protected LocationGroup mergeLocationGroup(LocationGroup persisted, LocationGroup locationGroup) {
-        persisted.setDescription(locationGroup.getDescription());
-        persisted.setMaxFillLevel(locationGroup.getMaxFillLevel());
-        persisted.setLocationGroupCountingActive(locationGroup.isLocationGroupCountingActive());
-        return persisted;
-    }
-
-    /**
-     * Regarding at least one groupState has changed the state is set on the {@link LocationGroup} directly. Whether a state change is
-     * allowed or not is checked within the {@link LocationGroup} itself but we do a basic check before. When the parent
-     * {@link LocationGroup} is blocked the current {@link LocationGroup} cannot be turned to AVAILABLE.
-     * 
-     * @param persisted
-     *            The instance read from the persisted storage
-     * @param locationGroup
-     *            The instance holding the new values to save
-     * @throws ServiceLayerException
-     *             when a state change is not allowed
-     */
-    protected void changeGroupState(LocationGroup persisted, LocationGroup locationGroup) {
-        if (persisted.getGroupStateIn() != locationGroup.getGroupStateIn()) {
-            // GroupStateIn changed
-            if (locationGroup.getParent() != null
-                    && locationGroup.getParent().getGroupStateIn() == LocationGroupState.NOT_AVAILABLE
-                    && locationGroup.getGroupStateIn() == LocationGroupState.AVAILABLE) {
-                throw new ServiceLayerException(
-                        "Not allowed to change GroupStateIn, parent locationGroup is not available");
-            }
-            persisted.setGroupStateIn(locationGroup.getGroupStateIn(), persisted);
-        }
-        if (persisted.getGroupStateOut() != locationGroup.getGroupStateOut()) {
-            // GroupStateOut changed
-            if (locationGroup.getParent() != null
-                    && locationGroup.getParent().getGroupStateOut() == LocationGroupState.NOT_AVAILABLE
-                    && locationGroup.getGroupStateOut() == LocationGroupState.AVAILABLE) {
-                throw new ServiceLayerException(
-                        "Not allowed to change GroupStateOut, parent locationGroup is not available");
-            }
-            persisted.setGroupStateOut(locationGroup.getGroupStateOut(), persisted);
-        }
+    public void changeGroupState(String id, LocationGroupState stateIn, LocationGroupState stateOut) {
+        LocationGroup locationGroup = locationGroupRepository.findOne(Long.valueOf(id));
+        NotFoundException.throwIfNull(locationGroup, String.format("No LocationGroup with id %s found", id));
+        locationGroup.changeState(stateIn, stateOut);
     }
 
     /**
      * {@inheritDoc}
      */
     @Transactional(readOnly = true)
-    @Override
+    //@Override
     public TreeNode<LocationGroup> getLocationGroupsAsTree() {
-        return createTree(new TreeNodeImpl<LocationGroup>(), getLocationGroupsAsList());
+        return createTree(new TreeNodeImpl<>(), getLocationGroupsAsList());
     }
 
     /**
      * {@inheritDoc}
      */
     @Transactional(readOnly = true)
-    @Override
+    //@Override
     public List<LocationGroup> getLocationGroupsAsList() {
-        return dao.findAll();
+        return locationGroupRepository.findAll();
     }
 
     private TreeNode<LocationGroup> createTree(TreeNode<LocationGroup> root, List<LocationGroup> locationGroups) {
@@ -158,7 +87,7 @@ class LocationGroupServiceImpl implements LocationGroupService<LocationGroup> {
         if (lg.getParent() == null) {
             node = root.getChild(lg);
             if (node == null) {
-                TreeNode<LocationGroup> n1 = new TreeNodeImpl<LocationGroup>();
+                TreeNode<LocationGroup> n1 = new TreeNodeImpl<>();
                 n1.setData(lg);
                 n1.setParent(root);
                 root.addChild(n1.getData(), n1);
@@ -169,7 +98,7 @@ class LocationGroupServiceImpl implements LocationGroupService<LocationGroup> {
             node = searchForNode(lg.getParent(), root);
             TreeNode<LocationGroup> child = node.getChild(lg);
             if (child == null) {
-                child = new TreeNodeImpl<LocationGroup>();
+                child = new TreeNodeImpl<>();
                 child.setData(lg);
                 child.setParent(node);
                 node.addChild(lg, child);

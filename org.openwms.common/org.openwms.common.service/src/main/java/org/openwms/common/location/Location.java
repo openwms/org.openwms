@@ -58,7 +58,7 @@ import org.openwms.core.values.Message;
  * @since 0.1
  */
 @Entity
-@Table(name = "COM_LOCATION", uniqueConstraints = @UniqueConstraint(columnNames = {"AREA", "AISLE", "X", "Y", "Z"}))
+@Table(name = "COM_LOCATION", uniqueConstraints = @UniqueConstraint(columnNames = {"C_AREA", "C_AISLE", "C_X", "C_Y", "C_Z"}))
 public class Location extends BaseEntity implements Serializable {
 
     /** Unique natural key. */
