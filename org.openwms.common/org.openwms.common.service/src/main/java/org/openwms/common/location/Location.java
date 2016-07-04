@@ -46,6 +46,7 @@ import java.util.Set;
 
 import org.ameba.integration.jpa.BaseEntity;
 import org.openwms.core.values.Message;
+import org.springframework.util.Assert;
 
 /**
  * A Location, represents a physical or virtual place in a warehouse. Could be something like a storage location in the stock or a location
@@ -157,6 +158,7 @@ public class Location extends BaseEntity implements Serializable {
     private Set<Message> messages = new HashSet<>();
 
     /*~ ----------------------------- constructors ------------------- */
+
     /**
      * Create a new Location with the business key.
      *
@@ -165,12 +167,13 @@ public class Location extends BaseEntity implements Serializable {
     public Location(LocationPK locationId) {
         this.locationId = locationId;
     }
-    
+
     /** Dear JPA... */
     protected Location() {
     }
 
     /*~ ----------------------------- methods ------------------- */
+
     /**
      * Add a new {@link Message} to this Location.
      *
@@ -361,21 +364,30 @@ public class Location extends BaseEntity implements Serializable {
     }
 
     /**
-     * Add this Location to the {@literal locationGroup}. When the argument is {@literal null} an existing {@link LocationGroup} is
-     * removed from the Location.
+     * Add this Location to the {@literal locationGroup}. When the argument is {@literal null} an existing {@link LocationGroup} is removed
+     * from the Location.
      *
      * @param locationGroup The {@link LocationGroup} to be assigned
      */
-    public void setLocationGroup(LocationGroup locationGroup) {
-        if (locationGroup != null) {
-            this.setLocationGroupCountingActive(locationGroup.isLocationGroupCountingActive());
+    void setLocationGroup(LocationGroup locationGroup) {
+        Assert.notNull(locationGroup, "Not allowed to call location#setLocationGroup with null argument. this: " + this);
+        if (this.locationGroup != null) {
+            this.locationGroup.removeLocation(this);
         }
+        this.setLocationGroupCountingActive(locationGroup.isLocationGroupCountingActive());
         this.locationGroup = locationGroup;
     }
 
     /**
+     * Set the locationGroup to {@literal null}.
+     */
+    void unsetLocationGroup() {
+        this.locationGroup = null;
+    }
+
+    /**
      * {@inheritDoc}
-     *
+     * <p>
      * Only use the unique natural key for comparison.
      */
     @Override
@@ -388,7 +400,7 @@ public class Location extends BaseEntity implements Serializable {
 
     /**
      * {@inheritDoc}
-     *
+     * <p>
      * Only use the unique natural key for hashCode calculation.
      */
     @Override
