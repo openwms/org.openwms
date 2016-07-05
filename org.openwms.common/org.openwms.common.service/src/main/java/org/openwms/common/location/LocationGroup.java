@@ -151,6 +151,7 @@ public class LocationGroup extends Target implements Serializable {
      * @param name The name of the {@code LocationGroup}
      */
     public LocationGroup(String name) {
+        Assert.hasText(name, "Creation of LocationGroup with name null");
         this.name = name;
     }
 

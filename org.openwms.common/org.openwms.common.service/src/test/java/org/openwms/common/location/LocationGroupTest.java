@@ -21,6 +21,8 @@
  */
 package org.openwms.common.location;
 
+import static org.assertj.core.api.Assertions.assertThat;
+
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
@@ -35,12 +37,37 @@ import org.junit.rules.ExpectedException;
 public class LocationGroupTest {
 
     @Rule
-    public  ExpectedException thrown = ExpectedException.none();
+    public ExpectedException thrown = ExpectedException.none();
 
-    public @Test
-    void test() {
-        LocationGroup lg = new LocationGroup();
+    public
+    @Test
+    void testConstructionWithNull() {
         thrown.expect(IllegalArgumentException.class);
-        lg.addLocation(null);
+        new LocationGroup(null);
+    }
+
+    public
+    @Test
+    void testConstructionWithEmpty() {
+        thrown.expect(IllegalArgumentException.class);
+        new LocationGroup("");
+    }
+
+    public
+    @Test
+    void testDefaultValues() {
+        LocationGroup lg = new LocationGroup("Error zone");
+        assertThat(lg.getName()).isEqualTo("Error zone");
+        assertThat(lg.isLocationGroupCountingActive()).isTrue();
+        assertThat(lg.getNoLocations()).isEqualTo(0);
+        assertThat(lg.getGroupStateIn()).isEqualTo(LocationGroupState.AVAILABLE);
+        assertThat(lg.isInfeedAllowed()).isTrue();
+        assertThat(lg.isInfeedBlocked()).isFalse();
+        assertThat(lg.getGroupStateOut()).isEqualTo(LocationGroupState.AVAILABLE);
+        assertThat(lg.isOutfeedAllowed()).isTrue();
+        assertThat(lg.isOutfeedBlocked()).isFalse();
+        assertThat(lg.getMaxFillLevel()).isEqualTo(0);
+        assertThat(lg.getLocationGroups()).hasSize(0);
+        assertThat(lg.getLocations()).hasSize(0);
     }
 }
