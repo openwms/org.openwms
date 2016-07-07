@@ -35,6 +35,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 import org.ameba.exception.ServiceLayerException;
+import org.openwms.common.StateChangeException;
 import org.openwms.common.transport.TransportUnit;
 import org.springframework.util.Assert;
 
@@ -217,19 +218,33 @@ public class LocationGroup extends Target implements Serializable {
      * @param newGroupStateIn The state to set
      * @param lockLG The {@code LocationGroup} that wants to lock/unlock this {@code LocationGroup}.
      */
-    public void setGroupStateIn(LocationGroupState newGroupStateIn, LocationGroup lockLG) {
-        if (groupStateIn == LocationGroupState.NOT_AVAILABLE && newGroupStateIn == LocationGroupState.AVAILABLE
-                && (stateInLocker == null || stateInLocker.equals(lockLG))) {
-            groupStateIn = newGroupStateIn;
+    public void setGroupStateIn(LocationGroupState newGroupStateIn) {
+        if (stateInLocker != null) {
+            throw new StateChangeException("The LocationGroup's state is blocked by any other LocationGroup and cannot be changed");
+        }
+        groupStateIn = newGroupStateIn;
+        locationGroups.forEach(lg -> lg.setGroupStateIn(newGroupStateIn, this));
+    }
+
+    /**
+     * Change the infeed state of the {@code LocationGroup}.
+     *
+     * @param newGroupStateIn The state to set
+     * @param lockLG The {@code LocationGroup} that wants to lock/unlock this {@code LocationGroup}.
+     */
+    private void setGroupStateIn(LocationGroupState newGroupStateIn, LocationGroup lockLG) {
+        if (groupStateIn == LocationGroupState.NOT_AVAILABLE && newGroupStateIn == LocationGroupState.AVAILABLE) {
+
+            // unlock
             stateInLocker = null;
-            locationGroups.forEach(lg -> lg.setGroupStateIn(newGroupStateIn, lockLG));
         }
-        if (groupStateIn == LocationGroupState.AVAILABLE && newGroupStateIn == LocationGroupState.NOT_AVAILABLE
-                && (stateInLocker == null || stateInLocker.equals(lockLG))) {
-            groupStateIn = newGroupStateIn;
+        if (groupStateIn == LocationGroupState.AVAILABLE && newGroupStateIn == LocationGroupState.NOT_AVAILABLE) {
+
+            // lock
             stateInLocker = lockLG;
-            locationGroups.forEach(lg -> lg.setGroupStateIn(newGroupStateIn, lockLG));
         }
+        groupStateIn = newGroupStateIn;
+        locationGroups.forEach(lg -> lg.setGroupStateIn(newGroupStateIn, lockLG));
     }
 
     /**
