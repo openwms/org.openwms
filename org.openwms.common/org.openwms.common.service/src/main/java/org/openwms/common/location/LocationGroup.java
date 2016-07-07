@@ -42,7 +42,7 @@ import org.springframework.util.Assert;
  * A LocationGroup is a logical group of {@code Location}s, grouping together {@code Location}s with same characteristics.
  *
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
- * @version $Revision$
+ * @version 1.0
  * @GlossaryTerm
  * @see org.openwms.common.location.Location
  * @since 0.1
@@ -167,15 +167,6 @@ public class LocationGroup extends Target implements Serializable {
     }
 
     /**
-     * Returns the infeed state of the {@code LocationGroup}.
-     *
-     * @return The state of infeed
-     */
-    public LocationGroupState getGroupStateIn() {
-        return this.groupStateIn;
-    }
-
-    /**
      * Check whether infeed is allowed for the {@code LocationGroup}.
      *
      * @return {@code true} if allowed, otherwise {@code false}.
@@ -212,27 +203,32 @@ public class LocationGroup extends Target implements Serializable {
     }
 
     /**
+     * Returns the infeed state of the {@code LocationGroup}.
+     *
+     * @return The state of infeed
+     */
+    public LocationGroupState getGroupStateIn() {
+        return this.groupStateIn;
+    }
+
+    /**
      * Change the infeed state of the {@code LocationGroup}.
      *
-     * @param gStateIn The state to set
-     * @param lockLg The {@code LocationGroup} that wants to lock/unlock this {@code LocationGroup}.
+     * @param newGroupStateIn The state to set
+     * @param lockLG The {@code LocationGroup} that wants to lock/unlock this {@code LocationGroup}.
      */
-    public void setGroupStateIn(LocationGroupState gStateIn, LocationGroup lockLg) {
-        if (this.groupStateIn == LocationGroupState.NOT_AVAILABLE && gStateIn == LocationGroupState.AVAILABLE
-                && (this.stateInLocker == null || this.stateInLocker.equals(lockLg))) {
-            this.groupStateIn = gStateIn;
-            this.stateInLocker = null;
-            for (LocationGroup child : locationGroups) {
-                child.setGroupStateIn(gStateIn, lockLg);
-            }
+    public void setGroupStateIn(LocationGroupState newGroupStateIn, LocationGroup lockLG) {
+        if (groupStateIn == LocationGroupState.NOT_AVAILABLE && newGroupStateIn == LocationGroupState.AVAILABLE
+                && (stateInLocker == null || stateInLocker.equals(lockLG))) {
+            groupStateIn = newGroupStateIn;
+            stateInLocker = null;
+            locationGroups.forEach(lg -> lg.setGroupStateIn(newGroupStateIn, lockLG));
         }
-        if (this.groupStateIn == LocationGroupState.AVAILABLE && gStateIn == LocationGroupState.NOT_AVAILABLE
-                && (this.stateInLocker == null || this.stateInLocker.equals(lockLg))) {
-            this.groupStateIn = gStateIn;
-            this.stateInLocker = lockLg;
-            for (LocationGroup child : locationGroups) {
-                child.setGroupStateIn(gStateIn, lockLg);
-            }
+        if (groupStateIn == LocationGroupState.AVAILABLE && newGroupStateIn == LocationGroupState.NOT_AVAILABLE
+                && (stateInLocker == null || stateInLocker.equals(lockLG))) {
+            groupStateIn = newGroupStateIn;
+            stateInLocker = lockLG;
+            locationGroups.forEach(lg -> lg.setGroupStateIn(newGroupStateIn, lockLG));
         }
     }
 
@@ -350,7 +346,7 @@ public class LocationGroup extends Target implements Serializable {
      *
      * @param parent The {@code LocationGroup} to set as parent
      */
-    public void setParent(LocationGroup parent) {
+    private void setParent(LocationGroup parent) {
         this.parent = parent;
     }
 
@@ -373,10 +369,12 @@ public class LocationGroup extends Target implements Serializable {
         if (locationGroup == null) {
             throw new IllegalArgumentException("LocationGroup to be added is null");
         }
-        if (locationGroup.getParent() != null) {
-            locationGroup.getParent().removeLocationGroup(locationGroup);
+        if (locationGroup.parent != null) {
+            locationGroup.parent.removeLocationGroup(locationGroup);
         }
-        locationGroup.setParent(this);
+        locationGroup.parent = this;
+        locationGroup.setGroupStateIn(groupStateIn, this);
+        locationGroup.setGroupStateOut(groupStateOut, this);
         return locationGroups.add(locationGroup);
     }
 
@@ -512,6 +510,13 @@ public class LocationGroup extends Target implements Serializable {
         return getName();
     }
 
+    /**
+     * Tries to change the {@code groupStateIn} and {@code groupStateOut} of the {@code LocationGroup}. A state change is only allowed when
+     * the parent {@code LocationGroup}s state is not blocked.
+     *
+     * @param stateIn The new groupStateIn to set, or {@literal null}
+     * @param stateOut The new groupStateOut to set, or {@literal null}
+     */
     void changeState(LocationGroupState stateIn, LocationGroupState stateOut) {
         if (groupStateIn != stateIn && stateIn != null) {
             // GroupStateIn changed

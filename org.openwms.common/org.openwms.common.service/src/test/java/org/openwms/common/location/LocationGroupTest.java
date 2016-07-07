@@ -70,4 +70,56 @@ public class LocationGroupTest {
         assertThat(lg.getLocationGroups()).hasSize(0);
         assertThat(lg.getLocations()).hasSize(0);
     }
+
+    public
+    @Test
+    void testAddLocationGroupWithNull() {
+        LocationGroup parent = new LocationGroup("Warehouse");
+        thrown.expect(IllegalArgumentException.class);
+        parent.addLocationGroup(null);
+    }
+
+    public
+    @Test
+    void testAddLocationGroup() {
+        LocationGroup parent = new LocationGroup("Warehouse");
+        LocationGroup lg = new LocationGroup("Error zone");
+        parent.addLocationGroup(lg);
+        assertThat(parent.getLocationGroups()).hasSize(1);
+        assertThat(lg.getParent()).isEqualTo(parent);
+        assertThat(lg.getGroupStateIn()).isEqualTo(parent.getGroupStateIn());
+        assertThat(lg.getGroupStateOut()).isEqualTo(parent.getGroupStateOut());
+    }
+
+    public
+    @Test
+    void testAddLocationGroupWithStateChange() {
+        LocationGroup parent = new LocationGroup("Warehouse");
+        parent.setGroupStateIn(LocationGroupState.NOT_AVAILABLE, parent);
+        parent.setGroupStateOut(LocationGroupState.NOT_AVAILABLE, parent);
+        LocationGroup lg = new LocationGroup("Error zone");
+        parent.addLocationGroup(lg);
+        assertThat(parent.getLocationGroups()).hasSize(1);
+        assertThat(lg.getParent()).isEqualTo(parent);
+        assertThat(lg.getGroupStateIn()).isEqualTo(parent.getGroupStateIn()).isEqualTo(LocationGroupState.NOT_AVAILABLE);
+        assertThat(lg.getGroupStateOut()).isEqualTo(parent.getGroupStateOut()).isEqualTo(LocationGroupState.NOT_AVAILABLE);
+    }
+
+    public
+    @Test
+    void testStateChange() {
+        LocationGroup parent = new LocationGroup("Warehouse");
+        LocationGroup lg = new LocationGroup("Error zone");
+        parent.addLocationGroup(lg);
+
+        parent.setGroupStateIn(LocationGroupState.NOT_AVAILABLE, parent);
+        assertThat(lg.getGroupStateIn()).isEqualTo(parent.getGroupStateIn()).isEqualTo(LocationGroupState.NOT_AVAILABLE);
+        parent.setGroupStateOut(LocationGroupState.NOT_AVAILABLE, parent);
+        assertThat(lg.getGroupStateOut()).isEqualTo(parent.getGroupStateOut()).isEqualTo(LocationGroupState.NOT_AVAILABLE);
+
+        parent.setGroupStateIn(LocationGroupState.AVAILABLE, parent);
+        assertThat(lg.getGroupStateIn()).isEqualTo(parent.getGroupStateIn()).isEqualTo(LocationGroupState.AVAILABLE);
+        parent.setGroupStateOut(LocationGroupState.AVAILABLE, parent);
+        assertThat(lg.getGroupStateOut()).isEqualTo(parent.getGroupStateOut()).isEqualTo(LocationGroupState.AVAILABLE);
+    }
 }

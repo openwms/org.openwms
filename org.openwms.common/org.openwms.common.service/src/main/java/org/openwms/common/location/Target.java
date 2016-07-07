@@ -28,16 +28,16 @@ import javax.persistence.InheritanceType;
 import org.ameba.integration.jpa.BaseEntity;
 
 /**
- * A Target is either a physical or a logical endpoint of any kind of order in a warehouse. A <code>TransportOrder</code> has a Target set,
- * to where a <code>TransportUnit</code> has to be moved to.
+ * A Target is either a physical or a logical endpoint of any kind of warehouse order. A {@code TransportOrder} has a Target set,
+ * to where a {@code TransportUnit} has to be moved to.
  * 
  * @GlossaryTerm
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
- * @version $Revision$
+ * @version 1.0
  * @since 0.1
  */
 @Entity
 @Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
-public abstract class Target extends BaseEntity {
+abstract class Target extends BaseEntity {
 
 }
