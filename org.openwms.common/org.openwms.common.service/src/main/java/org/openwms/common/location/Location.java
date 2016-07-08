@@ -172,6 +172,15 @@ public class Location extends BaseEntity implements Serializable {
     protected Location() {
     }
 
+    /**
+     * Create a new Location with the business key.
+     *
+     * @param locationId The unique natural key of the Location
+     * @return The Location
+     */
+    public static Location create(LocationPK locationId) {
+        return new Location(locationId);
+    }
     /*~ ----------------------------- methods ------------------- */
 
     /**
@@ -364,8 +373,8 @@ public class Location extends BaseEntity implements Serializable {
     }
 
     /**
-     * Add this Location to the {@literal locationGroup}. When the argument is {@literal null} an existing {@link LocationGroup} is removed
-     * from the Location.
+     * Add this {@code Location} to the {@literal locationGroup}. When the argument is {@literal null} an existing {@link LocationGroup} is removed
+     * from the {@code Location}.
      *
      * @param locationGroup The {@link LocationGroup} to be assigned
      */
@@ -376,6 +385,24 @@ public class Location extends BaseEntity implements Serializable {
         }
         this.setLocationGroupCountingActive(locationGroup.isLocationGroupCountingActive());
         this.locationGroup = locationGroup;
+    }
+
+    /**
+     * Checks whether this {@code Location} belongs to a {@code LocationGroup}.
+     *
+     * @return {@literal true} if it belongs to a {@code LocationGroup}, otherwise {@literal false}
+     */
+    public boolean belongsToLocationGroup() {
+        return locationGroup != null;
+    }
+
+    /**
+     * Checks whether this {@code Location} belongs NOT to a {@code LocationGroup}.
+     *
+     * @return {@literal true} if it does not belong to a {@code LocationGroup}, otherwise {@literal false}
+     */
+    public boolean belongsNotToLocationGroup() {
+        return !belongsToLocationGroup();
     }
 
     /**

@@ -19,24 +19,21 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
-package org.openwms.common.location;
-
-import javax.persistence.Entity;
-import javax.persistence.Inheritance;
-import javax.persistence.InheritanceType;
-
-import org.ameba.integration.jpa.BaseEntity;
+package org.openwms.common;
 
 /**
- * A Target is either a physical or a logical endpoint of any kind of warehouse order. A {@code TransportOrder} has a Target set,
- * to where a {@code TransportUnit} has to be moved to.
- * 
- * @GlossaryTerm
+ * A StateChangeException.
+ *
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  * @version 1.0
- * @since 0.1
+ * @since 1.0
  */
-@Entity
-@Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
-abstract class Target extends BaseEntity {
+public class StateChangeException extends RuntimeException {
+
+    /**
+     * {@inheritDoc}
+     */
+    public StateChangeException(String s) {
+        super(s);
+    }
 }

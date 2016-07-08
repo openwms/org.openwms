@@ -31,7 +31,7 @@ import java.io.Serializable;
  *
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  * @version 1.0
- * @see org.openwms.common.location.Location
+ * @see Location
  * @since 0.1
  */
 @Embeddable
@@ -107,6 +107,14 @@ public class LocationPK implements Serializable {
         this.z = keys[4];
     }
 
+    private LocationPK(Builder builder) {
+        area = builder.area;
+        aisle = builder.aisle;
+        x = builder.x;
+        y = builder.y;
+        z = builder.z;
+    }
+
     /*~ ----------------------------- methods ------------------- */
 
     /**
@@ -167,7 +175,7 @@ public class LocationPK implements Serializable {
     /**
      * {@inheritDoc}
      *
-     * @see java.lang.Object#equals(Object)
+     * @see Object#equals(Object)
      */
     @Override
     public boolean equals(Object o) {
@@ -185,7 +193,7 @@ public class LocationPK implements Serializable {
     /**
      * {@inheritDoc}
      *
-     * @see java.lang.Object#hashCode()
+     * @see Object#hashCode()
      */
     @Override
     public int hashCode() {
@@ -196,10 +204,89 @@ public class LocationPK implements Serializable {
      * Return a String like {AREA/AISLE/X/Y/Z}.
      *
      * @return String
-     * @see java.lang.Object#toString()
+     * @see Object#toString()
      */
     @Override
     public String toString() {
         return "{" + this.area + "/" + this.aisle + "/" + this.x + "/" + this.y + "/" + this.z + "}";
+    }
+
+    /**
+     * {@code LocationPK} builder static inner class.
+     */
+    public static final class Builder {
+
+        private String area;
+        private String aisle;
+        private String x;
+        private String y;
+        private String z;
+
+        public Builder() {
+        }
+
+        /**
+         * Sets the {@code area} and returns a reference to this Builder so that the methods can be chained together.
+         *
+         * @param val the {@code area} to set
+         * @return a reference to this Builder
+         */
+        public Builder area(String val) {
+            area = val;
+            return this;
+        }
+
+        /**
+         * Sets the {@code aisle} and returns a reference to this Builder so that the methods can be chained together.
+         *
+         * @param val the {@code aisle} to set
+         * @return a reference to this Builder
+         */
+        public Builder aisle(String val) {
+            aisle = val;
+            return this;
+        }
+
+        /**
+         * Sets the {@code x} and returns a reference to this Builder so that the methods can be chained together.
+         *
+         * @param val the {@code x} to set
+         * @return a reference to this Builder
+         */
+        public Builder x(String val) {
+            x = val;
+            return this;
+        }
+
+        /**
+         * Sets the {@code y} and returns a reference to this Builder so that the methods can be chained together.
+         *
+         * @param val the {@code y} to set
+         * @return a reference to this Builder
+         */
+        public Builder withY(String val) {
+            y = val;
+            return this;
+        }
+
+        /**
+         * Sets the {@code z} and returns a reference to this Builder so that the methods can be chained together.
+         *
+         * @param val the {@code z} to set
+         * @return a reference to this Builder
+         */
+        public Builder withZ(String val) {
+            z = val;
+            return this;
+        }
+
+        /**
+         * Returns a {@code LocationPK} built from the parameters previously set.
+         *
+         * @return a {@code LocationPK} built with parameters of this {@code LocationPK.Builder}
+         */
+        public LocationPK build() {
+            return new LocationPK(this);
+        }
     }
 }
