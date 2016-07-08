@@ -216,7 +216,6 @@ public class LocationGroup extends Target implements Serializable {
      * Change the infeed state of the {@code LocationGroup}.
      *
      * @param newGroupStateIn The state to set
-     * @param lockLG The {@code LocationGroup} that wants to lock/unlock this {@code LocationGroup}.
      */
     public void setGroupStateIn(LocationGroupState newGroupStateIn) {
         if (stateInLocker != null) {
@@ -415,6 +414,15 @@ public class LocationGroup extends Target implements Serializable {
     }
 
     /**
+     * Check whether this {@code LocationGroup} has {@code Location}s assigned.
+     *
+     * @return {@literal true} if {@code Location}s are assigned, otherwise {@literal false}
+     */
+    public boolean hasLocations() {
+        return locations != null && !locations.isEmpty();
+    }
+
+    /**
      * Add a {@link Location} to the list of children.
      *
      * @param location The {@link Location} to be added as child
@@ -482,7 +490,7 @@ public class LocationGroup extends Target implements Serializable {
     @Override
     public int hashCode() {
         final int prime = 31;
-        int result = super.hashCode();
+        int result = 111;
         result = prime * result + ((name == null) ? 0 : name.hashCode());
         return result;
     }
@@ -496,9 +504,6 @@ public class LocationGroup extends Target implements Serializable {
     public boolean equals(Object obj) {
         if (this == obj) {
             return true;
-        }
-        if (!super.equals(obj)) {
-            return false;
         }
         if (!(obj instanceof LocationGroup)) {
             return false;

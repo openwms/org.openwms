@@ -39,5 +39,4 @@ import org.ameba.integration.jpa.BaseEntity;
 @Entity
 @Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
 abstract class Target extends BaseEntity {
-
 }
