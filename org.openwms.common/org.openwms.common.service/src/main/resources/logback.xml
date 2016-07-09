@@ -8,7 +8,7 @@
     </encoder>
   </appender>
 
-  <logger name="org.openwms" level="warn"/>
+  <logger name="org.openwms" level="debug"/>
   <logger name="org.springframework" level="warn"/>
   <logger name="org.hibernate" level="warn"/>
 
