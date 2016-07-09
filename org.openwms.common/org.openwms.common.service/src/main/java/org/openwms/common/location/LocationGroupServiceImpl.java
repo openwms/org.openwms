@@ -27,8 +27,6 @@ import org.ameba.annotation.TxService;
 import org.ameba.exception.NotFoundException;
 import org.openwms.core.util.TreeNode;
 import org.openwms.core.util.TreeNodeImpl;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -41,8 +39,6 @@ import org.springframework.transaction.annotation.Transactional;
  */
 @TxService
 class LocationGroupServiceImpl implements LocationGroupService<LocationGroup> {
-
-    private static final Logger LOGGER = LoggerFactory.getLogger(LocationGroupServiceImpl.class);
 
     @Autowired
     private LocationGroupRepository locationGroupRepository;

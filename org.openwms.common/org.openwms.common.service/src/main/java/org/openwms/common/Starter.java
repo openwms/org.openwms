@@ -43,6 +43,6 @@ public class Starter {
      * @param args Some args
      */
     public static void main(String[] args) {
-        SpringApplication.run(org.openwms.core.Starter.class, args);
+        SpringApplication.run(org.openwms.common.Starter.class, args);
     }
 }

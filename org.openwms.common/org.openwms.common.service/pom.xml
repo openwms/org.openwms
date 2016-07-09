@@ -34,33 +34,40 @@
     <name>${project.artifactId}</name>
     <properties>
         <moduleDir>../../..</moduleDir>
+        <eventsourcing.version>0.3.1</eventsourcing.version>
     </properties>
     <dependencies>
         <!-- Spring Framework -->
         <dependency>
-            <groupId>org.springframework</groupId>
-            <artifactId>spring-context</artifactId>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
         </dependency>
         <dependency>
-            <groupId>org.springframework.security</groupId>
-            <artifactId>spring-security-core</artifactId>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-data-jpa</artifactId>
         </dependency>
         <dependency>
-            <groupId>org.springframework.security</groupId>
-            <artifactId>spring-security-web</artifactId>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-security</artifactId>
         </dependency>
 
-        <!-- JavaEE API -->
+        <!-- Project dependencies -->
         <dependency>
-            <groupId>org.hibernate.javax.persistence</groupId>
-            <artifactId>hibernate-jpa-2.1-api</artifactId>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>org.openwms.core.test</artifactId>
+            <type>test-jar</type>
+            <scope>test</scope>
         </dependency>
         <dependency>
-            <groupId>javax.validation</groupId>
-            <artifactId>validation-api</artifactId>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>org.openwms.core.util</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>org.openwms.core.uaa</artifactId>
+            <scope>provided</scope>
         </dependency>
 
-        <!-- Provider -->
         <dependency>
             <groupId>org.hibernate</groupId>
             <artifactId>hibernate-entitymanager</artifactId>
@@ -69,39 +76,39 @@
             <groupId>org.hibernate</groupId>
             <artifactId>hibernate-validator</artifactId>
         </dependency>
-
-        <!-- Project dependencies -->
-        <dependency>
-            <groupId>${project.groupId}</groupId>
-            <artifactId>org.openwms.core.uaa</artifactId>
-            <version>${core.version}</version>
-        </dependency>
-
         <dependency>
             <groupId>org.apache.commons</groupId>
             <artifactId>commons-lang3</artifactId>
         </dependency>
-
         <dependency>
             <groupId>com.eventsourcing</groupId>
             <artifactId>eventsourcing-core</artifactId>
-            <version>0.3.1</version>
         </dependency>
         <dependency>
             <groupId>com.eventsourcing</groupId>
             <artifactId>eventsourcing-h2</artifactId>
-            <version>0.3.1</version>
-        </dependency>
-
-        <dependency>
-            <groupId>${project.groupId}</groupId>
-            <artifactId>org.openwms.core.test</artifactId>
-            <version>${core.version}</version>
-            <type>test-jar</type>
-            <scope>test</scope>
         </dependency>
     </dependencies>
 
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>com.eventsourcing</groupId>
+                <artifactId>eventsourcing-core</artifactId>
+                <version>${eventsourcing.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.eventsourcing</groupId>
+                <artifactId>eventsourcing-h2</artifactId>
+                <version>${eventsourcing.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>${project.groupId}</groupId>
+                <artifactId>org.openwms.core.uaa</artifactId>
+                <version>${core.version}</version>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
     <repositories>
         <repository>
             <id>es4j</id>
