@@ -65,16 +65,11 @@
         <dependency>
             <groupId>${project.groupId}</groupId>
             <artifactId>org.openwms.core.uaa</artifactId>
-            <scope>provided</scope>
         </dependency>
 
         <dependency>
             <groupId>org.hibernate</groupId>
-            <artifactId>hibernate-entitymanager</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.hibernate</groupId>
-            <artifactId>hibernate-validator</artifactId>
+            <artifactId>hibernate-core</artifactId>
         </dependency>
         <dependency>
             <groupId>org.apache.commons</groupId>

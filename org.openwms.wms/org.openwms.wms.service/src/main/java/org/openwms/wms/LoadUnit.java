@@ -37,7 +37,6 @@ import java.util.HashSet;
 import java.util.Set;
 
 import org.ameba.integration.jpa.BaseEntity;
-import org.openwms.common.TransportUnit;
 import org.openwms.core.exception.DomainModelRuntimeException;
 import org.openwms.wms.inventory.Product;
 

@@ -33,7 +33,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
  * @version 1.0
  * @since 1.0
  */
-@SpringBootApplication(scanBasePackageClasses = {org.openwms.common.Starter.class, SolutionApp.class})
+@SpringBootApplication(scanBasePackageClasses = {Starter.class, SolutionApp.class})
 @EnableAspects
 public class Starter {
 
@@ -43,6 +43,6 @@ public class Starter {
      * @param args Some args
      */
     public static void main(String[] args) {
-        SpringApplication.run(org.openwms.common.Starter.class, args);
+        SpringApplication.run(Starter.class, args);
     }
 }
