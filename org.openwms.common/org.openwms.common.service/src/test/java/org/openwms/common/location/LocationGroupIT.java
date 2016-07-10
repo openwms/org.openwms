@@ -31,6 +31,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.test.context.junit4.SpringRunner;
 
 /**
@@ -53,6 +54,8 @@ public class LocationGroupIT {
 
     @Autowired
     private TestEntityManager entityManager;
+    @Autowired
+    private LocationGroupRepository repository;
 
     /**
      * Setup data.
@@ -71,7 +74,7 @@ public class LocationGroupIT {
      */
     @Test
     public final void testNameConstraint() {
-        thrown.expect(IllegalArgumentException.class);
-        entityManager.persist(new LocationGroup(KNOWN_LG));
+        thrown.expect(DataIntegrityViolationException.class);
+        repository.save(new LocationGroup(KNOWN_LG));
     }
 }

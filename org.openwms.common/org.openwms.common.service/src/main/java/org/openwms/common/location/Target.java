@@ -21,9 +21,9 @@
  */
 package org.openwms.common.location;
 
-import javax.persistence.Entity;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
+import javax.persistence.MappedSuperclass;
 
 import org.ameba.integration.jpa.BaseEntity;
 
@@ -36,7 +36,7 @@ import org.ameba.integration.jpa.BaseEntity;
  * @version 1.0
  * @since 0.1
  */
-@Entity
+@MappedSuperclass
 @Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
 abstract class Target extends BaseEntity {
 }
