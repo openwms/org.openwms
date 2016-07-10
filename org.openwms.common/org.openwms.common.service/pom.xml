@@ -70,18 +70,11 @@
         <dependency>
             <groupId>org.hibernate</groupId>
             <artifactId>hibernate-core</artifactId>
+            <version>5.1.0.Final</version>
         </dependency>
         <dependency>
             <groupId>org.apache.commons</groupId>
             <artifactId>commons-lang3</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>com.eventsourcing</groupId>
-            <artifactId>eventsourcing-core</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>com.eventsourcing</groupId>
-            <artifactId>eventsourcing-h2</artifactId>
         </dependency>
     </dependencies>
 

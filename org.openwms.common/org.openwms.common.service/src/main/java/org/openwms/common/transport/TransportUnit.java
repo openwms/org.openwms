@@ -157,23 +157,22 @@ public class TransportUnit extends BaseEntity {
     /**
      * The {@code User} who performed the last inventory action on the {@code TransportUnit}.
      */
-    @ManyToOne
-    @JoinColumn(name = "C_INVENTORY_USER")
-    private User inventoryUser;
+    @Column(name = "C_INVENTORY_USER")
+    private String inventoryUser;
 
     /**
      * A set of all child {@code TransportUnit}s, ordered by id.
      */
     @OneToMany(mappedBy = "parent", cascade = { CascadeType.MERGE, CascadeType.PERSIST })
     @OrderBy("id DESC")
-    private Set<TransportUnit> children = new HashSet<TransportUnit>();
+    private Set<TransportUnit> children = new HashSet<>();
 
     /**
      * A Map of errors occurred on the {@code TransportUnit}.
      */
     @OneToMany(cascade = CascadeType.ALL)
     @JoinTable(name = "COM_TRANSPORT_UNIT_ERROR", joinColumns = @JoinColumn(name = "C_TRANSPORT_UNIT_ID"), inverseJoinColumns = @JoinColumn(name = "C_ERROR_ID"))
-    private Map<Date, UnitError> errors = new HashMap<Date, UnitError>();
+    private Map<Date, UnitError> errors = new HashMap<>();
 
     /*~ ----------------------------- constructors ------------------- */
     /**
@@ -269,7 +268,7 @@ public class TransportUnit extends BaseEntity {
      * 
      * @return The {@link User} who did the last inventory check
      */
-    public User getInventoryUser() {
+    public String getInventoryUser() {
         return this.inventoryUser;
     }
 
@@ -279,7 +278,7 @@ public class TransportUnit extends BaseEntity {
      * @param inventoryUser
      *            The {@link User} who did the last inventory check
      */
-    public void setInventoryUser(User inventoryUser) {
+    public void setInventoryUser(String inventoryUser) {
         this.inventoryUser = inventoryUser;
     }
 

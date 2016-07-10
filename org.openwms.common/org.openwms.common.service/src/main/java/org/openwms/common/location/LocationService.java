@@ -23,8 +23,6 @@ package org.openwms.common.location;
 
 import java.util.List;
 
-import org.openwms.core.values.Message;
-
 /**
  * A LocationService offers some useful methods regarding the general handling of {@link Location}s. <p> This interface is declared generic
  * typed that implementation classes can use any extension of {@link Location}s. </p>

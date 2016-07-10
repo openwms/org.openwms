@@ -45,7 +45,6 @@ import java.util.Objects;
 import java.util.Set;
 
 import org.ameba.integration.jpa.BaseEntity;
-import org.openwms.core.values.Message;
 import org.springframework.util.Assert;
 
 /**
