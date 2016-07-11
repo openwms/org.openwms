@@ -61,6 +61,9 @@ import org.springframework.util.Assert;
 @Table(name = "COM_LOCATION", uniqueConstraints = @UniqueConstraint(columnNames = {"C_AREA", "C_AISLE", "C_X", "C_Y", "C_Z"}))
 public class Location extends BaseEntity implements Serializable {
 
+    /** Default number of maximum {@code TransportUnit}s allowed on this Location. */
+    public static final int MAX_TU = 1;
+
     /** Unique natural key. */
     @Embedded
     @AttributeOverrides({
@@ -76,9 +79,9 @@ public class Location extends BaseEntity implements Serializable {
     @Column(name = "C_DESCRIPTION")
     private String description;
 
-    /** Maximum number of {@code TransportUnit}s placed on this Location. */
+    /** Maximum number of {@code TransportUnit}s allowed on this Location. */
     @Column(name = "C_NO_MAX_TRANSPORT_UNITS")
-    private short noMaxTransportUnits = 1;
+    private int noMaxTransportUnits = MAX_TU;
 
     /** Maximum allowed weight on this Location. */
     @Column(name = "C_MAXIMUM_WEIGHT")
@@ -326,8 +329,8 @@ public class Location extends BaseEntity implements Serializable {
      *
      * @return The maximum number of {@code TransportUnit}s
      */
-    public short getNoMaxTransportUnits() {
-        return this.noMaxTransportUnits;
+    public int getNoMaxTransportUnits() {
+        return noMaxTransportUnits;
     }
 
     /**
