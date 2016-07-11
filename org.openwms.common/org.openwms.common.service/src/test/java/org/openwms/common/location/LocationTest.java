@@ -38,7 +38,9 @@ public class LocationTest {
     @Test
     void testDefaultCreation() {
         Location l = new Location(new LocationPK.Builder().area("area").aisle("aisle").x("x").y("y").z("z").build());
-        assertThat(l.getNoMaxTransportUnits()).isEqualTo(Location.MAX_TU);
+        assertThat(l.getNoMaxTransportUnits()).isEqualTo(Location.DEF_MAX_TU);
+        assertThat(l.isCountingActive()).isFalse();
+        assertThat(l.getCheckState()).isEqualTo(Location.DEF_CHECK_STATE);
     }
 
     /**

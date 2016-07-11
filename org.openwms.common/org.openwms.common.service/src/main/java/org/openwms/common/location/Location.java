@@ -61,9 +61,6 @@ import org.springframework.util.Assert;
 @Table(name = "COM_LOCATION", uniqueConstraints = @UniqueConstraint(columnNames = {"C_AREA", "C_AISLE", "C_X", "C_Y", "C_Z"}))
 public class Location extends BaseEntity implements Serializable {
 
-    /** Default number of maximum {@code TransportUnit}s allowed on this Location. */
-    public static final int MAX_TU = 1;
-
     /** Unique natural key. */
     @Embedded
     @AttributeOverrides({
@@ -81,28 +78,32 @@ public class Location extends BaseEntity implements Serializable {
 
     /** Maximum number of {@code TransportUnit}s allowed on this Location. */
     @Column(name = "C_NO_MAX_TRANSPORT_UNITS")
-    private int noMaxTransportUnits = MAX_TU;
+    private int noMaxTransportUnits = DEF_MAX_TU;
+    /** Default value of {@link #noMaxTransportUnits}. */
+    public static final int DEF_MAX_TU = 1;
 
     /** Maximum allowed weight on this Location. */
     @Column(name = "C_MAXIMUM_WEIGHT")
     private BigDecimal maximumWeight;
 
     /**
-     * Date of last change. When a {@code TransportUnit} is moving to or away from this Location, {@code lastAccess} will be updated. This
+     * Date of last change. When a {@code TransportUnit} is moving to or away from this Location, {@code lastMovement} will be updated. This
      * is useful to get the history of {@code TransportUnit}s as well as for inventory calculation.
      */
     @Temporal(TemporalType.TIMESTAMP)
-    @Column(name = "C_LAST_ACCESS")
-    private Date lastAccess;
+    @Column(name = "C_LAST_MOVEMENT")
+    private Date lastMovement;
 
     /** Flag to indicate whether {@code TransportUnit}s should be counted on this Location or not. */
     @Column(name = "C_COUNTING_ACTIVE")
-    private boolean countingActive = false;
+    private boolean countingActive = DEF_COUNTING_ACTIVE;
+    /** Default value of {@link #countingActive}. */
+    public static final boolean DEF_COUNTING_ACTIVE = false;
 
     /** Reserved for stock check procedure and inventory calculation. */
     @Column(name = "C_CHECK_STATE")
     private String checkState = DEF_CHECK_STATE;
-    /** Default value of {@code Location#checkstate}. */
+    /** Default value of {@link #checkState}. */
     public static final String DEF_CHECK_STATE = "--";
 
     /**
@@ -257,17 +258,17 @@ public class Location extends BaseEntity implements Serializable {
      *
      * @return Timestamp of the last update
      */
-    public Date getLastAccess() {
-        return this.lastAccess;
+    public Date getLastMovement() {
+        return this.lastMovement;
     }
 
     /**
      * Change the date when a TransportUnit was put or left the Location the last time.
      *
-     * @param lastAccess The date of change.
+     * @param lastMovement The date of change.
      */
-    public void setLastAccess(Date lastAccess) {
-        this.lastAccess = lastAccess;
+    public void setLastMovement(Date lastMovement) {
+        this.lastMovement = lastMovement;
     }
 
     /**

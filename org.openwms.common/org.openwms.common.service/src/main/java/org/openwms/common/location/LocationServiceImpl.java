@@ -54,7 +54,7 @@ class LocationServiceImpl implements LocationService<Location> {
     public List<Location> getAllLocations() {
         List<Location> list = locationRepository.findAll();
         for (Location location : list) {
-            location.setLastAccess(new Date());
+            location.setLastMovement(new Date());
             locationRepository.save(location);
         }
         return list;
