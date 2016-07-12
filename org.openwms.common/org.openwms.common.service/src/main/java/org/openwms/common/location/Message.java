@@ -23,75 +23,40 @@ package org.openwms.common.location;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
 import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
-import javax.persistence.Version;
 import java.io.Serializable;
-import java.util.Date;
+import java.util.Objects;
 
-import org.openwms.core.AbstractEntity;
+import org.ameba.integration.jpa.BaseEntity;
 
 /**
- * A Message can be used to store useful information on other domain objects.
+ * A Message can be used to store useful information about errors or events.
  * 
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
- * @version $Revision$
+ * @version 1.0
  * @since 0.1
  */
 @Entity
 @Table(name = "COR_MESSAGE")
-public class Message extends AbstractEntity<Long> implements Serializable {
+public class Message extends BaseEntity implements Serializable {
 
-    private static final long serialVersionUID = 7836132529431969528L;
-
-    /**
-     * Unique technical key.
-     */
-    @Id
-    @Column(name = "C_ID")
-    @GeneratedValue
-    private Long id;
-
-    /**
-     * Message number.
-     */
+    /** Message number. */
     @Column(name = "C_MESSAGE_NO")
     private int messageNo;
 
-    /**
-     * Message description text.
-     */
+    /** Message description text. */
     @Column(name = "C_MESSAGE_TEXT")
     private String messageText;
 
+    /*~ ----------------------------- constructors ------------------- */
     /**
-     * Timestamp when the <code>Message</code> was created.
+     * Dear JPA...
      */
-    @Temporal(TemporalType.TIMESTAMP)
-    @Column(name = "C_CREATE_DT")
-    private Date created;
-
-    /**
-     * Version field.
-     */
-    @Version
-    @Column(name = "C_VERSION")
-    private long version;
-
-    /* ----------------------------- methods ------------------- */
-    /**
-     * Accessed by persistence provider.
-     */
-    @SuppressWarnings("unused")
-    private Message() {
-        super();
+    protected Message() {
     }
 
     /**
-     * Create a new <code>Message</code> with message number and message text.
+     * Create a new {@code Message} with message number and message text.
      * 
      * @param messageNo
      *            The message number
@@ -101,25 +66,18 @@ public class Message extends AbstractEntity<Long> implements Serializable {
     public Message(int messageNo, String messageText) {
         this.messageNo = messageNo;
         this.messageText = messageText;
-        created = new Date();
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public Long getId() {
-        return id;
+    private Message(Builder builder) {
+        messageNo = builder.messageNo;
+        messageText = builder.messageText;
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public boolean isNew() {
-        return id == null;
+    public static Builder newBuilder() {
+        return new Builder();
     }
 
+    /*~ ----------------------------- methods ------------------- */
     /**
      * Return the message number.
      * 
@@ -127,16 +85,6 @@ public class Message extends AbstractEntity<Long> implements Serializable {
      */
     public int getMessageNo() {
         return messageNo;
-    }
-
-    /**
-     * Set the message number.
-     * 
-     * @param messageNo
-     *            The messageNo to set.
-     */
-    public void setMessageNo(int messageNo) {
-        this.messageNo = messageNo;
     }
 
     /**
@@ -149,29 +97,74 @@ public class Message extends AbstractEntity<Long> implements Serializable {
     }
 
     /**
-     * Set the message text.
-     * 
-     * @param messageText
-     *            The messageText to set.
+     * {@inheritDoc}
      */
-    public void setMessageText(String messageText) {
-        this.messageText = messageText;
-    }
-
-    /**
-     * Return the date when this <code>Message</code> was created.
-     * 
-     * @return The date of creation
-     */
-    public Date getCreated() {
-        return created == null ? null : new Date(created.getTime());
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Message message = (Message) o;
+        return messageNo == message.messageNo &&
+                Objects.equals(messageText, message.messageText);
     }
 
     /**
      * {@inheritDoc}
      */
     @Override
-    public long getVersion() {
-        return version;
+    public int hashCode() {
+        return Objects.hash(messageNo, messageText);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public String toString() {
+        return messageNo+"::"+messageText;
+    }
+
+
+    /**
+     * {@code Message} builder static inner class.
+     */
+    public static final class Builder {
+
+        private int messageNo;
+        private String messageText;
+
+        private Builder() {
+        }
+
+        /**
+         * Sets the {@code messageNo} and returns a reference to this Builder so that the methods can be chained together.
+         *
+         * @param val the {@code messageNo} to set
+         * @return a reference to this Builder
+         */
+        public Builder messageNo(int val) {
+            messageNo = val;
+            return this;
+        }
+
+        /**
+         * Sets the {@code messageText} and returns a reference to this Builder so that the methods can be chained together.
+         *
+         * @param val the {@code messageText} to set
+         * @return a reference to this Builder
+         */
+        public Builder messageText(String val) {
+            messageText = val;
+            return this;
+        }
+
+        /**
+         * Returns a {@code Message} built from the parameters previously set.
+         *
+         * @return a {@code Message} built with parameters of this {@code Message.Builder}
+         */
+        public Message build() {
+            return new Message(this);
+        }
     }
 }

@@ -60,6 +60,61 @@ public class LocationTest {
         assertThat(l.isConsideredInAllocation()).isEqualTo(Location.DEF_CONSIDERED_IN_ALLOCATION);
     }
 
+    public
+    @Test
+    void testAddMessageWithNull() {
+        Location l = new Location(new LocationPK.Builder().area("area").aisle("aisle").x("x").y("y").z("z").build());
+        thrown.expect(IllegalArgumentException.class);
+        l.addMessage(null);
+    }
+
+    public
+    @Test
+    void testMessageHandling() {
+        Location l = new Location(new LocationPK.Builder().area("area").aisle("aisle").x("x").y("y").z("z").build());
+        Message m = Message.newBuilder().messageNo(1).messageText("First message").build();
+
+        l.addMessage(m);
+        assertThat(l.getMessages()).hasSize(1);
+        assertThat(l.getMessages()).contains(m);
+
+        l.removeMessages(m);
+        assertThat(l.getMessages()).hasSize(0);
+    }
+
+    public
+    @Test
+    void testRemoveMessageWithNull() {
+        Location l = new Location(new LocationPK.Builder().area("area").aisle("aisle").x("x").y("y").z("z").build());
+        thrown.expect(IllegalArgumentException.class);
+        l.removeMessages(null);
+    }
+
+    public
+    @Test
+    void testSetLocationGroupWithNull() {
+        Location l = new Location(new LocationPK.Builder().area("area").aisle("aisle").x("x").y("y").z("z").build());
+        thrown.expect(IllegalArgumentException.class);
+        l.setLocationGroup(null);
+    }
+
+    public
+    @Test
+    void testSetLocationGroup() {
+        Location l = new Location(new LocationPK.Builder().area("area").aisle("aisle").x("x").y("y").z("z").build());
+        assertThat(l.getLocationGroup()).isNull();
+        LocationGroup lg1 = new LocationGroup("error zone");
+        LocationGroup lg2 = new LocationGroup("picking");
+        lg2.setLocationGroupCountingActive(false);
+
+        l.setLocationGroup(lg1);
+        assertThat(l.getLocationGroup()).isEqualTo(lg1);
+        assertThat(l.isLocationGroupCountingActive()).isEqualTo(lg1.isLocationGroupCountingActive());
+        l.setLocationGroup(lg2);
+        assertThat(l.getLocationGroup()).isEqualTo(lg2);
+        assertThat(l.isLocationGroupCountingActive()).isEqualTo(lg2.isLocationGroupCountingActive());
+    }
+
     /**
      * Test adding messages to the location. Test cascading persistence.
      @Test public final void testAddingErrorMessages() {

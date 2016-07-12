@@ -27,7 +27,7 @@ import org.junit.Test;
 
 /**
  * A MessageTest.
- * 
+ *
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  * @version 0.1
  * @since 0.1
@@ -37,11 +37,12 @@ public class MessageTest {
     /**
      * Test construction and initialization of a Message object.
      */
-    public @Test final void testConstruction() {
+    public
+    @Test
+    final void testConstruction() {
         Message m = new Message(4711, "Test message");
-        assertThat(m.getCreated()).isNotNull();
         assertThat(m.getMessageText()).isEqualTo("Test message");
         assertThat(m.getMessageNo()).isEqualTo(4711);
-        assertThat(m).isNotEqualTo((new Message(4711, "Test message")));
+        assertThat(m).isEqualTo((new Message(4711, "Test message")));
     }
 }

@@ -389,12 +389,21 @@ public class Location extends BaseEntity implements Serializable {
      * @param locationGroup The {@link LocationGroup} to be assigned
      */
     void setLocationGroup(LocationGroup locationGroup) {
-        Assert.notNull(locationGroup, "Not allowed to call location#setLocationGroup with null argument. this: " + this);
+        Assert.notNull(locationGroup, "Not allowed to call location#setLocationGroup with null argument, this: " + this);
         if (this.locationGroup != null) {
             this.locationGroup.removeLocation(this);
         }
         this.setLocationGroupCountingActive(locationGroup.isLocationGroupCountingActive());
         this.locationGroup = locationGroup;
+    }
+
+    /**
+     * Define whether or not the Location shall be considered in counting {@code TransportUnit}s of the parent {@link LocationGroup}.
+     *
+     * @param locationGroupCountingActive {@literal true} if considered, otherwise {@literal false}
+     */
+    public void setLocationGroupCountingActive(boolean locationGroupCountingActive) {
+        this.locationGroupCountingActive = locationGroupCountingActive;
     }
 
     /**
@@ -443,15 +452,6 @@ public class Location extends BaseEntity implements Serializable {
     @Override
     public int hashCode() {
         return Objects.hash(locationId);
-    }
-
-    /**
-     * Define whether or not the Location shall be considered in counting {@code TransportUnit}s of the parent {@link LocationGroup}.
-     *
-     * @param locationGroupCountingActive {@literal true} if considered, otherwise {@literal false}
-     */
-    public void setLocationGroupCountingActive(boolean locationGroupCountingActive) {
-        this.locationGroupCountingActive = locationGroupCountingActive;
     }
 
     /**
