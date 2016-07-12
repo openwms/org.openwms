@@ -177,7 +177,7 @@ public class Location extends BaseEntity implements Serializable {
      *
      * @param locationId The unique natural key of the Location
      */
-    public Location(LocationPK locationId) {
+    protected Location(LocationPK locationId) {
         Assert.notNull(locationId, "Creation of Location with locationId null");
         this.locationId = locationId;
     }

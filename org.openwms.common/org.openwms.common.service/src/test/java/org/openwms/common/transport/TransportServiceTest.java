@@ -49,9 +49,9 @@ public class TransportServiceTest extends AbstractJpaSpringContextTests {
     private TransportUnitService<TransportUnit> transportService;
 
     private final LocationPK locationPk = new LocationPK("AREA", "AISL", "X", "Y", "Z");
-    private final Location actualLocation = new Location(locationPk);
+    private final Location actualLocation = Location.create(locationPk);
     private final LocationPK targetLocationPk = new LocationPK("TRGT", "TRGT", "TRGT", "TRGT", "TRGT");
-    private final Location targetLocation = new Location(targetLocationPk);
+    private final Location targetLocation = Location.create(targetLocationPk);
     private final TransportUnitType transportUnitType = new TransportUnitType("TestType");
     private final TransportUnit transportUnit = new TransportUnit("KNOWN");
 

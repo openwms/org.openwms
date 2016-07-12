@@ -115,6 +115,14 @@ public class LocationPK implements Serializable {
         z = builder.z;
     }
 
+    /**
+     * Create a new builder instance to create LocationPK from.
+     *
+     * @return The builder
+     */
+    public static Builder newBuilder() {
+        return new Builder();
+    }
     /*~ ----------------------------- methods ------------------- */
 
     /**
