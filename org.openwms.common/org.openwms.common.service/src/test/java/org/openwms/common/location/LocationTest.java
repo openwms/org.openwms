@@ -23,7 +23,9 @@ package org.openwms.common.location;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.ExpectedException;
 
 /**
  * A LocationDaoTest.
@@ -34,6 +36,16 @@ import org.junit.Test;
  */
 public class LocationTest {
 
+    @Rule
+    public ExpectedException thrown = ExpectedException.none();
+
+    public
+    @Test
+    void testConstructionWithNull() {
+        thrown.expect(IllegalArgumentException.class);
+        new Location(null);
+    }
+
     public
     @Test
     void testDefaultCreation() {
@@ -41,6 +53,11 @@ public class LocationTest {
         assertThat(l.getNoMaxTransportUnits()).isEqualTo(Location.DEF_MAX_TU);
         assertThat(l.isCountingActive()).isFalse();
         assertThat(l.getCheckState()).isEqualTo(Location.DEF_CHECK_STATE);
+        assertThat(l.isLocationGroupCountingActive()).isEqualTo(Location.DEF_LG_COUNTING_ACTIVE);
+        assertThat(l.isIncomingActive()).isEqualTo(Location.DEF_INCOMING_ACTIVE);
+        assertThat(l.isOutgoingActive()).isEqualTo(Location.DEF_OUTGOING_ACTIVE);
+        assertThat(l.getPlcState()).isEqualTo(Location.DEF_PLC_STATE);
+        assertThat(l.isConsideredInAllocation()).isEqualTo(Location.DEF_CONSIDERED_IN_ALLOCATION);
     }
 
     /**

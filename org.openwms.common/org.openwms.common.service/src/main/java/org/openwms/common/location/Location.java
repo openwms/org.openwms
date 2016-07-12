@@ -112,7 +112,9 @@ public class Location extends BaseEntity implements Serializable {
      * calculation of {@code TransportUnit}s.</li></ul>
      */
     @Column(name = "C_LG_COUNTING_ACTIVE")
-    private boolean locationGroupCountingActive = false;
+    private boolean locationGroupCountingActive = DEF_LG_COUNTING_ACTIVE;
+    /** Default value of {@link #locationGroupCountingActive}. */
+    public static final boolean DEF_LG_COUNTING_ACTIVE = false;
 
     /**
      * Signals the incoming state of this Location. Locations which are blocked for incoming cannot pick up {@code TransportUnit}s.<ul>
@@ -120,7 +122,9 @@ public class Location extends BaseEntity implements Serializable {
      * pick up {@code TransportUnit}s.</li></ul>
      */
     @Column(name = "C_INCOMING_ACTIVE")
-    private boolean incomingActive = true;
+    private boolean incomingActive = DEF_INCOMING_ACTIVE;
+    /** Default value of {@link #incomingActive}. */
+    public static final boolean DEF_INCOMING_ACTIVE = true;
 
     /**
      * Signals the outgoing state of this Location. Locations which are blocked for outgoing cannot release {@code
@@ -128,14 +132,18 @@ public class Location extends BaseEntity implements Serializable {
      * is locked, {@code TransportUnit}s can't leave this Location.</li></ul>
      */
     @Column(name = "C_OUTGOING_ACTIVE")
-    private boolean outgoingActive = true;
+    private boolean outgoingActive = DEF_OUTGOING_ACTIVE;
+    /** Default value of {@link #outgoingActive}. */
+    public static final boolean DEF_OUTGOING_ACTIVE = true;
 
     /**
      * The PLC is able to change the state of a Location. This property stores the last state, received from the PLC.<ul><li>-1: Not
      * defined.</li><li>0 : No PLC error, everything okay.</li></ul>
      */
     @Column(name = "C_PLC_STATE")
-    private short plcState = 0;
+    private int plcState = DEF_PLC_STATE;
+    /** Default value of {@link #plcState}. */
+    public static final int DEF_PLC_STATE = 0;
 
     /**
      * Determines whether the Location is considered in the allocation procedure.<ul><li>{@literal true} : This Location will be considered
@@ -143,7 +151,9 @@ public class Location extends BaseEntity implements Serializable {
      * process.</li></ul>
      */
     @Column(name = "C_CONSIDERED_IN_ALLOCATION")
-    private boolean consideredInAllocation = true;
+    private boolean consideredInAllocation = DEF_CONSIDERED_IN_ALLOCATION;
+    /** Default value of {@link #consideredInAllocation}. */
+    public static final boolean DEF_CONSIDERED_IN_ALLOCATION = true;
 
     /** The {@link LocationType} this Location belongs to. */
     @ManyToOne
@@ -168,6 +178,7 @@ public class Location extends BaseEntity implements Serializable {
      * @param locationId The unique natural key of the Location
      */
     public Location(LocationPK locationId) {
+        Assert.notNull(locationId, "Creation of Location with locationId null");
         this.locationId = locationId;
     }
 
@@ -193,9 +204,7 @@ public class Location extends BaseEntity implements Serializable {
      * @return {@literal true} if the {@link Message} is new in the collection of messages, otherwise {@literal false}
      */
     public boolean addMessage(Message message) {
-        if (message == null) {
-            throw new IllegalArgumentException("Message may not be null!");
-        }
+        Assert.notNull(message, "null passed to addMessage, this: " + this);
         return this.messages.add(message);
     }
 
@@ -357,8 +366,8 @@ public class Location extends BaseEntity implements Serializable {
      *
      * @return the plc state
      */
-    public short getPlcState() {
-        return this.plcState;
+    public int getPlcState() {
+        return plcState;
     }
 
     /**
@@ -369,15 +378,13 @@ public class Location extends BaseEntity implements Serializable {
      * @throws IllegalArgumentException when messages is {@literal null}
      */
     public boolean removeMessages(Message... msgs) {
-        if (msgs == null) {
-            throw new IllegalArgumentException("Parameter msgs may not be null!");
-        }
+        Assert.notNull(msgs, "null passed to removeMessages, this: " + this);
         return this.messages.removeAll(Arrays.asList(msgs));
     }
 
     /**
-     * Add this {@code Location} to the {@literal locationGroup}. When the argument is {@literal null} an existing {@link LocationGroup} is removed
-     * from the {@code Location}.
+     * Add this {@code Location} to the {@literal locationGroup}. When the argument is {@literal null} an existing {@link LocationGroup} is
+     * removed from the {@code Location}.
      *
      * @param locationGroup The {@link LocationGroup} to be assigned
      */
