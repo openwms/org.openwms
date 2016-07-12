@@ -32,7 +32,7 @@ import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.test.context.junit4.SpringRunner;
 
 /**
- * A LocationIT.
+ * A LocationTypeIT.
  *
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  * @version 1.0
@@ -40,7 +40,7 @@ import org.springframework.test.context.junit4.SpringRunner;
  */
 @RunWith(SpringRunner.class)
 @IntegrationTest
-public class LocationIT {
+public class LocationTypeIT {
 
     @Rule
     public ExpectedException thrown = ExpectedException.none();
@@ -48,17 +48,16 @@ public class LocationIT {
     @Autowired
     private TestEntityManager entityManager;
     @Autowired
-    private LocationRepository repository;
+    private LocationTypeRepository repository;
 
-    /**
-     * Creating two groups with same id must fail.
-     */
+    public final
     @Test
-    public final void testNameConstraint() {
-        Location loc1 = new Location(LocationPK.newBuilder().area("area").aisle("aisle").x("x").y("y").z("z").build());
-        repository.save(loc1);
-        Location loc2 = new Location(LocationPK.newBuilder().area("area").aisle("aisle").x("x").y("y").z("z").build());
+    void testUniqueConstraint() {
+        LocationType lt = new LocationType("conveyor");
+        repository.save(lt);
+        LocationType lt2 = new LocationType("conveyor");
+
         thrown.expect(DataIntegrityViolationException.class);
-        repository.save(loc2);
+        repository.save(lt2);
     }
 }

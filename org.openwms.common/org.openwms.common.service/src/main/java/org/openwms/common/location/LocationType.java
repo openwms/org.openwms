@@ -23,138 +23,77 @@ package org.openwms.common.location;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.NamedQueries;
-import javax.persistence.NamedQuery;
 import javax.persistence.OrderBy;
 import javax.persistence.Table;
-import javax.persistence.Version;
+import java.io.Serializable;
+import java.util.Objects;
 
-import org.openwms.core.AbstractEntity;
-import org.openwms.core.DomainObject;
+import org.ameba.integration.jpa.BaseEntity;
+import org.springframework.util.Assert;
 
 /**
- * A LocationType is the type of <code>Location</code>s with same characteristics.
- * 
- * @GlossaryTerm
+ * A LocationType is the type of {@code Location}s with same characteristics.
+ *
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
- * @version $Revision$
+ * @version 1.0
+ * @GlossaryTerm
+ * @see org.openwms.common.location.Location
  * @since 0.1
- * @see org.openwms.common.domain.Location
  */
 @Entity
 @Table(name = "COM_LOCATION_TYPE")
-@NamedQueries({
-        @NamedQuery(name = LocationType.NQ_FIND_ALL, query = "select l from LocationType l"),
-        @NamedQuery(name = LocationType.NQ_FIND_BY_UNIQUE_QUERY, query = "select l from LocationType l where l.type = ?1") })
-public class LocationType extends AbstractEntity<Long> implements DomainObject<Long> {
-
-    private static final long serialVersionUID = 7694581168374440182L;
-
-    /**
-     * Query to find all <code>LocationType</code>s.
-     */
-    public static final String NQ_FIND_ALL = "LocationType.findAll";
-
-    /**
-     * Query to find <strong>one</strong> <code>LocationType</code> by its natural key.
-     * <ul>
-     * <li>Query parameter index <strong>1</strong> : The name of the <code>LocationType</code> to search for.</li>
-     * </ul>
-     */
-    public static final String NQ_FIND_BY_UNIQUE_QUERY = "LocationType.findByUniqueId";
-
-    /**
-     * Default value of the description, by default * {@value} .
-     */
-    public static final String DEF_TYPE_DESCRIPTION = "--";
-
-    /**
-     * Unique technical key.
-     */
-    @Id
-    @Column(name = "ID")
-    @GeneratedValue
-    private Long id;
-
-    /**
-     * Type of the <code>LocationType</code> (unique).
-     */
+public class LocationType extends BaseEntity implements Serializable {
+    
+    /** Type of the {@code LocationType} (unique). */
     @Column(name = "C_TYPE", unique = true)
     @OrderBy
     private String type;
 
-    /**
-     * Description of the <code>LocationType</code>.
-     */
-    @Column(name = "DESCRIPTION")
+    /** Description of the {@code LocationType}. */
+    @Column(name = "C_DESCRIPTION")
     private String description = DEF_TYPE_DESCRIPTION;
+    /** Default value of the description, by default * {@value} . */
+    public static final String DEF_TYPE_DESCRIPTION = "--";
 
-    /**
-     * Length of the <code>LocationType</code>.
-     */
-    @Column(name = "LENGTH")
-    private int length = 0;
+    /** Length of the {@code LocationType}. */
+    @Column(name = "C_LENGTH")
+    private int length = DEF_LENGTH;
+    /** Default value of {@link #length}. */
+    public static final int DEF_LENGTH = 0;
 
-    /**
-     * Width of the <code>LocationType</code>.
-     */
-    @Column(name = "WIDTH")
-    private int width = 0;
+    /** Width of the {@code LocationType}. */
+    @Column(name = "C_WIDTH")
+    private int width = DEF_WIDTH;
+    /** Default value of {@link #width}. */
+    public static final int DEF_WIDTH = 0;
 
-    /**
-     * Height of the <code>LocationType</code>.
-     */
-    @Column(name = "HEIGHT")
-    private int height = 0;
+    /** Height of the {@code LocationType}. */
+    @Column(name = "C_HEIGHT")
+    private int height = DEF_HEIGHT;
+    /** Default value of {@link #height}. */
+    public static final int DEF_HEIGHT = 0;
 
+    /*~ ----------------------------- constructors ------------------- */
     /**
-     * Version field.
+     * Dear JPA...
      */
-    @Version
-    @Column(name = "C_VERSION")
-    private long version;
-
-    /* ----------------------------- methods ------------------- */
-    /**
-     * Accessed by the persistence provider.
-     */
-    @SuppressWarnings("unused")
-    private LocationType() {
-        super();
+    protected LocationType() {
     }
 
     /**
-     * Create a new <code>LocationType</code> with an unique natural key.
-     * 
-     * @param type
-     *            Unique type
+     * Create a new {@code LocationType} with an unique natural key.
+     *
+     * @param type Unique type
      */
     public LocationType(String type) {
-        super();
+        Assert.hasText(type, "type must exist when creating a new LocationType");
         this.type = type;
     }
 
+    /* ----------------------------- methods ------------------- */
     /**
-     * {@inheritDoc}
-     */
-    @Override
-    public Long getId() {
-        return this.id;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public boolean isNew() {
-        return this.id == null;
-    }
-
-    /**
-     * Returns the unique identifier of the <code>LocationType</code>.
-     * 
+     * Returns the unique identifier of the {@code LocationType}.
+     *
      * @return type The Type
      */
     public String getType() {
@@ -162,8 +101,8 @@ public class LocationType extends AbstractEntity<Long> implements DomainObject<L
     }
 
     /**
-     * Returns the length of the <code>LocationType</code>.
-     * 
+     * Returns the length of the {@code LocationType}.
+     *
      * @return length The Length
      */
     public int getLength() {
@@ -171,18 +110,17 @@ public class LocationType extends AbstractEntity<Long> implements DomainObject<L
     }
 
     /**
-     * Set the length of this <code>LocationType</code>.
-     * 
-     * @param length
-     *            The length of this type
+     * Set the length of this {@code LocationType}.
+     *
+     * @param length The length of this type
      */
     public void setLength(int length) {
         this.length = length;
     }
 
     /**
-     * Returns the width of this <code>LocationType</code>.
-     * 
+     * Returns the width of this {@code LocationType}.
+     *
      * @return width The Width
      */
     public int getWidth() {
@@ -190,37 +128,17 @@ public class LocationType extends AbstractEntity<Long> implements DomainObject<L
     }
 
     /**
-     * Set the width of this <code>LocationType</code>.
-     * 
-     * @param width
-     *            The width of this type
+     * Set the width of this {@code LocationType}.
+     *
+     * @param width The width of this type
      */
     public void setWidth(int width) {
         this.width = width;
     }
 
     /**
-     * Returns the description of this <code>LocationType</code>.
-     * 
-     * @return description The description text
-     */
-    public String getDescription() {
-        return this.description;
-    }
-
-    /**
-     * Set the description of the <code>LocationType</code>.
-     * 
-     * @param description
-     *            The description text of this type
-     */
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    /**
-     * Returns the height of the <code>LocationType</code>.
-     * 
+     * Returns the height of the {@code LocationType}.
+     *
      * @return height The Height
      */
     public int getHeight() {
@@ -228,31 +146,59 @@ public class LocationType extends AbstractEntity<Long> implements DomainObject<L
     }
 
     /**
-     * Set the height of this <code>LocationType</code>.
-     * 
-     * @param height
-     *            The height of this type
+     * Set the height of this {@code LocationType}.
+     *
+     * @param height The height of this type
      */
     public void setHeight(int height) {
         this.height = height;
     }
 
     /**
-     * {@inheritDoc}
+     * Returns the description of this {@code LocationType}.
+     *
+     * @return description The description text
      */
-    @Override
-    public long getVersion() {
-        return this.version;
+    public String getDescription() {
+        return this.description;
+    }
+
+    /**
+     * Set the description of the {@code LocationType}.
+     *
+     * @param description The description text of this type
+     */
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     /**
      * Return the type as String.
-     * 
-     * @see java.lang.Object#toString()
+     *
      * @return String
+     * @see java.lang.Object#toString()
      */
     @Override
     public String toString() {
         return getType();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        LocationType that = (LocationType) o;
+        return Objects.equals(type, that.type);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public int hashCode() {
+        return Objects.hash(type);
     }
 }
