@@ -51,6 +51,7 @@ import org.openwms.common.location.Location;
 import org.openwms.common.units.Weight;
 import org.openwms.core.uaa.User;
 import org.openwms.core.values.CoreTypeDefinitions;
+import org.springframework.util.Assert;
 
 /**
  * A TransportUnit is an item like a box, a toad, a bin or a palette that is moved around within a warehouse and can carry goods.
@@ -188,6 +189,7 @@ public class TransportUnit extends BaseEntity {
      *            The unique identifier of the {@code TransportUnit}
      */
     public TransportUnit(String unitId) {
+        Assert.hasText(unitId);
         this.barcode = new Barcode(unitId);
     }
 
