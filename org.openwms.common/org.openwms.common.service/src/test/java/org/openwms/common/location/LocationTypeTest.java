@@ -77,4 +77,10 @@ public class LocationTypeTest {
         assertThat(conveyor2).isEqualTo(conveyor);
     }
 
+    public final
+    @Test
+    void testProperReturnOfToString() {
+        LocationType conveyor = new LocationType("conveyor");
+        assertThat(conveyor.toString()).isEqualTo("conveyor");
+    }
 }

@@ -37,7 +37,7 @@ import org.springframework.util.Assert;
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  * @version 1.0
  * @GlossaryTerm
- * @see org.openwms.common.location.Location
+ * @see Location
  * @since 0.1
  */
 @Entity
@@ -45,7 +45,7 @@ import org.springframework.util.Assert;
 public class LocationType extends BaseEntity implements Serializable {
     
     /** Type of the {@code LocationType} (unique). */
-    @Column(name = "C_TYPE", unique = true)
+    @Column(name = "C_TYPE", unique = true, nullable = false)
     @OrderBy
     private String type;
 

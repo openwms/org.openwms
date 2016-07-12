@@ -24,178 +24,141 @@ package org.openwms.common.transport;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.NamedQueries;
-import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.OrderBy;
 import javax.persistence.Table;
-import javax.persistence.Version;
+import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.HashSet;
 import java.util.Set;
 
-import org.openwms.common.location.LocationType;
-import org.openwms.core.AbstractEntity;
-import org.openwms.core.DomainObject;
+import org.ameba.integration.jpa.BaseEntity;
+import org.springframework.util.Assert;
 
 /**
- * A TransportUnitType is a type of a certain <code>TransportUnit</code>s.
- * <p>
- * Typically to store some static attributes of <code>TransportUnit</code>s, such as the length, the height, or the weight of
- * <code>TransportUnit</code>s. It is possible to group and characterize <code>TransportUnit</code>s.
- * </p>
- * 
- * @GlossaryTerm
+ * A TransportUnitType is a type of a certain {@code TransportUnit}s. <p> Typically to store some static attributes of {@code
+ * TransportUnit}s, such as the length, the height, or the weight of {@code TransportUnit}s. It is possible to group and characterize {@code
+ * TransportUnit}s. </p>
+ *
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
- * @version $Revision$
- * @since 0.1
+ * @version 1.0
+ * @GlossaryTerm
  * @see TransportUnit
+ * @since 0.1
  */
 @Entity
 @Table(name = "COM_TRANSPORT_UNIT_TYPE")
-@NamedQueries({
-        @NamedQuery(name = TransportUnitType.NQ_FIND_ALL, query = "select tut from TransportUnitType tut order by tut.type"),
-        @NamedQuery(name = TransportUnitType.NQ_FIND_BY_NAME, query = "select tut from TransportUnitType tut where tut.type = ?1") })
-public class TransportUnitType extends AbstractEntity<Long> implements DomainObject<Long> {
+public class TransportUnitType extends BaseEntity implements Serializable {
 
-    private static final long serialVersionUID = -8223409025971215884L;
-
-    /**
-     * Query to find all <code>TransportUnitType</code>s.
-     */
-    public static final String NQ_FIND_ALL = "TransportUnitType.findAll";
-
-    /**
-     * Query to find <strong>one</strong> <code>TransportUnitType</code> by its natural key.
-     * <ul>
-     * <li>Query parameter index <strong>1</strong> : The name of the <code>TransportUnitType</code> to search for.</li>
-     * </ul>
-     */
-    public static final String NQ_FIND_BY_NAME = "TransportUnitType.findByID";
-
-    /**
-     * Default description of the <code>TransportUnitType</code>. Default value}.
-     */
-    public static final String DEF_TYPE_DESCRIPTION = "--";
-
-    /**
-     * Unique technical key.
-     */
-    @Id
-    @Column(name = "ID")
-    @GeneratedValue
-    private Long id;
-
-    /**
-     * Unique natural key.
-     */
-    @Column(name = "TYPE", unique = true)
+    /** Unique natural key. */
+    @Column(name = "C_TYPE", unique = true, nullable = false)
     @OrderBy
     private String type;
 
-    /**
-     * Description for this type.
-     */
-    @Column(name = "DESCRIPTION")
+    /** Description for this type. */
+    @Column(name = "C_DESCRIPTION")
     private String description = DEF_TYPE_DESCRIPTION;
+    /** Default description of the {@code TransportUnitType}. Default value}. */
+    public static final String DEF_TYPE_DESCRIPTION = "--";
 
-    /**
-     * Length of the <code>TransportUnitType</code>.
-     */
-    @Column(name = "LENGTH")
-    private int length = 0;
+    /** Length of the {@code TransportUnitType}. */
+    @Column(name = "C_LENGTH")
+    private int length = DEF_LENGTH;
+    /** Default value of {@link #length}. */
+    public static final int DEF_LENGTH = 0;
 
-    /**
-     * Width of the <code>TransportUnitType</code>.
-     */
-    @Column(name = "WIDTH")
+    /** Width of the {@code TransportUnitType}. */
+    @Column(name = "C_WIDTH")
     private int width = 0;
+    /** Default value of {@link #width}. */
+    public static final int DEF_WIDTH = 0;
 
-    /**
-     * Height of the <code>TransportUnitType</code>.
-     */
-    @Column(name = "HEIGHT")
+    /** Height of the {@code TransportUnitType}. */
+    @Column(name = "C_HEIGHT")
     private int height = 0;
+    /** Default value of {@link #height}. */
+    public static final int DEF_HEIGHT = 0;
 
-    /**
-     * Tare weight of the <code>TransportUnitType</code>.
-     */
-    @Column(name = "WEIGHT_TARE", scale = 3)
+    /** Tare weight of the {@code TransportUnitType}. */
+    @Column(name = "C_WEIGHT_TARE", scale = 3)
     private BigDecimal weightTare;
 
-    /**
-     * Maximum weight of the <code>TransportUnitType</code>.
-     */
-    @Column(name = "WEIGHT_MAX", scale = 3)
+    /** Maximum weight of the {@code TransportUnitType}. */
+    @Column(name = "C_WEIGHT_MAX", scale = 3)
     private BigDecimal weightMax;
 
-    /**
-     * Effective payload of the <code>TransportUnitType</code>.
-     */
-    @Column(name = "PAYLOAD", scale = 3)
+    /** Effective payload of the {@code TransportUnitType}. */
+    @Column(name = "C_PAYLOAD", scale = 3)
     private BigDecimal payload;
 
     /**
-     * Characteristic used to hold specific compatibility attributes.<br>
-     * Example:<br>
-     * 'isn't compatible with...' or 'is compatible with ...' or 'type owns another type ...'
+     * Characteristic used to hold specific compatibility attributes.<br /> Example:<br /> 'isn't compatible with...' or 'is compatible with
+     * ...' or 'type owns another type ...'
      */
-    @Column(name = "COMPATIBILITY")
+    @Column(name = "C_COMPATIBILITY")
     private String compatibility;
 
-    /**
-     * Version field.
-     */
-    @Version
-    @Column(name = "C_VERSION")
-    private long version;
+    /*~ ------------------- collection mapping ------------------- */
+    /** A collection of all {@link TransportUnit}s belonging to this type. */
+    @OneToMany(mappedBy = "transportUnitType")
+    private Set<TransportUnit> transportUnits = new HashSet<>();
 
-    /* ------------------- collection mapping ------------------- */
-    /**
-     * A collection of all {@link TransportUnit}s belonging to this type.
-     */
-    @OneToMany
-    @JoinTable(name = "COM_TU_UNIT_TYPE", joinColumns = @JoinColumn(name = "TRANSPORT_UNIT_TYPE_ID"), inverseJoinColumns = @JoinColumn(name = "TRANSPORT_UNIT_ID"))
-    private Set<TransportUnit> transportUnits = new HashSet<TransportUnit>();
+    /** Describes other {@code TransportUnitType}s and how many of these may be stacked on the {@code TransportUnitType}. */
+    @OneToMany(mappedBy = "transportUnitType", cascade = {CascadeType.ALL})
+    private Set<TypeStackingRule> typeStackingRules = new HashSet<>();
 
-    /**
-     * Describes other <code>TransportUnitType</code>s and how many of these may be stacked on the <code>TransportUnitType</code>.
-     */
-    @OneToMany(mappedBy = "transportUnitType", cascade = { CascadeType.ALL })
-    private Set<TypeStackingRule> typeStackingRules = new HashSet<TypeStackingRule>();
+    /** A Set of {@link TypePlacingRule}s store all possible {@code LocationType} s of the {@code TransportUnitType}. */
+    @OneToMany(mappedBy = "transportUnitType", cascade = {CascadeType.ALL})
+    private Set<TypePlacingRule> typePlacingRules = new HashSet<>();
+
+    /*~ ----------------------------- constructors ------------------- */
 
     /**
-     * A Set of {@link TypePlacingRule}s store all possible {@link LocationType} s of the <code>TransportUnitType</code>.
+     * Dear JPA...
      */
-    @OneToMany(mappedBy = "transportUnitType", cascade = { CascadeType.PERSIST, CascadeType.MERGE })
-    private Set<TypePlacingRule> typePlacingRules = new HashSet<TypePlacingRule>();
-
-    /* ----------------------------- methods ------------------- */
-    /**
-     * Accessed by persistence provider.
-     */
-    @SuppressWarnings("unused")
-    private TransportUnitType() {
-        super();
+    protected TransportUnitType() {
     }
 
     /**
-     * Create a new <code>TransportUnitType</code>.
-     * 
-     * @param type
-     *            Unique name
+     * Create a new {@code TransportUnitType}.
+     *
+     * @param type Unique name
      */
     public TransportUnitType(String type) {
+        Assert.hasText(type);
         this.type = type;
     }
 
+    private TransportUnitType(Builder builder) {
+        this.type = builder.type;
+        setDescription(builder.description);
+        setLength(builder.length);
+        setWidth(builder.width);
+        setHeight(builder.height);
+        setWeightTare(builder.weightTare);
+        setWeightMax(builder.weightMax);
+        setPayload(builder.payload);
+        setCompatibility(builder.compatibility);
+        setTransportUnits(builder.transportUnits);
+        setTypeStackingRules(builder.typeStackingRules);
+        setTypePlacingRules(builder.typePlacingRules);
+    }
+
     /**
-     * Returns the type of the <code>TransportUnitType</code>.
-     * 
+     * Create a TransportUnitType with the corresponding builder.
+     *
+     * @param type The business key
+     * @return The builder instance
+     */
+    public static Builder newBuilder(String type) {
+        return new Builder(type);
+    }
+
+    /*~ ----------------------------- methods ------------------- */
+
+    /**
+     * Returns the type of the {@code TransportUnitType}.
+     *
      * @return The type
      */
     public String getType() {
@@ -203,34 +166,8 @@ public class TransportUnitType extends AbstractEntity<Long> implements DomainObj
     }
 
     /**
-     * {@inheritDoc}
-     */
-    @Override
-    public Long getId() {
-        return id;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public boolean isNew() {
-        return getType() == null || getType().isEmpty() ? true : false;
-    }
-
-    /**
-     * Set the type of the <code>TransportUnitType</code>.
-     * 
-     * @param type
-     *            The type to set
-     */
-    public void setType(String type) {
-        this.type = type;
-    }
-
-    /**
-     * Returns the width of the <code>TransportUnitType</code>.
-     * 
+     * Returns the width of the {@code TransportUnitType}.
+     *
      * @return The width
      */
     public int getWidth() {
@@ -238,37 +175,17 @@ public class TransportUnitType extends AbstractEntity<Long> implements DomainObj
     }
 
     /**
-     * Set the width of the <code>TransportUnitType</code>.
-     * 
-     * @param width
-     *            The width to set
+     * Set the width of the {@code TransportUnitType}.
+     *
+     * @param width The width to set
      */
     public void setWidth(int width) {
         this.width = width;
     }
 
     /**
-     * Returns the description of the <code>TransportUnitType</code>.
-     * 
-     * @return The description text
-     */
-    public String getDescription() {
-        return this.description;
-    }
-
-    /**
-     * Set the description for the <code>TransportUnitType</code>.
-     * 
-     * @param description
-     *            The description to set
-     */
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    /**
-     * Returns the height of the <code>TransportUnitType</code>.
-     * 
+     * Returns the height of the {@code TransportUnitType}.
+     *
      * @return The height
      */
     public int getHeight() {
@@ -276,56 +193,17 @@ public class TransportUnitType extends AbstractEntity<Long> implements DomainObj
     }
 
     /**
-     * Set the height of the <code>TransportUnitType</code>.
-     * 
-     * @param height
-     *            The height to set
+     * Set the height of the {@code TransportUnitType}.
+     *
+     * @param height The height to set
      */
     public void setHeight(int height) {
         this.height = height;
     }
 
     /**
-     * Returns the payload of the <code>TransportUnitType</code>.
-     * 
-     * @return The payload
-     */
-    public BigDecimal getPayload() {
-        return this.payload;
-    }
-
-    /**
-     * Set the payload of the <code>TransportUnitType</code>.
-     * 
-     * @param payload
-     *            The payload to set
-     */
-    public void setPayload(BigDecimal payload) {
-        this.payload = payload;
-    }
-
-    /**
-     * Returns the compatibility of the <code>TransportUnitType</code>.
-     * 
-     * @return The compatibility
-     */
-    public String getCompatibility() {
-        return this.compatibility;
-    }
-
-    /**
-     * Set the compatibility of the <code>TransportUnitType</code>.
-     * 
-     * @param compatibility
-     *            The compatibility to set
-     */
-    public void setCompatibility(String compatibility) {
-        this.compatibility = compatibility;
-    }
-
-    /**
-     * Get the length of the <code>TransportUnitType</code>.
-     * 
+     * Get the length of the {@code TransportUnitType}.
+     *
      * @return The length
      */
     public int getLength() {
@@ -333,67 +211,112 @@ public class TransportUnitType extends AbstractEntity<Long> implements DomainObj
     }
 
     /**
-     * Set the length of the <code>TransportUnitType</code>.
-     * 
-     * @param length
-     *            The length to set
+     * Set the length of the {@code TransportUnitType}.
+     *
+     * @param length The length to set
      */
     public void setLength(int length) {
         this.length = length;
     }
 
     /**
-     * Returns a Set of all {@link TransportUnit}s belonging to the <code>TransportUnitType</code>.
-     * 
-     * @return A Set of all {@link TransportUnit}s belonging to the <code>TransportUnitType</code>
+     * Returns the description of the {@code TransportUnitType}.
+     *
+     * @return The description text
+     */
+    public String getDescription() {
+        return this.description;
+    }
+
+    /**
+     * Set the description for the {@code TransportUnitType}.
+     *
+     * @param description The description to set
+     */
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    /**
+     * Returns the payload of the {@code TransportUnitType}.
+     *
+     * @return The payload
+     */
+    public BigDecimal getPayload() {
+        return this.payload;
+    }
+
+    /**
+     * Set the payload of the {@code TransportUnitType}.
+     *
+     * @param payload The payload to set
+     */
+    public void setPayload(BigDecimal payload) {
+        this.payload = payload;
+    }
+
+    /**
+     * Returns the compatibility of the {@code TransportUnitType}.
+     *
+     * @return The compatibility
+     */
+    public String getCompatibility() {
+        return this.compatibility;
+    }
+
+    /**
+     * Set the compatibility of the {@code TransportUnitType}.
+     *
+     * @param compatibility The compatibility to set
+     */
+    public void setCompatibility(String compatibility) {
+        this.compatibility = compatibility;
+    }
+
+    /**
+     * Returns a Set of all {@link TransportUnit}s belonging to the {@code TransportUnitType}.
+     *
+     * @return A Set of all {@link TransportUnit}s belonging to the {@code TransportUnitType}
      */
     public Set<TransportUnit> getTransportUnits() {
         return this.transportUnits;
     }
 
     /**
-     * Assign a Set of {@link TransportUnit}s to the <code>TransportUnitType</code>. Already existing {@link TransportUnit}s will be
-     * removed.
-     * 
-     * @param transportUnits
-     *            A Set of {@link TransportUnit}s.
+     * Assign a Set of {@link TransportUnit}s to the {@code TransportUnitType}. Already existing {@link TransportUnit}s will be removed.
+     *
+     * @param transportUnits A Set of {@link TransportUnit}s.
      */
-    public void setTransportUnits(Set<TransportUnit> transportUnits) {
+    private void setTransportUnits(Set<TransportUnit> transportUnits) {
         this.transportUnits = transportUnits;
     }
 
     /**
-     * Add a rule to the <code>TransportUnitType</code>. A {@link TypePlacingRule} determines what <code>TransportUnitType</code>s can be
-     * placed on which locations.
-     * 
-     * @param typePlacingRule
-     *            The rule to set
-     * @return <code>true</code> when the rule was added gracefully, otherwise <code>false</code>
+     * Add a rule to the {@code TransportUnitType}. A {@link TypePlacingRule} determines what {@code TransportUnitType}s can be placed on
+     * which locations.
+     *
+     * @param typePlacingRule The rule to set
+     * @return {@literal true} when the rule was added gracefully, otherwise {@literal false}
      */
     public boolean addTypePlacingRule(TypePlacingRule typePlacingRule) {
-        if (typePlacingRule == null) {
-            return false;
-        }
+        Assert.notNull(typePlacingRule, "typePlacingRule to add is null, this: " + this);
         return this.typePlacingRules.add(typePlacingRule);
     }
 
     /**
      * Remove a {@link TypePlacingRule} from the collection or rules.
-     * 
-     * @param typePlacingRule
-     *            The rule to be removed
-     * @return <code>true</code> when the rule was removed gracefully, otherwise <code>false</code>
+     *
+     * @param typePlacingRule The rule to be removed
+     * @return {@literal true} when the rule was removed gracefully, otherwise {@literal false}
      */
     public boolean removeTypePlacingRule(TypePlacingRule typePlacingRule) {
-        if (typePlacingRule == null) {
-            return false;
-        }
+        Assert.notNull(typePlacingRule, "typePlacingRule to remove is null, this: " + this);
         return this.typePlacingRules.remove(typePlacingRule);
     }
 
     /**
-     * Returns all {@link TypePlacingRule}s belonging to the <code>TransportUnitType</code>.
-     * 
+     * Returns all {@link TypePlacingRule}s belonging to the {@code TransportUnitType}.
+     *
      * @return A Set of all placing rules
      */
     public Set<TypePlacingRule> getTypePlacingRules() {
@@ -401,20 +324,19 @@ public class TransportUnitType extends AbstractEntity<Long> implements DomainObj
     }
 
     /**
-     * Assign a Set of {@link TypePlacingRule}s to the <code>TransportUnitType</code>. Already existing {@link TypePlacingRule}s will be
+     * Assign a Set of {@link TypePlacingRule}s to the {@code TransportUnitType}. Already existing {@link TypePlacingRule}s will be
      * removed.
-     * 
-     * @param typePlacingRules
-     *            The rules to set
+     *
+     * @param typePlacingRules The rules to set
      */
-    public void setTypePlacingRules(Set<TypePlacingRule> typePlacingRules) {
+    private void setTypePlacingRules(Set<TypePlacingRule> typePlacingRules) {
         this.typePlacingRules = typePlacingRules;
     }
 
     /**
-     * Returns a Set of all {@link TypeStackingRule}s. A {@link TypeStackingRule} determines which other <code>TransportUnitType</code>s can
-     * be placed on the <code>TransportUnitType</code>.
-     * 
+     * Returns a Set of all {@link TypeStackingRule}s. A {@link TypeStackingRule} determines which other {@code TransportUnitType}s can be
+     * placed on the {@code TransportUnitType}.
+     *
      * @return A Set of all stacking rules
      */
     public Set<TypeStackingRule> getTypeStackingRules() {
@@ -422,19 +344,18 @@ public class TransportUnitType extends AbstractEntity<Long> implements DomainObj
     }
 
     /**
-     * Assign a Set of {@link TypeStackingRule}s. A {@link TypeStackingRule} determines which <code>TransportUnitType</code>s can be placed
-     * on the <code>TransportUnitType</code>. Already existing {@link TypeStackingRule} s will be removed.
-     * 
-     * @param typeStackingRules
-     *            The rules to set
+     * Assign a Set of {@link TypeStackingRule}s. A {@link TypeStackingRule} determines which {@code TransportUnitType}s can be placed on
+     * the {@code TransportUnitType}. Already existing {@link TypeStackingRule} s will be removed.
+     *
+     * @param typeStackingRules The rules to set
      */
-    public void setTypeStackingRules(Set<TypeStackingRule> typeStackingRules) {
+    private void setTypeStackingRules(Set<TypeStackingRule> typeStackingRules) {
         this.typeStackingRules = typeStackingRules;
     }
 
     /**
      * Get the weightTare.
-     * 
+     *
      * @return The weightTare.
      */
     public BigDecimal getWeightTare() {
@@ -443,9 +364,8 @@ public class TransportUnitType extends AbstractEntity<Long> implements DomainObj
 
     /**
      * Set the weightTare.
-     * 
-     * @param weightTare
-     *            The weightTare to set.
+     *
+     * @param weightTare The weightTare to set.
      */
     public void setWeightTare(BigDecimal weightTare) {
         this.weightTare = weightTare;
@@ -453,7 +373,7 @@ public class TransportUnitType extends AbstractEntity<Long> implements DomainObj
 
     /**
      * Get the weightMax.
-     * 
+     *
      * @return The weightMax.
      */
     public BigDecimal getWeightMax() {
@@ -462,30 +382,174 @@ public class TransportUnitType extends AbstractEntity<Long> implements DomainObj
 
     /**
      * Set the weightMax.
-     * 
-     * @param weightMax
-     *            The weightMax to set.
+     *
+     * @param weightMax The weightMax to set.
      */
     public void setWeightMax(BigDecimal weightMax) {
         this.weightMax = weightMax;
     }
 
     /**
-     * {@inheritDoc}
-     */
-    @Override
-    public long getVersion() {
-        return this.version;
-    }
-
-    /**
      * Returns the type.
-     * 
-     * @see java.lang.Object#toString()
+     *
      * @return as String
+     * @see Object#toString()
      */
     @Override
     public String toString() {
         return this.type;
+    }
+
+    /**
+     * {@code TransportUnitType} builder static inner class.
+     */
+    public static final class Builder {
+
+        private String type;
+        private String description;
+        private int length;
+        private int width;
+        private int height;
+        private BigDecimal weightTare;
+        private BigDecimal weightMax;
+        private BigDecimal payload;
+        private String compatibility;
+        private Set<TransportUnit> transportUnits;
+        private Set<TypeStackingRule> typeStackingRules;
+        private Set<TypePlacingRule> typePlacingRules;
+
+        private Builder(String type) {
+            this.type = type;
+        }
+
+        /**
+         * Sets the {@code description} and returns a reference to this Builder so that the methods can be chained together.
+         *
+         * @param val the {@code description} to set
+         * @return a reference to this Builder
+         */
+        public Builder description(String val) {
+            description = val;
+            return this;
+        }
+
+        /**
+         * Sets the {@code length} and returns a reference to this Builder so that the methods can be chained together.
+         *
+         * @param val the {@code length} to set
+         * @return a reference to this Builder
+         */
+        public Builder length(int val) {
+            length = val;
+            return this;
+        }
+
+        /**
+         * Sets the {@code width} and returns a reference to this Builder so that the methods can be chained together.
+         *
+         * @param val the {@code width} to set
+         * @return a reference to this Builder
+         */
+        public Builder width(int val) {
+            width = val;
+            return this;
+        }
+
+        /**
+         * Sets the {@code height} and returns a reference to this Builder so that the methods can be chained together.
+         *
+         * @param val the {@code height} to set
+         * @return a reference to this Builder
+         */
+        public Builder height(int val) {
+            height = val;
+            return this;
+        }
+
+        /**
+         * Sets the {@code weightTare} and returns a reference to this Builder so that the methods can be chained together.
+         *
+         * @param val the {@code weightTare} to set
+         * @return a reference to this Builder
+         */
+        public Builder weightTare(BigDecimal val) {
+            weightTare = val;
+            return this;
+        }
+
+        /**
+         * Sets the {@code weightMax} and returns a reference to this Builder so that the methods can be chained together.
+         *
+         * @param val the {@code weightMax} to set
+         * @return a reference to this Builder
+         */
+        public Builder weightMax(BigDecimal val) {
+            weightMax = val;
+            return this;
+        }
+
+        /**
+         * Sets the {@code payload} and returns a reference to this Builder so that the methods can be chained together.
+         *
+         * @param val the {@code payload} to set
+         * @return a reference to this Builder
+         */
+        public Builder payload(BigDecimal val) {
+            payload = val;
+            return this;
+        }
+
+        /**
+         * Sets the {@code compatibility} and returns a reference to this Builder so that the methods can be chained together.
+         *
+         * @param val the {@code compatibility} to set
+         * @return a reference to this Builder
+         */
+        public Builder compatibility(String val) {
+            compatibility = val;
+            return this;
+        }
+
+        /**
+         * Sets the {@code transportUnits} and returns a reference to this Builder so that the methods can be chained together.
+         *
+         * @param val the {@code transportUnits} to set
+         * @return a reference to this Builder
+         */
+        public Builder transportUnits(Set<TransportUnit> val) {
+            transportUnits = val;
+            return this;
+        }
+
+        /**
+         * Sets the {@code typeStackingRules} and returns a reference to this Builder so that the methods can be chained together.
+         *
+         * @param val the {@code typeStackingRules} to set
+         * @return a reference to this Builder
+         */
+        public Builder typeStackingRules(Set<TypeStackingRule> val) {
+            typeStackingRules = val;
+            return this;
+        }
+
+        /**
+         * Sets the {@code typePlacingRules} and returns a reference to this Builder so that the methods can be chained together.
+         *
+         * @param val the {@code typePlacingRules} to set
+         * @return a reference to this Builder
+         */
+        public Builder typePlacingRules(Set<TypePlacingRule> val) {
+            typePlacingRules = val;
+            return this;
+        }
+
+        /**
+         * Returns a {@code TransportUnitType} built from the parameters previously set.
+         *
+         * @return a {@code TransportUnitType} built with parameters of this {@code TransportUnitType.Builder}
+         */
+        public TransportUnitType build() {
+            return new TransportUnitType(this);
+        }
     }
 }

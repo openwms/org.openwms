@@ -53,11 +53,9 @@ public class LocationTypeIT {
     public final
     @Test
     void testUniqueConstraint() {
-        LocationType lt = new LocationType("conveyor");
-        repository.save(lt);
-        LocationType lt2 = new LocationType("conveyor");
+        repository.save(new LocationType("conveyor"));
 
         thrown.expect(DataIntegrityViolationException.class);
-        repository.save(lt2);
+        repository.save(new LocationType("conveyor"));
     }
 }
