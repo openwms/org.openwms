@@ -34,9 +34,6 @@ import org.junit.Test;
  */
 public class MessageTest {
 
-    /**
-     * Test construction and initialization of a Message object.
-     */
     public
     @Test
     final void testConstruction() {
@@ -44,5 +41,39 @@ public class MessageTest {
         assertThat(m.getMessageText()).isEqualTo("Test message");
         assertThat(m.getMessageNo()).isEqualTo(4711);
         assertThat(m).isEqualTo((new Message(4711, "Test message")));
+    }
+
+    public
+    @Test
+    final void testConstructionWithBuilder() {
+        Message m = Message.newBuilder().messageNo(4711).messageText("Test message").build();
+        assertThat(m.getMessageText()).isEqualTo("Test message");
+        assertThat(m.getMessageNo()).isEqualTo(4711);
+        assertThat(m).isEqualTo((new Message(4711, "Test message")));
+    }
+
+    public
+    @Test
+    final void testEqualityLight() {
+        Message m1 = Message.newBuilder().messageNo(4711).messageText("Test message").build();
+        Message m2 = Message.newBuilder().messageNo(4711).messageText("Test message").build();
+        Message m3 = Message.newBuilder().messageNo(9999).messageText("Test message").build();
+        Message m4 = Message.newBuilder().messageNo(4711).messageText("Error message").build();
+
+        assertThat(m1).isEqualTo(m2);
+        assertThat(m2).isEqualTo(m1);
+
+        assertThat(m1).isNotEqualTo(m3);
+        assertThat(m1).isNotEqualTo(m4);
+
+        assertThat(m3).isNotEqualTo(m4);
+        assertThat(m4).isNotEqualTo(m3);
+    }
+
+    public
+    @Test
+    final void testProperOutcomeOfToString() {
+        Message m1 = Message.newBuilder().messageNo(4711).messageText("Test message").build();
+        assertThat(m1.toString()).isEqualTo("4711" + Message.SEPARATOR + "Test message");
     }
 }

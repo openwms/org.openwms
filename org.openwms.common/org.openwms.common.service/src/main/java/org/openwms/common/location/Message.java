@@ -31,15 +31,17 @@ import org.ameba.integration.jpa.BaseEntity;
 
 /**
  * A Message can be used to store useful information about errors or events.
- * 
+ *
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  * @version 1.0
  * @since 0.1
  */
 @Entity
 @Table(name = "COR_MESSAGE")
-public class Message extends BaseEntity implements Serializable {
+class Message extends BaseEntity implements Serializable {
 
+    /** String used to separate messageNo and messageText in toString. */
+    public static final String SEPARATOR = " :: ";
     /** Message number. */
     @Column(name = "C_MESSAGE_NO")
     private int messageNo;
@@ -49,6 +51,7 @@ public class Message extends BaseEntity implements Serializable {
     private String messageText;
 
     /*~ ----------------------------- constructors ------------------- */
+
     /**
      * Dear JPA...
      */
@@ -57,11 +60,9 @@ public class Message extends BaseEntity implements Serializable {
 
     /**
      * Create a new {@code Message} with message number and message text.
-     * 
-     * @param messageNo
-     *            The message number
-     * @param messageText
-     *            The message text
+     *
+     * @param messageNo The message number
+     * @param messageText The message text
      */
     public Message(int messageNo, String messageText) {
         this.messageNo = messageNo;
@@ -73,14 +74,20 @@ public class Message extends BaseEntity implements Serializable {
         messageText = builder.messageText;
     }
 
+    /**
+     * Create a new builder instance to create messages from.
+     *
+     * @return The builder
+     */
     public static Builder newBuilder() {
         return new Builder();
     }
 
     /*~ ----------------------------- methods ------------------- */
+
     /**
      * Return the message number.
-     * 
+     *
      * @return The message number
      */
     public int getMessageNo() {
@@ -89,7 +96,7 @@ public class Message extends BaseEntity implements Serializable {
 
     /**
      * Return the message text.
-     * 
+     *
      * @return The message text
      */
     public String getMessageText() {
@@ -121,7 +128,7 @@ public class Message extends BaseEntity implements Serializable {
      */
     @Override
     public String toString() {
-        return messageNo+"::"+messageText;
+        return messageNo + SEPARATOR + messageText;
     }
 
 
