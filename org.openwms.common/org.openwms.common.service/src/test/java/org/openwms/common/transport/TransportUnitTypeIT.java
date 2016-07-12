@@ -57,9 +57,9 @@ public class TransportUnitTypeIT {
     public final
     @Test
     void testUniqueConstraint() {
-        repository.save(TransportUnitType.create("TUT1"));
+        repository.save(ObjectFactory.createTransportUnitType("TUT1"));
         thrown.expect(DataIntegrityViolationException.class);
-        repository.save(TransportUnitType.create("TUT1"));
+        repository.save(ObjectFactory.createTransportUnitType("TUT1"));
     }
 
     public final
@@ -69,7 +69,7 @@ public class TransportUnitTypeIT {
         entityManager.persist(locationType);
         entityManager.flush();
 
-        TransportUnitType cartonType = TransportUnitType.create("Carton Type");
+        TransportUnitType cartonType = ObjectFactory.createTransportUnitType("Carton Type");
         TypePlacingRule typePlacingRule = new TypePlacingRule(cartonType, locationType, 1);
         cartonType.addTypePlacingRule(typePlacingRule);
         cartonType = entityManager.merge(cartonType);
@@ -90,7 +90,7 @@ public class TransportUnitTypeIT {
         entityManager.persist(locationType);
         entityManager.flush();
 
-        TransportUnitType cartonType = TransportUnitType.create("Carton Type");
+        TransportUnitType cartonType = ObjectFactory.createTransportUnitType("Carton Type");
         TypePlacingRule typePlacingRule = new TypePlacingRule(cartonType, locationType, 1);
         cartonType.addTypePlacingRule(typePlacingRule);
         cartonType = entityManager.merge(cartonType);

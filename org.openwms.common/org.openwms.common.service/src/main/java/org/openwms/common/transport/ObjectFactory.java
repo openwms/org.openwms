@@ -22,13 +22,36 @@
 package org.openwms.common.transport;
 
 /**
- * A Rule used as marker interface.
- * 
- * @GlossaryTerm
+ * A ObjectFactory.
+ *
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  * @version 1.0
- * @since 0.1
+ * @since 1.0
  */
-public interface Rule {
+public class ObjectFactory {
 
+
+    public static Barcode createBarcode(String barcodeId) {
+        return new Barcode(barcodeId);
+    }
+
+    /**
+     * Create a new TransportUnit with the unique id {@code unitId}.
+     *
+     * @param unitId The unique id of the Barcode
+     * @return The instance
+     */
+    public static TransportUnit createTransportUnit(String unitId) {
+        return new TransportUnit(unitId);
+    }
+
+    /**
+     * Factory method to create a new TransportUnitType.
+     *
+     * @param type The business key
+     * @return The instance
+     */
+    public static TransportUnitType createTransportUnitType(String type) {
+        return new TransportUnitType((type));
+    }
 }

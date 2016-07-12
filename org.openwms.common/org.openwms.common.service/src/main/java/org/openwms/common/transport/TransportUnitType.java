@@ -49,7 +49,7 @@ import org.springframework.util.Assert;
  */
 @Entity
 @Table(name = "COM_TRANSPORT_UNIT_TYPE")
-public class TransportUnitType extends BaseEntity implements Serializable {
+class TransportUnitType extends BaseEntity implements Serializable {
 
     /** Unique natural key. */
     @Column(name = "C_TYPE", unique = true, nullable = false)
@@ -125,19 +125,9 @@ public class TransportUnitType extends BaseEntity implements Serializable {
      *
      * @param type Unique name
      */
-    private TransportUnitType(String type) {
+    TransportUnitType(String type) {
         Assert.hasText(type);
         this.type = type;
-    }
-
-    /**
-     * Factory method to create a new TransportUnitType.
-     *
-     * @param type The business key
-     * @return The instance
-     */
-    public static TransportUnitType create(String type) {
-        return new TransportUnitType((type));
     }
 
     private TransportUnitType(Builder builder) {

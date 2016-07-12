@@ -35,7 +35,7 @@ import org.openwms.common.location.LocationPK;
  * @version $Revision$
  * @since 0.1
  */
-public interface TransportUnitService<T extends TransportUnit> {
+interface TransportUnitService<T extends TransportUnit> {
 
     /**
      * Create a new {@link TransportUnit} with the type {@link TransportUnitType} placed on an initial <code>Location</code>. The new

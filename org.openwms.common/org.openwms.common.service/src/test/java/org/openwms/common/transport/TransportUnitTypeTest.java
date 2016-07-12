@@ -43,20 +43,20 @@ public class TransportUnitTypeTest {
     @Test
     void testCreationWithNull() {
         thrown.expect(IllegalArgumentException.class);
-        TransportUnitType.create(null);
+        ObjectFactory.createTransportUnitType(null);
     }
 
     public final
     @Test
     void testCreationWithEmpty() {
         thrown.expect(IllegalArgumentException.class);
-        TransportUnitType.create("");
+        ObjectFactory.createTransportUnitType("");
     }
 
     public final
     @Test
     void testDefaultValues() {
-        TransportUnitType tut = TransportUnitType.create("tut");
+        TransportUnitType tut = ObjectFactory.createTransportUnitType("tut");
         assertThat(tut.getDescription()).isEqualTo(TransportUnitType.DEF_TYPE_DESCRIPTION);
         assertThat(tut.getLength()).isEqualTo(TransportUnitType.DEF_LENGTH);
         assertThat(tut.getHeight()).isEqualTo(TransportUnitType.DEF_HEIGHT);
@@ -70,7 +70,7 @@ public class TransportUnitTypeTest {
     @Test
     void testPlacingRuleHandling() {
         LocationType locationType = new LocationType("conveyor");
-        TransportUnitType tut = TransportUnitType.create("tut");
+        TransportUnitType tut = ObjectFactory.createTransportUnitType("tut");
         TypePlacingRule typePlacingRule = new TypePlacingRule(tut, locationType, 1);
 
         tut.addTypePlacingRule(typePlacingRule);

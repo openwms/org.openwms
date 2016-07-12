@@ -47,10 +47,10 @@ import org.springframework.util.Assert;
 @Entity
 @Table(name = "COM_TYPE_PLACING_RULE", uniqueConstraints = @UniqueConstraint(columnNames = {"C_TUT_ID",
         "C_PRIVILEGE_LEVEL", "C_ALLOWED_LOCATION_TYPE"}))
-public class TypePlacingRule extends BaseEntity implements Serializable, Rule {
+class TypePlacingRule extends BaseEntity implements Serializable, Rule {
 
     /** To separate fields in toString method. */
-    public static final String SEPARATOR = "::";
+    static final String SEPARATOR = "::";
     /** Parent {@link TransportUnitType} (not-null). */
     @ManyToOne
     @JoinColumn(name = "C_TUT_ID", nullable = false)
@@ -65,7 +65,7 @@ public class TypePlacingRule extends BaseEntity implements Serializable, Rule {
     @Column(name = "C_PRIVILEGE_LEVEL", nullable = false)
     private int privilegeLevel = DEF_PRIVILEGE_LEVEL;
     /** Default value of {@link #privilegeLevel}. */
-    public static final int DEF_PRIVILEGE_LEVEL = 0;
+    static final int DEF_PRIVILEGE_LEVEL = 0;
 
     /** An allowed {@link LocationType} on which the owning {@link TransportUnitType} may be placed (not-null). */
     @ManyToOne
@@ -85,7 +85,7 @@ public class TypePlacingRule extends BaseEntity implements Serializable, Rule {
      * @param allowedLocationType The allowed {@link LocationType}
      * @param privilegeLevel The privilege level
      */
-    public TypePlacingRule(TransportUnitType transportUnitType, LocationType allowedLocationType, int privilegeLevel) {
+    TypePlacingRule(TransportUnitType transportUnitType, LocationType allowedLocationType, int privilegeLevel) {
         Assert.notNull(transportUnitType);
         Assert.notNull(allowedLocationType);
         this.transportUnitType = transportUnitType;
@@ -99,7 +99,7 @@ public class TypePlacingRule extends BaseEntity implements Serializable, Rule {
      * @param transportUnitType The {@link TransportUnitType} for this rule
      * @param allowedLocationType The allowed {@link LocationType}
      */
-    public TypePlacingRule(TransportUnitType transportUnitType, LocationType allowedLocationType) {
+    TypePlacingRule(TransportUnitType transportUnitType, LocationType allowedLocationType) {
         Assert.notNull(transportUnitType);
         Assert.notNull(allowedLocationType);
         this.transportUnitType = transportUnitType;

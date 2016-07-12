@@ -22,28 +22,22 @@
 package org.openwms.common.transport;
 
 /**
- * A TransportUnitState defines a set of states for <code>TransportUnit</code>s.
+ * A TransportUnitState defines a set of states for {@code TransportUnit}s.
  * 
  * @GlossaryTerm
  * @author <a href="mailto:russelltina@users.sourceforge.net">Tina Russell</a>
- * @version $Revision$
+ * @version 1.0
  * @since 0.1
  * @see TransportUnit
  */
-public enum TransportUnitState {
+enum TransportUnitState {
 
-    /**
-     * The <code>TransportUnit</code> is available.
-     */
+    /** The {@code TransportUnit} is available. */
     AVAILABLE,
 
-    /**
-     * The <code>TransportUnit</code> is okay.
-     */
+    /** The {@code TransportUnit} is okay. */
     OK,
 
-    /**
-     * The <code>TransportUnit</code> is not okay.
-     */
+    /** The {@code TransportUnit} is not okay. */
     NOT_OK
 }
