@@ -85,7 +85,7 @@ class LocationServiceImpl implements LocationService<Location> {
     /**
      * {@inheritDoc}
      * <p>
-     * If the <code>locationType</code> is a transient one, it will be persisted otherwise saved.
+     * If the {@code locationType} is a transient one, it will be persisted otherwise saved.
      */
     @Override
     public void createLocationType(LocationType locationType) {
@@ -104,7 +104,7 @@ class LocationServiceImpl implements LocationService<Location> {
     @Override
     public void deleteLocationTypes(List<LocationType> locationTypes) {
         for (LocationType locationType : locationTypes) {
-            LocationType lt = locationTypeRepository.findOne(locationType.getId());
+            LocationType lt = locationTypeRepository.findOne(locationType.getPk());
             locationTypeRepository.delete(lt);
         }
     }

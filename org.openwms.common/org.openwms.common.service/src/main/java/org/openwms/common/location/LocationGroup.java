@@ -53,7 +53,7 @@ import org.springframework.util.Assert;
 public class LocationGroup extends Target implements Serializable {
 
     /** Unique identifier of a {@code LocationGroup}. */
-    @Column(name = "C_NAME", unique = true)
+    @Column(name = "C_NAME", unique = true, nullable = false)
     private String name;
 
     /** Description for the {@code LocationGroup}. */

@@ -23,138 +23,94 @@ package org.openwms.common.transport;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
-import javax.persistence.Version;
+import java.io.Serializable;
+import java.util.Objects;
 
+import org.ameba.integration.jpa.BaseEntity;
 import org.openwms.common.location.LocationType;
-import org.openwms.core.AbstractEntity;
-import org.openwms.core.DomainObject;
+import org.springframework.util.Assert;
 
 /**
- * A TypePlacingRule is a <code>Rule</code> that defines which types of <code>TransportUnit</code>s (<code>TransportUnitType</code>s) can be
- * put on which type of <code>Location</code> (<code>LocationType</code>).
- * <p>
- * A privilegeLevel is defined to order a list of allowed <code>LocationType</code>s.
- * </p>
- * 
- * @GlossaryTerm
+ * A TypePlacingRule is a {@code Rule} that defines which types of {@code TransportUnit}s ({@code TransportUnitType}s) can be put on which
+ * type of {@code Location} ({@code LocationType}). <p> A privilegeLevel is defined to order a list of allowed {@code LocationType}s. </p>
+ *
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
- * @version $Revision$
+ * @version 1.0
+ * @GlossaryTerm
+ * @see TransportUnitType
  * @since 0.1
- * @see org.openwms.common.domain.TransportUnitType
  */
 @Entity
-@Table(name = "COM_TYPE_PLACING_RULE", uniqueConstraints = @UniqueConstraint(columnNames = { "TRANSPORT_UNIT_TYPE",
-        "PRIVILEGE_LEVEL", "ALLOWED_LOCATION_TYPE" }))
-public class TypePlacingRule extends AbstractEntity<Long> implements DomainObject<Long>, Rule {
+@Table(name = "COM_TYPE_PLACING_RULE", uniqueConstraints = @UniqueConstraint(columnNames = {"C_TUT_ID",
+        "C_PRIVILEGE_LEVEL", "C_ALLOWED_LOCATION_TYPE"}))
+public class TypePlacingRule extends BaseEntity implements Serializable, Rule {
 
-    private static final long serialVersionUID = 9095722886493210159L;
-
-    /**
-     * Unique technical key.
-     */
-    @Id
-    @Column(name = "ID")
-    @GeneratedValue
-    private Long id;
-
-    /**
-     * Parent {@link TransportUnitType} (not-null).
-     */
+    /** To separate fields in toString method. */
+    public static final String SEPARATOR = "::";
+    /** Parent {@link TransportUnitType} (not-null). */
     @ManyToOne
-    @JoinColumn(name = "TRANSPORT_UNIT_TYPE", nullable = false)
+    @JoinColumn(name = "C_TUT_ID", nullable = false)
     private TransportUnitType transportUnitType;
 
     /**
-     * The privilegeLevel defines a priority to describe which {@link TransportUnitType} can be placed on which {@link LocationType}.
-     * <p>
-     * A value of 0 means the lowest priority. Increasing the privilegeLevel implies a higher priority and means the
-     * {@link TransportUnitType} can be placed to the {@link LocationType} with the highest privilegeLevel.
-     * </p>
-     * <p>
-     * To forbid a {@link TransportUnitType} on a certain {@link LocationType} the privilegeLevel must be set to -1.
-     * </p>
-     * (not-null)
+     * The privilegeLevel defines a priority to describe which {@link TransportUnitType} can be placed on which {@link LocationType}. <p> A
+     * value of 0 means the lowest priority. Increasing the privilegeLevel implies a higher priority and means the {@link TransportUnitType}
+     * can be placed to the {@link LocationType} with the highest privilegeLevel. </p> <p> To forbid a {@link TransportUnitType} on a
+     * certain {@link LocationType} the privilegeLevel must be set to -1. </p> (not-null)
      */
-    @Column(name = "PRIVILEGE_LEVEL", nullable = false)
-    private int privilegeLevel = 0;
+    @Column(name = "C_PRIVILEGE_LEVEL", nullable = false)
+    private int privilegeLevel = DEF_PRIVILEGE_LEVEL;
+    /** Default value of {@link #privilegeLevel}. */
+    public static final int DEF_PRIVILEGE_LEVEL = 0;
 
-    /**
-     * An allowed {@link LocationType} on which the owning {@link TransportUnitType} may be placed (not-null).
-     */
+    /** An allowed {@link LocationType} on which the owning {@link TransportUnitType} may be placed (not-null). */
     @ManyToOne
-    @JoinColumn(name = "ALLOWED_LOCATION_TYPE", nullable = false)
+    @JoinColumn(name = "C_ALLOWED_LOCATION_TYPE", nullable = false)
     private LocationType allowedLocationType;
 
-    /**
-     * Version field.
-     */
-    @Version
-    @Column(name = "C_VERSION")
-    private long version;
+    /*~ ----------------------------- constructors ------------------- */
 
-    /* ----------------------------- methods ------------------- */
-    /**
-     * Create a new <code>TypePlacingRule</code>.
-     */
-    @SuppressWarnings("unused")
-    private TypePlacingRule() {
-        super();
+    /** Dear JPA... */
+    protected TypePlacingRule() {
     }
 
     /**
-     * Create a new <code>TypePlacingRule</code> with privilegeLevel and allowedLocationType.
-     * 
-     * @param transportUnitType
-     *            The {@link TransportUnitType} for this rule
-     * @param allowedLocationType
-     *            The allowed {@link LocationType}
-     * @param privilegeLevel
-     *            The privilege level
+     * Create a new {@code TypePlacingRule} with privilegeLevel and allowedLocationType.
+     *
+     * @param transportUnitType The {@link TransportUnitType} for this rule
+     * @param allowedLocationType The allowed {@link LocationType}
+     * @param privilegeLevel The privilege level
      */
     public TypePlacingRule(TransportUnitType transportUnitType, LocationType allowedLocationType, int privilegeLevel) {
+        Assert.notNull(transportUnitType);
+        Assert.notNull(allowedLocationType);
         this.transportUnitType = transportUnitType;
         this.allowedLocationType = allowedLocationType;
         this.privilegeLevel = privilegeLevel;
     }
 
     /**
-     * Create a new <code>TypePlacingRule</code> with allowedLocationType.
-     * 
-     * @param transportUnitType
-     *            The {@link TransportUnitType} for this rule
-     * @param allowedLocationType
-     *            The allowed {@link LocationType}
+     * Create a new {@code TypePlacingRule} with allowedLocationType.
+     *
+     * @param transportUnitType The {@link TransportUnitType} for this rule
+     * @param allowedLocationType The allowed {@link LocationType}
      */
     public TypePlacingRule(TransportUnitType transportUnitType, LocationType allowedLocationType) {
+        Assert.notNull(transportUnitType);
+        Assert.notNull(allowedLocationType);
         this.transportUnitType = transportUnitType;
         this.allowedLocationType = allowedLocationType;
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public Long getId() {
-        return id;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public boolean isNew() {
-        return this.id == null;
-    }
+    /*~ ----------------------------- methods ------------------- */
 
     /**
      * Get the transportUnitType.
-     * 
+     *
      * @return The transportUnitType.
      */
     public TransportUnitType getTransportUnitType() {
@@ -163,7 +119,7 @@ public class TypePlacingRule extends AbstractEntity<Long> implements DomainObjec
 
     /**
      * Get the privilegeLevel.
-     * 
+     *
      * @return The privilegeLevel.
      */
     public int getPrivilegeLevel() {
@@ -172,9 +128,8 @@ public class TypePlacingRule extends AbstractEntity<Long> implements DomainObjec
 
     /**
      * Set the privilegeLevel.
-     * 
-     * @param privilegeLevel
-     *            The level to set
+     *
+     * @param privilegeLevel The level to set
      */
     public void setPrivilegeLevel(int privilegeLevel) {
         this.privilegeLevel = privilegeLevel;
@@ -182,7 +137,7 @@ public class TypePlacingRule extends AbstractEntity<Long> implements DomainObjec
 
     /**
      * Get the allowedLocationType.
-     * 
+     *
      * @return The allowedLocationType.
      */
     public LocationType getAllowedLocationType() {
@@ -193,7 +148,28 @@ public class TypePlacingRule extends AbstractEntity<Long> implements DomainObjec
      * {@inheritDoc}
      */
     @Override
-    public long getVersion() {
-        return this.version;
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        TypePlacingRule that = (TypePlacingRule) o;
+        return privilegeLevel == that.privilegeLevel &&
+                Objects.equals(transportUnitType, that.transportUnitType) &&
+                Objects.equals(allowedLocationType, that.allowedLocationType);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public int hashCode() {
+        return Objects.hash(transportUnitType, privilegeLevel, allowedLocationType);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public String toString() {
+        return privilegeLevel + SEPARATOR + transportUnitType + SEPARATOR + allowedLocationType;
     }
 }

@@ -21,7 +21,6 @@
  */
 package org.openwms.common.location;
 
-import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
@@ -33,7 +32,7 @@ import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.test.context.junit4.SpringRunner;
 
 /**
- * A LocationGroupIT.
+ * A LocationIT.
  *
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  * @version 1.0
@@ -41,36 +40,25 @@ import org.springframework.test.context.junit4.SpringRunner;
  */
 @RunWith(SpringRunner.class)
 @IntegrationTest
-public class LocationGroupIT {
+public class LocationIT {
 
     @Rule
     public ExpectedException thrown = ExpectedException.none();
 
-    private static final String KNOWN_LG = "KNOWN";
-    private LocationGroup knownLG;
     @Autowired
     private TestEntityManager entityManager;
     @Autowired
-    private LocationGroupRepository repository;
-
-    /**
-     * Setup data.
-     */
-    @Before
-    public void onBefore() {
-        knownLG = new LocationGroup(KNOWN_LG);
-        entityManager.persist(knownLG);
-        entityManager.flush();
-        entityManager.clear();
-    }
-
+    private LocationRepository repository;
 
     /**
      * Creating two groups with same id must fail.
      */
     @Test
     public final void testNameConstraint() {
+        Location loc1 = new Location(LocationPK.newBuilder().area("area").aisle("aisle").x("x").y("y").z("z").build());
+        repository.save(loc1);
+        Location loc2 = new Location(LocationPK.newBuilder().area("area").aisle("aisle").x("x").y("y").z("z").build());
         thrown.expect(DataIntegrityViolationException.class);
-        repository.save(new LocationGroup(KNOWN_LG));
+        repository.save(loc2);
     }
 }
