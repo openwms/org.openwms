@@ -30,6 +30,7 @@ import javax.persistence.Table;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.HashSet;
+import java.util.Objects;
 import java.util.Set;
 
 import org.ameba.integration.jpa.BaseEntity;
@@ -108,7 +109,7 @@ public class TransportUnitType extends BaseEntity implements Serializable {
     private Set<TypeStackingRule> typeStackingRules = new HashSet<>();
 
     /** A Set of {@link TypePlacingRule}s store all possible {@code LocationType} s of the {@code TransportUnitType}. */
-    @OneToMany(mappedBy = "transportUnitType", cascade = {CascadeType.ALL})
+    @OneToMany(mappedBy = "transportUnitType", cascade = {CascadeType.PERSIST, CascadeType.MERGE}, orphanRemoval = true)
     private Set<TypePlacingRule> typePlacingRules = new HashSet<>();
 
     /*~ ----------------------------- constructors ------------------- */
@@ -310,7 +311,7 @@ public class TransportUnitType extends BaseEntity implements Serializable {
      */
     public boolean addTypePlacingRule(TypePlacingRule typePlacingRule) {
         Assert.notNull(typePlacingRule, "typePlacingRule to add is null, this: " + this);
-        return this.typePlacingRules.add(typePlacingRule);
+        return typePlacingRules.add(typePlacingRule);
     }
 
     /**
@@ -321,7 +322,7 @@ public class TransportUnitType extends BaseEntity implements Serializable {
      */
     public boolean removeTypePlacingRule(TypePlacingRule typePlacingRule) {
         Assert.notNull(typePlacingRule, "typePlacingRule to remove is null, this: " + this);
-        return this.typePlacingRules.remove(typePlacingRule);
+        return typePlacingRules.remove(typePlacingRule);
     }
 
     /**
@@ -408,6 +409,25 @@ public class TransportUnitType extends BaseEntity implements Serializable {
     @Override
     public String toString() {
         return this.type;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        TransportUnitType that = (TransportUnitType) o;
+        return Objects.equals(type, that.type);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public int hashCode() {
+        return Objects.hash(type);
     }
 
     /**

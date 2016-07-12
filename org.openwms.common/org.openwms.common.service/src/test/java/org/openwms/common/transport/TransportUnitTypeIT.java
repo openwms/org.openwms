@@ -21,9 +21,14 @@
  */
 package org.openwms.common.transport;
 
+import static org.assertj.core.api.Assertions.assertThat;
+
+import java.util.List;
+
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
 import org.junit.runner.RunWith;
+import org.openwms.common.location.LocationType;
 import org.openwms.core.test.IntegrationTest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
@@ -34,7 +39,7 @@ import org.springframework.test.context.junit4.SpringRunner;
  * A TransportUnitTypeTest.
  *
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
- * @version $Revision$
+ * @version 1.0
  * @since 0.1
  */
 @RunWith(SpringRunner.class)
@@ -57,29 +62,44 @@ public class TransportUnitTypeIT {
         repository.save(TransportUnitType.create("TUT1"));
     }
 
-    /**
-     * Test that removal a TUT with referenced Rules is not allowed.
-
+    public final
     @Test
-    @Ignore
-    public final void testCascadingTypePlacingRule() {
-        LocationType locationType = new LocationType("JU_LOC_TYPE");
+    void testCascadingTypePlacingRuleWithOrphan() {
+        LocationType locationType = new LocationType("conveyor");
         entityManager.persist(locationType);
+        entityManager.flush();
 
-        TypePlacingRule typePlacingRule = new TypePlacingRule(transportUnitType, locationType, 1);
-        transportUnitType.addTypePlacingRule(typePlacingRule);
-        transportUnitType = entityManager.merge(transportUnitType);
+        TransportUnitType cartonType = TransportUnitType.create("Carton Type");
+        TypePlacingRule typePlacingRule = new TypePlacingRule(cartonType, locationType, 1);
+        cartonType.addTypePlacingRule(typePlacingRule);
+        cartonType = entityManager.merge(cartonType);
 
-        TypePlacingRule tpr = entityManager.find(TypePlacingRule.class, Long.valueOf(1));
-        Assert.assertNotNull("TypePlacingRule should be cascade persisted", tpr);
+        List<TypePlacingRule> tpr = entityManager.getEntityManager().createQuery("select tpr from TypePlacingRule tpr", TypePlacingRule.class).getResultList();
+        assertThat(tpr).hasSize(1);
 
-        entityManager.remove(transportUnitType);
-        try {
-            transportUnitType = (TransportUnitType) entityManager.createNamedQuery(TransportUnitType.NQ_FIND_BY_NAME)
-                    .setParameter(1, "TUT1").getSingleResult();
-            Assert.assertNull("TransportUnitType is not allowed to be REMOVED before", transportUnitType);
-        } catch (PersistenceException pe) {
-            LOGGER.debug("OK:No Entity found, it was removed.");
-        }
-    }*/
+        cartonType.removeTypePlacingRule(typePlacingRule);
+        entityManager.merge(cartonType);
+        tpr = entityManager.getEntityManager().createQuery("select tpr from TypePlacingRule tpr", TypePlacingRule.class).getResultList();
+        assertThat(tpr).hasSize(0);
+    }
+
+    public final
+    @Test
+    void testCascadingTypePlacingRule() {
+        LocationType locationType = new LocationType("conveyor");
+        entityManager.persist(locationType);
+        entityManager.flush();
+
+        TransportUnitType cartonType = TransportUnitType.create("Carton Type");
+        TypePlacingRule typePlacingRule = new TypePlacingRule(cartonType, locationType, 1);
+        cartonType.addTypePlacingRule(typePlacingRule);
+        cartonType = entityManager.merge(cartonType);
+
+        List<TypePlacingRule> tpr = entityManager.getEntityManager().createQuery("select tpr from TypePlacingRule tpr", TypePlacingRule.class).getResultList();
+        assertThat(tpr).hasSize(1);
+
+        entityManager.remove(cartonType);
+        tpr = entityManager.getEntityManager().createQuery("select tpr from TypePlacingRule tpr", TypePlacingRule.class).getResultList();
+        assertThat(tpr).hasSize(0);
+    }
 }

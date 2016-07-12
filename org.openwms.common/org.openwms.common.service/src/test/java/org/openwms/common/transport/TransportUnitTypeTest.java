@@ -21,8 +21,11 @@
  */
 package org.openwms.common.transport;
 
+import static org.assertj.core.api.Assertions.assertThat;
+
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
+import org.openwms.common.location.LocationType;
 
 /**
  * A TransportUnitTypeTest.
@@ -48,5 +51,32 @@ public class TransportUnitTypeTest {
     void testCreationWithEmpty() {
         thrown.expect(IllegalArgumentException.class);
         TransportUnitType.create("");
+    }
+
+    public final
+    @Test
+    void testDefaultValues() {
+        TransportUnitType tut = TransportUnitType.create("tut");
+        assertThat(tut.getDescription()).isEqualTo(TransportUnitType.DEF_TYPE_DESCRIPTION);
+        assertThat(tut.getLength()).isEqualTo(TransportUnitType.DEF_LENGTH);
+        assertThat(tut.getHeight()).isEqualTo(TransportUnitType.DEF_HEIGHT);
+        assertThat(tut.getWidth()).isEqualTo(TransportUnitType.DEF_WIDTH);
+        assertThat(tut.getTransportUnits()).hasSize(0);
+        assertThat(tut.getTypePlacingRules()).hasSize(0);
+        assertThat(tut.getTypeStackingRules()).hasSize(0);
+    }
+
+    public final
+    @Test
+    void testPlacingRuleHandling() {
+        LocationType locationType = new LocationType("conveyor");
+        TransportUnitType tut = TransportUnitType.create("tut");
+        TypePlacingRule typePlacingRule = new TypePlacingRule(tut, locationType, 1);
+
+        tut.addTypePlacingRule(typePlacingRule);
+        assertThat(tut.getTypePlacingRules()).hasSize(1).contains(typePlacingRule);
+
+        tut.removeTypePlacingRule(typePlacingRule);
+        assertThat(tut.getTypePlacingRules()).hasSize(0);
     }
 }
