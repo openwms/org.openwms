@@ -45,7 +45,6 @@ import java.util.Objects;
 import java.util.Set;
 
 import org.ameba.integration.jpa.BaseEntity;
-import org.openwms.core.values.Message;
 import org.springframework.util.Assert;
 
 /**
@@ -77,30 +76,34 @@ public class Location extends BaseEntity implements Serializable {
     @Column(name = "C_DESCRIPTION")
     private String description;
 
-    /** Maximum number of {@code TransportUnit}s placed on this Location. */
+    /** Maximum number of {@code TransportUnit}s allowed on this Location. */
     @Column(name = "C_NO_MAX_TRANSPORT_UNITS")
-    private short noMaxTransportUnits = 1;
+    private int noMaxTransportUnits = DEF_MAX_TU;
+    /** Default value of {@link #noMaxTransportUnits}. */
+    public static final int DEF_MAX_TU = 1;
 
     /** Maximum allowed weight on this Location. */
     @Column(name = "C_MAXIMUM_WEIGHT")
     private BigDecimal maximumWeight;
 
     /**
-     * Date of last change. When a {@code TransportUnit} is moving to or away from this Location, {@code lastAccess} will be updated. This
+     * Date of last change. When a {@code TransportUnit} is moving to or away from this Location, {@code lastMovement} will be updated. This
      * is useful to get the history of {@code TransportUnit}s as well as for inventory calculation.
      */
     @Temporal(TemporalType.TIMESTAMP)
-    @Column(name = "C_LAST_ACCESS")
-    private Date lastAccess;
+    @Column(name = "C_LAST_MOVEMENT")
+    private Date lastMovement;
 
     /** Flag to indicate whether {@code TransportUnit}s should be counted on this Location or not. */
     @Column(name = "C_COUNTING_ACTIVE")
-    private boolean countingActive = false;
+    private boolean countingActive = DEF_COUNTING_ACTIVE;
+    /** Default value of {@link #countingActive}. */
+    public static final boolean DEF_COUNTING_ACTIVE = false;
 
     /** Reserved for stock check procedure and inventory calculation. */
     @Column(name = "C_CHECK_STATE")
     private String checkState = DEF_CHECK_STATE;
-    /** Default value of {@code Location#checkstate}. */
+    /** Default value of {@link #checkState}. */
     public static final String DEF_CHECK_STATE = "--";
 
     /**
@@ -109,7 +112,9 @@ public class Location extends BaseEntity implements Serializable {
      * calculation of {@code TransportUnit}s.</li></ul>
      */
     @Column(name = "C_LG_COUNTING_ACTIVE")
-    private boolean locationGroupCountingActive = false;
+    private boolean locationGroupCountingActive = DEF_LG_COUNTING_ACTIVE;
+    /** Default value of {@link #locationGroupCountingActive}. */
+    public static final boolean DEF_LG_COUNTING_ACTIVE = false;
 
     /**
      * Signals the incoming state of this Location. Locations which are blocked for incoming cannot pick up {@code TransportUnit}s.<ul>
@@ -117,7 +122,9 @@ public class Location extends BaseEntity implements Serializable {
      * pick up {@code TransportUnit}s.</li></ul>
      */
     @Column(name = "C_INCOMING_ACTIVE")
-    private boolean incomingActive = true;
+    private boolean incomingActive = DEF_INCOMING_ACTIVE;
+    /** Default value of {@link #incomingActive}. */
+    public static final boolean DEF_INCOMING_ACTIVE = true;
 
     /**
      * Signals the outgoing state of this Location. Locations which are blocked for outgoing cannot release {@code
@@ -125,14 +132,18 @@ public class Location extends BaseEntity implements Serializable {
      * is locked, {@code TransportUnit}s can't leave this Location.</li></ul>
      */
     @Column(name = "C_OUTGOING_ACTIVE")
-    private boolean outgoingActive = true;
+    private boolean outgoingActive = DEF_OUTGOING_ACTIVE;
+    /** Default value of {@link #outgoingActive}. */
+    public static final boolean DEF_OUTGOING_ACTIVE = true;
 
     /**
      * The PLC is able to change the state of a Location. This property stores the last state, received from the PLC.<ul><li>-1: Not
      * defined.</li><li>0 : No PLC error, everything okay.</li></ul>
      */
     @Column(name = "C_PLC_STATE")
-    private short plcState = 0;
+    private int plcState = DEF_PLC_STATE;
+    /** Default value of {@link #plcState}. */
+    public static final int DEF_PLC_STATE = 0;
 
     /**
      * Determines whether the Location is considered in the allocation procedure.<ul><li>{@literal true} : This Location will be considered
@@ -140,7 +151,9 @@ public class Location extends BaseEntity implements Serializable {
      * process.</li></ul>
      */
     @Column(name = "C_CONSIDERED_IN_ALLOCATION")
-    private boolean consideredInAllocation = true;
+    private boolean consideredInAllocation = DEF_CONSIDERED_IN_ALLOCATION;
+    /** Default value of {@link #consideredInAllocation}. */
+    public static final boolean DEF_CONSIDERED_IN_ALLOCATION = true;
 
     /** The {@link LocationType} this Location belongs to. */
     @ManyToOne
@@ -165,6 +178,7 @@ public class Location extends BaseEntity implements Serializable {
      * @param locationId The unique natural key of the Location
      */
     public Location(LocationPK locationId) {
+        Assert.notNull(locationId, "Creation of Location with locationId null");
         this.locationId = locationId;
     }
 
@@ -190,9 +204,7 @@ public class Location extends BaseEntity implements Serializable {
      * @return {@literal true} if the {@link Message} is new in the collection of messages, otherwise {@literal false}
      */
     public boolean addMessage(Message message) {
-        if (message == null) {
-            throw new IllegalArgumentException("Message may not be null!");
-        }
+        Assert.notNull(message, "null passed to addMessage, this: " + this);
         return this.messages.add(message);
     }
 
@@ -255,17 +267,17 @@ public class Location extends BaseEntity implements Serializable {
      *
      * @return Timestamp of the last update
      */
-    public Date getLastAccess() {
-        return this.lastAccess;
+    public Date getLastMovement() {
+        return this.lastMovement;
     }
 
     /**
      * Change the date when a TransportUnit was put or left the Location the last time.
      *
-     * @param lastAccess The date of change.
+     * @param lastMovement The date of change.
      */
-    public void setLastAccess(Date lastAccess) {
-        this.lastAccess = lastAccess;
+    public void setLastMovement(Date lastMovement) {
+        this.lastMovement = lastMovement;
     }
 
     /**
@@ -327,8 +339,8 @@ public class Location extends BaseEntity implements Serializable {
      *
      * @return The maximum number of {@code TransportUnit}s
      */
-    public short getNoMaxTransportUnits() {
-        return this.noMaxTransportUnits;
+    public int getNoMaxTransportUnits() {
+        return noMaxTransportUnits;
     }
 
     /**
@@ -354,8 +366,8 @@ public class Location extends BaseEntity implements Serializable {
      *
      * @return the plc state
      */
-    public short getPlcState() {
-        return this.plcState;
+    public int getPlcState() {
+        return plcState;
     }
 
     /**
@@ -366,15 +378,13 @@ public class Location extends BaseEntity implements Serializable {
      * @throws IllegalArgumentException when messages is {@literal null}
      */
     public boolean removeMessages(Message... msgs) {
-        if (msgs == null) {
-            throw new IllegalArgumentException("Parameter msgs may not be null!");
-        }
+        Assert.notNull(msgs, "null passed to removeMessages, this: " + this);
         return this.messages.removeAll(Arrays.asList(msgs));
     }
 
     /**
-     * Add this {@code Location} to the {@literal locationGroup}. When the argument is {@literal null} an existing {@link LocationGroup} is removed
-     * from the {@code Location}.
+     * Add this {@code Location} to the {@literal locationGroup}. When the argument is {@literal null} an existing {@link LocationGroup} is
+     * removed from the {@code Location}.
      *
      * @param locationGroup The {@link LocationGroup} to be assigned
      */

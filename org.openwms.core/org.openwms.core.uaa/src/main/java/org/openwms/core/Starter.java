@@ -82,7 +82,7 @@ public class Starter {
     }
 
     /**
-     * /** Boot up!
+     * Boot up!
      *
      * @param args Some args
      */

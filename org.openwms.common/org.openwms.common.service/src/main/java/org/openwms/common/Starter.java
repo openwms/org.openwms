@@ -19,24 +19,30 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
-package org.openwms.common.location;
+package org.openwms.common;
 
-import javax.persistence.Inheritance;
-import javax.persistence.InheritanceType;
-import javax.persistence.MappedSuperclass;
-
-import org.ameba.integration.jpa.BaseEntity;
+import org.ameba.annotation.EnableAspects;
+import org.ameba.app.SolutionApp;
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 /**
- * A Target is either a physical or a logical endpoint of any kind of warehouse order. A {@code TransportOrder} has a Target set,
- * to where a {@code TransportUnit} has to be moved to.
- * 
- * @GlossaryTerm
+ * A Starter.
+ *
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  * @version 1.0
- * @since 0.1
+ * @since 1.0
  */
-@MappedSuperclass
-@Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
-abstract class Target extends BaseEntity {
+@SpringBootApplication(scanBasePackageClasses = {Starter.class, SolutionApp.class})
+@EnableAspects
+public class Starter {
+
+    /**
+     * Boot up!
+     *
+     * @param args Some args
+     */
+    public static void main(String[] args) {
+        SpringApplication.run(Starter.class, args);
+    }
 }

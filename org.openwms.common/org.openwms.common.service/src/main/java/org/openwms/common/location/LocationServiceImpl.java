@@ -27,7 +27,6 @@ import java.util.List;
 import org.ameba.annotation.TxService;
 import org.ameba.exception.NotFoundException;
 import org.ameba.exception.ServiceLayerException;
-import org.openwms.core.values.Message;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -55,7 +54,7 @@ class LocationServiceImpl implements LocationService<Location> {
     public List<Location> getAllLocations() {
         List<Location> list = locationRepository.findAll();
         for (Location location : list) {
-            location.setLastAccess(new Date());
+            location.setLastMovement(new Date());
             locationRepository.save(location);
         }
         return list;

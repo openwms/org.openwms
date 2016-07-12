@@ -264,7 +264,7 @@ public class LocationPK implements Serializable {
          * @param val the {@code y} to set
          * @return a reference to this Builder
          */
-        public Builder withY(String val) {
+        public Builder y(String val) {
             y = val;
             return this;
         }
@@ -275,7 +275,7 @@ public class LocationPK implements Serializable {
          * @param val the {@code z} to set
          * @return a reference to this Builder
          */
-        public Builder withZ(String val) {
+        public Builder z(String val) {
             z = val;
             return this;
         }

@@ -37,7 +37,6 @@
     <description>The CORE project Maven POM file. Just a common definition of dependencies valid for all other CORE projects. Call mvn install -Pcore to build all CORE projects.</description>
     <properties>
         <moduleDir>../..</moduleDir>
-        <module.version>${project.version}</module.version>
     </properties>
 
     <distributionManagement>
@@ -103,29 +102,29 @@
             <dependency>
                 <groupId>${project.groupId}</groupId>
                 <artifactId>org.openwms.core.lang</artifactId>
-                <version>${module.version}</version>
+                <version>${project.version}</version>
             </dependency>
             <dependency>
                 <groupId>${project.groupId}</groupId>
                 <artifactId>org.openwms.core.search</artifactId>
-                <version>${module.version}</version>
+                <version>${project.version}</version>
             </dependency>
             <dependency>
                 <groupId>${project.groupId}</groupId>
                 <artifactId>org.openwms.core.test</artifactId>
-                <version>${module.version}</version>
+                <version>${project.version}</version>
                 <type>test-jar</type>
                 <scope>test</scope>
             </dependency>
             <dependency>
                 <groupId>${project.groupId}</groupId>
                 <artifactId>org.openwms.core.uaa</artifactId>
-                <version>${module.version}</version>
+                <version>${project.version}</version>
             </dependency>
             <dependency>
                 <groupId>${project.groupId}</groupId>
                 <artifactId>org.openwms.core.util</artifactId>
-                <version>${module.version}</version>
+                <version>${project.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>
