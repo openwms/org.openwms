@@ -124,9 +124,19 @@ public class TransportUnitType extends BaseEntity implements Serializable {
      *
      * @param type Unique name
      */
-    public TransportUnitType(String type) {
+    private TransportUnitType(String type) {
         Assert.hasText(type);
         this.type = type;
+    }
+
+    /**
+     * Factory method to create a new TransportUnitType.
+     *
+     * @param type The business key
+     * @return The instance
+     */
+    public static TransportUnitType create(String type) {
+        return new TransportUnitType((type));
     }
 
     private TransportUnitType(Builder builder) {
