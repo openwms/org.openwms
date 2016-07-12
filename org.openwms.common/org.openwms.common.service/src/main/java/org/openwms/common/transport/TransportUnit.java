@@ -31,8 +31,6 @@ import javax.persistence.Enumerated;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToOne;
-import javax.persistence.NamedQueries;
-import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.OrderBy;
 import javax.persistence.Table;
@@ -49,164 +47,116 @@ import java.util.Set;
 import org.ameba.integration.jpa.BaseEntity;
 import org.openwms.common.location.Location;
 import org.openwms.common.units.Weight;
-import org.openwms.core.uaa.User;
 import org.openwms.core.values.CoreTypeDefinitions;
 import org.springframework.util.Assert;
 
 /**
- * A TransportUnit is an item like a box, a toad, a bin or a palette that is moved around within a warehouse and can carry goods.
- * <p>
- * Used as container to transport items like <code>LoadUnit</code>s. It can be moved between <code>Location</code>s.
- * </p>
- * 
- * @GlossaryTerm
+ * A TransportUnit is an item like a box, a toad, a bin or a palette that is moved around within a warehouse and can carry goods. <p> Used
+ * as container to transport items like {@code LoadUnit}s. It can be moved between {@code Location}s. </p>
+ *
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
- * @version $Revision$
+ * @version 1.0
+ * @GlossaryTerm
  * @since 0.1
  */
 @Entity
-@Table(name = "COM_TRANSPORT_UNIT", uniqueConstraints = @UniqueConstraint(columnNames = { "C_BARCODE" }))
-@NamedQueries({
-        @NamedQuery(name = TransportUnit.NQ_FIND_ALL, query = "select tu from TransportUnit tu"),
-        @NamedQuery(name = TransportUnit.NQ_FIND_BY_UNIQUE_QUERY, query = "select tu from TransportUnit tu where tu.barcode = ?1") })
-public class TransportUnit extends BaseEntity {
+@Table(name = "COM_TRANSPORT_UNIT", uniqueConstraints = @UniqueConstraint(columnNames = {"C_BARCODE"}))
+class TransportUnit extends BaseEntity {
 
-    /**
-     * Name of the <code>NamedQuery</code> to find all {@code TransportUnit} Entities.
-     */
-    public static final String NQ_FIND_ALL = "TransportUnit.findAll";
-
-    /**
-     * Query to find <strong>one</strong> {@code TransportUnit} by its natural key.
-     * <ul>
-     * <li>Query parameter index <strong>1</strong> : The Barcode of the {@code TransportUnit} to search for.</li>
-     * </ul>
-     */
-    public static final String NQ_FIND_BY_UNIQUE_QUERY = "TransportUnit.findByBarcode";
-
-    /**
-     * Unique natural key.
-     */
+    /** Unique natural key. */
     @Embedded
     @AttributeOverride(name = "value", column = @Column(name = "C_BARCODE", length = Barcode.BARCODE_LENGTH))
     @OrderBy
     private Barcode barcode;
 
-    /**
-     * Indicates whether the {@code TransportUnit} is empty or not (nullable).
-     */
+    /** Indicates whether the {@code TransportUnit} is empty or not (nullable). */
     @Column(name = "C_EMPTY")
     private Boolean empty;
 
-    /**
-     * Date when the {@code TransportUnit} has been moved to the current {@link Location}.
-     */
+    /** Date when the {@code TransportUnit} has been moved to the current {@link Location}. */
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "C_ACTUAL_LOCATION_DATE")
     private Date actualLocationDate;
 
-    /**
-     * Date of last inventory check.
-     */
+    /** Date of last inventory check. */
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "C_INVENTORY_DATE")
     private Date inventoryDate;
 
-    /**
-     * Weight of the {@code TransportUnit}.
-     */
+    /** Weight of the {@code TransportUnit}. */
     @Embedded
     @AttributeOverride(name = "quantity", column = @Column(name = "C_WEIGHT", length = CoreTypeDefinitions.QUANTITY_LENGTH))
     private Weight weight = new Weight("0");
 
-    /**
-     * State of the {@code TransportUnit}.
-     */
+    /** State of the {@code TransportUnit}. */
     @Column(name = "C_STATE")
     @Enumerated(EnumType.STRING)
     private TransportUnitState state = TransportUnitState.AVAILABLE;
 
-    /**
-     * The current {@link Location} of the {@code TransportUnit}.
-     */
+    /** The current {@link Location} of the {@code TransportUnit}. */
     @ManyToOne
     @JoinColumn(name = "C_ACTUAL_LOCATION", nullable = false)
     private Location actualLocation;
 
-    /**
-     * The target {@link Location} of the {@code TransportUnit}.<br>
-     * This property will be set when a {@code TransportOrder} is started.
-     */
+    /** The target {@link Location} of the {@code TransportUnit}.<br /> This property will be set when a {@code TransportOrder} is started. */
     @ManyToOne
     @JoinColumn(name = "C_TARGET_LOCATION")
     private Location targetLocation;
 
-    /**
-     * The {@link TransportUnitType} of the {@code TransportUnit}.
-     */
+    /** The {@link TransportUnitType} of the {@code TransportUnit}. */
     @ManyToOne
     @JoinColumn(name = "C_TRANSPORT_UNIT_TYPE", nullable = false)
     private TransportUnitType transportUnitType;
 
-    /**
-     * Owning {@code TransportUnit}.
-     */
+    /** Owning {@code TransportUnit}. */
     @ManyToOne
     @JoinColumn(name = "C_PARENT")
     private TransportUnit parent;
 
-    /**
-     * The {@code User} who performed the last inventory action on the {@code TransportUnit}.
-     */
+    /** The {@code User} who performed the last inventory action on the {@code TransportUnit}. */
     @Column(name = "C_INVENTORY_USER")
     private String inventoryUser;
 
-    /**
-     * A set of all child {@code TransportUnit}s, ordered by id.
-     */
-    @OneToMany(mappedBy = "parent", cascade = { CascadeType.MERGE, CascadeType.PERSIST })
+    /** A set of all child {@code TransportUnit}s, ordered by id. */
+    @OneToMany(mappedBy = "parent", cascade = {CascadeType.MERGE, CascadeType.PERSIST})
     @OrderBy("id DESC")
     private Set<TransportUnit> children = new HashSet<>();
 
-    /**
-     * A Map of errors occurred on the {@code TransportUnit}.
-     */
+    /** A Map of errors occurred on the {@code TransportUnit}. */
     @OneToMany(cascade = CascadeType.ALL)
     @JoinTable(name = "COM_TRANSPORT_UNIT_ERROR", joinColumns = @JoinColumn(name = "C_TRANSPORT_UNIT_ID"), inverseJoinColumns = @JoinColumn(name = "C_ERROR_ID"))
     private Map<Date, UnitError> errors = new HashMap<>();
 
     /*~ ----------------------------- constructors ------------------- */
-    /**
-     * Dear JPA...
-     */
+
+    /** Dear JPA... */
     protected TransportUnit() {
     }
 
     /**
      * Create a new {@code TransportUnit} with an unique id. The id is used to create a {@link Barcode}.
-     * 
-     * @param unitId
-     *            The unique identifier of the {@code TransportUnit}
+     *
+     * @param unitId The unique identifier of the {@code TransportUnit}
      */
-    public TransportUnit(String unitId) {
+    TransportUnit(String unitId) {
         Assert.hasText(unitId);
         this.barcode = new Barcode(unitId);
     }
 
     /**
      * Create a new {@code TransportUnit} with an unique {@link Barcode}.
-     * 
-     * @param barcode
-     *            The unique identifier of this {@code TransportUnit} is the {@link Barcode}
+     *
+     * @param barcode The unique identifier of this {@code TransportUnit} is the {@link Barcode}
      */
-    public TransportUnit(Barcode barcode) {
+    TransportUnit(Barcode barcode) {
         this.barcode = new Barcode(barcode.adjustBarcode(barcode.getValue()));
     }
 
     /*~ ----------------------------- methods ------------------- */
+
     /**
      * Get the actual {@link Location} of the {@code TransportUnit}.
-     * 
+     *
      * @return The {@link Location} where the {@code TransportUnit} is placed on
      */
     public Location getActualLocation() {
@@ -215,9 +165,8 @@ public class TransportUnit extends BaseEntity {
 
     /**
      * Put the {@code TransportUnit} on a {@link Location}.
-     * 
-     * @param actualLocation
-     *            The new {@link Location} of the {@code TransportUnit}
+     *
+     * @param actualLocation The new {@link Location} of the {@code TransportUnit}
      */
     public void setActualLocation(Location actualLocation) {
         this.actualLocation = actualLocation;
@@ -225,9 +174,9 @@ public class TransportUnit extends BaseEntity {
     }
 
     /**
-     * Get the target {@link Location} of the {@code TransportUnit}. This property can not be {@literal null} when an active
-     * {@code TransportOrder} exists.
-     * 
+     * Get the target {@link Location} of the {@code TransportUnit}. This property can not be {@literal null} when an active {@code
+     * TransportOrder} exists.
+     *
      * @return The target location
      */
     public Location getTargetLocation() {
@@ -235,11 +184,10 @@ public class TransportUnit extends BaseEntity {
     }
 
     /**
-     * Set the target {@link Location} of the {@code TransportUnit}. Shall only be set in combination with an active
-     * <code>TransportOder</code>.
-     * 
-     * @param targetLocation
-     *            The target {@link Location} where this {@code TransportUnit} shall be transported to
+     * Set the target {@link Location} of the {@code TransportUnit}. Shall only be set in combination with an active {@code
+     * TransportOrder}.
+     *
+     * @param targetLocation The target {@link Location} where this {@code TransportUnit} shall be transported to
      */
     public void setTargetLocation(Location targetLocation) {
         this.targetLocation = targetLocation;
@@ -247,8 +195,8 @@ public class TransportUnit extends BaseEntity {
 
     /**
      * Indicates whether the {@code TransportUnit} is empty or not.
-     * 
-     * @return {@code true} if empty, {@code false} if not empty, {@literal null} when not defined
+     *
+     * @return {@literal true} if empty, {@literal false} if not empty, {@literal null} when not defined
      */
     public Boolean isEmpty() {
         return this.empty;
@@ -256,29 +204,27 @@ public class TransportUnit extends BaseEntity {
 
     /**
      * Marks the {@code TransportUnit} to be empty.
-     * 
-     * @param empty
-     *            {@code true} to mark the {@code TransportUnit} as empty, {@code false} to mark it as not empty and
-     *            {@literal null} for no definition
+     *
+     * @param empty {@literal true} to mark the {@code TransportUnit} as empty, {@literal false} to mark it as not empty and {@literal null}
+     * for no definition
      */
     public void setEmpty(Boolean empty) {
         this.empty = empty;
     }
 
     /**
-     * Returns the {@link User} who performed the last inventory action on the {@code TransportUnit}.
-     * 
-     * @return The {@link User} who did the last inventory check
+     * Returns the username of the User who performed the last inventory action on the {@code TransportUnit}.
+     *
+     * @return The username who did the last inventory check
      */
     public String getInventoryUser() {
         return this.inventoryUser;
     }
 
     /**
-     * Set the {@link User}> who performed the last inventory action on the {@code TransportUnit}.
-     * 
-     * @param inventoryUser
-     *            The {@link User} who did the last inventory check
+     * Set the username who performed the last inventory action on the {@code TransportUnit}.
+     *
+     * @param inventoryUser The username who did the last inventory check
      */
     public void setInventoryUser(String inventoryUser) {
         this.inventoryUser = inventoryUser;
@@ -286,7 +232,7 @@ public class TransportUnit extends BaseEntity {
 
     /**
      * Number of {@code TransportUnit}s belonging to the {@code TransportUnit}.
-     * 
+     *
      * @return The number of all {@code TransportUnit}s belonging to this one
      */
     public int getNoTransportUnits() {
@@ -295,7 +241,7 @@ public class TransportUnit extends BaseEntity {
 
     /**
      * Returns the date when the {@code TransportUnit} moved to the actualLocation.
-     * 
+     *
      * @return The timestamp when the {@code TransportUnit} moved the last time
      */
     public Date getActualLocationDate() {
@@ -304,7 +250,7 @@ public class TransportUnit extends BaseEntity {
 
     /**
      * Returns the timestamp of the last inventory check of the {@code TransportUnit}.
-     * 
+     *
      * @return The timestamp of the last inventory check of the {@code TransportUnit}.
      */
     public Date getInventoryDate() {
@@ -313,9 +259,8 @@ public class TransportUnit extends BaseEntity {
 
     /**
      * Set the timestamp of the last inventory action of the {@code TransportUnit}.
-     * 
-     * @param inventoryDate
-     *            The timestamp of the last inventory check
+     *
+     * @param inventoryDate The timestamp of the last inventory check
      */
     public void setInventoryDate(Date inventoryDate) {
         this.inventoryDate = new Date(inventoryDate.getTime());
@@ -323,7 +268,7 @@ public class TransportUnit extends BaseEntity {
 
     /**
      * Returns the current weight of the {@code TransportUnit}.
-     * 
+     *
      * @return The current weight of the {@code TransportUnit}
      */
     public Weight getWeight() {
@@ -332,9 +277,8 @@ public class TransportUnit extends BaseEntity {
 
     /**
      * Sets the current weight of the {@code TransportUnit}.
-     * 
-     * @param weight
-     *            The current weight of the {@code TransportUnit}
+     *
+     * @param weight The current weight of the {@code TransportUnit}
      */
     public void setWeight(Weight weight) {
         this.weight = weight;
@@ -342,7 +286,7 @@ public class TransportUnit extends BaseEntity {
 
     /**
      * Get all errors that have occurred on the {@code TransportUnit}.
-     * 
+     *
      * @return A Map of all occurred {@link UnitError}s on the {@code TransportUnit}
      */
     public Map<Date, UnitError> getErrors() {
@@ -351,23 +295,19 @@ public class TransportUnit extends BaseEntity {
 
     /**
      * Add an error to the {@code TransportUnit}.
-     * 
-     * @param error
-     *            An {@link UnitError} to be added
+     *
+     * @param error An {@link UnitError} to be added
      * @return The key.
-     * @throws IllegalArgumentException
-     *             when something went wrong
+     * @throws IllegalArgumentException when something went wrong
      */
     public UnitError addError(UnitError error) {
-        if (error == null) {
-            throw new IllegalArgumentException("Error may not be null!");
-        }
+        Assert.notNull(error, "Error to add may not be null, this: " + this);
         return errors.put(new Date(), error);
     }
 
     /**
      * Return the state of the {@code TransportUnit}.
-     * 
+     *
      * @return The current state of the {@code TransportUnit}
      */
     public TransportUnitState getState() {
@@ -376,9 +316,8 @@ public class TransportUnit extends BaseEntity {
 
     /**
      * Set the state of the {@code TransportUnit}.
-     * 
-     * @param state
-     *            The state to set on the {@code TransportUnit}
+     *
+     * @param state The state to set on the {@code TransportUnit}
      */
     public void setState(TransportUnitState state) {
         this.state = state;
@@ -386,7 +325,7 @@ public class TransportUnit extends BaseEntity {
 
     /**
      * Return the {@link TransportUnitType} of the {@code TransportUnit}.
-     * 
+     *
      * @return The {@link TransportUnitType} the {@code TransportUnit} belongs to
      */
     public TransportUnitType getTransportUnitType() {
@@ -395,9 +334,8 @@ public class TransportUnit extends BaseEntity {
 
     /**
      * Set the {@link TransportUnitType} of the {@code TransportUnit}.
-     * 
-     * @param transportUnitType
-     *            The type of the {@code TransportUnit}
+     *
+     * @param transportUnitType The type of the {@code TransportUnit}
      */
     public void setTransportUnitType(TransportUnitType transportUnitType) {
         this.transportUnitType = transportUnitType;
@@ -405,7 +343,7 @@ public class TransportUnit extends BaseEntity {
 
     /**
      * Return the {@link Barcode} of the {@code TransportUnit}.
-     * 
+     *
      * @return The current {@link Barcode}
      */
     public Barcode getBarcode() {
@@ -414,9 +352,8 @@ public class TransportUnit extends BaseEntity {
 
     /**
      * Set the {@link Barcode} of the {@code TransportUnit}.
-     * 
-     * @param barcode
-     *            The {@link Barcode} to be set on the {@code TransportUnit}
+     *
+     * @param barcode The {@link Barcode} to be set on the {@code TransportUnit}
      */
     public void setBarcode(Barcode barcode) {
         this.barcode = barcode;
@@ -424,7 +361,7 @@ public class TransportUnit extends BaseEntity {
 
     /**
      * Returns the parent {@code TransportUnit}.
-     * 
+     *
      * @return the parent.
      */
     public TransportUnit getParent() {
@@ -433,9 +370,8 @@ public class TransportUnit extends BaseEntity {
 
     /**
      * Set a parent {@code TransportUnit}.
-     * 
-     * @param parent
-     *            The parent to set.
+     *
+     * @param parent The parent to set.
      */
     public void setParent(TransportUnit parent) {
         this.parent = parent;
@@ -443,7 +379,7 @@ public class TransportUnit extends BaseEntity {
 
     /**
      * Get all child {@code TransportUnit}s.
-     * 
+     *
      * @return the transportUnits.
      */
     public Set<TransportUnit> getChildren() {
@@ -452,25 +388,21 @@ public class TransportUnit extends BaseEntity {
 
     /**
      * Add a {@code TransportUnit} to the children.
-     * 
-     * @param transportUnit
-     *            The {@code TransportUnit} to be added to the list of children
-     * @throws IllegalArgumentException
-     *             when transportUnit is {@literal null}
+     *
+     * @param transportUnit The {@code TransportUnit} to be added to the list of children
+     * @throws IllegalArgumentException when transportUnit is {@literal null}
      */
     public void addChild(TransportUnit transportUnit) {
-        if (transportUnit == null) {
-            throw new IllegalArgumentException("Child transportUnit is null!");
-        }
-
-        if (transportUnit.getParent() != null) {
+        Assert.notNull(transportUnit, "Child to add may not be null, this: " + this);
+        if (transportUnit.hasParent()) {
             if (transportUnit.getParent().equals(this)) {
+
                 // if this instance is already the parent, we just return
                 return;
-            } else {
-                // disconnect post from it's current relationship
-                transportUnit.getParent().children.remove(this);
             }
+
+            // disconnect post from it's current relationship
+            transportUnit.getParent().removeChild(transportUnit);
         }
 
         // make this instance the new parent
@@ -478,19 +410,18 @@ public class TransportUnit extends BaseEntity {
         children.add(transportUnit);
     }
 
+    boolean hasParent() {
+        return parent != null;
+    }
+
     /**
      * Remove a {@code TransportUnit} from the list of children.
-     * 
-     * @param transportUnit
-     *            The {@code TransportUnit} to be removed from the list of children
-     * @throws IllegalArgumentException
-     *             when transportUnit is {@literal null} or any other failure occurs
+     *
+     * @param transportUnit The {@code TransportUnit} to be removed from the list of children
+     * @throws IllegalArgumentException when transportUnit is {@literal null} or any other failure occurs
      */
     public void removeChild(TransportUnit transportUnit) {
-        if (transportUnit == null) {
-            throw new IllegalArgumentException("Child transportUnit is null!");
-        }
-
+        Assert.notNull(transportUnit, "Child to remove may not be null, this: " + this);
         // make sure we are the parent before we break the relationship
         if (transportUnit.parent != null && transportUnit.getParent().equals(this)) {
             transportUnit.setParent(null);
@@ -502,9 +433,8 @@ public class TransportUnit extends BaseEntity {
 
     /**
      * Set the actualLocationDate.
-     * 
-     * @param actualLocationDate
-     *            The actualLocationDate to set.
+     *
+     * @param actualLocationDate The actualLocationDate to set.
      */
     public void setActualLocationDate(Date actualLocationDate) {
         this.actualLocationDate = new Date(actualLocationDate.getTime());
@@ -512,18 +442,18 @@ public class TransportUnit extends BaseEntity {
 
     /**
      * Return the {@link Barcode} as String.
-     * 
-     * @see java.lang.Object#toString()
+     *
      * @return String
+     * @see java.lang.Object#toString()
      */
     @Override
     public String toString() {
-        return this.barcode.toString();
+        return barcode.toString();
     }
 
     /**
      * {@inheritDoc}
-     * 
+     * <p>
      * Uses barcode for calculation.
      */
     @Override
@@ -536,7 +466,7 @@ public class TransportUnit extends BaseEntity {
 
     /**
      * {@inheritDoc}
-     * 
+     * <p>
      * Uses barcode for comparison.
      */
     @Override

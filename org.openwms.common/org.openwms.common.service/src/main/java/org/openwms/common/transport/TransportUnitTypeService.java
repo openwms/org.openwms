@@ -32,7 +32,7 @@ import org.openwms.common.location.LocationType;
  * @version $Revision: $
  * @since 0.2
  */
-public interface TransportUnitTypeService {
+interface TransportUnitTypeService {
 
     /**
      * Returns a List of all {@link TransportUnitType}s.

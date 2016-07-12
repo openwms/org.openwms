@@ -62,8 +62,8 @@ public class TransportUnitIT {
     public final
     @Test
     void testTUwithUnknownType() {
-        TransportUnit transportUnit = new TransportUnit("NEVER_PERSISTED");
-        TransportUnitType transportUnitType = TransportUnitType.create("UNKNOWN_TUT");
+        TransportUnit transportUnit = ObjectFactory.createTransportUnit("NEVER_PERSISTED");
+        TransportUnitType transportUnitType = ObjectFactory.createTransportUnitType("UNKNOWN_TUT");
         transportUnit.setTransportUnitType(transportUnitType);
         try {
             entityManager.persist(transportUnit);
@@ -78,8 +78,8 @@ public class TransportUnitIT {
      */
     @Test
     public final void testTUwithUnknownLocations() {
-        TransportUnit transportUnit = new TransportUnit("NEVER_PERSISTED");
-        TransportUnitType transportUnitType = TransportUnitType.create("WELL_KNOWN_TUT");
+        TransportUnit transportUnit = ObjectFactory.createTransportUnit("NEVER_PERSISTED");
+        TransportUnitType transportUnitType = ObjectFactory.createTransportUnitType("WELL_KNOWN_TUT");
         Location actualLocation = Location.create(new LocationPK("UNKN", "UNKN", "UNKN", "UNKN", "UNKN"));
 
         entityManager.persist(transportUnitType);
@@ -99,8 +99,8 @@ public class TransportUnitIT {
      */
     @Test
     public final void testTUwithKnownLocation() {
-        TransportUnit transportUnit = new TransportUnit("TEST_TU");
-        TransportUnitType transportUnitType = TransportUnitType.create("WELL_KNOWN_TUT_2");
+        TransportUnit transportUnit = ObjectFactory.createTransportUnit("TEST_TU");
+        TransportUnitType transportUnitType = ObjectFactory.createTransportUnitType("WELL_KNOWN_TUT_2");
         Location location = Location.create(new LocationPK("KNO4", "KNO4", "KNO4", "KNO4", "KNO4"));
 
         entityManager.persist(transportUnitType);
@@ -123,7 +123,7 @@ public class TransportUnitIT {
     @Test
     public final void testTUwithErrors() {
         TransportUnit transportUnit = new TransportUnit(new Barcode("TEST_TU3"));
-        TransportUnitType transportUnitType = TransportUnitType.create("WELL_KNOWN_TUT_4");
+        TransportUnitType transportUnitType = ObjectFactory.createTransportUnitType("WELL_KNOWN_TUT_4");
         Location location = Location.create(new LocationPK("KNOWN3", "KNOWN3", "KNOWN3", "KNOWN3", "KNOWN3"));
 
         entityManager.persist(transportUnitType);
@@ -160,8 +160,8 @@ public class TransportUnitIT {
      */
     @Test
     public final void testTUwithKnownLocations() {
-        TransportUnit transportUnit = new TransportUnit("TEST_TU2");
-        TransportUnitType transportUnitType = TransportUnitType.create("WELL_KNOWN_TUT_3");
+        TransportUnit transportUnit = ObjectFactory.createTransportUnit("TEST_TU2");
+        TransportUnitType transportUnitType = ObjectFactory.createTransportUnitType("WELL_KNOWN_TUT_3");
         Location actualLocation = Location.create(new LocationPK("KNO2", "KNO2", "KNO2", "KNO2", "KNO2"));
         Location targetLocation = Location.create(new LocationPK("UNKN", "UNKN", "UNKN", "UNKN", "UNKN"));
 

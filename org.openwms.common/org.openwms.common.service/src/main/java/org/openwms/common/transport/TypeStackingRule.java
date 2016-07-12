@@ -23,111 +23,71 @@ package org.openwms.common.transport;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
-import javax.persistence.Version;
+import java.io.Serializable;
+import java.util.Objects;
 
-import org.openwms.core.AbstractEntity;
-import org.openwms.core.DomainObject;
+import org.ameba.integration.jpa.BaseEntity;
 
 /**
- * A TypeStackingRule is a <code>Rule</code> that defines which <code>TransportUnitType</code> can be stacked on other types. Additionally a
- * maximum number of <code>TransportUnit</code>s can be defined.
- * 
- * @GlossaryTerm
+ * A TypeStackingRule is a {@link Rule} that defines which {@link TransportUnitType} can be stacked on other types. Additionally a maximum
+ * number of {@link TransportUnit}s can be defined.
+ *
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
- * @version $Revision$
+ * @version 1.0
+ * @GlossaryTerm
+ * @see TransportUnitType
  * @since 0.1
- * @see org.openwms.common.domain.TransportUnitType
  */
 @Entity
-@Table(name = "COM_TYPE_STACKING_RULE", uniqueConstraints = @UniqueConstraint(columnNames = { "TRANSPORT_UNIT_TYPE",
-        "NO_TRANSPORT_UNITS", "ALLOWED_TRANSPORT_UNIT_TYPE" }))
-public class TypeStackingRule extends AbstractEntity<Long> implements DomainObject<Long>, Rule {
+@Table(name = "COM_TYPE_STACKING_RULE", uniqueConstraints = @UniqueConstraint(columnNames = {"C_TRANSPORT_UNIT_TYPE",
+        "C_NO_TRANSPORT_UNITS", "C_ALLOWED_TRANSPORT_UNIT_TYPE"}))
+class TypeStackingRule extends BaseEntity implements Serializable, Rule {
 
-    private static final long serialVersionUID = 8695359002320051884L;
-
-    /**
-     * Unique technical key.
-     */
-    @Id
-    @Column(name = "ID")
-    @GeneratedValue
-    private Long id;
-
-    /**
-     * Parent {@link TransportUnitType}.
-     */
+    /** To separate fields in toString method. */
+    static final String SEPARATOR = "::";
+    /** Parent {@link TransportUnitType}. */
     @ManyToOne
-    @JoinColumn(name = "TRANSPORT_UNIT_TYPE")
+    @JoinColumn(name = "C_TRANSPORT_UNIT_TYPE")
     private TransportUnitType transportUnitType;
 
-    /**
-     * Number of {@link TransportUnitType}s that may be placed on the owning {@link TransportUnitType} (not-null).
-     */
-    @Column(name = "NO_TRANSPORT_UNITS", nullable = false)
+    /** Number of {@link TransportUnitType}s that may be placed on the owning {@link TransportUnitType} (not-null). */
+    @Column(name = "C_NO_TRANSPORT_UNITS", nullable = false)
     private short noTransportUnits;
 
-    /**
-     * The allowed {@link TransportUnitType} that may be placed on the owning {@link TransportUnitType} (not-null).
-     */
+    /** The allowed {@link TransportUnitType} that may be placed on the owning {@link TransportUnitType} (not-null). */
     @ManyToOne
-    @JoinColumn(name = "ALLOWED_TRANSPORT_UNIT_TYPE", nullable = false)
+    @JoinColumn(name = "C_ALLOWED_TRANSPORT_UNIT_TYPE", nullable = false)
     private TransportUnitType allowedTransportUnitType;
 
-    /**
-     * Version field.
-     */
-    @Version
-    @Column(name = "C_VERSION")
-    private long version;
+    /*~ ----------------------------- constructors ------------------- */
 
-    /* ----------------------------- methods ------------------- */
     /**
-     * Create a new <code>TypeStackingRule</code>.
+     * Dear JPA...
      */
-    @SuppressWarnings("unused")
-    private TypeStackingRule() {
-        super();
+    TypeStackingRule() {
     }
 
     /**
-     * Create a new <code>TypeStackingRule</code>. Define how many {@link org.openwms.common.domain.TransportUnit}s of the
-     * allowedTransportUnitType may stacked on this {@link TransportUnitType}.
-     * 
-     * @param noTransportUnits
-     *            The number of allowed {@link org.openwms.common.domain.TransportUnit}s
-     * @param allowedTransportUnitType
-     *            The allowed {@link TransportUnitType}
+     * Create a new {@code TypeStackingRule}. Define how many {@link TransportUnit}s of the allowedTransportUnitType may stacked on this
+     * {@link TransportUnitType}.
+     *
+     * @param noTransportUnits The number of allowed {@link TransportUnit}s
+     * @param allowedTransportUnitType The allowed {@link TransportUnitType}
      */
-    public TypeStackingRule(short noTransportUnits, TransportUnitType allowedTransportUnitType) {
+    TypeStackingRule(short noTransportUnits, TransportUnitType allowedTransportUnitType) {
         this.noTransportUnits = noTransportUnits;
         this.allowedTransportUnitType = allowedTransportUnitType;
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public Long getId() {
-        return id;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public boolean isNew() {
-        return this.id == null;
-    }
+    /*~ ----------------------------- methods ------------------- */
 
     /**
      * Get the transportUnitType.
-     * 
+     *
      * @return The transportUnitType.
      */
     public TransportUnitType getTransportUnitType() {
@@ -136,7 +96,7 @@ public class TypeStackingRule extends AbstractEntity<Long> implements DomainObje
 
     /**
      * Returns the number of {@link TransportUnitType}s that may be placed on the owning {@link TransportUnitType}.
-     * 
+     *
      * @return The number of TransportUnits allowed
      */
     public short getNoTransportUnits() {
@@ -145,7 +105,7 @@ public class TypeStackingRule extends AbstractEntity<Long> implements DomainObje
 
     /**
      * Returns the allowed {@link TransportUnitType} that may be placed on the owning {@link TransportUnitType}.
-     * 
+     *
      * @return The allowed TransportUnitType
      */
     public TransportUnitType getAllowedTransportUnitType() {
@@ -156,7 +116,28 @@ public class TypeStackingRule extends AbstractEntity<Long> implements DomainObje
      * {@inheritDoc}
      */
     @Override
-    public long getVersion() {
-        return this.version;
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        TypeStackingRule that = (TypeStackingRule) o;
+        return noTransportUnits == that.noTransportUnits &&
+                Objects.equals(transportUnitType, that.transportUnitType) &&
+                Objects.equals(allowedTransportUnitType, that.allowedTransportUnitType);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public int hashCode() {
+        return Objects.hash(transportUnitType, noTransportUnits, allowedTransportUnitType);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public String toString() {
+        return noTransportUnits + SEPARATOR + transportUnitType + SEPARATOR + allowedTransportUnitType;
     }
 }
