@@ -21,13 +21,11 @@
  */
 package org.openwms.common.transport;
 
-import static org.junit.Assert.fail;
+import static org.assertj.core.api.Assertions.assertThat;
 
-import javax.persistence.PersistenceException;
 import javax.persistence.Query;
 
-import org.junit.Assert;
-import org.junit.Ignore;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
 import org.junit.runner.RunWith;
@@ -36,6 +34,7 @@ import org.openwms.common.location.LocationPK;
 import org.openwms.core.test.IntegrationTest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
+import org.springframework.dao.DataAccessException;
 import org.springframework.test.context.junit4.SpringRunner;
 
 /**
@@ -45,7 +44,6 @@ import org.springframework.test.context.junit4.SpringRunner;
  * @version 1.0
  * @since 1.0
  */
-@Ignore
 @RunWith(SpringRunner.class)
 @IntegrationTest
 public class TransportUnitIT {
@@ -55,129 +53,112 @@ public class TransportUnitIT {
 
     @Autowired
     private TestEntityManager entityManager;
+    @Autowired
+    private TransportUnitRepository repository;
 
-    /**
-     * Try to instantiate TransportUnit with unknown TransportUnitType.
-     */
+    private TransportUnitType knownType;
+    private Location knownLocation1;
+
+    @Before
+    public void onBefore() {
+        knownType = ObjectFactory.createTransportUnitType("Carton");
+        knownLocation1 = Location.create(new LocationPK("KNO4", "KNO4", "KNO4", "KNO4", "KNO4"));
+        entityManager.persist(knownType);
+        entityManager.persist(knownLocation1);
+        entityManager.flush();
+    }
+
     public final
     @Test
-    void testTUwithUnknownType() {
+    void testCreation() {
         TransportUnit transportUnit = ObjectFactory.createTransportUnit("NEVER_PERSISTED");
-        TransportUnitType transportUnitType = ObjectFactory.createTransportUnitType("UNKNOWN_TUT");
-        transportUnit.setTransportUnitType(transportUnitType);
-        try {
-            entityManager.persist(transportUnit);
-            fail("Persisting with unknown TransportUnitType not allowed!");
-        } catch (Exception pe) {
-            // okay
-        }
+
+        transportUnit.setTransportUnitType(knownType);
+        transportUnit.setActualLocation(knownLocation1);
     }
 
-    /**
-     * Try to persist TransportUnit with an unknown actualLocation.
-     */
+    public final
     @Test
-    public final void testTUwithUnknownLocations() {
+    void testCreateTUWithUnknownType() {
         TransportUnit transportUnit = ObjectFactory.createTransportUnit("NEVER_PERSISTED");
-        TransportUnitType transportUnitType = ObjectFactory.createTransportUnitType("WELL_KNOWN_TUT");
-        Location actualLocation = Location.create(new LocationPK("UNKN", "UNKN", "UNKN", "UNKN", "UNKN"));
-
-        entityManager.persist(transportUnitType);
-
-        transportUnit.setTransportUnitType(transportUnitType);
-        transportUnit.setActualLocation(actualLocation);
-        try {
-            entityManager.persist(transportUnit);
-            fail("Persisting with unknown actualLocation && targetLocation not allowed!");
-        } catch (Exception pe) {
-            // okay
-        }
+        TransportUnitType tut = ObjectFactory.createTransportUnitType("UNKNOWN_TUT");
+        transportUnit.setTransportUnitType(tut);
+        thrown.expect(DataAccessException.class);
+        repository.save(transportUnit);
     }
 
-    /**
-     * Try to persist TransportUnit with known TransportUnitType and a known actualLocation.
-     */
+
+    public final
     @Test
-    public final void testTUwithKnownLocation() {
-        TransportUnit transportUnit = ObjectFactory.createTransportUnit("TEST_TU");
-        TransportUnitType transportUnitType = ObjectFactory.createTransportUnitType("WELL_KNOWN_TUT_2");
-        Location location = Location.create(new LocationPK("KNO4", "KNO4", "KNO4", "KNO4", "KNO4"));
-
-        entityManager.persist(transportUnitType);
-        entityManager.persist(location);
-
-        transportUnit.setTransportUnitType(transportUnitType);
-        transportUnit.setActualLocation(location);
-
-        try {
-            entityManager.merge(transportUnit);
-        } catch (PersistenceException pe) {
-            fail("Persisting transportUnit with known actualLocation and transportUnitType not committed!");
-        }
+    void testCreateTUWithUnknownActualLocation() {
+        TransportUnit transportUnit = ObjectFactory.createTransportUnit("NEVER_PERSISTED");
+        transportUnit.setTransportUnitType(knownType);
+        transportUnit.setActualLocation(Location.create(new LocationPK("UNKN", "UNKN", "UNKN", "UNKN", "UNKN")));
+        thrown.expect(DataAccessException.class);
+        repository.save(transportUnit);
     }
 
-    /**
-     * Test cascading UnitErrors with TransportUnits.
-     */
-    @Ignore
+    public final
     @Test
-    public final void testTUwithErrors() {
-        TransportUnit transportUnit = new TransportUnit(new Barcode("TEST_TU3"));
-        TransportUnitType transportUnitType = ObjectFactory.createTransportUnitType("WELL_KNOWN_TUT_4");
-        Location location = Location.create(new LocationPK("KNOWN3", "KNOWN3", "KNOWN3", "KNOWN3", "KNOWN3"));
+    void testCreateTUWithUnknownTargetLocation() {
+        TransportUnit transportUnit = ObjectFactory.createTransportUnit("NEVER_PERSISTED");
+        transportUnit.setTransportUnitType(knownType);
+        transportUnit.setActualLocation(knownLocation1);
+        transportUnit.setTargetLocation(Location.create(new LocationPK("UNKN", "UNKN", "UNKN", "UNKN", "UNKN")));
+        thrown.expect(IllegalStateException.class);
+        entityManager.persistAndFlush(transportUnit);
+    }
 
-        entityManager.persist(transportUnitType);
-        entityManager.persist(location);
+    public final
+    @Test
+    void testSaveTUWithKnownActualLocation() {
+        TransportUnit transportUnit = ObjectFactory.createTransportUnit("4711");
 
-        transportUnit.setTransportUnitType(transportUnitType);
-        transportUnit.setActualLocation(location);
-        transportUnit.setTargetLocation(location);
+        transportUnit.setTransportUnitType(knownType);
+        transportUnit.setActualLocation(knownLocation1);
+
+        transportUnit = repository.save(transportUnit);
+        assertThat(transportUnit.isNew()).isFalse();
+        assertThat(transportUnit.getActualLocation()).isNotNull();
+    }
+
+    public final
+    @Test
+    void testSaveTUwithKnownTargetLocation() {
+        TransportUnit transportUnit = ObjectFactory.createTransportUnit("4711");
+
+        transportUnit.setTransportUnitType(knownType);
+        transportUnit.setActualLocation(knownLocation1);
+        transportUnit.setTargetLocation(knownLocation1);
+
+        transportUnit = repository.save(transportUnit);
+        assertThat(transportUnit.isNew()).isFalse();
+        assertThat(transportUnit.getActualLocation()).isNotNull();
+    }
+
+
+    public final
+    @Test
+    void testTUwithErrors() throws Exception {
+        TransportUnit transportUnit = new TransportUnit(new Barcode("4711"));
+
+        transportUnit.setTransportUnitType(knownType);
+        transportUnit.setActualLocation(knownLocation1);
+        transportUnit.setTargetLocation(knownLocation1);
 
         transportUnit.addError(new UnitError());
-        try {
-            Thread.sleep(100);
-        } catch (InterruptedException e) {
-        }
+        Thread.sleep(100);
         transportUnit.addError(new UnitError());
-        try {
-            entityManager.persist(transportUnit);
-        } catch (Exception pe) {
-            fail("Persisting with well known Location and TransportUnitType fails!");
-        }
+        entityManager.persist(transportUnit);
 
-        Query query = entityManager.getEntityManager().createQuery("select count(ue) from UnitError ue");
+        Query query = entityManager.getEntityManager().createQuery("select count(ue) from UnitError ue", Long.class);
+
         Long cnt = (Long) query.getSingleResult();
-        Assert.assertEquals("Expected 2 persisted UnitErrors", 2, cnt.intValue());
+        assertThat(cnt).isEqualTo(2);
 
         entityManager.remove(transportUnit);
 
         cnt = (Long) query.getSingleResult();
-        Assert.assertEquals("Expected 0 persisted UnitErrors", 0, cnt.intValue());
+        assertThat(cnt).isEqualTo(0);
     }
-
-    /**
-     * Try to persist a TransportUnit with well known actualLocation and a well known TransportUnitType. The targetLocation is unknown.
-     */
-    @Test
-    public final void testTUwithKnownLocations() {
-        TransportUnit transportUnit = ObjectFactory.createTransportUnit("TEST_TU2");
-        TransportUnitType transportUnitType = ObjectFactory.createTransportUnitType("WELL_KNOWN_TUT_3");
-        Location actualLocation = Location.create(new LocationPK("KNO2", "KNO2", "KNO2", "KNO2", "KNO2"));
-        Location targetLocation = Location.create(new LocationPK("UNKN", "UNKN", "UNKN", "UNKN", "UNKN"));
-
-        entityManager.persist(transportUnitType);
-        entityManager.persist(actualLocation);
-
-        transportUnit.setTransportUnitType(transportUnitType);
-        transportUnit.setActualLocation(actualLocation);
-        transportUnit.setTargetLocation(targetLocation);
-        try {
-            entityManager.persist(transportUnit);
-            // FIXME [scherrer] :
-            // fail("Persisting with unknown targetLocation must fail!");
-        } catch (Exception pe) {
-            // okay
-        }
-    }
-
 }

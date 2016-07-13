@@ -21,6 +21,11 @@
  */
 package org.openwms.common.transport;
 
+import javax.persistence.EntityManager;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Configurable;
+
 /**
  * A ObjectFactory.
  *
@@ -28,21 +33,50 @@ package org.openwms.common.transport;
  * @version 1.0
  * @since 1.0
  */
-public class ObjectFactory {
+@Configurable
+class ObjectFactory {
 
+    @Autowired
+    private static EntityManager em;
 
     public static Barcode createBarcode(String barcodeId) {
         return new Barcode(barcodeId);
     }
 
     /**
-     * Create a new TransportUnit with the unique id {@code unitId}.
+     * Create a new TransportUnit.
      *
      * @param unitId The unique id of the Barcode
      * @return The instance
      */
     public static TransportUnit createTransportUnit(String unitId) {
         return new TransportUnit(unitId);
+    }
+
+    /**
+     * Create a new TransportUnit.
+     *
+     * @param unitId The unique id of the Barcode
+     * @param tut The TransportUnitType to set
+     * @return The instance
+     */
+    public static TransportUnit createTransportUnit(String unitId, TransportUnitType tut) {
+        TransportUnit tu = new TransportUnit(unitId);
+        tu.setTransportUnitType(tut);
+        return tu;
+    }
+
+    /**
+     * Create a new TransportUnit.
+     *
+     * @param unitId The unique id of the Barcode
+     * @param transportUnitTypeBk The business key of the TransportUnitType
+     * @return The instance
+     */
+    public static TransportUnit createTransportUnit(String unitId, String transportUnitTypeBk) {
+        TransportUnit tu = new TransportUnit(unitId);
+        tu.setTransportUnitType(em.createQuery("select tu from TransportUnitType tu where tu.type = ?1", TransportUnitType.class).setParameter(1, transportUnitTypeBk).getSingleResult());
+        return tu;
     }
 
     /**
