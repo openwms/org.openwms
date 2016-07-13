@@ -40,7 +40,7 @@ public interface TransportationService<T extends TransportOrder> {
      * @param states An array of TransportOrder states to filter TransportOrders for
      * @return Number of all TransportOrders in one of the {@code states} that are on the way to the {@code target}
      */
-    int getTransportsToTarget(String target, String... states);
+    int getNoTransportOrdersToTarget(String target, String... states);
 
     /**
      * Create a new {@link TransportOrder} with the given {@code target}.

@@ -69,4 +69,3 @@ class LocationGroupRedirector implements DecisionVoter<RedirectVote> {
         vote.getTransportOrder().setTargetLocationGroup(vote.getTarget());
     }
 }
-}

@@ -26,6 +26,7 @@ import java.util.Collection;
 import java.util.List;
 
 import org.ameba.annotation.TxService;
+import org.openwms.common.CommonGateway;
 import org.openwms.tms.exception.TransportOrderServiceException;
 import org.openwms.tms.voter.DecisionVoter;
 import org.openwms.tms.voter.DeniedException;
@@ -51,10 +52,14 @@ class TransportationServiceImpl implements TransportationService<TransportOrder>
     @Autowired
     private ApplicationContext ctx;
     @Autowired
+    private CommonGateway commonGateway;
+    @Autowired
     private TransportOrderDao repository;
     /** 0..* voters, can be overridden and extended with XML configuration. So far we define only one (default) voter directly. */
     @Autowired(required = false)
     private List<DecisionVoter<RedirectVote>> redirectVoters;
+    @Autowired(required = false)
+    private List<TargetResolver> targetResolvers;
 
     /**
      * {@inheritDoc}
@@ -73,10 +78,10 @@ class TransportationServiceImpl implements TransportationService<TransportOrder>
             try {
                 if (null != redirectVoters) {
                     RedirectVote rv = new RedirectVote(target, transportOrder);
+                    // TODO [openwms]: 13/07/16 the concept of a voter is missused in that a voter changes the state of a TO
                     for (DecisionVoter<RedirectVote> voter : redirectVoters) {
                         voter.voteFor(rv);
                     }
-
                 }
             } catch (DeniedException de) {
                 LOGGER.error("Could not redirect TransportOrder with ID [" + transportOrder.getPk() + "], reason is: "
@@ -90,15 +95,15 @@ class TransportationServiceImpl implements TransportationService<TransportOrder>
     }
 
     /**
-     * Returns the number of {@code TransportOrder}s that have the {@code target} as target and are in one of the {@code states}.
-     *
-     * @param target The target place to search TransportOrders for
-     * @param states An array of TransportOrder states to filter TransportOrders for
-     * @return Number of all TransportOrders in one of the {@code states} that are on the way to the {@code target}
+     * {@inheritDoc}
      */
     @Override
-    public int getTransportsToTarget(String target, String... states) {
-        return repository.getNumberOfTransportOrders(locationGroup);
+    public int getNoTransportOrdersToTarget(String target, String... states) {
+        int i = 0;
+        for (TargetResolver tr : targetResolvers) {
+            i = +tr.resolve(target).getNoTOToTarget(target);
+        }
+        return i;
     }
 
     /**
