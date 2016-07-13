@@ -1,3 +1,5 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
 /*
  * openwms.org, the Open Warehouse Management System.
  * Copyright (C) 2014 Heiko Scherrer
@@ -19,25 +21,28 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
-package org.openwms.core.event;
+-->
+<!DOCTYPE log4j:configuration SYSTEM "log4j.dtd">
+<log4j:configuration xmlns:log4j="http://jakarta.apache.org/log4j/" debug="false">
 
-import org.springframework.context.ApplicationEvent;
+    <appender name="STDOUT" class="org.apache.log4j.ConsoleAppender">
+        <param name="Target" value="System.out" />
+        <layout class="org.apache.log4j.PatternLayout">
+            <param name="ConversionPattern" value="%d %-5p [%c] - %m%n" />
+        </layout>
+    </appender>
 
-/**
- * A RootApplicationEvent.
- *
- * @author <a href="mailto:russelltina@users.sourceforge.net">Tina Russell</a>
- * @version $Revision$
- * @since 0.1
- */
-public class RootApplicationEvent extends ApplicationEvent {
+    <category name="org.openwms">
+        <priority value="WARN" />
+    </category>
 
-    /**
-     * Create a new RootApplicationEvent.
-     *
-     * @param source The event sender
-     */
-    public RootApplicationEvent(Object source) {
-        super(source);
-    }
-}
+    <category name="org.hibernate">
+        <priority value="WARN" />
+    </category>
+
+    <root>
+        <priority value="ERROR" />
+        <appender-ref ref="STDOUT" />
+    </root>
+
+</log4j:configuration>

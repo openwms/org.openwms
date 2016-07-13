@@ -61,7 +61,7 @@ import org.springframework.util.Assert;
  */
 @Entity
 @Table(name = "COM_TRANSPORT_UNIT", uniqueConstraints = @UniqueConstraint(columnNames = {"C_BARCODE"}))
-class TransportUnit extends BaseEntity {
+public class TransportUnit extends BaseEntity {
 
     /** Unique natural key. */
     @Embedded

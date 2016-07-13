@@ -19,25 +19,26 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
-package org.openwms.core.event;
-
-import org.springframework.context.ApplicationEvent;
+package org.openwms.tms.voter;
 
 /**
- * A RootApplicationEvent.
- *
- * @author <a href="mailto:russelltina@users.sourceforge.net">Tina Russell</a>
+ * A DecisionVoter is asked to vote for a business action.
+ * 
+ * @param <T>
+ *            Any type of Vote
+ * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  * @version $Revision$
  * @since 0.1
  */
-public class RootApplicationEvent extends ApplicationEvent {
+public interface DecisionVoter<T extends Vote> {
 
     /**
-     * Create a new RootApplicationEvent.
-     *
-     * @param source The event sender
+     * The implementation has to vote for a certain vote on particular rules that are implemented by the voter.
+     * 
+     * @param vote
+     *            The vote to vote for
+     * @throws DeniedException
+     *             is thrown when the voter cannot vote for the action
      */
-    public RootApplicationEvent(Object source) {
-        super(source);
-    }
+    void voteFor(T vote) throws DeniedException;
 }

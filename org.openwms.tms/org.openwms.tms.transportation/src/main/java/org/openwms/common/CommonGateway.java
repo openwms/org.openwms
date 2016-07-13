@@ -19,25 +19,20 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
-package org.openwms.core.event;
+package org.openwms.common;
 
-import org.springframework.context.ApplicationEvent;
+import java.util.Optional;
 
 /**
- * A RootApplicationEvent.
+ * A CommonGateway.
  *
- * @author <a href="mailto:russelltina@users.sourceforge.net">Tina Russell</a>
- * @version $Revision$
- * @since 0.1
+ * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
+ * @version 1.0
+ * @since 1.0
  */
-public class RootApplicationEvent extends ApplicationEvent {
+public interface CommonGateway {
 
-    /**
-     * Create a new RootApplicationEvent.
-     *
-     * @param source The event sender
-     */
-    public RootApplicationEvent(Object source) {
-        super(source);
-    }
+    Optional<LocationGroup> getLocationGroup(String target);
+
+    Optional<Location> getLocation(String target);
 }

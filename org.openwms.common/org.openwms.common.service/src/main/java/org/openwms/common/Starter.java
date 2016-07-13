@@ -21,6 +21,7 @@
  */
 package org.openwms.common;
 
+import org.ameba.annotation.EnableAspects;
 import org.ameba.app.SolutionApp;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -33,7 +34,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
  * @since 1.0
  */
 @SpringBootApplication(scanBasePackageClasses = {Starter.class, SolutionApp.class})
-//@EnableAspects
+@EnableAspects
 public class Starter {
 
     /**

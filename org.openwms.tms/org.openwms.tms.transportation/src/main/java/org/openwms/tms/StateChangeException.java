@@ -19,25 +19,25 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
-package org.openwms.core.event;
-
-import org.springframework.context.ApplicationEvent;
+package org.openwms.tms;
 
 /**
- * A RootApplicationEvent.
+ * A StateChangeException.
  *
- * @author <a href="mailto:russelltina@users.sourceforge.net">Tina Russell</a>
- * @version $Revision$
- * @since 0.1
+ * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
+ * @version 1.0
+ * @since 1.0
  */
-public class RootApplicationEvent extends ApplicationEvent {
+public class StateChangeException extends RuntimeException {
 
     /**
-     * Create a new RootApplicationEvent.
-     *
-     * @param source The event sender
+     * {@inheritDoc}
      */
-    public RootApplicationEvent(Object source) {
-        super(source);
+    public StateChangeException(String s) {
+        super(s);
+    }
+
+    public StateChangeException(RuntimeException re) {
+
     }
 }

@@ -19,25 +19,56 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
-package org.openwms.core.event;
-
-import org.springframework.context.ApplicationEvent;
+package org.openwms.tms;
 
 /**
- * A RootApplicationEvent.
- *
- * @author <a href="mailto:russelltina@users.sourceforge.net">Tina Russell</a>
+ * A PriorityLevel is used to prioritize {@link TransportOrder}s.
+ * 
+ * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  * @version $Revision$
  * @since 0.1
+ * @see TransportOrder
  */
-public class RootApplicationEvent extends ApplicationEvent {
+public enum PriorityLevel {
 
     /**
-     * Create a new RootApplicationEvent.
-     *
-     * @param source The event sender
+     * Lowest priority.
      */
-    public RootApplicationEvent(Object source) {
-        super(source);
+    LOWEST(10),
+
+    /**
+     * Low priority.
+     */
+    LOW(20),
+
+    /**
+     * Standard priority.
+     */
+    NORMAL(30),
+
+    /**
+     * High priority.
+     */
+    HIGH(40),
+
+    /**
+     * Highest priority.
+     */
+    HIGHEST(50);
+
+    private int order;
+
+    private PriorityLevel(int order) {
+        this.order = order;
     }
+
+    /**
+     * Get the order.
+     * 
+     * @return the order.
+     */
+    public int getOrder() {
+        return order;
+    }
+
 }
