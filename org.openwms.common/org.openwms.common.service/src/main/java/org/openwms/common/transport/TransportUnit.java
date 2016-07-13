@@ -125,6 +125,7 @@ class TransportUnit extends BaseEntity {
     /** A Map of errors occurred on the {@code TransportUnit}. */
     @OneToMany(cascade = CascadeType.ALL)
     @JoinTable(name = "COM_TRANSPORT_UNIT_ERROR", joinColumns = @JoinColumn(name = "C_TRANSPORT_UNIT_ID"), inverseJoinColumns = @JoinColumn(name = "C_ERROR_ID"))
+    // TODO [openwms]: 12/07/16 refactor into a JPA2 map withou using Date as key!
     private Map<Date, UnitError> errors = new HashMap<>();
 
     /*~ ----------------------------- constructors ------------------- */
