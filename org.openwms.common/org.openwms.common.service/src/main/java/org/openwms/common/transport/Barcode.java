@@ -39,7 +39,7 @@ import org.apache.commons.lang3.StringUtils;
  * @since 0.1
  */
 @Embeddable
-class Barcode implements Serializable {
+public class Barcode implements Serializable {
 
     /** Length of a Barcode field. */
     public static final int BARCODE_LENGTH = 20;
@@ -90,7 +90,7 @@ class Barcode implements Serializable {
      * @param value The value of the {@code Barcode} as String
      * @throws IllegalArgumentException when the value is set to <code>null</code>.
      */
-    Barcode(String value) {
+    public Barcode(String value) {
         adjustBarcode(value);
     }
 
