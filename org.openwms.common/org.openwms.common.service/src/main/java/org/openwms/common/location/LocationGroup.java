@@ -36,7 +36,6 @@ import java.util.Set;
 
 import org.ameba.exception.ServiceLayerException;
 import org.openwms.common.StateChangeException;
-import org.openwms.common.transport.TransportUnit;
 import org.springframework.util.Assert;
 
 /**
@@ -65,15 +64,15 @@ public class LocationGroup extends Target implements Serializable {
     private String groupType;
 
     /**
-     * Is the {@code LocationGroup} included in the calculation of {@link TransportUnit}s? <p> {@code true} : Location is included in the
-     * calculation of {@link TransportUnit}s.<br> {@code false}: Location is not included in the calculation of {@link TransportUnit}s.
+     * Is the {@code LocationGroup} included in the calculation of {@code TransportUnit}s? <p> {@literal true} : Location is included in the
+     * calculation of {@code TransportUnit}s.<br> {@literal false}: Location is not included in the calculation of {@code TransportUnit}s.
      * </p>
      */
     @Column(name = "C_GROUP_COUNTING_ACTIVE")
     private boolean locationGroupCountingActive = true;
 
     /**
-     * Number of {@link Location}s belonging to the {@code LocationGroup}.
+     * Number of {@code Location}s belonging to the {@code LocationGroup}.
      */
     @Column(name = "C_NO_LOCATIONS")
     private int noLocations = 0;
@@ -170,7 +169,7 @@ public class LocationGroup extends Target implements Serializable {
     /**
      * Check whether infeed is allowed for the {@code LocationGroup}.
      *
-     * @return {@code true} if allowed, otherwise {@code false}.
+     * @return {@literal true} if allowed, otherwise {@literal false}.
      */
     public boolean isInfeedAllowed() {
         return (getGroupStateIn() == LocationGroupState.AVAILABLE);
@@ -179,7 +178,7 @@ public class LocationGroup extends Target implements Serializable {
     /**
      * Check whether infeed of the {@code LocationGroup} is blocked.
      *
-     * @return {@code true} if blocked, otherwise {@code false}.
+     * @return {@literal true} if blocked, otherwise {@literal false}.
      */
     public boolean isInfeedBlocked() {
         return !isInfeedAllowed();
@@ -188,7 +187,7 @@ public class LocationGroup extends Target implements Serializable {
     /**
      * Check whether outfeed is allowed for the {@code LocationGroup}.
      *
-     * @return {@code true} if allowed, otherwise {@code false}.
+     * @return {@literal true} if allowed, otherwise {@literal false}.
      */
     public boolean isOutfeedAllowed() {
         return (getGroupStateIn() == LocationGroupState.AVAILABLE);
@@ -197,7 +196,7 @@ public class LocationGroup extends Target implements Serializable {
     /**
      * Check whether outfeed of the {@code LocationGroup} is blocked.
      *
-     * @return {@code true} if blocked, otherwise {@code false}.
+     * @return {@literal true} if blocked, otherwise {@literal false}.
      */
     public boolean isOutfeedBlocked() {
         return !isInfeedAllowed();
@@ -291,7 +290,7 @@ public class LocationGroup extends Target implements Serializable {
 
     /**
      * Returns the maximum fill level of the {@code LocationGroup}.<br> The maximum fill level defines how many {@link Location}s of the
-     * {@code LocationGroup} can be occupied by {@link TransportUnit}s. <p> The maximum fill level is a value between 0 and 1 and represents
+     * {@code LocationGroup} can be occupied by {@code TransportUnit}s. <p> The maximum fill level is a value between 0 and 1 and represents
      * a percentage value. </p>
      *
      * @return The maximum fill level
@@ -377,7 +376,7 @@ public class LocationGroup extends Target implements Serializable {
      * Add a {@code LocationGroup} to the list of children.
      *
      * @param locationGroup The {@code LocationGroup} to be added as a child
-     * @return {@code true} if the {@code LocationGroup} was new in the collection of {@code LocationGroup}s, otherwise {@code false}
+     * @return {@literal true} if the {@code LocationGroup} was new in the collection of {@code LocationGroup}s, otherwise {@literal false}
      */
     public boolean addLocationGroup(LocationGroup locationGroup) {
         if (locationGroup == null) {
@@ -396,7 +395,7 @@ public class LocationGroup extends Target implements Serializable {
      * Remove a {@code LocationGroup} from the list of children.
      *
      * @param locationGroup The {@code LocationGroup} to be removed from the list of children
-     * @return {@code true} if the {@code LocationGroup} was found and could be removed, otherwise {@code false}
+     * @return {@literal true} if the {@code LocationGroup} was found and could be removed, otherwise {@literal false}
      */
     public boolean removeLocationGroup(LocationGroup locationGroup) {
         Assert.notNull(locationGroup, "LocationGroup to remove is null. this: " + this);
@@ -426,7 +425,7 @@ public class LocationGroup extends Target implements Serializable {
      * Add a {@link Location} to the list of children.
      *
      * @param location The {@link Location} to be added as child
-     * @return {@code true} if the {@link Location} was new in the collection of {@link Location}s, otherwise {@code false}
+     * @return {@literal true} if the {@link Location} was new in the collection of {@link Location}s, otherwise {@literal false}
      */
     public boolean addLocation(Location location) {
         Assert.notNull(location, "Location to be added to LocationGroup is null. this: " + this);
@@ -438,7 +437,7 @@ public class LocationGroup extends Target implements Serializable {
      * Remove a {@link Location} from the list of children.
      *
      * @param location The {@link Location} to be removed from the list of children
-     * @return {@code true} if the {@link Location} was found and could be removed, otherwise {@code false}
+     * @return {@literal true} if the {@link Location} was found and could be removed, otherwise {@literal false}
      */
     public boolean removeLocation(Location location) {
         Assert.notNull(location, "Location to remove from LocationGroup is null. this: " + this);
