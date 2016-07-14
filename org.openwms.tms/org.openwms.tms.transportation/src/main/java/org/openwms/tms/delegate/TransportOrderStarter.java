@@ -21,7 +21,8 @@
  */
 package org.openwms.tms.delegate;
 
-import org.openwms.core.exception.StateChangeException;
+
+import org.openwms.tms.StateChangeException;
 import org.openwms.tms.TransportOrder;
 
 /**

@@ -64,7 +64,7 @@ class TransportationServiceImpl implements TransportationService<TransportOrder>
     /**
      * {@inheritDoc}
      *
-     * @throws TransportOrderServiceException when both targets are <code>null</code>
+     * @throws TransportOrderServiceException when both targets are {@literal null}
      */
     @Override
     public Collection<String> redirectTransportOrders(Collection<String> bks, String target) {
@@ -73,12 +73,12 @@ class TransportationServiceImpl implements TransportationService<TransportOrder>
             throw new TransportOrderServiceException("Both targets can may not be null, at least one target must be specififed");
         }
         List<String> failure = new ArrayList<>(bks.size());
-        List<TransportOrder> transportOrders = repository.findByIds(TransportOrderUtil.getLongList(bks));
+        List<TransportOrder> transportOrders = repository.findByBk(new ArrayList<>(bks));
         for (TransportOrder transportOrder : transportOrders) {
             try {
                 if (null != redirectVoters) {
                     RedirectVote rv = new RedirectVote(target, transportOrder);
-                    // TODO [openwms]: 13/07/16 the concept of a voter is missused in that a voter changes the state of a TO
+                    // TODO [openwms]: 13/07/16 the concept of a voter is misused in that a voter changes the state of a TO
                     for (DecisionVoter<RedirectVote> voter : redirectVoters) {
                         voter.voteFor(rv);
                     }
@@ -112,8 +112,8 @@ class TransportationServiceImpl implements TransportationService<TransportOrder>
      * Checks that all necessary data to create a TransportOrder is given, does not do any logical checks, whether a target is blocked or a
      * {@link TransportOrder} for the {@code TransportUnit} exist.
      *
-     * @throws TransportOrderServiceException when the barcode is <code>null</code> or no transportUnit with barcode can be found or no
-     * target can be found.
+     * @throws TransportOrderServiceException when the barcode is {@literal null} or no transportUnit with barcode can be found or no target
+     * can be found.
      */
     @Override
     public TransportOrder createTransportOrder(String barcode, String target, PriorityLevel priority) {
@@ -145,7 +145,7 @@ class TransportationServiceImpl implements TransportationService<TransportOrder>
     @Override
     public Collection<String> cancelTransportOrders(Collection<String> bks, TransportOrder.State state) {
         List<String> failure = new ArrayList<>(bks.size());
-        List<TransportOrder> transportOrders = repository.findByIds(TransportOrderUtil.getLongList(bks));
+        List<TransportOrder> transportOrders = repository.findByBk(new ArrayList<>(bks));
         for (TransportOrder transportOrder : transportOrders) {
             try {
                 if (LOGGER.isDebugEnabled()) {

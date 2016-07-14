@@ -25,8 +25,6 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
-import javax.persistence.NamedQueries;
-import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -44,29 +42,7 @@ import org.ameba.integration.jpa.BaseEntity;
  */
 @Entity
 @Table(name = "TMS_TRANSPORT_ORDER")
-@NamedQueries({
-        @NamedQuery(name = TransportOrder.NQ_FIND_ALL, query = "select to from TransportOrder to order by to.id"),
-        @NamedQuery(name = TransportOrder.NQ_FIND_BY_TU, query = "select to from TransportOrder to where to.transportUnit = :transportUnit"),
-        @NamedQuery(name = TransportOrder.NQ_FIND_FOR_TU_IN_STATE, query = "select to from TransportOrder to where to.transportUnit = :transportUnit and to.state in (:states)")})
 public class TransportOrder extends BaseEntity implements Serializable {
-
-    /**
-     * Query to find all {@code TransportOrder}s.
-     */
-    public static final String NQ_FIND_ALL = "TransportOrder.findAll";
-
-    /**
-     * Query to find all {@code TransportOrder}s for a certain {@code TransportUnit}. <li>Query parameter name
-     * <strong>transportUnit</strong> : The {@code TransportUnit} to search for.</li>
-     */
-    public static final String NQ_FIND_BY_TU = "TransportOrder.findByTU";
-
-    /**
-     * Query to find all {@code TransportOrder}s for a particular {@code TransportUnit} in certain states. <li>Query parameter name
-     * <strong>transportUnit</strong> : The {@code TransportUnit} to search for.</li> <li>Query parameter name <strong>states</strong> : A
-     * list of {@link TransportOrder.State}s.</li>
-     */
-    public static final String NQ_FIND_FOR_TU_IN_STATE = "TransportOrder.findForTuInState";
 
     /** Unique business key. */
     @Column(name = "C_BK")

@@ -21,17 +21,7 @@
  */
 package org.openwms.tms;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.fail;
-
-import org.junit.Test;
-import org.openwms.common.Location;
-import org.openwms.common.LocationGroup;
-import org.openwms.common.LocationPK;
-import org.openwms.common.TransportUnit;
-import org.openwms.common.TransportUnitType;
 import org.openwms.core.test.AbstractJpaSpringContextTests;
-import org.openwms.tms.domain.order.TransportOrder;
 
 /**
  * A TransportOrderTest.
@@ -45,7 +35,7 @@ public class TransportOrderTest extends AbstractJpaSpringContextTests {
     /**
      * Test method for
      * {@link org.openwms.tms.domain.order.TransportOrder#setState(org.openwms.tms.domain.order.TransportOrder.TRANSPORT_ORDER_STATE)} .
-     */
+
     @Test
     public final void testSetState() {
         TransportOrder transportOrder = new TransportOrder();
@@ -98,5 +88,5 @@ public class TransportOrderTest extends AbstractJpaSpringContextTests {
         entityManager.persist(targetLocationGroup);
         entityManager.persist(transportOrder2);
     }
-
+     */
 }

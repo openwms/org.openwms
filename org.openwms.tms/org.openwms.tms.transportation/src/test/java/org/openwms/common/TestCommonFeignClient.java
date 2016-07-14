@@ -21,43 +21,31 @@
  */
 package org.openwms.common;
 
+import org.springframework.cloud.netflix.eureka.EnableEurekaClient;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
+
 /**
- * A Location.
+ * A TestCommonFeignClient.
  *
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  * @version 1.0
  * @since 1.0
  */
-public class Location {
+@EnableEurekaClient
+@RestController
+public class TestCommonFeignClient implements CommonFeignClient {
 
-    private String locationId;
-
-    private boolean infeedBlocked;
-    private boolean incomingActive;
-
-    public boolean isInfeedBlocked() {
-        return infeedBlocked;
+    @RequestMapping(method = RequestMethod.GET, value = "/locations", params = {"locationPK"})
+    public Location getLocation(@RequestParam("locationPK") String locationPk) {
+        return null;
     }
 
-    public void setInfeedBlocked(boolean infeedBlocked) {
-        this.infeedBlocked = infeedBlocked;
+    @RequestMapping(method = RequestMethod.GET, value = "/locationGroups", params = {"name"})
+    public LocationGroup getLocationGroup(@RequestParam("name") String name) {
+        return null;
     }
 
-    /**
-     * Return the {@code locationId}.
-     *
-     * @return String locationId
-     */
-    @Override
-    public String toString() {
-        return locationId;
-    }
-
-    public boolean isIncomingActive() {
-        return incomingActive;
-    }
-
-    public void setIncomingActive(boolean incomingActive) {
-        this.incomingActive = incomingActive;
-    }
 }

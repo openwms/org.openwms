@@ -53,9 +53,9 @@ public class TransportStartComparator implements Comparator<TransportOrder>, Ser
         } else if (o1.getPriority().getOrder() < o2.getPriority().getOrder()) {
             return 1;
         }
-        if (o1.getId() < o2.getId()) {
+        if (o1.getPk() < o2.getPk()) {
             return -1;
-        } else if (o1.getId() > o2.getId()) {
+        } else if (o1.getPk() > o2.getPk()) {
             return 1;
         }
         return 0;

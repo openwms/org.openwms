@@ -23,12 +23,12 @@ package org.openwms.tms.delegate;
 
 import java.util.List;
 
-import org.openwms.common.location.Location;
-import org.openwms.common.location.LocationGroup;
-import org.openwms.core.exception.StateChangeException;
+import org.openwms.common.CommonGateway;
+import org.openwms.common.Location;
+import org.openwms.common.LocationGroup;
+import org.openwms.tms.StateChangeException;
 import org.openwms.tms.TransportOrder;
 import org.openwms.tms.TransportOrderRepository;
-import org.openwms.tms.TransportOrderState;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,26 +38,28 @@ import org.springframework.transaction.annotation.Transactional;
 
 /**
  * A TransportOrderStarterImpl.
- * 
+ *
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  * @version $Revision$
  * @since 0.1
  */
-@Transactional(propagation = Propagation.MANDATORY, noRollbackFor = { StateChangeException.class })
+@Transactional(propagation = Propagation.MANDATORY, noRollbackFor = {StateChangeException.class})
 @Component
 public class TransportOrderStarterImpl implements TransportOrderStarter {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(TransportOrderStarterImpl.class);
     @Autowired
     private TransportOrderRepository dao;
+    @Autowired
+    private CommonGateway commonGateway;
 
     /**
      * {@inheritDoc}
      */
     @Override
     public void start(TransportOrder transportOrder) throws StateChangeException {
-        LocationGroup lg = transportOrder.getTargetLocationGroup();
-        Location loc = transportOrder.getTargetLocation();
+        LocationGroup lg = commonGateway.getLocationGroup(transportOrder.getTargetLocationGroup()).get();
+        Location loc = commonGateway.getLocation(transportOrder.getTargetLocation()).get();
         if (null == lg && null == loc) {
             // At least one target must be set
             throw new StateChangeException(
@@ -73,15 +75,14 @@ public class TransportOrderStarterImpl implements TransportOrderStarter {
         if (loc != null && !loc.isIncomingActive()) {
             throw new StateChangeException("Cannot start the TransportOrder because TargetLocation is blocked");
         }
-        List<TransportOrder> others = dao.findForTUinState(transportOrder.getTransportUnit(),
-                TransportOrderState.STARTED, TransportOrderState.INTERRUPTED);
+        List<TransportOrder> others = dao.findByTransportUnitBKAndState(transportOrder.getTransportUnitBK(), TransportOrder.State.STARTED, TransportOrder.State.INTERRUPTED);
         if (!others.isEmpty()) {
             throw new StateChangeException(
                     "Cannot start the TransportOrder because one or more active TransportOrders exist");
         }
-        transportOrder.setState(TransportOrderState.STARTED);
+        transportOrder.setState(TransportOrder.State.STARTED);
         if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("TransportOrder " + transportOrder.getId() + " started at " + transportOrder.getStartDate());
+            LOGGER.debug("TransportOrder " + transportOrder.getPk() + " started at " + transportOrder.getStartDate());
         }
     }
 }

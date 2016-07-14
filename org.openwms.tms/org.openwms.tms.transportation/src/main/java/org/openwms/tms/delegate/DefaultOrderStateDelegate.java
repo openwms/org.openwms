@@ -24,11 +24,11 @@ package org.openwms.tms.delegate;
 import java.util.Collections;
 import java.util.List;
 
-import org.openwms.common.transport.TransportUnit;
-import org.openwms.core.exception.StateChangeException;
+import org.openwms.common.CommonGateway;
+import org.openwms.common.TransportUnit;
+import org.openwms.tms.StateChangeException;
 import org.openwms.tms.TransportOrder;
 import org.openwms.tms.TransportOrderRepository;
-import org.openwms.tms.TransportOrderState;
 import org.openwms.tms.TransportStartComparator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -40,7 +40,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 /**
  * A DefaultOrderStateDelegate. Lazy instantiated, only when needed. Thus it is possible to override this bean and prevent instantiation.
- * 
+ *
  * @author <a href="mailto:russelltina@users.sourceforge.net">Tina Russell</a>
  * @version $Revision$
  * @since 0.1
@@ -53,30 +53,31 @@ public class DefaultOrderStateDelegate implements TransportOrderStateDelegate {
     private static final Logger LOGGER = LoggerFactory.getLogger(DefaultOrderStateDelegate.class);
     private TransportOrderRepository dao;
     private TransportOrderStarter starter;
+    private CommonGateway commonGateway;
 
     /**
      * Create a new DefaultOrderStateDelegate.
-     * 
-     * @param dao
-     *            TransportOrderDao is required
-     * @param starter
-     *            TransportOrderStarter is required
+     *
+     * @param dao TransportOrderDao is required
+     * @param starter TransportOrderStarter is required
+     * @param commonGateway The common gateway
      */
     @Autowired
-    public DefaultOrderStateDelegate(TransportOrderRepository dao, TransportOrderStarter starter) {
+    public DefaultOrderStateDelegate(TransportOrderRepository dao, TransportOrderStarter starter, CommonGateway commonGateway) {
         this.dao = dao;
         this.starter = starter;
+        this.commonGateway = commonGateway;
     }
 
     /**
      * {@inheritDoc}
-     * 
-     * Search for already {@link TransportOrderState#CREATED} {@link TransportOrder}s for this transportUnit and try to initialize them.
+     * <p>
+     * Search for already {@link TransportOrder.State#CREATED} {@link TransportOrder}s for this transportUnit and try to initialize them.
      * When initialization is done try to start them.
      */
     @Override
     public void afterCreation(TransportUnit transportUnit) {
-        List<TransportOrder> transportOrders = findInState(transportUnit, TransportOrderState.CREATED);
+        List<TransportOrder> transportOrders = findInState(transportUnit.getBk(), TransportOrder.State.CREATED);
         for (TransportOrder transportOrder : transportOrders) {
             boolean go = initialize(transportOrder);
             if (go) {
@@ -93,7 +94,7 @@ public class DefaultOrderStateDelegate implements TransportOrderStateDelegate {
 
     /**
      * {@inheritDoc}
-     * 
+     * <p>
      * Just search the next TransportOrder for the TransportUnit and try to start it.
      */
     @Override
@@ -103,7 +104,7 @@ public class DefaultOrderStateDelegate implements TransportOrderStateDelegate {
 
     /**
      * {@inheritDoc}
-     * 
+     * <p>
      * Just search the next TransportOrder for the TransportUnit and try to start it.
      */
     @Override
@@ -113,7 +114,7 @@ public class DefaultOrderStateDelegate implements TransportOrderStateDelegate {
 
     /**
      * {@inheritDoc}
-     * 
+     * <p>
      * Just search the next TransportOrder for the TransportUnit and try to start it.
      */
     @Override
@@ -127,8 +128,8 @@ public class DefaultOrderStateDelegate implements TransportOrderStateDelegate {
             LOGGER.warn("TransportOrder with id:" + id + " could not be loaded");
             return;
         }
-        List<TransportOrder> transportOrders = findInState(transportOrder.getTransportUnit(),
-                TransportOrderState.INITIALIZED);
+        List<TransportOrder> transportOrders = findInState(transportOrder.getTransportUnitBK(),
+                TransportOrder.State.INITIALIZED);
         Collections.sort(transportOrders, new TransportStartComparator());
         for (TransportOrder to : transportOrders) {
             try {
@@ -146,7 +147,7 @@ public class DefaultOrderStateDelegate implements TransportOrderStateDelegate {
 
     /**
      * {@inheritDoc}
-     * 
+     * <p>
      * Just search the next TransportOrder for the TransportUnit and try to start it.
      */
     @Override
@@ -156,20 +157,20 @@ public class DefaultOrderStateDelegate implements TransportOrderStateDelegate {
 
     private boolean initialize(TransportOrder transportOrder) {
         try {
-            transportOrder.setState(TransportOrderState.INITIALIZED);
+            transportOrder.setState(TransportOrder.State.INITIALIZED);
         } catch (StateChangeException sce) {
-            LOGGER.info("Could not initialize TransportOrder [" + transportOrder.getId() + "]. Message:"
+            LOGGER.info("Could not initialize TransportOrder [" + transportOrder.getPk() + "]. Message:"
                     + sce.getMessage());
             return false;
         }
-        transportOrder.setSourceLocation(transportOrder.getTransportUnit().getActualLocation());
+        transportOrder.setSourceLocation(commonGateway.getLocation(transportOrder.getTransportUnitBK()).get().toString());
         if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("TransportOrder " + transportOrder.getId() + " INITIALIZED");
+            LOGGER.debug("TransportOrder " + transportOrder.getPk() + " INITIALIZED");
         }
         return true;
     }
 
-    private List<TransportOrder> findInState(TransportUnit transportUnit, TransportOrderState... orderStates) {
-        return dao.findForTUinState(transportUnit, orderStates);
+    private List<TransportOrder> findInState(String transportUnitBK, TransportOrder.State... orderStates) {
+        return dao.findByTransportUnitBKAndState(transportUnitBK, orderStates);
     }
 }

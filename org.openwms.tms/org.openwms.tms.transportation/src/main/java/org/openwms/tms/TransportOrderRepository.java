@@ -35,13 +35,9 @@ import org.springframework.data.jpa.repository.JpaRepository;
  */
 public interface TransportOrderRepository extends JpaRepository<TransportOrder, Long> {
 
-    /**
-     * Find and retrieve a list of {@link TransportOrder}s, searched by a list of their ids.
-     *
-     * @param ids A list of technical keys of the orders to search for
-     * @return The list of {@link TransportOrder}s.
-     */
-    List<TransportOrder> findByIds(List<Long> ids);
+    List<TransportOrder> findByBk(List<String> bks);
 
     List<TransportOrder> findByTransportUnitBKAndState(String transportUnitBK, TransportOrder.State... states);
+
+    List<TransportOrder> findByTargetLocation(String targetLocation);
 }
