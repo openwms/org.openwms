@@ -19,26 +19,30 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
-package org.openwms.common;
-
-import org.springframework.cloud.netflix.feign.FeignClient;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
+package org.openwms.tms;
 
 /**
- * A CommonFeignClient.
+ * A CreateTransportOrderVO.
  *
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  * @version 1.0
  * @since 1.0
  */
-@FeignClient(url = "${common.url}", name = "COMMON-1")
-interface CommonFeignClient {
+class CreateTransportOrderVO {
 
-    @RequestMapping(method = RequestMethod.GET, value = "/locations", params = {"locationPK"})
-    Location getLocation(@RequestParam("locationPK") String locationPk);
+    private PriorityLevel priority;
+    private String target;
+    private String barcode;
 
-    @RequestMapping(method = RequestMethod.GET, value = "/locationGroups", params = {"name"})
-    LocationGroup getLocationGroup(@RequestParam("name") String name);
+    public PriorityLevel getPriority() {
+        return priority;
+    }
+
+    public String getTarget() {
+        return target;
+    }
+
+    public String getBarcode() {
+        return barcode;
+    }
 }

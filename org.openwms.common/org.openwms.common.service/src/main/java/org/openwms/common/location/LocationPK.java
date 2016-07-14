@@ -115,6 +115,10 @@ public class LocationPK implements Serializable {
         z = builder.z;
     }
 
+    public static LocationPK fromString(String s) {
+        return new LocationPK(s.split("/"));
+    }
+
     /**
      * Create a new builder instance to create LocationPK from.
      *
@@ -209,14 +213,14 @@ public class LocationPK implements Serializable {
     }
 
     /**
-     * Return a String like {AREA/AISLE/X/Y/Z}.
+     * Return a String like AREA/AISLE/X/Y/Z.
      *
      * @return String
      * @see Object#toString()
      */
     @Override
     public String toString() {
-        return "{" + this.area + "/" + this.aisle + "/" + this.x + "/" + this.y + "/" + this.z + "}";
+        return this.area + "/" + this.aisle + "/" + this.x + "/" + this.y + "/" + this.z;
     }
 
     /**

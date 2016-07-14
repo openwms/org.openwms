@@ -19,42 +19,35 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
-package org.openwms.common.location;
+package org.openwms.tms;
 
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.catalina.servlet4preview.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.util.UriTemplate;
 
 /**
- * A LocationGroupController.
+ * A TransportationController.
  *
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  * @version 1.0
  * @since 1.0
  */
 @RestController
-class LocationGroupController {
+class TransportationController {
 
     @Autowired
-    private LocationGroupService locationGroupService;
+    private TransportationService<TransportOrder> service;
 
-    @RequestMapping(value = "/locationgroups/{id}", method = RequestMethod.PATCH)
-    public void save(@PathVariable String id, @RequestParam(name = "statein", required = false) LocationGroupState stateIn, @RequestParam(name = "stateout", required = false) LocationGroupState stateOut, HttpServletRequest req, HttpServletResponse res) {
-        locationGroupService.changeGroupState(id, stateIn, stateOut);
-        res.addHeader(HttpHeaders.LOCATION, getLocationForCreatedResource(req, id));
-    }
-
-    @RequestMapping(method = RequestMethod.GET, value = "/locationgroups", params = {"name"})
-    public LocationGroup getLocationGroup(@RequestParam("name") String name) {
-        return null;
+    @RequestMapping(method = RequestMethod.POST, value = "/transportorders")
+    public void createTO(CreateTransportOrderVO vo, HttpServletRequest req, HttpServletResponse resp) {
+        TransportOrder to = service.createTransportOrder(vo.getBarcode(), vo.getTarget(), vo.getPriority());
+        resp.addHeader(HttpHeaders.LOCATION, getLocationForCreatedResource(req, to.getPersistentKey()));
     }
 
     private String getLocationForCreatedResource(javax.servlet.http.HttpServletRequest req, String objId) {

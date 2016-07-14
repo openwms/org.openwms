@@ -19,26 +19,29 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
-package org.openwms.common;
+package org.openwms.common.location;
 
-import org.springframework.cloud.netflix.feign.FeignClient;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 
 /**
- * A CommonFeignClient.
+ * A LocationController.
  *
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  * @version 1.0
  * @since 1.0
  */
-@FeignClient(url = "${common.url}", name = "COMMON-1")
-interface CommonFeignClient {
+@RestController
+class LocationController {
+
+    @Autowired
+    private LocationService<Location> locationService;
 
     @RequestMapping(method = RequestMethod.GET, value = "/locations", params = {"locationPK"})
-    Location getLocation(@RequestParam("locationPK") String locationPk);
-
-    @RequestMapping(method = RequestMethod.GET, value = "/locationGroups", params = {"name"})
-    LocationGroup getLocationGroup(@RequestParam("name") String name);
+    public Location getLocation(@RequestParam("locationPK") String locationPk) {
+        return locationService.findByLocationId(LocationPK.fromString(locationPk));
+    }
 }

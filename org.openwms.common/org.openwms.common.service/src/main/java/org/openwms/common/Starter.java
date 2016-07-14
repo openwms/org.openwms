@@ -25,6 +25,7 @@ import org.ameba.annotation.EnableAspects;
 import org.ameba.app.SolutionApp;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 
 /**
  * A Starter.
@@ -35,6 +36,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
  */
 @SpringBootApplication(scanBasePackageClasses = {Starter.class, SolutionApp.class})
 @EnableAspects
+@EnableJpaAuditing
 public class Starter {
 
     /**

@@ -31,7 +31,7 @@ import javax.persistence.TemporalType;
 import java.io.Serializable;
 import java.util.Date;
 
-import org.ameba.integration.jpa.BaseEntity;
+import org.ameba.integration.jpa.ApplicationEntity;
 
 /**
  * A TransportOrder is used to move {@code TransportUnit}s from a current {@code Location} to a target.
@@ -42,7 +42,7 @@ import org.ameba.integration.jpa.BaseEntity;
  */
 @Entity
 @Table(name = "TMS_TRANSPORT_ORDER")
-public class TransportOrder extends BaseEntity implements Serializable {
+public class TransportOrder extends ApplicationEntity implements Serializable {
 
     /** Unique business key. */
     @Column(name = "C_BK")

@@ -21,7 +21,6 @@
  */
 package org.openwms.common;
 
-import org.springframework.cloud.netflix.eureka.EnableEurekaClient;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -34,9 +33,12 @@ import org.springframework.web.bind.annotation.RestController;
  * @version 1.0
  * @since 1.0
  */
-@EnableEurekaClient
 @RestController
 public class TestCommonFeignClient implements CommonFeignClient {
+
+    TestCommonFeignClient() {
+        System.out.println("init");
+    }
 
     @RequestMapping(method = RequestMethod.GET, value = "/locations", params = {"locationPK"})
     public Location getLocation(@RequestParam("locationPK") String locationPk) {

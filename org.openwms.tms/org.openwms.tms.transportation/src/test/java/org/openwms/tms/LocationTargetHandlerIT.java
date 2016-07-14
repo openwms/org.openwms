@@ -25,7 +25,6 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.openwms.core.test.IntegrationTest;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cloud.netflix.eureka.server.EnableEurekaServer;
 import org.springframework.test.context.junit4.SpringRunner;
 
 /**
@@ -35,7 +34,6 @@ import org.springframework.test.context.junit4.SpringRunner;
  * @version 1.0
  * @since 1.0
  */
-@EnableEurekaServer
 @RunWith(SpringRunner.class)
 @IntegrationTest
 public class LocationTargetHandlerIT {

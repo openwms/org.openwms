@@ -21,12 +21,20 @@
  */
 package org.openwms;
 
+import java.nio.charset.Charset;
+import java.util.Base64;
+
+import feign.RequestInterceptor;
 import org.ameba.annotation.EnableAspects;
 import org.ameba.app.SolutionApp;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.cloud.netflix.eureka.EnableEurekaClient;
 import org.springframework.cloud.netflix.feign.EnableFeignClients;
+import org.springframework.context.annotation.Bean;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.User;
+import org.springframework.web.bind.annotation.RestController;
 
 /**
  * A Starter.
@@ -35,9 +43,11 @@ import org.springframework.cloud.netflix.feign.EnableFeignClients;
  * @version 1.0
  * @since 1.0
  */
-@EnableEurekaClient
+//@EnableEurekaServer
+//@EnableEurekaClient
 @EnableFeignClients
 @SpringBootApplication(scanBasePackageClasses = {Starter.class, SolutionApp.class})
+@RestController
 @EnableAspects
 public class Starter {
 
@@ -49,4 +59,16 @@ public class Starter {
     public static void main(String[] args) {
         SpringApplication.run(Starter.class, args);
     }
+
+    @Bean
+    public RequestInterceptor basicAuthRequestInterceptor() {
+        return (t) -> {
+            Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+            User user = (User) authentication.getPrincipal();
+            String username = user.getUsername();
+            String password = (String) authentication.getCredentials();
+            t.header("Authorization", "Basic " + Base64.getEncoder().encodeToString((username + ":" + password).getBytes(Charset.forName("UTF-8"))));
+        };
+    }
+
 }
