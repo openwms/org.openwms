@@ -27,7 +27,7 @@ import org.openwms.common.location.Location;
 import org.openwms.common.location.LocationGroup;
 import org.openwms.core.exception.StateChangeException;
 import org.openwms.tms.TransportOrder;
-import org.openwms.tms.TransportOrderDao;
+import org.openwms.tms.TransportOrderRepository;
 import org.openwms.tms.TransportOrderState;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -49,7 +49,7 @@ public class TransportOrderStarterImpl implements TransportOrderStarter {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(TransportOrderStarterImpl.class);
     @Autowired
-    private TransportOrderDao dao;
+    private TransportOrderRepository dao;
 
     /**
      * {@inheritDoc}

@@ -27,7 +27,7 @@ import java.util.List;
 import org.openwms.common.transport.TransportUnit;
 import org.openwms.core.exception.StateChangeException;
 import org.openwms.tms.TransportOrder;
-import org.openwms.tms.TransportOrderDao;
+import org.openwms.tms.TransportOrderRepository;
 import org.openwms.tms.TransportOrderState;
 import org.openwms.tms.TransportStartComparator;
 import org.slf4j.Logger;
@@ -51,7 +51,7 @@ import org.springframework.transaction.annotation.Transactional;
 public class DefaultOrderStateDelegate implements TransportOrderStateDelegate {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(DefaultOrderStateDelegate.class);
-    private TransportOrderDao dao;
+    private TransportOrderRepository dao;
     private TransportOrderStarter starter;
 
     /**
@@ -63,7 +63,7 @@ public class DefaultOrderStateDelegate implements TransportOrderStateDelegate {
      *            TransportOrderStarter is required
      */
     @Autowired
-    public DefaultOrderStateDelegate(TransportOrderDao dao, TransportOrderStarter starter) {
+    public DefaultOrderStateDelegate(TransportOrderRepository dao, TransportOrderStarter starter) {
         this.dao = dao;
         this.starter = starter;
     }

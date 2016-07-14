@@ -43,13 +43,13 @@ import org.springframework.transaction.annotation.Transactional;
  * @version $Revision$
  * @since 0.1
  * @see AbstractGenericJpaDao
- * @see org.openwms.tms.TransportOrderDao
+ * @see TransportOrderRepository
  */
 @Transactional(propagation = Propagation.MANDATORY)
-@Repository(value = TransportOrderDaoImpl.COMPONENT_NAME)
-public class TransportOrderDaoImpl extends AbstractGenericJpaDao<TransportOrder, Long> implements TransportOrderDao {
+@Repository(value = TransportOrderRepositoryImpl.COMPONENT_NAME)
+public class TransportOrderRepositoryImpl extends AbstractGenericJpaDao<TransportOrder, Long> implements TransportOrderRepository {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(TransportOrderDaoImpl.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(TransportOrderRepositoryImpl.class);
 
     /** Springs component name. */
     public static final String COMPONENT_NAME = "transportOrderDao";

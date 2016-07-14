@@ -54,7 +54,7 @@ class TransportationServiceImpl implements TransportationService<TransportOrder>
     @Autowired
     private CommonGateway commonGateway;
     @Autowired
-    private TransportOrderDao repository;
+    private TransportOrderRepository repository;
     /** 0..* voters, can be overridden and extended with XML configuration. So far we define only one (default) voter directly. */
     @Autowired(required = false)
     private List<DecisionVoter<RedirectVote>> redirectVoters;

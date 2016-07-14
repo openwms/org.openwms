@@ -64,7 +64,7 @@ public class TransportOrder extends BaseEntity implements Serializable {
     /**
      * Query to find all {@code TransportOrder}s for a particular {@code TransportUnit} in certain states. <li>Query parameter name
      * <strong>transportUnit</strong> : The {@code TransportUnit} to search for.</li> <li>Query parameter name <strong>states</strong> : A
-     * list of {@link TransportOrderState}s.</li>
+     * list of {@link TransportOrder.State}s.</li>
      */
     public static final String NQ_FIND_FOR_TU_IN_STATE = "TransportOrder.findForTuInState";
 
