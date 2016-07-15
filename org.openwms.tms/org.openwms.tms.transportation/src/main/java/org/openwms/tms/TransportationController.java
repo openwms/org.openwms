@@ -26,6 +26,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.catalina.servlet4preview.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
@@ -45,8 +46,8 @@ class TransportationController {
     private TransportationService<TransportOrder> service;
 
     @RequestMapping(method = RequestMethod.POST, value = "/transportorders")
-    public void createTO(CreateTransportOrderVO vo, HttpServletRequest req, HttpServletResponse resp) {
-        TransportOrder to = service.createTransportOrder(vo.getBarcode(), vo.getTarget(), vo.getPriority());
+    public void createTO(@RequestBody CreateTransportOrderVO vo, HttpServletRequest req, HttpServletResponse resp) {
+        TransportOrder to = service.createTransportOrder(vo.getBarcode(), vo.getTarget(), PriorityLevel.valueOf(vo.getPriority()));
         resp.addHeader(HttpHeaders.LOCATION, getLocationForCreatedResource(req, to.getPersistentKey()));
     }
 

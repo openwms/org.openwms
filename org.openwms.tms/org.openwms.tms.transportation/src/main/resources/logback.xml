@@ -12,8 +12,7 @@
         </filter>
     </appender>
 
-    <logger name="org.openwms" level="DEBUG" additivity="false"/>
-    <logger name="org.springframework" level="INFO"/>
+    <logger name="org.openwms" level="DEBUG"/>
     <logger name="org.hibernate" level="warn"/>
 
     <!-- Specialized loggers -->
@@ -30,7 +29,7 @@
     <logger name="MEASURED" level="INFO" additivity="false">
     </logger>
 
-    <root level="INFO">
+    <root level="DEBUG">
         <appender-ref ref="STDOUT"/>
     </root>
 

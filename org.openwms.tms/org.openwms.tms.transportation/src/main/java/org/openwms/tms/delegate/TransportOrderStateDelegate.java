@@ -21,8 +21,6 @@
  */
 package org.openwms.tms.delegate;
 
-import org.openwms.common.TransportUnit;
-
 /**
  * A TransportOrderStateDelegate is called after state changes on a TransportOrder happen.
  * 
@@ -35,10 +33,10 @@ public interface TransportOrderStateDelegate {
     /**
      * An action that should be triggered after a TransportOrder has been created.
      * 
-     * @param transportUnit
-     *            The {@link TransportUnit} of the corresponding TransportOrder
+     * @param pk
+     *            The primary key of the created {@code TransportOrder}
      */
-    void afterCreation(TransportUnit transportUnit);
+    void afterCreation(Long pk);
 
     /**
      * An action that should be triggered after a TransportOrder has been canceled.

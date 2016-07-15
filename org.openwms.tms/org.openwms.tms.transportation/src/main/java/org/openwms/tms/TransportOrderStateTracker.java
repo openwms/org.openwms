@@ -21,7 +21,6 @@
  */
 package org.openwms.tms;
 
-import org.openwms.common.TransportUnit;
 import org.openwms.tms.delegate.TransportOrderStateDelegate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationListener;
@@ -61,7 +60,7 @@ public class TransportOrderStateTracker implements ApplicationListener<Transport
     public void onApplicationEvent(TransportServiceEvent event) {
         switch (event.getType()) {
             case TRANSPORT_CREATED:
-                transportOrderStateDelegate.afterCreation((TransportUnit) event.getSource());
+                transportOrderStateDelegate.afterCreation((Long) event.getSource());
                 break;
             case TRANSPORT_INTERRUPTED:
                 transportOrderStateDelegate.onInterrupt((Long) event.getSource());

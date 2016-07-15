@@ -21,6 +21,8 @@
  */
 package org.openwms.tms;
 
+import java.io.Serializable;
+
 /**
  * A CreateTransportOrderVO.
  *
@@ -28,13 +30,13 @@ package org.openwms.tms;
  * @version 1.0
  * @since 1.0
  */
-class CreateTransportOrderVO {
+public class CreateTransportOrderVO implements Serializable {
 
-    private PriorityLevel priority;
+    private String priority;
     private String target;
     private String barcode;
 
-    public PriorityLevel getPriority() {
+    public String getPriority() {
         return priority;
     }
 
@@ -44,5 +46,17 @@ class CreateTransportOrderVO {
 
     public String getBarcode() {
         return barcode;
+    }
+
+    public void setPriority(String priority) {
+        this.priority = priority;
+    }
+
+    public void setTarget(String target) {
+        this.target = target;
+    }
+
+    public void setBarcode(String barcode) {
+        this.barcode = barcode;
     }
 }

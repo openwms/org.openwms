@@ -25,7 +25,6 @@ import java.util.Collections;
 import java.util.List;
 
 import org.openwms.common.CommonGateway;
-import org.openwms.common.TransportUnit;
 import org.openwms.tms.StateChangeException;
 import org.openwms.tms.TransportOrder;
 import org.openwms.tms.TransportOrderRepository;
@@ -76,8 +75,9 @@ public class DefaultOrderStateDelegate implements TransportOrderStateDelegate {
      * When initialization is done try to start them.
      */
     @Override
-    public void afterCreation(TransportUnit transportUnit) {
-        List<TransportOrder> transportOrders = findInState(transportUnit.getBk(), TransportOrder.State.CREATED);
+    public void afterCreation(Long pk) {
+        TransportOrder to = dao.findOne(pk);
+        List<TransportOrder> transportOrders = findInState(to.getTransportUnitBK(), TransportOrder.State.CREATED);
         for (TransportOrder transportOrder : transportOrders) {
             boolean go = initialize(transportOrder);
             if (go) {
