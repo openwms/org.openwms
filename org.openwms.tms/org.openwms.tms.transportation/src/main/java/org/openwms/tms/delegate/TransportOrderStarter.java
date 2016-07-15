@@ -19,25 +19,28 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
-package org.openwms.core.event;
+package org.openwms.tms.delegate;
 
-import org.springframework.context.ApplicationEvent;
+
+import org.openwms.tms.StateChangeException;
+import org.openwms.tms.TransportOrder;
 
 /**
- * A RootApplicationEvent.
- *
- * @author <a href="mailto:russelltina@users.sourceforge.net">Tina Russell</a>
+ * A TransportOrderStarter.
+ * 
+ * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  * @version $Revision$
  * @since 0.1
  */
-public class RootApplicationEvent extends ApplicationEvent {
+public interface TransportOrderStarter {
 
     /**
-     * Create a new RootApplicationEvent.
-     *
-     * @param source The event sender
+     * Call to start a {@link TransportOrder}.
+     * 
+     * @param transportOrder
+     *            The {@link TransportOrder} to start.
+     * @throws StateChangeException
+     *             when starting failed
      */
-    public RootApplicationEvent(Object source) {
-        super(source);
-    }
+    void start(TransportOrder transportOrder) throws StateChangeException;
 }

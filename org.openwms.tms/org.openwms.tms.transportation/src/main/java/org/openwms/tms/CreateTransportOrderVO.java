@@ -19,25 +19,44 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
-package org.openwms.core.event;
+package org.openwms.tms;
 
-import org.springframework.context.ApplicationEvent;
+import java.io.Serializable;
 
 /**
- * A RootApplicationEvent.
+ * A CreateTransportOrderVO.
  *
- * @author <a href="mailto:russelltina@users.sourceforge.net">Tina Russell</a>
- * @version $Revision$
- * @since 0.1
+ * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
+ * @version 1.0
+ * @since 1.0
  */
-public class RootApplicationEvent extends ApplicationEvent {
+public class CreateTransportOrderVO implements Serializable {
 
-    /**
-     * Create a new RootApplicationEvent.
-     *
-     * @param source The event sender
-     */
-    public RootApplicationEvent(Object source) {
-        super(source);
+    private String priority;
+    private String target;
+    private String barcode;
+
+    public String getPriority() {
+        return priority;
+    }
+
+    public String getTarget() {
+        return target;
+    }
+
+    public String getBarcode() {
+        return barcode;
+    }
+
+    public void setPriority(String priority) {
+        this.priority = priority;
+    }
+
+    public void setTarget(String target) {
+        this.target = target;
+    }
+
+    public void setBarcode(String barcode) {
+        this.barcode = barcode;
     }
 }

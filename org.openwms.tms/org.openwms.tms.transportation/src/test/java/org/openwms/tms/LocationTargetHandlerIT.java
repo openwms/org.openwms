@@ -19,25 +19,31 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
-package org.openwms.core.event;
+package org.openwms.tms;
 
-import org.springframework.context.ApplicationEvent;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.openwms.core.test.IntegrationTest;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.test.context.junit4.SpringRunner;
 
 /**
- * A RootApplicationEvent.
+ * A LocationTargetHandlerIT.
  *
- * @author <a href="mailto:russelltina@users.sourceforge.net">Tina Russell</a>
- * @version $Revision$
- * @since 0.1
+ * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
+ * @version 1.0
+ * @since 1.0
  */
-public class RootApplicationEvent extends ApplicationEvent {
+@RunWith(SpringRunner.class)
+@IntegrationTest
+public class LocationTargetHandlerIT {
 
-    /**
-     * Create a new RootApplicationEvent.
-     *
-     * @param source The event sender
-     */
-    public RootApplicationEvent(Object source) {
-        super(source);
+    @Autowired
+    private LocationTargetHandler lth;
+
+    public final
+    @Test
+    void test() {
+        int no = lth.getNoTOToTarget("ERR_/0000/0000/0000/0000");
     }
 }

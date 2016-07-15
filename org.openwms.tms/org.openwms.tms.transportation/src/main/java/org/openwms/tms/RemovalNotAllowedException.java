@@ -19,25 +19,27 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
-package org.openwms.core.event;
+package org.openwms.tms;
 
-import org.springframework.context.ApplicationEvent;
+import org.ameba.exception.ServiceLayerException;
 
 /**
- * A RootApplicationEvent.
- *
+ * A RemovalNotAllowedException is thrown when the caller is not allowed to remove an entity.
+ * 
  * @author <a href="mailto:russelltina@users.sourceforge.net">Tina Russell</a>
  * @version $Revision$
  * @since 0.1
  */
-public class RootApplicationEvent extends ApplicationEvent {
+public class RemovalNotAllowedException extends ServiceLayerException {
 
     /**
-     * Create a new RootApplicationEvent.
-     *
-     * @param source The event sender
+     * Create a new RemovalNotAllowedException.
+     * 
+     * @param message
+     *            Detail message
      */
-    public RootApplicationEvent(Object source) {
-        super(source);
+    public RemovalNotAllowedException(String message) {
+        super(message);
     }
+
 }

@@ -19,25 +19,38 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
-package org.openwms.core.event;
+package org.openwms.tms.exception;
 
-import org.springframework.context.ApplicationEvent;
+import java.io.Serializable;
+
+import org.ameba.exception.ServiceLayerException;
 
 /**
- * A RootApplicationEvent.
+ * A TransportOrderServiceException.
  *
  * @author <a href="mailto:russelltina@users.sourceforge.net">Tina Russell</a>
- * @version $Revision$
+ * @version 1.0
  * @since 0.1
  */
-public class RootApplicationEvent extends ApplicationEvent {
+public class TransportOrderServiceException extends ServiceLayerException implements Serializable {
 
     /**
-     * Create a new RootApplicationEvent.
+     * Create a new TransportOrderServiceException.
      *
-     * @param source The event sender
+     * @param message Detail message
      */
-    public RootApplicationEvent(Object source) {
-        super(source);
+    public TransportOrderServiceException(String message) {
+        super(message);
+    }
+
+
+    /**
+     * Create a new TransportOrderServiceException.
+     *
+     * @param message Detail message
+     * @param cause Root cause
+     */
+    public TransportOrderServiceException(String message, Throwable cause) {
+        super(message, cause);
     }
 }

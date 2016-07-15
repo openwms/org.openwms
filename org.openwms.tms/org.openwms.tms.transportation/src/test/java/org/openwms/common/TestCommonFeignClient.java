@@ -19,47 +19,35 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
-package org.openwms.common.location;
+package org.openwms.common;
 
-import javax.servlet.http.HttpServletResponse;
-
-import org.apache.catalina.servlet4preview.http.HttpServletRequest;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpHeaders;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.util.UriTemplate;
 
 /**
- * A LocationGroupController.
+ * A TestCommonFeignClient.
  *
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  * @version 1.0
  * @since 1.0
  */
 @RestController
-class LocationGroupController {
+public class TestCommonFeignClient implements CommonFeignClient {
 
-    @Autowired
-    private LocationGroupService locationGroupService;
-
-    @RequestMapping(value = "/locationgroups/{id}", method = RequestMethod.PATCH)
-    public void save(@PathVariable String id, @RequestParam(name = "statein", required = false) LocationGroupState stateIn, @RequestParam(name = "stateout", required = false) LocationGroupState stateOut, HttpServletRequest req, HttpServletResponse res) {
-        locationGroupService.changeGroupState(id, stateIn, stateOut);
-        res.addHeader(HttpHeaders.LOCATION, getLocationForCreatedResource(req, id));
+    TestCommonFeignClient() {
+        System.out.println("init");
     }
 
-    @RequestMapping(method = RequestMethod.GET, value = "/locationgroups", params = {"name"})
+    @RequestMapping(method = RequestMethod.GET, value = "/locations", params = {"locationPK"})
+    public Location getLocation(@RequestParam("locationPK") String locationPk) {
+        return null;
+    }
+
+    @RequestMapping(method = RequestMethod.GET, value = "/locationGroups", params = {"name"})
     public LocationGroup getLocationGroup(@RequestParam("name") String name) {
         return null;
     }
 
-    private String getLocationForCreatedResource(javax.servlet.http.HttpServletRequest req, String objId) {
-        StringBuffer url = req.getRequestURL();
-        UriTemplate template = new UriTemplate(url.append("/{objId}/").toString());
-        return template.expand(objId).toASCIIString();
-    }
 }

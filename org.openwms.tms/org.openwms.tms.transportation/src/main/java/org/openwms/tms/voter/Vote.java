@@ -19,25 +19,16 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
-package org.openwms.core.event;
-
-import org.springframework.context.ApplicationEvent;
+package org.openwms.tms.voter;
 
 /**
- * A RootApplicationEvent.
+ * A Vote stores all information used by {@link DecisionVoter}s to vote for or against an action that shall be executed. Acts as a
+ * superclass for certain votes.
  *
- * @author <a href="mailto:russelltina@users.sourceforge.net">Tina Russell</a>
- * @version $Revision$
+ * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
+ * @version 1.0
  * @since 0.1
  */
-public class RootApplicationEvent extends ApplicationEvent {
+public class Vote {
 
-    /**
-     * Create a new RootApplicationEvent.
-     *
-     * @param source The event sender
-     */
-    public RootApplicationEvent(Object source) {
-        super(source);
-    }
 }

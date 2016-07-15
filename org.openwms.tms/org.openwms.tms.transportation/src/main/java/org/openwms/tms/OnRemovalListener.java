@@ -19,25 +19,25 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
-package org.openwms.core.event;
-
-import org.springframework.context.ApplicationEvent;
+package org.openwms.tms;
 
 /**
- * A RootApplicationEvent.
+ * An OnRemovalListener is able to hook in the lifecycle of an entity class. A class implementing this interface is called before an entity
+ * of type <code>T</code> is removed.
  *
+ * @param <T> Any entity
  * @author <a href="mailto:russelltina@users.sourceforge.net">Tina Russell</a>
  * @version $Revision$
  * @since 0.1
  */
-public class RootApplicationEvent extends ApplicationEvent {
+public interface OnRemovalListener<T> {
 
     /**
-     * Create a new RootApplicationEvent.
+     * Do something prior the <code>entity</code> instance is been removed.
      *
-     * @param source The event sender
+     * @param entity The instance to be removed.
+     * @return <code>true</code> if removal is allowed, otherwise <code>false</code>
+     * @throws RemovalNotAllowedException When it is not allowed to remove the entity, because depending items exist
      */
-    public RootApplicationEvent(Object source) {
-        super(source);
-    }
+    void preRemove(T entity) throws RemovalNotAllowedException;
 }

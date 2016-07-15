@@ -19,25 +19,45 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
-package org.openwms.core.event;
-
-import org.springframework.context.ApplicationEvent;
+package org.openwms.common;
 
 /**
- * A RootApplicationEvent.
+ * A Location.
  *
- * @author <a href="mailto:russelltina@users.sourceforge.net">Tina Russell</a>
- * @version $Revision$
- * @since 0.1
+ * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
+ * @version 1.0
+ * @since 1.0
  */
-public class RootApplicationEvent extends ApplicationEvent {
+public class Location {
+
+    private String locationId;
+
+    private boolean infeedBlocked;
+    private boolean incomingActive;
+
+    public boolean isInfeedBlocked() {
+        return infeedBlocked;
+    }
+
+    public void setInfeedBlocked(boolean infeedBlocked) {
+        this.infeedBlocked = infeedBlocked;
+    }
 
     /**
-     * Create a new RootApplicationEvent.
+     * Return the {@code locationId}.
      *
-     * @param source The event sender
+     * @return String locationId
      */
-    public RootApplicationEvent(Object source) {
-        super(source);
+    @Override
+    public String toString() {
+        return locationId;
+    }
+
+    public boolean isIncomingActive() {
+        return incomingActive;
+    }
+
+    public void setIncomingActive(boolean incomingActive) {
+        this.incomingActive = incomingActive;
     }
 }

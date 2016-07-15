@@ -86,11 +86,6 @@
         </dependency>
         <dependency>
             <groupId>${project.groupId}</groupId>
-            <artifactId>org.openwms.common.domain</artifactId>
-            <version>${common.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>${project.groupId}</groupId>
             <artifactId>org.openwms.common.service</artifactId>
             <version>${common.version}</version>
         </dependency>

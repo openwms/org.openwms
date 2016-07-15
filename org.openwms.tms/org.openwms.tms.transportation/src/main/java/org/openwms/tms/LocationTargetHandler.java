@@ -19,32 +19,42 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
-package org.openwms.common;
+package org.openwms.tms;
 
-import org.ameba.annotation.EnableAspects;
-import org.ameba.app.SolutionApp;
-import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
+import java.util.Optional;
+
+import org.openwms.common.CommonGateway;
+import org.openwms.common.Location;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 /**
- * A Starter.
+ * A LocationTargetHandler.
  *
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  * @version 1.0
  * @since 1.0
  */
-@SpringBootApplication(scanBasePackageClasses = {Starter.class, SolutionApp.class})
-@EnableAspects
-@EnableJpaAuditing
-public class Starter {
+@Component
+class LocationTargetHandler implements TargetHandler {
+
+    @Autowired
+    private CommonGateway gateway;
+    @Autowired
+    private TransportOrderRepository repository;
 
     /**
-     * Boot up!
+     * Get the number of {@code TransportOrder}s that are on the way to the specific {@code target}.
      *
-     * @param args Some args
+     * @param target The target to search for
+     * @return The number of TransportOrders
      */
-    public static void main(String[] args) {
-        SpringApplication.run(Starter.class, args);
+    @Override
+    public int getNoTOToTarget(String target) {
+        Optional<Location> opt = gateway.getLocation(target);
+        if (opt.isPresent()) {
+            return repository.findByTargetLocation(target).size();
+        }
+        return 0;
     }
 }

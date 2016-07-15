@@ -19,25 +19,26 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
-package org.openwms.core.event;
+package org.openwms.common;
 
-import org.springframework.context.ApplicationEvent;
+import org.springframework.cloud.netflix.feign.FeignClient;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
 /**
- * A RootApplicationEvent.
+ * A CommonFeignClient.
  *
- * @author <a href="mailto:russelltina@users.sourceforge.net">Tina Russell</a>
- * @version $Revision$
- * @since 0.1
+ * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
+ * @version 1.0
+ * @since 1.0
  */
-public class RootApplicationEvent extends ApplicationEvent {
+@FeignClient(url = "${common.url}", name = "COMMON-1")
+interface CommonFeignClient {
 
-    /**
-     * Create a new RootApplicationEvent.
-     *
-     * @param source The event sender
-     */
-    public RootApplicationEvent(Object source) {
-        super(source);
-    }
+    @RequestMapping(method = RequestMethod.GET, value = "/locations", params = {"locationPK"})
+    Location getLocation(@RequestParam("locationPK") String locationPk);
+
+    @RequestMapping(method = RequestMethod.GET, value = "/locationGroups", params = {"name"})
+    LocationGroup getLocationGroup(@RequestParam("name") String name);
 }

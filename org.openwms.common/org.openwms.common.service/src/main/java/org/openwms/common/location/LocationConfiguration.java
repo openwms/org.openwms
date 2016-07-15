@@ -19,25 +19,32 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
-package org.openwms.core.event;
+package org.openwms.common.location;
 
-import org.springframework.context.ApplicationEvent;
+import java.util.Arrays;
+
+import org.springframework.boot.CommandLineRunner;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Profile;
 
 /**
- * A RootApplicationEvent.
+ * A LocationConfiguration.
  *
- * @author <a href="mailto:russelltina@users.sourceforge.net">Tina Russell</a>
- * @version $Revision$
- * @since 0.1
+ * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
+ * @version 1.0
+ * @since 1.0
  */
-public class RootApplicationEvent extends ApplicationEvent {
+@Profile("default")
+@Configuration
+class LocationConfiguration {
 
-    /**
-     * Create a new RootApplicationEvent.
-     *
-     * @param source The event sender
-     */
-    public RootApplicationEvent(Object source) {
-        super(source);
+    @Bean
+    CommandLineRunner runner(LocationRepository lr) {
+        return args -> {
+            lr.deleteAll();
+            Arrays.asList("ERR_/0000/0000/0000/0000,AKL_/0001/0000/0000/0000".split(","))
+                    .forEach(x -> lr.save(new Location(LocationPK.fromString(x))));
+        };
     }
 }

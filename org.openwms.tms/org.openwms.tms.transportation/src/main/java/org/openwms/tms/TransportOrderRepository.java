@@ -19,25 +19,25 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
-package org.openwms.core.event;
+package org.openwms.tms;
 
-import org.springframework.context.ApplicationEvent;
+import java.util.List;
+
+import org.springframework.data.jpa.repository.JpaRepository;
 
 /**
- * A RootApplicationEvent.
+ * A TransportOrderRepository provides functionality regarding {@link TransportOrder} entity classes.
  *
- * @author <a href="mailto:russelltina@users.sourceforge.net">Tina Russell</a>
- * @version $Revision$
+ * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
+ * @version 1.0
+ * @see TransportOrder
  * @since 0.1
  */
-public class RootApplicationEvent extends ApplicationEvent {
+public interface TransportOrderRepository extends JpaRepository<TransportOrder, Long> {
 
-    /**
-     * Create a new RootApplicationEvent.
-     *
-     * @param source The event sender
-     */
-    public RootApplicationEvent(Object source) {
-        super(source);
-    }
+    List<TransportOrder> findByBk(List<String> bks);
+
+    List<TransportOrder> findByTransportUnitBKAndState(String transportUnitBK, TransportOrder.State... states);
+
+    List<TransportOrder> findByTargetLocation(String targetLocation);
 }

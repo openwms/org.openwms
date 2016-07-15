@@ -19,25 +19,44 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
-package org.openwms.core.event;
+package org.openwms.tms.voter;
 
-import org.springframework.context.ApplicationEvent;
+
+import org.ameba.exception.ServiceLayerException;
 
 /**
- * A RootApplicationEvent.
- *
- * @author <a href="mailto:russelltina@users.sourceforge.net">Tina Russell</a>
+ * A DeniedException is thrown by a {@link DecisionVoter}s in case a business action is not allowed to be executed.
+ * 
+ * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  * @version $Revision$
  * @since 0.1
  */
-public class RootApplicationEvent extends ApplicationEvent {
+public class DeniedException extends ServiceLayerException {
 
     /**
-     * Create a new RootApplicationEvent.
-     *
-     * @param source The event sender
+     * Create a new DeniedException.
+     * 
+     * @param message
+     *            Detail message
      */
-    public RootApplicationEvent(Object source) {
-        super(source);
+    private DeniedException(String message) {
+        super(message);
+    }
+
+    /**
+     * Create a new DeniedException.
+     * 
+     * @param message
+     *            Detail message
+     * @param cause
+     *            Root cause
+     */
+    public DeniedException(String message, Throwable cause) {
+        super(message, cause);
+    }
+
+
+    public static final DeniedException with(String msg) {
+        return new DeniedException(msg);
     }
 }

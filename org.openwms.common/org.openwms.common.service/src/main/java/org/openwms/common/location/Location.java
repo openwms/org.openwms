@@ -462,6 +462,6 @@ public class Location extends BaseEntity implements Serializable {
      */
     @Override
     public String toString() {
-        return this.locationId.toString();
+        return locationId.toString();
     }
 }
