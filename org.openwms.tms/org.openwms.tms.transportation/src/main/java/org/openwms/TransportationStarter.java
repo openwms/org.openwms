@@ -31,9 +31,6 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.netflix.feign.EnableFeignClients;
 import org.springframework.context.annotation.Bean;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
@@ -46,10 +43,10 @@ import org.springframework.web.bind.annotation.RestController;
 //@EnableEurekaServer
 //@EnableEurekaClient
 @EnableFeignClients
-@SpringBootApplication(scanBasePackageClasses = {Starter.class, SolutionApp.class})
+@SpringBootApplication(scanBasePackageClasses = {TransportationStarter.class, SolutionApp.class})
 @RestController
 @EnableAspects
-public class Starter {
+public class TransportationStarter {
 
     /**
      * Boot up!
@@ -57,16 +54,16 @@ public class Starter {
      * @param args Some args
      */
     public static void main(String[] args) {
-        SpringApplication.run(Starter.class, args);
+        SpringApplication.run(TransportationStarter.class, args);
     }
 
     @Bean
     public RequestInterceptor basicAuthRequestInterceptor() {
         return (t) -> {
-            Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-            User user = (User) authentication.getPrincipal();
-            String username = user.getUsername();
-            String password = (String) authentication.getCredentials();
+            //Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+            //User user = (User) authentication.getPrincipal();
+            String username = "user";//user.getUsername();
+            String password = "sa";//(String) authentication.getCredentials();
             t.header("Authorization", "Basic " + Base64.getEncoder().encodeToString((username + ":" + password).getBytes(Charset.forName("UTF-8"))));
         };
     }

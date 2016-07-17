@@ -22,7 +22,9 @@
 package org.openwms.common.location;
 
 import javax.servlet.http.HttpServletResponse;
+import java.util.Optional;
 
+import org.ameba.exception.NotFoundException;
 import org.apache.catalina.servlet4preview.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
@@ -46,15 +48,16 @@ class LocationGroupController {
     @Autowired
     private LocationGroupService locationGroupService;
 
-    @RequestMapping(value = "/locationgroups/{id}", method = RequestMethod.PATCH)
+    @RequestMapping(value = "/locationGroups/{id}", method = RequestMethod.PATCH)
     public void save(@PathVariable String id, @RequestParam(name = "statein", required = false) LocationGroupState stateIn, @RequestParam(name = "stateout", required = false) LocationGroupState stateOut, HttpServletRequest req, HttpServletResponse res) {
         locationGroupService.changeGroupState(id, stateIn, stateOut);
         res.addHeader(HttpHeaders.LOCATION, getLocationForCreatedResource(req, id));
     }
 
-    @RequestMapping(method = RequestMethod.GET, value = "/locationgroups", params = {"name"})
+    @RequestMapping(method = RequestMethod.GET, value = "/locationGroups", params = {"name"})
     public LocationGroup getLocationGroup(@RequestParam("name") String name) {
-        return null;
+        Optional<LocationGroup> opt = locationGroupService.findByName(name);
+        return opt.orElseThrow(NotFoundException::new);
     }
 
     private String getLocationForCreatedResource(javax.servlet.http.HttpServletRequest req, String objId) {

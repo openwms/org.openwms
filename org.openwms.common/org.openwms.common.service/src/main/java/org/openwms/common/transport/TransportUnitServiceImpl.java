@@ -27,6 +27,7 @@ import java.util.Comparator;
 import java.util.List;
 
 import org.ameba.annotation.TxService;
+import org.ameba.exception.NotFoundException;
 import org.ameba.exception.ServiceLayerException;
 import org.openwms.common.location.Location;
 import org.openwms.common.location.LocationPK;
@@ -199,6 +200,6 @@ class TransportUnitServiceImpl implements TransportUnitService<TransportUnit> {
     @Override
     @Transactional(readOnly = true)
     public TransportUnit findByBarcode(Barcode barcode) {
-        return dao.findByBarcode(barcode).get();
+        return dao.findByBarcode(barcode).orElseThrow(NotFoundException::new);
     }
 }

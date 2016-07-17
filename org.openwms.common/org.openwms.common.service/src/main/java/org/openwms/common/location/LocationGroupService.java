@@ -21,6 +21,8 @@
  */
 package org.openwms.common.location;
 
+import java.util.Optional;
+
 /**
  * A LocationGroupService offers some useful methods regarding the general handling of {@link LocationGroup}s. <p> This interface is
  * declared generic typed that implementation classes can use any extension of {@link LocationGroup}s. </p>
@@ -36,6 +38,8 @@ public interface LocationGroupService<T extends LocationGroup> {
      * Tries to change the infeed and outfeed state of a {@code Location Group}.
      */
     void changeGroupState(String id, LocationGroupState stateIn, LocationGroupState stateOut);
+
+    Optional<LocationGroup> findByName(String name);
 
     /**
      * Returns a hierarchical Tree of all {@link LocationGroup}s. Used by the user interface to show all {@link LocationGroup}s in a tree

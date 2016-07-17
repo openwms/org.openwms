@@ -21,40 +21,38 @@
  */
 package org.openwms.common;
 
-import java.util.Optional;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
+import org.ameba.annotation.EnableAspects;
+import org.ameba.app.SolutionApp;
+import org.ameba.mapping.BeanMapper;
+import org.ameba.mapping.DozerMapperImpl;
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.annotation.Bean;
+import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 
 /**
- * A HttpCommonGateway.
+ * A Starter.
  *
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  * @version 1.0
  * @since 1.0
  */
-@Component
-class HttpCommonGateway implements CommonGateway {
+@SpringBootApplication(scanBasePackageClasses = {CommonStarter.class, SolutionApp.class})
+@EnableAspects
+@EnableJpaAuditing
+public class CommonStarter {
 
-    @Autowired
-    private CommonFeignClient commonFeignClient;
-
-    @Override
-    public Optional<LocationGroup> getLocationGroup(String target) {
-        try {
-            return Optional.ofNullable(commonFeignClient.getLocationGroup(target));
-        } catch (Exception ex) {
-            return Optional.empty();
-        }
+    /**
+     * Boot up!
+     *
+     * @param args Some args
+     */
+    public static void main(String[] args) {
+        SpringApplication.run(CommonStarter.class, args);
     }
 
-    @Override
-    public Optional<Location> getLocation(String target) {
-        return Optional.ofNullable(commonFeignClient.getLocation(target));
-    }
-
-    @Override
-    public Optional<TransportUnit> getTransportUnit(String transportUnitBK) {
-        return Optional.ofNullable(commonFeignClient.getTransportUnit(transportUnitBK));
+    public
+    @Bean BeanMapper beanMapper() {
+        return new DozerMapperImpl("classpath:/META-INF/dozer/common-bean-mappings.xml");
     }
 }

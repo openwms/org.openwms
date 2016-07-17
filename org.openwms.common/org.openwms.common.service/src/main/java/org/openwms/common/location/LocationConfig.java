@@ -19,42 +19,32 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
-package org.openwms.common;
+package org.openwms.common.location;
 
-import java.util.Optional;
+import java.util.Arrays;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
+import org.springframework.boot.CommandLineRunner;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Profile;
 
 /**
- * A HttpCommonGateway.
+ * A LocationConfiguration.
  *
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  * @version 1.0
  * @since 1.0
  */
-@Component
-class HttpCommonGateway implements CommonGateway {
+@Profile("default")
+@Configuration
+class LocationConfig {
 
-    @Autowired
-    private CommonFeignClient commonFeignClient;
-
-    @Override
-    public Optional<LocationGroup> getLocationGroup(String target) {
-        try {
-            return Optional.ofNullable(commonFeignClient.getLocationGroup(target));
-        } catch (Exception ex) {
-            return Optional.empty();
-        }
-    }
-
-    @Override
-    public Optional<Location> getLocation(String target) {
-        return Optional.ofNullable(commonFeignClient.getLocation(target));
-    }
-
-    @Override
-    public Optional<TransportUnit> getTransportUnit(String transportUnitBK) {
-        return Optional.ofNullable(commonFeignClient.getTransportUnit(transportUnitBK));
+    @Bean
+    CommandLineRunner locationRunner(LocationRepository lr) {
+        return args -> {
+            lr.deleteAll();
+            Arrays.asList("ERR_/0000/0000/0000/0000,AKL_/0001/0000/0000/0000".split(","))
+                    .forEach(x -> lr.save(new Location(LocationPK.fromString(x))));
+        };
     }
 }

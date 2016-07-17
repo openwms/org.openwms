@@ -13,23 +13,29 @@
     </appender>
 
     <logger name="org.openwms" level="DEBUG"/>
-    <logger name="org.hibernate" level="warn"/>
+    <logger name="org.hibernate" level="WARN"/>
 
     <!-- Specialized loggers -->
     <logger name="PRESENTATION_LAYER_EXCEPTION" level="ERROR" additivity="false">
+        <appender-ref ref="STDOUT"/>
     </logger>
     <logger name="SERVICE_LAYER_ACCESS" level="INFO" additivity="false">
+        <appender-ref ref="STDOUT"/>
     </logger>
     <logger name="SERVICE_LAYER_EXCEPTION" level="ERROR" additivity="false">
+        <appender-ref ref="STDOUT"/>
     </logger>
     <logger name="INTEGRATION_LAYER_ACCESS" level="INFO" additivity="false">
+        <appender-ref ref="STDOUT"/>
     </logger>
     <logger name="INTEGRATION_LAYER_EXCEPTION" level="ERROR" additivity="false">
+        <appender-ref ref="STDOUT"/>
     </logger>
     <logger name="MEASURED" level="INFO" additivity="false">
+        <appender-ref ref="STDOUT"/>
     </logger>
 
-    <root level="DEBUG">
+    <root level="INFO">
         <appender-ref ref="STDOUT"/>
     </root>
 

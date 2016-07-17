@@ -19,32 +19,40 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
-package org.openwms.common.location;
+package org.openwms.common.transport;
 
 import java.util.Arrays;
 
+import org.openwms.common.location.LocationPK;
+import org.openwms.common.location.LocationService;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Profile;
+import org.springframework.context.annotation.DependsOn;
 
 /**
- * A LocationConfiguration.
+ * A TransportConfig.
  *
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  * @version 1.0
  * @since 1.0
  */
-@Profile("default")
 @Configuration
-class LocationConfiguration {
+class TransportConfig {
 
     @Bean
-    CommandLineRunner runner(LocationRepository lr) {
+    @DependsOn("locationRunner")
+    CommandLineRunner transportRunner(TransportUnitRepository tur, TransportUnitTypeRepository tutr, LocationService ls) {
+        TransportUnitType tut = tutr.save(new TransportUnitType(("Carton")));
         return args -> {
-            lr.deleteAll();
-            Arrays.asList("ERR_/0000/0000/0000/0000,AKL_/0001/0000/0000/0000".split(","))
-                    .forEach(x -> lr.save(new Location(LocationPK.fromString(x))));
+            tur.deleteAll();
+            Arrays.asList("4711,4712,4713".split(","))
+                    .forEach(bc -> {
+                        TransportUnit tu = new TransportUnit(new Barcode(bc));
+                        tu.setTransportUnitType(tut);
+                        tu.setActualLocation(ls.findByLocationId(LocationPK.fromString("ERR_/0000/0000/0000/0000")));
+                        tur.save(tu);
+                    });
         };
     }
 }

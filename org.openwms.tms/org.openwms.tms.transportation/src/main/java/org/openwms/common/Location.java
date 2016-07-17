@@ -21,6 +21,8 @@
  */
 package org.openwms.common;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+
 /**
  * A Location.
  *
@@ -31,9 +33,17 @@ package org.openwms.common;
 public class Location {
 
     private String locationId;
-
     private boolean infeedBlocked;
     private boolean incomingActive;
+
+    @JsonCreator
+    public Location() {
+    }
+
+    @JsonCreator
+    public Location(String locationId) {
+        this.locationId = locationId;
+    }
 
     public boolean isInfeedBlocked() {
         return infeedBlocked;
@@ -41,6 +51,14 @@ public class Location {
 
     public void setInfeedBlocked(boolean infeedBlocked) {
         this.infeedBlocked = infeedBlocked;
+    }
+
+    public boolean isIncomingActive() {
+        return incomingActive;
+    }
+
+    public void setIncomingActive(boolean incomingActive) {
+        this.incomingActive = incomingActive;
     }
 
     /**
@@ -53,11 +71,4 @@ public class Location {
         return locationId;
     }
 
-    public boolean isIncomingActive() {
-        return incomingActive;
-    }
-
-    public void setIncomingActive(boolean incomingActive) {
-        this.incomingActive = incomingActive;
-    }
 }
