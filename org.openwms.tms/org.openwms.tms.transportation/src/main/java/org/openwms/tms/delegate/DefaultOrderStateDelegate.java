@@ -164,7 +164,7 @@ public class DefaultOrderStateDelegate implements TransportOrderStateDelegate {
                     + sce.getMessage());
             return false;
         }
-        transportOrder.setSourceLocation(commonGateway.getTransportUnit(transportOrder.getTransportUnitBK()).orElseThrow(NotFoundException::new).getSourceLocationAsString());
+        transportOrder.setSourceLocation(commonGateway.getTransportUnit(transportOrder.getTransportUnitBK()).orElseThrow(NotFoundException::new).getActualLocation().toString());
         if (LOGGER.isDebugEnabled()) {
             LOGGER.debug("TransportOrder " + transportOrder.getPk() + " INITIALIZED");
         }

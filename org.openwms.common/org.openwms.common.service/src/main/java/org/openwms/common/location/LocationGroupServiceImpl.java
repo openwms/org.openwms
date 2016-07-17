@@ -22,6 +22,7 @@
 package org.openwms.common.location;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.ameba.annotation.TxService;
 import org.ameba.exception.NotFoundException;
@@ -51,6 +52,11 @@ class LocationGroupServiceImpl implements LocationGroupService<LocationGroup> {
         LocationGroup locationGroup = locationGroupRepository.findOne(Long.valueOf(id));
         NotFoundException.throwIfNull(locationGroup, String.format("No LocationGroup with id %s found", id));
         locationGroup.changeState(stateIn, stateOut);
+    }
+
+    @Override
+    public Optional<LocationGroup> findByName(String name) {
+        return Optional.ofNullable(locationGroupRepository.findByName(name));
     }
 
     /**

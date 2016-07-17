@@ -19,42 +19,35 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
-package org.openwms.common;
+package org.openwms.common.transport;
 
-import java.util.Optional;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
+import java.io.Serializable;
 
 /**
- * A HttpCommonGateway.
+ * A TransportUnitVO.
  *
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  * @version 1.0
  * @since 1.0
  */
-@Component
-class HttpCommonGateway implements CommonGateway {
+public class TransportUnitVO implements Serializable{
 
-    @Autowired
-    private CommonFeignClient commonFeignClient;
+    String barcode;
+    String actualLocation;
 
-    @Override
-    public Optional<LocationGroup> getLocationGroup(String target) {
-        try {
-            return Optional.ofNullable(commonFeignClient.getLocationGroup(target));
-        } catch (Exception ex) {
-            return Optional.empty();
-        }
+    public String getBarcode() {
+        return barcode;
     }
 
-    @Override
-    public Optional<Location> getLocation(String target) {
-        return Optional.ofNullable(commonFeignClient.getLocation(target));
+    public void setBarcode(String barcode) {
+        this.barcode = barcode;
     }
 
-    @Override
-    public Optional<TransportUnit> getTransportUnit(String transportUnitBK) {
-        return Optional.ofNullable(commonFeignClient.getTransportUnit(transportUnitBK));
+    public String getActualLocation() {
+        return actualLocation;
+    }
+
+    public void setActualLocation(String actualLocation) {
+        this.actualLocation = actualLocation;
     }
 }

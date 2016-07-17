@@ -31,7 +31,7 @@ package org.openwms.common;
 public class TransportUnit implements Identifiable {
 
     private String bk;
-    private Location sourceLocation;
+    private Location actualLocation;
 
     @Override
     public String getId() {
@@ -46,15 +46,11 @@ public class TransportUnit implements Identifiable {
         this.bk = bk;
     }
 
-    public Location getSourceLocation() {
-        return sourceLocation;
+    public Location getActualLocation() {
+        return actualLocation;
     }
 
-    public void setSourceLocation(Location sourceLocation) {
-        this.sourceLocation = sourceLocation;
-    }
-
-    public String getSourceLocationAsString() {
-        return sourceLocation.toString();
+    public void setActualLocation(Location actualLocation) {
+        this.actualLocation = actualLocation;
     }
 }

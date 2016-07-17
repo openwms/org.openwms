@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mappings xmlns="http://dozer.sourceforge.net" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://dozer.sourceforge.net
+          http://dozer.sourceforge.net/schema/beanmapping.xsd">
+
+	<configuration>
+		<stop-on-errors>true</stop-on-errors>
+		<date-format>MM/dd/yyyy HH:mm</date-format>
+		<wildcard>true</wildcard>
+		<custom-converters>
+			<converter type="org.ameba.mapping.LocalDateTimeConverter">
+				<class-a>java.time.LocalDateTime</class-a>
+				<class-b>java.time.LocalDateTime</class-b>
+			</converter>
+        </custom-converters>
+	</configuration>
+
+    <mapping>
+		<class-a>org.openwms.common.transport.TransportUnitVO</class-a>
+		<class-b>org.openwms.common.transport.TransportUnit</class-b>
+        <field>
+            <a is-accessible="true">barcode</a>
+            <b is-accessible="true">barcode</b>
+        </field>
+		<field>
+			<a is-accessible="true">actualLocation</a>
+			<b is-accessible="true">actualLocation</b>
+		</field>
+    </mapping>
+
+</mappings>

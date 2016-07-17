@@ -78,11 +78,6 @@ public class TransportUnit extends BaseEntity {
     @Column(name = "C_ACTUAL_LOCATION_DATE")
     private Date actualLocationDate;
 
-    /** Date of last inventory check. */
-    @Temporal(TemporalType.TIMESTAMP)
-    @Column(name = "C_INVENTORY_DATE")
-    private Date inventoryDate;
-
     /** Weight of the {@code TransportUnit}. */
     @Embedded
     @AttributeOverride(name = "quantity", column = @Column(name = "C_WEIGHT", length = CoreTypeDefinitions.QUANTITY_LENGTH))
@@ -116,6 +111,11 @@ public class TransportUnit extends BaseEntity {
     /** The {@code User} who performed the last inventory action on the {@code TransportUnit}. */
     @Column(name = "C_INVENTORY_USER")
     private String inventoryUser;
+
+    /** Date of last inventory check. */
+    @Temporal(TemporalType.TIMESTAMP)
+    @Column(name = "C_INVENTORY_DATE")
+    private Date inventoryDate;
 
     /** A set of all child {@code TransportUnit}s, ordered by id. */
     @OneToMany(mappedBy = "parent", cascade = {CascadeType.MERGE, CascadeType.PERSIST})
@@ -255,6 +255,9 @@ public class TransportUnit extends BaseEntity {
      * @return The timestamp of the last inventory check of the {@code TransportUnit}.
      */
     public Date getInventoryDate() {
+        if (inventoryDate == null) {
+            return null;
+        }
         return new Date(this.inventoryDate.getTime());
     }
 
@@ -273,7 +276,7 @@ public class TransportUnit extends BaseEntity {
      * @return The current weight of the {@code TransportUnit}
      */
     public Weight getWeight() {
-        return this.weight;
+        return weight;
     }
 
     /**

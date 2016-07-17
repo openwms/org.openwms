@@ -23,8 +23,11 @@ package org.openwms.common;
 
 import org.ameba.annotation.EnableAspects;
 import org.ameba.app.SolutionApp;
+import org.ameba.mapping.BeanMapper;
+import org.ameba.mapping.DozerMapperImpl;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.annotation.Bean;
 import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 
 /**
@@ -46,5 +49,10 @@ public class CommonStarter {
      */
     public static void main(String[] args) {
         SpringApplication.run(CommonStarter.class, args);
+    }
+
+    public
+    @Bean BeanMapper beanMapper() {
+        return new DozerMapperImpl("classpath:/META-INF/dozer/common-bean-mappings.xml");
     }
 }

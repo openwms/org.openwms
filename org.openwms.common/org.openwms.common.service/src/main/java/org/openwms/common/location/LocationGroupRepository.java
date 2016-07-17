@@ -32,4 +32,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
  * @see LocationGroup
  */
 interface LocationGroupRepository extends JpaRepository<LocationGroup, Long> {
+
+    LocationGroup findByName(String name);
 }
