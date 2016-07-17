@@ -50,4 +50,8 @@ public class TestCommonFeignClient implements CommonFeignClient {
         return null;
     }
 
+    @Override
+    public TransportUnit getTransportUnit(String transportUnitBK) {
+        return null;
+    }
 }

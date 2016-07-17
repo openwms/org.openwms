@@ -19,32 +19,29 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
-package org.openwms.common;
+package org.openwms.common.transport;
 
-import org.ameba.annotation.EnableAspects;
-import org.ameba.app.SolutionApp;
-import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 
 /**
- * A Starter.
+ * A TransportUnitController.
  *
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  * @version 1.0
  * @since 1.0
  */
-@SpringBootApplication(scanBasePackageClasses = {Starter.class, SolutionApp.class})
-@EnableAspects
-@EnableJpaAuditing
-public class Starter {
+@RestController
+public class TransportUnitController {
 
-    /**
-     * Boot up!
-     *
-     * @param args Some args
-     */
-    public static void main(String[] args) {
-        SpringApplication.run(Starter.class, args);
+    @Autowired
+    private TransportUnitService<TransportUnit> service;
+
+    @RequestMapping(method = RequestMethod.GET, value = "/transportUnits", params = {"bk"})
+    public TransportUnit getTransportUnit(@RequestParam("bk") String transportUnitBK) {
+        return service.findByBarcode(new Barcode(transportUnitBK));
     }
 }

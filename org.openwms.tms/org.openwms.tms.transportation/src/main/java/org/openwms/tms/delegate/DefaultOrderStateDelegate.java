@@ -24,6 +24,7 @@ package org.openwms.tms.delegate;
 import java.util.Collections;
 import java.util.List;
 
+import org.ameba.exception.NotFoundException;
 import org.openwms.common.CommonGateway;
 import org.openwms.tms.StateChangeException;
 import org.openwms.tms.TransportOrder;
@@ -163,7 +164,7 @@ public class DefaultOrderStateDelegate implements TransportOrderStateDelegate {
                     + sce.getMessage());
             return false;
         }
-        transportOrder.setSourceLocation(commonGateway.getLocation(transportOrder.getTransportUnitBK()).get().toString());
+        transportOrder.setSourceLocation(commonGateway.getTransportUnit(transportOrder.getTransportUnitBK()).orElseThrow(NotFoundException::new).getSourceLocationAsString());
         if (LOGGER.isDebugEnabled()) {
             LOGGER.debug("TransportOrder " + transportOrder.getPk() + " INITIALIZED");
         }
@@ -171,6 +172,6 @@ public class DefaultOrderStateDelegate implements TransportOrderStateDelegate {
     }
 
     private List<TransportOrder> findInState(String transportUnitBK, TransportOrder.State... orderStates) {
-        return dao.findByTransportUnitBKAndState(transportUnitBK, orderStates);
+        return dao.findByTransportUnitBKAndStates(transportUnitBK, orderStates);
     }
 }

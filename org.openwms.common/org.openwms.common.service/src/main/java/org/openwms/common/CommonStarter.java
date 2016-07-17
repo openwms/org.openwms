@@ -21,36 +21,30 @@
  */
 package org.openwms.common;
 
-import java.util.Optional;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
+import org.ameba.annotation.EnableAspects;
+import org.ameba.app.SolutionApp;
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 
 /**
- * A HttpCommonGateway.
+ * A Starter.
  *
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  * @version 1.0
  * @since 1.0
  */
-@Component
-class HttpCommonGateway implements CommonGateway {
+@SpringBootApplication(scanBasePackageClasses = {CommonStarter.class, SolutionApp.class})
+@EnableAspects
+@EnableJpaAuditing
+public class CommonStarter {
 
-    @Autowired
-    private CommonFeignClient commonFeignClient;
-
-    @Override
-    public Optional<LocationGroup> getLocationGroup(String target) {
-        return Optional.of(commonFeignClient.getLocationGroup(target));
-    }
-
-    @Override
-    public Optional<Location> getLocation(String target) {
-        return Optional.of(commonFeignClient.getLocation(target));
-    }
-
-    @Override
-    public Optional<TransportUnit> getTransportUnit(String transportUnitBK) {
-        return Optional.of(commonFeignClient.getTransportUnit(transportUnitBK));
+    /**
+     * Boot up!
+     *
+     * @param args Some args
+     */
+    public static void main(String[] args) {
+        SpringApplication.run(CommonStarter.class, args);
     }
 }

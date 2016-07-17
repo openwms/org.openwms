@@ -75,7 +75,7 @@ class TransportUnitRemovalListener implements OnRemovalListener<TransportUnit> {
         if (LOGGER.isDebugEnabled()) {
             LOGGER.debug("Trying to cancel and remove already created but not started TransportOrders");
         }
-        List<TransportOrder> transportOrders = repository.findByTransportUnitBKAndState(transportUnit.getBk(), TransportOrder.State.CREATED,
+        List<TransportOrder> transportOrders = repository.findByTransportUnitBKAndStates(transportUnit.getBk(), TransportOrder.State.CREATED,
                 TransportOrder.State.INITIALIZED);
         if (!transportOrders.isEmpty()) {
             for (TransportOrder transportOrder : transportOrders) {
@@ -100,7 +100,7 @@ class TransportUnitRemovalListener implements OnRemovalListener<TransportUnit> {
         if (LOGGER.isDebugEnabled()) {
             LOGGER.debug("Trying to unlink finished and failed TransportOrders for TransportUnit: " + transportUnit);
         }
-        List<TransportOrder> transportOrders = repository.findByTransportUnitBKAndState(transportUnit.getBk(), TransportOrder.State.FINISHED,
+        List<TransportOrder> transportOrders = repository.findByTransportUnitBKAndStates(transportUnit.getBk(), TransportOrder.State.FINISHED,
                 TransportOrder.State.ONFAILURE);
         if (!transportOrders.isEmpty()) {
             for (TransportOrder transportOrder : transportOrders) {
@@ -116,7 +116,7 @@ class TransportUnitRemovalListener implements OnRemovalListener<TransportUnit> {
     }
 
     protected void unlinkCanceledOrders(TransportUnit transportUnit) {
-        List<TransportOrder> transportOrders = repository.findByTransportUnitBKAndState(transportUnit.getBk(), TransportOrder.State.CANCELED);
+        List<TransportOrder> transportOrders = repository.findByTransportUnitBKAndStates(transportUnit.getBk(), TransportOrder.State.CANCELED);
         if (!transportOrders.isEmpty()) {
             for (TransportOrder transportOrder : transportOrders) {
                 transportOrder.setProblem(new Problem("TransportUnit " + transportUnit

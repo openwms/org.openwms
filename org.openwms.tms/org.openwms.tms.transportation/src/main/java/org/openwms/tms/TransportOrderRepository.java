@@ -24,6 +24,7 @@ package org.openwms.tms;
 import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
 
 /**
  * A TransportOrderRepository provides functionality regarding {@link TransportOrder} entity classes.
@@ -37,7 +38,8 @@ public interface TransportOrderRepository extends JpaRepository<TransportOrder, 
 
     List<TransportOrder> findByBk(List<String> bks);
 
-    List<TransportOrder> findByTransportUnitBKAndState(String transportUnitBK, TransportOrder.State... states);
+    @Query("select to from TransportOrder to where to.transportUnitBK = ?1 and to.state in ?2")
+    List<TransportOrder> findByTransportUnitBKAndStates(String transportUnitBK, TransportOrder.State... states);
 
     List<TransportOrder> findByTargetLocation(String targetLocation);
 }

@@ -41,4 +41,7 @@ interface CommonFeignClient {
 
     @RequestMapping(method = RequestMethod.GET, value = "/locationGroups", params = {"name"})
     LocationGroup getLocationGroup(@RequestParam("name") String name);
+
+    @RequestMapping(method = RequestMethod.GET, value = "/transportUnits", params = {"bk"})
+    TransportUnit getTransportUnit(@RequestParam("bk") String transportUnitBK);
 }

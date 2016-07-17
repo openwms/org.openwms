@@ -75,7 +75,7 @@ public class TransportOrderStarterImpl implements TransportOrderStarter {
         if (loc != null && !loc.isIncomingActive()) {
             throw new StateChangeException("Cannot start the TransportOrder because TargetLocation is blocked");
         }
-        List<TransportOrder> others = dao.findByTransportUnitBKAndState(transportOrder.getTransportUnitBK(), TransportOrder.State.STARTED, TransportOrder.State.INTERRUPTED);
+        List<TransportOrder> others = dao.findByTransportUnitBKAndStates(transportOrder.getTransportUnitBK(), TransportOrder.State.STARTED, TransportOrder.State.INTERRUPTED);
         if (!others.isEmpty()) {
             throw new StateChangeException(
                     "Cannot start the TransportOrder because one or more active TransportOrders exist");

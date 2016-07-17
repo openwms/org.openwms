@@ -75,12 +75,10 @@ interface TransportUnitService<T extends TransportUnit> {
     List<T> findAll();
 
     /**
-     * Find and return a {@link TransportUnit} with a particular {@link Barcode} .
+     * Find and return a {@link TransportUnit} with a particular {@link Barcode}.
      *
      * @param barcode {@link Barcode} of the {@link TransportUnit} to search for
-     * @return The {@link TransportUnit} or <code>null</code> when no {@link TransportUnit} with this <code>barcode</code> exists
-     * @deprecated Move to UI specific interface
+     * @return The {@link TransportUnit} or {@literal null} when no {@link TransportUnit} with this {@link Barcode} exists
      */
-    @Deprecated
     T findByBarcode(Barcode barcode);
 }

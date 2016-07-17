@@ -35,4 +35,6 @@ public interface CommonGateway {
     Optional<LocationGroup> getLocationGroup(String target);
 
     Optional<Location> getLocation(String target);
+
+    Optional<TransportUnit> getTransportUnit(String transportUnitBK);
 }
