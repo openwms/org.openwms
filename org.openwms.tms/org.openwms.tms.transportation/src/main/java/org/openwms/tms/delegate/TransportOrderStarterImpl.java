@@ -85,7 +85,7 @@ class TransportOrderStarterImpl implements TransportOrderStarter {
         }
         transportOrder.setState(TransportOrder.State.STARTED);
         if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("TransportOrder " + transportOrder.getPk() + " started at " + transportOrder.getStartDate());
+            LOGGER.debug("TransportOrder " + transportOrder.getPk() + " STARTED at " + transportOrder.getStartDate());
         }
     }
 }

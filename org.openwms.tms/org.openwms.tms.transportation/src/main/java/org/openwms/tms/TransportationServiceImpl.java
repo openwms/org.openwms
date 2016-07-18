@@ -117,13 +117,12 @@ class TransportationServiceImpl implements TransportationService<TransportOrder>
      */
     @Override
     public TransportOrder createTransportOrder(String barcode, String target, PriorityLevel priority) {
+        if (barcode == null) {
+            throw new TransportOrderServiceException("Barcode cannot be null when creating a TransportOrder");
+        }
         if (LOGGER.isDebugEnabled()) {
             LOGGER.debug("Create TransportOrder with Barcode " + barcode + ", to Target " + target
                     + ", with Priority " + priority + " ...");
-        }
-
-        if (barcode == null) {
-            throw new TransportOrderServiceException("Barcode cannot be null when creating a TransportOrder");
         }
         TransportOrder transportOrder = new TransportOrder();
         transportOrder.setTransportUnitBK(barcode);
