@@ -86,6 +86,6 @@ class ObjectFactory {
      * @return The instance
      */
     public static TransportUnitType createTransportUnitType(String type) {
-        return new TransportUnitType((type));
+        return new TransportUnitType(type);
     }
 }

@@ -22,6 +22,7 @@
 package org.openwms.tms.delegate;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.openwms.common.CommonGateway;
 import org.openwms.common.Location;
@@ -37,19 +38,19 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 /**
- * A TransportOrderStarterImpl.
+ * A TransportOrderStarterImpl is responsible to start initialized {@link TransportOrder}s.
  *
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
- * @version $Revision$
+ * @version 1.0
  * @since 0.1
  */
 @Transactional(propagation = Propagation.MANDATORY, noRollbackFor = {StateChangeException.class})
 @Component
-public class TransportOrderStarterImpl implements TransportOrderStarter {
+class TransportOrderStarterImpl implements TransportOrderStarter {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(TransportOrderStarterImpl.class);
     @Autowired
-    private TransportOrderRepository dao;
+    private TransportOrderRepository repository;
     @Autowired
     private CommonGateway commonGateway;
 
@@ -58,24 +59,26 @@ public class TransportOrderStarterImpl implements TransportOrderStarter {
      */
     @Override
     public void start(TransportOrder transportOrder) throws StateChangeException {
-        LocationGroup lg = commonGateway.getLocationGroup(transportOrder.getTargetLocationGroup()).get();
-        Location loc = commonGateway.getLocation(transportOrder.getTargetLocation()).get();
-        if (null == lg && null == loc) {
+        Optional<LocationGroup> lg = commonGateway.getLocationGroup(transportOrder.getTargetLocationGroup());
+        Optional<Location> loc = commonGateway.getLocation(transportOrder.getTargetLocation());
+        if (!lg.isPresent() && !loc.isPresent()) {
             // At least one target must be set
             throw new StateChangeException(
-                    "Neither a LocationGroup nor a Location are set as target, thus impossible to start the TransportOrder");
+                    "Neither a valid target LocationGroup nor a Location are set, hence it is not possible to start the TransportOrder");
         }
-        if (lg != null && lg.isInfeedBlocked() && loc != null && !loc.isIncomingActive()) {
-            // At least one target must be free for infeed
-            throw new StateChangeException("Cannot start the TransportOrder because both targets are blocked");
-        }
-        if (lg != null && lg.isInfeedBlocked()) {
+        if (lg.isPresent() && lg.get().isInfeedBlocked()) {
             throw new StateChangeException("Cannot start the TransportOrder because TargetLocationGroup is blocked");
         }
-        if (loc != null && !loc.isIncomingActive()) {
+        if (loc.isPresent() && !loc.get().isIncomingActive()) {
             throw new StateChangeException("Cannot start the TransportOrder because TargetLocation is blocked");
         }
-        List<TransportOrder> others = dao.findByTransportUnitBKAndStates(transportOrder.getTransportUnitBK(), TransportOrder.State.STARTED, TransportOrder.State.INTERRUPTED);
+        if (lg.isPresent()) {
+            transportOrder.setTargetLocationGroup(lg.get().toString());
+        }
+        if (loc.isPresent()) {
+            transportOrder.setTargetLocation(loc.get().toString());
+        }
+        List<TransportOrder> others = repository.findByTransportUnitBKAndStates(transportOrder.getTransportUnitBK(), TransportOrder.State.STARTED, TransportOrder.State.INTERRUPTED);
         if (!others.isEmpty()) {
             throw new StateChangeException(
                     "Cannot start the TransportOrder because one or more active TransportOrders exist");

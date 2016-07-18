@@ -55,12 +55,17 @@ public class TransportUnitIT {
     private TestEntityManager entityManager;
     @Autowired
     private TransportUnitRepository repository;
+    @Autowired
+    private TransportUnitTypeRepository typeRepository;
 
     private TransportUnitType knownType;
     private Location knownLocation1;
 
     @Before
     public void onBefore() {
+        repository.deleteAll();
+        typeRepository.deleteAll();
+        entityManager.flush();
         knownType = ObjectFactory.createTransportUnitType("Carton");
         knownLocation1 = Location.create(new LocationPK("KNO4", "KNO4", "KNO4", "KNO4", "KNO4"));
         entityManager.persist(knownType);
@@ -72,9 +77,9 @@ public class TransportUnitIT {
     @Test
     void testCreation() {
         TransportUnit transportUnit = ObjectFactory.createTransportUnit("NEVER_PERSISTED");
-
         transportUnit.setTransportUnitType(knownType);
         transportUnit.setActualLocation(knownLocation1);
+        repository.save(transportUnit);
     }
 
     public final
