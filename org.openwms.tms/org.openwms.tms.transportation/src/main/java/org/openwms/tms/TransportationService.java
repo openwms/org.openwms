@@ -50,8 +50,9 @@ public interface TransportationService<T extends TransportOrder> {
      * @param priority A {@link PriorityLevel} of the new {@link TransportOrder}
      * @return The newly created {@link TransportOrder}
      */
-    T createTransportOrder(String barcode, String target, PriorityLevel priority);
+    T create(String barcode, String target, PriorityLevel priority);
 
+    T update(T transportOrder);
     /**
      * Try to turn a list of {@link TransportOrder}s into the given {@code state}.
      *
@@ -60,13 +61,4 @@ public interface TransportationService<T extends TransportOrder> {
      * @return A list of business keys of that {@link TransportOrder}s that have not been changed
      */
     Collection<String> cancelTransportOrders(Collection<String> bks, TransportOrder.State state);
-
-    /**
-     * Try to redirect a list of {@link TransportOrder}s to a new target {@code LocationGroup}.
-     *
-     * @param bks The business keys of {@link TransportOrder}s to be redirected
-     * @param target The new target of the {@link TransportOrder}s
-     * @return A list of business keys of that {@link TransportOrder} that couldn't be redirected
-     */
-    Collection<String> redirectTransportOrders(Collection<String> bks, String target);
 }

@@ -29,6 +29,7 @@ import org.ameba.annotation.EnableAspects;
 import org.ameba.app.SolutionApp;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.cloud.client.circuitbreaker.EnableCircuitBreaker;
 import org.springframework.cloud.netflix.feign.EnableFeignClients;
 import org.springframework.context.annotation.Bean;
 import org.springframework.web.bind.annotation.RestController;
@@ -43,6 +44,7 @@ import org.springframework.web.bind.annotation.RestController;
 //@EnableEurekaServer
 //@EnableEurekaClient
 @EnableFeignClients
+@EnableCircuitBreaker
 @SpringBootApplication(scanBasePackageClasses = {TransportationStarter.class, SolutionApp.class})
 @RestController
 @EnableAspects

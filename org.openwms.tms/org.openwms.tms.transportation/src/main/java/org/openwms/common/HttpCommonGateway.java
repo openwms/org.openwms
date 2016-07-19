@@ -23,6 +23,8 @@ package org.openwms.common;
 
 import java.util.Optional;
 
+import feign.FeignException;
+import org.ameba.exception.ServiceLayerException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -42,9 +44,13 @@ class HttpCommonGateway implements CommonGateway {
     @Override
     public Optional<LocationGroup> getLocationGroup(String target) {
         try {
-            return Optional.ofNullable(commonFeignClient.getLocationGroup(target));
+            return Optional.of(commonFeignClient.getLocationGroup(target));
         } catch (Exception ex) {
-            return Optional.empty();
+            if (translate(ex) == 404) {
+                return Optional.empty();
+            } else {
+                throw new ServiceLayerException(ex.getMessage());
+            }
         }
     }
 
@@ -55,6 +61,21 @@ class HttpCommonGateway implements CommonGateway {
 
     @Override
     public Optional<TransportUnit> getTransportUnit(String transportUnitBK) {
-        return Optional.ofNullable(commonFeignClient.getTransportUnit(transportUnitBK));
+        try {
+            return Optional.of(commonFeignClient.getTransportUnit(transportUnitBK));
+        } catch (Exception ex) {
+            if (translate(ex) == 404) {
+                return Optional.empty();
+            } else {
+                throw new ServiceLayerException(ex.getMessage());
+            }
+        }
+    }
+
+    private int translate(Exception ex) {
+        if (ex.getCause() instanceof FeignException) {
+            return ((FeignException) ex.getCause()).status();
+        }
+        throw new ServiceLayerException(ex.getMessage());
     }
 }

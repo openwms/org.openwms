@@ -32,9 +32,20 @@ import java.io.Serializable;
  */
 public class CreateTransportOrderVO implements Serializable {
 
-    private String priority;
-    private String target;
+    private String pKey;
     private String barcode;
+    private String priority;
+    private Problem problem;
+    private String state;
+    private String target;
+
+    public String getPKey() {
+        return pKey;
+    }
+
+    public void setPKey(String bk) {
+        this.pKey = pKey;
+    }
 
     public String getPriority() {
         return priority;
@@ -58,5 +69,21 @@ public class CreateTransportOrderVO implements Serializable {
 
     public void setBarcode(String barcode) {
         this.barcode = barcode;
+    }
+
+    public Problem getProblem() {
+        return problem;
+    }
+
+    public void setProblem(Problem problem) {
+        this.problem = problem;
+    }
+
+    public String getState() {
+        return state;
+    }
+
+    public void setState(String state) {
+        this.state = state;
     }
 }

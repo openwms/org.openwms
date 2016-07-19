@@ -308,6 +308,15 @@ public class TransportOrder extends ApplicationEntity implements Serializable {
         this.sourceLocation = sourceLocation;
     }
 
+    /**
+     * Check whether a problem was reported on this TO.
+     *
+     * @return {@literal true} if so, otherwise {@literal false}
+     */
+    boolean hasProblem() {
+        return problem != null;
+    }
+
     public static enum State {
         /** Status of new created {@code TransportOrder}s. */
         CREATED(10),
