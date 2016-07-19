@@ -26,6 +26,7 @@ import java.util.Collection;
 import java.util.List;
 
 import org.ameba.annotation.TxService;
+import org.ameba.exception.NotFoundException;
 import org.openwms.common.CommonGateway;
 import org.openwms.tms.exception.TransportOrderServiceException;
 import org.openwms.tms.voter.DecisionVoter;
@@ -35,6 +36,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
+import org.springframework.util.Assert;
 
 /**
  * A TransportService.
@@ -63,39 +65,6 @@ class TransportationServiceImpl implements TransportationService<TransportOrder>
 
     /**
      * {@inheritDoc}
-     *
-     * @throws TransportOrderServiceException when both targets are {@literal null}
-     */
-    @Override
-    public Collection<String> redirectTransportOrders(Collection<String> bks, String target) {
-
-        if (null == target || target.isEmpty()) {
-            throw new TransportOrderServiceException("Both targets can may not be null, at least one target must be specififed");
-        }
-        List<String> failure = new ArrayList<>(bks.size());
-        List<TransportOrder> transportOrders = repository.findByBk(new ArrayList<>(bks));
-        for (TransportOrder transportOrder : transportOrders) {
-            try {
-                if (null != redirectVoters) {
-                    RedirectVote rv = new RedirectVote(target, transportOrder);
-                    // TODO [openwms]: 13/07/16 the concept of a voter is misused in that a voter changes the state of a TO
-                    for (DecisionVoter<RedirectVote> voter : redirectVoters) {
-                        voter.voteFor(rv);
-                    }
-                }
-            } catch (DeniedException de) {
-                LOGGER.error("Could not redirect TransportOrder with ID [" + transportOrder.getPk() + "], reason is: "
-                        + de.getMessage());
-                Problem problem = new Problem(de.getMessage());
-                transportOrder.setProblem(problem);
-                failure.add(transportOrder.getPk().toString());
-            }
-        }
-        return failure;
-    }
-
-    /**
-     * {@inheritDoc}
      */
     @Override
     public int getNoTransportOrdersToTarget(String target, String... states) {
@@ -116,7 +85,7 @@ class TransportationServiceImpl implements TransportationService<TransportOrder>
      * can be found.
      */
     @Override
-    public TransportOrder createTransportOrder(String barcode, String target, PriorityLevel priority) {
+    public TransportOrder create(String barcode, String target, PriorityLevel priority) {
         if (barcode == null) {
             throw new TransportOrderServiceException("Barcode cannot be null when creating a TransportOrder");
         }
@@ -138,6 +107,44 @@ class TransportationServiceImpl implements TransportationService<TransportOrder>
         return transportOrder;
     }
 
+    @Override
+    public TransportOrder update(TransportOrder transportOrder) {
+        TransportOrder saved = repository.findByPKey(transportOrder.getPersistentKey()).orElseThrow(NotFoundException::new);
+
+        if (saved.getTransportUnitBK().equalsIgnoreCase(transportOrder.getTransportUnitBK())){
+            tuChange(saved, transportOrder);
+        }
+
+        if (saved.getPriority() != transportOrder.getPriority()) {
+            prioritize(saved, transportOrder.getPriority());
+        }
+
+        if (transportOrder.hasProblem()) {
+            reportProblem(saved, transportOrder.getProblem());
+        }
+
+        if (saved.getState() != transportOrder.getState()) {
+            stateChange(saved, transportOrder.getState());
+        }
+        return saved;
+    }
+
+    private void stateChange(TransportOrder saved, TransportOrder.State state) {
+
+    }
+
+    private void reportProblem(TransportOrder saved, Problem problem) {
+
+    }
+
+    private void prioritize(TransportOrder saved, PriorityLevel priority) {
+
+    }
+
+    private void tuChange(TransportOrder saved, TransportOrder transportOrder) {
+
+    }
+
     /**
      * {@inheritDoc}
      */
@@ -157,6 +164,30 @@ class TransportationServiceImpl implements TransportationService<TransportOrder>
                 LOGGER.error("Could not turn TransportOrder: [" + transportOrder.getPk() + "] into " + state
                         + " with reason : " + sce.getMessage());
                 Problem problem = new Problem(sce.getMessage());
+                transportOrder.setProblem(problem);
+                failure.add(transportOrder.getPk().toString());
+            }
+        }
+        return failure;
+    }
+
+    private Collection<String> redirectTransportOrders(Collection<String> bks, String target) {
+        Assert.hasText(target, "At least one target to re-direct must be specififed");
+        List<String> failure = new ArrayList<>(bks.size());
+        List<TransportOrder> transportOrders = repository.findByBk(new ArrayList<>(bks));
+        for (TransportOrder transportOrder : transportOrders) {
+            try {
+                if (null != redirectVoters) {
+                    RedirectVote rv = new RedirectVote(target, transportOrder);
+                    // TODO [openwms]: 13/07/16 the concept of a voter is misused in that a voter changes the state of a TO
+                    for (DecisionVoter<RedirectVote> voter : redirectVoters) {
+                        voter.voteFor(rv);
+                    }
+                }
+            } catch (DeniedException de) {
+                LOGGER.error("Could not redirect TransportOrder with ID [" + transportOrder.getPk() + "], reason is: "
+                        + de.getMessage());
+                Problem problem = new Problem(de.getMessage());
                 transportOrder.setProblem(problem);
                 failure.add(transportOrder.getPk().toString());
             }

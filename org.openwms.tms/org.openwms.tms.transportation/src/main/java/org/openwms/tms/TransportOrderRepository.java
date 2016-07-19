@@ -22,6 +22,7 @@
 package org.openwms.tms;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -35,6 +36,8 @@ import org.springframework.data.jpa.repository.Query;
  * @since 0.1
  */
 public interface TransportOrderRepository extends JpaRepository<TransportOrder, Long> {
+
+    Optional<TransportOrder> findByPKey(String pKey);
 
     List<TransportOrder> findByBk(List<String> bks);
 

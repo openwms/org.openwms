@@ -23,6 +23,7 @@ package org.openwms.tms;
 
 import javax.servlet.http.HttpServletResponse;
 
+import org.ameba.mapping.BeanMapper;
 import org.apache.catalina.servlet4preview.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
@@ -43,15 +44,23 @@ import org.springframework.web.util.UriTemplate;
 class TransportationController {
 
     @Autowired
+    private BeanMapper m;
+    @Autowired
     private TransportationService<TransportOrder> service;
 
-    @RequestMapping(method = RequestMethod.POST, value = "/transportorders")
+    @RequestMapping(method = RequestMethod.POST, value = "/transportOrders")
     public void createTO(@RequestBody CreateTransportOrderVO vo, HttpServletRequest req, HttpServletResponse resp) {
-        TransportOrder to = service.createTransportOrder(vo.getBarcode(), vo.getTarget(), PriorityLevel.valueOf(vo.getPriority()));
-        resp.addHeader(HttpHeaders.LOCATION, getLocationForCreatedResource(req, to.getPersistentKey()));
+        TransportOrder to = service.create(vo.getBarcode(), vo.getTarget(), PriorityLevel.valueOf(vo.getPriority()));
+        resp.addHeader(HttpHeaders.LOCATION, getCreatedResourceURI(req, to.getPersistentKey()));
     }
 
-    private String getLocationForCreatedResource(javax.servlet.http.HttpServletRequest req, String objId) {
+    @RequestMapping(method = RequestMethod.PATCH, value = "/transportOrders")
+    public void redirectTOs(@RequestBody CreateTransportOrderVO vo, HttpServletRequest req, HttpServletResponse resp) {
+        TransportOrder to = service.update(m.map(vo, TransportOrder.class));
+        resp.addHeader(HttpHeaders.LOCATION, getCreatedResourceURI(req, to.getPersistentKey()));
+    }
+
+    private String getCreatedResourceURI(HttpServletRequest req, String objId) {
         StringBuffer url = req.getRequestURL();
         UriTemplate template = new UriTemplate(url.append("/{objId}/").toString());
         return template.expand(objId).toASCIIString();
