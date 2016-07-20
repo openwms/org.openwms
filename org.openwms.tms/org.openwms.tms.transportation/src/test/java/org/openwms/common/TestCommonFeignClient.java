@@ -21,6 +21,7 @@
  */
 package org.openwms.common;
 
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -52,6 +53,11 @@ public class TestCommonFeignClient implements CommonFeignClient {
 
     @Override
     public TransportUnit getTransportUnit(String transportUnitBK) {
+        return null;
+    }
+
+    @Override
+    public TransportUnit getTransportUnit(@RequestParam("bk") String transportUnitBK, @RequestBody TransportUnit tu) {
         return null;
     }
 }
