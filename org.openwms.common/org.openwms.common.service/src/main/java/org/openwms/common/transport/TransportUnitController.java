@@ -23,6 +23,7 @@ package org.openwms.common.transport;
 
 import org.ameba.mapping.BeanMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -48,4 +49,10 @@ public class TransportUnitController {
     public @ResponseBody TransportUnitVO getTransportUnit(@RequestParam("bk") String transportUnitBK) {
         return mapper.map(service.findByBarcode(new Barcode(transportUnitBK)), TransportUnitVO.class);
     }
+
+    @RequestMapping(method = RequestMethod.PATCH, value = "/transportUnits", params = {"bk"})
+    public @ResponseBody TransportUnitVO getTransportUnit(@RequestParam("bk") String transportUnitBK, @RequestBody TransportUnitVO tu) {
+        return null;
+    }
+
 }

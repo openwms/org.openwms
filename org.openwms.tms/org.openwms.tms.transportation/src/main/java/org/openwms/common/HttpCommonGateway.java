@@ -72,6 +72,11 @@ class HttpCommonGateway implements CommonGateway {
         }
     }
 
+    @Override
+    public void updateTransportUnit(TransportUnit savedTU) {
+
+    }
+
     private int translate(Exception ex) {
         if (ex.getCause() instanceof FeignException) {
             return ((FeignException) ex.getCause()).status();

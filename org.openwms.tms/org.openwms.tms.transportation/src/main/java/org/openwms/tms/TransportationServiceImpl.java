@@ -62,6 +62,8 @@ class TransportationServiceImpl implements TransportationService<TransportOrder>
     private List<DecisionVoter<RedirectVote>> redirectVoters;
     @Autowired(required = false)
     private List<TargetResolver> targetResolvers;
+    @Autowired(required = false)
+    private List<UpdateFunction> updateFunctions;
 
     /**
      * {@inheritDoc}
@@ -111,7 +113,11 @@ class TransportationServiceImpl implements TransportationService<TransportOrder>
     public TransportOrder update(TransportOrder transportOrder) {
         TransportOrder saved = repository.findByPKey(transportOrder.getPersistentKey()).orElseThrow(NotFoundException::new);
 
-        if (saved.getTransportUnitBK().equalsIgnoreCase(transportOrder.getTransportUnitBK())){
+        for (UpdateFunction up : updateFunctions) {
+            up.update(saved, transportOrder);
+        }
+
+        if (saved.getTransportUnitBK().equalsIgnoreCase(transportOrder.getTransportUnitBK())) {
             tuChange(saved, transportOrder);
         }
 
@@ -126,7 +132,14 @@ class TransportationServiceImpl implements TransportationService<TransportOrder>
         if (saved.getState() != transportOrder.getState()) {
             stateChange(saved, transportOrder.getState());
         }
+
+        if (saved.hasTargetChanged(transportOrder)) {
+            targetChange(saved, transportOrder);
+        }
         return saved;
+    }
+
+    private void targetChange(TransportOrder saved, TransportOrder transportOrder) {
     }
 
     private void stateChange(TransportOrder saved, TransportOrder.State state) {
