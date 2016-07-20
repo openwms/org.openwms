@@ -317,6 +317,17 @@ public class TransportOrder extends ApplicationEntity implements Serializable {
         return problem != null;
     }
 
+    /**
+     * Check whether one of the targets has changed between this TransportOrder and the one passed as {@code transportOrder}.
+     *
+     * @param transportOrder The TransportOrder to verify against
+     * @return {@literal true} if targets has changed, otherwise {@literal false}
+     */
+    boolean hasTargetChanged(TransportOrder transportOrder) {
+        return ((targetLocation != null && !targetLocation.equals(transportOrder.getTargetLocation())) ||
+                (targetLocationGroup != null && targetLocationGroup.equals(transportOrder.getTargetLocationGroup())));
+    }
+
     public static enum State {
         /** Status of new created {@code TransportOrder}s. */
         CREATED(10),

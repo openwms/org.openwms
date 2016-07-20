@@ -19,51 +19,16 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
-package org.openwms.common;
+package org.openwms.tms;
 
 /**
- * A TransportUnit.
+ * A UpdateFunction.
  *
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  * @version 1.0
  * @since 1.0
  */
-public class TransportUnit implements Identifiable {
+interface UpdateFunction {
 
-    private String bk;
-    private Location actualLocation;
-    private String target;
-
-    @Override
-    public String getId() {
-        return null;
-    }
-
-    public String getBk() {
-        return bk;
-    }
-
-    public void setBk(String bk) {
-        this.bk = bk;
-    }
-
-    public Location getActualLocation() {
-        return actualLocation;
-    }
-
-    public void setActualLocation(Location actualLocation) {
-        this.actualLocation = actualLocation;
-    }
-
-    public String getTarget() {
-        return target;
-    }
-
-    public void setTarget(String target) {
-        this.target = target;
-    }
-
-    public void clearTarget() {
-        this.target = "";
-    }
+    TransportOrder update(TransportOrder saved, TransportOrder toUpdate);
 }

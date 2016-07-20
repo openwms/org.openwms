@@ -37,4 +37,6 @@ public interface CommonGateway {
     Optional<Location> getLocation(String target);
 
     Optional<TransportUnit> getTransportUnit(String transportUnitBK);
+
+    void updateTransportUnit(TransportUnit savedTU);
 }
