@@ -74,7 +74,11 @@ class HttpCommonGateway implements CommonGateway {
 
     @Override
     public void updateTransportUnit(TransportUnit savedTU) {
-
+        try {
+            commonFeignClient.patchTransportUnit(savedTU.getBk(), savedTU);
+        } catch (Exception ex) {
+            throw new ServiceLayerException(ex.getMessage());
+        }
     }
 
     private int translate(Exception ex) {

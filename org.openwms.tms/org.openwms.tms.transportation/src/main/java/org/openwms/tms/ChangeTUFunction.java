@@ -21,21 +21,22 @@
  */
 package org.openwms.tms;
 
-import org.ameba.exception.NotFoundException;
+import java.util.Optional;
+
 import org.openwms.common.CommonGateway;
 import org.openwms.common.TransportUnit;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 /**
- * A TUChangeFunction is responsible to change a {@link TransportOrder}s assigned {@code TransportUnit}.
+ * A ChangeTUFunction is responsible to change a {@link TransportOrder}s assigned {@code TransportUnit}.
  *
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  * @version 1.0
  * @since 1.0
  */
 @Component
-class TUChangeFunction implements UpdateFunction {
+class ChangeTUFunction implements UpdateFunction {
 
     @Autowired
     private CommonGateway gateway;
@@ -44,13 +45,19 @@ class TUChangeFunction implements UpdateFunction {
     public TransportOrder update(TransportOrder saved, TransportOrder toUpdate) {
         if (saved.getTransportUnitBK().equalsIgnoreCase(toUpdate.getTransportUnitBK())) {
             // change TU.targetLocation
-            gateway.getTransportUnit(saved.getTransportUnitBK()).ifPresent(TransportUnit::clearTarget);
-            TransportUnit savedTU = gateway.getTransportUnit(toUpdate.getTransportUnitBK()).orElseThrow(NotFoundException::new);
+
+            TransportUnit savedTU = new TransportUnit();
+            savedTU.setBk(toUpdate.getTransportUnitBK());
             savedTU.setTarget(toUpdate.getTargetLocationGroup());
-
-
             // synchronizing ...
             gateway.updateTransportUnit(savedTU);
+
+            Optional<TransportUnit> tuOpt = gateway.getTransportUnit(saved.getTransportUnitBK());
+            if (tuOpt.isPresent()){
+                TransportUnit tu = tuOpt.get();
+                tu.clearTarget();
+                gateway.updateTransportUnit(tu);
+            }
 
         }
         return saved;
