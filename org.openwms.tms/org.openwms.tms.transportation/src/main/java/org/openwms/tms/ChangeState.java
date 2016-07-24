@@ -21,20 +21,27 @@
  */
 package org.openwms.tms;
 
+import org.springframework.stereotype.Component;
+
 /**
- * A UpdateFunction.
+ * A ChangeState.
  *
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  * @version 1.0
  * @since 1.0
  */
-public interface UpdateFunction {
+@Component
+class ChangeState implements UpdateFunction {
 
     /**
-     * Validate and change the requested values of the {code saved} instance.
-     *
-     * @param saved The currently persisted TransportOrder
-     * @param toUpdate The TransportOrder holding the new values to save
+     * {@inheritDoc}
      */
-    void update(TransportOrder saved, TransportOrder toUpdate);
+    @Override
+    public void update(TransportOrder saved, TransportOrder toUpdate) {
+        if (saved.getState() != toUpdate.getState()) {
+
+            // Request to change TO's state...
+            saved.setState(toUpdate.getState());
+        }
+    }
 }

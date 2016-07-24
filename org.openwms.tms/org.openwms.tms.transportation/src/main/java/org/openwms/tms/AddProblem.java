@@ -21,20 +21,37 @@
  */
 package org.openwms.tms;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+
 /**
- * A UpdateFunction.
+ * A AddProblem.
  *
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  * @version 1.0
  * @since 1.0
  */
-public interface UpdateFunction {
+@Component
+class AddProblem implements UpdateFunction {
+
+    @Autowired
+    private ProblemHistoryRepository repository;
 
     /**
-     * Validate and change the requested values of the {code saved} instance.
-     *
-     * @param saved The currently persisted TransportOrder
-     * @param toUpdate The TransportOrder holding the new values to save
+     * {@inheritDoc}
      */
-    void update(TransportOrder saved, TransportOrder toUpdate);
+    @Override
+    public void update(TransportOrder saved, TransportOrder toUpdate) {
+        if (saved.getProblem() != null && !saved.getProblem().equals(toUpdate.getProblem())) {
+
+            // A Problem occurred and must be added to the TO ...
+            add(toUpdate.getProblem(), saved);
+        }
+    }
+
+    void add(Problem problem, TransportOrder to) {
+        repository.save(new ProblemHistory(to, to.getProblem()));
+        to.setProblem(problem);
+
+    }
 }

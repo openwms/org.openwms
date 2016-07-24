@@ -21,20 +21,38 @@
  */
 package org.openwms.tms;
 
+import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
+
+import org.ameba.integration.jpa.BaseEntity;
+
 /**
- * A UpdateFunction.
+ * A ProblemHistory.
  *
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  * @version 1.0
  * @since 1.0
  */
-public interface UpdateFunction {
+@Entity
+class ProblemHistory extends BaseEntity {
+
+    @JoinColumn(name = "C_FK_TO")
+    private TransportOrder transportOrder;
+
+    private Problem problem;
+
+    /** Dear JPA ... */
+    protected ProblemHistory() {
+    }
 
     /**
-     * Validate and change the requested values of the {code saved} instance.
+     * Full constructor.
      *
-     * @param saved The currently persisted TransportOrder
-     * @param toUpdate The TransportOrder holding the new values to save
+     * @param transportOrder The TO this problem initially occurred
+     * @param problem The problem itself
      */
-    void update(TransportOrder saved, TransportOrder toUpdate);
+    public ProblemHistory(TransportOrder transportOrder, Problem problem) {
+        this.transportOrder = transportOrder;
+        this.problem = problem;
+    }
 }

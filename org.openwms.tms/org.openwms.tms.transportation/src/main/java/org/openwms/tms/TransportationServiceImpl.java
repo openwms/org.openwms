@@ -29,14 +29,10 @@ import org.ameba.annotation.TxService;
 import org.ameba.exception.NotFoundException;
 import org.openwms.common.CommonGateway;
 import org.openwms.tms.exception.TransportOrderServiceException;
-import org.openwms.tms.voter.DecisionVoter;
-import org.openwms.tms.voter.DeniedException;
-import org.openwms.tms.voter.RedirectVote;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
-import org.springframework.util.Assert;
 
 /**
  * A TransportService.
@@ -57,9 +53,6 @@ class TransportationServiceImpl implements TransportationService<TransportOrder>
     private CommonGateway commonGateway;
     @Autowired
     private TransportOrderRepository repository;
-    /** 0..* voters, can be overridden and extended with XML configuration. So far we define only one (default) voter directly. */
-    @Autowired(required = false)
-    private List<DecisionVoter<RedirectVote>> redirectVoters;
     @Autowired(required = false)
     private List<TargetResolver> targetResolvers;
     @Autowired(required = false)
@@ -116,7 +109,7 @@ class TransportationServiceImpl implements TransportationService<TransportOrder>
         for (UpdateFunction up : updateFunctions) {
             up.update(saved, transportOrder);
         }
-
+/*
         if (saved.getTransportUnitBK().equalsIgnoreCase(transportOrder.getTransportUnitBK())) {
             tuChange(saved, transportOrder);
         }
@@ -136,9 +129,10 @@ class TransportationServiceImpl implements TransportationService<TransportOrder>
         if (saved.hasTargetChanged(transportOrder)) {
             targetChange(saved, transportOrder);
         }
+        */
         return saved;
     }
-
+/*
     private void targetChange(TransportOrder saved, TransportOrder transportOrder) {
     }
 
@@ -157,7 +151,7 @@ class TransportationServiceImpl implements TransportationService<TransportOrder>
     private void tuChange(TransportOrder saved, TransportOrder transportOrder) {
 
     }
-
+*/
     /**
      * {@inheritDoc}
      */
@@ -177,30 +171,6 @@ class TransportationServiceImpl implements TransportationService<TransportOrder>
                 LOGGER.error("Could not turn TransportOrder: [" + transportOrder.getPk() + "] into " + state
                         + " with reason : " + sce.getMessage());
                 Problem problem = new Problem(sce.getMessage());
-                transportOrder.setProblem(problem);
-                failure.add(transportOrder.getPk().toString());
-            }
-        }
-        return failure;
-    }
-
-    private Collection<String> redirectTransportOrders(Collection<String> bks, String target) {
-        Assert.hasText(target, "At least one target to re-direct must be specififed");
-        List<String> failure = new ArrayList<>(bks.size());
-        List<TransportOrder> transportOrders = repository.findByBk(new ArrayList<>(bks));
-        for (TransportOrder transportOrder : transportOrders) {
-            try {
-                if (null != redirectVoters) {
-                    RedirectVote rv = new RedirectVote(target, transportOrder);
-                    // TODO [openwms]: 13/07/16 the concept of a voter is misused in that a voter changes the state of a TO
-                    for (DecisionVoter<RedirectVote> voter : redirectVoters) {
-                        voter.voteFor(rv);
-                    }
-                }
-            } catch (DeniedException de) {
-                LOGGER.error("Could not redirect TransportOrder with ID [" + transportOrder.getPk() + "], reason is: "
-                        + de.getMessage());
-                Problem problem = new Problem(de.getMessage());
                 transportOrder.setProblem(problem);
                 failure.add(transportOrder.getPk().toString());
             }
