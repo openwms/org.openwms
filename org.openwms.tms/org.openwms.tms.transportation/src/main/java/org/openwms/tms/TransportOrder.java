@@ -226,7 +226,7 @@ public class TransportOrder extends ApplicationEntity implements Serializable {
      * else then {@link TransportOrder.State#INITIALIZED} or {@link TransportOrder.State#CANCELED}</li> <li>the {@code TransportOrder} is
      * {@link TransportOrder.State#CREATED} and shall be {@link TransportOrder.State#INITIALIZED} but it is incomplete</li> </ul>
      */
-    void setState(TransportOrder.State newState) throws StateChangeException {
+    public void setState(TransportOrder.State newState) throws StateChangeException {
         validateStateChange(newState);
         switch (newState) {
             case STARTED:

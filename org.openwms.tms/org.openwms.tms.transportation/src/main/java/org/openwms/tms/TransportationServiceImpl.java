@@ -24,11 +24,14 @@ package org.openwms.tms;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.Optional;
 
 import org.ameba.annotation.TxService;
 import org.ameba.exception.NotFoundException;
 import org.openwms.common.CommonGateway;
 import org.openwms.tms.exception.TransportOrderServiceException;
+import org.openwms.tms.target.Target;
+import org.openwms.tms.target.TargetResolver;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -54,7 +57,7 @@ class TransportationServiceImpl implements TransportationService<TransportOrder>
     @Autowired
     private TransportOrderRepository repository;
     @Autowired(required = false)
-    private List<TargetResolver> targetResolvers;
+    private List<TargetResolver<Target>> targetResolvers;
     @Autowired(required = false)
     private List<UpdateFunction> updateFunctions;
 
@@ -64,8 +67,11 @@ class TransportationServiceImpl implements TransportationService<TransportOrder>
     @Override
     public int getNoTransportOrdersToTarget(String target, String... states) {
         int i = 0;
-        for (TargetResolver tr : targetResolvers) {
-            i = +tr.resolve(target).getNoTOToTarget(target);
+        for (TargetResolver<Target> tr : targetResolvers) {
+            Optional<Target> t = tr.resolve(target);
+            if (t.isPresent()) {
+                i = +tr.getHandler().getNoTOToTarget(t.get());
+            }
         }
         return i;
     }

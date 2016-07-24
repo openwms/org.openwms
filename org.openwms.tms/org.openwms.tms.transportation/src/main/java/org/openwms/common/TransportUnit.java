@@ -21,6 +21,8 @@
  */
 package org.openwms.common;
 
+import org.openwms.tms.target.Location;
+
 /**
  * A TransportUnit.
  *

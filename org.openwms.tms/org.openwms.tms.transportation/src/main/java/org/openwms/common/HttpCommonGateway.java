@@ -25,6 +25,8 @@ import java.util.Optional;
 
 import feign.FeignException;
 import org.ameba.exception.ServiceLayerException;
+import org.openwms.tms.target.Location;
+import org.openwms.tms.target.LocationGroup;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 

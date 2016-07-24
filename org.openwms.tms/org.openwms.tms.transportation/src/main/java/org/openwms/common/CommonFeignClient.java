@@ -21,6 +21,8 @@
  */
 package org.openwms.common;
 
+import org.openwms.tms.target.Location;
+import org.openwms.tms.target.LocationGroup;
 import org.springframework.cloud.netflix.feign.FeignClient;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;

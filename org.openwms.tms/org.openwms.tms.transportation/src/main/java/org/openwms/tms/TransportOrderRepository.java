@@ -45,4 +45,6 @@ public interface TransportOrderRepository extends JpaRepository<TransportOrder, 
     List<TransportOrder> findByTransportUnitBKAndStates(String transportUnitBK, TransportOrder.State... states);
 
     List<TransportOrder> findByTargetLocation(String targetLocation);
+
+    List<TransportOrder> findByTargetLocationGroup(String targetLocationGroup);
 }

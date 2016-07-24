@@ -25,11 +25,11 @@ import java.util.List;
 import java.util.Optional;
 
 import org.openwms.common.CommonGateway;
-import org.openwms.common.Location;
-import org.openwms.common.LocationGroup;
 import org.openwms.tms.StateChangeException;
 import org.openwms.tms.TransportOrder;
 import org.openwms.tms.TransportOrderRepository;
+import org.openwms.tms.target.Location;
+import org.openwms.tms.target.LocationGroup;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
