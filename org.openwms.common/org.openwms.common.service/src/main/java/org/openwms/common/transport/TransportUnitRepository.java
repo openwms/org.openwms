@@ -24,6 +24,7 @@ package org.openwms.common.transport;
 import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
 
 /**
  * A TransportUnitRepository adds particular functionality regarding {@link TransportUnit} entity classes.
@@ -33,6 +34,9 @@ import org.springframework.data.jpa.repository.JpaRepository;
  * @see TransportUnit
  */
 interface TransportUnitRepository extends JpaRepository<TransportUnit, Long> {
+
+    @Query("select tu from TransportUnit tu where tu.pKey = ?1")
+    Optional<TransportUnit> findByPKey(String pKey);
 
     Optional<TransportUnit> findByBarcode(Barcode barcode);
 }

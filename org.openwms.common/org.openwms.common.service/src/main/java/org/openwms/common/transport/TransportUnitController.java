@@ -51,8 +51,10 @@ public class TransportUnitController {
     }
 
     @RequestMapping(method = RequestMethod.PATCH, value = "/transportUnits", params = {"bk"})
-    public @ResponseBody TransportUnitVO getTransportUnit(@RequestParam("bk") String transportUnitBK, @RequestBody TransportUnitVO tu) {
-        return null;
+    public @ResponseBody TransportUnitVO getTransportUnit(@RequestParam("bk") String transportUnitBK, @RequestBody TransportUnitVO tuVo) {
+        TransportUnit tu = mapper.map(tuVo, TransportUnit.class);
+        service.
+        return tuVo;
     }
 
 }

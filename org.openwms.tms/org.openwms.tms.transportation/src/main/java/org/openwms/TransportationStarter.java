@@ -27,6 +27,8 @@ import java.util.Base64;
 import feign.RequestInterceptor;
 import org.ameba.annotation.EnableAspects;
 import org.ameba.app.SolutionApp;
+import org.ameba.mapping.BeanMapper;
+import org.ameba.mapping.DozerMapperImpl;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.client.circuitbreaker.EnableCircuitBreaker;
@@ -59,8 +61,15 @@ public class TransportationStarter {
         SpringApplication.run(TransportationStarter.class, args);
     }
 
+    public
     @Bean
-    public RequestInterceptor basicAuthRequestInterceptor() {
+    BeanMapper beanMapper() {
+        return new DozerMapperImpl("classpath:/META-INF/dozer/tms-bean-mappings.xml");
+    }
+
+    public
+    @Bean
+    RequestInterceptor basicAuthRequestInterceptor() {
         return (t) -> {
             //Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
             //User user = (User) authentication.getPrincipal();
@@ -69,5 +78,4 @@ public class TransportationStarter {
             t.header("Authorization", "Basic " + Base64.getEncoder().encodeToString((username + ":" + password).getBytes(Charset.forName("UTF-8"))));
         };
     }
-
 }

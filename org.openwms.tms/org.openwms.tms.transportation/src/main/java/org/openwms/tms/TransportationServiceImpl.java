@@ -28,7 +28,6 @@ import java.util.Optional;
 
 import org.ameba.annotation.TxService;
 import org.ameba.exception.NotFoundException;
-import org.openwms.common.CommonGateway;
 import org.openwms.tms.exception.TransportOrderServiceException;
 import org.openwms.tms.target.Target;
 import org.openwms.tms.target.TargetResolver;
@@ -52,8 +51,6 @@ class TransportationServiceImpl implements TransportationService<TransportOrder>
 
     @Autowired
     private ApplicationContext ctx;
-    @Autowired
-    private CommonGateway commonGateway;
     @Autowired
     private TransportOrderRepository repository;
     @Autowired(required = false)

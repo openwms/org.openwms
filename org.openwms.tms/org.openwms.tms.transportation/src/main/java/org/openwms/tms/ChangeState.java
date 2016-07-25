@@ -38,7 +38,7 @@ class ChangeState implements UpdateFunction {
      */
     @Override
     public void update(TransportOrder saved, TransportOrder toUpdate) {
-        if (saved.getState() != toUpdate.getState()) {
+        if (saved.getState() != toUpdate.getState() && toUpdate.getState() != null) {
 
             // Request to change TO's state...
             saved.setState(toUpdate.getState());

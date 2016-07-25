@@ -23,6 +23,7 @@ package org.openwms.tms;
 
 import java.util.List;
 
+import org.openwms.tms.target.Target;
 import org.openwms.tms.target.TargetResolver;
 import org.openwms.tms.voter.DecisionVoter;
 import org.openwms.tms.voter.DeniedException;
@@ -45,18 +46,12 @@ class RedirectTO implements UpdateFunction {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(RedirectTO.class);
     /** 0..* voters, can be overridden and extended with XML configuration. So far we define only one (default) voter directly. */
-    private final List<DecisionVoter<RedirectVote>> redirectVoters;
-    private final List<TargetResolver> targetResolvers;
-    private final AddProblem addProblem;
-
     @Autowired(required = false)
-    RedirectTO(List<DecisionVoter<RedirectVote>> redirectVoters, List<TargetResolver> targetResolvers, AddProblem addProblem) {
-        this.redirectVoters = redirectVoters;
-        this.targetResolvers = targetResolvers;
-        this.addProblem = addProblem;
-    }
-
-
+    private List<DecisionVoter<RedirectVote>> redirectVoters;
+    @Autowired(required = false)
+    private List<TargetResolver<Target>> targetResolvers;
+    @Autowired
+    private AddProblem addProblem;
 
     /**
      * {@inheritDoc}

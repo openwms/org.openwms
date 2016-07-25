@@ -46,7 +46,7 @@ class ChangeTUFunction implements UpdateFunction {
      */
     @Override
     public void update(TransportOrder saved, TransportOrder toUpdate) {
-        if (saved.getTransportUnitBK().equalsIgnoreCase(toUpdate.getTransportUnitBK())) {
+        if (!saved.getTransportUnitBK().equalsIgnoreCase(toUpdate.getTransportUnitBK())) {
 
             // change the target of the TU to assign
             TransportUnit savedTU = new TransportUnit();

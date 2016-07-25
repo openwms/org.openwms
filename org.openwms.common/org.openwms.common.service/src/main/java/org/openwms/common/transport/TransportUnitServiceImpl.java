@@ -102,6 +102,15 @@ class TransportUnitServiceImpl implements TransportUnitService<TransportUnit> {
         return transportUnit;
     }
 
+    @Override
+    public TransportUnit update(TransportUnit tu) {
+        TransportUnit savedTu = dao.findByPKey(tu.getPersistentKey()).orElseThrow(NotFoundException::new);
+        //if (savedTu.get)
+        // TODO [openwms]: 25/07/16
+
+        return null;
+    }
+
     /**
      * {@inheritDoc}
      */

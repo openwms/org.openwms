@@ -238,7 +238,7 @@ public class TransportOrder extends ApplicationEntity implements Serializable {
                 endDate = new Date();
                 break;
             default:
-                throw new IllegalStateException("TO state not managed:" + state);
+                // OK for all others
         }
         state = newState;
         // TODO [openwms]: 24/07/16 publish state changed here!
