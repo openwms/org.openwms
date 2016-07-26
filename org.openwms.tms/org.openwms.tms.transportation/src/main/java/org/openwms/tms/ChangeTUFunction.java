@@ -50,12 +50,12 @@ class ChangeTUFunction implements UpdateFunction {
 
             // change the target of the TU to assign
             TransportUnit savedTU = new TransportUnit();
-            savedTU.setBk(toUpdate.getTransportUnitBK());
+            savedTU.setBarcode(toUpdate.getTransportUnitBK());
             savedTU.setTarget(toUpdate.getTargetLocationGroup());
             gateway.updateTransportUnit(savedTU);
 
             // clear target of an formerly assigned TU
-            savedTU.setBk(saved.getTransportUnitBK());
+            savedTU.setBarcode(saved.getTransportUnitBK());
             savedTU.clearTarget();
             gateway.updateTransportUnit(savedTU);
 

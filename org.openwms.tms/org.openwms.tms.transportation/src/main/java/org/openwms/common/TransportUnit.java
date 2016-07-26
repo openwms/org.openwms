@@ -32,7 +32,7 @@ import org.openwms.tms.target.Location;
  */
 public class TransportUnit implements Identifiable {
 
-    private String bk;
+    private String barcode;
     private Location actualLocation;
     private String target;
 
@@ -41,12 +41,12 @@ public class TransportUnit implements Identifiable {
         return null;
     }
 
-    public String getBk() {
-        return bk;
+    public String getBarcode() {
+        return barcode;
     }
 
-    public void setBk(String bk) {
-        this.bk = bk;
+    public void setBarcode(String barcode) {
+        this.barcode = barcode;
     }
 
     public Location getActualLocation() {

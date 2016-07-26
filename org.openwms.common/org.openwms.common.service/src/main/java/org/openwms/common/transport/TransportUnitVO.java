@@ -34,6 +34,7 @@ public class TransportUnitVO implements Serializable{
 
     String barcode;
     String actualLocation;
+    String target;
 
     public String getBarcode() {
         return barcode;
@@ -49,5 +50,13 @@ public class TransportUnitVO implements Serializable{
 
     public void setActualLocation(String actualLocation) {
         this.actualLocation = actualLocation;
+    }
+
+    public String getTarget() {
+        return target;
+    }
+
+    public void setTarget(String target) {
+        this.target = target;
     }
 }
