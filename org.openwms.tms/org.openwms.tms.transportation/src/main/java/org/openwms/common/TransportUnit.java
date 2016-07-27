@@ -21,6 +21,8 @@
  */
 package org.openwms.common;
 
+import java.io.Serializable;
+
 import org.openwms.tms.target.Location;
 
 /**
@@ -30,16 +32,11 @@ import org.openwms.tms.target.Location;
  * @version 1.0
  * @since 1.0
  */
-public class TransportUnit implements Identifiable {
+public class TransportUnit implements Serializable {
 
     private String barcode;
     private Location actualLocation;
     private String target;
-
-    @Override
-    public String getId() {
-        return null;
-    }
 
     public String getBarcode() {
         return barcode;
