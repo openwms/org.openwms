@@ -21,20 +21,27 @@
  */
 package org.openwms.tms;
 
+import org.springframework.stereotype.Component;
+
 /**
- * A TargetHandler is able to handle {@code TransportOrder}s.
+ * A ChangeState.
  *
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  * @version 1.0
  * @since 1.0
  */
-interface TargetHandler {
+@Component
+class ChangeState implements UpdateFunction {
 
     /**
-     * Get the number of {@code TransportOrder}s that are on the way to the specific {@code target}.
-     *
-     * @param target The target to search for
-     * @return The number of TransportOrders
+     * {@inheritDoc}
      */
-    int getNoTOToTarget(String target);
+    @Override
+    public void update(TransportOrder saved, TransportOrder toUpdate) {
+        if (saved.getState() != toUpdate.getState() && toUpdate.getState() != null) {
+
+            // Request to change TO's state...
+            saved.setState(toUpdate.getState());
+        }
+    }
 }

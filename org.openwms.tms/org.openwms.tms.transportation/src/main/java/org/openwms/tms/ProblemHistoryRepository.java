@@ -21,20 +21,15 @@
  */
 package org.openwms.tms;
 
+import org.springframework.data.jpa.repository.JpaRepository;
+
 /**
- * A TargetResolver is responsible to resolve the proper {@link TargetHandler}.
+ * A ProblemHistoryRepository.
  *
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  * @version 1.0
  * @since 1.0
  */
-interface TargetResolver {
+interface ProblemHistoryRepository extends JpaRepository<ProblemHistory, Long> {
 
-    /**
-     * Resolves the {@link TargetHandler} for a given {@code target}.
-     *
-     * @param target The target to search a handler for
-     * @return The TargetHandler instance
-     */
-    TargetHandler resolve(String target);
 }

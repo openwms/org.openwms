@@ -39,36 +39,28 @@ public class CreateTransportOrderVO implements Serializable {
     private String state;
     private String target;
 
-    public String getPKey() {
+    public String getpKey() {
         return pKey;
     }
 
-    public void setPKey(String bk) {
+    public void setpKey(String pKey) {
         this.pKey = pKey;
-    }
-
-    public String getPriority() {
-        return priority;
-    }
-
-    public String getTarget() {
-        return target;
     }
 
     public String getBarcode() {
         return barcode;
     }
 
-    public void setPriority(String priority) {
-        this.priority = priority;
-    }
-
-    public void setTarget(String target) {
-        this.target = target;
-    }
-
     public void setBarcode(String barcode) {
         this.barcode = barcode;
+    }
+
+    public String getPriority() {
+        return priority;
+    }
+
+    public void setPriority(String priority) {
+        this.priority = priority;
     }
 
     public Problem getProblem() {
@@ -85,5 +77,13 @@ public class CreateTransportOrderVO implements Serializable {
 
     public void setState(String state) {
         this.state = state;
+    }
+
+    public String getTarget() {
+        return target;
+    }
+
+    public void setTarget(String target) {
+        this.target = target;
     }
 }

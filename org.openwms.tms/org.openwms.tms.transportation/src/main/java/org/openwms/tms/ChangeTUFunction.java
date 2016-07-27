@@ -21,8 +21,6 @@
  */
 package org.openwms.tms;
 
-import java.util.Optional;
-
 import org.openwms.common.CommonGateway;
 import org.openwms.common.TransportUnit;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -41,25 +39,27 @@ class ChangeTUFunction implements UpdateFunction {
     @Autowired
     private CommonGateway gateway;
 
+    /**
+     * {@inheritDoc}
+     * <p>
+     * If the assigned {@code TransportUnitBK} has changed, we're going to re-assign the {code TransportUnit}s.
+     */
     @Override
-    public TransportOrder update(TransportOrder saved, TransportOrder toUpdate) {
-        if (saved.getTransportUnitBK().equalsIgnoreCase(toUpdate.getTransportUnitBK())) {
-            // change TU.targetLocation
+    public void update(TransportOrder saved, TransportOrder toUpdate) {
+        if (!saved.getTransportUnitBK().equalsIgnoreCase(toUpdate.getTransportUnitBK())) {
 
+            // change the target of the TU to assign
             TransportUnit savedTU = new TransportUnit();
-            savedTU.setBk(toUpdate.getTransportUnitBK());
+            savedTU.setBarcode(toUpdate.getTransportUnitBK());
             savedTU.setTarget(toUpdate.getTargetLocationGroup());
-            // synchronizing ...
             gateway.updateTransportUnit(savedTU);
 
-            Optional<TransportUnit> tuOpt = gateway.getTransportUnit(saved.getTransportUnitBK());
-            if (tuOpt.isPresent()){
-                TransportUnit tu = tuOpt.get();
-                tu.clearTarget();
-                gateway.updateTransportUnit(tu);
-            }
+            // clear target of an formerly assigned TU
+            savedTU.setBarcode(saved.getTransportUnitBK());
+            savedTU.clearTarget();
+            gateway.updateTransportUnit(savedTU);
 
+            saved.setTransportUnitBK(toUpdate.getTransportUnitBK());
         }
-        return saved;
     }
 }

@@ -23,6 +23,9 @@ package org.openwms.common;
 
 import java.util.Optional;
 
+import org.openwms.tms.target.Location;
+import org.openwms.tms.target.LocationGroup;
+
 /**
  * A CommonGateway.
  *

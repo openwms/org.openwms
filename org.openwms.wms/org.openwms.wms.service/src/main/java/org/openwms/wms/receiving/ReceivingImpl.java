@@ -64,7 +64,7 @@ class ReceivingImpl implements Receiving {
     @Autowired
     private LoadUnitRepository loadUnitDao;
     @Autowired
-    private TransportUnitService<TransportUnit> transportUnitSrv;
+    private TransportUnitService transportUnitSrv;
 
     /**
      * {@inheritDoc}

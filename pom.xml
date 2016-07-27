@@ -264,8 +264,8 @@
                 <module>org.openwms.core</module>
                 <module>org.openwms.common</module>
                 <module>org.openwms.tms</module>
-                <!--module>org.openwms.wms</module>
-                <module>org.openwms.app</module-->
+                <!--module>org.openwms.wms</module-->
+                <!--module>org.openwms.app</module-->
             </modules>
         </profile>
         <profile>
@@ -442,7 +442,7 @@
         <!-- Spring Integration 2.2.4 uses Spring Core 3.1.3 -->
         <spring.io.version>2.1.0.BUILD-SNAPSHOT</spring.io.version>
         <spring-boot.version>1.4.0.BUILD-SNAPSHOT</spring-boot.version> <!-- Keep in sync with platform -->
-        <spring.version>4.2.6.RELEASE</spring.version> <!-- Keep in sync with platform -->
+        <spring.version>4.3.2.BUILD-SNAPSHOT</spring.version> <!-- Keep in sync with platform -->
         <start-class></start-class> <!-- keep it empty, set by actual boot module -->
         <validation-api.version>1.1.0.Final</validation-api.version>
         <!-- =================== -->
@@ -688,6 +688,13 @@
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-dependencies</artifactId>
                 <version>${spring-boot.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework.cloud</groupId>
+                <artifactId>spring-cloud-dependencies</artifactId>
+                <version>Brixton.BUILD-SNAPSHOT</version>
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>

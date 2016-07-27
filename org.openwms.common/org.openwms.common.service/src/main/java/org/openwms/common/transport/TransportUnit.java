@@ -44,7 +44,7 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
-import org.ameba.integration.jpa.BaseEntity;
+import org.ameba.integration.jpa.ApplicationEntity;
 import org.openwms.common.location.Location;
 import org.openwms.common.units.Weight;
 import org.openwms.core.values.CoreTypeDefinitions;
@@ -61,7 +61,7 @@ import org.springframework.util.Assert;
  */
 @Entity
 @Table(name = "COM_TRANSPORT_UNIT", uniqueConstraints = @UniqueConstraint(columnNames = {"C_BARCODE"}))
-public class TransportUnit extends BaseEntity {
+public class TransportUnit extends ApplicationEntity {
 
     /** Unique natural key. */
     @Embedded

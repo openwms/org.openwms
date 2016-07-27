@@ -28,7 +28,13 @@ package org.openwms.tms;
  * @version 1.0
  * @since 1.0
  */
-interface UpdateFunction {
+public interface UpdateFunction {
 
-    TransportOrder update(TransportOrder saved, TransportOrder toUpdate);
+    /**
+     * Validate and change the requested values of the {code saved} instance.
+     *
+     * @param saved The currently persisted TransportOrder
+     * @param toUpdate The TransportOrder holding the new values to save
+     */
+    void update(TransportOrder saved, TransportOrder toUpdate);
 }

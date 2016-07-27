@@ -19,56 +19,39 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
-package org.openwms.common;
+package org.openwms.tms;
 
-import com.fasterxml.jackson.annotation.JsonCreator;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 /**
- * A Location.
+ * A AddProblem.
  *
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  * @version 1.0
  * @since 1.0
  */
-public class Location {
+@Component
+class AddProblem implements UpdateFunction {
 
-    private String locationId;
-    private boolean infeedBlocked;
-    private boolean incomingActive;
-
-    @JsonCreator
-    public Location() {
-    }
-
-    @JsonCreator
-    public Location(String locationId) {
-        this.locationId = locationId;
-    }
-
-    public boolean isInfeedBlocked() {
-        return infeedBlocked;
-    }
-
-    public void setInfeedBlocked(boolean infeedBlocked) {
-        this.infeedBlocked = infeedBlocked;
-    }
-
-    public boolean isIncomingActive() {
-        return incomingActive;
-    }
-
-    public void setIncomingActive(boolean incomingActive) {
-        this.incomingActive = incomingActive;
-    }
+    @Autowired
+    private ProblemHistoryRepository repository;
 
     /**
-     * Return the {@code locationId}.
-     *
-     * @return String locationId
+     * {@inheritDoc}
      */
     @Override
-    public String toString() {
-        return locationId;
+    public void update(TransportOrder saved, TransportOrder toUpdate) {
+        if (saved.getProblem() != null && !saved.getProblem().equals(toUpdate.getProblem())) {
+
+            // A Problem occurred and must be added to the TO ...
+            add(toUpdate.getProblem(), saved);
+        }
     }
 
+    void add(Problem problem, TransportOrder to) {
+        repository.save(new ProblemHistory(to, to.getProblem()));
+        to.setProblem(problem);
+
+    }
 }

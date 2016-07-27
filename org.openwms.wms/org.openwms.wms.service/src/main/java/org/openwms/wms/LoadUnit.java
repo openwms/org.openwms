@@ -27,7 +27,6 @@ import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
-import javax.persistence.PostLoad;
 import javax.persistence.PrePersist;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
@@ -41,24 +40,23 @@ import org.openwms.core.exception.DomainModelRuntimeException;
 import org.openwms.wms.inventory.Product;
 
 /**
- * A LoadUnit is used to divide a {@link TransportUnit} into physical areas. It is used for separation concerns only and cannot be
- * transported without a {@link TransportUnit}.
+ * A LoadUnit is used to divide a {@code TransportUnit} into physical areas. It is used for separation concerns only and cannot be
+ * transported without a {@code TransportUnit}.
  *
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  * @version 0.1
- * @see org.openwms.common.TransportUnit
  * @since 0.1
  */
 @Entity
 @Table(name = "WMS_LOAD_UNIT", uniqueConstraints = @UniqueConstraint(columnNames = {"C_TRANSPORT_UNIT", "C_PHYSICAL_POS"}))
 public class LoadUnit extends BaseEntity implements Serializable {
 
-    /** The {@link TransportUnit} where this {@link LoadUnit} belongs to. */
+    /** The barcode of the {@code TransportUnit} where this {@link LoadUnit} belongs to. */
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "C_TRANSPORT_UNIT")
-    private TransportUnit transportUnit;
+    private String transportUnit;
 
-    /** Where this {@link LoadUnit} is located on the {@link TransportUnit}. */
+    /** Where this {@link LoadUnit} is located on the {@code TransportUnit}. */
     @Column(name = "C_PHYSICAL_POS")
     private String physicalPosition;
 
@@ -82,10 +80,10 @@ public class LoadUnit extends BaseEntity implements Serializable {
     /**
      * Create a new LoadUnit.
      *
-     * @param tu The {@link TransportUnit} where this LoadUnit stands on.
-     * @param physicalPosition The physical position within the {@link TransportUnit} where this LoadUnit stands on
+     * @param tu The {@code TransportUnit} where this LoadUnit stands on.
+     * @param physicalPosition The physical position within the {@code TransportUnit} where this LoadUnit stands on
      */
-    public LoadUnit(TransportUnit tu, String physicalPosition) {
+    public LoadUnit(String tu, String physicalPosition) {
         this.transportUnit = tu;
         this.physicalPosition = physicalPosition;
     }
@@ -93,11 +91,11 @@ public class LoadUnit extends BaseEntity implements Serializable {
     /**
      * Create a new LoadUnit.
      *
-     * @param tu The {@link TransportUnit} where this LoadUnit stands on.
-     * @param physicalPosition The physical position within the {@link TransportUnit} where this LoadUnit stands on
+     * @param tu The {@code TransportUnit} where this LoadUnit stands on.
+     * @param physicalPosition The physical position within the {@code TransportUnit} where this LoadUnit stands on
      * @param product The {@link Product} to set on this LoadUnit
      */
-    public LoadUnit(TransportUnit tu, String physicalPosition, Product product) {
+    public LoadUnit(String tu, String physicalPosition, Product product) {
         this(tu, physicalPosition);
         this.product = product;
     }
@@ -113,17 +111,12 @@ public class LoadUnit extends BaseEntity implements Serializable {
         }
     }
 
-    @PostLoad
-    protected void postLoad() {
-        this.transportUnit.getVersion();
-    }
-
     /**
      * Get the transportUnit.
      *
      * @return the transportUnit.
      */
-    public TransportUnit getTransportUnit() {
+    public String getTransportUnit() {
         return transportUnit;
     }
 
@@ -176,10 +169,10 @@ public class LoadUnit extends BaseEntity implements Serializable {
     }
 
     /**
-     * Unassign the product from this LoadUnit - set it to <code>null</code>.
+     * Unassign the product from this LoadUnit - set it to {@literal null}.
      */
     public void unassignProduct() {
-        this.product = null;
+        product = null;
     }
 
     /**
@@ -195,10 +188,10 @@ public class LoadUnit extends BaseEntity implements Serializable {
      * Add one or more {@link PackagingUnit}s to this LoadUnit.
      *
      * @param pUnits {@link PackagingUnit}s to add
-     * @return <code>true</code> if this set changed as a result of the call
+     * @return {@literal true} if this set changed as a result of the call
      */
     public boolean addPackagingUnits(PackagingUnit... pUnits) {
-        return this.packagingUnits.addAll(Arrays.asList(pUnits));
+        return packagingUnits.addAll(Arrays.asList(pUnits));
     }
 
     /**
@@ -207,7 +200,7 @@ public class LoadUnit extends BaseEntity implements Serializable {
      * @param pUnits {@link PackagingUnit}s to remove
      */
     public void removePackagingUnits(PackagingUnit... pUnits) {
-        this.packagingUnits.removeAll(Arrays.asList(pUnits));
+        packagingUnits.removeAll(Arrays.asList(pUnits));
     }
 
     /**
@@ -217,6 +210,6 @@ public class LoadUnit extends BaseEntity implements Serializable {
      */
     @Override
     public String toString() {
-        return this.transportUnit.getBarcode() + " / " + this.physicalPosition;
+        return transportUnit + " / " + physicalPosition;
     }
 }

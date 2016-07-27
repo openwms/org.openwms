@@ -21,6 +21,11 @@
  */
 package org.openwms.tms;
 
+import static org.openwms.tms.TransportOrder.State.CANCELED;
+import static org.openwms.tms.TransportOrder.State.INITIALIZED;
+import static org.openwms.tms.TransportOrder.State.ONFAILURE;
+import static org.openwms.tms.TransportOrder.State.STARTED;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -167,37 +172,48 @@ public class TransportOrder extends ApplicationEntity implements Serializable {
 
     private void validateInitializationCondition() {
         if (transportUnitBK == null || transportUnitBK.isEmpty() || (targetLocation == null && targetLocationGroup == null)) {
-            throw new IllegalStateException("Not all properties set to turn TransportOrder into next state");
+            throw new StateChangeException(String.format("Not all properties set to turn TransportOrder into next state! transportUnit's barcode [%s], targetLocation [%s], targetLocationGroup [%s]", transportUnitBK, targetLocation, targetLocationGroup));
         }
     }
 
     /**
      * Validate whether a state change is valid or not. States must be changed in a defined order. Mostly the order is defined by the
-     * ordering if the states in {@link TransportOrderState} enum class. But some other rules are checked here too and an exception is
+     * ordering if the states in {@link TransportOrder.State} enum class. But some other rules are checked here too and an exception is
      * thrown in case the sequence of states is violated.
      *
      * @param newState The new state of the order
      * @throws StateChangeException when <li>newState is {@literal null} or</li><li>the state shall be turned back to a prior state
      * or</li><li>when the caller tries to leap the state {@link TransportOrder.State#INITIALIZED}</li>
      */
-    protected void validateStateChange(TransportOrder.State newState) throws StateChangeException {
+    private void validateStateChange(TransportOrder.State newState) throws StateChangeException {
         if (newState == null) {
-            throw new StateChangeException("New TransportState cannot be set to null");
+            throw new StateChangeException("New TransportOrder's state may not be NULL");
         }
-        if (getState().compareTo(newState) > 0) {
+        if (state.compareTo(newState) > 0) {
             // Don't allow to turn back the state!
             throw new StateChangeException("Turning back the state of a TransportOrder is not allowed");
         }
-        if (getState() == TransportOrder.State.CREATED) {
-            if (newState != TransportOrder.State.INITIALIZED && newState != TransportOrder.State.CANCELED) {
-                // Don't allow to except the initialization
-                throw new StateChangeException("A new TransportOrder must first be initialized or be canceled");
-            }
-            try {
+        switch (state) {
+            case CREATED:
+                if (newState != INITIALIZED && newState != CANCELED) {
+                    throw new StateChangeException("A new TransportOrder must first be INITIALIZED or can be CANCELED");
+                }
                 validateInitializationCondition();
-            } catch (IllegalStateException ise) {
-                throw new StateChangeException(ise);
-            }
+                break;
+            case INITIALIZED:
+                if (newState != STARTED && newState != CANCELED && newState != ONFAILURE) {
+                    throw new StateChangeException("An initialized TransportOrder must only be STARTED, CANCELED or set ONFAILURE");
+                }
+                break;
+            case STARTED:
+                // new state may be one of the following, no additional if-check required here
+                break;
+            case FINISHED:
+            case ONFAILURE:
+            case CANCELED:
+                throw new StateChangeException("Not allowed to change the state of a TransportOrder that has already been completed. Current state is " + state);
+            default:
+                throw new IllegalStateException("TO state not managed:" + state);
         }
     }
 
@@ -222,9 +238,10 @@ public class TransportOrder extends ApplicationEntity implements Serializable {
                 endDate = new Date();
                 break;
             default:
-                break;
+                // OK for all others
         }
         state = newState;
+        // TODO [openwms]: 24/07/16 publish state changed here!
     }
 
     /**

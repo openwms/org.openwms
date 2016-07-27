@@ -25,6 +25,8 @@ import java.util.Optional;
 
 import feign.FeignException;
 import org.ameba.exception.ServiceLayerException;
+import org.openwms.tms.target.Location;
+import org.openwms.tms.target.LocationGroup;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -75,7 +77,7 @@ class HttpCommonGateway implements CommonGateway {
     @Override
     public void updateTransportUnit(TransportUnit savedTU) {
         try {
-            commonFeignClient.patchTransportUnit(savedTU.getBk(), savedTU);
+            commonFeignClient.patchTransportUnit(savedTU.getBarcode(), savedTU);
         } catch (Exception ex) {
             throw new ServiceLayerException(ex.getMessage());
         }

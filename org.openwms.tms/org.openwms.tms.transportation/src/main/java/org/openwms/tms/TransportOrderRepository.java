@@ -37,6 +37,7 @@ import org.springframework.data.jpa.repository.Query;
  */
 public interface TransportOrderRepository extends JpaRepository<TransportOrder, Long> {
 
+    @Query("select to from TransportOrder to where to.pKey = ?1")
     Optional<TransportOrder> findByPKey(String pKey);
 
     List<TransportOrder> findByBk(List<String> bks);
@@ -45,4 +46,6 @@ public interface TransportOrderRepository extends JpaRepository<TransportOrder, 
     List<TransportOrder> findByTransportUnitBKAndStates(String transportUnitBK, TransportOrder.State... states);
 
     List<TransportOrder> findByTargetLocation(String targetLocation);
+
+    List<TransportOrder> findByTargetLocationGroup(String targetLocationGroup);
 }

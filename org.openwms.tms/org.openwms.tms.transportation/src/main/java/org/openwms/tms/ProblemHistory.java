@@ -19,18 +19,40 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
-package org.openwms.common;
+package org.openwms.tms;
+
+import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
+
+import org.ameba.integration.jpa.BaseEntity;
 
 /**
- * A LocationGroup.
+ * A ProblemHistory.
  *
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  * @version 1.0
  * @since 1.0
  */
-public class LocationGroup {
+@Entity
+class ProblemHistory extends BaseEntity {
 
-    public boolean isInfeedBlocked() {
-        return false;
+    @JoinColumn(name = "C_FK_TO")
+    private TransportOrder transportOrder;
+
+    private Problem problem;
+
+    /** Dear JPA ... */
+    protected ProblemHistory() {
+    }
+
+    /**
+     * Full constructor.
+     *
+     * @param transportOrder The TO this problem initially occurred
+     * @param problem The problem itself
+     */
+    public ProblemHistory(TransportOrder transportOrder, Problem problem) {
+        this.transportOrder = transportOrder;
+        this.problem = problem;
     }
 }

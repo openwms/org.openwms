@@ -21,40 +21,27 @@
  */
 package org.openwms.tms;
 
-import java.util.Optional;
-
-import org.openwms.common.CommonGateway;
-import org.openwms.common.Location;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 /**
- * A LocationTargetHandler.
+ * A PrioritizeTO is responsible to change the priority of a {@link TransportOrder}.
  *
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  * @version 1.0
  * @since 1.0
  */
 @Component
-class LocationTargetHandler implements TargetHandler {
-
-    @Autowired
-    private CommonGateway gateway;
-    @Autowired
-    private TransportOrderRepository repository;
+class PrioritizeTO implements UpdateFunction {
 
     /**
-     * Get the number of {@code TransportOrder}s that are on the way to the specific {@code target}.
-     *
-     * @param target The target to search for
-     * @return The number of TransportOrders
+     * {@inheritDoc}
      */
     @Override
-    public int getNoTOToTarget(String target) {
-        Optional<Location> opt = gateway.getLocation(target);
-        if (opt.isPresent()) {
-            return repository.findByTargetLocation(target).size();
+    public void update(TransportOrder saved, TransportOrder toUpdate) {
+        if (saved.getPriority() != toUpdate.getPriority()) {
+
+            // Request to change priority
+            saved.setPriority(toUpdate.getPriority());
         }
-        return 0;
     }
 }
