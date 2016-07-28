@@ -21,14 +21,42 @@
  */
 package org.openwms.common;
 
+import java.io.Serializable;
+
 /**
- * A Identifiable.
+ * A TransportUnitVO.
  *
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  * @version 1.0
  * @since 1.0
  */
-public interface Identifiable {
+public class TransportUnitVO implements Serializable {
 
-    String getId();
+    String barcode;
+    String actualLocation;
+    String target;
+
+    public String getBarcode() {
+        return barcode;
+    }
+
+    public void setBarcode(String barcode) {
+        this.barcode = barcode;
+    }
+
+    public String getActualLocation() {
+        return actualLocation;
+    }
+
+    public void setActualLocation(String actualLocation) {
+        this.actualLocation = actualLocation;
+    }
+
+    public String getTarget() {
+        return target;
+    }
+
+    public void setTarget(String target) {
+        this.target = target;
+    }
 }

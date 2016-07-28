@@ -49,5 +49,5 @@ interface CommonFeignClient {
     TransportUnit getTransportUnit(@RequestParam("bk") String transportUnitBK);
 
     @RequestMapping(method = RequestMethod.PATCH, value = "/transportUnits", params = {"bk"})
-    TransportUnit patchTransportUnit(@RequestParam("bk") String transportUnitBK, @RequestBody TransportUnit tu);
+    TransportUnit patchTransportUnit(@RequestParam("bk") String transportUnitBK, @RequestBody TransportUnitVO tu);
 }

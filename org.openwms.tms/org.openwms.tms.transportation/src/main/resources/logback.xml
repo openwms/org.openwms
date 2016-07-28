@@ -14,6 +14,8 @@
 
     <logger name="org.openwms" level="DEBUG"/>
     <logger name="org.hibernate" level="WARN"/>
+    <logger name="com.fasterxml" level="DEBUG"/>
+    <logger name="org.springframework" level="WARN"/>
 
     <!-- Specialized loggers -->
     <logger name="PRESENTATION_LAYER_EXCEPTION" level="ERROR" additivity="false">

@@ -30,7 +30,7 @@ import java.io.Serializable;
  * @version 1.0
  * @since 1.0
  */
-public class TransportUnitVO implements Serializable{
+public class TransportUnitVO implements Serializable {
 
     String barcode;
     String actualLocation;

@@ -25,6 +25,7 @@ import java.util.Optional;
 
 import feign.FeignException;
 import org.ameba.exception.ServiceLayerException;
+import org.ameba.mapping.BeanMapper;
 import org.openwms.tms.target.Location;
 import org.openwms.tms.target.LocationGroup;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,6 +43,8 @@ class HttpCommonGateway implements CommonGateway {
 
     @Autowired
     private CommonFeignClient commonFeignClient;
+    @Autowired
+    private BeanMapper m;
 
     @Override
     public Optional<LocationGroup> getLocationGroup(String target) {
@@ -77,7 +80,9 @@ class HttpCommonGateway implements CommonGateway {
     @Override
     public void updateTransportUnit(TransportUnit savedTU) {
         try {
-            commonFeignClient.patchTransportUnit(savedTU.getBarcode(), savedTU);
+            TransportUnitVO map = m.map(savedTU, TransportUnitVO.class);
+            map.setActualLocation("ERR_/0000/0000/0000/0000");
+            commonFeignClient.patchTransportUnit(savedTU.getBarcode(), map);
         } catch (Exception ex) {
             throw new ServiceLayerException(ex.getMessage());
         }
