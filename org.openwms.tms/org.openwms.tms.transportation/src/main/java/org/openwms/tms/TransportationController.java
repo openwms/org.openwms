@@ -55,7 +55,7 @@ class TransportationController {
     }
 
     @RequestMapping(method = RequestMethod.PATCH, value = "/transportOrders")
-    public void redirectTOs(@RequestBody CreateTransportOrderVO vo, HttpServletRequest req, HttpServletResponse resp) {
+    public void updateTO(@RequestBody CreateTransportOrderVO vo, HttpServletRequest req, HttpServletResponse resp) {
         TransportOrder to = service.update(m.map(vo, TransportOrder.class));
         resp.addHeader(HttpHeaders.LOCATION, getCreatedResourceURI(req, to.getPersistentKey()));
     }

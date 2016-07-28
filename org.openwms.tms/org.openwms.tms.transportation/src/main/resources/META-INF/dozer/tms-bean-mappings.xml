@@ -44,4 +44,20 @@
 		</field>
     </mapping>
 
+	<mapping>
+		<class-a>org.openwms.common.TransportUnit</class-a>
+		<class-b>org.openwms.common.TransportUnitVO</class-b>
+		<field>
+			<a is-accessible="true">barcode</a>
+			<b is-accessible="true">barcode</b>
+		</field>
+		<field>
+			<a is-accessible="true">actualLocation</a>
+			<b is-accessible="true">actualLocation</b>
+		</field>
+		<field>
+			<a is-accessible="true">target</a>
+			<b is-accessible="true">target</b>
+		</field>
+	</mapping>
 </mappings>
