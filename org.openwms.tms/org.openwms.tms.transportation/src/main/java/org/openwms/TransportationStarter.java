@@ -21,10 +21,8 @@
  */
 package org.openwms;
 
-import java.nio.charset.Charset;
-import java.util.Base64;
-
 import feign.RequestInterceptor;
+import feign.auth.BasicAuthRequestInterceptor;
 import org.ameba.annotation.EnableAspects;
 import org.ameba.app.SolutionApp;
 import org.ameba.mapping.BeanMapper;
@@ -70,12 +68,13 @@ public class TransportationStarter {
     public
     @Bean
     RequestInterceptor basicAuthRequestInterceptor() {
-        return (t) -> {
+        return  new BasicAuthRequestInterceptor("user", "sa");
+        /*return (t) -> {
             //Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
             //User user = (User) authentication.getPrincipal();
             String username = "user";//user.getUsername();
             String password = "sa";//(String) authentication.getCredentials();
             t.header("Authorization", "Basic " + Base64.getEncoder().encodeToString((username + ":" + password).getBytes(Charset.forName("UTF-8"))));
-        };
+        };*/
     }
 }

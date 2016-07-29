@@ -82,7 +82,7 @@ class HttpCommonGateway implements CommonGateway {
         try {
             TransportUnitVO map = m.map(savedTU, TransportUnitVO.class);
             map.setActualLocation("ERR_/0000/0000/0000/0000");
-            commonFeignClient.patchTransportUnit(savedTU.getBarcode(), map);
+            commonFeignClient.updateTU(savedTU.getBarcode(), map);
         } catch (Exception ex) {
             throw new ServiceLayerException(ex.getMessage());
         }
