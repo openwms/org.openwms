@@ -56,8 +56,8 @@ class TransportationController {
 
     @RequestMapping(method = RequestMethod.PATCH, value = "/transportOrders")
     public void updateTO(@RequestBody CreateTransportOrderVO vo, HttpServletRequest req, HttpServletResponse resp) {
-        TransportOrder to = service.update(m.map(vo, TransportOrder.class));
-        resp.addHeader(HttpHeaders.LOCATION, getCreatedResourceURI(req, to.getPersistentKey()));
+        service.update(m.map(vo, TransportOrder.class));
+        resp.setStatus(204);
     }
 
     private String getCreatedResourceURI(HttpServletRequest req, String objId) {

@@ -47,7 +47,7 @@ interface TransportUnitService<T extends TransportUnit> {
      */
     T create(Barcode barcode, TransportUnitType transportUnitType, LocationPK actualLocation);
 
-    T update(T tu);
+    T update(Barcode barcode, T tu);
 
     /**
      * Move a {@link TransportUnit} identified by its {@link Barcode} to the given target {@code Location} identified by the {@code
