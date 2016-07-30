@@ -103,12 +103,12 @@ class TransportUnitServiceImpl implements TransportUnitService<TransportUnit> {
     }
 
     @Override
-    public TransportUnit update(TransportUnit tu) {
-        TransportUnit savedTu = dao.findByPKey(tu.getPersistentKey()).orElseThrow(NotFoundException::new);
+    public TransportUnit update(Barcode barcode, TransportUnit tu) {
+        TransportUnit savedTu = dao.findByBarcode(barcode).orElseThrow(NotFoundException::new);
         //if (savedTu.get)
         // TODO [openwms]: 25/07/16
 
-        return null;
+        return savedTu;
     }
 
     /**
