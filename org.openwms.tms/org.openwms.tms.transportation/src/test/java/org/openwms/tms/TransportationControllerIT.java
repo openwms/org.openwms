@@ -94,7 +94,7 @@ public class TransportationControllerIT {
                 .content(objectMapper.writeValueAsString(vo)))
                 .andExpect(status().isCreated())
                 .andExpect(jsonPath("messageKey", is(Messages.CREATED)))
-                .andDo(document("dossier-create-example")
+                .andDo(document("to-create-example")
                 )
         ;
 
