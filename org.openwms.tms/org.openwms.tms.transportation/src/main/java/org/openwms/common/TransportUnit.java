@@ -38,6 +38,16 @@ public class TransportUnit implements Serializable {
     private Location actualLocation;
     private String target;
 
+    public TransportUnit() {
+
+    }
+
+    public TransportUnit(String barcode, Location actualLocation, String target) {
+        this.barcode = barcode;
+        this.actualLocation = actualLocation;
+        this.target = target;
+    }
+
     public String getBarcode() {
         return barcode;
     }
