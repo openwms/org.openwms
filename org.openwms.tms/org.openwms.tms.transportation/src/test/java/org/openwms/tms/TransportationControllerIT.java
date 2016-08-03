@@ -22,10 +22,13 @@
 package org.openwms.tms;
 
 import static org.hamcrest.CoreMatchers.is;
+import static org.mockito.BDDMockito.given;
 import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+
+import java.util.Optional;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.ameba.Messages;
@@ -33,8 +36,12 @@ import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.openwms.common.CommonGateway;
+import org.openwms.common.TransportUnit;
+import org.openwms.tms.target.Location;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.restdocs.RestDocumentation;
 import org.springframework.restdocs.mockmvc.MockMvcRestDocumentation;
@@ -55,6 +62,7 @@ import org.springframework.web.filter.CharacterEncodingFilter;
 @SpringBootTest
 public class TransportationControllerIT {
 
+    public static final String INIT_LOC = "INIT/0000/0000/0000/0000";
     @Autowired
     private ObjectMapper objectMapper;
     protected MockMvc mockMvc;
@@ -62,7 +70,8 @@ public class TransportationControllerIT {
     public final RestDocumentation restDocumentation = new RestDocumentation("target/generated-snippets");
     @Autowired
     protected WebApplicationContext context;
-
+    @MockBean
+    private CommonGateway commonGateway;
 
     /**
      * Do something before each test method.
@@ -89,6 +98,14 @@ public class TransportationControllerIT {
         vo.setBarcode("4711");
         vo.setPriority(PriorityLevel.HIGHEST.toString());
         vo.setTarget("ERR_/0000/0000/0000/0000");
+
+        Location actualLocation = new Location(INIT_LOC);
+        TransportUnit tu = new TransportUnit(vo.getBarcode(), actualLocation, vo.getTarget());
+
+        given(this.commonGateway.getTransportUnit(vo.getBarcode())).willReturn(Optional.of(tu));
+        given(this.commonGateway.getLocation(vo.getTarget())).willReturn(Optional.of(actualLocation));
+        given(this.commonGateway.getLocationGroup(vo.getTarget())).willReturn(Optional.empty());
+
         mockMvc.perform(post("/transportOrders")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(vo)))
@@ -97,6 +114,5 @@ public class TransportationControllerIT {
                 .andDo(document("to-create-example")
                 )
         ;
-
     }
 }
