@@ -21,17 +21,13 @@
  */
 package org.openwms.tms;
 
-import static org.hamcrest.CoreMatchers.is;
 import static org.mockito.BDDMockito.given;
-import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import java.util.Optional;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.ameba.Messages;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
@@ -109,9 +105,7 @@ public class TransportationControllerIT {
         mockMvc.perform(post("/transportOrders")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(vo)))
-                .andExpect(status().isCreated())
-                .andExpect(jsonPath("messageKey", is(Messages.CREATED)))
-                .andDo(document("to-create-example")
+                .andExpect(status().isCreated()
                 )
         ;
     }
