@@ -19,27 +19,22 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
-package org.openwms.common;
-
-import java.util.Optional;
-
-import org.openwms.tms.targets.Location;
-import org.openwms.tms.targets.LocationGroup;
+package org.openwms.tms.targets;
 
 /**
- * A CommonGateway.
+ * A TargetHandler is able to handle {@code TransportOrder}s.
  *
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  * @version 1.0
  * @since 1.0
  */
-public interface CommonGateway {
+public interface TargetHandler<T extends Target> {
 
-    Optional<LocationGroup> getLocationGroup(String target);
-
-    Optional<Location> getLocation(String target);
-
-    Optional<TransportUnit> getTransportUnit(String transportUnitBK);
-
-    void updateTransportUnit(TransportUnit savedTU);
+    /**
+     * Get the number of {@code TransportOrder}s that are on the way to the specific {@code target}.
+     *
+     * @param target The target to search for
+     * @return The number of TransportOrders
+     */
+    int getNoTOToTarget(T target);
 }

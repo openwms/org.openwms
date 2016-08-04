@@ -24,7 +24,7 @@ package org.openwms.tms.voter;
 import java.util.Optional;
 
 import org.openwms.common.CommonGateway;
-import org.openwms.tms.target.LocationGroup;
+import org.openwms.tms.targets.LocationGroup;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -19,27 +19,25 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
-package org.openwms.common;
-
-import java.util.Optional;
-
-import org.openwms.tms.targets.Location;
-import org.openwms.tms.targets.LocationGroup;
+package org.openwms.tms.targets;
 
 /**
- * A CommonGateway.
+ * A LocationGroup.
  *
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  * @version 1.0
  * @since 1.0
  */
-public interface CommonGateway {
+public class LocationGroup implements Target {
 
-    Optional<LocationGroup> getLocationGroup(String target);
+    private String name;
 
-    Optional<Location> getLocation(String target);
+    public boolean isInfeedBlocked() {
+        return false;
+    }
 
-    Optional<TransportUnit> getTransportUnit(String transportUnitBK);
-
-    void updateTransportUnit(TransportUnit savedTU);
+    @Override
+    public String asString() {
+        return name;
+    }
 }
