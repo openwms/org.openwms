@@ -19,27 +19,27 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
-package org.openwms.common;
+package org.openwms.tms.targets;
 
 import java.util.Optional;
 
-import org.openwms.tms.targets.Location;
-import org.openwms.tms.targets.LocationGroup;
-
 /**
- * A CommonGateway.
+ * A TargetResolver is responsible to resolve a {@link Target}.
  *
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  * @version 1.0
  * @since 1.0
  */
-public interface CommonGateway {
+public interface TargetResolver<T extends Target> {
 
-    Optional<LocationGroup> getLocationGroup(String target);
+    /**
+     * Resolves a {@link Target} for a given {@code target}.
+     *
+     * @param target The target to resolve
+     * @return The target instance
+     * @throws org.ameba.exception.NotFoundException
+     */
+    Optional<T> resolve(String target);
 
-    Optional<Location> getLocation(String target);
-
-    Optional<TransportUnit> getTransportUnit(String transportUnitBK);
-
-    void updateTransportUnit(TransportUnit savedTU);
+    TargetHandler<T> getHandler();
 }

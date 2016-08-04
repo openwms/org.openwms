@@ -19,60 +19,62 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
-package org.openwms.common;
+package org.openwms.tms.targets;
 
 import java.io.Serializable;
 
-import org.openwms.tms.targets.Location;
+import com.fasterxml.jackson.annotation.JsonCreator;
 
 /**
- * A TransportUnit.
+ * A Location.
  *
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  * @version 1.0
  * @since 1.0
  */
-public class TransportUnit implements Serializable {
+public class Location implements Target, Serializable {
 
-    private String barcode;
-    private Location actualLocation;
-    private String target;
+    private String locationId;
+    private boolean infeedBlocked;
+    private boolean incomingActive;
 
-    public TransportUnit() {
-
+    @JsonCreator
+    public Location() {
     }
 
-    public TransportUnit(String barcode, Location actualLocation, String target) {
-        this.barcode = barcode;
-        this.actualLocation = actualLocation;
-        this.target = target;
+    @JsonCreator
+    public Location(String locationId) {
+        this.locationId = locationId;
     }
 
-    public String getBarcode() {
-        return barcode;
+    public boolean isInfeedBlocked() {
+        return infeedBlocked;
     }
 
-    public void setBarcode(String barcode) {
-        this.barcode = barcode;
+    public void setInfeedBlocked(boolean infeedBlocked) {
+        this.infeedBlocked = infeedBlocked;
     }
 
-    public Location getActualLocation() {
-        return actualLocation;
+    public boolean isIncomingActive() {
+        return incomingActive;
     }
 
-    public void setActualLocation(Location actualLocation) {
-        this.actualLocation = actualLocation;
+    public void setIncomingActive(boolean incomingActive) {
+        this.incomingActive = incomingActive;
     }
 
-    public String getTarget() {
-        return target;
+    /**
+     * Return the {@code locationId}.
+     *
+     * @return String locationId
+     */
+    @Override
+    public String toString() {
+        return locationId;
     }
 
-    public void setTarget(String target) {
-        this.target = target;
-    }
-
-    public void clearTarget() {
-        this.target = "";
+    @Override
+    public String asString() {
+        return locationId;
     }
 }

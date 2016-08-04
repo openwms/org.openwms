@@ -23,8 +23,8 @@ package org.openwms.tms;
 
 import java.util.List;
 
-import org.openwms.tms.target.Target;
-import org.openwms.tms.target.TargetResolver;
+import org.openwms.tms.targets.Target;
+import org.openwms.tms.targets.TargetResolver;
 import org.openwms.tms.voter.DecisionVoter;
 import org.openwms.tms.voter.DeniedException;
 import org.openwms.tms.voter.RedirectVote;

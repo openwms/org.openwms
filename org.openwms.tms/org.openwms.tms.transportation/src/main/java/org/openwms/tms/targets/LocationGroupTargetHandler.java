@@ -19,27 +19,34 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
-package org.openwms.common;
+package org.openwms.tms.targets;
 
-import java.util.Optional;
+import java.util.List;
 
-import org.openwms.tms.targets.Location;
-import org.openwms.tms.targets.LocationGroup;
+import org.openwms.tms.TransportOrder;
+import org.openwms.tms.TransportOrderRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 /**
- * A CommonGateway.
+ * A LocationGroupTargetHandler.
  *
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  * @version 1.0
  * @since 1.0
  */
-public interface CommonGateway {
+@Component
+class LocationGroupTargetHandler implements TargetHandler<LocationGroup> {
 
-    Optional<LocationGroup> getLocationGroup(String target);
+    @Autowired
+    private TransportOrderRepository repository;
 
-    Optional<Location> getLocation(String target);
-
-    Optional<TransportUnit> getTransportUnit(String transportUnitBK);
-
-    void updateTransportUnit(TransportUnit savedTU);
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public int getNoTOToTarget(LocationGroup target) {
+        List<TransportOrder> result = repository.findByTargetLocation(target.asString());
+        return result != null ? result.size() : 0;
+    }
 }
