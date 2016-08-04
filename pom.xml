@@ -420,9 +420,10 @@
         <maven.min.version>3.0.4</maven.min.version>
         <debug.info>true</debug.info>
         <ci.buildNumber>MANUAL</ci.buildNumber>
-        <documentation.snippet.dir>${project.build.directory}/generated-snippets</documentation.snippet.dir>
-        <documentation.input.dir>${project.build.directory}/generated-docs</documentation.input.dir>
-        <documentation.output.dir>${project.build.directory}/site/rest</documentation.output.dir>
+        <documentation.dir>${project.build.directory}</documentation.dir>
+        <documentation.snippet.dir>${documentation.dir}/generated-snippets</documentation.snippet.dir>
+        <documentation.input.dir>${documentation.dir}/generated-docs</documentation.input.dir>
+        <documentation.output.dir>${documentation.dir}/site/rest</documentation.output.dir>
 
         <!-- Used to make the Maven description property available from Bundlor -->
         <project.description>${project.description}</project.description>
