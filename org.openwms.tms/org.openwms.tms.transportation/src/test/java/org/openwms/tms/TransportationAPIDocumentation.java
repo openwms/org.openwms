@@ -39,9 +39,9 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.openwms.common.CommonGateway;
 import org.openwms.common.TransportUnit;
+import org.openwms.core.test.IntegrationTest;
 import org.openwms.tms.targets.Location;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
@@ -51,7 +51,6 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
-import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.context.WebApplicationContext;
 import org.springframework.web.filter.CharacterEncodingFilter;
@@ -64,8 +63,8 @@ import org.springframework.web.filter.CharacterEncodingFilter;
  * @since 1.0
  */
 @RunWith(SpringRunner.class)
-@SpringBootTest
-@Transactional(propagation = Propagation.NOT_SUPPORTED)
+@IntegrationTest
+@Transactional(readOnly = true)
 public class TransportationAPIDocumentation {
 
     public static final String INIT_LOC = "INIT/0000/0000/0000/0000";
@@ -124,10 +123,26 @@ public class TransportationAPIDocumentation {
     }
 
     public
-    //@Test
+    @Test
     void testCreateTO() throws Exception {
         MvcResult res = postTOAndValidate(createTO());
         assertThat(res.getResponse().getHeaderValue(HttpHeaders.LOCATION)).isNotNull();
+    }
+
+    public
+    @Test
+    void testCreateTOUnknownTU() throws Exception {
+        CreateTransportOrderVO vo = createTO();
+        vo.setBarcode("UNKNOWN");
+
+        given(commonGateway.getTransportUnit(vo.getBarcode())).willReturn(Optional.empty());
+
+        mockMvc.perform(post("/transportOrders")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(objectMapper.writeValueAsString(vo)))
+                .andExpect(status().isNotFound())
+                .andDo(document("to-create-uk-tu"))
+        ;
     }
 
     public
@@ -143,6 +158,32 @@ public class TransportationAPIDocumentation {
                 .andExpect(jsonPath("sourceLocation", is(INIT_LOC)))
                 .andExpect(jsonPath("targetLocation", is(ERR_LOC)))
                 .andDo(document("to-create-and-get"))
+        ;
+    }
+
+    public
+    @Test
+    void testCreateTOAndGetTargetNotAvailable() throws Exception {
+        CreateTransportOrderVO vo = createTO();
+        vo.setTarget(ERR_LOC);
+        Location loc = new Location(ERR_LOC);
+        loc.setIncomingActive(false);
+        given(commonGateway.getLocation(vo.getTarget())).willReturn(Optional.of(loc));
+
+        MvcResult res = mockMvc.perform(post("/transportOrders")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(objectMapper.writeValueAsString(vo)))
+                .andExpect(status().isCreated())
+                .andReturn();
+
+        Thread.sleep(1000);
+        String toLocation = (String) res.getResponse().getHeaderValue(HttpHeaders.LOCATION);
+        mockMvc.perform(get(toLocation))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("state", is("INITIALIZED")))
+                .andExpect(jsonPath("sourceLocation", is(INIT_LOC)))
+                .andExpect(jsonPath("targetLocation", is(ERR_LOC)))
+                .andDo(document("to-create-and-get-target-na"))
         ;
     }
 }

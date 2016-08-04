@@ -35,7 +35,6 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 public class Location implements Target, Serializable {
 
     private String locationId;
-    private boolean infeedBlocked = false;
     private boolean incomingActive = true;
 
     @JsonCreator
@@ -45,14 +44,6 @@ public class Location implements Target, Serializable {
     @JsonCreator
     public Location(String locationId) {
         this.locationId = locationId;
-    }
-
-    public boolean isInfeedBlocked() {
-        return infeedBlocked;
-    }
-
-    public void setInfeedBlocked(boolean infeedBlocked) {
-        this.infeedBlocked = infeedBlocked;
     }
 
     public boolean isIncomingActive() {
@@ -76,5 +67,9 @@ public class Location implements Target, Serializable {
     @Override
     public String asString() {
         return locationId;
+    }
+
+    public boolean isInfeedBlocked() {
+        return !incomingActive;
     }
 }
