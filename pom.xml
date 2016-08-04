@@ -419,6 +419,10 @@
         <maven.compile.sourceLevel>${java.version}</maven.compile.sourceLevel>
         <maven.min.version>3.0.4</maven.min.version>
         <debug.info>true</debug.info>
+        <ci.buildNumber>MANUAL</ci.buildNumber>
+        <documentation.snippet.dir>${project.build.directory}/generated-snippets</documentation.snippet.dir>
+        <documentation.input.dir>${project.build.directory}/generated-docs</documentation.input.dir>
+        <documentation.output.dir>${project.build.directory}/site/rest</documentation.output.dir>
 
         <!-- Used to make the Maven description property available from Bundlor -->
         <project.description>${project.description}</project.description>
@@ -449,6 +453,7 @@
         <!--   Plugin versions   -->
         <!-- =================== -->
         <plugin.archiver.version>2.3.2</plugin.archiver.version>
+        <plugin.asciidoctor-maven.version>1.5.3</plugin.asciidoctor-maven.version>
         <plugin.assembly.version>2.4</plugin.assembly.version>
         <plugin.checkstyle.version>2.11</plugin.checkstyle.version>
         <plugin.clean.version>2.5</plugin.clean.version>
@@ -578,6 +583,82 @@
                         </rules>
                     </configuration>
                 </plugin-->
+
+                <plugin>
+                    <groupId>org.asciidoctor</groupId>
+                    <artifactId>asciidoctor-maven-plugin</artifactId>
+                    <version>${plugin.asciidoctor-maven.version}</version>
+                    <executions>
+                        <execution>
+                            <id>generate-docs</id>
+                            <phase>prepare-package</phase>
+                            <goals>
+                                <goal>process-asciidoc</goal>
+                            </goals>
+                            <configuration>
+                                <backend>html</backend>
+                                <doctype>book</doctype>
+                                <attributes>
+                                    <bversion>${project.version}</bversion>
+                                    <bnumber>${ci.buildNumber}</bnumber>
+                                    <generated>${documentation.snippet.dir}</generated>
+                                </attributes>
+                            </configuration>
+                        </execution>
+                        <execution>
+                            <id>generate-docs-site</id>
+                            <phase>site</phase>
+                            <goals>
+                                <goal>process-asciidoc</goal>
+                            </goals>
+                            <configuration>
+                                <backend>html</backend>
+                                <doctype>book</doctype>
+                                <attributes>
+                                    <generated>${documentation.snippet.dir}</generated>
+                                </attributes>
+                            </configuration>
+                        </execution>
+                    </executions>
+                </plugin>
+
+                <plugin>
+                    <artifactId>maven-resources-plugin</artifactId>
+                    <executions>
+                        <execution>
+                            <id>copy-resources</id>
+                            <phase>prepare-package</phase>
+                            <goals>
+                                <goal>copy-resources</goal>
+                            </goals>
+                            <configuration>
+                                <outputDirectory>
+                                    ${project.build.outputDirectory}/META-INF/resources/public/static/docs
+                                </outputDirectory>
+                                <resources>
+                                    <resource>
+                                        <directory>${documentation.input.dir}</directory>
+                                    </resource>
+                                </resources>
+                            </configuration>
+                        </execution>
+                        <execution>
+                            <id>copy-asciidoc</id>
+                            <phase>pre-site</phase>
+                            <goals>
+                                <goal>copy-resources</goal>
+                            </goals>
+                            <configuration>
+                                <outputDirectory>${documentation.output.dir}</outputDirectory>
+                                <resources>
+                                    <resource>
+                                        <directory>${documentation.input.dir}</directory>
+                                    </resource>
+                                </resources>
+                            </configuration>
+                        </execution>
+                    </executions>
+                </plugin>
 
                 <plugin>
                     <artifactId>maven-install-plugin</artifactId>

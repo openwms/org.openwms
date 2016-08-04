@@ -36,7 +36,6 @@
     <name>OpenWMS.org TMS</name>
     <properties>
         <moduleDir>../..</moduleDir>
-        <maven.test.skip>true</maven.test.skip>
         <core.version>${project.version}</core.version>
         <common.version>${project.version}</common.version>
         <module.version>${project.version}</module.version>

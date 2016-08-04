@@ -30,7 +30,7 @@ import org.openwms.core.test.AbstractJpaSpringContextTests;
  * @version $Revision$
  * @since 0.1
  */
-public class TransportOrderTest extends AbstractJpaSpringContextTests {
+public class TransportOrderTests extends AbstractJpaSpringContextTests {
 
     /**
      * Test method for
