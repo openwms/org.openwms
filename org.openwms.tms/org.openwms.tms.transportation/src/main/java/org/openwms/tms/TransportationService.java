@@ -28,7 +28,7 @@ import java.util.Collection;
  *
  * @param <T> Any kind of {@link TransportOrder}
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
- * @version 1.0
+ * @version 1.1
  * @since 0.1
  */
 public interface TransportationService<T extends TransportOrder> {
@@ -61,4 +61,13 @@ public interface TransportationService<T extends TransportOrder> {
      * @return A list of business keys of that {@link TransportOrder}s that have not been changed
      */
     Collection<String> cancelTransportOrders(Collection<String> bks, TransportOrder.State state);
+
+    /**
+     * Find and return the {@code TransportOrder} identified by the persisted key {@code pKey}.
+     *
+     * @param pKey The persisted key
+     * @return An {@code TransportOrder} instance
+     * @throws org.ameba.exception.NotFoundException if no entity was found
+     */
+    T findByPKey(String pKey);
 }

@@ -27,6 +27,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.ameba.mapping.BeanMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -47,6 +48,11 @@ class TransportationController {
     private BeanMapper m;
     @Autowired
     private TransportationService<TransportOrder> service;
+
+    @RequestMapping(method = RequestMethod.GET, value = "/transportOrders/{pKey}")
+    public TransportOrder findByPKey(@PathVariable String pKey) {
+        return service.findByPKey(pKey);
+    }
 
     @RequestMapping(method = RequestMethod.POST, value = "/transportOrders")
     public void createTO(@RequestBody CreateTransportOrderVO vo, HttpServletRequest req, HttpServletResponse resp) {

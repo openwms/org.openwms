@@ -35,8 +35,8 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 public class Location implements Target, Serializable {
 
     private String locationId;
-    private boolean infeedBlocked;
-    private boolean incomingActive;
+    private boolean infeedBlocked = false;
+    private boolean incomingActive = true;
 
     @JsonCreator
     public Location() {

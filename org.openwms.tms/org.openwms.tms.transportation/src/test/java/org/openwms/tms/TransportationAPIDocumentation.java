@@ -51,6 +51,8 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.context.WebApplicationContext;
 import org.springframework.web.filter.CharacterEncodingFilter;
 
@@ -63,9 +65,11 @@ import org.springframework.web.filter.CharacterEncodingFilter;
  */
 @RunWith(SpringRunner.class)
 @SpringBootTest
+@Transactional(propagation = Propagation.NOT_SUPPORTED)
 public class TransportationAPIDocumentation {
 
     public static final String INIT_LOC = "INIT/0000/0000/0000/0000";
+    public static final String ERR_LOC = "ERR_/0000/0000/0000/0000";
     @Autowired
     private ObjectMapper objectMapper;
     protected MockMvc mockMvc;
@@ -98,13 +102,14 @@ public class TransportationAPIDocumentation {
         CreateTransportOrderVO vo = new CreateTransportOrderVO();
         vo.setBarcode("4711");
         vo.setPriority(PriorityLevel.HIGHEST.toString());
-        vo.setTarget("ERR_/0000/0000/0000/0000");
+        vo.setTarget(ERR_LOC);
 
         Location actualLocation = new Location(INIT_LOC);
+        Location errorLocation = new Location(ERR_LOC);
         TransportUnit tu = new TransportUnit(vo.getBarcode(), actualLocation, vo.getTarget());
 
         given(this.commonGateway.getTransportUnit(vo.getBarcode())).willReturn(Optional.of(tu));
-        given(this.commonGateway.getLocation(vo.getTarget())).willReturn(Optional.of(actualLocation));
+        given(this.commonGateway.getLocation(vo.getTarget())).willReturn(Optional.of(errorLocation));
         given(this.commonGateway.getLocationGroup(vo.getTarget())).willReturn(Optional.empty());
         return vo;
     }
@@ -119,7 +124,7 @@ public class TransportationAPIDocumentation {
     }
 
     public
-    @Test
+    //@Test
     void testCreateTO() throws Exception {
         MvcResult res = postTOAndValidate(createTO());
         assertThat(res.getResponse().getHeaderValue(HttpHeaders.LOCATION)).isNotNull();
@@ -128,12 +133,15 @@ public class TransportationAPIDocumentation {
     public
     @Test
     void testCreateTOAndGet() throws Exception {
-        MvcResult res = postTOAndValidate(createTO());
+        CreateTransportOrderVO vo = createTO();
+        MvcResult res = postTOAndValidate(vo);
 
         String toLocation = (String) res.getResponse().getHeaderValue(HttpHeaders.LOCATION);
         mockMvc.perform(get(toLocation))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("mn", is("")))
+                .andExpect(jsonPath("state", is("STARTED")))
+                .andExpect(jsonPath("sourceLocation", is(INIT_LOC)))
+                .andExpect(jsonPath("targetLocation", is(ERR_LOC)))
                 .andDo(document("to-create-and-get"))
         ;
     }
